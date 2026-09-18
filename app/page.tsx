@@ -39,6 +39,22 @@ type Benchmark = {
   p95: number;
 };
 
+type RealNewsResult = {
+  ok: boolean;
+  headline?: string;
+  symbols?: string[];
+  source?: string;
+  createdAt?: string | null;
+  receivedAt?: string;
+  sourceToServerMs?: number | null;
+  waitedMs?: number;
+  relatedToWatchlist?: string[];
+  error?: string;
+  timeout?: boolean;
+  receivedToVisibleMs?: number | null;
+  sourceToVisibleMs?: number | null;
+};
+
 const watchlist = ["MU", "NVDA", "NBIS", "AVGO", "TSM"];
 
 const sampleHeadlines = [
@@ -74,6 +90,8 @@ export default function Home() {
   const [flash, setFlash] = useState<FlashItem[]>([]);
   const [testing, setTesting] = useState(false);
   const [benchmarking, setBenchmarking] = useState(false);
+  const [probingNews, setProbingNews] = useState(false);
+  const [realNews, setRealNews] = useState<RealNewsResult | null>(null);
   const [lastRoundTrip, setLastRoundTrip] = useState<number | null>(null);
   const [benchmark, setBenchmark] = useState<Benchmark | null>(null);
   const [selected, setSelected] = useState(0);
@@ -169,6 +187,30 @@ export default function Home() {
     }
   }
 
+  async function runRealNewsProbe() {
+    setProbingNews(true);
+    setRealNews(null);
+    try {
+      const response = await fetch("/api/news-probe", { cache: "no-store" });
+      const data = (await response.json()) as RealNewsResult;
+      if (data.ok && data.receivedAt) {
+        const visibleAt = Date.now();
+        const receivedMs = Date.parse(data.receivedAt);
+        const createdMs = data.createdAt ? Date.parse(data.createdAt) : Number.NaN;
+        data.receivedToVisibleMs = Number.isFinite(receivedMs) ? visibleAt - receivedMs : null;
+        data.sourceToVisibleMs = Number.isFinite(createdMs) ? visibleAt - createdMs : null;
+      }
+      setRealNews(data);
+    } catch (error) {
+      setRealNews({
+        ok: false,
+        error: error instanceof Error ? error.message : "Real news probe failed.",
+      });
+    } finally {
+      setProbingNews(false);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#050608] text-zinc-100">
       <header className="border-b border-white/10 bg-black/40 backdrop-blur-xl">
@@ -233,15 +275,22 @@ export default function Home() {
 
             <div className="flex flex-wrap gap-2">
               <button
+                onClick={runRealNewsProbe}
+                disabled={probingNews || benchmarking || testing}
+                className="rounded-xl border border-emerald-400/20 bg-emerald-400/[0.06] px-4 py-3 text-sm font-semibold text-emerald-300 transition hover:bg-emerald-400/[0.1] disabled:cursor-wait disabled:opacity-50"
+              >
+                {probingNews ? "WAITING FOR LIVE NEWS…" : "PROBE REAL NEWS"}
+              </button>
+              <button
                 onClick={runBenchmark}
-                disabled={benchmarking || testing}
+                disabled={benchmarking || testing || probingNews}
                 className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-zinc-200 transition hover:bg-white/[0.08] disabled:cursor-wait disabled:opacity-50"
               >
                 {benchmarking ? "BENCHMARKING…" : "RUN 10× BENCHMARK"}
               </button>
               <button
                 onClick={runFlashTest}
-                disabled={testing || benchmarking}
+                disabled={testing || benchmarking || probingNews}
                 className="rounded-xl bg-amber-300 px-4 py-3 text-sm font-bold text-black transition hover:bg-amber-200 disabled:cursor-wait disabled:opacity-60"
               >
                 {testing ? "RUNNING TEST…" : "INJECT TEST FLASH"}
@@ -265,6 +314,57 @@ export default function Home() {
               value={market?.live ? "CONNECTED" : "WAITING"}
               sub={market?.source ?? "Alpaca IEX"}
             />
+          </section>
+
+          <section className="mt-4 overflow-hidden rounded-2xl border border-emerald-400/15 bg-emerald-400/[0.025]">
+            <div className="flex flex-col gap-3 border-b border-white/[0.07] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+              <div>
+                <div className="text-sm font-semibold text-emerald-300">REAL NEWS PROBE</div>
+                <div className="mt-1 text-xs text-zinc-600">
+                  Opens Alpaca&apos;s live news WebSocket and waits up to 20 seconds for the next article.
+                </div>
+              </div>
+              <div className="text-[10px] font-semibold tracking-[0.12em] text-zinc-600">
+                CREATED_AT → SERVER → VISIBLE
+              </div>
+            </div>
+            <div className="px-4 py-5 sm:px-5">
+              {!realNews ? (
+                <div className="text-sm text-zinc-600">
+                  Press <span className="text-emerald-300">PROBE REAL NEWS</span> to capture the next live Alpaca news item.
+                </div>
+              ) : realNews.ok ? (
+                <div>
+                  <div className="flex flex-wrap items-center gap-2 text-xs">
+                    <span className="rounded bg-emerald-400/10 px-2 py-1 font-bold text-emerald-300">LIVE NEWS</span>
+                    <span className="font-semibold text-white">{realNews.source ?? "unknown source"}</span>
+                    <span className="text-zinc-600">{(realNews.symbols ?? []).join(", ") || "No ticker"}</span>
+                  </div>
+                  <div className="mt-3 text-base font-medium leading-6 text-zinc-100">{realNews.headline}</div>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                    <Metric
+                      label="SOURCE CREATED → SERVER"
+                      value={realNews.sourceToServerMs == null ? "—" : `${realNews.sourceToServerMs} ms`}
+                      sub="approx. using Alpaca created_at"
+                    />
+                    <Metric
+                      label="SERVER → VISIBLE"
+                      value={realNews.receivedToVisibleMs == null ? "—" : `${realNews.receivedToVisibleMs} ms`}
+                      sub="response + browser render"
+                    />
+                    <Metric
+                      label="SOURCE → VISIBLE"
+                      value={realNews.sourceToVisibleMs == null ? "—" : `${realNews.sourceToVisibleMs} ms`}
+                      sub="approx. end-to-end"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="text-sm text-amber-300">
+                  {realNews.error ?? "No live news arrived during this probe."}
+                </div>
+              )}
+            </div>
           </section>
 
           <section className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-[#090b0f]">
