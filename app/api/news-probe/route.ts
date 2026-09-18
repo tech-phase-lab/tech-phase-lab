@@ -49,7 +49,7 @@ export async function GET() {
         settled = true;
         clearTimeout(timeout);
         try {
-          ws.close();
+          ws.terminate();
         } catch {}
         resolve(value);
       };
@@ -59,7 +59,7 @@ export async function GET() {
         settled = true;
         clearTimeout(timeout);
         try {
-          ws.close();
+          ws.terminate();
         } catch {}
         reject(error);
       };
@@ -101,7 +101,9 @@ export async function GET() {
               url: message.url ?? null,
               createdAt: message.created_at ?? null,
               receivedAt: new Date(receivedMs).toISOString(),
+              serverRespondAt: new Date().toISOString(),
               sourceToServerMs: Number.isFinite(createdMs) ? receivedMs - createdMs : null,
+              serverProcessMs: Date.now() - receivedMs,
               waitedMs: receivedMs - startedAt,
               relatedToWatchlist: related,
             });
