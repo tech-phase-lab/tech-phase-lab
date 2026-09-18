@@ -46,13 +46,15 @@ type RealNewsResult = {
   source?: string;
   createdAt?: string | null;
   receivedAt?: string;
+  serverRespondAt?: string;
   sourceToServerMs?: number | null;
+  serverProcessMs?: number | null;
   waitedMs?: number;
   relatedToWatchlist?: string[];
   error?: string;
   timeout?: boolean;
-  receivedToVisibleMs?: number | null;
-  sourceToVisibleMs?: number | null;
+  deliveryOverheadMs?: number | null;
+  approxSourceToVisibleMs?: number | null;
 };
 
 const watchlist = ["MU", "NVDA", "NBIS", "AVGO", "TSM"];
@@ -191,14 +193,18 @@ export default function Home() {
     setProbingNews(true);
     setRealNews(null);
     try {
+      const clientStarted = performance.now();
       const response = await fetch("/api/news-probe", { cache: "no-store" });
       const data = (await response.json()) as RealNewsResult;
-      if (data.ok && data.receivedAt) {
-        const visibleAt = Date.now();
-        const receivedMs = Date.parse(data.receivedAt);
-        const createdMs = data.createdAt ? Date.parse(data.createdAt) : Number.NaN;
-        data.receivedToVisibleMs = Number.isFinite(receivedMs) ? visibleAt - receivedMs : null;
-        data.sourceToVisibleMs = Number.isFinite(createdMs) ? visibleAt - createdMs : null;
+      const clientFinished = performance.now();
+
+      if (data.ok) {
+        const totalClientFetchMs = clientFinished - clientStarted;
+        const serverWaitMs = data.waitedMs ?? 0;
+        const deliveryOverheadMs = Math.max(0, totalClientFetchMs - serverWaitMs);
+        data.deliveryOverheadMs = deliveryOverheadMs;
+        data.approxSourceToVisibleMs =
+          data.sourceToServerMs == null ? null : data.sourceToServerMs + deliveryOverheadMs;
       }
       setRealNews(data);
     } catch (error) {
@@ -325,7 +331,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="text-[10px] font-semibold tracking-[0.12em] text-zinc-600">
-                CREATED_AT → SERVER → VISIBLE
+                SOURCE → SERVER + DELIVERY
               </div>
             </div>
             <div className="px-4 py-5 sm:px-5">
@@ -348,14 +354,14 @@ export default function Home() {
                       sub="approx. using Alpaca created_at"
                     />
                     <Metric
-                      label="SERVER → VISIBLE"
-                      value={realNews.receivedToVisibleMs == null ? "—" : `${realNews.receivedToVisibleMs} ms`}
-                      sub="response + browser render"
+                      label="DELIVERY OVERHEAD"
+                      value={realNews.deliveryOverheadMs == null ? "—" : `${realNews.deliveryOverheadMs.toFixed(0)} ms`}
+                      sub="request + response after removing news wait"
                     />
                     <Metric
-                      label="SOURCE → VISIBLE"
-                      value={realNews.sourceToVisibleMs == null ? "—" : `${realNews.sourceToVisibleMs} ms`}
-                      sub="approx. end-to-end"
+                      label="APPROX. SOURCE → VISIBLE"
+                      value={realNews.approxSourceToVisibleMs == null ? "—" : `${realNews.approxSourceToVisibleMs.toFixed(0)} ms`}
+                      sub="clock-safe estimate"
                     />
                   </div>
                 </div>
