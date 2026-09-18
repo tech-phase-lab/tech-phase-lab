@@ -15,6 +15,8 @@ export async function GET() {
         live: false,
         source: "Alpaca credentials missing",
         fetchedAt: new Date().toISOString(),
+        marketOpen: null,
+        nextOpen: null,
         quotes: [],
         error: "ALPACA_API_KEY / ALPACA_SECRET_KEY are not available to this deployment.",
       },
@@ -22,54 +24,73 @@ export async function GET() {
     );
   }
 
-  try {
-    const response = await fetch(
-      `https://data.alpaca.markets/v2/stocks/quotes/latest?symbols=${symbols.join(",")}&feed=iex`,
-      {
-        headers: {
-          "APCA-API-KEY-ID": key,
-          "APCA-API-SECRET-KEY": secret,
-        },
-        cache: "no-store",
-      },
-    );
+  const headers = {
+    "APCA-API-KEY-ID": key,
+    "APCA-API-SECRET-KEY": secret,
+  };
 
-    if (!response.ok) {
-      const errorText = await response.text();
+  try {
+    const [quoteResponse, tradeResponse, clockResponse] = await Promise.all([
+      fetch(
+        `https://data.alpaca.markets/v2/stocks/quotes/latest?symbols=${symbols.join(",")}&feed=iex`,
+        { headers, cache: "no-store" },
+      ),
+      fetch(
+        `https://data.alpaca.markets/v2/stocks/trades/latest?symbols=${symbols.join(",")}&feed=iex`,
+        { headers, cache: "no-store" },
+      ),
+      fetch("https://paper-api.alpaca.markets/v2/clock", { headers, cache: "no-store" }),
+    ]);
+
+    if (!quoteResponse.ok || !tradeResponse.ok) {
+      const quoteError = quoteResponse.ok ? "" : await quoteResponse.text();
+      const tradeError = tradeResponse.ok ? "" : await tradeResponse.text();
       return NextResponse.json(
         {
           ok: false,
           live: false,
           source: "Alpaca IEX",
           fetchedAt: new Date().toISOString(),
+          marketOpen: null,
+          nextOpen: null,
           quotes: [],
-          error: `Alpaca returned ${response.status}: ${errorText.slice(0, 160)}`,
+          error: `Alpaca market data error. Quotes ${quoteResponse.status}: ${quoteError.slice(0, 100)} Trades ${tradeResponse.status}: ${tradeError.slice(0, 100)}`,
         },
         { status: 502 },
       );
     }
 
-    const payload = await response.json();
+    const [quotePayload, tradePayload] = await Promise.all([
+      quoteResponse.json(),
+      tradeResponse.json(),
+    ]);
+
+    const clockPayload = clockResponse.ok ? await clockResponse.json() : null;
+
     const quotes = symbols.map((symbol) => {
-      const quote = payload.quotes?.[symbol];
-      const bid = typeof quote?.bp === "number" ? quote.bp : null;
-      const ask = typeof quote?.ap === "number" ? quote.ap : null;
-      const mid = bid !== null && ask !== null ? (bid + ask) / 2 : bid ?? ask;
+      const quote = quotePayload.quotes?.[symbol];
+      const trade = tradePayload.trades?.[symbol];
+
+      const rawBid = typeof quote?.bp === "number" ? quote.bp : null;
+      const rawAsk = typeof quote?.ap === "number" ? quote.ap : null;
 
       return {
         symbol,
-        bid,
-        ask,
-        mid,
-        timestamp: quote?.t ?? null,
+        bid: rawBid !== null && rawBid > 0 ? rawBid : null,
+        ask: rawAsk !== null && rawAsk > 0 ? rawAsk : null,
+        last: typeof trade?.p === "number" && trade.p > 0 ? trade.p : null,
+        timestamp: trade?.t ?? null,
+        quoteTimestamp: quote?.t ?? null,
       };
     });
 
     return NextResponse.json({
       ok: true,
       live: true,
-      source: "Alpaca IEX latest quote",
+      source: "Alpaca IEX latest trade + quote",
       fetchedAt: new Date().toISOString(),
+      marketOpen: typeof clockPayload?.is_open === "boolean" ? clockPayload.is_open : null,
+      nextOpen: clockPayload?.next_open ?? null,
       quotes,
     });
   } catch (error) {
@@ -79,6 +100,8 @@ export async function GET() {
         live: false,
         source: "Alpaca IEX",
         fetchedAt: new Date().toISOString(),
+        marketOpen: null,
+        nextOpen: null,
         quotes: [],
         error: error instanceof Error ? error.message : "Unknown market-data error",
       },
