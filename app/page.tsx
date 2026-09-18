@@ -39,6 +39,22 @@ type Benchmark = {
   p95: number;
 };
 
+type LatestNewsItem = {
+  id: number | null;
+  headline: string;
+  source: string;
+  symbols: string[];
+  createdAt: string | null;
+  updatedAt: string | null;
+};
+
+type LatestNewsResponse = {
+  ok: boolean;
+  fetchedAt?: string;
+  news: LatestNewsItem[];
+  error?: string;
+};
+
 type RealNewsResult = {
   ok: boolean;
   headline?: string;
@@ -113,6 +129,7 @@ export default function Home() {
   const [probingNews, setProbingNews] = useState(false);
   const [probeStatus, setProbeStatus] = useState("");
   const [realNews, setRealNews] = useState<RealNewsResult | null>(null);
+  const [latestNews, setLatestNews] = useState<LatestNewsResponse | null>(null);
   const [lastRoundTrip, setLastRoundTrip] = useState<number | null>(null);
   const [benchmark, setBenchmark] = useState<Benchmark | null>(null);
   const [selected, setSelected] = useState(0);
@@ -136,10 +153,25 @@ export default function Home() {
     }
   }
 
+  async function loadLatestNews() {
+    try {
+      const response = await fetch("/api/news-latest", { cache: "no-store" });
+      const data = (await response.json()) as LatestNewsResponse;
+      setLatestNews(data);
+    } catch {
+      setLatestNews({ ok: false, news: [], error: "Latest news endpoint unavailable" });
+    }
+  }
+
   useEffect(() => {
     loadMarket();
-    const timer = window.setInterval(loadMarket, 15000);
-    return () => window.clearInterval(timer);
+    loadLatestNews();
+    const marketTimer = window.setInterval(loadMarket, 15000);
+    const newsTimer = window.setInterval(loadLatestNews, 60000);
+    return () => {
+      window.clearInterval(marketTimer);
+      window.clearInterval(newsTimer);
+    };
   }, []);
 
   const quoteMap = useMemo(() => {
@@ -407,6 +439,41 @@ export default function Home() {
                 <div className="text-sm text-amber-300">
                   {realNews.error ?? "No live news arrived during this probe."}
                 </div>
+              )}
+            </div>
+          </section>
+
+          <section className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-[#090b0f]">
+            <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 sm:px-5">
+              <div>
+                <div className="text-sm font-semibold">LATEST REAL NEWS</div>
+                <div className="text-xs text-zinc-600">Recent Alpaca/Benzinga articles via REST. Refreshes every 60 seconds.</div>
+              </div>
+              <button
+                onClick={loadLatestNews}
+                className="rounded-lg border border-white/10 px-3 py-1.5 text-[11px] font-semibold text-zinc-400 hover:bg-white/[0.05]"
+              >
+                REFRESH
+              </button>
+            </div>
+            <div className="divide-y divide-white/[0.07]">
+              {!latestNews ? (
+                <div className="px-5 py-8 text-sm text-zinc-600">Loading recent news…</div>
+              ) : !latestNews.ok ? (
+                <div className="px-5 py-8 text-sm text-amber-300">{latestNews.error ?? "News unavailable"}</div>
+              ) : latestNews.news.length === 0 ? (
+                <div className="px-5 py-8 text-sm text-zinc-600">No recent articles returned.</div>
+              ) : (
+                latestNews.news.map((item) => (
+                  <article key={String(item.id) + item.headline} className="px-4 py-3.5 sm:px-5">
+                    <div className="flex flex-wrap items-center gap-2 text-[11px]">
+                      <span className="font-semibold text-emerald-300">{item.source || "news"}</span>
+                      <span className="text-zinc-600">{item.symbols.join(", ") || "GENERAL"}</span>
+                      <span className="ml-auto text-zinc-700">{formatTime(item.createdAt)}</span>
+                    </div>
+                    <div className="mt-2 text-sm leading-5 text-zinc-200">{item.headline}</div>
+                  </article>
+                ))
               )}
             </div>
           </section>
