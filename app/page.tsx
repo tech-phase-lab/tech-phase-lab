@@ -87,12 +87,31 @@ function percentile(values: number[], p: number) {
   return sorted[Math.max(0, index)];
 }
 
+function sessionLabel(iso: string | null) {
+  if (!iso) return "NO TRADE";
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(new Date(iso));
+  const hour = Number(parts.find((part) => part.type === "hour")?.value ?? "0");
+  const minute = Number(parts.find((part) => part.type === "minute")?.value ?? "0");
+  const minutes = hour * 60 + minute;
+
+  if (minutes >= 4 * 60 && minutes < 9 * 60 + 30) return "PRE-MARKET";
+  if (minutes >= 9 * 60 + 30 && minutes < 16 * 60) return "REGULAR";
+  if (minutes >= 16 * 60 && minutes < 20 * 60) return "AFTER HOURS";
+  return "OVERNIGHT / LAST";
+}
+
 export default function Home() {
   const [market, setMarket] = useState<MarketResponse | null>(null);
   const [flash, setFlash] = useState<FlashItem[]>([]);
   const [testing, setTesting] = useState(false);
   const [benchmarking, setBenchmarking] = useState(false);
   const [probingNews, setProbingNews] = useState(false);
+  const [probeStatus, setProbeStatus] = useState("");
   const [realNews, setRealNews] = useState<RealNewsResult | null>(null);
   const [lastRoundTrip, setLastRoundTrip] = useState<number | null>(null);
   const [benchmark, setBenchmark] = useState<Benchmark | null>(null);
@@ -192,27 +211,46 @@ export default function Home() {
   async function runRealNewsProbe() {
     setProbingNews(true);
     setRealNews(null);
-    try {
-      const clientStarted = performance.now();
-      const response = await fetch("/api/news-probe", { cache: "no-store" });
-      const data = (await response.json()) as RealNewsResult;
-      const clientFinished = performance.now();
+    setProbeStatus("Listening for live news…");
 
-      if (data.ok) {
-        const totalClientFetchMs = clientFinished - clientStarted;
-        const serverWaitMs = data.waitedMs ?? 0;
-        const deliveryOverheadMs = Math.max(0, totalClientFetchMs - serverWaitMs);
-        data.deliveryOverheadMs = deliveryOverheadMs;
-        data.approxSourceToVisibleMs =
-          data.sourceToServerMs == null ? null : data.sourceToServerMs + deliveryOverheadMs;
+    try {
+      let finalResult: RealNewsResult | null = null;
+
+      for (let attempt = 1; attempt <= 6; attempt += 1) {
+        setProbeStatus(`Listening… window ${attempt}/6 (up to 2 min total)`);
+        const clientStarted = performance.now();
+        const response = await fetch("/api/news-probe", { cache: "no-store" });
+        const data = (await response.json()) as RealNewsResult;
+        const clientFinished = performance.now();
+
+        if (data.ok) {
+          const totalClientFetchMs = clientFinished - clientStarted;
+          const serverWaitMs = data.waitedMs ?? 0;
+          const deliveryOverheadMs = Math.max(0, totalClientFetchMs - serverWaitMs);
+          data.deliveryOverheadMs = deliveryOverheadMs;
+          data.approxSourceToVisibleMs =
+            data.sourceToServerMs == null ? null : data.sourceToServerMs + deliveryOverheadMs;
+          finalResult = data;
+          break;
+        }
+
+        finalResult = data;
+        if (!data.timeout) break;
       }
-      setRealNews(data);
+
+      setRealNews(
+        finalResult ?? {
+          ok: false,
+          error: "No live news arrived during the 2-minute listening window.",
+        },
+      );
     } catch (error) {
       setRealNews({
         ok: false,
         error: error instanceof Error ? error.message : "Real news probe failed.",
       });
     } finally {
+      setProbeStatus("");
       setProbingNews(false);
     }
   }
@@ -285,7 +323,7 @@ export default function Home() {
                 disabled={probingNews || benchmarking || testing}
                 className="rounded-xl border border-emerald-400/20 bg-emerald-400/[0.06] px-4 py-3 text-sm font-semibold text-emerald-300 transition hover:bg-emerald-400/[0.1] disabled:cursor-wait disabled:opacity-50"
               >
-                {probingNews ? "WAITING FOR LIVE NEWS…" : "PROBE REAL NEWS"}
+                {probingNews ? "LISTENING…" : "LISTEN FOR REAL NEWS"}
               </button>
               <button
                 onClick={runBenchmark}
@@ -327,7 +365,7 @@ export default function Home() {
               <div>
                 <div className="text-sm font-semibold text-emerald-300">REAL NEWS PROBE</div>
                 <div className="mt-1 text-xs text-zinc-600">
-                  Opens Alpaca&apos;s live news WebSocket and waits up to 20 seconds for the next article.
+                  Opens Alpaca&apos;s live news WebSocket repeatedly and listens for up to 2 minutes.
                 </div>
               </div>
               <div className="text-[10px] font-semibold tracking-[0.12em] text-zinc-600">
@@ -337,7 +375,7 @@ export default function Home() {
             <div className="px-4 py-5 sm:px-5">
               {!realNews ? (
                 <div className="text-sm text-zinc-600">
-                  Press <span className="text-emerald-300">PROBE REAL NEWS</span> to capture the next live Alpaca news item.
+                  {probingNews ? probeStatus : <>Press <span className="text-emerald-300">LISTEN FOR REAL NEWS</span> to capture the next live Alpaca news item.</>}
                 </div>
               ) : realNews.ok ? (
                 <div>
@@ -416,14 +454,16 @@ export default function Home() {
                 <div key={symbol} className="rounded-xl border border-white/10 bg-[#090b0f] p-4">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-bold">{symbol}</span>
-                    <span className="text-[10px] text-zinc-600">IEX LAST TRADE</span>
+                    <span className="text-[10px] text-zinc-600">{sessionLabel(quote?.timestamp ?? null)}</span>
                   </div>
                   <div className="mt-4 text-xl font-semibold">{formatPrice(quote?.last ?? null)}</div>
                   <div className="mt-2 flex justify-between text-[11px] text-zinc-600">
                     <span>Bid {formatPrice(quote?.bid ?? null)}</span>
                     <span>Ask {formatPrice(quote?.ask ?? null)}</span>
                   </div>
-                  <div className="mt-3 text-[10px] text-zinc-700">{formatTime(quote?.timestamp ?? null)} JST</div>
+                  <div className="mt-3 text-[10px] leading-4 text-zinc-700">
+                    Latest IEX trade · {formatTime(quote?.timestamp ?? null)} JST
+                  </div>
                 </div>
               );
             })}
