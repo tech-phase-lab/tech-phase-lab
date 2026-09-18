@@ -6,8 +6,9 @@ type Quote = {
   symbol: string;
   bid: number | null;
   ask: number | null;
-  mid: number | null;
+  last: number | null;
   timestamp: string | null;
+  quoteTimestamp: string | null;
 };
 
 type MarketResponse = {
@@ -15,6 +16,8 @@ type MarketResponse = {
   live: boolean;
   source: string;
   fetchedAt: string;
+  marketOpen: boolean | null;
+  nextOpen: string | null;
   quotes: Quote[];
   error?: string;
 };
@@ -27,6 +30,13 @@ type FlashItem = {
   receivedAt: string;
   latencyMs: number;
   status: "SIMULATED";
+};
+
+type Benchmark = {
+  runs: number;
+  avg: number;
+  p50: number;
+  p95: number;
 };
 
 const watchlist = ["MU", "NVDA", "NBIS", "AVGO", "TSM"];
@@ -52,11 +62,20 @@ function formatTime(iso: string | null) {
   }).format(new Date(iso));
 }
 
+function percentile(values: number[], p: number) {
+  if (!values.length) return 0;
+  const sorted = [...values].sort((a, b) => a - b);
+  const index = Math.min(sorted.length - 1, Math.ceil((p / 100) * sorted.length) - 1);
+  return sorted[Math.max(0, index)];
+}
+
 export default function Home() {
   const [market, setMarket] = useState<MarketResponse | null>(null);
   const [flash, setFlash] = useState<FlashItem[]>([]);
   const [testing, setTesting] = useState(false);
+  const [benchmarking, setBenchmarking] = useState(false);
   const [lastRoundTrip, setLastRoundTrip] = useState<number | null>(null);
+  const [benchmark, setBenchmark] = useState<Benchmark | null>(null);
   const [selected, setSelected] = useState(0);
 
   async function loadMarket() {
@@ -70,6 +89,8 @@ export default function Home() {
         live: false,
         source: "Unavailable",
         fetchedAt: new Date().toISOString(),
+        marketOpen: null,
+        nextOpen: null,
         quotes: [],
         error: "Market endpoint unavailable",
       });
@@ -86,21 +107,17 @@ export default function Home() {
     return new Map((market?.quotes ?? []).map((quote) => [quote.symbol, quote]));
   }, [market]);
 
-  async function runFlashTest() {
-    setTesting(true);
-    const event = sampleHeadlines[selected % sampleHeadlines.length];
+  async function sendFlash(event: (typeof sampleHeadlines)[number], showCard: boolean) {
     const started = performance.now();
+    const response = await fetch("/api/flash", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(event),
+    });
+    const data = await response.json();
+    const latencyMs = performance.now() - started;
 
-    try {
-      const response = await fetch("/api/flash", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(event),
-      });
-
-      const data = await response.json();
-      const latencyMs = performance.now() - started;
-
+    if (showCard) {
       const item: FlashItem = {
         id: data.id,
         ticker: data.ticker,
@@ -110,12 +127,45 @@ export default function Home() {
         latencyMs,
         status: "SIMULATED",
       };
-
-      setLastRoundTrip(latencyMs);
       setFlash((current) => [item, ...current].slice(0, 6));
+    }
+
+    return latencyMs;
+  }
+
+  async function runFlashTest() {
+    setTesting(true);
+    try {
+      const event = sampleHeadlines[selected % sampleHeadlines.length];
+      const latencyMs = await sendFlash(event, true);
+      setLastRoundTrip(latencyMs);
       setSelected((value) => value + 1);
     } finally {
       setTesting(false);
+    }
+  }
+
+  async function runBenchmark() {
+    setBenchmarking(true);
+    setBenchmark(null);
+    try {
+      const values: number[] = [];
+      for (let i = 0; i < 10; i += 1) {
+        const event = sampleHeadlines[(selected + i) % sampleHeadlines.length];
+        values.push(await sendFlash(event, false));
+      }
+      const avg = values.reduce((sum, value) => sum + value, 0) / values.length;
+      const result = {
+        runs: values.length,
+        avg,
+        p50: percentile(values, 50),
+        p95: percentile(values, 95),
+      };
+      setBenchmark(result);
+      setLastRoundTrip(values[values.length - 1]);
+      setSelected((value) => value + values.length);
+    } finally {
+      setBenchmarking(false);
     }
   }
 
@@ -132,12 +182,13 @@ export default function Home() {
               <div className="text-[10px] tracking-[0.2em] text-zinc-500">RESEARCH LAB</div>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-xs">
-            <span
-              className={`h-2 w-2 rounded-full ${market?.live ? "bg-emerald-400" : "bg-amber-300"}`}
-            />
-            <span className="text-zinc-400">
-              {market?.live ? "ALPACA LIVE" : "CONNECTING / FALLBACK"}
+          <div className="flex items-center gap-3 text-xs">
+            <span className="flex items-center gap-2">
+              <span className={`h-2 w-2 rounded-full ${market?.live ? "bg-emerald-400" : "bg-amber-300"}`} />
+              <span className="text-zinc-400">{market?.live ? "ALPACA CONNECTED" : "CONNECTING"}</span>
+            </span>
+            <span className="hidden rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-semibold sm:inline">
+              {market?.marketOpen === true ? "MARKET OPEN" : market?.marketOpen === false ? "MARKET CLOSED" : "MARKET —"}
             </span>
           </div>
         </div>
@@ -165,7 +216,7 @@ export default function Home() {
           <div className="mt-8 rounded-xl border border-amber-300/15 bg-amber-300/[0.04] p-4">
             <div className="text-[10px] font-semibold tracking-[0.2em] text-amber-300">LAB MODE</div>
             <p className="mt-2 text-xs leading-5 text-zinc-500">
-              Real-time delivery architecture prototype. Not an investment recommendation.
+              Real-time delivery prototype. Current FLASH button is simulated; market data is live Alpaca IEX.
             </p>
           </div>
         </aside>
@@ -174,22 +225,28 @@ export default function Home() {
           <section className="mb-6 flex flex-col gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <div className="mb-2 text-xs font-semibold tracking-[0.18em] text-amber-300">LIVE INTELLIGENCE</div>
-              <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-                Market events, delivered before the noise.
-              </h1>
+              <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Market events, delivered before the noise.</h1>
               <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-500">
-                Tech Phase Lab measures the path from event ingestion to visible FLASH delivery. The first test below
-                measures browser → server → browser round-trip latency.
+                The current lab test measures browser → server → browser delivery. It does not yet measure real news-source latency.
               </p>
             </div>
 
-            <button
-              onClick={runFlashTest}
-              disabled={testing}
-              className="rounded-xl bg-amber-300 px-4 py-3 text-sm font-bold text-black transition hover:bg-amber-200 disabled:cursor-wait disabled:opacity-60"
-            >
-              {testing ? "RUNNING TEST…" : "INJECT TEST FLASH"}
-            </button>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={runBenchmark}
+                disabled={benchmarking || testing}
+                className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-zinc-200 transition hover:bg-white/[0.08] disabled:cursor-wait disabled:opacity-50"
+              >
+                {benchmarking ? "BENCHMARKING…" : "RUN 10× BENCHMARK"}
+              </button>
+              <button
+                onClick={runFlashTest}
+                disabled={testing || benchmarking}
+                className="rounded-xl bg-amber-300 px-4 py-3 text-sm font-bold text-black transition hover:bg-amber-200 disabled:cursor-wait disabled:opacity-60"
+              >
+                {testing ? "RUNNING TEST…" : "INJECT TEST FLASH"}
+              </button>
+            </div>
           </section>
 
           <section className="grid gap-3 sm:grid-cols-3">
@@ -198,10 +255,14 @@ export default function Home() {
               value={lastRoundTrip === null ? "—" : `${lastRoundTrip.toFixed(0)} ms`}
               sub="browser → API → visible card"
             />
-            <Metric label="TARGET SOURCE → FLASH" value="< 1,000 ms" sub="production architecture goal" />
+            <Metric
+              label="10× BENCHMARK"
+              value={benchmark ? `P95 ${benchmark.p95.toFixed(0)} ms` : "—"}
+              sub={benchmark ? `P50 ${benchmark.p50.toFixed(0)} ms · AVG ${benchmark.avg.toFixed(0)} ms` : "run benchmark to measure stability"}
+            />
             <Metric
               label="MARKET FEED"
-              value={market?.live ? "LIVE" : "WAITING"}
+              value={market?.live ? "CONNECTED" : "WAITING"}
               sub={market?.source ?? "Alpaca IEX"}
             />
           </section>
@@ -212,9 +273,7 @@ export default function Home() {
                 <div className="text-sm font-semibold">FLASH STREAM</div>
                 <div className="text-xs text-zinc-600">Newest intelligence appears at the top without page refresh.</div>
               </div>
-              <div className="rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-semibold tracking-wider text-zinc-500">
-                LIVE UI
-              </div>
+              <div className="rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-semibold tracking-wider text-zinc-500">LIVE UI</div>
             </div>
 
             <div className="divide-y divide-white/[0.07]">
@@ -228,9 +287,7 @@ export default function Home() {
                 flash.map((item) => (
                   <article key={item.id} className="px-4 py-4 sm:px-5">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded bg-red-500/15 px-2 py-1 text-[10px] font-bold tracking-wider text-red-300">
-                        HIGH IMPACT
-                      </span>
+                      <span className="rounded bg-red-500/15 px-2 py-1 text-[10px] font-bold tracking-wider text-red-300">HIGH IMPACT</span>
                       <span className="text-sm font-black text-white">{item.ticker}</span>
                       <span className="text-xs text-zinc-600">{formatTime(item.receivedAt)}</span>
                       <span className="ml-auto font-mono text-xs text-amber-300">{item.latencyMs.toFixed(0)} ms</span>
@@ -238,9 +295,7 @@ export default function Home() {
                     <h2 className="mt-3 text-base font-medium leading-6 text-zinc-100">{item.headline}</h2>
                     <div className="mt-3 flex gap-2 text-[11px]">
                       <span className="rounded-full border border-white/10 px-2.5 py-1 text-zinc-500">SIMULATED EVENT</span>
-                      <span className="rounded-full border border-emerald-400/15 bg-emerald-400/[0.04] px-2.5 py-1 text-emerald-300">
-                        FLASH DELIVERED
-                      </span>
+                      <span className="rounded-full border border-emerald-400/15 bg-emerald-400/[0.04] px-2.5 py-1 text-emerald-300">FLASH DELIVERED</span>
                     </div>
                   </article>
                 ))
@@ -255,9 +310,9 @@ export default function Home() {
                 <div key={symbol} className="rounded-xl border border-white/10 bg-[#090b0f] p-4">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-bold">{symbol}</span>
-                    <span className="text-[10px] text-zinc-600">IEX</span>
+                    <span className="text-[10px] text-zinc-600">IEX LAST TRADE</span>
                   </div>
-                  <div className="mt-4 text-xl font-semibold">{formatPrice(quote?.mid ?? null)}</div>
+                  <div className="mt-4 text-xl font-semibold">{formatPrice(quote?.last ?? null)}</div>
                   <div className="mt-2 flex justify-between text-[11px] text-zinc-600">
                     <span>Bid {formatPrice(quote?.bid ?? null)}</span>
                     <span>Ask {formatPrice(quote?.ask ?? null)}</span>
