@@ -24,6 +24,13 @@ test("operations preview exposes verified backup health without storage details"
   assert.doesNotMatch(intakeDashboard, /backup\.(sha256|filename|path|directory)/);
 });
 
+test("operations preview shows durable incident state while external delivery stays off", () => {
+  assert.match(liveTypes, /incidents\?:/);
+  assert.match(liveTypes, /heldNotifications/);
+  assert.match(intakeDashboard, /障害台帳：未復旧/);
+  assert.match(intakeDashboard, /外部送信OFF/);
+});
+
 test("latest failure wins over a previously successful fetch or editorial approval", () => {
   const errored = { ...source, error: "http-403", status: "approved" };
   assert.equal(fetchState(errored), "error");

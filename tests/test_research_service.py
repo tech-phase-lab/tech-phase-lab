@@ -130,6 +130,24 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertTrue(state["backup"]["overdue"])
         self.assertIn("backup-overdue", state["health"]["issues"])
         self.assertEqual(state["health"]["status"], "degraded")
+        self.assertEqual(state["incidents"]["open"], 1)
+        self.assertFalse(state["incidents"]["deliveryEnabled"])
+        self.assertEqual(state["incidents"]["recent"][0]["errorCode"], "backup-overdue")
+
+    def test_successful_backup_resolves_a_persisted_failure_without_sending(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.backup_dir = Path(self.temp.name) / "backups"
+        with patch.object(persistence, "create_backup", side_effect=OSError("private path must not leak")):
+            self.assertFalse(app.perform_backup())
+        with monitor.connect(self.db_path) as db:
+            before = monitor.operational_incident_summary(db)
+        self.assertEqual(before["open"], 1)
+        self.assertEqual(before["heldNotifications"], 1)
+        self.assertTrue(app.perform_backup())
+        after = app.public_state()["incidents"]
+        self.assertEqual(after["open"], 0)
+        self.assertEqual(after["heldNotifications"], 2)
+        self.assertFalse(after["deliveryEnabled"])
 
     def test_backup_failure_and_stalled_monitor_have_distinct_health_codes(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)

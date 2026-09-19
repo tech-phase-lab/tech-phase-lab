@@ -85,6 +85,36 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(second_row["fetch_failures"], 2)
         self.assertGreater(second_row["next_fetch_at"], second_row["checked_at"])
 
+    def test_operational_incident_transitions_are_deduplicated_and_held(self):
+        self.assertEqual(m.record_operational_incident(
+            self.db, "source:NBIS", "official-source", "NBIS", "warning", "timeout"
+        ), "opened")
+        self.assertEqual(m.record_operational_incident(
+            self.db, "source:NBIS", "official-source", "NBIS", "warning", "timeout"
+        ), "ongoing")
+        summary = m.operational_incident_summary(self.db)
+        self.assertEqual(summary["open"], 1)
+        self.assertEqual(summary["heldNotifications"], 1)
+        self.assertFalse(summary["deliveryEnabled"])
+        self.assertEqual(summary["recent"][0]["occurrences"], 2)
+        self.assertTrue(m.resolve_operational_incident(self.db, "source:NBIS"))
+        self.assertFalse(m.resolve_operational_incident(self.db, "source:NBIS"))
+        self.assertEqual(m.record_operational_incident(
+            self.db, "source:NBIS", "official-source", "NBIS", "critical", "http-403"
+        ), "opened")
+        summary = m.operational_incident_summary(self.db)
+        self.assertEqual(summary["open"], 1)
+        self.assertEqual(summary["heldNotifications"], 3)
+        self.assertEqual(summary["recent"][0]["revision"], 2)
+        self.assertEqual(self.db.execute("SELECT count(*) FROM incident_events").fetchone()[0], 3)
+
+    def test_operational_incidents_reject_unbounded_or_unsafe_values(self):
+        for key in ("source:NBIS\nsecret", "", "x" * 121):
+            with self.assertRaisesRegex(ValueError, "invalid-incident-value"):
+                m.record_operational_incident(
+                    self.db, key, "official-source", "NBIS", "warning", "timeout"
+                )
+
     def test_successful_historical_body_uses_background_recheck_interval(self):
         with patch.dict("os.environ", {
             "RESEARCH_BODY_RECHECK_SECONDS": "21600",

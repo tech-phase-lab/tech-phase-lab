@@ -167,9 +167,23 @@ class AutomaticMonitor:
             "monitorStaleAfterSeconds": self.monitor_stale_seconds,
         }
         with self.db_lock, monitor.connect(self.db_path) as db:
+            if "monitor-stale" in issues:
+                monitor.record_operational_incident(
+                    db, "monitor:cycle", "monitor", "cycle", "critical", "monitor-stale"
+                )
+            else:
+                monitor.resolve_operational_incident(db, "monitor:cycle")
+            backup_issue = next((issue for issue in issues if issue.startswith("backup-")), None)
+            if backup_issue:
+                monitor.record_operational_incident(
+                    db, "backup:database", "backup", "database", "critical", backup_issue
+                )
+            else:
+                monitor.resolve_operational_incident(db, "backup:database")
             state["generation"].update(monitor.generation_queue_stats(
                 db, self.generation_daily_limit, self.generation_token_limit
             ))
+            state["incidents"] = monitor.operational_incident_summary(db)
         return state
 
     def public_snapshot(self):
@@ -296,6 +310,7 @@ class AutomaticMonitor:
         errors = 0
         not_modified = 0
         with self.db_lock, monitor.connect(self.db_path) as db:
+            affected_tickers = {row["ticker"] for row, _, _ in completed}
             for row, result, error in completed:
                 if error is None:
                     monitor.save_source_check(db, row, result)
@@ -308,6 +323,20 @@ class AutomaticMonitor:
                 else:
                     monitor.save_source_error(db, row, error)
                     errors += 1
+            for ticker in affected_tickers:
+                remaining = db.execute("""
+                  SELECT error FROM sources
+                  WHERE ticker=? AND source_mode='remote' AND error IS NOT NULL
+                  ORDER BY checked_at DESC LIMIT 1
+                """, (ticker,)).fetchone()
+                incident_key = f"body:{ticker}"
+                if remaining:
+                    monitor.record_operational_incident(
+                        db, incident_key, "article-body", ticker, "warning",
+                        monitor.public_error(remaining["error"]) or "body-fetch-failed",
+                    )
+                else:
+                    monitor.resolve_operational_incident(db, incident_key)
             monitor.write_snapshot(db, self.snapshot_path)
         with self.state_lock:
             self.state["sourceChecks"] += len(completed)
@@ -363,12 +392,18 @@ class AutomaticMonitor:
                 self.state["backup"].update({
                     "healthy": False, "lastError": "backup-failed",
                 })
+            with self.db_lock, monitor.connect(self.db_path) as db:
+                monitor.record_operational_incident(
+                    db, "backup:database", "backup", "database", "critical", "backup-failed"
+                )
             return False
         with self.state_lock:
             self.state["backup"].update({
                 "healthy": True, "lastSuccessAt": result["createdAt"],
                 "backupCount": result["backupCount"], "lastError": None,
             })
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            monitor.resolve_operational_incident(db, "backup:database")
         return True
 
     def run_backup(self):
@@ -454,6 +489,15 @@ class AutomaticMonitor:
                                 baseline_ready[ticker] = True
                             changed = True
                         signatures[ticker] = signature
+                        incident_key = f"source:{ticker}"
+                        if result["status"] == "degraded":
+                            monitor.record_operational_incident(
+                                db, incident_key, "official-source", ticker, "warning",
+                                monitor.public_error(result["error"]) or "source-fetch-failed",
+                                checked_at,
+                            )
+                        else:
+                            monitor.resolve_operational_incident(db, incident_key, checked_at)
                         company_states[ticker] = {
                             "status": result["status"],
                             "route": result["route"],

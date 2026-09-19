@@ -460,6 +460,32 @@ def connect(path):
       outcome TEXT NOT NULL, error_code TEXT,
       reserved_tokens INTEGER NOT NULL DEFAULT 0,
       input_tokens INTEGER, output_tokens INTEGER, total_tokens INTEGER);
+    CREATE TABLE IF NOT EXISTS operational_incidents (
+      incident_key TEXT PRIMARY KEY, category TEXT NOT NULL, subject TEXT NOT NULL,
+      severity TEXT NOT NULL CHECK(severity IN ('warning','critical')),
+      status TEXT NOT NULL CHECK(status IN ('open','resolved')),
+      revision INTEGER NOT NULL DEFAULT 1,
+      opened_at TEXT NOT NULL, last_seen_at TEXT NOT NULL, resolved_at TEXT,
+      occurrences INTEGER NOT NULL DEFAULT 1, last_error_code TEXT);
+    CREATE TABLE IF NOT EXISTS incident_events (
+      id INTEGER PRIMARY KEY, incident_key TEXT NOT NULL,
+      revision INTEGER NOT NULL, at TEXT NOT NULL,
+      event TEXT NOT NULL CHECK(event IN ('opened','resolved')),
+      severity TEXT NOT NULL CHECK(severity IN ('warning','critical')), error_code TEXT,
+      FOREIGN KEY(incident_key) REFERENCES operational_incidents(incident_key));
+    CREATE TABLE IF NOT EXISTS incident_notification_outbox (
+      id INTEGER PRIMARY KEY, incident_key TEXT NOT NULL, revision INTEGER NOT NULL,
+      transition TEXT NOT NULL, created_at TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'held'
+        CHECK(status IN ('held','pending','delivered','dead')),
+      attempts INTEGER NOT NULL DEFAULT 0,
+      next_attempt_at TEXT, delivered_at TEXT, last_error_code TEXT,
+      UNIQUE(incident_key, revision, transition),
+      FOREIGN KEY(incident_key) REFERENCES operational_incidents(incident_key));
+    CREATE INDEX IF NOT EXISTS operational_incidents_status_seen
+      ON operational_incidents(status,last_seen_at);
+    CREATE INDEX IF NOT EXISTS incident_outbox_status_created
+      ON incident_notification_outbox(status,created_at);
     """)
     if "index_url" not in {row[1] for row in db.execute("PRAGMA table_info(discovery_runs)")}:
         db.execute("ALTER TABLE discovery_runs ADD COLUMN index_url TEXT")
@@ -501,6 +527,123 @@ def connect(path):
         if column not in attempt_columns:
             db.execute(f"ALTER TABLE brief_generation_attempts ADD COLUMN {column} {declaration}")
     return db
+
+
+def _incident_value(value, maximum=80):
+    value = " ".join(str(value or "").split())
+    if not value or len(value) > maximum or not re.fullmatch(r"[A-Za-z0-9:._-]+", value):
+        raise ValueError("invalid-incident-value")
+    return value
+
+
+def record_operational_incident(db, incident_key, category, subject, severity, error_code=None, seen_at=None):
+    """Persist an operational fault once and queue only state transitions.
+
+    Notification rows intentionally remain held. A separately authorized sender can
+    be added later without losing incidents that occurred during a restart.
+    """
+    incident_key = _incident_value(incident_key, 120)
+    category = _incident_value(category)
+    subject = _incident_value(subject)
+    if severity not in {"warning", "critical"}:
+        raise ValueError("invalid-incident-severity")
+    error_code = _incident_value(error_code, 120) if error_code else None
+    seen_at = seen_at or now()
+    with db:
+        row = db.execute(
+            "SELECT status,revision,occurrences FROM operational_incidents WHERE incident_key=?",
+            (incident_key,),
+        ).fetchone()
+        if row is None:
+            revision, transition = 1, "opened"
+            db.execute("""
+              INSERT INTO operational_incidents(
+                incident_key,category,subject,severity,status,revision,opened_at,last_seen_at,
+                occurrences,last_error_code
+              ) VALUES(?,?,?,?,?,?,?,?,?,?)
+            """, (incident_key, category, subject, severity, "open", revision, seen_at,
+                  seen_at, 1, error_code))
+        elif row["status"] == "resolved":
+            revision, transition = row["revision"] + 1, "opened"
+            db.execute("""
+              UPDATE operational_incidents SET category=?,subject=?,severity=?,status='open',
+                revision=?,opened_at=?,last_seen_at=?,resolved_at=NULL,
+                occurrences=occurrences+1,last_error_code=? WHERE incident_key=?
+            """, (category, subject, severity, revision, seen_at, seen_at, error_code, incident_key))
+        else:
+            db.execute("""
+              UPDATE operational_incidents SET category=?,subject=?,severity=?,last_seen_at=?,
+                occurrences=occurrences+1,last_error_code=? WHERE incident_key=?
+            """, (category, subject, severity, seen_at, error_code, incident_key))
+            return "ongoing"
+        db.execute("""
+          INSERT INTO incident_events(incident_key,revision,at,event,severity,error_code)
+          VALUES(?,?,?,?,?,?)
+        """, (incident_key, revision, seen_at, transition, severity, error_code))
+        db.execute("""
+          INSERT OR IGNORE INTO incident_notification_outbox(
+            incident_key,revision,transition,created_at,status
+          ) VALUES(?,?,?,?, 'held')
+        """, (incident_key, revision, transition, seen_at))
+    return transition
+
+
+def resolve_operational_incident(db, incident_key, resolved_at=None):
+    incident_key = _incident_value(incident_key, 120)
+    resolved_at = resolved_at or now()
+    with db:
+        row = db.execute("""
+          SELECT revision,severity FROM operational_incidents
+          WHERE incident_key=? AND status='open'
+        """, (incident_key,)).fetchone()
+        if row is None:
+            return False
+        db.execute("""
+          UPDATE operational_incidents SET status='resolved',resolved_at=?,last_seen_at=?
+          WHERE incident_key=?
+        """, (resolved_at, resolved_at, incident_key))
+        db.execute("""
+          INSERT INTO incident_events(incident_key,revision,at,event,severity)
+          VALUES(?,?,?,'resolved',?)
+        """, (incident_key, row["revision"], resolved_at, row["severity"]))
+        db.execute("""
+          INSERT OR IGNORE INTO incident_notification_outbox(
+            incident_key,revision,transition,created_at,status
+          ) VALUES(?,?, 'resolved',?, 'held')
+        """, (incident_key, row["revision"], resolved_at))
+    return True
+
+
+def operational_incident_summary(db, limit=20):
+    limit = max(1, min(int(limit), 100))
+    rows = db.execute("""
+      SELECT incident_key,category,subject,severity,status,revision,opened_at,
+             last_seen_at,resolved_at,occurrences,last_error_code
+      FROM operational_incidents ORDER BY status='open' DESC,last_seen_at DESC LIMIT ?
+    """, (limit,)).fetchall()
+    counts = db.execute("""
+      SELECT
+        sum(CASE WHEN status='open' THEN 1 ELSE 0 END) AS open_count,
+        count(*) AS total_count
+      FROM operational_incidents
+    """).fetchone()
+    held = db.execute(
+        "SELECT count(*) FROM incident_notification_outbox WHERE status='held'"
+    ).fetchone()[0]
+    return {
+        "open": counts["open_count"] or 0,
+        "total": counts["total_count"] or 0,
+        "heldNotifications": held,
+        "deliveryEnabled": False,
+        "recent": [{
+            "key": row["incident_key"], "category": row["category"],
+            "subject": row["subject"], "severity": row["severity"],
+            "status": row["status"], "revision": row["revision"],
+            "openedAt": row["opened_at"], "lastSeenAt": row["last_seen_at"],
+            "resolvedAt": row["resolved_at"], "occurrences": row["occurrences"],
+            "errorCode": row["last_error_code"],
+        } for row in rows],
+    }
 
 
 def add_source(db, ticker, url, published_on=None, title=None):

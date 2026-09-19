@@ -34,6 +34,15 @@ export type MonitorState = {
     issues: Array<"monitor-stale" | "backup-failed" | "backup-overdue">;
     monitorStaleAfterSeconds: number;
   };
+  incidents?: {
+    open: number; total: number; heldNotifications: number; deliveryEnabled: boolean;
+    recent: Array<{
+      key: string; category: string; subject: string; severity: "warning" | "critical";
+      status: "open" | "resolved"; revision: number; openedAt: string;
+      lastSeenAt: string; resolvedAt: string | null; occurrences: number;
+      errorCode: string | null;
+    }>;
+  };
   companies: Record<string, {
     basePollSeconds?: number; nextPollSeconds?: number; requestDurationMs?: number;
     status: string; route: string; candidates: number; checkedAt: string; error: string | null;
