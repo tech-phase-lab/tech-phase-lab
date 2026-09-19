@@ -3,7 +3,7 @@ export type VerifiedChangeMetric = {
   label: { ja: string; en: string };
   previous: number | null;
   current: number;
-  unit: "billion" | "eur-billion" | "percent";
+  unit: "billion" | "eur-billion" | "krw-trillion" | "percent";
   change: { value: number; unit: "percent" | "pp"; companyReported?: boolean };
   note: { ja: string; en: string };
 };
@@ -290,13 +290,66 @@ export const verifiedChanges: VerifiedChange[] = [{
     { ja: "Q2 GAAP粗利益率：62.9%〜64.9%", en: "Q2 GAAP gross margin: 62.9%–64.9%" },
     { ja: "Q2 GAAP営業費用：$199M〜$204M", en: "Q2 GAAP operating expenses: $199M–$204M" },
   ],
+}, {
+  ticker: "SKHY",
+  title: { ja: "Q2 2026：前四半期からの変化", en: "Q2 2026: changes from the prior quarter" },
+  previousPeriod: "Q1 2026",
+  currentPeriod: "Q2 2026",
+  reviewedOn: "2026-09-19",
+  source: {
+    title: "SK hynix Announces 2Q26 Financial Results",
+    publisher: "SK hynix Newsroom",
+    publishedOn: "2026-07-29",
+    url: "https://news.skhynix.com/en/q2-2026-business-results/",
+    location: "2Q26 Financial Results (K-IFRS); operating highlights; capacity and product commentary",
+  },
+  metrics: [
+    { id: "revenue", label: { ja: "売上高", en: "Revenue" }, previous: 52.5763, current: 79.3187, unit: "krw-trillion", change: { value: 50.864, unit: "percent" }, note: { ja: "K-IFRS・連結。会社発表の前四半期比は51%。", en: "Consolidated K-IFRS. SK hynix reports 51% quarter-on-quarter." } },
+    { id: "operating-profit", label: { ja: "営業利益", en: "Operating profit" }, previous: 37.6103, current: 60.5426, unit: "krw-trillion", change: { value: 60.973, unit: "percent" }, note: { ja: "K-IFRS・連結。会社発表の前四半期比は61%。", en: "Consolidated K-IFRS. SK hynix reports 61% quarter-on-quarter." } },
+    { id: "operating-margin", label: { ja: "営業利益率", en: "Operating margin" }, previous: 72, current: 76, unit: "percent", change: { value: 4, unit: "pp" }, note: { ja: "増減率ではなくパーセントポイント差。", en: "Percentage-point difference, not percentage growth." } },
+    { id: "net-income", label: { ja: "純利益", en: "Net income" }, previous: 40.3459, current: 93.9226, unit: "krw-trillion", change: { value: 132.793, unit: "percent" }, note: { ja: "K-IFRS・連結。会社発表の前四半期比は133%。", en: "Consolidated K-IFRS. SK hynix reports 133% quarter-on-quarter." } },
+  ],
+  reading: { ja: "売上高は前四半期比約50.9%、営業利益は約61.0%増え、営業利益率は72%から76%へ上昇しました。会社はAIサーバー向けHBM・DRAM・eSSDなど高付加価値製品が寄与したと説明し、HBM4の量産出荷をQ2に開始しています。", en: "Revenue rose about 50.9% quarter-on-quarter, operating profit rose about 61.0%, and operating margin increased from 72% to 76%. The company attributes the result to high-value products including HBM, AI-server DRAM, and eSSD, and says HBM4 mass shipments began in Q2." },
+  unknown: { ja: "Q3以降も同じ価格上昇と利益率を維持できるか、顧客別のHBM売上構成、増産投資が将来の供給と利益率へ与える影響は、この発表だけでは確定しません。", en: "This release does not establish whether the same pricing and margins will persist beyond Q2, the HBM revenue mix by customer, or how capacity investments will affect future supply and profitability." },
+  outlookHeading: { ja: "会社が示した先行材料", en: "COMPANY LEADING INDICATORS" },
+  outlook: [
+    { ja: "主要顧客約10社と長期供給契約を締結", en: "Long-term supply agreements finalized with around 10 key customers" },
+    { ja: "HBM4はQ2に量産出荷を開始し、下期に生産拡大予定", en: "HBM4 mass shipments began in Q2, with production set to ramp in the second half" },
+    { ja: "321層NANDを年末までに韓国内生産能力の約50%へ拡大予定", en: "321-layer NAND is planned to reach about 50% of domestic production capacity by year-end" },
+  ],
+}, {
+  ticker: "SNDK",
+  title: { ja: "Q4 FY2026：前四半期からの変化", en: "Q4 FY2026: changes from the prior quarter" },
+  previousPeriod: "Q3 FY2026",
+  currentPeriod: "Q4 FY2026",
+  reviewedOn: "2026-09-19",
+  source: {
+    title: "Sandisk Reports Fiscal Fourth Quarter 2026 Financial Results",
+    publisher: "Sandisk filing on SEC EDGAR",
+    publishedOn: "2026-08-05",
+    url: "https://www.sec.gov/Archives/edgar/data/2023554/000162828026053346/sndkq4-26ex991xpressrelease.htm",
+    location: "Q4 FY2026 financial results; end-market revenue; Q1 FY2027 outlook",
+  },
+  metrics: [
+    { id: "revenue", label: { ja: "売上高", en: "Revenue" }, previous: 5.950, current: 8.965, unit: "billion", change: { value: 50.672, unit: "percent" }, note: { ja: "GAAP・全社。会社発表の前四半期比は51%。", en: "GAAP, total company. Sandisk reports 51% quarter-on-quarter." } },
+    { id: "data-center", label: { ja: "データセンター売上", en: "Data Center revenue" }, previous: 1.467, current: 2.977, unit: "billion", change: { value: 102.931, unit: "percent" }, note: { ja: "会社のエンドマーケット区分。前四半期から約2.0倍。", en: "Company end-market classification; roughly doubled from the prior quarter." } },
+    { id: "gross-margin", label: { ja: "GAAP粗利益率", en: "GAAP gross margin" }, previous: 78.4, current: 84.6, unit: "percent", change: { value: 6.2, unit: "pp" }, note: { ja: "増減率ではなくパーセントポイント差。", en: "Percentage-point difference, not percentage growth." } },
+    { id: "consumer", label: { ja: "コンシューマー売上", en: "Consumer revenue" }, previous: 0.820, current: 0.556, unit: "billion", change: { value: -32.195, unit: "percent" }, note: { ja: "会社のエンドマーケット区分。成長指標と同時に減少も表示。", en: "Company end-market classification; shown alongside growth metrics to retain the decline." } },
+  ],
+  reading: { ja: "全社売上は前四半期比約50.7%増え、データセンター売上は約2倍、GAAP粗利益率は6.2ポイント上昇しました。一方、コンシューマー売上は約32.2%減少しており、AI・データセンター需要と消費者向け需要を分けて見る必要があります。", en: "Total revenue rose about 50.7% quarter-on-quarter, Data Center revenue roughly doubled, and GAAP gross margin improved by 6.2 points. Consumer revenue fell about 32.2%, so AI and data-center demand needs to be assessed separately from consumer demand." },
+  unknown: { ja: "Q1 FY2027見通しの達成可否、価格上昇による成長の持続性、顧客集中や長期供給契約の採算は、この発表だけでは確定しません。", en: "This release does not establish whether Q1 FY2027 guidance will be met, the durability of pricing-led growth, or the economics of customer concentration and long-term supply agreements." },
+  outlook: [
+    { ja: "Q1 FY2027売上見通し：$10.3B〜$10.8B", en: "Q1 FY2027 revenue outlook: $10.3B–$10.8B" },
+    { ja: "Q1 FY2027 GAAP粗利益率：83.0%〜84.9%", en: "Q1 FY2027 GAAP gross margin: 83.0%–84.9%" },
+    { ja: "Q1 FY2027 非GAAP希薄化後EPS：$44〜$46", en: "Q1 FY2027 non-GAAP diluted EPS: $44–$46" },
+  ],
 }];
 
 export const verifiedChangeByTicker = Object.fromEntries(verifiedChanges.map((item) => [item.ticker, item]));
 
 export function verifiedChangeIssues(item: VerifiedChange): string[] {
   const issues: string[] = [];
-  const allowedSourceHosts = new Set(["www.sec.gov", "ir.amd.com", "investors.broadcom.com", "newsroom.arm.com", "pr.tsmc.com", "investor.tsmc.com", "www.asml.com", "investor.marvell.com"]);
+  const allowedSourceHosts = new Set(["www.sec.gov", "ir.amd.com", "investors.broadcom.com", "newsroom.arm.com", "pr.tsmc.com", "investor.tsmc.com", "www.asml.com", "investor.marvell.com", "news.skhynix.com"]);
   if (!item.metrics.length || new Set(item.metrics.map((metric) => metric.id)).size !== item.metrics.length) issues.push("invalid-metrics");
   let sourceHost = "";
   try { sourceHost = new URL(item.source.url).hostname; } catch { /* reported below */ }

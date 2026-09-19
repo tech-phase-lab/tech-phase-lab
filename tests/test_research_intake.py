@@ -130,7 +130,7 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(self.db.execute("SELECT count(*) FROM sources").fetchone()[0], count)
 
     def test_all_registered_sources_are_scoped_to_their_official_hosts(self):
-        self.assertEqual(len(m.PROVIDERS), 20)
+        self.assertEqual(len(m.PROVIDERS), 22)
         for ticker, p in m.PROVIDERS.items():
             self.assertEqual(m.safe_url(p["indexUrl"], ticker), p["indexUrl"])
             for rule in p["articleRules"]:

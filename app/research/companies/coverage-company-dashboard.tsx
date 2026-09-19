@@ -23,6 +23,7 @@ function time(value: string | null, lang: "ja" | "en") {
 function metricValue(metric: VerifiedChangeMetric, value: number | null, lang: "ja" | "en") {
   if (value === null) return lang === "ja" ? "非表示" : "Not shown";
   if (metric.unit === "percent") return `${value.toFixed(1)}%`;
+  if (metric.unit === "krw-trillion") return `₩${value.toFixed(value >= 10 ? 1 : 3)}T`;
   const currency = metric.unit === "eur-billion" ? "€" : "$";
   return `${currency}${value.toFixed(value >= 10 ? 1 : 3)}B`;
 }
@@ -39,11 +40,11 @@ export default function CoverageCompanyDashboard({ company, companies, generated
     <a className={base.skip} href="#coverage-main">{t("本文へ移動", "Skip to content")}</a>
     <header className={base.header}>
       <Link href="/research" className={base.brand} aria-label="Tech Phase Research"><span className={base.mark}>TP<span /></span><span>TECH PHASE<small>RESEARCH</small></span></Link>
-      <div className={base.headerRight}><span className={base.edition}>COMPANY WATCH <span>20</span></span><div className={base.languages} aria-label={t("言語", "Language")}><button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button><button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button></div></div>
+      <div className={base.headerRight}><span className={base.edition}>COMPANY WATCH <span>{companies.length}</span></span><div className={base.languages} aria-label={t("言語", "Language")}><button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button><button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button></div></div>
     </header>
     <main id="coverage-main" className={styles.main}>
       <div className={styles.topline}>
-        <Link href="/research/intake">← {t("AI関連20銘柄", "20 AI companies")}</Link>
+        <Link href="/research/intake">← {t(`AI関連${companies.length}銘柄`, `${companies.length} AI companies`)}</Link>
         <label>{t("銘柄を切り替える", "Choose company")}<select value={company.ticker} onChange={(event) => router.push(`/research/companies/${event.target.value}`)}>{companies.map((item) => <option key={item.ticker} value={item.ticker}>{item.ticker} · {item.name}</option>)}</select></label>
       </div>
       <aside className={styles.snapshot}><strong>{t("保存した取得記録", "SAVED INTAKE SNAPSHOT")}</strong><span>{t("出力日時", "Generated")}: {time(generatedAt, lang)} JST</span><p>{t("常時監視・自動更新はまだ接続していません。", "Continuous monitoring and automatic updates are not connected yet.")}</p></aside>

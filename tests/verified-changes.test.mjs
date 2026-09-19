@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import { verifiedChanges, verifiedChangeIssues } from "../lib/research/verified-changes.ts";
 
 test("verified WHAT CHANGED records retain valid primary evidence", () => {
-  assert.equal(verifiedChanges.length, 10);
-  assert.deepEqual(verifiedChanges.map((item) => item.ticker), ["NVDA", "AMD", "AVGO", "CRWV", "ARM", "TSM", "ASML", "MRVL", "ANET", "CRDO"]);
+  assert.equal(verifiedChanges.length, 12);
+  assert.deepEqual(verifiedChanges.map((item) => item.ticker), ["NVDA", "AMD", "AVGO", "CRWV", "ARM", "TSM", "ASML", "MRVL", "ANET", "CRDO", "SKHY", "SNDK"]);
   for (const item of verifiedChanges) assert.deepEqual(verifiedChangeIssues(item), []);
 });
 
@@ -83,4 +83,24 @@ test("Credo keeps sequential growth and profitability contraction together", () 
   assert.equal((((revenue.current / revenue.previous) - 1) * 100).toFixed(1), "9.6");
   assert.equal((margin.current - margin.previous).toFixed(1), "-3.7");
   assert.equal((((netIncome.current / netIncome.previous) - 1) * 100).toFixed(1), "-23.5");
+});
+
+test("SK hynix keeps won-denominated growth and margins distinct", () => {
+  const skhy = verifiedChanges.find((item) => item.ticker === "SKHY");
+  const revenue = skhy.metrics.find((metric) => metric.id === "revenue");
+  const operatingMargin = skhy.metrics.find((metric) => metric.id === "operating-margin");
+  assert.equal(revenue.unit, "krw-trillion");
+  assert.equal((((revenue.current / revenue.previous) - 1) * 100).toFixed(1), "50.9");
+  assert.equal((operatingMargin.current - operatingMargin.previous).toFixed(1), "4.0");
+  assert.equal(skhy.source.url, "https://news.skhynix.com/en/q2-2026-business-results/");
+});
+
+test("Sandisk shows Data Center acceleration and Consumer contraction together", () => {
+  const sndk = verifiedChanges.find((item) => item.ticker === "SNDK");
+  const dataCenter = sndk.metrics.find((metric) => metric.id === "data-center");
+  const consumer = sndk.metrics.find((metric) => metric.id === "consumer");
+  const grossMargin = sndk.metrics.find((metric) => metric.id === "gross-margin");
+  assert.equal((((dataCenter.current / dataCenter.previous) - 1) * 100).toFixed(1), "102.9");
+  assert.equal((((consumer.current / consumer.previous) - 1) * 100).toFixed(1), "-32.2");
+  assert.equal((grossMargin.current - grossMargin.previous).toFixed(1), "6.2");
 });

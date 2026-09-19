@@ -17,6 +17,44 @@
     ]
   },
   {
+    "ticker": "SKHY",
+    "name": "SK hynix",
+    "sector": "semiconductors",
+    "indexUrl": "https://news.skhynix.com/en/category/ir/",
+    "format": "html",
+    "allowedHosts": [
+      "news.skhynix.com",
+      "www.skhynix.com"
+    ],
+    "articleRules": [
+      {
+        "host": "news.skhynix.com",
+        "pattern": "^/en/[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "SNDK",
+    "name": "Sandisk",
+    "sector": "semiconductors",
+    "indexUrl": "https://investor.sandisk.com/news-events/news-releases",
+    "format": "html",
+    "allowedHosts": [
+      "www.sandisk.com",
+      "investor.sandisk.com"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sandisk.com",
+        "pattern": "^/company/newsroom/(?:press-releases|blogs)/\\d{4}/.+"
+      },
+      {
+        "host": "investor.sandisk.com",
+        "pattern": "^/news-releases/news-release-details/.+"
+      }
+    ]
+  },
+  {
     "ticker": "NBIS",
     "name": "Nebius",
     "sector": "ai-cloud",

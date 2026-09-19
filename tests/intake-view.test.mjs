@@ -35,7 +35,7 @@ test("unsafe links, duplicate records and broken history references fail validat
 });
 
 test("sector and company filters use the shared registry", () => {
-  assert.equal(providers.length, 20);
+  assert.equal(providers.length, 22);
   const sector = providerByTicker[source.ticker].sector;
   assert.equal(filterSources([source], providerByTicker[source.ticker].name, "all", "all", "all", {}, sector).length, 1);
   assert.equal(filterSources([source], "", "all", "all", "all", {}, "not-a-sector").length, 0);
@@ -47,12 +47,12 @@ test("coverage uses the latest run and never counts untested companies as failur
     { id: 3, ticker: "NVDA", status: "degraded" },
     { id: 2, ticker: "AMD", status: "ok" },
   ] });
-  assert.deepEqual(counts, { registered: 20, discovered: 1, needsCheck: 1, untested: 18 });
+  assert.deepEqual(counts, { registered: 22, discovered: 1, needsCheck: 1, untested: 20 });
 });
 
 test("every registered company has a valid company coverage page model", () => {
   const companies = buildCoverageCompanies(snapshot);
-  assert.equal(companies.length, 20);
+  assert.equal(companies.length, 22);
   assert.deepEqual(coverageCompanyIssues(companies), []);
   assert.equal(companies.find((company) => company.ticker === "NVDA").counts.total, 20);
   assert.equal(companies.find((company) => company.ticker === "CRWV").counts.fetched, 1);
