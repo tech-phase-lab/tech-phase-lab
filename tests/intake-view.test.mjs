@@ -19,6 +19,8 @@ test("operations preview exposes verified backup health without storage details"
   assert.match(liveTypes, /backup\?:/);
   assert.match(intakeDashboard, /DB保護：正常/);
   assert.match(intakeDashboard, /backupCount/);
+  assert.match(intakeDashboard, /バックアップ期限超過/);
+  assert.match(intakeDashboard, /monitor-stale/);
   assert.doesNotMatch(intakeDashboard, /backup\.(sha256|filename|path|directory)/);
 });
 

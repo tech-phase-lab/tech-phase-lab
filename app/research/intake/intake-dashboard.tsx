@@ -25,9 +25,22 @@ function duration(value: number | null | undefined) {
 }
 function backupStatus(backup: MonitorState["backup"]) {
   if (!backup) return "DB保護：状態取得待ち";
-  if (backup.healthy === false) return "DB保護：要確認（直近バックアップ失敗）";
+  if (backup.status === "failed" || backup.healthy === false) return "DB保護：要確認（直近バックアップ失敗）";
+  if (backup.status === "overdue" || backup.overdue) return "DB保護：要確認（バックアップ期限超過）";
   if (backup.healthy !== true || !backup.lastSuccessAt) return "DB保護：初回バックアップ待ち";
   return `DB保護：正常 · ${backup.backupCount}世代 · 最終成功 ${time(backup.lastSuccessAt)} JST`;
+}
+function monitorStatus(monitor: MonitorState | null) {
+  if (monitor?.health?.status === "degraded") return "自動監視に確認が必要です";
+  if (monitor?.health?.status === "starting") return "自動監視を起動しています";
+  return "公式発表を自動監視しています";
+}
+function monitorIssue(monitor: MonitorState | null) {
+  const issues = monitor?.health?.issues ?? [];
+  if (issues.includes("monitor-stale")) return "巡回更新が停止しています";
+  if (issues.includes("backup-failed")) return "DBバックアップに失敗しています";
+  if (issues.includes("backup-overdue")) return "DBバックアップが期限を超過しています";
+  return null;
 }
 
 export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: { snapshot: IntakeSnapshot; titles: Record<string, string> }) {
@@ -54,7 +67,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
     <header className={styles.header}><Link href="/research" className={styles.brand}><b>TP</b><span>TECH PHASE<small>RESEARCH / OPERATIONS</small></span></Link><span className={styles.badge}>運営用プレビュー</span></header>
     <main id="intake-main" className={styles.main}>
       <div className={styles.heading}><div><p className={styles.eyebrow}>AI COMPANY COVERAGE</p><h1>AI関連銘柄の資料・取得状況</h1><p>企業公式・取引所・SECの一次情報から、原文と照合する資料を選びます。</p></div><div className={styles.headingLinks}><Link href="/research/review">速報レビュー →</Link><Link href="/research">リサーチ画面へ ↗</Link></div></div>
-      <aside className={styles.notice}><strong>{live.mode === "automatic" ? "公式発表を自動監視しています" : "自動監視サービスの接続待ち"}</strong><span>{live.mode === "automatic" ? `最終巡回：${time(live.monitor?.lastCycleAt ?? null)} JST` : `保存記録の出力日時：${time(snapshot.generatedAt)} JST`}</span>{live.mode === "automatic" && <><span>直近巡回：{duration(live.monitor?.lastCycleDurationMs)}（{live.monitor?.lastCycleCompanies ?? 0}社）</span><span>{backupStatus(live.monitor?.backup)}</span></>}<p>{live.mode === "automatic" ? "公式経路を銘柄ごとに3〜5秒の基準間隔で巡回します。間隔は保証速度ではなく、直近応答時間と検知後の本文取得時間を別に実測します。" : "現在は保存済み記録を表示しています。監視サービス接続後は3秒ごとに自動更新されます。"}</p></aside>
+      <aside className={styles.notice}><strong>{live.mode === "automatic" ? monitorStatus(live.monitor) : "自動監視サービスの接続待ち"}</strong><span>{live.mode === "automatic" ? `最終巡回：${time(live.monitor?.lastCycleAt ?? null)} JST` : `保存記録の出力日時：${time(snapshot.generatedAt)} JST`}</span>{live.mode === "automatic" && <><span>直近巡回：{duration(live.monitor?.lastCycleDurationMs)}（{live.monitor?.lastCycleCompanies ?? 0}社）</span><span>{backupStatus(live.monitor?.backup)}</span>{monitorIssue(live.monitor) && <span role="alert" className={styles.alert}>運用警告：{monitorIssue(live.monitor)}</span>}</>}<p>{live.mode === "automatic" ? "公式経路を銘柄ごとに3〜5秒の基準間隔で巡回します。間隔は保証速度ではなく、直近応答時間と検知後の本文取得時間を別に実測します。" : "現在は保存済み記録を表示しています。監視サービス接続後は3秒ごとに自動更新されます。"}</p></aside>
       <section aria-labelledby="events-title" className={styles.queue}><div className={styles.sectionTitle}><h2 id="events-title">新着の公式発表</h2><span>初回取り込みを除く自動検知：{events.length}件</span></div>
         <p className={styles.coverageNote}>監視開始前の過去資料は速報として扱いません。ここには監視開始後に新しく現れた公式URLだけを表示します。発表元の公開時刻が秒単位で得られない場合、公開から検知までの時間は未計測です。</p>
         {events.length === 0 ? <div className={styles.empty}><h3>監視開始後の新着はまだありません</h3><p>常駐監視の接続後、新しい公式発表を検知すると自動で追加されます。</p></div> : <ul className={styles.sources}>{events.slice(0, 20).map(event => <li key={event.id}><article className={styles.source}>

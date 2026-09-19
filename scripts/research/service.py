@@ -28,6 +28,18 @@ def positive_int(name, default, minimum):
         return default
 
 
+def timestamp_age_seconds(value):
+    if not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return max(0, int((datetime.now(timezone.utc) - parsed.astimezone(timezone.utc)).total_seconds()))
+    except (TypeError, ValueError):
+        return None
+
+
 class AutomaticMonitor:
     def __init__(self, db_path, snapshot_path):
         self.db_path = Path(db_path)
@@ -38,7 +50,9 @@ class AutomaticMonitor:
         self.body_interval = positive_int("RESEARCH_BODY_FETCH_INTERVAL_SECONDS", 10, 5)
         self.body_batch = positive_int("RESEARCH_BODY_FETCH_BATCH", 2, 1)
         self.backup_interval = positive_int("RESEARCH_BACKUP_INTERVAL_SECONDS", 3600, 300)
+        self.backup_grace = positive_int("RESEARCH_BACKUP_GRACE_SECONDS", 600, 60)
         self.backup_retention = positive_int("RESEARCH_BACKUP_RETENTION", 24, 2)
+        self.monitor_stale_seconds = positive_int("RESEARCH_MONITOR_STALE_SECONDS", 60, 15)
         self.backup_dir = Path(os.environ.get(
             "RESEARCH_BACKUP_DIR", str(self.db_path.parent / "backups")
         ))
@@ -81,6 +95,7 @@ class AutomaticMonitor:
             },
             "backup": {
                 "enabled": True, "intervalSeconds": self.backup_interval,
+                "graceSeconds": self.backup_grace,
                 "retention": min(self.backup_retention, 168), "lastAttemptAt": None,
                 "lastSuccessAt": None, "healthy": None, "backupCount": 0,
                 "lastError": None,
@@ -119,6 +134,37 @@ class AutomaticMonitor:
     def public_state(self):
         with self.state_lock:
             state = json.loads(json.dumps(self.state))
+        cycle_age = timestamp_age_seconds(state["lastCycleAt"])
+        state["lastCycleAgeSeconds"] = cycle_age
+        backup = state["backup"]
+        success_age = timestamp_age_seconds(backup["lastSuccessAt"])
+        backup["lastSuccessAgeSeconds"] = success_age
+        reference_age = success_age
+        if reference_age is None:
+            reference_age = timestamp_age_seconds(state["startedAt"])
+        overdue_after = self.backup_interval + self.backup_grace
+        backup["overdueAfterSeconds"] = overdue_after
+        backup["overdue"] = reference_age is None or reference_age > overdue_after
+        if backup["healthy"] is False:
+            backup["status"] = "failed"
+        elif backup["overdue"]:
+            backup["status"] = "overdue"
+        elif backup["healthy"] is True:
+            backup["status"] = "ok"
+        else:
+            backup["status"] = "waiting"
+        issues = []
+        if state["ready"] and (cycle_age is None or cycle_age > self.monitor_stale_seconds):
+            issues.append("monitor-stale")
+        if backup["status"] == "failed":
+            issues.append("backup-failed")
+        elif backup["status"] == "overdue":
+            issues.append("backup-overdue")
+        state["health"] = {
+            "status": "degraded" if issues else ("ready" if state["ready"] else "starting"),
+            "issues": issues,
+            "monitorStaleAfterSeconds": self.monitor_stale_seconds,
+        }
         with self.db_lock, monitor.connect(self.db_path) as db:
             state["generation"].update(monitor.generation_queue_stats(
                 db, self.generation_daily_limit, self.generation_token_limit

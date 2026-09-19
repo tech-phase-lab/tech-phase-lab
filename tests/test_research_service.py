@@ -77,6 +77,35 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertNotIn("filename", state)
         self.assertNotIn(str(app.backup_dir), json.dumps(state))
 
+    def test_backup_becomes_degraded_when_last_success_exceeds_deadline(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        with app.state_lock:
+            app.state["ready"] = True
+            app.state["lastCycleAt"] = service.utc_now()
+            app.state["backup"].update({
+                "healthy": True, "lastSuccessAt": "2020-01-01T00:00:00+00:00",
+                "backupCount": 2,
+            })
+        state = app.public_state()
+        self.assertEqual(state["backup"]["status"], "overdue")
+        self.assertTrue(state["backup"]["overdue"])
+        self.assertIn("backup-overdue", state["health"]["issues"])
+        self.assertEqual(state["health"]["status"], "degraded")
+
+    def test_backup_failure_and_stalled_monitor_have_distinct_health_codes(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.backup_dir = Path(self.temp.name) / "backups"
+        with patch.object(persistence, "create_backup", side_effect=OSError("private path must not leak")):
+            self.assertFalse(app.perform_backup())
+        with app.state_lock:
+            app.state["ready"] = True
+            app.state["lastCycleAt"] = "2020-01-01T00:00:00+00:00"
+        state = app.public_state()
+        self.assertEqual(state["backup"]["status"], "failed")
+        self.assertEqual(state["backup"]["lastError"], "backup-failed")
+        self.assertCountEqual(state["health"]["issues"], ["monitor-stale", "backup-failed"])
+        self.assertNotIn("private path", json.dumps(state))
+
     def test_inline_exchange_evidence_is_not_refetched_as_an_article(self):
         inline_url = "https://openapi.twse.com.tw/v1/opendata/t187ap04_L?company=2330&date=1150918&time=153643&id=abc"
         with monitor.connect(self.db_path) as db:

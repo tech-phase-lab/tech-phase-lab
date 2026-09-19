@@ -7,6 +7,7 @@ export type MonitorState = {
   ready: boolean;
   startedAt: string;
   lastCycleAt: string | null;
+  lastCycleAgeSeconds?: number | null;
   lastCycleDurationMs: number | null;
   lastCycleCompanies: number;
   lastChangeAt: string | null;
@@ -22,9 +23,16 @@ export type MonitorState = {
     tokenLimitReached?: boolean; tokenBudgetBlocked?: number;
   };
   backup?: {
-    enabled: boolean; intervalSeconds: number; retention: number;
+    enabled: boolean; intervalSeconds: number; graceSeconds?: number; retention: number;
     lastAttemptAt: string | null; lastSuccessAt: string | null;
     healthy: boolean | null; backupCount: number; lastError: string | null;
+    lastSuccessAgeSeconds?: number | null; overdueAfterSeconds?: number;
+    overdue?: boolean; status?: "waiting" | "ok" | "failed" | "overdue";
+  };
+  health?: {
+    status: "starting" | "ready" | "degraded";
+    issues: Array<"monitor-stale" | "backup-failed" | "backup-overdue">;
+    monitorStaleAfterSeconds: number;
   };
   companies: Record<string, {
     basePollSeconds?: number; nextPollSeconds?: number; requestDurationMs?: number;

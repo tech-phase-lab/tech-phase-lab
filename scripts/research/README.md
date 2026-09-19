@@ -111,7 +111,7 @@ HTTP APIは `/health`、`/snapshot`、`/live`。`/snapshot` と `/live` は `RES
 
 処理状態、実測トークン、予算計上トークン、上限到達は `/health` へ本文を含めず表示します。プロセス停止後もSQLiteから再開し、すでに現行SHAの下書きが保存済みなら重複生成せず完了扱いに戻します。
 
-監視DBは起動直後と標準1時間ごとに、SQLiteのオンラインバックアップ機能で同じ非公開永続ボリュームへ保存します。完成後に `PRAGMA integrity_check` と必須テーブルを確認し、SHA-256付きマニフェストとともにアトミックに公開します。バックアップ用ディレクトリは所有者だけが読み書き・参照できる権限、DBとマニフェストは所有者だけが読み書きできる権限に固定し、標準24世代を保持します。`/health` には成功日時・世代数・異常コードだけを出し、保存先・ファイル名・ハッシュは出しません。
+監視DBは起動直後と標準1時間ごとに、SQLiteのオンラインバックアップ機能で同じ非公開永続ボリュームへ保存します。完成後に `PRAGMA integrity_check` と必須テーブルを確認し、SHA-256付きマニフェストとともにアトミックに公開します。バックアップ用ディレクトリは所有者だけが読み書き・参照できる権限、DBとマニフェストは所有者だけが読み書きできる権限に固定し、標準24世代を保持します。直近成功が「実行間隔＋猶予時間」を超えた場合は、前回が成功でも `backup-overdue` として運営画面へ警告します。`/health` には成功日時・世代数・経過秒・異常コードだけを出し、保存先・ファイル名・ハッシュは出しません。公式経路の巡回更新が標準60秒止まった場合も `monitor-stale` として区別します。
 
 復元コマンドは既定で検証だけを行います。実際の置換は監視サービスを停止し、対象DBと同じ永続領域でのみ実行してください。`--apply` を付けた場合も、復元用一時DBを再検証してから置換し、古いWAL/SHMを除去します。
 
@@ -143,7 +143,9 @@ python3 scripts/research/persistence.py restore --backup /data/backups/research-
 - `RESEARCH_BODY_FETCH_BATCH`：1回に取得する本文数。標準2件
 - `RESEARCH_BACKUP_DIR`：検証済みバックアップの保存先。標準はDBと同じディレクトリ内の `backups`
 - `RESEARCH_BACKUP_INTERVAL_SECONDS`：バックアップ間隔。標準3600秒、最低300秒
+- `RESEARCH_BACKUP_GRACE_SECONDS`：予定時刻から期限超過とするまでの猶予。標準600秒、最低60秒
 - `RESEARCH_BACKUP_RETENTION`：保持世代数。標準24、2〜168世代
+- `RESEARCH_MONITOR_STALE_SECONDS`：巡回更新が停止したと判定する時間。標準60秒、最低15秒
 - `RESEARCH_USER_AGENT`：運営サービス名と連絡可能な汎用メールアドレス。SEC等の自動アクセス方針に合わせて設定
 
 Vercel側には監視サービスのHTTPS URLを `RESEARCH_MONITOR_URL`、同じトークンを `RESEARCH_MONITOR_TOKEN` として設定します。`/research/intake` は3秒ごとにAPIを確認し、接続中か保存済み記録かを明示します。
