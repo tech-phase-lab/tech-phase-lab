@@ -22,7 +22,7 @@ python3 scripts/research/monitor.py history
 
 RSS / Atomの取り込みを追加しました。フィードのリンクと見出しを取り込み、本文取得や編集上の確認とは分けて記録します。外部ホスト、カテゴリー一覧、コメントフィード等は規則に合わなければ取り込みません。XMLの外部定義・エンティティ宣言を拒否し、壊れたフィードは取得異常として扱います。見出しはプレーンテキストとして扱い、HTMLやスクリプトとして実行しません。
 
-MRVLは、取得制限のある企業ニュース一覧ではなく、同社Investor Relationsが公開する公式RSSを優先します。RSSに失敗した場合はSEC EDGARの8-Kへ切り替えます。ANET・TSM・VRT・PLTR・ORCLは、企業公式ページが403、タイムアウト、動的表示などで取得できない場合、SEC EDGARの会社別Submissions JSONを公式バックアップとして使い、必要なら8-K／6-K Atomへ切り替えます。バックアップで取得した実行は `fallback` と明示します。SEC経路は重要開示の補完であり、製品ブログを含む企業ニュース全件の代替ではありません。
+MRVLは、取得制限のある企業ニュース一覧ではなく、同社Investor Relationsが公開する公式RSSを優先します。RSSに失敗した場合はSEC EDGARの8-Kへ切り替えます。ANETは同社公式Press RoomのRSS、PLTRは同社公式サイトマップ内のpress-releasesだけ、VRTは同社ニュース画面が利用する公開JSON結果を使います。いずれも企業自身が一般公開している経路で、アクセス制御の回避はしません。TSM・ORCLを含む各社は、企業公式経路に失敗した場合、SEC EDGARの会社別Submissions JSONを公式バックアップとして使い、必要なら8-K／6-K Atomへ切り替えます。バックアップで取得した実行は `fallback` と明示します。SEC経路は重要開示の補完であり、製品ブログを含む企業ニュース全件の代替ではありません。
 
 ```sh
 python3 scripts/research/monitor.py discover NVDA

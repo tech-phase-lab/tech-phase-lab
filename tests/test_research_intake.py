@@ -235,6 +235,28 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(result["status"], "ok")
         self.assertEqual(list(links.values()), ["Marvell AI release"])
 
+    def test_arista_uses_first_party_press_release_rss(self):
+        provider = m.PROVIDERS["ANET"]
+        self.assertEqual(provider["indexUrl"], "https://www.arista.com/en/company/news/press-release-rss")
+        body = b'''<rss><channel><item><title>Arista AI release</title><link>https://www.arista.com/en/company/news/press-release/123-pr-20260919</link></item></channel></rss>'''
+        result, links = m.collect_discovery("ANET", lambda *_: (body, "application/xml"), automatic=True)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(list(links.values()), ["Arista AI release"])
+
+    def test_palantir_first_party_sitemap_keeps_only_press_releases(self):
+        body = b'''<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://www.palantir.com/newsroom/press-releases/official-release/</loc></url><url><loc>https://www.palantir.com/newsroom/media/not-a-release/</loc></url></urlset>'''
+        result, links = m.collect_discovery("PLTR", lambda *_: (body, "application/xml"), automatic=True)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(list(links), ["https://www.palantir.com/newsroom/press-releases/official-release/"])
+
+    def test_vertiv_public_news_endpoint_uses_static_post_and_scoped_links(self):
+        source = m.monitoring_sources("VRT")[0]
+        self.assertEqual(source["format"], "news-json")
+        self.assertEqual(source["requestJson"]["newsType"], "4593")
+        body = b'''{"items":[{"displayName":"Vertiv AI release","pageUrl":"/en-us/about/news-and-events/corporate-news/2026/official-release/"},{"displayName":"Outside","pageUrl":"https://evil.test/release"}]}'''
+        links = m.news_json_links(body, "VRT", source)
+        self.assertEqual(links, {"https://www.vertiv.com/en-us/about/news-and-events/corporate-news/2026/official-release/": "Vertiv AI release"})
+
     def test_atom_links_supported_and_entity_declarations_rejected(self):
         body = b'''<feed xmlns="http://www.w3.org/2005/Atom"><entry><title>AI</title><link href="https://newsroom.arm.com/news/ai"/></entry></feed>'''
         self.assertEqual(len(m.feed_links(body, "ARM")), 1)
@@ -251,9 +273,11 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(len(m.PROVIDERS), 22)
         for ticker, p in m.PROVIDERS.items():
             self.assertEqual(m.safe_url(p["indexUrl"], ticker), p["indexUrl"])
+            if p.get("monitorUrl"):
+                self.assertEqual(m.safe_url(p["monitorUrl"], ticker), p["monitorUrl"])
             for source in p.get("fallbackSources", []):
                 self.assertEqual(m.safe_url(source["url"], ticker), source["url"])
-                self.assertIn(source["format"], {"html", "rss", "sec-json"})
+                self.assertIn(source["format"], {"html", "rss", "sec-json", "sitemap", "news-json"})
             for rule in p["articleRules"]:
                 self.assertIn(rule["host"], m.HOSTS[ticker])
                 self.assertIsNotNone(m.re.compile(rule["pattern"]))

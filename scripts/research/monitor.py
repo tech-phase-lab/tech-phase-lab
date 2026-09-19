@@ -18,7 +18,7 @@ import threading
 
 ROOT = Path(__file__).resolve().parents[2]
 PROVIDERS = {p["ticker"]: p for p in json.loads((ROOT / "lib/research/providers.json").read_text())}
-INDEXES = {t: p["indexUrl"] for t, p in PROVIDERS.items()}
+INDEXES = {t: p.get("monitorUrl", p["indexUrl"]) for t, p in PROVIDERS.items()}
 HOSTS = {t: set(p["allowedHosts"]) for t, p in PROVIDERS.items()}
 MAX_BYTES = 12 * 1024 * 1024
 MAX_EXTRACTED_CHARS = 160_000
@@ -47,6 +47,14 @@ class Redirects(HTTPRedirectHandler):
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
+def source_configuration(url, ticker):
+    """Return static request settings only for a configured discovery endpoint."""
+    for source in monitoring_sources(ticker):
+        if source["url"] == url:
+            return source
+    return {}
+
+
 def fetch(url, ticker):
     url = safe_url(url, ticker)
     with _FETCH_CACHE_LOCK:
@@ -55,11 +63,17 @@ def fetch(url, ticker):
         "User-Agent": os.environ.get("RESEARCH_USER_AGENT", "TechPhaseResearch-SourceCheck/0.1"),
         "Accept": "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf",
     }
+    source = source_configuration(url, ticker)
+    request_body = source.get("requestJson")
+    data = None
+    if request_body is not None:
+        data = json.dumps(request_body, separators=(",", ":")).encode()
+        headers["Content-Type"] = "application/json"
     if cached and cached.get("etag"):
         headers["If-None-Match"] = cached["etag"]
     if cached and cached.get("last_modified"):
         headers["If-Modified-Since"] = cached["last_modified"]
-    req = Request(url, headers=headers)
+    req = Request(url, headers=headers, data=data, method="POST" if data is not None else "GET")
     timeout = PROVIDERS[ticker].get("requestTimeoutSeconds", 20) if url == INDEXES[ticker] else 20
     if os.environ.get("RESEARCH_REQUEST_TIMEOUT_SECONDS"):
         timeout = min(timeout, max(1, int(os.environ["RESEARCH_REQUEST_TIMEOUT_SECONDS"])))
@@ -218,6 +232,39 @@ def feed_links(body, ticker):
     return links
 
 
+def sitemap_links(body, ticker):
+    """Extract approved article URLs from a first-party XML sitemap."""
+    if b"\x00" in body or re.search(br"<!\s*(DOCTYPE|ENTITY)", body, re.I):
+        raise ValueError("XML declarations with entities are not supported")
+    root = ET.fromstring(body)
+    namespace = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+    links = {}
+    for item in root.findall(namespace + "url"):
+        canonical = article_url(item.findtext(namespace + "loc") or "", ticker)
+        if canonical:
+            links[canonical] = None
+    return links
+
+
+def news_json_links(body, ticker, source):
+    """Parse a first-party page's public JSON result shape."""
+    data = json.loads(body)
+    items = data.get(source.get("itemsKey", "items"), [])
+    if not isinstance(items, list):
+        raise ValueError("Invalid news JSON structure")
+    links = {}
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        value = item.get(source.get("urlKey", "pageUrl"))
+        canonical = article_url(urljoin(source["url"], value or ""), ticker)
+        if not canonical:
+            continue
+        title = item.get(source.get("titleKey", "displayName"))
+        links[canonical] = " ".join(unescape(title).split())[:300] if isinstance(title, str) and title.strip() else None
+    return links
+
+
 def sec_submission_links(body, ticker, source):
     """Turn the SEC submissions columnar JSON into official filing-document URLs."""
     data = json.loads(body)
@@ -308,7 +355,11 @@ def add_source(db, ticker, url, published_on=None, title=None):
 def monitoring_sources(ticker, automatic=False):
     """Return the preferred company feed followed by official fallback feeds."""
     provider = PROVIDERS[ticker]
-    sources = [{"url": provider["indexUrl"], "format": provider["format"], "route": "primary"}] + [
+    primary = {"url": INDEXES[ticker], "format": provider["format"], "route": "primary"}
+    for key in ("requestJson", "itemsKey", "urlKey", "titleKey"):
+        if key in provider:
+            primary[key] = provider[key]
+    sources = [primary] + [
         {**source, "route": "fallback"} for source in provider.get("fallbackSources", [])
     ]
     if automatic and provider.get("automaticSource") == "fallback":
@@ -323,6 +374,12 @@ def discover_links(body, kind, ticker, source):
         return sec_submission_links(body, ticker, source)
     if source["format"] == "rss":
         return feed_links(body, ticker)
+    if source["format"] == "sitemap":
+        return sitemap_links(body, ticker)
+    if source["format"] == "news-json":
+        if kind != "application/json":
+            raise ValueError("News endpoint is not JSON")
+        return news_json_links(body, ticker, source)
     if kind != "text/html":
         raise ValueError("Index is not HTML")
     parser = Links(source["url"], ticker)

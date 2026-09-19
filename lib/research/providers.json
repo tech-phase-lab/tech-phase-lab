@@ -241,10 +241,9 @@
     "ticker": "ANET",
     "name": "Arista Networks",
     "sector": "networking",
-    "indexUrl": "https://investors.arista.com/Communications/Press-Releases-and-Events/default.aspx",
-    "format": "html",
-    "requestTimeoutSeconds": 6,
-    "automaticSource": "fallback",
+    "indexUrl": "https://www.arista.com/en/company/news/press-release-rss",
+    "format": "rss",
+    "requestTimeoutSeconds": 15,
     "fallbackSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001596532.json",
@@ -261,11 +260,16 @@
       }
     ],
     "allowedHosts": [
+      "www.arista.com",
       "investors.arista.com",
       "data.sec.gov",
       "www.sec.gov"
     ],
     "articleRules": [
+      {
+        "host": "www.arista.com",
+        "pattern": "^/en/company/news/press-release/[^/]+/?$"
+      },
       {
         "host": "investors.arista.com",
         "pattern": "^/news-releases/news-release-details/.+"
@@ -322,9 +326,19 @@
     "name": "Vertiv",
     "sector": "power-cooling",
     "indexUrl": "https://www.vertiv.com/en-us/about/news-and-events/corporate-news/",
-    "format": "html",
-    "requestTimeoutSeconds": 6,
-    "automaticSource": "fallback",
+    "monitorUrl": "https://www.vertiv.com/api-lang/en/searchAboutResults/searchNews",
+    "format": "news-json",
+    "requestTimeoutSeconds": 12,
+    "requestJson": {
+      "pageNumber": 0,
+      "newsType": "4593",
+      "fromNewsRelease": true,
+      "parentId": "4599",
+      "facetGroups": []
+    },
+    "itemsKey": "items",
+    "urlKey": "pageUrl",
+    "titleKey": "displayName",
     "fallbackSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001674101.json",
@@ -348,7 +362,7 @@
     "articleRules": [
       {
         "host": "www.vertiv.com",
-        "pattern": "^/en-us/about/news-and-events/corporate-news/[^/]+/?$"
+        "pattern": "^/en-us/about/news-and-events/corporate-news/(?:\\d{4}/)?[^/]+/?$"
       },
       {
         "host": "www.sec.gov",
@@ -392,10 +406,9 @@
     "ticker": "PLTR",
     "name": "Palantir",
     "sector": "software",
-    "indexUrl": "https://investors.palantir.com/news",
-    "format": "html",
-    "requestTimeoutSeconds": 6,
-    "automaticSource": "fallback",
+    "indexUrl": "https://www.palantir.com/sitemap.xml",
+    "format": "sitemap",
+    "requestTimeoutSeconds": 15,
     "fallbackSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001321655.json",
@@ -412,11 +425,16 @@
       }
     ],
     "allowedHosts": [
+      "www.palantir.com",
       "investors.palantir.com",
       "data.sec.gov",
       "www.sec.gov"
     ],
     "articleRules": [
+      {
+        "host": "www.palantir.com",
+        "pattern": "^/newsroom/press-releases/[^/]+/?$"
+      },
       {
         "host": "investors.palantir.com",
         "pattern": "^/news-details/.+"
