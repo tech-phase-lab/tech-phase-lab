@@ -22,7 +22,9 @@ function time(value: string | null, lang: "ja" | "en") {
 
 function metricValue(metric: VerifiedChangeMetric, value: number | null, lang: "ja" | "en") {
   if (value === null) return lang === "ja" ? "非表示" : "Not shown";
-  return metric.unit === "percent" ? `${value.toFixed(1)}%` : `$${value.toFixed(value >= 10 ? 1 : 3)}B`;
+  if (metric.unit === "percent") return `${value.toFixed(1)}%`;
+  const currency = metric.unit === "eur-billion" ? "€" : "$";
+  return `${currency}${value.toFixed(value >= 10 ? 1 : 3)}B`;
 }
 
 export default function CoverageCompanyDashboard({ company, companies, generatedAt }: { company: CoverageCompany; companies: Pick<CoverageCompany, "ticker" | "name">[]; generatedAt: string }) {
@@ -58,7 +60,7 @@ export default function CoverageCompanyDashboard({ company, companies, generated
         {verified ? <div className={styles.verifiedChange}>
           <div className={styles.metricGrid}>{verified.metrics.map((metric) => <article key={metric.id}><span>{metric.label[lang]}</span><div><small>{verified.previousPeriod}</small><strong>{metricValue(metric, metric.previous, lang)}</strong><b>→</b><small>{verified.currentPeriod}</small><strong>{metricValue(metric, metric.current, lang)}</strong></div><em>{metric.change.value > 0 ? "+" : ""}{metric.change.value.toFixed(1)}{metric.change.unit === "pp" ? lang === "ja" ? "pt" : "pp" : "%"}{metric.change.companyReported ? ` ${t("会社発表", "reported")}` : ""}</em><p>{metric.note[lang]}</p></article>)}</div>
           <div className={styles.changeReading}><article><span>{t("読み取れる変化", "VERIFIED READING")}</span><p>{verified.reading[lang]}</p></article><article><span>{verified.outlookHeading?.[lang] ?? t("次四半期の会社見通し", "COMPANY OUTLOOK")}</span><ul>{verified.outlook.map((item) => <li key={item.en}>{item[lang]}</li>)}</ul></article><article><span>{t("この資料だけでは分からないこと", "NOT ESTABLISHED")}</span><p>{verified.unknown[lang]}</p></article></div>
-          <footer><span>{t("照合日", "Reviewed")}: {verified.reviewedOn}</span><a href={verified.source.url} target="_blank" rel="noreferrer">{t("公式原文 ↗", "Official source ↗")}</a></footer>
+          <footer><span>{t("照合日", "Reviewed")}: {verified.reviewedOn}</span><span><a href={verified.source.url} target="_blank" rel="noreferrer">{t("公式原文 ↗", "Official source ↗")}</a>{verified.additionalSources?.map((source, index) => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{t(`比較元${index + 1} ↗`, `Comparison source ${index + 1} ↗`)}</a>)}</span></footer>
         </div> : <div className={styles.pipeline}>
           <article className={company.discovery.status === "ok" ? styles.complete : ""}><span>01</span><h3>{t("公式発表を検知", "Detect release")}</h3><strong>{discoveryLabel}</strong><p>{company.discovery.status === "ok" ? t(`${company.discovery.candidates}件のリンクを検出しました。`, `${company.discovery.candidates} links were found.`) : error || t("取得記録がありません。", "No retrieval record.")}</p><small>{t("最終確認", "Last check")}: {time(company.discovery.checkedAt, lang)} JST</small></article>
           <article className={company.counts.fetched > 0 ? styles.complete : ""}><span>02</span><h3>{t("原文を取得", "Fetch source")}</h3><strong>{company.counts.fetched > 0 ? t(`${company.counts.fetched}件取得`, `${company.counts.fetched} fetched`) : t("取得待ち", "Awaiting fetch")}</strong><p>{t("取得できても、発表日・数値・対象期間の照合が必要です。", "Publication date, values, and reporting period still require review.")}</p></article>

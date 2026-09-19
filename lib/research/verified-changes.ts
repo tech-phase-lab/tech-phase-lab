@@ -3,7 +3,7 @@ export type VerifiedChangeMetric = {
   label: { ja: string; en: string };
   previous: number | null;
   current: number;
-  unit: "billion" | "percent";
+  unit: "billion" | "eur-billion" | "percent";
   change: { value: number; unit: "percent" | "pp"; companyReported?: boolean };
   note: { ja: string; en: string };
 };
@@ -15,6 +15,7 @@ export type VerifiedChange = {
   currentPeriod: string;
   reviewedOn: string;
   source: { title: string; publisher: string; publishedOn: string; url: string; location: string };
+  additionalSources?: { title: string; publisher: string; publishedOn: string; url: string; location: string }[];
   metrics: VerifiedChangeMetric[];
   reading: { ja: string; en: string };
   unknown: { ja: string; en: string };
@@ -127,17 +128,106 @@ export const verifiedChanges: VerifiedChange[] = [{
     { ja: "Q3初期の純増顧客コミットメント$25B超はバックログに未算入", en: "More than $25B of early-Q3 net new customer commitments is excluded from that backlog" },
     { ja: "このSEC提出資料には数値ガイダンスを記載せず、同日の決算説明会で提供すると明記", en: "This SEC-filed release does not state numerical guidance; it says guidance would be provided on the same-day earnings call" },
   ],
+}, {
+  ticker: "ARM",
+  title: { ja: "Q1 FYE27：前年同期からの変化", en: "Q1 FYE27: changes from the prior-year quarter" },
+  previousPeriod: "Q1 FYE26",
+  currentPeriod: "Q1 FYE27",
+  reviewedOn: "2026-09-19",
+  source: {
+    title: "Arm delivers record first-quarter for total revenue",
+    publisher: "Arm Newsroom",
+    publishedOn: "2026-07-29",
+    url: "https://newsroom.arm.com/news/arm-q1-fye27-results",
+    location: "Q1 FYE27 financial results infographic; quarterly highlights",
+  },
+  metrics: [
+    { id: "revenue", label: { ja: "売上高", en: "Total revenue" }, previous: null, current: 1.29, unit: "billion", change: { value: 22, unit: "percent", companyReported: true }, note: { ja: "会社発表の前年同期比。前年同期の金額はこの比較表では表示しない。", en: "Company-reported year-on-year change; the prior-year amount is not shown here." } },
+    { id: "royalty", label: { ja: "ロイヤルティ収入", en: "Royalty revenue" }, previous: null, current: 0.715, unit: "billion", change: { value: 22, unit: "percent", companyReported: true }, note: { ja: "会社発表の前年同期比。データセンターの金額内訳とは別。", en: "Company-reported year-on-year change; this is separate from the undisclosed data-center dollar mix." } },
+    { id: "licensing", label: { ja: "ライセンス収入", en: "License revenue" }, previous: null, current: 0.574, unit: "billion", change: { value: 23, unit: "percent", companyReported: true }, note: { ja: "会社発表の前年同期比。前年同期の金額はこの比較表では表示しない。", en: "Company-reported year-on-year change; the prior-year amount is not shown here." } },
+  ],
+  reading: { ja: "売上高は$1.29Bで前年同期比22%増。ロイヤルティ収入とライセンス収入も22〜23%増え、いずれも第1四半期として過去最高でした。データセンターのロイヤルティは前年同期比で2倍超と説明されていますが、金額は開示されていません。", en: "Revenue reached $1.29B, up 22% year-on-year. Royalty and license revenue also rose 22–23%, both reaching first-quarter records. Arm says data-center royalties more than doubled, but it does not disclose the dollar amount." },
+  unknown: { ja: "データセンターのロイヤルティ金額、$2B超の需要がいつ売上に転換するか、今後も同じ成長率を維持できるかは、この発表だけでは確定しません。", en: "This release does not establish the dollar value of data-center royalties, when more than $2B of demand will convert into revenue, or whether the same growth rate can be sustained." },
+  outlookHeading: { ja: "会社が示した先行材料", en: "COMPANY LEADING INDICATORS" },
+  outlook: [
+    { ja: "Arm AGI CPUの顧客需要はFYE27〜FYE28で$2B超", en: "Customer demand for the Arm AGI CPU exceeds $2B across FYE27 and FYE28" },
+    { ja: "初期製品を複数顧客へ納入済み", en: "Initial product has been delivered to multiple customers" },
+    { ja: "FYE27〜FYE28の$1B機会を支える製造能力を確保", en: "Manufacturing capacity is secured for the stated $1B opportunity across FYE27 and FYE28" },
+  ],
+}, {
+  ticker: "TSM",
+  title: { ja: "Q2 2026：前四半期からの変化", en: "Q2 2026: changes from the prior quarter" },
+  previousPeriod: "Q1 2026",
+  currentPeriod: "Q2 2026",
+  reviewedOn: "2026-09-19",
+  source: {
+    title: "TSMC Reports Second Quarter EPS of NT$27.25",
+    publisher: "TSMC Press Center",
+    publishedOn: "2026-07-16",
+    url: "https://pr.tsmc.com/english/news/3326",
+    location: "Second-quarter results; third-quarter business outlook",
+  },
+  additionalSources: [{
+    title: "TSMC 2026 Q1 Quarterly Results",
+    publisher: "TSMC Investor Relations",
+    publishedOn: "2026-04-16",
+    url: "https://investor.tsmc.com/english/quarterly-results/2026/q1",
+    location: "Q1 actual net revenue, gross margin, and operating margin",
+  }],
+  metrics: [
+    { id: "revenue", label: { ja: "売上高", en: "Net revenue" }, previous: 35.9, current: 40.2, unit: "billion", change: { value: 11.978, unit: "percent" }, note: { ja: "米ドル換算。会社発表の前四半期比は12.0%。", en: "US-dollar basis. TSMC reports 12.0% quarter-on-quarter." } },
+    { id: "gross-margin", label: { ja: "粗利益率", en: "Gross margin" }, previous: 66.2, current: 67.7, unit: "percent", change: { value: 1.5, unit: "pp" }, note: { ja: "増減率ではなくパーセントポイント差。", en: "Percentage-point difference, not percentage growth." } },
+    { id: "operating-margin", label: { ja: "営業利益率", en: "Operating margin" }, previous: 58.1, current: 60.3, unit: "percent", change: { value: 2.2, unit: "pp" }, note: { ja: "増減率ではなくパーセントポイント差。", en: "Percentage-point difference, not percentage growth." } },
+  ],
+  reading: { ja: "米ドル建て売上は前四半期比12.0%増の$40.2B。粗利益率は1.5ポイント、営業利益率は2.2ポイント上昇しました。2nmはウェハ売上の3%、7nm以下の先端技術は77%を占めました。", en: "US-dollar revenue rose 12.0% quarter-on-quarter to $40.2B. Gross margin increased 1.5 points and operating margin increased 2.2 points. Two-nanometer accounted for 3% of wafer revenue, while 7nm and below accounted for 77%." },
+  unknown: { ja: "Q3見通しの達成可否、2nmの急拡大が製品別・顧客別売上に与える影響、海外生産拡大による将来の利益率への影響は、この発表だけでは確定しません。", en: "This release does not establish whether Q3 guidance will be met, how the 2nm ramp will affect product or customer mix, or the future margin impact of overseas manufacturing expansion." },
+  outlook: [
+    { ja: "Q3売上見通し：$44.6B〜$45.8B", en: "Q3 revenue outlook: $44.6B–$45.8B" },
+    { ja: "Q3粗利益率：65%〜67%", en: "Q3 gross margin: 65%–67%" },
+    { ja: "Q3営業利益率：56%〜58%", en: "Q3 operating margin: 56%–58%" },
+  ],
+}, {
+  ticker: "ASML",
+  title: { ja: "Q2 2026：前四半期からの変化", en: "Q2 2026: changes from the prior quarter" },
+  previousPeriod: "Q1 2026",
+  currentPeriod: "Q2 2026",
+  reviewedOn: "2026-09-19",
+  source: {
+    title: "ASML reports €9.3 billion total net sales and €2.9 billion net income in Q2 2026",
+    publisher: "ASML",
+    publishedOn: "2026-07-15",
+    url: "https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results",
+    location: "Q1/Q2 financial table; CEO statement and outlook",
+  },
+  metrics: [
+    { id: "sales", label: { ja: "売上高", en: "Total net sales" }, previous: 8.767, current: 9.326, unit: "eur-billion", change: { value: 6.376, unit: "percent" }, note: { ja: "ユーロ建て。公式表のQ1とQ2を比較。", en: "Euro basis; compares Q1 and Q2 in the official table." } },
+    { id: "installed-base", label: { ja: "保守・アップグレード売上", en: "Installed Base Management sales" }, previous: 2.488, current: 2.762, unit: "eur-billion", change: { value: 11.013, unit: "percent" }, note: { ja: "ネットサービスおよびフィールドオプション売上。", en: "Net service and field-option sales." } },
+    { id: "gross-margin", label: { ja: "粗利益率", en: "Gross margin" }, previous: 53.0, current: 54.0, unit: "percent", change: { value: 1.0, unit: "pp" }, note: { ja: "増減率ではなくパーセントポイント差。", en: "Percentage-point difference, not percentage growth." } },
+    { id: "net-income", label: { ja: "純利益", en: "Net income" }, previous: 2.757, current: 2.918, unit: "eur-billion", change: { value: 5.84, unit: "percent" }, note: { ja: "公式表のQ1とQ2を比較。", en: "Compares Q1 and Q2 in the official table." } },
+  ],
+  reading: { ja: "売上高は前四半期比約6.4%増の€9.326B、純利益は約5.8%増の€2.918Bでした。保守・アップグレード売上は約11.0%増え、粗利益率は1.0ポイント上昇しました。", en: "Sales rose about 6.4% quarter-on-quarter to €9.326B and net income rose about 5.8% to €2.918B. Installed Base Management sales increased about 11.0%, while gross margin improved by 1.0 point." },
+  unknown: { ja: "Q3見通しの達成可否、顧客別の注文構成、増産計画が将来の納入時期と利益率へ与える影響は、この発表だけでは確定しません。", en: "This release does not establish whether Q3 guidance will be met, the customer mix of orders, or how capacity expansion will affect future delivery timing and margins." },
+  outlook: [
+    { ja: "Q3売上見通し：€11.0B〜€12.0B", en: "Q3 sales outlook: €11.0B–€12.0B" },
+    { ja: "Q3粗利益率：55%〜57%", en: "Q3 gross margin: 55%–57%" },
+    { ja: "2026年売上見通し：€43B〜€45B、粗利益率54%〜56%", en: "2026 outlook: €43B–€45B sales and 54%–56% gross margin" },
+  ],
 }];
 
 export const verifiedChangeByTicker = Object.fromEntries(verifiedChanges.map((item) => [item.ticker, item]));
 
 export function verifiedChangeIssues(item: VerifiedChange): string[] {
   const issues: string[] = [];
-  const allowedSourceHosts = new Set(["www.sec.gov", "ir.amd.com", "investors.broadcom.com"]);
+  const allowedSourceHosts = new Set(["www.sec.gov", "ir.amd.com", "investors.broadcom.com", "newsroom.arm.com", "pr.tsmc.com", "investor.tsmc.com", "www.asml.com"]);
   if (!item.metrics.length || new Set(item.metrics.map((metric) => metric.id)).size !== item.metrics.length) issues.push("invalid-metrics");
   let sourceHost = "";
   try { sourceHost = new URL(item.source.url).hostname; } catch { /* reported below */ }
   if (item.source.publishedOn > item.reviewedOn || !allowedSourceHosts.has(sourceHost)) issues.push("invalid-source");
+  for (const source of item.additionalSources ?? []) {
+    let additionalHost = "";
+    try { additionalHost = new URL(source.url).hostname; } catch { /* reported below */ }
+    if (source.publishedOn > item.reviewedOn || !allowedSourceHosts.has(additionalHost)) issues.push("invalid-source");
+  }
   for (const metric of item.metrics) {
     if (!Number.isFinite(metric.current) || (metric.previous !== null && !Number.isFinite(metric.previous)) || !Number.isFinite(metric.change.value)) issues.push("invalid-value");
     if (metric.change.unit === "pp" && metric.unit !== "percent") issues.push("invalid-point-change");
