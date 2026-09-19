@@ -1,0 +1,70 @@
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import type { CoverageCompany } from "@/lib/research/intake";
+import { useResearchLanguage } from "../use-research-language";
+import base from "../research.module.css";
+import styles from "./coverage-company.module.css";
+
+const errorNames: Record<string, { ja: string; en: string }> = {
+  "http-403": { ja: "公式サイトが自動取得を拒否", en: "Official site rejected the automated request" },
+  timeout: { ja: "公式サイトが時間内に応答しませんでした", en: "Official site did not respond before timeout" },
+  "no-links": { ja: "現在の方法では発表リンクを抽出できませんでした", en: "No release links were found with the current method" },
+};
+
+function time(value: string | null, lang: "ja" | "en") {
+  if (!value) return lang === "ja" ? "未確認" : "Not checked";
+  return new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }).format(new Date(value));
+}
+
+export default function CoverageCompanyDashboard({ company, companies, generatedAt }: { company: CoverageCompany; companies: Pick<CoverageCompany, "ticker" | "name">[]; generatedAt: string }) {
+  const [lang, setLang] = useResearchLanguage();
+  const router = useRouter();
+  const t = (ja: string, en: string) => lang === "ja" ? ja : en;
+  const discoveryLabel = company.discovery.status === "ok" ? t("一覧取得に成功", "Release list retrieved") : company.discovery.status === "degraded" ? t("一覧の確認が必要", "Release list needs attention") : t("一覧未検証", "Release list untested");
+  const error = company.discovery.error ? errorNames[company.discovery.error]?.[lang] ?? t("取得時にエラーを検出", "Retrieval error detected") : null;
+
+  return <div className={base.app} lang={lang}>
+    <a className={base.skip} href="#coverage-main">{t("本文へ移動", "Skip to content")}</a>
+    <header className={base.header}>
+      <Link href="/research" className={base.brand} aria-label="Tech Phase Research"><span className={base.mark}>TP<span /></span><span>TECH PHASE<small>RESEARCH</small></span></Link>
+      <div className={base.headerRight}><span className={base.edition}>COMPANY WATCH <span>20</span></span><div className={base.languages} aria-label={t("言語", "Language")}><button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button><button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button></div></div>
+    </header>
+    <main id="coverage-main" className={styles.main}>
+      <div className={styles.topline}>
+        <Link href="/research/intake">← {t("AI関連20銘柄", "20 AI companies")}</Link>
+        <label>{t("銘柄を切り替える", "Choose company")}<select value={company.ticker} onChange={(event) => router.push(`/research/companies/${event.target.value}`)}>{companies.map((item) => <option key={item.ticker} value={item.ticker}>{item.ticker} · {item.name}</option>)}</select></label>
+      </div>
+      <aside className={styles.snapshot}><strong>{t("保存した取得記録", "SAVED INTAKE SNAPSHOT")}</strong><span>{t("出力日時", "Generated")}: {time(generatedAt, lang)} JST</span><p>{t("常時監視・自動更新はまだ接続していません。", "Continuous monitoring and automatic updates are not connected yet.")}</p></aside>
+      <header className={styles.companyHeading}><div><p className={styles.eyebrow}>{company.sector}</p><h1>{company.ticker} <span>{company.name}</span></h1><p>{t("公式発表から、前回との変化を照合するための銘柄ページ。", "A company page for comparing changes across official releases.")}</p></div><span className={`${styles.status} ${company.discovery.status === "ok" ? styles.good : styles.warning}`}>{discoveryLabel}</span></header>
+
+      <section className={styles.stats} aria-label={t("資料の取得状況", "Source intake status")}>
+        <div><span>{t("登録資料", "Sources found")}</span><strong>{company.counts.total}</strong><small>{t("過去分を含む", "Includes historical items")}</small></div>
+        <div><span>{t("本文を取得", "Bodies fetched")}</span><strong>{company.counts.fetched}</strong><small>{t("内容の照合前", "Not yet reviewed")}</small></div>
+        <div><span>{t("未取得", "Not fetched")}</span><strong>{company.counts.unfetched}</strong><small>{t("順次確認", "Awaiting checks")}</small></div>
+        <div><span>{t("取得エラー", "Fetch errors")}</span><strong>{company.counts.error}</strong><small>{t("経路の調整対象", "Retrieval path to review")}</small></div>
+      </section>
+
+      <section className={styles.section} aria-labelledby="changed-title"><div className={styles.sectionHeading}><div><p className={styles.eyebrow}>01 / WHAT CHANGED?</p><h2 id="changed-title">{t("変化を伝えるまでの確認状況", "Progress toward a verified change")}</h2></div><span>{t("数値比較は未作成", "Numeric comparison not prepared")}</span></div>
+        <div className={styles.pipeline}>
+          <article className={company.discovery.status === "ok" ? styles.complete : ""}><span>01</span><h3>{t("公式発表を検知", "Detect release")}</h3><strong>{discoveryLabel}</strong><p>{company.discovery.status === "ok" ? t(`${company.discovery.candidates}件のリンクを検出しました。`, `${company.discovery.candidates} links were found.`) : error || t("取得記録がありません。", "No retrieval record.")}</p><small>{t("最終確認", "Last check")}: {time(company.discovery.checkedAt, lang)} JST</small></article>
+          <article className={company.counts.fetched > 0 ? styles.complete : ""}><span>02</span><h3>{t("原文を取得", "Fetch source")}</h3><strong>{company.counts.fetched > 0 ? t(`${company.counts.fetched}件取得`, `${company.counts.fetched} fetched`) : t("取得待ち", "Awaiting fetch")}</strong><p>{t("取得できても、発表日・数値・対象期間の照合が必要です。", "Publication date, values, and reporting period still require review.")}</p></article>
+          <article><span>03</span><h3>{t("前回と比較", "Compare changes")}</h3><strong>{t("編集確認待ち", "Awaiting editorial review")}</strong><p>{t("同じ定義の数値をそろえ、事実・影響・未確認事項を分けて公開します。", "Comparable metrics must be aligned before facts, impact, and unknowns are published separately.")}</p></article>
+        </div>
+      </section>
+
+      <section className={styles.section} aria-labelledby="sources-title"><div className={styles.sectionHeading}><div><p className={styles.eyebrow}>02 / OFFICIAL RELEASES</p><h2 id="sources-title">{t("検知した公式資料", "Detected official sources")}</h2></div><a href={company.indexUrl} target="_blank" rel="noreferrer">{t(`公式${company.format === "rss" ? "RSS" : "一覧"} ↗`, `Official ${company.format === "rss" ? "RSS" : "release list"} ↗`)}</a></div>
+        {company.sources.length ? <ol className={styles.sources}>{company.sources.slice(0, 12).map((source) => <li key={source.url}><article><div className={styles.sourceTop}><span className={source.fetchState === "fetched" ? styles.fetched : source.fetchState === "error" ? styles.failed : styles.pending}>{source.fetchState === "fetched" ? t("本文取得済み", "Fetched") : source.fetchState === "error" ? t("取得エラー", "Fetch error") : t("本文未取得", "Not fetched")}</span><time>{source.published_on ?? t("発表日未確認", "Publication date unverified")}</time></div><h3>{source.displayTitle}</h3><p>{new URL(source.url).hostname}</p><div><span>{t("初回検知", "First detected")}: {time(source.discovered_at, lang)} JST</span><a href={source.url} target="_blank" rel="noreferrer">{t("公式原文 ↗", "Official source ↗")}</a></div></article></li>)}</ol> : <div className={styles.empty}><h3>{t("資料リンクをまだ登録できていません", "No source links registered yet")}</h3><p>{error || t("公式一覧の取得方法を確認しています。", "The official release-list method is being reviewed.")}</p><a href={company.indexUrl} target="_blank" rel="noreferrer">{t("公式サイトを確認 ↗", "Open official site ↗")}</a></div>}
+        {company.sources.length > 12 && <p className={styles.more}><Link href="/research/intake">{t(`残り${company.sources.length - 12}件を取得状況画面で確認 →`, `View ${company.sources.length - 12} more in intake status →`)}</Link></p>}
+      </section>
+
+      <section className={styles.section} aria-labelledby="next-title"><div className={styles.sectionHeading}><div><p className={styles.eyebrow}>03 / NEXT REVIEW</p><h2 id="next-title">{t("この銘柄で次に確認すること", "Next checks for this company")}</h2></div></div><div className={styles.nextChecks}>
+        <article><span>1</span><h3>{t("発表日と資料の種類", "Date and source type")}</h3><p>{t("決算・提携・製品発表を分け、公開日時を公式原文で確定します。", "Classify earnings, partnerships, and product releases; verify publication time in the original source.")}</p></article>
+        <article><span>2</span><h3>{t("比較できる数値", "Comparable metrics")}</h3><p>{t("前回と同じ対象・期間・会計基準の数値だけを並べます。", "Only values with matching scope, period, and accounting basis are compared.")}</p></article>
+        <article><span>3</span><h3>{t("影響と未確認事項", "Impact and unknowns")}</h3><p>{t("発表された事実と、業績・関連銘柄への解釈を分けて記録します。", "Published facts are kept separate from interpretations about financial and related-stock impact.")}</p></article>
+      </div></section>
+      <footer className={styles.footer}>TECH PHASE RESEARCH<p>{t("このページは取得状況の確認版です。リアルタイム配信や分析完了を示すものではありません。", "This page shows intake progress. It does not indicate real-time delivery or completed analysis.")}</p></footer>
+    </main>
+  </div>;
+}

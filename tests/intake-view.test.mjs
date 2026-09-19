@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { fetchState, filterSources, intakeCounts, snapshotIssues, coverageCounts, providers, providerByTicker } from "../lib/research/intake.ts";
+import { buildCoverageCompanies, coverageCompanyIssues, fetchState, filterSources, intakeCounts, snapshotIssues, coverageCounts, providers, providerByTicker } from "../lib/research/intake.ts";
 const snapshot = JSON.parse(readFileSync(new URL("../lib/research/intake-snapshot.json", import.meta.url)));
 const source = snapshot.sources.find(s => s.sha256);
 
@@ -48,4 +48,13 @@ test("coverage uses the latest run and never counts untested companies as failur
     { id: 2, ticker: "AMD", status: "ok" },
   ] });
   assert.deepEqual(counts, { registered: 20, discovered: 1, needsCheck: 1, untested: 18 });
+});
+
+test("every registered company has a valid company coverage page model", () => {
+  const companies = buildCoverageCompanies(snapshot);
+  assert.equal(companies.length, 20);
+  assert.deepEqual(coverageCompanyIssues(companies), []);
+  assert.equal(companies.find((company) => company.ticker === "NVDA").counts.total, 20);
+  assert.equal(companies.find((company) => company.ticker === "CRWV").counts.fetched, 1);
+  assert.equal(companies.find((company) => company.ticker === "ORCL").discovery.status, "degraded");
 });

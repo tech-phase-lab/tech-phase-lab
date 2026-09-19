@@ -75,3 +75,52 @@ export function snapshotIssues(data: IntakeSnapshot) {
   for (const h of data.history) if (!urls.has(h.url) || !Number.isFinite(Date.parse(h.at))) issues.push("invalid-history");
   return issues;
 }
+
+export type CoverageSource = IntakeSource & { displayTitle: string; fetchState: "error" | "fetched" | "unfetched" };
+export type CoverageCompany = {
+  ticker: string;
+  name: string;
+  sector: string;
+  sectorKey: string;
+  indexUrl: string;
+  format: string;
+  discovery: { status: "ok" | "degraded" | "untested"; candidates: number; checkedAt: string | null; error: string | null };
+  counts: ReturnType<typeof intakeCounts>;
+  sources: CoverageSource[];
+};
+
+export function buildCoverageCompanies(snapshot: IntakeSnapshot): CoverageCompany[] {
+  return providers.map((provider) => {
+    const runs = snapshot.discoveryRuns.filter((run) => run.ticker === provider.ticker).toSorted((a, b) => b.id - a.id);
+    const latest = runs[0];
+    const companySources = snapshot.sources.filter((source) => source.ticker === provider.ticker);
+    return {
+      ticker: provider.ticker,
+      name: provider.name,
+      sector: sectorNames[provider.sector],
+      sectorKey: provider.sector,
+      indexUrl: provider.indexUrl,
+      format: provider.format,
+      discovery: latest ? {
+        status: latest.status === "ok" ? "ok" : "degraded",
+        candidates: latest.candidates,
+        checkedAt: latest.at,
+        error: latest.error,
+      } : { status: "untested", candidates: 0, checkedAt: null, error: null },
+      counts: intakeCounts(companySources),
+      sources: companySources.map((source) => ({ ...source, displayTitle: source.title || sourceTitle(source.url), fetchState: fetchState(source) })),
+    };
+  });
+}
+
+export function coverageCompanyIssues(companies: CoverageCompany[]): string[] {
+  const issues: string[] = [];
+  if (companies.length !== providers.length) issues.push("missing-company");
+  if (new Set(companies.map((company) => company.ticker)).size !== companies.length) issues.push("duplicate-company");
+  for (const company of companies) {
+    if (!company.name || !company.sector || !company.indexUrl) issues.push("incomplete-company");
+    if (company.sources.some((source) => source.ticker !== company.ticker)) issues.push("wrong-company-source");
+    if (company.counts.total !== company.sources.length) issues.push("invalid-company-count");
+  }
+  return [...new Set(issues)];
+}
