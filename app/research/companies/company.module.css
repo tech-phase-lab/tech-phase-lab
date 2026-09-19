@@ -34,6 +34,7 @@
 .sectionHeading .eyebrow { margin-bottom: 6px; }
 .sectionNote { color: var(--muted); margin: -6px 0 20px; font-size: .875rem; }
 .tableScroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: #0e151e; }
+.scrollHint { display: none; font-size: .8125rem; color: var(--muted); margin: -6px 0 14px; }
 .comparisonTable { width: 100%; border-collapse: collapse; text-align: left; }
 .comparisonTable caption { caption-side: bottom; text-align: left; padding: 16px 20px; font-size: .8125rem; color: var(--muted); border-top: 1px solid var(--line); }
 .comparisonTable thead { background: #17212c; }
@@ -97,6 +98,7 @@
 .footer>span { white-space: nowrap; }
 .footer p { margin: 0; }
 @media(max-width:1000px) {
+  .scrollHint { display: block; }
   .main { padding: 24px 24px 0; }
   .comparisonTable { min-width: 770px; }
   .targetPanel { grid-template-columns: 1fr; }

@@ -71,6 +71,7 @@ export default function CompanyDashboard({ profile }: { profile: CompanyProfile 
 
       <section id="comparison" className={styles.section}>
         <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>01 / FINANCIAL CHANGES</p><h2>{t("前回から、数字はどう変わったか", "What changed in the numbers?")}</h2></div><span>{firstRow.previous.period} → {firstRow.current.period}</span></div>
+        <p className={styles.scrollHint}>{t("比較表は左右にスクロールできます →", "Scroll the table horizontally to compare →")}</p>
         <div className={styles.tableScroll} tabIndex={0} role="region" aria-label={t("数値比較表。狭い画面では横にスクロールできます", "Financial comparisons. Scroll horizontally on small screens")}>
           <table className={styles.comparisonTable}><caption>{t("金額のMは百万米ドル。実績とARRを区別し、同じ対象・基準で比較しています。", "M denotes USD millions. Actuals and ARR remain distinct; each row retains a consistent scope and basis.")}</caption>
             <thead><tr><th scope="col">{t("指標・定義", "Metric / definition")}</th><th scope="col">{firstRow.previous.period}</th><th scope="col">{firstRow.current.period}</th><th scope="col">{t("変化", "Change")}</th></tr></thead>

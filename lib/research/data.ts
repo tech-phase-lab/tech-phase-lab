@@ -18,7 +18,7 @@ const copy = (ja: string, en: string): Copy => ({ ja, en });
 const nebiusRelease: Source = {
   id: "nbis-q2", publisher: "Nebius IR", title: "Q2 2026 results",
   url: "https://assets.nebius.com/assets/72a8c258-bbb7-4df7-ab9d-8698f6cb88fc/PR.pdf?cache-buster=2026-08-12T11:54:07.336Z",
-  publishedOn: "2026-08-12", location: "p. 1 · Consolidated results",
+  publishedOn: "2026-08-12", location: "pp. 1–2, 7 · Results / Cash flow / Operations",
 };
 const nebiusLetter: Source = {
   id: "nbis-letter", publisher: "Nebius IR", title: "Q2 2026 shareholder letter",
@@ -28,7 +28,7 @@ const nebiusLetter: Source = {
 const micronSource: Source = {
   id: "mu-q3", publisher: "Micron IR", title: "Fiscal Q3 2026 results",
   url: "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx",
-  publishedOn: "2026-06-24", location: "Quarterly Financial Results / Business Outlook",
+  publishedOn: "2026-06-24", location: "Quarterly results / Cash-flow reconciliation / Outlook",
 };
 function metric(name: string, value: number, opts: Partial<Metric> = {}): Metric {
   return { name, value, unit: "million", currency: "USD", basis: "GAAP", scope: "Nebius Group", period: "Q2 2026", periodEnd: "2026-06-30", duration: "quarter", kind: "actual", sourceId: "nbis-q2", ...opts };
