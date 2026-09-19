@@ -1,0 +1,553 @@
+[
+  {
+    "ticker": "MU",
+    "name": "Micron",
+    "sector": "semiconductors",
+    "indexUrl": "https://www.micron.com/about/press/news",
+    "format": "html",
+    "allowedHosts": [
+      "www.micron.com",
+      "investors.micron.com"
+    ],
+    "articleRules": [
+      {
+        "host": "investors.micron.com",
+        "pattern": "^/news/press-release/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "SKHY",
+    "name": "SK hynix",
+    "sector": "semiconductors",
+    "indexUrl": "https://news.skhynix.com/en/category/ir/",
+    "format": "html",
+    "allowedHosts": [
+      "news.skhynix.com",
+      "www.skhynix.com"
+    ],
+    "articleRules": [
+      {
+        "host": "news.skhynix.com",
+        "pattern": "^/en/(?!contact-us/?$|terms-of-use/?$|feed/?$|heritage/?$)[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "SNDK",
+    "name": "Sandisk",
+    "sector": "semiconductors",
+    "indexUrl": "https://investor.sandisk.com/news-events/news-releases",
+    "format": "html",
+    "allowedHosts": [
+      "www.sandisk.com",
+      "investor.sandisk.com"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sandisk.com",
+        "pattern": "^/company/newsroom/(?:press-releases|blogs)/\\d{4}/.+"
+      },
+      {
+        "host": "investor.sandisk.com",
+        "pattern": "^/news-releases/news-release-details/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "NBIS",
+    "name": "Nebius",
+    "sector": "ai-cloud",
+    "indexUrl": "https://nebius.com/newsroom",
+    "format": "html",
+    "allowedHosts": [
+      "nebius.com",
+      "assets.nebius.com"
+    ],
+    "articleRules": [
+      {
+        "host": "nebius.com",
+        "pattern": "^/newsroom/[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "NVDA",
+    "name": "NVIDIA",
+    "sector": "semiconductors",
+    "indexUrl": "https://nvidianews.nvidia.com/rss.xml",
+    "format": "rss",
+    "allowedHosts": [
+      "nvidianews.nvidia.com",
+      "blogs.nvidia.com"
+    ],
+    "articleRules": [
+      {
+        "host": "nvidianews.nvidia.com",
+        "pattern": "^/news/[^/]+/?$"
+      },
+      {
+        "host": "blogs.nvidia.com",
+        "pattern": "^/blog/[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "AMD",
+    "name": "AMD",
+    "sector": "semiconductors",
+    "indexUrl": "https://ir.amd.com/news-events/press-releases/rss",
+    "format": "rss",
+    "allowedHosts": [
+      "ir.amd.com"
+    ],
+    "articleRules": [
+      {
+        "host": "ir.amd.com",
+        "pattern": "^/news-events/press-releases/detail/\\d+/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "AVGO",
+    "name": "Broadcom",
+    "sector": "semiconductors",
+    "indexUrl": "https://investors.broadcom.com/financial-information/financial-news-releases",
+    "format": "html",
+    "allowedHosts": [
+      "investors.broadcom.com"
+    ],
+    "articleRules": [
+      {
+        "host": "investors.broadcom.com",
+        "pattern": "^/news-releases/news-release-details/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "ARM",
+    "name": "Arm",
+    "sector": "semiconductors",
+    "indexUrl": "https://newsroom.arm.com/news/feed/",
+    "format": "rss",
+    "allowedHosts": [
+      "newsroom.arm.com"
+    ],
+    "articleRules": [
+      {
+        "host": "newsroom.arm.com",
+        "pattern": "^/news/(?!feed/?$)[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "TSM",
+    "name": "TSMC",
+    "sector": "semiconductors",
+    "indexUrl": "https://pr.tsmc.com/english/news",
+    "monitorUrl": "https://openapi.twse.com.tw/v1/opendata/t187ap04_L",
+    "format": "twse-material-json",
+    "requestTimeoutSeconds": 15,
+    "pollSeconds": 3,
+    "twseCompanyCode": "2330",
+    "allowEmpty": true,
+    "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001046179.json",
+        "format": "sec-json",
+        "label": "SEC submissions 6-K",
+        "cik": "0001046179",
+        "forms": ["6-K"],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001046179&type=6-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 6-K"
+      }
+    ],
+    "allowedHosts": [
+      "pr.tsmc.com",
+      "openapi.twse.com.tw",
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "pr.tsmc.com",
+        "pattern": "^/english/news/\\d+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1046179/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "ASML",
+    "name": "ASML",
+    "sector": "semiconductors",
+    "indexUrl": "https://www.asml.com/en/news/press-releases",
+    "format": "html",
+    "allowedHosts": [
+      "www.asml.com"
+    ],
+    "articleRules": [
+      {
+        "host": "www.asml.com",
+        "pattern": "^/en/news/press-releases/\\d{4}/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "MRVL",
+    "name": "Marvell",
+    "sector": "semiconductors",
+    "indexUrl": "https://investor.marvell.com/news-events/press-releases/rss",
+    "format": "rss",
+    "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001835632.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001835632",
+        "forms": ["8-K"],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001835632&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "www.marvell.com",
+      "investor.marvell.com",
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.marvell.com",
+        "pattern": "^/company/newsroom/(?!press-releases|in-the-news)[^/]+\\.html$"
+      },
+      {
+        "host": "investor.marvell.com",
+        "pattern": "^/news-events/press-releases/detail/\\d+/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1835632/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "ANET",
+    "name": "Arista Networks",
+    "sector": "networking",
+    "indexUrl": "https://www.arista.com/en/company/news/press-release-rss",
+    "format": "rss",
+    "requestTimeoutSeconds": 15,
+    "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001596532.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001596532",
+        "forms": ["8-K"],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001596532&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "www.arista.com",
+      "investors.arista.com",
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.arista.com",
+        "pattern": "^/en/company/news/press-release/[^/]+/?$"
+      },
+      {
+        "host": "investors.arista.com",
+        "pattern": "^/news-releases/news-release-details/.+"
+      },
+      {
+        "host": "investors.arista.com",
+        "pattern": "^/news-and-events/press-releases/press-release-details/.+"
+      },
+      {
+        "host": "investors.arista.com",
+        "pattern": "^/Communications/Press-Releases-and-Events/Press-Release-Details/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1596532/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "CRDO",
+    "name": "Credo",
+    "sector": "networking",
+    "indexUrl": "https://credosemi.com/",
+    "format": "html",
+    "allowedHosts": [
+      "credosemi.com",
+      "investors.credosemi.com"
+    ],
+    "articleRules": [
+      {
+        "host": "investors.credosemi.com",
+        "pattern": "^/news-events/news/news-details/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "CRWV",
+    "name": "CoreWeave",
+    "sector": "ai-cloud",
+    "indexUrl": "https://www.coreweave.com/",
+    "format": "html",
+    "allowedHosts": [
+      "www.coreweave.com"
+    ],
+    "articleRules": [
+      {
+        "host": "www.coreweave.com",
+        "pattern": "^/news/[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "VRT",
+    "name": "Vertiv",
+    "sector": "power-cooling",
+    "indexUrl": "https://www.vertiv.com/en-us/about/news-and-events/corporate-news/",
+    "monitorUrl": "https://www.vertiv.com/api-lang/en/searchAboutResults/searchNews",
+    "format": "news-json",
+    "requestTimeoutSeconds": 12,
+    "requestJson": {
+      "pageNumber": 0,
+      "newsType": "4593",
+      "fromNewsRelease": true,
+      "parentId": "4599",
+      "facetGroups": []
+    },
+    "itemsKey": "items",
+    "urlKey": "pageUrl",
+    "titleKey": "displayName",
+    "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001674101.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001674101",
+        "forms": ["8-K"],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001674101&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "www.vertiv.com",
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.vertiv.com",
+        "pattern": "^/en-us/about/news-and-events/corporate-news/(?:\\d{4}/)?[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1674101/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "GEV",
+    "name": "GE Vernova",
+    "sector": "power-cooling",
+    "indexUrl": "https://www.gevernova.com/news/subscribe/all/rss.xml",
+    "format": "rss",
+    "allowedHosts": [
+      "www.gevernova.com"
+    ],
+    "articleRules": [
+      {
+        "host": "www.gevernova.com",
+        "pattern": "^/news/press-releases/[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "DELL",
+    "name": "Dell Technologies",
+    "sector": "servers",
+    "indexUrl": "https://investors.delltechnologies.com/news-events/press-release",
+    "format": "html",
+    "allowedHosts": [
+      "investors.delltechnologies.com"
+    ],
+    "articleRules": [
+      {
+        "host": "investors.delltechnologies.com",
+        "pattern": "^/news-releases/news-release-details/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "PLTR",
+    "name": "Palantir",
+    "sector": "software",
+    "indexUrl": "https://www.palantir.com/sitemap.xml",
+    "format": "sitemap",
+    "requestTimeoutSeconds": 15,
+    "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001321655.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001321655",
+        "forms": ["8-K"],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "www.palantir.com",
+      "investors.palantir.com",
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.palantir.com",
+        "pattern": "^/newsroom/press-releases/[^/]+/?$"
+      },
+      {
+        "host": "investors.palantir.com",
+        "pattern": "^/news-details/.+"
+      },
+      {
+        "host": "investors.palantir.com",
+        "pattern": "^/news/[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1321655/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "MSFT",
+    "name": "Microsoft",
+    "sector": "platforms",
+    "indexUrl": "https://news.microsoft.com/source/feed/",
+    "format": "rss",
+    "allowedHosts": [
+      "news.microsoft.com",
+      "blogs.microsoft.com",
+      "www.microsoft.com"
+    ],
+    "articleRules": [
+      {
+        "host": "news.microsoft.com",
+        "pattern": "^/source/(?:\\d{4}/|features/).+"
+      },
+      {
+        "host": "blogs.microsoft.com",
+        "pattern": "^/(?:blog|on-the-issues)/\\d{4}/.+"
+      },
+      {
+        "host": "www.microsoft.com",
+        "pattern": "^/en-us/(?:security/blog|microsoft-cloud/blog)/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "AMZN",
+    "name": "Amazon",
+    "sector": "platforms",
+    "indexUrl": "https://www.aboutamazon.com/rss/feed.rss",
+    "format": "rss",
+    "allowedHosts": [
+      "www.aboutamazon.com"
+    ],
+    "articleRules": [
+      {
+        "host": "www.aboutamazon.com",
+        "pattern": "^/news/[^/]+/[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "GOOGL",
+    "name": "Alphabet / Google",
+    "sector": "platforms",
+    "indexUrl": "https://blog.google/rss/",
+    "format": "rss",
+    "allowedHosts": [
+      "blog.google"
+    ],
+    "articleRules": [
+      {
+        "host": "blog.google",
+        "pattern": "^/(?:technology|products|company-news|inside-google|outreach-initiatives|around-the-globe|feed)/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "ORCL",
+    "name": "Oracle",
+    "sector": "platforms",
+    "indexUrl": "https://www.oracle.com/news/",
+    "format": "html",
+    "requestTimeoutSeconds": 6,
+    "automaticSource": "fallback",
+    "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001341439.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001341439",
+        "forms": ["8-K"],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001341439&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "www.oracle.com",
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.oracle.com",
+        "pattern": "^/news/announcement/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1341439/.+"
+      }
+    ]
+  }
+]
