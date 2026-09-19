@@ -21,6 +21,11 @@ export type MonitorState = {
     budgetTokensLast24Hours?: number; measuredTokensLast24Hours?: number;
     tokenLimitReached?: boolean; tokenBudgetBlocked?: number;
   };
+  backup?: {
+    enabled: boolean; intervalSeconds: number; retention: number;
+    lastAttemptAt: string | null; lastSuccessAt: string | null;
+    healthy: boolean | null; backupCount: number; lastError: string | null;
+  };
   companies: Record<string, {
     basePollSeconds?: number; nextPollSeconds?: number; requestDurationMs?: number;
     status: string; route: string; candidates: number; checkedAt: string; error: string | null;

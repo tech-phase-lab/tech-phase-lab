@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { buildCoverageCompanies, coverageCompanyIssues, fetchState, filterSources, intakeCounts, snapshotIssues, coverageCounts, providers, providerByTicker } from "../lib/research/intake.ts";
 const snapshot = JSON.parse(readFileSync(new URL("../lib/research/intake-snapshot.json", import.meta.url)));
+const liveTypes = readFileSync(new URL("../lib/research/use-live-intake.ts", import.meta.url), "utf8");
+const intakeDashboard = readFileSync(new URL("../app/research/intake/intake-dashboard.tsx", import.meta.url), "utf8");
 const source = snapshot.sources.find(s => s.sha256);
 
 test("snapshot has valid source references and no private review details", () => {
@@ -11,6 +13,13 @@ test("snapshot has valid source references and no private review details", () =>
     assert.equal("reviewer" in h, false);
     assert.equal("reason" in h, false);
   }
+});
+
+test("operations preview exposes verified backup health without storage details", () => {
+  assert.match(liveTypes, /backup\?:/);
+  assert.match(intakeDashboard, /DB保護：正常/);
+  assert.match(intakeDashboard, /backupCount/);
+  assert.doesNotMatch(intakeDashboard, /backup\.(sha256|filename|path|directory)/);
 });
 
 test("latest failure wins over a previously successful fetch or editorial approval", () => {
