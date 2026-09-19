@@ -11,7 +11,7 @@ import sqlite3
 import sys
 import re
 import xml.etree.ElementTree as ET
-from urllib.parse import urljoin, urlsplit, urlunsplit
+from urllib.parse import urlencode, urljoin, urlsplit, urlunsplit
 from urllib.error import HTTPError
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 import threading
@@ -265,6 +265,56 @@ def news_json_links(body, ticker, source):
     return links
 
 
+def roc_date(value):
+    """Convert a strict seven-digit Minguo date to ISO without guessing."""
+    if not re.fullmatch(r"\d{7}", value or ""):
+        raise ValueError("Invalid TWSE material-information date")
+    year = int(value[:3]) + 1911
+    parsed = datetime.strptime(f"{year:04d}{value[3:]}", "%Y%m%d")
+    return parsed.strftime("%Y-%m-%d")
+
+
+def twse_material_links(body, ticker, source):
+    """Extract one company's official material disclosures with inline evidence."""
+    data = json.loads(body)
+    if not isinstance(data, list):
+        raise ValueError("Invalid TWSE material-information structure")
+    company_code = source.get("twseCompanyCode")
+    if not re.fullmatch(r"\d{4,6}", company_code or ""):
+        raise ValueError("Invalid TWSE company code")
+    links = {}
+    for item in data:
+        if not isinstance(item, dict) or item.get("公司代號") != company_code:
+            continue
+        spoken_date = item.get("發言日期", "")
+        spoken_time = item.get("發言時間", "")
+        subject = item.get("主旨 ", "")
+        explanation = item.get("說明", "")
+        if not re.fullmatch(r"\d{1,6}", spoken_time) or not isinstance(subject, str) or not subject.strip():
+            raise ValueError("Incomplete TWSE material-information record")
+        published_on = roc_date(spoken_date)
+        subject = " ".join(subject.split())[:300]
+        explanation = "\n".join(line.strip() for line in str(explanation).splitlines() if line.strip())
+        evidence = "\n".join([
+            f"公司代號: {company_code}",
+            f"公司名稱: {' '.join(str(item.get('公司名稱', '')).split())}",
+            f"發言日期: {spoken_date}",
+            f"發言時間: {spoken_time}",
+            f"主旨: {subject}",
+            f"說明: {explanation}",
+        ])[:MAX_EXTRACTED_CHARS]
+        identity = hashlib.sha256(evidence.encode()).hexdigest()[:16]
+        query = urlencode({"company": company_code, "date": spoken_date, "time": spoken_time, "id": identity})
+        url = safe_url(source["url"] + "?" + query, ticker)
+        links[url] = {
+            "title": subject,
+            "publishedOn": published_on,
+            "inlineText": evidence,
+            "contentBytes": len(json.dumps(item, ensure_ascii=False, separators=(",", ":")).encode()),
+        }
+    return links
+
+
 def sec_submission_links(body, ticker, source):
     """Turn the SEC submissions columnar JSON into official filing-document URLs."""
     data = json.loads(body)
@@ -342,6 +392,7 @@ def connect(path):
         "fetched_at": "TEXT",
         "fetch_failures": "INTEGER NOT NULL DEFAULT 0",
         "next_fetch_at": "TEXT",
+        "source_mode": "TEXT NOT NULL DEFAULT 'remote'",
     }
     for column, declaration in migrations.items():
         if column not in source_columns:
@@ -364,7 +415,7 @@ def monitoring_sources(ticker, automatic=False):
     """Return the preferred company feed followed by official fallback feeds."""
     provider = PROVIDERS[ticker]
     primary = {"url": INDEXES[ticker], "format": provider["format"], "route": "primary"}
-    for key in ("requestJson", "itemsKey", "urlKey", "titleKey"):
+    for key in ("requestJson", "itemsKey", "urlKey", "titleKey", "twseCompanyCode", "allowEmpty"):
         if key in provider:
             primary[key] = provider[key]
     sources = [primary] + [
@@ -388,6 +439,10 @@ def discover_links(body, kind, ticker, source):
         if kind != "application/json":
             raise ValueError("News endpoint is not JSON")
         return news_json_links(body, ticker, source)
+    if source["format"] == "twse-material-json":
+        if kind != "application/json":
+            raise ValueError("TWSE material-information source is not JSON")
+        return twse_material_links(body, ticker, source)
     if kind != "text/html":
         raise ValueError("Index is not HTML")
     parser = Links(source["url"], ticker)
@@ -403,7 +458,7 @@ def collect_discovery(ticker, transport=fetch, automatic=False):
         try:
             body, kind = transport(source["url"], ticker)
             links = discover_links(body, kind, ticker, source)
-            if not links:
+            if not links and not source.get("allowEmpty"):
                 raise ValueError("No release links parsed; source discovery requires investigation")
             if len(links) > 500:
                 raise ValueError("Too many source links; narrow the source scope before importing")
@@ -428,8 +483,21 @@ def collect_discovery(ticker, transport=fetch, automatic=False):
 def save_discovery(db, ticker, result, links):
     """Persist one completed discovery result and return newly inserted URLs."""
     before = {row[0] for row in db.execute("SELECT url FROM sources WHERE ticker=?", (ticker,))}
-    for url, title in links.items():
-        add_source(db, ticker, url, title=title)
+    for url, candidate in links.items():
+        detail = candidate if isinstance(candidate, dict) else {"title": candidate}
+        add_source(db, ticker, url, published_on=detail.get("publishedOn"), title=detail.get("title"))
+        if detail.get("inlineText") is not None:
+            with db:
+                db.execute("UPDATE sources SET source_mode='inline' WHERE url=?", (url,))
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            text = detail["inlineText"]
+            save_source_check(db, row, {
+                "sha256": hashlib.sha256(text.encode()).hexdigest(),
+                "contentType": "application/json",
+                "contentBytes": detail.get("contentBytes", len(text.encode())),
+                "extractedText": text,
+                "extractedChars": len(text),
+            })
     with db:
         db.execute("INSERT INTO discovery_runs(ticker,at,status,candidates,error,index_url) VALUES(?,?,?,?,?,?)", (ticker, now(), result["status"], result["candidates"], result["error"], result["sourceUrl"]))
     return sorted(set(links) - before)

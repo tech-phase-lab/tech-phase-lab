@@ -51,6 +51,16 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertNotIn("Evidence body.", exported)
         self.assertEqual(app.public_state()["sourceChecks"], 1)
 
+    def test_inline_exchange_evidence_is_not_refetched_as_an_article(self):
+        inline_url = "https://openapi.twse.com.tw/v1/opendata/t187ap04_L?company=2330&date=1150918&time=153643&id=abc"
+        with monitor.connect(self.db_path) as db:
+            monitor.add_source(db, "TSM", inline_url)
+            db.execute("UPDATE sources SET source_mode='inline' WHERE url=?", (inline_url,))
+            db.commit()
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        rows, _ = app.body_candidates()
+        self.assertNotIn(inline_url, [row["url"] for row in rows])
+
 
 if __name__ == "__main__":
     unittest.main()

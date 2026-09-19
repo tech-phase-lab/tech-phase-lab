@@ -92,7 +92,7 @@ class AutomaticMonitor:
             rows = db.execute("""
               SELECT s.*
               FROM sources s LEFT JOIN release_events e ON e.url=s.url
-              WHERE s.next_fetch_at IS NULL OR s.next_fetch_at<=?
+              WHERE s.source_mode='remote' AND (s.next_fetch_at IS NULL OR s.next_fetch_at<=?)
               ORDER BY e.detected_at IS NULL, e.detected_at DESC,
                        s.checked_at IS NOT NULL, s.checked_at, s.discovered_at, s.url
               LIMIT ?

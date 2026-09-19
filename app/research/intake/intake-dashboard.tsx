@@ -43,8 +43,8 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
     <a className={styles.skip} href="#intake-main">本文へ移動</a>
     <header className={styles.header}><Link href="/research" className={styles.brand}><b>TP</b><span>TECH PHASE<small>RESEARCH / OPERATIONS</small></span></Link><span className={styles.badge}>運営用プレビュー</span></header>
     <main id="intake-main" className={styles.main}>
-      <div className={styles.heading}><div><p className={styles.eyebrow}>AI COMPANY COVERAGE</p><h1>AI関連銘柄の資料・取得状況</h1><p>公式ニュース・RSSから、原文と照合する資料を選びます。</p></div><Link href="/research">リサーチ画面へ ↗</Link></div>
-      <aside className={styles.notice}><strong>{live.mode === "automatic" ? "公式発表を自動監視しています" : "自動監視サービスの接続待ち"}</strong><span>{live.mode === "automatic" ? `最終巡回：${time(live.monitor?.lastCycleAt ?? null)} JST` : `保存記録の出力日時：${time(snapshot.generatedAt)} JST`}</span><p>{live.mode === "automatic" ? "SEC・公式RSSは3秒、企業HTML一覧は5秒を基準に巡回し、新しい公式資料を検知すると自動反映します。" : "現在は保存済み記録を表示しています。監視サービス接続後は3秒ごとに自動更新されます。"}</p></aside>
+      <div className={styles.heading}><div><p className={styles.eyebrow}>AI COMPANY COVERAGE</p><h1>AI関連銘柄の資料・取得状況</h1><p>企業公式・取引所・SECの一次情報から、原文と照合する資料を選びます。</p></div><Link href="/research">リサーチ画面へ ↗</Link></div>
+      <aside className={styles.notice}><strong>{live.mode === "automatic" ? "公式発表を自動監視しています" : "自動監視サービスの接続待ち"}</strong><span>{live.mode === "automatic" ? `最終巡回：${time(live.monitor?.lastCycleAt ?? null)} JST` : `保存記録の出力日時：${time(snapshot.generatedAt)} JST`}</span><p>{live.mode === "automatic" ? "公式RSS・構造化された一次情報は3秒、企業HTML一覧は5秒を基準に巡回し、新しい公式資料を検知すると自動反映します。" : "現在は保存済み記録を表示しています。監視サービス接続後は3秒ごとに自動更新されます。"}</p></aside>
       <section aria-labelledby="events-title" className={styles.queue}><div className={styles.sectionTitle}><h2 id="events-title">新着の公式発表</h2><span>初回取り込みを除く自動検知：{events.length}件</span></div>
         <p className={styles.coverageNote}>監視開始前の過去資料は速報として扱いません。ここには監視開始後に新しく現れた公式URLだけを、検知時刻順で表示します。</p>
         {events.length === 0 ? <div className={styles.empty}><h3>監視開始後の新着はまだありません</h3><p>常駐監視の接続後、新しい公式発表を検知すると自動で追加されます。</p></div> : <ul className={styles.sources}>{events.slice(0, 20).map(event => <li key={event.id}><article className={styles.source}>
@@ -59,20 +59,20 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
       </section>
       <nav aria-label="分野で絞り込み" className={styles.sectors}>{[["all", "すべて"], ...Object.entries(sectorNames)].map(([key, label]) => <button key={key} aria-pressed={sector === key} onClick={() => chooseSector(key)}>{label}</button>)}</nav>
       <section aria-labelledby="health-title"><div className={styles.sectionTitle}><h2 id="health-title">公式一覧の取得状況</h2><span>一覧と本文の取得は別々に確認</span></div>
-        <p className={styles.coverageNote}>会社の公式発表・ブログを対象としています。AI以外の発表や過去分も含みます。登録済みでも取得に成功していない銘柄があります。</p>
+        <p className={styles.coverageNote}>企業公式の発表・ブログに加え、対象企業のSEC提出書類と取引所の重要開示を補完利用します。AI以外の発表や過去分も含みます。</p>
         <div className={styles.health}>{selectedProviders.map(provider => {
           const symbol = provider.ticker;
           const runs = snapshot.discoveryRuns.filter(r => r.ticker === symbol).toSorted((a, b) => b.id - a.id);
           const latest = runs[0];
           const totals = intakeCounts(snapshot.sources.filter(s => s.ticker === symbol));
           const available = latest?.status === "ok" || latest?.status === "fallback";
-          return <article key={symbol}><div className={styles.healthTop}><h3>{symbol}</h3><span className={available ? styles.good : styles.warning}>{latest?.status === "ok" ? "企業公式一覧から取得" : latest?.status === "fallback" ? "公式バックアップ経路で取得" : latest ? "一覧の確認が必要" : "一覧未検証"}</span></div>
+          return <article key={symbol}><div className={styles.healthTop}><h3>{symbol}</h3><span className={available ? styles.good : styles.warning}>{latest?.status === "ok" ? "公式経路から取得" : latest?.status === "fallback" ? "公式バックアップ経路で取得" : latest ? "一覧の確認が必要" : "一覧未検証"}</span></div>
             <p className={styles.companyName}>{provider.name} <small>{sectorNames[provider.sector]}</small></p>
-            <p>{latest?.status === "ok" ? `${latest.candidates}件のリンクを検出` : latest?.status === "fallback" ? `企業サイトを補完し、SEC提出書類を${latest.candidates}件検出` : errorNames[latest?.error ?? ""] || "取得記録なし"}</p>
+            <p>{latest?.status === "ok" ? (provider.format === "twse-material-json" ? `取引所の当日重要開示 ${latest.candidates}件` : `${latest.candidates}件のリンクを検出`) : latest?.status === "fallback" ? `企業サイトを補完し、公式提出書類を${latest.candidates}件検出` : errorNames[latest?.error ?? ""] || "取得記録なし"}</p>
             <p className={styles.muted}>本文・PDF：取得済み {totals.fetched} ／ 未取得 {totals.unfetched} ／ エラー {totals.error}</p>
             <p className={styles.meta}>一覧の確認日時：{latest ? time(latest.at) : "未確認"} JST</p>
             <div className={styles.cardActions}><Link href={`/research/companies/${symbol}`}>銘柄ページ →</Link><a href={provider.indexUrl} target="_blank" rel="noopener noreferrer">公式{provider.format === "rss" ? "RSS" : "一覧"} ↗</a><button disabled={!totals.total} onClick={() => { setTicker(symbol); setQuery(""); setState("all"); setReview("all"); setPage(1); requestAnimationFrame(() => document.getElementById("queue-title")?.scrollIntoView({ block: "start" })); }}>資料を表示（{totals.total}）</button></div>
-            <details className={styles.runHistory}><summary>{symbol}の一覧取得履歴（{runs.length}件）</summary><ul>{runs.map(r => <li key={r.id}><time>{time(r.at)} JST</time><span>{r.status === "ok" ? `${r.candidates}件検出` : r.status === "fallback" ? `SEC経路で${r.candidates}件検出` : errorNames[r.error ?? ""] || "取得異常"}</span></li>)}</ul></details>
+            <details className={styles.runHistory}><summary>{symbol}の一覧取得履歴（{runs.length}件）</summary><ul>{runs.map(r => <li key={r.id}><time>{time(r.at)} JST</time><span>{r.status === "ok" ? `${r.candidates}件検出` : r.status === "fallback" ? `公式バックアップで${r.candidates}件検出` : errorNames[r.error ?? ""] || "取得異常"}</span></li>)}</ul></details>
           </article>;
         })}</div>
       </section>

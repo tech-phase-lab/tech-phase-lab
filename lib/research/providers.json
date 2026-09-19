@@ -145,9 +145,11 @@
     "name": "TSMC",
     "sector": "semiconductors",
     "indexUrl": "https://pr.tsmc.com/english/news",
-    "format": "html",
-    "requestTimeoutSeconds": 6,
-    "automaticSource": "fallback",
+    "monitorUrl": "https://openapi.twse.com.tw/v1/opendata/t187ap04_L",
+    "format": "twse-material-json",
+    "requestTimeoutSeconds": 15,
+    "twseCompanyCode": "2330",
+    "allowEmpty": true,
     "fallbackSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001046179.json",
@@ -165,6 +167,7 @@
     ],
     "allowedHosts": [
       "pr.tsmc.com",
+      "openapi.twse.com.tw",
       "data.sec.gov",
       "www.sec.gov"
     ],

@@ -1,4 +1,5 @@
 import importlib.util
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -121,19 +122,45 @@ class IntakeTests(unittest.TestCase):
         self.assertIn("sec.gov", run["index_url"])
         self.assertIn("403", run["error"])
 
-    def test_automatic_monitor_prefers_configured_official_fallback(self):
-        self.assertEqual(m.monitoring_sources("TSM")[0]["route"], "primary")
-        self.assertEqual(m.monitoring_sources("TSM", automatic=True)[0]["route"], "fallback")
-        self.assertEqual(m.monitoring_sources("TSM", automatic=True)[0]["format"], "sec-json")
+    def test_automatic_monitor_prefers_twse_material_information(self):
+        source = m.monitoring_sources("TSM", automatic=True)[0]
+        self.assertEqual(source["route"], "primary")
+        self.assertEqual(source["format"], "twse-material-json")
+        self.assertEqual(source["twseCompanyCode"], "2330")
+        self.assertTrue(source["allowEmpty"])
 
     def test_sec_submissions_json_filters_form_and_builds_official_document_url(self):
-        source = m.monitoring_sources("TSM", automatic=True)[0]
+        source = next(source for source in m.monitoring_sources("TSM", automatic=True) if source["format"] == "sec-json")
         body = b'''{"cik":"1046179","filings":{"recent":{"form":["6-K","3"],"accessionNumber":["0001046179-26-000658","0000000000-26-000001"],"primaryDocument":["tsm-20260918.htm","ownership.xml"],"primaryDocDescription":["REPORT OF FOREIGN ISSUER",""]}}}'''
         links = m.sec_submission_links(body, "TSM", source)
         self.assertEqual(len(links), 1)
         url, title = next(iter(links.items()))
         self.assertEqual(url, "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000658/tsm-20260918.htm")
         self.assertEqual(title, "6-K · REPORT OF FOREIGN ISSUER")
+
+    def test_twse_material_information_is_filtered_and_saved_as_inline_evidence(self):
+        body = json.dumps([
+            {"發言日期":"1150918","發言時間":"153643","公司代號":"2330","公司名稱":"台積電","主旨 ":"董事會決議重要事項","說明":"1. 核准資本預算100億元。\n2. 尚待執行。"},
+            {"發言日期":"1150918","發言時間":"160000","公司代號":"9999","公司名稱":"其他公司","主旨 ":"不應匯入","說明":"其他"},
+        ], ensure_ascii=False).encode()
+        result = m.discover(self.db, "TSM", lambda *_: (body, "application/json"))
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["candidates"], 1)
+        row = self.db.execute("SELECT * FROM sources WHERE ticker='TSM'").fetchone()
+        self.assertEqual(row["published_on"], "2026-09-18")
+        self.assertEqual(row["source_mode"], "inline")
+        self.assertEqual(row["content_type"], "application/json")
+        self.assertIn("資本預算100億元", row["extracted_text"])
+        self.assertIsNotNone(row["sha256"])
+        self.assertIn("company=2330", row["url"])
+        self.assertNotIn("extracted_text", m.snapshot(self.db)["sources"][-1])
+
+    def test_twse_valid_empty_company_result_is_not_a_false_failure(self):
+        body = b'[{"company":"other"}]'
+        result, links = m.collect_discovery("TSM", lambda *_: (body, "application/json"), automatic=True)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["candidates"], 0)
+        self.assertEqual(links, {})
 
     def test_collection_is_read_only_until_saved_and_reports_only_new_urls(self):
         markup = b'<a href="/newsroom/automatic">Automatic release</a>'
@@ -328,6 +355,8 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(len(m.PROVIDERS), 22)
         for ticker, p in m.PROVIDERS.items():
             self.assertEqual(m.safe_url(p["indexUrl"], ticker), p["indexUrl"])
+            if p.get("monitorUrl"):
+                self.assertEqual(m.safe_url(p["monitorUrl"], ticker), p["monitorUrl"])
             if p.get("monitorUrl"):
                 self.assertEqual(m.safe_url(p["monitorUrl"], ticker), p["monitorUrl"])
             for source in p.get("fallbackSources", []):
