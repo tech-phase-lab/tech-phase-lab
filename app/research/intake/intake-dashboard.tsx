@@ -14,6 +14,11 @@ function time(value: string | null) {
   if (!value) return "未取得";
   return new Intl.DateTimeFormat("ja-JP", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" }).format(new Date(value));
 }
+function bodyEvidence(source: IntakeSnapshot["sources"][number]) {
+  if (!source.sha256) return "未取得";
+  if ((source.extracted_chars ?? 0) > 0) return `抽出済み ${source.extracted_chars?.toLocaleString("ja-JP")}文字`;
+  return source.content_type === "application/pdf" ? "PDF取得済み・文字抽出は未対応" : "原文取得済み・抽出テキストなし";
+}
 
 export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: { snapshot: IntakeSnapshot; titles: Record<string, string> }) {
   const [query, setQuery] = useState("");
@@ -87,7 +92,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
             <div className={styles.tags}><b>{s.ticker}</b><span className={styles.neutral}>{sectorNames[providerByTicker[s.ticker]?.sector]}</span><span className={status === "error" ? styles.warning : status === "fetched" ? styles.good : styles.neutral}>{stateNames[status]}</span><span className={styles.neutral}>{reviewNames[s.status]}</span></div>
             <h3>{title(s.url)}</h3><p className={styles.domain}>{new URL(s.url).hostname}</p>
             {s.error && <p className={styles.error}>{errorNames[s.error] || "資料の取得に失敗"}。{s.sha256 ? "以前の取得記録はありますが、最新の試行は失敗しています。" : "本文は未取得です。"}</p>}
-            <dl className={styles.dates}><div><dt>資料の発表日</dt><dd>{s.published_on ?? "未確認"}</dd></div><div><dt>初回の検知日時（JST）</dt><dd>{time(s.discovered_at)}</dd></div><div><dt>最後の取得試行（JST）</dt><dd>{time(s.checked_at)}</dd></div></dl>
+            <dl className={styles.dates}><div><dt>資料の発表日</dt><dd>{s.published_on ?? "未確認"}</dd></div><div><dt>初回の検知日時（JST）</dt><dd>{time(s.discovered_at)}</dd></div><div><dt>最後の取得試行（JST）</dt><dd>{time(s.checked_at)}</dd></div><div><dt>要約用の原文証拠</dt><dd>{bodyEvidence(s)}</dd></div></dl>
             <div className={styles.sourceFooter}><a href={s.url} target="_blank" rel="noopener noreferrer">公式原文を開く ↗</a><span>取得の成功は、内容の確認完了を意味しません</span></div>
             <details className={styles.history}><summary>資料の取得・確認履歴（{history.length}件）</summary>
               {s.sha256 && <p className={styles.fingerprint}>最後に取得した内容の識別値 <code>{s.sha256}</code></p>}

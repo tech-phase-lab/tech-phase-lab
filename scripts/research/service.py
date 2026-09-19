@@ -33,6 +33,8 @@ class AutomaticMonitor:
         self.fast_seconds = positive_int("RESEARCH_FAST_POLL_SECONDS", 3, 3)
         self.standard_seconds = positive_int("RESEARCH_STANDARD_POLL_SECONDS", 5, 5)
         self.workers = positive_int("RESEARCH_MAX_WORKERS", 8, 1)
+        self.body_interval = positive_int("RESEARCH_BODY_FETCH_INTERVAL_SECONDS", 10, 5)
+        self.body_batch = positive_int("RESEARCH_BODY_FETCH_BATCH", 2, 1)
         configured = [value.strip().upper() for value in os.environ.get("RESEARCH_TICKERS", "").split(",") if value.strip()]
         unknown = sorted(set(configured) - set(monitor.PROVIDERS))
         if unknown:
@@ -48,6 +50,9 @@ class AutomaticMonitor:
             "lastChangeAt": None,
             "cycles": 0,
             "newSources": 0,
+            "sourceChecks": 0,
+            "sourceFetchErrors": 0,
+            "pendingBodies": 0,
             "tickerCount": len(self.tickers),
             "companies": {},
         }
@@ -76,12 +81,59 @@ class AutomaticMonitor:
         with self.db_lock, monitor.connect(self.db_path) as db:
             return monitor.snapshot(db)
 
+    def body_candidates(self):
+        """Prioritize new release events, then the oldest due source bodies."""
+        due = utc_now()
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            pending = db.execute(
+                "SELECT count(*) FROM sources WHERE next_fetch_at IS NULL OR next_fetch_at<=?",
+                (due,),
+            ).fetchone()[0]
+            rows = db.execute("""
+              SELECT s.*
+              FROM sources s LEFT JOIN release_events e ON e.url=s.url
+              WHERE s.next_fetch_at IS NULL OR s.next_fetch_at<=?
+              ORDER BY e.detected_at IS NULL, e.detected_at DESC,
+                       s.checked_at IS NOT NULL, s.checked_at, s.discovered_at, s.url
+              LIMIT ?
+            """, (due, self.body_batch)).fetchall()
+        return rows, pending
+
+    def fetch_bodies(self, pool):
+        rows, pending = self.body_candidates()
+        if not rows:
+            with self.state_lock:
+                self.state["pendingBodies"] = pending
+            return
+        futures = {pool.submit(monitor.collect_source, row, monitor.fetch): row for row in rows}
+        completed = []
+        for future in as_completed(futures):
+            row = futures[future]
+            try:
+                completed.append((row, future.result(), None))
+            except Exception as exc:
+                completed.append((row, None, exc))
+        errors = 0
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            for row, result, error in completed:
+                if error is None:
+                    monitor.save_source_check(db, row, result)
+                else:
+                    monitor.save_source_error(db, row, error)
+                    errors += 1
+            monitor.write_snapshot(db, self.snapshot_path)
+        with self.state_lock:
+            self.state["sourceChecks"] += len(completed)
+            self.state["sourceFetchErrors"] += errors
+            self.state["pendingBodies"] = max(0, pending - len(completed))
+
     def run(self):
         next_due = {ticker: 0.0 for ticker in self.tickers}
         signatures = {}
         known = {}
         baseline_ready = {}
         failure_streak = {ticker: 0 for ticker in self.tickers}
+        next_body_fetch = 0.0
         with self.db_lock, monitor.connect(self.db_path) as db:
             for ticker in self.tickers:
                 known[ticker] = {row[0] for row in db.execute("SELECT url FROM sources WHERE ticker=?", (ticker,))}
@@ -161,6 +213,10 @@ class AutomaticMonitor:
                     self.state["companies"].update(company_states)
                     if new_count:
                         self.state["lastChangeAt"] = checked_at
+
+                if time.monotonic() >= next_body_fetch:
+                    self.fetch_bodies(pool)
+                    next_body_fetch = time.monotonic() + self.body_interval
 
 
 class Handler(BaseHTTPRequestHandler):

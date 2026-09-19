@@ -1,6 +1,6 @@
 """Official-source research intake. No scheduler, summarization, or publishing side effects."""
 import argparse
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import hashlib
 from html.parser import HTMLParser
 from html import unescape
@@ -21,6 +21,7 @@ PROVIDERS = {p["ticker"]: p for p in json.loads((ROOT / "lib/research/providers.
 INDEXES = {t: p["indexUrl"] for t, p in PROVIDERS.items()}
 HOSTS = {t: set(p["allowedHosts"]) for t, p in PROVIDERS.items()}
 MAX_BYTES = 12 * 1024 * 1024
+MAX_EXTRACTED_CHARS = 160_000
 _FETCH_CACHE = {}
 _FETCH_CACHE_LOCK = threading.Lock()
 
@@ -123,6 +124,70 @@ class Links(HTMLParser):
             self.current, self.text = None, []
 
 
+class ArticleText(HTMLParser):
+    """Extract readable evidence text without retaining scripts or page chrome."""
+
+    ignored = {"script", "style", "noscript", "svg", "nav", "footer", "form", "button"}
+    blocks = {"title", "h1", "h2", "h3", "h4", "p", "li", "blockquote", "figcaption", "td", "th", "time"}
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.parts = []
+        self.ignored_depth = 0
+
+    def handle_starttag(self, tag, attrs):
+        tag = tag.lower()
+        if tag in self.ignored:
+            self.ignored_depth += 1
+            return
+        if self.ignored_depth:
+            return
+        if tag == "meta":
+            values = {key.lower(): value for key, value in attrs if key and value}
+            name = (values.get("name") or values.get("property") or "").lower()
+            if name in {"description", "og:description", "twitter:description"}:
+                self.parts.extend(["\n", values.get("content", ""), "\n"])
+        elif tag in self.blocks or tag == "br":
+            self.parts.append("\n")
+
+    def handle_endtag(self, tag):
+        tag = tag.lower()
+        if tag in self.ignored:
+            self.ignored_depth = max(0, self.ignored_depth - 1)
+            return
+        if not self.ignored_depth and tag in self.blocks:
+            self.parts.append("\n")
+
+    def handle_data(self, value):
+        if not self.ignored_depth:
+            self.parts.append(value)
+
+    def result(self):
+        lines, previous = [], None
+        for part in "".join(self.parts).splitlines():
+            line = " ".join(part.split())
+            if line and line != previous:
+                lines.append(line)
+                previous = line
+        return "\n".join(lines)[:MAX_EXTRACTED_CHARS]
+
+
+def extract_text(content, content_type):
+    """Return bounded plain text for later evidence-grounded editorial work."""
+    if content_type == "text/html":
+        parser = ArticleText()
+        parser.feed(content.decode("utf-8", errors="replace"))
+        parser.close()
+        return parser.result()
+    if content_type in {"application/rss+xml", "application/atom+xml", "application/xml", "text/xml"}:
+        if b"\x00" in content or re.search(br"<!\s*(DOCTYPE|ENTITY)", content, re.I):
+            raise ValueError("XML declarations with entities are not supported")
+        return "\n".join(" ".join(text.split()) for text in ET.fromstring(content).itertext() if text.strip())[:MAX_EXTRACTED_CHARS]
+    if content_type == "application/json":
+        return json.dumps(json.loads(content), ensure_ascii=False, separators=(",", ":"))[:MAX_EXTRACTED_CHARS]
+    return ""
+
+
 def article_url(url, ticker):
     try:
         p = urlsplit(safe_url(url, ticker))
@@ -213,6 +278,19 @@ def connect(path):
         db.execute("ALTER TABLE discovery_runs ADD COLUMN index_url TEXT")
     if "title" not in {row[1] for row in db.execute("PRAGMA table_info(sources)")}:
         db.execute("ALTER TABLE sources ADD COLUMN title TEXT")
+    source_columns = {row[1] for row in db.execute("PRAGMA table_info(sources)")}
+    migrations = {
+        "content_type": "TEXT",
+        "content_bytes": "INTEGER",
+        "extracted_text": "TEXT",
+        "extracted_chars": "INTEGER NOT NULL DEFAULT 0",
+        "fetched_at": "TEXT",
+        "fetch_failures": "INTEGER NOT NULL DEFAULT 0",
+        "next_fetch_at": "TEXT",
+    }
+    for column, declaration in migrations.items():
+        if column not in source_columns:
+            db.execute(f"ALTER TABLE sources ADD COLUMN {column} {declaration}")
     return db
 
 
@@ -327,7 +405,11 @@ def snapshot(db):
     """Public-safe, read-only report. Explicit field lists prevent identity leaks."""
     with db:
         db.execute("BEGIN")
-        sources = [dict(r) for r in db.execute("SELECT url,ticker,title,published_on,discovered_at,checked_at,sha256,status,error FROM sources ORDER BY ticker,url")]
+        sources = [dict(r) for r in db.execute("""
+          SELECT url,ticker,title,published_on,discovered_at,checked_at,sha256,status,error,
+                 content_type,content_bytes,extracted_chars,fetched_at
+          FROM sources ORDER BY ticker,url
+        """)]
         history = [dict(r) for r in db.execute("SELECT id,url,at,kind,sha256 FROM history ORDER BY id DESC")]
         runs = [dict(r) for r in db.execute("SELECT id,ticker,at,status,candidates,error,index_url FROM discovery_runs ORDER BY id DESC")]
         events = [dict(r) for r in db.execute("""
@@ -353,24 +435,70 @@ def write_snapshot(db, output):
     return data
 
 
+def collect_source(row, transport=fetch):
+    """Fetch and extract one source without mutating SQLite, safe for worker threads."""
+    content, content_type = transport(row["url"], row["ticker"])
+    extracted = extract_text(content, content_type)
+    return {
+        "sha256": hashlib.sha256(content).hexdigest(),
+        "contentType": content_type,
+        "contentBytes": len(content),
+        "extractedText": extracted,
+        "extractedChars": len(extracted),
+    }
+
+
+def save_source_check(db, row, result):
+    checked_at = now()
+    next_fetch_at = (datetime.now(timezone.utc) + timedelta(minutes=15)).isoformat(timespec="milliseconds")
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        current = db.execute("SELECT * FROM sources WHERE url=?", (row["url"],)).fetchone()
+        if not current:
+            raise ValueError("Source disappeared before its fetch result was saved")
+        changed = result["sha256"] != current["sha256"]
+        if changed:
+            db.execute(
+                "INSERT INTO history(url,at,kind,sha256,reason) VALUES(?,?,?,?,?)",
+                (row["url"], checked_at, "changed" if current["sha256"] else "first-fetch", result["sha256"], "Raw response changed; editorial correction not established"),
+            )
+        db.execute("""
+          UPDATE sources
+          SET sha256=?,checked_at=?,fetched_at=?,error=NULL,status=?,content_type=?,content_bytes=?,
+              extracted_text=?,extracted_chars=?,fetch_failures=0,next_fetch_at=?
+          WHERE url=?
+        """, (
+            result["sha256"], checked_at, checked_at, "pending" if changed else current["status"],
+            result["contentType"], result["contentBytes"], result["extractedText"],
+            result["extractedChars"], next_fetch_at, row["url"],
+        ))
+    status = "first-fetched" if not current["sha256"] else ("changed" if changed else "unchanged")
+    return {"url": row["url"], "status": status, "extractedChars": result["extractedChars"]}
+
+
+def save_source_error(db, row, exc):
+    checked_at = now()
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        current = db.execute("SELECT fetch_failures FROM sources WHERE url=?", (row["url"],)).fetchone()
+        if not current:
+            raise ValueError("Source disappeared before its fetch error was saved")
+        failures = current["fetch_failures"] + 1
+        retry_seconds = min(6 * 60 * 60, 60 * (2 ** min(failures - 1, 8)))
+        next_fetch_at = (datetime.now(timezone.utc) + timedelta(seconds=retry_seconds)).isoformat(timespec="milliseconds")
+        db.execute(
+            "UPDATE sources SET checked_at=?,error=?,fetch_failures=?,next_fetch_at=? WHERE url=?",
+            (checked_at, str(exc), failures, next_fetch_at, row["url"]),
+        )
+        db.execute("INSERT INTO history(url,at,kind,reason) VALUES(?,?,?,?)", (row["url"], checked_at, "fetch-error", str(exc)))
+    return {"url": row["url"], "status": "error", "retrySeconds": retry_seconds, "error": str(exc)}
+
+
 def check_source(db, row, transport=fetch):
     try:
-        content, _ = transport(row["url"], row["ticker"])
-        digest = hashlib.sha256(content).hexdigest()
-        with db:
-            db.execute("BEGIN IMMEDIATE")
-            current = db.execute("SELECT * FROM sources WHERE url=?", (row["url"],)).fetchone()
-            changed = digest != current["sha256"]
-            if changed:
-                db.execute("INSERT INTO history(url,at,kind,sha256,reason) VALUES(?,?,?,?,?)", (row["url"], now(), "changed" if current["sha256"] else "first-fetch", digest, "Raw response changed; editorial correction not established"))
-            db.execute("UPDATE sources SET sha256=?,checked_at=?,error=NULL,status=? WHERE url=?", (digest, now(), "pending" if changed else current["status"], row["url"]))
-        status = "first-fetched" if not current["sha256"] else ("changed" if changed else "unchanged")
-        return {"url": row["url"], "status": status}
+        return save_source_check(db, row, collect_source(row, transport))
     except Exception as exc:
-        with db:
-            db.execute("UPDATE sources SET checked_at=?,error=? WHERE url=?", (now(), str(exc), row["url"]))
-            db.execute("INSERT INTO history(url,at,kind,reason) VALUES(?,?,?,?)", (row["url"], now(), "fetch-error", str(exc)))
-        return {"url": row["url"], "status": "error", "error": str(exc)}
+        return save_source_error(db, row, exc)
 
 
 def review(db, url, expected_sha, decision, reviewer, reason):

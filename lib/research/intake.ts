@@ -10,6 +10,7 @@ export const sectorNames: Record<string, string> = {
 export type IntakeSource = {
   url: string; ticker: string; title?: string | null; published_on: string | null;
   discovered_at: string; checked_at: string | null; sha256: string | null;
+  content_type?: string | null; content_bytes?: number | null; extracted_chars?: number | null; fetched_at?: string | null;
   status: "pending" | "approved" | "held" | "rejected"; error: string | null;
 };
 export type IntakeSnapshot = {

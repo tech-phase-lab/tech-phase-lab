@@ -56,6 +56,33 @@ class IntakeTests(unittest.TestCase):
         self.check()
         self.assertIsNone(self.row()["error"])
 
+    def test_article_body_is_extracted_for_evidence_without_public_text_leak(self):
+        body = b'''<html><head><title>Nebius expands AI capacity</title><meta name="description" content="Official release summary"></head><body><nav>Private navigation noise</nav><main><h1>Nebius expands AI capacity</h1><p>Capacity will increase in 2027.</p><script>steal()</script></main></body></html>'''
+        result = self.check(body)
+        row = self.row()
+        self.assertEqual(result["status"], "first-fetched")
+        self.assertEqual(row["content_type"], "text/html")
+        self.assertEqual(row["content_bytes"], len(body))
+        self.assertIn("Capacity will increase in 2027.", row["extracted_text"])
+        self.assertNotIn("Private navigation noise", row["extracted_text"])
+        self.assertNotIn("steal()", row["extracted_text"])
+        self.assertEqual(row["extracted_chars"], len(row["extracted_text"]))
+        public = m.snapshot(self.db)["sources"][0]
+        self.assertEqual(public["extracted_chars"], row["extracted_chars"])
+        self.assertNotIn("extracted_text", public)
+
+    def test_fetch_failure_uses_persisted_exponential_backoff(self):
+        def fail(*_):
+            raise TimeoutError("timeout")
+        first = m.check_source(self.db, self.row(), fail)
+        first_row = self.row()
+        second = m.check_source(self.db, first_row, fail)
+        second_row = self.row()
+        self.assertEqual(first["retrySeconds"], 60)
+        self.assertEqual(second["retrySeconds"], 120)
+        self.assertEqual(second_row["fetch_failures"], 2)
+        self.assertGreater(second_row["next_fetch_at"], second_row["checked_at"])
+
     def test_unfetched_or_incomplete_review_is_rejected(self):
         with self.assertRaises(ValueError):
             m.review(self.db, URL, None, "approved", "editor", "Unfetched")
@@ -197,6 +224,16 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(row["title"], "Arm & AI")
         self.assertIsNone(row["published_on"])
         self.assertEqual(row["status"], "pending")
+
+    def test_marvell_uses_company_official_rss_with_sec_fallback(self):
+        provider = m.PROVIDERS["MRVL"]
+        self.assertEqual(provider["format"], "rss")
+        self.assertEqual(provider["indexUrl"], "https://investor.marvell.com/news-events/press-releases/rss")
+        self.assertEqual(provider["fallbackSources"][0]["format"], "sec-json")
+        body = b'''<rss><channel><item><title>Marvell AI release</title><link>https://investor.marvell.com/news-events/press-releases/detail/1234/example</link></item></channel></rss>'''
+        result, links = m.collect_discovery("MRVL", lambda *_: (body, "text/xml"), automatic=True)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(list(links.values()), ["Marvell AI release"])
 
     def test_atom_links_supported_and_entity_declarations_rejected(self):
         body = b'''<feed xmlns="http://www.w3.org/2005/Atom"><entry><title>AI</title><link href="https://newsroom.arm.com/news/ai"/></entry></feed>'''
