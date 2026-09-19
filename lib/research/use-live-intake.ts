@@ -12,6 +12,12 @@ export type MonitorState = {
   lastChangeAt: string | null;
   cycles: number;
   newSources: number;
+  generation?: {
+    requested: boolean; configured: boolean; enabled: boolean; dailyLimit: number; maxAttempts: number;
+    waitingBody?: number; queued?: number; running?: number; retry?: number; succeeded?: number; failed?: number;
+    attemptsLast24Hours?: number; limitReached?: boolean; lastAttemptAt?: string | null;
+    lastSuccessAt?: string | null; lastErrorCode?: string | null;
+  };
   companies: Record<string, {
     basePollSeconds?: number; nextPollSeconds?: number; requestDurationMs?: number;
     status: string; route: string; candidates: number; checkedAt: string; error: string | null;

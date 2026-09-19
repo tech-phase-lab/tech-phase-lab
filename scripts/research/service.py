@@ -36,6 +36,16 @@ class AutomaticMonitor:
         self.workers = positive_int("RESEARCH_MAX_WORKERS", 8, 1)
         self.body_interval = positive_int("RESEARCH_BODY_FETCH_INTERVAL_SECONDS", 10, 5)
         self.body_batch = positive_int("RESEARCH_BODY_FETCH_BATCH", 2, 1)
+        self.auto_drafts_requested = os.environ.get("RESEARCH_AUTO_DRAFTS", "").strip().lower() in {"1", "true", "yes"}
+        self.generation_daily_limit = positive_int("RESEARCH_AUTO_DRAFT_DAILY_LIMIT", 20, 1)
+        self.generation_max_attempts = positive_int("RESEARCH_AUTO_DRAFT_MAX_ATTEMPTS", 3, 1)
+        self.generation_interval = positive_int("RESEARCH_AUTO_DRAFT_INTERVAL_SECONDS", 5, 1)
+        try:
+            brief_generator.configuration()
+            generation_configured = True
+        except brief_generator.GenerationUnavailable:
+            generation_configured = False
+        self.auto_drafts_enabled = self.auto_drafts_requested and generation_configured
         configured = [value.strip().upper() for value in os.environ.get("RESEARCH_TICKERS", "").split(",") if value.strip()]
         unknown = sorted(set(configured) - set(monitor.PROVIDERS))
         if unknown:
@@ -57,16 +67,24 @@ class AutomaticMonitor:
             "sourceFetchErrors": 0,
             "pendingBodies": 0,
             "tickerCount": len(self.tickers),
+            "generation": {
+                "requested": self.auto_drafts_requested, "configured": generation_configured,
+                "enabled": self.auto_drafts_enabled, "dailyLimit": self.generation_daily_limit,
+                "maxAttempts": self.generation_max_attempts,
+            },
             "companies": {},
         }
         self.thread = threading.Thread(target=self.run, name="research-monitor", daemon=True)
+        self.generation_thread = threading.Thread(target=self.run_generation, name="brief-generator", daemon=True)
 
     def start(self):
         self.thread.start()
+        self.generation_thread.start()
 
     def stop(self):
         self.stop_event.set()
         self.thread.join(timeout=15)
+        self.generation_thread.join(timeout=45)
 
     def interval_for(self, ticker):
         provider = monitor.PROVIDERS[ticker]
@@ -84,7 +102,10 @@ class AutomaticMonitor:
 
     def public_state(self):
         with self.state_lock:
-            return json.loads(json.dumps(self.state))
+            state = json.loads(json.dumps(self.state))
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            state["generation"].update(monitor.generation_queue_stats(db, self.generation_daily_limit))
+        return state
 
     def public_snapshot(self):
         with self.db_lock, monitor.connect(self.db_path) as db:
@@ -173,6 +194,7 @@ class AutomaticMonitor:
             for row, result, error in completed:
                 if error is None:
                     monitor.save_source_check(db, row, result)
+                    monitor.activate_generation_job(db, row["url"])
                 else:
                     monitor.save_source_error(db, row, error)
                     errors += 1
@@ -181,6 +203,36 @@ class AutomaticMonitor:
             self.state["sourceChecks"] += len(completed)
             self.state["sourceFetchErrors"] += errors
             self.state["pendingBodies"] = max(0, pending - len(completed))
+
+    def process_generation_job(self):
+        if not self.auto_drafts_enabled:
+            return None
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            claim = monitor.claim_generation_job(db, self.generation_daily_limit, self.generation_max_attempts)
+        if not claim:
+            return None
+        error_code = None
+        try:
+            self.generate_brief({"url": claim["url"], "sha256": claim["sha256"]})
+        except brief_generator.GenerationUnavailable:
+            error_code = "generation-not-configured"
+        except brief_generator.GenerationFailed:
+            error_code = "generation-failed"
+        except ValueError:
+            error_code = "validation-failed"
+        except Exception:
+            error_code = "worker-error"
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            return monitor.finish_generation_job(
+                db, claim, error_code=error_code, max_attempts=self.generation_max_attempts
+            )
+
+    def run_generation(self):
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            monitor.recover_generation_jobs(db)
+        while not self.stop_event.is_set():
+            self.process_generation_job()
+            self.stop_event.wait(self.generation_interval)
 
     def run(self):
         next_due = {ticker: 0.0 for ticker in self.tickers}
@@ -245,8 +297,11 @@ class AutomaticMonitor:
                             inserted = monitor.save_discovery(db, ticker, result, links)
                             known[ticker].update(inserted)
                             if baseline_ready[ticker]:
-                                monitor.add_release_events(db, ticker, inserted)
-                                new_count += len(inserted)
+                                events = monitor.add_release_events(db, ticker, inserted)
+                                if self.auto_drafts_enabled:
+                                    for url in events:
+                                        monitor.queue_generation_job(db, url)
+                                new_count += len(events)
                             elif result["status"] in {"ok", "fallback"}:
                                 baseline_ready[ticker] = True
                             changed = True

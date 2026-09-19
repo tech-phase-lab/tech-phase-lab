@@ -134,6 +134,113 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(item["generation_response_id"], "resp_test")
         self.assertEqual(item["generation_source_truncated"], 0)
 
+    def test_auto_generation_is_opt_in_and_does_not_backfill_existing_events(self):
+        with patch.dict(os.environ, {
+            "RESEARCH_AUTO_DRAFTS": "true", "OPENAI_API_KEY": "sk-" + "x" * 40,
+            "RESEARCH_SUMMARY_MODEL": "test-model",
+        }, clear=False):
+            app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        self.assertTrue(app.auto_drafts_enabled)
+        with monitor.connect(self.db_path) as db:
+            self.assertEqual(db.execute("SELECT count(*) FROM brief_generation_jobs").fetchone()[0], 0)
+        state = app.public_state()["generation"]
+        self.assertTrue(state["enabled"])
+        self.assertEqual(state["queued"], 0)
+
+    def test_generation_queue_waits_for_body_then_claims_once(self):
+        url = "https://nebius.com/newsroom/new-release"
+        with monitor.connect(self.db_path) as db:
+            queued = monitor.queue_generation_job(db, url)
+            self.assertEqual(queued["status"], "waiting-body")
+            self.assertIsNone(monitor.claim_generation_job(db, 20, 3))
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            monitor.save_source_check(db, row, {
+                "sha256": "e" * 64, "contentType": "text/html", "contentBytes": 80,
+                "extractedText": "Capacity will increase. Execution remains subject to demand.", "extractedChars": 60,
+            })
+            monitor.activate_generation_job(db, url)
+            claim = monitor.claim_generation_job(db, 20, 3)
+            self.assertEqual(claim["url"], url)
+            self.assertEqual(claim["attempt"], 1)
+            self.assertIsNone(monitor.claim_generation_job(db, 20, 3))
+
+    def test_generation_retry_and_rolling_call_limit_are_persistent(self):
+        url = "https://nebius.com/newsroom/new-release"
+        with monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            monitor.save_source_check(db, row, {
+                "sha256": "f" * 64, "contentType": "text/html", "contentBytes": 80,
+                "extractedText": "Official evidence remains available for review.", "extractedChars": 47,
+            })
+            monitor.queue_generation_job(db, url)
+            claim = monitor.claim_generation_job(db, 1, 3)
+            result = monitor.finish_generation_job(db, claim, "generation-failed", 3)
+            self.assertEqual(result["status"], "retry")
+            self.assertEqual(result["retrySeconds"], 60)
+            self.assertIsNone(monitor.claim_generation_job(db, 1, 3))
+            stats = monitor.generation_queue_stats(db, 1)
+            self.assertEqual(stats["attemptsLast24Hours"], 1)
+            self.assertTrue(stats["limitReached"])
+            self.assertEqual(stats["lastErrorCode"], "generation-failed")
+
+    def test_auto_worker_creates_private_draft_and_never_publishes(self):
+        url = "https://nebius.com/newsroom/new-release"
+        with patch.dict(os.environ, {
+            "RESEARCH_AUTO_DRAFTS": "true", "OPENAI_API_KEY": "sk-" + "x" * 40,
+            "RESEARCH_SUMMARY_MODEL": "test-model",
+        }, clear=False):
+            app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        with monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            monitor.save_source_check(db, row, {
+                "sha256": "c" * 64, "contentType": "text/html", "contentBytes": 90,
+                "extractedText": "Capacity will increase in 2027. Execution remains subject to demand.", "extractedChars": 69,
+            })
+            monitor.queue_generation_job(db, url)
+        generated = {
+            "draft": {
+                "summaryJa": "公式発表によると、容量は2027年に増加する計画です。",
+                "impactLabel": "mixed", "impactJa": "供給能力の拡大余地がありますが、需要の確認が引き続き必要です。",
+                "confidence": "medium", "evidence": {
+                    "summary": ["Capacity will increase in 2027."],
+                    "impact": ["Execution remains subject to demand."],
+                },
+            },
+            "audit": {"provider": "openai-responses", "model": "test-model", "responseId": "resp_auto", "sourceTruncated": False},
+        }
+        with patch.object(brief_generator, "generate_draft", return_value=generated):
+            result = app.process_generation_job()
+        self.assertEqual(result["status"], "succeeded")
+        self.assertEqual(app.public_snapshot()["briefs"], [])
+        item = app.editorial_queue(5)["items"][0]
+        self.assertEqual(item["brief_status"], "draft")
+        self.assertEqual(item["generation_job_status"], "succeeded")
+        self.assertEqual(item["generation_response_id"], "resp_auto")
+
+    def test_recovery_marks_saved_current_draft_complete_without_second_call(self):
+        url = "https://nebius.com/newsroom/new-release"
+        with monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            monitor.save_source_check(db, row, {
+                "sha256": "9" * 64, "contentType": "text/html", "contentBytes": 90,
+                "extractedText": "Capacity will increase. Execution remains subject to demand.", "extractedChars": 60,
+            })
+            monitor.queue_generation_job(db, url)
+            claim = monitor.claim_generation_job(db, 20, 3)
+            monitor.save_brief_draft(
+                db, url, "9" * 64, "公式発表によると、容量を増やす計画が示されました。", "mixed",
+                "供給拡大の余地がありますが、需要条件の確認が引き続き必要です。", "medium",
+                {"summary": ["Capacity will increase."], "impact": ["Execution remains subject to demand."]},
+            )
+            db.execute("UPDATE briefs SET generation_response_id='resp_saved' WHERE url=?", (url,))
+            db.commit()
+            recovered = monitor.recover_generation_jobs(db, stale_minutes=0)
+            self.assertEqual(recovered["completed"], 1)
+            self.assertEqual(db.execute(
+                "SELECT status FROM brief_generation_jobs WHERE url=?", (url,)
+            ).fetchone()[0], "succeeded")
+            self.assertEqual(claim["attempt"], 1)
+
     def test_editorial_http_api_is_fail_closed_and_bearer_protected(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         with monitor.connect(self.db_path) as db:
