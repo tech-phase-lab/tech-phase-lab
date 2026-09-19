@@ -12,6 +12,7 @@ const errorNames: Record<string, { ja: string; en: string }> = {
   timeout: { ja: "公式サイトが時間内に応答しませんでした", en: "Official site did not respond before timeout" },
   "no-links": { ja: "現在の方法では発表リンクを抽出できませんでした", en: "No release links were found with the current method" },
 };
+const sectorNamesEn: Record<string, string> = { semiconductors: "Semiconductors", networking: "Networking", "ai-cloud": "AI cloud", "power-cooling": "Power & cooling", servers: "Servers", software: "AI software", platforms: "Large cloud platforms" };
 
 function time(value: string | null, lang: "ja" | "en") {
   if (!value) return lang === "ja" ? "未確認" : "Not checked";
@@ -37,7 +38,7 @@ export default function CoverageCompanyDashboard({ company, companies, generated
         <label>{t("銘柄を切り替える", "Choose company")}<select value={company.ticker} onChange={(event) => router.push(`/research/companies/${event.target.value}`)}>{companies.map((item) => <option key={item.ticker} value={item.ticker}>{item.ticker} · {item.name}</option>)}</select></label>
       </div>
       <aside className={styles.snapshot}><strong>{t("保存した取得記録", "SAVED INTAKE SNAPSHOT")}</strong><span>{t("出力日時", "Generated")}: {time(generatedAt, lang)} JST</span><p>{t("常時監視・自動更新はまだ接続していません。", "Continuous monitoring and automatic updates are not connected yet.")}</p></aside>
-      <header className={styles.companyHeading}><div><p className={styles.eyebrow}>{company.sector}</p><h1>{company.ticker} <span>{company.name}</span></h1><p>{t("公式発表から、前回との変化を照合するための銘柄ページ。", "A company page for comparing changes across official releases.")}</p></div><span className={`${styles.status} ${company.discovery.status === "ok" ? styles.good : styles.warning}`}>{discoveryLabel}</span></header>
+      <header className={styles.companyHeading}><div><p className={styles.eyebrow}>{lang === "ja" ? company.sector : sectorNamesEn[company.sectorKey]}</p><h1>{company.ticker} <span>{company.name}</span></h1><p>{t("公式発表から、前回との変化を照合するための銘柄ページ。", "A company page for comparing changes across official releases.")}</p></div><span className={`${styles.status} ${company.discovery.status === "ok" ? styles.good : styles.warning}`}>{discoveryLabel}</span></header>
 
       <section className={styles.stats} aria-label={t("資料の取得状況", "Source intake status")}>
         <div><span>{t("登録資料", "Sources found")}</span><strong>{company.counts.total}</strong><small>{t("過去分を含む", "Includes historical items")}</small></div>
