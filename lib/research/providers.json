@@ -146,13 +146,26 @@
     "sector": "semiconductors",
     "indexUrl": "https://pr.tsmc.com/english/news",
     "format": "html",
+    "requestTimeoutSeconds": 6,
+    "fallbackSources": [
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001046179&type=6-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 6-K"
+      }
+    ],
     "allowedHosts": [
-      "pr.tsmc.com"
+      "pr.tsmc.com",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "pr.tsmc.com",
         "pattern": "^/english/news/\\d+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1046179/.+-index\\.htm$"
       }
     ]
   },
@@ -199,8 +212,17 @@
     "sector": "networking",
     "indexUrl": "https://investors.arista.com/Communications/Press-Releases-and-Events/default.aspx",
     "format": "html",
+    "requestTimeoutSeconds": 6,
+    "fallbackSources": [
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001596532&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
     "allowedHosts": [
-      "investors.arista.com"
+      "investors.arista.com",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
@@ -214,6 +236,10 @@
       {
         "host": "investors.arista.com",
         "pattern": "^/Communications/Press-Releases-and-Events/Press-Release-Details/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1596532/.+-index\\.htm$"
       }
     ]
   },
@@ -256,13 +282,26 @@
     "sector": "power-cooling",
     "indexUrl": "https://www.vertiv.com/en-us/about/news-and-events/corporate-news/",
     "format": "html",
+    "requestTimeoutSeconds": 6,
+    "fallbackSources": [
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001674101&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
     "allowedHosts": [
-      "www.vertiv.com"
+      "www.vertiv.com",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "www.vertiv.com",
         "pattern": "^/en-us/about/news-and-events/corporate-news/[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1674101/.+-index\\.htm$"
       }
     ]
   },
@@ -304,8 +343,17 @@
     "sector": "software",
     "indexUrl": "https://investors.palantir.com/news",
     "format": "html",
+    "requestTimeoutSeconds": 6,
+    "fallbackSources": [
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
     "allowedHosts": [
-      "investors.palantir.com"
+      "investors.palantir.com",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
@@ -315,6 +363,10 @@
       {
         "host": "investors.palantir.com",
         "pattern": "^/news/[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1321655/.+-index\\.htm$"
       }
     ]
   },
@@ -382,13 +434,26 @@
     "sector": "platforms",
     "indexUrl": "https://www.oracle.com/news/",
     "format": "html",
+    "requestTimeoutSeconds": 6,
+    "fallbackSources": [
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001341439&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
     "allowedHosts": [
-      "www.oracle.com"
+      "www.oracle.com",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "www.oracle.com",
         "pattern": "^/news/announcement/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1341439/.+-index\\.htm$"
       }
     ]
   }

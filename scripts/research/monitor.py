@@ -1,4 +1,4 @@
-"""Manual research intake. No scheduler, summarization, or publishing side effects."""
+"""Official-source research intake. No scheduler, summarization, or publishing side effects."""
 import argparse
 from datetime import datetime, timezone
 import hashlib
@@ -44,7 +44,8 @@ class Redirects(HTTPRedirectHandler):
 def fetch(url, ticker):
     url = safe_url(url, ticker)
     req = Request(url, headers={"User-Agent": "TechPhaseResearch-SourceCheck/0.1", "Accept": "application/rss+xml,application/atom+xml,text/html,application/pdf"})
-    with build_opener(Redirects(ticker)).open(req, timeout=20) as response:
+    timeout = PROVIDERS[ticker].get("requestTimeoutSeconds", 20) if url == INDEXES[ticker] else 20
+    with build_opener(Redirects(ticker)).open(req, timeout=timeout) as response:
         content_type = response.headers.get_content_type()
         if content_type not in {"text/html", "application/pdf", "application/rss+xml", "application/atom+xml", "application/xml", "text/xml"}:
             raise ValueError("Unsupported content type: " + content_type)
@@ -158,29 +159,55 @@ def add_source(db, ticker, url, published_on=None, title=None):
     return url
 
 
+def monitoring_sources(ticker):
+    """Return the preferred company feed followed by official fallback feeds."""
+    provider = PROVIDERS[ticker]
+    return [{"url": provider["indexUrl"], "format": provider["format"], "route": "primary"}] + [
+        {**source, "route": "fallback"} for source in provider.get("fallbackSources", [])
+    ]
+
+
+def discover_links(body, kind, ticker, source):
+    if source["format"] == "rss":
+        return feed_links(body, ticker)
+    if kind != "text/html":
+        raise ValueError("Index is not HTML")
+    parser = Links(source["url"], ticker)
+    parser.feed(body.decode("utf-8", errors="replace"))
+    return {url: parser.labels.get(url) for url in parser.urls}
+
+
 def discover(db, ticker, transport=fetch):
-    """First-page candidates only. Missing markup is degraded, never 'no news'."""
-    try:
-        body, kind = transport(INDEXES[ticker], ticker)
-        if PROVIDERS[ticker]["format"] == "rss":
-            links = feed_links(body, ticker)
-        else:
-            if kind != "text/html":
-                raise ValueError("Index is not HTML")
-            parser = Links(INDEXES[ticker], ticker)
-            parser.feed(body.decode("utf-8", errors="replace"))
-            links = {url: parser.labels.get(url) for url in parser.urls}
-        if not links:
-            raise ValueError("No release links parsed; source discovery requires investigation")
-        if len(links) > 500:
-            raise ValueError("Too many source links; narrow the source scope before importing")
+    """Discover candidates, using an official fallback when the preferred route fails."""
+    failures = []
+    links, used_source = {}, None
+    for source in monitoring_sources(ticker):
+        try:
+            body, kind = transport(source["url"], ticker)
+            links = discover_links(body, kind, ticker, source)
+            if not links:
+                raise ValueError("No release links parsed; source discovery requires investigation")
+            if len(links) > 500:
+                raise ValueError("Too many source links; narrow the source scope before importing")
+            used_source = source
+            break
+        except Exception as exc:
+            failures.append(str(exc))
+    if used_source:
         for url, title in links.items():
             add_source(db, ticker, url, title=title)
-        result = {"ticker": ticker, "status": "ok", "candidates": len(links), "error": None}
-    except Exception as exc:
-        result = {"ticker": ticker, "status": "degraded", "candidates": 0, "error": str(exc)}
+        result = {
+            "ticker": ticker,
+            "status": "ok" if used_source["route"] == "primary" else "fallback",
+            "route": used_source["route"],
+            "sourceUrl": used_source["url"],
+            "candidates": len(links),
+            "error": failures[0] if failures else None,
+        }
+    else:
+        result = {"ticker": ticker, "status": "degraded", "route": "none", "sourceUrl": INDEXES[ticker], "candidates": 0, "error": failures[0] if failures else "No monitoring sources configured"}
     with db:
-        db.execute("INSERT INTO discovery_runs(ticker,at,status,candidates,error,index_url) VALUES(?,?,?,?,?,?)", (ticker, now(), result["status"], result["candidates"], result["error"], INDEXES[ticker]))
+        db.execute("INSERT INTO discovery_runs(ticker,at,status,candidates,error,index_url) VALUES(?,?,?,?,?,?)", (ticker, now(), result["status"], result["candidates"], result["error"], result["sourceUrl"]))
     return result
 
 
@@ -209,6 +236,17 @@ def snapshot(db):
     for row in sources:
         safe_url(row["url"], row["ticker"])
     return {"schemaVersion": 1, "generatedAt": now(), "sources": sources, "history": history, "discoveryRuns": runs}
+
+
+def write_snapshot(db, output):
+    """Replace a public snapshot atomically so readers never observe partial JSON."""
+    output = Path(output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    temporary = output.with_name(output.name + ".tmp")
+    data = snapshot(db)
+    temporary.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+    temporary.replace(output)
+    return data
 
 
 def check_source(db, row, transport=fetch):
@@ -258,6 +296,9 @@ def main():
     sub.add_parser("history")
     e = sub.add_parser("export")
     e.add_argument("--output", required=True, help="JSON report path; reviewer identities and reasons are excluded")
+    refresh = sub.add_parser("refresh")
+    refresh.add_argument("--output", required=True, help="JSON report path; replaced atomically after all companies run")
+    refresh.add_argument("--check-limit", type=int, default=0, help="Also fetch up to this many oldest unchecked source bodies")
     a = sub.add_parser("add")
     a.add_argument("ticker", choices=HOSTS)
     a.add_argument("url")
@@ -286,17 +327,31 @@ def main():
         elif args.command == "review":
             review(db, args.url, args.sha256, args.decision, args.reviewer, args.reason)
             result = {"status": args.decision, "published": False}
+        elif args.command == "refresh":
+            if not 0 <= args.check_limit <= 200:
+                p.error("--check-limit must be between 0 and 200")
+            discoveries = [discover(db, ticker) for ticker in PROVIDERS]
+            rows = db.execute("SELECT * FROM sources ORDER BY checked_at IS NOT NULL, checked_at, discovered_at, url LIMIT ?", (args.check_limit,)).fetchall()
+            checked = [check_source(db, row) for row in rows]
+            data = write_snapshot(db, args.output)
+            result = {
+                "companies": len(discoveries),
+                "available": sum(row["status"] in {"ok", "fallback"} for row in discoveries),
+                "fallback": sum(row["status"] == "fallback" for row in discoveries),
+                "degraded": sum(row["status"] == "degraded" for row in discoveries),
+                "checked": len(checked),
+                "sources": len(data["sources"]),
+                "exported": str(Path(args.output)),
+                "published": False,
+            }
         elif args.command == "export":
-            data = snapshot(db)
-            output = Path(args.output)
-            output.parent.mkdir(parents=True, exist_ok=True)
-            output.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
-            result = {"sources": len(data["sources"]), "exported": str(output), "published": False}
+            data = write_snapshot(db, args.output)
+            result = {"sources": len(data["sources"]), "exported": str(Path(args.output)), "published": False}
         else:
             table = "sources" if args.command == "list" else "history"
             result = [dict(row) for row in db.execute("SELECT * FROM " + table)]
     print(json.dumps(result, ensure_ascii=False, indent=2))
-    if (isinstance(result, dict) and result.get("status") == "degraded") or (isinstance(result, list) and any(row.get("status") == "error" for row in result)):
+    if (isinstance(result, dict) and (result.get("status") == "degraded" or result.get("degraded", 0) > 0)) or (isinstance(result, list) and any(row.get("status") == "error" for row in result)):
         return 1
     return 0
 

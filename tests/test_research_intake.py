@@ -76,6 +76,23 @@ class IntakeTests(unittest.TestCase):
             result = m.discover(self.db, ticker, lambda *_: (b"<div id='app'></div>", "text/html"))
             self.assertEqual(result["status"], "degraded")
 
+    def test_official_sec_fallback_is_used_when_company_index_fails(self):
+        atom = b'''<feed xmlns="http://www.w3.org/2005/Atom"><entry><title>6-K - Report</title><link href="https://www.sec.gov/Archives/edgar/data/1046179/000104617926000658/0001046179-26-000658-index.htm"/></entry></feed>'''
+
+        def transport(url, _ticker):
+            if url == m.INDEXES["TSM"]:
+                raise RuntimeError("HTTP Error 403")
+            return atom, "application/atom+xml"
+
+        result = m.discover(self.db, "TSM", transport)
+        self.assertEqual(result["status"], "fallback")
+        self.assertEqual(result["route"], "fallback")
+        self.assertEqual(result["candidates"], 1)
+        run = self.db.execute("SELECT status,index_url,error FROM discovery_runs WHERE ticker='TSM'").fetchone()
+        self.assertEqual(run["status"], "fallback")
+        self.assertIn("sec.gov", run["index_url"])
+        self.assertIn("403", run["error"])
+
     def test_external_links_and_redirect_targets_are_blocked(self):
         for url in ["http://nebius.com/newsroom/a", "https://nebius.com.evil.test/a", "https://x:secret@nebius.com/a", "https://nebius.com:8443/a", "https://127.0.0.1/a"]:
             with self.assertRaises(ValueError):
@@ -101,6 +118,13 @@ class IntakeTests(unittest.TestCase):
         self.assertNotIn("/local/path", str(report))
         self.assertEqual(report["sources"][0]["error"], "fetch-error")
         self.assertEqual(report["history"][0]["kind"], "held")
+
+    def test_snapshot_export_is_complete_and_leaves_no_temporary_file(self):
+        output = Path(self.temp.name) / "public" / "snapshot.json"
+        report = m.write_snapshot(self.db, output)
+        self.assertTrue(output.exists())
+        self.assertFalse(output.with_name(output.name + ".tmp").exists())
+        self.assertEqual(report["schemaVersion"], 1)
 
     def test_micron_corporate_index_finds_ir_links_and_records_origin(self):
         markup = b'<a href="https://investors.micron.com/news/press-release/2026/example/default.aspx">Read</a>'
@@ -133,6 +157,9 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(len(m.PROVIDERS), 22)
         for ticker, p in m.PROVIDERS.items():
             self.assertEqual(m.safe_url(p["indexUrl"], ticker), p["indexUrl"])
+            for source in p.get("fallbackSources", []):
+                self.assertEqual(m.safe_url(source["url"], ticker), source["url"])
+                self.assertIn(source["format"], {"html", "rss"})
             for rule in p["articleRules"]:
                 self.assertIn(rule["host"], m.HOSTS[ticker])
                 self.assertIsNotNone(m.re.compile(rule["pattern"]))

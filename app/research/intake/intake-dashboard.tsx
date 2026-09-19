@@ -47,13 +47,14 @@ export default function IntakeDashboard({ snapshot, titles }: { snapshot: Intake
           const runs = snapshot.discoveryRuns.filter(r => r.ticker === symbol).toSorted((a, b) => b.id - a.id);
           const latest = runs[0];
           const totals = intakeCounts(snapshot.sources.filter(s => s.ticker === symbol));
-          return <article key={symbol}><div className={styles.healthTop}><h3>{symbol}</h3><span className={latest?.status === "ok" ? styles.good : styles.warning}>{latest?.status === "ok" ? "一覧取得に成功" : latest ? "一覧の確認が必要" : "一覧未検証"}</span></div>
+          const available = latest?.status === "ok" || latest?.status === "fallback";
+          return <article key={symbol}><div className={styles.healthTop}><h3>{symbol}</h3><span className={available ? styles.good : styles.warning}>{latest?.status === "ok" ? "企業公式一覧から取得" : latest?.status === "fallback" ? "公式バックアップ経路で取得" : latest ? "一覧の確認が必要" : "一覧未検証"}</span></div>
             <p className={styles.companyName}>{provider.name} <small>{sectorNames[provider.sector]}</small></p>
-            <p>{latest?.status === "ok" ? `${latest.candidates}件のリンクを検出` : errorNames[latest?.error ?? ""] || "取得記録なし"}</p>
+            <p>{latest?.status === "ok" ? `${latest.candidates}件のリンクを検出` : latest?.status === "fallback" ? `企業サイトを補完し、SEC提出書類を${latest.candidates}件検出` : errorNames[latest?.error ?? ""] || "取得記録なし"}</p>
             <p className={styles.muted}>本文・PDF：取得済み {totals.fetched} ／ 未取得 {totals.unfetched} ／ エラー {totals.error}</p>
             <p className={styles.meta}>一覧の確認日時：{latest ? time(latest.at) : "未確認"} JST</p>
             <div className={styles.cardActions}><Link href={`/research/companies/${symbol}`}>銘柄ページ →</Link><a href={provider.indexUrl} target="_blank" rel="noopener noreferrer">公式{provider.format === "rss" ? "RSS" : "一覧"} ↗</a><button disabled={!totals.total} onClick={() => { setTicker(symbol); setQuery(""); setState("all"); setReview("all"); setPage(1); requestAnimationFrame(() => document.getElementById("queue-title")?.scrollIntoView({ block: "start" })); }}>資料を表示（{totals.total}）</button></div>
-            <details className={styles.runHistory}><summary>{symbol}の一覧取得履歴（{runs.length}件）</summary><ul>{runs.map(r => <li key={r.id}><time>{time(r.at)} JST</time><span>{r.status === "ok" ? `${r.candidates}件検出` : errorNames[r.error ?? ""] || "取得異常"}</span></li>)}</ul></details>
+            <details className={styles.runHistory}><summary>{symbol}の一覧取得履歴（{runs.length}件）</summary><ul>{runs.map(r => <li key={r.id}><time>{time(r.at)} JST</time><span>{r.status === "ok" ? `${r.candidates}件検出` : r.status === "fallback" ? `SEC経路で${r.candidates}件検出` : errorNames[r.error ?? ""] || "取得異常"}</span></li>)}</ul></details>
           </article>;
         })}</div>
       </section>

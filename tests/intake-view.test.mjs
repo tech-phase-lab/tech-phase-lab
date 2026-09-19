@@ -46,8 +46,9 @@ test("coverage uses the latest run and never counts untested companies as failur
     { id: 1, ticker: "NVDA", status: "ok" },
     { id: 3, ticker: "NVDA", status: "degraded" },
     { id: 2, ticker: "AMD", status: "ok" },
+    { id: 4, ticker: "TSM", status: "fallback" },
   ] });
-  assert.deepEqual(counts, { registered: 22, discovered: 1, needsCheck: 1, untested: 20 });
+  assert.deepEqual(counts, { registered: 22, discovered: 2, needsCheck: 1, untested: 19 });
 });
 
 test("every registered company has a valid company coverage page model", () => {
@@ -56,5 +57,5 @@ test("every registered company has a valid company coverage page model", () => {
   assert.deepEqual(coverageCompanyIssues(companies), []);
   assert.equal(companies.find((company) => company.ticker === "NVDA").counts.total, 20);
   assert.equal(companies.find((company) => company.ticker === "CRWV").counts.fetched, 1);
-  assert.equal(companies.find((company) => company.ticker === "ORCL").discovery.status, "degraded");
+  assert.ok(["fallback", "degraded"].includes(companies.find((company) => company.ticker === "ORCL").discovery.status));
 });

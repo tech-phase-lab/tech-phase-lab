@@ -1,6 +1,6 @@
 # 公式資料の取り込み・確認待ち管理
 
-Python標準ライブラリのみを使う、編集作業用の手動コマンドです。取得記録は `/research/intake` の閲覧用画面へ出力できます。定期監視サービスではありません。追加契約・APIキーは不要です。
+Python標準ライブラリのみを使う、公式資料の検知・確認コマンドです。取得記録は `/research/intake` の閲覧用画面へ出力できます。22社一括実行には対応していますが、定期実行サービスへの設置はまだ行っていません。追加契約・APIキーは不要です。
 
 ## 実行
 
@@ -11,6 +11,7 @@ python3 scripts/research/monitor.py seed
 python3 scripts/research/monitor.py discover NBIS
 python3 scripts/research/monitor.py discover MU
 python3 scripts/research/monitor.py check --limit 6
+python3 scripts/research/monitor.py refresh --output lib/research/intake-snapshot.json --check-limit 6
 python3 scripts/research/monitor.py list
 python3 scripts/research/monitor.py history
 ```
@@ -21,18 +22,21 @@ python3 scripts/research/monitor.py history
 
 RSS / Atomの取り込みを追加しました。フィードのリンクと見出しを取り込み、本文取得や編集上の確認とは分けて記録します。外部ホスト、カテゴリー一覧、コメントフィード等は規則に合わなければ取り込みません。XMLの外部定義・エンティティ宣言を拒否し、壊れたフィードは取得異常として扱います。見出しはプレーンテキストとして扱い、HTMLやスクリプトとして実行しません。
 
+ANET・TSM・VRT・PLTR・ORCLは、企業公式ページが403、タイムアウト、動的表示などで取得できない場合に限り、SEC EDGARの会社別8-K／6-K Atomを公式バックアップとして使います。企業公式一覧を優先し、バックアップで取得した実行は `fallback` と明示します。SEC経路は重要開示の補完であり、製品ブログを含む企業ニュース全件の代替ではありません。
+
 ```sh
 python3 scripts/research/monitor.py discover NVDA
 python3 scripts/research/monitor.py discover AMD
 python3 scripts/research/monitor.py check --ticker NVDA --limit 1
 ```
 
-全銘柄一括の定期ジョブは設定していません。取得元の許容範囲と運用環境を決めてから設置します。今回は一覧1回と、取得できた会社の代表的な資料1件ずつを手動で試しました。
+全銘柄一括の定期ジョブは設定していません。`refresh` で22社の一覧取得、指定数の本文確認、公開用JSONのアトミックな置換を一度に実行できます。常時運用は永続DBと実行環境を決めてから設置します。
 
 - `seed`：既存記事が参照する6件の公式資料を登録します。これは取得・承認済みの意味ではありません。
-- `discover`：公式ニュース一覧のHTMLにある発表リンクを確認待ちに追加します。初回は過去資料も入ります。「取得候補」であって速報ではありません。ページ送りやJavaScript実行には未対応。
+- `discover`：公式ニュース一覧またはRSS / Atomにある発表リンクを確認待ちに追加します。初回は過去資料も入ります。「取得候補」であって速報ではありません。企業一覧に失敗して公式SEC経路へ切り替えた場合は `fallback` を返します。ページ送りやJavaScript実行には未対応。
 - リンクが0件、タイムアウト、HTTPエラーの場合は `degraded` / `error` と終了コード1を返します。「新着なし」「正常監視」と扱わないでください。
 - `check`：未取得、次いで確認日時の古い順に最大20資料を取得します。SHA-256で重複・応答の変化を記録。本文はDBや公開リポジトリに保存しません。エラーでは最後に取得できたハッシュを保持します。
+- `refresh`：22社を順に検知し、`--check-limit` 件まで本文を確認してから公開用JSONを一時ファイル経由で置換します。途中の壊れたJSONを画面が読むことを防ぎます。1社でも企業一覧と公式バックアップの両方が失敗すれば終了コード1です。
 - HTMLの装飾・動的要素やPDFメタデータでもハッシュは変化します。`changed` は内容変更の候補であり、財務情報の訂正を意味しません。
 
 公式原文を確認して、掲載候補として採用・保留・却下を記録できます。記録するのは資料の判断であり、要約や数値の正しさを自動認定するものではありません。
@@ -59,7 +63,7 @@ python3 scripts/research/monitor.py add MU 'https://investors.micron.com/news/pr
 python3 scripts/research/monitor.py export --output lib/research/intake-snapshot.json
 ```
 
-`/research/intake` は出力時点の記録を表示するページです。分野、銘柄、取得状態、編集状態、会社名・資料名・URLで絞り込み、20件ずつのページ切り替え、原文リンクと履歴を確認できます。会社ごとの「資料を表示」から銘柄を選べます。DBの直接参照や自動更新は行いません。更新はexport後に通常の確認用デプロイを行います。
+`/research/intake` は出力時点の記録を表示するページです。分野、銘柄、取得状態、編集状態、会社名・資料名・URLで絞り込み、20件ずつのページ切り替え、原文リンクと履歴を確認できます。会社ごとの「資料を表示」から銘柄を選べます。企業一覧からの直接取得とSECバックアップを分けて表示します。DBの直接参照や自動更新は行いません。更新はexportまたはrefresh後に通常の確認用デプロイを行います。
 
 exportは明示した項目のみ出力し、担当者名・判断理由・原文本文を含めません。例外メッセージも分類コードに変換し、内部パスなどを除きます。公開リポジトリへ送る前に出力内容を確認してください。画面は共有可能な取得記録を扱うプレビューであり、編集用認証や公開操作は未実装です。
 

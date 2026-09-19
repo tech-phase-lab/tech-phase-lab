@@ -165,11 +165,14 @@ export default function Home() {
   }
 
   useEffect(() => {
-    loadMarket();
-    loadLatestNews();
+    const initialTimer = window.setTimeout(() => {
+      void loadMarket();
+      void loadLatestNews();
+    }, 0);
     const marketTimer = window.setInterval(loadMarket, 15000);
     const newsTimer = window.setInterval(loadLatestNews, 60000);
     return () => {
+      window.clearTimeout(initialTimer);
       window.clearInterval(marketTimer);
       window.clearInterval(newsTimer);
     };

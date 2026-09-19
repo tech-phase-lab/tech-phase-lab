@@ -15,7 +15,7 @@ export type IntakeSource = {
 export type IntakeSnapshot = {
   schemaVersion: number; generatedAt: string; sources: IntakeSource[];
   history: { id: number; url: string; at: string; kind: string; sha256: string | null }[];
-  discoveryRuns: { id: number; ticker: string; at: string; status: string; candidates: number; error: string | null; index_url: string | null }[];
+  discoveryRuns: { id: number; ticker: string; at: string; status: "ok" | "fallback" | "degraded"; candidates: number; error: string | null; index_url: string | null }[];
 };
 
 export type FetchState = "error" | "fetched" | "unfetched";
@@ -44,7 +44,7 @@ export function coverageCounts(data: IntakeSnapshot) {
   for (const r of data.discoveryRuns) if (!latest.has(r.ticker) || latest.get(r.ticker)!.id < r.id) latest.set(r.ticker, r);
   return {
     registered: providers.length,
-    discovered: providers.filter(p => latest.get(p.ticker)?.status === "ok").length,
+    discovered: providers.filter(p => ["ok", "fallback"].includes(latest.get(p.ticker)?.status ?? "")).length,
     needsCheck: providers.filter(p => latest.get(p.ticker)?.status === "degraded").length,
     untested: providers.filter(p => !latest.has(p.ticker)).length,
   };
@@ -84,7 +84,7 @@ export type CoverageCompany = {
   sectorKey: string;
   indexUrl: string;
   format: string;
-  discovery: { status: "ok" | "degraded" | "untested"; candidates: number; checkedAt: string | null; error: string | null };
+  discovery: { status: "ok" | "fallback" | "degraded" | "untested"; candidates: number; checkedAt: string | null; error: string | null };
   counts: ReturnType<typeof intakeCounts>;
   sources: CoverageSource[];
 };
@@ -102,7 +102,7 @@ export function buildCoverageCompanies(snapshot: IntakeSnapshot): CoverageCompan
       indexUrl: provider.indexUrl,
       format: provider.format,
       discovery: latest ? {
-        status: latest.status === "ok" ? "ok" : "degraded",
+        status: latest.status === "ok" || latest.status === "fallback" ? latest.status : "degraded",
         candidates: latest.candidates,
         checkedAt: latest.at,
         error: latest.error,
