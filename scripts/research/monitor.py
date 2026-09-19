@@ -320,6 +320,14 @@ def connect(path):
     CREATE TABLE IF NOT EXISTS release_events (
       id INTEGER PRIMARY KEY, url TEXT NOT NULL UNIQUE REFERENCES sources(url),
       ticker TEXT NOT NULL, detected_at TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS briefs (
+      url TEXT PRIMARY KEY REFERENCES sources(url), source_sha256 TEXT NOT NULL,
+      summary_ja TEXT NOT NULL, impact_label TEXT NOT NULL, impact_ja TEXT NOT NULL,
+      confidence TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'draft',
+      generated_at TEXT NOT NULL, reviewed_at TEXT, reviewer TEXT, review_reason TEXT);
+    CREATE TABLE IF NOT EXISTS brief_evidence (
+      id INTEGER PRIMARY KEY, url TEXT NOT NULL REFERENCES briefs(url) ON DELETE CASCADE,
+      field TEXT NOT NULL, excerpt TEXT NOT NULL);
     """)
     if "index_url" not in {row[1] for row in db.execute("PRAGMA table_info(discovery_runs)")}:
         db.execute("ALTER TABLE discovery_runs ADD COLUMN index_url TEXT")
@@ -474,11 +482,16 @@ def snapshot(db):
           FROM release_events e JOIN sources s ON s.url=e.url
           ORDER BY e.id DESC LIMIT 200
         """)]
+        briefs = [dict(r) for r in db.execute("""
+          SELECT url,source_sha256,summary_ja,impact_label,impact_ja,confidence,status,
+                 generated_at,reviewed_at
+          FROM briefs WHERE status='approved' ORDER BY reviewed_at DESC
+        """)]
     for row in sources + runs:
         row["error"] = public_error(row["error"])
     for row in sources:
         safe_url(row["url"], row["ticker"])
-    return {"schemaVersion": 1, "generatedAt": now(), "sources": sources, "history": history, "discoveryRuns": runs, "events": events}
+    return {"schemaVersion": 1, "generatedAt": now(), "sources": sources, "history": history, "discoveryRuns": runs, "events": events, "briefs": briefs}
 
 
 def write_snapshot(db, output):
@@ -518,6 +531,10 @@ def save_source_check(db, row, result):
             db.execute(
                 "INSERT INTO history(url,at,kind,sha256,reason) VALUES(?,?,?,?,?)",
                 (row["url"], checked_at, "changed" if current["sha256"] else "first-fetch", result["sha256"], "Raw response changed; editorial correction not established"),
+            )
+            db.execute(
+                "UPDATE briefs SET status='stale',reviewed_at=NULL,reviewer=NULL,review_reason=NULL WHERE url=?",
+                (row["url"],),
             )
         db.execute("""
           UPDATE sources
@@ -571,6 +588,68 @@ def review(db, url, expected_sha, decision, reviewer, reason):
         db.execute("UPDATE sources SET status=? WHERE url=?", (decision, url))
 
 
+def save_brief_draft(db, url, expected_sha, summary_ja, impact_label, impact_ja, confidence, evidence):
+    """Save a private evidence-bound draft; never publish it without a later review."""
+    summary_ja, impact_ja = summary_ja.strip(), impact_ja.strip()
+    if not 20 <= len(summary_ja) <= 600 or not 20 <= len(impact_ja) <= 900:
+        raise ValueError("Japanese summary and impact must be concise but substantive")
+    if not re.search(r"[ぁ-んァ-ヶ一-龯]", summary_ja + impact_ja):
+        raise ValueError("Summary and impact must contain Japanese text")
+    if impact_label not in {"positive", "negative", "mixed", "neutral", "uncertain"}:
+        raise ValueError("Invalid impact label")
+    if confidence not in {"low", "medium", "high"}:
+        raise ValueError("Invalid confidence")
+    if not isinstance(evidence, dict) or any(not evidence.get(field) for field in ("summary", "impact")):
+        raise ValueError("Summary and impact evidence are required")
+    row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+    if not row or not row["sha256"] or row["sha256"] != expected_sha or row["error"] or not row["extracted_text"]:
+        raise ValueError("Source is missing, changed, failed, or has no extracted evidence")
+    cleaned = []
+    for field in ("summary", "impact"):
+        for excerpt in evidence[field]:
+            excerpt = " ".join(str(excerpt).split())
+            if not 12 <= len(excerpt) <= 800 or excerpt not in row["extracted_text"]:
+                raise ValueError("Every evidence excerpt must appear exactly in the current source text")
+            cleaned.append((field, excerpt))
+    cited = " ".join(excerpt for _, excerpt in cleaned)
+    for token in re.findall(r"([$€£¥₩]?\d[\d,.]*%?)(?:億|万|兆|倍|年|月|日)?", summary_ja + " " + impact_ja):
+        if token not in cited:
+            raise ValueError("Every numeric claim must appear in the cited evidence")
+    generated_at = now()
+    with db:
+        db.execute("""
+          INSERT INTO briefs(url,source_sha256,summary_ja,impact_label,impact_ja,confidence,status,generated_at,reviewed_at,reviewer,review_reason)
+          VALUES(?,?,?,?,?,?,'draft',?,NULL,NULL,NULL)
+          ON CONFLICT(url) DO UPDATE SET source_sha256=excluded.source_sha256,
+            summary_ja=excluded.summary_ja,impact_label=excluded.impact_label,
+            impact_ja=excluded.impact_ja,confidence=excluded.confidence,status='draft',
+            generated_at=excluded.generated_at,reviewed_at=NULL,reviewer=NULL,review_reason=NULL
+        """, (url, expected_sha, summary_ja, impact_label, impact_ja, confidence, generated_at))
+        db.execute("DELETE FROM brief_evidence WHERE url=?", (url,))
+        db.executemany("INSERT INTO brief_evidence(url,field,excerpt) VALUES(?,?,?)", [(url, field, excerpt) for field, excerpt in cleaned])
+    return {"url": url, "status": "draft", "generatedAt": generated_at, "published": False}
+
+
+def review_brief(db, url, expected_sha, decision, reviewer, reason):
+    """Record the mandatory human decision for the current source revision."""
+    if decision not in {"approved", "held", "rejected"} or not reviewer.strip() or not reason.strip():
+        raise ValueError("Decision, reviewer, and reason are required")
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        row = db.execute("""
+          SELECT b.*,s.sha256 AS current_sha,s.error AS source_error
+          FROM briefs b JOIN sources s ON s.url=b.url WHERE b.url=?
+        """, (url,)).fetchone()
+        evidence_count = db.execute("SELECT count(*) FROM brief_evidence WHERE url=?", (url,)).fetchone()[0]
+        if not row or row["source_sha256"] != expected_sha or row["current_sha"] != expected_sha or row["source_error"] or evidence_count < 2:
+            raise ValueError("Draft evidence is missing or the official source changed; regenerate before review")
+        db.execute(
+            "UPDATE briefs SET status=?,reviewed_at=?,reviewer=?,review_reason=? WHERE url=?",
+            (decision, now(), reviewer.strip(), reason.strip(), url),
+        )
+    return {"url": url, "status": decision, "published": False}
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--db", default=str(ROOT / ".research-private/intake.sqlite"))
@@ -597,6 +676,21 @@ def main():
     r.add_argument("decision", choices=["approved", "held", "rejected"])
     r.add_argument("--reviewer", required=True)
     r.add_argument("--reason", required=True)
+    brief = sub.add_parser("draft-brief")
+    brief.add_argument("url")
+    brief.add_argument("sha256")
+    brief.add_argument("--summary-ja", required=True)
+    brief.add_argument("--impact-label", required=True, choices=["positive", "negative", "mixed", "neutral", "uncertain"])
+    brief.add_argument("--impact-ja", required=True)
+    brief.add_argument("--confidence", required=True, choices=["low", "medium", "high"])
+    brief.add_argument("--summary-evidence", required=True, action="append")
+    brief.add_argument("--impact-evidence", required=True, action="append")
+    brief_review = sub.add_parser("review-brief")
+    brief_review.add_argument("url")
+    brief_review.add_argument("sha256")
+    brief_review.add_argument("decision", choices=["approved", "held", "rejected"])
+    brief_review.add_argument("--reviewer", required=True)
+    brief_review.add_argument("--reason", required=True)
     args = p.parse_args()
     with connect(args.db) as db:
         if args.command == "seed":
@@ -616,6 +710,12 @@ def main():
         elif args.command == "review":
             review(db, args.url, args.sha256, args.decision, args.reviewer, args.reason)
             result = {"status": args.decision, "published": False}
+        elif args.command == "draft-brief":
+            result = save_brief_draft(db, args.url, args.sha256, args.summary_ja, args.impact_label,
+                                      args.impact_ja, args.confidence,
+                                      {"summary": args.summary_evidence, "impact": args.impact_evidence})
+        elif args.command == "review-brief":
+            result = review_brief(db, args.url, args.sha256, args.decision, args.reviewer, args.reason)
         elif args.command == "refresh":
             if not 0 <= args.check_limit <= 200:
                 p.error("--check-limit must be between 0 and 200")

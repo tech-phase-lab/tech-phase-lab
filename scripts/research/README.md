@@ -47,6 +47,20 @@ python3 scripts/research/monitor.py review '原文URL' 'listで表示されたsh
 
 判断は `approved` / `held` / `rejected`。担当者・理由・現在のハッシュが必要です。取得前、取得失敗中、古いハッシュでの承認は拒否します。取得内容が変わると `pending` に戻り、過去の判断を履歴に残します。**approvedでも会員ページへの公開は行いません。** 現状の掲載は既存の資料照合・コードレビュー・デプロイの手順です。
 
+## 根拠付き日本語速報の安全ゲート
+
+日本語要約と影響判定は、取得した原文の現在のSHA-256、要約根拠、影響根拠、確信度をまとめて非公開DBへ `draft` として保存します。根拠抜粋は現在の抽出本文に完全一致する必要があり、要約中の数値も根拠にない場合は保存を拒否します。`positive` / `negative` / `mixed` / `neutral` / `uncertain` は市場反応の保証ではなく、編集用の影響分類です。
+
+```sh
+python3 scripts/research/monitor.py draft-brief '原文URL' '現在のsha256' \
+  --summary-ja '日本語の事実要約' --impact-label mixed --impact-ja '日本語の影響と未確認事項' \
+  --confidence medium --summary-evidence '原文に完全一致する抜粋' --impact-evidence '原文に完全一致する抜粋'
+python3 scripts/research/monitor.py review-brief '原文URL' '現在のsha256' approved \
+  --reviewer '担当者の識別名' --reason '原文・数値・解釈を確認'
+```
+
+未承認の下書き、根拠抜粋、担当者名、判断理由は共有スナップショットへ出しません。人間が現在の原文ハッシュに対して承認した要約だけを共有スナップショットへ出しますが、この操作自体は会員配信を行いません。承認後に原文応答が変わった場合は自動的に `stale` へ戻し、再生成・再確認まで共有対象から外します。
+
 MUの一覧からリンクを抽出できない場合は、公式発表のURLを確認して明示的に登録できます。
 
 2026-09-19に、MUの一覧取得先を `https://www.micron.com/about/press/news` に変更しました。公式サイトのニュース一覧からIR記事11件のリンクを実取得。リンク先 `investors.micron.com` の本文取得は既存記事・追加記事ともHTTP 403のため未解決です。一覧取得に成功しても本文取得・速報配信ができたとは扱いません。

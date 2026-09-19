@@ -257,6 +257,61 @@ class IntakeTests(unittest.TestCase):
         links = m.news_json_links(body, "VRT", source)
         self.assertEqual(links, {"https://www.vertiv.com/en-us/about/news-and-events/corporate-news/2026/official-release/": "Vertiv AI release"})
 
+    def test_brief_draft_requires_current_exact_evidence_and_cited_numbers(self):
+        body = b"<main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main>"
+        self.check(body)
+        sha = self.row()["sha256"]
+        evidence = {"summary": ["Capacity will increase in 2027."], "impact": ["Execution remains subject to demand."]}
+        result = m.save_brief_draft(
+            self.db, URL, sha,
+            "公式発表によると、AI向け容量は2027年に増加する計画です。",
+            "mixed", "供給能力の拡大は成長機会ですが、実行時期と需要の確度は引き続き確認が必要です。",
+            "medium", evidence,
+        )
+        self.assertEqual(result["status"], "draft")
+        self.assertFalse(result["published"])
+        with self.assertRaises(ValueError):
+            m.save_brief_draft(
+                self.db, URL, sha,
+                "公式発表によると、AI向け容量は2028年に増加する計画です。",
+                "mixed", "供給能力の拡大は成長機会ですが、実行時期と需要の確度は引き続き確認が必要です。",
+                "medium", evidence,
+            )
+
+    def test_only_human_approved_brief_is_public_without_private_review_data(self):
+        body = b"<main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main>"
+        self.check(body)
+        sha = self.row()["sha256"]
+        m.save_brief_draft(
+            self.db, URL, sha,
+            "公式発表によると、AI向け容量は2027年に増加する計画です。",
+            "mixed", "供給能力の拡大は成長機会ですが、実行時期と需要の確度は引き続き確認が必要です。",
+            "medium", {"summary": ["Capacity will increase in 2027."], "impact": ["Execution remains subject to demand."]},
+        )
+        self.assertEqual(m.snapshot(self.db)["briefs"], [])
+        result = m.review_brief(self.db, URL, sha, "approved", "private-editor", "private-review-reason")
+        self.assertFalse(result["published"])
+        public = m.snapshot(self.db)["briefs"]
+        self.assertEqual(len(public), 1)
+        self.assertEqual(public[0]["status"], "approved")
+        self.assertNotIn("private-", str(public))
+        self.assertNotIn("evidence", str(public))
+
+    def test_source_change_makes_approved_brief_stale_and_private_again(self):
+        body = b"<main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main>"
+        self.check(body)
+        sha = self.row()["sha256"]
+        m.save_brief_draft(
+            self.db, URL, sha,
+            "公式発表によると、AI向け容量は2027年に増加する計画です。",
+            "mixed", "供給能力の拡大は成長機会ですが、実行時期と需要の確度は引き続き確認が必要です。",
+            "medium", {"summary": ["Capacity will increase in 2027."], "impact": ["Execution remains subject to demand."]},
+        )
+        m.review_brief(self.db, URL, sha, "approved", "editor", "Evidence reviewed")
+        self.check(b"<main><p>Capacity plan changed.</p></main>")
+        self.assertEqual(self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0], "stale")
+        self.assertEqual(m.snapshot(self.db)["briefs"], [])
+
     def test_atom_links_supported_and_entity_declarations_rejected(self):
         body = b'''<feed xmlns="http://www.w3.org/2005/Atom"><entry><title>AI</title><link href="https://newsroom.arm.com/news/ai"/></entry></feed>'''
         self.assertEqual(len(m.feed_links(body, "ARM")), 1)
