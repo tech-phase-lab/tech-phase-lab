@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 
 type Quote = {
   symbol: string;
@@ -301,6 +302,9 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-center gap-3 text-xs">
+            <Link href="/research" className="rounded-lg border border-emerald-400/30 px-3 py-2 text-emerald-200 hover:bg-emerald-400/10">
+              RESEARCH PREVIEW →
+            </Link>
             <span className="flex items-center gap-2">
               <span className={`h-2 w-2 rounded-full ${market?.live ? "bg-emerald-400" : "bg-amber-300"}`} />
               <span className="text-zinc-400">{market?.live ? "ALPACA CONNECTED" : "CONNECTING"}</span>
