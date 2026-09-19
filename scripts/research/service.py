@@ -30,7 +30,7 @@ class AutomaticMonitor:
     def __init__(self, db_path, snapshot_path):
         self.db_path = Path(db_path)
         self.snapshot_path = Path(snapshot_path)
-        self.fast_seconds = positive_int("RESEARCH_FAST_POLL_SECONDS", 5, 5)
+        self.fast_seconds = positive_int("RESEARCH_FAST_POLL_SECONDS", 3, 3)
         self.standard_seconds = positive_int("RESEARCH_STANDARD_POLL_SECONDS", 5, 5)
         self.workers = positive_int("RESEARCH_MAX_WORKERS", 8, 1)
         configured = [value.strip().upper() for value in os.environ.get("RESEARCH_TICKERS", "").split(",") if value.strip()]
@@ -63,7 +63,7 @@ class AutomaticMonitor:
     def interval_for(self, ticker):
         provider = monitor.PROVIDERS[ticker]
         if provider.get("pollSeconds"):
-            return max(5, int(provider["pollSeconds"]))
+            return max(3, int(provider["pollSeconds"]))
         if provider["format"] == "rss" or provider.get("automaticSource") == "fallback":
             return self.fast_seconds
         return self.standard_seconds

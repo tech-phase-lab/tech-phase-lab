@@ -75,11 +75,11 @@ exportは明示した項目のみ出力し、担当者名・判断理由・原�
 
 デフォルトは `.research-private/intake.sqlite`。Git管理から除外し、会員サイトから直接読み出しません。`--db /absolute/path/intake.sqlite` で永続ディスクを指定できます。Vercelの一時ファイルシステムには保存せず、下記の常駐監視サービスで永続ボリュームを使用します。
 
-手動コマンドは直列取得です。常駐監視サービスは銘柄ごとに並列取得し、通常5秒間隔で巡回します。ETagまたはLast-Modifiedを返す取得先には条件付きリクエストを送り、変更がなければ本文を再転送しません。取得失敗時だけ10秒、20秒と自動的に間隔を延ばし、最大5分で再試行します。初回の過去資料は基準データとして保存し、2回目以降に初めて現れた公式URLだけを新着イベントとして記録します。全履歴本文の保存、訂正内容の差分表示、自動数値抽出、AI要約、公開操作は未実装です。
+手動コマンドは直列取得です。常駐監視サービスは銘柄ごとに並列取得し、SEC・公式RSSは通常3秒、企業HTML一覧は通常5秒間隔で巡回します。ETagまたはLast-Modifiedを返す取得先には条件付きリクエストを送り、変更がなければ本文を再転送しません。取得失敗時だけ基準間隔の2倍、4倍と自動的に間隔を延ばし、最大5分で再試行します。初回の過去資料は基準データとして保存し、2回目以降に初めて現れた公式URLだけを新着イベントとして記録します。全履歴本文の保存、訂正内容の差分表示、自動数値抽出、AI要約、公開操作は未実装です。
 
 ## 常駐自動監視
 
-`service.py` は起動後、自分で22社を通常5秒間隔で巡回し続けます。新しいURLまたは取得状態の変化があった時だけSQLiteと公開用スナップショットを更新します。初回巡回は過去資料の基準作成に使い、新着件数や速報欄には入れません。5社のSEC経路では、Atomより高速なSEC Submissions JSONを優先し、8-Kまたは6-Kだけを抽出します。
+`service.py` は起動後、自分で22社を巡回し続けます。SEC・公式RSSは通常3秒、企業HTML一覧は通常5秒です。新しいURLまたは取得状態の変化があった時だけSQLiteと公開用スナップショットを更新します。初回巡回は過去資料の基準作成に使い、新着件数や速報欄には入れません。5社のSEC経路では、Atomより高速なSEC Submissions JSONを優先し、8-Kまたは6-Kだけを抽出します。
 
 ```sh
 RESEARCH_API_TOKEN='共有トークン' python3 scripts/research/service.py
@@ -90,13 +90,13 @@ HTTP APIは `/health`、`/snapshot`、`/live`。`/snapshot` と `/live` は `RES
 `Dockerfile.research-monitor` は常駐サービス用です。デプロイ先では `/data` に永続ボリュームを接続し、以下を設定します。
 
 - `RESEARCH_API_TOKEN`：長いランダム値
-- `RESEARCH_FAST_POLL_SECONDS`：標準5秒、最低5秒
+- `RESEARCH_FAST_POLL_SECONDS`：標準3秒、最低3秒
 - `RESEARCH_STANDARD_POLL_SECONDS`：標準5秒、最低5秒
 - `RESEARCH_REQUEST_TIMEOUT_SECONDS`：標準20秒。巡回間隔とは別で、遅い公式サイトを誤って障害扱いしないための上限
 - `RESEARCH_MAX_WORKERS`：標準8
 - `RESEARCH_USER_AGENT`：運営サービス名と連絡可能な汎用メールアドレス。SEC等の自動アクセス方針に合わせて設定
 
-Vercel側には監視サービスのHTTPS URLを `RESEARCH_MONITOR_URL`、同じトークンを `RESEARCH_MONITOR_TOKEN` として設定します。`/research/intake` は5秒ごとにAPIを確認し、接続中か保存済み記録かを明示します。
+Vercel側には監視サービスのHTTPS URLを `RESEARCH_MONITOR_URL`、同じトークンを `RESEARCH_MONITOR_TOKEN` として設定します。`/research/intake` は3秒ごとにAPIを確認し、接続中か保存済み記録かを明示します。
 
 ## 検証
 
