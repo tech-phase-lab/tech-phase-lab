@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import { verifiedChanges, verifiedChangeIssues } from "../lib/research/verified-changes.ts";
 
 test("verified WHAT CHANGED records retain valid primary evidence", () => {
-  assert.equal(verifiedChanges.length, 7);
-  assert.deepEqual(verifiedChanges.map((item) => item.ticker), ["NVDA", "AMD", "AVGO", "CRWV", "ARM", "TSM", "ASML"]);
+  assert.equal(verifiedChanges.length, 10);
+  assert.deepEqual(verifiedChanges.map((item) => item.ticker), ["NVDA", "AMD", "AVGO", "CRWV", "ARM", "TSM", "ASML", "MRVL", "ANET", "CRDO"]);
   for (const item of verifiedChanges) assert.deepEqual(verifiedChangeIssues(item), []);
 });
 
@@ -57,4 +57,30 @@ test("ASML euro-denominated comparisons remain distinct from USD", () => {
   assert.equal(sales.unit, "eur-billion");
   assert.equal((((sales.current / sales.previous) - 1) * 100).toFixed(1), "6.4");
   assert.equal((margin.current - margin.previous).toFixed(1), "1.0");
+});
+
+test("Marvell separates total and Data Center sequential growth", () => {
+  const mrvl = verifiedChanges.find((item) => item.ticker === "MRVL");
+  const revenue = mrvl.metrics.find((metric) => metric.id === "revenue");
+  const dataCenter = mrvl.metrics.find((metric) => metric.id === "data-center");
+  assert.equal((((revenue.current / revenue.previous) - 1) * 100).toFixed(1), "13.3");
+  assert.equal((((dataCenter.current / dataCenter.previous) - 1) * 100).toFixed(1), "18.5");
+});
+
+test("Arista year-on-year values match the filed income statement", () => {
+  const anet = verifiedChanges.find((item) => item.ticker === "ANET");
+  const revenue = anet.metrics.find((metric) => metric.id === "revenue");
+  const margin = anet.metrics.find((metric) => metric.id === "operating-margin");
+  assert.equal((((revenue.current / revenue.previous) - 1) * 100).toFixed(1), "37.7");
+  assert.equal((margin.current - margin.previous).toFixed(1), "0.7");
+});
+
+test("Credo keeps sequential growth and profitability contraction together", () => {
+  const crdo = verifiedChanges.find((item) => item.ticker === "CRDO");
+  const revenue = crdo.metrics.find((metric) => metric.id === "revenue");
+  const margin = crdo.metrics.find((metric) => metric.id === "gross-margin");
+  const netIncome = crdo.metrics.find((metric) => metric.id === "net-income");
+  assert.equal((((revenue.current / revenue.previous) - 1) * 100).toFixed(1), "9.6");
+  assert.equal((margin.current - margin.previous).toFixed(1), "-3.7");
+  assert.equal((((netIncome.current / netIncome.previous) - 1) * 100).toFixed(1), "-23.5");
 });

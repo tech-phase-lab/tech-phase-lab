@@ -212,13 +212,91 @@ export const verifiedChanges: VerifiedChange[] = [{
     { ja: "Q3粗利益率：55%〜57%", en: "Q3 gross margin: 55%–57%" },
     { ja: "2026年売上見通し：€43B〜€45B、粗利益率54%〜56%", en: "2026 outlook: €43B–€45B sales and 54%–56% gross margin" },
   ],
+}, {
+  ticker: "MRVL",
+  title: { ja: "Q2 FY2027：前四半期からの変化", en: "Q2 FY2027: changes from the prior quarter" },
+  previousPeriod: "Q1 FY2027",
+  currentPeriod: "Q2 FY2027",
+  reviewedOn: "2026-09-19",
+  source: {
+    title: "Marvell Technology, Inc. Reports Second Quarter of Fiscal Year 2027 Financial Results",
+    publisher: "Marvell Investor Relations",
+    publishedOn: "2026-08-27",
+    url: "https://investor.marvell.com/news-events/press-releases/detail/1031/marvell-technology-inc-reports-second-quarter-of-fiscal-year-2027-financial-results",
+    location: "Statements of Operations; Reconciliations; Quarterly Revenue Trend; Q3 Outlook",
+  },
+  metrics: [
+    { id: "revenue", label: { ja: "売上高", en: "Net revenue" }, previous: 2.4178, current: 2.7393, unit: "billion", change: { value: 13.297, unit: "percent" }, note: { ja: "GAAP・全社。会社発表の前四半期比は13%。", en: "GAAP, total company. Marvell reports 13% quarter-on-quarter." } },
+    { id: "data-center", label: { ja: "データセンター売上", en: "Data Center revenue" }, previous: 1.8327, current: 2.1715, unit: "billion", change: { value: 18.486, unit: "percent" }, note: { ja: "会社のエンドマーケット区分。会社発表の前四半期比は18%。", en: "Company end-market classification. Marvell reports 18% quarter-on-quarter." } },
+    { id: "gross-margin", label: { ja: "GAAP粗利益率", en: "GAAP gross margin" }, previous: 52.1, current: 53.1, unit: "percent", change: { value: 1, unit: "pp" }, note: { ja: "増減率ではなくパーセントポイント差。", en: "Percentage-point difference, not percentage growth." } },
+    { id: "operating-income", label: { ja: "GAAP営業利益", en: "GAAP operating income" }, previous: 0.3394, current: 0.4597, unit: "billion", change: { value: 35.445, unit: "percent" }, note: { ja: "同じ公式表の前四半期値と比較。", en: "Compared with the prior-quarter amount in the same official table." } },
+  ],
+  reading: { ja: "売上は前四半期比約13.3%増の$2.739B、データセンター売上は約18.5%増の$2.172Bでした。GAAP粗利益率は1.0ポイント、GAAP営業利益は約35.4%上昇しています。", en: "Revenue rose about 13.3% quarter-on-quarter to $2.739B, while Data Center revenue increased about 18.5% to $2.172B. GAAP gross margin improved by 1.0 point and GAAP operating income rose about 35.4%." },
+  unknown: { ja: "Q3見通しの達成可否、AI関連受注が売上に転換する時期、データセンター売上の顧客別構成は、この発表だけでは確定しません。", en: "This release does not establish whether Q3 guidance will be met, when AI-related bookings will convert to revenue, or the customer mix within Data Center revenue." },
+  outlook: [
+    { ja: "Q3売上見通し：$3.150B ±5%", en: "Q3 revenue outlook: $3.150B ±5%" },
+    { ja: "Q3 GAAP粗利益率：52.9%〜53.9%", en: "Q3 GAAP gross margin: 52.9%–53.9%" },
+    { ja: "Q3非GAAP希薄化後EPS：$1.10 ±$0.05", en: "Q3 non-GAAP diluted EPS: $1.10 ±$0.05" },
+  ],
+}, {
+  ticker: "ANET",
+  title: { ja: "Q2 2026：前年同期からの変化", en: "Q2 2026: changes from the prior-year quarter" },
+  previousPeriod: "Q2 2025",
+  currentPeriod: "Q2 2026",
+  reviewedOn: "2026-09-19",
+  source: {
+    title: "Arista Networks, Inc. Reports Second Quarter 2026 Financial Results",
+    publisher: "Arista Networks filing on SEC EDGAR",
+    publishedOn: "2026-08-04",
+    url: "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000174/ex991q226-earningsrelease.htm",
+    location: "Second Quarter Financial Highlights; Income Statements; GAAP Reconciliation; Financial Outlook",
+  },
+  metrics: [
+    { id: "revenue", label: { ja: "売上高", en: "Revenue" }, previous: 2.2048, current: 3.0357, unit: "billion", change: { value: 37.686, unit: "percent" }, note: { ja: "GAAP・全社。会社発表の前年同期比は37.7%。", en: "GAAP, total company. Arista reports 37.7% year-on-year." } },
+    { id: "product-revenue", label: { ja: "製品売上", en: "Product revenue" }, previous: 1.8770, current: 2.6052, unit: "billion", change: { value: 38.796, unit: "percent" }, note: { ja: "公式損益計算書の製品売上を比較。", en: "Compares product revenue in the official income statement." } },
+    { id: "service-revenue", label: { ja: "サービス売上", en: "Service revenue" }, previous: 0.3278, current: 0.4305, unit: "billion", change: { value: 31.330, unit: "percent" }, note: { ja: "公式損益計算書のサービス売上を比較。", en: "Compares service revenue in the official income statement." } },
+    { id: "operating-margin", label: { ja: "GAAP営業利益率", en: "GAAP operating margin" }, previous: 44.7, current: 45.4, unit: "percent", change: { value: 0.7, unit: "pp" }, note: { ja: "増減率ではなくパーセントポイント差。", en: "Percentage-point difference, not percentage growth." } },
+  ],
+  reading: { ja: "四半期売上は初めて$3Bを超え、前年同期比約37.7%増でした。製品売上は約38.8%、サービス売上は約31.3%増え、GAAP営業利益率も0.7ポイント上昇しました。", en: "Quarterly revenue exceeded $3B for the first time and rose about 37.7% year-on-year. Product revenue increased about 38.8%, service revenue about 31.3%, and GAAP operating margin improved by 0.7 points." },
+  unknown: { ja: "Q3見通しの達成可否、AIネットワーク売上の具体的な金額、顧客別の売上構成は、この発表だけでは確定しません。", en: "This release does not establish whether Q3 guidance will be met, the specific dollar amount of AI networking revenue, or the customer mix of revenue." },
+  outlook: [
+    { ja: "Q3売上見通し：約$3.3B", en: "Q3 revenue outlook: approximately $3.3B" },
+    { ja: "Q3非GAAP営業利益率：48%〜49%", en: "Q3 non-GAAP operating margin: 48%–49%" },
+    { ja: "Q3非GAAP希薄化後EPS：$1.06〜$1.08", en: "Q3 non-GAAP diluted EPS: $1.06–$1.08" },
+  ],
+}, {
+  ticker: "CRDO",
+  title: { ja: "Q1 FY2027：前四半期からの変化", en: "Q1 FY2027: changes from the prior quarter" },
+  previousPeriod: "Q4 FY2026",
+  currentPeriod: "Q1 FY2027",
+  reviewedOn: "2026-09-19",
+  source: {
+    title: "Credo Technology Group Holding Ltd Reports First Quarter of Fiscal Year 2027 Financial Results",
+    publisher: "Credo filing on SEC EDGAR",
+    publishedOn: "2026-09-01",
+    url: "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+    location: "Financial Highlights; Statements of Operations; Q2 Outlook",
+  },
+  metrics: [
+    { id: "revenue", label: { ja: "売上高", en: "Revenue" }, previous: 0.437003, current: 0.479003, unit: "billion", change: { value: 9.611, unit: "percent" }, note: { ja: "GAAP・全社。会社発表の前四半期比は9.6%。", en: "GAAP, total company. Credo reports 9.6% quarter-on-quarter." } },
+    { id: "gross-margin", label: { ja: "GAAP粗利益率", en: "GAAP gross margin" }, previous: 68.2, current: 64.5, unit: "percent", change: { value: -3.7, unit: "pp" }, note: { ja: "増減率ではなくパーセントポイント差。", en: "Percentage-point difference, not percentage growth." } },
+    { id: "operating-expenses", label: { ja: "GAAP営業費用", en: "GAAP operating expenses" }, previous: 0.142222, current: 0.188380, unit: "billion", change: { value: 32.456, unit: "percent" }, note: { ja: "研究開発費と販売・一般管理費の合計。", en: "Total research and development plus selling, general and administrative expenses." } },
+    { id: "net-income", label: { ja: "GAAP純利益", en: "GAAP net income" }, previous: 0.169102, current: 0.129425, unit: "billion", change: { value: -23.463, unit: "percent" }, note: { ja: "非GAAP純利益とは分けて比較。", en: "Compared separately from non-GAAP net income." } },
+  ],
+  reading: { ja: "売上は前四半期比約9.6%増えましたが、GAAP粗利益率は3.7ポイント低下し、営業費用は約32.5%増加、GAAP純利益は約23.5%減少しました。成長と収益性を分けて見る必要があります。", en: "Revenue rose about 9.6% quarter-on-quarter, but GAAP gross margin fell 3.7 points, operating expenses increased about 32.5%, and GAAP net income declined about 23.5%. Growth and profitability need to be assessed separately." },
+  unknown: { ja: "Q2見通しの達成可否、製品別・顧客別の成長寄与、買収関連費用と統合が今後の利益率に与える影響は、この発表だけでは確定しません。", en: "This release does not establish whether Q2 guidance will be met, the growth contribution by product or customer, or how acquisition-related costs and integration will affect future margins." },
+  outlook: [
+    { ja: "Q2売上見通し：$525M〜$535M", en: "Q2 revenue outlook: $525M–$535M" },
+    { ja: "Q2 GAAP粗利益率：62.9%〜64.9%", en: "Q2 GAAP gross margin: 62.9%–64.9%" },
+    { ja: "Q2 GAAP営業費用：$199M〜$204M", en: "Q2 GAAP operating expenses: $199M–$204M" },
+  ],
 }];
 
 export const verifiedChangeByTicker = Object.fromEntries(verifiedChanges.map((item) => [item.ticker, item]));
 
 export function verifiedChangeIssues(item: VerifiedChange): string[] {
   const issues: string[] = [];
-  const allowedSourceHosts = new Set(["www.sec.gov", "ir.amd.com", "investors.broadcom.com", "newsroom.arm.com", "pr.tsmc.com", "investor.tsmc.com", "www.asml.com"]);
+  const allowedSourceHosts = new Set(["www.sec.gov", "ir.amd.com", "investors.broadcom.com", "newsroom.arm.com", "pr.tsmc.com", "investor.tsmc.com", "www.asml.com", "investor.marvell.com"]);
   if (!item.metrics.length || new Set(item.metrics.map((metric) => metric.id)).size !== item.metrics.length) issues.push("invalid-metrics");
   let sourceHost = "";
   try { sourceHost = new URL(item.source.url).hostname; } catch { /* reported below */ }
