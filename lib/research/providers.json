@@ -148,6 +148,7 @@
     "monitorUrl": "https://openapi.twse.com.tw/v1/opendata/t187ap04_L",
     "format": "twse-material-json",
     "requestTimeoutSeconds": 15,
+    "pollSeconds": 3,
     "twseCompanyCode": "2330",
     "allowEmpty": true,
     "fallbackSources": [

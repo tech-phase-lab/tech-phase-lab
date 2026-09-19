@@ -64,6 +64,7 @@ class ResearchServiceTests(unittest.TestCase):
             db.execute("UPDATE sources SET source_mode='inline' WHERE url=?", (inline_url,))
             db.commit()
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        self.assertEqual(app.interval_for("TSM"), 3)
         rows, _ = app.body_candidates()
         self.assertNotIn(inline_url, [row["url"] for row in rows])
 
