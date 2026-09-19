@@ -33,6 +33,7 @@ test("unsafe links, duplicate records and broken history references fail validat
   assert.ok(snapshotIssues({ ...snapshot, sources: [{ ...source, url: "javascript:alert(1)" }] }).includes("unsafe-url"));
   assert.ok(snapshotIssues({ ...snapshot, history: [{ url: "missing", at: "2026-09-19" }] }).includes("invalid-history"));
   assert.ok(snapshotIssues({ ...snapshot, events: [{ id: 1, url: "missing", ticker: "NVDA", detected_at: snapshot.generatedAt, title: null, published_on: null }] }).includes("invalid-event"));
+  assert.ok(snapshotIssues({ ...snapshot, events: [{ id: 1, url: source.url, ticker: source.ticker, detected_at: snapshot.generatedAt, title: null, published_on: null, detection_to_body_ms: -1 }] }).includes("invalid-event-latency"));
 });
 
 test("sector and company filters use the shared registry", () => {

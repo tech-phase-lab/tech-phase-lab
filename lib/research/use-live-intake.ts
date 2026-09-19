@@ -7,9 +7,15 @@ export type MonitorState = {
   ready: boolean;
   startedAt: string;
   lastCycleAt: string | null;
+  lastCycleDurationMs: number | null;
+  lastCycleCompanies: number;
   lastChangeAt: string | null;
   cycles: number;
   newSources: number;
+  companies: Record<string, {
+    basePollSeconds?: number; nextPollSeconds?: number; requestDurationMs?: number;
+    status: string; route: string; candidates: number; checkedAt: string; error: string | null;
+  }>;
 };
 
 type LiveState = {

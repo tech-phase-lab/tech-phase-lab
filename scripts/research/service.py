@@ -47,6 +47,8 @@ class AutomaticMonitor:
             "ready": False,
             "startedAt": utc_now(),
             "lastCycleAt": None,
+            "lastCycleDurationMs": None,
+            "lastCycleCompanies": 0,
             "lastChangeAt": None,
             "cycles": 0,
             "newSources": 0,
@@ -72,6 +74,12 @@ class AutomaticMonitor:
         if provider["format"] == "rss" or provider.get("automaticSource") == "fallback":
             return self.fast_seconds
         return self.standard_seconds
+
+    def collect_discovery_timed(self, ticker):
+        """Measure one official-source request separately from its polling interval."""
+        started = time.monotonic()
+        result, links = monitor.collect_discovery(ticker, monitor.fetch, True)
+        return result, links, max(0, round((time.monotonic() - started) * 1000))
 
     def public_state(self):
         with self.state_lock:
@@ -175,13 +183,15 @@ class AutomaticMonitor:
                     self.stop_event.wait(min(1.0, max(0.1, min(next_due.values()) - current)))
                     continue
 
-                futures = {pool.submit(monitor.collect_discovery, ticker, monitor.fetch, True): ticker for ticker in due}
+                cycle_started = time.monotonic()
+                futures = {pool.submit(self.collect_discovery_timed, ticker): ticker for ticker in due}
                 collected = []
                 for future in as_completed(futures):
                     ticker = futures[future]
                     try:
-                        result, links = future.result()
+                        result, links, request_duration_ms = future.result()
                     except Exception as exc:
+                        request_duration_ms = max(0, round((time.monotonic() - cycle_started) * 1000))
                         result = {
                             "ticker": ticker,
                             "status": "degraded",
@@ -191,7 +201,7 @@ class AutomaticMonitor:
                             "error": str(exc),
                         }
                         links = {}
-                    collected.append((ticker, result, links))
+                    collected.append((ticker, result, links, request_duration_ms))
                     if result["status"] == "degraded":
                         failure_streak[ticker] += 1
                     else:
@@ -205,7 +215,7 @@ class AutomaticMonitor:
                 checked_at = utc_now()
                 company_states = {}
                 with self.db_lock, monitor.connect(self.db_path) as db:
-                    for ticker, result, links in collected:
+                    for ticker, result, links, request_duration_ms in collected:
                         signature = (result["status"], result["sourceUrl"], tuple(sorted(links)))
                         new_urls = set(links) - known[ticker]
                         if signatures.get(ticker) != signature or new_urls:
@@ -224,6 +234,9 @@ class AutomaticMonitor:
                             "candidates": result["candidates"],
                             "checkedAt": checked_at,
                             "pollSeconds": result["nextPollSeconds"],
+                            "basePollSeconds": self.interval_for(ticker),
+                            "nextPollSeconds": result["nextPollSeconds"],
+                            "requestDurationMs": request_duration_ms,
                             "error": monitor.public_error(result["error"]),
                         }
                     if changed:
@@ -232,6 +245,8 @@ class AutomaticMonitor:
                 with self.state_lock:
                     self.state["ready"] = True
                     self.state["lastCycleAt"] = checked_at
+                    self.state["lastCycleDurationMs"] = max(0, round((time.monotonic() - cycle_started) * 1000))
+                    self.state["lastCycleCompanies"] = len(due)
                     self.state["cycles"] += 1
                     self.state["newSources"] += new_count
                     self.state["companies"].update(company_states)

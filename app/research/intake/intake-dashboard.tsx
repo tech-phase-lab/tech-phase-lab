@@ -19,6 +19,10 @@ function bodyEvidence(source: IntakeSnapshot["sources"][number]) {
   if ((source.extracted_chars ?? 0) > 0) return `抽出済み ${source.extracted_chars?.toLocaleString("ja-JP")}文字`;
   return source.content_type === "application/pdf" ? "PDF取得済み・文字抽出は未対応" : "原文取得済み・抽出テキストなし";
 }
+function duration(value: number | null | undefined) {
+  if (value == null || !Number.isFinite(value)) return "計測待ち";
+  return value < 10_000 ? `${(value / 1000).toFixed(1)}秒` : `${Math.round(value / 1000)}秒`;
+}
 
 export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: { snapshot: IntakeSnapshot; titles: Record<string, string> }) {
   const [query, setQuery] = useState("");
@@ -44,13 +48,13 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
     <header className={styles.header}><Link href="/research" className={styles.brand}><b>TP</b><span>TECH PHASE<small>RESEARCH / OPERATIONS</small></span></Link><span className={styles.badge}>運営用プレビュー</span></header>
     <main id="intake-main" className={styles.main}>
       <div className={styles.heading}><div><p className={styles.eyebrow}>AI COMPANY COVERAGE</p><h1>AI関連銘柄の資料・取得状況</h1><p>企業公式・取引所・SECの一次情報から、原文と照合する資料を選びます。</p></div><div className={styles.headingLinks}><Link href="/research/review">速報レビュー →</Link><Link href="/research">リサーチ画面へ ↗</Link></div></div>
-      <aside className={styles.notice}><strong>{live.mode === "automatic" ? "公式発表を自動監視しています" : "自動監視サービスの接続待ち"}</strong><span>{live.mode === "automatic" ? `最終巡回：${time(live.monitor?.lastCycleAt ?? null)} JST` : `保存記録の出力日時：${time(snapshot.generatedAt)} JST`}</span><p>{live.mode === "automatic" ? "公式経路を銘柄ごとに3〜5秒の基準間隔で巡回し、新しい公式資料を検知すると自動反映します。" : "現在は保存済み記録を表示しています。監視サービス接続後は3秒ごとに自動更新されます。"}</p></aside>
+      <aside className={styles.notice}><strong>{live.mode === "automatic" ? "公式発表を自動監視しています" : "自動監視サービスの接続待ち"}</strong><span>{live.mode === "automatic" ? `最終巡回：${time(live.monitor?.lastCycleAt ?? null)} JST` : `保存記録の出力日時：${time(snapshot.generatedAt)} JST`}</span>{live.mode === "automatic" && <span>直近巡回：{duration(live.monitor?.lastCycleDurationMs)}（{live.monitor?.lastCycleCompanies ?? 0}社）</span>}<p>{live.mode === "automatic" ? "公式経路を銘柄ごとに3〜5秒の基準間隔で巡回します。間隔は保証速度ではなく、直近応答時間と検知後の本文取得時間を別に実測します。" : "現在は保存済み記録を表示しています。監視サービス接続後は3秒ごとに自動更新されます。"}</p></aside>
       <section aria-labelledby="events-title" className={styles.queue}><div className={styles.sectionTitle}><h2 id="events-title">新着の公式発表</h2><span>初回取り込みを除く自動検知：{events.length}件</span></div>
-        <p className={styles.coverageNote}>監視開始前の過去資料は速報として扱いません。ここには監視開始後に新しく現れた公式URLだけを、検知時刻順で表示します。</p>
+        <p className={styles.coverageNote}>監視開始前の過去資料は速報として扱いません。ここには監視開始後に新しく現れた公式URLだけを表示します。発表元の公開時刻が秒単位で得られない場合、公開から検知までの時間は未計測です。</p>
         {events.length === 0 ? <div className={styles.empty}><h3>監視開始後の新着はまだありません</h3><p>常駐監視の接続後、新しい公式発表を検知すると自動で追加されます。</p></div> : <ul className={styles.sources}>{events.slice(0, 20).map(event => <li key={event.id}><article className={styles.source}>
           <div className={styles.tags}><b>{event.ticker}</b><span className={styles.good}>公式URLを新規検知</span></div>
           <h3>{event.title || title(event.url)}</h3>
-          <dl className={styles.dates}><div><dt>初回検知（JST）</dt><dd>{time(event.detected_at)}</dd></div><div><dt>発表日</dt><dd>{event.published_on ?? "原文で確認"}</dd></div></dl>
+          <dl className={styles.dates}><div><dt>初回検知（JST）</dt><dd>{time(event.detected_at)}</dd></div><div><dt>本文取得（JST）</dt><dd>{time(event.body_fetched_at ?? null)}</dd></div><div><dt>検知→本文取得</dt><dd>{duration(event.detection_to_body_ms)}</dd></div><div><dt>発表日</dt><dd>{event.published_on ?? "原文で確認"}</dd></div></dl>
           <div className={styles.sourceFooter}><a href={event.url} target="_blank" rel="noopener noreferrer">公式原文を開く ↗</a><span>要約前の確定情報</span></div>
         </article></li>)}</ul>}
       </section>
@@ -66,11 +70,13 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
           const latest = runs[0];
           const totals = intakeCounts(snapshot.sources.filter(s => s.ticker === symbol));
           const available = latest?.status === "ok" || latest?.status === "fallback";
+          const monitor = live.monitor?.companies?.[symbol];
           return <article key={symbol}><div className={styles.healthTop}><h3>{symbol}</h3><span className={available ? styles.good : styles.warning}>{latest?.status === "ok" ? "公式経路から取得" : latest?.status === "fallback" ? "公式バックアップ経路で取得" : latest ? "一覧の確認が必要" : "一覧未検証"}</span></div>
             <p className={styles.companyName}>{provider.name} <small>{sectorNames[provider.sector]}</small></p>
             <p>{latest?.status === "ok" ? (provider.format === "twse-material-json" ? `取引所の当日重要開示 ${latest.candidates}件` : `${latest.candidates}件のリンクを検出`) : latest?.status === "fallback" ? `企業サイトを補完し、公式提出書類を${latest.candidates}件検出` : errorNames[latest?.error ?? ""] || "取得記録なし"}</p>
             <p className={styles.muted}>本文・PDF：取得済み {totals.fetched} ／ 未取得 {totals.unfetched} ／ エラー {totals.error}</p>
             <p className={styles.meta}>一覧の確認日時：{latest ? time(latest.at) : "未確認"} JST</p>
+            {monitor && <p className={styles.meta}>基準間隔 {monitor.basePollSeconds ?? monitor.nextPollSeconds ?? "—"}秒 ／ 直近の公式応答 {duration(monitor.requestDurationMs)}{monitor.nextPollSeconds && monitor.basePollSeconds && monitor.nextPollSeconds > monitor.basePollSeconds ? ` ／ 次回まで${monitor.nextPollSeconds}秒（失敗時バックオフ）` : ""}</p>}
             <div className={styles.cardActions}><Link href={`/research/companies/${symbol}`}>銘柄ページ →</Link><a href={provider.indexUrl} target="_blank" rel="noopener noreferrer">公式{provider.format === "rss" ? "RSS" : "一覧"} ↗</a><button disabled={!totals.total} onClick={() => { setTicker(symbol); setQuery(""); setState("all"); setReview("all"); setPage(1); requestAnimationFrame(() => document.getElementById("queue-title")?.scrollIntoView({ block: "start" })); }}>資料を表示（{totals.total}）</button></div>
             <details className={styles.runHistory}><summary>{symbol}の一覧取得履歴（{runs.length}件）</summary><ul>{runs.map(r => <li key={r.id}><time>{time(r.at)} JST</time><span>{r.status === "ok" ? `${r.candidates}件検出` : r.status === "fallback" ? `公式バックアップで${r.candidates}件検出` : errorNames[r.error ?? ""] || "取得異常"}</span></li>)}</ul></details>
           </article>;

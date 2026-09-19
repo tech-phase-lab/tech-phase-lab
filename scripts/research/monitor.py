@@ -546,7 +546,8 @@ def snapshot(db):
         history = [dict(r) for r in db.execute("SELECT id,url,at,kind,sha256 FROM history ORDER BY id DESC")]
         runs = [dict(r) for r in db.execute("SELECT id,ticker,at,status,candidates,error,index_url FROM discovery_runs ORDER BY id DESC")]
         events = [dict(r) for r in db.execute("""
-          SELECT e.id,e.url,e.ticker,e.detected_at,s.title,s.published_on
+          SELECT e.id,e.url,e.ticker,e.detected_at,s.title,s.published_on,
+                 s.fetched_at AS body_fetched_at
           FROM release_events e JOIN sources s ON s.url=e.url
           ORDER BY e.id DESC LIMIT 200
         """)]
@@ -559,6 +560,13 @@ def snapshot(db):
         row["error"] = public_error(row["error"])
     for row in sources:
         safe_url(row["url"], row["ticker"])
+    for row in events:
+        row["detection_to_body_ms"] = None
+        if row["body_fetched_at"]:
+            detected = datetime.fromisoformat(row["detected_at"])
+            fetched = datetime.fromisoformat(row["body_fetched_at"])
+            if fetched >= detected:
+                row["detection_to_body_ms"] = round((fetched - detected).total_seconds() * 1000)
     return {"schemaVersion": 1, "generatedAt": now(), "sources": sources, "history": history, "discoveryRuns": runs, "events": events, "briefs": briefs}
 
 

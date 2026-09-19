@@ -15,7 +15,8 @@ export type IntakeSource = {
 };
 export type IntakeSnapshot = {
   schemaVersion: number; generatedAt: string; sources: IntakeSource[];
-  events?: { id: number; url: string; ticker: string; detected_at: string; title: string | null; published_on: string | null }[];
+  events?: { id: number; url: string; ticker: string; detected_at: string; title: string | null; published_on: string | null;
+    body_fetched_at?: string | null; detection_to_body_ms?: number | null }[];
   history: { id: number; url: string; at: string; kind: string; sha256: string | null }[];
   discoveryRuns: { id: number; ticker: string; at: string; status: "ok" | "fallback" | "degraded"; candidates: number; error: string | null; index_url: string | null }[];
 };
@@ -77,6 +78,8 @@ export function snapshotIssues(data: IntakeSnapshot) {
   for (const h of data.history) if (!urls.has(h.url) || !Number.isFinite(Date.parse(h.at))) issues.push("invalid-history");
   for (const event of data.events ?? []) {
     if (!urls.has(event.url) || !providerByTicker[event.ticker] || !Number.isFinite(Date.parse(event.detected_at))) issues.push("invalid-event");
+    if (event.body_fetched_at && !Number.isFinite(Date.parse(event.body_fetched_at))) issues.push("invalid-event-body-time");
+    if (event.detection_to_body_ms != null && (!Number.isFinite(event.detection_to_body_ms) || event.detection_to_body_ms < 0)) issues.push("invalid-event-latency");
   }
   return issues;
 }

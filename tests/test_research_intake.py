@@ -178,6 +178,16 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(report["events"][0]["url"], new_url)
         self.assertEqual(report["events"][0]["title"], "Official release")
         self.assertNotIn("reviewer", report["events"][0])
+        self.assertIsNone(report["events"][0]["detection_to_body_ms"])
+
+        row = self.db.execute("SELECT * FROM sources WHERE url=?", (new_url,)).fetchone()
+        m.save_source_check(self.db, row, {
+            "sha256": "c" * 64, "contentType": "text/html", "contentBytes": 40,
+            "extractedText": "Official evidence body.", "extractedChars": 23,
+        })
+        measured = m.snapshot(self.db)["events"][0]
+        self.assertIsNotNone(measured["body_fetched_at"])
+        self.assertGreaterEqual(measured["detection_to_body_ms"], 0)
 
     def test_conditional_fetch_reuses_cached_body_on_not_modified(self):
         url = m.INDEXES["NBIS"]

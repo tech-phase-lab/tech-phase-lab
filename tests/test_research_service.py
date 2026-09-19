@@ -68,6 +68,15 @@ class ResearchServiceTests(unittest.TestCase):
         rows, _ = app.body_candidates()
         self.assertNotIn(inline_url, [row["url"] for row in rows])
 
+    def test_discovery_timing_is_measured_separately_from_poll_interval(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        with patch.object(monitor, "collect_discovery", return_value=({"status": "ok"}, {})):
+            result, links, elapsed = app.collect_discovery_timed("TSM")
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(links, {})
+        self.assertGreaterEqual(elapsed, 0)
+        self.assertEqual(app.interval_for("TSM"), 3)
+
     def test_editorial_methods_require_current_evidence_and_do_not_deliver(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         with monitor.connect(self.db_path) as db:
