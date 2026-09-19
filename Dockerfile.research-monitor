@@ -8,7 +8,6 @@ RUN useradd --create-home --uid 10001 monitor \
   && mkdir -p /data \
   && chown -R monitor:monitor /app /data
 
-USER monitor
 ENV PYTHONUNBUFFERED=1 \
     PORT=8080 \
     RESEARCH_DATA_DIR=/data \
