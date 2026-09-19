@@ -13,6 +13,7 @@ import time
 from urllib.parse import parse_qs, urlsplit
 
 import monitor
+import brief_generator
 
 
 def utc_now():
@@ -103,6 +104,28 @@ class AutomaticMonitor:
             )
             monitor.write_snapshot(db, self.snapshot_path)
             return result
+
+    def generate_brief(self, payload, transport=brief_generator.request_response):
+        url, expected_sha = payload.get("url", ""), payload.get("sha256", "")
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            if not row or row["sha256"] != expected_sha or row["error"] or not row["extracted_text"]:
+                raise ValueError("Source is missing, changed, failed, or has no extracted evidence")
+            source = dict(row)
+        generated = brief_generator.generate_draft(source, transport=transport)
+        draft, audit = generated["draft"], generated["audit"]
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            result = monitor.save_brief_draft(
+                db, url, expected_sha, draft["summaryJa"], draft["impactLabel"],
+                draft["impactJa"], draft["confidence"], draft["evidence"],
+            )
+            db.execute("""
+              UPDATE briefs SET generation_provider=?,generation_model=?,generation_response_id=?,
+                                generation_source_truncated=? WHERE url=?
+            """, (audit["provider"], audit["model"], audit["responseId"], int(audit["sourceTruncated"]), url))
+            db.commit()
+            monitor.write_snapshot(db, self.snapshot_path)
+        return {**result, "generatedBy": audit["provider"], "model": audit["model"], "sourceTruncated": audit["sourceTruncated"]}
 
     def decide_brief(self, payload):
         with self.db_lock, monitor.connect(self.db_path) as db:
@@ -340,7 +363,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlsplit(self.path).path
-        if path not in {"/admin/briefs/draft", "/admin/briefs/review"}:
+        if path not in {"/admin/briefs/generate", "/admin/briefs/draft", "/admin/briefs/review"}:
             self.send_json(404, {"ok": False, "error": "not-found"})
             return
         if not self.editor_authorized():
@@ -348,8 +371,17 @@ class Handler(BaseHTTPRequestHandler):
             return
         try:
             payload = self.read_json()
-            result = self.app.save_brief(payload) if path.endswith("/draft") else self.app.decide_brief(payload)
+            if path.endswith("/generate"):
+                result = self.app.generate_brief(payload)
+            elif path.endswith("/draft"):
+                result = self.app.save_brief(payload)
+            else:
+                result = self.app.decide_brief(payload)
             self.send_json(200, {"ok": True, **result})
+        except brief_generator.GenerationUnavailable:
+            self.send_json(503, {"ok": False, "error": "generation-not-configured"})
+        except brief_generator.GenerationFailed:
+            self.send_json(502, {"ok": False, "error": "generation-failed"})
         except ValueError as exc:
             self.send_json(400, {"ok": False, "error": str(exc)})
         except Exception:

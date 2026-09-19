@@ -397,6 +397,13 @@ def connect(path):
     for column, declaration in migrations.items():
         if column not in source_columns:
             db.execute(f"ALTER TABLE sources ADD COLUMN {column} {declaration}")
+    brief_columns = {row[1] for row in db.execute("PRAGMA table_info(briefs)")}
+    for column, declaration in {
+        "generation_provider": "TEXT", "generation_model": "TEXT", "generation_response_id": "TEXT",
+        "generation_source_truncated": "INTEGER NOT NULL DEFAULT 0",
+    }.items():
+        if column not in brief_columns:
+            db.execute(f"ALTER TABLE briefs ADD COLUMN {column} {declaration}")
     return db
 
 
@@ -577,7 +584,8 @@ def private_brief_queue(db, limit=20):
       SELECT s.url,s.ticker,s.title,s.published_on,s.discovered_at,s.checked_at,s.sha256,
              s.extracted_text,s.extracted_chars,e.detected_at,
              b.summary_ja,b.impact_label,b.impact_ja,b.confidence,b.status AS brief_status,
-             b.generated_at,b.reviewed_at,b.reviewer,b.review_reason
+             b.generated_at,b.reviewed_at,b.reviewer,b.review_reason,
+             b.generation_provider,b.generation_model,b.generation_response_id,b.generation_source_truncated
       FROM sources s
       LEFT JOIN release_events e ON e.url=s.url
       LEFT JOIN briefs b ON b.url=s.url
@@ -731,6 +739,10 @@ def save_brief_draft(db, url, expected_sha, summary_ja, impact_label, impact_ja,
             generated_at=excluded.generated_at,reviewed_at=NULL,reviewer=NULL,review_reason=NULL
         """, (url, expected_sha, summary_ja, impact_label, impact_ja, confidence, generated_at))
         db.execute("DELETE FROM brief_evidence WHERE url=?", (url,))
+        db.execute("""
+          UPDATE briefs SET generation_provider=NULL,generation_model=NULL,generation_response_id=NULL,
+                            generation_source_truncated=0 WHERE url=?
+        """, (url,))
         db.executemany("INSERT INTO brief_evidence(url,field,excerpt) VALUES(?,?,?)", [(url, field, excerpt) for field, excerpt in cleaned])
     return {"url": url, "status": "draft", "generatedAt": generated_at, "published": False}
 

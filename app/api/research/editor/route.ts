@@ -54,10 +54,10 @@ export async function POST(request: Request) {
     if (!text || new TextEncoder().encode(text).length > 64 * 1024) return response(400, { ok: false, error: "invalid-request-size" });
     let parsed: { action?: unknown; payload?: unknown };
     try { parsed = JSON.parse(text); } catch { return response(400, { ok: false, error: "invalid-json" }); }
-    if (!parsed || typeof parsed !== "object" || !["draft", "review"].includes(String(parsed.action)) || !parsed.payload || typeof parsed.payload !== "object") {
+    if (!parsed || typeof parsed !== "object" || !["generate", "draft", "review"].includes(String(parsed.action)) || !parsed.payload || typeof parsed.payload !== "object") {
       return response(400, { ok: false, error: "invalid-request" });
     }
-    const path = parsed.action === "draft" ? "/admin/briefs/draft" : "/admin/briefs/review";
+    const path = parsed.action === "generate" ? "/admin/briefs/generate" : parsed.action === "draft" ? "/admin/briefs/draft" : "/admin/briefs/review";
     return await relay(endpoint(path), {
       method: "POST",
       headers: { Authorization: auth, "Content-Type": "application/json" },

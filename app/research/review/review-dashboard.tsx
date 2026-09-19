@@ -10,6 +10,8 @@ type ReviewItem = {
   checked_at: string; sha256: string; source_text: string; source_text_truncated: boolean;
   summary_ja: string | null; impact_label: string | null; impact_ja: string | null; confidence: string | null;
   brief_status: string | null; generated_at: string | null; reviewed_at: string | null; evidence: Evidence;
+  generation_provider: string | null; generation_model: string | null; generation_response_id: string | null;
+  generation_source_truncated: number;
 };
 
 const labels: Record<string, string> = { draft: "下書き", approved: "承認済み", held: "保留", rejected: "却下", stale: "原文変更・再確認" };
@@ -71,6 +73,18 @@ export default function ReviewDashboard() {
     } finally { setBusy(false); }
   }
 
+  async function generateDraft() {
+    if (!selected) return;
+    setBusy(true);
+    try {
+      await request("POST", { action: "generate", payload: { url: selected.url, sha256: selected.sha256 } });
+      await load("AI下書きを生成し、原文根拠の機械照合を通過しました。まだ公開・配信されていません。");
+    } catch (error) {
+      const code = error instanceof Error ? error.message : "unknown";
+      setMessage(code === "generation-not-configured" ? "生成機能は未設定です。APIキーと使用モデルを設定するまで課金・生成は行われません。" : `生成失敗：${code}`);
+    } finally { setBusy(false); }
+  }
+
   async function submitReview(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!selected) return;
@@ -99,6 +113,7 @@ export default function ReviewDashboard() {
       {selected && <article className={styles.editor}>
         <div className={styles.sourceHead}><div><p>{selected.ticker} · SHA {selected.sha256.slice(0, 12)}…</p><h2>{selected.title || "公式原文"}</h2></div><a href={selected.url} target="_blank" rel="noopener noreferrer">公式原文 ↗</a></div>
         <details open className={styles.evidence}><summary>取得した原文証拠（{selected.source_text.length.toLocaleString("ja-JP")}文字）</summary><pre>{selected.source_text}</pre>{selected.source_text_truncated && <p>画面表示は80,000文字で打ち切っています。承認前に公式原文も確認してください。</p>}</details>
+        <section className={styles.form}><div><h2>AIによる根拠付き下書き</h2><p>設定済みの場合だけ1件生成します。現在の原文・完全一致する根拠抜粋・数値照合を通過しない限り保存されません。</p>{selected.generation_model && <small>生成記録：{selected.generation_provider} · {selected.generation_model}{selected.generation_source_truncated ? " · 入力上限のため原文を短縮" : ""}</small>}</div><button type="button" disabled={busy} onClick={generateDraft}>AI下書きを生成</button></section>
         <form key={`${selected.url}-draft-${selected.generated_at}`} onSubmit={submitDraft} className={styles.form}><h2>日本語速報の下書き</h2>
           <label>事実要約<textarea name="summaryJa" minLength={20} maxLength={600} required defaultValue={selected.summary_ja ?? ""} /></label>
           <label>要約の根拠抜粋<textarea name="summaryEvidence" required defaultValue={selected.evidence.summary.join("\n\n")} /><small>原文に完全一致する抜粋。複数は空行で区切ります。</small></label>
