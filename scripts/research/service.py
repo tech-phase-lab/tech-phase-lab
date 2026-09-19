@@ -264,7 +264,8 @@ class AutomaticMonitor:
         due = utc_now()
         with self.db_lock, monitor.connect(self.db_path) as db:
             pending = db.execute(
-                "SELECT count(*) FROM sources WHERE next_fetch_at IS NULL OR next_fetch_at<=?",
+                """SELECT count(*) FROM sources
+                   WHERE source_mode='remote' AND (next_fetch_at IS NULL OR next_fetch_at<=?)""",
                 (due,),
             ).fetchone()[0]
             rows = db.execute("""

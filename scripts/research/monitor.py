@@ -30,6 +30,38 @@ def now():
     return datetime.now(timezone.utc).isoformat(timespec="milliseconds")
 
 
+def environment_seconds(name, default, minimum, maximum):
+    """Read a bounded interval without letting a bad deployment value stop monitoring."""
+    try:
+        value = int(os.environ.get(name, default))
+    except (TypeError, ValueError):
+        value = default
+    return max(minimum, min(value, maximum))
+
+
+def successful_recheck_seconds(db, url, changed, had_previous_hash, checked_at):
+    """Keep recent releases hot while avoiding perpetual historical refetches."""
+    background = environment_seconds(
+        "RESEARCH_BODY_RECHECK_SECONDS", 6 * 60 * 60, 15 * 60, 7 * 24 * 60 * 60
+    )
+    hot = environment_seconds("RESEARCH_HOT_BODY_RECHECK_SECONDS", 15 * 60, 60, background)
+    hot_window = environment_seconds(
+        "RESEARCH_HOT_EVENT_WINDOW_SECONDS", 24 * 60 * 60, hot, 7 * 24 * 60 * 60
+    )
+    if changed and had_previous_hash:
+        return hot
+    event = db.execute("SELECT detected_at FROM release_events WHERE url=?", (url,)).fetchone()
+    if event:
+        try:
+            detected = datetime.fromisoformat(event["detected_at"].replace("Z", "+00:00"))
+            checked = datetime.fromisoformat(checked_at.replace("Z", "+00:00"))
+            if 0 <= (checked - detected).total_seconds() <= hot_window:
+                return hot
+        except (TypeError, ValueError):
+            pass
+    return background
+
+
 def safe_url(url, ticker):
     p = urlsplit(url)
     if (p.scheme != "https" or p.hostname not in HOSTS[ticker]
@@ -899,13 +931,18 @@ def collect_source(row, transport=fetch):
 
 def save_source_check(db, row, result):
     checked_at = now()
-    next_fetch_at = (datetime.now(timezone.utc) + timedelta(minutes=15)).isoformat(timespec="milliseconds")
     with db:
         db.execute("BEGIN IMMEDIATE")
         current = db.execute("SELECT * FROM sources WHERE url=?", (row["url"],)).fetchone()
         if not current:
             raise ValueError("Source disappeared before its fetch result was saved")
         changed = result["sha256"] != current["sha256"]
+        recheck_seconds = successful_recheck_seconds(
+            db, row["url"], changed, bool(current["sha256"]), checked_at
+        )
+        next_fetch_at = (
+            datetime.fromisoformat(checked_at) + timedelta(seconds=recheck_seconds)
+        ).isoformat(timespec="milliseconds")
         if changed:
             db.execute(
                 "INSERT INTO history(url,at,kind,sha256,reason) VALUES(?,?,?,?,?)",
@@ -926,7 +963,10 @@ def save_source_check(db, row, result):
             result["extractedChars"], next_fetch_at, row["url"],
         ))
     status = "first-fetched" if not current["sha256"] else ("changed" if changed else "unchanged")
-    return {"url": row["url"], "status": status, "extractedChars": result["extractedChars"]}
+    return {
+        "url": row["url"], "status": status, "extractedChars": result["extractedChars"],
+        "recheckSeconds": recheck_seconds,
+    }
 
 
 def save_source_error(db, row, exc):

@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 from urllib.error import HTTPError
 
 spec = importlib.util.spec_from_file_location("intake", Path(__file__).resolve().parents[1] / "scripts/research/monitor.py")
@@ -83,6 +84,32 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(second["retrySeconds"], 120)
         self.assertEqual(second_row["fetch_failures"], 2)
         self.assertGreater(second_row["next_fetch_at"], second_row["checked_at"])
+
+    def test_successful_historical_body_uses_background_recheck_interval(self):
+        with patch.dict("os.environ", {
+            "RESEARCH_BODY_RECHECK_SECONDS": "21600",
+            "RESEARCH_HOT_BODY_RECHECK_SECONDS": "900",
+            "RESEARCH_HOT_EVENT_WINDOW_SECONDS": "86400",
+        }):
+            result = self.check()
+        self.assertEqual(result["recheckSeconds"], 21600)
+        interval = (
+            m.datetime.fromisoformat(self.row()["next_fetch_at"])
+            - m.datetime.fromisoformat(self.row()["checked_at"])
+        ).total_seconds()
+        self.assertEqual(interval, 21600)
+
+    def test_new_release_and_corrected_body_remain_on_hot_recheck_interval(self):
+        with patch.dict("os.environ", {
+            "RESEARCH_BODY_RECHECK_SECONDS": "21600",
+            "RESEARCH_HOT_BODY_RECHECK_SECONDS": "900",
+            "RESEARCH_HOT_EVENT_WINDOW_SECONDS": "86400",
+        }):
+            m.add_release_events(self.db, "NBIS", [URL])
+            self.assertEqual(self.check()["recheckSeconds"], 900)
+            self.db.execute("DELETE FROM release_events WHERE url=?", (URL,))
+            self.db.commit()
+            self.assertEqual(self.check(b"corrected")["recheckSeconds"], 900)
 
     def test_unfetched_or_incomplete_review_is_rejected(self):
         with self.assertRaises(ValueError):

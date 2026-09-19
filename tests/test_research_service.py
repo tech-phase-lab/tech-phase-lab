@@ -114,8 +114,9 @@ class ResearchServiceTests(unittest.TestCase):
             db.commit()
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         self.assertEqual(app.interval_for("TSM"), 3)
-        rows, _ = app.body_candidates()
+        rows, pending = app.body_candidates()
         self.assertNotIn(inline_url, [row["url"] for row in rows])
+        self.assertEqual(pending, 2)
 
     def test_discovery_timing_is_measured_separately_from_poll_interval(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
