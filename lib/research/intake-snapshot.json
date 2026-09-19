@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-19T09:37:01.135+00:00",
+  "generatedAt": "2026-09-19T12:06:53.951+00:00",
   "sources": [
     {
       "url": "https://ir.amd.com/news-events/press-releases/detail/1289/amd-to-report-fiscal-second-quarter-2026-financial-results",
@@ -2091,6 +2091,28 @@
       "sha256": null,
       "status": "pending",
       "error": null
+    },
+    {
+      "url": "https://news.skhynix.com/en/q2-2026-business-results/",
+      "ticker": "SKHY",
+      "title": "SK hynix Announces 2Q26 Financial Results",
+      "published_on": "2026-07-29",
+      "discovered_at": "2026-09-19T12:05:47.969+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-fourth-quarter-2026-financial-results",
+      "ticker": "SNDK",
+      "title": "Sandisk Reports Fiscal Fourth Quarter 2026 Financial Results",
+      "published_on": "2026-08-05",
+      "discovered_at": "2026-09-19T12:06:53.951+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
     }
   ],
   "history": [
@@ -2236,6 +2258,24 @@
     }
   ],
   "discoveryRuns": [
+    {
+      "id": 25,
+      "ticker": "SNDK",
+      "at": "2026-09-19T12:06:53.951+00:00",
+      "status": "ok",
+      "candidates": 10,
+      "error": null,
+      "index_url": "https://investor.sandisk.com/news-events/news-releases"
+    },
+    {
+      "id": 24,
+      "ticker": "SKHY",
+      "at": "2026-09-19T12:05:47.970+00:00",
+      "status": "ok",
+      "candidates": 12,
+      "error": null,
+      "index_url": "https://news.skhynix.com/en/category/ir/"
+    },
     {
       "id": 23,
       "ticker": "ORCL",

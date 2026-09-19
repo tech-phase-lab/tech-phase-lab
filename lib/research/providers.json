@@ -29,7 +29,7 @@
     "articleRules": [
       {
         "host": "news.skhynix.com",
-        "pattern": "^/en/[^/]+/?$"
+        "pattern": "^/en/(?!contact-us/?$|terms-of-use/?$|feed/?$|heritage/?$)[^/]+/?$"
       }
     ]
   },
