@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { fetchState, filterSources, intakeCounts, snapshotIssues } from "../lib/research/intake.ts";
+import { fetchState, filterSources, intakeCounts, snapshotIssues, coverageCounts, providers, providerByTicker } from "../lib/research/intake.ts";
 const snapshot = JSON.parse(readFileSync(new URL("../lib/research/intake-snapshot.json", import.meta.url)));
 const source = snapshot.sources.find(s => s.sha256);
 
@@ -32,4 +32,20 @@ test("unsafe links, duplicate records and broken history references fail validat
   assert.ok(snapshotIssues({ ...snapshot, sources: [...snapshot.sources, source] }).includes("duplicate-source"));
   assert.ok(snapshotIssues({ ...snapshot, sources: [{ ...source, url: "javascript:alert(1)" }] }).includes("unsafe-url"));
   assert.ok(snapshotIssues({ ...snapshot, history: [{ url: "missing", at: "2026-09-19" }] }).includes("invalid-history"));
+});
+
+test("sector and company filters use the shared registry", () => {
+  assert.equal(providers.length, 20);
+  const sector = providerByTicker[source.ticker].sector;
+  assert.equal(filterSources([source], providerByTicker[source.ticker].name, "all", "all", "all", {}, sector).length, 1);
+  assert.equal(filterSources([source], "", "all", "all", "all", {}, "not-a-sector").length, 0);
+});
+
+test("coverage uses the latest run and never counts untested companies as failures", () => {
+  const counts = coverageCounts({ ...snapshot, discoveryRuns: [
+    { id: 1, ticker: "NVDA", status: "ok" },
+    { id: 3, ticker: "NVDA", status: "degraded" },
+    { id: 2, ticker: "AMD", status: "ok" },
+  ] });
+  assert.deepEqual(counts, { registered: 20, discovered: 1, needsCheck: 1, untested: 18 });
 });

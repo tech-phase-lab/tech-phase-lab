@@ -1,5 +1,14 @@
+import registry from "./providers.json" with { type: "json" };
+
+export const providers = registry;
+export const providerByTicker = Object.fromEntries(providers.map(p => [p.ticker, p]));
+export const sectorNames: Record<string, string> = {
+  semiconductors: "半導体", networking: "ネットワーク", "ai-cloud": "AIクラウド",
+  "power-cooling": "電力・冷却", servers: "サーバー", software: "AIソフトウェア", platforms: "大手クラウド",
+};
+
 export type IntakeSource = {
-  url: string; ticker: "MU" | "NBIS"; published_on: string | null;
+  url: string; ticker: string; title?: string | null; published_on: string | null;
   discovered_at: string; checked_at: string | null; sha256: string | null;
   status: "pending" | "approved" | "held" | "rejected"; error: string | null;
 };
@@ -21,12 +30,24 @@ export function intakeCounts(sources: IntakeSource[]) {
     pending: sources.filter(s => s.status === "pending").length };
 }
 
-export function filterSources(sources: IntakeSource[], query: string, ticker: string, state: string, review: string, titles: Record<string, string> = {}) {
+export function filterSources(sources: IntakeSource[], query: string, ticker: string, state: string, review: string, titles: Record<string, string> = {}, sector = "all") {
   const q = query.trim().toLocaleLowerCase();
   return sources.filter(s => (ticker === "all" || s.ticker === ticker)
     && (state === "all" || fetchState(s) === state)
     && (review === "all" || s.status === review)
-    && (!q || `${s.ticker} ${titles[s.url] || ""} ${sourceTitle(s.url)} ${s.url}`.toLocaleLowerCase().includes(q)));
+    && (sector === "all" || providerByTicker[s.ticker]?.sector === sector)
+    && (!q || `${s.ticker} ${providerByTicker[s.ticker]?.name || ""} ${s.title || ""} ${titles[s.url] || ""} ${sourceTitle(s.url)} ${s.url}`.toLocaleLowerCase().includes(q)));
+}
+
+export function coverageCounts(data: IntakeSnapshot) {
+  const latest = new Map<string, IntakeSnapshot["discoveryRuns"][number]>();
+  for (const r of data.discoveryRuns) if (!latest.has(r.ticker) || latest.get(r.ticker)!.id < r.id) latest.set(r.ticker, r);
+  return {
+    registered: providers.length,
+    discovered: providers.filter(p => latest.get(p.ticker)?.status === "ok").length,
+    needsCheck: providers.filter(p => latest.get(p.ticker)?.status === "degraded").length,
+    untested: providers.filter(p => !latest.has(p.ticker)).length,
+  };
 }
 
 export function sourceTitle(url: string) {
@@ -42,12 +63,12 @@ export function snapshotIssues(data: IntakeSnapshot) {
   for (const s of data.sources) {
     try {
       const url = new URL(s.url);
-      const hosts = s.ticker === "MU" ? ["investors.micron.com", "www.micron.com"] : ["nebius.com", "assets.nebius.com"];
+      const hosts = providerByTicker[s.ticker]?.allowedHosts ?? [];
       if (url.protocol !== "https:" || !hosts.includes(url.hostname) || url.username || url.password || (url.port && url.port !== "443")) issues.push("unsafe-url");
       if (urls.has(s.url)) issues.push("duplicate-source");
       urls.add(s.url);
     } catch { issues.push("invalid-url"); }
-    if (!["MU", "NBIS"].includes(s.ticker) || !["pending", "approved", "held", "rejected"].includes(s.status)) issues.push("invalid-status");
+    if (!providerByTicker[s.ticker] || !["pending", "approved", "held", "rejected"].includes(s.status)) issues.push("invalid-status");
     if (s.sha256 && (!/^[a-f0-9]{64}$/.test(s.sha256) || !s.checked_at)) issues.push("invalid-revision");
     for (const time of [s.discovered_at, s.checked_at]) if (time && (!Number.isFinite(Date.parse(time)) || Date.parse(time) > Date.parse(data.generatedAt))) issues.push("invalid-source-time");
   }

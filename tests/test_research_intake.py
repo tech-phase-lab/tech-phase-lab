@@ -108,6 +108,35 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(result["candidates"], 1)
         self.assertEqual(self.db.execute("SELECT index_url FROM discovery_runs").fetchone()[0], m.INDEXES["MU"])
 
+    def test_official_rss_keeps_plain_title_and_rejects_other_hosts(self):
+        body = b'''<rss><channel><item><title>Arm &amp; AI</title><link>https://newsroom.arm.com/news/example</link></item><item><link>https://evil.test/news/example</link></item></channel></rss>'''
+        result = m.discover(self.db, "ARM", lambda *_: (body, "application/rss+xml"))
+        self.assertEqual(result["candidates"], 1)
+        row = self.db.execute("SELECT * FROM sources WHERE ticker='ARM'").fetchone()
+        self.assertEqual(row["title"], "Arm & AI")
+        self.assertIsNone(row["published_on"])
+        self.assertEqual(row["status"], "pending")
+
+    def test_atom_links_supported_and_entity_declarations_rejected(self):
+        body = b'''<feed xmlns="http://www.w3.org/2005/Atom"><entry><title>AI</title><link href="https://newsroom.arm.com/news/ai"/></entry></feed>'''
+        self.assertEqual(len(m.feed_links(body, "ARM")), 1)
+        with self.assertRaises(ValueError):
+            m.feed_links(b'<!DOCTYPE rss [<!ENTITY x "bad">]><rss/>', "ARM")
+
+    def test_bad_feed_fails_without_creating_false_candidates(self):
+        count = self.db.execute("SELECT count(*) FROM sources").fetchone()[0]
+        result = m.discover(self.db, "ARM", lambda *_: (b"<rss>broken", "application/rss+xml"))
+        self.assertEqual(result["status"], "degraded")
+        self.assertEqual(self.db.execute("SELECT count(*) FROM sources").fetchone()[0], count)
+
+    def test_all_registered_sources_are_scoped_to_their_official_hosts(self):
+        self.assertEqual(len(m.PROVIDERS), 20)
+        for ticker, p in m.PROVIDERS.items():
+            self.assertEqual(m.safe_url(p["indexUrl"], ticker), p["indexUrl"])
+            for rule in p["articleRules"]:
+                self.assertIn(rule["host"], m.HOSTS[ticker])
+                self.assertIsNotNone(m.re.compile(rule["pattern"]))
+
 
 if __name__ == "__main__":
     unittest.main()

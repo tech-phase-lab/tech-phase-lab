@@ -14,6 +14,6 @@ export default function IntakePage() {
   const snapshot = rawSnapshot as IntakeSnapshot;
   const issues = snapshotIssues(snapshot);
   if (issues.length) throw new Error(`Invalid intake snapshot: ${issues.join(", ")}`);
-  const titles = Object.fromEntries(events.flatMap(e => e.sources.map(s => [s.url, s.title])));
+  const titles = Object.fromEntries([...snapshot.sources.filter(s => s.title).map(s => [s.url, s.title!]), ...events.flatMap(e => e.sources.map(s => [s.url, s.title]))]);
   return <IntakeDashboard snapshot={snapshot} titles={titles} />;
 }

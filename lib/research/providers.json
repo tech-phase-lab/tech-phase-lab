@@ -1,0 +1,357 @@
+[
+  {
+    "ticker": "MU",
+    "name": "Micron",
+    "sector": "semiconductors",
+    "indexUrl": "https://www.micron.com/about/press/news",
+    "format": "html",
+    "allowedHosts": [
+      "www.micron.com",
+      "investors.micron.com"
+    ],
+    "articleRules": [
+      {
+        "host": "investors.micron.com",
+        "pattern": "^/news/press-release/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "NBIS",
+    "name": "Nebius",
+    "sector": "ai-cloud",
+    "indexUrl": "https://nebius.com/newsroom",
+    "format": "html",
+    "allowedHosts": [
+      "nebius.com",
+      "assets.nebius.com"
+    ],
+    "articleRules": [
+      {
+        "host": "nebius.com",
+        "pattern": "^/newsroom/[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "NVDA",
+    "name": "NVIDIA",
+    "sector": "semiconductors",
+    "indexUrl": "https://nvidianews.nvidia.com/rss.xml",
+    "format": "rss",
+    "allowedHosts": [
+      "nvidianews.nvidia.com",
+      "blogs.nvidia.com"
+    ],
+    "articleRules": [
+      {
+        "host": "nvidianews.nvidia.com",
+        "pattern": "^/news/[^/]+/?$"
+      },
+      {
+        "host": "blogs.nvidia.com",
+        "pattern": "^/blog/[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "AMD",
+    "name": "AMD",
+    "sector": "semiconductors",
+    "indexUrl": "https://ir.amd.com/news-events/press-releases/rss",
+    "format": "rss",
+    "allowedHosts": [
+      "ir.amd.com"
+    ],
+    "articleRules": [
+      {
+        "host": "ir.amd.com",
+        "pattern": "^/news-events/press-releases/detail/\\d+/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "AVGO",
+    "name": "Broadcom",
+    "sector": "semiconductors",
+    "indexUrl": "https://investors.broadcom.com/financial-information/financial-news-releases",
+    "format": "html",
+    "allowedHosts": [
+      "investors.broadcom.com"
+    ],
+    "articleRules": [
+      {
+        "host": "investors.broadcom.com",
+        "pattern": "^/news-releases/news-release-details/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "ARM",
+    "name": "Arm",
+    "sector": "semiconductors",
+    "indexUrl": "https://newsroom.arm.com/news/feed/",
+    "format": "rss",
+    "allowedHosts": [
+      "newsroom.arm.com"
+    ],
+    "articleRules": [
+      {
+        "host": "newsroom.arm.com",
+        "pattern": "^/news/(?!feed/?$)[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "TSM",
+    "name": "TSMC",
+    "sector": "semiconductors",
+    "indexUrl": "https://pr.tsmc.com/english/news",
+    "format": "html",
+    "allowedHosts": [
+      "pr.tsmc.com"
+    ],
+    "articleRules": [
+      {
+        "host": "pr.tsmc.com",
+        "pattern": "^/english/news/\\d+"
+      }
+    ]
+  },
+  {
+    "ticker": "ASML",
+    "name": "ASML",
+    "sector": "semiconductors",
+    "indexUrl": "https://www.asml.com/en/news/press-releases",
+    "format": "html",
+    "allowedHosts": [
+      "www.asml.com"
+    ],
+    "articleRules": [
+      {
+        "host": "www.asml.com",
+        "pattern": "^/en/news/press-releases/\\d{4}/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "MRVL",
+    "name": "Marvell",
+    "sector": "semiconductors",
+    "indexUrl": "https://www.marvell.com/company/newsroom.html",
+    "format": "html",
+    "allowedHosts": [
+      "www.marvell.com",
+      "investor.marvell.com"
+    ],
+    "articleRules": [
+      {
+        "host": "www.marvell.com",
+        "pattern": "^/company/newsroom/(?!press-releases|in-the-news)[^/]+\\.html$"
+      },
+      {
+        "host": "investor.marvell.com",
+        "pattern": "^/news-events/press-releases/detail/\\d+/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "ANET",
+    "name": "Arista Networks",
+    "sector": "networking",
+    "indexUrl": "https://investors.arista.com/Communications/Press-Releases-and-Events/default.aspx",
+    "format": "html",
+    "allowedHosts": [
+      "investors.arista.com"
+    ],
+    "articleRules": [
+      {
+        "host": "investors.arista.com",
+        "pattern": "^/news-releases/news-release-details/.+"
+      },
+      {
+        "host": "investors.arista.com",
+        "pattern": "^/news-and-events/press-releases/press-release-details/.+"
+      },
+      {
+        "host": "investors.arista.com",
+        "pattern": "^/Communications/Press-Releases-and-Events/Press-Release-Details/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "CRDO",
+    "name": "Credo",
+    "sector": "networking",
+    "indexUrl": "https://credosemi.com/",
+    "format": "html",
+    "allowedHosts": [
+      "credosemi.com",
+      "investors.credosemi.com"
+    ],
+    "articleRules": [
+      {
+        "host": "investors.credosemi.com",
+        "pattern": "^/news-events/news/news-details/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "CRWV",
+    "name": "CoreWeave",
+    "sector": "ai-cloud",
+    "indexUrl": "https://www.coreweave.com/",
+    "format": "html",
+    "allowedHosts": [
+      "www.coreweave.com"
+    ],
+    "articleRules": [
+      {
+        "host": "www.coreweave.com",
+        "pattern": "^/news/[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "VRT",
+    "name": "Vertiv",
+    "sector": "power-cooling",
+    "indexUrl": "https://www.vertiv.com/en-us/about/news-and-events/corporate-news/",
+    "format": "html",
+    "allowedHosts": [
+      "www.vertiv.com"
+    ],
+    "articleRules": [
+      {
+        "host": "www.vertiv.com",
+        "pattern": "^/en-us/about/news-and-events/corporate-news/[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "GEV",
+    "name": "GE Vernova",
+    "sector": "power-cooling",
+    "indexUrl": "https://www.gevernova.com/news/subscribe/all/rss.xml",
+    "format": "rss",
+    "allowedHosts": [
+      "www.gevernova.com"
+    ],
+    "articleRules": [
+      {
+        "host": "www.gevernova.com",
+        "pattern": "^/news/press-releases/[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "DELL",
+    "name": "Dell Technologies",
+    "sector": "servers",
+    "indexUrl": "https://investors.delltechnologies.com/news-events/press-release",
+    "format": "html",
+    "allowedHosts": [
+      "investors.delltechnologies.com"
+    ],
+    "articleRules": [
+      {
+        "host": "investors.delltechnologies.com",
+        "pattern": "^/news-releases/news-release-details/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "PLTR",
+    "name": "Palantir",
+    "sector": "software",
+    "indexUrl": "https://investors.palantir.com/news",
+    "format": "html",
+    "allowedHosts": [
+      "investors.palantir.com"
+    ],
+    "articleRules": [
+      {
+        "host": "investors.palantir.com",
+        "pattern": "^/news-details/.+"
+      },
+      {
+        "host": "investors.palantir.com",
+        "pattern": "^/news/[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "MSFT",
+    "name": "Microsoft",
+    "sector": "platforms",
+    "indexUrl": "https://news.microsoft.com/source/feed/",
+    "format": "rss",
+    "allowedHosts": [
+      "news.microsoft.com",
+      "blogs.microsoft.com",
+      "www.microsoft.com"
+    ],
+    "articleRules": [
+      {
+        "host": "news.microsoft.com",
+        "pattern": "^/source/(?:\\d{4}/|features/).+"
+      },
+      {
+        "host": "blogs.microsoft.com",
+        "pattern": "^/(?:blog|on-the-issues)/\\d{4}/.+"
+      },
+      {
+        "host": "www.microsoft.com",
+        "pattern": "^/en-us/(?:security/blog|microsoft-cloud/blog)/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "AMZN",
+    "name": "Amazon",
+    "sector": "platforms",
+    "indexUrl": "https://www.aboutamazon.com/rss/feed.rss",
+    "format": "rss",
+    "allowedHosts": [
+      "www.aboutamazon.com"
+    ],
+    "articleRules": [
+      {
+        "host": "www.aboutamazon.com",
+        "pattern": "^/news/[^/]+/[^/]+/?$"
+      }
+    ]
+  },
+  {
+    "ticker": "GOOGL",
+    "name": "Alphabet / Google",
+    "sector": "platforms",
+    "indexUrl": "https://blog.google/rss/",
+    "format": "rss",
+    "allowedHosts": [
+      "blog.google"
+    ],
+    "articleRules": [
+      {
+        "host": "blog.google",
+        "pattern": "^/(?:technology|products|company-news|inside-google|outreach-initiatives|around-the-globe|feed)/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "ORCL",
+    "name": "Oracle",
+    "sector": "platforms",
+    "indexUrl": "https://www.oracle.com/news/",
+    "format": "html",
+    "allowedHosts": [
+      "www.oracle.com"
+    ],
+    "articleRules": [
+      {
+        "host": "www.oracle.com",
+        "pattern": "^/news/announcement/.+"
+      }
+    ]
+  }
+]

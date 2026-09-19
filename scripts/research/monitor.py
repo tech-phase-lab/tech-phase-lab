@@ -3,16 +3,20 @@ import argparse
 from datetime import datetime, timezone
 import hashlib
 from html.parser import HTMLParser
+from html import unescape
 import json
 from pathlib import Path
 import sqlite3
 import sys
+import re
+import xml.etree.ElementTree as ET
 from urllib.parse import urljoin, urlsplit, urlunsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 ROOT = Path(__file__).resolve().parents[2]
-INDEXES = {"NBIS": "https://nebius.com/newsroom", "MU": "https://www.micron.com/about/press/news"}
-HOSTS = {"NBIS": {"nebius.com", "assets.nebius.com"}, "MU": {"investors.micron.com", "www.micron.com"}}
+PROVIDERS = {p["ticker"]: p for p in json.loads((ROOT / "lib/research/providers.json").read_text())}
+INDEXES = {t: p["indexUrl"] for t, p in PROVIDERS.items()}
+HOSTS = {t: set(p["allowedHosts"]) for t, p in PROVIDERS.items()}
 MAX_BYTES = 12 * 1024 * 1024
 
 
@@ -39,16 +43,20 @@ class Redirects(HTTPRedirectHandler):
 
 def fetch(url, ticker):
     url = safe_url(url, ticker)
-    req = Request(url, headers={"User-Agent": "TechPhaseResearch-SourceCheck/0.1", "Accept": "text/html,application/pdf"})
+    req = Request(url, headers={"User-Agent": "TechPhaseResearch-SourceCheck/0.1", "Accept": "application/rss+xml,application/atom+xml,text/html,application/pdf"})
     with build_opener(Redirects(ticker)).open(req, timeout=20) as response:
         content_type = response.headers.get_content_type()
-        if content_type not in {"text/html", "application/pdf"}:
+        if content_type not in {"text/html", "application/pdf", "application/rss+xml", "application/atom+xml", "application/xml", "text/xml"}:
             raise ValueError("Unsupported content type: " + content_type)
         content = response.read(MAX_BYTES + 1)
         if not content or len(content) > MAX_BYTES:
             raise ValueError("Empty or oversized source")
         if content_type == "application/pdf" and not content.startswith(b"%PDF-"):
             raise ValueError("Invalid PDF response")
+        if content_type == "text/html":
+            title = re.search(br"<title[^>]*>(.*?)</title>", content, re.I | re.S)
+            if title and re.search(br"access denied|just a moment|page not found|403 forbidden", title.group(1), re.I):
+                raise ValueError("Source returned an error or verification page")
         return content, content_type
 
 
@@ -56,6 +64,7 @@ class Links(HTMLParser):
     def __init__(self, base, ticker):
         super().__init__(convert_charrefs=True)
         self.base, self.ticker, self.urls = base, ticker, set()
+        self.labels, self.current, self.text = {}, None, []
 
     def handle_starttag(self, tag, attrs):
         if tag != "a":
@@ -67,10 +76,50 @@ class Links(HTMLParser):
             url = safe_url(urljoin(self.base, href), self.ticker)
         except ValueError:
             return
-        p = urlsplit(url)
-        if ((self.ticker == "NBIS" and p.hostname == "nebius.com" and p.path.startswith("/newsroom/") and p.path.rstrip("/") != "/newsroom")
-                or (self.ticker == "MU" and p.hostname == "investors.micron.com" and p.path.startswith("/news/press-release/"))):
-            self.urls.add(urlunsplit((p.scheme, p.netloc, p.path, "", "")))
+        self.current, self.text = article_url(url, self.ticker), []
+        if self.current:
+            self.urls.add(self.current)
+
+    def handle_data(self, value):
+        if self.current:
+            self.text.append(value)
+
+    def handle_endtag(self, tag):
+        if tag == "a" and self.current:
+            label = " ".join(" ".join(self.text).split())[:300]
+            if label and label.lower() not in {"read more", "read article", "learn more", "read press release", "read blog"}:
+                self.labels[self.current] = label
+            self.current, self.text = None, []
+
+
+def article_url(url, ticker):
+    try:
+        p = urlsplit(safe_url(url, ticker))
+        if any(p.hostname == rule["host"] and re.search(rule["pattern"], p.path) for rule in PROVIDERS[ticker]["articleRules"]):
+            return urlunsplit((p.scheme, p.netloc, p.path, "", ""))
+    except (ValueError, KeyError):
+        pass
+    return None
+
+
+def feed_links(body, ticker):
+    if b"\x00" in body or re.search(br"<!\s*(DOCTYPE|ENTITY)", body, re.I):
+        raise ValueError("XML declarations with entities are not supported")
+    root = ET.fromstring(body)
+    entries = root.findall("./channel/item") + root.findall("{http://www.w3.org/2005/Atom}entry")
+    links = {}
+    for item in entries:
+        url = item.findtext("link")
+        if not url:
+            for link in item.findall("{http://www.w3.org/2005/Atom}link"):
+                if link.get("rel", "alternate") == "alternate":
+                    url = link.get("href")
+                    break
+        canonical = article_url(url or "", ticker)
+        if canonical:
+            title = item.findtext("title") or item.findtext("{http://www.w3.org/2005/Atom}title") or ""
+            links[canonical] = " ".join(unescape(title).split())[:300] or None
+    return links
 
 
 def connect(path):
@@ -93,15 +142,19 @@ def connect(path):
     """)
     if "index_url" not in {row[1] for row in db.execute("PRAGMA table_info(discovery_runs)")}:
         db.execute("ALTER TABLE discovery_runs ADD COLUMN index_url TEXT")
+    if "title" not in {row[1] for row in db.execute("PRAGMA table_info(sources)")}:
+        db.execute("ALTER TABLE sources ADD COLUMN title TEXT")
     return db
 
 
-def add_source(db, ticker, url, published_on=None):
+def add_source(db, ticker, url, published_on=None, title=None):
     url = safe_url(url, ticker)
     if published_on:
         datetime.strptime(published_on, "%Y-%m-%d")
     with db:
         db.execute("INSERT OR IGNORE INTO sources(url,ticker,published_on,discovered_at) VALUES(?,?,?,?)", (url, ticker, published_on, now()))
+        if title:
+            db.execute("UPDATE sources SET title=? WHERE url=? AND title IS NULL", (title[:300], url))
     return url
 
 
@@ -109,15 +162,21 @@ def discover(db, ticker, transport=fetch):
     """First-page candidates only. Missing markup is degraded, never 'no news'."""
     try:
         body, kind = transport(INDEXES[ticker], ticker)
-        if kind != "text/html":
-            raise ValueError("Index is not HTML")
-        parser = Links(INDEXES[ticker], ticker)
-        parser.feed(body.decode("utf-8", errors="replace"))
-        if not parser.urls:
+        if PROVIDERS[ticker]["format"] == "rss":
+            links = feed_links(body, ticker)
+        else:
+            if kind != "text/html":
+                raise ValueError("Index is not HTML")
+            parser = Links(INDEXES[ticker], ticker)
+            parser.feed(body.decode("utf-8", errors="replace"))
+            links = {url: parser.labels.get(url) for url in parser.urls}
+        if not links:
             raise ValueError("No release links parsed; source discovery requires investigation")
-        for url in sorted(parser.urls):
-            add_source(db, ticker, url)
-        result = {"ticker": ticker, "status": "ok", "candidates": len(parser.urls), "error": None}
+        if len(links) > 500:
+            raise ValueError("Too many source links; narrow the source scope before importing")
+        for url, title in links.items():
+            add_source(db, ticker, url, title=title)
+        result = {"ticker": ticker, "status": "ok", "candidates": len(links), "error": None}
     except Exception as exc:
         result = {"ticker": ticker, "status": "degraded", "candidates": 0, "error": str(exc)}
     with db:
@@ -142,7 +201,7 @@ def snapshot(db):
     """Public-safe, read-only report. Explicit field lists prevent identity leaks."""
     with db:
         db.execute("BEGIN")
-        sources = [dict(r) for r in db.execute("SELECT url,ticker,published_on,discovered_at,checked_at,sha256,status,error FROM sources ORDER BY ticker,url")]
+        sources = [dict(r) for r in db.execute("SELECT url,ticker,title,published_on,discovered_at,checked_at,sha256,status,error FROM sources ORDER BY ticker,url")]
         history = [dict(r) for r in db.execute("SELECT id,url,at,kind,sha256 FROM history ORDER BY id DESC")]
         runs = [dict(r) for r in db.execute("SELECT id,ticker,at,status,candidates,error,index_url FROM discovery_runs ORDER BY id DESC")]
     for row in sources + runs:
@@ -194,6 +253,7 @@ def main():
     d.add_argument("ticker", choices=HOSTS)
     c = sub.add_parser("check")
     c.add_argument("--limit", type=int, default=6)
+    c.add_argument("--ticker", choices=HOSTS)
     sub.add_parser("list")
     sub.add_parser("history")
     e = sub.add_parser("export")
@@ -219,7 +279,7 @@ def main():
         elif args.command == "check":
             if not 1 <= args.limit <= 20:
                 p.error("--limit must be between 1 and 20")
-            rows = db.execute("SELECT * FROM sources ORDER BY checked_at IS NOT NULL, checked_at, url LIMIT ?", (args.limit,)).fetchall()
+            rows = db.execute("SELECT * FROM sources WHERE (? IS NULL OR ticker=?) ORDER BY checked_at IS NOT NULL, checked_at, url LIMIT ?", (args.ticker, args.ticker, args.limit)).fetchall()
             result = [check_source(db, row) for row in rows]
         elif args.command == "add":
             result = {"url": add_source(db, args.ticker, args.url)}
