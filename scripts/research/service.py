@@ -10,7 +10,7 @@ from pathlib import Path
 import signal
 import threading
 import time
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, urlsplit
 
 import monitor
 
@@ -80,6 +80,30 @@ class AutomaticMonitor:
     def public_snapshot(self):
         with self.db_lock, monitor.connect(self.db_path) as db:
             return monitor.snapshot(db)
+
+    def editorial_queue(self, limit=20):
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            return monitor.private_brief_queue(db, limit)
+
+    def save_brief(self, payload):
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            result = monitor.save_brief_draft(
+                db, payload.get("url", ""), payload.get("sha256", ""),
+                payload.get("summaryJa", ""), payload.get("impactLabel", ""),
+                payload.get("impactJa", ""), payload.get("confidence", ""),
+                payload.get("evidence", {}),
+            )
+            monitor.write_snapshot(db, self.snapshot_path)
+            return result
+
+    def decide_brief(self, payload):
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            result = monitor.review_brief(
+                db, payload.get("url", ""), payload.get("sha256", ""),
+                payload.get("decision", ""), payload.get("reviewer", ""), payload.get("reason", ""),
+            )
+            monitor.write_snapshot(db, self.snapshot_path)
+            return result
 
     def body_candidates(self):
         """Prioritize new release events, then the oldest due source bodies."""
@@ -243,11 +267,46 @@ class Handler(BaseHTTPRequestHandler):
         supplied = self.headers.get("Authorization", "")
         return hmac.compare_digest(supplied, "Bearer " + token)
 
+    def editor_authorized(self):
+        token = os.environ.get("RESEARCH_EDITOR_TOKEN")
+        if not token:
+            return False
+        supplied = self.headers.get("Authorization", "")
+        return hmac.compare_digest(supplied, "Bearer " + token)
+
+    def read_json(self):
+        try:
+            length = int(self.headers.get("Content-Length", "0"))
+        except ValueError as exc:
+            raise ValueError("invalid-content-length") from exc
+        if not 1 <= length <= 64 * 1024:
+            raise ValueError("invalid-request-size")
+        try:
+            value = json.loads(self.rfile.read(length))
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise ValueError("invalid-json") from exc
+        if not isinstance(value, dict):
+            raise ValueError("invalid-json-object")
+        return value
+
     def do_GET(self):
-        path = urlsplit(self.path).path
+        parsed = urlsplit(self.path)
+        path = parsed.path
         if path == "/health":
             state = self.app.public_state()
             self.send_json(200 if state["ready"] else 503, state)
+            return
+        if path == "/admin/briefs":
+            if not self.editor_authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
+                self.send_json(200, {"ok": True, **self.app.editorial_queue(limit)})
+            except (TypeError, ValueError):
+                self.send_json(400, {"ok": False, "error": "invalid-request"})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "editorial-queue-unavailable"})
             return
         if path not in {"/snapshot", "/live"}:
             self.send_json(404, {"ok": False, "error": "not-found"})
@@ -263,6 +322,23 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(200, {"ok": True, "mode": "automatic", "monitor": self.app.public_state(), "snapshot": snapshot})
         except Exception:
             self.send_json(503, {"ok": False, "error": "snapshot-unavailable"})
+
+    def do_POST(self):
+        path = urlsplit(self.path).path
+        if path not in {"/admin/briefs/draft", "/admin/briefs/review"}:
+            self.send_json(404, {"ok": False, "error": "not-found"})
+            return
+        if not self.editor_authorized():
+            self.send_json(401, {"ok": False, "error": "unauthorized"})
+            return
+        try:
+            payload = self.read_json()
+            result = self.app.save_brief(payload) if path.endswith("/draft") else self.app.decide_brief(payload)
+            self.send_json(200, {"ok": True, **result})
+        except ValueError as exc:
+            self.send_json(400, {"ok": False, "error": str(exc)})
+        except Exception:
+            self.send_json(503, {"ok": False, "error": "editorial-write-unavailable"})
 
     def log_message(self, message, *args):
         print("%s - %s" % (self.address_string(), message % args), flush=True)

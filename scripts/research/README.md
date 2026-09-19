@@ -101,9 +101,12 @@ RESEARCH_API_TOKEN='共有トークン' python3 scripts/research/service.py
 
 HTTP APIは `/health`、`/snapshot`、`/live`。`/snapshot` と `/live` は `RESEARCH_API_TOKEN` を設定した場合にBearer認証が必要です。サイト側の `/api/research/live` がトークンをサーバー内だけで使用し、ブラウザーには渡しません。監視サービスが未接続または停止中なら、画面は保存済みスナップショットへ安全に戻ります。
 
+編集用APIは `/admin/briefs`、`/admin/briefs/draft`、`/admin/briefs/review`。別の `RESEARCH_EDITOR_TOKEN` が設定されている時だけ有効になり、未設定なら必ず拒否します。`/research/review` はトークンをURL・Cookie・ローカル保存へ入れず、そのタブのメモリ内だけで使います。原文抽出テキストと根拠抜粋はこの認証済み経路でだけ取得し、公開スナップショットへは出しません。承認操作は公開候補の状態を記録しますが、会員通知・メール・SNS配信は実行しません。
+
 `Dockerfile.research-monitor` は常駐サービス用です。デプロイ先では `/data` に永続ボリュームを接続し、以下を設定します。
 
 - `RESEARCH_API_TOKEN`：長いランダム値
+- `RESEARCH_EDITOR_TOKEN`：公開APIとは別に生成した長いランダム値。編集用APIは未設定時に無効
 - `RESEARCH_FAST_POLL_SECONDS`：標準3秒、最低3秒
 - `RESEARCH_STANDARD_POLL_SECONDS`：標準5秒、最低5秒
 - `RESEARCH_REQUEST_TIMEOUT_SECONDS`：標準20秒。巡回間隔とは別で、遅い公式サイトを誤って障害扱いしないための上限

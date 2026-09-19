@@ -562,6 +562,35 @@ def snapshot(db):
     return {"schemaVersion": 1, "generatedAt": now(), "sources": sources, "history": history, "discoveryRuns": runs, "events": events, "briefs": briefs}
 
 
+def private_brief_queue(db, limit=20):
+    """Return bounded source evidence for the authenticated editorial interface only."""
+    limit = max(1, min(int(limit), 50))
+    rows = [dict(row) for row in db.execute("""
+      SELECT s.url,s.ticker,s.title,s.published_on,s.discovered_at,s.checked_at,s.sha256,
+             s.extracted_text,s.extracted_chars,e.detected_at,
+             b.summary_ja,b.impact_label,b.impact_ja,b.confidence,b.status AS brief_status,
+             b.generated_at,b.reviewed_at,b.reviewer,b.review_reason
+      FROM sources s
+      LEFT JOIN release_events e ON e.url=s.url
+      LEFT JOIN briefs b ON b.url=s.url
+      WHERE s.sha256 IS NOT NULL AND s.error IS NULL AND s.extracted_chars>0
+      ORDER BY e.detected_at IS NULL,e.detected_at DESC,s.discovered_at DESC,s.url
+      LIMIT ?
+    """, (limit,))]
+    for row in rows:
+        evidence = db.execute(
+            "SELECT field,excerpt FROM brief_evidence WHERE url=? ORDER BY id", (row["url"],)
+        ).fetchall()
+        row["evidence"] = {
+            "summary": [item["excerpt"] for item in evidence if item["field"] == "summary"],
+            "impact": [item["excerpt"] for item in evidence if item["field"] == "impact"],
+        }
+        text = row.pop("extracted_text") or ""
+        row["source_text"] = text[:80_000]
+        row["source_text_truncated"] = len(text) > 80_000
+    return {"generatedAt": now(), "items": rows}
+
+
 def write_snapshot(db, output):
     """Replace a public snapshot atomically so readers never observe partial JSON."""
     output = Path(output)

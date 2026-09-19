@@ -43,7 +43,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
     <a className={styles.skip} href="#intake-main">本文へ移動</a>
     <header className={styles.header}><Link href="/research" className={styles.brand}><b>TP</b><span>TECH PHASE<small>RESEARCH / OPERATIONS</small></span></Link><span className={styles.badge}>運営用プレビュー</span></header>
     <main id="intake-main" className={styles.main}>
-      <div className={styles.heading}><div><p className={styles.eyebrow}>AI COMPANY COVERAGE</p><h1>AI関連銘柄の資料・取得状況</h1><p>企業公式・取引所・SECの一次情報から、原文と照合する資料を選びます。</p></div><Link href="/research">リサーチ画面へ ↗</Link></div>
+      <div className={styles.heading}><div><p className={styles.eyebrow}>AI COMPANY COVERAGE</p><h1>AI関連銘柄の資料・取得状況</h1><p>企業公式・取引所・SECの一次情報から、原文と照合する資料を選びます。</p></div><div className={styles.headingLinks}><Link href="/research/review">速報レビュー →</Link><Link href="/research">リサーチ画面へ ↗</Link></div></div>
       <aside className={styles.notice}><strong>{live.mode === "automatic" ? "公式発表を自動監視しています" : "自動監視サービスの接続待ち"}</strong><span>{live.mode === "automatic" ? `最終巡回：${time(live.monitor?.lastCycleAt ?? null)} JST` : `保存記録の出力日時：${time(snapshot.generatedAt)} JST`}</span><p>{live.mode === "automatic" ? "公式RSS・構造化された一次情報は3秒、企業HTML一覧は5秒を基準に巡回し、新しい公式資料を検知すると自動反映します。" : "現在は保存済み記録を表示しています。監視サービス接続後は3秒ごとに自動更新されます。"}</p></aside>
       <section aria-labelledby="events-title" className={styles.queue}><div className={styles.sectionTitle}><h2 id="events-title">新着の公式発表</h2><span>初回取り込みを除く自動検知：{events.length}件</span></div>
         <p className={styles.coverageNote}>監視開始前の過去資料は速報として扱いません。ここには監視開始後に新しく現れた公式URLだけを、検知時刻順で表示します。</p>

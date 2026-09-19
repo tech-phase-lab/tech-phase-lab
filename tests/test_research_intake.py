@@ -324,6 +324,12 @@ class IntakeTests(unittest.TestCase):
         self.assertNotIn("private-", str(public))
         self.assertNotIn("evidence", str(public))
 
+        editorial = m.private_brief_queue(self.db, 5)
+        self.assertEqual(len(editorial["items"]), 1)
+        self.assertIn("Capacity will increase", editorial["items"][0]["source_text"])
+        self.assertEqual(editorial["items"][0]["evidence"]["summary"], ["Capacity will increase in 2027."])
+        self.assertFalse(editorial["items"][0]["source_text_truncated"])
+
     def test_source_change_makes_approved_brief_stale_and_private_again(self):
         body = b"<main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main>"
         self.check(body)
