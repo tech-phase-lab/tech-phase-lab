@@ -504,7 +504,10 @@ def collect_discovery(ticker, transport=fetch, automatic=False):
             "route": used_source["route"],
             "sourceUrl": used_source["url"],
             "candidates": len(links),
-            "error": failures[0] if failures else None,
+            # Automatic monitoring may try a preferred low-latency route before the
+            # company's primary page. A recovered primary result is healthy; retain
+            # the earlier failure only when an actual fallback route was required.
+            "error": failures[0] if failures and used_source["route"] == "fallback" else None,
         }
     else:
         result = {"ticker": ticker, "status": "degraded", "route": "none", "sourceUrl": INDEXES[ticker], "candidates": 0, "error": failures[0] if failures else "No monitoring sources configured"}

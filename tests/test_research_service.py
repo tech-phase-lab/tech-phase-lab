@@ -21,6 +21,10 @@ generator_spec = importlib.util.spec_from_file_location("brief_generator", ROOT 
 brief_generator = importlib.util.module_from_spec(generator_spec)
 generator_spec.loader.exec_module(brief_generator)
 sys.modules["brief_generator"] = brief_generator
+persistence_spec = importlib.util.spec_from_file_location("persistence", ROOT / "scripts/research/persistence.py")
+persistence = importlib.util.module_from_spec(persistence_spec)
+persistence_spec.loader.exec_module(persistence)
+sys.modules["persistence"] = persistence
 service_spec = importlib.util.spec_from_file_location("research_service", ROOT / "scripts/research/service.py")
 service = importlib.util.module_from_spec(service_spec)
 service_spec.loader.exec_module(service)
@@ -60,6 +64,18 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertIn('"extracted_chars"', exported)
         self.assertNotIn("Evidence body.", exported)
         self.assertEqual(app.public_state()["sourceChecks"], 1)
+
+    def test_verified_backup_updates_public_health_without_exposing_storage_details(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.backup_dir = Path(self.temp.name) / "backups"
+        self.assertTrue(app.perform_backup())
+        state = app.public_state()["backup"]
+        self.assertTrue(state["healthy"])
+        self.assertEqual(state["backupCount"], 1)
+        self.assertIsNotNone(state["lastSuccessAt"])
+        self.assertNotIn("sha256", state)
+        self.assertNotIn("filename", state)
+        self.assertNotIn(str(app.backup_dir), json.dumps(state))
 
     def test_inline_exchange_evidence_is_not_refetched_as_an_article(self):
         inline_url = "https://openapi.twse.com.tw/v1/opendata/t187ap04_L?company=2330&date=1150918&time=153643&id=abc"

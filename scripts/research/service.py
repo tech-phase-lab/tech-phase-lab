@@ -14,6 +14,7 @@ from urllib.parse import parse_qs, urlsplit
 
 import monitor
 import brief_generator
+import persistence
 
 
 def utc_now():
@@ -36,6 +37,11 @@ class AutomaticMonitor:
         self.workers = positive_int("RESEARCH_MAX_WORKERS", 8, 1)
         self.body_interval = positive_int("RESEARCH_BODY_FETCH_INTERVAL_SECONDS", 10, 5)
         self.body_batch = positive_int("RESEARCH_BODY_FETCH_BATCH", 2, 1)
+        self.backup_interval = positive_int("RESEARCH_BACKUP_INTERVAL_SECONDS", 3600, 300)
+        self.backup_retention = positive_int("RESEARCH_BACKUP_RETENTION", 24, 2)
+        self.backup_dir = Path(os.environ.get(
+            "RESEARCH_BACKUP_DIR", str(self.db_path.parent / "backups")
+        ))
         self.auto_drafts_requested = os.environ.get("RESEARCH_AUTO_DRAFTS", "").strip().lower() in {"1", "true", "yes"}
         self.generation_daily_limit = positive_int("RESEARCH_AUTO_DRAFT_DAILY_LIMIT", 20, 1)
         self.generation_token_limit = positive_int("RESEARCH_AUTO_DRAFT_TOKEN_LIMIT", 100_000, 10_000)
@@ -73,19 +79,28 @@ class AutomaticMonitor:
                 "enabled": self.auto_drafts_enabled, "dailyLimit": self.generation_daily_limit,
                 "tokenLimit": self.generation_token_limit, "maxAttempts": self.generation_max_attempts,
             },
+            "backup": {
+                "enabled": True, "intervalSeconds": self.backup_interval,
+                "retention": min(self.backup_retention, 168), "lastAttemptAt": None,
+                "lastSuccessAt": None, "healthy": None, "backupCount": 0,
+                "lastError": None,
+            },
             "companies": {},
         }
         self.thread = threading.Thread(target=self.run, name="research-monitor", daemon=True)
         self.generation_thread = threading.Thread(target=self.run_generation, name="brief-generator", daemon=True)
+        self.backup_thread = threading.Thread(target=self.run_backup, name="database-backup", daemon=True)
 
     def start(self):
         self.thread.start()
         self.generation_thread.start()
+        self.backup_thread.start()
 
     def stop(self):
         self.stop_event.set()
         self.thread.join(timeout=15)
         self.generation_thread.join(timeout=45)
+        self.backup_thread.join(timeout=15)
 
     def interval_for(self, ticker):
         provider = monitor.PROVIDERS[ticker]
@@ -280,6 +295,37 @@ class AutomaticMonitor:
         while not self.stop_event.is_set():
             self.process_generation_job()
             self.stop_event.wait(self.generation_interval)
+
+    def perform_backup(self):
+        attempted_at = utc_now()
+        with self.state_lock:
+            self.state["backup"]["lastAttemptAt"] = attempted_at
+        try:
+            with self.db_lock:
+                result = persistence.create_backup(
+                    self.db_path, self.backup_dir, self.backup_retention
+                )
+        except Exception:
+            with self.state_lock:
+                self.state["backup"].update({
+                    "healthy": False, "lastError": "backup-failed",
+                })
+            return False
+        with self.state_lock:
+            self.state["backup"].update({
+                "healthy": True, "lastSuccessAt": result["createdAt"],
+                "backupCount": result["backupCount"], "lastError": None,
+            })
+        return True
+
+    def run_backup(self):
+        # The monitor initializes the schema under this same lock. Waiting for the
+        # database file keeps a new deployment from reporting a false backup fault.
+        while not self.stop_event.is_set() and not self.db_path.is_file():
+            self.stop_event.wait(1)
+        while not self.stop_event.is_set():
+            self.perform_backup()
+            self.stop_event.wait(self.backup_interval)
 
     def run(self):
         next_due = {ticker: 0.0 for ticker in self.tickers}

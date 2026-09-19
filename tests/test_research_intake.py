@@ -169,6 +169,20 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(len(m.save_discovery(self.db, "NBIS", result, links)), 1)
         self.assertEqual(len(m.save_discovery(self.db, "NBIS", result, links)), 0)
 
+    def test_recovered_primary_source_does_not_report_a_stale_fallback_error(self):
+        markup = b'<a href="/news/announcement/official-release">Official release</a>'
+
+        def transport(url, _ticker):
+            if url == "https://www.oracle.com/news/":
+                return markup, "text/html"
+            raise RuntimeError("HTTP Error 403")
+
+        result, links = m.collect_discovery("ORCL", transport, automatic=True)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["route"], "primary")
+        self.assertIsNone(result["error"])
+        self.assertEqual(list(links), ["https://www.oracle.com/news/announcement/official-release"])
+
     def test_release_events_are_deduplicated_and_exposed_without_private_fields(self):
         new_url = "https://nebius.com/newsroom/automatic-event"
         m.add_source(self.db, "NBIS", new_url, title="Official release")
