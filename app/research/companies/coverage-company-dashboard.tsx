@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { CoverageCompany } from "@/lib/research/intake";
+import { verifiedChangeByTicker, type VerifiedChangeMetric } from "@/lib/research/verified-changes";
 import { useResearchLanguage } from "../use-research-language";
 import base from "../research.module.css";
 import styles from "./coverage-company.module.css";
@@ -19,12 +20,18 @@ function time(value: string | null, lang: "ja" | "en") {
   return new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }).format(new Date(value));
 }
 
+function metricValue(metric: VerifiedChangeMetric, value: number | null, lang: "ja" | "en") {
+  if (value === null) return lang === "ja" ? "非表示" : "Not shown";
+  return metric.unit === "percent" ? `${value.toFixed(1)}%` : `$${value.toFixed(value >= 10 ? 1 : 3)}B`;
+}
+
 export default function CoverageCompanyDashboard({ company, companies, generatedAt }: { company: CoverageCompany; companies: Pick<CoverageCompany, "ticker" | "name">[]; generatedAt: string }) {
   const [lang, setLang] = useResearchLanguage();
   const router = useRouter();
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const discoveryLabel = company.discovery.status === "ok" ? t("一覧取得に成功", "Release list retrieved") : company.discovery.status === "degraded" ? t("一覧の確認が必要", "Release list needs attention") : t("一覧未検証", "Release list untested");
   const error = company.discovery.error ? errorNames[company.discovery.error]?.[lang] ?? t("取得時にエラーを検出", "Retrieval error detected") : null;
+  const verified = verifiedChangeByTicker[company.ticker];
 
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#coverage-main">{t("本文へ移動", "Skip to content")}</a>
@@ -47,12 +54,16 @@ export default function CoverageCompanyDashboard({ company, companies, generated
         <div><span>{t("取得エラー", "Fetch errors")}</span><strong>{company.counts.error}</strong><small>{t("経路の調整対象", "Retrieval path to review")}</small></div>
       </section>
 
-      <section className={styles.section} aria-labelledby="changed-title"><div className={styles.sectionHeading}><div><p className={styles.eyebrow}>01 / WHAT CHANGED?</p><h2 id="changed-title">{t("変化を伝えるまでの確認状況", "Progress toward a verified change")}</h2></div><span>{t("数値比較は未作成", "Numeric comparison not prepared")}</span></div>
-        <div className={styles.pipeline}>
+      <section className={styles.section} aria-labelledby="changed-title"><div className={styles.sectionHeading}><div><p className={styles.eyebrow}>01 / WHAT CHANGED?</p><h2 id="changed-title">{verified ? verified.title[lang] : t("変化を伝えるまでの確認状況", "Progress toward a verified change")}</h2></div><span>{verified ? `${verified.previousPeriod} → ${verified.currentPeriod}` : t("数値比較は未作成", "Numeric comparison not prepared")}</span></div>
+        {verified ? <div className={styles.verifiedChange}>
+          <div className={styles.metricGrid}>{verified.metrics.map((metric) => <article key={metric.id}><span>{metric.label[lang]}</span><div><small>{verified.previousPeriod}</small><strong>{metricValue(metric, metric.previous, lang)}</strong><b>→</b><small>{verified.currentPeriod}</small><strong>{metricValue(metric, metric.current, lang)}</strong></div><em>{metric.change.value > 0 ? "+" : ""}{metric.change.value.toFixed(1)}{metric.change.unit === "pp" ? lang === "ja" ? "pt" : "pp" : "%"}{metric.change.companyReported ? ` ${t("会社発表", "reported")}` : ""}</em><p>{metric.note[lang]}</p></article>)}</div>
+          <div className={styles.changeReading}><article><span>{t("読み取れる変化", "VERIFIED READING")}</span><p>{verified.reading[lang]}</p></article><article><span>{t("次四半期の会社見通し", "COMPANY OUTLOOK")}</span><ul>{verified.outlook.map((item) => <li key={item.en}>{item[lang]}</li>)}</ul></article><article><span>{t("この資料だけでは分からないこと", "NOT ESTABLISHED")}</span><p>{verified.unknown[lang]}</p></article></div>
+          <footer><span>{t("照合日", "Reviewed")}: {verified.reviewedOn}</span><a href={verified.source.url} target="_blank" rel="noreferrer">{t("SEC提出資料の原文 ↗", "Filed source on SEC EDGAR ↗")}</a></footer>
+        </div> : <div className={styles.pipeline}>
           <article className={company.discovery.status === "ok" ? styles.complete : ""}><span>01</span><h3>{t("公式発表を検知", "Detect release")}</h3><strong>{discoveryLabel}</strong><p>{company.discovery.status === "ok" ? t(`${company.discovery.candidates}件のリンクを検出しました。`, `${company.discovery.candidates} links were found.`) : error || t("取得記録がありません。", "No retrieval record.")}</p><small>{t("最終確認", "Last check")}: {time(company.discovery.checkedAt, lang)} JST</small></article>
           <article className={company.counts.fetched > 0 ? styles.complete : ""}><span>02</span><h3>{t("原文を取得", "Fetch source")}</h3><strong>{company.counts.fetched > 0 ? t(`${company.counts.fetched}件取得`, `${company.counts.fetched} fetched`) : t("取得待ち", "Awaiting fetch")}</strong><p>{t("取得できても、発表日・数値・対象期間の照合が必要です。", "Publication date, values, and reporting period still require review.")}</p></article>
           <article><span>03</span><h3>{t("前回と比較", "Compare changes")}</h3><strong>{t("編集確認待ち", "Awaiting editorial review")}</strong><p>{t("同じ定義の数値をそろえ、事実・影響・未確認事項を分けて公開します。", "Comparable metrics must be aligned before facts, impact, and unknowns are published separately.")}</p></article>
-        </div>
+        </div>}
       </section>
 
       <section className={styles.section} aria-labelledby="sources-title"><div className={styles.sectionHeading}><div><p className={styles.eyebrow}>02 / OFFICIAL RELEASES</p><h2 id="sources-title">{t("検知した公式資料", "Detected official sources")}</h2></div><a href={company.indexUrl} target="_blank" rel="noreferrer">{t(`公式${company.format === "rss" ? "RSS" : "一覧"} ↗`, `Official ${company.format === "rss" ? "RSS" : "release list"} ↗`)}</a></div>
