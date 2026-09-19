@@ -105,7 +105,11 @@ HTTP APIは `/health`、`/snapshot`、`/live`。`/snapshot` と `/live` は `RES
 
 任意のAI下書き生成は `/admin/briefs/generate` から1件ずつ実行します。`OPENAI_API_KEY` と `RESEARCH_SUMMARY_MODEL` の両方が明示設定されるまで必ず503で停止し、課金も外部送信も行いません。生成結果は既存の原文SHA、完全一致する根拠抜粋、数値照合を通過した場合だけ非公開の `draft` になります。拒否・壊れたJSON・根拠不一致は保存せず、人間承認と会員配信は別工程のままです。APIの接続形式は[OpenAI Responses API](https://platform.openai.com/docs/api-reference/responses/create)と[Structured Outputs](https://platform.openai.com/docs/guides/structured-outputs)に合わせています。
 
-新着イベントだけを下書き生成へ渡す永続キューも実装していますが、既定値は停止です。`RESEARCH_AUTO_DRAFTS=true`、有効なAPIキー、モデルの3条件が起動時に揃った場合だけ、その後に初めて検知した新着をキューへ入れます。過去資料は遡って投入しません。本文取得完了後に1件ずつ処理し、失敗時は1分、5分、25分の指数バックオフ（最大1時間）で再試行します。`RESEARCH_AUTO_DRAFT_DAILY_LIMIT` は成功・失敗を含む生成ジョブの試行回数を直近24時間で制限し、既定20回です。1回の生成ジョブ内では一時的な通信障害に対して最大3回のHTTP試行があるため、これは金額上限でも厳密なHTTPリクエスト数上限でもありません。処理状態と上限到達は `/health` へ本文を含めず表示します。プロセス停止後もSQLiteから再開し、すでに現行SHAの下書きが保存済みなら重複生成せず完了扱いに戻します。
+新着イベントだけを下書き生成へ渡す永続キューも実装していますが、既定値は停止です。`RESEARCH_AUTO_DRAFTS=true`、有効なAPIキー、モデルの3条件が起動時に揃った場合だけ、その後に初めて検知した新着をキューへ入れます。過去資料は遡って投入しません。本文取得完了後に1件ずつ処理し、失敗時は1分、5分、25分の指数バックオフ（最大1時間）で再試行します。
+
+`RESEARCH_AUTO_DRAFT_DAILY_LIMIT` は成功・失敗を含む生成ジョブの試行回数を直近24時間で制限します。加えて、`RESEARCH_AUTO_DRAFT_TOKEN_LIMIT` の範囲内かを外部送信前に確認します。実際の入力・出力・合計トークン数をAPI応答から監査記録し、成功後は実測合計を予算へ計上します。通信失敗や使用量が返らない場合は、入力UTF-8バイト数・固定プロンプト余裕・最大出力を合算した保守的な予約値を24時間維持します。このため、使用量不明の失敗が続いても無制限に再試行しません。これはモデル単価を仮定しない利用量上限で、円建て費用上限ではありません。モデル価格を確認せず円換算しません。
+
+処理状態、実測トークン、予算計上トークン、上限到達は `/health` へ本文を含めず表示します。プロセス停止後もSQLiteから再開し、すでに現行SHAの下書きが保存済みなら重複生成せず完了扱いに戻します。
 
 `Dockerfile.research-monitor` は常駐サービス用です。デプロイ先では `/data` に永続ボリュームを接続し、以下を設定します。
 
@@ -115,6 +119,7 @@ HTTP APIは `/health`、`/snapshot`、`/live`。`/snapshot` と `/live` は `RES
 - `RESEARCH_SUMMARY_MODEL`：運営者が承認したStructured Outputs対応モデル名。未設定時は生成無効
 - `RESEARCH_AUTO_DRAFTS`：既定false。有効なキー・モデルとtrueが揃った起動後の新着だけを自動生成待ちへ追加
 - `RESEARCH_AUTO_DRAFT_DAILY_LIMIT`：成功・失敗を含む直近24時間の生成ジョブ試行上限。標準20
+- `RESEARCH_AUTO_DRAFT_TOKEN_LIMIT`：外部送信前に確保する直近24時間のトークン予算。標準100,000、最低10,000
 - `RESEARCH_AUTO_DRAFT_MAX_ATTEMPTS`：1つの原文SHAに対する最大試行回数。標準3
 - `RESEARCH_AUTO_DRAFT_INTERVAL_SECONDS`：キュー確認間隔。標準5秒（発表から生成までの保証ではない）
 - `RESEARCH_FAST_POLL_SECONDS`：標準3秒、最低3秒

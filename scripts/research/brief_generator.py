@@ -11,6 +11,10 @@ from urllib.request import Request, urlopen
 RESPONSES_URL = "https://api.openai.com/v1/responses"
 MAX_SOURCE_CHARS = 45_000
 MAX_RESPONSE_BYTES = 1_000_000
+MAX_OUTPUT_TOKENS = 1_400
+# A conservative upper bound: token count cannot exceed the UTF-8 byte count,
+# plus fixed prompt/schema overhead and the maximum generated output.
+TOKEN_RESERVATION_OVERHEAD = 6_000
 
 
 class GenerationUnavailable(RuntimeError):
@@ -111,6 +115,25 @@ def validate_shape(value):
     return value
 
 
+def token_reservation(source_text):
+    """Reserve a conservative maximum before an automatic paid request starts."""
+    return len((source_text or "")[:MAX_SOURCE_CHARS].encode("utf-8")) + TOKEN_RESERVATION_OVERHEAD
+
+
+def token_usage(response):
+    usage = response.get("usage")
+    if not isinstance(usage, dict):
+        return {"inputTokens": None, "outputTokens": None, "totalTokens": None}
+    values = []
+    for key in ("input_tokens", "output_tokens", "total_tokens"):
+        value = usage.get(key)
+        values.append(value if isinstance(value, int) and not isinstance(value, bool) and value >= 0 else None)
+    input_tokens, output_tokens, total_tokens = values
+    if total_tokens is None and input_tokens is not None and output_tokens is not None:
+        total_tokens = input_tokens + output_tokens
+    return {"inputTokens": input_tokens, "outputTokens": output_tokens, "totalTokens": total_tokens}
+
+
 def generate_draft(source, transport=request_response, env=None):
     """Generate a private draft. The caller must still run the database evidence gate."""
     key, model = configuration(env)
@@ -133,7 +156,7 @@ def generate_draft(source, transport=request_response, env=None):
             "sourceSha256": sha, "sourceTruncated": len(text) > MAX_SOURCE_CHARS,
             "SOURCE": source_excerpt,
         }, ensure_ascii=False),
-        "max_output_tokens": 1_400,
+        "max_output_tokens": MAX_OUTPUT_TOKENS,
         "text": {"format": {"type": "json_schema", "name": "tech_phase_brief", "strict": True, "schema": SCHEMA}},
     }
     response = transport(payload, key)
@@ -148,5 +171,6 @@ def generate_draft(source, transport=request_response, env=None):
             "model": str(response.get("model") or model)[:100],
             "responseId": str(response.get("id") or "")[:200] or None,
             "sourceTruncated": len(text) > MAX_SOURCE_CHARS,
+            **token_usage(response),
         },
     }

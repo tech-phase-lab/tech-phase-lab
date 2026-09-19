@@ -32,11 +32,17 @@ class BriefGeneratorTests(unittest.TestCase):
         def transport(payload, key):
             captured.update(payload)
             self.assertEqual(key, "k" * 24)
-            return {"id": "resp_1", "model": "test-model", "output": [{"content": [{"type": "output_text", "text": json.dumps(draft)}]}]}
+            return {"id": "resp_1", "model": "test-model", "usage": {
+                "input_tokens": 321, "output_tokens": 123, "total_tokens": 444,
+            }, "output": [{"content": [{"type": "output_text", "text": json.dumps(draft)}]}]}
         result = g.generate_draft(self.source(), transport=transport,
                                   env={"OPENAI_API_KEY": "k" * 24, "RESEARCH_SUMMARY_MODEL": "test-model"})
         self.assertEqual(result["draft"], draft)
         self.assertEqual(result["audit"]["responseId"], "resp_1")
+        self.assertEqual(result["audit"]["inputTokens"], 321)
+        self.assertEqual(result["audit"]["outputTokens"], 123)
+        self.assertEqual(result["audit"]["totalTokens"], 444)
+        self.assertGreaterEqual(g.token_reservation(self.source()["extracted_text"]), g.MAX_OUTPUT_TOKENS)
         self.assertTrue(captured["text"]["format"]["strict"])
         self.assertNotIn("publish", json.dumps(captured))
 
@@ -48,6 +54,12 @@ class BriefGeneratorTests(unittest.TestCase):
                      "impactJa": "日本語の十分に長い影響文章をここへ記録します。", "confidence": "low", "evidence": {"summary": [], "impact": []}}
         with self.assertRaises(g.GenerationFailed):
             g.generate_draft(self.source(), lambda *_: {"output_text": json.dumps(malformed)}, env)
+
+    def test_invalid_or_missing_usage_is_not_invented(self):
+        self.assertEqual(g.token_usage({}), {"inputTokens": None, "outputTokens": None, "totalTokens": None})
+        self.assertEqual(g.token_usage({"usage": {"input_tokens": True, "output_tokens": -1, "total_tokens": "8"}}),
+                         {"inputTokens": None, "outputTokens": None, "totalTokens": None})
+        self.assertEqual(g.token_usage({"usage": {"input_tokens": 10, "output_tokens": 5}})["totalTokens"], 15)
 
 
 if __name__ == "__main__":

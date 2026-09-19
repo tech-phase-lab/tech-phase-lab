@@ -122,7 +122,8 @@ class ResearchServiceTests(unittest.TestCase):
                     "summary": ["Capacity will increase in 2027."], "impact": ["Execution remains subject to demand."],
                 },
             },
-            "audit": {"provider": "openai-responses", "model": "test-model", "responseId": "resp_test", "sourceTruncated": False},
+            "audit": {"provider": "openai-responses", "model": "test-model", "responseId": "resp_test",
+                      "sourceTruncated": False, "inputTokens": 400, "outputTokens": 120, "totalTokens": 520},
         }
         with patch.object(brief_generator, "generate_draft", return_value=generated):
             result = app.generate_brief({"url": "https://nebius.com/newsroom/new-release", "sha256": "d" * 64})
@@ -133,6 +134,42 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(item["brief_status"], "draft")
         self.assertEqual(item["generation_response_id"], "resp_test")
         self.assertEqual(item["generation_source_truncated"], 0)
+        self.assertEqual(item["generation_total_tokens"], 520)
+
+    def test_manual_generation_uses_the_same_rolling_budget(self):
+        url = "https://nebius.com/newsroom/new-release"
+        with patch.dict(os.environ, {
+            "OPENAI_API_KEY": "sk-" + "x" * 40, "RESEARCH_SUMMARY_MODEL": "test-model",
+            "RESEARCH_AUTO_DRAFT_DAILY_LIMIT": "1", "RESEARCH_AUTO_DRAFT_TOKEN_LIMIT": "10000",
+        }, clear=False):
+            app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        with monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            monitor.save_source_check(db, row, {
+                "sha256": "7" * 64, "contentType": "text/html", "contentBytes": 90,
+                "extractedText": "Capacity will increase in 2027. Execution remains subject to demand.", "extractedChars": 69,
+            })
+        generated = {
+            "draft": {
+                "summaryJa": "公式発表によると、容量は2027年に増加する計画です。",
+                "impactLabel": "mixed", "impactJa": "供給拡大の余地がありますが、需要条件の確認が必要です。",
+                "confidence": "medium", "evidence": {
+                    "summary": ["Capacity will increase in 2027."],
+                    "impact": ["Execution remains subject to demand."],
+                },
+            },
+            "audit": {"provider": "openai-responses", "model": "test-model", "responseId": "resp_manual",
+                      "sourceTruncated": False, "inputTokens": 400, "outputTokens": 100, "totalTokens": 500},
+        }
+        with patch.dict(os.environ, {
+            "OPENAI_API_KEY": "sk-" + "x" * 40, "RESEARCH_SUMMARY_MODEL": "test-model",
+        }, clear=False), patch.object(brief_generator, "generate_draft", return_value=generated):
+            app.generate_brief_budgeted({"url": url, "sha256": "7" * 64})
+            with self.assertRaisesRegex(ValueError, "generation-daily-limit-reached"):
+                app.generate_brief_budgeted({"url": url, "sha256": "7" * 64})
+        state = app.public_state()["generation"]
+        self.assertEqual(state["attemptsLast24Hours"], 1)
+        self.assertEqual(state["measuredTokensLast24Hours"], 500)
 
     def test_auto_generation_is_opt_in_and_does_not_backfill_existing_events(self):
         with patch.dict(os.environ, {
@@ -150,19 +187,19 @@ class ResearchServiceTests(unittest.TestCase):
     def test_generation_queue_waits_for_body_then_claims_once(self):
         url = "https://nebius.com/newsroom/new-release"
         with monitor.connect(self.db_path) as db:
-            queued = monitor.queue_generation_job(db, url)
+            queued = monitor.queue_generation_job(db, url, 7_000)
             self.assertEqual(queued["status"], "waiting-body")
-            self.assertIsNone(monitor.claim_generation_job(db, 20, 3))
+            self.assertIsNone(monitor.claim_generation_job(db, 20, 3, 100_000))
             row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
             monitor.save_source_check(db, row, {
                 "sha256": "e" * 64, "contentType": "text/html", "contentBytes": 80,
                 "extractedText": "Capacity will increase. Execution remains subject to demand.", "extractedChars": 60,
             })
-            monitor.activate_generation_job(db, url)
-            claim = monitor.claim_generation_job(db, 20, 3)
+            monitor.activate_generation_job(db, url, 7_000)
+            claim = monitor.claim_generation_job(db, 20, 3, 100_000)
             self.assertEqual(claim["url"], url)
             self.assertEqual(claim["attempt"], 1)
-            self.assertIsNone(monitor.claim_generation_job(db, 20, 3))
+            self.assertIsNone(monitor.claim_generation_job(db, 20, 3, 100_000))
 
     def test_generation_retry_and_rolling_call_limit_are_persistent(self):
         url = "https://nebius.com/newsroom/new-release"
@@ -172,16 +209,36 @@ class ResearchServiceTests(unittest.TestCase):
                 "sha256": "f" * 64, "contentType": "text/html", "contentBytes": 80,
                 "extractedText": "Official evidence remains available for review.", "extractedChars": 47,
             })
-            monitor.queue_generation_job(db, url)
-            claim = monitor.claim_generation_job(db, 1, 3)
+            monitor.queue_generation_job(db, url, 7_000)
+            claim = monitor.claim_generation_job(db, 1, 3, 100_000)
             result = monitor.finish_generation_job(db, claim, "generation-failed", 3)
             self.assertEqual(result["status"], "retry")
             self.assertEqual(result["retrySeconds"], 60)
-            self.assertIsNone(monitor.claim_generation_job(db, 1, 3))
-            stats = monitor.generation_queue_stats(db, 1)
+            self.assertIsNone(monitor.claim_generation_job(db, 1, 3, 100_000))
+            stats = monitor.generation_queue_stats(db, 1, 100_000)
             self.assertEqual(stats["attemptsLast24Hours"], 1)
             self.assertTrue(stats["limitReached"])
             self.assertEqual(stats["lastErrorCode"], "generation-failed")
+
+    def test_token_budget_blocks_before_generation_and_uses_measured_total_after_success(self):
+        url = "https://nebius.com/newsroom/new-release"
+        with monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            monitor.save_source_check(db, row, {
+                "sha256": "8" * 64, "contentType": "text/html", "contentBytes": 80,
+                "extractedText": "Official evidence remains available for review.", "extractedChars": 47,
+            })
+            monitor.queue_generation_job(db, url, 7_000)
+            self.assertIsNone(monitor.claim_generation_job(db, 20, 3, 6_999))
+            blocked = monitor.generation_queue_stats(db, 20, 6_999)
+            self.assertEqual(blocked["tokenBudgetBlocked"], 1)
+            claim = monitor.claim_generation_job(db, 20, 3, 100_000)
+            monitor.finish_generation_job(db, claim, max_attempts=3, usage={
+                "inputTokens": 500, "outputTokens": 100, "totalTokens": 600,
+            })
+            stats = monitor.generation_queue_stats(db, 20, 100_000)
+            self.assertEqual(stats["budgetTokensLast24Hours"], 600)
+            self.assertEqual(stats["measuredTokensLast24Hours"], 600)
 
     def test_auto_worker_creates_private_draft_and_never_publishes(self):
         url = "https://nebius.com/newsroom/new-release"
@@ -196,7 +253,7 @@ class ResearchServiceTests(unittest.TestCase):
                 "sha256": "c" * 64, "contentType": "text/html", "contentBytes": 90,
                 "extractedText": "Capacity will increase in 2027. Execution remains subject to demand.", "extractedChars": 69,
             })
-            monitor.queue_generation_job(db, url)
+            monitor.queue_generation_job(db, url, 7_000)
         generated = {
             "draft": {
                 "summaryJa": "公式発表によると、容量は2027年に増加する計画です。",
@@ -206,7 +263,8 @@ class ResearchServiceTests(unittest.TestCase):
                     "impact": ["Execution remains subject to demand."],
                 },
             },
-            "audit": {"provider": "openai-responses", "model": "test-model", "responseId": "resp_auto", "sourceTruncated": False},
+            "audit": {"provider": "openai-responses", "model": "test-model", "responseId": "resp_auto",
+                      "sourceTruncated": False, "inputTokens": 500, "outputTokens": 100, "totalTokens": 600},
         }
         with patch.object(brief_generator, "generate_draft", return_value=generated):
             result = app.process_generation_job()
@@ -216,6 +274,8 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(item["brief_status"], "draft")
         self.assertEqual(item["generation_job_status"], "succeeded")
         self.assertEqual(item["generation_response_id"], "resp_auto")
+        self.assertEqual(item["generation_total_tokens"], 600)
+        self.assertEqual(app.public_state()["generation"]["measuredTokensLast24Hours"], 600)
 
     def test_recovery_marks_saved_current_draft_complete_without_second_call(self):
         url = "https://nebius.com/newsroom/new-release"
@@ -225,8 +285,8 @@ class ResearchServiceTests(unittest.TestCase):
                 "sha256": "9" * 64, "contentType": "text/html", "contentBytes": 90,
                 "extractedText": "Capacity will increase. Execution remains subject to demand.", "extractedChars": 60,
             })
-            monitor.queue_generation_job(db, url)
-            claim = monitor.claim_generation_job(db, 20, 3)
+            monitor.queue_generation_job(db, url, 7_000)
+            claim = monitor.claim_generation_job(db, 20, 3, 100_000)
             monitor.save_brief_draft(
                 db, url, "9" * 64, "公式発表によると、容量を増やす計画が示されました。", "mixed",
                 "供給拡大の余地がありますが、需要条件の確認が引き続き必要です。", "medium",

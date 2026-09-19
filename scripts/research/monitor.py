@@ -382,11 +382,14 @@ def connect(path):
       url TEXT PRIMARY KEY REFERENCES sources(url), source_sha256 TEXT,
       status TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0,
       queued_at TEXT NOT NULL, started_at TEXT, completed_at TEXT,
-      next_attempt_at TEXT NOT NULL, error_code TEXT);
+      next_attempt_at TEXT NOT NULL, error_code TEXT,
+      reserved_tokens INTEGER NOT NULL DEFAULT 0);
     CREATE TABLE IF NOT EXISTS brief_generation_attempts (
       id INTEGER PRIMARY KEY, url TEXT NOT NULL REFERENCES sources(url),
       source_sha256 TEXT NOT NULL, started_at TEXT NOT NULL, completed_at TEXT,
-      outcome TEXT NOT NULL, error_code TEXT);
+      outcome TEXT NOT NULL, error_code TEXT,
+      reserved_tokens INTEGER NOT NULL DEFAULT 0,
+      input_tokens INTEGER, output_tokens INTEGER, total_tokens INTEGER);
     """)
     if "index_url" not in {row[1] for row in db.execute("PRAGMA table_info(discovery_runs)")}:
         db.execute("ALTER TABLE discovery_runs ADD COLUMN index_url TEXT")
@@ -410,9 +413,21 @@ def connect(path):
     for column, declaration in {
         "generation_provider": "TEXT", "generation_model": "TEXT", "generation_response_id": "TEXT",
         "generation_source_truncated": "INTEGER NOT NULL DEFAULT 0",
+        "generation_input_tokens": "INTEGER", "generation_output_tokens": "INTEGER",
+        "generation_total_tokens": "INTEGER",
     }.items():
         if column not in brief_columns:
             db.execute(f"ALTER TABLE briefs ADD COLUMN {column} {declaration}")
+    job_columns = {row[1] for row in db.execute("PRAGMA table_info(brief_generation_jobs)")}
+    if "reserved_tokens" not in job_columns:
+        db.execute("ALTER TABLE brief_generation_jobs ADD COLUMN reserved_tokens INTEGER NOT NULL DEFAULT 0")
+    attempt_columns = {row[1] for row in db.execute("PRAGMA table_info(brief_generation_attempts)")}
+    for column, declaration in {
+        "reserved_tokens": "INTEGER NOT NULL DEFAULT 0", "input_tokens": "INTEGER",
+        "output_tokens": "INTEGER", "total_tokens": "INTEGER",
+    }.items():
+        if column not in attempt_columns:
+            db.execute(f"ALTER TABLE brief_generation_attempts ADD COLUMN {column} {declaration}")
     return db
 
 
@@ -600,8 +615,10 @@ def private_brief_queue(db, limit=20):
              b.summary_ja,b.impact_label,b.impact_ja,b.confidence,b.status AS brief_status,
              b.generated_at,b.reviewed_at,b.reviewer,b.review_reason,
              b.generation_provider,b.generation_model,b.generation_response_id,b.generation_source_truncated,
+             b.generation_input_tokens,b.generation_output_tokens,b.generation_total_tokens,
              j.status AS generation_job_status,j.attempts AS generation_job_attempts,
-             j.next_attempt_at AS generation_job_next_attempt_at,j.error_code AS generation_job_error
+             j.next_attempt_at AS generation_job_next_attempt_at,j.error_code AS generation_job_error,
+             j.reserved_tokens AS generation_job_reserved_tokens
       FROM sources s
       LEFT JOIN release_events e ON e.url=s.url
       LEFT JOIN briefs b ON b.url=s.url
@@ -624,7 +641,7 @@ def private_brief_queue(db, limit=20):
     return {"generatedAt": now(), "items": rows}
 
 
-def queue_generation_job(db, url):
+def queue_generation_job(db, url, reserved_tokens=0):
     """Queue one monitored release revision; never backfill sources without a release event."""
     queued_at = now()
     with db:
@@ -638,14 +655,15 @@ def queue_generation_job(db, url):
         ready = bool(row["sha256"] and not row["error"] and row["extracted_chars"] > 0)
         db.execute("""
           INSERT INTO brief_generation_jobs(
-            url,source_sha256,status,attempts,queued_at,started_at,completed_at,next_attempt_at,error_code
-          ) VALUES(?,?,?,0,?,NULL,NULL,?,NULL)
+            url,source_sha256,status,attempts,queued_at,started_at,completed_at,next_attempt_at,error_code,reserved_tokens
+          ) VALUES(?,?,?,0,?,NULL,NULL,?,NULL,?)
           ON CONFLICT(url) DO NOTHING
-        """, (url, row["sha256"] if ready else None, "queued" if ready else "waiting-body", queued_at, queued_at))
+        """, (url, row["sha256"] if ready else None, "queued" if ready else "waiting-body", queued_at, queued_at,
+              max(0, int(reserved_tokens)) if ready else 0))
     return {"url": url, "status": "queued" if ready else "waiting-body"}
 
 
-def activate_generation_job(db, url):
+def activate_generation_job(db, url, reserved_tokens=0):
     """Make a queued release ready after body retrieval, resetting only a changed revision."""
     activated_at = now()
     with db:
@@ -654,13 +672,14 @@ def activate_generation_job(db, url):
         job = db.execute("SELECT * FROM brief_generation_jobs WHERE url=?", (url,)).fetchone()
         if not source or not job or not source["sha256"] or source["error"] or source["extracted_chars"] <= 0:
             return None
-        if job["source_sha256"] == source["sha256"] and job["status"] != "waiting-body":
+        if (job["source_sha256"] == source["sha256"] and job["status"] != "waiting-body"
+                and job["reserved_tokens"] > 0):
             return {"url": url, "status": job["status"]}
         db.execute("""
           UPDATE brief_generation_jobs SET source_sha256=?,status='queued',attempts=0,
-            queued_at=?,started_at=NULL,completed_at=NULL,next_attempt_at=?,error_code=NULL
+            queued_at=?,started_at=NULL,completed_at=NULL,next_attempt_at=?,error_code=NULL,reserved_tokens=?
           WHERE url=?
-        """, (source["sha256"], activated_at, activated_at, url))
+        """, (source["sha256"], activated_at, activated_at, max(0, int(reserved_tokens)), url))
     return {"url": url, "status": "queued"}
 
 
@@ -680,8 +699,8 @@ def recover_generation_jobs(db, stale_minutes=10):
         db.execute("""
           UPDATE brief_generation_attempts AS a SET completed_at=?,outcome='succeeded',error_code=NULL
           WHERE outcome='running' AND EXISTS (
-            SELECT 1 FROM brief_generation_jobs j WHERE j.url=a.url
-              AND j.source_sha256=a.source_sha256 AND j.status='succeeded'
+            SELECT 1 FROM briefs b WHERE b.url=a.url AND b.source_sha256=a.source_sha256
+              AND b.generation_response_id IS NOT NULL
           )
         """, (recovered_at,))
         interrupted = db.execute("""
@@ -695,8 +714,8 @@ def recover_generation_jobs(db, stale_minutes=10):
     return {"completed": completed, "interrupted": interrupted}
 
 
-def claim_generation_job(db, daily_limit, max_attempts):
-    """Atomically claim one due revision while enforcing a rolling 24-hour call cap."""
+def claim_generation_job(db, daily_limit, max_attempts, token_limit):
+    """Atomically claim one due revision under rolling job and token budgets."""
     claimed_at = now()
     window_start = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat(timespec="milliseconds")
     with db:
@@ -710,14 +729,20 @@ def claim_generation_job(db, daily_limit, max_attempts):
         ).fetchone()[0]
         if used >= daily_limit:
             return None
+        tokens_used = db.execute("""
+          SELECT coalesce(sum(CASE WHEN outcome='succeeded' AND total_tokens IS NOT NULL
+                              THEN total_tokens ELSE reserved_tokens END),0)
+          FROM brief_generation_attempts WHERE started_at>=?
+        """, (window_start,)).fetchone()[0]
         row = db.execute("""
           SELECT j.* FROM brief_generation_jobs j
           JOIN sources s ON s.url=j.url
           WHERE j.status IN ('queued','retry') AND j.next_attempt_at<=?
             AND j.attempts<? AND j.source_sha256=s.sha256
             AND s.error IS NULL AND s.extracted_chars>0
+            AND j.reserved_tokens>0 AND j.reserved_tokens<=?
           ORDER BY j.queued_at,j.url LIMIT 1
-        """, (claimed_at, max_attempts)).fetchone()
+        """, (claimed_at, max_attempts, max(0, token_limit - tokens_used))).fetchone()
         if not row:
             return None
         attempt = row["attempts"] + 1
@@ -726,13 +751,57 @@ def claim_generation_job(db, daily_limit, max_attempts):
           WHERE url=?
         """, (attempt, claimed_at, row["url"]))
         cursor = db.execute("""
-          INSERT INTO brief_generation_attempts(url,source_sha256,started_at,outcome)
-          VALUES(?,?,?,'running')
-        """, (row["url"], row["source_sha256"], claimed_at))
-    return {"url": row["url"], "sha256": row["source_sha256"], "attempt": attempt, "attemptId": cursor.lastrowid}
+          INSERT INTO brief_generation_attempts(url,source_sha256,started_at,outcome,reserved_tokens)
+          VALUES(?,?,?,'running',?)
+        """, (row["url"], row["source_sha256"], claimed_at, row["reserved_tokens"]))
+    return {"url": row["url"], "sha256": row["source_sha256"], "attempt": attempt,
+            "attemptId": cursor.lastrowid, "reservedTokens": row["reserved_tokens"]}
 
 
-def finish_generation_job(db, claim, error_code=None, max_attempts=3):
+def claim_manual_generation(db, url, expected_sha, reserved_tokens, daily_limit, token_limit):
+    """Reserve rolling budgets for an authenticated one-at-a-time generation."""
+    claimed_at = now()
+    window_start = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat(timespec="milliseconds")
+    reserved_tokens = max(1, int(reserved_tokens))
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        source = db.execute("SELECT sha256,error,extracted_chars FROM sources WHERE url=?", (url,)).fetchone()
+        if (not source or source["sha256"] != expected_sha or source["error"]
+                or source["extracted_chars"] <= 0):
+            raise ValueError("Source is missing, changed, failed, or has no extracted evidence")
+        used, budget_tokens = db.execute("""
+          SELECT count(*),coalesce(sum(CASE WHEN outcome='succeeded' AND total_tokens IS NOT NULL
+                                      THEN total_tokens ELSE reserved_tokens END),0)
+          FROM brief_generation_attempts WHERE started_at>=?
+        """, (window_start,)).fetchone()
+        if used >= daily_limit:
+            raise ValueError("generation-daily-limit-reached")
+        if budget_tokens + reserved_tokens > token_limit:
+            raise ValueError("generation-token-budget-exhausted")
+        cursor = db.execute("""
+          INSERT INTO brief_generation_attempts(url,source_sha256,started_at,outcome,reserved_tokens)
+          VALUES(?,?,?,'running',?)
+        """, (url, expected_sha, claimed_at, reserved_tokens))
+    return {"url": url, "sha256": expected_sha, "attemptId": cursor.lastrowid,
+            "reservedTokens": reserved_tokens}
+
+
+def finish_manual_generation(db, claim, error_code=None, usage=None):
+    completed_at = now()
+    error_code = error_code if error_code in {
+        None, "generation-not-configured", "generation-failed", "validation-failed", "worker-error"
+    } else "worker-error"
+    usage = usage or {}
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        db.execute("""
+          UPDATE brief_generation_attempts SET completed_at=?,outcome=?,error_code=?,
+            input_tokens=?,output_tokens=?,total_tokens=? WHERE id=? AND outcome='running'
+        """, (completed_at, "succeeded" if error_code is None else "failed", error_code,
+              usage.get("inputTokens"), usage.get("outputTokens"), usage.get("totalTokens"), claim["attemptId"]))
+
+
+def finish_generation_job(db, claim, error_code=None, max_attempts=3, usage=None):
     """Complete or reschedule a claimed generation without storing sensitive errors."""
     completed_at = now()
     error_code = error_code if error_code in {
@@ -755,32 +824,47 @@ def finish_generation_job(db, claim, error_code=None, max_attempts=3):
             db.execute("""
               UPDATE brief_generation_jobs SET status=?,completed_at=?,next_attempt_at=?,error_code=? WHERE url=?
             """, (status, completed_at, next_attempt_at, error_code, claim["url"]))
+        usage = usage or {}
         db.execute("""
-          UPDATE brief_generation_attempts SET completed_at=?,outcome=?,error_code=?
+          UPDATE brief_generation_attempts SET completed_at=?,outcome=?,error_code=?,
+            input_tokens=?,output_tokens=?,total_tokens=?
           WHERE id=? AND outcome='running'
-        """, (completed_at, status, error_code, claim["attemptId"]))
+        """, (completed_at, status, error_code, usage.get("inputTokens"), usage.get("outputTokens"),
+              usage.get("totalTokens"), claim["attemptId"]))
     return {"url": claim["url"], "status": status, "retrySeconds": retry_seconds}
 
 
-def generation_queue_stats(db, daily_limit):
+def generation_queue_stats(db, daily_limit, token_limit):
     window_start = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat(timespec="milliseconds")
     counts = {row["status"]: row["total"] for row in db.execute(
         "SELECT status,count(*) AS total FROM brief_generation_jobs GROUP BY status"
     )}
     attempt = db.execute("""
       SELECT count(*) AS total,max(started_at) AS last_attempt_at,
-             max(CASE WHEN outcome='succeeded' THEN completed_at END) AS last_success_at
+             max(CASE WHEN outcome='succeeded' THEN completed_at END) AS last_success_at,
+             coalesce(sum(CASE WHEN outcome='succeeded' AND total_tokens IS NOT NULL
+                          THEN total_tokens ELSE reserved_tokens END),0) AS budget_tokens,
+             coalesce(sum(CASE WHEN total_tokens IS NOT NULL THEN total_tokens ELSE 0 END),0) AS measured_tokens
       FROM brief_generation_attempts WHERE started_at>=?
     """, (window_start,)).fetchone()
     error = db.execute("""
       SELECT error_code FROM brief_generation_attempts
       WHERE error_code IS NOT NULL ORDER BY id DESC LIMIT 1
     """).fetchone()
+    remaining_tokens = max(0, token_limit - attempt["budget_tokens"])
+    budget_blocked = db.execute("""
+      SELECT count(*) FROM brief_generation_jobs
+      WHERE status IN ('queued','retry') AND reserved_tokens>?
+    """, (remaining_tokens,)).fetchone()[0]
     return {
         "waitingBody": counts.get("waiting-body", 0), "queued": counts.get("queued", 0),
         "running": counts.get("running", 0), "retry": counts.get("retry", 0),
         "succeeded": counts.get("succeeded", 0), "failed": counts.get("failed", 0),
         "attemptsLast24Hours": attempt["total"], "limitReached": attempt["total"] >= daily_limit,
+        "tokenLimit": token_limit, "budgetTokensLast24Hours": attempt["budget_tokens"],
+        "measuredTokensLast24Hours": attempt["measured_tokens"],
+        "tokenLimitReached": attempt["budget_tokens"] >= token_limit,
+        "tokenBudgetBlocked": budget_blocked,
         "lastAttemptAt": attempt["last_attempt_at"], "lastSuccessAt": attempt["last_success_at"],
         "lastErrorCode": error["error_code"] if error else None,
     }
@@ -920,7 +1004,8 @@ def save_brief_draft(db, url, expected_sha, summary_ja, impact_label, impact_ja,
         db.execute("DELETE FROM brief_evidence WHERE url=?", (url,))
         db.execute("""
           UPDATE briefs SET generation_provider=NULL,generation_model=NULL,generation_response_id=NULL,
-                            generation_source_truncated=0 WHERE url=?
+                            generation_source_truncated=0,generation_input_tokens=NULL,
+                            generation_output_tokens=NULL,generation_total_tokens=NULL WHERE url=?
         """, (url,))
         db.executemany("INSERT INTO brief_evidence(url,field,excerpt) VALUES(?,?,?)", [(url, field, excerpt) for field, excerpt in cleaned])
     return {"url": url, "status": "draft", "generatedAt": generated_at, "published": False}

@@ -38,6 +38,7 @@ class AutomaticMonitor:
         self.body_batch = positive_int("RESEARCH_BODY_FETCH_BATCH", 2, 1)
         self.auto_drafts_requested = os.environ.get("RESEARCH_AUTO_DRAFTS", "").strip().lower() in {"1", "true", "yes"}
         self.generation_daily_limit = positive_int("RESEARCH_AUTO_DRAFT_DAILY_LIMIT", 20, 1)
+        self.generation_token_limit = positive_int("RESEARCH_AUTO_DRAFT_TOKEN_LIMIT", 100_000, 10_000)
         self.generation_max_attempts = positive_int("RESEARCH_AUTO_DRAFT_MAX_ATTEMPTS", 3, 1)
         self.generation_interval = positive_int("RESEARCH_AUTO_DRAFT_INTERVAL_SECONDS", 5, 1)
         try:
@@ -70,7 +71,7 @@ class AutomaticMonitor:
             "generation": {
                 "requested": self.auto_drafts_requested, "configured": generation_configured,
                 "enabled": self.auto_drafts_enabled, "dailyLimit": self.generation_daily_limit,
-                "maxAttempts": self.generation_max_attempts,
+                "tokenLimit": self.generation_token_limit, "maxAttempts": self.generation_max_attempts,
             },
             "companies": {},
         }
@@ -104,7 +105,9 @@ class AutomaticMonitor:
         with self.state_lock:
             state = json.loads(json.dumps(self.state))
         with self.db_lock, monitor.connect(self.db_path) as db:
-            state["generation"].update(monitor.generation_queue_stats(db, self.generation_daily_limit))
+            state["generation"].update(monitor.generation_queue_stats(
+                db, self.generation_daily_limit, self.generation_token_limit
+            ))
         return state
 
     def public_snapshot(self):
@@ -142,11 +145,49 @@ class AutomaticMonitor:
             )
             db.execute("""
               UPDATE briefs SET generation_provider=?,generation_model=?,generation_response_id=?,
-                                generation_source_truncated=? WHERE url=?
-            """, (audit["provider"], audit["model"], audit["responseId"], int(audit["sourceTruncated"]), url))
+                                generation_source_truncated=?,generation_input_tokens=?,
+                                generation_output_tokens=?,generation_total_tokens=? WHERE url=?
+            """, (audit["provider"], audit["model"], audit["responseId"], int(audit["sourceTruncated"]),
+                  audit.get("inputTokens"), audit.get("outputTokens"), audit.get("totalTokens"), url))
             db.commit()
             monitor.write_snapshot(db, self.snapshot_path)
-        return {**result, "generatedBy": audit["provider"], "model": audit["model"], "sourceTruncated": audit["sourceTruncated"]}
+        return {**result, "generatedBy": audit["provider"], "model": audit["model"],
+                "sourceTruncated": audit["sourceTruncated"], "usage": {
+                    "inputTokens": audit.get("inputTokens"), "outputTokens": audit.get("outputTokens"),
+                    "totalTokens": audit.get("totalTokens"),
+                }}
+
+    def generate_brief_budgeted(self, payload, transport=brief_generator.request_response):
+        """Apply the same rolling budgets to authenticated manual generation."""
+        brief_generator.configuration()
+        url, expected_sha = payload.get("url", ""), payload.get("sha256", "")
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            source = db.execute("SELECT extracted_text FROM sources WHERE url=?", (url,)).fetchone()
+            reservation = brief_generator.token_reservation(source["extracted_text"] if source else "")
+            claim = monitor.claim_manual_generation(
+                db, url, expected_sha, reservation, self.generation_daily_limit, self.generation_token_limit
+            )
+        error_code = None
+        usage = None
+        try:
+            result = self.generate_brief(payload, transport=transport)
+            usage = result.get("usage")
+            return result
+        except brief_generator.GenerationUnavailable:
+            error_code = "generation-not-configured"
+            raise
+        except brief_generator.GenerationFailed:
+            error_code = "generation-failed"
+            raise
+        except ValueError:
+            error_code = "validation-failed"
+            raise
+        except Exception:
+            error_code = "worker-error"
+            raise
+        finally:
+            with self.db_lock, monitor.connect(self.db_path) as db:
+                monitor.finish_manual_generation(db, claim, error_code=error_code, usage=usage)
 
     def decide_brief(self, payload):
         with self.db_lock, monitor.connect(self.db_path) as db:
@@ -194,7 +235,9 @@ class AutomaticMonitor:
             for row, result, error in completed:
                 if error is None:
                     monitor.save_source_check(db, row, result)
-                    monitor.activate_generation_job(db, row["url"])
+                    monitor.activate_generation_job(
+                        db, row["url"], brief_generator.token_reservation(result["extractedText"])
+                    )
                 else:
                     monitor.save_source_error(db, row, error)
                     errors += 1
@@ -208,12 +251,16 @@ class AutomaticMonitor:
         if not self.auto_drafts_enabled:
             return None
         with self.db_lock, monitor.connect(self.db_path) as db:
-            claim = monitor.claim_generation_job(db, self.generation_daily_limit, self.generation_max_attempts)
+            claim = monitor.claim_generation_job(
+                db, self.generation_daily_limit, self.generation_max_attempts, self.generation_token_limit
+            )
         if not claim:
             return None
         error_code = None
+        usage = None
         try:
-            self.generate_brief({"url": claim["url"], "sha256": claim["sha256"]})
+            generated = self.generate_brief({"url": claim["url"], "sha256": claim["sha256"]})
+            usage = generated.get("usage")
         except brief_generator.GenerationUnavailable:
             error_code = "generation-not-configured"
         except brief_generator.GenerationFailed:
@@ -224,7 +271,7 @@ class AutomaticMonitor:
             error_code = "worker-error"
         with self.db_lock, monitor.connect(self.db_path) as db:
             return monitor.finish_generation_job(
-                db, claim, error_code=error_code, max_attempts=self.generation_max_attempts
+                db, claim, error_code=error_code, max_attempts=self.generation_max_attempts, usage=usage
             )
 
     def run_generation(self):
@@ -300,7 +347,9 @@ class AutomaticMonitor:
                                 events = monitor.add_release_events(db, ticker, inserted)
                                 if self.auto_drafts_enabled:
                                     for url in events:
-                                        monitor.queue_generation_job(db, url)
+                                        source = db.execute("SELECT extracted_text FROM sources WHERE url=?", (url,)).fetchone()
+                                        reservation = brief_generator.token_reservation(source["extracted_text"] if source else "")
+                                        monitor.queue_generation_job(db, url, reservation)
                                 new_count += len(events)
                             elif result["status"] in {"ok", "fallback"}:
                                 baseline_ready[ticker] = True
@@ -427,7 +476,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             payload = self.read_json()
             if path.endswith("/generate"):
-                result = self.app.generate_brief(payload)
+                result = self.app.generate_brief_budgeted(payload)
             elif path.endswith("/draft"):
                 result = self.app.save_brief(payload)
             else:

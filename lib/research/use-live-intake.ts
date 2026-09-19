@@ -14,9 +14,12 @@ export type MonitorState = {
   newSources: number;
   generation?: {
     requested: boolean; configured: boolean; enabled: boolean; dailyLimit: number; maxAttempts: number;
+    tokenLimit: number;
     waitingBody?: number; queued?: number; running?: number; retry?: number; succeeded?: number; failed?: number;
     attemptsLast24Hours?: number; limitReached?: boolean; lastAttemptAt?: string | null;
     lastSuccessAt?: string | null; lastErrorCode?: string | null;
+    budgetTokensLast24Hours?: number; measuredTokensLast24Hours?: number;
+    tokenLimitReached?: boolean; tokenBudgetBlocked?: number;
   };
   companies: Record<string, {
     basePollSeconds?: number; nextPollSeconds?: number; requestDurationMs?: number;
