@@ -93,6 +93,27 @@ class IntakeTests(unittest.TestCase):
         self.assertIn("sec.gov", run["index_url"])
         self.assertIn("403", run["error"])
 
+    def test_automatic_monitor_prefers_configured_official_fallback(self):
+        self.assertEqual(m.monitoring_sources("TSM")[0]["route"], "primary")
+        self.assertEqual(m.monitoring_sources("TSM", automatic=True)[0]["route"], "fallback")
+        self.assertEqual(m.monitoring_sources("TSM", automatic=True)[0]["format"], "sec-json")
+
+    def test_sec_submissions_json_filters_form_and_builds_official_document_url(self):
+        source = m.monitoring_sources("TSM", automatic=True)[0]
+        body = b'''{"cik":"1046179","filings":{"recent":{"form":["6-K","3"],"accessionNumber":["0001046179-26-000658","0000000000-26-000001"],"primaryDocument":["tsm-20260918.htm","ownership.xml"],"primaryDocDescription":["REPORT OF FOREIGN ISSUER",""]}}}'''
+        links = m.sec_submission_links(body, "TSM", source)
+        self.assertEqual(len(links), 1)
+        url, title = next(iter(links.items()))
+        self.assertEqual(url, "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000658/tsm-20260918.htm")
+        self.assertEqual(title, "6-K · REPORT OF FOREIGN ISSUER")
+
+    def test_collection_is_read_only_until_saved_and_reports_only_new_urls(self):
+        markup = b'<a href="/newsroom/automatic">Automatic release</a>'
+        result, links = m.collect_discovery("NBIS", lambda *_: (markup, "text/html"), automatic=True)
+        self.assertEqual(self.db.execute("SELECT count(*) FROM sources WHERE url LIKE '%automatic'").fetchone()[0], 0)
+        self.assertEqual(len(m.save_discovery(self.db, "NBIS", result, links)), 1)
+        self.assertEqual(len(m.save_discovery(self.db, "NBIS", result, links)), 0)
+
     def test_external_links_and_redirect_targets_are_blocked(self):
         for url in ["http://nebius.com/newsroom/a", "https://nebius.com.evil.test/a", "https://x:secret@nebius.com/a", "https://nebius.com:8443/a", "https://127.0.0.1/a"]:
             with self.assertRaises(ValueError):
@@ -159,7 +180,7 @@ class IntakeTests(unittest.TestCase):
             self.assertEqual(m.safe_url(p["indexUrl"], ticker), p["indexUrl"])
             for source in p.get("fallbackSources", []):
                 self.assertEqual(m.safe_url(source["url"], ticker), source["url"])
-                self.assertIn(source["format"], {"html", "rss"})
+                self.assertIn(source["format"], {"html", "rss", "sec-json"})
             for rule in p["articleRules"]:
                 self.assertIn(rule["host"], m.HOSTS[ticker])
                 self.assertIsNotNone(m.re.compile(rule["pattern"]))

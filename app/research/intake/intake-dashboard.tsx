@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { fetchState, filterSources, intakeCounts, sourceTitle, coverageCounts, providers, providerByTicker, sectorNames, type IntakeSnapshot } from "@/lib/research/intake";
+import { useLiveIntake } from "@/lib/research/use-live-intake";
 import styles from "./intake.module.css";
 
 const stateNames = { error: "取得エラー", fetched: "取得済み", unfetched: "未取得" };
@@ -14,13 +15,15 @@ function time(value: string | null) {
   return new Intl.DateTimeFormat("ja-JP", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" }).format(new Date(value));
 }
 
-export default function IntakeDashboard({ snapshot, titles }: { snapshot: IntakeSnapshot; titles: Record<string, string> }) {
+export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: { snapshot: IntakeSnapshot; titles: Record<string, string> }) {
   const [query, setQuery] = useState("");
   const [ticker, setTicker] = useState("all");
   const [state, setState] = useState("all");
   const [review, setReview] = useState("all");
   const [sector, setSector] = useState("all");
   const [page, setPage] = useState(1);
+  const live = useLiveIntake(initialSnapshot);
+  const snapshot = live.snapshot;
   const counts = intakeCounts(snapshot.sources);
   const coverage = coverageCounts(snapshot);
   const visible = filterSources(snapshot.sources, query, ticker, state, review, titles, sector);
@@ -35,7 +38,7 @@ export default function IntakeDashboard({ snapshot, titles }: { snapshot: Intake
     <header className={styles.header}><Link href="/research" className={styles.brand}><b>TP</b><span>TECH PHASE<small>RESEARCH / OPERATIONS</small></span></Link><span className={styles.badge}>運営用プレビュー</span></header>
     <main id="intake-main" className={styles.main}>
       <div className={styles.heading}><div><p className={styles.eyebrow}>AI COMPANY COVERAGE</p><h1>AI関連銘柄の資料・取得状況</h1><p>公式ニュース・RSSから、原文と照合する資料を選びます。</p></div><Link href="/research">リサーチ画面へ ↗</Link></div>
-      <aside className={styles.notice}><strong>保存した取得記録を表示しています</strong><span>記録の出力日時：{time(snapshot.generatedAt)} JST</span><p>常時監視・自動更新は未接続です。初回取得には過去資料も含まれます。この画面から採用・公開の操作は行いません。</p></aside>
+      <aside className={styles.notice}><strong>{live.mode === "automatic" ? "公式発表を自動監視しています" : "自動監視サービスの接続待ち"}</strong><span>{live.mode === "automatic" ? `最終巡回：${time(live.monitor?.lastCycleAt ?? null)} JST` : `保存記録の出力日時：${time(snapshot.generatedAt)} JST`}</span><p>{live.mode === "automatic" ? "新しい公式資料を検知すると、この画面へ自動反映します。取得と内容の確認・公開判断は分けて管理します。" : "現在は保存済み記録を表示しています。監視サービス接続後は10秒ごとに自動更新されます。"}</p></aside>
       <section aria-label="銘柄の対応状況" className={styles.stats}>
         {[["登録銘柄", coverage.registered], ["一覧取得に成功", coverage.discovered], ["一覧の確認が必要", coverage.needsCheck], ["一覧未検証", coverage.untested]].map(([label, count]) => <div key={label}><span>{label}</span><strong>{count}<small>銘柄</small></strong></div>)}
       </section>

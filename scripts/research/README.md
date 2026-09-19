@@ -22,7 +22,7 @@ python3 scripts/research/monitor.py history
 
 RSS / Atomの取り込みを追加しました。フィードのリンクと見出しを取り込み、本文取得や編集上の確認とは分けて記録します。外部ホスト、カテゴリー一覧、コメントフィード等は規則に合わなければ取り込みません。XMLの外部定義・エンティティ宣言を拒否し、壊れたフィードは取得異常として扱います。見出しはプレーンテキストとして扱い、HTMLやスクリプトとして実行しません。
 
-ANET・TSM・VRT・PLTR・ORCLは、企業公式ページが403、タイムアウト、動的表示などで取得できない場合に限り、SEC EDGARの会社別8-K／6-K Atomを公式バックアップとして使います。企業公式一覧を優先し、バックアップで取得した実行は `fallback` と明示します。SEC経路は重要開示の補完であり、製品ブログを含む企業ニュース全件の代替ではありません。
+ANET・TSM・VRT・PLTR・ORCLは、企業公式ページが403、タイムアウト、動的表示などで取得できない場合、SEC EDGARの会社別Submissions JSONを公式バックアップとして使い、必要なら8-K／6-K Atomへ切り替えます。企業公式一覧を優先し、バックアップで取得した実行は `fallback` と明示します。SEC経路は重要開示の補完であり、製品ブログを含む企業ニュース全件の代替ではありません。
 
 ```sh
 python3 scripts/research/monitor.py discover NVDA
@@ -73,9 +73,29 @@ exportは明示した項目のみ出力し、担当者名・判断理由・原�
 
 ## 保存と運用範囲
 
-デフォルトは `.research-private/intake.sqlite`。Git管理から除外し、会員サイトから読み出しません。`--db /absolute/path/intake.sqlite` で永続ディスクを指定できます。ローカル状態なのでVercelの一時ファイルシステムでの常時運用には使わないでください。本番化には永続保存、バックアップ、実行環境、取得条件・間隔の確認が必要です。
+デフォルトは `.research-private/intake.sqlite`。Git管理から除外し、会員サイトから直接読み出しません。`--db /absolute/path/intake.sqlite` で永続ディスクを指定できます。Vercelの一時ファイルシステムには保存せず、下記の常駐監視サービスで永続ボリュームを使用します。
 
-実行ごとの通信は少数の直列リクエストです。自動リトライ・スケジュールは設定していません。これは編集用ツールであり、認証付き管理画面や改ざん耐性のある監査基盤ではありません。全履歴本文の保存、訂正内容の差分表示、自動数値抽出、AI要約、公開操作は未実装です。
+手動コマンドは直列取得です。常駐監視サービスは銘柄ごとに並列取得し、取得先の種類に応じて10秒または30秒間隔で巡回します。全履歴本文の保存、訂正内容の差分表示、自動数値抽出、AI要約、公開操作は未実装です。
+
+## 常駐自動監視
+
+`service.py` は起動後、自分で22社を巡回し続けます。RSSとSEC経路は標準10秒、HTML一覧は標準30秒です。新しいURLまたは取得状態の変化があった時だけSQLiteと公開用スナップショットを更新します。5社のSEC経路では、Atomより高速なSEC Submissions JSONを優先し、8-Kまたは6-Kだけを抽出します。
+
+```sh
+RESEARCH_API_TOKEN='共有トークン' python3 scripts/research/service.py
+```
+
+HTTP APIは `/health`、`/snapshot`、`/live`。`/snapshot` と `/live` は `RESEARCH_API_TOKEN` を設定した場合にBearer認証が必要です。サイト側の `/api/research/live` がトークンをサーバー内だけで使用し、ブラウザーには渡しません。監視サービスが未接続または停止中なら、画面は保存済みスナップショットへ安全に戻ります。
+
+`Dockerfile.research-monitor` は常駐サービス用です。デプロイ先では `/data` に永続ボリュームを接続し、以下を設定します。
+
+- `RESEARCH_API_TOKEN`：長いランダム値
+- `RESEARCH_FAST_POLL_SECONDS`：標準10秒、最低5秒
+- `RESEARCH_STANDARD_POLL_SECONDS`：標準30秒、最低10秒
+- `RESEARCH_REQUEST_TIMEOUT_SECONDS`：標準20秒。巡回間隔とは別で、遅い公式サイトを誤って障害扱いしないための上限
+- `RESEARCH_MAX_WORKERS`：標準8
+
+Vercel側には監視サービスのHTTPS URLを `RESEARCH_MONITOR_URL`、同じトークンを `RESEARCH_MONITOR_TOKEN` として設定します。`/research/intake` は10秒ごとにAPIを確認し、接続中か保存済み記録かを明示します。
 
 ## 検証
 

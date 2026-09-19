@@ -5,6 +5,7 @@ import hashlib
 from html.parser import HTMLParser
 from html import unescape
 import json
+import os
 from pathlib import Path
 import sqlite3
 import sys
@@ -43,11 +44,13 @@ class Redirects(HTTPRedirectHandler):
 
 def fetch(url, ticker):
     url = safe_url(url, ticker)
-    req = Request(url, headers={"User-Agent": "TechPhaseResearch-SourceCheck/0.1", "Accept": "application/rss+xml,application/atom+xml,text/html,application/pdf"})
+    req = Request(url, headers={"User-Agent": "TechPhaseResearch-SourceCheck/0.1", "Accept": "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf"})
     timeout = PROVIDERS[ticker].get("requestTimeoutSeconds", 20) if url == INDEXES[ticker] else 20
+    if os.environ.get("RESEARCH_REQUEST_TIMEOUT_SECONDS"):
+        timeout = min(timeout, max(1, int(os.environ["RESEARCH_REQUEST_TIMEOUT_SECONDS"])))
     with build_opener(Redirects(ticker)).open(req, timeout=timeout) as response:
         content_type = response.headers.get_content_type()
-        if content_type not in {"text/html", "application/pdf", "application/rss+xml", "application/atom+xml", "application/xml", "text/xml"}:
+        if content_type not in {"text/html", "application/pdf", "application/json", "application/rss+xml", "application/atom+xml", "application/xml", "text/xml"}:
             raise ValueError("Unsupported content type: " + content_type)
         content = response.read(MAX_BYTES + 1)
         if not content or len(content) > MAX_BYTES:
@@ -123,11 +126,46 @@ def feed_links(body, ticker):
     return links
 
 
+def sec_submission_links(body, ticker, source):
+    """Turn the SEC submissions columnar JSON into official filing-document URLs."""
+    data = json.loads(body)
+    cik = source.get("cik", "")
+    if not re.fullmatch(r"\d{10}", cik) or str(data.get("cik", "")).zfill(10) != cik:
+        raise ValueError("SEC submissions CIK mismatch")
+    recent = data.get("filings", {}).get("recent", {})
+    forms = recent.get("form", [])
+    accessions = recent.get("accessionNumber", [])
+    documents = recent.get("primaryDocument", [])
+    descriptions = recent.get("primaryDocDescription", [])
+    if not all(isinstance(items, list) for items in (forms, accessions, documents, descriptions)):
+        raise ValueError("Invalid SEC submissions structure")
+    allowed_forms = set(source.get("forms", []))
+    limit = max(1, min(int(source.get("limit", 40)), 100))
+    links = {}
+    for index, form in enumerate(forms):
+        if form not in allowed_forms or index >= len(accessions) or index >= len(documents):
+            continue
+        accession, document = accessions[index], documents[index]
+        if not re.fullmatch(r"\d{10}-\d{2}-\d{6}", accession or "") or not re.fullmatch(r"[A-Za-z0-9._-]+", document or ""):
+            continue
+        url = f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{accession.replace('-', '')}/{document}"
+        canonical = article_url(url, ticker)
+        if not canonical:
+            continue
+        description = descriptions[index] if index < len(descriptions) else ""
+        links[canonical] = " ".join(f"{form} · {description or 'Official filing'}".split())[:300]
+        if len(links) >= limit:
+            break
+    return links
+
+
 def connect(path):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     db = sqlite3.connect(path)
     db.row_factory = sqlite3.Row
+    db.execute("PRAGMA busy_timeout = 5000")
+    db.execute("PRAGMA journal_mode = WAL")
     db.execute("PRAGMA foreign_keys = ON")
     db.executescript("""
     CREATE TABLE IF NOT EXISTS sources (
@@ -159,15 +197,22 @@ def add_source(db, ticker, url, published_on=None, title=None):
     return url
 
 
-def monitoring_sources(ticker):
+def monitoring_sources(ticker, automatic=False):
     """Return the preferred company feed followed by official fallback feeds."""
     provider = PROVIDERS[ticker]
-    return [{"url": provider["indexUrl"], "format": provider["format"], "route": "primary"}] + [
+    sources = [{"url": provider["indexUrl"], "format": provider["format"], "route": "primary"}] + [
         {**source, "route": "fallback"} for source in provider.get("fallbackSources", [])
     ]
+    if automatic and provider.get("automaticSource") == "fallback":
+        sources.sort(key=lambda source: source["route"] != "fallback")
+    return sources
 
 
 def discover_links(body, kind, ticker, source):
+    if source["format"] == "sec-json":
+        if kind != "application/json":
+            raise ValueError("SEC submissions source is not JSON")
+        return sec_submission_links(body, ticker, source)
     if source["format"] == "rss":
         return feed_links(body, ticker)
     if kind != "text/html":
@@ -177,11 +222,11 @@ def discover_links(body, kind, ticker, source):
     return {url: parser.labels.get(url) for url in parser.urls}
 
 
-def discover(db, ticker, transport=fetch):
-    """Discover candidates, using an official fallback when the preferred route fails."""
+def collect_discovery(ticker, transport=fetch, automatic=False):
+    """Fetch and parse candidates without mutating storage."""
     failures = []
     links, used_source = {}, None
-    for source in monitoring_sources(ticker):
+    for source in monitoring_sources(ticker, automatic=automatic):
         try:
             body, kind = transport(source["url"], ticker)
             links = discover_links(body, kind, ticker, source)
@@ -194,8 +239,6 @@ def discover(db, ticker, transport=fetch):
         except Exception as exc:
             failures.append(str(exc))
     if used_source:
-        for url, title in links.items():
-            add_source(db, ticker, url, title=title)
         result = {
             "ticker": ticker,
             "status": "ok" if used_source["route"] == "primary" else "fallback",
@@ -206,8 +249,23 @@ def discover(db, ticker, transport=fetch):
         }
     else:
         result = {"ticker": ticker, "status": "degraded", "route": "none", "sourceUrl": INDEXES[ticker], "candidates": 0, "error": failures[0] if failures else "No monitoring sources configured"}
+    return result, links
+
+
+def save_discovery(db, ticker, result, links):
+    """Persist one completed discovery result and return newly inserted URLs."""
+    before = {row[0] for row in db.execute("SELECT url FROM sources WHERE ticker=?", (ticker,))}
+    for url, title in links.items():
+        add_source(db, ticker, url, title=title)
     with db:
         db.execute("INSERT INTO discovery_runs(ticker,at,status,candidates,error,index_url) VALUES(?,?,?,?,?,?)", (ticker, now(), result["status"], result["candidates"], result["error"], result["sourceUrl"]))
+    return sorted(set(links) - before)
+
+
+def discover(db, ticker, transport=fetch):
+    """Discover candidates, using an official fallback when the preferred route fails."""
+    result, links = collect_discovery(ticker, transport=transport)
+    result["newCandidates"] = len(save_discovery(db, ticker, result, links))
     return result
 
 

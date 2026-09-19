@@ -6,7 +6,7 @@ import IntakeDashboard from "./intake-dashboard";
 
 export const metadata: Metadata = {
   title: "資料の取得・確認状況 | Tech Phase Research",
-  description: "取得記録を確認する運営用プレビュー。常時監視ではありません。",
+  description: "公式発表の自動監視と取得記録を確認する運営用プレビュー。",
   robots: { index: false, follow: false },
 };
 

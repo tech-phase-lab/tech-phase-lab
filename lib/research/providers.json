@@ -147,7 +147,16 @@
     "indexUrl": "https://pr.tsmc.com/english/news",
     "format": "html",
     "requestTimeoutSeconds": 6,
+    "automaticSource": "fallback",
     "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001046179.json",
+        "format": "sec-json",
+        "label": "SEC submissions 6-K",
+        "cik": "0001046179",
+        "forms": ["6-K"],
+        "limit": 40
+      },
       {
         "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001046179&type=6-K&owner=exclude&count=40&output=atom",
         "format": "rss",
@@ -156,6 +165,7 @@
     ],
     "allowedHosts": [
       "pr.tsmc.com",
+      "data.sec.gov",
       "www.sec.gov"
     ],
     "articleRules": [
@@ -165,7 +175,7 @@
       },
       {
         "host": "www.sec.gov",
-        "pattern": "^/Archives/edgar/data/1046179/.+-index\\.htm$"
+        "pattern": "^/Archives/edgar/data/1046179/.+"
       }
     ]
   },
@@ -213,7 +223,16 @@
     "indexUrl": "https://investors.arista.com/Communications/Press-Releases-and-Events/default.aspx",
     "format": "html",
     "requestTimeoutSeconds": 6,
+    "automaticSource": "fallback",
     "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001596532.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001596532",
+        "forms": ["8-K"],
+        "limit": 40
+      },
       {
         "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001596532&type=8-K&owner=exclude&count=40&output=atom",
         "format": "rss",
@@ -222,6 +241,7 @@
     ],
     "allowedHosts": [
       "investors.arista.com",
+      "data.sec.gov",
       "www.sec.gov"
     ],
     "articleRules": [
@@ -239,7 +259,7 @@
       },
       {
         "host": "www.sec.gov",
-        "pattern": "^/Archives/edgar/data/1596532/.+-index\\.htm$"
+        "pattern": "^/Archives/edgar/data/1596532/.+"
       }
     ]
   },
@@ -283,7 +303,16 @@
     "indexUrl": "https://www.vertiv.com/en-us/about/news-and-events/corporate-news/",
     "format": "html",
     "requestTimeoutSeconds": 6,
+    "automaticSource": "fallback",
     "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001674101.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001674101",
+        "forms": ["8-K"],
+        "limit": 40
+      },
       {
         "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001674101&type=8-K&owner=exclude&count=40&output=atom",
         "format": "rss",
@@ -292,6 +321,7 @@
     ],
     "allowedHosts": [
       "www.vertiv.com",
+      "data.sec.gov",
       "www.sec.gov"
     ],
     "articleRules": [
@@ -301,7 +331,7 @@
       },
       {
         "host": "www.sec.gov",
-        "pattern": "^/Archives/edgar/data/1674101/.+-index\\.htm$"
+        "pattern": "^/Archives/edgar/data/1674101/.+"
       }
     ]
   },
@@ -344,7 +374,16 @@
     "indexUrl": "https://investors.palantir.com/news",
     "format": "html",
     "requestTimeoutSeconds": 6,
+    "automaticSource": "fallback",
     "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001321655.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001321655",
+        "forms": ["8-K"],
+        "limit": 40
+      },
       {
         "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=8-K&owner=exclude&count=40&output=atom",
         "format": "rss",
@@ -353,6 +392,7 @@
     ],
     "allowedHosts": [
       "investors.palantir.com",
+      "data.sec.gov",
       "www.sec.gov"
     ],
     "articleRules": [
@@ -366,7 +406,7 @@
       },
       {
         "host": "www.sec.gov",
-        "pattern": "^/Archives/edgar/data/1321655/.+-index\\.htm$"
+        "pattern": "^/Archives/edgar/data/1321655/.+"
       }
     ]
   },
@@ -435,7 +475,16 @@
     "indexUrl": "https://www.oracle.com/news/",
     "format": "html",
     "requestTimeoutSeconds": 6,
+    "automaticSource": "fallback",
     "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001341439.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001341439",
+        "forms": ["8-K"],
+        "limit": 40
+      },
       {
         "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001341439&type=8-K&owner=exclude&count=40&output=atom",
         "format": "rss",
@@ -444,6 +493,7 @@
     ],
     "allowedHosts": [
       "www.oracle.com",
+      "data.sec.gov",
       "www.sec.gov"
     ],
     "articleRules": [
@@ -453,7 +503,7 @@
       },
       {
         "host": "www.sec.gov",
-        "pattern": "^/Archives/edgar/data/1341439/.+-index\\.htm$"
+        "pattern": "^/Archives/edgar/data/1341439/.+"
       }
     ]
   }
