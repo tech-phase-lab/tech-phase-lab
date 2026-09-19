@@ -12,13 +12,17 @@ import sys
 import re
 import xml.etree.ElementTree as ET
 from urllib.parse import urljoin, urlsplit, urlunsplit
+from urllib.error import HTTPError
 from urllib.request import HTTPRedirectHandler, Request, build_opener
+import threading
 
 ROOT = Path(__file__).resolve().parents[2]
 PROVIDERS = {p["ticker"]: p for p in json.loads((ROOT / "lib/research/providers.json").read_text())}
 INDEXES = {t: p["indexUrl"] for t, p in PROVIDERS.items()}
 HOSTS = {t: set(p["allowedHosts"]) for t, p in PROVIDERS.items()}
 MAX_BYTES = 12 * 1024 * 1024
+_FETCH_CACHE = {}
+_FETCH_CACHE_LOCK = threading.Lock()
 
 
 def now():
@@ -44,11 +48,27 @@ class Redirects(HTTPRedirectHandler):
 
 def fetch(url, ticker):
     url = safe_url(url, ticker)
-    req = Request(url, headers={"User-Agent": "TechPhaseResearch-SourceCheck/0.1", "Accept": "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf"})
+    with _FETCH_CACHE_LOCK:
+        cached = _FETCH_CACHE.get(url)
+    headers = {
+        "User-Agent": os.environ.get("RESEARCH_USER_AGENT", "TechPhaseResearch-SourceCheck/0.1"),
+        "Accept": "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf",
+    }
+    if cached and cached.get("etag"):
+        headers["If-None-Match"] = cached["etag"]
+    if cached and cached.get("last_modified"):
+        headers["If-Modified-Since"] = cached["last_modified"]
+    req = Request(url, headers=headers)
     timeout = PROVIDERS[ticker].get("requestTimeoutSeconds", 20) if url == INDEXES[ticker] else 20
     if os.environ.get("RESEARCH_REQUEST_TIMEOUT_SECONDS"):
         timeout = min(timeout, max(1, int(os.environ["RESEARCH_REQUEST_TIMEOUT_SECONDS"])))
-    with build_opener(Redirects(ticker)).open(req, timeout=timeout) as response:
+    try:
+        response = build_opener(Redirects(ticker)).open(req, timeout=timeout)
+    except HTTPError as exc:
+        if exc.code == 304 and cached:
+            return cached["content"], cached["content_type"]
+        raise
+    with response:
         content_type = response.headers.get_content_type()
         if content_type not in {"text/html", "application/pdf", "application/json", "application/rss+xml", "application/atom+xml", "application/xml", "text/xml"}:
             raise ValueError("Unsupported content type: " + content_type)
@@ -61,6 +81,13 @@ def fetch(url, ticker):
             title = re.search(br"<title[^>]*>(.*?)</title>", content, re.I | re.S)
             if title and re.search(br"access denied|just a moment|page not found|403 forbidden", title.group(1), re.I):
                 raise ValueError("Source returned an error or verification page")
+        with _FETCH_CACHE_LOCK:
+            _FETCH_CACHE[url] = {
+                "content": content,
+                "content_type": content_type,
+                "etag": response.headers.get("ETag"),
+                "last_modified": response.headers.get("Last-Modified"),
+            }
         return content, content_type
 
 

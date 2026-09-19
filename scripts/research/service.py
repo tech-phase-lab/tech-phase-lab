@@ -30,8 +30,8 @@ class AutomaticMonitor:
     def __init__(self, db_path, snapshot_path):
         self.db_path = Path(db_path)
         self.snapshot_path = Path(snapshot_path)
-        self.fast_seconds = positive_int("RESEARCH_FAST_POLL_SECONDS", 10, 5)
-        self.standard_seconds = positive_int("RESEARCH_STANDARD_POLL_SECONDS", 30, 10)
+        self.fast_seconds = positive_int("RESEARCH_FAST_POLL_SECONDS", 5, 5)
+        self.standard_seconds = positive_int("RESEARCH_STANDARD_POLL_SECONDS", 5, 5)
         self.workers = positive_int("RESEARCH_MAX_WORKERS", 8, 1)
         configured = [value.strip().upper() for value in os.environ.get("RESEARCH_TICKERS", "").split(",") if value.strip()]
         unknown = sorted(set(configured) - set(monitor.PROVIDERS))
@@ -81,6 +81,7 @@ class AutomaticMonitor:
         signatures = {}
         known = {}
         baseline_ready = {}
+        failure_streak = {ticker: 0 for ticker in self.tickers}
         with self.db_lock, monitor.connect(self.db_path) as db:
             for ticker in self.tickers:
                 known[ticker] = {row[0] for row in db.execute("SELECT url FROM sources WHERE ticker=?", (ticker,))}
@@ -115,7 +116,13 @@ class AutomaticMonitor:
                         }
                         links = {}
                     collected.append((ticker, result, links))
-                    next_due[ticker] = time.monotonic() + self.interval_for(ticker)
+                    if result["status"] == "degraded":
+                        failure_streak[ticker] += 1
+                    else:
+                        failure_streak[ticker] = 0
+                    delay = min(300, self.interval_for(ticker) * (2 ** min(failure_streak[ticker], 6)))
+                    next_due[ticker] = time.monotonic() + delay
+                    result["nextPollSeconds"] = delay
 
                 changed = False
                 new_count = 0
@@ -140,7 +147,7 @@ class AutomaticMonitor:
                             "route": result["route"],
                             "candidates": result["candidates"],
                             "checkedAt": checked_at,
-                            "pollSeconds": self.interval_for(ticker),
+                            "pollSeconds": result["nextPollSeconds"],
                             "error": monitor.public_error(result["error"]),
                         }
                     if changed:

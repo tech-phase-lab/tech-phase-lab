@@ -19,7 +19,7 @@ type LiveState = {
   error: "not-configured" | "monitor-unavailable" | null;
 };
 
-export function useLiveIntake(initialSnapshot: IntakeSnapshot, intervalMs = 10_000) {
+export function useLiveIntake(initialSnapshot: IntakeSnapshot, intervalMs = 5_000) {
   const [state, setState] = useState<LiveState>({ snapshot: initialSnapshot, mode: "snapshot", monitor: null, error: null });
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import importlib.util
 from pathlib import Path
 import tempfile
 import unittest
+from urllib.error import HTTPError
 
 spec = importlib.util.spec_from_file_location("intake", Path(__file__).resolve().parents[1] / "scripts/research/monitor.py")
 m = importlib.util.module_from_spec(spec)
@@ -123,6 +124,31 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(report["events"][0]["url"], new_url)
         self.assertEqual(report["events"][0]["title"], "Official release")
         self.assertNotIn("reviewer", report["events"][0])
+
+    def test_conditional_fetch_reuses_cached_body_on_not_modified(self):
+        url = m.INDEXES["NBIS"]
+        m._FETCH_CACHE[url] = {
+            "content": b"cached-index",
+            "content_type": "text/html",
+            "etag": '"revision-1"',
+            "last_modified": "Fri, 19 Sep 2026 00:00:00 GMT",
+        }
+        original = m.build_opener
+
+        class NotModified:
+            def open(self, request, timeout):
+                self.request = request
+                raise HTTPError(request.full_url, 304, "Not Modified", {}, None)
+
+        opener = NotModified()
+        m.build_opener = lambda *_: opener
+        try:
+            content, content_type = m.fetch(url, "NBIS")
+        finally:
+            m.build_opener = original
+            m._FETCH_CACHE.pop(url, None)
+        self.assertEqual((content, content_type), (b"cached-index", "text/html"))
+        self.assertEqual(opener.request.headers["If-none-match"], '"revision-1"')
 
     def test_external_links_and_redirect_targets_are_blocked(self):
         for url in ["http://nebius.com/newsroom/a", "https://nebius.com.evil.test/a", "https://x:secret@nebius.com/a", "https://nebius.com:8443/a", "https://127.0.0.1/a"]:
