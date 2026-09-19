@@ -95,7 +95,7 @@ export default function ResearchDashboard({ events }: { events: ResearchEvent[] 
         <nav aria-label={t("リサーチメニュー", "Research navigation")}>
           <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => setTab("changes")}><span aria-hidden="true">▤</span>{t("変化を追う", "What changed")}</button>
           <button aria-current={tab === "metrics" ? "page" : undefined} onClick={() => setTab("metrics")}><span aria-hidden="true">▥</span>{t("決算・指標", "Financial metrics")}</button>
-          <button aria-current={tab === "saved" ? "page" : undefined} onClick={() => setTab("saved")}><Bookmark />{t("保存したリサーチ", "Saved research")}<small>{saved.filter((id) => events.some((event) => event.id === id)).length}</small></button>
+          <button aria-current={tab === "saved" ? "page" : undefined} onClick={() => setTab("saved")}><Bookmark />{t("保存した記事", "Saved research")}<small>{saved.filter((id) => events.some((event) => event.id === id)).length}</small></button>
         </nav>
         <div className={styles.coverage}>
           <p className={styles.navLabel}>{t("今回の検証対象", "IN THIS REVIEW")}</p>
@@ -120,7 +120,7 @@ export default function ResearchDashboard({ events }: { events: ResearchEvent[] 
 
         <section className={styles.workspace}>
           <div className={styles.toolbar}>
-            <div className={styles.sectionTitle}><h2>{tab === "metrics" ? t("指標一覧", "Metrics") : tab === "saved" ? t("保存したリサーチ", "Saved research") : "WHAT CHANGED?"}</h2><span>{tab === "metrics" ? allMetrics.length : filtered.length}</span></div>
+            <div className={styles.sectionTitle}><h2>{tab === "metrics" ? t("指標一覧", "Metrics") : tab === "saved" ? t("保存した記事", "Saved research") : "WHAT CHANGED?"}</h2><span>{tab === "metrics" ? allMetrics.length : filtered.length}</span></div>
             <label className={styles.search}><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input aria-label={t("銘柄・キーワードで検索", "Search ticker or keyword")} placeholder={t("銘柄・キーワードを検索", "Search ticker or keyword")} value={query} onChange={(e) => setQuery(e.target.value)} /></label>
           </div>
           <div className={styles.filters}>
