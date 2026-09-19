@@ -87,10 +87,21 @@ def source_configuration(url, ticker):
     return {}
 
 
-def fetch(url, ticker):
+def http_validator(value):
+    """Keep only bounded single-line HTTP validators safe to reuse as headers."""
+    if not isinstance(value, str):
+        return None
+    value = value.strip()
+    if not value or len(value) > 1024 or "\r" in value or "\n" in value:
+        return None
+    return value
+
+
+def fetch(url, ticker, validators=None, include_metadata=False):
     url = safe_url(url, ticker)
     with _FETCH_CACHE_LOCK:
         cached = _FETCH_CACHE.get(url)
+    conditional = cached or validators or {}
     headers = {
         "User-Agent": os.environ.get("RESEARCH_USER_AGENT", "TechPhaseResearch-SourceCheck/0.1"),
         "Accept": "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf",
@@ -101,10 +112,12 @@ def fetch(url, ticker):
     if request_body is not None:
         data = json.dumps(request_body, separators=(",", ":")).encode()
         headers["Content-Type"] = "application/json"
-    if cached and cached.get("etag"):
-        headers["If-None-Match"] = cached["etag"]
-    if cached and cached.get("last_modified"):
-        headers["If-Modified-Since"] = cached["last_modified"]
+    etag = http_validator(conditional.get("etag"))
+    last_modified = http_validator(conditional.get("last_modified"))
+    if etag:
+        headers["If-None-Match"] = etag
+    if last_modified:
+        headers["If-Modified-Since"] = last_modified
     req = Request(url, headers=headers, data=data, method="POST" if data is not None else "GET")
     timeout = PROVIDERS[ticker].get("requestTimeoutSeconds", 20) if url == INDEXES[ticker] else 20
     if os.environ.get("RESEARCH_REQUEST_TIMEOUT_SECONDS"):
@@ -113,7 +126,21 @@ def fetch(url, ticker):
         response = build_opener(Redirects(ticker)).open(req, timeout=timeout)
     except HTTPError as exc:
         if exc.code == 304 and cached:
+            if include_metadata:
+                return {
+                    "content": cached["content"], "contentType": cached["content_type"],
+                    "etag": cached.get("etag"), "lastModified": cached.get("last_modified"),
+                    "notModified": False,
+                }
             return cached["content"], cached["content_type"]
+        if exc.code == 304 and include_metadata and (etag or last_modified):
+            error_headers = exc.headers or {}
+            return {
+                "content": None, "contentType": None,
+                "etag": http_validator(error_headers.get("ETag")) or etag,
+                "lastModified": http_validator(error_headers.get("Last-Modified")) or last_modified,
+                "notModified": True,
+            }
         raise
     with response:
         content_type = response.headers.get_content_type()
@@ -128,14 +155,25 @@ def fetch(url, ticker):
             title = re.search(br"<title[^>]*>(.*?)</title>", content, re.I | re.S)
             if title and re.search(br"access denied|just a moment|page not found|403 forbidden", title.group(1), re.I):
                 raise ValueError("Source returned an error or verification page")
+        response_etag = http_validator(response.headers.get("ETag"))
+        response_last_modified = http_validator(response.headers.get("Last-Modified"))
         with _FETCH_CACHE_LOCK:
             _FETCH_CACHE[url] = {
                 "content": content,
                 "content_type": content_type,
-                "etag": response.headers.get("ETag"),
-                "last_modified": response.headers.get("Last-Modified"),
+                "etag": response_etag,
+                "last_modified": response_last_modified,
+            }
+        if include_metadata:
+            return {
+                "content": content, "contentType": content_type,
+                "etag": response_etag, "lastModified": response_last_modified,
+                "notModified": False,
             }
         return content, content_type
+
+
+fetch.supports_persistent_validators = True
 
 
 class Links(HTMLParser):
@@ -437,6 +475,8 @@ def connect(path):
         "fetch_failures": "INTEGER NOT NULL DEFAULT 0",
         "next_fetch_at": "TEXT",
         "source_mode": "TEXT NOT NULL DEFAULT 'remote'",
+        "response_etag": "TEXT",
+        "response_last_modified": "TEXT",
     }
     for column, declaration in migrations.items():
         if column not in source_columns:
@@ -618,7 +658,8 @@ def snapshot(db):
         runs = [dict(r) for r in db.execute("SELECT id,ticker,at,status,candidates,error,index_url FROM discovery_runs ORDER BY id DESC")]
         events = [dict(r) for r in db.execute("""
           SELECT e.id,e.url,e.ticker,e.detected_at,s.title,s.published_on,
-                 s.fetched_at AS body_fetched_at
+                 COALESCE((SELECT MIN(h.at) FROM history h
+                           WHERE h.url=s.url AND h.kind='first-fetch'),s.fetched_at) AS body_fetched_at
           FROM release_events e JOIN sources s ON s.url=e.url
           ORDER BY e.id DESC LIMIT 200
         """)]
@@ -918,7 +959,25 @@ def write_snapshot(db, output):
 
 def collect_source(row, transport=fetch):
     """Fetch and extract one source without mutating SQLite, safe for worker threads."""
-    content, content_type = transport(row["url"], row["ticker"])
+    if getattr(transport, "supports_persistent_validators", False):
+        response = transport(
+            row["url"], row["ticker"],
+            validators={
+                "etag": row["response_etag"],
+                "last_modified": row["response_last_modified"],
+            },
+            include_metadata=True,
+        )
+        if response["notModified"]:
+            return {
+                "notModified": True, "responseEtag": response["etag"],
+                "responseLastModified": response["lastModified"],
+            }
+        content, content_type = response["content"], response["contentType"]
+        response_etag, response_last_modified = response["etag"], response["lastModified"]
+    else:
+        content, content_type = transport(row["url"], row["ticker"])
+        response_etag = response_last_modified = None
     extracted = extract_text(content, content_type)
     return {
         "sha256": hashlib.sha256(content).hexdigest(),
@@ -926,6 +985,8 @@ def collect_source(row, transport=fetch):
         "contentBytes": len(content),
         "extractedText": extracted,
         "extractedChars": len(extracted),
+        "responseEtag": response_etag,
+        "responseLastModified": response_last_modified,
     }
 
 
@@ -936,7 +997,10 @@ def save_source_check(db, row, result):
         current = db.execute("SELECT * FROM sources WHERE url=?", (row["url"],)).fetchone()
         if not current:
             raise ValueError("Source disappeared before its fetch result was saved")
-        changed = result["sha256"] != current["sha256"]
+        not_modified = bool(result.get("notModified"))
+        if not_modified and not current["sha256"]:
+            raise ValueError("Not-modified response has no stored source body")
+        changed = False if not_modified else result["sha256"] != current["sha256"]
         recheck_seconds = successful_recheck_seconds(
             db, row["url"], changed, bool(current["sha256"]), checked_at
         )
@@ -952,19 +1016,36 @@ def save_source_check(db, row, result):
                 "UPDATE briefs SET status='stale',reviewed_at=NULL,reviewer=NULL,review_reason=NULL WHERE url=?",
                 (row["url"],),
             )
-        db.execute("""
+        if not_modified:
+            db.execute("""
+              UPDATE sources
+              SET checked_at=?,error=NULL,fetch_failures=0,next_fetch_at=?,
+                  response_etag=COALESCE(?,response_etag),
+                  response_last_modified=COALESCE(?,response_last_modified)
+              WHERE url=?
+            """, (
+                checked_at, next_fetch_at, http_validator(result.get("responseEtag")),
+                http_validator(result.get("responseLastModified")), row["url"],
+            ))
+        else:
+            db.execute("""
           UPDATE sources
-          SET sha256=?,checked_at=?,fetched_at=?,error=NULL,status=?,content_type=?,content_bytes=?,
-              extracted_text=?,extracted_chars=?,fetch_failures=0,next_fetch_at=?
+          SET sha256=?,checked_at=?,fetched_at=COALESCE(fetched_at,?),error=NULL,status=?,
+              content_type=?,content_bytes=?,extracted_text=?,extracted_chars=?,fetch_failures=0,
+              next_fetch_at=?,response_etag=?,response_last_modified=?
           WHERE url=?
         """, (
             result["sha256"], checked_at, checked_at, "pending" if changed else current["status"],
             result["contentType"], result["contentBytes"], result["extractedText"],
-            result["extractedChars"], next_fetch_at, row["url"],
+            result["extractedChars"], next_fetch_at, http_validator(result.get("responseEtag")),
+            http_validator(result.get("responseLastModified")), row["url"],
         ))
-    status = "first-fetched" if not current["sha256"] else ("changed" if changed else "unchanged")
+    status = "not-modified" if not_modified else (
+        "first-fetched" if not current["sha256"] else ("changed" if changed else "unchanged")
+    )
     return {
-        "url": row["url"], "status": status, "extractedChars": result["extractedChars"],
+        "url": row["url"], "status": status,
+        "extractedChars": current["extracted_chars"] if not_modified else result["extractedChars"],
         "recheckSeconds": recheck_seconds,
     }
 

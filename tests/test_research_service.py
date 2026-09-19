@@ -65,6 +65,45 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertNotIn("Evidence body.", exported)
         self.assertEqual(app.public_state()["sourceChecks"], 1)
 
+    def test_not_modified_body_check_does_not_reextract_or_requeue_generation(self):
+        url = "https://nebius.com/newsroom/new-release"
+        with monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            monitor.save_source_check(db, row, {
+                "sha256": "e" * 64, "contentType": "text/html", "contentBytes": 70,
+                "extractedText": "Existing evidence remains current.", "extractedChars": 34,
+                "responseEtag": '"revision-1"', "responseLastModified": None,
+            })
+            db.execute("UPDATE sources SET next_fetch_at=NULL WHERE url=?", (url,))
+            db.commit()
+
+        def not_modified(_url, _ticker, validators=None, include_metadata=False):
+            self.assertEqual(validators["etag"], '"revision-1"')
+            self.assertTrue(include_metadata)
+            return {
+                "content": None, "contentType": None, "etag": '"revision-1"',
+                "lastModified": None, "notModified": True,
+            }
+
+        not_modified.supports_persistent_validators = True
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_batch = 1
+        original_fetch = monitor.fetch
+        monitor.fetch = not_modified
+        try:
+            with ThreadPoolExecutor(max_workers=1) as pool:
+                app.fetch_bodies(pool)
+        finally:
+            monitor.fetch = original_fetch
+        with monitor.connect(self.db_path) as db:
+            source = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            self.assertEqual(source["sha256"], "e" * 64)
+            self.assertEqual(source["extracted_text"], "Existing evidence remains current.")
+            self.assertEqual(db.execute(
+                "SELECT count(*) FROM brief_generation_jobs WHERE url=?", (url,)
+            ).fetchone()[0], 0)
+        self.assertEqual(app.public_state()["sourceNotModified"], 1)
+
     def test_verified_backup_updates_public_health_without_exposing_storage_details(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         app.backup_dir = Path(self.temp.name) / "backups"

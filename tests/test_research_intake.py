@@ -229,6 +229,13 @@ class IntakeTests(unittest.TestCase):
         measured = m.snapshot(self.db)["events"][0]
         self.assertIsNotNone(measured["body_fetched_at"])
         self.assertGreaterEqual(measured["detection_to_body_ms"], 0)
+        first_fetched_at = measured["body_fetched_at"]
+        current = self.db.execute("SELECT * FROM sources WHERE url=?", (new_url,)).fetchone()
+        m.save_source_check(self.db, current, {
+            "sha256": "c" * 64, "contentType": "text/html", "contentBytes": 40,
+            "extractedText": "Official evidence body.", "extractedChars": 23,
+        })
+        self.assertEqual(m.snapshot(self.db)["events"][0]["body_fetched_at"], first_fetched_at)
 
     def test_conditional_fetch_reuses_cached_body_on_not_modified(self):
         url = m.INDEXES["NBIS"]
@@ -254,6 +261,50 @@ class IntakeTests(unittest.TestCase):
             m._FETCH_CACHE.pop(url, None)
         self.assertEqual((content, content_type), (b"cached-index", "text/html"))
         self.assertEqual(opener.request.headers["If-none-match"], '"revision-1"')
+
+    def test_persisted_validator_survives_restart_and_304_preserves_evidence(self):
+        m.save_source_check(self.db, self.row(), {
+            "sha256": "d" * 64, "contentType": "text/html", "contentBytes": 40,
+            "extractedText": "Persisted official evidence.", "extractedChars": 28,
+            "responseEtag": '"article-revision-1"',
+            "responseLastModified": "Fri, 19 Sep 2026 00:00:00 GMT",
+        })
+        before = self.row()
+        original_fetch_time = before["fetched_at"]
+        original_history = self.db.execute("SELECT count(*) FROM history").fetchone()[0]
+        m._FETCH_CACHE.pop(URL, None)
+        original = m.build_opener
+
+        class PersistedNotModified:
+            def open(self, request, timeout):
+                self.request = request
+                raise HTTPError(request.full_url, 304, "Not Modified", {}, None)
+
+        opener = PersistedNotModified()
+        m.build_opener = lambda *_: opener
+        try:
+            result = m.collect_source(before)
+        finally:
+            m.build_opener = original
+        self.assertTrue(result["notModified"])
+        self.assertEqual(opener.request.headers["If-none-match"], '"article-revision-1"')
+        self.assertEqual(
+            opener.request.headers["If-modified-since"], "Fri, 19 Sep 2026 00:00:00 GMT"
+        )
+        saved = m.save_source_check(self.db, before, result)
+        after = self.row()
+        self.assertEqual(saved["status"], "not-modified")
+        self.assertEqual(after["sha256"], "d" * 64)
+        self.assertEqual(after["extracted_text"], "Persisted official evidence.")
+        self.assertEqual(after["fetched_at"], original_fetch_time)
+        self.assertEqual(self.db.execute("SELECT count(*) FROM history").fetchone()[0], original_history)
+        public = m.snapshot(self.db)["sources"][0]
+        self.assertNotIn("response_etag", public)
+        self.assertNotIn("response_last_modified", public)
+
+    def test_unsafe_http_validators_are_not_reused(self):
+        self.assertIsNone(m.http_validator("ok\r\nInjected: value"))
+        self.assertIsNone(m.http_validator("x" * 1025))
 
     def test_external_links_and_redirect_targets_are_blocked(self):
         for url in ["http://nebius.com/newsroom/a", "https://nebius.com.evil.test/a", "https://x:secret@nebius.com/a", "https://nebius.com:8443/a", "https://127.0.0.1/a"]:

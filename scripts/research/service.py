@@ -86,6 +86,7 @@ class AutomaticMonitor:
             "newSources": 0,
             "sourceChecks": 0,
             "sourceFetchErrors": 0,
+            "sourceNotModified": 0,
             "pendingBodies": 0,
             "tickerCount": len(self.tickers),
             "generation": {
@@ -293,13 +294,17 @@ class AutomaticMonitor:
             except Exception as exc:
                 completed.append((row, None, exc))
         errors = 0
+        not_modified = 0
         with self.db_lock, monitor.connect(self.db_path) as db:
             for row, result, error in completed:
                 if error is None:
                     monitor.save_source_check(db, row, result)
-                    monitor.activate_generation_job(
-                        db, row["url"], brief_generator.token_reservation(result["extractedText"])
-                    )
+                    if result.get("notModified"):
+                        not_modified += 1
+                    else:
+                        monitor.activate_generation_job(
+                            db, row["url"], brief_generator.token_reservation(result["extractedText"])
+                        )
                 else:
                     monitor.save_source_error(db, row, error)
                     errors += 1
@@ -307,6 +312,7 @@ class AutomaticMonitor:
         with self.state_lock:
             self.state["sourceChecks"] += len(completed)
             self.state["sourceFetchErrors"] += errors
+            self.state["sourceNotModified"] += not_modified
             self.state["pendingBodies"] = max(0, pending - len(completed))
 
     def process_generation_job(self):
