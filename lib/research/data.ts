@@ -5,7 +5,7 @@ export type Copy = Record<Language, string>;
 export type ResearchEvent = {
   id: string; ticker: string; company: string;
   category: "cloud" | "memory";
-  kind: "partnership" | "earnings" | "capacity";
+  kind: "partnership" | "earnings" | "capacity" | "financing";
   publishedOn: string; reviewedOn: string;
   title: Copy; summary: Copy; change: Copy; interpretation: Copy;
   facts: { text: Copy; sourceIds: string[] }[];
@@ -23,7 +23,7 @@ const nebiusRelease: Source = {
 const nebiusLetter: Source = {
   id: "nbis-letter", publisher: "Nebius IR", title: "Q2 2026 shareholder letter",
   url: "https://assets.nebius.com/assets/a6ecfd85-a6cb-4967-8ef7-9a25bd261f9c/SHLQ226.pdf?cache-buster=2026-08-12T11:54:46.695Z",
-  publishedOn: "2026-08-12", location: "pp. 2–4 · Capacity / Financial model",
+  publishedOn: "2026-08-12", location: "pp. 2, 5, 9–11 · Capacity / Financial update",
 };
 const micronSource: Source = {
   id: "mu-q3", publisher: "Micron IR", title: "Fiscal Q3 2026 results",
@@ -108,6 +108,40 @@ export const events: ResearchEvent[] = [
       metric("gross-margin", 74.4, { unit: "percent", currency: null, scope: "Micron", period: "FQ2 2026", periodEnd: "2026-02-26", sourceId: "mu-q3" }),
     ],
   },
+  {
+    id: "nbis-funding-q2-2026", ticker: "NBIS", company: "Nebius", category: "cloud", kind: "financing",
+    publishedOn: "2026-08-12", reviewedOn: "2026-09-19",
+    title: copy("資金調達を、売上成長と分けて追う", "Track equity funding alongside growth"),
+    summary: copy("Q2にATMプログラムで1,270万株を売却。調達資金と1株当たりの持分への影響を確認する。", "12.7 million shares were sold through the ATM program in Q2. Track both funding and ownership dilution."),
+    change: copy("四半期中の株式売却による資金調達を開示。", "The company disclosed equity funding during the quarter."),
+    facts: [
+      { text: copy("6月末までにATMで1,270万株を売却し、総額約$2.8Bを調達。", "Through June 30, ATM sales totaled 12.7 million shares and approximately $2.8B in gross proceeds."), sourceIds: ["nbis-letter"] },
+      { text: copy("同プログラムで売却可能な残りの枠は1,230万株。", "The program had capacity for a further 12.3 million shares."), sourceIds: ["nbis-letter"] },
+    ],
+    interpretation: copy("設備拡張の資金確保と、既存株主の持分希薄化を同時に評価する。", "Assess expansion funding and dilution together."),
+    unknown: copy("残りの枠が今後すべて使われるか、この資料では確定しない。", "The remaining authorization does not establish future sales."),
+    next: copy("追加の株式売却、発行済株式数、設備投資額を次の開示で照合。", "Reconcile subsequent share sales, shares outstanding, and capital spending."),
+    sources: [nebiusLetter], metrics: [],
+  },
+  {
+    id: "nbis-q1-2026", ticker: "NBIS", company: "Nebius", category: "cloud", kind: "earnings",
+    publishedOn: "2026-05-13", reviewedOn: "2026-09-19",
+    title: copy("Q1を比較の起点にする", "Establish the Q1 comparison baseline"),
+    summary: copy("売上$399.0M、営業損失$128.0M。投資評価益を含む純利益とは分けて確認。", "Revenue was $399.0M and operating loss $128.0M. Distinguish operations from investment revaluation gains."),
+    change: copy("次の決算と照合するため、Q1の実績を記録。", "Record the Q1 actuals for comparison with the next release."),
+    facts: [
+      { text: copy("グループ売上$399.0M、営業損失$128.0M。", "Group revenue was $399.0M and operating loss was $128.0M."), sourceIds: ["nbis-q1"] },
+      { text: copy("継続事業純利益$621.2Mには、投資有価証券の評価益$780.6Mが含まれる。", "Net income from continuing operations of $621.2M included $780.6M in investment revaluation gains."), sourceIds: ["nbis-q1"] },
+    ],
+    interpretation: copy("純利益の黒字だけで本業の黒字化と判断しない。", "Positive net income alone does not establish operating profitability."),
+    unknown: copy("投資評価益が次の四半期も続くとは限らない。", "Investment gains may not recur in the next quarter."),
+    next: copy("Q2の売上、営業損失、資金需要を同じ定義で確認。", "Compare Q2 revenue, operating loss, and funding needs on the same basis."),
+    sources: [
+      { id: "nbis-q1", publisher: "Nebius IR", title: "Q1 2026 results", publishedOn: "2026-05-13", location: "pp. 1–2, 7 · Results / Cash flow / Operations", url: "https://assets.nebius.com/assets/0de223a2-f519-408d-8c7e-04f2fef342a9/Financial%20results_Q1%202026.pdf?cache-buster=2026-05-13T10:36:29.509Z" },
+      { id: "nbis-q1-letter", publisher: "Nebius IR", title: "Q1 2026 shareholder letter", publishedOn: "2026-05-13", location: "pp. 3, 6, 9 · Capacity / ARR", url: "https://assets.nebius.com/assets/aa1bc2e6-df83-40cd-a6a2-95e7cda3d16c/Nebius%20SHL_Q1%202026.pdf?cache-buster=2026-05-13T14:00:35.352Z" },
+    ],
+    metrics: [metric("revenue", 399, { period: "Q1 2026", periodEnd: "2026-03-31", sourceId: "nbis-q1" })],
+  },
 ];
 
 export const metricNames: Record<string, Copy> = {
@@ -116,4 +150,8 @@ export const metricNames: Record<string, Copy> = {
   "net-income-continuing": copy("継続事業の純損益", "Net income · continuing operations"),
   "contracted-power": copy("契約電力の目標", "Contracted-power target"),
   "gross-margin": copy("粗利益率", "Gross margin"),
+  "operating-income": copy("営業損益", "Operating income / loss"),
+  "capital-spending": copy("設備・無形資産への支出", "Property, equipment & intangible purchases"),
+  "net-capex": copy("設備投資（純額）", "Capital expenditures, net"),
+  "adjusted-fcf": copy("調整後フリーキャッシュフロー", "Adjusted free cash flow"),
 };

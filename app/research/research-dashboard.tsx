@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import type { Language, ResearchEvent } from "@/lib/research/data";
 import { metricNames } from "@/lib/research/data";
-import { compareMetrics, type Metric } from "@/lib/research/quality";
+import { compareMetrics } from "@/lib/research/quality";
+import { valueLabel, dateLabel } from "@/lib/research/presentation";
+import { useResearchLanguage } from "./use-research-language";
 import styles from "./research.module.css";
 
 const storageKey = "tech-phase:research-saved:v1";
@@ -27,18 +29,8 @@ function Arrow() { return <span aria-hidden="true">↗</span>; }
 function Bookmark({ filled = false }: { filled?: boolean }) {
   return <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.6"><path d="M6 3h12v18l-6-4-6 4V3Z" /></svg>;
 }
-function valueLabel(metric: Metric) {
-  if (metric.unit === "percent") return `${metric.value.toFixed(1)}%`;
-  if (metric.unit === "GW") return `${metric.value} GW`;
-  if (metric.unit === "million") return `${metric.value < 0 ? "-" : ""}$${Math.abs(metric.value).toLocaleString("en-US", { maximumFractionDigits: 1 })}M`;
-  return `$${metric.value.toFixed(2)}`;
-}
-function dateLabel(value: string, lang: Language) {
-  return new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
-}
-
 export default function ResearchDashboard({ events }: { events: ResearchEvent[] }) {
-  const [lang, setLang] = useState<Language>("ja");
+  const [lang, setLang] = useResearchLanguage();
   const [tab, setTab] = useState<"changes" | "metrics" | "saved">("changes");
   const [ticker, setTicker] = useState("all");
   const [category, setCategory] = useState("all");
@@ -48,7 +40,6 @@ export default function ResearchDashboard({ events }: { events: ResearchEvent[] 
   const detailRef = useRef<HTMLElement>(null);
   const saved = useSaved();
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
-  useEffect(() => { const before = document.documentElement.lang; document.documentElement.lang = lang; return () => { document.documentElement.lang = before; }; }, [lang]);
 
   const filtered = events.filter((event) => {
     const search = [event.ticker, event.company, event.title.ja, event.title.en, event.summary.ja, event.summary.en].join(" ").toLowerCase();
@@ -57,7 +48,7 @@ export default function ResearchDashboard({ events }: { events: ResearchEvent[] 
   });
   const active = filtered.find((event) => event.id === activeId) ?? filtered[0];
   const allMetrics = filtered.flatMap((event) => event.metrics.map((metric) => ({ metric, event })));
-  const kinds = { partnership: t("提携", "Partnership"), earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity") };
+  const kinds = { partnership: t("提携", "Partnership"), earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding") };
   function toggleSaved(id: string) {
     try {
       const next = saved.includes(id) ? saved.filter((value) => value !== id) : [...saved, id];
@@ -81,7 +72,7 @@ export default function ResearchDashboard({ events }: { events: ResearchEvent[] 
         <span className={styles.mark}>TP<span /></span><span>TECH PHASE<small>RESEARCH</small></span>
       </Link>
       <div className={styles.headerRight}>
-        <span className={styles.edition}>RESEARCH PREVIEW <span>01</span></span>
+        <span className={styles.edition}>RESEARCH PREVIEW <span>02</span></span>
         <div className={styles.languages} aria-label={t("言語", "Language")}>
           <button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button>
           <button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button>
@@ -108,13 +99,13 @@ export default function ResearchDashboard({ events }: { events: ResearchEvent[] 
       </aside>
 
       <main id="research-main" className={styles.main}>
-        <div className={styles.previewNotice}><span>{t("検証版", "PREVIEW")}</span><p>{t("2026年6〜9月の公式発表を使った過去事例です。自動更新・リアルタイム配信は未接続。", "Historical examples from June–September 2026. Automatic updates and live delivery are not connected.")}</p></div>
+        <div className={styles.previewNotice}><span>{t("検証版", "PREVIEW")}</span><p>{t("2026年5〜9月の公式発表を使った過去事例です。自動更新・リアルタイム配信は未接続。", "Historical examples from May–September 2026. Automatic updates and live delivery are not connected.")}</p></div>
 
         <div className={styles.heading}><div><p className={styles.eyebrow}>THE RESEARCH DESK</p><h1>{tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : t("変化を捉え、根拠まで。", "See the change. Follow the evidence.")}</h1><p>{t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p></div><div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>2026.09.19</strong></div></div>
 
         <section className={styles.overview} aria-label={t("検証内容", "Review overview")}>
-          <div><span className={styles.cardLabel}>{t("検証レポート", "RESEARCH NOTES")}</span><strong>04<span>{t("件", "notes")}</span></strong><p>{t("公式発表にリンク", "Linked to primary sources")}</p></div>
-          <div><span className={styles.cardLabel}>{t("対象銘柄", "COMPANIES")}</span><strong>02<span>MU / NBIS</span></strong><p>{t("半導体・AIクラウド", "Memory & AI cloud")}</p></div>
+          <div><span className={styles.cardLabel}>{t("検証レポート", "RESEARCH NOTES")}</span><strong>{String(events.length).padStart(2, "0")}<span>{t("件", "notes")}</span></strong><p>{t("公式発表にリンク", "Linked to primary sources")}</p></div>
+          <div><span className={styles.cardLabel}>{t("銘柄の変化を追う", "COMPANY RESEARCH")}</span><div className={styles.companyLinks}>{["NBIS", "MU"].map((symbol) => <Link key={symbol} href={`/research/companies/${symbol}`} aria-label={t(`${symbol}の銘柄ページ`, `${symbol} company research`)}>{symbol}<span aria-hidden="true">→</span></Link>)}</div><p>{t("履歴・数値比較・次の確認点", "History, comparisons & checkpoints")}</p></div>
           <div className={styles.quoteStatus}><span className={styles.cardLabel}>{t("株価データ", "MARKET DATA")}</span><strong>—<span>{t("配信準備中", "Not connected")}</span></strong><p>{t("契約確認後に価格と遅延を表示", "Prices and feed delay follow licensing")}</p></div>
         </section>
 
@@ -144,7 +135,7 @@ export default function ResearchDashboard({ events }: { events: ResearchEvent[] 
 
             {active && <article ref={detailRef} tabIndex={-1} className={styles.detail} aria-label={t("リサーチ詳細", "Research detail")}>
               <div className={styles.detailTop}><span className={styles.eyebrow}>RESEARCH NOTE</span><span className={styles.version}>v1 · {t("過去事例", "Historical")}</span></div>
-              <div className={styles.detailCompany}><span className={styles.detailTicker}>{active.ticker}</span><span>{active.company}</span></div>
+              <div className={styles.detailCompany}><Link className={styles.detailTicker} href={`/research/companies/${active.ticker}`} aria-label={t(`${active.ticker}の銘柄ページ`, `${active.ticker} company research`)}>{active.ticker} ↗</Link><span>{active.company}</span></div>
               <h2>{active.title[lang]}</h2>
               <div className={styles.change}><span>{t("今回の変化", "WHAT CHANGED")}</span><p>{active.change[lang]}</p></div>
               {active.metrics.length > 0 && <div className={styles.metricStrip}>{active.metrics.slice(0, 2).map((metric) => {

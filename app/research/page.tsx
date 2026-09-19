@@ -14,5 +14,5 @@ export default function ResearchPage() {
     const issues = evidenceIssues({ ...event, metrics: [...event.metrics, ...(event.previous ?? [])] });
     if (issues.length) throw new Error(`Invalid research record ${event.id}: ${issues.join(", ")}`);
   }
-  return <ResearchDashboard events={events} />;
+  return <ResearchDashboard events={events.toSorted((a, b) => b.publishedOn.localeCompare(a.publishedOn) || a.id.localeCompare(b.id))} />;
 }
