@@ -80,9 +80,14 @@ class AutomaticMonitor:
         next_due = {ticker: 0.0 for ticker in self.tickers}
         signatures = {}
         known = {}
+        baseline_ready = {}
         with self.db_lock, monitor.connect(self.db_path) as db:
             for ticker in self.tickers:
                 known[ticker] = {row[0] for row in db.execute("SELECT url FROM sources WHERE ticker=?", (ticker,))}
+                baseline_ready[ticker] = db.execute(
+                    "SELECT 1 FROM discovery_runs WHERE ticker=? AND status IN ('ok','fallback') LIMIT 1",
+                    (ticker,),
+                ).fetchone() is not None
             monitor.write_snapshot(db, self.snapshot_path)
 
         with ThreadPoolExecutor(max_workers=self.workers, thread_name_prefix="source") as pool:
@@ -123,7 +128,11 @@ class AutomaticMonitor:
                         if signatures.get(ticker) != signature or new_urls:
                             inserted = monitor.save_discovery(db, ticker, result, links)
                             known[ticker].update(inserted)
-                            new_count += len(inserted)
+                            if baseline_ready[ticker]:
+                                monitor.add_release_events(db, ticker, inserted)
+                                new_count += len(inserted)
+                            elif result["status"] in {"ok", "fallback"}:
+                                baseline_ready[ticker] = True
                             changed = True
                         signatures[ticker] = signature
                         company_states[ticker] = {

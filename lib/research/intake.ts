@@ -14,6 +14,7 @@ export type IntakeSource = {
 };
 export type IntakeSnapshot = {
   schemaVersion: number; generatedAt: string; sources: IntakeSource[];
+  events?: { id: number; url: string; ticker: string; detected_at: string; title: string | null; published_on: string | null }[];
   history: { id: number; url: string; at: string; kind: string; sha256: string | null }[];
   discoveryRuns: { id: number; ticker: string; at: string; status: "ok" | "fallback" | "degraded"; candidates: number; error: string | null; index_url: string | null }[];
 };
@@ -73,6 +74,9 @@ export function snapshotIssues(data: IntakeSnapshot) {
     for (const time of [s.discovered_at, s.checked_at]) if (time && (!Number.isFinite(Date.parse(time)) || Date.parse(time) > Date.parse(data.generatedAt))) issues.push("invalid-source-time");
   }
   for (const h of data.history) if (!urls.has(h.url) || !Number.isFinite(Date.parse(h.at))) issues.push("invalid-history");
+  for (const event of data.events ?? []) {
+    if (!urls.has(event.url) || !providerByTicker[event.ticker] || !Number.isFinite(Date.parse(event.detected_at))) issues.push("invalid-event");
+  }
   return issues;
 }
 

@@ -114,6 +114,16 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(len(m.save_discovery(self.db, "NBIS", result, links)), 1)
         self.assertEqual(len(m.save_discovery(self.db, "NBIS", result, links)), 0)
 
+    def test_release_events_are_deduplicated_and_exposed_without_private_fields(self):
+        new_url = "https://nebius.com/newsroom/automatic-event"
+        m.add_source(self.db, "NBIS", new_url, title="Official release")
+        m.add_release_events(self.db, "NBIS", [new_url, new_url])
+        report = m.snapshot(self.db)
+        self.assertEqual(len(report["events"]), 1)
+        self.assertEqual(report["events"][0]["url"], new_url)
+        self.assertEqual(report["events"][0]["title"], "Official release")
+        self.assertNotIn("reviewer", report["events"][0])
+
     def test_external_links_and_redirect_targets_are_blocked(self):
         for url in ["http://nebius.com/newsroom/a", "https://nebius.com.evil.test/a", "https://x:secret@nebius.com/a", "https://nebius.com:8443/a", "https://127.0.0.1/a"]:
             with self.assertRaises(ValueError):

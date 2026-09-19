@@ -26,6 +26,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
   const snapshot = live.snapshot;
   const counts = intakeCounts(snapshot.sources);
   const coverage = coverageCounts(snapshot);
+  const events = snapshot.events ?? [];
   const visible = filterSources(snapshot.sources, query, ticker, state, review, titles, sector);
   const selectedProviders = providers.filter(p => (sector === "all" || p.sector === sector) && (ticker === "all" || ticker === p.ticker));
   const displayed = visible.slice((page - 1) * 20, page * 20);
@@ -39,6 +40,15 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
     <main id="intake-main" className={styles.main}>
       <div className={styles.heading}><div><p className={styles.eyebrow}>AI COMPANY COVERAGE</p><h1>AI関連銘柄の資料・取得状況</h1><p>公式ニュース・RSSから、原文と照合する資料を選びます。</p></div><Link href="/research">リサーチ画面へ ↗</Link></div>
       <aside className={styles.notice}><strong>{live.mode === "automatic" ? "公式発表を自動監視しています" : "自動監視サービスの接続待ち"}</strong><span>{live.mode === "automatic" ? `最終巡回：${time(live.monitor?.lastCycleAt ?? null)} JST` : `保存記録の出力日時：${time(snapshot.generatedAt)} JST`}</span><p>{live.mode === "automatic" ? "新しい公式資料を検知すると、この画面へ自動反映します。取得と内容の確認・公開判断は分けて管理します。" : "現在は保存済み記録を表示しています。監視サービス接続後は10秒ごとに自動更新されます。"}</p></aside>
+      <section aria-labelledby="events-title" className={styles.queue}><div className={styles.sectionTitle}><h2 id="events-title">新着の公式発表</h2><span>初回取り込みを除く自動検知：{events.length}件</span></div>
+        <p className={styles.coverageNote}>監視開始前の過去資料は速報として扱いません。ここには監視開始後に新しく現れた公式URLだけを、検知時刻順で表示します。</p>
+        {events.length === 0 ? <div className={styles.empty}><h3>監視開始後の新着はまだありません</h3><p>常駐監視の接続後、新しい公式発表を検知すると自動で追加されます。</p></div> : <ul className={styles.sources}>{events.slice(0, 20).map(event => <li key={event.id}><article className={styles.source}>
+          <div className={styles.tags}><b>{event.ticker}</b><span className={styles.good}>公式URLを新規検知</span></div>
+          <h3>{event.title || title(event.url)}</h3>
+          <dl className={styles.dates}><div><dt>初回検知（JST）</dt><dd>{time(event.detected_at)}</dd></div><div><dt>発表日</dt><dd>{event.published_on ?? "原文で確認"}</dd></div></dl>
+          <div className={styles.sourceFooter}><a href={event.url} target="_blank" rel="noopener noreferrer">公式原文を開く ↗</a><span>要約前の確定情報</span></div>
+        </article></li>)}</ul>}
+      </section>
       <section aria-label="銘柄の対応状況" className={styles.stats}>
         {[["登録銘柄", coverage.registered], ["一覧取得に成功", coverage.discovered], ["一覧の確認が必要", coverage.needsCheck], ["一覧未検証", coverage.untested]].map(([label, count]) => <div key={label}><span>{label}</span><strong>{count}<small>銘柄</small></strong></div>)}
       </section>

@@ -178,6 +178,9 @@ def connect(path):
     CREATE TABLE IF NOT EXISTS discovery_runs (
       id INTEGER PRIMARY KEY, ticker TEXT NOT NULL, at TEXT NOT NULL,
       status TEXT NOT NULL, candidates INTEGER NOT NULL, error TEXT);
+    CREATE TABLE IF NOT EXISTS release_events (
+      id INTEGER PRIMARY KEY, url TEXT NOT NULL UNIQUE REFERENCES sources(url),
+      ticker TEXT NOT NULL, detected_at TEXT NOT NULL);
     """)
     if "index_url" not in {row[1] for row in db.execute("PRAGMA table_info(discovery_runs)")}:
         db.execute("ALTER TABLE discovery_runs ADD COLUMN index_url TEXT")
@@ -262,6 +265,17 @@ def save_discovery(db, ticker, result, links):
     return sorted(set(links) - before)
 
 
+def add_release_events(db, ticker, urls):
+    """Record newly observed URLs once; baseline imports should not call this."""
+    detected_at = now()
+    with db:
+        for url in urls:
+            db.execute(
+                "INSERT OR IGNORE INTO release_events(url,ticker,detected_at) VALUES(?,?,?)",
+                (safe_url(url, ticker), ticker, detected_at),
+            )
+
+
 def discover(db, ticker, transport=fetch):
     """Discover candidates, using an official fallback when the preferred route fails."""
     result, links = collect_discovery(ticker, transport=transport)
@@ -289,11 +303,16 @@ def snapshot(db):
         sources = [dict(r) for r in db.execute("SELECT url,ticker,title,published_on,discovered_at,checked_at,sha256,status,error FROM sources ORDER BY ticker,url")]
         history = [dict(r) for r in db.execute("SELECT id,url,at,kind,sha256 FROM history ORDER BY id DESC")]
         runs = [dict(r) for r in db.execute("SELECT id,ticker,at,status,candidates,error,index_url FROM discovery_runs ORDER BY id DESC")]
+        events = [dict(r) for r in db.execute("""
+          SELECT e.id,e.url,e.ticker,e.detected_at,s.title,s.published_on
+          FROM release_events e JOIN sources s ON s.url=e.url
+          ORDER BY e.id DESC LIMIT 200
+        """)]
     for row in sources + runs:
         row["error"] = public_error(row["error"])
     for row in sources:
         safe_url(row["url"], row["ticker"])
-    return {"schemaVersion": 1, "generatedAt": now(), "sources": sources, "history": history, "discoveryRuns": runs}
+    return {"schemaVersion": 1, "generatedAt": now(), "sources": sources, "history": history, "discoveryRuns": runs, "events": events}
 
 
 def write_snapshot(db, output):
