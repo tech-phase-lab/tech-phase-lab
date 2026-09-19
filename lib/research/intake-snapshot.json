@@ -1,0 +1,446 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-19T09:17:18.775+00:00",
+  "sources": [
+    {
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Accelerates-U-S--Investments-Pours-First-Concrete-at-New-York-Fab/default.aspx",
+      "ticker": "MU",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:11:08.023+00:00",
+      "checked_at": "2026-09-19T09:14:57.524+00:00",
+      "sha256": null,
+      "status": "pending",
+      "error": "http-403"
+    },
+    {
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Advances-Memory-Innovation-With-the-Worlds-First-Ultra-Dense-Module-for-Next-Generation-Servers/default.aspx",
+      "ticker": "MU",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:11:08.023+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Announces-Leadership-Appointments-to-Accelerate-Innovation-and-Growth/default.aspx",
+      "ticker": "MU",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:11:08.023+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Announces-Participation-in-Investor-Event-dafb80110/default.aspx",
+      "ticker": "MU",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:11:08.023+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Announces-Up-to-3-Billion-Strategic-Investment-to-Strengthen-U-S--Semiconductor-Ecosystem/default.aspx",
+      "ticker": "MU",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:11:08.024+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Appoints-Deirdre-Hanford-to-Lead-Micron-Research-Labs/default.aspx",
+      "ticker": "MU",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:11:08.024+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Opens-State-of-the-Art-Training-Center-in-Boise-to-Strengthen-Americas-Semiconductor-Workforce/default.aspx",
+      "ticker": "MU",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:11:08.024+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Strengthens-Automotive-Ecosystem-Supply-Through-Strategic-Customer-Agreements/default.aspx",
+      "ticker": "MU",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:11:08.024+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx",
+      "ticker": "MU",
+      "published_on": "2026-06-24",
+      "discovered_at": "2026-09-19T09:03:17.426+00:00",
+      "checked_at": "2026-09-19T09:04:08.529+00:00",
+      "sha256": null,
+      "status": "pending",
+      "error": "http-403"
+    },
+    {
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Technology-to-Report-Fiscal-Fourth-Quarter-Results-on-September-30-2026/default.aspx",
+      "ticker": "MU",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:11:08.024+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Unveils-Micron-Research-Labs-a-U-S--Based-Long-Horizon-Innovation-Hub-to-Shape-the-Future-of-Memory-and-AI/default.aspx",
+      "ticker": "MU",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:11:08.024+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Ventures-Launches-250-Million-Fund-to-Invest-in-the-Next-Generation-of-AI/default.aspx",
+      "ticker": "MU",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:11:08.025+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://assets.nebius.com/assets/0de223a2-f519-408d-8c7e-04f2fef342a9/Financial%20results_Q1%202026.pdf?cache-buster=2026-05-13T10:36:29.509Z",
+      "ticker": "NBIS",
+      "published_on": "2026-05-13",
+      "discovered_at": "2026-09-19T09:03:17.426+00:00",
+      "checked_at": "2026-09-19T09:03:35.351+00:00",
+      "sha256": "72d293b8d9c16dd33c6a12864a03dac391bbd52430d0619d69cae2951b83c7b9",
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://assets.nebius.com/assets/72a8c258-bbb7-4df7-ab9d-8698f6cb88fc/PR.pdf?cache-buster=2026-08-12T11:54:07.336Z",
+      "ticker": "NBIS",
+      "published_on": "2026-08-12",
+      "discovered_at": "2026-09-19T09:03:17.426+00:00",
+      "checked_at": "2026-09-19T09:03:45.438+00:00",
+      "sha256": "d3dd403297e2e1680317ba6597f79c35deb13d29188fc5647dcd132885510289",
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://assets.nebius.com/assets/a6ecfd85-a6cb-4967-8ef7-9a25bd261f9c/SHLQ226.pdf?cache-buster=2026-08-12T11:54:46.695Z",
+      "ticker": "NBIS",
+      "published_on": "2026-08-12",
+      "discovered_at": "2026-09-19T09:03:17.426+00:00",
+      "checked_at": "2026-09-19T09:03:53.620+00:00",
+      "sha256": "aec30236b7903532684ddf43fd5006ef89a945118366d767315434fd65b4dc29",
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://assets.nebius.com/assets/aa1bc2e6-df83-40cd-a6a2-95e7cda3d16c/Nebius%20SHL_Q1%202026.pdf?cache-buster=2026-05-13T14:00:35.352Z",
+      "ticker": "NBIS",
+      "published_on": "2026-05-13",
+      "discovered_at": "2026-09-19T09:03:17.426+00:00",
+      "checked_at": "2026-09-19T09:04:01.026+00:00",
+      "sha256": "83a68d99d7f50c7df2406add513a7c7913b99e18e3a6d8b97e59433ba7128832",
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-ai-cloud-3-6-strengthens-developer-experience-and-governance-for-production-operations",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.571+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-and-bloom-energy-partner-to-power-ai-infrastructure-build-out",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.573+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-appoints-lindsey-irvine-as-chief-marketing-officer",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.573+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-celebrates-healthcare-and-life-sciences-innovators-at-expanded-ai-discovery-awards",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.573+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-completes-acquisition-of-eigen-ai",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.574+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-expands-in-uk-with-more-nvidia-powered-infrastructure-more-customers-and-more-cloud-capabilities-for-agentic-and-enterprise-ai",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.574+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-group-announces-closing-of-private-offering-of-convertible-senior-notes-with-aggregate-gross-proceeds-of-approximately-5-75-billion",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.574+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-group-announces-date-of-second-quarter-2026-results-and-conference-call",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.574+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-group-announces-pricing-of-upsized-private-offering-of-5-0-billion-of-convertible-senior-notes",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.574+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-group-announces-proposed-private-offering-of-4-50-billion-of-convertible-senior-notes",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.574+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-group-n-v-announces-results-of-its-annual-general-meeting-2026",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.574+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-introduces-business-model-to-scale-ai-cloud-globally-through-infrastructure-partnerships",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.574+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-launches-physical-ai-living-lab-for-uk-and-european-robotics-startups-built-with-nvidia-technologies",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.574+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-publishes-2025-sustainability-report-outlining-blueprint-for-scaling-responsibly",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.574+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-raises-775-million-in-first-secured-debt-financing-to-accelerate-global-buildout",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.574+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-reports-first-quarter-2026-financial-results",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.574+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-reports-second-quarter-2026-financial-results",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.574+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-to-participate-in-upcoming-investor-conferences",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.574+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-to-present-at-bof-a-global-technology-conference",
+      "ticker": "NBIS",
+      "published_on": null,
+      "discovered_at": "2026-09-19T09:03:29.575+00:00",
+      "checked_at": null,
+      "sha256": null,
+      "status": "pending",
+      "error": null
+    },
+    {
+      "url": "https://nebius.com/newsroom/palantir-and-nebius-partner-to-deliver-a-complete-sovereign-ai-stack-to-palantir-customers",
+      "ticker": "NBIS",
+      "published_on": "2026-09-08",
+      "discovered_at": "2026-09-19T09:03:17.425+00:00",
+      "checked_at": "2026-09-19T09:04:17.705+00:00",
+      "sha256": "d066f856fbc47dc7613f08715b4f2ae7316db3c5e2d428a2fcac794c23f4a842",
+      "status": "pending",
+      "error": null
+    }
+  ],
+  "history": [
+    {
+      "id": 7,
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Accelerates-U-S--Investments-Pours-First-Concrete-at-New-York-Fab/default.aspx",
+      "at": "2026-09-19T09:14:57.525+00:00",
+      "kind": "fetch-error",
+      "sha256": null
+    },
+    {
+      "id": 6,
+      "url": "https://nebius.com/newsroom/palantir-and-nebius-partner-to-deliver-a-complete-sovereign-ai-stack-to-palantir-customers",
+      "at": "2026-09-19T09:04:17.705+00:00",
+      "kind": "first-fetch",
+      "sha256": "d066f856fbc47dc7613f08715b4f2ae7316db3c5e2d428a2fcac794c23f4a842"
+    },
+    {
+      "id": 5,
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx",
+      "at": "2026-09-19T09:04:08.530+00:00",
+      "kind": "fetch-error",
+      "sha256": null
+    },
+    {
+      "id": 4,
+      "url": "https://assets.nebius.com/assets/aa1bc2e6-df83-40cd-a6a2-95e7cda3d16c/Nebius%20SHL_Q1%202026.pdf?cache-buster=2026-05-13T14:00:35.352Z",
+      "at": "2026-09-19T09:04:01.025+00:00",
+      "kind": "first-fetch",
+      "sha256": "83a68d99d7f50c7df2406add513a7c7913b99e18e3a6d8b97e59433ba7128832"
+    },
+    {
+      "id": 3,
+      "url": "https://assets.nebius.com/assets/a6ecfd85-a6cb-4967-8ef7-9a25bd261f9c/SHLQ226.pdf?cache-buster=2026-08-12T11:54:46.695Z",
+      "at": "2026-09-19T09:03:53.619+00:00",
+      "kind": "first-fetch",
+      "sha256": "aec30236b7903532684ddf43fd5006ef89a945118366d767315434fd65b4dc29"
+    },
+    {
+      "id": 2,
+      "url": "https://assets.nebius.com/assets/72a8c258-bbb7-4df7-ab9d-8698f6cb88fc/PR.pdf?cache-buster=2026-08-12T11:54:07.336Z",
+      "at": "2026-09-19T09:03:45.437+00:00",
+      "kind": "first-fetch",
+      "sha256": "d3dd403297e2e1680317ba6597f79c35deb13d29188fc5647dcd132885510289"
+    },
+    {
+      "id": 1,
+      "url": "https://assets.nebius.com/assets/0de223a2-f519-408d-8c7e-04f2fef342a9/Financial%20results_Q1%202026.pdf?cache-buster=2026-05-13T10:36:29.509Z",
+      "at": "2026-09-19T09:03:35.351+00:00",
+      "kind": "first-fetch",
+      "sha256": "72d293b8d9c16dd33c6a12864a03dac391bbd52430d0619d69cae2951b83c7b9"
+    }
+  ],
+  "discoveryRuns": [
+    {
+      "id": 3,
+      "ticker": "MU",
+      "at": "2026-09-19T09:11:08.025+00:00",
+      "status": "ok",
+      "candidates": 11,
+      "error": null,
+      "index_url": "https://www.micron.com/about/press/news"
+    },
+    {
+      "id": 2,
+      "ticker": "MU",
+      "at": "2026-09-19T09:03:35.761+00:00",
+      "status": "degraded",
+      "candidates": 0,
+      "error": "http-403",
+      "index_url": null
+    },
+    {
+      "id": 1,
+      "ticker": "NBIS",
+      "at": "2026-09-19T09:03:29.575+00:00",
+      "status": "ok",
+      "candidates": 20,
+      "error": null,
+      "index_url": null
+    }
+  ]
+}

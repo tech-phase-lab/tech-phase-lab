@@ -91,6 +91,23 @@ class IntakeTests(unittest.TestCase):
         self.assertIsNotNone(self.row()["sha256"])
         self.assertEqual(self.db.execute("SELECT count(*) FROM history").fetchone()[0], 1)
 
+    def test_snapshot_omits_private_review_fields_and_raw_errors(self):
+        self.check()
+        m.review(self.db, URL, self.row()["sha256"], "held", "private-editor", "private-reason")
+        with self.db:
+            self.db.execute("UPDATE sources SET error='private error /local/path' WHERE url=?", (URL,))
+        report = m.snapshot(self.db)
+        self.assertNotIn("private-", str(report))
+        self.assertNotIn("/local/path", str(report))
+        self.assertEqual(report["sources"][0]["error"], "fetch-error")
+        self.assertEqual(report["history"][0]["kind"], "held")
+
+    def test_micron_corporate_index_finds_ir_links_and_records_origin(self):
+        markup = b'<a href="https://investors.micron.com/news/press-release/2026/example/default.aspx">Read</a>'
+        result = m.discover(self.db, "MU", lambda *_: (markup, "text/html"))
+        self.assertEqual(result["candidates"], 1)
+        self.assertEqual(self.db.execute("SELECT index_url FROM discovery_runs").fetchone()[0], m.INDEXES["MU"])
+
 
 if __name__ == "__main__":
     unittest.main()

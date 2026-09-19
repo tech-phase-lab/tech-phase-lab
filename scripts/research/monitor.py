@@ -11,8 +11,8 @@ from urllib.parse import urljoin, urlsplit, urlunsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 ROOT = Path(__file__).resolve().parents[2]
-INDEXES = {"NBIS": "https://nebius.com/newsroom", "MU": "https://investors.micron.com/news/"}
-HOSTS = {"NBIS": {"nebius.com", "assets.nebius.com"}, "MU": {"investors.micron.com"}}
+INDEXES = {"NBIS": "https://nebius.com/newsroom", "MU": "https://www.micron.com/about/press/news"}
+HOSTS = {"NBIS": {"nebius.com", "assets.nebius.com"}, "MU": {"investors.micron.com", "www.micron.com"}}
 MAX_BYTES = 12 * 1024 * 1024
 
 
@@ -69,7 +69,7 @@ class Links(HTMLParser):
             return
         p = urlsplit(url)
         if ((self.ticker == "NBIS" and p.hostname == "nebius.com" and p.path.startswith("/newsroom/") and p.path.rstrip("/") != "/newsroom")
-                or (self.ticker == "MU" and p.path.startswith("/news/press-release/"))):
+                or (self.ticker == "MU" and p.hostname == "investors.micron.com" and p.path.startswith("/news/press-release/"))):
             self.urls.add(urlunsplit((p.scheme, p.netloc, p.path, "", "")))
 
 
@@ -91,6 +91,8 @@ def connect(path):
       id INTEGER PRIMARY KEY, ticker TEXT NOT NULL, at TEXT NOT NULL,
       status TEXT NOT NULL, candidates INTEGER NOT NULL, error TEXT);
     """)
+    if "index_url" not in {row[1] for row in db.execute("PRAGMA table_info(discovery_runs)")}:
+        db.execute("ALTER TABLE discovery_runs ADD COLUMN index_url TEXT")
     return db
 
 
@@ -119,8 +121,35 @@ def discover(db, ticker, transport=fetch):
     except Exception as exc:
         result = {"ticker": ticker, "status": "degraded", "candidates": 0, "error": str(exc)}
     with db:
-        db.execute("INSERT INTO discovery_runs(ticker,at,status,candidates,error) VALUES(?,?,?,?,?)", (ticker, now(), result["status"], result["candidates"], result["error"]))
+        db.execute("INSERT INTO discovery_runs(ticker,at,status,candidates,error,index_url) VALUES(?,?,?,?,?,?)", (ticker, now(), result["status"], result["candidates"], result["error"], INDEXES[ticker]))
     return result
+
+
+def public_error(error):
+    """Export a category, never exception messages containing local paths or secrets."""
+    if not error:
+        return None
+    if "403" in error:
+        return "http-403"
+    if "timed out" in error.lower() or "timeout" in error.lower():
+        return "timeout"
+    if "No release links" in error:
+        return "no-links"
+    return "fetch-error"
+
+
+def snapshot(db):
+    """Public-safe, read-only report. Explicit field lists prevent identity leaks."""
+    with db:
+        db.execute("BEGIN")
+        sources = [dict(r) for r in db.execute("SELECT url,ticker,published_on,discovered_at,checked_at,sha256,status,error FROM sources ORDER BY ticker,url")]
+        history = [dict(r) for r in db.execute("SELECT id,url,at,kind,sha256 FROM history ORDER BY id DESC")]
+        runs = [dict(r) for r in db.execute("SELECT id,ticker,at,status,candidates,error,index_url FROM discovery_runs ORDER BY id DESC")]
+    for row in sources + runs:
+        row["error"] = public_error(row["error"])
+    for row in sources:
+        safe_url(row["url"], row["ticker"])
+    return {"schemaVersion": 1, "generatedAt": now(), "sources": sources, "history": history, "discoveryRuns": runs}
 
 
 def check_source(db, row, transport=fetch):
@@ -167,6 +196,8 @@ def main():
     c.add_argument("--limit", type=int, default=6)
     sub.add_parser("list")
     sub.add_parser("history")
+    e = sub.add_parser("export")
+    e.add_argument("--output", required=True, help="JSON report path; reviewer identities and reasons are excluded")
     a = sub.add_parser("add")
     a.add_argument("ticker", choices=HOSTS)
     a.add_argument("url")
@@ -195,6 +226,12 @@ def main():
         elif args.command == "review":
             review(db, args.url, args.sha256, args.decision, args.reviewer, args.reason)
             result = {"status": args.decision, "published": False}
+        elif args.command == "export":
+            data = snapshot(db)
+            output = Path(args.output)
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+            result = {"sources": len(data["sources"]), "exported": str(output), "published": False}
         else:
             table = "sources" if args.command == "list" else "history"
             result = [dict(row) for row in db.execute("SELECT * FROM " + table)]
