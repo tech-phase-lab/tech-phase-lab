@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import type { AnnualFilingBrief } from "@/lib/research/annual-filing-briefs";
 import type { BusinessSection, RiskSection, StockDirectoryEntry, StockProfile } from "@/lib/research/stock-directory";
 import { useResearchLanguage } from "../use-research-language";
 import base from "../research.module.css";
@@ -10,7 +11,8 @@ import filingStyles from "./filings.module.css";
 
 type SearchResponse = { ok: boolean; results?: StockDirectoryEntry[]; error?: string; source?: string; asOf?: string };
 type ProfileResponse = { ok: boolean; profile?: StockProfile; error?: string; profileSource?: string; asOf?: string };
-type BusinessResponse = { ok: boolean; business?: BusinessSection | null; risks?: RiskSection | null; error?: string };
+type BusinessResponse = { ok: boolean; business?: BusinessSection | null; risks?: RiskSection | null; brief?: AnnualFilingBrief | null; briefStatus?: "approved" | "pending"; error?: string };
+type BriefStatus = "idle" | "loading" | "approved" | "pending" | "source-unavailable";
 
 function exchangeLabel(exchange: string) {
   return exchange === "Nasdaq" ? "NASDAQ" : exchange.toUpperCase();
@@ -37,6 +39,8 @@ export default function StockDirectory() {
   const [profile, setProfile] = useState<StockProfile | null>(null);
   const [business, setBusiness] = useState<BusinessSection | null>(null);
   const [risks, setRisks] = useState<RiskSection | null>(null);
+  const [brief, setBrief] = useState<AnnualFilingBrief | null>(null);
+  const [briefStatus, setBriefStatus] = useState<BriefStatus>("idle");
   const [loading, setLoading] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
   const [businessLoading, setBusinessLoading] = useState(false);
@@ -57,6 +61,8 @@ export default function StockDirectory() {
     setProfile(null);
     setBusiness(null);
     setRisks(null);
+    setBrief(null);
+    setBriefStatus("idle");
     setBusinessLoading(false);
     setBusinessUnavailable(false);
     setRisksUnavailable(false);
@@ -89,6 +95,8 @@ export default function StockDirectory() {
     setProfileLoading(true);
     setBusiness(null);
     setRisks(null);
+    setBrief(null);
+    setBriefStatus("idle");
     setBusinessLoading(false);
     setBusinessUnavailable(false);
     setRisksUnavailable(false);
@@ -112,6 +120,7 @@ export default function StockDirectory() {
   async function loadBusiness(ticker: string) {
     const requestId = ++businessRequest.current;
     setBusinessLoading(true);
+    setBriefStatus("loading");
     setBusinessUnavailable(false);
     setRisksUnavailable(false);
     try {
@@ -119,17 +128,20 @@ export default function StockDirectory() {
       const data = await response.json() as BusinessResponse;
       if (requestId !== businessRequest.current) return;
       if (!response.ok || !data.ok) {
-        if (response.status === 404 || response.status === 422) { setBusinessUnavailable(true); setRisksUnavailable(true); return; }
+        if (response.status === 404 || response.status === 422) { setBusinessUnavailable(true); setRisksUnavailable(true); setBriefStatus("source-unavailable"); return; }
         throw new Error(data.error || "business-section-failed");
       }
       setBusiness(data.business ?? null);
       setBusinessUnavailable(!data.business);
       setRisks(data.risks ?? null);
       setRisksUnavailable(!data.risks);
+      setBrief(data.brief ?? null);
+      setBriefStatus(data.briefStatus === "approved" && data.brief ? "approved" : "pending");
     } catch {
       if (requestId === businessRequest.current) {
         setBusinessUnavailable(true);
         setRisksUnavailable(true);
+        setBriefStatus("source-unavailable");
       }
     } finally {
       if (requestId === businessRequest.current) setBusinessLoading(false);
@@ -174,6 +186,16 @@ export default function StockDirectory() {
           </> : <div className={styles.profileEmpty}><span className={styles.profileIcon}>TP</span><strong>{t("銘柄を選ぶと企業情報を表示", "Select a stock to view its profile")}</strong><p>{t("今は企業識別情報を表示します。決算、公式ニュース、株価は検証状態を分けて順次追加します。", "This preview starts with company identity. Filings, official news, and prices will be added with separate verification states.")}</p></div>}
         </aside>
       </div>
+
+      {profile?.latestAnnualFiling && <section className={filingStyles.brief} aria-labelledby="annual-brief-title" aria-busy={briefStatus === "loading"}>
+        <div className={styles.sectionHeading}><div><p>REVIEWED JAPANESE BRIEF</p><h2 id="annual-brief-title">{t("根拠付き日本語要点", "Evidence-backed Japanese brief")}</h2></div><span className={briefStatus === "approved" ? filingStyles.briefApproved : filingStyles.briefPending}>{briefStatus === "approved" ? t("人間確認済み", "Human reviewed") : briefStatus === "loading" ? t("原文照合中", "Checking source") : briefStatus === "source-unavailable" ? t("原文確認不可", "Source unavailable") : t("編集確認待ち", "Awaiting review")}</span></div>
+        {briefStatus === "approved" && brief ? <>
+          <div className={filingStyles.briefSummary}><span>{t("要点", "Summary")}</span><p>{brief.summaryJa}</p></div>
+          <div className={filingStyles.briefGrid}><article><span>{t("何で稼ぐ会社か", "Business model")}</span><p>{brief.businessModelJa}</p></article><article><span>{t("重要リスク", "Key risks")}</span><ol>{brief.riskPointsJa.map((point, index) => <li key={`${point.text}-${index}`}>{point.text}</li>)}</ol></article></div>
+          <details className={filingStyles.briefEvidence}><summary>{t("根拠引用を確認", "Review source evidence")}</summary><ol>{brief.evidence.map((item) => <li key={item.id}><span>{item.section === "business" ? t("事業説明", "Business") : t("リスク", "Risk")}</span><q>{item.quote}</q></li>)}</ol></details>
+          <div className={filingStyles.briefMeta}><span>{t("確信度", "Confidence")}: {brief.confidence}</span><span>{t("確認日時", "Reviewed")}: <time dateTime={brief.reviewedAt}>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", dateStyle: "medium", timeStyle: "short" }).format(new Date(brief.reviewedAt))} JST</time></span><span>{t("生成方法", "Method")}: {brief.generationMethod === "ai-assisted" ? t("AI補助＋人間確認", "AI-assisted + human review") : t("人間作成", "Human-authored")}</span><span>SHA {brief.sourceSha256.slice(0, 12)}</span></div>
+        </> : briefStatus === "loading" ? <div className={filingStyles.businessStatus}><span className={styles.loader} /><strong>{t("年次報告書と日本語要点を照合中", "Checking the annual filing against reviewed copy")}</strong></div> : <div className={filingStyles.briefGate}><strong>{briefStatus === "source-unavailable" ? t("原文を確認できないため日本語要点を停止しました", "Japanese copy is withheld because the source could not be verified") : t("日本語要点は編集確認待ちです", "The Japanese brief is awaiting editorial review")}</strong><p>{t("提出番号・原文SHA・根拠引用・数値を照合し、人間が承認した版だけを表示します。原文が更新された場合、以前の承認は自動的に無効になります。", "Only a human-approved version with matching accession, source SHA, evidence quotes, and numbers is shown. A source update automatically invalidates the prior approval.")}</p></div>}
+      </section>}
 
       {profile && <section className={filingStyles.business} aria-labelledby="business-section-title" aria-busy={businessLoading}>
         <div className={styles.sectionHeading}><div><p>OFFICIAL BUSINESS DESCRIPTION</p><h2 id="business-section-title">{t("どんな企業か — 年次報告書の原文", "What the company does — annual filing source")}</h2></div>{business && <span>{business.form} · {business.filingDate}</span>}</div>

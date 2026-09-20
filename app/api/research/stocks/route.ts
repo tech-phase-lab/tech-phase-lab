@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { approvedAnnualFilingBrief } from "@/lib/research/annual-filing-briefs";
 import { extractBusinessSection, extractRiskSection, normalizeTicker, parseSecDirectory, parseSecProfile, searchDirectory, type BusinessSection, type RiskSection } from "@/lib/research/stock-directory";
 
 const directoryUrl = "https://www.sec.gov/files/company_tickers_exchange.json";
@@ -104,7 +105,8 @@ export async function GET(request: Request) {
           retrievedAt,
           sourceSha256,
         } : null;
-        return Response.json({ ok: true, business, risks }, { headers: { "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800" } });
+        const brief = approvedAnnualFilingBrief({ business, risks });
+        return Response.json({ ok: true, business, risks, brief, briefStatus: brief ? "approved" : "pending" }, { headers: { "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800" } });
       }
       return Response.json({ ok: true, profile, source: directoryUrl, profileSource: profileUrl, asOf: new Date().toISOString() }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" } });
     }

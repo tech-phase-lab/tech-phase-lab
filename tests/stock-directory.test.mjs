@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { validateAnnualFilingBrief } from "../lib/research/annual-filing-briefs.ts";
 import { extractBusinessSection, extractRiskSection, normalizeTicker, parseLatestAnnualFiling, parseRecentFilings, parseSecDirectory, parseSecProfile, searchDirectory, stockDirectoryIssues } from "../lib/research/stock-directory.ts";
 
 function payload() {
@@ -189,6 +190,44 @@ test("20-F risk extraction exposes only a verified issuer overview list", () => 
   assert.equal(section.overview.itemCount, 4);
 });
 
+function filingBriefFixture() {
+  const shared = { ticker: "NVDA", cik: 1045810, form: "10-K", filingDate: "2026-02-25", reportDate: "2026-01-25", accessionNumber: "0001045810-26-000021", documentUrl: "https://www.sec.gov/Archives/example.htm", filingIndexUrl: "https://www.sec.gov/Archives/example-index.html", retrievedAt: "2026-09-20T08:00:00Z", sourceSha256: "a".repeat(64), sectionCharacters: 1000, truncated: false };
+  const source = {
+    business: { ...shared, heading: "Item 1. Business", extractionMethod: "form-item", excerpt: "NVIDIA designs accelerated computing platforms and software for data centers and other markets." },
+    risks: { ...shared, heading: "Item 1A. Risk Factors", extractionMethod: "form-item", overview: null, excerpt: "Demand can change rapidly, and dependence on third-party suppliers could disrupt product delivery." },
+  };
+  const record = {
+    id: "nvda-2026-annual-ja", status: "approved", ticker: "NVDA", accessionNumber: shared.accessionNumber, sourceSha256: shared.sourceSha256,
+    summaryJa: "データセンターなどに向けて、アクセラレーテッド・コンピューティング基盤とソフトウェアを提供する企業です。",
+    businessModelJa: "計算基盤と関連ソフトウェアをデータセンターなどの市場へ提供します。",
+    riskPointsJa: [{ text: "需要の急変や第三者サプライヤーへの依存により、製品供給が滞る可能性があります。", evidenceIds: ["risk-1"] }],
+    summaryEvidenceIds: ["business-1"], businessModelEvidenceIds: ["business-1"],
+    evidence: [{ id: "business-1", section: "business", quote: source.business.excerpt }, { id: "risk-1", section: "risk", quote: source.risks.excerpt }],
+    confidence: "high", generationMethod: "human", generatedAt: "2026-09-20T08:05:00Z", reviewedAt: "2026-09-20T08:10:00Z", reviewer: "editor-1", reviewReason: "原文と根拠引用を照合済み",
+  };
+  return { source, record };
+}
+
+test("annual-filing Japanese briefs require approval, current source identity, and exact evidence", () => {
+  const { source, record } = filingBriefFixture();
+  const valid = validateAnnualFilingBrief(record, source);
+  assert.deepEqual(valid.issues, []);
+  assert.equal(valid.brief?.ticker, "NVDA");
+  assert.equal("reviewer" in valid.brief, false);
+
+  assert.ok(validateAnnualFilingBrief({ ...record, status: "draft" }, source).issues.includes("not-approved"));
+  assert.ok(validateAnnualFilingBrief({ ...record, sourceSha256: "b".repeat(64) }, source).issues.includes("source-sha-mismatch"));
+  assert.ok(validateAnnualFilingBrief({ ...record, evidence: record.evidence.map((item, index) => index ? item : { ...item, quote: "A plausible sentence that is absent from the source filing." }) }, source).issues.includes("evidence-not-in-source:business-1"));
+  assert.ok(validateAnnualFilingBrief({ ...record, reviewedAt: "2026-09-20T08:01:00Z" }, source).issues.includes("review-before-generation"));
+});
+
+test("annual-filing Japanese briefs reject numbers absent from their cited evidence", () => {
+  const { source, record } = filingBriefFixture();
+  const result = validateAnnualFilingBrief({ ...record, summaryJa: `${record.summaryJa} 売上は100億ドルです。` }, source);
+  assert.ok(result.issues.includes("number-not-grounded"));
+  assert.equal(result.brief, null);
+});
+
 test("stock search UI separates free identity data from licensed prices and news", async () => {
   const [page, route, dashboard] = await Promise.all([
     readFile(new URL("../app/research/stocks/stock-directory.tsx", import.meta.url), "utf8"),
@@ -207,6 +246,9 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /20-Fリスク参照先を検証/);
   assert.match(page, /リスク早見表（英語原文）/);
   assert.match(page, /企業が年次報告書で要約・一覧として明示した項目だけ/);
+  assert.match(page, /根拠付き日本語要点/);
+  assert.match(page, /提出番号・原文SHA・根拠引用・数値を照合/);
+  assert.match(page, /以前の承認は自動的に無効/);
   assert.match(page, /リスクを推測で補完しません/);
   assert.match(page, /businessRequest\.current \+= 1/);
   assert.match(page, /リアルタイム通知ではありません/);
@@ -219,6 +261,8 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(route, /maxFilingBytes = 30_000_000/);
   assert.match(route, /createHash\("sha256"\)/);
   assert.match(route, /extractRiskSection/);
+  assert.match(route, /approvedAnnualFilingBrief/);
+  assert.match(route, /briefStatus: brief \? "approved" : "pending"/);
   assert.match(route, /annual-sections-not-found/);
   assert.match(route, /BusinessSection \| null/);
   assert.match(route, /business, risks/);

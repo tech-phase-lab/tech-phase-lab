@@ -1,4 +1,5 @@
 .filings,
+.brief,
 .business,
 .risks {
   margin-top: 34px;
@@ -9,7 +10,31 @@
 }
 
 .business { border-color: #30483f; }
+.brief { border-color: #3a564b; background: linear-gradient(135deg, #0d1917, #0d151d 55%); }
 .risks { border-color: #59483a; }
+.briefApproved,
+.briefPending { padding: 6px 9px; border-radius: 4px; font: 600 .68rem var(--font-geist-mono), monospace; }
+.briefApproved { border: 1px solid #3c725e; background: #112c24; color: #9aebca; }
+.briefPending { border: 1px solid #66553c; background: #251f14; color: #dfc38d; }
+.briefGate { padding: 20px; border: 1px dashed #4b5e55; border-radius: 8px; background: #0a1312; }
+.briefGate strong { color: #e4eee9; font-size: .95rem; }
+.briefGate p { max-width: 850px; margin: 10px 0 0; color: #91a39b; font-size: .78rem; line-height: 1.75; }
+.briefSummary { margin-bottom: 14px; padding: 18px; border-left: 3px solid var(--mint); background: #0a1513; }
+.briefSummary span,
+.briefGrid article > span { color: #79cfae; font: 600 .68rem var(--font-geist-mono), monospace; letter-spacing: .08em; text-transform: uppercase; }
+.briefSummary p { margin: 8px 0 0; color: #e0ebe6; font-size: .92rem; line-height: 1.75; }
+.briefGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.briefGrid article { padding: 17px; border: 1px solid #294238; border-radius: 7px; background: #0b1412; }
+.briefGrid p,
+.briefGrid ol { margin: 9px 0 0; color: #c9d8d1; font-size: .8rem; line-height: 1.7; }
+.briefGrid ol { display: grid; gap: 7px; padding-left: 20px; }
+.briefEvidence { margin-top: 14px; padding: 14px 16px; border: 1px solid #2a4138; border-radius: 7px; }
+.briefEvidence summary { color: #9fd6c1; cursor: pointer; font-size: .78rem; }
+.briefEvidence ol { display: grid; gap: 10px; margin: 13px 0 0; padding: 0; list-style: none; }
+.briefEvidence li { display: grid; grid-template-columns: 70px minmax(0,1fr); gap: 10px; color: #aebeb7; font-size: .72rem; line-height: 1.6; }
+.briefEvidence li span { color: #6fc9a6; }
+.briefEvidence q { quotes: none; }
+.briefMeta { display: flex; flex-wrap: wrap; gap: 7px 18px; margin-top: 14px; color: #71877d; font: 400 .67rem var(--font-geist-mono), monospace; }
 .businessStatus { min-height: 150px; display: grid; place-content: center; justify-items: center; gap: 14px; padding: 22px; border: 1px dashed #344b42; border-radius: 8px; text-align: center; }
 .businessStatus strong { font-size: .95rem; }
 .businessStatus p { max-width: 700px; margin: 0; color: #91a3b1; font-size: .8rem; line-height: 1.7; }
@@ -100,6 +125,7 @@
 
 @media (max-width: 650px) {
   .filings,
+  .brief,
   .business,
   .risks { margin-top: 20px; padding: 18px; }
   .businessExcerpt,
@@ -107,6 +133,8 @@
   .riskOverview { padding: 15px; }
   .riskOverviewHeading { display: grid; }
   .businessActions { display: grid; }
+  .briefGrid { grid-template-columns: 1fr; }
+  .briefEvidence li { grid-template-columns: 1fr; }
   .filingList > li { padding: 15px; }
   .filingActions { display: grid; }
   .filingList dl > div { grid-template-columns: 68px minmax(0, 1fr); }
