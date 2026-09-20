@@ -77,6 +77,7 @@ test("business-section extraction ignores a table of contents and returns bounde
   const section = extractBusinessSection(html, "10-K", 900);
   assert.ok(section);
   assert.equal(section.heading, "Item 1. Business");
+  assert.equal(section.extractionMethod, "form-item");
   assert.match(section.excerpt, /^NVIDIA designs accelerated computing/);
   assert.equal(section.excerpt.includes("fake script"), false);
   assert.equal(section.truncated, true);
@@ -88,9 +89,29 @@ test("business-section extraction supports 20-F and withholds unverifiable text"
   const html = `<html><body><h2>ITEM 4. INFORMATION ON THE COMPANY</h2><p>${paragraph}</p><h2>ITEM 4A. UNRESOLVED STAFF COMMENTS</h2></body></html>`;
   const section = extractBusinessSection(html, "20-F");
   assert.equal(section?.heading, "Item 4. Information on the Company");
+  assert.equal(section?.extractionMethod, "form-item");
   assert.match(section?.excerpt ?? "", /^The company develops semiconductor/);
   assert.equal(extractBusinessSection(`<html><body>${"Unstructured prose. ".repeat(80)}</body></html>`, "10-K"), null);
   assert.equal(extractBusinessSection(html, "40-F"), null);
+});
+
+test("20-F extraction resolves a verified overview referenced by Item 4 without returning the reference table", () => {
+  const overview = "ASML is a leading innovator in the global semiconductor ecosystem. We provide hardware, software and services that help chipmakers create advanced microchips. Our customers use these systems in high-volume manufacturing around the world. We invest in research and work closely with suppliers and customers. ".repeat(5);
+  const html = `<html><body>
+    <h2>At a glance – 2025 overview</h2><p>${overview}</p><h2>STRATEGIC REPORT</h2>
+    <h2>ITEM 4. INFORMATION ON THE COMPANY</h2><p>FORM 20-F CAPTION</p><p>LOCATION IN THIS DOCUMENT</p><p>B. Business Overview</p><p>At a glance / Our business, page 13</p><p>C. Organizational Structure</p><h2>ITEM 4A. UNRESOLVED STAFF COMMENTS</h2>
+  </body></html>`;
+  const section = extractBusinessSection(html, "20-F", 1_200);
+  assert.ok(section);
+  assert.equal(section.extractionMethod, "cross-referenced-overview");
+  assert.equal(section.heading, "At a glance — official annual report overview");
+  assert.match(section.excerpt, /^ASML is a leading innovator/);
+  assert.equal(section.excerpt.includes("FORM 20-F CAPTION"), false);
+});
+
+test("20-F extraction withholds an unresolved cross-reference instead of publishing a table", () => {
+  const html = `<html><body>${"Background information. ".repeat(50)}<h2>ITEM 4. INFORMATION ON THE COMPANY</h2><p>FORM 20-F CAPTION</p><p>LOCATION IN THIS DOCUMENT</p><p>B. Business Overview</p><p>See another document</p><h2>ITEM 4A. UNRESOLVED STAFF COMMENTS</h2></body></html>`;
+  assert.equal(extractBusinessSection(html, "20-F"), null);
 });
 
 test("stock search UI separates free identity data from licensed prices and news", async () => {
@@ -105,6 +126,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /最新の重要提出書類/);
   assert.match(page, /どんな企業か — 年次報告書の原文/);
   assert.match(page, /Tech Phaseによる日本語要約・評価ではありません/);
+  assert.match(page, /20-F参照先を検証/);
   assert.match(page, /businessRequest\.current \+= 1/);
   assert.match(page, /リアルタイム通知ではありません/);
   assert.match(page, /profileRequest\.current \+= 1/);

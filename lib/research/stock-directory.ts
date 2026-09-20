@@ -40,6 +40,7 @@ export type BusinessSection = {
   reportDate: string | null;
   accessionNumber: string;
   heading: string;
+  extractionMethod: "form-item" | "cross-referenced-overview";
   excerpt: string;
   sectionCharacters: number;
   truncated: boolean;
@@ -49,7 +50,7 @@ export type BusinessSection = {
   sourceSha256: string;
 };
 
-export type ExtractedBusinessSection = Pick<BusinessSection, "heading" | "excerpt" | "sectionCharacters" | "truncated">;
+export type ExtractedBusinessSection = Pick<BusinessSection, "heading" | "extractionMethod" | "excerpt" | "sectionCharacters" | "truncated">;
 
 type SecDirectoryPayload = { fields?: unknown; data?: unknown };
 type SecSubmissionPayload = {
@@ -246,14 +247,14 @@ function filingHtmlToText(html: string) {
     .split(/\r?\n/)
     .map((line) => line.replace(/\s+/g, " ").trim())
     .filter(Boolean);
-  return lines.filter((line, index) => index === 0 || line !== lines[index - 1]).join("\n").slice(0, 1_000_000);
+  return lines.filter((line, index) => index === 0 || line !== lines[index - 1]).join("\n").slice(0, 2_000_000);
 }
 
 function allMatches(text: string, pattern: RegExp) {
   return [...text.matchAll(pattern)].map((match) => ({ index: match.index ?? -1, length: match[0].length })).filter((match) => match.index >= 0);
 }
 
-function bestSection(text: string, startPattern: RegExp, endPattern: RegExp) {
+function bestSection(text: string, startPattern: RegExp, endPattern: RegExp, minimumCharacters = 800) {
   const starts = allMatches(text, startPattern);
   const ends = allMatches(text, endPattern);
   return starts
@@ -264,24 +265,54 @@ function bestSection(text: string, startPattern: RegExp, endPattern: RegExp) {
       const value = text.slice(contentStart, contentEnd).replace(/^\s+|\s+$/g, "");
       return { value, length: value.length };
     })
-    .filter((candidate) => candidate.length >= 800)
+    .filter((candidate) => candidate.length >= minimumCharacters)
     .toSorted((a, b) => b.length - a.length)[0]?.value ?? null;
+}
+
+function looksLikeFormCrossReference(value: string) {
+  return /FORM\s+20-F\s+CAPTION[\s\S]{0,2000}LOCATION\s+IN\s+THIS\s+DOCUMENT/i.test(value);
+}
+
+function crossReferencedOverview(text: string) {
+  const referenceCandidates = [
+    ...(text.match(/\bITEM\s+4\s*[.:\-–—]?\s*INFORMATION\s+ON\s+THE\s+COMPANY\b[\s\S]{0,10000}?\bITEM\s+4A\b/gi) ?? []),
+    ...(text.match(/APPENDIX\s*[–—-]\s*REFERENCE\s+TABLE\s+20-F[\s\S]{0,25000}/gi) ?? []),
+  ];
+  const reference = referenceCandidates.find((candidate) => looksLikeFormCrossReference(candidate) && /\bB[.:]?\s+BUSINESS\s+OVERVIEW\b/i.test(candidate) && /\bAT\s+A\s+GLANCE\b/i.test(candidate));
+  if (!reference) return null;
+  const starts = allMatches(text, /\bAT\s+A\s+GLANCE\s*[–—-]\s*(?:20\d{2}\s+)?OVERVIEW\b/gi);
+  const candidates = starts.flatMap((start) => {
+    const contentStart = start.index + start.length;
+    if (/^\s*\(continued\)/i.test(text.slice(contentStart, contentStart + 32))) return [];
+    const bounded = text.slice(contentStart, Math.min(text.length, contentStart + 20_000));
+    const end = bounded.search(/\n(?:STRATEGIC\s+REPORT|CORPORATE\s+GOVERNANCE|FINANCIALS|SUSTAINABILITY\s+STATEMENTS)\n/i);
+    if (end < 0) return [];
+    const value = bounded.slice(0, end).trim();
+    const letters = value.match(/[A-Za-z]/g)?.length ?? 0;
+    const sentences = value.match(/[.!?](?:\s|\n|$)/g)?.length ?? 0;
+    if (value.length < 600 || value.length > 15_000 || letters / value.length < 0.55 || sentences < 4 || looksLikeFormCrossReference(value)) return [];
+    return [{ value, length: value.length }];
+  });
+  return candidates.toSorted((a, b) => b.length - a.length)[0]?.value ?? null;
 }
 
 export function extractBusinessSection(html: string, form: string, excerptLimit = 4_000): ExtractedBusinessSection | null {
   if (typeof html !== "string" || html.length < 500 || html.length > 30_000_000) return null;
   const text = filingHtmlToText(html);
-  const section = form === "10-K"
+  const itemSection = form === "10-K"
     ? bestSection(text, /\bITEM\s+1\s*[.:\-–—]?\s*BUSINESS\b/gi, /\bITEM\s+1A\s*[.:\-–—]?\s*RISK\s+FACTORS\b|\bITEM\s+1B\b/gi)
     : form === "20-F"
-      ? bestSection(text, /\bITEM\s+4\s*[.:\-–—]?\s*INFORMATION\s+ON\s+THE\s+COMPANY\b/gi, /\bITEM\s+4A\b|\bITEM\s+5\s*[.:\-–—]/gi)
+      ? bestSection(text, /\bITEM\s+4\s*[.:\-–—]?\s*INFORMATION\s+ON\s+THE\s+COMPANY\b/gi, /\bITEM\s+4A\b|\bITEM\s+5\s*[.:\-–—]/gi, 80)
       : null;
+  const referencedOverview = form === "20-F" ? crossReferencedOverview(text) : null;
+  const section = referencedOverview ?? (itemSection && itemSection.length >= 800 && !looksLikeFormCrossReference(itemSection) ? itemSection : null);
   if (!section) return null;
   const boundedLimit = Math.min(Math.max(excerptLimit, 800), 8_000);
   let excerpt = section.slice(0, boundedLimit);
   if (section.length > boundedLimit) excerpt = excerpt.replace(/\s+\S*$/, "").trimEnd();
   return {
-    heading: form === "10-K" ? "Item 1. Business" : "Item 4. Information on the Company",
+    heading: referencedOverview ? "At a glance — official annual report overview" : form === "10-K" ? "Item 1. Business" : "Item 4. Information on the Company",
+    extractionMethod: referencedOverview ? "cross-referenced-overview" : "form-item",
     excerpt,
     sectionCharacters: section.length,
     truncated: section.length > excerpt.length,
