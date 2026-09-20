@@ -8,6 +8,7 @@ import { useResearchLanguage } from "../use-research-language";
 import base from "../research.module.css";
 import styles from "./stocks.module.css";
 import filingStyles from "./filings.module.css";
+import { TradingViewChart } from "./tradingview-chart";
 
 type SearchResponse = { ok: boolean; results?: StockDirectoryEntry[]; error?: string; source?: string; asOf?: string };
 type ProfileResponse = { ok: boolean; profile?: StockProfile; error?: string; profileSource?: string; asOf?: string };
@@ -163,7 +164,7 @@ export default function StockDirectory() {
         <h1>{t("米国株を、すぐ調べる。", "Find a U.S. stock in seconds.")}</h1>
         <p>{t("ティッカーまたは企業名で検索。会社名、取引所、SEC識別番号、業種を一次情報から確認できます。", "Search by ticker or company name. Verify the company, exchange, SEC identifier, and industry from primary data.")}</p>
         <label className={styles.search}><span aria-hidden="true">⌕</span><input autoComplete="off" inputMode="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("例：NVDA、Micron、Palantir", "Try NVDA, Micron, or Palantir")} aria-label={t("米国株を検索", "Search U.S. stocks")} /><kbd>SEC</kbd></label>
-        <div className={styles.scope}><span>{t("無料の企業名簿", "Free company directory")}</span><span>{t("株価は未接続", "Prices not connected")}</span><span>{t("ニュース権利と分離", "Separate from news licensing")}</span></div>
+        <div className={styles.scope}><span>{t("無料の企業名簿", "Free company directory")}</span><span>{t("遅延チャートを試験表示", "Delayed chart preview")}</span><span>{t("ニュース権利と分離", "Separate from news licensing")}</span></div>
       </section>
 
       <div className={styles.layout}>
@@ -182,10 +183,12 @@ export default function StockDirectory() {
             <h2>{profile.ticker}</h2><h3>{profile.name}</h3>
             <dl><div><dt>{t("SEC業種", "SEC industry")}</dt><dd>{profile.sicDescription ?? t("未掲載", "Not listed")}{profile.sic && <small>SIC {profile.sic}</small>}</dd></div><div><dt>{t("法人区分", "Entity type")}</dt><dd>{profile.entityType ?? t("未掲載", "Not listed")}</dd></div><div><dt>{t("設立・登録地域", "Incorporation")}</dt><dd>{profile.stateOfIncorporation ?? t("未掲載", "Not listed")}</dd></div><div><dt>{t("決算期末", "Fiscal year end")}</dt><dd>{profile.fiscalYearEnd ?? t("未掲載", "Not listed")}</dd></div></dl>
             <div className={styles.actions}><a href={profile.secProfileUrl} target="_blank" rel="noreferrer">{t("SEC提出書類を見る ↗", "Open SEC filings ↗")}</a>{profile.tracked && <Link href={`/research/companies/${profile.ticker}`}>{t("Tech Phase銘柄ページ →", "Tech Phase company page →")}</Link>}</div>
-            <p className={styles.profileNote}>{t("業種はSEC登録情報で、Tech Phase独自分類や投資判断ではありません。現在株価・時間外価格は、表示契約の確定後に別データとして接続します。", "Industry comes from the SEC registration record, not a Tech Phase rating. Live and extended-hours prices will be connected separately after display rights are confirmed.")}</p>
+            <p className={styles.profileNote}>{t("業種はSEC登録情報で、Tech Phase独自分類や投資判断ではありません。下のチャートはTradingView提供の遅延表示です。Tech Phaseの速報判定には使用しません。", "Industry comes from the SEC registration record, not a Tech Phase rating. The chart below is a delayed TradingView display and is not used for Tech Phase alert decisions.")}</p>
           </> : <div className={styles.profileEmpty}><span className={styles.profileIcon}>TP</span><strong>{t("銘柄を選ぶと企業情報を表示", "Select a stock to view its profile")}</strong><p>{t("今は企業識別情報を表示します。決算、公式ニュース、株価は検証状態を分けて順次追加します。", "This preview starts with company identity. Filings, official news, and prices will be added with separate verification states.")}</p></div>}
         </aside>
       </div>
+
+      {profile && <TradingViewChart key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} />}
 
       {profile?.latestAnnualFiling && <section className={filingStyles.brief} aria-labelledby="annual-brief-title" aria-busy={briefStatus === "loading"}>
         <div className={styles.sectionHeading}><div><p>REVIEWED JAPANESE BRIEF</p><h2 id="annual-brief-title">{t("根拠付き日本語要点", "Evidence-backed Japanese brief")}</h2></div><span className={briefStatus === "approved" ? filingStyles.briefApproved : filingStyles.briefPending}>{briefStatus === "approved" ? t("人間確認済み", "Human reviewed") : briefStatus === "loading" ? t("原文照合中", "Checking source") : briefStatus === "source-unavailable" ? t("原文確認不可", "Source unavailable") : t("編集確認待ち", "Awaiting review")}</span></div>
@@ -239,7 +242,7 @@ export default function StockDirectory() {
         <p className={filingStyles.filingNote}>{t("SEC公式APIを1時間キャッシュして表示します。リアルタイム通知ではありません。", "Shown from the official SEC API with a one-hour source cache. This is not a real-time alert feed.")}</p>
       </section>}
 
-      <section className={styles.disclosure}><div><span>01</span><h2>{t("何が無料で使える？", "What is free?")}</h2><p>{t("SECの企業名・ティッカー・取引所・CIK対応表。検索とSEC提出書類への導線に使用します。", "The SEC company, ticker, exchange, and CIK association file powers search and links to filings.")}</p></div><div><span>02</span><h2>{t("まだ何を出さない？", "What is not shown yet?")}</h2><p>{t("リアルタイム株価、時間外価格、通信社ニュース。データ表示権を確認するまで混ぜません。", "Live prices, extended-hours quotes, and wire-service news remain separate until display rights are confirmed.")}</p></div><div><span>03</span><h2>{t("次に何を追加する？", "What comes next?")}</h2><p>{t("企業概要、決算日、SEC提出、公式発表、Tech Phaseの重要変化を一つの銘柄ページへ統合します。", "Company overview, earnings dates, filings, official releases, and verified changes will converge on one company page.")}</p></div></section>
+      <section className={styles.disclosure}><div><span>01</span><h2>{t("何が無料で使える？", "What is free?")}</h2><p>{t("SECの企業名簿と提出書類、TradingViewの遅延ウィジェット。一次情報と参考チャートを分けて表示します。", "SEC company and filing data plus a delayed TradingView widget. Primary sources and the reference chart remain distinct.")}</p></div><div><span>02</span><h2>{t("まだ何を出さない？", "What is not shown yet?")}</h2><p>{t("自社取得のリアルタイム株価、時間外価格、通信社ニュース。再配信権を確認するまで混ぜません。", "Tech Phase-sourced real-time prices, extended-hours quotes, and wire-service news remain separate until redistribution rights are confirmed.")}</p></div><div><span>03</span><h2>{t("次に何を追加する？", "What comes next?")}</h2><p>{t("企業概要、決算日、SEC提出、公式発表、Tech Phaseの重要変化を一つの銘柄ページへ統合します。", "Company overview, earnings dates, filings, official releases, and verified changes will converge on one company page.")}</p></div></section>
       <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("SECは名簿の正確性・網羅性を保証していません。検索結果は企業識別用で、売買推奨ではありません。", "The SEC does not guarantee directory accuracy or scope. Results identify issuers and are not investment recommendations.")}</p></footer>
     </main>
   </div>;

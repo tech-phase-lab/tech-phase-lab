@@ -234,15 +234,18 @@ test("annual-filing Japanese briefs reject numbers absent from their cited evide
 });
 
 test("stock search UI separates free identity data from licensed prices and news", async () => {
-  const [page, route, dashboard, review] = await Promise.all([
+  const [page, widget, route, dashboard, review] = await Promise.all([
     readFile(new URL("../app/research/stocks/stock-directory.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/research/stocks/tradingview-chart.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/api/research/stocks/route.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/research/research-dashboard.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/review/review-dashboard.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(page, /SEC公式データ使用/);
-  assert.match(page, /株価は未接続/);
+  assert.match(page, /遅延チャートを試験表示/);
   assert.match(page, /ニュース権利と分離/);
+  assert.match(widget, /TradingView提供・遅延/);
+  assert.match(page, /Tech Phaseの速報判定には使用しません/);
   assert.match(page, /最新の重要提出書類/);
   assert.match(page, /どんな企業か — 年次報告書の原文/);
   assert.match(page, /Tech Phaseによる日本語要約・評価ではありません/);
@@ -260,6 +263,10 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /リアルタイム通知ではありません/);
   assert.match(page, /profileRequest\.current \+= 1/);
   assert.match(page, /SECは名簿の正確性・網羅性を保証していません/);
+  assert.match(widget, /next\/script/);
+  assert.match(widget, /strategy="lazyOnload"/);
+  assert.match(widget, /s3\.tradingview\.com\/tv\.js/);
+  assert.match(widget, /allow_symbol_change: false/);
   assert.match(route, /company_tickers_exchange\.json/);
   assert.match(route, /secJson\(directoryUrl, 86_400\)/);
   assert.match(route, /AbortSignal\.timeout\(8_000\)/);
