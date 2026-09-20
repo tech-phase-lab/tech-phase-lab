@@ -234,10 +234,11 @@ test("annual-filing Japanese briefs reject numbers absent from their cited evide
 });
 
 test("stock search UI separates free identity data from licensed prices and news", async () => {
-  const [page, route, dashboard] = await Promise.all([
+  const [page, route, dashboard, review] = await Promise.all([
     readFile(new URL("../app/research/stocks/stock-directory.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/api/research/stocks/route.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/research/research-dashboard.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/research/review/review-dashboard.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(page, /SEC公式データ使用/);
   assert.match(page, /株価は未接続/);
@@ -277,4 +278,13 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(route, /cache: "no-store"/);
   assert.match(route, /s-maxage=300, stale-while-revalidate=3600/);
   assert.match(dashboard, /\/research\/stocks/);
+  assert.match(review, /根拠付きリサーチレビュー/);
+  assert.match(review, /&kind=annual/);
+  assert.match(review, /action: "annual-draft"/);
+  assert.match(review, /action: "annual-review"/);
+  assert.match(review, /sourceBusiness: business\.excerpt/);
+  assert.match(review, /sourceRisks: riskCorpus\(risks\)/);
+  assert.match(review, /existing\?\.sourceSha256 === source\.business\.sourceSha256/);
+  assert.match(review, /年次報告書の下書きを保存/);
+  assert.match(review, /人間が承認するまで公開されません/);
 });
