@@ -13,17 +13,31 @@ function headers(accept = "application/json") {
 }
 
 async function secJson(url: string, revalidate: number) {
-  const response = await fetch(url, { headers: headers(), next: { revalidate, tags: ["sec-stock-directory"] }, signal: AbortSignal.timeout(8_000) });
+  let response: Response;
+  try {
+    response = await fetch(url, { headers: headers(), next: { revalidate, tags: ["sec-stock-directory"] }, signal: AbortSignal.timeout(8_000) });
+  } catch (error) {
+    throw new Error(error instanceof Error && ["AbortError", "TimeoutError"].includes(error.name) ? "sec-timeout" : "sec-fetch-unavailable");
+  }
   if (!response.ok) throw new Error(`sec-http-${response.status}`);
   const length = Number(response.headers.get("content-length") ?? 0);
   if (length > maxResponseBytes) throw new Error("sec-response-too-large");
   const text = await response.text();
   if (text.length > maxResponseBytes) throw new Error("sec-response-too-large");
-  return JSON.parse(text) as unknown;
+  try {
+    return JSON.parse(text) as unknown;
+  } catch {
+    throw new Error("sec-invalid-json");
+  }
 }
 
 async function secHtml(url: string) {
-  const response = await fetch(url, { headers: headers("text/html,application/xhtml+xml"), next: { revalidate: 86_400, tags: ["sec-annual-filings"] }, signal: AbortSignal.timeout(12_000) });
+  let response: Response;
+  try {
+    response = await fetch(url, { headers: headers("text/html,application/xhtml+xml"), next: { revalidate: 86_400, tags: ["sec-annual-filings"] }, signal: AbortSignal.timeout(12_000) });
+  } catch (error) {
+    throw new Error(error instanceof Error && ["AbortError", "TimeoutError"].includes(error.name) ? "sec-filing-timeout" : "sec-filing-fetch-unavailable");
+  }
   if (!response.ok) throw new Error(`sec-filing-http-${response.status}`);
   const contentType = response.headers.get("content-type")?.toLowerCase() ?? "";
   if (!contentType.includes("text/html") && !contentType.includes("application/xhtml+xml")) throw new Error("sec-filing-invalid-content-type");
