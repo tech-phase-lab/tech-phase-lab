@@ -17,6 +17,19 @@
 .evidenceBar span { padding: 5px 8px; border: 1px solid #365346; border-radius: 4px; color: #9ed8c0; background: #10231d; font: 500 .68rem var(--font-geist-mono), monospace; }
 .riskEvidenceBar { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
 .riskEvidenceBar span { padding: 5px 8px; border: 1px solid #694f38; border-radius: 4px; color: #efc397; background: #261b12; font: 500 .68rem var(--font-geist-mono), monospace; }
+.riskOverview { margin: 0 0 18px; padding: 18px; border: 1px solid #5a4735; border-radius: 8px; background: #17120e; }
+.riskOverviewHeading { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+.riskOverviewHeading > div { display: grid; gap: 4px; }
+.riskOverviewHeading span { color: #c99766; font: 600 .65rem var(--font-geist-mono), monospace; letter-spacing: .08em; text-transform: uppercase; }
+.riskOverviewHeading strong { color: #f0ddd0; font-size: 1rem; }
+.riskOverviewHeading b { flex: none; padding: 5px 8px; border-radius: 4px; background: #302114; color: #efc397; font: 600 .7rem var(--font-geist-mono), monospace; }
+.riskOverview > p { max-width: 850px; margin: 11px 0 16px; color: #a89b91; font-size: .75rem; line-height: 1.7; }
+.riskGroups { display: grid; gap: 12px; }
+.riskGroups section { padding: 14px; border: 1px solid #3c3027; border-radius: 6px; background: #100d0a; }
+.riskGroups h3 { margin: 0 0 10px; color: #dab58f; font-size: .8rem; }
+.riskGroups ol { display: grid; gap: 7px; margin: 0; padding-left: 24px; }
+.riskGroups li { padding-left: 3px; color: #d2c6bc; font-size: .78rem; line-height: 1.55; }
+.riskOverview small { display: block; margin-top: 13px; color: #796b60; font: 400 .65rem var(--font-geist-mono), monospace; }
 .businessExcerpt { max-height: 380px; overflow: auto; margin: 0; padding: 20px; border-left: 3px solid var(--mint); border-radius: 0 7px 7px 0; background: #0c141b; color: #c7d3dc; font-size: .84rem; line-height: 1.85; white-space: pre-line; }
 .riskExcerpt { max-height: 380px; overflow: auto; margin: 0; padding: 20px; border-left: 3px solid #c28b55; border-radius: 0 7px 7px 0; background: #17120e; color: #d4c9bf; font-size: .84rem; line-height: 1.85; white-space: pre-line; }
 .businessMeta { display: flex; flex-wrap: wrap; gap: 10px 24px; margin: 18px 0; }
@@ -91,6 +104,8 @@
   .risks { margin-top: 20px; padding: 18px; }
   .businessExcerpt,
   .riskExcerpt { max-height: 330px; padding: 15px; }
+  .riskOverview { padding: 15px; }
+  .riskOverviewHeading { display: grid; }
   .businessActions { display: grid; }
   .filingList > li { padding: 15px; }
   .filingActions { display: grid; }

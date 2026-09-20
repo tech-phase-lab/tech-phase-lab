@@ -61,6 +61,7 @@ export type RiskSection = {
   accessionNumber: string;
   heading: string;
   extractionMethod: "form-item" | "cross-referenced-risk-factors";
+  overview: RiskOverview | null;
   excerpt: string;
   sectionCharacters: number;
   truncated: boolean;
@@ -70,7 +71,14 @@ export type RiskSection = {
   sourceSha256: string;
 };
 
-export type ExtractedRiskSection = Pick<RiskSection, "heading" | "extractionMethod" | "excerpt" | "sectionCharacters" | "truncated">;
+export type RiskOverview = {
+  heading: string;
+  extractionMethod: "issuer-risk-summary" | "issuer-risk-overview";
+  groups: { heading: string | null; items: string[] }[];
+  itemCount: number;
+};
+
+export type ExtractedRiskSection = Pick<RiskSection, "heading" | "extractionMethod" | "overview" | "excerpt" | "sectionCharacters" | "truncated">;
 
 type SecDirectoryPayload = { fields?: unknown; data?: unknown };
 type SecSubmissionPayload = {
@@ -392,6 +400,89 @@ function crossReferencedRiskFactors(text: string) {
   return candidates.toSorted((a, b) => b.length - a.length)[0]?.value ?? null;
 }
 
+function riskOverviewLine(value: string, maxLength = 500) {
+  const normalized = value.replace(/^\s*[•·▪◦]\s*/, "").replace(/\s+/g, " ").trim();
+  if (normalized.length < 24 || normalized.length > maxLength) return null;
+  if (/^(?:table of contents|strategic report|corporate governance|sustainability|financials)$/i.test(normalized)) return null;
+  if (/^\d{1,3}$/.test(normalized)) return null;
+  return normalized;
+}
+
+function deduplicateRiskItems(items: string[]) {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    const key = item.toLocaleLowerCase("en-US").replace(/[^a-z0-9]+/g, " ").trim();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function tenKRiskOverview(section: string): RiskOverview | null {
+  const start = section.search(/^\s*RISK\s+FACTORS\s+SUMMARY\s*$/im);
+  if (start < 0) return null;
+  const afterHeading = section.slice(start).replace(/^\s*RISK\s+FACTORS\s+SUMMARY\s*$/im, "");
+  const end = afterHeading.search(/^\s*RISK\s+FACTORS\s*$/im);
+  if (end < 0 || end > 30_000) return null;
+  const lines = afterHeading.slice(0, end).split("\n").map((line) => line.trim()).filter(Boolean);
+  const groups: { heading: string | null; items: string[] }[] = [];
+  let group: { heading: string | null; items: string[] } | null = null;
+  let currentItem: string | null = null;
+  const finishItem = () => {
+    if (!group || !currentItem) return;
+    const item = riskOverviewLine(currentItem);
+    if (item) group.items.push(item);
+    currentItem = null;
+  };
+  const finishGroup = () => {
+    finishItem();
+    if (group?.items.length) groups.push({ ...group, items: deduplicateRiskItems(group.items) });
+  };
+  for (const line of lines) {
+    if (/^RISKS?\s+RELATED\s+TO\b/i.test(line)) {
+      finishGroup();
+      group = { heading: riskOverviewLine(line, 180), items: [] };
+      continue;
+    }
+    if (/^\s*[•·▪◦]\s*/.test(line)) {
+      finishItem();
+      group ??= { heading: null, items: [] };
+      currentItem = line;
+      continue;
+    }
+    if (currentItem && !/^(?:table of contents|\d{1,3})$/i.test(line)) currentItem += ` ${line}`;
+  }
+  finishGroup();
+  const itemCount = groups.reduce((count, candidate) => count + candidate.items.length, 0);
+  if (itemCount < 3 || itemCount > 40) return null;
+  return { heading: "Risk Factors Summary", extractionMethod: "issuer-risk-summary", groups, itemCount };
+}
+
+function twentyFRiskOverview(text: string): RiskOverview | null {
+  const starts = allMatches(text, /^\s*OVERVIEW\s+OF\s+RISK\s+FACTORS\s*$/gim);
+  const candidates = starts.flatMap((start) => {
+    const bounded = text.slice(start.index + start.length, Math.min(text.length, start.index + start.length + 40_000));
+    const end = bounded.search(/^\s*(?:STRATEGIC\s+REPORT|RISK\s+FACTORS)\s*$/im);
+    if (end < 0) return [];
+    const items = deduplicateRiskItems(bounded.slice(0, end).split("\n").flatMap((line) => {
+      const item = riskOverviewLine(line, 320);
+      if (!item || /^(?:risk|type|factor|risk type|risk factor)$/i.test(item)) return [];
+      return [item];
+    }));
+    const signaled = items.filter((item) => /\b(?:risk|could|may|depend|failure|uncertain|competition|cyclical|adversely|protect|unable|challenge|exposed|subject|restriction|not\s+declare)\b/i.test(item)).length;
+    if (items.length < 3 || items.length > 40 || signaled / items.length < 0.7) return [];
+    return [{ items, signaled }];
+  });
+  const overview = candidates.toSorted((a, b) => b.signaled - a.signaled || b.items.length - a.items.length)[0];
+  if (!overview) return null;
+  return {
+    heading: "Overview of risk factors",
+    extractionMethod: "issuer-risk-overview",
+    groups: [{ heading: null, items: overview.items }],
+    itemCount: overview.items.length,
+  };
+}
+
 export function extractRiskSection(html: string, form: string, excerptLimit = 4_000): ExtractedRiskSection | null {
   if (typeof html !== "string" || html.length < 500 || html.length > 30_000_000) return null;
   const text = filingHtmlToText(html);
@@ -411,9 +502,11 @@ export function extractRiskSection(html: string, form: string, excerptLimit = 4_
   const referencedRisks = form === "20-F" ? crossReferencedRiskFactors(text) : null;
   const section = referencedRisks ?? itemSection;
   if (!section || !looksLikeNarrativeSection(section)) return null;
+  const overview = form === "10-K" ? tenKRiskOverview(section) : twentyFRiskOverview(text);
   return {
     heading: referencedRisks ? "Risk factors — official annual report section" : form === "10-K" ? "Item 1A. Risk Factors" : "Item 3.D. Risk Factors",
     extractionMethod: referencedRisks ? "cross-referenced-risk-factors" : "form-item",
+    overview,
     ...boundedExcerpt(section, excerptLimit),
   };
 }

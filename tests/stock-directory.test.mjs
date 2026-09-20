@@ -84,6 +84,24 @@ test("business-section extraction ignores a table of contents and returns bounde
   assert.ok(section.sectionCharacters > 1_000);
 });
 
+test("10-K risk extraction preserves an explicit issuer summary and its filing order", () => {
+  const detailedRisk = "Our operations depend on complex technology and suppliers, which may materially affect our business and financial results. ".repeat(20);
+  const html = `<html><body><h1>ITEM 1A. RISK FACTORS</h1>
+    <p>Risk Factors Summary</p><h2>Risks Related to Our Industry and Markets</h2>
+    <p>• Failure to meet changing customer needs could adversely affect our financial results.</p>
+    <p>• Competition may reduce our market share and operating margins.</p>
+    <h2>Risks Related to Operations</h2><p>• Dependence on third-party suppliers could disrupt product delivery.</p>
+    <h2>Risk Factors</h2><p>${detailedRisk}</p><h1>ITEM 1B. UNRESOLVED STAFF COMMENTS</h1>
+  </body></html>`;
+  const section = extractRiskSection(html, "10-K");
+  assert.ok(section?.overview);
+  assert.equal(section.overview.extractionMethod, "issuer-risk-summary");
+  assert.equal(section.overview.itemCount, 3);
+  assert.equal(section.overview.groups.length, 2);
+  assert.equal(section.overview.groups[0].heading, "Risks Related to Our Industry and Markets");
+  assert.match(section.overview.groups[1].items[0], /^Dependence on third-party suppliers/);
+});
+
 test("business-section extraction supports 20-F and withholds unverifiable text", () => {
   const paragraph = "The company develops semiconductor manufacturing systems and serves customers around the world. ".repeat(16);
   const html = `<html><body><h2>ITEM 4. INFORMATION ON THE COMPANY</h2><p>${paragraph}</p><h2>ITEM 4A. UNRESOLVED STAFF COMMENTS</h2></body></html>`;
@@ -124,6 +142,7 @@ test("risk extraction ignores a table of contents and returns bounded 10-K Item 
   assert.match(section.excerpt, /^Our business is exposed to supply constraints/);
   assert.equal(section.truncated, true);
   assert.ok(section.sectionCharacters > 1_000);
+  assert.equal(section.overview, null);
 });
 
 test("risk extraction supports direct 20-F Item 3.D and withholds reference tables", () => {
@@ -153,6 +172,23 @@ test("20-F risk extraction resolves a verified annual-report section without sta
   assert.equal(section.excerpt.includes("FORM 20-F CAPTION"), false);
 });
 
+test("20-F risk extraction exposes only a verified issuer overview list", () => {
+  const overview = [
+    "Our future success depends on responding to technological developments in our industry",
+    "The success of new product introductions is uncertain and depends on our research programs",
+    "We face intense competition that could adversely affect our business",
+    "We are exposed to financial risks including liquidity and foreign exchange risk",
+  ];
+  const narrative = "We face risks that could materially affect operations, financial results and reputation. Customers may delay orders and suppliers may not deliver critical components. ".repeat(20);
+  const html = `<html><body><h2>Overview of risk factors</h2><p>Risk type</p><p>Risk factor</p>${overview.map((item) => `<p>${item}</p>`).join("")}<h2>STRATEGIC REPORT</h2>
+    <h2>ITEM 3. KEY INFORMATION</h2><h3>D. RISK FACTORS</h3><p>${narrative}</p><h2>ITEM 4. INFORMATION ON THE COMPANY</h2></body></html>`;
+  const section = extractRiskSection(html, "20-F");
+  assert.ok(section?.overview);
+  assert.equal(section.overview.extractionMethod, "issuer-risk-overview");
+  assert.deepEqual(section.overview.groups[0].items, overview);
+  assert.equal(section.overview.itemCount, 4);
+});
+
 test("stock search UI separates free identity data from licensed prices and news", async () => {
   const [page, route, dashboard] = await Promise.all([
     readFile(new URL("../app/research/stocks/stock-directory.tsx", import.meta.url), "utf8"),
@@ -169,6 +205,8 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /主要リスク — 年次報告書の原文/);
   assert.match(page, /リスク見出しを検証/);
   assert.match(page, /20-Fリスク参照先を検証/);
+  assert.match(page, /リスク早見表（英語原文）/);
+  assert.match(page, /企業が年次報告書で要約・一覧として明示した項目だけ/);
   assert.match(page, /リスクを推測で補完しません/);
   assert.match(page, /businessRequest\.current \+= 1/);
   assert.match(page, /リアルタイム通知ではありません/);
