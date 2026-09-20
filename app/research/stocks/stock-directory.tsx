@@ -55,12 +55,16 @@ export default function StockDirectory() {
   const profileRequest = useRef(0);
   const businessRequest = useRef(0);
   const marketTarget = useRef<HTMLDivElement>(null);
+  const marketTicker = profile?.ticker ?? null;
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
 
   useEffect(() => {
-    if (!profileLoading || !selectedResultKey) return;
-    marketTarget.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [profileLoading, selectedResultKey]);
+    if (!selectedResultKey || (!profileLoading && !marketTicker)) return;
+    const frame = window.requestAnimationFrame(() => {
+      marketTarget.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [marketTicker, profileLoading, selectedResultKey]);
 
   useEffect(() => {
     const q = query.trim();
