@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import type { StockDirectoryEntry, StockProfile } from "@/lib/research/stock-directory";
+import type { BusinessSection, StockDirectoryEntry, StockProfile } from "@/lib/research/stock-directory";
 import { useResearchLanguage } from "../use-research-language";
 import base from "../research.module.css";
 import styles from "./stocks.module.css";
@@ -10,6 +10,7 @@ import filingStyles from "./filings.module.css";
 
 type SearchResponse = { ok: boolean; results?: StockDirectoryEntry[]; error?: string; source?: string; asOf?: string };
 type ProfileResponse = { ok: boolean; profile?: StockProfile; error?: string; profileSource?: string; asOf?: string };
+type BusinessResponse = { ok: boolean; business?: BusinessSection; error?: string };
 
 function exchangeLabel(exchange: string) {
   return exchange === "Nasdaq" ? "NASDAQ" : exchange.toUpperCase();
@@ -34,19 +35,27 @@ export default function StockDirectory() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<StockDirectoryEntry[]>([]);
   const [profile, setProfile] = useState<StockProfile | null>(null);
+  const [business, setBusiness] = useState<BusinessSection | null>(null);
   const [loading, setLoading] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
+  const [businessLoading, setBusinessLoading] = useState(false);
+  const [businessUnavailable, setBusinessUnavailable] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [asOf, setAsOf] = useState<string | null>(null);
   const searchRequest = useRef(0);
   const profileRequest = useRef(0);
+  const businessRequest = useRef(0);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
 
   useEffect(() => {
     const q = query.trim();
     const requestId = ++searchRequest.current;
     profileRequest.current += 1;
+    businessRequest.current += 1;
     setProfile(null);
+    setBusiness(null);
+    setBusinessLoading(false);
+    setBusinessUnavailable(false);
     setError(null);
     if (!q) { setResults([]); setLoading(false); return; }
     setLoading(true);
@@ -72,7 +81,11 @@ export default function StockDirectory() {
 
   async function selectStock(entry: StockDirectoryEntry) {
     const requestId = ++profileRequest.current;
+    businessRequest.current += 1;
     setProfileLoading(true);
+    setBusiness(null);
+    setBusinessLoading(false);
+    setBusinessUnavailable(false);
     setError(null);
     try {
       const response = await fetch(`/api/research/stocks?ticker=${encodeURIComponent(entry.ticker)}`);
@@ -81,11 +94,32 @@ export default function StockDirectory() {
       if (!response.ok || !data.ok || !data.profile) throw new Error(data.error || "profile-failed");
       setProfile(data.profile);
       setAsOf(data.asOf ?? asOf);
+      if (data.profile.latestAnnualFiling) void loadBusiness(entry.ticker);
     } catch (reason) {
       if (requestId !== profileRequest.current) return;
       setError(reason instanceof Error ? reason.message : "profile-failed");
     } finally {
       if (requestId === profileRequest.current) setProfileLoading(false);
+    }
+  }
+
+  async function loadBusiness(ticker: string) {
+    const requestId = ++businessRequest.current;
+    setBusinessLoading(true);
+    setBusinessUnavailable(false);
+    try {
+      const response = await fetch(`/api/research/stocks?ticker=${encodeURIComponent(ticker)}&view=business`);
+      const data = await response.json() as BusinessResponse;
+      if (requestId !== businessRequest.current) return;
+      if (!response.ok || !data.ok || !data.business) {
+        if (response.status === 404 || response.status === 422) { setBusinessUnavailable(true); return; }
+        throw new Error(data.error || "business-section-failed");
+      }
+      setBusiness(data.business);
+    } catch {
+      if (requestId === businessRequest.current) setBusinessUnavailable(true);
+    } finally {
+      if (requestId === businessRequest.current) setBusinessLoading(false);
     }
   }
 
@@ -127,6 +161,17 @@ export default function StockDirectory() {
           </> : <div className={styles.profileEmpty}><span className={styles.profileIcon}>TP</span><strong>{t("銘柄を選ぶと企業情報を表示", "Select a stock to view its profile")}</strong><p>{t("今は企業識別情報を表示します。決算、公式ニュース、株価は検証状態を分けて順次追加します。", "This preview starts with company identity. Filings, official news, and prices will be added with separate verification states.")}</p></div>}
         </aside>
       </div>
+
+      {profile && <section className={filingStyles.business} aria-labelledby="business-section-title" aria-busy={businessLoading}>
+        <div className={styles.sectionHeading}><div><p>OFFICIAL BUSINESS DESCRIPTION</p><h2 id="business-section-title">{t("どんな企業か — 年次報告書の原文", "What the company does — annual filing source")}</h2></div>{business && <span>{business.form} · {business.filingDate}</span>}</div>
+        {businessLoading ? <div className={filingStyles.businessStatus}><span className={styles.loader} /><strong>{t("SEC年次報告書の事業説明を確認中", "Extracting the business section from the SEC annual filing")}</strong></div> : business ? <>
+          <div className={filingStyles.evidenceBar}><span>{t("一次情報から機械抽出", "Machine-extracted from primary source")}</span><span>{business.heading}</span><span>{t("原文照合用SHA", "Source SHA")} {business.sourceSha256.slice(0, 12)}</span></div>
+          <blockquote className={filingStyles.businessExcerpt}>{business.excerpt}</blockquote>
+          <dl className={filingStyles.businessMeta}><div><dt>{t("書類", "Form")}</dt><dd>{business.form}</dd></div><div><dt>{t("提出日", "Filed")}</dt><dd>{business.filingDate}</dd></div>{business.reportDate && <div><dt>{t("対象期末", "Period end")}</dt><dd>{business.reportDate}</dd></div>}<div><dt>{t("取得時刻", "Retrieved")}</dt><dd><time dateTime={business.retrievedAt}>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", dateStyle: "medium", timeStyle: "short" }).format(new Date(business.retrievedAt))} JST</time></dd></div><div><dt>{t("抽出範囲", "Extracted section")}</dt><dd>{business.sectionCharacters.toLocaleString(lang === "ja" ? "ja-JP" : "en-US")}{t("文字", " characters")}{business.truncated ? t("（表示は冒頭のみ）", " (opening excerpt shown)") : ""}</dd></div></dl>
+          <div className={filingStyles.businessActions}><a href={business.documentUrl} target="_blank" rel="noreferrer">{t("SEC原文で続きを確認 ↗", "Continue in the SEC filing ↗")}</a><a href={business.filingIndexUrl} target="_blank" rel="noreferrer">{t("添付資料一覧 ↗", "Filing index ↗")}</a></div>
+          <p className={filingStyles.businessNote}>{t("これは企業自身が提出した英語原文の抜粋です。Tech Phaseによる日本語要約・評価ではありません。見出し構造を判定できない書類は推測せず表示を止めます。", "This is an English excerpt filed by the company, not a Tech Phase summary or rating. If the filing structure cannot be verified, the excerpt is withheld rather than guessed.")}</p>
+        </> : <div className={filingStyles.businessStatus}><strong>{businessUnavailable ? t("事業説明を安全に抽出できませんでした", "A business section could not be safely extracted") : t("対象の10-K／20-Fが見つかりません", "No eligible 10-K or 20-F was found")}</strong><p>{t("SEC原文へのリンクは下の提出書類一覧から確認できます。企業概要を推測で補完しません。", "The original filing remains available below. Tech Phase does not fill this gap with an inferred company description.")}</p></div>}
+      </section>}
 
       {profile && <section className={filingStyles.filings} aria-labelledby="recent-filings-title">
         <div className={styles.sectionHeading}><div><p>RECENT SEC FILINGS</p><h2 id="recent-filings-title">{t("最新の重要提出書類", "Recent material filings")}</h2></div><span>{profile.recentFilings.length}{t("件", " filings")}</span></div>

@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { normalizeTicker, parseRecentFilings, parseSecDirectory, parseSecProfile, searchDirectory, stockDirectoryIssues } from "../lib/research/stock-directory.ts";
+import { extractBusinessSection, normalizeTicker, parseLatestAnnualFiling, parseRecentFilings, parseSecDirectory, parseSecProfile, searchDirectory, stockDirectoryIssues } from "../lib/research/stock-directory.ts";
 
 function payload() {
   const data = Array.from({ length: 120 }, (_, index) => [1000000 + index, `Example Company ${index}`, `X${index}`, index % 2 ? "Nasdaq" : "NYSE"]);
@@ -31,6 +31,7 @@ test("profile parsing keeps only bounded SEC identity fields and official links"
   assert.equal(profile.sicDescription, "Semiconductors & Related Devices");
   assert.equal(profile.secProfileUrl, "https://www.sec.gov/edgar/browse/?CIK=1045810");
   assert.deepEqual(profile.recentFilings, []);
+  assert.equal(profile.latestAnnualFiling, null);
   assert.throws(() => parseSecProfile(entry, { cik: 1 }), /sec-profile-cik-mismatch/);
   assert.equal(normalizeTicker(" brk-b "), "BRK-B");
   assert.equal(normalizeTicker("../../bad"), null);
@@ -55,6 +56,43 @@ test("recent SEC filings include material forms and construct only bounded archi
   assert.match(filings[1].filingIndexUrl, /0001045810-26-000121-index\.html$/);
 });
 
+test("latest annual filing selects an original 10-K or 20-F and skips amendments", () => {
+  const filing = parseLatestAnnualFiling(1045810, { recent: {
+    accessionNumber: ["0001045810-26-000125", "0001045810-26-000124", "0001045810-26-000123"],
+    form: ["10-K/A", "8-K", "10-K"],
+    filingDate: ["2026-03-03", "2026-03-02", "2026-02-28"],
+    reportDate: ["2026-01-25", "2026-03-02", "2026-01-25"],
+    acceptanceDateTime: ["", "", ""], items: ["", "", ""], primaryDocDescription: ["", "", "Annual report"],
+    primaryDocument: ["amendment.htm", "current.htm", "annual.htm"],
+  } });
+  assert.equal(filing?.form, "10-K");
+  assert.equal(filing?.documentUrl, "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000123/annual.htm");
+});
+
+test("business-section extraction ignores a table of contents and returns bounded 10-K evidence", () => {
+  const paragraph = "NVIDIA designs accelerated computing platforms and related software for data center and other markets. ".repeat(18);
+  const html = `<html><head><style>.hidden{display:none}</style><script>ITEM 1. BUSINESS fake script</script></head><body>
+    <p>Table of contents</p><p>ITEM 1. BUSINESS</p><p>3</p><p>ITEM 1A. RISK FACTORS</p>
+    <h1>ITEM 1. BUSINESS</h1><p>${paragraph}</p><h1>ITEM 1A. RISK FACTORS</h1><p>Risks</p></body></html>`;
+  const section = extractBusinessSection(html, "10-K", 900);
+  assert.ok(section);
+  assert.equal(section.heading, "Item 1. Business");
+  assert.match(section.excerpt, /^NVIDIA designs accelerated computing/);
+  assert.equal(section.excerpt.includes("fake script"), false);
+  assert.equal(section.truncated, true);
+  assert.ok(section.sectionCharacters > 1_000);
+});
+
+test("business-section extraction supports 20-F and withholds unverifiable text", () => {
+  const paragraph = "The company develops semiconductor manufacturing systems and serves customers around the world. ".repeat(16);
+  const html = `<html><body><h2>ITEM 4. INFORMATION ON THE COMPANY</h2><p>${paragraph}</p><h2>ITEM 4A. UNRESOLVED STAFF COMMENTS</h2></body></html>`;
+  const section = extractBusinessSection(html, "20-F");
+  assert.equal(section?.heading, "Item 4. Information on the Company");
+  assert.match(section?.excerpt ?? "", /^The company develops semiconductor/);
+  assert.equal(extractBusinessSection(`<html><body>${"Unstructured prose. ".repeat(80)}</body></html>`, "10-K"), null);
+  assert.equal(extractBusinessSection(html, "40-F"), null);
+});
+
 test("stock search UI separates free identity data from licensed prices and news", async () => {
   const [page, route, dashboard] = await Promise.all([
     readFile(new URL("../app/research/stocks/stock-directory.tsx", import.meta.url), "utf8"),
@@ -65,11 +103,17 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /株価は未接続/);
   assert.match(page, /ニュース権利と分離/);
   assert.match(page, /最新の重要提出書類/);
+  assert.match(page, /どんな企業か — 年次報告書の原文/);
+  assert.match(page, /Tech Phaseによる日本語要約・評価ではありません/);
+  assert.match(page, /businessRequest\.current \+= 1/);
   assert.match(page, /リアルタイム通知ではありません/);
   assert.match(page, /profileRequest\.current \+= 1/);
   assert.match(page, /SECは名簿の正確性・網羅性を保証していません/);
   assert.match(route, /company_tickers_exchange\.json/);
   assert.match(route, /secJson\(directoryUrl, 86_400\)/);
   assert.match(route, /AbortSignal\.timeout\(8_000\)/);
+  assert.match(route, /AbortSignal\.timeout\(12_000\)/);
+  assert.match(route, /maxFilingBytes = 12_000_000/);
+  assert.match(route, /createHash\("sha256"\)/);
   assert.match(dashboard, /\/research\/stocks/);
 });
