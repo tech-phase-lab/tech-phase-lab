@@ -10,6 +10,8 @@ const stateNames = { error: "取得エラー", fetched: "取得済み", unfetche
 const reviewNames = { pending: "確認待ち", approved: "採用", held: "保留", rejected: "却下" };
 const historyNames: Record<string, string> = { "first-fetch": "初回取得", changed: "応答の変化を検出", "fetch-error": "取得に失敗", approved: "採用を記録", held: "保留を記録", rejected: "却下を記録" };
 const errorNames: Record<string, string> = { "http-403": "配信元が取得を拒否（HTTP 403）", timeout: "応答待ちでタイムアウト", "no-links": "発表リンクを抽出できませんでした", "fetch-error": "資料の取得に失敗" };
+const impactNames = { positive: "好影響", negative: "悪影響", mixed: "好悪材料", neutral: "中立", uncertain: "判断保留" };
+const confidenceNames = { high: "高", medium: "中", low: "低" };
 function time(value: string | null) {
   if (!value) return "未取得";
   return new Intl.DateTimeFormat("ja-JP", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" }).format(new Date(value));
@@ -68,6 +70,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
   const counts = intakeCounts(snapshot.sources);
   const coverage = coverageCounts(snapshot);
   const events = snapshot.events ?? [];
+  const briefs = snapshot.briefs ?? [];
   const visible = filterSources(snapshot.sources, query, ticker, state, review, titles, sector);
   const selectedProviders = providers.filter(p => (sector === "all" || p.sector === sector) && (ticker === "all" || ticker === p.ticker));
   const displayed = visible.slice((page - 1) * 20, page * 20);
@@ -88,6 +91,16 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
           <h3>{event.title || title(event.url)}</h3>
           <dl className={styles.dates}><div><dt>初回検知（JST）</dt><dd>{time(event.detected_at)}</dd></div><div><dt>本文取得（JST）</dt><dd>{time(event.body_fetched_at ?? null)}</dd></div><div><dt>検知→本文取得</dt><dd>{duration(event.detection_to_body_ms)}</dd></div><div><dt>発表日</dt><dd>{event.published_on ?? "原文で確認"}</dd></div></dl>
           <div className={styles.sourceFooter}><a href={event.url} target="_blank" rel="noopener noreferrer">公式原文を開く ↗</a><span>要約前の確定情報</span></div>
+        </article></li>)}</ul>}
+      </section>
+      <section aria-labelledby="briefs-title" className={styles.queue}><div className={styles.sectionTitle}><h2 id="briefs-title">人間確認済みの速報要約</h2><span>公開ゲート通過：{briefs.length}件</span></div>
+        <p className={styles.coverageNote}>現在の公式原文とSHAが一致し、根拠引用・数値を照合したうえで人間が承認した版だけを表示します。未承認、原文変更、最新取得エラーのある要約は表示しません。</p>
+        {briefs.length === 0 ? <div className={styles.empty}><h3>承認済みの速報要約はまだありません</h3><p>下書きは運営レビューを通過するまで公開候補に含めません。</p></div> : <ul className={styles.briefs}>{briefs.slice(0, 12).map(brief => <li key={`${brief.url}-${brief.source_sha256}`}><article className={styles.brief}>
+          <div className={styles.briefHead}><div className={styles.tags}><b>{brief.ticker}</b><span className={styles.good}>人間確認済み</span><span className={styles.neutral}>{impactNames[brief.impact_label]}</span></div><span className={styles.confidence}>確信度 {confidenceNames[brief.confidence]}</span></div>
+          <h3>{brief.title || title(brief.url)}</h3>
+          <div className={styles.briefCopy}><section><h4>確認できた事実</h4><p>{brief.summary_ja}</p></section><section><h4>影響と未確認事項</h4><p>{brief.impact_ja}</p></section></div>
+          <dl className={styles.briefDates}><div><dt>発表日</dt><dd>{brief.published_on ?? "原文で確認"}</dd></div><div><dt>初回検知（JST）</dt><dd>{time(brief.detected_at)}</dd></div><div><dt>編集確認（JST）</dt><dd>{time(brief.reviewed_at)}</dd></div></dl>
+          <div className={styles.sourceFooter}><a href={brief.url} target="_blank" rel="noopener noreferrer">根拠となる公式原文 ↗</a><span>原文識別値 {brief.source_sha256.slice(0, 12)}…</span></div>
         </article></li>)}</ul>}
       </section>
       <section aria-label="銘柄の対応状況" className={styles.stats}>

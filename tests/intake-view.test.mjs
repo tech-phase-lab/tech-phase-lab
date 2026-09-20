@@ -60,6 +60,31 @@ test("unsafe links, duplicate records and broken history references fail validat
   assert.ok(snapshotIssues({ ...snapshot, events: [{ id: 1, url: source.url, ticker: source.ticker, detected_at: snapshot.generatedAt, title: null, published_on: null, detection_to_body_ms: -1 }] }).includes("invalid-event-latency"));
 });
 
+test("reviewed briefs require current source identity, safe copy, status, and timestamps", () => {
+  const brief = {
+    url: source.url, ticker: source.ticker, title: "Official release", published_on: null,
+    detected_at: null, source_sha256: source.sha256,
+    summary_ja: "公式発表で確認できた事実を、根拠に沿って簡潔に説明します。",
+    impact_label: "mixed", impact_ja: "好材料と未確認事項を分け、追加確認が必要な点を明示します。",
+    confidence: "medium", status: "approved",
+    generated_at: snapshot.generatedAt, reviewed_at: snapshot.generatedAt,
+  };
+  assert.deepEqual(snapshotIssues({ ...snapshot, briefs: [brief] }), []);
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, status: "draft" }] }).includes("invalid-brief-status"));
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, source_sha256: "f".repeat(64) }] }).includes("invalid-brief-source"));
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, summary_ja: "<script>危険</script>" }] }).includes("invalid-brief-copy"));
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, reviewed_at: "2099-01-01T00:00:00Z" }] }).includes("invalid-brief-time"));
+});
+
+test("operations preview renders only reviewed briefs with evidence and review metadata", () => {
+  assert.match(intakeDashboard, /人間確認済みの速報要約/);
+  assert.match(intakeDashboard, /根拠となる公式原文/);
+  assert.match(intakeDashboard, /編集確認（JST）/);
+  assert.match(intakeDashboard, /確信度/);
+  assert.match(intakeDashboard, /原文識別値/);
+  assert.doesNotMatch(intakeDashboard, /brief\.reviewer|brief\.reviewReason/);
+});
+
 test("sector and company filters use the shared registry", () => {
   assert.equal(providers.length, 22);
   const sector = providerByTicker[source.ticker].sector;

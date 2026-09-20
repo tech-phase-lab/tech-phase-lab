@@ -73,6 +73,32 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(public["extracted_chars"], row["extracted_chars"])
         self.assertNotIn("extracted_text", public)
 
+    def test_snapshot_exposes_only_approved_brief_for_current_healthy_source(self):
+        body = b'''<html><body><main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main></body></html>'''
+        self.check(body)
+        sha = self.row()["sha256"]
+        m.save_brief_draft(
+            self.db, URL, sha,
+            "公式発表では、AI向け容量を2027年に増やす計画を示しています。",
+            "mixed",
+            "供給能力の拡大余地がある一方、実行状況と需要の確認が必要です。",
+            "medium",
+            {"summary": ["Capacity will increase in 2027."],
+             "impact": ["Execution remains subject to demand."]},
+        )
+        m.review_brief(self.db, URL, sha, "approved", "editor", "原文と根拠を確認")
+        brief = m.snapshot(self.db)["briefs"][0]
+        self.assertEqual(brief["ticker"], "NBIS")
+        self.assertEqual(brief["source_sha256"], sha)
+        self.assertEqual(brief["status"], "approved")
+        self.assertIn("reviewed_at", brief)
+        self.assertNotIn("reviewer", brief)
+        self.assertNotIn("review_reason", brief)
+
+        self.db.execute("UPDATE sources SET error='timeout' WHERE url=?", (URL,))
+        self.db.commit()
+        self.assertEqual(m.snapshot(self.db)["briefs"], [])
+
     def test_fetch_failure_uses_persisted_exponential_backoff(self):
         def fail(*_):
             raise TimeoutError("timeout")

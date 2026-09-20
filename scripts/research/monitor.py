@@ -913,9 +913,15 @@ def snapshot(db):
           ORDER BY e.id DESC LIMIT 200
         """)]
         briefs = [dict(r) for r in db.execute("""
-          SELECT url,source_sha256,summary_ja,impact_label,impact_ja,confidence,status,
-                 generated_at,reviewed_at
-          FROM briefs WHERE status='approved' ORDER BY reviewed_at DESC
+          SELECT b.url,s.ticker,s.title,s.published_on,e.detected_at,b.source_sha256,
+                 b.summary_ja,b.impact_label,b.impact_ja,b.confidence,b.status,
+                 b.generated_at,b.reviewed_at
+          FROM briefs b JOIN sources s ON s.url=b.url
+          LEFT JOIN release_events e ON e.url=b.url
+          WHERE b.status='approved' AND b.source_sha256=s.sha256
+            AND s.error IS NULL AND s.extracted_chars>0
+            AND b.reviewed_at IS NOT NULL
+          ORDER BY b.reviewed_at DESC
         """)]
     for row in sources + runs:
         row["error"] = public_error(row["error"])
