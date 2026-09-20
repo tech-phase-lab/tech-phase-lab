@@ -40,13 +40,15 @@ function monitorIssue(monitor: MonitorState | null) {
   if (issues.includes("monitor-stale")) return "巡回更新が停止しています";
   if (issues.includes("backup-failed")) return "DBバックアップに失敗しています";
   if (issues.includes("backup-overdue")) return "DBバックアップが期限を超過しています";
+  if (issues.includes("incident-watch-failed")) return "障害台帳の内部監視を再試行しています";
   return null;
 }
 function incidentStatus(monitor: MonitorState | null) {
   const incidents = monitor?.incidents;
   if (!incidents) return "障害台帳：状態取得待ち";
+  const watch = monitor?.incidentWatch?.healthy === true ? "内部監視正常" : "内部監視確認中";
   if (incidents.open) return `障害台帳：未復旧 ${incidents.open}件 · 通知候補 ${incidents.heldNotifications}件を保留中`;
-  return `障害台帳：未復旧なし · 通知候補 ${incidents.heldNotifications}件を保留中（外部送信OFF）`;
+  return `障害台帳：未復旧なし · ${watch} · 通知候補 ${incidents.heldNotifications}件を保留中（外部送信OFF）`;
 }
 
 export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: { snapshot: IntakeSnapshot; titles: Record<string, string> }) {

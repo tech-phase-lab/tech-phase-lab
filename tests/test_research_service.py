@@ -130,6 +130,8 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertTrue(state["backup"]["overdue"])
         self.assertIn("backup-overdue", state["health"]["issues"])
         self.assertEqual(state["health"]["status"], "degraded")
+        app.sync_health_incidents()
+        state = app.public_state()
         self.assertEqual(state["incidents"]["open"], 1)
         self.assertFalse(state["incidents"]["deliveryEnabled"])
         self.assertEqual(state["incidents"]["recent"][0]["errorCode"], "backup-overdue")
@@ -157,11 +159,45 @@ class ResearchServiceTests(unittest.TestCase):
         with app.state_lock:
             app.state["ready"] = True
             app.state["lastCycleAt"] = "2020-01-01T00:00:00+00:00"
+        app.sync_health_incidents()
         state = app.public_state()
         self.assertEqual(state["backup"]["status"], "failed")
         self.assertEqual(state["backup"]["lastError"], "backup-failed")
         self.assertCountEqual(state["health"]["issues"], ["monitor-stale", "backup-failed"])
+        self.assertEqual(state["incidents"]["open"], 2)
         self.assertNotIn("private path", json.dumps(state))
+
+    def test_public_health_reads_do_not_create_or_repeat_incidents(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        with app.state_lock:
+            app.state["ready"] = True
+            app.state["lastCycleAt"] = "2020-01-01T00:00:00+00:00"
+        first = app.public_state()
+        second = app.public_state()
+        self.assertEqual(first["health"]["issues"], ["monitor-stale"])
+        self.assertEqual(second["health"]["issues"], ["monitor-stale"])
+        self.assertEqual(second["incidents"]["total"], 0)
+        app.sync_health_incidents()
+        recorded = app.public_state()["incidents"]
+        self.assertEqual(recorded["open"], 1)
+        self.assertEqual(recorded["recent"][0]["occurrences"], 1)
+
+    def test_incident_watch_failure_is_visible_and_retried_without_raw_error(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        original = app.sync_health_incidents
+        with patch.object(app, "sync_health_incidents", side_effect=OSError("private database path must not leak")):
+            self.assertFalse(app.check_incident_watch_once())
+        failed = app.public_state()
+        self.assertIn("incident-watch-failed", failed["health"]["issues"])
+        self.assertEqual(failed["incidentWatch"]["lastError"], "incident-watch-failed")
+        self.assertNotIn("private database path", json.dumps(failed))
+        app.sync_health_incidents = original
+        self.assertTrue(app.check_incident_watch_once())
+        recovered = app.public_state()
+        self.assertNotIn("incident-watch-failed", recovered["health"]["issues"])
+        self.assertTrue(recovered["incidentWatch"]["healthy"])
+        self.assertEqual(recovered["incidents"]["open"], 0)
+        self.assertEqual(recovered["incidents"]["heldNotifications"], 2)
 
     def test_inline_exchange_evidence_is_not_refetched_as_an_article(self):
         inline_url = "https://openapi.twse.com.tw/v1/opendata/t187ap04_L?company=2330&date=1150918&time=153643&id=abc"

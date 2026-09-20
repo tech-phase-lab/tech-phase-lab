@@ -53,6 +53,7 @@ class AutomaticMonitor:
         self.backup_grace = positive_int("RESEARCH_BACKUP_GRACE_SECONDS", 600, 60)
         self.backup_retention = positive_int("RESEARCH_BACKUP_RETENTION", 24, 2)
         self.monitor_stale_seconds = positive_int("RESEARCH_MONITOR_STALE_SECONDS", 60, 15)
+        self.incident_check_seconds = positive_int("RESEARCH_INCIDENT_CHECK_SECONDS", 5, 1)
         self.backup_dir = Path(os.environ.get(
             "RESEARCH_BACKUP_DIR", str(self.db_path.parent / "backups")
         ))
@@ -101,22 +102,31 @@ class AutomaticMonitor:
                 "lastSuccessAt": None, "healthy": None, "backupCount": 0,
                 "lastError": None,
             },
+            "incidentWatch": {
+                "enabled": True, "intervalSeconds": self.incident_check_seconds,
+                "lastCheckAt": None, "healthy": None, "lastError": None,
+            },
             "companies": {},
         }
         self.thread = threading.Thread(target=self.run, name="research-monitor", daemon=True)
         self.generation_thread = threading.Thread(target=self.run_generation, name="brief-generator", daemon=True)
         self.backup_thread = threading.Thread(target=self.run_backup, name="database-backup", daemon=True)
+        self.incident_thread = threading.Thread(
+            target=self.run_incident_watch, name="incident-watch", daemon=True
+        )
 
     def start(self):
         self.thread.start()
         self.generation_thread.start()
         self.backup_thread.start()
+        self.incident_thread.start()
 
     def stop(self):
         self.stop_event.set()
         self.thread.join(timeout=15)
         self.generation_thread.join(timeout=45)
         self.backup_thread.join(timeout=15)
+        self.incident_thread.join(timeout=15)
 
     def interval_for(self, ticker):
         provider = monitor.PROVIDERS[ticker]
@@ -132,9 +142,8 @@ class AutomaticMonitor:
         result, links = monitor.collect_discovery(ticker, monitor.fetch, True)
         return result, links, max(0, round((time.monotonic() - started) * 1000))
 
-    def public_state(self):
-        with self.state_lock:
-            state = json.loads(json.dumps(self.state))
+    def derive_health(self, state):
+        """Add computed health fields to a private state copy and return issue codes."""
         cycle_age = timestamp_age_seconds(state["lastCycleAt"])
         state["lastCycleAgeSeconds"] = cycle_age
         backup = state["backup"]
@@ -161,11 +170,20 @@ class AutomaticMonitor:
             issues.append("backup-failed")
         elif backup["status"] == "overdue":
             issues.append("backup-overdue")
+        if state["incidentWatch"]["healthy"] is False:
+            issues.append("incident-watch-failed")
         state["health"] = {
             "status": "degraded" if issues else ("ready" if state["ready"] else "starting"),
             "issues": issues,
             "monitorStaleAfterSeconds": self.monitor_stale_seconds,
         }
+        return issues
+
+    def sync_health_incidents(self):
+        """Persist health transitions independently of traffic to the HTTP API."""
+        with self.state_lock:
+            state = json.loads(json.dumps(self.state))
+        issues = self.derive_health(state)
         with self.db_lock, monitor.connect(self.db_path) as db:
             if "monitor-stale" in issues:
                 monitor.record_operational_incident(
@@ -180,6 +198,55 @@ class AutomaticMonitor:
                 )
             else:
                 monitor.resolve_operational_incident(db, "backup:database")
+            if "incident-watch-failed" in issues:
+                monitor.record_operational_incident(
+                    db, "monitor:incident-watch", "monitor", "incident-watch",
+                    "critical", "incident-watch-failed"
+                )
+            else:
+                monitor.resolve_operational_incident(db, "monitor:incident-watch")
+        return issues
+
+    def check_incident_watch_once(self):
+        checked_at = utc_now()
+        with self.state_lock:
+            recovering = self.state["incidentWatch"]["healthy"] is False
+        try:
+            self.sync_health_incidents()
+        except Exception:
+            with self.state_lock:
+                self.state["incidentWatch"].update({
+                    "lastCheckAt": checked_at, "healthy": False,
+                    "lastError": "incident-watch-failed",
+                })
+            return False
+        with self.state_lock:
+            self.state["incidentWatch"].update({
+                "lastCheckAt": checked_at, "healthy": True, "lastError": None,
+            })
+        if recovering:
+            # The successful pass above records the watch failure that could not be
+            # written while storage was unavailable. A second pass closes it.
+            try:
+                self.sync_health_incidents()
+            except Exception:
+                with self.state_lock:
+                    self.state["incidentWatch"].update({
+                        "healthy": False, "lastError": "incident-watch-failed",
+                    })
+                return False
+        return True
+
+    def run_incident_watch(self):
+        while not self.stop_event.is_set():
+            self.check_incident_watch_once()
+            self.stop_event.wait(self.incident_check_seconds)
+
+    def public_state(self):
+        with self.state_lock:
+            state = json.loads(json.dumps(self.state))
+        self.derive_health(state)
+        with self.db_lock, monitor.connect(self.db_path) as db:
             state["generation"].update(monitor.generation_queue_stats(
                 db, self.generation_daily_limit, self.generation_token_limit
             ))

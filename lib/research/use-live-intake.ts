@@ -31,8 +31,12 @@ export type MonitorState = {
   };
   health?: {
     status: "starting" | "ready" | "degraded";
-    issues: Array<"monitor-stale" | "backup-failed" | "backup-overdue">;
+    issues: Array<"monitor-stale" | "backup-failed" | "backup-overdue" | "incident-watch-failed">;
     monitorStaleAfterSeconds: number;
+  };
+  incidentWatch?: {
+    enabled: boolean; intervalSeconds: number; lastCheckAt: string | null;
+    healthy: boolean | null; lastError: string | null;
   };
   incidents?: {
     open: number; total: number; heldNotifications: number; deliveryEnabled: boolean;

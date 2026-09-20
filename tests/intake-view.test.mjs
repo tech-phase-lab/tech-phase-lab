@@ -29,6 +29,8 @@ test("operations preview shows durable incident state while external delivery st
   assert.match(liveTypes, /heldNotifications/);
   assert.match(intakeDashboard, /障害台帳：未復旧/);
   assert.match(intakeDashboard, /外部送信OFF/);
+  assert.match(intakeDashboard, /内部監視正常/);
+  assert.match(intakeDashboard, /障害台帳の内部監視を再試行しています/);
 });
 
 test("latest failure wins over a previously successful fetch or editorial approval", () => {
