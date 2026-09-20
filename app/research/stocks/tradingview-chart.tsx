@@ -36,7 +36,7 @@ function TradingViewEmbed({ kind, symbol, lang }: { kind: WidgetKind; symbol: st
     script.async = true;
     script.src = kind === "compact"
       ? "https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js"
-      : "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+      : "https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js";
     script.textContent = JSON.stringify(kind === "compact" ? {
       symbol,
       width: "100%",
@@ -44,19 +44,20 @@ function TradingViewEmbed({ kind, symbol, lang }: { kind: WidgetKind; symbol: st
       colorTheme: "dark",
       isTransparent: true,
     } : {
-      autosize: true,
       symbol,
-      interval: "D",
-      timezone: "Asia/Tokyo",
-      theme: "dark",
-      style: "1",
+      width: "100%",
+      height: "100%",
       locale: lang === "ja" ? "ja" : "en",
+      dateRange: "12M",
+      colorTheme: "dark",
+      trendLineColor: "rgba(125, 224, 184, 1)",
+      underLineColor: "rgba(125, 224, 184, 0.28)",
+      underLineBottomColor: "rgba(125, 224, 184, 0)",
+      isTransparent: true,
+      autosize: true,
+      chartOnly: false,
+      noTimeScale: false,
       allow_symbol_change: false,
-      calendar: false,
-      details: true,
-      hide_side_toolbar: false,
-      save_image: false,
-      support_host: "https://www.tradingview.com",
     });
     script.onerror = () => setFailed(true);
     host.appendChild(script);
@@ -81,9 +82,9 @@ export function TradingViewChart({ ticker, exchange, name, lang }: { ticker: str
     </div>
     <div className={styles.viewTabs} role="tablist" aria-label={lang === "ja" ? "株価表示を切り替え" : "Switch price display"}>
       <button type="button" role="tab" aria-selected={view === "compact"} onClick={() => setView("compact")}>{lang === "ja" ? "小型の株価カード" : "Compact price card"}</button>
-      <button type="button" role="tab" aria-selected={view === "chart"} onClick={() => setView("chart")}>{lang === "ja" ? "詳細チャート" : "Detailed chart"}</button>
+      <button type="button" role="tab" aria-selected={view === "chart"} onClick={() => setView("chart")}>{lang === "ja" ? "値動きチャート" : "Price chart"}</button>
     </div>
     <TradingViewEmbed key={`${symbol}:${lang}:${view}`} kind={view} symbol={symbol} lang={lang} />
-    <div className={styles.note}><p>{lang === "ja" ? "無料ウィジェットによる参考表示です。米国株はTradingView側の利用可能市場データを使い、正確な遅延時間は保証されません。売買判断やTech Phaseの速報処理には使用しません。" : "This is a reference display from the free widget. U.S. stocks use market data available to TradingView; the exact delay is not guaranteed. It is not used for trading decisions or Tech Phase alert processing."}</p><a href={`https://www.tradingview.com/symbols/${symbol.replace(":", "-").replace(".", "-")}/`} target="_blank" rel="noreferrer">{lang === "ja" ? "TradingViewで確認 ↗" : "Open in TradingView ↗"}</a></div>
+    <div className={styles.note}><p>{lang === "ja" ? "市場データはTradingView提供。表示には遅延があり、Tech Phaseの速報判定とは独立しています。" : "Market data provided by TradingView. Displayed data is delayed and remains separate from Tech Phase alert decisions."}</p><a href={`https://www.tradingview.com/symbols/${symbol.replace(":", "-").replace(".", "-")}/`} target="_blank" rel="noreferrer">{lang === "ja" ? "TradingViewで確認 ↗" : "Open in TradingView ↗"}</a></div>
   </section>;
 }

@@ -234,9 +234,10 @@ test("annual-filing Japanese briefs reject numbers absent from their cited evide
 });
 
 test("stock search UI separates free identity data from licensed prices and news", async () => {
-  const [page, widget, route, dashboard, review] = await Promise.all([
+  const [page, widget, styles, route, dashboard, review] = await Promise.all([
     readFile(new URL("../app/research/stocks/stock-directory.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/tradingview-chart.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/research/stocks/stocks.module.css", import.meta.url), "utf8"),
     readFile(new URL("../app/api/research/stocks/route.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/research/research-dashboard.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/review/review-dashboard.tsx", import.meta.url), "utf8"),
@@ -264,11 +265,15 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /profileRequest\.current \+= 1/);
   assert.match(page, /SECは名簿の正確性・網羅性を保証していません/);
   assert.match(widget, /embed-widget-symbol-info\.js/);
-  assert.match(widget, /embed-widget-advanced-chart\.js/);
+  assert.match(widget, /embed-widget-mini-symbol-overview\.js/);
   assert.match(widget, /小型の株価カード/);
-  assert.match(widget, /詳細チャート/);
+  assert.match(widget, /値動きチャート/);
   assert.match(widget, /view, setView/);
   assert.match(widget, /allow_symbol_change: false/);
+  assert.doesNotMatch(widget, /無料ウィジェットによる参考表示/);
+  assert.match(widget, /市場データはTradingView提供/);
+  assert.match(styles, /\.hero h1\{[^}]*font-weight:650/);
+  assert.match(styles, /\.main \.search input:focus-visible\{outline:0\}/);
   assert.match(route, /company_tickers_exchange\.json/);
   assert.match(route, /secJson\(directoryUrl, 86_400\)/);
   assert.match(route, /AbortSignal\.timeout\(8_000\)/);
