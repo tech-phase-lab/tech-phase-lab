@@ -38,8 +38,14 @@ export type MonitorState = {
     enabled: boolean; intervalSeconds: number; lastCheckAt: string | null;
     healthy: boolean | null; lastError: string | null;
   };
+  notification?: {
+    requested: boolean; configured: boolean; enabled: boolean; intervalSeconds: number;
+    maxAttempts: number; attempts: number; delivered: number;
+    lastAttemptAt: string | null; lastSuccessAt: string | null; lastError: string | null;
+  };
   incidents?: {
-    open: number; total: number; heldNotifications: number; deliveryEnabled: boolean;
+    open: number; total: number; heldNotifications: number; pendingNotifications: number;
+    deliveredNotifications: number; deadNotifications: number; deliveryEnabled: boolean;
     recent: Array<{
       key: string; category: string; subject: string; severity: "warning" | "critical";
       status: "open" | "resolved"; revision: number; openedAt: string;

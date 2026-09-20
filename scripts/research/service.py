@@ -14,6 +14,7 @@ from urllib.parse import parse_qs, urlsplit
 
 import monitor
 import brief_generator
+import incident_delivery
 import persistence
 
 
@@ -54,6 +55,10 @@ class AutomaticMonitor:
         self.backup_retention = positive_int("RESEARCH_BACKUP_RETENTION", 24, 2)
         self.monitor_stale_seconds = positive_int("RESEARCH_MONITOR_STALE_SECONDS", 60, 15)
         self.incident_check_seconds = positive_int("RESEARCH_INCIDENT_CHECK_SECONDS", 5, 1)
+        self.notification_interval = positive_int("RESEARCH_INCIDENT_DELIVERY_INTERVAL_SECONDS", 5, 1)
+        self.notification_max_attempts = min(
+            20, positive_int("RESEARCH_INCIDENT_DELIVERY_MAX_ATTEMPTS", 5, 1)
+        )
         self.backup_dir = Path(os.environ.get(
             "RESEARCH_BACKUP_DIR", str(self.db_path.parent / "backups")
         ))
@@ -68,6 +73,15 @@ class AutomaticMonitor:
         except brief_generator.GenerationUnavailable:
             generation_configured = False
         self.auto_drafts_enabled = self.auto_drafts_requested and generation_configured
+        try:
+            self.notification_config = incident_delivery.configuration()
+            notification_configured = self.notification_config["configured"]
+            notification_error = None
+        except incident_delivery.DeliveryUnavailable as exc:
+            self.notification_config = {"requested": True, "configured": False, "enabled": False}
+            notification_configured = False
+            notification_error = str(exc)
+        self.notification_enabled = bool(self.notification_config.get("enabled"))
         configured = [value.strip().upper() for value in os.environ.get("RESEARCH_TICKERS", "").split(",") if value.strip()]
         unknown = sorted(set(configured) - set(monitor.PROVIDERS))
         if unknown:
@@ -106,6 +120,14 @@ class AutomaticMonitor:
                 "enabled": True, "intervalSeconds": self.incident_check_seconds,
                 "lastCheckAt": None, "healthy": None, "lastError": None,
             },
+            "notification": {
+                "requested": self.notification_config["requested"],
+                "configured": notification_configured, "enabled": self.notification_enabled,
+                "intervalSeconds": self.notification_interval,
+                "maxAttempts": self.notification_max_attempts,
+                "attempts": 0, "delivered": 0, "lastAttemptAt": None,
+                "lastSuccessAt": None, "lastError": notification_error,
+            },
             "companies": {},
         }
         self.thread = threading.Thread(target=self.run, name="research-monitor", daemon=True)
@@ -114,12 +136,16 @@ class AutomaticMonitor:
         self.incident_thread = threading.Thread(
             target=self.run_incident_watch, name="incident-watch", daemon=True
         )
+        self.notification_thread = threading.Thread(
+            target=self.run_notification_delivery, name="incident-delivery", daemon=True
+        )
 
     def start(self):
         self.thread.start()
         self.generation_thread.start()
         self.backup_thread.start()
         self.incident_thread.start()
+        self.notification_thread.start()
 
     def stop(self):
         self.stop_event.set()
@@ -127,6 +153,7 @@ class AutomaticMonitor:
         self.generation_thread.join(timeout=45)
         self.backup_thread.join(timeout=15)
         self.incident_thread.join(timeout=15)
+        self.notification_thread.join(timeout=15)
 
     def interval_for(self, ticker):
         provider = monitor.PROVIDERS[ticker]
@@ -242,6 +269,49 @@ class AutomaticMonitor:
             self.check_incident_watch_once()
             self.stop_event.wait(self.incident_check_seconds)
 
+    def process_incident_notification(self, transport=incident_delivery.send_webhook):
+        if not self.notification_enabled:
+            return None
+        attempted_at = utc_now()
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            claim = monitor.claim_incident_notification(
+                db, self.notification_config["startAt"], attempted_at
+            )
+        if not claim:
+            return None
+        error_code = None
+        try:
+            transport(self.notification_config, claim)
+        except incident_delivery.DeliveryUnavailable:
+            error_code = "notification-not-configured"
+        except incident_delivery.DeliveryFailed:
+            error_code = "notification-delivery-failed"
+        except Exception:
+            error_code = "notification-worker-failed"
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            outcome = monitor.finish_incident_notification(
+                db, claim, error_code=error_code,
+                max_attempts=self.notification_max_attempts,
+            )
+        with self.state_lock:
+            notification = self.state["notification"]
+            notification["attempts"] += 1
+            notification["lastAttemptAt"] = attempted_at
+            notification["lastError"] = error_code
+            if outcome == "delivered":
+                notification["delivered"] += 1
+                notification["lastSuccessAt"] = utc_now()
+        return outcome
+
+    def run_notification_delivery(self):
+        while not self.stop_event.is_set():
+            try:
+                self.process_incident_notification()
+            except Exception:
+                with self.state_lock:
+                    self.state["notification"]["lastError"] = "notification-worker-failed"
+            self.stop_event.wait(self.notification_interval)
+
     def public_state(self):
         with self.state_lock:
             state = json.loads(json.dumps(self.state))
@@ -250,7 +320,9 @@ class AutomaticMonitor:
             state["generation"].update(monitor.generation_queue_stats(
                 db, self.generation_daily_limit, self.generation_token_limit
             ))
-            state["incidents"] = monitor.operational_incident_summary(db)
+            state["incidents"] = monitor.operational_incident_summary(
+                db, delivery_enabled=self.notification_enabled
+            )
         return state
 
     def public_snapshot(self):

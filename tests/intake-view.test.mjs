@@ -27,8 +27,12 @@ test("operations preview exposes verified backup health without storage details"
 test("operations preview shows durable incident state while external delivery stays off", () => {
   assert.match(liveTypes, /incidents\?:/);
   assert.match(liveTypes, /heldNotifications/);
+  assert.match(liveTypes, /pendingNotifications/);
+  assert.match(liveTypes, /deadNotifications/);
   assert.match(intakeDashboard, /障害台帳：未復旧/);
   assert.match(intakeDashboard, /外部送信OFF/);
+  assert.match(intakeDashboard, /通知送信ON/);
+  assert.match(intakeDashboard, /再送確認が必要/);
   assert.match(intakeDashboard, /内部監視正常/);
   assert.match(intakeDashboard, /障害台帳の内部監視を再試行しています/);
 });

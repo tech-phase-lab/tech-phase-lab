@@ -115,6 +115,35 @@ class IntakeTests(unittest.TestCase):
                     self.db, key, "official-source", "NBIS", "warning", "timeout"
                 )
 
+    def test_incident_notification_retry_is_leased_and_bounded(self):
+        m.record_operational_incident(
+            self.db, "source:NBIS", "official-source", "NBIS", "warning", "timeout",
+            "2026-09-20T00:00:01+00:00",
+        )
+        first = m.claim_incident_notification(
+            self.db, "2026-09-20T00:00:00Z", "2026-09-20T00:00:02+00:00"
+        )
+        self.assertEqual(first["attempts"], 1)
+        self.assertEqual(m.finish_incident_notification(
+            self.db, first, "notification-delivery-failed",
+            "2026-09-20T00:00:03+00:00", max_attempts=2,
+        ), "retry")
+        self.assertIsNone(m.claim_incident_notification(
+            self.db, "2026-09-20T00:00:00Z", "2026-09-20T00:01:02+00:00"
+        ))
+        second = m.claim_incident_notification(
+            self.db, "2026-09-20T00:00:00Z", "2026-09-20T00:01:03+00:00"
+        )
+        self.assertEqual(second["attempts"], 2)
+        self.assertEqual(m.finish_incident_notification(
+            self.db, second, "notification-delivery-failed",
+            "2026-09-20T00:01:04+00:00", max_attempts=2,
+        ), "dead")
+        summary = m.operational_incident_summary(self.db, delivery_enabled=True)
+        self.assertEqual(summary["deadNotifications"], 1)
+        self.assertEqual(summary["pendingNotifications"], 0)
+        self.assertTrue(summary["deliveryEnabled"])
+
     def test_successful_historical_body_uses_background_recheck_interval(self):
         with patch.dict("os.environ", {
             "RESEARCH_BODY_RECHECK_SECONDS": "21600",

@@ -47,8 +47,13 @@ function incidentStatus(monitor: MonitorState | null) {
   const incidents = monitor?.incidents;
   if (!incidents) return "障害台帳：状態取得待ち";
   const watch = monitor?.incidentWatch?.healthy === true ? "内部監視正常" : "内部監視確認中";
-  if (incidents.open) return `障害台帳：未復旧 ${incidents.open}件 · 通知候補 ${incidents.heldNotifications}件を保留中`;
-  return `障害台帳：未復旧なし · ${watch} · 通知候補 ${incidents.heldNotifications}件を保留中（外部送信OFF）`;
+  const delivery = incidents.deliveryEnabled
+    ? incidents.deadNotifications
+      ? `通知停止 ${incidents.deadNotifications}件 · 再送確認が必要`
+      : `通知送信ON · 待機 ${incidents.pendingNotifications}件 · 配信済み ${incidents.deliveredNotifications}件`
+    : `通知候補 ${incidents.heldNotifications}件を保留中（外部送信OFF）`;
+  if (incidents.open) return `障害台帳：未復旧 ${incidents.open}件 · ${watch} · ${delivery}`;
+  return `障害台帳：未復旧なし · ${watch} · ${delivery}`;
 }
 
 export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: { snapshot: IntakeSnapshot; titles: Record<string, string> }) {

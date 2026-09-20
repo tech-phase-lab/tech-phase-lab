@@ -25,6 +25,10 @@ persistence_spec = importlib.util.spec_from_file_location("persistence", ROOT / 
 persistence = importlib.util.module_from_spec(persistence_spec)
 persistence_spec.loader.exec_module(persistence)
 sys.modules["persistence"] = persistence
+delivery_spec = importlib.util.spec_from_file_location("incident_delivery", ROOT / "scripts/research/incident_delivery.py")
+incident_delivery = importlib.util.module_from_spec(delivery_spec)
+delivery_spec.loader.exec_module(incident_delivery)
+sys.modules["incident_delivery"] = incident_delivery
 service_spec = importlib.util.spec_from_file_location("research_service", ROOT / "scripts/research/service.py")
 service = importlib.util.module_from_spec(service_spec)
 service_spec.loader.exec_module(service)
@@ -198,6 +202,66 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertTrue(recovered["incidentWatch"]["healthy"])
         self.assertEqual(recovered["incidents"]["open"], 0)
         self.assertEqual(recovered["incidents"]["heldNotifications"], 2)
+
+    def test_incident_delivery_is_fail_closed_by_default(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        with monitor.connect(self.db_path) as db:
+            monitor.record_operational_incident(
+                db, "source:NBIS", "official-source", "NBIS", "warning", "timeout"
+            )
+        sent = []
+        self.assertIsNone(app.process_incident_notification(
+            transport=lambda config, claim: sent.append((config, claim))
+        ))
+        self.assertEqual(sent, [])
+        state = app.public_state()
+        self.assertFalse(state["notification"]["enabled"])
+        self.assertFalse(state["incidents"]["deliveryEnabled"])
+        self.assertEqual(state["incidents"]["heldNotifications"], 1)
+
+    def test_explicit_cutover_delivers_only_new_incident_transitions(self):
+        environment = {
+            "RESEARCH_INCIDENT_DELIVERY_ENABLED": "true",
+            "RESEARCH_INCIDENT_DELIVERY_START_AT": "2026-09-20T00:00:00Z",
+            "RESEARCH_INCIDENT_WEBHOOK_URL": "https://alerts.example.com/incidents",
+            "RESEARCH_INCIDENT_WEBHOOK_TOKEN": "x" * 40,
+        }
+        with monitor.connect(self.db_path) as db:
+            monitor.record_operational_incident(
+                db, "source:OLD", "official-source", "OLD", "warning", "timeout",
+                "2026-09-19T23:59:59+00:00",
+            )
+            monitor.record_operational_incident(
+                db, "source:NBIS", "official-source", "NBIS", "critical", "http-403",
+                "2026-09-20T00:00:01+00:00",
+            )
+        delivered = []
+        with patch.dict("os.environ", environment, clear=False):
+            app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+            outcome = app.process_incident_notification(
+                transport=lambda config, claim: delivered.append(
+                    incident_delivery.public_payload(claim)
+                )
+            )
+        self.assertEqual(outcome, "delivered")
+        self.assertEqual(delivered[0]["incident"]["key"], "source:NBIS")
+        self.assertNotIn("url", delivered[0]["incident"])
+        state = app.public_state()
+        self.assertTrue(state["incidents"]["deliveryEnabled"])
+        self.assertEqual(state["incidents"]["heldNotifications"], 1)
+        self.assertEqual(state["incidents"]["deliveredNotifications"], 1)
+
+    def test_invalid_notification_configuration_never_attempts_delivery(self):
+        environment = {
+            "RESEARCH_INCIDENT_DELIVERY_ENABLED": "true",
+            "RESEARCH_INCIDENT_DELIVERY_START_AT": "2026-09-20T00:00:00Z",
+            "RESEARCH_INCIDENT_WEBHOOK_URL": "http://127.0.0.1/private",
+            "RESEARCH_INCIDENT_WEBHOOK_TOKEN": "x" * 40,
+        }
+        with patch.dict("os.environ", environment, clear=False):
+            app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        self.assertFalse(app.notification_enabled)
+        self.assertEqual(app.state["notification"]["lastError"], "notification-url-invalid")
 
     def test_inline_exchange_evidence_is_not_refetched_as_an_article(self):
         inline_url = "https://openapi.twse.com.tw/v1/opendata/t187ap04_L?company=2330&date=1150918&time=153643&id=abc"

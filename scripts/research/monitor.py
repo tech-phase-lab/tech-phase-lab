@@ -614,7 +614,96 @@ def resolve_operational_incident(db, incident_key, resolved_at=None):
     return True
 
 
-def operational_incident_summary(db, limit=20):
+def claim_incident_notification(db, activated_at, claimed_at=None, lease_seconds=120):
+    """Claim one eligible transition with a retry lease.
+
+    Rows older than the explicit cutover remain held so enabling a destination
+    cannot unexpectedly replay the full incident history.
+    """
+    claimed_at = claimed_at or now()
+    try:
+        activated = datetime.fromisoformat(activated_at.replace("Z", "+00:00"))
+        claimed = datetime.fromisoformat(claimed_at.replace("Z", "+00:00"))
+        if activated.tzinfo is None or claimed.tzinfo is None:
+            raise ValueError
+    except (AttributeError, ValueError) as exc:
+        raise ValueError("invalid-notification-time") from exc
+    lease_seconds = max(30, min(int(lease_seconds), 900))
+    lease_until = (claimed.astimezone(timezone.utc) + timedelta(seconds=lease_seconds)).isoformat(
+        timespec="milliseconds"
+    )
+    with db:
+        db.execute("""
+          UPDATE incident_notification_outbox
+          SET status='pending',next_attempt_at=COALESCE(next_attempt_at,created_at)
+          WHERE status='held' AND julianday(created_at)>=julianday(?)
+        """, (activated.astimezone(timezone.utc).isoformat(timespec="milliseconds"),))
+        row = db.execute("""
+          SELECT o.id,o.incident_key,o.revision,o.transition,o.attempts,
+                 e.at AS occurred_at,e.severity,e.error_code,
+                 i.category,i.subject
+          FROM incident_notification_outbox o
+          JOIN incident_events e ON e.incident_key=o.incident_key
+            AND e.revision=o.revision AND e.event=o.transition
+          JOIN operational_incidents i ON i.incident_key=o.incident_key
+          WHERE o.status='pending' AND julianday(o.next_attempt_at)<=julianday(?)
+          ORDER BY o.created_at,o.id LIMIT 1
+        """, (claimed_at,)).fetchone()
+        if row is None:
+            return None
+        attempts = row["attempts"] + 1
+        updated = db.execute("""
+          UPDATE incident_notification_outbox
+          SET attempts=?,next_attempt_at=?
+          WHERE id=? AND status='pending' AND attempts=?
+        """, (attempts, lease_until, row["id"], row["attempts"])).rowcount
+        if updated != 1:
+            return None
+    return {
+        "id": row["id"], "key": row["incident_key"], "revision": row["revision"],
+        "transition": row["transition"], "occurredAt": row["occurred_at"],
+        "category": row["category"], "subject": row["subject"],
+        "severity": row["severity"], "errorCode": row["error_code"],
+        "attempts": attempts,
+    }
+
+
+def finish_incident_notification(db, claim, error_code=None, completed_at=None, max_attempts=5):
+    completed_at = completed_at or now()
+    notification_id = int(claim["id"])
+    attempts = int(claim["attempts"])
+    max_attempts = max(1, min(int(max_attempts), 20))
+    if error_code is None:
+        with db:
+            updated = db.execute("""
+              UPDATE incident_notification_outbox
+              SET status='delivered',delivered_at=?,next_attempt_at=NULL,last_error_code=NULL
+              WHERE id=? AND status='pending' AND attempts=?
+            """, (completed_at, notification_id, attempts)).rowcount
+        return "delivered" if updated == 1 else "superseded"
+    error_code = _incident_value(error_code, 120)
+    terminal = attempts >= max_attempts
+    delay = min(6 * 60 * 60, 60 * (5 ** max(0, attempts - 1)))
+    try:
+        completed = datetime.fromisoformat(completed_at.replace("Z", "+00:00"))
+        if completed.tzinfo is None:
+            raise ValueError
+    except (AttributeError, ValueError) as exc:
+        raise ValueError("invalid-notification-time") from exc
+    next_attempt = None if terminal else (
+        completed.astimezone(timezone.utc) + timedelta(seconds=delay)
+    ).isoformat(timespec="milliseconds")
+    with db:
+        updated = db.execute("""
+          UPDATE incident_notification_outbox
+          SET status=?,next_attempt_at=?,last_error_code=?
+          WHERE id=? AND status='pending' AND attempts=?
+        """, ("dead" if terminal else "pending", next_attempt, error_code,
+              notification_id, attempts)).rowcount
+    return ("dead" if terminal else "retry") if updated == 1 else "superseded"
+
+
+def operational_incident_summary(db, limit=20, delivery_enabled=False):
     limit = max(1, min(int(limit), 100))
     rows = db.execute("""
       SELECT incident_key,category,subject,severity,status,revision,opened_at,
@@ -627,14 +716,22 @@ def operational_incident_summary(db, limit=20):
         count(*) AS total_count
       FROM operational_incidents
     """).fetchone()
-    held = db.execute(
-        "SELECT count(*) FROM incident_notification_outbox WHERE status='held'"
-    ).fetchone()[0]
+    outbox = db.execute("""
+      SELECT
+        sum(CASE WHEN status='held' THEN 1 ELSE 0 END) AS held_count,
+        sum(CASE WHEN status='pending' THEN 1 ELSE 0 END) AS pending_count,
+        sum(CASE WHEN status='delivered' THEN 1 ELSE 0 END) AS delivered_count,
+        sum(CASE WHEN status='dead' THEN 1 ELSE 0 END) AS dead_count
+      FROM incident_notification_outbox
+    """).fetchone()
     return {
         "open": counts["open_count"] or 0,
         "total": counts["total_count"] or 0,
-        "heldNotifications": held,
-        "deliveryEnabled": False,
+        "heldNotifications": outbox["held_count"] or 0,
+        "pendingNotifications": outbox["pending_count"] or 0,
+        "deliveredNotifications": outbox["delivered_count"] or 0,
+        "deadNotifications": outbox["dead_count"] or 0,
+        "deliveryEnabled": bool(delivery_enabled),
         "recent": [{
             "key": row["incident_key"], "category": row["category"],
             "subject": row["subject"], "severity": row["severity"],
