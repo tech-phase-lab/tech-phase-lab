@@ -6,12 +6,27 @@ import type { StockDirectoryEntry, StockProfile } from "@/lib/research/stock-dir
 import { useResearchLanguage } from "../use-research-language";
 import base from "../research.module.css";
 import styles from "./stocks.module.css";
+import filingStyles from "./filings.module.css";
 
 type SearchResponse = { ok: boolean; results?: StockDirectoryEntry[]; error?: string; source?: string; asOf?: string };
 type ProfileResponse = { ok: boolean; profile?: StockProfile; error?: string; profileSource?: string; asOf?: string };
 
 function exchangeLabel(exchange: string) {
   return exchange === "Nasdaq" ? "NASDAQ" : exchange.toUpperCase();
+}
+
+function filingLabel(form: string, lang: "ja" | "en") {
+  const base = form.replace("/A", "");
+  const labels: Record<string, [string, string]> = {
+    "10-K": ["年次報告書", "Annual report"],
+    "10-Q": ["四半期報告書", "Quarterly report"],
+    "8-K": ["重要事項報告", "Current report"],
+    "6-K": ["外国企業の重要報告", "Foreign issuer report"],
+    "20-F": ["外国企業の年次報告", "Foreign issuer annual report"],
+    "40-F": ["カナダ企業の年次報告", "Canadian issuer annual report"],
+  };
+  const label = labels[base]?.[lang === "ja" ? 0 : 1] ?? (lang === "ja" ? "SEC提出書類" : "SEC filing");
+  return form.endsWith("/A") ? `${label}${lang === "ja" ? "（訂正）" : " (amended)"}` : label;
 }
 
 export default function StockDirectory() {
@@ -30,6 +45,7 @@ export default function StockDirectory() {
   useEffect(() => {
     const q = query.trim();
     const requestId = ++searchRequest.current;
+    profileRequest.current += 1;
     setProfile(null);
     setError(null);
     if (!q) { setResults([]); setLoading(false); return; }
@@ -111,6 +127,17 @@ export default function StockDirectory() {
           </> : <div className={styles.profileEmpty}><span className={styles.profileIcon}>TP</span><strong>{t("銘柄を選ぶと企業情報を表示", "Select a stock to view its profile")}</strong><p>{t("今は企業識別情報を表示します。決算、公式ニュース、株価は検証状態を分けて順次追加します。", "This preview starts with company identity. Filings, official news, and prices will be added with separate verification states.")}</p></div>}
         </aside>
       </div>
+
+      {profile && <section className={filingStyles.filings} aria-labelledby="recent-filings-title">
+        <div className={styles.sectionHeading}><div><p>RECENT SEC FILINGS</p><h2 id="recent-filings-title">{t("最新の重要提出書類", "Recent material filings")}</h2></div><span>{profile.recentFilings.length}{t("件", " filings")}</span></div>
+        <p className={filingStyles.filingIntro}>{t("SEC提出履歴から年次・四半期報告と重要事項を抽出しています。提出日は発表日や決算日と同じとは限りません。", "Filtered from SEC submission history for annual, quarterly, and material current reports. Filing date is not necessarily the announcement or earnings date.")}</p>
+        {profile.recentFilings.length ? <ol className={filingStyles.filingList}>{profile.recentFilings.map((filing) => <li key={filing.accessionNumber}>
+          <div><span>{filing.form}</span><strong>{filingLabel(filing.form, lang)}</strong></div>
+          <dl><div><dt>{t("提出日", "Filed")}</dt><dd><time dateTime={filing.filingDate}>{filing.filingDate}</time></dd></div>{filing.reportDate && <div><dt>{t("対象期末", "Period end")}</dt><dd><time dateTime={filing.reportDate}>{filing.reportDate}</time></dd></div>}{filing.items && <div><dt>{t("8-K項目", "8-K items")}</dt><dd>{filing.items}</dd></div>}</dl>
+          <div className={filingStyles.filingActions}><a href={filing.documentUrl} target="_blank" rel="noreferrer">{t("原文を開く ↗", "Open filing ↗")}</a><a href={filing.filingIndexUrl} target="_blank" rel="noreferrer">{t("添付資料一覧 ↗", "Filing index ↗")}</a></div>
+        </li>)}</ol> : <div className={styles.empty}><strong>{t("対象書類が見つかりません", "No material filings found")}</strong><p>{t("直近のSEC提出履歴に対象形式がないか、企業が別の開示制度を利用している可能性があります。", "The recent SEC history may not contain these form types, or the issuer may use another disclosure regime.")}</p></div>}
+        <p className={filingStyles.filingNote}>{t("SEC公式APIを1時間キャッシュして表示します。リアルタイム通知ではありません。", "Shown from the official SEC API with a one-hour source cache. This is not a real-time alert feed.")}</p>
+      </section>}
 
       <section className={styles.disclosure}><div><span>01</span><h2>{t("何が無料で使える？", "What is free?")}</h2><p>{t("SECの企業名・ティッカー・取引所・CIK対応表。検索とSEC提出書類への導線に使用します。", "The SEC company, ticker, exchange, and CIK association file powers search and links to filings.")}</p></div><div><span>02</span><h2>{t("まだ何を出さない？", "What is not shown yet?")}</h2><p>{t("リアルタイム株価、時間外価格、通信社ニュース。データ表示権を確認するまで混ぜません。", "Live prices, extended-hours quotes, and wire-service news remain separate until display rights are confirmed.")}</p></div><div><span>03</span><h2>{t("次に何を追加する？", "What comes next?")}</h2><p>{t("企業概要、決算日、SEC提出、公式発表、Tech Phaseの重要変化を一つの銘柄ページへ統合します。", "Company overview, earnings dates, filings, official releases, and verified changes will converge on one company page.")}</p></div></section>
       <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("SECは名簿の正確性・網羅性を保証していません。検索結果は企業識別用で、売買推奨ではありません。", "The SEC does not guarantee directory accuracy or scope. Results identify issuers and are not investment recommendations.")}</p></footer>

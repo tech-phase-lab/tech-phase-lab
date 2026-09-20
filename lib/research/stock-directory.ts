@@ -15,7 +15,20 @@ export type StockProfile = StockDirectoryEntry & {
   fiscalYearEnd: string | null;
   stateOfIncorporation: string | null;
   formerNames: { name: string; from: string | null; to: string | null }[];
+  recentFilings: SecFiling[];
   secProfileUrl: string;
+};
+
+export type SecFiling = {
+  accessionNumber: string;
+  form: string;
+  filingDate: string;
+  reportDate: string | null;
+  acceptedAt: string | null;
+  items: string | null;
+  description: string | null;
+  documentUrl: string;
+  filingIndexUrl: string;
 };
 
 type SecDirectoryPayload = { fields?: unknown; data?: unknown };
@@ -27,9 +40,15 @@ type SecSubmissionPayload = {
   fiscalYearEnd?: unknown;
   stateOfIncorporation?: unknown;
   formerNames?: unknown;
+  filings?: unknown;
 };
 
 const tickerPattern = /^[A-Z0-9][A-Z0-9.-]{0,14}$/;
+const accessionPattern = /^\d{10}-\d{2}-\d{6}$/;
+const documentPattern = /^[A-Za-z0-9][A-Za-z0-9._-]{0,199}$/;
+const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+const acceptedAtPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z?$/;
+const materialForms = new Set(["10-K", "10-K/A", "10-Q", "10-Q/A", "8-K", "8-K/A", "6-K", "6-K/A", "20-F", "20-F/A", "40-F", "40-F/A"]);
 const trackedTickers = new Set(providers.map((provider) => provider.ticker));
 
 function safeText(value: unknown, maxLength: number) {
@@ -107,8 +126,61 @@ export function parseSecProfile(entry: StockDirectoryEntry, payload: unknown): S
     fiscalYearEnd: safeText(submission.fiscalYearEnd, 8),
     stateOfIncorporation: safeText(submission.stateOfIncorporation, 24),
     formerNames,
+    recentFilings: parseRecentFilings(entry.cik, submission.filings),
     secProfileUrl: `https://www.sec.gov/edgar/browse/?CIK=${entry.cik}`,
   };
+}
+
+function safeDate(value: unknown) {
+  const text = safeText(value, 10);
+  return text && isoDatePattern.test(text) && !Number.isNaN(Date.parse(`${text}T00:00:00Z`)) ? text : null;
+}
+
+function safeAcceptedAt(value: unknown) {
+  const text = safeText(value, 32);
+  return text && acceptedAtPattern.test(text) && !Number.isNaN(Date.parse(text.endsWith("Z") ? text : `${text}Z`)) ? text : null;
+}
+
+function recentColumn(recent: Record<string, unknown>, key: string) {
+  return Array.isArray(recent[key]) ? recent[key] : [];
+}
+
+export function parseRecentFilings(cik: number, filings: unknown, limit = 8): SecFiling[] {
+  if (!filings || typeof filings !== "object") return [];
+  const recentValue = (filings as Record<string, unknown>).recent;
+  if (!recentValue || typeof recentValue !== "object") return [];
+  const recent = recentValue as Record<string, unknown>;
+  const accessions = recentColumn(recent, "accessionNumber");
+  const forms = recentColumn(recent, "form");
+  const filingDates = recentColumn(recent, "filingDate");
+  const reportDates = recentColumn(recent, "reportDate");
+  const acceptedDates = recentColumn(recent, "acceptanceDateTime");
+  const items = recentColumn(recent, "items");
+  const descriptions = recentColumn(recent, "primaryDocDescription");
+  const documents = recentColumn(recent, "primaryDocument");
+  const results: SecFiling[] = [];
+  const seen = new Set<string>();
+  for (let index = 0; index < accessions.length && results.length < Math.min(Math.max(limit, 1), 12); index += 1) {
+    const accessionNumber = safeText(accessions[index], 20);
+    const form = safeText(forms[index], 16)?.toUpperCase() ?? null;
+    const filingDate = safeDate(filingDates[index]);
+    const primaryDocument = safeText(documents[index], 200);
+    if (!accessionNumber || !accessionPattern.test(accessionNumber) || !form || !materialForms.has(form) || !filingDate || !primaryDocument || !documentPattern.test(primaryDocument) || seen.has(accessionNumber)) continue;
+    seen.add(accessionNumber);
+    const archiveRoot = `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionNumber.replaceAll("-", "")}`;
+    results.push({
+      accessionNumber,
+      form,
+      filingDate,
+      reportDate: safeDate(reportDates[index]),
+      acceptedAt: safeAcceptedAt(acceptedDates[index]),
+      items: safeText(items[index], 160),
+      description: safeText(descriptions[index], 200),
+      documentUrl: `${archiveRoot}/${primaryDocument}`,
+      filingIndexUrl: `${archiveRoot}/${accessionNumber}-index.html`,
+    });
+  }
+  return results;
 }
 
 export function stockDirectoryIssues(entries: StockDirectoryEntry[]) {
