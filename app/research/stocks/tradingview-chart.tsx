@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import styles from "./tradingview-chart.module.css";
+import polish from "./tradingview-polish.module.css";
 
 type WidgetKind = "compact" | "chart";
 
@@ -36,7 +37,7 @@ function TradingViewEmbed({ kind, symbol, lang }: { kind: WidgetKind; symbol: st
     script.async = true;
     script.src = kind === "compact"
       ? "https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js"
-      : "https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js";
+      : "https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js";
     script.textContent = JSON.stringify(kind === "compact" ? {
       symbol,
       width: "100%",
@@ -44,47 +45,64 @@ function TradingViewEmbed({ kind, symbol, lang }: { kind: WidgetKind; symbol: st
       colorTheme: "dark",
       isTransparent: true,
     } : {
-      symbol,
+      symbols: [[`${symbol}|12M`]],
       width: "100%",
       height: "100%",
       locale: lang === "ja" ? "ja" : "en",
-      dateRange: "12M",
       colorTheme: "dark",
-      trendLineColor: "rgba(125, 224, 184, 1)",
-      underLineColor: "rgba(125, 224, 184, 0.28)",
-      underLineBottomColor: "rgba(125, 224, 184, 0)",
-      isTransparent: true,
       autosize: true,
-      chartOnly: false,
+      chartOnly: true,
+      showVolume: false,
+      showMA: false,
+      hideDateRanges: false,
+      hideMarketStatus: true,
+      hideSymbolLogo: true,
+      scalePosition: "right",
+      scaleMode: "Normal",
+      fontFamily: "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, sans-serif",
+      fontSize: "10",
       noTimeScale: false,
-      allow_symbol_change: false,
+      valuesTracking: "1",
+      changeMode: "price-and-percent",
+      chartType: "area",
+      lineWidth: 2,
+      lineType: 0,
+      dateRanges: ["1d|1", "1m|30", "3m|60", "12m|1D", "60m|1W", "all|1M"],
+      upColor: "#7de0b8",
+      downColor: "#e58b82",
     });
-    script.onerror = () => setFailed(true);
+    const observer = new MutationObserver(() => {
+      if (host.querySelector("iframe")) window.clearTimeout(timeout);
+    });
+    const timeout = window.setTimeout(() => {
+      if (!host.querySelector("iframe")) setFailed(true);
+    }, 10_000);
+    observer.observe(host, { childList: true, subtree: true });
+    script.onerror = () => { window.clearTimeout(timeout); setFailed(true); };
     host.appendChild(script);
 
-    return () => host.replaceChildren();
+    return () => { observer.disconnect(); window.clearTimeout(timeout); host.replaceChildren(); };
   }, [kind, lang, symbol]);
 
   return <>
-    <div className={`${styles.embed} ${kind === "chart" ? styles.chartEmbed : styles.compactEmbed}`} ref={hostRef} aria-label={`${symbol} TradingView ${kind}`} />
-    {failed && <div className={styles.error} role="status">{lang === "ja" ? "TradingViewを読み込めませんでした。SEC企業情報は引き続き利用できます。" : "TradingView could not be loaded. SEC company data remains available."}</div>}
+    <div hidden={failed} className={`${styles.embed} ${polish.embed} ${kind === "chart" ? styles.chartEmbed : styles.compactEmbed}`} ref={hostRef} aria-label={`${symbol} TradingView ${kind}`} />
+    {failed && <div className={styles.error} role="status">{lang === "ja" ? "チャートを読み込めませんでした。TradingViewで直接確認できます。" : "The chart could not be loaded. You can open it directly on TradingView."}</div>}
   </>;
 }
 
-export function TradingViewChart({ ticker, exchange, name, lang }: { ticker: string; exchange: string; name: string; lang: "ja" | "en" }) {
+export function TradingViewChart({ ticker, exchange, lang }: { ticker: string; exchange: string; lang: "ja" | "en" }) {
   const [view, setView] = useState<WidgetKind>("compact");
   const symbol = tradingViewSymbol(ticker, exchange);
 
-  return <section className={styles.market} aria-labelledby="market-chart-title">
-    <div className={styles.heading}>
-      <div><p>MARKET SNAPSHOT</p><h2 id="market-chart-title">{ticker} {lang === "ja" ? "マーケット情報" : "market snapshot"}</h2><span>{name}</span></div>
-      <strong>{lang === "ja" ? "TradingView提供・遅延" : "TradingView · delayed"}</strong>
+  return <section className={`${styles.market} ${polish.market}`} aria-labelledby="market-chart-title">
+    <div className={`${styles.heading} ${polish.heading}`}>
+      <h2 id="market-chart-title">MARKET SNAPSHOT</h2>
     </div>
-    <div className={styles.viewTabs} role="tablist" aria-label={lang === "ja" ? "株価表示を切り替え" : "Switch price display"}>
-      <button type="button" role="tab" aria-selected={view === "compact"} onClick={() => setView("compact")}>{lang === "ja" ? "小型の株価カード" : "Compact price card"}</button>
-      <button type="button" role="tab" aria-selected={view === "chart"} onClick={() => setView("chart")}>{lang === "ja" ? "値動きチャート" : "Price chart"}</button>
+    <div className={`${styles.viewTabs} ${polish.viewTabs}`} role="tablist" aria-label={lang === "ja" ? "株価表示を切り替え" : "Switch price display"}>
+      <button type="button" role="tab" aria-selected={view === "compact"} onClick={() => setView("compact")}>{lang === "ja" ? "株価" : "Quote"}</button>
+      <button type="button" role="tab" aria-selected={view === "chart"} onClick={() => setView("chart")}>{lang === "ja" ? "12か月チャート" : "12-month chart"}</button>
     </div>
     <TradingViewEmbed key={`${symbol}:${lang}:${view}`} kind={view} symbol={symbol} lang={lang} />
-    <div className={styles.note}><p>{lang === "ja" ? "市場データはTradingView提供。表示には遅延があり、Tech Phaseの速報判定とは独立しています。" : "Market data provided by TradingView. Displayed data is delayed and remains separate from Tech Phase alert decisions."}</p><a href={`https://www.tradingview.com/symbols/${symbol.replace(":", "-").replace(".", "-")}/`} target="_blank" rel="noreferrer">{lang === "ja" ? "TradingViewで確認 ↗" : "Open in TradingView ↗"}</a></div>
+    <div className={`${styles.note} ${polish.note}`}><p>{lang === "ja" ? "TradingViewの市場データ（遅延）です。Tech Phaseの速報判定には使用しません。" : "Delayed market data from TradingView. It is not used for Tech Phase alert decisions."}</p><a href={`https://www.tradingview.com/symbols/${symbol.replace(":", "-").replace(".", "-")}/`} target="_blank" rel="noreferrer">{lang === "ja" ? "TradingViewで確認 ↗" : "Open in TradingView ↗"}</a></div>
   </section>;
 }

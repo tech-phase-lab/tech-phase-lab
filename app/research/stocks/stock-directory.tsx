@@ -7,6 +7,7 @@ import type { BusinessSection, RiskSection, StockDirectoryEntry, StockProfile } 
 import { useResearchLanguage } from "../use-research-language";
 import base from "../research.module.css";
 import styles from "./stocks.module.css";
+import polish from "./stock-polish.module.css";
 import filingStyles from "./filings.module.css";
 import { TradingViewChart } from "./tradingview-chart";
 
@@ -77,7 +78,8 @@ export default function StockDirectory() {
         const data = await response.json() as SearchResponse;
         if (requestId !== searchRequest.current) return;
         if (!response.ok || !data.ok) throw new Error(data.error || "search-failed");
-        setResults(data.results ?? []);
+        const nextResults = data.results ?? [];
+        setResults(nextResults);
         setAsOf(data.asOf ?? null);
       } catch (reason) {
         if (controller.signal.aborted || requestId !== searchRequest.current) return;
@@ -161,34 +163,37 @@ export default function StockDirectory() {
       <div className={styles.topline}><Link href="/research">← {t("リサーチ画面", "Research desk")}</Link><span>{t("SEC公式データ使用", "Powered by official SEC data")}</span></div>
       <section className={styles.hero}>
         <p>STOCK DISCOVERY</p>
-        <h1>{t("米国株を、すぐ調べる。", "Find a U.S. stock in seconds.")}</h1>
+        <h1><span className={polish.desktopTitle}>{t("米国株を、すぐ調べる。", "Find a U.S. stock in seconds.")}</span><span className={polish.mobileTitle}>{t("米国株リサーチ", "U.S. stock research")}</span></h1>
         <p>{t("ティッカーまたは企業名で検索。会社名、取引所、SEC識別番号、業種を一次情報から確認できます。", "Search by ticker or company name. Verify the company, exchange, SEC identifier, and industry from primary data.")}</p>
         <label className={styles.search}><span aria-hidden="true">⌕</span><input autoComplete="off" inputMode="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("例：NVDA、Micron、Palantir", "Try NVDA, Micron, or Palantir")} aria-label={t("米国株を検索", "Search U.S. stocks")} /><kbd>SEC</kbd></label>
         <div className={styles.scope}><span>{t("無料の企業名簿", "Free company directory")}</span><span>{t("遅延チャートを試験表示", "Delayed chart preview")}</span><span>{t("ニュース権利と分離", "Separate from news licensing")}</span></div>
       </section>
 
-      <div className={styles.layout}>
+      <div className={`${styles.layout} ${polish.resultLayout}`}>
         <section className={styles.results} aria-labelledby="results-title" aria-busy={loading}>
           <div className={styles.sectionHeading}><div><p>SEARCH RESULTS</p><h2 id="results-title">{query.trim() ? t("検索結果", "Matches") : t("銘柄名かティッカーを入力", "Enter a company or ticker")}</h2></div><span aria-live="polite">{loading ? t("検索中…", "Searching…") : query.trim() ? `${results.length}${t("件", " results")}` : "—"}</span></div>
           {errorMessage && <div className={styles.error} role="alert"><strong>{t("取得経路を確認中", "Source unavailable")}</strong><p>{errorMessage}</p></div>}
           {!error && query.trim() && !loading && results.length === 0 && <div className={styles.empty}><strong>{t("該当銘柄が見つかりません", "No matching ticker")}</strong><p>{t("英語の企業名またはティッカーで検索してください。SEC名簿は全銘柄を保証するものではありません。", "Try an English company name or ticker. The SEC does not guarantee complete coverage.")}</p></div>}
           {!query.trim() && <div className={styles.examples}><button onClick={() => setQuery("NVDA")}>NVDA</button><button onClick={() => setQuery("Micron")}>Micron</button><button onClick={() => setQuery("Nebius")}>Nebius</button><button onClick={() => setQuery("Palantir")}>Palantir</button><button onClick={() => setQuery("Vertiv")}>Vertiv</button></div>}
-          <ol className={styles.resultList}>{results.map((entry) => <li key={`${entry.ticker}:${entry.cik}:${entry.exchange}`}><button onClick={() => selectStock(entry)} aria-current={profile?.ticker === entry.ticker ? "true" : undefined}><span className={styles.ticker}>{entry.ticker}</span><span className={styles.identity}><strong>{entry.name}</strong><small>CIK {String(entry.cik).padStart(10, "0")}</small></span><span className={styles.exchange}>{exchangeLabel(entry.exchange)}{entry.tracked && <em>{t("監視中", "WATCHED")}</em>}</span><span aria-hidden="true">→</span></button></li>)}</ol>
+          {results.length > 0 && <p className={polish.resultHint}>{t("銘柄を選ぶと株価と公式情報を表示します。", "Choose a stock to view prices and official information.")}</p>}
+          <ol className={styles.resultList}>{results.map((entry) => <li key={`${entry.ticker}:${entry.cik}:${entry.exchange}`}><button className={polish.resultButton} onClick={() => selectStock(entry)} aria-current={profile?.ticker === entry.ticker ? "true" : undefined}><span className={styles.ticker}>{entry.ticker}</span><span className={styles.identity}><strong>{entry.name}</strong><small>CIK {String(entry.cik).padStart(10, "0")}</small></span><span className={styles.exchange}>{exchangeLabel(entry.exchange)}{entry.tracked && <em>{t("監視中", "WATCHED")}</em>}</span><span className={polish.resultCta}>{profile?.ticker === entry.ticker ? t("表示中", "OPEN") : t("詳細を見る", "VIEW")} <span aria-hidden="true">→</span></span></button></li>)}</ol>
           {asOf && <p className={styles.asOf}>{t("表示取得時刻", "Retrieved")}: <time dateTime={asOf}>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", dateStyle: "medium", timeStyle: "short" }).format(new Date(asOf))} JST</time></p>}
         </section>
 
-        <aside className={styles.profile} aria-busy={profileLoading} aria-live="polite">
-          {profileLoading ? <div className={styles.profileEmpty}><span className={styles.loader} /><strong>{t("SEC企業情報を確認中", "Loading SEC company data")}</strong></div> : profile ? <>
-            <div className={styles.profileTop}><span>{exchangeLabel(profile.exchange)}</span>{profile.tracked && <em>{t("公式発表を自動監視中", "Official releases monitored")}</em>}</div>
-            <h2>{profile.ticker}</h2><h3>{profile.name}</h3>
-            <dl><div><dt>{t("SEC業種", "SEC industry")}</dt><dd>{profile.sicDescription ?? t("未掲載", "Not listed")}{profile.sic && <small>SIC {profile.sic}</small>}</dd></div><div><dt>{t("法人区分", "Entity type")}</dt><dd>{profile.entityType ?? t("未掲載", "Not listed")}</dd></div><div><dt>{t("設立・登録地域", "Incorporation")}</dt><dd>{profile.stateOfIncorporation ?? t("未掲載", "Not listed")}</dd></div><div><dt>{t("決算期末", "Fiscal year end")}</dt><dd>{profile.fiscalYearEnd ?? t("未掲載", "Not listed")}</dd></div></dl>
-            <div className={styles.actions}><a href={profile.secProfileUrl} target="_blank" rel="noreferrer">{t("SEC提出書類を見る ↗", "Open SEC filings ↗")}</a>{profile.tracked && <Link href={`/research/companies/${profile.ticker}`}>{t("Tech Phase銘柄ページ →", "Tech Phase company page →")}</Link>}</div>
-            <p className={styles.profileNote}>{t("業種はSEC登録情報で、Tech Phase独自分類や投資判断ではありません。下のチャートはTradingView提供の遅延表示です。Tech Phaseの速報判定には使用しません。", "Industry comes from the SEC registration record, not a Tech Phase rating. The chart below is a delayed TradingView display and is not used for Tech Phase alert decisions.")}</p>
-          </> : <div className={styles.profileEmpty}><span className={styles.profileIcon}>TP</span><strong>{t("銘柄を選ぶと企業情報を表示", "Select a stock to view its profile")}</strong><p>{t("今は企業識別情報を表示します。決算、公式ニュース、株価は検証状態を分けて順次追加します。", "This preview starts with company identity. Filings, official news, and prices will be added with separate verification states.")}</p></div>}
-        </aside>
       </div>
 
-      {profile && <TradingViewChart key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} />}
+      {profileLoading && <div className={polish.profileLoading} role="status"><span className={styles.loader} /><strong>{t("SEC企業情報を確認中", "Loading SEC company data")}</strong></div>}
+      {profile && <TradingViewChart key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} lang={lang} />}
+
+      {profile && <details className={polish.profileDetails}>
+        <summary><span><small>SEC COMPANY RECORD</small><strong>{t("企業登録情報", "Company registration data")}</strong></span><em>{t("業種・法人区分などを表示", "Industry, entity type, and more")}</em></summary>
+        <div className={polish.profileBody}>
+          <div className={styles.profileTop}><span>{exchangeLabel(profile.exchange)} · {profile.ticker} · {profile.name}</span>{profile.tracked && <em>{t("公式発表を自動監視中", "Official releases monitored")}</em>}</div>
+          <dl><div><dt>{t("SEC業種", "SEC industry")}</dt><dd>{profile.sicDescription ?? t("未掲載", "Not listed")}{profile.sic && <small>SIC {profile.sic}</small>}</dd></div><div><dt>{t("法人区分", "Entity type")}</dt><dd>{profile.entityType ?? t("未掲載", "Not listed")}</dd></div><div><dt>{t("設立・登録地域", "Incorporation")}</dt><dd>{profile.stateOfIncorporation ?? t("未掲載", "Not listed")}</dd></div><div><dt>{t("決算期末", "Fiscal year end")}</dt><dd>{profile.fiscalYearEnd ?? t("未掲載", "Not listed")}</dd></div></dl>
+          <div className={styles.actions}><a href={profile.secProfileUrl} target="_blank" rel="noreferrer">{t("SEC提出書類を見る ↗", "Open SEC filings ↗")}</a>{profile.tracked && <Link href={`/research/companies/${profile.ticker}`}>{t("Tech Phase銘柄ページ →", "Tech Phase company page →")}</Link>}</div>
+          <p className={styles.profileNote}>{t("業種・法人区分はSEC登録情報です。Tech Phase独自分類や投資判断ではありません。", "Industry and entity type come from SEC registration records, not a Tech Phase rating.")}</p>
+        </div>
+      </details>}
 
       {profile?.latestAnnualFiling && <section className={filingStyles.brief} aria-labelledby="annual-brief-title" aria-busy={briefStatus === "loading"}>
         <div className={styles.sectionHeading}><div><p>REVIEWED JAPANESE BRIEF</p><h2 id="annual-brief-title">{t("根拠付き日本語要点", "Evidence-backed Japanese brief")}</h2></div><span className={briefStatus === "approved" ? filingStyles.briefApproved : filingStyles.briefPending}>{briefStatus === "approved" ? t("人間確認済み", "Human reviewed") : briefStatus === "loading" ? t("原文照合中", "Checking source") : briefStatus === "source-unavailable" ? t("原文確認不可", "Source unavailable") : t("編集確認待ち", "Awaiting review")}</span></div>

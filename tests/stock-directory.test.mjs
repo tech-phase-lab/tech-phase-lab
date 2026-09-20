@@ -233,11 +233,33 @@ test("annual-filing Japanese briefs reject numbers absent from their cited evide
   assert.equal(result.brief, null);
 });
 
+test("annual-filing Japanese briefs preserve multiple separately cited risks", () => {
+  const { source, record } = filingBriefFixture();
+  const secondRisk = "Cybersecurity incidents could interrupt services and harm the company reputation.";
+  const candidate = {
+    ...record,
+    riskPointsJa: [
+      ...record.riskPointsJa,
+      { text: "サイバー攻撃により、サービスが中断し信用が損なわれる可能性があります。", evidenceIds: ["risk-2-1"] },
+    ],
+    evidence: [...record.evidence, { id: "risk-2-1", section: "risk", quote: secondRisk }],
+  };
+  const result = validateAnnualFilingBrief(candidate, {
+    ...source,
+    risks: { ...source.risks, excerpt: `${source.risks.excerpt}\n${secondRisk}` },
+  });
+  assert.deepEqual(result.issues, []);
+  assert.equal(result.brief?.riskPointsJa.length, 2);
+  assert.deepEqual(result.brief?.riskPointsJa[1].evidenceIds, ["risk-2-1"]);
+});
+
 test("stock search UI separates free identity data from licensed prices and news", async () => {
-  const [page, widget, styles, route, dashboard, review] = await Promise.all([
+  const [page, widget, styles, polish, chartPolish, route, dashboard, review] = await Promise.all([
     readFile(new URL("../app/research/stocks/stock-directory.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/tradingview-chart.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/stocks.module.css", import.meta.url), "utf8"),
+    readFile(new URL("../app/research/stocks/stock-polish.module.css", import.meta.url), "utf8"),
+    readFile(new URL("../app/research/stocks/tradingview-polish.module.css", import.meta.url), "utf8"),
     readFile(new URL("../app/api/research/stocks/route.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/research/research-dashboard.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/review/review-dashboard.tsx", import.meta.url), "utf8"),
@@ -245,8 +267,8 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /SEC公式データ使用/);
   assert.match(page, /遅延チャートを試験表示/);
   assert.match(page, /ニュース権利と分離/);
-  assert.match(widget, /TradingView提供・遅延/);
-  assert.match(page, /Tech Phaseの速報判定には使用しません/);
+  assert.match(widget, /TradingViewの市場データ（遅延）/);
+  assert.match(widget, /Tech Phaseの速報判定には使用しません/);
   assert.match(page, /最新の重要提出書類/);
   assert.match(page, /どんな企業か — 年次報告書の原文/);
   assert.match(page, /Tech Phaseによる日本語要約・評価ではありません/);
@@ -265,15 +287,24 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /profileRequest\.current \+= 1/);
   assert.match(page, /SECは名簿の正確性・網羅性を保証していません/);
   assert.match(widget, /embed-widget-symbol-info\.js/);
-  assert.match(widget, /embed-widget-mini-symbol-overview\.js/);
-  assert.match(widget, /小型の株価カード/);
-  assert.match(widget, /値動きチャート/);
+  assert.match(widget, /embed-widget-symbol-overview\.js/);
+  assert.match(widget, /12か月チャート/);
   assert.match(widget, /view, setView/);
-  assert.match(widget, /allow_symbol_change: false/);
+  assert.match(widget, /symbols: \[\[/);
+  assert.match(widget, /MutationObserver/);
+  assert.match(widget, /10_000/);
   assert.doesNotMatch(widget, /無料ウィジェットによる参考表示/);
-  assert.match(widget, /市場データはTradingView提供/);
+  assert.match(widget, /Tech Phaseの速報判定には使用しません/);
   assert.match(styles, /\.hero h1\{[^}]*font-weight:650/);
   assert.match(styles, /\.main \.search input:focus-visible\{outline:0\}/);
+  assert.match(page, /米国株リサーチ/);
+  assert.match(page, /銘柄を選ぶと株価と公式情報を表示します/);
+  assert.match(page, /詳細を見る/);
+  assert.match(page, /profileDetails/);
+  assert.match(polish, /\.mobileTitle\{display:block/);
+  assert.match(polish, /\.resultButton/);
+  assert.match(polish, /\.profileDetails/);
+  assert.match(chartPolish, /\.heading h2/);
   assert.match(route, /company_tickers_exchange\.json/);
   assert.match(route, /secJson\(directoryUrl, 86_400\)/);
   assert.match(route, /AbortSignal\.timeout\(8_000\)/);
@@ -301,4 +332,9 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(review, /existing\?\.sourceSha256 === source\.business\.sourceSha256/);
   assert.match(review, /年次報告書の下書きを保存/);
   assert.match(review, /人間が承認するまで公開されません/);
+  assert.match(review, /annualRisks\.map/);
+  assert.match(review, /リスクを追加/);
+  assert.match(review, /根拠引用を追加/);
+  assert.match(review, /annualRisks\.length >= 6/);
+  assert.match(review, /risk-\$\{riskIndex \+ 1\}-\$\{evidenceIndex \+ 1\}/);
 });
