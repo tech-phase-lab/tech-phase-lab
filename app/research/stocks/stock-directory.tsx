@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import type { BusinessSection, StockDirectoryEntry, StockProfile } from "@/lib/research/stock-directory";
+import type { BusinessSection, RiskSection, StockDirectoryEntry, StockProfile } from "@/lib/research/stock-directory";
 import { useResearchLanguage } from "../use-research-language";
 import base from "../research.module.css";
 import styles from "./stocks.module.css";
@@ -10,7 +10,7 @@ import filingStyles from "./filings.module.css";
 
 type SearchResponse = { ok: boolean; results?: StockDirectoryEntry[]; error?: string; source?: string; asOf?: string };
 type ProfileResponse = { ok: boolean; profile?: StockProfile; error?: string; profileSource?: string; asOf?: string };
-type BusinessResponse = { ok: boolean; business?: BusinessSection; error?: string };
+type BusinessResponse = { ok: boolean; business?: BusinessSection | null; risks?: RiskSection | null; error?: string };
 
 function exchangeLabel(exchange: string) {
   return exchange === "Nasdaq" ? "NASDAQ" : exchange.toUpperCase();
@@ -36,10 +36,12 @@ export default function StockDirectory() {
   const [results, setResults] = useState<StockDirectoryEntry[]>([]);
   const [profile, setProfile] = useState<StockProfile | null>(null);
   const [business, setBusiness] = useState<BusinessSection | null>(null);
+  const [risks, setRisks] = useState<RiskSection | null>(null);
   const [loading, setLoading] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
   const [businessLoading, setBusinessLoading] = useState(false);
   const [businessUnavailable, setBusinessUnavailable] = useState(false);
+  const [risksUnavailable, setRisksUnavailable] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [asOf, setAsOf] = useState<string | null>(null);
   const searchRequest = useRef(0);
@@ -54,8 +56,10 @@ export default function StockDirectory() {
     businessRequest.current += 1;
     setProfile(null);
     setBusiness(null);
+    setRisks(null);
     setBusinessLoading(false);
     setBusinessUnavailable(false);
+    setRisksUnavailable(false);
     setError(null);
     if (!q) { setResults([]); setLoading(false); return; }
     setLoading(true);
@@ -84,8 +88,10 @@ export default function StockDirectory() {
     businessRequest.current += 1;
     setProfileLoading(true);
     setBusiness(null);
+    setRisks(null);
     setBusinessLoading(false);
     setBusinessUnavailable(false);
+    setRisksUnavailable(false);
     setError(null);
     try {
       const response = await fetch(`/api/research/stocks?ticker=${encodeURIComponent(entry.ticker)}`);
@@ -107,17 +113,24 @@ export default function StockDirectory() {
     const requestId = ++businessRequest.current;
     setBusinessLoading(true);
     setBusinessUnavailable(false);
+    setRisksUnavailable(false);
     try {
       const response = await fetch(`/api/research/stocks?ticker=${encodeURIComponent(ticker)}&view=business`);
       const data = await response.json() as BusinessResponse;
       if (requestId !== businessRequest.current) return;
-      if (!response.ok || !data.ok || !data.business) {
-        if (response.status === 404 || response.status === 422) { setBusinessUnavailable(true); return; }
+      if (!response.ok || !data.ok) {
+        if (response.status === 404 || response.status === 422) { setBusinessUnavailable(true); setRisksUnavailable(true); return; }
         throw new Error(data.error || "business-section-failed");
       }
-      setBusiness(data.business);
+      setBusiness(data.business ?? null);
+      setBusinessUnavailable(!data.business);
+      setRisks(data.risks ?? null);
+      setRisksUnavailable(!data.risks);
     } catch {
-      if (requestId === businessRequest.current) setBusinessUnavailable(true);
+      if (requestId === businessRequest.current) {
+        setBusinessUnavailable(true);
+        setRisksUnavailable(true);
+      }
     } finally {
       if (requestId === businessRequest.current) setBusinessLoading(false);
     }
@@ -171,6 +184,17 @@ export default function StockDirectory() {
           <div className={filingStyles.businessActions}><a href={business.documentUrl} target="_blank" rel="noreferrer">{t("SEC原文で続きを確認 ↗", "Continue in the SEC filing ↗")}</a><a href={business.filingIndexUrl} target="_blank" rel="noreferrer">{t("添付資料一覧 ↗", "Filing index ↗")}</a></div>
           <p className={filingStyles.businessNote}>{business.extractionMethod === "cross-referenced-overview" ? t("この20-FはItem 4から年次報告書内の企業概要を参照しています。参照表ではなく、参照先で確認できた企業提出原文だけを表示しています。日本語要約・評価ではありません。", "This 20-F points from Item 4 to a company overview elsewhere in the annual report. Only the verified referenced source text is shown, not the cross-reference table. This is not a Tech Phase summary or rating.") : t("これは企業自身が提出した英語原文の抜粋です。Tech Phaseによる日本語要約・評価ではありません。見出し構造を判定できない書類は推測せず表示を止めます。", "This is an English excerpt filed by the company, not a Tech Phase summary or rating. If the filing structure cannot be verified, the excerpt is withheld rather than guessed.")}</p>
         </> : <div className={filingStyles.businessStatus}><strong>{businessUnavailable ? t("事業説明を安全に抽出できませんでした", "A business section could not be safely extracted") : t("対象の10-K／20-Fが見つかりません", "No eligible 10-K or 20-F was found")}</strong><p>{t("SEC原文へのリンクは下の提出書類一覧から確認できます。企業概要を推測で補完しません。", "The original filing remains available below. Tech Phase does not fill this gap with an inferred company description.")}</p></div>}
+      </section>}
+
+      {profile && <section className={filingStyles.risks} aria-labelledby="risk-section-title" aria-busy={businessLoading}>
+        <div className={styles.sectionHeading}><div><p>OFFICIAL RISK FACTORS</p><h2 id="risk-section-title">{t("主要リスク — 年次報告書の原文", "Key risks — annual filing source")}</h2></div>{risks && <span>{risks.form} · {risks.filingDate}</span>}</div>
+        {businessLoading ? <div className={filingStyles.businessStatus}><span className={styles.loader} /><strong>{t("SEC年次報告書のリスク項目を確認中", "Extracting risk factors from the SEC annual filing")}</strong></div> : risks ? <>
+          <div className={filingStyles.riskEvidenceBar}><span>{t("一次情報から機械抽出", "Machine-extracted from primary source")}</span><span>{risks.extractionMethod === "cross-referenced-risk-factors" ? t("20-Fリスク参照先を検証", "Verified 20-F risk cross-reference") : t("リスク見出しを検証", "Verified risk heading")}</span><span>{risks.heading}</span><span>{t("原文照合用SHA", "Source SHA")} {risks.sourceSha256.slice(0, 12)}</span></div>
+          <blockquote className={filingStyles.riskExcerpt}>{risks.excerpt}</blockquote>
+          <dl className={filingStyles.businessMeta}><div><dt>{t("書類", "Form")}</dt><dd>{risks.form}</dd></div><div><dt>{t("提出日", "Filed")}</dt><dd>{risks.filingDate}</dd></div>{risks.reportDate && <div><dt>{t("対象期末", "Period end")}</dt><dd>{risks.reportDate}</dd></div>}<div><dt>{t("取得時刻", "Retrieved")}</dt><dd><time dateTime={risks.retrievedAt}>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", dateStyle: "medium", timeStyle: "short" }).format(new Date(risks.retrievedAt))} JST</time></dd></div><div><dt>{t("抽出範囲", "Extracted section")}</dt><dd>{risks.sectionCharacters.toLocaleString(lang === "ja" ? "ja-JP" : "en-US")}{t("文字", " characters")}{risks.truncated ? t("（表示は冒頭のみ）", " (opening excerpt shown)") : ""}</dd></div></dl>
+          <div className={filingStyles.businessActions}><a href={risks.documentUrl} target="_blank" rel="noreferrer">{t("SEC原文で続きを確認 ↗", "Continue in the SEC filing ↗")}</a><a href={risks.filingIndexUrl} target="_blank" rel="noreferrer">{t("添付資料一覧 ↗", "Filing index ↗")}</a></div>
+          <p className={filingStyles.businessNote}>{risks.extractionMethod === "cross-referenced-risk-factors" ? t("この20-FはItem 3.Dから年次報告書内のリスク項目を参照しています。参照表ではなく、参照先で確認できた企業提出原文だけを表示しています。", "This 20-F points from Item 3.D to risk factors elsewhere in the annual report. Only the verified referenced source text is shown, not the cross-reference table.") : t("企業自身が提出したリスク項目の英語原文です。重要度順の並べ替えやTech Phaseによる投資判断ではありません。構造を検証できない書類は表示しません。", "This is the issuer-filed English risk section, not a Tech Phase ranking or investment judgment. The section is withheld when its filing structure cannot be verified.")}</p>
+        </> : <div className={filingStyles.businessStatus}><strong>{risksUnavailable ? t("リスク項目を安全に抽出できませんでした", "Risk factors could not be safely extracted") : t("対象の年次報告書が見つかりません", "No eligible annual filing was found")}</strong><p>{t("SEC原文へのリンクは提出書類一覧から確認できます。リスクを推測で補完しません。", "The original filing remains available in the filing list. Tech Phase does not infer missing risk factors.")}</p></div>}
       </section>}
 
       {profile && <section className={filingStyles.filings} aria-labelledby="recent-filings-title">

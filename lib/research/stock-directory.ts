@@ -52,6 +52,26 @@ export type BusinessSection = {
 
 export type ExtractedBusinessSection = Pick<BusinessSection, "heading" | "extractionMethod" | "excerpt" | "sectionCharacters" | "truncated">;
 
+export type RiskSection = {
+  ticker: string;
+  cik: number;
+  form: "10-K" | "20-F";
+  filingDate: string;
+  reportDate: string | null;
+  accessionNumber: string;
+  heading: string;
+  extractionMethod: "form-item" | "cross-referenced-risk-factors";
+  excerpt: string;
+  sectionCharacters: number;
+  truncated: boolean;
+  documentUrl: string;
+  filingIndexUrl: string;
+  retrievedAt: string;
+  sourceSha256: string;
+};
+
+export type ExtractedRiskSection = Pick<RiskSection, "heading" | "extractionMethod" | "excerpt" | "sectionCharacters" | "truncated">;
+
 type SecDirectoryPayload = { fields?: unknown; data?: unknown };
 type SecSubmissionPayload = {
   cik?: unknown;
@@ -316,6 +336,85 @@ export function extractBusinessSection(html: string, form: string, excerptLimit 
     excerpt,
     sectionCharacters: section.length,
     truncated: section.length > excerpt.length,
+  };
+}
+
+function boundedExcerpt(section: string, excerptLimit: number) {
+  const boundedLimit = Math.min(Math.max(excerptLimit, 800), 8_000);
+  let excerpt = section.slice(0, boundedLimit);
+  if (section.length > boundedLimit) excerpt = excerpt.replace(/\s+\S*$/, "").trimEnd();
+  return { excerpt, sectionCharacters: section.length, truncated: section.length > excerpt.length };
+}
+
+function looksLikeNarrativeSection(value: string) {
+  const letters = value.match(/[A-Za-z]/g)?.length ?? 0;
+  const sentences = value.match(/[.!?](?:\s|\n|$)/g)?.length ?? 0;
+  return value.length >= 800 && letters / value.length >= 0.48 && sentences >= 5 && !looksLikeFormCrossReference(value);
+}
+
+function crossReferencedRiskFactors(text: string) {
+  const referenceCandidates = [
+    ...(text.match(/\bITEM\s+3\s*[.:\-–—]?\s*KEY\s+INFORMATION\b[\s\S]{0,15000}?\bITEM\s+4\b/gi) ?? []),
+    ...(text.match(/APPENDIX\s*[–—-]\s*REFERENCE\s+TABLE\s+20-F[\s\S]{0,40000}/gi) ?? []),
+  ];
+  const reference = referenceCandidates.find((candidate) => looksLikeFormCrossReference(candidate)
+    && /\bD[.:]?\s+RISK\s+FACTORS\b/i.test(candidate)
+    && /\bRISK\s*[–—-]\s*RISK\s+FACTORS\b/i.test(candidate));
+  if (!reference) return null;
+  const starts = allMatches(text, /^\s*RISK\s+FACTORS\s*$/gim);
+  const continuations = allMatches(text, /^\s*RISK\s+FACTORS\s*\(continued\)\s*$/gim);
+  const firstContinuation = continuations[0];
+  if (firstContinuation) {
+    const start = starts.filter((candidate) => candidate.index < firstContinuation.index).at(-1);
+    if (start) {
+      const boundedContinuations = continuations.filter((candidate) => candidate.index > start.index && candidate.index < start.index + 120_000);
+      const lastContinuation = boundedContinuations.at(-1) ?? firstContinuation;
+      const ends = allMatches(text, /^\s*INFORMATION\s+SECURITY\s*$/gim);
+      const end = ends.find((candidate) => candidate.index > lastContinuation.index);
+      if (end) {
+        const value = text.slice(start.index + start.length, end.index).trim();
+        const materialityLanguage = value.match(/\b(?:could|may)\b/gi)?.length ?? 0;
+        if (value.length >= 3_000 && value.length <= 100_000 && materialityLanguage >= 5 && looksLikeNarrativeSection(value)) return value;
+      }
+    }
+  }
+  const candidates = starts.flatMap((start) => {
+    const contentStart = start.index + start.length;
+    if (/^\s*\(continued\)/i.test(text.slice(contentStart, contentStart + 32))) return [];
+    const bounded = text.slice(contentStart, Math.min(text.length, contentStart + 120_000));
+    const end = bounded.search(/\n(?:INFORMATION\s+SECURITY|CORPORATE\s+GOVERNANCE)\n/i);
+    if (end < 0) return [];
+    const value = bounded.slice(0, end).trim();
+    const materialityLanguage = value.match(/\b(?:could|may)\b/gi)?.length ?? 0;
+    if (value.length < 3_000 || value.length > 100_000 || materialityLanguage < 5 || !looksLikeNarrativeSection(value)) return [];
+    return [{ value, length: value.length }];
+  });
+  return candidates.toSorted((a, b) => b.length - a.length)[0]?.value ?? null;
+}
+
+export function extractRiskSection(html: string, form: string, excerptLimit = 4_000): ExtractedRiskSection | null {
+  if (typeof html !== "string" || html.length < 500 || html.length > 30_000_000) return null;
+  const text = filingHtmlToText(html);
+  const itemSection = form === "10-K"
+    ? bestSection(
+        text,
+        /^\s*ITEM\s+1A\s*[.:\-–—]?\s*RISK\s+FACTORS\s*$/gim,
+        /^\s*ITEM\s+(?:1B|1C|2)\b[^\n]*$/gim,
+      )
+    : form === "20-F"
+      ? bestSection(
+          text,
+          /^\s*(?:ITEM\s+3\s*[.:\-–—]?\s*)?D\s*[.:\-–—]\s*RISK\s+FACTORS\s*$/gim,
+          /^\s*ITEM\s+4\b[^\n]*$/gim,
+        )
+      : null;
+  const referencedRisks = form === "20-F" ? crossReferencedRiskFactors(text) : null;
+  const section = referencedRisks ?? itemSection;
+  if (!section || !looksLikeNarrativeSection(section)) return null;
+  return {
+    heading: referencedRisks ? "Risk factors — official annual report section" : form === "10-K" ? "Item 1A. Risk Factors" : "Item 3.D. Risk Factors",
+    extractionMethod: referencedRisks ? "cross-referenced-risk-factors" : "form-item",
+    ...boundedExcerpt(section, excerptLimit),
   };
 }
 

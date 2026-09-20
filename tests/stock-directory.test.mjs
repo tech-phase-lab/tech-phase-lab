@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { extractBusinessSection, normalizeTicker, parseLatestAnnualFiling, parseRecentFilings, parseSecDirectory, parseSecProfile, searchDirectory, stockDirectoryIssues } from "../lib/research/stock-directory.ts";
+import { extractBusinessSection, extractRiskSection, normalizeTicker, parseLatestAnnualFiling, parseRecentFilings, parseSecDirectory, parseSecProfile, searchDirectory, stockDirectoryIssues } from "../lib/research/stock-directory.ts";
 
 function payload() {
   const data = Array.from({ length: 120 }, (_, index) => [1000000 + index, `Example Company ${index}`, `X${index}`, index % 2 ? "Nasdaq" : "NYSE"]);
@@ -114,6 +114,45 @@ test("20-F extraction withholds an unresolved cross-reference instead of publish
   assert.equal(extractBusinessSection(html, "20-F"), null);
 });
 
+test("risk extraction ignores a table of contents and returns bounded 10-K Item 1A evidence", () => {
+  const risk = "Our business is exposed to supply constraints, customer concentration and rapid technology changes that could materially affect results. ".repeat(18);
+  const html = `<html><body><p>Read Item 1A. Risk Factors, our financial statements and other cautionary disclosures before investing.</p><p>Table of contents</p><p>ITEM 1A. RISK FACTORS</p><p>12</p><p>ITEM 1B. UNRESOLVED STAFF COMMENTS</p><h1>ITEM 1A. RISK FACTORS</h1><p>${risk}</p><h1>ITEM 1B. UNRESOLVED STAFF COMMENTS</h1></body></html>`;
+  const section = extractRiskSection(html, "10-K", 1_000);
+  assert.ok(section);
+  assert.equal(section.heading, "Item 1A. Risk Factors");
+  assert.equal(section.extractionMethod, "form-item");
+  assert.match(section.excerpt, /^Our business is exposed to supply constraints/);
+  assert.equal(section.truncated, true);
+  assert.ok(section.sectionCharacters > 1_000);
+});
+
+test("risk extraction supports direct 20-F Item 3.D and withholds reference tables", () => {
+  const risk = "We face geopolitical, supply-chain and customer-demand risks that may adversely affect our operations and financial results. ".repeat(18);
+  const html = `<html><body><h2>ITEM 3. KEY INFORMATION</h2><h3>D. RISK FACTORS</h3><p>${risk}</p><h2>ITEM 4. INFORMATION ON THE COMPANY</h2></body></html>`;
+  const section = extractRiskSection(html, "20-F");
+  assert.equal(section?.heading, "Item 3.D. Risk Factors");
+  assert.equal(section?.extractionMethod, "form-item");
+  assert.match(section?.excerpt ?? "", /^We face geopolitical/);
+  const reference = `<html><body>${"Background. ".repeat(80)}<h3>D. RISK FACTORS</h3><p>FORM 20-F CAPTION</p><p>LOCATION IN THIS DOCUMENT</p><p>Risk factors, page 48</p><h2>ITEM 4. INFORMATION ON THE COMPANY</h2></body></html>`;
+  assert.equal(extractRiskSection(reference, "20-F"), null);
+  assert.equal(extractRiskSection(html, "40-F"), null);
+});
+
+test("20-F risk extraction resolves a verified annual-report section without starting on a continued page", () => {
+  const overview = "The company faces risks that could materially affect operations, financial results and reputation. Customers may delay orders and suppliers may be unable to deliver critical components. Geopolitical controls may limit sales in important markets. Technology transitions may reduce demand for existing products. Cybersecurity incidents could disrupt systems and manufacturing. ".repeat(12);
+  const html = `<html><body>
+    <h2>Risk factors</h2><p>${overview}</p>
+    <h2>Risk factors (continued)</h2><p>${"Continued risk text remains part of the verified risk section. ".repeat(80)}</p><h2>Information security</h2>
+    <h2>APPENDIX – REFERENCE TABLE 20-F</h2><p>FORM 20-F CAPTION</p><p>LOCATION IN THIS DOCUMENT</p><p>D. Risk Factors</p><p>Risk – Risk factors</p><p>66</p><p>ITEM 4. INFORMATION ON THE COMPANY</p>
+  </body></html>`;
+  const section = extractRiskSection(html, "20-F", 1_200);
+  assert.ok(section);
+  assert.equal(section.heading, "Risk factors — official annual report section");
+  assert.equal(section.extractionMethod, "cross-referenced-risk-factors");
+  assert.match(section.excerpt, /^The company faces risks/);
+  assert.equal(section.excerpt.includes("FORM 20-F CAPTION"), false);
+});
+
 test("stock search UI separates free identity data from licensed prices and news", async () => {
   const [page, route, dashboard] = await Promise.all([
     readFile(new URL("../app/research/stocks/stock-directory.tsx", import.meta.url), "utf8"),
@@ -127,6 +166,10 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /どんな企業か — 年次報告書の原文/);
   assert.match(page, /Tech Phaseによる日本語要約・評価ではありません/);
   assert.match(page, /20-F参照先を検証/);
+  assert.match(page, /主要リスク — 年次報告書の原文/);
+  assert.match(page, /リスク見出しを検証/);
+  assert.match(page, /20-Fリスク参照先を検証/);
+  assert.match(page, /リスクを推測で補完しません/);
   assert.match(page, /businessRequest\.current \+= 1/);
   assert.match(page, /リアルタイム通知ではありません/);
   assert.match(page, /profileRequest\.current \+= 1/);
@@ -137,6 +180,10 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(route, /AbortSignal\.timeout\(12_000\)/);
   assert.match(route, /maxFilingBytes = 30_000_000/);
   assert.match(route, /createHash\("sha256"\)/);
+  assert.match(route, /extractRiskSection/);
+  assert.match(route, /annual-sections-not-found/);
+  assert.match(route, /BusinessSection \| null/);
+  assert.match(route, /business, risks/);
   assert.match(route, /cache: "no-store"/);
   assert.match(route, /s-maxage=86400/);
   assert.match(dashboard, /\/research\/stocks/);

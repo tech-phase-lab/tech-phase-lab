@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { extractBusinessSection, normalizeTicker, parseSecDirectory, parseSecProfile, searchDirectory, type BusinessSection } from "@/lib/research/stock-directory";
+import { extractBusinessSection, extractRiskSection, normalizeTicker, parseSecDirectory, parseSecProfile, searchDirectory, type BusinessSection, type RiskSection } from "@/lib/research/stock-directory";
 
 const directoryUrl = "https://www.sec.gov/files/company_tickers_exchange.json";
 const maxResponseBytes = 2_000_000;
@@ -74,8 +74,11 @@ export async function GET(request: Request) {
         if (!filing || (filing.form !== "10-K" && filing.form !== "20-F")) return Response.json({ ok: false, error: "annual-filing-not-found" }, { status: 404 });
         const html = await secHtml(filing.documentUrl);
         const extracted = extractBusinessSection(html, filing.form);
-        if (!extracted) return Response.json({ ok: false, error: "business-section-not-found", filing }, { status: 422, headers: { "Cache-Control": "public, s-maxage=3600" } });
-        const business: BusinessSection = {
+        const extractedRisks = extractRiskSection(html, filing.form);
+        if (!extracted && !extractedRisks) return Response.json({ ok: false, error: "annual-sections-not-found", filing }, { status: 422, headers: { "Cache-Control": "public, s-maxage=3600" } });
+        const retrievedAt = new Date().toISOString();
+        const sourceSha256 = createHash("sha256").update(html).digest("hex");
+        const business: BusinessSection | null = extracted ? {
           ticker: entry.ticker,
           cik: entry.cik,
           form: filing.form,
@@ -85,10 +88,23 @@ export async function GET(request: Request) {
           ...extracted,
           documentUrl: filing.documentUrl,
           filingIndexUrl: filing.filingIndexUrl,
-          retrievedAt: new Date().toISOString(),
-          sourceSha256: createHash("sha256").update(html).digest("hex"),
-        };
-        return Response.json({ ok: true, business }, { headers: { "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800" } });
+          retrievedAt,
+          sourceSha256,
+        } : null;
+        const risks: RiskSection | null = extractedRisks ? {
+          ticker: entry.ticker,
+          cik: entry.cik,
+          form: filing.form,
+          filingDate: filing.filingDate,
+          reportDate: filing.reportDate,
+          accessionNumber: filing.accessionNumber,
+          ...extractedRisks,
+          documentUrl: filing.documentUrl,
+          filingIndexUrl: filing.filingIndexUrl,
+          retrievedAt,
+          sourceSha256,
+        } : null;
+        return Response.json({ ok: true, business, risks }, { headers: { "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800" } });
       }
       return Response.json({ ok: true, profile, source: directoryUrl, profileSource: profileUrl, asOf: new Date().toISOString() }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" } });
     }
