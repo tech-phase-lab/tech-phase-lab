@@ -330,6 +330,11 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(route, /cache: "no-store"/);
   assert.match(route, /s-maxage=300, stale-while-revalidate=3600/);
   assert.match(dashboard, /\/research\/stocks/);
+  assert.match(dashboard, /無料で調べる。PROで変化を追う。/);
+  assert.match(dashboard, /課金・会員公開は未開始/);
+  assert.match(dashboard, /原文照合済みの日本語要点・影響分類/);
+  assert.match(dashboard, /未承認の要約、契約未確認のニュースや価格は配信しません/);
+  assert.match(dashboard, /自動監視は運営検証中、会員配信・課金・外部通知は停止したまま/);
   assert.match(review, /根拠付きリサーチレビュー/);
   assert.match(review, /&kind=annual/);
   assert.match(review, /action: "annual-draft"/);

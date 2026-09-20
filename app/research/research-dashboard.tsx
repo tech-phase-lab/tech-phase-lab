@@ -100,7 +100,7 @@ export default function ResearchDashboard({ events }: { events: ResearchEvent[] 
       </aside>
 
       <main id="research-main" className={styles.main}>
-        <div className={styles.previewNotice}><span>{t("検証版", "PREVIEW")}</span><p>{t("2026年5〜9月の公式発表を使った過去事例です。自動更新・リアルタイム配信は未接続。", "Historical examples from May–September 2026. Automatic updates and live delivery are not connected.")}</p></div>
+        <div className={styles.previewNotice}><span>{t("検証版", "PREVIEW")}</span><p>{t("2026年5〜9月の公式発表を使った過去事例です。公式発表の自動監視は運営環境で検証中ですが、この画面の自動更新と会員配信はまだ開始していません。", "Historical examples from May–September 2026. Official-source monitoring is being tested in operations, while automatic updates and member delivery remain off on this screen.")}</p></div>
 
         <div className={styles.heading}><div><p className={styles.eyebrow}>THE RESEARCH DESK</p><h1>{tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : t("変化を捉え、根拠まで。", "See the change. Follow the evidence.")}</h1><p>{t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p></div><div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>2026.09.19</strong></div></div>
 
@@ -109,6 +109,35 @@ export default function ResearchDashboard({ events }: { events: ResearchEvent[] 
           <div><span className={styles.cardLabel}>{t("銘柄の変化を追う", "COMPANY RESEARCH")}</span><div className={styles.companyLinks}>{["NBIS", "MU"].map((symbol) => <Link key={symbol} href={`/research/companies/${symbol}`} aria-label={t(`${symbol}の銘柄ページ`, `${symbol} company research`)}>{symbol}<span aria-hidden="true">→</span></Link>)}</div><p>{t("履歴・数値比較・次の確認点", "History, comparisons & checkpoints")}</p></div>
           <div className={styles.quoteStatus}><span className={styles.cardLabel}>{t("株価データ", "MARKET DATA")}</span><strong>—<span>{t("配信準備中", "Not connected")}</span></strong><p>{t("契約確認後に価格と遅延を表示", "Prices and feed delay follow licensing")}</p></div>
           <div><span className={styles.cardLabel}>{t("米国株検索", "STOCK DIRECTORY")}</span><div className={styles.companyLinks}><Link href="/research/stocks">SEC<span aria-hidden="true">→</span></Link></div><p>{t("企業名・ティッカー・取引所", "Company, ticker & exchange")}</p></div>
+        </section>
+
+        <section className={styles.accessMatrix} aria-labelledby="access-matrix-title">
+          <div className={styles.accessHead}>
+            <div><p className={styles.eyebrow}>FREE / TECH PHASE PRO</p><h2 id="access-matrix-title">{t("無料で調べる。PROで変化を追う。", "Research for free. Track change with PRO.")}</h2></div>
+            <p>{t("課金・会員公開は未開始。現在の実装と提供予定を混ぜずに表示しています。", "Billing and member access are not live. Current features and planned PRO features are labeled separately.")}</p>
+          </div>
+          <div className={styles.accessCards}>
+            <article className={styles.accessCard}>
+              <div className={styles.accessStatus}><span>FREE</span><em>{t("現在利用可能", "Available now")}</em></div>
+              <h3>{t("一次情報を自分で確認", "Verify the primary source")}</h3>
+              <ul>
+                <li>{t("米国株検索とSEC企業情報", "U.S. stock search and SEC company data")}</li>
+                <li>{t("遅延表示の株価カードと12か月チャート", "Delayed market card and 12-month chart")}</li>
+                <li>{t("公開済みリサーチと公式原文リンク", "Published research with primary-source links")}</li>
+              </ul>
+              <Link href="/research/stocks">{t("米国株を検索する", "Search U.S. stocks")} <Arrow /></Link>
+            </article>
+            <article className={`${styles.accessCard} ${styles.proCard}`}>
+              <div className={styles.accessStatus}><span>TECH PHASE PRO</span><em>{t("提供準備中", "In development")}</em></div>
+              <h3>{t("重要な変化を短時間で把握", "Understand material change quickly")}</h3>
+              <ul>
+                <li>{t("公式発表を検知した事実速報", "Fact-first alerts from official releases")}</li>
+                <li>{t("原文照合済みの日本語要点・影響分類", "Source-checked Japanese briefs and impact labels")}</li>
+                <li>{t("WHAT CHANGED履歴と優先銘柄の監視", "WHAT CHANGED history and priority-company monitoring")}</li>
+              </ul>
+              <p className={styles.accessNote}>{t("速度・対象範囲は実測後に確定。未承認の要約、契約未確認のニュースや価格は配信しません。", "Speed and coverage will be set only after measurement. Unapproved briefs and unlicensed news or price data will not be delivered.")}</p>
+            </article>
+          </div>
         </section>
 
         <section className={styles.workspace}>
@@ -154,7 +183,7 @@ export default function ResearchDashboard({ events }: { events: ResearchEvent[] 
             </article>}
           </div>}
         </section>
-        <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("公式発表に基づく検証用リサーチ。速報・会員課金・自動監視は未接続です。", "A source-linked research preview. Live news, billing, and automated monitoring are not connected.")}</p></footer>
+        <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("公式発表に基づく検証用リサーチ。自動監視は運営検証中、会員配信・課金・外部通知は停止したままです。", "A source-linked research preview. Monitoring is under operational review; member delivery, billing, and external notifications remain off.")}</p></footer>
       </main>
     </div>
   </div>;
