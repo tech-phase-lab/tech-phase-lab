@@ -38,6 +38,7 @@ export default function StockDirectory() {
   const [lang, setLang] = useResearchLanguage();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<StockDirectoryEntry[]>([]);
+  const [selectedResultKey, setSelectedResultKey] = useState<string | null>(null);
   const [profile, setProfile] = useState<StockProfile | null>(null);
   const [business, setBusiness] = useState<BusinessSection | null>(null);
   const [risks, setRisks] = useState<RiskSection | null>(null);
@@ -61,6 +62,7 @@ export default function StockDirectory() {
     profileRequest.current += 1;
     businessRequest.current += 1;
     setProfile(null);
+    setSelectedResultKey(null);
     setBusiness(null);
     setRisks(null);
     setBrief(null);
@@ -93,6 +95,7 @@ export default function StockDirectory() {
   }, [query]);
 
   async function selectStock(entry: StockDirectoryEntry) {
+    setSelectedResultKey(`${entry.ticker}:${entry.cik}:${entry.exchange}`);
     const requestId = ++profileRequest.current;
     businessRequest.current += 1;
     setProfileLoading(true);
@@ -152,6 +155,9 @@ export default function StockDirectory() {
   }
 
   const errorMessage = error ? t("現在、SECの公式名簿を取得できません。監視対象22銘柄の速報機能には影響しません。", "The official SEC directory is temporarily unavailable. The 22-company monitoring pipeline is unaffected.") : null;
+  const visibleResults = selectedResultKey
+    ? results.filter((entry) => `${entry.ticker}:${entry.cik}:${entry.exchange}` === selectedResultKey)
+    : results;
 
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#stock-search-main">{t("本文へ移動", "Skip to content")}</a>
@@ -175,8 +181,8 @@ export default function StockDirectory() {
           {errorMessage && <div className={styles.error} role="alert"><strong>{t("取得経路を確認中", "Source unavailable")}</strong><p>{errorMessage}</p></div>}
           {!error && query.trim() && !loading && results.length === 0 && <div className={styles.empty}><strong>{t("該当銘柄が見つかりません", "No matching ticker")}</strong><p>{t("英語の企業名またはティッカーで検索してください。SEC名簿は全銘柄を保証するものではありません。", "Try an English company name or ticker. The SEC does not guarantee complete coverage.")}</p></div>}
           {!query.trim() && <div className={styles.examples}><button onClick={() => setQuery("NVDA")}>NVDA</button><button onClick={() => setQuery("Micron")}>Micron</button><button onClick={() => setQuery("Nebius")}>Nebius</button><button onClick={() => setQuery("Palantir")}>Palantir</button><button onClick={() => setQuery("Vertiv")}>Vertiv</button></div>}
-          {results.length > 0 && <p className={polish.resultHint}>{t("銘柄を選ぶと株価と公式情報を表示します。", "Choose a stock to view prices and official information.")}</p>}
-          <ol className={styles.resultList}>{results.map((entry) => <li key={`${entry.ticker}:${entry.cik}:${entry.exchange}`}><button className={polish.resultButton} onClick={() => selectStock(entry)} aria-current={profile?.ticker === entry.ticker ? "true" : undefined}><span className={styles.ticker}>{entry.ticker}</span><span className={styles.identity}><strong>{entry.name}</strong><small>CIK {String(entry.cik).padStart(10, "0")}</small></span><span className={styles.exchange}>{exchangeLabel(entry.exchange)}{entry.tracked && <em>{t("監視中", "WATCHED")}</em>}</span><span className={polish.resultCta}>{profile?.ticker === entry.ticker ? t("表示中", "OPEN") : t("詳細を見る", "VIEW")} <span aria-hidden="true">→</span></span></button></li>)}</ol>
+          {results.length > 0 && <div className={polish.resultGuide}><p className={polish.resultHint}>{selectedResultKey ? t("選択した銘柄を表示しています。", "Showing the selected stock.") : t("銘柄を選ぶと株価と公式情報を表示します。", "Choose a stock to view prices and official information.")}</p>{selectedResultKey && results.length > 1 && <button type="button" onClick={() => setSelectedResultKey(null)}>{t("ほかの検索結果を見る", "Show other matches")}</button>}</div>}
+          <ol className={styles.resultList}>{visibleResults.map((entry) => <li key={`${entry.ticker}:${entry.cik}:${entry.exchange}`}><button className={polish.resultButton} onClick={() => selectStock(entry)} aria-current={selectedResultKey === `${entry.ticker}:${entry.cik}:${entry.exchange}` ? "true" : undefined}><span className={styles.ticker}>{entry.ticker}</span><span className={styles.identity}><strong>{entry.name}</strong><small>CIK {String(entry.cik).padStart(10, "0")}</small></span><span className={styles.exchange}>{exchangeLabel(entry.exchange)}{entry.tracked && <em>{t("監視中", "WATCHED")}</em>}</span><span className={polish.resultCta}>{selectedResultKey === `${entry.ticker}:${entry.cik}:${entry.exchange}` ? t("表示中", "OPEN") : t("詳細を見る", "VIEW")} <span aria-hidden="true">→</span></span></button></li>)}</ol>
           {asOf && <p className={styles.asOf}>{t("表示取得時刻", "Retrieved")}: <time dateTime={asOf}>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", dateStyle: "medium", timeStyle: "short" }).format(new Date(asOf))} JST</time></p>}
         </section>
 

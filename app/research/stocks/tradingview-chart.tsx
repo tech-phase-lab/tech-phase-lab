@@ -37,7 +37,7 @@ function TradingViewEmbed({ kind, symbol, lang }: { kind: WidgetKind; symbol: st
     script.async = true;
     script.src = kind === "compact"
       ? "https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js"
-      : "https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js";
+      : "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
     script.textContent = JSON.stringify(kind === "compact" ? {
       symbol,
       width: "100%",
@@ -45,31 +45,22 @@ function TradingViewEmbed({ kind, symbol, lang }: { kind: WidgetKind; symbol: st
       colorTheme: "dark",
       isTransparent: true,
     } : {
-      symbols: [[`${symbol}|12M`]],
-      width: "100%",
-      height: "100%",
+      symbol,
+      interval: "D",
+      range: "12M",
+      timezone: "exchange",
       locale: lang === "ja" ? "ja" : "en",
-      colorTheme: "dark",
+      theme: "dark",
+      backgroundColor: "rgba(16, 24, 32, 1)",
       autosize: true,
-      chartOnly: true,
-      showVolume: false,
-      showMA: false,
-      hideDateRanges: false,
-      hideMarketStatus: true,
-      hideSymbolLogo: true,
-      scalePosition: "right",
-      scaleMode: "Normal",
-      fontFamily: "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, sans-serif",
-      fontSize: "10",
-      noTimeScale: false,
-      valuesTracking: "1",
-      changeMode: "price-and-percent",
-      chartType: "area",
-      lineWidth: 2,
-      lineType: 0,
-      dateRanges: ["1d|1", "1m|30", "3m|60", "12m|1D", "60m|1W", "all|1M"],
-      upColor: "#7de0b8",
-      downColor: "#e58b82",
+      style: "3",
+      withdateranges: false,
+      hide_top_toolbar: true,
+      hide_side_toolbar: true,
+      allow_symbol_change: false,
+      save_image: false,
+      calendar: false,
+      support_host: "https://www.tradingview.com",
     });
     const observer = new MutationObserver(() => {
       if (host.querySelector("iframe")) window.clearTimeout(timeout);
@@ -103,6 +94,6 @@ export function TradingViewChart({ ticker, exchange, lang }: { ticker: string; e
       <button type="button" role="tab" aria-selected={view === "chart"} onClick={() => setView("chart")}>{lang === "ja" ? "12か月チャート" : "12-month chart"}</button>
     </div>
     <TradingViewEmbed key={`${symbol}:${lang}:${view}`} kind={view} symbol={symbol} lang={lang} />
-    <div className={`${styles.note} ${polish.note}`}><p>{lang === "ja" ? "TradingViewの市場データ（遅延）です。Tech Phaseの速報判定には使用しません。" : "Delayed market data from TradingView. It is not used for Tech Phase alert decisions."}</p><a href={`https://www.tradingview.com/symbols/${symbol.replace(":", "-").replace(".", "-")}/`} target="_blank" rel="noreferrer">{lang === "ja" ? "TradingViewで確認 ↗" : "Open in TradingView ↗"}</a></div>
+    <div className={`${styles.note} ${polish.note}`}><p>{lang === "ja" ? "TradingViewの市場データです。遅延があるため、Tech Phaseの速報判定には使用しません。" : "Market data is provided by TradingView. Because it may be delayed, it is not used for Tech Phase alert decisions."}</p><a href={`https://www.tradingview.com/symbols/${symbol.replace(":", "-").replace(".", "-")}/`} target="_blank" rel="noreferrer">{lang === "ja" ? "TradingViewで確認 ↗" : "Open in TradingView ↗"}</a></div>
   </section>;
 }

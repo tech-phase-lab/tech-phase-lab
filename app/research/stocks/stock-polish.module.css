@@ -1,6 +1,10 @@
 .mobileTitle{display:none}
 .resultLayout{display:block}
 .resultHint{margin:0 0 10px;color:#8fa2b1;font-size:.75rem;line-height:1.6}
+.resultGuide{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:10px}
+.resultGuide .resultHint{margin:0}
+.resultGuide button{flex:none;border:0;background:transparent;color:#9ce8ca;padding:3px 0;font:inherit;font-size:.72rem;cursor:pointer}
+.resultGuide button:hover{text-decoration:underline}
 .resultButton{margin-top:7px;border:1px solid #273b49!important;border-radius:8px!important;background:#0d1822!important;box-shadow:0 8px 22px #0002;cursor:pointer}
 .resultButton:hover,.resultButton[aria-current=true]{border-color:#538c75!important;background:#13251f!important;transform:translateY(-1px)}
 .resultCta{display:inline-flex;align-items:center;justify-content:flex-end;gap:7px;min-width:94px;color:#9ce8ca;font-size:.72rem;font-weight:650}
@@ -26,6 +30,8 @@
   .desktopTitle{display:none}
   .mobileTitle{display:block;white-space:nowrap;font-size:clamp(2.1rem,11vw,2.55rem);letter-spacing:-.04em}
   .resultHint{margin-bottom:8px}
+  .resultGuide{align-items:flex-start;margin-bottom:8px}
+  .resultGuide button{font-size:.68rem}
   .resultButton{grid-template-columns:65px minmax(0,1fr)!important}
   .resultCta{grid-column:2!important;grid-row:auto!important;justify-content:flex-start;min-width:0;margin-top:4px}
   .profileDetails summary{padding:16px 18px}
