@@ -94,6 +94,7 @@ export default function ResearchDashboard({ events }: { events: ResearchEvent[] 
             <span className={styles.miniLogo}>{item.symbol.slice(0, 1)}</span><span><strong>{item.symbol}</strong><small>{item.name}</small></span><span className={styles.coverageCount}>{events.filter((event) => event.ticker === item.symbol).length}</span>
           </button>)}
         </div>
+        <Link className={styles.labLink} href="/research/stocks">{t("米国株を検索", "U.S. stock search")} <Arrow /></Link>
         <div className={styles.sideNote}><span className={styles.mono}>SOURCE FIRST</span><p>{t("数字の根拠まで、ひと続きに。", "Follow the evidence behind every number.")}</p></div>
         <Link className={styles.labLink} href="/" prefetch={false}>{t("速度測定ラボ", "Delivery lab")} <Arrow /></Link>
       </aside>
@@ -107,6 +108,7 @@ export default function ResearchDashboard({ events }: { events: ResearchEvent[] 
           <div><span className={styles.cardLabel}>{t("検証レポート", "RESEARCH NOTES")}</span><strong>{String(events.length).padStart(2, "0")}<span>{t("件", "notes")}</span></strong><p>{t("公式発表にリンク", "Linked to primary sources")}</p></div>
           <div><span className={styles.cardLabel}>{t("銘柄の変化を追う", "COMPANY RESEARCH")}</span><div className={styles.companyLinks}>{["NBIS", "MU"].map((symbol) => <Link key={symbol} href={`/research/companies/${symbol}`} aria-label={t(`${symbol}の銘柄ページ`, `${symbol} company research`)}>{symbol}<span aria-hidden="true">→</span></Link>)}</div><p>{t("履歴・数値比較・次の確認点", "History, comparisons & checkpoints")}</p></div>
           <div className={styles.quoteStatus}><span className={styles.cardLabel}>{t("株価データ", "MARKET DATA")}</span><strong>—<span>{t("配信準備中", "Not connected")}</span></strong><p>{t("契約確認後に価格と遅延を表示", "Prices and feed delay follow licensing")}</p></div>
+          <div><span className={styles.cardLabel}>{t("米国株検索", "STOCK DIRECTORY")}</span><div className={styles.companyLinks}><Link href="/research/stocks">SEC<span aria-hidden="true">→</span></Link></div><p>{t("企業名・ティッカー・取引所", "Company, ticker & exchange")}</p></div>
         </section>
 
         <section className={styles.workspace}>
