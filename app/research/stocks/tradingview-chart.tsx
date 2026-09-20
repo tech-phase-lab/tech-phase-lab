@@ -1,31 +1,9 @@
 "use client";
 
-import Script from "next/script";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./tradingview-chart.module.css";
 
-type TradingViewWidgetConfig = {
-  autosize: boolean;
-  symbol: string;
-  interval: string;
-  timezone: string;
-  theme: string;
-  style: string;
-  locale: string;
-  allow_symbol_change: boolean;
-  calendar: boolean;
-  details: boolean;
-  hide_side_toolbar: boolean;
-  save_image: boolean;
-  support_host: string;
-  container_id: string;
-};
-
-declare global {
-  interface Window {
-    TradingView?: { widget: new (config: TradingViewWidgetConfig) => unknown };
-  }
-}
+type WidgetKind = "compact" | "chart";
 
 function tradingViewSymbol(ticker: string, exchange: string) {
   const prefix: Record<string, string> = {
@@ -40,20 +18,32 @@ function tradingViewSymbol(ticker: string, exchange: string) {
   return market ? `${market}:${ticker}` : ticker;
 }
 
-export function TradingViewChart({ ticker, exchange, name, lang }: { ticker: string; exchange: string; name: string; lang: "ja" | "en" }) {
+function TradingViewEmbed({ kind, symbol, lang }: { kind: WidgetKind; symbol: string; lang: "ja" | "en" }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [failed, setFailed] = useState(false);
-  const symbol = useMemo(() => tradingViewSymbol(ticker, exchange), [ticker, exchange]);
-  const containerId = useMemo(() => `tradingview-chart-${ticker.toLowerCase().replace(/[^a-z0-9-]/g, "-")}`, [ticker]);
 
-  const mountWidget = useCallback(() => {
-    if (!hostRef.current || !window.TradingView) return;
-    hostRef.current.replaceChildren();
-    const container = document.createElement("div");
-    container.id = containerId;
-    container.className = styles.canvas;
-    hostRef.current.appendChild(container);
-    new window.TradingView.widget({
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
+
+    host.replaceChildren();
+    const widget = document.createElement("div");
+    widget.className = "tradingview-widget-container__widget";
+    host.appendChild(widget);
+
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.async = true;
+    script.src = kind === "compact"
+      ? "https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js"
+      : "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+    script.textContent = JSON.stringify(kind === "compact" ? {
+      symbol,
+      width: "100%",
+      locale: lang === "ja" ? "ja" : "en",
+      colorTheme: "dark",
+      isTransparent: true,
+    } : {
       autosize: true,
       symbol,
       interval: "D",
@@ -67,18 +57,33 @@ export function TradingViewChart({ ticker, exchange, name, lang }: { ticker: str
       hide_side_toolbar: false,
       save_image: false,
       support_host: "https://www.tradingview.com",
-      container_id: containerId,
     });
-  }, [containerId, lang, symbol]);
+    script.onerror = () => setFailed(true);
+    host.appendChild(script);
+
+    return () => host.replaceChildren();
+  }, [kind, lang, symbol]);
+
+  return <>
+    <div className={`${styles.embed} ${kind === "chart" ? styles.chartEmbed : styles.compactEmbed}`} ref={hostRef} aria-label={`${symbol} TradingView ${kind}`} />
+    {failed && <div className={styles.error} role="status">{lang === "ja" ? "TradingViewを読み込めませんでした。SEC企業情報は引き続き利用できます。" : "TradingView could not be loaded. SEC company data remains available."}</div>}
+  </>;
+}
+
+export function TradingViewChart({ ticker, exchange, name, lang }: { ticker: string; exchange: string; name: string; lang: "ja" | "en" }) {
+  const [view, setView] = useState<WidgetKind>("compact");
+  const symbol = tradingViewSymbol(ticker, exchange);
 
   return <section className={styles.market} aria-labelledby="market-chart-title">
     <div className={styles.heading}>
-      <div><p>MARKET SNAPSHOT</p><h2 id="market-chart-title">{ticker} {lang === "ja" ? "株価チャート" : "price chart"}</h2><span>{name}</span></div>
+      <div><p>MARKET SNAPSHOT</p><h2 id="market-chart-title">{ticker} {lang === "ja" ? "マーケット情報" : "market snapshot"}</h2><span>{name}</span></div>
       <strong>{lang === "ja" ? "TradingView提供・遅延" : "TradingView · delayed"}</strong>
     </div>
-    <Script id="tradingview-widget-loader" src="https://s3.tradingview.com/tv.js" strategy="lazyOnload" onReady={mountWidget} onError={() => setFailed(true)} />
-    <div className={styles.host} ref={hostRef} aria-label={`${ticker} TradingView chart`} />
-    {failed && <div className={styles.error} role="status">{lang === "ja" ? "チャートを読み込めませんでした。企業情報とSEC原文は引き続き利用できます。" : "The chart could not be loaded. Company data and SEC sources remain available."}</div>}
-    <div className={styles.note}><p>{lang === "ja" ? "無料ウィジェットによる参考表示です。米国株はTradingView側の利用可能市場データを使い、正確な遅延時間は保証されません。売買判断やTech Phaseの速報処理には使用しません。" : "This is a reference display from the free widget. U.S. stocks use market data available to TradingView; the exact delay is not guaranteed. It is not used for trading decisions or Tech Phase alert processing."}</p><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">{lang === "ja" ? "TradingViewで確認 ↗" : "Open in TradingView ↗"}</a></div>
+    <div className={styles.viewTabs} role="tablist" aria-label={lang === "ja" ? "株価表示を切り替え" : "Switch price display"}>
+      <button type="button" role="tab" aria-selected={view === "compact"} onClick={() => setView("compact")}>{lang === "ja" ? "小型の株価カード" : "Compact price card"}</button>
+      <button type="button" role="tab" aria-selected={view === "chart"} onClick={() => setView("chart")}>{lang === "ja" ? "詳細チャート" : "Detailed chart"}</button>
+    </div>
+    <TradingViewEmbed key={`${symbol}:${lang}:${view}`} kind={view} symbol={symbol} lang={lang} />
+    <div className={styles.note}><p>{lang === "ja" ? "無料ウィジェットによる参考表示です。米国株はTradingView側の利用可能市場データを使い、正確な遅延時間は保証されません。売買判断やTech Phaseの速報処理には使用しません。" : "This is a reference display from the free widget. U.S. stocks use market data available to TradingView; the exact delay is not guaranteed. It is not used for trading decisions or Tech Phase alert processing."}</p><a href={`https://www.tradingview.com/symbols/${symbol.replace(":", "-").replace(".", "-")}/`} target="_blank" rel="noreferrer">{lang === "ja" ? "TradingViewで確認 ↗" : "Open in TradingView ↗"}</a></div>
   </section>;
 }

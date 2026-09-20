@@ -263,9 +263,11 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /リアルタイム通知ではありません/);
   assert.match(page, /profileRequest\.current \+= 1/);
   assert.match(page, /SECは名簿の正確性・網羅性を保証していません/);
-  assert.match(widget, /next\/script/);
-  assert.match(widget, /strategy="lazyOnload"/);
-  assert.match(widget, /s3\.tradingview\.com\/tv\.js/);
+  assert.match(widget, /embed-widget-symbol-info\.js/);
+  assert.match(widget, /embed-widget-advanced-chart\.js/);
+  assert.match(widget, /小型の株価カード/);
+  assert.match(widget, /詳細チャート/);
+  assert.match(widget, /view, setView/);
   assert.match(widget, /allow_symbol_change: false/);
   assert.match(route, /company_tickers_exchange\.json/);
   assert.match(route, /secJson\(directoryUrl, 86_400\)/);
