@@ -54,7 +54,13 @@ export default function StockDirectory() {
   const searchRequest = useRef(0);
   const profileRequest = useRef(0);
   const businessRequest = useRef(0);
+  const marketTarget = useRef<HTMLDivElement>(null);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
+
+  useEffect(() => {
+    if (!profileLoading || !selectedResultKey) return;
+    marketTarget.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [profileLoading, selectedResultKey]);
 
   useEffect(() => {
     const q = query.trim();
@@ -188,8 +194,10 @@ export default function StockDirectory() {
 
       </div>
 
-      {profileLoading && <div className={polish.profileLoading} role="status"><span className={styles.loader} /><strong>{t("SEC企業情報を確認中", "Loading SEC company data")}</strong></div>}
-      {profile && <TradingViewChart key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} lang={lang} />}
+      {(profileLoading || profile) && <div ref={marketTarget} className={polish.marketTarget}>
+        {profileLoading && <div className={polish.profileLoading} role="status"><span className={styles.loader} /><strong>{t("株価とSEC企業情報を確認中", "Loading price and SEC company data")}</strong></div>}
+        {profile && <TradingViewChart key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} lang={lang} />}
+      </div>}
 
       {profile && <details className={polish.profileDetails}>
         <summary><span><small>SEC COMPANY RECORD</small><strong>{t("企業登録情報", "Company registration data")}</strong></span><em>{t("業種・法人区分などを表示", "Industry, entity type, and more")}</em></summary>

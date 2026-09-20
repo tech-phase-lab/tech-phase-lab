@@ -9,6 +9,7 @@
 .resultButton:hover,.resultButton[aria-current=true]{border-color:#538c75!important;background:#13251f!important;transform:translateY(-1px)}
 .resultCta{display:inline-flex;align-items:center;justify-content:flex-end;gap:7px;min-width:94px;color:#9ce8ca;font-size:.72rem;font-weight:650}
 .profileLoading{display:flex;align-items:center;justify-content:center;gap:14px;min-height:120px;margin-top:20px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.marketTarget{scroll-margin-top:18px}
 .profileDetails{margin-top:20px;border:1px solid var(--line);border-radius:10px;background:var(--panel);overflow:hidden}
 .profileDetails summary{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px 22px;cursor:pointer;list-style:none}
 .profileDetails summary::-webkit-details-marker{display:none}

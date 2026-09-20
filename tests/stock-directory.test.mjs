@@ -303,10 +303,13 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /詳細を見る/);
   assert.match(page, /ほかの検索結果を見る/);
   assert.match(page, /visibleResults/);
+  assert.match(page, /marketTarget\.current\?\.scrollIntoView\(\{ behavior: "smooth", block: "start" \}\)/);
+  assert.match(page, /株価とSEC企業情報を確認中/);
   assert.match(page, /profileDetails/);
   assert.match(polish, /\.mobileTitle\{display:block/);
   assert.match(polish, /\.resultButton/);
   assert.match(chartStyles, /transform:scale\(\.86\)/);
+  assert.match(chartStyles, /compactEmbed\{min-height:260px\}/);
   assert.match(polish, /\.profileDetails/);
   assert.match(chartPolish, /\.heading h2/);
   assert.match(route, /company_tickers_exchange\.json/);
