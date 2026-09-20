@@ -36,9 +36,11 @@ export async function GET(request: Request) {
   const auth = authorization(request);
   if (!auth) return response(401, { ok: false, error: "unauthorized" });
   try {
-    const requested = Number(new URL(request.url).searchParams.get("limit") ?? 20);
+    const requestUrl = new URL(request.url);
+    const requested = Number(requestUrl.searchParams.get("limit") ?? 20);
     const limit = Number.isInteger(requested) ? Math.max(1, Math.min(requested, 50)) : 20;
-    const url = endpoint("/admin/briefs");
+    const kind = requestUrl.searchParams.get("kind");
+    const url = endpoint(kind === "annual" ? "/admin/annual-briefs" : "/admin/briefs");
     url.searchParams.set("limit", String(limit));
     return await relay(url, { headers: { Authorization: auth } });
   } catch {
@@ -54,10 +56,17 @@ export async function POST(request: Request) {
     if (!text || new TextEncoder().encode(text).length > 64 * 1024) return response(400, { ok: false, error: "invalid-request-size" });
     let parsed: { action?: unknown; payload?: unknown };
     try { parsed = JSON.parse(text); } catch { return response(400, { ok: false, error: "invalid-json" }); }
-    if (!parsed || typeof parsed !== "object" || !["generate", "draft", "review"].includes(String(parsed.action)) || !parsed.payload || typeof parsed.payload !== "object") {
+    if (!parsed || typeof parsed !== "object" || !["generate", "draft", "review", "annual-draft", "annual-review"].includes(String(parsed.action)) || !parsed.payload || typeof parsed.payload !== "object") {
       return response(400, { ok: false, error: "invalid-request" });
     }
-    const path = parsed.action === "generate" ? "/admin/briefs/generate" : parsed.action === "draft" ? "/admin/briefs/draft" : "/admin/briefs/review";
+    const paths: Record<string, string> = {
+      generate: "/admin/briefs/generate",
+      draft: "/admin/briefs/draft",
+      review: "/admin/briefs/review",
+      "annual-draft": "/admin/annual-briefs/draft",
+      "annual-review": "/admin/annual-briefs/review",
+    };
+    const path = paths[String(parsed.action)];
     return await relay(endpoint(path), {
       method: "POST",
       headers: { Authorization: auth, "Content-Type": "application/json" },

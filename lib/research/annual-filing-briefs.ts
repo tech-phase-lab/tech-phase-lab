@@ -88,7 +88,7 @@ function sourceIdentity(source: AnnualFilingBriefSource) {
   return { ticker: first.ticker, accessionNumber: first.accessionNumber, sourceSha256: first.sourceSha256 };
 }
 
-export function validateAnnualFilingBrief(value: unknown, source: AnnualFilingBriefSource) {
+export function validateAnnualFilingBrief(value: unknown, source: AnnualFilingBriefSource, trustedApproval = false) {
   const issues: string[] = [];
   const identity = sourceIdentity(source);
   if (!identity) issues.push("source-identity-invalid");
@@ -125,8 +125,8 @@ export function validateAnnualFilingBrief(value: unknown, source: AnnualFilingBr
   if (!generatedAt) issues.push("generated-at-invalid");
   if (!reviewedAt) issues.push("reviewed-at-invalid");
   if (generatedAt && reviewedAt && Date.parse(reviewedAt) < Date.parse(generatedAt)) issues.push("review-before-generation");
-  if (!reviewer) issues.push("reviewer-invalid");
-  if (!reviewReason) issues.push("review-reason-invalid");
+  if (!trustedApproval && !reviewer) issues.push("reviewer-invalid");
+  if (!trustedApproval && !reviewReason) issues.push("review-reason-invalid");
   if (identity && ticker !== identity.ticker) issues.push("ticker-mismatch");
   if (identity && accessionNumber !== identity.accessionNumber) issues.push("accession-mismatch");
   if (identity && sourceSha256 !== identity.sourceSha256) issues.push("source-sha-mismatch");

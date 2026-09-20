@@ -333,6 +333,26 @@ class AutomaticMonitor:
         with self.db_lock, monitor.connect(self.db_path) as db:
             return monitor.private_brief_queue(db, limit)
 
+    def annual_editorial_queue(self, limit=20):
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            return monitor.annual_filing_brief_queue(db, limit)
+
+    def public_annual_brief(self, ticker, accession, source_sha):
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            return monitor.approved_annual_filing_brief(db, ticker, accession, source_sha)
+
+    def save_annual_brief(self, payload):
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            return monitor.save_annual_filing_brief_draft(db, payload)
+
+    def decide_annual_brief(self, payload):
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            return monitor.review_annual_filing_brief(
+                db, payload.get("ticker", ""), payload.get("accessionNumber", ""),
+                payload.get("sourceSha256", ""), payload.get("decision", ""),
+                payload.get("reviewer", ""), payload.get("reason", ""),
+            )
+
     def save_brief(self, payload):
         with self.db_lock, monitor.connect(self.db_path) as db:
             result = monitor.save_brief_draft(
@@ -720,17 +740,36 @@ class Handler(BaseHTTPRequestHandler):
             state = self.app.public_state()
             self.send_json(200 if state["ready"] else 503, state)
             return
-        if path == "/admin/briefs":
+        if path in {"/admin/briefs", "/admin/annual-briefs"}:
             if not self.editor_authorized():
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
                 return
             try:
                 limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
-                self.send_json(200, {"ok": True, **self.app.editorial_queue(limit)})
+                queue = (self.app.annual_editorial_queue(limit) if path == "/admin/annual-briefs"
+                         else self.app.editorial_queue(limit))
+                self.send_json(200, {"ok": True, **queue})
             except (TypeError, ValueError):
                 self.send_json(400, {"ok": False, "error": "invalid-request"})
             except Exception:
                 self.send_json(503, {"ok": False, "error": "editorial-queue-unavailable"})
+            return
+        if path == "/annual-brief":
+            if not self.authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            query = parse_qs(parsed.query)
+            try:
+                brief = self.app.public_annual_brief(
+                    query.get("ticker", [""])[0], query.get("accession", [""])[0],
+                    query.get("sha256", [""])[0],
+                )
+                self.send_json(200, {"ok": True, "brief": brief,
+                                     "status": "approved" if brief else "pending"})
+            except ValueError as exc:
+                self.send_json(400, {"ok": False, "error": str(exc)})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "annual-brief-unavailable"})
             return
         if path not in {"/snapshot", "/live"}:
             self.send_json(404, {"ok": False, "error": "not-found"})
@@ -749,7 +788,10 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlsplit(self.path).path
-        if path not in {"/admin/briefs/generate", "/admin/briefs/draft", "/admin/briefs/review"}:
+        if path not in {
+            "/admin/briefs/generate", "/admin/briefs/draft", "/admin/briefs/review",
+            "/admin/annual-briefs/draft", "/admin/annual-briefs/review",
+        }:
             self.send_json(404, {"ok": False, "error": "not-found"})
             return
         if not self.editor_authorized():
@@ -757,7 +799,11 @@ class Handler(BaseHTTPRequestHandler):
             return
         try:
             payload = self.read_json()
-            if path.endswith("/generate"):
+            if path == "/admin/annual-briefs/draft":
+                result = self.app.save_annual_brief(payload)
+            elif path == "/admin/annual-briefs/review":
+                result = self.app.decide_annual_brief(payload)
+            elif path.endswith("/generate"):
                 result = self.app.generate_brief_budgeted(payload)
             elif path.endswith("/draft"):
                 result = self.app.save_brief(payload)

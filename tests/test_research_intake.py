@@ -506,6 +506,76 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0], "stale")
         self.assertEqual(m.snapshot(self.db)["briefs"], [])
 
+    def test_annual_filing_brief_requires_exact_evidence_and_human_approval(self):
+        business = "NVIDIA designs accelerated computing platforms and software for data centers and other markets."
+        risk = "Demand can change rapidly, and dependence on third-party suppliers could disrupt product delivery."
+        payload = {
+            "id": "nvda-2026-annual-ja", "ticker": "NVDA",
+            "accessionNumber": "0001045810-26-000021", "sourceSha256": "a" * 64,
+            "summaryJa": "データセンターなどに向けて、計算基盤とソフトウェアを提供する企業です。",
+            "businessModelJa": "計算基盤と関連ソフトウェアをデータセンターなどの市場へ提供します。",
+            "riskPointsJa": [{
+                "text": "需要の急変や第三者サプライヤーへの依存により、製品供給が滞る可能性があります。",
+                "evidenceIds": ["risk-1"],
+            }],
+            "summaryEvidenceIds": ["business-1"],
+            "businessModelEvidenceIds": ["business-1"],
+            "evidence": [
+                {"id": "business-1", "section": "business", "quote": business},
+                {"id": "risk-1", "section": "risk", "quote": risk},
+            ],
+            "confidence": "high", "generationMethod": "human",
+            "sourceBusiness": business, "sourceRisks": risk,
+        }
+        saved = m.save_annual_filing_brief_draft(self.db, payload)
+        self.assertEqual(saved["status"], "draft")
+        self.assertIsNone(m.approved_annual_filing_brief(
+            self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"]
+        ))
+        reviewed = m.review_annual_filing_brief(
+            self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
+            "approved", "private-editor", "SEC原文と根拠引用を照合済み",
+        )
+        self.assertEqual(reviewed["status"], "approved")
+        public = m.approved_annual_filing_brief(
+            self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"]
+        )
+        self.assertEqual(public["summaryJa"], payload["summaryJa"])
+        self.assertTrue(public["generatedAt"].endswith("Z"))
+        self.assertTrue(public["reviewedAt"].endswith("Z"))
+        self.assertNotIn("reviewer", public)
+        self.assertNotIn("reviewReason", public)
+        self.assertIsNone(m.approved_annual_filing_brief(
+            self.db, "NVDA", payload["accessionNumber"], "b" * 64
+        ))
+        private = m.annual_filing_brief_queue(self.db)["items"][0]
+        self.assertEqual(private["reviewer"], "private-editor")
+
+        altered = {**payload, "evidence": [
+            {"id": "business-1", "section": "business", "quote": "A plausible sentence absent from the filing."},
+            payload["evidence"][1],
+        ]}
+        with self.assertRaisesRegex(ValueError, "annual-evidence-not-in-source"):
+            m.save_annual_filing_brief_draft(self.db, altered)
+
+    def test_annual_filing_brief_rejects_uncited_numbers(self):
+        business = "The company provides accelerated computing systems."
+        risk = "Demand and supply conditions may affect results."
+        payload = {
+            "id": "nvda-annual-ja", "ticker": "NVDA",
+            "accessionNumber": "0001045810-26-000021", "sourceSha256": "c" * 64,
+            "summaryJa": "同社は計算基盤を提供し、売上高は100億ドルに達しています。",
+            "businessModelJa": "企業向けにアクセラレーテッド・コンピューティング基盤を提供します。",
+            "riskPointsJa": [{"text": "需要と供給の変動が業績に影響する可能性があります。", "evidenceIds": ["risk-1"]}],
+            "summaryEvidenceIds": ["business-1"], "businessModelEvidenceIds": ["business-1"],
+            "evidence": [{"id": "business-1", "section": "business", "quote": business},
+                         {"id": "risk-1", "section": "risk", "quote": risk}],
+            "confidence": "medium", "generationMethod": "human",
+            "sourceBusiness": business, "sourceRisks": risk,
+        }
+        with self.assertRaisesRegex(ValueError, "annual-number-not-grounded"):
+            m.save_annual_filing_brief_draft(self.db, payload)
+
     def test_atom_links_supported_and_entity_declarations_rejected(self):
         body = b'''<feed xmlns="http://www.w3.org/2005/Atom"><entry><title>AI</title><link href="https://newsroom.arm.com/news/ai"/></entry></feed>'''
         self.assertEqual(len(m.feed_links(body, "ARM")), 1)

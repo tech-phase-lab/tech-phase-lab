@@ -219,6 +219,11 @@ test("annual-filing Japanese briefs require approval, current source identity, a
   assert.ok(validateAnnualFilingBrief({ ...record, sourceSha256: "b".repeat(64) }, source).issues.includes("source-sha-mismatch"));
   assert.ok(validateAnnualFilingBrief({ ...record, evidence: record.evidence.map((item, index) => index ? item : { ...item, quote: "A plausible sentence that is absent from the source filing." }) }, source).issues.includes("evidence-not-in-source:business-1"));
   assert.ok(validateAnnualFilingBrief({ ...record, reviewedAt: "2026-09-20T08:01:00Z" }, source).issues.includes("review-before-generation"));
+  const publicRecord = { ...record };
+  delete publicRecord.reviewer;
+  delete publicRecord.reviewReason;
+  assert.equal(validateAnnualFilingBrief(publicRecord, source).brief, null);
+  assert.equal(validateAnnualFilingBrief(publicRecord, source, true).brief?.ticker, "NVDA");
 });
 
 test("annual-filing Japanese briefs reject numbers absent from their cited evidence", () => {
@@ -262,11 +267,14 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(route, /createHash\("sha256"\)/);
   assert.match(route, /extractRiskSection/);
   assert.match(route, /approvedAnnualFilingBrief/);
+  assert.match(route, /approvedMonitorBrief/);
+  assert.match(route, /RESEARCH_MONITOR_TOKEN/);
+  assert.match(route, /validateAnnualFilingBrief\(remoteCandidate, source, true\)/);
   assert.match(route, /briefStatus: brief \? "approved" : "pending"/);
   assert.match(route, /annual-sections-not-found/);
   assert.match(route, /BusinessSection \| null/);
   assert.match(route, /business, risks/);
   assert.match(route, /cache: "no-store"/);
-  assert.match(route, /s-maxage=86400/);
+  assert.match(route, /s-maxage=300, stale-while-revalidate=3600/);
   assert.match(dashboard, /\/research\/stocks/);
 });

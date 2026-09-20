@@ -460,6 +460,15 @@ def connect(path):
       outcome TEXT NOT NULL, error_code TEXT,
       reserved_tokens INTEGER NOT NULL DEFAULT 0,
       input_tokens INTEGER, output_tokens INTEGER, total_tokens INTEGER);
+    CREATE TABLE IF NOT EXISTS annual_filing_briefs (
+      ticker TEXT NOT NULL, accession_number TEXT NOT NULL, source_sha256 TEXT NOT NULL,
+      brief_id TEXT NOT NULL, summary_ja TEXT NOT NULL, business_model_ja TEXT NOT NULL,
+      risk_points_json TEXT NOT NULL, summary_evidence_ids_json TEXT NOT NULL,
+      business_evidence_ids_json TEXT NOT NULL, evidence_json TEXT NOT NULL,
+      confidence TEXT NOT NULL, generation_method TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'draft', generated_at TEXT NOT NULL,
+      reviewed_at TEXT, reviewer TEXT, review_reason TEXT,
+      PRIMARY KEY(ticker,accession_number));
     CREATE TABLE IF NOT EXISTS operational_incidents (
       incident_key TEXT PRIMARY KEY, category TEXT NOT NULL, subject TEXT NOT NULL,
       severity TEXT NOT NULL CHECK(severity IN ('warning','critical')),
@@ -1393,6 +1402,239 @@ def review_brief(db, url, expected_sha, decision, reviewer, reason):
             (decision, now(), reviewer.strip(), reason.strip(), url),
         )
     return {"url": url, "status": decision, "published": False}
+
+
+_ANNUAL_ID = re.compile(r"^[a-z0-9][a-z0-9._:-]{2,79}$")
+_ANNUAL_TICKER = re.compile(r"^[A-Z0-9][A-Z0-9.-]{0,14}$")
+_ANNUAL_ACCESSION = re.compile(r"^\d{10}-\d{2}-\d{6}$")
+_ANNUAL_SHA = re.compile(r"^[a-f0-9]{64}$")
+
+
+def _annual_text(value, minimum, maximum, japanese=False):
+    if not isinstance(value, str) or value != value.strip() or not minimum <= len(value) <= maximum:
+        raise ValueError("invalid-annual-brief-text")
+    if re.search(r"[\x00-\x1f\x7f<>]", value):
+        raise ValueError("invalid-annual-brief-text")
+    if japanese and not re.search(r"[ぁ-んァ-ヶ一-龯]", value):
+        raise ValueError("annual-brief-text-must-be-japanese")
+    return value
+
+
+def _annual_ids(value, maximum=8):
+    if not isinstance(value, list) or not 1 <= len(value) <= maximum:
+        raise ValueError("invalid-annual-evidence-ids")
+    result = [_annual_text(item, 3, 80) for item in value]
+    if len(set(result)) != len(result):
+        raise ValueError("duplicate-annual-evidence-id")
+    return result
+
+
+def _annual_numbers(value):
+    return {
+        match.group(0).replace(",", "").replace("％", "%")
+        for match in re.finditer(r"\d+(?:[,.]\d+)*(?:%|％)?", value)
+    }
+
+
+def _validate_annual_filing_payload(payload):
+    """Validate an editor draft against the submitted SEC excerpts before storage.
+
+    The excerpts are deliberately not persisted. Public delivery independently checks
+    the stored record against a newly retrieved SEC filing and its current SHA.
+    """
+    if not isinstance(payload, dict):
+        raise ValueError("invalid-annual-brief")
+    ticker = str(payload.get("ticker", ""))
+    accession = str(payload.get("accessionNumber", ""))
+    source_sha = str(payload.get("sourceSha256", ""))
+    brief_id = str(payload.get("id", ""))
+    if not _ANNUAL_TICKER.fullmatch(ticker):
+        raise ValueError("invalid-annual-ticker")
+    if not _ANNUAL_ACCESSION.fullmatch(accession):
+        raise ValueError("invalid-annual-accession")
+    if not _ANNUAL_SHA.fullmatch(source_sha):
+        raise ValueError("invalid-annual-source-sha")
+    if not _ANNUAL_ID.fullmatch(brief_id):
+        raise ValueError("invalid-annual-brief-id")
+    summary = _annual_text(payload.get("summaryJa"), 20, 500, japanese=True)
+    business_model = _annual_text(payload.get("businessModelJa"), 20, 800, japanese=True)
+    confidence = payload.get("confidence")
+    method = payload.get("generationMethod")
+    if confidence not in {"low", "medium", "high"}:
+        raise ValueError("invalid-annual-confidence")
+    if method not in {"human", "ai-assisted"}:
+        raise ValueError("invalid-annual-generation-method")
+    source_business = payload.get("sourceBusiness", "")
+    source_risks = payload.get("sourceRisks", "")
+    if not isinstance(source_business, str) or not isinstance(source_risks, str):
+        raise ValueError("invalid-annual-source-evidence")
+    if len(source_business) > 20_000 or len(source_risks) > 30_000:
+        raise ValueError("annual-source-evidence-too-large")
+
+    evidence_value = payload.get("evidence")
+    if not isinstance(evidence_value, list) or not 2 <= len(evidence_value) <= 12:
+        raise ValueError("invalid-annual-evidence")
+    evidence, evidence_map = [], {}
+    for item in evidence_value:
+        if not isinstance(item, dict):
+            raise ValueError("invalid-annual-evidence")
+        evidence_id = _annual_text(item.get("id"), 3, 80)
+        section = item.get("section")
+        quote = _annual_text(item.get("quote"), 24, 800)
+        if not _ANNUAL_ID.fullmatch(evidence_id) or evidence_id in evidence_map:
+            raise ValueError("invalid-annual-evidence-id")
+        if section not in {"business", "risk"}:
+            raise ValueError("invalid-annual-evidence-section")
+        corpus = source_business if section == "business" else source_risks
+        if quote not in corpus:
+            raise ValueError("annual-evidence-not-in-source")
+        cleaned = {"id": evidence_id, "section": section, "quote": quote}
+        evidence.append(cleaned)
+        evidence_map[evidence_id] = cleaned
+
+    summary_ids = _annual_ids(payload.get("summaryEvidenceIds"))
+    business_ids = _annual_ids(payload.get("businessModelEvidenceIds"))
+    risk_value = payload.get("riskPointsJa")
+    if not isinstance(risk_value, list) or not 1 <= len(risk_value) <= 6:
+        raise ValueError("invalid-annual-risk-points")
+    risks = []
+    for point in risk_value:
+        if not isinstance(point, dict):
+            raise ValueError("invalid-annual-risk-point")
+        risks.append({
+            "text": _annual_text(point.get("text"), 12, 360, japanese=True),
+            "evidenceIds": _annual_ids(point.get("evidenceIds"), 4),
+        })
+    references = summary_ids + business_ids + [ref for point in risks for ref in point["evidenceIds"]]
+    if any(ref not in evidence_map for ref in references):
+        raise ValueError("annual-evidence-reference-missing")
+    if any(evidence_map[ref]["section"] != "business" for ref in summary_ids + business_ids):
+        raise ValueError("annual-business-evidence-section-invalid")
+    if any(evidence_map[ref]["section"] != "risk" for point in risks for ref in point["evidenceIds"]):
+        raise ValueError("annual-risk-evidence-section-invalid")
+    for text, refs in [(summary, summary_ids), (business_model, business_ids)] + [
+        (point["text"], point["evidenceIds"]) for point in risks
+    ]:
+        supported = _annual_numbers(" ".join(evidence_map[ref]["quote"] for ref in refs))
+        if _annual_numbers(text) - supported:
+            raise ValueError("annual-number-not-grounded")
+    return {
+        "ticker": ticker, "accessionNumber": accession, "sourceSha256": source_sha,
+        "id": brief_id, "summaryJa": summary, "businessModelJa": business_model,
+        "riskPointsJa": risks, "summaryEvidenceIds": summary_ids,
+        "businessModelEvidenceIds": business_ids, "evidence": evidence,
+        "confidence": confidence, "generationMethod": method,
+    }
+
+
+def save_annual_filing_brief_draft(db, payload):
+    """Persist a source-bound private draft after exact local evidence checks."""
+    record = _validate_annual_filing_payload(payload)
+    generated_at = now()
+    with db:
+        db.execute("""
+          INSERT INTO annual_filing_briefs(
+            ticker,accession_number,source_sha256,brief_id,summary_ja,business_model_ja,
+            risk_points_json,summary_evidence_ids_json,business_evidence_ids_json,
+            evidence_json,confidence,generation_method,status,generated_at,
+            reviewed_at,reviewer,review_reason
+          ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,'draft',?,NULL,NULL,NULL)
+          ON CONFLICT(ticker,accession_number) DO UPDATE SET
+            source_sha256=excluded.source_sha256,brief_id=excluded.brief_id,
+            summary_ja=excluded.summary_ja,business_model_ja=excluded.business_model_ja,
+            risk_points_json=excluded.risk_points_json,
+            summary_evidence_ids_json=excluded.summary_evidence_ids_json,
+            business_evidence_ids_json=excluded.business_evidence_ids_json,
+            evidence_json=excluded.evidence_json,confidence=excluded.confidence,
+            generation_method=excluded.generation_method,status='draft',
+            generated_at=excluded.generated_at,reviewed_at=NULL,reviewer=NULL,review_reason=NULL
+        """, (
+            record["ticker"], record["accessionNumber"], record["sourceSha256"], record["id"],
+            record["summaryJa"], record["businessModelJa"],
+            json.dumps(record["riskPointsJa"], ensure_ascii=False, separators=(",", ":")),
+            json.dumps(record["summaryEvidenceIds"], separators=(",", ":")),
+            json.dumps(record["businessModelEvidenceIds"], separators=(",", ":")),
+            json.dumps(record["evidence"], ensure_ascii=False, separators=(",", ":")),
+            record["confidence"], record["generationMethod"], generated_at,
+        ))
+    return {"ticker": record["ticker"], "accessionNumber": record["accessionNumber"],
+            "status": "draft", "generatedAt": generated_at, "published": False}
+
+
+def review_annual_filing_brief(db, ticker, accession, expected_sha, decision, reviewer, reason):
+    """Record a human decision for one exact annual filing revision."""
+    if not _ANNUAL_TICKER.fullmatch(str(ticker)) or not _ANNUAL_ACCESSION.fullmatch(str(accession)):
+        raise ValueError("invalid-annual-filing-identity")
+    if not _ANNUAL_SHA.fullmatch(str(expected_sha)):
+        raise ValueError("invalid-annual-source-sha")
+    if decision not in {"approved", "held", "rejected"}:
+        raise ValueError("invalid-annual-review-decision")
+    reviewer = _annual_text(reviewer, 2, 120)
+    reason = _annual_text(reason, 5, 500)
+    reviewed_at = now()
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        row = db.execute("""
+          SELECT source_sha256,evidence_json FROM annual_filing_briefs
+          WHERE ticker=? AND accession_number=?
+        """, (ticker, accession)).fetchone()
+        if not row or row["source_sha256"] != expected_sha:
+            raise ValueError("annual-draft-missing-or-source-changed")
+        try:
+            evidence = json.loads(row["evidence_json"])
+        except json.JSONDecodeError as exc:
+            raise ValueError("annual-draft-evidence-invalid") from exc
+        if not isinstance(evidence, list) or len(evidence) < 2:
+            raise ValueError("annual-draft-evidence-invalid")
+        db.execute("""
+          UPDATE annual_filing_briefs SET status=?,reviewed_at=?,reviewer=?,review_reason=?
+          WHERE ticker=? AND accession_number=?
+        """, (decision, reviewed_at, reviewer, reason, ticker, accession))
+    return {"ticker": ticker, "accessionNumber": accession, "status": decision,
+            "reviewedAt": reviewed_at, "published": False}
+
+
+def _annual_row(row, private=False):
+    if row is None:
+        return None
+    generated_at = row["generated_at"].replace("+00:00", "Z")
+    reviewed_at = row["reviewed_at"].replace("+00:00", "Z") if row["reviewed_at"] else None
+    value = {
+        "id": row["brief_id"], "ticker": row["ticker"],
+        "accessionNumber": row["accession_number"], "sourceSha256": row["source_sha256"],
+        "summaryJa": row["summary_ja"], "businessModelJa": row["business_model_ja"],
+        "riskPointsJa": json.loads(row["risk_points_json"]),
+        "summaryEvidenceIds": json.loads(row["summary_evidence_ids_json"]),
+        "businessModelEvidenceIds": json.loads(row["business_evidence_ids_json"]),
+        "evidence": json.loads(row["evidence_json"]), "confidence": row["confidence"],
+        "generationMethod": row["generation_method"], "status": row["status"],
+        "generatedAt": generated_at, "reviewedAt": reviewed_at,
+    }
+    if private:
+        value.update({"reviewer": row["reviewer"], "reviewReason": row["review_reason"]})
+    return value
+
+
+def annual_filing_brief_queue(db, limit=20):
+    limit = max(1, min(int(limit), 50))
+    rows = db.execute("""
+      SELECT * FROM annual_filing_briefs
+      ORDER BY generated_at DESC,ticker,accession_number LIMIT ?
+    """, (limit,)).fetchall()
+    return {"generatedAt": now(), "items": [_annual_row(row, private=True) for row in rows]}
+
+
+def approved_annual_filing_brief(db, ticker, accession, source_sha):
+    """Return only an approved exact revision and omit reviewer identity/reason."""
+    if (not _ANNUAL_TICKER.fullmatch(str(ticker))
+            or not _ANNUAL_ACCESSION.fullmatch(str(accession))
+            or not _ANNUAL_SHA.fullmatch(str(source_sha))):
+        raise ValueError("invalid-annual-filing-identity")
+    row = db.execute("""
+      SELECT * FROM annual_filing_briefs
+      WHERE ticker=? AND accession_number=? AND source_sha256=? AND status='approved'
+    """, (ticker, accession, source_sha)).fetchone()
+    return _annual_row(row, private=False)
 
 
 def main():

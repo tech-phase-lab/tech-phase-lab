@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { approvedAnnualFilingBrief } from "@/lib/research/annual-filing-briefs";
+import { approvedAnnualFilingBrief, validateAnnualFilingBrief } from "@/lib/research/annual-filing-briefs";
 import { extractBusinessSection, extractRiskSection, normalizeTicker, parseSecDirectory, parseSecProfile, searchDirectory, type BusinessSection, type RiskSection } from "@/lib/research/stock-directory";
 
 const directoryUrl = "https://www.sec.gov/files/company_tickers_exchange.json";
@@ -51,6 +51,45 @@ async function secHtml(url: string) {
 
 async function directory() {
   return parseSecDirectory(await secJson(directoryUrl, 86_400));
+}
+
+function monitorEndpoint() {
+  const value = process.env.RESEARCH_MONITOR_URL;
+  if (!value) return null;
+  try {
+    const url = new URL(value);
+    const local = ["localhost", "127.0.0.1"].includes(url.hostname);
+    if (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && local)) return null;
+    url.pathname = `${url.pathname.replace(/\/$/, "")}/annual-brief`;
+    url.search = "";
+    url.hash = "";
+    return url;
+  } catch {
+    return null;
+  }
+}
+
+async function approvedMonitorBrief(ticker: string, accessionNumber: string, sourceSha256: string) {
+  const url = monitorEndpoint();
+  const token = process.env.RESEARCH_MONITOR_TOKEN;
+  if (!url || !token || !/^[\x21-\x7e]{24,512}$/.test(token)) return null;
+  url.searchParams.set("ticker", ticker);
+  url.searchParams.set("accession", accessionNumber);
+  url.searchParams.set("sha256", sourceSha256);
+  try {
+    const response = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
+      cache: "no-store",
+      signal: AbortSignal.timeout(4_000),
+    });
+    if (!response.ok) return null;
+    const text = await response.text();
+    if (new TextEncoder().encode(text).length > 100_000) return null;
+    const payload = JSON.parse(text) as { ok?: boolean; brief?: unknown };
+    return payload.ok ? payload.brief ?? null : null;
+  } catch {
+    return null;
+  }
 }
 
 function errorResponse(error: unknown) {
@@ -105,8 +144,13 @@ export async function GET(request: Request) {
           retrievedAt,
           sourceSha256,
         } : null;
-        const brief = approvedAnnualFilingBrief({ business, risks });
-        return Response.json({ ok: true, business, risks, brief, briefStatus: brief ? "approved" : "pending" }, { headers: { "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800" } });
+        const source = { business, risks };
+        const remoteCandidate = await approvedMonitorBrief(entry.ticker, filing.accessionNumber, sourceSha256);
+        const remoteBrief = remoteCandidate
+          ? validateAnnualFilingBrief(remoteCandidate, source, true).brief
+          : null;
+        const brief = remoteBrief ?? approvedAnnualFilingBrief(source);
+        return Response.json({ ok: true, business, risks, brief, briefStatus: brief ? "approved" : "pending" }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" } });
       }
       return Response.json({ ok: true, profile, source: directoryUrl, profileSource: profileUrl, asOf: new Date().toISOString() }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" } });
     }

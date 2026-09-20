@@ -531,6 +531,45 @@ class ResearchServiceTests(unittest.TestCase):
                     payload = json.loads(response.read())
                 self.assertTrue(payload["ok"])
                 self.assertIn("Official evidence body.", str(payload["items"]))
+                business = "NVIDIA designs accelerated computing platforms and software for data centers and other markets."
+                risk = "Demand can change rapidly, and suppliers could disrupt product delivery."
+                annual = {
+                    "id": "nvda-2026-annual-ja", "ticker": "NVDA",
+                    "accessionNumber": "0001045810-26-000021", "sourceSha256": "a" * 64,
+                    "summaryJa": "データセンターなどに向けて、計算基盤とソフトウェアを提供する企業です。",
+                    "businessModelJa": "計算基盤と関連ソフトウェアをデータセンターなどの市場へ提供します。",
+                    "riskPointsJa": [{"text": "需要の急変や供給企業への依存により、製品供給が滞る可能性があります。", "evidenceIds": ["risk-1"]}],
+                    "summaryEvidenceIds": ["business-1"], "businessModelEvidenceIds": ["business-1"],
+                    "evidence": [{"id": "business-1", "section": "business", "quote": business},
+                                 {"id": "risk-1", "section": "risk", "quote": risk}],
+                    "confidence": "high", "generationMethod": "human",
+                    "sourceBusiness": business, "sourceRisks": risk,
+                }
+                annual_draft = Request(
+                    f"http://127.0.0.1:{server.server_port}/admin/annual-briefs/draft",
+                    data=json.dumps(annual).encode(), method="POST",
+                    headers={"Authorization": "Bearer editor-token-at-least-24-characters", "Content-Type": "application/json"},
+                )
+                with urlopen(annual_draft, timeout=2) as response:
+                    self.assertEqual(json.loads(response.read())["status"], "draft")
+                annual_review = Request(
+                    f"http://127.0.0.1:{server.server_port}/admin/annual-briefs/review",
+                    data=json.dumps({
+                        "ticker": "NVDA", "accessionNumber": annual["accessionNumber"],
+                        "sourceSha256": annual["sourceSha256"], "decision": "approved",
+                        "reviewer": "private-editor", "reason": "SEC原文と根拠引用を照合済み",
+                    }).encode(), method="POST",
+                    headers={"Authorization": "Bearer editor-token-at-least-24-characters", "Content-Type": "application/json"},
+                )
+                with urlopen(annual_review, timeout=2) as response:
+                    self.assertEqual(json.loads(response.read())["status"], "approved")
+                query = (f"http://127.0.0.1:{server.server_port}/annual-brief?ticker=NVDA"
+                         f"&accession={annual['accessionNumber']}&sha256={annual['sourceSha256']}")
+                with patch.dict(os.environ, {"RESEARCH_API_TOKEN": "api-token-at-least-24-characters"}):
+                    with urlopen(Request(query, headers={"Authorization": "Bearer api-token-at-least-24-characters"}), timeout=2) as response:
+                        public = json.loads(response.read())
+                self.assertEqual(public["status"], "approved")
+                self.assertNotIn("private-editor", str(public))
                 generate = Request(
                     f"http://127.0.0.1:{server.server_port}/admin/briefs/generate",
                     data=json.dumps({"url": "https://nebius.com/newsroom/new-release", "sha256": "b" * 64}).encode(),
