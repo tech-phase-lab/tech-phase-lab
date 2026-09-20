@@ -30,6 +30,7 @@ type AnnualRecord = {
 };
 type AnnualSource = { business: BusinessSection | null; risks: RiskSection | null };
 type AnnualSourceResponse = AnnualSource & { ok: boolean; error?: string };
+type AnnualRiskDraft = { text: string; evidence: string[] };
 
 const labels: Record<string, string> = { draft: "下書き", approved: "承認済み", held: "保留", rejected: "却下", stale: "原文変更・再確認" };
 const jobLabels: Record<string, string> = {
@@ -41,6 +42,16 @@ const riskCorpus = (risks: RiskSection | null) => [
   risks?.excerpt ?? "",
   risks?.overview?.groups.flatMap(group => [group.heading ?? "", ...group.items]).join("\n") ?? "",
 ].filter(Boolean).join("\n");
+const emptyAnnualRisk = (): AnnualRiskDraft => ({ text: "", evidence: [""] });
+
+function annualRiskDrafts(record: AnnualRecord | null): AnnualRiskDraft[] {
+  if (!record?.riskPointsJa.length) return [emptyAnnualRisk()];
+  const evidence = new Map(record.evidence.map(item => [item.id, item]));
+  return record.riskPointsJa.map(point => ({
+    text: point.text,
+    evidence: point.evidenceIds.map(id => evidence.get(id)?.quote).filter((quote): quote is string => Boolean(quote)).slice(0, 4),
+  })).map(point => point.evidence.length ? point : { ...point, evidence: [""] });
+}
 
 export default function ReviewDashboard() {
   const [token, setToken] = useState("");
@@ -52,9 +63,9 @@ export default function ReviewDashboard() {
   const [annualTicker, setAnnualTicker] = useState("NVDA");
   const [annualSource, setAnnualSource] = useState<AnnualSource | null>(null);
   const [annualRecord, setAnnualRecord] = useState<AnnualRecord | null>(null);
+  const [annualRisks, setAnnualRisks] = useState<AnnualRiskDraft[]>([emptyAnnualRisk()]);
   const selected = useMemo(() => items.find(item => item.url === selectedUrl) ?? items[0], [items, selectedUrl]);
   const annualBusinessEvidence = annualRecord?.evidence.find(item => item.section === "business")?.quote ?? "";
-  const annualRiskEvidence = annualRecord?.evidence.find(item => item.section === "risk")?.quote ?? "";
 
   async function request(method: "GET" | "POST", body?: unknown, kind: "news" | "annual" = "news") {
     const result = await fetch(`/api/research/editor?limit=${kind === "annual" ? 50 : 30}${kind === "annual" ? "&kind=annual" : ""}`, {
@@ -109,6 +120,7 @@ export default function ReviewDashboard() {
       setAnnualTicker(ticker);
       setAnnualSource({ business: source.business, risks: source.risks });
       setAnnualRecord(currentRecord);
+      setAnnualRisks(annualRiskDrafts(currentRecord));
       setMode("annual");
       setMessage(successMessage ?? (existing && !currentRecord
         ? `${ticker}のSEC原文が保存済み下書きから更新されています。以前の内容は読み込まず、新しいSHAで再作成してください。`
@@ -116,6 +128,7 @@ export default function ReviewDashboard() {
     } catch (error) {
       setAnnualSource(null);
       setAnnualRecord(null);
+      setAnnualRisks([emptyAnnualRisk()]);
       setMessage(`年次報告書の読み込み失敗：${error instanceof Error ? error.message : "unknown"}`);
     } finally { setBusy(false); }
   }
@@ -185,8 +198,16 @@ export default function ReviewDashboard() {
     if (!annualSource?.business || !annualSource.risks) return;
     const form = new FormData(event.currentTarget);
     const businessEvidence = String(form.get("businessEvidence") ?? "").trim();
-    const riskEvidence = String(form.get("riskEvidence") ?? "").trim();
     const { business, risks } = annualSource;
+    const riskPointsJa = annualRisks.map((risk, riskIndex) => ({
+      text: risk.text,
+      evidenceIds: risk.evidence.map((_, evidenceIndex) => `risk-${riskIndex + 1}-${evidenceIndex + 1}`),
+    }));
+    const riskEvidence = annualRisks.flatMap((risk, riskIndex) => risk.evidence.map((quote, evidenceIndex) => ({
+      id: `risk-${riskIndex + 1}-${evidenceIndex + 1}`,
+      section: "risk",
+      quote: quote.trim(),
+    })));
     setBusy(true);
     try {
       await request("POST", { action: "annual-draft", payload: {
@@ -196,12 +217,12 @@ export default function ReviewDashboard() {
         sourceSha256: business.sourceSha256,
         summaryJa: form.get("summaryJa"),
         businessModelJa: form.get("businessModelJa"),
-        riskPointsJa: [{ text: form.get("riskPointJa"), evidenceIds: ["risk-1"] }],
+        riskPointsJa,
         summaryEvidenceIds: ["business-1"],
         businessModelEvidenceIds: ["business-1"],
         evidence: [
           { id: "business-1", section: "business", quote: businessEvidence },
-          { id: "risk-1", section: "risk", quote: riskEvidence },
+          ...riskEvidence,
         ],
         confidence: form.get("confidence"),
         generationMethod: "human",
@@ -270,8 +291,18 @@ export default function ReviewDashboard() {
         <label>企業の要点<textarea name="summaryJa" minLength={20} maxLength={500} required defaultValue={annualRecord?.summaryJa ?? ""} /></label>
         <label>何で稼ぐ会社か<textarea name="businessModelJa" minLength={20} maxLength={800} required defaultValue={annualRecord?.businessModelJa ?? ""} /></label>
         <label>事業説明の根拠引用<textarea name="businessEvidence" minLength={24} maxLength={800} required defaultValue={annualBusinessEvidence} /><small>上の事業説明に完全一致する24〜800文字。要点とビジネスモデルの両方を支える引用を選びます。</small></label>
-        <label>重要リスク<textarea name="riskPointJa" minLength={12} maxLength={360} required defaultValue={annualRecord?.riskPointsJa[0]?.text ?? ""} /></label>
-        <label>リスクの根拠引用<textarea name="riskEvidence" minLength={24} maxLength={800} required defaultValue={annualRiskEvidence} /><small>上のリスク原文に完全一致する24〜800文字。原文にない数値を日本語へ追加すると保存を拒否します。</small></label>
+        <section className={styles.riskEditor} aria-label="重要リスクの編集">
+          <div className={styles.riskEditorHead}><div><h3>重要リスク</h3><p>各項目を別々のSEC原文引用へ結び付けます。最大6項目、1項目につき根拠は最大4件です。</p></div><button type="button" disabled={busy || annualRisks.length >= 6} onClick={() => setAnnualRisks(current => [...current, emptyAnnualRisk()])}>リスクを追加</button></div>
+          {annualRisks.map((risk, riskIndex) => <fieldset key={`annual-risk-${riskIndex}`} className={styles.riskItem}>
+            <legend>リスク {riskIndex + 1}</legend>
+            <label>日本語要点<textarea aria-label={`リスク ${riskIndex + 1} の日本語要点`} minLength={12} maxLength={360} required value={risk.text} onChange={event => setAnnualRisks(current => current.map((item, index) => index === riskIndex ? { ...item, text: event.target.value } : item))} /></label>
+            {risk.evidence.map((quote, evidenceIndex) => <div key={`annual-risk-${riskIndex}-evidence-${evidenceIndex}`} className={styles.riskEvidenceRow}>
+              <label>根拠引用 {evidenceIndex + 1}<textarea aria-label={`リスク ${riskIndex + 1} の根拠引用 ${evidenceIndex + 1}`} minLength={24} maxLength={800} required value={quote} onChange={event => setAnnualRisks(current => current.map((item, index) => index === riskIndex ? { ...item, evidence: item.evidence.map((value, quoteIndex) => quoteIndex === evidenceIndex ? event.target.value : value) } : item))} /><small>上のリスク原文に完全一致する24〜800文字。原文にない数値を日本語へ追加すると保存を拒否します。</small></label>
+              {risk.evidence.length > 1 && <button type="button" className={styles.quietButton} onClick={() => setAnnualRisks(current => current.map((item, index) => index === riskIndex ? { ...item, evidence: item.evidence.filter((_, quoteIndex) => quoteIndex !== evidenceIndex) } : item))}>この引用を削除</button>}
+            </div>)}
+            <div className={styles.riskActions}><button type="button" className={styles.quietButton} disabled={busy || risk.evidence.length >= 4 || annualRisks.reduce((total, item) => total + item.evidence.length, 0) >= 11} onClick={() => setAnnualRisks(current => current.map((item, index) => index === riskIndex ? { ...item, evidence: [...item.evidence, ""] } : item))}>根拠引用を追加</button>{annualRisks.length > 1 && <button type="button" className={styles.dangerButton} onClick={() => setAnnualRisks(current => current.filter((_, index) => index !== riskIndex))}>このリスクを削除</button>}</div>
+          </fieldset>)}
+        </section>
         <label>確信度<select name="confidence" defaultValue={annualRecord?.confidence ?? "low"}><option value="low">low</option><option value="medium">medium</option><option value="high">high</option></select></label>
         <button disabled={busy}>年次報告書の下書きを保存</button>
       </form>

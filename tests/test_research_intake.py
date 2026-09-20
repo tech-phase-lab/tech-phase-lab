@@ -576,6 +576,43 @@ class IntakeTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "annual-number-not-grounded"):
             m.save_annual_filing_brief_draft(self.db, payload)
 
+    def test_annual_filing_brief_preserves_multiple_risks_and_evidence_links(self):
+        business = "The company develops computing systems and software for enterprise customers."
+        demand = "Customer demand can change rapidly and may adversely affect operating results."
+        supply = "The company depends on third-party suppliers for critical components."
+        security = "Cybersecurity incidents could interrupt services and harm the company reputation."
+        payload = {
+            "id": "nvda-multi-risk-ja", "ticker": "NVDA",
+            "accessionNumber": "0001045810-26-000021", "sourceSha256": "d" * 64,
+            "summaryJa": "企業向けに計算システムとソフトウェアを開発する企業です。",
+            "businessModelJa": "企業顧客へ計算システムと関連ソフトウェアを提供します。",
+            "riskPointsJa": [
+                {"text": "顧客需要の急変により、業績へ悪影響が及ぶ可能性があります。", "evidenceIds": ["risk-1-1"]},
+                {"text": "重要部品の外部調達とサイバー攻撃により、事業が中断する可能性があります。", "evidenceIds": ["risk-2-1", "risk-2-2"]},
+            ],
+            "summaryEvidenceIds": ["business-1"], "businessModelEvidenceIds": ["business-1"],
+            "evidence": [
+                {"id": "business-1", "section": "business", "quote": business},
+                {"id": "risk-1-1", "section": "risk", "quote": demand},
+                {"id": "risk-2-1", "section": "risk", "quote": supply},
+                {"id": "risk-2-2", "section": "risk", "quote": security},
+            ],
+            "confidence": "high", "generationMethod": "human",
+            "sourceBusiness": business, "sourceRisks": "\n".join([demand, supply, security]),
+        }
+        saved = m.save_annual_filing_brief_draft(self.db, payload)
+        m.review_annual_filing_brief(
+            self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
+            "approved", "private-editor", "複数のSEC原文引用を照合済み",
+        )
+        public = m.approved_annual_filing_brief(
+            self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"]
+        )
+        self.assertEqual(saved["status"], "draft")
+        self.assertEqual(len(public["riskPointsJa"]), 2)
+        self.assertEqual(public["riskPointsJa"][1]["evidenceIds"], ["risk-2-1", "risk-2-2"])
+        self.assertEqual(len(public["evidence"]), 4)
+
     def test_atom_links_supported_and_entity_declarations_rejected(self):
         body = b'''<feed xmlns="http://www.w3.org/2005/Atom"><entry><title>AI</title><link href="https://newsroom.arm.com/news/ai"/></entry></feed>'''
         self.assertEqual(len(m.feed_links(body, "ARM")), 1)
