@@ -34,7 +34,7 @@ async function secJson(url: string, revalidate: number) {
 async function secHtml(url: string) {
   let response: Response;
   try {
-    response = await fetch(url, { headers: headers("text/html,application/xhtml+xml"), next: { revalidate: 86_400, tags: ["sec-annual-filings"] }, signal: AbortSignal.timeout(12_000) });
+    response = await fetch(url, { headers: headers("text/html,application/xhtml+xml"), cache: "no-store", signal: AbortSignal.timeout(12_000) });
   } catch (error) {
     throw new Error(error instanceof Error && ["AbortError", "TimeoutError"].includes(error.name) ? "sec-filing-timeout" : "sec-filing-fetch-unavailable");
   }
@@ -88,7 +88,7 @@ export async function GET(request: Request) {
           retrievedAt: new Date().toISOString(),
           sourceSha256: createHash("sha256").update(html).digest("hex"),
         };
-        return Response.json({ ok: true, business }, { headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400" } });
+        return Response.json({ ok: true, business }, { headers: { "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800" } });
       }
       return Response.json({ ok: true, profile, source: directoryUrl, profileSource: profileUrl, asOf: new Date().toISOString() }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" } });
     }
