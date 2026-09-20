@@ -111,6 +111,22 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(second_row["fetch_failures"], 2)
         self.assertGreater(second_row["next_fetch_at"], second_row["checked_at"])
 
+    def test_fetch_failure_honors_retry_after_and_stores_only_a_safe_code(self):
+        error = HTTPError(
+            "https://nebius.com/newsroom/private-path?token=secret", 429,
+            "Too Many Requests", {"Retry-After": "900"}, None,
+        )
+        result = m.save_source_error(self.db, self.row(), error)
+        row = self.row()
+        history = self.db.execute(
+            "SELECT reason FROM history WHERE kind='fetch-error' ORDER BY id DESC LIMIT 1"
+        ).fetchone()
+        self.assertEqual(result["retrySeconds"], 900)
+        self.assertEqual(result["error"], "http-429")
+        self.assertEqual(row["error"], "http-429")
+        self.assertEqual(history["reason"], "http-429")
+        self.assertNotIn("private-path", str(result) + str(dict(row)) + str(dict(history)))
+
     def test_operational_incident_transitions_are_deduplicated_and_held(self):
         self.assertEqual(m.record_operational_incident(
             self.db, "source:NBIS", "official-source", "NBIS", "warning", "timeout"
@@ -492,6 +508,106 @@ class IntakeTests(unittest.TestCase):
                 "medium", evidence,
             )
 
+    def test_brief_numbers_must_be_cited_by_the_same_editorial_field(self):
+        body = b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand in 2027.</p></main>"
+        self.check(body)
+        sha = self.row()["sha256"]
+        with self.assertRaisesRegex(ValueError, "numeric summary claim"):
+            m.save_brief_draft(
+                self.db, URL, sha,
+                "公式発表によると、AI向け容量は2027年に増加する計画です。",
+                "mixed", "実行時期と需要の確度は2027年も引き続き確認が必要です。",
+                "medium", {
+                    "summary": ["Capacity will increase."],
+                    "impact": ["Execution remains subject to demand in 2027."],
+                },
+            )
+
+    def test_brief_review_revalidates_both_evidence_fields(self):
+        body = b"<main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main>"
+        self.check(body)
+        sha = self.row()["sha256"]
+        m.save_brief_draft(
+            self.db, URL, sha,
+            "公式発表によると、AI向け容量は2027年に増加する計画です。",
+            "mixed", "供給能力の拡大余地がありますが、実行と需要の確認が引き続き必要です。",
+            "medium", {
+                "summary": ["Capacity will increase in 2027."],
+                "impact": ["Execution remains subject to demand."],
+            },
+        )
+        self.db.execute("DELETE FROM brief_evidence WHERE url=? AND field='impact'", (URL,))
+        self.db.commit()
+        with self.assertRaisesRegex(ValueError, "missing or invalid"):
+            m.review_brief(self.db, URL, sha, "approved", "editor", "Evidence reviewed")
+        self.assertEqual(self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0], "draft")
+
+    def test_brief_review_revalidates_field_specific_numeric_claims(self):
+        body = b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand in 2027.</p></main>"
+        self.check(body)
+        sha = self.row()["sha256"]
+        m.save_brief_draft(
+            self.db, URL, sha,
+            "公式発表によると、AI向け容量を増加させる計画です。",
+            "mixed", "実行時期と需要の確度は2027年も引き続き確認が必要です。",
+            "medium", {
+                "summary": ["Capacity will increase."],
+                "impact": ["Execution remains subject to demand in 2027."],
+            },
+        )
+        self.db.execute(
+            "UPDATE briefs SET summary_ja=? WHERE url=?",
+            ("公式発表によると、AI向け容量は2027年に増加する計画です。", URL),
+        )
+        self.db.commit()
+        with self.assertRaisesRegex(ValueError, "missing or invalid"):
+            m.review_brief(self.db, URL, sha, "approved", "editor", "Evidence reviewed")
+        self.assertEqual(self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0], "draft")
+
+    def test_brief_review_rejects_evidence_modified_after_save(self):
+        body = b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main>"
+        self.check(body)
+        sha = self.row()["sha256"]
+        m.save_brief_draft(
+            self.db, URL, sha,
+            "公式発表によると、AI向け容量を増加させる計画です。",
+            "mixed", "供給能力の拡大余地がありますが、実行と需要の確認が引き続き必要です。",
+            "medium", {
+                "summary": ["Capacity will increase."],
+                "impact": ["Execution remains subject to demand."],
+            },
+        )
+        self.db.execute(
+            "UPDATE brief_evidence SET excerpt=? WHERE url=? AND field='summary'",
+            ("Capacity may increase.", URL),
+        )
+        self.db.commit()
+        with self.assertRaisesRegex(ValueError, "missing or invalid"):
+            m.review_brief(self.db, URL, sha, "approved", "editor", "Evidence reviewed")
+        self.assertEqual(self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0], "draft")
+
+    def test_brief_review_rejects_valid_but_unsealed_edit_after_save(self):
+        body = b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main>"
+        self.check(body)
+        sha = self.row()["sha256"]
+        m.save_brief_draft(
+            self.db, URL, sha,
+            "公式発表では、AI向けの供給能力を増やす計画が示されています。",
+            "mixed", "供給拡大の余地はありますが、需要と実行状況の確認が引き続き必要です。",
+            "medium", {
+                "summary": ["Capacity will increase."],
+                "impact": ["Execution remains subject to demand."],
+            },
+        )
+        self.db.execute(
+            "UPDATE briefs SET summary_ja=? WHERE url=?",
+            ("公式資料では、AI向け供給能力を拡大する方針が示されています。", URL),
+        )
+        self.db.commit()
+        with self.assertRaisesRegex(ValueError, "missing or invalid"):
+            m.review_brief(self.db, URL, sha, "approved", "editor", "Evidence reviewed")
+        self.assertEqual(self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0], "draft")
+
     def test_only_human_approved_brief_is_public_without_private_review_data(self):
         body = b"<main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main>"
         self.check(body)
@@ -515,7 +631,119 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(len(editorial["items"]), 1)
         self.assertIn("Capacity will increase", editorial["items"][0]["source_text"])
         self.assertEqual(editorial["items"][0]["evidence"]["summary"], ["Capacity will increase in 2027."])
+        review_history = editorial["items"][0]["review_history"]
+        self.assertEqual(len(review_history), 1)
+        self.assertEqual(review_history[0]["source_sha256"], sha)
+        self.assertEqual(review_history[0]["decision"], "approved")
+        self.assertEqual(review_history[0]["reviewed_at"], public[0]["reviewed_at"])
+        self.assertEqual(review_history[0]["reviewer"], "private-editor")
+        self.assertEqual(review_history[0]["reason"], "private-review-reason")
+        self.assertTrue(review_history[0]["current_revision"])
+        self.assertTrue(review_history[0]["draft_validation_sha256"])
         self.assertFalse(editorial["items"][0]["source_text_truncated"])
+        self.db.execute(
+            "UPDATE briefs SET summary_ja=? WHERE url=?",
+            ("公式資料では、AI向け容量を拡大する方針が示されています。", URL),
+        )
+        self.db.commit()
+        self.assertEqual(m.snapshot(self.db)["briefs"], [])
+
+    def test_brief_review_history_is_append_only_and_private(self):
+        body = b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main>"
+        self.check(body)
+        sha = self.row()["sha256"]
+        m.save_brief_draft(
+            self.db, URL, sha,
+            "公式発表によると、AI向け容量を増加させる計画です。",
+            "mixed", "供給能力の拡大余地がありますが、実行と需要の確認が引き続き必要です。",
+            "medium", {
+                "summary": ["Capacity will increase."],
+                "impact": ["Execution remains subject to demand."],
+            },
+        )
+        m.review_brief(self.db, URL, sha, "held", "first-editor", "追加確認が必要です")
+        m.review_brief(self.db, URL, sha, "approved", "second-editor", "原文と根拠を再確認しました")
+        history = m.private_brief_queue(self.db, 5)["items"][0]["review_history"]
+        self.assertEqual([item["decision"] for item in history], ["approved", "held"])
+        self.assertEqual([item["reviewer"] for item in history], ["second-editor", "first-editor"])
+        self.assertTrue(all(item["current_revision"] for item in history))
+        self.assertTrue(all(item["draft_validation_sha256"] for item in history))
+        self.assertNotIn("review_history", m.snapshot(self.db)["briefs"][0])
+
+        m.save_brief_draft(
+            self.db, URL, sha,
+            "公式資料では、AI向けの供給能力を増やす方針を示しています。",
+            "mixed", "供給拡大の余地はありますが、需要と実行状況の継続確認が必要です。",
+            "medium", {
+                "summary": ["Capacity will increase."],
+                "impact": ["Execution remains subject to demand."],
+            },
+        )
+        rewritten_history = m.private_brief_queue(self.db, 5)["items"][0]["review_history"]
+        self.assertTrue(all(not item["current_revision"] for item in rewritten_history))
+        m.review_brief(self.db, URL, sha, "held", "third-editor", "書き直した要約を追加確認します")
+        rewritten_history = m.private_brief_queue(self.db, 5)["items"][0]["review_history"]
+        self.assertEqual(
+            [item["current_revision"] for item in rewritten_history],
+            [True, False, False],
+        )
+
+        legacy = self.db.execute("""
+          INSERT INTO brief_review_history(
+            url,source_sha256,draft_validation_sha256,decision,reviewed_at,reviewer,reason
+          ) VALUES(?,?,?,?,?,?,?)
+        """, (
+            URL, sha, None, "held", "2026-09-21T00:00:00+00:00",
+            "legacy-editor", "下書き指紋導入前の判断です",
+        ))
+        legacy_history = m.private_brief_queue(self.db, 5)["items"][0]["review_history"]
+        self.assertFalse(legacy_history[0]["current_revision"])
+        self.db.execute("DELETE FROM brief_review_history WHERE id=?", (legacy.lastrowid,))
+        self.db.commit()
+
+        self.check(b"<main><p>Capacity plan changed.</p></main>")
+        stale_history = m.private_brief_queue(self.db, 5)["items"][0]["review_history"]
+        self.assertTrue(all(not item["current_revision"] for item in stale_history))
+        with self.assertRaises(ValueError):
+            m.review_brief(self.db, URL, self.row()["sha256"], "held", "bad\nname", "理由を確認します")
+
+    def test_editorial_queue_counts_all_items_and_prioritizes_human_actions(self):
+        body = b"<main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main>"
+        summary = "公式発表によると、AI向け容量は2027年に増加する計画です。"
+        impact = "供給能力の拡大余地がありますが、実行と需要の確認が引き続き必要です。"
+        evidence = {
+            "summary": ["Capacity will increase in 2027."],
+            "impact": ["Execution remains subject to demand."],
+        }
+
+        def prepare(url):
+            m.add_source(self.db, "NBIS", url)
+            row = self.db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            m.check_source(self.db, row, lambda *_: (body, "text/html"))
+            return self.db.execute("SELECT sha256 FROM sources WHERE url=?", (url,)).fetchone()[0]
+
+        approved_sha = prepare(URL)
+        m.save_brief_draft(self.db, URL, approved_sha, summary, "mixed", impact, "medium", evidence)
+        m.review_brief(self.db, URL, approved_sha, "approved", "editor", "Evidence reviewed")
+
+        draft_url = "https://nebius.com/newsroom/draft-release"
+        draft_sha = prepare(draft_url)
+        m.save_brief_draft(self.db, draft_url, draft_sha, summary, "mixed", impact, "medium", evidence)
+
+        held_url = "https://nebius.com/newsroom/held-release"
+        held_sha = prepare(held_url)
+        m.save_brief_draft(self.db, held_url, held_sha, summary, "mixed", impact, "medium", evidence)
+        m.review_brief(self.db, held_url, held_sha, "held", "editor", "Needs follow-up")
+
+        prepare("https://nebius.com/newsroom/no-draft-release")
+        queue = m.private_brief_queue(self.db, 2)
+
+        self.assertEqual(queue["counts"], {
+            "total": 4, "needs_draft": 1, "awaiting_review": 1, "stale": 0,
+            "held": 1, "approved": 1, "rejected": 0,
+        })
+        self.assertEqual([item["brief_status"] for item in queue["items"]], ["draft", "held"])
+        self.assertEqual([item["url"] for item in queue["items"]], [draft_url, held_url])
 
     def test_source_change_makes_approved_brief_stale_and_private_again(self):
         body = b"<main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main>"
@@ -531,6 +759,12 @@ class IntakeTests(unittest.TestCase):
         self.check(b"<main><p>Capacity plan changed.</p></main>")
         self.assertEqual(self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0], "stale")
         self.assertEqual(m.snapshot(self.db)["briefs"], [])
+        stale = m.private_brief_queue(self.db, 5)["items"][0]
+        self.assertFalse(stale["brief_current"])
+        self.assertEqual(stale["brief_status"], "stale")
+        self.assertIsNone(stale["summary_ja"])
+        self.assertIsNone(stale["impact_ja"])
+        self.assertEqual(stale["evidence"], {"summary": [], "impact": []})
 
     def test_annual_filing_brief_requires_exact_evidence_and_human_approval(self):
         business = "NVIDIA designs accelerated computing platforms and software for data centers and other markets."
@@ -558,6 +792,14 @@ class IntakeTests(unittest.TestCase):
         self.assertIsNone(m.approved_annual_filing_brief(
             self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"]
         ))
+        held = m.review_annual_filing_brief(
+            self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
+            "held", "first-editor", "追加確認が必要です",
+        )
+        self.assertEqual(held["status"], "held")
+        self.assertIsNone(m.approved_annual_filing_brief(
+            self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"]
+        ))
         reviewed = m.review_annual_filing_brief(
             self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
             "approved", "private-editor", "SEC原文と根拠引用を照合済み",
@@ -571,11 +813,36 @@ class IntakeTests(unittest.TestCase):
         self.assertTrue(public["reviewedAt"].endswith("Z"))
         self.assertNotIn("reviewer", public)
         self.assertNotIn("reviewReason", public)
+        self.assertNotIn("reviewHistory", public)
         self.assertIsNone(m.approved_annual_filing_brief(
             self.db, "NVDA", payload["accessionNumber"], "b" * 64
         ))
         private = m.annual_filing_brief_queue(self.db)["items"][0]
         self.assertEqual(private["reviewer"], "private-editor")
+        self.assertEqual(
+            [entry["decision"] for entry in private["reviewHistory"]],
+            ["approved", "held"],
+        )
+        self.assertEqual(
+            [entry["reviewer"] for entry in private["reviewHistory"]],
+            ["private-editor", "first-editor"],
+        )
+        self.assertTrue(all(entry["currentRevision"] for entry in private["reviewHistory"]))
+        self.assertTrue(all(entry["draftValidationSha256"] for entry in private["reviewHistory"]))
+
+        legacy = self.db.execute("""
+          INSERT INTO annual_filing_review_history(
+            ticker,accession_number,source_sha256,draft_validation_sha256,
+            decision,reviewed_at,reviewer,reason
+          ) VALUES(?,?,?,?,?,?,?,?)
+        """, (
+            "NVDA", payload["accessionNumber"], payload["sourceSha256"], None,
+            "held", "2026-09-21T00:00:00+00:00", "legacy-editor",
+            "下書き指紋導入前の判断です",
+        ))
+        legacy_history = m.annual_filing_brief_queue(self.db)["items"][0]["reviewHistory"]
+        self.assertFalse(legacy_history[0]["currentRevision"])
+        self.db.execute("DELETE FROM annual_filing_review_history WHERE id=?", (legacy.lastrowid,))
 
         altered = {**payload, "evidence": [
             {"id": "business-1", "section": "business", "quote": "A plausible sentence absent from the filing."},
@@ -583,6 +850,25 @@ class IntakeTests(unittest.TestCase):
         ]}
         with self.assertRaisesRegex(ValueError, "annual-evidence-not-in-source"):
             m.save_annual_filing_brief_draft(self.db, altered)
+
+        reworded = {
+            **payload,
+            "summaryJa": "計算基盤とソフトウェアをデータセンターなどへ提供している企業です。",
+        }
+        m.save_annual_filing_brief_draft(self.db, reworded)
+        history = m.annual_filing_brief_queue(self.db)["items"][0]["reviewHistory"]
+        self.assertTrue(all(not entry["currentRevision"] for entry in history))
+        m.review_annual_filing_brief(
+            self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
+            "held", "third-editor", "書き直した要点を追加確認します",
+        )
+        history = m.annual_filing_brief_queue(self.db)["items"][0]["reviewHistory"]
+        self.assertEqual([entry["currentRevision"] for entry in history], [True, False, False])
+
+        revised = {**payload, "sourceSha256": "b" * 64}
+        m.save_annual_filing_brief_draft(self.db, revised)
+        history = m.annual_filing_brief_queue(self.db)["items"][0]["reviewHistory"]
+        self.assertTrue(all(not entry["currentRevision"] for entry in history))
 
     def test_annual_filing_brief_rejects_uncited_numbers(self):
         business = "The company provides accelerated computing systems."
@@ -601,6 +887,48 @@ class IntakeTests(unittest.TestCase):
         }
         with self.assertRaisesRegex(ValueError, "annual-number-not-grounded"):
             m.save_annual_filing_brief_draft(self.db, payload)
+
+    def test_annual_filing_review_rejects_a_draft_changed_after_validation(self):
+        business = "The company provides accelerated computing systems to enterprise customers."
+        risk = "Demand changes and third-party suppliers may adversely affect product delivery."
+        payload = {
+            "id": "nvda-tamper-check-ja", "ticker": "NVDA",
+            "accessionNumber": "0001045810-26-000021", "sourceSha256": "e" * 64,
+            "summaryJa": "企業顧客に向けて、アクセラレーテッド・コンピューティング基盤を提供する企業です。",
+            "businessModelJa": "企業顧客へ計算基盤を提供し、その対価を収益として受け取ります。",
+            "riskPointsJa": [{
+                "text": "需要変動や外部供給企業への依存により、製品供給へ影響する可能性があります。",
+                "evidenceIds": ["risk-1"],
+            }],
+            "summaryEvidenceIds": ["business-1"],
+            "businessModelEvidenceIds": ["business-1"],
+            "evidence": [
+                {"id": "business-1", "section": "business", "quote": business},
+                {"id": "risk-1", "section": "risk", "quote": risk},
+            ],
+            "confidence": "medium", "generationMethod": "human",
+            "sourceBusiness": business, "sourceRisks": risk,
+        }
+        m.save_annual_filing_brief_draft(self.db, payload)
+        self.db.execute("""
+          UPDATE annual_filing_briefs SET summary_ja=?
+          WHERE ticker=? AND accession_number=?
+        """, ("保存後に書き換えられた未検証の日本語要約です。", "NVDA", payload["accessionNumber"]))
+        self.db.commit()
+
+        with self.assertRaisesRegex(ValueError, "annual-draft-evidence-invalid"):
+            m.review_annual_filing_brief(
+                self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
+                "approved", "private-editor", "SEC原文と根拠引用を照合済み",
+            )
+        row = self.db.execute("""
+          SELECT status FROM annual_filing_briefs
+          WHERE ticker=? AND accession_number=?
+        """, ("NVDA", payload["accessionNumber"])).fetchone()
+        self.assertEqual(row["status"], "draft")
+        self.assertEqual(self.db.execute(
+            "SELECT count(*) FROM annual_filing_review_history"
+        ).fetchone()[0], 0)
 
     def test_annual_filing_brief_preserves_multiple_risks_and_evidence_links(self):
         business = "The company develops computing systems and software for enterprise customers."

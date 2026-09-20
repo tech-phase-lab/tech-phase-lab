@@ -613,7 +613,7 @@ class AutomaticMonitor:
                             "route": "none",
                             "sourceUrl": monitor.INDEXES[ticker],
                             "candidates": 0,
-                            "error": str(exc),
+                            "error": monitor.source_error_code(exc),
                         }
                         links = {}
                     collected.append((ticker, result, links, request_duration_ms))

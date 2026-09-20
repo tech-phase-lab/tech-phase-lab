@@ -44,6 +44,8 @@ class BriefGeneratorTests(unittest.TestCase):
         self.assertEqual(result["audit"]["totalTokens"], 444)
         self.assertGreaterEqual(g.token_reservation(self.source()["extracted_text"]), g.MAX_OUTPUT_TOKENS)
         self.assertTrue(captured["text"]["format"]["strict"])
+        self.assertIn("summaryJa must appear in evidence.summary", captured["instructions"])
+        self.assertIn("impactJa must appear in evidence.impact", captured["instructions"])
         self.assertNotIn("publish", json.dumps(captured))
 
     def test_refusal_and_malformed_evidence_are_rejected(self):

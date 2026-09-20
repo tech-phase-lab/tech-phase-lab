@@ -6,9 +6,19 @@ import type { BusinessSection, RiskSection } from "@/lib/research/stock-director
 import styles from "./review.module.css";
 
 type Evidence = { summary: string[]; impact: string[] };
+type ReviewHistory = {
+  source_sha256: string; draft_validation_sha256: string | null;
+  decision: "approved" | "held" | "rejected";
+  reviewed_at: string; reviewer: string; reason: string; current_revision: boolean;
+};
+type ReviewCounts = {
+  total: number; needs_draft: number; awaiting_review: number; stale: number;
+  held: number; approved: number; rejected: number;
+};
 type ReviewItem = {
   url: string; ticker: string; title: string | null; published_on: string | null; discovered_at: string;
   checked_at: string; sha256: string; source_text: string; source_text_truncated: boolean;
+  brief_current: boolean; review_history?: ReviewHistory[];
   summary_ja: string | null; impact_label: string | null; impact_ja: string | null; confidence: string | null;
   brief_status: string | null; generated_at: string | null; reviewed_at: string | null; evidence: Evidence;
   generation_provider: string | null; generation_model: string | null; generation_response_id: string | null;
@@ -27,6 +37,11 @@ type AnnualRecord = {
   confidence: "low" | "medium" | "high"; generationMethod: "human" | "ai-assisted";
   status: "draft" | "approved" | "held" | "rejected";
   generatedAt: string; reviewedAt: string | null; reviewer: string | null; reviewReason: string | null;
+  reviewHistory?: {
+    sourceSha256: string; draftValidationSha256: string | null;
+    decision: "approved" | "held" | "rejected"; reviewedAt: string;
+    reviewer: string; reason: string; currentRevision: boolean;
+  }[];
 };
 type AnnualSource = { business: BusinessSection | null; risks: RiskSection | null };
 type AnnualSourceResponse = AnnualSource & { ok: boolean; error?: string };
@@ -43,6 +58,9 @@ const riskCorpus = (risks: RiskSection | null) => [
   risks?.overview?.groups.flatMap(group => [group.heading ?? "", ...group.items]).join("\n") ?? "",
 ].filter(Boolean).join("\n");
 const emptyAnnualRisk = (): AnnualRiskDraft => ({ text: "", evidence: [""] });
+const emptyReviewCounts: ReviewCounts = {
+  total: 0, needs_draft: 0, awaiting_review: 0, stale: 0, held: 0, approved: 0, rejected: 0,
+};
 
 function annualRiskDrafts(record: AnnualRecord | null): AnnualRiskDraft[] {
   if (!record?.riskPointsJa.length) return [emptyAnnualRisk()];
@@ -56,6 +74,7 @@ function annualRiskDrafts(record: AnnualRecord | null): AnnualRiskDraft[] {
 export default function ReviewDashboard() {
   const [token, setToken] = useState("");
   const [items, setItems] = useState<ReviewItem[]>([]);
+  const [reviewCounts, setReviewCounts] = useState<ReviewCounts>(emptyReviewCounts);
   const [selectedUrl, setSelectedUrl] = useState("");
   const [message, setMessage] = useState("編集用トークンを入力してください。ブラウザーには保存しません。");
   const [busy, setBusy] = useState(false);
@@ -65,7 +84,9 @@ export default function ReviewDashboard() {
   const [annualRecord, setAnnualRecord] = useState<AnnualRecord | null>(null);
   const [annualRisks, setAnnualRisks] = useState<AnnualRiskDraft[]>([emptyAnnualRisk()]);
   const selected = useMemo(() => items.find(item => item.url === selectedUrl) ?? items[0], [items, selectedUrl]);
+  const selectedReviewHistory = selected?.review_history ?? [];
   const annualBusinessEvidence = annualRecord?.evidence.find(item => item.section === "business")?.quote ?? "";
+  const annualReviewHistory = annualRecord?.reviewHistory ?? [];
 
   async function request(method: "GET" | "POST", body?: unknown, kind: "news" | "annual" = "news") {
     const result = await fetch(`/api/research/editor?limit=${kind === "annual" ? 50 : 30}${kind === "annual" ? "&kind=annual" : ""}`, {
@@ -84,9 +105,10 @@ export default function ReviewDashboard() {
     try {
       const payload = await request("GET");
       setItems(payload.items);
+      setReviewCounts(payload.counts ?? emptyReviewCounts);
       setSelectedUrl(current => payload.items.some((item: ReviewItem) => item.url === current) ? current : payload.items[0]?.url ?? "");
       setMode("news");
-      setMessage(successMessage ?? `確認可能な原文 ${payload.items.length}件を読み込みました。`);
+      setMessage(successMessage ?? `確認可能な原文 ${payload.counts?.total ?? payload.items.length}件から、対応優先順に${payload.items.length}件を読み込みました。`);
     } catch (error) {
       setMessage(`読み込み失敗：${error instanceof Error ? error.message : "unknown"}`);
     } finally { setBusy(false); }
@@ -261,12 +283,13 @@ export default function ReviewDashboard() {
     <section className={styles.auth} aria-label="編集者認証"><label>編集用トークン<input type="password" autoComplete="off" value={token} onChange={event => setToken(event.target.value)} /></label><div className={styles.authActions}><button disabled={busy || token.length < 24} onClick={() => load()}>速報原文を読み込む</button><div className={styles.tickerLoad}><input aria-label="年次報告書のティッカー" value={annualTicker} maxLength={15} onChange={event => setAnnualTicker(event.target.value.toUpperCase())} /><button disabled={busy || token.length < 24} onClick={() => loadAnnual()}>年次報告書を開く</button></div></div><p aria-live="polite">{message}</p></section>
     {(items.length > 0 || annualSource) && <div className={styles.modeTabs} role="tablist" aria-label="レビュー対象"><button role="tab" aria-selected={mode === "news"} disabled={!items.length} onClick={() => setMode("news")}>速報レビュー</button><button role="tab" aria-selected={mode === "annual"} disabled={!annualSource} onClick={() => setMode("annual")}>年次報告書レビュー</button></div>}
     {mode === "news" && items.length > 0 && <div className={styles.workspace}>
-      <nav aria-label="確認する原文"><h2>確認待ち原文</h2>{items.map(item => <button key={item.url} aria-current={selected?.url === item.url} onClick={() => setSelectedUrl(item.url)}><b>{item.ticker}</b><span>{item.title || new URL(item.url).pathname.split("/").filter(Boolean).at(-1)}</span><small>{labels[item.brief_status ?? ""] ?? "下書きなし"}</small></button>)}</nav>
+      <nav aria-label="確認する原文"><h2>速報レビューキュー</h2><div className={styles.annualMeta} aria-label="レビュー状況"><span>承認待ち {reviewCounts.awaiting_review}</span><span>原文更新 {reviewCounts.stale}</span><span>保留 {reviewCounts.held}</span><span>下書き未作成 {reviewCounts.needs_draft}</span><span>承認済み {reviewCounts.approved}</span></div>{items.map(item => <button key={item.url} aria-current={selected?.url === item.url} onClick={() => setSelectedUrl(item.url)}><b>{item.ticker}</b><span>{item.title || new URL(item.url).pathname.split("/").filter(Boolean).at(-1)}</span><small>{labels[item.brief_status ?? ""] ?? "下書きなし"}</small></button>)}</nav>
       {selected && <article className={styles.editor}>
         <div className={styles.sourceHead}><div><p>{selected.ticker} · SHA {selected.sha256.slice(0, 12)}…</p><h2>{selected.title || "公式原文"}</h2></div><a href={selected.url} target="_blank" rel="noopener noreferrer">公式原文 ↗</a></div>
+        {selected.brief_status === "stale" && !selected.brief_current && <aside className={styles.warning}><strong>原文が更新されました</strong><span>旧要約と旧根拠はフォームへ読み戻していません。現在の原文から下書きを作り直してください。</span></aside>}
         <details open className={styles.evidence}><summary>取得した原文証拠（{selected.source_text.length.toLocaleString("ja-JP")}文字）</summary><pre>{selected.source_text}</pre>{selected.source_text_truncated && <p>画面表示は80,000文字で打ち切っています。承認前に公式原文も確認してください。</p>}</details>
         <section className={styles.form}><div><h2>AIによる根拠付き下書き</h2><p>設定済みの場合だけ1件生成します。現在の原文・完全一致する根拠抜粋・数値照合を通過しない限り保存されません。</p>{selected.generation_job_status && <small>自動処理：{jobLabels[selected.generation_job_status] ?? selected.generation_job_status} · 試行 {selected.generation_job_attempts ?? 0}回{selected.generation_job_error ? ` · ${selected.generation_job_error}` : ""}</small>}{selected.generation_model && <small>生成記録：{selected.generation_provider} · {selected.generation_model}{selected.generation_total_tokens != null ? ` · ${selected.generation_total_tokens.toLocaleString("ja-JP")} tokens` : " · 使用量未取得"}{selected.generation_source_truncated ? " · 入力上限のため原文を短縮" : ""}</small>}</div><button type="button" disabled={busy} onClick={generateDraft}>AI下書きを生成</button></section>
-        <form key={`${selected.url}-draft-${selected.generated_at}`} onSubmit={submitDraft} className={styles.form}><h2>日本語速報の下書き</h2>
+        <form key={`${selected.url}-draft-${selected.sha256}-${selected.generated_at}`} onSubmit={submitDraft} className={styles.form}><h2>日本語速報の下書き</h2>
           <label>事実要約<textarea name="summaryJa" minLength={20} maxLength={600} required defaultValue={selected.summary_ja ?? ""} /></label>
           <label>要約の根拠抜粋<textarea name="summaryEvidence" required defaultValue={selected.evidence.summary.join("\n\n")} /><small>原文に完全一致する抜粋。複数は空行で区切ります。</small></label>
           <div className={styles.row}><label>影響分類<select name="impactLabel" defaultValue={selected.impact_label ?? "uncertain"}><option value="positive">positive</option><option value="negative">negative</option><option value="mixed">mixed</option><option value="neutral">neutral</option><option value="uncertain">uncertain</option></select></label><label>確信度<select name="confidence" defaultValue={selected.confidence ?? "low"}><option value="low">low</option><option value="medium">medium</option><option value="high">high</option></select></label></div>
@@ -278,6 +301,7 @@ export default function ReviewDashboard() {
           <div className={styles.row}><label>判断<select name="decision"><option value="held">保留</option><option value="approved">承認</option><option value="rejected">却下</option></select></label><label>確認者<input name="reviewer" required minLength={2} /></label></div>
           <label>判断理由<textarea name="reason" required minLength={5} /></label><button disabled={busy || !selected.brief_status}>判断を記録</button>
         </form>
+        {selectedReviewHistory.length > 0 && <details className={styles.evidence}><summary>判断履歴（直近{selectedReviewHistory.length}件）</summary><ol>{selectedReviewHistory.map((entry, index) => <li key={`${entry.reviewed_at}-${index}`}><div><b>{labels[entry.decision]}</b><span>{entry.reviewed_at.replace("T", " ").replace("+00:00", " UTC")} · {entry.reviewer}{entry.current_revision ? " · 現在の下書き" : " · 過去の下書き"}</span></div><p>{entry.reason}</p><small>原文 {entry.source_sha256.slice(0, 12)}…{entry.draft_validation_sha256 ? ` · 下書き ${entry.draft_validation_sha256.slice(0, 12)}…` : " · 旧履歴（下書き指紋なし）"}</small></li>)}</ol></details>}
       </article>}
     </div>}
     {mode === "annual" && annualSource?.business && annualSource.risks && <article className={`${styles.editor} ${styles.annualEditor}`}>
@@ -310,6 +334,7 @@ export default function ReviewDashboard() {
         <div className={styles.row}><label>判断<select name="decision"><option value="held">保留</option><option value="approved">承認</option><option value="rejected">却下</option></select></label><label>確認者<input name="reviewer" required minLength={2} /></label></div>
         <label>判断理由<textarea name="reason" required minLength={5} maxLength={500} /></label><button disabled={busy || !annualRecord}>判断を記録</button>
       </form>
+      {annualReviewHistory.length > 0 && <details className={styles.evidence}><summary>年次報告書の判断履歴（直近{annualReviewHistory.length}件）</summary><ol>{annualReviewHistory.map((entry, index) => <li key={`${entry.reviewedAt}-${index}`}><div><b>{labels[entry.decision]}</b><span>{entry.reviewedAt.replace("T", " ").replace("Z", " UTC")} · {entry.reviewer}{entry.currentRevision ? " · 現在の下書き" : " · 過去の下書き"}</span></div><p>{entry.reason}</p><small>原文 {entry.sourceSha256.slice(0, 12)}…{entry.draftValidationSha256 ? ` · 下書き ${entry.draftValidationSha256.slice(0, 12)}…` : " · 旧履歴（下書き指紋なし）"}</small></li>)}</ol></details>}
     </article>}
   </main>;
 }

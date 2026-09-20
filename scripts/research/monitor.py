@@ -1,6 +1,7 @@
 """Official-source research intake. No scheduler, summarization, or publishing side effects."""
 import argparse
 from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
 import hashlib
 from html.parser import HTMLParser
 from html import unescape
@@ -12,7 +13,7 @@ import sys
 import re
 import xml.etree.ElementTree as ET
 from urllib.parse import urlencode, urljoin, urlsplit, urlunsplit
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 import threading
 
@@ -95,6 +96,54 @@ def http_validator(value):
     if not value or len(value) > 1024 or "\r" in value or "\n" in value:
         return None
     return value
+
+
+def source_error_code(exc):
+    """Reduce transport failures to bounded operational codes without leaking URLs."""
+    if isinstance(exc, HTTPError) and 400 <= exc.code <= 599:
+        return f"http-{exc.code}"
+    if isinstance(exc, (TimeoutError,)) or (
+        isinstance(exc, URLError) and isinstance(exc.reason, TimeoutError)
+    ):
+        return "timeout"
+    message = str(exc)
+    http_code = re.search(r"\bHTTP(?: Error)?\s+(\d{3})\b", message, re.I)
+    if http_code and 400 <= int(http_code.group(1)) <= 599:
+        return f"http-{http_code.group(1)}"
+    if isinstance(exc, ValueError):
+        lowered = message.lower()
+        for fragment, code in (
+            ("unsupported content type", "unsupported-content-type"),
+            ("empty or oversized source", "empty-or-oversized-source"),
+            ("invalid pdf response", "invalid-pdf"),
+            ("verification page", "verification-page"),
+            ("no release links parsed", "no-release-links"),
+            ("too many source links", "too-many-source-links"),
+        ):
+            if fragment in lowered:
+                return code
+        return "invalid-source-response"
+    return "fetch-failed"
+
+
+def retry_after_seconds(exc, reference=None):
+    """Parse a server Retry-After hint and cap it to the body-fetch backoff ceiling."""
+    if not isinstance(exc, HTTPError) or not exc.headers:
+        return None
+    value = str(exc.headers.get("Retry-After", "")).strip()
+    if not value:
+        return None
+    if value.isdigit():
+        seconds = int(value)
+    else:
+        try:
+            target = parsedate_to_datetime(value)
+            if target.tzinfo is None:
+                target = target.replace(tzinfo=timezone.utc)
+            seconds = round((target - (reference or datetime.now(timezone.utc))).total_seconds())
+        except (TypeError, ValueError, OverflowError):
+            return None
+    return max(0, min(6 * 60 * 60, seconds))
 
 
 def fetch(url, ticker, validators=None, include_metadata=False):
@@ -443,11 +492,19 @@ def connect(path):
     CREATE TABLE IF NOT EXISTS briefs (
       url TEXT PRIMARY KEY REFERENCES sources(url), source_sha256 TEXT NOT NULL,
       summary_ja TEXT NOT NULL, impact_label TEXT NOT NULL, impact_ja TEXT NOT NULL,
-      confidence TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'draft',
+      confidence TEXT NOT NULL, validation_sha256 TEXT,
+      status TEXT NOT NULL DEFAULT 'draft',
       generated_at TEXT NOT NULL, reviewed_at TEXT, reviewer TEXT, review_reason TEXT);
     CREATE TABLE IF NOT EXISTS brief_evidence (
       id INTEGER PRIMARY KEY, url TEXT NOT NULL REFERENCES briefs(url) ON DELETE CASCADE,
       field TEXT NOT NULL, excerpt TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS brief_review_history (
+      id INTEGER PRIMARY KEY, url TEXT NOT NULL REFERENCES sources(url),
+      source_sha256 TEXT NOT NULL, draft_validation_sha256 TEXT,
+      decision TEXT NOT NULL CHECK(decision IN ('approved','held','rejected')),
+      reviewed_at TEXT NOT NULL, reviewer TEXT NOT NULL, reason TEXT NOT NULL);
+    CREATE INDEX IF NOT EXISTS brief_review_history_url_id
+      ON brief_review_history(url,id DESC);
     CREATE TABLE IF NOT EXISTS brief_generation_jobs (
       url TEXT PRIMARY KEY REFERENCES sources(url), source_sha256 TEXT,
       status TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0,
@@ -466,9 +523,19 @@ def connect(path):
       risk_points_json TEXT NOT NULL, summary_evidence_ids_json TEXT NOT NULL,
       business_evidence_ids_json TEXT NOT NULL, evidence_json TEXT NOT NULL,
       confidence TEXT NOT NULL, generation_method TEXT NOT NULL,
+      validation_sha256 TEXT,
       status TEXT NOT NULL DEFAULT 'draft', generated_at TEXT NOT NULL,
       reviewed_at TEXT, reviewer TEXT, review_reason TEXT,
       PRIMARY KEY(ticker,accession_number));
+    CREATE TABLE IF NOT EXISTS annual_filing_review_history (
+      id INTEGER PRIMARY KEY, ticker TEXT NOT NULL, accession_number TEXT NOT NULL,
+      source_sha256 TEXT NOT NULL, draft_validation_sha256 TEXT,
+      decision TEXT NOT NULL CHECK(decision IN ('approved','held','rejected')),
+      reviewed_at TEXT NOT NULL, reviewer TEXT NOT NULL, reason TEXT NOT NULL,
+      FOREIGN KEY(ticker,accession_number)
+        REFERENCES annual_filing_briefs(ticker,accession_number));
+    CREATE INDEX IF NOT EXISTS annual_filing_review_history_filing_id
+      ON annual_filing_review_history(ticker,accession_number,id DESC);
     CREATE TABLE IF NOT EXISTS operational_incidents (
       incident_key TEXT PRIMARY KEY, category TEXT NOT NULL, subject TEXT NOT NULL,
       severity TEXT NOT NULL CHECK(severity IN ('warning','critical')),
@@ -518,6 +585,7 @@ def connect(path):
             db.execute(f"ALTER TABLE sources ADD COLUMN {column} {declaration}")
     brief_columns = {row[1] for row in db.execute("PRAGMA table_info(briefs)")}
     for column, declaration in {
+        "validation_sha256": "TEXT",
         "generation_provider": "TEXT", "generation_model": "TEXT", "generation_response_id": "TEXT",
         "generation_source_truncated": "INTEGER NOT NULL DEFAULT 0",
         "generation_input_tokens": "INTEGER", "generation_output_tokens": "INTEGER",
@@ -525,6 +593,13 @@ def connect(path):
     }.items():
         if column not in brief_columns:
             db.execute(f"ALTER TABLE briefs ADD COLUMN {column} {declaration}")
+    brief_history_columns = {
+        row[1] for row in db.execute("PRAGMA table_info(brief_review_history)")
+    }
+    if "draft_validation_sha256" not in brief_history_columns:
+        db.execute(
+            "ALTER TABLE brief_review_history ADD COLUMN draft_validation_sha256 TEXT"
+        )
     job_columns = {row[1] for row in db.execute("PRAGMA table_info(brief_generation_jobs)")}
     if "reserved_tokens" not in job_columns:
         db.execute("ALTER TABLE brief_generation_jobs ADD COLUMN reserved_tokens INTEGER NOT NULL DEFAULT 0")
@@ -535,6 +610,16 @@ def connect(path):
     }.items():
         if column not in attempt_columns:
             db.execute(f"ALTER TABLE brief_generation_attempts ADD COLUMN {column} {declaration}")
+    annual_columns = {row[1] for row in db.execute("PRAGMA table_info(annual_filing_briefs)")}
+    if "validation_sha256" not in annual_columns:
+        db.execute("ALTER TABLE annual_filing_briefs ADD COLUMN validation_sha256 TEXT")
+    annual_history_columns = {
+        row[1] for row in db.execute("PRAGMA table_info(annual_filing_review_history)")
+    }
+    if "draft_validation_sha256" not in annual_history_columns:
+        db.execute(
+            "ALTER TABLE annual_filing_review_history ADD COLUMN draft_validation_sha256 TEXT"
+        )
     return db
 
 
@@ -817,7 +902,7 @@ def collect_discovery(ticker, transport=fetch, automatic=False):
             used_source = source
             break
         except Exception as exc:
-            failures.append(str(exc))
+            failures.append(source_error_code(exc))
     if used_source:
         result = {
             "ticker": ticker,
@@ -912,17 +997,44 @@ def snapshot(db):
           FROM release_events e JOIN sources s ON s.url=e.url
           ORDER BY e.id DESC LIMIT 200
         """)]
-        briefs = [dict(r) for r in db.execute("""
+        brief_rows = [dict(r) for r in db.execute("""
           SELECT b.url,s.ticker,s.title,s.published_on,e.detected_at,b.source_sha256,
                  b.summary_ja,b.impact_label,b.impact_ja,b.confidence,b.status,
-                 b.generated_at,b.reviewed_at
+                 b.generated_at,b.reviewed_at,b.validation_sha256,s.extracted_text
           FROM briefs b JOIN sources s ON s.url=b.url
           LEFT JOIN release_events e ON e.url=b.url
           WHERE b.status='approved' AND b.source_sha256=s.sha256
+            AND b.validation_sha256 IS NOT NULL
             AND s.error IS NULL AND s.extracted_chars>0
             AND b.reviewed_at IS NOT NULL
           ORDER BY b.reviewed_at DESC
         """)]
+        briefs = []
+        for row in brief_rows:
+            evidence_rows = db.execute(
+                "SELECT field,excerpt FROM brief_evidence WHERE url=? ORDER BY id",
+                (row["url"],),
+            ).fetchall()
+            evidence = {
+                field: [item["excerpt"] for item in evidence_rows if item["field"] == field]
+                for field in ("summary", "impact")
+            }
+            try:
+                summary_ja, impact_ja, cleaned = _validate_brief_payload(
+                    row["extracted_text"], row["summary_ja"], row["impact_label"],
+                    row["impact_ja"], row["confidence"], evidence,
+                )
+            except (TypeError, ValueError):
+                continue
+            validation_sha = _brief_validation_sha(
+                row["source_sha256"], summary_ja, row["impact_label"],
+                impact_ja, row["confidence"], cleaned,
+            )
+            if validation_sha != row["validation_sha256"]:
+                continue
+            row.pop("validation_sha256")
+            row.pop("extracted_text")
+            briefs.append(row)
     for row in sources + runs:
         row["error"] = public_error(row["error"])
     for row in sources:
@@ -940,10 +1052,24 @@ def snapshot(db):
 def private_brief_queue(db, limit=20):
     """Return bounded source evidence for the authenticated editorial interface only."""
     limit = max(1, min(int(limit), 50))
+    counts = dict(db.execute("""
+      SELECT count(*) AS total,
+             sum(CASE WHEN b.url IS NULL THEN 1 ELSE 0 END) AS needs_draft,
+             sum(CASE WHEN b.status='draft' THEN 1 ELSE 0 END) AS awaiting_review,
+             sum(CASE WHEN b.status='stale' THEN 1 ELSE 0 END) AS stale,
+             sum(CASE WHEN b.status='held' THEN 1 ELSE 0 END) AS held,
+             sum(CASE WHEN b.status='approved' THEN 1 ELSE 0 END) AS approved,
+             sum(CASE WHEN b.status='rejected' THEN 1 ELSE 0 END) AS rejected
+      FROM sources s LEFT JOIN briefs b ON b.url=s.url
+      WHERE s.sha256 IS NOT NULL AND s.error IS NULL AND s.extracted_chars>0
+    """).fetchone())
+    counts = {key: int(value or 0) for key, value in counts.items()}
     rows = [dict(row) for row in db.execute("""
       SELECT s.url,s.ticker,s.title,s.published_on,s.discovered_at,s.checked_at,s.sha256,
              s.extracted_text,s.extracted_chars,e.detected_at,
+             b.source_sha256 AS brief_source_sha256,
              b.summary_ja,b.impact_label,b.impact_ja,b.confidence,b.status AS brief_status,
+             b.validation_sha256 AS brief_validation_sha256,
              b.generated_at,b.reviewed_at,b.reviewer,b.review_reason,
              b.generation_provider,b.generation_model,b.generation_response_id,b.generation_source_truncated,
              b.generation_input_tokens,b.generation_output_tokens,b.generation_total_tokens,
@@ -955,21 +1081,56 @@ def private_brief_queue(db, limit=20):
       LEFT JOIN briefs b ON b.url=s.url
       LEFT JOIN brief_generation_jobs j ON j.url=s.url
       WHERE s.sha256 IS NOT NULL AND s.error IS NULL AND s.extracted_chars>0
-      ORDER BY e.detected_at IS NULL,e.detected_at DESC,s.discovered_at DESC,s.url
+      ORDER BY CASE
+                 WHEN b.status='draft' THEN 0
+                 WHEN b.status='stale' THEN 1
+                 WHEN b.status='held' THEN 2
+                 WHEN b.url IS NULL THEN 3
+                 WHEN b.status='rejected' THEN 4
+                 WHEN b.status='approved' THEN 5
+                 ELSE 6
+               END,
+               e.detected_at IS NULL,e.detected_at DESC,s.discovered_at DESC,s.url
       LIMIT ?
     """, (limit,))]
     for row in rows:
-        evidence = db.execute(
+        brief_source_sha = row.pop("brief_source_sha256")
+        brief_validation_sha = row.pop("brief_validation_sha256")
+        brief_current = bool(brief_source_sha and brief_source_sha == row["sha256"] and row["brief_status"] != "stale")
+        row["brief_current"] = brief_current
+        evidence = (db.execute(
             "SELECT field,excerpt FROM brief_evidence WHERE url=? ORDER BY id", (row["url"],)
-        ).fetchall()
+        ).fetchall() if brief_current else [])
         row["evidence"] = {
             "summary": [item["excerpt"] for item in evidence if item["field"] == "summary"],
             "impact": [item["excerpt"] for item in evidence if item["field"] == "impact"],
         }
+        row["review_history"] = [{
+            "source_sha256": item["source_sha256"], "decision": item["decision"],
+            "draft_validation_sha256": item["draft_validation_sha256"],
+            "reviewed_at": item["reviewed_at"], "reviewer": item["reviewer"],
+            "reason": item["reason"], "current_revision": (
+                item["source_sha256"] == row["sha256"]
+                and item["draft_validation_sha256"] is not None
+                and item["draft_validation_sha256"] == brief_validation_sha
+            ),
+        } for item in db.execute("""
+          SELECT source_sha256,draft_validation_sha256,decision,reviewed_at,reviewer,reason
+          FROM brief_review_history WHERE url=? ORDER BY id DESC LIMIT 10
+        """, (row["url"],))]
+        if not brief_current:
+            for field in (
+                "summary_ja", "impact_label", "impact_ja", "confidence", "generated_at", "reviewed_at",
+                "reviewer", "review_reason", "generation_provider", "generation_model",
+                "generation_response_id", "generation_input_tokens", "generation_output_tokens",
+                "generation_total_tokens",
+            ):
+                row[field] = None
+            row["generation_source_truncated"] = 0
         text = row.pop("extracted_text") or ""
         row["source_text"] = text[:80_000]
         row["source_text_truncated"] = len(text) > 80_000
-    return {"generatedAt": now(), "items": rows}
+    return {"generatedAt": now(), "counts": counts, "items": rows}
 
 
 def queue_generation_job(db, url, reserved_tokens=0):
@@ -1307,6 +1468,7 @@ def save_source_check(db, row, result):
 
 def save_source_error(db, row, exc):
     checked_at = now()
+    error_code = source_error_code(exc)
     with db:
         db.execute("BEGIN IMMEDIATE")
         current = db.execute("SELECT fetch_failures FROM sources WHERE url=?", (row["url"],)).fetchone()
@@ -1314,13 +1476,16 @@ def save_source_error(db, row, exc):
             raise ValueError("Source disappeared before its fetch error was saved")
         failures = current["fetch_failures"] + 1
         retry_seconds = min(6 * 60 * 60, 60 * (2 ** min(failures - 1, 8)))
+        retry_hint = retry_after_seconds(exc)
+        if retry_hint is not None:
+            retry_seconds = max(retry_seconds, retry_hint)
         next_fetch_at = (datetime.now(timezone.utc) + timedelta(seconds=retry_seconds)).isoformat(timespec="milliseconds")
         db.execute(
             "UPDATE sources SET checked_at=?,error=?,fetch_failures=?,next_fetch_at=? WHERE url=?",
-            (checked_at, str(exc), failures, next_fetch_at, row["url"]),
+            (checked_at, error_code, failures, next_fetch_at, row["url"]),
         )
-        db.execute("INSERT INTO history(url,at,kind,reason) VALUES(?,?,?,?)", (row["url"], checked_at, "fetch-error", str(exc)))
-    return {"url": row["url"], "status": "error", "retrySeconds": retry_seconds, "error": str(exc)}
+        db.execute("INSERT INTO history(url,at,kind,reason) VALUES(?,?,?,?)", (row["url"], checked_at, "fetch-error", error_code))
+    return {"url": row["url"], "status": "error", "retrySeconds": retry_seconds, "error": error_code}
 
 
 def check_source(db, row, transport=fetch):
@@ -1330,21 +1495,31 @@ def check_source(db, row, transport=fetch):
         return save_source_error(db, row, exc)
 
 
-def review(db, url, expected_sha, decision, reviewer, reason):
-    if decision not in {"approved", "held", "rejected"} or not reviewer.strip() or not reason.strip():
+def _review_text(value, minimum, maximum):
+    if not isinstance(value, str):
         raise ValueError("Decision, reviewer, and reason are required")
+    value = value.strip()
+    if not minimum <= len(value) <= maximum or re.search(r"[\x00-\x1f\x7f<>]", value):
+        raise ValueError("Decision, reviewer, and reason are required")
+    return value
+
+
+def review(db, url, expected_sha, decision, reviewer, reason):
+    if decision not in {"approved", "held", "rejected"}:
+        raise ValueError("Decision, reviewer, and reason are required")
+    reviewer, reason = _review_text(reviewer, 2, 120), _review_text(reason, 5, 500)
     with db:
         # Acquire a write lock before reading so a concurrent check cannot invalidate approval.
         db.execute("BEGIN IMMEDIATE")
         row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
         if not row or not row["sha256"] or row["sha256"] != expected_sha or row["error"]:
             raise ValueError("Source is missing, changed, or failed its latest check; review current content first")
-        db.execute("INSERT INTO history(url,at,kind,sha256,reviewer,reason) VALUES(?,?,?,?,?,?)", (url, now(), decision, expected_sha, reviewer.strip(), reason.strip()))
+        db.execute("INSERT INTO history(url,at,kind,sha256,reviewer,reason) VALUES(?,?,?,?,?,?)", (url, now(), decision, expected_sha, reviewer, reason))
         db.execute("UPDATE sources SET status=? WHERE url=?", (decision, url))
 
 
-def save_brief_draft(db, url, expected_sha, summary_ja, impact_label, impact_ja, confidence, evidence):
-    """Save a private evidence-bound draft; never publish it without a later review."""
+def _validate_brief_payload(source_text, summary_ja, impact_label, impact_ja, confidence, evidence):
+    """Return normalized evidence only when both editorial fields remain source-bound."""
     summary_ja, impact_ja = summary_ja.strip(), impact_ja.strip()
     if not 20 <= len(summary_ja) <= 600 or not 20 <= len(impact_ja) <= 900:
         raise ValueError("Japanese summary and impact must be concise but substantive")
@@ -1356,30 +1531,67 @@ def save_brief_draft(db, url, expected_sha, summary_ja, impact_label, impact_ja,
         raise ValueError("Invalid confidence")
     if not isinstance(evidence, dict) or any(not evidence.get(field) for field in ("summary", "impact")):
         raise ValueError("Summary and impact evidence are required")
-    row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
-    if not row or not row["sha256"] or row["sha256"] != expected_sha or row["error"] or not row["extracted_text"]:
-        raise ValueError("Source is missing, changed, failed, or has no extracted evidence")
     cleaned = []
+    cited_by_field = {}
     for field in ("summary", "impact"):
+        field_excerpts = []
         for excerpt in evidence[field]:
             excerpt = " ".join(str(excerpt).split())
-            if not 12 <= len(excerpt) <= 800 or excerpt not in row["extracted_text"]:
+            if not 12 <= len(excerpt) <= 800 or excerpt not in source_text:
                 raise ValueError("Every evidence excerpt must appear exactly in the current source text")
             cleaned.append((field, excerpt))
-    cited = " ".join(excerpt for _, excerpt in cleaned)
-    for token in re.findall(r"([$€£¥₩]?\d[\d,.]*%?)(?:億|万|兆|倍|年|月|日)?", summary_ja + " " + impact_ja):
-        if token not in cited:
-            raise ValueError("Every numeric claim must appear in the cited evidence")
+            field_excerpts.append(excerpt)
+        cited_by_field[field] = " ".join(field_excerpts)
+    for field, text in (("summary", summary_ja), ("impact", impact_ja)):
+        for token in re.findall(r"([$€£¥₩]?\d[\d,.]*%?)(?:億|万|兆|倍|年|月|日)?", text):
+            if token not in cited_by_field[field]:
+                raise ValueError(f"Every numeric {field} claim must appear in its cited evidence")
+    return summary_ja, impact_ja, cleaned
+
+
+def _brief_validation_sha(source_sha, summary_ja, impact_label, impact_ja, confidence, evidence):
+    """Seal the exact normalized news draft that passed evidence and numeric checks."""
+    fields = {
+        "sourceSha256": source_sha,
+        "summaryJa": summary_ja,
+        "impactLabel": impact_label,
+        "impactJa": impact_ja,
+        "confidence": confidence,
+        "evidence": [{"field": field, "excerpt": excerpt} for field, excerpt in evidence],
+    }
+    encoded = json.dumps(
+        fields, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def save_brief_draft(db, url, expected_sha, summary_ja, impact_label, impact_ja, confidence, evidence):
+    """Save a private evidence-bound draft; never publish it without a later review."""
     generated_at = now()
     with db:
+        # Lock before reading so a concurrent source refresh cannot race the evidence check.
+        db.execute("BEGIN IMMEDIATE")
+        row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+        if not row or not row["sha256"] or row["sha256"] != expected_sha or row["error"] or not row["extracted_text"]:
+            raise ValueError("Source is missing, changed, failed, or has no extracted evidence")
+        summary_ja, impact_ja, cleaned = _validate_brief_payload(
+            row["extracted_text"], summary_ja, impact_label, impact_ja, confidence, evidence
+        )
+        validation_sha = _brief_validation_sha(
+            expected_sha, summary_ja, impact_label, impact_ja, confidence, cleaned
+        )
         db.execute("""
-          INSERT INTO briefs(url,source_sha256,summary_ja,impact_label,impact_ja,confidence,status,generated_at,reviewed_at,reviewer,review_reason)
-          VALUES(?,?,?,?,?,?,'draft',?,NULL,NULL,NULL)
+          INSERT INTO briefs(url,source_sha256,summary_ja,impact_label,impact_ja,confidence,validation_sha256,status,generated_at,reviewed_at,reviewer,review_reason)
+          VALUES(?,?,?,?,?,?,?,'draft',?,NULL,NULL,NULL)
           ON CONFLICT(url) DO UPDATE SET source_sha256=excluded.source_sha256,
             summary_ja=excluded.summary_ja,impact_label=excluded.impact_label,
-            impact_ja=excluded.impact_ja,confidence=excluded.confidence,status='draft',
+            impact_ja=excluded.impact_ja,confidence=excluded.confidence,
+            validation_sha256=excluded.validation_sha256,status='draft',
             generated_at=excluded.generated_at,reviewed_at=NULL,reviewer=NULL,review_reason=NULL
-        """, (url, expected_sha, summary_ja, impact_label, impact_ja, confidence, generated_at))
+        """, (
+            url, expected_sha, summary_ja, impact_label, impact_ja, confidence,
+            validation_sha, generated_at,
+        ))
         db.execute("DELETE FROM brief_evidence WHERE url=?", (url,))
         db.execute("""
           UPDATE briefs SET generation_provider=NULL,generation_model=NULL,generation_response_id=NULL,
@@ -1392,20 +1604,50 @@ def save_brief_draft(db, url, expected_sha, summary_ja, impact_label, impact_ja,
 
 def review_brief(db, url, expected_sha, decision, reviewer, reason):
     """Record the mandatory human decision for the current source revision."""
-    if decision not in {"approved", "held", "rejected"} or not reviewer.strip() or not reason.strip():
+    if decision not in {"approved", "held", "rejected"}:
         raise ValueError("Decision, reviewer, and reason are required")
+    reviewer, reason = _review_text(reviewer, 2, 120), _review_text(reason, 5, 500)
     with db:
         db.execute("BEGIN IMMEDIATE")
         row = db.execute("""
-          SELECT b.*,s.sha256 AS current_sha,s.error AS source_error
+          SELECT b.*,s.sha256 AS current_sha,s.error AS source_error,s.extracted_text AS source_text
           FROM briefs b JOIN sources s ON s.url=b.url WHERE b.url=?
         """, (url,)).fetchone()
-        evidence_count = db.execute("SELECT count(*) FROM brief_evidence WHERE url=?", (url,)).fetchone()[0]
-        if not row or row["source_sha256"] != expected_sha or row["current_sha"] != expected_sha or row["source_error"] or evidence_count < 2:
+        if not row or row["source_sha256"] != expected_sha or row["current_sha"] != expected_sha or row["source_error"] or not row["source_text"]:
             raise ValueError("Draft evidence is missing or the official source changed; regenerate before review")
+        evidence_rows = db.execute(
+            "SELECT field,excerpt FROM brief_evidence WHERE url=? ORDER BY id", (url,)
+        ).fetchall()
+        if any(item["field"] not in {"summary", "impact"} for item in evidence_rows):
+            raise ValueError("Draft evidence is missing or invalid; regenerate before review")
+        evidence = {
+            field: [item["excerpt"] for item in evidence_rows if item["field"] == field]
+            for field in ("summary", "impact")
+        }
+        try:
+            summary_ja, impact_ja, cleaned = _validate_brief_payload(
+                row["source_text"], row["summary_ja"], row["impact_label"], row["impact_ja"],
+                row["confidence"], evidence,
+            )
+        except (TypeError, ValueError) as exc:
+            raise ValueError("Draft evidence is missing or invalid; regenerate before review") from exc
+        validation_sha = _brief_validation_sha(
+            expected_sha, summary_ja, row["impact_label"], impact_ja, row["confidence"], cleaned
+        )
+        if not row["validation_sha256"] or row["validation_sha256"] != validation_sha:
+            raise ValueError("Draft evidence is missing or invalid; regenerate before review")
+        reviewed_at = now()
+        db.execute("""
+          INSERT INTO brief_review_history(
+            url,source_sha256,draft_validation_sha256,decision,reviewed_at,reviewer,reason
+          ) VALUES(?,?,?,?,?,?,?)
+        """, (
+            url, expected_sha, row["validation_sha256"], decision,
+            reviewed_at, reviewer, reason,
+        ))
         db.execute(
             "UPDATE briefs SET status=?,reviewed_at=?,reviewer=?,review_reason=? WHERE url=?",
-            (decision, now(), reviewer.strip(), reason.strip(), url),
+            (decision, reviewed_at, reviewer, reason, url),
         )
     return {"url": url, "status": decision, "published": False}
 
@@ -1533,6 +1775,37 @@ def _validate_annual_filing_payload(payload):
     }
 
 
+def _annual_validation_sha(record):
+    """Seal the exact normalized draft that passed source and numeric checks."""
+    fields = {
+        key: record[key] for key in (
+            "ticker", "accessionNumber", "sourceSha256", "id", "summaryJa",
+            "businessModelJa", "riskPointsJa", "summaryEvidenceIds",
+            "businessModelEvidenceIds", "evidence", "confidence", "generationMethod",
+        )
+    }
+    encoded = json.dumps(
+        fields, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def _annual_record_from_row(row):
+    try:
+        return {
+            "ticker": row["ticker"], "accessionNumber": row["accession_number"],
+            "sourceSha256": row["source_sha256"], "id": row["brief_id"],
+            "summaryJa": row["summary_ja"], "businessModelJa": row["business_model_ja"],
+            "riskPointsJa": json.loads(row["risk_points_json"]),
+            "summaryEvidenceIds": json.loads(row["summary_evidence_ids_json"]),
+            "businessModelEvidenceIds": json.loads(row["business_evidence_ids_json"]),
+            "evidence": json.loads(row["evidence_json"]), "confidence": row["confidence"],
+            "generationMethod": row["generation_method"],
+        }
+    except (json.JSONDecodeError, KeyError, TypeError) as exc:
+        raise ValueError("annual-draft-evidence-invalid") from exc
+
+
 def save_annual_filing_brief_draft(db, payload):
     """Persist a source-bound private draft after exact local evidence checks."""
     record = _validate_annual_filing_payload(payload)
@@ -1542,9 +1815,9 @@ def save_annual_filing_brief_draft(db, payload):
           INSERT INTO annual_filing_briefs(
             ticker,accession_number,source_sha256,brief_id,summary_ja,business_model_ja,
             risk_points_json,summary_evidence_ids_json,business_evidence_ids_json,
-            evidence_json,confidence,generation_method,status,generated_at,
+            evidence_json,confidence,generation_method,validation_sha256,status,generated_at,
             reviewed_at,reviewer,review_reason
-          ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,'draft',?,NULL,NULL,NULL)
+          ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,'draft',?,NULL,NULL,NULL)
           ON CONFLICT(ticker,accession_number) DO UPDATE SET
             source_sha256=excluded.source_sha256,brief_id=excluded.brief_id,
             summary_ja=excluded.summary_ja,business_model_ja=excluded.business_model_ja,
@@ -1552,7 +1825,8 @@ def save_annual_filing_brief_draft(db, payload):
             summary_evidence_ids_json=excluded.summary_evidence_ids_json,
             business_evidence_ids_json=excluded.business_evidence_ids_json,
             evidence_json=excluded.evidence_json,confidence=excluded.confidence,
-            generation_method=excluded.generation_method,status='draft',
+            generation_method=excluded.generation_method,
+            validation_sha256=excluded.validation_sha256,status='draft',
             generated_at=excluded.generated_at,reviewed_at=NULL,reviewer=NULL,review_reason=NULL
         """, (
             record["ticker"], record["accessionNumber"], record["sourceSha256"], record["id"],
@@ -1561,7 +1835,8 @@ def save_annual_filing_brief_draft(db, payload):
             json.dumps(record["summaryEvidenceIds"], separators=(",", ":")),
             json.dumps(record["businessModelEvidenceIds"], separators=(",", ":")),
             json.dumps(record["evidence"], ensure_ascii=False, separators=(",", ":")),
-            record["confidence"], record["generationMethod"], generated_at,
+            record["confidence"], record["generationMethod"],
+            _annual_validation_sha(record), generated_at,
         ))
     return {"ticker": record["ticker"], "accessionNumber": record["accessionNumber"],
             "status": "draft", "generatedAt": generated_at, "published": False}
@@ -1581,17 +1856,23 @@ def review_annual_filing_brief(db, ticker, accession, expected_sha, decision, re
     with db:
         db.execute("BEGIN IMMEDIATE")
         row = db.execute("""
-          SELECT source_sha256,evidence_json FROM annual_filing_briefs
+          SELECT * FROM annual_filing_briefs
           WHERE ticker=? AND accession_number=?
         """, (ticker, accession)).fetchone()
         if not row or row["source_sha256"] != expected_sha:
             raise ValueError("annual-draft-missing-or-source-changed")
-        try:
-            evidence = json.loads(row["evidence_json"])
-        except json.JSONDecodeError as exc:
-            raise ValueError("annual-draft-evidence-invalid") from exc
-        if not isinstance(evidence, list) or len(evidence) < 2:
+        record = _annual_record_from_row(row)
+        if not row["validation_sha256"] or row["validation_sha256"] != _annual_validation_sha(record):
             raise ValueError("annual-draft-evidence-invalid")
+        db.execute("""
+          INSERT INTO annual_filing_review_history(
+            ticker,accession_number,source_sha256,draft_validation_sha256,
+            decision,reviewed_at,reviewer,reason
+          ) VALUES(?,?,?,?,?,?,?,?)
+        """, (
+            ticker, accession, expected_sha, row["validation_sha256"],
+            decision, reviewed_at, reviewer, reason,
+        ))
         db.execute("""
           UPDATE annual_filing_briefs SET status=?,reviewed_at=?,reviewer=?,review_reason=?
           WHERE ticker=? AND accession_number=?
@@ -1627,7 +1908,26 @@ def annual_filing_brief_queue(db, limit=20):
       SELECT * FROM annual_filing_briefs
       ORDER BY generated_at DESC,ticker,accession_number LIMIT ?
     """, (limit,)).fetchall()
-    return {"generatedAt": now(), "items": [_annual_row(row, private=True) for row in rows]}
+    items = []
+    for row in rows:
+        item = _annual_row(row, private=True)
+        item["reviewHistory"] = [{
+            "sourceSha256": history["source_sha256"], "decision": history["decision"],
+            "draftValidationSha256": history["draft_validation_sha256"],
+            "reviewedAt": history["reviewed_at"].replace("+00:00", "Z"),
+            "reviewer": history["reviewer"], "reason": history["reason"],
+            "currentRevision": (
+                history["source_sha256"] == row["source_sha256"]
+                and history["draft_validation_sha256"] is not None
+                and history["draft_validation_sha256"] == row["validation_sha256"]
+            ),
+        } for history in db.execute("""
+          SELECT source_sha256,draft_validation_sha256,decision,reviewed_at,reviewer,reason
+          FROM annual_filing_review_history
+          WHERE ticker=? AND accession_number=? ORDER BY id DESC LIMIT 10
+        """, (row["ticker"], row["accession_number"]))]
+        items.append(item)
+    return {"generatedAt": now(), "items": items}
 
 
 def approved_annual_filing_brief(db, ticker, accession, source_sha):
