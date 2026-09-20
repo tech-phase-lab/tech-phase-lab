@@ -269,7 +269,7 @@ function bestSection(text: string, startPattern: RegExp, endPattern: RegExp) {
 }
 
 export function extractBusinessSection(html: string, form: string, excerptLimit = 4_000): ExtractedBusinessSection | null {
-  if (typeof html !== "string" || html.length < 500 || html.length > 12_000_000) return null;
+  if (typeof html !== "string" || html.length < 500 || html.length > 30_000_000) return null;
   const text = filingHtmlToText(html);
   const section = form === "10-K"
     ? bestSection(text, /\bITEM\s+1\s*[.:\-–—]?\s*BUSINESS\b/gi, /\bITEM\s+1A\s*[.:\-–—]?\s*RISK\s+FACTORS\b|\bITEM\s+1B\b/gi)

@@ -3,7 +3,7 @@ import { extractBusinessSection, normalizeTicker, parseSecDirectory, parseSecPro
 
 const directoryUrl = "https://www.sec.gov/files/company_tickers_exchange.json";
 const maxResponseBytes = 2_000_000;
-const maxFilingBytes = 12_000_000;
+const maxFilingBytes = 30_000_000;
 
 function headers(accept = "application/json") {
   return {

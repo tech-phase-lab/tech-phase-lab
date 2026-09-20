@@ -113,7 +113,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(route, /secJson\(directoryUrl, 86_400\)/);
   assert.match(route, /AbortSignal\.timeout\(8_000\)/);
   assert.match(route, /AbortSignal\.timeout\(12_000\)/);
-  assert.match(route, /maxFilingBytes = 12_000_000/);
+  assert.match(route, /maxFilingBytes = 30_000_000/);
   assert.match(route, /createHash\("sha256"\)/);
   assert.match(route, /cache: "no-store"/);
   assert.match(route, /s-maxage=86400/);
