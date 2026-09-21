@@ -14,6 +14,7 @@ test("each symbol has a standalone, uncached provider document", async () => {
     assert.match(html, /<!doctype html>/);
     assert.ok(html.includes(JSON.stringify(symbol)));
     assert.match(html, /embed-widget-symbol-info\.js/);
+    assert.match(html, /"isTransparent":false/);
     assert.match(html, /ResizeObserver/);
     assert.match(html, /parent.postMessage/);
     assert.match(html, /location.origin/);
@@ -23,6 +24,7 @@ test("each symbol has a standalone, uncached provider document", async () => {
 test("chart document starts with a real height and a 12-month daily range", async () => {
   const html = await GET(request({ symbol: "NASDAQ:NVDA", kind: "chart", lang: "en" })).text();
   assert.match(html, /height:100vh/);
+  assert.match(html, /html,body\{[^}]*height:100%/);
   assert.match(html, /embed-widget-advanced-chart\.js/);
   assert.match(html, /"range":"12M"/);
   assert.match(html, /"interval":"D"/);

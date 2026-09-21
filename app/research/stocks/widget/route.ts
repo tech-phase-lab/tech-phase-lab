@@ -15,10 +15,11 @@ export function GET(request: Request) {
     style: "3", withdateranges: false, hide_top_toolbar: true,
     hide_side_toolbar: true, allow_symbol_change: false, save_image: false,
     calendar: false, support_host: "https://www.tradingview.com",
-  } : { symbol, width: "100%", locale: lang, colorTheme: "dark", isTransparent: true };
+  } : { symbol, width: "100%", locale: lang, colorTheme: "dark", isTransparent: false };
   const script = chart ? "advanced-chart" : "symbol-info";
   const html = `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><style>
-    html,body{margin:0;padding:0;background:#101820;color:#d9e7ed;width:100%;overflow:hidden}
+    html,body{margin:0;padding:0;background:#101820;color:#d9e7ed;color-scheme:dark;width:100%;${chart ? "height:100%;" : ""}overflow:hidden}
+    iframe{background:#101820;color-scheme:dark}
     #widget{width:100%;${chart ? "height:100vh" : "min-height:220px"}}
     .tradingview-widget-container__widget{width:100%;${chart ? "height:100%" : ""}}
   </style></head><body><div id="widget" class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>

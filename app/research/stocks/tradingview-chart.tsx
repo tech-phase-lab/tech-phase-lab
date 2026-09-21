@@ -30,7 +30,7 @@ function TradingViewEmbed({ kind, symbol, lang }: { kind: WidgetKind; symbol: st
       if (event.origin !== window.location.origin || event.source !== frameRef.current?.contentWindow) return;
       const data = event.data;
       if (data?.type !== "tech-phase-widget-size" || !Number.isFinite(data.height) || data.height < 100 || data.height > 2400) return;
-      if (kind === "compact") setHeight(Math.max(220, Math.ceil(data.height)));
+      if (kind === "compact") setHeight(Math.max(220, Math.ceil(data.height) + 2));
     }
     window.addEventListener("message", receiveSize);
     return () => window.removeEventListener("message", receiveSize);
