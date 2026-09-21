@@ -720,6 +720,7 @@ class IntakeTests(unittest.TestCase):
         public = m.snapshot(self.db)["briefs"]
         self.assertEqual(len(public), 1)
         self.assertEqual(public[0]["status"], "approved")
+        self.assertEqual(public[0]["generation_method"], "human")
         self.assertNotIn("private-", str(public))
         self.assertNotIn("evidence", str(public))
 

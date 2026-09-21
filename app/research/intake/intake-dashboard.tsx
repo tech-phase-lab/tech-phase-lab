@@ -99,7 +99,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
           <div className={styles.briefHead}><div className={styles.tags}><b>{brief.ticker}</b><span className={styles.good}>人間確認済み</span><span className={styles.neutral}>{impactNames[brief.impact_label]}</span></div><span className={styles.confidence}>確信度 {confidenceNames[brief.confidence]}</span></div>
           <h3>{brief.title || title(brief.url)}</h3>
           <div className={styles.briefCopy}><section><h4>確認できた事実</h4><p>{brief.summary_ja}</p></section><section><h4>影響と未確認事項</h4><p>{brief.impact_ja}</p></section></div>
-          <dl className={styles.briefDates}><div><dt>発表日</dt><dd>{brief.published_on ?? "原文で確認"}</dd></div><div><dt>初回検知（JST）</dt><dd>{time(brief.detected_at)}</dd></div><div><dt>編集確認（JST）</dt><dd>{time(brief.reviewed_at)}</dd></div></dl>
+          <dl className={styles.briefDates}><div><dt>発表日</dt><dd>{brief.published_on ?? "原文で確認"}</dd></div><div><dt>初回検知（JST）</dt><dd>{time(brief.detected_at)}</dd></div><div><dt>下書き作成（JST）</dt><dd>{time(brief.generated_at)}</dd></div><div><dt>編集確認（JST）</dt><dd>{time(brief.reviewed_at)}</dd></div><div><dt>作成方法</dt><dd>{brief.generation_method === "ai-assisted" ? "AI下書き＋人間確認" : "人間作成"}</dd></div></dl>
           <div className={styles.sourceFooter}><a href={brief.url} target="_blank" rel="noopener noreferrer">根拠となる公式原文 ↗</a><span>原文識別値 {brief.source_sha256.slice(0, 12)}…</span></div>
         </article></li>)}</ul>}
       </section>

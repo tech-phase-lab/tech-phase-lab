@@ -67,10 +67,12 @@ test("reviewed briefs require current source identity, safe copy, status, and ti
     summary_ja: "公式発表で確認できた事実を、根拠に沿って簡潔に説明します。",
     impact_label: "mixed", impact_ja: "好材料と未確認事項を分け、追加確認が必要な点を明示します。",
     confidence: "medium", status: "approved",
+    generation_method: "human",
     generated_at: snapshot.generatedAt, reviewed_at: snapshot.generatedAt,
   };
   assert.deepEqual(snapshotIssues({ ...snapshot, briefs: [brief] }), []);
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, status: "draft" }] }).includes("invalid-brief-status"));
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, generation_method: "automatic" }] }).includes("invalid-brief-status"));
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, source_sha256: "f".repeat(64) }] }).includes("invalid-brief-source"));
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, summary_ja: "<script>危険</script>" }] }).includes("invalid-brief-copy"));
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, reviewed_at: "2099-01-01T00:00:00Z" }] }).includes("invalid-brief-time"));
@@ -80,6 +82,9 @@ test("operations preview renders only reviewed briefs with evidence and review m
   assert.match(intakeDashboard, /人間確認済みの速報要約/);
   assert.match(intakeDashboard, /根拠となる公式原文/);
   assert.match(intakeDashboard, /編集確認（JST）/);
+  assert.match(intakeDashboard, /下書き作成（JST）/);
+  assert.match(intakeDashboard, /AI下書き＋人間確認/);
+  assert.match(intakeDashboard, /人間作成/);
   assert.match(intakeDashboard, /確信度/);
   assert.match(intakeDashboard, /原文識別値/);
   assert.doesNotMatch(intakeDashboard, /brief\.reviewer|brief\.reviewReason/);

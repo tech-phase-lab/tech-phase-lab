@@ -421,6 +421,16 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(item["generation_response_id"], "resp_test")
         self.assertEqual(item["generation_source_truncated"], 0)
         self.assertEqual(item["generation_total_tokens"], 520)
+        app.decide_brief({
+            "url": "https://nebius.com/newsroom/new-release", "sha256": "d" * 64,
+            "decision": "approved", "reviewer": "human-editor",
+            "reason": "AI下書きと公式原文の根拠を人間が照合しました",
+        })
+        public = app.public_snapshot()["briefs"]
+        self.assertEqual(public[0]["generation_method"], "ai-assisted")
+        self.assertNotIn("generation_provider", public[0])
+        self.assertNotIn("generation_model", public[0])
+        self.assertNotIn("generation_response_id", public[0])
 
     def test_manual_generation_uses_the_same_rolling_budget(self):
         url = "https://nebius.com/newsroom/new-release"

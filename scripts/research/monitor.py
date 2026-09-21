@@ -1022,7 +1022,9 @@ def snapshot(db):
         brief_rows = [dict(r) for r in db.execute("""
           SELECT b.url,s.ticker,s.title,s.published_on,e.detected_at,b.source_sha256,
                  b.summary_ja,b.impact_label,b.impact_ja,b.confidence,b.status,
-                 b.generated_at,b.reviewed_at,b.validation_sha256,s.extracted_text
+                 b.generated_at,b.reviewed_at,b.validation_sha256,s.extracted_text,
+                 CASE WHEN b.generation_provider IS NULL THEN 'human'
+                      ELSE 'ai-assisted' END AS generation_method
           FROM briefs b JOIN sources s ON s.url=b.url
           LEFT JOIN release_events e ON e.url=b.url
           WHERE b.status='approved' AND b.source_sha256=s.sha256

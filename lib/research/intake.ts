@@ -18,7 +18,7 @@ export type ReviewedBrief = {
   detected_at: string | null; source_sha256: string;
   summary_ja: string; impact_label: "positive" | "negative" | "mixed" | "neutral" | "uncertain";
   impact_ja: string; confidence: "low" | "medium" | "high"; status: "approved";
-  generated_at: string; reviewed_at: string;
+  generation_method: "human" | "ai-assisted"; generated_at: string; reviewed_at: string;
 };
 export type IntakeSnapshot = {
   schemaVersion: number; generatedAt: string; sources: IntakeSource[];
@@ -95,7 +95,8 @@ export function snapshotIssues(data: IntakeSnapshot) {
   for (const brief of data.briefs ?? []) {
     const source = data.sources.find(item => item.url === brief.url);
     if (!source || source.ticker !== brief.ticker || source.sha256 !== brief.source_sha256 || source.error) issues.push("invalid-brief-source");
-    if (brief.status !== "approved" || !impactLabels.has(brief.impact_label) || !confidences.has(brief.confidence)) issues.push("invalid-brief-status");
+    if (brief.status !== "approved" || !impactLabels.has(brief.impact_label) || !confidences.has(brief.confidence)
+        || !["human", "ai-assisted"].includes(brief.generation_method)) issues.push("invalid-brief-status");
     if (!brief.summary_ja || brief.summary_ja.length > 600 || !brief.impact_ja || brief.impact_ja.length > 900
         || !japanese.test(brief.summary_ja + brief.impact_ja) || /[\u0000-\u001f\u007f<>]/.test(brief.summary_ja + brief.impact_ja)) issues.push("invalid-brief-copy");
     const generated = Date.parse(brief.generated_at);
