@@ -1120,9 +1120,13 @@ def private_brief_queue(db, limit=20):
         brief_validation_sha = row.pop("brief_validation_sha256")
         brief_current = bool(brief_source_sha and brief_source_sha == row["sha256"] and row["brief_status"] != "stale")
         row["brief_current"] = brief_current
-        evidence = (db.execute(
+        evidence_rows = (db.execute(
             "SELECT field,excerpt FROM brief_evidence WHERE url=? ORDER BY id", (row["url"],)
-        ).fetchall() if brief_current else [])
+        ).fetchall() if brief_source_sha else [])
+        row["previous_brief"] = _validated_previous_brief(
+            db, row, brief_source_sha, brief_validation_sha, evidence_rows
+        )
+        evidence = evidence_rows if brief_current else []
         row["evidence"] = {
             "summary": [item["excerpt"] for item in evidence if item["field"] == "summary"],
             "impact": [item["excerpt"] for item in evidence if item["field"] == "impact"],
@@ -1198,6 +1202,50 @@ def source_revision_evidence(db, url, current_sha, current_text):
         "diff_preview": preview,
         "truncated": truncated,
         "method": "word-diff",
+    }
+
+
+def _validated_previous_brief(db, row, source_sha, validation_sha, evidence_rows):
+    """Return a read-only stale draft only when its retained evidence still validates."""
+    if (
+        row["brief_status"] != "stale" or not source_sha or not validation_sha
+        or source_sha == row["sha256"]
+        or any(item["field"] not in {"summary", "impact"} for item in evidence_rows)
+    ):
+        return None
+    previous = db.execute("""
+      SELECT extracted_text FROM source_revisions
+      WHERE url=? AND sha256=? ORDER BY observed_at DESC,rowid DESC LIMIT 1
+    """, (row["url"], source_sha)).fetchone()
+    if not previous:
+        return None
+    evidence = {
+        field: [item["excerpt"] for item in evidence_rows if item["field"] == field]
+        for field in ("summary", "impact")
+    }
+    try:
+        summary_ja, impact_ja, cleaned = _validate_brief_payload(
+            previous["extracted_text"], row["summary_ja"], row["impact_label"],
+            row["impact_ja"], row["confidence"], evidence,
+        )
+    except (AttributeError, TypeError, ValueError):
+        return None
+    if _brief_validation_sha(
+        source_sha, summary_ja, row["impact_label"], impact_ja,
+        row["confidence"], cleaned,
+    ) != validation_sha:
+        return None
+    return {
+        "source_sha256": source_sha,
+        "summary_ja": summary_ja,
+        "impact_label": row["impact_label"],
+        "impact_ja": impact_ja,
+        "confidence": row["confidence"],
+        "generated_at": row["generated_at"],
+        "evidence": {
+            field: [excerpt for item_field, excerpt in cleaned if item_field == field]
+            for field in ("summary", "impact")
+        },
     }
 
 

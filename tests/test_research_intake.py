@@ -861,6 +861,35 @@ class IntakeTests(unittest.TestCase):
         self.assertIsNone(stale["summary_ja"])
         self.assertIsNone(stale["impact_ja"])
         self.assertEqual(stale["evidence"], {"summary": [], "impact": []})
+        previous = stale["previous_brief"]
+        self.assertEqual(previous["source_sha256"], sha)
+        self.assertIn("2027年", previous["summary_ja"])
+        self.assertEqual(previous["evidence"]["summary"], ["Capacity will increase in 2027."])
+        public = json.dumps(m.snapshot(self.db), ensure_ascii=False)
+        self.assertNotIn("previous_brief", public)
+        self.assertNotIn(previous["summary_ja"], public)
+
+    def test_tampered_stale_brief_is_not_returned_as_previous_reference(self):
+        self.check(b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main>")
+        sha = self.row()["sha256"]
+        m.save_brief_draft(
+            self.db, URL, sha,
+            "公式発表によると、AI向け容量を増加させる計画です。",
+            "mixed", "供給能力の拡大余地がありますが、実行と需要の確認が必要です。",
+            "medium", {
+                "summary": ["Capacity will increase."],
+                "impact": ["Execution remains subject to demand."],
+            },
+        )
+        self.check(b"<main><p>Capacity plan changed.</p></main>")
+        self.db.execute(
+            "UPDATE briefs SET summary_ja=summary_ja || ' 改変' WHERE url=?", (URL,)
+        )
+        self.db.commit()
+
+        stale = m.private_brief_queue(self.db, 5)["items"][0]
+        self.assertEqual(stale["brief_status"], "stale")
+        self.assertIsNone(stale["previous_brief"])
 
     def test_annual_filing_brief_requires_exact_evidence_and_human_approval(self):
         business = "NVIDIA designs accelerated computing platforms and software for data centers and other markets."
