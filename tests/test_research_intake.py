@@ -1,5 +1,6 @@
 import importlib.util
 import json
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import tempfile
 import unittest
@@ -758,6 +759,10 @@ class IntakeTests(unittest.TestCase):
             "draft-fingerprint-matched",
             editorial["items"][0]["review_preflight"]["checks"],
         )
+        self.assertIn(
+            "source-check-recent",
+            editorial["items"][0]["review_preflight"]["checks"],
+        )
         review_history = editorial["items"][0]["review_history"]
         self.assertEqual(len(review_history), 1)
         self.assertEqual(review_history[0]["source_sha256"], sha)
@@ -779,6 +784,39 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(
             tampered["review_preflight"]["blockers"],
             ["draft-fingerprint-mismatch"],
+        )
+
+    def test_stale_source_check_blocks_review_and_public_preview(self):
+        body = b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main>"
+        self.check(body)
+        sha = self.row()["sha256"]
+        m.save_brief_draft(
+            self.db, URL, sha,
+            "公式発表では、AI向けの供給能力を増やす計画が示されています。",
+            "mixed", "供給拡大の余地はありますが、需要と実行状況の確認が必要です。",
+            "medium", {
+                "summary": ["Capacity will increase."],
+                "impact": ["Execution remains subject to demand."],
+            },
+        )
+        m.review_brief(self.db, URL, sha, "approved", "editor", "Evidence reviewed")
+        self.assertEqual(len(m.snapshot(self.db)["briefs"]), 1)
+
+        stale_at = (datetime.now(timezone.utc) - timedelta(hours=9)).isoformat(
+            timespec="milliseconds"
+        )
+        self.db.execute("UPDATE sources SET checked_at=? WHERE url=?", (stale_at, URL))
+        self.db.commit()
+
+        item = m.private_brief_queue(self.db, 5)["items"][0]
+        self.assertFalse(item["review_preflight"]["ready"])
+        self.assertEqual(item["review_preflight"]["blockers"], ["source-check-stale"])
+        self.assertEqual(m.snapshot(self.db)["briefs"], [])
+        with self.assertRaisesRegex(ValueError, "missing, stale"):
+            m.review_brief(self.db, URL, sha, "held", "editor", "Refresh required")
+        self.assertEqual(
+            self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0],
+            "approved",
         )
 
     def test_public_brief_evidence_is_bounded_and_marks_truncation(self):

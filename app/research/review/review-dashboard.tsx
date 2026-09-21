@@ -67,6 +67,7 @@ const preflightLabels: Record<string, string> = {
   "draft-missing": "現在の原文に対応する下書きがありません",
   "source-revision-mismatch": "下書き作成後に公式原文が更新されました",
   "source-unavailable": "公式原文の最新取得を確認できません",
+  "source-check-stale": "公式原文の最終取得が古いため、再取得後に確認してください",
   "draft-evidence-invalid": "根拠引用または数値根拠を再確認してください",
   "draft-fingerprint-missing": "旧形式の下書きです。現在の原文から再保存してください",
   "draft-fingerprint-mismatch": "保存後に下書きまたは根拠が変更されています",

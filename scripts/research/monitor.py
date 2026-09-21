@@ -41,6 +41,23 @@ def environment_seconds(name, default, minimum, maximum):
     return max(minimum, min(value, maximum))
 
 
+def source_check_is_fresh(checked_at, reference=None):
+    """Require a recent successful source check before review or public preview."""
+    try:
+        checked = datetime.fromisoformat(str(checked_at).replace("Z", "+00:00"))
+        if checked.tzinfo is None:
+            checked = checked.replace(tzinfo=timezone.utc)
+        checked = checked.astimezone(timezone.utc)
+    except (TypeError, ValueError):
+        return False
+    current = reference or datetime.now(timezone.utc)
+    maximum_age = environment_seconds(
+        "RESEARCH_REVIEW_SOURCE_MAX_AGE_SECONDS", 8 * 60 * 60, 5 * 60, 24 * 60 * 60
+    )
+    age = (current - checked).total_seconds()
+    return -5 * 60 <= age <= maximum_age
+
+
 def successful_recheck_seconds(db, url, changed, had_previous_hash, checked_at):
     """Keep recent releases hot while avoiding perpetual historical refetches."""
     background = environment_seconds(
@@ -1075,6 +1092,8 @@ def snapshot(db):
         """)]
         briefs = []
         for row in brief_rows:
+            if not source_check_is_fresh(row["source_checked_at"]):
+                continue
             evidence_rows = db.execute(
                 "SELECT field,excerpt FROM brief_evidence WHERE url=? ORDER BY id",
                 (row["url"],),
@@ -1135,7 +1154,7 @@ def private_brief_queue(db, limit=20, review_filter="all"):
     counts.update({"machine_ready": 0, "machine_blocked": 0})
     preflight_candidates = db.execute("""
       SELECT b.*,s.sha256 AS current_sha,s.error AS source_error,
-             s.extracted_text AS source_text
+             s.extracted_text AS source_text,s.checked_at AS source_checked_at
       FROM briefs b JOIN sources s ON s.url=b.url
       WHERE s.sha256 IS NOT NULL AND s.error IS NULL AND s.extracted_chars>0
         AND b.status IN ('draft','stale','held','rejected')
@@ -1225,6 +1244,7 @@ def private_brief_queue(db, limit=20, review_filter="all"):
             "current_sha": row["sha256"],
             "source_error": None,
             "source_text": row["extracted_text"],
+            "source_checked_at": row["checked_at"],
             "summary_ja": row["summary_ja"],
             "impact_label": row["impact_label"],
             "impact_ja": row["impact_ja"],
@@ -1836,6 +1856,8 @@ def _validate_brief_for_review(row, evidence_rows, expected_sha):
         raise ValueError("source-revision-mismatch")
     if row["source_error"] or not row["source_text"]:
         raise ValueError("source-unavailable")
+    if not source_check_is_fresh(row["source_checked_at"]):
+        raise ValueError("source-check-stale")
     if any(item["field"] not in {"summary", "impact"} for item in evidence_rows):
         raise ValueError("draft-evidence-invalid")
     evidence = {
@@ -1871,7 +1893,8 @@ def _brief_preflight_result(row, evidence_rows, expected_sha):
         "blockers": [],
         "checks": [
             "source-revision-current", "source-fetch-successful",
-            "evidence-and-numbers-valid", "draft-fingerprint-matched",
+            "source-check-recent", "evidence-and-numbers-valid",
+            "draft-fingerprint-matched",
         ],
     }
 
@@ -1933,7 +1956,8 @@ def review_brief(db, url, expected_sha, decision, reviewer, reason):
     with db:
         db.execute("BEGIN IMMEDIATE")
         row = db.execute("""
-          SELECT b.*,s.sha256 AS current_sha,s.error AS source_error,s.extracted_text AS source_text
+          SELECT b.*,s.sha256 AS current_sha,s.error AS source_error,
+                 s.extracted_text AS source_text,s.checked_at AS source_checked_at
           FROM briefs b JOIN sources s ON s.url=b.url WHERE b.url=?
         """, (url,)).fetchone()
         evidence_rows = db.execute(
@@ -1942,9 +1966,13 @@ def review_brief(db, url, expected_sha, decision, reviewer, reason):
         try:
             _validate_brief_for_review(row, evidence_rows, expected_sha)
         except ValueError as exc:
-            if str(exc) in {"draft-missing", "source-revision-mismatch", "source-unavailable"}:
+            if str(exc) in {
+                "draft-missing", "source-revision-mismatch", "source-unavailable",
+                "source-check-stale",
+            }:
                 raise ValueError(
-                    "Draft evidence is missing or the official source changed; regenerate before review"
+                    "Draft evidence is missing, stale, or the official source changed; "
+                    "refresh or regenerate before review"
                 ) from exc
             raise ValueError(
                 "Draft evidence is missing or invalid; regenerate before review"

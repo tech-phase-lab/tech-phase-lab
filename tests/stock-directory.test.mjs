@@ -432,6 +432,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(review, /承認前の機械検証：通過/);
   assert.match(review, /これは人間による内容確認の代わりではありません/);
   assert.match(review, /draft-fingerprint-mismatch/);
+  assert.match(review, /source-check-stale/);
   assert.match(review, /selected\.sha256.*selected\.generated_at/);
   assert.match(review, /selected\?\.review_history \?\? \[\]/);
   assert.match(review, /annualRecord\?\.reviewHistory \?\? \[\]/);
