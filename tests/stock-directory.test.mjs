@@ -291,7 +291,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(marketStyles, /background:linear-gradient\(145deg,#101a24,#090f16 70%\)/);
   assert.doesNotMatch(marketStyles, /background:#fff/);
   assert.match(marketStyles, /@media\(max-width:520px\)/);
-  assert.match(widget, /Delayed market data provided by TradingView/);
+  assert.match(widget, /TradingView data delayed by 15 minutes/);
   assert.match(widget, /Tech Phaseの速報判定には使用しません/);
   assert.match(page, /最新の重要提出書類/);
   assert.match(page, /どんな企業か — 年次報告書の原文/);
@@ -344,7 +344,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.doesNotMatch(widget, /表示が欠ける場合|Missing data\?/);
   assert.match(widget, /aria-hidden="true">▶<\/span>/);
   assert.match(widget, /株価・指標を再読み込みする/);
-  assert.match(widget, /TradingViewの遅延データです。/);
+  assert.match(widget, /TradingViewの15分遅延データです。/);
   assert.match(widget, /<br \/>\{lang === "ja" \? "Tech Phaseの速報判定には使用しません。"/);
   assert.match(chartStyles, /\.reloadControl button\{[^}]*border:0;[^}]*background:transparent/);
   assert.equal((widget.match(/className=\{styles.reloadControl\}/g) ?? []).length, 1);

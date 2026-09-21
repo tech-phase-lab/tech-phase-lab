@@ -24,7 +24,7 @@ export function MarketWorkspace({ ticker, exchange, name, lang }: MarketWorkspac
 
     <div className={styles.marketNotice} role="status">
       <span aria-hidden="true">TP</span>
-      <div><strong>{t("株価カードと12か月チャート", "Quote card and 12-month chart")}</strong><p>{t("TradingViewの参考データを表示しています。遅延する場合があり、Tech Phaseの速報判定には使用しません。", "Reference data from TradingView is shown below. It may be delayed and is not used for Tech Phase alerts.")}</p></div>
+      <div><strong>{t("株価カードと12か月チャート", "Quote card and 12-month chart")}</strong><p>{t("TradingViewの15分遅延データを表示しています。Tech Phaseの速報判定には使用しません。", "TradingView data delayed by 15 minutes is shown below. It is not used for Tech Phase alerts.")}</p></div>
     </div>
 
     <div className={styles.chartSlot}>
@@ -33,10 +33,10 @@ export function MarketWorkspace({ ticker, exchange, name, lang }: MarketWorkspac
 
     <dl className={styles.connectionStrip}>
       <div><dt>{t("現在の表示", "Current view")}</dt><dd>TradingView</dd></div>
-      <div><dt>{t("独自価格フィード", "Custom price feed")}</dt><dd>{t("契約確認中", "Under review")}</dd></div>
+      <div><dt>{t("独自価格フィード", "Custom price feed")}</dt><dd>{t("未接続", "Not connected")}</dd></div>
       <div><dt>{t("外部通知", "External alerts")}</dt><dd>{t("停止中", "Off")}</dd></div>
     </dl>
 
-    <p className={styles.licenseNote}>{t("価格配信契約の確認後、許諾済みデータを独自画面へ接続します。未契約の数値や推定値は表示しません。", "Licensed data will be connected to the custom view after display rights are confirmed. Unlicensed or estimated values are never shown.")}</p>
+    <p className={styles.licenseNote}>{t("参考株価はTradingViewで確認できます。速報は公式発表と契約済みニュースを対象にします。未契約の数値や推定値は表示しません。", "Reference prices are available through TradingView. Alerts use official releases and licensed news. Unlicensed or estimated values are not shown.")}</p>
   </section>;
 }

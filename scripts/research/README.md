@@ -82,6 +82,14 @@ python3 scripts/research/monitor.py add MU 'https://investors.micron.com/news/pr
 
 年次報告書は12秒・30MBを上限に取得し、公開画面へ出す原文は各項目の冒頭最大4,000文字です。提出日、対象期末、取得時刻、SEC原文リンク、抽出範囲、原文SHA-256の短縮値を併記します。これは企業提出の英語原文であり、日本語要約、リスクの重要度順位、売買推奨ではありません。株価と通信社ニュースは表示権を確認するまで別系統のままです。
 
+年次報告書の日本語下書きを手元で準備する場合は、現在のSEC抜粋を含むJSONを `.research-private/` に保存し、次のコマンドで機械照合して非公開DBへ取り込みます。提出番号、原文SHA、引用の完全一致、引用参照、根拠にない数値、文字数を通常の編集APIと同じ規則で検証します。取り込まれる状態は `draft` で、人間による確認・承認や公開は実行しません。原文抜粋を含む入力JSONはGitへ追加しないでください。
+
+```sh
+python3 scripts/research/monitor.py \
+  --db .research-private/intake.sqlite \
+  draft-annual --input .research-private/annual-candidate.json
+```
+
 ## 取得状況の確認画面
 
 ```sh

@@ -2372,6 +2372,14 @@ def main():
     brief_review.add_argument("--validation-sha256", required=True)
     brief_review.add_argument("--reviewer", required=True)
     brief_review.add_argument("--reason", required=True)
+    annual_draft = sub.add_parser(
+        "draft-annual",
+        help="validate and store one private SEC annual-report draft from JSON",
+    )
+    annual_draft.add_argument(
+        "--input", required=True,
+        help="private JSON payload containing current SEC excerpts and cited evidence",
+    )
     args = p.parse_args()
     with connect(args.db) as db:
         if args.command == "seed":
@@ -2400,6 +2408,15 @@ def main():
                 db, args.url, args.sha256, args.decision, args.reviewer, args.reason,
                 args.validation_sha256,
             )
+        elif args.command == "draft-annual":
+            candidate_path = Path(args.input)
+            try:
+                if candidate_path.stat().st_size > 60_000:
+                    p.error("--input must be 60 KB or smaller")
+                candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+                p.error(f"could not read --input: {type(exc).__name__}")
+            result = save_annual_filing_brief_draft(db, candidate)
         elif args.command == "refresh":
             if not 0 <= args.check_limit <= 200:
                 p.error("--check-limit must be between 0 and 200")
