@@ -642,6 +642,38 @@ class IntakeTests(unittest.TestCase):
                 m._FETCH_CACHE.clear()
                 m._FETCH_CACHE.update(original_cache)
 
+    def test_invalid_request_timeout_uses_the_bounded_default(self):
+        url = m.INDEXES["NBIS"]
+        m._FETCH_CACHE[url] = {
+            "content": b"cached-index", "content_type": "text/html",
+            "etag": '"revision-1"', "last_modified": None,
+        }
+        original = m.build_opener
+
+        class NotModified:
+            def open(self, request, timeout):
+                self.timeout = timeout
+                raise HTTPError(request.full_url, 304, "Not Modified", {}, None)
+
+        opener = NotModified()
+        m.build_opener = lambda *_: opener
+        try:
+            with patch.dict(m.os.environ, {"RESEARCH_REQUEST_TIMEOUT_SECONDS": "invalid"}):
+                content, content_type = m.fetch(url, "NBIS")
+        finally:
+            m.build_opener = original
+            m._FETCH_CACHE.pop(url, None)
+        self.assertEqual((content, content_type), (b"cached-index", "text/html"))
+        self.assertEqual(opener.timeout, 20)
+        with patch.dict(m.os.environ, {"RESEARCH_REQUEST_TIMEOUT_SECONDS": "999"}):
+            self.assertEqual(
+                m.environment_seconds("RESEARCH_REQUEST_TIMEOUT_SECONDS", 20, 1, 20), 20
+            )
+        with patch.dict(m.os.environ, {"RESEARCH_REQUEST_TIMEOUT_SECONDS": "4"}):
+            self.assertEqual(
+                m.environment_seconds("RESEARCH_REQUEST_TIMEOUT_SECONDS", 20, 1, 20), 4
+            )
+
     def test_persisted_validator_survives_restart_and_304_preserves_evidence(self):
         m.save_source_check(self.db, self.row(), {
             "sha256": "d" * 64, "contentType": "text/html", "contentBytes": 40,

@@ -160,7 +160,7 @@ python3 scripts/research/persistence.py restore --backup /data/backups/research-
 - `RESEARCH_AUTO_DRAFT_INTERVAL_SECONDS`：キュー確認間隔。標準5秒（発表から生成までの保証ではない）
 - `RESEARCH_FAST_POLL_SECONDS`：標準3秒、最低3秒
 - `RESEARCH_STANDARD_POLL_SECONDS`：標準5秒、最低5秒
-- `RESEARCH_REQUEST_TIMEOUT_SECONDS`：標準20秒。巡回間隔とは別で、遅い公式サイトを誤って障害扱いしないための上限
+- `RESEARCH_REQUEST_TIMEOUT_SECONDS`：標準20秒。巡回間隔とは別で、遅い公式サイトを誤って障害扱いしないための上限。不正値は標準値へ戻し、1秒未満・取得先の既定上限超過は範囲内へ補正
 - `RESEARCH_MAX_WORKERS`：標準8
 - `RESEARCH_BODY_FETCH_INTERVAL_SECONDS`：本文取得キューの実行間隔。標準10秒、最低5秒
 - `RESEARCH_BODY_FETCH_BATCH`：1回に取得する本文数。標準2件

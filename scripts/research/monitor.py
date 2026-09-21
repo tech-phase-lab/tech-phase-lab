@@ -216,8 +216,7 @@ def fetch(url, ticker, validators=None, include_metadata=False):
         headers["If-Modified-Since"] = last_modified
     req = Request(url, headers=headers, data=data, method="POST" if data is not None else "GET")
     timeout = PROVIDERS[ticker].get("requestTimeoutSeconds", 20) if url == INDEXES[ticker] else 20
-    if os.environ.get("RESEARCH_REQUEST_TIMEOUT_SECONDS"):
-        timeout = min(timeout, max(1, int(os.environ["RESEARCH_REQUEST_TIMEOUT_SECONDS"])))
+    timeout = environment_seconds("RESEARCH_REQUEST_TIMEOUT_SECONDS", timeout, 1, timeout)
     try:
         response = build_opener(Redirects(ticker)).open(req, timeout=timeout)
     except HTTPError as exc:
