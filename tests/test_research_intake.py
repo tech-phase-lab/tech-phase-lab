@@ -1097,6 +1097,58 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(stale["brief_status"], "stale")
         self.assertIsNone(stale["previous_brief"])
 
+    def test_annual_queue_counts_and_prioritizes_items_needing_human_action(self):
+        business = "The company provides accelerated computing systems to enterprise customers."
+        risk = "Demand changes and third-party suppliers may adversely affect product delivery."
+
+        def save(ticker, accession, source_sha):
+            payload = {
+                "id": f"{ticker.lower()}-annual-ja", "ticker": ticker,
+                "accessionNumber": accession, "sourceSha256": source_sha,
+                "summaryJa": "企業顧客に向けて、アクセラレーテッド・コンピューティング基盤を提供する企業です。",
+                "businessModelJa": "企業顧客へ計算基盤を提供し、その対価を収益として受け取ります。",
+                "riskPointsJa": [{
+                    "text": "需要変動や外部供給企業への依存により、製品供給へ影響する可能性があります。",
+                    "evidenceIds": ["risk-1"],
+                }],
+                "summaryEvidenceIds": ["business-1"],
+                "businessModelEvidenceIds": ["business-1"],
+                "evidence": [
+                    {"id": "business-1", "section": "business", "quote": business},
+                    {"id": "risk-1", "section": "risk", "quote": risk},
+                ],
+                "confidence": "medium", "generationMethod": "human",
+                "sourceBusiness": business, "sourceRisks": risk,
+            }
+            m.save_annual_filing_brief_draft(self.db, payload)
+            return payload
+
+        approved = save("NVDA", "0001045810-26-000021", "a" * 64)
+        self.review_annual_brief(
+            "NVDA", approved["accessionNumber"], approved["sourceSha256"],
+            "approved", "editor-one", "SEC原文と根拠を確認しました",
+        )
+        held = save("MRVL", "0001835632-26-000001", "b" * 64)
+        self.review_annual_brief(
+            "MRVL", held["accessionNumber"], held["sourceSha256"],
+            "held", "editor-two", "追加確認が必要なため保留します",
+        )
+        invalid = save("ANET", "0001596532-26-000001", "c" * 64)
+        self.db.execute("""
+          UPDATE annual_filing_briefs SET validation_sha256=?
+          WHERE ticker=? AND accession_number=?
+        """, ("0" * 64, "ANET", invalid["accessionNumber"]))
+        self.db.commit()
+
+        queue = m.annual_filing_brief_queue(self.db, 2)
+        self.assertEqual(queue["counts"], {
+            "total": 3, "draft": 1, "held": 1, "approved": 1,
+            "rejected": 0, "integrity_invalid": 1, "actionable": 2,
+        })
+        self.assertEqual([item["ticker"] for item in queue["items"]], ["ANET", "MRVL"])
+        self.assertFalse(queue["items"][0]["integrityValid"])
+        self.assertTrue(queue["items"][1]["integrityValid"])
+
     def test_annual_filing_brief_requires_exact_evidence_and_human_approval(self):
         business = "NVIDIA designs accelerated computing platforms and software for data centers and other markets."
         risk = "Demand can change rapidly, and dependence on third-party suppliers could disrupt product delivery."

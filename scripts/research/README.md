@@ -90,6 +90,8 @@ python3 scripts/research/monitor.py \
   draft-annual --input .research-private/annual-candidate.json
 ```
 
+年次報告書キューは下書き・保留・承認済み・却下・整合性エラーを集計し、整合性エラー、保留、下書きの順で表示します。銘柄を選ぶまでSEC原文は取得せず、選択後に最新提出番号・SHA・根拠を照合します。
+
 ## 取得状況の確認画面
 
 ```sh

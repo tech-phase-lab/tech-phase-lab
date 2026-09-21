@@ -2274,14 +2274,35 @@ def _annual_row(row, private=False):
 
 
 def annual_filing_brief_queue(db, limit=20):
+    """Return private annual drafts in human-action order with integrity counts."""
     limit = max(1, min(int(limit), 50))
     rows = db.execute("""
       SELECT * FROM annual_filing_briefs
-      ORDER BY generated_at DESC,ticker,accession_number LIMIT ?
-    """, (limit,)).fetchall()
+      ORDER BY generated_at DESC,ticker,accession_number
+    """).fetchall()
+    counts = {
+        "total": len(rows), "draft": 0, "held": 0, "approved": 0,
+        "rejected": 0, "integrity_invalid": 0, "actionable": 0,
+    }
     items = []
     for row in rows:
         item = _annual_row(row, private=True)
+        try:
+            integrity_valid = bool(
+                row["validation_sha256"]
+                and row["validation_sha256"] == _annual_validation_sha(
+                    _annual_record_from_row(row)
+                )
+            )
+        except ValueError:
+            integrity_valid = False
+        item["integrityValid"] = integrity_valid
+        status = row["status"] if row["status"] in {"draft", "held", "approved", "rejected"} else "draft"
+        counts[status] += 1
+        if not integrity_valid:
+            counts["integrity_invalid"] += 1
+        if not integrity_valid or status in {"draft", "held"}:
+            counts["actionable"] += 1
         item["reviewHistory"] = [{
             "sourceSha256": history["source_sha256"], "decision": history["decision"],
             "draftValidationSha256": history["draft_validation_sha256"],
@@ -2298,7 +2319,11 @@ def annual_filing_brief_queue(db, limit=20):
           WHERE ticker=? AND accession_number=? ORDER BY id DESC LIMIT 10
         """, (row["ticker"], row["accession_number"]))]
         items.append(item)
-    return {"generatedAt": now(), "items": items}
+    priority = {"held": 1, "draft": 2, "rejected": 3, "approved": 4}
+    items.sort(key=lambda item: (
+        0 if not item["integrityValid"] else priority.get(item["status"], 5)
+    ))
+    return {"generatedAt": now(), "counts": counts, "items": items[:limit]}
 
 
 def approved_annual_filing_brief(db, ticker, accession, source_sha):

@@ -16,6 +16,10 @@ type ReviewCounts = {
   total: number; needs_draft: number; awaiting_review: number; stale: number;
   held: number; approved: number; rejected: number; machine_ready: number; machine_blocked: number;
 };
+type AnnualReviewCounts = {
+  total: number; draft: number; held: number; approved: number;
+  rejected: number; integrity_invalid: number; actionable: number;
+};
 type ReviewFilter = "all" | "ready" | "blocked" | "needs-draft";
 type RevisionEvidence = {
   previous_sha256: string; previous_observed_at: string; current_sha256: string;
@@ -49,6 +53,7 @@ type AnnualRecord = {
   evidence: { id: string; section: "business" | "risk"; quote: string }[];
   confidence: "low" | "medium" | "high"; generationMethod: "human" | "ai-assisted";
   status: "draft" | "approved" | "held" | "rejected";
+  integrityValid: boolean;
   validationSha256: string | null;
   generatedAt: string; reviewedAt: string | null; reviewer: string | null; reviewReason: string | null;
   reviewHistory?: {
@@ -92,6 +97,10 @@ const emptyReviewCounts: ReviewCounts = {
   total: 0, needs_draft: 0, awaiting_review: 0, stale: 0, held: 0, approved: 0, rejected: 0,
   machine_ready: 0, machine_blocked: 0,
 };
+const emptyAnnualReviewCounts: AnnualReviewCounts = {
+  total: 0, draft: 0, held: 0, approved: 0, rejected: 0,
+  integrity_invalid: 0, actionable: 0,
+};
 const reviewFilters: { value: ReviewFilter; label: string }[] = [
   { value: "all", label: "すべて" },
   { value: "ready", label: "機械検証通過" },
@@ -119,6 +128,8 @@ export default function ReviewDashboard() {
   const [busy, setBusy] = useState(false);
   const [mode, setMode] = useState<"news" | "annual">("news");
   const [annualTicker, setAnnualTicker] = useState("NVDA");
+  const [annualItems, setAnnualItems] = useState<AnnualRecord[]>([]);
+  const [annualCounts, setAnnualCounts] = useState<AnnualReviewCounts>(emptyAnnualReviewCounts);
   const [annualSource, setAnnualSource] = useState<AnnualSource | null>(null);
   const [annualRecord, setAnnualRecord] = useState<AnnualRecord | null>(null);
   const [annualRisks, setAnnualRisks] = useState<AnnualRiskDraft[]>([emptyAnnualRisk()]);
@@ -152,21 +163,31 @@ export default function ReviewDashboard() {
   async function load(successMessage?: string, filter: ReviewFilter = reviewFilter) {
     setBusy(true);
     try {
-      const payload = await request("GET", undefined, "news", filter);
+      const [newsResult, annualResult] = await Promise.allSettled([
+        request("GET", undefined, "news", filter),
+        request("GET", undefined, "annual"),
+      ]);
+      if (newsResult.status === "rejected") throw newsResult.reason;
+      const payload = newsResult.value;
       setItems(payload.items);
       setReviewCounts(payload.counts ?? emptyReviewCounts);
+      if (annualResult.status === "fulfilled") {
+        setAnnualItems(annualResult.value.items ?? []);
+        setAnnualCounts(annualResult.value.counts ?? emptyAnnualReviewCounts);
+      }
       setReviewFilter(filter);
       setFilteredTotal(payload.filteredTotal ?? payload.items.length);
       setSelectedUrl(current => payload.items.some((item: ReviewItem) => item.url === current) ? current : payload.items[0]?.url ?? "");
       setMode("news");
-      setMessage(successMessage ?? `絞り込み対象 ${payload.filteredTotal ?? payload.items.length}件から、対応優先順に${payload.items.length}件を読み込みました。`);
+      const annualWarning = annualResult.status === "rejected" ? " 年次報告書キューは読み込めませんでした。" : "";
+      setMessage(successMessage ?? `絞り込み対象 ${payload.filteredTotal ?? payload.items.length}件から、対応優先順に${payload.items.length}件を読み込みました。${annualWarning}`);
     } catch (error) {
       setMessage(`読み込み失敗：${error instanceof Error ? error.message : "unknown"}`);
     } finally { setBusy(false); }
   }
 
-  async function loadAnnual(successMessage?: string) {
-    const ticker = annualTicker.trim().toUpperCase();
+  async function loadAnnual(successMessage?: string, requestedTicker = annualTicker) {
+    const ticker = requestedTicker.trim().toUpperCase();
     if (!/^[A-Z0-9][A-Z0-9.-]{0,14}$/.test(ticker)) {
       setMessage("年次報告書の読み込み失敗：ティッカー形式を確認してください。");
       return;
@@ -191,6 +212,8 @@ export default function ReviewDashboard() {
       ) ?? null;
       const currentRecord = existing?.sourceSha256 === source.business.sourceSha256 ? existing : null;
       setAnnualTicker(ticker);
+      setAnnualItems(queue.items ?? []);
+      setAnnualCounts(queue.counts ?? emptyAnnualReviewCounts);
       setAnnualSource({ business: source.business, risks: source.risks });
       setAnnualRecord(currentRecord);
       setAnnualRisks(annualRiskDrafts(currentRecord));
@@ -354,8 +377,8 @@ export default function ReviewDashboard() {
   return <main className={styles.main}>
     <header><div><p>TECH PHASE · PRIVATE EDITOR</p><h1>根拠付きリサーチレビュー</h1></div><Link href="/research/intake">取得状況へ戻る</Link></header>
     <aside className={styles.warning}><strong>配信前の運営画面</strong><span>原文・数値・解釈を人間が確認するための画面です。承認操作だけで会員へ配信されることはありません。</span></aside>
-    <section className={styles.auth} aria-label="編集者認証"><label>編集用トークン<input type="password" autoComplete="off" value={token} onChange={event => setToken(event.target.value)} /></label><div className={styles.authActions}><button disabled={busy || token.length < 24} onClick={() => load()}>速報原文を読み込む</button><div className={styles.tickerLoad}><input aria-label="年次報告書のティッカー" value={annualTicker} maxLength={15} onChange={event => setAnnualTicker(event.target.value.toUpperCase())} /><button disabled={busy || token.length < 24} onClick={() => loadAnnual()}>年次報告書を開く</button></div></div><p aria-live="polite">{message}</p></section>
-    {(reviewCounts.total > 0 || items.length > 0 || annualSource) && <div className={styles.modeTabs} role="tablist" aria-label="レビュー対象"><button role="tab" aria-selected={mode === "news"} disabled={!reviewCounts.total && !items.length} onClick={() => setMode("news")}>速報レビュー</button><button role="tab" aria-selected={mode === "annual"} disabled={!annualSource} onClick={() => setMode("annual")}>年次報告書レビュー</button></div>}
+    <section className={styles.auth} aria-label="編集者認証"><label>編集用トークン<input type="password" autoComplete="off" value={token} onChange={event => setToken(event.target.value)} /></label><div className={styles.authActions}><button disabled={busy || token.length < 24} onClick={() => load()}>レビューキューを読み込む</button><div className={styles.tickerLoad}><input aria-label="年次報告書のティッカー" value={annualTicker} maxLength={15} onChange={event => setAnnualTicker(event.target.value.toUpperCase())} /><button disabled={busy || token.length < 24} onClick={() => loadAnnual()}>年次報告書を開く</button></div></div><p aria-live="polite">{message}</p></section>
+    {(reviewCounts.total > 0 || items.length > 0 || annualCounts.total > 0 || annualSource) && <div className={styles.modeTabs} role="tablist" aria-label="レビュー対象"><button role="tab" aria-selected={mode === "news"} disabled={!reviewCounts.total && !items.length} onClick={() => setMode("news")}>速報レビュー</button><button role="tab" aria-selected={mode === "annual"} disabled={!annualCounts.total && !annualSource} onClick={() => setMode("annual")}>年次報告書レビュー</button></div>}
     {mode === "news" && (reviewCounts.total > 0 || items.length > 0) && <div className={styles.workspace}>
       <nav aria-label="確認する原文"><h2>速報レビューキュー</h2><div className={styles.annualMeta} aria-label="レビュー状況"><span>機械検証通過 {reviewCounts.machine_ready}</span><span>要修正 {reviewCounts.machine_blocked}</span><span>承認待ち {reviewCounts.awaiting_review}</span><span>原文更新 {reviewCounts.stale}</span><span>保留 {reviewCounts.held}</span><span>下書き未作成 {reviewCounts.needs_draft}</span><span>承認済み {reviewCounts.approved}</span></div><p style={{ margin: "10px 0 12px", color: "#81968f", fontSize: 12, lineHeight: 1.55 }}>機械検証通過は、人間が内容を確認できる状態の件数です。承認済み・下書き未作成は含みません。</p><div className={styles.queueFilters} aria-label="レビューキューの絞り込み">{reviewFilters.map(filter => <button key={filter.value} type="button" aria-pressed={reviewFilter === filter.value} disabled={busy} onClick={() => load(undefined, filter.value)}>{filter.label}</button>)}</div><p className={styles.filterResult}>{filteredTotal}件中 {items.length}件を表示</p>{items.length ? items.map(item => <button key={item.url} aria-current={selected?.url === item.url} onClick={() => setSelectedUrl(item.url)}><b>{item.ticker}</b><span>{item.title || new URL(item.url).pathname.split("/").filter(Boolean).at(-1)}</span><small>{labels[item.brief_status ?? ""] ?? "下書きなし"}{item.brief_status && item.brief_status !== "approved" ? ` · ${item.review_preflight.ready ? "機械検証通過" : "要修正"}` : ""}</small></button>) : <p className={styles.filterResult}>該当する資料はありません。</p>}</nav>
       {selected && <article className={styles.editor}>
@@ -386,6 +409,11 @@ export default function ReviewDashboard() {
         {selectedReviewHistory.length > 0 && <details className={styles.evidence}><summary>判断履歴（直近{selectedReviewHistory.length}件）</summary><ol>{selectedReviewHistory.map((entry, index) => <li key={`${entry.reviewed_at}-${index}`}><div><b>{labels[entry.decision]}</b><span>{entry.reviewed_at.replace("T", " ").replace("+00:00", " UTC")} · {entry.reviewer}{entry.current_revision ? " · 現在の下書き" : " · 過去の下書き"}</span></div><p>{entry.reason}</p><small>原文 {entry.source_sha256.slice(0, 12)}…{entry.draft_validation_sha256 ? ` · 下書き ${entry.draft_validation_sha256.slice(0, 12)}…` : " · 旧履歴（下書き指紋なし）"}</small></li>)}</ol></details>}
       </article>}
     </div>}
+    {mode === "annual" && annualCounts.total > 0 && <section className={styles.annualQueue} aria-label="年次報告書レビューキュー">
+      <div className={styles.annualQueueHead}><div><p>ANNUAL FILING QUEUE</p><h2>年次報告書レビューキュー</h2></div><div className={styles.annualMeta}><span>要対応 {annualCounts.actionable}</span><span>下書き {annualCounts.draft}</span><span>保留 {annualCounts.held}</span><span>整合性エラー {annualCounts.integrity_invalid}</span><span>承認済み {annualCounts.approved}</span><span>却下 {annualCounts.rejected}</span></div></div>
+      <p>整合性エラー、保留、下書きの順で表示します。銘柄を開くと最新SEC原文を再取得し、提出番号・SHA・根拠を照合します。</p>
+      <div className={styles.annualQueueItems}>{annualItems.map(item => <button type="button" key={`${item.ticker}-${item.accessionNumber}`} aria-current={annualSource?.business?.ticker === item.ticker && annualSource?.business?.accessionNumber === item.accessionNumber} disabled={busy} onClick={() => { setAnnualTicker(item.ticker); void loadAnnual(undefined, item.ticker); }}><b>{item.ticker}</b><span>{labels[item.status] ?? item.status}{item.integrityValid ? "" : " · 整合性エラー"}</span><small>{item.accessionNumber}<br />{item.generatedAt.replace("T", " ").replace("Z", " UTC")}</small></button>)}</div>
+    </section>}
     {mode === "annual" && annualSource?.business && annualSource.risks && <article className={`${styles.editor} ${styles.annualEditor}`}>
       <div className={styles.sourceHead}><div><p>{annualSource.business.ticker} · {annualSource.business.form} · SHA {annualSource.business.sourceSha256.slice(0, 12)}…</p><h2>年次報告書の日本語要点</h2></div><a href={annualSource.business.documentUrl} target="_blank" rel="noopener noreferrer">SEC原文 ↗</a></div>
       <div className={styles.annualMeta}><span>提出日 {annualSource.business.filingDate}</span><span>対象期末 {annualSource.business.reportDate ?? "未記載"}</span><span>提出番号 {annualSource.business.accessionNumber}</span><span>現在：{labels[annualRecord?.status ?? ""] ?? "下書きなし"}</span></div>

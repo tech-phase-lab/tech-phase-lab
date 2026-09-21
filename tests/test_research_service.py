@@ -685,7 +685,13 @@ class ResearchServiceTests(unittest.TestCase):
                     headers={"Authorization": "Bearer editor-token-at-least-24-characters"},
                 )
                 with urlopen(annual_queue, timeout=2) as response:
-                    annual_validation_sha = json.loads(response.read())["items"][0]["validationSha256"]
+                    annual_queue_payload = json.loads(response.read())
+                self.assertEqual(annual_queue_payload["counts"], {
+                    "total": 1, "draft": 1, "held": 0, "approved": 0,
+                    "rejected": 0, "integrity_invalid": 0, "actionable": 1,
+                })
+                self.assertTrue(annual_queue_payload["items"][0]["integrityValid"])
+                annual_validation_sha = annual_queue_payload["items"][0]["validationSha256"]
                 annual_review = Request(
                     f"http://127.0.0.1:{server.server_port}/admin/annual-briefs/review",
                     data=json.dumps({

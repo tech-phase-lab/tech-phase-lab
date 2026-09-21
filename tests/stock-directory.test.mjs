@@ -417,6 +417,12 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(review, /sourceRisks: riskCorpus\(risks\)/);
   assert.match(review, /existing\?\.sourceSha256 === source\.business\.sourceSha256/);
   assert.match(review, /年次報告書の下書きを保存/);
+  assert.match(review, /年次報告書レビューキュー/);
+  assert.match(review, /annualCounts\.actionable/);
+  assert.match(review, /annualCounts\.integrity_invalid/);
+  assert.match(review, /item\.integrityValid/);
+  assert.match(review, /loadAnnual\(undefined, item\.ticker\)/);
+  assert.match(review, /Promise\.allSettled\(\[/);
   assert.match(review, /速報レビューキュー/);
   assert.match(review, /reviewCounts\.awaiting_review/);
   assert.match(review, /reviewCounts\.machine_ready/);
