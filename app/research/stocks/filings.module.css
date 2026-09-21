@@ -24,6 +24,22 @@
 .briefGrid article > span { color: #79cfae; font: 600 .68rem var(--font-geist-mono), monospace; letter-spacing: .08em; text-transform: uppercase; }
 .briefSummary p { margin: 8px 0 0; color: #e0ebe6; font-size: .92rem; line-height: 1.75; }
 .briefGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.briefIntro { margin: 0 0 18px; color: #91a39b; font-size: .8rem; line-height: 1.75; }
+.briefSummary h3,.briefGrid h3 { margin: 0; color: #9aebca; font-size: .95rem; }
+.briefGrid > article { min-width: 0; }
+.briefGrid li > p { margin: 0; }
+.pointEvidence { margin-top: 12px; border-top: 1px solid #294238; padding-top: 8px; }
+.pointEvidence summary { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 36px; color: #a8dfc8; cursor: pointer; font-size: .75rem; }
+.pointEvidence summary::before { content: "+"; }
+.pointEvidence[open] summary::before { content: "−"; }
+.pointEvidence summary small { color: #91a39b; }
+.pointEvidence blockquote { margin: 8px 0; padding: 10px 12px; border-left: 2px solid #477a66; background: #09110f; color: #bacbc3; font-size: .78rem; line-height: 1.75; overflow-wrap: anywhere; }
+.pointEvidence a,.briefSource a { display: inline-block; padding: 8px 0; color: #a8efd2; font-size: .75rem; }
+.pointEvidence summary:focus-visible,.pointEvidence a:focus-visible,.briefSource a:focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; }
+.briefSource { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; margin-top: 18px; padding-top: 12px; border-top: 1px solid #294238; }
+.briefSource span,.briefSource p { color: #91a39b; font-size: .72rem; line-height: 1.7; }
+.briefSource p { flex-basis: 100%; margin: 0; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .briefGrid article { padding: 17px; border: 1px solid #294238; border-radius: 7px; background: #0b1412; }
 .briefGrid p,
 .briefGrid ol { margin: 9px 0 0; color: #c9d8d1; font-size: .8rem; line-height: 1.7; }

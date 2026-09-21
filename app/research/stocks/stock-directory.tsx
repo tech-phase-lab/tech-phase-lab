@@ -20,6 +20,15 @@ function exchangeLabel(exchange: string) {
   return exchange === "Nasdaq" ? "NASDAQ" : exchange.toUpperCase();
 }
 
+function BriefEvidence({ brief, evidenceIds, lang, label, documentUrl }: { brief: AnnualFilingBrief; evidenceIds: string[]; lang: "ja" | "en"; label: string; documentUrl: string }) {
+  const evidence = evidenceIds.map((id) => brief.evidence.find((item) => item.id === id)).filter((item) => item !== undefined);
+  return <details className={filingStyles.pointEvidence}>
+    <summary>{lang === "ja" ? "根拠の原文を見る" : "Show source evidence"}<span className={filingStyles.srOnly}> — {label}</span><small>{evidence.length}{lang === "ja" ? "件" : " quotes"}</small></summary>
+    {evidence.map((item) => <blockquote key={item.id} lang="en">{item.quote}</blockquote>)}
+    <a href={documentUrl} target="_blank" rel="noreferrer">{lang === "ja" ? "年次報告書を開く ↗" : "Open annual filing ↗"}</a>
+  </details>;
+}
+
 function filingLabel(form: string, lang: "ja" | "en") {
   const base = form.replace("/A", "");
   const labels: Record<string, [string, string]> = {
@@ -217,11 +226,19 @@ export default function StockDirectory() {
       {profile?.latestAnnualFiling && <section className={filingStyles.brief} aria-labelledby="annual-brief-title" aria-busy={briefStatus === "loading"}>
         <div className={styles.sectionHeading}><div><p>REVIEWED JAPANESE BRIEF</p><h2 id="annual-brief-title">{t("根拠付き日本語要点", "Evidence-backed Japanese brief")}</h2></div><span className={briefStatus === "approved" ? filingStyles.briefApproved : filingStyles.briefPending}>{briefStatus === "approved" ? t("人間確認済み", "Human reviewed") : briefStatus === "loading" ? t("原文照合中", "Checking source") : briefStatus === "source-unavailable" ? t("原文確認不可", "Source unavailable") : t("編集確認待ち", "Awaiting review")}</span></div>
         {briefStatus === "approved" && brief ? <>
-          <div className={filingStyles.briefSummary}><span>{t("要点", "Summary")}</span><p>{brief.summaryJa}</p></div>
-          <div className={filingStyles.briefGrid}><article><span>{t("何で稼ぐ会社か", "Business model")}</span><p>{brief.businessModelJa}</p></article><article><span>{t("重要リスク", "Key risks")}</span><ol>{brief.riskPointsJa.map((point, index) => <li key={`${point.text}-${index}`}>{point.text}</li>)}</ol></article></div>
-          <details className={filingStyles.briefEvidence}><summary>{t("根拠引用を確認", "Review source evidence")}</summary><ol>{brief.evidence.map((item) => <li key={item.id}><span>{item.section === "business" ? t("事業説明", "Business") : t("リスク", "Risk")}</span><q>{item.quote}</q></li>)}</ol></details>
+          <p className={filingStyles.briefIntro}>{t("年次報告書をもとに、事業とリスクを日本語で整理しました。各項目から根拠の英語原文を確認できます。", "A reviewed Japanese overview of the business and risks. Open the English evidence beneath each point.")}</p>
+          <div className={filingStyles.briefSummary}><h3>{t("どんな会社？", "What does it do?")}</h3><p lang="ja">{brief.summaryJa}</p><BriefEvidence brief={brief} evidenceIds={brief.summaryEvidenceIds} lang={lang} label={t("企業概要", "Company overview")} documentUrl={profile.latestAnnualFiling.documentUrl} /></div>
+          <div className={filingStyles.briefGrid}>
+            <article><h3>{t("何で稼ぐ？", "How does it earn revenue?")}</h3><p lang="ja">{brief.businessModelJa}</p><BriefEvidence brief={brief} evidenceIds={brief.businessModelEvidenceIds} lang={lang} label={t("事業モデル", "Business model")} documentUrl={profile.latestAnnualFiling.documentUrl} /></article>
+            <article><h3>{t("主なリスク", "Key risks")}</h3><ol>{brief.riskPointsJa.map((point, index) => <li key={`${point.text}-${index}`}><p lang="ja">{point.text}</p><BriefEvidence brief={brief} evidenceIds={point.evidenceIds} lang={lang} label={`${t("リスク", "Risk")} ${index + 1}`} documentUrl={profile.latestAnnualFiling!.documentUrl} /></li>)}</ol></article>
+          </div>
           <div className={filingStyles.briefMeta}><span>{t("確信度", "Confidence")}: {brief.confidence}</span><span>{t("確認日時", "Reviewed")}: <time dateTime={brief.reviewedAt}>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", dateStyle: "medium", timeStyle: "short" }).format(new Date(brief.reviewedAt))} JST</time></span><span>{t("生成方法", "Method")}: {brief.generationMethod === "ai-assisted" ? t("AI補助＋人間確認", "AI-assisted + human review") : t("人間作成", "Human-authored")}</span><span>SHA {brief.sourceSha256.slice(0, 12)}</span></div>
         </> : briefStatus === "loading" ? <div className={filingStyles.businessStatus}><span className={styles.loader} /><strong>{t("年次報告書と日本語要点を照合中", "Checking the annual filing against reviewed copy")}</strong></div> : <div className={filingStyles.briefGate}><strong>{briefStatus === "source-unavailable" ? t("原文を確認できないため日本語要点を停止しました", "Japanese copy is withheld because the source could not be verified") : t("日本語要点は編集確認待ちです", "The Japanese brief is awaiting editorial review")}</strong><p>{t("提出番号・原文SHA・根拠引用・数値を照合し、人間が承認した版だけを表示します。原文が更新された場合、以前の承認は自動的に無効になります。", "Only a human-approved version with matching accession, source SHA, evidence quotes, and numbers is shown. A source update automatically invalidates the prior approval.")}</p></div>}
+        <div className={filingStyles.briefSource}>
+          <span>{profile.latestAnnualFiling.form} · {t("提出日", "Filed")}: {profile.latestAnnualFiling.filingDate}{profile.latestAnnualFiling.reportDate && ` · ${t("対象期末", "Period end")}: ${profile.latestAnnualFiling.reportDate}`}</span>
+          <a href={profile.latestAnnualFiling.documentUrl} target="_blank" rel="noreferrer">{t("年次報告書を確認 ↗", "Read annual filing ↗")}</a>
+          <p>{t("この要点は年次報告書に基づきます。提出後の決算・ニュースは含みません。", "This brief reflects the annual filing, not earnings or news released afterward.")}</p>
+        </div>
       </section>}
 
       {profile && <section className={filingStyles.sourceArchive} aria-labelledby="source-archive-title">

@@ -306,6 +306,11 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /リスク早見表（英語原文）/);
   assert.match(page, /企業が年次報告書で要約・一覧として明示した項目だけ/);
   assert.match(page, /根拠付き日本語要点/);
+  assert.match(page, /evidenceIds\.map\(\(id\) => brief\.evidence\.find\(\(item\) => item\.id === id\)\)/);
+  assert.match(page, /evidenceIds=\{brief.summaryEvidenceIds\}/);
+  assert.match(page, /evidenceIds=\{brief.businessModelEvidenceIds\}/);
+  assert.match(page, /evidenceIds=\{point.evidenceIds\}/);
+  assert.match(page, /提出後の決算・ニュースは含みません/);
   assert.match(page, /提出番号・原文SHA・根拠引用・数値を照合/);
   assert.match(page, /以前の承認は自動的に無効/);
   assert.match(page, /リスクを推測で補完しません/);
