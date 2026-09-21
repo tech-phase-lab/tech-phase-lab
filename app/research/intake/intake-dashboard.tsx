@@ -30,6 +30,7 @@ const sourceFormatNames: Record<string, string> = {
   "news-json": "企業公式JSON", "twse-material-json": "TWSE重要開示JSON", html: "企業公式HTML",
 };
 function discoveryEvidence(run: IntakeSnapshot["discoveryRuns"][number]) {
+  if (!run.source_format) return "旧記録 · 経路詳細なし";
   const checked = run.sources_checked ?? 1;
   const configured = run.sources_configured ?? 1;
   if (run.status === "degraded") return `${checked}/${configured}経路を確認 · 復旧なし`;

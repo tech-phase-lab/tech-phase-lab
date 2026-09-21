@@ -1003,7 +1003,7 @@ def collect_discovery(ticker, transport=fetch, automatic=False):
     else:
         result = {
             "ticker": ticker, "status": "degraded", "route": "none",
-            "sourceUrl": INDEXES[ticker], "sourceFormat": None,
+            "sourceUrl": INDEXES[ticker], "sourceFormat": "none",
             "sourcesChecked": len(failures), "sourcesConfigured": len(sources),
             "candidates": 0,
             "error": failures[0] if failures else "No monitoring sources configured",

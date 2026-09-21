@@ -422,6 +422,15 @@ class IntakeTests(unittest.TestCase):
                     "sources_configured": 3,
                 })
 
+    def test_degraded_discovery_records_completed_route_evidence(self):
+        result, links = m.collect_discovery(
+            "MRVL", lambda *_: (_ for _ in ()).throw(TimeoutError()), automatic=True
+        )
+        self.assertEqual(links, {})
+        self.assertEqual(result["status"], "degraded")
+        self.assertEqual(result["sourceFormat"], "none")
+        self.assertEqual(result["sourcesChecked"], result["sourcesConfigured"])
+
     def test_automatic_monitor_prefers_twse_material_information(self):
         source = m.monitoring_sources("TSM", automatic=True)[0]
         self.assertEqual(source["route"], "primary")

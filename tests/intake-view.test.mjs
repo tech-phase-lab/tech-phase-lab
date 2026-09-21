@@ -66,6 +66,7 @@ test("operations preview explains which official fallback recovered discovery", 
   assert.match(intakeDashboard, /sources_checked/);
   assert.match(intakeDashboard, /SEC Submissions JSON/);
   assert.match(intakeDashboard, /経路目で取得/);
+  assert.match(intakeDashboard, /旧記録 · 経路詳細なし/);
 });
 
 test("reviewed briefs require current source identity, safe copy, status, and timestamps", () => {
