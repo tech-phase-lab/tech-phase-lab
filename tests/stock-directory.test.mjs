@@ -334,8 +334,8 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /profileDetails/);
   assert.match(polish, /\.mobileTitle\{display:block/);
   assert.match(polish, /\.resultButton/);
-  assert.match(chartStyles, /transform:scale\(\.86\)/);
-  assert.match(chartStyles, /compactEmbed\{min-height:260px\}/);
+  assert.match(chartStyles, /translateX\(-10px\) scale\(\.82\)/);
+  assert.match(chartStyles, /compactEmbed\{min-height:330px\}/);
   assert.match(polish, /\.profileDetails/);
   assert.match(chartPolish, /\.heading h2/);
   assert.match(route, /company_tickers_exchange\.json/);
