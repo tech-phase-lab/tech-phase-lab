@@ -1,4 +1,11 @@
 type Evidence = { id: string; section: "business" | "risk"; quote: string };
+type GenerationMethod = "human" | "ai-assisted";
+
+export function annualDraftGenerationMethod(selected: unknown, previous?: GenerationMethod): GenerationMethod {
+  if (selected !== "human" && selected !== "ai-assisted") throw new Error("下書きの作成方法を選択してください。");
+  // Editing an AI-assisted draft does not erase its provenance.
+  return previous === "ai-assisted" ? previous : selected;
+}
 type ReviewRecord = {
   ticker: string; accessionNumber: string; sourceSha256: string;
   validationSha256: string | null; evidence: Evidence[];

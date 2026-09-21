@@ -1,6 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { annualReviewPreflight, businessDraftEvidence, referencedQuotes } from "../lib/research/annual-draft-evidence.ts";
+import { annualDraftGenerationMethod, annualReviewPreflight, businessDraftEvidence, referencedQuotes } from "../lib/research/annual-draft-evidence.ts";
+
+test("annual edits preserve AI provenance and require an explicit method for new drafts", () => {
+  assert.equal(annualDraftGenerationMethod("human", "ai-assisted"), "ai-assisted");
+  assert.equal(annualDraftGenerationMethod("ai-assisted", "human"), "ai-assisted");
+  assert.equal(annualDraftGenerationMethod("human", "human"), "human");
+  assert.equal(annualDraftGenerationMethod("ai-assisted"), "ai-assisted");
+  assert.throws(() => annualDraftGenerationMethod(null));
+  assert.throws(() => annualDraftGenerationMethod(""));
+});
 
 const company = "The company designs and manufactures memory products.";
 const model = "Revenue is generated through sales to enterprise customers.";

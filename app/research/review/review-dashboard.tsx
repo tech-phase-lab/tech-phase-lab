@@ -3,7 +3,7 @@
 import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
 import type { BusinessSection, RiskSection } from "@/lib/research/stock-directory";
-import { annualReviewPreflight, businessDraftEvidence, referencedQuotes } from "@/lib/research/annual-draft-evidence";
+import { annualDraftGenerationMethod, annualReviewPreflight, businessDraftEvidence, referencedQuotes } from "@/lib/research/annual-draft-evidence";
 import styles from "./review.module.css";
 
 type Evidence = { summary: string[]; impact: string[] };
@@ -308,7 +308,7 @@ export default function ReviewDashboard() {
           ...riskEvidence,
         ],
         confidence: form.get("confidence"),
-        generationMethod: "human",
+        generationMethod: annualDraftGenerationMethod(form.get("generationMethod"), annualRecord?.generationMethod),
         sourceBusiness: business.excerpt,
         sourceRisks: riskCorpus(risks),
       } }, "annual");
@@ -393,7 +393,8 @@ export default function ReviewDashboard() {
         <details open className={styles.evidence}><summary>事業説明のSEC原文（{annualSource.business.excerpt.length.toLocaleString("ja-JP")}文字）</summary><pre>{annualSource.business.excerpt}</pre></details>
         <details open className={styles.evidence}><summary>リスク項目のSEC原文（{annualSource.risks.excerpt.length.toLocaleString("ja-JP")}文字）</summary><pre>{annualSource.risks.excerpt}</pre></details>
       </div>
-      <form key={`${annualSource.business.accessionNumber}-${annualRecord?.generatedAt ?? "new"}`} onSubmit={submitAnnualDraft} className={styles.form}><h2>根拠付き日本語要点の下書き</h2><p>英語原文から完全一致する引用を選びます。ここではAI生成を行わず、人間が作成した下書きとして保存します。</p>
+      <form key={`${annualSource.business.accessionNumber}-${annualRecord?.generatedAt ?? "new"}`} onSubmit={submitAnnualDraft} className={styles.form}><h2>根拠付き日本語要点の下書き</h2><p>英語原文から完全一致する引用を選びます。作成方法を記録し、人間による内容確認と承認を経て公開します。この画面でAI生成は実行しません。</p>
+        <label>下書きの作成方法<select name="generationMethod" required defaultValue={annualRecord?.generationMethod ?? ""}><option value="" disabled>作成方法を選択</option><option value="human" disabled={annualRecord?.generationMethod === "ai-assisted"}>人間が作成（AI補助なし）</option><option value="ai-assisted">AI補助あり（翻訳・要約を含む）</option></select><small>外部のAIで作成した文章を貼り付けた場合も「AI補助あり」を選びます。AI補助の下書きは、人間が編集しても作成履歴を保持します。</small></label>
         <label>企業の要点<textarea name="summaryJa" minLength={20} maxLength={500} required defaultValue={annualRecord?.summaryJa ?? ""} /></label>
         <label>何で稼ぐ会社か<textarea name="businessModelJa" minLength={20} maxLength={800} required defaultValue={annualRecord?.businessModelJa ?? ""} /></label>
         <label>企業の要点の根拠引用<textarea name="summaryEvidence" minLength={24} maxLength={6414} required defaultValue={annualSummaryEvidence} /><small>上の事業説明から完全一致する引用を選びます。1件24〜800文字、複数の引用は空行で区切り、最大8件です。</small></label>
