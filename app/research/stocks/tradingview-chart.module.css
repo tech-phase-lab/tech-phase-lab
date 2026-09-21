@@ -9,12 +9,19 @@
 .viewTabs button[aria-selected=true]{border-color:#528f76;background:#153529;color:#c7f7e2}
 .embed{position:relative;margin:12px 26px 20px;overflow:hidden;border:1px solid #243541;border-radius:8px;background:#101820}
 .embed :global(.tradingview-widget-container__widget){width:100%;height:100%}
-.compactEmbed{min-height:220px}
+.quoteViewport{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-color:#528f76 #101820;scrollbar-width:thin}
+.quoteViewport:focus-visible{outline:2px solid #9de3c5;outline-offset:3px}
+/* Keep the provider's complete card at its natural aspect ratio. No masks or iframe transforms. */
+.compactEmbed{min-width:760px;min-height:220px}
+.quoteNavigation{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 20px 0}
+.quoteNavigation p{margin:0;color:#91a4b2;font-size:.72rem;line-height:1.6}
+.quoteNavigation>div{display:flex;gap:8px;flex:none}
+.quoteNavigation button{min-height:44px;padding:8px 12px;border:1px solid #365c4d;border-radius:8px;background:#10271f;color:#c7f7e2;font:inherit;font-size:.74rem;cursor:pointer}
+.quoteNavigation button:focus-visible{outline:2px solid #9de3c5;outline-offset:2px}
 .chartEmbed{height:320px}
 .error{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 26px 20px;padding:14px 18px;text-align:center;border:1px solid #5f4035;border-radius:8px;background:#231713;color:#e2b9aa;font-size:.82rem}
 .error button{border:1px solid #7a5a4f;border-radius:999px;background:#35221c;color:#f4d5c9;padding:7px 12px;font:inherit;cursor:pointer}
 .error button:hover{background:#422a23}
-.companyEvents{display:none}
 .note{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:15px 26px;border-top:1px solid var(--line);background:#0d151d}
 .note p{margin:0;max-width:900px;color:#8396a5;font-size:.72rem;line-height:1.7}
 .note a{flex:none;color:#a8efd2;font-size:.76rem}
@@ -25,21 +32,11 @@
   .heading strong{display:inline-block;margin-top:14px}
   .viewTabs{display:grid;grid-template-columns:1fr 1fr;padding:12px 18px 0}
   .embed{margin:10px 18px 16px}
-  .compactEmbed{min-height:330px}
-  .compactEmbed :global(iframe){width:122%!important;height:122%!important;transform:translateX(-10px) scale(.82);transform-origin:top left}
-  .compactEmbed::after{content:"";position:absolute;z-index:2;right:0;bottom:0;width:21%;height:45%;pointer-events:none;background:#131722}
+  .quoteNavigation{display:block;margin:12px 16px 0}
+  .quoteNavigation>div{justify-content:space-between;margin-top:8px}
   .chartEmbed{height:300px}
   .error{display:block;margin:0 18px 16px}
   .error button{display:block;margin:10px auto 0}
-  .companyEvents{display:block;margin:0 18px 16px;border:1px solid #243541;border-radius:8px;background:#101820;padding:16px}
-  .eventsHeading{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:13px}
-  .eventsHeading p{margin:0;color:var(--mint);font-size:.62rem;letter-spacing:.14em}
-  .eventsHeading h3{margin:0;color:#dce8ef;font-size:.9rem}
-  .eventList{display:grid;gap:8px;margin:0}
-  .eventList div{display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid #20313d;padding-top:10px}
-  .eventList dt{color:#91a4b2;font-size:.74rem}
-  .eventList dd{margin:0;color:#c4d2da;font-size:.74rem;text-align:right}
-  .eventsNotice{margin:13px 0 0;color:#718592;font-size:.64rem;line-height:1.65}
   .note{display:block;padding:14px 18px}
   .note a{display:inline-block;margin-top:10px}
 }
