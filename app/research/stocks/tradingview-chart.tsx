@@ -75,8 +75,11 @@ function TradingViewPanels({ symbol, lang }: { symbol: string; lang: "ja" | "en"
       </div>
     </div>
     <div className={styles.reloadControl}>
-      <button type="button" onClick={() => setAttempts((current) => ({ ...current, [view]: current[view] + 1 }))}>{lang === "ja" ? (view === "chart" ? "チャートを再読み込み" : "株価・指標を再読み込み") : "Reload market view"}</button>
+      <button type="button" onClick={() => setAttempts((current) => ({ ...current, [view]: current[view] + 1 }))}><span aria-hidden="true">▶</span>{lang === "ja" ? (view === "chart" ? "チャートを再読み込みする" : "株価・指標を再読み込みする") : "Reload market view"}</button>
     </div>
-    <div className={`${styles.note} ${polish.note}`}><p>{lang === "ja" ? "TradingViewの市場データです。遅延があるため、Tech Phaseの速報判定には使用しません。" : "Market data is provided by TradingView. Because it may be delayed, it is not used for Tech Phase alert decisions."}</p><a href={`https://www.tradingview.com/symbols/${symbol.replace(":", "-").replace(".", "-")}/`} target="_blank" rel="noreferrer">{lang === "ja" ? "TradingViewで確認 ↗" : "Open in TradingView ↗"}</a></div>
+    <div className={`${styles.note} ${polish.note}`}>
+      <p>{lang === "ja" ? "TradingViewの遅延データです。" : "Delayed market data provided by TradingView."}<br />{lang === "ja" ? "Tech Phaseの速報判定には使用しません。" : "Not used for Tech Phase alert decisions."}</p>
+      <a href={`https://www.tradingview.com/symbols/${symbol.replace(":", "-").replace(".", "-")}/`} target="_blank" rel="noreferrer">{lang === "ja" ? "TradingViewで確認 ↗" : "Open in TradingView ↗"}</a>
+    </div>
   </section>;
 }
