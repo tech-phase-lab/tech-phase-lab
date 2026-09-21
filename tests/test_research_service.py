@@ -629,6 +629,19 @@ class ResearchServiceTests(unittest.TestCase):
                     payload = json.loads(response.read())
                 self.assertTrue(payload["ok"])
                 self.assertIn("Official evidence body.", str(payload["items"]))
+                with urlopen(Request(
+                    f"{url}?view=needs-draft",
+                    headers={"Authorization": "Bearer editor-token-at-least-24-characters"},
+                ), timeout=2) as response:
+                    filtered = json.loads(response.read())
+                self.assertEqual(filtered["filter"], "needs-draft")
+                self.assertEqual(filtered["filteredTotal"], 1)
+                with self.assertRaises(HTTPError) as invalid_filter:
+                    urlopen(Request(
+                        f"{url}?view=approved",
+                        headers={"Authorization": "Bearer editor-token-at-least-24-characters"},
+                    ), timeout=2)
+                self.assertEqual(invalid_filter.exception.code, 400)
                 business = "NVIDIA designs accelerated computing platforms and software for data centers and other markets."
                 risk = "Demand can change rapidly, and suppliers could disrupt product delivery."
                 annual = {

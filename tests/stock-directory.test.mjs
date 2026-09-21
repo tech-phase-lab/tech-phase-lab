@@ -394,7 +394,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(dashboard, /未承認の要約、契約未確認のニュースや価格は配信しません/);
   assert.match(dashboard, /自動監視は運営検証中、会員配信・課金・外部通知は停止したまま/);
   assert.match(review, /根拠付きリサーチレビュー/);
-  assert.match(review, /&kind=annual/);
+  assert.match(review, /params\.set\("kind", "annual"\)/);
   assert.match(review, /action: "annual-draft"/);
   assert.match(review, /action: "annual-review"/);
   assert.match(review, /sourceBusiness: business\.excerpt/);
@@ -405,6 +405,10 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(review, /reviewCounts\.awaiting_review/);
   assert.match(review, /reviewCounts\.machine_ready/);
   assert.match(review, /reviewCounts\.machine_blocked/);
+  assert.match(review, /type ReviewFilter = "all" \| "ready" \| "blocked" \| "needs-draft"/);
+  assert.match(review, /params\.set\("view", filter\)/);
+  assert.match(review, /load\(undefined, filter\.value\)/);
+  assert.match(review, /該当する資料はありません/);
   assert.match(review, /機械検証通過は、人間が内容を確認できる状態の件数です/);
   assert.match(review, /対応優先順/);
   assert.match(review, /selected\.brief_status === "stale" && !selected\.brief_current/);

@@ -15,6 +15,7 @@ type ReviewCounts = {
   total: number; needs_draft: number; awaiting_review: number; stale: number;
   held: number; approved: number; rejected: number; machine_ready: number; machine_blocked: number;
 };
+type ReviewFilter = "all" | "ready" | "blocked" | "needs-draft";
 type RevisionEvidence = {
   previous_sha256: string; previous_observed_at: string; current_sha256: string;
   diff_preview: string; truncated: boolean; method: "word-diff";
@@ -80,6 +81,12 @@ const emptyReviewCounts: ReviewCounts = {
   total: 0, needs_draft: 0, awaiting_review: 0, stale: 0, held: 0, approved: 0, rejected: 0,
   machine_ready: 0, machine_blocked: 0,
 };
+const reviewFilters: { value: ReviewFilter; label: string }[] = [
+  { value: "all", label: "すべて" },
+  { value: "ready", label: "機械検証通過" },
+  { value: "blocked", label: "要修正" },
+  { value: "needs-draft", label: "下書き未作成" },
+];
 
 function annualRiskDrafts(record: AnnualRecord | null): AnnualRiskDraft[] {
   if (!record?.riskPointsJa.length) return [emptyAnnualRisk()];
@@ -94,6 +101,8 @@ export default function ReviewDashboard() {
   const [token, setToken] = useState("");
   const [items, setItems] = useState<ReviewItem[]>([]);
   const [reviewCounts, setReviewCounts] = useState<ReviewCounts>(emptyReviewCounts);
+  const [reviewFilter, setReviewFilter] = useState<ReviewFilter>("all");
+  const [filteredTotal, setFilteredTotal] = useState(0);
   const [selectedUrl, setSelectedUrl] = useState("");
   const [message, setMessage] = useState("編集用トークンを入力してください。ブラウザーには保存しません。");
   const [busy, setBusy] = useState(false);
@@ -107,8 +116,11 @@ export default function ReviewDashboard() {
   const annualBusinessEvidence = annualRecord?.evidence.find(item => item.section === "business")?.quote ?? "";
   const annualReviewHistory = annualRecord?.reviewHistory ?? [];
 
-  async function request(method: "GET" | "POST", body?: unknown, kind: "news" | "annual" = "news") {
-    const result = await fetch(`/api/research/editor?limit=${kind === "annual" ? 50 : 30}${kind === "annual" ? "&kind=annual" : ""}`, {
+  async function request(method: "GET" | "POST", body?: unknown, kind: "news" | "annual" = "news", filter: ReviewFilter = reviewFilter) {
+    const params = new URLSearchParams({ limit: String(kind === "annual" ? 50 : 30) });
+    if (kind === "annual") params.set("kind", "annual");
+    else params.set("view", filter);
+    const result = await fetch(`/api/research/editor?${params}`, {
       method,
       cache: "no-store",
       headers: { Authorization: `Bearer ${token}`, ...(body ? { "Content-Type": "application/json" } : {}) },
@@ -119,15 +131,17 @@ export default function ReviewDashboard() {
     return payload;
   }
 
-  async function load(successMessage?: string) {
+  async function load(successMessage?: string, filter: ReviewFilter = reviewFilter) {
     setBusy(true);
     try {
-      const payload = await request("GET");
+      const payload = await request("GET", undefined, "news", filter);
       setItems(payload.items);
       setReviewCounts(payload.counts ?? emptyReviewCounts);
+      setReviewFilter(filter);
+      setFilteredTotal(payload.filteredTotal ?? payload.items.length);
       setSelectedUrl(current => payload.items.some((item: ReviewItem) => item.url === current) ? current : payload.items[0]?.url ?? "");
       setMode("news");
-      setMessage(successMessage ?? `確認可能な原文 ${payload.counts?.total ?? payload.items.length}件から、対応優先順に${payload.items.length}件を読み込みました。`);
+      setMessage(successMessage ?? `絞り込み対象 ${payload.filteredTotal ?? payload.items.length}件から、対応優先順に${payload.items.length}件を読み込みました。`);
     } catch (error) {
       setMessage(`読み込み失敗：${error instanceof Error ? error.message : "unknown"}`);
     } finally { setBusy(false); }
@@ -300,9 +314,9 @@ export default function ReviewDashboard() {
     <header><div><p>TECH PHASE · PRIVATE EDITOR</p><h1>根拠付きリサーチレビュー</h1></div><Link href="/research/intake">取得状況へ戻る</Link></header>
     <aside className={styles.warning}><strong>配信前の運営画面</strong><span>原文・数値・解釈を人間が確認するための画面です。承認操作だけで会員へ配信されることはありません。</span></aside>
     <section className={styles.auth} aria-label="編集者認証"><label>編集用トークン<input type="password" autoComplete="off" value={token} onChange={event => setToken(event.target.value)} /></label><div className={styles.authActions}><button disabled={busy || token.length < 24} onClick={() => load()}>速報原文を読み込む</button><div className={styles.tickerLoad}><input aria-label="年次報告書のティッカー" value={annualTicker} maxLength={15} onChange={event => setAnnualTicker(event.target.value.toUpperCase())} /><button disabled={busy || token.length < 24} onClick={() => loadAnnual()}>年次報告書を開く</button></div></div><p aria-live="polite">{message}</p></section>
-    {(items.length > 0 || annualSource) && <div className={styles.modeTabs} role="tablist" aria-label="レビュー対象"><button role="tab" aria-selected={mode === "news"} disabled={!items.length} onClick={() => setMode("news")}>速報レビュー</button><button role="tab" aria-selected={mode === "annual"} disabled={!annualSource} onClick={() => setMode("annual")}>年次報告書レビュー</button></div>}
-    {mode === "news" && items.length > 0 && <div className={styles.workspace}>
-      <nav aria-label="確認する原文"><h2>速報レビューキュー</h2><div className={styles.annualMeta} aria-label="レビュー状況"><span>機械検証通過 {reviewCounts.machine_ready}</span><span>要修正 {reviewCounts.machine_blocked}</span><span>承認待ち {reviewCounts.awaiting_review}</span><span>原文更新 {reviewCounts.stale}</span><span>保留 {reviewCounts.held}</span><span>下書き未作成 {reviewCounts.needs_draft}</span><span>承認済み {reviewCounts.approved}</span></div><p style={{ margin: "10px 0 12px", color: "#81968f", fontSize: 12, lineHeight: 1.55 }}>機械検証通過は、人間が内容を確認できる状態の件数です。承認済み・下書き未作成は含みません。</p>{items.map(item => <button key={item.url} aria-current={selected?.url === item.url} onClick={() => setSelectedUrl(item.url)}><b>{item.ticker}</b><span>{item.title || new URL(item.url).pathname.split("/").filter(Boolean).at(-1)}</span><small>{labels[item.brief_status ?? ""] ?? "下書きなし"}{item.brief_status && item.brief_status !== "approved" ? ` · ${item.review_preflight.ready ? "機械検証通過" : "要修正"}` : ""}</small></button>)}</nav>
+    {(reviewCounts.total > 0 || items.length > 0 || annualSource) && <div className={styles.modeTabs} role="tablist" aria-label="レビュー対象"><button role="tab" aria-selected={mode === "news"} disabled={!reviewCounts.total && !items.length} onClick={() => setMode("news")}>速報レビュー</button><button role="tab" aria-selected={mode === "annual"} disabled={!annualSource} onClick={() => setMode("annual")}>年次報告書レビュー</button></div>}
+    {mode === "news" && (reviewCounts.total > 0 || items.length > 0) && <div className={styles.workspace}>
+      <nav aria-label="確認する原文"><h2>速報レビューキュー</h2><div className={styles.annualMeta} aria-label="レビュー状況"><span>機械検証通過 {reviewCounts.machine_ready}</span><span>要修正 {reviewCounts.machine_blocked}</span><span>承認待ち {reviewCounts.awaiting_review}</span><span>原文更新 {reviewCounts.stale}</span><span>保留 {reviewCounts.held}</span><span>下書き未作成 {reviewCounts.needs_draft}</span><span>承認済み {reviewCounts.approved}</span></div><p style={{ margin: "10px 0 12px", color: "#81968f", fontSize: 12, lineHeight: 1.55 }}>機械検証通過は、人間が内容を確認できる状態の件数です。承認済み・下書き未作成は含みません。</p><div className={styles.queueFilters} aria-label="レビューキューの絞り込み">{reviewFilters.map(filter => <button key={filter.value} type="button" aria-pressed={reviewFilter === filter.value} disabled={busy} onClick={() => load(undefined, filter.value)}>{filter.label}</button>)}</div><p className={styles.filterResult}>{filteredTotal}件中 {items.length}件を表示</p>{items.length ? items.map(item => <button key={item.url} aria-current={selected?.url === item.url} onClick={() => setSelectedUrl(item.url)}><b>{item.ticker}</b><span>{item.title || new URL(item.url).pathname.split("/").filter(Boolean).at(-1)}</span><small>{labels[item.brief_status ?? ""] ?? "下書きなし"}{item.brief_status && item.brief_status !== "approved" ? ` · ${item.review_preflight.ready ? "機械検証通過" : "要修正"}` : ""}</small></button>) : <p className={styles.filterResult}>該当する資料はありません。</p>}</nav>
       {selected && <article className={styles.editor}>
         <div className={styles.sourceHead}><div><p>{selected.ticker} · SHA {selected.sha256.slice(0, 12)}…</p><h2>{selected.title || "公式原文"}</h2></div><a href={selected.url} target="_blank" rel="noopener noreferrer">公式原文 ↗</a></div>
         {selected.brief_status === "stale" && !selected.brief_current && <aside className={styles.warning}><strong>原文が更新されました</strong><span>旧要約と旧根拠はフォームへ読み戻していません。現在の原文から下書きを作り直してください。</span></aside>}

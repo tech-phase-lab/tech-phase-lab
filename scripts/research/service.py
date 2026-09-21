@@ -329,9 +329,9 @@ class AutomaticMonitor:
         with self.db_lock, monitor.connect(self.db_path) as db:
             return monitor.snapshot(db)
 
-    def editorial_queue(self, limit=20):
+    def editorial_queue(self, limit=20, review_filter="all"):
         with self.db_lock, monitor.connect(self.db_path) as db:
-            return monitor.private_brief_queue(db, limit)
+            return monitor.private_brief_queue(db, limit, review_filter)
 
     def annual_editorial_queue(self, limit=20):
         with self.db_lock, monitor.connect(self.db_path) as db:
@@ -747,7 +747,9 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
                 queue = (self.app.annual_editorial_queue(limit) if path == "/admin/annual-briefs"
-                         else self.app.editorial_queue(limit))
+                         else self.app.editorial_queue(
+                             limit, parse_qs(parsed.query).get("view", ["all"])[0]
+                         ))
                 self.send_json(200, {"ok": True, **queue})
             except (TypeError, ValueError):
                 self.send_json(400, {"ok": False, "error": "invalid-request"})

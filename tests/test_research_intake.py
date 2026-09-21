@@ -903,6 +903,25 @@ class IntakeTests(unittest.TestCase):
         )
         self.assertTrue(queue["items"][1]["review_preflight"]["ready"])
 
+        ready = m.private_brief_queue(self.db, 50, "ready")
+        self.assertEqual(ready["filter"], "ready")
+        self.assertEqual(ready["filteredTotal"], 1)
+        self.assertEqual([item["url"] for item in ready["items"]], [held_url])
+
+        blocked = m.private_brief_queue(self.db, 50, "blocked")
+        self.assertEqual(blocked["filteredTotal"], 1)
+        self.assertEqual([item["url"] for item in blocked["items"]], [draft_url])
+
+        needs_draft = m.private_brief_queue(self.db, 50, "needs-draft")
+        self.assertEqual(needs_draft["filteredTotal"], 1)
+        self.assertEqual(
+            [item["url"] for item in needs_draft["items"]],
+            ["https://nebius.com/newsroom/no-draft-release"],
+        )
+        self.assertEqual(needs_draft["counts"], queue["counts"])
+        with self.assertRaisesRegex(ValueError, "invalid-review-filter"):
+            m.private_brief_queue(self.db, 50, "approved")
+
     def test_source_change_makes_approved_brief_stale_and_private_again(self):
         body = b"<main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main>"
         self.check(body)

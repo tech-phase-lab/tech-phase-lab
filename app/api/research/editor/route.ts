@@ -40,8 +40,13 @@ export async function GET(request: Request) {
     const requested = Number(requestUrl.searchParams.get("limit") ?? 20);
     const limit = Number.isInteger(requested) ? Math.max(1, Math.min(requested, 50)) : 20;
     const kind = requestUrl.searchParams.get("kind");
+    const view = requestUrl.searchParams.get("view") ?? "all";
+    if (kind !== "annual" && !["all", "ready", "blocked", "needs-draft"].includes(view)) {
+      return response(400, { ok: false, error: "invalid-review-filter" });
+    }
     const url = endpoint(kind === "annual" ? "/admin/annual-briefs" : "/admin/briefs");
     url.searchParams.set("limit", String(limit));
+    if (kind !== "annual") url.searchParams.set("view", view);
     return await relay(url, { headers: { Authorization: auth } });
   } catch {
     return response(503, { ok: false, error: "editorial-service-unavailable" });

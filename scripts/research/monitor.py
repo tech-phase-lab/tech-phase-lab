@@ -1114,9 +1114,12 @@ def snapshot(db):
     return {"schemaVersion": 1, "generatedAt": now(), "sources": sources, "history": history, "discoveryRuns": runs, "events": events, "briefs": briefs}
 
 
-def private_brief_queue(db, limit=20):
+def private_brief_queue(db, limit=20, review_filter="all"):
     """Return bounded source evidence for the authenticated editorial interface only."""
     limit = max(1, min(int(limit), 50))
+    review_filter = str(review_filter).strip().lower()
+    if review_filter not in {"all", "ready", "blocked", "needs-draft"}:
+        raise ValueError("invalid-review-filter")
     counts = dict(db.execute("""
       SELECT count(*) AS total,
              sum(CASE WHEN b.url IS NULL THEN 1 ELSE 0 END) AS needs_draft,
@@ -1145,12 +1148,33 @@ def private_brief_queue(db, limit=20):
           WHERE url IN ({placeholders}) ORDER BY url,id
         """, tuple(evidence_by_url)):
             evidence_by_url[evidence_row["url"]].append(evidence_row)
+    preflight_by_url = {}
     for candidate in preflight_candidates:
         result = _brief_preflight_result(
             candidate, evidence_by_url[candidate["url"]], candidate["current_sha"]
         )
+        preflight_by_url[candidate["url"]] = result
         counts["machine_ready" if result["ready"] else "machine_blocked"] += 1
-    rows = [dict(row) for row in db.execute("""
+
+    filter_sql = ""
+    query_params = []
+    if review_filter == "needs-draft":
+        filter_sql = "AND b.url IS NULL"
+    elif review_filter in {"ready", "blocked"}:
+        expected_ready = review_filter == "ready"
+        filtered_urls = [
+            url for url, result in preflight_by_url.items()
+            if result["ready"] is expected_ready
+        ]
+        if not filtered_urls:
+            rows = []
+        else:
+            placeholders = ",".join("?" for _ in filtered_urls)
+            filter_sql = f"AND s.url IN ({placeholders})"
+            query_params.extend(filtered_urls)
+    if review_filter not in {"ready", "blocked"} or filter_sql:
+        query_params.append(limit)
+        rows = [dict(row) for row in db.execute(f"""
       SELECT s.url,s.ticker,s.title,s.published_on,s.discovered_at,s.checked_at,s.sha256,
              s.extracted_text,s.extracted_chars,e.detected_at,
              b.source_sha256 AS brief_source_sha256,
@@ -1167,6 +1191,7 @@ def private_brief_queue(db, limit=20):
       LEFT JOIN briefs b ON b.url=s.url
       LEFT JOIN brief_generation_jobs j ON j.url=s.url
       WHERE s.sha256 IS NOT NULL AND s.error IS NULL AND s.extracted_chars>0
+        {filter_sql}
       ORDER BY CASE
                  WHEN b.status='draft' THEN 0
                  WHEN b.status='stale' THEN 1
@@ -1178,7 +1203,7 @@ def private_brief_queue(db, limit=20):
                END,
                e.detected_at IS NULL,e.detected_at DESC,s.discovered_at DESC,s.url
       LIMIT ?
-    """, (limit,))]
+    """, tuple(query_params))]
     for row in rows:
         brief_source_sha = row.pop("brief_source_sha256")
         brief_validation_sha = row.pop("brief_validation_sha256")
@@ -1237,7 +1262,16 @@ def private_brief_queue(db, limit=20):
         )
         row["source_text"] = text[:80_000]
         row["source_text_truncated"] = len(text) > 80_000
-    return {"generatedAt": now(), "counts": counts, "items": rows}
+    filtered_total = {
+        "all": counts["total"],
+        "ready": counts["machine_ready"],
+        "blocked": counts["machine_blocked"],
+        "needs-draft": counts["needs_draft"],
+    }[review_filter]
+    return {
+        "generatedAt": now(), "filter": review_filter,
+        "filteredTotal": filtered_total, "counts": counts, "items": rows,
+    }
 
 
 def _machine_diff(previous_text, current_text, maximum=6_000):
