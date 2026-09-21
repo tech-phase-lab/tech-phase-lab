@@ -3,6 +3,7 @@
 import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
 import type { BusinessSection, RiskSection } from "@/lib/research/stock-directory";
+import { businessDraftEvidence, referencedQuotes } from "@/lib/research/annual-draft-evidence";
 import styles from "./review.module.css";
 
 type Evidence = { summary: string[]; impact: string[] };
@@ -114,7 +115,8 @@ export default function ReviewDashboard() {
   const [annualRisks, setAnnualRisks] = useState<AnnualRiskDraft[]>([emptyAnnualRisk()]);
   const selected = useMemo(() => items.find(item => item.url === selectedUrl) ?? items[0], [items, selectedUrl]);
   const selectedReviewHistory = selected?.review_history ?? [];
-  const annualBusinessEvidence = annualRecord?.evidence.find(item => item.section === "business")?.quote ?? "";
+  const annualSummaryEvidence = annualRecord ? referencedQuotes(annualRecord.evidence, annualRecord.summaryEvidenceIds).join("\n\n") : "";
+  const annualBusinessEvidence = annualRecord ? referencedQuotes(annualRecord.evidence, annualRecord.businessModelEvidenceIds).join("\n\n") : "";
   const annualReviewHistory = annualRecord?.reviewHistory ?? [];
 
   async function request(method: "GET" | "POST", body?: unknown, kind: "news" | "annual" = "news", filter: ReviewFilter = reviewFilter) {
@@ -253,7 +255,6 @@ export default function ReviewDashboard() {
     event.preventDefault();
     if (!annualSource?.business || !annualSource.risks) return;
     const form = new FormData(event.currentTarget);
-    const businessEvidence = String(form.get("businessEvidence") ?? "").trim();
     const { business, risks } = annualSource;
     const riskPointsJa = annualRisks.map((risk, riskIndex) => ({
       text: risk.text,
@@ -266,6 +267,11 @@ export default function ReviewDashboard() {
     })));
     setBusy(true);
     try {
+      const businessEvidence = businessDraftEvidence(
+        splitEvidence(String(form.get("summaryEvidence") ?? "")),
+        splitEvidence(String(form.get("businessEvidence") ?? "")),
+      );
+      if (businessEvidence.evidence.length + riskEvidence.length > 12) throw new Error("根拠引用は事業・リスクを合わせて最大12件です。");
       await request("POST", { action: "annual-draft", payload: {
         id: `${business.ticker.toLowerCase()}-${business.accessionNumber.replaceAll("-", "")}-ja`,
         ticker: business.ticker,
@@ -274,10 +280,10 @@ export default function ReviewDashboard() {
         summaryJa: form.get("summaryJa"),
         businessModelJa: form.get("businessModelJa"),
         riskPointsJa,
-        summaryEvidenceIds: ["business-1"],
-        businessModelEvidenceIds: ["business-1"],
+        summaryEvidenceIds: businessEvidence.summaryEvidenceIds,
+        businessModelEvidenceIds: businessEvidence.businessModelEvidenceIds,
         evidence: [
-          { id: "business-1", section: "business", quote: businessEvidence },
+          ...businessEvidence.evidence,
           ...riskEvidence,
         ],
         confidence: form.get("confidence"),
@@ -356,7 +362,8 @@ export default function ReviewDashboard() {
       <form key={`${annualSource.business.accessionNumber}-${annualRecord?.generatedAt ?? "new"}`} onSubmit={submitAnnualDraft} className={styles.form}><h2>根拠付き日本語要点の下書き</h2><p>英語原文から完全一致する引用を選びます。ここではAI生成を行わず、人間が作成した下書きとして保存します。</p>
         <label>企業の要点<textarea name="summaryJa" minLength={20} maxLength={500} required defaultValue={annualRecord?.summaryJa ?? ""} /></label>
         <label>何で稼ぐ会社か<textarea name="businessModelJa" minLength={20} maxLength={800} required defaultValue={annualRecord?.businessModelJa ?? ""} /></label>
-        <label>事業説明の根拠引用<textarea name="businessEvidence" minLength={24} maxLength={800} required defaultValue={annualBusinessEvidence} /><small>上の事業説明に完全一致する24〜800文字。要点とビジネスモデルの両方を支える引用を選びます。</small></label>
+        <label>企業の要点の根拠引用<textarea name="summaryEvidence" minLength={24} maxLength={6414} required defaultValue={annualSummaryEvidence} /><small>上の事業説明から完全一致する引用を選びます。1件24〜800文字、複数の引用は空行で区切り、最大8件です。</small></label>
+        <label>何で稼ぐ会社かの根拠引用<textarea name="businessEvidence" minLength={24} maxLength={6414} required defaultValue={annualBusinessEvidence} /><small>企業の要点とは別に根拠を指定できます。1件24〜800文字、空行区切りで最大8件。同じ引用はまとめ、リスクを含め全体で最大12件です。</small></label>
         <section className={styles.riskEditor} aria-label="重要リスクの編集">
           <div className={styles.riskEditorHead}><div><h3>重要リスク</h3><p>各項目を別々のSEC原文引用へ結び付けます。最大6項目、1項目につき根拠は最大4件です。</p></div><button type="button" disabled={busy || annualRisks.length >= 6} onClick={() => setAnnualRisks(current => [...current, emptyAnnualRisk()])}>リスクを追加</button></div>
           {annualRisks.map((risk, riskIndex) => <fieldset key={`annual-risk-${riskIndex}`} className={styles.riskItem}>
