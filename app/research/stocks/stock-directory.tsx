@@ -183,7 +183,7 @@ export default function StockDirectory() {
         <h1><span className={polish.desktopTitle}>{t("米国株を、すぐ調べる。", "Find a U.S. stock in seconds.")}</span><span className={polish.mobileTitle}>{t("米国株リサーチ", "U.S. stock research")}</span></h1>
         <p>{t("ティッカーまたは企業名で検索。会社名、取引所、SEC識別番号、業種を一次情報から確認できます。", "Search by ticker or company name. Verify the company, exchange, SEC identifier, and industry from primary data.")}</p>
         <label className={styles.search}><span aria-hidden="true">⌕</span><input autoComplete="off" inputMode="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("例：NVDA、Micron、Palantir", "Try NVDA, Micron, or Palantir")} aria-label={t("米国株を検索", "Search U.S. stocks")} /><kbd>SEC</kbd></label>
-        <div className={styles.scope}><span>{t("無料の企業名簿", "Free company directory")}</span><span>{t("独自株価画面を準備中", "Custom market view ready for data")}</span><span>{t("ニュース権利と分離", "Separate from news licensing")}</span></div>
+        <div className={styles.scope}><span>{t("無料の企業名簿", "Free company directory")}</span><span>{t("TradingView株価・12か月チャート", "TradingView quote and 12-month chart")}</span><span>{t("ニュース権利と分離", "Separate from news licensing")}</span></div>
       </section>
 
       <div className={`${styles.layout} ${polish.resultLayout}`}>
@@ -275,7 +275,7 @@ export default function StockDirectory() {
         <p className={filingStyles.filingNote}>{t("SEC公式APIを1時間キャッシュして表示します。リアルタイム通知ではありません。", "Shown from the official SEC API with a one-hour source cache. This is not a real-time alert feed.")}</p>
       </section>}
 
-      <section className={styles.disclosure}><div><span>01</span><h2>{t("何が無料で使える？", "What is free?")}</h2><p>{t("SECの企業名簿と提出書類、数値を捏造しないTech Phase株価画面、分離されたTradingView参考チャート。", "SEC company and filing data, a Tech Phase market view that never invents values, and a separate TradingView reference chart.")}</p></div><div><span>02</span><h2>{t("まだ何を出さない？", "What is not shown yet?")}</h2><p>{t("契約未確認のリアルタイム株価、時間外価格、通信社ニュース。表示権を確認するまで数値を出しません。", "Unlicensed real-time prices, extended-hours quotes, and wire-service news. Values remain withheld until display rights are confirmed.")}</p></div><div><span>03</span><h2>{t("次に何を追加する？", "What comes next?")}</h2><p>{t("承認済みの配信元を独自画面へ接続し、無料版は企業調査、PROは速報・変化追跡として明確に分けます。", "Connect an approved provider to the custom view, keeping company research in Free and timely change tracking in PRO.")}</p></div></section>
+      <section className={styles.disclosure}><div><span>01</span><h2>{t("何が無料で使える？", "What is free?")}</h2><p>{t("SECの企業名簿・提出書類と、TradingViewの参考株価・12か月チャートを確認できます。", "View the SEC company directory and filings alongside a TradingView reference quote and 12-month chart.")}</p></div><div><span>02</span><h2>{t("まだ何を出さない？", "What is not shown yet?")}</h2><p>{t("契約未確認のリアルタイム株価、時間外価格、通信社ニュース。表示権を確認するまで数値を出しません。", "Unlicensed real-time prices, extended-hours quotes, and wire-service news. Values remain withheld until display rights are confirmed.")}</p></div><div><span>03</span><h2>{t("次に何を追加する？", "What comes next?")}</h2><p>{t("承認済みの配信元を独自画面へ接続し、無料版は企業調査、PROは速報・変化追跡として明確に分けます。", "Connect an approved provider to the custom view, keeping company research in Free and timely change tracking in PRO.")}</p></div></section>
       <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("SECは名簿の正確性・網羅性を保証していません。検索結果は企業識別用で、売買推奨ではありません。", "The SEC does not guarantee directory accuracy or scope. Results identify issuers and are not investment recommendations.")}</p></footer>
     </main>
   </div>;
