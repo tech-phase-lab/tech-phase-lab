@@ -442,6 +442,10 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(review, /validationSha256: annualRecord\.validationSha256/);
   assert.match(review, /code === "draft-revision-mismatch"/);
   assert.match(review, /code === "annual-draft-revision-mismatch"/);
+  assert.match(review, /annualReviewPreflight/);
+  assert.match(review, /sourceBusiness: annualSource\.business\.excerpt/);
+  assert.match(review, /sourceRisks: riskCorpus\(annualSource\.risks\)/);
+  assert.match(review, /!annualPreflight\.ready/);
   assert.match(review, /selected\.sha256.*selected\.generated_at/);
   assert.match(review, /selected\?\.review_history \?\? \[\]/);
   assert.match(review, /annualRecord\?\.reviewHistory \?\? \[\]/);

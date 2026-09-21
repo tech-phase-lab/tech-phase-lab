@@ -3,7 +3,7 @@
 import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
 import type { BusinessSection, RiskSection } from "@/lib/research/stock-directory";
-import { businessDraftEvidence, referencedQuotes } from "@/lib/research/annual-draft-evidence";
+import { annualReviewPreflight, businessDraftEvidence, referencedQuotes } from "@/lib/research/annual-draft-evidence";
 import styles from "./review.module.css";
 
 type Evidence = { summary: string[]; impact: string[] };
@@ -74,6 +74,13 @@ const preflightLabels: Record<string, string> = {
   "draft-evidence-invalid": "根拠引用または数値根拠を再確認してください",
   "draft-fingerprint-missing": "旧形式の下書きです。現在の原文から再保存してください",
   "draft-fingerprint-mismatch": "保存後に下書きまたは根拠が変更されています",
+  "annual-draft-missing": "現在のSEC原文に対応する下書きがありません",
+  "annual-source-unavailable": "SEC原文の事業説明とリスク項目を確認できません",
+  "annual-source-revision-mismatch": "下書き作成後にSEC原文が更新されました",
+  "annual-draft-fingerprint-missing": "旧形式の下書きです。現在のSEC原文から再保存してください",
+  "annual-draft-evidence-invalid": "根拠の参照関係を再確認してください",
+  "annual-business-evidence-mismatch": "企業要点または収益構造の根拠が表示中のSEC原文と一致しません",
+  "annual-risk-evidence-mismatch": "リスク根拠が表示中のSEC原文と一致しません",
 };
 const splitEvidence = (value: string) => value.split(/\n{2,}/).map(v => v.trim()).filter(Boolean);
 const riskCorpus = (risks: RiskSection | null) => [
@@ -120,6 +127,12 @@ export default function ReviewDashboard() {
   const annualSummaryEvidence = annualRecord ? referencedQuotes(annualRecord.evidence, annualRecord.summaryEvidenceIds).join("\n\n") : "";
   const annualBusinessEvidence = annualRecord ? referencedQuotes(annualRecord.evidence, annualRecord.businessModelEvidenceIds).join("\n\n") : "";
   const annualReviewHistory = annualRecord?.reviewHistory ?? [];
+  const annualPreflight = useMemo(() => annualReviewPreflight(
+    annualRecord,
+    annualSource?.business ?? null,
+    annualSource?.risks ?? null,
+    riskCorpus(annualSource?.risks ?? null),
+  ), [annualRecord, annualSource]);
 
   async function request(method: "GET" | "POST", body?: unknown, kind: "news" | "annual" = "news", filter: ReviewFilter = reviewFilter) {
     const params = new URLSearchParams({ limit: String(kind === "annual" ? 50 : 30) });
@@ -316,6 +329,8 @@ export default function ReviewDashboard() {
         accessionNumber: annualSource.business.accessionNumber,
         sourceSha256: annualSource.business.sourceSha256,
         validationSha256: annualRecord.validationSha256,
+        sourceBusiness: annualSource.business.excerpt,
+        sourceRisks: riskCorpus(annualSource.risks),
         decision: form.get("decision"),
         reviewer: form.get("reviewer"),
         reason: form.get("reason"),
@@ -325,6 +340,11 @@ export default function ReviewDashboard() {
       const code = error instanceof Error ? error.message : "unknown";
       if (code === "annual-draft-revision-mismatch") {
         await loadAnnual("別の編集者が年次報告書の下書きを更新したため、最新版を再読み込みしました。内容を確認し直してください。");
+      } else if ([
+        "annual-review-source-invalid", "annual-review-source-too-large",
+        "annual-review-evidence-mismatch",
+      ].includes(code)) {
+        await loadAnnual("判断前のSEC抜粋照合に失敗したため、原文と下書きを再読み込みしました。根拠を確認し直してください。");
       } else {
         setMessage(`年次報告書の判断保存失敗：${code}`);
       }
@@ -393,9 +413,15 @@ export default function ReviewDashboard() {
         <label>確信度<select name="confidence" defaultValue={annualRecord?.confidence ?? "low"}><option value="low">low</option><option value="medium">medium</option><option value="high">high</option></select></label>
         <button disabled={busy}>年次報告書の下書きを保存</button>
       </form>
-      <form onSubmit={submitAnnualReview} className={styles.form}><h2>人間による最終判断</h2><p>SEC原文・提出番号・SHA・根拠引用・数値を確認してから判断します。画面に表示した下書き指紋も再照合し、原文更新時は公開側で自動失効します。</p>
+      <form onSubmit={submitAnnualReview} className={styles.form}><h2>人間による最終判断</h2><p>SEC原文・提出番号・SHA・根拠引用・数値を確認してから判断します。画面に表示した下書き指紋とSEC抜粋も判断時に再照合し、原文更新時は公開側で自動失効します。</p>
+        <aside className={styles.warning}>
+          <strong>{annualPreflight.ready ? "承認前の機械検証：通過" : "承認前の機械検証：要修正"}</strong>
+          {annualPreflight.ready
+            ? <span>提出番号・原文SHA・下書き指紋・根拠参照・表示中のSEC抜粋が一致しています。これは人間による内容確認の代わりではありません。</span>
+            : <ul>{annualPreflight.blockers.map(code => <li key={code}>{preflightLabels[code] ?? "現在のSEC原文から下書きを再保存してください"}</li>)}</ul>}
+        </aside>
         <div className={styles.row}><label>判断<select name="decision"><option value="held">保留</option><option value="approved">承認</option><option value="rejected">却下</option></select></label><label>確認者<input name="reviewer" required minLength={2} /></label></div>
-        <label>判断理由<textarea name="reason" required minLength={5} maxLength={500} /></label><button disabled={busy || !annualRecord?.validationSha256}>判断を記録</button>
+        <label>判断理由<textarea name="reason" required minLength={5} maxLength={500} /></label><button disabled={busy || !annualPreflight.ready}>判断を記録</button>
       </form>
       {annualReviewHistory.length > 0 && <details className={styles.evidence}><summary>年次報告書の判断履歴（直近{annualReviewHistory.length}件）</summary><ol>{annualReviewHistory.map((entry, index) => <li key={`${entry.reviewedAt}-${index}`}><div><b>{labels[entry.decision]}</b><span>{entry.reviewedAt.replace("T", " ").replace("Z", " UTC")} · {entry.reviewer}{entry.currentRevision ? " · 現在の下書き" : " · 過去の下書き"}</span></div><p>{entry.reason}</p><small>原文 {entry.sourceSha256.slice(0, 12)}…{entry.draftValidationSha256 ? ` · 下書き ${entry.draftValidationSha256.slice(0, 12)}…` : " · 旧履歴（下書き指紋なし）"}</small></li>)}</ol></details>}
     </article>}

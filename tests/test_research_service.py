@@ -693,10 +693,25 @@ class ResearchServiceTests(unittest.TestCase):
                         "sourceSha256": annual["sourceSha256"],
                         "validationSha256": annual_validation_sha, "decision": "approved",
                         "reviewer": "private-editor", "reason": "SEC原文と根拠引用を照合済み",
+                        "sourceBusiness": business, "sourceRisks": "別のリスク原文です。",
                     }).encode(), method="POST",
                     headers={"Authorization": "Bearer editor-token-at-least-24-characters", "Content-Type": "application/json"},
                 )
-                with urlopen(annual_review, timeout=2) as response:
+                with self.assertRaises(HTTPError) as changed_evidence:
+                    urlopen(annual_review, timeout=2)
+                self.assertEqual(changed_evidence.exception.code, 400)
+                valid_annual_review = Request(
+                    f"http://127.0.0.1:{server.server_port}/admin/annual-briefs/review",
+                    data=json.dumps({
+                        "ticker": "NVDA", "accessionNumber": annual["accessionNumber"],
+                        "sourceSha256": annual["sourceSha256"],
+                        "validationSha256": annual_validation_sha, "decision": "approved",
+                        "reviewer": "private-editor", "reason": "SEC原文と根拠引用を照合済み",
+                        "sourceBusiness": business, "sourceRisks": risk,
+                    }).encode(), method="POST",
+                    headers={"Authorization": "Bearer editor-token-at-least-24-characters", "Content-Type": "application/json"},
+                )
+                with urlopen(valid_annual_review, timeout=2) as response:
                     self.assertEqual(json.loads(response.read())["status"], "approved")
                 query = (f"http://127.0.0.1:{server.server_port}/annual-brief?ticker=NVDA"
                          f"&accession={annual['accessionNumber']}&sha256={annual['sourceSha256']}")

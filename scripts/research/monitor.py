@@ -2152,6 +2152,23 @@ def _annual_record_from_row(row):
         raise ValueError("annual-draft-evidence-invalid") from exc
 
 
+def _validate_annual_review_sources(record, source_business, source_risks):
+    """Recheck stored excerpts against the exact SEC text shown to the reviewer."""
+    if (not isinstance(source_business, str) or not isinstance(source_risks, str)
+            or not source_business or not source_risks):
+        raise ValueError("annual-review-source-invalid")
+    if len(source_business) > 20_000 or len(source_risks) > 30_000:
+        raise ValueError("annual-review-source-too-large")
+    try:
+        return _validate_annual_filing_payload({
+            **record, "sourceBusiness": source_business, "sourceRisks": source_risks,
+        })
+    except ValueError as exc:
+        if str(exc) == "annual-evidence-not-in-source":
+            raise ValueError("annual-review-evidence-mismatch") from exc
+        raise ValueError("annual-draft-evidence-invalid") from exc
+
+
 def save_annual_filing_brief_draft(db, payload):
     """Persist a source-bound private draft after exact local evidence checks."""
     record = _validate_annual_filing_payload(payload)
@@ -2190,7 +2207,7 @@ def save_annual_filing_brief_draft(db, payload):
 
 def review_annual_filing_brief(
         db, ticker, accession, expected_sha, decision, reviewer, reason,
-        expected_validation_sha=None):
+        expected_validation_sha=None, source_business=None, source_risks=None):
     """Record a human decision for one exact annual filing revision."""
     if not _ANNUAL_TICKER.fullmatch(str(ticker)) or not _ANNUAL_ACCESSION.fullmatch(str(accession)):
         raise ValueError("invalid-annual-filing-identity")
@@ -2214,6 +2231,8 @@ def review_annual_filing_brief(
                     or row["validation_sha256"] != expected_validation_sha):
                 raise ValueError("annual-draft-revision-mismatch")
         record = _annual_record_from_row(row)
+        if source_business is not None or source_risks is not None:
+            record = _validate_annual_review_sources(record, source_business, source_risks)
         if not row["validation_sha256"] or row["validation_sha256"] != _annual_validation_sha(record):
             raise ValueError("annual-draft-evidence-invalid")
         db.execute("""

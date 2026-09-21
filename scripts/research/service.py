@@ -352,6 +352,7 @@ class AutomaticMonitor:
                 payload.get("sourceSha256", ""), payload.get("decision", ""),
                 payload.get("reviewer", ""), payload.get("reason", ""),
                 payload.get("validationSha256", ""),
+                payload.get("sourceBusiness", ""), payload.get("sourceRisks", ""),
             )
 
     def save_brief(self, payload):

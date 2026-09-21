@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { businessDraftEvidence, referencedQuotes } from "../lib/research/annual-draft-evidence.ts";
+import { annualReviewPreflight, businessDraftEvidence, referencedQuotes } from "../lib/research/annual-draft-evidence.ts";
 
 const company = "The company designs and manufactures memory products.";
 const model = "Revenue is generated through sales to enterprise customers.";
@@ -28,4 +28,49 @@ test("missing, oversized, and excessive quotes are rejected before submission", 
   assert.throws(() => businessDraftEvidence(["short"], [model]));
   assert.throws(() => businessDraftEvidence([company], ["a".repeat(801)]));
   assert.throws(() => businessDraftEvidence(Array(9).fill(company), [model]));
+});
+
+test("annual review preflight binds the draft to the displayed SEC evidence", () => {
+  const source = { ticker: "MU", accessionNumber: "0000723125-26-000001", sourceSha256: "a".repeat(64) };
+  const record = {
+    ...source, validationSha256: "b".repeat(64),
+    evidence: [
+      { id: "business-1", section: "business", quote: company },
+      { id: "risk-1", section: "risk", quote: model },
+    ],
+    summaryEvidenceIds: ["business-1"], businessModelEvidenceIds: ["business-1"],
+    riskPointsJa: [{ evidenceIds: ["risk-1"] }],
+  };
+  const result = annualReviewPreflight(
+    record,
+    { ...source, excerpt: company },
+    { ...source, excerpt: model },
+    model,
+  );
+  assert.deepEqual(result, { ready: true, blockers: [] });
+});
+
+test("annual review preflight identifies source drift and missing evidence", () => {
+  const source = { ticker: "MU", accessionNumber: "0000723125-26-000001", sourceSha256: "a".repeat(64) };
+  const record = {
+    ...source, validationSha256: "b".repeat(64),
+    evidence: [
+      { id: "business-1", section: "business", quote: company },
+      { id: "risk-1", section: "risk", quote: model },
+    ],
+    summaryEvidenceIds: ["business-1"], businessModelEvidenceIds: ["business-1"],
+    riskPointsJa: [{ evidenceIds: ["risk-1"] }],
+  };
+  const result = annualReviewPreflight(
+    record,
+    { ...source, sourceSha256: "c".repeat(64), excerpt: "Changed business section without the quote." },
+    { ...source, sourceSha256: "c".repeat(64), excerpt: "Changed risk section without the quote." },
+    "Changed risk section without the quote.",
+  );
+  assert.equal(result.ready, false);
+  assert.deepEqual(result.blockers, [
+    "annual-source-revision-mismatch",
+    "annual-business-evidence-mismatch",
+    "annual-risk-evidence-mismatch",
+  ]);
 });
