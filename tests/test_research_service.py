@@ -309,6 +309,89 @@ class ResearchServiceTests(unittest.TestCase):
         })
         self.assertFalse(decision["published"])
 
+    def test_updated_source_requires_rewrite_before_hold_and_approval(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        url = "https://nebius.com/newsroom/new-release"
+        first_text = "Capacity will increase in 2027.\nExecution remains subject to demand."
+        with monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            monitor.save_source_check(db, row, {
+                "sha256": "1" * 64, "contentType": "text/html", "contentBytes": 80,
+                "extractedText": first_text, "extractedChars": len(first_text),
+            })
+        first = {
+            "url": url, "sha256": "1" * 64,
+            "summaryJa": "公式発表によると、AI向け容量は2027年に増加する計画です。",
+            "impactLabel": "mixed",
+            "impactJa": "供給能力の拡大余地がありますが、実行と需要の確認が引き続き必要です。",
+            "confidence": "medium", "evidence": {
+                "summary": ["Capacity will increase in 2027."],
+                "impact": ["Execution remains subject to demand."],
+            },
+        }
+        app.save_brief(first)
+        app.decide_brief({
+            "url": url, "sha256": first["sha256"], "decision": "approved",
+            "reviewer": "first-editor", "reason": "初版の原文と根拠を確認しました",
+        })
+        self.assertEqual(app.public_snapshot()["briefs"][0]["source_sha256"], first["sha256"])
+
+        second_text = "Capacity will increase in 2028.\nExecution remains subject to demand and permits."
+        with monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            monitor.save_source_check(db, row, {
+                "sha256": "2" * 64, "contentType": "text/html", "contentBytes": 88,
+                "extractedText": second_text, "extractedChars": len(second_text),
+            })
+        stale = app.editorial_queue(5)["items"][0]
+        self.assertEqual(stale["brief_status"], "stale")
+        self.assertFalse(stale["brief_current"])
+        self.assertEqual(stale["previous_brief"]["summary_ja"], first["summaryJa"])
+        self.assertEqual(app.public_snapshot()["briefs"], [])
+        with self.assertRaises(ValueError):
+            app.decide_brief({
+                "url": url, "sha256": "2" * 64, "decision": "approved",
+                "reviewer": "stale-editor", "reason": "古い下書きを承認しようとしました",
+            })
+
+        second = {
+            "url": url, "sha256": "2" * 64,
+            "summaryJa": "公式発表によると、AI向け容量は2028年に増加する計画へ更新されました。",
+            "impactLabel": "mixed",
+            "impactJa": "供給拡大の余地がありますが、需要と許認可の確認が引き続き必要です。",
+            "confidence": "medium", "evidence": {
+                "summary": ["Capacity will increase in 2028."],
+                "impact": ["Execution remains subject to demand and permits."],
+            },
+        }
+        app.save_brief(second)
+        app.decide_brief({
+            "url": url, "sha256": second["sha256"], "decision": "held",
+            "reviewer": "second-editor", "reason": "許認可への影響を追加確認します",
+        })
+        self.assertEqual(app.public_snapshot()["briefs"], [])
+
+        corrected = {
+            **second,
+            "impactJa": "供給拡大の機会はありますが、需要と許認可が未確定のため継続確認が必要です。",
+        }
+        app.save_brief(corrected)
+        app.decide_brief({
+            "url": url, "sha256": corrected["sha256"], "decision": "approved",
+            "reviewer": "final-editor", "reason": "更新後の原文と修正版の根拠を確認しました",
+        })
+        public = app.public_snapshot()["briefs"]
+        self.assertEqual(len(public), 1)
+        self.assertEqual(public[0]["source_sha256"], corrected["sha256"])
+        self.assertEqual(public[0]["impact_ja"], corrected["impactJa"])
+        queue = app.editorial_queue(5)["items"][0]
+        self.assertTrue(queue["brief_current"])
+        self.assertIsNone(queue["previous_brief"])
+        self.assertEqual(
+            [(item["decision"], item["current_revision"]) for item in queue["review_history"]],
+            [("approved", True), ("held", False), ("approved", False)],
+        )
+
     def test_ai_generation_must_pass_existing_evidence_gate_and_stays_private(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         with monitor.connect(self.db_path) as db:

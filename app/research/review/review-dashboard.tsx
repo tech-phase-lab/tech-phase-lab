@@ -308,9 +308,9 @@ export default function ReviewDashboard() {
           <label>影響判定の根拠抜粋<textarea name="impactEvidence" required defaultValue={selected.evidence.impact.join("\n\n")} /></label>
           <button disabled={busy}>根拠付き下書きを保存</button>
         </form>
-        <form onSubmit={submitReview} className={styles.form}><h2>人間による最終判断</h2><p>現在：{labels[selected.brief_status ?? ""] ?? "下書きなし"}</p>
+        <form onSubmit={submitReview} className={styles.form}><h2>人間による最終判断</h2><p>現在：{labels[selected.brief_status ?? ""] ?? "下書きなし"}{selected.brief_status && !selected.brief_current ? " · 新しい下書き保存後に判断できます" : ""}</p>
           <div className={styles.row}><label>判断<select name="decision"><option value="held">保留</option><option value="approved">承認</option><option value="rejected">却下</option></select></label><label>確認者<input name="reviewer" required minLength={2} /></label></div>
-          <label>判断理由<textarea name="reason" required minLength={5} /></label><button disabled={busy || !selected.brief_status}>判断を記録</button>
+          <label>判断理由<textarea name="reason" required minLength={5} /></label><button disabled={busy || !selected.brief_status || !selected.brief_current}>判断を記録</button>
         </form>
         {selectedReviewHistory.length > 0 && <details className={styles.evidence}><summary>判断履歴（直近{selectedReviewHistory.length}件）</summary><ol>{selectedReviewHistory.map((entry, index) => <li key={`${entry.reviewed_at}-${index}`}><div><b>{labels[entry.decision]}</b><span>{entry.reviewed_at.replace("T", " ").replace("+00:00", " UTC")} · {entry.reviewer}{entry.current_revision ? " · 現在の下書き" : " · 過去の下書き"}</span></div><p>{entry.reason}</p><small>原文 {entry.source_sha256.slice(0, 12)}…{entry.draft_validation_sha256 ? ` · 下書き ${entry.draft_validation_sha256.slice(0, 12)}…` : " · 旧履歴（下書き指紋なし）"}</small></li>)}</ol></details>}
       </article>}

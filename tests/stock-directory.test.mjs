@@ -351,6 +351,8 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(review, /失効した以前の下書き（参考・再利用不可）/);
   assert.match(review, /selected\.previous_brief/);
   assert.match(review, /編集フォームには転記していません/);
+  assert.match(review, /新しい下書き保存後に判断できます/);
+  assert.match(review, /!selected\.brief_status \|\| !selected\.brief_current/);
   assert.match(review, /selected\.sha256.*selected\.generated_at/);
   assert.match(review, /selected\?\.review_history \?\? \[\]/);
   assert.match(review, /annualRecord\?\.reviewHistory \?\? \[\]/);
