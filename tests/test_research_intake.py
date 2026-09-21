@@ -721,6 +721,16 @@ class IntakeTests(unittest.TestCase):
             "medium", {"summary": ["Capacity will increase in 2027."], "impact": ["Execution remains subject to demand."]},
         )
         self.assertEqual(m.snapshot(self.db)["briefs"], [])
+        self.db.execute(
+            "UPDATE briefs SET status='approved',reviewed_at=? WHERE url=?",
+            ("2026-09-21T00:00:00+00:00", URL),
+        )
+        self.db.commit()
+        self.assertEqual(m.snapshot(self.db)["briefs"], [])
+        self.db.execute(
+            "UPDATE briefs SET status='draft',reviewed_at=NULL WHERE url=?", (URL,)
+        )
+        self.db.commit()
         result = m.review_brief(self.db, URL, sha, "approved", "private-editor", "private-review-reason")
         self.assertFalse(result["published"])
         public = m.snapshot(self.db)["briefs"]
@@ -944,6 +954,19 @@ class IntakeTests(unittest.TestCase):
         self.assertIsNone(m.approved_annual_filing_brief(
             self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"]
         ))
+        self.db.execute("""
+          UPDATE annual_filing_briefs SET status='approved',reviewed_at=?
+          WHERE ticker=? AND accession_number=?
+        """, ("2026-09-21T00:00:00+00:00", "NVDA", payload["accessionNumber"]))
+        self.db.commit()
+        self.assertIsNone(m.approved_annual_filing_brief(
+            self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"]
+        ))
+        self.db.execute("""
+          UPDATE annual_filing_briefs SET status='draft',reviewed_at=NULL
+          WHERE ticker=? AND accession_number=?
+        """, ("NVDA", payload["accessionNumber"]))
+        self.db.commit()
         held = m.review_annual_filing_brief(
             self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
             "held", "first-editor", "追加確認が必要です",
@@ -966,6 +989,19 @@ class IntakeTests(unittest.TestCase):
         self.assertNotIn("reviewer", public)
         self.assertNotIn("reviewReason", public)
         self.assertNotIn("reviewHistory", public)
+        self.db.execute("""
+          UPDATE annual_filing_briefs SET summary_ja=?
+          WHERE ticker=? AND accession_number=?
+        """, ("保存後に改変された日本語要点です。", "NVDA", payload["accessionNumber"]))
+        self.db.commit()
+        self.assertIsNone(m.approved_annual_filing_brief(
+            self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"]
+        ))
+        self.db.execute("""
+          UPDATE annual_filing_briefs SET summary_ja=?
+          WHERE ticker=? AND accession_number=?
+        """, (payload["summaryJa"], "NVDA", payload["accessionNumber"]))
+        self.db.commit()
         self.assertIsNone(m.approved_annual_filing_brief(
             self.db, "NVDA", payload["accessionNumber"], "b" * 64
         ))

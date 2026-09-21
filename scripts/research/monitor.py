@@ -1064,6 +1064,12 @@ def snapshot(db):
             AND b.validation_sha256 IS NOT NULL
             AND s.error IS NULL AND s.extracted_chars>0
             AND b.reviewed_at IS NOT NULL
+            AND EXISTS (
+              SELECT 1 FROM brief_review_history h
+              WHERE h.url=b.url AND h.source_sha256=b.source_sha256
+                AND h.draft_validation_sha256=b.validation_sha256
+                AND h.decision='approved' AND h.reviewed_at=b.reviewed_at
+            )
           ORDER BY b.reviewed_at DESC
         """)]
         briefs = []
@@ -2130,15 +2136,31 @@ def annual_filing_brief_queue(db, limit=20):
 
 
 def approved_annual_filing_brief(db, ticker, accession, source_sha):
-    """Return only an approved exact revision and omit reviewer identity/reason."""
+    """Return only an intact revision with a matching append-only approval."""
     if (not _ANNUAL_TICKER.fullmatch(str(ticker))
             or not _ANNUAL_ACCESSION.fullmatch(str(accession))
             or not _ANNUAL_SHA.fullmatch(str(source_sha))):
         raise ValueError("invalid-annual-filing-identity")
     row = db.execute("""
-      SELECT * FROM annual_filing_briefs
-      WHERE ticker=? AND accession_number=? AND source_sha256=? AND status='approved'
+      SELECT b.* FROM annual_filing_briefs b
+      WHERE b.ticker=? AND b.accession_number=? AND b.source_sha256=?
+        AND b.status='approved' AND b.reviewed_at IS NOT NULL
+        AND b.validation_sha256 IS NOT NULL
+        AND EXISTS (
+          SELECT 1 FROM annual_filing_review_history h
+          WHERE h.ticker=b.ticker AND h.accession_number=b.accession_number
+            AND h.source_sha256=b.source_sha256
+            AND h.draft_validation_sha256=b.validation_sha256
+            AND h.decision='approved' AND h.reviewed_at=b.reviewed_at
+        )
     """, (ticker, accession, source_sha)).fetchone()
+    if row is None:
+        return None
+    try:
+        if row["validation_sha256"] != _annual_validation_sha(_annual_record_from_row(row)):
+            return None
+    except ValueError:
+        return None
     return _annual_row(row, private=False)
 
 
