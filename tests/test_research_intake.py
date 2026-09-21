@@ -544,6 +544,41 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual((content, content_type), (b"cached-index", "text/html"))
         self.assertEqual(opener.request.headers["If-none-match"], '"revision-1"')
 
+    def test_conditional_article_fetch_treats_cached_304_as_not_modified(self):
+        url = URL
+        m._FETCH_CACHE[url] = {
+            "content": b"cached article must not be re-extracted",
+            "content_type": "text/html",
+            "etag": None,
+            "last_modified": None,
+        }
+        original = m.build_opener
+
+        class NotModified:
+            def open(self, request, timeout):
+                self.request = request
+                raise HTTPError(
+                    request.full_url, 304, "Not Modified",
+                    {"ETag": '"persisted-revision-2"'}, None,
+                )
+
+        opener = NotModified()
+        m.build_opener = lambda *_: opener
+        try:
+            result = m.fetch(
+                url, "NBIS",
+                validators={"etag": '"persisted-revision-1"', "last_modified": None},
+                include_metadata=True,
+            )
+        finally:
+            m.build_opener = original
+            m._FETCH_CACHE.pop(url, None)
+        self.assertTrue(result["notModified"])
+        self.assertIsNone(result["content"])
+        self.assertIsNone(result["contentType"])
+        self.assertEqual(result["etag"], '"persisted-revision-2"')
+        self.assertEqual(opener.request.headers["If-none-match"], '"persisted-revision-1"')
+
     def test_persisted_validator_survives_restart_and_304_preserves_evidence(self):
         m.save_source_check(self.db, self.row(), {
             "sha256": "d" * 64, "contentType": "text/html", "contentBytes": 40,

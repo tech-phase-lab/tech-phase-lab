@@ -168,7 +168,11 @@ def fetch(url, ticker, validators=None, include_metadata=False):
     url = safe_url(url, ticker)
     with _FETCH_CACHE_LOCK:
         cached = _FETCH_CACHE.get(url)
-    conditional = cached or validators or {}
+    conditional = dict(validators or {})
+    if cached:
+        for key in ("etag", "last_modified"):
+            if cached.get(key):
+                conditional[key] = cached[key]
     headers = {
         "User-Agent": os.environ.get("RESEARCH_USER_AGENT", "TechPhaseResearch-SourceCheck/0.1"),
         "Accept": "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf",
@@ -192,14 +196,6 @@ def fetch(url, ticker, validators=None, include_metadata=False):
     try:
         response = build_opener(Redirects(ticker)).open(req, timeout=timeout)
     except HTTPError as exc:
-        if exc.code == 304 and cached:
-            if include_metadata:
-                return {
-                    "content": cached["content"], "contentType": cached["content_type"],
-                    "etag": cached.get("etag"), "lastModified": cached.get("last_modified"),
-                    "notModified": False,
-                }
-            return cached["content"], cached["content_type"]
         if exc.code == 304 and include_metadata and (etag or last_modified):
             error_headers = exc.headers or {}
             return {
@@ -208,6 +204,8 @@ def fetch(url, ticker, validators=None, include_metadata=False):
                 "lastModified": http_validator(error_headers.get("Last-Modified")) or last_modified,
                 "notModified": True,
             }
+        if exc.code == 304 and cached:
+            return cached["content"], cached["content_type"]
         raise
     with response:
         content_type = response.headers.get_content_type()
