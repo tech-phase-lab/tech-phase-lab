@@ -19,6 +19,7 @@ export type ReviewedBrief = {
   summary_ja: string; impact_label: "positive" | "negative" | "mixed" | "neutral" | "uncertain";
   impact_ja: string; confidence: "low" | "medium" | "high"; status: "approved";
   generation_method: "human" | "ai-assisted"; generated_at: string; reviewed_at: string;
+  evidence: { summary: { text: string; truncated: boolean }[]; impact: { text: string; truncated: boolean }[] };
 };
 export type IntakeSnapshot = {
   schemaVersion: number; generatedAt: string; sources: IntakeSource[];
@@ -99,6 +100,11 @@ export function snapshotIssues(data: IntakeSnapshot) {
         || !["human", "ai-assisted"].includes(brief.generation_method)) issues.push("invalid-brief-status");
     if (!brief.summary_ja || brief.summary_ja.length > 600 || !brief.impact_ja || brief.impact_ja.length > 900
         || !japanese.test(brief.summary_ja + brief.impact_ja) || /[\u0000-\u001f\u007f<>]/.test(brief.summary_ja + brief.impact_ja)) issues.push("invalid-brief-copy");
+    for (const field of [brief.evidence?.summary, brief.evidence?.impact]) {
+      if (!Array.isArray(field) || field.length < 1 || field.length > 2
+          || field.some(item => !item || typeof item.text !== "string" || !item.text || item.text.length > 320
+            || typeof item.truncated !== "boolean" || /[\u0000-\u001f\u007f]/.test(item.text))) issues.push("invalid-brief-evidence");
+    }
     const generated = Date.parse(brief.generated_at);
     const reviewed = Date.parse(brief.reviewed_at);
     if (!Number.isFinite(generated) || !Number.isFinite(reviewed) || reviewed < generated || reviewed > Date.parse(data.generatedAt)) issues.push("invalid-brief-time");

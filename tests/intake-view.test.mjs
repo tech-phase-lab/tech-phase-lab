@@ -69,12 +69,15 @@ test("reviewed briefs require current source identity, safe copy, status, and ti
     confidence: "medium", status: "approved",
     generation_method: "human",
     generated_at: snapshot.generatedAt, reviewed_at: snapshot.generatedAt,
+    evidence: { summary: [{ text: "Official fact.", truncated: false }], impact: [{ text: "Official condition.", truncated: false }] },
   };
   assert.deepEqual(snapshotIssues({ ...snapshot, briefs: [brief] }), []);
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, status: "draft" }] }).includes("invalid-brief-status"));
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, generation_method: "automatic" }] }).includes("invalid-brief-status"));
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, source_sha256: "f".repeat(64) }] }).includes("invalid-brief-source"));
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, summary_ja: "<script>危険</script>" }] }).includes("invalid-brief-copy"));
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, evidence: { summary: [], impact: brief.evidence.impact } }] }).includes("invalid-brief-evidence"));
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, evidence: { summary: [{ text: "x".repeat(321), truncated: true }], impact: brief.evidence.impact } }] }).includes("invalid-brief-evidence"));
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, reviewed_at: "2099-01-01T00:00:00Z" }] }).includes("invalid-brief-time"));
 });
 
@@ -87,6 +90,9 @@ test("operations preview renders only reviewed briefs with evidence and review m
   assert.match(intakeDashboard, /人間作成/);
   assert.match(intakeDashboard, /確信度/);
   assert.match(intakeDashboard, /原文識別値/);
+  assert.match(intakeDashboard, /照合した公式原文の抜粋/);
+  assert.match(intakeDashboard, /事実要約の根拠/);
+  assert.match(intakeDashboard, /影響判断の根拠/);
   assert.doesNotMatch(intakeDashboard, /brief\.reviewer|brief\.reviewReason/);
 });
 

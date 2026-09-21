@@ -1091,6 +1091,7 @@ def snapshot(db):
                 continue
             row.pop("validation_sha256")
             row.pop("extracted_text")
+            row["evidence"] = _public_brief_evidence(evidence)
             briefs.append(row)
     for row in sources + runs:
         row["error"] = public_error(row["error"])
@@ -1749,6 +1750,18 @@ def _brief_validation_sha(source_sha, summary_ja, impact_label, impact_ja, confi
         fields, ensure_ascii=False, sort_keys=True, separators=(",", ":")
     ).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
+
+
+def _public_brief_evidence(evidence, maximum_items=2, maximum_chars=320):
+    """Expose a small, source-verbatim prefix without leaking editorial metadata."""
+    result = {}
+    for field in ("summary", "impact"):
+        items = []
+        for excerpt in evidence.get(field, [])[:maximum_items]:
+            text = excerpt[:maximum_chars].rstrip()
+            items.append({"text": text, "truncated": len(text) < len(excerpt)})
+        result[field] = items
+    return result
 
 
 def save_brief_draft(db, url, expected_sha, summary_ja, impact_label, impact_ja, confidence, evidence):

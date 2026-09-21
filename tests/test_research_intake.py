@@ -728,7 +728,14 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(public[0]["status"], "approved")
         self.assertEqual(public[0]["generation_method"], "human")
         self.assertNotIn("private-", str(public))
-        self.assertNotIn("evidence", str(public))
+        self.assertEqual(public[0]["evidence"]["summary"], [{
+            "text": "Capacity will increase in 2027.", "truncated": False,
+        }])
+        self.assertEqual(public[0]["evidence"]["impact"], [{
+            "text": "Execution remains subject to demand.", "truncated": False,
+        }])
+        self.assertNotIn("reviewer", str(public))
+        self.assertNotIn("review_reason", str(public))
 
         editorial = m.private_brief_queue(self.db, 5)
         self.assertEqual(len(editorial["items"]), 1)
@@ -750,6 +757,19 @@ class IntakeTests(unittest.TestCase):
         )
         self.db.commit()
         self.assertEqual(m.snapshot(self.db)["briefs"], [])
+
+    def test_public_brief_evidence_is_bounded_and_marks_truncation(self):
+        result = m._public_brief_evidence({
+            "summary": ["A" * 400, "second", "not-public"],
+            "impact": ["B" * 12],
+        })
+        self.assertEqual(result["summary"], [
+            {"text": "A" * 320, "truncated": True},
+            {"text": "second", "truncated": False},
+        ])
+        self.assertEqual(result["impact"], [
+            {"text": "B" * 12, "truncated": False},
+        ])
 
     def test_brief_review_history_is_append_only_and_private(self):
         body = b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main>"
