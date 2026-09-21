@@ -22,6 +22,7 @@ function tradingViewSymbol(ticker: string, exchange: string) {
 function TradingViewEmbed({ kind, symbol, lang }: { kind: WidgetKind; symbol: string; lang: "ja" | "en" }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     const host = hostRef.current;
@@ -63,21 +64,24 @@ function TradingViewEmbed({ kind, symbol, lang }: { kind: WidgetKind; symbol: st
       support_host: "https://www.tradingview.com",
     });
     const observer = new MutationObserver(() => {
-      if (host.querySelector("iframe")) window.clearTimeout(timeout);
+      if (host.querySelector("iframe")) {
+        window.clearTimeout(timeout);
+        setFailed(false);
+      }
     });
     const timeout = window.setTimeout(() => {
       if (!host.querySelector("iframe")) setFailed(true);
-    }, 10_000);
+    }, 15_000);
     observer.observe(host, { childList: true, subtree: true });
     script.onerror = () => { window.clearTimeout(timeout); setFailed(true); };
     host.appendChild(script);
 
     return () => { observer.disconnect(); window.clearTimeout(timeout); host.replaceChildren(); };
-  }, [kind, lang, symbol]);
+  }, [attempt, kind, lang, symbol]);
 
   return <>
-    <div hidden={failed} className={`${styles.embed} ${polish.embed} ${kind === "chart" ? styles.chartEmbed : styles.compactEmbed}`} ref={hostRef} aria-label={`${symbol} TradingView ${kind}`} />
-    {failed && <div className={styles.error} role="status">{lang === "ja" ? "チャートを読み込めませんでした。TradingViewで直接確認できます。" : "The chart could not be loaded. You can open it directly on TradingView."}</div>}
+    <div className={`${styles.embed} ${polish.embed} ${kind === "chart" ? styles.chartEmbed : styles.compactEmbed}`} ref={hostRef} aria-label={`${symbol} TradingView ${kind}`} />
+    {failed && <div className={styles.error} role="status"><span>{lang === "ja" ? "株価表示の読み込みに時間がかかっています。" : "The market view is taking longer than expected to load."}</span><button type="button" onClick={() => { setFailed(false); setAttempt((current) => current + 1); }}>{lang === "ja" ? "再読み込み" : "Retry"}</button></div>}
   </>;
 }
 
