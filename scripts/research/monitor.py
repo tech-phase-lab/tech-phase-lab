@@ -1054,6 +1054,7 @@ def snapshot(db):
         """)]
         brief_rows = [dict(r) for r in db.execute("""
           SELECT b.url,s.ticker,s.title,s.published_on,e.detected_at,b.source_sha256,
+                 s.checked_at AS source_checked_at,
                  b.summary_ja,b.impact_label,b.impact_ja,b.confidence,b.status,
                  b.generated_at,b.reviewed_at,b.validation_sha256,s.extracted_text,
                  CASE WHEN b.generation_provider IS NULL THEN 'human'
@@ -1062,7 +1063,7 @@ def snapshot(db):
           LEFT JOIN release_events e ON e.url=b.url
           WHERE b.status='approved' AND b.source_sha256=s.sha256
             AND b.validation_sha256 IS NOT NULL
-            AND s.error IS NULL AND s.extracted_chars>0
+            AND s.error IS NULL AND s.extracted_chars>0 AND s.checked_at IS NOT NULL
             AND b.reviewed_at IS NOT NULL
             AND EXISTS (
               SELECT 1 FROM brief_review_history h

@@ -737,6 +737,7 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(len(public), 1)
         self.assertEqual(public[0]["status"], "approved")
         self.assertEqual(public[0]["generation_method"], "human")
+        self.assertEqual(public[0]["source_checked_at"], self.row()["checked_at"])
         self.assertNotIn("private-", str(public))
         self.assertEqual(public[0]["evidence"]["summary"], [{
             "text": "Capacity will increase in 2027.", "truncated": False,

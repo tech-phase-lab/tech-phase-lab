@@ -63,7 +63,7 @@ test("unsafe links, duplicate records and broken history references fail validat
 test("reviewed briefs require current source identity, safe copy, status, and timestamps", () => {
   const brief = {
     url: source.url, ticker: source.ticker, title: "Official release", published_on: null,
-    detected_at: null, source_sha256: source.sha256,
+    detected_at: null, source_sha256: source.sha256, source_checked_at: source.checked_at,
     summary_ja: "公式発表で確認できた事実を、根拠に沿って簡潔に説明します。",
     impact_label: "mixed", impact_ja: "好材料と未確認事項を分け、追加確認が必要な点を明示します。",
     confidence: "medium", status: "approved",
@@ -75,6 +75,7 @@ test("reviewed briefs require current source identity, safe copy, status, and ti
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, status: "draft" }] }).includes("invalid-brief-status"));
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, generation_method: "automatic" }] }).includes("invalid-brief-status"));
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, source_sha256: "f".repeat(64) }] }).includes("invalid-brief-source"));
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, source_checked_at: "2026-01-01T00:00:00Z" }] }).includes("invalid-brief-source"));
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, summary_ja: "<script>危険</script>" }] }).includes("invalid-brief-copy"));
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, evidence: { summary: [], impact: brief.evidence.impact } }] }).includes("invalid-brief-evidence"));
   assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, evidence: { summary: [{ text: "x".repeat(321), truncated: true }], impact: brief.evidence.impact } }] }).includes("invalid-brief-evidence"));
@@ -85,6 +86,7 @@ test("operations preview renders only reviewed briefs with evidence and review m
   assert.match(intakeDashboard, /人間確認済みの速報要約/);
   assert.match(intakeDashboard, /根拠となる公式原文/);
   assert.match(intakeDashboard, /編集確認（JST）/);
+  assert.match(intakeDashboard, /公式原文の最終確認（JST）/);
   assert.match(intakeDashboard, /下書き作成（JST）/);
   assert.match(intakeDashboard, /AI下書き＋人間確認/);
   assert.match(intakeDashboard, /人間作成/);
