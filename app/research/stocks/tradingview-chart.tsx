@@ -19,11 +19,10 @@ function tradingViewSymbol(ticker: string, exchange: string) {
   return market ? `${market}:${ticker}` : ticker;
 }
 
-function TradingViewEmbed({ kind, symbol, lang }: { kind: WidgetKind; symbol: string; lang: "ja" | "en" }) {
+function TradingViewEmbed({ kind, symbol, lang, attempt }: { kind: WidgetKind; symbol: string; lang: "ja" | "en"; attempt: number }) {
   const frameRef = useRef<HTMLIFrameElement>(null);
   const [height, setHeight] = useState(220);
-  const [failed, setFailed] = useState(false);
-  const [attempt, setAttempt] = useState(0);
+  const [failedAttempt, setFailedAttempt] = useState<number | null>(null);
 
   useEffect(() => {
     function receiveSize(event: MessageEvent) {
@@ -39,11 +38,10 @@ function TradingViewEmbed({ kind, symbol, lang }: { kind: WidgetKind; symbol: st
   const src = `/research/stocks/widget?${new URLSearchParams({ symbol, kind, lang, attempt: String(attempt) })}`;
 
   return <>
-    <div className={styles.chartHelp}><span>{lang === "ja" ? "表示が欠ける場合" : "Missing data?"}</span><button type="button" onClick={() => { setFailed(false); setAttempt((current) => current + 1); }}>{lang === "ja" ? (kind === "chart" ? "チャートを再読み込み" : "株価・指標を再読み込み") : "Reload market view"}</button></div>
     <div className={`${styles.embed} ${polish.embed} ${kind === "chart" ? styles.chartEmbed : styles.compactEmbed}`} style={kind === "compact" ? { height } : undefined}>
-      <iframe key={src} ref={frameRef} src={src} title={`${symbol} TradingView ${kind}`} className={styles.widgetFrame} onError={() => setFailed(true)} />
+      <iframe key={src} ref={frameRef} src={src} title={`${symbol} TradingView ${kind}`} className={styles.widgetFrame} onError={() => setFailedAttempt(attempt)} />
     </div>
-    {failed && <p className={styles.error} role="status">{lang === "ja" ? "表示を読み込めませんでした。上の再読み込みをお試しください。" : "Unable to load the market view. Please retry above."}</p>}
+    {failedAttempt === attempt && <p className={styles.error} role="status">{lang === "ja" ? "表示を読み込めませんでした。再読み込みボタンをお試しください。" : "Unable to load the market view. Please use the reload button."}</p>}
   </>;
 }
 
@@ -55,6 +53,7 @@ export function TradingViewChart({ ticker, exchange, lang }: { ticker: string; e
 function TradingViewPanels({ symbol, lang }: { symbol: string; lang: "ja" | "en" }) {
   const [view, setView] = useState<WidgetKind>("compact");
   const [chartOpened, setChartOpened] = useState(false);
+  const [attempts, setAttempts] = useState({ compact: 0, chart: 0 });
   const id = useId();
 
   return <section className={`${styles.market} ${polish.market}`} aria-labelledby="market-chart-title">
@@ -69,11 +68,14 @@ function TradingViewPanels({ symbol, lang }: { symbol: string; lang: "ja" | "en"
         give responsive widgets a zero-width container during tab switches. */}
     <div className={styles.panels}>
       <div id={`${id}-quote-panel`} role="tabpanel" aria-labelledby={`${id}-quote-tab`} className={styles.panel} data-active={view === "compact"} aria-hidden={view !== "compact"} inert={view !== "compact"}>
-        <TradingViewEmbed kind="compact" symbol={symbol} lang={lang} />
+        <TradingViewEmbed kind="compact" symbol={symbol} lang={lang} attempt={attempts.compact} />
       </div>
       <div id={`${id}-chart-panel`} role="tabpanel" aria-labelledby={`${id}-chart-tab`} className={styles.panel} data-active={view === "chart"} aria-hidden={view !== "chart"} inert={view !== "chart"}>
-        {chartOpened && <TradingViewEmbed kind="chart" symbol={symbol} lang={lang} />}
+        {chartOpened && <TradingViewEmbed kind="chart" symbol={symbol} lang={lang} attempt={attempts.chart} />}
       </div>
+    </div>
+    <div className={styles.reloadControl}>
+      <button type="button" onClick={() => setAttempts((current) => ({ ...current, [view]: current[view] + 1 }))}>{lang === "ja" ? (view === "chart" ? "チャートを再読み込み" : "株価・指標を再読み込み") : "Reload market view"}</button>
     </div>
     <div className={`${styles.note} ${polish.note}`}><p>{lang === "ja" ? "TradingViewの市場データです。遅延があるため、Tech Phaseの速報判定には使用しません。" : "Market data is provided by TradingView. Because it may be delayed, it is not used for Tech Phase alert decisions."}</p><a href={`https://www.tradingview.com/symbols/${symbol.replace(":", "-").replace(".", "-")}/`} target="_blank" rel="noreferrer">{lang === "ja" ? "TradingViewで確認 ↗" : "Open in TradingView ↗"}</a></div>
   </section>;

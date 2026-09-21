@@ -333,7 +333,13 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.doesNotMatch(widget, /createElement\("script"\)|replaceChildren/);
   assert.match(widget, /株価・指標を再読み込み/);
   assert.doesNotMatch(widget, /hidden=\{failed\}/);
-  assert.match(widget, /setAttempt\(\(current\) => current \+ 1\)/);
+  assert.match(widget, /setAttempts\(\(current\) => \(\{ \.\.\.current, \[view\]: current\[view\] \+ 1 \}\)\)/);
+  assert.match(widget, /attempt=\{attempts.compact\}/);
+  assert.match(widget, /attempt=\{attempts.chart\}/);
+  assert.doesNotMatch(widget, /表示が欠ける場合|Missing data\?/);
+  assert.equal((widget.match(/className=\{styles.reloadControl\}/g) ?? []).length, 1);
+  assert.match(chartStyles, /\.reloadControl\{grid-column:2;grid-row:2/);
+  assert.match(chartStyles, /@media\(max-width:650px\)\{[\s\S]*\.reloadControl\{grid-column:1 \/ -1;grid-row:4/);
   assert.doesNotMatch(widget, /無料ウィジェットによる参考表示/);
   assert.match(widget, /Tech Phaseの速報判定には使用しません/);
   assert.match(styles, /\.hero h1\{[^}]*font-weight:650/);
