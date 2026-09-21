@@ -36,6 +36,58 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(self.row()["status"], "approved")
         self.assertEqual(self.db.execute("SELECT count(*) FROM history").fetchone()[0], 2)
 
+    def test_wrapper_only_html_changes_do_not_invalidate_reviewed_evidence(self):
+        first = b'''<html data-build="one"><body><main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main><script>window.build=1</script></body></html>'''
+        second = b'''<html data-build="two"><body><main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main><script>window.build=2</script></body></html>'''
+        self.check(first)
+        stable_sha = self.row()["sha256"]
+        body_sha = self.row()["body_sha256"]
+        m.save_brief_draft(
+            self.db, URL, stable_sha,
+            "公式発表によると、AI向け容量を増加させる計画です。",
+            "mixed", "供給能力の拡大余地がありますが、実行と需要の確認が必要です。",
+            "medium", {
+                "summary": ["Capacity will increase."],
+                "impact": ["Execution remains subject to demand."],
+            },
+        )
+        m.review_brief(self.db, URL, stable_sha, "approved", "editor", "Evidence reviewed")
+
+        result = self.check(second)
+        current = self.row()
+        self.assertEqual(result["status"], "unchanged")
+        self.assertEqual(current["sha256"], stable_sha)
+        self.assertEqual(current["body_sha256"], body_sha)
+        self.assertNotEqual(current["raw_sha256"], stable_sha)
+        self.assertEqual(self.db.execute(
+            "SELECT status FROM briefs WHERE url=?", (URL,)
+        ).fetchone()[0], "approved")
+        self.assertEqual(len(m.snapshot(self.db)["briefs"]), 1)
+        self.assertEqual(
+            self.db.execute("SELECT count(*) FROM source_revisions").fetchone()[0], 1
+        )
+        self.assertEqual(
+            self.db.execute("SELECT count(*) FROM history WHERE kind='changed'").fetchone()[0], 0
+        )
+
+    def test_existing_evidence_hashes_are_backfilled_without_changing_identity(self):
+        self.check(b"<main><p>Persisted official evidence.</p></main>")
+        original_sha = self.row()["sha256"]
+        self.db.execute(
+            "UPDATE sources SET body_sha256=NULL,raw_sha256=NULL WHERE url=?", (URL,)
+        )
+        self.db.commit()
+        self.db.close()
+        self.db = m.connect(Path(self.temp.name) / "test.sqlite")
+        self.assertFalse(self.db.in_transaction)
+        row = self.row()
+        self.assertEqual(row["sha256"], original_sha)
+        self.assertEqual(row["raw_sha256"], original_sha)
+        self.assertEqual(
+            row["body_sha256"],
+            m.hashlib.sha256(row["extracted_text"].encode("utf-8")).hexdigest(),
+        )
+
     def test_change_requires_review_and_keeps_previous_decision(self):
         self.check()
         old = self.row()["sha256"]

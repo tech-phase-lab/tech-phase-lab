@@ -581,6 +581,8 @@ def connect(path):
         "content_bytes": "INTEGER",
         "extracted_text": "TEXT",
         "extracted_chars": "INTEGER NOT NULL DEFAULT 0",
+        "body_sha256": "TEXT",
+        "raw_sha256": "TEXT",
         "fetched_at": "TEXT",
         "fetch_failures": "INTEGER NOT NULL DEFAULT 0",
         "next_fetch_at": "TEXT",
@@ -591,6 +593,17 @@ def connect(path):
     for column, declaration in migrations.items():
         if column not in source_columns:
             db.execute(f"ALTER TABLE sources ADD COLUMN {column} {declaration}")
+    for source in db.execute("""
+      SELECT url,sha256,extracted_text FROM sources
+      WHERE sha256 IS NOT NULL AND extracted_text IS NOT NULL
+        AND (body_sha256 IS NULL OR raw_sha256 IS NULL)
+    """).fetchall():
+        body_sha = hashlib.sha256(source["extracted_text"].encode("utf-8")).hexdigest()
+        db.execute("""
+          UPDATE sources SET body_sha256=COALESCE(body_sha256,?),
+                             raw_sha256=COALESCE(raw_sha256,sha256)
+          WHERE url=?
+        """, (body_sha, source["url"]))
     brief_columns = {row[1] for row in db.execute("PRAGMA table_info(briefs)")}
     for column, declaration in {
         "validation_sha256": "TEXT",
@@ -628,6 +641,7 @@ def connect(path):
         db.execute(
             "ALTER TABLE annual_filing_review_history ADD COLUMN draft_validation_sha256 TEXT"
         )
+    db.commit()
     return db
 
 
@@ -1451,6 +1465,7 @@ def collect_source(row, transport=fetch):
     extracted = extract_text(content, content_type)
     return {
         "sha256": hashlib.sha256(content).hexdigest(),
+        "bodySha256": hashlib.sha256(extracted.encode("utf-8")).hexdigest(),
         "contentType": content_type,
         "contentBytes": len(content),
         "extractedText": extracted,
@@ -1470,7 +1485,12 @@ def save_source_check(db, row, result):
         not_modified = bool(result.get("notModified"))
         if not_modified and not current["sha256"]:
             raise ValueError("Not-modified response has no stored source body")
-        changed = False if not_modified else result["sha256"] != current["sha256"]
+        result_body_sha = None if not_modified else result.get("bodySha256")
+        if not not_modified and not result_body_sha:
+            result_body_sha = hashlib.sha256(
+                result["extractedText"].encode("utf-8")
+            ).hexdigest()
+        changed = False if not_modified else result_body_sha != current["body_sha256"]
         recheck_seconds = successful_recheck_seconds(
             db, row["url"], changed, bool(current["sha256"]), checked_at
         )
@@ -1480,7 +1500,7 @@ def save_source_check(db, row, result):
         if changed:
             db.execute(
                 "INSERT INTO history(url,at,kind,sha256,reason) VALUES(?,?,?,?,?)",
-                (row["url"], checked_at, "changed" if current["sha256"] else "first-fetch", result["sha256"], "Raw response changed; editorial correction not established"),
+                (row["url"], checked_at, "changed" if current["sha256"] else "first-fetch", result["sha256"], "Extracted evidence body changed; editorial correction not established"),
             )
             db.execute(
                 "UPDATE briefs SET status='stale',reviewed_at=NULL,reviewer=NULL,review_reason=NULL WHERE url=?",
@@ -1508,7 +1528,7 @@ def save_source_check(db, row, result):
                 checked_at, next_fetch_at, http_validator(result.get("responseEtag")),
                 http_validator(result.get("responseLastModified")), row["url"],
             ))
-        else:
+        elif changed:
             db.execute("""
               INSERT OR IGNORE INTO source_revisions(
                 url,sha256,observed_at,content_type,content_bytes,extracted_text,extracted_chars
@@ -1523,14 +1543,18 @@ def save_source_check(db, row, result):
                 ORDER BY observed_at DESC,rowid DESC LIMIT -1 OFFSET 12
               )
             """, (row["url"],))
+        if not not_modified:
             db.execute("""
           UPDATE sources
-          SET sha256=?,checked_at=?,fetched_at=COALESCE(fetched_at,?),error=NULL,status=?,
+          SET sha256=?,raw_sha256=?,body_sha256=?,checked_at=?,
+              fetched_at=COALESCE(fetched_at,?),error=NULL,status=?,
               content_type=?,content_bytes=?,extracted_text=?,extracted_chars=?,fetch_failures=0,
               next_fetch_at=?,response_etag=?,response_last_modified=?
           WHERE url=?
         """, (
-            result["sha256"], checked_at, checked_at, "pending" if changed else current["status"],
+            result["sha256"] if changed else current["sha256"], result["sha256"],
+            result_body_sha, checked_at, checked_at,
+            "pending" if changed else current["status"],
             result["contentType"], result["contentBytes"], result["extractedText"],
             result["extractedChars"], next_fetch_at, http_validator(result.get("responseEtag")),
             http_validator(result.get("responseLastModified")), row["url"],
