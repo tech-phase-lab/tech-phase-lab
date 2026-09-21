@@ -98,6 +98,17 @@ export function TradingViewChart({ ticker, exchange, lang }: { ticker: string; e
       <button type="button" role="tab" aria-selected={view === "chart"} onClick={() => setView("chart")}>{lang === "ja" ? "12か月チャート" : "12-month chart"}</button>
     </div>
     <TradingViewEmbed key={`${symbol}:${lang}:${view}`} kind={view} symbol={symbol} lang={lang} />
+    {view === "compact" && <section className={styles.companyEvents} aria-labelledby="company-events-title">
+      <div className={styles.eventsHeading}>
+        <p>COMPANY EVENTS</p>
+        <h3 id="company-events-title">{lang === "ja" ? "決算・配当" : "Earnings & dividends"}</h3>
+      </div>
+      <dl className={styles.eventList}>
+        <div><dt>{lang === "ja" ? "次回決算" : "Next earnings"}</dt><dd>{lang === "ja" ? "データ接続準備中" : "Data connection pending"}</dd></div>
+        <div><dt>{lang === "ja" ? "配当" : "Dividend"}</dt><dd>{lang === "ja" ? "データ接続準備中" : "Data connection pending"}</dd></div>
+      </dl>
+      <p className={styles.eventsNotice}>{lang === "ja" ? "商用表示権の確認後、許諾済みデータだけを表示します。" : "Licensed data will appear after commercial display rights are confirmed."}</p>
+    </section>}
     <div className={`${styles.note} ${polish.note}`}><p>{lang === "ja" ? "TradingViewの市場データです。遅延があるため、Tech Phaseの速報判定には使用しません。" : "Market data is provided by TradingView. Because it may be delayed, it is not used for Tech Phase alert decisions."}</p><a href={`https://www.tradingview.com/symbols/${symbol.replace(":", "-").replace(".", "-")}/`} target="_blank" rel="noreferrer">{lang === "ja" ? "TradingViewで確認 ↗" : "Open in TradingView ↗"}</a></div>
   </section>;
 }
