@@ -1129,6 +1129,27 @@ def private_brief_queue(db, limit=20):
       WHERE s.sha256 IS NOT NULL AND s.error IS NULL AND s.extracted_chars>0
     """).fetchone())
     counts = {key: int(value or 0) for key, value in counts.items()}
+    counts.update({"machine_ready": 0, "machine_blocked": 0})
+    preflight_candidates = db.execute("""
+      SELECT b.*,s.sha256 AS current_sha,s.error AS source_error,
+             s.extracted_text AS source_text
+      FROM briefs b JOIN sources s ON s.url=b.url
+      WHERE s.sha256 IS NOT NULL AND s.error IS NULL AND s.extracted_chars>0
+        AND b.status IN ('draft','stale','held','rejected')
+    """).fetchall()
+    evidence_by_url = {candidate["url"]: [] for candidate in preflight_candidates}
+    if evidence_by_url:
+        placeholders = ",".join("?" for _ in evidence_by_url)
+        for evidence_row in db.execute(f"""
+          SELECT url,field,excerpt FROM brief_evidence
+          WHERE url IN ({placeholders}) ORDER BY url,id
+        """, tuple(evidence_by_url)):
+            evidence_by_url[evidence_row["url"]].append(evidence_row)
+    for candidate in preflight_candidates:
+        result = _brief_preflight_result(
+            candidate, evidence_by_url[candidate["url"]], candidate["current_sha"]
+        )
+        counts["machine_ready" if result["ready"] else "machine_blocked"] += 1
     rows = [dict(row) for row in db.execute("""
       SELECT s.url,s.ticker,s.title,s.published_on,s.discovered_at,s.checked_at,s.sha256,
              s.extracted_text,s.extracted_chars,e.detected_at,
@@ -1185,20 +1206,9 @@ def private_brief_queue(db, limit=20):
             "confidence": row["confidence"],
             "validation_sha256": brief_validation_sha,
         }
-        try:
-            _validate_brief_for_review(preflight_row, evidence_rows, row["sha256"])
-            row["review_preflight"] = {
-                "ready": True,
-                "blockers": [],
-                "checks": [
-                    "source-revision-current", "source-fetch-successful",
-                    "evidence-and-numbers-valid", "draft-fingerprint-matched",
-                ],
-            }
-        except ValueError as exc:
-            row["review_preflight"] = {
-                "ready": False, "blockers": [str(exc)], "checks": [],
-            }
+        row["review_preflight"] = _brief_preflight_result(
+            preflight_row, evidence_rows, row["sha256"]
+        )
         row["review_history"] = [{
             "source_sha256": item["source_sha256"], "decision": item["decision"],
             "draft_validation_sha256": item["draft_validation_sha256"],
@@ -1814,6 +1824,22 @@ def _validate_brief_for_review(row, evidence_rows, expected_sha):
     if row["validation_sha256"] != validation_sha:
         raise ValueError("draft-fingerprint-mismatch")
     return validation_sha
+
+
+def _brief_preflight_result(row, evidence_rows, expected_sha):
+    """Return the private, read-only review gate result without changing state."""
+    try:
+        _validate_brief_for_review(row, evidence_rows, expected_sha)
+    except ValueError as exc:
+        return {"ready": False, "blockers": [str(exc)], "checks": []}
+    return {
+        "ready": True,
+        "blockers": [],
+        "checks": [
+            "source-revision-current", "source-fetch-successful",
+            "evidence-and-numbers-valid", "draft-fingerprint-matched",
+        ],
+    }
 
 
 def _public_brief_evidence(evidence, maximum_items=2, maximum_chars=320):

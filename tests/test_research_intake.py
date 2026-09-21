@@ -882,14 +882,26 @@ class IntakeTests(unittest.TestCase):
         m.review_brief(self.db, held_url, held_sha, "held", "editor", "Needs follow-up")
 
         prepare("https://nebius.com/newsroom/no-draft-release")
+        self.db.execute(
+            "UPDATE briefs SET validation_sha256=? WHERE url=?",
+            ("0" * 64, draft_url),
+        )
+        self.db.commit()
         queue = m.private_brief_queue(self.db, 2)
 
         self.assertEqual(queue["counts"], {
             "total": 4, "needs_draft": 1, "awaiting_review": 1, "stale": 0,
             "held": 1, "approved": 1, "rejected": 0,
+            "machine_ready": 1, "machine_blocked": 1,
         })
         self.assertEqual([item["brief_status"] for item in queue["items"]], ["draft", "held"])
         self.assertEqual([item["url"] for item in queue["items"]], [draft_url, held_url])
+        self.assertFalse(queue["items"][0]["review_preflight"]["ready"])
+        self.assertEqual(
+            queue["items"][0]["review_preflight"]["blockers"],
+            ["draft-fingerprint-mismatch"],
+        )
+        self.assertTrue(queue["items"][1]["review_preflight"]["ready"])
 
     def test_source_change_makes_approved_brief_stale_and_private_again(self):
         body = b"<main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main>"

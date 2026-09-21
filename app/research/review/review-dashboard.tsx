@@ -13,7 +13,7 @@ type ReviewHistory = {
 };
 type ReviewCounts = {
   total: number; needs_draft: number; awaiting_review: number; stale: number;
-  held: number; approved: number; rejected: number;
+  held: number; approved: number; rejected: number; machine_ready: number; machine_blocked: number;
 };
 type RevisionEvidence = {
   previous_sha256: string; previous_observed_at: string; current_sha256: string;
@@ -78,6 +78,7 @@ const riskCorpus = (risks: RiskSection | null) => [
 const emptyAnnualRisk = (): AnnualRiskDraft => ({ text: "", evidence: [""] });
 const emptyReviewCounts: ReviewCounts = {
   total: 0, needs_draft: 0, awaiting_review: 0, stale: 0, held: 0, approved: 0, rejected: 0,
+  machine_ready: 0, machine_blocked: 0,
 };
 
 function annualRiskDrafts(record: AnnualRecord | null): AnnualRiskDraft[] {
@@ -301,7 +302,7 @@ export default function ReviewDashboard() {
     <section className={styles.auth} aria-label="編集者認証"><label>編集用トークン<input type="password" autoComplete="off" value={token} onChange={event => setToken(event.target.value)} /></label><div className={styles.authActions}><button disabled={busy || token.length < 24} onClick={() => load()}>速報原文を読み込む</button><div className={styles.tickerLoad}><input aria-label="年次報告書のティッカー" value={annualTicker} maxLength={15} onChange={event => setAnnualTicker(event.target.value.toUpperCase())} /><button disabled={busy || token.length < 24} onClick={() => loadAnnual()}>年次報告書を開く</button></div></div><p aria-live="polite">{message}</p></section>
     {(items.length > 0 || annualSource) && <div className={styles.modeTabs} role="tablist" aria-label="レビュー対象"><button role="tab" aria-selected={mode === "news"} disabled={!items.length} onClick={() => setMode("news")}>速報レビュー</button><button role="tab" aria-selected={mode === "annual"} disabled={!annualSource} onClick={() => setMode("annual")}>年次報告書レビュー</button></div>}
     {mode === "news" && items.length > 0 && <div className={styles.workspace}>
-      <nav aria-label="確認する原文"><h2>速報レビューキュー</h2><div className={styles.annualMeta} aria-label="レビュー状況"><span>承認待ち {reviewCounts.awaiting_review}</span><span>原文更新 {reviewCounts.stale}</span><span>保留 {reviewCounts.held}</span><span>下書き未作成 {reviewCounts.needs_draft}</span><span>承認済み {reviewCounts.approved}</span></div>{items.map(item => <button key={item.url} aria-current={selected?.url === item.url} onClick={() => setSelectedUrl(item.url)}><b>{item.ticker}</b><span>{item.title || new URL(item.url).pathname.split("/").filter(Boolean).at(-1)}</span><small>{labels[item.brief_status ?? ""] ?? "下書きなし"}</small></button>)}</nav>
+      <nav aria-label="確認する原文"><h2>速報レビューキュー</h2><div className={styles.annualMeta} aria-label="レビュー状況"><span>機械検証通過 {reviewCounts.machine_ready}</span><span>要修正 {reviewCounts.machine_blocked}</span><span>承認待ち {reviewCounts.awaiting_review}</span><span>原文更新 {reviewCounts.stale}</span><span>保留 {reviewCounts.held}</span><span>下書き未作成 {reviewCounts.needs_draft}</span><span>承認済み {reviewCounts.approved}</span></div><p style={{ margin: "10px 0 12px", color: "#81968f", fontSize: 12, lineHeight: 1.55 }}>機械検証通過は、人間が内容を確認できる状態の件数です。承認済み・下書き未作成は含みません。</p>{items.map(item => <button key={item.url} aria-current={selected?.url === item.url} onClick={() => setSelectedUrl(item.url)}><b>{item.ticker}</b><span>{item.title || new URL(item.url).pathname.split("/").filter(Boolean).at(-1)}</span><small>{labels[item.brief_status ?? ""] ?? "下書きなし"}{item.brief_status && item.brief_status !== "approved" ? ` · ${item.review_preflight.ready ? "機械検証通過" : "要修正"}` : ""}</small></button>)}</nav>
       {selected && <article className={styles.editor}>
         <div className={styles.sourceHead}><div><p>{selected.ticker} · SHA {selected.sha256.slice(0, 12)}…</p><h2>{selected.title || "公式原文"}</h2></div><a href={selected.url} target="_blank" rel="noopener noreferrer">公式原文 ↗</a></div>
         {selected.brief_status === "stale" && !selected.brief_current && <aside className={styles.warning}><strong>原文が更新されました</strong><span>旧要約と旧根拠はフォームへ読み戻していません。現在の原文から下書きを作り直してください。</span></aside>}

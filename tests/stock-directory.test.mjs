@@ -391,6 +391,9 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(review, /年次報告書の下書きを保存/);
   assert.match(review, /速報レビューキュー/);
   assert.match(review, /reviewCounts\.awaiting_review/);
+  assert.match(review, /reviewCounts\.machine_ready/);
+  assert.match(review, /reviewCounts\.machine_blocked/);
+  assert.match(review, /機械検証通過は、人間が内容を確認できる状態の件数です/);
   assert.match(review, /対応優先順/);
   assert.match(review, /selected\.brief_status === "stale" && !selected\.brief_current/);
   assert.match(review, /旧要約と旧根拠はフォームへ読み戻していません/);
