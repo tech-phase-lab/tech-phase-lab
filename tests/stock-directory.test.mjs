@@ -254,8 +254,10 @@ test("annual-filing Japanese briefs preserve multiple separately cited risks", (
 });
 
 test("stock search UI separates free identity data from licensed prices and news", async () => {
-  const [page, widget, styles, polish, chartStyles, chartPolish, route, dashboard, review] = await Promise.all([
+  const [page, market, marketStyles, widget, styles, polish, chartStyles, chartPolish, route, dashboard, review] = await Promise.all([
     readFile(new URL("../app/research/stocks/stock-directory.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/research/stocks/market-workspace.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/research/stocks/market-workspace.module.css", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/tradingview-chart.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/stocks.module.css", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/stock-polish.module.css", import.meta.url), "utf8"),
@@ -266,12 +268,29 @@ test("stock search UI separates free identity data from licensed prices and news
     readFile(new URL("../app/research/review/review-dashboard.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(page, /SEC公式データ使用/);
-  assert.match(page, /遅延チャートを試験表示/);
+  assert.match(page, /メインメニュー/);
+  assert.match(page, /何が変わった？/);
+  assert.match(page, /独自株価画面を準備中/);
   assert.match(page, /ニュース権利と分離/);
+  assert.match(page, /MarketWorkspace/);
+  assert.match(market, /独自株価画面は準備済みです/);
+  assert.match(market, /未契約の数値や推定値は表示しません/);
+  assert.match(market, /データ接続待ち/);
+  assert.match(market, /チャートデータ未接続/);
+  assert.match(market, /価格フィード/);
+  assert.match(market, /外部通知/);
+  assert.match(market, /TradingViewの参考チャートを開く/);
+  assert.match(market, /referenceOpen && <TradingViewChart/);
+  assert.doesNotMatch(market, /api_key|secret_key|alpaca\.markets|twelvedata\.com/i);
+  assert.match(marketStyles, /grid-template-columns:minmax\(250px,.72fr\) minmax\(0,1.6fr\)/);
+  assert.match(marketStyles, /@media\(max-width:520px\)/);
   assert.match(widget, /TradingViewの市場データです。遅延があるため/);
   assert.match(widget, /Tech Phaseの速報判定には使用しません/);
   assert.match(page, /最新の重要提出書類/);
   assert.match(page, /どんな企業か — 年次報告書の原文/);
+  assert.match(page, /長い英語原文は証拠資料として収納しました/);
+  assert.match(page, /sourceDetails/);
+  assert.match(page, /必要なときだけ開く/);
   assert.match(page, /Tech Phaseによる日本語要約・評価ではありません/);
   assert.match(page, /20-F参照先を検証/);
   assert.match(page, /主要リスク — 年次報告書の原文/);
@@ -330,7 +349,12 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(route, /cache: "no-store"/);
   assert.match(route, /s-maxage=300, stale-while-revalidate=3600/);
   assert.match(dashboard, /\/research\/stocks/);
-  assert.match(dashboard, /無料で調べる。PROで変化を追う。/);
+  assert.match(dashboard, /ホーム \/ リサーチデスク/);
+  assert.match(dashboard, /何が変わった？/);
+  assert.match(dashboard, /米国株を探す/);
+  assert.match(dashboard, /Tech Phase PRO/);
+  assert.doesNotMatch(dashboard, /変化を追う/);
+  assert.match(dashboard, /無料で調べる。PROなら変化を見逃さない。/);
   assert.match(dashboard, /課金・会員公開は未開始/);
   assert.match(dashboard, /原文照合済みの日本語要点・影響分類/);
   assert.match(dashboard, /未承認の要約、契約未確認のニュースや価格は配信しません/);

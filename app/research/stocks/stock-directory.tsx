@@ -9,7 +9,7 @@ import base from "../research.module.css";
 import styles from "./stocks.module.css";
 import polish from "./stock-polish.module.css";
 import filingStyles from "./filings.module.css";
-import { TradingViewChart } from "./tradingview-chart";
+import { MarketWorkspace } from "./market-workspace";
 
 type SearchResponse = { ok: boolean; results?: StockDirectoryEntry[]; error?: string; source?: string; asOf?: string };
 type ProfileResponse = { ok: boolean; profile?: StockProfile; error?: string; profileSource?: string; asOf?: string };
@@ -173,6 +173,7 @@ export default function StockDirectory() {
     <a className={base.skip} href="#stock-search-main">{t("本文へ移動", "Skip to content")}</a>
     <header className={base.header}>
       <Link href="/research" className={base.brand} aria-label="Tech Phase Research"><span className={base.mark}>TP<span /></span><span>TECH PHASE<small>RESEARCH</small></span></Link>
+      <nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research">{t("ホーム", "Home")}</Link><Link href="/research#what-changed">{t("何が変わった？", "What changed?")}</Link><Link href="/research/stocks" aria-current="page">{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics">{t("決算・指標", "Financials")}</Link><Link className={base.proNav} href="/research#tech-phase-pro">Tech Phase PRO</Link></nav>
       <div className={base.headerRight}><span className={base.edition}>US STOCK DIRECTORY <span>PREVIEW</span></span><div className={base.languages} aria-label={t("言語", "Language")}><button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button><button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button></div></div>
     </header>
     <main id="stock-search-main" className={styles.main}>
@@ -182,7 +183,7 @@ export default function StockDirectory() {
         <h1><span className={polish.desktopTitle}>{t("米国株を、すぐ調べる。", "Find a U.S. stock in seconds.")}</span><span className={polish.mobileTitle}>{t("米国株リサーチ", "U.S. stock research")}</span></h1>
         <p>{t("ティッカーまたは企業名で検索。会社名、取引所、SEC識別番号、業種を一次情報から確認できます。", "Search by ticker or company name. Verify the company, exchange, SEC identifier, and industry from primary data.")}</p>
         <label className={styles.search}><span aria-hidden="true">⌕</span><input autoComplete="off" inputMode="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("例：NVDA、Micron、Palantir", "Try NVDA, Micron, or Palantir")} aria-label={t("米国株を検索", "Search U.S. stocks")} /><kbd>SEC</kbd></label>
-        <div className={styles.scope}><span>{t("無料の企業名簿", "Free company directory")}</span><span>{t("遅延チャートを試験表示", "Delayed chart preview")}</span><span>{t("ニュース権利と分離", "Separate from news licensing")}</span></div>
+        <div className={styles.scope}><span>{t("無料の企業名簿", "Free company directory")}</span><span>{t("独自株価画面を準備中", "Custom market view ready for data")}</span><span>{t("ニュース権利と分離", "Separate from news licensing")}</span></div>
       </section>
 
       <div className={`${styles.layout} ${polish.resultLayout}`}>
@@ -200,7 +201,7 @@ export default function StockDirectory() {
 
       {(profileLoading || profile) && <div ref={marketTarget} className={polish.marketTarget}>
         {profileLoading && <div className={polish.profileLoading} role="status"><span className={styles.loader} /><strong>{t("株価とSEC企業情報を確認中", "Loading price and SEC company data")}</strong></div>}
-        {profile && <TradingViewChart key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} lang={lang} />}
+        {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} />}
       </div>}
 
       {profile && <details className={polish.profileDetails}>
@@ -223,8 +224,14 @@ export default function StockDirectory() {
         </> : briefStatus === "loading" ? <div className={filingStyles.businessStatus}><span className={styles.loader} /><strong>{t("年次報告書と日本語要点を照合中", "Checking the annual filing against reviewed copy")}</strong></div> : <div className={filingStyles.briefGate}><strong>{briefStatus === "source-unavailable" ? t("原文を確認できないため日本語要点を停止しました", "Japanese copy is withheld because the source could not be verified") : t("日本語要点は編集確認待ちです", "The Japanese brief is awaiting editorial review")}</strong><p>{t("提出番号・原文SHA・根拠引用・数値を照合し、人間が承認した版だけを表示します。原文が更新された場合、以前の承認は自動的に無効になります。", "Only a human-approved version with matching accession, source SHA, evidence quotes, and numbers is shown. A source update automatically invalidates the prior approval.")}</p></div>}
       </section>}
 
-      {profile && <section className={filingStyles.business} aria-labelledby="business-section-title" aria-busy={businessLoading}>
-        <div className={styles.sectionHeading}><div><p>OFFICIAL BUSINESS DESCRIPTION</p><h2 id="business-section-title">{t("どんな企業か — 年次報告書の原文", "What the company does — annual filing source")}</h2></div>{business && <span>{business.form} · {business.filingDate}</span>}</div>
+      {profile && <section className={filingStyles.sourceArchive} aria-labelledby="source-archive-title">
+        <div><p>PRIMARY SOURCE ARCHIVE</p><h2 id="source-archive-title">{t("SEC英語原文", "SEC source documents")}</h2><p>{t("長い英語原文は証拠資料として収納しました。必要な部分だけ開いて確認できます。", "Long English excerpts are stored as supporting evidence. Open only the source section you need.")}</p></div>
+        <span>{t("必要なときだけ開く", "Open when needed")}</span>
+      </section>}
+
+      {profile && <details className={`${filingStyles.sourceDetails} ${filingStyles.businessSource}`} aria-labelledby="business-section-title">
+        <summary><span className={filingStyles.sourceNumber}>01</span><span className={filingStyles.sourceTitle}><small>OFFICIAL BUSINESS DESCRIPTION</small><strong id="business-section-title">{t("どんな企業か — 年次報告書の原文", "What the company does — annual filing source")}</strong></span><span className={filingStyles.sourceMeta}>{businessLoading ? t("確認中", "Loading") : business ? `${business.form} · ${business.filingDate}` : t("原文なし", "Unavailable")}</span></summary>
+        <div className={filingStyles.sourceBody} aria-busy={businessLoading}>
         {businessLoading ? <div className={filingStyles.businessStatus}><span className={styles.loader} /><strong>{t("SEC年次報告書の事業説明を確認中", "Extracting the business section from the SEC annual filing")}</strong></div> : business ? <>
           <div className={filingStyles.evidenceBar}><span>{t("一次情報から機械抽出", "Machine-extracted from primary source")}</span><span>{business.extractionMethod === "cross-referenced-overview" ? t("20-F参照先を検証", "Verified 20-F cross-reference") : t("様式見出しを検証", "Verified form heading")}</span><span>{business.heading}</span><span>{t("原文照合用SHA", "Source SHA")} {business.sourceSha256.slice(0, 12)}</span></div>
           <blockquote className={filingStyles.businessExcerpt}>{business.excerpt}</blockquote>
@@ -232,10 +239,12 @@ export default function StockDirectory() {
           <div className={filingStyles.businessActions}><a href={business.documentUrl} target="_blank" rel="noreferrer">{t("SEC原文で続きを確認 ↗", "Continue in the SEC filing ↗")}</a><a href={business.filingIndexUrl} target="_blank" rel="noreferrer">{t("添付資料一覧 ↗", "Filing index ↗")}</a></div>
           <p className={filingStyles.businessNote}>{business.extractionMethod === "cross-referenced-overview" ? t("この20-FはItem 4から年次報告書内の企業概要を参照しています。参照表ではなく、参照先で確認できた企業提出原文だけを表示しています。日本語要約・評価ではありません。", "This 20-F points from Item 4 to a company overview elsewhere in the annual report. Only the verified referenced source text is shown, not the cross-reference table. This is not a Tech Phase summary or rating.") : t("これは企業自身が提出した英語原文の抜粋です。Tech Phaseによる日本語要約・評価ではありません。見出し構造を判定できない書類は推測せず表示を止めます。", "This is an English excerpt filed by the company, not a Tech Phase summary or rating. If the filing structure cannot be verified, the excerpt is withheld rather than guessed.")}</p>
         </> : <div className={filingStyles.businessStatus}><strong>{businessUnavailable ? t("事業説明を安全に抽出できませんでした", "A business section could not be safely extracted") : t("対象の10-K／20-Fが見つかりません", "No eligible 10-K or 20-F was found")}</strong><p>{t("SEC原文へのリンクは下の提出書類一覧から確認できます。企業概要を推測で補完しません。", "The original filing remains available below. Tech Phase does not fill this gap with an inferred company description.")}</p></div>}
-      </section>}
+        </div>
+      </details>}
 
-      {profile && <section className={filingStyles.risks} aria-labelledby="risk-section-title" aria-busy={businessLoading}>
-        <div className={styles.sectionHeading}><div><p>OFFICIAL RISK FACTORS</p><h2 id="risk-section-title">{t("主要リスク — 年次報告書の原文", "Key risks — annual filing source")}</h2></div>{risks && <span>{risks.form} · {risks.filingDate}</span>}</div>
+      {profile && <details className={`${filingStyles.sourceDetails} ${filingStyles.riskSource}`} aria-labelledby="risk-section-title">
+        <summary><span className={filingStyles.sourceNumber}>02</span><span className={filingStyles.sourceTitle}><small>OFFICIAL RISK FACTORS</small><strong id="risk-section-title">{t("主要リスク — 年次報告書の原文", "Key risks — annual filing source")}</strong></span><span className={filingStyles.sourceMeta}>{businessLoading ? t("確認中", "Loading") : risks ? `${risks.form} · ${risks.filingDate}` : t("原文なし", "Unavailable")}</span></summary>
+        <div className={filingStyles.sourceBody} aria-busy={businessLoading}>
         {businessLoading ? <div className={filingStyles.businessStatus}><span className={styles.loader} /><strong>{t("SEC年次報告書のリスク項目を確認中", "Extracting risk factors from the SEC annual filing")}</strong></div> : risks ? <>
           <div className={filingStyles.riskEvidenceBar}><span>{t("一次情報から機械抽出", "Machine-extracted from primary source")}</span><span>{risks.extractionMethod === "cross-referenced-risk-factors" ? t("20-Fリスク参照先を検証", "Verified 20-F risk cross-reference") : t("リスク見出しを検証", "Verified risk heading")}</span><span>{risks.heading}</span><span>{t("原文照合用SHA", "Source SHA")} {risks.sourceSha256.slice(0, 12)}</span></div>
           {risks.overview && <div className={filingStyles.riskOverview}>
@@ -252,7 +261,8 @@ export default function StockDirectory() {
           <div className={filingStyles.businessActions}><a href={risks.documentUrl} target="_blank" rel="noreferrer">{t("SEC原文で続きを確認 ↗", "Continue in the SEC filing ↗")}</a><a href={risks.filingIndexUrl} target="_blank" rel="noreferrer">{t("添付資料一覧 ↗", "Filing index ↗")}</a></div>
           <p className={filingStyles.businessNote}>{risks.extractionMethod === "cross-referenced-risk-factors" ? t("この20-FはItem 3.Dから年次報告書内のリスク項目を参照しています。参照表ではなく、参照先で確認できた企業提出原文だけを表示しています。", "This 20-F points from Item 3.D to risk factors elsewhere in the annual report. Only the verified referenced source text is shown, not the cross-reference table.") : t("企業自身が提出したリスク項目の英語原文です。重要度順の並べ替えやTech Phaseによる投資判断ではありません。構造を検証できない書類は表示しません。", "This is the issuer-filed English risk section, not a Tech Phase ranking or investment judgment. The section is withheld when its filing structure cannot be verified.")}</p>
         </> : <div className={filingStyles.businessStatus}><strong>{risksUnavailable ? t("リスク項目を安全に抽出できませんでした", "Risk factors could not be safely extracted") : t("対象の年次報告書が見つかりません", "No eligible annual filing was found")}</strong><p>{t("SEC原文へのリンクは提出書類一覧から確認できます。リスクを推測で補完しません。", "The original filing remains available in the filing list. Tech Phase does not infer missing risk factors.")}</p></div>}
-      </section>}
+        </div>
+      </details>}
 
       {profile && <section className={filingStyles.filings} aria-labelledby="recent-filings-title">
         <div className={styles.sectionHeading}><div><p>RECENT SEC FILINGS</p><h2 id="recent-filings-title">{t("最新の重要提出書類", "Recent material filings")}</h2></div><span>{profile.recentFilings.length}{t("件", " filings")}</span></div>
@@ -265,7 +275,7 @@ export default function StockDirectory() {
         <p className={filingStyles.filingNote}>{t("SEC公式APIを1時間キャッシュして表示します。リアルタイム通知ではありません。", "Shown from the official SEC API with a one-hour source cache. This is not a real-time alert feed.")}</p>
       </section>}
 
-      <section className={styles.disclosure}><div><span>01</span><h2>{t("何が無料で使える？", "What is free?")}</h2><p>{t("SECの企業名簿と提出書類、TradingViewの遅延ウィジェット。一次情報と参考チャートを分けて表示します。", "SEC company and filing data plus a delayed TradingView widget. Primary sources and the reference chart remain distinct.")}</p></div><div><span>02</span><h2>{t("まだ何を出さない？", "What is not shown yet?")}</h2><p>{t("自社取得のリアルタイム株価、時間外価格、通信社ニュース。再配信権を確認するまで混ぜません。", "Tech Phase-sourced real-time prices, extended-hours quotes, and wire-service news remain separate until redistribution rights are confirmed.")}</p></div><div><span>03</span><h2>{t("次に何を追加する？", "What comes next?")}</h2><p>{t("企業概要、決算日、SEC提出、公式発表、Tech Phaseの重要変化を一つの銘柄ページへ統合します。", "Company overview, earnings dates, filings, official releases, and verified changes will converge on one company page.")}</p></div></section>
+      <section className={styles.disclosure}><div><span>01</span><h2>{t("何が無料で使える？", "What is free?")}</h2><p>{t("SECの企業名簿と提出書類、数値を捏造しないTech Phase株価画面、分離されたTradingView参考チャート。", "SEC company and filing data, a Tech Phase market view that never invents values, and a separate TradingView reference chart.")}</p></div><div><span>02</span><h2>{t("まだ何を出さない？", "What is not shown yet?")}</h2><p>{t("契約未確認のリアルタイム株価、時間外価格、通信社ニュース。表示権を確認するまで数値を出しません。", "Unlicensed real-time prices, extended-hours quotes, and wire-service news. Values remain withheld until display rights are confirmed.")}</p></div><div><span>03</span><h2>{t("次に何を追加する？", "What comes next?")}</h2><p>{t("承認済みの配信元を独自画面へ接続し、無料版は企業調査、PROは速報・変化追跡として明確に分けます。", "Connect an approved provider to the custom view, keeping company research in Free and timely change tracking in PRO.")}</p></div></section>
       <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("SECは名簿の正確性・網羅性を保証していません。検索結果は企業識別用で、売買推奨ではありません。", "The SEC does not guarantee directory accuracy or scope. Results identify issuers and are not investment recommendations.")}</p></footer>
     </main>
   </div>;
