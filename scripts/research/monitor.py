@@ -1,5 +1,6 @@
 """Official-source research intake. No scheduler, summarization, or publishing side effects."""
 import argparse
+import difflib
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 import hashlib
@@ -483,6 +484,13 @@ def connect(path):
     CREATE TABLE IF NOT EXISTS history (
       id INTEGER PRIMARY KEY, url TEXT NOT NULL REFERENCES sources(url),
       at TEXT NOT NULL, kind TEXT NOT NULL, sha256 TEXT, reviewer TEXT, reason TEXT);
+    CREATE TABLE IF NOT EXISTS source_revisions (
+      url TEXT NOT NULL REFERENCES sources(url), sha256 TEXT NOT NULL,
+      observed_at TEXT NOT NULL, content_type TEXT, content_bytes INTEGER,
+      extracted_text TEXT NOT NULL, extracted_chars INTEGER NOT NULL,
+      PRIMARY KEY(url,sha256));
+    CREATE INDEX IF NOT EXISTS source_revisions_url_observed
+      ON source_revisions(url,observed_at DESC);
     CREATE TABLE IF NOT EXISTS discovery_runs (
       id INTEGER PRIMARY KEY, ticker TEXT NOT NULL, at TEXT NOT NULL,
       status TEXT NOT NULL, candidates INTEGER NOT NULL, error TEXT);
@@ -1128,9 +1136,55 @@ def private_brief_queue(db, limit=20):
                 row[field] = None
             row["generation_source_truncated"] = 0
         text = row.pop("extracted_text") or ""
+        row["revision_evidence"] = source_revision_evidence(
+            db, row["url"], row["sha256"], text
+        )
         row["source_text"] = text[:80_000]
         row["source_text_truncated"] = len(text) > 80_000
     return {"generatedAt": now(), "counts": counts, "items": rows}
+
+
+def _machine_diff(previous_text, current_text, maximum=6_000):
+    """Return a bounded word-level preview; it makes no semantic correction claim."""
+    previous_all, current_all = previous_text.split(), current_text.split()
+    input_truncated = len(previous_all) > 12_000 or len(current_all) > 12_000
+    previous_words, current_words = previous_all[:12_000], current_all[:12_000]
+    matcher = difflib.SequenceMatcher(None, previous_words, current_words)
+    lines = []
+    for tag, old_start, old_end, new_start, new_end in matcher.get_opcodes():
+        if tag == "equal":
+            continue
+        if old_start != old_end:
+            lines.append("- " + " ".join(
+                previous_words[max(0, old_start - 10):min(len(previous_words), old_end + 10)]
+            ))
+        if new_start != new_end:
+            lines.append("+ " + " ".join(
+                current_words[max(0, new_start - 10):min(len(current_words), new_end + 10)]
+            ))
+        if sum(len(line) + 1 for line in lines) >= maximum:
+            break
+    preview = "\n".join(lines)
+    return preview[:maximum], input_truncated or len(preview) > maximum
+
+
+def source_revision_evidence(db, url, current_sha, current_text):
+    """Build private revision evidence from retained official-source text."""
+    previous = db.execute("""
+      SELECT sha256,observed_at,extracted_text FROM source_revisions
+      WHERE url=? AND sha256<>? ORDER BY observed_at DESC,rowid DESC LIMIT 1
+    """, (url, current_sha)).fetchone()
+    if not previous:
+        return None
+    preview, truncated = _machine_diff(previous["extracted_text"], current_text)
+    return {
+        "previous_sha256": previous["sha256"],
+        "previous_observed_at": previous["observed_at"],
+        "current_sha256": current_sha,
+        "diff_preview": preview,
+        "truncated": truncated,
+        "method": "word-diff",
+    }
 
 
 def queue_generation_job(db, url, reserved_tokens=0):
@@ -1432,6 +1486,17 @@ def save_source_check(db, row, result):
                 "UPDATE briefs SET status='stale',reviewed_at=NULL,reviewer=NULL,review_reason=NULL WHERE url=?",
                 (row["url"],),
             )
+        if current["sha256"] and current["extracted_text"]:
+            db.execute("""
+              INSERT OR IGNORE INTO source_revisions(
+                url,sha256,observed_at,content_type,content_bytes,extracted_text,extracted_chars
+              ) VALUES(?,?,?,?,?,?,?)
+            """, (
+                row["url"], current["sha256"],
+                current["checked_at"] or current["fetched_at"] or checked_at,
+                current["content_type"], current["content_bytes"],
+                current["extracted_text"], current["extracted_chars"],
+            ))
         if not_modified:
             db.execute("""
               UPDATE sources
@@ -1444,6 +1509,20 @@ def save_source_check(db, row, result):
                 http_validator(result.get("responseLastModified")), row["url"],
             ))
         else:
+            db.execute("""
+              INSERT OR IGNORE INTO source_revisions(
+                url,sha256,observed_at,content_type,content_bytes,extracted_text,extracted_chars
+              ) VALUES(?,?,?,?,?,?,?)
+            """, (
+                row["url"], result["sha256"], checked_at, result["contentType"],
+                result["contentBytes"], result["extractedText"], result["extractedChars"],
+            ))
+            db.execute("""
+              DELETE FROM source_revisions WHERE rowid IN (
+                SELECT rowid FROM source_revisions WHERE url=?
+                ORDER BY observed_at DESC,rowid DESC LIMIT -1 OFFSET 12
+              )
+            """, (row["url"],))
             db.execute("""
           UPDATE sources
           SET sha256=?,checked_at=?,fetched_at=COALESCE(fetched_at,?),error=NULL,status=?,

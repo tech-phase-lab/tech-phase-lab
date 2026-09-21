@@ -15,10 +15,14 @@ type ReviewCounts = {
   total: number; needs_draft: number; awaiting_review: number; stale: number;
   held: number; approved: number; rejected: number;
 };
+type RevisionEvidence = {
+  previous_sha256: string; previous_observed_at: string; current_sha256: string;
+  diff_preview: string; truncated: boolean; method: "word-diff";
+};
 type ReviewItem = {
   url: string; ticker: string; title: string | null; published_on: string | null; discovered_at: string;
   checked_at: string; sha256: string; source_text: string; source_text_truncated: boolean;
-  brief_current: boolean; review_history?: ReviewHistory[];
+  brief_current: boolean; review_history?: ReviewHistory[]; revision_evidence?: RevisionEvidence | null;
   summary_ja: string | null; impact_label: string | null; impact_ja: string | null; confidence: string | null;
   brief_status: string | null; generated_at: string | null; reviewed_at: string | null; evidence: Evidence;
   generation_provider: string | null; generation_model: string | null; generation_response_id: string | null;
@@ -287,6 +291,7 @@ export default function ReviewDashboard() {
       {selected && <article className={styles.editor}>
         <div className={styles.sourceHead}><div><p>{selected.ticker} · SHA {selected.sha256.slice(0, 12)}…</p><h2>{selected.title || "公式原文"}</h2></div><a href={selected.url} target="_blank" rel="noopener noreferrer">公式原文 ↗</a></div>
         {selected.brief_status === "stale" && !selected.brief_current && <aside className={styles.warning}><strong>原文が更新されました</strong><span>旧要約と旧根拠はフォームへ読み戻していません。現在の原文から下書きを作り直してください。</span></aside>}
+        {selected.revision_evidence && <details open className={`${styles.evidence} ${styles.revisionDiff}`}><summary>前回取得版からの機械差分</summary><div className={styles.diffMeta}><span>旧 {selected.revision_evidence.previous_sha256.slice(0, 12)}…</span><span>現 {selected.revision_evidence.current_sha256.slice(0, 12)}…</span></div>{selected.revision_evidence.diff_preview ? <pre>{selected.revision_evidence.diff_preview}</pre> : <p>本文の文字列差分は検出されませんでした。HTMLなど本文外の応答が変わった可能性があります。</p>}<p>文字列の機械比較です。訂正理由や意味、重要度は自動判定していません。公式原文を確認してください。{selected.revision_evidence.truncated ? " 差分表示は6,000文字で打ち切っています。" : ""}</p></details>}
         <details open className={styles.evidence}><summary>取得した原文証拠（{selected.source_text.length.toLocaleString("ja-JP")}文字）</summary><pre>{selected.source_text}</pre>{selected.source_text_truncated && <p>画面表示は80,000文字で打ち切っています。承認前に公式原文も確認してください。</p>}</details>
         <section className={styles.form}><div><h2>AIによる根拠付き下書き</h2><p>設定済みの場合だけ1件生成します。現在の原文・完全一致する根拠抜粋・数値照合を通過しない限り保存されません。</p>{selected.generation_job_status && <small>自動処理：{jobLabels[selected.generation_job_status] ?? selected.generation_job_status} · 試行 {selected.generation_job_attempts ?? 0}回{selected.generation_job_error ? ` · ${selected.generation_job_error}` : ""}</small>}{selected.generation_model && <small>生成記録：{selected.generation_provider} · {selected.generation_model}{selected.generation_total_tokens != null ? ` · ${selected.generation_total_tokens.toLocaleString("ja-JP")} tokens` : " · 使用量未取得"}{selected.generation_source_truncated ? " · 入力上限のため原文を短縮" : ""}</small>}</div><button type="button" disabled={busy} onClick={generateDraft}>AI下書きを生成</button></section>
         <form key={`${selected.url}-draft-${selected.sha256}-${selected.generated_at}`} onSubmit={submitDraft} className={styles.form}><h2>日本語速報の下書き</h2>

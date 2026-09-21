@@ -73,6 +73,47 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(public["extracted_chars"], row["extracted_chars"])
         self.assertNotIn("extracted_text", public)
 
+    def test_source_revisions_are_retained_for_private_machine_diff_only(self):
+        first = b"<main><p>Capacity will increase to 100 units in 2027.</p></main>"
+        second = b"<main><p>Capacity will increase to 120 units in 2027.</p></main>"
+        self.check(first)
+        old_sha = self.row()["sha256"]
+        self.check(first)
+        self.assertEqual(
+            self.db.execute("SELECT count(*) FROM source_revisions").fetchone()[0], 1
+        )
+
+        self.check(second)
+        current_sha = self.row()["sha256"]
+        revisions = self.db.execute(
+            "SELECT sha256,extracted_text FROM source_revisions ORDER BY observed_at"
+        ).fetchall()
+        self.assertEqual([item["sha256"] for item in revisions], [old_sha, current_sha])
+        self.assertIn("100 units", revisions[0]["extracted_text"])
+        self.assertIn("120 units", revisions[1]["extracted_text"])
+
+        private = m.private_brief_queue(self.db, 5)["items"][0]["revision_evidence"]
+        self.assertEqual(private["previous_sha256"], old_sha)
+        self.assertEqual(private["current_sha256"], current_sha)
+        self.assertIn("- Capacity will increase to 100 units", private["diff_preview"])
+        self.assertIn("+ Capacity will increase to 120 units", private["diff_preview"])
+        public = json.dumps(m.snapshot(self.db), ensure_ascii=False)
+        self.assertNotIn("revision_evidence", public)
+        self.assertNotIn("100 units", public)
+
+    def test_source_revision_retention_is_bounded_per_article(self):
+        for revision in range(15):
+            self.check(
+                f"<main><p>Official article revision {revision}.</p></main>".encode()
+            )
+        revisions = self.db.execute(
+            "SELECT extracted_text FROM source_revisions WHERE url=? ORDER BY rowid",
+            (URL,),
+        ).fetchall()
+        self.assertEqual(len(revisions), 12)
+        self.assertNotIn("revision 0.", " ".join(row[0] for row in revisions))
+        self.assertIn("revision 14.", revisions[-1][0])
+
     def test_snapshot_exposes_only_approved_brief_for_current_healthy_source(self):
         body = b'''<html><body><main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main></body></html>'''
         self.check(body)
@@ -399,6 +440,9 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(after["extracted_text"], "Persisted official evidence.")
         self.assertEqual(after["fetched_at"], original_fetch_time)
         self.assertEqual(self.db.execute("SELECT count(*) FROM history").fetchone()[0], original_history)
+        self.assertEqual(
+            self.db.execute("SELECT count(*) FROM source_revisions").fetchone()[0], 1
+        )
         public = m.snapshot(self.db)["sources"][0]
         self.assertNotIn("response_etag", public)
         self.assertNotIn("response_last_modified", public)

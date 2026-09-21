@@ -10,7 +10,7 @@ import sqlite3
 
 
 REQUIRED_TABLES = {
-    "sources", "history", "discovery_runs", "release_events", "briefs",
+    "sources", "history", "source_revisions", "discovery_runs", "release_events", "briefs",
     "brief_evidence", "brief_generation_jobs", "brief_generation_attempts",
 }
 
