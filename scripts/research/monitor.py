@@ -24,6 +24,8 @@ INDEXES = {t: p.get("monitorUrl", p["indexUrl"]) for t, p in PROVIDERS.items()}
 HOSTS = {t: set(p["allowedHosts"]) for t, p in PROVIDERS.items()}
 MAX_BYTES = 12 * 1024 * 1024
 MAX_EXTRACTED_CHARS = 160_000
+FETCH_CACHE_MAX_ENTRIES = 64
+FETCH_CACHE_MAX_BYTES = 24 * 1024 * 1024
 _FETCH_CACHE = {}
 _FETCH_CACHE_LOCK = threading.Lock()
 
@@ -116,6 +118,30 @@ def http_validator(value):
     return value
 
 
+def cached_fetch(url):
+    """Return and refresh a bounded discovery-response cache entry."""
+    with _FETCH_CACHE_LOCK:
+        cached = _FETCH_CACHE.pop(url, None)
+        if cached is not None:
+            _FETCH_CACHE[url] = cached
+        return cached
+
+
+def remember_fetch(url, cached):
+    """Keep discovery bodies for 304 reuse without unbounded process memory growth."""
+    with _FETCH_CACHE_LOCK:
+        _FETCH_CACHE.pop(url, None)
+        _FETCH_CACHE[url] = cached
+        cached_bytes = sum(len(item.get("content", b"")) for item in _FETCH_CACHE.values())
+        while _FETCH_CACHE and (
+            len(_FETCH_CACHE) > FETCH_CACHE_MAX_ENTRIES
+            or cached_bytes > FETCH_CACHE_MAX_BYTES
+        ):
+            oldest_url = next(iter(_FETCH_CACHE))
+            removed = _FETCH_CACHE.pop(oldest_url)
+            cached_bytes -= len(removed.get("content", b""))
+
+
 def source_error_code(exc):
     """Reduce transport failures to bounded operational codes without leaking URLs."""
     if isinstance(exc, HTTPError) and 400 <= exc.code <= 599:
@@ -166,8 +192,7 @@ def retry_after_seconds(exc, reference=None):
 
 def fetch(url, ticker, validators=None, include_metadata=False):
     url = safe_url(url, ticker)
-    with _FETCH_CACHE_LOCK:
-        cached = _FETCH_CACHE.get(url)
+    cached = cached_fetch(url)
     conditional = dict(validators or {})
     if cached:
         for key in ("etag", "last_modified"):
@@ -222,13 +247,13 @@ def fetch(url, ticker, validators=None, include_metadata=False):
                 raise ValueError("Source returned an error or verification page")
         response_etag = http_validator(response.headers.get("ETag"))
         response_last_modified = http_validator(response.headers.get("Last-Modified"))
-        with _FETCH_CACHE_LOCK:
-            _FETCH_CACHE[url] = {
+        if not include_metadata:
+            remember_fetch(url, {
                 "content": content,
                 "content_type": content_type,
                 "etag": response_etag,
                 "last_modified": response_last_modified,
-            }
+            })
         if include_metadata:
             return {
                 "content": content, "contentType": content_type,

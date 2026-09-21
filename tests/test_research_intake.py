@@ -579,6 +579,69 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(result["etag"], '"persisted-revision-2"')
         self.assertEqual(opener.request.headers["If-none-match"], '"persisted-revision-1"')
 
+    def test_article_fetch_does_not_retain_full_body_in_process_cache(self):
+        from email.message import Message
+
+        original = m.build_opener
+
+        class Response:
+            def __init__(self):
+                self.headers = Message()
+                self.headers["Content-Type"] = "text/html; charset=utf-8"
+                self.headers["ETag"] = '"article-revision-3"'
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args):
+                return False
+
+            def read(self, _limit):
+                return b"<main>Official article body</main>"
+
+        class Opener:
+            def open(self, _request, timeout):
+                self.timeout = timeout
+                return Response()
+
+        opener = Opener()
+        m._FETCH_CACHE.pop(URL, None)
+        m.build_opener = lambda *_: opener
+        try:
+            result = m.fetch(URL, "NBIS", include_metadata=True)
+        finally:
+            m.build_opener = original
+        self.assertFalse(result["notModified"])
+        self.assertEqual(result["etag"], '"article-revision-3"')
+        self.assertNotIn(URL, m._FETCH_CACHE)
+
+    def test_discovery_cache_is_bounded_by_count_and_bytes(self):
+        original_entries = m.FETCH_CACHE_MAX_ENTRIES
+        original_bytes = m.FETCH_CACHE_MAX_BYTES
+        with m._FETCH_CACHE_LOCK:
+            original_cache = dict(m._FETCH_CACHE)
+            m._FETCH_CACHE.clear()
+        m.FETCH_CACHE_MAX_ENTRIES = 2
+        m.FETCH_CACHE_MAX_BYTES = 7
+        try:
+            for suffix, body in (("a", b"111"), ("b", b"222"), ("c", b"333")):
+                m.remember_fetch(suffix, {
+                    "content": body, "content_type": "text/html",
+                    "etag": None, "last_modified": None,
+                })
+            self.assertEqual(list(m._FETCH_CACHE), ["b", "c"])
+            m.remember_fetch("d", {
+                "content": b"44444", "content_type": "text/html",
+                "etag": None, "last_modified": None,
+            })
+            self.assertEqual(list(m._FETCH_CACHE), ["d"])
+        finally:
+            m.FETCH_CACHE_MAX_ENTRIES = original_entries
+            m.FETCH_CACHE_MAX_BYTES = original_bytes
+            with m._FETCH_CACHE_LOCK:
+                m._FETCH_CACHE.clear()
+                m._FETCH_CACHE.update(original_cache)
+
     def test_persisted_validator_survives_restart_and_304_preserves_evidence(self):
         m.save_source_check(self.db, self.row(), {
             "sha256": "d" * 64, "contentType": "text/html", "contentBytes": 40,
