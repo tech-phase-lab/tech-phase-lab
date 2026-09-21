@@ -254,7 +254,7 @@ test("annual-filing Japanese briefs preserve multiple separately cited risks", (
 });
 
 test("stock search UI separates free identity data from licensed prices and news", async () => {
-  const [page, market, marketStyles, widget, styles, polish, chartStyles, chartPolish, route, dashboard, review, home, lab] = await Promise.all([
+  const [page, market, marketStyles, widget, styles, polish, chartStyles, chartPolish, route, dashboard, review, researchStyles, home, lab] = await Promise.all([
     readFile(new URL("../app/research/stocks/stock-directory.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/market-workspace.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/market-workspace.module.css", import.meta.url), "utf8"),
@@ -266,6 +266,7 @@ test("stock search UI separates free identity data from licensed prices and news
     readFile(new URL("../app/api/research/stocks/route.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/research/research-dashboard.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/review/review-dashboard.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/research/research.module.css", import.meta.url), "utf8"),
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/lab/page.tsx", import.meta.url), "utf8"),
   ]);
@@ -355,7 +356,15 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(route, /cache: "no-store"/);
   assert.match(route, /s-maxage=300, stale-while-revalidate=3600/);
   assert.match(dashboard, /\/research\/stocks/);
+  assert.match(dashboard, /\/lab/);
   assert.match(dashboard, /ホーム \/ リサーチデスク/);
+  assert.match(dashboard, /サイドメニュー/);
+  assert.match(dashboard, /検証済み銘柄/);
+  assert.match(dashboard, /根拠照合済みのレポートがある銘柄だけ/);
+  assert.match(dashboard, /coveredCompanies/);
+  assert.match(researchStyles, /\.primaryNav \{\s*display:none/);
+  assert.match(researchStyles, /@media\(max-width:760px\)[\s\S]*\.primaryNav \{\s*display:flex/);
+  assert.match(researchStyles, /\.sideMenu \{/);
   assert.match(dashboard, /何が変わった？/);
   assert.match(dashboard, /米国株を探す/);
   assert.match(dashboard, /Tech Phase PRO/);
