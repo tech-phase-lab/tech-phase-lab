@@ -1949,7 +1949,7 @@ def save_brief_draft(db, url, expected_sha, summary_ja, impact_label, impact_ja,
     return {"url": url, "status": "draft", "generatedAt": generated_at, "published": False}
 
 
-def review_brief(db, url, expected_sha, decision, reviewer, reason, expected_validation_sha=None):
+def review_brief(db, url, expected_sha, decision, reviewer, reason, expected_validation_sha):
     """Record the mandatory human decision for the current source revision."""
     if decision not in {"approved", "held", "rejected"}:
         raise ValueError("Decision, reviewer, and reason are required")
@@ -1964,10 +1964,9 @@ def review_brief(db, url, expected_sha, decision, reviewer, reason, expected_val
         evidence_rows = db.execute(
             "SELECT field,excerpt FROM brief_evidence WHERE url=? ORDER BY id", (url,)
         ).fetchall()
-        if expected_validation_sha is not None:
-            if (not _ANNUAL_SHA.fullmatch(str(expected_validation_sha)) or not row
-                    or row["validation_sha256"] != expected_validation_sha):
-                raise ValueError("draft-revision-mismatch")
+        if (not _ANNUAL_SHA.fullmatch(str(expected_validation_sha)) or not row
+                or row["validation_sha256"] != expected_validation_sha):
+            raise ValueError("draft-revision-mismatch")
         try:
             _validate_brief_for_review(row, evidence_rows, expected_sha)
         except ValueError as exc:
@@ -2207,7 +2206,7 @@ def save_annual_filing_brief_draft(db, payload):
 
 def review_annual_filing_brief(
         db, ticker, accession, expected_sha, decision, reviewer, reason,
-        expected_validation_sha=None, source_business=None, source_risks=None):
+        expected_validation_sha, source_business, source_risks):
     """Record a human decision for one exact annual filing revision."""
     if not _ANNUAL_TICKER.fullmatch(str(ticker)) or not _ANNUAL_ACCESSION.fullmatch(str(accession)):
         raise ValueError("invalid-annual-filing-identity")
@@ -2226,13 +2225,11 @@ def review_annual_filing_brief(
         """, (ticker, accession)).fetchone()
         if not row or row["source_sha256"] != expected_sha:
             raise ValueError("annual-draft-missing-or-source-changed")
-        if expected_validation_sha is not None:
-            if (not _ANNUAL_SHA.fullmatch(str(expected_validation_sha))
-                    or row["validation_sha256"] != expected_validation_sha):
-                raise ValueError("annual-draft-revision-mismatch")
+        if (not _ANNUAL_SHA.fullmatch(str(expected_validation_sha))
+                or row["validation_sha256"] != expected_validation_sha):
+            raise ValueError("annual-draft-revision-mismatch")
         record = _annual_record_from_row(row)
-        if source_business is not None or source_risks is not None:
-            record = _validate_annual_review_sources(record, source_business, source_risks)
+        record = _validate_annual_review_sources(record, source_business, source_risks)
         if not row["validation_sha256"] or row["validation_sha256"] != _annual_validation_sha(record):
             raise ValueError("annual-draft-evidence-invalid")
         db.execute("""

@@ -29,6 +29,39 @@ class IntakeTests(unittest.TestCase):
     def check(self, body=b"first"):
         return m.check_source(self.db, self.row(), lambda *_: (body, "text/html"))
 
+    def review_brief(self, url, source_sha, decision, reviewer, reason,
+                     validation_sha=None):
+        if validation_sha is None:
+            row = self.db.execute(
+                "SELECT validation_sha256 FROM briefs WHERE url=?", (url,)
+            ).fetchone()
+            validation_sha = row["validation_sha256"] if row else None
+        return m.review_brief(
+            self.db, url, source_sha, decision, reviewer, reason, validation_sha
+        )
+
+    def review_annual_brief(self, ticker, accession, source_sha, decision,
+                            reviewer, reason, validation_sha=None,
+                            source_business=None, source_risks=None):
+        row = self.db.execute("""
+          SELECT validation_sha256,evidence_json FROM annual_filing_briefs
+          WHERE ticker=? AND accession_number=?
+        """, (ticker, accession)).fetchone()
+        if validation_sha is None:
+            validation_sha = row["validation_sha256"] if row else None
+        if row and (source_business is None or source_risks is None):
+            evidence = json.loads(row["evidence_json"])
+            source_business = source_business or "\n".join(
+                item["quote"] for item in evidence if item["section"] == "business"
+            )
+            source_risks = source_risks or "\n".join(
+                item["quote"] for item in evidence if item["section"] == "risk"
+            )
+        return m.review_annual_filing_brief(
+            self.db, ticker, accession, source_sha, decision, reviewer, reason,
+            validation_sha, source_business, source_risks,
+        )
+
     def test_repeated_fetch_deduplicates_and_preserves_review(self):
         self.check()
         sha = self.row()["sha256"]
@@ -52,7 +85,7 @@ class IntakeTests(unittest.TestCase):
                 "impact": ["Execution remains subject to demand."],
             },
         )
-        m.review_brief(self.db, URL, stable_sha, "approved", "editor", "Evidence reviewed")
+        self.review_brief(URL, stable_sha, "approved", "editor", "Evidence reviewed")
 
         result = self.check(second)
         current = self.row()
@@ -186,7 +219,7 @@ class IntakeTests(unittest.TestCase):
             {"summary": ["Capacity will increase in 2027."],
              "impact": ["Execution remains subject to demand."]},
         )
-        m.review_brief(self.db, URL, sha, "approved", "editor", "原文と根拠を確認")
+        self.review_brief(URL, sha, "approved", "editor", "原文と根拠を確認")
         brief = m.snapshot(self.db)["briefs"][0]
         self.assertEqual(brief["ticker"], "NBIS")
         self.assertEqual(brief["source_sha256"], sha)
@@ -642,7 +675,7 @@ class IntakeTests(unittest.TestCase):
         self.db.execute("DELETE FROM brief_evidence WHERE url=? AND field='impact'", (URL,))
         self.db.commit()
         with self.assertRaisesRegex(ValueError, "missing or invalid"):
-            m.review_brief(self.db, URL, sha, "approved", "editor", "Evidence reviewed")
+            self.review_brief(URL, sha, "approved", "editor", "Evidence reviewed")
         self.assertEqual(self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0], "draft")
 
     def test_brief_review_revalidates_field_specific_numeric_claims(self):
@@ -664,7 +697,7 @@ class IntakeTests(unittest.TestCase):
         )
         self.db.commit()
         with self.assertRaisesRegex(ValueError, "missing or invalid"):
-            m.review_brief(self.db, URL, sha, "approved", "editor", "Evidence reviewed")
+            self.review_brief(URL, sha, "approved", "editor", "Evidence reviewed")
         self.assertEqual(self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0], "draft")
 
     def test_brief_review_rejects_evidence_modified_after_save(self):
@@ -686,7 +719,7 @@ class IntakeTests(unittest.TestCase):
         )
         self.db.commit()
         with self.assertRaisesRegex(ValueError, "missing or invalid"):
-            m.review_brief(self.db, URL, sha, "approved", "editor", "Evidence reviewed")
+            self.review_brief(URL, sha, "approved", "editor", "Evidence reviewed")
         self.assertEqual(self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0], "draft")
 
     def test_brief_review_rejects_valid_but_unsealed_edit_after_save(self):
@@ -708,7 +741,7 @@ class IntakeTests(unittest.TestCase):
         )
         self.db.commit()
         with self.assertRaisesRegex(ValueError, "missing or invalid"):
-            m.review_brief(self.db, URL, sha, "approved", "editor", "Evidence reviewed")
+            self.review_brief(URL, sha, "approved", "editor", "Evidence reviewed")
         self.assertEqual(self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0], "draft")
 
     def test_only_human_approved_brief_is_public_without_private_review_data(self):
@@ -732,7 +765,7 @@ class IntakeTests(unittest.TestCase):
             "UPDATE briefs SET status='draft',reviewed_at=NULL WHERE url=?", (URL,)
         )
         self.db.commit()
-        result = m.review_brief(self.db, URL, sha, "approved", "private-editor", "private-review-reason")
+        result = self.review_brief(URL, sha, "approved", "private-editor", "private-review-reason")
         self.assertFalse(result["published"])
         public = m.snapshot(self.db)["briefs"]
         self.assertEqual(len(public), 1)
@@ -803,6 +836,11 @@ class IntakeTests(unittest.TestCase):
         first_validation_sha = m.private_brief_queue(
             self.db, 5
         )["items"][0]["draft_validation_sha256"]
+        with self.assertRaisesRegex(ValueError, "draft-revision-mismatch"):
+            m.review_brief(
+                self.db, URL, sha, "approved", "missing-fingerprint-editor",
+                "検証指紋を省略した判断は拒否します", "",
+            )
         m.save_brief_draft(
             self.db, URL, sha,
             "公式発表では、AI向け供給能力を拡大する方針が示されています。",
@@ -814,8 +852,8 @@ class IntakeTests(unittest.TestCase):
         )["items"][0]["draft_validation_sha256"]
         self.assertNotEqual(first_validation_sha, current_validation_sha)
         with self.assertRaisesRegex(ValueError, "draft-revision-mismatch"):
-            m.review_brief(
-                self.db, URL, sha, "approved", "stale-editor",
+            self.review_brief(
+                URL, sha, "approved", "stale-editor",
                 "画面表示時の下書きを確認しました", first_validation_sha,
             )
         self.assertEqual(self.db.execute(
@@ -824,8 +862,8 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(self.db.execute(
             "SELECT count(*) FROM brief_review_history WHERE url=?", (URL,)
         ).fetchone()[0], 0)
-        result = m.review_brief(
-            self.db, URL, sha, "held", "current-editor",
+        result = self.review_brief(
+            URL, sha, "held", "current-editor",
             "最新版を確認して追加確認に回します", current_validation_sha,
         )
         self.assertEqual(result["status"], "held")
@@ -843,7 +881,7 @@ class IntakeTests(unittest.TestCase):
                 "impact": ["Execution remains subject to demand."],
             },
         )
-        m.review_brief(self.db, URL, sha, "approved", "editor", "Evidence reviewed")
+        self.review_brief(URL, sha, "approved", "editor", "Evidence reviewed")
         self.assertEqual(len(m.snapshot(self.db)["briefs"]), 1)
 
         stale_at = (datetime.now(timezone.utc) - timedelta(hours=9)).isoformat(
@@ -857,7 +895,7 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(item["review_preflight"]["blockers"], ["source-check-stale"])
         self.assertEqual(m.snapshot(self.db)["briefs"], [])
         with self.assertRaisesRegex(ValueError, "missing, stale"):
-            m.review_brief(self.db, URL, sha, "held", "editor", "Refresh required")
+            self.review_brief(URL, sha, "held", "editor", "Refresh required")
         self.assertEqual(
             self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0],
             "approved",
@@ -889,8 +927,8 @@ class IntakeTests(unittest.TestCase):
                 "impact": ["Execution remains subject to demand."],
             },
         )
-        m.review_brief(self.db, URL, sha, "held", "first-editor", "追加確認が必要です")
-        m.review_brief(self.db, URL, sha, "approved", "second-editor", "原文と根拠を再確認しました")
+        self.review_brief(URL, sha, "held", "first-editor", "追加確認が必要です")
+        self.review_brief(URL, sha, "approved", "second-editor", "原文と根拠を再確認しました")
         history = m.private_brief_queue(self.db, 5)["items"][0]["review_history"]
         self.assertEqual([item["decision"] for item in history], ["approved", "held"])
         self.assertEqual([item["reviewer"] for item in history], ["second-editor", "first-editor"])
@@ -909,7 +947,7 @@ class IntakeTests(unittest.TestCase):
         )
         rewritten_history = m.private_brief_queue(self.db, 5)["items"][0]["review_history"]
         self.assertTrue(all(not item["current_revision"] for item in rewritten_history))
-        m.review_brief(self.db, URL, sha, "held", "third-editor", "書き直した要約を追加確認します")
+        self.review_brief(URL, sha, "held", "third-editor", "書き直した要約を追加確認します")
         rewritten_history = m.private_brief_queue(self.db, 5)["items"][0]["review_history"]
         self.assertEqual(
             [item["current_revision"] for item in rewritten_history],
@@ -933,7 +971,7 @@ class IntakeTests(unittest.TestCase):
         stale_history = m.private_brief_queue(self.db, 5)["items"][0]["review_history"]
         self.assertTrue(all(not item["current_revision"] for item in stale_history))
         with self.assertRaises(ValueError):
-            m.review_brief(self.db, URL, self.row()["sha256"], "held", "bad\nname", "理由を確認します")
+            self.review_brief(URL, self.row()["sha256"], "held", "bad\nname", "理由を確認します")
 
     def test_editorial_queue_counts_all_items_and_prioritizes_human_actions(self):
         body = b"<main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main>"
@@ -952,7 +990,7 @@ class IntakeTests(unittest.TestCase):
 
         approved_sha = prepare(URL)
         m.save_brief_draft(self.db, URL, approved_sha, summary, "mixed", impact, "medium", evidence)
-        m.review_brief(self.db, URL, approved_sha, "approved", "editor", "Evidence reviewed")
+        self.review_brief(URL, approved_sha, "approved", "editor", "Evidence reviewed")
 
         draft_url = "https://nebius.com/newsroom/draft-release"
         draft_sha = prepare(draft_url)
@@ -961,7 +999,7 @@ class IntakeTests(unittest.TestCase):
         held_url = "https://nebius.com/newsroom/held-release"
         held_sha = prepare(held_url)
         m.save_brief_draft(self.db, held_url, held_sha, summary, "mixed", impact, "medium", evidence)
-        m.review_brief(self.db, held_url, held_sha, "held", "editor", "Needs follow-up")
+        self.review_brief(held_url, held_sha, "held", "editor", "Needs follow-up")
 
         prepare("https://nebius.com/newsroom/no-draft-release")
         self.db.execute(
@@ -1014,7 +1052,7 @@ class IntakeTests(unittest.TestCase):
             "mixed", "供給能力の拡大は成長機会ですが、実行時期と需要の確度は引き続き確認が必要です。",
             "medium", {"summary": ["Capacity will increase in 2027."], "impact": ["Execution remains subject to demand."]},
         )
-        m.review_brief(self.db, URL, sha, "approved", "editor", "Evidence reviewed")
+        self.review_brief(URL, sha, "approved", "editor", "Evidence reviewed")
         self.check(b"<main><p>Capacity plan changed.</p></main>")
         self.assertEqual(self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0], "stale")
         self.assertEqual(m.snapshot(self.db)["briefs"], [])
@@ -1085,6 +1123,12 @@ class IntakeTests(unittest.TestCase):
         first_validation_sha = m.annual_filing_brief_queue(
             self.db
         )["items"][0]["validationSha256"]
+        with self.assertRaisesRegex(ValueError, "annual-review-source-invalid"):
+            m.review_annual_filing_brief(
+                self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
+                "approved", "missing-source-editor", "SEC抜粋なしの判断は拒否します",
+                first_validation_sha, "", "",
+            )
         reworded_before_review = {
             **payload,
             "summaryJa": "計算基盤とソフトウェアをデータセンターなどへ提供している企業です。",
@@ -1095,8 +1139,8 @@ class IntakeTests(unittest.TestCase):
         )["items"][0]["validationSha256"]
         self.assertNotEqual(first_validation_sha, current_validation_sha)
         with self.assertRaisesRegex(ValueError, "annual-draft-revision-mismatch"):
-            m.review_annual_filing_brief(
-                self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
+            self.review_annual_brief(
+                "NVDA", payload["accessionNumber"], payload["sourceSha256"],
                 "approved", "stale-editor", "画面表示時の下書きを確認しました",
                 first_validation_sha,
             )
@@ -1123,16 +1167,16 @@ class IntakeTests(unittest.TestCase):
           WHERE ticker=? AND accession_number=?
         """, ("NVDA", payload["accessionNumber"]))
         self.db.commit()
-        held = m.review_annual_filing_brief(
-            self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
+        held = self.review_annual_brief(
+            "NVDA", payload["accessionNumber"], payload["sourceSha256"],
             "held", "first-editor", "追加確認が必要です",
         )
         self.assertEqual(held["status"], "held")
         self.assertIsNone(m.approved_annual_filing_brief(
             self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"]
         ))
-        reviewed = m.review_annual_filing_brief(
-            self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
+        reviewed = self.review_annual_brief(
+            "NVDA", payload["accessionNumber"], payload["sourceSha256"],
             "approved", "private-editor", "SEC原文と根拠引用を照合済み",
         )
         self.assertEqual(reviewed["status"], "approved")
@@ -1202,8 +1246,8 @@ class IntakeTests(unittest.TestCase):
         m.save_annual_filing_brief_draft(self.db, reworded)
         history = m.annual_filing_brief_queue(self.db)["items"][0]["reviewHistory"]
         self.assertTrue(all(not entry["currentRevision"] for entry in history))
-        m.review_annual_filing_brief(
-            self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
+        self.review_annual_brief(
+            "NVDA", payload["accessionNumber"], payload["sourceSha256"],
             "held", "third-editor", "書き直した要点を追加確認します",
         )
         history = m.annual_filing_brief_queue(self.db)["items"][0]["reviewHistory"]
@@ -1261,8 +1305,8 @@ class IntakeTests(unittest.TestCase):
         self.db.commit()
 
         with self.assertRaisesRegex(ValueError, "annual-draft-evidence-invalid"):
-            m.review_annual_filing_brief(
-                self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
+            self.review_annual_brief(
+                "NVDA", payload["accessionNumber"], payload["sourceSha256"],
                 "approved", "private-editor", "SEC原文と根拠引用を照合済み",
             )
         row = self.db.execute("""
@@ -1299,8 +1343,8 @@ class IntakeTests(unittest.TestCase):
             "sourceBusiness": business, "sourceRisks": "\n".join([demand, supply, security]),
         }
         saved = m.save_annual_filing_brief_draft(self.db, payload)
-        m.review_annual_filing_brief(
-            self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
+        self.review_annual_brief(
+            "NVDA", payload["accessionNumber"], payload["sourceSha256"],
             "approved", "private-editor", "複数のSEC原文引用を照合済み",
         )
         public = m.approved_annual_filing_brief(
