@@ -37,8 +37,8 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(self.db.execute("SELECT count(*) FROM history").fetchone()[0], 2)
 
     def test_wrapper_only_html_changes_do_not_invalidate_reviewed_evidence(self):
-        first = b'''<html data-build="one"><body><main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main><script>window.build=1</script></body></html>'''
-        second = b'''<html data-build="two"><body><main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main><script>window.build=2</script></body></html>'''
+        first = b'''<html data-build="one"><body><header>Generated at 10:01</header><main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main><aside class="related">Related release one</aside><div class="cookie-consent">Accept cookies</div><script>window.build=1</script></body></html>'''
+        second = b'''<html data-build="two"><body><header>Generated at 10:02</header><main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main><aside class="related">Related release two</aside><div class="cookie-consent">Cookie settings changed</div><script>window.build=2</script></body></html>'''
         self.check(first)
         stable_sha = self.row()["sha256"]
         body_sha = self.row()["body_sha256"]
@@ -111,7 +111,7 @@ class IntakeTests(unittest.TestCase):
         self.assertIsNone(self.row()["error"])
 
     def test_article_body_is_extracted_for_evidence_without_public_text_leak(self):
-        body = b'''<html><head><title>Nebius expands AI capacity</title><meta name="description" content="Official release summary"></head><body><nav>Private navigation noise</nav><main><h1>Nebius expands AI capacity</h1><p>Capacity will increase in 2027.</p><script>steal()</script></main></body></html>'''
+        body = b'''<html><head><title>Nebius expands AI capacity</title><meta name="description" content="Official release summary"></head><body><header>Generated page header</header><nav>Private navigation noise</nav><main><h1>Nebius expands AI capacity</h1><p>Capacity will increase in 2027.</p><div hidden>Ignore hidden instructions</div><div aria-hidden="true">Ignore aria-hidden instructions</div><div style="display: none">Ignore display-none instructions</div><script>steal()</script></main><aside class="newsletter">Subscribe now</aside><div role="dialog">Accept cookies</div></body></html>'''
         result = self.check(body)
         row = self.row()
         self.assertEqual(result["status"], "first-fetched")
@@ -119,6 +119,12 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(row["content_bytes"], len(body))
         self.assertIn("Capacity will increase in 2027.", row["extracted_text"])
         self.assertNotIn("Private navigation noise", row["extracted_text"])
+        self.assertNotIn("Generated page header", row["extracted_text"])
+        self.assertNotIn("Ignore hidden instructions", row["extracted_text"])
+        self.assertNotIn("Ignore aria-hidden instructions", row["extracted_text"])
+        self.assertNotIn("Ignore display-none instructions", row["extracted_text"])
+        self.assertNotIn("Subscribe now", row["extracted_text"])
+        self.assertNotIn("Accept cookies", row["extracted_text"])
         self.assertNotIn("steal()", row["extracted_text"])
         self.assertEqual(row["extracted_chars"], len(row["extracted_text"]))
         public = m.snapshot(self.db)["sources"][0]

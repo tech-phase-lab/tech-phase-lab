@@ -261,20 +261,51 @@ class Links(HTMLParser):
 class ArticleText(HTMLParser):
     """Extract readable evidence text without retaining scripts or page chrome."""
 
-    ignored = {"script", "style", "noscript", "svg", "nav", "footer", "form", "button"}
+    ignored = {
+        "script", "style", "noscript", "template", "svg", "canvas", "iframe",
+        "header", "nav", "aside", "footer", "form", "button", "dialog", "menu",
+    }
+    ignored_roles = {"banner", "complementary", "contentinfo", "dialog", "navigation"}
+    ignored_tokens = {
+        "breadcrumb", "breadcrumbs", "consent", "cookie", "cookies", "modal",
+        "newsletter", "promo", "related", "share", "sharing", "social", "subscribe",
+    }
+    void_tags = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
     blocks = {"title", "h1", "h2", "h3", "h4", "p", "li", "blockquote", "figcaption", "td", "th", "time"}
 
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.parts = []
-        self.ignored_depth = 0
+        self.ignored_stack = []
+
+    def _is_page_chrome(self, tag, attrs):
+        values = {
+            str(key).lower(): "" if value is None else str(value)
+            for key, value in attrs if key
+        }
+        if tag in self.ignored or "hidden" in values or "data-nosnippet" in values:
+            return True
+        if values.get("aria-hidden", "").lower() == "true":
+            return True
+        if values.get("role", "").lower() in self.ignored_roles:
+            return True
+        style = values.get("style", "").lower()
+        if re.search(r"(?:display\s*:\s*none|visibility\s*:\s*hidden)", style):
+            return True
+        tokens = set(re.split(r"[^a-z0-9]+", " ".join([
+            values.get("id", ""), values.get("class", "")
+        ]).lower()))
+        return bool(tokens & self.ignored_tokens)
 
     def handle_starttag(self, tag, attrs):
         tag = tag.lower()
-        if tag in self.ignored:
-            self.ignored_depth += 1
+        if self.ignored_stack:
+            if tag not in self.void_tags:
+                self.ignored_stack.append(tag)
             return
-        if self.ignored_depth:
+        if self._is_page_chrome(tag, attrs):
+            if tag not in self.void_tags:
+                self.ignored_stack.append(tag)
             return
         if tag == "meta":
             values = {key.lower(): value for key, value in attrs if key and value}
@@ -286,14 +317,16 @@ class ArticleText(HTMLParser):
 
     def handle_endtag(self, tag):
         tag = tag.lower()
-        if tag in self.ignored:
-            self.ignored_depth = max(0, self.ignored_depth - 1)
+        if self.ignored_stack:
+            if tag in self.ignored_stack:
+                last = len(self.ignored_stack) - 1 - self.ignored_stack[::-1].index(tag)
+                del self.ignored_stack[last:]
             return
-        if not self.ignored_depth and tag in self.blocks:
+        if tag in self.blocks:
             self.parts.append("\n")
 
     def handle_data(self, value):
-        if not self.ignored_depth:
+        if not self.ignored_stack:
             self.parts.append(value)
 
     def result(self):
