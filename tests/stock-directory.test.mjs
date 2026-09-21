@@ -337,11 +337,11 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(polish, /\.mobileTitle\{display:block/);
   assert.match(polish, /\.resultButton/);
   assert.doesNotMatch(widget, /COMPANY EVENTS|データ接続準備中/);
-  assert.match(widget, /決算日・時価総額・配当利回り/);
-  assert.match(widget, /viewportRef\.current\?\.scrollTo/);
-  assert.match(widget, /tabIndex=\{kind === "compact" \? 0 : undefined\}/);
-  assert.match(chartStyles, /\.quoteViewport\{overflow-x:auto/);
-  assert.match(chartStyles, /\.compactEmbed\{min-width:760px;min-height:220px\}/);
+  assert.doesNotMatch(widget, /viewportRef|quoteNavigation|横にスワイプ|scrollTo/);
+  assert.match(widget, /width: "100%"/);
+  assert.match(widget, /colorTheme: "dark"/);
+  assert.match(chartStyles, /\.compactEmbed\{min-height:220px\}/);
+  assert.doesNotMatch(chartStyles, /min-width:760px|quoteViewport|quoteNavigation/);
   assert.doesNotMatch(chartStyles, /scaleY|scale\(|translateX|\.compactEmbed::after|height:122%/);
   assert.match(polish, /\.profileDetails/);
   assert.match(chartPolish, /\.heading h2/);

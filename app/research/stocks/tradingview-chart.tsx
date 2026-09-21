@@ -21,7 +21,6 @@ function tradingViewSymbol(ticker: string, exchange: string) {
 
 function TradingViewEmbed({ kind, symbol, lang }: { kind: WidgetKind; symbol: string; lang: "ja" | "en" }) {
   const hostRef = useRef<HTMLDivElement>(null);
-  const viewportRef = useRef<HTMLDivElement>(null);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
 
@@ -81,16 +80,7 @@ function TradingViewEmbed({ kind, symbol, lang }: { kind: WidgetKind; symbol: st
   }, [attempt, kind, lang, symbol]);
 
   return <>
-    {kind === "compact" && <div className={styles.quoteNavigation}>
-      <p>{lang === "ja" ? "横にスワイプして、決算日・時価総額・配当利回りを確認できます。" : "Swipe horizontally to see earnings, market cap and dividend yield."}</p>
-      <div>
-        <button type="button" onClick={() => viewportRef.current?.scrollTo({ left: 0, behavior: "smooth" })}>{lang === "ja" ? "← 株価" : "← Price"}</button>
-        <button type="button" onClick={() => viewportRef.current?.scrollTo({ left: viewportRef.current.scrollWidth, behavior: "smooth" })}>{lang === "ja" ? "指標 →" : "Metrics →"}</button>
-      </div>
-    </div>}
-    <div className={`${styles.embed} ${polish.embed} ${kind === "compact" ? styles.quoteViewport : ""}`} ref={viewportRef} role={kind === "compact" ? "region" : undefined} aria-label={`${symbol} TradingView ${kind}`} tabIndex={kind === "compact" ? 0 : undefined}>
-      <div className={kind === "chart" ? styles.chartEmbed : styles.compactEmbed} ref={hostRef} />
-    </div>
+    <div className={`${styles.embed} ${polish.embed} ${kind === "chart" ? styles.chartEmbed : styles.compactEmbed}`} ref={hostRef} aria-label={`${symbol} TradingView ${kind}`} />
     {failed && <div className={styles.error} role="status"><span>{lang === "ja" ? "株価表示の読み込みに時間がかかっています。" : "The market view is taking longer than expected to load."}</span><button type="button" onClick={() => { setFailed(false); setAttempt((current) => current + 1); }}>{lang === "ja" ? "再読み込み" : "Retry"}</button></div>}
   </>;
 }
