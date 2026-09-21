@@ -58,6 +58,14 @@ test("unsafe links, duplicate records and broken history references fail validat
   assert.ok(snapshotIssues({ ...snapshot, history: [{ url: "missing", at: "2026-09-19" }] }).includes("invalid-history"));
   assert.ok(snapshotIssues({ ...snapshot, events: [{ id: 1, url: "missing", ticker: "NVDA", detected_at: snapshot.generatedAt, title: null, published_on: null }] }).includes("invalid-event"));
   assert.ok(snapshotIssues({ ...snapshot, events: [{ id: 1, url: source.url, ticker: source.ticker, detected_at: snapshot.generatedAt, title: null, published_on: null, detection_to_body_ms: -1 }] }).includes("invalid-event-latency"));
+  assert.ok(snapshotIssues({ ...snapshot, discoveryRuns: [{ ...snapshot.discoveryRuns[0], sources_checked: 3, sources_configured: 2 }] }).includes("invalid-discovery-evidence"));
+});
+
+test("operations preview explains which official fallback recovered discovery", () => {
+  assert.match(intakeDashboard, /取得経路の証跡/);
+  assert.match(intakeDashboard, /sources_checked/);
+  assert.match(intakeDashboard, /SEC Submissions JSON/);
+  assert.match(intakeDashboard, /経路目で取得/);
 });
 
 test("reviewed briefs require current source identity, safe copy, status, and timestamps", () => {

@@ -623,6 +623,15 @@ def connect(path):
     """)
     if "index_url" not in {row[1] for row in db.execute("PRAGMA table_info(discovery_runs)")}:
         db.execute("ALTER TABLE discovery_runs ADD COLUMN index_url TEXT")
+    discovery_columns = {row[1] for row in db.execute("PRAGMA table_info(discovery_runs)")}
+    discovery_migrations = {
+        "source_format": "TEXT",
+        "sources_checked": "INTEGER NOT NULL DEFAULT 1",
+        "sources_configured": "INTEGER NOT NULL DEFAULT 1",
+    }
+    for column, declaration in discovery_migrations.items():
+        if column not in discovery_columns:
+            db.execute(f"ALTER TABLE discovery_runs ADD COLUMN {column} {declaration}")
     if "title" not in {row[1] for row in db.execute("PRAGMA table_info(sources)")}:
         db.execute("ALTER TABLE sources ADD COLUMN title TEXT")
     source_columns = {row[1] for row in db.execute("PRAGMA table_info(sources)")}
@@ -963,7 +972,8 @@ def collect_discovery(ticker, transport=fetch, automatic=False):
     """Fetch and parse candidates without mutating storage."""
     failures = []
     links, used_source = {}, None
-    for source in monitoring_sources(ticker, automatic=automatic):
+    sources = monitoring_sources(ticker, automatic=automatic)
+    for source in sources:
         try:
             body, kind = transport(source["url"], ticker)
             links = discover_links(body, kind, ticker, source)
@@ -981,6 +991,9 @@ def collect_discovery(ticker, transport=fetch, automatic=False):
             "status": "ok" if used_source["route"] == "primary" else "fallback",
             "route": used_source["route"],
             "sourceUrl": used_source["url"],
+            "sourceFormat": used_source["format"],
+            "sourcesChecked": len(failures) + 1,
+            "sourcesConfigured": len(sources),
             "candidates": len(links),
             # Automatic monitoring may try a preferred low-latency route before the
             # company's primary page. A recovered primary result is healthy; retain
@@ -988,7 +1001,13 @@ def collect_discovery(ticker, transport=fetch, automatic=False):
             "error": failures[0] if failures and used_source["route"] == "fallback" else None,
         }
     else:
-        result = {"ticker": ticker, "status": "degraded", "route": "none", "sourceUrl": INDEXES[ticker], "candidates": 0, "error": failures[0] if failures else "No monitoring sources configured"}
+        result = {
+            "ticker": ticker, "status": "degraded", "route": "none",
+            "sourceUrl": INDEXES[ticker], "sourceFormat": None,
+            "sourcesChecked": len(failures), "sourcesConfigured": len(sources),
+            "candidates": 0,
+            "error": failures[0] if failures else "No monitoring sources configured",
+        }
     return result, links
 
 
@@ -1011,7 +1030,16 @@ def save_discovery(db, ticker, result, links):
                 "extractedChars": len(text),
             })
     with db:
-        db.execute("INSERT INTO discovery_runs(ticker,at,status,candidates,error,index_url) VALUES(?,?,?,?,?,?)", (ticker, now(), result["status"], result["candidates"], result["error"], result["sourceUrl"]))
+        db.execute("""
+          INSERT INTO discovery_runs(
+            ticker,at,status,candidates,error,index_url,source_format,
+            sources_checked,sources_configured
+          ) VALUES(?,?,?,?,?,?,?,?,?)
+        """, (
+            ticker, now(), result["status"], result["candidates"], result["error"],
+            result["sourceUrl"], result.get("sourceFormat"),
+            result.get("sourcesChecked", 1), result.get("sourcesConfigured", 1),
+        ))
     return sorted(set(links) - before)
 
 
@@ -1061,7 +1089,11 @@ def snapshot(db):
           FROM sources ORDER BY ticker,url
         """)]
         history = [dict(r) for r in db.execute("SELECT id,url,at,kind,sha256 FROM history ORDER BY id DESC")]
-        runs = [dict(r) for r in db.execute("SELECT id,ticker,at,status,candidates,error,index_url FROM discovery_runs ORDER BY id DESC")]
+        runs = [dict(r) for r in db.execute("""
+          SELECT id,ticker,at,status,candidates,error,index_url,source_format,
+                 sources_checked,sources_configured
+          FROM discovery_runs ORDER BY id DESC
+        """)]
         events = [dict(r) for r in db.execute("""
           SELECT e.id,e.url,e.ticker,e.detected_at,s.title,s.published_on,
                  COALESCE((SELECT MIN(h.at) FROM history h

@@ -25,6 +25,17 @@ function duration(value: number | null | undefined) {
   if (value == null || !Number.isFinite(value)) return "計測待ち";
   return value < 10_000 ? `${(value / 1000).toFixed(1)}秒` : `${Math.round(value / 1000)}秒`;
 }
+const sourceFormatNames: Record<string, string> = {
+  rss: "RSS / Atom", "sec-json": "SEC Submissions JSON", sitemap: "公式サイトマップ",
+  "news-json": "企業公式JSON", "twse-material-json": "TWSE重要開示JSON", html: "企業公式HTML",
+};
+function discoveryEvidence(run: IntakeSnapshot["discoveryRuns"][number]) {
+  const checked = run.sources_checked ?? 1;
+  const configured = run.sources_configured ?? 1;
+  if (run.status === "degraded") return `${checked}/${configured}経路を確認 · 復旧なし`;
+  const format = run.source_format ? sourceFormatNames[run.source_format] ?? run.source_format : "公式経路";
+  return `${checked}/${configured}経路目で取得 · ${format}`;
+}
 function backupStatus(backup: MonitorState["backup"]) {
   if (!backup) return "DB保護：状態取得待ち";
   if (backup.status === "failed" || backup.healthy === false) return "DB保護：要確認（直近バックアップ失敗）";
@@ -122,9 +133,10 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
             <p>{latest?.status === "ok" ? (provider.format === "twse-material-json" ? `取引所の当日重要開示 ${latest.candidates}件` : `${latest.candidates}件のリンクを検出`) : latest?.status === "fallback" ? `企業サイトを補完し、公式提出書類を${latest.candidates}件検出` : errorNames[latest?.error ?? ""] || "取得記録なし"}</p>
             <p className={styles.muted}>本文・PDF：取得済み {totals.fetched} ／ 未取得 {totals.unfetched} ／ エラー {totals.error}</p>
             <p className={styles.meta}>一覧の確認日時：{latest ? time(latest.at) : "未確認"} JST</p>
+            {latest && <p className={styles.meta}>取得経路の証跡：{discoveryEvidence(latest)}</p>}
             {monitor && <p className={styles.meta}>基準間隔 {monitor.basePollSeconds ?? monitor.nextPollSeconds ?? "—"}秒 ／ 直近の公式応答 {duration(monitor.requestDurationMs)}{monitor.nextPollSeconds && monitor.basePollSeconds && monitor.nextPollSeconds > monitor.basePollSeconds ? ` ／ 次回まで${monitor.nextPollSeconds}秒（失敗時バックオフ）` : ""}</p>}
             <div className={styles.cardActions}><Link href={`/research/companies/${symbol}`}>銘柄ページ →</Link><a href={provider.indexUrl} target="_blank" rel="noopener noreferrer">公式{provider.format === "rss" ? "RSS" : "一覧"} ↗</a><button disabled={!totals.total} onClick={() => { setTicker(symbol); setQuery(""); setState("all"); setReview("all"); setPage(1); requestAnimationFrame(() => document.getElementById("queue-title")?.scrollIntoView({ block: "start" })); }}>資料を表示（{totals.total}）</button></div>
-            <details className={styles.runHistory}><summary>{symbol}の一覧取得履歴（{runs.length}件）</summary><ul>{runs.map(r => <li key={r.id}><time>{time(r.at)} JST</time><span>{r.status === "ok" ? `${r.candidates}件検出` : r.status === "fallback" ? `公式バックアップで${r.candidates}件検出` : errorNames[r.error ?? ""] || "取得異常"}</span></li>)}</ul></details>
+            <details className={styles.runHistory}><summary>{symbol}の一覧取得履歴（{runs.length}件）</summary><ul>{runs.map(r => <li key={r.id}><time>{time(r.at)} JST</time><span>{r.status === "ok" ? `${r.candidates}件検出` : r.status === "fallback" ? `公式バックアップで${r.candidates}件検出` : errorNames[r.error ?? ""] || "取得異常"}<small>{discoveryEvidence(r)}</small></span></li>)}</ul></details>
           </article>;
         })}</div>
       </section>

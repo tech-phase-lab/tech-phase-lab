@@ -26,7 +26,8 @@ export type IntakeSnapshot = {
   events?: { id: number; url: string; ticker: string; detected_at: string; title: string | null; published_on: string | null;
     body_fetched_at?: string | null; detection_to_body_ms?: number | null }[];
   history: { id: number; url: string; at: string; kind: string; sha256: string | null }[];
-  discoveryRuns: { id: number; ticker: string; at: string; status: "ok" | "fallback" | "degraded"; candidates: number; error: string | null; index_url: string | null }[];
+  discoveryRuns: { id: number; ticker: string; at: string; status: "ok" | "fallback" | "degraded"; candidates: number; error: string | null; index_url: string | null;
+    source_format?: string | null; sources_checked?: number; sources_configured?: number }[];
   briefs?: ReviewedBrief[];
 };
 
@@ -85,6 +86,12 @@ export function snapshotIssues(data: IntakeSnapshot) {
     for (const time of [s.discovered_at, s.checked_at]) if (time && (!Number.isFinite(Date.parse(time)) || Date.parse(time) > Date.parse(data.generatedAt))) issues.push("invalid-source-time");
   }
   for (const h of data.history) if (!urls.has(h.url) || !Number.isFinite(Date.parse(h.at))) issues.push("invalid-history");
+  for (const run of data.discoveryRuns) {
+    if ((run.sources_checked != null && (!Number.isInteger(run.sources_checked) || run.sources_checked < 0))
+        || (run.sources_configured != null && (!Number.isInteger(run.sources_configured) || run.sources_configured < 1))
+        || (run.sources_checked != null && run.sources_configured != null && run.sources_checked > run.sources_configured)
+        || (run.status !== "degraded" && run.sources_checked === 0)) issues.push("invalid-discovery-evidence");
+  }
   for (const event of data.events ?? []) {
     if (!urls.has(event.url) || !providerByTicker[event.ticker] || !Number.isFinite(Date.parse(event.detected_at))) issues.push("invalid-event");
     if (event.body_fetched_at && !Number.isFinite(Date.parse(event.body_fetched_at))) issues.push("invalid-event-body-time");
@@ -125,7 +132,8 @@ export type CoverageCompany = {
   sectorKey: string;
   indexUrl: string;
   format: string;
-  discovery: { status: "ok" | "fallback" | "degraded" | "untested"; candidates: number; checkedAt: string | null; error: string | null };
+  discovery: { status: "ok" | "fallback" | "degraded" | "untested"; candidates: number; checkedAt: string | null; error: string | null;
+    sourceFormat: string | null; sourcesChecked: number; sourcesConfigured: number };
   counts: ReturnType<typeof intakeCounts>;
   sources: CoverageSource[];
 };
@@ -147,7 +155,11 @@ export function buildCoverageCompanies(snapshot: IntakeSnapshot): CoverageCompan
         candidates: latest.candidates,
         checkedAt: latest.at,
         error: latest.error,
-      } : { status: "untested", candidates: 0, checkedAt: null, error: null },
+        sourceFormat: latest.source_format ?? null,
+        sourcesChecked: latest.sources_checked ?? 1,
+        sourcesConfigured: latest.sources_configured ?? 1,
+      } : { status: "untested", candidates: 0, checkedAt: null, error: null,
+        sourceFormat: null, sourcesChecked: 0, sourcesConfigured: 1 },
       counts: intakeCounts(companySources),
       sources: companySources.map((source) => ({ ...source, displayTitle: source.title || sourceTitle(source.url), fetchState: fetchState(source) })),
     };

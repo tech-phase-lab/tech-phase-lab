@@ -383,6 +383,45 @@ class IntakeTests(unittest.TestCase):
         self.assertIn("sec.gov", run["index_url"])
         self.assertIn("403", run["error"])
 
+    def test_priority_companies_record_multi_route_sec_recovery_evidence(self):
+        companies = {
+            "TSM": ("1046179", "6-K"),
+            "MRVL": ("1835632", "8-K"),
+            "ANET": ("1596532", "8-K"),
+            "VRT": ("1674101", "8-K"),
+            "PLTR": ("1321655", "8-K"),
+        }
+        for ticker, (cik, form) in companies.items():
+            with self.subTest(ticker=ticker):
+                accession = f"000{cik}-26-000001"
+                archive_accession = accession.replace("-", "")
+                atom = f'''<feed xmlns="http://www.w3.org/2005/Atom"><entry>
+                  <title>{form} - Official filing</title>
+                  <link href="https://www.sec.gov/Archives/edgar/data/{int(cik)}/{archive_accession}/{accession}-index.htm"/>
+                </entry></feed>'''.encode()
+
+                def transport(url, _ticker):
+                    if "output=atom" in url:
+                        return atom, "application/atom+xml"
+                    raise RuntimeError("HTTP Error 403")
+
+                result, links = m.collect_discovery(ticker, transport, automatic=True)
+                self.assertEqual(result["status"], "fallback")
+                self.assertEqual(result["sourceFormat"], "rss")
+                self.assertEqual(result["sourcesChecked"], 3)
+                self.assertEqual(result["sourcesConfigured"], 3)
+                self.assertEqual(len(links), 1)
+                m.save_discovery(self.db, ticker, result, links)
+                run = self.db.execute("""
+                  SELECT source_format,sources_checked,sources_configured
+                  FROM discovery_runs WHERE ticker=? ORDER BY id DESC LIMIT 1
+                """, (ticker,)).fetchone()
+                self.assertEqual(dict(run), {
+                    "source_format": "rss",
+                    "sources_checked": 3,
+                    "sources_configured": 3,
+                })
+
     def test_automatic_monitor_prefers_twse_material_information(self):
         source = m.monitoring_sources("TSM", automatic=True)[0]
         self.assertEqual(source["route"], "primary")
