@@ -254,7 +254,7 @@ test("annual-filing Japanese briefs preserve multiple separately cited risks", (
 });
 
 test("stock search UI separates free identity data from licensed prices and news", async () => {
-  const [page, market, marketStyles, widget, styles, polish, chartStyles, chartPolish, route, dashboard, review, researchStyles, home, lab] = await Promise.all([
+  const [page, market, marketStyles, widget, styles, polish, chartStyles, chartPolish, route, editorRoute, dashboard, review, researchStyles, home, lab] = await Promise.all([
     readFile(new URL("../app/research/stocks/stock-directory.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/market-workspace.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/market-workspace.module.css", import.meta.url), "utf8"),
@@ -264,6 +264,7 @@ test("stock search UI separates free identity data from licensed prices and news
     readFile(new URL("../app/research/stocks/tradingview-chart.module.css", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/tradingview-polish.module.css", import.meta.url), "utf8"),
     readFile(new URL("../app/api/research/stocks/route.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/api/research/editor/route.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/research/research-dashboard.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/review/review-dashboard.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/research.module.css", import.meta.url), "utf8"),
@@ -423,6 +424,11 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(review, /item\.integrityValid/);
   assert.match(review, /loadAnnual\(undefined, item\.ticker\)/);
   assert.match(review, /Promise\.allSettled\(\[/);
+  assert.match(review, /type AnnualReviewFilter = "all" \| "actionable" \| "invalid"/);
+  assert.match(review, /loadAnnualQueue\(filter\.value\)/);
+  assert.match(review, /該当する年次報告書はありません/);
+  assert.match(editorRoute, /"actionable", "invalid", "draft", "held", "approved", "rejected"/);
+  assert.match(editorRoute, /url\.searchParams\.set\("view", view\)/);
   assert.match(review, /速報レビューキュー/);
   assert.match(review, /reviewCounts\.awaiting_review/);
   assert.match(review, /reviewCounts\.machine_ready/);

@@ -21,6 +21,7 @@ type AnnualReviewCounts = {
   rejected: number; integrity_invalid: number; actionable: number;
 };
 type ReviewFilter = "all" | "ready" | "blocked" | "needs-draft";
+type AnnualReviewFilter = "all" | "actionable" | "invalid" | "draft" | "held" | "approved" | "rejected";
 type RevisionEvidence = {
   previous_sha256: string; previous_observed_at: string; current_sha256: string;
   diff_preview: string; truncated: boolean; method: "word-diff";
@@ -107,6 +108,15 @@ const reviewFilters: { value: ReviewFilter; label: string }[] = [
   { value: "blocked", label: "要修正" },
   { value: "needs-draft", label: "下書き未作成" },
 ];
+const annualReviewFilters: { value: AnnualReviewFilter; label: string }[] = [
+  { value: "all", label: "すべて" },
+  { value: "actionable", label: "要対応" },
+  { value: "invalid", label: "整合性エラー" },
+  { value: "draft", label: "下書き" },
+  { value: "held", label: "保留" },
+  { value: "approved", label: "承認済み" },
+  { value: "rejected", label: "却下" },
+];
 
 function annualRiskDrafts(record: AnnualRecord | null): AnnualRiskDraft[] {
   if (!record?.riskPointsJa.length) return [emptyAnnualRisk()];
@@ -130,6 +140,8 @@ export default function ReviewDashboard() {
   const [annualTicker, setAnnualTicker] = useState("NVDA");
   const [annualItems, setAnnualItems] = useState<AnnualRecord[]>([]);
   const [annualCounts, setAnnualCounts] = useState<AnnualReviewCounts>(emptyAnnualReviewCounts);
+  const [annualReviewFilter, setAnnualReviewFilter] = useState<AnnualReviewFilter>("all");
+  const [annualFilteredTotal, setAnnualFilteredTotal] = useState(0);
   const [annualSource, setAnnualSource] = useState<AnnualSource | null>(null);
   const [annualRecord, setAnnualRecord] = useState<AnnualRecord | null>(null);
   const [annualRisks, setAnnualRisks] = useState<AnnualRiskDraft[]>([emptyAnnualRisk()]);
@@ -145,7 +157,7 @@ export default function ReviewDashboard() {
     riskCorpus(annualSource?.risks ?? null),
   ), [annualRecord, annualSource]);
 
-  async function request(method: "GET" | "POST", body?: unknown, kind: "news" | "annual" = "news", filter: ReviewFilter = reviewFilter) {
+  async function request(method: "GET" | "POST", body?: unknown, kind: "news" | "annual" = "news", filter: ReviewFilter | AnnualReviewFilter = kind === "annual" ? annualReviewFilter : reviewFilter) {
     const params = new URLSearchParams({ limit: String(kind === "annual" ? 50 : 30) });
     if (kind === "annual") params.set("kind", "annual");
     else params.set("view", filter);
@@ -165,7 +177,7 @@ export default function ReviewDashboard() {
     try {
       const [newsResult, annualResult] = await Promise.allSettled([
         request("GET", undefined, "news", filter),
-        request("GET", undefined, "annual"),
+        request("GET", undefined, "annual", annualReviewFilter),
       ]);
       if (newsResult.status === "rejected") throw newsResult.reason;
       const payload = newsResult.value;
@@ -174,6 +186,7 @@ export default function ReviewDashboard() {
       if (annualResult.status === "fulfilled") {
         setAnnualItems(annualResult.value.items ?? []);
         setAnnualCounts(annualResult.value.counts ?? emptyAnnualReviewCounts);
+        setAnnualFilteredTotal(annualResult.value.filteredTotal ?? annualResult.value.items?.length ?? 0);
       }
       setReviewFilter(filter);
       setFilteredTotal(payload.filteredTotal ?? payload.items.length);
@@ -195,7 +208,7 @@ export default function ReviewDashboard() {
     setBusy(true);
     try {
       const [queue, sourceResponse] = await Promise.all([
-        request("GET", undefined, "annual"),
+        request("GET", undefined, "annual", annualReviewFilter),
         fetch(`/api/research/stocks?ticker=${encodeURIComponent(ticker)}&view=business`, { cache: "no-store" }),
       ]);
       const source = await sourceResponse.json() as AnnualSourceResponse;
@@ -214,6 +227,7 @@ export default function ReviewDashboard() {
       setAnnualTicker(ticker);
       setAnnualItems(queue.items ?? []);
       setAnnualCounts(queue.counts ?? emptyAnnualReviewCounts);
+      setAnnualFilteredTotal(queue.filteredTotal ?? queue.items?.length ?? 0);
       setAnnualSource({ business: source.business, risks: source.risks });
       setAnnualRecord(currentRecord);
       setAnnualRisks(annualRiskDrafts(currentRecord));
@@ -226,6 +240,21 @@ export default function ReviewDashboard() {
       setAnnualRecord(null);
       setAnnualRisks([emptyAnnualRisk()]);
       setMessage(`年次報告書の読み込み失敗：${error instanceof Error ? error.message : "unknown"}`);
+    } finally { setBusy(false); }
+  }
+
+  async function loadAnnualQueue(filter: AnnualReviewFilter) {
+    setBusy(true);
+    try {
+      const queue = await request("GET", undefined, "annual", filter);
+      setAnnualItems(queue.items ?? []);
+      setAnnualCounts(queue.counts ?? emptyAnnualReviewCounts);
+      setAnnualReviewFilter(filter);
+      setAnnualFilteredTotal(queue.filteredTotal ?? queue.items?.length ?? 0);
+      setMode("annual");
+      setMessage(`年次報告書${queue.filteredTotal ?? queue.items?.length ?? 0}件から、対応優先順に${queue.items?.length ?? 0}件を読み込みました。`);
+    } catch (error) {
+      setMessage(`年次報告書キューの読み込み失敗：${error instanceof Error ? error.message : "unknown"}`);
     } finally { setBusy(false); }
   }
 
@@ -412,7 +441,9 @@ export default function ReviewDashboard() {
     {mode === "annual" && annualCounts.total > 0 && <section className={styles.annualQueue} aria-label="年次報告書レビューキュー">
       <div className={styles.annualQueueHead}><div><p>ANNUAL FILING QUEUE</p><h2>年次報告書レビューキュー</h2></div><div className={styles.annualMeta}><span>要対応 {annualCounts.actionable}</span><span>下書き {annualCounts.draft}</span><span>保留 {annualCounts.held}</span><span>整合性エラー {annualCounts.integrity_invalid}</span><span>承認済み {annualCounts.approved}</span><span>却下 {annualCounts.rejected}</span></div></div>
       <p>整合性エラー、保留、下書きの順で表示します。銘柄を開くと最新SEC原文を再取得し、提出番号・SHA・根拠を照合します。</p>
-      <div className={styles.annualQueueItems}>{annualItems.map(item => <button type="button" key={`${item.ticker}-${item.accessionNumber}`} aria-current={annualSource?.business?.ticker === item.ticker && annualSource?.business?.accessionNumber === item.accessionNumber} disabled={busy} onClick={() => { setAnnualTicker(item.ticker); void loadAnnual(undefined, item.ticker); }}><b>{item.ticker}</b><span>{labels[item.status] ?? item.status}{item.integrityValid ? "" : " · 整合性エラー"}</span><small>{item.accessionNumber}<br />{item.generatedAt.replace("T", " ").replace("Z", " UTC")}</small></button>)}</div>
+      <div className={styles.annualQueueFilters} aria-label="年次報告書キューの絞り込み">{annualReviewFilters.map(filter => <button key={filter.value} type="button" aria-pressed={annualReviewFilter === filter.value} disabled={busy} onClick={() => void loadAnnualQueue(filter.value)}>{filter.label}</button>)}</div>
+      <p className={styles.filterResult}>{annualFilteredTotal}件中 {annualItems.length}件を表示</p>
+      <div className={styles.annualQueueItems}>{annualItems.length ? annualItems.map(item => <button type="button" key={`${item.ticker}-${item.accessionNumber}`} aria-current={annualSource?.business?.ticker === item.ticker && annualSource?.business?.accessionNumber === item.accessionNumber} disabled={busy} onClick={() => { setAnnualTicker(item.ticker); void loadAnnual(undefined, item.ticker); }}><b>{item.ticker}</b><span>{labels[item.status] ?? item.status}{item.integrityValid ? "" : " · 整合性エラー"}</span><small>{item.accessionNumber}<br />{item.generatedAt.replace("T", " ").replace("Z", " UTC")}</small></button>) : <p className={styles.filterResult}>該当する年次報告書はありません。</p>}</div>
     </section>}
     {mode === "annual" && annualSource?.business && annualSource.risks && <article className={`${styles.editor} ${styles.annualEditor}`}>
       <div className={styles.sourceHead}><div><p>{annualSource.business.ticker} · {annualSource.business.form} · SHA {annualSource.business.sourceSha256.slice(0, 12)}…</p><h2>年次報告書の日本語要点</h2></div><a href={annualSource.business.documentUrl} target="_blank" rel="noopener noreferrer">SEC原文 ↗</a></div>

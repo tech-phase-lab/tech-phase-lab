@@ -1140,14 +1140,36 @@ class IntakeTests(unittest.TestCase):
         """, ("0" * 64, "ANET", invalid["accessionNumber"]))
         self.db.commit()
 
-        queue = m.annual_filing_brief_queue(self.db, 2)
+        statements = []
+        self.db.set_trace_callback(statements.append)
+        try:
+            queue = m.annual_filing_brief_queue(self.db, 2)
+        finally:
+            self.db.set_trace_callback(None)
         self.assertEqual(queue["counts"], {
             "total": 3, "draft": 1, "held": 1, "approved": 1,
             "rejected": 0, "integrity_invalid": 1, "actionable": 2,
         })
+        self.assertEqual(queue["view"], "all")
+        self.assertEqual(queue["filteredTotal"], 3)
         self.assertEqual([item["ticker"] for item in queue["items"]], ["ANET", "MRVL"])
         self.assertFalse(queue["items"][0]["integrityValid"])
         self.assertTrue(queue["items"][1]["integrityValid"])
+        self.assertEqual(sum(
+            "FROM annual_filing_review_history" in statement
+            for statement in statements
+        ), 1)
+
+        actionable = m.annual_filing_brief_queue(self.db, 10, "actionable")
+        self.assertEqual(actionable["filteredTotal"], 2)
+        self.assertEqual([item["ticker"] for item in actionable["items"]], ["ANET", "MRVL"])
+        invalid_only = m.annual_filing_brief_queue(self.db, 10, "invalid")
+        self.assertEqual([item["ticker"] for item in invalid_only["items"]], ["ANET"])
+        approved_only = m.annual_filing_brief_queue(self.db, 10, "approved")
+        self.assertEqual([item["ticker"] for item in approved_only["items"]], ["NVDA"])
+        self.assertEqual(approved_only["counts"], queue["counts"])
+        with self.assertRaisesRegex(ValueError, "invalid-annual-review-filter"):
+            m.annual_filing_brief_queue(self.db, 10, "unknown")
 
     def test_annual_filing_brief_requires_exact_evidence_and_human_approval(self):
         business = "NVIDIA designs accelerated computing platforms and software for data centers and other markets."

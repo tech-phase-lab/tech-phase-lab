@@ -690,7 +690,22 @@ class ResearchServiceTests(unittest.TestCase):
                     "total": 1, "draft": 1, "held": 0, "approved": 0,
                     "rejected": 0, "integrity_invalid": 0, "actionable": 1,
                 })
+                self.assertEqual(annual_queue_payload["filteredTotal"], 1)
                 self.assertTrue(annual_queue_payload["items"][0]["integrityValid"])
+                annual_invalid_queue = Request(
+                    f"http://127.0.0.1:{server.server_port}/admin/annual-briefs?view=invalid",
+                    headers={"Authorization": "Bearer editor-token-at-least-24-characters"},
+                )
+                with urlopen(annual_invalid_queue, timeout=2) as response:
+                    invalid_queue_payload = json.loads(response.read())
+                self.assertEqual(invalid_queue_payload["filteredTotal"], 0)
+                self.assertEqual(invalid_queue_payload["items"], [])
+                with self.assertRaises(HTTPError) as invalid_annual_filter:
+                    urlopen(Request(
+                        f"http://127.0.0.1:{server.server_port}/admin/annual-briefs?view=unknown",
+                        headers={"Authorization": "Bearer editor-token-at-least-24-characters"},
+                    ), timeout=2)
+                self.assertEqual(invalid_annual_filter.exception.code, 400)
                 annual_validation_sha = annual_queue_payload["items"][0]["validationSha256"]
                 annual_review = Request(
                     f"http://127.0.0.1:{server.server_port}/admin/annual-briefs/review",

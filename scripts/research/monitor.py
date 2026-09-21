@@ -2273,9 +2273,16 @@ def _annual_row(row, private=False):
     return value
 
 
-def annual_filing_brief_queue(db, limit=20):
+_ANNUAL_QUEUE_VIEWS = {
+    "all", "actionable", "invalid", "draft", "held", "approved", "rejected",
+}
+
+
+def annual_filing_brief_queue(db, limit=20, review_filter="all"):
     """Return private annual drafts in human-action order with integrity counts."""
     limit = max(1, min(int(limit), 50))
+    if review_filter not in _ANNUAL_QUEUE_VIEWS:
+        raise ValueError("invalid-annual-review-filter")
     rows = db.execute("""
       SELECT * FROM annual_filing_briefs
       ORDER BY generated_at DESC,ticker,accession_number
@@ -2303,27 +2310,52 @@ def annual_filing_brief_queue(db, limit=20):
             counts["integrity_invalid"] += 1
         if not integrity_valid or status in {"draft", "held"}:
             counts["actionable"] += 1
-        item["reviewHistory"] = [{
+        item["reviewHistory"] = []
+        items.append(item)
+    items_by_key = {(item["ticker"], item["accessionNumber"]): item for item in items}
+    for history in db.execute("""
+      WITH ranked AS (
+        SELECT ticker,accession_number,source_sha256,draft_validation_sha256,
+               decision,reviewed_at,reviewer,reason,
+               ROW_NUMBER() OVER (
+                 PARTITION BY ticker,accession_number ORDER BY id DESC
+               ) AS history_rank
+        FROM annual_filing_review_history
+      )
+      SELECT * FROM ranked WHERE history_rank<=10
+      ORDER BY ticker,accession_number,history_rank
+    """):
+        item = items_by_key.get((history["ticker"], history["accession_number"]))
+        if item is None:
+            continue
+        item["reviewHistory"].append({
             "sourceSha256": history["source_sha256"], "decision": history["decision"],
             "draftValidationSha256": history["draft_validation_sha256"],
             "reviewedAt": history["reviewed_at"].replace("+00:00", "Z"),
             "reviewer": history["reviewer"], "reason": history["reason"],
             "currentRevision": (
-                history["source_sha256"] == row["source_sha256"]
+                history["source_sha256"] == item["sourceSha256"]
                 and history["draft_validation_sha256"] is not None
-                and history["draft_validation_sha256"] == row["validation_sha256"]
+                and history["draft_validation_sha256"] == item["validationSha256"]
             ),
-        } for history in db.execute("""
-          SELECT source_sha256,draft_validation_sha256,decision,reviewed_at,reviewer,reason
-          FROM annual_filing_review_history
-          WHERE ticker=? AND accession_number=? ORDER BY id DESC LIMIT 10
-        """, (row["ticker"], row["accession_number"]))]
-        items.append(item)
+        })
     priority = {"held": 1, "draft": 2, "rejected": 3, "approved": 4}
     items.sort(key=lambda item: (
         0 if not item["integrityValid"] else priority.get(item["status"], 5)
     ))
-    return {"generatedAt": now(), "counts": counts, "items": items[:limit]}
+    if review_filter == "actionable":
+        filtered = [item for item in items if not item["integrityValid"]
+                    or item["status"] in {"draft", "held"}]
+    elif review_filter == "invalid":
+        filtered = [item for item in items if not item["integrityValid"]]
+    elif review_filter == "all":
+        filtered = items
+    else:
+        filtered = [item for item in items if item["status"] == review_filter]
+    return {
+        "generatedAt": now(), "counts": counts, "view": review_filter,
+        "filteredTotal": len(filtered), "items": filtered[:limit],
+    }
 
 
 def approved_annual_filing_brief(db, ticker, accession, source_sha):
