@@ -318,6 +318,13 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(widget, /12か月チャート/);
   assert.match(widget, /view, setView/);
   assert.match(widget, /range: "12M"/);
+  assert.doesNotMatch(widget, /key=\{`\$\{symbol\}:\$\{lang\}:\$\{view\}`\}/);
+  assert.match(widget, /TradingViewPanels key=\{`\$\{symbol\}:\$\{lang\}`\}/);
+  assert.match(widget, /<TradingViewEmbed kind="compact"/);
+  assert.match(widget, /chartOpened && <TradingViewEmbed kind="chart"/);
+  assert.match(widget, /inert=\{view !== "compact"\}/);
+  assert.match(widget, /チャートを再読み込み/);
+  assert.match(chartStyles, /\.panel\[data-active=false\]\{[^}]*width:100%;visibility:hidden/);
   assert.match(widget, /MutationObserver/);
   assert.match(widget, /15_000/);
   assert.doesNotMatch(widget, /hidden=\{failed\}/);

@@ -7,6 +7,11 @@
 .viewTabs{display:flex;gap:8px;padding:14px 26px 0}
 .viewTabs button{border:1px solid #263b49;border-radius:999px;background:#101b25;color:#8fa1af;padding:8px 13px;font:inherit;font-size:.72rem;cursor:pointer}
 .viewTabs button[aria-selected=true]{border-color:#528f76;background:#153529;color:#c7f7e2}
+.panels{position:relative}
+.panel{display:flow-root;min-width:0}
+.panel[data-active=false]{position:absolute;top:0;left:0;width:100%;visibility:hidden;pointer-events:none}
+.chartHelp{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:0 20px 14px;color:#8fa1af;font-size:.72rem}
+.chartHelp button{border:1px solid #263b49;border-radius:999px;background:#101b25;color:#c7f7e2;padding:6px 10px;font:inherit;cursor:pointer}
 .embed{position:relative;margin:12px 26px 20px;overflow:hidden;border:1px solid #243541;border-radius:8px;background:#101820}
 .embed :global(.tradingview-widget-container__widget){width:100%;height:100%}
 /* Let TradingView size its complete card, including extended-hours prices. */
