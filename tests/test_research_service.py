@@ -47,6 +47,12 @@ class ResearchServiceTests(unittest.TestCase):
     def tearDown(self):
         self.temp.cleanup()
 
+    def brief_validation_sha(self, app, url):
+        return next(
+            item["draft_validation_sha256"]
+            for item in app.editorial_queue(50)["items"] if item["url"] == url
+        )
+
     def test_body_fetch_prioritizes_new_event_and_exports_only_metadata(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         app.body_batch = 1
@@ -306,8 +312,15 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertTrue(queue["items"][0]["review_preflight"]["ready"])
         with monitor.connect(self.db_path) as db:
             self.assertEqual(db.execute("SELECT count(*) FROM brief_review_history").fetchone()[0], 0)
+        with self.assertRaisesRegex(ValueError, "draft-revision-mismatch"):
+            app.decide_brief({
+                "url": payload["url"], "sha256": payload["sha256"],
+                "decision": "approved", "reviewer": "editor",
+                "reason": "下書き指紋なしでは判断できません",
+            })
         decision = app.decide_brief({
             "url": payload["url"], "sha256": payload["sha256"], "decision": "approved",
+            "validationSha256": self.brief_validation_sha(app, payload["url"]),
             "reviewer": "editor", "reason": "原文と数値を確認",
         })
         self.assertFalse(decision["published"])
@@ -335,6 +348,7 @@ class ResearchServiceTests(unittest.TestCase):
         app.save_brief(first)
         app.decide_brief({
             "url": url, "sha256": first["sha256"], "decision": "approved",
+            "validationSha256": self.brief_validation_sha(app, url),
             "reviewer": "first-editor", "reason": "初版の原文と根拠を確認しました",
         })
         self.assertEqual(app.public_snapshot()["briefs"][0]["source_sha256"], first["sha256"])
@@ -372,6 +386,7 @@ class ResearchServiceTests(unittest.TestCase):
         app.save_brief(second)
         app.decide_brief({
             "url": url, "sha256": second["sha256"], "decision": "held",
+            "validationSha256": self.brief_validation_sha(app, url),
             "reviewer": "second-editor", "reason": "許認可への影響を追加確認します",
         })
         self.assertEqual(app.public_snapshot()["briefs"], [])
@@ -383,6 +398,7 @@ class ResearchServiceTests(unittest.TestCase):
         app.save_brief(corrected)
         app.decide_brief({
             "url": url, "sha256": corrected["sha256"], "decision": "approved",
+            "validationSha256": self.brief_validation_sha(app, url),
             "reviewer": "final-editor", "reason": "更新後の原文と修正版の根拠を確認しました",
         })
         public = app.public_snapshot()["briefs"]
@@ -428,6 +444,7 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(item["generation_total_tokens"], 520)
         app.decide_brief({
             "url": "https://nebius.com/newsroom/new-release", "sha256": "d" * 64,
+            "validationSha256": item["draft_validation_sha256"],
             "decision": "approved", "reviewer": "human-editor",
             "reason": "AI下書きと公式原文の根拠を人間が照合しました",
         })
@@ -663,11 +680,18 @@ class ResearchServiceTests(unittest.TestCase):
                 )
                 with urlopen(annual_draft, timeout=2) as response:
                     self.assertEqual(json.loads(response.read())["status"], "draft")
+                annual_queue = Request(
+                    f"http://127.0.0.1:{server.server_port}/admin/annual-briefs",
+                    headers={"Authorization": "Bearer editor-token-at-least-24-characters"},
+                )
+                with urlopen(annual_queue, timeout=2) as response:
+                    annual_validation_sha = json.loads(response.read())["items"][0]["validationSha256"]
                 annual_review = Request(
                     f"http://127.0.0.1:{server.server_port}/admin/annual-briefs/review",
                     data=json.dumps({
                         "ticker": "NVDA", "accessionNumber": annual["accessionNumber"],
-                        "sourceSha256": annual["sourceSha256"], "decision": "approved",
+                        "sourceSha256": annual["sourceSha256"],
+                        "validationSha256": annual_validation_sha, "decision": "approved",
                         "reviewer": "private-editor", "reason": "SEC原文と根拠引用を照合済み",
                     }).encode(), method="POST",
                     headers={"Authorization": "Bearer editor-token-at-least-24-characters", "Content-Type": "application/json"},

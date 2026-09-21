@@ -1228,6 +1228,7 @@ def private_brief_queue(db, limit=20, review_filter="all"):
         brief_validation_sha = row.pop("brief_validation_sha256")
         brief_current = bool(brief_source_sha and brief_source_sha == row["sha256"] and row["brief_status"] != "stale")
         row["brief_current"] = brief_current
+        row["draft_validation_sha256"] = brief_validation_sha if brief_current else None
         evidence_rows = (db.execute(
             "SELECT field,excerpt FROM brief_evidence WHERE url=? ORDER BY id", (row["url"],)
         ).fetchall() if brief_source_sha else [])
@@ -1948,7 +1949,7 @@ def save_brief_draft(db, url, expected_sha, summary_ja, impact_label, impact_ja,
     return {"url": url, "status": "draft", "generatedAt": generated_at, "published": False}
 
 
-def review_brief(db, url, expected_sha, decision, reviewer, reason):
+def review_brief(db, url, expected_sha, decision, reviewer, reason, expected_validation_sha=None):
     """Record the mandatory human decision for the current source revision."""
     if decision not in {"approved", "held", "rejected"}:
         raise ValueError("Decision, reviewer, and reason are required")
@@ -1963,6 +1964,10 @@ def review_brief(db, url, expected_sha, decision, reviewer, reason):
         evidence_rows = db.execute(
             "SELECT field,excerpt FROM brief_evidence WHERE url=? ORDER BY id", (url,)
         ).fetchall()
+        if expected_validation_sha is not None:
+            if (not _ANNUAL_SHA.fullmatch(str(expected_validation_sha)) or not row
+                    or row["validation_sha256"] != expected_validation_sha):
+                raise ValueError("draft-revision-mismatch")
         try:
             _validate_brief_for_review(row, evidence_rows, expected_sha)
         except ValueError as exc:
@@ -2183,7 +2188,9 @@ def save_annual_filing_brief_draft(db, payload):
             "status": "draft", "generatedAt": generated_at, "published": False}
 
 
-def review_annual_filing_brief(db, ticker, accession, expected_sha, decision, reviewer, reason):
+def review_annual_filing_brief(
+        db, ticker, accession, expected_sha, decision, reviewer, reason,
+        expected_validation_sha=None):
     """Record a human decision for one exact annual filing revision."""
     if not _ANNUAL_TICKER.fullmatch(str(ticker)) or not _ANNUAL_ACCESSION.fullmatch(str(accession)):
         raise ValueError("invalid-annual-filing-identity")
@@ -2202,6 +2209,10 @@ def review_annual_filing_brief(db, ticker, accession, expected_sha, decision, re
         """, (ticker, accession)).fetchone()
         if not row or row["source_sha256"] != expected_sha:
             raise ValueError("annual-draft-missing-or-source-changed")
+        if expected_validation_sha is not None:
+            if (not _ANNUAL_SHA.fullmatch(str(expected_validation_sha))
+                    or row["validation_sha256"] != expected_validation_sha):
+                raise ValueError("annual-draft-revision-mismatch")
         record = _annual_record_from_row(row)
         if not row["validation_sha256"] or row["validation_sha256"] != _annual_validation_sha(record):
             raise ValueError("annual-draft-evidence-invalid")
@@ -2239,7 +2250,10 @@ def _annual_row(row, private=False):
         "generatedAt": generated_at, "reviewedAt": reviewed_at,
     }
     if private:
-        value.update({"reviewer": row["reviewer"], "reviewReason": row["review_reason"]})
+        value.update({
+            "reviewer": row["reviewer"], "reviewReason": row["review_reason"],
+            "validationSha256": row["validation_sha256"],
+        })
     return value
 
 
@@ -2339,6 +2353,7 @@ def main():
     brief_review.add_argument("url")
     brief_review.add_argument("sha256")
     brief_review.add_argument("decision", choices=["approved", "held", "rejected"])
+    brief_review.add_argument("--validation-sha256", required=True)
     brief_review.add_argument("--reviewer", required=True)
     brief_review.add_argument("--reason", required=True)
     args = p.parse_args()
@@ -2365,7 +2380,10 @@ def main():
                                       args.impact_ja, args.confidence,
                                       {"summary": args.summary_evidence, "impact": args.impact_evidence})
         elif args.command == "review-brief":
-            result = review_brief(db, args.url, args.sha256, args.decision, args.reviewer, args.reason)
+            result = review_brief(
+                db, args.url, args.sha256, args.decision, args.reviewer, args.reason,
+                args.validation_sha256,
+            )
         elif args.command == "refresh":
             if not 0 <= args.check_limit <= 200:
                 p.error("--check-limit must be between 0 and 200")

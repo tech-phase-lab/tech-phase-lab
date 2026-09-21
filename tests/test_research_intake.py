@@ -786,6 +786,50 @@ class IntakeTests(unittest.TestCase):
             ["draft-fingerprint-mismatch"],
         )
 
+    def test_brief_review_rejects_a_draft_changed_after_the_editor_loaded_it(self):
+        body = b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main>"
+        self.check(body)
+        sha = self.row()["sha256"]
+        evidence = {
+            "summary": ["Capacity will increase."],
+            "impact": ["Execution remains subject to demand."],
+        }
+        m.save_brief_draft(
+            self.db, URL, sha,
+            "公式発表では、AI向けの供給能力を増やす計画が示されています。",
+            "mixed", "供給拡大の余地はありますが、需要と実行状況の確認が必要です。",
+            "medium", evidence,
+        )
+        first_validation_sha = m.private_brief_queue(
+            self.db, 5
+        )["items"][0]["draft_validation_sha256"]
+        m.save_brief_draft(
+            self.db, URL, sha,
+            "公式発表では、AI向け供給能力を拡大する方針が示されています。",
+            "mixed", "供給拡大の余地はありますが、需要と実行状況の確認が必要です。",
+            "medium", evidence,
+        )
+        current_validation_sha = m.private_brief_queue(
+            self.db, 5
+        )["items"][0]["draft_validation_sha256"]
+        self.assertNotEqual(first_validation_sha, current_validation_sha)
+        with self.assertRaisesRegex(ValueError, "draft-revision-mismatch"):
+            m.review_brief(
+                self.db, URL, sha, "approved", "stale-editor",
+                "画面表示時の下書きを確認しました", first_validation_sha,
+            )
+        self.assertEqual(self.db.execute(
+            "SELECT status FROM briefs WHERE url=?", (URL,)
+        ).fetchone()[0], "draft")
+        self.assertEqual(self.db.execute(
+            "SELECT count(*) FROM brief_review_history WHERE url=?", (URL,)
+        ).fetchone()[0], 0)
+        result = m.review_brief(
+            self.db, URL, sha, "held", "current-editor",
+            "最新版を確認して追加確認に回します", current_validation_sha,
+        )
+        self.assertEqual(result["status"], "held")
+
     def test_stale_source_check_blocks_review_and_public_preview(self):
         body = b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main>"
         self.check(body)
@@ -1038,6 +1082,31 @@ class IntakeTests(unittest.TestCase):
         }
         saved = m.save_annual_filing_brief_draft(self.db, payload)
         self.assertEqual(saved["status"], "draft")
+        first_validation_sha = m.annual_filing_brief_queue(
+            self.db
+        )["items"][0]["validationSha256"]
+        reworded_before_review = {
+            **payload,
+            "summaryJa": "計算基盤とソフトウェアをデータセンターなどへ提供している企業です。",
+        }
+        m.save_annual_filing_brief_draft(self.db, reworded_before_review)
+        current_validation_sha = m.annual_filing_brief_queue(
+            self.db
+        )["items"][0]["validationSha256"]
+        self.assertNotEqual(first_validation_sha, current_validation_sha)
+        with self.assertRaisesRegex(ValueError, "annual-draft-revision-mismatch"):
+            m.review_annual_filing_brief(
+                self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"],
+                "approved", "stale-editor", "画面表示時の下書きを確認しました",
+                first_validation_sha,
+            )
+        self.assertEqual(self.db.execute(
+            "SELECT status FROM annual_filing_briefs WHERE ticker='NVDA'"
+        ).fetchone()[0], "draft")
+        self.assertEqual(self.db.execute(
+            "SELECT count(*) FROM annual_filing_review_history WHERE ticker='NVDA'"
+        ).fetchone()[0], 0)
+        m.save_annual_filing_brief_draft(self.db, payload)
         self.assertIsNone(m.approved_annual_filing_brief(
             self.db, "NVDA", payload["accessionNumber"], payload["sourceSha256"]
         ))

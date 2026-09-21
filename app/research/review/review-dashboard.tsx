@@ -28,7 +28,8 @@ type PreviousBrief = {
 type ReviewItem = {
   url: string; ticker: string; title: string | null; published_on: string | null; discovered_at: string;
   checked_at: string; sha256: string; source_text: string; source_text_truncated: boolean;
-  brief_current: boolean; review_history?: ReviewHistory[]; revision_evidence?: RevisionEvidence | null;
+  brief_current: boolean; draft_validation_sha256: string | null;
+  review_history?: ReviewHistory[]; revision_evidence?: RevisionEvidence | null;
   previous_brief?: PreviousBrief | null;
   summary_ja: string | null; impact_label: string | null; impact_ja: string | null; confidence: string | null;
   brief_status: string | null; generated_at: string | null; reviewed_at: string | null; evidence: Evidence;
@@ -48,6 +49,7 @@ type AnnualRecord = {
   evidence: { id: string; section: "business" | "risk"; quote: string }[];
   confidence: "low" | "medium" | "high"; generationMethod: "human" | "ai-assisted";
   status: "draft" | "approved" | "held" | "rejected";
+  validationSha256: string | null;
   generatedAt: string; reviewedAt: string | null; reviewer: string | null; reviewReason: string | null;
   reviewHistory?: {
     sourceSha256: string; draftValidationSha256: string | null;
@@ -234,20 +236,26 @@ export default function ReviewDashboard() {
 
   async function submitReview(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!selected) return;
+    if (!selected?.draft_validation_sha256) return;
     const form = new FormData(event.currentTarget);
     setBusy(true);
     try {
       await request("POST", { action: "review", payload: {
         url: selected.url,
         sha256: selected.sha256,
+        validationSha256: selected.draft_validation_sha256,
         decision: form.get("decision"),
         reviewer: form.get("reviewer"),
         reason: form.get("reason"),
       } });
       await load("人間の判断を記録しました。承認しても会員への自動配信は行いません。");
     } catch (error) {
-      setMessage(`判断の保存失敗：${error instanceof Error ? error.message : "unknown"}`);
+      const code = error instanceof Error ? error.message : "unknown";
+      if (code === "draft-revision-mismatch") {
+        await load("別の編集者が下書きを更新したため、最新版を再読み込みしました。内容を確認し直してください。");
+      } else {
+        setMessage(`判断の保存失敗：${code}`);
+      }
     } finally { setBusy(false); }
   }
 
@@ -299,7 +307,7 @@ export default function ReviewDashboard() {
 
   async function submitAnnualReview(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!annualSource?.business || !annualRecord) return;
+    if (!annualSource?.business || !annualRecord?.validationSha256) return;
     const form = new FormData(event.currentTarget);
     setBusy(true);
     try {
@@ -307,13 +315,19 @@ export default function ReviewDashboard() {
         ticker: annualSource.business.ticker,
         accessionNumber: annualSource.business.accessionNumber,
         sourceSha256: annualSource.business.sourceSha256,
+        validationSha256: annualRecord.validationSha256,
         decision: form.get("decision"),
         reviewer: form.get("reviewer"),
         reason: form.get("reason"),
       } }, "annual");
       await loadAnnual("年次報告書の人間判断を記録しました。承認後も会員通知や外部配信は行いません。");
     } catch (error) {
-      setMessage(`年次報告書の判断保存失敗：${error instanceof Error ? error.message : "unknown"}`);
+      const code = error instanceof Error ? error.message : "unknown";
+      if (code === "annual-draft-revision-mismatch") {
+        await loadAnnual("別の編集者が年次報告書の下書きを更新したため、最新版を再読み込みしました。内容を確認し直してください。");
+      } else {
+        setMessage(`年次報告書の判断保存失敗：${code}`);
+      }
     } finally { setBusy(false); }
   }
 
@@ -339,7 +353,7 @@ export default function ReviewDashboard() {
           <label>影響判定の根拠抜粋<textarea name="impactEvidence" required defaultValue={selected.evidence.impact.join("\n\n")} /></label>
           <button disabled={busy}>根拠付き下書きを保存</button>
         </form>
-        <form onSubmit={submitReview} className={styles.form}><h2>人間による最終判断</h2><p>現在：{labels[selected.brief_status ?? ""] ?? "下書きなし"}{selected.brief_status && !selected.brief_current ? " · 新しい下書き保存後に判断できます" : ""}</p>
+        <form onSubmit={submitReview} className={styles.form}><h2>人間による最終判断</h2><p>現在：{labels[selected.brief_status ?? ""] ?? "下書きなし"}{selected.brief_status && !selected.brief_current ? " · 新しい下書き保存後に判断できます" : ""}。画面に表示した下書き指紋も判断時に再照合します。</p>
           <aside className={styles.warning}>
             <strong>{selected.review_preflight.ready ? "承認前の機械検証：通過" : "承認前の機械検証：要修正"}</strong>
             {selected.review_preflight.ready
@@ -347,7 +361,7 @@ export default function ReviewDashboard() {
               : <ul>{selected.review_preflight.blockers.map(code => <li key={code}>{preflightLabels[code] ?? "下書きを現在の原文から再保存してください"}</li>)}</ul>}
           </aside>
           <div className={styles.row}><label>判断<select name="decision"><option value="held">保留</option><option value="approved">承認</option><option value="rejected">却下</option></select></label><label>確認者<input name="reviewer" required minLength={2} /></label></div>
-          <label>判断理由<textarea name="reason" required minLength={5} /></label><button disabled={busy || !selected.review_preflight.ready}>判断を記録</button>
+          <label>判断理由<textarea name="reason" required minLength={5} /></label><button disabled={busy || !selected.review_preflight.ready || !selected.draft_validation_sha256}>判断を記録</button>
         </form>
         {selectedReviewHistory.length > 0 && <details className={styles.evidence}><summary>判断履歴（直近{selectedReviewHistory.length}件）</summary><ol>{selectedReviewHistory.map((entry, index) => <li key={`${entry.reviewed_at}-${index}`}><div><b>{labels[entry.decision]}</b><span>{entry.reviewed_at.replace("T", " ").replace("+00:00", " UTC")} · {entry.reviewer}{entry.current_revision ? " · 現在の下書き" : " · 過去の下書き"}</span></div><p>{entry.reason}</p><small>原文 {entry.source_sha256.slice(0, 12)}…{entry.draft_validation_sha256 ? ` · 下書き ${entry.draft_validation_sha256.slice(0, 12)}…` : " · 旧履歴（下書き指紋なし）"}</small></li>)}</ol></details>}
       </article>}
@@ -379,9 +393,9 @@ export default function ReviewDashboard() {
         <label>確信度<select name="confidence" defaultValue={annualRecord?.confidence ?? "low"}><option value="low">low</option><option value="medium">medium</option><option value="high">high</option></select></label>
         <button disabled={busy}>年次報告書の下書きを保存</button>
       </form>
-      <form onSubmit={submitAnnualReview} className={styles.form}><h2>人間による最終判断</h2><p>SEC原文・提出番号・SHA・根拠引用・数値を確認してから判断します。原文更新時は公開側で自動失効します。</p>
+      <form onSubmit={submitAnnualReview} className={styles.form}><h2>人間による最終判断</h2><p>SEC原文・提出番号・SHA・根拠引用・数値を確認してから判断します。画面に表示した下書き指紋も再照合し、原文更新時は公開側で自動失効します。</p>
         <div className={styles.row}><label>判断<select name="decision"><option value="held">保留</option><option value="approved">承認</option><option value="rejected">却下</option></select></label><label>確認者<input name="reviewer" required minLength={2} /></label></div>
-        <label>判断理由<textarea name="reason" required minLength={5} maxLength={500} /></label><button disabled={busy || !annualRecord}>判断を記録</button>
+        <label>判断理由<textarea name="reason" required minLength={5} maxLength={500} /></label><button disabled={busy || !annualRecord?.validationSha256}>判断を記録</button>
       </form>
       {annualReviewHistory.length > 0 && <details className={styles.evidence}><summary>年次報告書の判断履歴（直近{annualReviewHistory.length}件）</summary><ol>{annualReviewHistory.map((entry, index) => <li key={`${entry.reviewedAt}-${index}`}><div><b>{labels[entry.decision]}</b><span>{entry.reviewedAt.replace("T", " ").replace("Z", " UTC")} · {entry.reviewer}{entry.currentRevision ? " · 現在の下書き" : " · 過去の下書き"}</span></div><p>{entry.reason}</p><small>原文 {entry.sourceSha256.slice(0, 12)}…{entry.draftValidationSha256 ? ` · 下書き ${entry.draftValidationSha256.slice(0, 12)}…` : " · 旧履歴（下書き指紋なし）"}</small></li>)}</ol></details>}
     </article>}

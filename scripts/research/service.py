@@ -351,6 +351,7 @@ class AutomaticMonitor:
                 db, payload.get("ticker", ""), payload.get("accessionNumber", ""),
                 payload.get("sourceSha256", ""), payload.get("decision", ""),
                 payload.get("reviewer", ""), payload.get("reason", ""),
+                payload.get("validationSha256", ""),
             )
 
     def save_brief(self, payload):
@@ -429,6 +430,7 @@ class AutomaticMonitor:
             result = monitor.review_brief(
                 db, payload.get("url", ""), payload.get("sha256", ""),
                 payload.get("decision", ""), payload.get("reviewer", ""), payload.get("reason", ""),
+                payload.get("validationSha256", ""),
             )
             monitor.write_snapshot(db, self.snapshot_path)
             return result
