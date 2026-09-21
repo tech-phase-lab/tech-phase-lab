@@ -1174,6 +1174,31 @@ def private_brief_queue(db, limit=20):
             "summary": [item["excerpt"] for item in evidence if item["field"] == "summary"],
             "impact": [item["excerpt"] for item in evidence if item["field"] == "impact"],
         }
+        preflight_row = {
+            "source_sha256": brief_source_sha,
+            "current_sha": row["sha256"],
+            "source_error": None,
+            "source_text": row["extracted_text"],
+            "summary_ja": row["summary_ja"],
+            "impact_label": row["impact_label"],
+            "impact_ja": row["impact_ja"],
+            "confidence": row["confidence"],
+            "validation_sha256": brief_validation_sha,
+        }
+        try:
+            _validate_brief_for_review(preflight_row, evidence_rows, row["sha256"])
+            row["review_preflight"] = {
+                "ready": True,
+                "blockers": [],
+                "checks": [
+                    "source-revision-current", "source-fetch-successful",
+                    "evidence-and-numbers-valid", "draft-fingerprint-matched",
+                ],
+            }
+        except ValueError as exc:
+            row["review_preflight"] = {
+                "ready": False, "blockers": [str(exc)], "checks": [],
+            }
         row["review_history"] = [{
             "source_sha256": item["source_sha256"], "decision": item["decision"],
             "draft_validation_sha256": item["draft_validation_sha256"],
@@ -1759,6 +1784,38 @@ def _brief_validation_sha(source_sha, summary_ja, impact_label, impact_ja, confi
     return hashlib.sha256(encoded).hexdigest()
 
 
+def _validate_brief_for_review(row, evidence_rows, expected_sha):
+    """Run the exact, read-only integrity checks required before a human decision."""
+    if not row or not row["source_sha256"]:
+        raise ValueError("draft-missing")
+    if row["source_sha256"] != expected_sha or row["current_sha"] != expected_sha:
+        raise ValueError("source-revision-mismatch")
+    if row["source_error"] or not row["source_text"]:
+        raise ValueError("source-unavailable")
+    if any(item["field"] not in {"summary", "impact"} for item in evidence_rows):
+        raise ValueError("draft-evidence-invalid")
+    evidence = {
+        field: [item["excerpt"] for item in evidence_rows if item["field"] == field]
+        for field in ("summary", "impact")
+    }
+    try:
+        summary_ja, impact_ja, cleaned = _validate_brief_payload(
+            row["source_text"], row["summary_ja"], row["impact_label"],
+            row["impact_ja"], row["confidence"], evidence,
+        )
+    except (AttributeError, TypeError, ValueError) as exc:
+        raise ValueError("draft-evidence-invalid") from exc
+    validation_sha = _brief_validation_sha(
+        expected_sha, summary_ja, row["impact_label"], impact_ja,
+        row["confidence"], cleaned,
+    )
+    if not row["validation_sha256"]:
+        raise ValueError("draft-fingerprint-missing")
+    if row["validation_sha256"] != validation_sha:
+        raise ValueError("draft-fingerprint-mismatch")
+    return validation_sha
+
+
 def _public_brief_evidence(evidence, maximum_items=2, maximum_chars=320):
     """Expose a small, source-verbatim prefix without leaking editorial metadata."""
     result = {}
@@ -1819,29 +1876,19 @@ def review_brief(db, url, expected_sha, decision, reviewer, reason):
           SELECT b.*,s.sha256 AS current_sha,s.error AS source_error,s.extracted_text AS source_text
           FROM briefs b JOIN sources s ON s.url=b.url WHERE b.url=?
         """, (url,)).fetchone()
-        if not row or row["source_sha256"] != expected_sha or row["current_sha"] != expected_sha or row["source_error"] or not row["source_text"]:
-            raise ValueError("Draft evidence is missing or the official source changed; regenerate before review")
         evidence_rows = db.execute(
             "SELECT field,excerpt FROM brief_evidence WHERE url=? ORDER BY id", (url,)
         ).fetchall()
-        if any(item["field"] not in {"summary", "impact"} for item in evidence_rows):
-            raise ValueError("Draft evidence is missing or invalid; regenerate before review")
-        evidence = {
-            field: [item["excerpt"] for item in evidence_rows if item["field"] == field]
-            for field in ("summary", "impact")
-        }
         try:
-            summary_ja, impact_ja, cleaned = _validate_brief_payload(
-                row["source_text"], row["summary_ja"], row["impact_label"], row["impact_ja"],
-                row["confidence"], evidence,
-            )
-        except (TypeError, ValueError) as exc:
-            raise ValueError("Draft evidence is missing or invalid; regenerate before review") from exc
-        validation_sha = _brief_validation_sha(
-            expected_sha, summary_ja, row["impact_label"], impact_ja, row["confidence"], cleaned
-        )
-        if not row["validation_sha256"] or row["validation_sha256"] != validation_sha:
-            raise ValueError("Draft evidence is missing or invalid; regenerate before review")
+            _validate_brief_for_review(row, evidence_rows, expected_sha)
+        except ValueError as exc:
+            if str(exc) in {"draft-missing", "source-revision-mismatch", "source-unavailable"}:
+                raise ValueError(
+                    "Draft evidence is missing or the official source changed; regenerate before review"
+                ) from exc
+            raise ValueError(
+                "Draft evidence is missing or invalid; regenerate before review"
+            ) from exc
         reviewed_at = now()
         db.execute("""
           INSERT INTO brief_review_history(

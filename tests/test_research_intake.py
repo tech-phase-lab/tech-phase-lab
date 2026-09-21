@@ -752,6 +752,12 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(len(editorial["items"]), 1)
         self.assertIn("Capacity will increase", editorial["items"][0]["source_text"])
         self.assertEqual(editorial["items"][0]["evidence"]["summary"], ["Capacity will increase in 2027."])
+        self.assertTrue(editorial["items"][0]["review_preflight"]["ready"])
+        self.assertEqual(editorial["items"][0]["review_preflight"]["blockers"], [])
+        self.assertIn(
+            "draft-fingerprint-matched",
+            editorial["items"][0]["review_preflight"]["checks"],
+        )
         review_history = editorial["items"][0]["review_history"]
         self.assertEqual(len(review_history), 1)
         self.assertEqual(review_history[0]["source_sha256"], sha)
@@ -768,6 +774,12 @@ class IntakeTests(unittest.TestCase):
         )
         self.db.commit()
         self.assertEqual(m.snapshot(self.db)["briefs"], [])
+        tampered = m.private_brief_queue(self.db, 5)["items"][0]
+        self.assertFalse(tampered["review_preflight"]["ready"])
+        self.assertEqual(
+            tampered["review_preflight"]["blockers"],
+            ["draft-fingerprint-mismatch"],
+        )
 
     def test_public_brief_evidence_is_bounded_and_marks_truncation(self):
         result = m._public_brief_evidence({
@@ -896,6 +908,11 @@ class IntakeTests(unittest.TestCase):
         stale = m.private_brief_queue(self.db, 5)["items"][0]
         self.assertFalse(stale["brief_current"])
         self.assertEqual(stale["brief_status"], "stale")
+        self.assertFalse(stale["review_preflight"]["ready"])
+        self.assertEqual(
+            stale["review_preflight"]["blockers"],
+            ["source-revision-mismatch"],
+        )
         self.assertIsNone(stale["summary_ja"])
         self.assertIsNone(stale["impact_ja"])
         self.assertEqual(stale["evidence"], {"summary": [], "impact": []})

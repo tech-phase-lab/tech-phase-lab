@@ -303,6 +303,9 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertFalse(app.save_brief(payload)["published"])
         queue = app.editorial_queue(5)
         self.assertEqual(queue["items"][0]["brief_status"], "draft")
+        self.assertTrue(queue["items"][0]["review_preflight"]["ready"])
+        with monitor.connect(self.db_path) as db:
+            self.assertEqual(db.execute("SELECT count(*) FROM brief_review_history").fetchone()[0], 0)
         decision = app.decide_brief({
             "url": payload["url"], "sha256": payload["sha256"], "decision": "approved",
             "reviewer": "editor", "reason": "原文と数値を確認",
@@ -346,6 +349,8 @@ class ResearchServiceTests(unittest.TestCase):
         stale = app.editorial_queue(5)["items"][0]
         self.assertEqual(stale["brief_status"], "stale")
         self.assertFalse(stale["brief_current"])
+        self.assertFalse(stale["review_preflight"]["ready"])
+        self.assertEqual(stale["review_preflight"]["blockers"], ["source-revision-mismatch"])
         self.assertEqual(stale["previous_brief"]["summary_ja"], first["summaryJa"])
         self.assertEqual(app.public_snapshot()["briefs"], [])
         with self.assertRaises(ValueError):

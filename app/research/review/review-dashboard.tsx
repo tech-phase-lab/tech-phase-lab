@@ -30,6 +30,7 @@ type ReviewItem = {
   previous_brief?: PreviousBrief | null;
   summary_ja: string | null; impact_label: string | null; impact_ja: string | null; confidence: string | null;
   brief_status: string | null; generated_at: string | null; reviewed_at: string | null; evidence: Evidence;
+  review_preflight: { ready: boolean; blockers: string[]; checks: string[] };
   generation_provider: string | null; generation_model: string | null; generation_response_id: string | null;
   generation_source_truncated: number; generation_input_tokens: number | null;
   generation_output_tokens: number | null; generation_total_tokens: number | null;
@@ -60,6 +61,14 @@ const labels: Record<string, string> = { draft: "下書き", approved: "承認�
 const jobLabels: Record<string, string> = {
   "waiting-body": "原文取得待ち", queued: "AI生成待ち", running: "AI生成中", retry: "AI再試行待ち",
   succeeded: "AI下書き生成済み", failed: "AI生成停止",
+};
+const preflightLabels: Record<string, string> = {
+  "draft-missing": "現在の原文に対応する下書きがありません",
+  "source-revision-mismatch": "下書き作成後に公式原文が更新されました",
+  "source-unavailable": "公式原文の最新取得を確認できません",
+  "draft-evidence-invalid": "根拠引用または数値根拠を再確認してください",
+  "draft-fingerprint-missing": "旧形式の下書きです。現在の原文から再保存してください",
+  "draft-fingerprint-mismatch": "保存後に下書きまたは根拠が変更されています",
 };
 const splitEvidence = (value: string) => value.split(/\n{2,}/).map(v => v.trim()).filter(Boolean);
 const riskCorpus = (risks: RiskSection | null) => [
@@ -309,8 +318,14 @@ export default function ReviewDashboard() {
           <button disabled={busy}>根拠付き下書きを保存</button>
         </form>
         <form onSubmit={submitReview} className={styles.form}><h2>人間による最終判断</h2><p>現在：{labels[selected.brief_status ?? ""] ?? "下書きなし"}{selected.brief_status && !selected.brief_current ? " · 新しい下書き保存後に判断できます" : ""}</p>
+          <aside className={styles.warning}>
+            <strong>{selected.review_preflight.ready ? "承認前の機械検証：通過" : "承認前の機械検証：要修正"}</strong>
+            {selected.review_preflight.ready
+              ? <span>原文SHA・最新取得・根拠引用・数値根拠・下書き指紋が一致しています。これは人間による内容確認の代わりではありません。</span>
+              : <ul>{selected.review_preflight.blockers.map(code => <li key={code}>{preflightLabels[code] ?? "下書きを現在の原文から再保存してください"}</li>)}</ul>}
+          </aside>
           <div className={styles.row}><label>判断<select name="decision"><option value="held">保留</option><option value="approved">承認</option><option value="rejected">却下</option></select></label><label>確認者<input name="reviewer" required minLength={2} /></label></div>
-          <label>判断理由<textarea name="reason" required minLength={5} /></label><button disabled={busy || !selected.brief_status || !selected.brief_current}>判断を記録</button>
+          <label>判断理由<textarea name="reason" required minLength={5} /></label><button disabled={busy || !selected.review_preflight.ready}>判断を記録</button>
         </form>
         {selectedReviewHistory.length > 0 && <details className={styles.evidence}><summary>判断履歴（直近{selectedReviewHistory.length}件）</summary><ol>{selectedReviewHistory.map((entry, index) => <li key={`${entry.reviewed_at}-${index}`}><div><b>{labels[entry.decision]}</b><span>{entry.reviewed_at.replace("T", " ").replace("+00:00", " UTC")} · {entry.reviewer}{entry.current_revision ? " · 現在の下書き" : " · 過去の下書き"}</span></div><p>{entry.reason}</p><small>原文 {entry.source_sha256.slice(0, 12)}…{entry.draft_validation_sha256 ? ` · 下書き ${entry.draft_validation_sha256.slice(0, 12)}…` : " · 旧履歴（下書き指紋なし）"}</small></li>)}</ol></details>}
       </article>}
