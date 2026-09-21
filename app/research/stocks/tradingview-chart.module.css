@@ -13,7 +13,7 @@
 .quoteViewport:focus-visible{outline:2px solid #9de3c5;outline-offset:3px}
 /* Keep the provider's complete card at its natural aspect ratio. No masks or iframe transforms. */
 .compactEmbed{min-width:760px;min-height:220px}
-.quoteNavigation{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 20px 0}
+.quoteNavigation{display:none}
 .quoteNavigation p{margin:0;color:#91a4b2;font-size:.72rem;line-height:1.6}
 .quoteNavigation>div{display:flex;gap:8px;flex:none}
 .quoteNavigation button{min-height:44px;padding:8px 12px;border:1px solid #365c4d;border-radius:8px;background:#10271f;color:#c7f7e2;font:inherit;font-size:.74rem;cursor:pointer}
