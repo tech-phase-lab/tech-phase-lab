@@ -1532,6 +1532,52 @@ def public_error(error):
     return "fetch-error"
 
 
+def sec_evidence_summary(db, tickers):
+    """Return URL-free SEC body evidence counts for operational health checks."""
+    requested = tuple(dict.fromkeys(str(ticker).strip().upper() for ticker in tickers if ticker))
+    empty = {"total": 0, "exhibit": 0, "direct": 0, "pending": 0, "error": 0}
+    by_ticker = {ticker: {**empty, "lastCheckedAt": None} for ticker in requested}
+    if not requested:
+        return {**empty, "lastCheckedAt": None, "byTicker": by_ticker}
+    placeholders = ",".join("?" for _ in requested)
+    rows = db.execute(f"""
+      SELECT ticker,url,checked_at,sha256,error,evidence_kind
+      FROM sources
+      WHERE ticker IN ({placeholders})
+      ORDER BY ticker,url
+    """, requested).fetchall()
+    last_checked_at = None
+    totals = dict(empty)
+    for row in rows:
+        try:
+            parsed = urlsplit(row["url"])
+        except (TypeError, ValueError):
+            continue
+        if parsed.scheme != "https" or parsed.hostname != "www.sec.gov" \
+                or not parsed.path.lower().startswith("/archives/edgar/data/"):
+            continue
+        if row["error"] == "sec-exhibit-unavailable":
+            state = "error"
+        elif row["evidence_kind"] == "sec-exhibit-99.1":
+            state = "exhibit"
+        elif not row["sha256"]:
+            state = "error" if row["error"] else "pending"
+        else:
+            state = "error" if row["error"] else "direct"
+        ticker_counts = by_ticker[row["ticker"]]
+        totals["total"] += 1
+        totals[state] += 1
+        ticker_counts["total"] += 1
+        ticker_counts[state] += 1
+        checked_at = row["checked_at"]
+        if checked_at and (ticker_counts["lastCheckedAt"] is None
+                           or checked_at > ticker_counts["lastCheckedAt"]):
+            ticker_counts["lastCheckedAt"] = checked_at
+        if checked_at and (last_checked_at is None or checked_at > last_checked_at):
+            last_checked_at = checked_at
+    return {**totals, "lastCheckedAt": last_checked_at, "byTicker": by_ticker}
+
+
 def snapshot(db):
     """Public-safe, read-only report. Explicit field lists prevent identity leaks."""
     with db:

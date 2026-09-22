@@ -27,6 +27,7 @@ LEGACY_FULL_TICKERS = (
     "MRVL", "ANET", "CRDO", "CRWV", "VRT", "GEV", "DELL", "PLTR", "MSFT", "AMZN",
     "GOOGL", "ORCL",
 )
+PRIORITY_SEC_TICKERS = ("TSM", "MRVL", "ANET", "VRT", "PLTR")
 
 
 def utc_now():
@@ -342,6 +343,7 @@ class AutomaticMonitor:
             state["generation"].update(monitor.generation_queue_stats(
                 db, self.generation_daily_limit, self.generation_token_limit
             ))
+            state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
             state["incidents"] = monitor.operational_incident_summary(
                 db, delivery_enabled=self.notification_enabled
             )

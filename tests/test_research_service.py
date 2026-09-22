@@ -218,6 +218,43 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertLessEqual(cache["bytes"], cache["maxBytes"])
         self.assertNotIn("https://", json.dumps(cache))
 
+    def test_public_health_exposes_url_free_priority_sec_evidence_counts(self):
+        sources = {
+            "TSM": "https://www.sec.gov/Archives/edgar/data/1046179/000119312526000001/tsm-6k.htm",
+            "MRVL": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/mrvl-8k.htm",
+            "ANET": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000001/anet-8k.htm",
+            "VRT": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000001/vrt-8k.htm",
+        }
+        with monitor.connect(self.db_path) as db:
+            for ticker, url in sources.items():
+                monitor.add_source(db, ticker, url, title=f"{ticker} filing")
+            db.execute("""
+              UPDATE sources SET sha256=?,checked_at=?,extracted_chars=120,evidence_kind='direct'
+              WHERE url=?
+            """, ("a" * 64, "2026-09-22T00:01:00+00:00", sources["MRVL"]))
+            db.execute("""
+              UPDATE sources SET sha256=?,checked_at=?,extracted_chars=240,
+                                 evidence_kind='sec-exhibit-99.1',
+                                 evidence_url='https://www.sec.gov/Archives/edgar/data/1596532/000159653226000001/exhibit991.htm'
+              WHERE url=?
+            """, ("b" * 64, "2026-09-22T00:02:00+00:00", sources["ANET"]))
+            db.execute("""
+              UPDATE sources SET checked_at=?,error='sec-exhibit-unavailable'
+              WHERE url=?
+            """, ("2026-09-22T00:03:00+00:00", sources["VRT"]))
+            db.commit()
+
+        evidence = service.AutomaticMonitor(self.db_path, self.snapshot_path).public_state()["secEvidence"]
+        self.assertEqual(
+            {key: evidence[key] for key in ("total", "exhibit", "direct", "pending", "error")},
+            {"total": 4, "exhibit": 1, "direct": 1, "pending": 1, "error": 1},
+        )
+        self.assertEqual(evidence["lastCheckedAt"], "2026-09-22T00:03:00+00:00")
+        self.assertEqual(evidence["byTicker"]["PLTR"]["total"], 0)
+        serialized = json.dumps(evidence)
+        self.assertNotIn("https://", serialized)
+        self.assertNotIn("sec-exhibit-unavailable", serialized)
+
     def test_backup_becomes_degraded_when_last_success_exceeds_deadline(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         with app.state_lock:
