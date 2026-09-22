@@ -68,61 +68,61 @@
   {
     "ticker": "CRDO",
     "name": "Credo",
-    "sourceUrl": "https://credosemi.com/",
+    "sourceUrl": "https://investors.credosemi.com/news-events/events/default.aspx",
     "lastCheckedOn": null
   },
   {
     "ticker": "CRM",
     "name": "Salesforce",
-    "sourceUrl": "https://investor.salesforce.com/overview/default.aspx",
+    "sourceUrl": "https://investor.salesforce.com/events-and-presentations/default.aspx",
     "lastCheckedOn": null
   },
   {
     "ticker": "CRWD",
     "name": "CrowdStrike",
-    "sourceUrl": "https://ir.crowdstrike.com/",
+    "sourceUrl": "https://ir.crowdstrike.com/events-and-presentations/",
     "lastCheckedOn": null
   },
   {
     "ticker": "CRWV",
     "name": "CoreWeave",
-    "sourceUrl": "https://www.coreweave.com/",
+    "sourceUrl": "https://investors.coreweave.com/events-and-presentations/default.aspx",
     "lastCheckedOn": null
   },
   {
     "ticker": "DELL",
     "name": "Dell Technologies",
-    "sourceUrl": "https://investors.delltechnologies.com/news-events/press-release",
-    "lastCheckedOn": null
+    "sourceUrl": "https://investors.delltechnologies.com/news-events/upcoming-events",
+    "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "GEV",
     "name": "GE Vernova",
-    "sourceUrl": "https://www.gevernova.com/news/subscribe/all/rss.xml",
-    "lastCheckedOn": null
+    "sourceUrl": "https://www.gevernova.com/investors/events",
+    "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "GOOGL",
     "name": "Alphabet / Google",
-    "sourceUrl": "https://blog.google/rss/",
+    "sourceUrl": "https://abc.xyz/investor/events/default.aspx",
     "lastCheckedOn": null
   },
   {
     "ticker": "INTC",
     "name": "Intel",
-    "sourceUrl": "https://www.intc.com/",
-    "lastCheckedOn": null
+    "sourceUrl": "https://www.intc.com/news-events/ir-calendar",
+    "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "KLAC",
     "name": "KLA",
-    "sourceUrl": "https://ir.kla.com/",
+    "sourceUrl": "https://ir.kla.com/events-presentations/",
     "lastCheckedOn": null
   },
   {
     "ticker": "LITE",
     "name": "Lumentum",
-    "sourceUrl": "https://investor.lumentum.com/overview/default.aspx",
+    "sourceUrl": "https://investor.lumentum.com/events-and-presentations/default.aspx",
     "lastCheckedOn": null
   },
   {

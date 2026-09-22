@@ -64,6 +64,12 @@ export const calendarEvents: CalendarEvent[] = [
     note: { ja: "公開は予定時刻の前後です。経営陣インタビューは44分後を予定しています。", en: "Approximate release time. The management interview is scheduled 44 minutes later." },
   },
   {
+    id: "gev-q3-2026-webcast", ticker: "GEV", kind: "earnings" as const, title: { ja: "GE Vernova 決算説明会（2026年Q3）", en: "GE Vernova Q3 2026 earnings webcast" },
+    startsAt: "2026-10-28T07:30:00-04:00", sourceTimezone: "America/New_York", sourceName: "GE Vernova IR",
+    sourceUrl: "https://www.gevernova.com/investors/events/3rd-quarter-2026-earnings-webcast",
+    note: { ja: "ウェブキャストの開始予定です。決算資料の公開時刻を示すものではありません。", en: "Scheduled webcast start, not the publication time of the earnings release." },
+  },
+  {
     id: "adbe-fq4-2026-call", ticker: "ADBE", kind: "earnings" as const, title: { ja: "Adobe 決算説明会（2026年度Q4・通期）", en: "Adobe fiscal Q4 and FY2026 earnings call" },
     startsAt: "2026-12-09T14:00:00-08:00", sourceTimezone: "America/Los_Angeles", sourceName: "Adobe IR",
     sourceUrl: "https://www.adobe.com/investor-relations/events-presentations.html",

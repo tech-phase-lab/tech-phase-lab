@@ -48,7 +48,7 @@ test("registered schedules are ordered, unique and linked to official sources", 
     assert.ok(Number.isFinite(timestamp) && timestamp >= previous);
     previous = timestamp;
     assert.ok(event.title.ja && event.title.en);
-    assert.ok(["www.bls.gov", "investors.micron.com", "investor.tsmc.com", "ir.netflix.net", "www.adobe.com"].includes(new URL(event.sourceUrl).hostname));
+    assert.ok(["www.bls.gov", "investors.micron.com", "investor.tsmc.com", "ir.netflix.net", "www.gevernova.com", "www.adobe.com"].includes(new URL(event.sourceUrl).hostname));
     if (event.sourceName === "BLS") {
       assert.equal(new Intl.DateTimeFormat("en-GB", { timeZone: event.sourceTimezone, hour: "2-digit", minute: "2-digit" }).format(new Date(event.startsAt)), "08:30");
     }
@@ -88,6 +88,15 @@ test("Adobe call keeps the official Pacific time and release/call distinction", 
   assert.equal(calendarDateKey(adobe.startsAt, "Asia/Tokyo"), "2026-12-10");
 });
 
+test("GE Vernova webcast keeps the official Eastern time and release/call distinction", () => {
+  const gev = calendarEvents.find((event) => event.id === "gev-q3-2026-webcast");
+  assert.equal(gev.startsAt, "2026-10-28T07:30:00-04:00");
+  assert.equal(gev.sourceTimezone, "America/New_York");
+  assert.match(gev.note.en, /webcast start, not the publication time/i);
+  assert.equal(calendarDateKey(gev.startsAt, "America/New_York"), "2026-10-28");
+  assert.equal(calendarDateKey(gev.startsAt, "Asia/Tokyo"), "2026-10-28");
+});
+
 test("FOMC meetings stay date-only until the Federal Reserve publishes clock times", () => {
   const fomc = dateOnlyEvents.filter((event) => event.id.startsWith("fomc-"));
   assert.deepEqual(fomc.map((event) => event.date), ["2026-10-28", "2026-12-09"]);
@@ -100,6 +109,6 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   assert.equal(coverage.length, 40);
   assert.equal(new Set(coverage.map((company) => company.ticker)).size, 40);
   const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
-  for (const ticker of ["ADBE", "AMAT", "AMD"]) assert.equal(checked[ticker], "2026-09-23");
-  for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "COHR"]) assert.equal(checked[ticker], null);
+  for (const ticker of ["ADBE", "AMAT", "AMD", "DELL", "GEV", "INTC"]) assert.equal(checked[ticker], "2026-09-23");
+  for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "COHR", "CRDO", "CRM", "CRWD", "CRWV", "GOOGL", "KLAC", "LITE"]) assert.equal(checked[ticker], null);
 });
