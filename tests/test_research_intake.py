@@ -1493,6 +1493,60 @@ class IntakeTests(unittest.TestCase):
                 },
             )
 
+    def test_brief_kanji_numbers_must_be_cited_by_the_same_editorial_field(self):
+        body = b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main>"
+        self.check(body)
+        sha = self.row()["sha256"]
+        with self.assertRaisesRegex(ValueError, "numeric summary claim"):
+            m.save_brief_draft(
+                self.db, URL, sha,
+                "公式発表によると、AI向け容量は二〇二八年に増加する計画です。",
+                "mixed", "供給能力の拡大余地がありますが、実行と需要の確認が引き続き必要です。",
+                "medium", {
+                    "summary": ["Capacity will increase."],
+                    "impact": ["Execution remains subject to demand."],
+                },
+            )
+
+    def test_brief_evidence_shape_is_bounded_before_storage_and_review(self):
+        body = b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main>"
+        self.check(body)
+        sha = self.row()["sha256"]
+        summary = "公式発表では、AI向けの供給能力を増やす計画が示されています。"
+        impact = "供給拡大の余地はありますが、需要と実行状況の確認が引き続き必要です。"
+        with self.assertRaisesRegex(ValueError, "one to four text excerpts"):
+            m.save_brief_draft(
+                self.db, URL, sha, summary, "mixed", impact, "medium", {
+                    "summary": ["Capacity will increase."] * 5,
+                    "impact": ["Execution remains subject to demand."],
+                },
+            )
+        with self.assertRaisesRegex(ValueError, "must be unique"):
+            m.save_brief_draft(
+                self.db, URL, sha, summary, "mixed", impact, "medium", {
+                    "summary": ["Capacity will increase.", "Capacity will increase."],
+                    "impact": ["Execution remains subject to demand."],
+                },
+            )
+        m.save_brief_draft(
+            self.db, URL, sha, summary, "mixed", impact, "medium", {
+                "summary": ["Capacity will increase."],
+                "impact": ["Execution remains subject to demand."],
+            },
+        )
+        for _ in range(4):
+            self.db.execute(
+                "INSERT INTO brief_evidence(url,field,excerpt) VALUES(?,?,?)",
+                (URL, "summary", "Capacity will increase."),
+            )
+        self.db.commit()
+        with self.assertRaisesRegex(ValueError, "missing or invalid"):
+            self.review_brief(URL, sha, "approved", "editor", "Evidence reviewed")
+        self.assertEqual(
+            self.db.execute("SELECT status FROM briefs WHERE url=?", (URL,)).fetchone()[0],
+            "draft",
+        )
+
     def test_brief_review_revalidates_both_evidence_fields(self):
         body = b"<main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main>"
         self.check(body)

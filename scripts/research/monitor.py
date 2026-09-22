@@ -2411,6 +2411,23 @@ def review(db, url, expected_sha, decision, reviewer, reason):
         db.execute("UPDATE sources SET status=? WHERE url=?", (decision, url))
 
 
+def _brief_numeric_claims(value):
+    """Return explicit numeric claims, including Japanese kanji-number forms.
+
+    A single kanji digit is treated as a number only when followed by a common
+    quantitative unit. This avoids misclassifying ordinary words such as
+    ``一方`` while still catching claims such as ``二社`` and ``十倍``.
+    """
+    arabic = re.findall(r"([$€£¥₩]?\d[\d,.]*%?)(?:億|万|兆|倍|年|月|日)?", value)
+    kanji = re.findall(
+        r"[〇零一二三四五六七八九十百千万億兆]{2,}"
+        r"|[〇零一二三四五六七八九十百千万億兆](?="
+        r"年|月|日|倍|割|分|厘|%|％|円|ドル|件|社|人|台|基|株)",
+        value,
+    )
+    return arabic + kanji
+
+
 def _validate_brief_payload(source_text, summary_ja, impact_label, impact_ja, confidence, evidence):
     """Return normalized evidence only when both editorial fields remain source-bound."""
     summary_ja, impact_ja = summary_ja.strip(), impact_ja.strip()
@@ -2422,21 +2439,27 @@ def _validate_brief_payload(source_text, summary_ja, impact_label, impact_ja, co
         raise ValueError("Invalid impact label")
     if confidence not in {"low", "medium", "high"}:
         raise ValueError("Invalid confidence")
-    if not isinstance(evidence, dict) or any(not evidence.get(field) for field in ("summary", "impact")):
+    if not isinstance(evidence, dict) or set(evidence) != {"summary", "impact"}:
         raise ValueError("Summary and impact evidence are required")
     cleaned = []
     cited_by_field = {}
     for field in ("summary", "impact"):
+        if (not isinstance(evidence[field], list)
+                or not 1 <= len(evidence[field]) <= 4
+                or not all(isinstance(item, str) for item in evidence[field])):
+            raise ValueError("Each evidence field requires one to four text excerpts")
         field_excerpts = []
         for excerpt in evidence[field]:
-            excerpt = " ".join(str(excerpt).split())
+            excerpt = " ".join(excerpt.split())
             if not 12 <= len(excerpt) <= 800 or excerpt not in source_text:
                 raise ValueError("Every evidence excerpt must appear exactly in the current source text")
+            if excerpt in field_excerpts:
+                raise ValueError("Evidence excerpts must be unique within each field")
             cleaned.append((field, excerpt))
             field_excerpts.append(excerpt)
         cited_by_field[field] = " ".join(field_excerpts)
     for field, text in (("summary", summary_ja), ("impact", impact_ja)):
-        for token in re.findall(r"([$€£¥₩]?\d[\d,.]*%?)(?:億|万|兆|倍|年|月|日)?", text):
+        for token in _brief_numeric_claims(text):
             if token not in cited_by_field[field]:
                 raise ValueError(f"Every numeric {field} claim must appear in its cited evidence")
     return summary_ja, impact_ja, cleaned
