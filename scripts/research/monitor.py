@@ -25,6 +25,10 @@ INDEXES = {t: p.get("monitorUrl", p["indexUrl"]) for t, p in PROVIDERS.items()}
 HOSTS = {t: set(p["allowedHosts"]) for t, p in PROVIDERS.items()}
 MAX_BYTES = 12 * 1024 * 1024
 MAX_EXTRACTED_CHARS = 160_000
+MAX_JSON_LD_CHARS = 512 * 1024
+MAX_JSON_LD_BLOCKS = 20
+MAX_JSON_LD_NODES = 2_000
+MIN_JSON_LD_BODY_CHARS = 120
 SUPPORTED_CONTENT_TYPES = {
     "text/html", "application/pdf", "application/json", "application/rss+xml",
     "application/atom+xml", "application/xml", "text/xml",
@@ -405,6 +409,116 @@ class ArticleText(HTMLParser):
         return "\n".join(lines)[:MAX_EXTRACTED_CHARS]
 
 
+class StructuredArticleText(HTMLParser):
+    """Read bounded Schema.org articleBody values without executing page scripts."""
+
+    article_types = {
+        "analysisnewsarticle", "article", "blogposting", "newsarticle", "report",
+        "techarticle",
+    }
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.blocks = []
+        self.blocks_seen = 0
+        self.current = None
+        self.current_chars = 0
+        self.current_overflow = False
+
+    def handle_starttag(self, tag, attrs):
+        if tag.lower() != "script" or self.current is not None:
+            return
+        values = {
+            str(key).lower(): "" if value is None else str(value)
+            for key, value in attrs if key
+        }
+        content_type = values.get("type", "").split(";", 1)[0].strip().lower()
+        if content_type == "application/ld+json" and self.blocks_seen < MAX_JSON_LD_BLOCKS:
+            self.blocks_seen += 1
+            self.current = []
+            self.current_chars = 0
+            self.current_overflow = False
+
+    def handle_data(self, value):
+        if self.current is None or self.current_overflow:
+            return
+        self.current_chars += len(value)
+        if self.current_chars > MAX_JSON_LD_CHARS:
+            self.current = []
+            self.current_overflow = True
+            return
+        self.current.append(value)
+
+    def handle_endtag(self, tag):
+        if tag.lower() != "script" or self.current is None:
+            return
+        if not self.current_overflow:
+            self.blocks.append("".join(self.current))
+        self.current = None
+        self.current_chars = 0
+        self.current_overflow = False
+
+    @staticmethod
+    def _schema_type(value):
+        if not isinstance(value, str):
+            return ""
+        return re.split(r"[/#]", value.strip().lower())[-1]
+
+    @staticmethod
+    def _normalize_body(value):
+        if not isinstance(value, str):
+            return ""
+        lines = [" ".join(line.split()) for line in value.splitlines()]
+        return "\n".join(line for line in lines if line)[:MAX_EXTRACTED_CHARS]
+
+    def result(self):
+        candidates = []
+        nodes_seen = 0
+        for block in self.blocks:
+            try:
+                root = json.loads(block)
+            except (TypeError, ValueError, RecursionError):
+                continue
+            stack = [(root, 0)]
+            while stack and nodes_seen < MAX_JSON_LD_NODES:
+                node, depth = stack.pop()
+                nodes_seen += 1
+                if depth > 8:
+                    continue
+                if isinstance(node, dict):
+                    raw_types = node.get("@type", [])
+                    if isinstance(raw_types, str):
+                        raw_types = [raw_types]
+                    types = {self._schema_type(item) for item in raw_types}
+                    body = self._normalize_body(node.get("articleBody"))
+                    if types & self.article_types:
+                        meaningful = sum(character.isalnum() for character in body)
+                        if len(body) >= MIN_JSON_LD_BODY_CHARS and meaningful >= 80:
+                            candidates.append(body)
+                    stack.extend((value, depth + 1) for value in node.values())
+                elif isinstance(node, list):
+                    stack.extend((value, depth + 1) for value in node)
+        return max(candidates, key=len, default="")
+
+
+def extract_html_text(content):
+    """Prefer visible evidence, using verified JSON-LD only for thin page shells."""
+    decoded = content.decode("utf-8", errors="replace")
+    visible_parser = ArticleText()
+    visible_parser.feed(decoded)
+    visible_parser.close()
+    visible = visible_parser.result()
+
+    structured_parser = StructuredArticleText()
+    structured_parser.feed(decoded)
+    structured_parser.close()
+    structured = structured_parser.result()
+    visible_meaningful = sum(character.isalnum() for character in visible)
+    if structured and visible_meaningful < 120 and len(structured) >= max(240, len(visible) * 2):
+        return structured
+    return visible
+
+
 def extract_pdf_text(content):
     """Extract PDF evidence in a resource-limited child process."""
     timeout = environment_seconds("RESEARCH_PDF_EXTRACT_TIMEOUT_SECONDS", 20, 1, 30)
@@ -445,10 +559,7 @@ def extract_pdf_text(content):
 def extract_text(content, content_type):
     """Return bounded plain text for later evidence-grounded editorial work."""
     if content_type == "text/html":
-        parser = ArticleText()
-        parser.feed(content.decode("utf-8", errors="replace"))
-        parser.close()
-        return parser.result()
+        return extract_html_text(content)
     if content_type == "application/pdf":
         return extract_pdf_text(content)
     if content_type in {"application/rss+xml", "application/atom+xml", "application/xml", "text/xml"}:

@@ -335,6 +335,51 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(row["extracted_chars"], 0)
         self.assertEqual(row["fetch_failures"], 1)
 
+    def test_schema_article_body_fills_a_thin_javascript_page_shell(self):
+        article_body = (
+            "The company announced a verified expansion of its AI infrastructure capacity. "
+            "The official release says construction will proceed in phases through 2027, "
+            "subject to customer demand, permitting, power availability, and final contracts. "
+            "Management will provide updated capacity and capital expenditure figures later."
+        )
+        body = f'''<html><head><title>Official update</title><script type="application/ld+json">{{"@context":"https://schema.org","@graph":[{{"@type":["Thing","https://schema.org/NewsArticle"],"articleBody":{json.dumps(article_body)}}}]}}</script></head><body><nav>Navigation only</nav><script>renderLater()</script></body></html>'''.encode()
+        result = self.check(body)
+        row = self.row()
+        self.assertEqual(result["status"], "first-fetched")
+        self.assertEqual(row["extracted_text"], article_body)
+        self.assertNotIn("renderLater", row["extracted_text"])
+        self.assertNotIn("schema.org", row["extracted_text"])
+
+    def test_untrusted_or_malformed_json_ld_is_not_source_evidence(self):
+        fake_body = "Product copy " * 30
+        body = f'''<html><body><nav>Navigation only</nav><script type="application/ld+json">{{"@type":"Product","articleBody":{json.dumps(fake_body)}}}</script><script type="application/ld+json">{{broken json</script></body></html>'''.encode()
+        result = self.check(body)
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["error"], "no-extractable-text")
+        self.assertEqual(self.row()["extracted_chars"], 0)
+
+    def test_oversized_json_ld_is_not_source_evidence(self):
+        article_body = "Oversized official-looking article body. " * 20
+        body = f'''<html><body><nav>Navigation only</nav><script type="application/ld+json">{{"@type":"NewsArticle","articleBody":{json.dumps(article_body)}}}</script></body></html>'''.encode()
+        with patch.object(m, "MAX_JSON_LD_CHARS", 64):
+            result = self.check(body)
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["error"], "no-extractable-text")
+
+    def test_substantial_visible_article_text_wins_over_json_ld(self):
+        visible = (
+            "This visible official release is the evidence retained by the intake pipeline. "
+            "It contains enough substantive detail to avoid replacing an existing evidence "
+            "identity with a structured metadata variant. The release describes timing, "
+            "capacity, dependencies, and the limits of the company's current expectations."
+        )
+        structured = "Different structured article wording that should not replace visible evidence. " * 5
+        body = f'''<html><body><main><p>{visible}</p></main><script type="application/ld+json">{{"@type":"Article","articleBody":{json.dumps(structured)}}}</script></body></html>'''.encode()
+        result = self.check(body)
+        self.assertEqual(result["status"], "first-fetched")
+        self.assertIn("visible official release", self.row()["extracted_text"])
+        self.assertNotIn("Different structured", self.row()["extracted_text"])
+
     def test_empty_recheck_preserves_last_good_evidence_and_blocks_review(self):
         self.check(b"<main><p>Previously verified official evidence remains stored.</p></main>")
         previous_sha = self.row()["sha256"]
