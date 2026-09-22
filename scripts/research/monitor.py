@@ -29,6 +29,7 @@ MAX_JSON_LD_CHARS = 512 * 1024
 MAX_JSON_LD_BLOCKS = 20
 MAX_JSON_LD_NODES = 2_000
 MIN_JSON_LD_BODY_CHARS = 120
+MIN_INLINE_FEED_CHARS = 120
 SUPPORTED_CONTENT_TYPES = {
     "text/html", "application/pdf", "application/json", "application/rss+xml",
     "application/atom+xml", "application/xml", "text/xml",
@@ -581,23 +582,83 @@ def article_url(url, ticker):
     return None
 
 
-def feed_links(body, ticker):
+def _feed_inline_text(element):
+    """Convert one bounded RSS/Atom body field to safe plain-text evidence."""
+    if element is None:
+        return "", 0
+    raw = "\n".join(element.itertext()).strip()
+    if not raw:
+        return "", 0
+    parser = ArticleText()
+    parser.feed(raw[:MAX_EXTRACTED_CHARS * 2])
+    parser.close()
+    text = parser.result()
+    meaningful = sum(character.isalnum() for character in text)
+    if len(text) < MIN_INLINE_FEED_CHARS or meaningful < 80:
+        return "", len(raw.encode("utf-8"))
+    return text, len(raw.encode("utf-8"))
+
+
+def _feed_publication_date(item):
+    """Return a source-stated calendar date without inventing a publication time."""
+    atom = "{http://www.w3.org/2005/Atom}"
+    candidates = [
+        item.findtext("pubDate"), item.findtext(atom + "published"),
+    ]
+    for value in candidates:
+        value = (value or "").strip()
+        if not value:
+            continue
+        try:
+            parsed = parsedate_to_datetime(value)
+        except (TypeError, ValueError, OverflowError):
+            try:
+                parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+            except (TypeError, ValueError, OverflowError):
+                continue
+        return parsed.date().isoformat()
+    return None
+
+
+def feed_links(body, ticker, content_type="application/rss+xml"):
+    """Extract official links and substantive first-party feed evidence."""
     if b"\x00" in body or re.search(br"<!\s*(DOCTYPE|ENTITY)", body, re.I):
         raise ValueError("XML declarations with entities are not supported")
     root = ET.fromstring(body)
-    entries = root.findall("./channel/item") + root.findall("{http://www.w3.org/2005/Atom}entry")
+    atom = "{http://www.w3.org/2005/Atom}"
+    content = "{http://purl.org/rss/1.0/modules/content/}"
+    entries = root.findall("./channel/item") + root.findall(atom + "entry")
     links = {}
     for item in entries:
         url = item.findtext("link")
         if not url:
-            for link in item.findall("{http://www.w3.org/2005/Atom}link"):
+            for link in item.findall(atom + "link"):
                 if link.get("rel", "alternate") == "alternate":
                     url = link.get("href")
                     break
         canonical = article_url(url or "", ticker)
         if canonical:
-            title = item.findtext("title") or item.findtext("{http://www.w3.org/2005/Atom}title") or ""
-            links[canonical] = " ".join(unescape(title).split())[:300] or None
+            title = item.findtext("title") or item.findtext(atom + "title") or ""
+            title = " ".join(unescape(title).split())[:300] or None
+            evidence_candidates = [
+                _feed_inline_text(item.find(content + "encoded")),
+                _feed_inline_text(item.find(atom + "content")),
+                _feed_inline_text(item.find("description")),
+                _feed_inline_text(item.find(atom + "summary")),
+            ]
+            evidence, content_bytes = max(evidence_candidates, key=lambda candidate: len(candidate[0]))
+            published_on = _feed_publication_date(item)
+            if evidence or published_on:
+                detail = {"title": title, "publishedOn": published_on}
+                if evidence:
+                    detail.update({
+                        "inlineText": evidence,
+                        "contentBytes": content_bytes,
+                        "contentType": content_type,
+                    })
+                links[canonical] = detail
+            else:
+                links[canonical] = title
     return links
 
 
@@ -1125,6 +1186,11 @@ def add_source(db, ticker, url, published_on=None, title=None):
         db.execute("INSERT OR IGNORE INTO sources(url,ticker,published_on,discovered_at) VALUES(?,?,?,?)", (url, ticker, published_on, now()))
         if title:
             db.execute("UPDATE sources SET title=? WHERE url=? AND title IS NULL", (title[:300], url))
+        if published_on:
+            db.execute(
+                "UPDATE sources SET published_on=? WHERE url=? AND published_on IS NULL",
+                (published_on, url),
+            )
     return url
 
 
@@ -1149,7 +1215,7 @@ def discover_links(body, kind, ticker, source):
             raise ValueError("SEC submissions source is not JSON")
         return sec_submission_links(body, ticker, source)
     if source["format"] == "rss":
-        return feed_links(body, ticker)
+        return feed_links(body, ticker, kind)
     if source["format"] == "sitemap":
         return sitemap_links(body, ticker)
     if source["format"] == "news-json":
@@ -1223,11 +1289,18 @@ def save_discovery(db, ticker, result, links):
             text = detail["inlineText"]
             save_source_check(db, row, {
                 "sha256": hashlib.sha256(text.encode()).hexdigest(),
-                "contentType": "application/json",
+                "contentType": detail.get("contentType", "application/json"),
                 "contentBytes": detail.get("contentBytes", len(text.encode())),
                 "extractedText": text,
                 "extractedChars": len(text),
             })
+        else:
+            with db:
+                db.execute(
+                    "UPDATE sources SET source_mode='remote',next_fetch_at=NULL "
+                    "WHERE url=? AND source_mode='inline'",
+                    (url,),
+                )
     with db:
         db.execute("""
           INSERT INTO discovery_runs(

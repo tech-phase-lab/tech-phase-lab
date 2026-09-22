@@ -1051,6 +1051,111 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(result["status"], "ok")
         self.assertEqual(list(links.values()), ["Marvell AI release"])
 
+    def test_official_rss_full_text_is_saved_as_timestamped_inline_evidence(self):
+        body = b'''<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><item>
+          <title>Marvell expands AI infrastructure connectivity</title>
+          <link>https://investor.marvell.com/news-events/press-releases/detail/1234/example</link>
+          <pubDate>Tue, 22 Sep 2026 08:30:00 -0400</pubDate>
+          <content:encoded><![CDATA[<nav>Feed navigation</nav><p>Marvell announced a verified expansion of its AI infrastructure connectivity portfolio for data center customers.</p><p>The official release describes phased availability, customer qualification requirements, and execution risks through 2027.</p><script>doNotRun()</script>]]></content:encoded>
+        </item></channel></rss>'''
+        result, links = m.collect_discovery(
+            "MRVL", lambda *_: (body, "text/xml"), automatic=True
+        )
+        self.assertEqual(result["status"], "ok")
+        detail = next(iter(links.values()))
+        self.assertEqual(detail["publishedOn"], "2026-09-22")
+        self.assertEqual(detail["contentType"], "text/xml")
+        m.save_discovery(self.db, "MRVL", result, links)
+        row = self.db.execute("SELECT * FROM sources WHERE ticker='MRVL'").fetchone()
+        self.assertEqual(row["source_mode"], "inline")
+        self.assertEqual(row["content_type"], "text/xml")
+        self.assertEqual(row["published_on"], "2026-09-22")
+        self.assertEqual(row["status"], "pending")
+        self.assertIn("phased availability", row["extracted_text"])
+        self.assertNotIn("Feed navigation", row["extracted_text"])
+        self.assertNotIn("doNotRun", row["extracted_text"])
+
+    def test_short_feed_summary_keeps_remote_article_body_fetch_enabled(self):
+        body = b'''<rss><channel><item><title>Arista update</title>
+          <link>https://www.arista.com/en/company/news/press-release/123-pr-20260919</link>
+          <pubDate>not-a-date</pubDate><description>Read the official release.</description>
+        </item></channel></rss>'''
+        result, links = m.collect_discovery(
+            "ANET", lambda *_: (body, "application/rss+xml"), automatic=True
+        )
+        m.save_discovery(self.db, "ANET", result, links)
+        row = self.db.execute("SELECT * FROM sources WHERE ticker='ANET'").fetchone()
+        self.assertEqual(row["source_mode"], "remote")
+        self.assertIsNone(row["published_on"])
+        self.assertIsNone(row["sha256"])
+        self.assertEqual(row["status"], "pending")
+
+    def test_atom_full_content_is_accepted_without_executing_markup(self):
+        body = b'''<feed xmlns="http://www.w3.org/2005/Atom"><entry>
+          <title>Arm official AI platform update</title>
+          <link rel="alternate" href="https://newsroom.arm.com/news/example"/>
+          <published>2026-09-22T15:45:00Z</published>
+          <content type="html">&lt;p&gt;Arm announced an official AI platform update for infrastructure and data center customers.&lt;/p&gt;&lt;p&gt;The release describes phased availability, ecosystem qualification, software dependencies, and execution risks through 2027.&lt;/p&gt;&lt;script&gt;doNotRun()&lt;/script&gt;</content>
+        </entry></feed>'''
+        result, links = m.collect_discovery(
+            "ARM", lambda *_: (body, "application/atom+xml"), automatic=True
+        )
+        m.save_discovery(self.db, "ARM", result, links)
+        row = self.db.execute("SELECT * FROM sources WHERE ticker='ARM'").fetchone()
+        self.assertEqual(row["source_mode"], "inline")
+        self.assertEqual(row["published_on"], "2026-09-22")
+        self.assertIn("ecosystem qualification", row["extracted_text"])
+        self.assertNotIn("doNotRun", row["extracted_text"])
+
+    def test_feed_evidence_deduplicates_updates_and_backfills_publication_date(self):
+        url = "https://investor.marvell.com/news-events/press-releases/detail/1234/example"
+        m.add_source(self.db, "MRVL", url)
+
+        def feed(detail):
+            return f'''<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><item>
+              <title>Marvell official update</title><link>{url}</link>
+              <pubDate>Tue, 22 Sep 2026 08:30:00 -0400</pubDate>
+              <content:encoded><![CDATA[<p>Marvell announced an official AI infrastructure update for data center customers.</p><p>{detail}</p>]]></content:encoded>
+            </item></channel></rss>'''.encode()
+
+        first = "Initial availability is planned in phases through 2027, subject to qualification and demand."
+        result, links = m.collect_discovery(
+            "MRVL", lambda *_: (feed(first), "application/rss+xml"), automatic=True
+        )
+        m.save_discovery(self.db, "MRVL", result, links)
+        row = self.db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+        original_sha = row["sha256"]
+        self.assertEqual(row["published_on"], "2026-09-22")
+        m.review(self.db, url, original_sha, "approved", "editor", "Verified official feed")
+
+        m.save_discovery(self.db, "MRVL", result, links)
+        row = self.db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+        self.assertEqual(row["sha256"], original_sha)
+        self.assertEqual(row["status"], "approved")
+
+        changed = "Updated availability is planned in phases through 2027, subject to qualification, demand, and final contracts."
+        result, links = m.collect_discovery(
+            "MRVL", lambda *_: (feed(changed), "application/rss+xml"), automatic=True
+        )
+        m.save_discovery(self.db, "MRVL", result, links)
+        row = self.db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+        self.assertNotEqual(row["sha256"], original_sha)
+        self.assertEqual(row["status"], "pending")
+        self.assertIn("Updated availability", row["extracted_text"])
+
+        short_feed = f'''<rss><channel><item><title>Marvell official update</title>
+          <link>{url}</link><pubDate>Tue, 22 Sep 2026 08:30:00 -0400</pubDate>
+          <description>Read the official release.</description>
+        </item></channel></rss>'''.encode()
+        result, links = m.collect_discovery(
+            "MRVL", lambda *_: (short_feed, "text/xml"), automatic=True
+        )
+        m.save_discovery(self.db, "MRVL", result, links)
+        row = self.db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+        self.assertEqual(row["source_mode"], "remote")
+        self.assertIsNone(row["next_fetch_at"])
+        self.assertIn("Updated availability", row["extracted_text"])
+
     def test_arista_uses_first_party_press_release_rss(self):
         provider = m.PROVIDERS["ANET"]
         self.assertEqual(provider["indexUrl"], "https://www.arista.com/en/company/news/press-release-rss")
