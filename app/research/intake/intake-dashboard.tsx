@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { fetchState, filterSources, intakeCounts, sourceTitle, coverageCounts, providers, providerByTicker, sectorNames, type IntakeSnapshot } from "@/lib/research/intake";
+import { fetchState, filterSources, intakeCounts, pdfEvidenceCounts, sourceTitle, coverageCounts, providers, providerByTicker, sectorNames, type IntakeSnapshot } from "@/lib/research/intake";
 import { useLiveIntake, type MonitorState } from "@/lib/research/use-live-intake";
 import styles from "./intake.module.css";
 
@@ -86,6 +86,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
   const live = useLiveIntake(initialSnapshot);
   const snapshot = live.snapshot;
   const counts = intakeCounts(snapshot.sources);
+  const pdfEvidence = pdfEvidenceCounts(snapshot.sources);
   const coverage = coverageCounts(snapshot);
   const events = snapshot.events ?? [];
   const briefs = snapshot.briefs ?? [];
@@ -127,7 +128,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
       </section>
       <nav aria-label="分野で絞り込み" className={styles.sectors}>{[["all", "すべて"], ...Object.entries(sectorNames)].map(([key, label]) => <button key={key} aria-pressed={sector === key} onClick={() => chooseSector(key)}>{label}</button>)}</nav>
       <section aria-labelledby="health-title"><div className={styles.sectionTitle}><h2 id="health-title">公式一覧の取得状況</h2><span>一覧と本文の取得は別々に確認</span></div>
-        <p className={styles.coverageNote}>企業公式の発表・ブログに加え、対象企業のSEC提出書類と取引所の重要開示を補完利用します。AI以外の発表や過去分も含みます。</p>
+        <p className={styles.coverageNote}>企業公式の発表・ブログに加え、対象企業のSEC提出書類と取引所の重要開示を補完利用します。AI以外の発表や過去分も含みます。<br />PDF根拠：抽出済み {pdfEvidence.extracted}件 ／ 補完待ち {pdfEvidence.pending}件 ／ エラー {pdfEvidence.error}件（全{pdfEvidence.total}件）</p>
         <div className={styles.health}>{selectedProviders.map(provider => {
           const symbol = provider.ticker;
           const runs = snapshot.discoveryRuns.filter(r => r.ticker === symbol).toSorted((a, b) => b.id - a.id);

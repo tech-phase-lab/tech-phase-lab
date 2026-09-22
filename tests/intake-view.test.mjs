@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { buildCoverageCompanies, coverageCompanyIssues, fetchState, filterSources, intakeCounts, snapshotIssues, coverageCounts, providers, providerByTicker } from "../lib/research/intake.ts";
+import { buildCoverageCompanies, coverageCompanyIssues, fetchState, filterSources, intakeCounts, pdfEvidenceCounts, snapshotIssues, coverageCounts, providers, providerByTicker } from "../lib/research/intake.ts";
 const snapshot = JSON.parse(readFileSync(new URL("../lib/research/intake-snapshot.json", import.meta.url)));
 const liveTypes = readFileSync(new URL("../lib/research/use-live-intake.ts", import.meta.url), "utf8");
 const intakeDashboard = readFileSync(new URL("../app/research/intake/intake-dashboard.tsx", import.meta.url), "utf8");
@@ -38,6 +38,19 @@ test("operations preview describes PDF evidence extraction without stale unsuppo
   assert.match(intakeDashboard, /PDF取得済み・根拠本文の補完待ち/);
   assert.match(intakeDashboard, /PDFから根拠本文を抽出できませんでした/);
   assert.doesNotMatch(intakeDashboard, /文字抽出は未対応/);
+});
+
+test("PDF evidence totals separate extracted, pending, and latest errors", () => {
+  const pdfUrl = "https://nebius.com/newsroom/official.pdf?revision=1";
+  const pdf = { ...source, url: pdfUrl, content_type: null, extracted_chars: null, error: null };
+  assert.deepEqual(pdfEvidenceCounts([
+    { ...pdf, extracted_chars: 120 },
+    { ...pdf, url: pdfUrl.replace("revision=1", "revision=2") },
+    { ...pdf, url: pdfUrl.replace("revision=1", "revision=3"), error: "invalid-pdf" },
+    { ...pdf, url: "https://nebius.com/newsroom/article", content_type: "text/html" },
+  ]), { total: 3, extracted: 1, pending: 1, error: 1 });
+  assert.match(intakeDashboard, /PDF根拠：抽出済み/);
+  assert.match(intakeDashboard, /補完待ち/);
 });
 
 test("operations preview shows durable incident state while external delivery stays off", () => {

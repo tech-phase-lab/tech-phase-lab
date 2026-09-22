@@ -43,6 +43,16 @@ export function intakeCounts(sources: IntakeSource[]) {
     pending: sources.filter(s => s.status === "pending").length };
 }
 
+export function pdfEvidenceCounts(sources: IntakeSource[]) {
+  const pdfs = sources.filter((source) => {
+    if (source.content_type === "application/pdf") return true;
+    try { return /\.pdf$/i.test(new URL(source.url).pathname); } catch { return false; }
+  });
+  const error = pdfs.filter(source => Boolean(source.error)).length;
+  const extracted = pdfs.filter(source => !source.error && (source.extracted_chars ?? 0) > 0).length;
+  return { total: pdfs.length, extracted, pending: pdfs.length - extracted - error, error };
+}
+
 export function filterSources(sources: IntakeSource[], query: string, ticker: string, state: string, review: string, titles: Record<string, string> = {}, sector = "all") {
   const q = query.trim().toLocaleLowerCase();
   return sources.filter(s => (ticker === "all" || s.ticker === ticker)
