@@ -9,7 +9,7 @@ import styles from "./intake.module.css";
 const stateNames = { error: "取得エラー", fetched: "取得済み", unfetched: "未取得" };
 const reviewNames = { pending: "確認待ち", approved: "採用", held: "保留", rejected: "却下" };
 const historyNames: Record<string, string> = { "first-fetch": "初回取得", changed: "応答の変化を検出", "fetch-error": "取得に失敗", approved: "採用を記録", held: "保留を記録", rejected: "却下を記録" };
-const errorNames: Record<string, string> = { "http-403": "配信元が取得を拒否（HTTP 403）", timeout: "応答待ちでタイムアウト", "no-links": "発表リンクを抽出できませんでした", "invalid-pdf": "PDF形式を検証できませんでした", "pdf-encrypted": "暗号化PDFのため本文を抽出できませんでした", "pdf-page-limit": "PDFが安全なページ数上限を超えました", "pdf-no-text": "画像主体または根拠として十分な文字を抽出できませんでした", "pdf-timeout": "PDF解析が安全な時間上限を超えました", "pdf-extract-failed": "PDF本文の解析に失敗しました", "fetch-error": "資料の取得に失敗" };
+const errorNames: Record<string, string> = { "http-403": "配信元が取得を拒否（HTTP 403）", timeout: "応答待ちでタイムアウト", "no-links": "発表リンクを抽出できませんでした", "no-extractable-text": "本文として使える文字を抽出できませんでした", "invalid-pdf": "PDF形式を検証できませんでした", "pdf-encrypted": "暗号化PDFのため本文を抽出できませんでした", "pdf-page-limit": "PDFが安全なページ数上限を超えました", "pdf-no-text": "画像主体または根拠として十分な文字を抽出できませんでした", "pdf-timeout": "PDF解析が安全な時間上限を超えました", "pdf-extract-failed": "PDF本文の解析に失敗しました", "fetch-error": "資料の取得に失敗" };
 const impactNames = { positive: "好影響", negative: "悪影響", mixed: "好悪材料", neutral: "中立", uncertain: "判断保留" };
 const confidenceNames = { high: "高", medium: "中", low: "低" };
 function time(value: string | null) {

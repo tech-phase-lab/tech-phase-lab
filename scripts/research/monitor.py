@@ -176,6 +176,7 @@ def source_error_code(exc):
         for fragment, code in (
             ("unsupported content type", "unsupported-content-type"),
             ("empty or oversized source", "empty-or-oversized-source"),
+            ("source has no extractable text", "no-extractable-text"),
             ("pdf is encrypted", "pdf-encrypted"),
             ("pdf page limit exceeded", "pdf-page-limit"),
             ("pdf has no extractable text", "pdf-no-text"),
@@ -1768,6 +1769,8 @@ def collect_source(row, transport=fetch):
         content, content_type = transport(row["url"], row["ticker"])
         response_etag = response_last_modified = None
     extracted = extract_text(content, content_type)
+    if not extracted.strip():
+        raise ValueError("Source has no extractable text")
     return {
         "sha256": hashlib.sha256(content).hexdigest(),
         "bodySha256": hashlib.sha256(extracted.encode("utf-8")).hexdigest(),

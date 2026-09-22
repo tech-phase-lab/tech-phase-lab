@@ -35,6 +35,7 @@ test("operations preview exposes bounded cache pressure without cached contents"
 });
 
 test("operations preview describes PDF evidence extraction without stale unsupported copy", () => {
+  assert.match(intakeDashboard, /no-extractable-text/);
   assert.match(intakeDashboard, /PDF取得済み・根拠本文の補完待ち/);
   for (const code of ["pdf-encrypted", "pdf-page-limit", "pdf-no-text", "pdf-timeout", "pdf-extract-failed"]) {
     assert.match(intakeDashboard, new RegExp(code));

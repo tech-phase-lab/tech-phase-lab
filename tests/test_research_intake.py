@@ -324,6 +324,30 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(public["extracted_chars"], row["extracted_chars"])
         self.assertNotIn("extracted_text", public)
 
+    def test_empty_article_shell_fails_closed_and_uses_retry_backoff(self):
+        body = b"<html><body><nav>Navigation only</nav><script>renderLater()</script></body></html>"
+        result = self.check(body)
+        row = self.row()
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["error"], "no-extractable-text")
+        self.assertEqual(result["retrySeconds"], 60)
+        self.assertIsNone(row["sha256"])
+        self.assertEqual(row["extracted_chars"], 0)
+        self.assertEqual(row["fetch_failures"], 1)
+
+    def test_empty_recheck_preserves_last_good_evidence_and_blocks_review(self):
+        self.check(b"<main><p>Previously verified official evidence remains stored.</p></main>")
+        previous_sha = self.row()["sha256"]
+        result = self.check(
+            b"<html><body><nav>Navigation only</nav><script>renderLater()</script></body></html>"
+        )
+        row = self.row()
+        self.assertEqual(result["error"], "no-extractable-text")
+        self.assertEqual(row["sha256"], previous_sha)
+        self.assertIn("Previously verified", row["extracted_text"])
+        with self.assertRaises(ValueError):
+            m.review(self.db, URL, previous_sha, "approved", "editor", "Latest check failed")
+
     def test_source_revisions_are_retained_for_private_machine_diff_only(self):
         first = b"<main><p>Capacity will increase to 100 units in 2027.</p></main>"
         second = b"<main><p>Capacity will increase to 120 units in 2027.</p></main>"
