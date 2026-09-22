@@ -768,6 +768,9 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed = urlsplit(self.path)
         path = parsed.path
+        if path == "/livez":
+            self.send_json(200, {"ok": True, "status": "alive"})
+            return
         if path == "/health":
             state = self.app.public_state()
             self.send_json(200 if state["ready"] else 503, state)

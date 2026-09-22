@@ -67,6 +67,25 @@ class ResearchServiceTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "Unknown RESEARCH_TICKERS: AMZN"):
                 service.AutomaticMonitor(self.db_path, self.snapshot_path)
 
+    def test_liveness_does_not_wait_for_first_official_source_cycle(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        server = service.ThreadingHTTPServer(("127.0.0.1", 0), service.Handler)
+        server.app = app
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        base = f"http://127.0.0.1:{server.server_port}"
+        try:
+            with urlopen(f"{base}/livez", timeout=2) as response:
+                self.assertEqual(response.status, 200)
+                self.assertEqual(json.loads(response.read()), {"ok": True, "status": "alive"})
+            with self.assertRaises(HTTPError) as starting:
+                urlopen(f"{base}/health", timeout=2)
+            self.assertEqual(starting.exception.code, 503)
+            self.assertEqual(json.loads(starting.exception.read())["health"]["status"], "starting")
+        finally:
+            server.shutdown()
+            server.server_close()
+
     def test_body_fetch_prioritizes_new_event_and_exports_only_metadata(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         app.body_batch = 1
