@@ -39,12 +39,15 @@ news monitor. A roster entry is not a confirmed next earnings date. Null
 `lastCheckedOn` means a schedule review is still due. Do not interpret an empty
 IR page or inaccessible JavaScript calendar as proof no event is announced.
 MU and TSMC are call times; Netflix is an approximate release time. ASML's
-October 14 official date has no confirmed time and is displayed separately,
-without manufacturing a timestamp or converting the date to JST/ET.
+October 14 official date and FOMC meeting dates with no published clock time are
+displayed separately, without manufacturing a timestamp or converting the date
+to JST/ET. A date-only item remains date-only for filtering and display.
 
 The existing hourly Tech Phase development task also reviews calendar sources.
 Review the oldest/unreviewed companies first in batches of up to 10, aiming to
 revisit each within 24 hours; failures remain pending with blockers recorded.
+`docs/CALENDAR-HANDOFF.md` records those blockers and the next batch; only a
+conclusive schedule check advances `lastCheckedOn`.
 Confirm dates and changes from first-party IR announcements, including exact
 fiscal quarter, release vs call, timezone/UTC offset, source URL and review date.
 Refresh BLS/Federal Reserve schedules as well. Commit verified updates only to

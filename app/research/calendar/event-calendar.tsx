@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
-import { calendarDateKey, dateOnlyEarnings, selectDateOnlyEarnings, calendarEvents, calendarReviewedOn, selectCalendarEvents, type CalendarEvent } from "@/lib/research/calendar";
+import { calendarDateKey, dateOnlyEvents, selectDateOnlyEarnings, selectDateOnlyEvents, calendarEvents, calendarReviewedOn, selectCalendarEvents, type CalendarEvent } from "@/lib/research/calendar";
 import coverage from "@/lib/research/calendar-coverage.json";
 import { useResearchLanguage } from "../use-research-language";
 import ResearchToolShell from "../research-tool-shell";
@@ -22,12 +22,12 @@ export default function EventCalendar() {
   const zone = zoneOverride ?? (lang === "ja" ? "Asia/Tokyo" : "America/New_York");
   const otherZone = zone === "Asia/Tokyo" ? "America/New_York" : "Asia/Tokyo";
   const zoneLabel = (value: string) => value === "Asia/Tokyo" ? "JST" : "ET";
-  const months = [...new Set([...calendarEvents.map((event) => calendarDateKey(event.startsAt, zone).slice(0, 7)), ...dateOnlyEarnings.map((event) => event.date.slice(0, 7))])].sort();
+  const months = [...new Set([...calendarEvents.map((event) => calendarDateKey(event.startsAt, zone).slice(0, 7)), ...dateOnlyEvents.map((event) => event.date.slice(0, 7))])].sort();
   const [period, setPeriod] = useState("upcoming");
   const now = useSyncExternalStore(subscribeClock, clockSnapshot, () => null);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const visible = now === null ? [] : selectCalendarEvents(calendarEvents, kind, period, now, zone);
-  const visibleDateOnly = now === null || kind === "economic" ? [] : selectDateOnlyEarnings(period, now);
+  const visibleDateOnly = now === null ? [] : selectDateOnlyEvents(dateOnlyEvents, kind, period, now);
   const stale = now !== null && now - Date.parse(`${calendarReviewedOn}T00:00:00+09:00`) > 7 * 86400000;
   const stamp = (value: string, zone: string) => new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, month: "short", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(value));
   return <ResearchToolShell lang={lang} setLang={(value) => { setLang(value); setZoneOverride(null); setPeriod("upcoming"); }} title={t("決算・経済指標カレンダー", "Earnings & economic calendar")} description={t("公式発表で確認した予定を、日本時間と米国東部時間で。", "Official schedules in U.S. Eastern and Japan time.")}>
@@ -46,8 +46,8 @@ export default function EventCalendar() {
     </li>)}</ol>
     {now !== null && visible.length === 0 && visibleDateOnly.length === 0 && <div className={styles.empty}><strong>{t("この条件で登録済みの予定はありません。", "No registered events match this filter.")}</strong><p>{t("発表がないという意味ではありません。期間を変更するか、公式日程をご確認ください。", "This does not mean no events are scheduled. Change the filter or check the official schedules.")}</p></div>}
     <section className={styles.section}>
-      {visibleDateOnly.length > 0 && <><h2>{t("時刻未公表の決算予定", "Earnings dates awaiting a time")}</h2>
-      {visibleDateOnly.map((event) => <p key={event.ticker} className={styles.notice}><strong>{event.title[lang]}</strong> · {event.date}<br />{t("公式掲載日です。時刻未公表のためET/JSTへの日付換算はしていません。", "Official calendar date; not converted to ET/JST because no time has been confirmed.")} <a href={event.sourceUrl} target="_blank" rel="noreferrer">{t("公式日程", "Official schedule")} ↗</a></p>)}</>}
+      {visibleDateOnly.length > 0 && <><h2>{t("時刻未公表の予定", "Dates awaiting a time")}</h2>
+      {visibleDateOnly.map((event) => <p key={event.id} className={styles.notice}><strong>{event.title[lang]}</strong> · {event.date}<br />{event.note?.[lang] ?? t("公式掲載日です。時刻未公表のためET/JSTへの日付換算はしていません。", "Official calendar date; not converted to ET/JST because no time has been confirmed.")} <a href={event.sourceUrl} target="_blank" rel="noreferrer">{event.sourceName} ↗</a></p>)}</>}
       <details className={styles.coverage}>
         <summary>{t("決算の追跡対象", "Earnings coverage")} · {coverage.length}{t("社", " companies")}</summary>
         <p className={styles.description}>{t("掲載済み以外は次回日程の確認待ちです。「発表がない」という意味ではありません。予想日で埋めず、公式確認後に追加します。", "Other dates are awaiting verification, not necessarily unannounced. We add official dates rather than estimates.")}</p>

@@ -1,7 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { parseFavoriteStocks, toggleFavoriteStock } from "../lib/research/favorites.ts";
-import { calendarEvents, selectDateOnlyEarnings, calendarDateKey, selectCalendarEvents } from "../lib/research/calendar.ts";
+import { calendarEvents, dateOnlyEvents, selectDateOnlyEarnings, selectDateOnlyEvents, calendarDateKey, selectCalendarEvents } from "../lib/research/calendar.ts";
+
+const coverage = JSON.parse(readFileSync(new URL("../lib/research/calendar-coverage.json", import.meta.url), "utf8"));
 
 test("favorite storage tolerates invalid JSON and rejects non-ticker values", () => {
   for (const raw of [null, "{", "null", "{}", '"MU"']) assert.deepEqual(parseFavoriteStocks(raw), []);
@@ -45,7 +48,7 @@ test("registered schedules are ordered, unique and linked to official sources", 
     assert.ok(Number.isFinite(timestamp) && timestamp >= previous);
     previous = timestamp;
     assert.ok(event.title.ja && event.title.en);
-    assert.ok(["www.bls.gov", "www.federalreserve.gov", "investors.micron.com", "investor.tsmc.com", "ir.netflix.net"].includes(new URL(event.sourceUrl).hostname));
+    assert.ok(["www.bls.gov", "investors.micron.com", "investor.tsmc.com", "ir.netflix.net", "www.adobe.com"].includes(new URL(event.sourceUrl).hostname));
     if (event.sourceName === "BLS") {
       assert.equal(new Intl.DateTimeFormat("en-GB", { timeZone: event.sourceTimezone, hour: "2-digit", minute: "2-digit" }).format(new Date(event.startsAt)), "08:30");
     }
@@ -74,4 +77,29 @@ test("date-only earnings keep the official date without fabricating a time", () 
   assert.equal(selectDateOnlyEarnings("2026-10", now)[0].date, "2026-10-14");
   assert.equal(selectDateOnlyEarnings("upcoming", Date.parse("2026-10-14T21:59:00Z")).length, 1);
   assert.equal(selectDateOnlyEarnings("upcoming", Date.parse("2026-10-14T22:00:00Z")).length, 0);
+});
+
+test("Adobe call keeps the official Pacific time and release/call distinction", () => {
+  const adobe = calendarEvents.find((event) => event.id === "adbe-fq4-2026-call");
+  assert.equal(adobe.startsAt, "2026-12-09T14:00:00-08:00");
+  assert.equal(adobe.sourceTimezone, "America/Los_Angeles");
+  assert.match(adobe.note.en, /call start, not the publication time/i);
+  assert.equal(calendarDateKey(adobe.startsAt, "America/New_York"), "2026-12-09");
+  assert.equal(calendarDateKey(adobe.startsAt, "Asia/Tokyo"), "2026-12-10");
+});
+
+test("FOMC meetings stay date-only until the Federal Reserve publishes clock times", () => {
+  const fomc = dateOnlyEvents.filter((event) => event.id.startsWith("fomc-"));
+  assert.deepEqual(fomc.map((event) => event.date), ["2026-10-28", "2026-12-09"]);
+  assert.ok(fomc.every((event) => event.kind === "economic" && !("startsAt" in event)));
+  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "economic", "upcoming", Date.parse("2026-09-23T00:00:00Z")).length, 2);
+  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "earnings", "2026-10", 0).length, 1);
+});
+
+test("calendar coverage tracks 40 unique companies and only conclusive checks advance", () => {
+  assert.equal(coverage.length, 40);
+  assert.equal(new Set(coverage.map((company) => company.ticker)).size, 40);
+  const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
+  for (const ticker of ["ADBE", "AMAT", "AMD"]) assert.equal(checked[ticker], "2026-09-23");
+  for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "COHR"]) assert.equal(checked[ticker], null);
 });

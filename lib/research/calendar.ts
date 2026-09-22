@@ -10,8 +10,20 @@ export type CalendarEvent = {
   ticker?: string;
   note?: Copy;
 };
+export type DateOnlyCalendarEvent = {
+  id: string;
+  kind: CalendarEvent["kind"];
+  ticker?: string;
+  date: string;
+  sourceTimezone: string;
+  title: Copy;
+  sourceName: string;
+  sourceUrl: string;
+  checkedOn: string;
+  note?: Copy;
+};
 
-export const calendarReviewedOn = "2026-09-22";
+export const calendarReviewedOn = "2026-09-23";
 const blsUrl = "https://www.bls.gov/schedule/2026/";
 const labels: Record<string, Copy> = {
   jobs: { ja: "米国雇用統計", en: "U.S. employment report" },
@@ -51,12 +63,12 @@ export const calendarEvents: CalendarEvent[] = [
     sourceUrl: "https://ir.netflix.net/investor-news-and-events/financial-releases/press-release-details/2026/Netflix-to-Announce-Third-Quarter-2026-Financial-Results/default.aspx",
     note: { ja: "公開は予定時刻の前後です。経営陣インタビューは44分後を予定しています。", en: "Approximate release time. The management interview is scheduled 44 minutes later." },
   },
-  ...["2026-10-28T14:00:00-04:00", "2026-12-09T14:00:00-05:00"].map((startsAt) => ({
-    id: `fomc-${startsAt.slice(0, 10)}`, kind: "economic" as const, title: { ja: "FOMC 政策発表", en: "FOMC policy announcement" }, startsAt,
-    sourceTimezone: "America/New_York", sourceName: "Federal Reserve",
-    sourceUrl: `https://www.federalreserve.gov/newsevents/2026-${startsAt.includes("-10-") ? "october" : "december"}.htm`,
-    note: { ja: "会合最終日の予定。議長会見は30分後の予定です。", en: "Final meeting day. The press conference is scheduled 30 minutes later." },
-  })),
+  {
+    id: "adbe-fq4-2026-call", ticker: "ADBE", kind: "earnings" as const, title: { ja: "Adobe 決算説明会（2026年度Q4・通期）", en: "Adobe fiscal Q4 and FY2026 earnings call" },
+    startsAt: "2026-12-09T14:00:00-08:00", sourceTimezone: "America/Los_Angeles", sourceName: "Adobe IR",
+    sourceUrl: "https://www.adobe.com/investor-relations/events-presentations.html",
+    note: { ja: "説明会の開始予定です。決算資料の公開時刻を示すものではありません。", en: "Scheduled call start, not the publication time of the earnings release." },
+  },
 ].sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt));
 
 export function calendarDateKey(startsAt: string, timezone = "Asia/Tokyo") {
@@ -68,14 +80,25 @@ export function selectCalendarEvents(events: CalendarEvent[], kind: "all" | Cale
 }
 
 // Date-only announcements must never be turned into fictitious midnight timestamps.
-export const dateOnlyEarnings = [{
-  ticker: "ASML", date: "2026-10-14", sourceTimezone: "Europe/Amsterdam",
-  title: { ja: "ASML 決算発表（2026年Q3）", en: "ASML Q3 2026 results" },
-  sourceUrl: "https://www.asml.com/en/investors/financial-calendar",
-  checkedOn: "2026-09-22",
-}];
-export function selectDateOnlyEarnings(period: string, now: number) {
-  return dateOnlyEarnings.filter((event) => period === "upcoming"
+export const dateOnlyEvents: DateOnlyCalendarEvent[] = [
+  {
+    id: "asml-q3-2026-results", kind: "earnings", ticker: "ASML", date: "2026-10-14", sourceTimezone: "Europe/Amsterdam",
+    title: { ja: "ASML 決算発表（2026年Q3）", en: "ASML Q3 2026 results" }, sourceName: "ASML IR",
+    sourceUrl: "https://www.asml.com/en/investors/financial-calendar", checkedOn: "2026-09-22",
+  },
+  ...["2026-10-28", "2026-12-09"].map((date): DateOnlyCalendarEvent => ({
+    id: `fomc-${date}`, kind: "economic", date, sourceTimezone: "America/New_York",
+    title: { ja: "FOMC会合 最終日", en: "FOMC meeting final day" }, sourceName: "Federal Reserve",
+    sourceUrl: "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm", checkedOn: calendarReviewedOn,
+    note: { ja: "公式会合予定で確認できる日付のみを掲載しています。政策発表・会見の時刻は未公表です。", en: "Only the official meeting date is shown. Policy announcement and press-conference times have not been published." },
+  })),
+];
+export const dateOnlyEarnings = dateOnlyEvents.filter((event) => event.kind === "earnings");
+export function selectDateOnlyEvents(events: DateOnlyCalendarEvent[], kind: "all" | CalendarEvent["kind"], period: string, now: number) {
+  return events.filter((event) => (kind === "all" || event.kind === kind) && (period === "upcoming"
     ? event.date >= calendarDateKey(new Date(now).toISOString(), event.sourceTimezone)
-    : event.date.startsWith(period));
+    : event.date.startsWith(period)));
+}
+export function selectDateOnlyEarnings(period: string, now: number) {
+  return selectDateOnlyEvents(dateOnlyEarnings, "earnings", period, now);
 }
