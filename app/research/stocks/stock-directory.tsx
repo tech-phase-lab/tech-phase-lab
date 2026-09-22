@@ -10,6 +10,7 @@ import styles from "./stocks.module.css";
 import polish from "./stock-polish.module.css";
 import filingStyles from "./filings.module.css";
 import { MarketWorkspace } from "./market-workspace";
+import { useStockHistory } from "./use-stock-history";
 
 type SearchResponse = { ok: boolean; results?: StockDirectoryEntry[]; error?: string; source?: string; asOf?: string };
 type ProfileResponse = { ok: boolean; profile?: StockProfile; error?: string; profileSource?: string; asOf?: string };
@@ -46,6 +47,7 @@ function filingLabel(form: string, lang: "ja" | "en") {
 export default function StockDirectory() {
   const [lang, setLang] = useResearchLanguage();
   const [query, setQuery] = useState("");
+  const { history, remember, clear: clearHistory, error: historyError } = useStockHistory();
   const [results, setResults] = useState<StockDirectoryEntry[]>([]);
   const [selectedResultKey, setSelectedResultKey] = useState<string | null>(null);
   const [profile, setProfile] = useState<StockProfile | null>(null);
@@ -81,6 +83,8 @@ export default function StockDirectory() {
     profileRequest.current += 1;
     businessRequest.current += 1;
     setProfile(null);
+    setProfileLoading(false);
+    setResults([]);
     setSelectedResultKey(null);
     setBusiness(null);
     setRisks(null);
@@ -132,6 +136,7 @@ export default function StockDirectory() {
       if (requestId !== profileRequest.current) return;
       if (!response.ok || !data.ok || !data.profile) throw new Error(data.error || "profile-failed");
       setProfile(data.profile);
+      remember(data.profile.ticker);
       setAsOf(data.asOf ?? asOf);
       if (data.profile.latestAnnualFiling) void loadBusiness(entry.ticker);
     } catch (reason) {
@@ -190,23 +195,28 @@ export default function StockDirectory() {
       <section className={styles.hero}>
         <p>STOCK DISCOVERY</p>
         <h1><span className={polish.desktopTitle}>{t("米国株を、すぐ調べる。", "Find a U.S. stock in seconds.")}</span><span className={polish.mobileTitle}>{t("米国株リサーチ", "U.S. stock research")}</span></h1>
-        <p>{t("ティッカーまたは企業名で検索。会社名、取引所、SEC識別番号、業種を一次情報から確認できます。", "Search by ticker or company name. Verify the company, exchange, SEC identifier, and industry from primary data.")}</p>
-        <label className={styles.search}><span aria-hidden="true">⌕</span><input autoComplete="off" inputMode="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("例：NVDA、Micron、Palantir", "Try NVDA, Micron, or Palantir")} aria-label={t("米国株を検索", "Search U.S. stocks")} /><kbd>SEC</kbd></label>
+
+        <label className={`${styles.search} ${polish.searchBox}`}><span aria-hidden="true">⌕</span><input autoComplete="off" inputMode="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("例：NVDA、Micron、Palantir", "Try NVDA, Micron, or Palantir")} aria-label={t("米国株を検索", "Search U.S. stocks")} /><kbd>SEC</kbd></label>
         <div className={styles.scope}><span>{t("無料の企業名簿", "Free company directory")}</span><span>{t("TradingView株価・12か月チャート", "TradingView quote and 12-month chart")}</span><span>{t("ニュース権利と分離", "Separate from news licensing")}</span></div>
       </section>
 
-      <div className={`${styles.layout} ${polish.resultLayout}`}>
-        <section className={styles.results} aria-labelledby="results-title" aria-busy={loading}>
-          <div className={styles.sectionHeading}><div><p>SEARCH RESULTS</p><h2 id="results-title">{query.trim() ? t("検索結果", "Matches") : t("銘柄名かティッカーを入力", "Enter a company or ticker")}</h2></div><span aria-live="polite">{loading ? t("検索中…", "Searching…") : query.trim() ? `${results.length}${t("件", " results")}` : "—"}</span></div>
+      <section className={polish.history} aria-label={t("履歴", "History")}>
+        <strong>{t("履歴", "History")}</strong>
+        {history.length ? <><ul>{history.map((ticker) => <li key={ticker}><button onClick={() => setQuery(ticker)} aria-label={t(`${ticker}を再検索`, `Search ${ticker} again`)}>{ticker}</button></li>)}</ul><button className={polish.clearHistory} onClick={clearHistory}>{t("消去", "Clear")}</button></> : <span>{t("まだ履歴はありません", "No history yet")}</span>}
+        {historyError && <span role="status">{t("このブラウザーで履歴を保存・消去できませんでした。", "Could not update history in this browser.")}</span>}
+      </section>
+
+      {(query.trim() || errorMessage) && <div className={`${styles.layout} ${polish.resultLayout}`}>
+        <section className={`${styles.results} ${polish.searchResults}`} aria-labelledby="results-title" aria-busy={loading}>
+          <div className={styles.sectionHeading}><h2 id="results-title">{t("検索結果", "Matches")}</h2><span aria-live="polite">{loading ? t("検索中…", "Searching…") : `${results.length}${t("件", " results")}`}</span></div>
           {errorMessage && <div className={styles.error} role="alert"><strong>{t("取得経路を確認中", "Source unavailable")}</strong><p>{errorMessage}</p></div>}
           {!error && query.trim() && !loading && results.length === 0 && <div className={styles.empty}><strong>{t("該当銘柄が見つかりません", "No matching ticker")}</strong><p>{t("英語の企業名またはティッカーで検索してください。SEC名簿は全銘柄を保証するものではありません。", "Try an English company name or ticker. The SEC does not guarantee complete coverage.")}</p></div>}
-          {!query.trim() && <div className={styles.examples}><button onClick={() => setQuery("NVDA")}>NVDA</button><button onClick={() => setQuery("Micron")}>Micron</button><button onClick={() => setQuery("Nebius")}>Nebius</button><button onClick={() => setQuery("Palantir")}>Palantir</button><button onClick={() => setQuery("Vertiv")}>Vertiv</button></div>}
-          {results.length > 0 && <div className={polish.resultGuide}><p className={polish.resultHint}>{selectedResultKey ? t("選択した銘柄を表示しています。", "Showing the selected stock.") : t("銘柄を選ぶと株価と公式情報を表示します。", "Choose a stock to view prices and official information.")}</p>{selectedResultKey && results.length > 1 && <button type="button" onClick={() => setSelectedResultKey(null)}>{t("ほかの検索結果を見る", "Show other matches")}</button>}</div>}
-          <ol className={styles.resultList}>{visibleResults.map((entry) => <li key={`${entry.ticker}:${entry.cik}:${entry.exchange}`}><button className={polish.resultButton} onClick={() => selectStock(entry)} aria-current={selectedResultKey === `${entry.ticker}:${entry.cik}:${entry.exchange}` ? "true" : undefined}><span className={styles.ticker}>{entry.ticker}</span><span className={styles.identity}><strong>{entry.name}</strong><small>CIK {String(entry.cik).padStart(10, "0")}</small></span><span className={styles.exchange}>{exchangeLabel(entry.exchange)}{entry.tracked && <em>{t("監視中", "WATCHED")}</em>}</span><span className={polish.resultCta}>{selectedResultKey === `${entry.ticker}:${entry.cik}:${entry.exchange}` ? t("表示中", "OPEN") : t("詳細を見る", "VIEW")} <span aria-hidden="true">→</span></span></button></li>)}</ol>
+          {selectedResultKey && results.length > 1 && <div className={polish.resultGuide}><button type="button" onClick={() => setSelectedResultKey(null)}>{t("ほかの検索結果を見る", "Show other matches")}</button></div>}
+          <ol className={polish.compactResults}>{visibleResults.map((entry) => <li key={`${entry.ticker}:${entry.cik}:${entry.exchange}`}><button className={polish.resultButton} onClick={() => selectStock(entry)} aria-current={selectedResultKey === `${entry.ticker}:${entry.cik}:${entry.exchange}` ? "true" : undefined}><span className={styles.ticker}>{entry.ticker}</span><span className={styles.identity}><strong>{entry.name}</strong></span><span className={styles.exchange}>{exchangeLabel(entry.exchange)}{entry.tracked && <em>{t("監視中", "WATCHED")}</em>}</span><span className={polish.resultCta} aria-hidden="true">→</span></button></li>)}</ol>
           {asOf && <p className={styles.asOf}>{t("表示取得時刻", "Retrieved")}: <time dateTime={asOf}>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", dateStyle: "medium", timeStyle: "short" }).format(new Date(asOf))} JST</time></p>}
         </section>
 
-      </div>
+      </div>}
 
       {(profileLoading || profile) && <div ref={marketTarget} className={polish.marketTarget}>
         {profileLoading && <div className={polish.profileLoading} role="status"><span className={styles.loader} /><strong>{t("株価とSEC企業情報を確認中", "Loading price and SEC company data")}</strong></div>}
@@ -217,7 +227,7 @@ export default function StockDirectory() {
         <summary><span><small>SEC COMPANY RECORD</small><strong>{t("企業登録情報", "Company registration data")}</strong></span><em>{t("業種・法人区分などを表示", "Industry, entity type, and more")}</em></summary>
         <div className={polish.profileBody}>
           <div className={styles.profileTop}><span>{exchangeLabel(profile.exchange)} · {profile.ticker} · {profile.name}</span>{profile.tracked && <em>{t("公式発表を自動監視中", "Official releases monitored")}</em>}</div>
-          <dl><div><dt>{t("SEC業種", "SEC industry")}</dt><dd>{profile.sicDescription ?? t("未掲載", "Not listed")}{profile.sic && <small>SIC {profile.sic}</small>}</dd></div><div><dt>{t("法人区分", "Entity type")}</dt><dd>{profile.entityType ?? t("未掲載", "Not listed")}</dd></div><div><dt>{t("設立・登録地域", "Incorporation")}</dt><dd>{profile.stateOfIncorporation ?? t("未掲載", "Not listed")}</dd></div><div><dt>{t("決算期末", "Fiscal year end")}</dt><dd>{profile.fiscalYearEnd ?? t("未掲載", "Not listed")}</dd></div></dl>
+          <dl><div><dt>CIK</dt><dd>{String(profile.cik).padStart(10, "0")}</dd></div><div><dt>{t("SEC業種", "SEC industry")}</dt><dd>{profile.sicDescription ?? t("未掲載", "Not listed")}{profile.sic && <small>SIC {profile.sic}</small>}</dd></div><div><dt>{t("法人区分", "Entity type")}</dt><dd>{profile.entityType ?? t("未掲載", "Not listed")}</dd></div><div><dt>{t("設立・登録地域", "Incorporation")}</dt><dd>{profile.stateOfIncorporation ?? t("未掲載", "Not listed")}</dd></div><div><dt>{t("決算期末", "Fiscal year end")}</dt><dd>{profile.fiscalYearEnd ?? t("未掲載", "Not listed")}</dd></div></dl>
           <div className={styles.actions}><a href={profile.secProfileUrl} target="_blank" rel="noreferrer">{t("SEC提出書類を見る ↗", "Open SEC filings ↗")}</a>{profile.tracked && <Link href={`/research/companies/${profile.ticker}`}>{t("Tech Phase銘柄ページ →", "Tech Phase company page →")}</Link>}</div>
           <p className={styles.profileNote}>{t("業種・法人区分はSEC登録情報です。Tech Phase独自分類や投資判断ではありません。", "Industry and entity type come from SEC registration records, not a Tech Phase rating.")}</p>
         </div>

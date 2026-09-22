@@ -356,8 +356,8 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(styles, /\.hero h1\{[^}]*font-weight:650/);
   assert.match(styles, /\.main \.search input:focus-visible\{outline:0\}/);
   assert.match(page, /米国株リサーチ/);
-  assert.match(page, /銘柄を選ぶと株価と公式情報を表示します/);
-  assert.match(page, /詳細を見る/);
+  assert.doesNotMatch(page, /銘柄を選ぶと株価と公式情報を表示します|SEARCH RESULTS/);
+  assert.match(page, /useStockHistory/);
   assert.match(page, /ほかの検索結果を見る/);
   assert.match(page, /visibleResults/);
   assert.match(page, /marketTarget\.current\?\.scrollIntoView\(\{ behavior: "smooth", block: "start" \}\)/);
