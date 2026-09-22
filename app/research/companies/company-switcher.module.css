@@ -1,4 +1,7 @@
-.bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; min-width: 0; }
+.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; min-width: 0; }
+.favorite { min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--mint); font-size: .875rem; margin-left: auto; }
+.favorite[aria-pressed=true] { border-color: #57947e; background: #10271f; }
+.bar>p { width: 100%; color: #f0cb89; font-size: .8125rem; }
 .bar>a { color: var(--muted); font-size: .875rem; }
 .bar>a:hover { color: var(--mint); }
 .bar label { display: flex; align-items: center; gap: 12px; min-width: 0; color: var(--muted); font-size: .8125rem; }
@@ -8,4 +11,5 @@
   .bar { align-items: stretch; flex-direction: column; gap: 12px; margin-bottom: 20px; }
   .bar label { display: grid; gap: 6px; }
   .bar select { width: 100%; }
+  .favorite { margin-left: 0; align-self: flex-start; }
 }

@@ -9,6 +9,7 @@ import { valueLabel, dateLabel } from "@/lib/research/presentation";
 import { researchViewFromHash, researchViewHashes, type ResearchView } from "@/lib/research/navigation";
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./research.module.css";
+import HomeTools from "./home-tools";
 
 const storageKey = "tech-phase:research-saved:v1";
 const notifyName = "tech-phase:research-saved";
@@ -86,7 +87,6 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
     }
     return [...companies.values()].toSorted((a, b) => b.count - a.count || a.symbol.localeCompare(b.symbol));
   }, [events]);
-  const verifiedCompanyCount = monitoredCompanies.filter((company) => company.verified).length;
   const companyGroups = useMemo(() => {
     const groups = new Map<string, MonitoredCompany[]>();
     for (const company of monitoredCompanies) {
@@ -174,11 +174,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
 
         <div className={styles.heading}><div><p className={styles.eyebrow}>{tab === "home" ? t("ホーム / リサーチデスク", "HOME / THE RESEARCH DESK") : "THE RESEARCH DESK"}</p><h1>{tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : tab === "changes" ? t("何が変わった？を、根拠付きで。", "See what changed. Follow the evidence.") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1><p>{t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p></div><div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>2026.09.19</strong></div></div>
 
-        <section className={styles.overview} aria-label={t("検証内容", "Review overview")}>
-          <div><span className={styles.cardLabel}>{t("検証レポート", "RESEARCH NOTES")}</span><strong>{String(events.length).padStart(2, "0")}<span>{t("件", "notes")}</span></strong><p>{t("公式発表にリンク", "Linked to primary sources")}</p></div>
-          <div><span className={styles.cardLabel}>{t("銘柄別「何が変わった？」", "COMPANY RESEARCH")}</span><strong>{verifiedCompanyCount}<span>/ {monitoredCompanies.length} {t("社で比較公開", "companies verified")}</span></strong><p><a className={styles.overviewLink} href="#monitored-companies">{t("監視対象を見る", "View monitored companies")} <Arrow /></a></p></div>
-          <div><span className={styles.cardLabel}>{t("米国株検索・参考チャート", "STOCK SEARCH & CHARTS")}</span><div className={styles.companyLinks}><Link href="/research/stocks">SEC + TradingView<span aria-hidden="true">→</span></Link></div><p>{t("企業検索・SEC情報・参考株価・12か月チャート。価格は遅延表示で、速報判定には使用しません。", "Company search, SEC data, reference quotes, and a 12-month chart. Prices are delayed and not used for alerts.")}</p></div>
-        </section>
+        <HomeTools lang={lang} onChanges={() => openView("changes")} />
 
         <section id="monitored-companies" className={styles.companyDirectory} aria-labelledby="monitored-companies-title">
           <div className={styles.directoryHead}>

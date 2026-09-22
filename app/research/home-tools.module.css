@@ -1,0 +1,9 @@
+.grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); grid-auto-rows: 1fr; gap: 14px; margin-bottom: 30px; }
+.grid>a,.grid>button { display: flex; flex-direction: column; align-items: flex-start; text-align: left; min-width: 0; padding: 22px; color: var(--text); background: linear-gradient(125deg,#15232d,#0d171f); border: 1px solid var(--line); border-radius: 10px; text-decoration: none; font: inherit; cursor: pointer; }
+.grid>a:hover,.grid>button:hover { border-color: #598570; background: #14271f; }
+.grid :focus-visible { outline: 2px solid var(--mint); outline-offset: 4px; }
+.icon { color: var(--mint); font-size: 25px; height: 32px; margin-bottom: 10px; line-height: 1; }
+.grid strong { font-size: 1.2rem; line-height: 1.45; overflow-wrap: anywhere; }
+.grid p { font-size: .875rem; color: var(--muted); margin: 8px 0 18px; line-height: 1.6; }
+.action { margin-top: auto; color: var(--mint); font-size: .8125rem; }
+@media(max-width:650px) { .grid { gap: 10px; } .grid>a,.grid>button { padding: 16px 12px; } .grid strong { font-size: .95rem; } .grid p { font-size: .75rem; margin-bottom: 12px; } .action { font-size: .75rem; } .icon { font-size: 22px; margin-bottom: 6px; } }
