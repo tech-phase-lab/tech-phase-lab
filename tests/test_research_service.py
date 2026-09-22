@@ -218,6 +218,36 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertLessEqual(cache["bytes"], cache["maxBytes"])
         self.assertNotIn("https://", json.dumps(cache))
 
+    def test_discovery_signature_detects_same_url_inline_feed_revisions(self):
+        result = {
+            "status": "ok", "route": "primary+supplemental",
+            "sourceUrl": "https://investor.marvell.com/news-events/press-releases/rss",
+            "sourceFormat": "rss+sec-json", "sourcesChecked": 2,
+            "sourcesConfigured": 3, "error": None,
+        }
+        url = "https://investor.marvell.com/news-events/press-releases/detail/1234/example"
+        initial = {
+            url: {
+                "title": "Marvell official update", "publishedOn": "2026-09-22",
+                "contentType": "application/rss+xml", "contentBytes": 160,
+                "inlineText": "Initial official evidence with enough verified article text.",
+            }
+        }
+        unchanged = {url: dict(initial[url])}
+        revised = {url: {
+            **initial[url],
+            "inlineText": "Revised official evidence with enough verified article text.",
+        }}
+        remote_only = {url: {
+            "title": initial[url]["title"], "publishedOn": "2026-09-22",
+        }}
+
+        original_signature = service.discovery_signature(result, initial)
+        self.assertEqual(original_signature, service.discovery_signature(result, unchanged))
+        self.assertNotEqual(original_signature, service.discovery_signature(result, revised))
+        self.assertNotEqual(original_signature, service.discovery_signature(result, remote_only))
+        self.assertEqual(len(original_signature), 64)
+
     def test_public_health_exposes_url_free_priority_sec_evidence_counts(self):
         sources = {
             "TSM": "https://www.sec.gov/Archives/edgar/data/1046179/000119312526000001/tsm-6k.htm",

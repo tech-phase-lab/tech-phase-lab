@@ -3,6 +3,7 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import hashlib
 import hmac
 import json
 import os
@@ -65,6 +66,32 @@ def timestamp_age_seconds(value):
         return max(0, int((datetime.now(timezone.utc) - parsed.astimezone(timezone.utc)).total_seconds()))
     except (TypeError, ValueError):
         return None
+
+
+def discovery_signature(result, links):
+    """Hash bounded discovery evidence so same-URL feed revisions are observed."""
+    digest = hashlib.sha256()
+
+    def add(value):
+        text = "" if value is None else str(value)
+        digest.update(len(text).to_bytes(8, "big"))
+        for offset in range(0, len(text), 4096):
+            digest.update(text[offset:offset + 4096].encode("utf-8", "replace"))
+
+    for key in (
+        "status", "route", "sourceUrl", "sourceFormat", "sourcesChecked",
+        "sourcesConfigured", "error",
+    ):
+        add(result.get(key))
+    for url in sorted(links):
+        add(url)
+        candidate = links[url]
+        if isinstance(candidate, dict):
+            for key in ("title", "publishedOn", "contentType", "contentBytes", "inlineText"):
+                add(candidate.get(key))
+        else:
+            add(candidate)
+    return digest.hexdigest()
 
 
 class AutomaticMonitor:
@@ -665,7 +692,7 @@ class AutomaticMonitor:
                 company_states = {}
                 with self.db_lock, monitor.connect(self.db_path) as db:
                     for ticker, result, links, request_duration_ms in collected:
-                        signature = (result["status"], result["sourceUrl"], tuple(sorted(links)))
+                        signature = discovery_signature(result, links)
                         new_urls = set(links) - known[ticker]
                         if signatures.get(ticker) != signature or new_urls:
                             inserted = monitor.save_discovery(db, ticker, result, links)
