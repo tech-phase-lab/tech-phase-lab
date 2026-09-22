@@ -167,6 +167,21 @@ class IntakeTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "Invalid PDF: text extraction timed out"):
                 m.extract_pdf_text(text_pdf("Official evidence"))
 
+    def test_pdf_extractor_child_does_not_inherit_service_secrets(self):
+        completed = subprocess.CompletedProcess(
+            ["pdf_extract.py"], 0, stdout=b"Official evidence", stderr=b""
+        )
+        with patch.dict(m.os.environ, {
+            "RESEARCH_EDITOR_TOKEN": "must-not-reach-parser",
+            "HTTPS_PROXY": "must-not-reach-parser",
+        }), patch.object(m.subprocess, "run", return_value=completed) as run:
+            self.assertEqual(m.extract_pdf_text(text_pdf("Official evidence")), "Official evidence")
+        child = run.call_args.kwargs
+        self.assertEqual(set(child["env"]), {"PATH", "PYTHONIOENCODING"})
+        self.assertNotIn("RESEARCH_EDITOR_TOKEN", child["env"])
+        self.assertNotIn("HTTPS_PROXY", child["env"])
+        self.assertTrue(child["close_fds"])
+
     def test_legacy_empty_pdf_bypasses_304_once_to_backfill_evidence(self):
         self.db.execute("""
           UPDATE sources

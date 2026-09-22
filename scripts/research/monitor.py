@@ -393,11 +393,15 @@ class ArticleText(HTMLParser):
 def extract_pdf_text(content):
     """Extract PDF evidence in a resource-limited child process."""
     timeout = environment_seconds("RESEARCH_PDF_EXTRACT_TIMEOUT_SECONDS", 20, 1, 30)
+    child_environment = {
+        "PATH": os.environ.get("PATH", ""),
+        "PYTHONIOENCODING": "utf-8",
+    }
     try:
         completed = subprocess.run(
             [sys.executable, str(Path(__file__).with_name("pdf_extract.py"))],
             input=content, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
-            check=False, timeout=timeout,
+            check=False, close_fds=True, env=child_environment, timeout=timeout,
             start_new_session=True,
         )
     except subprocess.TimeoutExpired as exc:
