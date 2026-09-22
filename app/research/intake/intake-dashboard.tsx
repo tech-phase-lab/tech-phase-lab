@@ -82,6 +82,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
   const [state, setState] = useState("all");
   const [review, setReview] = useState("all");
   const [sector, setSector] = useState("all");
+  const [pdfEvidenceFilter, setPdfEvidenceFilter] = useState("all");
   const [page, setPage] = useState(1);
   const live = useLiveIntake(initialSnapshot);
   const snapshot = live.snapshot;
@@ -90,12 +91,12 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
   const coverage = coverageCounts(snapshot);
   const events = snapshot.events ?? [];
   const briefs = snapshot.briefs ?? [];
-  const visible = filterSources(snapshot.sources, query, ticker, state, review, titles, sector);
+  const visible = filterSources(snapshot.sources, query, ticker, state, review, titles, sector, pdfEvidenceFilter);
   const selectedProviders = providers.filter(p => (sector === "all" || p.sector === sector) && (ticker === "all" || ticker === p.ticker));
   const displayed = visible.slice((page - 1) * 20, page * 20);
   const pages = Math.max(1, Math.ceil(visible.length / 20));
   const title = (url: string) => titles[url] || sourceTitle(url);
-  function reset() { setQuery(""); setTicker("all"); setState("all"); setReview("all"); setSector("all"); setPage(1); }
+  function reset() { setQuery(""); setTicker("all"); setState("all"); setReview("all"); setSector("all"); setPdfEvidenceFilter("all"); setPage(1); }
   function chooseSector(value: string) { setSector(value); setTicker("all"); setPage(1); }
   return <div className={styles.app}>
     <a className={styles.skip} href="#intake-main">本文へ移動</a>
@@ -134,12 +135,14 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
           const runs = snapshot.discoveryRuns.filter(r => r.ticker === symbol).toSorted((a, b) => b.id - a.id);
           const latest = runs[0];
           const totals = intakeCounts(snapshot.sources.filter(s => s.ticker === symbol));
+          const companyPdfEvidence = pdfEvidenceCounts(snapshot.sources.filter(s => s.ticker === symbol));
           const available = latest?.status === "ok" || latest?.status === "fallback";
           const monitor = live.monitor?.companies?.[symbol];
           return <article key={symbol}><div className={styles.healthTop}><h3>{symbol}</h3><span className={available ? styles.good : styles.warning}>{latest?.status === "ok" ? "公式経路から取得" : latest?.status === "fallback" ? "公式バックアップ経路で取得" : latest ? "一覧の確認が必要" : "一覧未検証"}</span></div>
             <p className={styles.companyName}>{provider.name} <small>{sectorNames[provider.sector]}</small></p>
             <p>{latest?.status === "ok" ? (provider.format === "twse-material-json" ? `取引所の当日重要開示 ${latest.candidates}件` : `${latest.candidates}件のリンクを検出`) : latest?.status === "fallback" ? `企業サイトを補完し、公式提出書類を${latest.candidates}件検出` : errorNames[latest?.error ?? ""] || "取得記録なし"}</p>
             <p className={styles.muted}>本文・PDF：取得済み {totals.fetched} ／ 未取得 {totals.unfetched} ／ エラー {totals.error}</p>
+            {companyPdfEvidence.total > 0 && <p className={styles.muted}>PDF根拠：抽出済み {companyPdfEvidence.extracted} ／ 補完待ち {companyPdfEvidence.pending} ／ エラー {companyPdfEvidence.error}</p>}
             <p className={styles.meta}>一覧の確認日時：{latest ? time(latest.at) : "未確認"} JST</p>
             {latest && <p className={styles.meta}>取得経路の証跡：{discoveryEvidence(latest)}</p>}
             {monitor && <p className={styles.meta}>基準間隔 {monitor.basePollSeconds ?? monitor.nextPollSeconds ?? "—"}秒 ／ 直近の公式応答 {duration(monitor.requestDurationMs)}{monitor.nextPollSeconds && monitor.basePollSeconds && monitor.nextPollSeconds > monitor.basePollSeconds ? ` ／ 次回まで${monitor.nextPollSeconds}秒（失敗時バックオフ）` : ""}</p>}
@@ -154,6 +157,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
           <label className={styles.search}>資料名・会社名・URLを検索<input type="search" value={query} onChange={e => { setQuery(e.target.value); setPage(1); }} placeholder="NVIDIA、financial、AI…" /></label>
           <label>銘柄<select value={ticker} onChange={e => { setTicker(e.target.value); setPage(1); }}><option value="all">すべての銘柄</option>{providers.filter(p => sector === "all" || p.sector === sector).map(p => <option key={p.ticker} value={p.ticker}>{p.ticker} · {p.name}</option>)}</select></label>
           <label>取得状態<select value={state} onChange={e => { setState(e.target.value); setPage(1); }}><option value="all">すべての取得状態</option><option value="error">取得エラー</option><option value="unfetched">未取得</option><option value="fetched">取得済み</option></select></label>
+          <label>PDF根拠<select value={pdfEvidenceFilter} onChange={e => { setPdfEvidenceFilter(e.target.value); setPage(1); }}><option value="all">すべての資料</option><option value="pending">PDF補完待ち</option><option value="extracted">PDF抽出済み</option><option value="error">PDF取得エラー</option></select></label>
           <label>編集状態<select value={review} onChange={e => { setReview(e.target.value); setPage(1); }}><option value="all">すべての編集状態</option>{Object.entries(reviewNames).map(([key, name]) => <option key={key} value={key}>{name}</option>)}</select></label>
         </div>
         <div className={styles.results}><p aria-live="polite">{visible.length}件が該当 · {page} / {pages}ページ</p><button onClick={reset}>絞り込みを解除</button></div>

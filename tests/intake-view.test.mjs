@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { buildCoverageCompanies, coverageCompanyIssues, fetchState, filterSources, intakeCounts, pdfEvidenceCounts, snapshotIssues, coverageCounts, providers, providerByTicker } from "../lib/research/intake.ts";
+import { buildCoverageCompanies, coverageCompanyIssues, fetchState, filterSources, intakeCounts, pdfEvidenceCounts, pdfEvidenceState, snapshotIssues, coverageCounts, providers, providerByTicker } from "../lib/research/intake.ts";
 const snapshot = JSON.parse(readFileSync(new URL("../lib/research/intake-snapshot.json", import.meta.url)));
 const liveTypes = readFileSync(new URL("../lib/research/use-live-intake.ts", import.meta.url), "utf8");
 const intakeDashboard = readFileSync(new URL("../app/research/intake/intake-dashboard.tsx", import.meta.url), "utf8");
@@ -51,8 +51,24 @@ test("PDF evidence totals separate extracted, pending, and latest errors", () =>
     { ...pdf, url: pdfUrl.replace("revision=1", "revision=3"), error: "invalid-pdf" },
     { ...pdf, url: "https://nebius.com/newsroom/article", content_type: "text/html" },
   ]), { total: 3, extracted: 1, pending: 1, error: 1 });
+  assert.equal(pdfEvidenceState({ ...pdf, extracted_chars: 120 }), "extracted");
+  assert.equal(pdfEvidenceState({ ...pdf, error: "pdf-no-text" }), "error");
+  assert.equal(pdfEvidenceState({ ...pdf, url: "https://nebius.com/newsroom/article", content_type: "text/html" }), null);
   assert.match(intakeDashboard, /PDF根拠：抽出済み/);
   assert.match(intakeDashboard, /補完待ち/);
+  assert.match(intakeDashboard, /PDF補完待ち/);
+});
+
+test("PDF evidence filters isolate pending, extracted, and failed source work", () => {
+  const pdfUrl = "https://nebius.com/newsroom/official.pdf";
+  const pending = { ...source, url: pdfUrl, content_type: "application/pdf", extracted_chars: 0, error: null };
+  const extracted = { ...pending, url: `${pdfUrl}?revision=2`, extracted_chars: 120 };
+  const failed = { ...pending, url: `${pdfUrl}?revision=3`, error: "pdf-no-text" };
+  const html = { ...source, url: "https://nebius.com/newsroom/article", content_type: "text/html" };
+  const sources = [pending, extracted, failed, html];
+  assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "pending"), [pending]);
+  assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "extracted"), [extracted]);
+  assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "error"), [failed]);
 });
 
 test("operations preview shows durable incident state while external delivery stays off", () => {

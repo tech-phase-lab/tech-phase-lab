@@ -43,22 +43,32 @@ export function intakeCounts(sources: IntakeSource[]) {
     pending: sources.filter(s => s.status === "pending").length };
 }
 
-export function pdfEvidenceCounts(sources: IntakeSource[]) {
-  const pdfs = sources.filter((source) => {
-    if (source.content_type === "application/pdf") return true;
-    try { return /\.pdf$/i.test(new URL(source.url).pathname); } catch { return false; }
-  });
-  const error = pdfs.filter(source => Boolean(source.error)).length;
-  const extracted = pdfs.filter(source => !source.error && (source.extracted_chars ?? 0) > 0).length;
-  return { total: pdfs.length, extracted, pending: pdfs.length - extracted - error, error };
+export type PdfEvidenceState = "extracted" | "pending" | "error";
+export function pdfEvidenceState(source: IntakeSource): PdfEvidenceState | null {
+  let isPdf = source.content_type === "application/pdf";
+  if (!isPdf) {
+    try { isPdf = /\.pdf$/i.test(new URL(source.url).pathname); } catch { isPdf = false; }
+  }
+  if (!isPdf) return null;
+  if (source.error) return "error";
+  return (source.extracted_chars ?? 0) > 0 ? "extracted" : "pending";
 }
 
-export function filterSources(sources: IntakeSource[], query: string, ticker: string, state: string, review: string, titles: Record<string, string> = {}, sector = "all") {
+export function pdfEvidenceCounts(sources: IntakeSource[]) {
+  const states = sources.map(pdfEvidenceState).filter(state => state !== null);
+  const extracted = states.filter(state => state === "extracted").length;
+  const pending = states.filter(state => state === "pending").length;
+  const error = states.filter(state => state === "error").length;
+  return { total: states.length, extracted, pending, error };
+}
+
+export function filterSources(sources: IntakeSource[], query: string, ticker: string, state: string, review: string, titles: Record<string, string> = {}, sector = "all", pdfEvidence = "all") {
   const q = query.trim().toLocaleLowerCase();
   return sources.filter(s => (ticker === "all" || s.ticker === ticker)
     && (state === "all" || fetchState(s) === state)
     && (review === "all" || s.status === review)
     && (sector === "all" || providerByTicker[s.ticker]?.sector === sector)
+    && (pdfEvidence === "all" || pdfEvidenceState(s) === pdfEvidence)
     && (!q || `${s.ticker} ${providerByTicker[s.ticker]?.name || ""} ${s.title || ""} ${titles[s.url] || ""} ${sourceTitle(s.url)} ${s.url}`.toLocaleLowerCase().includes(q)));
 }
 
