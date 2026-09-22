@@ -176,6 +176,11 @@ def source_error_code(exc):
         for fragment, code in (
             ("unsupported content type", "unsupported-content-type"),
             ("empty or oversized source", "empty-or-oversized-source"),
+            ("pdf is encrypted", "pdf-encrypted"),
+            ("pdf page limit exceeded", "pdf-page-limit"),
+            ("pdf has no extractable text", "pdf-no-text"),
+            ("pdf text extraction timed out", "pdf-timeout"),
+            ("pdf text extraction failed", "pdf-extract-failed"),
             ("invalid pdf", "invalid-pdf"),
             ("verification page", "verification-page"),
             ("no release links parsed", "no-release-links"),
@@ -414,17 +419,25 @@ def extract_pdf_text(content):
             start_new_session=True,
         )
     except subprocess.TimeoutExpired as exc:
-        raise ValueError("Invalid PDF: text extraction timed out") from exc
+        raise ValueError("PDF text extraction timed out") from exc
     except OSError as exc:
-        raise ValueError("Invalid PDF: text extraction failed") from exc
+        raise ValueError("PDF text extraction failed") from exc
+    extraction_errors = {
+        2: "Invalid PDF response",
+        3: "PDF is encrypted",
+        4: "PDF page limit exceeded",
+        5: "PDF has no extractable text",
+    }
     if completed.returncode != 0:
-        raise ValueError("Invalid PDF: text extraction failed")
+        raise ValueError(extraction_errors.get(
+            completed.returncode, "PDF text extraction failed"
+        ))
     try:
         extracted = completed.stdout.decode("utf-8")[:MAX_EXTRACTED_CHARS]
     except UnicodeDecodeError as exc:
-        raise ValueError("Invalid PDF: text extraction failed") from exc
+        raise ValueError("PDF text extraction failed") from exc
     if not extracted:
-        raise ValueError("Invalid PDF: no extractable text")
+        raise ValueError("PDF has no extractable text")
     return extracted
 
 

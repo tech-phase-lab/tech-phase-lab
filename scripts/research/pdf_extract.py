@@ -11,6 +11,19 @@ MAX_PAGES = 400
 MAX_ADDRESS_SPACE = 256 * 1024 * 1024
 MAX_CPU_SECONDS = 15
 
+EXIT_INVALID = 2
+EXIT_ENCRYPTED = 3
+EXIT_PAGE_LIMIT = 4
+EXIT_NO_TEXT = 5
+
+
+class EncryptedPdfError(ValueError):
+    pass
+
+
+class PdfPageLimitError(ValueError):
+    pass
+
 
 def apply_limits():
     resource.setrlimit(resource.RLIMIT_AS, (MAX_ADDRESS_SPACE, MAX_ADDRESS_SPACE))
@@ -21,9 +34,9 @@ def apply_limits():
 def extract(content):
     reader = PdfReader(BytesIO(content), strict=False)
     if reader.is_encrypted:
-        raise ValueError("encrypted")
+        raise EncryptedPdfError("encrypted")
     if len(reader.pages) > MAX_PAGES:
-        raise ValueError("page-limit")
+        raise PdfPageLimitError("page-limit")
     lines, extracted_chars = [], 0
     for page in reader.pages:
         page_text = page.extract_text() or ""
@@ -41,13 +54,17 @@ def main():
     apply_limits()
     content = sys.stdin.buffer.read(MAX_BYTES + 1)
     if not content or len(content) > MAX_BYTES or not content.startswith(b"%PDF-"):
-        return 2
+        return EXIT_INVALID
     try:
         extracted = extract(content)
+    except EncryptedPdfError:
+        return EXIT_ENCRYPTED
+    except PdfPageLimitError:
+        return EXIT_PAGE_LIMIT
     except Exception:
-        return 2
+        return EXIT_INVALID
     if not extracted:
-        return 2
+        return EXIT_NO_TEXT
     sys.stdout.buffer.write(extracted.encode("utf-8"))
     return 0
 

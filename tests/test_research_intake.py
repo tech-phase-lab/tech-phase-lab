@@ -156,16 +156,36 @@ class IntakeTests(unittest.TestCase):
             self.db, self.row(), lambda *_: (text_pdf(""), "application/pdf")
         )
         self.assertEqual(result["status"], "error")
-        self.assertEqual(result["error"], "invalid-pdf")
-        self.assertEqual(self.row()["error"], "invalid-pdf")
+        self.assertEqual(result["error"], "pdf-no-text")
+        self.assertEqual(self.row()["error"], "pdf-no-text")
 
     def test_pdf_extraction_timeout_fails_closed(self):
         with patch.object(
             m.subprocess, "run",
             side_effect=subprocess.TimeoutExpired(["pdf_extract.py"], 1),
         ):
-            with self.assertRaisesRegex(ValueError, "Invalid PDF: text extraction timed out"):
+            with self.assertRaisesRegex(ValueError, "PDF text extraction timed out") as caught:
                 m.extract_pdf_text(text_pdf("Official evidence"))
+            self.assertEqual(m.source_error_code(caught.exception), "pdf-timeout")
+
+    def test_pdf_extractor_reports_bounded_operational_failure_codes(self):
+        cases = {
+            2: ("Invalid PDF response", "invalid-pdf"),
+            3: ("PDF is encrypted", "pdf-encrypted"),
+            4: ("PDF page limit exceeded", "pdf-page-limit"),
+            5: ("PDF has no extractable text", "pdf-no-text"),
+            9: ("PDF text extraction failed", "pdf-extract-failed"),
+        }
+        for returncode, (message, code) in cases.items():
+            with self.subTest(returncode=returncode), patch.object(
+                m.subprocess, "run",
+                return_value=subprocess.CompletedProcess(
+                    ["pdf_extract.py"], returncode, stdout=b"", stderr=b""
+                ),
+            ):
+                with self.assertRaisesRegex(ValueError, message) as caught:
+                    m.extract_pdf_text(text_pdf("Official evidence"))
+                self.assertEqual(m.source_error_code(caught.exception), code)
 
     def test_pdf_extractor_child_does_not_inherit_service_secrets(self):
         completed = subprocess.CompletedProcess(
