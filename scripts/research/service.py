@@ -316,6 +316,7 @@ class AutomaticMonitor:
         with self.state_lock:
             state = json.loads(json.dumps(self.state))
         self.derive_health(state)
+        state["fetchCache"] = monitor.fetch_cache_stats()
         with self.db_lock, monitor.connect(self.db_path) as db:
             state["generation"].update(monitor.generation_queue_stats(
                 db, self.generation_daily_limit, self.generation_token_limit

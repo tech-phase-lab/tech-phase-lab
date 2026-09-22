@@ -142,6 +142,17 @@ def remember_fetch(url, cached):
             cached_bytes -= len(removed.get("content", b""))
 
 
+def fetch_cache_stats():
+    """Expose only aggregate cache pressure, never cached URLs or response bodies."""
+    with _FETCH_CACHE_LOCK:
+        return {
+            "entries": len(_FETCH_CACHE),
+            "bytes": sum(len(item.get("content", b"")) for item in _FETCH_CACHE.values()),
+            "maxEntries": FETCH_CACHE_MAX_ENTRIES,
+            "maxBytes": FETCH_CACHE_MAX_BYTES,
+        }
+
+
 def source_error_code(exc):
     """Reduce transport failures to bounded operational codes without leaking URLs."""
     if isinstance(exc, HTTPError) and 400 <= exc.code <= 599:

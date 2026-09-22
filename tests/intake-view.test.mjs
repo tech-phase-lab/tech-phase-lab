@@ -24,6 +24,16 @@ test("operations preview exposes verified backup health without storage details"
   assert.doesNotMatch(intakeDashboard, /backup\.(sha256|filename|path|directory)/);
 });
 
+test("operations preview exposes bounded cache pressure without cached contents", () => {
+  assert.match(liveTypes, /fetchCache\?:/);
+  assert.match(liveTypes, /maxEntries/);
+  assert.match(liveTypes, /maxBytes/);
+  assert.match(intakeDashboard, /公式一覧キャッシュ/);
+  assert.match(intakeDashboard, /cache\.entries/);
+  assert.match(intakeDashboard, /cache\.bytes/);
+  assert.doesNotMatch(intakeDashboard, /cache\.(url|content|body)/);
+});
+
 test("operations preview shows durable incident state while external delivery stays off", () => {
   assert.match(liveTypes, /incidents\?:/);
   assert.match(liveTypes, /heldNotifications/);

@@ -635,6 +635,10 @@ class IntakeTests(unittest.TestCase):
                 "etag": None, "last_modified": None,
             })
             self.assertEqual(list(m._FETCH_CACHE), ["d"])
+            self.assertEqual(m.fetch_cache_stats(), {
+                "entries": 1, "bytes": 5, "maxEntries": 2, "maxBytes": 7,
+            })
+            self.assertNotIn("content", json.dumps(m.fetch_cache_stats()))
         finally:
             m.FETCH_CACHE_MAX_ENTRIES = original_entries
             m.FETCH_CACHE_MAX_BYTES = original_bytes

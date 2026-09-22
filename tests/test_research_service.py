@@ -126,6 +126,14 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertNotIn("filename", state)
         self.assertNotIn(str(app.backup_dir), json.dumps(state))
 
+    def test_public_health_exposes_only_bounded_fetch_cache_totals(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        cache = app.public_state()["fetchCache"]
+        self.assertEqual(set(cache), {"entries", "bytes", "maxEntries", "maxBytes"})
+        self.assertLessEqual(cache["entries"], cache["maxEntries"])
+        self.assertLessEqual(cache["bytes"], cache["maxBytes"])
+        self.assertNotIn("https://", json.dumps(cache))
+
     def test_backup_becomes_degraded_when_last_success_exceeds_deadline(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         with app.state_lock:
