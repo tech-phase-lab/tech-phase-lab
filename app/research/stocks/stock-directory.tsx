@@ -202,9 +202,10 @@ export default function StockDirectory() {
 
       <section className={polish.history} aria-label={t("履歴", "History")}>
         <strong>{t("履歴", "History")}</strong>
-        {history.length ? <><ul>{history.map((ticker) => <li key={ticker}><button onClick={() => setQuery(ticker)} aria-label={t(`${ticker}を再検索`, `Search ${ticker} again`)}>{ticker}</button></li>)}</ul><button className={polish.clearHistory} onClick={clearHistory}>{t("消去", "Clear")}</button></> : <span>{t("まだ履歴はありません", "No history yet")}</span>}
-        {historyError && <span role="status">{t("このブラウザーで履歴を保存・消去できませんでした。", "Could not update history in this browser.")}</span>}
+        {history.length ? <><select className={polish.historySelect} aria-label={t("履歴から銘柄を選ぶ", "Choose a recent stock")} value="" onChange={(event) => { if (event.target.value) setQuery(event.target.value); }}><option value="" disabled>{t(`履歴から選択（${history.length}件）`, `Recent stocks (${history.length})`)}</option>{history.map((ticker) => <option key={ticker} value={ticker}>{ticker}</option>)}</select><ul>{history.map((ticker) => <li key={ticker}><button onClick={() => setQuery(ticker)} aria-label={t(`${ticker}を再検索`, `Search ${ticker} again`)}>{ticker}</button></li>)}</ul><button className={polish.clearHistory} onClick={clearHistory}>{t("消去", "Clear")}</button></> : <span>{t("まだ履歴はありません", "No history yet")}</span>}
       </section>
+
+      {historyError && <p className={polish.resultHint} role="status">{t("このブラウザーで履歴を保存・消去できませんでした。", "Could not update history in this browser.")}</p>}
 
       {(query.trim() || errorMessage) && <div className={`${styles.layout} ${polish.resultLayout}`}>
         <section className={`${styles.results} ${polish.searchResults}`} aria-labelledby="results-title" aria-busy={loading}>
