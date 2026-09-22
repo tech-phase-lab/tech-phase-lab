@@ -104,6 +104,13 @@ test("operations preview shows durable incident state while external delivery st
   assert.match(intakeDashboard, /障害台帳の内部監視を再試行しています/);
 });
 
+test("operations preview labels simultaneous company and SEC discovery evidence", () => {
+  assert.match(intakeDashboard, /value\.split\("\+"\)/);
+  assert.match(intakeDashboard, /SEC Submissions JSON/);
+  assert.match(intakeDashboard, /件の公式リンクを検出/);
+  assert.doesNotMatch(intakeDashboard, /経路目で取得/);
+});
+
 test("latest failure wins over a previously successful fetch or editorial approval", () => {
   const errored = { ...source, error: "http-403", status: "approved" };
   assert.equal(fetchState(errored), "error");
@@ -131,11 +138,11 @@ test("unsafe links, duplicate records and broken history references fail validat
   assert.ok(snapshotIssues({ ...snapshot, discoveryRuns: [{ ...snapshot.discoveryRuns[0], sources_checked: 3, sources_configured: 2 }] }).includes("invalid-discovery-evidence"));
 });
 
-test("operations preview explains which official fallback recovered discovery", () => {
+test("operations preview explains which official routes were checked", () => {
   assert.match(intakeDashboard, /取得経路の証跡/);
   assert.match(intakeDashboard, /sources_checked/);
   assert.match(intakeDashboard, /SEC Submissions JSON/);
-  assert.match(intakeDashboard, /経路目で取得/);
+  assert.match(intakeDashboard, /経路を確認/);
   assert.match(intakeDashboard, /旧記録 · 経路詳細なし/);
 });
 

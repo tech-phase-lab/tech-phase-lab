@@ -151,7 +151,7 @@
     "pollSeconds": 3,
     "twseCompanyCode": "2330",
     "allowEmpty": true,
-    "fallbackSources": [
+    "supplementalSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001046179.json",
         "format": "sec-json",
@@ -205,7 +205,7 @@
     "sector": "networking",
     "indexUrl": "https://investor.marvell.com/news-events/press-releases/rss",
     "format": "rss",
-    "fallbackSources": [
+    "supplementalSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001835632.json",
         "format": "sec-json",
@@ -248,7 +248,7 @@
     "indexUrl": "https://www.arista.com/en/company/news/press-release-rss",
     "format": "rss",
     "requestTimeoutSeconds": 15,
-    "fallbackSources": [
+    "supplementalSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001596532.json",
         "format": "sec-json",
@@ -343,7 +343,7 @@
     "itemsKey": "items",
     "urlKey": "pageUrl",
     "titleKey": "displayName",
-    "fallbackSources": [
+    "supplementalSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001674101.json",
         "format": "sec-json",
@@ -413,7 +413,7 @@
     "indexUrl": "https://www.palantir.com/sitemap.xml",
     "format": "sitemap",
     "requestTimeoutSeconds": 15,
-    "fallbackSources": [
+    "supplementalSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001321655.json",
         "format": "sec-json",

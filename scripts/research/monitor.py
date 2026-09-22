@@ -1354,18 +1354,22 @@ def add_source(db, ticker, url, published_on=None, title=None):
 
 
 def monitoring_sources(ticker, automatic=False):
-    """Return the preferred company feed followed by official fallback feeds."""
+    """Return the primary chain followed by independently collected official sources."""
     provider = PROVIDERS[ticker]
     primary = {"url": INDEXES[ticker], "format": provider["format"], "route": "primary"}
     for key in ("requestJson", "itemsKey", "urlKey", "titleKey", "twseCompanyCode", "allowEmpty"):
         if key in provider:
             primary[key] = provider[key]
-    sources = [primary] + [
+    primary_chain = [primary] + [
         {**source, "route": "fallback"} for source in provider.get("fallbackSources", [])
     ]
     if automatic and provider.get("automaticSource") == "fallback":
-        sources.sort(key=lambda source: source["route"] != "fallback")
-    return sources
+        primary_chain.sort(key=lambda source: source["route"] != "fallback")
+    supplemental = [
+        {**source, "route": "supplemental" if index == 0 else "supplemental-fallback"}
+        for index, source in enumerate(provider.get("supplementalSources", []))
+    ]
+    return primary_chain + supplemental
 
 
 def discover_links(body, kind, ticker, source):
@@ -1394,41 +1398,82 @@ def discover_links(body, kind, ticker, source):
 
 def collect_discovery(ticker, transport=fetch, automatic=False):
     """Fetch and parse candidates without mutating storage."""
-    failures = []
-    links, used_source = {}, None
     sources = monitoring_sources(ticker, automatic=automatic)
-    for source in sources:
-        try:
-            body, kind = transport(source["url"], ticker)
-            links = discover_links(body, kind, ticker, source)
-            if not links and not source.get("allowEmpty"):
-                raise ValueError("No release links parsed; source discovery requires investigation")
-            if len(links) > 500:
-                raise ValueError("Too many source links; narrow the source scope before importing")
-            used_source = source
-            break
-        except Exception as exc:
-            failures.append(source_error_code(exc))
+    primary_sources = [source for source in sources if not source["route"].startswith("supplemental")]
+    supplemental_sources = [source for source in sources if source["route"].startswith("supplemental")]
+    failures, links, attempts = [], {}, 0
+
+    def collect_first(chain):
+        nonlocal attempts
+        chain_failures = []
+        for source in chain:
+            attempts += 1
+            try:
+                body, kind = transport(source["url"], ticker)
+                discovered = discover_links(body, kind, ticker, source)
+                if not discovered and not source.get("allowEmpty"):
+                    raise ValueError("No release links parsed; source discovery requires investigation")
+                if len(discovered) > 500:
+                    raise ValueError("Too many source links; narrow the source scope before importing")
+                return source, discovered, chain_failures
+            except Exception as exc:
+                chain_failures.append(source_error_code(exc))
+        return None, {}, chain_failures
+
+    primary_source, primary_links, primary_failures = collect_first(primary_sources)
+    failures.extend(primary_failures)
+    links.update(primary_links)
+    supplemental_source, supplemental_links, supplemental_failures = None, {}, []
+    # Interactive/manual discovery retains the legacy failover behavior. The
+    # always-on monitor additionally collects this independent first-party route
+    # even when the company feed is healthy.
+    if supplemental_sources and (automatic or primary_source is None):
+        supplemental_source, supplemental_links, supplemental_failures = collect_first(
+            supplemental_sources
+        )
+        failures.extend(supplemental_failures)
+        links.update(supplemental_links)
+
+    successful_sources = [source for source in (primary_source, supplemental_source) if source]
+    used_source = primary_source or supplemental_source
+    supplemental_required = bool(supplemental_sources and automatic)
+    supplemental_missing = supplemental_required and supplemental_source is None
     if used_source:
+        recovered_with_fallback = (
+            primary_source is None
+            or (primary_source and primary_source["route"] == "fallback")
+            or (supplemental_source and supplemental_source["route"] == "supplemental-fallback")
+        )
+        if supplemental_missing:
+            status = "degraded"
+        elif recovered_with_fallback:
+            status = "fallback"
+        else:
+            status = "ok"
+        if primary_source and supplemental_source:
+            route = "primary+supplemental"
+        elif primary_source:
+            route = primary_source["route"]
+        else:
+            route = "fallback"
+        formats = []
+        for source in successful_sources:
+            if source["format"] not in formats:
+                formats.append(source["format"])
         result = {
-            "ticker": ticker,
-            "status": "ok" if used_source["route"] == "primary" else "fallback",
-            "route": used_source["route"],
+            "ticker": ticker, "status": status, "route": route,
             "sourceUrl": used_source["url"],
-            "sourceFormat": used_source["format"],
-            "sourcesChecked": len(failures) + 1,
+            "sourceFormat": "+".join(formats),
+            "sourcesChecked": attempts,
             "sourcesConfigured": len(sources),
             "candidates": len(links),
-            # Automatic monitoring may try a preferred low-latency route before the
-            # company's primary page. A recovered primary result is healthy; retain
-            # the earlier failure only when an actual fallback route was required.
-            "error": failures[0] if failures and used_source["route"] == "fallback" else None,
+            "error": failures[0] if failures and status != "ok" else None,
         }
     else:
         result = {
             "ticker": ticker, "status": "degraded", "route": "none",
             "sourceUrl": INDEXES[ticker], "sourceFormat": "none",
-            "sourcesChecked": len(failures), "sourcesConfigured": len(sources),
+            "sourcesChecked": attempts, "sourcesConfigured": len(sources),
             "candidates": 0,
             "error": failures[0] if failures else "No monitoring sources configured",
         }

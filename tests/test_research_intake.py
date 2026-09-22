@@ -877,7 +877,7 @@ class IntakeTests(unittest.TestCase):
 
     def test_twse_valid_empty_company_result_is_not_a_false_failure(self):
         body = b'[{"company":"other"}]'
-        result, links = m.collect_discovery("TSM", lambda *_: (body, "application/json"), automatic=True)
+        result, links = m.collect_discovery("TSM", lambda *_: (body, "application/json"))
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["candidates"], 0)
         self.assertEqual(links, {})
@@ -1281,15 +1281,49 @@ class IntakeTests(unittest.TestCase):
         self.assertIsNone(row["published_on"])
         self.assertEqual(row["status"], "pending")
 
-    def test_marvell_uses_company_official_rss_with_sec_fallback(self):
+    def test_automatic_monitor_unions_marvell_rss_and_sec_submissions(self):
         provider = m.PROVIDERS["MRVL"]
         self.assertEqual(provider["format"], "rss")
         self.assertEqual(provider["indexUrl"], "https://investor.marvell.com/news-events/press-releases/rss")
-        self.assertEqual(provider["fallbackSources"][0]["format"], "sec-json")
-        body = b'''<rss><channel><item><title>Marvell AI release</title><link>https://investor.marvell.com/news-events/press-releases/detail/1234/example</link></item></channel></rss>'''
-        result, links = m.collect_discovery("MRVL", lambda *_: (body, "text/xml"), automatic=True)
+        self.assertEqual(provider["supplementalSources"][0]["format"], "sec-json")
+        company_body = b'''<rss><channel><item><title>Marvell AI release</title><link>https://investor.marvell.com/news-events/press-releases/detail/1234/example</link></item></channel></rss>'''
+        sec_body = b'''{"cik":1835632,"filings":{"recent":{"form":["8-K"],"accessionNumber":["0001835632-26-000001"],"primaryDocument":["mrvl-20260922.htm"],"primaryDocDescription":["CURRENT REPORT"]}}}'''
+        requested = []
+
+        def transport(url, _ticker):
+            requested.append(url)
+            if url == provider["indexUrl"]:
+                return company_body, "text/xml"
+            if url == provider["supplementalSources"][0]["url"]:
+                return sec_body, "application/json"
+            raise AssertionError(f"unexpected URL: {url}")
+
+        result, links = m.collect_discovery("MRVL", transport, automatic=True)
         self.assertEqual(result["status"], "ok")
-        self.assertEqual(list(links.values()), ["Marvell AI release"])
+        self.assertEqual(result["route"], "primary+supplemental")
+        self.assertEqual(result["sourceFormat"], "rss+sec-json")
+        self.assertEqual(result["sourcesChecked"], 2)
+        self.assertEqual(result["sourcesConfigured"], 3)
+        self.assertEqual(len(links), 2)
+        self.assertIn("Marvell AI release", links.values())
+        self.assertEqual(requested, [
+            provider["indexUrl"], provider["supplementalSources"][0]["url"],
+        ])
+
+    def test_healthy_company_route_is_degraded_when_required_sec_route_fails(self):
+        company_body = b'''<rss><channel><item><title>Marvell AI release</title><link>https://investor.marvell.com/news-events/press-releases/detail/1234/example</link></item></channel></rss>'''
+
+        def transport(url, _ticker):
+            if url == m.PROVIDERS["MRVL"]["indexUrl"]:
+                return company_body, "text/xml"
+            raise TimeoutError("SEC unavailable")
+
+        result, links = m.collect_discovery("MRVL", transport, automatic=True)
+        self.assertEqual(result["status"], "degraded")
+        self.assertEqual(result["route"], "primary")
+        self.assertEqual(result["error"], "timeout")
+        self.assertEqual(result["sourcesChecked"], 3)
+        self.assertEqual(len(links), 1)
 
     def test_official_rss_full_text_is_saved_as_timestamped_inline_evidence(self):
         body = b'''<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><item>
@@ -1299,7 +1333,7 @@ class IntakeTests(unittest.TestCase):
           <content:encoded><![CDATA[<nav>Feed navigation</nav><p>Marvell announced a verified expansion of its AI infrastructure connectivity portfolio for data center customers.</p><p>The official release describes phased availability, customer qualification requirements, and execution risks through 2027.</p><script>doNotRun()</script>]]></content:encoded>
         </item></channel></rss>'''
         result, links = m.collect_discovery(
-            "MRVL", lambda *_: (body, "text/xml"), automatic=True
+            "MRVL", lambda *_: (body, "text/xml")
         )
         self.assertEqual(result["status"], "ok")
         detail = next(iter(links.values()))
@@ -1400,13 +1434,13 @@ class IntakeTests(unittest.TestCase):
         provider = m.PROVIDERS["ANET"]
         self.assertEqual(provider["indexUrl"], "https://www.arista.com/en/company/news/press-release-rss")
         body = b'''<rss><channel><item><title>Arista AI release</title><link>https://www.arista.com/en/company/news/press-release/123-pr-20260919</link></item></channel></rss>'''
-        result, links = m.collect_discovery("ANET", lambda *_: (body, "application/xml"), automatic=True)
+        result, links = m.collect_discovery("ANET", lambda *_: (body, "application/xml"))
         self.assertEqual(result["status"], "ok")
         self.assertEqual(list(links.values()), ["Arista AI release"])
 
     def test_palantir_first_party_sitemap_keeps_only_press_releases(self):
         body = b'''<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://www.palantir.com/newsroom/press-releases/official-release/</loc></url><url><loc>https://www.palantir.com/newsroom/media/not-a-release/</loc></url></urlset>'''
-        result, links = m.collect_discovery("PLTR", lambda *_: (body, "application/xml"), automatic=True)
+        result, links = m.collect_discovery("PLTR", lambda *_: (body, "application/xml"))
         self.assertEqual(result["status"], "ok")
         self.assertEqual(list(links), ["https://www.palantir.com/newsroom/press-releases/official-release/"])
 
@@ -2245,6 +2279,9 @@ class IntakeTests(unittest.TestCase):
             if p.get("monitorUrl"):
                 self.assertEqual(m.safe_url(p["monitorUrl"], ticker), p["monitorUrl"])
             for source in p.get("fallbackSources", []):
+                self.assertEqual(m.safe_url(source["url"], ticker), source["url"])
+                self.assertIn(source["format"], {"html", "rss", "sec-json", "sitemap", "news-json"})
+            for source in p.get("supplementalSources", []):
                 self.assertEqual(m.safe_url(source["url"], ticker), source["url"])
                 self.assertIn(source["format"], {"html", "rss", "sec-json", "sitemap", "news-json"})
             for rule in p["articleRules"]:

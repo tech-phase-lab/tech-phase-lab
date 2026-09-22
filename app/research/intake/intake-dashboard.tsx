@@ -29,13 +29,16 @@ const sourceFormatNames: Record<string, string> = {
   rss: "RSS / Atom", "sec-json": "SEC Submissions JSON", sitemap: "公式サイトマップ",
   "news-json": "企業公式JSON", "twse-material-json": "TWSE重要開示JSON", html: "企業公式HTML",
 };
+function sourceFormatName(value: string) {
+  return value.split("+").map(format => sourceFormatNames[format] ?? format).join(" + ");
+}
 function discoveryEvidence(run: IntakeSnapshot["discoveryRuns"][number]) {
   if (!run.source_format) return "旧記録 · 経路詳細なし";
   const checked = run.sources_checked ?? 1;
   const configured = run.sources_configured ?? 1;
   if (run.status === "degraded") return `${checked}/${configured}経路を確認 · 復旧なし`;
-  const format = run.source_format ? sourceFormatNames[run.source_format] ?? run.source_format : "公式経路";
-  return `${checked}/${configured}経路目で取得 · ${format}`;
+  const format = run.source_format ? sourceFormatName(run.source_format) : "公式経路";
+  return `${checked}/${configured}経路を確認 · ${format}`;
 }
 function backupStatus(backup: MonitorState["backup"]) {
   if (!backup) return "DB保護：状態取得待ち";
@@ -143,7 +146,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
           const monitor = live.monitor?.companies?.[symbol];
           return <article key={symbol}><div className={styles.healthTop}><h3>{symbol}</h3><span className={available ? styles.good : styles.warning}>{latest?.status === "ok" ? "公式経路から取得" : latest?.status === "fallback" ? "公式バックアップ経路で取得" : latest ? "一覧の確認が必要" : "一覧未検証"}</span></div>
             <p className={styles.companyName}>{provider.name} <small>{sectorNames[provider.sector]}</small></p>
-            <p>{latest?.status === "ok" ? (provider.format === "twse-material-json" ? `取引所の当日重要開示 ${latest.candidates}件` : `${latest.candidates}件のリンクを検出`) : latest?.status === "fallback" ? `企業サイトを補完し、公式提出書類を${latest.candidates}件検出` : errorNames[latest?.error ?? ""] || "取得記録なし"}</p>
+            <p>{latest?.status === "ok" ? `${latest.candidates}件の公式リンクを検出` : latest?.status === "fallback" ? `公式バックアップを含む${latest.candidates}件を検出` : errorNames[latest?.error ?? ""] || "取得記録なし"}</p>
             <p className={styles.muted}>本文・PDF：取得済み {totals.fetched} ／ 未取得 {totals.unfetched} ／ エラー {totals.error}</p>
             {companyPdfEvidence.total > 0 && <p className={styles.muted}>PDF根拠：抽出済み {companyPdfEvidence.extracted} ／ 補完待ち {companyPdfEvidence.pending} ／ エラー {companyPdfEvidence.error}</p>}
             {companySecEvidence.total > 0 && <p className={styles.muted}>SEC根拠：EX-99.1 {companySecEvidence.exhibit} ／ 提出本文 {companySecEvidence.direct} ／ 未取得 {companySecEvidence.pending} ／ エラー {companySecEvidence.error}</p>}
