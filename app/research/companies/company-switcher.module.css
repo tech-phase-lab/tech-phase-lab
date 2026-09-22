@@ -1,0 +1,11 @@
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; min-width: 0; }
+.bar>a { color: var(--muted); font-size: .875rem; }
+.bar>a:hover { color: var(--mint); }
+.bar label { display: flex; align-items: center; gap: 12px; min-width: 0; color: var(--muted); font-size: .8125rem; }
+.bar select { width: 260px; max-width: 100%; min-width: 0; min-height: 44px; padding: 9px 12px; background: #0d151e; color: var(--text); border: 1px solid var(--line); border-radius: 6px; font: inherit; color-scheme: dark; }
+.bar :focus-visible { outline: 2px solid var(--mint); outline-offset: 4px; }
+@media (max-width: 650px) {
+  .bar { align-items: stretch; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+  .bar label { display: grid; gap: 6px; }
+  .bar select { width: 100%; }
+}

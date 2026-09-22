@@ -9,6 +9,7 @@ import { dateLabel, valueLabel } from "@/lib/research/presentation";
 import { useResearchLanguage } from "../use-research-language";
 import base from "../research.module.css";
 import styles from "./company.module.css";
+import CompanySwitcher, { type CompanyOption } from "./company-switcher";
 
 function changeLabel(row: CompanyComparison, lang: Language) {
   const result = compareMetrics(row.current, row.previous);
@@ -29,7 +30,7 @@ function EvidenceLinks({ ids, sources, lang }: { ids: string[]; sources: Source[
   })}</span>;
 }
 
-export default function CompanyDashboard({ profile }: { profile: CompanyProfile }) {
+export default function CompanyDashboard({ profile, companies }: { profile: CompanyProfile; companies: CompanyOption[] }) {
   const [lang, setLang] = useResearchLanguage();
   const [topic, setTopic] = useState<ResearchEvent["kind"] | "all">("all");
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
@@ -49,12 +50,7 @@ export default function CompanyDashboard({ profile }: { profile: CompanyProfile 
       </div></div>
     </header>
     <main className={styles.main} id="company-main">
-      <div className={styles.topline}>
-        <Link href="/research" className={styles.back}>← {t("リサーチ一覧", "All research")}</Link>
-        <nav aria-label={t("銘柄を選択", "Choose company")} className={styles.companySwitch}>
-          {(["NBIS", "MU"] as const).map((ticker) => <Link key={ticker} href={`/research/companies/${ticker}`} aria-current={profile.ticker === ticker ? "page" : undefined}>{ticker}<span>{ticker === "MU" ? "Micron" : "Nebius"}</span></Link>)}
-        </nav>
-      </div>
+      <CompanySwitcher ticker={profile.ticker} companies={companies} lang={lang} />
       <div className={styles.preview}><strong>{t("過去資料の比較版", "HISTORICAL REVIEW")}</strong><span>{t("収録資料の最終発表日", "Latest included release")}: {latestDate} · {t("自動更新なし", "No automatic updates")}</span></div>
       <header className={styles.companyHeading}>
         <div><p className={styles.eyebrow}>{profile.sector[lang]}</p><h1>{profile.ticker} <span>{profile.name}</span></h1><p className={styles.focus}>{profile.focus[lang]}</p></div>
@@ -62,7 +58,7 @@ export default function CompanyDashboard({ profile }: { profile: CompanyProfile 
       </header>
 
       <nav className={styles.sectionNav} aria-label={t("ページ内の項目", "On this page")}>
-        <a href="#comparison">{t("数値の変化", "Financial changes")}</a><a href="#targets">{t("会社見通し", "Guidance")}</a><a href="#checkpoints">{t("次の確認点", "What to watch")}</a><a href="#history">{t("発表の履歴", "Release history")}</a>
+        <a href="#comparison">{t("数値の変化", "Financial changes")}</a><a href="#targets">{t("会社見通し", "Guidance")}</a><a href="#checkpoints">{t("次の確認点", "What to watch")}</a><a href="#history">{t("発表の履歴", "Release history")}</a><a href="#company-sources">{t("根拠資料", "Source evidence")}</a>
       </nav>
 
       <section className={styles.summary} aria-label={t("今回の比較", "Comparison overview")}>

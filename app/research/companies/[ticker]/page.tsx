@@ -33,7 +33,8 @@ export default async function CompanyPage({ params }: { params: Promise<{ ticker
   const snapshotProblems = snapshotIssues(snapshot);
   const coverageProblems = coverageCompanyIssues(coverageCompanies);
   if (snapshotProblems.length || coverageProblems.length) throw new Error(`Invalid coverage data: ${[...snapshotProblems, ...coverageProblems].join(", ")}`);
-  if (!profile) return <CoverageCompanyDashboard company={coverage} companies={coverageCompanies.map(({ ticker, name }) => ({ ticker, name }))} generatedAt={snapshot.generatedAt} />;
+  const companyOptions = coverageCompanies.map(({ ticker, name }) => ({ ticker, name }));
+  if (!profile) return <CoverageCompanyDashboard key={ticker} company={coverage} companies={companyOptions} generatedAt={snapshot.generatedAt} />;
   const issues = companyProfileIssues(profile);
   for (const event of profile.events) issues.push(...evidenceIssues({ ...event, metrics: [...event.metrics, ...(event.previous ?? [])] }));
   for (const row of profile.comparisons) {
@@ -41,5 +42,5 @@ export default async function CompanyPage({ params }: { params: Promise<{ ticker
     if (!comparison.ok && comparison.reason !== "non-positive-base") issues.push(`incompatible-comparison:${row.id}`);
   }
   if (issues.length) throw new Error(`Invalid company profile ${ticker}: ${issues.join(", ")}`);
-  return <CompanyDashboard key={profile.ticker} profile={profile} />;
+  return <CompanyDashboard key={profile.ticker} profile={profile} companies={companyOptions} />;
 }

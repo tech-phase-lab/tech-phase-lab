@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { sectorNamesEn, type CoverageCompany } from "@/lib/research/intake";
 import { verifiedChangeByTicker, type VerifiedChangeMetric } from "@/lib/research/verified-changes";
 import { useResearchLanguage } from "../use-research-language";
 import base from "../research.module.css";
 import styles from "./coverage-company.module.css";
+import CompanySwitcher from "./company-switcher";
 
 const errorNames: Record<string, { ja: string; en: string }> = {
   "http-403": { ja: "公式サイトが自動取得を拒否", en: "Official site rejected the automated request" },
@@ -28,7 +28,6 @@ function metricValue(metric: VerifiedChangeMetric, value: number | null, lang: "
 
 export default function CoverageCompanyDashboard({ company, companies, generatedAt }: { company: CoverageCompany; companies: Pick<CoverageCompany, "ticker" | "name">[]; generatedAt: string }) {
   const [lang, setLang] = useResearchLanguage();
-  const router = useRouter();
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const discoveryLabel = company.discovery.status === "ok" ? t("企業公式一覧から取得", "Company release list retrieved") : company.discovery.status === "fallback" ? t("公式バックアップ経路で取得", "Official fallback retrieved") : company.discovery.status === "degraded" ? t("一覧の確認が必要", "Release list needs attention") : t("一覧未検証", "Release list untested");
   const discoveryAvailable = company.discovery.status === "ok" || company.discovery.status === "fallback";
@@ -43,19 +42,15 @@ export default function CoverageCompanyDashboard({ company, companies, generated
       <div className={base.headerRight}><span className={base.edition}>COMPANY WATCH <span>{companies.length}</span></span><div className={base.languages} aria-label={t("言語", "Language")}><button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button><button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button></div></div>
     </header>
     <main id="coverage-main" className={styles.main}>
-      <div className={styles.topline}>
-        <Link href="/research/intake">← {t(`AI関連${companies.length}銘柄`, `${companies.length} AI companies`)}</Link>
-        <label>{t("銘柄を切り替える", "Choose company")}<select value={company.ticker} onChange={(event) => router.push(`/research/companies/${event.target.value}`)}>{companies.map((item) => <option key={item.ticker} value={item.ticker}>{item.ticker} · {item.name}</option>)}</select></label>
-      </div>
+      <CompanySwitcher ticker={company.ticker} companies={companies} lang={lang} />
       <aside className={styles.snapshot}><strong>{t("保存した取得記録", "SAVED INTAKE SNAPSHOT")}</strong><span>{t("出力日時", "Generated")}: {time(generatedAt, lang)} JST</span><p>{t("このページは保存時点の記録で、自動更新されません。現在の監視状況は取得状況画面で確認できます。", "This page is a saved snapshot and does not update automatically. Check the intake page for current monitoring status.")} <Link href="/research/intake">{t("取得状況を見る →", "View intake status →")}</Link></p></aside>
       <header className={styles.companyHeading}><div><p className={styles.eyebrow}>{lang === "ja" ? company.sector : sectorNamesEn[company.sectorKey]}</p><h1>{company.ticker} <span>{company.name}</span></h1><p>{t("公式発表から、前回との変化を照合するための銘柄ページ。", "A company page for comparing changes across official releases.")}</p></div><span className={`${styles.status} ${discoveryAvailable ? styles.good : styles.warning}`}>{discoveryLabel}</span></header>
 
-      <section className={styles.stats} aria-label={t("資料の取得状況", "Source intake status")}>
-        <div><span>{t("登録資料", "Sources found")}</span><strong>{company.counts.total}</strong><small>{t("過去分を含む", "Includes historical items")}</small></div>
-        <div><span>{t("本文を取得", "Bodies fetched")}</span><strong>{company.counts.fetched}</strong><small>{t("内容の照合前", "Not yet reviewed")}</small></div>
-        <div><span>{t("未取得", "Not fetched")}</span><strong>{company.counts.unfetched}</strong><small>{t("順次確認", "Awaiting checks")}</small></div>
-        <div><span>{t("取得エラー", "Fetch errors")}</span><strong>{company.counts.error}</strong><small>{t("経路の調整対象", "Retrieval path to review")}</small></div>
-      </section>
+      <nav className={styles.sectionNav} aria-label={t("ページ内の項目", "On this page")}>
+        <a href="#changed-title">{verified ? t("何が変わった？", "What changed?") : t("確認状況", "Review progress")}</a>
+        <a href="#sources-title">{t("公式資料", "Official sources")}</a>
+        <a href="#next-title">{t("次の確認点", "Next checks")}</a>
+      </nav>
 
       <section className={styles.section} aria-labelledby="changed-title"><div className={styles.sectionHeading}><div><p className={styles.eyebrow}>01 / WHAT CHANGED?</p><h2 id="changed-title">{verified ? verified.title[lang] : t("変化を伝えるまでの確認状況", "Progress toward a verified change")}</h2></div><span>{verified ? `${verified.previousPeriod} → ${verified.currentPeriod}` : t("数値比較は未作成", "Numeric comparison not prepared")}</span></div>
         {verified ? <div className={styles.verifiedChange}>
@@ -70,6 +65,15 @@ export default function CoverageCompanyDashboard({ company, companies, generated
       </section>
 
       <section className={styles.section} aria-labelledby="sources-title"><div className={styles.sectionHeading}><div><p className={styles.eyebrow}>02 / OFFICIAL RELEASES</p><h2 id="sources-title">{t("検知した公式資料", "Detected official sources")}</h2></div><a href={company.indexUrl} target="_blank" rel="noreferrer">{t(`公式${company.format === "rss" ? "RSS" : "一覧"} ↗`, `Official ${company.format === "rss" ? "RSS" : "release list"} ↗`)}</a></div>
+        <details className={styles.intakeDetails}>
+          <summary>{t("資料の取得状況", "Source intake status")} <span>{t(`登録${company.counts.total}件・本文取得${company.counts.fetched}件`, `${company.counts.total} found · ${company.counts.fetched} fetched`)}</span></summary>
+          <div className={styles.stats}>
+            <div><span>{t("登録資料", "Sources found")}</span><strong>{company.counts.total}</strong><small>{t("過去分を含む", "Includes historical items")}</small></div>
+            <div><span>{t("本文を取得", "Bodies fetched")}</span><strong>{company.counts.fetched}</strong><small>{t("内容の照合前", "Not yet reviewed")}</small></div>
+            <div><span>{t("未取得", "Not fetched")}</span><strong>{company.counts.unfetched}</strong><small>{t("順次確認", "Awaiting checks")}</small></div>
+            <div><span>{t("取得エラー", "Fetch errors")}</span><strong>{company.counts.error}</strong><small>{t("経路の調整対象", "Retrieval path to review")}</small></div>
+          </div>
+        </details>
         {company.sources.length ? <ol className={styles.sources}>{company.sources.slice(0, 12).map((source) => <li key={source.url}><article><div className={styles.sourceTop}><span className={source.fetchState === "fetched" ? styles.fetched : source.fetchState === "error" ? styles.failed : styles.pending}>{source.fetchState === "fetched" ? t("本文取得済み", "Fetched") : source.fetchState === "error" ? t("取得エラー", "Fetch error") : t("本文未取得", "Not fetched")}</span><time>{source.published_on ?? t("発表日未確認", "Publication date unverified")}</time></div><h3>{source.displayTitle}</h3><p>{new URL(source.url).hostname}</p><div><span>{t("初回検知", "First detected")}: {time(source.discovered_at, lang)} JST</span><a href={source.url} target="_blank" rel="noreferrer">{t("公式原文 ↗", "Official source ↗")}</a></div></article></li>)}</ol> : <div className={styles.empty}><h3>{t("資料リンクをまだ登録できていません", "No source links registered yet")}</h3><p>{error || t("公式一覧の取得方法を確認しています。", "The official release-list method is being reviewed.")}</p><a href={company.indexUrl} target="_blank" rel="noreferrer">{t("公式サイトを確認 ↗", "Open official site ↗")}</a></div>}
         {company.sources.length > 12 && <p className={styles.more}><Link href="/research/intake">{t(`残り${company.sources.length - 12}件を取得状況画面で確認 →`, `View ${company.sources.length - 12} more in intake status →`)}</Link></p>}
       </section>
