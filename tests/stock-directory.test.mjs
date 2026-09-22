@@ -398,6 +398,12 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(dashboard, /検証済み銘柄/);
   assert.match(dashboard, /根拠照合済みのレポートがある銘柄だけ/);
   assert.match(dashboard, /coveredCompanies/);
+  assert.match(dashboard, /監視対象 \$\{monitoredCompanies\.length\}社/);
+  assert.match(dashboard, /数値比較を公開済み/);
+  assert.match(dashboard, /速報配信や全資料の分析完了を示すものではありません/);
+  assert.match(dashboard, /\/research\/companies\/\$\{company\.ticker\}/);
+  assert.match(researchStyles, /\.companyGroups \{/);
+  assert.match(researchStyles, /@media\(max-width:760px\)[\s\S]*\.companyGroups \{\s*grid-template-columns:1fr/);
   assert.match(researchStyles, /\.primaryNav \{\s*display:none/);
   assert.match(researchStyles, /@media\(max-width:760px\)[\s\S]*\.primaryNav \{\s*display:flex/);
   assert.match(researchStyles, /\.sideMenu \{/);

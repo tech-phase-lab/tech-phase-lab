@@ -29,7 +29,14 @@ function Arrow() { return <span aria-hidden="true">↗</span>; }
 function Bookmark({ filled = false }: { filled?: boolean }) {
   return <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.6"><path d="M6 3h12v18l-6-4-6 4V3Z" /></svg>;
 }
-export default function ResearchDashboard({ events }: { events: ResearchEvent[] }) {
+type MonitoredCompany = {
+  ticker: string;
+  name: string;
+  sector: { ja: string; en: string };
+  verified: boolean;
+};
+
+export default function ResearchDashboard({ events, monitoredCompanies }: { events: ResearchEvent[]; monitoredCompanies: MonitoredCompany[] }) {
   const [lang, setLang] = useResearchLanguage();
   const [tab, setTab] = useState<"home" | "changes" | "metrics" | "saved">("home");
   const [ticker, setTicker] = useState("all");
@@ -71,6 +78,15 @@ export default function ResearchDashboard({ events }: { events: ResearchEvent[] 
     }
     return [...companies.values()].toSorted((a, b) => b.count - a.count || a.symbol.localeCompare(b.symbol));
   }, [events]);
+  const verifiedCompanyCount = monitoredCompanies.filter((company) => company.verified).length;
+  const companyGroups = useMemo(() => {
+    const groups = new Map<string, MonitoredCompany[]>();
+    for (const company of monitoredCompanies) {
+      const key = company.sector[lang];
+      groups.set(key, [...(groups.get(key) ?? []), company]);
+    }
+    return [...groups.entries()];
+  }, [lang, monitoredCompanies]);
   const kinds = { partnership: t("提携", "Partnership"), earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding") };
   function toggleSaved(id: string) {
     try {
@@ -148,9 +164,25 @@ export default function ResearchDashboard({ events }: { events: ResearchEvent[] 
 
         <section className={styles.overview} aria-label={t("検証内容", "Review overview")}>
           <div><span className={styles.cardLabel}>{t("検証レポート", "RESEARCH NOTES")}</span><strong>{String(events.length).padStart(2, "0")}<span>{t("件", "notes")}</span></strong><p>{t("公式発表にリンク", "Linked to primary sources")}</p></div>
-          <div><span className={styles.cardLabel}>{t("銘柄別「何が変わった？」", "COMPANY RESEARCH")}</span><div className={styles.companyLinks}>{["NBIS", "MU"].map((symbol) => <Link key={symbol} href={`/research/companies/${symbol}`} aria-label={t(`${symbol}の銘柄ページ`, `${symbol} company research`)}>{symbol}<span aria-hidden="true">→</span></Link>)}</div><p>{t("履歴・数値比較・次の確認点", "History, comparisons & checkpoints")}</p></div>
+          <div><span className={styles.cardLabel}>{t("銘柄別「何が変わった？」", "COMPANY RESEARCH")}</span><strong>{verifiedCompanyCount}<span>/ {monitoredCompanies.length} {t("社で比較公開", "companies verified")}</span></strong><p><a className={styles.overviewLink} href="#monitored-companies">{t("監視対象を見る", "View monitored companies")} <Arrow /></a></p></div>
           <div className={styles.quoteStatus}><span className={styles.cardLabel}>{t("株価データ", "MARKET DATA")}</span><strong>—<span>{t("配信準備中", "Not connected")}</span></strong><p>{t("契約確認後に価格と遅延を表示", "Prices and feed delay follow licensing")}</p></div>
           <div><span className={styles.cardLabel}>{t("米国株検索", "STOCK DIRECTORY")}</span><div className={styles.companyLinks}><Link href="/research/stocks">SEC<span aria-hidden="true">→</span></Link></div><p>{t("企業名・ティッカー・取引所", "Company, ticker & exchange")}</p></div>
+        </section>
+
+        <section id="monitored-companies" className={styles.companyDirectory} aria-labelledby="monitored-companies-title">
+          <div className={styles.directoryHead}>
+            <div><p className={styles.eyebrow}>OFFICIAL SOURCE WATCH</p><h2 id="monitored-companies-title">{t(`監視対象 ${monitoredCompanies.length}社`, `${monitoredCompanies.length} monitored companies`)}</h2></div>
+            <div className={styles.directoryLegend}><span><i className={styles.verifiedDot} aria-hidden="true" />{t("数値比較を公開済み", "Verified comparison")}</span><span><i aria-hidden="true" />{t("取得状況を公開", "Intake status")}</span></div>
+          </div>
+          <p className={styles.directoryNote}>{t("公式発表の取得対象です。緑の印は、原文と数値を照合した「何が変わった？」を公開済みの銘柄です。速報配信や全資料の分析完了を示すものではありません。", "These companies are monitored through official sources. A green marker means a source-checked What changed? comparison is published; it does not indicate live delivery or complete analysis of every release.")}</p>
+          <div className={styles.companyGroups}>
+            {companyGroups.map(([sector, companies]) => <section key={sector} aria-label={sector}>
+              <h3>{sector}<span>{companies.length}</span></h3>
+              <div>{companies.map((company) => <Link key={company.ticker} href={`/research/companies/${company.ticker}`} aria-label={t(`${company.ticker} ${company.name}の銘柄ページ`, `${company.ticker} ${company.name} company page`)}>
+                <i className={company.verified ? styles.verifiedDot : undefined} aria-hidden="true" /><strong>{company.ticker}</strong><span>{company.name}</span><b aria-hidden="true">→</b>
+              </Link>)}</div>
+            </section>)}
+          </div>
         </section>
 
         <section id="tech-phase-pro" className={styles.accessMatrix} aria-labelledby="access-matrix-title">

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import type { CoverageCompany } from "@/lib/research/intake";
+import { sectorNamesEn, type CoverageCompany } from "@/lib/research/intake";
 import { verifiedChangeByTicker, type VerifiedChangeMetric } from "@/lib/research/verified-changes";
 import { useResearchLanguage } from "../use-research-language";
 import base from "../research.module.css";
@@ -13,8 +13,6 @@ const errorNames: Record<string, { ja: string; en: string }> = {
   timeout: { ja: "公式サイトが時間内に応答しませんでした", en: "Official site did not respond before timeout" },
   "no-links": { ja: "現在の方法では発表リンクを抽出できませんでした", en: "No release links were found with the current method" },
 };
-const sectorNamesEn: Record<string, string> = { semiconductors: "Semiconductors", networking: "Networking", "ai-cloud": "AI cloud", "power-cooling": "Power & cooling", servers: "Servers", software: "AI software", platforms: "Large cloud platforms" };
-
 function time(value: string | null, lang: "ja" | "en") {
   if (!value) return lang === "ja" ? "未確認" : "Not checked";
   return new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }).format(new Date(value));

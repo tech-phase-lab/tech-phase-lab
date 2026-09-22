@@ -6,6 +6,10 @@ export const sectorNames: Record<string, string> = {
   semiconductors: "半導体", networking: "ネットワーク", "ai-cloud": "AIクラウド",
   "power-cooling": "電力・冷却", servers: "サーバー", software: "AIソフトウェア", platforms: "大手クラウド",
 };
+export const sectorNamesEn: Record<string, string> = {
+  semiconductors: "Semiconductors", networking: "Networking", "ai-cloud": "AI cloud",
+  "power-cooling": "Power & cooling", servers: "Servers", software: "AI software", platforms: "Large cloud platforms",
+};
 
 export type IntakeSource = {
   url: string; ticker: string; title?: string | null; published_on: string | null;
