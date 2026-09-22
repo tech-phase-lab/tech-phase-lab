@@ -6,9 +6,11 @@ from email.utils import parsedate_to_datetime
 import hashlib
 from html.parser import HTMLParser
 from html import unescape
+from io import BytesIO
 import json
 import os
 from pathlib import Path
+from pypdf import PdfReader
 import sqlite3
 import sys
 import re
@@ -170,7 +172,7 @@ def source_error_code(exc):
         for fragment, code in (
             ("unsupported content type", "unsupported-content-type"),
             ("empty or oversized source", "empty-or-oversized-source"),
-            ("invalid pdf response", "invalid-pdf"),
+            ("invalid pdf", "invalid-pdf"),
             ("verification page", "verification-page"),
             ("no release links parsed", "no-release-links"),
             ("too many source links", "too-many-source-links"),
@@ -389,6 +391,34 @@ class ArticleText(HTMLParser):
         return "\n".join(lines)[:MAX_EXTRACTED_CHARS]
 
 
+def extract_pdf_text(content):
+    """Extract bounded PDF evidence or fail closed when no text is verifiable."""
+    try:
+        reader = PdfReader(BytesIO(content), strict=False)
+        if reader.is_encrypted:
+            raise ValueError("Invalid PDF: encrypted documents are not supported")
+        if len(reader.pages) > 400:
+            raise ValueError("Invalid PDF: page limit exceeded")
+        lines, extracted_chars = [], 0
+        for page in reader.pages:
+            page_text = page.extract_text() or ""
+            for value in page_text.splitlines():
+                normalized = " ".join(value.split())
+                if normalized:
+                    lines.append(normalized)
+                    extracted_chars += len(normalized) + 1
+            if extracted_chars >= MAX_EXTRACTED_CHARS:
+                break
+    except ValueError:
+        raise
+    except Exception as exc:
+        raise ValueError("Invalid PDF: text extraction failed") from exc
+    extracted = "\n".join(lines)[:MAX_EXTRACTED_CHARS]
+    if not extracted:
+        raise ValueError("Invalid PDF: no extractable text")
+    return extracted
+
+
 def extract_text(content, content_type):
     """Return bounded plain text for later evidence-grounded editorial work."""
     if content_type == "text/html":
@@ -396,6 +426,8 @@ def extract_text(content, content_type):
         parser.feed(content.decode("utf-8", errors="replace"))
         parser.close()
         return parser.result()
+    if content_type == "application/pdf":
+        return extract_pdf_text(content)
     if content_type in {"application/rss+xml", "application/atom+xml", "application/xml", "text/xml"}:
         if b"\x00" in content or re.search(br"<!\s*(DOCTYPE|ENTITY)", content, re.I):
             raise ValueError("XML declarations with entities are not supported")

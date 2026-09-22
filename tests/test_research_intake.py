@@ -13,6 +13,33 @@ spec.loader.exec_module(m)
 URL = "https://nebius.com/newsroom/example"
 
 
+def text_pdf(value):
+    """Build a small dependency-free PDF fixture with one extractable text line."""
+    escaped = value.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
+    stream = f"BT /F1 12 Tf 72 720 Td ({escaped}) Tj ET".encode()
+    objects = [
+        b"<< /Type /Catalog /Pages 2 0 R >>",
+        b"<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
+        b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>",
+        b"<< /Length %d >>\nstream\n" % len(stream) + stream + b"\nendstream",
+        b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
+    ]
+    document = bytearray(b"%PDF-1.4\n")
+    offsets = [0]
+    for index, body in enumerate(objects, 1):
+        offsets.append(len(document))
+        document.extend(f"{index} 0 obj\n".encode() + body + b"\nendobj\n")
+    xref = len(document)
+    document.extend(f"xref\n0 {len(objects) + 1}\n".encode())
+    document.extend(b"0000000000 65535 f \n")
+    for offset in offsets[1:]:
+        document.extend(f"{offset:010d} 00000 n \n".encode())
+    document.extend(
+        f"trailer\n<< /Size {len(objects) + 1} /Root 1 0 R >>\nstartxref\n{xref}\n%%EOF\n".encode()
+    )
+    return bytes(document)
+
+
 class IntakeTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -103,6 +130,33 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(
             self.db.execute("SELECT count(*) FROM history WHERE kind='changed'").fetchone()[0], 0
         )
+
+    def test_pdf_text_is_extracted_and_same_url_replacement_requires_review(self):
+        first = text_pdf("Official revenue was 100 million dollars.")
+        second = text_pdf("Official revenue was 200 million dollars.")
+        initial = m.check_source(
+            self.db, self.row(), lambda *_: (first, "application/pdf")
+        )
+        self.assertEqual(initial["status"], "first-fetched")
+        self.assertIn("100 million", self.row()["extracted_text"])
+        first_body_sha = self.row()["body_sha256"]
+
+        m.review(self.db, URL, self.row()["sha256"], "approved", "editor", "PDF reviewed")
+        changed = m.check_source(
+            self.db, self.row(), lambda *_: (second, "application/pdf")
+        )
+        self.assertEqual(changed["status"], "changed")
+        self.assertIn("200 million", self.row()["extracted_text"])
+        self.assertNotEqual(self.row()["body_sha256"], first_body_sha)
+        self.assertEqual(self.row()["status"], "pending")
+
+    def test_pdf_without_extractable_text_fails_with_safe_error_code(self):
+        result = m.check_source(
+            self.db, self.row(), lambda *_: (text_pdf(""), "application/pdf")
+        )
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["error"], "invalid-pdf")
+        self.assertEqual(self.row()["error"], "invalid-pdf")
 
     def test_existing_evidence_hashes_are_backfilled_without_changing_identity(self):
         self.check(b"<main><p>Persisted official evidence.</p></main>")
