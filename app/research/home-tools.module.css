@@ -6,6 +6,6 @@
 .grid strong { font-size: 1.2rem; line-height: 1.45; overflow-wrap: anywhere; }
 .grid p { font-size: .875rem; color: var(--muted); margin: 8px 0 18px; line-height: 1.6; }
 .action { margin-top: auto; color: var(--mint); font-size: .8125rem; }
-@media(max-width:650px) { .grid { gap: 10px; } .grid>a,.grid>button { padding: 16px 12px; } .grid strong { font-size: .95rem; } .grid p { font-size: .75rem; margin-bottom: 12px; } .action { font-size: .75rem; } .icon { font-size: 28px; margin-bottom: 6px; } }
+@media(max-width:650px) { .grid { gap: 10px; } .grid>a,.grid>button { padding: 16px 12px; } .grid strong { font-size: .95rem; } .grid p { font-size: clamp(.6875rem, 3vw, .75rem); margin-bottom: 12px; } .action { font-size: .75rem; } .icon { font-size: 28px; margin-bottom: 6px; } }
 
 .grid strong small { color: var(--muted); font-size: .8em; font-weight: 400; }
