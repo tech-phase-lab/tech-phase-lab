@@ -1425,6 +1425,28 @@ def public_error(error):
     """Export a category, never exception messages containing local paths or secrets."""
     if not error:
         return None
+    # source_error_code already reduces these failures to fixed, bounded
+    # operational codes. Preserve them for diagnosis while continuing to
+    # collapse all unknown strings so exception details never reach clients.
+    if error == "no-release-links":
+        return "no-links"
+    if error in {
+        "unsupported-content-type",
+        "empty-or-oversized-source",
+        "no-extractable-text",
+        "sec-exhibit-unavailable",
+        "pdf-encrypted",
+        "pdf-page-limit",
+        "pdf-no-text",
+        "pdf-timeout",
+        "pdf-extract-failed",
+        "invalid-pdf",
+        "verification-page",
+        "too-many-source-links",
+        "invalid-source-response",
+        "fetch-failed",
+    } or re.fullmatch(r"http-[45]\d\d", error):
+        return error
     if "403" in error:
         return "http-403"
     if "timed out" in error.lower() or "timeout" in error.lower():

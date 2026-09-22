@@ -1134,6 +1134,20 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(report["sources"][0]["error"], "fetch-error")
         self.assertEqual(report["history"][0]["kind"], "held")
 
+    def test_snapshot_preserves_only_fixed_sec_exhibit_error(self):
+        self.check()
+        with self.db:
+            self.db.execute("UPDATE sources SET error=? WHERE url=?", ("sec-exhibit-unavailable", URL))
+        report = m.snapshot(self.db)
+        self.assertEqual(report["sources"][0]["error"], "sec-exhibit-unavailable")
+        with self.db:
+            self.db.execute(
+                "UPDATE sources SET error=? WHERE url=?",
+                ("sec-exhibit-unavailable at /private/path?token=secret", URL),
+            )
+        report = m.snapshot(self.db)
+        self.assertEqual(report["sources"][0]["error"], "fetch-error")
+
     def test_snapshot_export_is_complete_and_leaves_no_temporary_file(self):
         output = Path(self.temp.name) / "public" / "snapshot.json"
         report = m.write_snapshot(self.db, output)

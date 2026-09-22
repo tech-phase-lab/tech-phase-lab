@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { buildCoverageCompanies, coverageCompanyIssues, fetchState, filterSources, intakeCounts, pdfEvidenceCounts, pdfEvidenceState, snapshotIssues, coverageCounts, providers, providerByTicker } from "../lib/research/intake.ts";
+import { buildCoverageCompanies, coverageCompanyIssues, fetchState, filterSources, intakeCounts, pdfEvidenceCounts, pdfEvidenceState, secEvidenceCounts, secEvidenceState, snapshotIssues, coverageCounts, providers, providerByTicker } from "../lib/research/intake.ts";
 const snapshot = JSON.parse(readFileSync(new URL("../lib/research/intake-snapshot.json", import.meta.url)));
 const liveTypes = readFileSync(new URL("../lib/research/use-live-intake.ts", import.meta.url), "utf8");
 const intakeDashboard = readFileSync(new URL("../app/research/intake/intake-dashboard.tsx", import.meta.url), "utf8");
@@ -70,6 +70,25 @@ test("PDF evidence filters isolate pending, extracted, and failed source work", 
   assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "pending"), [pending]);
   assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "extracted"), [extracted]);
   assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "error"), [failed]);
+});
+
+test("SEC evidence totals and filters distinguish exhibits from filing-body fallback", () => {
+  const secUrl = "https://www.sec.gov/Archives/edgar/data/1835632/000119312526123456/form8-k.htm";
+  const direct = { ...source, url: secUrl, evidence_url: secUrl, evidence_kind: "direct", error: null };
+  const exhibit = { ...direct, url: secUrl.replace("123456", "123457"), evidence_url: secUrl.replace("form8-k.htm", "ex991.htm"), evidence_kind: "sec-exhibit-99.1" };
+  const pending = { ...direct, url: secUrl.replace("123456", "123458"), sha256: null, checked_at: null };
+  const failed = { ...pending, url: secUrl.replace("123456", "123459"), error: "sec-exhibit-unavailable" };
+  const company = { ...source, url: "https://investors.example.com/news", evidence_kind: "direct" };
+  const sources = [direct, exhibit, pending, failed, company];
+  assert.deepEqual(secEvidenceCounts(sources), { total: 4, exhibit: 1, direct: 1, pending: 1, error: 1 });
+  assert.equal(secEvidenceState(company), null);
+  assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "all", "exhibit"), [exhibit]);
+  assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "all", "direct"), [direct]);
+  assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "all", "pending"), [pending]);
+  assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "all", "error"), [failed]);
+  assert.match(intakeDashboard, /SEC根拠：EX-99\.1取得/);
+  assert.match(intakeDashboard, /SEC根拠エラー/);
+  assert.match(intakeDashboard, /SEC根拠要確認/);
 });
 
 test("operations preview shows durable incident state while external delivery stays off", () => {

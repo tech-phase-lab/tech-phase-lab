@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { fetchState, filterSources, intakeCounts, pdfEvidenceCounts, sourceTitle, coverageCounts, providers, providerByTicker, sectorNames, type IntakeSnapshot } from "@/lib/research/intake";
+import { fetchState, filterSources, intakeCounts, pdfEvidenceCounts, secEvidenceCounts, secEvidenceState, sourceTitle, coverageCounts, providers, providerByTicker, sectorNames, type IntakeSnapshot } from "@/lib/research/intake";
 import { useLiveIntake, type MonitorState } from "@/lib/research/use-live-intake";
 import styles from "./intake.module.css";
 
@@ -83,20 +83,22 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
   const [review, setReview] = useState("all");
   const [sector, setSector] = useState("all");
   const [pdfEvidenceFilter, setPdfEvidenceFilter] = useState("all");
+  const [secEvidenceFilter, setSecEvidenceFilter] = useState("all");
   const [page, setPage] = useState(1);
   const live = useLiveIntake(initialSnapshot);
   const snapshot = live.snapshot;
   const counts = intakeCounts(snapshot.sources);
   const pdfEvidence = pdfEvidenceCounts(snapshot.sources);
+  const secEvidence = secEvidenceCounts(snapshot.sources);
   const coverage = coverageCounts(snapshot);
   const events = snapshot.events ?? [];
   const briefs = snapshot.briefs ?? [];
-  const visible = filterSources(snapshot.sources, query, ticker, state, review, titles, sector, pdfEvidenceFilter);
+  const visible = filterSources(snapshot.sources, query, ticker, state, review, titles, sector, pdfEvidenceFilter, secEvidenceFilter);
   const selectedProviders = providers.filter(p => (sector === "all" || p.sector === sector) && (ticker === "all" || ticker === p.ticker));
   const displayed = visible.slice((page - 1) * 20, page * 20);
   const pages = Math.max(1, Math.ceil(visible.length / 20));
   const title = (url: string) => titles[url] || sourceTitle(url);
-  function reset() { setQuery(""); setTicker("all"); setState("all"); setReview("all"); setSector("all"); setPdfEvidenceFilter("all"); setPage(1); }
+  function reset() { setQuery(""); setTicker("all"); setState("all"); setReview("all"); setSector("all"); setPdfEvidenceFilter("all"); setSecEvidenceFilter("all"); setPage(1); }
   function chooseSector(value: string) { setSector(value); setTicker("all"); setPage(1); }
   return <div className={styles.app}>
     <a className={styles.skip} href="#intake-main">本文へ移動</a>
@@ -129,13 +131,14 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
       </section>
       <nav aria-label="分野で絞り込み" className={styles.sectors}>{[["all", "すべて"], ...Object.entries(sectorNames)].map(([key, label]) => <button key={key} aria-pressed={sector === key} onClick={() => chooseSector(key)}>{label}</button>)}</nav>
       <section aria-labelledby="health-title"><div className={styles.sectionTitle}><h2 id="health-title">公式一覧の取得状況</h2><span>一覧と本文の取得は別々に確認</span></div>
-        <p className={styles.coverageNote}>企業公式の発表・ブログに加え、対象企業のSEC提出書類と取引所の重要開示を補完利用します。AI以外の発表や過去分も含みます。<br />PDF根拠：抽出済み {pdfEvidence.extracted}件 ／ 補完待ち {pdfEvidence.pending}件 ／ エラー {pdfEvidence.error}件（全{pdfEvidence.total}件）</p>
+        <p className={styles.coverageNote}>企業公式の発表・ブログに加え、対象企業のSEC提出書類と取引所の重要開示を補完利用します。AI以外の発表や過去分も含みます。<br />PDF根拠：抽出済み {pdfEvidence.extracted}件 ／ 補完待ち {pdfEvidence.pending}件 ／ エラー {pdfEvidence.error}件（全{pdfEvidence.total}件）<br />SEC根拠：EX-99.1取得 {secEvidence.exhibit}件 ／ 提出本文 {secEvidence.direct}件 ／ 未取得 {secEvidence.pending}件 ／ エラー {secEvidence.error}件（全{secEvidence.total}件）</p>
         <div className={styles.health}>{selectedProviders.map(provider => {
           const symbol = provider.ticker;
           const runs = snapshot.discoveryRuns.filter(r => r.ticker === symbol).toSorted((a, b) => b.id - a.id);
           const latest = runs[0];
           const totals = intakeCounts(snapshot.sources.filter(s => s.ticker === symbol));
           const companyPdfEvidence = pdfEvidenceCounts(snapshot.sources.filter(s => s.ticker === symbol));
+          const companySecEvidence = secEvidenceCounts(snapshot.sources.filter(s => s.ticker === symbol));
           const available = latest?.status === "ok" || latest?.status === "fallback";
           const monitor = live.monitor?.companies?.[symbol];
           return <article key={symbol}><div className={styles.healthTop}><h3>{symbol}</h3><span className={available ? styles.good : styles.warning}>{latest?.status === "ok" ? "公式経路から取得" : latest?.status === "fallback" ? "公式バックアップ経路で取得" : latest ? "一覧の確認が必要" : "一覧未検証"}</span></div>
@@ -143,6 +146,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
             <p>{latest?.status === "ok" ? (provider.format === "twse-material-json" ? `取引所の当日重要開示 ${latest.candidates}件` : `${latest.candidates}件のリンクを検出`) : latest?.status === "fallback" ? `企業サイトを補完し、公式提出書類を${latest.candidates}件検出` : errorNames[latest?.error ?? ""] || "取得記録なし"}</p>
             <p className={styles.muted}>本文・PDF：取得済み {totals.fetched} ／ 未取得 {totals.unfetched} ／ エラー {totals.error}</p>
             {companyPdfEvidence.total > 0 && <p className={styles.muted}>PDF根拠：抽出済み {companyPdfEvidence.extracted} ／ 補完待ち {companyPdfEvidence.pending} ／ エラー {companyPdfEvidence.error}</p>}
+            {companySecEvidence.total > 0 && <p className={styles.muted}>SEC根拠：EX-99.1 {companySecEvidence.exhibit} ／ 提出本文 {companySecEvidence.direct} ／ 未取得 {companySecEvidence.pending} ／ エラー {companySecEvidence.error}</p>}
             <p className={styles.meta}>一覧の確認日時：{latest ? time(latest.at) : "未確認"} JST</p>
             {latest && <p className={styles.meta}>取得経路の証跡：{discoveryEvidence(latest)}</p>}
             {monitor && <p className={styles.meta}>基準間隔 {monitor.basePollSeconds ?? monitor.nextPollSeconds ?? "—"}秒 ／ 直近の公式応答 {duration(monitor.requestDurationMs)}{monitor.nextPollSeconds && monitor.basePollSeconds && monitor.nextPollSeconds > monitor.basePollSeconds ? ` ／ 次回まで${monitor.nextPollSeconds}秒（失敗時バックオフ）` : ""}</p>}
@@ -158,14 +162,16 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
           <label>銘柄<select value={ticker} onChange={e => { setTicker(e.target.value); setPage(1); }}><option value="all">すべての銘柄</option>{providers.filter(p => sector === "all" || p.sector === sector).map(p => <option key={p.ticker} value={p.ticker}>{p.ticker} · {p.name}</option>)}</select></label>
           <label>取得状態<select value={state} onChange={e => { setState(e.target.value); setPage(1); }}><option value="all">すべての取得状態</option><option value="error">取得エラー</option><option value="unfetched">未取得</option><option value="fetched">取得済み</option></select></label>
           <label>PDF根拠<select value={pdfEvidenceFilter} onChange={e => { setPdfEvidenceFilter(e.target.value); setPage(1); }}><option value="all">すべての資料</option><option value="pending">PDF補完待ち</option><option value="extracted">PDF抽出済み</option><option value="error">PDF取得エラー</option></select></label>
+          <label>SEC根拠<select value={secEvidenceFilter} onChange={e => { setSecEvidenceFilter(e.target.value); setPage(1); }}><option value="all">すべての資料</option><option value="exhibit">EX-99.1取得済み</option><option value="direct">SEC提出本文</option><option value="pending">SEC本文未取得</option><option value="error">SEC根拠エラー</option></select></label>
           <label>編集状態<select value={review} onChange={e => { setReview(e.target.value); setPage(1); }}><option value="all">すべての編集状態</option>{Object.entries(reviewNames).map(([key, name]) => <option key={key} value={key}>{name}</option>)}</select></label>
         </div>
         <div className={styles.results}><p aria-live="polite">{visible.length}件が該当 · {page} / {pages}ページ</p><button onClick={reset}>絞り込みを解除</button></div>
         {visible.length === 0 ? <div className={styles.empty}><h3>条件に合う資料はありません</h3><p>検索語や取得状態を変更してください。</p><button onClick={reset}>すべての資料を表示</button></div> : <ul className={styles.sources}>{displayed.map(s => {
           const status = fetchState(s);
+          const secState = secEvidenceState(s);
           const history = snapshot.history.filter(h => h.url === s.url);
           return <li key={s.url}><article className={styles.source}>
-            <div className={styles.tags}><b>{s.ticker}</b><span className={styles.neutral}>{sectorNames[providerByTicker[s.ticker]?.sector]}</span><span className={status === "error" ? styles.warning : status === "fetched" ? styles.good : styles.neutral}>{stateNames[status]}</span><span className={styles.neutral}>{reviewNames[s.status]}</span></div>
+            <div className={styles.tags}><b>{s.ticker}</b><span className={styles.neutral}>{sectorNames[providerByTicker[s.ticker]?.sector]}</span><span className={status === "error" ? styles.warning : status === "fetched" ? styles.good : styles.neutral}>{stateNames[status]}</span>{secState && <span className={secState === "exhibit" ? styles.good : secState === "error" ? styles.warning : styles.neutral}>{secState === "exhibit" ? "EX-99.1根拠" : secState === "direct" ? "SEC提出本文" : secState === "pending" ? "SEC本文未取得" : "SEC根拠要確認"}</span>}<span className={styles.neutral}>{reviewNames[s.status]}</span></div>
             <h3>{title(s.url)}</h3><p className={styles.domain}>{new URL(s.url).hostname}</p>
             {s.error && <p className={styles.error}>{errorNames[s.error] || "資料の取得に失敗"}。{s.sha256 ? "以前の取得記録はありますが、最新の試行は失敗しています。" : "本文は未取得です。"}</p>}
             <dl className={styles.dates}><div><dt>資料の発表日</dt><dd>{s.published_on ?? "未確認"}</dd></div><div><dt>初回の検知日時（JST）</dt><dd>{time(s.discovered_at)}</dd></div><div><dt>最後の取得試行（JST）</dt><dd>{time(s.checked_at)}</dd></div><div><dt>要約用の原文証拠</dt><dd>{bodyEvidence(s)}</dd></div></dl>

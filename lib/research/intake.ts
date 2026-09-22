@@ -67,13 +67,37 @@ export function pdfEvidenceCounts(sources: IntakeSource[]) {
   return { total: states.length, extracted, pending, error };
 }
 
-export function filterSources(sources: IntakeSource[], query: string, ticker: string, state: string, review: string, titles: Record<string, string> = {}, sector = "all", pdfEvidence = "all") {
+export type SecEvidenceState = "exhibit" | "direct" | "pending" | "error";
+export function secEvidenceState(source: IntakeSource): SecEvidenceState | null {
+  let isSecFiling = false;
+  try {
+    const url = new URL(source.url);
+    isSecFiling = url.hostname === "www.sec.gov" && /^\/Archives\/edgar\/data\//i.test(url.pathname);
+  } catch { isSecFiling = false; }
+  if (!isSecFiling) return null;
+  if (source.error === "sec-exhibit-unavailable") return "error";
+  if (source.evidence_kind === "sec-exhibit-99.1") return "exhibit";
+  if (!source.sha256) return source.error ? "error" : "pending";
+  return source.error ? "error" : "direct";
+}
+
+export function secEvidenceCounts(sources: IntakeSource[]) {
+  const states = sources.map(secEvidenceState).filter(state => state !== null);
+  const exhibit = states.filter(state => state === "exhibit").length;
+  const direct = states.filter(state => state === "direct").length;
+  const pending = states.filter(state => state === "pending").length;
+  const error = states.filter(state => state === "error").length;
+  return { total: states.length, exhibit, direct, pending, error };
+}
+
+export function filterSources(sources: IntakeSource[], query: string, ticker: string, state: string, review: string, titles: Record<string, string> = {}, sector = "all", pdfEvidence = "all", secEvidence = "all") {
   const q = query.trim().toLocaleLowerCase();
   return sources.filter(s => (ticker === "all" || s.ticker === ticker)
     && (state === "all" || fetchState(s) === state)
     && (review === "all" || s.status === review)
     && (sector === "all" || providerByTicker[s.ticker]?.sector === sector)
     && (pdfEvidence === "all" || pdfEvidenceState(s) === pdfEvidence)
+    && (secEvidence === "all" || secEvidenceState(s) === secEvidence)
     && (!q || `${s.ticker} ${providerByTicker[s.ticker]?.name || ""} ${s.title || ""} ${titles[s.url] || ""} ${sourceTitle(s.url)} ${s.url}`.toLocaleLowerCase().includes(q)));
 }
 
