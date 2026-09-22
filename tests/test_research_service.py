@@ -53,6 +53,20 @@ class ResearchServiceTests(unittest.TestCase):
             for item in app.editorial_queue(50)["items"] if item["url"] == url
         )
 
+    def test_legacy_full_ticker_roster_migrates_amzn_to_be(self):
+        legacy = ",".join(service.LEGACY_FULL_TICKERS)
+        with patch.dict(os.environ, {"RESEARCH_TICKERS": legacy}, clear=False):
+            app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        self.assertEqual(len(app.tickers), 22)
+        self.assertIn("BE", app.tickers)
+        self.assertNotIn("AMZN", app.tickers)
+        self.assertEqual(set(app.tickers), set(monitor.PROVIDERS))
+
+    def test_partial_roster_still_rejects_retired_or_unknown_tickers(self):
+        with patch.dict(os.environ, {"RESEARCH_TICKERS": "NBIS,AMZN"}, clear=False):
+            with self.assertRaisesRegex(ValueError, "Unknown RESEARCH_TICKERS: AMZN"):
+                service.AutomaticMonitor(self.db_path, self.snapshot_path)
+
     def test_body_fetch_prioritizes_new_event_and_exports_only_metadata(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         app.body_batch = 1

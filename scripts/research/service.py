@@ -18,6 +18,17 @@ import incident_delivery
 import persistence
 
 
+# The preview deployment previously pinned the complete 22-company roster in
+# RESEARCH_TICKERS. Keep this one exact roster migration-safe after AMZN was
+# deliberately replaced by BE, while continuing to reject typos and arbitrary
+# retired tickers in every partial/custom roster.
+LEGACY_FULL_TICKERS = (
+    "MU", "SKHY", "SNDK", "NBIS", "NVDA", "AMD", "AVGO", "ARM", "TSM", "ASML",
+    "MRVL", "ANET", "CRDO", "CRWV", "VRT", "GEV", "DELL", "PLTR", "MSFT", "AMZN",
+    "GOOGL", "ORCL",
+)
+
+
 def utc_now():
     return datetime.now(timezone.utc).isoformat(timespec="milliseconds")
 
@@ -27,6 +38,20 @@ def positive_int(name, default, minimum):
         return max(minimum, int(os.environ.get(name, default)))
     except ValueError:
         return default
+
+
+def configured_tickers(value):
+    configured = [item.strip().upper() for item in value.split(",") if item.strip()]
+    if not configured:
+        return list(monitor.PROVIDERS)
+    unknown = sorted(set(configured) - set(monitor.PROVIDERS))
+    if not unknown:
+        return configured
+    if len(configured) == len(LEGACY_FULL_TICKERS) and set(configured) == set(LEGACY_FULL_TICKERS):
+        migrated = ["BE" if ticker == "AMZN" else ticker for ticker in configured]
+        if len(set(migrated)) == len(migrated) and set(migrated) == set(monitor.PROVIDERS):
+            return migrated
+    raise ValueError("Unknown RESEARCH_TICKERS: " + ", ".join(unknown))
 
 
 def timestamp_age_seconds(value):
@@ -82,11 +107,7 @@ class AutomaticMonitor:
             notification_configured = False
             notification_error = str(exc)
         self.notification_enabled = bool(self.notification_config.get("enabled"))
-        configured = [value.strip().upper() for value in os.environ.get("RESEARCH_TICKERS", "").split(",") if value.strip()]
-        unknown = sorted(set(configured) - set(monitor.PROVIDERS))
-        if unknown:
-            raise ValueError("Unknown RESEARCH_TICKERS: " + ", ".join(unknown))
-        self.tickers = configured or list(monitor.PROVIDERS)
+        self.tickers = configured_tickers(os.environ.get("RESEARCH_TICKERS", ""))
         self.stop_event = threading.Event()
         self.db_lock = threading.Lock()
         self.state_lock = threading.Lock()
