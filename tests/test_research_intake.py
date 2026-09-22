@@ -11,6 +11,11 @@ from urllib.error import HTTPError
 spec = importlib.util.spec_from_file_location("intake", Path(__file__).resolve().parents[1] / "scripts/research/monitor.py")
 m = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
+pdf_spec = importlib.util.spec_from_file_location(
+    "pdf_extract", Path(__file__).resolve().parents[1] / "scripts/research/pdf_extract.py"
+)
+pdf = importlib.util.module_from_spec(pdf_spec)
+pdf_spec.loader.exec_module(pdf)
 URL = "https://nebius.com/newsroom/example"
 
 
@@ -133,8 +138,8 @@ class IntakeTests(unittest.TestCase):
         )
 
     def test_pdf_text_is_extracted_and_same_url_replacement_requires_review(self):
-        first = text_pdf("Official revenue was 100 million dollars.")
-        second = text_pdf("Official revenue was 200 million dollars.")
+        first = text_pdf("Official quarterly revenue was 100 million dollars.")
+        second = text_pdf("Official quarterly revenue was 200 million dollars.")
         initial = m.check_source(
             self.db, self.row(), lambda *_: (first, "application/pdf")
         )
@@ -158,6 +163,29 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(result["status"], "error")
         self.assertEqual(result["error"], "pdf-no-text")
         self.assertEqual(self.row()["error"], "pdf-no-text")
+
+    def test_pdf_page_number_noise_is_not_accepted_as_source_evidence(self):
+        page_numbers = " ".join(f"Page {number}" for number in range(1, 101))
+        result = m.check_source(
+            self.db,
+            self.row(),
+            lambda *_: (text_pdf(page_numbers), "application/pdf"),
+        )
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["error"], "pdf-no-text")
+
+    def test_pdf_text_quality_removes_controls_and_supports_non_english_text(self):
+        self.assertEqual(
+            pdf.normalize_line("Revenue\u202e  100\u200b million"),
+            "Revenue 100 million",
+        )
+        self.assertFalse(pdf.has_meaningful_text("Page 1\n" * 100))
+        self.assertTrue(pdf.has_meaningful_text(
+            "Official revenue increased while management confirmed demand and capacity plans."
+        ))
+        self.assertTrue(pdf.has_meaningful_text(
+            "公式発表では人工知能向け設備の増強計画と今後の需要見通しを説明しています"
+        ))
 
     def test_pdf_extraction_timeout_fails_closed(self):
         with patch.object(
@@ -218,7 +246,9 @@ class IntakeTests(unittest.TestCase):
                 "includeMetadata": include_metadata,
             })
             return {
-                "content": text_pdf("Backfilled official PDF evidence."),
+                "content": text_pdf(
+                    "Backfilled official PDF evidence now includes verified capacity details."
+                ),
                 "contentType": "application/pdf",
                 "etag": '"new-pdf"', "lastModified": None, "notModified": False,
             }
