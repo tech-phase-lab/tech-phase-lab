@@ -158,6 +158,37 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(result["error"], "invalid-pdf")
         self.assertEqual(self.row()["error"], "invalid-pdf")
 
+    def test_legacy_empty_pdf_bypasses_304_once_to_backfill_evidence(self):
+        self.db.execute("""
+          UPDATE sources
+          SET sha256=?,raw_sha256=?,body_sha256=?,content_type='application/pdf',
+              content_bytes=100,extracted_text='',extracted_chars=0,response_etag=?
+          WHERE url=?
+        """, ("a" * 64, "a" * 64, m.hashlib.sha256(b"").hexdigest(), '"old-pdf"', URL))
+        self.db.commit()
+        captured = {}
+
+        def transport(url, ticker, validators=None, include_metadata=False):
+            captured.update({
+                "url": url, "ticker": ticker, "validators": validators,
+                "includeMetadata": include_metadata,
+            })
+            return {
+                "content": text_pdf("Backfilled official PDF evidence."),
+                "contentType": "application/pdf",
+                "etag": '"new-pdf"', "lastModified": None, "notModified": False,
+            }
+
+        transport.supports_persistent_validators = True
+        result = m.collect_source(self.row(), transport)
+        self.assertEqual(captured["validators"], {})
+        self.assertTrue(captured["includeMetadata"])
+        self.assertIn("Backfilled official PDF evidence", result["extractedText"])
+        saved = m.save_source_check(self.db, self.row(), result)
+        self.assertEqual(saved["status"], "changed")
+        self.assertGreater(self.row()["extracted_chars"], 0)
+        self.assertEqual(self.row()["response_etag"], '"new-pdf"')
+
     def test_existing_evidence_hashes_are_backfilled_without_changing_identity(self):
         self.check(b"<main><p>Persisted official evidence.</p></main>")
         original_sha = self.row()["sha256"]

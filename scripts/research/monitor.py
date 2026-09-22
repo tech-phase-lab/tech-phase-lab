@@ -1722,9 +1722,14 @@ def write_snapshot(db, output):
 def collect_source(row, transport=fetch):
     """Fetch and extract one source without mutating SQLite, safe for worker threads."""
     if getattr(transport, "supports_persistent_validators", False):
+        legacy_unextracted_pdf = (
+            row["content_type"] == "application/pdf"
+            and bool(row["sha256"])
+            and not row["extracted_chars"]
+        )
         response = transport(
             row["url"], row["ticker"],
-            validators={
+            validators={} if legacy_unextracted_pdf else {
                 "etag": row["response_etag"],
                 "last_modified": row["response_last_modified"],
             },
