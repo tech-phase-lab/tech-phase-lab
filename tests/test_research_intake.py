@@ -263,6 +263,78 @@ class IntakeTests(unittest.TestCase):
         self.assertGreater(self.row()["extracted_chars"], 0)
         self.assertEqual(self.row()["response_etag"], '"new-pdf"')
 
+    def test_sec_filing_uses_same_accession_exhibit_and_tracks_its_revision(self):
+        filing = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/mrvl-20260922.htm"
+        filing_index = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/0001835632-26-000001-index.html"
+        exhibit = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/ex991.htm"
+        m.add_source(self.db, "MRVL", filing)
+        primary = b"<main>8-K cover. Exhibit 99.1 is furnished with this filing.</main>"
+        index = b'<table><tr><td><a href="ex991.htm">EX-99.1</a></td></tr></table>'
+        bodies = [
+            b"<main><p>Official results confirmed strong data center demand and higher revenue. "
+            b"Management also described capacity, customer demand, and the outlook for the next quarter.</p></main>",
+            b"<main><p>Official results confirmed stronger data center demand and revised revenue. "
+            b"Management also described capacity, customer demand, and the outlook for the next quarter.</p></main>",
+        ]
+        captured = []
+
+        def transport(url, ticker, validators=None, include_metadata=False):
+            captured.append((url, ticker, validators, include_metadata))
+            if url == filing:
+                return {
+                    "content": primary, "contentType": "text/html", "etag": '"cover"',
+                    "lastModified": None, "notModified": False,
+                }
+            if url == filing_index:
+                return index, "text/html"
+            if url == exhibit:
+                return bodies[0], "text/html"
+            raise AssertionError(f"unexpected URL: {url}")
+
+        transport.supports_persistent_validators = True
+        row = self.db.execute("SELECT * FROM sources WHERE url=?", (filing,)).fetchone()
+        first = m.collect_source(row, transport)
+        self.assertEqual(captured[0][2], {"force_unconditional": True})
+        self.assertEqual(first["evidenceUrl"], exhibit)
+        self.assertEqual(first["evidenceKind"], "sec-exhibit-99.1")
+        self.assertIn("strong data center", first["extractedText"])
+        self.assertEqual(m.save_source_check(self.db, row, first)["status"], "first-fetched")
+        public = next(item for item in m.snapshot(self.db)["sources"] if item["url"] == filing)
+        self.assertEqual(public["evidence_url"], exhibit)
+        self.assertEqual(public["evidence_kind"], "sec-exhibit-99.1")
+
+        def revised_transport(url, ticker, validators=None, include_metadata=False):
+            if url == filing:
+                return {
+                    "content": primary, "contentType": "text/html", "etag": '"cover"',
+                    "lastModified": None, "notModified": False,
+                }
+            if url == filing_index:
+                return index, "text/html"
+            if url == exhibit:
+                return bodies[1], "text/html"
+            raise AssertionError(f"unexpected URL: {url}")
+
+        revised_transport.supports_persistent_validators = True
+        current = self.db.execute("SELECT * FROM sources WHERE url=?", (filing,)).fetchone()
+        changed = m.save_source_check(
+            self.db, current, m.collect_source(current, revised_transport)
+        )
+        self.assertEqual(changed["status"], "changed")
+        self.assertIn("revised revenue", self.db.execute(
+            "SELECT extracted_text FROM sources WHERE url=?", (filing,)
+        ).fetchone()[0])
+
+    def test_sec_exhibit_links_cannot_leave_the_filing_accession(self):
+        filing = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/mrvl-20260922.htm"
+        markup = b'''<a href="ex991.htm">EX-99.1</a>
+          <a href="../000183563226000002/ex991.htm">EX-99.1</a>
+          <a href="https://evil.test/ex991.htm">EX-99.1</a>
+          <a href="other.htm">EX-10.1</a>'''
+        self.assertEqual(m.sec_exhibit_links(markup, filing, "MRVL"), [
+            "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/ex991.htm"
+        ])
+
     def test_existing_evidence_hashes_are_backfilled_without_changing_identity(self):
         self.check(b"<main><p>Persisted official evidence.</p></main>")
         original_sha = self.row()["sha256"]
@@ -806,6 +878,49 @@ class IntakeTests(unittest.TestCase):
         self.assertIsNone(result["contentType"])
         self.assertEqual(result["etag"], '"persisted-revision-2"')
         self.assertEqual(opener.request.headers["If-none-match"], '"persisted-revision-1"')
+
+    def test_forced_unconditional_fetch_ignores_process_cache_validators(self):
+        from email.message import Message
+
+        url = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/mrvl-20260922.htm"
+        m._FETCH_CACHE[url] = {
+            "content": b"old filing", "content_type": "text/html",
+            "etag": '"old-cover"', "last_modified": "Mon, 21 Sep 2026 00:00:00 GMT",
+        }
+        original = m.build_opener
+
+        class Response:
+            def __init__(self):
+                self.headers = Message()
+                self.headers["Content-Type"] = "text/html"
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args):
+                return False
+
+            def read(self, _limit):
+                return b"<main>Current filing</main>"
+
+        class Opener:
+            def open(self, request, timeout):
+                self.request = request
+                return Response()
+
+        opener = Opener()
+        m.build_opener = lambda *_: opener
+        try:
+            result = m.fetch(
+                url, "MRVL", validators={"force_unconditional": True},
+                include_metadata=True,
+            )
+        finally:
+            m.build_opener = original
+            m._FETCH_CACHE.pop(url, None)
+        self.assertFalse(result["notModified"])
+        self.assertNotIn("If-none-match", opener.request.headers)
+        self.assertNotIn("If-modified-since", opener.request.headers)
 
     def test_article_fetch_does_not_retain_full_body_in_process_cache(self):
         from email.message import Message

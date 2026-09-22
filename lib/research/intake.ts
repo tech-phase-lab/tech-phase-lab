@@ -15,6 +15,7 @@ export type IntakeSource = {
   url: string; ticker: string; title?: string | null; published_on: string | null;
   discovered_at: string; checked_at: string | null; sha256: string | null;
   content_type?: string | null; content_bytes?: number | null; extracted_chars?: number | null; fetched_at?: string | null;
+  evidence_url?: string | null; evidence_kind?: "direct" | "sec-exhibit-99.1";
   status: "pending" | "approved" | "held" | "rejected"; error: string | null;
 };
 export type ReviewedBrief = {
@@ -104,7 +105,15 @@ export function snapshotIssues(data: IntakeSnapshot) {
       if (url.protocol !== "https:" || !hosts.includes(url.hostname) || url.username || url.password || (url.port && url.port !== "443")) issues.push("unsafe-url");
       if (urls.has(s.url)) issues.push("duplicate-source");
       urls.add(s.url);
+      if (s.evidence_url) {
+        const evidence = new URL(s.evidence_url);
+        if (evidence.protocol !== "https:" || !hosts.includes(evidence.hostname) || evidence.username || evidence.password
+            || (evidence.port && evidence.port !== "443")) issues.push("unsafe-evidence-url");
+        const rules = providerByTicker[s.ticker]?.articleRules ?? [];
+        if (!rules.some(rule => rule.host === evidence.hostname && new RegExp(rule.pattern).test(evidence.pathname))) issues.push("unsafe-evidence-path");
+      }
     } catch { issues.push("invalid-url"); }
+    if (s.evidence_kind && !["direct", "sec-exhibit-99.1"].includes(s.evidence_kind)) issues.push("invalid-evidence-kind");
     if (!providerByTicker[s.ticker] || !["pending", "approved", "held", "rejected"].includes(s.status)) issues.push("invalid-status");
     if (s.sha256 && (!/^[a-f0-9]{64}$/.test(s.sha256) || !s.checked_at)) issues.push("invalid-revision");
     for (const time of [s.discovered_at, s.checked_at]) if (time && (!Number.isFinite(Date.parse(time)) || Date.parse(time) > Date.parse(data.generatedAt))) issues.push("invalid-source-time");

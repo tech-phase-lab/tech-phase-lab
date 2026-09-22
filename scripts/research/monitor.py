@@ -30,6 +30,7 @@ MAX_JSON_LD_BLOCKS = 20
 MAX_JSON_LD_NODES = 2_000
 MIN_JSON_LD_BODY_CHARS = 120
 MIN_INLINE_FEED_CHARS = 120
+MIN_SEC_EXHIBIT_CHARS = 120
 SUPPORTED_CONTENT_TYPES = {
     "text/html", "application/pdf", "application/json", "application/rss+xml",
     "application/atom+xml", "application/xml", "text/xml",
@@ -182,6 +183,7 @@ def source_error_code(exc):
             ("unsupported content type", "unsupported-content-type"),
             ("empty or oversized source", "empty-or-oversized-source"),
             ("source has no extractable text", "no-extractable-text"),
+            ("sec exhibit evidence unavailable", "sec-exhibit-unavailable"),
             ("pdf is encrypted", "pdf-encrypted"),
             ("pdf page limit exceeded", "pdf-page-limit"),
             ("pdf has no extractable text", "pdf-no-text"),
@@ -222,7 +224,8 @@ def fetch(url, ticker, validators=None, include_metadata=False):
     url = safe_url(url, ticker)
     cached = cached_fetch(url)
     conditional = dict(validators or {})
-    if cached:
+    force_unconditional = bool(conditional.pop("force_unconditional", False))
+    if cached and not force_unconditional:
         for key in ("etag", "last_modified"):
             if cached.get(key):
                 conditional[key] = cached[key]
@@ -327,6 +330,84 @@ class Links(HTMLParser):
             if label and label.lower() not in {"read more", "read article", "learn more", "read press release", "read blog"}:
                 self.labels[self.current] = label
             self.current, self.text = None, []
+
+
+def sec_exhibit_links(content, filing_url, ticker):
+    """Return explicit EX-99.1 links in the same immutable SEC filing directory.
+
+    Filing HTML is untrusted input. The same-host and same-accession checks prevent
+    it from turning article retrieval into a general-purpose URL fetcher.
+    """
+    parsed = urlsplit(filing_url)
+    directory = parsed.path.rsplit("/", 1)[0] + "/"
+    if (parsed.hostname != "www.sec.gov"
+            or not re.fullmatch(r"/Archives/edgar/data/\d+/\d+/", directory)):
+        return []
+    parser = Links(filing_url, ticker)
+    parser.feed(content[:MAX_EXTRACTED_CHARS * 2].decode("utf-8", "replace"))
+    parser.close()
+    candidates = []
+    for url in parser.urls:
+        candidate = urlsplit(url)
+        if candidate.hostname != "www.sec.gov" or candidate.path.rsplit("/", 1)[0] + "/" != directory:
+            continue
+        filename = candidate.path.rsplit("/", 1)[-1]
+        label = parser.labels.get(url, "")
+        identity = re.sub(r"[^a-z0-9]", "", f"{filename} {label}".lower())
+        if not re.search(r"(?:exhibit|ex)99(?:01|1)(?:htm|html|pdf)?$", identity):
+            if not re.search(r"\b(?:exhibit\s*)?99[.\- ]?1\b", label, re.I):
+                continue
+        score = 2 if re.search(r"\bEX(?:HIBIT)?[- .]*99[.\- ]?1\b", label, re.I) else 1
+        candidates.append((score, url))
+    return [url for _score, url in sorted(candidates, key=lambda item: (-item[0], item[1]))[:2]]
+
+
+def sec_filing_index_url(filing_url, ticker):
+    """Derive SEC's canonical filing index without guessing another accession."""
+    parsed = urlsplit(filing_url)
+    directory = parsed.path.rsplit("/", 1)[0]
+    accession = directory.rsplit("/", 1)[-1]
+    if parsed.hostname != "www.sec.gov" or not re.fullmatch(r"\d{18}", accession):
+        return None
+    formatted = f"{accession[:10]}-{accession[10:12]}-{accession[12:]}"
+    return article_url(
+        urlunsplit((parsed.scheme, parsed.netloc, f"{directory}/{formatted}-index.html", "", "")),
+        ticker,
+    )
+
+
+def sec_exhibit_evidence(content, filing_url, ticker, transport):
+    """Fetch the first substantive EX-99.1 without leaving the filing directory."""
+    candidates = sec_exhibit_links(content, filing_url, ticker)
+    last_error = None
+    if not candidates and re.search(br"(?:EXHIBIT\s*)?99[.\- ]?1\b", content, re.I):
+        index_url = sec_filing_index_url(filing_url, ticker)
+        if index_url and index_url != filing_url:
+            try:
+                index_content, index_type = transport(index_url, ticker)
+                if index_type != "text/html":
+                    raise ValueError("SEC filing index has unsupported content type")
+                candidates = sec_exhibit_links(index_content, index_url, ticker)
+                if not candidates:
+                    last_error = ValueError("SEC exhibit link not found in filing index")
+            except (HTTPError, URLError, TimeoutError, ValueError) as exc:
+                last_error = exc
+    for url in candidates:
+        try:
+            exhibit, content_type = transport(url, ticker)
+            extracted = extract_text(exhibit, content_type)
+            meaningful = sum(character.isalnum() for character in extracted)
+            if len(extracted) < MIN_SEC_EXHIBIT_CHARS or meaningful < 80:
+                raise ValueError("SEC exhibit has no extractable text")
+            return {
+                "content": exhibit, "contentType": content_type,
+                "extractedText": extracted, "url": url,
+            }
+        except (HTTPError, URLError, TimeoutError, ValueError) as exc:
+            last_error = exc
+    if last_error is not None:
+        return {"error": last_error}
+    return None
 
 
 class ArticleText(HTMLParser):
@@ -908,6 +989,8 @@ def connect(path):
         "source_mode": "TEXT NOT NULL DEFAULT 'remote'",
         "response_etag": "TEXT",
         "response_last_modified": "TEXT",
+        "evidence_url": "TEXT",
+        "evidence_kind": "TEXT NOT NULL DEFAULT 'direct'",
     }
     for column, declaration in migrations.items():
         if column not in source_columns:
@@ -1357,7 +1440,8 @@ def snapshot(db):
         db.execute("BEGIN")
         sources = [dict(r) for r in db.execute("""
           SELECT url,ticker,title,published_on,discovered_at,checked_at,sha256,status,error,
-                 content_type,content_bytes,extracted_chars,fetched_at
+                 content_type,content_bytes,extracted_chars,fetched_at,
+                 COALESCE(evidence_url,url) AS evidence_url,evidence_kind
           FROM sources ORDER BY ticker,url
         """)]
         history = [dict(r) for r in db.execute("SELECT id,url,at,kind,sha256 FROM history ORDER BY id DESC")]
@@ -1934,12 +2018,17 @@ def collect_source(row, transport=fetch):
             and bool(row["sha256"])
             and not row["extracted_chars"]
         )
-        response = transport(
-            row["url"], row["ticker"],
-            validators={} if legacy_unextracted_pdf else {
+        sec_filing = urlsplit(row["url"]).hostname == "www.sec.gov"
+        validators = (
+            {"force_unconditional": True}
+            if sec_filing else {}
+            if legacy_unextracted_pdf else {
                 "etag": row["response_etag"],
                 "last_modified": row["response_last_modified"],
-            },
+            }
+        )
+        response = transport(
+            row["url"], row["ticker"], validators=validators,
             include_metadata=True,
         )
         if response["notModified"]:
@@ -1955,15 +2044,28 @@ def collect_source(row, transport=fetch):
     extracted = extract_text(content, content_type)
     if not extracted.strip():
         raise ValueError("Source has no extractable text")
+    evidence_url, evidence_kind = row["url"], "direct"
+    identity_content = content
+    if content_type == "text/html" and urlsplit(row["url"]).hostname == "www.sec.gov":
+        exhibit = sec_exhibit_evidence(content, row["url"], row["ticker"], transport)
+        if exhibit and "extractedText" in exhibit:
+            extracted = exhibit["extractedText"]
+            content_type = exhibit["contentType"]
+            evidence_url, evidence_kind = exhibit["url"], "sec-exhibit-99.1"
+            identity_content = content + b"\0SEC-EXHIBIT-99.1\0" + exhibit["content"]
+        elif exhibit and sum(character.isalnum() for character in extracted) < 80:
+            raise ValueError("SEC exhibit evidence unavailable") from exhibit["error"]
     return {
-        "sha256": hashlib.sha256(content).hexdigest(),
+        "sha256": hashlib.sha256(identity_content).hexdigest(),
         "bodySha256": hashlib.sha256(extracted.encode("utf-8")).hexdigest(),
         "contentType": content_type,
-        "contentBytes": len(content),
+        "contentBytes": len(identity_content),
         "extractedText": extracted,
         "extractedChars": len(extracted),
         "responseEtag": response_etag,
         "responseLastModified": response_last_modified,
+        "evidenceUrl": evidence_url,
+        "evidenceKind": evidence_kind,
     }
 
 
@@ -2041,7 +2143,8 @@ def save_source_check(db, row, result):
           SET sha256=?,raw_sha256=?,body_sha256=?,checked_at=?,
               fetched_at=COALESCE(fetched_at,?),error=NULL,status=?,
               content_type=?,content_bytes=?,extracted_text=?,extracted_chars=?,fetch_failures=0,
-              next_fetch_at=?,response_etag=?,response_last_modified=?
+              next_fetch_at=?,response_etag=?,response_last_modified=?,
+              evidence_url=?,evidence_kind=?
           WHERE url=?
         """, (
             result["sha256"] if changed else current["sha256"], result["sha256"],
@@ -2049,7 +2152,9 @@ def save_source_check(db, row, result):
             "pending" if changed else current["status"],
             result["contentType"], result["contentBytes"], result["extractedText"],
             result["extractedChars"], next_fetch_at, http_validator(result.get("responseEtag")),
-            http_validator(result.get("responseLastModified")), row["url"],
+            http_validator(result.get("responseLastModified")),
+            result.get("evidenceUrl") or row["url"],
+            result.get("evidenceKind") or "direct", row["url"],
         ))
     status = "not-modified" if not_modified else (
         "first-fetched" if not current["sha256"] else ("changed" if changed else "unchanged")

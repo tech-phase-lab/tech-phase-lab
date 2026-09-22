@@ -9,7 +9,7 @@ import styles from "./intake.module.css";
 const stateNames = { error: "取得エラー", fetched: "取得済み", unfetched: "未取得" };
 const reviewNames = { pending: "確認待ち", approved: "採用", held: "保留", rejected: "却下" };
 const historyNames: Record<string, string> = { "first-fetch": "初回取得", changed: "応答の変化を検出", "fetch-error": "取得に失敗", approved: "採用を記録", held: "保留を記録", rejected: "却下を記録" };
-const errorNames: Record<string, string> = { "http-403": "配信元が取得を拒否（HTTP 403）", timeout: "応答待ちでタイムアウト", "no-links": "発表リンクを抽出できませんでした", "no-extractable-text": "本文として使える文字を抽出できませんでした", "invalid-pdf": "PDF形式を検証できませんでした", "pdf-encrypted": "暗号化PDFのため本文を抽出できませんでした", "pdf-page-limit": "PDFが安全なページ数上限を超えました", "pdf-no-text": "画像主体または根拠として十分な文字を抽出できませんでした", "pdf-timeout": "PDF解析が安全な時間上限を超えました", "pdf-extract-failed": "PDF本文の解析に失敗しました", "fetch-error": "資料の取得に失敗" };
+const errorNames: Record<string, string> = { "http-403": "配信元が取得を拒否（HTTP 403）", timeout: "応答待ちでタイムアウト", "no-links": "発表リンクを抽出できませんでした", "no-extractable-text": "本文として使える文字を抽出できませんでした", "sec-exhibit-unavailable": "SEC添付資料から十分な根拠本文を取得できませんでした", "invalid-pdf": "PDF形式を検証できませんでした", "pdf-encrypted": "暗号化PDFのため本文を抽出できませんでした", "pdf-page-limit": "PDFが安全なページ数上限を超えました", "pdf-no-text": "画像主体または根拠として十分な文字を抽出できませんでした", "pdf-timeout": "PDF解析が安全な時間上限を超えました", "pdf-extract-failed": "PDF本文の解析に失敗しました", "fetch-error": "資料の取得に失敗" };
 const impactNames = { positive: "好影響", negative: "悪影響", mixed: "好悪材料", neutral: "中立", uncertain: "判断保留" };
 const confidenceNames = { high: "高", medium: "中", low: "低" };
 function time(value: string | null) {
@@ -169,7 +169,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
             <h3>{title(s.url)}</h3><p className={styles.domain}>{new URL(s.url).hostname}</p>
             {s.error && <p className={styles.error}>{errorNames[s.error] || "資料の取得に失敗"}。{s.sha256 ? "以前の取得記録はありますが、最新の試行は失敗しています。" : "本文は未取得です。"}</p>}
             <dl className={styles.dates}><div><dt>資料の発表日</dt><dd>{s.published_on ?? "未確認"}</dd></div><div><dt>初回の検知日時（JST）</dt><dd>{time(s.discovered_at)}</dd></div><div><dt>最後の取得試行（JST）</dt><dd>{time(s.checked_at)}</dd></div><div><dt>要約用の原文証拠</dt><dd>{bodyEvidence(s)}</dd></div></dl>
-            <div className={styles.sourceFooter}><a href={s.url} target="_blank" rel="noopener noreferrer">公式原文を開く ↗</a><span>取得の成功は、内容の確認完了を意味しません</span></div>
+            <div className={styles.sourceFooter}><span><a href={s.url} target="_blank" rel="noopener noreferrer">公式原文を開く ↗</a>{s.evidence_kind === "sec-exhibit-99.1" && s.evidence_url && s.evidence_url !== s.url && <>　<a href={s.evidence_url} target="_blank" rel="noopener noreferrer">取得した添付根拠 ↗</a></>}</span><span>取得の成功は、内容の確認完了を意味しません</span></div>
             <details className={styles.history}><summary>資料の取得・確認履歴（{history.length}件）</summary>
               {s.sha256 && <p className={styles.fingerprint}>最後に取得した内容の識別値 <code>{s.sha256}</code></p>}
               {history.length ? <ol>{history.map(h => <li key={h.id}><time>{time(h.at)} JST</time><strong>{historyNames[h.kind] || h.kind}</strong>{h.sha256 && <code>{h.sha256.slice(0, 12)}…</code>}</li>)}</ol> : <p>資料取得・編集判断の記録はまだありません。</p>}

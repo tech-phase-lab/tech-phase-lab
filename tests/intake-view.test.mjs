@@ -103,6 +103,9 @@ test("combined filters search displayed titles without changing source records",
 test("unsafe links, duplicate records and broken history references fail validation", () => {
   assert.ok(snapshotIssues({ ...snapshot, sources: [...snapshot.sources, source] }).includes("duplicate-source"));
   assert.ok(snapshotIssues({ ...snapshot, sources: [{ ...source, url: "javascript:alert(1)" }] }).includes("unsafe-url"));
+  assert.ok(snapshotIssues({ ...snapshot, sources: [{ ...source, evidence_url: "https://evil.test/ex991.htm" }] }).includes("unsafe-evidence-url"));
+  assert.ok(snapshotIssues({ ...snapshot, sources: [{ ...source, evidence_url: `https://${providers.find(p => p.ticker === source.ticker).allowedHosts[0]}/not-an-article` }] }).includes("unsafe-evidence-path"));
+  assert.ok(snapshotIssues({ ...snapshot, sources: [{ ...source, evidence_kind: "unverified" }] }).includes("invalid-evidence-kind"));
   assert.ok(snapshotIssues({ ...snapshot, history: [{ url: "missing", at: "2026-09-19" }] }).includes("invalid-history"));
   assert.ok(snapshotIssues({ ...snapshot, events: [{ id: 1, url: "missing", ticker: "NVDA", detected_at: snapshot.generatedAt, title: null, published_on: null }] }).includes("invalid-event"));
   assert.ok(snapshotIssues({ ...snapshot, events: [{ id: 1, url: source.url, ticker: source.ticker, detected_at: snapshot.generatedAt, title: null, published_on: null, detection_to_body_ms: -1 }] }).includes("invalid-event-latency"));
