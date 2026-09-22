@@ -3,6 +3,7 @@ import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import tempfile
+import subprocess
 import unittest
 from unittest.mock import patch
 from urllib.error import HTTPError
@@ -157,6 +158,14 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(result["status"], "error")
         self.assertEqual(result["error"], "invalid-pdf")
         self.assertEqual(self.row()["error"], "invalid-pdf")
+
+    def test_pdf_extraction_timeout_fails_closed(self):
+        with patch.object(
+            m.subprocess, "run",
+            side_effect=subprocess.TimeoutExpired(["pdf_extract.py"], 1),
+        ):
+            with self.assertRaisesRegex(ValueError, "Invalid PDF: text extraction timed out"):
+                m.extract_pdf_text(text_pdf("Official evidence"))
 
     def test_legacy_empty_pdf_bypasses_304_once_to_backfill_evidence(self):
         self.db.execute("""

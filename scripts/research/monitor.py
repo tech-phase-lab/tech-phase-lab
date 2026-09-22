@@ -6,12 +6,11 @@ from email.utils import parsedate_to_datetime
 import hashlib
 from html.parser import HTMLParser
 from html import unescape
-from io import BytesIO
 import json
 import os
 from pathlib import Path
-from pypdf import PdfReader
 import sqlite3
+import subprocess
 import sys
 import re
 import xml.etree.ElementTree as ET
@@ -392,28 +391,25 @@ class ArticleText(HTMLParser):
 
 
 def extract_pdf_text(content):
-    """Extract bounded PDF evidence or fail closed when no text is verifiable."""
+    """Extract PDF evidence in a resource-limited child process."""
+    timeout = environment_seconds("RESEARCH_PDF_EXTRACT_TIMEOUT_SECONDS", 20, 1, 30)
     try:
-        reader = PdfReader(BytesIO(content), strict=False)
-        if reader.is_encrypted:
-            raise ValueError("Invalid PDF: encrypted documents are not supported")
-        if len(reader.pages) > 400:
-            raise ValueError("Invalid PDF: page limit exceeded")
-        lines, extracted_chars = [], 0
-        for page in reader.pages:
-            page_text = page.extract_text() or ""
-            for value in page_text.splitlines():
-                normalized = " ".join(value.split())
-                if normalized:
-                    lines.append(normalized)
-                    extracted_chars += len(normalized) + 1
-            if extracted_chars >= MAX_EXTRACTED_CHARS:
-                break
-    except ValueError:
-        raise
-    except Exception as exc:
+        completed = subprocess.run(
+            [sys.executable, str(Path(__file__).with_name("pdf_extract.py"))],
+            input=content, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+            check=False, timeout=timeout,
+            start_new_session=True,
+        )
+    except subprocess.TimeoutExpired as exc:
+        raise ValueError("Invalid PDF: text extraction timed out") from exc
+    except OSError as exc:
         raise ValueError("Invalid PDF: text extraction failed") from exc
-    extracted = "\n".join(lines)[:MAX_EXTRACTED_CHARS]
+    if completed.returncode != 0:
+        raise ValueError("Invalid PDF: text extraction failed")
+    try:
+        extracted = completed.stdout.decode("utf-8")[:MAX_EXTRACTED_CHARS]
+    except UnicodeDecodeError as exc:
+        raise ValueError("Invalid PDF: text extraction failed") from exc
     if not extracted:
         raise ValueError("Invalid PDF: no extractable text")
     return extracted
