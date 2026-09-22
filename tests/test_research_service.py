@@ -78,8 +78,11 @@ class ResearchServiceTests(unittest.TestCase):
             with urlopen(f"{base}/livez", timeout=2) as response:
                 self.assertEqual(response.status, 200)
                 self.assertEqual(json.loads(response.read()), {"ok": True, "status": "alive"})
+            with urlopen(f"{base}/health", timeout=2) as response:
+                self.assertEqual(response.status, 200)
+                self.assertEqual(json.loads(response.read())["health"]["status"], "starting")
             with self.assertRaises(HTTPError) as starting:
-                urlopen(f"{base}/health", timeout=2)
+                urlopen(f"{base}/readyz", timeout=2)
             self.assertEqual(starting.exception.code, 503)
             self.assertEqual(json.loads(starting.exception.read())["health"]["status"], "starting")
         finally:

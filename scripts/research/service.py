@@ -771,9 +771,9 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/livez":
             self.send_json(200, {"ok": True, "status": "alive"})
             return
-        if path == "/health":
+        if path in {"/health", "/readyz"}:
             state = self.app.public_state()
-            self.send_json(200 if state["ready"] else 503, state)
+            self.send_json(200 if path == "/health" or state["ready"] else 503, state)
             return
         if path in {"/admin/briefs", "/admin/annual-briefs"}:
             if not self.editor_authorized():
