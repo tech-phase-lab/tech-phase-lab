@@ -25,6 +25,11 @@ INDEXES = {t: p.get("monitorUrl", p["indexUrl"]) for t, p in PROVIDERS.items()}
 HOSTS = {t: set(p["allowedHosts"]) for t, p in PROVIDERS.items()}
 MAX_BYTES = 12 * 1024 * 1024
 MAX_EXTRACTED_CHARS = 160_000
+SUPPORTED_CONTENT_TYPES = {
+    "text/html", "application/pdf", "application/json", "application/rss+xml",
+    "application/atom+xml", "application/xml", "text/xml",
+}
+PDF_FALLBACK_CONTENT_TYPES = {"application/octet-stream", "application/x-pdf"}
 FETCH_CACHE_MAX_ENTRIES = 64
 FETCH_CACHE_MAX_BYTES = 24 * 1024 * 1024
 _FETCH_CACHE = {}
@@ -245,11 +250,15 @@ def fetch(url, ticker, validators=None, include_metadata=False):
         raise
     with response:
         content_type = response.headers.get_content_type()
-        if content_type not in {"text/html", "application/pdf", "application/json", "application/rss+xml", "application/atom+xml", "application/xml", "text/xml"}:
+        if content_type not in SUPPORTED_CONTENT_TYPES | PDF_FALLBACK_CONTENT_TYPES:
             raise ValueError("Unsupported content type: " + content_type)
         content = response.read(MAX_BYTES + 1)
         if not content or len(content) > MAX_BYTES:
             raise ValueError("Empty or oversized source")
+        if content_type in PDF_FALLBACK_CONTENT_TYPES:
+            if not content.startswith(b"%PDF-"):
+                raise ValueError("Unsupported content type: " + content_type)
+            content_type = "application/pdf"
         if content_type == "application/pdf" and not content.startswith(b"%PDF-"):
             raise ValueError("Invalid PDF response")
         if content_type == "text/html":

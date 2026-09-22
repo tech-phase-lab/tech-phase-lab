@@ -724,6 +724,46 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(result["etag"], '"article-revision-3"')
         self.assertNotIn(URL, m._FETCH_CACHE)
 
+    def test_fetch_accepts_only_signature_verified_mislabeled_pdfs(self):
+        from email.message import Message
+
+        original = m.build_opener
+
+        class Response:
+            def __init__(self, body):
+                self.body = body
+                self.headers = Message()
+                self.headers["Content-Type"] = "application/octet-stream"
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args):
+                return False
+
+            def read(self, _limit):
+                return self.body
+
+        class Opener:
+            def __init__(self, body):
+                self.body = body
+
+            def open(self, _request, timeout):
+                self.timeout = timeout
+                return Response(self.body)
+
+        try:
+            m.build_opener = lambda *_: Opener(text_pdf("Official PDF evidence"))
+            result = m.fetch(URL, "NBIS", include_metadata=True)
+            self.assertEqual(result["contentType"], "application/pdf")
+            self.assertTrue(result["content"].startswith(b"%PDF-"))
+
+            m.build_opener = lambda *_: Opener(b"not a pdf")
+            with self.assertRaisesRegex(ValueError, "Unsupported content type"):
+                m.fetch(URL, "NBIS", include_metadata=True)
+        finally:
+            m.build_opener = original
+
     def test_discovery_cache_is_bounded_by_count_and_bytes(self):
         original_entries = m.FETCH_CACHE_MAX_ENTRIES
         original_bytes = m.FETCH_CACHE_MAX_BYTES
