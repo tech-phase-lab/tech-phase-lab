@@ -266,10 +266,12 @@ class IntakeTests(unittest.TestCase):
     def test_sec_filing_uses_same_accession_exhibit_and_tracks_its_revision(self):
         filing = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/mrvl-20260922.htm"
         filing_index = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/0001835632-26-000001-index.html"
-        exhibit = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/ex991.htm"
+        exhibit = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/marvell-quarterly-results.htm"
         m.add_source(self.db, "MRVL", filing)
         primary = b"<main>8-K cover. Exhibit 99.1 is furnished with this filing.</main>"
-        index = b'<table><tr><td><a href="ex991.htm">EX-99.1</a></td></tr></table>'
+        index = b'''<table><tr><td>2</td><td>Quarterly results</td>
+          <td><a href="marvell-quarterly-results.htm">marvell-quarterly-results.htm</a></td>
+          <td>EX-99.1</td></tr></table>'''
         bodies = [
             b"<main><p>Official results confirmed strong data center demand and higher revenue. "
             b"Management also described capacity, customer demand, and the outlook for the next quarter.</p></main>",
@@ -389,6 +391,19 @@ class IntakeTests(unittest.TestCase):
           <a href="other.htm">EX-10.1</a>'''
         self.assertEqual(m.sec_exhibit_links(markup, filing, "MRVL"), [
             "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/ex991.htm"
+        ])
+
+    def test_sec_index_type_cell_selects_only_same_accession_exhibit(self):
+        filing = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/0001835632-26-000001-index.html"
+        markup = b'''<table>
+          <tr><td>1</td><td>Material contract</td><td><a href="contract.htm">contract.htm</a></td><td>EX-10.1</td></tr>
+          <tr><td>2</td><td>Quarterly release</td><td><a href="quarterly-results.htm">quarterly-results.htm</a></td><td><strong>EX-99.1</strong></td></tr>
+          <tr><td>3</td><td>Other exhibit</td><td><a href="other.htm">other.htm</a></td><td>EX-99.10</td></tr>
+          <tr><td>4</td><td>Wrong accession</td><td><a href="../000183563226000002/ex991.htm">foreign.htm</a></td><td>EX-99.1</td></tr>
+          <tr><td>5</td><td>External</td><td><a href="https://evil.test/ex991.htm">external.htm</a></td><td>EX-99.1</td></tr>
+        </table>'''
+        self.assertEqual(m.sec_exhibit_links(markup, filing, "MRVL"), [
+            "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/quarterly-results.htm"
         ])
 
     def test_existing_evidence_hashes_are_backfilled_without_changing_identity(self):

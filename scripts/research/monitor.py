@@ -332,6 +332,67 @@ class Links(HTMLParser):
             self.current, self.text = None, []
 
 
+class SecIndexExhibits(HTMLParser):
+    """Collect same-accession document links from rows typed exactly EX-99.1."""
+
+    def __init__(self, base, ticker, directory):
+        super().__init__(convert_charrefs=True)
+        self.base, self.ticker, self.directory = base, ticker, directory
+        self.row_depth = self.cell_depth = 0
+        self.row_urls, self.cell_text, self.urls = set(), [], set()
+        self.row_is_exhibit = False
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "tr":
+            if self.row_depth == 0:
+                self.row_urls, self.cell_text = set(), []
+                self.row_is_exhibit = False
+            self.row_depth += 1
+            return
+        if not self.row_depth:
+            return
+        if tag in {"td", "th"}:
+            self.cell_depth += 1
+            if self.cell_depth == 1:
+                self.cell_text = []
+            return
+        if tag != "a":
+            return
+        href = dict(attrs).get("href")
+        if not href:
+            return
+        try:
+            url = article_url(safe_url(urljoin(self.base, href), self.ticker), self.ticker)
+        except ValueError:
+            return
+        if not url:
+            return
+        parsed = urlsplit(url)
+        filename = parsed.path.rsplit("/", 1)[-1]
+        if (parsed.hostname == "www.sec.gov"
+                and parsed.path.rsplit("/", 1)[0] + "/" == self.directory
+                and re.search(r"\.(?:html?|pdf)$", filename, re.I)):
+            self.row_urls.add(url)
+
+    def handle_data(self, value):
+        if self.cell_depth:
+            self.cell_text.append(value)
+
+    def handle_endtag(self, tag):
+        if tag in {"td", "th"} and self.cell_depth:
+            self.cell_depth -= 1
+            if self.cell_depth == 0:
+                label = " ".join(" ".join(self.cell_text).split())
+                if re.fullmatch(r"EX(?:HIBIT)?[- .]*99[.\- ]?1", label, re.I):
+                    self.row_is_exhibit = True
+                self.cell_text = []
+            return
+        if tag == "tr" and self.row_depth:
+            self.row_depth -= 1
+            if self.row_depth == 0 and self.row_is_exhibit:
+                self.urls.update(self.row_urls)
+
+
 def sec_exhibit_links(content, filing_url, ticker):
     """Return explicit EX-99.1 links in the same immutable SEC filing directory.
 
@@ -343,8 +404,9 @@ def sec_exhibit_links(content, filing_url, ticker):
     if (parsed.hostname != "www.sec.gov"
             or not re.fullmatch(r"/Archives/edgar/data/\d+/\d+/", directory)):
         return []
+    markup = content[:MAX_EXTRACTED_CHARS * 2].decode("utf-8", "replace")
     parser = Links(filing_url, ticker)
-    parser.feed(content[:MAX_EXTRACTED_CHARS * 2].decode("utf-8", "replace"))
+    parser.feed(markup)
     parser.close()
     candidates = []
     for url in parser.urls:
@@ -359,7 +421,16 @@ def sec_exhibit_links(content, filing_url, ticker):
                 continue
         score = 2 if re.search(r"\bEX(?:HIBIT)?[- .]*99[.\- ]?1\b", label, re.I) else 1
         candidates.append((score, url))
-    return [url for _score, url in sorted(candidates, key=lambda item: (-item[0], item[1]))[:2]]
+    index_parser = SecIndexExhibits(filing_url, ticker, directory)
+    index_parser.feed(markup)
+    index_parser.close()
+    candidates.extend((3, url) for url in index_parser.urls)
+    ranked = {}
+    for score, url in candidates:
+        ranked[url] = max(score, ranked.get(url, 0))
+    return [url for url, _score in sorted(
+        ranked.items(), key=lambda item: (-item[1], item[0])
+    )[:2]]
 
 
 def sec_filing_index_url(filing_url, ticker):
