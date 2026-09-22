@@ -47,7 +47,7 @@ export default function CoverageCompanyDashboard({ company, companies, generated
         <Link href="/research/intake">← {t(`AI関連${companies.length}銘柄`, `${companies.length} AI companies`)}</Link>
         <label>{t("銘柄を切り替える", "Choose company")}<select value={company.ticker} onChange={(event) => router.push(`/research/companies/${event.target.value}`)}>{companies.map((item) => <option key={item.ticker} value={item.ticker}>{item.ticker} · {item.name}</option>)}</select></label>
       </div>
-      <aside className={styles.snapshot}><strong>{t("保存した取得記録", "SAVED INTAKE SNAPSHOT")}</strong><span>{t("出力日時", "Generated")}: {time(generatedAt, lang)} JST</span><p>{t("常時監視・自動更新はまだ接続していません。", "Continuous monitoring and automatic updates are not connected yet.")}</p></aside>
+      <aside className={styles.snapshot}><strong>{t("保存した取得記録", "SAVED INTAKE SNAPSHOT")}</strong><span>{t("出力日時", "Generated")}: {time(generatedAt, lang)} JST</span><p>{t("このページは保存時点の記録で、自動更新されません。現在の監視状況は取得状況画面で確認できます。", "This page is a saved snapshot and does not update automatically. Check the intake page for current monitoring status.")} <Link href="/research/intake">{t("取得状況を見る →", "View intake status →")}</Link></p></aside>
       <header className={styles.companyHeading}><div><p className={styles.eyebrow}>{lang === "ja" ? company.sector : sectorNamesEn[company.sectorKey]}</p><h1>{company.ticker} <span>{company.name}</span></h1><p>{t("公式発表から、前回との変化を照合するための銘柄ページ。", "A company page for comparing changes across official releases.")}</p></div><span className={`${styles.status} ${discoveryAvailable ? styles.good : styles.warning}`}>{discoveryLabel}</span></header>
 
       <section className={styles.stats} aria-label={t("資料の取得状況", "Source intake status")}>
