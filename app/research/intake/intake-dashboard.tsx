@@ -9,7 +9,7 @@ import styles from "./intake.module.css";
 const stateNames = { error: "取得エラー", fetched: "取得済み", unfetched: "未取得" };
 const reviewNames = { pending: "確認待ち", approved: "採用", held: "保留", rejected: "却下" };
 const historyNames: Record<string, string> = { "first-fetch": "初回取得", changed: "応答の変化を検出", "fetch-error": "取得に失敗", approved: "採用を記録", held: "保留を記録", rejected: "却下を記録" };
-const errorNames: Record<string, string> = { "http-403": "配信元が取得を拒否（HTTP 403）", timeout: "応答待ちでタイムアウト", "no-links": "発表リンクを抽出できませんでした", "fetch-error": "資料の取得に失敗" };
+const errorNames: Record<string, string> = { "http-403": "配信元が取得を拒否（HTTP 403）", timeout: "応答待ちでタイムアウト", "no-links": "発表リンクを抽出できませんでした", "invalid-pdf": "PDFから根拠本文を抽出できませんでした", "fetch-error": "資料の取得に失敗" };
 const impactNames = { positive: "好影響", negative: "悪影響", mixed: "好悪材料", neutral: "中立", uncertain: "判断保留" };
 const confidenceNames = { high: "高", medium: "中", low: "低" };
 function time(value: string | null) {
@@ -19,7 +19,7 @@ function time(value: string | null) {
 function bodyEvidence(source: IntakeSnapshot["sources"][number]) {
   if (!source.sha256) return "未取得";
   if ((source.extracted_chars ?? 0) > 0) return `抽出済み ${source.extracted_chars?.toLocaleString("ja-JP")}文字`;
-  return source.content_type === "application/pdf" ? "PDF取得済み・文字抽出は未対応" : "原文取得済み・抽出テキストなし";
+  return source.content_type === "application/pdf" ? "PDF取得済み・根拠本文の補完待ち" : "原文取得済み・抽出テキストなし";
 }
 function duration(value: number | null | undefined) {
   if (value == null || !Number.isFinite(value)) return "計測待ち";

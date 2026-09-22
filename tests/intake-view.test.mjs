@@ -34,6 +34,12 @@ test("operations preview exposes bounded cache pressure without cached contents"
   assert.doesNotMatch(intakeDashboard, /cache\.(url|content|body)/);
 });
 
+test("operations preview describes PDF evidence extraction without stale unsupported copy", () => {
+  assert.match(intakeDashboard, /PDF取得済み・根拠本文の補完待ち/);
+  assert.match(intakeDashboard, /PDFから根拠本文を抽出できませんでした/);
+  assert.doesNotMatch(intakeDashboard, /文字抽出は未対応/);
+});
+
 test("operations preview shows durable incident state while external delivery stays off", () => {
   assert.match(liveTypes, /incidents\?:/);
   assert.match(liveTypes, /heldNotifications/);
