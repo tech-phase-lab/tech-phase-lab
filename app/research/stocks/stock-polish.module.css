@@ -2,12 +2,6 @@
 .resultLayout{display:block;padding-top:12px}
 .searchBox{margin-top:20px}
 .resultLayout .searchResults{border:0;background:transparent;padding:0!important}
-.history{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px;margin:4px 0;color:var(--muted);font-size:.72rem;min-height:44px}
-.history>strong{font-weight:500;flex:none}
-.history ul{display:flex;flex-wrap:nowrap;gap:0 12px;list-style:none;margin:0;padding:0;min-width:0;overflow-x:auto;white-space:nowrap}
-.history button{border:0;background:none;color:var(--mint);font:inherit;min-height:44px;padding:6px 0;cursor:pointer}
-.history button:hover{text-decoration:underline}
-.history .clearHistory{color:var(--muted);white-space:nowrap;min-width:44px;text-align:right}
 .compactResults{list-style:none;padding:0;margin:0}
 .compactResults .resultButton{display:grid;grid-template-columns:70px minmax(0,1fr) 24px;grid-template-areas:"ticker identity arrow" "ticker exchange arrow";align-items:center;gap:5px 12px;width:100%;padding:13px 14px;color:inherit;text-align:left}
 .compactResults .resultButton>span:nth-child(1){grid-area:ticker}
@@ -54,14 +48,4 @@
   .profileBody dl{grid-template-columns:1fr 1fr}
   .profileBody dl>div:nth-child(2){border-right:0}
   .profileBody dl>div:nth-child(-n+2){border-bottom:1px solid var(--line)}
-}
-
-.history + .resultLayout h2{font-size:.95rem}
-
-.historySelect{display:none}
-.history + .resultLayout{padding-top:4px}
-.history + section{margin-top:12px}
-@media(max-width:900px){
-  .history ul{display:none}
-  .historySelect{display:block;width:100%;min-width:0;min-height:44px;padding:0 8px;border:0;background:#0c141d;color:var(--mint);color-scheme:dark;font:inherit;font-size:16px;border-radius:4px}
 }

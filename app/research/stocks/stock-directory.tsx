@@ -10,6 +10,7 @@ import styles from "./stocks.module.css";
 import polish from "./stock-polish.module.css";
 import filingStyles from "./filings.module.css";
 import { MarketWorkspace } from "./market-workspace";
+import StockSearchHistory from "./stock-search-history";
 import { useStockHistory } from "./use-stock-history";
 
 type SearchResponse = { ok: boolean; results?: StockDirectoryEntry[]; error?: string; source?: string; asOf?: string };
@@ -200,10 +201,7 @@ export default function StockDirectory() {
         <div className={styles.scope}><span>{t("無料の企業名簿", "Free company directory")}</span><span>{t("TradingView株価・12か月チャート", "TradingView quote and 12-month chart")}</span><span>{t("ニュース権利と分離", "Separate from news licensing")}</span></div>
       </section>
 
-      <section className={polish.history} aria-label={t("履歴", "History")}>
-        <strong>{t("履歴", "History")}</strong>
-        {history.length ? <><select className={polish.historySelect} aria-label={t("履歴から銘柄を選ぶ", "Choose a recent stock")} value="" onChange={(event) => { if (event.target.value) setQuery(event.target.value); }}><option value="" disabled>{t(`履歴から選択（${history.length}件）`, `Recent stocks (${history.length})`)}</option>{history.map((ticker) => <option key={ticker} value={ticker}>{ticker}</option>)}</select><ul>{history.map((ticker) => <li key={ticker}><button onClick={() => setQuery(ticker)} aria-label={t(`${ticker}を再検索`, `Search ${ticker} again`)}>{ticker}</button></li>)}</ul><button className={polish.clearHistory} onClick={clearHistory}>{t("消去", "Clear")}</button></> : <span>{t("まだ履歴はありません", "No history yet")}</span>}
-      </section>
+      <StockSearchHistory lang={lang} history={history} onSelect={setQuery} onClear={clearHistory} />
 
       {historyError && <p className={polish.resultHint} role="status">{t("このブラウザーで履歴を保存・消去できませんでした。", "Could not update history in this browser.")}</p>}
 
