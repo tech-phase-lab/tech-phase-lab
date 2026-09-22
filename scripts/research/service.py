@@ -94,6 +94,19 @@ def discovery_signature(result, links):
     return digest.hexdigest()
 
 
+def discovery_has_verified_route(result):
+    """True when at least one lawful official route completed successfully."""
+    route = result.get("route")
+    if route is not None:
+        return route != "none"
+    return result.get("status") in {"ok", "fallback"}
+
+
+def discovery_requires_backoff(result):
+    """Back off only total discovery failures, not a supplemental-route outage."""
+    return result.get("status") == "degraded" and not discovery_has_verified_route(result)
+
+
 class AutomaticMonitor:
     def __init__(self, db_path, snapshot_path):
         self.db_path = Path(db_path)
@@ -646,7 +659,11 @@ class AutomaticMonitor:
             for ticker in self.tickers:
                 known[ticker] = {row[0] for row in db.execute("SELECT url FROM sources WHERE ticker=?", (ticker,))}
                 baseline_ready[ticker] = db.execute(
-                    "SELECT 1 FROM discovery_runs WHERE ticker=? AND status IN ('ok','fallback') LIMIT 1",
+                    """SELECT 1 FROM discovery_runs
+                       WHERE ticker=? AND (
+                         status IN ('ok','fallback')
+                         OR (status='degraded' AND route IS NOT NULL AND route!='none')
+                       ) LIMIT 1""",
                     (ticker,),
                 ).fetchone() is not None
             monitor.write_snapshot(db, self.snapshot_path)
@@ -678,7 +695,7 @@ class AutomaticMonitor:
                         }
                         links = {}
                     collected.append((ticker, result, links, request_duration_ms))
-                    if result["status"] == "degraded":
+                    if discovery_requires_backoff(result):
                         failure_streak[ticker] += 1
                     else:
                         failure_streak[ticker] = 0
@@ -705,7 +722,7 @@ class AutomaticMonitor:
                                         reservation = brief_generator.token_reservation(source["extracted_text"] if source else "")
                                         monitor.queue_generation_job(db, url, reservation)
                                 new_count += len(events)
-                            elif result["status"] in {"ok", "fallback"}:
+                            elif discovery_has_verified_route(result):
                                 baseline_ready[ticker] = True
                             changed = True
                         signatures[ticker] = signature

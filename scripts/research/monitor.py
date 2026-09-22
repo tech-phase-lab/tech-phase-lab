@@ -1042,6 +1042,7 @@ def connect(path):
         db.execute("ALTER TABLE discovery_runs ADD COLUMN index_url TEXT")
     discovery_columns = {row[1] for row in db.execute("PRAGMA table_info(discovery_runs)")}
     discovery_migrations = {
+        "route": "TEXT",
         "source_format": "TEXT",
         "sources_checked": "INTEGER NOT NULL DEFAULT 1",
         "sources_configured": "INTEGER NOT NULL DEFAULT 1",
@@ -1508,12 +1509,12 @@ def save_discovery(db, ticker, result, links):
     with db:
         db.execute("""
           INSERT INTO discovery_runs(
-            ticker,at,status,candidates,error,index_url,source_format,
+            ticker,at,status,candidates,error,index_url,route,source_format,
             sources_checked,sources_configured
-          ) VALUES(?,?,?,?,?,?,?,?,?)
+          ) VALUES(?,?,?,?,?,?,?,?,?,?)
         """, (
             ticker, now(), result["status"], result["candidates"], result["error"],
-            result["sourceUrl"], result.get("sourceFormat"),
+            result["sourceUrl"], result.get("route"), result.get("sourceFormat"),
             result.get("sourcesChecked", 1), result.get("sourcesConfigured", 1),
         ))
     return sorted(set(links) - before)

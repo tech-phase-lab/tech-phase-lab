@@ -248,6 +248,37 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertNotEqual(original_signature, service.discovery_signature(result, remote_only))
         self.assertEqual(len(original_signature), 64)
 
+    def test_supplemental_failure_does_not_back_off_verified_company_route(self):
+        partial = {"status": "degraded", "route": "primary", "candidates": 1}
+        total = {"status": "degraded", "route": "none", "candidates": 0}
+        recovered = {"status": "fallback", "route": "fallback", "candidates": 1}
+        legacy_ok = {"status": "ok", "candidates": 1}
+
+        self.assertTrue(service.discovery_has_verified_route(partial))
+        self.assertFalse(service.discovery_requires_backoff(partial))
+        self.assertFalse(service.discovery_has_verified_route(total))
+        self.assertTrue(service.discovery_requires_backoff(total))
+        self.assertTrue(service.discovery_has_verified_route(recovered))
+        self.assertFalse(service.discovery_requires_backoff(recovered))
+        self.assertTrue(service.discovery_has_verified_route(legacy_ok))
+
+    def test_partial_discovery_route_restores_baseline_after_restart(self):
+        with monitor.connect(self.db_path) as db:
+            monitor.save_discovery(db, "MRVL", {
+                "status": "degraded", "route": "primary", "candidates": 0,
+                "error": "timeout", "sourceUrl": monitor.INDEXES["MRVL"],
+                "sourceFormat": "rss", "sourcesChecked": 3,
+                "sourcesConfigured": 3,
+            }, {})
+            restored = db.execute("""
+              SELECT 1 FROM discovery_runs
+              WHERE ticker=? AND (
+                status IN ('ok','fallback')
+                OR (status='degraded' AND route IS NOT NULL AND route!='none')
+              ) LIMIT 1
+            """, ("MRVL",)).fetchone()
+        self.assertIsNotNone(restored)
+
     def test_public_health_exposes_url_free_priority_sec_evidence_counts(self):
         sources = {
             "TSM": "https://www.sec.gov/Archives/edgar/data/1046179/000119312526000001/tsm-6k.htm",

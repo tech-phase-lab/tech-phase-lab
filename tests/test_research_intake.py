@@ -1324,6 +1324,11 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(result["error"], "timeout")
         self.assertEqual(result["sourcesChecked"], 3)
         self.assertEqual(len(links), 1)
+        m.save_discovery(self.db, "MRVL", result, links)
+        stored = self.db.execute(
+            "SELECT status,route FROM discovery_runs ORDER BY id DESC LIMIT 1"
+        ).fetchone()
+        self.assertEqual(dict(stored), {"status": "degraded", "route": "primary"})
 
     def test_official_rss_full_text_is_saved_as_timestamped_inline_evidence(self):
         body = b'''<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><item>
