@@ -38,7 +38,6 @@ export default function EventCalendar() {
       <label>{t("期間", "Period")} ({zoneLabel(zone)})<select value={period} onChange={(event) => setPeriod(event.target.value)}><option value="upcoming">{t("今後の予定", "Upcoming")}</option>{months.map((month) => <option key={month} value={month}>{month}</option>)}</select></label>
       <label>{t("表示時間", "Time zone")}<select value={zone} onChange={(event) => { setZoneOverride(event.target.value); setPeriod("upcoming"); }}><option value="Asia/Tokyo">JST · Japan</option><option value="America/New_York">ET · U.S. Eastern</option></select></label>
     </div>
-    <p className={styles.description}>{t("日付・期間は選択した時間帯が基準です。米国の夏時間・冬時間を反映しています。", "Dates and month filters follow the selected time zone. ET accounts for U.S. daylight saving.")}</p>
     <p aria-live="polite" className={styles.description}>{now === null ? t("予定を読み込み中…", "Loading schedule…") : t(`${visible.length + visibleDateOnly.length}件の予定`, `${visible.length + visibleDateOnly.length} events`)}</p>
     <ol className={styles.schedule}>{visible.map((event) => <li key={event.id}>
       <time dateTime={event.startsAt}>{stamp(event.startsAt, zone)}<small>{zoneLabel(zone)} · {calendarDateKey(event.startsAt, zone).slice(0, 4)}</small></time>
@@ -56,5 +55,6 @@ export default function EventCalendar() {
       </details>
     </section>
     <p className={styles.notice}>{t("結果・市場予想・自動通知は含みません。参加・視聴前に公式日程をご確認ください。", "Results, consensus forecasts and automatic notifications are not included. Check the official schedule before attending.")}</p>
+    <p className={styles.footnote}>{t("日付・期間は選択した時間帯が基準です。米国の夏時間・冬時間を反映しています。", "Dates and month filters follow the selected time zone. ET accounts for U.S. daylight saving.")}</p>
   </ResearchToolShell>;
 }

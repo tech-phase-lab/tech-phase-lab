@@ -48,3 +48,5 @@
 .coverage a { font-size: .875rem; overflow-wrap: anywhere; }
 .coverage strong { color: var(--mint); margin-right: 6px; }
 .coverage small { color: var(--muted); font-size: .75rem; }
+
+.footnote { color: var(--muted); font-size: .75rem; line-height: 1.6; margin-top: 12px; }
