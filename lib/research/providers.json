@@ -202,7 +202,7 @@
   {
     "ticker": "MRVL",
     "name": "Marvell",
-    "sector": "semiconductors",
+    "sector": "networking",
     "indexUrl": "https://investor.marvell.com/news-events/press-releases/rss",
     "format": "rss",
     "fallbackSources": [
@@ -480,18 +480,44 @@
     ]
   },
   {
-    "ticker": "AMZN",
-    "name": "Amazon",
-    "sector": "platforms",
-    "indexUrl": "https://www.aboutamazon.com/rss/feed.rss",
+    "ticker": "BE",
+    "name": "Bloom Energy",
+    "sector": "power-cooling",
+    "indexUrl": "https://investor.bloomenergy.com/rss/pressrelease.aspx",
     "format": "rss",
+    "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001664703.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001664703",
+        "forms": ["8-K"],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001664703&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
     "allowedHosts": [
-      "www.aboutamazon.com"
+      "investor.bloomenergy.com",
+      "www.bloomenergy.com",
+      "data.sec.gov",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
-        "host": "www.aboutamazon.com",
-        "pattern": "^/news/[^/]+/[^/]+/?$"
+        "host": "investor.bloomenergy.com",
+        "pattern": "^/press-releases/press-release-details/\\d{4}/.+"
+      },
+      {
+        "host": "www.bloomenergy.com",
+        "pattern": "^/news/[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1664703/.+"
       }
     ]
   },

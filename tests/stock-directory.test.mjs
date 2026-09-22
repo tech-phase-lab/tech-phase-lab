@@ -403,7 +403,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(dashboard, /速報配信や全資料の分析完了を示すものではありません/);
   assert.match(dashboard, /\/research\/companies\/\$\{company\.ticker\}/);
   assert.match(researchStyles, /\.companyGroups \{/);
-  assert.match(researchStyles, /@media\(max-width:760px\)[\s\S]*\.companyGroups \{\s*grid-template-columns:1fr/);
+  assert.match(researchStyles, /@media\(max-width:760px\)[\s\S]*\.companyGroups \{\s*column-count:1/);
   assert.match(researchStyles, /\.primaryNav \{\s*display:none/);
   assert.match(researchStyles, /@media\(max-width:760px\)[\s\S]*\.primaryNav \{\s*display:flex/);
   assert.match(researchStyles, /\.sideMenu \{/);

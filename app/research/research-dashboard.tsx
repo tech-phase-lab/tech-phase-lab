@@ -95,7 +95,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
     }
     return [...groups.entries()];
   }, [lang, monitoredCompanies]);
-  const kinds = { partnership: t("提携", "Partnership"), earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding") };
+  const kinds = { partnership: t("提携", "Partnership"), earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding"), product: t("製品・料金", "Product & pricing") };
   function toggleSaved(id: string) {
     try {
       const next = saved.includes(id) ? saved.filter((value) => value !== id) : [...saved, id];
@@ -177,8 +177,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
         <section className={styles.overview} aria-label={t("検証内容", "Review overview")}>
           <div><span className={styles.cardLabel}>{t("検証レポート", "RESEARCH NOTES")}</span><strong>{String(events.length).padStart(2, "0")}<span>{t("件", "notes")}</span></strong><p>{t("公式発表にリンク", "Linked to primary sources")}</p></div>
           <div><span className={styles.cardLabel}>{t("銘柄別「何が変わった？」", "COMPANY RESEARCH")}</span><strong>{verifiedCompanyCount}<span>/ {monitoredCompanies.length} {t("社で比較公開", "companies verified")}</span></strong><p><a className={styles.overviewLink} href="#monitored-companies">{t("監視対象を見る", "View monitored companies")} <Arrow /></a></p></div>
-          <div><span className={styles.cardLabel}>{t("参考株価・チャート", "REFERENCE PRICES")}</span><div className={styles.companyLinks}><Link href="/research/stocks">TradingView<span aria-hidden="true">→</span></Link></div><p>{t("遅延表示・速報判定には不使用", "Delayed · not used for alerts")}</p></div>
-          <div><span className={styles.cardLabel}>{t("米国株検索", "STOCK DIRECTORY")}</span><div className={styles.companyLinks}><Link href="/research/stocks">SEC<span aria-hidden="true">→</span></Link></div><p>{t("企業名・ティッカー・取引所", "Company, ticker & exchange")}</p></div>
+          <div><span className={styles.cardLabel}>{t("米国株検索・参考チャート", "STOCK SEARCH & CHARTS")}</span><div className={styles.companyLinks}><Link href="/research/stocks">SEC + TradingView<span aria-hidden="true">→</span></Link></div><p>{t("企業検索・SEC情報・参考株価・12か月チャート。価格は遅延表示で、速報判定には使用しません。", "Company search, SEC data, reference quotes, and a 12-month chart. Prices are delayed and not used for alerts.")}</p></div>
         </section>
 
         <section id="monitored-companies" className={styles.companyDirectory} aria-labelledby="monitored-companies-title">

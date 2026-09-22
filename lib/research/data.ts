@@ -5,7 +5,7 @@ export type Copy = Record<Language, string>;
 export type ResearchEvent = {
   id: string; ticker: string; company: string;
   category: "cloud" | "memory";
-  kind: "partnership" | "earnings" | "capacity" | "financing";
+  kind: "partnership" | "earnings" | "capacity" | "financing" | "product";
   publishedOn: string; reviewedOn: string;
   title: Copy; summary: Copy; change: Copy; interpretation: Copy;
   facts: { text: Copy; sourceIds: string[] }[];
@@ -141,6 +141,26 @@ export const events: ResearchEvent[] = [
       { id: "nbis-q1-letter", publisher: "Nebius IR", title: "Q1 2026 shareholder letter", publishedOn: "2026-05-13", location: "pp. 3, 6, 9 · Capacity / ARR", url: "https://assets.nebius.com/assets/aa1bc2e6-df83-40cd-a6a2-95e7cda3d16c/Nebius%20SHL_Q1%202026.pdf?cache-buster=2026-05-13T14:00:35.352Z" },
     ],
     metrics: [metric("revenue", 399, { period: "Q1 2026", periodEnd: "2026-03-31", sourceId: "nbis-q1" })],
+  },
+  {
+    id: "nbis-spot-pricing-2026-09-22", ticker: "NBIS", company: "Nebius", category: "cloud", kind: "product",
+    publishedOn: "2026-09-22", reviewedOn: "2026-09-22",
+    title: copy("プリエンプティブルVMに、需要連動のスポット価格を導入", "Nebius introduces demand-based spot pricing for preemptible VMs"),
+    summary: copy("10月8日からGPU種類・地域・空き容量・需要に応じて価格を動的計算。利用者は上限価格を設定するか、スポット価格へ追従できます。", "From October 8, prices will vary by GPU type, region, available capacity, and demand. Customers can set a maximum price or follow the spot price."),
+    change: copy("固定割引ではなく、空き容量と需要を反映する価格方式へ変更。", "Pricing moves from a fixed discount to a model tied to available capacity and demand."),
+    facts: [
+      { text: copy("NebiusはプリエンプティブルVMへスポット価格を導入すると公式発表。", "Nebius officially announced spot pricing for preemptible VMs."), sourceIds: ["nbis-spot-x"] },
+      { text: copy("価格はGPU種類とリージョンごとに、利用可能な容量と需要をもとに動的に計算。", "Prices will be calculated dynamically by GPU type and region using available capacity and demand."), sourceIds: ["nbis-spot-x"] },
+      { text: copy("利用者は価格上限を設定するか、その時点のスポット価格へ追従できる。", "Customers can set a maximum spot price or follow the current spot price."), sourceIds: ["nbis-spot-docs"] },
+    ],
+    interpretation: copy("余剰GPU容量の稼働率を上げ、価格に敏感な学習・推論需要を取り込む施策です。一方、低価格利用の増加が売上と利益率へどう効くかは、稼働率と平均単価を分けて確認する必要があります。", "The model can improve utilization of spare GPU capacity and attract price-sensitive training and inference workloads. Revenue and margin effects still depend on utilization and realized pricing."),
+    unknown: copy("開始時点のGPU別スポット価格、通常価格からの平均割引率、対象容量、売上・利益率への影響は今回の発表だけでは確定しません。", "The announcement does not establish launch prices by GPU, average discounts versus on-demand rates, available capacity, or the revenue and margin impact."),
+    next: copy("10月8日の実価格、対象リージョンとGPU、稼働率やAIクラウド売上への寄与を確認。", "Check October 8 launch prices, eligible regions and GPUs, and any later disclosure on utilization or AI cloud revenue."),
+    sources: [
+      { id: "nbis-spot-x", publisher: "Nebius official X", title: "Spot pricing announcement", publishedOn: "2026-09-22", location: "Official post · full announcement", url: "https://x.com/nebiusai/status/2102398298833190969" },
+      { id: "nbis-spot-docs", publisher: "Nebius AI Cloud Docs", title: "Preemptible virtual machines", publishedOn: "2026-09-22", location: "Pricing policy / Follow spot price", url: "https://docs.nebius.com/compute/virtual-machines/preemptible" },
+    ],
+    metrics: [],
   },
 ];
 

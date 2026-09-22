@@ -179,6 +179,9 @@ test("operations preview renders only reviewed briefs with evidence and review m
 
 test("sector and company filters use the shared registry", () => {
   assert.equal(providers.length, 22);
+  assert.equal(providerByTicker.MRVL.sector, "networking");
+  assert.equal(providerByTicker.BE.sector, "power-cooling");
+  assert.equal(providerByTicker.AMZN, undefined);
   const sector = providerByTicker[source.ticker].sector;
   assert.equal(filterSources([source], providerByTicker[source.ticker].name, "all", "all", "all", {}, sector).length, 1);
   assert.equal(filterSources([source], "", "all", "all", "all", {}, "not-a-sector").length, 0);

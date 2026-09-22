@@ -113,116 +113,6 @@
       "error": null
     },
     {
-      "url": "https://www.aboutamazon.com/news/aws/aws-cto-future-of-ai",
-      "ticker": "AMZN",
-      "title": "What AWS's chief AI and technology officer told employees about the future of AI",
-      "published_on": null,
-      "discovered_at": "2026-09-19T09:32:17.935+00:00",
-      "checked_at": "2026-09-19T09:36:11.374+00:00",
-      "sha256": "2f6a532947da8eb69ed97f8f4c102fb5eba82a77809c3a453ecfd1c247d900e4",
-      "status": "pending",
-      "error": null
-    },
-    {
-      "url": "https://www.aboutamazon.com/news/books-and-authors/prime-reading-free-books-benefits",
-      "ticker": "AMZN",
-      "title": "How to read books for free with Prime: Amazon First Reads and Amazon Original Stories",
-      "published_on": null,
-      "discovered_at": "2026-09-19T09:32:17.935+00:00",
-      "checked_at": null,
-      "sha256": null,
-      "status": "pending",
-      "error": null
-    },
-    {
-      "url": "https://www.aboutamazon.com/news/community/amazon-summer-meals-kids-rural-delivery",
-      "ticker": "AMZN",
-      "title": "Amazon delivered more than 2 million meals to students in rural communities this summer",
-      "published_on": null,
-      "discovered_at": "2026-09-19T09:32:17.935+00:00",
-      "checked_at": null,
-      "sha256": null,
-      "status": "pending",
-      "error": null
-    },
-    {
-      "url": "https://www.aboutamazon.com/news/entertainment/perfect-liars-prime-video",
-      "ticker": "AMZN",
-      "title": "Watch the trailer for 'Perfect Liars,' the adaptation of the hit novel coming to Prime Video November 20",
-      "published_on": null,
-      "discovered_at": "2026-09-19T09:32:17.935+00:00",
-      "checked_at": null,
-      "sha256": null,
-      "status": "pending",
-      "error": null
-    },
-    {
-      "url": "https://www.aboutamazon.com/news/policy-news-views/united-nations-general-assembly-2026-amazon-ai-sustainability",
-      "ticker": "AMZN",
-      "title": "Amazon highlights investments in satellite connectivity, responsible AI, and sustainability at UN General Assembly",
-      "published_on": null,
-      "discovered_at": "2026-09-19T09:32:17.935+00:00",
-      "checked_at": null,
-      "sha256": null,
-      "status": "pending",
-      "error": null
-    },
-    {
-      "url": "https://www.aboutamazon.com/news/retail/amazon-prime-big-deals-day-2026-cuando-octubre-6-7",
-      "ticker": "AMZN",
-      "title": "Prime Big Deal Days regresa del 6 al 7 de octubre: Esto es lo que puedes esperar",
-      "published_on": null,
-      "discovered_at": "2026-09-19T09:32:17.935+00:00",
-      "checked_at": null,
-      "sha256": null,
-      "status": "pending",
-      "error": null
-    },
-    {
-      "url": "https://www.aboutamazon.com/news/retail/how-amazon-influencer-program-works",
-      "ticker": "AMZN",
-      "title": "What is the Amazon Influencer Program? Your questions answered.",
-      "published_on": null,
-      "discovered_at": "2026-09-19T09:32:17.935+00:00",
-      "checked_at": null,
-      "sha256": null,
-      "status": "pending",
-      "error": null
-    },
-    {
-      "url": "https://www.aboutamazon.com/news/sustainability/amazon-water-conservation-replenishment-sustainability",
-      "ticker": "AMZN",
-      "title": "Amazon's water conservation and replenishment efforts around the world",
-      "published_on": null,
-      "discovered_at": "2026-09-19T09:32:17.935+00:00",
-      "checked_at": null,
-      "sha256": null,
-      "status": "pending",
-      "error": null
-    },
-    {
-      "url": "https://www.aboutamazon.com/news/workplace/amazon-raises-minimum-starting-pay-adds-grocery-banking-benefits",
-      "ticker": "AMZN",
-      "title": "Amazon raises minimum starting pay for full-time core operations employees to $20/hour, with average pay reaching nearly $24/hour",
-      "published_on": null,
-      "discovered_at": "2026-09-19T09:32:17.935+00:00",
-      "checked_at": null,
-      "sha256": null,
-      "status": "pending",
-      "error": null
-    },
-    {
-      "url": "https://www.aboutamazon.com/news/workplace/amazon-us-employee-grocery-discount",
-      "ticker": "AMZN",
-      "title": "Amazon is giving every US employee a discount on groceries",
-      "published_on": null,
-      "discovered_at": "2026-09-19T09:32:17.935+00:00",
-      "checked_at": null,
-      "sha256": null,
-      "status": "pending",
-      "error": null
-    },
-    {
       "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653221000242/0001596532-21-000242-index.htm",
       "ticker": "ANET",
       "title": "8-K - Current report",
@@ -4324,13 +4214,6 @@
       "sha256": "9adbeffe3a6404b69bcdab0c242a23df9110f9a4c796d6d7bc3f80e5d6a01539"
     },
     {
-      "id": 19,
-      "url": "https://www.aboutamazon.com/news/aws/aws-cto-future-of-ai",
-      "at": "2026-09-19T09:36:11.374+00:00",
-      "kind": "first-fetch",
-      "sha256": "2f6a532947da8eb69ed97f8f4c102fb5eba82a77809c3a453ecfd1c247d900e4"
-    },
-    {
       "id": 18,
       "url": "https://blogs.microsoft.com/blog/2026/09/16/microsofts-commitment-for-ai-in-education/",
       "at": "2026-09-19T09:36:03.125+00:00",
@@ -4540,15 +4423,6 @@
       "index_url": "https://blog.google/rss/"
     },
     {
-      "id": 21,
-      "ticker": "AMZN",
-      "at": "2026-09-19T09:32:17.935+00:00",
-      "status": "ok",
-      "candidates": 10,
-      "error": null,
-      "index_url": "https://www.aboutamazon.com/rss/feed.rss"
-    },
-    {
       "id": 20,
       "ticker": "MSFT",
       "at": "2026-09-19T09:32:09.458+00:00",
@@ -4728,5 +4602,7 @@
       "error": null,
       "index_url": null
     }
-  ]
+  ],
+  "events": [],
+  "briefs": []
 }
