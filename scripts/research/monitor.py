@@ -447,23 +447,16 @@ def sec_filing_index_url(filing_url, ticker):
     )
 
 
-def sec_exhibit_evidence(content, filing_url, ticker, transport, primary_text=""):
+def sec_exhibit_evidence(content, filing_url, ticker, transport):
     """Fetch the first substantive EX-99.1 without leaving the filing directory."""
     candidates = sec_exhibit_links(content, filing_url, ticker)
     last_error = None
-    primary_meaningful = sum(character.isalnum() for character in primary_text)
-    # Some SEC primary documents are thin wrappers with neither readable text
-    # nor an exhibit link. In that case the canonical same-accession index is
-    # the only first-party location that identifies EX-99.1. Never broaden the
-    # lookup beyond the immutable filing directory derived below.
-    should_check_index = (
-        not candidates
-        and (
-            primary_meaningful < 80
-            or re.search(br"(?:EXHIBIT\s*)?99[.\- ]?1\b", content, re.I)
-        )
-    )
-    if should_check_index:
+    # The primary 8-K/6-K document can contain substantive filing text without
+    # linking its exhibits. The canonical same-accession index is authoritative
+    # for the exhibit Type column, so consult it whenever the primary document
+    # did not yield a safe candidate. Never broaden the lookup beyond the
+    # immutable filing directory derived below.
+    if not candidates:
         index_url = sec_filing_index_url(filing_url, ticker)
         if index_url and index_url != filing_url:
             try:
@@ -2153,9 +2146,7 @@ def collect_source(row, transport=fetch):
     evidence_url, evidence_kind = row["url"], "direct"
     identity_content = content
     if is_sec_html:
-        exhibit = sec_exhibit_evidence(
-            content, row["url"], row["ticker"], transport, primary_text=extracted
-        )
+        exhibit = sec_exhibit_evidence(content, row["url"], row["ticker"], transport)
         if exhibit and "extractedText" in exhibit:
             extracted = exhibit["extractedText"]
             content_type = exhibit["contentType"]

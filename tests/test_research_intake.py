@@ -361,6 +361,46 @@ class IntakeTests(unittest.TestCase):
         self.assertIn("data center demand", result["extractedText"])
         self.assertEqual(requested, [filing, filing_index, exhibit])
 
+    def test_substantive_sec_primary_still_checks_index_for_exhibit(self):
+        filing = "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000004/vrt-20260923.htm"
+        filing_index = "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000004/0001674101-26-000004-index.html"
+        exhibit = "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000004/quarterly-results.htm"
+        m.add_source(self.db, "VRT", filing)
+        primary = (
+            b"<main><p>Vertiv filed this current report to describe a material corporate event. "
+            b"The filing contains enough readable cover text to be useful on its own, but the "
+            b"primary document does not include a direct link or label for the results exhibit.</p></main>"
+        )
+        index = b'''<table><tr><td>2</td><td>Quarterly results</td>
+          <td><a href="quarterly-results.htm">quarterly-results.htm</a></td>
+          <td>EX-99.1</td></tr></table>'''
+        evidence = (
+            b"<main><p>Official quarterly results reported stronger organic sales, operating "
+            b"margin expansion, data center demand, updated guidance, and management's outlook.</p></main>"
+        )
+        requested = []
+
+        def transport(url, ticker, validators=None, include_metadata=False):
+            requested.append(url)
+            if url == filing:
+                return {
+                    "content": primary, "contentType": "text/html", "etag": '"cover"',
+                    "lastModified": None, "notModified": False,
+                }
+            if url == filing_index:
+                return index, "text/html"
+            if url == exhibit:
+                return evidence, "text/html"
+            raise AssertionError(f"unexpected URL: {url}")
+
+        transport.supports_persistent_validators = True
+        row = self.db.execute("SELECT * FROM sources WHERE url=?", (filing,)).fetchone()
+        result = m.collect_source(row, transport)
+        self.assertEqual(result["evidenceUrl"], exhibit)
+        self.assertEqual(result["evidenceKind"], "sec-exhibit-99.1")
+        self.assertIn("updated guidance", result["extractedText"])
+        self.assertEqual(requested, [filing, filing_index, exhibit])
+
     def test_empty_sec_primary_without_exhibit_has_specific_safe_error(self):
         filing = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000003/mrvl-20260924.htm"
         filing_index = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000003/0001835632-26-000003-index.html"
