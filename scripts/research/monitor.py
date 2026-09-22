@@ -376,11 +376,23 @@ def sec_filing_index_url(filing_url, ticker):
     )
 
 
-def sec_exhibit_evidence(content, filing_url, ticker, transport):
+def sec_exhibit_evidence(content, filing_url, ticker, transport, primary_text=""):
     """Fetch the first substantive EX-99.1 without leaving the filing directory."""
     candidates = sec_exhibit_links(content, filing_url, ticker)
     last_error = None
-    if not candidates and re.search(br"(?:EXHIBIT\s*)?99[.\- ]?1\b", content, re.I):
+    primary_meaningful = sum(character.isalnum() for character in primary_text)
+    # Some SEC primary documents are thin wrappers with neither readable text
+    # nor an exhibit link. In that case the canonical same-accession index is
+    # the only first-party location that identifies EX-99.1. Never broaden the
+    # lookup beyond the immutable filing directory derived below.
+    should_check_index = (
+        not candidates
+        and (
+            primary_meaningful < 80
+            or re.search(br"(?:EXHIBIT\s*)?99[.\- ]?1\b", content, re.I)
+        )
+    )
+    if should_check_index:
         index_url = sec_filing_index_url(filing_url, ticker)
         if index_url and index_url != filing_url:
             try:
@@ -2064,12 +2076,15 @@ def collect_source(row, transport=fetch):
         content, content_type = transport(row["url"], row["ticker"])
         response_etag = response_last_modified = None
     extracted = extract_text(content, content_type)
-    if not extracted.strip():
+    is_sec_html = content_type == "text/html" and urlsplit(row["url"]).hostname == "www.sec.gov"
+    if not extracted.strip() and not is_sec_html:
         raise ValueError("Source has no extractable text")
     evidence_url, evidence_kind = row["url"], "direct"
     identity_content = content
-    if content_type == "text/html" and urlsplit(row["url"]).hostname == "www.sec.gov":
-        exhibit = sec_exhibit_evidence(content, row["url"], row["ticker"], transport)
+    if is_sec_html:
+        exhibit = sec_exhibit_evidence(
+            content, row["url"], row["ticker"], transport, primary_text=extracted
+        )
         if exhibit and "extractedText" in exhibit:
             extracted = exhibit["extractedText"]
             content_type = exhibit["contentType"]
@@ -2077,6 +2092,8 @@ def collect_source(row, transport=fetch):
             identity_content = content + b"\0SEC-EXHIBIT-99.1\0" + exhibit["content"]
         elif exhibit and sum(character.isalnum() for character in extracted) < 80:
             raise ValueError("SEC exhibit evidence unavailable") from exhibit["error"]
+    if not extracted.strip():
+        raise ValueError("Source has no extractable text")
     return {
         "sha256": hashlib.sha256(identity_content).hexdigest(),
         "bodySha256": hashlib.sha256(extracted.encode("utf-8")).hexdigest(),

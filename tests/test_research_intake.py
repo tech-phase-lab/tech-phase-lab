@@ -325,6 +325,62 @@ class IntakeTests(unittest.TestCase):
             "SELECT extracted_text FROM sources WHERE url=?", (filing,)
         ).fetchone()[0])
 
+    def test_empty_sec_primary_uses_same_accession_index_exhibit(self):
+        filing = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000002/mrvl-20260923.htm"
+        filing_index = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000002/0001835632-26-000002-index.html"
+        exhibit = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000002/ex991.htm"
+        m.add_source(self.db, "MRVL", filing)
+        primary = b"<html><body><script>renderFiling()</script></body></html>"
+        index = b'<table><tr><td><a href="ex991.htm">EX-99.1</a></td></tr></table>'
+        evidence = (
+            b"<main><p>Official results confirmed data center demand, revenue growth, "
+            b"capacity plans, customer activity, and the outlook for the next quarter.</p></main>"
+        )
+        requested = []
+
+        def transport(url, ticker, validators=None, include_metadata=False):
+            requested.append(url)
+            if url == filing:
+                return {
+                    "content": primary, "contentType": "text/html", "etag": '"cover"',
+                    "lastModified": None, "notModified": False,
+                }
+            if url == filing_index:
+                return index, "text/html"
+            if url == exhibit:
+                return evidence, "text/html"
+            raise AssertionError(f"unexpected URL: {url}")
+
+        transport.supports_persistent_validators = True
+        row = self.db.execute("SELECT * FROM sources WHERE url=?", (filing,)).fetchone()
+        result = m.collect_source(row, transport)
+        self.assertEqual(result["evidenceUrl"], exhibit)
+        self.assertEqual(result["evidenceKind"], "sec-exhibit-99.1")
+        self.assertIn("data center demand", result["extractedText"])
+        self.assertEqual(requested, [filing, filing_index, exhibit])
+
+    def test_empty_sec_primary_without_exhibit_has_specific_safe_error(self):
+        filing = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000003/mrvl-20260924.htm"
+        filing_index = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000003/0001835632-26-000003-index.html"
+        m.add_source(self.db, "MRVL", filing)
+
+        def transport(url, ticker, validators=None, include_metadata=False):
+            if url == filing:
+                return {
+                    "content": b"<html><body><script>renderFiling()</script></body></html>",
+                    "contentType": "text/html", "etag": '"cover"',
+                    "lastModified": None, "notModified": False,
+                }
+            if url == filing_index:
+                return b'<table><tr><td><a href="other.htm">EX-10.1</a></td></tr></table>', "text/html"
+            raise AssertionError(f"unexpected URL: {url}")
+
+        transport.supports_persistent_validators = True
+        row = self.db.execute("SELECT * FROM sources WHERE url=?", (filing,)).fetchone()
+        with self.assertRaisesRegex(ValueError, "SEC exhibit evidence unavailable") as caught:
+            m.collect_source(row, transport)
+        self.assertEqual(m.source_error_code(caught.exception), "sec-exhibit-unavailable")
+
     def test_sec_exhibit_links_cannot_leave_the_filing_accession(self):
         filing = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/mrvl-20260922.htm"
         markup = b'''<a href="ex991.htm">EX-99.1</a>
