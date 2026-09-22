@@ -438,7 +438,7 @@ class AutomaticMonitor:
             return result
 
     def body_candidates(self):
-        """Prioritize new release events, then the oldest due source bodies."""
+        """Prioritize unseen releases, then missing evidence, then routine rechecks."""
         due = utc_now()
         with self.db_lock, monitor.connect(self.db_path) as db:
             pending = db.execute(
@@ -450,7 +450,14 @@ class AutomaticMonitor:
               SELECT s.*
               FROM sources s LEFT JOIN release_events e ON e.url=s.url
               WHERE s.source_mode='remote' AND (s.next_fetch_at IS NULL OR s.next_fetch_at<=?)
-              ORDER BY e.detected_at IS NULL, e.detected_at DESC,
+              ORDER BY CASE
+                         WHEN e.detected_at IS NOT NULL AND s.sha256 IS NULL THEN 0
+                         WHEN s.sha256 IS NOT NULL AND s.extracted_chars=0 THEN 1
+                         WHEN e.detected_at IS NOT NULL THEN 2
+                         WHEN s.sha256 IS NULL THEN 3
+                         ELSE 4
+                       END,
+                       e.detected_at IS NULL, e.detected_at DESC,
                        s.checked_at IS NOT NULL, s.checked_at, s.discovered_at, s.url
               LIMIT ?
             """, (due, self.body_batch)).fetchall()

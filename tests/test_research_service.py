@@ -75,6 +75,54 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertNotIn("Evidence body.", exported)
         self.assertEqual(app.public_state()["sourceChecks"], 1)
 
+    def test_body_candidates_prioritize_missing_evidence_before_routine_rechecks(self):
+        incomplete = "https://nebius.com/newsroom/legacy-evidence.pdf"
+        with monitor.connect(self.db_path) as db:
+            for url in (
+                "https://nebius.com/newsroom/older",
+                "https://nebius.com/newsroom/new-release",
+            ):
+                db.execute("""
+                  UPDATE sources
+                  SET sha256=?,raw_sha256=?,body_sha256=?,content_type='text/html',
+                      extracted_text='Existing evidence.',extracted_chars=18,
+                      checked_at='2026-09-20T00:00:00+00:00',next_fetch_at=NULL
+                  WHERE url=?
+                """, ("a" * 64, "a" * 64, "b" * 64, url))
+            monitor.add_source(db, "NBIS", incomplete, title="Legacy PDF")
+            db.execute("""
+              UPDATE sources
+              SET sha256=?,raw_sha256=?,body_sha256=?,content_type='application/pdf',
+                  extracted_text='',extracted_chars=0,
+                  checked_at='2026-09-21T00:00:00+00:00',next_fetch_at=NULL
+              WHERE url=?
+            """, ("c" * 64, "c" * 64, "d" * 64, incomplete))
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_batch = 1
+        rows, pending = app.body_candidates()
+        self.assertEqual(pending, 3)
+        self.assertEqual(rows[0]["url"], incomplete)
+
+    def test_body_candidates_keep_unseen_releases_ahead_of_missing_evidence(self):
+        incomplete = "https://nebius.com/newsroom/legacy-evidence.pdf"
+        with monitor.connect(self.db_path) as db:
+            monitor.add_source(db, "NBIS", incomplete, title="Legacy PDF")
+            db.execute("""
+              UPDATE sources
+              SET sha256=?,raw_sha256=?,body_sha256=?,content_type='application/pdf',
+                  extracted_text='',extracted_chars=0,next_fetch_at=NULL
+              WHERE url=?
+            """, ("c" * 64, "c" * 64, "d" * 64, incomplete))
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_batch = 1
+        rows, pending = app.body_candidates()
+        self.assertEqual(pending, 3)
+        self.assertTrue(rows[0]["url"].endswith("new-release"))
+
     def test_not_modified_body_check_does_not_reextract_or_requeue_generation(self):
         url = "https://nebius.com/newsroom/new-release"
         with monitor.connect(self.db_path) as db:
