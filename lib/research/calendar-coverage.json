@@ -1,0 +1,242 @@
+[
+  {
+    "ticker": "AAPL",
+    "name": "Apple",
+    "sourceUrl": "https://investor.apple.com/investor-relations/default.aspx",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "ADBE",
+    "name": "Adobe",
+    "sourceUrl": "https://www.adobe.com/investor-relations.html",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "AMAT",
+    "name": "Applied Materials",
+    "sourceUrl": "https://ir.appliedmaterials.com/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "AMD",
+    "name": "AMD",
+    "sourceUrl": "https://ir.amd.com/news-events/press-releases/rss",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "AMZN",
+    "name": "Amazon",
+    "sourceUrl": "https://ir.aboutamazon.com/overview/default.aspx",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "ANET",
+    "name": "Arista Networks",
+    "sourceUrl": "https://www.arista.com/en/company/news/press-release-rss",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "ARM",
+    "name": "Arm",
+    "sourceUrl": "https://newsroom.arm.com/news/feed/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "ASML",
+    "name": "ASML",
+    "sourceUrl": "https://www.asml.com/en/investors/financial-calendar",
+    "lastCheckedOn": "2026-09-22"
+  },
+  {
+    "ticker": "AVGO",
+    "name": "Broadcom",
+    "sourceUrl": "https://investors.broadcom.com/financial-information/financial-news-releases",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "BE",
+    "name": "Bloom Energy",
+    "sourceUrl": "https://investor.bloomenergy.com/rss/pressrelease.aspx",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "COHR",
+    "name": "Coherent",
+    "sourceUrl": "https://www.coherent.com/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "CRDO",
+    "name": "Credo",
+    "sourceUrl": "https://credosemi.com/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "CRM",
+    "name": "Salesforce",
+    "sourceUrl": "https://investor.salesforce.com/overview/default.aspx",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "CRWD",
+    "name": "CrowdStrike",
+    "sourceUrl": "https://ir.crowdstrike.com/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "CRWV",
+    "name": "CoreWeave",
+    "sourceUrl": "https://www.coreweave.com/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "DELL",
+    "name": "Dell Technologies",
+    "sourceUrl": "https://investors.delltechnologies.com/news-events/press-release",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "GEV",
+    "name": "GE Vernova",
+    "sourceUrl": "https://www.gevernova.com/news/subscribe/all/rss.xml",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "GOOGL",
+    "name": "Alphabet / Google",
+    "sourceUrl": "https://blog.google/rss/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "INTC",
+    "name": "Intel",
+    "sourceUrl": "https://www.intc.com/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "KLAC",
+    "name": "KLA",
+    "sourceUrl": "https://ir.kla.com/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "LITE",
+    "name": "Lumentum",
+    "sourceUrl": "https://investor.lumentum.com/overview/default.aspx",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "LRCX",
+    "name": "Lam Research",
+    "sourceUrl": "https://investor.lamresearch.com/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "META",
+    "name": "Meta Platforms",
+    "sourceUrl": "https://investor.atmeta.com/home/default.aspx",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "MRVL",
+    "name": "Marvell",
+    "sourceUrl": "https://investor.marvell.com/news-events/press-releases/rss",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "MSFT",
+    "name": "Microsoft",
+    "sourceUrl": "https://news.microsoft.com/source/feed/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "MU",
+    "name": "Micron",
+    "sourceUrl": "https://investors.micron.com/",
+    "lastCheckedOn": "2026-09-22"
+  },
+  {
+    "ticker": "NBIS",
+    "name": "Nebius",
+    "sourceUrl": "https://nebius.com/newsroom",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "NFLX",
+    "name": "Netflix",
+    "sourceUrl": "https://ir.netflix.net/",
+    "lastCheckedOn": "2026-09-22"
+  },
+  {
+    "ticker": "NOW",
+    "name": "ServiceNow",
+    "sourceUrl": "https://investor.servicenow.com/overview/default.aspx",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "NVDA",
+    "name": "NVIDIA",
+    "sourceUrl": "https://nvidianews.nvidia.com/rss.xml",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "ORCL",
+    "name": "Oracle",
+    "sourceUrl": "https://www.oracle.com/news/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "PANW",
+    "name": "Palo Alto Networks",
+    "sourceUrl": "https://investors.paloaltonetworks.com/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "PLTR",
+    "name": "Palantir",
+    "sourceUrl": "https://www.palantir.com/sitemap.xml",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "QCOM",
+    "name": "Qualcomm",
+    "sourceUrl": "https://investor.qualcomm.com/overview/default.aspx",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "SKHY",
+    "name": "SK hynix",
+    "sourceUrl": "https://news.skhynix.com/en/category/ir/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "SNDK",
+    "name": "Sandisk",
+    "sourceUrl": "https://investor.sandisk.com/news-events/news-releases",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "SNOW",
+    "name": "Snowflake",
+    "sourceUrl": "https://investors.snowflake.com/overview/default.aspx",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "TSLA",
+    "name": "Tesla",
+    "sourceUrl": "https://ir.tesla.com/",
+    "lastCheckedOn": null
+  },
+  {
+    "ticker": "TSM",
+    "name": "TSMC",
+    "sourceUrl": "https://investor.tsmc.com/english/financial-calendar",
+    "lastCheckedOn": "2026-09-22"
+  },
+  {
+    "ticker": "VRT",
+    "name": "Vertiv",
+    "sourceUrl": "https://www.vertiv.com/en-us/about/news-and-events/corporate-news/",
+    "lastCheckedOn": null
+  }
+]

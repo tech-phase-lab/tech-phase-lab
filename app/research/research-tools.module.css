@@ -40,3 +40,11 @@
 .main :focus-visible { outline: 2px solid var(--mint); outline-offset: 4px; }
 @media(max-width:700px) { .favorites,.companyChoices { grid-template-columns: repeat(2,minmax(0,1fr)); } .schedule li { grid-template-columns: 1fr; gap: 10px; padding: 16px; } .schedule time small { display: inline; margin-left: 8px; } .main { padding: 18px 16px 40px; } }
 @media(max-width:380px) { .favorites { grid-template-columns: 1fr; } }
+
+.coverage { border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
+.coverage summary { cursor: pointer; color: var(--mint); min-height: 32px; }
+.coverage ul { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,260px),1fr)); gap: 12px; }
+.coverage li { display: grid; gap: 5px; min-width: 0; padding: 8px 0; }
+.coverage a { font-size: .875rem; overflow-wrap: anywhere; }
+.coverage strong { color: var(--mint); margin-right: 6px; }
+.coverage small { color: var(--muted); font-size: .75rem; }

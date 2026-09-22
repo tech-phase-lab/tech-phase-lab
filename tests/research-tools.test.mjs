@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { parseFavoriteStocks, toggleFavoriteStock } from "../lib/research/favorites.ts";
-import { calendarEvents, calendarDateKey, selectCalendarEvents } from "../lib/research/calendar.ts";
+import { calendarEvents, selectDateOnlyEarnings, calendarDateKey, selectCalendarEvents } from "../lib/research/calendar.ts";
 
 test("favorite storage tolerates invalid JSON and rejects non-ticker values", () => {
   for (const raw of [null, "{", "null", "{}", '"MU"']) assert.deepEqual(parseFavoriteStocks(raw), []);
@@ -30,9 +30,10 @@ test("Japan calendar dates account for midnight and US daylight saving", () => {
 
 test("calendar filters use Japan months and exclude past events from upcoming", () => {
   const now = Date.parse("2026-10-01T00:00:00Z");
-  assert.equal(selectCalendarEvents(calendarEvents, "earnings", "2026-10", now).length, 1);
-  assert.equal(selectCalendarEvents(calendarEvents, "earnings", "2026-09", now).length, 0);
-  assert.equal(selectCalendarEvents(calendarEvents, "earnings", "upcoming", now).length, 0);
+  const muEvents = calendarEvents.filter((event) => event.ticker === "MU");
+  assert.equal(selectCalendarEvents(muEvents, "earnings", "2026-10", now).length, 1);
+  assert.equal(selectCalendarEvents(muEvents, "earnings", "2026-09", now).length, 0);
+  assert.equal(selectCalendarEvents(muEvents, "earnings", "upcoming", now).length, 0);
   assert.ok(selectCalendarEvents(calendarEvents, "economic", "upcoming", now).every((event) => Date.parse(event.startsAt) >= now && event.kind === "economic"));
 });
 
@@ -44,9 +45,33 @@ test("registered schedules are ordered, unique and linked to official sources", 
     assert.ok(Number.isFinite(timestamp) && timestamp >= previous);
     previous = timestamp;
     assert.ok(event.title.ja && event.title.en);
-    assert.ok(["www.bls.gov", "www.federalreserve.gov", "investors.micron.com"].includes(new URL(event.sourceUrl).hostname));
+    assert.ok(["www.bls.gov", "www.federalreserve.gov", "investors.micron.com", "investor.tsmc.com", "ir.netflix.net"].includes(new URL(event.sourceUrl).hostname));
     if (event.sourceName === "BLS") {
       assert.equal(new Intl.DateTimeFormat("en-GB", { timeZone: event.sourceTimezone, hour: "2-digit", minute: "2-digit" }).format(new Date(event.startsAt)), "08:30");
     }
   }
+});
+
+test("Eastern month filters follow the displayed date across the Japan midnight boundary", () => {
+  const events = calendarEvents.filter((event) => event.ticker === "MU");
+  assert.equal(calendarDateKey(events[0].startsAt, "America/New_York"), "2026-09-30");
+  assert.equal(selectCalendarEvents(events, "earnings", "2026-09", 0, "America/New_York").length, 1);
+  assert.equal(selectCalendarEvents(events, "earnings", "2026-10", 0, "America/New_York").length, 0);
+});
+test("Taiwan and Pacific events convert to the right Eastern and Japan dates", () => {
+  const tsm = calendarEvents.find((event) => event.ticker === "TSM");
+  const netflix = calendarEvents.find((event) => event.ticker === "NFLX");
+  const time = (date, zone) => new Intl.DateTimeFormat("en-GB", { timeZone: zone, hour: "2-digit", minute: "2-digit" }).format(new Date(date));
+  assert.equal(time(tsm.startsAt, "America/New_York"), "02:00");
+  assert.equal(time(tsm.startsAt, "Asia/Tokyo"), "15:00");
+  assert.equal(time(netflix.startsAt, "America/New_York"), "16:01");
+  assert.equal(calendarDateKey(netflix.startsAt), "2026-10-21");
+});
+
+test("date-only earnings keep the official date without fabricating a time", () => {
+  const now = Date.parse("2026-09-22T12:00:00Z");
+  assert.equal(selectDateOnlyEarnings("2026-09", now).length, 0);
+  assert.equal(selectDateOnlyEarnings("2026-10", now)[0].date, "2026-10-14");
+  assert.equal(selectDateOnlyEarnings("upcoming", Date.parse("2026-10-14T21:59:00Z")).length, 1);
+  assert.equal(selectDateOnlyEarnings("upcoming", Date.parse("2026-10-14T22:00:00Z")).length, 0);
 });

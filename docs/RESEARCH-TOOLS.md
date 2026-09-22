@@ -19,8 +19,9 @@ Every item has an official source link, explicit UTC offset, source timezone,
 and Japanese/English labels. Keep `calendarReviewedOn` current only after source
 verification. This is not an exhaustive earnings or economic calendar.
 
-The UI shows Japan time, applies US daylight-saving changes, and filters months
-by Japan date. Upcoming events exclude past timestamps; monthly views retain
+Japanese defaults to JST and English to U.S. Eastern Time (ET); the other zone
+is shown alongside. A selector overrides the default, with language changes
+resetting it. Date and month filters follow the selected zone, including DST. Upcoming events exclude past timestamps; monthly views retain
 them with a past-time label. A notice appears after seven days without review.
 Micron's earnings call time must not be labeled as its release publication time.
 
@@ -30,3 +31,23 @@ membership feature is enabled by these tools.
 Validation: `npm run lint`, `node --experimental-strip-types --test tests/*.test.mjs`,
 and `npm run build`. Browser checks cover favorites persistence, company-page
 toggles, calendar filters, and the four home destinations.
+
+### Earnings coverage and maintenance
+
+`calendar-coverage.json` tracks 40 companies independently of the 22-company
+news monitor. A roster entry is not a confirmed next earnings date. Null
+`lastCheckedOn` means a schedule review is still due. Do not interpret an empty
+IR page or inaccessible JavaScript calendar as proof no event is announced.
+MU and TSMC are call times; Netflix is an approximate release time. ASML's
+October 14 official date has no confirmed time and is displayed separately,
+without manufacturing a timestamp or converting the date to JST/ET.
+
+The existing hourly Tech Phase development task also reviews calendar sources.
+Review the oldest/unreviewed companies first in batches of up to 10, aiming to
+revisit each within 24 hours; failures remain pending with blockers recorded.
+Confirm dates and changes from first-party IR announcements, including exact
+fiscal quarter, release vs call, timezone/UTC offset, source URL and review date.
+Refresh BLS/Federal Reserve schedules as well. Commit verified updates only to
+codex/research-preview, preserving concurrent changes. This is scheduled review,
+not a live feed, a guaranteed refresh SLA, or a claim that all 40 dates are known.
+No inferred/consensus date may be promoted to officially confirmed.
