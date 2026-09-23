@@ -9,7 +9,7 @@ import { valueLabel, dateLabel } from "@/lib/research/presentation";
 import { researchViewFromHash, researchViewHashes, type ResearchView } from "@/lib/research/navigation";
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./research.module.css";
-import HomeTools from "./home-tools";
+import HomeTools, { FavoriteResearch } from "./home-tools";
 
 const storageKey = "tech-phase:research-saved:v1";
 const notifyName = "tech-phase:research-saved";
@@ -115,6 +115,13 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
     }
   }
   function clearFilters() { setQuery(""); setTicker("all"); setCategory("all"); }
+  function openFavoriteResearch(event: ResearchEvent) {
+    setQuery("");
+    setCategory("all");
+    setTicker(event.ticker);
+    setActiveId(event.id);
+    openView("changes");
+  }
   function openView(next: ResearchView) {
     const hash = researchViewHashes[next];
     if (window.location.hash !== hash) window.history.pushState(null, "", hash);
@@ -179,6 +186,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
         <div className={styles.heading}><div><p className={styles.eyebrow}>{tab === "home" ? t("ホーム / リサーチデスク", "HOME / THE RESEARCH DESK") : "THE RESEARCH DESK"}</p><h1>{tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : tab === "changes" ? t("何が変わった？を、根拠付きで。", "See what changed. Follow the evidence.") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1><p>{t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p></div><div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>2026.09.19</strong></div></div>
 
         <HomeTools lang={lang} onChanges={() => openView("changes")} />
+        {tab === "home" && <FavoriteResearch lang={lang} events={events} onOpenResearch={openFavoriteResearch} />}
 
         <section id="monitored-companies" className={styles.companyDirectory} aria-labelledby="monitored-companies-title">
           <div className={styles.directoryHead}>
