@@ -74,6 +74,10 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
       (!query.trim() || search.includes(query.trim().toLowerCase())) && (tab !== "saved" || saved.includes(event.id));
   });
   const active = filtered.find((event) => event.id === activeId) ?? filtered[0];
+  const comparisonPeriods = [...new Set(active?.metrics.flatMap((metric) => {
+    const previous = active.previous?.find((item) => item.name === metric.name);
+    return previous && compareMetrics(metric, previous).ok ? [`${previous.period} → ${metric.period}`] : [];
+  }) ?? [])];
   const allMetrics = filtered.flatMap((event) => event.metrics.map((metric) => ({ metric, event })));
   const coveredCompanies = useMemo(() => {
     const companies = new Map<string, { symbol: string; name: string; count: number }>();
@@ -251,6 +255,10 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
               <div className={styles.detailTop}><span className={styles.eyebrow}>RESEARCH NOTE</span><span className={styles.version}>v1 · {t("過去事例", "Historical")}</span></div>
               <div className={styles.detailCompany}><Link className={styles.detailTicker} href={`/research/companies/${active.ticker}`} aria-label={t(`${active.ticker}の銘柄ページ`, `${active.ticker} company research`)}>{active.ticker} ↗</Link><span>{active.company}</span></div>
               <h2>{active.title[lang]}</h2>
+              <dl className={styles.announcementContext}>
+                <div><dt>{t("発表日", "Announced")}</dt><dd><time dateTime={active.publishedOn}>{dateLabel(active.publishedOn, lang)}</time></dd></div>
+                <div><dt>{t("比較の基準", "Comparison basis")}</dt><dd>{comparisonPeriods.length ? comparisonPeriods.map((period) => <span key={period}>{period}</span>) : t("この発表で確認した内容", "Findings from this announcement")}</dd></div>
+              </dl>
               <div className={styles.change}><span>{t("今回の変化", "WHAT CHANGED")}</span><p>{active.change[lang]}</p></div>
               {active.metrics.length > 0 && <div className={styles.metricStrip}>{active.metrics.slice(0, 2).map((metric) => {
                 const previous = active.previous?.find((item) => item.name === metric.name);

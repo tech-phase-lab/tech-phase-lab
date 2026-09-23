@@ -1539,3 +1539,16 @@
     transition:none
   }
 }
+
+.announcementContext {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: -8px 0 20px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.announcementContext > div { min-width: 0; }
+.announcementContext dt { color: var(--muted); font-size: 11px; }
+.announcementContext dd { margin: 2px 0 0; overflow-wrap: anywhere; }
+.announcementContext dd span { display: block; }
