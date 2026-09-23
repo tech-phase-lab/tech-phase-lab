@@ -34,7 +34,7 @@ export default function CompanyDashboard({ profile, companies }: { profile: Comp
   const [lang, setLang] = useResearchLanguage();
   const [topic, setTopic] = useState<ResearchEvent["kind"] | "all">("all");
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
-  const kinds = { earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding"), partnership: t("提携", "Partnership"), product: t("製品・料金", "Product & pricing") };
+  const kinds = { earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding"), partnership: t("提携", "Partnership"), product: t("製品・料金", "Product & pricing"), "external-research": t("外部調査・評価", "External research") };
   const filtered = profile.events.filter((event) => topic === "all" || event.kind === topic);
   const availableTopics = [...new Set(profile.events.map((event) => event.kind))];
   const firstRow = profile.comparisons[0];
@@ -101,7 +101,7 @@ export default function CompanyDashboard({ profile, companies }: { profile: Comp
 
       <section id="history" className={styles.section}>
         <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>04 / RELEASE HISTORY</p><h2>{t("発表を、時系列でつなぐ", "Connect the disclosures over time")}</h2></div><span aria-live="polite">{filtered.length} {t("件の記録", "research records")}</span></div>
-        <p className={styles.sectionNote}>{t("日付は資料の発表日です。選んだ資料の記録で、すべてのニュースを網羅していません。", "Dates refer to publication. This is a selected research history, not a complete news feed.")}</p>
+        <p className={styles.sectionNote}>{t("日付は資料の発表日です。企業の公式発表と第三者の調査・評価を区別して表示します。選んだ資料の記録で、すべてのニュースを網羅していません。", "Dates refer to publication. Company announcements are labeled separately from third-party research and ratings. This is a selected research history, not a complete news feed.")}</p>
         {availableTopics.length > 1 && <div className={styles.topicFilters} role="group" aria-label={t("履歴を絞り込み", "Filter history")}><button aria-pressed={topic === "all"} onClick={() => setTopic("all")}>{t("すべて", "All")}</button>{availableTopics.map((kind) => <button key={kind} aria-pressed={topic === kind} onClick={() => setTopic(kind)}>{kinds[kind]}</button>)}</div>}
         <ol className={styles.timeline}>{filtered.map((event) => <li key={event.id}>
           <div className={styles.timelineDate}><time dateTime={event.publishedOn}>{dateLabel(event.publishedOn, lang)}</time><span>{kinds[event.kind]}</span></div>
@@ -114,7 +114,7 @@ export default function CompanyDashboard({ profile, companies }: { profile: Comp
         </li>)}</ol>
       </section>
 
-      <section className={styles.section} aria-labelledby="company-sources"><div className={styles.sectionHeading}><h2 id="company-sources">{t("使用した一次資料", "Primary sources used")}</h2></div><div className={styles.sourceList}>{profile.sources.map((source) => <a key={source.id} href={source.url} target="_blank" rel="noreferrer"><strong>{source.title} <span aria-hidden="true">↗</span></strong><span>{source.publisher} · {source.publishedOn}</span><small>{source.location}</small></a>)}</div></section>
+      <section className={styles.section} aria-labelledby="company-sources"><div className={styles.sectionHeading}><h2 id="company-sources">{t("使用した資料", "Sources used")}</h2></div><div className={styles.sourceList}>{profile.sources.map((source) => <a key={source.id} href={source.url} target="_blank" rel="noreferrer"><strong>{source.title} <span aria-hidden="true">↗</span></strong><span>{source.publisher} · {source.publishedOn}</span><small>{source.location}</small></a>)}</div></section>
       <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("株価・速報の配信は未接続。後日の訂正や新しい発表は自動反映していません。", "Live prices and news are not connected. Subsequent corrections and releases are not incorporated automatically.")}</p></footer>
     </main>
   </div>;

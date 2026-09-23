@@ -72,7 +72,7 @@ export function buildCompanyProfiles(records: ResearchEvent[]): CompanyProfile[]
   const muPrevious = metric(mu, "revenue", true);
   return [
     {
-      ticker: "NBIS", name: "Nebius", sector: copy("AIクラウド", "AI cloud"), reviewedOn: "2026-09-22",
+      ticker: "NBIS", name: "Nebius", sector: copy("AIクラウド", "AI cloud"), reviewedOn: "2026-09-23",
       focus: copy("売上の拡大を、製品・料金・稼働・損益・資金調達まで追う。", "Follow growth through products, pricing, capacity, operations, and funding."),
       events: history("NBIS"), sources: sources("NBIS"),
       comparisons: [

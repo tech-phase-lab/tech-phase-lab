@@ -44,6 +44,15 @@ test("all shipped facts and current/comparative metrics have valid source refere
   for (const event of events) assert.deepEqual(evidenceIssues({ ...event, metrics: [...event.metrics, ...(event.previous ?? [])] }), [], event.id);
 });
 
+test("external industry ratings are labeled as secondary research and retain their source limits", () => {
+  const event = events.find((item) => item.id === "nbis-clustermax-platinum-2026-09-23");
+  assert.equal(event.kind, "external-research");
+  assert.equal(event.sources[0].publisher, "SemiAnalysis · paid industry research");
+  assert.match(event.interpretation.ja, /第三者/);
+  assert.match(event.unknown.ja, /有料記事/);
+  assert.deepEqual(evidenceIssues(event), []);
+});
+
 test("missing evidence, unsafe URLs, invalid dates, and pre-publication reviews fail validation", () => {
   const event = events[1];
   assert.ok(evidenceIssues({ ...event, facts: [{ sourceIds: ["unknown"] }] }).includes("unsupported-fact"));

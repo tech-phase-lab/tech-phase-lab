@@ -99,7 +99,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
     }
     return [...groups.entries()];
   }, [lang, monitoredCompanies]);
-  const kinds = { partnership: t("提携", "Partnership"), earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding"), product: t("製品・料金", "Product & pricing") };
+  const kinds = { partnership: t("提携", "Partnership"), earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding"), product: t("製品・料金", "Product & pricing"), "external-research": t("外部調査・評価", "External research") };
   function toggleSaved(id: string) {
     try {
       const next = saved.includes(id) ? saved.filter((value) => value !== id) : [...saved, id];
@@ -254,7 +254,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
             <div className={styles.eventList}>
               {filtered.map((event) => <article key={event.id} className={`${styles.eventCard} ${active?.id === event.id ? styles.selected : ""}`}>
                 <div className={styles.eventMeta}><span className={styles.ticker}>{event.ticker}</span><span>{kinds[event.kind]}</span><time dateTime={event.publishedOn}>{dateLabel(event.publishedOn, lang)}</time><button className={styles.saveButton} aria-label={saved.includes(event.id) ? t("保存を解除", "Unsave research") : t("リサーチを保存", "Save research")} aria-pressed={saved.includes(event.id)} onClick={() => toggleSaved(event.id)}><Bookmark filled={saved.includes(event.id)} /></button></div>
-                <button className={styles.eventOpen} aria-pressed={active?.id === event.id} onClick={() => selectEvent(event.id)}><h3>{event.title[lang]}</h3><p>{event.summary[lang]}</p><span className={styles.eventFoot}><span>{t("一次資料", "Primary sources")} {event.sources.length}<span className={styles.dot}>·</span>{t("原文付き", "Evidence linked")}</span><span>{t("詳しく見る", "Read research")} <span aria-hidden="true">→</span></span></span></button>
+                <button className={styles.eventOpen} aria-pressed={active?.id === event.id} onClick={() => selectEvent(event.id)}><h3>{event.title[lang]}</h3><p>{event.summary[lang]}</p><span className={styles.eventFoot}><span>{event.kind === "external-research" ? t("外部調査", "External research") : t("一次資料", "Primary sources")} {event.sources.length}<span className={styles.dot}>·</span>{t("原文付き", "Evidence linked")}</span><span>{t("詳しく見る", "Read research")} <span aria-hidden="true">→</span></span></span></button>
               </article>)}
               {!filtered.length && <Empty lang={lang} onReset={clearFilters} saved={tab === "saved"} />}
             </div>
@@ -277,8 +277,8 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
               <section className={styles.detailSection}><h3><span className={styles.sectionNumber}>02</span>{t("どう読むか", "How to read it")}<small>{t("分析・解釈", "INTERPRETATION")}</small></h3><p>{active.interpretation[lang]}</p></section>
               <section className={`${styles.detailSection} ${styles.unknown}`}><h3>{t("まだ分からないこと", "What remains unknown")}</h3><p>{active.unknown[lang]}</p></section>
               <section className={styles.detailSection}><h3><span className={styles.sectionNumber}>03</span>{t("次に確認すること", "What to watch next")}</h3><p>{active.next[lang]}</p></section>
-              <div className={styles.sources}><h3>{t("一次資料を開く", "Open primary sources")}</h3>{active.sources.map((source, i) => <a key={source.id} href={source.url} target="_blank" rel="noreferrer"><span className={styles.sourceIndex}>{String(i + 1).padStart(2, "0")}</span><span><strong>{source.title}</strong><small>{source.publisher} · {source.publishedOn}</small><small>{source.location}</small></span><Arrow /></a>)}</div>
-              <p className={styles.revision}>{t("資料照合", "Source review")}: {active.reviewedOn} · v1<br/>{t("発表時点の内容を整理した検証例。以後の変更は自動反映していません。", "A review of the announcement as published. Later changes are not automatically incorporated.")}</p>
+              <div className={styles.sources}><h3>{active.kind === "external-research" ? t("外部調査の原文", "Open external research") : t("一次資料を開く", "Open primary sources")}</h3>{active.sources.map((source, i) => <a key={source.id} href={source.url} target="_blank" rel="noreferrer"><span className={styles.sourceIndex}>{String(i + 1).padStart(2, "0")}</span><span><strong>{source.title}</strong><small>{source.publisher} · {source.publishedOn}</small><small>{source.location}</small></span><Arrow /></a>)}</div>
+              <p className={styles.revision}>{t("資料照合", "Source review")}: {active.reviewedOn} · v1<br/>{active.kind === "external-research" ? t("公開された要約のみを根拠に独自に整理しています。有料記事の本文は転載していません。", "This note is based on the publisher's public summary. The paid article is not reproduced.") : t("発表時点の内容を整理した検証例。以後の変更は自動反映していません。", "A review of the announcement as published. Later changes are not automatically incorporated.")}</p>
             </article>}
           </div>}
         </section>

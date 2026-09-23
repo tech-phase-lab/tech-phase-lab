@@ -5,7 +5,7 @@ export type Copy = Record<Language, string>;
 export type ResearchEvent = {
   id: string; ticker: string; company: string;
   category: "cloud" | "memory";
-  kind: "partnership" | "earnings" | "capacity" | "financing" | "product";
+  kind: "partnership" | "earnings" | "capacity" | "financing" | "product" | "external-research";
   publishedOn: string; reviewedOn: string;
   title: Copy; summary: Copy; change: Copy; interpretation: Copy;
   facts: { text: Copy; sourceIds: string[] }[];
@@ -160,6 +160,22 @@ export const events: ResearchEvent[] = [
       { id: "nbis-spot-x", publisher: "Nebius official X", title: "Spot pricing announcement", publishedOn: "2026-09-22", location: "Official post · full announcement", url: "https://x.com/nebiusai/status/2102398298833190969" },
       { id: "nbis-spot-docs", publisher: "Nebius AI Cloud Docs", title: "Preemptible virtual machines", publishedOn: "2026-09-22", location: "Pricing policy / Follow spot price", url: "https://docs.nebius.com/compute/virtual-machines/preemptible" },
     ],
+    metrics: [],
+  },
+  {
+    id: "nbis-clustermax-platinum-2026-09-23", ticker: "NBIS", company: "Nebius", category: "cloud", kind: "external-research",
+    publishedOn: "2026-09-23", reviewedOn: "2026-09-23",
+    title: copy("SemiAnalysisがNebiusをClusterMAXのPlatinum tierに選定", "SemiAnalysis moves Nebius into ClusterMAX's Platinum tier"),
+    summary: copy("GPUクラウドの外部評価で、NebiusはGoldからPlatinumへ。これは企業発表ではなく、SemiAnalysisによる有料業界調査の評価です。", "An external GPU-cloud assessment moves Nebius from Gold to Platinum. This is SemiAnalysis's paid industry research, not a company announcement."),
+    change: copy("SemiAnalysisのClusterMAX 3.0で、Nebiusが前回のGoldからPlatinumへ昇格。", "In SemiAnalysis's ClusterMAX 3.0, Nebius moves up from Gold to Platinum."),
+    facts: [
+      { text: copy("調査は管理型GPUクラスター77社を対象とし、200社超の利用者への聞き取りを含むと説明。", "SemiAnalysis says ClusterMAX 3.0 reviews 77 managed GPU-cluster providers and draws on interviews with more than 200 end users."), sourceIds: ["nbis-clustermax-2026"] },
+      { text: copy("公開された要約で、NebiusをCoreWeaveと並ぶPlatinum tierに分類。価格プレミアムを得られる事業者との評価を示した。", "The public summary places Nebius in the Platinum tier alongside CoreWeave and says it can command a pricing premium."), sourceIds: ["nbis-clustermax-2026"] },
+    ],
+    interpretation: copy("第三者によるGPUクラウドの技術・事業評価が上向いた材料です。ただし評価はSemiAnalysis独自の調査で、顧客契約や売上増加を直接証明するものではありません。", "This is a favorable third-party assessment of Nebius's GPU-cloud offering. The rating is SemiAnalysis's own research and does not directly prove customer contracts or revenue growth."),
+    unknown: copy("評価の詳細な採点根拠は有料記事です。今回確認できた公開要約だけでは、Platinum判定の個別スコア、売上への寄与、調査方法の全容は分かりません。", "The detailed scoring is in a paid article. The public summary does not establish Nebius's individual scores, revenue impact, or the full methodology."),
+    next: copy("Nebiusの稼働容量、顧客利用、価格・売上の会社開示と、今後の調査更新を別々に確認。", "Track company disclosures on deployed capacity, customer usage, pricing, and revenue separately from future rating updates."),
+    sources: [{ id: "nbis-clustermax-2026", publisher: "SemiAnalysis · paid industry research", title: "ClusterMAX 3.0: The Industry Standard GPU Cloud Rating System Returns", publishedOn: "2026-09-23", location: "Public executive summary; Nebius rating and research scope", url: "https://newsletter.semianalysis.com/p/clustermax-30-the-industry-standard" }],
     metrics: [],
   },
 ];
