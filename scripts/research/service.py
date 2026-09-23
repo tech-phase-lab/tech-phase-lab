@@ -225,10 +225,12 @@ class AutomaticMonitor:
             return self.fast_seconds
         return self.standard_seconds
 
-    def collect_discovery_timed(self, ticker):
+    def collect_discovery_timed(self, ticker, cached_sources=None):
         """Measure one official-source request separately from its polling interval."""
         started = time.monotonic()
-        result, links = monitor.collect_discovery(ticker, monitor.fetch, True)
+        result, links = monitor.collect_discovery(
+            ticker, monitor.fetch, True, cached_sources
+        )
         return result, links, max(0, round((time.monotonic() - started) * 1000))
 
     def derive_health(self, state):
@@ -652,12 +654,14 @@ class AutomaticMonitor:
         next_due = {ticker: 0.0 for ticker in self.tickers}
         signatures = {}
         known = {}
+        discovery_caches = {}
         baseline_ready = {}
         failure_streak = {ticker: 0 for ticker in self.tickers}
         next_body_fetch = 0.0
         with self.db_lock, monitor.connect(self.db_path) as db:
             for ticker in self.tickers:
                 known[ticker] = {row[0] for row in db.execute("SELECT url FROM sources WHERE ticker=?", (ticker,))}
+                discovery_caches[ticker] = monitor.load_discovery_source_cache(db, ticker)
                 baseline_ready[ticker] = db.execute(
                     """SELECT 1 FROM discovery_runs
                        WHERE ticker=? AND (
@@ -677,7 +681,11 @@ class AutomaticMonitor:
                     continue
 
                 cycle_started = time.monotonic()
-                futures = {pool.submit(self.collect_discovery_timed, ticker): ticker for ticker in due}
+                futures = {
+                    pool.submit(
+                        self.collect_discovery_timed, ticker, discovery_caches[ticker]
+                    ): ticker for ticker in due
+                }
                 collected = []
                 for future in as_completed(futures):
                     ticker = futures[future]
@@ -709,6 +717,8 @@ class AutomaticMonitor:
                 company_states = {}
                 with self.db_lock, monitor.connect(self.db_path) as db:
                     for ticker, result, links, request_duration_ms in collected:
+                        source_cache = result.get("_sourceCache", discovery_caches[ticker])
+                        cache_changed = source_cache != discovery_caches[ticker]
                         signature = discovery_signature(result, links)
                         new_urls = set(links) - known[ticker]
                         if signatures.get(ticker) != signature or new_urls:
@@ -725,6 +735,10 @@ class AutomaticMonitor:
                             elif discovery_has_verified_route(result):
                                 baseline_ready[ticker] = True
                             changed = True
+                        elif cache_changed:
+                            monitor.save_discovery_source_cache(db, ticker, source_cache)
+                        discovery_caches[ticker] = source_cache
+                        result.pop("_sourceCache", None)
                         signatures[ticker] = signature
                         incident_key = f"source:{ticker}"
                         if result["status"] == "degraded":

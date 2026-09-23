@@ -14,7 +14,7 @@ import subprocess
 import sys
 import re
 import xml.etree.ElementTree as ET
-from urllib.parse import urlencode, urljoin, urlsplit, urlunsplit
+from urllib.parse import parse_qs, urlencode, urljoin, urlsplit, urlunsplit
 from urllib.error import HTTPError, URLError
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 import threading
@@ -38,6 +38,7 @@ SUPPORTED_CONTENT_TYPES = {
 PDF_FALLBACK_CONTENT_TYPES = {"application/octet-stream", "application/x-pdf"}
 FETCH_CACHE_MAX_ENTRIES = 64
 FETCH_CACHE_MAX_BYTES = 24 * 1024 * 1024
+DISCOVERY_CACHE_MAX_BYTES = 2 * 1024 * 1024
 _FETCH_CACHE = {}
 _FETCH_CACHE_LOCK = threading.Lock()
 
@@ -961,6 +962,11 @@ def connect(path):
     CREATE TABLE IF NOT EXISTS discovery_runs (
       id INTEGER PRIMARY KEY, ticker TEXT NOT NULL, at TEXT NOT NULL,
       status TEXT NOT NULL, candidates INTEGER NOT NULL, error TEXT);
+    CREATE TABLE IF NOT EXISTS discovery_source_cache (
+      ticker TEXT NOT NULL, source_url TEXT NOT NULL,
+      response_etag TEXT, response_last_modified TEXT,
+      candidates_json TEXT NOT NULL, updated_at TEXT NOT NULL,
+      PRIMARY KEY(ticker,source_url));
     CREATE TABLE IF NOT EXISTS release_events (
       id INTEGER PRIMARY KEY, url TEXT NOT NULL UNIQUE REFERENCES sources(url),
       ticker TEXT NOT NULL, detected_at TEXT NOT NULL);
@@ -1397,12 +1403,180 @@ def discover_links(body, kind, ticker, source):
     return {url: parser.labels.get(url) for url in parser.urls}
 
 
-def collect_discovery(ticker, transport=fetch, automatic=False):
+def normalized_discovery_candidates(ticker, candidates):
+    """Validate cached parsed candidates without trusting mutable SQLite content."""
+    if not isinstance(candidates, dict) or len(candidates) > 500:
+        return None
+    normalized = {}
+    allowed_detail_keys = {
+        "title", "publishedOn", "inlineText", "contentType", "contentBytes",
+    }
+    for url, candidate in candidates.items():
+        if not isinstance(url, str) or not valid_discovery_candidate_url(url, ticker):
+            return None
+        if candidate is None:
+            normalized[url] = None
+            continue
+        if isinstance(candidate, str):
+            if len(candidate) > 300:
+                return None
+            normalized[url] = candidate
+            continue
+        if not isinstance(candidate, dict) or set(candidate) - allowed_detail_keys:
+            return None
+        detail = {}
+        title = candidate.get("title")
+        if title is not None:
+            if not isinstance(title, str) or len(title) > 300:
+                return None
+            detail["title"] = title
+        published_on = candidate.get("publishedOn")
+        if published_on is not None:
+            if not isinstance(published_on, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", published_on):
+                return None
+            detail["publishedOn"] = published_on
+        inline_text = candidate.get("inlineText")
+        if inline_text is not None:
+            if not isinstance(inline_text, str) or len(inline_text) > MAX_EXTRACTED_CHARS:
+                return None
+            detail["inlineText"] = inline_text
+        content_type = candidate.get("contentType")
+        if content_type is not None:
+            if content_type not in SUPPORTED_CONTENT_TYPES:
+                return None
+            detail["contentType"] = content_type
+        content_bytes = candidate.get("contentBytes")
+        if content_bytes is not None:
+            if isinstance(content_bytes, bool) or not isinstance(content_bytes, int):
+                return None
+            if content_bytes < 0 or content_bytes > MAX_BYTES:
+                return None
+            detail["contentBytes"] = content_bytes
+        normalized[url] = detail
+    return normalized
+
+
+def valid_discovery_candidate_url(url, ticker):
+    """Accept configured article URLs and tightly scoped TWSE inline identities."""
+    if article_url(url, ticker) == url:
+        return True
+    try:
+        canonical = safe_url(url, ticker)
+    except ValueError:
+        return False
+    if canonical != url:
+        return False
+    candidate_parts = urlsplit(url)
+    for source in monitoring_sources(ticker):
+        if source.get("format") != "twse-material-json":
+            continue
+        source_parts = urlsplit(source["url"])
+        if (
+            candidate_parts.scheme, candidate_parts.netloc, candidate_parts.path
+        ) != (source_parts.scheme, source_parts.netloc, source_parts.path):
+            continue
+        query = parse_qs(candidate_parts.query, keep_blank_values=True)
+        if set(query) != {"company", "date", "time", "id"} or any(
+            len(values) != 1 for values in query.values()
+        ):
+            return False
+        return (
+            query["company"][0] == source.get("twseCompanyCode")
+            and re.fullmatch(r"\d{7}", query["date"][0]) is not None
+            and re.fullmatch(r"\d{1,6}", query["time"][0]) is not None
+            and re.fullmatch(r"[0-9a-f]{16}", query["id"][0]) is not None
+        )
+    return False
+
+
+def normalized_discovery_cache_state(ticker, state):
+    """Return one bounded cache entry, or None when it must be refetched."""
+    if not isinstance(state, dict):
+        return None
+    etag = http_validator(state.get("etag"))
+    last_modified = http_validator(state.get("lastModified"))
+    candidates = normalized_discovery_candidates(ticker, state.get("candidates"))
+    if candidates is None or not (etag or last_modified):
+        return None
+    encoded = json.dumps(candidates, ensure_ascii=False, separators=(",", ":"))
+    if len(encoded.encode("utf-8")) > DISCOVERY_CACHE_MAX_BYTES:
+        return None
+    return {
+        "etag": etag, "lastModified": last_modified,
+        "candidates": candidates, "encoded": encoded,
+    }
+
+
+def load_discovery_source_cache(db, ticker):
+    """Load only configured, bounded validators and parsed candidates."""
+    configured = {source["url"] for source in monitoring_sources(ticker)}
+    cache = {}
+    for row in db.execute(
+        """SELECT source_url,response_etag,response_last_modified,candidates_json
+           FROM discovery_source_cache WHERE ticker=?""",
+        (ticker,),
+    ):
+        if (
+            row["source_url"] not in configured
+            or len(row["candidates_json"].encode("utf-8")) > DISCOVERY_CACHE_MAX_BYTES
+        ):
+            continue
+        try:
+            candidates = normalized_discovery_candidates(
+                ticker, json.loads(row["candidates_json"])
+            )
+        except (TypeError, ValueError, json.JSONDecodeError, RecursionError):
+            continue
+        state = normalized_discovery_cache_state(ticker, {
+            "etag": row["response_etag"],
+            "lastModified": row["response_last_modified"],
+            "candidates": candidates,
+        })
+        if state is None:
+            continue
+        cache[row["source_url"]] = {
+            "etag": state["etag"], "lastModified": state["lastModified"],
+            "candidates": state["candidates"],
+        }
+    return cache
+
+
+def save_discovery_source_cache(db, ticker, cache):
+    """Persist parsed candidates, never raw discovery response bodies."""
+    configured = {source["url"] for source in monitoring_sources(ticker)}
+    normalized = {}
+    for source_url, state in (cache or {}).items():
+        if source_url not in configured:
+            continue
+        state = normalized_discovery_cache_state(ticker, state)
+        if state is None:
+            continue
+        normalized[source_url] = (
+            state["etag"], state["lastModified"], state["encoded"]
+        )
+    with db:
+        db.execute("DELETE FROM discovery_source_cache WHERE ticker=?", (ticker,))
+        for source_url, (etag, last_modified, encoded) in normalized.items():
+            db.execute(
+                """INSERT INTO discovery_source_cache(
+                     ticker,source_url,response_etag,response_last_modified,
+                     candidates_json,updated_at
+                   ) VALUES(?,?,?,?,?,?)""",
+                (ticker, source_url, etag, last_modified, encoded, now()),
+            )
+
+
+def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=None):
     """Fetch and parse candidates without mutating storage."""
     sources = monitoring_sources(ticker, automatic=automatic)
     primary_sources = [source for source in sources if not source["route"].startswith("supplemental")]
     supplemental_sources = [source for source in sources if source["route"].startswith("supplemental")]
     failures, links, attempts = [], {}, 0
+    persistent_transport = (
+        cached_sources is not None
+        and getattr(transport, "supports_persistent_validators", False)
+    )
+    source_cache = dict(cached_sources or {})
 
     def collect_first(chain):
         nonlocal attempts
@@ -1410,12 +1584,45 @@ def collect_discovery(ticker, transport=fetch, automatic=False):
         for source in chain:
             attempts += 1
             try:
-                body, kind = transport(source["url"], ticker)
-                discovered = discover_links(body, kind, ticker, source)
+                if persistent_transport:
+                    cached = source_cache.get(source["url"])
+                    validators = {
+                        "etag": cached.get("etag") if cached else None,
+                        "last_modified": cached.get("lastModified") if cached else None,
+                    }
+                    response = transport(
+                        source["url"], ticker, validators=validators,
+                        include_metadata=True,
+                    )
+                    if response["notModified"]:
+                        if not cached:
+                            raise ValueError("Conditional discovery response has no cached candidates")
+                        discovered = cached["candidates"]
+                    else:
+                        body, kind = response["content"], response["contentType"]
+                        discovered = discover_links(body, kind, ticker, source)
+                    etag = http_validator(response.get("etag"))
+                    last_modified = http_validator(response.get("lastModified"))
+                else:
+                    body, kind = transport(source["url"], ticker)
+                    discovered = discover_links(body, kind, ticker, source)
                 if not discovered and not source.get("allowEmpty"):
                     raise ValueError("No release links parsed; source discovery requires investigation")
                 if len(discovered) > 500:
                     raise ValueError("Too many source links; narrow the source scope before importing")
+                if persistent_transport:
+                    state = normalized_discovery_cache_state(ticker, {
+                        "etag": etag, "lastModified": last_modified,
+                        "candidates": discovered,
+                    })
+                    if state is None:
+                        source_cache.pop(source["url"], None)
+                    else:
+                        source_cache[source["url"]] = {
+                            "etag": state["etag"],
+                            "lastModified": state["lastModified"],
+                            "candidates": state["candidates"],
+                        }
                 return source, discovered, chain_failures
             except Exception as exc:
                 chain_failures.append(source_error_code(exc))
@@ -1478,11 +1685,15 @@ def collect_discovery(ticker, transport=fetch, automatic=False):
             "candidates": 0,
             "error": failures[0] if failures else "No monitoring sources configured",
         }
+    if persistent_transport:
+        result["_sourceCache"] = source_cache
     return result, links
 
 
 def save_discovery(db, ticker, result, links):
     """Persist one completed discovery result and return newly inserted URLs."""
+    if "_sourceCache" in result:
+        save_discovery_source_cache(db, ticker, result["_sourceCache"])
     before = {row[0] for row in db.execute("SELECT url FROM sources WHERE ticker=?", (ticker,))}
     for url, candidate in links.items():
         detail = candidate if isinstance(candidate, dict) else {"title": candidate}
@@ -1538,8 +1749,16 @@ def add_release_events(db, ticker, urls):
 
 def discover(db, ticker, transport=fetch):
     """Discover candidates, using an official fallback when the preferred route fails."""
-    result, links = collect_discovery(ticker, transport=transport)
+    cached_sources = (
+        load_discovery_source_cache(db, ticker)
+        if getattr(transport, "supports_persistent_validators", False)
+        else None
+    )
+    result, links = collect_discovery(
+        ticker, transport=transport, cached_sources=cached_sources
+    )
     result["newCandidates"] = len(save_discovery(db, ticker, result, links))
+    result.pop("_sourceCache", None)
     return result
 
 

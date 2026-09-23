@@ -889,6 +889,84 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(len(m.save_discovery(self.db, "NBIS", result, links)), 1)
         self.assertEqual(len(m.save_discovery(self.db, "NBIS", result, links)), 0)
 
+    def test_discovery_validators_and_candidates_survive_process_restart(self):
+        provider = m.PROVIDERS["MRVL"]
+        body = b'''<rss><channel><item><title>Marvell official update</title>
+          <link>https://investor.marvell.com/news-events/press-releases/detail/1234/example</link>
+        </item></channel></rss>'''
+        first_requests = []
+
+        def initial_transport(url, _ticker, validators=None, include_metadata=False):
+            first_requests.append((url, validators, include_metadata))
+            return {
+                "content": body, "contentType": "text/xml", "etag": '"feed-v1"',
+                "lastModified": None, "notModified": False,
+            }
+
+        initial_transport.supports_persistent_validators = True
+        first = m.discover(self.db, "MRVL", initial_transport)
+        self.assertEqual(first["candidates"], 1)
+        self.assertEqual(first_requests, [(provider["indexUrl"], {
+            "etag": None, "last_modified": None,
+        }, True)])
+        stored = self.db.execute(
+            "SELECT * FROM discovery_source_cache WHERE ticker='MRVL'"
+        ).fetchone()
+        self.assertEqual(stored["response_etag"], '"feed-v1"')
+        self.assertNotIn("<rss", stored["candidates_json"])
+
+        def restarted_transport(url, _ticker, validators=None, include_metadata=False):
+            self.assertEqual(url, provider["indexUrl"])
+            self.assertEqual(validators["etag"], '"feed-v1"')
+            self.assertTrue(include_metadata)
+            return {
+                "content": None, "contentType": None, "etag": '"feed-v1"',
+                "lastModified": None, "notModified": True,
+            }
+
+        restarted_transport.supports_persistent_validators = True
+        second = m.discover(self.db, "MRVL", restarted_transport)
+        self.assertEqual(second["candidates"], 1)
+        self.assertEqual(second["newCandidates"], 0)
+        self.assertNotIn("_sourceCache", second)
+
+    def test_tampered_discovery_cache_is_ignored(self):
+        with self.db:
+            self.db.execute(
+                """INSERT INTO discovery_source_cache(
+                     ticker,source_url,response_etag,candidates_json,updated_at
+                   ) VALUES(?,?,?,?,?)""",
+                ("MRVL", m.INDEXES["MRVL"], '"unsafe"',
+                 '{"https://evil.test/release":"Injected"}', m.now()),
+            )
+        self.assertEqual(m.load_discovery_source_cache(self.db, "MRVL"), {})
+
+    def test_twse_inline_identity_can_be_cached_but_arbitrary_queries_cannot(self):
+        body = json.dumps([{
+            "發言日期": "1150918", "發言時間": "153643", "公司代號": "2330",
+            "公司名稱": "台積電", "主旨 ": "董事會決議重要事項",
+            "說明": "核准資本預算100億元。",
+        }], ensure_ascii=False).encode()
+
+        def transport(_url, _ticker, validators=None, include_metadata=False):
+            self.assertTrue(include_metadata)
+            return {
+                "content": body, "contentType": "application/json",
+                "etag": '"twse-v1"', "lastModified": None,
+                "notModified": False,
+            }
+
+        transport.supports_persistent_validators = True
+        result = m.discover(self.db, "TSM", transport)
+        self.assertEqual(result["candidates"], 1)
+        cache = m.load_discovery_source_cache(self.db, "TSM")
+        candidate_url = next(iter(cache[m.INDEXES["TSM"]]["candidates"]))
+        self.assertTrue(m.valid_discovery_candidate_url(candidate_url, "TSM"))
+        self.assertFalse(m.valid_discovery_candidate_url(
+            m.INDEXES["TSM"] + "?company=2330&date=1150918&time=153643&id=not-safe",
+            "TSM",
+        ))
+
     def test_recovered_primary_source_does_not_report_a_stale_fallback_error(self):
         markup = b'<a href="/news/announcement/official-release">Official release</a>'
 
