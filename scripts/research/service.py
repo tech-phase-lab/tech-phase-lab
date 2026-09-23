@@ -519,6 +519,7 @@ class AutomaticMonitor:
                 db, payload.get("url", ""), payload.get("sha256", ""),
                 payload.get("decision", ""), payload.get("reviewer", ""), payload.get("reason", ""),
                 payload.get("validationSha256", ""),
+                payload.get("aiVerification") is True,
             )
             monitor.write_snapshot(db, self.snapshot_path)
             return result

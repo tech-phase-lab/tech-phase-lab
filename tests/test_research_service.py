@@ -729,17 +729,61 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(item["generation_response_id"], "resp_test")
         self.assertEqual(item["generation_source_truncated"], 0)
         self.assertEqual(item["generation_total_tokens"], 520)
+        app.save_brief({
+            "url": "https://nebius.com/newsroom/new-release", "sha256": "d" * 64,
+            **generated["draft"],
+        })
+        item = app.editorial_queue(5)["items"][0]
+        self.assertEqual(item["generation_provider"], "openai-responses")
+        self.assertEqual(item["generation_response_id"], "resp_test")
+        with self.assertRaisesRegex(ValueError, "ai-draft-human-verification-required"):
+            app.decide_brief({
+                "url": "https://nebius.com/newsroom/new-release", "sha256": "d" * 64,
+                "validationSha256": item["draft_validation_sha256"],
+                "decision": "approved", "reviewer": "human-editor",
+                "reason": "AI下書きと公式原文の根拠を人間が照合しました",
+            })
+        with monitor.connect(self.db_path) as db:
+            fake_reviewed_at = "2026-09-23T12:00:00+00:00"
+            db.execute(
+                "UPDATE briefs SET status='approved',reviewed_at=? WHERE url=?",
+                (fake_reviewed_at, "https://nebius.com/newsroom/new-release"),
+            )
+            db.execute("""
+              INSERT INTO brief_review_history(
+                url,source_sha256,draft_validation_sha256,decision,reviewed_at,
+                reviewer,reason,ai_verification
+              ) VALUES(?,?,?,?,?,?,?,0)
+            """, (
+                "https://nebius.com/newsroom/new-release", "d" * 64,
+                item["draft_validation_sha256"], "approved", fake_reviewed_at,
+                "tampered-editor", "AI verification was not recorded",
+            ))
+            db.commit()
+        self.assertEqual(app.public_snapshot()["briefs"], [])
+        with monitor.connect(self.db_path) as db:
+            db.execute(
+                "DELETE FROM brief_review_history WHERE reviewer='tampered-editor'"
+            )
+            db.execute(
+                "UPDATE briefs SET status='draft',reviewed_at=NULL WHERE url=?",
+                ("https://nebius.com/newsroom/new-release",),
+            )
+            db.commit()
         app.decide_brief({
             "url": "https://nebius.com/newsroom/new-release", "sha256": "d" * 64,
             "validationSha256": item["draft_validation_sha256"],
             "decision": "approved", "reviewer": "human-editor",
             "reason": "AI下書きと公式原文の根拠を人間が照合しました",
+            "aiVerification": True,
         })
         public = app.public_snapshot()["briefs"]
         self.assertEqual(public[0]["generation_method"], "ai-assisted")
         self.assertNotIn("generation_provider", public[0])
         self.assertNotIn("generation_model", public[0])
         self.assertNotIn("generation_response_id", public[0])
+        history = app.editorial_queue(5)["items"][0]["review_history"]
+        self.assertTrue(history[0]["ai_verification"])
 
     def test_manual_generation_uses_the_same_rolling_budget(self):
         url = "https://nebius.com/newsroom/new-release"

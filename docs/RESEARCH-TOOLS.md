@@ -28,6 +28,13 @@ Micron's earnings call time must not be labeled as its release publication time.
 No paid data subscription, automatic ingestion, external notification, or
 membership feature is enabled by these tools.
 
+AI-assisted news drafts retain their AI provenance after human edits and
+require a separate human-verification acknowledgement before approval. The
+reviewer must compare the official source, evidence quotes, factual summary,
+impact interpretation, and numbers. The private audit history retains that
+acknowledgement; public data excludes AI-assisted drafts whose matching
+approval lacks it.
+
 Validation: `npm run lint`, `node --experimental-strip-types --test tests/*.test.mjs`,
 and `npm run build`. Browser checks cover favorites persistence, company-page
 toggles, calendar filters, and the four home destinations.

@@ -425,3 +425,33 @@ calendar event changed.
 
 Continue rotating the remaining pending roster. Empty dynamic sections,
 historical-only pages and transport failures remain inconclusive.
+
+## Sixteenth company batch reviewed on 2026-09-23
+
+The next ten pending entries were rechecked against their first-party schedule
+or earnings-announcement pages. None supplied a confirmed future earnings date
+or an explicit no-events statement, so no forecast was added and
+`lastCheckedOn` remains null. The existing 2026-09-23 `lastAttemptedOn` values
+already record the same-day attempt.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| SKHY | Pending | The official IR newsroom listed its July 29 second-quarter results and August IR articles as the latest items, with no future earnings invitation or explicit no-events statement. |
+| SNOW | Pending | The official page exposed an empty Upcoming Events section and archive headings without an explicit no-events statement. |
+| VRT | Pending | The official Events & Presentations page loaded navigation but no inspectable dated schedule state. |
+| AAPL | Pending | The official page exposed Investor Updates and Quarterly Earnings Reports headings without a dated future item or explicit no-events statement. |
+| AMZN | Pending | The official Events page exposed empty Upcoming Events and Past Events headings without an explicit no-events statement. |
+| ANET | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| ARM | Pending | The official investor page remained inaccessible through the review connection. |
+| AVGO | Pending | The official Financial News list still ended with the September 2 fiscal Q3 results and contained no future timing announcement or explicit no-events statement. |
+| BE | Pending | The official Event Calendar exposed an empty Upcoming Events section without an explicit no-events statement. |
+| COHR | Pending | The official Financial Releases list still ended with the August 12 fiscal 2026 results and contained no future timing announcement or explicit no-events statement. |
+
+The BLS annual schedule was rechecked on 2026-09-23 and still lists the October
+2 Employment Situation, October 14 CPI and October 15 PPI releases at 08:30
+Eastern. The Federal Reserve page, last updated September 16, still lists the
+October 27-28 and December 8-9 meetings without future statement or
+press-conference clock times. No calendar event changed.
+
+Continue rotating the remaining pending roster. Inaccessible pages, empty
+dynamic sections and historical-only lists remain pending.

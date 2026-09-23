@@ -987,7 +987,8 @@ def connect(path):
       id INTEGER PRIMARY KEY, url TEXT NOT NULL REFERENCES sources(url),
       source_sha256 TEXT NOT NULL, draft_validation_sha256 TEXT,
       decision TEXT NOT NULL CHECK(decision IN ('approved','held','rejected')),
-      reviewed_at TEXT NOT NULL, reviewer TEXT NOT NULL, reason TEXT NOT NULL);
+      reviewed_at TEXT NOT NULL, reviewer TEXT NOT NULL, reason TEXT NOT NULL,
+      ai_verification INTEGER NOT NULL DEFAULT 0);
     CREATE INDEX IF NOT EXISTS brief_review_history_url_id
       ON brief_review_history(url,id DESC);
     CREATE TABLE IF NOT EXISTS brief_generation_jobs (
@@ -1117,6 +1118,10 @@ def connect(path):
     if "draft_validation_sha256" not in brief_history_columns:
         db.execute(
             "ALTER TABLE brief_review_history ADD COLUMN draft_validation_sha256 TEXT"
+        )
+    if "ai_verification" not in brief_history_columns:
+        db.execute(
+            "ALTER TABLE brief_review_history ADD COLUMN ai_verification INTEGER NOT NULL DEFAULT 0"
         )
     job_columns = {row[1] for row in db.execute("PRAGMA table_info(brief_generation_jobs)")}
     if "reserved_tokens" not in job_columns:
@@ -1940,6 +1945,7 @@ def snapshot(db):
               WHERE h.url=b.url AND h.source_sha256=b.source_sha256
                 AND h.draft_validation_sha256=b.validation_sha256
                 AND h.decision='approved' AND h.reviewed_at=b.reviewed_at
+                AND (b.generation_provider IS NULL OR h.ai_verification=1)
             )
           ORDER BY b.reviewed_at DESC
         """)]
@@ -2112,13 +2118,15 @@ def private_brief_queue(db, limit=20, review_filter="all"):
             "source_sha256": item["source_sha256"], "decision": item["decision"],
             "draft_validation_sha256": item["draft_validation_sha256"],
             "reviewed_at": item["reviewed_at"], "reviewer": item["reviewer"],
-            "reason": item["reason"], "current_revision": (
+            "reason": item["reason"],
+            "ai_verification": bool(item["ai_verification"]), "current_revision": (
                 item["source_sha256"] == row["sha256"]
                 and item["draft_validation_sha256"] is not None
                 and item["draft_validation_sha256"] == brief_validation_sha
             ),
         } for item in db.execute("""
-          SELECT source_sha256,draft_validation_sha256,decision,reviewed_at,reviewer,reason
+          SELECT source_sha256,draft_validation_sha256,decision,reviewed_at,reviewer,reason,
+                 ai_verification
           FROM brief_review_history WHERE url=? ORDER BY id DESC LIMIT 10
         """, (row["url"],))]
         if not brief_current:
@@ -2828,6 +2836,13 @@ def save_brief_draft(db, url, expected_sha, summary_ja, impact_label, impact_ja,
         row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
         if not row or not row["sha256"] or row["sha256"] != expected_sha or row["error"] or not row["extracted_text"]:
             raise ValueError("Source is missing, changed, failed, or has no extracted evidence")
+        previous = db.execute(
+            "SELECT source_sha256,generation_provider FROM briefs WHERE url=?", (url,)
+        ).fetchone()
+        preserve_ai_audit = bool(
+            previous and previous["source_sha256"] == expected_sha
+            and previous["generation_provider"]
+        )
         summary_ja, impact_ja, cleaned = _validate_brief_payload(
             row["extracted_text"], summary_ja, impact_label, impact_ja, confidence, evidence
         )
@@ -2847,16 +2862,20 @@ def save_brief_draft(db, url, expected_sha, summary_ja, impact_label, impact_ja,
             validation_sha, generated_at,
         ))
         db.execute("DELETE FROM brief_evidence WHERE url=?", (url,))
-        db.execute("""
-          UPDATE briefs SET generation_provider=NULL,generation_model=NULL,generation_response_id=NULL,
-                            generation_source_truncated=0,generation_input_tokens=NULL,
-                            generation_output_tokens=NULL,generation_total_tokens=NULL WHERE url=?
-        """, (url,))
+        if not preserve_ai_audit:
+            db.execute("""
+              UPDATE briefs SET generation_provider=NULL,generation_model=NULL,generation_response_id=NULL,
+                                generation_source_truncated=0,generation_input_tokens=NULL,
+                                generation_output_tokens=NULL,generation_total_tokens=NULL WHERE url=?
+            """, (url,))
         db.executemany("INSERT INTO brief_evidence(url,field,excerpt) VALUES(?,?,?)", [(url, field, excerpt) for field, excerpt in cleaned])
     return {"url": url, "status": "draft", "generatedAt": generated_at, "published": False}
 
 
-def review_brief(db, url, expected_sha, decision, reviewer, reason, expected_validation_sha):
+def review_brief(
+    db, url, expected_sha, decision, reviewer, reason, expected_validation_sha,
+    ai_verification=False,
+):
     """Record the mandatory human decision for the current source revision."""
     if decision not in {"approved", "held", "rejected"}:
         raise ValueError("Decision, reviewer, and reason are required")
@@ -2874,6 +2893,9 @@ def review_brief(db, url, expected_sha, decision, reviewer, reason, expected_val
         if (not _ANNUAL_SHA.fullmatch(str(expected_validation_sha)) or not row
                 or row["validation_sha256"] != expected_validation_sha):
             raise ValueError("draft-revision-mismatch")
+        if (decision == "approved" and row["generation_provider"] is not None
+                and ai_verification is not True):
+            raise ValueError("ai-draft-human-verification-required")
         try:
             _validate_brief_for_review(row, evidence_rows, expected_sha)
         except ValueError as exc:
@@ -2891,11 +2913,13 @@ def review_brief(db, url, expected_sha, decision, reviewer, reason, expected_val
         reviewed_at = now()
         db.execute("""
           INSERT INTO brief_review_history(
-            url,source_sha256,draft_validation_sha256,decision,reviewed_at,reviewer,reason
-          ) VALUES(?,?,?,?,?,?,?)
+            url,source_sha256,draft_validation_sha256,decision,reviewed_at,reviewer,reason,
+            ai_verification
+          ) VALUES(?,?,?,?,?,?,?,?)
         """, (
             url, expected_sha, row["validation_sha256"], decision,
             reviewed_at, reviewer, reason,
+            int(row["generation_provider"] is not None and ai_verification is True),
         ))
         db.execute(
             "UPDATE briefs SET status=?,reviewed_at=?,reviewer=?,review_reason=? WHERE url=?",
@@ -3336,6 +3360,10 @@ def main():
     brief_review.add_argument("--validation-sha256", required=True)
     brief_review.add_argument("--reviewer", required=True)
     brief_review.add_argument("--reason", required=True)
+    brief_review.add_argument(
+        "--ai-verification", action="store_true",
+        help="confirm human comparison of an AI-assisted draft with the official source",
+    )
     annual_draft = sub.add_parser(
         "draft-annual",
         help="validate and store one private SEC annual-report draft from JSON",
@@ -3370,7 +3398,7 @@ def main():
         elif args.command == "review-brief":
             result = review_brief(
                 db, args.url, args.sha256, args.decision, args.reviewer, args.reason,
-                args.validation_sha256,
+                args.validation_sha256, args.ai_verification,
             )
         elif args.command == "draft-annual":
             candidate_path = Path(args.input)
