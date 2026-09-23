@@ -63,6 +63,8 @@ export type MonitorState = {
   };
   discoveryRuns?: {
     lastCompletedAt: string | null; lastDurationMs: number | null;
+    lastCompletedAgeSeconds: number | null; pollOverdueAfterSeconds: number;
+    pollOverdue: boolean;
     lastChecks: number; lastDegraded: number; lastNewSources: number;
     lastRequestDurationAverageMs: number | null; lastRequestDurationMaxMs: number | null;
     runs24Hours: number; checks24Hours: number; degraded24Hours: number;

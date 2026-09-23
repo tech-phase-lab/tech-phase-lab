@@ -92,6 +92,8 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["newSources24Hours"], 2)
         self.assertEqual(summary["requestDurationAverageMs24Hours"], 450)
         self.assertEqual(summary["requestDurationMaxMs24Hours"], 600)
+        self.assertEqual(summary["lastCompletedAgeSeconds"], 1)
+        self.assertFalse(summary["pollOverdue"])
         self.assertNotIn("https://", json.dumps(summary))
 
         restarted = service.AutomaticMonitor(self.db_path, self.snapshot_path)
@@ -113,6 +115,24 @@ class ResearchServiceTests(unittest.TestCase):
                     monitor.record_discovery_poll_batch(db, *values)
             with self.assertRaisesRegex(ValueError, "invalid-discovery-poll-reference"):
                 monitor.discovery_poll_summary(db, "not-a-time")
+            with self.assertRaisesRegex(ValueError, "invalid-discovery-poll-reference"):
+                monitor.discovery_poll_summary(db, poll_overdue_after_seconds=14)
+
+    def test_discovery_poll_metrics_mark_stale_persisted_evidence(self):
+        completed = datetime.now(timezone.utc)
+        with monitor.connect(self.db_path) as db:
+            monitor.record_discovery_poll_batch(
+                db, (completed - timedelta(seconds=1)).isoformat(timespec="milliseconds"),
+                completed.isoformat(timespec="milliseconds"),
+                1000, 1, 0, 0, (250,),
+            )
+            summary = monitor.discovery_poll_summary(
+                db, (completed + timedelta(seconds=61)).isoformat(timespec="milliseconds"),
+                poll_overdue_after_seconds=60,
+            )
+        self.assertEqual(summary["lastCompletedAgeSeconds"], 61)
+        self.assertEqual(summary["pollOverdueAfterSeconds"], 60)
+        self.assertTrue(summary["pollOverdue"])
 
     def test_durable_batch_summaries_ignore_future_rows(self):
         reference = datetime.now(timezone.utc)

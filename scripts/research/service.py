@@ -433,7 +433,9 @@ class AutomaticMonitor:
             state["bodyFetch"]["durable"] = monitor.body_fetch_batch_summary(
                 db, poll_overdue_after_seconds=max(360, self.body_interval * 2 + 60)
             )
-            state["discoveryRuns"] = monitor.discovery_poll_summary(db)
+            state["discoveryRuns"] = monitor.discovery_poll_summary(
+                db, poll_overdue_after_seconds=self.monitor_stale_seconds
+            )
             state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
             state["incidents"] = monitor.operational_incident_summary(
                 db, delivery_enabled=self.notification_enabled

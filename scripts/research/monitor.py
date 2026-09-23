@@ -1222,12 +1222,15 @@ def record_discovery_poll_batch(
         """)
 
 
-def discovery_poll_summary(db, reference=None):
+def discovery_poll_summary(db, reference=None, poll_overdue_after_seconds=60):
     """Return restart-safe official-list polling metrics without source identities."""
     reference = reference or now()
     try:
         parsed = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
         if parsed.tzinfo is None:
+            raise ValueError
+        poll_overdue_after_seconds = int(poll_overdue_after_seconds)
+        if not 15 <= poll_overdue_after_seconds <= 86_400:
             raise ValueError
     except (TypeError, ValueError) as exc:
         raise ValueError("invalid-discovery-poll-reference") from exc
@@ -1254,6 +1257,16 @@ def discovery_poll_summary(db, reference=None):
             continue
         latest = candidate
         break
+    last_completed_at = None
+    last_completed_age_seconds = None
+    if latest:
+        completed_at = datetime.fromisoformat(
+            str(latest["completed_at"]).replace("Z", "+00:00")
+        ).astimezone(timezone.utc)
+        last_completed_at = completed_at.isoformat(timespec="milliseconds")
+        last_completed_age_seconds = max(
+            0, round((reference_utc - completed_at).total_seconds())
+        )
     totals = db.execute("""
       SELECT count(*) AS runs,COALESCE(sum(checks),0) AS checks,
              COALESCE(sum(degraded),0) AS degraded,
@@ -1264,7 +1277,13 @@ def discovery_poll_summary(db, reference=None):
       WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
     """, (window_start, reference_text)).fetchone()
     return {
-        "lastCompletedAt": latest["completed_at"] if latest else None,
+        "lastCompletedAt": last_completed_at,
+        "lastCompletedAgeSeconds": last_completed_age_seconds,
+        "pollOverdueAfterSeconds": poll_overdue_after_seconds,
+        "pollOverdue": (
+            last_completed_age_seconds is None
+            or last_completed_age_seconds > poll_overdue_after_seconds
+        ),
         "lastDurationMs": latest["duration_ms"] if latest else None,
         "lastChecks": latest["checks"] if latest else 0,
         "lastDegraded": latest["degraded"] if latest else 0,

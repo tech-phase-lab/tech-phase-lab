@@ -86,10 +86,13 @@ function discoveryCacheStatus(cache: MonitorState["discoveryCache"]) {
 }
 function discoveryRunStatus(runs: MonitorState["discoveryRuns"]) {
   if (!runs?.lastCompletedAt) return "公式一覧の永続実測：初回巡回待ち";
+  const freshness = runs.pollOverdue
+    ? `要確認・最終完了 ${time(runs.lastCompletedAt)} JST`
+    : `稼働確認 ${time(runs.lastCompletedAt)} JST`;
   const latency = runs.requestDurationAverageMs24Hours == null
     ? "応答時間の実測待ち"
     : `応答平均 ${duration(runs.requestDurationAverageMs24Hours)}・最大 ${duration(runs.requestDurationMaxMs24Hours)}`;
-  return `公式一覧の永続実測：24時間 ${runs.runs24Hours}バッチ・${runs.checks24Hours}経路 · 要確認 ${runs.degraded24Hours}件 · 新規 ${runs.newSources24Hours}件 · ${latency} · 最終完了 ${time(runs.lastCompletedAt)} JST`;
+  return `公式一覧の永続実測：${freshness} · 24時間 ${runs.runs24Hours}バッチ・${runs.checks24Hours}経路 · 要確認 ${runs.degraded24Hours}件 · 新規 ${runs.newSources24Hours}件 · ${latency}`;
 }
 function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], pending = 0) {
   if (!bodyFetch?.lastPollAt) return "本文取得：初回ポーリング待ち";
