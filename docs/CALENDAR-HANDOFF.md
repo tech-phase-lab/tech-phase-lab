@@ -117,3 +117,32 @@ meetings, without future statement or press-conference clock times.
 Next company batch retries MRVL, NBIS, NOW, NVDA, ORCL, PANW, PLTR, SKHY, SNOW
 and VRT. Other pending rows remain queued until an official source becomes
 conclusive.
+
+## Sixth company batch reviewed on 2026-09-23
+
+The schedule-specific official URLs below were rechecked. All ten entries remain
+pending: an empty upcoming section, a page containing only past items, or an
+inaccessible page is not enough evidence to advance `lastCheckedOn`.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| MRVL | Pending | The official Marvell Events & Presentations page was not accessible through the review connection, so no current schedule could be established. |
+| NBIS | Pending | The investor hub loaded and showed September 2026 investor conferences, but no future earnings announcement or explicit statement that none is scheduled. |
+| NOW | Pending | The official page exposed archived events and presentations only; it did not provide a dated upcoming earnings item or an explicit no-events statement. |
+| NVDA | Pending | The official NVIDIA events and presentations page was not accessible through the review connection. |
+| ORCL | Pending | The official page exposed empty Featured Event and Upcoming events headings without an explicit no-events statement. |
+| PANW | Pending | The official Palo Alto Networks events page was not accessible through the review connection. |
+| PLTR | Pending | The official events URL returned only the investor-relations navigation shell, with no inspectable schedule state. |
+| SKHY | Pending | The official IR newsroom listed past results and invitations through August 2026, but no future earnings announcement or explicit no-events statement. |
+| SNOW | Pending | The official page exposed an empty Upcoming Events heading without an explicit no-events statement. |
+| VRT | Pending | The official page exposed empty Latest Events and Latest Presentation headings without an explicit no-events statement. |
+
+BLS and Federal Reserve sources were also rechecked on 2026-09-23. The BLS
+October releases still show Employment Situation on October 2, CPI on October
+14 and PPI on October 15 at 08:30 Eastern. The Federal Reserve still lists the
+October 27-28 and December 8-9 FOMC meetings without publishing future statement
+or press-conference clock times. No calendar event changed.
+
+Next company batch starts with AAPL, then AMZN, ANET, ARM, AVGO, BE, COHR,
+CRDO, CRM and CRWV. These pending entries should be retried through their
+schedule-specific URLs when the blockers above change.
