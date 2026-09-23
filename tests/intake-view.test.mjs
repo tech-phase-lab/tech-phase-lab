@@ -42,6 +42,9 @@ test("operations preview exposes bounded cache pressure without cached contents"
   assert.match(liveTypes, /durable\?:/);
   assert.match(intakeDashboard, /本文取得の永続集計/);
   assert.match(intakeDashboard, /notModified24Hours/);
+  assert.match(liveTypes, /detectionLatencySamples24Hours/);
+  assert.match(intakeDashboard, /検知→初回本文/);
+  assert.match(intakeDashboard, /実測待ち/);
   assert.match(intakeDashboard, /cache\.entries/);
   assert.match(intakeDashboard, /cache\.bytes/);
   assert.doesNotMatch(intakeDashboard, /cache\.(url|content|body)/);

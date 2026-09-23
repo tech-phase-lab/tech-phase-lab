@@ -37,7 +37,10 @@ approval lacks it.
 
 Article-body batch metrics are persisted separately from the in-memory worker
 state. The operations preview can therefore show the last completed batch and
-24-hour checks, errors and HTTP 304 reuse after a service restart. These
+24-hour checks, errors and HTTP 304 reuse after a service restart. For newly
+detected release URLs, it also records the measured interval from discovery to
+the first completed body extraction as an average, maximum and sample count.
+This is processing evidence after detection, not a subscriber-delivery SLA. These
 metrics contain no source URLs, validators or article text and retain at most
 20,000 batches, enough to preserve a full 24-hour window even at the minimum
 five-second worker interval. The configured batch size is capped at 100.

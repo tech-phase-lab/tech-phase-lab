@@ -70,8 +70,14 @@ export type MonitorState = {
     durable?: {
       lastCompletedAt: string | null; lastDurationMs: number | null;
       lastChecks: number; lastErrors: number; lastNotModified: number;
+      lastDetectionLatencySamples: number;
+      lastDetectionLatencyAverageMs: number | null;
+      lastDetectionLatencyMaxMs: number | null;
       runs24Hours: number; checks24Hours: number; errors24Hours: number;
       notModified24Hours: number;
+      detectionLatencySamples24Hours: number;
+      detectionLatencyAverageMs24Hours: number | null;
+      detectionLatencyMaxMs24Hours: number | null;
     };
   };
   pendingBodies?: number;

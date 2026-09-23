@@ -3,6 +3,7 @@ import importlib.util
 from pathlib import Path
 import json
 import os
+import sqlite3
 import sys
 import tempfile
 import threading
@@ -72,6 +73,37 @@ class ResearchServiceTests(unittest.TestCase):
             app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         self.assertEqual(app.body_batch, 100)
 
+    def test_legacy_body_batch_table_migrates_without_losing_metrics(self):
+        legacy_path = Path(self.temp.name) / "legacy-batches.sqlite"
+        with sqlite3.connect(legacy_path) as db:
+            db.execute("""
+              CREATE TABLE body_fetch_batches (
+                id INTEGER PRIMARY KEY, polled_at TEXT NOT NULL,
+                completed_at TEXT NOT NULL, duration_ms INTEGER NOT NULL,
+                checks INTEGER NOT NULL, errors INTEGER NOT NULL,
+                not_modified INTEGER NOT NULL)
+            """)
+            db.execute("""
+              INSERT INTO body_fetch_batches(
+                polled_at,completed_at,duration_ms,checks,errors,not_modified
+              ) VALUES(?,?,?,?,?,?)
+            """, (
+                "2026-09-23T00:00:00+00:00", "2026-09-23T00:00:01+00:00",
+                1000, 2, 0, 1,
+            ))
+        with monitor.connect(legacy_path) as db:
+            columns = {row[1] for row in db.execute("PRAGMA table_info(body_fetch_batches)")}
+            self.assertTrue({
+                "detection_latency_samples", "detection_latency_total_ms",
+                "detection_latency_max_ms",
+            }.issubset(columns))
+            summary = monitor.body_fetch_batch_summary(
+                db, "2026-09-23T00:01:00+00:00"
+            )
+        self.assertEqual(summary["checks24Hours"], 2)
+        self.assertEqual(summary["detectionLatencySamples24Hours"], 0)
+        self.assertIsNone(summary["detectionLatencyAverageMs24Hours"])
+
     def test_liveness_does_not_wait_for_first_official_source_cycle(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         server = service.ThreadingHTTPServer(("127.0.0.1", 0), service.Handler)
@@ -127,11 +159,38 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(durable["checks24Hours"], 1)
         self.assertEqual(durable["errors24Hours"], 0)
         self.assertEqual(durable["notModified24Hours"], 0)
+        self.assertEqual(durable["detectionLatencySamples24Hours"], 1)
+        self.assertIsInstance(durable["detectionLatencyAverageMs24Hours"], int)
+        self.assertIsInstance(durable["detectionLatencyMaxMs24Hours"], int)
         self.assertNotIn("https://", json.dumps(durable))
 
         restarted = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         persisted = restarted.public_state()["bodyFetch"]["durable"]
         self.assertEqual(persisted, durable)
+
+    def test_body_latency_ignores_routine_rechecks_and_invalid_detection_times(self):
+        with monitor.connect(self.db_path) as db:
+            db.execute("""
+              UPDATE sources SET sha256=?,raw_sha256=?,body_sha256=?,
+                extracted_text='Existing evidence.',extracted_chars=18,next_fetch_at=NULL
+              WHERE url LIKE '%new-release'
+            """, ("a" * 64, "a" * 64, "b" * 64))
+            db.commit()
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_batch = 1
+        original_fetch = monitor.fetch
+        monitor.fetch = lambda *_: (b"<main>Routine evidence remains current.</main>", "text/html")
+        try:
+            with ThreadPoolExecutor(max_workers=1) as pool:
+                app.fetch_bodies(pool)
+        finally:
+            monitor.fetch = original_fetch
+        durable = app.public_state()["bodyFetch"]["durable"]
+        self.assertEqual(durable["detectionLatencySamples24Hours"], 0)
+        self.assertIsNone(durable["detectionLatencyAverageMs24Hours"])
+        self.assertIsNone(durable["detectionLatencyMaxMs24Hours"])
+        self.assertIsNone(service.timestamp_latency_ms("not-a-timestamp", service.utc_now()))
+        self.assertIsNone(service.timestamp_latency_ms(service.utc_now(), "not-a-timestamp"))
 
     def test_body_candidates_prioritize_missing_evidence_before_routine_rechecks(self):
         incomplete = "https://nebius.com/newsroom/legacy-evidence.pdf"

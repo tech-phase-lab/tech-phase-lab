@@ -979,7 +979,10 @@ def connect(path):
       duration_ms INTEGER NOT NULL CHECK(duration_ms>=0 AND duration_ms<=3600000),
       checks INTEGER NOT NULL CHECK(checks>0 AND checks<=1000),
       errors INTEGER NOT NULL CHECK(errors>=0 AND errors<=checks),
-      not_modified INTEGER NOT NULL CHECK(not_modified>=0 AND not_modified<=checks));
+      not_modified INTEGER NOT NULL CHECK(not_modified>=0 AND not_modified<=checks),
+      detection_latency_samples INTEGER NOT NULL DEFAULT 0,
+      detection_latency_total_ms INTEGER NOT NULL DEFAULT 0,
+      detection_latency_max_ms INTEGER);
     CREATE INDEX IF NOT EXISTS body_fetch_batches_completed
       ON body_fetch_batches(completed_at DESC);
     CREATE TABLE IF NOT EXISTS briefs (
@@ -1077,6 +1080,18 @@ def connect(path):
             "ALTER TABLE discovery_source_cache "
             "ADD COLUMN parser_version TEXT NOT NULL DEFAULT ''"
         )
+    body_batch_columns = {
+        row[1] for row in db.execute("PRAGMA table_info(body_fetch_batches)")
+    }
+    for column, declaration in {
+        "detection_latency_samples": "INTEGER NOT NULL DEFAULT 0",
+        "detection_latency_total_ms": "INTEGER NOT NULL DEFAULT 0",
+        "detection_latency_max_ms": "INTEGER",
+    }.items():
+        if column not in body_batch_columns:
+            db.execute(
+                f"ALTER TABLE body_fetch_batches ADD COLUMN {column} {declaration}"
+            )
     if "title" not in {row[1] for row in db.execute("PRAGMA table_info(sources)")}:
         db.execute("ALTER TABLE sources ADD COLUMN title TEXT")
     source_columns = {row[1] for row in db.execute("PRAGMA table_info(sources)")}
@@ -1155,27 +1170,40 @@ def connect(path):
     return db
 
 
-def record_body_fetch_batch(db, polled_at, completed_at, duration_ms, checks, errors, not_modified):
+def record_body_fetch_batch(
+    db, polled_at, completed_at, duration_ms, checks, errors, not_modified,
+    detection_latencies_ms=(),
+):
     """Persist bounded URL-free body-fetch evidence across service restarts."""
     try:
         polled = datetime.fromisoformat(str(polled_at).replace("Z", "+00:00"))
         completed = datetime.fromisoformat(str(completed_at).replace("Z", "+00:00"))
         duration_ms, checks = int(duration_ms), int(checks)
         errors, not_modified = int(errors), int(not_modified)
+        latencies = tuple(int(value) for value in detection_latencies_ms)
     except (TypeError, ValueError) as exc:
         raise ValueError("invalid-body-fetch-batch") from exc
+    maximum_latency_ms = 31 * 24 * 60 * 60 * 1000
     if (
         polled.tzinfo is None or completed.tzinfo is None or completed < polled
         or not 0 <= duration_ms <= 3_600_000 or not 1 <= checks <= 1000
         or not 0 <= errors <= checks or not 0 <= not_modified <= checks
+        or len(latencies) > checks
+        or any(value < 0 or value > maximum_latency_ms for value in latencies)
     ):
         raise ValueError("invalid-body-fetch-batch")
+    latency_total = sum(latencies)
+    latency_max = max(latencies) if latencies else None
     with db:
         db.execute("""
           INSERT INTO body_fetch_batches(
-            polled_at,completed_at,duration_ms,checks,errors,not_modified
-          ) VALUES(?,?,?,?,?,?)
-        """, (polled_at, completed_at, duration_ms, checks, errors, not_modified))
+            polled_at,completed_at,duration_ms,checks,errors,not_modified,
+            detection_latency_samples,detection_latency_total_ms,detection_latency_max_ms
+          ) VALUES(?,?,?,?,?,?,?,?,?)
+        """, (
+            polled_at, completed_at, duration_ms, checks, errors, not_modified,
+            len(latencies), latency_total, latency_max,
+        ))
         db.execute("""
           DELETE FROM body_fetch_batches WHERE id IN (
             SELECT id FROM body_fetch_batches ORDER BY id DESC LIMIT -1 OFFSET 20000
@@ -1196,13 +1224,18 @@ def body_fetch_batch_summary(db, reference=None):
         timespec="milliseconds"
     )
     latest = db.execute("""
-      SELECT completed_at,duration_ms,checks,errors,not_modified
+      SELECT completed_at,duration_ms,checks,errors,not_modified,
+             detection_latency_samples,detection_latency_total_ms,
+             detection_latency_max_ms
       FROM body_fetch_batches ORDER BY id DESC LIMIT 1
     """).fetchone()
     totals = db.execute("""
       SELECT count(*) AS runs,COALESCE(sum(checks),0) AS checks,
              COALESCE(sum(errors),0) AS errors,
-             COALESCE(sum(not_modified),0) AS not_modified
+             COALESCE(sum(not_modified),0) AS not_modified,
+             COALESCE(sum(detection_latency_samples),0) AS latency_samples,
+             COALESCE(sum(detection_latency_total_ms),0) AS latency_total,
+             max(detection_latency_max_ms) AS latency_max
       FROM body_fetch_batches
       WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
     """, (window_start, parsed.astimezone(timezone.utc).isoformat(timespec="milliseconds"))).fetchone()
@@ -1212,9 +1245,21 @@ def body_fetch_batch_summary(db, reference=None):
         "lastChecks": latest["checks"] if latest else 0,
         "lastErrors": latest["errors"] if latest else 0,
         "lastNotModified": latest["not_modified"] if latest else 0,
+        "lastDetectionLatencySamples": latest["detection_latency_samples"] if latest else 0,
+        "lastDetectionLatencyAverageMs": (
+            round(latest["detection_latency_total_ms"] / latest["detection_latency_samples"])
+            if latest and latest["detection_latency_samples"] else None
+        ),
+        "lastDetectionLatencyMaxMs": latest["detection_latency_max_ms"] if latest else None,
         "runs24Hours": totals["runs"], "checks24Hours": totals["checks"],
         "errors24Hours": totals["errors"],
         "notModified24Hours": totals["not_modified"],
+        "detectionLatencySamples24Hours": totals["latency_samples"],
+        "detectionLatencyAverageMs24Hours": (
+            round(totals["latency_total"] / totals["latency_samples"])
+            if totals["latency_samples"] else None
+        ),
+        "detectionLatencyMaxMs24Hours": totals["latency_max"],
     }
 
 

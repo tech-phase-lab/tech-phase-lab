@@ -92,7 +92,10 @@ function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], pending = 0) {
 function durableBodyFetchStatus(bodyFetch: MonitorState["bodyFetch"]) {
   const durable = bodyFetch?.durable;
   if (!durable?.lastCompletedAt) return "本文取得の永続集計：実績待ち";
-  return `本文取得の永続集計：24時間 ${durable.runs24Hours}バッチ・${durable.checks24Hours}件 · エラー ${durable.errors24Hours}件 · 304 ${durable.notModified24Hours}件 · 最終完了 ${time(durable.lastCompletedAt)} JST`;
+  const latency = durable.detectionLatencySamples24Hours > 0
+    ? ` · 検知→初回本文 平均 ${duration(durable.detectionLatencyAverageMs24Hours)}・最大 ${duration(durable.detectionLatencyMaxMs24Hours)}（${durable.detectionLatencySamples24Hours}件）`
+    : " · 検知→初回本文 実測待ち";
+  return `本文取得の永続集計：24時間 ${durable.runs24Hours}バッチ・${durable.checks24Hours}件 · エラー ${durable.errors24Hours}件 · 304 ${durable.notModified24Hours}件${latency} · 最終完了 ${time(durable.lastCompletedAt)} JST`;
 }
 
 export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: { snapshot: IntakeSnapshot; titles: Record<string, string> }) {

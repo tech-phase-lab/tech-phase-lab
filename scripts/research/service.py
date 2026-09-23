@@ -68,6 +68,19 @@ def timestamp_age_seconds(value):
         return None
 
 
+def timestamp_latency_ms(started_at, completed_at):
+    """Return a bounded measured interval, or None for invalid/future evidence."""
+    try:
+        started = datetime.fromisoformat(str(started_at).replace("Z", "+00:00"))
+        completed = datetime.fromisoformat(str(completed_at).replace("Z", "+00:00"))
+        if started.tzinfo is None or completed.tzinfo is None or completed < started:
+            return None
+        latency = round((completed - started).total_seconds() * 1000)
+        return latency if latency <= 31 * 24 * 60 * 60 * 1000 else None
+    except (TypeError, ValueError):
+        return None
+
+
 def discovery_signature(result, links):
     """Hash bounded discovery evidence so same-URL feed revisions are observed."""
     digest = hashlib.sha256()
@@ -535,7 +548,7 @@ class AutomaticMonitor:
                 (due,),
             ).fetchone()[0]
             rows = db.execute("""
-              SELECT s.*
+              SELECT s.*,e.detected_at AS release_detected_at
               FROM sources s LEFT JOIN release_events e ON e.url=s.url
               WHERE s.source_mode='remote' AND (s.next_fetch_at IS NULL OR s.next_fetch_at<=?)
               ORDER BY CASE
@@ -576,6 +589,7 @@ class AutomaticMonitor:
         not_modified = 0
         completed_at = None
         duration_ms = None
+        detection_latencies_ms = []
         with self.db_lock, monitor.connect(self.db_path) as db:
             affected_tickers = {row["ticker"] for row, _, _ in completed}
             for row, result, error in completed:
@@ -606,9 +620,15 @@ class AutomaticMonitor:
                     monitor.resolve_operational_incident(db, incident_key)
             completed_at = utc_now()
             duration_ms = max(0, round((time.monotonic() - cycle_started) * 1000))
+            for row, result, error in completed:
+                if error is not None or result.get("notModified") or row["sha256"] is not None:
+                    continue
+                latency = timestamp_latency_ms(row["release_detected_at"], completed_at)
+                if latency is not None:
+                    detection_latencies_ms.append(latency)
             monitor.record_body_fetch_batch(
                 db, polled_at, completed_at, duration_ms,
-                len(completed), errors, not_modified,
+                len(completed), errors, not_modified, detection_latencies_ms,
             )
             monitor.write_snapshot(db, self.snapshot_path)
         with self.state_lock:
