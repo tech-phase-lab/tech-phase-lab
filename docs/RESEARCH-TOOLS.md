@@ -38,6 +38,9 @@ toggles, calendar filters, and the four home destinations.
 news monitor. A roster entry is not a confirmed next earnings date. Null
 `lastCheckedOn` means a schedule review is still due. Do not interpret an empty
 IR page or inaccessible JavaScript calendar as proof no event is announced.
+The calendar UI distinguishes a conclusive official-source check with no
+confirmed date from an inconclusive review that must remain pending; neither
+state is promoted to a forecast date.
 MU, TSMC, Adobe and GE Vernova are call or webcast times; Netflix is an approximate release time. ASML's
 October 14 official date and FOMC meeting dates with no published clock time are
 displayed separately, without manufacturing a timestamp or converting the date

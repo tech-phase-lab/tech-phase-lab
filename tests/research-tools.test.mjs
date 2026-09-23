@@ -5,6 +5,7 @@ import { parseFavoriteStocks, toggleFavoriteStock } from "../lib/research/favori
 import { calendarEvents, dateOnlyEvents, selectDateOnlyEarnings, selectDateOnlyEvents, calendarDateKey, selectCalendarEvents } from "../lib/research/calendar.ts";
 
 const coverage = JSON.parse(readFileSync(new URL("../lib/research/calendar-coverage.json", import.meta.url), "utf8"));
+const eventCalendarSource = readFileSync(new URL("../app/research/calendar/event-calendar.tsx", import.meta.url), "utf8");
 
 test("favorite storage tolerates invalid JSON and rejects non-ticker values", () => {
   for (const raw of [null, "{", "null", "{}", '"MU"']) assert.deepEqual(parseFavoriteStocks(raw), []);
@@ -109,6 +110,14 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   assert.equal(coverage.length, 40);
   assert.equal(new Set(coverage.map((company) => company.ticker)).size, 40);
   const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
-  for (const ticker of ["ADBE", "AMAT", "AMD", "DELL", "GEV", "INTC", "LRCX", "META", "MSFT", "QCOM", "SNDK", "TSLA"]) assert.equal(checked[ticker], "2026-09-23");
-  for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "COHR", "CRDO", "CRM", "CRWD", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(checked[ticker], null);
+  for (const ticker of ["ADBE", "AMAT", "AMD", "CRWD", "DELL", "GEV", "INTC", "LRCX", "META", "MSFT", "QCOM", "SNDK", "TSLA"]) assert.equal(checked[ticker], "2026-09-23");
+  for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "COHR", "CRDO", "CRM", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(checked[ticker], null);
+  assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 17);
+  assert.equal(coverage.filter((company) => company.lastCheckedOn === null).length, 23);
+});
+
+test("calendar UI distinguishes a completed source check from an inconclusive review", () => {
+  assert.match(eventCalendarSource, /公式確認済み・確定日なし/);
+  assert.match(eventCalendarSource, /次回日程を確認継続中/);
+  assert.match(eventCalendarSource, /company\.lastCheckedOn !== null/);
 });

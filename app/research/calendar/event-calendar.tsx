@@ -28,6 +28,8 @@ export default function EventCalendar() {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const visible = now === null ? [] : selectCalendarEvents(calendarEvents, kind, period, now, zone);
   const visibleDateOnly = now === null ? [] : selectDateOnlyEvents(dateOnlyEvents, kind, period, now);
+  const reviewedCompanies = coverage.filter((company) => company.lastCheckedOn !== null).length;
+  const pendingCompanies = coverage.length - reviewedCompanies;
   const stale = now !== null && now - Date.parse(`${calendarReviewedOn}T00:00:00+09:00`) > 7 * 86400000;
   const stamp = (value: string, zone: string) => new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, month: "short", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(value));
   return <ResearchToolShell lang={lang} setLang={(value) => { setLang(value); setZoneOverride(null); setPeriod("upcoming"); }} title={t("決算・経済指標カレンダー", "Earnings & economic calendar")} description={t("公式発表で確認した予定を、日本時間と米国東部時間で。", "Official schedules in U.S. Eastern and Japan time.")}>
@@ -50,8 +52,8 @@ export default function EventCalendar() {
       {visibleDateOnly.map((event) => <p key={event.id} className={styles.notice}><strong>{event.title[lang]}</strong> · {event.date}<br />{event.note?.[lang] ?? t("公式掲載日です。時刻未公表のためET/JSTへの日付換算はしていません。", "Official calendar date; not converted to ET/JST because no time has been confirmed.")} <a href={event.sourceUrl} target="_blank" rel="noreferrer">{event.sourceName} ↗</a></p>)}</>}
       <details className={styles.coverage}>
         <summary>{t("決算の追跡対象", "Earnings coverage")} · {coverage.length}{t("社", " companies")}</summary>
-        <p className={styles.description}>{t("掲載済み以外は次回日程の確認待ちです。「発表がない」という意味ではありません。予想日で埋めず、公式確認後に追加します。", "Other dates are awaiting verification, not necessarily unannounced. We add official dates rather than estimates.")}</p>
-        <ul>{coverage.map((company) => <li key={company.ticker}><a href={company.sourceUrl} target="_blank" rel="noreferrer"><strong>{company.ticker}</strong> {company.name} ↗</a><small>{calendarEvents.some((event) => event.ticker === company.ticker && (now === null || Date.parse(event.startsAt) >= now)) ? t("予定掲載済み", "Schedule listed") : now !== null && selectDateOnlyEarnings("upcoming", now).some((event) => event.ticker === company.ticker) ? t("日付のみ確認", "Date confirmed; time pending") : t("次回日程を確認中", "Next date awaiting verification")}</small></li>)}</ul>
+        <p className={styles.description}>{t(`公式照合済み ${reviewedCompanies}社 · 確認継続 ${pendingCompanies}社。確定日がない企業を予想日で埋めず、公式確認後に追加します。`, `${reviewedCompanies} official sources checked · ${pendingCompanies} still under review. We add confirmed dates rather than filling gaps with estimates.`)}</p>
+        <ul>{coverage.map((company) => <li key={company.ticker}><a href={company.sourceUrl} target="_blank" rel="noreferrer"><strong>{company.ticker}</strong> {company.name} ↗</a><small>{calendarEvents.some((event) => event.ticker === company.ticker && (now === null || Date.parse(event.startsAt) >= now)) ? t("予定掲載済み", "Schedule listed") : now !== null && selectDateOnlyEarnings("upcoming", now).some((event) => event.ticker === company.ticker) ? t("日付のみ確認", "Date confirmed; time pending") : company.lastCheckedOn !== null ? t(`公式確認済み・確定日なし（${company.lastCheckedOn}）`, `Official source checked; no confirmed date (${company.lastCheckedOn})`) : t("次回日程を確認継続中", "Next date still under review")}</small></li>)}</ul>
       </details>
     </section>
     <p className={styles.notice}>{t("結果・市場予想・自動通知は含みません。参加・視聴前に公式日程をご確認ください。", "Results, consensus forecasts and automatic notifications are not included. Check the official schedule before attending.")}</p>

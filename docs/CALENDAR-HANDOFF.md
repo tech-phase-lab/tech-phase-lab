@@ -92,3 +92,28 @@ dates, without future statement or press-conference clock times.
 Next company batch starts with AVGO, then BE, COHR, CRDO, CRM, CRWD, CRWV,
 GOOGL, KLAC and LITE. Other pending rows remain queued for another first-party
 check when their pages become inspectable or publish an explicit schedule state.
+
+## Fifth company batch reviewed on 2026-09-23
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| AVGO | Pending | The current official Financial News page ends with the September 2 fiscal Q3 results and contains no future scheduling announcement. No first-party calendar or explicit absence statement was available. |
+| BE | Pending | The official Event Calendar again exposed an empty Upcoming Events section without an item or explicit absence statement. |
+| COHR | Pending | The current official Financial Releases page ends with the August 12 fiscal 2026 results and contains no fiscal Q1 2027 timing announcement or explicit absence statement. |
+| CRDO | Pending | The official Events page again exposed empty Upcoming & Recent Events and Archived Events sections without a dated item or explicit absence statement. |
+| CRM | Pending | The official Events page showed the past September 16 Dreamforce investor session as its latest accessible item, but no future earnings event or explicit absence statement. |
+| CRWD | Checked; no earnings event added | The official Events & Presentations page was accessible in this review. It labels every displayed item as a Past Event and ends with the September 10 investor conferences; the latest earnings call shown is the past August 26 fiscal Q2 2027 call. |
+| CRWV | Pending | The official Events & Presentations page again exposed an empty Upcoming & Recent Events section without an item or explicit absence statement. |
+| GOOGL | Pending | The official Alphabet Events & Presentations page exposed only its page shell without a dated item or explicit absence statement. |
+| KLAC | Pending | The official Events & Presentations URL still returned an internal access error, so its schedule could not be inspected. |
+| LITE | Pending | The official Events page exposed empty Latest Events and Latest Presentation sections without an item or explicit absence statement. |
+
+The BLS annual schedule was rechecked on 2026-09-23 and the October through
+December Employment Situation, CPI and PPI dates and 08:30 Eastern times remain
+unchanged. The Federal Reserve calendar was also rechecked; it still publishes
+only the October 27-28 and December 8-9 meeting dates for the remaining 2026
+meetings, without future statement or press-conference clock times.
+
+Next company batch retries MRVL, NBIS, NOW, NVDA, ORCL, PANW, PLTR, SKHY, SNOW
+and VRT. Other pending rows remain queued until an official source becomes
+conclusive.
