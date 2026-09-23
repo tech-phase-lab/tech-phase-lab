@@ -61,6 +61,14 @@ export type MonitorState = {
     conditionalRequests: number; notModifiedResponses: number; freshResponses: number;
     lastUpdatedAt: string | null;
   };
+  discoveryRuns?: {
+    lastCompletedAt: string | null; lastDurationMs: number | null;
+    lastChecks: number; lastDegraded: number; lastNewSources: number;
+    lastRequestDurationAverageMs: number | null; lastRequestDurationMaxMs: number | null;
+    runs24Hours: number; checks24Hours: number; degraded24Hours: number;
+    newSources24Hours: number; requestDurationAverageMs24Hours: number | null;
+    requestDurationMaxMs24Hours: number | null;
+  };
   bodyFetch?: {
     lastPollAt: string | null; lastBatchAt: string | null;
     lastBatchDurationMs: number | null; lastBatchChecks: number;

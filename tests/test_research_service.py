@@ -74,6 +74,75 @@ class ResearchServiceTests(unittest.TestCase):
             app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         self.assertEqual(app.body_batch, 100)
 
+    def test_discovery_poll_metrics_survive_restart_without_source_details(self):
+        completed = datetime.now(timezone.utc)
+        started = completed - timedelta(milliseconds=900)
+        with monitor.connect(self.db_path) as db:
+            monitor.record_discovery_poll_batch(
+                db, started.isoformat(timespec="milliseconds"),
+                completed.isoformat(timespec="milliseconds"),
+                900, 3, 1, 2, (300, 450, 600),
+            )
+            summary = monitor.discovery_poll_summary(
+                db, (completed + timedelta(seconds=1)).isoformat(timespec="milliseconds")
+            )
+        self.assertEqual(summary["runs24Hours"], 1)
+        self.assertEqual(summary["checks24Hours"], 3)
+        self.assertEqual(summary["degraded24Hours"], 1)
+        self.assertEqual(summary["newSources24Hours"], 2)
+        self.assertEqual(summary["requestDurationAverageMs24Hours"], 450)
+        self.assertEqual(summary["requestDurationMaxMs24Hours"], 600)
+        self.assertNotIn("https://", json.dumps(summary))
+
+        restarted = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        persisted = restarted.public_state()["discoveryRuns"]
+        self.assertEqual(persisted["lastChecks"], 3)
+        self.assertEqual(persisted["lastDegraded"], 1)
+        self.assertEqual(persisted["lastNewSources"], 2)
+
+    def test_discovery_poll_metrics_reject_invalid_or_unbounded_values(self):
+        timestamp = service.utc_now()
+        with monitor.connect(self.db_path) as db:
+            for values in (
+                (timestamp, timestamp, 0, 2, 0, 0, (100,)),
+                (timestamp, timestamp, 0, 2, 3, 0, (100, 100)),
+                (timestamp, timestamp, 0, 1, 0, -1, (100,)),
+                ("not-a-time", timestamp, 0, 1, 0, 0, (100,)),
+            ):
+                with self.assertRaisesRegex(ValueError, "invalid-discovery-poll-batch"):
+                    monitor.record_discovery_poll_batch(db, *values)
+            with self.assertRaisesRegex(ValueError, "invalid-discovery-poll-reference"):
+                monitor.discovery_poll_summary(db, "not-a-time")
+
+    def test_discovery_loop_records_one_url_free_poll_batch(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.tickers = ["NBIS"]
+        app.collect_discovery_timed = lambda *_: ({
+            "ticker": "NBIS", "status": "degraded", "route": "none",
+            "sourceUrl": monitor.INDEXES["NBIS"], "sourceFormat": "none",
+            "sourcesChecked": 1, "sourcesConfigured": 1, "candidates": 0,
+            "error": "timeout",
+        }, {}, 123)
+        app.fetch_bodies_safely = lambda _pool: True
+        app.thread.start()
+        try:
+            for _ in range(100):
+                with app.state_lock:
+                    if app.state["ready"]:
+                        break
+                threading.Event().wait(0.01)
+            else:
+                self.fail("discovery loop did not complete")
+        finally:
+            app.stop_event.set()
+            app.thread.join(timeout=2)
+        durable = app.public_state()["discoveryRuns"]
+        self.assertGreaterEqual(durable["runs24Hours"], 1)
+        self.assertGreaterEqual(durable["checks24Hours"], 1)
+        self.assertGreaterEqual(durable["degraded24Hours"], 1)
+        self.assertEqual(durable["lastRequestDurationAverageMs"], 123)
+        self.assertNotIn("https://", json.dumps(durable))
+
     def test_idle_body_poll_heartbeat_survives_restart_without_source_details(self):
         with monitor.connect(self.db_path) as db:
             db.execute("UPDATE sources SET next_fetch_at='2099-01-01T00:00:00+00:00'")

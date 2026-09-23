@@ -27,10 +27,13 @@ test("operations preview exposes verified backup health without storage details"
 test("operations preview exposes bounded cache pressure without cached contents", () => {
   assert.match(liveTypes, /fetchCache\?:/);
   assert.match(liveTypes, /discoveryCache\?:/);
+  assert.match(liveTypes, /discoveryRuns\?:/);
   assert.match(liveTypes, /bodyFetch\?:/);
   assert.match(liveTypes, /maxEntries/);
   assert.match(liveTypes, /maxBytes/);
   assert.match(intakeDashboard, /公式一覧の再利用/);
+  assert.match(intakeDashboard, /公式一覧の永続実測/);
+  assert.match(intakeDashboard, /requestDurationAverageMs24Hours/);
   assert.match(intakeDashboard, /304再利用/);
   assert.match(intakeDashboard, /invalidatedSources/);
   assert.match(intakeDashboard, /一時応答キャッシュ/);

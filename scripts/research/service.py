@@ -433,6 +433,7 @@ class AutomaticMonitor:
             state["bodyFetch"]["durable"] = monitor.body_fetch_batch_summary(
                 db, poll_overdue_after_seconds=max(360, self.body_interval * 2 + 60)
             )
+            state["discoveryRuns"] = monitor.discovery_poll_summary(db)
             state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
             state["incidents"] = monitor.operational_incident_summary(
                 db, delivery_enabled=self.notification_enabled
@@ -799,6 +800,7 @@ class AutomaticMonitor:
                     continue
 
                 cycle_started = time.monotonic()
+                cycle_started_at = utc_now()
                 futures = {
                     pool.submit(
                         self.collect_discovery_timed, ticker, discovery_caches[ticker]
@@ -888,10 +890,22 @@ class AutomaticMonitor:
                     if changed:
                         monitor.write_snapshot(db, self.snapshot_path)
 
+                    cycle_duration_ms = max(
+                        0, round((time.monotonic() - cycle_started) * 1000)
+                    )
+                    completed_at = utc_now()
+                    monitor.record_discovery_poll_batch(
+                        db, cycle_started_at, completed_at, cycle_duration_ms,
+                        len(due),
+                        sum(1 for _, result, _, _ in collected if result["status"] == "degraded"),
+                        new_count,
+                        (request_duration_ms for _, _, _, request_duration_ms in collected),
+                    )
+
                 with self.state_lock:
                     self.state["ready"] = True
-                    self.state["lastCycleAt"] = checked_at
-                    self.state["lastCycleDurationMs"] = max(0, round((time.monotonic() - cycle_started) * 1000))
+                    self.state["lastCycleAt"] = completed_at
+                    self.state["lastCycleDurationMs"] = cycle_duration_ms
                     self.state["lastCycleCompanies"] = len(due)
                     self.state["cycles"] += 1
                     self.state["newSources"] += new_count

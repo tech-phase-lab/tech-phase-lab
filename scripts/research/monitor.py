@@ -965,6 +965,16 @@ def connect(path):
     CREATE TABLE IF NOT EXISTS discovery_runs (
       id INTEGER PRIMARY KEY, ticker TEXT NOT NULL, at TEXT NOT NULL,
       status TEXT NOT NULL, candidates INTEGER NOT NULL, error TEXT);
+    CREATE TABLE IF NOT EXISTS discovery_poll_batches (
+      id INTEGER PRIMARY KEY, started_at TEXT NOT NULL, completed_at TEXT NOT NULL,
+      duration_ms INTEGER NOT NULL CHECK(duration_ms>=0 AND duration_ms<=3600000),
+      checks INTEGER NOT NULL CHECK(checks>0 AND checks<=1000),
+      degraded INTEGER NOT NULL CHECK(degraded>=0 AND degraded<=checks),
+      new_sources INTEGER NOT NULL CHECK(new_sources>=0 AND new_sources<=1000000),
+      request_duration_total_ms INTEGER NOT NULL CHECK(request_duration_total_ms>=0),
+      request_duration_max_ms INTEGER NOT NULL CHECK(request_duration_max_ms>=0));
+    CREATE INDEX IF NOT EXISTS discovery_poll_batches_completed
+      ON discovery_poll_batches(completed_at DESC);
     CREATE TABLE IF NOT EXISTS discovery_source_cache (
       ticker TEXT NOT NULL, source_url TEXT NOT NULL,
       response_etag TEXT, response_last_modified TEXT,
@@ -1172,6 +1182,93 @@ def connect(path):
         )
     db.commit()
     return db
+
+
+def record_discovery_poll_batch(
+    db, started_at, completed_at, duration_ms, checks, degraded, new_sources,
+    request_durations_ms=(),
+):
+    """Persist bounded URL-free official-list polling evidence across restarts."""
+    try:
+        started = datetime.fromisoformat(str(started_at).replace("Z", "+00:00"))
+        completed = datetime.fromisoformat(str(completed_at).replace("Z", "+00:00"))
+        duration_ms, checks = int(duration_ms), int(checks)
+        degraded, new_sources = int(degraded), int(new_sources)
+        request_durations = tuple(int(value) for value in request_durations_ms)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-discovery-poll-batch") from exc
+    if (
+        started.tzinfo is None or completed.tzinfo is None or completed < started
+        or not 0 <= duration_ms <= 3_600_000 or not 1 <= checks <= 1000
+        or not 0 <= degraded <= checks or not 0 <= new_sources <= 1_000_000
+        or len(request_durations) != checks
+        or any(value < 0 or value > 3_600_000 for value in request_durations)
+    ):
+        raise ValueError("invalid-discovery-poll-batch")
+    with db:
+        db.execute("""
+          INSERT INTO discovery_poll_batches(
+            started_at,completed_at,duration_ms,checks,degraded,new_sources,
+            request_duration_total_ms,request_duration_max_ms
+          ) VALUES(?,?,?,?,?,?,?,?)
+        """, (
+            started_at, completed_at, duration_ms, checks, degraded, new_sources,
+            sum(request_durations), max(request_durations),
+        ))
+        db.execute("""
+          DELETE FROM discovery_poll_batches WHERE id IN (
+            SELECT id FROM discovery_poll_batches ORDER BY id DESC LIMIT -1 OFFSET 100000
+          )
+        """)
+
+
+def discovery_poll_summary(db, reference=None):
+    """Return restart-safe official-list polling metrics without source identities."""
+    reference = reference or now()
+    try:
+        parsed = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            raise ValueError
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-discovery-poll-reference") from exc
+    reference_utc = parsed.astimezone(timezone.utc)
+    window_start = (reference_utc - timedelta(hours=24)).isoformat(timespec="milliseconds")
+    reference_text = reference_utc.isoformat(timespec="milliseconds")
+    latest = db.execute("""
+      SELECT completed_at,duration_ms,checks,degraded,new_sources,
+             request_duration_total_ms,request_duration_max_ms
+      FROM discovery_poll_batches ORDER BY id DESC LIMIT 1
+    """).fetchone()
+    totals = db.execute("""
+      SELECT count(*) AS runs,COALESCE(sum(checks),0) AS checks,
+             COALESCE(sum(degraded),0) AS degraded,
+             COALESCE(sum(new_sources),0) AS new_sources,
+             COALESCE(sum(request_duration_total_ms),0) AS request_total,
+             max(request_duration_max_ms) AS request_max
+      FROM discovery_poll_batches
+      WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
+    """, (window_start, reference_text)).fetchone()
+    return {
+        "lastCompletedAt": latest["completed_at"] if latest else None,
+        "lastDurationMs": latest["duration_ms"] if latest else None,
+        "lastChecks": latest["checks"] if latest else 0,
+        "lastDegraded": latest["degraded"] if latest else 0,
+        "lastNewSources": latest["new_sources"] if latest else 0,
+        "lastRequestDurationAverageMs": (
+            round(latest["request_duration_total_ms"] / latest["checks"])
+            if latest and latest["checks"] else None
+        ),
+        "lastRequestDurationMaxMs": latest["request_duration_max_ms"] if latest else None,
+        "runs24Hours": totals["runs"],
+        "checks24Hours": totals["checks"],
+        "degraded24Hours": totals["degraded"],
+        "newSources24Hours": totals["new_sources"],
+        "requestDurationAverageMs24Hours": (
+            round(totals["request_total"] / totals["checks"])
+            if totals["checks"] else None
+        ),
+        "requestDurationMaxMs24Hours": totals["request_max"],
+    }
 
 
 def record_body_fetch_batch(
