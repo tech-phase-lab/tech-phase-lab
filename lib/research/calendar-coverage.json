@@ -3,7 +3,7 @@
     "ticker": "AAPL",
     "name": "Apple",
     "sourceUrl": "https://investor.apple.com/investor-relations/default.aspx",
-    "lastAttemptedOn": "2026-09-23",
+    "lastAttemptedOn": "2026-09-24",
     "lastCheckedOn": null
   },
   {
@@ -31,21 +31,21 @@
     "ticker": "AMZN",
     "name": "Amazon",
     "sourceUrl": "https://ir.aboutamazon.com/events/default.aspx",
-    "lastAttemptedOn": "2026-09-23",
+    "lastAttemptedOn": "2026-09-24",
     "lastCheckedOn": null
   },
   {
     "ticker": "ANET",
     "name": "Arista Networks",
     "sourceUrl": "https://investors.arista.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-23",
+    "lastAttemptedOn": "2026-09-24",
     "lastCheckedOn": null
   },
   {
     "ticker": "ARM",
     "name": "Arm",
     "sourceUrl": "https://investors.arm.com/",
-    "lastAttemptedOn": "2026-09-23",
+    "lastAttemptedOn": "2026-09-24",
     "lastCheckedOn": null
   },
   {
@@ -59,35 +59,35 @@
     "ticker": "AVGO",
     "name": "Broadcom",
     "sourceUrl": "https://investors.broadcom.com/financial-information/financial-news-releases",
-    "lastAttemptedOn": "2026-09-23",
+    "lastAttemptedOn": "2026-09-24",
     "lastCheckedOn": null
   },
   {
     "ticker": "BE",
     "name": "Bloom Energy",
     "sourceUrl": "https://investor.bloomenergy.com/events-and-presentations/events-calendar/",
-    "lastAttemptedOn": "2026-09-23",
+    "lastAttemptedOn": "2026-09-24",
     "lastCheckedOn": null
   },
   {
     "ticker": "COHR",
     "name": "Coherent",
     "sourceUrl": "https://ir.coherent.com/news-events/financial-releases",
-    "lastAttemptedOn": "2026-09-23",
+    "lastAttemptedOn": "2026-09-24",
     "lastCheckedOn": null
   },
   {
     "ticker": "CRDO",
     "name": "Credo",
     "sourceUrl": "https://investors.credosemi.com/news-events/events/default.aspx",
-    "lastAttemptedOn": "2026-09-23",
+    "lastAttemptedOn": "2026-09-24",
     "lastCheckedOn": null
   },
   {
     "ticker": "CRM",
     "name": "Salesforce",
     "sourceUrl": "https://investor.salesforce.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-23",
+    "lastAttemptedOn": "2026-09-24",
     "lastCheckedOn": null
   },
   {
@@ -101,7 +101,7 @@
     "ticker": "CRWV",
     "name": "CoreWeave",
     "sourceUrl": "https://investors.coreweave.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-23",
+    "lastAttemptedOn": "2026-09-24",
     "lastCheckedOn": null
   },
   {
