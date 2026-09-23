@@ -175,6 +175,66 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(body["errors24Hours"], 0)
         self.assertEqual(body["detectionLatencySamples24Hours"], 1)
 
+    def test_durable_batch_summaries_ignore_corrupted_metric_rows(self):
+        reference = datetime.now(timezone.utc)
+        started = reference - timedelta(seconds=3)
+        completed = reference - timedelta(seconds=2)
+        corrupted_completed = reference - timedelta(seconds=1)
+        with monitor.connect(self.db_path) as db:
+            monitor.record_discovery_poll_batch(
+                db, started.isoformat(timespec="milliseconds"),
+                completed.isoformat(timespec="milliseconds"),
+                1000, 2, 0, 1, (200, 300),
+            )
+            monitor.record_body_fetch_batch(
+                db, started.isoformat(timespec="milliseconds"),
+                completed.isoformat(timespec="milliseconds"),
+                1000, 2, 0, 1, (400,),
+            )
+            monitor.record_body_fetch_poll(
+                db, completed.isoformat(timespec="milliseconds"), 4
+            )
+            db.execute("PRAGMA ignore_check_constraints=ON")
+            db.execute("""
+              INSERT INTO discovery_poll_batches(
+                started_at,completed_at,duration_ms,checks,degraded,new_sources,
+                request_duration_total_ms,request_duration_max_ms
+              ) VALUES(?,?,?,?,?,?,?,?)
+            """, (
+                started.isoformat(timespec="milliseconds"),
+                corrupted_completed.isoformat(timespec="milliseconds"),
+                1000, 2, 0, 99, -1, 500,
+            ))
+            db.execute("""
+              INSERT INTO body_fetch_batches(
+                polled_at,completed_at,duration_ms,checks,errors,not_modified,
+                detection_latency_samples,detection_latency_total_ms,
+                detection_latency_max_ms
+              ) VALUES(?,?,?,?,?,?,?,?,?)
+            """, (
+                started.isoformat(timespec="milliseconds"),
+                corrupted_completed.isoformat(timespec="milliseconds"),
+                1000, 2, 0, 1, 2, -1, 500,
+            ))
+            db.execute("UPDATE body_fetch_worker_state SET pending_count=-1 WHERE id=1")
+            db.commit()
+            discovery = monitor.discovery_poll_summary(
+                db, reference.isoformat(timespec="milliseconds")
+            )
+            body = monitor.body_fetch_batch_summary(
+                db, reference.isoformat(timespec="milliseconds")
+            )
+        self.assertEqual(discovery["lastChecks"], 2)
+        self.assertEqual(discovery["lastNewSources"], 1)
+        self.assertEqual(discovery["runs24Hours"], 1)
+        self.assertEqual(discovery["requestDurationAverageMs24Hours"], 250)
+        self.assertEqual(body["lastChecks"], 2)
+        self.assertEqual(body["runs24Hours"], 1)
+        self.assertEqual(body["detectionLatencySamples24Hours"], 1)
+        self.assertEqual(body["detectionLatencyAverageMs24Hours"], 400)
+        self.assertIsNone(body["lastPolledAt"])
+        self.assertIsNone(body["pendingAtLastPoll"])
+
     def test_discovery_loop_records_one_url_free_poll_batch(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         app.tickers = ["NBIS"]

@@ -1222,6 +1222,21 @@ def record_discovery_poll_batch(
         """)
 
 
+DISCOVERY_POLL_METRIC_WHERE = """
+  typeof(duration_ms)='integer' AND duration_ms BETWEEN 0 AND 3600000
+  AND typeof(checks)='integer' AND checks BETWEEN 1 AND 1000
+  AND typeof(degraded)='integer' AND degraded BETWEEN 0 AND checks
+  AND typeof(new_sources)='integer' AND new_sources BETWEEN 0 AND 1000000
+  AND typeof(request_duration_total_ms)='integer'
+  AND request_duration_total_ms BETWEEN 0 AND checks * 3600000
+  AND typeof(request_duration_max_ms)='integer'
+  AND request_duration_max_ms BETWEEN 0 AND 3600000
+  AND request_duration_max_ms <= request_duration_total_ms
+  AND julianday(started_at) IS NOT NULL AND julianday(completed_at) IS NOT NULL
+  AND julianday(started_at) <= julianday(completed_at)
+"""
+
+
 def discovery_poll_summary(db, reference=None, poll_overdue_after_seconds=60):
     """Return restart-safe official-list polling metrics without source identities."""
     reference = reference or now()
@@ -1238,10 +1253,12 @@ def discovery_poll_summary(db, reference=None, poll_overdue_after_seconds=60):
     window_start = (reference_utc - timedelta(hours=24)).isoformat(timespec="milliseconds")
     reference_text = reference_utc.isoformat(timespec="milliseconds")
     latest = None
-    latest_candidates = db.execute("""
+    latest_candidates = db.execute(f"""
       SELECT completed_at,duration_ms,checks,degraded,new_sources,
              request_duration_total_ms,request_duration_max_ms
-      FROM discovery_poll_batches ORDER BY id DESC LIMIT 100
+      FROM discovery_poll_batches
+      WHERE {DISCOVERY_POLL_METRIC_WHERE}
+      ORDER BY id DESC LIMIT 100
     """).fetchall()
     for candidate in latest_candidates:
         try:
@@ -1267,7 +1284,7 @@ def discovery_poll_summary(db, reference=None, poll_overdue_after_seconds=60):
         last_completed_age_seconds = max(
             0, round((reference_utc - completed_at).total_seconds())
         )
-    totals = db.execute("""
+    totals = db.execute(f"""
       SELECT count(*) AS runs,COALESCE(sum(checks),0) AS checks,
              COALESCE(sum(degraded),0) AS degraded,
              COALESCE(sum(new_sources),0) AS new_sources,
@@ -1275,6 +1292,7 @@ def discovery_poll_summary(db, reference=None, poll_overdue_after_seconds=60):
              max(request_duration_max_ms) AS request_max
       FROM discovery_poll_batches
       WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
+        AND {DISCOVERY_POLL_METRIC_WHERE}
     """, (window_start, reference_text)).fetchone()
     return {
         "lastCompletedAt": last_completed_at,
@@ -1365,6 +1383,29 @@ def record_body_fetch_poll(db, polled_at, pending_count):
         """, (polled_at, pending))
 
 
+BODY_FETCH_METRIC_WHERE = """
+  typeof(duration_ms)='integer' AND duration_ms BETWEEN 0 AND 3600000
+  AND typeof(checks)='integer' AND checks BETWEEN 1 AND 1000
+  AND typeof(errors)='integer' AND errors BETWEEN 0 AND checks
+  AND typeof(not_modified)='integer' AND not_modified BETWEEN 0 AND checks
+  AND typeof(detection_latency_samples)='integer'
+  AND detection_latency_samples BETWEEN 0 AND checks
+  AND typeof(detection_latency_total_ms)='integer'
+  AND detection_latency_total_ms >= 0
+  AND (
+    (detection_latency_samples=0 AND detection_latency_total_ms=0
+      AND detection_latency_max_ms IS NULL)
+    OR
+    (detection_latency_samples>0 AND typeof(detection_latency_max_ms)='integer'
+      AND detection_latency_max_ms BETWEEN 0 AND 2678400000
+      AND detection_latency_max_ms <= detection_latency_total_ms
+      AND detection_latency_total_ms <= detection_latency_samples * 2678400000)
+  )
+  AND julianday(polled_at) IS NOT NULL AND julianday(completed_at) IS NOT NULL
+  AND julianday(polled_at) <= julianday(completed_at)
+"""
+
+
 def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360):
     """Return restart-safe aggregate metrics without source identities or bodies."""
     reference = reference or now()
@@ -1382,7 +1423,9 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
         timespec="milliseconds"
     )
     heartbeat = db.execute("""
-      SELECT last_polled_at,pending_count FROM body_fetch_worker_state WHERE id=1
+      SELECT last_polled_at,pending_count FROM body_fetch_worker_state
+      WHERE id=1 AND typeof(pending_count)='integer'
+        AND pending_count BETWEEN 0 AND 1000000
     """).fetchone()
     last_polled_at = None
     last_poll_age_seconds = None
@@ -1401,11 +1444,13 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
         except (TypeError, ValueError):
             pass
     latest = None
-    latest_candidates = db.execute("""
+    latest_candidates = db.execute(f"""
       SELECT completed_at,duration_ms,checks,errors,not_modified,
              detection_latency_samples,detection_latency_total_ms,
              detection_latency_max_ms
-      FROM body_fetch_batches ORDER BY id DESC LIMIT 100
+      FROM body_fetch_batches
+      WHERE {BODY_FETCH_METRIC_WHERE}
+      ORDER BY id DESC LIMIT 100
     """).fetchall()
     for candidate in latest_candidates:
         try:
@@ -1421,7 +1466,7 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
             continue
         latest = candidate
         break
-    totals = db.execute("""
+    totals = db.execute(f"""
       SELECT count(*) AS runs,COALESCE(sum(checks),0) AS checks,
              COALESCE(sum(errors),0) AS errors,
              COALESCE(sum(not_modified),0) AS not_modified,
@@ -1430,6 +1475,7 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
              max(detection_latency_max_ms) AS latency_max
       FROM body_fetch_batches
       WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
+        AND {BODY_FETCH_METRIC_WHERE}
     """, (window_start, parsed.astimezone(timezone.utc).isoformat(timespec="milliseconds"))).fetchone()
     return {
         "lastPolledAt": last_polled_at,

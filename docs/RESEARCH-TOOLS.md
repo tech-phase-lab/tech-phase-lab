@@ -48,8 +48,11 @@ This is processing evidence after detection, not a subscriber-delivery SLA. Thes
 metrics contain no source URLs, validators or article text and retain at most
 20,000 batches, enough to preserve a full 24-hour window even at the minimum
 five-second worker interval. Future-dated batch rows are excluded from both the
-latest result and the 24-hour aggregate, so clock or database corruption cannot
-replace observed processing evidence. The configured batch size is capped at 100.
+latest result and the 24-hour aggregate. Rows with invalid numeric types,
+out-of-range counts, impossible latency totals or reversed timestamps are also
+excluded, as are malformed heartbeat pending counts. Clock or database
+corruption therefore cannot replace observed processing evidence. The
+configured batch size is capped at 100.
 
 Official-list polling batches are also persisted as bounded, URL-free
 operational evidence. The preview retains the last completed batch and
@@ -58,10 +61,11 @@ sources, plus measured average and maximum request time across checked routes.
 This evidence survives a service restart, retains at most 100,000 batches, and
 contains no source URL, title, response validator, article body or exception
 message. Future-dated rows are excluded from the latest result and 24-hour
-aggregate. The latest durable completion also carries a bounded age and overdue
-state, so an old pre-restart result cannot be presented as current worker
-activity. Polling configuration and observed request time are not delivery
-latency guarantees.
+aggregate. Invalid types, bounds, request-time totals and reversed timestamps
+are excluded from both views as well. The latest durable completion also
+carries a bounded age and overdue state, so an old pre-restart result cannot be
+presented as current worker activity. Polling configuration and observed
+request time are not delivery latency guarantees.
 
 Validation: `npm run lint`, `node --experimental-strip-types --test tests/*.test.mjs`,
 and `npm run build`. Browser checks cover favorites persistence, company-page
