@@ -61,6 +61,12 @@ export type MonitorState = {
     conditionalRequests: number; notModifiedResponses: number; freshResponses: number;
     lastUpdatedAt: string | null;
   };
+  bodyFetch?: {
+    lastPollAt: string | null; lastBatchAt: string | null;
+    lastBatchDurationMs: number | null; lastBatchChecks: number;
+    lastBatchErrors: number; lastBatchNotModified: number;
+  };
+  pendingBodies?: number;
   companies: Record<string, {
     basePollSeconds?: number; nextPollSeconds?: number; requestDurationMs?: number;
     status: string; route: string; candidates: number; checkedAt: string; error: string | null;

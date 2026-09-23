@@ -110,6 +110,13 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertIn('"extracted_chars"', exported)
         self.assertNotIn("Evidence body.", exported)
         self.assertEqual(app.public_state()["sourceChecks"], 1)
+        body_fetch = app.public_state()["bodyFetch"]
+        self.assertEqual(body_fetch["lastBatchChecks"], 1)
+        self.assertEqual(body_fetch["lastBatchErrors"], 0)
+        self.assertEqual(body_fetch["lastBatchNotModified"], 0)
+        self.assertIsNotNone(body_fetch["lastPollAt"])
+        self.assertIsNotNone(body_fetch["lastBatchAt"])
+        self.assertIsInstance(body_fetch["lastBatchDurationMs"], int)
 
     def test_body_candidates_prioritize_missing_evidence_before_routine_rechecks(self):
         incomplete = "https://nebius.com/newsroom/legacy-evidence.pdf"
@@ -197,6 +204,25 @@ class ResearchServiceTests(unittest.TestCase):
                 "SELECT count(*) FROM brief_generation_jobs WHERE url=?", (url,)
             ).fetchone()[0], 0)
         self.assertEqual(app.public_state()["sourceNotModified"], 1)
+        self.assertEqual(app.public_state()["bodyFetch"]["lastBatchNotModified"], 1)
+
+    def test_empty_body_poll_records_poll_without_overwriting_batch_metrics(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.state["bodyFetch"].update({
+            "lastBatchAt": "2026-09-23T00:00:00+00:00",
+            "lastBatchDurationMs": 125,
+            "lastBatchChecks": 2,
+            "lastBatchErrors": 1,
+            "lastBatchNotModified": 1,
+        })
+        with patch.object(app, "body_candidates", return_value=([], 0)):
+            with ThreadPoolExecutor(max_workers=1) as pool:
+                app.fetch_bodies(pool)
+        body_fetch = app.public_state()["bodyFetch"]
+        self.assertIsNotNone(body_fetch["lastPollAt"])
+        self.assertEqual(body_fetch["lastBatchAt"], "2026-09-23T00:00:00+00:00")
+        self.assertEqual(body_fetch["lastBatchDurationMs"], 125)
+        self.assertEqual(body_fetch["lastBatchChecks"], 2)
 
     def test_verified_backup_updates_public_health_without_exposing_storage_details(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)

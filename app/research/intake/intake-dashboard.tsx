@@ -82,6 +82,11 @@ function discoveryCacheStatus(cache: MonitorState["discoveryCache"]) {
   if (!cache) return "公式一覧の再利用：状態取得待ち";
   return `公式一覧の再利用：保存 ${cache.persistedSources}経路 · 条件付き確認 ${cache.conditionalRequests}回 · 304再利用 ${cache.notModifiedResponses}回 · 新規取得 ${cache.freshResponses}回 · 無効化 ${cache.invalidatedSources}件`;
 }
+function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], pending = 0) {
+  if (!bodyFetch?.lastPollAt) return "本文取得：初回ポーリング待ち";
+  if (!bodyFetch.lastBatchAt) return `本文取得：${time(bodyFetch.lastPollAt)} JSTに確認 · 待機 ${pending}件 · 取得実績待ち`;
+  return `本文取得：直近 ${bodyFetch.lastBatchChecks}件 · エラー ${bodyFetch.lastBatchErrors}件 · 304 ${bodyFetch.lastBatchNotModified}件 · ${duration(bodyFetch.lastBatchDurationMs)} · 待機 ${pending}件`;
+}
 
 export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: { snapshot: IntakeSnapshot; titles: Record<string, string> }) {
   const [query, setQuery] = useState("");
@@ -112,7 +117,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
     <header className={styles.header}><Link href="/research" className={styles.brand}><b>TP</b><span>TECH PHASE<small>RESEARCH / OPERATIONS</small></span></Link><span className={styles.badge}>運営用プレビュー</span></header>
     <main id="intake-main" className={styles.main}>
       <div className={styles.heading}><div><p className={styles.eyebrow}>AI COMPANY COVERAGE</p><h1>AI関連銘柄の資料・取得状況</h1><p>企業公式・取引所・SECの一次情報から、原文と照合する資料を選びます。</p></div><div className={styles.headingLinks}><Link href="/research/review">速報レビュー →</Link><Link href="/research">リサーチ画面へ ↗</Link></div></div>
-      <aside className={styles.notice}><strong>{live.mode === "automatic" ? monitorStatus(live.monitor) : "自動監視サービスの接続待ち"}</strong><span>{live.mode === "automatic" ? `最終巡回：${time(live.monitor?.lastCycleAt ?? null)} JST` : `保存記録の出力日時：${time(snapshot.generatedAt)} JST`}</span>{live.mode === "automatic" && <><span>直近巡回：{duration(live.monitor?.lastCycleDurationMs)}（{live.monitor?.lastCycleCompanies ?? 0}社）</span><span>{discoveryCacheStatus(live.monitor?.discoveryCache)}</span><span>{cacheStatus(live.monitor?.fetchCache)}</span><span>{backupStatus(live.monitor?.backup)}</span><span>{incidentStatus(live.monitor)}</span>{monitorIssue(live.monitor) && <span role="alert" className={styles.alert}>運用警告：{monitorIssue(live.monitor)}</span>}</>}<p>{live.mode === "automatic" ? "公式経路を銘柄ごとに3〜5秒の基準間隔で巡回します。間隔は保証速度ではなく、直近応答時間と検知後の本文取得時間を別に実測します。" : "現在は保存済み記録を表示しています。監視サービス接続後は3秒ごとに自動更新されます。"}</p></aside>
+      <aside className={styles.notice}><strong>{live.mode === "automatic" ? monitorStatus(live.monitor) : "自動監視サービスの接続待ち"}</strong><span>{live.mode === "automatic" ? `最終巡回：${time(live.monitor?.lastCycleAt ?? null)} JST` : `保存記録の出力日時：${time(snapshot.generatedAt)} JST`}</span>{live.mode === "automatic" && <><span>直近巡回：{duration(live.monitor?.lastCycleDurationMs)}（{live.monitor?.lastCycleCompanies ?? 0}社）</span><span>{bodyFetchStatus(live.monitor?.bodyFetch, live.monitor?.pendingBodies)}</span><span>{discoveryCacheStatus(live.monitor?.discoveryCache)}</span><span>{cacheStatus(live.monitor?.fetchCache)}</span><span>{backupStatus(live.monitor?.backup)}</span><span>{incidentStatus(live.monitor)}</span>{monitorIssue(live.monitor) && <span role="alert" className={styles.alert}>運用警告：{monitorIssue(live.monitor)}</span>}</>}<p>{live.mode === "automatic" ? "公式経路を銘柄ごとに3〜5秒の基準間隔で巡回します。間隔は保証速度ではなく、直近応答時間と検知後の本文取得時間を別に実測します。" : "現在は保存済み記録を表示しています。監視サービス接続後は3秒ごとに自動更新されます。"}</p></aside>
       <section aria-labelledby="events-title" className={styles.queue}><div className={styles.sectionTitle}><h2 id="events-title">新着の公式発表</h2><span>初回取り込みを除く自動検知：{events.length}件</span></div>
         <p className={styles.coverageNote}>監視開始前の過去資料は速報として扱いません。ここには監視開始後に新しく現れた公式URLだけを表示します。発表元の公開時刻が秒単位で得られない場合、公開から検知までの時間は未計測です。</p>
         {events.length === 0 ? <div className={styles.empty}><h3>監視開始後の新着はまだありません</h3><p>常駐監視の接続後、新しい公式発表を検知すると自動で追加されます。</p></div> : <ul className={styles.sources}>{events.slice(0, 20).map(event => <li key={event.id}><article className={styles.source}>

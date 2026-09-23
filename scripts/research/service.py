@@ -169,6 +169,11 @@ class AutomaticMonitor:
                 "conditionalRequests": 0, "notModifiedResponses": 0,
                 "freshResponses": 0, "lastUpdatedAt": None,
             },
+            "bodyFetch": {
+                "lastPollAt": None, "lastBatchAt": None,
+                "lastBatchDurationMs": None, "lastBatchChecks": 0,
+                "lastBatchErrors": 0, "lastBatchNotModified": 0,
+            },
             "pendingBodies": 0,
             "tickerCount": len(self.tickers),
             "generation": {
@@ -534,10 +539,13 @@ class AutomaticMonitor:
         return rows, pending
 
     def fetch_bodies(self, pool):
+        cycle_started = time.monotonic()
+        polled_at = utc_now()
         rows, pending = self.body_candidates()
         if not rows:
             with self.state_lock:
                 self.state["pendingBodies"] = pending
+                self.state["bodyFetch"]["lastPollAt"] = polled_at
             return
         futures = {pool.submit(monitor.collect_source, row, monitor.fetch): row for row in rows}
         completed = []
@@ -583,6 +591,16 @@ class AutomaticMonitor:
             self.state["sourceFetchErrors"] += errors
             self.state["sourceNotModified"] += not_modified
             self.state["pendingBodies"] = max(0, pending - len(completed))
+            self.state["bodyFetch"].update({
+                "lastPollAt": polled_at,
+                "lastBatchAt": utc_now(),
+                "lastBatchDurationMs": max(
+                    0, round((time.monotonic() - cycle_started) * 1000)
+                ),
+                "lastBatchChecks": len(completed),
+                "lastBatchErrors": errors,
+                "lastBatchNotModified": not_modified,
+            })
 
     def process_generation_job(self):
         if not self.auto_drafts_enabled:
