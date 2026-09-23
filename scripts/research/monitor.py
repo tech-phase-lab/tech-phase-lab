@@ -985,6 +985,10 @@ def connect(path):
       detection_latency_max_ms INTEGER);
     CREATE INDEX IF NOT EXISTS body_fetch_batches_completed
       ON body_fetch_batches(completed_at DESC);
+    CREATE TABLE IF NOT EXISTS body_fetch_worker_state (
+      id INTEGER PRIMARY KEY CHECK(id=1),
+      last_polled_at TEXT NOT NULL,
+      pending_count INTEGER NOT NULL CHECK(pending_count>=0 AND pending_count<=1000000));
     CREATE TABLE IF NOT EXISTS briefs (
       url TEXT PRIMARY KEY REFERENCES sources(url), source_sha256 TEXT NOT NULL,
       summary_ja TEXT NOT NULL, impact_label TEXT NOT NULL, impact_ja TEXT NOT NULL,
@@ -1211,18 +1215,60 @@ def record_body_fetch_batch(
         """)
 
 
-def body_fetch_batch_summary(db, reference=None):
+def record_body_fetch_poll(db, polled_at, pending_count):
+    """Persist one URL-free heartbeat so idle workers remain observable after restart."""
+    try:
+        polled = datetime.fromisoformat(str(polled_at).replace("Z", "+00:00"))
+        pending = int(pending_count)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-body-fetch-poll") from exc
+    if polled.tzinfo is None or not 0 <= pending <= 1_000_000:
+        raise ValueError("invalid-body-fetch-poll")
+    with db:
+        db.execute("""
+          INSERT INTO body_fetch_worker_state(id,last_polled_at,pending_count)
+          VALUES(1,?,?)
+          ON CONFLICT(id) DO UPDATE SET
+            last_polled_at=excluded.last_polled_at,
+            pending_count=excluded.pending_count
+        """, (polled_at, pending))
+
+
+def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360):
     """Return restart-safe aggregate metrics without source identities or bodies."""
     reference = reference or now()
     try:
         parsed = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
         if parsed.tzinfo is None:
             raise ValueError
+        poll_overdue_after_seconds = int(poll_overdue_after_seconds)
+        if not 60 <= poll_overdue_after_seconds <= 86_400:
+            raise ValueError
     except (TypeError, ValueError) as exc:
         raise ValueError("invalid-body-fetch-reference") from exc
+    reference_utc = parsed.astimezone(timezone.utc)
     window_start = (parsed.astimezone(timezone.utc) - timedelta(hours=24)).isoformat(
         timespec="milliseconds"
     )
+    heartbeat = db.execute("""
+      SELECT last_polled_at,pending_count FROM body_fetch_worker_state WHERE id=1
+    """).fetchone()
+    last_polled_at = None
+    last_poll_age_seconds = None
+    if heartbeat:
+        try:
+            heartbeat_at = datetime.fromisoformat(
+                str(heartbeat["last_polled_at"]).replace("Z", "+00:00")
+            )
+            if heartbeat_at.tzinfo is None:
+                raise ValueError
+            age = round((reference_utc - heartbeat_at.astimezone(timezone.utc)).total_seconds())
+            if age < -5:
+                raise ValueError
+            last_polled_at = heartbeat_at.isoformat(timespec="milliseconds")
+            last_poll_age_seconds = max(0, age)
+        except (TypeError, ValueError):
+            pass
     latest = db.execute("""
       SELECT completed_at,duration_ms,checks,errors,not_modified,
              detection_latency_samples,detection_latency_total_ms,
@@ -1240,6 +1286,14 @@ def body_fetch_batch_summary(db, reference=None):
       WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
     """, (window_start, parsed.astimezone(timezone.utc).isoformat(timespec="milliseconds"))).fetchone()
     return {
+        "lastPolledAt": last_polled_at,
+        "lastPollAgeSeconds": last_poll_age_seconds,
+        "pendingAtLastPoll": heartbeat["pending_count"] if heartbeat and last_polled_at else None,
+        "pollOverdueAfterSeconds": poll_overdue_after_seconds,
+        "pollOverdue": (
+            last_poll_age_seconds is None
+            or last_poll_age_seconds > poll_overdue_after_seconds
+        ),
         "lastCompletedAt": latest["completed_at"] if latest else None,
         "lastDurationMs": latest["duration_ms"] if latest else None,
         "lastChecks": latest["checks"] if latest else 0,

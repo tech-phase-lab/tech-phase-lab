@@ -1,4 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timedelta, timezone
 import importlib.util
 from pathlib import Path
 import json
@@ -72,6 +73,61 @@ class ResearchServiceTests(unittest.TestCase):
         with patch.dict(os.environ, {"RESEARCH_BODY_FETCH_BATCH": "999999"}, clear=False):
             app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         self.assertEqual(app.body_batch, 100)
+
+    def test_idle_body_poll_heartbeat_survives_restart_without_source_details(self):
+        with monitor.connect(self.db_path) as db:
+            db.execute("UPDATE sources SET next_fetch_at='2099-01-01T00:00:00+00:00'")
+            db.commit()
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        with ThreadPoolExecutor(max_workers=1) as pool:
+            app.fetch_bodies(pool)
+        durable = app.public_state()["bodyFetch"]["durable"]
+        self.assertIsNotNone(durable["lastPolledAt"])
+        self.assertEqual(durable["pendingAtLastPoll"], 0)
+        self.assertFalse(durable["pollOverdue"])
+        self.assertIsNone(durable["lastCompletedAt"])
+        self.assertNotIn("https://", json.dumps(durable))
+
+        restarted = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        persisted = restarted.public_state()["bodyFetch"]["durable"]
+        self.assertEqual(persisted["lastPolledAt"], durable["lastPolledAt"])
+        self.assertEqual(persisted["pendingAtLastPoll"], 0)
+        self.assertFalse(persisted["pollOverdue"])
+
+    def test_stale_body_poll_degrades_health_without_repeating_monitor_stale(self):
+        old_poll = (datetime.now(timezone.utc) - timedelta(minutes=10)).isoformat(
+            timespec="milliseconds"
+        )
+        with monitor.connect(self.db_path) as db:
+            monitor.record_body_fetch_poll(db, old_poll, 2)
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        recent = service.utc_now()
+        app.state.update({"ready": True, "lastCycleAt": recent})
+        app.state["backup"].update({"healthy": True, "lastSuccessAt": recent})
+        app.state["incidentWatch"]["healthy"] = True
+        state = app.public_state()
+        self.assertEqual(state["health"]["issues"], ["body-fetch-stale"])
+        self.assertTrue(state["bodyFetch"]["durable"]["pollOverdue"])
+        app.sync_health_incidents()
+        incident = app.public_state()["incidents"]
+        self.assertEqual(incident["open"], 1)
+        self.assertEqual(incident["recent"][0]["errorCode"], "body-fetch-stale")
+
+        app.state["lastCycleAt"] = "2026-01-01T00:00:00+00:00"
+        stale_monitor = app.public_state()
+        self.assertIn("monitor-stale", stale_monitor["health"]["issues"])
+        self.assertNotIn("body-fetch-stale", stale_monitor["health"]["issues"])
+
+    def test_body_poll_heartbeat_rejects_invalid_or_unbounded_values(self):
+        with monitor.connect(self.db_path) as db:
+            for timestamp, pending in (
+                ("not-a-time", 0), (service.utc_now(), -1),
+                (service.utc_now(), 1_000_001),
+            ):
+                with self.assertRaisesRegex(ValueError, "invalid-body-fetch-poll"):
+                    monitor.record_body_fetch_poll(db, timestamp, pending)
+            with self.assertRaisesRegex(ValueError, "invalid-body-fetch-reference"):
+                monitor.body_fetch_batch_summary(db, poll_overdue_after_seconds=59)
 
     def test_legacy_body_batch_table_migrates_without_losing_metrics(self):
         legacy_path = Path(self.temp.name) / "legacy-batches.sqlite"
@@ -492,6 +548,8 @@ class ResearchServiceTests(unittest.TestCase):
 
     def test_backup_becomes_degraded_when_last_success_exceeds_deadline(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        with monitor.connect(self.db_path) as db:
+            monitor.record_body_fetch_poll(db, service.utc_now(), 0)
         with app.state_lock:
             app.state["ready"] = True
             app.state["lastCycleAt"] = service.utc_now()

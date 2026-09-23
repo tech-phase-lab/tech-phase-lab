@@ -59,6 +59,7 @@ function monitorIssue(monitor: MonitorState | null) {
   if (issues.includes("backup-overdue")) return "DBバックアップが期限を超過しています";
   if (issues.includes("incident-watch-failed")) return "障害台帳の内部監視を再試行しています";
   if (issues.includes("body-fetch-failed")) return "本文取得キューの内部処理を再試行しています";
+  if (issues.includes("body-fetch-stale")) return "本文取得キューの永続ポーリング記録が期限を超過しています";
   return null;
 }
 function incidentStatus(monitor: MonitorState | null) {
@@ -91,11 +92,15 @@ function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], pending = 0) {
 }
 function durableBodyFetchStatus(bodyFetch: MonitorState["bodyFetch"]) {
   const durable = bodyFetch?.durable;
-  if (!durable?.lastCompletedAt) return "本文取得の永続集計：実績待ち";
+  if (!durable?.lastPolledAt) return "本文取得の永続稼働：初回ポーリング待ち";
+  const poll = durable.pollOverdue
+    ? `要確認・最終ポーリング ${time(durable.lastPolledAt)} JST`
+    : `稼働確認 ${time(durable.lastPolledAt)} JST・待機 ${durable.pendingAtLastPoll ?? 0}件`;
+  if (!durable.lastCompletedAt) return `本文取得の永続稼働：${poll} · 処理バッチなし`;
   const latency = durable.detectionLatencySamples24Hours > 0
     ? ` · 検知→初回本文 平均 ${duration(durable.detectionLatencyAverageMs24Hours)}・最大 ${duration(durable.detectionLatencyMaxMs24Hours)}（${durable.detectionLatencySamples24Hours}件）`
     : " · 検知→初回本文 実測待ち";
-  return `本文取得の永続集計：24時間 ${durable.runs24Hours}バッチ・${durable.checks24Hours}件 · エラー ${durable.errors24Hours}件 · 304 ${durable.notModified24Hours}件${latency} · 最終完了 ${time(durable.lastCompletedAt)} JST`;
+  return `本文取得の永続稼働：${poll} · 24時間 ${durable.runs24Hours}バッチ・${durable.checks24Hours}件 · エラー ${durable.errors24Hours}件 · 304 ${durable.notModified24Hours}件${latency} · 最終完了 ${time(durable.lastCompletedAt)} JST`;
 }
 
 export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: { snapshot: IntakeSnapshot; titles: Record<string, string> }) {

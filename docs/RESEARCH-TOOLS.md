@@ -40,6 +40,10 @@ state. The operations preview can therefore show the last completed batch and
 24-hour checks, errors and HTTP 304 reuse after a service restart. For newly
 detected release URLs, it also records the measured interval from discovery to
 the first completed body extraction as an average, maximum and sample count.
+An independent singleton heartbeat records the most recent worker poll and
+pending count even when no article is due. This prevents an old successful
+batch from looking like current worker activity after a restart or stalled
+loop; an overdue heartbeat degrades health without exposing queued URLs.
 This is processing evidence after detection, not a subscriber-delivery SLA. These
 metrics contain no source URLs, validators or article text and retain at most
 20,000 batches, enough to preserve a full 24-hour window even at the minimum

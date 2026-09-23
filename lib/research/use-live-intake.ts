@@ -31,7 +31,7 @@ export type MonitorState = {
   };
   health?: {
     status: "starting" | "ready" | "degraded";
-    issues: Array<"monitor-stale" | "backup-failed" | "backup-overdue" | "incident-watch-failed" | "body-fetch-failed">;
+    issues: Array<"monitor-stale" | "backup-failed" | "backup-overdue" | "incident-watch-failed" | "body-fetch-failed" | "body-fetch-stale">;
     monitorStaleAfterSeconds: number;
   };
   incidentWatch?: {
@@ -68,6 +68,9 @@ export type MonitorState = {
     healthy: boolean | null; consecutiveFailures: number; lastError: string | null;
     retrySeconds: number; nextRetryAt: string | null;
     durable?: {
+      lastPolledAt: string | null; lastPollAgeSeconds: number | null;
+      pendingAtLastPoll: number | null; pollOverdueAfterSeconds: number;
+      pollOverdue: boolean;
       lastCompletedAt: string | null; lastDurationMs: number | null;
       lastChecks: number; lastErrors: number; lastNotModified: number;
       lastDetectionLatencySamples: number;

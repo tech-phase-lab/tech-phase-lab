@@ -290,6 +290,12 @@ class AutomaticMonitor:
             issues.append("incident-watch-failed")
         if state["bodyFetch"]["healthy"] is False:
             issues.append("body-fetch-failed")
+        durable_body_fetch = state["bodyFetch"].get("durable") or {}
+        if (
+            state["ready"] and durable_body_fetch.get("pollOverdue")
+            and "monitor-stale" not in issues
+        ):
+            issues.append("body-fetch-stale")
         state["health"] = {
             "status": "degraded" if issues else ("ready" if state["ready"] else "starting"),
             "issues": issues,
@@ -301,8 +307,11 @@ class AutomaticMonitor:
         """Persist health transitions independently of traffic to the HTTP API."""
         with self.state_lock:
             state = json.loads(json.dumps(self.state))
-        issues = self.derive_health(state)
         with self.db_lock, monitor.connect(self.db_path) as db:
+            state["bodyFetch"]["durable"] = monitor.body_fetch_batch_summary(
+                db, poll_overdue_after_seconds=max(360, self.body_interval * 2 + 60)
+            )
+            issues = self.derive_health(state)
             if "monitor-stale" in issues:
                 monitor.record_operational_incident(
                     db, "monitor:cycle", "monitor", "cycle", "critical", "monitor-stale"
@@ -323,10 +332,13 @@ class AutomaticMonitor:
                 )
             else:
                 monitor.resolve_operational_incident(db, "monitor:incident-watch")
-            if "body-fetch-failed" in issues:
+            body_issue = next(
+                (issue for issue in issues if issue.startswith("body-fetch-")), None
+            )
+            if body_issue:
                 monitor.record_operational_incident(
                     db, "body:worker", "article-body", "worker", "warning",
-                    "body-fetch-failed"
+                    body_issue
                 )
             else:
                 monitor.resolve_operational_incident(db, "body:worker")
@@ -413,17 +425,19 @@ class AutomaticMonitor:
     def public_state(self):
         with self.state_lock:
             state = json.loads(json.dumps(self.state))
-        self.derive_health(state)
         state["fetchCache"] = monitor.fetch_cache_stats()
         with self.db_lock, monitor.connect(self.db_path) as db:
             state["generation"].update(monitor.generation_queue_stats(
                 db, self.generation_daily_limit, self.generation_token_limit
             ))
-            state["bodyFetch"]["durable"] = monitor.body_fetch_batch_summary(db)
+            state["bodyFetch"]["durable"] = monitor.body_fetch_batch_summary(
+                db, poll_overdue_after_seconds=max(360, self.body_interval * 2 + 60)
+            )
             state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
             state["incidents"] = monitor.operational_incident_summary(
                 db, delivery_enabled=self.notification_enabled
             )
+        self.derive_health(state)
         return state
 
     def public_snapshot(self):
@@ -538,15 +552,17 @@ class AutomaticMonitor:
             monitor.write_snapshot(db, self.snapshot_path)
             return result
 
-    def body_candidates(self):
+    def body_candidates(self, polled_at=None):
         """Prioritize unseen releases, then missing evidence, then routine rechecks."""
         due = utc_now()
+        polled_at = polled_at or due
         with self.db_lock, monitor.connect(self.db_path) as db:
             pending = db.execute(
                 """SELECT count(*) FROM sources
                    WHERE source_mode='remote' AND (next_fetch_at IS NULL OR next_fetch_at<=?)""",
                 (due,),
             ).fetchone()[0]
+            monitor.record_body_fetch_poll(db, polled_at, pending)
             rows = db.execute("""
               SELECT s.*,e.detected_at AS release_detected_at
               FROM sources s LEFT JOIN release_events e ON e.url=s.url
@@ -567,7 +583,7 @@ class AutomaticMonitor:
     def fetch_bodies(self, pool):
         cycle_started = time.monotonic()
         polled_at = utc_now()
-        rows, pending = self.body_candidates()
+        rows, pending = self.body_candidates(polled_at)
         if not rows:
             with self.state_lock:
                 self.state["pendingBodies"] = pending
