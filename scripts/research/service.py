@@ -93,6 +93,30 @@ def timestamp_at_or_after(value, reference):
         return False
 
 
+def priority_source_coverage(state, configured_tickers):
+    """Summarize post-start priority checks without exposing source details."""
+    configured = [ticker for ticker in PRIORITY_SEC_TICKERS if ticker in configured_tickers]
+    companies = state.get("companies") if isinstance(state.get("companies"), dict) else {}
+    checked = []
+    for ticker in configured:
+        company = companies.get(ticker)
+        if not isinstance(company, dict):
+            continue
+        if timestamp_at_or_after(company.get("checkedAt"), state.get("startedAt")):
+            checked.append(company)
+    healthy = sum(1 for company in checked if company.get("status") in {"ok", "fallback"})
+    degraded = len(checked) - healthy
+    return {
+        "targetCount": len(PRIORITY_SEC_TICKERS),
+        "configuredCount": len(configured),
+        "checkedSinceStart": len(checked),
+        "healthy": healthy,
+        "degraded": degraded,
+        "pending": len(configured) - len(checked),
+        "omitted": len(PRIORITY_SEC_TICKERS) - len(configured),
+    }
+
+
 def discovery_signature(result, links):
     """Hash bounded discovery evidence so same-URL feed revisions are observed."""
     digest = hashlib.sha256()
@@ -463,6 +487,7 @@ class AutomaticMonitor:
     def public_state(self):
         with self.state_lock:
             state = json.loads(json.dumps(self.state))
+        state["prioritySources"] = priority_source_coverage(state, self.tickers)
         state["fetchCache"] = monitor.fetch_cache_stats()
         with self.db_lock, monitor.connect(self.db_path) as db:
             state["generation"].update(monitor.generation_queue_stats(

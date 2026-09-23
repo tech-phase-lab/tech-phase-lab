@@ -147,6 +147,34 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertTrue(current["bodyFetch"]["durable"]["polledSinceStart"])
         self.assertTrue(current["bodyFetch"]["durable"]["completedSinceStart"])
 
+    def test_priority_source_coverage_requires_current_process_evidence(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        started = datetime.fromisoformat(app.state["startedAt"])
+        before = (started - timedelta(milliseconds=1)).isoformat(timespec="milliseconds")
+        after = (started + timedelta(milliseconds=1)).isoformat(timespec="milliseconds")
+        with app.state_lock:
+            app.state["companies"] = {
+                "TSM": {"status": "ok", "checkedAt": after},
+                "MRVL": {"status": "fallback", "checkedAt": after},
+                "ANET": {"status": "degraded", "checkedAt": after},
+                "VRT": {"status": "ok", "checkedAt": before},
+                "PLTR": {"status": "ok", "checkedAt": "not-a-time"},
+            }
+        coverage = app.public_state()["prioritySources"]
+        self.assertEqual(coverage, {
+            "targetCount": 5, "configuredCount": 5, "checkedSinceStart": 3,
+            "healthy": 2, "degraded": 1, "pending": 2, "omitted": 0,
+        })
+        self.assertNotIn("checkedAt", json.dumps(coverage))
+
+    def test_priority_source_coverage_reports_custom_roster_omissions(self):
+        with patch.dict(os.environ, {"RESEARCH_TICKERS": "TSM,MRVL"}, clear=False):
+            app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        coverage = app.public_state()["prioritySources"]
+        self.assertEqual(coverage["configuredCount"], 2)
+        self.assertEqual(coverage["pending"], 2)
+        self.assertEqual(coverage["omitted"], 3)
+
     def test_discovery_poll_metrics_reject_invalid_or_unbounded_values(self):
         timestamp = service.utc_now()
         with monitor.connect(self.db_path) as db:

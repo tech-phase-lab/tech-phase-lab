@@ -72,6 +72,10 @@ The API also compares the latest durable discovery completion and body-worker
 heartbeat with the current process start time. The preview can therefore label
 restored pre-restart evidence separately from activity observed by the current
 deployment, without publishing a process identifier or source details.
+For TSM, MRVL, ANET, VRT and PLTR it also reports an aggregate count of
+configured, post-start checked, healthy, degraded and pending companies. This
+shows whether every priority route has actually run after a deployment without
+publishing per-source URLs, timestamps or error details.
 Polling configuration and observed request time are not delivery latency
 guarantees.
 

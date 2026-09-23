@@ -71,6 +71,10 @@ export type MonitorState = {
     newSources24Hours: number; requestDurationAverageMs24Hours: number | null;
     requestDurationMaxMs24Hours: number | null;
   };
+  prioritySources?: {
+    targetCount: number; configuredCount: number; checkedSinceStart: number;
+    healthy: number; degraded: number; pending: number; omitted: number;
+  };
   bodyFetch?: {
     lastPollAt: string | null; lastBatchAt: string | null;
     lastBatchDurationMs: number | null; lastBatchChecks: number;
