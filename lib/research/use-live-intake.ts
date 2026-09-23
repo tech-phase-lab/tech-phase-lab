@@ -31,7 +31,7 @@ export type MonitorState = {
   };
   health?: {
     status: "starting" | "ready" | "degraded";
-    issues: Array<"monitor-stale" | "backup-failed" | "backup-overdue" | "incident-watch-failed">;
+    issues: Array<"monitor-stale" | "backup-failed" | "backup-overdue" | "incident-watch-failed" | "body-fetch-failed">;
     monitorStaleAfterSeconds: number;
   };
   incidentWatch?: {
@@ -65,6 +65,7 @@ export type MonitorState = {
     lastPollAt: string | null; lastBatchAt: string | null;
     lastBatchDurationMs: number | null; lastBatchChecks: number;
     lastBatchErrors: number; lastBatchNotModified: number;
+    healthy: boolean | null; consecutiveFailures: number; lastError: string | null;
   };
   pendingBodies?: number;
   companies: Record<string, {

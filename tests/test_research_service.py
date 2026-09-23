@@ -224,6 +224,44 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(body_fetch["lastBatchDurationMs"], 125)
         self.assertEqual(body_fetch["lastBatchChecks"], 2)
 
+    def test_body_worker_failure_is_isolated_redacted_and_recovers(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        with patch.object(
+            app, "fetch_bodies", side_effect=RuntimeError("private database path")
+        ):
+            with ThreadPoolExecutor(max_workers=1) as pool:
+                self.assertFalse(app.fetch_bodies_safely(pool))
+        failed = app.public_state()
+        self.assertFalse(failed["bodyFetch"]["healthy"])
+        self.assertEqual(failed["bodyFetch"]["consecutiveFailures"], 1)
+        self.assertEqual(failed["bodyFetch"]["lastError"], "body-fetch-failed")
+        self.assertIn("body-fetch-failed", failed["health"]["issues"])
+        self.assertNotIn("private database path", json.dumps(failed))
+
+        app.sync_health_incidents()
+        with monitor.connect(self.db_path) as db:
+            incident = db.execute(
+                "SELECT status,last_error_code AS error_code FROM operational_incidents WHERE incident_key=?",
+                ("body:worker",),
+            ).fetchone()
+            self.assertEqual(dict(incident), {
+                "status": "open", "error_code": "body-fetch-failed",
+            })
+
+        with patch.object(app, "body_candidates", return_value=([], 0)):
+            with ThreadPoolExecutor(max_workers=1) as pool:
+                self.assertTrue(app.fetch_bodies_safely(pool))
+        recovered = app.public_state()
+        self.assertTrue(recovered["bodyFetch"]["healthy"])
+        self.assertEqual(recovered["bodyFetch"]["consecutiveFailures"], 0)
+        self.assertNotIn("body-fetch-failed", recovered["health"]["issues"])
+        app.sync_health_incidents()
+        with monitor.connect(self.db_path) as db:
+            self.assertEqual(db.execute(
+                "SELECT status FROM operational_incidents WHERE incident_key=?",
+                ("body:worker",),
+            ).fetchone()[0], "resolved")
+
     def test_verified_backup_updates_public_health_without_exposing_storage_details(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         app.backup_dir = Path(self.temp.name) / "backups"

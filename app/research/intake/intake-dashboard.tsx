@@ -58,6 +58,7 @@ function monitorIssue(monitor: MonitorState | null) {
   if (issues.includes("backup-failed")) return "DBバックアップに失敗しています";
   if (issues.includes("backup-overdue")) return "DBバックアップが期限を超過しています";
   if (issues.includes("incident-watch-failed")) return "障害台帳の内部監視を再試行しています";
+  if (issues.includes("body-fetch-failed")) return "本文取得キューの内部処理を再試行しています";
   return null;
 }
 function incidentStatus(monitor: MonitorState | null) {
@@ -84,6 +85,7 @@ function discoveryCacheStatus(cache: MonitorState["discoveryCache"]) {
 }
 function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], pending = 0) {
   if (!bodyFetch?.lastPollAt) return "本文取得：初回ポーリング待ち";
+  if (bodyFetch.healthy === false) return `本文取得：要確認 · 内部処理を再試行中（連続 ${bodyFetch.consecutiveFailures}回） · 待機 ${pending}件`;
   if (!bodyFetch.lastBatchAt) return `本文取得：${time(bodyFetch.lastPollAt)} JSTに確認 · 待機 ${pending}件 · 取得実績待ち`;
   return `本文取得：直近 ${bodyFetch.lastBatchChecks}件 · エラー ${bodyFetch.lastBatchErrors}件 · 304 ${bodyFetch.lastBatchNotModified}件 · ${duration(bodyFetch.lastBatchDurationMs)} · 待機 ${pending}件`;
 }

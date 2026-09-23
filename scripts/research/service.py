@@ -173,6 +173,7 @@ class AutomaticMonitor:
                 "lastPollAt": None, "lastBatchAt": None,
                 "lastBatchDurationMs": None, "lastBatchChecks": 0,
                 "lastBatchErrors": 0, "lastBatchNotModified": 0,
+                "healthy": None, "consecutiveFailures": 0, "lastError": None,
             },
             "pendingBodies": 0,
             "tickerCount": len(self.tickers),
@@ -273,6 +274,8 @@ class AutomaticMonitor:
             issues.append("backup-overdue")
         if state["incidentWatch"]["healthy"] is False:
             issues.append("incident-watch-failed")
+        if state["bodyFetch"]["healthy"] is False:
+            issues.append("body-fetch-failed")
         state["health"] = {
             "status": "degraded" if issues else ("ready" if state["ready"] else "starting"),
             "issues": issues,
@@ -306,6 +309,13 @@ class AutomaticMonitor:
                 )
             else:
                 monitor.resolve_operational_incident(db, "monitor:incident-watch")
+            if "body-fetch-failed" in issues:
+                monitor.record_operational_incident(
+                    db, "body:worker", "article-body", "worker", "warning",
+                    "body-fetch-failed"
+                )
+            else:
+                monitor.resolve_operational_incident(db, "body:worker")
         return issues
 
     def check_incident_watch_once(self):
@@ -545,7 +555,10 @@ class AutomaticMonitor:
         if not rows:
             with self.state_lock:
                 self.state["pendingBodies"] = pending
-                self.state["bodyFetch"]["lastPollAt"] = polled_at
+                self.state["bodyFetch"].update({
+                    "lastPollAt": polled_at, "healthy": True,
+                    "consecutiveFailures": 0, "lastError": None,
+                })
             return
         futures = {pool.submit(monitor.collect_source, row, monitor.fetch): row for row in rows}
         completed = []
@@ -600,7 +613,26 @@ class AutomaticMonitor:
                 "lastBatchChecks": len(completed),
                 "lastBatchErrors": errors,
                 "lastBatchNotModified": not_modified,
+                "healthy": True,
+                "consecutiveFailures": 0,
+                "lastError": None,
             })
+
+    def fetch_bodies_safely(self, pool):
+        """Keep a body-queue fault from stopping official-source discovery."""
+        try:
+            self.fetch_bodies(pool)
+        except Exception:
+            with self.state_lock:
+                body_fetch = self.state["bodyFetch"]
+                body_fetch.update({
+                    "lastPollAt": utc_now(),
+                    "healthy": False,
+                    "consecutiveFailures": body_fetch["consecutiveFailures"] + 1,
+                    "lastError": "body-fetch-failed",
+                })
+            return False
+        return True
 
     def process_generation_job(self):
         if not self.auto_drafts_enabled:
@@ -821,7 +853,7 @@ class AutomaticMonitor:
                         self.state["lastChangeAt"] = checked_at
 
                 if time.monotonic() >= next_body_fetch:
-                    self.fetch_bodies(pool)
+                    self.fetch_bodies_safely(pool)
                     next_body_fetch = time.monotonic() + self.body_interval
 
 
