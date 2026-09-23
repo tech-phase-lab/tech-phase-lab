@@ -68,3 +68,27 @@ pages become inspectable or provide an explicit schedule state.
 Next company batch starts with QCOM, then SKHY, SNDK, SNOW, TSLA and VRT,
 followed by pending retries for AAPL, AMZN, ANET and ARM. Other pending rows
 remain queued for another first-party check.
+
+## Fourth company batch reviewed on 2026-09-23
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| QCOM | Checked; no earnings event added | The official Investor Events page had no upcoming item, while the IR overview listed the September 22-24 Snapdragon Summit and the past June Investor Day. Neither source published a future earnings release or call. |
+| SKHY | Pending | The official English IR newsroom showed the past Q2 results and July 28 conference-call invitation as its latest earnings items, but it is not a forward schedule and did not explicitly state that no future event is announced. |
+| SNDK | Checked; no earnings event added | The official IR overview explicitly says more events are coming soon and lists only past events. The full Events page also contained no future entry. |
+| SNOW | Pending | The official Events & Presentations page exposed an empty Upcoming Events section without an item or explicit absence statement. |
+| TSLA | Checked; no earnings event added | Tesla's official Documents and Events table currently ends with Q2 2026 on July 22; it does not list a Q3 2026 earnings date. No date was inferred from prior years. |
+| VRT | Pending | The official Events & Presentations page exposed empty Latest Events and Latest Presentation sections without an item or explicit absence statement. |
+| AAPL | Pending | The official IR page again exposed Investor Updates and Quarterly Earnings Reports headings without a future item or explicit absence statement. |
+| AMZN | Pending | The official Events page again exposed an empty Upcoming Events section without an item or explicit absence statement. |
+| ANET | Pending | The first-party press-release RSS endpoint still returned an unsupported XML content type to the reviewer, so no conclusive current schedule could be verified. |
+| ARM | Pending | The first-party newsroom RSS endpoint still returned an unsupported RSS content type to the reviewer, so no conclusive current schedule could be verified. |
+
+The daily BLS and Federal Reserve review was also repeated on 2026-09-23. The
+October through December BLS dates and 08:30 Eastern times remain unchanged;
+the FOMC page still publishes only the October 27-28 and December 8-9 meeting
+dates, without future statement or press-conference clock times.
+
+Next company batch starts with AVGO, then BE, COHR, CRDO, CRM, CRWD, CRWV,
+GOOGL, KLAC and LITE. Other pending rows remain queued for another first-party
+check when their pages become inspectable or publish an explicit schedule state.

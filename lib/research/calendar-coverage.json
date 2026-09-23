@@ -200,8 +200,8 @@
   {
     "ticker": "QCOM",
     "name": "Qualcomm",
-    "sourceUrl": "https://investor.qualcomm.com/overview/default.aspx",
-    "lastCheckedOn": null
+    "sourceUrl": "https://investor.qualcomm.com/news-events/investor-events/default.aspx",
+    "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "SKHY",
@@ -212,20 +212,20 @@
   {
     "ticker": "SNDK",
     "name": "Sandisk",
-    "sourceUrl": "https://investor.sandisk.com/news-events/news-releases",
-    "lastCheckedOn": null
+    "sourceUrl": "https://investor.sandisk.com/news-events/events",
+    "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "SNOW",
     "name": "Snowflake",
-    "sourceUrl": "https://investors.snowflake.com/overview/default.aspx",
+    "sourceUrl": "https://investors.snowflake.com/events-and-presentations/default.aspx",
     "lastCheckedOn": null
   },
   {
     "ticker": "TSLA",
     "name": "Tesla",
     "sourceUrl": "https://ir.tesla.com/",
-    "lastCheckedOn": null
+    "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "TSM",
@@ -236,7 +236,7 @@
   {
     "ticker": "VRT",
     "name": "Vertiv",
-    "sourceUrl": "https://www.vertiv.com/en-us/about/news-and-events/corporate-news/",
+    "sourceUrl": "https://investors.vertiv.com/events-presentations/events-presentations/default.aspx",
     "lastCheckedOn": null
   }
 ]
