@@ -52,12 +52,6 @@ export const calendarEvents: CalendarEvent[] = [
     note: { ja: "説明会の開始予定です。決算資料の公開時刻を示すものではありません。", en: "Scheduled call start, not the publication time of the earnings release." },
   },
   {
-    id: "tsm-q3-2026-call", ticker: "TSM", kind: "earnings" as const, title: { ja: "TSMC 決算説明会（2026年Q3）", en: "TSMC Q3 2026 earnings call" },
-    startsAt: "2026-10-15T14:00:00+08:00", sourceTimezone: "Asia/Taipei", sourceName: "TSMC IR",
-    sourceUrl: "https://investor.tsmc.com/english/quarterly-results/2026/q3",
-    note: { ja: "説明会の開始予定です。決算資料の公開時刻とは区別しています。", en: "Scheduled conference call, not the earnings release publication time." },
-  },
-  {
     id: "nflx-q3-2026-release", ticker: "NFLX", kind: "earnings" as const, title: { ja: "Netflix 決算発表（2026年Q3）", en: "Netflix Q3 2026 results release" },
     startsAt: "2026-10-20T13:01:00-07:00", sourceTimezone: "America/Los_Angeles", sourceName: "Netflix IR",
     sourceUrl: "https://ir.netflix.net/investor-news-and-events/financial-releases/press-release-details/2026/Netflix-to-Announce-Third-Quarter-2026-Financial-Results/default.aspx",
@@ -90,7 +84,7 @@ export const dateOnlyEvents: DateOnlyCalendarEvent[] = [
   {
     id: "asml-q3-2026-results", kind: "earnings", ticker: "ASML", date: "2026-10-14", sourceTimezone: "Europe/Amsterdam",
     title: { ja: "ASML 決算発表（2026年Q3）", en: "ASML Q3 2026 results" }, sourceName: "ASML IR",
-    sourceUrl: "https://www.asml.com/en/investors/financial-calendar", checkedOn: "2026-09-22",
+    sourceUrl: "https://www.asml.com/en/investors/financial-calendar", checkedOn: "2026-09-23",
   },
   ...["2026-10-28", "2026-12-09"].map((date): DateOnlyCalendarEvent => ({
     id: `fomc-${date}`, kind: "economic", date, sourceTimezone: "America/New_York",

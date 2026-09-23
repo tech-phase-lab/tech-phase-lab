@@ -45,7 +45,7 @@ Use that field to rotate the oldest attempts first; exact blockers remain in
 The calendar UI distinguishes a conclusive official-source check with no
 confirmed date from an inconclusive review that must remain pending; neither
 state is promoted to a forecast date.
-MU, TSMC, Adobe and GE Vernova are call or webcast times; Netflix is an approximate release time. ASML's
+MU, Adobe and GE Vernova are call or webcast times; Netflix is an approximate release time. ASML's
 October 14 official date and FOMC meeting dates with no published clock time are
 displayed separately, without manufacturing a timestamp or converting the date
 to JST/ET. A date-only item remains date-only for filtering and display.

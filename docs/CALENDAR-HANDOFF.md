@@ -208,3 +208,37 @@ Every roster entry now has a real attempt date from September 22 or 23. The next
 batch should start with the September 22 attempts ASML, MU, NFLX and TSM, then
 continue with the oldest September 23 entries. Advance `lastCheckedOn` only when
 the official source is conclusive.
+
+## Ninth company batch reviewed on 2026-09-23
+
+The four September 22 entries and the next six roster entries were reviewed
+against first-party pages. ASML, Micron and Netflix remain confirmed. TSMC's
+stored October 15 earnings call was removed because the current official
+financial calendar lists October 8, November 10 and December 10 monthly sales
+announcements as upcoming events, but does not list a Q3 earnings event. The
+unreachable guessed quarterly-results URL is not sufficient evidence to retain
+the date.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| ASML | Confirmed | The official financial-calendar embed still lists Q3 2026 financial results on October 14. The source publishes a date only, so no clock time was added. |
+| MU | Confirmed | Micron's August 26 announcement still schedules the fiscal Q4 2026 call for September 30 at 14:30 Mountain. The call time remains separate from the release time. |
+| NFLX | Confirmed | Netflix's September 14 announcement still schedules the Q3 results release for approximately October 20 at 13:01 Pacific and the interview for 13:45 Pacific. |
+| TSM | Confirmed no earnings date | The official financial calendar's upcoming section lists monthly sales announcements only. The unsupported October 15 earnings call was removed rather than inferred from prior years. |
+| AAPL | Pending | The official investor page exposed the Investor Updates and Quarterly Earnings Reports headings without a dated item or explicit no-events statement. |
+| ADBE | Confirmed | The official events page still lists the Q4 and FY2026 earnings call on December 9 at 14:00 Pacific. |
+| AMAT | Prior conclusion retained | The official events URL was inaccessible in this review. The prior September 23 conclusion remains unchanged; no projected date was promoted. |
+| AMD | Confirmed | The official IR calendar explicitly states that no upcoming events are scheduled. |
+| AMZN | Pending | The official events page exposed empty Upcoming Events and Past Events headings without an explicit no-events statement. |
+| ANET | Pending | The official Events and Presentations URL remained inaccessible through the review connection. |
+
+The BLS annual schedule was rechecked on 2026-09-23 and still lists the October
+2 Employment Situation, October 14 CPI and October 15 PPI releases at 08:30
+Eastern, with the stored November and December dates unchanged. The Federal
+Reserve calendar, last updated September 16, still lists the October 27-28 and
+December 8-9 FOMC meetings without future statement or press-conference clock
+times.
+
+The next company batch should begin with the oldest pending entries. A pending
+row must remain pending when a page is inaccessible, empty without an explicit
+status, or provides only historical material.
