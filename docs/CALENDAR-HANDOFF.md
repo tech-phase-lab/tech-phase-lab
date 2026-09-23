@@ -242,3 +242,33 @@ times.
 The next company batch should begin with the oldest pending entries. A pending
 row must remain pending when a page is inaccessible, empty without an explicit
 status, or provides only historical material.
+
+## Tenth company batch reviewed on 2026-09-23
+
+Ten pending entries were rechecked against their schedule-specific first-party
+pages. None published a confirmed future earnings date or an explicit statement
+that no event is scheduled. Their `lastCheckedOn` values therefore remain null;
+the existing 2026-09-23 `lastAttemptedOn` values already record today's attempt.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| MRVL | Pending | The official Events & Presentations page was not accessible through the review connection. The public official RSS is usable by the monitor but does not establish a future earnings schedule. |
+| ANET | Pending | The official Events & Presentations page was not accessible through the review connection. The public official RSS is usable by the monitor but does not establish a future earnings schedule. |
+| VRT | Pending | The official Events & Presentations page exposed empty Latest Events and Latest Presentation sections without an explicit no-events statement. |
+| PLTR | Pending | The official Events page returned navigation and contact content only, with no inspectable schedule state. |
+| AAPL | Pending | The official Investor Relations page exposed Investor Updates and Quarterly Earnings Reports headings without a dated future item or explicit no-events statement. |
+| AMZN | Pending | The official Events page exposed empty Upcoming Events and Past Events headings without an explicit no-events statement. |
+| ARM | Pending | The official investor site still showed the past July 29 fiscal Q1 2027 event as its latest item, with no future earnings event or explicit no-events statement. |
+| AVGO | Pending | The official Financial News page still ended with the September 2 fiscal Q3 results and contained no future timing announcement or explicit no-events statement. |
+| BE | Pending | The official Event Calendar exposed an empty Upcoming Events section without an explicit no-events statement. |
+| COHR | Pending | The official Financial Releases page still ended with the August 12 fiscal 2026 results and contained no future timing announcement or explicit no-events statement. |
+
+The BLS annual schedule was rechecked on 2026-09-23. It continues to list the
+October 2 Employment Situation, October 14 CPI and October 15 PPI at 08:30
+Eastern, with the stored November and December dates unchanged. The Federal
+Reserve calendar, last updated September 16, still lists the October 27-28 and
+December 8-9 FOMC meetings without future statement or press-conference clock
+times. No calendar event changed.
+
+Continue rotating the pending roster. Advance `lastCheckedOn` only when a
+first-party source provides a dated event or a conclusive no-events state.
