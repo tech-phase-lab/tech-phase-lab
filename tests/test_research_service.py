@@ -67,6 +67,11 @@ class ResearchServiceTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "Unknown RESEARCH_TICKERS: AMZN"):
                 service.AutomaticMonitor(self.db_path, self.snapshot_path)
 
+    def test_body_batch_configuration_is_bounded(self):
+        with patch.dict(os.environ, {"RESEARCH_BODY_FETCH_BATCH": "999999"}, clear=False):
+            app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        self.assertEqual(app.body_batch, 100)
+
     def test_liveness_does_not_wait_for_first_official_source_cycle(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         server = service.ThreadingHTTPServer(("127.0.0.1", 0), service.Handler)
@@ -117,6 +122,16 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertIsNotNone(body_fetch["lastPollAt"])
         self.assertIsNotNone(body_fetch["lastBatchAt"])
         self.assertIsInstance(body_fetch["lastBatchDurationMs"], int)
+        durable = body_fetch["durable"]
+        self.assertEqual(durable["runs24Hours"], 1)
+        self.assertEqual(durable["checks24Hours"], 1)
+        self.assertEqual(durable["errors24Hours"], 0)
+        self.assertEqual(durable["notModified24Hours"], 0)
+        self.assertNotIn("https://", json.dumps(durable))
+
+        restarted = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        persisted = restarted.public_state()["bodyFetch"]["durable"]
+        self.assertEqual(persisted, durable)
 
     def test_body_candidates_prioritize_missing_evidence_before_routine_rechecks(self):
         incomplete = "https://nebius.com/newsroom/legacy-evidence.pdf"
@@ -205,6 +220,9 @@ class ResearchServiceTests(unittest.TestCase):
             ).fetchone()[0], 0)
         self.assertEqual(app.public_state()["sourceNotModified"], 1)
         self.assertEqual(app.public_state()["bodyFetch"]["lastBatchNotModified"], 1)
+        durable = app.public_state()["bodyFetch"]["durable"]
+        self.assertEqual(durable["lastNotModified"], 1)
+        self.assertEqual(durable["notModified24Hours"], 1)
 
     def test_empty_body_poll_records_poll_without_overwriting_batch_metrics(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)

@@ -115,7 +115,7 @@ class AutomaticMonitor:
         self.standard_seconds = positive_int("RESEARCH_STANDARD_POLL_SECONDS", 5, 5)
         self.workers = positive_int("RESEARCH_MAX_WORKERS", 8, 1)
         self.body_interval = positive_int("RESEARCH_BODY_FETCH_INTERVAL_SECONDS", 10, 5)
-        self.body_batch = positive_int("RESEARCH_BODY_FETCH_BATCH", 2, 1)
+        self.body_batch = min(100, positive_int("RESEARCH_BODY_FETCH_BATCH", 2, 1))
         self.backup_interval = positive_int("RESEARCH_BACKUP_INTERVAL_SECONDS", 3600, 300)
         self.backup_grace = positive_int("RESEARCH_BACKUP_GRACE_SECONDS", 600, 60)
         self.backup_retention = positive_int("RESEARCH_BACKUP_RETENTION", 24, 2)
@@ -406,6 +406,7 @@ class AutomaticMonitor:
             state["generation"].update(monitor.generation_queue_stats(
                 db, self.generation_daily_limit, self.generation_token_limit
             ))
+            state["bodyFetch"]["durable"] = monitor.body_fetch_batch_summary(db)
             state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
             state["incidents"] = monitor.operational_incident_summary(
                 db, delivery_enabled=self.notification_enabled
@@ -573,6 +574,8 @@ class AutomaticMonitor:
                 completed.append((row, None, exc))
         errors = 0
         not_modified = 0
+        completed_at = None
+        duration_ms = None
         with self.db_lock, monitor.connect(self.db_path) as db:
             affected_tickers = {row["ticker"] for row, _, _ in completed}
             for row, result, error in completed:
@@ -601,6 +604,12 @@ class AutomaticMonitor:
                     )
                 else:
                     monitor.resolve_operational_incident(db, incident_key)
+            completed_at = utc_now()
+            duration_ms = max(0, round((time.monotonic() - cycle_started) * 1000))
+            monitor.record_body_fetch_batch(
+                db, polled_at, completed_at, duration_ms,
+                len(completed), errors, not_modified,
+            )
             monitor.write_snapshot(db, self.snapshot_path)
         with self.state_lock:
             self.state["sourceChecks"] += len(completed)
@@ -609,10 +618,8 @@ class AutomaticMonitor:
             self.state["pendingBodies"] = max(0, pending - len(completed))
             self.state["bodyFetch"].update({
                 "lastPollAt": polled_at,
-                "lastBatchAt": utc_now(),
-                "lastBatchDurationMs": max(
-                    0, round((time.monotonic() - cycle_started) * 1000)
-                ),
+                "lastBatchAt": completed_at,
+                "lastBatchDurationMs": duration_ms,
                 "lastBatchChecks": len(completed),
                 "lastBatchErrors": errors,
                 "lastBatchNotModified": not_modified,

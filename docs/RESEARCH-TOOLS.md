@@ -35,6 +35,13 @@ impact interpretation, and numbers. The private audit history retains that
 acknowledgement; public data excludes AI-assisted drafts whose matching
 approval lacks it.
 
+Article-body batch metrics are persisted separately from the in-memory worker
+state. The operations preview can therefore show the last completed batch and
+24-hour checks, errors and HTTP 304 reuse after a service restart. These
+metrics contain no source URLs, validators or article text and retain at most
+20,000 batches, enough to preserve a full 24-hour window even at the minimum
+five-second worker interval. The configured batch size is capped at 100.
+
 Validation: `npm run lint`, `node --experimental-strip-types --test tests/*.test.mjs`,
 and `npm run build`. Browser checks cover favorites persistence, company-page
 toggles, calendar filters, and the four home destinations.

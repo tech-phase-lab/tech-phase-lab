@@ -974,6 +974,14 @@ def connect(path):
     CREATE TABLE IF NOT EXISTS release_events (
       id INTEGER PRIMARY KEY, url TEXT NOT NULL UNIQUE REFERENCES sources(url),
       ticker TEXT NOT NULL, detected_at TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS body_fetch_batches (
+      id INTEGER PRIMARY KEY, polled_at TEXT NOT NULL, completed_at TEXT NOT NULL,
+      duration_ms INTEGER NOT NULL CHECK(duration_ms>=0 AND duration_ms<=3600000),
+      checks INTEGER NOT NULL CHECK(checks>0 AND checks<=1000),
+      errors INTEGER NOT NULL CHECK(errors>=0 AND errors<=checks),
+      not_modified INTEGER NOT NULL CHECK(not_modified>=0 AND not_modified<=checks));
+    CREATE INDEX IF NOT EXISTS body_fetch_batches_completed
+      ON body_fetch_batches(completed_at DESC);
     CREATE TABLE IF NOT EXISTS briefs (
       url TEXT PRIMARY KEY REFERENCES sources(url), source_sha256 TEXT NOT NULL,
       summary_ja TEXT NOT NULL, impact_label TEXT NOT NULL, impact_ja TEXT NOT NULL,
@@ -1145,6 +1153,69 @@ def connect(path):
         )
     db.commit()
     return db
+
+
+def record_body_fetch_batch(db, polled_at, completed_at, duration_ms, checks, errors, not_modified):
+    """Persist bounded URL-free body-fetch evidence across service restarts."""
+    try:
+        polled = datetime.fromisoformat(str(polled_at).replace("Z", "+00:00"))
+        completed = datetime.fromisoformat(str(completed_at).replace("Z", "+00:00"))
+        duration_ms, checks = int(duration_ms), int(checks)
+        errors, not_modified = int(errors), int(not_modified)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-body-fetch-batch") from exc
+    if (
+        polled.tzinfo is None or completed.tzinfo is None or completed < polled
+        or not 0 <= duration_ms <= 3_600_000 or not 1 <= checks <= 1000
+        or not 0 <= errors <= checks or not 0 <= not_modified <= checks
+    ):
+        raise ValueError("invalid-body-fetch-batch")
+    with db:
+        db.execute("""
+          INSERT INTO body_fetch_batches(
+            polled_at,completed_at,duration_ms,checks,errors,not_modified
+          ) VALUES(?,?,?,?,?,?)
+        """, (polled_at, completed_at, duration_ms, checks, errors, not_modified))
+        db.execute("""
+          DELETE FROM body_fetch_batches WHERE id IN (
+            SELECT id FROM body_fetch_batches ORDER BY id DESC LIMIT -1 OFFSET 20000
+          )
+        """)
+
+
+def body_fetch_batch_summary(db, reference=None):
+    """Return restart-safe aggregate metrics without source identities or bodies."""
+    reference = reference or now()
+    try:
+        parsed = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            raise ValueError
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-body-fetch-reference") from exc
+    window_start = (parsed.astimezone(timezone.utc) - timedelta(hours=24)).isoformat(
+        timespec="milliseconds"
+    )
+    latest = db.execute("""
+      SELECT completed_at,duration_ms,checks,errors,not_modified
+      FROM body_fetch_batches ORDER BY id DESC LIMIT 1
+    """).fetchone()
+    totals = db.execute("""
+      SELECT count(*) AS runs,COALESCE(sum(checks),0) AS checks,
+             COALESCE(sum(errors),0) AS errors,
+             COALESCE(sum(not_modified),0) AS not_modified
+      FROM body_fetch_batches
+      WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
+    """, (window_start, parsed.astimezone(timezone.utc).isoformat(timespec="milliseconds"))).fetchone()
+    return {
+        "lastCompletedAt": latest["completed_at"] if latest else None,
+        "lastDurationMs": latest["duration_ms"] if latest else None,
+        "lastChecks": latest["checks"] if latest else 0,
+        "lastErrors": latest["errors"] if latest else 0,
+        "lastNotModified": latest["not_modified"] if latest else 0,
+        "runs24Hours": totals["runs"], "checks24Hours": totals["checks"],
+        "errors24Hours": totals["errors"],
+        "notModified24Hours": totals["not_modified"],
+    }
 
 
 def _incident_value(value, maximum=80):
