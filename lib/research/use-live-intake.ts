@@ -66,6 +66,7 @@ export type MonitorState = {
     lastBatchDurationMs: number | null; lastBatchChecks: number;
     lastBatchErrors: number; lastBatchNotModified: number;
     healthy: boolean | null; consecutiveFailures: number; lastError: string | null;
+    retrySeconds: number; nextRetryAt: string | null;
   };
   pendingBodies?: number;
   companies: Record<string, {

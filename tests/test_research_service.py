@@ -226,6 +226,7 @@ class ResearchServiceTests(unittest.TestCase):
 
     def test_body_worker_failure_is_isolated_redacted_and_recovers(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_interval = 10
         with patch.object(
             app, "fetch_bodies", side_effect=RuntimeError("private database path")
         ):
@@ -235,8 +236,27 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertFalse(failed["bodyFetch"]["healthy"])
         self.assertEqual(failed["bodyFetch"]["consecutiveFailures"], 1)
         self.assertEqual(failed["bodyFetch"]["lastError"], "body-fetch-failed")
+        self.assertEqual(failed["bodyFetch"]["retrySeconds"], 20)
+        self.assertIsNotNone(failed["bodyFetch"]["nextRetryAt"])
         self.assertIn("body-fetch-failed", failed["health"]["issues"])
         self.assertNotIn("private database path", json.dumps(failed))
+
+        with patch.object(app, "fetch_bodies", side_effect=RuntimeError("still private")):
+            with ThreadPoolExecutor(max_workers=1) as pool:
+                self.assertFalse(app.fetch_bodies_safely(pool))
+        repeated = app.public_state()["bodyFetch"]
+        self.assertEqual(repeated["consecutiveFailures"], 2)
+        self.assertEqual(repeated["retrySeconds"], 40)
+        self.assertNotIn("still private", json.dumps(repeated))
+
+        with patch.object(app, "fetch_bodies", side_effect=RuntimeError("bounded private")):
+            with ThreadPoolExecutor(max_workers=1) as pool:
+                for _ in range(4):
+                    self.assertFalse(app.fetch_bodies_safely(pool))
+        capped = app.public_state()["bodyFetch"]
+        self.assertEqual(capped["consecutiveFailures"], 6)
+        self.assertEqual(capped["retrySeconds"], 300)
+        self.assertNotIn("bounded private", json.dumps(capped))
 
         app.sync_health_incidents()
         with monitor.connect(self.db_path) as db:
@@ -254,6 +274,8 @@ class ResearchServiceTests(unittest.TestCase):
         recovered = app.public_state()
         self.assertTrue(recovered["bodyFetch"]["healthy"])
         self.assertEqual(recovered["bodyFetch"]["consecutiveFailures"], 0)
+        self.assertEqual(recovered["bodyFetch"]["retrySeconds"], 0)
+        self.assertIsNone(recovered["bodyFetch"]["nextRetryAt"])
         self.assertNotIn("body-fetch-failed", recovered["health"]["issues"])
         app.sync_health_incidents()
         with monitor.connect(self.db_path) as db:

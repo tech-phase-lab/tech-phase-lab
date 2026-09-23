@@ -37,6 +37,7 @@ test("operations preview exposes bounded cache pressure without cached contents"
   assert.match(intakeDashboard, /本文取得：直近/);
   assert.match(intakeDashboard, /本文取得：要確認/);
   assert.match(intakeDashboard, /body-fetch-failed/);
+  assert.match(intakeDashboard, /retrySeconds/);
   assert.match(intakeDashboard, /lastBatchDurationMs/);
   assert.match(intakeDashboard, /cache\.entries/);
   assert.match(intakeDashboard, /cache\.bytes/);

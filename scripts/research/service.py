@@ -1,7 +1,7 @@
 """Always-on official-source monitor with a small authenticated HTTP API."""
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import hashlib
 import hmac
@@ -174,6 +174,7 @@ class AutomaticMonitor:
                 "lastBatchDurationMs": None, "lastBatchChecks": 0,
                 "lastBatchErrors": 0, "lastBatchNotModified": 0,
                 "healthy": None, "consecutiveFailures": 0, "lastError": None,
+                "retrySeconds": 0, "nextRetryAt": None,
             },
             "pendingBodies": 0,
             "tickerCount": len(self.tickers),
@@ -558,6 +559,7 @@ class AutomaticMonitor:
                 self.state["bodyFetch"].update({
                     "lastPollAt": polled_at, "healthy": True,
                     "consecutiveFailures": 0, "lastError": None,
+                    "retrySeconds": 0, "nextRetryAt": None,
                 })
             return
         futures = {pool.submit(monitor.collect_source, row, monitor.fetch): row for row in rows}
@@ -616,6 +618,8 @@ class AutomaticMonitor:
                 "healthy": True,
                 "consecutiveFailures": 0,
                 "lastError": None,
+                "retrySeconds": 0,
+                "nextRetryAt": None,
             })
 
     def fetch_bodies_safely(self, pool):
@@ -625,11 +629,17 @@ class AutomaticMonitor:
         except Exception:
             with self.state_lock:
                 body_fetch = self.state["bodyFetch"]
+                failures = body_fetch["consecutiveFailures"] + 1
+                retry_seconds = min(300, self.body_interval * (2 ** min(failures, 5)))
                 body_fetch.update({
                     "lastPollAt": utc_now(),
                     "healthy": False,
-                    "consecutiveFailures": body_fetch["consecutiveFailures"] + 1,
+                    "consecutiveFailures": failures,
                     "lastError": "body-fetch-failed",
+                    "retrySeconds": retry_seconds,
+                    "nextRetryAt": (
+                        datetime.now(timezone.utc) + timedelta(seconds=retry_seconds)
+                    ).isoformat(timespec="milliseconds"),
                 })
             return False
         return True
@@ -853,8 +863,12 @@ class AutomaticMonitor:
                         self.state["lastChangeAt"] = checked_at
 
                 if time.monotonic() >= next_body_fetch:
-                    self.fetch_bodies_safely(pool)
-                    next_body_fetch = time.monotonic() + self.body_interval
+                    succeeded = self.fetch_bodies_safely(pool)
+                    with self.state_lock:
+                        retry_seconds = self.state["bodyFetch"]["retrySeconds"]
+                    next_body_fetch = time.monotonic() + (
+                        self.body_interval if succeeded else retry_seconds
+                    )
 
 
 class Handler(BaseHTTPRequestHandler):

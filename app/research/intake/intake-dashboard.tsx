@@ -85,7 +85,7 @@ function discoveryCacheStatus(cache: MonitorState["discoveryCache"]) {
 }
 function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], pending = 0) {
   if (!bodyFetch?.lastPollAt) return "本文取得：初回ポーリング待ち";
-  if (bodyFetch.healthy === false) return `本文取得：要確認 · 内部処理を再試行中（連続 ${bodyFetch.consecutiveFailures}回） · 待機 ${pending}件`;
+  if (bodyFetch.healthy === false) return `本文取得：要確認 · 内部処理を再試行予定（連続 ${bodyFetch.consecutiveFailures}回・${bodyFetch.retrySeconds ?? 0}秒後） · 待機 ${pending}件`;
   if (!bodyFetch.lastBatchAt) return `本文取得：${time(bodyFetch.lastPollAt)} JSTに確認 · 待機 ${pending}件 · 取得実績待ち`;
   return `本文取得：直近 ${bodyFetch.lastBatchChecks}件 · エラー ${bodyFetch.lastBatchErrors}件 · 304 ${bodyFetch.lastBatchNotModified}件 · ${duration(bodyFetch.lastBatchDurationMs)} · 待機 ${pending}件`;
 }
