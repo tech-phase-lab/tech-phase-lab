@@ -164,6 +164,11 @@ class AutomaticMonitor:
             "sourceChecks": 0,
             "sourceFetchErrors": 0,
             "sourceNotModified": 0,
+            "discoveryCache": {
+                "persistedSources": 0, "invalidatedSources": 0,
+                "conditionalRequests": 0, "notModifiedResponses": 0,
+                "freshResponses": 0, "lastUpdatedAt": None,
+            },
             "pendingBodies": 0,
             "tickerCount": len(self.tickers),
             "generation": {
@@ -659,9 +664,13 @@ class AutomaticMonitor:
         failure_streak = {ticker: 0 for ticker in self.tickers}
         next_body_fetch = 0.0
         with self.db_lock, monitor.connect(self.db_path) as db:
+            invalidated_sources = 0
             for ticker in self.tickers:
                 known[ticker] = {row[0] for row in db.execute("SELECT url FROM sources WHERE ticker=?", (ticker,))}
-                discovery_caches[ticker] = monitor.load_discovery_source_cache(db, ticker)
+                discovery_caches[ticker], cache_stats = monitor.load_discovery_source_cache(
+                    db, ticker, include_stats=True
+                )
+                invalidated_sources += cache_stats["invalidatedSources"]
                 baseline_ready[ticker] = db.execute(
                     """SELECT 1 FROM discovery_runs
                        WHERE ticker=? AND (
@@ -671,6 +680,11 @@ class AutomaticMonitor:
                     (ticker,),
                 ).fetchone() is not None
             monitor.write_snapshot(db, self.snapshot_path)
+        with self.state_lock:
+            self.state["discoveryCache"].update({
+                "persistedSources": sum(len(cache) for cache in discovery_caches.values()),
+                "invalidatedSources": invalidated_sources,
+            })
 
         with ThreadPoolExecutor(max_workers=self.workers, thread_name_prefix="source") as pool:
             while not self.stop_event.is_set():
@@ -715,9 +729,16 @@ class AutomaticMonitor:
                 new_count = 0
                 checked_at = utc_now()
                 company_states = {}
+                cache_metrics = {
+                    "conditionalRequests": 0, "notModifiedResponses": 0,
+                    "freshResponses": 0,
+                }
                 with self.db_lock, monitor.connect(self.db_path) as db:
                     for ticker, result, links, request_duration_ms in collected:
                         source_cache = result.get("_sourceCache", discovery_caches[ticker])
+                        result_cache_metrics = result.pop("_cacheMetrics", {})
+                        for metric in cache_metrics:
+                            cache_metrics[metric] += int(result_cache_metrics.get(metric, 0))
                         cache_changed = source_cache != discovery_caches[ticker]
                         signature = discovery_signature(result, links)
                         new_urls = set(links) - known[ticker]
@@ -771,6 +792,13 @@ class AutomaticMonitor:
                     self.state["cycles"] += 1
                     self.state["newSources"] += new_count
                     self.state["companies"].update(company_states)
+                    discovery_cache = self.state["discoveryCache"]
+                    discovery_cache["persistedSources"] = sum(
+                        len(cache) for cache in discovery_caches.values()
+                    )
+                    for metric, count in cache_metrics.items():
+                        discovery_cache[metric] += count
+                    discovery_cache["lastUpdatedAt"] = checked_at
                     if new_count:
                         self.state["lastChangeAt"] = checked_at
 

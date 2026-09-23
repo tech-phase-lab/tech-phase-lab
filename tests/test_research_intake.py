@@ -906,6 +906,7 @@ class IntakeTests(unittest.TestCase):
         initial_transport.supports_persistent_validators = True
         first = m.discover(self.db, "MRVL", initial_transport)
         self.assertEqual(first["candidates"], 1)
+        self.assertNotIn("_cacheMetrics", first)
         self.assertEqual(first_requests, [(provider["indexUrl"], {
             "etag": None, "last_modified": None,
         }, True)])
@@ -933,6 +934,17 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(second["candidates"], 1)
         self.assertEqual(second["newCandidates"], 0)
         self.assertNotIn("_sourceCache", second)
+        self.assertNotIn("_cacheMetrics", second)
+
+        cached = m.load_discovery_source_cache(self.db, "MRVL")
+        collected, _ = m.collect_discovery(
+            "MRVL", restarted_transport, cached_sources=cached
+        )
+        self.assertEqual(collected["_cacheMetrics"], {
+            "conditionalRequests": 1,
+            "notModifiedResponses": 1,
+            "freshResponses": 0,
+        })
 
     def test_stale_discovery_parser_cache_forces_unconditional_refresh(self):
         provider = m.PROVIDERS["MRVL"]
@@ -951,6 +963,16 @@ class IntakeTests(unittest.TestCase):
                     "0" * 64, m.now(),
                 ),
             )
+
+        cached, stats = m.load_discovery_source_cache(
+            self.db, "MRVL", include_stats=True
+        )
+        self.assertEqual(cached, {})
+        self.assertEqual(stats, {
+            "storedSources": 1,
+            "loadedSources": 0,
+            "invalidatedSources": 1,
+        })
 
         fresh_url = (
             "https://investor.marvell.com/news-events/press-releases/detail/5678/new"

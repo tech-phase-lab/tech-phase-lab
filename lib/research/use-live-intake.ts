@@ -56,6 +56,11 @@ export type MonitorState = {
   fetchCache?: {
     entries: number; bytes: number; maxEntries: number; maxBytes: number;
   };
+  discoveryCache?: {
+    persistedSources: number; invalidatedSources: number;
+    conditionalRequests: number; notModifiedResponses: number; freshResponses: number;
+    lastUpdatedAt: string | null;
+  };
   companies: Record<string, {
     basePollSeconds?: number; nextPollSeconds?: number; requestDurationMs?: number;
     status: string; route: string; candidates: number; checkedAt: string; error: string | null;

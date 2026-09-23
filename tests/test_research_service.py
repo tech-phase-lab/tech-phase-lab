@@ -218,6 +218,17 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertLessEqual(cache["bytes"], cache["maxBytes"])
         self.assertNotIn("https://", json.dumps(cache))
 
+    def test_public_health_exposes_safe_discovery_cache_totals(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        cache = app.public_state()["discoveryCache"]
+        self.assertEqual(set(cache), {
+            "persistedSources", "invalidatedSources", "conditionalRequests",
+            "notModifiedResponses", "freshResponses", "lastUpdatedAt",
+        })
+        self.assertEqual(cache["persistedSources"], 0)
+        self.assertEqual(cache["notModifiedResponses"], 0)
+        self.assertNotIn("https://", json.dumps(cache))
+
     def test_discovery_signature_detects_same_url_inline_feed_revisions(self):
         result = {
             "status": "ok", "route": "primary+supplemental",
