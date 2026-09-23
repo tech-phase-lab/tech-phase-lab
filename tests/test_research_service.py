@@ -102,6 +102,51 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(persisted["lastDegraded"], 1)
         self.assertEqual(persisted["lastNewSources"], 2)
 
+    def test_durable_worker_evidence_distinguishes_restored_and_current_activity(self):
+        previous_completed = datetime.now(timezone.utc) - timedelta(seconds=2)
+        previous_started = previous_completed - timedelta(milliseconds=500)
+        with monitor.connect(self.db_path) as db:
+            monitor.record_discovery_poll_batch(
+                db, previous_started.isoformat(timespec="milliseconds"),
+                previous_completed.isoformat(timespec="milliseconds"),
+                500, 1, 0, 0, (250,),
+            )
+            monitor.record_body_fetch_poll(
+                db, previous_completed.isoformat(timespec="milliseconds"), 0
+            )
+            monitor.record_body_fetch_batch(
+                db, previous_started.isoformat(timespec="milliseconds"),
+                previous_completed.isoformat(timespec="milliseconds"),
+                500, 1, 0, 0,
+            )
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        restored = app.public_state()
+        self.assertFalse(restored["discoveryRuns"]["completedSinceStart"])
+        self.assertFalse(restored["bodyFetch"]["durable"]["polledSinceStart"])
+        self.assertFalse(restored["bodyFetch"]["durable"]["completedSinceStart"])
+
+        current_completed = datetime.now(timezone.utc)
+        current_started = current_completed - timedelta(milliseconds=250)
+        with monitor.connect(self.db_path) as db:
+            monitor.record_discovery_poll_batch(
+                db, current_started.isoformat(timespec="milliseconds"),
+                current_completed.isoformat(timespec="milliseconds"),
+                250, 1, 0, 0, (125,),
+            )
+            monitor.record_body_fetch_poll(
+                db, current_completed.isoformat(timespec="milliseconds"), 0
+            )
+            monitor.record_body_fetch_batch(
+                db, current_started.isoformat(timespec="milliseconds"),
+                current_completed.isoformat(timespec="milliseconds"),
+                250, 1, 0, 0,
+            )
+        current = app.public_state()
+        self.assertTrue(current["discoveryRuns"]["completedSinceStart"])
+        self.assertTrue(current["bodyFetch"]["durable"]["polledSinceStart"])
+        self.assertTrue(current["bodyFetch"]["durable"]["completedSinceStart"])
+
     def test_discovery_poll_metrics_reject_invalid_or_unbounded_values(self):
         timestamp = service.utc_now()
         with monitor.connect(self.db_path) as db:
@@ -459,6 +504,10 @@ class ResearchServiceTests(unittest.TestCase):
 
         restarted = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         persisted = restarted.public_state()["bodyFetch"]["durable"]
+        self.assertTrue(durable.pop("polledSinceStart"))
+        self.assertTrue(durable.pop("completedSinceStart"))
+        self.assertFalse(persisted.pop("polledSinceStart"))
+        self.assertFalse(persisted.pop("completedSinceStart"))
         self.assertEqual(persisted, durable)
 
     def test_body_latency_ignores_routine_rechecks_and_invalid_detection_times(self):

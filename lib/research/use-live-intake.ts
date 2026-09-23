@@ -64,7 +64,7 @@ export type MonitorState = {
   discoveryRuns?: {
     lastCompletedAt: string | null; lastDurationMs: number | null;
     lastCompletedAgeSeconds: number | null; pollOverdueAfterSeconds: number;
-    pollOverdue: boolean;
+    pollOverdue: boolean; completedSinceStart?: boolean;
     lastChecks: number; lastDegraded: number; lastNewSources: number;
     lastRequestDurationAverageMs: number | null; lastRequestDurationMaxMs: number | null;
     runs24Hours: number; checks24Hours: number; degraded24Hours: number;
@@ -80,7 +80,7 @@ export type MonitorState = {
     durable?: {
       lastPolledAt: string | null; lastPollAgeSeconds: number | null;
       pendingAtLastPoll: number | null; pollOverdueAfterSeconds: number;
-      pollOverdue: boolean;
+      pollOverdue: boolean; polledSinceStart?: boolean; completedSinceStart?: boolean;
       lastCompletedAt: string | null; lastDurationMs: number | null;
       lastChecks: number; lastErrors: number; lastNotModified: number;
       lastDetectionLatencySamples: number;

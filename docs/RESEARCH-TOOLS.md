@@ -68,6 +68,10 @@ presented as current worker activity. Once a completed durable poll exists, an
 overdue completion independently degrades service health and opens a redacted
 `discovery-poll-stale` incident; a fresh completion resolves the same incident.
 An empty database remains a startup state rather than a fabricated failure.
+The API also compares the latest durable discovery completion and body-worker
+heartbeat with the current process start time. The preview can therefore label
+restored pre-restart evidence separately from activity observed by the current
+deployment, without publishing a process identifier or source details.
 Polling configuration and observed request time are not delivery latency
 guarantees.
 

@@ -81,6 +81,18 @@ def timestamp_latency_ms(started_at, completed_at):
         return None
 
 
+def timestamp_at_or_after(value, reference):
+    """Return whether two timezone-aware timestamps prove post-start activity."""
+    try:
+        observed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        started = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
+        if observed.tzinfo is None or started.tzinfo is None:
+            return False
+        return observed.astimezone(timezone.utc) >= started.astimezone(timezone.utc)
+    except (TypeError, ValueError):
+        return False
+
+
 def discovery_signature(result, links):
     """Hash bounded discovery evidence so same-URL feed revisions are observed."""
     digest = hashlib.sha256()
@@ -291,12 +303,21 @@ class AutomaticMonitor:
         if state["bodyFetch"]["healthy"] is False:
             issues.append("body-fetch-failed")
         durable_body_fetch = state["bodyFetch"].get("durable") or {}
+        durable_body_fetch["polledSinceStart"] = timestamp_at_or_after(
+            durable_body_fetch.get("lastPolledAt"), state.get("startedAt")
+        )
+        durable_body_fetch["completedSinceStart"] = timestamp_at_or_after(
+            durable_body_fetch.get("lastCompletedAt"), state.get("startedAt")
+        )
         if (
             state["ready"] and durable_body_fetch.get("pollOverdue")
             and "monitor-stale" not in issues
         ):
             issues.append("body-fetch-stale")
         durable_discovery = state.get("discoveryRuns") or {}
+        durable_discovery["completedSinceStart"] = timestamp_at_or_after(
+            durable_discovery.get("lastCompletedAt"), state.get("startedAt")
+        )
         if (
             state["ready"] and durable_discovery.get("lastCompletedAt")
             and durable_discovery.get("pollOverdue")
