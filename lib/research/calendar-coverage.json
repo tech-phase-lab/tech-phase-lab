@@ -128,26 +128,26 @@
   {
     "ticker": "LRCX",
     "name": "Lam Research",
-    "sourceUrl": "https://investor.lamresearch.com/",
-    "lastCheckedOn": null
+    "sourceUrl": "https://investor.lamresearch.com/events",
+    "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "META",
     "name": "Meta Platforms",
-    "sourceUrl": "https://investor.atmeta.com/home/default.aspx",
-    "lastCheckedOn": null
+    "sourceUrl": "https://investor.atmeta.com/investor-events/",
+    "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "MRVL",
     "name": "Marvell",
-    "sourceUrl": "https://investor.marvell.com/news-events/press-releases/rss",
+    "sourceUrl": "https://investor.marvell.com/events-and-presentations/default.aspx",
     "lastCheckedOn": null
   },
   {
     "ticker": "MSFT",
     "name": "Microsoft",
-    "sourceUrl": "https://news.microsoft.com/source/feed/",
-    "lastCheckedOn": null
+    "sourceUrl": "https://www.microsoft.com/en-us/investor/events/events-upcoming",
+    "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "MU",
@@ -158,7 +158,7 @@
   {
     "ticker": "NBIS",
     "name": "Nebius",
-    "sourceUrl": "https://nebius.com/newsroom",
+    "sourceUrl": "https://nebius.com/investor-hub",
     "lastCheckedOn": null
   },
   {
@@ -170,31 +170,31 @@
   {
     "ticker": "NOW",
     "name": "ServiceNow",
-    "sourceUrl": "https://investor.servicenow.com/overview/default.aspx",
+    "sourceUrl": "https://investor.servicenow.com/events-and-presentations/default.aspx",
     "lastCheckedOn": null
   },
   {
     "ticker": "NVDA",
     "name": "NVIDIA",
-    "sourceUrl": "https://nvidianews.nvidia.com/rss.xml",
+    "sourceUrl": "https://investor.nvidia.com/events-and-presentations/default.aspx",
     "lastCheckedOn": null
   },
   {
     "ticker": "ORCL",
     "name": "Oracle",
-    "sourceUrl": "https://www.oracle.com/news/",
+    "sourceUrl": "https://investor.oracle.com/events-and-presentations/default.aspx",
     "lastCheckedOn": null
   },
   {
     "ticker": "PANW",
     "name": "Palo Alto Networks",
-    "sourceUrl": "https://investors.paloaltonetworks.com/",
+    "sourceUrl": "https://investors.paloaltonetworks.com/events-and-presentations/default.aspx",
     "lastCheckedOn": null
   },
   {
     "ticker": "PLTR",
     "name": "Palantir",
-    "sourceUrl": "https://www.palantir.com/sitemap.xml",
+    "sourceUrl": "https://investors.palantir.com/events",
     "lastCheckedOn": null
   },
   {

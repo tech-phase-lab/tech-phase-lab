@@ -49,3 +49,22 @@ JavaScript-only IR page is not evidence that no event exists.
 Next company batch starts with LRCX, then META, MRVL, MSFT, NBIS, NOW, NVDA,
 ORCL, PANW and PLTR. Pending rows above should be retried when their official
 pages become inspectable or provide an explicit schedule state.
+
+## Third company batch reviewed on 2026-09-23
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| LRCX | Checked; no event added | The official Events & Presentations page explicitly states “No events to display” under Upcoming Events. |
+| META | Checked; no event added | The official Upcoming Events page explicitly states “Stay tuned for upcoming events.” |
+| MRVL | Pending | The official Events & Presentations URL was not accessible to the reviewer, so no current schedule state could be verified. |
+| MSFT | Checked; no earnings event added | The official Upcoming Events page lists the December 8, 2026 annual shareholders meeting, but no earnings release or call. The non-earnings event is outside this selected calendar. |
+| NBIS | Pending | The official Investor Hub shows two recent September investor conferences and the newsroom shows the past Q2 results, but neither publishes a future earnings event or an explicit absence statement. |
+| NOW | Pending | The official Events & Presentations page exposed archived-event sections without a current item or explicit absence statement. |
+| NVDA | Pending | The official events endpoint was inaccessible. The latest accessible first-party event announcement concerned the already-past September 10 investor conference and does not establish the current future schedule. |
+| ORCL | Pending | The official page exposed Featured Event and Upcoming Events headings without an item or explicit absence statement. |
+| PANW | Pending | The official Events & Presentations URL was not accessible to the reviewer, so no current schedule state could be verified. |
+| PLTR | Pending | The official Events page exposed only its navigation shell, with no dated item or explicit absence statement. |
+
+Next company batch starts with QCOM, then SKHY, SNDK, SNOW, TSLA and VRT,
+followed by pending retries for AAPL, AMZN, ANET and ARM. Other pending rows
+remain queued for another first-party check.
