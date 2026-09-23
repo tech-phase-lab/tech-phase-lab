@@ -32,6 +32,12 @@ export default function EventCalendar() {
   const pendingCompanies = coverage.length - reviewedCompanies;
   const stale = now !== null && now - Date.parse(`${calendarReviewedOn}T00:00:00+09:00`) > 7 * 86400000;
   const stamp = (value: string, zone: string) => new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, month: "short", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(value));
+  const coverageStatus = (company: (typeof coverage)[number]) => {
+    if (calendarEvents.some((event) => event.ticker === company.ticker && (now === null || Date.parse(event.startsAt) >= now))) return t("予定掲載済み", "Schedule listed");
+    if (now !== null && selectDateOnlyEarnings("upcoming", now).some((event) => event.ticker === company.ticker)) return t("日付のみ確認", "Date confirmed; time pending");
+    if (company.lastCheckedOn !== null) return t(`公式確認済み・確定日なし（${company.lastCheckedOn}）`, `Official source checked; no confirmed date (${company.lastCheckedOn})`);
+    return t(`公式確認試行済み・確認継続（${company.lastAttemptedOn}）`, `Official check attempted; still under review (${company.lastAttemptedOn})`);
+  };
   return <ResearchToolShell lang={lang} setLang={(value) => { setLang(value); setZoneOverride(null); setPeriod("upcoming"); }} title={t("決算・経済指標カレンダー", "Earnings & economic calendar")} description={t("公式発表で確認した予定を、日本時間と米国東部時間で。", "Official schedules in U.S. Eastern and Japan time.")}>
     <p className={styles.notice}>{t("公式予定の確認日", "Schedule checked")}: {calendarReviewedOn} · {t("公式確認済みの予定を掲載。未確認の企業は下の追跡対象に表示します。日程は変更される場合があります。", "Verified schedules only. Companies awaiting date confirmation are listed below. Dates may change.")}</p>
     {stale && <p role="status" className={styles.error}>{t("確認から7日以上経過しています。参加・視聴前に公式日程を再確認してください。", "This schedule was checked over 7 days ago. Recheck the official source before attending.")}</p>}
@@ -53,7 +59,7 @@ export default function EventCalendar() {
       <details className={styles.coverage}>
         <summary>{t("決算の追跡対象", "Earnings coverage")} · {coverage.length}{t("社", " companies")}</summary>
         <p className={styles.description}>{t(`公式照合済み ${reviewedCompanies}社 · 確認継続 ${pendingCompanies}社。確定日がない企業を予想日で埋めず、公式確認後に追加します。`, `${reviewedCompanies} official sources checked · ${pendingCompanies} still under review. We add confirmed dates rather than filling gaps with estimates.`)}</p>
-        <ul>{coverage.map((company) => <li key={company.ticker}><a href={company.sourceUrl} target="_blank" rel="noreferrer"><strong>{company.ticker}</strong> {company.name} ↗</a><small>{calendarEvents.some((event) => event.ticker === company.ticker && (now === null || Date.parse(event.startsAt) >= now)) ? t("予定掲載済み", "Schedule listed") : now !== null && selectDateOnlyEarnings("upcoming", now).some((event) => event.ticker === company.ticker) ? t("日付のみ確認", "Date confirmed; time pending") : company.lastCheckedOn !== null ? t(`公式確認済み・確定日なし（${company.lastCheckedOn}）`, `Official source checked; no confirmed date (${company.lastCheckedOn})`) : t("次回日程を確認継続中", "Next date still under review")}</small></li>)}</ul>
+        <ul>{coverage.map((company) => <li key={company.ticker}><a href={company.sourceUrl} target="_blank" rel="noreferrer"><strong>{company.ticker}</strong> {company.name} ↗</a><small>{coverageStatus(company)}</small></li>)}</ul>
       </details>
     </section>
     <p className={styles.notice}>{t("結果・市場予想・自動通知は含みません。参加・視聴前に公式日程をご確認ください。", "Results, consensus forecasts and automatic notifications are not included. Check the official schedule before attending.")}</p>

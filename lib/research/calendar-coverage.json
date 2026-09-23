@@ -3,240 +3,280 @@
     "ticker": "AAPL",
     "name": "Apple",
     "sourceUrl": "https://investor.apple.com/investor-relations/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "ADBE",
     "name": "Adobe",
     "sourceUrl": "https://www.adobe.com/investor-relations/events-presentations.html",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "AMAT",
     "name": "Applied Materials",
     "sourceUrl": "https://ir.appliedmaterials.com/events?tab=upcoming",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "AMD",
     "name": "AMD",
     "sourceUrl": "https://ir.amd.com/news-events/ir-calendar",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "AMZN",
     "name": "Amazon",
     "sourceUrl": "https://ir.aboutamazon.com/events/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "ANET",
     "name": "Arista Networks",
     "sourceUrl": "https://investors.arista.com/events-and-presentations/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "ARM",
     "name": "Arm",
     "sourceUrl": "https://investors.arm.com/",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "ASML",
     "name": "ASML",
     "sourceUrl": "https://www.asml.com/en/investors/financial-calendar",
+    "lastAttemptedOn": "2026-09-22",
     "lastCheckedOn": "2026-09-22"
   },
   {
     "ticker": "AVGO",
     "name": "Broadcom",
     "sourceUrl": "https://investors.broadcom.com/financial-information/financial-news-releases",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "BE",
     "name": "Bloom Energy",
     "sourceUrl": "https://investor.bloomenergy.com/events-and-presentations/events-calendar/",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "COHR",
     "name": "Coherent",
     "sourceUrl": "https://ir.coherent.com/news-events/financial-releases",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "CRDO",
     "name": "Credo",
     "sourceUrl": "https://investors.credosemi.com/news-events/events/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "CRM",
     "name": "Salesforce",
     "sourceUrl": "https://investor.salesforce.com/events-and-presentations/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "CRWD",
     "name": "CrowdStrike",
     "sourceUrl": "https://ir.crowdstrike.com/events-and-presentations/",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "CRWV",
     "name": "CoreWeave",
     "sourceUrl": "https://investors.coreweave.com/events-and-presentations/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "DELL",
     "name": "Dell Technologies",
     "sourceUrl": "https://investors.delltechnologies.com/news-events/upcoming-events",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "GEV",
     "name": "GE Vernova",
     "sourceUrl": "https://www.gevernova.com/investors/events",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "GOOGL",
     "name": "Alphabet / Google",
     "sourceUrl": "https://abc.xyz/investor/events/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "INTC",
     "name": "Intel",
     "sourceUrl": "https://www.intc.com/news-events/ir-calendar",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "KLAC",
     "name": "KLA",
     "sourceUrl": "https://ir.kla.com/events-presentations/",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "LITE",
     "name": "Lumentum",
     "sourceUrl": "https://investor.lumentum.com/events-and-presentations/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "LRCX",
     "name": "Lam Research",
     "sourceUrl": "https://investor.lamresearch.com/events",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "META",
     "name": "Meta Platforms",
     "sourceUrl": "https://investor.atmeta.com/investor-events/",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "MRVL",
     "name": "Marvell",
     "sourceUrl": "https://investor.marvell.com/events-and-presentations/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "MSFT",
     "name": "Microsoft",
     "sourceUrl": "https://www.microsoft.com/en-us/investor/events/events-upcoming",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "MU",
     "name": "Micron",
     "sourceUrl": "https://investors.micron.com/",
+    "lastAttemptedOn": "2026-09-22",
     "lastCheckedOn": "2026-09-22"
   },
   {
     "ticker": "NBIS",
     "name": "Nebius",
     "sourceUrl": "https://nebius.com/investor-hub",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "NFLX",
     "name": "Netflix",
     "sourceUrl": "https://ir.netflix.net/",
+    "lastAttemptedOn": "2026-09-22",
     "lastCheckedOn": "2026-09-22"
   },
   {
     "ticker": "NOW",
     "name": "ServiceNow",
     "sourceUrl": "https://investor.servicenow.com/events-and-presentations/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "NVDA",
     "name": "NVIDIA",
     "sourceUrl": "https://investor.nvidia.com/events-and-presentations/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "ORCL",
     "name": "Oracle",
     "sourceUrl": "https://investor.oracle.com/events-and-presentations/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "PANW",
     "name": "Palo Alto Networks",
     "sourceUrl": "https://investors.paloaltonetworks.com/events-and-presentations/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "PLTR",
     "name": "Palantir",
     "sourceUrl": "https://investors.palantir.com/events",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "QCOM",
     "name": "Qualcomm",
     "sourceUrl": "https://investor.qualcomm.com/news-events/investor-events/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "SKHY",
     "name": "SK hynix",
     "sourceUrl": "https://news.skhynix.com/en/category/ir/",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "SNDK",
     "name": "Sandisk",
     "sourceUrl": "https://investor.sandisk.com/news-events/events",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "SNOW",
     "name": "Snowflake",
     "sourceUrl": "https://investors.snowflake.com/events-and-presentations/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   },
   {
     "ticker": "TSLA",
     "name": "Tesla",
     "sourceUrl": "https://ir.tesla.com/",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "TSM",
     "name": "TSMC",
     "sourceUrl": "https://investor.tsmc.com/english/financial-calendar",
+    "lastAttemptedOn": "2026-09-22",
     "lastCheckedOn": "2026-09-22"
   },
   {
     "ticker": "VRT",
     "name": "Vertiv",
     "sourceUrl": "https://investors.vertiv.com/events-presentations/events-presentations/default.aspx",
+    "lastAttemptedOn": "2026-09-23",
     "lastCheckedOn": null
   }
 ]

@@ -177,3 +177,34 @@ future statement or press-conference clock times. No calendar event changed.
 Next company batch starts with GOOGL, KLAC and LITE, followed by MRVL, NBIS,
 NOW, NVDA, ORCL, PANW and PLTR. Pending entries must remain unchanged until a
 first-party source publishes a dated event or a conclusive no-events state.
+
+## Eighth company batch reviewed on 2026-09-23
+
+This review adds `lastAttemptedOn` to the 40-company coverage roster. It records
+an actual source check separately from `lastCheckedOn`, which remains null for
+inaccessible or inconclusive pages. All ten entries below therefore stay
+pending even though their latest attempt is now visible in the operations UI.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| GOOGL | Pending | The official Events & Presentations page exposed only its heading and navigation shell, without a dated item or explicit no-events statement. |
+| KLAC | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| LITE | Pending | The official page exposed empty Latest Events and Latest Presentation sections without an explicit no-events statement. |
+| MRVL | Pending | The official Events & Presentations URL remained inaccessible through the review connection. An official-domain search also yielded no current timing announcement. |
+| NBIS | Pending | The investor hub still showed the two September investor conferences as its latest events, but no future earnings announcement or explicit no-events statement. |
+| NOW | Pending | The official page exposed Archived Events and Archived Presentations only, without a dated upcoming earnings item or explicit no-events statement. |
+| NVDA | Pending | The official Events & Presentations URL remained inaccessible through the review connection. An official-domain search yielded no current timing announcement. |
+| ORCL | Pending | The official page exposed empty Featured Event and Upcoming events headings without an explicit no-events statement. |
+| PANW | Pending | The official Events & Presentations URL remained inaccessible through the review connection. An official-domain search yielded no current timing announcement. |
+| PLTR | Pending | The official Events page returned only navigation and contact content, with no inspectable schedule state. |
+
+The BLS annual schedule was rechecked on 2026-09-23. October still lists the
+Employment Situation on October 2, CPI on October 14 and PPI on October 15 at
+08:30 Eastern, with the stored November and December dates also unchanged. The
+Federal Reserve still lists the October 27-28 and December 8-9 FOMC meetings
+without future statement or press-conference clock times. No event changed.
+
+Every roster entry now has a real attempt date from September 22 or 23. The next
+batch should start with the September 22 attempts ASML, MU, NFLX and TSM, then
+continue with the oldest September 23 entries. Advance `lastCheckedOn` only when
+the official source is conclusive.
