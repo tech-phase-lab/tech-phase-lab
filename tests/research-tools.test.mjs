@@ -118,6 +118,9 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   for (const ticker of ["MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) {
     assert.match(byTicker[ticker].sourceUrl, /(?:events|investor-hub|category\/ir)/i);
   }
+  assert.equal(byTicker.AMZN.sourceUrl, "https://ir.aboutamazon.com/events/default.aspx");
+  assert.equal(byTicker.ANET.sourceUrl, "https://investors.arista.com/events-and-presentations/default.aspx");
+  assert.equal(byTicker.ARM.sourceUrl, "https://investors.arm.com/");
 });
 
 test("calendar UI distinguishes a completed source check from an inconclusive review", () => {

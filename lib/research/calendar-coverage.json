@@ -26,19 +26,19 @@
   {
     "ticker": "AMZN",
     "name": "Amazon",
-    "sourceUrl": "https://ir.aboutamazon.com/overview/default.aspx",
+    "sourceUrl": "https://ir.aboutamazon.com/events/default.aspx",
     "lastCheckedOn": null
   },
   {
     "ticker": "ANET",
     "name": "Arista Networks",
-    "sourceUrl": "https://www.arista.com/en/company/news/press-release-rss",
+    "sourceUrl": "https://investors.arista.com/events-and-presentations/default.aspx",
     "lastCheckedOn": null
   },
   {
     "ticker": "ARM",
     "name": "Arm",
-    "sourceUrl": "https://newsroom.arm.com/news/feed/",
+    "sourceUrl": "https://investors.arm.com/",
     "lastCheckedOn": null
   },
   {
