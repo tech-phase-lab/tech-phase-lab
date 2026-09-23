@@ -296,6 +296,13 @@ class AutomaticMonitor:
             and "monitor-stale" not in issues
         ):
             issues.append("body-fetch-stale")
+        durable_discovery = state.get("discoveryRuns") or {}
+        if (
+            state["ready"] and durable_discovery.get("lastCompletedAt")
+            and durable_discovery.get("pollOverdue")
+            and "monitor-stale" not in issues
+        ):
+            issues.append("discovery-poll-stale")
         state["health"] = {
             "status": "degraded" if issues else ("ready" if state["ready"] else "starting"),
             "issues": issues,
@@ -308,6 +315,9 @@ class AutomaticMonitor:
         with self.state_lock:
             state = json.loads(json.dumps(self.state))
         with self.db_lock, monitor.connect(self.db_path) as db:
+            state["discoveryRuns"] = monitor.discovery_poll_summary(
+                db, poll_overdue_after_seconds=self.monitor_stale_seconds
+            )
             state["bodyFetch"]["durable"] = monitor.body_fetch_batch_summary(
                 db, poll_overdue_after_seconds=max(360, self.body_interval * 2 + 60)
             )
@@ -332,6 +342,13 @@ class AutomaticMonitor:
                 )
             else:
                 monitor.resolve_operational_incident(db, "monitor:incident-watch")
+            if "discovery-poll-stale" in issues:
+                monitor.record_operational_incident(
+                    db, "discovery:worker", "official-discovery", "worker",
+                    "warning", "discovery-poll-stale"
+                )
+            else:
+                monitor.resolve_operational_incident(db, "discovery:worker")
             body_issue = next(
                 (issue for issue in issues if issue.startswith("body-fetch-")), None
             )

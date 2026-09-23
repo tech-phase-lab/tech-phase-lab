@@ -308,6 +308,53 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertIn("monitor-stale", stale_monitor["health"]["issues"])
         self.assertNotIn("body-fetch-stale", stale_monitor["health"]["issues"])
 
+    def test_stale_discovery_poll_records_and_resolves_an_incident(self):
+        completed = datetime.now(timezone.utc) - timedelta(minutes=10)
+        started = completed - timedelta(seconds=1)
+        with monitor.connect(self.db_path) as db:
+            monitor.record_discovery_poll_batch(
+                db, started.isoformat(timespec="milliseconds"),
+                completed.isoformat(timespec="milliseconds"),
+                1000, 1, 0, 0, (500,),
+            )
+            monitor.record_body_fetch_poll(db, service.utc_now(), 0)
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        recent = service.utc_now()
+        app.state.update({"ready": True, "lastCycleAt": recent})
+        app.state["backup"].update({"healthy": True, "lastSuccessAt": recent})
+        app.state["incidentWatch"]["healthy"] = True
+
+        stale = app.public_state()
+        self.assertEqual(stale["health"]["issues"], ["discovery-poll-stale"])
+        self.assertTrue(stale["discoveryRuns"]["pollOverdue"])
+        app.sync_health_incidents()
+        with monitor.connect(self.db_path) as db:
+            incident = db.execute(
+                "SELECT status,last_error_code AS error_code "
+                "FROM operational_incidents WHERE incident_key=?",
+                ("discovery:worker",),
+            ).fetchone()
+            self.assertEqual(dict(incident), {
+                "status": "open", "error_code": "discovery-poll-stale",
+            })
+
+        fresh_completed = datetime.now(timezone.utc)
+        fresh_started = fresh_completed - timedelta(milliseconds=500)
+        with monitor.connect(self.db_path) as db:
+            monitor.record_discovery_poll_batch(
+                db, fresh_started.isoformat(timespec="milliseconds"),
+                fresh_completed.isoformat(timespec="milliseconds"),
+                500, 1, 0, 0, (250,),
+            )
+        recovered = app.public_state()
+        self.assertNotIn("discovery-poll-stale", recovered["health"]["issues"])
+        app.sync_health_incidents()
+        with monitor.connect(self.db_path) as db:
+            self.assertEqual(db.execute(
+                "SELECT status FROM operational_incidents WHERE incident_key=?",
+                ("discovery:worker",),
+            ).fetchone()[0], "resolved")
+
     def test_body_poll_heartbeat_rejects_invalid_or_unbounded_values(self):
         with monitor.connect(self.db_path) as db:
             for timestamp, pending in (

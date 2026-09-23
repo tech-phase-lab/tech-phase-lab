@@ -64,8 +64,12 @@ message. Future-dated rows are excluded from the latest result and 24-hour
 aggregate. Invalid types, bounds, request-time totals and reversed timestamps
 are excluded from both views as well. The latest durable completion also
 carries a bounded age and overdue state, so an old pre-restart result cannot be
-presented as current worker activity. Polling configuration and observed
-request time are not delivery latency guarantees.
+presented as current worker activity. Once a completed durable poll exists, an
+overdue completion independently degrades service health and opens a redacted
+`discovery-poll-stale` incident; a fresh completion resolves the same incident.
+An empty database remains a startup state rather than a fabricated failure.
+Polling configuration and observed request time are not delivery latency
+guarantees.
 
 Validation: `npm run lint`, `node --experimental-strip-types --test tests/*.test.mjs`,
 and `npm run build`. Browser checks cover favorites persistence, company-page

@@ -60,6 +60,7 @@ function monitorIssue(monitor: MonitorState | null) {
   if (issues.includes("incident-watch-failed")) return "障害台帳の内部監視を再試行しています";
   if (issues.includes("body-fetch-failed")) return "本文取得キューの内部処理を再試行しています";
   if (issues.includes("body-fetch-stale")) return "本文取得キューの永続ポーリング記録が期限を超過しています";
+  if (issues.includes("discovery-poll-stale")) return "公式一覧の永続巡回記録が期限を超過しています";
   return null;
 }
 function incidentStatus(monitor: MonitorState | null) {
