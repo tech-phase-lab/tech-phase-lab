@@ -133,3 +133,23 @@ test("calendar UI distinguishes a completed source check from an inconclusive re
   assert.match(eventCalendarSource, /company\.lastCheckedOn !== null/);
   assert.match(eventCalendarSource, /company\.lastAttemptedOn/);
 });
+
+test("favorite calendar includes only followed earnings while retaining economic releases", async () => {
+  const { filterFavoriteEvents } = await import("../lib/research/favorites.ts");
+  const sample = [{ kind: "earnings", ticker: "MU" }, { kind: "earnings", ticker: "NVDA" }, { kind: "economic" }, { kind: "earnings" }];
+  assert.deepEqual(filterFavoriteEvents(sample, ["MU"]), [sample[0], sample[2]]);
+  assert.deepEqual(filterFavoriteEvents(sample, []), [sample[2]]);
+  assert.deepEqual(filterFavoriteEvents(sample, ["MU"], false), [sample[0]]);
+  assert.deepEqual(filterFavoriteEvents(sample, [], false), []);
+});
+
+test("favorite schedules drop expired calls and preserve date-only announcements", async () => {
+  const { filterFavoriteEvents } = await import("../lib/research/favorites.ts");
+  const now = Date.parse("2026-10-01T00:00:00Z");
+  assert.equal(selectCalendarEvents(filterFavoriteEvents(calendarEvents, ["MU"], false), "earnings", "upcoming", now).length, 0);
+  const asml = selectDateOnlyEvents(filterFavoriteEvents(dateOnlyEvents, ["ASML"], false), "earnings", "upcoming", now);
+  assert.equal(asml.length, 1);
+  assert.equal(asml[0].date, "2026-10-14");
+  assert.equal(asml[0].startsAt, undefined);
+  assert.equal(selectDateOnlyEvents(asml, "earnings", "upcoming", Date.parse("2026-10-15T12:00:00Z")).length, 0);
+});

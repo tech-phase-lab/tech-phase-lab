@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useStockFavorites } from "../use-stock-favorites";
 import { useResearchLanguage } from "../use-research-language";
 import ResearchToolShell from "../research-tool-shell";
+import FavoriteSchedule from "./favorite-schedule";
 import styles from "../research-tools.module.css";
 
 type Company = { ticker: string; name: string; sector: { ja: string; en: string } };
@@ -24,6 +25,7 @@ export default function Watchlist({ companies }: { companies: Company[] }) {
         return <li key={ticker}>{company ? <Link href={`/research/companies/${ticker}`}><strong>{ticker}</strong><span>{company.name}</span><small>{t("銘柄ページへ →", "Open research →")}</small></Link> : <div><strong>{ticker}</strong><span>{t("現在の監視対象外", "Outside current coverage")}</span></div>}<button onClick={() => toggle(ticker)} aria-label={t(`${ticker}をお気に入りから解除`, `Remove ${ticker} from favorites`)}>★</button></li>;
       })}</ul>}
     </section>
+    <FavoriteSchedule favorites={favorites} lang={lang} />
     <section className={styles.section} aria-labelledby="add-favorites-heading">
       <h2 id="add-favorites-heading">{t("お気に入りに追加", "Add favorites")}</h2>
       <p className={styles.description}>{t(`現在はTech Phaseの監視対象${companies.length}社から選べます。`, `Choose from the ${companies.length} companies currently covered by Tech Phase.`)}</p>

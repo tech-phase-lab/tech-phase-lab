@@ -1,22 +1,20 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useState } from "react";
 import { calendarDateKey, dateOnlyEvents, selectDateOnlyEarnings, selectDateOnlyEvents, calendarEvents, calendarReviewedOn, selectCalendarEvents, type CalendarEvent } from "@/lib/research/calendar";
+import { filterFavoriteEvents } from "@/lib/research/favorites";
+import { useStockFavorites } from "../use-stock-favorites";
+import { useCalendarClock } from "../use-calendar-clock";
+import Link from "next/link";
 import coverage from "@/lib/research/calendar-coverage.json";
 import { useResearchLanguage } from "../use-research-language";
 import ResearchToolShell from "../research-tool-shell";
 import styles from "../research-tools.module.css";
 
-function subscribeClock(notify: () => void) {
-  const timer = window.setInterval(notify, 60000);
-  document.addEventListener("visibilitychange", notify);
-  return () => { window.clearInterval(timer); document.removeEventListener("visibilitychange", notify); };
-}
-function clockSnapshot() { return Math.floor(Date.now() / 60000) * 60000; }
-
-
 export default function EventCalendar() {
   const [lang, setLang] = useResearchLanguage();
+  const { favorites } = useStockFavorites();
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [kind, setKind] = useState<"all" | CalendarEvent["kind"]>("all");
   const [zoneOverride, setZoneOverride] = useState<string | null>(null);
   const zone = zoneOverride ?? (lang === "ja" ? "Asia/Tokyo" : "America/New_York");
@@ -24,10 +22,10 @@ export default function EventCalendar() {
   const zoneLabel = (value: string) => value === "Asia/Tokyo" ? "JST" : "ET";
   const months = [...new Set([...calendarEvents.map((event) => calendarDateKey(event.startsAt, zone).slice(0, 7)), ...dateOnlyEvents.map((event) => event.date.slice(0, 7))])].sort();
   const [period, setPeriod] = useState("upcoming");
-  const now = useSyncExternalStore(subscribeClock, clockSnapshot, () => null);
+  const now = useCalendarClock();
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
-  const visible = now === null ? [] : selectCalendarEvents(calendarEvents, kind, period, now, zone);
-  const visibleDateOnly = now === null ? [] : selectDateOnlyEvents(dateOnlyEvents, kind, period, now);
+  const visible = now === null ? [] : selectCalendarEvents(favoritesOnly ? filterFavoriteEvents(calendarEvents, favorites) : calendarEvents, kind, period, now, zone);
+  const visibleDateOnly = now === null ? [] : selectDateOnlyEvents(favoritesOnly ? filterFavoriteEvents(dateOnlyEvents, favorites) : dateOnlyEvents, kind, period, now);
   const reviewedCompanies = coverage.filter((company) => company.lastCheckedOn !== null).length;
   const pendingCompanies = coverage.length - reviewedCompanies;
   const stale = now !== null && now - Date.parse(`${calendarReviewedOn}T00:00:00+09:00`) > 7 * 86400000;
@@ -46,6 +44,11 @@ export default function EventCalendar() {
       <label>{t("期間", "Period")} ({zoneLabel(zone)})<select value={period} onChange={(event) => setPeriod(event.target.value)}><option value="upcoming">{t("今後の予定", "Upcoming")}</option>{months.map((month) => <option key={month} value={month}>{month}</option>)}</select></label>
       <label>{t("表示時間", "Time zone")}<select value={zone} onChange={(event) => { setZoneOverride(event.target.value); setPeriod("upcoming"); }}><option value="Asia/Tokyo">JST · Japan</option><option value="America/New_York">ET · U.S. Eastern</option></select></label>
     </div>
+    <div className={styles.watchFilter}>
+      <label><input type="checkbox" checked={favoritesOnly} onChange={(event) => setFavoritesOnly(event.target.checked)} />{t("お気に入り＋経済指標", "Favorites + economic events")}</label>
+      <Link href="/research/watchlist">{t("お気に入りを編集 →", "Edit favorites →")}</Link>
+    </div>
+    {favoritesOnly && favorites.length === 0 && <p role="status" className={styles.description}>{t("お気に入りがまだありません。銘柄を追加すると、その決算予定も表示します。", "No favorites yet. Add companies to include their earnings schedules.")}</p>}
     <p aria-live="polite" className={styles.description}>{now === null ? t("予定を読み込み中…", "Loading schedule…") : t(`${visible.length + visibleDateOnly.length}件の予定`, `${visible.length + visibleDateOnly.length} events`)}</p>
     <ol className={styles.schedule}>{visible.map((event) => <li key={event.id}>
       <time dateTime={event.startsAt}>{stamp(event.startsAt, zone)}<small>{zoneLabel(zone)} · {calendarDateKey(event.startsAt, zone).slice(0, 4)}</small></time>

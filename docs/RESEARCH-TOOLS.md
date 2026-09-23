@@ -61,3 +61,10 @@ Refresh BLS/Federal Reserve schedules as well. Commit verified updates only to
 codex/research-preview, preserving concurrent changes. This is scheduled review,
 not a live feed, a guaranteed refresh SLA, or a claim that all 40 dates are known.
 No inferred/consensus date may be promoted to officially confirmed.
+
+### Favorite earnings workflow (2026-09-23)
+- Watchlist shows upcoming official earnings schedules for saved companies, with source links and language-based JST/ET formatting.
+- Date-only announcements remain date-only; unlisted schedules are explicitly identified without inferring that no event exists.
+- Calendar can filter to favorite-company earnings plus economic events, combined with its existing category/month/time-zone controls.
+- Both pages reuse calendar data and a minute/visibility clock; expired calls disappear and stale schedule reviews are flagged.
+- Favorites remain browser-local. No notifications, external feeds, subscriptions or production delivery were enabled.

@@ -50,3 +50,9 @@
 .coverage small { color: var(--muted); font-size: .75rem; }
 
 .footnote { color: var(--muted); font-size: .75rem; line-height: 1.6; margin-top: 12px; }
+
+.watchFilter, .sectionHeading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 20px; }
+.watchFilter { margin: 8px 0; font-size: .8125rem; }
+.watchFilter label { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; }
+.watchFilter input { width: 18px; height: 18px; accent-color: #91dfc4; }
+.watchFilter a, .sectionHeading a { display: inline-flex; align-items: center; min-height: 44px; color: var(--mint); font-size: .8125rem; }
