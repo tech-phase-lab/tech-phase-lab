@@ -1,6 +1,6 @@
 # Calendar verification handoff
 
-Last updated: 2026-09-23
+Last updated: 2026-09-24
 
 This file records the latest manual official-source review. A pending entry must
 keep `lastCheckedOn` null in `calendar-coverage.json`; an empty or
@@ -546,3 +546,27 @@ press-conference clock times. No calendar event changed.
 Continue with SKHY, SNOW and VRT, then rotate the pending roster again. Empty
 dynamic sections, historical-only pages and transport failures remain
 inconclusive and must not be promoted to forecast dates.
+
+## Twentieth company batch reviewed on 2026-09-24
+
+The three remaining oldest pending entries were rechecked against their
+first-party schedule pages. None supplied a confirmed future earnings date or
+an explicit no-events statement. Their `lastAttemptedOn` values advance to
+2026-09-24, while `lastCheckedOn` remains null and no forecast date is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| SKHY | Pending | The official English IR newsroom still lists the August 19 share-repurchase article as its latest item and July 29 as its latest financial results, with no future earnings invitation or explicit no-events statement. |
+| SNOW | Pending | The official Events & Presentations page exposes an empty Upcoming Events section and archive headings without an explicit no-events statement. |
+| VRT | Pending | The official Events & Presentations page loads investor navigation and historical conference links but no inspectable dated earnings schedule or explicit no-events statement. |
+
+The BLS annual schedule was rechecked on 2026-09-24 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern, with the stored November and December dates unchanged. The
+Federal Reserve page, last updated September 16, still lists the October 27-28
+and December 8-9 meetings without future statement or press-conference clock
+times. No calendar event changed.
+
+All 23 pending companies now have a 2026-09-24 attempt. Continue rotating from
+AAPL through the pending roster. Empty dynamic sections, historical-only pages
+and transport failures remain inconclusive and must not be promoted to dates.
