@@ -634,3 +634,34 @@ No calendar event changed.
 Continue with SKHY, SNOW and VRT, then rotate again from AAPL. Empty dynamic
 sections, historical-only pages and transport failures remain inconclusive and
 must not be promoted to forecast dates.
+
+## Twenty-third company batch reviewed on 2026-09-24
+
+The next ten pending entries were rechecked against their first-party schedule
+or earnings-announcement pages. None supplied a confirmed future earnings date
+or an explicit no-events statement. Their existing 2026-09-24
+`lastAttemptedOn` values already record the same-day attempt, while
+`lastCheckedOn` remains null and no forecast date is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| SKHY | Pending | The official English IR newsroom remained inaccessible through the direct review path; its indexed first-party result still exposed July 29 fiscal Q3 2026 as the latest financial release, with no future invitation or explicit no-events statement. |
+| SNOW | Pending | The official Events & Presentations page exposed an empty Upcoming Events section and archive headings without an explicit no-events statement. |
+| VRT | Pending | The official Events & Presentations URL returned 404 through the review connection, so no schedule state could be established. |
+| AAPL | Pending | The official page exposed Investor Updates and Quarterly Earnings Reports headings without a dated future item or explicit no-events statement. |
+| AMZN | Pending | The official Events page exposed empty Upcoming Events and Past Events headings without an explicit no-events statement. |
+| ANET | Pending | The official Events & Presentations URL remained inaccessible through the review connection; the alternate first-party communications page did not expose a dated future earnings item. |
+| ARM | Pending | The official investor page returned 403 through the review connection, so no schedule state could be established. |
+| AVGO | Pending | The official Financial News list still ended with the September 2 fiscal Q3 results and contained no future timing announcement or explicit no-events statement. |
+| BE | Pending | The official Event Calendar exposed an empty Upcoming Events section and archive without an explicit no-events statement. |
+| COHR | Pending | The official Financial Releases page exposed the company shell but no inspectable dated release list through the review connection. |
+
+The BLS annual schedule was rechecked on 2026-09-24 and still lists the October
+2 Employment Situation, October 14 CPI and October 15 PPI releases at 08:30
+Eastern, with the stored November and December dates unchanged. The Federal
+Reserve page still lists the October 27-28 and December 8-9 meetings without
+future statement or press-conference clock times. No calendar event changed.
+
+Continue with GOOGL, KLAC, LITE, MRVL, NBIS, NOW, NVDA, ORCL, PANW and PLTR.
+Empty dynamic sections, historical-only pages and transport failures remain
+inconclusive and must not be promoted to forecast dates.
