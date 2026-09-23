@@ -913,6 +913,10 @@ class IntakeTests(unittest.TestCase):
             "SELECT * FROM discovery_source_cache WHERE ticker='MRVL'"
         ).fetchone()
         self.assertEqual(stored["response_etag"], '"feed-v1"')
+        self.assertEqual(
+            stored["parser_version"],
+            m.discovery_cache_parser_version("MRVL", provider["indexUrl"]),
+        )
         self.assertNotIn("<rss", stored["candidates_json"])
 
         def restarted_transport(url, _ticker, validators=None, include_metadata=False):
@@ -929,6 +933,54 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(second["candidates"], 1)
         self.assertEqual(second["newCandidates"], 0)
         self.assertNotIn("_sourceCache", second)
+
+    def test_stale_discovery_parser_cache_forces_unconditional_refresh(self):
+        provider = m.PROVIDERS["MRVL"]
+        cached_url = (
+            "https://investor.marvell.com/news-events/press-releases/detail/1234/old"
+        )
+        with self.db:
+            self.db.execute(
+                """INSERT INTO discovery_source_cache(
+                     ticker,source_url,response_etag,candidates_json,
+                     parser_version,updated_at
+                   ) VALUES(?,?,?,?,?,?)""",
+                (
+                    "MRVL", provider["indexUrl"], '"stale-feed"',
+                    json.dumps({cached_url: "Old parser result"}),
+                    "0" * 64, m.now(),
+                ),
+            )
+
+        fresh_url = (
+            "https://investor.marvell.com/news-events/press-releases/detail/5678/new"
+        )
+        body = f"""<rss><channel><item><title>Fresh parser result</title>
+          <link>{fresh_url}</link></item></channel></rss>""".encode()
+
+        def transport(url, _ticker, validators=None, include_metadata=False):
+            self.assertEqual(url, provider["indexUrl"])
+            self.assertEqual(validators, {"etag": None, "last_modified": None})
+            self.assertTrue(include_metadata)
+            return {
+                "content": body, "contentType": "text/xml", "etag": '"fresh-feed"',
+                "lastModified": None, "notModified": False,
+            }
+
+        transport.supports_persistent_validators = True
+        result = m.discover(self.db, "MRVL", transport)
+        self.assertEqual(result["candidates"], 1)
+        self.assertIsNotNone(self.db.execute(
+            "SELECT 1 FROM sources WHERE url=?", (fresh_url,)
+        ).fetchone())
+        stored = self.db.execute(
+            "SELECT * FROM discovery_source_cache WHERE ticker='MRVL'"
+        ).fetchone()
+        self.assertEqual(stored["response_etag"], '"fresh-feed"')
+        self.assertEqual(
+            stored["parser_version"],
+            m.discovery_cache_parser_version("MRVL", provider["indexUrl"]),
+        )
 
     def test_tampered_discovery_cache_is_ignored(self):
         with self.db:

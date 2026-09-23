@@ -39,6 +39,9 @@ PDF_FALLBACK_CONTENT_TYPES = {"application/octet-stream", "application/x-pdf"}
 FETCH_CACHE_MAX_ENTRIES = 64
 FETCH_CACHE_MAX_BYTES = 24 * 1024 * 1024
 DISCOVERY_CACHE_MAX_BYTES = 2 * 1024 * 1024
+# Increment this whenever discovery parsing semantics change. Persisted validators
+# must not make a new deployment reuse candidates produced by an older parser.
+DISCOVERY_CACHE_PARSER_VERSION = 1
 _FETCH_CACHE = {}
 _FETCH_CACHE_LOCK = threading.Lock()
 
@@ -965,7 +968,8 @@ def connect(path):
     CREATE TABLE IF NOT EXISTS discovery_source_cache (
       ticker TEXT NOT NULL, source_url TEXT NOT NULL,
       response_etag TEXT, response_last_modified TEXT,
-      candidates_json TEXT NOT NULL, updated_at TEXT NOT NULL,
+      candidates_json TEXT NOT NULL, parser_version TEXT NOT NULL DEFAULT '',
+      updated_at TEXT NOT NULL,
       PRIMARY KEY(ticker,source_url));
     CREATE TABLE IF NOT EXISTS release_events (
       id INTEGER PRIMARY KEY, url TEXT NOT NULL UNIQUE REFERENCES sources(url),
@@ -1056,6 +1060,14 @@ def connect(path):
     for column, declaration in discovery_migrations.items():
         if column not in discovery_columns:
             db.execute(f"ALTER TABLE discovery_runs ADD COLUMN {column} {declaration}")
+    discovery_cache_columns = {
+        row[1] for row in db.execute("PRAGMA table_info(discovery_source_cache)")
+    }
+    if "parser_version" not in discovery_cache_columns:
+        db.execute(
+            "ALTER TABLE discovery_source_cache "
+            "ADD COLUMN parser_version TEXT NOT NULL DEFAULT ''"
+        )
     if "title" not in {row[1] for row in db.execute("PRAGMA table_info(sources)")}:
         db.execute("ALTER TABLE sources ADD COLUMN title TEXT")
     source_columns = {row[1] for row in db.execute("PRAGMA table_info(sources)")}
@@ -1489,6 +1501,25 @@ def valid_discovery_candidate_url(url, ticker):
     return False
 
 
+def discovery_cache_parser_version(ticker, source_url):
+    """Fingerprint source rules plus the explicit discovery-parser generation."""
+    source = next(
+        (item for item in monitoring_sources(ticker) if item["url"] == source_url),
+        None,
+    )
+    if source is None:
+        return None
+    material = {
+        "version": DISCOVERY_CACHE_PARSER_VERSION,
+        "source": source,
+        "articleRules": PROVIDERS[ticker].get("articleRules", []),
+    }
+    encoded = json.dumps(
+        material, ensure_ascii=True, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
 def normalized_discovery_cache_state(ticker, state):
     """Return one bounded cache entry, or None when it must be refetched."""
     if not isinstance(state, dict):
@@ -1512,12 +1543,15 @@ def load_discovery_source_cache(db, ticker):
     configured = {source["url"] for source in monitoring_sources(ticker)}
     cache = {}
     for row in db.execute(
-        """SELECT source_url,response_etag,response_last_modified,candidates_json
+        """SELECT source_url,response_etag,response_last_modified,candidates_json,
+                  parser_version
            FROM discovery_source_cache WHERE ticker=?""",
         (ticker,),
     ):
         if (
             row["source_url"] not in configured
+            or row["parser_version"]
+            != discovery_cache_parser_version(ticker, row["source_url"])
             or len(row["candidates_json"].encode("utf-8")) > DISCOVERY_CACHE_MAX_BYTES
         ):
             continue
@@ -1552,17 +1586,23 @@ def save_discovery_source_cache(db, ticker, cache):
         if state is None:
             continue
         normalized[source_url] = (
-            state["etag"], state["lastModified"], state["encoded"]
+            state["etag"], state["lastModified"], state["encoded"],
+            discovery_cache_parser_version(ticker, source_url),
         )
     with db:
         db.execute("DELETE FROM discovery_source_cache WHERE ticker=?", (ticker,))
-        for source_url, (etag, last_modified, encoded) in normalized.items():
+        for source_url, (
+            etag, last_modified, encoded, parser_version
+        ) in normalized.items():
             db.execute(
                 """INSERT INTO discovery_source_cache(
                      ticker,source_url,response_etag,response_last_modified,
-                     candidates_json,updated_at
-                   ) VALUES(?,?,?,?,?,?)""",
-                (ticker, source_url, etag, last_modified, encoded, now()),
+                     candidates_json,parser_version,updated_at
+                   ) VALUES(?,?,?,?,?,?,?)""",
+                (
+                    ticker, source_url, etag, last_modified, encoded,
+                    parser_version, now(),
+                ),
             )
 
 
