@@ -1234,11 +1234,26 @@ def discovery_poll_summary(db, reference=None):
     reference_utc = parsed.astimezone(timezone.utc)
     window_start = (reference_utc - timedelta(hours=24)).isoformat(timespec="milliseconds")
     reference_text = reference_utc.isoformat(timespec="milliseconds")
-    latest = db.execute("""
+    latest = None
+    latest_candidates = db.execute("""
       SELECT completed_at,duration_ms,checks,degraded,new_sources,
              request_duration_total_ms,request_duration_max_ms
-      FROM discovery_poll_batches ORDER BY id DESC LIMIT 1
-    """).fetchone()
+      FROM discovery_poll_batches ORDER BY id DESC LIMIT 100
+    """).fetchall()
+    for candidate in latest_candidates:
+        try:
+            completed_at = datetime.fromisoformat(
+                str(candidate["completed_at"]).replace("Z", "+00:00")
+            )
+            if (
+                completed_at.tzinfo is None
+                or completed_at.astimezone(timezone.utc) > reference_utc
+            ):
+                continue
+        except (TypeError, ValueError):
+            continue
+        latest = candidate
+        break
     totals = db.execute("""
       SELECT count(*) AS runs,COALESCE(sum(checks),0) AS checks,
              COALESCE(sum(degraded),0) AS degraded,
@@ -1366,12 +1381,27 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
             last_poll_age_seconds = max(0, age)
         except (TypeError, ValueError):
             pass
-    latest = db.execute("""
+    latest = None
+    latest_candidates = db.execute("""
       SELECT completed_at,duration_ms,checks,errors,not_modified,
              detection_latency_samples,detection_latency_total_ms,
              detection_latency_max_ms
-      FROM body_fetch_batches ORDER BY id DESC LIMIT 1
-    """).fetchone()
+      FROM body_fetch_batches ORDER BY id DESC LIMIT 100
+    """).fetchall()
+    for candidate in latest_candidates:
+        try:
+            completed_at = datetime.fromisoformat(
+                str(candidate["completed_at"]).replace("Z", "+00:00")
+            )
+            if (
+                completed_at.tzinfo is None
+                or completed_at.astimezone(timezone.utc) > reference_utc
+            ):
+                continue
+        except (TypeError, ValueError):
+            continue
+        latest = candidate
+        break
     totals = db.execute("""
       SELECT count(*) AS runs,COALESCE(sum(checks),0) AS checks,
              COALESCE(sum(errors),0) AS errors,

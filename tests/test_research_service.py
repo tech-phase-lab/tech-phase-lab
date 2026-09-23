@@ -114,6 +114,47 @@ class ResearchServiceTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "invalid-discovery-poll-reference"):
                 monitor.discovery_poll_summary(db, "not-a-time")
 
+    def test_durable_batch_summaries_ignore_future_rows(self):
+        reference = datetime.now(timezone.utc)
+        past_started = reference - timedelta(seconds=2)
+        past_completed = reference - timedelta(seconds=1)
+        future_started = reference + timedelta(hours=1)
+        future_completed = future_started + timedelta(seconds=1)
+        with monitor.connect(self.db_path) as db:
+            monitor.record_discovery_poll_batch(
+                db, past_started.isoformat(timespec="milliseconds"),
+                past_completed.isoformat(timespec="milliseconds"),
+                1000, 2, 0, 1, (200, 300),
+            )
+            monitor.record_discovery_poll_batch(
+                db, future_started.isoformat(timespec="milliseconds"),
+                future_completed.isoformat(timespec="milliseconds"),
+                1000, 9, 9, 99, (100,) * 9,
+            )
+            monitor.record_body_fetch_batch(
+                db, past_started.isoformat(timespec="milliseconds"),
+                past_completed.isoformat(timespec="milliseconds"),
+                1000, 2, 0, 1, (400,),
+            )
+            monitor.record_body_fetch_batch(
+                db, future_started.isoformat(timespec="milliseconds"),
+                future_completed.isoformat(timespec="milliseconds"),
+                1000, 8, 8, 8, (500,) * 8,
+            )
+            discovery = monitor.discovery_poll_summary(
+                db, reference.isoformat(timespec="milliseconds")
+            )
+            body = monitor.body_fetch_batch_summary(
+                db, reference.isoformat(timespec="milliseconds")
+            )
+        self.assertEqual(discovery["lastChecks"], 2)
+        self.assertEqual(discovery["runs24Hours"], 1)
+        self.assertEqual(discovery["newSources24Hours"], 1)
+        self.assertEqual(body["lastChecks"], 2)
+        self.assertEqual(body["runs24Hours"], 1)
+        self.assertEqual(body["errors24Hours"], 0)
+        self.assertEqual(body["detectionLatencySamples24Hours"], 1)
+
     def test_discovery_loop_records_one_url_free_poll_batch(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         app.tickers = ["NBIS"]
