@@ -1188,3 +1188,34 @@ press-conference clock times. No calendar event changed.
 Continue with CRDO, CRM, CRWV, GOOGL, KLAC, LITE, MRVL, NBIS, NOW and NVDA.
 Empty dynamic sections, historical-only pages and transport failures remain
 inconclusive and must not be promoted to forecast dates.
+
+## Forty-second company batch reviewed on 2026-09-24
+
+The next ten pending entries were rechecked against their first-party schedule
+or investor-relations URLs. None supplied a confirmed future earnings date or
+an explicit no-events statement. Their existing same-day `lastAttemptedOn`
+values remain unchanged, `lastCheckedOn` remains null and no forecast date was
+added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| CRDO | Pending | The official Events page returned an access-control interstitial, so no schedule state could be established. |
+| CRM | Pending | The official Investor Events page returned an access-control interstitial, so no schedule state could be established. |
+| CRWV | Pending | The official Events & Presentations page returned an access-control interstitial, so no schedule state could be established. |
+| GOOGL | Pending | The official Events page returned an access-control interstitial, so no future item or explicit no-events state could be inspected. |
+| KLAC | Pending | The stored official Events & Presentations URL returned 404; this does not establish that no event exists. |
+| LITE | Pending | The official page exposed Latest Events and Archived Events structures without a dated future earnings item or explicit no-events statement. |
+| MRVL | Pending | The stored official Events & Presentations URL returned 404; this does not establish that no event exists. |
+| NBIS | Pending | The official Investor Hub still showed September investor conferences as its latest events, with no future earnings announcement or explicit no-events statement. |
+| NOW | Pending | The official Events & Presentations page returned an access-control interstitial, so no schedule state could be established. |
+| NVDA | Pending | The official Events & Presentations page returned an access-control interstitial, so no schedule state could be established. |
+
+The BLS October schedule was rechecked on 2026-09-24 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar still lists the October 27-28 and
+December 8-9 meetings without future statement or press-conference clock times.
+No calendar event changed.
+
+Continue with ORCL and PANW, then PLTR, SKHY, SNOW, VRT, AAPL, AMZN, ANET and
+ARM. Empty dynamic sections, historical-only pages and transport failures
+remain inconclusive and must not be promoted to forecast dates.
