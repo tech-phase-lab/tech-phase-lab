@@ -290,9 +290,9 @@ these accounts post about the wider market, not only Tech Phase tickers.
 
 | Candidate | Evidence and fit | Initial priority |
 |---|---|---|
-| TipRanks `@TipRanks` | The user's example is from this account. Search-indexed X posts also show Microsoft and Oracle target changes with old/new values and rating context. TipRanks' site has a daily analyst-ratings section, and its enterprise API is separately marketed for structured ratings data. | **High: test first.** Best match to the requested post format; check coverage and arrival delay for our watchlist. |
-| The Fly `@theflynews` | The Fly's public feed displays timestamped analyst actions, including upgrades and target-price changes, alongside broader company news. Its X account links to ticker pages; sampled posts include analyst calls and target changes. Feed access prompts for a trial, so public visibility is not a commercial reuse grant. | **High: test second.** Strong newsroom candidate; high volume and broader scope need filtering. |
-| Wall St Engine `@wallstengine` | Sampled X posts include detailed target-price and rating changes, sometimes with substantial excerpts from analyst research. Its source verification, update delay, and completeness have not been established. | **Supplementary only.** Monitor only after accuracy checks; do not reuse its research-note excerpts. |
+| Wall St Engine `@wallstengine` | The user regularly uses its target-price posts. Indexed examples include analyst, firm, old/new target and sometimes reasoning. Its source verification, update delay, and completeness have not been established; some posts include substantial report excerpts. | **High: include in the first comparison.** User relevance is strong; verify facts independently and do not reuse its report excerpts. |
+| TipRanks `@TipRanks` | The user's example is from this account. Search-indexed X posts also show Microsoft and Oracle target changes with old/new values and rating context. TipRanks' site has a daily analyst-ratings section, and its enterprise API is separately marketed for structured ratings data. | **High: include in the first comparison.** Best match to the example post format; check coverage and arrival delay for our watchlist. |
+| The Fly `@theflynews` | The Fly's public feed displays timestamped analyst actions, including upgrades and target-price changes, alongside broader company news. Its X account links to ticker pages; sampled posts include analyst calls and target changes. Feed access prompts for a trial, so public visibility is not a commercial reuse grant. | **High: include in the first comparison.** Strong newsroom candidate; high volume and broader scope need filtering. |
 | Benzinga | The public Ratings pages expose structured analyst/firm, action, rating and target-price changes. Benzinga's API page says overnight changes are displayed three hours before the US market open and intraday changes are posted during the session. A systematic target-change X stream was not confirmed in this scan. | **Strong data/API fallback, not yet an X-first source.** Continue the existing vendor inquiry for price and display rights. |
 | MarketBeat | Its public ratings pages describe newly published upgrades and price-target changes across US, UK and Canadian stocks. A systematic X account feed for the same events was not confirmed here. | **Discovery candidate.** Evaluate only if the first X accounts miss material events. |
 
@@ -301,6 +301,55 @@ consistently posts every target change. Influencer posts are useful as leads but
 are selective opinions; the account's reach or reputation is not evidence that
 the underlying broker action has been checked. Prefer a traceable news desk or
 ratings feed for automatic coverage, with influencers as supplemental sources.
+
+### First comparison run: three X sources × current 22-company list
+
+Compare the three accounts above against the current 22-company Tech Phase
+watchlist. This is three *source accounts*, not a decision to expand the ticker
+universe. Do not add more accounts until this group shows a material coverage
+gap.
+
+The intended comparison window is 14 days, with a weekly review and extension
+to 30 days if too few distinct analyst actions arrive. Use the official Filtered
+Stream, not browser collection. Resolve stable X user IDs first. Match analyst
+action phrases and company names/tickers; avoid ticker-only rules because a
+post may name a company without its cashtag. Keep post-to-event links so the
+same broker action found by two accounts is counted once, while each account's
+arrival is measured separately.
+
+For every candidate, record source account, Post ID, Post-created time, API
+first-seen time, ticker, analyst/firm, rating and target before/after, currency,
+independent confirmation URL/time, review outcome, duplicate/correction/deletion
+status, and billable unique Post count. Compare:
+
+- Useful signal rate: confirmed target/rating actions divided by matched Posts.
+- Observed coverage: unique confirmed actions found by each source and by the
+  union of all three, checked against independently observed rating feeds/news.
+- Arrival delay: Post-created to API first-seen; and earliest independently
+  known announcement time to API first-seen when that earlier timestamp exists.
+- Misses, wrong values, stale/reposted items, duplicates, and edits/deletions.
+
+The X stream's documented 4–5 second P99 describes X delivery after a matching
+Post is published; it does not measure how quickly TipRanks, The Fly, or Wall St
+Engine publishes the underlying analyst action. Report those two intervals
+separately. Public search results and existing indexed examples do not provide
+a reliable per-account daily volume or historical miss rate; those remain
+unmeasured until the authorized stream runs.
+
+Current listed read pricing is $0.005 per returned Post. Cost scenarios are
+therefore $0.50 / 100 Posts, $2.50 / 500, $5 / 1,000, $15 / 3,000, and $50 /
+10,000. X says repeated reads of the same Post are usually deduplicated inside
+one 24-hour UTC window, but describes this as a soft guarantee. For the pilot,
+configure a hard project spend cap (recommended ceiling: $20 total, equivalent
+to 4,000 unique reads at the listed rate), leave auto-recharge off, and check
+actual X Developer Console usage. This ceiling is a proposed guardrail, not a
+claim that the three accounts will generate that many matches. Broad author
+rules cost more; ticker/action phrase rules reduce volume but can miss unusual
+wording, so report their filter-induced misses as well.
+
+Keep all X candidates in the private editor queue during the comparison. Do not
+publish them to Research/PRO or send alerts until both data-use terms and
+editorial checks are approved.
 
 ### Rewriting and republication boundary
 
@@ -313,11 +362,17 @@ policy separately restricts redistribution of X Content and requires commercial
 use to be on an appropriate paid tier; changing the wording alone does not
 remove those platform obligations.
 
-Preferred editorial form after source/terms review: independently verify the
-action from the analyst firm, an authorized news feed, or another permitted
-source; state ticker, firm, analyst (when known), rating change, old/new target,
-currency, publication time and a source link in Tech Phase's own concise wording;
-add only Tech Phase's own relevant context. Avoid importing the influencer's
-commentary, distinctive explanation, images, or long report excerpts. Keep an
-X-only signal private until X-derived data display terms are confirmed. Store
-source IDs and honor edits/deletions and current-content requirements.
+Preferred editorial form after source/terms review:
+
+> **目標株価変更｜MU** — 〇〇証券の△△氏が目標株価を **$X → $Y** に引き上げ。評価は **Buyを維持**。発表時刻: 9月24日 08:10 ET。出典: [元情報]・[X投稿]
+
+Independently verify the action from the analyst firm, an authorized news feed,
+or another permitted source. State ticker, firm, analyst (when known), rating
+change, old/new target, currency, publication time and source link in Tech
+Phase's own concise wording; add only Tech Phase's independently prepared
+context (for example, how the target compares with a separately sourced
+consensus). Do not import an influencer's commentary, distinctive explanation,
+images, or long report excerpts. Attribution is good editorial practice but is
+not a license. Keep an X-only signal private until X-derived data display terms
+are confirmed. Store source IDs and honor edits/deletions and current-content
+requirements.
