@@ -1058,6 +1058,39 @@ class ResearchServiceTests(unittest.TestCase):
         restarted = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         self.assertEqual(restarted.public_state()["bodyHostProbes"], probes)
 
+    def test_expired_host_circuit_reserves_spare_batch_capacity_for_probe(self):
+        expired = datetime.now(timezone.utc) - timedelta(minutes=1)
+        updated = expired - timedelta(hours=6)
+        fresh_urls = (
+            "https://pr.tsmc.com/english/news/official-release",
+            "https://investor.sandisk.com/news-events/news-releases/official-release",
+        )
+        with monitor.connect(self.db_path) as db:
+            db.execute("""
+              UPDATE sources SET sha256=?,raw_sha256=?,body_sha256=?,
+                extracted_text='Existing evidence.',extracted_chars=18,
+                error=NULL,next_fetch_at=NULL
+            """, ("a" * 64, "a" * 64, "b" * 64))
+            for ticker, url in zip(("TSM", "SNDK"), fresh_urls):
+                monitor.add_source(db, ticker, url, title="Fresh official release")
+                monitor.add_release_events(db, ticker, [url])
+            db.execute("""
+              INSERT INTO body_host_backoff(host,failures,error,retry_at,updated_at)
+              VALUES('nebius.com',1,'http-403',?,?)
+            """, (
+                expired.isoformat(timespec="milliseconds"),
+                updated.isoformat(timespec="milliseconds"),
+            ))
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_batch = 2
+        rows, _pending = app.body_candidates()
+
+        self.assertIn(rows[0]["url"], fresh_urls)
+        self.assertEqual(monitor.source_hostname(rows[1]["url"]), "nebius.com")
+        self.assertEqual(app.body_probe_urls, {rows[1]["url"]})
+
     def test_expired_host_circuit_probe_success_is_persisted_as_recovered(self):
         expired = datetime.now(timezone.utc) - timedelta(minutes=1)
         updated = expired - timedelta(hours=6)

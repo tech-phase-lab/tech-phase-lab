@@ -916,14 +916,45 @@ class AutomaticMonitor:
                        e.detected_at IS NULL, e.detected_at DESC,
                        s.checked_at IS NOT NULL, s.checked_at, s.discovered_at, s.url
             """, (due,)).fetchall()
-            selected_urls = []
-            selected_hosts = set()
             host_deferred = 0
+            eligible_candidates = []
             for candidate in ordered:
                 hostname = monitor.source_hostname(candidate["url"])
                 if hostname and hostname in blocked_hosts:
                     host_deferred += 1
                     continue
+                eligible_candidates.append(candidate)
+
+            # Keep the highest-priority evidence candidate first, but reserve
+            # spare batch capacity for expired host circuits. Without this,
+            # a steady stream of new links from other hosts could postpone a
+            # lawful single recovery probe indefinitely.
+            candidate_order = eligible_candidates
+            if self.body_batch > 1 and probe_hosts and eligible_candidates:
+                probe_candidates = []
+                seen_probe_hosts = set()
+                for candidate in eligible_candidates:
+                    hostname = monitor.source_hostname(candidate["url"])
+                    if hostname in probe_hosts and hostname not in seen_probe_hosts:
+                        probe_candidates.append(candidate)
+                        seen_probe_hosts.add(hostname)
+                pinned = [eligible_candidates[0]]
+                pinned_urls = {eligible_candidates[0]["url"]}
+                for candidate in probe_candidates:
+                    if len(pinned) >= self.body_batch:
+                        break
+                    if candidate["url"] not in pinned_urls:
+                        pinned.append(candidate)
+                        pinned_urls.add(candidate["url"])
+                candidate_order = pinned + [
+                    candidate for candidate in eligible_candidates
+                    if candidate["url"] not in pinned_urls
+                ]
+
+            selected_urls = []
+            selected_hosts = set()
+            for candidate in candidate_order:
+                hostname = monitor.source_hostname(candidate["url"])
                 if hostname and hostname in selected_hosts:
                     continue
                 if len(selected_urls) < self.body_batch:
