@@ -200,6 +200,32 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(invalid["pending"], 1)
         self.assertIsNone(invalid["completionLatencyMs"])
 
+    def test_priority_source_completion_latency_stays_at_first_complete_cycle(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        started = datetime.now(timezone.utc) - timedelta(seconds=2)
+        app.state["startedAt"] = started.isoformat(timespec="milliseconds")
+        with app.state_lock:
+            app.state["companies"] = {
+                ticker: {
+                    "status": "ok",
+                    "checkedAt": (started + timedelta(milliseconds=offset)).isoformat(
+                        timespec="milliseconds"
+                    ),
+                }
+                for ticker, offset in zip(
+                    service.PRIORITY_SEC_TICKERS, (100, 200, 300, 400, 500)
+                )
+            }
+            first = app.current_priority_source_coverage(
+                app.state, remember_completion=True
+            )
+            for company in app.state["companies"].values():
+                company["checkedAt"] = (
+                    started + timedelta(milliseconds=1500)
+                ).isoformat(timespec="milliseconds")
+        self.assertEqual(first["completionLatencyMs"], 500)
+        self.assertEqual(app.public_state()["prioritySources"]["completionLatencyMs"], 500)
+
     def test_priority_source_coverage_reports_custom_roster_omissions(self):
         with patch.dict(os.environ, {"RESEARCH_TICKERS": "TSM,MRVL"}, clear=False):
             app = service.AutomaticMonitor(self.db_path, self.snapshot_path)

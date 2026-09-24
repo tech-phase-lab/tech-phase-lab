@@ -223,6 +223,7 @@ class AutomaticMonitor:
         self.notification_enabled = bool(self.notification_config.get("enabled"))
         self.tickers = configured_tickers(os.environ.get("RESEARCH_TICKERS", ""))
         self.signals_enabled = os.environ.get("RESEARCH_SIGNALS_ENABLED", "").lower() in {"1", "true", "yes"}
+        self.priority_completion_latency_ms = None
         self.stop_event = threading.Event()
         self.db_lock = threading.Lock()
         self.state_lock = threading.Lock()
@@ -372,7 +373,7 @@ class AutomaticMonitor:
 
     def derive_health(self, state):
         """Add computed health fields to a private state copy and return issue codes."""
-        priority_coverage = priority_source_coverage(state, self.tickers)
+        priority_coverage = self.current_priority_source_coverage(state)
         state["prioritySources"] = priority_coverage
         cycle_age = timestamp_age_seconds(state["lastCycleAt"])
         state["lastCycleAgeSeconds"] = cycle_age
@@ -439,6 +440,17 @@ class AutomaticMonitor:
             "monitorStaleAfterSeconds": self.monitor_stale_seconds,
         }
         return issues
+
+    def current_priority_source_coverage(self, state, remember_completion=False):
+        """Keep the first complete post-start measurement stable across repolls."""
+        coverage = priority_source_coverage(state, self.tickers)
+        measured = coverage["completionLatencyMs"]
+        if measured is not None:
+            if remember_completion and self.priority_completion_latency_ms is None:
+                self.priority_completion_latency_ms = measured
+            if self.priority_completion_latency_ms is not None:
+                coverage["completionLatencyMs"] = self.priority_completion_latency_ms
+        return coverage
 
     def sync_health_incidents(self):
         """Persist health transitions independently of traffic to the HTTP API."""
@@ -1114,8 +1126,8 @@ class AutomaticMonitor:
                     discovery_cache["lastUpdatedAt"] = checked_at
                     if new_count:
                         self.state["lastChangeAt"] = checked_at
-                    priority_coverage = priority_source_coverage(
-                        self.state, self.tickers
+                    priority_coverage = self.current_priority_source_coverage(
+                        self.state, remember_completion=True
                     )
                     process_started_at = self.state["startedAt"]
 
