@@ -781,6 +781,9 @@ class AutomaticMonitor:
                          WHEN s.sha256 IS NULL THEN 3
                          ELSE 4
                        END,
+                       s.fetch_failures,
+                       CASE WHEN s.url LIKE 'https://www.sec.gov/Archives/edgar/data/%'
+                            THEN 1 ELSE 0 END,
                        e.detected_at IS NULL, e.detected_at DESC,
                        s.checked_at IS NOT NULL, s.checked_at, s.discovered_at, s.url
               LIMIT ?

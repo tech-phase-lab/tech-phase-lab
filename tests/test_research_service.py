@@ -834,6 +834,30 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(pending, 3)
         self.assertTrue(rows[0]["url"].endswith("new-release"))
 
+    def test_body_candidates_try_company_evidence_before_equivalent_sec_backlog(self):
+        sec_url = (
+            "https://www.sec.gov/Archives/edgar/data/1835632/"
+            "000183563226000001/example.htm"
+        )
+        with monitor.connect(self.db_path) as db:
+            monitor.add_source(db, "MRVL", sec_url, title="SEC filing")
+            monitor.add_release_events(db, "MRVL", [sec_url])
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_batch = 2
+        rows, _pending = app.body_candidates()
+        self.assertTrue(rows[0]["url"].endswith("new-release"))
+        self.assertEqual(rows[1]["url"], sec_url)
+
+        with monitor.connect(self.db_path) as db:
+            db.execute(
+                "UPDATE sources SET fetch_failures=1 WHERE url LIKE '%new-release'"
+            )
+            db.commit()
+        rows, _pending = app.body_candidates()
+        self.assertEqual(rows[0]["url"], sec_url)
+
     def test_not_modified_body_check_does_not_reextract_or_requeue_generation(self):
         url = "https://nebius.com/newsroom/new-release"
         with monitor.connect(self.db_path) as db:

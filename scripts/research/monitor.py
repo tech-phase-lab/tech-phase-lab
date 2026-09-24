@@ -224,6 +224,26 @@ def retry_after_seconds(exc, reference=None):
     return max(0, min(6 * 60 * 60, seconds))
 
 
+def source_retry_seconds(error_code, failures, retry_hint=None):
+    """Back off access controls without repeatedly probing a blocked official page."""
+    access_restricted = error_code in {
+        "http-401", "http-403", "http-451", "verification-page",
+    }
+    if access_restricted:
+        # A denied or interstitial-protected route is unlikely to recover within
+        # minutes. Keep it eligible for a later lawful retry, but do not hammer it
+        # or let it crowd newly discovered first-party evidence out of the queue.
+        retry_seconds = min(
+            7 * 24 * 60 * 60,
+            6 * 60 * 60 * (2 ** min(max(failures - 1, 0), 5)),
+        )
+    else:
+        retry_seconds = min(6 * 60 * 60, 60 * (2 ** min(max(failures - 1, 0), 8)))
+    if retry_hint is not None:
+        retry_seconds = max(retry_seconds, retry_hint)
+    return retry_seconds
+
+
 def fetch(url, ticker, validators=None, include_metadata=False):
     url = safe_url(url, ticker)
     cached = cached_fetch(url)
@@ -3142,10 +3162,8 @@ def save_source_error(db, row, exc):
         if not current:
             raise ValueError("Source disappeared before its fetch error was saved")
         failures = current["fetch_failures"] + 1
-        retry_seconds = min(6 * 60 * 60, 60 * (2 ** min(failures - 1, 8)))
         retry_hint = retry_after_seconds(exc)
-        if retry_hint is not None:
-            retry_seconds = max(retry_seconds, retry_hint)
+        retry_seconds = source_retry_seconds(error_code, failures, retry_hint)
         next_fetch_at = (datetime.now(timezone.utc) + timedelta(seconds=retry_seconds)).isoformat(timespec="milliseconds")
         db.execute(
             "UPDATE sources SET checked_at=?,error=?,fetch_failures=?,next_fetch_at=? WHERE url=?",

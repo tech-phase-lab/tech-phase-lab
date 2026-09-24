@@ -655,6 +655,18 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(second_row["fetch_failures"], 2)
         self.assertGreater(second_row["next_fetch_at"], second_row["checked_at"])
 
+    def test_access_restrictions_use_slow_bounded_backoff(self):
+        forbidden = HTTPError(URL, 403, "Forbidden", {}, None)
+        first = m.save_source_error(self.db, self.row(), forbidden)
+        second = m.save_source_error(self.db, self.row(), forbidden)
+        self.assertEqual(first["retrySeconds"], 6 * 60 * 60)
+        self.assertEqual(second["retrySeconds"], 12 * 60 * 60)
+        self.assertEqual(
+            m.source_retry_seconds("verification-page", 99),
+            7 * 24 * 60 * 60,
+        )
+        self.assertEqual(m.source_retry_seconds("timeout", 1), 60)
+
     def test_fetch_failure_honors_retry_after_and_stores_only_a_safe_code(self):
         error = HTTPError(
             "https://nebius.com/newsroom/private-path?token=secret", 429,
