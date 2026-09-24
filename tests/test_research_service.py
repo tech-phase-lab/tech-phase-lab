@@ -1043,6 +1043,18 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertNotIn("nebius.com", json.dumps(probes))
         self.assertNotIn("https://", json.dumps(probes))
 
+        def unexpected_retry(*_args, **_kwargs):
+            raise AssertionError("an active host circuit must suppress the next worker request")
+
+        monitor.fetch = unexpected_retry
+        try:
+            with ThreadPoolExecutor(max_workers=5) as pool:
+                app.fetch_bodies(pool)
+        finally:
+            monitor.fetch = original_fetch
+        self.assertEqual(app.public_state()["bodyHostProbes"], probes)
+        self.assertEqual(app.public_state()["bodyFetch"]["lastBatchChecks"], 1)
+
         restarted = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         self.assertEqual(restarted.public_state()["bodyHostProbes"], probes)
 

@@ -82,6 +82,9 @@ Recovery-probe outcomes are persisted as URL-free aggregates. The operations
 preview shows the latest recovery, renewed restriction or transient failure and
 24-hour counts after a restart, without returning the hostname, URL, HTTP code
 or exception text.
+After a restricted recovery probe reopens the circuit, subsequent worker cycles
+perform no request to that hostname until the new retry deadline; those idle
+cycles also do not increment the recovery-probe counters.
 The body backlog reports rate-limited retries separately from other
 access-control retries. Older backends that do not provide this aggregate stay
 display-compatible and are treated as having no observed rate limits.
