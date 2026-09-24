@@ -1279,3 +1279,28 @@ press-conference clock times. No calendar event changed.
 Continue with NBIS, NOW and NVDA, then rotate again from AAPL. Empty dynamic
 sections, historical-only pages and transport failures remain inconclusive and
 must not be promoted to forecast dates.
+
+## Forty-fifth company batch reviewed on 2026-09-25
+
+The three remaining oldest pending entries were rechecked against their
+first-party investor-relations pages. None supplied a confirmed future earnings
+date or an explicit no-events statement. Their `lastAttemptedOn` values advance
+to 2026-09-25, completing a same-day attempt for all 23 inconclusive companies;
+`lastCheckedOn` remains null and no forecast date is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| NBIS | Pending | The official Investor Hub still listed its September Goldman Sachs and Citi conference appearances as the latest events, with no future earnings announcement or explicit no-events statement. |
+| NOW | Pending | The official Events & Presentations page exposed archived-event and archived-presentation sections without a dated upcoming earnings item or explicit no-events statement. |
+| NVDA | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+
+The BLS October schedule was rechecked on 2026-09-25 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar, last updated September 16, still
+lists the October 27-28 and December 8-9 meetings without future statement or
+press-conference clock times. No calendar event changed.
+
+All 40 companies now have a source attempt dated within the latest 24-hour
+maintenance cycle. Continue rotating from AAPL on the next run. Empty dynamic
+sections, historical-only pages and transport failures remain inconclusive and
+must not be promoted to forecast dates.

@@ -185,7 +185,7 @@
     "ticker": "NBIS",
     "name": "Nebius",
     "sourceUrl": "https://nebius.com/investor-hub",
-    "lastAttemptedOn": "2026-09-24",
+    "lastAttemptedOn": "2026-09-25",
     "lastCheckedOn": null
   },
   {
@@ -199,14 +199,14 @@
     "ticker": "NOW",
     "name": "ServiceNow",
     "sourceUrl": "https://investor.servicenow.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-24",
+    "lastAttemptedOn": "2026-09-25",
     "lastCheckedOn": null
   },
   {
     "ticker": "NVDA",
     "name": "NVIDIA",
     "sourceUrl": "https://investor.nvidia.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-24",
+    "lastAttemptedOn": "2026-09-25",
     "lastCheckedOn": null
   },
   {
