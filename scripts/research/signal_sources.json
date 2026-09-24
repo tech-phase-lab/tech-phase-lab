@@ -195,5 +195,35 @@
     ],
     "intervalSeconds": 120,
     "reuse": "review-required"
+  },
+  {
+    "id": "bloom-blog",
+    "name": "Bloom Energy Blog",
+    "url": "https://www.bloomenergy.com/feed/",
+    "allowedHosts": [
+      "www.bloomenergy.com"
+    ],
+    "tickers": [
+      "BE"
+    ],
+    "kind": "publisher-update",
+    "format": "feed",
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "google-cloud-blog",
+    "name": "Google Blog \u00b7 Cloud",
+    "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/rss/",
+    "allowedHosts": [
+      "blog.google"
+    ],
+    "tickers": [
+      "GOOGL"
+    ],
+    "kind": "publisher-update",
+    "format": "feed",
+    "intervalSeconds": 120,
+    "reuse": "review-required"
   }
 ]

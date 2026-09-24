@@ -124,7 +124,7 @@
 ## 22銘柄の設定台帳
 
 公式取得先の登録は22/22。今回の補完モジュールに銘柄を固定した追加元があるのは
-SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMDの8銘柄。これは既存取得元が扱う製品記事を含めた
+SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMD、BE、GOOGLの10銘柄。これは既存取得元が扱う製品記事を含めた
 全体の網羅率ではない。共通元のSemiAnalysisとAnthropicは全22銘柄へ本文照合し、
 特定銘柄のニュースとして無条件には配信しない。
 
@@ -151,8 +151,8 @@ SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMDの8銘柄。これは既存
 | DELL | [Dell Technologies](https://investors.delltechnologies.com/news-events/press-release) | Dell Technologies Blog | AIサーバー製品／構成・導入事例 |
 | PLTR | [Palantir](https://www.palantir.com/sitemap.xml) | 未登録 | 製品・顧客事例／提携先の公式発表 |
 | MSFT | [Microsoft](https://news.microsoft.com/source/feed/) | Microsoft Blog | Azureの製品・設備投資／顧客・供給側発表 |
-| BE | [Bloom Energy](https://investor.bloomenergy.com/rss/pressrelease.aspx) | 未登録 | 発電設備・受注／導入企業の公式発表 |
-| GOOGL | [Alphabet / Google](https://blog.google/rss/) | 未登録 | Cloud・TPU・データセンターの製品・技術情報 |
+| BE | [Bloom Energy](https://investor.bloomenergy.com/rss/pressrelease.aspx) | Bloom Energy Blog RSS | 発電設備・受注／導入企業の公式発表 |
+| GOOGL | [Alphabet / Google](https://blog.google/rss/) | Google Blog Cloud RSS | Cloud・TPU・データセンターの製品・技術情報 |
 | ORCL | [Oracle](https://www.oracle.com/news/) | 未登録 | OCI製品・設備／顧客・提携先発表 |
 
 各追加元は、URLの登録だけで完了にしない。以下を記録する。
@@ -187,3 +187,14 @@ SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMDの8銘柄。これは既存
   （$5分の使用量込み、超過分は加算）。現在の常駐構成が無料枠に収まるかは未検証。
   https://docs.railway.com/pricing/free-trial
   https://docs.railway.com/pricing/plans
+
+## 2026-09-24 05:23 UTC 点検と補完元追加
+
+- 稼働中の12経路をPreview管理画面で確認。11経路成功、Anthropic個別1記事失敗。
+  CoreWeaveの過去記事取り込み待ちは解消。キュー297件は新着件数ではない。
+- Bloom Energy公式ブログが案内するRSSから10件取得。本文例4484文字・9452文字。
+- Google公式Cloudページが案内するRSSから20件取得。短い抜粋のため全文扱いしない。
+  cloud.google.com/blog/products/rss はXMLではない応答で、こちらは登録していない。
+- 新規2経路追加後は14経路、銘柄固定の補完元は10/22銘柄。網羅保証ではない。
+- 他チャットのリモート更新0951098をfast-forwardで統合。
+- 次の作業とAPI見積もり状況は TECH-PHASE-PROGRESS.md に集約。
