@@ -80,6 +80,9 @@ Recovery-probe outcomes are persisted as URL-free aggregates. The operations
 preview shows the latest recovery, renewed restriction or transient failure and
 24-hour counts after a restart, without returning the hostname, URL, HTTP code
 or exception text.
+The body backlog reports rate-limited retries separately from other
+access-control retries. Older backends that do not provide this aggregate stay
+display-compatible and are treated as having no observed rate limits.
 When inline first-party evidence replaces the last failed remote body for a
 ticker, its stale body incident is resolved even though the hostname circuit
 remains in force. Another failed remote body keeps the ticker incident open.

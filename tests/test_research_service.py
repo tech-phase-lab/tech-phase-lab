@@ -919,11 +919,30 @@ class ResearchServiceTests(unittest.TestCase):
             "nextHostProbeAt": None,
             "retryDeferred": 1,
             "accessRestricted": 1,
+            "rateLimited": 0,
             "recheckDeferred": 0,
             "total": 2,
             "measuredAt": "2026-09-24T05:00:00+00:00",
         })
         self.assertNotIn("https://", json.dumps(backlog))
+
+    def test_body_backlog_reports_rate_limits_separately_from_access_controls(self):
+        with monitor.connect(self.db_path) as db:
+            db.execute("""
+              UPDATE sources
+              SET error='http-429',fetch_failures=1,next_fetch_at='2099-01-01T00:00:00+00:00'
+              WHERE url LIKE '%older'
+            """)
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_candidates("2026-09-24T05:00:00+00:00")
+        backlog = app.public_state()["bodyBacklog"]
+
+        self.assertEqual(backlog["retryDeferred"], 1)
+        self.assertEqual(backlog["accessRestricted"], 0)
+        self.assertEqual(backlog["rateLimited"], 1)
+        self.assertNotIn("http-429", json.dumps(backlog))
 
     def test_body_candidates_defer_same_host_after_access_restriction(self):
         sec_url = (

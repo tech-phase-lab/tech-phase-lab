@@ -343,7 +343,7 @@ class AutomaticMonitor:
             "bodyBacklog": {
                 "eligible": 0, "hostDeferred": 0,
                 "activeHostCircuits": 0, "nextHostProbeAt": None,
-                "retryDeferred": 0, "accessRestricted": 0,
+                "retryDeferred": 0, "accessRestricted": 0, "rateLimited": 0,
                 "recheckDeferred": 0, "total": 0, "measuredAt": None,
             },
             "tickerCount": len(self.tickers),
@@ -890,10 +890,12 @@ class AutomaticMonitor:
                 sum(CASE WHEN next_fetch_at>? AND error IN (
                   'http-401','http-403','http-451','verification-page'
                 ) THEN 1 ELSE 0 END) AS access_restricted,
+                sum(CASE WHEN next_fetch_at>? AND error='http-429' THEN 1 ELSE 0 END)
+                  AS rate_limited,
                 sum(CASE WHEN next_fetch_at>? AND error IS NULL THEN 1 ELSE 0 END)
                   AS recheck_deferred
               FROM sources WHERE source_mode='remote'
-            """, (due, due, due, due)).fetchone()
+            """, (due, due, due, due, due)).fetchone()
             blocked_host_state, next_host_probe_at = active_body_host_backoff_state(db, due)
             blocked_hosts = set(blocked_host_state)
             probe_hosts = due_body_host_backoffs(db, due)
@@ -953,6 +955,7 @@ class AutomaticMonitor:
                 "nextHostProbeAt": next_host_probe_at,
                 "retryDeferred": int(backlog["retry_deferred"] or 0),
                 "accessRestricted": int(backlog["access_restricted"] or 0),
+                "rateLimited": int(backlog["rate_limited"] or 0),
                 "recheckDeferred": int(backlog["recheck_deferred"] or 0),
                 "total": int(backlog["total"] or 0),
                 "measuredAt": polled_at,

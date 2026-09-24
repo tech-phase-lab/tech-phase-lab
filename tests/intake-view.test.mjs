@@ -149,6 +149,8 @@ test("SEC evidence totals and filters distinguish exhibits from filing-body fall
   assert.match(intakeDashboard, /遮断経路の復旧確認/);
   assert.match(intakeDashboard, /公式側5xx/);
   assert.match(intakeDashboard, /evidence\.errorKinds \?\?/);
+  assert.match(liveTypes, /rateLimited\?: number/);
+  assert.match(intakeDashboard, /backlog\.rateLimited \?\? 0/);
 });
 
 test("operations preview shows durable incident state while external delivery stays off", () => {
