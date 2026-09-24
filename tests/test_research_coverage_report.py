@@ -29,10 +29,16 @@ class CoverageReportTests(unittest.TestCase):
         self.assertIn('broadcom-news', avgo['dedicatedSupplementalSources'])
         arm = next(c for c in result['companies'] if c['ticker'] == 'ARM')
         self.assertIn('arm-blog', arm['dedicatedSupplementalSources'])
+        arm_source = next(s for s in signals.SOURCES if s['id'] == 'arm-blog')
+        self.assertEqual(arm_source['format'], 'feed')
+        self.assertEqual(arm_source['url'], 'https://newsroom.arm.com/topics/company/feed')
         tsm = next(c for c in result['companies'] if c['ticker'] == 'TSM')
         self.assertIn('tsmc-press-center', tsm['dedicatedSupplementalSources'])
         orcl = next(c for c in result['companies'] if c['ticker'] == 'ORCL')
         self.assertIn('oracle-investor-news', orcl['dedicatedSupplementalSources'])
+        oracle_source = next(s for s in signals.SOURCES if s['id'] == 'oracle-investor-news')
+        self.assertEqual(oracle_source['format'], 'feed')
+        self.assertEqual(oracle_source['url'], 'https://investor.oracle.com/rss/pressrelease.aspx')
         self.assertIn('anthropic-news', result['sharedSources'])
 
     def test_missing_database_is_not_created(self):

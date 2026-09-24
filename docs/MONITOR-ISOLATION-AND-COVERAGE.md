@@ -124,7 +124,7 @@
 ## 22銘柄の設定台帳
 
 公式取得先の登録は22/22。今回の補完モジュールに銘柄を固定した追加元があるのは
-SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMD、BE、GOOGL、MU、MRVL、VRT、ARM、AVGO、TSM、SNDK、ORCLの18銘柄（MRVLは常駐403。後ろ5銘柄は追加設定後の常駐確認待ち）。これは既存取得元が扱う製品記事を含めた
+SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMD、BE、GOOGL、MU、MRVL、VRT、ARM、AVGO、TSM、SNDK、ORCLの18銘柄（MRVLは常駐403。TSM/SNDK/ORCLは直近の常駐失敗を未解消。ARMは公式RSSへの切替後の常駐確認待ち）。これは既存取得元が扱う製品記事を含めた
 全体の網羅率ではない。共通元のSemiAnalysisとAnthropicは全22銘柄へ本文照合し、
 特定銘柄のニュースとして無条件には配信しない。
 
@@ -202,4 +202,16 @@ SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMD、BE、GOOGL、MU、MRVL、
 ## 継続改善
 
 MU・MRVL・Vertivの追加とAnthropicの長文対応は TECH-PHASE-PROGRESS.md の9/24追記を参照。
-補完22経路の設定登録と実環境での取得成功は区別する。後から追加した5経路は常駐確認待ち。MRVLの常駐403は残っている。
+補完22経路の設定登録と実環境での取得成功は区別する。後から追加した5経路はBroadcomのみ常駐成功。MRVL/TSMCの常駐403、Sandiskのtimeout、Oracleの応答不正が残る。Armは公式RSSへ切り替えたため常駐再確認が必要。
+
+## 2026-09-24 06:28 UTC 公式RSS切替の記録
+
+- Broadcom: 公式IR RSS。常駐環境で10記事取得、作業環境でも10記事を解析。
+- Arm: 公式ニュースルームのCompany RSSに切替。作業環境では6記事と本文抽出を確認。
+  常駐環境へ未反映のため運用成功とはまだ数えない。
+- Oracle: 公式IRサイトが案内するRSSに切替。ただし作業環境からの応答はHTTP 200の
+  「Site Unavailable」HTML（195 bytes）でRSSではなかった。常駐確認後も失敗なら代替へ戻す。
+- TSMC: 公式Press Centerが常駐環境で403。制限の回避は行わない。
+- Sandisk: 公式IR一覧が常駐環境でtimeout。作業環境でも安定確認できていない。
+- したがって追加5経路すべての稼働確認は完了していない。記事が配信されないことと
+  取得に失敗していることを区別する。
