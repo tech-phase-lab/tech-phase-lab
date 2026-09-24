@@ -369,7 +369,19 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
         row = db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
         state_row = db.execute("SELECT body FROM signal_index_state WHERE source_id=?", (source["id"],)).fetchone()
         children = json.loads(state_row["body"]).get("children", {}) if state_row else {}
+        article_errors = []
+        for url, child in children.items():
+            if not child.get("error"):
+                continue
+            try:
+                url = safe_url(url, source)
+            except ValueError:
+                continue
+            article_errors.append({"url": url, "error": child["error"],
+                                   "nextCheckAt": child.get("next_check"),
+                                   "checkedAt": child.get("checked")})
         routes.append({"pendingArticles": sum(not c.get("succeeded") for c in children.values()),
+                       "articleErrors": article_errors[:20],
                        "id": source["id"], "name": source["name"], "kind": source["kind"],
                        "intervalSeconds": source["intervalSeconds"],
                        "checkedAt": row["checked_at"] if row else None,

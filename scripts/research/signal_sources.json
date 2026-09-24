@@ -225,5 +225,48 @@
     "format": "feed",
     "intervalSeconds": 120,
     "reuse": "review-required"
+  },
+  {
+    "id": "micron-blog",
+    "name": "Micron Blog \u00b7 Sitemap",
+    "url": "https://www.micron.com/sitemap.xml",
+    "allowedHosts": [
+      "www.micron.com"
+    ],
+    "tickers": [
+      "MU"
+    ],
+    "kind": "publisher-update",
+    "format": "html-index",
+    "indexFormat": "sitemap",
+    "articlePrefixes": [
+      "/about/blog/"
+    ],
+    "excludeArticlePrefixes": [
+      "/about/blog/blog-authors/"
+    ],
+    "minArticlePathSegments": 5,
+    "intervalSeconds": 300,
+    "reuse": "review-required"
+  },
+  {
+    "id": "marvell-blog",
+    "name": "Marvell Blog",
+    "url": "https://www.marvell.com/blogs.html",
+    "allowedHosts": [
+      "www.marvell.com"
+    ],
+    "tickers": [
+      "MRVL"
+    ],
+    "kind": "publisher-update",
+    "format": "html-index",
+    "articlePrefixes": [
+      "/blogs/"
+    ],
+    "articleBodyClass": "cmp-blogs-details__desc",
+    "articleTitleClass": "cmp-blogs-details__heading",
+    "intervalSeconds": 120,
+    "reuse": "review-required"
   }
 ]

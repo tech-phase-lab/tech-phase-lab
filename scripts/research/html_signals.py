@@ -4,7 +4,7 @@ from urllib.parse import urljoin, urlsplit
 
 
 class NewsHTML(HTMLParser):
-    def __init__(self, body_class=None):
+    def __init__(self, body_class=None, title_class=None):
         super().__init__(convert_charrefs=True)
         self.links, self.title, self.published = [], [], None
         self.link_classes = {}
@@ -15,6 +15,7 @@ class NewsHTML(HTMLParser):
         self.in_next_data = False
         self.next_data = []
         self.body_class = body_class
+        self.title_class = title_class
         self.selected = []
         self.selected_depth = 0
 
@@ -25,7 +26,7 @@ class NewsHTML(HTMLParser):
         if tag == 'a' and values.get('href'):
             self.links.append(values['href'])
             self.link_classes[values['href']] = values.get('class', '')
-        if tag == 'h1' and not self.title:
+        if tag == 'h1' and not self.title and (not self.title_class or self.title_class in values.get('class', '').split()):
             self.in_h1 = True
         void = tag in {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
         if self.selected_depth:
@@ -84,9 +85,22 @@ def collect(source, previous, tickers, request):
     from datetime import datetime, timedelta
     import json
 
-    response = request({**source, 'format': 'document'}, {})
+    sitemap = source.get('indexFormat') == 'sitemap'
+    capacity = 1000 if sitemap else 100
+    response = request({**source, 'format': 'feed' if sitemap else 'document'}, {})
     parser = NewsHTML()
-    parser.feed(response['body'].decode('utf-8', errors='replace'))
+    if sitemap:
+        import re
+        import xml.etree.ElementTree as ET
+        if re.search(br'<!\s*(DOCTYPE|ENTITY)\b', response['body'], re.I):
+            raise ValueError('unsafe-signal-xml')
+        root = ET.fromstring(response['body'])
+        if signals.local_name(root) != 'urlset' or len(root) > 10000:
+            raise ValueError('signal-index-invalid-sitemap')
+        parser.links = [signals.child_text(node, 'loc') for node in root
+                        if signals.local_name(node) == 'url']
+    else:
+        parser.feed(response['body'].decode('utf-8', errors='replace'))
     # Some publishers render the article listing from public Next.js page data,
     # with no article anchors in the initial HTML. Read only the configured path;
     # do not crawl arbitrary hydration state or execute publisher JavaScript.
@@ -106,11 +120,13 @@ def collect(source, previous, tickers, request):
             continue
         is_article = any(urlsplit(url).path.startswith(prefix) for prefix in source['articlePrefixes'])
         is_feature = any(marker in parser.link_classes.get(href, '') for marker in source.get('articleLinkClasses', []))
-        if (is_article or is_feature) and url not in urls:
+        excluded = any(urlsplit(url).path.startswith(prefix) for prefix in source.get('excludeArticlePrefixes', []))
+        excluded = excluded or len(urlsplit(url).path.strip('/').split('/')) < source.get('minArticlePathSegments', 0)
+        if (is_article or is_feature) and not excluded and url not in urls:
             urls.append(url)
     if not urls:
         raise ValueError('signal-index-no-articles')
-    if len(urls) > 100:
+    if len(urls) > capacity:
         raise ValueError('signal-index-article-limit')
 
     state = json.loads(previous.get('index_state') or '{}')
@@ -120,7 +136,7 @@ def collect(source, previous, tickers, request):
     # Retain a bounded set of recently discovered articles even after index rotation.
     for url in urls:
         children.setdefault(url, {'baseline': initial})
-    keep = list(dict.fromkeys(urls + list(children)))[:100]
+    keep = list(dict.fromkeys(urls + list(children)))[:capacity]
     children = {url: children[url] for url in keep}
     pending = [url for url in keep if children[url].get('next_check', '') <= checked]
     pending.sort(key=lambda url: (children[url].get('checked', ''), keep.index(url)))
@@ -141,7 +157,7 @@ def collect(source, previous, tickers, request):
                 if not entry.get('succeeded'):
                     raise ValueError('signal-304-without-article')
             else:
-                article = NewsHTML(source.get('articleBodyClass'))
+                article = NewsHTML(source.get('articleBodyClass'), source.get('articleTitleClass'))
                 article.feed(fetched['body'].decode('utf-8', errors='replace'))
                 title = ' '.join(' '.join(article.title).split())[:500]
                 content = ''.join(article.selected if source.get('articleBodyClass') else article.article or article.main)

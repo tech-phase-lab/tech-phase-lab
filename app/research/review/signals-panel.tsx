@@ -11,6 +11,7 @@ type Signal = {
 type Route = {
   id: string; name: string; kind: string; intervalSeconds: number; checkedAt: string | null;
   succeededAt: string | null; nextCheckAt: string | null; error: string | null; matchedItems: number; pendingArticles: number;
+  articleErrors?: { url: string; error: string; nextCheckAt: string | null; checkedAt: string | null }[];
 };
 type Queue = {
   ok: boolean; error?: string; items: Signal[]; routes: Route[]; tickers: string[];
@@ -74,6 +75,12 @@ export default function SignalsPanel({ token }: { token: string }) {
         <ul>{data.routes.map(route => <li key={route.id}><strong>{route.name}</strong>
           <span>{route.error ? `取得失敗：${route.error}` : route.succeededAt ? "取得成功" : "未取得"} · 確認間隔 {route.intervalSeconds}秒</span>
           <small>最終成功 {timeLabel(route.succeededAt)} · 直近処理 {route.matchedItems}件{route.pendingArticles > 0 ? ` · 本文取得待ち ${route.pendingArticles}件` : ""}</small>
+          {!!route.articleErrors?.length && <details><summary>取得できなかった記事（最大20件）</summary>
+            <ul>{route.articleErrors.map(article => <li key={article.url}>
+              <a href={article.url} target="_blank" rel="noopener noreferrer">{article.url}</a>
+              <small>{article.error} · 最終確認 {timeLabel(article.checkedAt)} · 再試行予定 {timeLabel(article.nextCheckAt)}</small>
+            </li>)}</ul>
+          </details>}
         </li>)}</ul>
       </details>
       <div className={styles.filters}>

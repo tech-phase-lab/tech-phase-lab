@@ -18,7 +18,10 @@ class CoverageReportTests(unittest.TestCase):
         self.assertEqual(len(result['companies']), 22)
         self.assertTrue(all(r['status'] == 'untested' for r in result['routes']))
         mu = next(c for c in result['companies'] if c['ticker'] == 'MU')
-        self.assertTrue(mu['needsDedicatedSupplementalSource'])
+        self.assertIn('micron-blog', mu['dedicatedSupplementalSources'])
+        self.assertFalse(mu['needsDedicatedSupplementalSource'])
+        sndk = next(c for c in result['companies'] if c['ticker'] == 'SNDK')
+        self.assertTrue(sndk['needsDedicatedSupplementalSource'])
         self.assertIn('anthropic-news', result['sharedSources'])
 
     def test_missing_database_is_not_created(self):

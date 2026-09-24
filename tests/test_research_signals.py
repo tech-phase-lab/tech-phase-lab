@@ -203,6 +203,9 @@ class SignalTests(unittest.TestCase):
         child = state['children'][source['url'] + '/test']
         self.assertTrue(child['baseline'])
         self.assertEqual(child['error'], 'http-403')
+        self.assertEqual(queue['routes'][0]['articleErrors'][0]['url'], source['url'] + '/test')
+        self.assertEqual(queue['routes'][0]['articleErrors'][0]['error'], 'http-403')
+        self.assertTrue(queue['routes'][0]['articleErrors'][0]['nextCheckAt'])
 
     def test_html_index_unchanged_index_still_rechecks_article_changes(self):
         source = next(s for s in signals.SOURCES if s["id"] == "anthropic-news")
@@ -289,6 +292,48 @@ class SignalTests(unittest.TestCase):
         collect(source, {'index_state': json.dumps(state)}, self.tickers, request)
         self.assertEqual(calls, [base + 'new-2', base + 'old-1', base + 'old-2'])
         self.assertNotIn(base + 'new-3', calls)
+
+    def test_sitemap_baselines_survive_restart_and_new_url_is_prioritized(self):
+        source = next(s for s in signals.SOURCES if s['id'] == 'micron-blog')
+        urls = [f'https://www.micron.com/about/blog/memory/dram/article-{i}' for i in range(130)]
+        urls += ['https://www.micron.com/about/blog/blog-authors/author-bio/person',
+                 'https://www.micron.com/about/blog/memory/dram',
+                 'https://evil.test/about/blog/memory/dram/attack']
+        calls = []
+        def request(route, validators):
+            if route['url'] == source['url']:
+                return {'body': ('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+                                 + ''.join(f'<url><loc>{u}</loc></url>' for u in urls) + '</urlset>').encode()}
+            calls.append(route['url'])
+            return {'body': ('<main><h1>Memory update</h1><p>' + 'Micron memory innovation. ' * 10 + '</p></main>').encode()}
+        with patch.object(signals, 'fetch', side_effect=request):
+            signals.check(self.db, source, self.tickers)
+            self.assertEqual(signals.queue(self.db, sources=[source])['routes'][0]['pendingArticles'], 127)
+            self.db.close(); self.db = monitor.connect(self.path)
+            urls.append('https://www.micron.com/about/blog/memory/dram/new-arrival')
+            calls.clear()
+            signals.check(self.db, source, self.tickers)
+        self.assertTrue(calls[0].endswith('/new-arrival'))
+        self.assertEqual(len(calls), 3)
+        queue = signals.queue(self.db, sources=[source])
+        self.assertEqual(queue['counts']['baseline'], 5)
+        self.assertEqual(queue['counts']['new'], 1)
+
+    def test_sitemap_rejects_entities_and_nested_sitemaps(self):
+        source = next(s for s in signals.SOURCES if s['id'] == 'micron-blog')
+        for body in [b'<!DOCTYPE urlset [<!ENTITY x SYSTEM "file:///etc/passwd">]><urlset/>',
+                     b'<sitemapindex><sitemap><loc>https://evil.test/a.xml</loc></sitemap></sitemapindex>']:
+            with patch.object(signals, 'fetch', return_value={'body': body}):
+                self.assertEqual(signals.check(self.db, source, self.tickers)['status'], 'error')
+        self.assertEqual(signals.queue(self.db, sources=[source])['counts']['all'], 0)
+
+    def test_specific_title_skips_generic_site_heading(self):
+        from html_signals import NewsHTML
+        parser = NewsHTML('article-body', 'story-title')
+        parser.feed('<h1>All blogs</h1><h1 class="story-title">New chips</h1>'
+                    '<div class="article-body"><p>New memory platform</p></div><aside>NVIDIA</aside>')
+        self.assertEqual(parser.title, ['New chips'])
+        self.assertNotIn('NVIDIA', ''.join(parser.selected))
 
     def test_worker_is_opt_in_and_stops(self):
         with patch.dict(os.environ, {"RESEARCH_SIGNALS_ENABLED": ""}):
