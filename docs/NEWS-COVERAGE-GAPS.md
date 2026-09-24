@@ -137,8 +137,25 @@ where possible rather than building a second article store.
 
 - Dedicated product/document sources for remaining issuers; current shared
   feeds do not establish comprehensive per-company coverage.
-- Authorized X stream, broader search, semantic cross-publisher deduplication,
-  X deletion/correction handling, and source-bound AI drafts for this queue.
+- **Priority next: X target-price signals.** Use the official Filtered Stream API
+  with `from:<account>` rules for a reviewed list of analyst/news accounts, then
+  apply target-price and rating-action checks to incoming posts. The X docs say
+  matching posts arrive near real time (about 4–5 seconds P99), and the
+  pay-per-use price table lists $0.005 per Post read. At that listed rate, 1,000
+  returned Posts in a month would cost about $5; this is an estimate, and the
+  Developer Console is authoritative for current rates and actual usage. Reading
+  other accounts' Posts is billed separately from creating Posts, so an existing
+  posting integration does not by itself establish read access or read pricing.
+  Keep this opt-in until an authorized app/token and a spending limit are set.
+- Separate technical ingestion from permission to publish X-derived material.
+  X's developer policy restricts redistribution of X Content and says commercial
+  use requires an appropriate paid tier. Before showing target-price values or
+  copied excerpts in the subscriber-facing news feed, review the current terms
+  for that exact use. Until resolved, route candidate Post IDs and source links
+  to the private review queue; verify the analyst action against an accessible
+  primary source where possible. Do not use scraping or browser automation.
+- Broader search, semantic cross-publisher deduplication, X deletion/correction
+  handling, and source-bound AI drafts for this queue.
 - Permissions for commercial publisher material, a reviewed publication policy,
   and real live end-to-end latency measurement.
 
