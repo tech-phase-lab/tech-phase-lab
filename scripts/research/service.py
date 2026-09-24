@@ -252,6 +252,10 @@ class AutomaticMonitor:
                 "retrySeconds": 0, "nextRetryAt": None,
             },
             "pendingBodies": 0,
+            "bodyBacklog": {
+                "eligible": 0, "retryDeferred": 0, "accessRestricted": 0,
+                "recheckDeferred": 0, "total": 0, "measuredAt": None,
+            },
             "tickerCount": len(self.tickers),
             "generation": {
                 "requested": self.auto_drafts_requested, "configured": generation_configured,
@@ -764,11 +768,21 @@ class AutomaticMonitor:
         due = utc_now()
         polled_at = polled_at or due
         with self.db_lock, monitor.connect(self.db_path) as db:
-            pending = db.execute(
-                """SELECT count(*) FROM sources
-                   WHERE source_mode='remote' AND (next_fetch_at IS NULL OR next_fetch_at<=?)""",
-                (due,),
-            ).fetchone()[0]
+            backlog = db.execute("""
+              SELECT
+                count(*) AS total,
+                sum(CASE WHEN next_fetch_at IS NULL OR next_fetch_at<=? THEN 1 ELSE 0 END)
+                  AS eligible,
+                sum(CASE WHEN next_fetch_at>? AND error IS NOT NULL THEN 1 ELSE 0 END)
+                  AS retry_deferred,
+                sum(CASE WHEN next_fetch_at>? AND error IN (
+                  'http-401','http-403','http-451','verification-page'
+                ) THEN 1 ELSE 0 END) AS access_restricted,
+                sum(CASE WHEN next_fetch_at>? AND error IS NULL THEN 1 ELSE 0 END)
+                  AS recheck_deferred
+              FROM sources WHERE source_mode='remote'
+            """, (due, due, due, due)).fetchone()
+            pending = int(backlog["eligible"] or 0)
             monitor.record_body_fetch_poll(db, polled_at, pending)
             rows = db.execute("""
               SELECT s.*,e.detected_at AS release_detected_at
@@ -788,6 +802,15 @@ class AutomaticMonitor:
                        s.checked_at IS NOT NULL, s.checked_at, s.discovered_at, s.url
               LIMIT ?
             """, (due, self.body_batch)).fetchall()
+        with self.state_lock:
+            self.state["bodyBacklog"] = {
+                "eligible": pending,
+                "retryDeferred": int(backlog["retry_deferred"] or 0),
+                "accessRestricted": int(backlog["access_restricted"] or 0),
+                "recheckDeferred": int(backlog["recheck_deferred"] or 0),
+                "total": int(backlog["total"] or 0),
+                "measuredAt": polled_at,
+            }
         return rows, pending
 
     def fetch_bodies(self, pool):

@@ -508,17 +508,17 @@
       {
         "url": "https://data.sec.gov/submissions/CIK0001807794.json",
         "format": "sec-json",
-        "label": "SEC submissions 6-K",
+        "label": "SEC submissions 8-K",
         "cik": "0001807794",
         "forms": [
-          "6-K"
+          "8-K"
         ],
         "limit": 40
       },
       {
-        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001807794&type=6-K&owner=exclude&count=40&output=atom",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001807794&type=8-K&owner=exclude&count=40&output=atom",
         "format": "rss",
-        "label": "SEC 6-K"
+        "label": "SEC 8-K"
       }
     ]
   },

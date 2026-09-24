@@ -834,6 +834,30 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(pending, 3)
         self.assertTrue(rows[0]["url"].endswith("new-release"))
 
+    def test_body_backlog_distinguishes_eligible_and_access_restricted_retries(self):
+        with monitor.connect(self.db_path) as db:
+            db.execute("""
+              UPDATE sources
+              SET error='http-403',fetch_failures=1,next_fetch_at='2099-01-01T00:00:00+00:00'
+              WHERE url LIKE '%older'
+            """)
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        _rows, pending = app.body_candidates("2026-09-24T05:00:00+00:00")
+        backlog = app.public_state()["bodyBacklog"]
+
+        self.assertEqual(pending, 1)
+        self.assertEqual(backlog, {
+            "eligible": 1,
+            "retryDeferred": 1,
+            "accessRestricted": 1,
+            "recheckDeferred": 0,
+            "total": 2,
+            "measuredAt": "2026-09-24T05:00:00+00:00",
+        })
+        self.assertNotIn("https://", json.dumps(backlog))
+
     def test_body_candidates_try_company_evidence_before_equivalent_sec_backlog(self):
         sec_url = (
             "https://www.sec.gov/Archives/edgar/data/1835632/"

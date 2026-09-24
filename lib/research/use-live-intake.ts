@@ -109,6 +109,10 @@ export type MonitorState = {
     };
   };
   pendingBodies?: number;
+  bodyBacklog?: {
+    eligible: number; retryDeferred: number; accessRestricted: number;
+    recheckDeferred: number; total: number; measuredAt: string | null;
+  };
   companies: Record<string, {
     basePollSeconds?: number; nextPollSeconds?: number; requestDurationMs?: number;
     status: string; route: string; candidates: number; checkedAt: string; error: string | null;

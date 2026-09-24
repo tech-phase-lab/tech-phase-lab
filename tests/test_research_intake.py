@@ -1474,6 +1474,26 @@ class IntakeTests(unittest.TestCase):
             provider["indexUrl"], provider["supplementalSources"][0]["url"],
         ])
 
+    def test_automatic_monitor_unions_credo_company_and_current_report_routes(self):
+        provider = m.PROVIDERS["CRDO"]
+        company_body = b'''<a href="https://investors.credosemi.com/news-events/news/news-details/2026/Credo-AI-Update/default.aspx">Credo AI update</a>'''
+        sec_body = b'''{"cik":1807794,"filings":{"recent":{"form":["8-K","10-Q"],"accessionNumber":["0001807794-26-000001","0001807794-26-000002"],"primaryDocument":["crdo-20260924.htm","crdo-20260731.htm"],"primaryDocDescription":["CURRENT REPORT","QUARTERLY REPORT"]}}}'''
+
+        def transport(url, _ticker):
+            if url == provider["indexUrl"]:
+                return company_body, "text/html"
+            if url == provider["supplementalSources"][0]["url"]:
+                return sec_body, "application/json"
+            raise AssertionError(f"unexpected URL: {url}")
+
+        result, links = m.collect_discovery("CRDO", transport, automatic=True)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["route"], "primary+supplemental")
+        self.assertEqual(result["sourceFormat"], "html+sec-json")
+        self.assertEqual(len(links), 2)
+        self.assertTrue(any("news-details" in url for url in links))
+        self.assertTrue(any("/Archives/edgar/data/1807794/" in url for url in links))
+
     def test_healthy_company_route_is_degraded_when_required_sec_route_fails(self):
         company_body = b'''<rss><channel><item><title>Marvell AI release</title><link>https://investor.marvell.com/news-events/press-releases/detail/1234/example</link></item></channel></rss>'''
 
@@ -2541,6 +2561,17 @@ class IntakeTests(unittest.TestCase):
                     and rule["pattern"] == f"^/Archives/edgar/data/{int(cik)}/.+"
                     for rule in provider["articleRules"]
                 ))
+
+    def test_credo_sec_route_tracks_the_issuer_current_report_form(self):
+        provider = m.PROVIDERS["CRDO"]
+        sources = provider["supplementalSources"]
+        submissions = next(source for source in sources if source["format"] == "sec-json")
+        atom = next(source for source in sources if source["format"] == "rss")
+
+        self.assertEqual(submissions["forms"], ["8-K"])
+        self.assertEqual(submissions["label"], "SEC submissions 8-K")
+        self.assertIn("type=8-K", atom["url"])
+        self.assertEqual(atom["label"], "SEC 8-K")
 
 
 if __name__ == "__main__":
