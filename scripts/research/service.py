@@ -94,6 +94,44 @@ def timestamp_at_or_after(value, reference):
         return False
 
 
+def active_body_host_backoffs(db, reference):
+    """Load only bounded, internally consistent private host circuits."""
+    try:
+        current = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
+        if current.tzinfo is None:
+            return set()
+        current = current.astimezone(timezone.utc)
+    except (TypeError, ValueError):
+        return set()
+    active = set()
+    for row in db.execute("""
+      SELECT host,failures,error,retry_at,updated_at
+      FROM body_host_backoff WHERE retry_at>? LIMIT 10000
+    """, (reference,)).fetchall():
+        try:
+            updated = datetime.fromisoformat(str(row["updated_at"]).replace("Z", "+00:00"))
+            retry = datetime.fromisoformat(str(row["retry_at"]).replace("Z", "+00:00"))
+            failures = int(row["failures"])
+            if updated.tzinfo is None or retry.tzinfo is None:
+                continue
+            updated = updated.astimezone(timezone.utc)
+            retry = retry.astimezone(timezone.utc)
+        except (TypeError, ValueError, OverflowError):
+            continue
+        host = row["host"]
+        if (
+            monitor.source_hostname(f"https://{host}") != host
+            or row["error"] not in monitor.ACCESS_RESTRICTED_ERRORS
+            or not 1 <= failures <= 1_000_000
+            or updated > current + timedelta(minutes=5)
+            or retry <= current
+            or retry > updated + timedelta(days=7, minutes=5)
+        ):
+            continue
+        active.add(host)
+    return active
+
+
 def process_observation_latency_ms(value, started_at):
     """Return bounded post-start latency only for observations not in the future."""
     try:
@@ -253,7 +291,8 @@ class AutomaticMonitor:
             },
             "pendingBodies": 0,
             "bodyBacklog": {
-                "eligible": 0, "retryDeferred": 0, "accessRestricted": 0,
+                "eligible": 0, "hostDeferred": 0,
+                "retryDeferred": 0, "accessRestricted": 0,
                 "recheckDeferred": 0, "total": 0, "measuredAt": None,
             },
             "tickerCount": len(self.tickers),
@@ -782,10 +821,9 @@ class AutomaticMonitor:
                   AS recheck_deferred
               FROM sources WHERE source_mode='remote'
             """, (due, due, due, due)).fetchone()
-            pending = int(backlog["eligible"] or 0)
-            monitor.record_body_fetch_poll(db, polled_at, pending)
-            rows = db.execute("""
-              SELECT s.*,e.detected_at AS release_detected_at
+            blocked_hosts = active_body_host_backoffs(db, due)
+            ordered = db.execute("""
+              SELECT s.url
               FROM sources s LEFT JOIN release_events e ON e.url=s.url
               WHERE s.source_mode='remote' AND (s.next_fetch_at IS NULL OR s.next_fetch_at<=?)
               ORDER BY CASE
@@ -800,11 +838,37 @@ class AutomaticMonitor:
                             THEN 1 ELSE 0 END,
                        e.detected_at IS NULL, e.detected_at DESC,
                        s.checked_at IS NOT NULL, s.checked_at, s.discovered_at, s.url
-              LIMIT ?
-            """, (due, self.body_batch)).fetchall()
+            """, (due,)).fetchall()
+            selected_urls = []
+            selected_hosts = set()
+            host_deferred = 0
+            for candidate in ordered:
+                hostname = monitor.source_hostname(candidate["url"])
+                if hostname and hostname in blocked_hosts:
+                    host_deferred += 1
+                    continue
+                if hostname and hostname in selected_hosts:
+                    continue
+                if len(selected_urls) < self.body_batch:
+                    selected_urls.append(candidate["url"])
+                    if hostname:
+                        selected_hosts.add(hostname)
+            pending = max(0, int(backlog["eligible"] or 0) - host_deferred)
+            monitor.record_body_fetch_poll(db, polled_at, pending)
+            rows = []
+            if selected_urls:
+                placeholders = ",".join("?" for _ in selected_urls)
+                selected = db.execute(f"""
+                  SELECT s.*,e.detected_at AS release_detected_at
+                  FROM sources s LEFT JOIN release_events e ON e.url=s.url
+                  WHERE s.url IN ({placeholders})
+                """, selected_urls).fetchall()
+                by_url = {row["url"]: row for row in selected}
+                rows = [by_url[url] for url in selected_urls if url in by_url]
         with self.state_lock:
             self.state["bodyBacklog"] = {
                 "eligible": pending,
+                "hostDeferred": host_deferred,
                 "retryDeferred": int(backlog["retry_deferred"] or 0),
                 "accessRestricted": int(backlog["access_restricted"] or 0),
                 "recheckDeferred": int(backlog["recheck_deferred"] or 0),

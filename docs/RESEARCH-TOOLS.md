@@ -53,6 +53,14 @@ out-of-range counts, impossible latency totals or reversed timestamps are also
 excluded, as are malformed heartbeat pending counts. Clock or database
 corruption therefore cannot replace observed processing evidence. The
 configured batch size is capped at 100.
+Access-control responses (HTTP 401, 403 and 451, plus verification pages) also
+open a private, persistent hostname circuit. While that circuit is active,
+other queued URLs on the same official hostname are deferred without another
+request; at most one URL per hostname is attempted in a batch. A successful
+body check closes the circuit immediately. The preview exposes only the number
+of host-deferred bodies, not hostnames, URLs or errors. Timeouts and other
+transient failures remain URL-scoped. This reduces repeated traffic without
+bypassing an official site's access controls.
 
 Official-list polling batches are also persisted as bounded, URL-free
 operational evidence. The preview retains the last completed batch and

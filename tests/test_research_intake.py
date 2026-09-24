@@ -659,13 +659,34 @@ class IntakeTests(unittest.TestCase):
         forbidden = HTTPError(URL, 403, "Forbidden", {}, None)
         first = m.save_source_error(self.db, self.row(), forbidden)
         second = m.save_source_error(self.db, self.row(), forbidden)
+        circuit = self.db.execute(
+            "SELECT * FROM body_host_backoff WHERE host='nebius.com'"
+        ).fetchone()
         self.assertEqual(first["retrySeconds"], 6 * 60 * 60)
         self.assertEqual(second["retrySeconds"], 12 * 60 * 60)
+        self.assertEqual(circuit["failures"], 2)
+        self.assertEqual(circuit["error"], "http-403")
+        self.assertGreater(circuit["retry_at"], circuit["updated_at"])
         self.assertEqual(
             m.source_retry_seconds("verification-page", 99),
             7 * 24 * 60 * 60,
         )
         self.assertEqual(m.source_retry_seconds("timeout", 1), 60)
+
+        m.save_source_check(self.db, self.row(), {
+            "sha256": "a" * 64, "contentType": "text/html", "contentBytes": 64,
+            "extractedText": "Official evidence is available again.",
+            "extractedChars": 37,
+        })
+        self.assertIsNone(self.db.execute(
+            "SELECT 1 FROM body_host_backoff WHERE host='nebius.com'"
+        ).fetchone())
+
+    def test_transient_failure_does_not_open_host_circuit(self):
+        m.save_source_error(self.db, self.row(), TimeoutError("timeout"))
+        self.assertEqual(
+            self.db.execute("SELECT count(*) FROM body_host_backoff").fetchone()[0], 0
+        )
 
     def test_fetch_failure_honors_retry_after_and_stores_only_a_safe_code(self):
         error = HTTPError(

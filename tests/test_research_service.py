@@ -850,6 +850,7 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(pending, 1)
         self.assertEqual(backlog, {
             "eligible": 1,
+            "hostDeferred": 0,
             "retryDeferred": 1,
             "accessRestricted": 1,
             "recheckDeferred": 0,
@@ -857,6 +858,54 @@ class ResearchServiceTests(unittest.TestCase):
             "measuredAt": "2026-09-24T05:00:00+00:00",
         })
         self.assertNotIn("https://", json.dumps(backlog))
+
+    def test_body_candidates_defer_same_host_after_access_restriction(self):
+        sec_url = (
+            "https://www.sec.gov/Archives/edgar/data/1835632/"
+            "000183563226000001/example.htm"
+        )
+        with monitor.connect(self.db_path) as db:
+            blocked = db.execute(
+                "SELECT * FROM sources WHERE url LIKE '%older'"
+            ).fetchone()
+            monitor.save_source_error(
+                db, blocked, HTTPError(blocked["url"], 403, "Forbidden", {}, None)
+            )
+            monitor.add_source(db, "NBIS", sec_url, title="SEC filing")
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_batch = 5
+        rows, pending = app.body_candidates("2026-09-24T05:00:00+00:00")
+        backlog = app.public_state()["bodyBacklog"]
+
+        self.assertEqual([row["url"] for row in rows], [sec_url])
+        self.assertEqual(pending, 1)
+        self.assertEqual(backlog["hostDeferred"], 1)
+        self.assertEqual(backlog["retryDeferred"], 1)
+        self.assertEqual(backlog["total"], 3)
+        self.assertNotIn("nebius.com", json.dumps(backlog))
+
+    def test_body_batch_attempts_only_one_url_per_host(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_batch = 5
+        rows, pending = app.body_candidates()
+        self.assertEqual(pending, 2)
+        self.assertEqual(len(rows), 1)
+
+    def test_body_candidates_ignore_corrupt_host_circuit(self):
+        with monitor.connect(self.db_path) as db:
+            db.execute("""
+              INSERT INTO body_host_backoff(host,failures,error,retry_at,updated_at)
+              VALUES('nebius.com',1,'http-403','2099-01-01T00:00:00+00:00',
+                     '2026-09-24T05:00:00+00:00')
+            """)
+            db.commit()
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        rows, pending = app.body_candidates("2026-09-24T05:00:00+00:00")
+        self.assertEqual(pending, 2)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(app.public_state()["bodyBacklog"]["hostDeferred"], 0)
 
     def test_body_candidates_try_company_evidence_before_equivalent_sec_backlog(self):
         sec_url = (

@@ -125,7 +125,8 @@ function priorityPersistenceStatus(state: MonitorState["priorityPersistence"]) {
 }
 function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], backlog?: MonitorState["bodyBacklog"], pending = 0) {
   const eligible = backlog?.eligible ?? pending;
-  const deferred = backlog ? ` · エラー再試行待ち ${backlog.retryDeferred}件（アクセス制限 ${backlog.accessRestricted}件） · 定期再確認待ち ${backlog.recheckDeferred}件` : "";
+  const hostDeferred = backlog?.hostDeferred ? ` · 同一ホスト遮断中 ${backlog.hostDeferred}件` : "";
+  const deferred = backlog ? `${hostDeferred} · エラー再試行待ち ${backlog.retryDeferred}件（アクセス制限 ${backlog.accessRestricted}件） · 定期再確認待ち ${backlog.recheckDeferred}件` : "";
   if (!bodyFetch?.lastPollAt) return "本文取得：初回ポーリング待ち";
   if (bodyFetch.healthy === false) return `本文取得：要確認 · 内部処理を再試行予定（連続 ${bodyFetch.consecutiveFailures}回・${bodyFetch.retrySeconds ?? 0}秒後） · 取得可能 ${eligible}件${deferred}`;
   if (!bodyFetch.lastBatchAt) return `本文取得：${time(bodyFetch.lastPollAt)} JSTに確認 · 取得可能 ${eligible}件${deferred} · 取得実績待ち`;

@@ -44,6 +44,9 @@ DISCOVERY_CACHE_MAX_BYTES = 2 * 1024 * 1024
 DISCOVERY_CACHE_PARSER_VERSION = 1
 _FETCH_CACHE = {}
 _FETCH_CACHE_LOCK = threading.Lock()
+ACCESS_RESTRICTED_ERRORS = {
+    "http-401", "http-403", "http-451", "verification-page",
+}
 
 
 def now():
@@ -226,9 +229,7 @@ def retry_after_seconds(exc, reference=None):
 
 def source_retry_seconds(error_code, failures, retry_hint=None):
     """Back off access controls without repeatedly probing a blocked official page."""
-    access_restricted = error_code in {
-        "http-401", "http-403", "http-451", "verification-page",
-    }
+    access_restricted = error_code in ACCESS_RESTRICTED_ERRORS
     if access_restricted:
         # A denied or interstitial-protected route is unlikely to recover within
         # minutes. Keep it eligible for a later lawful retry, but do not hammer it
@@ -242,6 +243,17 @@ def source_retry_seconds(error_code, failures, retry_hint=None):
     if retry_hint is not None:
         retry_seconds = max(retry_seconds, retry_hint)
     return retry_seconds
+
+
+def source_hostname(url):
+    """Return a bounded normalized hostname for private circuit-breaker state."""
+    try:
+        hostname = (urlsplit(str(url)).hostname or "").lower().rstrip(".")
+    except (TypeError, ValueError):
+        return None
+    if not hostname or len(hostname) > 253 or not re.fullmatch(r"[a-z0-9.-]+", hostname):
+        return None
+    return hostname
 
 
 def fetch(url, ticker, validators=None, include_metadata=False):
@@ -1030,6 +1042,14 @@ def connect(path):
       id INTEGER PRIMARY KEY CHECK(id=1),
       last_polled_at TEXT NOT NULL,
       pending_count INTEGER NOT NULL CHECK(pending_count>=0 AND pending_count<=1000000));
+    CREATE TABLE IF NOT EXISTS body_host_backoff (
+      host TEXT PRIMARY KEY,
+      failures INTEGER NOT NULL CHECK(failures>0 AND failures<=1000000),
+      error TEXT NOT NULL,
+      retry_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL);
+    CREATE INDEX IF NOT EXISTS body_host_backoff_retry
+      ON body_host_backoff(retry_at);
     CREATE TABLE IF NOT EXISTS briefs (
       url TEXT PRIMARY KEY REFERENCES sources(url), source_sha256 TEXT NOT NULL,
       summary_ja TEXT NOT NULL, impact_label TEXT NOT NULL, impact_ja TEXT NOT NULL,
@@ -3143,6 +3163,9 @@ def save_source_check(db, row, result):
             result.get("evidenceUrl") or row["url"],
             result.get("evidenceKind") or "direct", row["url"],
         ))
+        hostname = source_hostname(row["url"])
+        if hostname:
+            db.execute("DELETE FROM body_host_backoff WHERE host=?", (hostname,))
     status = "not-modified" if not_modified else (
         "first-fetched" if not current["sha256"] else ("changed" if changed else "unchanged")
     )
@@ -3164,11 +3187,29 @@ def save_source_error(db, row, exc):
         failures = current["fetch_failures"] + 1
         retry_hint = retry_after_seconds(exc)
         retry_seconds = source_retry_seconds(error_code, failures, retry_hint)
+        hostname = source_hostname(row["url"])
+        if hostname and error_code in ACCESS_RESTRICTED_ERRORS:
+            host_state = db.execute(
+                "SELECT failures FROM body_host_backoff WHERE host=?", (hostname,)
+            ).fetchone()
+            host_failures = min(1_000_000, (host_state["failures"] if host_state else 0) + 1)
+            host_retry_seconds = source_retry_seconds(
+                error_code, host_failures, retry_hint
+            )
+            retry_seconds = max(retry_seconds, host_retry_seconds)
         next_fetch_at = (datetime.now(timezone.utc) + timedelta(seconds=retry_seconds)).isoformat(timespec="milliseconds")
         db.execute(
             "UPDATE sources SET checked_at=?,error=?,fetch_failures=?,next_fetch_at=? WHERE url=?",
             (checked_at, error_code, failures, next_fetch_at, row["url"]),
         )
+        if hostname and error_code in ACCESS_RESTRICTED_ERRORS:
+            db.execute("""
+              INSERT INTO body_host_backoff(host,failures,error,retry_at,updated_at)
+              VALUES(?,?,?,?,?)
+              ON CONFLICT(host) DO UPDATE SET
+                failures=excluded.failures,error=excluded.error,
+                retry_at=excluded.retry_at,updated_at=excluded.updated_at
+            """, (hostname, host_failures, error_code, next_fetch_at, checked_at))
         db.execute("INSERT INTO history(url,at,kind,reason) VALUES(?,?,?,?)", (row["url"], checked_at, "fetch-error", error_code))
     return {"url": row["url"], "status": "error", "retrySeconds": retry_seconds, "error": error_code}
 
