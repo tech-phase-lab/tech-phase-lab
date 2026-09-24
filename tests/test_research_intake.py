@@ -722,6 +722,37 @@ class IntakeTests(unittest.TestCase):
             "SELECT 1 FROM body_host_backoff WHERE host='nebius.com'"
         ).fetchone())
 
+    def test_long_retry_after_respects_official_delay_and_circuit_ceiling(self):
+        reference = datetime(2026, 9, 25, tzinfo=timezone.utc)
+        numeric = HTTPError(
+            URL, 429, "Too Many Requests",
+            {"Retry-After": str(2 * 24 * 60 * 60)}, None,
+        )
+        dated = HTTPError(
+            URL, 429, "Too Many Requests",
+            {"Retry-After": "Mon, 28 Sep 2026 00:00:00 GMT"}, None,
+        )
+        oversized = HTTPError(
+            URL, 429, "Too Many Requests",
+            {"Retry-After": str(30 * 24 * 60 * 60)}, None,
+        )
+        unavailable = HTTPError(
+            URL, 503, "Service Unavailable",
+            {"Retry-After": str(2 * 24 * 60 * 60)}, None,
+        )
+
+        self.assertEqual(m.retry_after_seconds(numeric, reference), 2 * 24 * 60 * 60)
+        self.assertEqual(m.retry_after_seconds(dated, reference), 3 * 24 * 60 * 60)
+        self.assertEqual(
+            m.retry_after_seconds(oversized, reference),
+            m.MAX_ACCESS_BACKOFF_SECONDS,
+        )
+        self.assertEqual(m.retry_after_seconds(unavailable, reference), 6 * 60 * 60)
+        self.assertEqual(
+            m.source_retry_seconds("http-429", 1, 2 * 24 * 60 * 60),
+            2 * 24 * 60 * 60,
+        )
+
     def test_transient_failure_does_not_open_host_circuit(self):
         m.save_source_error(self.db, self.row(), TimeoutError("timeout"))
         self.assertEqual(

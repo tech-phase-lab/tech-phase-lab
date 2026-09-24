@@ -63,7 +63,9 @@ linked article host has recovered. The preview exposes only the number of
 host-deferred bodies, not hostnames, URLs or errors. Timeouts and other
 transient failures remain URL-scoped. This reduces repeated traffic without
 bypassing an official site's access controls.
-HTTP 429 rate limits use the same conservative circuit. When a short SEC
+HTTP 429 rate limits use the same conservative circuit. A valid server
+`Retry-After` is honored up to the circuit's seven-day ceiling instead of
+being shortened to the six-hour transient-failure ceiling. When a short SEC
 primary filing requires its same-accession index or EX-99.1, transport errors
 from that official follow-up request retain their bounded error class instead
 of being flattened into a missing-exhibit error. A 403 or verification page can

@@ -47,6 +47,7 @@ _FETCH_CACHE_LOCK = threading.Lock()
 ACCESS_RESTRICTED_ERRORS = {
     "http-401", "http-403", "http-429", "http-451", "verification-page",
 }
+MAX_ACCESS_BACKOFF_SECONDS = 7 * 24 * 60 * 60
 
 
 def now():
@@ -235,7 +236,7 @@ def source_error_code(exc):
 
 
 def retry_after_seconds(exc, reference=None):
-    """Parse a server Retry-After hint and cap it to the body-fetch backoff ceiling."""
+    """Parse Retry-After within the relevant URL or hostname backoff ceiling."""
     if not isinstance(exc, HTTPError) or not exc.headers:
         return None
     value = str(exc.headers.get("Retry-After", "")).strip()
@@ -251,7 +252,12 @@ def retry_after_seconds(exc, reference=None):
             seconds = round((target - (reference or datetime.now(timezone.utc))).total_seconds())
         except (TypeError, ValueError, OverflowError):
             return None
-    return max(0, min(6 * 60 * 60, seconds))
+    ceiling = (
+        MAX_ACCESS_BACKOFF_SECONDS
+        if source_error_code(exc) in ACCESS_RESTRICTED_ERRORS
+        else 6 * 60 * 60
+    )
+    return max(0, min(ceiling, seconds))
 
 
 def source_retry_seconds(error_code, failures, retry_hint=None):
@@ -267,7 +273,7 @@ def source_retry_seconds(error_code, failures, retry_hint=None):
         # minutes. Keep it eligible for a later lawful retry, but do not hammer it
         # or let it crowd newly discovered first-party evidence out of the queue.
         retry_seconds = min(
-            7 * 24 * 60 * 60,
+            MAX_ACCESS_BACKOFF_SECONDS,
             6 * 60 * 60 * (2 ** min(max(failures - 1, 0), 5)),
         )
     else:
