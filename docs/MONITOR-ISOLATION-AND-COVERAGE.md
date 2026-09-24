@@ -223,3 +223,16 @@ MU・MRVL・Vertivの追加とAnthropicの長文対応は TECH-PHASE-PROGRESS.md
 - MRVLとTSMCは403、Sandiskはtimeout、Oracle RSSは`invalid-source-response`。
 - Micron sitemap本文は3件処理、409件待ち。キュー383件は新着数ではない。
 - 安全な固定コードで取得失敗をもう一段詳しく表示する診断改善を実装中。
+
+## 2026-09-24 09:20 UTC 継続確認
+
+- Dellの公式IR RSSを主経路に切替後、stagingで`ok / primary+supplemental`。
+- Broadcomも公式IR RSSへ切替後、stagingで`ok / primary+supplemental`。
+  作業環境では7.65秒で10件の公式発表リンクを抽出。
+- SandiskのIRニュース一覧は作業環境で7.46秒・10件の候補を抽出できたが、
+  stagingからは12秒でタイムアウト。HTMLは公式ページへのリンクを含む一方、
+  Newsroom別URLは作業環境でも記事候補0件だった。アクセス制限の迂回や未検証URL追加は行わず、
+  8秒の上限とSEC 8-Kフォールバックを維持する。
+- 優先監視は5/5正常。全体ヘルスはready。本文キューは918件（host保留240、
+  アクセス制限／再試行488、再確認待ち190）、取得可能0件、24時間エラー963件。
+  1つのホスト回路が開いており、予定時刻までは再試行しない。

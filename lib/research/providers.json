@@ -62,7 +62,7 @@
     "sector": "semiconductors",
     "indexUrl": "https://investor.sandisk.com/news-events/news-releases",
     "format": "html",
-    "requestTimeoutSeconds": 12,
+    "requestTimeoutSeconds": 8,
     "allowedHosts": [
       "data.sec.gov",
       "investor.sandisk.com",
