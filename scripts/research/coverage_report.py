@@ -46,11 +46,13 @@ def report(db_path=None, now=None):
                        'reuse': source['reuse']})
     companies = []
     for ticker, provider in monitor.PROVIDERS.items():
-        dedicated = [r['id'] for r in routes if ticker in r['tickers']]
+        dedicated = [r for r in routes if ticker in r['tickers']]
         companies.append({'ticker': ticker, 'name': provider['name'],
                           'officialIndex': provider['indexUrl'],
                           'officialAvailability': 'not-assessed-by-this-report',
-                          'dedicatedSupplementalSources': dedicated,
+                          'dedicatedSupplementalSources': [r['id'] for r in dedicated],
+                          'dedicatedSupplementalStatuses': {r['id']: r['status'] for r in dedicated},
+                          'hasFreshDedicatedSupplementalSource': any(r['status'] == 'fresh' for r in dedicated),
                           'needsDedicatedSupplementalSource': not bool(dedicated)})
     return {'generatedAt': now.isoformat(), 'databaseInspected': db_path is not None,
             'companies': companies, 'routes': routes,

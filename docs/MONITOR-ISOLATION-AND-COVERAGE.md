@@ -124,7 +124,7 @@
 ## 22銘柄の設定台帳
 
 公式取得先の登録は22/22。今回の補完モジュールに銘柄を固定した追加元があるのは
-SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMD、BE、GOOGL、MU、MRVL、VRTの13銘柄（MRVLは常駐403）。これは既存取得元が扱う製品記事を含めた
+SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMD、BE、GOOGL、MU、MRVL、VRT、ARM、AVGO、TSM、SNDK、ORCLの18銘柄（MRVLは常駐403。後ろ5銘柄は追加設定後の常駐確認待ち）。これは既存取得元が扱う製品記事を含めた
 全体の網羅率ではない。共通元のSemiAnalysisとAnthropicは全22銘柄へ本文照合し、
 特定銘柄のニュースとして無条件には配信しない。
 
@@ -134,13 +134,13 @@ SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMD、BE、GOOGL、MU、MRVL、
 |---|---|---|---|
 | MU | [Micron](https://www.micron.com/about/press/news) | 公式ブログサイトマップ | HBM・DRAM製品ブログ／顧客の採用発表 |
 | SKHY | [SK hynix](https://news.skhynix.com/en/category/ir/) | SK hynix Newsroom | HBM・製造技術／韓国語の公式発表 |
-| SNDK | [Sandisk](https://investor.sandisk.com/news-events/news-releases) | 未登録 | NAND・SSD製品発表／決算資料 |
+| SNDK | [Sandisk](https://investor.sandisk.com/news-events/news-releases) | 投資家ニュース一覧（常駐確認待ち） | NAND・SSD製品発表／決算資料 |
 | NBIS | [Nebius](https://nebius.com/newsroom) | Nebius Blog、Preemptible VMs、Product changelog | 製品仕様・価格・障害／顧客・提携先／外部GPUクラウド評価 |
 | NVDA | [NVIDIA](https://nvidianews.nvidia.com/rss.xml) | NVIDIA Developer Blog | 開発者情報／新製品の採用先・システム構成 |
 | AMD | [AMD](https://ir.amd.com/news-events/press-releases/rss) | AMD News Blogs RSS | Instinct・EPYC製品情報／クラウド採用 |
-| AVGO | [Broadcom](https://investors.broadcom.com/financial-information/financial-news-releases) | 未登録 | ネットワーク・カスタム半導体の製品情報／顧客側発表 |
-| ARM | [Arm](https://newsroom.arm.com/news/feed/) | 未登録 | 設計・ライセンス・エコシステム発表 |
-| TSM | [TSMC](https://pr.tsmc.com/english/news) | 未登録 | 先端プロセス・先端パッケージ／台湾の公式開示 |
+| AVGO | [Broadcom](https://investors.broadcom.com/financial-information/financial-news-releases) | 投資家ニュースRSS（常駐確認待ち） | ネットワーク・カスタム半導体の製品情報／顧客側発表 |
+| ARM | [Arm](https://newsroom.arm.com/news/feed/) | 公式ブログ一覧（常駐確認待ち） | 設計・ライセンス・エコシステム発表 |
+| TSM | [TSMC](https://pr.tsmc.com/english/news) | Press Center（常駐確認待ち） | 先端プロセス・先端パッケージ／台湾の公式開示 |
 | ASML | [ASML](https://www.asml.com/en/news/press-releases) | 未登録 | 露光装置・技術情報／受注・輸出規制の公式資料 |
 | MRVL | [Marvell](https://investor.marvell.com/news-events/press-releases/rss) | Blog（手元成功・常駐403） | 光・ネットワーク・カスタム半導体の製品情報 |
 | ANET | [Arista Networks](https://www.arista.com/en/company/news/press-release-rss) | Arista Networks Blog RSS | ネットワーク製品・技術ブログ／導入事例 |
@@ -153,7 +153,7 @@ SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMD、BE、GOOGL、MU、MRVL、
 | MSFT | [Microsoft](https://news.microsoft.com/source/feed/) | Microsoft Blog | Azureの製品・設備投資／顧客・供給側発表 |
 | BE | [Bloom Energy](https://investor.bloomenergy.com/rss/pressrelease.aspx) | Bloom Energy Blog RSS | 発電設備・受注／導入企業の公式発表 |
 | GOOGL | [Alphabet / Google](https://blog.google/rss/) | Google Blog Cloud RSS | Cloud・TPU・データセンターの製品・技術情報 |
-| ORCL | [Oracle](https://www.oracle.com/news/) | 未登録 | OCI製品・設備／顧客・提携先発表 |
+| ORCL | [Oracle](https://www.oracle.com/news/) | 投資家ニュース一覧（常駐確認待ち） | OCI製品・設備／顧客・提携先発表 |
 
 各追加元は、URLの登録だけで完了にしない。以下を記録する。
 
@@ -202,4 +202,4 @@ SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMD、BE、GOOGL、MU、MRVL、
 ## 継続改善
 
 MU・MRVL・Vertivの追加とAnthropicの長文対応は TECH-PHASE-PROGRESS.md の9/24追記を参照。
-補完17経路登録と実環境での取得成功は区別する。MRVLの常駐403は残っている。
+補完22経路の設定登録と実環境での取得成功は区別する。後から追加した5経路は常駐確認待ち。MRVLの常駐403は残っている。

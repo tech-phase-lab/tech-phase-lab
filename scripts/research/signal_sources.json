@@ -283,5 +283,92 @@
     "kind": "publisher-update",
     "intervalSeconds": 300,
     "reuse": "review-required"
+  },
+  {
+    "id": "arm-blog",
+    "name": "Arm Newsroom Blog",
+    "url": "https://newsroom.arm.com/blog",
+    "allowedHosts": [
+      "newsroom.arm.com"
+    ],
+    "tickers": [
+      "ARM"
+    ],
+    "kind": "publisher-update",
+    "format": "html-index",
+    "articlePrefixes": [
+      "/blog/"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "broadcom-news",
+    "name": "Broadcom Investor News RSS",
+    "url": "https://investors.broadcom.com/rss/news-releases.xml",
+    "allowedHosts": [
+      "investors.broadcom.com"
+    ],
+    "tickers": [
+      "AVGO"
+    ],
+    "kind": "publisher-update",
+    "format": "feed",
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "tsmc-press-center",
+    "name": "TSMC Press Center",
+    "url": "https://pr.tsmc.com/english/latest-news",
+    "allowedHosts": [
+      "pr.tsmc.com"
+    ],
+    "tickers": [
+      "TSM"
+    ],
+    "kind": "publisher-update",
+    "format": "html-index",
+    "articlePrefixes": [
+      "/english/news/"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "sandisk-news",
+    "name": "Sandisk Investor News Releases",
+    "url": "https://investor.sandisk.com/news-events/news-releases",
+    "allowedHosts": [
+      "investor.sandisk.com"
+    ],
+    "tickers": [
+      "SNDK"
+    ],
+    "kind": "publisher-update",
+    "format": "html-index",
+    "articlePrefixes": [
+      "/news-releases/news-release-details/"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "oracle-investor-news",
+    "name": "Oracle Investor News",
+    "url": "https://investor.oracle.com/investor-news/",
+    "allowedHosts": [
+      "investor.oracle.com"
+    ],
+    "tickers": [
+      "ORCL"
+    ],
+    "kind": "publisher-update",
+    "format": "html-index",
+    "articlePrefixes": [
+      "/investor-news/news-details/"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
   }
 ]
