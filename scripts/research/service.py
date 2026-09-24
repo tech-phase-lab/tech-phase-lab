@@ -94,16 +94,16 @@ def timestamp_at_or_after(value, reference):
         return False
 
 
-def active_body_host_backoffs(db, reference):
-    """Load only bounded, internally consistent private host circuits."""
+def active_body_host_backoff_state(db, reference):
+    """Load bounded private host circuits and their earliest safe retry."""
     try:
         current = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
         if current.tzinfo is None:
-            return set()
+            return {}, None
         current = current.astimezone(timezone.utc)
     except (TypeError, ValueError):
-        return set()
-    active = set()
+        return {}, None
+    active = {}
     for row in db.execute("""
       SELECT host,failures,error,retry_at,updated_at
       FROM body_host_backoff WHERE retry_at>? LIMIT 10000
@@ -128,8 +128,15 @@ def active_body_host_backoffs(db, reference):
             or retry > updated + timedelta(days=7, minutes=5)
         ):
             continue
-        active.add(host)
-    return active
+        active[host] = retry
+    next_probe = min(active.values()).isoformat(timespec="milliseconds") if active else None
+    return active, next_probe
+
+
+def active_body_host_backoffs(db, reference):
+    """Return active circuit hostnames for internal queue filtering only."""
+    active, _next_probe = active_body_host_backoff_state(db, reference)
+    return set(active)
 
 
 def process_observation_latency_ms(value, started_at):
@@ -292,6 +299,7 @@ class AutomaticMonitor:
             "pendingBodies": 0,
             "bodyBacklog": {
                 "eligible": 0, "hostDeferred": 0,
+                "activeHostCircuits": 0, "nextHostProbeAt": None,
                 "retryDeferred": 0, "accessRestricted": 0,
                 "recheckDeferred": 0, "total": 0, "measuredAt": None,
             },
@@ -821,7 +829,8 @@ class AutomaticMonitor:
                   AS recheck_deferred
               FROM sources WHERE source_mode='remote'
             """, (due, due, due, due)).fetchone()
-            blocked_hosts = active_body_host_backoffs(db, due)
+            blocked_host_state, next_host_probe_at = active_body_host_backoff_state(db, due)
+            blocked_hosts = set(blocked_host_state)
             ordered = db.execute("""
               SELECT s.url
               FROM sources s LEFT JOIN release_events e ON e.url=s.url
@@ -869,6 +878,8 @@ class AutomaticMonitor:
             self.state["bodyBacklog"] = {
                 "eligible": pending,
                 "hostDeferred": host_deferred,
+                "activeHostCircuits": len(blocked_hosts),
+                "nextHostProbeAt": next_host_probe_at,
                 "retryDeferred": int(backlog["retry_deferred"] or 0),
                 "accessRestricted": int(backlog["access_restricted"] or 0),
                 "recheckDeferred": int(backlog["recheck_deferred"] or 0),

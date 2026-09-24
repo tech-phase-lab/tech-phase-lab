@@ -110,7 +110,8 @@ export type MonitorState = {
   };
   pendingBodies?: number;
   bodyBacklog?: {
-    eligible: number; hostDeferred?: number; retryDeferred: number; accessRestricted: number;
+    eligible: number; hostDeferred?: number; activeHostCircuits?: number;
+    nextHostProbeAt?: string | null; retryDeferred: number; accessRestricted: number;
     recheckDeferred: number; total: number; measuredAt: string | null;
   };
   companies: Record<string, {
