@@ -268,6 +268,10 @@ class AutomaticMonitor:
                 "enabled": True, "intervalSeconds": self.incident_check_seconds,
                 "lastCheckAt": None, "healthy": None, "lastError": None,
             },
+            "priorityPersistence": {
+                "lastAttemptAt": None, "lastSuccessAt": None,
+                "healthy": None, "lastError": None,
+            },
             "notification": {
                 "requested": self.notification_config["requested"],
                 "configured": notification_configured, "enabled": self.notification_enabled,
@@ -403,6 +407,8 @@ class AutomaticMonitor:
             issues.append("backup-overdue")
         if state["incidentWatch"]["healthy"] is False:
             issues.append("incident-watch-failed")
+        if state["priorityPersistence"]["healthy"] is False:
+            issues.append("priority-source-metrics-failed")
         if state["bodyFetch"]["healthy"] is False:
             issues.append("body-fetch-failed")
         durable_body_fetch = state["bodyFetch"].get("durable") or {}
@@ -473,9 +479,9 @@ class AutomaticMonitor:
                 )
             else:
                 monitor.resolve_operational_incident(db, "discovery:worker")
-            priority_issue = next(
-                (issue for issue in issues if issue.startswith("priority-source-")), None
-            )
+            priority_issue = next((issue for issue in issues if issue in {
+                "priority-source-pending", "priority-source-degraded",
+            }), None)
             if priority_issue:
                 monitor.record_operational_incident(
                     db, "discovery:priority-sources", "official-discovery",
@@ -483,6 +489,13 @@ class AutomaticMonitor:
                 )
             else:
                 monitor.resolve_operational_incident(db, "discovery:priority-sources")
+            if "priority-source-metrics-failed" in issues:
+                monitor.record_operational_incident(
+                    db, "discovery:priority-metrics", "official-discovery",
+                    "priority-metrics", "warning", "priority-source-metrics-failed"
+                )
+            else:
+                monitor.resolve_operational_incident(db, "discovery:priority-metrics")
             body_issue = next(
                 (issue for issue in issues if issue.startswith("body-fetch-")), None
             )
@@ -572,6 +585,33 @@ class AutomaticMonitor:
                 with self.state_lock:
                     self.state["notification"]["lastError"] = "notification-worker-failed"
             self.stop_event.wait(self.notification_interval)
+
+    def record_priority_source_run_safely(
+        self, process_started_at, observed_at, coverage,
+    ):
+        """Persist optional coverage telemetry without stopping source polling."""
+        attempted_at = utc_now()
+        try:
+            with self.db_lock, monitor.connect(self.db_path) as db:
+                monitor.record_priority_source_run(
+                    db, process_started_at, observed_at,
+                    coverage["targetCount"], coverage["configuredCount"],
+                    coverage["healthy"], coverage["degraded"],
+                    coverage["completionLatencyMs"],
+                )
+        except Exception:
+            with self.state_lock:
+                self.state["priorityPersistence"].update({
+                    "lastAttemptAt": attempted_at, "healthy": False,
+                    "lastError": "priority-source-metrics-failed",
+                })
+            return False
+        with self.state_lock:
+            self.state["priorityPersistence"].update({
+                "lastAttemptAt": attempted_at, "lastSuccessAt": attempted_at,
+                "healthy": True, "lastError": None,
+            })
+        return True
 
     def public_state(self):
         with self.state_lock:
@@ -1084,16 +1124,10 @@ class AutomaticMonitor:
                         priority_coverage["healthy"], priority_coverage["degraded"]
                     )
                     if run_signature != priority_run_signature:
-                        with self.db_lock, monitor.connect(self.db_path) as db:
-                            monitor.record_priority_source_run(
-                                db, process_started_at, completed_at,
-                                priority_coverage["targetCount"],
-                                priority_coverage["configuredCount"],
-                                priority_coverage["healthy"],
-                                priority_coverage["degraded"],
-                                priority_coverage["completionLatencyMs"],
-                            )
-                        priority_run_signature = run_signature
+                        if self.record_priority_source_run_safely(
+                            process_started_at, completed_at, priority_coverage
+                        ):
+                            priority_run_signature = run_signature
 
                 if time.monotonic() >= next_body_fetch:
                     succeeded = self.fetch_bodies_safely(pool)

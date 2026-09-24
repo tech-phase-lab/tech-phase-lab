@@ -275,6 +275,50 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertIsNone(summary["lastCompletedAt"])
         self.assertEqual(summary["completedRuns24Hours"], 0)
 
+    def test_priority_source_run_persistence_failure_is_isolated_and_recovers(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        observed = datetime.now(timezone.utc)
+        started = observed - timedelta(seconds=1)
+        coverage = {
+            "targetCount": 5, "configuredCount": 5, "healthy": 5,
+            "degraded": 0, "completionLatencyMs": 500,
+        }
+        with patch.object(
+            monitor, "record_priority_source_run",
+            side_effect=sqlite3.OperationalError("simulated storage failure"),
+        ):
+            self.assertFalse(app.record_priority_source_run_safely(
+                started.isoformat(timespec="milliseconds"),
+                observed.isoformat(timespec="milliseconds"), coverage,
+            ))
+        failed = app.public_state()
+        self.assertFalse(failed["priorityPersistence"]["healthy"])
+        self.assertEqual(
+            failed["priorityPersistence"]["lastError"],
+            "priority-source-metrics-failed",
+        )
+        self.assertIn("priority-source-metrics-failed", failed["health"]["issues"])
+        app.sync_health_incidents()
+        with monitor.connect(self.db_path) as db:
+            self.assertEqual(db.execute(
+                "SELECT status FROM operational_incidents WHERE incident_key=?",
+                ("discovery:priority-metrics",),
+            ).fetchone()[0], "open")
+
+        self.assertTrue(app.record_priority_source_run_safely(
+            started.isoformat(timespec="milliseconds"),
+            observed.isoformat(timespec="milliseconds"), coverage,
+        ))
+        app.sync_health_incidents()
+        recovered = app.public_state()
+        self.assertTrue(recovered["priorityPersistence"]["healthy"])
+        self.assertNotIn("priority-source-metrics-failed", recovered["health"]["issues"])
+        with monitor.connect(self.db_path) as db:
+            self.assertEqual(db.execute(
+                "SELECT status FROM operational_incidents WHERE incident_key=?",
+                ("discovery:priority-metrics",),
+            ).fetchone()[0], "resolved")
+
     def test_priority_source_health_records_and_resolves_degraded_coverage(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         checked_at = service.utc_now()

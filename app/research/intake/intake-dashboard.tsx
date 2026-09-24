@@ -63,6 +63,7 @@ function monitorIssue(monitor: MonitorState | null) {
   if (issues.includes("discovery-poll-stale")) return "公式一覧の永続巡回記録が期限を超過しています";
   if (issues.includes("priority-source-pending")) return "優先5銘柄に現プロセス未確認の公式経路があります";
   if (issues.includes("priority-source-degraded")) return "優先5銘柄に要確認の公式経路があります";
+  if (issues.includes("priority-source-metrics-failed")) return "優先5銘柄の実績保存を再試行しています";
   return null;
 }
 function incidentStatus(monitor: MonitorState | null) {
@@ -117,6 +118,11 @@ function durablePrioritySourceStatus(run: MonitorState["prioritySourceRuns"]) {
     : `正常 ${run.healthy}社`;
   return `優先5銘柄の永続実績：${run.configuredCount}/${run.configuredCount}社 · ${health} · 再起動後 ${duration(run.completionLatencyMs)}で初回確認 · 最終観測 ${time(run.lastObservedAt)} JST · 24時間 ${run.completedRuns24Hours}起動`;
 }
+function priorityPersistenceStatus(state: MonitorState["priorityPersistence"]) {
+  if (!state?.lastAttemptAt) return "優先5銘柄の実績保存：初回完了待ち";
+  if (state.healthy === false) return "優先5銘柄の実績保存：要確認・次回巡回で再試行";
+  return `優先5銘柄の実績保存：正常 · 最終成功 ${time(state.lastSuccessAt)} JST`;
+}
 function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], pending = 0) {
   if (!bodyFetch?.lastPollAt) return "本文取得：初回ポーリング待ち";
   if (bodyFetch.healthy === false) return `本文取得：要確認 · 内部処理を再試行予定（連続 ${bodyFetch.consecutiveFailures}回・${bodyFetch.retrySeconds ?? 0}秒後） · 待機 ${pending}件`;
@@ -168,7 +174,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
     <header className={styles.header}><Link href="/research" className={styles.brand}><b>TP</b><span>TECH PHASE<small>RESEARCH / OPERATIONS</small></span></Link><span className={styles.badge}>運営用プレビュー</span></header>
     <main id="intake-main" className={styles.main}>
       <div className={styles.heading}><div><p className={styles.eyebrow}>AI COMPANY COVERAGE</p><h1>AI関連銘柄の資料・取得状況</h1><p>企業公式・取引所・SECの一次情報から、原文と照合する資料を選びます。</p></div><div className={styles.headingLinks}><Link href="/research/review">速報レビュー →</Link><Link href="/research">リサーチ画面へ ↗</Link></div></div>
-      <aside className={styles.notice}><strong>{live.mode === "automatic" ? monitorStatus(live.monitor) : "自動監視サービスの接続待ち"}</strong><span>{live.mode === "automatic" ? `最終巡回：${time(live.monitor?.lastCycleAt ?? null)} JST` : `保存記録の出力日時：${time(snapshot.generatedAt)} JST`}</span>{live.mode === "automatic" && <><span>直近巡回：{duration(live.monitor?.lastCycleDurationMs)}（{live.monitor?.lastCycleCompanies ?? 0}社）</span><span>{discoveryRunStatus(live.monitor?.discoveryRuns)}</span><span>{prioritySourceStatus(live.monitor?.prioritySources)}</span><span>{durablePrioritySourceStatus(live.monitor?.prioritySourceRuns)}</span><span>{bodyFetchStatus(live.monitor?.bodyFetch, live.monitor?.pendingBodies)}</span><span>{durableBodyFetchStatus(live.monitor?.bodyFetch)}</span><span>{discoveryCacheStatus(live.monitor?.discoveryCache)}</span><span>{cacheStatus(live.monitor?.fetchCache)}</span><span>{backupStatus(live.monitor?.backup)}</span><span>{incidentStatus(live.monitor)}</span>{monitorIssue(live.monitor) && <span role="alert" className={styles.alert}>運用警告：{monitorIssue(live.monitor)}</span>}</>}<p>{live.mode === "automatic" ? "公式経路を銘柄ごとに3〜5秒の基準間隔で巡回します。間隔は保証速度ではなく、直近応答時間と検知後の本文取得時間を別に実測します。" : "現在は保存済み記録を表示しています。監視サービス接続後は3秒ごとに自動更新されます。"}</p></aside>
+      <aside className={styles.notice}><strong>{live.mode === "automatic" ? monitorStatus(live.monitor) : "自動監視サービスの接続待ち"}</strong><span>{live.mode === "automatic" ? `最終巡回：${time(live.monitor?.lastCycleAt ?? null)} JST` : `保存記録の出力日時：${time(snapshot.generatedAt)} JST`}</span>{live.mode === "automatic" && <><span>直近巡回：{duration(live.monitor?.lastCycleDurationMs)}（{live.monitor?.lastCycleCompanies ?? 0}社）</span><span>{discoveryRunStatus(live.monitor?.discoveryRuns)}</span><span>{prioritySourceStatus(live.monitor?.prioritySources)}</span><span>{durablePrioritySourceStatus(live.monitor?.prioritySourceRuns)}</span><span>{priorityPersistenceStatus(live.monitor?.priorityPersistence)}</span><span>{bodyFetchStatus(live.monitor?.bodyFetch, live.monitor?.pendingBodies)}</span><span>{durableBodyFetchStatus(live.monitor?.bodyFetch)}</span><span>{discoveryCacheStatus(live.monitor?.discoveryCache)}</span><span>{cacheStatus(live.monitor?.fetchCache)}</span><span>{backupStatus(live.monitor?.backup)}</span><span>{incidentStatus(live.monitor)}</span>{monitorIssue(live.monitor) && <span role="alert" className={styles.alert}>運用警告：{monitorIssue(live.monitor)}</span>}</>}<p>{live.mode === "automatic" ? "公式経路を銘柄ごとに3〜5秒の基準間隔で巡回します。間隔は保証速度ではなく、直近応答時間と検知後の本文取得時間を別に実測します。" : "現在は保存済み記録を表示しています。監視サービス接続後は3秒ごとに自動更新されます。"}</p></aside>
       <section aria-labelledby="events-title" className={styles.queue}><div className={styles.sectionTitle}><h2 id="events-title">新着の公式発表</h2><span>初回取り込みを除く自動検知：{events.length}件</span></div>
         <p className={styles.coverageNote}>監視開始前の過去資料は速報として扱いません。ここには監視開始後に新しく現れた公式URLだけを表示します。発表元の公開時刻が秒単位で得られない場合、公開から検知までの時間は未計測です。</p>
         {events.length === 0 ? <div className={styles.empty}><h3>監視開始後の新着はまだありません</h3><p>常駐監視の接続後、新しい公式発表を検知すると自動で追加されます。</p></div> : <ul className={styles.sources}>{events.slice(0, 20).map(event => <li key={event.id}><article className={styles.source}>

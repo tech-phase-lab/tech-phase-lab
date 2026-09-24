@@ -36,6 +36,7 @@ test("operations preview exposes bounded cache pressure without cached contents"
   assert.match(intakeDashboard, /優先5銘柄：現プロセス/);
   assert.match(liveTypes, /prioritySources/);
   assert.match(liveTypes, /prioritySourceRuns/);
+  assert.match(liveTypes, /priorityPersistence/);
   assert.match(liveTypes, /completionLatencyMs/);
   assert.match(intakeDashboard, /再起動後.*で対象確認/);
   assert.match(intakeDashboard, /優先5銘柄の永続実績/);
@@ -64,6 +65,8 @@ test("operations preview exposes bounded cache pressure without cached contents"
   assert.match(intakeDashboard, /discovery-poll-stale/);
   assert.match(intakeDashboard, /priority-source-pending/);
   assert.match(intakeDashboard, /priority-source-degraded/);
+  assert.match(intakeDashboard, /priority-source-metrics-failed/);
+  assert.match(intakeDashboard, /優先5銘柄の実績保存：正常/);
   assert.match(intakeDashboard, /最終ポーリング/);
   assert.match(intakeDashboard, /notModified24Hours/);
   assert.match(liveTypes, /detectionLatencySamples24Hours/);

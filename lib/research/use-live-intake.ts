@@ -31,7 +31,7 @@ export type MonitorState = {
   };
   health?: {
     status: "starting" | "ready" | "degraded";
-    issues: Array<"monitor-stale" | "backup-failed" | "backup-overdue" | "incident-watch-failed" | "body-fetch-failed" | "body-fetch-stale" | "discovery-poll-stale" | "priority-source-pending" | "priority-source-degraded">;
+    issues: Array<"monitor-stale" | "backup-failed" | "backup-overdue" | "incident-watch-failed" | "body-fetch-failed" | "body-fetch-stale" | "discovery-poll-stale" | "priority-source-pending" | "priority-source-degraded" | "priority-source-metrics-failed">;
     monitorStaleAfterSeconds: number;
   };
   incidentWatch?: {
@@ -81,6 +81,10 @@ export type MonitorState = {
     lastObservedAgeSeconds: number | null; configuredCount: number;
     healthy: number; degraded: number; completionLatencyMs: number | null;
     completedRuns24Hours: number;
+  };
+  priorityPersistence?: {
+    lastAttemptAt: string | null; lastSuccessAt: string | null;
+    healthy: boolean | null; lastError: string | null;
   };
   bodyFetch?: {
     lastPollAt: string | null; lastBatchAt: string | null;
