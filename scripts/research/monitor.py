@@ -2443,9 +2443,23 @@ def sec_evidence_summary(db, tickers):
     """Return URL-free SEC body evidence counts for operational health checks."""
     requested = tuple(dict.fromkeys(str(ticker).strip().upper() for ticker in tickers if ticker))
     empty = {"total": 0, "exhibit": 0, "direct": 0, "pending": 0, "error": 0}
-    by_ticker = {ticker: {**empty, "lastCheckedAt": None} for ticker in requested}
+    empty_error_kinds = {
+        "accessRestricted": 0,
+        "rateLimited": 0,
+        "timeout": 0,
+        "server": 0,
+        "missingExhibit": 0,
+        "other": 0,
+    }
+    by_ticker = {
+        ticker: {**empty, "errorKinds": dict(empty_error_kinds), "lastCheckedAt": None}
+        for ticker in requested
+    }
     if not requested:
-        return {**empty, "lastCheckedAt": None, "byTicker": by_ticker}
+        return {
+            **empty, "errorKinds": dict(empty_error_kinds),
+            "lastCheckedAt": None, "byTicker": by_ticker,
+        }
     placeholders = ",".join("?" for _ in requested)
     rows = db.execute(f"""
       SELECT ticker,url,checked_at,sha256,error,evidence_kind
@@ -2455,6 +2469,7 @@ def sec_evidence_summary(db, tickers):
     """, requested).fetchall()
     last_checked_at = None
     totals = dict(empty)
+    error_kinds = dict(empty_error_kinds)
     for row in rows:
         try:
             parsed = urlsplit(row["url"])
@@ -2476,13 +2491,32 @@ def sec_evidence_summary(db, tickers):
         totals[state] += 1
         ticker_counts["total"] += 1
         ticker_counts[state] += 1
+        if state == "error":
+            error = row["error"]
+            if error == "http-429":
+                error_kind = "rateLimited"
+            elif error in {"http-401", "http-403", "http-451", "verification-page"}:
+                error_kind = "accessRestricted"
+            elif error == "timeout":
+                error_kind = "timeout"
+            elif error and re.fullmatch(r"http-5\d\d", error):
+                error_kind = "server"
+            elif error == "sec-exhibit-unavailable":
+                error_kind = "missingExhibit"
+            else:
+                error_kind = "other"
+            error_kinds[error_kind] += 1
+            ticker_counts["errorKinds"][error_kind] += 1
         checked_at = row["checked_at"]
         if checked_at and (ticker_counts["lastCheckedAt"] is None
                            or checked_at > ticker_counts["lastCheckedAt"]):
             ticker_counts["lastCheckedAt"] = checked_at
         if checked_at and (last_checked_at is None or checked_at > last_checked_at):
             last_checked_at = checked_at
-    return {**totals, "lastCheckedAt": last_checked_at, "byTicker": by_ticker}
+    return {
+        **totals, "errorKinds": error_kinds,
+        "lastCheckedAt": last_checked_at, "byTicker": by_ticker,
+    }
 
 
 def snapshot(db):

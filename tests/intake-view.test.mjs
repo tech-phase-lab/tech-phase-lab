@@ -140,6 +140,13 @@ test("SEC evidence totals and filters distinguish exhibits from filing-body fall
   assert.match(intakeDashboard, /SEC根拠：EX-99\.1取得/);
   assert.match(intakeDashboard, /SEC根拠エラー/);
   assert.match(intakeDashboard, /SEC根拠要確認/);
+  assert.match(liveTypes, /secEvidence\?:/);
+  for (const kind of ["accessRestricted", "rateLimited", "timeout", "server", "missingExhibit", "other"]) {
+    assert.match(liveTypes, new RegExp(kind));
+  }
+  assert.match(intakeDashboard, /SEC本文証跡/);
+  assert.match(intakeDashboard, /公式側5xx/);
+  assert.match(intakeDashboard, /evidence\.errorKinds \?\?/);
 });
 
 test("operations preview shows durable incident state while external delivery stays off", () => {

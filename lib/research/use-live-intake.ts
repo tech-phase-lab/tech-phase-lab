@@ -114,6 +114,22 @@ export type MonitorState = {
     nextHostProbeAt?: string | null; retryDeferred: number; accessRestricted: number;
     recheckDeferred: number; total: number; measuredAt: string | null;
   };
+  secEvidence?: {
+    total: number; exhibit: number; direct: number; pending: number; error: number;
+    errorKinds?: {
+      accessRestricted: number; rateLimited: number; timeout: number;
+      server: number; missingExhibit: number; other: number;
+    };
+    lastCheckedAt: string | null;
+    byTicker: Record<string, {
+      total: number; exhibit: number; direct: number; pending: number; error: number;
+      errorKinds?: {
+        accessRestricted: number; rateLimited: number; timeout: number;
+        server: number; missingExhibit: number; other: number;
+      };
+      lastCheckedAt: string | null;
+    }>;
+  };
   companies: Record<string, {
     basePollSeconds?: number; nextPollSeconds?: number; requestDurationMs?: number;
     status: string; route: string; candidates: number; checkedAt: string; error: string | null;

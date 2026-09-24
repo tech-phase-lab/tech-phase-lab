@@ -1308,6 +1308,40 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertNotIn("https://", serialized)
         self.assertNotIn("sec-exhibit-unavailable", serialized)
 
+    def test_public_health_groups_sec_errors_without_exposing_transport_details(self):
+        errors = [
+            ("TSM", "000119312526000011/tsm-6k.htm", "http-403", "accessRestricted"),
+            ("MRVL", "000183563226000011/mrvl-8k.htm", "http-429", "rateLimited"),
+            ("ANET", "000159653226000011/anet-8k.htm", "timeout", "timeout"),
+            ("VRT", "000167410126000011/vrt-8k.htm", "http-503", "server"),
+            ("PLTR", "000132165526000011/pltr-8k.htm", "sec-exhibit-unavailable", "missingExhibit"),
+            ("PLTR", "000132165526000012/pltr-8k.htm", "fetch-failed", "other"),
+        ]
+        with monitor.connect(self.db_path) as db:
+            for ticker, path, error, _ in errors:
+                url = f"https://www.sec.gov/Archives/edgar/data/{path}"
+                monitor.add_source(db, ticker, url, title=f"{ticker} filing")
+                db.execute(
+                    "UPDATE sources SET checked_at=?,error=? WHERE url=?",
+                    ("2026-09-24T00:00:00+00:00", error, url),
+                )
+            db.commit()
+            evidence = monitor.sec_evidence_summary(db, service.PRIORITY_SEC_TICKERS)
+
+        self.assertEqual(evidence["error"], len(errors))
+        self.assertEqual(evidence["errorKinds"], {
+            "accessRestricted": 1,
+            "rateLimited": 1,
+            "timeout": 1,
+            "server": 1,
+            "missingExhibit": 1,
+            "other": 1,
+        })
+        self.assertEqual(evidence["byTicker"]["PLTR"]["errorKinds"]["other"], 1)
+        serialized = json.dumps(evidence)
+        for private_value in ("http-403", "http-429", "http-503", "sec-exhibit-unavailable"):
+            self.assertNotIn(private_value, serialized)
+
     def test_backup_becomes_degraded_when_last_success_exceeds_deadline(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         with monitor.connect(self.db_path) as db:

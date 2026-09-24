@@ -68,6 +68,11 @@ primary filing requires its same-accession index or EX-99.1, transport errors
 from that official follow-up request retain their bounded error class instead
 of being flattened into a missing-exhibit error. A 403 or verification page can
 therefore pause the SEC hostname without publishing the accession or URL.
+The operations health view groups SEC evidence failures into fixed aggregate
+counts for access control, rate limiting, timeout, official 5xx, missing
+exhibit evidence and other failures. It never returns the raw HTTP code, URL,
+accession number or exception text. This lets operators verify that a due SEC
+record moved into conservative backoff without exposing source identifiers.
 When a hostname circuit reaches its retry time, the worker admits only one
 URL from that hostname as a recovery probe. Another access-control response
 immediately reopens the circuit before any second URL on that host is tried.
