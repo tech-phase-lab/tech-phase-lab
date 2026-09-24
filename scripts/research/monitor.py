@@ -1778,6 +1778,19 @@ def resolve_operational_incident(db, incident_key, resolved_at=None):
     return True
 
 
+def resolve_body_incident_if_recovered(db, ticker, resolved_at=None):
+    """Resolve a ticker body incident only when no failed remote body remains."""
+    ticker = _incident_value(ticker, 16)
+    remaining = db.execute("""
+      SELECT 1 FROM sources
+      WHERE ticker=? AND source_mode='remote' AND error IS NOT NULL
+      LIMIT 1
+    """, (ticker,)).fetchone()
+    if remaining:
+        return False
+    return resolve_operational_incident(db, f"body:{ticker}", resolved_at)
+
+
 def claim_incident_notification(db, activated_at, claimed_at=None, lease_seconds=120):
     """Claim one eligible transition with a retry lease.
 
@@ -2316,6 +2329,11 @@ def save_discovery(db, ticker, result, links):
                 "extractedText": text,
                 "extractedChars": len(text),
             })
+            # An official feed body can recover the evidence without proving
+            # that the linked article hostname accepts direct requests. Clear
+            # only a now-stale ticker incident; save_source_check deliberately
+            # leaves the private hostname circuit intact for inline evidence.
+            resolve_body_incident_if_recovered(db, ticker)
         else:
             with db:
                 db.execute(

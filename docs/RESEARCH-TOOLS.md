@@ -63,6 +63,9 @@ linked article host has recovered. The preview exposes only the number of
 host-deferred bodies, not hostnames, URLs or errors. Timeouts and other
 transient failures remain URL-scoped. This reduces repeated traffic without
 bypassing an official site's access controls.
+When inline first-party evidence replaces the last failed remote body for a
+ticker, its stale body incident is resolved even though the hostname circuit
+remains in force. Another failed remote body keeps the ticker incident open.
 
 Official-list polling batches are also persisted as bounded, URL-free
 operational evidence. The preview retains the last completed batch and

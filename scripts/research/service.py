@@ -967,7 +967,7 @@ class AutomaticMonitor:
                         monitor.public_error(remaining["error"]) or "body-fetch-failed",
                     )
                 else:
-                    monitor.resolve_operational_incident(db, incident_key)
+                    monitor.resolve_body_incident_if_recovered(db, ticker)
             completed_at = utc_now()
             duration_ms = max(0, round((time.monotonic() - cycle_started) * 1000))
             for row, result, error in completed:

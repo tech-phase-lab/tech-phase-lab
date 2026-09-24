@@ -1612,6 +1612,48 @@ class IntakeTests(unittest.TestCase):
             "SELECT 1 FROM body_host_backoff WHERE host='investor.marvell.com'"
         ).fetchone())
 
+    def test_inline_feed_recovery_resolves_only_stale_ticker_body_incident(self):
+        recovered_url = "https://investor.marvell.com/news-events/press-releases/detail/1234/example"
+        remaining_url = "https://investor.marvell.com/news-events/press-releases/detail/5678/other"
+        for url in (recovered_url, remaining_url):
+            m.add_source(self.db, "MRVL", url)
+            row = self.db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            m.save_source_error(
+                self.db, row, HTTPError(url, 403, "Forbidden", {}, None)
+            )
+        m.record_operational_incident(
+            self.db, "body:MRVL", "article-body", "MRVL", "warning", "http-403"
+        )
+
+        body = b'''<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><item>
+          <title>Marvell expands AI infrastructure connectivity</title>
+          <link>https://investor.marvell.com/news-events/press-releases/detail/1234/example</link>
+          <content:encoded><![CDATA[<p>Marvell announced a verified expansion of its AI infrastructure connectivity portfolio for data center customers.</p><p>The official feed describes phased availability, customer qualification requirements, and execution risks through 2027.</p>]]></content:encoded>
+        </item></channel></rss>'''
+        result, links = m.collect_discovery("MRVL", lambda *_: (body, "text/xml"))
+        m.save_discovery(self.db, "MRVL", result, links)
+        incident = self.db.execute(
+            "SELECT status FROM operational_incidents WHERE incident_key='body:MRVL'"
+        ).fetchone()
+        self.assertEqual(incident["status"], "open")
+
+        remaining_body = b'''<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><item>
+          <title>Marvell publishes another official infrastructure update</title>
+          <link>https://investor.marvell.com/news-events/press-releases/detail/5678/other</link>
+          <content:encoded><![CDATA[<p>Marvell published another verified infrastructure update for data center customers.</p><p>The official feed explains product qualification, phased availability, customer dependencies, and execution risks through 2027.</p>]]></content:encoded>
+        </item></channel></rss>'''
+        result, links = m.collect_discovery(
+            "MRVL", lambda *_: (remaining_body, "text/xml")
+        )
+        m.save_discovery(self.db, "MRVL", result, links)
+        incident = self.db.execute(
+            "SELECT status FROM operational_incidents WHERE incident_key='body:MRVL'"
+        ).fetchone()
+        self.assertEqual(incident["status"], "resolved")
+        self.assertEqual(self.db.execute(
+            "SELECT count(*) FROM incident_events WHERE incident_key='body:MRVL'"
+        ).fetchone()[0], 2)
+
     def test_short_feed_summary_keeps_remote_article_body_fetch_enabled(self):
         body = b'''<rss><channel><item><title>Arista update</title>
           <link>https://www.arista.com/en/company/news/press-release/123-pr-20260919</link>
