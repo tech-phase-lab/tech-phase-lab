@@ -124,7 +124,7 @@
 ## 22銘柄の設定台帳
 
 公式取得先の登録は22/22。今回の補完モジュールに銘柄を固定した追加元があるのは
-SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMD、BE、GOOGLの10銘柄。これは既存取得元が扱う製品記事を含めた
+SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMD、BE、GOOGL、MU、MRVL、VRTの13銘柄（MRVLは常駐403）。これは既存取得元が扱う製品記事を含めた
 全体の網羅率ではない。共通元のSemiAnalysisとAnthropicは全22銘柄へ本文照合し、
 特定銘柄のニュースとして無条件には配信しない。
 
@@ -132,7 +132,7 @@ SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMD、BE、GOOGLの10銘柄。�
 
 | 銘柄 | 登録済み公式取得先 | 今回の銘柄固定の補完元 | 次に検証する情報 |
 |---|---|---|---|
-| MU | [Micron](https://www.micron.com/about/press/news) | 未登録 | HBM・DRAM製品ブログ／顧客の採用発表 |
+| MU | [Micron](https://www.micron.com/about/press/news) | 公式ブログサイトマップ | HBM・DRAM製品ブログ／顧客の採用発表 |
 | SKHY | [SK hynix](https://news.skhynix.com/en/category/ir/) | SK hynix Newsroom | HBM・製造技術／韓国語の公式発表 |
 | SNDK | [Sandisk](https://investor.sandisk.com/news-events/news-releases) | 未登録 | NAND・SSD製品発表／決算資料 |
 | NBIS | [Nebius](https://nebius.com/newsroom) | Nebius Blog、Preemptible VMs、Product changelog | 製品仕様・価格・障害／顧客・提携先／外部GPUクラウド評価 |
@@ -142,11 +142,11 @@ SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMD、BE、GOOGLの10銘柄。�
 | ARM | [Arm](https://newsroom.arm.com/news/feed/) | 未登録 | 設計・ライセンス・エコシステム発表 |
 | TSM | [TSMC](https://pr.tsmc.com/english/news) | 未登録 | 先端プロセス・先端パッケージ／台湾の公式開示 |
 | ASML | [ASML](https://www.asml.com/en/news/press-releases) | 未登録 | 露光装置・技術情報／受注・輸出規制の公式資料 |
-| MRVL | [Marvell](https://investor.marvell.com/news-events/press-releases/rss) | 未登録 | 光・ネットワーク・カスタム半導体の製品情報 |
+| MRVL | [Marvell](https://investor.marvell.com/news-events/press-releases/rss) | Blog（手元成功・常駐403） | 光・ネットワーク・カスタム半導体の製品情報 |
 | ANET | [Arista Networks](https://www.arista.com/en/company/news/press-release-rss) | Arista Networks Blog RSS | ネットワーク製品・技術ブログ／導入事例 |
 | CRDO | [Credo](https://credosemi.com/) | 未登録 | 高速接続・AEC製品／採用発表 |
 | CRWV | [CoreWeave](https://www.coreweave.com/) | CoreWeave Blog | クラウド製品・価格・障害／顧客側発表 |
-| VRT | [Vertiv](https://www.vertiv.com/en-us/about/news-and-events/corporate-news/) | 未登録 | 冷却・電源製品／データセンター導入事例 |
+| VRT | [Vertiv](https://www.vertiv.com/en-us/about/news-and-events/corporate-news/) | ラック技術ブログRSS | 冷却・電源製品／データセンター導入事例 |
 | GEV | [GE Vernova](https://www.gevernova.com/news/subscribe/all/rss.xml) | 未登録 | 発電設備・受注・納入計画 |
 | DELL | [Dell Technologies](https://investors.delltechnologies.com/news-events/press-release) | Dell Technologies Blog | AIサーバー製品／構成・導入事例 |
 | PLTR | [Palantir](https://www.palantir.com/sitemap.xml) | 未登録 | 製品・顧客事例／提携先の公式発表 |
@@ -198,3 +198,8 @@ SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMD、BE、GOOGLの10銘柄。�
 - 新規2経路追加後は14経路、銘柄固定の補完元は10/22銘柄。網羅保証ではない。
 - 他チャットのリモート更新0951098をfast-forwardで統合。
 - 次の作業とAPI見積もり状況は TECH-PHASE-PROGRESS.md に集約。
+
+## 継続改善
+
+MU・MRVL・Vertivの追加とAnthropicの長文対応は TECH-PHASE-PROGRESS.md の9/24追記を参照。
+補完17経路登録と実環境での取得成功は区別する。MRVLの常駐403は残っている。

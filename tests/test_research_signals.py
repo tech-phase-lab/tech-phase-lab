@@ -335,6 +335,21 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(parser.title, ['New chips'])
         self.assertNotIn('NVIDIA', ''.join(parser.selected))
 
+    def test_long_article_is_bounded_and_flagged_instead_of_retried_forever(self):
+        source = next(s for s in signals.SOURCES if s['id'] == 'anthropic-news')
+        def request(route, validators):
+            if route['url'] == source['url']:
+                return {'body': b'<a href="/news/long-report">Report</a>'}
+            return {'body': ('<main><h1>Long report</h1><p>' + 'Nebius infrastructure. ' * 10000
+                             + '</p></main>').encode()}
+        with patch.object(signals, 'fetch', side_effect=request):
+            result = signals.check(self.db, source, self.tickers)
+        self.assertEqual(result['status'], 'ok')
+        queue = signals.queue(self.db, sources=[source])
+        self.assertTrue(queue['items'][0]['truncated'])
+        self.assertEqual(queue['routes'][0]['articleErrors'], [])
+        self.assertEqual(queue['routes'][0]['pendingArticles'], 0)
+
     def test_worker_is_opt_in_and_stops(self):
         with patch.dict(os.environ, {"RESEARCH_SIGNALS_ENABLED": ""}):
             app = service.AutomaticMonitor(self.path, Path(self.temp.name) / "snapshot.json")

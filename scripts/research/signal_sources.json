@@ -268,5 +268,20 @@
     "articleTitleClass": "cmp-blogs-details__heading",
     "intervalSeconds": 120,
     "reuse": "review-required"
+  },
+  {
+    "id": "vertiv-racks-blog",
+    "name": "Vertiv Racks Blog",
+    "url": "https://racks.vertiv.com/category/blog/feed/",
+    "allowedHosts": [
+      "racks.vertiv.com"
+    ],
+    "tickers": [
+      "VRT"
+    ],
+    "format": "feed",
+    "kind": "publisher-update",
+    "intervalSeconds": 300,
+    "reuse": "review-required"
   }
 ]

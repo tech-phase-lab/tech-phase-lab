@@ -162,7 +162,7 @@ def collect(source, previous, tickers, request):
                 title = ' '.join(' '.join(article.title).split())[:500]
                 content = ''.join(article.selected if source.get('articleBodyClass') else article.article or article.main)
                 text = monitor.extract_html_text(content.encode())
-                if not title or len(text) < 120 or len(text) >= signals.MAX_TEXT:
+                if not title or len(text) < 120:
                     raise ValueError('signal-article-body-limit')
                 matches = signals.match_companies(title + '\n' + text, tickers)
                 for ticker in source.get('tickers', []):
@@ -171,7 +171,8 @@ def collect(source, previous, tickers, request):
                 items.append({'url': url, 'title': title, 'text': text,
                               'publishedAt': signals.date_value(article.published or ''),
                               'matches': matches,
-                              'truncated': False, 'baseline': entry['baseline'] and not entry.get('succeeded')})
+                              'truncated': len(text) >= signals.MAX_TEXT,
+                              'baseline': entry['baseline'] and not entry.get('succeeded')})
                 entry.update(etag=fetched.get('etag'), last_modified=fetched.get('last_modified'))
             entry.update(succeeded=checked, error=None, failures=0)
             delay = 3600
