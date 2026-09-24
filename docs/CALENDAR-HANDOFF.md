@@ -1304,3 +1304,30 @@ All 40 companies now have a source attempt dated within the latest 24-hour
 maintenance cycle. Continue rotating from AAPL on the next run. Empty dynamic
 sections, historical-only pages and transport failures remain inconclusive and
 must not be promoted to forecast dates.
+
+## Forty-sixth company batch reviewed on 2026-09-25
+
+The ten oldest conclusive entries were rechecked against their first-party
+calendar or investor-relations pages. The three already-confirmed future
+events remain unchanged. No new evidence-backed earnings date was added, and
+Applied Materials' explicitly projected date remains excluded.
+
+| Ticker | Result | Official source / evidence |
+| --- | --- | --- |
+| ADBE | Confirmed, unchanged | Adobe still lists its fiscal Q4 and FY2026 earnings call for December 9, 2026 at 14:00 Pacific. |
+| AMAT | Checked, no confirmed date | The official page lists an October 13 investor breakfast and labels the November 12 Q4 earnings date as “Projected”; neither is added as a confirmed earnings release. |
+| AMD | Checked, no future earnings date | The official calendar's visible entries remain past events, including the September 11 conference and August 4 Q2 earnings. |
+| ASML | Confirmed, unchanged | The official financial calendar continues to support the date-only October 14, 2026 Q3 results entry. |
+| CRWD | Checked, no future earnings date | The official page's latest visible entries remain the September 10 conference and August 26 Q2 results. |
+| DELL | Checked, no future earnings date | The official Upcoming Events page explicitly says that more events are coming soon and provides no dated earnings event. |
+| GEV | Confirmed, unchanged | GE Vernova still lists its Q3 2026 earnings webcast for October 28, 2026 from 07:30 to 08:30 Eastern. |
+| INTC | Checked, no future earnings date | The official calendar's latest visible earnings item remains the July 23 Q2 2026 event. |
+| LRCX | Checked, no future earnings date | The official Upcoming Events section explicitly says there are no events to display; the latest visible items are past events. |
+| META | Checked, no future earnings date | The official Upcoming Events section says to stay tuned and provides no dated future event. |
+
+The BLS and Federal Reserve schedules were already rechecked earlier on the
+same 2026-09-25 daily maintenance cycle. Their October and December entries
+remain unchanged; this hourly rotation did not claim an additional source
+check. Continue with MSFT, MU, NFLX, QCOM, SNDK, TSLA and TSM, then rotate to
+the oldest pending entries. Projected dates and historical-only pages must not
+be promoted to confirmed calendar events.
