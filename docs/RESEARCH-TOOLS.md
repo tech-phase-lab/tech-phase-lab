@@ -63,6 +63,9 @@ linked article host has recovered. The preview exposes only the number of
 host-deferred bodies, not hostnames, URLs or errors. Timeouts and other
 transient failures remain URL-scoped. This reduces repeated traffic without
 bypassing an official site's access controls.
+When a hostname circuit reaches its retry time, the worker admits only one
+URL from that hostname as a recovery probe. Another access-control response
+immediately reopens the circuit before any second URL on that host is tried.
 When inline first-party evidence replaces the last failed remote body for a
 ticker, its stale body incident is resolved even though the hostname circuit
 remains in force. Another failed remote body keeps the ticker incident open.

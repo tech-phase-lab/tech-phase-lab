@@ -961,6 +961,63 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(pending, 2)
         self.assertEqual(len(rows), 1)
 
+    def test_expired_host_circuit_allows_one_probe_then_reopens_on_restriction(self):
+        expired = datetime.now(timezone.utc) - timedelta(minutes=1)
+        updated = expired - timedelta(hours=6)
+        with monitor.connect(self.db_path) as db:
+            db.execute(
+                "UPDATE sources SET error='http-403',fetch_failures=1,next_fetch_at=?",
+                (expired.isoformat(timespec="milliseconds"),),
+            )
+            db.execute("""
+              INSERT INTO body_host_backoff(host,failures,error,retry_at,updated_at)
+              VALUES('nebius.com',1,'http-403',?,?)
+            """, (
+                expired.isoformat(timespec="milliseconds"),
+                updated.isoformat(timespec="milliseconds"),
+            ))
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_batch = 5
+        rows, pending = app.body_candidates()
+        self.assertEqual(pending, 2)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(app.public_state()["bodyBacklog"]["activeHostCircuits"], 0)
+
+        attempted = []
+
+        def still_restricted(url, *_args, **_kwargs):
+            attempted.append(url)
+            raise HTTPError(url, 403, "Forbidden", {}, None)
+
+        original_fetch = monitor.fetch
+        monitor.fetch = still_restricted
+        try:
+            with ThreadPoolExecutor(max_workers=5) as pool:
+                app.fetch_bodies(pool)
+        finally:
+            monitor.fetch = original_fetch
+
+        self.assertEqual(len(attempted), 1)
+        with monitor.connect(self.db_path) as db:
+            circuit = db.execute(
+                "SELECT failures,error,retry_at,updated_at FROM body_host_backoff "
+                "WHERE host='nebius.com'"
+            ).fetchone()
+        self.assertEqual(circuit["failures"], 2)
+        self.assertEqual(circuit["error"], "http-403")
+        self.assertGreater(circuit["retry_at"], circuit["updated_at"])
+
+        rows, pending = app.body_candidates()
+        backlog = app.public_state()["bodyBacklog"]
+        self.assertEqual(rows, [])
+        self.assertEqual(pending, 0)
+        self.assertEqual(backlog["activeHostCircuits"], 1)
+        self.assertEqual(backlog["hostDeferred"], 1)
+        self.assertEqual(backlog["retryDeferred"], 1)
+        self.assertIsNotNone(backlog["nextHostProbeAt"])
+
     def test_body_candidates_ignore_corrupt_host_circuit(self):
         with monitor.connect(self.db_path) as db:
             db.execute("""
