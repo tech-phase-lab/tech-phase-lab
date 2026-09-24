@@ -139,6 +139,43 @@ def active_body_host_backoffs(db, reference):
     return set(active)
 
 
+def due_body_host_backoffs(db, reference):
+    """Return valid expired circuit hostnames eligible for one private probe."""
+    try:
+        current = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
+        if current.tzinfo is None:
+            return set()
+        current = current.astimezone(timezone.utc)
+    except (TypeError, ValueError):
+        return set()
+    due = set()
+    for row in db.execute("""
+      SELECT host,failures,error,retry_at,updated_at
+      FROM body_host_backoff WHERE retry_at<=? LIMIT 10000
+    """, (reference,)).fetchall():
+        try:
+            updated = datetime.fromisoformat(str(row["updated_at"]).replace("Z", "+00:00"))
+            retry = datetime.fromisoformat(str(row["retry_at"]).replace("Z", "+00:00"))
+            failures = int(row["failures"])
+            if updated.tzinfo is None or retry.tzinfo is None:
+                continue
+            updated = updated.astimezone(timezone.utc)
+            retry = retry.astimezone(timezone.utc)
+        except (TypeError, ValueError, OverflowError):
+            continue
+        host = row["host"]
+        if (
+            monitor.source_hostname(f"https://{host}") == host
+            and row["error"] in monitor.ACCESS_RESTRICTED_ERRORS
+            and 1 <= failures <= 1_000_000
+            and updated <= current + timedelta(minutes=5)
+            and updated <= retry <= current
+            and retry <= updated + timedelta(days=7, minutes=5)
+        ):
+            due.add(host)
+    return due
+
+
 def process_observation_latency_ms(value, started_at):
     """Return bounded post-start latency only for observations not in the future."""
     try:
@@ -274,6 +311,7 @@ class AutomaticMonitor:
         )
         self.priority_metrics_signature = None
         self.next_priority_metrics_at = 0.0
+        self.body_probe_urls = set()
         self.stop_event = threading.Event()
         self.db_lock = threading.Lock()
         self.state_lock = threading.Lock()
@@ -717,6 +755,7 @@ class AutomaticMonitor:
                 db, poll_overdue_after_seconds=self.monitor_stale_seconds
             )
             state["prioritySourceRuns"] = monitor.priority_source_run_summary(db)
+            state["bodyHostProbes"] = monitor.body_host_probe_summary(db)
             state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
             state["incidents"] = monitor.operational_incident_summary(
                 db, delivery_enabled=self.notification_enabled
@@ -857,6 +896,7 @@ class AutomaticMonitor:
             """, (due, due, due, due)).fetchone()
             blocked_host_state, next_host_probe_at = active_body_host_backoff_state(db, due)
             blocked_hosts = set(blocked_host_state)
+            probe_hosts = due_body_host_backoffs(db, due)
             ordered = db.execute("""
               SELECT s.url
               FROM sources s LEFT JOIN release_events e ON e.url=s.url
@@ -900,6 +940,11 @@ class AutomaticMonitor:
                 """, selected_urls).fetchall()
                 by_url = {row["url"]: row for row in selected}
                 rows = [by_url[url] for url in selected_urls if url in by_url]
+            probe_urls = {
+                url for url in selected_urls
+                if monitor.source_hostname(url) in probe_hosts
+            }
+        self.body_probe_urls = probe_urls
         with self.state_lock:
             self.state["bodyBacklog"] = {
                 "eligible": pending,
@@ -918,6 +963,7 @@ class AutomaticMonitor:
         cycle_started = time.monotonic()
         polled_at = utc_now()
         rows, pending = self.body_candidates(polled_at)
+        probe_urls = set(self.body_probe_urls)
         if not rows:
             with self.state_lock:
                 self.state["pendingBodies"] = pending
@@ -954,6 +1000,16 @@ class AutomaticMonitor:
                 else:
                     monitor.save_source_error(db, row, error)
                     errors += 1
+                if row["url"] in probe_urls:
+                    if error is None:
+                        probe_outcome = "recovered"
+                    elif monitor.source_error_code(error) in monitor.ACCESS_RESTRICTED_ERRORS:
+                        probe_outcome = "restricted"
+                    else:
+                        probe_outcome = "failed"
+                    monitor.record_body_host_probe(
+                        db, polled_at, utc_now(), probe_outcome
+                    )
             for ticker in affected_tickers:
                 remaining = db.execute("""
                   SELECT error FROM sources

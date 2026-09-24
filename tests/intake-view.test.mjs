@@ -62,6 +62,7 @@ test("operations preview exposes bounded cache pressure without cached contents"
   assert.match(intakeDashboard, /最短再確認/);
   assert.match(liveTypes, /activeHostCircuits/);
   assert.match(liveTypes, /nextHostProbeAt/);
+  assert.match(liveTypes, /bodyHostProbes\?:/);
   assert.match(intakeDashboard, /body-fetch-failed/);
   assert.match(intakeDashboard, /retrySeconds/);
   assert.match(intakeDashboard, /lastBatchDurationMs/);
@@ -145,6 +146,7 @@ test("SEC evidence totals and filters distinguish exhibits from filing-body fall
     assert.match(liveTypes, new RegExp(kind));
   }
   assert.match(intakeDashboard, /SEC本文証跡/);
+  assert.match(intakeDashboard, /遮断経路の復旧確認/);
   assert.match(intakeDashboard, /公式側5xx/);
   assert.match(intakeDashboard, /evidence\.errorKinds \?\?/);
 });

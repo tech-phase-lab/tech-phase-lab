@@ -1082,6 +1082,13 @@ def connect(path):
       updated_at TEXT NOT NULL);
     CREATE INDEX IF NOT EXISTS body_host_backoff_retry
       ON body_host_backoff(retry_at);
+    CREATE TABLE IF NOT EXISTS body_host_probe_events (
+      id INTEGER PRIMARY KEY,
+      attempted_at TEXT NOT NULL,
+      completed_at TEXT NOT NULL,
+      outcome TEXT NOT NULL CHECK(outcome IN ('recovered','restricted','failed')));
+    CREATE INDEX IF NOT EXISTS body_host_probe_events_completed
+      ON body_host_probe_events(completed_at DESC);
     CREATE TABLE IF NOT EXISTS briefs (
       url TEXT PRIMARY KEY REFERENCES sources(url), source_sha256 TEXT NOT NULL,
       summary_ja TEXT NOT NULL, impact_label TEXT NOT NULL, impact_ja TEXT NOT NULL,
@@ -1582,6 +1589,76 @@ def record_body_fetch_poll(db, polled_at, pending_count):
             last_polled_at=excluded.last_polled_at,
             pending_count=excluded.pending_count
         """, (polled_at, pending))
+
+
+def record_body_host_probe(db, attempted_at, completed_at, outcome):
+    """Persist URL-free recovery-probe evidence across worker restarts."""
+    try:
+        attempted = datetime.fromisoformat(str(attempted_at).replace("Z", "+00:00"))
+        completed = datetime.fromisoformat(str(completed_at).replace("Z", "+00:00"))
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-body-host-probe") from exc
+    if (
+        attempted.tzinfo is None or completed.tzinfo is None
+        or completed < attempted
+        or completed - attempted > timedelta(hours=1)
+        or outcome not in {"recovered", "restricted", "failed"}
+    ):
+        raise ValueError("invalid-body-host-probe")
+    with db:
+        db.execute("""
+          INSERT INTO body_host_probe_events(attempted_at,completed_at,outcome)
+          VALUES(?,?,?)
+        """, (attempted_at, completed_at, outcome))
+        db.execute("""
+          DELETE FROM body_host_probe_events WHERE id IN (
+            SELECT id FROM body_host_probe_events ORDER BY id DESC LIMIT -1 OFFSET 20000
+          )
+        """)
+
+
+def body_host_probe_summary(db, reference=None):
+    """Return bounded recovery-probe counts without source or host identities."""
+    reference = reference or now()
+    try:
+        parsed = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            raise ValueError
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-body-host-probe-reference") from exc
+    reference_utc = parsed.astimezone(timezone.utc)
+    reference_text = reference_utc.isoformat(timespec="milliseconds")
+    window_start = (reference_utc - timedelta(hours=24)).isoformat(timespec="milliseconds")
+    valid = """
+      outcome IN ('recovered','restricted','failed')
+      AND julianday(attempted_at) IS NOT NULL
+      AND julianday(completed_at) IS NOT NULL
+      AND julianday(attempted_at) <= julianday(completed_at)
+      AND (julianday(completed_at)-julianday(attempted_at))*86400 <= 3600.001
+    """
+    latest = db.execute(f"""
+      SELECT attempted_at,completed_at,outcome FROM body_host_probe_events
+      WHERE julianday(completed_at)<=julianday(?) AND {valid}
+      ORDER BY id DESC LIMIT 1
+    """, (reference_text,)).fetchone()
+    totals = db.execute(f"""
+      SELECT count(*) AS probes,
+             sum(CASE WHEN outcome='recovered' THEN 1 ELSE 0 END) AS recovered,
+             sum(CASE WHEN outcome='restricted' THEN 1 ELSE 0 END) AS restricted,
+             sum(CASE WHEN outcome='failed' THEN 1 ELSE 0 END) AS failed
+      FROM body_host_probe_events
+      WHERE julianday(completed_at)>=julianday(?)
+        AND julianday(completed_at)<=julianday(?) AND {valid}
+    """, (window_start, reference_text)).fetchone()
+    return {
+        "lastAttemptedAt": latest["attempted_at"] if latest else None,
+        "lastCompletedAt": latest["completed_at"] if latest else None,
+        "lastOutcome": latest["outcome"] if latest else None,
+        "probes24Hours": int(totals["probes"] or 0),
+        "recovered24Hours": int(totals["recovered"] or 0),
+        "restricted24Hours": int(totals["restricted"] or 0),
+        "failed24Hours": int(totals["failed"] or 0),
+    }
 
 
 BODY_FETCH_METRIC_WHERE = """

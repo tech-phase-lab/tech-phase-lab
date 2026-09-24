@@ -1017,6 +1017,80 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(backlog["hostDeferred"], 1)
         self.assertEqual(backlog["retryDeferred"], 1)
         self.assertIsNotNone(backlog["nextHostProbeAt"])
+        probes = app.public_state()["bodyHostProbes"]
+        self.assertEqual(probes["lastOutcome"], "restricted")
+        self.assertEqual(probes["probes24Hours"], 1)
+        self.assertEqual(probes["restricted24Hours"], 1)
+        self.assertNotIn("nebius.com", json.dumps(probes))
+        self.assertNotIn("https://", json.dumps(probes))
+
+        restarted = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        self.assertEqual(restarted.public_state()["bodyHostProbes"], probes)
+
+    def test_expired_host_circuit_probe_success_is_persisted_as_recovered(self):
+        expired = datetime.now(timezone.utc) - timedelta(minutes=1)
+        updated = expired - timedelta(hours=6)
+        with monitor.connect(self.db_path) as db:
+            db.execute(
+                "UPDATE sources SET error='http-403',fetch_failures=1,next_fetch_at=?",
+                (expired.isoformat(timespec="milliseconds"),),
+            )
+            db.execute("""
+              INSERT INTO body_host_backoff(host,failures,error,retry_at,updated_at)
+              VALUES('nebius.com',1,'http-403',?,?)
+            """, (
+                expired.isoformat(timespec="milliseconds"),
+                updated.isoformat(timespec="milliseconds"),
+            ))
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_batch = 5
+        original_fetch = monitor.fetch
+        monitor.fetch = lambda *_args, **_kwargs: (
+            b"<main><h1>Recovered</h1><p>Direct official evidence.</p></main>",
+            "text/html",
+        )
+        try:
+            with ThreadPoolExecutor(max_workers=5) as pool:
+                app.fetch_bodies(pool)
+        finally:
+            monitor.fetch = original_fetch
+
+        probes = app.public_state()["bodyHostProbes"]
+        self.assertEqual(probes["lastOutcome"], "recovered")
+        self.assertEqual(probes["probes24Hours"], 1)
+        self.assertEqual(probes["recovered24Hours"], 1)
+        self.assertEqual(probes["restricted24Hours"], 0)
+        self.assertEqual(probes["failed24Hours"], 0)
+        with monitor.connect(self.db_path) as db:
+            self.assertIsNone(db.execute(
+                "SELECT 1 FROM body_host_backoff WHERE host='nebius.com'"
+            ).fetchone())
+
+    def test_body_host_probe_summary_excludes_future_and_invalid_timestamps(self):
+        reference = "2026-09-24T12:00:00.000+00:00"
+        with monitor.connect(self.db_path) as db:
+            monitor.record_body_host_probe(
+                db, "2026-09-24T11:59:58.000+00:00",
+                "2026-09-24T11:59:59.000+00:00", "failed",
+            )
+            db.executemany("""
+              INSERT INTO body_host_probe_events(attempted_at,completed_at,outcome)
+              VALUES(?,?,?)
+            """, (
+                ("2026-09-24T12:00:01.000+00:00", "2026-09-24T12:00:02.000+00:00", "recovered"),
+                ("2026-09-24T11:00:02.000+00:00", "2026-09-24T11:00:01.000+00:00", "restricted"),
+                ("2026-09-24T09:00:00.000+00:00", "2026-09-24T11:00:00.000+00:00", "restricted"),
+            ))
+            summary = monitor.body_host_probe_summary(db, reference)
+        self.assertEqual(summary, {
+            "lastAttemptedAt": "2026-09-24T11:59:58.000+00:00",
+            "lastCompletedAt": "2026-09-24T11:59:59.000+00:00",
+            "lastOutcome": "failed", "probes24Hours": 1,
+            "recovered24Hours": 0, "restricted24Hours": 0,
+            "failed24Hours": 1,
+        })
 
     def test_body_candidates_ignore_corrupt_host_circuit(self):
         with monitor.connect(self.db_path) as db:

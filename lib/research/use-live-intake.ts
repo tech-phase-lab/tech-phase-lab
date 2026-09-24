@@ -114,6 +114,12 @@ export type MonitorState = {
     nextHostProbeAt?: string | null; retryDeferred: number; accessRestricted: number;
     recheckDeferred: number; total: number; measuredAt: string | null;
   };
+  bodyHostProbes?: {
+    lastAttemptedAt: string | null; lastCompletedAt: string | null;
+    lastOutcome: "recovered" | "restricted" | "failed" | null;
+    probes24Hours: number; recovered24Hours: number;
+    restricted24Hours: number; failed24Hours: number;
+  };
   secEvidence?: {
     total: number; exhibit: number; direct: number; pending: number; error: number;
     errorKinds?: {

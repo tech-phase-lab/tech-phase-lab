@@ -76,6 +76,10 @@ record moved into conservative backoff without exposing source identifiers.
 When a hostname circuit reaches its retry time, the worker admits only one
 URL from that hostname as a recovery probe. Another access-control response
 immediately reopens the circuit before any second URL on that host is tried.
+Recovery-probe outcomes are persisted as URL-free aggregates. The operations
+preview shows the latest recovery, renewed restriction or transient failure and
+24-hour counts after a restart, without returning the hostname, URL, HTTP code
+or exception text.
 When inline first-party evidence replaces the last failed remote body for a
 ticker, its stale body incident is resolved even though the hostname circuit
 remains in force. Another failed remote body keeps the ticker incident open.
