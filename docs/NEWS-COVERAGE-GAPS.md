@@ -244,6 +244,18 @@ prices therefore do not establish a usable Tech Phase commercial price or grant
 display rights. No account, trial, API key, paid plan, or external contact was
 initiated in this work.
 
+### Existing vendor inquiries: relevant public API evidence
+
+| Provider | Publicly documented fit | What the current quote still needs to confirm |
+|---|---|---|
+| Stock News API | Its examples include an `All latest Upgrades/Downgrades` request with price targets, backed by a ratings endpoint. | Whether the quoted Premium/Business plan and all-ticker coverage include that endpoint, its update delay, and commercial display rights. The public example does not settle those terms. |
+| Benzinga | A dedicated Analyst Ratings API documents old/new rating and target, analyst/firm, action, timestamp, and importance. Overnight changes are posted before market open and intraday changes during the session. | Whether the current news quote includes the ratings product or prices it separately, and the licensed display, latency, watchlist and retention terms. |
+| Intrinio | Its public catalog lists Price Targets under Enterprise and describes consensus high/low/mean targets. | Whether the requested NewsEdge/news package includes individual analyst-action events or only news stories, and the separate cost/licensing terms for analyst data. |
+| finlight | Its public REST API documents searchable financial articles with ticker/entity metadata. | Whether analyst PT-change coverage is sufficiently complete and timely. No dedicated structured ratings endpoint was confirmed in the public docs reviewed. |
+| Alpaca | Its public news endpoint returns articles and supports ticker/date filtering. | Whether syndicated articles reliably include PT revisions. No structured analyst-rating fields were documented in this endpoint. |
+
+Therefore, a separate *vendor* is not automatically required. A news subscription may carry stories about target changes, while structured action fields often sit behind a distinct endpoint, dataset, or entitlement from the same vendor. Ask each vendor to include both the ordinary news feed and ratings actions in one quote, with an explicit line-item price and customer-display license. Do not treat aggregate consensus snapshots as a timely event feed.
+
 If licensed, add analyst changes as a distinct event class in the private review
 queue, then show the analyst/firm, previous and new rating, previous and new
 target with currency, publication and first-seen timestamps, and a link to the
