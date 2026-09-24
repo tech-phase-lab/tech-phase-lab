@@ -63,6 +63,11 @@ linked article host has recovered. The preview exposes only the number of
 host-deferred bodies, not hostnames, URLs or errors. Timeouts and other
 transient failures remain URL-scoped. This reduces repeated traffic without
 bypassing an official site's access controls.
+HTTP 429 rate limits use the same conservative circuit. When a short SEC
+primary filing requires its same-accession index or EX-99.1, transport errors
+from that official follow-up request retain their bounded error class instead
+of being flattened into a missing-exhibit error. A 403 or verification page can
+therefore pause the SEC hostname without publishing the accession or URL.
 When a hostname circuit reaches its retry time, the worker admits only one
 URL from that hostname as a recovery probe. Another access-control response
 immediately reopens the circuit before any second URL on that host is tried.

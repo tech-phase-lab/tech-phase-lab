@@ -423,6 +423,42 @@ class IntakeTests(unittest.TestCase):
             m.collect_source(row, transport)
         self.assertEqual(m.source_error_code(caught.exception), "sec-exhibit-unavailable")
 
+    def test_empty_sec_primary_preserves_index_access_restriction(self):
+        filing = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000004/mrvl-20260925.htm"
+        filing_index = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000004/0001835632-26-000004-index.html"
+        m.add_source(self.db, "MRVL", filing)
+
+        def transport(url, ticker, validators=None, include_metadata=False):
+            if url == filing:
+                return {
+                    "content": b"<html><body><script>renderFiling()</script></body></html>",
+                    "contentType": "text/html", "etag": '"cover"',
+                    "lastModified": None, "notModified": False,
+                }
+            if url == filing_index:
+                raise HTTPError(url, 403, "Forbidden", {}, None)
+            raise AssertionError(f"unexpected URL: {url}")
+
+        transport.supports_persistent_validators = True
+        row = self.db.execute("SELECT * FROM sources WHERE url=?", (filing,)).fetchone()
+        result = m.check_source(self.db, row, transport)
+        stored = self.db.execute(
+            "SELECT error,next_fetch_at,checked_at FROM sources WHERE url=?", (filing,)
+        ).fetchone()
+        circuit = self.db.execute(
+            "SELECT failures,error,retry_at FROM body_host_backoff WHERE host='www.sec.gov'"
+        ).fetchone()
+
+        self.assertEqual(result["error"], "http-403")
+        self.assertEqual(result["retrySeconds"], 6 * 60 * 60)
+        self.assertEqual(stored["error"], "http-403")
+        self.assertGreater(stored["next_fetch_at"], stored["checked_at"])
+        self.assertEqual(dict(circuit), {
+            "failures": 1,
+            "error": "http-403",
+            "retry_at": stored["next_fetch_at"],
+        })
+
     def test_sec_exhibit_links_cannot_leave_the_filing_accession(self):
         filing = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/mrvl-20260922.htm"
         markup = b'''<a href="ex991.htm">EX-99.1</a>
@@ -671,6 +707,10 @@ class IntakeTests(unittest.TestCase):
             m.source_retry_seconds("verification-page", 99),
             7 * 24 * 60 * 60,
         )
+        self.assertEqual(
+            m.source_retry_seconds("http-429", 1),
+            6 * 60 * 60,
+        )
         self.assertEqual(m.source_retry_seconds("timeout", 1), 60)
 
         m.save_source_check(self.db, self.row(), {
@@ -703,6 +743,11 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(row["error"], "http-429")
         self.assertEqual(history["reason"], "http-429")
         self.assertNotIn("private-path", str(result) + str(dict(row)) + str(dict(history)))
+        circuit = self.db.execute(
+            "SELECT error,retry_at FROM body_host_backoff WHERE host='nebius.com'"
+        ).fetchone()
+        self.assertEqual(circuit["error"], "http-429")
+        self.assertEqual(circuit["retry_at"], row["next_fetch_at"])
 
     def test_operational_incident_transitions_are_deduplicated_and_held(self):
         self.assertEqual(m.record_operational_incident(

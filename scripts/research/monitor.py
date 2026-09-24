@@ -45,7 +45,7 @@ DISCOVERY_CACHE_PARSER_VERSION = 1
 _FETCH_CACHE = {}
 _FETCH_CACHE_LOCK = threading.Lock()
 ACCESS_RESTRICTED_ERRORS = {
-    "http-401", "http-403", "http-451", "verification-page",
+    "http-401", "http-403", "http-429", "http-451", "verification-page",
 }
 
 
@@ -186,6 +186,18 @@ def source_error_code(exc):
         return f"http-{http_code.group(1)}"
     if isinstance(exc, ValueError):
         lowered = message.lower()
+        if "sec exhibit evidence unavailable" in lowered and exc.__cause__ is not None:
+            # A short SEC primary document may require its same-accession index
+            # or EX-99.1. Do not hide a real transport restriction behind the
+            # semantic fallback error: preserving it lets the hostname circuit
+            # stop repeated requests without exposing the underlying URL.
+            cause_code = source_error_code(exc.__cause__)
+            if (
+                cause_code in ACCESS_RESTRICTED_ERRORS
+                or cause_code in {"timeout", "fetch-failed"}
+                or re.fullmatch(r"http-5\d\d", cause_code)
+            ):
+                return cause_code
         for fragment, code in (
             ("unexpected-signal-content-type", "signal-content-type"),
             ("unapproved-signal-url", "signal-unapproved-url"),
@@ -245,7 +257,12 @@ def retry_after_seconds(exc, reference=None):
 def source_retry_seconds(error_code, failures, retry_hint=None):
     """Back off access controls without repeatedly probing a blocked official page."""
     access_restricted = error_code in ACCESS_RESTRICTED_ERRORS
-    if access_restricted:
+    if error_code == "http-429" and retry_hint is not None:
+        # A rate-limited official endpoint has supplied its own safe reopening
+        # time. Keep the hostname circuit, but do not replace that instruction
+        # with a longer invented delay.
+        retry_seconds = max(60, retry_hint)
+    elif access_restricted:
         # A denied or interstitial-protected route is unlikely to recover within
         # minutes. Keep it eligible for a later lawful retry, but do not hammer it
         # or let it crowd newly discovered first-party evidence out of the queue.
