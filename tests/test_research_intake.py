@@ -780,6 +780,25 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(circuit["error"], "http-429")
         self.assertEqual(circuit["retry_at"], row["next_fetch_at"])
 
+    def test_long_retry_after_is_persisted_for_source_and_host_circuit(self):
+        error = HTTPError(
+            URL, 429, "Too Many Requests",
+            {"Retry-After": str(2 * 24 * 60 * 60)}, None,
+        )
+        result = m.save_source_error(self.db, self.row(), error)
+        row = self.row()
+        circuit = self.db.execute(
+            "SELECT error,retry_at FROM body_host_backoff WHERE host='nebius.com'"
+        ).fetchone()
+        checked = datetime.fromisoformat(row["checked_at"])
+        retry = datetime.fromisoformat(row["next_fetch_at"])
+
+        self.assertEqual(result["retrySeconds"], 2 * 24 * 60 * 60)
+        self.assertEqual(circuit["error"], "http-429")
+        self.assertEqual(circuit["retry_at"], row["next_fetch_at"])
+        self.assertGreaterEqual(retry - checked, timedelta(days=2))
+        self.assertLess(retry - checked, timedelta(days=2, seconds=2))
+
     def test_operational_incident_transitions_are_deduplicated_and_held(self):
         self.assertEqual(m.record_operational_incident(
             self.db, "source:NBIS", "official-source", "NBIS", "warning", "timeout"
