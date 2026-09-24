@@ -1357,6 +1357,34 @@ class IntakeTests(unittest.TestCase):
                 m.environment_seconds("RESEARCH_REQUEST_TIMEOUT_SECONDS", 20, 1, 20), 4
             )
 
+    def test_primary_source_uses_issuer_timeout_ceiling(self):
+        url = m.INDEXES["DELL"]
+        m._FETCH_CACHE[url] = {
+            "content": b"<rss><channel/></rss>",
+            "content_type": "application/rss+xml",
+            "etag": '"revision-1"',
+            "last_modified": None,
+        }
+        original = m.build_opener
+
+        class NotModified:
+            def open(self, request, timeout):
+                self.timeout = timeout
+                raise HTTPError(request.full_url, 304, "Not Modified", {}, None)
+
+        opener = NotModified()
+        m.build_opener = lambda *_: opener
+        try:
+            content, content_type = m.fetch(url, "DELL")
+        finally:
+            m.build_opener = original
+            m._FETCH_CACHE.pop(url, None)
+        self.assertEqual(
+            (content, content_type),
+            (b"<rss><channel/></rss>", "application/rss+xml"),
+        )
+        self.assertEqual(opener.timeout, 8)
+
     def test_persisted_validator_survives_restart_and_304_preserves_evidence(self):
         m.save_source_check(self.db, self.row(), {
             "sha256": "d" * 64, "contentType": "text/html", "contentBytes": 40,
@@ -2552,15 +2580,16 @@ class IntakeTests(unittest.TestCase):
                 self.assertIn(rule["host"], m.HOSTS[ticker])
                 self.assertIsNotNone(m.re.compile(rule["pattern"]))
 
-        dell_rss = next(
-            source for source in m.monitoring_sources("DELL")
-            if source.get("label") == "Dell Investor News RSS"
-        )
+        dell_rss = m.monitoring_sources("DELL")[0]
+        self.assertEqual(dell_rss["route"], "primary")
         self.assertEqual(dell_rss["format"], "rss")
         self.assertEqual(
             dell_rss["url"],
             "https://investors.delltechnologies.com/rss/news-releases.xml",
         )
+        self.assertEqual(m.PROVIDERS["DELL"]["requestTimeoutSeconds"], 8)
+        self.assertEqual(m.PROVIDERS["AVGO"]["requestTimeoutSeconds"], 8)
+        self.assertEqual(m.PROVIDERS["SNDK"]["requestTimeoutSeconds"], 8)
         feed = b'''<rss><channel><item><title>Dell AI systems update</title><link>https://investors.delltechnologies.com/news-releases/news-release-details/dell-ai-systems-update</link></item></channel></rss>'''
         self.assertEqual(
             len(m.feed_links(feed, "DELL")),

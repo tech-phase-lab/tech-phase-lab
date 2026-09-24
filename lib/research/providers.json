@@ -62,6 +62,7 @@
     "sector": "semiconductors",
     "indexUrl": "https://investor.sandisk.com/news-events/news-releases",
     "format": "html",
+    "requestTimeoutSeconds": 8,
     "allowedHosts": [
       "data.sec.gov",
       "investor.sandisk.com",
@@ -229,6 +230,7 @@
     "sector": "semiconductors",
     "indexUrl": "https://investors.broadcom.com/financial-information/financial-news-releases",
     "format": "html",
+    "requestTimeoutSeconds": 8,
     "allowedHosts": [
       "data.sec.gov",
       "investors.broadcom.com",
@@ -655,8 +657,9 @@
     "ticker": "DELL",
     "name": "Dell Technologies",
     "sector": "servers",
-    "indexUrl": "https://investors.delltechnologies.com/news-events/press-release",
-    "format": "html",
+    "indexUrl": "https://investors.delltechnologies.com/rss/news-releases.xml",
+    "format": "rss",
+    "requestTimeoutSeconds": 8,
     "allowedHosts": [
       "data.sec.gov",
       "investors.delltechnologies.com",
@@ -687,11 +690,6 @@
         "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001571996&type=8-K&owner=exclude&count=40&output=atom",
         "format": "rss",
         "label": "SEC 8-K"
-      },
-      {
-        "url": "https://investors.delltechnologies.com/rss/news-releases.xml",
-        "format": "rss",
-        "label": "Dell Investor News RSS"
       }
     ]
   },

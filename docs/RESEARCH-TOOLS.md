@@ -102,6 +102,10 @@ a restart. Future-dated, malformed and internally inconsistent rows are
 excluded, and at most 10,000 process results are retained.
 Polling configuration and observed request time are not delivery latency
 guarantees.
+Issuer-specific discovery timeouts keep a slow first-party index from holding
+the complete concurrent polling batch. The timeout only advances that issuer
+to its configured official RSS or SEC route; it does not retry around an
+access control or turn the polling interval into a delivery guarantee.
 
 Validation: `npm run lint`, `node --experimental-strip-types --test tests/*.test.mjs`,
 and `npm run build`. Browser checks cover favorites persistence, company-page
