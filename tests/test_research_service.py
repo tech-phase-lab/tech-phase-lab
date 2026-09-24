@@ -204,6 +204,73 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(coverage["pending"], 2)
         self.assertEqual(coverage["omitted"], 3)
 
+    def test_priority_source_completion_survives_restart_without_company_details(self):
+        reference = datetime.now(timezone.utc)
+        started = reference - timedelta(seconds=2)
+        first_observed = reference - timedelta(seconds=1)
+        with monitor.connect(self.db_path) as db:
+            monitor.record_priority_source_run(
+                db, started.isoformat(timespec="milliseconds"),
+                first_observed.isoformat(timespec="milliseconds"),
+                5, 5, 4, 1, 500,
+            )
+            monitor.record_priority_source_run(
+                db, started.isoformat(timespec="milliseconds"),
+                reference.isoformat(timespec="milliseconds"),
+                5, 5, 5, 0, 500,
+            )
+            summary = monitor.priority_source_run_summary(
+                db, (reference + timedelta(seconds=1)).isoformat(timespec="milliseconds")
+            )
+        self.assertEqual(summary["configuredCount"], 5)
+        self.assertEqual(summary["healthy"], 5)
+        self.assertEqual(summary["degraded"], 0)
+        self.assertEqual(summary["completionLatencyMs"], 500)
+        self.assertEqual(summary["completedRuns24Hours"], 1)
+        self.assertEqual(summary["lastObservedAgeSeconds"], 1)
+        self.assertNotIn("ticker", json.dumps(summary).lower())
+        self.assertNotIn("process", json.dumps(summary).lower())
+
+        restarted = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        persisted = restarted.public_state()["prioritySourceRuns"]
+        self.assertEqual(persisted["healthy"], 5)
+        self.assertEqual(persisted["completionLatencyMs"], 500)
+
+    def test_priority_source_run_metrics_reject_invalid_and_future_evidence(self):
+        reference = datetime.now(timezone.utc)
+        started = reference - timedelta(seconds=1)
+        with monitor.connect(self.db_path) as db:
+            for values in (
+                (started, reference, 5, 5, 4, 0, 500),
+                (started, reference, 5, 6, 6, 0, 500),
+                (reference, started, 5, 5, 5, 0, 500),
+                (started, reference, 5, 5, 5, 0, 2_000),
+            ):
+                with self.assertRaisesRegex(ValueError, "invalid-priority-source-run"):
+                    monitor.record_priority_source_run(
+                        db,
+                        values[0].isoformat(timespec="milliseconds"),
+                        values[1].isoformat(timespec="milliseconds"),
+                        *values[2:],
+                    )
+            with self.assertRaisesRegex(
+                ValueError, "invalid-priority-source-run-reference"
+            ):
+                monitor.priority_source_run_summary(db, "not-a-time")
+
+            future_started = reference + timedelta(hours=1)
+            future_observed = future_started + timedelta(seconds=1)
+            monitor.record_priority_source_run(
+                db, future_started.isoformat(timespec="milliseconds"),
+                future_observed.isoformat(timespec="milliseconds"),
+                5, 5, 5, 0, 500,
+            )
+            summary = monitor.priority_source_run_summary(
+                db, reference.isoformat(timespec="milliseconds")
+            )
+        self.assertIsNone(summary["lastCompletedAt"])
+        self.assertEqual(summary["completedRuns24Hours"], 0)
+
     def test_priority_source_health_records_and_resolves_degraded_coverage(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         checked_at = service.utc_now()

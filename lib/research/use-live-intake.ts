@@ -76,6 +76,12 @@ export type MonitorState = {
     healthy: number; degraded: number; pending: number; omitted: number;
     completionLatencyMs: number | null;
   };
+  prioritySourceRuns?: {
+    lastCompletedAt: string | null; lastObservedAt: string | null;
+    lastObservedAgeSeconds: number | null; configuredCount: number;
+    healthy: number; degraded: number; completionLatencyMs: number | null;
+    completedRuns24Hours: number;
+  };
   bodyFetch?: {
     lastPollAt: string | null; lastBatchAt: string | null;
     lastBatchDurationMs: number | null; lastBatchChecks: number;

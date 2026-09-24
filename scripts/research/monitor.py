@@ -975,6 +975,17 @@ def connect(path):
       request_duration_max_ms INTEGER NOT NULL CHECK(request_duration_max_ms>=0));
     CREATE INDEX IF NOT EXISTS discovery_poll_batches_completed
       ON discovery_poll_batches(completed_at DESC);
+    CREATE TABLE IF NOT EXISTS priority_source_runs (
+      process_started_at TEXT PRIMARY KEY, first_completed_at TEXT NOT NULL,
+      last_observed_at TEXT NOT NULL,
+      target_count INTEGER NOT NULL CHECK(target_count>0 AND target_count<=100),
+      configured_count INTEGER NOT NULL CHECK(configured_count>0 AND configured_count<=target_count),
+      healthy INTEGER NOT NULL CHECK(healthy>=0 AND healthy<=configured_count),
+      degraded INTEGER NOT NULL CHECK(degraded>=0 AND degraded<=configured_count),
+      completion_latency_ms INTEGER NOT NULL
+        CHECK(completion_latency_ms>=0 AND completion_latency_ms<=2678400000));
+    CREATE INDEX IF NOT EXISTS priority_source_runs_observed
+      ON priority_source_runs(last_observed_at DESC);
     CREATE TABLE IF NOT EXISTS discovery_source_cache (
       ticker TEXT NOT NULL, source_url TEXT NOT NULL,
       response_etag TEXT, response_last_modified TEXT,
@@ -1320,6 +1331,124 @@ def discovery_poll_summary(db, reference=None, poll_overdue_after_seconds=60):
             if totals["checks"] else None
         ),
         "requestDurationMaxMs24Hours": totals["request_max"],
+    }
+
+
+def record_priority_source_run(
+    db, process_started_at, observed_at, target_count, configured_count,
+    healthy, degraded, completion_latency_ms,
+):
+    """Persist one bounded, identity-free priority coverage result per process."""
+    try:
+        started = datetime.fromisoformat(str(process_started_at).replace("Z", "+00:00"))
+        observed = datetime.fromisoformat(str(observed_at).replace("Z", "+00:00"))
+        target_count, configured_count = int(target_count), int(configured_count)
+        healthy, degraded = int(healthy), int(degraded)
+        completion_latency_ms = int(completion_latency_ms)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-priority-source-run") from exc
+    maximum_latency_ms = 31 * 24 * 60 * 60 * 1000
+    if (
+        started.tzinfo is None or observed.tzinfo is None or observed < started
+        or not 1 <= target_count <= 100
+        or not 1 <= configured_count <= target_count
+        or not 0 <= healthy <= configured_count
+        or not 0 <= degraded <= configured_count
+        or healthy + degraded != configured_count
+        or not 0 <= completion_latency_ms <= maximum_latency_ms
+    ):
+        raise ValueError("invalid-priority-source-run")
+    completed = started.astimezone(timezone.utc) + timedelta(milliseconds=completion_latency_ms)
+    if completed > observed.astimezone(timezone.utc):
+        raise ValueError("invalid-priority-source-run")
+    completed_at = completed.isoformat(timespec="milliseconds")
+    with db:
+        db.execute("""
+          INSERT INTO priority_source_runs(
+            process_started_at,first_completed_at,last_observed_at,target_count,
+            configured_count,healthy,degraded,completion_latency_ms
+          ) VALUES(?,?,?,?,?,?,?,?)
+          ON CONFLICT(process_started_at) DO UPDATE SET
+            last_observed_at=excluded.last_observed_at,
+            target_count=excluded.target_count,
+            configured_count=excluded.configured_count,
+            healthy=excluded.healthy,
+            degraded=excluded.degraded
+        """, (
+            process_started_at, completed_at, observed_at, target_count,
+            configured_count, healthy, degraded, completion_latency_ms,
+        ))
+        db.execute("""
+          DELETE FROM priority_source_runs WHERE process_started_at IN (
+            SELECT process_started_at FROM priority_source_runs
+            ORDER BY last_observed_at DESC LIMIT -1 OFFSET 10000
+          )
+        """)
+
+
+PRIORITY_SOURCE_RUN_WHERE = """
+  typeof(target_count)='integer' AND target_count BETWEEN 1 AND 100
+  AND typeof(configured_count)='integer'
+  AND configured_count BETWEEN 1 AND target_count
+  AND typeof(healthy)='integer' AND healthy BETWEEN 0 AND configured_count
+  AND typeof(degraded)='integer' AND degraded BETWEEN 0 AND configured_count
+  AND healthy + degraded = configured_count
+  AND typeof(completion_latency_ms)='integer'
+  AND completion_latency_ms BETWEEN 0 AND 2678400000
+  AND julianday(process_started_at) IS NOT NULL
+  AND julianday(first_completed_at) IS NOT NULL
+  AND julianday(last_observed_at) IS NOT NULL
+  AND julianday(process_started_at) <= julianday(first_completed_at)
+  AND julianday(first_completed_at) <= julianday(last_observed_at)
+"""
+
+
+def priority_source_run_summary(db, reference=None):
+    """Return durable priority completion evidence without per-company details."""
+    reference = reference or now()
+    try:
+        parsed = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            raise ValueError
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-priority-source-run-reference") from exc
+    reference_utc = parsed.astimezone(timezone.utc)
+    reference_text = reference_utc.isoformat(timespec="milliseconds")
+    window_start = (reference_utc - timedelta(hours=24)).isoformat(timespec="milliseconds")
+    latest = db.execute(f"""
+      SELECT first_completed_at,last_observed_at,configured_count,healthy,degraded,
+             completion_latency_ms
+      FROM priority_source_runs
+      WHERE julianday(first_completed_at)<=julianday(?)
+        AND julianday(last_observed_at)<=julianday(?)
+        AND {PRIORITY_SOURCE_RUN_WHERE}
+      ORDER BY julianday(last_observed_at) DESC LIMIT 1
+    """, (reference_text, reference_text)).fetchone()
+    completed_runs = db.execute(f"""
+      SELECT count(*) FROM priority_source_runs
+      WHERE julianday(first_completed_at)>=julianday(?)
+        AND julianday(first_completed_at)<=julianday(?)
+        AND julianday(last_observed_at)<=julianday(?)
+        AND {PRIORITY_SOURCE_RUN_WHERE}
+    """, (window_start, reference_text, reference_text)).fetchone()[0]
+    if not latest:
+        return {
+            "lastCompletedAt": None, "lastObservedAt": None,
+            "lastObservedAgeSeconds": None, "configuredCount": 0,
+            "healthy": 0, "degraded": 0, "completionLatencyMs": None,
+            "completedRuns24Hours": completed_runs,
+        }
+    observed = datetime.fromisoformat(
+        str(latest["last_observed_at"]).replace("Z", "+00:00")
+    ).astimezone(timezone.utc)
+    return {
+        "lastCompletedAt": latest["first_completed_at"],
+        "lastObservedAt": latest["last_observed_at"],
+        "lastObservedAgeSeconds": max(0, round((reference_utc - observed).total_seconds())),
+        "configuredCount": latest["configured_count"],
+        "healthy": latest["healthy"], "degraded": latest["degraded"],
+        "completionLatencyMs": latest["completion_latency_ms"],
+        "completedRuns24Hours": completed_runs,
     }
 
 

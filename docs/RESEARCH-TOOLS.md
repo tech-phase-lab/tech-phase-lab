@@ -81,6 +81,13 @@ checks. Once every configured priority company has run, the preview reports the
 measured interval from process start to the final priority check without
 publishing any individual company timestamp. This is startup-processing
 evidence, not publication or subscriber-delivery latency.
+The first complete result for each service process is also persisted without
+tickers, URLs, validators, exceptions or process identifiers. A later healthy
+recheck can update the aggregate healthy/degraded counts while preserving the
+original completion latency. The operations preview can therefore distinguish
+the current process's pending checks from the last durable completed run after
+a restart. Future-dated, malformed and internally inconsistent rows are
+excluded, and at most 10,000 process results are retained.
 Polling configuration and observed request time are not delivery latency
 guarantees.
 

@@ -538,6 +538,7 @@ class AutomaticMonitor:
             state["discoveryRuns"] = monitor.discovery_poll_summary(
                 db, poll_overdue_after_seconds=self.monitor_stale_seconds
             )
+            state["prioritySourceRuns"] = monitor.priority_source_run_summary(db)
             state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
             state["incidents"] = monitor.operational_incident_summary(
                 db, delivery_enabled=self.notification_enabled
@@ -871,6 +872,7 @@ class AutomaticMonitor:
         discovery_caches = {}
         baseline_ready = {}
         failure_streak = {ticker: 0 for ticker in self.tickers}
+        priority_run_signature = None
         next_body_fetch = 0.0
         with self.db_lock, monitor.connect(self.db_path) as db:
             invalidated_sources = 0
@@ -1023,6 +1025,26 @@ class AutomaticMonitor:
                     discovery_cache["lastUpdatedAt"] = checked_at
                     if new_count:
                         self.state["lastChangeAt"] = checked_at
+                    priority_coverage = priority_source_coverage(
+                        self.state, self.tickers
+                    )
+                    process_started_at = self.state["startedAt"]
+
+                if priority_coverage["completionLatencyMs"] is not None:
+                    run_signature = (
+                        priority_coverage["healthy"], priority_coverage["degraded"]
+                    )
+                    if run_signature != priority_run_signature:
+                        with self.db_lock, monitor.connect(self.db_path) as db:
+                            monitor.record_priority_source_run(
+                                db, process_started_at, completed_at,
+                                priority_coverage["targetCount"],
+                                priority_coverage["configuredCount"],
+                                priority_coverage["healthy"],
+                                priority_coverage["degraded"],
+                                priority_coverage["completionLatencyMs"],
+                            )
+                        priority_run_signature = run_signature
 
                 if time.monotonic() >= next_body_fetch:
                     succeeded = self.fetch_bodies_safely(pool)
