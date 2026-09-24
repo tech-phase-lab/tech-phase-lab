@@ -49,7 +49,7 @@ test("registered schedules are ordered, unique and linked to official sources", 
     assert.ok(Number.isFinite(timestamp) && timestamp >= previous);
     previous = timestamp;
     assert.ok(event.title.ja && event.title.en);
-    assert.ok(["www.bls.gov", "investors.micron.com", "ir.netflix.net", "www.gevernova.com", "www.adobe.com"].includes(new URL(event.sourceUrl).hostname));
+    assert.ok(["www.bls.gov", "investors.micron.com", "ir.netflix.net", "investor.tsmc.com", "www.gevernova.com", "www.adobe.com"].includes(new URL(event.sourceUrl).hostname));
     if (event.sourceName === "BLS") {
       assert.equal(new Intl.DateTimeFormat("en-GB", { timeZone: event.sourceTimezone, hour: "2-digit", minute: "2-digit" }).format(new Date(event.startsAt)), "08:30");
     }
@@ -63,11 +63,13 @@ test("Eastern month filters follow the displayed date across the Japan midnight 
   assert.equal(selectCalendarEvents(events, "earnings", "2026-10", 0, "America/New_York").length, 0);
 });
 test("Taiwan and Pacific timestamps convert to the right Eastern and Japan dates", () => {
-  const taiwanTimestamp = "2026-10-01T14:00:00+08:00";
+  const tsm = calendarEvents.find((event) => event.id === "tsm-q3-2026-call");
   const netflix = calendarEvents.find((event) => event.ticker === "NFLX");
   const time = (date, zone) => new Intl.DateTimeFormat("en-GB", { timeZone: zone, hour: "2-digit", minute: "2-digit" }).format(new Date(date));
-  assert.equal(time(taiwanTimestamp, "America/New_York"), "02:00");
-  assert.equal(time(taiwanTimestamp, "Asia/Tokyo"), "15:00");
+  assert.equal(time(tsm.startsAt, "America/New_York"), "02:00");
+  assert.equal(time(tsm.startsAt, "Asia/Tokyo"), "15:00");
+  assert.equal(calendarDateKey(tsm.startsAt, "Asia/Taipei"), "2026-10-15");
+  assert.match(tsm.note.en, /conference start.*not the publication time/i);
   assert.equal(time(netflix.startsAt, "America/New_York"), "16:01");
   assert.equal(calendarDateKey(netflix.startsAt), "2026-10-21");
 });
@@ -113,7 +115,8 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
   assert.ok(coverage.every((company) => /^2026-09-2[345]$/.test(company.lastAttemptedOn)));
   for (const ticker of ["ADBE", "AMAT", "AMD", "ASML", "CRWD", "DELL", "GEV", "INTC", "LRCX", "META"]) assert.equal(checked[ticker], "2026-09-25");
-  for (const ticker of ["MSFT", "QCOM", "SNDK", "TSLA"]) assert.equal(checked[ticker], "2026-09-23");
+  for (const ticker of ["MSFT", "QCOM"]) assert.equal(checked[ticker], "2026-09-23");
+  for (const ticker of ["MU", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-09-25");
   for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "COHR", "CRDO", "CRM", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(checked[ticker], null);
   for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "COHR", "CRDO", "CRM", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(byTicker[ticker].lastAttemptedOn, "2026-09-25");
   assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 17);
@@ -124,8 +127,8 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   assert.equal(byTicker.AMZN.sourceUrl, "https://ir.aboutamazon.com/events/default.aspx");
   assert.equal(byTicker.ANET.sourceUrl, "https://investors.arista.com/events-and-presentations/default.aspx");
   assert.equal(byTicker.ARM.sourceUrl, "https://investors.arm.com/");
-  assert.equal(byTicker.TSM.lastCheckedOn, "2026-09-23");
-  assert.equal(calendarEvents.some((event) => event.ticker === "TSM"), false);
+  assert.equal(byTicker.TSM.lastCheckedOn, "2026-09-25");
+  assert.equal(calendarEvents.some((event) => event.ticker === "TSM"), true);
 });
 
 test("calendar UI distinguishes a completed source check from an inconclusive review", () => {

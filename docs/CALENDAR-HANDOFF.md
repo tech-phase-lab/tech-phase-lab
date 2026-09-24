@@ -1331,3 +1331,27 @@ remain unchanged; this hourly rotation did not claim an additional source
 check. Continue with MSFT, MU, NFLX, QCOM, SNDK, TSLA and TSM, then rotate to
 the oldest pending entries. Projected dates and historical-only pages must not
 be promoted to confirmed calendar events.
+
+## Forty-seventh company batch reviewed on 2026-09-25
+
+The seven oldest conclusive entries were rechecked against their first-party
+calendars or announcements. TSMC now publishes a confirmed Q3 2026 earnings
+conference and call on October 15 at 14:00 Taipei time; that call start is
+added without inventing a separate release time. Micron and Netflix remain
+unchanged, while Sandisk and Tesla still publish only past earnings entries.
+
+| Ticker | Result | Official source / evidence |
+| --- | --- | --- |
+| MSFT | Attempted; prior check retained | The official Upcoming Events page exposed navigation and annual-report content but no inspectable dated schedule state. `lastAttemptedOn` advances; the earlier conclusive check remains historical. |
+| MU | Confirmed, unchanged | Micron's August 26 announcement still schedules its fiscal Q4 2026 call for September 30 at 14:30 Mountain. |
+| NFLX | Confirmed, unchanged | Netflix's September 14 announcement still schedules the Q3 results release for approximately October 20 at 13:01 Pacific and its interview for 13:45 Pacific. |
+| QCOM | Attempted; prior check retained | The official Investor Events page exposed an empty Upcoming Events section without an explicit no-events statement. `lastAttemptedOn` advances; the earlier conclusive check remains historical. |
+| SNDK | Checked; no future earnings date | The complete official Events list begins with September 9 under Past Events and contains no upcoming section or future entry. |
+| TSLA | Checked; no future earnings date | Tesla's official Documents and Events table still ends with Q2 2026 on July 22 and contains no Q3 earnings date. |
+| TSM | Confirmed; event added | TSMC's official Financial Calendar now lists “TSMC 3Q'26 Results - Earnings Conference and Conference Call” for October 15, 2026 from 14:00 to 15:30 Asia/Taipei. Only the 14:00 call start is recorded. |
+
+The BLS and Federal Reserve schedules were already rechecked earlier in the
+same 2026-09-25 daily maintenance cycle. Their confirmed entries remain
+unchanged. Continue the company rotation from the oldest pending entries;
+empty dynamic sections remain inconclusive and must not be converted to
+forecast dates.

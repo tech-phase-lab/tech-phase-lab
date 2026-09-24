@@ -58,6 +58,12 @@ export const calendarEvents: CalendarEvent[] = [
     note: { ja: "公開は予定時刻の前後です。経営陣インタビューは44分後を予定しています。", en: "Approximate release time. The management interview is scheduled 44 minutes later." },
   },
   {
+    id: "tsm-q3-2026-call", ticker: "TSM", kind: "earnings" as const, title: { ja: "TSMC 決算説明会（2026年Q3）", en: "TSMC Q3 2026 earnings conference and call" },
+    startsAt: "2026-10-15T14:00:00+08:00", sourceTimezone: "Asia/Taipei", sourceName: "TSMC IR",
+    sourceUrl: "https://investor.tsmc.com/english/financial-calendar",
+    note: { ja: "公式カレンダーに掲載された説明会の開始予定です。決算資料の公開時刻を示すものではありません。", en: "Scheduled conference start from the official calendar, not the publication time of the earnings release." },
+  },
+  {
     id: "gev-q3-2026-webcast", ticker: "GEV", kind: "earnings" as const, title: { ja: "GE Vernova 決算説明会（2026年Q3）", en: "GE Vernova Q3 2026 earnings webcast" },
     startsAt: "2026-10-28T07:30:00-04:00", sourceTimezone: "America/New_York", sourceName: "GE Vernova IR",
     sourceUrl: "https://www.gevernova.com/investors/events/3rd-quarter-2026-earnings-webcast",
