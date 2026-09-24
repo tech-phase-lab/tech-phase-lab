@@ -23,7 +23,7 @@ export type DateOnlyCalendarEvent = {
   note?: Copy;
 };
 
-export const calendarReviewedOn = "2026-09-24";
+export const calendarReviewedOn = "2026-09-25";
 const blsUrl = "https://www.bls.gov/schedule/2026/";
 const labels: Record<string, Copy> = {
   jobs: { ja: "米国雇用統計", en: "U.S. employment report" },
