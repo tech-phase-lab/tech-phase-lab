@@ -1374,3 +1374,34 @@ same 2026-09-25 daily maintenance cycle. Their confirmed entries remain
 unchanged. Continue the company rotation from the oldest pending entries;
 empty dynamic sections remain inconclusive and must not be converted to
 forecast dates.
+
+## Forty-eighth company batch reviewed on 2026-09-25
+
+The next ten pending entries were rechecked against their first-party schedule
+or investor-relations pages. None supplied a confirmed future earnings date or
+an explicit no-events statement. Their existing same-day `lastAttemptedOn`
+values remain unchanged, `lastCheckedOn` remains null and no forecast date is
+added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| GOOGL | Pending | The official Events page exposed only its heading and navigation, with no inspectable dated schedule state or explicit no-events statement. |
+| KLAC | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| LITE | Pending | The official page exposed Latest Events, Latest Presentation and archived-item headings without a dated future earnings item or explicit no-events statement. |
+| MRVL | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| NBIS | Pending | The official Investor Hub still listed its September Goldman Sachs and Citi conference appearances as the latest events, with no future earnings announcement or explicit no-events statement. |
+| NOW | Pending | The official Events & Presentations page exposed only archived-event and archived-presentation sections, without a dated upcoming earnings item or explicit no-events statement. |
+| NVDA | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| ORCL | Pending | The official page exposed Featured Event and Upcoming events headings without an inspectable dated item or explicit no-events statement. |
+| PANW | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| PLTR | Pending | The official Events page exposed only investor-relations navigation, with no inspectable schedule state or explicit no-events statement. |
+
+The BLS October schedule was rechecked on 2026-09-25 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar still lists the October 27-28 and
+December 8-9 meetings without future statement or press-conference clock times.
+No calendar event changed.
+
+Continue with SKHY, SNOW, VRT, AAPL, AMZN, ANET, ARM, AVGO, BE and COHR.
+Empty dynamic sections, historical-only pages and transport failures remain
+inconclusive and must not be promoted to forecast dates.
