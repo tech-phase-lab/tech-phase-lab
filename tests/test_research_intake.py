@@ -2588,13 +2588,22 @@ class IntakeTests(unittest.TestCase):
             "https://investors.delltechnologies.com/rss/news-releases.xml",
         )
         self.assertEqual(m.PROVIDERS["DELL"]["requestTimeoutSeconds"], 8)
-        self.assertEqual(m.PROVIDERS["AVGO"]["requestTimeoutSeconds"], 8)
+        avgo_rss = m.monitoring_sources("AVGO")[0]
+        self.assertEqual(avgo_rss["route"], "primary")
+        self.assertEqual(avgo_rss["format"], "rss")
+        self.assertEqual(
+            avgo_rss["url"],
+            "https://investors.broadcom.com/rss/news-releases.xml",
+        )
+        self.assertEqual(m.PROVIDERS["AVGO"]["requestTimeoutSeconds"], 12)
         self.assertEqual(m.PROVIDERS["SNDK"]["requestTimeoutSeconds"], 8)
         feed = b'''<rss><channel><item><title>Dell AI systems update</title><link>https://investors.delltechnologies.com/news-releases/news-release-details/dell-ai-systems-update</link></item></channel></rss>'''
         self.assertEqual(
             len(m.feed_links(feed, "DELL")),
             1,
         )
+        avgo_feed = b'''<rss><channel><item><title>Broadcom AI release</title><link>https://investors.broadcom.com/news-releases/news-release-details/broadcom-ai-release</link></item></channel></rss>'''
+        self.assertEqual(len(m.feed_links(avgo_feed, "AVGO")), 1)
 
     def test_us_issuer_coverage_has_sec_filing_backup(self):
         # EDGAR is an independent, no-cost first-party disclosure route. SKHY

@@ -228,9 +228,9 @@
     "ticker": "AVGO",
     "name": "Broadcom",
     "sector": "semiconductors",
-    "indexUrl": "https://investors.broadcom.com/financial-information/financial-news-releases",
-    "format": "html",
-    "requestTimeoutSeconds": 8,
+    "indexUrl": "https://investors.broadcom.com/rss/news-releases.xml",
+    "format": "rss",
+    "requestTimeoutSeconds": 12,
     "allowedHosts": [
       "data.sec.gov",
       "investors.broadcom.com",
