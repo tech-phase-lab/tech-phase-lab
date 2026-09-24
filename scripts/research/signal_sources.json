@@ -164,5 +164,20 @@
     "intervalSeconds": 120,
     "reuse": "review-required",
     "articleBodyClass": "article-content-container"
+  },
+  {
+    "id": "arista-blog",
+    "name": "Arista Networks Blog",
+    "kind": "publisher-update",
+    "url": "https://blogs.arista.com/blog/rss.xml",
+    "format": "feed",
+    "allowedHosts": [
+      "blogs.arista.com"
+    ],
+    "tickers": [
+      "ANET"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
   }
 ]

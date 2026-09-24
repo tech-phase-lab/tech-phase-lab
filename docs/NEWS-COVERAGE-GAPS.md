@@ -1,8 +1,8 @@
 # News coverage: missed-event investigation
 
 Checked: 2026-09-24 UTC. The initial investigation is followed by a local
-implementation and real-source verification below. Remote deployment and
-publication remain off.
+implementation and real-source verification below. The isolated staging deployment is now running; publication remains off.
+See MONITOR-ISOLATION-AND-COVERAGE.md for the current deployment evidence.
 
 ## Confirmed gaps
 
@@ -130,10 +130,8 @@ where possible rather than building a second article store.
   body-only company matches, invalid XML, failed first fetch and recovery,
   unapproved destinations, opt-in worker shutdown, and editor authentication.
 - Real HTTP handler authentication and proxy forwarding were checked separately.
-  Full browser-to-service verification remains incomplete: this environment had
-  no browser binary and the browser download failed. Mobile/desktop appearance
-  has not been visually verified. Do not present the build as deployed or as a
-  successful complete live browser check.
+  Historical local verification limitation (resolved for staging below): this environment had
+  no browser binary and the browser download failed. The later staging browser check is recorded under Deployment state.
 
 ## Still required
 
@@ -144,12 +142,20 @@ where possible rather than building a second article store.
 - Permissions for commercial publisher material, a reviewed publication policy,
   and real live end-to-end latency measurement.
 
-## Deployment state
+## Deployment state (updated 2026-09-24)
 
-Local read-only ingestion was executed. No paid API, external notification or
-remote recurring job/deployment was enabled. Preview push remains blocked pending
-confirmation that the preview branch cannot update the Railway production
-monitor identified in the previous deployment review.
+Isolated Railway `research-staging` is running with its own volume and newly
+issued read/editor credentials. The old monitor's automatic deployment was
+disabled before pushing. Vercel Preview variables are restricted to
+`codex/research-preview` and now point to the staging monitor. Main and Vercel
+Production were not changed. Paid AI and external delivery remain disabled.
+
+Browser verification succeeded through the Preview editor proxy: the private
+queue showed 174 imported records at 03:09 UTC, including the Nebius Platinum
+and spot-pricing blog posts and the SemiAnalysis ClusterMAX article. These are
+baseline imports, not measured real-time detections. Individual failures and
+pending article bodies remain visible; 24-hour continuity is not yet verified.
+
 
 ## Anthropic expansion — 2026-09-24
 
