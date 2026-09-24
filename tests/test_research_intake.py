@@ -2596,7 +2596,7 @@ class IntakeTests(unittest.TestCase):
             "https://investors.broadcom.com/rss/news-releases.xml",
         )
         self.assertEqual(m.PROVIDERS["AVGO"]["requestTimeoutSeconds"], 12)
-        self.assertEqual(m.PROVIDERS["SNDK"]["requestTimeoutSeconds"], 8)
+        self.assertEqual(m.PROVIDERS["SNDK"]["requestTimeoutSeconds"], 12)
         feed = b'''<rss><channel><item><title>Dell AI systems update</title><link>https://investors.delltechnologies.com/news-releases/news-release-details/dell-ai-systems-update</link></item></channel></rss>'''
         self.assertEqual(
             len(m.feed_links(feed, "DELL")),
