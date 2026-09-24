@@ -869,3 +869,34 @@ press-conference clock times. No calendar event changed.
 Continue with AAPL, AMZN, ANET, ARM, AVGO, BE, COHR, CRDO, CRM and CRWV. Empty
 dynamic sections, historical-only pages and transport failures remain
 inconclusive and must not be promoted to forecast dates.
+
+## Thirty-first company batch reviewed on 2026-09-24
+
+The next ten pending entries were rechecked against their first-party schedule,
+news or investor-relations pages. None supplied a confirmed future earnings
+date or an explicit no-events statement. Their existing 2026-09-24
+`lastAttemptedOn` values already record the same-day attempt, while
+`lastCheckedOn` remains null and no forecast date is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| AAPL | Pending | The official page exposed Investor Updates and Quarterly Earnings Reports headings without a dated future item or explicit no-events statement. |
+| AMZN | Pending | The official Events page exposed empty Upcoming Events and Past Events headings without an explicit no-events statement. |
+| ANET | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| ARM | Pending | The official investor page still ended with its July 29 fiscal Q1 2027 results and event, with no future timing announcement or explicit no-events statement. |
+| AVGO | Pending | The official Financial News list still ended with the September 2 fiscal Q3 results and contained no future timing announcement or explicit no-events statement. |
+| BE | Pending | The official Event Calendar exposed empty Upcoming Events and archive headings without an explicit no-events statement. |
+| COHR | Pending | The official Financial Releases list still ended with the August 12 fiscal Q4 and full-year results; no future timing announcement or explicit no-events statement was present. |
+| CRDO | Pending | The official Events page exposed empty Upcoming & Recent Events and Archived Events headings without an explicit no-events statement. |
+| CRM | Pending | The official Investor Events page exposed empty Upcoming & Recent Events and Archived Events headings without an explicit no-events statement. |
+| CRWV | Pending | The official Events & Presentations page exposed empty Upcoming & Recent Events and archive headings without an explicit no-events statement. |
+
+The BLS October schedule was rechecked on 2026-09-24 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve page, last updated September 16, still lists
+the October 27-28 and December 8-9 meetings without future statement or
+press-conference clock times. No calendar event changed.
+
+Continue with GOOGL, KLAC, LITE, MRVL, NBIS, NOW, NVDA, ORCL, PANW and PLTR.
+Empty dynamic sections, historical-only pages and transport failures remain
+inconclusive and must not be promoted to forecast dates.
