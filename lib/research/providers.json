@@ -687,6 +687,11 @@
         "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001571996&type=8-K&owner=exclude&count=40&output=atom",
         "format": "rss",
         "label": "SEC 8-K"
+      },
+      {
+        "url": "https://investors.delltechnologies.com/rss/news-releases.xml",
+        "format": "rss",
+        "label": "Dell Investor News RSS"
       }
     ]
   },

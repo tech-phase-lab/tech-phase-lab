@@ -2552,6 +2552,21 @@ class IntakeTests(unittest.TestCase):
                 self.assertIn(rule["host"], m.HOSTS[ticker])
                 self.assertIsNotNone(m.re.compile(rule["pattern"]))
 
+        dell_rss = next(
+            source for source in m.monitoring_sources("DELL")
+            if source.get("label") == "Dell Investor News RSS"
+        )
+        self.assertEqual(dell_rss["format"], "rss")
+        self.assertEqual(
+            dell_rss["url"],
+            "https://investors.delltechnologies.com/rss/news-releases.xml",
+        )
+        feed = b'''<rss><channel><item><title>Dell AI systems update</title><link>https://investors.delltechnologies.com/news-releases/news-release-details/dell-ai-systems-update</link></item></channel></rss>'''
+        self.assertEqual(
+            len(m.feed_links(feed, "DELL")),
+            1,
+        )
+
     def test_us_issuer_coverage_has_sec_filing_backup(self):
         # EDGAR is an independent, no-cost first-party disclosure route. SKHY
         # is excluded because this U.S.-listed roster entry has no matching
