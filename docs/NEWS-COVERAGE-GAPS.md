@@ -281,3 +281,43 @@ an investment recommendation, deduplicate repeated records, and require editoria
 review before public display. The existing generic publisher monitor is not yet
 connected to this structured API and the user-facing live news feed is not yet
 enabled.
+
+### X source scan: analyst target-price changes — 2026-09-24
+
+Initial scan identified these candidate public sources. X account streams should
+be limited to a reviewed set of accounts and the current 22-company roster;
+these accounts post about the wider market, not only Tech Phase tickers.
+
+| Candidate | Evidence and fit | Initial priority |
+|---|---|---|
+| TipRanks `@TipRanks` | The user's example is from this account. Search-indexed X posts also show Microsoft and Oracle target changes with old/new values and rating context. TipRanks' site has a daily analyst-ratings section, and its enterprise API is separately marketed for structured ratings data. | **High: test first.** Best match to the requested post format; check coverage and arrival delay for our watchlist. |
+| The Fly `@theflynews` | The Fly's public feed displays timestamped analyst actions, including upgrades and target-price changes, alongside broader company news. Its X account links to ticker pages; sampled posts include analyst calls and target changes. Feed access prompts for a trial, so public visibility is not a commercial reuse grant. | **High: test second.** Strong newsroom candidate; high volume and broader scope need filtering. |
+| Wall St Engine `@wallstengine` | Sampled X posts include detailed target-price and rating changes, sometimes with substantial excerpts from analyst research. Its source verification, update delay, and completeness have not been established. | **Supplementary only.** Monitor only after accuracy checks; do not reuse its research-note excerpts. |
+| Benzinga | The public Ratings pages expose structured analyst/firm, action, rating and target-price changes. Benzinga's API page says overnight changes are displayed three hours before the US market open and intraday changes are posted during the session. A systematic target-change X stream was not confirmed in this scan. | **Strong data/API fallback, not yet an X-first source.** Continue the existing vendor inquiry for price and display rights. |
+| MarketBeat | Its public ratings pages describe newly published upgrades and price-target changes across US, UK and Canadian stocks. A systematic X account feed for the same events was not confirmed here. | **Discovery candidate.** Evaluate only if the first X accounts miss material events. |
+
+The individual-influencer search did not identify a broad-coverage analyst who
+consistently posts every target change. Influencer posts are useful as leads but
+are selective opinions; the account's reach or reputation is not evidence that
+the underlying broker action has been checked. Prefer a traceable news desk or
+ratings feed for automatic coverage, with influencers as supplemental sources.
+
+### Rewriting and republication boundary
+
+Japanese Agency for Cultural Affairs guidance says bare facts, data and ideas
+are not, by themselves, copyright works. That supports writing an original,
+fact-focused Tech Phase notice instead of copying an account's prose. It does
+not by itself settle X API contract terms, source licensing, or whether a
+subscriber-facing product may present X-derived values. X's current developer
+policy separately restricts redistribution of X Content and requires commercial
+use to be on an appropriate paid tier; changing the wording alone does not
+remove those platform obligations.
+
+Preferred editorial form after source/terms review: independently verify the
+action from the analyst firm, an authorized news feed, or another permitted
+source; state ticker, firm, analyst (when known), rating change, old/new target,
+currency, publication time and a source link in Tech Phase's own concise wording;
+add only Tech Phase's own relevant context. Avoid importing the influencer's
+commentary, distinctive explanation, images, or long report excerpts. Keep an
+X-only signal private until X-derived data display terms are confirmed. Store
+source IDs and honor edits/deletions and current-content requirements.
