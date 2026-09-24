@@ -296,6 +296,8 @@ class AutomaticMonitor:
 
     def derive_health(self, state):
         """Add computed health fields to a private state copy and return issue codes."""
+        priority_coverage = priority_source_coverage(state, self.tickers)
+        state["prioritySources"] = priority_coverage
         cycle_age = timestamp_age_seconds(state["lastCycleAt"])
         state["lastCycleAgeSeconds"] = cycle_age
         backup = state["backup"]
@@ -318,6 +320,11 @@ class AutomaticMonitor:
         issues = []
         if state["ready"] and (cycle_age is None or cycle_age > self.monitor_stale_seconds):
             issues.append("monitor-stale")
+        if state["ready"] and state.get("lastCycleCompanies", 0) > 0:
+            if priority_coverage["pending"]:
+                issues.append("priority-source-pending")
+            if priority_coverage["degraded"]:
+                issues.append("priority-source-degraded")
         if backup["status"] == "failed":
             issues.append("backup-failed")
         elif backup["status"] == "overdue":
@@ -394,6 +401,16 @@ class AutomaticMonitor:
                 )
             else:
                 monitor.resolve_operational_incident(db, "discovery:worker")
+            priority_issue = next(
+                (issue for issue in issues if issue.startswith("priority-source-")), None
+            )
+            if priority_issue:
+                monitor.record_operational_incident(
+                    db, "discovery:priority-sources", "official-discovery",
+                    "priority-five", "warning", priority_issue
+                )
+            else:
+                monitor.resolve_operational_incident(db, "discovery:priority-sources")
             body_issue = next(
                 (issue for issue in issues if issue.startswith("body-fetch-")), None
             )
@@ -487,7 +504,6 @@ class AutomaticMonitor:
     def public_state(self):
         with self.state_lock:
             state = json.loads(json.dumps(self.state))
-        state["prioritySources"] = priority_source_coverage(state, self.tickers)
         state["fetchCache"] = monitor.fetch_cache_stats()
         with self.db_lock, monitor.connect(self.db_path) as db:
             state["generation"].update(monitor.generation_queue_stats(

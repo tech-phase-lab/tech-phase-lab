@@ -61,6 +61,8 @@ function monitorIssue(monitor: MonitorState | null) {
   if (issues.includes("body-fetch-failed")) return "本文取得キューの内部処理を再試行しています";
   if (issues.includes("body-fetch-stale")) return "本文取得キューの永続ポーリング記録が期限を超過しています";
   if (issues.includes("discovery-poll-stale")) return "公式一覧の永続巡回記録が期限を超過しています";
+  if (issues.includes("priority-source-pending")) return "優先5銘柄に現プロセス未確認の公式経路があります";
+  if (issues.includes("priority-source-degraded")) return "優先5銘柄に要確認の公式経路があります";
   return null;
 }
 function incidentStatus(monitor: MonitorState | null) {

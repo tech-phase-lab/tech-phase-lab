@@ -57,6 +57,8 @@ test("operations preview exposes bounded cache pressure without cached contents"
   assert.match(liveTypes, /pollOverdue/);
   assert.match(intakeDashboard, /body-fetch-stale/);
   assert.match(intakeDashboard, /discovery-poll-stale/);
+  assert.match(intakeDashboard, /priority-source-pending/);
+  assert.match(intakeDashboard, /priority-source-degraded/);
   assert.match(intakeDashboard, /最終ポーリング/);
   assert.match(intakeDashboard, /notModified24Hours/);
   assert.match(liveTypes, /detectionLatencySamples24Hours/);

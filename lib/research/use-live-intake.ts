@@ -31,7 +31,7 @@ export type MonitorState = {
   };
   health?: {
     status: "starting" | "ready" | "degraded";
-    issues: Array<"monitor-stale" | "backup-failed" | "backup-overdue" | "incident-watch-failed" | "body-fetch-failed" | "body-fetch-stale" | "discovery-poll-stale">;
+    issues: Array<"monitor-stale" | "backup-failed" | "backup-overdue" | "incident-watch-failed" | "body-fetch-failed" | "body-fetch-stale" | "discovery-poll-stale" | "priority-source-pending" | "priority-source-degraded">;
     monitorStaleAfterSeconds: number;
   };
   incidentWatch?: {

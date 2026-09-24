@@ -175,6 +175,60 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(coverage["pending"], 2)
         self.assertEqual(coverage["omitted"], 3)
 
+    def test_priority_source_health_records_and_resolves_degraded_coverage(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        checked_at = service.utc_now()
+        with app.state_lock:
+            app.state.update({
+                "ready": True, "lastCycleAt": checked_at, "lastCycleCompanies": 5,
+                "companies": {
+                    ticker: {
+                        "status": "degraded" if ticker == "VRT" else "ok",
+                        "checkedAt": checked_at,
+                    }
+                    for ticker in service.PRIORITY_SEC_TICKERS
+                },
+            })
+        degraded = app.public_state()
+        self.assertIn("priority-source-degraded", degraded["health"]["issues"])
+        self.assertEqual(degraded["prioritySources"]["degraded"], 1)
+        app.sync_health_incidents()
+        with monitor.connect(self.db_path) as db:
+            incident = db.execute(
+                "SELECT status,last_error_code AS error_code "
+                "FROM operational_incidents WHERE incident_key=?",
+                ("discovery:priority-sources",),
+            ).fetchone()
+            self.assertEqual(dict(incident), {
+                "status": "open", "error_code": "priority-source-degraded",
+            })
+
+        with app.state_lock:
+            app.state["companies"]["VRT"]["status"] = "fallback"
+        app.sync_health_incidents()
+        recovered = app.public_state()
+        self.assertNotIn("priority-source-degraded", recovered["health"]["issues"])
+        with monitor.connect(self.db_path) as db:
+            self.assertEqual(db.execute(
+                "SELECT status FROM operational_incidents WHERE incident_key=?",
+                ("discovery:priority-sources",),
+            ).fetchone()[0], "resolved")
+
+    def test_priority_source_health_marks_post_cycle_missing_checks(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        checked_at = service.utc_now()
+        with app.state_lock:
+            app.state.update({
+                "ready": True, "lastCycleAt": checked_at, "lastCycleCompanies": 4,
+                "companies": {
+                    ticker: {"status": "ok", "checkedAt": checked_at}
+                    for ticker in service.PRIORITY_SEC_TICKERS[:-1]
+                },
+            })
+        state = app.public_state()
+        self.assertIn("priority-source-pending", state["health"]["issues"])
+        self.assertEqual(state["prioritySources"]["pending"], 1)
+
     def test_discovery_poll_metrics_reject_invalid_or_unbounded_values(self):
         timestamp = service.utc_now()
         with monitor.connect(self.db_path) as db:
