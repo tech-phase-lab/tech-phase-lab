@@ -931,3 +931,26 @@ No calendar event changed.
 Continue with SKHY, SNOW and VRT, then rotate again from AAPL. Empty dynamic
 sections, historical-only pages and transport failures remain inconclusive and
 must not be promoted to forecast dates.
+
+## Thirty-third company batch reviewed on 2026-09-24
+
+SKHY, SNOW and VRT were rechecked against their first-party pages. No confirmed
+future earnings date or explicit no-events statement was present, so their
+existing same-day `lastAttemptedOn` values remain unchanged, `lastCheckedOn`
+remains null and no forecast date was added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| SKHY | Pending | The official English IR list still ended with the August 19 shareholder-return announcement and July 29 second-quarter results; it contained no future earnings announcement or explicit no-events statement. |
+| SNOW | Pending | The official Events & Presentations page still exposed an empty Upcoming Events section and archive headings without an explicit no-events statement. |
+| VRT | Pending | The official Events & Presentations page still exposed empty Latest Events and Latest Presentation sections plus its archive selector, without a future earnings item or explicit no-events statement. |
+
+The BLS October schedule was rechecked on 2026-09-24 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar still lists the October 27-28 and
+December 8-9 meetings without future statement or press-conference clock times.
+No calendar event changed.
+
+Continue with AAPL, AMZN, ANET, ARM, AVGO, BE, COHR, CRDO, CRM and CRWV. Empty
+dynamic sections, historical-only pages and transport failures remain
+inconclusive and must not be promoted to forecast dates.
