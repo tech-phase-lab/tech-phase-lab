@@ -34,6 +34,11 @@ reviewer must compare the official source, evidence quotes, factual summary,
 impact interpretation, and numbers. The private audit history retains that
 acknowledgement; public data excludes AI-assisted drafts whose matching
 approval lacks it.
+If the AI input was shortened by the configured source-character limit,
+approval also requires a separate acknowledgement that the reviewer checked
+the full stored source and official link, including the range not sent to the
+model. The private audit history retains this second acknowledgement, and the
+public snapshot fails closed when the matching approval does not contain it.
 The private news-review header shows the official publication date exactly as
 stored, without manufacturing a clock time, plus the source discovery and most
 recent successful body-check timestamps converted to JST. The AI generation

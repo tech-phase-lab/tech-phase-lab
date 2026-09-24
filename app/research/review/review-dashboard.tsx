@@ -12,7 +12,8 @@ type Evidence = { summary: string[]; impact: string[] };
 type ReviewHistory = {
   source_sha256: string; draft_validation_sha256: string | null;
   decision: "approved" | "held" | "rejected";
-  reviewed_at: string; reviewer: string; reason: string; ai_verification: boolean; current_revision: boolean;
+  reviewed_at: string; reviewer: string; reason: string; ai_verification: boolean;
+  full_source_verification: boolean; current_revision: boolean;
 };
 type ReviewCounts = {
   total: number; needs_draft: number; awaiting_review: number; stale: number;
@@ -324,12 +325,17 @@ export default function ReviewDashboard() {
         reviewer: form.get("reviewer"),
         reason: form.get("reason"),
         aiVerification: form.get("aiVerification") === "on",
+        fullSourceVerification: form.get("fullSourceVerification") === "on",
       } });
       await load("人間の判断を記録しました。承認しても会員への自動配信は行いません。");
     } catch (error) {
       const code = error instanceof Error ? error.message : "unknown";
       if (code === "draft-revision-mismatch") {
         await load("別の編集者が下書きを更新したため、最新版を再読み込みしました。内容を確認し直してください。");
+      } else if (code === "ai-draft-human-verification-required") {
+        setMessage("AI下書きの承認には、公式原文・根拠・数値を人間が照合した確認が必要です。");
+      } else if (code === "truncated-ai-draft-full-source-verification-required") {
+        setMessage("短縮入力のAI下書きは、AIへ送信されなかった範囲を含む原文全体と公式リンクの確認が必要です。");
       } else {
         setMessage(`判断の保存失敗：${code}`);
       }
@@ -448,9 +454,10 @@ export default function ReviewDashboard() {
           </aside>
           <div className={styles.row}><label>判断<select name="decision"><option value="held">保留</option><option value="approved">承認</option><option value="rejected">却下</option></select></label><label>確認者<input name="reviewer" required minLength={2} /></label></div>
           {selected.generation_provider && <label><input type="checkbox" name="aiVerification" />公式原文と根拠引用を参照し、AIの事実要約・影響解釈・数値を人間が照合しました<small>AI下書きの承認時は必須です。保留・却下ではチェック不要です。</small></label>}
+          {selected.generation_provider && selected.generation_source_truncated > 0 && <label><input type="checkbox" name="fullSourceVerification" />AIへ送信されなかった範囲を含む原文全体と公式リンクを人間が確認しました<small>入力上限で原文を短縮したAI下書きの承認時は、通常のAI照合とは別に必須です。</small></label>}
           <label>判断理由<textarea name="reason" required minLength={5} /></label><button disabled={busy || !selected.review_preflight.ready || !selected.draft_validation_sha256}>判断を記録</button>
         </form>
-        {selectedReviewHistory.length > 0 && <details className={styles.evidence}><summary>判断履歴（直近{selectedReviewHistory.length}件）</summary><ol>{selectedReviewHistory.map((entry, index) => <li key={`${entry.reviewed_at}-${index}`}><div><b>{labels[entry.decision]}</b><span>{entry.reviewed_at.replace("T", " ").replace("+00:00", " UTC")} · {entry.reviewer}{entry.current_revision ? " · 現在の下書き" : " · 過去の下書き"}{entry.ai_verification ? " · AI下書きの人間照合済み" : ""}</span></div><p>{entry.reason}</p><small>原文 {entry.source_sha256.slice(0, 12)}…{entry.draft_validation_sha256 ? ` · 下書き ${entry.draft_validation_sha256.slice(0, 12)}…` : " · 旧履歴（下書き指紋なし）"}</small></li>)}</ol></details>}
+        {selectedReviewHistory.length > 0 && <details className={styles.evidence}><summary>判断履歴（直近{selectedReviewHistory.length}件）</summary><ol>{selectedReviewHistory.map((entry, index) => <li key={`${entry.reviewed_at}-${index}`}><div><b>{labels[entry.decision]}</b><span>{entry.reviewed_at.replace("T", " ").replace("+00:00", " UTC")} · {entry.reviewer}{entry.current_revision ? " · 現在の下書き" : " · 過去の下書き"}{entry.ai_verification ? " · AI下書きの人間照合済み" : ""}{entry.full_source_verification ? " · 短縮前の原文全体を確認済み" : ""}</span></div><p>{entry.reason}</p><small>原文 {entry.source_sha256.slice(0, 12)}…{entry.draft_validation_sha256 ? ` · 下書き ${entry.draft_validation_sha256.slice(0, 12)}…` : " · 旧履歴（下書き指紋なし）"}</small></li>)}</ol></details>}
       </article>}
     </div>}
     {mode === "annual" && annualCounts.total > 0 && <section className={styles.annualQueue} aria-label="年次報告書レビューキュー">

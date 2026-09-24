@@ -1864,6 +1864,64 @@ class ResearchServiceTests(unittest.TestCase):
         history = app.editorial_queue(5)["items"][0]["review_history"]
         self.assertTrue(history[0]["ai_verification"])
 
+    def test_truncated_ai_draft_requires_full_source_verification_before_publication(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        url = "https://nebius.com/newsroom/new-release"
+        with monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            monitor.save_source_check(db, row, {
+                "sha256": "8" * 64, "contentType": "text/html", "contentBytes": 80,
+                "extractedText": "Capacity will increase in 2027. Execution remains subject to demand.",
+                "extractedChars": 69,
+            })
+        generated = {
+            "draft": {
+                "summaryJa": "公式発表によると、AI向け容量は2027年に増加する計画です。",
+                "impactLabel": "mixed",
+                "impactJa": "供給能力の拡大余地がありますが、実行と需要の確認が引き続き必要です。",
+                "confidence": "medium",
+                "evidence": {
+                    "summary": ["Capacity will increase in 2027."],
+                    "impact": ["Execution remains subject to demand."],
+                },
+            },
+            "audit": {
+                "provider": "openai-responses", "model": "test-model",
+                "responseId": "resp_truncated", "sourceTruncated": True,
+                "inputTokens": 400, "outputTokens": 120, "totalTokens": 520,
+            },
+        }
+        with patch.object(brief_generator, "generate_draft", return_value=generated):
+            app.generate_brief({"url": url, "sha256": "8" * 64})
+        item = app.editorial_queue(5)["items"][0]
+        self.assertEqual(item["generation_source_truncated"], 1)
+        payload = {
+            "url": url, "sha256": "8" * 64,
+            "validationSha256": item["draft_validation_sha256"],
+            "decision": "approved", "reviewer": "human-editor",
+            "reason": "短縮前を含む公式原文と根拠を確認しました",
+            "aiVerification": True,
+        }
+        with self.assertRaisesRegex(
+            ValueError, "truncated-ai-draft-full-source-verification-required"
+        ):
+            app.decide_brief(payload)
+        self.assertEqual(app.public_snapshot()["briefs"], [])
+
+        app.decide_brief({**payload, "fullSourceVerification": True})
+        self.assertEqual(len(app.public_snapshot()["briefs"]), 1)
+        history = app.editorial_queue(5)["items"][0]["review_history"]
+        self.assertTrue(history[0]["ai_verification"])
+        self.assertTrue(history[0]["full_source_verification"])
+
+        with monitor.connect(self.db_path) as db:
+            db.execute(
+                "UPDATE brief_review_history SET full_source_verification=0 WHERE url=?",
+                (url,),
+            )
+            db.commit()
+        self.assertEqual(app.public_snapshot()["briefs"], [])
+
     def test_manual_generation_uses_the_same_rolling_budget(self):
         url = "https://nebius.com/newsroom/new-release"
         with patch.dict(os.environ, {
