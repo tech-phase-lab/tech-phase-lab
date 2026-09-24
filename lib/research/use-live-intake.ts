@@ -111,7 +111,8 @@ export type MonitorState = {
   pendingBodies?: number;
   bodyBacklog?: {
     eligible: number; hostDeferred?: number; activeHostCircuits?: number;
-    nextHostProbeAt?: string | null; retryDeferred: number; accessRestricted: number;
+    nextHostProbeAt?: string | null; dueHostCircuits?: number; scheduledHostProbes?: number;
+    retryDeferred: number; accessRestricted: number;
     rateLimited?: number;
     recheckDeferred: number; total: number; measuredAt: string | null;
   };

@@ -88,6 +88,10 @@ Recovery-probe outcomes are persisted as URL-free aggregates. The operations
 preview shows the latest recovery, renewed restriction or transient failure and
 24-hour counts after a restart, without returning the hostname, URL, HTTP code
 or exception text.
+The same view also reports how many expired circuits have an eligible queued
+body and how many single probes were admitted to the current batch. These are
+aggregate counts only: a due circuit with no eligible body is not presented as
+ready, and no hostname or URL is returned.
 After a restricted recovery probe reopens the circuit, subsequent worker cycles
 perform no request to that hostname until the new retry deadline; those idle
 cycles also do not increment the recovery-probe counters.

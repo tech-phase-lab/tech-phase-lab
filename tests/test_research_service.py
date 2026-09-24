@@ -917,6 +917,8 @@ class ResearchServiceTests(unittest.TestCase):
             "hostDeferred": 0,
             "activeHostCircuits": 0,
             "nextHostProbeAt": None,
+            "dueHostCircuits": 0,
+            "scheduledHostProbes": 0,
             "retryDeferred": 1,
             "accessRestricted": 1,
             "rateLimited": 0,
@@ -1003,6 +1005,8 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(pending, 2)
         self.assertEqual(len(rows), 1)
         self.assertEqual(app.public_state()["bodyBacklog"]["activeHostCircuits"], 0)
+        self.assertEqual(app.public_state()["bodyBacklog"]["dueHostCircuits"], 1)
+        self.assertEqual(app.public_state()["bodyBacklog"]["scheduledHostProbes"], 1)
 
         attempted = []
 
@@ -1033,6 +1037,8 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(rows, [])
         self.assertEqual(pending, 0)
         self.assertEqual(backlog["activeHostCircuits"], 1)
+        self.assertEqual(backlog["dueHostCircuits"], 0)
+        self.assertEqual(backlog["scheduledHostProbes"], 0)
         self.assertEqual(backlog["hostDeferred"], 1)
         self.assertEqual(backlog["retryDeferred"], 1)
         self.assertIsNotNone(backlog["nextHostProbeAt"])
@@ -1090,6 +1096,10 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertIn(rows[0]["url"], fresh_urls)
         self.assertEqual(monitor.source_hostname(rows[1]["url"]), "nebius.com")
         self.assertEqual(app.body_probe_urls, {rows[1]["url"]})
+        backlog = app.public_state()["bodyBacklog"]
+        self.assertEqual(backlog["dueHostCircuits"], 1)
+        self.assertEqual(backlog["scheduledHostProbes"], 1)
+        self.assertNotIn("nebius.com", json.dumps(backlog))
 
     def test_expired_host_circuit_probe_success_is_persisted_as_recovered(self):
         expired = datetime.now(timezone.utc) - timedelta(minutes=1)

@@ -343,6 +343,7 @@ class AutomaticMonitor:
             "bodyBacklog": {
                 "eligible": 0, "hostDeferred": 0,
                 "activeHostCircuits": 0, "nextHostProbeAt": None,
+                "dueHostCircuits": 0, "scheduledHostProbes": 0,
                 "retryDeferred": 0, "accessRestricted": 0, "rateLimited": 0,
                 "recheckDeferred": 0, "total": 0, "measuredAt": None,
             },
@@ -924,6 +925,11 @@ class AutomaticMonitor:
                     host_deferred += 1
                     continue
                 eligible_candidates.append(candidate)
+            eligible_hosts = {
+                monitor.source_hostname(candidate["url"])
+                for candidate in eligible_candidates
+            }
+            due_probe_hosts = probe_hosts.intersection(eligible_hosts)
 
             # Keep the highest-priority evidence candidate first, but reserve
             # spare batch capacity for expired host circuits. Without this,
@@ -975,7 +981,7 @@ class AutomaticMonitor:
                 rows = [by_url[url] for url in selected_urls if url in by_url]
             probe_urls = {
                 url for url in selected_urls
-                if monitor.source_hostname(url) in probe_hosts
+                if monitor.source_hostname(url) in due_probe_hosts
             }
         self.body_probe_urls = probe_urls
         with self.state_lock:
@@ -984,6 +990,8 @@ class AutomaticMonitor:
                 "hostDeferred": host_deferred,
                 "activeHostCircuits": len(blocked_hosts),
                 "nextHostProbeAt": next_host_probe_at,
+                "dueHostCircuits": len(due_probe_hosts),
+                "scheduledHostProbes": len(probe_urls),
                 "retryDeferred": int(backlog["retry_deferred"] or 0),
                 "accessRestricted": int(backlog["access_restricted"] or 0),
                 "rateLimited": int(backlog["rate_limited"] or 0),
