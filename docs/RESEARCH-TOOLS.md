@@ -34,6 +34,12 @@ reviewer must compare the official source, evidence quotes, factual summary,
 impact interpretation, and numbers. The private audit history retains that
 acknowledgement; public data excludes AI-assisted drafts whose matching
 approval lacks it.
+The private news-review header shows the official publication date exactly as
+stored, without manufacturing a clock time, plus the source discovery and most
+recent successful body-check timestamps converted to JST. The AI generation
+record also shows its saved timestamp in JST. These are separate observations:
+discovery or body-check time must not be presented as the issuer's publication
+time or as subscriber-delivery latency.
 
 Article-body batch metrics are persisted separately from the in-memory worker
 state. The operations preview can therefore show the last completed batch and

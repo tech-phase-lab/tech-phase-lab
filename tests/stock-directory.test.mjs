@@ -436,6 +436,12 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(editorRoute, /"actionable", "invalid", "draft", "held", "approved", "rejected"/);
   assert.match(editorRoute, /url\.searchParams\.set\("view", view\)/);
   assert.match(review, /速報レビューキュー/);
+  assert.match(review, /公式資料の時刻情報/);
+  assert.match(review, /公式発表日.*selected\.published_on/);
+  assert.match(review, /監視で発見.*formatJst\(selected\.discovered_at\)/);
+  assert.match(review, /本文を確認.*formatJst\(selected\.checked_at\)/);
+  assert.match(review, /timeZone: "Asia\/Tokyo"/);
+  assert.match(review, /selected\.generated_at \? ` · \$\{formatJst\(selected\.generated_at\)\}`/);
   assert.match(review, /reviewCounts\.awaiting_review/);
   assert.match(review, /reviewCounts\.machine_ready/);
   assert.match(review, /reviewCounts\.machine_blocked/);

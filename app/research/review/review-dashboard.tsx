@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { BusinessSection, RiskSection } from "@/lib/research/stock-directory";
 import { annualDraftGenerationMethod, annualReviewPreflight, businessDraftEvidence, referencedQuotes } from "@/lib/research/annual-draft-evidence";
 import styles from "./review.module.css";
+import timelineStyles from "./review-timeline.module.css";
 import SignalsPanel from "./signals-panel";
 
 type Evidence = { summary: string[]; impact: string[] };
@@ -90,6 +91,15 @@ const preflightLabels: Record<string, string> = {
   "annual-risk-evidence-mismatch": "リスク根拠が表示中のSEC原文と一致しません",
 };
 const splitEvidence = (value: string) => value.split(/\n{2,}/).map(v => v.trim()).filter(Boolean);
+const formatJst = (value: string | null | undefined) => {
+  if (!value) return "未確認";
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return "時刻不正";
+  return `${new Intl.DateTimeFormat("ja-JP", {
+    timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23",
+  }).format(parsed)} JST`;
+};
 const riskCorpus = (risks: RiskSection | null) => [
   risks?.excerpt ?? "",
   risks?.overview?.groups.flatMap(group => [group.heading ?? "", ...group.items]).join("\n") ?? "",
@@ -415,11 +425,12 @@ export default function ReviewDashboard() {
       <nav aria-label="確認する原文"><h2>速報レビューキュー</h2><div className={styles.annualMeta} aria-label="レビュー状況"><span>機械検証通過 {reviewCounts.machine_ready}</span><span>要修正 {reviewCounts.machine_blocked}</span><span>承認待ち {reviewCounts.awaiting_review}</span><span>原文更新 {reviewCounts.stale}</span><span>保留 {reviewCounts.held}</span><span>下書き未作成 {reviewCounts.needs_draft}</span><span>承認済み {reviewCounts.approved}</span></div><p style={{ margin: "10px 0 12px", color: "#81968f", fontSize: 12, lineHeight: 1.55 }}>機械検証通過は、人間が内容を確認できる状態の件数です。承認済み・下書き未作成は含みません。</p><div className={styles.queueFilters} aria-label="レビューキューの絞り込み">{reviewFilters.map(filter => <button key={filter.value} type="button" aria-pressed={reviewFilter === filter.value} disabled={busy} onClick={() => load(undefined, filter.value)}>{filter.label}</button>)}</div><p className={styles.filterResult}>{filteredTotal}件中 {items.length}件を表示</p>{items.length ? items.map(item => <button key={item.url} aria-current={selected?.url === item.url} onClick={() => setSelectedUrl(item.url)}><b>{item.ticker}</b><span>{item.title || new URL(item.url).pathname.split("/").filter(Boolean).at(-1)}</span><small>{labels[item.brief_status ?? ""] ?? "下書きなし"}{item.brief_status && item.brief_status !== "approved" ? ` · ${item.review_preflight.ready ? "機械検証通過" : "要修正"}` : ""}</small></button>) : <p className={styles.filterResult}>該当する資料はありません。</p>}</nav>
       {selected && <article className={styles.editor}>
         <div className={styles.sourceHead}><div><p>{selected.ticker} · SHA {selected.sha256.slice(0, 12)}…</p><h2>{selected.title || "公式原文"}</h2></div><a href={selected.url} target="_blank" rel="noopener noreferrer">公式原文 ↗</a></div>
+        <div className={timelineStyles.sourceTimeline} aria-label="公式資料の時刻情報"><span>公式発表日 <b>{selected.published_on ?? "未確認"}</b></span><span>監視で発見 <b>{formatJst(selected.discovered_at)}</b></span><span>本文を確認 <b>{formatJst(selected.checked_at)}</b></span></div>
         {selected.brief_status === "stale" && !selected.brief_current && <aside className={styles.warning}><strong>原文が更新されました</strong><span>旧要約と旧根拠はフォームへ読み戻していません。現在の原文から下書きを作り直してください。</span></aside>}
         {selected.revision_evidence && <details open className={`${styles.evidence} ${styles.revisionDiff}`}><summary>前回取得版からの機械差分</summary><div className={styles.diffMeta}><span>旧 {selected.revision_evidence.previous_sha256.slice(0, 12)}…</span><span>現 {selected.revision_evidence.current_sha256.slice(0, 12)}…</span></div>{selected.revision_evidence.diff_preview ? <pre>{selected.revision_evidence.diff_preview}</pre> : <p>本文の文字列差分は検出されませんでした。HTMLなど本文外の応答が変わった可能性があります。</p>}<p>文字列の機械比較です。訂正理由や意味、重要度は自動判定していません。公式原文を確認してください。{selected.revision_evidence.truncated ? " 差分表示は6,000文字で打ち切っています。" : ""}</p></details>}
         {selected.previous_brief && <details className={`${styles.evidence} ${styles.revisionDiff}`}><summary>失効した以前の下書き（参考・再利用不可）</summary><div className={styles.diffMeta}><span>旧原文 {selected.previous_brief.source_sha256.slice(0, 12)}…</span><span>{selected.previous_brief.impact_label} · 確信度 {selected.previous_brief.confidence}</span></div><h3>事実要約</h3><p>{selected.previous_brief.summary_ja}</p><h3>影響と未確認事項</h3><p>{selected.previous_brief.impact_ja}</p><div className={styles.annualEvidenceGrid}><div><strong>旧要約の根拠</strong><pre>{selected.previous_brief.evidence.summary.join("\n\n")}</pre></div><div><strong>旧影響判定の根拠</strong><pre>{selected.previous_brief.evidence.impact.join("\n\n")}</pre></div></div><p>保持した旧原文との完全一致と下書き指紋を再検証できた場合だけ表示します。編集フォームには転記していません。現行原文と差分を確認して、新しく作成してください。</p></details>}
         <details open className={styles.evidence}><summary>取得した原文証拠（{selected.source_text.length.toLocaleString("ja-JP")}文字）</summary><pre>{selected.source_text}</pre>{selected.source_text_truncated && <p>画面表示は80,000文字で打ち切っています。承認前に公式原文も確認してください。</p>}</details>
-        <section className={styles.form}><div><h2>AIによる根拠付き下書き</h2><p>設定済みの場合だけ1件生成します。現在の原文・完全一致する根拠抜粋・数値照合を通過しない限り保存されません。</p>{selected.generation_job_status && <small>自動処理：{jobLabels[selected.generation_job_status] ?? selected.generation_job_status} · 試行 {selected.generation_job_attempts ?? 0}回{selected.generation_job_error ? ` · ${selected.generation_job_error}` : ""}</small>}{selected.generation_model && <small>生成記録：{selected.generation_provider} · {selected.generation_model}{selected.generation_total_tokens != null ? ` · ${selected.generation_total_tokens.toLocaleString("ja-JP")} tokens` : " · 使用量未取得"}{selected.generation_source_truncated ? " · 入力上限のため原文を短縮" : ""}</small>}</div><button type="button" disabled={busy} onClick={generateDraft}>AI下書きを生成</button></section>
+        <section className={styles.form}><div><h2>AIによる根拠付き下書き</h2><p>設定済みの場合だけ1件生成します。現在の原文・完全一致する根拠抜粋・数値照合を通過しない限り保存されません。</p>{selected.generation_job_status && <small>自動処理：{jobLabels[selected.generation_job_status] ?? selected.generation_job_status} · 試行 {selected.generation_job_attempts ?? 0}回{selected.generation_job_error ? ` · ${selected.generation_job_error}` : ""}</small>}{selected.generation_model && <small>生成記録：{selected.generation_provider} · {selected.generation_model}{selected.generated_at ? ` · ${formatJst(selected.generated_at)}` : ""}{selected.generation_total_tokens != null ? ` · ${selected.generation_total_tokens.toLocaleString("ja-JP")} tokens` : " · 使用量未取得"}{selected.generation_source_truncated ? " · 入力上限のため原文を短縮" : ""}</small>}</div><button type="button" disabled={busy} onClick={generateDraft}>AI下書きを生成</button></section>
         <form key={`${selected.url}-draft-${selected.sha256}-${selected.generated_at}`} onSubmit={submitDraft} className={styles.form}><h2>日本語速報の下書き</h2>
           <label>事実要約<textarea name="summaryJa" minLength={20} maxLength={600} required defaultValue={selected.summary_ja ?? ""} /></label>
           <label>要約の根拠抜粋<textarea name="summaryEvidence" required defaultValue={selected.evidence.summary.join("\n\n")} /><small>原文に完全一致する抜粋。複数は空行で区切ります。</small></label>
