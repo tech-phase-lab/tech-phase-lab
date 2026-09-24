@@ -215,3 +215,11 @@ MU・MRVL・Vertivの追加とAnthropicの長文対応は TECH-PHASE-PROGRESS.md
 - Sandisk: 公式IR一覧が常駐環境でtimeout。作業環境でも安定確認できていない。
 - したがって追加5経路すべての稼働確認は完了していない。記事が配信されないことと
   取得に失敗していることを区別する。
+
+## 2026-09-24 06:35 UTC 最新Preview状態
+
+- `cbb687d` の常駐デプロイはOnline。22経路中17成功、5失敗。
+- Broadcom RSSは10件取得。Armは新RSSへ切替後も`invalid-source-response`で未成功。
+- MRVLとTSMCは403、Sandiskはtimeout、Oracle RSSは`invalid-source-response`。
+- Micron sitemap本文は3件処理、409件待ち。キュー383件は新着数ではない。
+- 安全な固定コードで取得失敗をもう一段詳しく表示する診断改善を実装中。

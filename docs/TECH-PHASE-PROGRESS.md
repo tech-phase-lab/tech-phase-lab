@@ -10,6 +10,8 @@
 - 補完監視17経路を常駐環境で確認済み。追加5経路はBroadcomのみ常駐成功を確認済み。
   Armは公式RSSへ切替済みで常駐再確認待ち。TSMC/Sandisk/Oracleは常駐成功未確認。
   設定上の専用補完元は18/22銘柄。MRVLは常駐環境で403のため稼働確認に含めない。
+- 9/24 15:35 JSTの常駐再点検は22経路中17成功、5失敗（MRVL/TSMC 403、Arm/Oracleの応答不正、
+  Sandisk timeout）。Broadcom 10件、Arm新RSSは未取得。Micronの本文取得待ちは409件。
 - NBIS Platinum評価・スポット価格記事は自動取得と管理画面表示を確認。
   初回の過去記事取り込みであり、発表直後の検出実績ではない。
 - 新着の取得再試行を過去記事より優先し、過去記事の処理枠も確保。
@@ -81,3 +83,13 @@
 - 公式URLの方式を2経路切り替え。Python 209件・JavaScript 94件成功、JSON検証・`git diff --check`成功。
 - TSMCは常駐環境403、Sandisk IR一覧は常駐環境timeoutのまま。アクセス制限を回避せず、
   別の公式提供方法が見つかるまで失敗として扱う。
+
+### 2026-09-24 06:35 UTC 常駐デプロイ再点検
+
+- `cbb687d` を新しいRailway Previewサービスへ自動デプロイし、Onlineを確認。
+- Preview管理画面で22経路中17成功。Broadcomは10件、Arm RSS切替後も`invalid-source-response`。
+  TSMC/MRVLは403、Sandiskはtimeout、Oracle RSSは`invalid-source-response`。
+- Micron sitemapは3件ずつ本文を処理し、残り409件。キュー総数383件は新着件数ではない。
+- 管理画面が応答の理由を広いエラー分類へまとめているため、固定済みの詳細コードを出す
+  診断改善を追加。次回巡回でArm/Oracleの失敗原因をさらに分類する。
+- 全体テスト: Python 210件、JavaScript 94件成功。

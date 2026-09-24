@@ -38,6 +38,17 @@ class SignalTests(unittest.TestCase):
     def check_feed(self, content, **response):
         return signals.check(self.db, self.feed, self.tickers, lambda *_: {"body": content, **response})
 
+    def test_signal_route_errors_have_safe_specific_diagnostic_codes(self):
+        cases = {
+            "unexpected-signal-content-type": "signal-content-type",
+            "not-a-signal-feed": "signal-invalid-feed-root",
+            "signal-index-no-articles": "signal-no-article-links",
+            "signal-article-body-limit": "signal-article-body-invalid",
+        }
+        for message, expected in cases.items():
+            with self.subTest(message=message):
+                self.assertEqual(monitor.source_error_code(ValueError(message)), expected)
+
     def test_body_only_multicompany_association_and_no_false_ticker(self):
         self.assertEqual(len(signals.ALIASES), 22)
         items = signals.parse(self.feed, feed(), self.tickers)
