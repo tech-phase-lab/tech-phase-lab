@@ -5,8 +5,8 @@
 
 ## 2026-09-24 18:58 UTC 最新状態
 
-- `codex/research-preview` のリモート最新は `c0bab2b`。Vercel Previewと隔離Railway
-  `research-monitor-staging` のGitHubチェックは両方success。
+- `codex/research-preview` の機能変更コミットは `c0bab2b` まで反映済み。Vercel Previewと
+  隔離Railway `research-monitor-staging` のGitHubチェックは両方success。
 - 2026-09-25 03:27:28 JSTの単一復旧プローブは再度アクセス制限となり、同一ホストの
   残り729件へ追加アクセスせず再遮断。次回確認は2026-09-25 15:27:28 JST。
 - 再遮断後の次巡回でも対象ホストへ通信せず、プローブ件数を増やさない回帰テストを追加。
@@ -15,7 +15,7 @@
   再確認。既存の確定日を維持し、AMATの明記された予測日は採用しなかった。
 - 通常のGit pushは実行環境にGitHubユーザー名・資格情報がなく失敗したため、認可済みGitHub
   接続で同じツリーをプレビューブランチへfast-forwardした。ローカル追跡refは更新できず、
-  作業ツリーは正常だがローカルの同内容2コミットをaheadとして表示する。
+  作業ツリーは正常だがローカルの同内容コミット列をaheadとして表示する。
 - Vercelの接続は対象team scopeの権限不足でデプロイ本文を取得できない。GitHubのVercel
   statusはsuccessだが、保護付きプレビュー本文の外部確認は未完了。
 
