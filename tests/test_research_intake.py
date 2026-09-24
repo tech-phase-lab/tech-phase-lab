@@ -2151,6 +2151,26 @@ class IntakeTests(unittest.TestCase):
         )
         self.assertEqual(result["status"], "held")
 
+    def test_review_brief_cli_passes_both_ai_verification_acknowledgements(self):
+        db_path = self.db.execute("PRAGMA database_list").fetchone()["file"]
+        expected_sha = "a" * 64
+        validation_sha = "b" * 64
+        result = {"url": URL, "status": "approved", "published": False}
+        argv = [
+            "monitor.py", "--db", db_path, "review-brief", URL, expected_sha,
+            "approved", "--validation-sha256", validation_sha,
+            "--reviewer", "editor", "--reason", "原文全体と根拠を確認しました",
+            "--ai-verification", "--full-source-verification",
+        ]
+        with patch.object(m.sys, "argv", argv), patch.object(
+            m, "review_brief", return_value=result,
+        ) as review, patch("builtins.print"):
+            self.assertEqual(m.main(), 0)
+        review.assert_called_once_with(
+            unittest.mock.ANY, URL, expected_sha, "approved", "editor",
+            "原文全体と根拠を確認しました", validation_sha, True, True,
+        )
+
     def test_stale_source_check_blocks_review_and_public_preview(self):
         body = b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main>"
         self.check(body)

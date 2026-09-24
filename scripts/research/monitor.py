@@ -4099,6 +4099,10 @@ def main():
         "--ai-verification", action="store_true",
         help="confirm human comparison of an AI-assisted draft with the official source",
     )
+    brief_review.add_argument(
+        "--full-source-verification", action="store_true",
+        help="confirm review of the full official source when AI input was truncated",
+    )
     annual_draft = sub.add_parser(
         "draft-annual",
         help="validate and store one private SEC annual-report draft from JSON",
@@ -4134,6 +4138,7 @@ def main():
             result = review_brief(
                 db, args.url, args.sha256, args.decision, args.reviewer, args.reason,
                 args.validation_sha256, args.ai_verification,
+                args.full_source_verification,
             )
         elif args.command == "draft-annual":
             candidate_path = Path(args.input)
