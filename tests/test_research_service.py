@@ -31,6 +31,10 @@ delivery_spec = importlib.util.spec_from_file_location("incident_delivery", ROOT
 incident_delivery = importlib.util.module_from_spec(delivery_spec)
 delivery_spec.loader.exec_module(incident_delivery)
 sys.modules["incident_delivery"] = incident_delivery
+signals_spec = importlib.util.spec_from_file_location("signals", ROOT / "scripts/research/signals.py")
+signals = importlib.util.module_from_spec(signals_spec)
+signals_spec.loader.exec_module(signals)
+sys.modules["signals"] = signals
 service_spec = importlib.util.spec_from_file_location("research_service", ROOT / "scripts/research/service.py")
 service = importlib.util.module_from_spec(service_spec)
 service_spec.loader.exec_module(service)

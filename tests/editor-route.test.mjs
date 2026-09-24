@@ -5,6 +5,32 @@ import { GET } from "../app/api/research/editor/route.ts";
 
 const authorization = "Bearer editor-token-at-least-24-characters";
 
+test("private signals forward filters and require editor credentials", async () => {
+  const previousUrl = process.env.RESEARCH_MONITOR_URL;
+  const previousFetch = globalThis.fetch;
+  process.env.RESEARCH_MONITOR_URL = "http://127.0.0.1:8765";
+  const requests = [];
+  globalThis.fetch = async (url, init) => { requests.push({ url: String(url), init }); return Response.json({ ok: true, items: [] }); };
+  try {
+    const unauth = await GET(new Request("http://localhost/api/research/editor?kind=signals"));
+    assert.equal(unauth.status, 401);
+    assert.equal(requests.length, 0);
+    const response = await GET(new Request("http://localhost/api/research/editor?kind=signals&view=changed&ticker=NBIS", { headers: { Authorization: authorization } }));
+    assert.equal(response.status, 200);
+    const url = new URL(requests[0].url);
+    assert.equal(url.pathname, "/admin/signals");
+    assert.equal(url.searchParams.get("ticker"), "NBIS");
+    assert.equal(url.searchParams.get("view"), "changed");
+    assert.equal(requests[0].init.headers.Authorization, authorization);
+    const invalid = await GET(new Request("http://localhost/api/research/editor?kind=signals&view=approved", { headers: { Authorization: authorization } }));
+    assert.equal(invalid.status, 400);
+  } finally {
+    globalThis.fetch = previousFetch;
+    if (previousUrl === undefined) delete process.env.RESEARCH_MONITOR_URL;
+    else process.env.RESEARCH_MONITOR_URL = previousUrl;
+  }
+});
+
 test("editor proxy validates and forwards annual review filters", async () => {
   const previousUrl = process.env.RESEARCH_MONITOR_URL;
   const previousFetch = globalThis.fetch;

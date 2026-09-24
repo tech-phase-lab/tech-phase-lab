@@ -2,6 +2,34 @@
 
 Python標準ライブラリのみを使う、公式資料の検知・確認コマンドです。取得記録は `/research/intake` の閲覧用画面へ出力できます。22社一括実行と常駐監視サービスを実装し、確認用ブランチは永続SQLiteを持つ監視コンテナへ接続済みです。追加契約・APIキーは不要です。
 
+## 製品更新・業界記事の補完監視
+
+`signals.py` は発信元単位でRSS/Atomを一度取得し、記事本文を現在の22銘柄へ
+照合します。公式ドキュメントは同じURLの本文変更を記録します。既存の公式
+資料キューとは別の非公開テーブルへ保存し、`/research/review` の「関連情報の
+確認待ち」から編集用トークンで閲覧できます。公開用JSONには含めません。
+
+```sh
+# 契約APIや公開操作なしで、一度だけ取得して保存
+python3 scripts/research/signals.py --db .research-private/signals.sqlite
+
+# ローカル開発用の継続監視。終了はCtrl+C
+python3 scripts/research/signals.py --db .research-private/signals.sqlite --watch
+```
+
+常駐サービスへ組み込む場合は、分離された検証環境で
+`RESEARCH_SIGNALS_ENABLED=1` を設定します（標準は無効）。同じサービスの
+SQLiteを使い、最大3経路を並列取得します。7経路の一覧と間隔は
+`signal_sources.json` にあります。追加元は通常60〜120秒＋通信処理時間で確認し、
+既存の公式IR監視の3〜5秒とは別です。HTTP条件付き取得、失敗時のバックオフ、
+再起動をまたぐ初回基準、経路ごとの保存上限を実装しています。
+
+初回は過去資料として記録し、新規検出は初回基準以後に観測した資料だけです。
+発表が新しいことや株価への重要性は保証しません。企業名への言及・原文抜粋・
+本文差分までの機械処理で、このキューのAI要約、自動公開、外部通知、X連携は
+未接続です。商用利用条件も確認前のままです。実データ検証と残課題は
+`docs/NEWS-COVERAGE-GAPS.md` に記録しています。
+
 ## 実行
 
 プロジェクトのルートで実行します。
@@ -201,3 +229,22 @@ python3 -m unittest discover -s tests -p 'test_research_intake.py' -v
 ```
 
 重複、変更後の再確認、古い判断の拒否、取得エラー、発表日不明、一覧の取得異常、外部URL拒否、再起動後の保持、新着イベントの重複防止を検証します。
+
+Anthropic Newsroom is also registered with an `html-index` adapter. It follows
+approved `/news/`, `/research/` and configured featured article links, checks article bodies before
+company matching, and keeps unassigned material private for review. Each index
+check fetches at most three article bodies; remaining work and failures appear
+in source health. First-index backlog stays baseline across restarts. Existing
+articles are rechecked hourly, not every 120 seconds. Initial access probes returned HTTP 403, but a later one-off monitor run
+successfully acquired 14 article bodies, including root-path featured articles. This
+verifies that run, not continuous availability, full-archive coverage or remote
+deployment. Source failures must remain visible.
+# Offline coverage audit
+
+`python scripts/research/coverage_report.py` lists all 22 official company
+indexes, dedicated supplemental sources and shared sources. Registration alone
+is never reported as working coverage. Add `--db /data/automatic.sqlite` to
+inspect supplemental intake health through a read-only SQLite connection:
+untested, fresh, stale, error or configuration-changed. Official index
+availability is explicitly outside this report's health check. No network
+requests, publication, notifications or paid API calls are made.

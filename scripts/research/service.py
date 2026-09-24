@@ -17,6 +17,7 @@ import monitor
 import brief_generator
 import incident_delivery
 import persistence
+import signals
 
 
 # The preview deployment previously pinned the complete 22-company roster in
@@ -221,6 +222,7 @@ class AutomaticMonitor:
             notification_error = str(exc)
         self.notification_enabled = bool(self.notification_config.get("enabled"))
         self.tickers = configured_tickers(os.environ.get("RESEARCH_TICKERS", ""))
+        self.signals_enabled = os.environ.get("RESEARCH_SIGNALS_ENABLED", "").lower() in {"1", "true", "yes"}
         self.stop_event = threading.Event()
         self.db_lock = threading.Lock()
         self.state_lock = threading.Lock()
@@ -285,6 +287,7 @@ class AutomaticMonitor:
         self.notification_thread = threading.Thread(
             target=self.run_notification_delivery, name="incident-delivery", daemon=True
         )
+        self.signals_thread = threading.Thread(target=self.run_signals, name="research-signals", daemon=True)
 
     def start(self):
         self.thread.start()
@@ -292,6 +295,7 @@ class AutomaticMonitor:
         self.backup_thread.start()
         self.incident_thread.start()
         self.notification_thread.start()
+        self.signals_thread.start()
 
     def stop(self):
         self.stop_event.set()
@@ -300,6 +304,51 @@ class AutomaticMonitor:
         self.backup_thread.join(timeout=15)
         self.incident_thread.join(timeout=15)
         self.notification_thread.join(timeout=15)
+        self.signals_thread.join(timeout=45)
+
+    def signal_queue(self, limit=30, view="all", ticker=None):
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            result = signals.queue(db, limit=limit, view=view, ticker=ticker)
+        return {**result, "enabled": self.signals_enabled, "tickers": self.tickers,
+                "workerAlive": self.signals_thread.is_alive()}
+
+    def run_signals(self):
+        if not self.signals_enabled:
+            return
+        with ThreadPoolExecutor(max_workers=3, thread_name_prefix="signal-source") as pool:
+            while not self.stop_event.is_set():
+                try:
+                    with self.db_lock, monitor.connect(self.db_path) as db:
+                        pending = signals.due(db)
+                    futures = [pool.submit(self.check_signal_source, source) for source in pending]
+                    for future in as_completed(futures):
+                        future.result()
+                except Exception:
+                    print('{"event":"signal-worker-error"}', flush=True)
+                self.stop_event.wait(1)
+
+    def check_signal_source(self, source):
+        if self.stop_event.is_set():
+            return
+        # Network I/O and article parsing must not hold the shared database lock.
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            validators = signals.validators_for(db, source, self.tickers)
+        started = time.monotonic()
+        try:
+            response = signals.acquire(source, validators, self.tickers)
+            if not response.get("not_modified") and "_items" not in response:
+                response["_items"] = signals.parse(source, response.pop("body"), self.tickers)
+            failure = None
+        except Exception as exc:
+            response, failure = None, exc
+        def cached_transport(_source, _validators):
+            if failure:
+                raise failure
+            return response
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            signals.check(db, source, self.tickers, transport=cached_transport)
+            db.execute("UPDATE signal_routes SET last_duration_ms=? WHERE id=?",
+                       (round((time.monotonic() - started) * 1000), source["id"]))
 
     def interval_for(self, ticker):
         provider = monitor.PROVIDERS[ticker]
@@ -1111,14 +1160,16 @@ class Handler(BaseHTTPRequestHandler):
             state = self.app.public_state()
             self.send_json(200 if path == "/health" or state["ready"] else 503, state)
             return
-        if path in {"/admin/briefs", "/admin/annual-briefs"}:
+        if path in {"/admin/briefs", "/admin/annual-briefs", "/admin/signals"}:
             if not self.editor_authorized():
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
                 return
             try:
                 limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
                 view = parse_qs(parsed.query).get("view", ["all"])[0]
-                queue = (self.app.annual_editorial_queue(limit, view) if path == "/admin/annual-briefs"
+                queue = (self.app.signal_queue(limit, view, parse_qs(parsed.query).get("ticker", [None])[0])
+                         if path == "/admin/signals" else
+                         self.app.annual_editorial_queue(limit, view) if path == "/admin/annual-briefs"
                          else self.app.editorial_queue(
                              limit, view
                          ))

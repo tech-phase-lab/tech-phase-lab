@@ -2499,6 +2499,37 @@ class IntakeTests(unittest.TestCase):
                 self.assertIn(rule["host"], m.HOSTS[ticker])
                 self.assertIsNotNone(m.re.compile(rule["pattern"]))
 
+    def test_us_issuer_coverage_has_sec_filing_backup(self):
+        # EDGAR is an independent, no-cost first-party disclosure route. SKHY
+        # is excluded because this U.S.-listed roster entry has no matching
+        # SEC ticker record; it remains monitored through its issuer newsroom.
+        self.assertEqual(len(m.PROVIDERS), 22)
+        self.assertEqual(
+            {ticker for ticker in m.PROVIDERS if not any(
+                source.get("format") == "sec-json"
+                for source in m.monitoring_sources(ticker)
+            )},
+            {"SKHY"},
+        )
+        for ticker, provider in m.PROVIDERS.items():
+            sec_sources = [
+                source for source in m.monitoring_sources(ticker)
+                if source.get("format") == "sec-json"
+            ]
+            for source in sec_sources:
+                cik = source["cik"]
+                self.assertRegex(cik, r"^\d{10}$")
+                self.assertEqual(
+                    source["url"], f"https://data.sec.gov/submissions/CIK{cik}.json"
+                )
+                self.assertIn("data.sec.gov", provider["allowedHosts"])
+                self.assertIn("www.sec.gov", provider["allowedHosts"])
+                self.assertTrue(any(
+                    rule["host"] == "www.sec.gov"
+                    and rule["pattern"] == f"^/Archives/edgar/data/{int(cik)}/.+"
+                    for rule in provider["articleRules"]
+                ))
+
 
 if __name__ == "__main__":
     unittest.main()

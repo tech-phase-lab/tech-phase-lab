@@ -6,13 +6,36 @@
     "indexUrl": "https://www.micron.com/about/press/news",
     "format": "html",
     "allowedHosts": [
+      "data.sec.gov",
+      "investors.micron.com",
       "www.micron.com",
-      "investors.micron.com"
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "investors.micron.com",
         "pattern": "^/news/press-release/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/723125/.+"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0000723125.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0000723125",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000723125&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
       }
     ]
   },
@@ -40,8 +63,10 @@
     "indexUrl": "https://investor.sandisk.com/news-events/news-releases",
     "format": "html",
     "allowedHosts": [
+      "data.sec.gov",
+      "investor.sandisk.com",
       "www.sandisk.com",
-      "investor.sandisk.com"
+      "www.sec.gov"
     ],
     "articleRules": [
       {
@@ -51,6 +76,27 @@
       {
         "host": "investor.sandisk.com",
         "pattern": "^/news-releases/news-release-details/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/2023554/.+"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0002023554.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0002023554",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002023554&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
       }
     ]
   },
@@ -61,13 +107,36 @@
     "indexUrl": "https://nebius.com/newsroom",
     "format": "html",
     "allowedHosts": [
+      "assets.nebius.com",
+      "data.sec.gov",
       "nebius.com",
-      "assets.nebius.com"
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "nebius.com",
         "pattern": "^/newsroom/[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1513845/.+"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001513845.json",
+        "format": "sec-json",
+        "label": "SEC submissions 6-K",
+        "cik": "0001513845",
+        "forms": [
+          "6-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001513845&type=6-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 6-K"
       }
     ]
   },
@@ -78,8 +147,10 @@
     "indexUrl": "https://nvidianews.nvidia.com/rss.xml",
     "format": "rss",
     "allowedHosts": [
+      "blogs.nvidia.com",
+      "data.sec.gov",
       "nvidianews.nvidia.com",
-      "blogs.nvidia.com"
+      "www.sec.gov"
     ],
     "articleRules": [
       {
@@ -89,6 +160,27 @@
       {
         "host": "blogs.nvidia.com",
         "pattern": "^/blog/[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1045810/.+"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001045810.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001045810",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
       }
     ]
   },
@@ -99,12 +191,35 @@
     "indexUrl": "https://ir.amd.com/news-events/press-releases/rss",
     "format": "rss",
     "allowedHosts": [
-      "ir.amd.com"
+      "data.sec.gov",
+      "ir.amd.com",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "ir.amd.com",
         "pattern": "^/news-events/press-releases/detail/\\d+/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/2488/.+"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0000002488.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0000002488",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000002488&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
       }
     ]
   },
@@ -115,12 +230,35 @@
     "indexUrl": "https://investors.broadcom.com/financial-information/financial-news-releases",
     "format": "html",
     "allowedHosts": [
-      "investors.broadcom.com"
+      "data.sec.gov",
+      "investors.broadcom.com",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "investors.broadcom.com",
         "pattern": "^/news-releases/news-release-details/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1730168/.+"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001730168.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001730168",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001730168&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
       }
     ]
   },
@@ -131,12 +269,35 @@
     "indexUrl": "https://newsroom.arm.com/news/feed/",
     "format": "rss",
     "allowedHosts": [
-      "newsroom.arm.com"
+      "data.sec.gov",
+      "newsroom.arm.com",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "newsroom.arm.com",
         "pattern": "^/news/(?!feed/?$)[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1973239/.+"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001973239.json",
+        "format": "sec-json",
+        "label": "SEC submissions 6-K",
+        "cik": "0001973239",
+        "forms": [
+          "6-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001973239&type=6-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 6-K"
       }
     ]
   },
@@ -157,7 +318,9 @@
         "format": "sec-json",
         "label": "SEC submissions 6-K",
         "cik": "0001046179",
-        "forms": ["6-K"],
+        "forms": [
+          "6-K"
+        ],
         "limit": 40
       },
       {
@@ -190,12 +353,35 @@
     "indexUrl": "https://www.asml.com/en/news/press-releases",
     "format": "html",
     "allowedHosts": [
-      "www.asml.com"
+      "data.sec.gov",
+      "www.asml.com",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "www.asml.com",
         "pattern": "^/en/news/press-releases/\\d{4}/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/937966/.+"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0000937966.json",
+        "format": "sec-json",
+        "label": "SEC submissions 6-K",
+        "cik": "0000937966",
+        "forms": [
+          "6-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000937966&type=6-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 6-K"
       }
     ]
   },
@@ -211,7 +397,9 @@
         "format": "sec-json",
         "label": "SEC submissions 8-K",
         "cik": "0001835632",
-        "forms": ["8-K"],
+        "forms": [
+          "8-K"
+        ],
         "limit": 40
       },
       {
@@ -254,7 +442,9 @@
         "format": "sec-json",
         "label": "SEC submissions 8-K",
         "cik": "0001596532",
-        "forms": ["8-K"],
+        "forms": [
+          "8-K"
+        ],
         "limit": 40
       },
       {
@@ -300,12 +490,35 @@
     "format": "html",
     "allowedHosts": [
       "credosemi.com",
-      "investors.credosemi.com"
+      "data.sec.gov",
+      "investors.credosemi.com",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "investors.credosemi.com",
         "pattern": "^/news-events/news/news-details/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1807794/.+"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001807794.json",
+        "format": "sec-json",
+        "label": "SEC submissions 6-K",
+        "cik": "0001807794",
+        "forms": [
+          "6-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001807794&type=6-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 6-K"
       }
     ]
   },
@@ -316,12 +529,35 @@
     "indexUrl": "https://www.coreweave.com/",
     "format": "html",
     "allowedHosts": [
-      "www.coreweave.com"
+      "data.sec.gov",
+      "www.coreweave.com",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "www.coreweave.com",
         "pattern": "^/news/[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1769628/.+"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001769628.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001769628",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001769628&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
       }
     ]
   },
@@ -349,7 +585,9 @@
         "format": "sec-json",
         "label": "SEC submissions 8-K",
         "cik": "0001674101",
-        "forms": ["8-K"],
+        "forms": [
+          "8-K"
+        ],
         "limit": 40
       },
       {
@@ -381,12 +619,35 @@
     "indexUrl": "https://www.gevernova.com/news/subscribe/all/rss.xml",
     "format": "rss",
     "allowedHosts": [
-      "www.gevernova.com"
+      "data.sec.gov",
+      "www.gevernova.com",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "www.gevernova.com",
         "pattern": "^/news/press-releases/[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1996810/.+"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001996810.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001996810",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001996810&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
       }
     ]
   },
@@ -397,12 +658,35 @@
     "indexUrl": "https://investors.delltechnologies.com/news-events/press-release",
     "format": "html",
     "allowedHosts": [
-      "investors.delltechnologies.com"
+      "data.sec.gov",
+      "investors.delltechnologies.com",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "investors.delltechnologies.com",
         "pattern": "^/news-releases/news-release-details/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1571996/.+"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001571996.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001571996",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001571996&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
       }
     ]
   },
@@ -419,7 +703,9 @@
         "format": "sec-json",
         "label": "SEC submissions 8-K",
         "cik": "0001321655",
-        "forms": ["8-K"],
+        "forms": [
+          "8-K"
+        ],
         "limit": 40
       },
       {
@@ -460,9 +746,11 @@
     "indexUrl": "https://news.microsoft.com/source/feed/",
     "format": "rss",
     "allowedHosts": [
-      "news.microsoft.com",
       "blogs.microsoft.com",
-      "www.microsoft.com"
+      "data.sec.gov",
+      "news.microsoft.com",
+      "www.microsoft.com",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
@@ -476,6 +764,27 @@
       {
         "host": "www.microsoft.com",
         "pattern": "^/en-us/(?:security/blog|microsoft-cloud/blog)/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/789019/.+"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0000789019.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0000789019",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
       }
     ]
   },
@@ -491,7 +800,9 @@
         "format": "sec-json",
         "label": "SEC submissions 8-K",
         "cik": "0001664703",
-        "forms": ["8-K"],
+        "forms": [
+          "8-K"
+        ],
         "limit": 40
       },
       {
@@ -528,12 +839,35 @@
     "indexUrl": "https://blog.google/rss/",
     "format": "rss",
     "allowedHosts": [
-      "blog.google"
+      "blog.google",
+      "data.sec.gov",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "blog.google",
         "pattern": "^/(?:technology|products|company-news|inside-google|outreach-initiatives|around-the-globe|feed)/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1652044/.+"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001652044.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001652044",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
       }
     ]
   },
@@ -551,7 +885,9 @@
         "format": "sec-json",
         "label": "SEC submissions 8-K",
         "cik": "0001341439",
-        "forms": ["8-K"],
+        "forms": [
+          "8-K"
+        ],
         "limit": 40
       },
       {

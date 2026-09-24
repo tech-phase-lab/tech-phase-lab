@@ -1,0 +1,168 @@
+[
+  {
+    "id": "semianalysis",
+    "name": "SemiAnalysis",
+    "kind": "external-research",
+    "url": "https://newsletter.semianalysis.com/feed",
+    "format": "feed",
+    "allowedHosts": [
+      "newsletter.semianalysis.com"
+    ],
+    "intervalSeconds": 60,
+    "reuse": "permission-required"
+  },
+  {
+    "id": "nvidia-developer",
+    "name": "NVIDIA Developer Blog",
+    "kind": "publisher-update",
+    "url": "https://developer.nvidia.com/blog/feed/",
+    "format": "feed",
+    "allowedHosts": [
+      "developer.nvidia.com"
+    ],
+    "tickers": [
+      "NVDA"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "skhynix-news",
+    "name": "SK hynix Newsroom",
+    "kind": "publisher-update",
+    "url": "https://news.skhynix.com/feed/",
+    "format": "feed",
+    "tickers": [
+      "SKHY"
+    ],
+    "allowedHosts": [
+      "news.skhynix.com"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "microsoft-blog",
+    "name": "Microsoft Blog",
+    "kind": "publisher-update",
+    "url": "https://blogs.microsoft.com/feed/",
+    "format": "feed",
+    "tickers": [
+      "MSFT"
+    ],
+    "allowedHosts": [
+      "blogs.microsoft.com"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "nebius-preemptible",
+    "name": "Nebius · Preemptible VMs",
+    "kind": "official-document",
+    "url": "https://docs.nebius.com/compute/virtual-machines/preemptible",
+    "format": "document",
+    "tickers": [
+      "NBIS"
+    ],
+    "allowedHosts": [
+      "docs.nebius.com"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "nebius-changelog",
+    "name": "Nebius · Product changelog",
+    "kind": "official-document",
+    "url": "https://docs.nebius.com/changelog",
+    "format": "document",
+    "tickers": [
+      "NBIS"
+    ],
+    "allowedHosts": [
+      "docs.nebius.com"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "anthropic-news",
+    "name": "Anthropic Newsroom",
+    "kind": "publisher-update",
+    "url": "https://www.anthropic.com/news",
+    "format": "html-index",
+    "articlePrefixes": [
+      "/news/",
+      "/research/"
+    ],
+    "allowedHosts": [
+      "www.anthropic.com"
+    ],
+    "intervalSeconds": 120,
+    "retainUnmatched": true,
+    "reuse": "review-required",
+    "articleLinkClasses": [
+      "FeaturedGrid-"
+    ]
+  },
+  {
+    "id": "nebius-blog",
+    "name": "Nebius Blog",
+    "kind": "publisher-update",
+    "url": "https://nebius.com/blog",
+    "format": "html-index",
+    "articlePrefixes": [
+      "/blog/posts/"
+    ],
+    "nextDataListingPath": [
+      "props",
+      "pageProps",
+      "initialListing",
+      "items"
+    ],
+    "tickers": [
+      "NBIS"
+    ],
+    "allowedHosts": [
+      "nebius.com"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "dell-blog",
+    "name": "Dell Technologies Blog",
+    "kind": "publisher-update",
+    "url": "https://www.dell.com/en-us/blog/feed/",
+    "format": "feed",
+    "tickers": [
+      "DELL"
+    ],
+    "allowedHosts": [
+      "www.dell.com"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "coreweave-blog",
+    "name": "CoreWeave Blog",
+    "kind": "publisher-update",
+    "url": "https://www.coreweave.com/blog",
+    "format": "html-index",
+    "articlePrefixes": [
+      "/blog/"
+    ],
+    "tickers": [
+      "CRWV"
+    ],
+    "allowedHosts": [
+      "www.coreweave.com",
+      "coreweave.com"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required",
+    "articleBodyClass": "article-content-container"
+  }
+]
