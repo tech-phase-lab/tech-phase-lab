@@ -269,6 +269,11 @@ class AutomaticMonitor:
         self.tickers = configured_tickers(os.environ.get("RESEARCH_TICKERS", ""))
         self.signals_enabled = os.environ.get("RESEARCH_SIGNALS_ENABLED", "").lower() in {"1", "true", "yes"}
         self.priority_completion_latency_ms = None
+        self.priority_metrics_interval = positive_int(
+            "RESEARCH_PRIORITY_METRICS_INTERVAL_SECONDS", 300, 30
+        )
+        self.priority_metrics_signature = None
+        self.next_priority_metrics_at = 0.0
         self.stop_event = threading.Event()
         self.db_lock = threading.Lock()
         self.state_lock = threading.Lock()
@@ -676,6 +681,27 @@ class AutomaticMonitor:
             })
         return True
 
+    def persist_priority_source_coverage_if_due(
+        self, process_started_at, observed_at, coverage, monotonic_now=None,
+    ):
+        """Refresh bounded durable coverage after changes and on a heartbeat."""
+        if coverage["completionLatencyMs"] is None:
+            return False
+        current = time.monotonic() if monotonic_now is None else monotonic_now
+        signature = (coverage["healthy"], coverage["degraded"])
+        if (
+            signature == self.priority_metrics_signature
+            and current < self.next_priority_metrics_at
+        ):
+            return False
+        if not self.record_priority_source_run_safely(
+            process_started_at, observed_at, coverage
+        ):
+            return False
+        self.priority_metrics_signature = signature
+        self.next_priority_metrics_at = current + self.priority_metrics_interval
+        return True
+
     def public_state(self):
         with self.state_lock:
             state = json.loads(json.dumps(self.state))
@@ -1074,7 +1100,6 @@ class AutomaticMonitor:
         discovery_caches = {}
         baseline_ready = {}
         failure_streak = {ticker: 0 for ticker in self.tickers}
-        priority_run_signature = None
         next_body_fetch = 0.0
         with self.db_lock, monitor.connect(self.db_path) as db:
             invalidated_sources = 0
@@ -1232,15 +1257,9 @@ class AutomaticMonitor:
                     )
                     process_started_at = self.state["startedAt"]
 
-                if priority_coverage["completionLatencyMs"] is not None:
-                    run_signature = (
-                        priority_coverage["healthy"], priority_coverage["degraded"]
-                    )
-                    if run_signature != priority_run_signature:
-                        if self.record_priority_source_run_safely(
-                            process_started_at, completed_at, priority_coverage
-                        ):
-                            priority_run_signature = run_signature
+                self.persist_priority_source_coverage_if_due(
+                    process_started_at, completed_at, priority_coverage
+                )
 
                 if time.monotonic() >= next_body_fetch:
                     succeeded = self.fetch_bodies_safely(pool)

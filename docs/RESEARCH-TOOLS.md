@@ -92,7 +92,11 @@ evidence, not publication or subscriber-delivery latency.
 The first complete result for each service process is also persisted without
 tickers, URLs, validators, exceptions or process identifiers. A later healthy
 recheck can update the aggregate healthy/degraded counts while preserving the
-original completion latency. The operations preview can therefore distinguish
+original completion latency. Unchanged coverage is refreshed every five
+minutes by default, while a healthy/degraded transition is written on the next
+completed poll; failed telemetry writes remain isolated and retry on the next
+poll. This keeps the durable last-observed time useful without creating a new
+row for every discovery cycle. The operations preview can therefore distinguish
 the current process's pending checks from the last durable completed run after
 a restart. Future-dated, malformed and internally inconsistent rows are
 excluded, and at most 10,000 process results are retained.

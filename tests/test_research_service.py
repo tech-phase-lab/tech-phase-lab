@@ -345,6 +345,70 @@ class ResearchServiceTests(unittest.TestCase):
                 ("discovery:priority-metrics",),
             ).fetchone()[0], "resolved")
 
+    def test_priority_source_run_refreshes_on_change_and_heartbeat(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.priority_metrics_interval = 300
+        started = datetime.now(timezone.utc) - timedelta(seconds=2)
+        coverage = {
+            "targetCount": 5, "configuredCount": 5, "healthy": 5,
+            "degraded": 0, "completionLatencyMs": 500,
+        }
+        first = (started + timedelta(seconds=1)).isoformat(timespec="milliseconds")
+        unchanged = (started + timedelta(seconds=1, milliseconds=100)).isoformat(
+            timespec="milliseconds"
+        )
+        heartbeat = (started + timedelta(seconds=1, milliseconds=400)).isoformat(
+            timespec="milliseconds"
+        )
+
+        self.assertTrue(app.persist_priority_source_coverage_if_due(
+            started.isoformat(timespec="milliseconds"), first, coverage, 10,
+        ))
+        self.assertFalse(app.persist_priority_source_coverage_if_due(
+            started.isoformat(timespec="milliseconds"), unchanged, coverage, 20,
+        ))
+        with monitor.connect(self.db_path) as db:
+            summary = monitor.priority_source_run_summary(
+                db, (started + timedelta(seconds=10)).isoformat(timespec="milliseconds")
+            )
+        self.assertEqual(summary["lastObservedAt"], first)
+
+        degraded = {**coverage, "healthy": 4, "degraded": 1}
+        self.assertTrue(app.persist_priority_source_coverage_if_due(
+            started.isoformat(timespec="milliseconds"), unchanged, degraded, 20,
+        ))
+        self.assertTrue(app.persist_priority_source_coverage_if_due(
+            started.isoformat(timespec="milliseconds"), heartbeat, degraded, 321,
+        ))
+        with monitor.connect(self.db_path) as db:
+            summary = monitor.priority_source_run_summary(
+                db, (started + timedelta(seconds=10)).isoformat(timespec="milliseconds")
+            )
+            row_count = db.execute("SELECT count(*) FROM priority_source_runs").fetchone()[0]
+        self.assertEqual(summary["lastObservedAt"], heartbeat)
+        self.assertEqual(summary["healthy"], 4)
+        self.assertEqual(summary["degraded"], 1)
+        self.assertEqual(summary["completionLatencyMs"], 500)
+        self.assertEqual(row_count, 1)
+
+    def test_priority_source_run_refresh_retries_after_storage_failure(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        started = datetime.now(timezone.utc) - timedelta(seconds=1)
+        observed = datetime.now(timezone.utc).isoformat(timespec="milliseconds")
+        coverage = {
+            "targetCount": 5, "configuredCount": 5, "healthy": 5,
+            "degraded": 0, "completionLatencyMs": 500,
+        }
+        with patch.object(app, "record_priority_source_run_safely", return_value=False):
+            self.assertFalse(app.persist_priority_source_coverage_if_due(
+                started.isoformat(timespec="milliseconds"), observed, coverage, 10,
+            ))
+        self.assertIsNone(app.priority_metrics_signature)
+        self.assertEqual(app.next_priority_metrics_at, 0)
+        self.assertTrue(app.persist_priority_source_coverage_if_due(
+            started.isoformat(timespec="milliseconds"), observed, coverage, 11,
+        ))
+
     def test_priority_source_health_records_and_resolves_degraded_coverage(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         checked_at = service.utc_now()
