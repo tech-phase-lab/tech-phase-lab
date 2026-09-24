@@ -3179,7 +3179,10 @@ def save_source_check(db, row, result):
             result.get("evidenceKind") or "direct", row["url"],
         ))
         hostname = source_hostname(row["url"])
-        if hostname:
+        # Inline RSS/Atom evidence proves that the feed was reachable, not that
+        # the linked article host accepted a direct body request. Keep an
+        # access-control circuit open until that host itself succeeds.
+        if hostname and row["source_mode"] == "remote":
             db.execute("DELETE FROM body_host_backoff WHERE host=?", (hostname,))
     status = "not-modified" if not_modified else (
         "first-fetched" if not current["sha256"] else ("changed" if changed else "unchanged")

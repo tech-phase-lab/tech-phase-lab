@@ -56,9 +56,11 @@ configured batch size is capped at 100.
 Access-control responses (HTTP 401, 403 and 451, plus verification pages) also
 open a private, persistent hostname circuit. While that circuit is active,
 other queued URLs on the same official hostname are deferred without another
-request; at most one URL per hostname is attempted in a batch. A successful
-body check closes the circuit immediately. The preview exposes only the number
-of host-deferred bodies, not hostnames, URLs or errors. Timeouts and other
+request; at most one URL per hostname is attempted in a batch. Only a
+successful direct body check closes the circuit. Inline RSS or Atom evidence
+can satisfy a source without a body request, but it does not prove that the
+linked article host has recovered. The preview exposes only the number of
+host-deferred bodies, not hostnames, URLs or errors. Timeouts and other
 transient failures remain URL-scoped. This reduces repeated traffic without
 bypassing an official site's access controls.
 

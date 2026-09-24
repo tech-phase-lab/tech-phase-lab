@@ -1587,6 +1587,31 @@ class IntakeTests(unittest.TestCase):
         self.assertNotIn("Feed navigation", row["extracted_text"])
         self.assertNotIn("doNotRun", row["extracted_text"])
 
+    def test_inline_feed_evidence_does_not_close_article_host_circuit(self):
+        url = "https://investor.marvell.com/news-events/press-releases/detail/1234/example"
+        m.add_source(self.db, "MRVL", url)
+        row = self.db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+        m.save_source_error(self.db, row, HTTPError(url, 403, "Forbidden", {}, None))
+        self.assertIsNotNone(self.db.execute(
+            "SELECT 1 FROM body_host_backoff WHERE host='investor.marvell.com'"
+        ).fetchone())
+
+        body = b'''<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><item>
+          <title>Marvell expands AI infrastructure connectivity</title>
+          <link>https://investor.marvell.com/news-events/press-releases/detail/1234/example</link>
+          <content:encoded><![CDATA[<p>Marvell announced a verified expansion of its AI infrastructure connectivity portfolio for data center customers.</p><p>The official feed describes phased availability, customer qualification requirements, and execution risks through 2027.</p>]]></content:encoded>
+        </item></channel></rss>'''
+        result, links = m.collect_discovery("MRVL", lambda *_: (body, "text/xml"))
+        m.save_discovery(self.db, "MRVL", result, links)
+
+        source = self.db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+        self.assertEqual(source["source_mode"], "inline")
+        self.assertIsNone(source["error"])
+        self.assertIsNotNone(source["sha256"])
+        self.assertIsNotNone(self.db.execute(
+            "SELECT 1 FROM body_host_backoff WHERE host='investor.marvell.com'"
+        ).fetchone())
+
     def test_short_feed_summary_keeps_remote_article_body_fetch_enabled(self):
         body = b'''<rss><channel><item><title>Arista update</title>
           <link>https://www.arista.com/en/company/news/press-release/123-pr-20260919</link>
