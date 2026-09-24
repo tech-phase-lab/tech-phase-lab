@@ -35,6 +35,8 @@ test("operations preview exposes bounded cache pressure without cached contents"
   assert.match(intakeDashboard, /公式一覧の永続実測/);
   assert.match(intakeDashboard, /優先5銘柄：現プロセス/);
   assert.match(liveTypes, /prioritySources/);
+  assert.match(liveTypes, /completionLatencyMs/);
+  assert.match(intakeDashboard, /再起動後.*で対象確認/);
   assert.match(intakeDashboard, /requestDurationAverageMs24Hours/);
   assert.match(liveTypes, /lastCompletedAgeSeconds/);
   assert.match(liveTypes, /completedSinceStart/);

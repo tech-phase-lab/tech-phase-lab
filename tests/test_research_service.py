@@ -149,7 +149,8 @@ class ResearchServiceTests(unittest.TestCase):
 
     def test_priority_source_coverage_requires_current_process_evidence(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
-        started = datetime.fromisoformat(app.state["startedAt"])
+        started = datetime.now(timezone.utc) - timedelta(seconds=1)
+        app.state["startedAt"] = started.isoformat(timespec="milliseconds")
         before = (started - timedelta(milliseconds=1)).isoformat(timespec="milliseconds")
         after = (started + timedelta(milliseconds=1)).isoformat(timespec="milliseconds")
         with app.state_lock:
@@ -164,8 +165,36 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(coverage, {
             "targetCount": 5, "configuredCount": 5, "checkedSinceStart": 3,
             "healthy": 2, "degraded": 1, "pending": 2, "omitted": 0,
+            "completionLatencyMs": None,
         })
         self.assertNotIn("checkedAt", json.dumps(coverage))
+
+    def test_priority_source_coverage_rejects_future_evidence_and_measures_completion(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        started = datetime.now(timezone.utc) - timedelta(seconds=2)
+        app.state["startedAt"] = started.isoformat(timespec="milliseconds")
+        with app.state_lock:
+            app.state["companies"] = {
+                ticker: {
+                    "status": "ok",
+                    "checkedAt": (started + timedelta(milliseconds=offset)).isoformat(
+                        timespec="milliseconds"
+                    ),
+                }
+                for ticker, offset in zip(service.PRIORITY_SEC_TICKERS, (100, 200, 300, 400, 500))
+            }
+        complete = app.public_state()["prioritySources"]
+        self.assertEqual(complete["checkedSinceStart"], 5)
+        self.assertEqual(complete["completionLatencyMs"], 500)
+
+        with app.state_lock:
+            app.state["companies"]["PLTR"]["checkedAt"] = (
+                datetime.now(timezone.utc) + timedelta(hours=1)
+            ).isoformat(timespec="milliseconds")
+        invalid = app.public_state()["prioritySources"]
+        self.assertEqual(invalid["checkedSinceStart"], 4)
+        self.assertEqual(invalid["pending"], 1)
+        self.assertIsNone(invalid["completionLatencyMs"])
 
     def test_priority_source_coverage_reports_custom_roster_omissions(self):
         with patch.dict(os.environ, {"RESEARCH_TICKERS": "TSM,MRVL"}, clear=False):

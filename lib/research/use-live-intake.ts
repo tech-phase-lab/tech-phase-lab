@@ -74,6 +74,7 @@ export type MonitorState = {
   prioritySources?: {
     targetCount: number; configuredCount: number; checkedSinceStart: number;
     healthy: number; degraded: number; pending: number; omitted: number;
+    completionLatencyMs: number | null;
   };
   bodyFetch?: {
     lastPollAt: string | null; lastBatchAt: string | null;

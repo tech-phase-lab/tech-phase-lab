@@ -93,17 +93,39 @@ def timestamp_at_or_after(value, reference):
         return False
 
 
+def process_observation_latency_ms(value, started_at):
+    """Return bounded post-start latency only for observations not in the future."""
+    try:
+        observed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        started = datetime.fromisoformat(str(started_at).replace("Z", "+00:00"))
+        if observed.tzinfo is None or started.tzinfo is None:
+            return None
+        observed = observed.astimezone(timezone.utc)
+        started = started.astimezone(timezone.utc)
+        if observed < started or observed > datetime.now(timezone.utc):
+            return None
+        latency = round((observed - started).total_seconds() * 1000)
+        return latency if latency <= 31 * 24 * 60 * 60 * 1000 else None
+    except (TypeError, ValueError):
+        return None
+
+
 def priority_source_coverage(state, configured_tickers):
     """Summarize post-start priority checks without exposing source details."""
     configured = [ticker for ticker in PRIORITY_SEC_TICKERS if ticker in configured_tickers]
     companies = state.get("companies") if isinstance(state.get("companies"), dict) else {}
     checked = []
+    latencies = []
     for ticker in configured:
         company = companies.get(ticker)
         if not isinstance(company, dict):
             continue
-        if timestamp_at_or_after(company.get("checkedAt"), state.get("startedAt")):
+        latency = process_observation_latency_ms(
+            company.get("checkedAt"), state.get("startedAt")
+        )
+        if latency is not None:
             checked.append(company)
+            latencies.append(latency)
     healthy = sum(1 for company in checked if company.get("status") in {"ok", "fallback"})
     degraded = len(checked) - healthy
     return {
@@ -114,6 +136,7 @@ def priority_source_coverage(state, configured_tickers):
         "degraded": degraded,
         "pending": len(configured) - len(checked),
         "omitted": len(PRIORITY_SEC_TICKERS) - len(configured),
+        "completionLatencyMs": max(latencies) if len(checked) == len(configured) and latencies else None,
     }
 
 

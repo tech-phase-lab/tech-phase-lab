@@ -76,6 +76,11 @@ For TSM, MRVL, ANET, VRT and PLTR it also reports an aggregate count of
 configured, post-start checked, healthy, degraded and pending companies. This
 shows whether every priority route has actually run after a deployment without
 publishing per-source URLs, timestamps or error details.
+Future-dated or malformed company observations do not count as post-start
+checks. Once every configured priority company has run, the preview reports the
+measured interval from process start to the final priority check without
+publishing any individual company timestamp. This is startup-processing
+evidence, not publication or subscriber-delivery latency.
 Polling configuration and observed request time are not delivery latency
 guarantees.
 

@@ -105,7 +105,10 @@ function prioritySourceStatus(coverage: MonitorState["prioritySources"]) {
   const configuration = coverage.omitted > 0
     ? ` · 設定外 ${coverage.omitted}社`
     : "";
-  return `優先5銘柄：現プロセス ${coverage.checkedSinceStart}/${coverage.configuredCount}社確認 · 正常 ${coverage.healthy}社 · 要確認 ${coverage.degraded}社 · 待機 ${coverage.pending}社${configuration}`;
+  const completion = coverage.completionLatencyMs == null
+    ? ""
+    : ` · 再起動後 ${duration(coverage.completionLatencyMs)}で対象確認`;
+  return `優先5銘柄：現プロセス ${coverage.checkedSinceStart}/${coverage.configuredCount}社確認 · 正常 ${coverage.healthy}社 · 要確認 ${coverage.degraded}社 · 待機 ${coverage.pending}社${completion}${configuration}`;
 }
 function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], pending = 0) {
   if (!bodyFetch?.lastPollAt) return "本文取得：初回ポーリング待ち";
