@@ -1,6 +1,6 @@
 # Calendar verification handoff
 
-Last updated: 2026-09-24
+Last updated: 2026-09-25
 
 This file records the latest manual official-source review. A pending entry must
 keep `lastCheckedOn` null in `calendar-coverage.json`; an empty or
@@ -8,13 +8,32 @@ JavaScript-only IR page is not evidence that no event exists.
 
 ## Daily economic-source review
 
-- BLS: the 2026 annual release schedule was rechecked on 2026-09-24. The October through
+- BLS: the 2026 annual release schedule was rechecked on 2026-09-25. The October through
   December Employment Situation, CPI and PPI dates and 08:30 Eastern times in
   `calendar.ts` still match the official schedule.
-- Federal Reserve: the FOMC calendar was rechecked on 2026-09-24. October 27-28 and December
+- Federal Reserve: the FOMC calendar was rechecked on 2026-09-25. October 27-28 and December
   8-9 are confirmed meeting dates. The page does not yet publish policy
   announcement or press-conference times for those meetings, so only the final
   dates are stored and no clock time is inferred.
+
+## Forty-eighth company batch reviewed on 2026-09-25
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| AAPL | Pending | The official IR page exposed Investor Updates and Quarterly Earnings Reports headings, but no dated future earnings item or explicit no-events statement. |
+| AMZN | Pending | The official Events page exposed an empty Upcoming Events section without a dated item or explicit no-events statement. |
+| ANET | Pending | The official Events & Presentations URL remained inaccessible to the reviewer, so the current schedule could not be verified conclusively. |
+| ARM | Pending | The official investor site returned HTTP 403. The access control was not bypassed and the current schedule remains unverified. |
+| AVGO | Pending | The official financial-news page ended with the September 2 fiscal Q3 results and contained no future earnings scheduling announcement or explicit no-events statement. |
+| BE | Pending | The official event calendar exposed an empty Upcoming Events section without an explicit absence statement. |
+| COHR | Pending | The official financial-releases page ended with the August 12 fiscal Q4 results and contained no future earnings schedule or explicit absence statement. |
+| CRDO | Pending | The official IR page exposed empty Upcoming & Recent Events and Archived Events sections without a dated item or explicit absence statement. |
+| CRM | Pending | The official events page exposed an empty Upcoming & Recent Events section without a dated item or explicit absence statement. |
+| CRWV | Pending | The official Events & Presentations page exposed an empty Upcoming & Recent Events section without a dated item or explicit absence statement. |
+
+No `lastCheckedOn` value or forecast date was added for this inconclusive
+batch. The next rotation begins with GOOGL, KLAC, LITE, MRVL, NBIS, NOW, NVDA,
+ORCL, PANW and PLTR.
 
 ## Company batch reviewed on 2026-09-23
 
