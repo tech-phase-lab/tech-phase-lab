@@ -124,7 +124,7 @@
 ## 22銘柄の設定台帳
 
 公式取得先の登録は22/22。今回の補完モジュールに銘柄を固定した追加元があるのは
-SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANETの7銘柄。これは既存取得元が扱う製品記事を含めた
+SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANET、AMDの8銘柄。これは既存取得元が扱う製品記事を含めた
 全体の網羅率ではない。共通元のSemiAnalysisとAnthropicは全22銘柄へ本文照合し、
 特定銘柄のニュースとして無条件には配信しない。
 
@@ -137,7 +137,7 @@ SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANETの7銘柄。これは既存取得
 | SNDK | [Sandisk](https://investor.sandisk.com/news-events/news-releases) | 未登録 | NAND・SSD製品発表／決算資料 |
 | NBIS | [Nebius](https://nebius.com/newsroom) | Nebius Blog、Preemptible VMs、Product changelog | 製品仕様・価格・障害／顧客・提携先／外部GPUクラウド評価 |
 | NVDA | [NVIDIA](https://nvidianews.nvidia.com/rss.xml) | NVIDIA Developer Blog | 開発者情報／新製品の採用先・システム構成 |
-| AMD | [AMD](https://ir.amd.com/news-events/press-releases/rss) | 未登録 | Instinct・EPYC製品情報／クラウド採用 |
+| AMD | [AMD](https://ir.amd.com/news-events/press-releases/rss) | AMD News Blogs RSS | Instinct・EPYC製品情報／クラウド採用 |
 | AVGO | [Broadcom](https://investors.broadcom.com/financial-information/financial-news-releases) | 未登録 | ネットワーク・カスタム半導体の製品情報／顧客側発表 |
 | ARM | [Arm](https://newsroom.arm.com/news/feed/) | 未登録 | 設計・ライセンス・エコシステム発表 |
 | TSM | [TSMC](https://pr.tsmc.com/english/news) | 未登録 | 先端プロセス・先端パッケージ／台湾の公式開示 |
@@ -172,3 +172,18 @@ SKHY、NBIS、NVDA、MSFT、DELL、CRWV、ANETの7銘柄。これは既存取得
 - https://docs.railway.com/guides/isolate-staging-production
 - https://docs.railway.com/deployments/serverless
 - https://vercel.com/docs/environment-variables
+
+## 2026-09-24 新着優先処理と費用確認
+
+- HTML一覧で新着本文の取得に一時失敗すると、未取得の過去記事が先に処理される問題を修正。
+  初回取り込みと新着を区別し、新着の再試行を優先。過去記事・更新確認にも1枠を確保し、
+  1巡回あたり最大3記事とエラー時の待機時間は維持する。
+- 新着再試行、過去記事の進行、バックオフ中の記事を取得しないことを合成データで確認。
+- AMD公式News Blogs一覧が案内するRSSを取得し、9件の見出し・抜粋・AMD関連付けを確認。
+  例: EPYCのagentic AI記事の抜粋167文字。全文ではない。補完監視は12経路となる。
+- Palantir公式ブログはHTTP 403のため追加せず。制限の回避は行わない。
+- Railway管理画面はLimited Trialのまま。有料契約・支払方法の変更なし。
+  公式料金資料ではトライアル終了後は月$1のFree枠、Hobbyを選ぶ場合は月最低$5
+  （$5分の使用量込み、超過分は加算）。現在の常駐構成が無料枠に収まるかは未検証。
+  https://docs.railway.com/pricing/free-trial
+  https://docs.railway.com/pricing/plans

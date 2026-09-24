@@ -58,7 +58,7 @@
   },
   {
     "id": "nebius-preemptible",
-    "name": "Nebius · Preemptible VMs",
+    "name": "Nebius \u00b7 Preemptible VMs",
     "kind": "official-document",
     "url": "https://docs.nebius.com/compute/virtual-machines/preemptible",
     "format": "document",
@@ -73,7 +73,7 @@
   },
   {
     "id": "nebius-changelog",
-    "name": "Nebius · Product changelog",
+    "name": "Nebius \u00b7 Product changelog",
     "kind": "official-document",
     "url": "https://docs.nebius.com/changelog",
     "format": "document",
@@ -176,6 +176,22 @@
     ],
     "tickers": [
       "ANET"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "amd-news-blogs",
+    "name": "AMD News Blogs",
+    "kind": "publisher-update",
+    "url": "https://newsroom.amd.com/rss.xml?content-type=news-blogs",
+    "format": "feed",
+    "allowedHosts": [
+      "newsroom.amd.com",
+      "www.amd.com"
+    ],
+    "tickers": [
+      "AMD"
     ],
     "intervalSeconds": 120,
     "reuse": "review-required"

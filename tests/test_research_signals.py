@@ -263,6 +263,33 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(item['tickers'], ['CRWV'])
         self.assertNotIn('related stories', item['excerpt'])
 
+    def test_new_article_retry_precedes_baseline_backlog_and_respects_backoff(self):
+        from html_signals import collect
+        source = next(s for s in signals.SOURCES if s['id'] == 'anthropic-news')
+        base = source['url'] + '/'
+        children = {base + f'old-{i}': {'baseline': True} for i in range(8)}
+        for i in range(4):
+            children[base + f'new-{i}'] = {
+                'baseline': False, 'checked': '2026-01-01T00:00:00.000+00:00',
+                'next_check': '', 'failures': 1, 'error': 'http-503'}
+        children[base + 'new-3']['next_check'] = '2099-01-01T00:00:00.000+00:00'
+        calls = []
+        def request(route, validators):
+            if route['url'] == source['url']:
+                return {'body': ''.join(f'<a href="{url}">Story</a>' for url in children).encode()}
+            calls.append(route['url'])
+            return {'body': ('<main><h1>Infrastructure</h1><p>'
+                             + 'Nebius infrastructure update. ' * 10 + '</p></main>').encode()}
+        response = collect(source, {'index_state': json.dumps({
+            'initialized': True, 'children': children})}, self.tickers, request)
+        self.assertEqual(calls, [base + 'new-0', base + 'new-1', base + 'old-0'])
+        self.assertEqual([item['baseline'] for item in response['_items']], [False, False, True])
+        state = json.loads(response['index_state'])
+        calls.clear()
+        collect(source, {'index_state': json.dumps(state)}, self.tickers, request)
+        self.assertEqual(calls, [base + 'new-2', base + 'old-1', base + 'old-2'])
+        self.assertNotIn(base + 'new-3', calls)
+
     def test_worker_is_opt_in_and_stops(self):
         with patch.dict(os.environ, {"RESEARCH_SIGNALS_ENABLED": ""}):
             app = service.AutomaticMonitor(self.path, Path(self.temp.name) / "snapshot.json")
