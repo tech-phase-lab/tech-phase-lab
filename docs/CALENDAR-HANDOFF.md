@@ -666,6 +666,37 @@ Continue with SKHY, SNOW and VRT, then rotate again from AAPL. Empty dynamic
 sections, historical-only pages and transport failures remain inconclusive and
 must not be promoted to forecast dates.
 
+## Thirty-eighth company batch reviewed on 2026-09-24
+
+The next ten pending entries were rechecked against their first-party schedule
+or investor-relations pages. None supplied a confirmed future earnings date or
+an explicit no-events statement. Their existing 2026-09-24 `lastAttemptedOn`
+values already record the same-day attempt, while `lastCheckedOn` remains null
+and no forecast date is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| GOOGL | Pending | The official Events page exposed only its navigation and no future dated earnings item or explicit no-events statement. |
+| KLAC | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| LITE | Pending | The official page exposed empty Latest Events, Latest Presentation and archive headings without an explicit no-events statement. |
+| MRVL | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| NBIS | Pending | The official Investor Hub still listed September investor conferences as its latest events, with no future earnings announcement or explicit no-events statement. |
+| NOW | Pending | The official page exposed archived-event sections without a dated upcoming earnings item or explicit no-events statement. |
+| NVDA | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| ORCL | Pending | The official page exposed empty Featured Event, Upcoming events and archive headings without an explicit no-events statement. |
+| PANW | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| PLTR | Pending | The official Events page exposed only investor-relations navigation and contact content, with no inspectable schedule state. |
+
+The BLS October schedule was rechecked on 2026-09-24 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar, last updated September 16, still
+lists the October 27-28 and December 8-9 meetings without future statement or
+press-conference clock times. No calendar event changed.
+
+Continue with SKHY, SNOW and VRT, then rotate again from AAPL. Empty dynamic
+sections, historical-only pages and transport failures remain inconclusive and
+must not be promoted to forecast dates.
+
 ## Thirty-sixth company batch reviewed on 2026-09-24
 
 The next three pending entries were rechecked against their first-party
