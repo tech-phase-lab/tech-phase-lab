@@ -219,3 +219,36 @@ Three featured article bodies were acquired, bringing the private Anthropic
 baseline total to 14. Mentions included GOOGL, MSFT and NVDA; no NBIS match was
 established in this sample. A configuration change schedules baseline validation
 again, so outstanding work must not be presented as complete archive coverage.
+
+## 2026-09-24: analyst rating and price-target changes
+
+The current company and publisher monitors have no dedicated analyst-action
+source. The user's example is a TipRanks X post stating that BNP Paribas moved
+Nebius from Neutral to Outperform and raised its target from $260 to $399. Treat
+the screenshot as a lead, not independently verified source evidence.
+
+FMP's current TipRanks-powered Analyst Ratings Search API is a technically
+relevant candidate: its official documentation says records include the analyst,
+firm, recommendation, action (including upgrade/downgrade), price target, source
+article headline/site/link, and date filters. Results are newest-first and are
+explicitly described as suitable for activity feeds. This is closer to the
+desired event feed than scraping social posts or inferring changes from aggregate
+consensus snapshots.
+
+Before use, obtain written confirmation of commercial display/redistribution
+rights, access to this specific TipRanks endpoint, update latency, symbol coverage,
+rate limits, retention, attribution requirements, and price. FMP's public pricing
+page lists individual tiers but states that displaying or redistributing FMP data
+requires a separate Data Display and Licensing Agreement. The public individual
+prices therefore do not establish a usable Tech Phase commercial price or grant
+display rights. No account, trial, API key, paid plan, or external contact was
+initiated in this work.
+
+If licensed, add analyst changes as a distinct event class in the private review
+queue, then show the analyst/firm, previous and new rating, previous and new
+target with currency, publication and first-seen timestamps, and a link to the
+attributed source. Keep analyst opinion separate from issuer facts, do not infer
+an investment recommendation, deduplicate repeated records, and require editorial
+review before public display. The existing generic publisher monitor is not yet
+connected to this structured API and the user-facing live news feed is not yet
+enabled.
