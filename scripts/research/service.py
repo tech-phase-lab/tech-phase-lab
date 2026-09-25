@@ -1132,20 +1132,23 @@ class AutomaticMonitor:
             return None
         error_code = None
         usage = None
+        retry_after_seconds = None
         try:
             generated = self.generate_brief({"url": claim["url"], "sha256": claim["sha256"]})
             usage = generated.get("usage")
         except brief_generator.GenerationUnavailable:
             error_code = "generation-not-configured"
-        except brief_generator.GenerationFailed:
+        except brief_generator.GenerationFailed as exc:
             error_code = "generation-failed"
+            retry_after_seconds = exc.retry_after_seconds
         except ValueError:
             error_code = "validation-failed"
         except Exception:
             error_code = "worker-error"
         with self.db_lock, monitor.connect(self.db_path) as db:
             return monitor.finish_generation_job(
-                db, claim, error_code=error_code, max_attempts=self.generation_max_attempts, usage=usage
+                db, claim, error_code=error_code, max_attempts=self.generation_max_attempts,
+                usage=usage, retry_after_seconds=retry_after_seconds
             )
 
     def run_generation(self):

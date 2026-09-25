@@ -2006,6 +2006,28 @@ class ResearchServiceTests(unittest.TestCase):
             self.assertTrue(stats["limitReached"])
             self.assertEqual(stats["lastErrorCode"], "generation-failed")
 
+    def test_generation_retry_respects_bounded_provider_delay(self):
+        url = "https://nebius.com/newsroom/new-release"
+        with patch.dict(os.environ, {
+            "RESEARCH_AUTO_DRAFTS": "true", "OPENAI_API_KEY": "sk-" + "x" * 40,
+            "RESEARCH_SUMMARY_MODEL": "test-model",
+        }, clear=False):
+            app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        with monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            monitor.save_source_check(db, row, {
+                "sha256": "7" * 64, "contentType": "text/html", "contentBytes": 80,
+                "extractedText": "Official evidence remains available for review.", "extractedChars": 47,
+            })
+            monitor.queue_generation_job(db, url, 7_000)
+        deferred = brief_generator.GenerationFailed(
+            "generation-request-deferred", retry_after_seconds=7200
+        )
+        with patch.object(app, "generate_brief", side_effect=deferred):
+            result = app.process_generation_job()
+        self.assertEqual(result["status"], "retry")
+        self.assertEqual(result["retrySeconds"], 7200)
+
     def test_token_budget_blocks_before_generation_and_uses_measured_total_after_success(self):
         url = "https://nebius.com/newsroom/new-release"
         with monitor.connect(self.db_path) as db:

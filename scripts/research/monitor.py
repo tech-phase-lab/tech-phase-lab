@@ -3109,7 +3109,8 @@ def finish_manual_generation(db, claim, error_code=None, usage=None):
               usage.get("inputTokens"), usage.get("outputTokens"), usage.get("totalTokens"), claim["attemptId"]))
 
 
-def finish_generation_job(db, claim, error_code=None, max_attempts=3, usage=None):
+def finish_generation_job(db, claim, error_code=None, max_attempts=3, usage=None,
+                          retry_after_seconds=None):
     """Complete or reschedule a claimed generation without storing sensitive errors."""
     completed_at = now()
     error_code = error_code if error_code in {
@@ -3122,6 +3123,8 @@ def finish_generation_job(db, claim, error_code=None, max_attempts=3, usage=None
     else:
         status = "retry"
         retry_seconds = min(3600, 60 * (5 ** max(0, claim["attempt"] - 1)))
+        if isinstance(retry_after_seconds, (int, float)) and not isinstance(retry_after_seconds, bool):
+            retry_seconds = max(retry_seconds, min(7 * 24 * 60 * 60, max(0, int(retry_after_seconds))))
     next_attempt_at = (datetime.now(timezone.utc) + timedelta(seconds=retry_seconds)).isoformat(timespec="milliseconds")
     with db:
         db.execute("BEGIN IMMEDIATE")

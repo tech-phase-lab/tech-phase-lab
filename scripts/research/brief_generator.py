@@ -4,6 +4,9 @@ import json
 import os
 import re
 import time
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
+from math import ceil
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -12,6 +15,7 @@ RESPONSES_URL = "https://api.openai.com/v1/responses"
 MAX_SOURCE_CHARS = 45_000
 MAX_RESPONSE_BYTES = 1_000_000
 MAX_OUTPUT_TOKENS = 1_400
+MAX_RETRY_AFTER_SECONDS = 7 * 24 * 60 * 60
 # A conservative upper bound: token count cannot exceed the UTF-8 byte count,
 # plus fixed prompt/schema overhead and the maximum generated output.
 TOKEN_RESERVATION_OVERHEAD = 6_000
@@ -22,7 +26,9 @@ class GenerationUnavailable(RuntimeError):
 
 
 class GenerationFailed(RuntimeError):
-    pass
+    def __init__(self, code, retry_after_seconds=None):
+        super().__init__(code)
+        self.retry_after_seconds = retry_after_seconds
 
 
 SCHEMA = {
@@ -57,6 +63,27 @@ def configuration(env=None):
     return key, model
 
 
+def retry_after_seconds(error, now_at=None):
+    """Return a bounded Retry-After delay without retaining response details."""
+    value = str(error.headers.get("Retry-After", "")).strip() if error.headers else ""
+    if not value:
+        return None
+    try:
+        if value.isdigit():
+            seconds = int(value)
+        else:
+            target = parsedate_to_datetime(value)
+            if target.tzinfo is None:
+                target = target.replace(tzinfo=timezone.utc)
+            current = now_at or datetime.now(timezone.utc)
+            seconds = ceil((target.astimezone(timezone.utc) - current).total_seconds())
+    except (TypeError, ValueError, OverflowError):
+        return None
+    if seconds <= 0:
+        return None
+    return min(seconds, MAX_RETRY_AFTER_SECONDS)
+
+
 def request_response(payload, api_key, timeout=35):
     body = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode()
     request = Request(RESPONSES_URL, data=body, method="POST", headers={
@@ -79,6 +106,11 @@ def request_response(payload, api_key, timeout=35):
             last_error = exc
             if exc.code not in {408, 409, 429, 500, 502, 503, 504}:
                 break
+            retry_after = retry_after_seconds(exc)
+            if retry_after is not None:
+                raise GenerationFailed(
+                    "generation-request-deferred", retry_after_seconds=retry_after
+                ) from exc
         except (URLError, TimeoutError, json.JSONDecodeError) as exc:
             last_error = exc
         if attempt < 2:

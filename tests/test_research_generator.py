@@ -1,9 +1,11 @@
 import importlib.util
 import json
 import os
+from datetime import datetime, timezone
 from pathlib import Path
 import unittest
 from unittest.mock import patch
+from urllib.error import HTTPError
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -62,6 +64,32 @@ class BriefGeneratorTests(unittest.TestCase):
         self.assertEqual(g.token_usage({"usage": {"input_tokens": True, "output_tokens": -1, "total_tokens": "8"}}),
                          {"inputTokens": None, "outputTokens": None, "totalTokens": None})
         self.assertEqual(g.token_usage({"usage": {"input_tokens": 10, "output_tokens": 5}})["totalTokens"], 15)
+
+    def test_retry_after_defers_without_repeating_request(self):
+        calls = []
+        error = HTTPError(g.RESPONSES_URL, 429, "limit", {"Retry-After": "7200"}, None)
+
+        def blocked(*_args, **_kwargs):
+            calls.append(True)
+            raise error
+
+        with patch.object(g, "urlopen", blocked), patch.object(g.time, "sleep") as sleep:
+            with self.assertRaises(g.GenerationFailed) as raised:
+                g.request_response({"model": "test"}, "k" * 24)
+        self.assertEqual(raised.exception.retry_after_seconds, 7200)
+        self.assertEqual(len(calls), 1)
+        sleep.assert_not_called()
+
+    def test_retry_after_http_date_and_ceiling_are_bounded(self):
+        current = datetime(2026, 9, 25, tzinfo=timezone.utc)
+        dated = HTTPError(g.RESPONSES_URL, 503, "busy", {
+            "Retry-After": "Fri, 25 Sep 2026 02:00:00 GMT",
+        }, None)
+        excessive = HTTPError(g.RESPONSES_URL, 429, "limit", {
+            "Retry-After": str(30 * 24 * 60 * 60),
+        }, None)
+        self.assertEqual(g.retry_after_seconds(dated, current), 7200)
+        self.assertEqual(g.retry_after_seconds(excessive, current), g.MAX_RETRY_AFTER_SECONDS)
 
 
 if __name__ == "__main__":
