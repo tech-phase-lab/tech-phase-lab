@@ -16,15 +16,21 @@ class XApiTests(unittest.TestCase):
     def setUp(self):
         self.source = next(s for s in signals.SOURCES if s["id"] == "x-tipranks")
 
-    def test_x_source_scope_adds_three_x_only_pilot_companies(self):
+    def test_x_source_scope_adds_requested_x_only_companies(self):
         x_sources = [source for source in signals.SOURCES if source.get("format") == "x-api"]
+        added = {"LITE", "COHR", "VST", "IREN", "ALAB", "APH", "INTC",
+                 "AMAT", "SIMO", "AAOI", "META"}
         self.assertEqual({source["accounts"][0].lower() for source in x_sources},
                          {"tipranks", "theflynews", "wallstengine"})
         self.assertEqual({ticker for source in x_sources for ticker in source["tickers"]},
-                         set(monitor.PROVIDERS) | {"LITE", "COHR", "VST"})
+                         set(monitor.PROVIDERS) | added)
         for source in x_sources:
             self.assertLessEqual(len(source["query"]), 512)
-            self.assertEqual(source["extraTickers"], ["LITE", "COHR", "VST"])
+            self.assertEqual(set(source["extraTickers"]), added)
+            self.assertEqual(len(source["tickers"]), 33)
+            self.assertTrue(all(f"${ticker}" in source["query"] for ticker in added))
+            self.assertEqual(source["intervalSeconds"], 120)
+            self.assertEqual(source["maxResults"], 10)
             self.assertIn('"price target"', source["query"])
             self.assertIn('"target price"', source["query"])
             self.assertIn('"PT to"', source["query"])
@@ -107,9 +113,13 @@ class XApiTests(unittest.TestCase):
             {"id": "4102", "author_id": "1", "text": "$COHR reports quarterly results"},
             {"id": "4103", "author_id": "1", "text": "$VST opens a new power plant"},
             {"id": "4104", "author_id": "1", "text": "$XYZ price target raised to $20"},
+            {"id": "4105", "author_id": "1", "text": "$IREN price target raised to $70"},
+            {"id": "4106", "author_id": "1", "text": "$META earnings beat expectations"},
+            {"id": "4107", "author_id": "1", "text": "$INTC launches new chips"},
         ], "includes": {"users": [{"id": "1", "username": "TipRanks"}]}}
         items = x_api.parse_response(self.source, payload, list(monitor.PROVIDERS))
-        self.assertEqual([list(item["matches"]) for item in items], [["LITE"], ["COHR"]])
+        self.assertEqual([list(item["matches"]) for item in items],
+                         [["LITE"], ["COHR"], ["IREN"], ["META"]])
         self.assertIn("VST", signals.X_EXTRA_TICKERS)
 
     def test_direct_adapter_call_fails_closed(self):
