@@ -238,16 +238,26 @@ class SignalTests(unittest.TestCase):
         self.db = monitor.connect(self.path)
         self.assertEqual(signals.check(self.db, self.doc, self.tickers, timeout)["status"], "error")
 
+        def restricted(*_args):
+            raise HTTPError("https://private.invalid/route", 403, "forbidden", {}, None)
+
+        self.assertEqual(signals.check(self.db, self.doc, self.tickers, restricted)["status"], "error")
+        self.assertEqual(signals.check(self.db, self.doc, self.tickers, restricted)["status"], "error")
+
         history = self.db.execute(
             "SELECT outcome,previous_kind,current_kind,occurred_at "
             "FROM signal_route_transitions ORDER BY id"
         ).fetchall()
-        self.assertEqual([row["outcome"] for row in history], ["failed", "recovered", "failed"])
+        self.assertEqual(
+            [row["outcome"] for row in history],
+            ["failed", "recovered", "failed", "changed"],
+        )
         self.assertEqual(history[0]["current_kind"], "timeout")
+        self.assertEqual(history[-1]["current_kind"], "accessRestricted")
         summary = signals.operational_summary(self.db, sources=[self.doc])
         self.assertEqual(summary["routeTransitions24Hours"], {
-            "recoveries": 1, "failures": 2, "changes": 0,
-            "lastOutcome": "failed",
+            "recoveries": 1, "failures": 2, "changes": 1,
+            "lastOutcome": "changed",
             "lastOccurredAt": datetime.fromisoformat(history[-1]["occurred_at"]).isoformat(),
         })
         serialized = json.dumps(summary)
