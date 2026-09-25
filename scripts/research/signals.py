@@ -25,6 +25,8 @@ SOURCES = json.loads(Path(__file__).with_name("signal_sources.json").read_text()
 MAX_BYTES = 12 * 1024 * 1024
 MAX_TEXT = 160_000
 MAX_ITEMS = 500
+X_API_DAILY_REQUEST_LIMIT_DEFAULT = 100
+X_API_DAILY_REQUEST_LIMIT_MAX = 10_000
 ALIASES = {ticker: [p["name"]] for ticker, p in monitor.PROVIDERS.items()}
 ALIASES.update({
     "ARM": ["Arm Holdings"], "BE": ["Bloom Energy"],
@@ -224,7 +226,74 @@ def schema(db):
         UNIQUE(source_id,url,sha,previous_sha)
       );
       CREATE INDEX IF NOT EXISTS signal_event_time ON signal_events(observed_at);
+      CREATE TABLE IF NOT EXISTS signal_x_request_attempts (
+        id INTEGER PRIMARY KEY, source_id TEXT NOT NULL, attempted_at TEXT NOT NULL
+      );
+      CREATE INDEX IF NOT EXISTS signal_x_request_time ON signal_x_request_attempts(attempted_at);
     """)
+
+
+class XApiDailyLimit(ValueError):
+    def __init__(self, retry_at):
+        super().__init__("x-api-daily-limit")
+        self.retry_at = retry_at
+
+
+def x_api_daily_limit():
+    raw = os.environ.get("X_API_DAILY_REQUEST_LIMIT", str(X_API_DAILY_REQUEST_LIMIT_DEFAULT)).strip()
+    if not raw.isdigit() or not 1 <= int(raw) <= X_API_DAILY_REQUEST_LIMIT_MAX:
+        raise ValueError("x-api-daily-limit-invalid")
+    return int(raw)
+
+
+def x_api_usage(db, now=None):
+    schema(db)
+    current = now or datetime.now(timezone.utc)
+    cutoff = (current - timedelta(hours=24)).isoformat()
+    attempted = db.execute("""SELECT count(*) FROM signal_x_request_attempts
+      WHERE datetime(attempted_at)>=datetime(?) AND datetime(attempted_at)<=datetime(?)""",
+      (cutoff, current.isoformat())).fetchone()[0]
+    oldest = db.execute(
+        """SELECT attempted_at FROM signal_x_request_attempts
+          WHERE datetime(attempted_at)>=datetime(?) AND datetime(attempted_at)<=datetime(?)
+          ORDER BY datetime(attempted_at) LIMIT 1""",
+        (cutoff, current.isoformat()),
+    ).fetchone()
+    limit = x_api_daily_limit()
+    retry_at = None
+    if attempted >= limit and oldest:
+        retry_at = (datetime.fromisoformat(oldest["attempted_at"]) + timedelta(hours=24)).isoformat()
+    requested = os.environ.get("X_API_ENABLED", "").strip().lower() in {"1", "true", "yes"}
+    configured = bool(os.environ.get("X_BEARER_TOKEN", "").strip())
+    return {
+        "requested": requested, "configured": configured, "enabled": requested and configured,
+        "attemptsLast24Hours": attempted, "dailyLimit": limit,
+        "limitReached": attempted >= limit, "nextAvailableAt": retry_at,
+    }
+
+
+def reserve_x_api_request(db, source, now=None):
+    """Persist one billable attempt before network I/O without storing query or token."""
+    if source.get("format") != "x-api":
+        return None
+    current = now or datetime.now(timezone.utc)
+    usage = x_api_usage(db, current)
+    if usage["limitReached"]:
+        raise XApiDailyLimit(usage["nextAvailableAt"])
+    attempted_at = current.isoformat()
+    cutoff = (current - timedelta(days=8)).isoformat()
+    with db:
+        cursor = db.execute("""INSERT INTO signal_x_request_attempts(source_id,attempted_at)
+          SELECT ?,? WHERE (SELECT count(*) FROM signal_x_request_attempts
+            WHERE datetime(attempted_at)>=datetime(?) AND datetime(attempted_at)<=datetime(?))<?""",
+          (source["id"], attempted_at, (current - timedelta(hours=24)).isoformat(),
+           current.isoformat(), usage["dailyLimit"]))
+        if cursor.rowcount != 1:
+            refreshed = x_api_usage(db, current)
+            raise XApiDailyLimit(refreshed["nextAvailableAt"])
+        db.execute("""DELETE FROM signal_x_request_attempts
+          WHERE datetime(attempted_at) IS NULL OR datetime(attempted_at)<datetime(?)""", (cutoff,))
+    return x_api_usage(db, current)
 
 
 def fingerprint(source, tickers):
@@ -345,11 +414,14 @@ def check(db, source, tickers, transport=None):
         error = monitor.source_error_code(exc)
         if isinstance(exc, ET.ParseError):
             error = "invalid-feed-xml"
+        next_check = (datetime.fromisoformat(checked) + timedelta(seconds=delay)).isoformat()
+        if isinstance(exc, XApiDailyLimit) and exc.retry_at:
+            next_check = exc.retry_at
         with db:
             db.execute("""INSERT INTO signal_routes(id,checked_at,next_check_at,failures,error)
               VALUES(?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET checked_at=excluded.checked_at,
               next_check_at=excluded.next_check_at,failures=excluded.failures,error=excluded.error""",
-                       (source["id"], checked, (datetime.fromisoformat(checked) + timedelta(seconds=delay)).isoformat(), failures, error))
+                       (source["id"], checked, next_check, failures, error))
         return {"source": source["id"], "status": "error", "error": error, "events": 0}
 
 
@@ -403,7 +475,7 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
                        "nextCheckAt": row["next_check_at"] if row else None,
                        "error": row["error"] if row else None,
                        "matchedItems": row["matched_items"] if row else 0})
-    return {"items": items, "counts": counts, "routes": routes, "view": view,
+    return {"items": items, "counts": counts, "routes": routes, "xApiUsage": x_api_usage(db), "view": view,
             "ticker": ticker, "generatedAt": stamp(), "publicationEnabled": False}
 
 
