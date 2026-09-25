@@ -217,6 +217,7 @@ def source_error_code(exc):
             ("signal-article-body-limit", "signal-article-body-invalid"),
             ("x-api-daily-limit-invalid", "x-api-budget-invalid"),
             ("x-api-daily-limit", "x-api-daily-limit"),
+            ("x-api-paced", "x-api-paced"),
             ("x-api-disabled", "x-api-disabled"),
             ("x-api-token-missing", "x-api-token-missing"),
             ("x-api-query-invalid", "x-api-query-invalid"),

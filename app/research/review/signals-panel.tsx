@@ -18,7 +18,8 @@ type Queue = {
   counts: Record<string, number>; enabled: boolean; workerAlive: boolean; generatedAt: string;
   xApiUsage?: { requested: boolean; configured: boolean; enabled: boolean; attemptsLast24Hours: number;
     dailyLimit: number; limitReached: boolean; nextAvailableAt: string | null; sourceCount: number;
-    scope: string; configuredMaxRequestsPerDay: number; localMaxRequestsPerDay: number; budgetCapped: boolean };
+    scope: string; configuredMaxRequestsPerDay: number; localMaxRequestsPerDay: number; budgetCapped: boolean; pacingEnabled?: boolean;
+    minimumSpacingSeconds?: number; minimumSourceSpacingSeconds?: number; pacedUntil?: string | null };
 };
 const kindNames: Record<string, string> = {
   baseline: "初回取得・過去資料", new: "新規検出・発表時刻は要確認", changed: "内容変更",
@@ -27,6 +28,7 @@ const sourceNames: Record<string, string> = {
   "external-research": "外部調査", "publisher-update": "発信元の更新", "official-document": "公式ドキュメント",
 };
 const timeLabel = (value: string | null) => value ? new Date(value).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo", hour12: false }) + " JST" : "未取得";
+const durationLabel = (seconds: number) => `${Math.floor(seconds / 60)}分${seconds % 60 ? `${seconds % 60}秒` : ""}`;
 
 export default function SignalsPanel({ token }: { token: string }) {
   const [watch, setWatch] = useState(false);
@@ -80,12 +82,15 @@ export default function SignalsPanel({ token }: { token: string }) {
         {` · ${data.xApiUsage.sourceCount}発信元・目標株価と決算投稿`}
         {` · 設定上最大 ${data.xApiUsage.configuredMaxRequestsPerDay}回/日`}
         {data.xApiUsage.budgetCapped ? ` · ローカル上限 ${data.xApiUsage.localMaxRequestsPerDay}回/日` : ""}
+        {typeof data.xApiUsage.minimumSpacingSeconds === "number" && data.xApiUsage.minimumSpacingSeconds > 0 ? ` · API送信間隔 ${durationLabel(data.xApiUsage.minimumSpacingSeconds)}以上` : ""}
+        {typeof data.xApiUsage.minimumSourceSpacingSeconds === "number" && data.xApiUsage.minimumSourceSpacingSeconds > 0 ? ` · 1発信元あたり約${durationLabel(data.xApiUsage.minimumSourceSpacingSeconds)}以上` : ""}
+        {data.xApiUsage.pacedUntil ? ` · 次の送信枠 ${timeLabel(data.xApiUsage.pacedUntil)}` : ""}
         {data.xApiUsage.limitReached ? ` · 上限到達（再開 ${timeLabel(data.xApiUsage.nextAvailableAt)}）` : ""}
         {" · 自動公開なし"}
       </p>}
       <details className={styles.routes}><summary>取得元の状態（{data.routes.length}経路）</summary>
         <ul>{data.routes.map(route => <li key={route.id}><strong>{route.name}</strong>
-          <span>{route.error ? `取得失敗：${route.error}` : route.succeededAt ? "取得成功" : "未取得"} · 確認間隔 {route.intervalSeconds}秒</span>
+          <span>{route.error === "x-api-paced" ? "次のAPI送信枠を待機" : route.error ? `取得失敗：${route.error}` : route.succeededAt ? "取得成功" : "未取得"} · 確認間隔 {route.intervalSeconds}秒</span>
           <small>最終成功 {timeLabel(route.succeededAt)} · 直近処理 {route.matchedItems}件{route.pendingArticles > 0 ? ` · 本文取得待ち ${route.pendingArticles}件` : ""}</small>
           {!!route.articleErrors?.length && <details><summary>取得できなかった記事（最大20件）</summary>
             <ul>{route.articleErrors.map(article => <li key={article.url}>

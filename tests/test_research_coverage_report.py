@@ -17,7 +17,6 @@ class CoverageReportTests(unittest.TestCase):
         result = coverage_report.report()
         self.assertEqual(len(result['companies']), 22)
         self.assertTrue(all(r['status'] == 'untested' for r in result['routes']))
-        self.assertIsNone(next(r for r in result['routes'] if r['id'] == 'x-tipranks')['url'])
         mu = next(c for c in result['companies'] if c['ticker'] == 'MU')
         self.assertIn('micron-blog', mu['dedicatedSupplementalSources'])
         self.assertFalse(mu['needsDedicatedSupplementalSource'])
@@ -41,6 +40,10 @@ class CoverageReportTests(unittest.TestCase):
         self.assertEqual(oracle_source['format'], 'feed')
         self.assertEqual(oracle_source['url'], 'https://investor.oracle.com/rss/pressrelease.aspx')
         self.assertIn('anthropic-news', result['sharedSources'])
+        x_routes = [route for route in result['routes'] if route['id'].startswith('x-')]
+        self.assertEqual(len(x_routes), 3)
+        self.assertTrue(all(route['url'] is None for route in x_routes))
+        self.assertNotIn('query', str(x_routes).lower())
 
     def test_missing_database_is_not_created(self):
         with tempfile.TemporaryDirectory() as temp:

@@ -420,14 +420,15 @@ class AutomaticMonitor:
                 try:
                     with self.db_lock, monitor.connect(self.db_path) as db:
                         pending = signals.due(db)
-                    futures = [pool.submit(self.check_signal_source, source) for source in pending]
+                    x_due_ids = [source["id"] for source in pending if source.get("format") == "x-api"]
+                    futures = [pool.submit(self.check_signal_source, source, x_due_ids) for source in pending]
                     for future in as_completed(futures):
                         future.result()
                 except Exception:
                     print('{"event":"signal-worker-error"}', flush=True)
                 self.stop_event.wait(1)
 
-    def check_signal_source(self, source):
+    def check_signal_source(self, source, x_due_ids=None):
         if self.stop_event.is_set():
             return
         # Network I/O and article parsing must not hold the shared database lock.
@@ -435,7 +436,7 @@ class AutomaticMonitor:
         with self.db_lock, monitor.connect(self.db_path) as db:
             validators = signals.validators_for(db, source, self.tickers)
             try:
-                signals.reserve_x_api_request(db, source)
+                signals.reserve_x_api_request(db, source, eligible_source_ids=x_due_ids)
             except Exception as exc:
                 reservation_error = exc
         started = time.monotonic()

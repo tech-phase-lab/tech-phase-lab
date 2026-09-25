@@ -239,6 +239,12 @@ class XApiDailyLimit(ValueError):
         self.retry_at = retry_at
 
 
+class XApiPacing(ValueError):
+    def __init__(self, retry_at):
+        super().__init__("x-api-paced")
+        self.retry_at = retry_at
+
+
 def x_api_daily_limit():
     raw = os.environ.get("X_API_DAILY_REQUEST_LIMIT", str(X_API_DAILY_REQUEST_LIMIT_DEFAULT)).strip()
     if not raw.isdigit() or not 1 <= int(raw) <= X_API_DAILY_REQUEST_LIMIT_MAX:
@@ -263,12 +269,18 @@ def x_api_request_plan(sources=SOURCES):
                 # Include boundary polls so the estimate remains conservative.
                 configured_max += max(0, -(-int(duration) // fast) - int(duration) // normal + 2)
     daily_limit = x_api_daily_limit()
+    local_max = min(configured_max, daily_limit)
+    budget_capped = configured_max > daily_limit
+    minimum_spacing = (86400 + daily_limit - 1) // daily_limit if budget_capped else 0
     return {
         "sourceCount": len(x_sources),
         "scope": "analyst-price-target-or-earnings",
         "configuredMaxRequestsPerDay": configured_max,
-        "localMaxRequestsPerDay": min(configured_max, daily_limit),
-        "budgetCapped": configured_max > daily_limit,
+        "localMaxRequestsPerDay": local_max,
+        "budgetCapped": budget_capped,
+        "pacingEnabled": budget_capped,
+        "minimumSpacingSeconds": minimum_spacing,
+        "minimumSourceSpacingSeconds": minimum_spacing * max(1, len(x_sources)),
     }
 
 
@@ -283,17 +295,24 @@ def source_interval_seconds(source, checked_at):
     return normal
 
 
-def x_api_usage(db, now=None, sources=SOURCES):
-    schema(db)
+def x_api_usage(db, now=None, sources=SOURCES, ensure_schema=True):
+    if ensure_schema:
+        schema(db)
     current = now or datetime.now(timezone.utc)
     cutoff = (current - timedelta(hours=24)).isoformat()
     attempted = db.execute("""SELECT count(*) FROM signal_x_request_attempts
-      WHERE datetime(attempted_at)>=datetime(?) AND datetime(attempted_at)<=datetime(?)""",
+      WHERE datetime(attempted_at)>datetime(?) AND datetime(attempted_at)<=datetime(?)""",
       (cutoff, current.isoformat())).fetchone()[0]
     oldest = db.execute(
         """SELECT attempted_at FROM signal_x_request_attempts
-          WHERE datetime(attempted_at)>=datetime(?) AND datetime(attempted_at)<=datetime(?)
+          WHERE datetime(attempted_at)>datetime(?) AND datetime(attempted_at)<=datetime(?)
           ORDER BY datetime(attempted_at) LIMIT 1""",
+        (cutoff, current.isoformat()),
+    ).fetchone()
+    newest = db.execute(
+        """SELECT attempted_at FROM signal_x_request_attempts
+          WHERE datetime(attempted_at)>datetime(?) AND datetime(attempted_at)<=datetime(?)
+          ORDER BY datetime(attempted_at) DESC LIMIT 1""",
         (cutoff, current.isoformat()),
     ).fetchone()
     limit = x_api_daily_limit()
@@ -302,32 +321,65 @@ def x_api_usage(db, now=None, sources=SOURCES):
         retry_at = (datetime.fromisoformat(oldest["attempted_at"]) + timedelta(hours=24)).isoformat()
     requested = os.environ.get("X_API_ENABLED", "").strip().lower() in {"1", "true", "yes"}
     configured = bool(os.environ.get("X_BEARER_TOKEN", "").strip())
+    plan = x_api_request_plan(sources)
+    paced_until = None
+    if newest and plan["pacingEnabled"]:
+        candidate = datetime.fromisoformat(newest["attempted_at"]) + timedelta(
+            seconds=plan["minimumSpacingSeconds"]
+        )
+        if candidate > current:
+            paced_until = candidate.isoformat()
     return {
         "requested": requested, "configured": configured, "enabled": requested and configured,
         "attemptsLast24Hours": attempted, "dailyLimit": limit,
         "limitReached": attempted >= limit, "nextAvailableAt": retry_at,
-        **x_api_request_plan(sources),
+        "pacedUntil": paced_until, **plan,
     }
 
 
-def reserve_x_api_request(db, source, now=None):
+def reserve_x_api_request(db, source, now=None, eligible_source_ids=None):
     """Persist one billable attempt before network I/O without storing query or token."""
     if source.get("format") != "x-api":
         return None
     current = now or datetime.now(timezone.utc)
-    usage = x_api_usage(db, current)
-    if usage["limitReached"]:
-        raise XApiDailyLimit(usage["nextAvailableAt"])
+    schema(db)
     attempted_at = current.isoformat()
     cutoff = (current - timedelta(days=8)).isoformat()
     with db:
+        # Serialize the usage check, fair-source selection and reservation even
+        # when more than one worker process shares the SQLite database.
+        db.execute("BEGIN IMMEDIATE")
+        usage = x_api_usage(db, current, ensure_schema=False)
+        if usage["limitReached"]:
+            raise XApiDailyLimit(usage["nextAvailableAt"])
+        if usage["pacingEnabled"]:
+            eligible = list(dict.fromkeys(eligible_source_ids or [source["id"]]))
+            cutoff_24h = (current - timedelta(hours=24)).isoformat()
+            rows = {row["source_id"]: row for row in db.execute(
+                """SELECT source_id,count(*) AS attempts,max(attempted_at) AS latest
+                  FROM signal_x_request_attempts
+                  WHERE datetime(attempted_at)>datetime(?) AND datetime(attempted_at)<=datetime(?)
+                  GROUP BY source_id""",
+                (cutoff_24h, current.isoformat()),
+            )}
+            order = {item: index for index, item in enumerate(eligible)}
+            candidate = min(eligible, key=lambda item: (
+                int(rows.get(item, {"attempts": 0})["attempts"]),
+                rows.get(item, {"latest": ""})["latest"] or "",
+                order[item],
+            ))
+            if source["id"] != candidate or usage["pacedUntil"]:
+                retry_at = usage["pacedUntil"] or (
+                    current + timedelta(seconds=usage["minimumSpacingSeconds"])
+                ).isoformat()
+                raise XApiPacing(retry_at)
         cursor = db.execute("""INSERT INTO signal_x_request_attempts(source_id,attempted_at)
           SELECT ?,? WHERE (SELECT count(*) FROM signal_x_request_attempts
-            WHERE datetime(attempted_at)>=datetime(?) AND datetime(attempted_at)<=datetime(?))<?""",
+            WHERE datetime(attempted_at)>datetime(?) AND datetime(attempted_at)<=datetime(?))<?""",
           (source["id"], attempted_at, (current - timedelta(hours=24)).isoformat(),
            current.isoformat(), usage["dailyLimit"]))
         if cursor.rowcount != 1:
-            refreshed = x_api_usage(db, current)
+            refreshed = x_api_usage(db, current, ensure_schema=False)
             raise XApiDailyLimit(refreshed["nextAvailableAt"])
         db.execute("""DELETE FROM signal_x_request_attempts
           WHERE datetime(attempted_at) IS NULL OR datetime(attempted_at)<datetime(?)""", (cutoff,))
@@ -441,7 +493,10 @@ def check(db, source, tickers, transport=None):
                 "matchedItems": len(items), "events": count, "pendingArticles": response.get("article_pending", 0)}
     except Exception as exc:
         checked = stamp()
-        failures = min(20, (row["failures"] if row else 0) + 1)
+        paced = isinstance(exc, XApiPacing)
+        failures = (row["failures"] if row else 0) if paced else min(
+            20, (row["failures"] if row else 0) + 1
+        )
         delay = min(3600, max(30, source["intervalSeconds"]) * 2 ** failures)
         if isinstance(exc, HTTPError) and exc.headers:
             retry = exc.headers.get("Retry-After", "")
@@ -454,7 +509,7 @@ def check(db, source, tickers, transport=None):
         if isinstance(exc, ET.ParseError):
             error = "invalid-feed-xml"
         next_check = (datetime.fromisoformat(checked) + timedelta(seconds=delay)).isoformat()
-        if isinstance(exc, XApiDailyLimit) and exc.retry_at:
+        if isinstance(exc, (XApiDailyLimit, XApiPacing)) and exc.retry_at:
             next_check = exc.retry_at
         with db:
             db.execute("""INSERT INTO signal_routes(id,checked_at,next_check_at,failures,error)

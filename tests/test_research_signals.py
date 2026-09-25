@@ -46,6 +46,7 @@ class SignalTests(unittest.TestCase):
             "signal-index-no-articles": "signal-no-article-links",
             "signal-article-body-limit": "signal-article-body-invalid",
             "x-api-daily-limit": "x-api-daily-limit",
+            "x-api-paced": "x-api-paced",
             "x-api-daily-limit-invalid": "x-api-budget-invalid",
         }
         for message, expected in cases.items():
@@ -124,18 +125,18 @@ class SignalTests(unittest.TestCase):
             "X_API_DAILY_REQUEST_LIMIT": "2",
         }, clear=False):
             first = signals.reserve_x_api_request(self.db, source, now)
-            second = signals.reserve_x_api_request(self.db, source, now + timedelta(minutes=1))
+            second = signals.reserve_x_api_request(self.db, source, now + timedelta(hours=12))
             self.assertEqual(first["attemptsLast24Hours"], 1)
             self.assertEqual(second["attemptsLast24Hours"], 2)
             with self.assertRaises(signals.XApiDailyLimit) as blocked:
-                signals.reserve_x_api_request(self.db, source, now + timedelta(minutes=2))
+                signals.reserve_x_api_request(self.db, source, now + timedelta(hours=12, minutes=1))
             self.assertEqual(blocked.exception.retry_at, "2026-09-26T01:00:00+00:00")
             self.db.executemany(
                 "INSERT INTO signal_x_request_attempts(source_id,attempted_at) VALUES('x-test',?)",
                 [("not-a-time",), ((now + timedelta(days=30)).isoformat(),)],
             )
             self.db.commit()
-            usage = signals.queue(self.db, sources=[])["xApiUsage"]
+            usage = signals.x_api_usage(self.db, now + timedelta(hours=12, minutes=1), sources=[])
             self.assertEqual(usage["attemptsLast24Hours"], 2)
             self.assertNotIn("token", json.dumps(usage).lower())
 
@@ -153,6 +154,8 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(plan["configuredMaxRequestsPerDay"], 744)
         self.assertEqual(plan["localMaxRequestsPerDay"], 100)
         self.assertTrue(plan["budgetCapped"])
+        self.assertEqual(plan["minimumSpacingSeconds"], 864)
+        self.assertEqual(plan["minimumSourceSpacingSeconds"], 1728)
         serialized = json.dumps(plan)
         self.assertNotIn("secret-query", serialized)
         self.assertNotIn("example.invalid", serialized)
@@ -163,6 +166,7 @@ class SignalTests(unittest.TestCase):
             plan = signals.x_api_request_plan(sources)
         self.assertEqual(plan["configuredMaxRequestsPerDay"], 2286)
         self.assertFalse(plan["budgetCapped"])
+        self.assertFalse(plan["pacingEnabled"])
         source = sources[0]
         for moment, expected in [
             ("2026-09-30T19:29:59+00:00", 120),
@@ -171,13 +175,58 @@ class SignalTests(unittest.TestCase):
             ("2026-09-30T20:50:00+00:00", 120),
         ]:
             with self.subTest(moment=moment):
-                self.assertEqual(signals.source_interval_seconds(
-                    source, datetime.fromisoformat(moment)), expected)
+                self.assertEqual(
+                    signals.source_interval_seconds(source, datetime.fromisoformat(moment)),
+                    expected,
+                )
         with patch.object(signals, "stamp", return_value="2026-09-30T19:35:00+00:00"):
             signals.check(self.db, source, self.tickers, lambda *_: {"_items": []})
-        next_at = self.db.execute("SELECT next_check_at FROM signal_routes WHERE id=?",
-                                  (source["id"],)).fetchone()[0]
+        next_at = self.db.execute(
+            "SELECT next_check_at FROM signal_routes WHERE id=?", (source["id"],)
+        ).fetchone()[0]
         self.assertEqual(next_at, "2026-09-30T19:36:00+00:00")
+
+    def test_x_api_budget_is_evenly_paced_and_rotates_due_sources(self):
+        sources = [
+            {"id": source_id, "format": "x-api", "intervalSeconds": 120}
+            for source_id in ("x-a", "x-b", "x-c")
+        ]
+        due_ids = [source["id"] for source in sources]
+        now = datetime(2026, 9, 25, 1, 0, tzinfo=timezone.utc)
+        with patch.dict(os.environ, {"X_API_DAILY_REQUEST_LIMIT": "100"}, clear=False), \
+                patch.object(signals, "SOURCES", sources):
+            first = signals.reserve_x_api_request(
+                self.db, sources[0], now, eligible_source_ids=due_ids
+            )
+            self.assertEqual(first["pacedUntil"], "2026-09-25T01:14:24+00:00")
+            with self.assertRaises(signals.XApiPacing) as early:
+                signals.reserve_x_api_request(
+                    self.db, sources[1], now + timedelta(minutes=1), eligible_source_ids=due_ids
+                )
+            self.assertEqual(early.exception.retry_at, "2026-09-25T01:14:24+00:00")
+            with self.assertRaises(signals.XApiPacing):
+                signals.reserve_x_api_request(
+                    self.db, sources[0], now + timedelta(seconds=864), eligible_source_ids=due_ids
+                )
+            signals.reserve_x_api_request(
+                self.db, sources[1], now + timedelta(seconds=864), eligible_source_ids=due_ids
+            )
+            signals.reserve_x_api_request(
+                self.db, sources[2], now + timedelta(seconds=1728), eligible_source_ids=due_ids
+            )
+        attempts = [row["source_id"] for row in self.db.execute(
+            "SELECT source_id FROM signal_x_request_attempts ORDER BY attempted_at"
+        )]
+        self.assertEqual(attempts, ["x-a", "x-b", "x-c"])
+
+    def test_x_api_rolling_window_excludes_exactly_twenty_four_hours_old_attempt(self):
+        source = {"id": "x-test", "format": "x-api", "intervalSeconds": 120}
+        now = datetime(2026, 9, 25, 1, 0, tzinfo=timezone.utc)
+        with patch.dict(os.environ, {"X_API_DAILY_REQUEST_LIMIT": "2"}, clear=False):
+            signals.reserve_x_api_request(self.db, source, now)
+            signals.reserve_x_api_request(self.db, source, now + timedelta(hours=12))
+            usage = signals.reserve_x_api_request(self.db, source, now + timedelta(hours=24))
+        self.assertEqual(usage["attemptsLast24Hours"], 2)
 
     def test_x_api_budget_block_sets_next_check_without_transport(self):
         source = {"id": "x-test", "format": "x-api", "intervalSeconds": 120,

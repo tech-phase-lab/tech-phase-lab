@@ -40,6 +40,15 @@ configured polling intervals and shows it beside the enforced local cap. This
 is a request-count bound, not a currency estimate or delivery-latency promise;
 provider billing and provider-side caps remain authoritative. X queries and the
 post filter are restricted to analyst price-target or earnings language.
+When configured demand exceeds the rolling daily allowance, the monitor spaces
+billable X requests instead of consuming that allowance at the nominal polling
+rate. With a 100-request cap this is one request no more often than every 864
+seconds globally; due publishers rotate by rolling attempt count so one
+publisher cannot consume the shared budget. When configured demand fits below
+the cap, the declared source intervals and bounded event windows remain in
+effect. The private preview shows an aggregate next request slot only while
+pacing applies, without exposing queries, URLs or tokens. This is an internal
+request schedule, not a subscriber-delivery latency commitment.
 
 AI-assisted news drafts retain their AI provenance after human edits and
 require a separate human-verification acknowledgement before approval. The
