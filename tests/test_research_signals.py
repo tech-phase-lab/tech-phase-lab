@@ -139,6 +139,24 @@ class SignalTests(unittest.TestCase):
             self.assertEqual(usage["attemptsLast24Hours"], 2)
             self.assertNotIn("token", json.dumps(usage).lower())
 
+    def test_x_api_plan_exposes_only_bounded_aggregate_demand(self):
+        sources = [
+            {"id": "x-fast", "format": "x-api", "intervalSeconds": 120,
+             "query": "secret-query", "url": "https://example.invalid"},
+            {"id": "x-slow", "format": "x-api", "intervalSeconds": 3600},
+            {"id": "free", "format": "rss", "intervalSeconds": 5},
+        ]
+        with patch.dict(os.environ, {"X_API_DAILY_REQUEST_LIMIT": "100"}, clear=False):
+            plan = signals.x_api_request_plan(sources)
+        self.assertEqual(plan["sourceCount"], 2)
+        self.assertEqual(plan["scope"], "analyst-price-target-only")
+        self.assertEqual(plan["configuredMaxRequestsPerDay"], 744)
+        self.assertEqual(plan["localMaxRequestsPerDay"], 100)
+        self.assertTrue(plan["budgetCapped"])
+        serialized = json.dumps(plan)
+        self.assertNotIn("secret-query", serialized)
+        self.assertNotIn("example.invalid", serialized)
+
     def test_x_api_budget_block_sets_next_check_without_transport(self):
         source = {"id": "x-test", "format": "x-api", "intervalSeconds": 120,
                   "name": "X test", "kind": "publisher-update", "reuse": "review-required"}
