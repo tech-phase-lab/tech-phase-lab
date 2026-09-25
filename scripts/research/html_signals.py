@@ -197,8 +197,8 @@ def collect(source, previous, tickers, request):
     # Reserve one slot for history/revisions so a busy publisher cannot starve them.
     fresh = [url for url in pending if not children[url].get('baseline')
              and not children[url].get('succeeded')]
-    maintenance = [url for url in pending if url not in fresh]
-    selected = fresh[:2] + maintenance[:1]
+    retries = [url for url in pending if children[url].get('error') and url not in fresh]
+    selected = fresh[:2] + retries[:1]
     selected += [url for url in pending if url not in selected][:3 - len(selected)]
     items = []
     for url in selected:

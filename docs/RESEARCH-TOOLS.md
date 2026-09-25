@@ -98,7 +98,9 @@ by the same fixed error categories. Their due, deferred and unscheduled retry
 counts and earliest bounded retry time are reported overall and by category.
 Successful children are excluded, stored state is bounded before aggregation,
 and no child URL, title, HTTP status, validator or raw error reaches this
-operational summary.
+operational summary. When a child retry becomes due, one bounded maintenance
+slot prioritizes it ahead of untouched historical imports; up to two new-story
+slots remain available, and remaining capacity continues the history queue.
 Route state transitions are retained privately across worker restarts and the
 preview exposes only rolling 24-hour totals for recovery, renewed failure and
 error-category change, plus the most recent transition kind and time. A

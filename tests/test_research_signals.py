@@ -864,6 +864,32 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(calls, [base + 'new-2', base + 'old-1', base + 'old-2'])
         self.assertNotIn(base + 'new-3', calls)
 
+    def test_due_failed_baseline_retries_without_starving_history(self):
+        from html_signals import collect
+        source = next(s for s in signals.SOURCES if s['id'] == 'anthropic-news')
+        base = source['url'] + '/'
+        children = {base + f'old-{i}': {'baseline': True} for i in range(6)}
+        children[base + 'failed'] = {
+            'baseline': True, 'checked': '2026-09-25T10:00:00+00:00',
+            'next_check': '', 'failures': 1, 'error': 'http-503',
+        }
+        calls = []
+
+        def request(route, validators):
+            if route['url'] == source['url']:
+                return {'body': ''.join(
+                    f'<a href="{url}">Story</a>' for url in children
+                ).encode()}
+            calls.append(route['url'])
+            return {'body': ('<main><h1>Infrastructure</h1><p>'
+                             + 'Nebius infrastructure update. ' * 10
+                             + '</p></main>').encode()}
+
+        collect(source, {'index_state': json.dumps({
+            'initialized': True, 'children': children,
+        })}, self.tickers, request)
+        self.assertEqual(calls, [base + 'failed', base + 'old-0', base + 'old-1'])
+
     def test_sitemap_baselines_survive_restart_and_new_url_is_prioritized(self):
         source = next(s for s in signals.SOURCES if s['id'] == 'micron-blog')
         urls = [f'https://www.micron.com/about/blog/memory/dram/article-{i}' for i in range(130)]
