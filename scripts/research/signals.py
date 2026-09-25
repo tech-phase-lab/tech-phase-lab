@@ -631,12 +631,24 @@ def operational_summary(db, sources=SOURCES, reference=None):
         except (TypeError, ValueError):
             return None
 
+    def retry_value(value):
+        try:
+            parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+            if parsed.tzinfo is None:
+                return None
+            parsed = parsed.astimezone(timezone.utc)
+            return parsed if parsed <= current + timedelta(days=7) else None
+        except (TypeError, ValueError):
+            return None
+
     error_kinds = {kind: 0 for kind in (
         "accessRestricted", "rateLimited", "timeout", "server",
         "invalidResponse", "articlePartial", "other",
     )}
+    retry = {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None}
     route_counts = {"configured": len(official), "checked": 0, "fresh": 0,
-                    "stale": 0, "error": 0, "pending": 0, "errorKinds": error_kinds}
+                    "stale": 0, "error": 0, "pending": 0,
+                    "errorKinds": error_kinds, "retry": retry}
     for source_id, source in configured.items():
         row = db.execute("SELECT * FROM signal_routes WHERE id=?", (source_id,)).fetchone()
         if not row:
@@ -647,6 +659,16 @@ def operational_summary(db, sources=SOURCES, reference=None):
         if row["error"]:
             route_counts["error"] += 1
             error_kinds[signal_error_kind(row["error"])] += 1
+            next_check = retry_value(row["next_check_at"])
+            if next_check is None:
+                retry["unscheduled"] += 1
+            elif next_check <= current:
+                retry["due"] += 1
+            else:
+                retry["deferred"] += 1
+                next_at = retry["nextAt"]
+                if next_at is None or next_check.isoformat() < next_at:
+                    retry["nextAt"] = next_check.isoformat()
             continue
         succeeded = timestamp_value(row["succeeded_at"])
         if not succeeded:

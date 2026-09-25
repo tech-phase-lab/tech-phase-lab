@@ -81,6 +81,9 @@ timestamp separately from date-only evidence and missing publication time.
 Failed routes are grouped into access restriction, rate limit, timeout,
 first-party 5xx, invalid response, partial article retrieval and other fixed
 categories.
+The same aggregate separates retries that are due, deferred or missing a valid
+schedule, and exposes only the earliest bounded retry time. It excludes invalid
+or more-than-seven-day future values and never exposes which route failed.
 The aggregate excludes external-research and opt-in X API routes and never
 contains route names, URLs, titles or raw errors. A recently successful route
 is an operational observation only; it does not prove complete coverage or

@@ -1462,6 +1462,9 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["routes"]["configured"], 22)
         self.assertEqual(summary["routes"]["pending"], 22)
         self.assertEqual(sum(summary["routes"]["errorKinds"].values()), 0)
+        self.assertEqual(summary["routes"]["retry"], {
+            "due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None,
+        })
         self.assertEqual(summary["publicationEvidence"]["total"], 0)
         serialized = json.dumps(summary)
         self.assertNotIn("https://", serialized)

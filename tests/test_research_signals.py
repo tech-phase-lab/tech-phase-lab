@@ -157,6 +157,10 @@ class SignalTests(unittest.TestCase):
                 "server": 0, "invalidResponse": 0,
                 "articlePartial": 0, "other": 0,
             },
+            "retry": {
+                "due": 0, "deferred": 1, "unscheduled": 0,
+                "nextAt": "2026-09-25T07:03:00+00:00",
+            },
         })
         self.assertEqual(summary["publicationEvidence"], {
             "total": 3, "timestamp": 1, "dateOnly": 1, "missing": 1,
@@ -181,6 +185,36 @@ class SignalTests(unittest.TestCase):
         for error, expected in cases.items():
             with self.subTest(error=error):
                 self.assertEqual(signals.signal_error_kind(error), expected)
+
+    def test_operational_summary_bounds_retry_schedule_without_route_details(self):
+        reference = datetime(2026, 9, 25, 7, 0, tzinfo=timezone.utc)
+        official = [source for source in signals.SOURCES
+                    if source.get("kind") != "external-research"
+                    and source.get("format") != "x-api"][:3]
+        schedules = [
+            ("2026-09-25T06:59:00+00:00", "timeout"),
+            ("2026-09-25T07:10:00+00:00", "article-fetch-failed:1"),
+            ("2099-01-01T00:00:00+00:00", "http-403"),
+        ]
+        signals.schema(self.db)
+        with self.db:
+            for source, (next_check, error) in zip(official, schedules):
+                self.db.execute("""INSERT INTO signal_routes(
+                  id,initialized,checked_at,next_check_at,failures,error
+                  ) VALUES(?,1,?,?,1,?)""", (
+                    source["id"], "2026-09-25T06:58:00+00:00", next_check, error,
+                ))
+        summary = signals.operational_summary(
+            self.db, sources=official, reference=reference
+        )
+        self.assertEqual(summary["routes"]["retry"], {
+            "due": 1, "deferred": 1, "unscheduled": 1,
+            "nextAt": "2026-09-25T07:10:00+00:00",
+        })
+        self.assertEqual(sum(summary["routes"]["errorKinds"].values()), 3)
+        serialized = json.dumps(summary)
+        for private_value in ("article-fetch-failed", "http-403"):
+            self.assertNotIn(private_value, serialized)
 
     def test_persisted_validators_and_304(self):
         self.check_feed(feed(), etag='"v1"')

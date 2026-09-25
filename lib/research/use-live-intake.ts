@@ -147,6 +147,9 @@ export type MonitorState = {
         accessRestricted: number; rateLimited: number; timeout: number;
         server: number; invalidResponse: number; articlePartial: number; other: number;
       };
+      retry?: {
+        due: number; deferred: number; unscheduled: number; nextAt: string | null;
+      };
     };
     publicationEvidence: {
       total: number; timestamp: number; dateOnly: number; missing: number;
