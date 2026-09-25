@@ -167,6 +167,9 @@ test("SEC evidence totals and filters distinguish exhibits from filing-body fall
   assert.match(intakeDashboard, /区分別再試行/);
   assert.match(intakeDashboard, /子記事本文失敗/);
   assert.match(intakeDashboard, /子記事区分別再試行/);
+  assert.match(liveTypes, /recoveries24Hours\?:/);
+  assert.match(intakeDashboard, /子記事回復の実測/);
+  assert.match(intakeDashboard, /失敗開始→回復/);
   assert.match(intakeDashboard, /最短/);
   assert.match(intakeDashboard, /完全な網羅性を意味しません/);
   assert.match(intakeDashboard, /遮断経路の復旧確認/);

@@ -181,7 +181,23 @@ class SignalTests(unittest.TestCase):
                     "https://private.invalid/success": {
                         "error": None, "next_check": "2026-09-25T07:05:00+00:00",
                     },
-                }}),
+                }, "recoveries": [
+                    {
+                        "failedAt": "2026-09-25T06:50:00+00:00",
+                        "recoveredAt": "2026-09-25T06:55:00+00:00",
+                        "attempts": 3,
+                    },
+                    {
+                        "failedAt": "2026-09-23T06:50:00+00:00",
+                        "recoveredAt": "2026-09-23T06:55:00+00:00",
+                        "attempts": 2,
+                    },
+                    {
+                        "failedAt": "invalid",
+                        "recoveredAt": "2026-09-25T06:56:00+00:00",
+                        "attempts": 2,
+                    },
+                ]}),
             ))
             events = [
                 (official[0]["id"], "timestamp", "2026-09-25T06:00:00+00:00", None),
@@ -249,6 +265,14 @@ class SignalTests(unittest.TestCase):
             {"due": 0, "deferred": 1, "unscheduled": 0,
              "nextAt": "2026-09-25T07:04:00+00:00"},
         )
+        self.assertEqual(summary["articleRetrieval"]["recoveries24Hours"], {
+            "count": 1,
+            "latencyAverageMs": 300_000,
+            "latencyMaxMs": 300_000,
+            "attemptsAverage": 3.0,
+            "attemptsMax": 3,
+            "lastRecoveredAt": "2026-09-25T06:55:00+00:00",
+        })
         self.assertEqual(summary["routeTransitions24Hours"], {
             "recoveries": 0, "failures": 0, "changes": 0,
             "lastOutcome": None, "lastOccurredAt": None,
@@ -697,6 +721,70 @@ class SignalTests(unittest.TestCase):
             queue['routes'][0]['articleErrors'][0]['nextCheckAt'],
             '2026-09-25T16:00:00+00:00',
         )
+
+    def test_html_article_recovery_measurement_survives_restart_without_url(self):
+        source = next(s for s in signals.SOURCES if s["id"] == "anthropic-news")
+        failing = True
+
+        def request(route, validators):
+            if route["url"] == source["url"]:
+                return {"body": b'<a href="/news/test">Article</a>'}
+            if failing:
+                raise TimeoutError("private transport detail")
+            return {"body": (
+                '<main><h1>Official update</h1><p>'
+                + 'Nebius builds reliable infrastructure. ' * 10
+                + '</p></main>'
+            ).encode()}
+
+        with patch.object(signals, "fetch", side_effect=request), \
+                patch.object(signals, "stamp", return_value="2026-09-25T10:00:00+00:00"):
+            signals.check(self.db, source, self.tickers)
+        state = json.loads(self.db.execute(
+            "SELECT body FROM signal_index_state WHERE source_id=?", (source["id"],)
+        ).fetchone()[0])
+        child = state["children"][source["url"] + "/test"]
+        self.assertIsNotNone(datetime.fromisoformat(child["first_failed_at"]).tzinfo)
+        self.assertEqual(child["failure_attempts"], 1)
+        failed_at = (datetime.now(timezone.utc) - timedelta(minutes=5)).isoformat()
+        child["first_failed_at"] = failed_at
+        child["next_check"] = ""
+        self.db.execute(
+            "UPDATE signal_index_state SET body=? WHERE source_id=?",
+            (json.dumps(state), source["id"]),
+        )
+        self.db.commit()
+
+        failing = False
+        with patch.object(signals, "fetch", side_effect=request):
+            signals.check(self.db, source, self.tickers)
+        self.db.close()
+        self.db = monitor.connect(self.path)
+        state = json.loads(self.db.execute(
+            "SELECT body FROM signal_index_state WHERE source_id=?", (source["id"],)
+        ).fetchone()[0])
+        self.assertEqual(len(state["recoveries"]), 1)
+        recovery = state["recoveries"][0]
+        self.assertEqual(recovery["failedAt"], failed_at)
+        self.assertEqual(recovery["attempts"], 2)
+        self.assertEqual(recovery["errorKind"], "timeout")
+        self.assertNotIn(source["url"], json.dumps(state["recoveries"]))
+        recovered_at = datetime.fromisoformat(recovery["recoveredAt"])
+        expected_latency = round(
+            (recovered_at - datetime.fromisoformat(failed_at)).total_seconds() * 1000
+        )
+        summary = signals.operational_summary(
+            self.db, sources=[source],
+            reference=datetime.now(timezone.utc) + timedelta(minutes=1),
+        )
+        self.assertEqual(summary["articleRetrieval"]["recoveries24Hours"], {
+            "count": 1,
+            "latencyAverageMs": expected_latency,
+            "latencyMaxMs": expected_latency,
+            "attemptsAverage": 2.0,
+            "attemptsMax": 2,
+            "lastRecoveredAt": recovered_at.isoformat(),
+        })
 
     def test_html_article_retry_after_is_honored_without_retaining_header(self):
         source = next(s for s in signals.SOURCES if s["id"] == "anthropic-news")

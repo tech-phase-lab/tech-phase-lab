@@ -126,7 +126,7 @@ def visible_date(text, pattern, date_format):
     return parsed.date().isoformat()
 
 
-def collect(source, previous, tickers, request):
+def collect(source, previous, tickers, request, clock=None):
     # Local import avoids a module initialization cycle.
     import signals
     import monitor
@@ -183,8 +183,14 @@ def collect(source, previous, tickers, request):
 
     state = json.loads(previous.get('index_state') or '{}')
     children = state.get('children', {})
+    recoveries = state.get('recoveries', [])
+    if not isinstance(recoveries, list):
+        recoveries = []
     initial = not state.get('initialized')
-    checked = signals.stamp()
+    # The caller supplies its clock so alternate module loaders and tests use
+    # the same timestamp as route persistence. Direct callers retain the
+    # production clock as a safe default.
+    checked = (clock or signals.stamp)()
     # Retain a bounded set of recently discovered articles even after index rotation.
     for url in urls:
         children.setdefault(url, {'baseline': initial})
@@ -203,6 +209,7 @@ def collect(source, previous, tickers, request):
     items = []
     for url in selected:
         entry = children[url]
+        previous_error = entry.get('error')
         try:
             fetched = request({**source, 'url': url, 'format': 'document'}, entry)
             if fetched.get('not_modified'):
@@ -242,12 +249,40 @@ def collect(source, previous, tickers, request):
                               'truncated': truncated,
                               'baseline': entry['baseline'] and not entry.get('succeeded')})
                 entry.update(etag=fetched.get('etag'), last_modified=fetched.get('last_modified'))
-            entry.update(succeeded=checked, error=None, failures=0)
+            first_failed_at = entry.get('first_failed_at')
+            failed_attempts = entry.get('failure_attempts')
+            if previous_error and isinstance(first_failed_at, str) and isinstance(failed_attempts, int):
+                try:
+                    failed = datetime.fromisoformat(first_failed_at)
+                    recovered = datetime.fromisoformat(checked)
+                    if (failed.tzinfo is not None and recovered.tzinfo is not None
+                            and failed <= recovered <= failed + timedelta(days=7)
+                            and 1 <= failed_attempts <= 100):
+                        # Keep only URL-free measurements. The successful request
+                        # is included in the attempt count.
+                        recoveries.append({
+                            'failedAt': failed.isoformat(),
+                            'recoveredAt': recovered.isoformat(),
+                            'attempts': failed_attempts + 1,
+                            'errorKind': signals.signal_error_kind(previous_error),
+                        })
+                except ValueError:
+                    pass
+            entry.update(succeeded=checked, error=None, failures=0,
+                         first_failed_at=None, failure_attempts=0)
             delay = 3600
         except Exception as exc:
             failures = min(10, entry.get('failures', 0) + 1)
             error = monitor.source_error_code(exc)
-            entry.update(error=error, failures=failures)
+            first_failed_at = entry.get('first_failed_at')
+            if not previous_error or not isinstance(first_failed_at, str):
+                first_failed_at = checked
+            failed_attempts = entry.get('failure_attempts', 0)
+            if not isinstance(failed_attempts, int) or failed_attempts < 0:
+                failed_attempts = 0
+            entry.update(error=error, failures=failures,
+                         first_failed_at=first_failed_at,
+                         failure_attempts=min(100, failed_attempts + 1))
             retry_hint = monitor.retry_after_seconds(exc, datetime.fromisoformat(checked))
             delay = max(
                 min(3600, 120 * 2 ** failures),
@@ -256,5 +291,8 @@ def collect(source, previous, tickers, request):
         entry.update(checked=checked, next_check=(datetime.fromisoformat(checked) + timedelta(seconds=delay)).isoformat())
     errors = sum(bool(value.get('error')) for value in children.values())
     waiting = sum(not value.get('succeeded') for value in children.values())
-    return {'_items': items, 'index_state': json.dumps({'initialized': True, 'children': children}),
+    recoveries = [item for item in recoveries if isinstance(item, dict)][-100:]
+    return {'_items': items, 'index_state': json.dumps({
+                'initialized': True, 'children': children, 'recoveries': recoveries,
+            }),
             'article_errors': errors, 'article_pending': waiting}

@@ -1479,6 +1479,10 @@ class ResearchServiceTests(unittest.TestCase):
              for key in ("due", "deferred", "unscheduled", "nextAt")},
             {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
         )
+        self.assertEqual(articles["recoveries24Hours"], {
+            "count": 0, "latencyAverageMs": None, "latencyMaxMs": None,
+            "attemptsAverage": None, "attemptsMax": None, "lastRecoveredAt": None,
+        })
         self.assertEqual(summary["publicationEvidence"]["total"], 0)
         self.assertEqual(summary["routeTransitions24Hours"], {
             "recoveries": 0, "failures": 0, "changes": 0,

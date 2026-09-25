@@ -170,6 +170,10 @@ export type MonitorState = {
           { due: number; deferred: number; unscheduled: number; nextAt: string | null }
         >>;
       };
+      recoveries24Hours?: {
+        count: number; latencyAverageMs: number | null; latencyMaxMs: number | null;
+        attemptsAverage: number | null; attemptsMax: number | null; lastRecoveredAt: string | null;
+      };
     };
     publicationEvidence: {
       total: number; timestamp: number; dateOnly: number; missing: number;

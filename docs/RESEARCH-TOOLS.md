@@ -96,6 +96,14 @@ failed.
 For HTML indexes, currently failed child articles are also counted separately
 by the same fixed error categories. Their due, deferred and unscheduled retry
 counts and earliest bounded retry time are reported overall and by category.
+The first observed failure time and consecutive attempts remain private until
+that child recovers. Recovery creates a bounded, URL-free measurement with the
+failure/recovery timestamps, total attempts including the successful request,
+and a fixed error category. The preview aggregates only the latest 24 hours:
+sample count, average and maximum recovery time, average and maximum attempts,
+and latest recovery time. Invalid, timezone-free, future or over-seven-day
+measurements are excluded. These are observations, not retry or delivery
+guarantees.
 Successful children are excluded, stored state is bounded before aggregation,
 and no child URL, title, HTTP status, validator or raw error reaches this
 operational summary. When a child retry becomes due, one bounded maintenance

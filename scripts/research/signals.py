@@ -113,7 +113,7 @@ def acquire(source, validators, tickers=None):
         return x_api.fetch_posts(source, tickers or list(ALIASES))
     if source["format"] == "html-index":
         from html_signals import collect
-        return collect(source, validators, tickers or list(ALIASES), fetch)
+        return collect(source, validators, tickers or list(ALIASES), fetch, stamp)
     return fetch(source, validators)
 
 
@@ -811,6 +811,10 @@ def operational_summary(db, sources=SOURCES, reference=None):
         "error": 0,
         "errorKinds": article_error_kinds,
         "retry": retry_summary(),
+        "recoveries24Hours": {
+            "count": 0, "latencyAverageMs": None, "latencyMaxMs": None,
+            "attemptsAverage": None, "attemptsMax": None, "lastRecoveredAt": None,
+        },
     }
     evidence = {"total": 0, "timestamp": 0, "dateOnly": 0, "missing": 0}
     transitions = {
@@ -828,6 +832,7 @@ def operational_summary(db, sources=SOURCES, reference=None):
                 if not isinstance(state, dict):
                     continue
                 children = state.get("children", {})
+                recoveries = state.get("recoveries", [])
             except (TypeError, ValueError):
                 continue
             if not isinstance(children, dict):
@@ -841,6 +846,26 @@ def operational_summary(db, sources=SOURCES, reference=None):
                 article_retrieval["error"] += 1
                 article_error_kinds[error_kind] += 1
                 record_retry(article_retrieval["retry"], error_kind, child.get("next_check"))
+            if isinstance(recoveries, list):
+                measurements = article_retrieval["recoveries24Hours"]
+                cutoff = current - timedelta(hours=24)
+                for recovery in recoveries[-100:]:
+                    if not isinstance(recovery, dict):
+                        continue
+                    failed = timestamp_value(recovery.get("failedAt"))
+                    recovered = timestamp_value(recovery.get("recoveredAt"))
+                    attempts = recovery.get("attempts")
+                    if (not failed or not recovered or recovered < cutoff or failed > recovered
+                            or recovered - failed > timedelta(days=7)
+                            or not isinstance(attempts, int) or not 2 <= attempts <= 101):
+                        continue
+                    latency = round((recovered - failed).total_seconds() * 1000)
+                    measurements["count"] += 1
+                    measurements.setdefault("_latencies", []).append(latency)
+                    measurements.setdefault("_attempts", []).append(attempts)
+                    if (measurements["lastRecoveredAt"] is None
+                            or recovered.isoformat() > measurements["lastRecoveredAt"]):
+                        measurements["lastRecoveredAt"] = recovered.isoformat()
         rows = db.execute(f"""SELECT published_at,published_on FROM signal_events
           WHERE source_id IN ({placeholders})""", tuple(configured)).fetchall()
         for row in rows:
@@ -872,6 +897,14 @@ def operational_summary(db, sources=SOURCES, reference=None):
         if latest:
             transitions["lastOutcome"] = latest[1]
             transitions["lastOccurredAt"] = latest[0].isoformat()
+    measurements = article_retrieval["recoveries24Hours"]
+    latencies = measurements.pop("_latencies", [])
+    attempts = measurements.pop("_attempts", [])
+    if latencies:
+        measurements["latencyAverageMs"] = round(sum(latencies) / len(latencies))
+        measurements["latencyMaxMs"] = max(latencies)
+        measurements["attemptsAverage"] = round(sum(attempts) / len(attempts), 1)
+        measurements["attemptsMax"] = max(attempts)
     return {"routes": route_counts, "articleRetrieval": article_retrieval,
             "publicationEvidence": evidence,
             "routeTransitions24Hours": transitions}
