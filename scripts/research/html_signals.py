@@ -1,5 +1,6 @@
 """Bounded official-news index discovery; no browser or access-control bypass."""
 from html.parser import HTMLParser
+from datetime import datetime
 import re
 from urllib.parse import urljoin, urlsplit
 
@@ -111,6 +112,20 @@ def rich_text(value, max_nodes=20_000, max_depth=20):
     return parts
 
 
+def visible_date(text, pattern, date_format):
+    """Return an ISO date only when the configured visible-body format matches."""
+    if not pattern or not date_format:
+        return None
+    match = re.search(pattern, text)
+    if not match:
+        return None
+    try:
+        parsed = datetime.strptime(match.group(0), date_format)
+    except ValueError as exc:
+        raise ValueError('signal-article-published-date') from exc
+    return parsed.date().isoformat()
+
+
 def collect(source, previous, tickers, request):
     # Local import avoids a module initialization cycle.
     import signals
@@ -218,6 +233,11 @@ def collect(source, previous, tickers, request):
                         matches.setdefault(ticker, ['publisher-company'])
                 items.append({'url': url, 'title': title, 'text': text,
                               'publishedAt': signals.date_value(article.published or ''),
+                              'publishedOn': visible_date(
+                                  text,
+                                  source.get('nextDataArticlePublishedDatePattern'),
+                                  source.get('nextDataArticlePublishedDateFormat'),
+                              ),
                               'matches': matches,
                               'truncated': truncated,
                               'baseline': entry['baseline'] and not entry.get('succeeded')})

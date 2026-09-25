@@ -5,7 +5,7 @@ import styles from "./signals-panel.module.css";
 
 type Signal = {
   id: number; source: string; sourceKind: string; reuse: string; url: string; title: string;
-  tickers: string[]; eventKind: string; publishedAt: string | null; observedAt: string;
+  tickers: string[]; eventKind: string; publishedAt: string | null; publishedOn?: string | null; observedAt: string;
   excerpt: string; diff: string; truncated: boolean;
 };
 type Route = {
@@ -28,6 +28,11 @@ const sourceNames: Record<string, string> = {
   "external-research": "外部調査", "publisher-update": "発信元の更新", "official-document": "公式ドキュメント",
 };
 const timeLabel = (value: string | null) => value ? new Date(value).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo", hour12: false }) + " JST" : "未取得";
+const publicationLabel = (publishedAt: string | null, publishedOn?: string | null) => {
+  if (publishedAt) return timeLabel(publishedAt);
+  const match = publishedOn?.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return match ? `${match[1]}/${Number(match[2])}/${Number(match[3])}（時刻未公表）` : "未取得";
+};
 const durationLabel = (seconds: number) => `${Math.floor(seconds / 60)}分${seconds % 60 ? `${seconds % 60}秒` : ""}`;
 
 export default function SignalsPanel({ token }: { token: string }) {
@@ -109,7 +114,7 @@ export default function SignalsPanel({ token }: { token: string }) {
         <div className={styles.tags}><b>{item.tickers.join(" · ") || "銘柄未判定"}</b><span>{kindNames[item.eventKind]}</span><span>{sourceNames[item.sourceKind]}</span></div>
         <h3><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title} ↗</a></h3>
         <p className={styles.note}>{item.source} · 未確認{item.reuse === "permission-required" ? " · 商用利用条件の確認が必要" : ""}</p>
-        <div className={styles.times}><span>発信元の公表時刻 {timeLabel(item.publishedAt)}</span><span>取得時刻 {timeLabel(item.observedAt)}</span></div>
+        <div className={styles.times}><span>発信元の公表日時 {publicationLabel(item.publishedAt, item.publishedOn)}</span><span>取得時刻 {timeLabel(item.observedAt)}</span></div>
         <details><summary>関連箇所の原文抜粋</summary><pre>{item.excerpt}</pre><small>機械抽出です。記事全体の要約ではありません。{item.truncated ? " 本文の処理上限に達しています。" : ""}</small></details>
         {item.diff && <details><summary>前回取得版からの変更</summary><pre>{item.diff}</pre><small>文字列の差分を最大6,000文字で表示。変更の意味は要確認です。</small></details>}
       </article>)}</div>

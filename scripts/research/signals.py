@@ -221,7 +221,8 @@ def schema(db):
         id INTEGER PRIMARY KEY, source_id TEXT NOT NULL, url TEXT NOT NULL,
         sha TEXT NOT NULL, previous_sha TEXT, title TEXT NOT NULL,
         tickers_json TEXT NOT NULL, matches_json TEXT NOT NULL,
-        event_kind TEXT NOT NULL, published_at TEXT, observed_at TEXT NOT NULL,
+        event_kind TEXT NOT NULL, published_at TEXT, published_on TEXT,
+        observed_at TEXT NOT NULL,
         excerpt TEXT NOT NULL, diff TEXT NOT NULL, truncated INTEGER NOT NULL,
         UNIQUE(source_id,url,sha,previous_sha)
       );
@@ -231,6 +232,8 @@ def schema(db):
       );
       CREATE INDEX IF NOT EXISTS signal_x_request_time ON signal_x_request_attempts(attempted_at);
     """)
+    if "published_on" not in {row[1] for row in db.execute("PRAGMA table_info(signal_events)")}:
+        db.execute("ALTER TABLE signal_events ADD COLUMN published_on TEXT")
 
 
 class XApiDailyLimit(ValueError):
@@ -425,11 +428,12 @@ def save(db, source, items, response, checked, config_sha, duration):
                     ))[:6000]
                 cursor = db.execute("""INSERT OR IGNORE INTO signal_events(
                   source_id,url,sha,previous_sha,title,tickers_json,matches_json,event_kind,
-                  published_at,observed_at,excerpt,diff,truncated
-                  ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)""", (
+                  published_at,published_on,observed_at,excerpt,diff,truncated
+                  ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", (
                     source["id"], item["url"], digest, old["sha"] if old else "",
                     item["title"], json.dumps(sorted(item["matches"])), json.dumps(item["matches"]),
-                    kind, item["publishedAt"], checked, evidence_excerpt(item), diff, int(item["truncated"]),
+                    kind, item["publishedAt"], item.get("publishedOn"), checked,
+                    evidence_excerpt(item), diff, int(item["truncated"]),
                 ))
                 inserted += cursor.rowcount
             # Retain document bodies privately for meaningful same-URL changes.
@@ -541,7 +545,8 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
                       "reuse": source["reuse"], "url": safe_url(row["url"], source),
                       "title": row["title"], "tickers": tickers,
                       "matches": json.loads(row["matches_json"]), "eventKind": row["event_kind"],
-                      "publishedAt": row["published_at"], "observedAt": row["observed_at"],
+                      "publishedAt": row["published_at"], "publishedOn": row["published_on"],
+                      "observedAt": row["observed_at"],
                       "excerpt": row["excerpt"], "diff": row["diff"], "truncated": bool(row["truncated"]),
                       "status": "unreviewed", "sha256": row["sha"]})
     routes = []

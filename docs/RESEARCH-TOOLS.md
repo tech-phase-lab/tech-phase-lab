@@ -81,6 +81,10 @@ letters matching the strict `/qN-YYYY-letter/en/` shape. The latter extracts
 only Contentful rich-text leaves from the page's public `__NEXT_DATA__` payload,
 without executing JavaScript or treating metadata and navigation as evidence.
 Other languages, landing pages, media entries and off-domain URLs are ignored.
+When that extracted shareholder-letter body contains its English publication
+date, the monitor stores it as a date-only value. It does not invent midnight,
+convert that date to JST or treat Contentful creation metadata as publication
+evidence. The review screen labels the clock time as unpublished.
 The first pass is historical baseline evidence, not a new-news claim, and all
 items remain private and human-review required.
 

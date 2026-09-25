@@ -444,6 +444,8 @@ class SignalTests(unittest.TestCase):
         item = signals.queue(self.db, sources=[source])['items'][0]
         self.assertEqual(item['title'], 'Q2 2026 | Letter to Shareholders')
         self.assertEqual(item['tickers'], ['PLTR'])
+        self.assertEqual(item['publishedOn'], '2026-08-03')
+        self.assertIsNone(item['publishedAt'])
         self.assertIn('August 3, 2026', item['excerpt'])
         self.assertNotIn('do-not-extract', item['excerpt'])
 
@@ -454,6 +456,26 @@ class SignalTests(unittest.TestCase):
             nested = {'content': [nested]}
         with self.assertRaisesRegex(ValueError, 'signal-article-next-data-limit'):
             html_signals.rich_text(nested)
+
+    def test_visible_article_date_rejects_impossible_calendar_date(self):
+        import html_signals
+        with self.assertRaisesRegex(ValueError, 'signal-article-published-date'):
+            html_signals.visible_date(
+                'February 30, 2026', r'\b[A-Z][a-z]+ [0-9]{1,2}, 20[0-9]{2}\b', '%B %d, %Y'
+            )
+
+    def test_signal_schema_migrates_date_only_publication_column(self):
+        self.db.execute('''CREATE TABLE signal_events (
+          id INTEGER PRIMARY KEY, source_id TEXT NOT NULL, url TEXT NOT NULL,
+          sha TEXT NOT NULL, previous_sha TEXT, title TEXT NOT NULL,
+          tickers_json TEXT NOT NULL, matches_json TEXT NOT NULL,
+          event_kind TEXT NOT NULL, published_at TEXT, observed_at TEXT NOT NULL,
+          excerpt TEXT NOT NULL, diff TEXT NOT NULL, truncated INTEGER NOT NULL,
+          UNIQUE(source_id,url,sha,previous_sha)
+        )''')
+        signals.schema(self.db)
+        columns = {row[1] for row in self.db.execute('PRAGMA table_info(signal_events)')}
+        self.assertIn('published_on', columns)
 
     def test_specific_article_body_excludes_related_stories_and_duplicate_title(self):
         source = next(s for s in signals.SOURCES if s['id'] == 'coreweave-blog')
