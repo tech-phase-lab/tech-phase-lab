@@ -257,7 +257,7 @@ def x_api_request_plan(sources=SOURCES):
     daily_limit = x_api_daily_limit()
     return {
         "sourceCount": len(x_sources),
-        "scope": "analyst-price-target-only",
+        "scope": "analyst-price-target-or-earnings",
         "configuredMaxRequestsPerDay": configured_max,
         "localMaxRequestsPerDay": min(configured_max, daily_limit),
         "budgetCapped": configured_max > daily_limit,

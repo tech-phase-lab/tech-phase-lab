@@ -26,6 +26,7 @@ class XApiTests(unittest.TestCase):
             self.assertIn('"price target"', source["query"])
             self.assertIn('"target price"', source["query"])
             self.assertIn('"PT to"', source["query"])
+            self.assertIn('"quarterly results"', source["query"])
 
     def test_x_sources_are_disabled_without_both_explicit_flag_and_token(self):
         with patch.dict(os.environ, {"X_API_ENABLED": "true", "X_BEARER_TOKEN": ""}, clear=False):
@@ -85,6 +86,18 @@ class XApiTests(unittest.TestCase):
         ], "includes": {"users": [{"id": "2", "username": "wallstengine"}]}}
         items = x_api.parse_response(source, payload, list(monitor.PROVIDERS))
         self.assertEqual([item["url"] for item in items], ["https://x.com/wallstengine/status/2001"])
+
+    def test_earnings_posts_are_kept_separate_from_target_changes_and_previews(self):
+        source = self.source
+        payload = {"data": [
+            {"id": "3001", "author_id": "1", "text": "$MU reports Q2 earnings, revenue rose 25%"},
+            {"id": "3002", "author_id": "1", "text": "$MU earnings preview: revenue is expected to rise"},
+            {"id": "3003", "author_id": "1", "text": "$MU price target raised to $500"},
+            {"id": "3004", "author_id": "1", "text": "$NBIS quarterly results: revenue beat forecasts"},
+        ], "includes": {"users": [{"id": "1", "username": "TipRanks"}]}}
+        self.assertEqual([item["url"] for item in x_api.parse_response(source, payload, list(monitor.PROVIDERS))],
+                         ["https://x.com/TipRanks/status/3001", "https://x.com/TipRanks/status/3003",
+                          "https://x.com/TipRanks/status/3004"])
 
     def test_direct_adapter_call_fails_closed(self):
         with patch.dict(os.environ, {"X_API_ENABLED": "false", "X_BEARER_TOKEN": "secret"}, clear=False):

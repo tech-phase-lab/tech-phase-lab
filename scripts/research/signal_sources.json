@@ -371,7 +371,7 @@
     "kind": "publisher-update",
     "format": "x-api",
     "enabledBy": "X_API_ENABLED",
-    "query": "from:TipRanks ($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR \"SK hynix\") (\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\") -is:retweet -is:reply",
+    "query": "from:TipRanks ($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR \"SK hynix\") (\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\" OR earnings OR \"quarterly results\" OR \"financial results\") -is:retweet -is:reply",
     "accounts": [
       "TipRanks"
     ],
@@ -412,7 +412,7 @@
     "kind": "publisher-update",
     "format": "x-api",
     "enabledBy": "X_API_ENABLED",
-    "query": "from:theflynews ($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR \"SK hynix\") (\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\") -is:retweet -is:reply",
+    "query": "from:theflynews ($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR \"SK hynix\") (\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\" OR earnings OR \"quarterly results\" OR \"financial results\") -is:retweet -is:reply",
     "accounts": [
       "theflynews"
     ],
@@ -453,7 +453,7 @@
     "kind": "publisher-update",
     "format": "x-api",
     "enabledBy": "X_API_ENABLED",
-    "query": "from:wallstengine ($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR \"SK hynix\") (\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\") -is:retweet -is:reply",
+    "query": "from:wallstengine ($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR \"SK hynix\") (\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\" OR earnings OR \"quarterly results\" OR \"financial results\") -is:retweet -is:reply",
     "accounts": ["wallstengine"],
     "tickers": ["MU", "SKHY", "SNDK", "NBIS", "NVDA", "AMD", "AVGO", "ARM", "TSM", "ASML", "MRVL", "ANET", "CRDO", "CRWV", "VRT", "GEV", "DELL", "PLTR", "MSFT", "BE", "GOOGL", "ORCL"],
     "allowedHosts": ["x.com"],

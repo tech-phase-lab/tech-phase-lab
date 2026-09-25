@@ -39,7 +39,7 @@ The review screen also derives a conservative 24-hour request ceiling from the
 configured polling intervals and shows it beside the enforced local cap. This
 is a request-count bound, not a currency estimate or delivery-latency promise;
 provider billing and provider-side caps remain authoritative. X queries and the
-post filter are restricted to analyst price-target language.
+post filter are restricted to analyst price-target or earnings language.
 
 AI-assisted news drafts retain their AI provenance after human edits and
 require a separate human-verification acknowledgement before approval. The

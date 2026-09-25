@@ -77,7 +77,7 @@ export default function SignalsPanel({ token }: { token: string }) {
       {data.xApiUsage && <p className={styles.note}>
         X API：{data.xApiUsage.enabled ? "読取のみ有効" : data.xApiUsage.requested ? "設定不足で停止" : "OFF"}
         {` · 24時間 ${data.xApiUsage.attemptsLast24Hours}/${data.xApiUsage.dailyLimit}回`}
-        {` · ${data.xApiUsage.sourceCount}発信元・目標株価投稿のみ`}
+        {` · ${data.xApiUsage.sourceCount}発信元・目標株価と決算投稿`}
         {` · 設定上最大 ${data.xApiUsage.configuredMaxRequestsPerDay}回/日`}
         {data.xApiUsage.budgetCapped ? ` · ローカル上限 ${data.xApiUsage.localMaxRequestsPerDay}回/日` : ""}
         {data.xApiUsage.limitReached ? ` · 上限到達（再開 ${timeLabel(data.xApiUsage.nextAvailableAt)}）` : ""}
