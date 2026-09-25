@@ -1,6 +1,7 @@
 """Synthetic regression cases for private multi-company intake, never live news."""
 import json
 import os
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import sys
 import tempfile
@@ -44,6 +45,8 @@ class SignalTests(unittest.TestCase):
             "not-a-signal-feed": "signal-invalid-feed-root",
             "signal-index-no-articles": "signal-no-article-links",
             "signal-article-body-limit": "signal-article-body-invalid",
+            "x-api-daily-limit": "x-api-daily-limit",
+            "x-api-daily-limit-invalid": "x-api-budget-invalid",
         }
         for message, expected in cases.items():
             with self.subTest(message=message):
@@ -112,6 +115,64 @@ class SignalTests(unittest.TestCase):
         self.check_feed(feed())
         self.assertEqual(signals.queue(self.db)["counts"]["baseline"], 1)
         self.assertIsNone(signals.queue(self.db)["routes"][0]["error"])
+
+    def test_x_api_attempt_budget_is_persistent_bounded_and_redacted(self):
+        source = {"id": "x-test", "format": "x-api", "intervalSeconds": 120}
+        now = datetime(2026, 9, 25, 1, 0, tzinfo=timezone.utc)
+        with patch.dict(os.environ, {
+            "X_API_ENABLED": "true", "X_BEARER_TOKEN": "secret-token",
+            "X_API_DAILY_REQUEST_LIMIT": "2",
+        }, clear=False):
+            first = signals.reserve_x_api_request(self.db, source, now)
+            second = signals.reserve_x_api_request(self.db, source, now + timedelta(minutes=1))
+            self.assertEqual(first["attemptsLast24Hours"], 1)
+            self.assertEqual(second["attemptsLast24Hours"], 2)
+            with self.assertRaises(signals.XApiDailyLimit) as blocked:
+                signals.reserve_x_api_request(self.db, source, now + timedelta(minutes=2))
+            self.assertEqual(blocked.exception.retry_at, "2026-09-26T01:00:00+00:00")
+            self.db.executemany(
+                "INSERT INTO signal_x_request_attempts(source_id,attempted_at) VALUES('x-test',?)",
+                [("not-a-time",), ((now + timedelta(days=30)).isoformat(),)],
+            )
+            self.db.commit()
+            usage = signals.queue(self.db, sources=[])["xApiUsage"]
+            self.assertEqual(usage["attemptsLast24Hours"], 2)
+            self.assertNotIn("token", json.dumps(usage).lower())
+
+    def test_x_api_budget_block_sets_next_check_without_transport(self):
+        source = {"id": "x-test", "format": "x-api", "intervalSeconds": 120,
+                  "name": "X test", "kind": "publisher-update", "reuse": "review-required"}
+        with patch.dict(os.environ, {"X_API_DAILY_REQUEST_LIMIT": "1"}, clear=False):
+            signals.reserve_x_api_request(self.db, source)
+            usage = signals.x_api_usage(self.db)
+            result = signals.check(
+                self.db, source, self.tickers,
+                lambda *_: (_ for _ in ()).throw(signals.XApiDailyLimit(usage["nextAvailableAt"])),
+            )
+        self.assertEqual(result["error"], "x-api-daily-limit")
+        route = self.db.execute("SELECT next_check_at FROM signal_routes WHERE id='x-test'").fetchone()
+        self.assertEqual(route["next_check_at"], usage["nextAvailableAt"])
+
+    def test_signal_worker_reserves_x_budget_before_network(self):
+        source = {"id": "x-test", "format": "x-api", "intervalSeconds": 120,
+                  "name": "X test", "kind": "publisher-update", "reuse": "review-required"}
+        self.db.close()
+        with patch.dict(os.environ, {"X_API_DAILY_REQUEST_LIMIT": "1"}, clear=False):
+            with monitor.connect(self.path) as db:
+                signals.reserve_x_api_request(db, source)
+            app = service.AutomaticMonitor(self.path, Path(self.temp.name) / "snapshot.json")
+            with patch.object(signals, "acquire") as acquire:
+                app.check_signal_source(source)
+                acquire.assert_not_called()
+            with monitor.connect(self.path) as db:
+                route = db.execute(
+                    "SELECT error,next_check_at FROM signal_routes WHERE id='x-test'"
+                ).fetchone()
+                usage = signals.x_api_usage(db)
+        self.db = monitor.connect(self.path)
+        self.assertEqual(route["error"], "x-api-daily-limit")
+        self.assertEqual(route["next_check_at"], usage["nextAvailableAt"])
+        self.assertEqual(usage["attemptsLast24Hours"], 1)
 
     def test_invalid_xml_is_not_a_successful_empty_feed(self):
         result = self.check_feed(b"<rss><channel><item>")
