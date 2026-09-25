@@ -91,7 +91,20 @@ def fetch(source, validators):
         raise
 
 
+def enabled_sources(sources=SOURCES):
+    """Keep billable X reads opt-in even when a bearer token is present."""
+    enabled = os.environ.get("X_API_ENABLED", "").strip().lower() in {"1", "true", "yes"}
+    token = os.environ.get("X_BEARER_TOKEN", "").strip()
+    return [source for source in sources
+            if not source.get("enabledBy") or (enabled and bool(token))]
+
+
 def acquire(source, validators, tickers=None):
+    if source.get("format") == "x-api":
+        if source not in enabled_sources([source]):
+            raise ValueError("x-api-disabled")
+        import x_api
+        return {"_items": x_api.fetch_posts(source, tickers or list(ALIASES))}
     if source["format"] == "html-index":
         from html_signals import collect
         return collect(source, validators, tickers or list(ALIASES), fetch)
@@ -393,11 +406,12 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
             "ticker": ticker, "generatedAt": stamp(), "publicationEnabled": False}
 
 
-def due(db, sources=SOURCES):
+def due(db, sources=None):
     schema(db)
     current = stamp()
     rows = {row["id"]: row for row in db.execute("SELECT * FROM signal_routes")}
-    return [s for s in sources if s["id"] not in rows or not rows[s["id"]]["next_check_at"]
+    candidates = enabled_sources(SOURCES if sources is None else sources)
+    return [s for s in candidates if s["id"] not in rows or not rows[s["id"]]["next_check_at"]
             or rows[s["id"]]["next_check_at"] <= current]
 
 

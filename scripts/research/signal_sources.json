@@ -58,7 +58,7 @@
   },
   {
     "id": "nebius-preemptible",
-    "name": "Nebius \u00b7 Preemptible VMs",
+    "name": "Nebius · Preemptible VMs",
     "kind": "official-document",
     "url": "https://docs.nebius.com/compute/virtual-machines/preemptible",
     "format": "document",
@@ -73,7 +73,7 @@
   },
   {
     "id": "nebius-changelog",
-    "name": "Nebius \u00b7 Product changelog",
+    "name": "Nebius · Product changelog",
     "kind": "official-document",
     "url": "https://docs.nebius.com/changelog",
     "format": "document",
@@ -213,7 +213,7 @@
   },
   {
     "id": "google-cloud-blog",
-    "name": "Google Blog \u00b7 Cloud",
+    "name": "Google Blog · Cloud",
     "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/rss/",
     "allowedHosts": [
       "blog.google"
@@ -228,7 +228,7 @@
   },
   {
     "id": "micron-blog",
-    "name": "Micron Blog \u00b7 Sitemap",
+    "name": "Micron Blog · Sitemap",
     "url": "https://www.micron.com/sitemap.xml",
     "allowedHosts": [
       "www.micron.com"
@@ -363,6 +363,92 @@
     "kind": "publisher-update",
     "format": "feed",
     "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "x-tipranks",
+    "name": "X · TipRanks",
+    "kind": "publisher-update",
+    "format": "x-api",
+    "enabledBy": "X_API_ENABLED",
+    "query": "from:TipRanks ($MU OR $NBIS OR $SNDK OR $ANET OR $LITE OR $COHR OR $GEV OR $VRT OR $DELL OR $INTC OR $ARM OR $ASML OR $TSM OR $CRDO OR $AVGO OR $MRVL OR $AMD OR $NVDA OR $CRWV OR $BE OR $GOOGL OR $ORCL OR $PLTR OR $MSFT) -is:retweet -is:reply",
+    "accounts": [
+      "TipRanks"
+    ],
+    "tickers": [
+      "MU",
+      "NBIS",
+      "SNDK",
+      "ANET",
+      "LITE",
+      "COHR",
+      "GEV",
+      "VRT",
+      "DELL",
+      "INTC",
+      "ARM",
+      "ASML",
+      "TSM",
+      "CRDO",
+      "AVGO",
+      "MRVL",
+      "AMD",
+      "NVDA",
+      "CRWV",
+      "BE",
+      "GOOGL",
+      "ORCL",
+      "PLTR",
+      "MSFT"
+    ],
+    "allowedHosts": [
+      "x.com"
+    ],
+    "intervalSeconds": 120,
+    "maxResults": 10,
+    "reuse": "review-required"
+  },
+  {
+    "id": "x-thefly",
+    "name": "X · The Fly",
+    "kind": "publisher-update",
+    "format": "x-api",
+    "enabledBy": "X_API_ENABLED",
+    "query": "from:theflynews ($MU OR $NBIS OR $SNDK OR $ANET OR $LITE OR $COHR OR $GEV OR $VRT OR $DELL OR $INTC OR $ARM OR $ASML OR $TSM OR $CRDO OR $AVGO OR $MRVL OR $AMD OR $NVDA OR $CRWV OR $BE OR $GOOGL OR $ORCL OR $PLTR OR $MSFT) -is:retweet -is:reply",
+    "accounts": [
+      "theflynews"
+    ],
+    "tickers": [
+      "MU",
+      "NBIS",
+      "SNDK",
+      "ANET",
+      "LITE",
+      "COHR",
+      "GEV",
+      "VRT",
+      "DELL",
+      "INTC",
+      "ARM",
+      "ASML",
+      "TSM",
+      "CRDO",
+      "AVGO",
+      "MRVL",
+      "AMD",
+      "NVDA",
+      "CRWV",
+      "BE",
+      "GOOGL",
+      "ORCL",
+      "PLTR",
+      "MSFT"
+    ],
+    "allowedHosts": [
+      "x.com"
+    ],
+    "intervalSeconds": 120,
+    "maxResults": 10,
     "reuse": "review-required"
   }
 ]

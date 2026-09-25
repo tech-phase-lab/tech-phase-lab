@@ -264,3 +264,15 @@
   添付根拠なし・その他はいずれも0件だった。
 - アクセス制限は回避せず、次の期限まで追加プローブを行わない。運営画面にはURL、ホスト名、
   HTTPコード、アクセッション番号、例外文を公開しない設計を維持する。
+
+
+## 2026-09-25 X監視のコード準備（未接続）
+
+- `codex/research-preview` にX APIの読み取りアダプターを追加準備した。対象はTipRanks（`@TipRanks`）とThe Fly（`@theflynews`）。
+- 22銘柄のcashtagに絞ったRecent Searchを各ソース最大10件・標準120秒間隔で取得する設計。銘柄名を含まない投稿や、対象外アカウントの投稿はレビュー候補に残さない。
+- `X_API_ENABLED` と `X_BEARER_TOKEN` の両方が監視サービスに設定されない限り、ソースを巡回キューへ入れずAPIを呼ばない。既定は無効。通常の監視・ニュース配信・自動投稿には接続しない。
+- X APIへの実リクエスト、クレジット購入、TokenのVercelからRailwayへの移動は未実施。API利用費も発生していない。
+- X公式価格ページではPost読み取りは1件$0.005、同じPostは原則UTC日単位で重複課金を避けると説明されている。Developer Consoleのspending limitを先に設定する。現時点で予算上限は未設定。
+- X Developer Policyは、利用目的を申告し、用途の実質的な変更前に承認を得ることを求めている。また、有料会員サービスでX投稿を再配信・派生要約する条件は公開情報だけで許可済みと判断できない。よってこの接続はまず非公開の編集レビュー候補まで。公開・会員配信は契約条件の確認後に判断する。
+- 対象ソース: https://x.com/TipRanks 、https://x.com/theflynews
+- 参照: https://docs.x.com/x-api/getting-started/pricing 、https://docs.x.com/developer-terms/policy 、https://docs.x.com/developer-terms/agreement
