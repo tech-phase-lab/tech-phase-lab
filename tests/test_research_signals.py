@@ -412,6 +412,41 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(item['eventKind'], 'baseline')
         self.assertIsNone(item['publishedAt'])
 
+    def test_palantir_sitemap_extracts_only_english_shareholder_letter_next_data(self):
+        source = next(s for s in signals.SOURCES if s['id'] == 'palantir-shareholder-letters')
+        sitemap = b'''<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+          <url><loc>https://www.palantir.com/q2-2026-letter/</loc></url>
+          <url><loc>https://www.palantir.com/q2-2026-letter/fr/</loc></url>
+          <url><loc>https://www.palantir.com/q2-2026-letter/en/</loc></url>
+          <url><loc>https://www.palantir.com/newsroom/media/not-a-letter/</loc></url>
+          <url><loc>https://evil.test/q2-2026-letter/en/</loc></url>
+        </urlset>'''
+        payload = {'props': {'pageProps': {'page': {'fields': {
+            'pageTitle': 'Q2 2026 | Letter to Shareholders',
+            'blocks': [{'fields': {'text': {'nodeType': 'document', 'content': [
+                {'nodeType': 'paragraph', 'content': [
+                    {'nodeType': 'text', 'value': 'August 3, 2026', 'marks': [], 'data': {}}]},
+                {'nodeType': 'paragraph', 'content': [
+                    {'nodeType': 'text', 'value': 'Our revenue grew as customers adopted the Artificial Intelligence Platform. ' * 4,
+                     'marks': [], 'data': {}}]},
+            ]}}, 'sys': {'createdAt': 'do-not-extract'}}],
+        }}}}}
+        requested = []
+        def request(route, validators):
+            requested.append(route['url'])
+            if route['url'] == source['url']:
+                return {'body': sitemap}
+            return {'body': ('<script id="__NEXT_DATA__" type="application/json">'
+                             + json.dumps(payload) + '</script>').encode()}
+        with patch.object(signals, 'fetch', side_effect=request):
+            signals.check(self.db, source, self.tickers)
+        self.assertEqual(requested, [source['url'], 'https://www.palantir.com/q2-2026-letter/en/'])
+        item = signals.queue(self.db, sources=[source])['items'][0]
+        self.assertEqual(item['title'], 'Q2 2026 | Letter to Shareholders')
+        self.assertEqual(item['tickers'], ['PLTR'])
+        self.assertIn('August 3, 2026', item['excerpt'])
+        self.assertNotIn('do-not-extract', item['excerpt'])
+
     def test_specific_article_body_excludes_related_stories_and_duplicate_title(self):
         source = next(s for s in signals.SOURCES if s['id'] == 'coreweave-blog')
         def request(route, validators):

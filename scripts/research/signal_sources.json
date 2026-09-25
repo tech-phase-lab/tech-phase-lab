@@ -333,6 +333,39 @@
     "reuse": "review-required"
   },
   {
+    "id": "palantir-shareholder-letters",
+    "name": "Palantir Shareholder Letters",
+    "url": "https://www.palantir.com/sitemap.xml",
+    "allowedHosts": [
+      "www.palantir.com"
+    ],
+    "tickers": [
+      "PLTR"
+    ],
+    "kind": "publisher-update",
+    "format": "html-index",
+    "indexFormat": "sitemap",
+    "articlePathPatterns": [
+      "/q[1-4]-20[0-9]{2}-letter/en/"
+    ],
+    "nextDataArticleBodyPath": [
+      "props",
+      "pageProps",
+      "page",
+      "fields",
+      "blocks"
+    ],
+    "nextDataArticleTitlePath": [
+      "props",
+      "pageProps",
+      "page",
+      "fields",
+      "pageTitle"
+    ],
+    "intervalSeconds": 300,
+    "reuse": "review-required"
+  },
+  {
     "id": "sandisk-news",
     "name": "Sandisk Investor News Releases",
     "url": "https://investor.sandisk.com/news-events/news-releases",

@@ -342,3 +342,14 @@
 - KLAC、LITE、MRVL、NBIS、NOW、NVDA、ORCL、PANW、PLTR、SKHYとBLS・FOMCを公式情報で再確認。
   将来の確定決算日は裏づけられず、推定日や `lastCheckedOn` は追加していない。
 - 検証: Python 236件、画面・データ94件、lint、TypeScript、本番ビルド35ページ、`git diff --check` 成功。
+
+### 2026-09-25 05:53 UTC Palantir株主書簡の公式補完
+
+- 既存のPalantir公式プレスリリース・サイトマップ監視とは別に、公式サイトマップから
+  `/qN-YYYY-letter/en/` に完全一致する英語版株主書簡だけを抽出する補完経路を追加した。
+- 公開HTML内の `__NEXT_DATA__` からContentfulのリッチテキスト葉だけを読み取り、JavaScriptは実行しない。
+  他言語、ランディングページ、メディア記事、外部ドメイン、Contentfulメタデータは証拠から除外する。
+- 公式サイトへの実取得でQ2 2026、Q1 2026、Q4 2025の3書簡を取得し、本文11,611〜19,457文字、
+  PLTR固定関連付け、本文取得エラー0件を確認した。初回は過去資料として扱い、新着とは表示しない。
+- SNOW、VRT、AAPL、AMZN、ANET、ARM、AVGO、BE、COHR、CRDOとBLS・FOMCを公式情報で再確認。
+  将来の確定決算日は裏づけられず、推定日や `lastCheckedOn` は追加していない。

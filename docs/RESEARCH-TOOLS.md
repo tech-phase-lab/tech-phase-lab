@@ -74,6 +74,16 @@ therefore be distinguished from an immediate retry without exposing a source
 URL, response header or response body. Generated drafts remain private and
 still require human approval.
 
+Palantir has two separate first-party discovery paths. The investor-news
+pipeline retains the official press-release sitemap filter; the supplemental
+signal pipeline also checks the public Palantir sitemap for English shareholder
+letters matching the strict `/qN-YYYY-letter/en/` shape. The latter extracts
+only Contentful rich-text leaves from the page's public `__NEXT_DATA__` payload,
+without executing JavaScript or treating metadata and navigation as evidence.
+Other languages, landing pages, media entries and off-domain URLs are ignored.
+The first pass is historical baseline evidence, not a new-news claim, and all
+items remain private and human-review required.
+
 Article-body batch metrics are persisted separately from the in-memory worker
 state. The operations preview can therefore show the last completed batch and
 24-hour checks, errors and HTTP 304 reuse after a service restart. For newly

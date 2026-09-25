@@ -1,5 +1,6 @@
 """Bounded official-news index discovery; no browser or access-control bypass."""
 from html.parser import HTMLParser
+import re
 from urllib.parse import urljoin, urlsplit
 
 
@@ -78,6 +79,31 @@ class NewsHTML(HTMLParser):
             getattr(self, self.capture).append(escape(value))
 
 
+def json_path(value, path):
+    """Read one configured path from publisher-owned JSON without guessing keys."""
+    for key in path:
+        if not isinstance(value, dict) or key not in value:
+            raise ValueError('signal-article-next-data-path')
+        value = value[key]
+    return value
+
+
+def rich_text(value):
+    """Extract only Contentful rich-text leaf values, excluding metadata/navigation."""
+    parts = []
+    if isinstance(value, list):
+        for child in value:
+            parts.extend(rich_text(child))
+    elif isinstance(value, dict):
+        if value.get('nodeType') == 'text' and isinstance(value.get('value'), str):
+            parts.append(value['value'])
+        else:
+            for child in value.values():
+                if isinstance(child, (dict, list)):
+                    parts.extend(rich_text(child))
+    return parts
+
+
 def collect(source, previous, tickers, request):
     # Local import avoids a module initialization cycle.
     import signals
@@ -118,7 +144,11 @@ def collect(source, previous, tickers, request):
             url = signals.safe_url(urljoin(source['url'], href), source)
         except ValueError:
             continue
-        is_article = any(urlsplit(url).path.startswith(prefix) for prefix in source['articlePrefixes'])
+        path = urlsplit(url).path
+        is_article = any(path.startswith(prefix) for prefix in source.get('articlePrefixes', []))
+        is_article = is_article or any(
+            re.fullmatch(pattern, path) for pattern in source.get('articlePathPatterns', [])
+        )
         is_feature = any(marker in parser.link_classes.get(href, '') for marker in source.get('articleLinkClasses', []))
         excluded = any(urlsplit(url).path.startswith(prefix) for prefix in source.get('excludeArticlePrefixes', []))
         excluded = excluded or len(urlsplit(url).path.strip('/').split('/')) < source.get('minArticlePathSegments', 0)
@@ -162,6 +192,15 @@ def collect(source, previous, tickers, request):
                 title = ' '.join(' '.join(article.title).split())[:500]
                 content = ''.join(article.selected if source.get('articleBodyClass') else article.article or article.main)
                 text = monitor.extract_html_text(content.encode())
+                if source.get('nextDataArticleBodyPath'):
+                    next_data = json.loads(''.join(article.next_data))
+                    body = json_path(next_data, source['nextDataArticleBodyPath'])
+                    text = '\n'.join(' '.join(part.split()) for part in rich_text(body) if part.strip())
+                    if source.get('nextDataArticleTitlePath'):
+                        next_title = json_path(next_data, source['nextDataArticleTitlePath'])
+                        if not isinstance(next_title, str):
+                            raise ValueError('signal-article-next-data-title')
+                        title = ' '.join(next_title.split())[:500]
                 if not title or len(text) < 120:
                     raise ValueError('signal-article-body-limit')
                 matches = signals.match_companies(title + '\n' + text, tickers)
