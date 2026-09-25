@@ -89,6 +89,8 @@ error remain private. Existing historical recoveries are not estimated.
 While an outage is still active, the same view reports only the number with a
 valid measurement, the number that predates measurement, the longest current
 age, average and maximum bounded attempts, and the oldest measured start time.
+The same measurements are split by the fixed safe error categories so a short
+timeout is not confused with a long access-control restriction.
 Invalid, future, timezone-free or over-seven-day values are excluded instead of
 estimating missing history. These are processing observations, not a recovery
 or delivery-time guarantee.

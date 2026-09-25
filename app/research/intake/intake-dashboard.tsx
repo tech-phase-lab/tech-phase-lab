@@ -227,7 +227,17 @@ function signalIntakeStatus(signal: MonitorState["signalIntake"]) {
       ? ` · 継続中の経路障害：実測 ${activeOutages.measured}件・最長 ${duration(activeOutages.ageMaxMs)}・試行 平均 ${activeOutages.attemptsAverage}回・最大 ${activeOutages.attemptsMax}回（最古開始 ${time(activeOutages.oldestStartedAt)} JST）${activeOutages.unmeasured ? `・計測前 ${activeOutages.unmeasured}件` : ""}`
       : ` · 継続中の経路障害：実測なし${activeOutages.unmeasured ? `・計測前 ${activeOutages.unmeasured}件` : ""}`
     : "";
-  return `公式補完経路：直近成功 ${routes.fresh}/${routes.configured}経路 · 期限超過 ${routes.stale} · 要確認 ${routes.error}（アクセス制限 ${kinds.accessRestricted}・レート制限 ${kinds.rateLimited}・タイムアウト ${kinds.timeout}・公式側5xx ${kinds.server}・応答形式 ${kinds.invalidResponse}・記事一部失敗 ${kinds.articlePartial}・その他 ${kinds.other}）${retryStatus}${retryKindDetail}${activeOutageStatus}${articleStatus}${measuredRecoveryStatus}${transitionStatus}${routeRecoveryStatus} · 初回待ち ${routes.pending} · 公表証拠 ${evidence.total}件（日時あり ${evidence.timestamp}・日付のみ ${evidence.dateOnly}・時刻未取得 ${evidence.missing}）`;
+  const activeOutageKindStatus = activeOutages?.byErrorKind
+    ? Object.entries(activeOutages.byErrorKind).flatMap(([kind, state]) => {
+        if (!state || state.measured + state.unmeasured === 0) return [];
+        const label = retryLabels[kind as keyof typeof retryLabels] ?? "その他";
+        return [state.measured
+          ? `${label}：実測 ${state.measured}件・最長 ${duration(state.ageMaxMs)}・試行 平均 ${state.attemptsAverage}回・最大 ${state.attemptsMax}回${state.unmeasured ? `・計測前 ${state.unmeasured}件` : ""}`
+          : `${label}：計測前 ${state.unmeasured}件`];
+      }).join("／")
+    : "";
+  const activeOutageKindDetail = activeOutageKindStatus ? ` · 区分別継続障害：${activeOutageKindStatus}` : "";
+  return `公式補完経路：直近成功 ${routes.fresh}/${routes.configured}経路 · 期限超過 ${routes.stale} · 要確認 ${routes.error}（アクセス制限 ${kinds.accessRestricted}・レート制限 ${kinds.rateLimited}・タイムアウト ${kinds.timeout}・公式側5xx ${kinds.server}・応答形式 ${kinds.invalidResponse}・記事一部失敗 ${kinds.articlePartial}・その他 ${kinds.other}）${retryStatus}${retryKindDetail}${activeOutageStatus}${activeOutageKindDetail}${articleStatus}${measuredRecoveryStatus}${transitionStatus}${routeRecoveryStatus} · 初回待ち ${routes.pending} · 公表証拠 ${evidence.total}件（日時あり ${evidence.timestamp}・日付のみ ${evidence.dateOnly}・時刻未取得 ${evidence.missing}）`;
 }
 function generationStatus(generation: MonitorState["generation"]) {
   if (!generation) return "AI下書き生成：状態取得待ち";

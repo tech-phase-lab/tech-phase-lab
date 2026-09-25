@@ -247,6 +247,13 @@ class SignalTests(unittest.TestCase):
                 "measured": 0, "unmeasured": 1, "ageMaxMs": None,
                 "attemptsAverage": None, "attemptsMax": None,
                 "oldestStartedAt": None,
+                "byErrorKind": {
+                    "accessRestricted": {
+                        "measured": 0, "unmeasured": 1, "ageMaxMs": None,
+                        "attemptsAverage": None, "attemptsMax": None,
+                        "oldestStartedAt": None,
+                    },
+                },
             },
         })
         self.assertEqual(summary["publicationEvidence"], {
@@ -496,6 +503,18 @@ class SignalTests(unittest.TestCase):
             "attemptsAverage": 3.0,
             "attemptsMax": 3,
             "oldestStartedAt": "2026-09-25T10:01:00+00:00",
+            "byErrorKind": {
+                "timeout": {
+                    "measured": 1, "unmeasured": 0, "ageMaxMs": 300_000,
+                    "attemptsAverage": 3.0, "attemptsMax": 3,
+                    "oldestStartedAt": "2026-09-25T10:01:00+00:00",
+                },
+                "accessRestricted": {
+                    "measured": 0, "unmeasured": 1, "ageMaxMs": None,
+                    "attemptsAverage": None, "attemptsMax": None,
+                    "oldestStartedAt": None,
+                },
+            },
         })
         serialized = json.dumps(summary)
         self.assertNotIn(self.doc["id"], serialized)

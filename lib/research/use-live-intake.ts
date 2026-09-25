@@ -159,6 +159,13 @@ export type MonitorState = {
         measured: number; unmeasured: number; ageMaxMs: number | null;
         attemptsAverage: number | null; attemptsMax: number | null;
         oldestStartedAt: string | null;
+        byErrorKind?: Partial<Record<
+          "accessRestricted" | "rateLimited" | "timeout" | "server" |
+          "invalidResponse" | "articlePartial" | "other",
+          { measured: number; unmeasured: number; ageMaxMs: number | null;
+            attemptsAverage: number | null; attemptsMax: number | null;
+            oldestStartedAt: string | null }
+        >>;
       };
     };
     articleRetrieval?: {

@@ -843,6 +843,7 @@ def operational_summary(db, sources=SOURCES, reference=None):
     active_outages = {
         "measured": 0, "unmeasured": 0, "ageMaxMs": None,
         "attemptsAverage": None, "attemptsMax": None, "oldestStartedAt": None,
+        "byErrorKind": {},
     }
     route_counts = {"configured": len(official), "checked": 0, "fresh": 0,
                     "stale": 0, "error": 0, "pending": 0,
@@ -860,6 +861,11 @@ def operational_summary(db, sources=SOURCES, reference=None):
             error_kind = signal_error_kind(row["error"])
             error_kinds[error_kind] += 1
             record_retry(retry, error_kind, row["next_check_at"])
+            kind_outages = active_outages["byErrorKind"].setdefault(error_kind, {
+                "measured": 0, "unmeasured": 0, "ageMaxMs": None,
+                "attemptsAverage": None, "attemptsMax": None,
+                "oldestStartedAt": None,
+            })
             failure_started = timestamp_value(row["failure_started_at"])
             failure_attempts = row["failure_attempts"]
             if (failure_started and failure_started <= current
@@ -871,11 +877,20 @@ def operational_summary(db, sources=SOURCES, reference=None):
                     round((current - failure_started).total_seconds() * 1000)
                 )
                 active_outages.setdefault("_attempts", []).append(failure_attempts)
+                kind_outages["measured"] += 1
+                kind_outages.setdefault("_ages", []).append(
+                    round((current - failure_started).total_seconds() * 1000)
+                )
+                kind_outages.setdefault("_attempts", []).append(failure_attempts)
                 oldest = active_outages["oldestStartedAt"]
                 if oldest is None or failure_started.isoformat() < oldest:
                     active_outages["oldestStartedAt"] = failure_started.isoformat()
+                kind_oldest = kind_outages["oldestStartedAt"]
+                if kind_oldest is None or failure_started.isoformat() < kind_oldest:
+                    kind_outages["oldestStartedAt"] = failure_started.isoformat()
             else:
                 active_outages["unmeasured"] += 1
+                kind_outages["unmeasured"] += 1
             continue
         succeeded = timestamp_value(row["succeeded_at"])
         if not succeeded:
@@ -1022,6 +1037,15 @@ def operational_summary(db, sources=SOURCES, reference=None):
             sum(outage_attempts) / len(outage_attempts), 1,
         )
         active_outages["attemptsMax"] = max(outage_attempts)
+    for kind_outages in active_outages["byErrorKind"].values():
+        kind_ages = kind_outages.pop("_ages", [])
+        kind_attempts = kind_outages.pop("_attempts", [])
+        if kind_ages:
+            kind_outages["ageMaxMs"] = max(kind_ages)
+            kind_outages["attemptsAverage"] = round(
+                sum(kind_attempts) / len(kind_attempts), 1,
+            )
+            kind_outages["attemptsMax"] = max(kind_attempts)
     return {"routes": route_counts, "articleRetrieval": article_retrieval,
             "publicationEvidence": evidence,
             "routeTransitions24Hours": transitions,

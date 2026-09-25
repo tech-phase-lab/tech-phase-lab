@@ -1475,6 +1475,7 @@ class ResearchServiceTests(unittest.TestCase):
             "measured": 0, "unmeasured": 0, "ageMaxMs": None,
             "attemptsAverage": None, "attemptsMax": None,
             "oldestStartedAt": None,
+            "byErrorKind": {},
         })
         articles = summary["articleRetrieval"]
         self.assertEqual(articles["error"], 0)
