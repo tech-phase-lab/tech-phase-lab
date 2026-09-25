@@ -88,8 +88,11 @@ and six-hour ceiling. A valid `Retry-After` is honored up to the applicable
 ceiling. Only the fixed error class and next-check time are retained; response
 headers and bodies are not stored in retry state.
 The same aggregate separates retries that are due, deferred or missing a valid
-schedule, and exposes only the earliest bounded retry time. It excludes invalid
-or more-than-seven-day future values and never exposes which route failed.
+schedule, both overall and by fixed error category, and exposes only the
+earliest bounded retry time for each aggregate. This keeps a long access-control
+backoff visible even when a shorter timeout retry is due first. It excludes
+invalid or more-than-seven-day future values and never exposes which route
+failed.
 Route state transitions are retained privately across worker restarts and the
 preview exposes only rolling 24-hour totals for recovery, renewed failure and
 error-category change, plus the most recent transition kind and time. A

@@ -149,6 +149,11 @@ export type MonitorState = {
       };
       retry?: {
         due: number; deferred: number; unscheduled: number; nextAt: string | null;
+        byErrorKind?: Partial<Record<
+          "accessRestricted" | "rateLimited" | "timeout" | "server" |
+          "invalidResponse" | "articlePartial" | "other",
+          { due: number; deferred: number; unscheduled: number; nextAt: string | null }
+        >>;
       };
     };
     publicationEvidence: {

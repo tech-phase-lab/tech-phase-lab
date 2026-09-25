@@ -160,6 +160,18 @@ class SignalTests(unittest.TestCase):
             "retry": {
                 "due": 0, "deferred": 1, "unscheduled": 0,
                 "nextAt": "2026-09-25T07:03:00+00:00",
+                "byErrorKind": {
+                    "accessRestricted": {
+                        "due": 0, "deferred": 1, "unscheduled": 0,
+                        "nextAt": "2026-09-25T07:03:00+00:00",
+                    },
+                    "rateLimited": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
+                    "timeout": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
+                    "server": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
+                    "invalidResponse": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
+                    "articlePartial": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
+                    "other": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
+                },
             },
         })
         self.assertEqual(summary["publicationEvidence"], {
@@ -214,6 +226,18 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(summary["routes"]["retry"], {
             "due": 1, "deferred": 1, "unscheduled": 1,
             "nextAt": "2026-09-25T07:10:00+00:00",
+            "byErrorKind": {
+                "accessRestricted": {"due": 0, "deferred": 0, "unscheduled": 1, "nextAt": None},
+                "rateLimited": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
+                "timeout": {"due": 1, "deferred": 0, "unscheduled": 0, "nextAt": None},
+                "server": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
+                "invalidResponse": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
+                "articlePartial": {
+                    "due": 0, "deferred": 1, "unscheduled": 0,
+                    "nextAt": "2026-09-25T07:10:00+00:00",
+                },
+                "other": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
+            },
         })
         self.assertEqual(sum(summary["routes"]["errorKinds"].values()), 3)
         serialized = json.dumps(summary)

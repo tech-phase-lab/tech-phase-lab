@@ -680,7 +680,14 @@ def operational_summary(db, sources=SOURCES, reference=None):
         "accessRestricted", "rateLimited", "timeout", "server",
         "invalidResponse", "articlePartial", "other",
     )}
-    retry = {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None}
+    retry_by_kind = {
+        kind: {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None}
+        for kind in error_kinds
+    }
+    retry = {
+        "due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None,
+        "byErrorKind": retry_by_kind,
+    }
     route_counts = {"configured": len(official), "checked": 0, "fresh": 0,
                     "stale": 0, "error": 0, "pending": 0,
                     "errorKinds": error_kinds, "retry": retry}
@@ -693,17 +700,25 @@ def operational_summary(db, sources=SOURCES, reference=None):
             route_counts["checked"] += 1
         if row["error"]:
             route_counts["error"] += 1
-            error_kinds[signal_error_kind(row["error"])] += 1
+            error_kind = signal_error_kind(row["error"])
+            error_kinds[error_kind] += 1
+            kind_retry = retry_by_kind[error_kind]
             next_check = retry_value(row["next_check_at"])
             if next_check is None:
                 retry["unscheduled"] += 1
+                kind_retry["unscheduled"] += 1
             elif next_check <= current:
                 retry["due"] += 1
+                kind_retry["due"] += 1
             else:
                 retry["deferred"] += 1
+                kind_retry["deferred"] += 1
                 next_at = retry["nextAt"]
                 if next_at is None or next_check.isoformat() < next_at:
                     retry["nextAt"] = next_check.isoformat()
+                kind_next_at = kind_retry["nextAt"]
+                if kind_next_at is None or next_check.isoformat() < kind_next_at:
+                    kind_retry["nextAt"] = next_check.isoformat()
             continue
         succeeded = timestamp_value(row["succeeded_at"])
         if not succeeded:
