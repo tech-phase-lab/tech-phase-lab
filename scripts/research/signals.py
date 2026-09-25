@@ -246,7 +246,25 @@ def x_api_daily_limit():
     return int(raw)
 
 
-def x_api_usage(db, now=None):
+def x_api_request_plan(sources=SOURCES):
+    """Return a query-free upper bound from configured polling intervals."""
+    x_sources = [source for source in sources if source.get("format") == "x-api"]
+    configured_max = sum(
+        (86400 + max(30, int(source["intervalSeconds"])) - 1)
+        // max(30, int(source["intervalSeconds"]))
+        for source in x_sources
+    )
+    daily_limit = x_api_daily_limit()
+    return {
+        "sourceCount": len(x_sources),
+        "scope": "analyst-price-target-only",
+        "configuredMaxRequestsPerDay": configured_max,
+        "localMaxRequestsPerDay": min(configured_max, daily_limit),
+        "budgetCapped": configured_max > daily_limit,
+    }
+
+
+def x_api_usage(db, now=None, sources=SOURCES):
     schema(db)
     current = now or datetime.now(timezone.utc)
     cutoff = (current - timedelta(hours=24)).isoformat()
@@ -269,6 +287,7 @@ def x_api_usage(db, now=None):
         "requested": requested, "configured": configured, "enabled": requested and configured,
         "attemptsLast24Hours": attempted, "dailyLimit": limit,
         "limitReached": attempted >= limit, "nextAvailableAt": retry_at,
+        **x_api_request_plan(sources),
     }
 
 
@@ -475,7 +494,7 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
                        "nextCheckAt": row["next_check_at"] if row else None,
                        "error": row["error"] if row else None,
                        "matchedItems": row["matched_items"] if row else 0})
-    return {"items": items, "counts": counts, "routes": routes, "xApiUsage": x_api_usage(db), "view": view,
+    return {"items": items, "counts": counts, "routes": routes, "xApiUsage": x_api_usage(db, sources=sources), "view": view,
             "ticker": ticker, "generatedAt": stamp(), "publicationEnabled": False}
 
 
