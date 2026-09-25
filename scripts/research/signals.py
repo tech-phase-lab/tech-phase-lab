@@ -105,7 +105,7 @@ def acquire(source, validators, tickers=None):
         if source not in enabled_sources([source]):
             raise ValueError("x-api-disabled")
         import x_api
-        return {"_items": x_api.fetch_posts(source, tickers or list(ALIASES))}
+        return x_api.fetch_posts(source, tickers or list(ALIASES))
     if source["format"] == "html-index":
         from html_signals import collect
         return collect(source, validators, tickers or list(ALIASES), fetch)

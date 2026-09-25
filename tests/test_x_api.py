@@ -1,5 +1,6 @@
 """Synthetic tests for the disabled-by-default X adapter; no live X requests."""
 import os
+import sqlite3
 import sys
 import unittest
 from pathlib import Path
@@ -47,6 +48,24 @@ class XApiTests(unittest.TestCase):
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0]["url"], "https://x.com/TipRanks/status/1001")
         self.assertIn("MU", items[0]["matches"])
+
+    def test_fetched_x_post_reaches_private_editorial_queue(self):
+        payload = {
+            "data": [{"id": "1001", "author_id": "1", "created_at": "2026-09-25T00:00:00Z",
+                      "text": "Micron price target raised to $500"}],
+            "includes": {"users": [{"id": "1", "username": "TipRanks"}]},
+        }
+        items = x_api.parse_response(self.source, payload, list(monitor.PROVIDERS))
+        with patch.dict(os.environ, {"X_API_ENABLED": "true", "X_BEARER_TOKEN": "test-token"}):
+            with patch.object(x_api, "fetch_posts", return_value={"_items": items}):
+                with sqlite3.connect(":memory:") as db:
+                    db.row_factory = sqlite3.Row
+                    result = signals.check(db, self.source, list(monitor.PROVIDERS))
+                    self.assertEqual(result["status"], "ok")
+                    self.assertEqual(result["matchedItems"], 1)
+                    queue = signals.queue(db, ticker="MU")
+                    self.assertEqual(queue["counts"]["baseline"], 1)
+                    self.assertEqual(queue["items"][0]["url"], "https://x.com/TipRanks/status/1001")
 
     def test_direct_adapter_call_fails_closed(self):
         with patch.dict(os.environ, {"X_API_ENABLED": "false", "X_BEARER_TOKEN": "secret"}, clear=False):
