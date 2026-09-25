@@ -5,13 +5,12 @@ from collections import Counter
 from datetime import datetime, timedelta, timezone
 import json
 from pathlib import Path
-import re
 import sqlite3
 from statistics import median
+from x_api import TARGET_PATTERN
 
 
 SOURCES = ("x-tipranks", "x-thefly", "x-wallstengine")
-TARGET_PATTERN = re.compile(r"\b(?:price[ -]?target|target price|pt (?:raised|cut|lowered|hiked))\b", re.I)
 MAX_RESULTS = 10
 
 
@@ -39,6 +38,8 @@ def report(db, now=None, hours=24):
         for row in rows:
             observed = parse_time(row["observed_at"])
             if not observed or observed < since:
+                continue
+            if not TARGET_PATTERN.search(row["title"]):
                 continue
             if row["event_kind"] == "baseline":
                 baseline += 1

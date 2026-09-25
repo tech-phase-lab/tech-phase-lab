@@ -29,7 +29,8 @@ class ComparisonTests(unittest.TestCase):
             self.assertEqual(tip["medianArrivalSeconds"], 30)
             self.assertEqual(tip["tickerCounts"], {"NBIS": 1})
             self.assertTrue(tip["lastSearchHitLimit"])
-            self.assertEqual(result["sources"]["x-thefly"]["medianArrivalSeconds"], 60)
+            self.assertEqual(result["sources"]["x-thefly"]["newPosts"], 0)
+            self.assertIsNone(result["sources"]["x-thefly"]["medianArrivalSeconds"])
             self.assertEqual(result["sources"]["x-wallstengine"]["targetMentions"], 1)
 
 

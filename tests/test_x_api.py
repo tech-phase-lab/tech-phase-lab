@@ -23,6 +23,9 @@ class XApiTests(unittest.TestCase):
         self.assertEqual({ticker for source in x_sources for ticker in source["tickers"]}, set(monitor.PROVIDERS))
         for source in x_sources:
             self.assertLessEqual(len(source["query"]), 512)
+            self.assertIn('"price target"', source["query"])
+            self.assertIn('"target price"', source["query"])
+            self.assertIn('"PT to"', source["query"])
 
     def test_x_sources_are_disabled_without_both_explicit_flag_and_token(self):
         with patch.dict(os.environ, {"X_API_ENABLED": "true", "X_BEARER_TOKEN": ""}, clear=False):
@@ -39,6 +42,10 @@ class XApiTests(unittest.TestCase):
                  "text": "Unrelated market note"},
                 {"id": "1003", "author_id": "3", "created_at": "2026-09-25T00:02:00Z",
                  "text": "$NBIS price target raised to $250"},
+                {"id": "1004", "author_id": "1", "created_at": "2026-09-25T00:03:00Z",
+                 "text": "$MU releases new product lineup"},
+                {"id": "1005", "author_id": "1", "created_at": "2026-09-25T00:04:00Z",
+                 "text": "$NBIS analyst lifts PT to $399"},
             ],
             "includes": {"users": [
                 {"id": "1", "username": "TipRanks"},
@@ -47,9 +54,10 @@ class XApiTests(unittest.TestCase):
             ]},
         }
         items = x_api.parse_response(self.source, payload, list(monitor.PROVIDERS))
-        self.assertEqual(len(items), 1)
+        self.assertEqual(len(items), 2)
         self.assertEqual(items[0]["url"], "https://x.com/TipRanks/status/1001")
         self.assertIn("MU", items[0]["matches"])
+        self.assertEqual(items[1]["url"], "https://x.com/TipRanks/status/1005")
 
     def test_fetched_x_post_reaches_private_editorial_queue(self):
         payload = {

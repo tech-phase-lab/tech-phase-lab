@@ -5,6 +5,7 @@ and X_BEARER_TOKEN are configured in the monitor service environment.
 """
 import json
 import os
+import re
 import time
 from urllib.error import HTTPError
 from urllib.parse import urlencode
@@ -14,6 +15,10 @@ API_URL = "https://api.x.com/2/tweets/search/recent"
 MAX_RESPONSE_BYTES = 2 * 1024 * 1024
 MAX_RESULTS = 10
 ALLOWED_ACCOUNT_NAMES = {"tipranks", "theflynews", "wallstengine"}
+TARGET_PATTERN = re.compile(
+    r"\b(?:price[ -]?target|target price|pt\s+(?:raised|cut|lowered|hiked|boosted|slashed|(?:to|at)\s*\$?\d+))\b",
+    re.I,
+)
 
 
 def parse_response(source, payload, tickers):
@@ -32,7 +37,7 @@ def parse_response(source, payload, tickers):
                 or username.lower() not in ALLOWED_ACCOUNT_NAMES):
             continue
         matches = signals_match(text, tickers)
-        if not matches:
+        if not matches or not TARGET_PATTERN.search(text):
             continue
         url = f"https://x.com/{username}/status/{post_id}"
         items[url] = {
