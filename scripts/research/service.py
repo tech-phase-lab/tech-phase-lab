@@ -766,6 +766,7 @@ class AutomaticMonitor:
             state["prioritySourceRuns"] = monitor.priority_source_run_summary(db)
             state["bodyHostProbes"] = monitor.body_host_probe_summary(db)
             state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
+            state["signalIntake"] = signals.operational_summary(db)
             state["incidents"] = monitor.operational_incident_summary(
                 db, delivery_enabled=self.notification_enabled
             )

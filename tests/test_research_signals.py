@@ -100,6 +100,67 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(queue["counts"]["all"], 1)
         self.assertEqual(queue["items"][0]["publishedOn"], "2026-09-23")
 
+    def test_operational_summary_is_bounded_redacted_and_separates_date_only_evidence(self):
+        reference = datetime(2026, 9, 25, 7, 0, tzinfo=timezone.utc)
+        official = [self.doc, next(
+            source for source in signals.SOURCES
+            if source["id"] == "palantir-shareholder-letters"
+        )]
+        excluded = [self.feed, next(
+            source for source in signals.SOURCES if source["format"] == "x-api"
+        )]
+        signals.schema(self.db)
+        with self.db:
+            self.db.execute("""INSERT INTO signal_routes(
+              id,initialized,checked_at,succeeded_at,next_check_at,failures,error
+              ) VALUES(?,1,?,?,?,0,NULL)""", (
+                official[0]["id"], "2026-09-25T06:59:00+00:00",
+                "2026-09-25T06:59:00+00:00", "2026-09-25T07:01:00+00:00",
+            ))
+            self.db.execute("""INSERT INTO signal_routes(
+              id,initialized,checked_at,next_check_at,failures,error
+              ) VALUES(?,1,?,?,1,?)""", (
+                official[1]["id"], "2026-09-25T06:58:00+00:00",
+                "2026-09-25T07:03:00+00:00", "http-403-private-detail",
+            ))
+            self.db.execute("""INSERT INTO signal_routes(
+              id,initialized,checked_at,succeeded_at,next_check_at,failures,error
+              ) VALUES(?,1,?,?,?,0,NULL)""", (
+                excluded[0]["id"], "2026-09-25T06:59:00+00:00",
+                "2026-09-25T06:59:00+00:00", "2026-09-25T07:01:00+00:00",
+            ))
+            events = [
+                (official[0]["id"], "timestamp", "2026-09-25T06:00:00+00:00", None),
+                (official[0]["id"], "missing", "2099-01-01T00:00:00+00:00", "not-a-date"),
+                (official[1]["id"], "date", None, "2026-08-03"),
+                (excluded[0]["id"], "external", "2026-09-25T06:00:00+00:00", None),
+                (excluded[1]["id"], "x-api", "2026-09-25T06:00:00+00:00", None),
+            ]
+            for index, (source_id, title, published_at, published_on) in enumerate(events):
+                self.db.execute("""INSERT INTO signal_events(
+                  source_id,url,sha,previous_sha,title,tickers_json,matches_json,event_kind,
+                  published_at,published_on,observed_at,excerpt,diff,truncated
+                  ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,0)""", (
+                    source_id, f"https://example.invalid/{index}", str(index), "", title,
+                    "[]", "{}", "baseline", published_at, published_on,
+                    "2026-09-25T06:30:00+00:00", "private evidence", "",
+                ))
+
+        summary = signals.operational_summary(
+            self.db, sources=official + excluded, reference=reference
+        )
+        self.assertEqual(summary["routes"], {
+            "configured": 2, "checked": 2, "fresh": 1,
+            "stale": 0, "error": 1, "pending": 0,
+        })
+        self.assertEqual(summary["publicationEvidence"], {
+            "total": 3, "timestamp": 1, "dateOnly": 1, "missing": 1,
+        })
+        serialized = json.dumps(summary)
+        self.assertNotIn("https://", serialized)
+        self.assertNotIn("palantir", serialized.lower())
+        self.assertNotIn("http-403", serialized)
+
     def test_persisted_validators_and_304(self):
         self.check_feed(feed(), etag='"v1"')
         self.db.close()

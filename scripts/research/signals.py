@@ -586,6 +586,70 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
             "ticker": ticker, "generatedAt": stamp(), "publicationEnabled": False}
 
 
+def operational_summary(db, sources=SOURCES, reference=None):
+    """Return URL-free health and publication-evidence totals for official routes."""
+    schema(db)
+    current = reference or datetime.now(timezone.utc)
+    if current.tzinfo is None:
+        raise ValueError("signal-summary-reference-timezone")
+    current = current.astimezone(timezone.utc)
+    official = [source for source in sources
+                if source.get("kind") != "external-research" and source.get("format") != "x-api"]
+    configured = {source["id"]: source for source in official}
+
+    def timestamp_value(value):
+        try:
+            parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+            if parsed.tzinfo is None:
+                return None
+            parsed = parsed.astimezone(timezone.utc)
+            return parsed if parsed <= current + timedelta(minutes=5) else None
+        except (TypeError, ValueError):
+            return None
+
+    route_counts = {"configured": len(official), "checked": 0, "fresh": 0,
+                    "stale": 0, "error": 0, "pending": 0}
+    for source_id, source in configured.items():
+        row = db.execute("SELECT * FROM signal_routes WHERE id=?", (source_id,)).fetchone()
+        if not row:
+            route_counts["pending"] += 1
+            continue
+        if timestamp_value(row["checked_at"]):
+            route_counts["checked"] += 1
+        if row["error"]:
+            route_counts["error"] += 1
+            continue
+        succeeded = timestamp_value(row["succeeded_at"])
+        if not succeeded:
+            route_counts["pending"] += 1
+            continue
+        freshness = max(300, int(source["intervalSeconds"]) * 3)
+        if current - succeeded <= timedelta(seconds=freshness):
+            route_counts["fresh"] += 1
+        else:
+            route_counts["stale"] += 1
+
+    evidence = {"total": 0, "timestamp": 0, "dateOnly": 0, "missing": 0}
+    if configured:
+        placeholders = ",".join("?" for _ in configured)
+        rows = db.execute(f"""SELECT published_at,published_on FROM signal_events
+          WHERE source_id IN ({placeholders})""", tuple(configured)).fetchall()
+        for row in rows:
+            evidence["total"] += 1
+            if timestamp_value(row["published_at"]):
+                evidence["timestamp"] += 1
+                continue
+            try:
+                published_on = datetime.strptime(str(row["published_on"]), "%Y-%m-%d").date()
+            except (TypeError, ValueError):
+                published_on = None
+            if published_on and published_on <= current.date():
+                evidence["dateOnly"] += 1
+            else:
+                evidence["missing"] += 1
+    return {"routes": route_counts, "publicationEvidence": evidence}
+
+
 def due(db, sources=None):
     schema(db)
     current = stamp()

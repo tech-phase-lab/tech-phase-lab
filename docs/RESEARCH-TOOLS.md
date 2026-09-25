@@ -74,6 +74,15 @@ therefore be distinguished from an immediate retry without exposing a source
 URL, response header or response body. Generated drafts remain private and
 still require human approval.
 
+The operations preview exposes a URL-free aggregate for first-party
+supplemental routes. It separates recently successful, stale, failed and
+never-successful routes, and counts publication evidence with an issuer
+timestamp separately from date-only evidence and missing publication time.
+The aggregate excludes external-research and opt-in X API routes and never
+contains route names, URLs, titles or raw errors. A recently successful route
+is an operational observation only; it does not prove complete coverage or
+subscriber-delivery latency.
+
 Palantir has two separate first-party discovery paths. The investor-news
 pipeline retains the official press-release sitemap filter; the supplemental
 signal pipeline also checks the public Palantir sitemap for English shareholder

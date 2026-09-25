@@ -1456,6 +1456,16 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertNotIn("https://", serialized)
         self.assertNotIn("sec-exhibit-unavailable", serialized)
 
+    def test_public_health_exposes_only_aggregate_official_signal_state(self):
+        state = service.AutomaticMonitor(self.db_path, self.snapshot_path).public_state()
+        summary = state["signalIntake"]
+        self.assertEqual(summary["routes"]["configured"], 22)
+        self.assertEqual(summary["routes"]["pending"], 22)
+        self.assertEqual(summary["publicationEvidence"]["total"], 0)
+        serialized = json.dumps(summary)
+        self.assertNotIn("https://", serialized)
+        self.assertNotIn("source", serialized.lower())
+
     def test_public_health_groups_sec_errors_without_exposing_transport_details(self):
         errors = [
             ("TSM", "000119312526000011/tsm-6k.htm", "http-403", "accessRestricted"),

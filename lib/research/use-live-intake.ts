@@ -139,6 +139,15 @@ export type MonitorState = {
       lastCheckedAt: string | null;
     }>;
   };
+  signalIntake?: {
+    routes: {
+      configured: number; checked: number; fresh: number;
+      stale: number; error: number; pending: number;
+    };
+    publicationEvidence: {
+      total: number; timestamp: number; dateOnly: number; missing: number;
+    };
+  };
   companies: Record<string, {
     basePollSeconds?: number; nextPollSeconds?: number; requestDurationMs?: number;
     status: string; route: string; candidates: number; checkedAt: string; error: string | null;
