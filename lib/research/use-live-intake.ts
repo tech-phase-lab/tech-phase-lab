@@ -143,6 +143,10 @@ export type MonitorState = {
     routes: {
       configured: number; checked: number; fresh: number;
       stale: number; error: number; pending: number;
+      errorKinds?: {
+        accessRestricted: number; rateLimited: number; timeout: number;
+        server: number; invalidResponse: number; articlePartial: number; other: number;
+      };
     };
     publicationEvidence: {
       total: number; timestamp: number; dateOnly: number; missing: number;

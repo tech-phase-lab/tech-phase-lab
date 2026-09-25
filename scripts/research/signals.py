@@ -589,6 +589,27 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
             "ticker": ticker, "generatedAt": stamp(), "publicationEnabled": False}
 
 
+def signal_error_kind(error):
+    """Collapse a private route error into one stable aggregate category."""
+    value = str(error or "")
+    if value in {"http-401", "http-403", "http-451", "verification-page"}:
+        return "accessRestricted"
+    if value == "http-429":
+        return "rateLimited"
+    if value == "timeout":
+        return "timeout"
+    if re.fullmatch(r"http-5\d\d", value):
+        return "server"
+    if value.startswith("article-fetch-failed:"):
+        return "articlePartial"
+    if value.startswith("signal-") or value in {
+        "invalid-source-response", "unsupported-content-type",
+        "empty-or-oversized-source", "no-extractable-text",
+    }:
+        return "invalidResponse"
+    return "other"
+
+
 def operational_summary(db, sources=SOURCES, reference=None):
     """Return URL-free health and publication-evidence totals for official routes."""
     schema(db)
@@ -610,8 +631,12 @@ def operational_summary(db, sources=SOURCES, reference=None):
         except (TypeError, ValueError):
             return None
 
+    error_kinds = {kind: 0 for kind in (
+        "accessRestricted", "rateLimited", "timeout", "server",
+        "invalidResponse", "articlePartial", "other",
+    )}
     route_counts = {"configured": len(official), "checked": 0, "fresh": 0,
-                    "stale": 0, "error": 0, "pending": 0}
+                    "stale": 0, "error": 0, "pending": 0, "errorKinds": error_kinds}
     for source_id, source in configured.items():
         row = db.execute("SELECT * FROM signal_routes WHERE id=?", (source_id,)).fetchone()
         if not row:
@@ -621,6 +646,7 @@ def operational_summary(db, sources=SOURCES, reference=None):
             route_counts["checked"] += 1
         if row["error"]:
             route_counts["error"] += 1
+            error_kinds[signal_error_kind(row["error"])] += 1
             continue
         succeeded = timestamp_value(row["succeeded_at"])
         if not succeeded:

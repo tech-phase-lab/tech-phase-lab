@@ -78,6 +78,9 @@ The operations preview exposes a URL-free aggregate for first-party
 supplemental routes. It separates recently successful, stale, failed and
 never-successful routes, and counts publication evidence with an issuer
 timestamp separately from date-only evidence and missing publication time.
+Failed routes are grouped into access restriction, rate limit, timeout,
+first-party 5xx, invalid response, partial article retrieval and other fixed
+categories.
 The aggregate excludes external-research and opt-in X API routes and never
 contains route names, URLs, titles or raw errors. A recently successful route
 is an operational observation only; it does not prove complete coverage or

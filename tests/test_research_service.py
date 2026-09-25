@@ -1461,6 +1461,7 @@ class ResearchServiceTests(unittest.TestCase):
         summary = state["signalIntake"]
         self.assertEqual(summary["routes"]["configured"], 22)
         self.assertEqual(summary["routes"]["pending"], 22)
+        self.assertEqual(sum(summary["routes"]["errorKinds"].values()), 0)
         self.assertEqual(summary["publicationEvidence"]["total"], 0)
         serialized = json.dumps(summary)
         self.assertNotIn("https://", serialized)

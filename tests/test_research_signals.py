@@ -121,7 +121,7 @@ class SignalTests(unittest.TestCase):
               id,initialized,checked_at,next_check_at,failures,error
               ) VALUES(?,1,?,?,1,?)""", (
                 official[1]["id"], "2026-09-25T06:58:00+00:00",
-                "2026-09-25T07:03:00+00:00", "http-403-private-detail",
+                "2026-09-25T07:03:00+00:00", "http-403",
             ))
             self.db.execute("""INSERT INTO signal_routes(
               id,initialized,checked_at,succeeded_at,next_check_at,failures,error
@@ -152,6 +152,11 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(summary["routes"], {
             "configured": 2, "checked": 2, "fresh": 1,
             "stale": 0, "error": 1, "pending": 0,
+            "errorKinds": {
+                "accessRestricted": 1, "rateLimited": 0, "timeout": 0,
+                "server": 0, "invalidResponse": 0,
+                "articlePartial": 0, "other": 0,
+            },
         })
         self.assertEqual(summary["publicationEvidence"], {
             "total": 3, "timestamp": 1, "dateOnly": 1, "missing": 1,
@@ -160,6 +165,22 @@ class SignalTests(unittest.TestCase):
         self.assertNotIn("https://", serialized)
         self.assertNotIn("palantir", serialized.lower())
         self.assertNotIn("http-403", serialized)
+
+    def test_signal_error_kind_uses_fixed_aggregate_categories(self):
+        cases = {
+            "http-403": "accessRestricted",
+            "verification-page": "accessRestricted",
+            "http-429": "rateLimited",
+            "timeout": "timeout",
+            "http-503": "server",
+            "signal-invalid-feed-root": "invalidResponse",
+            "unsupported-content-type": "invalidResponse",
+            "article-fetch-failed:2": "articlePartial",
+            "unexpected-private-detail": "other",
+        }
+        for error, expected in cases.items():
+            with self.subTest(error=error):
+                self.assertEqual(signals.signal_error_kind(error), expected)
 
     def test_persisted_validators_and_304(self):
         self.check_feed(feed(), etag='"v1"')
