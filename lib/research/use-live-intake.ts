@@ -120,6 +120,8 @@ export type MonitorState = {
     detectedNeverFetchedMeasured?: number; detectedNeverFetchedUnmeasured?: number;
     detectedNeverFetchedAgeMaxMs?: number | null;
     oldestDetectedNeverFetchedAt?: string | null;
+    fairnessScheduled?: boolean; fairnessAgeMs?: number | null;
+    fairnessSharedHost?: boolean;
     extractionPending?: number; extracted?: number;
     total: number; measuredAt: string | null;
   };

@@ -138,8 +138,11 @@ function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], backlog?: Monitor
   const neverFetchedDetail = backlog?.detectedNeverFetched != null && backlog?.baselineNeverFetched != null
     ? `（新着検知 ${backlog.detectedNeverFetched}件${detectedWait}・履歴基準 ${backlog.baselineNeverFetched}件）`
     : "";
+  const fairness = backlog?.fairnessScheduled
+    ? ` · 最古新着の保守枠：今回予約（待機 ${duration(backlog.fairnessAgeMs)}${backlog.fairnessSharedHost ? "・同一ホスト内で切替" : ""}）`
+    : "";
   const evidenceState = backlog && backlog.neverFetched != null
-    ? ` · 証拠状態：本文未取得 ${backlog.neverFetched}件${neverFetchedDetail}・抽出不足 ${backlog.extractionPending ?? 0}件・抽出済み ${backlog.extracted ?? 0}件`
+    ? ` · 証拠状態：本文未取得 ${backlog.neverFetched}件${neverFetchedDetail}・抽出不足 ${backlog.extractionPending ?? 0}件・抽出済み ${backlog.extracted ?? 0}件${fairness}`
     : "";
   if (!bodyFetch?.lastPollAt) return "本文取得：初回ポーリング待ち";
   if (bodyFetch.healthy === false) return `本文取得：要確認 · 内部処理を再試行予定（連続 ${bodyFetch.consecutiveFailures}回・${bodyFetch.retrySeconds ?? 0}秒後） · 取得可能 ${eligible}件${deferred}${evidenceState}`;

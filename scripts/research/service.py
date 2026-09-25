@@ -350,6 +350,9 @@ class AutomaticMonitor:
                 "detectedNeverFetchedMeasured": 0, "detectedNeverFetchedUnmeasured": 0,
                 "detectedNeverFetchedAgeMaxMs": None,
                 "oldestDetectedNeverFetchedAt": None,
+                "fairnessScheduled": False,
+                "fairnessAgeMs": None,
+                "fairnessSharedHost": False,
                 "extractionPending": 0, "extracted": 0,
                 "total": 0, "measuredAt": None,
             },
@@ -979,6 +982,10 @@ class AutomaticMonitor:
             # stream of newer releases could postpone an older release
             # indefinitely. Recovery probes keep precedence over fairness.
             candidate_order = eligible_candidates
+            fairness_applied = False
+            fairness_age_ms = None
+            fairness_shared_host = False
+            oldest_release = None
             if self.body_batch > 1 and eligible_candidates:
                 probe_candidates = []
                 seen_probe_hosts = set()
@@ -1003,14 +1010,29 @@ class AutomaticMonitor:
                         age_ms = timestamp_latency_ms(candidate["detected_at"], due)
                         if age_ms is not None:
                             valid_unfetched_releases.append((age_ms, candidate))
-                    oldest_release = max(
+                    fairness_age_ms, oldest_release = max(
                         valid_unfetched_releases,
                         key=lambda item: item[0] if item[0] is not None else -1,
                         default=(None, None),
-                    )[1]
+                    )
                     if oldest_release and oldest_release["url"] not in pinned_urls:
-                        pinned.append(oldest_release)
-                        pinned_urls.add(oldest_release["url"])
+                        oldest_host = monitor.source_hostname(oldest_release["url"])
+                        shared_host_index = next((
+                            index for index, candidate in enumerate(pinned)
+                            if oldest_host
+                            and monitor.source_hostname(candidate["url"]) == oldest_host
+                        ), None)
+                        if shared_host_index is not None:
+                            displaced = pinned[shared_host_index]
+                            pinned[shared_host_index] = oldest_release
+                            pinned_urls.remove(displaced["url"])
+                            pinned_urls.add(oldest_release["url"])
+                            fairness_applied = True
+                            fairness_shared_host = True
+                        else:
+                            pinned.append(oldest_release)
+                            pinned_urls.add(oldest_release["url"])
+                            fairness_applied = True
                 candidate_order = pinned + [
                     candidate for candidate in eligible_candidates
                     if candidate["url"] not in pinned_urls
@@ -1042,6 +1064,11 @@ class AutomaticMonitor:
                 url for url in selected_urls
                 if monitor.source_hostname(url) in due_probe_hosts
             }
+            fairness_scheduled = bool(
+                fairness_applied
+                and oldest_release
+                and oldest_release["url"] in selected_urls
+            )
         self.body_probe_urls = probe_urls
         with self.state_lock:
             self.state["bodyBacklog"] = {
@@ -1068,6 +1095,9 @@ class AutomaticMonitor:
                 "oldestDetectedNeverFetchedAt": (
                     oldest_detected_wait[1] if oldest_detected_wait else None
                 ),
+                "fairnessScheduled": fairness_scheduled,
+                "fairnessAgeMs": fairness_age_ms if fairness_scheduled else None,
+                "fairnessSharedHost": fairness_shared_host if fairness_scheduled else False,
                 "extractionPending": int(backlog["extraction_pending"] or 0),
                 "extracted": int(backlog["extracted"] or 0),
                 "total": int(backlog["total"] or 0),

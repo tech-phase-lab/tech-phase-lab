@@ -926,6 +926,44 @@ class ResearchServiceTests(unittest.TestCase):
 
         self.assertEqual(pending, 5)
         self.assertEqual([row["url"] for row in rows], [newest, oldest])
+        backlog = app.public_state()["bodyBacklog"]
+        self.assertTrue(backlog["fairnessScheduled"])
+        self.assertFalse(backlog["fairnessSharedHost"])
+        self.assertGreater(backlog["fairnessAgeMs"], 2 * 24 * 60 * 60 * 1000)
+        self.assertLess(backlog["fairnessAgeMs"], 4 * 24 * 60 * 60 * 1000)
+
+    def test_body_candidates_oldest_release_replaces_newest_on_same_host(self):
+        oldest = "https://investor.marvell.com/news/detail/998/oldest-release"
+        newest = "https://investor.marvell.com/news/detail/999/newest-release"
+        other_host = "https://www.vertiv.com/news/middle-release/"
+        with monitor.connect(self.db_path) as db:
+            db.execute("UPDATE sources SET next_fetch_at='2099-01-01T00:00:00+00:00'")
+            for ticker, url, detected_at in (
+                ("MRVL", oldest, "2026-09-23T00:00:00+00:00"),
+                ("MRVL", newest, "2026-09-25T00:00:00+00:00"),
+                ("VRT", other_host, "2026-09-24T00:00:00+00:00"),
+            ):
+                monitor.add_source(db, ticker, url, title=ticker)
+                monitor.add_release_events(db, ticker, [url])
+                db.execute(
+                    "UPDATE release_events SET detected_at=? WHERE url=?",
+                    (detected_at, url),
+                )
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_batch = 2
+        rows, _pending = app.body_candidates("2026-09-26T00:00:00+00:00")
+
+        selected = [row["url"] for row in rows]
+        self.assertEqual(selected, [oldest, other_host])
+        self.assertNotIn(newest, selected)
+        backlog = app.public_state()["bodyBacklog"]
+        self.assertTrue(backlog["fairnessScheduled"])
+        self.assertTrue(backlog["fairnessSharedHost"])
+        self.assertGreater(backlog["fairnessAgeMs"], 2 * 24 * 60 * 60 * 1000)
+        self.assertLess(backlog["fairnessAgeMs"], 4 * 24 * 60 * 60 * 1000)
+        self.assertNotIn("marvell.com", json.dumps(backlog))
 
     def test_body_backlog_distinguishes_eligible_and_access_restricted_retries(self):
         detected_at = datetime.now(timezone.utc) - timedelta(hours=1)
@@ -964,6 +1002,9 @@ class ResearchServiceTests(unittest.TestCase):
             "detectedNeverFetchedMeasured": 1,
             "detectedNeverFetchedUnmeasured": 0,
             "oldestDetectedNeverFetchedAt": detected_at_text,
+            "fairnessScheduled": False,
+            "fairnessAgeMs": None,
+            "fairnessSharedHost": False,
             "extractionPending": 0,
             "extracted": 0,
             "total": 2,
