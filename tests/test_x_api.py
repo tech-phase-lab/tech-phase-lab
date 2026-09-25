@@ -18,6 +18,8 @@ class XApiTests(unittest.TestCase):
 
     def test_x_source_scope_matches_the_22_configured_company_roster(self):
         x_sources = [source for source in signals.SOURCES if source.get("format") == "x-api"]
+        self.assertEqual({source["accounts"][0].lower() for source in x_sources},
+                         {"tipranks", "theflynews", "wallstengine"})
         self.assertEqual({ticker for source in x_sources for ticker in source["tickers"]}, set(monitor.PROVIDERS))
         for source in x_sources:
             self.assertLessEqual(len(source["query"]), 512)
@@ -66,6 +68,15 @@ class XApiTests(unittest.TestCase):
                     queue = signals.queue(db, ticker="MU")
                     self.assertEqual(queue["counts"]["baseline"], 1)
                     self.assertEqual(queue["items"][0]["url"], "https://x.com/TipRanks/status/1001")
+
+    def test_wall_st_engine_post_is_kept_only_for_a_monitored_company(self):
+        source = next(s for s in signals.SOURCES if s["id"] == "x-wallstengine")
+        payload = {"data": [
+            {"id": "2001", "author_id": "2", "text": "$NBIS price target raised to $399"},
+            {"id": "2002", "author_id": "2", "text": "$XYZ price target raised to $20"},
+        ], "includes": {"users": [{"id": "2", "username": "wallstengine"}]}}
+        items = x_api.parse_response(source, payload, list(monitor.PROVIDERS))
+        self.assertEqual([item["url"] for item in items], ["https://x.com/wallstengine/status/2001"])
 
     def test_direct_adapter_call_fails_closed(self):
         with patch.dict(os.environ, {"X_API_ENABLED": "false", "X_BEARER_TOKEN": "secret"}, clear=False):

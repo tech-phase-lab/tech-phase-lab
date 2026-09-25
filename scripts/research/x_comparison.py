@@ -10,7 +10,7 @@ import sqlite3
 from statistics import median
 
 
-SOURCES = ("x-tipranks", "x-thefly")
+SOURCES = ("x-tipranks", "x-thefly", "x-wallstengine")
 TARGET_PATTERN = re.compile(r"\b(?:price[ -]?target|target price|pt (?:raised|cut|lowered|hiked))\b", re.I)
 MAX_RESULTS = 10
 

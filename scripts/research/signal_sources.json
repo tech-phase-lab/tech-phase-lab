@@ -446,5 +446,19 @@
     "intervalSeconds": 120,
     "maxResults": 10,
     "reuse": "review-required"
+  },
+  {
+    "id": "x-wallstengine",
+    "name": "X · Wall St Engine",
+    "kind": "publisher-update",
+    "format": "x-api",
+    "enabledBy": "X_API_ENABLED",
+    "query": "from:wallstengine ($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR \"SK hynix\") -is:retweet -is:reply",
+    "accounts": ["wallstengine"],
+    "tickers": ["MU", "SKHY", "SNDK", "NBIS", "NVDA", "AMD", "AVGO", "ARM", "TSM", "ASML", "MRVL", "ANET", "CRDO", "CRWV", "VRT", "GEV", "DELL", "PLTR", "MSFT", "BE", "GOOGL", "ORCL"],
+    "allowedHosts": ["x.com"],
+    "intervalSeconds": 120,
+    "maxResults": 10,
+    "reuse": "review-required"
   }
 ]

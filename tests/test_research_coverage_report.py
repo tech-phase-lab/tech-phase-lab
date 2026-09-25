@@ -17,6 +17,7 @@ class CoverageReportTests(unittest.TestCase):
         result = coverage_report.report()
         self.assertEqual(len(result['companies']), 22)
         self.assertTrue(all(r['status'] == 'untested' for r in result['routes']))
+        self.assertIsNone(next(r for r in result['routes'] if r['id'] == 'x-tipranks')['url'])
         mu = next(c for c in result['companies'] if c['ticker'] == 'MU')
         self.assertIn('micron-blog', mu['dedicatedSupplementalSources'])
         self.assertFalse(mu['needsDedicatedSupplementalSource'])

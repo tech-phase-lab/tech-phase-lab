@@ -40,7 +40,7 @@ def report(db_path=None, now=None):
             status = 'fresh' if 0 <= age <= max(300, source['intervalSeconds'] * 3) else 'stale'
         if row.get('config_sha') and row['config_sha'] != signals.fingerprint(source, list(signals.ALIASES)):
             status = 'configuration-changed'
-        routes.append({'id': source['id'], 'name': source['name'], 'url': source['url'],
+        routes.append({'id': source['id'], 'name': source['name'], 'url': source.get('url'),
                        'tickers': source.get('tickers', []), 'status': status,
                        'lastSuccess': row.get('succeeded_at'), 'error': row.get('error'),
                        'reuse': source['reuse']})

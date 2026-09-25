@@ -13,7 +13,7 @@ from urllib.request import Request, build_opener
 API_URL = "https://api.x.com/2/tweets/search/recent"
 MAX_RESPONSE_BYTES = 2 * 1024 * 1024
 MAX_RESULTS = 10
-ALLOWED_ACCOUNT_NAMES = {"tipranks", "theflynews"}
+ALLOWED_ACCOUNT_NAMES = {"tipranks", "theflynews", "wallstengine"}
 
 
 def parse_response(source, payload, tickers):
