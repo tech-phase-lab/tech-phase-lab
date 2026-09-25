@@ -431,10 +431,17 @@ class AutomaticMonitor:
         if self.stop_event.is_set():
             return
         # Network I/O and article parsing must not hold the shared database lock.
+        reservation_error = None
         with self.db_lock, monitor.connect(self.db_path) as db:
             validators = signals.validators_for(db, source, self.tickers)
+            try:
+                signals.reserve_x_api_request(db, source)
+            except Exception as exc:
+                reservation_error = exc
         started = time.monotonic()
         try:
+            if reservation_error:
+                raise reservation_error
             response = signals.acquire(source, validators, self.tickers)
             if not response.get("not_modified") and "_items" not in response:
                 response["_items"] = signals.parse(source, response.pop("body"), self.tickers)
