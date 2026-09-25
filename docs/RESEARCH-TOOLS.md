@@ -204,6 +204,10 @@ cycles also do not increment the recovery-probe counters.
 The body backlog reports rate-limited retries separately from other
 access-control retries. Older backends that do not provide this aggregate stay
 display-compatible and are treated as having no observed rate limits.
+It also partitions every remote-body row into never fetched, fetched but still
+missing extracted evidence, or successfully extracted. The three URL-free
+counts must sum to the reported total. This distinguishes missing evidence from
+routine rechecks without exposing source URLs, article text or error details.
 When inline first-party evidence replaces the last failed remote body for a
 ticker, its stale body incident is resolved even though the hostname circuit
 remains in force. Another failed remote body keeps the ticker incident open.

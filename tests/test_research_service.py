@@ -923,10 +923,43 @@ class ResearchServiceTests(unittest.TestCase):
             "accessRestricted": 1,
             "rateLimited": 0,
             "recheckDeferred": 0,
+            "neverFetched": 2,
+            "extractionPending": 0,
+            "extracted": 0,
             "total": 2,
             "measuredAt": "2026-09-24T05:00:00+00:00",
         })
         self.assertNotIn("https://", json.dumps(backlog))
+
+    def test_body_backlog_partitions_evidence_state_without_source_details(self):
+        with monitor.connect(self.db_path) as db:
+            older = "https://nebius.com/newsroom/older"
+            extracted = "https://nebius.com/newsroom/extracted"
+            monitor.add_source(db, "NBIS", extracted, title="Extracted")
+            db.execute("""
+              UPDATE sources
+              SET sha256=?,raw_sha256=?,body_sha256=?,extracted_text='',extracted_chars=0
+              WHERE url=?
+            """, ("a" * 64, "a" * 64, "b" * 64, older))
+            db.execute("""
+              UPDATE sources
+              SET sha256=?,raw_sha256=?,body_sha256=?,extracted_text='Evidence',extracted_chars=8
+              WHERE url=?
+            """, ("c" * 64, "c" * 64, "d" * 64, extracted))
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_candidates("2026-09-24T05:00:00+00:00")
+        backlog = app.public_state()["bodyBacklog"]
+
+        self.assertEqual(backlog["neverFetched"], 1)
+        self.assertEqual(backlog["extractionPending"], 1)
+        self.assertEqual(backlog["extracted"], 1)
+        self.assertEqual(
+            backlog["neverFetched"] + backlog["extractionPending"] + backlog["extracted"],
+            backlog["total"],
+        )
+        self.assertNotIn("nebius.com", json.dumps(backlog))
 
     def test_body_backlog_reports_rate_limits_separately_from_access_controls(self):
         with monitor.connect(self.db_path) as db:

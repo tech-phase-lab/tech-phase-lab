@@ -345,7 +345,9 @@ class AutomaticMonitor:
                 "activeHostCircuits": 0, "nextHostProbeAt": None,
                 "dueHostCircuits": 0, "scheduledHostProbes": 0,
                 "retryDeferred": 0, "accessRestricted": 0, "rateLimited": 0,
-                "recheckDeferred": 0, "total": 0, "measuredAt": None,
+                "recheckDeferred": 0, "neverFetched": 0,
+                "extractionPending": 0, "extracted": 0,
+                "total": 0, "measuredAt": None,
             },
             "tickerCount": len(self.tickers),
             "generation": {
@@ -908,7 +910,12 @@ class AutomaticMonitor:
                 sum(CASE WHEN next_fetch_at>? AND error='http-429' THEN 1 ELSE 0 END)
                   AS rate_limited,
                 sum(CASE WHEN next_fetch_at>? AND error IS NULL THEN 1 ELSE 0 END)
-                  AS recheck_deferred
+                  AS recheck_deferred,
+                sum(CASE WHEN sha256 IS NULL THEN 1 ELSE 0 END) AS never_fetched,
+                sum(CASE WHEN sha256 IS NOT NULL AND coalesce(extracted_chars,0)=0
+                         THEN 1 ELSE 0 END) AS extraction_pending,
+                sum(CASE WHEN sha256 IS NOT NULL AND coalesce(extracted_chars,0)>0
+                         THEN 1 ELSE 0 END) AS extracted
               FROM sources WHERE source_mode='remote'
             """, (due, due, due, due, due)).fetchone()
             blocked_host_state, next_host_probe_at = active_body_host_backoff_state(db, due)
@@ -1010,6 +1017,9 @@ class AutomaticMonitor:
                 "accessRestricted": int(backlog["access_restricted"] or 0),
                 "rateLimited": int(backlog["rate_limited"] or 0),
                 "recheckDeferred": int(backlog["recheck_deferred"] or 0),
+                "neverFetched": int(backlog["never_fetched"] or 0),
+                "extractionPending": int(backlog["extraction_pending"] or 0),
+                "extracted": int(backlog["extracted"] or 0),
                 "total": int(backlog["total"] or 0),
                 "measuredAt": polled_at,
             }

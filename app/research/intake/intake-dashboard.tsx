@@ -132,10 +132,13 @@ function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], backlog?: Monitor
     ? ` · 復旧確認待ち ${backlog.dueHostCircuits}経路（今回 ${backlog.scheduledHostProbes ?? 0}件）`
     : "";
   const deferred = backlog ? `${hostDeferred}${dueProbes} · エラー再試行待ち ${backlog.retryDeferred}件（アクセス制限 ${backlog.accessRestricted}件・レート制限 ${backlog.rateLimited ?? 0}件） · 定期再確認待ち ${backlog.recheckDeferred}件` : "";
+  const evidenceState = backlog && backlog.neverFetched != null
+    ? ` · 証拠状態：本文未取得 ${backlog.neverFetched}件・抽出不足 ${backlog.extractionPending ?? 0}件・抽出済み ${backlog.extracted ?? 0}件`
+    : "";
   if (!bodyFetch?.lastPollAt) return "本文取得：初回ポーリング待ち";
-  if (bodyFetch.healthy === false) return `本文取得：要確認 · 内部処理を再試行予定（連続 ${bodyFetch.consecutiveFailures}回・${bodyFetch.retrySeconds ?? 0}秒後） · 取得可能 ${eligible}件${deferred}`;
-  if (!bodyFetch.lastBatchAt) return `本文取得：${time(bodyFetch.lastPollAt)} JSTに確認 · 取得可能 ${eligible}件${deferred} · 取得実績待ち`;
-  return `本文取得：直近 ${bodyFetch.lastBatchChecks}件 · エラー ${bodyFetch.lastBatchErrors}件 · 304 ${bodyFetch.lastBatchNotModified}件 · ${duration(bodyFetch.lastBatchDurationMs)} · 取得可能 ${eligible}件${deferred}`;
+  if (bodyFetch.healthy === false) return `本文取得：要確認 · 内部処理を再試行予定（連続 ${bodyFetch.consecutiveFailures}回・${bodyFetch.retrySeconds ?? 0}秒後） · 取得可能 ${eligible}件${deferred}${evidenceState}`;
+  if (!bodyFetch.lastBatchAt) return `本文取得：${time(bodyFetch.lastPollAt)} JSTに確認 · 取得可能 ${eligible}件${deferred}${evidenceState} · 取得実績待ち`;
+  return `本文取得：直近 ${bodyFetch.lastBatchChecks}件 · エラー ${bodyFetch.lastBatchErrors}件 · 304 ${bodyFetch.lastBatchNotModified}件 · ${duration(bodyFetch.lastBatchDurationMs)} · 取得可能 ${eligible}件${deferred}${evidenceState}`;
 }
 function bodyHostProbeStatus(probes?: MonitorState["bodyHostProbes"]) {
   if (!probes?.lastCompletedAt) return "遮断経路の復旧確認：実績待ち";

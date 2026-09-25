@@ -115,7 +115,9 @@ export type MonitorState = {
     nextHostProbeAt?: string | null; dueHostCircuits?: number; scheduledHostProbes?: number;
     retryDeferred: number; accessRestricted: number;
     rateLimited?: number;
-    recheckDeferred: number; total: number; measuredAt: string | null;
+    recheckDeferred: number;
+    neverFetched?: number; extractionPending?: number; extracted?: number;
+    total: number; measuredAt: string | null;
   };
   bodyHostProbes?: {
     lastAttemptedAt: string | null; lastCompletedAt: string | null;
