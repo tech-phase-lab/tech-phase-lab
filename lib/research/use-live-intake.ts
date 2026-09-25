@@ -154,6 +154,11 @@ export type MonitorState = {
     publicationEvidence: {
       total: number; timestamp: number; dateOnly: number; missing: number;
     };
+    routeTransitions24Hours?: {
+      recoveries: number; failures: number; changes: number;
+      lastOutcome: "recovered" | "failed" | "changed" | null;
+      lastOccurredAt: string | null;
+    };
   };
   companies: Record<string, {
     basePollSeconds?: number; nextPollSeconds?: number; requestDurationMs?: number;

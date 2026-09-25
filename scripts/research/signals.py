@@ -233,6 +233,12 @@ def schema(db):
         id INTEGER PRIMARY KEY, source_id TEXT NOT NULL, attempted_at TEXT NOT NULL
       );
       CREATE INDEX IF NOT EXISTS signal_x_request_time ON signal_x_request_attempts(attempted_at);
+      CREATE TABLE IF NOT EXISTS signal_route_transitions (
+        id INTEGER PRIMARY KEY, source_id TEXT NOT NULL, occurred_at TEXT NOT NULL,
+        outcome TEXT NOT NULL, previous_kind TEXT, current_kind TEXT
+      );
+      CREATE INDEX IF NOT EXISTS signal_route_transition_time
+        ON signal_route_transitions(occurred_at);
     """)
     if "published_on" not in {row[1] for row in db.execute("PRAGMA table_info(signal_events)")}:
         db.execute("ALTER TABLE signal_events ADD COLUMN published_on TEXT")
@@ -409,6 +415,33 @@ def evidence_excerpt(item):
     return "\n…\n".join(chunks)[:2400] or text[:1000]
 
 
+def record_route_transition(db, source_id, previous_route, current_error, occurred_at):
+    """Persist only state changes; repeated identical failures do not inflate totals."""
+    if previous_route is None:
+        return
+    previous_error = previous_route["error"]
+    previous_kind = signal_error_kind(previous_error) if previous_error else None
+    current_kind = signal_error_kind(current_error) if current_error else None
+    if previous_kind and not current_kind:
+        outcome = "recovered"
+    elif not previous_kind and current_kind:
+        outcome = "failed"
+    elif previous_kind and current_kind and previous_kind != current_kind:
+        outcome = "changed"
+    else:
+        return
+    db.execute("""INSERT INTO signal_route_transitions(
+      source_id,occurred_at,outcome,previous_kind,current_kind
+      ) VALUES(?,?,?,?,?)""", (
+        source_id, occurred_at, outcome, previous_kind, current_kind,
+    ))
+    cutoff = (datetime.fromisoformat(occurred_at) - timedelta(days=8)).isoformat()
+    db.execute("""DELETE FROM signal_route_transitions
+      WHERE datetime(occurred_at) IS NULL OR datetime(occurred_at)<datetime(?)""", (cutoff,))
+    db.execute("""DELETE FROM signal_route_transitions WHERE id NOT IN
+      (SELECT id FROM signal_route_transitions ORDER BY id DESC LIMIT 5000)""")
+
+
 def save(db, source, items, response, checked, config_sha, duration):
     route = db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
     initial = not route or not route["initialized"] or route["config_sha"] != config_sha
@@ -470,6 +503,9 @@ def save(db, source, items, response, checked, config_sha, duration):
             if response.get("article_errors"):
                 db.execute("UPDATE signal_routes SET error=? WHERE id=?",
                            (f"article-fetch-failed:{response['article_errors']}", source["id"]))
+        current_error = (f"article-fetch-failed:{response['article_errors']}"
+                         if response.get("article_errors") else None)
+        record_route_transition(db, source["id"], route, current_error, checked)
         # Bound private retention per publisher; keep enough fingerprints for restarts.
         db.execute("""DELETE FROM signal_documents WHERE source_id=? AND url NOT IN
           (SELECT url FROM signal_documents WHERE source_id=? ORDER BY last_seen_at DESC LIMIT 1000)""",
@@ -499,6 +535,7 @@ def check(db, source, tickers, transport=None):
                         seconds=source_interval_seconds(source, datetime.fromisoformat(checked)))).isoformat(),
                     round((time.monotonic() - started) * 1000), source["id"],
                 ))
+                record_route_transition(db, source["id"], row, None, checked)
             return {"source": source["id"], "status": "unchanged", "events": 0}
         items = response["_items"] if "_items" in response else parse(source, response["body"], tickers)
         count = save(db, source, items, response, checked, config_sha,
@@ -530,6 +567,7 @@ def check(db, source, tickers, transport=None):
               VALUES(?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET checked_at=excluded.checked_at,
               next_check_at=excluded.next_check_at,failures=excluded.failures,error=excluded.error""",
                        (source["id"], checked, next_check, failures, error))
+            record_route_transition(db, source["id"], row, error, checked)
         return {"source": source["id"], "status": "error", "error": error, "events": 0}
 
 
@@ -681,6 +719,10 @@ def operational_summary(db, sources=SOURCES, reference=None):
             route_counts["stale"] += 1
 
     evidence = {"total": 0, "timestamp": 0, "dateOnly": 0, "missing": 0}
+    transitions = {
+        "recoveries": 0, "failures": 0, "changes": 0,
+        "lastOutcome": None, "lastOccurredAt": None,
+    }
     if configured:
         placeholders = ",".join("?" for _ in configured)
         rows = db.execute(f"""SELECT published_at,published_on FROM signal_events
@@ -698,7 +740,24 @@ def operational_summary(db, sources=SOURCES, reference=None):
                 evidence["dateOnly"] += 1
             else:
                 evidence["missing"] += 1
-    return {"routes": route_counts, "publicationEvidence": evidence}
+        cutoff = current - timedelta(hours=24)
+        latest = None
+        for row in db.execute(f"""SELECT occurred_at,outcome FROM signal_route_transitions
+          WHERE source_id IN ({placeholders}) ORDER BY id""", tuple(configured)):
+            occurred = timestamp_value(row["occurred_at"])
+            outcome = row["outcome"]
+            if not occurred or occurred < cutoff or occurred > current or outcome not in {
+                    "recovered", "failed", "changed"}:
+                continue
+            key = {"recovered": "recoveries", "failed": "failures", "changed": "changes"}[outcome]
+            transitions[key] += 1
+            if latest is None or occurred >= latest[0]:
+                latest = (occurred, outcome)
+        if latest:
+            transitions["lastOutcome"] = latest[1]
+            transitions["lastOccurredAt"] = latest[0].isoformat()
+    return {"routes": route_counts, "publicationEvidence": evidence,
+            "routeTransitions24Hours": transitions}
 
 
 def due(db, sources=None):

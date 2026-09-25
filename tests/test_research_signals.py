@@ -165,6 +165,10 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(summary["publicationEvidence"], {
             "total": 3, "timestamp": 1, "dateOnly": 1, "missing": 1,
         })
+        self.assertEqual(summary["routeTransitions24Hours"], {
+            "recoveries": 0, "failures": 0, "changes": 0,
+            "lastOutcome": None, "lastOccurredAt": None,
+        })
         serialized = json.dumps(summary)
         self.assertNotIn("https://", serialized)
         self.assertNotIn("palantir", serialized.lower())
@@ -215,6 +219,40 @@ class SignalTests(unittest.TestCase):
         serialized = json.dumps(summary)
         for private_value in ("article-fetch-failed", "http-403"):
             self.assertNotIn(private_value, serialized)
+
+    def test_route_recovery_history_survives_restart_without_repeated_failure_inflation(self):
+        html = b"<html><main><p>" + (b"Nebius official infrastructure update. " * 5) + b"</p></main></html>"
+        self.assertEqual(signals.check(
+            self.db, self.doc, self.tickers, lambda *_: {"body": html}
+        )["status"], "ok")
+
+        def timeout(*_args):
+            raise TimeoutError("private route detail")
+
+        self.assertEqual(signals.check(self.db, self.doc, self.tickers, timeout)["status"], "error")
+        self.assertEqual(signals.check(self.db, self.doc, self.tickers, timeout)["status"], "error")
+        self.assertEqual(signals.check(
+            self.db, self.doc, self.tickers, lambda *_: {"body": html}
+        )["status"], "ok")
+        self.db.close()
+        self.db = monitor.connect(self.path)
+        self.assertEqual(signals.check(self.db, self.doc, self.tickers, timeout)["status"], "error")
+
+        history = self.db.execute(
+            "SELECT outcome,previous_kind,current_kind,occurred_at "
+            "FROM signal_route_transitions ORDER BY id"
+        ).fetchall()
+        self.assertEqual([row["outcome"] for row in history], ["failed", "recovered", "failed"])
+        self.assertEqual(history[0]["current_kind"], "timeout")
+        summary = signals.operational_summary(self.db, sources=[self.doc])
+        self.assertEqual(summary["routeTransitions24Hours"], {
+            "recoveries": 1, "failures": 2, "changes": 0,
+            "lastOutcome": "failed",
+            "lastOccurredAt": datetime.fromisoformat(history[-1]["occurred_at"]).isoformat(),
+        })
+        serialized = json.dumps(summary)
+        self.assertNotIn(self.doc["id"], serialized)
+        self.assertNotIn("private route detail", serialized)
 
     def test_persisted_validators_and_304(self):
         self.check_feed(feed(), etag='"v1"')

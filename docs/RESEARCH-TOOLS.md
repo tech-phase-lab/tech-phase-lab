@@ -84,6 +84,12 @@ categories.
 The same aggregate separates retries that are due, deferred or missing a valid
 schedule, and exposes only the earliest bounded retry time. It excludes invalid
 or more-than-seven-day future values and never exposes which route failed.
+Route state transitions are retained privately across worker restarts and the
+preview exposes only rolling 24-hour totals for recovery, renewed failure and
+error-category change, plus the most recent transition kind and time. A
+repeated failure in the same category does not create another transition, so a
+persistently blocked route cannot inflate the failure total. Transition
+retention is capped by age and row count.
 The aggregate excludes external-research and opt-in X API routes and never
 contains route names, URLs, titles or raw errors. A recently successful route
 is an operational observation only; it does not prove complete coverage or

@@ -179,7 +179,14 @@ function signalIntakeStatus(signal: MonitorState["signalIntake"]) {
   const retryStatus = retry
     ? ` · 再試行：実行可能 ${retry.due}・待機 ${retry.deferred}${retry.nextAt ? `（最短 ${time(retry.nextAt)} JST）` : ""}・予定不明 ${retry.unscheduled}`
     : "";
-  return `公式補完経路：直近成功 ${routes.fresh}/${routes.configured}経路 · 期限超過 ${routes.stale} · 要確認 ${routes.error}（アクセス制限 ${kinds.accessRestricted}・レート制限 ${kinds.rateLimited}・タイムアウト ${kinds.timeout}・公式側5xx ${kinds.server}・応答形式 ${kinds.invalidResponse}・記事一部失敗 ${kinds.articlePartial}・その他 ${kinds.other}）${retryStatus} · 初回待ち ${routes.pending} · 公表証拠 ${evidence.total}件（日時あり ${evidence.timestamp}・日付のみ ${evidence.dateOnly}・時刻未取得 ${evidence.missing}）`;
+  const transitions = signal.routeTransitions24Hours;
+  const outcome = transitions?.lastOutcome
+    ? { recovered: "回復", failed: "障害", changed: "区分変化" }[transitions.lastOutcome]
+    : null;
+  const transitionStatus = transitions
+    ? ` · 24時間の状態変化：回復 ${transitions.recoveries}・再失敗 ${transitions.failures}・区分変化 ${transitions.changes}${outcome && transitions.lastOccurredAt ? `（最終 ${outcome} ${time(transitions.lastOccurredAt)} JST）` : ""}`
+    : "";
+  return `公式補完経路：直近成功 ${routes.fresh}/${routes.configured}経路 · 期限超過 ${routes.stale} · 要確認 ${routes.error}（アクセス制限 ${kinds.accessRestricted}・レート制限 ${kinds.rateLimited}・タイムアウト ${kinds.timeout}・公式側5xx ${kinds.server}・応答形式 ${kinds.invalidResponse}・記事一部失敗 ${kinds.articlePartial}・その他 ${kinds.other}）${retryStatus}${transitionStatus} · 初回待ち ${routes.pending} · 公表証拠 ${evidence.total}件（日時あり ${evidence.timestamp}・日付のみ ${evidence.dateOnly}・時刻未取得 ${evidence.missing}）`;
 }
 function generationStatus(generation: MonitorState["generation"]) {
   if (!generation) return "AI下書き生成：状態取得待ち";
