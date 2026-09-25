@@ -17,7 +17,8 @@ type Queue = {
   ok: boolean; error?: string; items: Signal[]; routes: Route[]; tickers: string[];
   counts: Record<string, number>; enabled: boolean; workerAlive: boolean; generatedAt: string;
   xApiUsage?: { requested: boolean; configured: boolean; enabled: boolean; attemptsLast24Hours: number;
-    dailyLimit: number; limitReached: boolean; nextAvailableAt: string | null };
+    dailyLimit: number; limitReached: boolean; nextAvailableAt: string | null; sourceCount: number;
+    scope: string; configuredMaxRequestsPerDay: number; localMaxRequestsPerDay: number; budgetCapped: boolean };
 };
 const kindNames: Record<string, string> = {
   baseline: "初回取得・過去資料", new: "新規検出・発表時刻は要確認", changed: "内容変更",
@@ -76,6 +77,9 @@ export default function SignalsPanel({ token }: { token: string }) {
       {data.xApiUsage && <p className={styles.note}>
         X API：{data.xApiUsage.enabled ? "読取のみ有効" : data.xApiUsage.requested ? "設定不足で停止" : "OFF"}
         {` · 24時間 ${data.xApiUsage.attemptsLast24Hours}/${data.xApiUsage.dailyLimit}回`}
+        {` · ${data.xApiUsage.sourceCount}発信元・目標株価投稿のみ`}
+        {` · 設定上最大 ${data.xApiUsage.configuredMaxRequestsPerDay}回/日`}
+        {data.xApiUsage.budgetCapped ? ` · ローカル上限 ${data.xApiUsage.localMaxRequestsPerDay}回/日` : ""}
         {data.xApiUsage.limitReached ? ` · 上限到達（再開 ${timeLabel(data.xApiUsage.nextAvailableAt)}）` : ""}
         {" · 自動公開なし"}
       </p>}
