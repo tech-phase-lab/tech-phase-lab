@@ -21,6 +21,7 @@ export type MonitorState = {
     lastSuccessAt?: string | null; lastErrorCode?: string | null;
     budgetTokensLast24Hours?: number; measuredTokensLast24Hours?: number;
     tokenLimitReached?: boolean; tokenBudgetBlocked?: number;
+    nextRetryAt?: string | null; nextRetryWaitSeconds?: number | null;
   };
   backup?: {
     enabled: boolean; intervalSeconds: number; graceSeconds?: number; retention: number;

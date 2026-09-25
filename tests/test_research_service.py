@@ -2027,6 +2027,21 @@ class ResearchServiceTests(unittest.TestCase):
             result = app.process_generation_job()
         self.assertEqual(result["status"], "retry")
         self.assertEqual(result["retrySeconds"], 7200)
+        with monitor.connect(self.db_path) as db:
+            stats = monitor.generation_queue_stats(db, 20, 100_000)
+        self.assertIsNotNone(stats["nextRetryAt"])
+        self.assertGreaterEqual(stats["nextRetryWaitSeconds"], 7195)
+        self.assertLessEqual(stats["nextRetryWaitSeconds"], 7200)
+        with monitor.connect(self.db_path) as db:
+            too_far = (datetime.now(timezone.utc) + timedelta(days=30)).isoformat()
+            db.execute(
+                "UPDATE brief_generation_jobs SET next_attempt_at=? WHERE url=?",
+                (too_far, url),
+            )
+            db.commit()
+            invalid = monitor.generation_queue_stats(db, 20, 100_000)
+        self.assertIsNone(invalid["nextRetryAt"])
+        self.assertIsNone(invalid["nextRetryWaitSeconds"])
 
     def test_token_budget_blocks_before_generation_and_uses_measured_total_after_success(self):
         url = "https://nebius.com/newsroom/new-release"

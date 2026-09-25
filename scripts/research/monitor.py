@@ -3167,6 +3167,24 @@ def generation_queue_stats(db, daily_limit, token_limit):
       SELECT count(*) FROM brief_generation_jobs
       WHERE status IN ('queued','retry') AND reserved_tokens>?
     """, (remaining_tokens,)).fetchone()[0]
+    current = datetime.now(timezone.utc)
+    retry_times = []
+    for row in db.execute("""
+      SELECT next_attempt_at FROM brief_generation_jobs
+      WHERE status='retry' AND next_attempt_at IS NOT NULL
+      ORDER BY next_attempt_at LIMIT 1000
+    """):
+        try:
+            retry_at = datetime.fromisoformat(str(row["next_attempt_at"]).replace("Z", "+00:00"))
+            if retry_at.tzinfo is None:
+                retry_at = retry_at.replace(tzinfo=timezone.utc)
+            retry_at = retry_at.astimezone(timezone.utc)
+        except (TypeError, ValueError, OverflowError):
+            continue
+        wait = (retry_at - current).total_seconds()
+        if wait <= MAX_ACCESS_BACKOFF_SECONDS:
+            retry_times.append((retry_at, max(0, int(wait + 0.999))))
+    next_retry_at, next_retry_wait = min(retry_times, default=(None, None))
     return {
         "waitingBody": counts.get("waiting-body", 0), "queued": counts.get("queued", 0),
         "running": counts.get("running", 0), "retry": counts.get("retry", 0),
@@ -3178,6 +3196,8 @@ def generation_queue_stats(db, daily_limit, token_limit):
         "tokenBudgetBlocked": budget_blocked,
         "lastAttemptAt": attempt["last_attempt_at"], "lastSuccessAt": attempt["last_success_at"],
         "lastErrorCode": error["error_code"] if error else None,
+        "nextRetryAt": next_retry_at.isoformat(timespec="milliseconds") if next_retry_at else None,
+        "nextRetryWaitSeconds": next_retry_wait,
     }
 
 
