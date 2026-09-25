@@ -93,6 +93,12 @@ earliest bounded retry time for each aggregate. This keeps a long access-control
 backoff visible even when a shorter timeout retry is due first. It excludes
 invalid or more-than-seven-day future values and never exposes which route
 failed.
+For HTML indexes, currently failed child articles are also counted separately
+by the same fixed error categories. Their due, deferred and unscheduled retry
+counts and earliest bounded retry time are reported overall and by category.
+Successful children are excluded, stored state is bounded before aggregation,
+and no child URL, title, HTTP status, validator or raw error reaches this
+operational summary.
 Route state transitions are retained privately across worker restarts and the
 preview exposes only rolling 24-hour totals for recovery, renewed failure and
 error-category change, plus the most recent transition kind and time. A

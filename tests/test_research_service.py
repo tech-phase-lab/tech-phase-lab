@@ -1471,6 +1471,14 @@ class ResearchServiceTests(unittest.TestCase):
             state == {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None}
             for state in retry["byErrorKind"].values()
         ))
+        articles = summary["articleRetrieval"]
+        self.assertEqual(articles["error"], 0)
+        self.assertEqual(sum(articles["errorKinds"].values()), 0)
+        self.assertEqual(
+            {key: articles["retry"][key]
+             for key in ("due", "deferred", "unscheduled", "nextAt")},
+            {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
+        )
         self.assertEqual(summary["publicationEvidence"]["total"], 0)
         self.assertEqual(summary["routeTransitions24Hours"], {
             "recoveries": 0, "failures": 0, "changes": 0,

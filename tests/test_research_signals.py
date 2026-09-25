@@ -150,6 +150,19 @@ class SignalTests(unittest.TestCase):
                 excluded[0]["id"], "2026-09-25T06:59:00+00:00",
                 "2026-09-25T06:59:00+00:00", "2026-09-25T07:01:00+00:00",
             ))
+            self.db.execute("INSERT INTO signal_index_state VALUES(?,?)", (
+                official[0]["id"], json.dumps({"initialized": True, "children": {
+                    "https://private.invalid/restricted": {
+                        "error": "http-403", "next_check": "2026-09-25T07:04:00+00:00",
+                    },
+                    "https://private.invalid/due": {
+                        "error": "timeout", "next_check": "2026-09-25T06:59:00+00:00",
+                    },
+                    "https://private.invalid/success": {
+                        "error": None, "next_check": "2026-09-25T07:05:00+00:00",
+                    },
+                }}),
+            ))
             events = [
                 (official[0]["id"], "timestamp", "2026-09-25T06:00:00+00:00", None),
                 (official[0]["id"], "missing", "2099-01-01T00:00:00+00:00", "not-a-date"),
@@ -198,6 +211,24 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(summary["publicationEvidence"], {
             "total": 3, "timestamp": 1, "dateOnly": 1, "missing": 1,
         })
+        self.assertEqual(summary["articleRetrieval"]["error"], 2)
+        self.assertEqual(summary["articleRetrieval"]["errorKinds"], {
+            "accessRestricted": 1, "rateLimited": 0, "timeout": 1,
+            "server": 0, "invalidResponse": 0,
+            "articlePartial": 0, "other": 0,
+        })
+        article_retry = summary["articleRetrieval"]["retry"]
+        self.assertEqual(
+            {key: article_retry[key] for key in ("due", "deferred", "unscheduled", "nextAt")},
+            {"due": 1, "deferred": 1, "unscheduled": 0,
+             "nextAt": "2026-09-25T07:04:00+00:00"},
+        )
+        self.assertEqual(article_retry["byErrorKind"]["timeout"]["due"], 1)
+        self.assertEqual(
+            article_retry["byErrorKind"]["accessRestricted"],
+            {"due": 0, "deferred": 1, "unscheduled": 0,
+             "nextAt": "2026-09-25T07:04:00+00:00"},
+        )
         self.assertEqual(summary["routeTransitions24Hours"], {
             "recoveries": 0, "failures": 0, "changes": 0,
             "lastOutcome": None, "lastOccurredAt": None,
@@ -206,6 +237,25 @@ class SignalTests(unittest.TestCase):
         self.assertNotIn("https://", serialized)
         self.assertNotIn("palantir", serialized.lower())
         self.assertNotIn("http-403", serialized)
+        self.assertNotIn("private.invalid", serialized)
+
+    def test_operational_summary_ignores_malformed_or_oversized_article_state(self):
+        official = [self.doc, next(
+            source for source in signals.SOURCES
+            if source["id"] == "palantir-shareholder-letters"
+        )]
+        signals.schema(self.db)
+        with self.db:
+            self.db.execute("INSERT INTO signal_index_state VALUES(?,?)", (
+                official[0]["id"], "not-json",
+            ))
+            self.db.execute("INSERT INTO signal_index_state VALUES(?,?)", (
+                official[1]["id"], " " * 2_000_001,
+            ))
+        summary = signals.operational_summary(self.db, sources=official)
+        self.assertEqual(summary["articleRetrieval"]["error"], 0)
+        self.assertEqual(sum(summary["articleRetrieval"]["errorKinds"].values()), 0)
+        self.assertEqual(summary["articleRetrieval"]["retry"]["unscheduled"], 0)
 
     def test_signal_error_kind_uses_fixed_aggregate_categories(self):
         cases = {

@@ -746,14 +746,36 @@ def operational_summary(db, sources=SOURCES, reference=None):
         "accessRestricted", "rateLimited", "timeout", "server",
         "invalidResponse", "articlePartial", "other",
     )}
-    retry_by_kind = {
-        kind: {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None}
-        for kind in error_kinds
-    }
-    retry = {
-        "due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None,
-        "byErrorKind": retry_by_kind,
-    }
+
+    def retry_summary():
+        return {
+            "due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None,
+            "byErrorKind": {
+                kind: {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None}
+                for kind in error_kinds
+            },
+        }
+
+    def record_retry(summary, error_kind, value):
+        kind_retry = summary["byErrorKind"][error_kind]
+        next_check = retry_value(value)
+        if next_check is None:
+            summary["unscheduled"] += 1
+            kind_retry["unscheduled"] += 1
+        elif next_check <= current:
+            summary["due"] += 1
+            kind_retry["due"] += 1
+        else:
+            summary["deferred"] += 1
+            kind_retry["deferred"] += 1
+            next_at = summary["nextAt"]
+            if next_at is None or next_check.isoformat() < next_at:
+                summary["nextAt"] = next_check.isoformat()
+            kind_next_at = kind_retry["nextAt"]
+            if kind_next_at is None or next_check.isoformat() < kind_next_at:
+                kind_retry["nextAt"] = next_check.isoformat()
+
+    retry = retry_summary()
     route_counts = {"configured": len(official), "checked": 0, "fresh": 0,
                     "stale": 0, "error": 0, "pending": 0,
                     "errorKinds": error_kinds, "retry": retry}
@@ -768,23 +790,7 @@ def operational_summary(db, sources=SOURCES, reference=None):
             route_counts["error"] += 1
             error_kind = signal_error_kind(row["error"])
             error_kinds[error_kind] += 1
-            kind_retry = retry_by_kind[error_kind]
-            next_check = retry_value(row["next_check_at"])
-            if next_check is None:
-                retry["unscheduled"] += 1
-                kind_retry["unscheduled"] += 1
-            elif next_check <= current:
-                retry["due"] += 1
-                kind_retry["due"] += 1
-            else:
-                retry["deferred"] += 1
-                kind_retry["deferred"] += 1
-                next_at = retry["nextAt"]
-                if next_at is None or next_check.isoformat() < next_at:
-                    retry["nextAt"] = next_check.isoformat()
-                kind_next_at = kind_retry["nextAt"]
-                if kind_next_at is None or next_check.isoformat() < kind_next_at:
-                    kind_retry["nextAt"] = next_check.isoformat()
+            record_retry(retry, error_kind, row["next_check_at"])
             continue
         succeeded = timestamp_value(row["succeeded_at"])
         if not succeeded:
@@ -796,6 +802,12 @@ def operational_summary(db, sources=SOURCES, reference=None):
         else:
             route_counts["stale"] += 1
 
+    article_error_kinds = {kind: 0 for kind in error_kinds}
+    article_retrieval = {
+        "error": 0,
+        "errorKinds": article_error_kinds,
+        "retry": retry_summary(),
+    }
     evidence = {"total": 0, "timestamp": 0, "dateOnly": 0, "missing": 0}
     transitions = {
         "recoveries": 0, "failures": 0, "changes": 0,
@@ -803,6 +815,28 @@ def operational_summary(db, sources=SOURCES, reference=None):
     }
     if configured:
         placeholders = ",".join("?" for _ in configured)
+        for row in db.execute(f"""SELECT body FROM signal_index_state
+          WHERE source_id IN ({placeholders})""", tuple(configured)):
+            try:
+                if len(row["body"]) > 2_000_000:
+                    continue
+                state = json.loads(row["body"])
+                if not isinstance(state, dict):
+                    continue
+                children = state.get("children", {})
+            except (TypeError, ValueError):
+                continue
+            if not isinstance(children, dict):
+                continue
+            for index, child in enumerate(children.values()):
+                if index >= 1000:
+                    break
+                if not isinstance(child, dict) or not child.get("error"):
+                    continue
+                error_kind = signal_error_kind(child["error"])
+                article_retrieval["error"] += 1
+                article_error_kinds[error_kind] += 1
+                record_retry(article_retrieval["retry"], error_kind, child.get("next_check"))
         rows = db.execute(f"""SELECT published_at,published_on FROM signal_events
           WHERE source_id IN ({placeholders})""", tuple(configured)).fetchall()
         for row in rows:
@@ -834,7 +868,8 @@ def operational_summary(db, sources=SOURCES, reference=None):
         if latest:
             transitions["lastOutcome"] = latest[1]
             transitions["lastOccurredAt"] = latest[0].isoformat()
-    return {"routes": route_counts, "publicationEvidence": evidence,
+    return {"routes": route_counts, "articleRetrieval": article_retrieval,
+            "publicationEvidence": evidence,
             "routeTransitions24Hours": transitions}
 
 

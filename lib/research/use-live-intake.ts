@@ -156,6 +156,21 @@ export type MonitorState = {
         >>;
       };
     };
+    articleRetrieval?: {
+      error: number;
+      errorKinds: {
+        accessRestricted: number; rateLimited: number; timeout: number;
+        server: number; invalidResponse: number; articlePartial: number; other: number;
+      };
+      retry: {
+        due: number; deferred: number; unscheduled: number; nextAt: string | null;
+        byErrorKind?: Partial<Record<
+          "accessRestricted" | "rateLimited" | "timeout" | "server" |
+          "invalidResponse" | "articlePartial" | "other",
+          { due: number; deferred: number; unscheduled: number; nextAt: string | null }
+        >>;
+      };
+    };
     publicationEvidence: {
       total: number; timestamp: number; dateOnly: number; missing: number;
     };
