@@ -1,7 +1,7 @@
 .panel{margin:0 0 23px;padding:20px;border:1px solid #2e5249;border-radius:9px;background:linear-gradient(145deg,#10221f,#111b26);color:#e6f2ec}
-.head{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:15px}
 .head h3{margin:5px 0 0;font-size:19px}.kicker{color:#85d6b4;font-size:11px;letter-spacing:.08em;font-weight:700}
-.refresh,.context,.updated{color:#a9bcb8;font-size:12px}.context{line-height:1.7;margin:15px 0}
+.refresh,.updated{color:#a9bcb8;font-size:12px}
 .state{padding:15px;color:#b8cec5;border-top:1px solid #36504c;font-size:13px}
 .list{display:grid;gap:9px}.card{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid #334c48;border-radius:6px;background:#14252b}
 .ticker{font-weight:700;color:#a7efcc;background:#214138;border-radius:4px;padding:6px 9px;min-width:58px;text-align:center}
