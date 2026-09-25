@@ -182,7 +182,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
       </aside>
 
       <main id="research-main" className={styles.main}>
-        <div className={styles.previewNotice}><span>{t("検証版", "PREVIEW")}</span><p>{t("2026年5〜9月の公式発表を使った過去事例です。公式発表の自動監視は運営環境で検証中ですが、この画面の自動更新と会員配信はまだ開始していません。", "Historical examples from May–September 2026. Official-source monitoring is being tested in operations, while automatic updates and member delivery remain off on this screen.")}</p></div>
+        <div className={styles.previewNotice}><span>{t("検証版", "PREVIEW")}</span><p>{t("下の検証レポートは2026年5〜9月の過去事例です。目標株価欄のみ監視中のX投稿を自動更新しています。公式発表の自動レポートと会員配信は開始していません。", "The research reports below are historical examples from May–September 2026. Only the X price target panel updates automatically. Automated reports from official releases and member delivery are not live.")}</p></div>
 
         <div className={styles.heading}><div><p className={styles.eyebrow}>{tab === "home" ? t("ホーム / リサーチデスク", "HOME / THE RESEARCH DESK") : "THE RESEARCH DESK"}</p><h1>{tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : tab === "changes" ? t("何が変わった？を、根拠付きで。", "See what changed. Follow the evidence.") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1><p>{t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p></div><div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>2026.09.19</strong></div></div>
 
