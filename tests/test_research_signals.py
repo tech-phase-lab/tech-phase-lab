@@ -88,6 +88,18 @@ class SignalTests(unittest.TestCase):
         self.assertIn("Follow spot price", items[0]["diff"])
         self.assertIsNone(items[0]["publishedAt"])
 
+    def test_unchanged_document_backfills_date_only_without_new_event(self):
+        self.assertEqual(self.check_feed(feed())["events"], 1)
+        items = signals.parse(self.feed, feed(), self.tickers)
+        items[0]["publishedOn"] = "2026-09-23"
+        count = signals.save(
+            self.db, self.feed, items, {}, signals.stamp(), "backfill-test", 1
+        )
+        queue = signals.queue(self.db)
+        self.assertEqual(count, 0)
+        self.assertEqual(queue["counts"]["all"], 1)
+        self.assertEqual(queue["items"][0]["publishedOn"], "2026-09-23")
+
     def test_persisted_validators_and_304(self):
         self.check_feed(feed(), etag='"v1"')
         self.db.close()

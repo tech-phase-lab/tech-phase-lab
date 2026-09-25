@@ -436,6 +436,14 @@ def save(db, source, items, response, checked, config_sha, duration):
                     evidence_excerpt(item), diff, int(item["truncated"]),
                 ))
                 inserted += cursor.rowcount
+            if item.get("publishedOn"):
+                # Enrich an unchanged historical baseline after this column is
+                # deployed, without creating a new event or rewriting evidence.
+                db.execute("""UPDATE signal_events SET published_on=?
+                  WHERE source_id=? AND url=? AND sha=?
+                  AND (published_on IS NULL OR published_on='')""", (
+                    item["publishedOn"], source["id"], item["url"], digest,
+                ))
             # Retain document bodies privately for meaningful same-URL changes.
             db.execute("""INSERT INTO signal_documents VALUES(?,?,?,?,?,?,?)
               ON CONFLICT(source_id,url) DO UPDATE SET sha=excluded.sha,title=excluded.title,
