@@ -16,13 +16,15 @@ class XApiTests(unittest.TestCase):
     def setUp(self):
         self.source = next(s for s in signals.SOURCES if s["id"] == "x-tipranks")
 
-    def test_x_source_scope_matches_the_22_configured_company_roster(self):
+    def test_x_source_scope_adds_three_x_only_pilot_companies(self):
         x_sources = [source for source in signals.SOURCES if source.get("format") == "x-api"]
         self.assertEqual({source["accounts"][0].lower() for source in x_sources},
                          {"tipranks", "theflynews", "wallstengine"})
-        self.assertEqual({ticker for source in x_sources for ticker in source["tickers"]}, set(monitor.PROVIDERS))
+        self.assertEqual({ticker for source in x_sources for ticker in source["tickers"]},
+                         set(monitor.PROVIDERS) | {"LITE", "COHR", "VST"})
         for source in x_sources:
             self.assertLessEqual(len(source["query"]), 512)
+            self.assertEqual(source["extraTickers"], ["LITE", "COHR", "VST"])
             self.assertIn('"price target"', source["query"])
             self.assertIn('"target price"', source["query"])
             self.assertIn('"PT to"', source["query"])
@@ -98,6 +100,17 @@ class XApiTests(unittest.TestCase):
         self.assertEqual([item["url"] for item in x_api.parse_response(source, payload, list(monitor.PROVIDERS))],
                          ["https://x.com/TipRanks/status/3001", "https://x.com/TipRanks/status/3003",
                           "https://x.com/TipRanks/status/3004"])
+
+    def test_x_only_tickers_accept_targets_and_earnings_but_not_other_posts(self):
+        payload = {"data": [
+            {"id": "4101", "author_id": "1", "text": "$LITE price target raised to $400"},
+            {"id": "4102", "author_id": "1", "text": "$COHR reports quarterly results"},
+            {"id": "4103", "author_id": "1", "text": "$VST opens a new power plant"},
+            {"id": "4104", "author_id": "1", "text": "$XYZ price target raised to $20"},
+        ], "includes": {"users": [{"id": "1", "username": "TipRanks"}]}}
+        items = x_api.parse_response(self.source, payload, list(monitor.PROVIDERS))
+        self.assertEqual([list(item["matches"]) for item in items], [["LITE"], ["COHR"]])
+        self.assertIn("VST", signals.X_EXTRA_TICKERS)
 
     def test_direct_adapter_call_fails_closed(self):
         with patch.dict(os.environ, {"X_API_ENABLED": "false", "X_BEARER_TOKEN": "secret"}, clear=False):

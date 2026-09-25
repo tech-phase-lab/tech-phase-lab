@@ -42,6 +42,11 @@ def parse_response(source, payload, tickers):
                 or username.lower() not in ALLOWED_ACCOUNT_NAMES):
             continue
         matches = signals_match(text, tickers)
+        # Keep X-only pilot tickers separate from the 22-company research roster.
+        for ticker in source.get("extraTickers", []):
+            if (ticker in source.get("tickers", []) and
+                    re.search(r"(?<!\w)\$" + re.escape(ticker) + r"(?!\w)", text, re.I)):
+                matches[ticker] = ["$" + ticker]
         is_earnings = bool(EARNINGS_PATTERN.search(text) and
                            not EARNINGS_PREVIEW_PATTERN.search(text))
         if not matches or not (TARGET_PATTERN.search(text) or is_earnings):

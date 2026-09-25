@@ -37,6 +37,8 @@ ALIASES.update({
     "SKHY": ["SK hynix", "SKハイニックス"], "GEV": ["GE Vernova"],
     "CRDO": ["Credo Technology"],
 })
+X_EXTRA_TICKERS = {ticker for source in SOURCES if source.get("format") == "x-api"
+                   for ticker in source.get("extraTickers", [])}
 
 
 def stamp():
@@ -533,7 +535,8 @@ def check(db, source, tickers, transport=None):
 
 def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
     schema(db)
-    if view not in {"all", "new", "changed", "baseline"} or (ticker and ticker not in ALIASES):
+    if view not in {"all", "new", "changed", "baseline"} or (
+            ticker and ticker not in ALIASES and ticker not in X_EXTRA_TICKERS):
         raise ValueError("invalid-signal-filter")
     configured = {source["id"]: source for source in sources}
     items = []
