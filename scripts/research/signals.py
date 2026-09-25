@@ -249,11 +249,19 @@ def x_api_daily_limit():
 def x_api_request_plan(sources=SOURCES):
     """Return a query-free upper bound from configured polling intervals."""
     x_sources = [source for source in sources if source.get("format") == "x-api"]
-    configured_max = sum(
-        (86400 + max(30, int(source["intervalSeconds"])) - 1)
-        // max(30, int(source["intervalSeconds"]))
-        for source in x_sources
-    )
+    configured_max = 0
+    for source in x_sources:
+        normal = max(30, int(source["intervalSeconds"]))
+        configured_max += (86400 + normal - 1) // normal
+        window = source.get("fastWindow")
+        if window:
+            start = datetime.fromisoformat(window["startAt"].replace("Z", "+00:00"))
+            end = datetime.fromisoformat(window["endAt"].replace("Z", "+00:00"))
+            duration = max(0, min(86400, (end - start).total_seconds()))
+            fast = max(30, int(window["intervalSeconds"]))
+            if fast < normal and duration:
+                # Include boundary polls so the estimate remains conservative.
+                configured_max += max(0, -(-int(duration) // fast) - int(duration) // normal + 2)
     daily_limit = x_api_daily_limit()
     return {
         "sourceCount": len(x_sources),
@@ -262,6 +270,17 @@ def x_api_request_plan(sources=SOURCES):
         "localMaxRequestsPerDay": min(configured_max, daily_limit),
         "budgetCapped": configured_max > daily_limit,
     }
+
+
+def source_interval_seconds(source, checked_at):
+    normal = max(30, int(source["intervalSeconds"]))
+    window = source.get("fastWindow")
+    if window:
+        start = datetime.fromisoformat(window["startAt"].replace("Z", "+00:00"))
+        end = datetime.fromisoformat(window["endAt"].replace("Z", "+00:00"))
+        if start <= checked_at < end:
+            return max(30, min(normal, int(window["intervalSeconds"])))
+    return normal
 
 
 def x_api_usage(db, now=None, sources=SOURCES):
@@ -367,7 +386,8 @@ def save(db, source, items, response, checked, config_sha, duration):
               text=excluded.text,last_seen_at=excluded.last_seen_at""", (
                 source["id"], item["url"], digest, item["title"], item["text"], checked, checked,
             ))
-        next_check = (datetime.fromisoformat(checked) + timedelta(seconds=max(30, source["intervalSeconds"]))).isoformat()
+        next_check = (datetime.fromisoformat(checked) + timedelta(
+            seconds=source_interval_seconds(source, datetime.fromisoformat(checked)))).isoformat()
         db.execute("""INSERT INTO signal_routes(id,initialized,checked_at,succeeded_at,next_check_at,
           failures,error,etag,last_modified,config_sha,last_duration_ms,matched_items)
           VALUES(?,1,?,?,?,0,NULL,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET
@@ -410,7 +430,7 @@ def check(db, source, tickers, transport=None):
                 db.execute("""UPDATE signal_routes SET checked_at=?,succeeded_at=?,next_check_at=?,
                   failures=0,error=NULL,last_duration_ms=? WHERE id=?""", (
                     checked, checked, (datetime.fromisoformat(checked) + timedelta(
-                        seconds=max(30, source["intervalSeconds"]))).isoformat(),
+                        seconds=source_interval_seconds(source, datetime.fromisoformat(checked)))).isoformat(),
                     round((time.monotonic() - started) * 1000), source["id"],
                 ))
             return {"source": source["id"], "status": "unchanged", "events": 0}

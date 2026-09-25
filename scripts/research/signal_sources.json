@@ -403,6 +403,11 @@
       "x.com"
     ],
     "intervalSeconds": 120,
+    "fastWindow": {
+      "startAt": "2026-09-30T19:30:00Z",
+      "endAt": "2026-09-30T20:50:00Z",
+      "intervalSeconds": 60
+    },
     "maxResults": 10,
     "reuse": "review-required"
   },
@@ -444,6 +449,11 @@
       "x.com"
     ],
     "intervalSeconds": 120,
+    "fastWindow": {
+      "startAt": "2026-09-30T19:30:00Z",
+      "endAt": "2026-09-30T20:50:00Z",
+      "intervalSeconds": 60
+    },
     "maxResults": 10,
     "reuse": "review-required"
   },
@@ -458,6 +468,11 @@
     "tickers": ["MU", "SKHY", "SNDK", "NBIS", "NVDA", "AMD", "AVGO", "ARM", "TSM", "ASML", "MRVL", "ANET", "CRDO", "CRWV", "VRT", "GEV", "DELL", "PLTR", "MSFT", "BE", "GOOGL", "ORCL"],
     "allowedHosts": ["x.com"],
     "intervalSeconds": 120,
+    "fastWindow": {
+      "startAt": "2026-09-30T19:30:00Z",
+      "endAt": "2026-09-30T20:50:00Z",
+      "intervalSeconds": 60
+    },
     "maxResults": 10,
     "reuse": "review-required"
   }

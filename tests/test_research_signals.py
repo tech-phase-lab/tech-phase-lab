@@ -157,6 +157,28 @@ class SignalTests(unittest.TestCase):
         self.assertNotIn("secret-query", serialized)
         self.assertNotIn("example.invalid", serialized)
 
+    def test_mu_earnings_window_increases_polling_only_during_release(self):
+        sources = [source for source in signals.SOURCES if source.get("format") == "x-api"]
+        with patch.dict(os.environ, {"X_API_DAILY_REQUEST_LIMIT": "2300"}):
+            plan = signals.x_api_request_plan(sources)
+        self.assertEqual(plan["configuredMaxRequestsPerDay"], 2286)
+        self.assertFalse(plan["budgetCapped"])
+        source = sources[0]
+        for moment, expected in [
+            ("2026-09-30T19:29:59+00:00", 120),
+            ("2026-09-30T19:30:00+00:00", 60),
+            ("2026-09-30T20:49:59+00:00", 60),
+            ("2026-09-30T20:50:00+00:00", 120),
+        ]:
+            with self.subTest(moment=moment):
+                self.assertEqual(signals.source_interval_seconds(
+                    source, datetime.fromisoformat(moment)), expected)
+        with patch.object(signals, "stamp", return_value="2026-09-30T19:35:00+00:00"):
+            signals.check(self.db, source, self.tickers, lambda *_: {"_items": []})
+        next_at = self.db.execute("SELECT next_check_at FROM signal_routes WHERE id=?",
+                                  (source["id"],)).fetchone()[0]
+        self.assertEqual(next_at, "2026-09-30T19:36:00+00:00")
+
     def test_x_api_budget_block_sets_next_check_without_transport(self):
         source = {"id": "x-test", "format": "x-api", "intervalSeconds": 120,
                   "name": "X test", "kind": "publisher-update", "reuse": "review-required"}
