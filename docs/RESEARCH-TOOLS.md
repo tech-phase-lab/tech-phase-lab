@@ -35,6 +35,11 @@ rolling 24-hour request ceiling. The private review screen exposes only this
 aggregate usage and next available time. This local guard does not replace the
 provider-side spending cap, and X-derived items remain private and unreviewed
 until a human verifies them; they are never auto-published.
+The review screen also derives a conservative 24-hour request ceiling from the
+configured polling intervals and shows it beside the enforced local cap. This
+is a request-count bound, not a currency estimate or delivery-latency promise;
+provider billing and provider-side caps remain authoritative. X queries and the
+post filter are restricted to analyst price-target language.
 
 AI-assisted news drafts retain their AI provenance after human edits and
 require a separate human-verification acknowledgement before approval. The
