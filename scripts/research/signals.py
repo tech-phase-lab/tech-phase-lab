@@ -642,6 +642,54 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
             "ticker": ticker, "generatedAt": stamp(), "publicationEnabled": False}
 
 
+PRICE_TARGET_TEXT = re.compile(
+    r"price target (?:raised|lowered|cut|hiked) to \$(\d+(?:\.\d+)?) from \$(\d+(?:\.\d+)?)",
+    re.I,
+)
+PRICE_TARGET_FIRM = re.compile(
+    r"(?:at|by) (BofA|BNP Paribas|Citi|Citizens|KeyBanc|Stifel|UBS|JPMorgan|Seaport Research)\b",
+    re.I,
+)
+
+
+def public_price_targets(db, sources=SOURCES, now=None, limit=20):
+    """Publish only recent structured observations, never the X post body."""
+    schema(db)
+    now = now or datetime.now(timezone.utc)
+    approved = {s["id"]: s for s in sources if s.get("format") == "x-api"}
+    items = []
+    rows = db.execute("""SELECT id,source_id,url,title,tickers_json,published_at,observed_at
+                         FROM signal_events WHERE event_kind='new' AND source_id LIKE 'x-%'
+                         ORDER BY observed_at DESC,id DESC LIMIT 300""").fetchall()
+    for row in rows:
+        source = approved.get(row["source_id"])
+        if not source:
+            continue
+        try:
+            published = datetime.fromisoformat(row["published_at"].replace("Z", "+00:00"))
+            observed = datetime.fromisoformat(row["observed_at"].replace("Z", "+00:00"))
+            tickers = json.loads(row["tickers_json"])
+            match = PRICE_TARGET_TEXT.search(row["title"].replace(",", ""))
+            firm = PRICE_TARGET_FIRM.search(row["title"])
+            url = safe_url(row["url"], source)
+            old, new = (float(match.group(2)), float(match.group(1))) if match else (0, 0)
+            if (published.tzinfo is None or observed.tzinfo is None or
+                    not timedelta(0) <= now - published <= timedelta(hours=24) or
+                    not timedelta(0) <= observed - published <= timedelta(minutes=15) or
+                    not match or not firm or not isinstance(tickers, list) or len(tickers) != 1 or
+                    tickers[0] not in ALIASES and tickers[0] not in X_EXTRA_TICKERS or
+                    not 0 < old <= 100000 or not 0 < new <= 100000 or old == new):
+                continue
+        except (ValueError, TypeError, AttributeError, OverflowError):
+            continue
+        items.append({"id": row["id"], "ticker": tickers[0], "firm": firm.group(1),
+                      "previous": old, "latest": new, "source": source["name"], "url": url,
+                      "publishedAt": published.isoformat(), "observedAt": observed.isoformat()})
+        if len(items) >= max(1, min(limit, 30)):
+            break
+    return {"ok": True, "items": items, "generatedAt": stamp()}
+
+
 def signal_error_kind(error):
     """Collapse a private route error into one stable aggregate category."""
     value = str(error or "")

@@ -39,6 +39,27 @@ class SignalTests(unittest.TestCase):
     def check_feed(self, content, **response):
         return signals.check(self.db, self.feed, self.tickers, lambda *_: {"body": content, **response})
 
+    def test_public_targets_only_recent_parseable_x_facts(self):
+        signals.schema(self.db)
+        reference = datetime(2026, 9, 25, 12, tzinfo=timezone.utc)
+        for index, (title, published, observed) in enumerate([
+            ("AMD price target raised to $720 from $620 at BofA", reference - timedelta(minutes=5), reference - timedelta(minutes=3)),
+            ("AMD price target raised to $750 from $620 at BofA", reference - timedelta(days=3), reference - timedelta(minutes=3)),
+            ("AMD price target raised to $760 from $620 at BofA", reference - timedelta(hours=2), reference - timedelta(minutes=3)),
+            ("AMD price target raised to $800 from $620", reference - timedelta(minutes=5), reference - timedelta(minutes=3)),
+        ]):
+            self.db.execute("""INSERT INTO signal_events(source_id,url,sha,previous_sha,title,tickers_json,
+              matches_json,event_kind,published_at,published_on,observed_at,excerpt,diff,truncated)
+              VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,0)""", (
+                "x-tipranks", f"https://x.com/TipRanks/status/{index + 1}", str(index), "", title,
+                '["AMD"]', "{}", "new", published.isoformat(), None, observed.isoformat(),
+                "private raw post text", "",
+            ))
+        result = signals.public_price_targets(self.db, now=reference)
+        self.assertEqual(len(result["items"]), 1)
+        self.assertEqual((result["items"][0]["previous"], result["items"][0]["latest"]), (620, 720))
+        self.assertNotIn("private raw post text", str(result))
+
     def test_signal_route_errors_have_safe_specific_diagnostic_codes(self):
         cases = {
             "unexpected-signal-content-type": "signal-content-type",

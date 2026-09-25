@@ -412,6 +412,10 @@ class AutomaticMonitor:
         return {**result, "enabled": self.signals_enabled, "tickers": self.tickers,
                 "workerAlive": self.signals_thread.is_alive()}
 
+    def public_price_targets(self):
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            return signals.public_price_targets(db)
+
     def run_signals(self):
         if not self.signals_enabled:
             return
@@ -1473,13 +1477,16 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "annual-brief-unavailable"})
             return
-        if path not in {"/snapshot", "/live"}:
+        if path not in {"/snapshot", "/live", "/price-targets"}:
             self.send_json(404, {"ok": False, "error": "not-found"})
             return
         if not self.authorized():
             self.send_json(401, {"ok": False, "error": "unauthorized"})
             return
         try:
+            if path == "/price-targets":
+                self.send_json(200, self.app.public_price_targets())
+                return
             snapshot = self.app.public_snapshot()
             if path == "/snapshot":
                 self.send_json(200, snapshot)
