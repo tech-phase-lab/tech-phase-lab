@@ -1591,3 +1591,34 @@ No calendar event changed.
 Continue with CRDO, CRM, CRWV, GOOGL, KLAC, LITE, MRVL, NBIS, NOW and NVDA.
 Empty dynamic sections, historical-only pages and transport failures remain
 inconclusive and must not be promoted to forecast dates.
+
+## Fifty-fifth company batch reviewed on 2026-09-25
+
+The next ten pending entries were rechecked against their first-party schedule,
+news or investor-relations pages. None supplied a confirmed future earnings
+date or an explicit no-events statement. Their existing same-day
+`lastAttemptedOn` values remain unchanged, `lastCheckedOn` remains null and no
+forecast date is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| KLAC | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| LITE | Pending | The official page exposes empty Latest Events and Latest Presentation sections plus archive headings, without a dated future item or explicit no-events statement. |
+| MRVL | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| NBIS | Pending | The official Investor Hub still lists its Goldman Sachs and Citi conference appearances as the latest events, without a future earnings announcement or explicit no-events statement. |
+| NOW | Pending | The official page exposes only archived-event and archived-presentation sections, without a dated upcoming earnings item or explicit no-events statement. |
+| NVDA | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| ORCL | Pending | The official page exposes empty Featured Event, Upcoming events and Archived Events sections without an explicit no-events statement. |
+| PANW | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| PLTR | Pending | The official Events page exposes investor-relations navigation without an inspectable dated schedule state or explicit no-events statement. |
+| SKHY | Pending | The official English IR list still ends with the August 19 shareholder-return announcement and July 29 second-quarter results; no future earnings announcement is present. |
+
+The BLS October schedule was rechecked on 2026-09-25 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar, last updated September 16, still
+lists the October 27-28 and December 8-9 meetings without future statement or
+press-conference clock times. No calendar event changed.
+
+Continue with SNOW, VRT, AAPL, AMZN, ANET, ARM, AVGO, BE, COHR and CRDO.
+Empty dynamic sections, historical-only pages and transport failures remain
+inconclusive and must not be promoted to forecast dates.
