@@ -246,10 +246,13 @@ def collect(source, previous, tickers, request):
             delay = 3600
         except Exception as exc:
             failures = min(10, entry.get('failures', 0) + 1)
-            entry.update(error=monitor.source_error_code(exc), failures=failures)
-            delay = min(3600, 120 * 2 ** failures)
-            if getattr(exc, 'code', None) == 429:
-                delay = 86400
+            error = monitor.source_error_code(exc)
+            entry.update(error=error, failures=failures)
+            retry_hint = monitor.retry_after_seconds(exc, datetime.fromisoformat(checked))
+            delay = max(
+                min(3600, 120 * 2 ** failures),
+                monitor.source_retry_seconds(error, failures, retry_hint),
+            )
         entry.update(checked=checked, next_check=(datetime.fromisoformat(checked) + timedelta(seconds=delay)).isoformat())
     errors = sum(bool(value.get('error')) for value in children.values())
     waiting = sum(not value.get('succeeded') for value in children.values())

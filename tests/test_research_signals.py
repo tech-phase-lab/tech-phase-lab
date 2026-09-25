@@ -286,12 +286,31 @@ class SignalTests(unittest.TestCase):
     def test_failed_initial_fetch_does_not_establish_baseline_and_retries_back_off(self):
         def failure(*_):
             raise HTTPError(self.feed["url"], 429, "limit", {"Retry-After": "900"}, None)
-        result = signals.check(self.db, self.feed, self.tickers, failure)
+        with patch.object(signals, "stamp", return_value="2026-09-25T10:00:00+00:00"):
+            result = signals.check(self.db, self.feed, self.tickers, failure)
         self.assertEqual(result["error"], "http-429")
-        self.assertEqual(signals.due(self.db, [self.feed]), [])
+        route = self.db.execute(
+            "SELECT next_check_at FROM signal_routes WHERE id=?", (self.feed["id"],)
+        ).fetchone()
+        self.assertEqual(route["next_check_at"], "2026-09-25T10:15:00+00:00")
+        with patch.object(signals, "stamp", return_value="2026-09-25T10:01:00+00:00"):
+            self.assertEqual(signals.due(self.db, [self.feed]), [])
         self.check_feed(feed())
         self.assertEqual(signals.queue(self.db)["counts"]["baseline"], 1)
         self.assertIsNone(signals.queue(self.db)["routes"][0]["error"])
+
+    def test_top_level_access_restriction_uses_shared_long_backoff(self):
+        def failure(*_):
+            raise HTTPError(self.feed["url"], 403, "forbidden", {}, None)
+        with patch.object(signals, "stamp", return_value="2026-09-25T10:00:00+00:00"):
+            result = signals.check(self.db, self.feed, self.tickers, failure)
+        self.assertEqual(result["error"], "http-403")
+        route = self.db.execute(
+            "SELECT next_check_at,failures,error FROM signal_routes WHERE id=?", (self.feed["id"],)
+        ).fetchone()
+        self.assertEqual(route["next_check_at"], "2026-09-25T16:00:00+00:00")
+        self.assertEqual(route["failures"], 1)
+        self.assertEqual(route["error"], "http-403")
 
     def test_x_api_attempt_budget_is_persistent_bounded_and_redacted(self):
         source = {"id": "x-test", "format": "x-api", "intervalSeconds": 120}
@@ -530,7 +549,8 @@ class SignalTests(unittest.TestCase):
             if route["url"] == source["url"]:
                 return {"body": b'<a href="/news/test">Article</a>'}
             raise HTTPError(route["url"], 403, "forbidden", {}, None)
-        with patch.object(signals, "fetch", side_effect=request):
+        with patch.object(signals, "fetch", side_effect=request), \
+                patch.object(signals, "stamp", return_value="2026-09-25T10:00:00+00:00"):
             signals.check(self.db, source, self.tickers)
         queue = signals.queue(self.db, sources=[source])
         self.assertEqual(queue["routes"][0]["error"], "article-fetch-failed:1")
@@ -542,7 +562,25 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(child['error'], 'http-403')
         self.assertEqual(queue['routes'][0]['articleErrors'][0]['url'], source['url'] + '/test')
         self.assertEqual(queue['routes'][0]['articleErrors'][0]['error'], 'http-403')
-        self.assertTrue(queue['routes'][0]['articleErrors'][0]['nextCheckAt'])
+        self.assertEqual(
+            queue['routes'][0]['articleErrors'][0]['nextCheckAt'],
+            '2026-09-25T16:00:00+00:00',
+        )
+
+    def test_html_article_retry_after_is_honored_without_retaining_header(self):
+        source = next(s for s in signals.SOURCES if s["id"] == "anthropic-news")
+        def request(route, validators):
+            if route["url"] == source["url"]:
+                return {"body": b'<a href="/news/test">Article</a>'}
+            raise HTTPError(route["url"], 429, "limited", {"Retry-After": "172800"}, None)
+        with patch.object(signals, "fetch", side_effect=request), \
+                patch.object(signals, "stamp", return_value="2026-09-25T10:00:00+00:00"):
+            signals.check(self.db, source, self.tickers)
+        state = json.loads(self.db.execute("SELECT body FROM signal_index_state").fetchone()[0])
+        child = state["children"][source["url"] + "/test"]
+        self.assertEqual(child["error"], "http-429")
+        self.assertEqual(child["next_check"], "2026-09-27T10:00:00+00:00")
+        self.assertNotIn("172800", json.dumps(signals.queue(self.db, sources=[source])))
 
     def test_html_index_unchanged_index_still_rechecks_article_changes(self):
         source = next(s for s in signals.SOURCES if s["id"] == "anthropic-news")

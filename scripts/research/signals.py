@@ -548,17 +548,14 @@ def check(db, source, tickers, transport=None):
         failures = (row["failures"] if row else 0) if paced else min(
             20, (row["failures"] if row else 0) + 1
         )
-        delay = min(3600, max(30, source["intervalSeconds"]) * 2 ** failures)
-        if isinstance(exc, HTTPError) and exc.headers:
-            retry = exc.headers.get("Retry-After", "")
-            retry_at = date_value(retry)
-            seconds = int(retry) if retry.isdigit() else (
-                max(0, int((datetime.fromisoformat(retry_at) - datetime.fromisoformat(checked)).total_seconds()))
-                if retry_at else 0)
-            delay = max(delay, min(86400, seconds))
         error = monitor.source_error_code(exc)
         if isinstance(exc, ET.ParseError):
             error = "invalid-feed-xml"
+        retry_hint = monitor.retry_after_seconds(exc, datetime.fromisoformat(checked))
+        delay = max(
+            min(3600, max(30, source["intervalSeconds"]) * 2 ** failures),
+            monitor.source_retry_seconds(error, failures, retry_hint),
+        )
         next_check = (datetime.fromisoformat(checked) + timedelta(seconds=delay)).isoformat()
         if isinstance(exc, (XApiDailyLimit, XApiPacing)) and exc.retry_at:
             next_check = exc.retry_at

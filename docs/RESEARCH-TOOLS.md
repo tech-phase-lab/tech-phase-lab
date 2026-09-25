@@ -81,6 +81,12 @@ timestamp separately from date-only evidence and missing publication time.
 Failed routes are grouped into access restriction, rate limit, timeout,
 first-party 5xx, invalid response, partial article retrieval and other fixed
 categories.
+Top-level supplemental checks and their bounded article-body children share
+the same retry policy. Access restrictions back off from six hours to at most
+seven days, while ordinary transient failures retain the shorter retry path
+and six-hour ceiling. A valid `Retry-After` is honored up to the applicable
+ceiling. Only the fixed error class and next-check time are retained; response
+headers and bodies are not stored in retry state.
 The same aggregate separates retries that are due, deferred or missing a valid
 schedule, and exposes only the earliest bounded retry time. It excludes invalid
 or more-than-seven-day future values and never exposes which route failed.

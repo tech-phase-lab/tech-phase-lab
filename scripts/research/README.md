@@ -245,7 +245,12 @@ in source health. First-index backlog stays baseline across restarts. Existing
 articles are rechecked hourly, not every 120 seconds. Initial access probes returned HTTP 403, but a later one-off monitor run
 successfully acquired 14 article bodies, including root-path featured articles. This
 verifies that run, not continuous availability, full-archive coverage or remote
-deployment. Source failures must remain visible.
+deployment. Source failures must remain visible. The top-level route and its
+article-body children use the same bounded retry policy: access restrictions
+start at six hours and grow to at most seven days, ordinary transient failures
+remain capped at six hours, and a valid publisher `Retry-After` is honored up
+to the applicable ceiling. Retry state retains only a fixed error code and the
+next-check time, not response headers or bodies.
 # Offline coverage audit
 
 `python scripts/research/coverage_report.py` lists all 22 official company
