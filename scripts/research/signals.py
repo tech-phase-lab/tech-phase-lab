@@ -840,9 +840,14 @@ def operational_summary(db, sources=SOURCES, reference=None):
                 kind_retry["nextAt"] = next_check.isoformat()
 
     retry = retry_summary()
+    active_outages = {
+        "measured": 0, "unmeasured": 0, "ageMaxMs": None,
+        "attemptsAverage": None, "attemptsMax": None, "oldestStartedAt": None,
+    }
     route_counts = {"configured": len(official), "checked": 0, "fresh": 0,
                     "stale": 0, "error": 0, "pending": 0,
-                    "errorKinds": error_kinds, "retry": retry}
+                    "errorKinds": error_kinds, "retry": retry,
+                    "activeOutages": active_outages}
     for source_id, source in configured.items():
         row = db.execute("SELECT * FROM signal_routes WHERE id=?", (source_id,)).fetchone()
         if not row:
@@ -855,6 +860,22 @@ def operational_summary(db, sources=SOURCES, reference=None):
             error_kind = signal_error_kind(row["error"])
             error_kinds[error_kind] += 1
             record_retry(retry, error_kind, row["next_check_at"])
+            failure_started = timestamp_value(row["failure_started_at"])
+            failure_attempts = row["failure_attempts"]
+            if (failure_started and failure_started <= current
+                    and current - failure_started <= timedelta(days=7)
+                    and isinstance(failure_attempts, int)
+                    and 1 <= failure_attempts <= 100):
+                active_outages["measured"] += 1
+                active_outages.setdefault("_ages", []).append(
+                    round((current - failure_started).total_seconds() * 1000)
+                )
+                active_outages.setdefault("_attempts", []).append(failure_attempts)
+                oldest = active_outages["oldestStartedAt"]
+                if oldest is None or failure_started.isoformat() < oldest:
+                    active_outages["oldestStartedAt"] = failure_started.isoformat()
+            else:
+                active_outages["unmeasured"] += 1
             continue
         succeeded = timestamp_value(row["succeeded_at"])
         if not succeeded:
@@ -993,6 +1014,14 @@ def operational_summary(db, sources=SOURCES, reference=None):
         route_recoveries["latencyMaxMs"] = max(route_latencies)
         route_recoveries["attemptsAverage"] = round(sum(route_attempts) / len(route_attempts), 1)
         route_recoveries["attemptsMax"] = max(route_attempts)
+    outage_ages = active_outages.pop("_ages", [])
+    outage_attempts = active_outages.pop("_attempts", [])
+    if outage_ages:
+        active_outages["ageMaxMs"] = max(outage_ages)
+        active_outages["attemptsAverage"] = round(
+            sum(outage_attempts) / len(outage_attempts), 1,
+        )
+        active_outages["attemptsMax"] = max(outage_attempts)
     return {"routes": route_counts, "articleRetrieval": article_retrieval,
             "publicationEvidence": evidence,
             "routeTransitions24Hours": transitions,

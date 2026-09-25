@@ -86,6 +86,12 @@ recovery. The private operations aggregate reports only the 24-hour sample
 count, average and maximum failure-to-recovery time, average and maximum total
 attempts, and latest recovery time. Route identity, URL, status code and raw
 error remain private. Existing historical recoveries are not estimated.
+While an outage is still active, the same view reports only the number with a
+valid measurement, the number that predates measurement, the longest current
+age, average and maximum bounded attempts, and the oldest measured start time.
+Invalid, future, timezone-free or over-seven-day values are excluded instead of
+estimating missing history. These are processing observations, not a recovery
+or delivery-time guarantee.
 Top-level supplemental checks and their bounded article-body children share
 the same retry policy. Access restrictions back off from six hours to at most
 seven days, while ordinary transient failures retain the shorter retry path

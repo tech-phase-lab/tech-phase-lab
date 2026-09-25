@@ -243,6 +243,11 @@ class SignalTests(unittest.TestCase):
                     "other": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
                 },
             },
+            "activeOutages": {
+                "measured": 0, "unmeasured": 1, "ageMaxMs": None,
+                "attemptsAverage": None, "attemptsMax": None,
+                "oldestStartedAt": None,
+            },
         })
         self.assertEqual(summary["publicationEvidence"], {
             "total": 3, "timestamp": 1, "dateOnly": 1, "missing": 1,
@@ -458,6 +463,43 @@ class SignalTests(unittest.TestCase):
         serialized = json.dumps(summary)
         self.assertNotIn(self.doc["id"], serialized)
         self.assertNotIn("private route detail", serialized)
+
+    def test_active_route_outages_report_only_bounded_aggregate_measurements(self):
+        signals.schema(self.db)
+        self.db.execute("""INSERT INTO signal_routes(
+          id,initialized,checked_at,next_check_at,failures,error,
+          failure_started_at,failure_attempts) VALUES(?,1,?,?,?,?,?,?)""", (
+            self.doc["id"], "2026-09-25T10:03:00+00:00",
+            "2026-09-25T10:10:00+00:00", 3, "timeout",
+            "2026-09-25T10:01:00+00:00", 3,
+        ))
+        second = {
+            **next(source for source in signals.SOURCES
+                   if source["id"] == "nvidia-developer"),
+            "id": "private-unmeasured-route",
+        }
+        self.db.execute("""INSERT INTO signal_routes(
+          id,initialized,checked_at,next_check_at,failures,error,
+          failure_started_at,failure_attempts) VALUES(?,1,?,?,?,?,?,?)""", (
+            second["id"], "2026-09-25T10:03:00+00:00",
+            "2026-09-25T10:10:00+00:00", 1, "http-403", None, 0,
+        ))
+        self.db.commit()
+        summary = signals.operational_summary(
+            self.db, sources=[self.doc, second],
+            reference=datetime(2026, 9, 25, 10, 6, tzinfo=timezone.utc),
+        )
+        self.assertEqual(summary["routes"]["activeOutages"], {
+            "measured": 1,
+            "unmeasured": 1,
+            "ageMaxMs": 300_000,
+            "attemptsAverage": 3.0,
+            "attemptsMax": 3,
+            "oldestStartedAt": "2026-09-25T10:01:00+00:00",
+        })
+        serialized = json.dumps(summary)
+        self.assertNotIn(self.doc["id"], serialized)
+        self.assertNotIn(second["id"], serialized)
 
     def test_route_recovery_measurement_migrates_an_existing_failure(self):
         self.db.execute("""CREATE TABLE signal_routes (

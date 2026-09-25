@@ -155,6 +155,11 @@ export type MonitorState = {
           { due: number; deferred: number; unscheduled: number; nextAt: string | null }
         >>;
       };
+      activeOutages?: {
+        measured: number; unmeasured: number; ageMaxMs: number | null;
+        attemptsAverage: number | null; attemptsMax: number | null;
+        oldestStartedAt: string | null;
+      };
     };
     articleRetrieval?: {
       error: number;
