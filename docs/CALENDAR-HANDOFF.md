@@ -1684,3 +1684,34 @@ press-conference clock times. No calendar event changed.
 Continue with PANW, PLTR, SKHY, SNOW, VRT, AAPL, AMZN, ANET, ARM and AVGO.
 Empty dynamic sections, historical-only pages and transport failures remain
 inconclusive and must not be promoted to forecast dates.
+
+## Fifty-eighth company batch reviewed on 2026-09-25
+
+The next ten pending entries were rechecked against their first-party schedule,
+news or investor-relations pages. None supplied a confirmed future earnings
+date or an explicit no-events statement. Their existing same-day
+`lastAttemptedOn` values remain unchanged, `lastCheckedOn` remains null and no
+forecast date is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| PANW | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| PLTR | Pending | The official Events page exposed only investor-relations navigation, with no inspectable schedule state or explicit no-events statement. |
+| SKHY | Pending | The official English IR list still ended with the August 19 shareholder-return announcement and July 29 second-quarter results; no future earnings announcement was present. |
+| SNOW | Pending | The official page exposed an empty Upcoming Events section and archive headings without an explicit no-events statement. |
+| VRT | Pending | The official Events & Presentations page exposed its event structure without a dated future earnings item or explicit no-events statement. |
+| AAPL | Pending | The official page exposed no inspectable dated future item or explicit no-events statement. |
+| AMZN | Pending | The official Events page exposed empty Upcoming Events and Past Events headings without an explicit no-events statement. |
+| ANET | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| ARM | Pending | The official investor page remained inaccessible through the review connection, so its current schedule could not be established. |
+| AVGO | Pending | The complete official Financial News list ended with the September 2 fiscal Q3 2026 results announcement and contained no future timing announcement. |
+
+The BLS October schedule was rechecked on 2026-09-25 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar, last updated September 16, still
+lists the October 27-28 and December 8-9 meetings without future statement or
+press-conference clock times. No calendar event changed.
+
+Continue with BE, COHR, CRDO, CRM, CRWV, GOOGL, KLAC, LITE, MRVL and NBIS.
+Empty dynamic sections, historical-only pages and transport failures remain
+inconclusive and must not be promoted to forecast dates.
