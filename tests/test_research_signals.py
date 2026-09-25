@@ -403,6 +403,89 @@ class SignalTests(unittest.TestCase):
         self.assertNotIn(self.doc["id"], serialized)
         self.assertNotIn("private route detail", serialized)
 
+    def test_route_recovery_measurement_persists_latency_and_total_attempts(self):
+        html = b"<html><main><p>" + (b"Nebius official infrastructure update. " * 5) + b"</p></main></html>"
+
+        def timeout(*_args):
+            raise TimeoutError("private route detail")
+
+        with patch.object(signals, "stamp", side_effect=[
+            "2026-09-25T10:00:00+00:00",
+            "2026-09-25T10:01:00+00:00",
+            "2026-09-25T10:02:00+00:00",
+            "2026-09-25T10:05:00+00:00",
+        ]):
+            signals.check(self.db, self.doc, self.tickers, lambda *_: {"body": html})
+            signals.check(self.db, self.doc, self.tickers, timeout)
+            signals.check(self.db, self.doc, self.tickers, timeout)
+            signals.check(self.db, self.doc, self.tickers, lambda *_: {"body": html})
+
+        route = self.db.execute(
+            "SELECT error,failure_started_at,failure_attempts FROM signal_routes WHERE id=?",
+            (self.doc["id"],),
+        ).fetchone()
+        self.assertIsNone(route["error"])
+        self.assertIsNone(route["failure_started_at"])
+        self.assertEqual(route["failure_attempts"], 0)
+        recovery = self.db.execute(
+            "SELECT failed_at,recovered_at,attempts,error_kind FROM signal_route_recoveries"
+        ).fetchone()
+        self.assertEqual(dict(recovery), {
+            "failed_at": "2026-09-25T10:01:00+00:00",
+            "recovered_at": "2026-09-25T10:05:00+00:00",
+            "attempts": 3,
+            "error_kind": "timeout",
+        })
+        self.db.execute("""INSERT INTO signal_route_recoveries(
+          source_id,failed_at,recovered_at,attempts,error_kind) VALUES(?,?,?,?,?)""", (
+            self.doc["id"], "2026-09-25T09:00:00", "2026-09-25T09:05:00", 2, "timeout",
+        ))
+        self.db.commit()
+        self.db.close()
+        self.db = monitor.connect(self.path)
+        summary = signals.operational_summary(
+            self.db, sources=[self.doc],
+            reference=datetime(2026, 9, 25, 10, 6, tzinfo=timezone.utc),
+        )
+        self.assertEqual(summary["routeRecoveries24Hours"], {
+            "count": 1,
+            "latencyAverageMs": 240_000,
+            "latencyMaxMs": 240_000,
+            "attemptsAverage": 3.0,
+            "attemptsMax": 3,
+            "lastRecoveredAt": "2026-09-25T10:05:00+00:00",
+        })
+        serialized = json.dumps(summary)
+        self.assertNotIn(self.doc["id"], serialized)
+        self.assertNotIn("private route detail", serialized)
+
+    def test_route_recovery_measurement_migrates_an_existing_failure(self):
+        self.db.execute("""CREATE TABLE signal_routes (
+          id TEXT PRIMARY KEY, initialized INTEGER NOT NULL DEFAULT 0,
+          checked_at TEXT, succeeded_at TEXT, next_check_at TEXT,
+          failures INTEGER NOT NULL DEFAULT 0, error TEXT, etag TEXT, last_modified TEXT,
+          config_sha TEXT, last_duration_ms INTEGER, matched_items INTEGER NOT NULL DEFAULT 0
+        )""")
+        self.db.execute("""INSERT INTO signal_routes(
+          id,initialized,checked_at,failures,error) VALUES(?,1,?,2,'timeout')""", (
+            self.doc["id"], "2026-09-25T10:01:00+00:00",
+        ))
+        self.db.commit()
+        html = b"<html><main><p>" + (b"Nebius official infrastructure update. " * 5) + b"</p></main></html>"
+        with patch.object(signals, "stamp", return_value="2026-09-25T10:05:00+00:00"):
+            result = signals.check(
+                self.db, self.doc, self.tickers, lambda *_: {"body": html},
+            )
+        self.assertEqual(result["status"], "ok")
+        recovery = self.db.execute(
+            "SELECT failed_at,recovered_at,attempts FROM signal_route_recoveries"
+        ).fetchone()
+        self.assertEqual(dict(recovery), {
+            "failed_at": "2026-09-25T10:01:00+00:00",
+            "recovered_at": "2026-09-25T10:05:00+00:00",
+            "attempts": 3,
+        })
+
     def test_persisted_validators_and_304(self):
         self.check_feed(feed(), etag='"v1"')
         self.db.close()

@@ -217,7 +217,11 @@ function signalIntakeStatus(signal: MonitorState["signalIntake"]) {
   const transitionStatus = transitions
     ? ` · 24時間の状態変化：回復 ${transitions.recoveries}・再失敗 ${transitions.failures}・区分変化 ${transitions.changes}${outcome && transitions.lastOccurredAt ? `（最終 ${outcome} ${time(transitions.lastOccurredAt)} JST）` : ""}`
     : "";
-  return `公式補完経路：直近成功 ${routes.fresh}/${routes.configured}経路 · 期限超過 ${routes.stale} · 要確認 ${routes.error}（アクセス制限 ${kinds.accessRestricted}・レート制限 ${kinds.rateLimited}・タイムアウト ${kinds.timeout}・公式側5xx ${kinds.server}・応答形式 ${kinds.invalidResponse}・記事一部失敗 ${kinds.articlePartial}・その他 ${kinds.other}）${retryStatus}${retryKindDetail}${articleStatus}${measuredRecoveryStatus}${transitionStatus} · 初回待ち ${routes.pending} · 公表証拠 ${evidence.total}件（日時あり ${evidence.timestamp}・日付のみ ${evidence.dateOnly}・時刻未取得 ${evidence.missing}）`;
+  const routeRecoveries = signal.routeRecoveries24Hours;
+  const routeRecoveryStatus = routeRecoveries?.count
+    ? ` · 経路回復の実測：24時間 ${routeRecoveries.count}件・障害開始→回復 平均 ${duration(routeRecoveries.latencyAverageMs)}・最大 ${duration(routeRecoveries.latencyMaxMs)}・試行 平均 ${routeRecoveries.attemptsAverage}回・最大 ${routeRecoveries.attemptsMax}回（最終 ${time(routeRecoveries.lastRecoveredAt)} JST）`
+    : routeRecoveries ? " · 経路回復の実測：24時間の標本なし" : "";
+  return `公式補完経路：直近成功 ${routes.fresh}/${routes.configured}経路 · 期限超過 ${routes.stale} · 要確認 ${routes.error}（アクセス制限 ${kinds.accessRestricted}・レート制限 ${kinds.rateLimited}・タイムアウト ${kinds.timeout}・公式側5xx ${kinds.server}・応答形式 ${kinds.invalidResponse}・記事一部失敗 ${kinds.articlePartial}・その他 ${kinds.other}）${retryStatus}${retryKindDetail}${articleStatus}${measuredRecoveryStatus}${transitionStatus}${routeRecoveryStatus} · 初回待ち ${routes.pending} · 公表証拠 ${evidence.total}件（日時あり ${evidence.timestamp}・日付のみ ${evidence.dateOnly}・時刻未取得 ${evidence.missing}）`;
 }
 function generationStatus(generation: MonitorState["generation"]) {
   if (!generation) return "AI下書き生成：状態取得待ち";

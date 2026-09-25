@@ -81,6 +81,11 @@ timestamp separately from date-only evidence and missing publication time.
 Failed routes are grouped into access restriction, rate limit, timeout,
 first-party 5xx, invalid response, partial article retrieval and other fixed
 categories.
+The first failure time and bounded attempt count for each route persist until
+recovery. The private operations aggregate reports only the 24-hour sample
+count, average and maximum failure-to-recovery time, average and maximum total
+attempts, and latest recovery time. Route identity, URL, status code and raw
+error remain private. Existing historical recoveries are not estimated.
 Top-level supplemental checks and their bounded article-body children share
 the same retry policy. Access restrictions back off from six hours to at most
 seven days, while ordinary transient failures retain the shorter retry path

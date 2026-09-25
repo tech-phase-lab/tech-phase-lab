@@ -213,7 +213,8 @@ def schema(db):
         id TEXT PRIMARY KEY, initialized INTEGER NOT NULL DEFAULT 0,
         checked_at TEXT, succeeded_at TEXT, next_check_at TEXT,
         failures INTEGER NOT NULL DEFAULT 0, error TEXT, etag TEXT, last_modified TEXT,
-        config_sha TEXT, last_duration_ms INTEGER, matched_items INTEGER NOT NULL DEFAULT 0
+        config_sha TEXT, last_duration_ms INTEGER, matched_items INTEGER NOT NULL DEFAULT 0,
+        failure_started_at TEXT, failure_attempts INTEGER NOT NULL DEFAULT 0
       );
       CREATE TABLE IF NOT EXISTS signal_documents (
         source_id TEXT NOT NULL, url TEXT NOT NULL, sha TEXT NOT NULL,
@@ -240,9 +241,22 @@ def schema(db):
       );
       CREATE INDEX IF NOT EXISTS signal_route_transition_time
         ON signal_route_transitions(occurred_at);
+      CREATE TABLE IF NOT EXISTS signal_route_recoveries (
+        id INTEGER PRIMARY KEY, source_id TEXT NOT NULL,
+        failed_at TEXT NOT NULL, recovered_at TEXT NOT NULL,
+        attempts INTEGER NOT NULL, error_kind TEXT NOT NULL
+      );
+      CREATE INDEX IF NOT EXISTS signal_route_recovery_time
+        ON signal_route_recoveries(recovered_at);
     """)
-    if "published_on" not in {row[1] for row in db.execute("PRAGMA table_info(signal_events)")}:
+    event_columns = {row[1] for row in db.execute("PRAGMA table_info(signal_events)")}
+    if "published_on" not in event_columns:
         db.execute("ALTER TABLE signal_events ADD COLUMN published_on TEXT")
+    route_columns = {row[1] for row in db.execute("PRAGMA table_info(signal_routes)")}
+    if "failure_started_at" not in route_columns:
+        db.execute("ALTER TABLE signal_routes ADD COLUMN failure_started_at TEXT")
+    if "failure_attempts" not in route_columns:
+        db.execute("ALTER TABLE signal_routes ADD COLUMN failure_attempts INTEGER NOT NULL DEFAULT 0")
 
 
 class XApiDailyLimit(ValueError):
@@ -450,6 +464,35 @@ def record_route_transition(db, source_id, previous_route, current_error, occurr
       (SELECT id FROM signal_route_transitions ORDER BY id DESC LIMIT 5000)""")
 
 
+def route_failure_measurement(db, source_id, previous_route, current_error, occurred_at):
+    """Track a bounded outage measurement without exposing route identity publicly."""
+    if current_error:
+        continuing = bool(previous_route and previous_route["error"])
+        started_at = ((previous_route["failure_started_at"] or previous_route["checked_at"])
+                      if continuing else None) or occurred_at
+        prior_attempts = ((previous_route["failure_attempts"] or previous_route["failures"])
+                          if continuing else 0)
+        return started_at, min(100, max(0, int(prior_attempts or 0)) + 1)
+    if not previous_route or not previous_route["error"]:
+        return None, 0
+    failed_at = previous_route["failure_started_at"] or previous_route["checked_at"]
+    attempts = min(101, max(1, int(
+        previous_route["failure_attempts"] or previous_route["failures"] or 1
+    )) + 1)
+    db.execute("""INSERT INTO signal_route_recoveries(
+      source_id,failed_at,recovered_at,attempts,error_kind
+      ) VALUES(?,?,?,?,?)""", (
+        source_id, failed_at or occurred_at, occurred_at, attempts,
+        signal_error_kind(previous_route["error"]),
+    ))
+    cutoff = (datetime.fromisoformat(occurred_at) - timedelta(days=8)).isoformat()
+    db.execute("""DELETE FROM signal_route_recoveries
+      WHERE datetime(recovered_at) IS NULL OR datetime(recovered_at)<datetime(?)""", (cutoff,))
+    db.execute("""DELETE FROM signal_route_recoveries WHERE id NOT IN
+      (SELECT id FROM signal_route_recoveries ORDER BY id DESC LIMIT 5000)""")
+    return None, 0
+
+
 def save(db, source, items, response, checked, config_sha, duration):
     route = db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
     initial = not route or not route["initialized"] or (
@@ -459,6 +502,8 @@ def save(db, source, items, response, checked, config_sha, duration):
         )
     )
     inserted = 0
+    current_error = (f"article-fetch-failed:{response['article_errors']}"
+                     if response.get("article_errors") else None)
     with db:
         for item in items:
             if not item["matches"] and not source.get("retainUnmatched"):
@@ -500,24 +545,26 @@ def save(db, source, items, response, checked, config_sha, duration):
             ))
         next_check = (datetime.fromisoformat(checked) + timedelta(
             seconds=source_interval_seconds(source, datetime.fromisoformat(checked)))).isoformat()
+        failure_started_at, failure_attempts = route_failure_measurement(
+            db, source["id"], route, current_error, checked,
+        )
         db.execute("""INSERT INTO signal_routes(id,initialized,checked_at,succeeded_at,next_check_at,
-          failures,error,etag,last_modified,config_sha,last_duration_ms,matched_items)
-          VALUES(?,1,?,?,?,0,NULL,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET
+          failures,error,etag,last_modified,config_sha,last_duration_ms,matched_items,
+          failure_started_at,failure_attempts)
+          VALUES(?,1,?,?,?,0,?,?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET
           initialized=1,checked_at=excluded.checked_at,succeeded_at=excluded.succeeded_at,
-          next_check_at=excluded.next_check_at,failures=0,error=NULL,etag=excluded.etag,
+          next_check_at=excluded.next_check_at,failures=0,error=excluded.error,etag=excluded.etag,
           last_modified=excluded.last_modified,config_sha=excluded.config_sha,
-          last_duration_ms=excluded.last_duration_ms,matched_items=excluded.matched_items""", (
-            source["id"], checked, checked, next_check, response.get("etag"),
+          last_duration_ms=excluded.last_duration_ms,matched_items=excluded.matched_items,
+          failure_started_at=excluded.failure_started_at,
+          failure_attempts=excluded.failure_attempts""", (
+            source["id"], checked, checked, next_check, current_error, response.get("etag"),
             response.get("last_modified"), config_sha, duration, len(items),
+            failure_started_at, failure_attempts,
         ))
         if "index_state" in response:
             db.execute("INSERT INTO signal_index_state VALUES(?,?) ON CONFLICT(source_id) DO UPDATE SET body=excluded.body",
                        (source["id"], response["index_state"]))
-            if response.get("article_errors"):
-                db.execute("UPDATE signal_routes SET error=? WHERE id=?",
-                           (f"article-fetch-failed:{response['article_errors']}", source["id"]))
-        current_error = (f"article-fetch-failed:{response['article_errors']}"
-                         if response.get("article_errors") else None)
         record_route_transition(db, source["id"], route, current_error, checked)
         # Bound private retention per publisher; keep enough fingerprints for restarts.
         db.execute("""DELETE FROM signal_documents WHERE source_id=? AND url NOT IN
@@ -542,11 +589,16 @@ def check(db, source, tickers, transport=None):
             if not validators.get("initialized"):
                 raise ValueError("signal-304-without-baseline")
             with db:
+                failure_started_at, failure_attempts = route_failure_measurement(
+                    db, source["id"], row, None, checked,
+                )
                 db.execute("""UPDATE signal_routes SET checked_at=?,succeeded_at=?,next_check_at=?,
-                  failures=0,error=NULL,last_duration_ms=? WHERE id=?""", (
+                  failures=0,error=NULL,last_duration_ms=?,failure_started_at=?,
+                  failure_attempts=? WHERE id=?""", (
                     checked, checked, (datetime.fromisoformat(checked) + timedelta(
                         seconds=source_interval_seconds(source, datetime.fromisoformat(checked)))).isoformat(),
-                    round((time.monotonic() - started) * 1000), source["id"],
+                    round((time.monotonic() - started) * 1000), failure_started_at,
+                    failure_attempts, source["id"],
                 ))
                 record_route_transition(db, source["id"], row, None, checked)
             return {"source": source["id"], "status": "unchanged", "events": 0}
@@ -573,10 +625,18 @@ def check(db, source, tickers, transport=None):
         if isinstance(exc, (XApiDailyLimit, XApiPacing)) and exc.retry_at:
             next_check = exc.retry_at
         with db:
-            db.execute("""INSERT INTO signal_routes(id,checked_at,next_check_at,failures,error)
-              VALUES(?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET checked_at=excluded.checked_at,
-              next_check_at=excluded.next_check_at,failures=excluded.failures,error=excluded.error""",
-                       (source["id"], checked, next_check, failures, error))
+            failure_started_at, failure_attempts = route_failure_measurement(
+                db, source["id"], row, error, checked,
+            )
+            db.execute("""INSERT INTO signal_routes(
+              id,checked_at,next_check_at,failures,error,failure_started_at,failure_attempts)
+              VALUES(?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET checked_at=excluded.checked_at,
+              next_check_at=excluded.next_check_at,failures=excluded.failures,error=excluded.error,
+              failure_started_at=excluded.failure_started_at,
+              failure_attempts=excluded.failure_attempts""", (
+                source["id"], checked, next_check, failures, error,
+                failure_started_at, failure_attempts,
+            ))
             record_route_transition(db, source["id"], row, error, checked)
         return {"source": source["id"], "status": "error", "error": error, "events": 0}
 
@@ -821,6 +881,10 @@ def operational_summary(db, sources=SOURCES, reference=None):
         "recoveries": 0, "failures": 0, "changes": 0,
         "lastOutcome": None, "lastOccurredAt": None,
     }
+    route_recoveries = {
+        "count": 0, "latencyAverageMs": None, "latencyMaxMs": None,
+        "attemptsAverage": None, "attemptsMax": None, "lastRecoveredAt": None,
+    }
     if configured:
         placeholders = ",".join("?" for _ in configured)
         for row in db.execute(f"""SELECT body FROM signal_index_state
@@ -897,6 +961,23 @@ def operational_summary(db, sources=SOURCES, reference=None):
         if latest:
             transitions["lastOutcome"] = latest[1]
             transitions["lastOccurredAt"] = latest[0].isoformat()
+        for row in db.execute(f"""SELECT failed_at,recovered_at,attempts
+          FROM signal_route_recoveries WHERE source_id IN ({placeholders})
+          ORDER BY id""", tuple(configured)):
+            failed = timestamp_value(row["failed_at"])
+            recovered = timestamp_value(row["recovered_at"])
+            attempts = row["attempts"]
+            if (not failed or not recovered or recovered < cutoff or failed > recovered
+                    or recovered - failed > timedelta(days=7)
+                    or not isinstance(attempts, int) or not 2 <= attempts <= 101):
+                continue
+            latency = round((recovered - failed).total_seconds() * 1000)
+            route_recoveries["count"] += 1
+            route_recoveries.setdefault("_latencies", []).append(latency)
+            route_recoveries.setdefault("_attempts", []).append(attempts)
+            if (route_recoveries["lastRecoveredAt"] is None
+                    or recovered.isoformat() > route_recoveries["lastRecoveredAt"]):
+                route_recoveries["lastRecoveredAt"] = recovered.isoformat()
     measurements = article_retrieval["recoveries24Hours"]
     latencies = measurements.pop("_latencies", [])
     attempts = measurements.pop("_attempts", [])
@@ -905,9 +986,17 @@ def operational_summary(db, sources=SOURCES, reference=None):
         measurements["latencyMaxMs"] = max(latencies)
         measurements["attemptsAverage"] = round(sum(attempts) / len(attempts), 1)
         measurements["attemptsMax"] = max(attempts)
+    route_latencies = route_recoveries.pop("_latencies", [])
+    route_attempts = route_recoveries.pop("_attempts", [])
+    if route_latencies:
+        route_recoveries["latencyAverageMs"] = round(sum(route_latencies) / len(route_latencies))
+        route_recoveries["latencyMaxMs"] = max(route_latencies)
+        route_recoveries["attemptsAverage"] = round(sum(route_attempts) / len(route_attempts), 1)
+        route_recoveries["attemptsMax"] = max(route_attempts)
     return {"routes": route_counts, "articleRetrieval": article_retrieval,
             "publicationEvidence": evidence,
-            "routeTransitions24Hours": transitions}
+            "routeTransitions24Hours": transitions,
+            "routeRecoveries24Hours": route_recoveries}
 
 
 def due(db, sources=None):
