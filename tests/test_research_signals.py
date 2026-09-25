@@ -383,15 +383,15 @@ class SignalTests(unittest.TestCase):
         sources = [source for source in signals.SOURCES if source.get("format") == "x-api"]
         with patch.dict(os.environ, {"X_API_DAILY_REQUEST_LIMIT": "2300"}):
             plan = signals.x_api_request_plan(sources)
-        self.assertEqual(plan["configuredMaxRequestsPerDay"], 2286)
-        self.assertFalse(plan["budgetCapped"])
-        self.assertFalse(plan["pacingEnabled"])
+        self.assertEqual(plan["configuredMaxRequestsPerDay"], 4320)
+        self.assertTrue(plan["budgetCapped"])
+        self.assertTrue(plan["pacingEnabled"])
         source = sources[0]
         for moment, expected in [
-            ("2026-09-30T19:29:59+00:00", 120),
+            ("2026-09-30T19:29:59+00:00", 60),
             ("2026-09-30T19:30:00+00:00", 60),
             ("2026-09-30T20:49:59+00:00", 60),
-            ("2026-09-30T20:50:00+00:00", 120),
+            ("2026-09-30T20:50:00+00:00", 60),
         ]:
             with self.subTest(moment=moment):
                 self.assertEqual(
@@ -404,6 +404,22 @@ class SignalTests(unittest.TestCase):
             "SELECT next_check_at FROM signal_routes WHERE id=?", (source["id"],)
         ).fetchone()[0]
         self.assertEqual(next_at, "2026-09-30T19:36:00+00:00")
+
+    def test_x_interval_change_keeps_existing_baseline_and_target_filter(self):
+        source = next(item for item in signals.SOURCES if item["id"] == "x-tipranks")
+        signals.schema(self.db)
+        with self.db:
+            self.db.execute("INSERT INTO signal_routes(id,initialized,config_sha) VALUES(?,1,?)",
+                            (source["id"], signals.legacy_x_fingerprint(source, self.tickers)))
+        item = {"url": "https://x.com/TipRanks/status/1234567890",
+                "title": "$AMD price target raised to $720 from $620 at BofA",
+                "text": "$AMD price target raised to $720 from $620 at BofA",
+                "matches": {"AMD": ["$AMD"]}, "publishedAt": "2026-09-25T10:50:28Z", "truncated": False}
+        signals.save(self.db, source, [item], {}, signals.stamp(),
+                     signals.fingerprint(source, self.tickers), 1)
+        queue = signals.queue(self.db, view="targets")
+        self.assertEqual(queue["counts"]["targets"], 1)
+        self.assertEqual(queue["items"][0]["eventKind"], "new")
 
     def test_x_api_budget_is_evenly_paced_and_rotates_due_sources(self):
         sources = [

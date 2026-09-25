@@ -34,7 +34,7 @@ class ComparisonTests(unittest.TestCase):
                 "postToFirstSeenSeconds": 30,
             }])
             self.assertEqual(tip["tickerCounts"], {"NBIS": 1})
-            self.assertTrue(tip["lastSearchHitLimit"])
+            self.assertFalse(tip["lastSearchHitLimit"])
             self.assertEqual(result["sources"]["x-thefly"]["newPosts"], 0)
             self.assertIsNone(result["sources"]["x-thefly"]["medianArrivalSeconds"])
             self.assertEqual(result["sources"]["x-wallstengine"]["targetMentions"], 1)

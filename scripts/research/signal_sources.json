@@ -449,13 +449,13 @@
     "allowedHosts": [
       "x.com"
     ],
-    "intervalSeconds": 120,
+    "intervalSeconds": 60,
     "fastWindow": {
       "startAt": "2026-09-30T19:30:00Z",
       "endAt": "2026-09-30T20:50:00Z",
       "intervalSeconds": 60
     },
-    "maxResults": 10,
+    "maxResults": 30,
     "reuse": "review-required"
   },
   {
@@ -507,7 +507,7 @@
     "allowedHosts": [
       "x.com"
     ],
-    "intervalSeconds": 120,
+    "intervalSeconds": 60,
     "fastWindow": {
       "startAt": "2026-09-30T19:30:00Z",
       "endAt": "2026-09-30T20:50:00Z",
@@ -527,7 +527,7 @@
     "accounts": ["wallstengine"],
     "tickers": ["MU", "SKHY", "SNDK", "NBIS", "NVDA", "AMD", "AVGO", "ARM", "TSM", "ASML", "MRVL", "ANET", "CRDO", "CRWV", "VRT", "GEV", "DELL", "PLTR", "MSFT", "BE", "GOOGL", "ORCL", "LITE", "COHR", "VST", "IREN", "ALAB", "APH", "INTC", "AMAT", "SIMO", "AAOI", "META"],
     "allowedHosts": ["x.com"],
-    "intervalSeconds": 120,
+    "intervalSeconds": 60,
     "fastWindow": {
       "startAt": "2026-09-30T19:30:00Z",
       "endAt": "2026-09-30T20:50:00Z",

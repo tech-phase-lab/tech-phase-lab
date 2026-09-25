@@ -8,10 +8,11 @@ from pathlib import Path
 import sqlite3
 from statistics import median
 from x_api import TARGET_PATTERN
+from signals import SOURCES as SIGNAL_SOURCES
 
 
 SOURCES = ("x-tipranks", "x-thefly", "x-wallstengine")
-MAX_RESULTS = 10
+SOURCE_LIMITS = {source["id"]: int(source.get("maxResults", 10)) for source in SIGNAL_SOURCES if source.get("format") == "x-api"}
 
 
 def parse_time(value):
@@ -75,7 +76,7 @@ def report(db, now=None, hours=24, ticker=None):
             "samples": samples,
             "lastCheckedAt": route["checked_at"] if route else None,
             "lastError": route["error"] if route else None,
-            "lastSearchHitLimit": bool(route and route["matched_items"] >= MAX_RESULTS),
+            "lastSearchHitLimit": bool(route and route["matched_items"] >= SOURCE_LIMITS.get(source, 10)),
         }
     return result
 

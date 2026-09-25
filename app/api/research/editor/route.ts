@@ -41,7 +41,7 @@ export async function GET(request: Request) {
     const limit = Number.isInteger(requested) ? Math.max(1, Math.min(requested, 50)) : 20;
     const kind = requestUrl.searchParams.get("kind");
     const view = requestUrl.searchParams.get("view") ?? "all";
-    const allowedViews = kind === "signals" ? ["all", "new", "changed", "baseline"] : kind === "annual"
+    const allowedViews = kind === "signals" ? ["all", "new", "changed", "baseline", "targets"] : kind === "annual"
       ? ["all", "actionable", "invalid", "draft", "held", "approved", "rejected"]
       : ["all", "ready", "blocked", "needs-draft"];
     if (!allowedViews.includes(view)) {

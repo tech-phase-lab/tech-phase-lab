@@ -20,6 +20,7 @@ from urllib.request import Request, HTTPRedirectHandler, build_opener
 import xml.etree.ElementTree as ET
 
 import monitor
+import x_api
 
 SOURCES = json.loads(Path(__file__).with_name("signal_sources.json").read_text())
 MAX_BYTES = 12 * 1024 * 1024
@@ -398,7 +399,14 @@ def reserve_x_api_request(db, source, now=None, eligible_source_ids=None):
 
 
 def fingerprint(source, tickers):
-    return hashlib.sha256(json.dumps([source, {t: ALIASES[t] for t in tickers}, 1], sort_keys=True).encode()).hexdigest()
+    identity = {key: value for key, value in source.items() if source.get("format") != "x-api"
+                or key not in {"intervalSeconds", "maxResults", "fastWindow"}}
+    return hashlib.sha256(json.dumps([identity, {t: ALIASES[t] for t in tickers}, 1], sort_keys=True).encode()).hexdigest()
+
+
+def legacy_x_fingerprint(source, tickers):
+    old = {**source, "intervalSeconds": 120, "maxResults": 10}
+    return hashlib.sha256(json.dumps([old, {t: ALIASES[t] for t in tickers}, 1], sort_keys=True).encode()).hexdigest()
 
 
 def evidence_excerpt(item):
@@ -444,7 +452,12 @@ def record_route_transition(db, source_id, previous_route, current_error, occurr
 
 def save(db, source, items, response, checked, config_sha, duration):
     route = db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
-    initial = not route or not route["initialized"] or route["config_sha"] != config_sha
+    initial = not route or not route["initialized"] or (
+        route["config_sha"] != config_sha and not (
+            source.get("format") == "x-api" and
+            route["config_sha"] == legacy_x_fingerprint(source, list(ALIASES))
+        )
+    )
     inserted = 0
     with db:
         for item in items:
@@ -570,12 +583,12 @@ def check(db, source, tickers, transport=None):
 
 def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
     schema(db)
-    if view not in {"all", "new", "changed", "baseline"} or (
+    if view not in {"all", "new", "changed", "baseline", "targets"} or (
             ticker and ticker not in ALIASES and ticker not in X_EXTRA_TICKERS):
         raise ValueError("invalid-signal-filter")
     configured = {source["id"]: source for source in sources}
     items = []
-    counts = {"all": 0, "new": 0, "changed": 0, "baseline": 0}
+    counts = {"all": 0, "new": 0, "changed": 0, "baseline": 0, "targets": 0}
     for row in db.execute("SELECT * FROM signal_events ORDER BY observed_at DESC,id DESC"):
         if row["source_id"] not in configured:
             continue
@@ -584,7 +597,12 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
             continue
         counts["all"] += 1
         counts[row["event_kind"]] += 1
-        if (view != "all" and row["event_kind"] != view) or len(items) >= max(1, min(50, limit)):
+        is_target = (row["source_id"].startswith("x-") and
+                     row["event_kind"] == "new" and x_api.TARGET_PATTERN.search(row["title"]))
+        if is_target:
+            counts["targets"] += 1
+        if (view == "targets" and not is_target) or (view not in {"all", "targets"} and
+            row["event_kind"] != view) or len(items) >= max(1, min(50, limit)):
             continue
         source = configured[row["source_id"]]
         items.append({"id": row["id"], "source": source["name"], "sourceKind": source["kind"],
