@@ -15,6 +15,12 @@ class XApiTests(unittest.TestCase):
     def setUp(self):
         self.source = next(s for s in signals.SOURCES if s["id"] == "x-tipranks")
 
+    def test_x_source_scope_matches_the_22_configured_company_roster(self):
+        x_sources = [source for source in signals.SOURCES if source.get("format") == "x-api"]
+        self.assertEqual({ticker for source in x_sources for ticker in source["tickers"]}, set(monitor.PROVIDERS))
+        for source in x_sources:
+            self.assertLessEqual(len(source["query"]), 512)
+
     def test_x_sources_are_disabled_without_both_explicit_flag_and_token(self):
         with patch.dict(os.environ, {"X_API_ENABLED": "true", "X_BEARER_TOKEN": ""}, clear=False):
             self.assertNotIn(self.source, signals.enabled_sources())
