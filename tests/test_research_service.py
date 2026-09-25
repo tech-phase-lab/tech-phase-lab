@@ -898,6 +898,35 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(pending, 3)
         self.assertTrue(rows[0]["url"].endswith("new-release"))
 
+    def test_body_candidates_reserve_spare_slot_for_oldest_unfetched_release(self):
+        oldest = "https://investor.marvell.com/news-events/press-releases/detail/999/oldest-release"
+        middle = "https://www.vertiv.com/en-us/about/news-and-events/corporate-news/2026/middle-release/"
+        newest = "https://www.arista.com/en/company/news/press-release/newest-release"
+        with monitor.connect(self.db_path) as db:
+            for ticker, url, detected_at in (
+                ("MRVL", oldest, "2026-09-23T00:00:00+00:00"),
+                ("VRT", middle, "2026-09-24T00:00:00+00:00"),
+                ("ANET", newest, "2026-09-25T00:00:00+00:00"),
+            ):
+                monitor.add_source(db, ticker, url, title=ticker)
+                monitor.add_release_events(db, ticker, [url])
+                db.execute(
+                    "UPDATE release_events SET detected_at=? WHERE url=?",
+                    (detected_at, url),
+                )
+            db.execute(
+                "UPDATE release_events SET detected_at=? WHERE url LIKE '%new-release'",
+                ("2026-09-24T12:00:00+00:00",),
+            )
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_batch = 2
+        rows, pending = app.body_candidates("2026-09-26T00:00:00+00:00")
+
+        self.assertEqual(pending, 5)
+        self.assertEqual([row["url"] for row in rows], [newest, oldest])
+
     def test_body_backlog_distinguishes_eligible_and_access_restricted_retries(self):
         detected_at = datetime.now(timezone.utc) - timedelta(hours=1)
         detected_at_text = detected_at.isoformat(timespec="milliseconds")

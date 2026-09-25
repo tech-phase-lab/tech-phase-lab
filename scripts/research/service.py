@@ -943,7 +943,7 @@ class AutomaticMonitor:
             blocked_hosts = set(blocked_host_state)
             probe_hosts = due_body_host_backoffs(db, due)
             ordered = db.execute("""
-              SELECT s.url
+              SELECT s.url,s.sha256,e.detected_at
               FROM sources s LEFT JOIN release_events e ON e.url=s.url
               WHERE s.source_mode='remote' AND (s.next_fetch_at IS NULL OR s.next_fetch_at<=?)
               ORDER BY CASE
@@ -973,12 +973,13 @@ class AutomaticMonitor:
             }
             due_probe_hosts = probe_hosts.intersection(eligible_hosts)
 
-            # Keep the highest-priority evidence candidate first, but reserve
-            # spare batch capacity for expired host circuits. Without this,
-            # a steady stream of new links from other hosts could postpone a
-            # lawful single recovery probe indefinitely.
+            # Keep the highest-priority evidence candidate first, then reserve
+            # spare capacity for expired host circuits and the oldest valid
+            # unfetched release. Without the latter fairness slot, a steady
+            # stream of newer releases could postpone an older release
+            # indefinitely. Recovery probes keep precedence over fairness.
             candidate_order = eligible_candidates
-            if self.body_batch > 1 and probe_hosts and eligible_candidates:
+            if self.body_batch > 1 and eligible_candidates:
                 probe_candidates = []
                 seen_probe_hosts = set()
                 for candidate in eligible_candidates:
@@ -994,6 +995,22 @@ class AutomaticMonitor:
                     if candidate["url"] not in pinned_urls:
                         pinned.append(candidate)
                         pinned_urls.add(candidate["url"])
+                if len(pinned) < self.body_batch:
+                    valid_unfetched_releases = []
+                    for candidate in eligible_candidates:
+                        if candidate["sha256"] is not None or candidate["detected_at"] is None:
+                            continue
+                        age_ms = timestamp_latency_ms(candidate["detected_at"], due)
+                        if age_ms is not None:
+                            valid_unfetched_releases.append((age_ms, candidate))
+                    oldest_release = max(
+                        valid_unfetched_releases,
+                        key=lambda item: item[0] if item[0] is not None else -1,
+                        default=(None, None),
+                    )[1]
+                    if oldest_release and oldest_release["url"] not in pinned_urls:
+                        pinned.append(oldest_release)
+                        pinned_urls.add(oldest_release["url"])
                 candidate_order = pinned + [
                     candidate for candidate in eligible_candidates
                     if candidate["url"] not in pinned_urls
