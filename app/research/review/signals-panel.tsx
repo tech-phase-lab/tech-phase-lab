@@ -16,6 +16,8 @@ type Route = {
 type Queue = {
   ok: boolean; error?: string; items: Signal[]; routes: Route[]; tickers: string[];
   counts: Record<string, number>; enabled: boolean; workerAlive: boolean; generatedAt: string;
+  xApiUsage?: { requested: boolean; configured: boolean; enabled: boolean; attemptsLast24Hours: number;
+    dailyLimit: number; limitReached: boolean; nextAvailableAt: string | null };
 };
 const kindNames: Record<string, string> = {
   baseline: "初回取得・過去資料", new: "新規検出・発表時刻は要確認", changed: "内容変更",
@@ -71,6 +73,12 @@ export default function SignalsPanel({ token }: { token: string }) {
       <p className={styles.note}>
         監視処理：{data.enabled && data.workerAlive ? "稼働中" : "停止中・保存済み記録"} · 画面更新 {timeLabel(data.generatedAt)}
       </p>
+      {data.xApiUsage && <p className={styles.note}>
+        X API：{data.xApiUsage.enabled ? "読取のみ有効" : data.xApiUsage.requested ? "設定不足で停止" : "OFF"}
+        {` · 24時間 ${data.xApiUsage.attemptsLast24Hours}/${data.xApiUsage.dailyLimit}回`}
+        {data.xApiUsage.limitReached ? ` · 上限到達（再開 ${timeLabel(data.xApiUsage.nextAvailableAt)}）` : ""}
+        {" · 自動公開なし"}
+      </p>}
       <details className={styles.routes}><summary>取得元の状態（{data.routes.length}経路）</summary>
         <ul>{data.routes.map(route => <li key={route.id}><strong>{route.name}</strong>
           <span>{route.error ? `取得失敗：${route.error}` : route.succeededAt ? "取得成功" : "未取得"} · 確認間隔 {route.intervalSeconds}秒</span>
