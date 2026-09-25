@@ -924,6 +924,8 @@ class ResearchServiceTests(unittest.TestCase):
             "rateLimited": 0,
             "recheckDeferred": 0,
             "neverFetched": 2,
+            "detectedNeverFetched": 1,
+            "baselineNeverFetched": 1,
             "extractionPending": 0,
             "extracted": 0,
             "total": 2,
@@ -953,6 +955,12 @@ class ResearchServiceTests(unittest.TestCase):
         backlog = app.public_state()["bodyBacklog"]
 
         self.assertEqual(backlog["neverFetched"], 1)
+        self.assertEqual(backlog["detectedNeverFetched"], 1)
+        self.assertEqual(backlog["baselineNeverFetched"], 0)
+        self.assertEqual(
+            backlog["detectedNeverFetched"] + backlog["baselineNeverFetched"],
+            backlog["neverFetched"],
+        )
         self.assertEqual(backlog["extractionPending"], 1)
         self.assertEqual(backlog["extracted"], 1)
         self.assertEqual(

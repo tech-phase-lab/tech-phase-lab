@@ -185,6 +185,9 @@ test("SEC evidence totals and filters distinguish exhibits from filing-body fall
   assert.match(liveTypes, /rateLimited\?: number/);
   assert.match(intakeDashboard, /backlog\.rateLimited \?\? 0/);
   assert.match(intakeDashboard, /証拠状態：本文未取得/);
+  assert.match(intakeDashboard, /新着検知/);
+  assert.match(intakeDashboard, /履歴基準/);
+  assert.match(intakeDashboard, /backlog\?\.detectedNeverFetched != null/);
   assert.match(intakeDashboard, /backlog\.extractionPending \?\? 0/);
 });
 

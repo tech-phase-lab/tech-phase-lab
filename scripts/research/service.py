@@ -346,6 +346,7 @@ class AutomaticMonitor:
                 "dueHostCircuits": 0, "scheduledHostProbes": 0,
                 "retryDeferred": 0, "accessRestricted": 0, "rateLimited": 0,
                 "recheckDeferred": 0, "neverFetched": 0,
+                "detectedNeverFetched": 0, "baselineNeverFetched": 0,
                 "extractionPending": 0, "extracted": 0,
                 "total": 0, "measuredAt": None,
             },
@@ -912,6 +913,12 @@ class AutomaticMonitor:
                 sum(CASE WHEN next_fetch_at>? AND error IS NULL THEN 1 ELSE 0 END)
                   AS recheck_deferred,
                 sum(CASE WHEN sha256 IS NULL THEN 1 ELSE 0 END) AS never_fetched,
+                sum(CASE WHEN sha256 IS NULL AND EXISTS (
+                  SELECT 1 FROM release_events e WHERE e.url=sources.url
+                ) THEN 1 ELSE 0 END) AS detected_never_fetched,
+                sum(CASE WHEN sha256 IS NULL AND NOT EXISTS (
+                  SELECT 1 FROM release_events e WHERE e.url=sources.url
+                ) THEN 1 ELSE 0 END) AS baseline_never_fetched,
                 sum(CASE WHEN sha256 IS NOT NULL AND coalesce(extracted_chars,0)=0
                          THEN 1 ELSE 0 END) AS extraction_pending,
                 sum(CASE WHEN sha256 IS NOT NULL AND coalesce(extracted_chars,0)>0
@@ -1018,6 +1025,8 @@ class AutomaticMonitor:
                 "rateLimited": int(backlog["rate_limited"] or 0),
                 "recheckDeferred": int(backlog["recheck_deferred"] or 0),
                 "neverFetched": int(backlog["never_fetched"] or 0),
+                "detectedNeverFetched": int(backlog["detected_never_fetched"] or 0),
+                "baselineNeverFetched": int(backlog["baseline_never_fetched"] or 0),
                 "extractionPending": int(backlog["extraction_pending"] or 0),
                 "extracted": int(backlog["extracted"] or 0),
                 "total": int(backlog["total"] or 0),

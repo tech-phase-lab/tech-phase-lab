@@ -116,7 +116,8 @@ export type MonitorState = {
     retryDeferred: number; accessRestricted: number;
     rateLimited?: number;
     recheckDeferred: number;
-    neverFetched?: number; extractionPending?: number; extracted?: number;
+    neverFetched?: number; detectedNeverFetched?: number; baselineNeverFetched?: number;
+    extractionPending?: number; extracted?: number;
     total: number; measuredAt: string | null;
   };
   bodyHostProbes?: {

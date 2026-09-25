@@ -208,6 +208,12 @@ It also partitions every remote-body row into never fetched, fetched but still
 missing extracted evidence, or successfully extracted. The three URL-free
 counts must sum to the reported total. This distinguishes missing evidence from
 routine rechecks without exposing source URLs, article text or error details.
+The never-fetched count is further divided into newly detected release URLs and
+historical baseline imports. Only durable `release_events` evidence qualifies a
+URL as newly detected; baseline imports never create those events and are not
+retroactively inferred. These aggregates describe evidence state, not complete
+source coverage or a delivery-time guarantee. Older backends omit the detail
+and remain display-compatible.
 When inline first-party evidence replaces the last failed remote body for a
 ticker, its stale body incident is resolved even though the hostname circuit
 remains in force. Another failed remote body keeps the ticker incident open.
