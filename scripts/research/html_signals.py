@@ -88,19 +88,26 @@ def json_path(value, path):
     return value
 
 
-def rich_text(value):
-    """Extract only Contentful rich-text leaf values, excluding metadata/navigation."""
+def rich_text(value, max_nodes=20_000, max_depth=20):
+    """Extract bounded Contentful rich-text leaves, excluding metadata/navigation."""
     parts = []
-    if isinstance(value, list):
-        for child in value:
-            parts.extend(rich_text(child))
-    elif isinstance(value, dict):
-        if value.get('nodeType') == 'text' and isinstance(value.get('value'), str):
-            parts.append(value['value'])
-        else:
-            for child in value.values():
-                if isinstance(child, (dict, list)):
-                    parts.extend(rich_text(child))
+    nodes = 0
+    stack = [(value, 0)]
+    while stack:
+        node, depth = stack.pop()
+        nodes += 1
+        if nodes > max_nodes or depth > max_depth:
+            raise ValueError('signal-article-next-data-limit')
+        if isinstance(node, list):
+            stack.extend((child, depth + 1) for child in reversed(node))
+        elif isinstance(node, dict):
+            if node.get('nodeType') == 'text' and isinstance(node.get('value'), str):
+                parts.append(node['value'])
+                continue
+            stack.extend(
+                (child, depth + 1) for child in reversed(list(node.values()))
+                if isinstance(child, (dict, list))
+            )
     return parts
 
 
@@ -203,6 +210,8 @@ def collect(source, previous, tickers, request):
                         title = ' '.join(next_title.split())[:500]
                 if not title or len(text) < 120:
                     raise ValueError('signal-article-body-limit')
+                truncated = len(text) >= signals.MAX_TEXT
+                text = text[:signals.MAX_TEXT]
                 matches = signals.match_companies(title + '\n' + text, tickers)
                 for ticker in source.get('tickers', []):
                     if ticker in tickers:
@@ -210,7 +219,7 @@ def collect(source, previous, tickers, request):
                 items.append({'url': url, 'title': title, 'text': text,
                               'publishedAt': signals.date_value(article.published or ''),
                               'matches': matches,
-                              'truncated': len(text) >= signals.MAX_TEXT,
+                              'truncated': truncated,
                               'baseline': entry['baseline'] and not entry.get('succeeded')})
                 entry.update(etag=fetched.get('etag'), last_modified=fetched.get('last_modified'))
             entry.update(succeeded=checked, error=None, failures=0)

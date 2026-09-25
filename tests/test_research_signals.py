@@ -447,6 +447,14 @@ class SignalTests(unittest.TestCase):
         self.assertIn('August 3, 2026', item['excerpt'])
         self.assertNotIn('do-not-extract', item['excerpt'])
 
+    def test_next_data_rich_text_rejects_excessive_nesting(self):
+        import html_signals
+        nested = {'nodeType': 'text', 'value': 'evidence'}
+        for _ in range(21):
+            nested = {'content': [nested]}
+        with self.assertRaisesRegex(ValueError, 'signal-article-next-data-limit'):
+            html_signals.rich_text(nested)
+
     def test_specific_article_body_excludes_related_stories_and_duplicate_title(self):
         source = next(s for s in signals.SOURCES if s['id'] == 'coreweave-blog')
         def request(route, validators):
