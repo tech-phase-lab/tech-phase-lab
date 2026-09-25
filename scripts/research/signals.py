@@ -657,7 +657,7 @@ def public_price_targets(db, sources=SOURCES, now=None, limit=20):
     schema(db)
     now = now or datetime.now(timezone.utc)
     approved = {s["id"]: s for s in sources if s.get("format") == "x-api"}
-    items = []
+    by_change = {}
     rows = db.execute("""SELECT id,source_id,url,title,tickers_json,published_at,observed_at
                          FROM signal_events WHERE event_kind='new' AND source_id LIKE 'x-%'
                          ORDER BY observed_at DESC,id DESC LIMIT 300""").fetchall()
@@ -682,11 +682,15 @@ def public_price_targets(db, sources=SOURCES, now=None, limit=20):
                 continue
         except (ValueError, TypeError, AttributeError, OverflowError):
             continue
-        items.append({"id": row["id"], "ticker": tickers[0], "firm": firm.group(1),
-                      "previous": old, "latest": new, "source": source["name"], "url": url,
-                      "publishedAt": published.isoformat(), "observedAt": observed.isoformat()})
-        if len(items) >= max(1, min(limit, 30)):
-            break
+        # Multiple monitored accounts can post the same analyst action. Keep
+        # its first detection and one source link instead of showing it twice.
+        change = (tickers[0], firm.group(1).casefold(), old, new)
+        current = by_change.get(change)
+        if current is None or (observed.isoformat(), row["id"]) < (current["observedAt"], current["id"]):
+            by_change[change] = {"id": row["id"], "ticker": tickers[0], "firm": firm.group(1),
+                                 "previous": old, "latest": new, "source": source["name"], "url": url,
+                                 "publishedAt": published.isoformat(), "observedAt": observed.isoformat()}
+    items = sorted(by_change.values(), key=lambda item: item["publishedAt"], reverse=True)[:max(1, min(limit, 30))]
     return {"ok": True, "items": items, "generatedAt": stamp()}
 
 

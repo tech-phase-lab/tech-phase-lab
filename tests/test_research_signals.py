@@ -60,6 +60,26 @@ class SignalTests(unittest.TestCase):
         self.assertEqual((result["items"][0]["previous"], result["items"][0]["latest"]), (620, 720))
         self.assertNotIn("private raw post text", str(result))
 
+    def test_public_target_from_multiple_accounts_uses_first_detection_once(self):
+        signals.schema(self.db)
+        reference = datetime(2026, 9, 25, 12, tzinfo=timezone.utc)
+        for index, (source_id, observed) in enumerate([
+            ("x-tipranks", reference - timedelta(minutes=2)),
+            ("x-thefly", reference - timedelta(minutes=3)),
+            ("x-wallstengine", reference - timedelta(minutes=1)),
+        ]):
+            self.db.execute("""INSERT INTO signal_events(source_id,url,sha,previous_sha,title,tickers_json,
+              matches_json,event_kind,published_at,published_on,observed_at,excerpt,diff,truncated)
+              VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,0)""", (
+                source_id, f"https://x.com/example/status/{index + 1}", str(index), "",
+                "AMD price target raised to $720 from $620 at BofA", '["AMD"]', "{}", "new",
+                (reference - timedelta(minutes=4)).isoformat(), None, observed.isoformat(), "", "",
+            ))
+        result = signals.public_price_targets(self.db, now=reference)
+        self.assertEqual(len(result["items"]), 1)
+        self.assertEqual(result["items"][0]["source"], "X · The Fly")
+        self.assertEqual(result["items"][0]["observedAt"], (reference - timedelta(minutes=3)).isoformat())
+
     def test_signal_route_errors_have_safe_specific_diagnostic_codes(self):
         cases = {
             "unexpected-signal-content-type": "signal-content-type",
