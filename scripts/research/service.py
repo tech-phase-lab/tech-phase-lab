@@ -347,6 +347,9 @@ class AutomaticMonitor:
                 "retryDeferred": 0, "accessRestricted": 0, "rateLimited": 0,
                 "recheckDeferred": 0, "neverFetched": 0,
                 "detectedNeverFetched": 0, "baselineNeverFetched": 0,
+                "detectedNeverFetchedMeasured": 0, "detectedNeverFetchedUnmeasured": 0,
+                "detectedNeverFetchedAgeMaxMs": None,
+                "oldestDetectedNeverFetchedAt": None,
                 "extractionPending": 0, "extracted": 0,
                 "total": 0, "measuredAt": None,
             },
@@ -925,6 +928,17 @@ class AutomaticMonitor:
                          THEN 1 ELSE 0 END) AS extracted
               FROM sources WHERE source_mode='remote'
             """, (due, due, due, due, due)).fetchone()
+            detected_waits = []
+            for detected in db.execute("""
+              SELECT e.detected_at
+              FROM sources s JOIN release_events e ON e.url=s.url
+              WHERE s.source_mode='remote' AND s.sha256 IS NULL
+              LIMIT 10000
+            """).fetchall():
+                age_ms = timestamp_latency_ms(detected["detected_at"], due)
+                if age_ms is not None:
+                    detected_waits.append((age_ms, detected["detected_at"]))
+            oldest_detected_wait = max(detected_waits, default=None)
             blocked_host_state, next_host_probe_at = active_body_host_backoff_state(db, due)
             blocked_hosts = set(blocked_host_state)
             probe_hosts = due_body_host_backoffs(db, due)
@@ -1027,6 +1041,16 @@ class AutomaticMonitor:
                 "neverFetched": int(backlog["never_fetched"] or 0),
                 "detectedNeverFetched": int(backlog["detected_never_fetched"] or 0),
                 "baselineNeverFetched": int(backlog["baseline_never_fetched"] or 0),
+                "detectedNeverFetchedMeasured": len(detected_waits),
+                "detectedNeverFetchedUnmeasured": max(
+                    0, int(backlog["detected_never_fetched"] or 0) - len(detected_waits)
+                ),
+                "detectedNeverFetchedAgeMaxMs": (
+                    oldest_detected_wait[0] if oldest_detected_wait else None
+                ),
+                "oldestDetectedNeverFetchedAt": (
+                    oldest_detected_wait[1] if oldest_detected_wait else None
+                ),
                 "extractionPending": int(backlog["extraction_pending"] or 0),
                 "extracted": int(backlog["extracted"] or 0),
                 "total": int(backlog["total"] or 0),

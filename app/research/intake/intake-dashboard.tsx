@@ -132,8 +132,11 @@ function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], backlog?: Monitor
     ? ` · 復旧確認待ち ${backlog.dueHostCircuits}経路（今回 ${backlog.scheduledHostProbes ?? 0}件）`
     : "";
   const deferred = backlog ? `${hostDeferred}${dueProbes} · エラー再試行待ち ${backlog.retryDeferred}件（アクセス制限 ${backlog.accessRestricted}件・レート制限 ${backlog.rateLimited ?? 0}件） · 定期再確認待ち ${backlog.recheckDeferred}件` : "";
+  const detectedWait = backlog?.detectedNeverFetchedMeasured
+    ? `・最長待機 ${duration(backlog.detectedNeverFetchedAgeMaxMs)}・最古検知 ${time(backlog.oldestDetectedNeverFetchedAt ?? null)} JST${backlog.detectedNeverFetchedUnmeasured ? `・時刻検証不可 ${backlog.detectedNeverFetchedUnmeasured}件` : ""}`
+    : backlog?.detectedNeverFetchedUnmeasured ? `・時刻検証不可 ${backlog.detectedNeverFetchedUnmeasured}件` : "";
   const neverFetchedDetail = backlog?.detectedNeverFetched != null && backlog?.baselineNeverFetched != null
-    ? `（新着検知 ${backlog.detectedNeverFetched}件・履歴基準 ${backlog.baselineNeverFetched}件）`
+    ? `（新着検知 ${backlog.detectedNeverFetched}件${detectedWait}・履歴基準 ${backlog.baselineNeverFetched}件）`
     : "";
   const evidenceState = backlog && backlog.neverFetched != null
     ? ` · 証拠状態：本文未取得 ${backlog.neverFetched}件${neverFetchedDetail}・抽出不足 ${backlog.extractionPending ?? 0}件・抽出済み ${backlog.extracted ?? 0}件`

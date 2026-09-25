@@ -214,6 +214,10 @@ URL as newly detected; baseline imports never create those events and are not
 retroactively inferred. These aggregates describe evidence state, not complete
 source coverage or a delivery-time guarantee. Older backends omit the detail
 and remain display-compatible.
+For unfetched newly detected releases, the preview also reports the oldest
+validated detection timestamp and maximum measured wait. Future, timezone-free,
+invalid or over-31-day intervals are excluded and counted as unmeasured. This is
+a queue-age observation, not a promised fetch or subscriber-delivery time.
 When inline first-party evidence replaces the last failed remote body for a
 ticker, its stale body incident is resolved even though the hostname circuit
 remains in force. Another failed remote body keeps the ticker incident open.

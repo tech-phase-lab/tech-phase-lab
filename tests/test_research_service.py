@@ -899,17 +899,23 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertTrue(rows[0]["url"].endswith("new-release"))
 
     def test_body_backlog_distinguishes_eligible_and_access_restricted_retries(self):
+        detected_at = datetime.now(timezone.utc) - timedelta(hours=1)
+        detected_at_text = detected_at.isoformat(timespec="milliseconds")
         with monitor.connect(self.db_path) as db:
             db.execute("""
               UPDATE sources
               SET error='http-403',fetch_failures=1,next_fetch_at='2099-01-01T00:00:00+00:00'
               WHERE url LIKE '%older'
             """)
+            db.execute(
+                "UPDATE release_events SET detected_at=?", (detected_at_text,)
+            )
             db.commit()
 
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         _rows, pending = app.body_candidates("2026-09-24T05:00:00+00:00")
         backlog = app.public_state()["bodyBacklog"]
+        detected_age_ms = backlog.pop("detectedNeverFetchedAgeMaxMs")
 
         self.assertEqual(pending, 1)
         self.assertEqual(backlog, {
@@ -926,11 +932,16 @@ class ResearchServiceTests(unittest.TestCase):
             "neverFetched": 2,
             "detectedNeverFetched": 1,
             "baselineNeverFetched": 1,
+            "detectedNeverFetchedMeasured": 1,
+            "detectedNeverFetchedUnmeasured": 0,
+            "oldestDetectedNeverFetchedAt": detected_at_text,
             "extractionPending": 0,
             "extracted": 0,
             "total": 2,
             "measuredAt": "2026-09-24T05:00:00+00:00",
         })
+        self.assertGreaterEqual(detected_age_ms, 3600000)
+        self.assertLess(detected_age_ms, 3610000)
         self.assertNotIn("https://", json.dumps(backlog))
 
     def test_body_backlog_partitions_evidence_state_without_source_details(self):
@@ -948,6 +959,7 @@ class ResearchServiceTests(unittest.TestCase):
               SET sha256=?,raw_sha256=?,body_sha256=?,extracted_text='Evidence',extracted_chars=8
               WHERE url=?
             """, ("c" * 64, "c" * 64, "d" * 64, extracted))
+            db.execute("UPDATE release_events SET detected_at='2099-01-01T00:00:00+00:00'")
             db.commit()
 
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
@@ -961,6 +973,15 @@ class ResearchServiceTests(unittest.TestCase):
             backlog["detectedNeverFetched"] + backlog["baselineNeverFetched"],
             backlog["neverFetched"],
         )
+        self.assertEqual(
+            backlog["detectedNeverFetchedMeasured"]
+            + backlog["detectedNeverFetchedUnmeasured"],
+            backlog["detectedNeverFetched"],
+        )
+        self.assertEqual(backlog["detectedNeverFetchedMeasured"], 0)
+        self.assertEqual(backlog["detectedNeverFetchedUnmeasured"], 1)
+        self.assertIsNone(backlog["detectedNeverFetchedAgeMaxMs"])
+        self.assertIsNone(backlog["oldestDetectedNeverFetchedAt"])
         self.assertEqual(backlog["extractionPending"], 1)
         self.assertEqual(backlog["extracted"], 1)
         self.assertEqual(

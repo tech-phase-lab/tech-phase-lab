@@ -117,6 +117,9 @@ export type MonitorState = {
     rateLimited?: number;
     recheckDeferred: number;
     neverFetched?: number; detectedNeverFetched?: number; baselineNeverFetched?: number;
+    detectedNeverFetchedMeasured?: number; detectedNeverFetchedUnmeasured?: number;
+    detectedNeverFetchedAgeMaxMs?: number | null;
+    oldestDetectedNeverFetchedAt?: string | null;
     extractionPending?: number; extracted?: number;
     total: number; measuredAt: string | null;
   };
