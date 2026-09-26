@@ -126,6 +126,32 @@ def visible_date(text, pattern, date_format):
     return parsed.date().isoformat()
 
 
+def article_retry_due(next_check, checked):
+    """Keep corrupt persisted child schedules from deferring an article forever."""
+    from datetime import timedelta, timezone
+
+    try:
+        current = datetime.fromisoformat(str(checked).replace('Z', '+00:00'))
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError('signal-article-reference-time') from exc
+    if current.tzinfo is None:
+        raise ValueError('signal-article-reference-timezone')
+    current = current.astimezone(timezone.utc)
+    if not next_check:
+        return True
+    try:
+        scheduled = datetime.fromisoformat(str(next_check).replace('Z', '+00:00'))
+        if scheduled.tzinfo is None:
+            return True
+        scheduled = scheduled.astimezone(timezone.utc)
+    except (TypeError, ValueError, OverflowError):
+        return True
+    # Seven days is the longest lawful access-control backoff used below.
+    # Valid bounded future schedules remain deferred; corrupt unbounded values
+    # become due and are replaced after the single normal request attempt.
+    return scheduled <= current or scheduled > current + timedelta(days=7)
+
+
 def collect(source, previous, tickers, request, clock=None):
     # Local import avoids a module initialization cycle.
     import signals
@@ -196,7 +222,8 @@ def collect(source, previous, tickers, request, clock=None):
         children.setdefault(url, {'baseline': initial})
     keep = list(dict.fromkeys(urls + list(children)))[:capacity]
     children = {url: children[url] for url in keep}
-    pending = [url for url in keep if children[url].get('next_check', '') <= checked]
+    pending = [url for url in keep
+               if article_retry_due(children[url].get('next_check'), checked)]
     pending.sort(key=lambda url: (children[url].get('checked', ''), keep.index(url)))
     # Retry newly discovered news before unfinished historical imports. Otherwise
     # a temporary failure pushes a new story behind every unchecked baseline.

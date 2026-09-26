@@ -1156,7 +1156,7 @@ class SignalTests(unittest.TestCase):
             children[base + f'new-{i}'] = {
                 'baseline': False, 'checked': '2026-01-01T00:00:00.000+00:00',
                 'next_check': '', 'failures': 1, 'error': 'http-503'}
-        children[base + 'new-3']['next_check'] = '2099-01-01T00:00:00.000+00:00'
+        children[base + 'new-3']['next_check'] = '2026-09-25T10:30:00+00:00'
         calls = []
         def request(route, validators):
             if route['url'] == source['url']:
@@ -1164,15 +1164,30 @@ class SignalTests(unittest.TestCase):
             calls.append(route['url'])
             return {'body': ('<main><h1>Infrastructure</h1><p>'
                              + 'Nebius infrastructure update. ' * 10 + '</p></main>').encode()}
+        clock = lambda: '2026-09-25T10:00:00+00:00'
         response = collect(source, {'index_state': json.dumps({
-            'initialized': True, 'children': children})}, self.tickers, request)
+            'initialized': True, 'children': children})}, self.tickers, request, clock)
         self.assertEqual(calls, [base + 'new-0', base + 'new-1', base + 'old-0'])
         self.assertEqual([item['baseline'] for item in response['_items']], [False, False, True])
         state = json.loads(response['index_state'])
         calls.clear()
-        collect(source, {'index_state': json.dumps(state)}, self.tickers, request)
+        collect(source, {'index_state': json.dumps(state)}, self.tickers, request, clock)
         self.assertEqual(calls, [base + 'new-2', base + 'old-1', base + 'old-2'])
         self.assertNotIn(base + 'new-3', calls)
+
+    def test_article_retry_recovers_malformed_or_unbounded_persisted_schedules(self):
+        from html_signals import article_retry_due
+
+        checked = '2026-09-25T10:00:00+00:00'
+        self.assertTrue(article_retry_due(None, checked))
+        self.assertTrue(article_retry_due('not-a-timestamp', checked))
+        self.assertTrue(article_retry_due('2026-09-25T10:30:00', checked))
+        self.assertTrue(article_retry_due('2026-10-02T10:00:00.001+00:00', checked))
+        self.assertFalse(article_retry_due('2026-10-02T10:00:00+00:00', checked))
+        self.assertFalse(article_retry_due('2026-09-25T10:30:00-04:00', checked))
+
+        with self.assertRaisesRegex(ValueError, 'signal-article-reference-timezone'):
+            article_retry_due('', '2026-09-25T10:00:00')
 
     def test_due_failed_baseline_retries_without_starving_history(self):
         from html_signals import collect
