@@ -73,7 +73,8 @@ class PushTests(unittest.TestCase):
     def test_public_status_is_persistent_and_contains_no_subscription_details(self):
         self.register()
         monotonic = iter([10.0, 10.25])
-        result=push.deliver(self.db,[event()],lambda *_:201,self.now,lambda:next(monotonic))
+        result=push.deliver(self.db,[event()],lambda *_:201,self.now,
+            lambda:next(monotonic),lambda:self.now)
         self.assertEqual(result['activeDevices'],1)
         self.assertEqual(result['attempted24Hours'],1)
         self.assertEqual(result['accepted24Hours'],1)
@@ -111,13 +112,32 @@ class PushTests(unittest.TestCase):
         self.register()
         monotonic = iter([10.0, 70.001])
         result = push.deliver(
-            self.db, [event()], lambda *_: 201, self.now, lambda: next(monotonic))
+            self.db, [event()], lambda *_: 201, self.now,
+            lambda: next(monotonic), lambda: self.now)
         self.assertEqual(result['attempted24Hours'], 1)
         self.assertEqual(result['detectionToAttemptSamples24Hours'], 1)
         self.assertEqual(result['providerResponseSamples24Hours'], 0)
         self.assertEqual(result['detectionToOutcomeSamples24Hours'], 0)
         self.assertIsNone(result['providerResponseAverageMs24Hours'])
         self.assertIsNone(result['detectionToOutcomeAverageMs24Hours'])
+
+    def test_each_device_records_its_actual_attempt_start(self):
+        self.register()
+        second = subscription('web.push.apple.com')
+        second['endpoint'] = 'https://web.push.apple.com/push/second'
+        push.register(self.db, {'subscription':second,'tickers':['MU'],'language':'en'},
+            {'MU'}, self.now - 10)
+        wall = iter([self.now, self.now + 2])
+        monotonic = iter([10.0, 10.1, 20.0, 20.1])
+        result = push.deliver(self.db, [event()], lambda *_: 201, self.now,
+            lambda: next(monotonic), lambda: next(wall))
+        self.assertEqual(result['attempted'], 2)
+        self.assertEqual(result['detectionToAttemptSamples24Hours'], 2)
+        self.assertEqual(result['detectionToAttemptAverageMs24Hours'], 2000)
+        self.assertEqual(result['detectionToAttemptMaxMs24Hours'], 3000)
+        attempts = [row[0] for row in self.db.execute(
+            'SELECT attempted_at FROM push_deliveries ORDER BY attempted_at')]
+        self.assertEqual(attempts, [self.now, self.now + 2])
 
     def test_existing_delivery_ledger_migrates_without_inventing_latency(self):
         self.db.close()

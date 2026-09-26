@@ -81,6 +81,10 @@ withheld. Separating queue/polling delay from network response avoids presenting
 one combined number as a root cause. Provider acceptance and attempt completion
 still do not prove device receipt or display.
 
+Each delivery row records the wall-clock time when that device's network attempt
+actually begins. A single batch timestamp is not reused across devices, so a
+later device's queueing delay remains visible in detection-to-attempt metrics.
+
 The service also derives the age of the last five-second worker poll. Once that
 age exceeds 30 seconds while the monitor itself remains current, health becomes
 degraded with the fixed `web-push-stale` code and the operational incident ledger

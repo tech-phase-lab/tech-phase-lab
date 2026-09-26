@@ -185,10 +185,11 @@ def public_status(db, now=None):
     }
 
 
-def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic):
+def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
+            wall_now=time.time):
     if not configuration()['enabled']:
         return {'status': 'disabled', 'attempted': 0}
-    now = time.time() if now is None else now
+    now = wall_now() if now is None else now
     attempted = accepted = uncertain = 0
     for device in db.execute('SELECT * FROM push_devices WHERE active=1').fetchall():
         watched = set(json.loads(device['tickers']))
@@ -197,11 +198,14 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic):
             if ('*' not in watched and item['ticker'] not in watched) or observed <= device['since'] or not 0 <= now - observed <= 300:
                 continue
             key = event_key(item)
+            # Record each network attempt when it actually starts. Reusing the
+            # batch timestamp understates queueing for later devices.
+            attempted_at = wall_now()
             # Reserve before network; a restart cannot silently send it twice.
             with db:
                 claim = db.execute('''INSERT OR IGNORE INTO push_deliveries
                     (device_id,event_key,status,attempted_at,observed_at) VALUES(?,?,?,?,?)''',
-                    (device['id'], key, 'uncertain', now, observed)).rowcount
+                    (device['id'], key, 'uncertain', attempted_at, observed)).rowcount
             if not claim:
                 continue
             ja = device['language'] == 'ja'

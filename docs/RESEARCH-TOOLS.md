@@ -52,6 +52,8 @@ Provider round-trip and detection-to-attempt-completion are stored and displayed
 as separate 24-hour aggregates. Non-finite, negative and over-60-second provider
 durations are withheld, so queue delay is not confused with provider response.
 Neither measure proves device receipt or display.
+Every device delivery stores its own actual attempt-start wall time instead of
+reusing the poll batch timestamp, preserving queue delay between pilot devices.
 
 The public-safe live operations payload is identical for every viewer. Its
 successful response is shared at the Vercel edge for two seconds, with a
