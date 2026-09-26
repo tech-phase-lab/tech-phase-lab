@@ -15,7 +15,7 @@ export default function NotificationSettings({ lang }: { lang: Language }) {
     {open && <div id="price-target-notifications" className={styles.notificationBody}>
       <div className={styles.notificationPreference}>
         <div>
-          <strong className={styles.notificationTitle} id="price-target-alert-label">{t("目標株価の通知", "Price target alerts")}</strong>
+          <strong className={styles.notificationTitle} id="price-target-alert-label">{t("目標株価のスマホ通知", "Price target phone alerts")}</strong>
           <p>{t("引き上げ・引き下げをお知らせ", "Get notified of increases and decreases")}</p>
         </div>
         <button type="button" role="switch" aria-checked={previewEnabled} aria-labelledby="price-target-alert-label" aria-describedby="notification-preview-note" className={styles.notificationSwitch} onClick={() => setPreviewEnabled(value => !value)}>

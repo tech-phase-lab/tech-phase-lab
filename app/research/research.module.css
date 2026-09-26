@@ -1552,3 +1552,7 @@
 .announcementContext dt { color: var(--muted); font-size: 11px; }
 .announcementContext dd { margin: 2px 0 0; overflow-wrap: anywhere; }
 .announcementContext dd span { display: block; }
+
+.homeNews{margin:0 0 20px;padding:20px;border:1px solid var(--line);border-radius:9px;background:var(--panel)}
+.homeNews h2{margin:0 0 12px;font-size:19px}
+.homeNews p{margin:0;color:var(--muted);font-size:13px}

@@ -9,7 +9,7 @@ import { valueLabel, dateLabel } from "@/lib/research/presentation";
 import { researchViewFromHash, researchViewHashes, type ResearchView } from "@/lib/research/navigation";
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./research.module.css";
-import HomeTools, { FavoriteResearch } from "./home-tools";
+import HomeTools from "./home-tools";
 import PriceTargetsPanel from "./price-targets-panel";
 
 const storageKey = "tech-phase:research-saved:v1";
@@ -116,20 +116,13 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
     }
   }
   function clearFilters() { setQuery(""); setTicker("all"); setCategory("all"); }
-  function openFavoriteResearch(event: ResearchEvent) {
-    setQuery("");
-    setCategory("all");
-    setTicker(event.ticker);
-    setActiveId(event.id);
-    openView("changes");
-  }
   function openView(next: ResearchView) {
     const hash = researchViewHashes[next];
     if (window.location.hash !== hash) window.history.pushState(null, "", hash);
     setTab(next);
     if (next === "home") clearFilters();
     requestAnimationFrame(() => {
-      (next === "home" ? document.getElementById("research-main") : workspaceRef.current)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      (next === "home" || next === "companies" || next === "pro" ? document.getElementById("research-main") : workspaceRef.current)?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   }
 
@@ -143,10 +136,10 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
         <button aria-current={tab === "home" ? "page" : undefined} onClick={() => openView("home")}>{t("ホーム", "Home")}</button>
         <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}>{t("何が変わった？", "What changed?")}</button>
         <Link href="/research/stocks">{t("米国株を探す", "Find stocks")}</Link>
-        <a href="#monitored-companies">{t("監視対象", "Company watch")}</a>
+        <button onClick={() => openView("companies")}>{t("監視対象", "Company watch")}</button>
         <button aria-current={tab === "metrics" ? "page" : undefined} onClick={() => openView("metrics")}>{t("決算・指標", "Financials")}</button>
         <button aria-current={tab === "saved" ? "page" : undefined} onClick={() => openView("saved")}>{t("保存", "Saved")}<small>{saved.filter((id) => events.some((event) => event.id === id)).length}</small></button>
-        <a className={styles.proNav} href="#tech-phase-pro">Tech Phase PRO</a>
+        <button className={styles.proNav} onClick={() => openView("pro")}>Tech Phase PRO</button>
       </nav>
       <div className={styles.headerRight}>
         <span className={styles.edition}>RESEARCH PREVIEW <span>02</span></span>
@@ -164,10 +157,10 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
           <button aria-current={tab === "home" ? "page" : undefined} onClick={() => openView("home")}>{t("ホーム", "Home")}</button>
           <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}>{t("何が変わった？", "What changed?")}</button>
           <Link href="/research/stocks">{t("米国株を探す", "Find stocks")}<span aria-hidden="true">↗</span></Link>
-          <a href="#monitored-companies">{t("監視対象", "Company watch")}<small>{monitoredCompanies.length}</small></a>
+          <button onClick={() => openView("companies")}>{t("監視対象", "Company watch")}<small>{monitoredCompanies.length}</small></button>
           <button aria-current={tab === "metrics" ? "page" : undefined} onClick={() => openView("metrics")}>{t("決算・指標", "Financials")}</button>
           <button aria-current={tab === "saved" ? "page" : undefined} onClick={() => openView("saved")}>{t("保存", "Saved")}<small>{saved.filter((id) => events.some((event) => event.id === id)).length}</small></button>
-          <a className={styles.sideProNav} href="#tech-phase-pro">Tech Phase PRO</a>
+          <button className={styles.sideProNav} onClick={() => openView("pro")}>Tech Phase PRO</button>
         </nav>
         <div className={styles.coverage}>
           <div className={styles.filterHeading}><p className={styles.navLabel}>{t("この一覧の銘柄", "FILTER THESE NOTES")}</p><span>{coveredCompanies.length}</span></div>
@@ -184,12 +177,18 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
       <main id="research-main" className={styles.main}>
         <div className={styles.previewNotice}><span>{t("検証版", "PREVIEW")}</span><p>{t("下の検証レポートは2026年5〜9月の過去事例です。目標株価欄のみ監視中のX投稿を自動更新しています。公式発表の自動レポートと会員配信は開始していません。", "The research reports below are historical examples from May–September 2026. Only the X price target panel updates automatically. Automated reports from official releases and member delivery are not live.")}</p></div>
 
-        <div className={styles.heading}><div><p className={styles.eyebrow}>{tab === "home" ? t("ホーム / リサーチデスク", "HOME / THE RESEARCH DESK") : "THE RESEARCH DESK"}</p><h1>{tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : tab === "changes" ? t("何が変わった？を、根拠付きで。", "See what changed. Follow the evidence.") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1><p>{t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p></div><div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>2026.09.19</strong></div></div>
+        <div className={styles.heading}><div><p className={styles.eyebrow}>{tab === "home" ? t("ホーム / リサーチデスク", "HOME / THE RESEARCH DESK") : "THE RESEARCH DESK"}</p><h1>{tab === "companies" ? t("監視対象", "Company watch") : tab === "pro" ? "Tech Phase PRO" : tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : tab === "changes" ? t("何が変わった？を、根拠付きで。", "See what changed. Follow the evidence.") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1><p>{t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p></div><div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>2026.09.19</strong></div></div>
 
-        <HomeTools lang={lang} onChanges={() => openView("changes")} />
-        {tab === "home" && <FavoriteResearch lang={lang} events={events} onOpenResearch={openFavoriteResearch} />}
+        {tab === "home" && <>
+          <HomeTools lang={lang} onChanges={() => openView("changes")} />
+          <section className={styles.homeNews} aria-labelledby="home-news-title">
+            <h2 id="home-news-title">{t("速報ニュース", "Breaking news")}</h2>
+            <p>{t("ニュース配信を準備中です。", "News delivery is being prepared.")}</p>
+          </section>
+          <PriceTargetsPanel lang={lang} />
+        </>}
 
-        <section id="monitored-companies" className={styles.companyDirectory} aria-labelledby="monitored-companies-title">
+        {tab === "companies" && <section id="monitored-companies" className={styles.companyDirectory} aria-labelledby="monitored-companies-title">
           <div className={styles.directoryHead}>
             <div><p className={styles.eyebrow}>OFFICIAL SOURCE WATCH</p><h2 id="monitored-companies-title">{t(`監視対象 ${monitoredCompanies.length}社`, `${monitoredCompanies.length} monitored companies`)}</h2></div>
             <div className={styles.directoryLegend}><span><i className={styles.verifiedDot} aria-hidden="true" />{t("数値比較を公開済み", "Verified comparison")}</span><span><i aria-hidden="true" />{t("取得状況を公開", "Intake status")}</span></div>
@@ -203,9 +202,9 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
               </Link>)}</div>
             </section>)}
           </div>
-        </section>
+        </section>}
 
-        <section id="tech-phase-pro" className={styles.accessMatrix} aria-labelledby="access-matrix-title">
+        {tab === "pro" && <section id="tech-phase-pro" className={styles.accessMatrix} aria-labelledby="access-matrix-title">
           <div className={styles.accessHead}>
             <div><p className={styles.eyebrow}>FREE / TECH PHASE PRO</p><h2 id="access-matrix-title">{t("無料で調べる。PROなら変化を見逃さない。", "Research for free. Stay ahead of change with PRO.")}</h2></div>
             <p>{t("課金・会員公開は未開始。現在の実装と提供予定を混ぜずに表示しています。", "Billing and member access are not live. Current features and planned PRO features are labeled separately.")}</p>
@@ -232,16 +231,16 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
               <p className={styles.accessNote}>{t("速度・対象範囲は実測後に確定。未承認の要約、契約未確認のニュースや価格は配信しません。", "Speed and coverage will be set only after measurement. Unapproved briefs and unlicensed news or price data will not be delivered.")}</p>
             </article>
           </div>
-        </section>
+        </section>}
 
-        <section id="what-changed" ref={workspaceRef} className={styles.workspace}>
+        {(tab === "changes" || tab === "metrics" || tab === "saved") && <section id="what-changed" ref={workspaceRef} className={styles.workspace}>
           <span id="metrics" className={styles.anchorTarget} aria-hidden="true" />
           <span id="saved" className={styles.anchorTarget} aria-hidden="true" />
           <div className={styles.toolbar}>
-            <div className={styles.sectionTitle}><h2>{tab === "metrics" ? t("指標一覧", "Metrics") : tab === "saved" ? t("保存した記事", "Saved research") : tab === "home" ? t("最新の「何が変わった？」", "Latest: What changed?") : t("何が変わった？", "What changed?")}</h2><span>{tab === "metrics" ? allMetrics.length : filtered.length}</span></div>
+            <div className={styles.sectionTitle}><h2>{tab === "metrics" ? t("指標一覧", "Metrics") : tab === "saved" ? t("保存した記事", "Saved research") : t("何が変わった？", "What changed?")}</h2><span>{tab === "metrics" ? allMetrics.length : filtered.length}</span></div>
             <label className={styles.search}><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input aria-label={t("銘柄・キーワードで検索", "Search ticker or keyword")} placeholder={t("銘柄・キーワードを検索", "Search ticker or keyword")} value={query} onChange={(e) => setQuery(e.target.value)} /></label>
           </div>
-          {(tab === "home" || tab === "changes") && <PriceTargetsPanel lang={lang} />}
+          {tab === "changes" && <PriceTargetsPanel lang={lang} />}
           <div className={styles.filters}>
             {[{ id: "all", label: t("すべて", "All topics") }, { id: "cloud", label: t("AIクラウド", "AI cloud") }, { id: "memory", label: t("半導体", "Semiconductors") }].map((item) => <button key={item.id} aria-pressed={category === item.id} onClick={() => { setCategory(item.id); setTicker("all"); }}>{item.label}</button>)}
             {ticker !== "all" && <button className={styles.activeTicker} onClick={() => setTicker("all")} aria-label={t(`${ticker}の絞り込みを解除`, `Clear ${ticker} filter`)}>{ticker} ×</button>}
@@ -283,7 +282,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
               <p className={styles.revision}>{t("資料照合", "Source review")}: {active.reviewedOn} · v1<br/>{active.kind === "external-research" ? t("公開された要約のみを根拠に独自に整理しています。有料記事の本文は転載していません。", "This note is based on the publisher's public summary. The paid article is not reproduced.") : t("発表時点の内容を整理した検証例。以後の変更は自動反映していません。", "A review of the announcement as published. Later changes are not automatically incorporated.")}</p>
             </article>}
           </div>}
-        </section>
+        </section>}
         <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("公式発表に基づく検証用リサーチ。自動監視は運営検証中、会員配信・課金は未開始。スマホ通知は試験運用中です。", "A source-linked research preview. Monitoring is under operational review; member delivery and billing are not live. Phone notifications are in a private pilot.")}</p></footer>
       </main>
     </div>

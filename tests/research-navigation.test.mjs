@@ -4,14 +4,14 @@ import { readFileSync } from "node:fs";
 import { researchViewFromHash, researchViewHashes } from "../lib/research/navigation.ts";
 
 test("each research view can be restored from its URL on reload or history navigation", () => {
-  for (const view of ["home", "changes", "metrics", "saved"]) {
+  for (const view of ["home", "changes", "metrics", "saved", "companies", "pro"]) {
     assert.equal(researchViewFromHash(researchViewHashes[view]), view);
   }
   assert.equal(researchViewFromHash(""), "home");
 });
 
-test("section links and unknown hashes do not silently replace the selected view", () => {
-  for (const hash of ["#monitored-companies", "#tech-phase-pro", "#unknown", "#toString"]) {
+test("unknown hashes do not silently replace the selected view", () => {
+  for (const hash of ["#unknown", "#toString"]) {
     assert.equal(researchViewFromHash(hash), null);
   }
 });
