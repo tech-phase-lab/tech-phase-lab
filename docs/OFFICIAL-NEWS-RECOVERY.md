@@ -1,0 +1,6 @@
+# Official news recovery — 2026-09-27 JST
+
+- Marvell: the official investor sitemap links to `https://investor.marvell.com/rss-news-feed`. A request from the Railway monitor returned HTTP 200 (8,469 bytes). The existing feed parser accepted ten MRVL items in local verification. Add this as `marvell-investor-news`; retain the separate blog route and its error history. This restores an official press-release route, not blog coverage.
+- TSMC: the configured press-center URL returned HTTP 403 with a "Just a moment" challenge on Railway. Do not bypass this control or mark the route healthy. Existing independent sources remain separate; complete TSMC press-center coverage is not established.
+- Sandisk: the official news index timed out while awaiting HTTP response headers on Railway, including with the project's descriptive User-Agent. A bounded 60-second diagnostic also timed out. A local request succeeded, which does not establish service-side recovery. No successful production intake should be claimed until the Railway worker succeeds.
+- First successful retrieval of a new feed creates historical baseline records. Historical releases must not be presented as newly published news or generate phone alerts.

@@ -250,6 +250,21 @@
     "reuse": "review-required"
   },
   {
+    "id": "marvell-investor-news",
+    "name": "Marvell Investor News RSS",
+    "url": "https://investor.marvell.com/rss-news-feed",
+    "allowedHosts": [
+      "investor.marvell.com"
+    ],
+    "tickers": [
+      "MRVL"
+    ],
+    "kind": "publisher-update",
+    "format": "feed",
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
     "id": "marvell-blog",
     "name": "Marvell Blog",
     "url": "https://www.marvell.com/blogs.html",
