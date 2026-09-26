@@ -22,8 +22,12 @@ accumulating an unbounded backlog. SSE uses asyncio, not a thread per viewer.
   off to approximately 60 seconds. Hidden tabs and offscreen panels disconnect.
 - Maximum 3,500 concurrent stream clients; excess clients receive 503 and fall
   back. This is a pilot resource guard, not a demonstrated production capacity.
-- `/price-targets/stream-status` reports clients, shared reads, changes and SSE
-  application bytes. It requires the existing RESEARCH_API_TOKEN.
+- `/price-targets/stream-status` reports aggregate active/accepted/rejected/
+  disconnected clients, shared reads, changes and SSE application bytes. It
+  requires the existing RESEARCH_API_TOKEN. The gateway also adds the same
+  public-safe aggregate to `/health` and the private operations preview's live
+  monitor state. A gateway with no shared read yet is reported as waiting, not
+  failed; neither surface exposes tickets, origins, IPs, URLs or tokens.
 - Set Railway `RESEARCH_STREAM_ENABLED=false` and redeploy to return to the
   original HTTP server. The browser's fallback remains usable.
 - Existing authenticated APIs are proxied to a loopback-only HTTP server;

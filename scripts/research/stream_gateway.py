@@ -10,6 +10,7 @@ import hashlib
 import hmac
 import json
 import time
+from datetime import datetime, timezone
 
 from aiohttp import ClientError, ClientSession, ClientTimeout, web
 
@@ -50,6 +51,21 @@ class SnapshotHub:
         self.changes = 0
         self.bytes_sent = 0
         self.healthy = False
+        self.started_at = datetime.now(timezone.utc).isoformat(timespec="milliseconds")
+        self.connections_accepted = 0
+        self.connections_rejected = 0
+        self.disconnects = 0
+
+    def public_status(self, max_clients):
+        """Return bounded aggregate telemetry without tickets or client details."""
+        return {"healthy": self.healthy, "checkedSinceStart": self.reads > 0,
+                "clients": len(self.clients),
+                "maxClients": max_clients, "connectionsAccepted": self.connections_accepted,
+                "connectionsRejected": self.connections_rejected,
+                "disconnects": self.disconnects, "snapshotReads": self.reads,
+                "changes": self.changes, "bytesSent": self.bytes_sent,
+                "startedAt": self.started_at,
+                "measuredAt": datetime.now(timezone.utc).isoformat(timespec="milliseconds")}
 
     def subscribe(self):
         queue = asyncio.Queue(maxsize=1)
@@ -135,8 +151,10 @@ def create_gateway(reader, secret, upstream, *, interval=1, max_clients=3500, he
         if not ticket:
             return web.json_response({"ok": False}, status=401, headers=headers)
         if len(hub.clients) >= max_clients:
+            hub.connections_rejected += 1
             return web.json_response({"ok": False}, status=503, headers={**headers, "Retry-After": "30"})
         queue = hub.subscribe()
+        hub.connections_accepted += 1
         response = web.StreamResponse(headers={**headers, "Content-Type": "text/event-stream",
                                                "X-Accel-Buffering": "no"})
         try:
@@ -156,23 +174,49 @@ def create_gateway(reader, secret, upstream, *, interval=1, max_clients=3500, he
             pass
         finally:
             hub.unsubscribe(queue)
+            hub.disconnects += 1
         return response
 
     async def stats(request):
         if not secret or not hmac.compare_digest(request.headers.get("Authorization", ""), "Bearer " + secret):
             return web.json_response({"ok": False}, status=401)
-        return web.json_response({"ok": True, "clients": len(hub.clients), "snapshotReads": hub.reads,
-            "changes": hub.changes, "bytesSent": hub.bytes_sent, "healthy": hub.healthy},
+        return web.json_response({"ok": True, **hub.public_status(max_clients)},
             headers={"Cache-Control": "no-store"})
 
     async def proxy(request):
         # Preserve the existing Handler's authentication and response semantics.
         excluded = {"host", "connection", "transfer-encoding", "content-length", "upgrade"}
         headers = {k: v for k, v in request.headers.items() if k.lower() not in excluded}
+        enrich = request.method == "GET" and request.path in {"/health", "/readyz", "/live"}
+        if enrich:
+            # The gateway must inspect these bounded JSON responses. Avoid
+            # changing compression semantics for every other proxied endpoint.
+            headers["Accept-Encoding"] = "identity"
         body = await request.read()
         try:
             async with app[session_key].request(request.method, upstream + request.rel_url.raw_path_qs,
                     headers=headers, data=body, allow_redirects=False) as upstream_response:
+                if enrich and (upstream_response.content_length or 0) <= 3_000_000:
+                    response_body = await upstream_response.read()
+                    response_headers = {k: v for k, v in upstream_response.headers.items()
+                        if k.lower() not in {"connection", "transfer-encoding", "content-length",
+                                             "content-encoding", "content-type"}}
+                    try:
+                        payload = json.loads(response_body)
+                    except (UnicodeDecodeError, json.JSONDecodeError):
+                        return web.Response(status=upstream_response.status, body=response_body,
+                                            headers=response_headers,
+                                            content_type=upstream_response.content_type)
+                    if upstream_response.status == 200 and isinstance(payload, dict):
+                        stream_status = hub.public_status(max_clients)
+                        if request.path == "/live":
+                            monitor_state = payload.get("monitor")
+                            if isinstance(monitor_state, dict):
+                                monitor_state["priceTargetStream"] = stream_status
+                        else:
+                            payload["priceTargetStream"] = stream_status
+                    return web.json_response(payload, status=upstream_response.status,
+                                             headers=response_headers)
                 response = web.StreamResponse(status=upstream_response.status, headers={
                     k: v for k, v in upstream_response.headers.items() if k.lower() not in {"connection", "transfer-encoding"}})
                 await response.prepare(request)

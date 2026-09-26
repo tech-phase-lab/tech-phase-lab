@@ -62,6 +62,12 @@ export type MonitorState = {
     conditionalRequests: number; notModifiedResponses: number; freshResponses: number;
     lastUpdatedAt: string | null;
   };
+  priceTargetStream?: {
+    healthy: boolean; checkedSinceStart: boolean; clients: number; maxClients: number;
+    connectionsAccepted: number; connectionsRejected: number; disconnects: number;
+    snapshotReads: number; changes: number; bytesSent: number;
+    startedAt: string; measuredAt: string;
+  };
   discoveryRuns?: {
     lastCompletedAt: string | null; lastDurationMs: number | null;
     lastCompletedAgeSeconds: number | null; pollOverdueAfterSeconds: number;

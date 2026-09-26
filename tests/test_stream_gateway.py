@@ -98,6 +98,14 @@ class StreamTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(all(s.status == 200 for s in streams))
         rejected = await self.connect()
         self.assertEqual(rejected.status, 503)
+        stats = await self.client.get(self.url + "/price-targets/stream-status", headers={
+            "Authorization": "Bearer test-secret"})
+        payload = await stats.json()
+        self.assertEqual(payload["connectionsAccepted"], 21)
+        self.assertEqual(payload["connectionsRejected"], 1)
+        self.assertEqual(payload["maxClients"], 20)
+        self.assertNotIn("ticket", payload)
+        self.assertNotIn("url", payload)
 
     async def test_existing_api_proxy_preserves_auth_post_and_gzip(self):
         upstream = web.Application()
@@ -106,6 +114,13 @@ class StreamTests(unittest.IsolatedAsyncioTestCase):
                 return web.Response(status=401)
             return web.Response(body=gzip.compress(await request.read()), headers={"Content-Encoding": "gzip"})
         upstream.router.add_post("/admin/test", echo)
+        async def health(_request):
+            return web.json_response({"ready": True})
+        async def live(_request):
+            return web.json_response({"ok": True, "mode": "automatic", "monitor": {"ready": True},
+                                      "snapshot": {"sources": []}})
+        upstream.router.add_get("/health", health)
+        upstream.router.add_get("/live", live)
         upstream_runner = web.AppRunner(upstream, access_log=None)
         await upstream_runner.setup()
         upstream_site = web.TCPSite(upstream_runner, "127.0.0.1", 0)
@@ -124,6 +139,16 @@ class StreamTests(unittest.IsolatedAsyncioTestCase):
             response = await self.client.post(url, data=b'{"test":"preserved"}', headers={"Authorization": "Bearer private-token"})
             self.assertEqual(response.status, 200)
             self.assertEqual(await response.json(content_type=None), {"test": "preserved"})
+            health_response = await self.client.get(f"http://127.0.0.1:{gateway_port}/health")
+            health_payload = await health_response.json()
+            self.assertFalse(health_payload["priceTargetStream"]["checkedSinceStart"])
+            self.assertFalse(health_payload["priceTargetStream"]["healthy"])
+            self.assertEqual(health_payload["priceTargetStream"]["clients"], 0)
+            self.assertEqual(health_payload["priceTargetStream"]["maxClients"], 3500)
+            live_response = await self.client.get(f"http://127.0.0.1:{gateway_port}/live")
+            live_payload = await live_response.json()
+            self.assertIn("priceTargetStream", live_payload["monitor"])
+            self.assertNotIn("priceTargetStream", live_payload["snapshot"])
         finally:
             await gateway_runner.cleanup()
             await upstream_runner.cleanup()
