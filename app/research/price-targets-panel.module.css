@@ -11,11 +11,11 @@
 @media(max-width:700px){.card{align-items:flex-start;flex-direction:column}.refresh,.updated{font-size:11px}}
 
 .footer{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:10px 12px;margin-top:14px}
-.notificationToggle{grid-column:1;grid-row:1;justify-self:start;min-height:32px;cursor:pointer;padding:7px 10px;border:1px solid #4677a2;border-radius:6px;background:#172e45;color:#a8d8ff;font-size:12px;font-weight:600;line-height:1.4}
-.notificationToggle:hover{background:#213e5b;border-color:#76baff}
+.panel .notificationToggle{grid-column:1;grid-row:1;justify-self:start;min-height:44px;cursor:pointer;padding:0 4px;border:0;border-radius:4px;background:transparent;color:#a8d8ff;font-size:11px;font-weight:600;line-height:1.4;white-space:nowrap}
+.panel .notificationToggle:hover{background:#213e5b;border-color:#76baff}
 .notificationToggle:focus-visible,.notificationActions button:focus-visible,.codeInput:focus-visible{outline:2px solid #a8d8ff;outline-offset:3px}
 .syncMeta{grid-column:2;grid-row:1;justify-self:end;min-width:0;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
-.updated{margin:0}
+.updated{margin:0;white-space:nowrap;font-variant-numeric:tabular-nums}
 .notificationBody{grid-column:1/-1;grid-row:2;padding:14px;border:1px solid #34526c;border-radius:7px;background:#111e2c;font-size:13px;line-height:1.6}
 .notificationBody p{margin:0 0 10px}.notificationBody p:last-child{margin-bottom:0}
 .notificationTitle{display:block;margin-bottom:8px;font-size:14px}
@@ -26,3 +26,21 @@
 .notificationActions button{cursor:pointer;padding:8px 12px;border:1px solid #64748b;border-radius:6px;background:#172e45;color:#e6f2ec;font:inherit}
 .notificationActions button:first-child{border-color:#69b89e;background:#1a443b}
 .notificationActions button:disabled{cursor:not-allowed;opacity:.5}
+
+.firm{font-size:13px;color:#b2c5c4;line-height:1.5;overflow-wrap:anywhere}
+.targetChange{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-top:3px}
+.targetChange strong{font-size:18px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.raised,.lowered{font-size:11px;white-space:nowrap;border-radius:4px;padding:2px 6px}
+.raised{color:#a7efcc;background:#214138}.lowered{color:#ffb6b0;background:#482e32}
+.firm .newBadge{margin:0 0 0 8px}
+.body small{font-size:11px}
+.panel .notificationActions button{font-size:13px;min-height:44px}
+@media(max-width:700px){
+  .panel{padding:16px}.head h3{font-size:17px;line-height:1.5}
+  .card{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding:12px}
+  .ticker{justify-self:start;min-width:0;padding:3px 8px;font-size:14px}
+  .targetChange strong{font-size:18px}.card a{font-size:11px}
+  .footer{gap:6px 8px;margin-top:8px}.refresh,.updated{font-size:10px}
+  .notificationBody{padding:12px}.notificationTitle{font-size:13px}
+  .codeLabel{font-size:12px}.codeInput{font-size:16px}
+}

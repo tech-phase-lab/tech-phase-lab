@@ -45,20 +45,19 @@ export default function NotificationSettings({ lang }: { lang: Language }) {
   }
   return <>
     <button type="button" className={styles.notificationToggle} aria-expanded={open} aria-controls={open ? "price-target-notifications" : undefined} onClick={() => setOpen(!open)}>
-      {open ? t("通知設定を閉じる", "Close notification settings") : t("スマホ通知を設定", "Set up phone alerts")}
+      {t("通知設定", "Alerts")} <span aria-hidden="true">{open ? "−" : "+"}</span>
     </button>
     {open && <div id="price-target-notifications" className={styles.notificationBody}>
     {config === null ? <p>{t("通知の設定を確認中…", "Checking notification settings…")}</p> : !config.enabled ? <p>{t("端末への通知は準備中です。まだ通知は送信されません。", "Device notifications are being prepared. No notifications are sent yet.")}</p> : <>
       <strong className={styles.notificationTitle}>{t("目標株価の通知を受け取る", "Receive price target alerts")}</strong>
-      <p>{t("監視中の3つの情報源から、新しい目標株価の引き上げ・引き下げを通知します。銘柄の選択は不要です。", "Receive new price target increases and decreases from the three monitored sources. No ticker selection is needed.")}</p>
-      <p className={styles.pilotNote}>{t("現在は試験運用中です。運営から案内された試験用コードを入力してください。正式公開時の会員向け設定は別途整備します。", "This is a private pilot. Enter the code provided by the team. Member notification settings will be prepared for launch.")}</p>
-      <label className={styles.codeLabel} htmlFor="price-target-pilot-code">{t("試験用コード", "Pilot code")}</label>
+      <p>{t("目標株価の引き上げ・引き下げをスマホに通知します。", "Get price target increases and decreases on your phone.")}</p>
+      <label className={styles.codeLabel} htmlFor="price-target-pilot-code">{t("確認用コード（テスト参加者のみ）", "Access code (test participants)")}</label>
       <input id="price-target-pilot-code" className={styles.codeInput} type="password" autoComplete="off" value={code} onChange={e => setCode(e.target.value)} />
       <div className={styles.notificationActions}>
-        <button type="button" disabled={busy || !code} onClick={() => void save()}>{t("通知を許可して開始", "Allow and start alerts")}</button>
-        <button type="button" disabled={busy || !code} onClick={() => void save(true)}>{t("この端末で停止", "Stop on this device")}</button>
+        <button type="button" disabled={busy || !code} onClick={() => void save()}>{t("通知をオン", "Turn on")}</button>
+        <button type="button" disabled={busy || !code} onClick={() => void save(true)}>{t("通知をオフ", "Turn off")}</button>
       </div>
-      <p className={styles.pilotNote}>{t("開始時にスマホの通知許可を確認します。停止にも試験用コードが必要です。", "Your phone will ask for notification permission when you start. The pilot code is also required to stop alerts.")}</p>
+      <p className={styles.pilotNote}>{t("コードを入力し、オン／オフを選んでください。", "Enter your code, then choose on or off.")}</p>
     </>}
     {message && <p role="status">{message}</p>}
     </div>}
