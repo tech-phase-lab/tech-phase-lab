@@ -7,6 +7,7 @@ import base64
 from datetime import datetime, timezone
 import hashlib
 import json
+import math
 import os
 import re
 import sqlite3
@@ -15,6 +16,7 @@ from urllib.parse import urlsplit
 
 DEVICE_LIMIT = 20
 DELIVERY_RETENTION_SECONDS = 7 * 86400
+PROVIDER_DURATION_LIMIT_MS = 60_000
 
 
 def configuration():
@@ -33,12 +35,14 @@ def connect(path):
       language TEXT NOT NULL, since REAL NOT NULL, active INTEGER NOT NULL DEFAULT 1);
     CREATE TABLE IF NOT EXISTS push_deliveries (
       device_id TEXT NOT NULL, event_key TEXT NOT NULL, status TEXT NOT NULL,
-      attempted_at REAL NOT NULL, observed_at REAL,
+      attempted_at REAL NOT NULL, observed_at REAL, provider_duration_ms REAL,
       PRIMARY KEY(device_id,event_key));
     ''')
     columns = {row['name'] for row in db.execute('PRAGMA table_info(push_deliveries)')}
     if 'observed_at' not in columns:
         db.execute('ALTER TABLE push_deliveries ADD COLUMN observed_at REAL')
+    if 'provider_duration_ms' not in columns:
+        db.execute('ALTER TABLE push_deliveries ADD COLUMN provider_duration_ms REAL')
     return db
 
 
@@ -138,10 +142,27 @@ def public_status(db, now=None):
             THEN attempted_at-observed_at END) AS latency_average,
         max(CASE WHEN observed_at IS NOT NULL AND attempted_at-observed_at BETWEEN 0 AND ?
             THEN attempted_at-observed_at END) AS latency_max,
+        sum(CASE WHEN provider_duration_ms BETWEEN 0 AND ? THEN 1 ELSE 0 END) AS provider_samples,
+        avg(CASE WHEN provider_duration_ms BETWEEN 0 AND ? THEN provider_duration_ms END) AS provider_average,
+        max(CASE WHEN provider_duration_ms BETWEEN 0 AND ? THEN provider_duration_ms END) AS provider_max,
+        sum(CASE WHEN observed_at IS NOT NULL AND attempted_at-observed_at BETWEEN 0 AND ?
+            AND provider_duration_ms BETWEEN 0 AND ? THEN 1 ELSE 0 END) AS total_samples,
+        avg(CASE WHEN observed_at IS NOT NULL AND attempted_at-observed_at BETWEEN 0 AND ?
+            AND provider_duration_ms BETWEEN 0 AND ?
+            THEN (attempted_at-observed_at)*1000+provider_duration_ms END) AS total_average,
+        max(CASE WHEN observed_at IS NOT NULL AND attempted_at-observed_at BETWEEN 0 AND ?
+            AND provider_duration_ms BETWEEN 0 AND ?
+            THEN (attempted_at-observed_at)*1000+provider_duration_ms END) AS total_max,
         max(attempted_at) AS last_attempt
       FROM push_deliveries WHERE attempted_at>=?''',
         (DELIVERY_RETENTION_SECONDS, DELIVERY_RETENTION_SECONDS,
-         DELIVERY_RETENTION_SECONDS, now - 86400)).fetchone()
+         DELIVERY_RETENTION_SECONDS,
+         PROVIDER_DURATION_LIMIT_MS, PROVIDER_DURATION_LIMIT_MS,
+         PROVIDER_DURATION_LIMIT_MS,
+         DELIVERY_RETENTION_SECONDS, PROVIDER_DURATION_LIMIT_MS,
+         DELIVERY_RETENTION_SECONDS, PROVIDER_DURATION_LIMIT_MS,
+         DELIVERY_RETENTION_SECONDS, PROVIDER_DURATION_LIMIT_MS,
+         now - 86400)).fetchone()
     last_attempt = row['last_attempt']
     return {
         'activeDevices': devices,
@@ -153,12 +174,18 @@ def public_status(db, now=None):
         'detectionToAttemptSamples24Hours': row['latency_samples'] or 0,
         'detectionToAttemptAverageMs24Hours': round(row['latency_average'] * 1000) if row['latency_average'] is not None else None,
         'detectionToAttemptMaxMs24Hours': round(row['latency_max'] * 1000) if row['latency_max'] is not None else None,
+        'providerResponseSamples24Hours': row['provider_samples'] or 0,
+        'providerResponseAverageMs24Hours': round(row['provider_average']) if row['provider_average'] is not None else None,
+        'providerResponseMaxMs24Hours': round(row['provider_max']) if row['provider_max'] is not None else None,
+        'detectionToOutcomeSamples24Hours': row['total_samples'] or 0,
+        'detectionToOutcomeAverageMs24Hours': round(row['total_average']) if row['total_average'] is not None else None,
+        'detectionToOutcomeMaxMs24Hours': round(row['total_max']) if row['total_max'] is not None else None,
         'lastAttemptAt': datetime.fromtimestamp(last_attempt, timezone.utc).isoformat(
             timespec='milliseconds') if last_attempt is not None else None,
     }
 
 
-def deliver(db, items, transport=send, now=None):
+def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic):
     if not configuration()['enabled']:
         return {'status': 'disabled', 'attempted': 0}
     now = time.time() if now is None else now
@@ -181,14 +208,21 @@ def deliver(db, items, transport=send, now=None):
             payload = {'title': f"{item['ticker']} · " + ('目標株価の変更' if ja else 'Price target update'),
                        'body': f"{item['firm']}: ${item['previous']:g} → ${item['latest']:g}",
                        'tag': key, 'url': '/research#what-changed'}
+            provider_started = monotonic_now()
             try:
                 code = transport(json.loads(device['subscription']), payload)
             except Exception:
                 code = 0  # Never log endpoint, keys, provider response, or payload.
+            provider_finished = monotonic_now()
+            provider_duration_ms = (provider_finished - provider_started) * 1000
+            if (not math.isfinite(provider_duration_ms) or provider_duration_ms < 0 or
+                    provider_duration_ms > PROVIDER_DURATION_LIMIT_MS):
+                provider_duration_ms = None
             status = 'accepted' if 200 <= code < 300 else 'expired' if code in (404, 410) else 'uncertain'
             with db:
-                db.execute('UPDATE push_deliveries SET status=? WHERE device_id=? AND event_key=?',
-                           (status, device['id'], key))
+                db.execute('''UPDATE push_deliveries SET status=?,provider_duration_ms=?
+                    WHERE device_id=? AND event_key=?''',
+                    (status, provider_duration_ms, device['id'], key))
                 if status == 'expired':
                     db.execute('DELETE FROM push_devices WHERE id=?', (device['id'],))
             attempted += 1

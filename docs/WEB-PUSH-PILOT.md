@@ -74,6 +74,13 @@ and missing, future, negative or over-seven-day intervals are excluded instead
 of being inferred. This measures internal post-detection processing only; it is
 not source-publication latency, device-display latency or a delivery guarantee.
 
+The same ledger separately records the monotonic provider round-trip duration
+and, when both timestamps are valid, detection-to-attempt-completion duration.
+Provider intervals above 60 seconds, negative values and non-finite values are
+withheld. Separating queue/polling delay from network response avoids presenting
+one combined number as a root cause. Provider acceptance and attempt completion
+still do not prove device receipt or display.
+
 The service also derives the age of the last five-second worker poll. Once that
 age exceeds 30 seconds while the monitor itself remains current, health becomes
 degraded with the fixed `web-push-stale` code and the operational incident ledger

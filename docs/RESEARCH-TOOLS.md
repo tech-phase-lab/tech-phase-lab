@@ -48,6 +48,10 @@ rows stay unmeasured, while missing, future, negative and over-seven-day
 intervals are excluded rather than guessed. This is internal post-detection
 processing evidence, not publication latency, device-display latency or a
 subscriber-delivery guarantee.
+Provider round-trip and detection-to-attempt-completion are stored and displayed
+as separate 24-hour aggregates. Non-finite, negative and over-60-second provider
+durations are withheld, so queue delay is not confused with provider response.
+Neither measure proves device receipt or display.
 
 The public-safe live operations payload is identical for every viewer. Its
 successful response is shared at the Vercel edge for two seconds, with a

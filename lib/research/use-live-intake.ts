@@ -53,6 +53,12 @@ export type MonitorState = {
     detectionToAttemptSamples24Hours: number;
     detectionToAttemptAverageMs24Hours: number | null;
     detectionToAttemptMaxMs24Hours: number | null;
+    providerResponseSamples24Hours: number;
+    providerResponseAverageMs24Hours: number | null;
+    providerResponseMaxMs24Hours: number | null;
+    detectionToOutcomeSamples24Hours: number;
+    detectionToOutcomeAverageMs24Hours: number | null;
+    detectionToOutcomeMaxMs24Hours: number | null;
     consecutiveFailures: number; recoveries: number;
     lastPollAt: string | null; lastSuccessAt: string | null;
     lastFailureAt: string | null; lastAttemptAt: string | null;

@@ -72,7 +72,8 @@ class PushTests(unittest.TestCase):
 
     def test_public_status_is_persistent_and_contains_no_subscription_details(self):
         self.register()
-        result=push.deliver(self.db,[event()],lambda *_:201,self.now)
+        monotonic = iter([10.0, 10.25])
+        result=push.deliver(self.db,[event()],lambda *_:201,self.now,lambda:next(monotonic))
         self.assertEqual(result['activeDevices'],1)
         self.assertEqual(result['attempted24Hours'],1)
         self.assertEqual(result['accepted24Hours'],1)
@@ -80,6 +81,12 @@ class PushTests(unittest.TestCase):
         self.assertEqual(result['detectionToAttemptSamples24Hours'],1)
         self.assertEqual(result['detectionToAttemptAverageMs24Hours'],1000)
         self.assertEqual(result['detectionToAttemptMaxMs24Hours'],1000)
+        self.assertEqual(result['providerResponseSamples24Hours'],1)
+        self.assertEqual(result['providerResponseAverageMs24Hours'],250)
+        self.assertEqual(result['providerResponseMaxMs24Hours'],250)
+        self.assertEqual(result['detectionToOutcomeSamples24Hours'],1)
+        self.assertEqual(result['detectionToOutcomeAverageMs24Hours'],1250)
+        self.assertEqual(result['detectionToOutcomeMaxMs24Hours'],1250)
         self.assertIsNotNone(result['lastAttemptAt'])
         self.assertNotIn('endpoint', result)
         self.assertNotIn('subscription', result)
@@ -100,6 +107,18 @@ class PushTests(unittest.TestCase):
         self.assertIsNone(status['detectionToAttemptAverageMs24Hours'])
         self.assertIsNone(status['detectionToAttemptMaxMs24Hours'])
 
+    def test_invalid_provider_duration_is_not_reported_or_added_to_total(self):
+        self.register()
+        monotonic = iter([10.0, 70.001])
+        result = push.deliver(
+            self.db, [event()], lambda *_: 201, self.now, lambda: next(monotonic))
+        self.assertEqual(result['attempted24Hours'], 1)
+        self.assertEqual(result['detectionToAttemptSamples24Hours'], 1)
+        self.assertEqual(result['providerResponseSamples24Hours'], 0)
+        self.assertEqual(result['detectionToOutcomeSamples24Hours'], 0)
+        self.assertIsNone(result['providerResponseAverageMs24Hours'])
+        self.assertIsNone(result['detectionToOutcomeAverageMs24Hours'])
+
     def test_existing_delivery_ledger_migrates_without_inventing_latency(self):
         self.db.close()
         path = Path(self.tmp.name)/'legacy.sqlite'
@@ -114,3 +133,5 @@ class PushTests(unittest.TestCase):
         self.assertEqual(status['attempted24Hours'], 1)
         self.assertEqual(status['detectionToAttemptSamples24Hours'], 0)
         self.assertIsNone(status['detectionToAttemptAverageMs24Hours'])
+        self.assertEqual(status['providerResponseSamples24Hours'], 0)
+        self.assertEqual(status['detectionToOutcomeSamples24Hours'], 0)
