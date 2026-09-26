@@ -235,6 +235,13 @@ The same view also reports how many expired circuits have an eligible queued
 body and how many single probes were admitted to the current batch. These are
 aggregate counts only: a due circuit with no eligible body is not presented as
 ready, and no hostname or URL is returned.
+For selected article bodies with a valid `next_fetch_at`, each completed batch
+also persists the bounded interval from eligibility to the batch's actual
+request start. The preview exposes only the latest and 24-hour sample counts,
+average and maximum wait; legacy batches remain zero-sample instead of receiving
+inferred timestamps. Invalid, future or over-31-day waits are discarded. This
+is internal worker-scheduling evidence, not article-detection or subscriber-
+delivery latency, and it contains no URL, hostname or error detail.
 After a restricted recovery probe reopens the circuit, subsequent worker cycles
 perform no request to that hostname until the new retry deadline; those idle
 cycles also do not increment the recovery-probe counters.

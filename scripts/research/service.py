@@ -1157,23 +1157,29 @@ class AutomaticMonitor:
                     "retrySeconds": 0, "nextRetryAt": None,
                 })
             return
-        futures = {pool.submit(monitor.collect_source, row, monitor.fetch): row for row in rows}
+        def collect_body(row):
+            attempted_at = utc_now()
+            try:
+                return attempted_at, monitor.collect_source(row, monitor.fetch), None
+            except Exception as exc:
+                return attempted_at, None, exc
+
+        futures = {pool.submit(collect_body, row): row for row in rows}
         completed = []
         for future in as_completed(futures):
             row = futures[future]
-            try:
-                completed.append((row, future.result(), None))
-            except Exception as exc:
-                completed.append((row, None, exc))
+            attempted_at, result, error = future.result()
+            completed.append((row, attempted_at, result, error))
         errors = 0
         not_modified = 0
         completed_at = None
         duration_ms = None
         detection_latencies_ms = []
+        eligibility_waits_ms = []
         saved_outcomes = {}
         with self.db_lock, monitor.connect(self.db_path) as db:
-            affected_tickers = {row["ticker"] for row, _, _ in completed}
-            for row, result, error in completed:
+            affected_tickers = {row["ticker"] for row, _, _, _ in completed}
+            for row, attempted_at, result, error in completed:
                 if error is None:
                     saved_outcomes[row["url"]] = monitor.save_source_check(
                         db, row, result
@@ -1224,7 +1230,12 @@ class AutomaticMonitor:
             selection_not_modified = dict.fromkeys(selection_partitions, 0)
             selection_fetched = dict.fromkeys(selection_partitions, 0)
             selection_updated = dict.fromkeys(selection_partitions, 0)
-            for row, result, error in completed:
+            for row, attempted_at, result, error in completed:
+                eligibility_wait = timestamp_latency_ms(
+                    row["next_fetch_at"], attempted_at
+                )
+                if eligibility_wait is not None:
+                    eligibility_waits_ms.append(eligibility_wait)
                 if row["sha256"] is None:
                     partition = (
                         "detectedNeverFetched"
@@ -1254,6 +1265,7 @@ class AutomaticMonitor:
                 len(completed), errors, not_modified, detection_latencies_ms,
                 selection_partitions, selection_errors, selection_not_modified,
                 selection_fetched, selection_updated,
+                eligibility_waits_ms=eligibility_waits_ms,
             )
             monitor.write_snapshot(db, self.snapshot_path)
         with self.state_lock:

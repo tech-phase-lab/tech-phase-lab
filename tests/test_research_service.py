@@ -764,7 +764,9 @@ class ResearchServiceTests(unittest.TestCase):
             columns = {row[1] for row in db.execute("PRAGMA table_info(body_fetch_batches)")}
             self.assertTrue({
                 "detection_latency_samples", "detection_latency_total_ms",
-                "detection_latency_max_ms", "selected_detected_never_fetched",
+                "detection_latency_max_ms", "eligibility_wait_samples",
+                "eligibility_wait_total_ms", "eligibility_wait_max_ms",
+                "selected_detected_never_fetched",
                 "selected_baseline_never_fetched", "selected_extraction_pending",
                 "selected_recheck", "error_detected_never_fetched",
                 "error_baseline_never_fetched", "error_extraction_pending",
@@ -785,6 +787,9 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["checks24Hours"], 2)
         self.assertEqual(summary["detectionLatencySamples24Hours"], 0)
         self.assertIsNone(summary["detectionLatencyAverageMs24Hours"])
+        self.assertEqual(summary["eligibilityWaitSamples24Hours"], 0)
+        self.assertIsNone(summary["eligibilityWaitAverageMs24Hours"])
+        self.assertIsNone(summary["eligibilityWaitMaxMs24Hours"])
         self.assertEqual(summary["selectedDetectedNeverFetched24Hours"], 0)
         self.assertEqual(summary["selectedBaselineNeverFetched24Hours"], 0)
         self.assertEqual(summary["selectedExtractionPending24Hours"], 0)
@@ -805,6 +810,42 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["updatedBaselineNeverFetched24Hours"], 0)
         self.assertEqual(summary["updatedExtractionPending24Hours"], 0)
         self.assertEqual(summary["updatedRecheck24Hours"], 0)
+
+    def test_body_fetch_eligibility_wait_is_bounded_and_persisted(self):
+        reference = datetime.now(timezone.utc)
+        started = reference - timedelta(seconds=1)
+        selection = {
+            "detectedNeverFetched": 0,
+            "baselineNeverFetched": 0,
+            "extractionPending": 0,
+            "recheck": 1,
+        }
+        with monitor.connect(self.db_path) as db:
+            with self.assertRaisesRegex(ValueError, "invalid-body-fetch-batch"):
+                monitor.record_body_fetch_batch(
+                    db, started.isoformat(timespec="milliseconds"),
+                    reference.isoformat(timespec="milliseconds"),
+                    1000, 1, 0, 1, (), selection,
+                    selection_not_modified={"recheck": 1},
+                    eligibility_waits_ms=(-1,),
+                )
+            monitor.record_body_fetch_batch(
+                db, started.isoformat(timespec="milliseconds"),
+                reference.isoformat(timespec="milliseconds"),
+                1000, 1, 0, 1, (), selection,
+                selection_not_modified={"recheck": 1},
+                eligibility_waits_ms=(3250,),
+            )
+            summary = monitor.body_fetch_batch_summary(
+                db, reference.isoformat(timespec="milliseconds")
+            )
+        self.assertEqual(summary["lastEligibilityWaitSamples"], 1)
+        self.assertEqual(summary["lastEligibilityWaitAverageMs"], 3250)
+        self.assertEqual(summary["lastEligibilityWaitMaxMs"], 3250)
+        self.assertEqual(summary["eligibilityWaitSamples24Hours"], 1)
+        self.assertEqual(summary["eligibilityWaitAverageMs24Hours"], 3250)
+        self.assertEqual(summary["eligibilityWaitMaxMs24Hours"], 3250)
+        self.assertNotIn("https://", json.dumps(summary))
 
     def test_legacy_body_host_probe_table_migrates_without_guessing_due_time(self):
         legacy_path = Path(self.temp.name) / "legacy-probes.sqlite"
@@ -1063,6 +1104,13 @@ class ResearchServiceTests(unittest.TestCase):
             server.server_close()
 
     def test_body_fetch_prioritizes_new_event_and_exports_only_metadata(self):
+        due_at = datetime.now(timezone.utc) - timedelta(seconds=3)
+        with monitor.connect(self.db_path) as db:
+            db.execute(
+                "UPDATE sources SET next_fetch_at=? WHERE url LIKE '%new-release'",
+                (due_at.isoformat(timespec="milliseconds"),),
+            )
+            db.commit()
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         app.body_batch = 1
         original_fetch = monitor.fetch
@@ -1096,6 +1144,10 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(durable["errors24Hours"], 0)
         self.assertEqual(durable["notModified24Hours"], 0)
         self.assertEqual(durable["detectionLatencySamples24Hours"], 1)
+        self.assertEqual(durable["eligibilityWaitSamples24Hours"], 1)
+        self.assertIsInstance(durable["eligibilityWaitAverageMs24Hours"], int)
+        self.assertIsInstance(durable["eligibilityWaitMaxMs24Hours"], int)
+        self.assertGreaterEqual(durable["eligibilityWaitAverageMs24Hours"], 3000)
         self.assertEqual(durable["selectedDetectedNeverFetched24Hours"], 1)
         self.assertEqual(durable["selectedBaselineNeverFetched24Hours"], 0)
         self.assertEqual(durable["selectedExtractionPending24Hours"], 0)
