@@ -633,6 +633,33 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(signals.queue(self.db)["counts"]["baseline"], 1)
         self.assertIsNone(signals.queue(self.db)["routes"][0]["error"])
 
+    def test_due_retries_malformed_or_unbounded_persisted_schedules(self):
+        signals.schema(self.db)
+        sources = []
+        schedules = {
+            "missing": None,
+            "malformed": "not-a-timestamp",
+            "timezone-free": "2026-09-25T10:30:00",
+            "unbounded-future": "2026-10-02T10:00:00.001+00:00",
+            "bounded-future": "2026-10-02T10:00:00+00:00",
+        }
+        for suffix, next_check_at in schedules.items():
+            source = {**self.feed, "id": f"due-{suffix}"}
+            sources.append(source)
+            self.db.execute(
+                "INSERT INTO signal_routes(id,initialized,next_check_at) VALUES(?,1,?)",
+                (source["id"], next_check_at),
+            )
+        self.db.commit()
+
+        with patch.object(signals, "stamp", return_value="2026-09-25T10:00:00+00:00"):
+            due_ids = {source["id"] for source in signals.due(self.db, sources)}
+
+        self.assertEqual(due_ids, {
+            "due-missing", "due-malformed", "due-timezone-free",
+            "due-unbounded-future",
+        })
+
     def test_top_level_access_restriction_uses_shared_long_backoff(self):
         def failure(*_):
             raise HTTPError(self.feed["url"], 403, "forbidden", {}, None)

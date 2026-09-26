@@ -155,6 +155,10 @@ seven days, while ordinary transient failures retain the shorter retry path
 and six-hour ceiling. A valid `Retry-After` is honored up to the applicable
 ceiling. Only the fixed error class and next-check time are retained; response
 headers and bodies are not stored in retry state.
+The scheduler respects valid timezone-aware retry times within that seven-day
+ceiling. A missing, malformed, timezone-free or more-than-seven-day future
+value is treated as due so corrupt persisted state cannot strand an official
+route indefinitely; the resulting request writes a fresh bounded schedule.
 The same aggregate separates retries that are due, deferred or missing a valid
 schedule, both overall and by fixed error category, and exposes only the
 earliest bounded retry time for each aggregate. This keeps a long access-control

@@ -1119,11 +1119,33 @@ def operational_summary(db, sources=SOURCES, reference=None):
 
 def due(db, sources=None):
     schema(db)
-    current = stamp()
+    current_text = stamp()
+    current = datetime.fromisoformat(current_text.replace("Z", "+00:00"))
+    if current.tzinfo is None:
+        raise ValueError("signal-due-reference-timezone")
+    current = current.astimezone(timezone.utc)
     rows = {row["id"]: row for row in db.execute("SELECT * FROM signal_routes")}
     candidates = enabled_sources(SOURCES if sources is None else sources)
-    return [s for s in candidates if s["id"] not in rows or not rows[s["id"]]["next_check_at"]
-            or rows[s["id"]]["next_check_at"] <= current]
+
+    def ready(source):
+        row = rows.get(source["id"])
+        if not row or not row["next_check_at"]:
+            return True
+        try:
+            next_check = datetime.fromisoformat(
+                str(row["next_check_at"]).replace("Z", "+00:00")
+            )
+            if next_check.tzinfo is None:
+                return True
+            next_check = next_check.astimezone(timezone.utc)
+        except (TypeError, ValueError, OverflowError):
+            return True
+        # Invalid persisted schedules must not strand a route forever. A
+        # valid bounded future schedule is still respected, including the
+        # seven-day access-control ceiling.
+        return next_check <= current or next_check > current + timedelta(days=7)
+
+    return [source for source in candidates if ready(source)]
 
 
 def main():
