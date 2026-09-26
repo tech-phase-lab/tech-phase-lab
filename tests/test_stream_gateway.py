@@ -88,6 +88,23 @@ class StreamTests(unittest.IsolatedAsyncioTestCase):
         await self.frame(response)
         self.fail = True
         self.assertIn("event: unavailable", await self.frame(response))
+        failed = await self.client.get(self.url + "/price-targets/stream-status", headers={
+            "Authorization": "Bearer test-secret"})
+        failed_payload = await failed.json()
+        self.assertTrue(failed_payload["active"])
+        self.assertGreaterEqual(failed_payload["readFailures"], 1)
+        self.assertGreaterEqual(failed_payload["consecutiveFailures"], 1)
+        self.assertIsNotNone(failed_payload["lastFailureAt"])
+        self.assertNotIn("error", failed_payload)
+        self.fail = False
+        self.assertIn("event: snapshot", await self.frame(response))
+        recovered = await self.client.get(self.url + "/price-targets/stream-status", headers={
+            "Authorization": "Bearer test-secret"})
+        recovered_payload = await recovered.json()
+        self.assertTrue(recovered_payload["healthy"])
+        self.assertEqual(recovered_payload["consecutiveFailures"], 0)
+        self.assertGreaterEqual(recovered_payload["recoveries"], 1)
+        self.assertIsNotNone(recovered_payload["lastSuccessAt"])
 
     async def test_ticket_rotation_and_connection_limit(self):
         response = await self.connect(exp=time.time()+.1)
@@ -141,6 +158,7 @@ class StreamTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(await response.json(content_type=None), {"test": "preserved"})
             health_response = await self.client.get(f"http://127.0.0.1:{gateway_port}/health")
             health_payload = await health_response.json()
+            self.assertFalse(health_payload["priceTargetStream"]["active"])
             self.assertFalse(health_payload["priceTargetStream"]["checkedSinceStart"])
             self.assertFalse(health_payload["priceTargetStream"]["healthy"])
             self.assertEqual(health_payload["priceTargetStream"]["clients"], 0)

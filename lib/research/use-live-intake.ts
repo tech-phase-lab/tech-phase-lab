@@ -63,9 +63,11 @@ export type MonitorState = {
     lastUpdatedAt: string | null;
   };
   priceTargetStream?: {
-    healthy: boolean; checkedSinceStart: boolean; clients: number; maxClients: number;
+    healthy: boolean; active: boolean; checkedSinceStart: boolean; clients: number; maxClients: number;
     connectionsAccepted: number; connectionsRejected: number; disconnects: number;
-    snapshotReads: number; changes: number; bytesSent: number;
+    readAttempts: number; snapshotReads: number; readFailures: number;
+    consecutiveFailures: number; recoveries: number; changes: number; bytesSent: number;
+    lastReadAt: string | null; lastSuccessAt: string | null; lastFailureAt: string | null;
     startedAt: string; measuredAt: string;
   };
   discoveryRuns?: {

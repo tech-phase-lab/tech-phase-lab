@@ -55,15 +55,27 @@ class SnapshotHub:
         self.connections_accepted = 0
         self.connections_rejected = 0
         self.disconnects = 0
+        self.read_attempts = 0
+        self.read_failures = 0
+        self.consecutive_failures = 0
+        self.recoveries = 0
+        self.last_read_at = None
+        self.last_success_at = None
+        self.last_failure_at = None
 
     def public_status(self, max_clients):
         """Return bounded aggregate telemetry without tickets or client details."""
-        return {"healthy": self.healthy, "checkedSinceStart": self.reads > 0,
-                "clients": len(self.clients),
+        return {"healthy": self.healthy, "active": bool(self.clients),
+                "checkedSinceStart": self.read_attempts > 0, "clients": len(self.clients),
                 "maxClients": max_clients, "connectionsAccepted": self.connections_accepted,
                 "connectionsRejected": self.connections_rejected,
-                "disconnects": self.disconnects, "snapshotReads": self.reads,
-                "changes": self.changes, "bytesSent": self.bytes_sent,
+                "disconnects": self.disconnects, "readAttempts": self.read_attempts,
+                "snapshotReads": self.reads, "readFailures": self.read_failures,
+                "consecutiveFailures": self.consecutive_failures,
+                "recoveries": self.recoveries, "changes": self.changes,
+                "bytesSent": self.bytes_sent, "lastReadAt": self.last_read_at,
+                "lastSuccessAt": self.last_success_at,
+                "lastFailureAt": self.last_failure_at,
                 "startedAt": self.started_at,
                 "measuredAt": datetime.now(timezone.utc).isoformat(timespec="milliseconds")}
 
@@ -83,14 +95,16 @@ class SnapshotHub:
             if not self.clients:
                 self.wake.clear()
                 await self.wake.wait()
+            self.read_attempts += 1
+            self.last_read_at = datetime.now(timezone.utc).isoformat(timespec="milliseconds")
             try:
                 payload = await asyncio.to_thread(self.reader)
-                self.reads += 1
                 if not payload.get("ok") or not isinstance(payload.get("items"), list) or len(payload["items"]) > 30:
                     raise ValueError("invalid-snapshot")
                 items = json.dumps(payload["items"], ensure_ascii=False, separators=(",", ":"))
                 if len(items.encode()) > 100_000:
                     raise ValueError("snapshot-too-large")
+                self.reads += 1
                 revision = hashlib.sha256(items.encode()).hexdigest()
                 changed = revision != self.revision
                 if changed or not self.healthy:
@@ -106,9 +120,16 @@ class SnapshotHub:
                     for queue in tuple(self.clients):
                         if not getattr(queue, "initialized", False) and queue.empty():
                             queue.put_nowait(self.current)
+                if self.consecutive_failures:
+                    self.recoveries += 1
+                self.consecutive_failures = 0
+                self.last_success_at = datetime.now(timezone.utc).isoformat(timespec="milliseconds")
                 self.healthy = True
             except Exception:
                 self.healthy = False
+                self.read_failures += 1
+                self.consecutive_failures += 1
+                self.last_failure_at = datetime.now(timezone.utc).isoformat(timespec="milliseconds")
                 for queue in tuple(self.clients):
                     if queue.full():
                         queue.get_nowait()

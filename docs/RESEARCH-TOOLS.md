@@ -30,11 +30,12 @@ membership feature is enabled by these tools.
 
 The operations preview receives public-safe aggregate telemetry for the shared
 price-target SSE gateway: health, active/capacity counts, accepted/disconnected/
-capacity-rejected connections, shared snapshot reads, change broadcasts and
-application bytes. It never includes client identifiers, origins, IP addresses,
-stream tickets, URLs or tokens. These process-lifetime counters measure the
-pilot gateway; an idle gateway with no shared read yet is shown as waiting
-rather than failed. They are not subscriber-delivery or monthly-cost guarantees.
+capacity-rejected connections, shared read attempts, successful reads,
+failures, recoveries, change broadcasts and application bytes. It never includes client identifiers,
+origins, IP addresses, exception text, stream tickets, URLs or tokens. These
+process-lifetime counters measure the pilot gateway; any idle gateway is shown
+as waiting, with prior-read state kept separate from active health. They are not
+subscriber-delivery or monthly-cost guarantees.
 
 The public-safe live operations payload is identical for every viewer. Its
 successful response is shared at the Vercel edge for two seconds, with a

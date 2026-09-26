@@ -41,8 +41,16 @@ test("operations preview exposes bounded cache pressure without cached contents"
   assert.match(liveTypes, /connectionsAccepted/);
   assert.match(liveTypes, /connectionsRejected/);
   assert.match(liveTypes, /checkedSinceStart: boolean/);
+  assert.match(liveTypes, /readFailures: number/);
+  assert.match(liveTypes, /recoveries: number/);
+  assert.match(liveTypes, /lastFailureAt: string \| null/);
   assert.match(intakeDashboard, /目標株価共有SSE：/);
-  assert.match(intakeDashboard, /待機中/);
+  assert.match(intakeDashboard, /待機中（直近読取あり）/);
+  assert.match(intakeDashboard, /待機中（未読取）/);
+  assert.match(intakeDashboard, /正常読取/);
+  assert.match(intakeDashboard, /最終試行/);
+  assert.match(intakeDashboard, /失敗/);
+  assert.match(intakeDashboard, /回復/);
   assert.match(intakeDashboard, /上限拒否/);
   assert.doesNotMatch(intakeDashboard, /priceTargetStream\.(ticket|url|token)/);
   assert.match(liveTypes, /bodyFetch\?:/);

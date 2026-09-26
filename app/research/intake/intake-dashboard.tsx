@@ -86,11 +86,12 @@ function cacheStatus(cache: MonitorState["fetchCache"]) {
 }
 function priceTargetStreamStatus(stream: MonitorState["priceTargetStream"]) {
   if (!stream) return "目標株価共有SSE：状態取得待ち";
-  const state = !stream.checkedSinceStart && stream.clients === 0
-    ? "待機中"
+  const state = !stream.active
+    ? stream.checkedSinceStart ? "待機中（直近読取あり）" : "待機中（未読取）"
     : stream.healthy ? "正常" : "要確認";
   const sent = (stream.bytesSent / 1024).toFixed(1);
-  return `目標株価共有SSE：${state} · 接続中 ${stream.clients}/${stream.maxClients} · 受付 ${stream.connectionsAccepted}・切断 ${stream.disconnects}・上限拒否 ${stream.connectionsRejected} · 共有読取 ${stream.snapshotReads}回・変更 ${stream.changes}回・送信 ${sent}KiB · 計測開始 ${time(stream.startedAt)} JST`;
+  const reads = `正常読取 ${stream.snapshotReads}/${stream.readAttempts}回・失敗 ${stream.readFailures}回（連続 ${stream.consecutiveFailures}）・回復 ${stream.recoveries}回`;
+  return `目標株価共有SSE：${state} · 接続中 ${stream.clients}/${stream.maxClients} · 受付 ${stream.connectionsAccepted}・切断 ${stream.disconnects}・上限拒否 ${stream.connectionsRejected} · ${reads}・変更 ${stream.changes}回・送信 ${sent}KiB · 最終試行 ${time(stream.lastReadAt)} JST · 計測開始 ${time(stream.startedAt)} JST`;
 }
 function discoveryCacheStatus(cache: MonitorState["discoveryCache"]) {
   if (!cache) return "公式一覧の再利用：状態取得待ち";
