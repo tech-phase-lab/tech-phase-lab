@@ -37,6 +37,12 @@ process-lifetime counters measure the pilot gateway; any idle gateway is shown
 as waiting, with prior-read state kept separate from active health. They are not
 subscriber-delivery or monthly-cost guarantees.
 
+The private Web Push pilot exposes only aggregate operations telemetry: active
+device count against the 20-device cap, 24-hour attempts, provider acceptances,
+uncertain outcomes, expired subscriptions, and worker poll/failure/recovery counts.
+Push endpoints, keys, payloads and device identifiers never enter the operations
+preview. Provider acceptance is not proof that a phone displayed a notification.
+
 The public-safe live operations payload is identical for every viewer. Its
 successful response is shared at the Vercel edge for two seconds, with a
 three-second stale-while-revalidate window, so an open dashboard does not turn

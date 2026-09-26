@@ -44,6 +44,16 @@ export type MonitorState = {
     maxAttempts: number; attempts: number; delivered: number;
     lastAttemptAt: string | null; lastSuccessAt: string | null; lastError: string | null;
   };
+  webPush?: {
+    enabled: boolean; status: "disabled" | "waiting" | "ready" | "error";
+    intervalSeconds: number; activeDevices: number; maxDevices: number;
+    attempted: number; accepted: number; uncertain: number;
+    attempted24Hours: number; accepted24Hours: number; uncertain24Hours: number;
+    expired24Hours: number; polls: number; failures: number;
+    consecutiveFailures: number; recoveries: number;
+    lastPollAt: string | null; lastSuccessAt: string | null;
+    lastFailureAt: string | null; lastAttemptAt: string | null;
+  };
   incidents?: {
     open: number; total: number; heldNotifications: number; pendingNotifications: number;
     deliveredNotifications: number; deadNotifications: number; deliveryEnabled: boolean;

@@ -59,6 +59,14 @@ the three X search queries now accept target changes without a fixed ticker rost
 Only explicit cashtags extend identification beyond known company aliases. Ambiguous
 multi-ticker posts are not automatically published as one target action.
 
+The operations preview now shows only aggregate pilot health: active devices,
+24-hour attempts, provider acceptances, uncertain outcomes, expired subscriptions,
+worker polls, failures and recoveries. The 24-hour delivery counts survive worker
+polling and service restarts through the delivery ledger; worker counters cover the
+current process lifetime. They never include push endpoints, keys, payloads or
+device identifiers. Provider acceptance still does not prove that the operating
+system displayed a notification.
+
 Price-target display retains seven days, still requiring a supported broker/old/new
 price extraction and initial detection within fifteen minutes. Historical display
 does not re-notify old records. X search still caps each response at 30 posts and

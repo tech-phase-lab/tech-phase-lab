@@ -311,6 +311,7 @@ class AutomaticMonitor:
             notification_configured = False
             notification_error = str(exc)
         self.notification_enabled = bool(self.notification_config.get("enabled"))
+        self.web_push_enabled = bool(web_push.configuration()["enabled"])
         self.tickers = configured_tickers(os.environ.get("RESEARCH_TICKERS", ""))
         self.signals_enabled = os.environ.get("RESEARCH_SIGNALS_ENABLED", "").lower() in {"1", "true", "yes"}
         self.priority_completion_latency_ms = None
@@ -398,6 +399,18 @@ class AutomaticMonitor:
                 "attempts": 0, "delivered": 0, "lastAttemptAt": None,
                 "lastSuccessAt": None, "lastError": notification_error,
             },
+            "webPush": {
+                "enabled": self.web_push_enabled,
+                "status": "waiting" if self.web_push_enabled else "disabled",
+                "intervalSeconds": 5, "activeDevices": 0,
+                "maxDevices": web_push.DEVICE_LIMIT,
+                "attempted": 0, "accepted": 0, "uncertain": 0,
+                "attempted24Hours": 0, "accepted24Hours": 0,
+                "uncertain24Hours": 0, "expired24Hours": 0,
+                "polls": 0, "failures": 0, "consecutiveFailures": 0,
+                "recoveries": 0, "lastPollAt": None, "lastSuccessAt": None,
+                "lastFailureAt": None, "lastAttemptAt": None,
+            },
             "companies": {},
         }
         self.thread = threading.Thread(target=self.run, name="research-monitor", daemon=True)
@@ -414,18 +427,31 @@ class AutomaticMonitor:
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
 
     def run_web_push(self):
-        if not web_push.configuration()["enabled"]:
+        if not self.web_push_enabled:
             return
         while not self.stop_event.is_set():
+            polled_at = utc_now()
             try:
                 items = self.public_price_targets()["items"]
                 with web_push.connect(self.db_path) as db:
                     result = web_push.deliver(db, items)
                 with self.state_lock:
-                    self.state["webPush"] = result
+                    previous = self.state["webPush"]
+                    self.state["webPush"] = {
+                        **previous, **result, "enabled": True,
+                        "polls": previous["polls"] + 1,
+                        "recoveries": previous["recoveries"] + int(
+                            previous["consecutiveFailures"] > 0),
+                        "consecutiveFailures": 0, "lastPollAt": polled_at,
+                        "lastSuccessAt": utc_now(),
+                    }
             except Exception:
                 with self.state_lock:
-                    self.state["webPush"] = {"status": "error"}
+                    push = self.state["webPush"]
+                    push.update({"status": "error", "polls": push["polls"] + 1,
+                                 "failures": push["failures"] + 1,
+                                 "consecutiveFailures": push["consecutiveFailures"] + 1,
+                                 "lastPollAt": polled_at, "lastFailureAt": utc_now()})
             self.stop_event.wait(5)
 
     def start(self):

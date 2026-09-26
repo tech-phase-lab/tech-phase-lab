@@ -13,6 +13,9 @@ import sqlite3
 import time
 from urllib.parse import urlsplit
 
+DEVICE_LIMIT = 20
+DELIVERY_RETENTION_SECONDS = 7 * 86400
+
 
 def configuration():
     ready = all(os.environ.get(k, '').strip() for k in (
@@ -72,7 +75,7 @@ def register(db, payload, allowed, now=None):
     now = time.time() if now is None else now
     with db:
         if not db.execute('SELECT 1 FROM push_devices WHERE id=?', (device,)).fetchone() and db.execute(
-                'SELECT COUNT(*) FROM push_devices').fetchone()[0] >= 20:
+                'SELECT COUNT(*) FROM push_devices').fetchone()[0] >= DEVICE_LIMIT:
             raise ValueError('pilot-device-limit')
         # Updating preferences resets the baseline, never backfills old alerts.
         db.execute('''INSERT INTO push_devices VALUES(?,?,?,?,?,1)
@@ -116,6 +119,30 @@ def send(subscription, payload):
         return exc.response.status_code if exc.response is not None else 0
 
 
+def public_status(db, now=None):
+    """Return bounded aggregate pilot state without endpoints, keys or payloads."""
+    now = time.time() if now is None else float(now)
+    devices = db.execute('SELECT COUNT(*) FROM push_devices WHERE active=1').fetchone()[0]
+    row = db.execute('''SELECT
+        COUNT(*) AS attempted,
+        sum(CASE WHEN status='accepted' THEN 1 ELSE 0 END) AS accepted,
+        sum(CASE WHEN status='uncertain' THEN 1 ELSE 0 END) AS uncertain,
+        sum(CASE WHEN status='expired' THEN 1 ELSE 0 END) AS expired,
+        max(attempted_at) AS last_attempt
+      FROM push_deliveries WHERE attempted_at>=?''', (now - 86400,)).fetchone()
+    last_attempt = row['last_attempt']
+    return {
+        'activeDevices': devices,
+        'maxDevices': DEVICE_LIMIT,
+        'attempted24Hours': row['attempted'] or 0,
+        'accepted24Hours': row['accepted'] or 0,
+        'uncertain24Hours': row['uncertain'] or 0,
+        'expired24Hours': row['expired'] or 0,
+        'lastAttemptAt': datetime.fromtimestamp(last_attempt, timezone.utc).isoformat(
+            timespec='milliseconds') if last_attempt is not None else None,
+    }
+
+
 def deliver(db, items, transport=send, now=None):
     if not configuration()['enabled']:
         return {'status': 'disabled', 'attempted': 0}
@@ -154,5 +181,7 @@ def deliver(db, items, transport=send, now=None):
             if status == 'expired':
                 break
     with db:
-        db.execute('DELETE FROM push_deliveries WHERE attempted_at<?', (now - 7 * 86400,))
-    return {'status': 'ready', 'attempted': attempted, 'accepted': accepted, 'uncertain': uncertain}
+        db.execute('DELETE FROM push_deliveries WHERE attempted_at<?',
+                   (now - DELIVERY_RETENTION_SECONDS,))
+    return {'status': 'ready', 'attempted': attempted, 'accepted': accepted,
+            'uncertain': uncertain, **public_status(db, now)}

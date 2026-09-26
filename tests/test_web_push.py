@@ -46,6 +46,9 @@ class PushTests(unittest.TestCase):
     def test_expired_subscription_removed(self):
         self.register();push.deliver(self.db,[event()],lambda *_:410,self.now)
         self.assertEqual(self.db.execute('SELECT COUNT(*) FROM push_devices').fetchone()[0],0)
+        status=push.public_status(self.db,self.now)
+        self.assertEqual(status['activeDevices'],0)
+        self.assertEqual(status['expired24Hours'],1)
     def test_disabled_never_sends(self):
         self.register()
         with patch.dict(os.environ,{'WEB_PUSH_ENABLED':'false'}):
@@ -66,3 +69,14 @@ class PushTests(unittest.TestCase):
         push.register(self.db, {'subscription':subscription(),'allTargets':True}, {'MU'}, self.now-10)
         self.assertEqual(push.deliver(self.db,[event('AAPL'),event('TSLA')],lambda *_:201,self.now)['accepted'],2)
         self.assertEqual(push.deliver(self.db,[event('AAPL')],lambda *_:self.fail('duplicate'),self.now)['attempted'],0)
+
+    def test_public_status_is_persistent_and_contains_no_subscription_details(self):
+        self.register()
+        result=push.deliver(self.db,[event()],lambda *_:201,self.now)
+        self.assertEqual(result['activeDevices'],1)
+        self.assertEqual(result['attempted24Hours'],1)
+        self.assertEqual(result['accepted24Hours'],1)
+        self.assertEqual(result['uncertain24Hours'],0)
+        self.assertIsNotNone(result['lastAttemptAt'])
+        self.assertNotIn('endpoint', result)
+        self.assertNotIn('subscription', result)
