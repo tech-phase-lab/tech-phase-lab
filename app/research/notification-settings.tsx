@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import type { Language } from "@/lib/research/data";
+import styles from "./price-targets-panel.module.css";
 
 export default function NotificationSettings({ lang }: { lang: Language }) {
   const [config, setConfig] = useState<{ enabled: boolean; publicKey?: string; tickers?: string[] } | null>(null);
@@ -41,14 +42,16 @@ export default function NotificationSettings({ lang }: { lang: Language }) {
     } catch (error) { setMessage(error instanceof Error ? error.message : t("設定できませんでした。", "Setup failed.")); }
     finally { setBusy(false); }
   }
-  return <details style={{ margin: "16px 0", padding: 12, border: "1px solid #64748b", borderRadius: 8 }}>
+  return <details className={styles.notifications}>
     <summary>{t("スマホ通知の設定", "Phone notifications")}</summary>
+    <div className={styles.notificationBody}>
     {!config?.enabled ? <p>{t("端末への通知は準備中です。まだ通知は送信されません。", "Device notifications are being prepared. No notifications are sent yet.")}</p> : <>
       <p>{t("3つの情報源から取得した目標株価の引き上げ・引き下げを、まとめて通知します。銘柄の選択は不要です。", "Receive price target increases and decreases from all three sources. No ticker selection required.")}</p>
       <p><label>{t("試験用コード", "Pilot code")} <input style={{ border: "1px solid #64748b", borderRadius: 6, padding: "8px 10px", display: "block", width: "100%", maxWidth: 380, margin: "8px 0" }} type="password" autoComplete="off" value={code} onChange={e => setCode(e.target.value)} /></label></p>
       <button style={{ padding: "8px 12px", border: "1px solid #64748b", borderRadius: 6, margin: "4px 8px 4px 0" }} disabled={busy || !code} onClick={() => void save()}>{t("通知を許可して保存", "Enable and save")}</button>{" "}
       <button style={{ padding: "8px 12px", border: "1px solid #64748b", borderRadius: 6, margin: "4px 8px 4px 0" }} disabled={busy || !code} onClick={() => void save(true)}>{t("この端末の通知を停止", "Stop on this device")}</button>
     </>}
-    <p role="status">{message}</p>
+    {message && <p role="status">{message}</p>}
+    </div>
   </details>;
 }
