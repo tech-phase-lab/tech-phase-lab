@@ -638,5 +638,18 @@
     "intervalSeconds": 30,
     "reuse": "review-required",
     "userAgent": "TechPhaseResearch/1.0 (+https://tech-phase-lab.vercel.app)"
+  },
+  {
+    "id": "prnewswire-public",
+    "name": "PR Newswire public releases",
+    "kind": "publisher-update",
+    "format": "feed",
+    "url": "https://www.prnewswire.com/rss/news-releases-list.rss",
+    "allowedHosts": [
+      "www.prnewswire.com"
+    ],
+    "intervalSeconds": 30,
+    "reuse": "review-required",
+    "userAgent": "TechPhaseResearch/1.0 (+https://tech-phase-lab.vercel.app)"
   }
 ]

@@ -22,6 +22,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
     let active = true;
     let visible = false;
     let session: AbortController | null = null;
+    let streamRevision = 0;
     const applySnapshot = (data: { ok: boolean; items: Target[] }, signal: AbortSignal) => {
       if (!data.ok || !Array.isArray(data.items) || data.items.length > 30) throw new Error("Invalid feed");
       if (active && !signal.aborted) {
@@ -29,17 +30,21 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
       }
     };
     const readFallback = async (signal: AbortSignal) => {
+      const revision = streamRevision;
       try {
         const response = await fetch("/api/research/price-targets", { signal: AbortSignal.any([signal, AbortSignal.timeout(10_000)]) });
         if (!response.ok) throw new Error("Feed unavailable");
-        applySnapshot(await response.json(), signal);
-      } catch { if (active && !signal.aborted) setStatus("error"); }
+        const snapshot = await response.json();
+        // A slow initial GET must not replace a newer streamed snapshot.
+        if (revision === streamRevision) applySnapshot(snapshot, signal);
+      } catch { if (active && !signal.aborted && revision === streamRevision) setStatus("error"); }
     };
     const run = async (signal: AbortSignal) => {
       let failures = 0;
       while (!signal.aborted) {
         const connection = new AbortController();
         let watchdog: ReturnType<typeof setTimeout> | undefined;
+        let firstSnapshotDeadline: ReturnType<typeof setTimeout> | undefined;
         let reader: ReadableStreamDefaultReader<Uint8Array> | undefined;
         let expiresAt = 0;
         try {
@@ -49,6 +54,8 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
           if (!config.ok || typeof config.ticket !== "string" || typeof config.url !== "string") throw new Error("Invalid connection");
           expiresAt = config.expiresAt * 1000;
           watchdog = setTimeout(() => connection.abort(), 15_000);
+          // Pings/headers alone are not a usable initial feed.
+          firstSnapshotDeadline = setTimeout(() => connection.abort(), 8_000);
           const stream = await fetch(config.url, { headers: { Authorization: `Bearer ${config.ticket}` },
             signal: AbortSignal.any([signal, connection.signal]), credentials: "omit", cache: "no-store" });
           if (!stream.ok || !stream.body || !stream.headers.get("content-type")?.includes("text/event-stream")) throw new Error("Stream unavailable");
@@ -64,6 +71,8 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
               if (event.event === "unavailable") throw new Error("Feed unavailable");
               if (event.event === "snapshot") {
                 applySnapshot(JSON.parse(event.data), signal);
+                streamRevision += 1;
+                clearTimeout(firstSnapshotDeadline);
                 if (active && !signal.aborted) setDelivery("live");
                 failures = 0;
               }
@@ -84,6 +93,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
             if (waited + 15_000 < retryAfter && !signal.aborted) await readFallback(signal);
           }
         } finally {
+          clearTimeout(firstSnapshotDeadline);
           clearTimeout(watchdog);
           connection.abort();
           await reader?.cancel().catch(() => {});
@@ -94,6 +104,8 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
       if (visible && !document.hidden) {
         if (!session) {
           session = new AbortController();
+          // Display the shared snapshot immediately; SSE connects independently.
+          void readFallback(session.signal);
           void run(session.signal);
         }
       } else { session?.abort(); session = null; }
