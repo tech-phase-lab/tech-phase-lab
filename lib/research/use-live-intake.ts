@@ -108,6 +108,12 @@ export type MonitorState = {
       lastRequestDurationSamples: number;
       lastRequestDurationAverageMs: number | null;
       lastRequestDurationMaxMs: number | null;
+      lastRequestSuccessDurationSamples: number;
+      lastRequestSuccessDurationAverageMs: number | null;
+      lastRequestSuccessDurationMaxMs: number | null;
+      lastRequestErrorDurationSamples: number;
+      lastRequestErrorDurationAverageMs: number | null;
+      lastRequestErrorDurationMaxMs: number | null;
       lastSelectedDetectedNeverFetched: number;
       lastSelectedBaselineNeverFetched: number;
       lastSelectedExtractionPending: number;
@@ -139,6 +145,12 @@ export type MonitorState = {
       requestDurationSamples24Hours: number;
       requestDurationAverageMs24Hours: number | null;
       requestDurationMaxMs24Hours: number | null;
+      requestSuccessDurationSamples24Hours: number;
+      requestSuccessDurationAverageMs24Hours: number | null;
+      requestSuccessDurationMaxMs24Hours: number | null;
+      requestErrorDurationSamples24Hours: number;
+      requestErrorDurationAverageMs24Hours: number | null;
+      requestErrorDurationMaxMs24Hours: number | null;
       selectedDetectedNeverFetched24Hours: number;
       selectedBaselineNeverFetched24Hours: number;
       selectedExtractionPending24Hours: number;

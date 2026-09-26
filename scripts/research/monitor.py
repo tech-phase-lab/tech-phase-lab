@@ -1090,6 +1090,12 @@ def connect(path):
       request_duration_samples INTEGER NOT NULL DEFAULT 0,
       request_duration_total_ms INTEGER NOT NULL DEFAULT 0,
       request_duration_max_ms INTEGER,
+      request_success_duration_samples INTEGER NOT NULL DEFAULT 0,
+      request_success_duration_total_ms INTEGER NOT NULL DEFAULT 0,
+      request_success_duration_max_ms INTEGER,
+      request_error_duration_samples INTEGER NOT NULL DEFAULT 0,
+      request_error_duration_total_ms INTEGER NOT NULL DEFAULT 0,
+      request_error_duration_max_ms INTEGER,
       selected_detected_never_fetched INTEGER NOT NULL DEFAULT 0,
       selected_baseline_never_fetched INTEGER NOT NULL DEFAULT 0,
       selected_extraction_pending INTEGER NOT NULL DEFAULT 0,
@@ -1241,6 +1247,12 @@ def connect(path):
         "request_duration_samples": "INTEGER NOT NULL DEFAULT 0",
         "request_duration_total_ms": "INTEGER NOT NULL DEFAULT 0",
         "request_duration_max_ms": "INTEGER",
+        "request_success_duration_samples": "INTEGER NOT NULL DEFAULT 0",
+        "request_success_duration_total_ms": "INTEGER NOT NULL DEFAULT 0",
+        "request_success_duration_max_ms": "INTEGER",
+        "request_error_duration_samples": "INTEGER NOT NULL DEFAULT 0",
+        "request_error_duration_total_ms": "INTEGER NOT NULL DEFAULT 0",
+        "request_error_duration_max_ms": "INTEGER",
         "selected_detected_never_fetched": "INTEGER NOT NULL DEFAULT 0",
         "selected_baseline_never_fetched": "INTEGER NOT NULL DEFAULT 0",
         "selected_extraction_pending": "INTEGER NOT NULL DEFAULT 0",
@@ -1615,6 +1627,7 @@ def record_body_fetch_batch(
     detection_latencies_ms=(), selection_partitions=None, selection_errors=None,
     selection_not_modified=None, selection_fetched=None, selection_updated=None,
     eligibility_waits_ms=(), request_durations_ms=(),
+    request_success_durations_ms=(), request_error_durations_ms=(),
 ):
     """Persist bounded URL-free body-fetch evidence across service restarts."""
     try:
@@ -1625,6 +1638,12 @@ def record_body_fetch_batch(
         latencies = tuple(int(value) for value in detection_latencies_ms)
         eligibility_waits = tuple(int(value) for value in eligibility_waits_ms)
         request_durations = tuple(int(value) for value in request_durations_ms)
+        request_success_durations = tuple(
+            int(value) for value in request_success_durations_ms
+        )
+        request_error_durations = tuple(
+            int(value) for value in request_error_durations_ms
+        )
         partitions = selection_partitions or {}
         selected_detected = int(partitions.get("detectedNeverFetched", 0))
         selected_baseline = int(partitions.get("baselineNeverFetched", 0))
@@ -1666,9 +1685,22 @@ def record_body_fetch_batch(
         or len(latencies) > checks
         or len(eligibility_waits) > checks
         or len(request_durations) > checks
+        or len(request_success_durations) > checks
+        or len(request_error_durations) > checks
         or any(value < 0 or value > maximum_latency_ms for value in latencies)
         or any(value < 0 or value > maximum_latency_ms for value in eligibility_waits)
         or any(value < 0 or value > 3_600_000 for value in request_durations)
+        or any(value < 0 or value > 3_600_000 for value in request_success_durations)
+        or any(value < 0 or value > 3_600_000 for value in request_error_durations)
+        or len(request_success_durations) + len(request_error_durations)
+            not in {0, len(request_durations)}
+        or (
+            (request_success_durations or request_error_durations)
+            and (
+                len(request_success_durations) != checks - errors
+                or len(request_error_durations) != errors
+            )
+        )
         or any(value < 0 or value > checks for value in (
             selected_detected, selected_baseline, selected_extraction, selected_recheck,
         ))
@@ -1716,6 +1748,14 @@ def record_body_fetch_batch(
     eligibility_wait_max = max(eligibility_waits) if eligibility_waits else None
     request_duration_total = sum(request_durations)
     request_duration_max = max(request_durations) if request_durations else None
+    request_success_duration_total = sum(request_success_durations)
+    request_success_duration_max = (
+        max(request_success_durations) if request_success_durations else None
+    )
+    request_error_duration_total = sum(request_error_durations)
+    request_error_duration_max = (
+        max(request_error_durations) if request_error_durations else None
+    )
     with db:
         db.execute("""
           INSERT INTO body_fetch_batches(
@@ -1723,6 +1763,9 @@ def record_body_fetch_batch(
             detection_latency_samples,detection_latency_total_ms,detection_latency_max_ms,
             eligibility_wait_samples,eligibility_wait_total_ms,eligibility_wait_max_ms,
             request_duration_samples,request_duration_total_ms,request_duration_max_ms,
+            request_success_duration_samples,request_success_duration_total_ms,
+            request_success_duration_max_ms,request_error_duration_samples,
+            request_error_duration_total_ms,request_error_duration_max_ms,
             selected_detected_never_fetched,selected_baseline_never_fetched,
             selected_extraction_pending,selected_recheck,
             error_detected_never_fetched,error_baseline_never_fetched,
@@ -1734,12 +1777,15 @@ def record_body_fetch_batch(
             fetched_extraction_pending,fetched_recheck,
             updated_detected_never_fetched,updated_baseline_never_fetched,
             updated_extraction_pending,updated_recheck
-          ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+          ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         """, (
             polled_at, completed_at, duration_ms, checks, errors, not_modified,
             len(latencies), latency_total, latency_max,
             len(eligibility_waits), eligibility_wait_total, eligibility_wait_max,
             len(request_durations), request_duration_total, request_duration_max,
+            len(request_success_durations), request_success_duration_total,
+            request_success_duration_max, len(request_error_durations),
+            request_error_duration_total, request_error_duration_max,
             selected_detected,
             selected_baseline, selected_extraction, selected_recheck,
             error_detected, error_baseline, error_extraction, error_recheck,
@@ -1941,6 +1987,43 @@ BODY_FETCH_METRIC_WHERE = """
       AND request_duration_max_ms <= request_duration_total_ms
       AND request_duration_total_ms <= request_duration_samples * 3600000)
   )
+  AND typeof(request_success_duration_samples)='integer'
+  AND request_success_duration_samples BETWEEN 0 AND checks
+  AND typeof(request_success_duration_total_ms)='integer'
+  AND request_success_duration_total_ms >= 0
+  AND (
+    (request_success_duration_samples=0 AND request_success_duration_total_ms=0
+      AND request_success_duration_max_ms IS NULL)
+    OR
+    (request_success_duration_samples>0
+      AND typeof(request_success_duration_max_ms)='integer'
+      AND request_success_duration_max_ms BETWEEN 0 AND 3600000
+      AND request_success_duration_max_ms <= request_success_duration_total_ms
+      AND request_success_duration_total_ms
+        <= request_success_duration_samples * 3600000)
+  )
+  AND typeof(request_error_duration_samples)='integer'
+  AND request_error_duration_samples BETWEEN 0 AND checks
+  AND typeof(request_error_duration_total_ms)='integer'
+  AND request_error_duration_total_ms >= 0
+  AND (
+    (request_error_duration_samples=0 AND request_error_duration_total_ms=0
+      AND request_error_duration_max_ms IS NULL)
+    OR
+    (request_error_duration_samples>0
+      AND typeof(request_error_duration_max_ms)='integer'
+      AND request_error_duration_max_ms BETWEEN 0 AND 3600000
+      AND request_error_duration_max_ms <= request_error_duration_total_ms
+      AND request_error_duration_total_ms
+        <= request_error_duration_samples * 3600000)
+  )
+  AND request_success_duration_samples + request_error_duration_samples
+    IN (0, request_duration_samples)
+  AND (
+    request_success_duration_samples + request_error_duration_samples=0
+    OR (request_success_duration_samples=checks-errors
+      AND request_error_duration_samples=errors)
+  )
   AND typeof(selected_detected_never_fetched)='integer'
   AND selected_detected_never_fetched BETWEEN 0 AND checks
   AND typeof(selected_baseline_never_fetched)='integer'
@@ -2059,6 +2142,9 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
              eligibility_wait_total_ms,eligibility_wait_max_ms,
              request_duration_samples,request_duration_total_ms,
              request_duration_max_ms,
+             request_success_duration_samples,request_success_duration_total_ms,
+             request_success_duration_max_ms,request_error_duration_samples,
+             request_error_duration_total_ms,request_error_duration_max_ms,
              selected_detected_never_fetched,
              selected_baseline_never_fetched,selected_extraction_pending,
              selected_recheck,error_detected_never_fetched,
@@ -2101,6 +2187,16 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
              COALESCE(sum(request_duration_samples),0) AS request_duration_samples,
              COALESCE(sum(request_duration_total_ms),0) AS request_duration_total,
              max(request_duration_max_ms) AS request_duration_max,
+             COALESCE(sum(request_success_duration_samples),0)
+               AS request_success_duration_samples,
+             COALESCE(sum(request_success_duration_total_ms),0)
+               AS request_success_duration_total,
+             max(request_success_duration_max_ms) AS request_success_duration_max,
+             COALESCE(sum(request_error_duration_samples),0)
+               AS request_error_duration_samples,
+             COALESCE(sum(request_error_duration_total_ms),0)
+               AS request_error_duration_total,
+             max(request_error_duration_max_ms) AS request_error_duration_max,
              COALESCE(sum(selected_detected_never_fetched),0) AS selected_detected,
              COALESCE(sum(selected_baseline_never_fetched),0) AS selected_baseline,
              COALESCE(sum(selected_extraction_pending),0) AS selected_extraction,
@@ -2168,6 +2264,32 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
             if latest and latest["request_duration_samples"] else None
         ),
         "lastRequestDurationMaxMs": latest["request_duration_max_ms"] if latest else None,
+        "lastRequestSuccessDurationSamples": (
+            latest["request_success_duration_samples"] if latest else 0
+        ),
+        "lastRequestSuccessDurationAverageMs": (
+            round(
+                latest["request_success_duration_total_ms"]
+                / latest["request_success_duration_samples"]
+            )
+            if latest and latest["request_success_duration_samples"] else None
+        ),
+        "lastRequestSuccessDurationMaxMs": (
+            latest["request_success_duration_max_ms"] if latest else None
+        ),
+        "lastRequestErrorDurationSamples": (
+            latest["request_error_duration_samples"] if latest else 0
+        ),
+        "lastRequestErrorDurationAverageMs": (
+            round(
+                latest["request_error_duration_total_ms"]
+                / latest["request_error_duration_samples"]
+            )
+            if latest and latest["request_error_duration_samples"] else None
+        ),
+        "lastRequestErrorDurationMaxMs": (
+            latest["request_error_duration_max_ms"] if latest else None
+        ),
         "lastSelectedDetectedNeverFetched": (
             latest["selected_detected_never_fetched"] if latest else 0
         ),
@@ -2239,6 +2361,26 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
             if totals["request_duration_samples"] else None
         ),
         "requestDurationMaxMs24Hours": totals["request_duration_max"],
+        "requestSuccessDurationSamples24Hours": (
+            totals["request_success_duration_samples"]
+        ),
+        "requestSuccessDurationAverageMs24Hours": (
+            round(
+                totals["request_success_duration_total"]
+                / totals["request_success_duration_samples"]
+            )
+            if totals["request_success_duration_samples"] else None
+        ),
+        "requestSuccessDurationMaxMs24Hours": totals["request_success_duration_max"],
+        "requestErrorDurationSamples24Hours": totals["request_error_duration_samples"],
+        "requestErrorDurationAverageMs24Hours": (
+            round(
+                totals["request_error_duration_total"]
+                / totals["request_error_duration_samples"]
+            )
+            if totals["request_error_duration_samples"] else None
+        ),
+        "requestErrorDurationMaxMs24Hours": totals["request_error_duration_max"],
         "selectedDetectedNeverFetched24Hours": totals["selected_detected"],
         "selectedBaselineNeverFetched24Hours": totals["selected_baseline"],
         "selectedExtractionPending24Hours": totals["selected_extraction"],

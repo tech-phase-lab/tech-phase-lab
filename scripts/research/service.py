@@ -1184,12 +1184,15 @@ class AutomaticMonitor:
         detection_latencies_ms = []
         eligibility_waits_ms = []
         request_durations_ms = []
+        request_success_durations_ms = []
+        request_error_durations_ms = []
         saved_outcomes = {}
         with self.db_lock, monitor.connect(self.db_path) as db:
             affected_tickers = {row["ticker"] for row, _, _, _, _ in completed}
             for row, attempted_at, request_duration_ms, result, error in completed:
                 request_durations_ms.append(request_duration_ms)
                 if error is None:
+                    request_success_durations_ms.append(request_duration_ms)
                     saved_outcomes[row["url"]] = monitor.save_source_check(
                         db, row, result
                     )["status"]
@@ -1200,6 +1203,7 @@ class AutomaticMonitor:
                             db, row["url"], brief_generator.token_reservation(result["extractedText"])
                         )
                 else:
+                    request_error_durations_ms.append(request_duration_ms)
                     monitor.save_source_error(db, row, error)
                     errors += 1
                 if row["url"] in probe_urls:
@@ -1276,6 +1280,8 @@ class AutomaticMonitor:
                 selection_fetched, selection_updated,
                 eligibility_waits_ms=eligibility_waits_ms,
                 request_durations_ms=request_durations_ms,
+                request_success_durations_ms=request_success_durations_ms,
+                request_error_durations_ms=request_error_durations_ms,
             )
             monitor.write_snapshot(db, self.snapshot_path)
         with self.state_lock:

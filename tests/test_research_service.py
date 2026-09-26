@@ -768,6 +768,12 @@ class ResearchServiceTests(unittest.TestCase):
                 "eligibility_wait_total_ms", "eligibility_wait_max_ms",
                 "request_duration_samples", "request_duration_total_ms",
                 "request_duration_max_ms",
+                "request_success_duration_samples",
+                "request_success_duration_total_ms",
+                "request_success_duration_max_ms",
+                "request_error_duration_samples",
+                "request_error_duration_total_ms",
+                "request_error_duration_max_ms",
                 "selected_detected_never_fetched",
                 "selected_baseline_never_fetched", "selected_extraction_pending",
                 "selected_recheck", "error_detected_never_fetched",
@@ -795,6 +801,12 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["requestDurationSamples24Hours"], 0)
         self.assertIsNone(summary["requestDurationAverageMs24Hours"])
         self.assertIsNone(summary["requestDurationMaxMs24Hours"])
+        self.assertEqual(summary["requestSuccessDurationSamples24Hours"], 0)
+        self.assertIsNone(summary["requestSuccessDurationAverageMs24Hours"])
+        self.assertIsNone(summary["requestSuccessDurationMaxMs24Hours"])
+        self.assertEqual(summary["requestErrorDurationSamples24Hours"], 0)
+        self.assertIsNone(summary["requestErrorDurationAverageMs24Hours"])
+        self.assertIsNone(summary["requestErrorDurationMaxMs24Hours"])
         self.assertEqual(summary["selectedDetectedNeverFetched24Hours"], 0)
         self.assertEqual(summary["selectedBaselineNeverFetched24Hours"], 0)
         self.assertEqual(summary["selectedExtractionPending24Hours"], 0)
@@ -859,33 +871,53 @@ class ResearchServiceTests(unittest.TestCase):
             "detectedNeverFetched": 0,
             "baselineNeverFetched": 0,
             "extractionPending": 0,
-            "recheck": 1,
+            "recheck": 2,
         }
         with monitor.connect(self.db_path) as db:
             with self.assertRaisesRegex(ValueError, "invalid-body-fetch-batch"):
                 monitor.record_body_fetch_batch(
                     db, started.isoformat(timespec="milliseconds"),
                     reference.isoformat(timespec="milliseconds"),
-                    1000, 1, 0, 1, (), selection,
+                    1000, 2, 1, 1, (), selection,
+                    selection_errors={"recheck": 1},
                     selection_not_modified={"recheck": 1},
                     request_durations_ms=(3_600_001,),
+                )
+            with self.assertRaisesRegex(ValueError, "invalid-body-fetch-batch"):
+                monitor.record_body_fetch_batch(
+                    db, started.isoformat(timespec="milliseconds"),
+                    reference.isoformat(timespec="milliseconds"),
+                    1000, 2, 1, 1, (), selection,
+                    selection_errors={"recheck": 1},
+                    selection_not_modified={"recheck": 1},
+                    request_durations_ms=(650, 1200),
+                    request_success_durations_ms=(650, 1200),
                 )
             monitor.record_body_fetch_batch(
                 db, started.isoformat(timespec="milliseconds"),
                 reference.isoformat(timespec="milliseconds"),
-                1000, 1, 0, 1, (), selection,
+                1000, 2, 1, 1, (), selection,
+                selection_errors={"recheck": 1},
                 selection_not_modified={"recheck": 1},
-                request_durations_ms=(650,),
+                request_durations_ms=(650, 1200),
+                request_success_durations_ms=(650,),
+                request_error_durations_ms=(1200,),
             )
             summary = monitor.body_fetch_batch_summary(
                 db, reference.isoformat(timespec="milliseconds")
             )
-        self.assertEqual(summary["lastRequestDurationSamples"], 1)
-        self.assertEqual(summary["lastRequestDurationAverageMs"], 650)
-        self.assertEqual(summary["lastRequestDurationMaxMs"], 650)
-        self.assertEqual(summary["requestDurationSamples24Hours"], 1)
-        self.assertEqual(summary["requestDurationAverageMs24Hours"], 650)
-        self.assertEqual(summary["requestDurationMaxMs24Hours"], 650)
+        self.assertEqual(summary["lastRequestDurationSamples"], 2)
+        self.assertEqual(summary["lastRequestDurationAverageMs"], 925)
+        self.assertEqual(summary["lastRequestDurationMaxMs"], 1200)
+        self.assertEqual(summary["requestDurationSamples24Hours"], 2)
+        self.assertEqual(summary["requestDurationAverageMs24Hours"], 925)
+        self.assertEqual(summary["requestDurationMaxMs24Hours"], 1200)
+        self.assertEqual(summary["requestSuccessDurationSamples24Hours"], 1)
+        self.assertEqual(summary["requestSuccessDurationAverageMs24Hours"], 650)
+        self.assertEqual(summary["requestSuccessDurationMaxMs24Hours"], 650)
+        self.assertEqual(summary["requestErrorDurationSamples24Hours"], 1)
+        self.assertEqual(summary["requestErrorDurationAverageMs24Hours"], 1200)
+        self.assertEqual(summary["requestErrorDurationMaxMs24Hours"], 1200)
         self.assertNotIn("https://", json.dumps(summary))
 
     def test_legacy_body_host_probe_table_migrates_without_guessing_due_time(self):
@@ -1192,6 +1224,8 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(durable["requestDurationSamples24Hours"], 1)
         self.assertIsInstance(durable["requestDurationAverageMs24Hours"], int)
         self.assertIsInstance(durable["requestDurationMaxMs24Hours"], int)
+        self.assertEqual(durable["requestSuccessDurationSamples24Hours"], 1)
+        self.assertEqual(durable["requestErrorDurationSamples24Hours"], 0)
         self.assertEqual(durable["selectedDetectedNeverFetched24Hours"], 1)
         self.assertEqual(durable["selectedBaselineNeverFetched24Hours"], 0)
         self.assertEqual(durable["selectedExtractionPending24Hours"], 0)
@@ -1244,6 +1278,10 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(durable["errorBaselineNeverFetched24Hours"], 0)
         self.assertEqual(durable["errorExtractionPending24Hours"], 0)
         self.assertEqual(durable["errorRecheck24Hours"], 0)
+        self.assertEqual(durable["requestSuccessDurationSamples24Hours"], 0)
+        self.assertEqual(durable["requestErrorDurationSamples24Hours"], 1)
+        self.assertIsInstance(durable["requestErrorDurationAverageMs24Hours"], int)
+        self.assertIsInstance(durable["requestErrorDurationMaxMs24Hours"], int)
         self.assertNotIn("private endpoint", json.dumps(durable))
 
     def test_body_latency_ignores_routine_rechecks_and_invalid_detection_times(self):

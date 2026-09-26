@@ -250,6 +250,12 @@ discarded. This isolates fetch/extraction work from the eligibility wait and
 from the detection-to-first-body metric. It is internal processing evidence,
 not a polling interval or subscriber-delivery guarantee, and contains no URL,
 hostname, body text, HTTP detail or exception.
+New batches additionally partition the same processing-time samples into
+successful responses (including validator reuse) and failed attempts. The
+partition must cover every newly measured attempt and match the batch error
+count; inconsistent rows are excluded. Legacy batches remain unpartitioned
+rather than being inferred, so operators can tell whether a high aggregate is
+normal extraction work or failure handling without exposing source identity.
 After a restricted recovery probe reopens the circuit, subsequent worker cycles
 perform no request to that hostname until the new retry deadline; those idle
 cycles also do not increment the recovery-probe counters.

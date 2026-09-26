@@ -188,6 +188,18 @@ function durableBodyFetchStatus(bodyFetch: MonitorState["bodyFetch"]) {
   const requestDuration = durable.requestDurationSamples24Hours > 0
     ? ` · 本文取得・抽出処理 平均 ${duration(durable.requestDurationAverageMs24Hours)}・最大 ${duration(durable.requestDurationMaxMs24Hours)}（${durable.requestDurationSamples24Hours}件）`
     : " · 本文取得・抽出処理 実測待ち";
+  const requestSuccessDuration = (durable.requestSuccessDurationSamples24Hours ?? 0) > 0
+    ? `正常 平均 ${duration(durable.requestSuccessDurationAverageMs24Hours)}・最大 ${duration(durable.requestSuccessDurationMaxMs24Hours)}（${durable.requestSuccessDurationSamples24Hours}件）`
+    : "正常 0件";
+  const requestErrorDuration = (durable.requestErrorDurationSamples24Hours ?? 0) > 0
+    ? `失敗 平均 ${duration(durable.requestErrorDurationAverageMs24Hours)}・最大 ${duration(durable.requestErrorDurationMaxMs24Hours)}（${durable.requestErrorDurationSamples24Hours}件）`
+    : "失敗 0件";
+  const requestDurationOutcomes = (
+    (durable.requestSuccessDurationSamples24Hours ?? 0)
+    + (durable.requestErrorDurationSamples24Hours ?? 0)
+  ) > 0
+    ? ` · 処理時間内訳：${requestSuccessDuration}／${requestErrorDuration}`
+    : " · 処理時間内訳：実測待ち";
   const selection = (durable.selectedDetectedNeverFetched24Hours ?? 0)
     + (durable.selectedBaselineNeverFetched24Hours ?? 0)
     + (durable.selectedExtractionPending24Hours ?? 0)
@@ -208,7 +220,7 @@ function durableBodyFetchStatus(bodyFetch: MonitorState["bodyFetch"]) {
   const selectionStatus = selection > 0
     ? ` · 24時間予約：${selectedOutcome("新着本文", durable.selectedDetectedNeverFetched24Hours, durable.errorDetectedNeverFetched24Hours, durable.notModifiedDetectedNeverFetched24Hours, durable.fetchedDetectedNeverFetched24Hours, durable.updatedDetectedNeverFetched24Hours, durable.outcomeUnmeasuredDetectedNeverFetched24Hours)}・${selectedOutcome("履歴本文", durable.selectedBaselineNeverFetched24Hours, durable.errorBaselineNeverFetched24Hours, durable.notModifiedBaselineNeverFetched24Hours, durable.fetchedBaselineNeverFetched24Hours, durable.updatedBaselineNeverFetched24Hours, durable.outcomeUnmeasuredBaselineNeverFetched24Hours)}・${selectedOutcome("抽出不足", durable.selectedExtractionPending24Hours, durable.errorExtractionPending24Hours, durable.notModifiedExtractionPending24Hours, durable.fetchedExtractionPending24Hours, durable.updatedExtractionPending24Hours, durable.outcomeUnmeasuredExtractionPending24Hours)}・${selectedOutcome("再確認", durable.selectedRecheck24Hours, durable.errorRecheck24Hours, durable.notModifiedRecheck24Hours, durable.fetchedRecheck24Hours, durable.updatedRecheck24Hours, durable.outcomeUnmeasuredRecheck24Hours)}`
     : " · 24時間予約内訳：実測待ち";
-  return `本文取得の永続稼働：${poll}${deployment} · 24時間 ${durable.runs24Hours}バッチ・${durable.checks24Hours}件 · エラー ${durable.errors24Hours}件 · 304 ${durable.notModified24Hours}件${selectionStatus}${latency}${eligibilityWait}${requestDuration} · 最終完了 ${time(durable.lastCompletedAt)} JST`;
+  return `本文取得の永続稼働：${poll}${deployment} · 24時間 ${durable.runs24Hours}バッチ・${durable.checks24Hours}件 · エラー ${durable.errors24Hours}件 · 304 ${durable.notModified24Hours}件${selectionStatus}${latency}${eligibilityWait}${requestDuration}${requestDurationOutcomes} · 最終完了 ${time(durable.lastCompletedAt)} JST`;
 }
 function secEvidenceStatus(evidence: MonitorState["secEvidence"]) {
   if (!evidence) return "SEC本文証跡：状態取得待ち";
