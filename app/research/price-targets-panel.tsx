@@ -5,6 +5,8 @@ import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
 import { EventStreamParser, abortableDelay } from "@/lib/research/event-stream";
 
+import { formatTargetTime } from "@/lib/research/price-target-time";
+
 import NotificationSettings from "./notification-settings";
 
 type Target = {
@@ -121,12 +123,8 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
     return () => { active = false; session?.abort(); observer?.disconnect(); document.removeEventListener("visibilitychange", syncVisibility); };
   }, []);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
-  const time = (date: string) => new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", {
-    timeZone: "Asia/Tokyo", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false,
-  }).format(new Date(date));
-  const syncTime = (date: string) => new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-GB", {
-    timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", hour12: false,
-  }).format(new Date(date));
+  const time = (date: string) => formatTargetTime(date, lang);
+  const syncTime = (date: string) => formatTargetTime(date, lang, true);
   return <section ref={panelRef} className={styles.panel} aria-label={t("目標株価の速報", "Price target updates")}>
     <div className={styles.head}><h3>{t("目標株価の変更（過去1週間）", "Price target changes (past week)")}</h3></div>
     {status === "error" && <p role="status" className={styles.state}>{t("現在、目標株価の更新を取得できません。表示内容は最新とは限りません。", "Price target updates are temporarily unavailable. Displayed items may be stale.")}</p>}
@@ -146,7 +144,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
             <strong>${number(item.previous)} → ${number(item.latest)}</strong>
             <span className={item.latest > item.previous ? styles.raised : styles.lowered}>{item.latest > item.previous ? t("引き上げ", "Raised") : t("引き下げ", "Lowered")}</span>
           </div>
-          <small>{item.source} · <time dateTime={item.publishedAt}>{time(item.publishedAt)} JST</time></small>
+          <small>{item.source.replace(/^X\s*[·・]\s*/, "")} · {t("X投稿", "X post")} <time dateTime={item.publishedAt}>{time(item.publishedAt)}</time></small>
         </div>
         <a href={item.url} target="_blank" rel="noopener noreferrer">{t("投稿を確認 ↗", "View post ↗")}</a>
       </article>;
@@ -154,7 +152,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
     <div className={styles.footer}>
       <NotificationSettings lang={lang} />
       <div className={styles.syncMeta}>
-        {updatedAt && <p className={styles.updated}>{t("最終同期", "Last synced")}: <time dateTime={updatedAt} title={`${time(updatedAt)} JST`}>{syncTime(updatedAt)}</time></p>}
+        {updatedAt && <p className={styles.updated}>{t("最終同期", "Last synced")}: <time dateTime={updatedAt} title={time(updatedAt)}>{syncTime(updatedAt)}</time></p>}
         <span className={styles.refresh}>{delivery === "live" ? t("新着を自動表示", "Live updates") : delivery === "polling" ? t("再接続中…", "Reconnecting…") : t("接続中…", "Connecting…")}</span>
       </div>
     </div>

@@ -44,3 +44,11 @@
   .notificationBody{padding:12px}.notificationTitle{font-size:13px}
   .codeLabel{font-size:12px}.codeInput{font-size:16px}
 }
+.notificationPreference{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:12px}
+.notificationPreference .notificationTitle{margin-bottom:3px}
+.notificationPreference p{margin:0;color:#b2c5c4;font-size:12px}
+.panel .notificationSwitch{display:flex;align-items:center;gap:8px;flex-shrink:0;border:0;padding:0;min-height:44px;background:transparent;color:#c3cece;font-size:12px}
+.switchTrack{display:block;position:relative;width:40px;height:24px;background:#50616d;border-radius:16px}
+.switchTrack>span{position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .15s}
+.notificationSwitch[aria-checked=true]{color:#a7efcc}.notificationSwitch[aria-checked=true] .switchTrack{background:#36795f}.notificationSwitch[aria-checked=true] .switchTrack>span{transform:translateX(16px)}
+.notificationSwitch:focus-visible{outline:2px solid #a8d8ff;outline-offset:3px}
