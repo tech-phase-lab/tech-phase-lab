@@ -248,6 +248,13 @@ def schema(db):
       );
       CREATE INDEX IF NOT EXISTS signal_route_recovery_time
         ON signal_route_recoveries(recovered_at);
+      CREATE TABLE IF NOT EXISTS signal_route_retry_attempts (
+        id INTEGER PRIMARY KEY, source_id TEXT NOT NULL,
+        eligible_at TEXT NOT NULL, attempted_at TEXT NOT NULL,
+        error_kind TEXT NOT NULL
+      );
+      CREATE INDEX IF NOT EXISTS signal_route_retry_attempt_time
+        ON signal_route_retry_attempts(attempted_at);
     """)
     event_columns = {row[1] for row in db.execute("PRAGMA table_info(signal_events)")}
     if "published_on" not in event_columns:
@@ -493,6 +500,36 @@ def route_failure_measurement(db, source_id, previous_route, current_error, occu
     return None, 0
 
 
+def record_route_retry_attempt(db, source_id, previous_route, attempted_at):
+    """Persist bounded retry scheduling evidence without a public route identity."""
+    if not previous_route or not previous_route["error"] or not previous_route["next_check_at"]:
+        return False
+    try:
+        eligible = datetime.fromisoformat(
+            str(previous_route["next_check_at"]).replace("Z", "+00:00")
+        )
+        attempted = datetime.fromisoformat(str(attempted_at).replace("Z", "+00:00"))
+        if eligible.tzinfo is None or attempted.tzinfo is None:
+            return False
+        eligible = eligible.astimezone(timezone.utc)
+        attempted = attempted.astimezone(timezone.utc)
+    except (TypeError, ValueError, OverflowError):
+        return False
+    if not eligible <= attempted <= eligible + timedelta(days=7):
+        return False
+    db.execute("""INSERT INTO signal_route_retry_attempts(
+      source_id,eligible_at,attempted_at,error_kind) VALUES(?,?,?,?)""", (
+        source_id, eligible.isoformat(), attempted.isoformat(),
+        signal_error_kind(previous_route["error"]),
+    ))
+    cutoff = (attempted - timedelta(days=8)).isoformat()
+    db.execute("""DELETE FROM signal_route_retry_attempts
+      WHERE datetime(attempted_at) IS NULL OR datetime(attempted_at)<datetime(?)""", (cutoff,))
+    db.execute("""DELETE FROM signal_route_retry_attempts WHERE id NOT IN
+      (SELECT id FROM signal_route_retry_attempts ORDER BY id DESC LIMIT 5000)""")
+    return True
+
+
 def save(db, source, items, response, checked, config_sha, duration):
     route = db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
     initial = not route or not route["initialized"] or (
@@ -579,6 +616,9 @@ def save(db, source, items, response, checked, config_sha, duration):
 def check(db, source, tickers, transport=None):
     schema(db)
     row = db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
+    attempted_at = datetime.now(timezone.utc).isoformat(timespec="milliseconds")
+    with db:
+        record_route_retry_attempt(db, source["id"], row, attempted_at)
     config_sha = fingerprint(source, tickers)
     validators = validators_for(db, source, tickers)
     started = time.monotonic()
@@ -921,6 +961,10 @@ def operational_summary(db, sources=SOURCES, reference=None):
         "count": 0, "latencyAverageMs": None, "latencyMaxMs": None,
         "attemptsAverage": None, "attemptsMax": None, "lastRecoveredAt": None,
     }
+    route_retry_wait = {
+        "count": 0, "waitAverageMs": None, "waitMaxMs": None,
+        "lastAttemptedAt": None,
+    }
     if configured:
         placeholders = ",".join("?" for _ in configured)
         for row in db.execute(f"""SELECT body FROM signal_index_state
@@ -1014,6 +1058,22 @@ def operational_summary(db, sources=SOURCES, reference=None):
             if (route_recoveries["lastRecoveredAt"] is None
                     or recovered.isoformat() > route_recoveries["lastRecoveredAt"]):
                 route_recoveries["lastRecoveredAt"] = recovered.isoformat()
+        for row in db.execute(f"""SELECT eligible_at,attempted_at,error_kind
+          FROM signal_route_retry_attempts WHERE source_id IN ({placeholders})
+          ORDER BY id""", tuple(configured)):
+            eligible = timestamp_value(row["eligible_at"])
+            attempted = timestamp_value(row["attempted_at"])
+            if (not eligible or not attempted or attempted < cutoff or attempted > current
+                    or eligible > attempted
+                    or attempted - eligible > timedelta(days=7)
+                    or row["error_kind"] not in error_kinds):
+                continue
+            wait = round((attempted - eligible).total_seconds() * 1000)
+            route_retry_wait["count"] += 1
+            route_retry_wait.setdefault("_waits", []).append(wait)
+            if (route_retry_wait["lastAttemptedAt"] is None
+                    or attempted.isoformat() > route_retry_wait["lastAttemptedAt"]):
+                route_retry_wait["lastAttemptedAt"] = attempted.isoformat()
     measurements = article_retrieval["recoveries24Hours"]
     latencies = measurements.pop("_latencies", [])
     attempts = measurements.pop("_attempts", [])
@@ -1029,6 +1089,10 @@ def operational_summary(db, sources=SOURCES, reference=None):
         route_recoveries["latencyMaxMs"] = max(route_latencies)
         route_recoveries["attemptsAverage"] = round(sum(route_attempts) / len(route_attempts), 1)
         route_recoveries["attemptsMax"] = max(route_attempts)
+    retry_waits = route_retry_wait.pop("_waits", [])
+    if retry_waits:
+        route_retry_wait["waitAverageMs"] = round(sum(retry_waits) / len(retry_waits))
+        route_retry_wait["waitMaxMs"] = max(retry_waits)
     outage_ages = active_outages.pop("_ages", [])
     outage_attempts = active_outages.pop("_attempts", [])
     if outage_ages:
@@ -1049,7 +1113,8 @@ def operational_summary(db, sources=SOURCES, reference=None):
     return {"routes": route_counts, "articleRetrieval": article_retrieval,
             "publicationEvidence": evidence,
             "routeTransitions24Hours": transitions,
-            "routeRecoveries24Hours": route_recoveries}
+            "routeRecoveries24Hours": route_recoveries,
+            "routeRetryWait24Hours": route_retry_wait}
 
 
 def due(db, sources=None):

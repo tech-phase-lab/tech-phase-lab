@@ -96,6 +96,13 @@ recovery. The private operations aggregate reports only the 24-hour sample
 count, average and maximum failure-to-recovery time, average and maximum total
 attempts, and latest recovery time. Route identity, URL, status code and raw
 error remain private. Existing historical recoveries are not estimated.
+For a route that is already failed, the monitor also persists the bounded
+interval from its valid retry-eligibility timestamp to the next actual request
+start. The preview exposes only the latest 24-hour sample count, average and
+maximum wait and last attempt time. Pre-migration retries remain unmeasured;
+invalid, early, timezone-free or over-seven-day intervals are discarded. This
+is internal worker-scheduling evidence, not source detection or delivery
+latency, and it contains no route identifier, URL or raw error.
 While an outage is still active, the same view reports only the number with a
 valid measurement, the number that predates measurement, the longest current
 age, average and maximum bounded attempts, and the oldest measured start time.

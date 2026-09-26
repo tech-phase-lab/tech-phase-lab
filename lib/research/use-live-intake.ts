@@ -258,6 +258,10 @@ export type MonitorState = {
       count: number; latencyAverageMs: number | null; latencyMaxMs: number | null;
       attemptsAverage: number | null; attemptsMax: number | null; lastRecoveredAt: string | null;
     };
+    routeRetryWait24Hours?: {
+      count: number; waitAverageMs: number | null; waitMaxMs: number | null;
+      lastAttemptedAt: string | null;
+    };
   };
   companies: Record<string, {
     basePollSeconds?: number; nextPollSeconds?: number; requestDurationMs?: number;

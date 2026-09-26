@@ -2020,6 +2020,10 @@ class ResearchServiceTests(unittest.TestCase):
             "count": 0, "latencyAverageMs": None, "latencyMaxMs": None,
             "attemptsAverage": None, "attemptsMax": None, "lastRecoveredAt": None,
         })
+        self.assertEqual(summary["routeRetryWait24Hours"], {
+            "count": 0, "waitAverageMs": None, "waitMaxMs": None,
+            "lastAttemptedAt": None,
+        })
         serialized = json.dumps(summary)
         self.assertNotIn("https://", serialized)
         self.assertNotIn("source", serialized.lower())

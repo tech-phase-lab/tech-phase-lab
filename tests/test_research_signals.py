@@ -371,6 +371,42 @@ class SignalTests(unittest.TestCase):
         for private_value in ("article-fetch-failed", "http-403"):
             self.assertNotIn(private_value, serialized)
 
+    def test_route_retry_wait_persists_without_route_identity(self):
+        signals.schema(self.db)
+        with self.db:
+            self.db.execute("""INSERT INTO signal_routes(
+              id,initialized,checked_at,next_check_at,failures,error
+              ) VALUES(?,1,?,?,1,?)""", (
+                self.doc["id"], "2026-09-25T09:55:00+00:00",
+                "2026-09-25T10:00:00+00:00", "timeout",
+            ))
+        route = self.db.execute(
+            "SELECT * FROM signal_routes WHERE id=?", (self.doc["id"],)
+        ).fetchone()
+        self.assertFalse(signals.record_route_retry_attempt(
+            self.db, self.doc["id"], route, "2026-09-25T09:59:59+00:00"
+        ))
+        self.assertTrue(signals.record_route_retry_attempt(
+            self.db, self.doc["id"], route, "2026-09-25T10:00:03.250+00:00"
+        ))
+        self.assertTrue(signals.record_route_retry_attempt(
+            self.db, self.doc["id"], route, "2026-09-25T10:02:00+00:00"
+        ))
+        self.db.commit()
+        self.db.close()
+        self.db = monitor.connect(self.path)
+        summary = signals.operational_summary(
+            self.db, sources=[self.doc],
+            reference=datetime(2026, 9, 25, 10, 1, tzinfo=timezone.utc),
+        )
+        self.assertEqual(summary["routeRetryWait24Hours"], {
+            "count": 1, "waitAverageMs": 3250, "waitMaxMs": 3250,
+            "lastAttemptedAt": "2026-09-25T10:00:03.250000+00:00",
+        })
+        serialized = json.dumps(summary["routeRetryWait24Hours"])
+        self.assertNotIn(self.doc["id"], serialized)
+        self.assertNotIn("timeout", serialized)
+
     def test_route_recovery_history_survives_restart_without_repeated_failure_inflation(self):
         html = b"<html><main><p>" + (b"Nebius official infrastructure update. " * 5) + b"</p></main></html>"
         self.assertEqual(signals.check(
