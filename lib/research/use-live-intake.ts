@@ -305,7 +305,10 @@ export function useLiveIntake(initialSnapshot: IntakeSnapshot, intervalMs = 3_00
 
   useEffect(() => {
     let active = true;
+    let inFlight = false;
     async function refresh() {
+      if (!active || document.hidden || inFlight) return;
+      inFlight = true;
       try {
         const response = await fetch("/api/research/live", { cache: "no-store" });
         const payload = await response.json() as { mode?: "automatic" | "snapshot"; monitor?: MonitorState; error?: LiveState["error"]; snapshot?: IntakeSnapshot };
@@ -318,14 +321,19 @@ export function useLiveIntake(initialSnapshot: IntakeSnapshot, intervalMs = 3_00
         });
       } catch {
         if (active) setState((current) => ({ ...current, mode: "snapshot", monitor: null, error: "monitor-unavailable" }));
+      } finally {
+        inFlight = false;
       }
     }
+    const onVisibilityChange = () => { if (!document.hidden) void refresh(); };
+    document.addEventListener("visibilitychange", onVisibilityChange);
     const initial = window.setTimeout(() => { void refresh(); }, 0);
     const timer = window.setInterval(() => { void refresh(); }, intervalMs);
     return () => {
       active = false;
       window.clearTimeout(initial);
       window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, [intervalMs]);
 

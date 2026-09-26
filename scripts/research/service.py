@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import hashlib
+import gzip
 import hmac
 import json
 import os
@@ -798,7 +799,7 @@ class AutomaticMonitor:
 
     def public_snapshot(self):
         with self.db_lock, monitor.connect(self.db_path) as db:
-            return monitor.snapshot(db)
+            return monitor.snapshot(db, recent_per_item=20)
 
     def editorial_queue(self, limit=20, review_filter="all"):
         with self.db_lock, monitor.connect(self.db_path) as db:
@@ -1585,8 +1586,14 @@ class Handler(BaseHTTPRequestHandler):
 
     def send_json(self, status, value):
         payload = json.dumps(value, ensure_ascii=False, separators=(",", ":")).encode()
+        compressed = "gzip" in self.headers.get("Accept-Encoding", "").lower()
+        if compressed:
+            payload = gzip.compress(payload, compresslevel=5)
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
+        if compressed:
+            self.send_header("Content-Encoding", "gzip")
+            self.send_header("Vary", "Accept-Encoding")
         self.send_header("Content-Length", str(len(payload)))
         self.send_header("Cache-Control", "no-store")
         self.send_header("X-Content-Type-Options", "nosniff")

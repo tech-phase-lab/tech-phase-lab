@@ -1,5 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
+import gzip
 import importlib.util
 from pathlib import Path
 import json
@@ -15,6 +16,7 @@ from urllib.request import Request, urlopen
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts/research"))
 monitor_spec = importlib.util.spec_from_file_location("monitor", ROOT / "scripts/research/monitor.py")
 monitor = importlib.util.module_from_spec(monitor_spec)
 monitor_spec.loader.exec_module(monitor)
@@ -1172,6 +1174,43 @@ class ResearchServiceTests(unittest.TestCase):
                 urlopen(f"{base}/readyz", timeout=2)
             self.assertEqual(starting.exception.code, 503)
             self.assertEqual(json.loads(starting.exception.read())["health"]["status"], "starting")
+        finally:
+            server.shutdown()
+            server.server_close()
+
+    def test_public_snapshot_limits_history_and_live_response_is_compressed(self):
+        with monitor.connect(self.db_path) as db:
+            for number in range(25):
+                db.execute(
+                    "INSERT INTO history (url,at,kind,sha256) VALUES (?,?,?,?)",
+                    ("https://nebius.com/newsroom/older", datetime.now(timezone.utc).isoformat(), "test", None),
+                )
+                db.execute(
+                    """INSERT INTO discovery_runs
+                       (ticker,at,status,candidates,index_url,source_format,sources_checked,sources_configured)
+                       VALUES (?,?,?,?,?,?,?,?)""",
+                    ("NBIS", datetime.now(timezone.utc).isoformat(), "ok", 1, "https://nebius.com/newsroom/", "html", 1, 1),
+                )
+            db.commit()
+            self.assertEqual(len(monitor.snapshot(db)["discoveryRuns"]), 25)
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        limited = app.public_snapshot()
+        self.assertEqual(len(limited["discoveryRuns"]), 20)
+        self.assertEqual(len([row for row in limited["history"] if row["url"].endswith("older")]), 20)
+        server = service.ThreadingHTTPServer(("127.0.0.1", 0), service.Handler)
+        server.app = app
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            request = Request(
+                f"http://127.0.0.1:{server.server_port}/live",
+                headers={"Accept-Encoding": "gzip"},
+            )
+            with urlopen(request, timeout=2) as response:
+                self.assertEqual(response.headers["Content-Encoding"], "gzip")
+                wire = response.read()
+                self.assertLess(len(wire), len(gzip.decompress(wire)))
+                self.assertEqual(len(json.loads(gzip.decompress(wire))["snapshot"]["discoveryRuns"]), 20)
         finally:
             server.shutdown()
             server.server_close()

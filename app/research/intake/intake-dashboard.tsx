@@ -399,7 +399,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
             {latest && <p className={styles.meta}>取得経路の証跡：{discoveryEvidence(latest)}</p>}
             {monitor && <p className={styles.meta}>基準間隔 {monitor.basePollSeconds ?? monitor.nextPollSeconds ?? "—"}秒 ／ 直近の公式応答 {duration(monitor.requestDurationMs)}{monitor.nextPollSeconds && monitor.basePollSeconds && monitor.nextPollSeconds > monitor.basePollSeconds ? ` ／ 次回まで${monitor.nextPollSeconds}秒（失敗時バックオフ）` : ""}</p>}
             <div className={styles.cardActions}><Link href={`/research/companies/${symbol}`}>銘柄ページ →</Link><a href={provider.indexUrl} target="_blank" rel="noopener noreferrer">公式{provider.format === "rss" ? "RSS" : "一覧"} ↗</a><button disabled={!totals.total} onClick={() => { setTicker(symbol); setQuery(""); setState("all"); setReview("all"); setPage(1); requestAnimationFrame(() => document.getElementById("queue-title")?.scrollIntoView({ block: "start" })); }}>資料を表示（{totals.total}）</button></div>
-            <details className={styles.runHistory}><summary>{symbol}の一覧取得履歴（{runs.length}件）</summary><ul>{runs.map(r => <li key={r.id}><time>{time(r.at)} JST</time><span>{r.status === "ok" ? `${r.candidates}件検出` : r.status === "fallback" ? `公式バックアップで${r.candidates}件検出` : errorNames[r.error ?? ""] || "取得異常"}<small>{discoveryEvidence(r)}</small></span></li>)}</ul></details>
+            <details className={styles.runHistory}><summary>{symbol}の直近の一覧取得履歴（{runs.length}件）</summary><ul>{runs.map(r => <li key={r.id}><time>{time(r.at)} JST</time><span>{r.status === "ok" ? `${r.candidates}件検出` : r.status === "fallback" ? `公式バックアップで${r.candidates}件検出` : errorNames[r.error ?? ""] || "取得異常"}<small>{discoveryEvidence(r)}</small></span></li>)}</ul></details>
           </article>;
         })}</div>
       </section>
@@ -424,7 +424,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
             {s.error && <p className={styles.error}>{errorNames[s.error] || "資料の取得に失敗"}。{s.sha256 ? "以前の取得記録はありますが、最新の試行は失敗しています。" : "本文は未取得です。"}</p>}
             <dl className={styles.dates}><div><dt>資料の発表日</dt><dd>{s.published_on ?? "未確認"}</dd></div><div><dt>初回の検知日時（JST）</dt><dd>{time(s.discovered_at)}</dd></div><div><dt>最後の取得試行（JST）</dt><dd>{time(s.checked_at)}</dd></div><div><dt>要約用の原文証拠</dt><dd>{bodyEvidence(s)}</dd></div></dl>
             <div className={styles.sourceFooter}><span><a href={s.url} target="_blank" rel="noopener noreferrer">公式原文を開く ↗</a>{s.evidence_kind === "sec-exhibit-99.1" && s.evidence_url && s.evidence_url !== s.url && <>　<a href={s.evidence_url} target="_blank" rel="noopener noreferrer">取得した添付根拠 ↗</a></>}</span><span>取得の成功は、内容の確認完了を意味しません</span></div>
-            <details className={styles.history}><summary>資料の取得・確認履歴（{history.length}件）</summary>
+            <details className={styles.history}><summary>資料の直近の取得・確認履歴（{history.length}件）</summary>
               {s.sha256 && <p className={styles.fingerprint}>最後に取得した内容の識別値 <code>{s.sha256}</code></p>}
               {history.length ? <ol>{history.map(h => <li key={h.id}><time>{time(h.at)} JST</time><strong>{historyNames[h.kind] || h.kind}</strong>{h.sha256 && <code>{h.sha256.slice(0, 12)}…</code>}</li>)}</ol> : <p>資料取得・編集判断の記録はまだありません。</p>}
               <p className={styles.meta}>担当者名・判断理由は、この共有用の記録に含めていません。応答の変化は、財務内容の訂正と確定したものではありません。</p>

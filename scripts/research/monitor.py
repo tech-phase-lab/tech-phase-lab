@@ -3223,7 +3223,7 @@ def sec_evidence_summary(db, tickers):
     }
 
 
-def snapshot(db):
+def snapshot(db, recent_per_item=None):
     """Public-safe, read-only report. Explicit field lists prevent identity leaks."""
     with db:
         db.execute("BEGIN")
@@ -3233,12 +3233,30 @@ def snapshot(db):
                  COALESCE(evidence_url,url) AS evidence_url,evidence_kind
           FROM sources ORDER BY ticker,url
         """)]
-        history = [dict(r) for r in db.execute("SELECT id,url,at,kind,sha256 FROM history ORDER BY id DESC")]
-        runs = [dict(r) for r in db.execute("""
-          SELECT id,ticker,at,status,candidates,error,index_url,source_format,
-                 sources_checked,sources_configured
-          FROM discovery_runs ORDER BY id DESC
-        """)]
+        if recent_per_item is None:
+            history = [dict(r) for r in db.execute("SELECT id,url,at,kind,sha256 FROM history ORDER BY id DESC")]
+            runs = [dict(r) for r in db.execute("""
+              SELECT id,ticker,at,status,candidates,error,index_url,source_format,
+                     sources_checked,sources_configured
+              FROM discovery_runs ORDER BY id DESC
+            """)]
+        else:
+            history = [dict(r) for r in db.execute("""
+              SELECT id,url,at,kind,sha256 FROM (
+                SELECT id,url,at,kind,sha256,
+                       ROW_NUMBER() OVER (PARTITION BY url ORDER BY id DESC) AS rank
+                FROM history
+              ) WHERE rank <= ? ORDER BY id DESC
+            """, (recent_per_item,))]
+            runs = [dict(r) for r in db.execute("""
+              SELECT id,ticker,at,status,candidates,error,index_url,source_format,
+                     sources_checked,sources_configured FROM (
+                SELECT id,ticker,at,status,candidates,error,index_url,source_format,
+                       sources_checked,sources_configured,
+                       ROW_NUMBER() OVER (PARTITION BY ticker ORDER BY id DESC) AS rank
+                FROM discovery_runs
+              ) WHERE rank <= ? ORDER BY id DESC
+            """, (recent_per_item,))]
         events = [dict(r) for r in db.execute("""
           SELECT e.id,e.url,e.ticker,e.detected_at,s.title,s.published_on,
                  COALESCE((SELECT MIN(h.at) FROM history h
