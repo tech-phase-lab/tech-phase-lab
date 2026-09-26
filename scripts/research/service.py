@@ -1196,7 +1196,27 @@ class AutomaticMonitor:
                     monitor.resolve_body_incident_if_recovered(db, ticker)
             completed_at = utc_now()
             duration_ms = max(0, round((time.monotonic() - cycle_started) * 1000))
+            selection_partitions = {
+                "detectedNeverFetched": 0,
+                "baselineNeverFetched": 0,
+                "extractionPending": 0,
+                "recheck": 0,
+            }
+            selection_errors = dict.fromkeys(selection_partitions, 0)
             for row, result, error in completed:
+                if row["sha256"] is None:
+                    partition = (
+                        "detectedNeverFetched"
+                        if row["release_detected_at"] is not None
+                        else "baselineNeverFetched"
+                    )
+                elif int(row["extracted_chars"] or 0) == 0:
+                    partition = "extractionPending"
+                else:
+                    partition = "recheck"
+                selection_partitions[partition] += 1
+                if error is not None:
+                    selection_errors[partition] += 1
                 if error is not None or result.get("notModified") or row["sha256"] is not None:
                     continue
                 latency = timestamp_latency_ms(row["release_detected_at"], completed_at)
@@ -1205,24 +1225,7 @@ class AutomaticMonitor:
             monitor.record_body_fetch_batch(
                 db, polled_at, completed_at, duration_ms,
                 len(completed), errors, not_modified, detection_latencies_ms,
-                {
-                    "detectedNeverFetched": sum(
-                        1 for row, _, _ in completed
-                        if row["sha256"] is None and row["release_detected_at"] is not None
-                    ),
-                    "baselineNeverFetched": sum(
-                        1 for row, _, _ in completed
-                        if row["sha256"] is None and row["release_detected_at"] is None
-                    ),
-                    "extractionPending": sum(
-                        1 for row, _, _ in completed
-                        if row["sha256"] is not None and int(row["extracted_chars"] or 0) == 0
-                    ),
-                    "recheck": sum(
-                        1 for row, _, _ in completed
-                        if row["sha256"] is not None and int(row["extracted_chars"] or 0) > 0
-                    ),
-                },
+                selection_partitions, selection_errors,
             )
             monitor.write_snapshot(db, self.snapshot_path)
         with self.state_lock:
