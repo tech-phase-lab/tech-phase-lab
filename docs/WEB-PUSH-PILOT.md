@@ -67,6 +67,13 @@ current process lifetime. They never include push endpoints, keys, payloads or
 device identifiers. Provider acceptance still does not prove that the operating
 system displayed a notification.
 
+The service also derives the age of the last five-second worker poll. Once that
+age exceeds 30 seconds while the monitor itself remains current, health becomes
+degraded with the fixed `web-push-stale` code and the operational incident ledger
+opens an anonymous worker incident. A later successful poll clears both states.
+The public payload exposes only the poll age, threshold and timestamp—never a
+subscription endpoint or device identifier.
+
 Price-target display retains seven days, still requiring a supported broker/old/new
 price extraction and initial detection within fifteen minutes. Historical display
 does not re-notify old records. X search still caps each response at 30 posts and

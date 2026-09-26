@@ -32,7 +32,7 @@ export type MonitorState = {
   };
   health?: {
     status: "starting" | "ready" | "degraded";
-    issues: Array<"monitor-stale" | "backup-failed" | "backup-overdue" | "incident-watch-failed" | "body-fetch-failed" | "body-fetch-stale" | "discovery-poll-stale" | "priority-source-pending" | "priority-source-degraded" | "priority-source-metrics-failed">;
+    issues: Array<"monitor-stale" | "backup-failed" | "backup-overdue" | "incident-watch-failed" | "body-fetch-failed" | "body-fetch-stale" | "discovery-poll-stale" | "priority-source-pending" | "priority-source-degraded" | "priority-source-metrics-failed" | "web-push-stale">;
     monitorStaleAfterSeconds: number;
   };
   incidentWatch?: {
@@ -53,6 +53,8 @@ export type MonitorState = {
     consecutiveFailures: number; recoveries: number;
     lastPollAt: string | null; lastSuccessAt: string | null;
     lastFailureAt: string | null; lastAttemptAt: string | null;
+    lastPollAgeSeconds: number | null; pollOverdueAfterSeconds: number;
+    pollOverdue: boolean;
   };
   incidents?: {
     open: number; total: number; heldNotifications: number; pendingNotifications: number;

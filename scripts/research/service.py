@@ -33,6 +33,8 @@ LEGACY_FULL_TICKERS = (
     "GOOGL", "ORCL",
 )
 PRIORITY_SEC_TICKERS = ("TSM", "MRVL", "ANET", "VRT", "PLTR")
+WEB_PUSH_POLL_SECONDS = 5
+WEB_PUSH_STALE_SECONDS = 30
 
 
 def utc_now():
@@ -402,7 +404,7 @@ class AutomaticMonitor:
             "webPush": {
                 "enabled": self.web_push_enabled,
                 "status": "waiting" if self.web_push_enabled else "disabled",
-                "intervalSeconds": 5, "activeDevices": 0,
+                "intervalSeconds": WEB_PUSH_POLL_SECONDS, "activeDevices": 0,
                 "maxDevices": web_push.DEVICE_LIMIT,
                 "attempted": 0, "accepted": 0, "uncertain": 0,
                 "attempted24Hours": 0, "accepted24Hours": 0,
@@ -410,6 +412,9 @@ class AutomaticMonitor:
                 "polls": 0, "failures": 0, "consecutiveFailures": 0,
                 "recoveries": 0, "lastPollAt": None, "lastSuccessAt": None,
                 "lastFailureAt": None, "lastAttemptAt": None,
+                "lastPollAgeSeconds": None,
+                "pollOverdueAfterSeconds": WEB_PUSH_STALE_SECONDS,
+                "pollOverdue": False,
             },
             "companies": {},
         }
@@ -452,7 +457,7 @@ class AutomaticMonitor:
                                  "failures": push["failures"] + 1,
                                  "consecutiveFailures": push["consecutiveFailures"] + 1,
                                  "lastPollAt": polled_at, "lastFailureAt": utc_now()})
-            self.stop_event.wait(5)
+            self.stop_event.wait(WEB_PUSH_POLL_SECONDS)
 
     def start(self):
         self.thread.start()
@@ -609,6 +614,19 @@ class AutomaticMonitor:
             issues.append("incident-watch-failed")
         if state["priorityPersistence"]["healthy"] is False:
             issues.append("priority-source-metrics-failed")
+        push = state["webPush"]
+        push_poll_age = timestamp_age_seconds(push["lastPollAt"])
+        if push_poll_age is None and push["enabled"]:
+            push_poll_age = timestamp_age_seconds(state["startedAt"])
+        push["lastPollAgeSeconds"] = push_poll_age
+        push["pollOverdueAfterSeconds"] = WEB_PUSH_STALE_SECONDS
+        push["pollOverdue"] = bool(
+            push["enabled"]
+            and push_poll_age is not None
+            and push_poll_age > WEB_PUSH_STALE_SECONDS
+        )
+        if state["ready"] and push["pollOverdue"] and "monitor-stale" not in issues:
+            issues.append("web-push-stale")
         if state["bodyFetch"]["healthy"] is False:
             issues.append("body-fetch-failed")
         durable_body_fetch = state["bodyFetch"].get("durable") or {}
@@ -707,6 +725,13 @@ class AutomaticMonitor:
                 )
             else:
                 monitor.resolve_operational_incident(db, "discovery:priority-metrics")
+            if "web-push-stale" in issues:
+                monitor.record_operational_incident(
+                    db, "push:worker", "web-push", "worker",
+                    "warning", "web-push-stale"
+                )
+            else:
+                monitor.resolve_operational_incident(db, "push:worker")
             body_issue = next(
                 (issue for issue in issues if issue.startswith("body-fetch-")), None
             )

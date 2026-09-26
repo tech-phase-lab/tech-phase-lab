@@ -733,6 +733,50 @@ class ResearchServiceTests(unittest.TestCase):
                 ("discovery:worker",),
             ).fetchone()[0], "resolved")
 
+    def test_stale_web_push_poll_degrades_health_and_resolves_without_device_details(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        recent = service.utc_now()
+        old_poll = (datetime.now(timezone.utc) - timedelta(minutes=2)).isoformat(
+            timespec="milliseconds"
+        )
+        app.state.update({"ready": True, "lastCycleAt": recent})
+        app.state["backup"].update({"healthy": True, "lastSuccessAt": recent})
+        app.state["incidentWatch"]["healthy"] = True
+        app.state["webPush"].update({
+            "enabled": True, "status": "ready", "activeDevices": 1,
+            "lastPollAt": old_poll, "lastSuccessAt": old_poll,
+        })
+
+        stale = app.public_state()
+        self.assertIn("web-push-stale", stale["health"]["issues"])
+        self.assertTrue(stale["webPush"]["pollOverdue"])
+        self.assertEqual(
+            stale["webPush"]["pollOverdueAfterSeconds"],
+            service.WEB_PUSH_STALE_SECONDS,
+        )
+        self.assertNotIn("endpoint", json.dumps(stale["webPush"]))
+        app.sync_health_incidents()
+        with monitor.connect(self.db_path) as db:
+            incident = db.execute(
+                "SELECT status,last_error_code AS error_code "
+                "FROM operational_incidents WHERE incident_key=?",
+                ("push:worker",),
+            ).fetchone()
+            self.assertEqual(dict(incident), {
+                "status": "open", "error_code": "web-push-stale",
+            })
+
+        app.state["webPush"].update({"lastPollAt": recent, "lastSuccessAt": recent})
+        recovered = app.public_state()
+        self.assertNotIn("web-push-stale", recovered["health"]["issues"])
+        self.assertFalse(recovered["webPush"]["pollOverdue"])
+        app.sync_health_incidents()
+        with monitor.connect(self.db_path) as db:
+            self.assertEqual(db.execute(
+                "SELECT status FROM operational_incidents WHERE incident_key=?",
+                ("push:worker",),
+            ).fetchone()[0], "resolved")
+
     def test_body_poll_heartbeat_rejects_invalid_or_unbounded_values(self):
         with monitor.connect(self.db_path) as db:
             for timestamp, pending in (

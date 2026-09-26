@@ -64,6 +64,7 @@ function monitorIssue(monitor: MonitorState | null) {
   if (issues.includes("priority-source-pending")) return "優先5銘柄に現プロセス未確認の公式経路があります";
   if (issues.includes("priority-source-degraded")) return "優先5銘柄に要確認の公式経路があります";
   if (issues.includes("priority-source-metrics-failed")) return "優先5銘柄の実績保存を再試行しています";
+  if (issues.includes("web-push-stale")) return "スマホ通知試験の内部巡回が停止しています";
   return null;
 }
 function incidentStatus(monitor: MonitorState | null) {
@@ -96,8 +97,8 @@ function priceTargetStreamStatus(stream: MonitorState["priceTargetStream"]) {
 function webPushStatus(push: MonitorState["webPush"]) {
   if (!push) return "スマホ通知試験：状態取得待ち";
   if (!push.enabled || push.status === "disabled") return "スマホ通知試験：外部送信OFF";
-  const state = push.status === "error" ? "要確認" : push.status === "waiting" ? "起動確認中" : "稼働中";
-  return `スマホ通知試験：${state} · 登録端末 ${push.activeDevices}/${push.maxDevices} · 24時間 試行 ${push.attempted24Hours}・送信受付 ${push.accepted24Hours}・不確定 ${push.uncertain24Hours}・期限切れ ${push.expired24Hours} · 内部巡回 ${push.polls}回・失敗 ${push.failures}回（連続 ${push.consecutiveFailures}）・回復 ${push.recoveries}回 · 最終送信試行 ${time(push.lastAttemptAt)} JST`;
+  const state = push.pollOverdue ? "要確認（巡回停止）" : push.status === "error" ? "要確認" : push.status === "waiting" ? "起動確認中" : "稼働中";
+  return `スマホ通知試験：${state} · 登録端末 ${push.activeDevices}/${push.maxDevices} · 24時間 試行 ${push.attempted24Hours}・送信受付 ${push.accepted24Hours}・不確定 ${push.uncertain24Hours}・期限切れ ${push.expired24Hours} · 内部巡回 ${push.polls}回・失敗 ${push.failures}回（連続 ${push.consecutiveFailures}）・回復 ${push.recoveries}回 · 最終巡回 ${time(push.lastPollAt)} JST · 最終送信試行 ${time(push.lastAttemptAt)} JST`;
 }
 function discoveryCacheStatus(cache: MonitorState["discoveryCache"]) {
   if (!cache) return "公式一覧の再利用：状態取得待ち";
