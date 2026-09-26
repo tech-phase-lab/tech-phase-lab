@@ -77,6 +77,40 @@ class PushTests(unittest.TestCase):
         self.assertEqual(result['attempted24Hours'],1)
         self.assertEqual(result['accepted24Hours'],1)
         self.assertEqual(result['uncertain24Hours'],0)
+        self.assertEqual(result['detectionToAttemptSamples24Hours'],1)
+        self.assertEqual(result['detectionToAttemptAverageMs24Hours'],1000)
+        self.assertEqual(result['detectionToAttemptMaxMs24Hours'],1000)
         self.assertIsNotNone(result['lastAttemptAt'])
         self.assertNotIn('endpoint', result)
         self.assertNotIn('subscription', result)
+
+    def test_latency_excludes_missing_future_and_over_seven_day_observations(self):
+        with self.db:
+            rows = [
+                ('missing', self.now - 3, None),
+                ('future', self.now - 2, self.now),
+                ('old', self.now - 1, self.now - push.DELIVERY_RETENTION_SECONDS - 2),
+            ]
+            self.db.executemany('''INSERT INTO push_deliveries
+                (device_id,event_key,status,attempted_at,observed_at)
+                VALUES('device',?,'accepted',?,?)''', rows)
+        status = push.public_status(self.db, self.now)
+        self.assertEqual(status['attempted24Hours'], 3)
+        self.assertEqual(status['detectionToAttemptSamples24Hours'], 0)
+        self.assertIsNone(status['detectionToAttemptAverageMs24Hours'])
+        self.assertIsNone(status['detectionToAttemptMaxMs24Hours'])
+
+    def test_existing_delivery_ledger_migrates_without_inventing_latency(self):
+        self.db.close()
+        path = Path(self.tmp.name)/'legacy.sqlite'
+        legacy = __import__('sqlite3').connect(path)
+        legacy.execute('''CREATE TABLE push_deliveries (
+            device_id TEXT NOT NULL, event_key TEXT NOT NULL, status TEXT NOT NULL,
+            attempted_at REAL NOT NULL, PRIMARY KEY(device_id,event_key))''')
+        legacy.execute("INSERT INTO push_deliveries VALUES('device','event','accepted',?)", (self.now,))
+        legacy.commit(); legacy.close()
+        self.db = push.connect(path)
+        status = push.public_status(self.db, self.now)
+        self.assertEqual(status['attempted24Hours'], 1)
+        self.assertEqual(status['detectionToAttemptSamples24Hours'], 0)
+        self.assertIsNone(status['detectionToAttemptAverageMs24Hours'])

@@ -46,6 +46,8 @@ test("operations preview exposes bounded cache pressure without cached contents"
   assert.match(liveTypes, /lastFailureAt: string \| null/);
   assert.match(liveTypes, /webPush\?:/);
   assert.match(liveTypes, /attempted24Hours: number/);
+  assert.match(liveTypes, /detectionToAttemptSamples24Hours: number/);
+  assert.match(intakeDashboard, /検知→送信試行/);
   assert.match(liveTypes, /pollOverdueAfterSeconds: number/);
   assert.match(intakeDashboard, /目標株価共有SSE：/);
   assert.match(intakeDashboard, /スマホ通知試験：/);

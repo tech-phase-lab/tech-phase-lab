@@ -33,8 +33,12 @@ def connect(path):
       language TEXT NOT NULL, since REAL NOT NULL, active INTEGER NOT NULL DEFAULT 1);
     CREATE TABLE IF NOT EXISTS push_deliveries (
       device_id TEXT NOT NULL, event_key TEXT NOT NULL, status TEXT NOT NULL,
-      attempted_at REAL NOT NULL, PRIMARY KEY(device_id,event_key));
+      attempted_at REAL NOT NULL, observed_at REAL,
+      PRIMARY KEY(device_id,event_key));
     ''')
+    columns = {row['name'] for row in db.execute('PRAGMA table_info(push_deliveries)')}
+    if 'observed_at' not in columns:
+        db.execute('ALTER TABLE push_deliveries ADD COLUMN observed_at REAL')
     return db
 
 
@@ -128,8 +132,16 @@ def public_status(db, now=None):
         sum(CASE WHEN status='accepted' THEN 1 ELSE 0 END) AS accepted,
         sum(CASE WHEN status='uncertain' THEN 1 ELSE 0 END) AS uncertain,
         sum(CASE WHEN status='expired' THEN 1 ELSE 0 END) AS expired,
+        sum(CASE WHEN observed_at IS NOT NULL AND attempted_at-observed_at BETWEEN 0 AND ?
+            THEN 1 ELSE 0 END) AS latency_samples,
+        avg(CASE WHEN observed_at IS NOT NULL AND attempted_at-observed_at BETWEEN 0 AND ?
+            THEN attempted_at-observed_at END) AS latency_average,
+        max(CASE WHEN observed_at IS NOT NULL AND attempted_at-observed_at BETWEEN 0 AND ?
+            THEN attempted_at-observed_at END) AS latency_max,
         max(attempted_at) AS last_attempt
-      FROM push_deliveries WHERE attempted_at>=?''', (now - 86400,)).fetchone()
+      FROM push_deliveries WHERE attempted_at>=?''',
+        (DELIVERY_RETENTION_SECONDS, DELIVERY_RETENTION_SECONDS,
+         DELIVERY_RETENTION_SECONDS, now - 86400)).fetchone()
     last_attempt = row['last_attempt']
     return {
         'activeDevices': devices,
@@ -138,6 +150,9 @@ def public_status(db, now=None):
         'accepted24Hours': row['accepted'] or 0,
         'uncertain24Hours': row['uncertain'] or 0,
         'expired24Hours': row['expired'] or 0,
+        'detectionToAttemptSamples24Hours': row['latency_samples'] or 0,
+        'detectionToAttemptAverageMs24Hours': round(row['latency_average'] * 1000) if row['latency_average'] is not None else None,
+        'detectionToAttemptMaxMs24Hours': round(row['latency_max'] * 1000) if row['latency_max'] is not None else None,
         'lastAttemptAt': datetime.fromtimestamp(last_attempt, timezone.utc).isoformat(
             timespec='milliseconds') if last_attempt is not None else None,
     }
@@ -157,8 +172,9 @@ def deliver(db, items, transport=send, now=None):
             key = event_key(item)
             # Reserve before network; a restart cannot silently send it twice.
             with db:
-                claim = db.execute('INSERT OR IGNORE INTO push_deliveries VALUES(?,?,?,?)',
-                                   (device['id'], key, 'uncertain', now)).rowcount
+                claim = db.execute('''INSERT OR IGNORE INTO push_deliveries
+                    (device_id,event_key,status,attempted_at,observed_at) VALUES(?,?,?,?,?)''',
+                    (device['id'], key, 'uncertain', now, observed)).rowcount
             if not claim:
                 continue
             ja = device['language'] == 'ja'

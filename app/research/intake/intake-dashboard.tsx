@@ -98,7 +98,10 @@ function webPushStatus(push: MonitorState["webPush"]) {
   if (!push) return "スマホ通知試験：状態取得待ち";
   if (!push.enabled || push.status === "disabled") return "スマホ通知試験：外部送信OFF";
   const state = push.pollOverdue ? "要確認（巡回停止）" : push.status === "error" ? "要確認" : push.status === "waiting" ? "起動確認中" : "稼働中";
-  return `スマホ通知試験：${state} · 登録端末 ${push.activeDevices}/${push.maxDevices} · 24時間 試行 ${push.attempted24Hours}・送信受付 ${push.accepted24Hours}・不確定 ${push.uncertain24Hours}・期限切れ ${push.expired24Hours} · 内部巡回 ${push.polls}回・失敗 ${push.failures}回（連続 ${push.consecutiveFailures}）・回復 ${push.recoveries}回 · 最終巡回 ${time(push.lastPollAt)} JST · 最終送信試行 ${time(push.lastAttemptAt)} JST`;
+  const latency = push.detectionToAttemptSamples24Hours
+    ? `検知→送信試行 ${push.detectionToAttemptSamples24Hours}件・平均 ${duration(push.detectionToAttemptAverageMs24Hours)}・最大 ${duration(push.detectionToAttemptMaxMs24Hours)}`
+    : "検知→送信試行 計測待ち";
+  return `スマホ通知試験：${state} · 登録端末 ${push.activeDevices}/${push.maxDevices} · 24時間 試行 ${push.attempted24Hours}・送信受付 ${push.accepted24Hours}・不確定 ${push.uncertain24Hours}・期限切れ ${push.expired24Hours} · ${latency} · 内部巡回 ${push.polls}回・失敗 ${push.failures}回（連続 ${push.consecutiveFailures}）・回復 ${push.recoveries}回 · 最終巡回 ${time(push.lastPollAt)} JST · 最終送信試行 ${time(push.lastAttemptAt)} JST`;
 }
 function discoveryCacheStatus(cache: MonitorState["discoveryCache"]) {
   if (!cache) return "公式一覧の再利用：状態取得待ち";

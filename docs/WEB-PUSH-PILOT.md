@@ -67,6 +67,13 @@ current process lifetime. They never include push endpoints, keys, payloads or
 device identifiers. Provider acceptance still does not prove that the operating
 system displayed a notification.
 
+For delivery attempts made in the latest 24 hours, the operations preview also
+reports the sample count and average/maximum time from the persisted detection
+timestamp to the first provider attempt. Legacy ledger rows remain unmeasured,
+and missing, future, negative or over-seven-day intervals are excluded instead
+of being inferred. This measures internal post-detection processing only; it is
+not source-publication latency, device-display latency or a delivery guarantee.
+
 The service also derives the age of the last five-second worker poll. Once that
 age exceeds 30 seconds while the monitor itself remains current, health becomes
 degraded with the fixed `web-push-stale` code and the operational incident ledger

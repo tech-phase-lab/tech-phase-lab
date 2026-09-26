@@ -42,6 +42,12 @@ device count against the 20-device cap, 24-hour attempts, provider acceptances,
 uncertain outcomes, expired subscriptions, and worker poll/failure/recovery counts.
 Push endpoints, keys, payloads and device identifiers never enter the operations
 preview. Provider acceptance is not proof that a phone displayed a notification.
+For first delivery attempts in the latest 24 hours, it also shows the persisted
+detection-to-provider-attempt sample count and average/maximum duration. Legacy
+rows stay unmeasured, while missing, future, negative and over-seven-day
+intervals are excluded rather than guessed. This is internal post-detection
+processing evidence, not publication latency, device-display latency or a
+subscriber-delivery guarantee.
 
 The public-safe live operations payload is identical for every viewer. Its
 successful response is shared at the Vercel edge for two seconds, with a

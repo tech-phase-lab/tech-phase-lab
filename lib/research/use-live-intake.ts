@@ -50,6 +50,9 @@ export type MonitorState = {
     attempted: number; accepted: number; uncertain: number;
     attempted24Hours: number; accepted24Hours: number; uncertain24Hours: number;
     expired24Hours: number; polls: number; failures: number;
+    detectionToAttemptSamples24Hours: number;
+    detectionToAttemptAverageMs24Hours: number | null;
+    detectionToAttemptMaxMs24Hours: number | null;
     consecutiveFailures: number; recoveries: number;
     lastPollAt: string | null; lastSuccessAt: string | null;
     lastFailureAt: string | null; lastAttemptAt: string | null;
