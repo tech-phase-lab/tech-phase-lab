@@ -1069,6 +1069,48 @@ class ResearchServiceTests(unittest.TestCase):
         )
         self.assertNotIn("nebius.com", json.dumps(backlog))
 
+    def test_body_backlog_partitions_current_batch_by_evidence_state(self):
+        detected = "https://www.arista.com/en/company/news/press-release/batch-detected"
+        baseline = "https://investor.marvell.com/news-events/press-releases/detail/997/batch-baseline"
+        incomplete = "https://www.vertiv.com/en-us/about/news-and-events/corporate-news/2026/batch-incomplete/"
+        recheck = "https://investors.palantir.com/news-details/2026/batch-recheck"
+        with monitor.connect(self.db_path) as db:
+            db.execute("UPDATE sources SET next_fetch_at='2099-01-01T00:00:00+00:00'")
+            for ticker, url in (
+                ("ANET", detected), ("MRVL", baseline),
+                ("VRT", incomplete), ("PLTR", recheck),
+            ):
+                monitor.add_source(db, ticker, url, title=ticker)
+            monitor.add_release_events(db, "ANET", [detected])
+            db.execute("""
+              UPDATE sources
+              SET sha256=?,raw_sha256=?,body_sha256=?,extracted_text='',extracted_chars=0
+              WHERE url=?
+            """, ("a" * 64, "a" * 64, "b" * 64, incomplete))
+            db.execute("""
+              UPDATE sources
+              SET sha256=?,raw_sha256=?,body_sha256=?,extracted_text='Evidence',extracted_chars=8
+              WHERE url=?
+            """, ("c" * 64, "c" * 64, "d" * 64, recheck))
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_batch = 4
+        rows, _pending = app.body_candidates("2026-09-26T00:00:00+00:00")
+        backlog = app.public_state()["bodyBacklog"]
+
+        self.assertEqual(backlog["scheduledDetectedNeverFetched"], 1)
+        self.assertEqual(backlog["scheduledBaselineNeverFetched"], 1)
+        self.assertEqual(backlog["scheduledExtractionPending"], 1)
+        self.assertEqual(backlog["scheduledRecheck"], 1)
+        self.assertEqual(sum((
+            backlog["scheduledDetectedNeverFetched"],
+            backlog["scheduledBaselineNeverFetched"],
+            backlog["scheduledExtractionPending"],
+            backlog["scheduledRecheck"],
+        )), len(rows))
+        self.assertNotIn("batch-", json.dumps(backlog))
+
     def test_body_backlog_reports_rate_limits_separately_from_access_controls(self):
         with monitor.connect(self.db_path) as db:
             db.execute("""
