@@ -125,23 +125,30 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
     timeZone: "Asia/Tokyo", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
   }).format(new Date(date));
   return <section ref={panelRef} className={styles.panel} aria-label={t("目標株価の速報", "Price target updates")}>
-    <div className={styles.head}><div><span className={styles.kicker}>X PRICE TARGET MONITOR · {t("試験表示", "PILOT")}</span><h3>{t("目標株価の変更（過去1週間）", "Price target changes (past week)")}</h3></div><span className={styles.refresh}>{delivery === "live" ? t("新着を自動表示", "Live updates") : delivery === "polling" ? t("再接続中・15秒ごとに確認", "Reconnecting · checking every 15s") : t("接続中…", "Connecting…")}</span></div>
+    <div className={styles.head}><span className={styles.kicker}>X PRICE TARGET MONITOR · {t("試験表示", "PILOT")}</span><h3>{t("目標株価の変更（過去1週間）", "Price target changes (past week)")}</h3></div>
     {status === "error" && <p role="status" className={styles.state}>{t("現在、目標株価の更新を取得できません。表示内容は最新とは限りません。", "Price target updates are temporarily unavailable. Displayed items may be stale.")}</p>}
     {status === "loading" && <p role="status" className={styles.state}>{t("更新を確認中…", "Checking updates…")}</p>}
     {status === "ready" && items.length === 0 && <p className={styles.state}>{t("条件に合う目標株価の投稿はまだありません。", "No matching price target posts yet.")}</p>}
     {items.length > 0 && <div className={styles.list}>{items.map((item) => {
       const number = (value: number) => value.toLocaleString("en-US", { maximumFractionDigits: 2 });
       const seconds = Math.max(0, Math.round((Date.parse(item.observedAt) - Date.parse(item.publishedAt)) / 1000));
+      const isNew = [item.publishedAt, item.observedAt].every(date => {
+        const age = Date.now() - Date.parse(date);
+        return age >= 0 && age < 24 * 60 * 60 * 1000;
+      });
       return <article key={item.id} className={styles.card}>
         <span className={styles.ticker}>{item.ticker}</span>
-        <div className={styles.body}><strong>{lang === "ja" ? `${item.firm}の目標株価：$${number(item.previous)} → $${number(item.latest)}（${item.latest > item.previous ? "引き上げ" : "引き下げ"}）` : `${item.firm} price target: $${number(item.previous)} → $${number(item.latest)} (${item.latest > item.previous ? "raised" : "lowered"})`}</strong>
+        <div className={styles.body}><strong>{isNew && <span className={styles.newBadge} aria-label={t("24時間以内の新着", "New within 24 hours")}>NEW</span>}{lang === "ja" ? `${item.firm}の目標株価：$${number(item.previous)} → $${number(item.latest)}（${item.latest > item.previous ? "引き上げ" : "引き下げ"}）` : `${item.firm} price target: $${number(item.previous)} → $${number(item.latest)} (${item.latest > item.previous ? "raised" : "lowered"})`}</strong>
           <small>{item.source} · {t("X投稿", "X post")} <time dateTime={item.publishedAt}>{time(item.publishedAt)} JST</time> · {t("取得", "Detected")} <time dateTime={item.observedAt}>{time(item.observedAt)} JST</time> · {t("取得差", "Detection lag")} {seconds}{t("秒", "s")}</small></div>
         <a href={item.url} target="_blank" rel="noopener noreferrer">{t("投稿を確認 ↗", "View post ↗")}</a>
       </article>;
     })}</div>}
     <div className={styles.footer}>
       <NotificationSettings lang={lang} />
-      {updatedAt && <p className={styles.updated}>{t("最終同期", "Last synced")}: {time(updatedAt)} JST</p>}
+      <div className={styles.syncMeta}>
+        {updatedAt && <p className={styles.updated}>{t("最終同期", "Last synced")}: {time(updatedAt)} JST</p>}
+        <span className={styles.refresh}>{delivery === "live" ? t("新着を自動表示", "Live updates") : delivery === "polling" ? t("再接続中 · 15秒ごとに確認", "Reconnecting · checking every 15s") : t("接続中…", "Connecting…")}</span>
+      </div>
     </div>
   </section>;
 }
