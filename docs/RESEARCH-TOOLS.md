@@ -54,6 +54,10 @@ durations are withheld, so queue delay is not confused with provider response.
 Neither measure proves device receipt or display.
 Every device delivery stores its own actual attempt-start wall time instead of
 reusing the poll batch timestamp, preserving queue delay between pilot devices.
+The completed delivery batch advances its aggregate observation boundary to the
+latest attempt it actually claimed, so later devices remain visible without
+admitting unrelated future-dated ledger rows. Standalone and 24-hour status
+reads reject those future rows instead of treating them as current evidence.
 
 The public-safe live operations payload is identical for every viewer. Its
 successful response is shared at the Vercel edge for two seconds, with a

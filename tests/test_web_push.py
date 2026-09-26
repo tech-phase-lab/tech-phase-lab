@@ -44,7 +44,8 @@ class PushTests(unittest.TestCase):
         self.assertEqual(push.deliver(self.db,[event()],lambda *_: 0,self.now)['uncertain'],1)
         push.deliver(self.db,[event()],lambda *_: self.fail('duplicate'),self.now)
     def test_expired_subscription_removed(self):
-        self.register();push.deliver(self.db,[event()],lambda *_:410,self.now)
+        self.register();push.deliver(
+            self.db,[event()],lambda *_:410,self.now,wall_now=lambda:self.now)
         self.assertEqual(self.db.execute('SELECT COUNT(*) FROM push_devices').fetchone()[0],0)
         status=push.public_status(self.db,self.now)
         self.assertEqual(status['activeDevices'],0)
@@ -107,6 +108,19 @@ class PushTests(unittest.TestCase):
         self.assertEqual(status['detectionToAttemptSamples24Hours'], 0)
         self.assertIsNone(status['detectionToAttemptAverageMs24Hours'])
         self.assertIsNone(status['detectionToAttemptMaxMs24Hours'])
+
+    def test_public_status_excludes_future_attempt_rows(self):
+        with self.db:
+            self.db.execute('''INSERT INTO push_deliveries
+                (device_id,event_key,status,attempted_at,observed_at,provider_duration_ms)
+                VALUES('device','future','accepted',?,?,100)''',
+                (self.now + 1, self.now))
+        status = push.public_status(self.db, self.now)
+        self.assertEqual(status['attempted24Hours'], 0)
+        self.assertEqual(status['detectionToAttemptSamples24Hours'], 0)
+        self.assertEqual(status['providerResponseSamples24Hours'], 0)
+        self.assertEqual(status['detectionToOutcomeSamples24Hours'], 0)
+        self.assertIsNone(status['lastAttemptAt'])
 
     def test_invalid_provider_duration_is_not_reported_or_added_to_total(self):
         self.register()

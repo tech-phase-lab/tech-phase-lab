@@ -154,7 +154,7 @@ def public_status(db, now=None):
             AND provider_duration_ms BETWEEN 0 AND ?
             THEN (attempted_at-observed_at)*1000+provider_duration_ms END) AS total_max,
         max(attempted_at) AS last_attempt
-      FROM push_deliveries WHERE attempted_at>=?''',
+      FROM push_deliveries WHERE attempted_at>=? AND attempted_at<=?''',
         (DELIVERY_RETENTION_SECONDS, DELIVERY_RETENTION_SECONDS,
          DELIVERY_RETENTION_SECONDS,
          PROVIDER_DURATION_LIMIT_MS, PROVIDER_DURATION_LIMIT_MS,
@@ -162,7 +162,7 @@ def public_status(db, now=None):
          DELIVERY_RETENTION_SECONDS, PROVIDER_DURATION_LIMIT_MS,
          DELIVERY_RETENTION_SECONDS, PROVIDER_DURATION_LIMIT_MS,
          DELIVERY_RETENTION_SECONDS, PROVIDER_DURATION_LIMIT_MS,
-         now - 86400)).fetchone()
+         now - 86400, now)).fetchone()
     last_attempt = row['last_attempt']
     return {
         'activeDevices': devices,
@@ -190,6 +190,7 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
     if not configuration()['enabled']:
         return {'status': 'disabled', 'attempted': 0}
     now = wall_now() if now is None else now
+    status_now = now
     attempted = accepted = uncertain = 0
     for device in db.execute('SELECT * FROM push_devices WHERE active=1').fetchall():
         watched = set(json.loads(device['tickers']))
@@ -208,6 +209,10 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                     (device['id'], key, 'uncertain', attempted_at, observed)).rowcount
             if not claim:
                 continue
+            # A later device may start after the poll's reference timestamp.
+            # Advance the aggregate boundary only from an actual claimed
+            # attempt, while standalone status reads still reject future rows.
+            status_now = max(status_now, attempted_at)
             ja = device['language'] == 'ja'
             payload = {'title': f"{item['ticker']} · " + ('目標株価の変更' if ja else 'Price target update'),
                        'body': f"{item['firm']}: ${item['previous']:g} → ${item['latest']:g}",
@@ -238,4 +243,4 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
         db.execute('DELETE FROM push_deliveries WHERE attempted_at<?',
                    (now - DELIVERY_RETENTION_SECONDS,))
     return {'status': 'ready', 'attempted': attempted, 'accepted': accepted,
-            'uncertain': uncertain, **public_status(db, now)}
+            'uncertain': uncertain, **public_status(db, status_now)}
