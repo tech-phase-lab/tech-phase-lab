@@ -67,6 +67,10 @@ recent successful body-check timestamps converted to JST. The AI generation
 record also shows its saved timestamp in JST. These are separate observations:
 discovery or body-check time must not be presented as the issuer's publication
 time or as subscriber-delivery latency.
+The operations preview also partitions the current body-fetch reservation into
+detected releases, baseline history, extraction retries and periodic rechecks.
+These URL-free counts describe only the work selected for the current internal
+batch; they do not promise retrieval or subscriber-delivery timing.
 The operations preview also shows whether automatic AI drafting is off,
 misconfigured or enabled, plus URL-free queue totals, rolling request and token
 budgets and the earliest aggregate retry time. A provider `Retry-After` can

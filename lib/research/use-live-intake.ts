@@ -122,6 +122,8 @@ export type MonitorState = {
     oldestDetectedNeverFetchedAt?: string | null;
     fairnessScheduled?: boolean; fairnessAgeMs?: number | null;
     fairnessSharedHost?: boolean;
+    scheduledDetectedNeverFetched?: number; scheduledBaselineNeverFetched?: number;
+    scheduledExtractionPending?: number; scheduledRecheck?: number;
     extractionPending?: number; extracted?: number;
     total: number; measuredAt: string | null;
   };

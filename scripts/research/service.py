@@ -353,6 +353,10 @@ class AutomaticMonitor:
                 "fairnessScheduled": False,
                 "fairnessAgeMs": None,
                 "fairnessSharedHost": False,
+                "scheduledDetectedNeverFetched": 0,
+                "scheduledBaselineNeverFetched": 0,
+                "scheduledExtractionPending": 0,
+                "scheduledRecheck": 0,
                 "extractionPending": 0, "extracted": 0,
                 "total": 0, "measuredAt": None,
             },
@@ -1069,6 +1073,22 @@ class AutomaticMonitor:
                 and oldest_release
                 and oldest_release["url"] in selected_urls
             )
+            scheduled_detected_never_fetched = sum(
+                1 for row in rows
+                if row["sha256"] is None and row["release_detected_at"] is not None
+            )
+            scheduled_baseline_never_fetched = sum(
+                1 for row in rows
+                if row["sha256"] is None and row["release_detected_at"] is None
+            )
+            scheduled_extraction_pending = sum(
+                1 for row in rows
+                if row["sha256"] is not None and int(row["extracted_chars"] or 0) == 0
+            )
+            scheduled_recheck = sum(
+                1 for row in rows
+                if row["sha256"] is not None and int(row["extracted_chars"] or 0) > 0
+            )
         self.body_probe_urls = probe_urls
         with self.state_lock:
             self.state["bodyBacklog"] = {
@@ -1098,6 +1118,10 @@ class AutomaticMonitor:
                 "fairnessScheduled": fairness_scheduled,
                 "fairnessAgeMs": fairness_age_ms if fairness_scheduled else None,
                 "fairnessSharedHost": fairness_shared_host if fairness_scheduled else False,
+                "scheduledDetectedNeverFetched": scheduled_detected_never_fetched,
+                "scheduledBaselineNeverFetched": scheduled_baseline_never_fetched,
+                "scheduledExtractionPending": scheduled_extraction_pending,
+                "scheduledRecheck": scheduled_recheck,
                 "extractionPending": int(backlog["extraction_pending"] or 0),
                 "extracted": int(backlog["extracted"] or 0),
                 "total": int(backlog["total"] or 0),

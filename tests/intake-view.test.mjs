@@ -60,6 +60,11 @@ test("operations preview exposes bounded cache pressure without cached contents"
   assert.match(intakeDashboard, /AI下書き生成：ON（非公開・人間承認必須）/);
   assert.match(intakeDashboard, /generation\.nextRetryAt/);
   assert.match(liveTypes, /bodyBacklog\?:/);
+  assert.match(liveTypes, /scheduledDetectedNeverFetched/);
+  assert.match(liveTypes, /scheduledBaselineNeverFetched/);
+  assert.match(liveTypes, /scheduledExtractionPending/);
+  assert.match(liveTypes, /scheduledRecheck/);
+  assert.match(intakeDashboard, /今回予約：新着本文/);
   assert.match(intakeDashboard, /エラー再試行待ち/);
   assert.match(intakeDashboard, /定期再確認待ち/);
   assert.match(intakeDashboard, /アクセス制限/);

@@ -929,6 +929,10 @@ class ResearchServiceTests(unittest.TestCase):
         backlog = app.public_state()["bodyBacklog"]
         self.assertTrue(backlog["fairnessScheduled"])
         self.assertFalse(backlog["fairnessSharedHost"])
+        self.assertEqual(backlog["scheduledDetectedNeverFetched"], 2)
+        self.assertEqual(backlog["scheduledBaselineNeverFetched"], 0)
+        self.assertEqual(backlog["scheduledExtractionPending"], 0)
+        self.assertEqual(backlog["scheduledRecheck"], 0)
         self.assertGreater(backlog["fairnessAgeMs"], 2 * 24 * 60 * 60 * 1000)
         self.assertLess(backlog["fairnessAgeMs"], 4 * 24 * 60 * 60 * 1000)
 
@@ -961,6 +965,7 @@ class ResearchServiceTests(unittest.TestCase):
         backlog = app.public_state()["bodyBacklog"]
         self.assertTrue(backlog["fairnessScheduled"])
         self.assertTrue(backlog["fairnessSharedHost"])
+        self.assertEqual(backlog["scheduledDetectedNeverFetched"], 2)
         self.assertGreater(backlog["fairnessAgeMs"], 2 * 24 * 60 * 60 * 1000)
         self.assertLess(backlog["fairnessAgeMs"], 4 * 24 * 60 * 60 * 1000)
         self.assertNotIn("marvell.com", json.dumps(backlog))
@@ -1005,6 +1010,10 @@ class ResearchServiceTests(unittest.TestCase):
             "fairnessScheduled": False,
             "fairnessAgeMs": None,
             "fairnessSharedHost": False,
+            "scheduledDetectedNeverFetched": 1,
+            "scheduledBaselineNeverFetched": 0,
+            "scheduledExtractionPending": 0,
+            "scheduledRecheck": 0,
             "extractionPending": 0,
             "extracted": 0,
             "total": 2,
