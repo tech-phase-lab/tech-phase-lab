@@ -535,5 +535,18 @@
     },
     "maxResults": 10,
     "reuse": "review-required"
+  },
+  {
+    "id": "globenewswire-public",
+    "name": "GlobeNewswire public companies",
+    "kind": "publisher-update",
+    "format": "feed",
+    "url": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+    "allowedHosts": [
+      "www.globenewswire.com",
+      "globenewswire.com"
+    ],
+    "intervalSeconds": 30,
+    "reuse": "review-required"
   }
 ]

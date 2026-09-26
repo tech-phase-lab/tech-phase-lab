@@ -2154,8 +2154,8 @@ class ResearchServiceTests(unittest.TestCase):
     def test_public_health_exposes_only_aggregate_official_signal_state(self):
         state = service.AutomaticMonitor(self.db_path, self.snapshot_path).public_state()
         summary = state["signalIntake"]
-        self.assertEqual(summary["routes"]["configured"], 22)
-        self.assertEqual(summary["routes"]["pending"], 22)
+        self.assertEqual(summary["routes"]["configured"], 23)
+        self.assertEqual(summary["routes"]["pending"], 23)
         self.assertEqual(sum(summary["routes"]["errorKinds"].values()), 0)
         retry = summary["routes"]["retry"]
         self.assertEqual(

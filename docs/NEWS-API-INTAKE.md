@@ -65,3 +65,15 @@ No claims of seconds-level delivery or completed three-provider coverage.
 - https://www.globenewswire.com/rss/list
 - https://www.prnewswire.com/rss/
 - https://www.businesswire.com/help/feed-options
+
+## Follow-up: verified GlobeNewswire route
+
+The official catalog was fetched successfully on September 26. Its public-company
+RSS URL was extracted from the actual catalog, then validated through the
+existing monitor HTTP fetch and XML parser (36,518 bytes, 20 items, 0 matching
+current official-source tickers in that snapshot). `globenewswire-public` is now
+configured at 30-second intervals with conditional requests and existing retry
+backoff. Initial results are a private baseline, not public notifications.
+Only the latest 20 releases were present; fast bursts may overflow this window.
+This is not complete archival coverage or proof of seconds-level delivery.
+Business Wire and PR Newswire live feed validation remain outstanding.
