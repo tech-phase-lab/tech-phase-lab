@@ -168,12 +168,22 @@ export default function Home() {
 
   useEffect(() => {
     const initialTimer = window.setTimeout(() => {
-      void loadMarket();
-      void loadLatestNews();
+      if (!document.hidden) {
+        void loadMarket();
+        void loadLatestNews();
+      }
     }, 0);
-    const marketTimer = window.setInterval(loadMarket, 15000);
-    const newsTimer = window.setInterval(loadLatestNews, 60000);
+    const refreshOnReturn = () => {
+      if (!document.hidden) {
+        void loadMarket();
+        void loadLatestNews();
+      }
+    };
+    document.addEventListener("visibilitychange", refreshOnReturn);
+    const marketTimer = window.setInterval(() => { if (!document.hidden) void loadMarket(); }, 15000);
+    const newsTimer = window.setInterval(() => { if (!document.hidden) void loadLatestNews(); }, 60000);
     return () => {
+      document.removeEventListener("visibilitychange", refreshOnReturn);
       window.clearTimeout(initialTimer);
       window.clearInterval(marketTimer);
       window.clearInterval(newsTimer);
