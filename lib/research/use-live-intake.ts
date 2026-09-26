@@ -118,6 +118,10 @@ export type MonitorState = {
       lastFetchedBaselineNeverFetched: number;
       lastFetchedExtractionPending: number;
       lastFetchedRecheck: number;
+      lastUpdatedDetectedNeverFetched: number;
+      lastUpdatedBaselineNeverFetched: number;
+      lastUpdatedExtractionPending: number;
+      lastUpdatedRecheck: number;
       runs24Hours: number; checks24Hours: number; errors24Hours: number;
       notModified24Hours: number;
       detectionLatencySamples24Hours: number;
@@ -139,6 +143,10 @@ export type MonitorState = {
       fetchedBaselineNeverFetched24Hours: number;
       fetchedExtractionPending24Hours: number;
       fetchedRecheck24Hours: number;
+      updatedDetectedNeverFetched24Hours: number;
+      updatedBaselineNeverFetched24Hours: number;
+      updatedExtractionPending24Hours: number;
+      updatedRecheck24Hours: number;
     };
   };
   pendingBodies?: number;

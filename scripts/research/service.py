@@ -1156,11 +1156,14 @@ class AutomaticMonitor:
         completed_at = None
         duration_ms = None
         detection_latencies_ms = []
+        saved_outcomes = {}
         with self.db_lock, monitor.connect(self.db_path) as db:
             affected_tickers = {row["ticker"] for row, _, _ in completed}
             for row, result, error in completed:
                 if error is None:
-                    monitor.save_source_check(db, row, result)
+                    saved_outcomes[row["url"]] = monitor.save_source_check(
+                        db, row, result
+                    )["status"]
                     if result.get("notModified"):
                         not_modified += 1
                     else:
@@ -1205,6 +1208,7 @@ class AutomaticMonitor:
             selection_errors = dict.fromkeys(selection_partitions, 0)
             selection_not_modified = dict.fromkeys(selection_partitions, 0)
             selection_fetched = dict.fromkeys(selection_partitions, 0)
+            selection_updated = dict.fromkeys(selection_partitions, 0)
             for row, result, error in completed:
                 if row["sha256"] is None:
                     partition = (
@@ -1223,6 +1227,8 @@ class AutomaticMonitor:
                     selection_not_modified[partition] += 1
                 else:
                     selection_fetched[partition] += 1
+                    if saved_outcomes.get(row["url"]) in {"first-fetched", "changed"}:
+                        selection_updated[partition] += 1
                 if error is not None or result.get("notModified") or row["sha256"] is not None:
                     continue
                 latency = timestamp_latency_ms(row["release_detected_at"], completed_at)
@@ -1232,7 +1238,7 @@ class AutomaticMonitor:
                 db, polled_at, completed_at, duration_ms,
                 len(completed), errors, not_modified, detection_latencies_ms,
                 selection_partitions, selection_errors, selection_not_modified,
-                selection_fetched,
+                selection_fetched, selection_updated,
             )
             monitor.write_snapshot(db, self.snapshot_path)
         with self.state_lock:

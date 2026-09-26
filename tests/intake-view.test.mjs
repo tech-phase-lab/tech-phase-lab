@@ -108,11 +108,16 @@ test("operations preview exposes bounded cache pressure without cached contents"
   assert.match(liveTypes, /fetchedBaselineNeverFetched24Hours/);
   assert.match(liveTypes, /fetchedExtractionPending24Hours/);
   assert.match(liveTypes, /fetchedRecheck24Hours/);
+  assert.match(liveTypes, /updatedDetectedNeverFetched24Hours/);
+  assert.match(liveTypes, /updatedBaselineNeverFetched24Hours/);
+  assert.match(liveTypes, /updatedExtractionPending24Hours/);
+  assert.match(liveTypes, /updatedRecheck24Hours/);
   assert.match(intakeDashboard, /24時間予約：/);
   assert.match(intakeDashboard, /selectedOutcome\("新着本文"/);
   assert.match(intakeDashboard, /失敗/);
   assert.match(intakeDashboard, /304再利用/);
-  assert.match(intakeDashboard, /本文応答/);
+  assert.match(intakeDashboard, /抽出成功/);
+  assert.match(intakeDashboard, /証拠更新/);
   assert.match(intakeDashboard, /24時間予約内訳：実測待ち/);
   assert.match(intakeDashboard, /検知→初回本文/);
   assert.match(intakeDashboard, /実測待ち/);

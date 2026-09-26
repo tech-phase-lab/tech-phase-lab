@@ -1099,7 +1099,11 @@ def connect(path):
       fetched_detected_never_fetched INTEGER NOT NULL DEFAULT 0,
       fetched_baseline_never_fetched INTEGER NOT NULL DEFAULT 0,
       fetched_extraction_pending INTEGER NOT NULL DEFAULT 0,
-      fetched_recheck INTEGER NOT NULL DEFAULT 0);
+      fetched_recheck INTEGER NOT NULL DEFAULT 0,
+      updated_detected_never_fetched INTEGER NOT NULL DEFAULT 0,
+      updated_baseline_never_fetched INTEGER NOT NULL DEFAULT 0,
+      updated_extraction_pending INTEGER NOT NULL DEFAULT 0,
+      updated_recheck INTEGER NOT NULL DEFAULT 0);
     CREATE INDEX IF NOT EXISTS body_fetch_batches_completed
       ON body_fetch_batches(completed_at DESC);
     CREATE TABLE IF NOT EXISTS body_fetch_worker_state (
@@ -1240,6 +1244,10 @@ def connect(path):
         "fetched_baseline_never_fetched": "INTEGER NOT NULL DEFAULT 0",
         "fetched_extraction_pending": "INTEGER NOT NULL DEFAULT 0",
         "fetched_recheck": "INTEGER NOT NULL DEFAULT 0",
+        "updated_detected_never_fetched": "INTEGER NOT NULL DEFAULT 0",
+        "updated_baseline_never_fetched": "INTEGER NOT NULL DEFAULT 0",
+        "updated_extraction_pending": "INTEGER NOT NULL DEFAULT 0",
+        "updated_recheck": "INTEGER NOT NULL DEFAULT 0",
     }.items():
         if column not in body_batch_columns:
             db.execute(
@@ -1587,7 +1595,7 @@ def priority_source_run_summary(db, reference=None):
 def record_body_fetch_batch(
     db, polled_at, completed_at, duration_ms, checks, errors, not_modified,
     detection_latencies_ms=(), selection_partitions=None, selection_errors=None,
-    selection_not_modified=None, selection_fetched=None,
+    selection_not_modified=None, selection_fetched=None, selection_updated=None,
 ):
     """Persist bounded URL-free body-fetch evidence across service restarts."""
     try:
@@ -1622,6 +1630,11 @@ def record_body_fetch_batch(
         fetched_baseline = int(fetched_partitions.get("baselineNeverFetched", 0))
         fetched_extraction = int(fetched_partitions.get("extractionPending", 0))
         fetched_recheck = int(fetched_partitions.get("recheck", 0))
+        updated_partitions = selection_updated or {}
+        updated_detected = int(updated_partitions.get("detectedNeverFetched", 0))
+        updated_baseline = int(updated_partitions.get("baselineNeverFetched", 0))
+        updated_extraction = int(updated_partitions.get("extractionPending", 0))
+        updated_recheck = int(updated_partitions.get("recheck", 0))
     except (TypeError, ValueError) as exc:
         raise ValueError("invalid-body-fetch-batch") from exc
     maximum_latency_ms = 31 * 24 * 60 * 60 * 1000
@@ -1665,6 +1678,11 @@ def record_body_fetch_batch(
         or sum((
             fetched_detected, fetched_baseline, fetched_extraction, fetched_recheck,
         )) not in {0, checks - errors - not_modified}
+        or any(value < 0 for value in (
+            updated_detected, updated_baseline, updated_extraction, updated_recheck,
+        ))
+        or updated_detected > fetched_detected or updated_baseline > fetched_baseline
+        or updated_extraction > fetched_extraction or updated_recheck > fetched_recheck
     ):
         raise ValueError("invalid-body-fetch-batch")
     latency_total = sum(latencies)
@@ -1682,8 +1700,10 @@ def record_body_fetch_batch(
             not_modified_baseline_never_fetched,
             not_modified_extraction_pending,not_modified_recheck,
             fetched_detected_never_fetched,fetched_baseline_never_fetched,
-            fetched_extraction_pending,fetched_recheck
-          ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+            fetched_extraction_pending,fetched_recheck,
+            updated_detected_never_fetched,updated_baseline_never_fetched,
+            updated_extraction_pending,updated_recheck
+          ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         """, (
             polled_at, completed_at, duration_ms, checks, errors, not_modified,
             len(latencies), latency_total, latency_max, selected_detected,
@@ -1692,6 +1712,7 @@ def record_body_fetch_batch(
             not_modified_detected, not_modified_baseline,
             not_modified_extraction, not_modified_recheck,
             fetched_detected, fetched_baseline, fetched_extraction, fetched_recheck,
+            updated_detected, updated_baseline, updated_extraction, updated_recheck,
         ))
         db.execute("""
           DELETE FROM body_fetch_batches WHERE id IN (
@@ -1867,6 +1888,14 @@ BODY_FETCH_METRIC_WHERE = """
     fetched_detected_never_fetched + fetched_baseline_never_fetched
       + fetched_extraction_pending + fetched_recheck IN (0, checks-errors-not_modified)
   )
+  AND typeof(updated_detected_never_fetched)='integer'
+  AND updated_detected_never_fetched BETWEEN 0 AND fetched_detected_never_fetched
+  AND typeof(updated_baseline_never_fetched)='integer'
+  AND updated_baseline_never_fetched BETWEEN 0 AND fetched_baseline_never_fetched
+  AND typeof(updated_extraction_pending)='integer'
+  AND updated_extraction_pending BETWEEN 0 AND fetched_extraction_pending
+  AND typeof(updated_recheck)='integer'
+  AND updated_recheck BETWEEN 0 AND fetched_recheck
   AND julianday(polled_at) IS NOT NULL AND julianday(completed_at) IS NOT NULL
   AND julianday(polled_at) <= julianday(completed_at)
 """
@@ -1921,7 +1950,9 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
              not_modified_baseline_never_fetched,
              not_modified_extraction_pending,not_modified_recheck,
              fetched_detected_never_fetched,fetched_baseline_never_fetched,
-             fetched_extraction_pending,fetched_recheck
+             fetched_extraction_pending,fetched_recheck,
+             updated_detected_never_fetched,updated_baseline_never_fetched,
+             updated_extraction_pending,updated_recheck
       FROM body_fetch_batches
       WHERE {BODY_FETCH_METRIC_WHERE}
       ORDER BY id DESC LIMIT 100
@@ -1965,7 +1996,11 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
              COALESCE(sum(fetched_detected_never_fetched),0) AS fetched_detected,
              COALESCE(sum(fetched_baseline_never_fetched),0) AS fetched_baseline,
              COALESCE(sum(fetched_extraction_pending),0) AS fetched_extraction,
-             COALESCE(sum(fetched_recheck),0) AS fetched_recheck
+             COALESCE(sum(fetched_recheck),0) AS fetched_recheck,
+             COALESCE(sum(updated_detected_never_fetched),0) AS updated_detected,
+             COALESCE(sum(updated_baseline_never_fetched),0) AS updated_baseline,
+             COALESCE(sum(updated_extraction_pending),0) AS updated_extraction,
+             COALESCE(sum(updated_recheck),0) AS updated_recheck
       FROM body_fetch_batches
       WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
         AND {BODY_FETCH_METRIC_WHERE}
@@ -2030,6 +2065,16 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
             latest["fetched_extraction_pending"] if latest else 0
         ),
         "lastFetchedRecheck": latest["fetched_recheck"] if latest else 0,
+        "lastUpdatedDetectedNeverFetched": (
+            latest["updated_detected_never_fetched"] if latest else 0
+        ),
+        "lastUpdatedBaselineNeverFetched": (
+            latest["updated_baseline_never_fetched"] if latest else 0
+        ),
+        "lastUpdatedExtractionPending": (
+            latest["updated_extraction_pending"] if latest else 0
+        ),
+        "lastUpdatedRecheck": latest["updated_recheck"] if latest else 0,
         "runs24Hours": totals["runs"], "checks24Hours": totals["checks"],
         "errors24Hours": totals["errors"],
         "notModified24Hours": totals["not_modified"],
@@ -2055,6 +2100,10 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
         "fetchedBaselineNeverFetched24Hours": totals["fetched_baseline"],
         "fetchedExtractionPending24Hours": totals["fetched_extraction"],
         "fetchedRecheck24Hours": totals["fetched_recheck"],
+        "updatedDetectedNeverFetched24Hours": totals["updated_detected"],
+        "updatedBaselineNeverFetched24Hours": totals["updated_baseline"],
+        "updatedExtractionPending24Hours": totals["updated_extraction"],
+        "updatedRecheck24Hours": totals["updated_recheck"],
     }
 
 
