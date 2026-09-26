@@ -176,7 +176,14 @@ function durableBodyFetchStatus(bodyFetch: MonitorState["bodyFetch"]) {
   const latency = durable.detectionLatencySamples24Hours > 0
     ? ` · 検知→初回本文 平均 ${duration(durable.detectionLatencyAverageMs24Hours)}・最大 ${duration(durable.detectionLatencyMaxMs24Hours)}（${durable.detectionLatencySamples24Hours}件）`
     : " · 検知→初回本文 実測待ち";
-  return `本文取得の永続稼働：${poll}${deployment} · 24時間 ${durable.runs24Hours}バッチ・${durable.checks24Hours}件 · エラー ${durable.errors24Hours}件 · 304 ${durable.notModified24Hours}件${latency} · 最終完了 ${time(durable.lastCompletedAt)} JST`;
+  const selection = (durable.selectedDetectedNeverFetched24Hours ?? 0)
+    + (durable.selectedBaselineNeverFetched24Hours ?? 0)
+    + (durable.selectedExtractionPending24Hours ?? 0)
+    + (durable.selectedRecheck24Hours ?? 0);
+  const selectionStatus = selection > 0
+    ? ` · 24時間予約：新着本文 ${durable.selectedDetectedNeverFetched24Hours ?? 0}件・履歴本文 ${durable.selectedBaselineNeverFetched24Hours ?? 0}件・抽出不足 ${durable.selectedExtractionPending24Hours ?? 0}件・再確認 ${durable.selectedRecheck24Hours ?? 0}件`
+    : " · 24時間予約内訳：実測待ち";
+  return `本文取得の永続稼働：${poll}${deployment} · 24時間 ${durable.runs24Hours}バッチ・${durable.checks24Hours}件 · エラー ${durable.errors24Hours}件 · 304 ${durable.notModified24Hours}件${selectionStatus}${latency} · 最終完了 ${time(durable.lastCompletedAt)} JST`;
 }
 function secEvidenceStatus(evidence: MonitorState["secEvidence"]) {
   if (!evidence) return "SEC本文証跡：状態取得待ち";

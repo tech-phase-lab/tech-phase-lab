@@ -1205,6 +1205,24 @@ class AutomaticMonitor:
             monitor.record_body_fetch_batch(
                 db, polled_at, completed_at, duration_ms,
                 len(completed), errors, not_modified, detection_latencies_ms,
+                {
+                    "detectedNeverFetched": sum(
+                        1 for row, _, _ in completed
+                        if row["sha256"] is None and row["release_detected_at"] is not None
+                    ),
+                    "baselineNeverFetched": sum(
+                        1 for row, _, _ in completed
+                        if row["sha256"] is None and row["release_detected_at"] is None
+                    ),
+                    "extractionPending": sum(
+                        1 for row, _, _ in completed
+                        if row["sha256"] is not None and int(row["extracted_chars"] or 0) == 0
+                    ),
+                    "recheck": sum(
+                        1 for row, _, _ in completed
+                        if row["sha256"] is not None and int(row["extracted_chars"] or 0) > 0
+                    ),
+                },
             )
             monitor.write_snapshot(db, self.snapshot_path)
         with self.state_lock:

@@ -1083,7 +1083,11 @@ def connect(path):
       not_modified INTEGER NOT NULL CHECK(not_modified>=0 AND not_modified<=checks),
       detection_latency_samples INTEGER NOT NULL DEFAULT 0,
       detection_latency_total_ms INTEGER NOT NULL DEFAULT 0,
-      detection_latency_max_ms INTEGER);
+      detection_latency_max_ms INTEGER,
+      selected_detected_never_fetched INTEGER NOT NULL DEFAULT 0,
+      selected_baseline_never_fetched INTEGER NOT NULL DEFAULT 0,
+      selected_extraction_pending INTEGER NOT NULL DEFAULT 0,
+      selected_recheck INTEGER NOT NULL DEFAULT 0);
     CREATE INDEX IF NOT EXISTS body_fetch_batches_completed
       ON body_fetch_batches(completed_at DESC);
     CREATE TABLE IF NOT EXISTS body_fetch_worker_state (
@@ -1208,6 +1212,10 @@ def connect(path):
         "detection_latency_samples": "INTEGER NOT NULL DEFAULT 0",
         "detection_latency_total_ms": "INTEGER NOT NULL DEFAULT 0",
         "detection_latency_max_ms": "INTEGER",
+        "selected_detected_never_fetched": "INTEGER NOT NULL DEFAULT 0",
+        "selected_baseline_never_fetched": "INTEGER NOT NULL DEFAULT 0",
+        "selected_extraction_pending": "INTEGER NOT NULL DEFAULT 0",
+        "selected_recheck": "INTEGER NOT NULL DEFAULT 0",
     }.items():
         if column not in body_batch_columns:
             db.execute(
@@ -1554,7 +1562,7 @@ def priority_source_run_summary(db, reference=None):
 
 def record_body_fetch_batch(
     db, polled_at, completed_at, duration_ms, checks, errors, not_modified,
-    detection_latencies_ms=(),
+    detection_latencies_ms=(), selection_partitions=None,
 ):
     """Persist bounded URL-free body-fetch evidence across service restarts."""
     try:
@@ -1563,6 +1571,11 @@ def record_body_fetch_batch(
         duration_ms, checks = int(duration_ms), int(checks)
         errors, not_modified = int(errors), int(not_modified)
         latencies = tuple(int(value) for value in detection_latencies_ms)
+        partitions = selection_partitions or {}
+        selected_detected = int(partitions.get("detectedNeverFetched", 0))
+        selected_baseline = int(partitions.get("baselineNeverFetched", 0))
+        selected_extraction = int(partitions.get("extractionPending", 0))
+        selected_recheck = int(partitions.get("recheck", 0))
     except (TypeError, ValueError) as exc:
         raise ValueError("invalid-body-fetch-batch") from exc
     maximum_latency_ms = 31 * 24 * 60 * 60 * 1000
@@ -1572,6 +1585,11 @@ def record_body_fetch_batch(
         or not 0 <= errors <= checks or not 0 <= not_modified <= checks
         or len(latencies) > checks
         or any(value < 0 or value > maximum_latency_ms for value in latencies)
+        or any(value < 0 or value > checks for value in (
+            selected_detected, selected_baseline, selected_extraction, selected_recheck,
+        ))
+        or sum((selected_detected, selected_baseline, selected_extraction, selected_recheck))
+            not in {0, checks}
     ):
         raise ValueError("invalid-body-fetch-batch")
     latency_total = sum(latencies)
@@ -1580,11 +1598,14 @@ def record_body_fetch_batch(
         db.execute("""
           INSERT INTO body_fetch_batches(
             polled_at,completed_at,duration_ms,checks,errors,not_modified,
-            detection_latency_samples,detection_latency_total_ms,detection_latency_max_ms
-          ) VALUES(?,?,?,?,?,?,?,?,?)
+            detection_latency_samples,detection_latency_total_ms,detection_latency_max_ms,
+            selected_detected_never_fetched,selected_baseline_never_fetched,
+            selected_extraction_pending,selected_recheck
+          ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)
         """, (
             polled_at, completed_at, duration_ms, checks, errors, not_modified,
-            len(latencies), latency_total, latency_max,
+            len(latencies), latency_total, latency_max, selected_detected,
+            selected_baseline, selected_extraction, selected_recheck,
         ))
         db.execute("""
           DELETE FROM body_fetch_batches WHERE id IN (
@@ -1700,6 +1721,17 @@ BODY_FETCH_METRIC_WHERE = """
       AND detection_latency_max_ms <= detection_latency_total_ms
       AND detection_latency_total_ms <= detection_latency_samples * 2678400000)
   )
+  AND typeof(selected_detected_never_fetched)='integer'
+  AND selected_detected_never_fetched BETWEEN 0 AND checks
+  AND typeof(selected_baseline_never_fetched)='integer'
+  AND selected_baseline_never_fetched BETWEEN 0 AND checks
+  AND typeof(selected_extraction_pending)='integer'
+  AND selected_extraction_pending BETWEEN 0 AND checks
+  AND typeof(selected_recheck)='integer' AND selected_recheck BETWEEN 0 AND checks
+  AND (
+    selected_detected_never_fetched + selected_baseline_never_fetched
+      + selected_extraction_pending + selected_recheck IN (0, checks)
+  )
   AND julianday(polled_at) IS NOT NULL AND julianday(completed_at) IS NOT NULL
   AND julianday(polled_at) <= julianday(completed_at)
 """
@@ -1746,7 +1778,9 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
     latest_candidates = db.execute(f"""
       SELECT completed_at,duration_ms,checks,errors,not_modified,
              detection_latency_samples,detection_latency_total_ms,
-             detection_latency_max_ms
+             detection_latency_max_ms,selected_detected_never_fetched,
+             selected_baseline_never_fetched,selected_extraction_pending,
+             selected_recheck
       FROM body_fetch_batches
       WHERE {BODY_FETCH_METRIC_WHERE}
       ORDER BY id DESC LIMIT 100
@@ -1771,7 +1805,11 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
              COALESCE(sum(not_modified),0) AS not_modified,
              COALESCE(sum(detection_latency_samples),0) AS latency_samples,
              COALESCE(sum(detection_latency_total_ms),0) AS latency_total,
-             max(detection_latency_max_ms) AS latency_max
+             max(detection_latency_max_ms) AS latency_max,
+             COALESCE(sum(selected_detected_never_fetched),0) AS selected_detected,
+             COALESCE(sum(selected_baseline_never_fetched),0) AS selected_baseline,
+             COALESCE(sum(selected_extraction_pending),0) AS selected_extraction,
+             COALESCE(sum(selected_recheck),0) AS selected_recheck
       FROM body_fetch_batches
       WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
         AND {BODY_FETCH_METRIC_WHERE}
@@ -1796,6 +1834,16 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
             if latest and latest["detection_latency_samples"] else None
         ),
         "lastDetectionLatencyMaxMs": latest["detection_latency_max_ms"] if latest else None,
+        "lastSelectedDetectedNeverFetched": (
+            latest["selected_detected_never_fetched"] if latest else 0
+        ),
+        "lastSelectedBaselineNeverFetched": (
+            latest["selected_baseline_never_fetched"] if latest else 0
+        ),
+        "lastSelectedExtractionPending": (
+            latest["selected_extraction_pending"] if latest else 0
+        ),
+        "lastSelectedRecheck": latest["selected_recheck"] if latest else 0,
         "runs24Hours": totals["runs"], "checks24Hours": totals["checks"],
         "errors24Hours": totals["errors"],
         "notModified24Hours": totals["not_modified"],
@@ -1805,6 +1853,10 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
             if totals["latency_samples"] else None
         ),
         "detectionLatencyMaxMs24Hours": totals["latency_max"],
+        "selectedDetectedNeverFetched24Hours": totals["selected_detected"],
+        "selectedBaselineNeverFetched24Hours": totals["selected_baseline"],
+        "selectedExtractionPending24Hours": totals["selected_extraction"],
+        "selectedRecheck24Hours": totals["selected_recheck"],
     }
 
 

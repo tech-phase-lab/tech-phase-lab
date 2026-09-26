@@ -515,7 +515,12 @@ class ResearchServiceTests(unittest.TestCase):
             monitor.record_body_fetch_batch(
                 db, past_started.isoformat(timespec="milliseconds"),
                 past_completed.isoformat(timespec="milliseconds"),
-                1000, 2, 0, 1, (400,),
+                1000, 2, 0, 1, (400,), {
+                    "detectedNeverFetched": 1,
+                    "baselineNeverFetched": 0,
+                    "extractionPending": 0,
+                    "recheck": 1,
+                },
             )
             monitor.record_body_fetch_batch(
                 db, future_started.isoformat(timespec="milliseconds"),
@@ -535,6 +540,12 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(body["runs24Hours"], 1)
         self.assertEqual(body["errors24Hours"], 0)
         self.assertEqual(body["detectionLatencySamples24Hours"], 1)
+        self.assertEqual(body["lastSelectedDetectedNeverFetched"], 1)
+        self.assertEqual(body["lastSelectedRecheck"], 1)
+        self.assertEqual(body["selectedDetectedNeverFetched24Hours"], 1)
+        self.assertEqual(body["selectedBaselineNeverFetched24Hours"], 0)
+        self.assertEqual(body["selectedExtractionPending24Hours"], 0)
+        self.assertEqual(body["selectedRecheck24Hours"], 1)
 
     def test_durable_batch_summaries_ignore_corrupted_metric_rows(self):
         reference = datetime.now(timezone.utc)
@@ -749,7 +760,9 @@ class ResearchServiceTests(unittest.TestCase):
             columns = {row[1] for row in db.execute("PRAGMA table_info(body_fetch_batches)")}
             self.assertTrue({
                 "detection_latency_samples", "detection_latency_total_ms",
-                "detection_latency_max_ms",
+                "detection_latency_max_ms", "selected_detected_never_fetched",
+                "selected_baseline_never_fetched", "selected_extraction_pending",
+                "selected_recheck",
             }.issubset(columns))
             summary = monitor.body_fetch_batch_summary(
                 db, "2026-09-23T00:01:00+00:00"
@@ -757,6 +770,26 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["checks24Hours"], 2)
         self.assertEqual(summary["detectionLatencySamples24Hours"], 0)
         self.assertIsNone(summary["detectionLatencyAverageMs24Hours"])
+        self.assertEqual(summary["selectedDetectedNeverFetched24Hours"], 0)
+        self.assertEqual(summary["selectedBaselineNeverFetched24Hours"], 0)
+        self.assertEqual(summary["selectedExtractionPending24Hours"], 0)
+        self.assertEqual(summary["selectedRecheck24Hours"], 0)
+
+    def test_body_fetch_selection_partitions_must_cover_new_batch(self):
+        reference = datetime.now(timezone.utc)
+        started = reference - timedelta(seconds=1)
+        with monitor.connect(self.db_path) as db:
+            with self.assertRaisesRegex(ValueError, "invalid-body-fetch-batch"):
+                monitor.record_body_fetch_batch(
+                    db, started.isoformat(timespec="milliseconds"),
+                    reference.isoformat(timespec="milliseconds"),
+                    1000, 2, 0, 0, (), {
+                        "detectedNeverFetched": 1,
+                        "baselineNeverFetched": 0,
+                        "extractionPending": 0,
+                        "recheck": 0,
+                    },
+                )
 
     def test_liveness_does_not_wait_for_first_official_source_cycle(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
@@ -814,6 +847,10 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(durable["errors24Hours"], 0)
         self.assertEqual(durable["notModified24Hours"], 0)
         self.assertEqual(durable["detectionLatencySamples24Hours"], 1)
+        self.assertEqual(durable["selectedDetectedNeverFetched24Hours"], 1)
+        self.assertEqual(durable["selectedBaselineNeverFetched24Hours"], 0)
+        self.assertEqual(durable["selectedExtractionPending24Hours"], 0)
+        self.assertEqual(durable["selectedRecheck24Hours"], 0)
         self.assertIsInstance(durable["detectionLatencyAverageMs24Hours"], int)
         self.assertIsInstance(durable["detectionLatencyMaxMs24Hours"], int)
         self.assertNotIn("https://", json.dumps(durable))
