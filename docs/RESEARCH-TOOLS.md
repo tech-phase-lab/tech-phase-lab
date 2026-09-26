@@ -69,10 +69,11 @@ discovery or body-check time must not be presented as the issuer's publication
 time or as subscriber-delivery latency.
 The operations preview also partitions the current body-fetch reservation into
 detected releases, baseline history, extraction retries and periodic rechecks.
-Each partition also reports failed selections and HTTP 304 validator reuse when
-non-zero, so operators can distinguish fair scheduling, fresh retrieval and a
-lawful conditional-cache hit without exposing a URL, hostname, validator or
-response detail. These URL-free counts describe only the work selected for the
+Each partition also reports successful non-304 body responses, failed selections
+and HTTP 304 validator reuse when non-zero, so operators can distinguish fair
+scheduling, a completed body response and a lawful conditional-cache hit without
+exposing a URL, hostname, validator or response detail. A non-304 response is not
+proof that the issuer changed the article or that delivery occurred. These URL-free counts describe only the work selected for the
 current internal batch; they do not promise retrieval or subscriber-delivery
 timing.
 The operations preview also shows whether automatic AI drafting is off,

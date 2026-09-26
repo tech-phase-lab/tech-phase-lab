@@ -1204,6 +1204,7 @@ class AutomaticMonitor:
             }
             selection_errors = dict.fromkeys(selection_partitions, 0)
             selection_not_modified = dict.fromkeys(selection_partitions, 0)
+            selection_fetched = dict.fromkeys(selection_partitions, 0)
             for row, result, error in completed:
                 if row["sha256"] is None:
                     partition = (
@@ -1220,6 +1221,8 @@ class AutomaticMonitor:
                     selection_errors[partition] += 1
                 elif result.get("notModified"):
                     selection_not_modified[partition] += 1
+                else:
+                    selection_fetched[partition] += 1
                 if error is not None or result.get("notModified") or row["sha256"] is not None:
                     continue
                 latency = timestamp_latency_ms(row["release_detected_at"], completed_at)
@@ -1229,6 +1232,7 @@ class AutomaticMonitor:
                 db, polled_at, completed_at, duration_ms,
                 len(completed), errors, not_modified, detection_latencies_ms,
                 selection_partitions, selection_errors, selection_not_modified,
+                selection_fetched,
             )
             monitor.write_snapshot(db, self.snapshot_path)
         with self.state_lock:

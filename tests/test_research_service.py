@@ -772,6 +772,9 @@ class ResearchServiceTests(unittest.TestCase):
                 "not_modified_detected_never_fetched",
                 "not_modified_baseline_never_fetched",
                 "not_modified_extraction_pending", "not_modified_recheck",
+                "fetched_detected_never_fetched",
+                "fetched_baseline_never_fetched",
+                "fetched_extraction_pending", "fetched_recheck",
             }.issubset(columns))
             summary = monitor.body_fetch_batch_summary(
                 db, "2026-09-23T00:01:00+00:00"
@@ -791,6 +794,10 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["notModifiedBaselineNeverFetched24Hours"], 0)
         self.assertEqual(summary["notModifiedExtractionPending24Hours"], 0)
         self.assertEqual(summary["notModifiedRecheck24Hours"], 0)
+        self.assertEqual(summary["fetchedDetectedNeverFetched24Hours"], 0)
+        self.assertEqual(summary["fetchedBaselineNeverFetched24Hours"], 0)
+        self.assertEqual(summary["fetchedExtractionPending24Hours"], 0)
+        self.assertEqual(summary["fetchedRecheck24Hours"], 0)
 
     def test_body_fetch_selection_partitions_must_cover_new_batch(self):
         reference = datetime.now(timezone.utc)
@@ -888,6 +895,48 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["notModifiedExtractionPending24Hours"], 0)
         self.assertEqual(summary["notModifiedRecheck24Hours"], 1)
 
+    def test_body_fetch_fetched_partitions_must_match_remaining_outcomes(self):
+        reference = datetime.now(timezone.utc)
+        started = reference - timedelta(seconds=1)
+        selections = {
+            "detectedNeverFetched": 1,
+            "baselineNeverFetched": 1,
+            "extractionPending": 1,
+            "recheck": 1,
+        }
+        errors = {"detectedNeverFetched": 1}
+        not_modified = {"recheck": 1}
+        with monitor.connect(self.db_path) as db:
+            for fetched in (
+                {"baselineNeverFetched": 1},
+                {"detectedNeverFetched": 1, "extractionPending": 1},
+            ):
+                with self.assertRaisesRegex(ValueError, "invalid-body-fetch-batch"):
+                    monitor.record_body_fetch_batch(
+                        db, started.isoformat(timespec="milliseconds"),
+                        reference.isoformat(timespec="milliseconds"),
+                        1000, 4, 1, 1, (), selections, errors, not_modified, fetched,
+                    )
+            monitor.record_body_fetch_batch(
+                db, started.isoformat(timespec="milliseconds"),
+                reference.isoformat(timespec="milliseconds"),
+                1000, 4, 1, 1, (), selections, errors, not_modified, {
+                    "baselineNeverFetched": 1,
+                    "extractionPending": 1,
+                },
+            )
+            summary = monitor.body_fetch_batch_summary(
+                db, reference.isoformat(timespec="milliseconds")
+            )
+        self.assertEqual(summary["lastFetchedDetectedNeverFetched"], 0)
+        self.assertEqual(summary["lastFetchedBaselineNeverFetched"], 1)
+        self.assertEqual(summary["lastFetchedExtractionPending"], 1)
+        self.assertEqual(summary["lastFetchedRecheck"], 0)
+        self.assertEqual(summary["fetchedDetectedNeverFetched24Hours"], 0)
+        self.assertEqual(summary["fetchedBaselineNeverFetched24Hours"], 1)
+        self.assertEqual(summary["fetchedExtractionPending24Hours"], 1)
+        self.assertEqual(summary["fetchedRecheck24Hours"], 0)
+
     def test_liveness_does_not_wait_for_first_official_source_cycle(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         server = service.ThreadingHTTPServer(("127.0.0.1", 0), service.Handler)
@@ -956,6 +1005,10 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(durable["notModifiedBaselineNeverFetched24Hours"], 0)
         self.assertEqual(durable["notModifiedExtractionPending24Hours"], 0)
         self.assertEqual(durable["notModifiedRecheck24Hours"], 0)
+        self.assertEqual(durable["fetchedDetectedNeverFetched24Hours"], 1)
+        self.assertEqual(durable["fetchedBaselineNeverFetched24Hours"], 0)
+        self.assertEqual(durable["fetchedExtractionPending24Hours"], 0)
+        self.assertEqual(durable["fetchedRecheck24Hours"], 0)
         self.assertIsInstance(durable["detectionLatencyAverageMs24Hours"], int)
         self.assertIsInstance(durable["detectionLatencyMaxMs24Hours"], int)
         self.assertNotIn("https://", json.dumps(durable))
