@@ -1189,6 +1189,53 @@ class SignalTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'signal-article-reference-timezone'):
             article_retry_due('', '2026-09-25T10:00:00')
 
+    def test_corrupt_article_children_recover_as_baseline_without_unsafe_requests(self):
+        from html_signals import collect
+
+        source = next(s for s in signals.SOURCES if s['id'] == 'anthropic-news')
+        article_url = source['url'] + '/test'
+        calls = []
+
+        def request(route, validators):
+            calls.append(route['url'])
+            if route['url'] == source['url']:
+                return {'body': b'<a href="/news/test">Story</a>'}
+            return {'body': ('<main><h1>Infrastructure</h1><p>'
+                             + 'Nebius infrastructure update. ' * 10
+                             + '</p></main>').encode()}
+
+        result = collect(source, {'index_state': json.dumps({
+            'initialized': True,
+            'children': {
+                article_url: 'corrupt-child',
+                'https://private.invalid/news/hidden': {'baseline': False},
+            },
+        })}, self.tickers, request, lambda: '2026-09-25T10:00:00+00:00')
+
+        self.assertEqual(calls, [source['url'], article_url])
+        self.assertEqual(len(result['_items']), 1)
+        self.assertTrue(result['_items'][0]['baseline'])
+        state = json.loads(result['index_state'])
+        self.assertEqual(list(state['children']), [article_url])
+        self.assertTrue(state['children'][article_url]['baseline'])
+
+    def test_queue_ignores_corrupt_or_unapproved_article_children(self):
+        source = next(s for s in signals.SOURCES if s['id'] == 'anthropic-news')
+        signals.schema(self.db)
+        with self.db:
+            self.db.execute("INSERT INTO signal_index_state VALUES(?,?)", (
+                source['id'], json.dumps({'children': {
+                    source['url'] + '/test': 'corrupt-child',
+                    'https://private.invalid/news/hidden': {
+                        'baseline': False, 'error': 'private-detail',
+                    },
+                }}),
+            ))
+
+        route = signals.queue(self.db, sources=[source])['routes'][0]
+        self.assertEqual(route['pendingArticles'], 0)
+        self.assertEqual(route['articleErrors'], [])
+
     def test_due_failed_baseline_retries_without_starving_history(self):
         from html_signals import collect
         source = next(s for s in signals.SOURCES if s['id'] == 'anthropic-news')

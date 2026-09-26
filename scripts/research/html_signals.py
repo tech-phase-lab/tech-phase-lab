@@ -207,19 +207,56 @@ def collect(source, previous, tickers, request, clock=None):
     if len(urls) > capacity:
         raise ValueError('signal-index-article-limit')
 
-    state = json.loads(previous.get('index_state') or '{}')
-    children = state.get('children', {})
+    serialized_state = previous.get('index_state') or '{}'
+    state_corrupt = not isinstance(serialized_state, str) or len(serialized_state) > 2_000_000
+    try:
+        state = json.loads(serialized_state) if not state_corrupt else {}
+    except (TypeError, ValueError):
+        state, state_corrupt = {}, True
+    if not isinstance(state, dict):
+        state, state_corrupt = {}, True
+    raw_children = state.get('children', {})
+    children = {}
+    invalid_children = set()
+    if isinstance(raw_children, dict):
+        for raw_url, raw_entry in list(raw_children.items())[:capacity]:
+            if not isinstance(raw_url, str) or not isinstance(raw_entry, dict):
+                if isinstance(raw_url, str):
+                    invalid_children.add(raw_url)
+                continue
+            try:
+                url = signals.safe_url(raw_url, source)
+            except ValueError:
+                continue
+            entry = dict(raw_entry)
+            if not isinstance(entry.get('baseline'), bool):
+                entry['baseline'] = True
+            if not isinstance(entry.get('checked', ''), str):
+                entry.pop('checked', None)
+            if not isinstance(entry.get('succeeded', ''), str):
+                entry.pop('succeeded', None)
+            if not isinstance(entry.get('error'), (str, type(None))):
+                entry.pop('error', None)
+            failures = entry.get('failures', 0)
+            if (not isinstance(failures, int) or isinstance(failures, bool)
+                    or not 0 <= failures <= 10):
+                entry['failures'] = 0
+            children[url] = entry
+    else:
+        state_corrupt = True
     recoveries = state.get('recoveries', [])
     if not isinstance(recoveries, list):
         recoveries = []
-    initial = not state.get('initialized')
+    initial = state.get('initialized') is not True
     # The caller supplies its clock so alternate module loaders and tests use
     # the same timestamp as route persistence. Direct callers retain the
     # production clock as a safe default.
     checked = (clock or signals.stamp)()
     # Retain a bounded set of recently discovered articles even after index rotation.
     for url in urls:
-        children.setdefault(url, {'baseline': initial})
+        children.setdefault(url, {
+            'baseline': initial or state_corrupt or url in invalid_children,
+        })
     keep = list(dict.fromkeys(urls + list(children)))[:capacity]
     children = {url: children[url] for url in keep}
     pending = [url for url in keep
@@ -305,7 +342,8 @@ def collect(source, previous, tickers, request, clock=None):
             if not previous_error or not isinstance(first_failed_at, str):
                 first_failed_at = checked
             failed_attempts = entry.get('failure_attempts', 0)
-            if not isinstance(failed_attempts, int) or failed_attempts < 0:
+            if (not isinstance(failed_attempts, int) or isinstance(failed_attempts, bool)
+                    or failed_attempts < 0):
                 failed_attempts = 0
             entry.update(error=error, failures=failures,
                          first_failed_at=first_failed_at,

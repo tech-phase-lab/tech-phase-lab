@@ -161,6 +161,10 @@ seven-day ceiling. A missing, malformed, timezone-free or more-than-seven-day
 future value is treated as due so corrupt persisted state cannot strand an
 official route or discovered child article indefinitely; the resulting single
 normal request writes a fresh bounded schedule.
+Malformed, oversized or non-object child state and unapproved child URLs are
+discarded before either retrieval or private queue rendering. A currently
+listed article whose saved child record is unusable is conservatively restored
+as historical baseline evidence, never as a new-story alert.
 The same aggregate separates retries that are due, deferred or missing a valid
 schedule, both overall and by fixed error category, and exposes only the
 earliest bounded retry time for each aggregate. This keeps a long access-control

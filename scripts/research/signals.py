@@ -717,7 +717,24 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
     for source in sources:
         row = db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
         state_row = db.execute("SELECT body FROM signal_index_state WHERE source_id=?", (source["id"],)).fetchone()
-        children = json.loads(state_row["body"]).get("children", {}) if state_row else {}
+        children = {}
+        if state_row and len(state_row["body"]) <= 2_000_000:
+            try:
+                state = json.loads(state_row["body"])
+                raw_children = state.get("children", {}) if isinstance(state, dict) else {}
+            except (TypeError, ValueError):
+                raw_children = {}
+            if isinstance(raw_children, dict):
+                for index, (url, child) in enumerate(raw_children.items()):
+                    if index >= 1000:
+                        break
+                    if not isinstance(url, str) or not isinstance(child, dict):
+                        continue
+                    try:
+                        url = safe_url(url, source)
+                    except ValueError:
+                        continue
+                    children[url] = child
         article_errors = []
         for url, child in children.items():
             if not child.get("error"):
