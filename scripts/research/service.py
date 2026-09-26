@@ -1159,27 +1159,36 @@ class AutomaticMonitor:
             return
         def collect_body(row):
             attempted_at = utc_now()
+            request_started = time.monotonic()
             try:
-                return attempted_at, monitor.collect_source(row, monitor.fetch), None
+                result = monitor.collect_source(row, monitor.fetch)
+                error = None
             except Exception as exc:
-                return attempted_at, None, exc
+                result = None
+                error = exc
+            request_duration_ms = max(
+                0, round((time.monotonic() - request_started) * 1000)
+            )
+            return attempted_at, request_duration_ms, result, error
 
         futures = {pool.submit(collect_body, row): row for row in rows}
         completed = []
         for future in as_completed(futures):
             row = futures[future]
-            attempted_at, result, error = future.result()
-            completed.append((row, attempted_at, result, error))
+            attempted_at, request_duration_ms, result, error = future.result()
+            completed.append((row, attempted_at, request_duration_ms, result, error))
         errors = 0
         not_modified = 0
         completed_at = None
         duration_ms = None
         detection_latencies_ms = []
         eligibility_waits_ms = []
+        request_durations_ms = []
         saved_outcomes = {}
         with self.db_lock, monitor.connect(self.db_path) as db:
-            affected_tickers = {row["ticker"] for row, _, _, _ in completed}
-            for row, attempted_at, result, error in completed:
+            affected_tickers = {row["ticker"] for row, _, _, _, _ in completed}
+            for row, attempted_at, request_duration_ms, result, error in completed:
+                request_durations_ms.append(request_duration_ms)
                 if error is None:
                     saved_outcomes[row["url"]] = monitor.save_source_check(
                         db, row, result
@@ -1230,7 +1239,7 @@ class AutomaticMonitor:
             selection_not_modified = dict.fromkeys(selection_partitions, 0)
             selection_fetched = dict.fromkeys(selection_partitions, 0)
             selection_updated = dict.fromkeys(selection_partitions, 0)
-            for row, attempted_at, result, error in completed:
+            for row, attempted_at, request_duration_ms, result, error in completed:
                 eligibility_wait = timestamp_latency_ms(
                     row["next_fetch_at"], attempted_at
                 )
@@ -1266,6 +1275,7 @@ class AutomaticMonitor:
                 selection_partitions, selection_errors, selection_not_modified,
                 selection_fetched, selection_updated,
                 eligibility_waits_ms=eligibility_waits_ms,
+                request_durations_ms=request_durations_ms,
             )
             monitor.write_snapshot(db, self.snapshot_path)
         with self.state_lock:

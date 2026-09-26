@@ -766,6 +766,8 @@ class ResearchServiceTests(unittest.TestCase):
                 "detection_latency_samples", "detection_latency_total_ms",
                 "detection_latency_max_ms", "eligibility_wait_samples",
                 "eligibility_wait_total_ms", "eligibility_wait_max_ms",
+                "request_duration_samples", "request_duration_total_ms",
+                "request_duration_max_ms",
                 "selected_detected_never_fetched",
                 "selected_baseline_never_fetched", "selected_extraction_pending",
                 "selected_recheck", "error_detected_never_fetched",
@@ -790,6 +792,9 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["eligibilityWaitSamples24Hours"], 0)
         self.assertIsNone(summary["eligibilityWaitAverageMs24Hours"])
         self.assertIsNone(summary["eligibilityWaitMaxMs24Hours"])
+        self.assertEqual(summary["requestDurationSamples24Hours"], 0)
+        self.assertIsNone(summary["requestDurationAverageMs24Hours"])
+        self.assertIsNone(summary["requestDurationMaxMs24Hours"])
         self.assertEqual(summary["selectedDetectedNeverFetched24Hours"], 0)
         self.assertEqual(summary["selectedBaselineNeverFetched24Hours"], 0)
         self.assertEqual(summary["selectedExtractionPending24Hours"], 0)
@@ -845,6 +850,42 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["eligibilityWaitSamples24Hours"], 1)
         self.assertEqual(summary["eligibilityWaitAverageMs24Hours"], 3250)
         self.assertEqual(summary["eligibilityWaitMaxMs24Hours"], 3250)
+        self.assertNotIn("https://", json.dumps(summary))
+
+    def test_body_fetch_request_duration_is_bounded_and_persisted(self):
+        reference = datetime.now(timezone.utc)
+        started = reference - timedelta(seconds=1)
+        selection = {
+            "detectedNeverFetched": 0,
+            "baselineNeverFetched": 0,
+            "extractionPending": 0,
+            "recheck": 1,
+        }
+        with monitor.connect(self.db_path) as db:
+            with self.assertRaisesRegex(ValueError, "invalid-body-fetch-batch"):
+                monitor.record_body_fetch_batch(
+                    db, started.isoformat(timespec="milliseconds"),
+                    reference.isoformat(timespec="milliseconds"),
+                    1000, 1, 0, 1, (), selection,
+                    selection_not_modified={"recheck": 1},
+                    request_durations_ms=(3_600_001,),
+                )
+            monitor.record_body_fetch_batch(
+                db, started.isoformat(timespec="milliseconds"),
+                reference.isoformat(timespec="milliseconds"),
+                1000, 1, 0, 1, (), selection,
+                selection_not_modified={"recheck": 1},
+                request_durations_ms=(650,),
+            )
+            summary = monitor.body_fetch_batch_summary(
+                db, reference.isoformat(timespec="milliseconds")
+            )
+        self.assertEqual(summary["lastRequestDurationSamples"], 1)
+        self.assertEqual(summary["lastRequestDurationAverageMs"], 650)
+        self.assertEqual(summary["lastRequestDurationMaxMs"], 650)
+        self.assertEqual(summary["requestDurationSamples24Hours"], 1)
+        self.assertEqual(summary["requestDurationAverageMs24Hours"], 650)
+        self.assertEqual(summary["requestDurationMaxMs24Hours"], 650)
         self.assertNotIn("https://", json.dumps(summary))
 
     def test_legacy_body_host_probe_table_migrates_without_guessing_due_time(self):
@@ -1148,6 +1189,9 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertIsInstance(durable["eligibilityWaitAverageMs24Hours"], int)
         self.assertIsInstance(durable["eligibilityWaitMaxMs24Hours"], int)
         self.assertGreaterEqual(durable["eligibilityWaitAverageMs24Hours"], 3000)
+        self.assertEqual(durable["requestDurationSamples24Hours"], 1)
+        self.assertIsInstance(durable["requestDurationAverageMs24Hours"], int)
+        self.assertIsInstance(durable["requestDurationMaxMs24Hours"], int)
         self.assertEqual(durable["selectedDetectedNeverFetched24Hours"], 1)
         self.assertEqual(durable["selectedBaselineNeverFetched24Hours"], 0)
         self.assertEqual(durable["selectedExtractionPending24Hours"], 0)

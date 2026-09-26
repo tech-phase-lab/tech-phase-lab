@@ -242,6 +242,14 @@ average and maximum wait; legacy batches remain zero-sample instead of receiving
 inferred timestamps. Invalid, future or over-31-day waits are discarded. This
 is internal worker-scheduling evidence, not article-detection or subscriber-
 delivery latency, and it contains no URL, hostname or error detail.
+Each completed article-body attempt also records its bounded processing time
+from worker start through response handling and text extraction. The preview
+exposes only latest and 24-hour sample counts, average and maximum duration;
+legacy batches remain zero-sample and invalid or over-one-hour values are
+discarded. This isolates fetch/extraction work from the eligibility wait and
+from the detection-to-first-body metric. It is internal processing evidence,
+not a polling interval or subscriber-delivery guarantee, and contains no URL,
+hostname, body text, HTTP detail or exception.
 After a restricted recovery probe reopens the circuit, subsequent worker cycles
 perform no request to that hostname until the new retry deadline; those idle
 cycles also do not increment the recovery-probe counters.

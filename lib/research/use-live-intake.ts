@@ -105,6 +105,9 @@ export type MonitorState = {
       lastEligibilityWaitSamples: number;
       lastEligibilityWaitAverageMs: number | null;
       lastEligibilityWaitMaxMs: number | null;
+      lastRequestDurationSamples: number;
+      lastRequestDurationAverageMs: number | null;
+      lastRequestDurationMaxMs: number | null;
       lastSelectedDetectedNeverFetched: number;
       lastSelectedBaselineNeverFetched: number;
       lastSelectedExtractionPending: number;
@@ -133,6 +136,9 @@ export type MonitorState = {
       eligibilityWaitSamples24Hours: number;
       eligibilityWaitAverageMs24Hours: number | null;
       eligibilityWaitMaxMs24Hours: number | null;
+      requestDurationSamples24Hours: number;
+      requestDurationAverageMs24Hours: number | null;
+      requestDurationMaxMs24Hours: number | null;
       selectedDetectedNeverFetched24Hours: number;
       selectedBaselineNeverFetched24Hours: number;
       selectedExtractionPending24Hours: number;

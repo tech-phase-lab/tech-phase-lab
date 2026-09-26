@@ -1087,6 +1087,9 @@ def connect(path):
       eligibility_wait_samples INTEGER NOT NULL DEFAULT 0,
       eligibility_wait_total_ms INTEGER NOT NULL DEFAULT 0,
       eligibility_wait_max_ms INTEGER,
+      request_duration_samples INTEGER NOT NULL DEFAULT 0,
+      request_duration_total_ms INTEGER NOT NULL DEFAULT 0,
+      request_duration_max_ms INTEGER,
       selected_detected_never_fetched INTEGER NOT NULL DEFAULT 0,
       selected_baseline_never_fetched INTEGER NOT NULL DEFAULT 0,
       selected_extraction_pending INTEGER NOT NULL DEFAULT 0,
@@ -1235,6 +1238,9 @@ def connect(path):
         "eligibility_wait_samples": "INTEGER NOT NULL DEFAULT 0",
         "eligibility_wait_total_ms": "INTEGER NOT NULL DEFAULT 0",
         "eligibility_wait_max_ms": "INTEGER",
+        "request_duration_samples": "INTEGER NOT NULL DEFAULT 0",
+        "request_duration_total_ms": "INTEGER NOT NULL DEFAULT 0",
+        "request_duration_max_ms": "INTEGER",
         "selected_detected_never_fetched": "INTEGER NOT NULL DEFAULT 0",
         "selected_baseline_never_fetched": "INTEGER NOT NULL DEFAULT 0",
         "selected_extraction_pending": "INTEGER NOT NULL DEFAULT 0",
@@ -1608,7 +1614,7 @@ def record_body_fetch_batch(
     db, polled_at, completed_at, duration_ms, checks, errors, not_modified,
     detection_latencies_ms=(), selection_partitions=None, selection_errors=None,
     selection_not_modified=None, selection_fetched=None, selection_updated=None,
-    eligibility_waits_ms=(),
+    eligibility_waits_ms=(), request_durations_ms=(),
 ):
     """Persist bounded URL-free body-fetch evidence across service restarts."""
     try:
@@ -1618,6 +1624,7 @@ def record_body_fetch_batch(
         errors, not_modified = int(errors), int(not_modified)
         latencies = tuple(int(value) for value in detection_latencies_ms)
         eligibility_waits = tuple(int(value) for value in eligibility_waits_ms)
+        request_durations = tuple(int(value) for value in request_durations_ms)
         partitions = selection_partitions or {}
         selected_detected = int(partitions.get("detectedNeverFetched", 0))
         selected_baseline = int(partitions.get("baselineNeverFetched", 0))
@@ -1658,8 +1665,10 @@ def record_body_fetch_batch(
         or not 0 <= errors <= checks or not 0 <= not_modified <= checks
         or len(latencies) > checks
         or len(eligibility_waits) > checks
+        or len(request_durations) > checks
         or any(value < 0 or value > maximum_latency_ms for value in latencies)
         or any(value < 0 or value > maximum_latency_ms for value in eligibility_waits)
+        or any(value < 0 or value > 3_600_000 for value in request_durations)
         or any(value < 0 or value > checks for value in (
             selected_detected, selected_baseline, selected_extraction, selected_recheck,
         ))
@@ -1705,12 +1714,15 @@ def record_body_fetch_batch(
     latency_max = max(latencies) if latencies else None
     eligibility_wait_total = sum(eligibility_waits)
     eligibility_wait_max = max(eligibility_waits) if eligibility_waits else None
+    request_duration_total = sum(request_durations)
+    request_duration_max = max(request_durations) if request_durations else None
     with db:
         db.execute("""
           INSERT INTO body_fetch_batches(
             polled_at,completed_at,duration_ms,checks,errors,not_modified,
             detection_latency_samples,detection_latency_total_ms,detection_latency_max_ms,
             eligibility_wait_samples,eligibility_wait_total_ms,eligibility_wait_max_ms,
+            request_duration_samples,request_duration_total_ms,request_duration_max_ms,
             selected_detected_never_fetched,selected_baseline_never_fetched,
             selected_extraction_pending,selected_recheck,
             error_detected_never_fetched,error_baseline_never_fetched,
@@ -1722,11 +1734,12 @@ def record_body_fetch_batch(
             fetched_extraction_pending,fetched_recheck,
             updated_detected_never_fetched,updated_baseline_never_fetched,
             updated_extraction_pending,updated_recheck
-          ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+          ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         """, (
             polled_at, completed_at, duration_ms, checks, errors, not_modified,
             len(latencies), latency_total, latency_max,
             len(eligibility_waits), eligibility_wait_total, eligibility_wait_max,
+            len(request_durations), request_duration_total, request_duration_max,
             selected_detected,
             selected_baseline, selected_extraction, selected_recheck,
             error_detected, error_baseline, error_extraction, error_recheck,
@@ -1915,6 +1928,19 @@ BODY_FETCH_METRIC_WHERE = """
       AND eligibility_wait_max_ms <= eligibility_wait_total_ms
       AND eligibility_wait_total_ms <= eligibility_wait_samples * 2678400000)
   )
+  AND typeof(request_duration_samples)='integer'
+  AND request_duration_samples BETWEEN 0 AND checks
+  AND typeof(request_duration_total_ms)='integer'
+  AND request_duration_total_ms >= 0
+  AND (
+    (request_duration_samples=0 AND request_duration_total_ms=0
+      AND request_duration_max_ms IS NULL)
+    OR
+    (request_duration_samples>0 AND typeof(request_duration_max_ms)='integer'
+      AND request_duration_max_ms BETWEEN 0 AND 3600000
+      AND request_duration_max_ms <= request_duration_total_ms
+      AND request_duration_total_ms <= request_duration_samples * 3600000)
+  )
   AND typeof(selected_detected_never_fetched)='integer'
   AND selected_detected_never_fetched BETWEEN 0 AND checks
   AND typeof(selected_baseline_never_fetched)='integer'
@@ -2031,6 +2057,8 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
              detection_latency_samples,detection_latency_total_ms,
              detection_latency_max_ms,eligibility_wait_samples,
              eligibility_wait_total_ms,eligibility_wait_max_ms,
+             request_duration_samples,request_duration_total_ms,
+             request_duration_max_ms,
              selected_detected_never_fetched,
              selected_baseline_never_fetched,selected_extraction_pending,
              selected_recheck,error_detected_never_fetched,
@@ -2070,6 +2098,9 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
              COALESCE(sum(eligibility_wait_samples),0) AS eligibility_wait_samples,
              COALESCE(sum(eligibility_wait_total_ms),0) AS eligibility_wait_total,
              max(eligibility_wait_max_ms) AS eligibility_wait_max,
+             COALESCE(sum(request_duration_samples),0) AS request_duration_samples,
+             COALESCE(sum(request_duration_total_ms),0) AS request_duration_total,
+             max(request_duration_max_ms) AS request_duration_max,
              COALESCE(sum(selected_detected_never_fetched),0) AS selected_detected,
              COALESCE(sum(selected_baseline_never_fetched),0) AS selected_baseline,
              COALESCE(sum(selected_extraction_pending),0) AS selected_extraction,
@@ -2131,6 +2162,12 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
             if latest and latest["eligibility_wait_samples"] else None
         ),
         "lastEligibilityWaitMaxMs": latest["eligibility_wait_max_ms"] if latest else None,
+        "lastRequestDurationSamples": latest["request_duration_samples"] if latest else 0,
+        "lastRequestDurationAverageMs": (
+            round(latest["request_duration_total_ms"] / latest["request_duration_samples"])
+            if latest and latest["request_duration_samples"] else None
+        ),
+        "lastRequestDurationMaxMs": latest["request_duration_max_ms"] if latest else None,
         "lastSelectedDetectedNeverFetched": (
             latest["selected_detected_never_fetched"] if latest else 0
         ),
@@ -2196,6 +2233,12 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
             if totals["eligibility_wait_samples"] else None
         ),
         "eligibilityWaitMaxMs24Hours": totals["eligibility_wait_max"],
+        "requestDurationSamples24Hours": totals["request_duration_samples"],
+        "requestDurationAverageMs24Hours": (
+            round(totals["request_duration_total"] / totals["request_duration_samples"])
+            if totals["request_duration_samples"] else None
+        ),
+        "requestDurationMaxMs24Hours": totals["request_duration_max"],
         "selectedDetectedNeverFetched24Hours": totals["selected_detected"],
         "selectedBaselineNeverFetched24Hours": totals["selected_baseline"],
         "selectedExtractionPending24Hours": totals["selected_extraction"],
