@@ -113,12 +113,13 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   assert.equal(new Set(coverage.map((company) => company.ticker)).size, 40);
   const byTicker = Object.fromEntries(coverage.map((company) => [company.ticker, company]));
   const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
-  assert.ok(coverage.every((company) => /^2026-09-2[3456]$/.test(company.lastAttemptedOn)));
+  assert.ok(coverage.every((company) => /^2026-09-2[3-7]$/.test(company.lastAttemptedOn)));
   for (const ticker of ["ADBE", "AMAT", "AMD", "ASML", "CRWD", "DELL", "GEV", "INTC", "LRCX", "META"]) assert.equal(checked[ticker], "2026-09-25");
   for (const ticker of ["MSFT", "QCOM"]) assert.equal(checked[ticker], "2026-09-23");
   for (const ticker of ["MU", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-09-25");
   for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "COHR", "CRDO", "CRM", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(checked[ticker], null);
-  for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "COHR", "CRDO", "CRM", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(byTicker[ticker].lastAttemptedOn, "2026-09-26");
+  for (const ticker of ["COHR", "CRDO", "CRM", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NBIS", "NOW"]) assert.equal(byTicker[ticker].lastAttemptedOn, "2026-09-27");
+  for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(byTicker[ticker].lastAttemptedOn, "2026-09-26");
   assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 17);
   assert.equal(coverage.filter((company) => company.lastCheckedOn === null).length, 23);
   for (const ticker of ["MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) {

@@ -73,21 +73,21 @@
     "ticker": "COHR",
     "name": "Coherent",
     "sourceUrl": "https://ir.coherent.com/news-events/financial-releases",
-    "lastAttemptedOn": "2026-09-26",
+    "lastAttemptedOn": "2026-09-27",
     "lastCheckedOn": null
   },
   {
     "ticker": "CRDO",
     "name": "Credo",
     "sourceUrl": "https://investors.credosemi.com/news-events/events/default.aspx",
-    "lastAttemptedOn": "2026-09-26",
+    "lastAttemptedOn": "2026-09-27",
     "lastCheckedOn": null
   },
   {
     "ticker": "CRM",
     "name": "Salesforce",
     "sourceUrl": "https://investor.salesforce.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-26",
+    "lastAttemptedOn": "2026-09-27",
     "lastCheckedOn": null
   },
   {
@@ -101,7 +101,7 @@
     "ticker": "CRWV",
     "name": "CoreWeave",
     "sourceUrl": "https://investors.coreweave.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-26",
+    "lastAttemptedOn": "2026-09-27",
     "lastCheckedOn": null
   },
   {
@@ -122,7 +122,7 @@
     "ticker": "GOOGL",
     "name": "Alphabet / Google",
     "sourceUrl": "https://abc.xyz/investor/events/default.aspx",
-    "lastAttemptedOn": "2026-09-26",
+    "lastAttemptedOn": "2026-09-27",
     "lastCheckedOn": null
   },
   {
@@ -136,14 +136,14 @@
     "ticker": "KLAC",
     "name": "KLA",
     "sourceUrl": "https://ir.kla.com/events-presentations/",
-    "lastAttemptedOn": "2026-09-26",
+    "lastAttemptedOn": "2026-09-27",
     "lastCheckedOn": null
   },
   {
     "ticker": "LITE",
     "name": "Lumentum",
     "sourceUrl": "https://investor.lumentum.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-26",
+    "lastAttemptedOn": "2026-09-27",
     "lastCheckedOn": null
   },
   {
@@ -164,7 +164,7 @@
     "ticker": "MRVL",
     "name": "Marvell",
     "sourceUrl": "https://investor.marvell.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-26",
+    "lastAttemptedOn": "2026-09-27",
     "lastCheckedOn": null
   },
   {
@@ -185,7 +185,7 @@
     "ticker": "NBIS",
     "name": "Nebius",
     "sourceUrl": "https://nebius.com/investor-hub",
-    "lastAttemptedOn": "2026-09-26",
+    "lastAttemptedOn": "2026-09-27",
     "lastCheckedOn": null
   },
   {
@@ -199,7 +199,7 @@
     "ticker": "NOW",
     "name": "ServiceNow",
     "sourceUrl": "https://investor.servicenow.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-26",
+    "lastAttemptedOn": "2026-09-27",
     "lastCheckedOn": null
   },
   {
