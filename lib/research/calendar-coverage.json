@@ -45,7 +45,7 @@
     "ticker": "ARM",
     "name": "Arm",
     "sourceUrl": "https://investors.arm.com/",
-    "lastAttemptedOn": "2026-09-26",
+    "lastAttemptedOn": "2026-09-27",
     "lastCheckedOn": null
   },
   {
@@ -59,14 +59,14 @@
     "ticker": "AVGO",
     "name": "Broadcom",
     "sourceUrl": "https://investors.broadcom.com/financial-information/financial-news-releases",
-    "lastAttemptedOn": "2026-09-26",
+    "lastAttemptedOn": "2026-09-27",
     "lastCheckedOn": null
   },
   {
     "ticker": "BE",
     "name": "Bloom Energy",
     "sourceUrl": "https://investor.bloomenergy.com/events-and-presentations/events-calendar/",
-    "lastAttemptedOn": "2026-09-26",
+    "lastAttemptedOn": "2026-09-27",
     "lastCheckedOn": null
   },
   {
