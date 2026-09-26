@@ -2064,6 +2064,14 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
       WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
         AND {BODY_FETCH_METRIC_WHERE}
     """, (window_start, parsed.astimezone(timezone.utc).isoformat(timespec="milliseconds"))).fetchone()
+    outcome_unmeasured = {
+        partition: max(0, int(totals[f"selected_{partition}"] or 0) - sum((
+            int(totals[f"error_{partition}"] or 0),
+            int(totals[f"not_modified_{partition}"] or 0),
+            int(totals[f"fetched_{partition}"] or 0),
+        )))
+        for partition in ("detected", "baseline", "extraction", "recheck")
+    }
     return {
         "lastPolledAt": last_polled_at,
         "lastPollAgeSeconds": last_poll_age_seconds,
@@ -2159,6 +2167,16 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
         "fetchedBaselineNeverFetched24Hours": totals["fetched_baseline"],
         "fetchedExtractionPending24Hours": totals["fetched_extraction"],
         "fetchedRecheck24Hours": totals["fetched_recheck"],
+        "outcomeUnmeasuredDetectedNeverFetched24Hours": (
+            outcome_unmeasured["detected"]
+        ),
+        "outcomeUnmeasuredBaselineNeverFetched24Hours": (
+            outcome_unmeasured["baseline"]
+        ),
+        "outcomeUnmeasuredExtractionPending24Hours": (
+            outcome_unmeasured["extraction"]
+        ),
+        "outcomeUnmeasuredRecheck24Hours": outcome_unmeasured["recheck"],
         "updatedDetectedNeverFetched24Hours": totals["updated_detected"],
         "updatedBaselineNeverFetched24Hours": totals["updated_baseline"],
         "updatedExtractionPending24Hours": totals["updated_extraction"],

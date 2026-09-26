@@ -971,6 +971,40 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["fetchedBaselineNeverFetched24Hours"], 1)
         self.assertEqual(summary["fetchedExtractionPending24Hours"], 1)
         self.assertEqual(summary["fetchedRecheck24Hours"], 0)
+        self.assertEqual(
+            summary["outcomeUnmeasuredDetectedNeverFetched24Hours"], 0
+        )
+        self.assertEqual(
+            summary["outcomeUnmeasuredBaselineNeverFetched24Hours"], 0
+        )
+        self.assertEqual(
+            summary["outcomeUnmeasuredExtractionPending24Hours"], 0
+        )
+        self.assertEqual(summary["outcomeUnmeasuredRecheck24Hours"], 0)
+
+    def test_body_fetch_summary_marks_partially_migrated_outcomes_unmeasured(self):
+        reference = datetime.now(timezone.utc)
+        started = reference - timedelta(seconds=1)
+        with monitor.connect(self.db_path) as db:
+            monitor.record_body_fetch_batch(
+                db, started.isoformat(timespec="milliseconds"),
+                reference.isoformat(timespec="milliseconds"),
+                1000, 2, 0, 1, (), {"recheck": 2}, {}, {"recheck": 1},
+                {"recheck": 1},
+            )
+            db.execute("""
+              UPDATE body_fetch_batches
+              SET not_modified_recheck=0,fetched_recheck=0
+              WHERE id=(SELECT max(id) FROM body_fetch_batches)
+            """)
+            db.commit()
+            summary = monitor.body_fetch_batch_summary(
+                db, reference.isoformat(timespec="milliseconds")
+            )
+        self.assertEqual(summary["selectedRecheck24Hours"], 2)
+        self.assertEqual(summary["notModifiedRecheck24Hours"], 0)
+        self.assertEqual(summary["fetchedRecheck24Hours"], 0)
+        self.assertEqual(summary["outcomeUnmeasuredRecheck24Hours"], 2)
 
     def test_body_fetch_updated_partitions_must_be_successful_extractions(self):
         reference = datetime.now(timezone.utc)

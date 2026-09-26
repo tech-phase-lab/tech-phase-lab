@@ -143,6 +143,10 @@ export type MonitorState = {
       fetchedBaselineNeverFetched24Hours: number;
       fetchedExtractionPending24Hours: number;
       fetchedRecheck24Hours: number;
+      outcomeUnmeasuredDetectedNeverFetched24Hours: number;
+      outcomeUnmeasuredBaselineNeverFetched24Hours: number;
+      outcomeUnmeasuredExtractionPending24Hours: number;
+      outcomeUnmeasuredRecheck24Hours: number;
       updatedDetectedNeverFetched24Hours: number;
       updatedBaselineNeverFetched24Hours: number;
       updatedExtractionPending24Hours: number;

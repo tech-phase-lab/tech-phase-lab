@@ -219,6 +219,11 @@ and bounded 24-hour sample count, average and maximum only. Pre-migration probe
 rows remain unmeasured rather than receiving an inferred due time. This is
 internal worker scheduling evidence, not article-detection or subscriber-
 delivery latency.
+The 24-hour reservation breakdown also derives an outcome-unmeasured count for
+each queue partition. It is the bounded difference between selected work and
+the persisted extraction, failure and 304 outcomes. This makes partially
+migrated historical rows explicit instead of silently treating them as success
+or failure; newly recorded complete batches have zero unmeasured outcomes.
 The same view also reports how many expired circuits have an eligible queued
 body and how many single probes were admitted to the current batch. These are
 aggregate counts only: a due circuit with no eligible body is not presented as
