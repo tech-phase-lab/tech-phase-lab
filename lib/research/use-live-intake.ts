@@ -310,7 +310,7 @@ export function useLiveIntake(initialSnapshot: IntakeSnapshot, intervalMs = 3_00
       if (!active || document.hidden || inFlight) return;
       inFlight = true;
       try {
-        const response = await fetch("/api/research/live", { cache: "no-store" });
+        const response = await fetch("/api/research/live");
         const payload = await response.json() as { mode?: "automatic" | "snapshot"; monitor?: MonitorState; error?: LiveState["error"]; snapshot?: IntakeSnapshot };
         if (!active || !payload.snapshot || snapshotIssues(payload.snapshot).length) return;
         setState({

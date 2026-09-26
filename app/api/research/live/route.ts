@@ -6,6 +6,13 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 15;
 
 const bundled = rawSnapshot as IntakeSnapshot;
+const liveHeaders = {
+  "Cache-Control": "public, max-age=0, must-revalidate",
+  // The payload is public-safe and identical for every viewer. Keep the
+  // browser on the three-second refresh loop while collapsing concurrent
+  // viewers to one monitor request per edge region for a short interval.
+  "Vercel-CDN-Cache-Control": "public, s-maxage=2, stale-while-revalidate=3",
+};
 
 function endpoint() {
   const value = process.env.RESEARCH_MONITOR_URL;
@@ -51,7 +58,7 @@ export async function GET() {
     if (!payload.ok || payload.mode !== "automatic" || !payload.snapshot || snapshotIssues(payload.snapshot).length) {
       return fallback("monitor-unavailable");
     }
-    return Response.json(payload, { headers: { "Cache-Control": "no-store" } });
+    return Response.json(payload, { headers: liveHeaders });
   } catch {
     return fallback("monitor-unavailable");
   }

@@ -28,6 +28,13 @@ Micron's earnings call time must not be labeled as its release publication time.
 No paid data subscription, automatic ingestion, external notification, or
 membership feature is enabled by these tools.
 
+The public-safe live operations payload is identical for every viewer. Its
+successful response is shared at the Vercel edge for two seconds, with a
+three-second stale-while-revalidate window, so an open dashboard does not turn
+every viewer's three-second refresh into a separate monitor request. Browsers
+still revalidate, and fallback/error responses remain `no-store`; this is a
+load-control interval, not a subscriber-delivery guarantee.
+
 X recent-search ingestion is separately fail-closed: the explicit enable flag
 and bearer token are both required. Before each network request the monitor
 persists a URL-, query- and token-free attempt record and enforces a configurable

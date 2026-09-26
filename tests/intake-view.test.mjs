@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import { buildCoverageCompanies, coverageCompanyIssues, fetchState, filterSources, intakeCounts, pdfEvidenceCounts, pdfEvidenceState, secEvidenceCounts, secEvidenceState, snapshotIssues, coverageCounts, providers, providerByTicker } from "../lib/research/intake.ts";
 const snapshot = JSON.parse(readFileSync(new URL("../lib/research/intake-snapshot.json", import.meta.url)));
 const liveTypes = readFileSync(new URL("../lib/research/use-live-intake.ts", import.meta.url), "utf8");
+const liveRoute = readFileSync(new URL("../app/api/research/live/route.ts", import.meta.url), "utf8");
 const intakeDashboard = readFileSync(new URL("../app/research/intake/intake-dashboard.tsx", import.meta.url), "utf8");
 const source = snapshot.sources.find(s => s.sha256);
 
@@ -22,6 +23,14 @@ test("operations preview exposes verified backup health without storage details"
   assert.match(intakeDashboard, /バックアップ期限超過/);
   assert.match(intakeDashboard, /monitor-stale/);
   assert.doesNotMatch(intakeDashboard, /backup\.(sha256|filename|path|directory)/);
+});
+
+test("identical live snapshots share a bounded edge cache without caching failures", () => {
+  assert.match(liveRoute, /Vercel-CDN-Cache-Control/);
+  assert.match(liveRoute, /public, s-maxage=2, stale-while-revalidate=3/);
+  assert.match(liveRoute, /public, max-age=0, must-revalidate/);
+  assert.match(liveRoute, /fallback[\s\S]*Cache-Control[^\n]*no-store/);
+  assert.doesNotMatch(liveTypes, /fetch\("\/api\/research\/live", \{ cache: "no-store" \}\)/);
 });
 
 test("operations preview exposes bounded cache pressure without cached contents", () => {
