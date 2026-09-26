@@ -19,6 +19,7 @@ import brief_generator
 import incident_delivery
 import persistence
 import signals
+import stock_news
 
 
 # The preview deployment previously pinned the complete 22-company roster in
@@ -408,6 +409,7 @@ class AutomaticMonitor:
             target=self.run_notification_delivery, name="incident-delivery", daemon=True
         )
         self.signals_thread = threading.Thread(target=self.run_signals, name="research-signals", daemon=True)
+        self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
 
     def start(self):
         self.thread.start()
@@ -416,6 +418,7 @@ class AutomaticMonitor:
         self.incident_thread.start()
         self.notification_thread.start()
         self.signals_thread.start()
+        self.news_thread.start()
 
     def stop(self):
         self.stop_event.set()
@@ -425,6 +428,30 @@ class AutomaticMonitor:
         self.incident_thread.join(timeout=15)
         self.notification_thread.join(timeout=15)
         self.signals_thread.join(timeout=45)
+        self.news_thread.join(timeout=25)
+
+    def run_stock_news(self):
+        # No schema writes or network activity until explicitly enabled.
+        if os.environ.get("STOCK_NEWS_ENABLED", "").lower() != "true" or not os.environ.get("STOCK_NEWS_API_KEY", "").strip():
+            return
+        tickers = os.environ.get("STOCK_NEWS_TICKERS", "").split(",")
+        if tickers == [""]:
+            tickers = sorted(set(self.tickers) | signals.X_EXTRA_TICKERS)
+        while not self.stop_event.is_set():
+            try:
+                # Independent connection: no shared database lock across HTTP.
+                with stock_news.connect(self.db_path) as db:
+                    result = stock_news.poll(db, tickers)
+                with self.state_lock:
+                    self.state["stockNewsIntake"] = {**result, "checkedAt": utc_now()}
+            except Exception:
+                with self.state_lock:
+                    self.state["stockNewsIntake"] = {"status": "error", "error": "stock-news-worker-failed"}
+            self.stop_event.wait(60)
+
+    def stock_news_queue(self, limit=20):
+        with stock_news.connect(self.db_path) as db:
+            return stock_news.queue(db, limit)
 
     def signal_queue(self, limit=30, view="all", ticker=None):
         with self.db_lock, monitor.connect(self.db_path) as db:
@@ -1639,14 +1666,15 @@ class Handler(BaseHTTPRequestHandler):
             state = self.app.public_state()
             self.send_json(200 if path == "/health" or state["ready"] else 503, state)
             return
-        if path in {"/admin/briefs", "/admin/annual-briefs", "/admin/signals"}:
+        if path in {"/admin/briefs", "/admin/annual-briefs", "/admin/signals", "/admin/news"}:
             if not self.editor_authorized():
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
                 return
             try:
                 limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
                 view = parse_qs(parsed.query).get("view", ["all"])[0]
-                queue = (self.app.signal_queue(limit, view, parse_qs(parsed.query).get("ticker", [None])[0])
+                queue = (self.app.stock_news_queue(limit) if path == "/admin/news" else
+                         self.app.signal_queue(limit, view, parse_qs(parsed.query).get("ticker", [None])[0])
                          if path == "/admin/signals" else
                          self.app.annual_editorial_queue(limit, view) if path == "/admin/annual-briefs"
                          else self.app.editorial_queue(
