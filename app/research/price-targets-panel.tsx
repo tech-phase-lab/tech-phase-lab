@@ -17,7 +17,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
     let active = true;
     const read = async () => {
       try {
-        const response = await fetch("/api/research/price-targets", { cache: "no-store" });
+        const response = await fetch("/api/research/price-targets");
         if (!response.ok) throw new Error("Feed unavailable");
         const data: { ok: boolean; items: Target[] } = await response.json();
         if (!data.ok || !Array.isArray(data.items)) throw new Error("Invalid feed");
