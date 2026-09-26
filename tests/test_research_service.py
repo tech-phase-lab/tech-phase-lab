@@ -806,6 +806,34 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["updatedExtractionPending24Hours"], 0)
         self.assertEqual(summary["updatedRecheck24Hours"], 0)
 
+    def test_legacy_body_host_probe_table_migrates_without_guessing_due_time(self):
+        legacy_path = Path(self.temp.name) / "legacy-probes.sqlite"
+        with sqlite3.connect(legacy_path) as db:
+            db.execute("""
+              CREATE TABLE body_host_probe_events (
+                id INTEGER PRIMARY KEY, attempted_at TEXT NOT NULL,
+                completed_at TEXT NOT NULL, outcome TEXT NOT NULL)
+            """)
+            db.execute("""
+              INSERT INTO body_host_probe_events(attempted_at,completed_at,outcome)
+              VALUES(?,?,?)
+            """, (
+                "2026-09-23T00:00:00+00:00",
+                "2026-09-23T00:00:01+00:00", "restricted",
+            ))
+        with monitor.connect(legacy_path) as db:
+            columns = {
+                row[1] for row in db.execute("PRAGMA table_info(body_host_probe_events)")
+            }
+            summary = monitor.body_host_probe_summary(
+                db, "2026-09-23T00:01:00+00:00"
+            )
+        self.assertIn("eligible_at", columns)
+        self.assertEqual(summary["probes24Hours"], 1)
+        self.assertIsNone(summary["lastEligibleAt"])
+        self.assertIsNone(summary["lastEligibilityWaitMs"])
+        self.assertEqual(summary["eligibilityWaitSamples24Hours"], 0)
+
     def test_body_fetch_selection_partitions_must_cover_new_batch(self):
         reference = datetime.now(timezone.utc)
         started = reference - timedelta(seconds=1)
@@ -1489,6 +1517,8 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertIsNotNone(backlog["nextHostProbeAt"])
         probes = app.public_state()["bodyHostProbes"]
         self.assertEqual(probes["lastOutcome"], "restricted")
+        self.assertGreaterEqual(probes["lastEligibilityWaitMs"], 0)
+        self.assertEqual(probes["eligibilityWaitSamples24Hours"], 1)
         self.assertEqual(probes["probes24Hours"], 1)
         self.assertEqual(probes["restricted24Hours"], 1)
         self.assertNotIn("nebius.com", json.dumps(probes))
@@ -1578,6 +1608,8 @@ class ResearchServiceTests(unittest.TestCase):
 
         probes = app.public_state()["bodyHostProbes"]
         self.assertEqual(probes["lastOutcome"], "recovered")
+        self.assertGreaterEqual(probes["lastEligibilityWaitMs"], 0)
+        self.assertEqual(probes["eligibilityWaitSamples24Hours"], 1)
         self.assertEqual(probes["probes24Hours"], 1)
         self.assertEqual(probes["recovered24Hours"], 1)
         self.assertEqual(probes["restricted24Hours"], 0)
@@ -1591,7 +1623,8 @@ class ResearchServiceTests(unittest.TestCase):
         reference = "2026-09-24T12:00:00.000+00:00"
         with monitor.connect(self.db_path) as db:
             monitor.record_body_host_probe(
-                db, "2026-09-24T11:59:58.000+00:00",
+                db, "2026-09-24T11:59:50.000+00:00",
+                "2026-09-24T11:59:58.000+00:00",
                 "2026-09-24T11:59:59.000+00:00", "failed",
             )
             db.executemany("""
@@ -1604,11 +1637,16 @@ class ResearchServiceTests(unittest.TestCase):
             ))
             summary = monitor.body_host_probe_summary(db, reference)
         self.assertEqual(summary, {
+            "lastEligibleAt": "2026-09-24T11:59:50.000+00:00",
             "lastAttemptedAt": "2026-09-24T11:59:58.000+00:00",
             "lastCompletedAt": "2026-09-24T11:59:59.000+00:00",
-            "lastOutcome": "failed", "probes24Hours": 1,
+            "lastOutcome": "failed", "lastEligibilityWaitMs": 8000,
+            "probes24Hours": 1,
             "recovered24Hours": 0, "restricted24Hours": 0,
             "failed24Hours": 1,
+            "eligibilityWaitSamples24Hours": 1,
+            "eligibilityWaitAverageMs24Hours": 8000,
+            "eligibilityWaitMaxMs24Hours": 8000,
         })
 
     def test_body_candidates_ignore_corrupt_host_circuit(self):

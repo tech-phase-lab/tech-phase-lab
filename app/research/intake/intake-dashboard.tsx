@@ -161,7 +161,13 @@ function bodyHostProbeStatus(probes?: MonitorState["bodyHostProbes"]) {
   const outcome = probes.lastOutcome === "recovered"
     ? "回復"
     : probes.lastOutcome === "restricted" ? "再遮断" : "一時障害";
-  return `遮断経路の復旧確認：直近 ${outcome}・${time(probes.lastCompletedAt)} JST · 24時間 ${probes.probes24Hours}回（回復 ${probes.recovered24Hours}・再遮断 ${probes.restricted24Hours}・一時障害 ${probes.failed24Hours}）`;
+  const lastWait = probes.lastEligibilityWaitMs == null
+    ? ""
+    : `・期限到来から ${duration(probes.lastEligibilityWaitMs)}後に試行`;
+  const wait24Hours = probes.eligibilityWaitSamples24Hours > 0
+    ? ` · 期限→試行の内部待機 平均 ${duration(probes.eligibilityWaitAverageMs24Hours)}・最大 ${duration(probes.eligibilityWaitMaxMs24Hours)}（${probes.eligibilityWaitSamples24Hours}件）`
+    : " · 期限→試行の内部待機：実測待ち";
+  return `遮断経路の復旧確認：直近 ${outcome}・${time(probes.lastCompletedAt)} JST${lastWait} · 24時間 ${probes.probes24Hours}回（回復 ${probes.recovered24Hours}・再遮断 ${probes.restricted24Hours}・一時障害 ${probes.failed24Hours}）${wait24Hours}`;
 }
 function durableBodyFetchStatus(bodyFetch: MonitorState["bodyFetch"]) {
   const durable = bodyFetch?.durable;

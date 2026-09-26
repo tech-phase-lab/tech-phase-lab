@@ -213,6 +213,12 @@ Recovery-probe outcomes are persisted as URL-free aggregates. The operations
 preview shows the latest recovery, renewed restriction or transient failure and
 24-hour counts after a restart, without returning the hostname, URL, HTTP code
 or exception text.
+Each new probe also persists the circuit's validated eligibility timestamp and
+measures eligibility-to-attempt wait time. The preview exposes the latest wait
+and bounded 24-hour sample count, average and maximum only. Pre-migration probe
+rows remain unmeasured rather than receiving an inferred due time. This is
+internal worker scheduling evidence, not article-detection or subscriber-
+delivery latency.
 The same view also reports how many expired circuits have an eligible queued
 body and how many single probes were admitted to the current batch. These are
 aggregate counts only: a due circuit with no eligible body is not presented as

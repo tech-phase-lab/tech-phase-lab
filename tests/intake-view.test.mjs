@@ -76,6 +76,9 @@ test("operations preview exposes bounded cache pressure without cached contents"
   assert.match(liveTypes, /scheduledHostProbes/);
   assert.match(intakeDashboard, /復旧確認待ち/);
   assert.match(liveTypes, /bodyHostProbes\?:/);
+  assert.match(liveTypes, /lastEligibilityWaitMs/);
+  assert.match(liveTypes, /eligibilityWaitAverageMs24Hours/);
+  assert.match(intakeDashboard, /期限→試行の内部待機/);
   assert.match(intakeDashboard, /body-fetch-failed/);
   assert.match(intakeDashboard, /retrySeconds/);
   assert.match(intakeDashboard, /lastBatchDurationMs/);

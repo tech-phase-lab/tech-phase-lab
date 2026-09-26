@@ -168,10 +168,15 @@ export type MonitorState = {
     total: number; measuredAt: string | null;
   };
   bodyHostProbes?: {
+    lastEligibleAt: string | null;
     lastAttemptedAt: string | null; lastCompletedAt: string | null;
     lastOutcome: "recovered" | "restricted" | "failed" | null;
+    lastEligibilityWaitMs: number | null;
     probes24Hours: number; recovered24Hours: number;
     restricted24Hours: number; failed24Hours: number;
+    eligibilityWaitSamples24Hours: number;
+    eligibilityWaitAverageMs24Hours: number | null;
+    eligibilityWaitMaxMs24Hours: number | null;
   };
   secEvidence?: {
     total: number; exhibit: number; direct: number; pending: number; error: number;

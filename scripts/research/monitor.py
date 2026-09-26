@@ -1120,6 +1120,7 @@ def connect(path):
       ON body_host_backoff(retry_at);
     CREATE TABLE IF NOT EXISTS body_host_probe_events (
       id INTEGER PRIMARY KEY,
+      eligible_at TEXT,
       attempted_at TEXT NOT NULL,
       completed_at TEXT NOT NULL,
       outcome TEXT NOT NULL CHECK(outcome IN ('recovered','restricted','failed')));
@@ -1253,6 +1254,11 @@ def connect(path):
             db.execute(
                 f"ALTER TABLE body_fetch_batches ADD COLUMN {column} {declaration}"
             )
+    body_probe_columns = {
+        row[1] for row in db.execute("PRAGMA table_info(body_host_probe_events)")
+    }
+    if "eligible_at" not in body_probe_columns:
+        db.execute("ALTER TABLE body_host_probe_events ADD COLUMN eligible_at TEXT")
     if "title" not in {row[1] for row in db.execute("PRAGMA table_info(sources)")}:
         db.execute("ALTER TABLE sources ADD COLUMN title TEXT")
     source_columns = {row[1] for row in db.execute("PRAGMA table_info(sources)")}
@@ -1740,15 +1746,20 @@ def record_body_fetch_poll(db, polled_at, pending_count):
         """, (polled_at, pending))
 
 
-def record_body_host_probe(db, attempted_at, completed_at, outcome):
+def record_body_host_probe(db, eligible_at, attempted_at, completed_at, outcome):
     """Persist URL-free recovery-probe evidence across worker restarts."""
     try:
+        eligible = datetime.fromisoformat(str(eligible_at).replace("Z", "+00:00"))
         attempted = datetime.fromisoformat(str(attempted_at).replace("Z", "+00:00"))
         completed = datetime.fromisoformat(str(completed_at).replace("Z", "+00:00"))
     except (TypeError, ValueError) as exc:
         raise ValueError("invalid-body-host-probe") from exc
     if (
-        attempted.tzinfo is None or completed.tzinfo is None
+        eligible.tzinfo is None
+        or attempted.tzinfo is None
+        or completed.tzinfo is None
+        or attempted < eligible
+        or attempted - eligible > timedelta(days=31)
         or completed < attempted
         or completed - attempted > timedelta(hours=1)
         or outcome not in {"recovered", "restricted", "failed"}
@@ -1756,9 +1767,9 @@ def record_body_host_probe(db, attempted_at, completed_at, outcome):
         raise ValueError("invalid-body-host-probe")
     with db:
         db.execute("""
-          INSERT INTO body_host_probe_events(attempted_at,completed_at,outcome)
-          VALUES(?,?,?)
-        """, (attempted_at, completed_at, outcome))
+          INSERT INTO body_host_probe_events(eligible_at,attempted_at,completed_at,outcome)
+          VALUES(?,?,?,?)
+        """, (eligible_at, attempted_at, completed_at, outcome))
         db.execute("""
           DELETE FROM body_host_probe_events WHERE id IN (
             SELECT id FROM body_host_probe_events ORDER BY id DESC LIMIT -1 OFFSET 20000
@@ -1786,7 +1797,7 @@ def body_host_probe_summary(db, reference=None):
       AND (julianday(completed_at)-julianday(attempted_at))*86400 <= 3600.001
     """
     latest = db.execute(f"""
-      SELECT attempted_at,completed_at,outcome FROM body_host_probe_events
+      SELECT eligible_at,attempted_at,completed_at,outcome FROM body_host_probe_events
       WHERE julianday(completed_at)<=julianday(?) AND {valid}
       ORDER BY id DESC LIMIT 1
     """, (reference_text,)).fetchone()
@@ -1799,14 +1810,62 @@ def body_host_probe_summary(db, reference=None):
       WHERE julianday(completed_at)>=julianday(?)
         AND julianday(completed_at)<=julianday(?) AND {valid}
     """, (window_start, reference_text)).fetchone()
+    waits = []
+    for row in db.execute(f"""
+      SELECT eligible_at,attempted_at FROM body_host_probe_events
+      WHERE julianday(completed_at)>=julianday(?)
+        AND julianday(completed_at)<=julianday(?) AND {valid}
+        AND julianday(eligible_at) IS NOT NULL
+        AND julianday(eligible_at)<=julianday(attempted_at)
+        AND (julianday(attempted_at)-julianday(eligible_at))*86400<=2678400.001
+    """, (window_start, reference_text)).fetchall():
+        try:
+            eligible = datetime.fromisoformat(
+                str(row["eligible_at"]).replace("Z", "+00:00")
+            )
+            attempted = datetime.fromisoformat(
+                str(row["attempted_at"]).replace("Z", "+00:00")
+            )
+            if eligible.tzinfo is None or attempted.tzinfo is None:
+                continue
+            wait = round((attempted - eligible).total_seconds() * 1000)
+            if 0 <= wait <= 2_678_400_000:
+                waits.append(wait)
+        except (TypeError, ValueError, OverflowError):
+            continue
+    latest_wait = None
+    if latest and latest["eligible_at"] is not None:
+        try:
+            eligible = datetime.fromisoformat(
+                str(latest["eligible_at"]).replace("Z", "+00:00")
+            )
+            attempted = datetime.fromisoformat(
+                str(latest["attempted_at"]).replace("Z", "+00:00")
+            )
+            wait = round((attempted - eligible).total_seconds() * 1000)
+            if (
+                eligible.tzinfo is not None
+                and attempted.tzinfo is not None
+                and 0 <= wait <= 2_678_400_000
+            ):
+                latest_wait = wait
+        except (TypeError, ValueError, OverflowError):
+            pass
     return {
+        "lastEligibleAt": latest["eligible_at"] if latest_wait is not None else None,
         "lastAttemptedAt": latest["attempted_at"] if latest else None,
         "lastCompletedAt": latest["completed_at"] if latest else None,
         "lastOutcome": latest["outcome"] if latest else None,
+        "lastEligibilityWaitMs": latest_wait,
         "probes24Hours": int(totals["probes"] or 0),
         "recovered24Hours": int(totals["recovered"] or 0),
         "restricted24Hours": int(totals["restricted"] or 0),
         "failed24Hours": int(totals["failed"] or 0),
+        "eligibilityWaitSamples24Hours": len(waits),
+        "eligibilityWaitAverageMs24Hours": (
+            round(sum(waits) / len(waits)) if waits else None
+        ),
+        "eligibilityWaitMaxMs24Hours": max(waits, default=None),
     }
 
 

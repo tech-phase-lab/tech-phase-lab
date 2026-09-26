@@ -139,16 +139,16 @@ def active_body_host_backoffs(db, reference):
     return set(active)
 
 
-def due_body_host_backoffs(db, reference):
-    """Return valid expired circuit hostnames eligible for one private probe."""
+def due_body_host_backoff_state(db, reference):
+    """Return valid expired circuit hosts and their evidence-backed due times."""
     try:
         current = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
         if current.tzinfo is None:
-            return set()
+            return {}
         current = current.astimezone(timezone.utc)
     except (TypeError, ValueError):
-        return set()
-    due = set()
+        return {}
+    due = {}
     for row in db.execute("""
       SELECT host,failures,error,retry_at,updated_at
       FROM body_host_backoff WHERE retry_at<=? LIMIT 10000
@@ -172,8 +172,13 @@ def due_body_host_backoffs(db, reference):
             and updated <= retry <= current
             and retry <= updated + timedelta(days=7, minutes=5)
         ):
-            due.add(host)
+            due[host] = retry
     return due
+
+
+def due_body_host_backoffs(db, reference):
+    """Return valid expired circuit hostnames eligible for one private probe."""
+    return set(due_body_host_backoff_state(db, reference))
 
 
 def process_observation_latency_ms(value, started_at):
@@ -312,6 +317,7 @@ class AutomaticMonitor:
         self.priority_metrics_signature = None
         self.next_priority_metrics_at = 0.0
         self.body_probe_urls = set()
+        self.body_probe_eligible_at = {}
         self.stop_event = threading.Event()
         self.db_lock = threading.Lock()
         self.state_lock = threading.Lock()
@@ -948,7 +954,8 @@ class AutomaticMonitor:
             oldest_detected_wait = max(detected_waits, default=None)
             blocked_host_state, next_host_probe_at = active_body_host_backoff_state(db, due)
             blocked_hosts = set(blocked_host_state)
-            probe_hosts = due_body_host_backoffs(db, due)
+            probe_host_state = due_body_host_backoff_state(db, due)
+            probe_hosts = set(probe_host_state)
             ordered = db.execute("""
               SELECT s.url,s.sha256,e.detected_at
               FROM sources s LEFT JOIN release_events e ON e.url=s.url
@@ -1090,6 +1097,12 @@ class AutomaticMonitor:
                 if row["sha256"] is not None and int(row["extracted_chars"] or 0) > 0
             )
         self.body_probe_urls = probe_urls
+        self.body_probe_eligible_at = {
+            url: probe_host_state[monitor.source_hostname(url)].isoformat(
+                timespec="milliseconds"
+            )
+            for url in probe_urls
+        }
         with self.state_lock:
             self.state["bodyBacklog"] = {
                 "eligible": pending,
@@ -1134,6 +1147,7 @@ class AutomaticMonitor:
         polled_at = utc_now()
         rows, pending = self.body_candidates(polled_at)
         probe_urls = set(self.body_probe_urls)
+        probe_eligible_at = dict(self.body_probe_eligible_at)
         if not rows:
             with self.state_lock:
                 self.state["pendingBodies"] = pending
@@ -1181,7 +1195,8 @@ class AutomaticMonitor:
                     else:
                         probe_outcome = "failed"
                     monitor.record_body_host_probe(
-                        db, polled_at, utc_now(), probe_outcome
+                        db, probe_eligible_at.get(row["url"]), polled_at,
+                        utc_now(), probe_outcome,
                     )
             for ticker in affected_tickers:
                 remaining = db.execute("""
