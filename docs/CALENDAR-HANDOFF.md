@@ -2830,3 +2830,34 @@ press-conference clock times. No calendar event changed.
 Continue with CRDO, CRM, CRWV, GOOGL, KLAC, LITE, MRVL, NBIS, NOW and NVDA.
 Empty dynamic sections, historical-only pages and transport failures remain
 inconclusive and must not be promoted to forecast dates.
+
+## Ninety-fifth company batch reviewed on 2026-09-27
+
+The next ten oldest pending entries were rechecked against their first-party
+schedule, news or investor-relations pages. None supplied a confirmed future
+earnings date or an explicit no-events statement. Their existing same-day
+`lastAttemptedOn` values remain unchanged; every `lastCheckedOn` remains null
+and no forecast date is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| CRDO | Pending | The official page exposes empty Upcoming & Recent Events and Archived Events headings without an explicit no-events statement. |
+| CRM | Pending | The official Investor Events page exposes empty Upcoming & Recent Events and Archived Events sections without a dated future item or explicit no-events statement. |
+| CRWV | Pending | The official Events & Presentations page exposes empty Upcoming & Recent Events and Archived Events sections plus presentation headings, without a dated future earnings item or explicit no-events statement. |
+| GOOGL | Pending | The official Events page supplied only its page shell, with no inspectable dated schedule state or explicit no-events statement. |
+| KLAC | Pending | The primary Events & Presentations URL remained inaccessible; the official IR calendar alternate shows a November 4 annual meeting and the completed July 28 earnings call, but no future earnings announcement. |
+| LITE | Pending | The official page exposes empty Latest Events, Latest Presentation and archive sections without a dated future earnings item or explicit no-events statement. |
+| MRVL | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| NBIS | Pending | The official Investor Hub still lists its Goldman Sachs and Citi conference appearances as the latest events, without a future earnings announcement or explicit no-events statement. |
+| NOW | Pending | The official page exposes only archived-event and archived-presentation sections, without a dated upcoming earnings item or explicit no-events statement. |
+| NVDA | Pending | The primary Events & Presentations URL remained inaccessible; the searchable official alternate ends with the completed August 26 fiscal Q2 2027 results event, with no future earnings announcement. |
+
+The BLS October schedule was rechecked on 2026-09-27 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar, last updated September 16, still
+lists the October 27-28 and December 8-9 meetings without future statement or
+press-conference clock times. No calendar event changed.
+
+Continue with ORCL, PANW, PLTR, SKHY, SNOW, VRT, AAPL, AMZN, ANET and ARM.
+Empty dynamic sections, historical-only pages and transport failures remain
+inconclusive and must not be promoted to forecast dates.
