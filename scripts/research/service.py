@@ -1738,19 +1738,31 @@ def main():
     host = os.environ.get("HOST", "0.0.0.0")
     port = positive_int("PORT", 8080, 1)
     app = AutomaticMonitor(db_path, snapshot_path)
-    server = ThreadingHTTPServer((host, port), Handler)
+    streaming = os.environ.get("RESEARCH_STREAM_ENABLED", "true").lower() == "true"
+    server = ThreadingHTTPServer(("127.0.0.1", 0) if streaming else (host, port), Handler)
     server.app = app
 
     def shutdown(*_):
         threading.Thread(target=server.shutdown, daemon=True).start()
 
-    signal.signal(signal.SIGTERM, shutdown)
-    signal.signal(signal.SIGINT, shutdown)
+    if not streaming:
+        signal.signal(signal.SIGTERM, shutdown)
+        signal.signal(signal.SIGINT, shutdown)
     app.start()
     print(json.dumps({"event": "listening", "host": host, "port": port}), flush=True)
     try:
-        server.serve_forever(poll_interval=0.5)
+        if streaming:
+            from aiohttp import web
+            from stream_gateway import create_gateway
+            gateway, _ = create_gateway(app.public_price_targets, os.environ.get("RESEARCH_API_TOKEN", ""),
+                                       f"http://127.0.0.1:{server.server_port}")
+            threading.Thread(target=server.serve_forever, daemon=True).start()
+            web.run_app(gateway, host=host, port=port, access_log=None, shutdown_timeout=5)
+        else:
+            server.serve_forever(poll_interval=0.5)
     finally:
+        if streaming:
+            server.shutdown()
         app.stop()
         server.server_close()
 
