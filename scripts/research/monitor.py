@@ -1,0 +1,4839 @@
+"""Official-source research intake. No scheduler, summarization, or publishing side effects."""
+import argparse
+import difflib
+from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
+import hashlib
+from html.parser import HTMLParser
+from html import unescape
+import json
+import os
+from pathlib import Path
+import sqlite3
+import subprocess
+import sys
+import re
+import xml.etree.ElementTree as ET
+from urllib.parse import parse_qs, urlencode, urljoin, urlsplit, urlunsplit
+from urllib.error import HTTPError, URLError
+from urllib.request import HTTPRedirectHandler, Request, build_opener
+import threading
+
+ROOT = Path(__file__).resolve().parents[2]
+PROVIDERS = {p["ticker"]: p for p in json.loads((ROOT / "lib/research/providers.json").read_text())}
+INDEXES = {t: p.get("monitorUrl", p["indexUrl"]) for t, p in PROVIDERS.items()}
+HOSTS = {t: set(p["allowedHosts"]) for t, p in PROVIDERS.items()}
+MAX_BYTES = 12 * 1024 * 1024
+MAX_EXTRACTED_CHARS = 160_000
+MAX_JSON_LD_CHARS = 512 * 1024
+MAX_JSON_LD_BLOCKS = 20
+MAX_JSON_LD_NODES = 2_000
+MIN_JSON_LD_BODY_CHARS = 120
+MIN_INLINE_FEED_CHARS = 120
+MIN_SEC_EXHIBIT_CHARS = 120
+SUPPORTED_CONTENT_TYPES = {
+    "text/html", "application/pdf", "application/json", "application/rss+xml",
+    "application/atom+xml", "application/xml", "text/xml",
+}
+PDF_FALLBACK_CONTENT_TYPES = {"application/octet-stream", "application/x-pdf"}
+FETCH_CACHE_MAX_ENTRIES = 64
+FETCH_CACHE_MAX_BYTES = 24 * 1024 * 1024
+DISCOVERY_CACHE_MAX_BYTES = 2 * 1024 * 1024
+# Increment this whenever discovery parsing semantics change. Persisted validators
+# must not make a new deployment reuse candidates produced by an older parser.
+DISCOVERY_CACHE_PARSER_VERSION = 1
+_FETCH_CACHE = {}
+_FETCH_CACHE_LOCK = threading.Lock()
+ACCESS_RESTRICTED_ERRORS = {
+    "http-401", "http-403", "http-429", "http-451", "verification-page",
+}
+MAX_ACCESS_BACKOFF_SECONDS = 7 * 24 * 60 * 60
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat(timespec="milliseconds")
+
+
+def environment_seconds(name, default, minimum, maximum):
+    """Read a bounded interval without letting a bad deployment value stop monitoring."""
+    try:
+        value = int(os.environ.get(name, default))
+    except (TypeError, ValueError):
+        value = default
+    return max(minimum, min(value, maximum))
+
+
+def source_check_is_fresh(checked_at, reference=None):
+    """Require a recent successful source check before review or public preview."""
+    try:
+        checked = datetime.fromisoformat(str(checked_at).replace("Z", "+00:00"))
+        if checked.tzinfo is None:
+            checked = checked.replace(tzinfo=timezone.utc)
+        checked = checked.astimezone(timezone.utc)
+    except (TypeError, ValueError):
+        return False
+    current = reference or datetime.now(timezone.utc)
+    maximum_age = environment_seconds(
+        "RESEARCH_REVIEW_SOURCE_MAX_AGE_SECONDS", 8 * 60 * 60, 5 * 60, 24 * 60 * 60
+    )
+    age = (current - checked).total_seconds()
+    return -5 * 60 <= age <= maximum_age
+
+
+def successful_recheck_seconds(db, url, changed, had_previous_hash, checked_at):
+    """Keep recent releases hot while avoiding perpetual historical refetches."""
+    background = environment_seconds(
+        "RESEARCH_BODY_RECHECK_SECONDS", 6 * 60 * 60, 15 * 60, 7 * 24 * 60 * 60
+    )
+    hot = environment_seconds("RESEARCH_HOT_BODY_RECHECK_SECONDS", 15 * 60, 60, background)
+    hot_window = environment_seconds(
+        "RESEARCH_HOT_EVENT_WINDOW_SECONDS", 24 * 60 * 60, hot, 7 * 24 * 60 * 60
+    )
+    if changed and had_previous_hash:
+        return hot
+    event = db.execute("SELECT detected_at FROM release_events WHERE url=?", (url,)).fetchone()
+    if event:
+        try:
+            detected = datetime.fromisoformat(event["detected_at"].replace("Z", "+00:00"))
+            checked = datetime.fromisoformat(checked_at.replace("Z", "+00:00"))
+            if 0 <= (checked - detected).total_seconds() <= hot_window:
+                return hot
+        except (TypeError, ValueError):
+            pass
+    return background
+
+
+def safe_url(url, ticker):
+    p = urlsplit(url)
+    if (p.scheme != "https" or p.hostname not in HOSTS[ticker]
+            or p.username or p.password or p.port not in (None, 443)):
+        raise ValueError("URL outside approved official hosts")
+    return urlunsplit((p.scheme, p.netloc, p.path, p.query, ""))
+
+
+class Redirects(HTTPRedirectHandler):
+    def __init__(self, ticker):
+        self.ticker = ticker
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        safe_url(newurl, self.ticker)
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+def source_configuration(url, ticker):
+    """Return static request settings only for a configured discovery endpoint."""
+    for source in monitoring_sources(ticker):
+        if source["url"] == url:
+            return source
+    return {}
+
+
+def http_validator(value):
+    """Keep only bounded single-line HTTP validators safe to reuse as headers."""
+    if not isinstance(value, str):
+        return None
+    value = value.strip()
+    if not value or len(value) > 1024 or "\r" in value or "\n" in value:
+        return None
+    return value
+
+
+def cached_fetch(url):
+    """Return and refresh a bounded discovery-response cache entry."""
+    with _FETCH_CACHE_LOCK:
+        cached = _FETCH_CACHE.pop(url, None)
+        if cached is not None:
+            _FETCH_CACHE[url] = cached
+        return cached
+
+
+def remember_fetch(url, cached):
+    """Keep discovery bodies for 304 reuse without unbounded process memory growth."""
+    with _FETCH_CACHE_LOCK:
+        _FETCH_CACHE.pop(url, None)
+        _FETCH_CACHE[url] = cached
+        cached_bytes = sum(len(item.get("content", b"")) for item in _FETCH_CACHE.values())
+        while _FETCH_CACHE and (
+            len(_FETCH_CACHE) > FETCH_CACHE_MAX_ENTRIES
+            or cached_bytes > FETCH_CACHE_MAX_BYTES
+        ):
+            oldest_url = next(iter(_FETCH_CACHE))
+            removed = _FETCH_CACHE.pop(oldest_url)
+            cached_bytes -= len(removed.get("content", b""))
+
+
+def fetch_cache_stats():
+    """Expose only aggregate cache pressure, never cached URLs or response bodies."""
+    with _FETCH_CACHE_LOCK:
+        return {
+            "entries": len(_FETCH_CACHE),
+            "bytes": sum(len(item.get("content", b"")) for item in _FETCH_CACHE.values()),
+            "maxEntries": FETCH_CACHE_MAX_ENTRIES,
+            "maxBytes": FETCH_CACHE_MAX_BYTES,
+        }
+
+
+def source_error_code(exc):
+    """Reduce transport failures to bounded operational codes without leaking URLs."""
+    if isinstance(exc, HTTPError) and 400 <= exc.code <= 599:
+        return f"http-{exc.code}"
+    if isinstance(exc, (TimeoutError,)) or (
+        isinstance(exc, URLError) and isinstance(exc.reason, TimeoutError)
+    ):
+        return "timeout"
+    message = str(exc)
+    http_code = re.search(r"\bHTTP(?: Error)?\s+(\d{3})\b", message, re.I)
+    if http_code and 400 <= int(http_code.group(1)) <= 599:
+        return f"http-{http_code.group(1)}"
+    if isinstance(exc, ValueError):
+        lowered = message.lower()
+        if "sec exhibit evidence unavailable" in lowered and exc.__cause__ is not None:
+            # A short SEC primary document may require its same-accession index
+            # or EX-99.1. Do not hide a real transport restriction behind the
+            # semantic fallback error: preserving it lets the hostname circuit
+            # stop repeated requests without exposing the underlying URL.
+            cause_code = source_error_code(exc.__cause__)
+            if (
+                cause_code in ACCESS_RESTRICTED_ERRORS
+                or cause_code in {"timeout", "fetch-failed"}
+                or re.fullmatch(r"http-5\d\d", cause_code)
+            ):
+                return cause_code
+        for fragment, code in (
+            ("unexpected-signal-content-type", "signal-content-type"),
+            ("unapproved-signal-url", "signal-unapproved-url"),
+            ("signal-response-limit", "signal-response-limit"),
+            ("empty-signal-response", "signal-empty-response"),
+            ("unsafe-signal-xml", "signal-unsafe-xml"),
+            ("not-a-signal-feed", "signal-invalid-feed-root"),
+            ("signal-item-limit", "signal-feed-item-limit"),
+            ("signal-document-body-limit", "signal-document-body-invalid"),
+            ("signal-index-invalid-sitemap", "signal-invalid-sitemap"),
+            ("signal-index-invalid-listing", "signal-invalid-listing"),
+            ("signal-index-no-articles", "signal-no-article-links"),
+            ("signal-index-article-limit", "signal-article-limit"),
+            ("signal-304-without-baseline", "signal-unexpected-not-modified"),
+            ("signal-304-without-article", "signal-unexpected-not-modified"),
+            ("signal-article-body-limit", "signal-article-body-invalid"),
+            ("x-api-daily-limit-invalid", "x-api-budget-invalid"),
+            ("x-api-daily-limit", "x-api-daily-limit"),
+            ("x-api-paced", "x-api-paced"),
+            ("x-api-disabled", "x-api-disabled"),
+            ("x-api-token-missing", "x-api-token-missing"),
+            ("x-api-query-invalid", "x-api-query-invalid"),
+            ("x-api-unexpected-content-type", "x-api-content-type"),
+            ("x-api-response-limit", "x-api-response-limit"),
+            ("x-api-invalid-json", "x-api-invalid-json"),
+            ("x-api-response-error", "x-api-response-error"),
+            ("unsupported content type", "unsupported-content-type"),
+            ("empty or oversized source", "empty-or-oversized-source"),
+            ("source has no extractable text", "no-extractable-text"),
+            ("sec exhibit evidence unavailable", "sec-exhibit-unavailable"),
+            ("pdf is encrypted", "pdf-encrypted"),
+            ("pdf page limit exceeded", "pdf-page-limit"),
+            ("pdf has no extractable text", "pdf-no-text"),
+            ("pdf text extraction timed out", "pdf-timeout"),
+            ("pdf text extraction failed", "pdf-extract-failed"),
+            ("invalid pdf", "invalid-pdf"),
+            ("verification page", "verification-page"),
+            ("no release links parsed", "no-release-links"),
+            ("too many source links", "too-many-source-links"),
+        ):
+            if fragment in lowered:
+                return code
+        return "invalid-source-response"
+    return "fetch-failed"
+
+
+def retry_after_seconds(exc, reference=None):
+    """Parse Retry-After within the relevant URL or hostname backoff ceiling."""
+    if not isinstance(exc, HTTPError) or not exc.headers:
+        return None
+    value = str(exc.headers.get("Retry-After", "")).strip()
+    if not value:
+        return None
+    if value.isdigit():
+        seconds = int(value)
+    else:
+        try:
+            target = parsedate_to_datetime(value)
+            if target.tzinfo is None:
+                target = target.replace(tzinfo=timezone.utc)
+            seconds = round((target - (reference or datetime.now(timezone.utc))).total_seconds())
+        except (TypeError, ValueError, OverflowError):
+            return None
+    ceiling = (
+        MAX_ACCESS_BACKOFF_SECONDS
+        if source_error_code(exc) in ACCESS_RESTRICTED_ERRORS
+        else 6 * 60 * 60
+    )
+    return max(0, min(ceiling, seconds))
+
+
+def source_retry_seconds(error_code, failures, retry_hint=None):
+    """Back off access controls without repeatedly probing a blocked official page."""
+    access_restricted = error_code in ACCESS_RESTRICTED_ERRORS
+    if error_code == "http-429" and retry_hint is not None:
+        # A rate-limited official endpoint has supplied its own safe reopening
+        # time. Keep the hostname circuit, but do not replace that instruction
+        # with a longer invented delay.
+        retry_seconds = max(60, retry_hint)
+    elif access_restricted:
+        # A denied or interstitial-protected route is unlikely to recover within
+        # minutes. Keep it eligible for a later lawful retry, but do not hammer it
+        # or let it crowd newly discovered first-party evidence out of the queue.
+        retry_seconds = min(
+            MAX_ACCESS_BACKOFF_SECONDS,
+            6 * 60 * 60 * (2 ** min(max(failures - 1, 0), 5)),
+        )
+    else:
+        retry_seconds = min(6 * 60 * 60, 60 * (2 ** min(max(failures - 1, 0), 8)))
+    if retry_hint is not None:
+        retry_seconds = max(retry_seconds, retry_hint)
+    return retry_seconds
+
+
+def source_hostname(url):
+    """Return a bounded normalized hostname for private circuit-breaker state."""
+    try:
+        hostname = (urlsplit(str(url)).hostname or "").lower().rstrip(".")
+    except (TypeError, ValueError):
+        return None
+    if not hostname or len(hostname) > 253 or not re.fullmatch(r"[a-z0-9.-]+", hostname):
+        return None
+    return hostname
+
+
+def fetch(url, ticker, validators=None, include_metadata=False):
+    url = safe_url(url, ticker)
+    cached = cached_fetch(url)
+    conditional = dict(validators or {})
+    force_unconditional = bool(conditional.pop("force_unconditional", False))
+    if cached and not force_unconditional:
+        for key in ("etag", "last_modified"):
+            if cached.get(key):
+                conditional[key] = cached[key]
+    headers = {
+        "User-Agent": os.environ.get("RESEARCH_USER_AGENT", "TechPhaseResearch-SourceCheck/0.1"),
+        "Accept": "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf",
+    }
+    source = source_configuration(url, ticker)
+    request_body = source.get("requestJson")
+    data = None
+    if request_body is not None:
+        data = json.dumps(request_body, separators=(",", ":")).encode()
+        headers["Content-Type"] = "application/json"
+    etag = http_validator(conditional.get("etag"))
+    last_modified = http_validator(conditional.get("last_modified"))
+    if etag:
+        headers["If-None-Match"] = etag
+    if last_modified:
+        headers["If-Modified-Since"] = last_modified
+    req = Request(url, headers=headers, data=data, method="POST" if data is not None else "GET")
+    timeout = PROVIDERS[ticker].get("requestTimeoutSeconds", 20) if url == INDEXES[ticker] else 20
+    timeout = environment_seconds("RESEARCH_REQUEST_TIMEOUT_SECONDS", timeout, 1, timeout)
+    try:
+        response = build_opener(Redirects(ticker)).open(req, timeout=timeout)
+    except HTTPError as exc:
+        if exc.code == 304 and include_metadata and (etag or last_modified):
+            error_headers = exc.headers or {}
+            return {
+                "content": None, "contentType": None,
+                "etag": http_validator(error_headers.get("ETag")) or etag,
+                "lastModified": http_validator(error_headers.get("Last-Modified")) or last_modified,
+                "notModified": True,
+            }
+        if exc.code == 304 and cached:
+            return cached["content"], cached["content_type"]
+        raise
+    with response:
+        content_type = response.headers.get_content_type()
+        if content_type not in SUPPORTED_CONTENT_TYPES | PDF_FALLBACK_CONTENT_TYPES:
+            raise ValueError("Unsupported content type: " + content_type)
+        content = response.read(MAX_BYTES + 1)
+        if not content or len(content) > MAX_BYTES:
+            raise ValueError("Empty or oversized source")
+        if content_type in PDF_FALLBACK_CONTENT_TYPES:
+            if not content.startswith(b"%PDF-"):
+                raise ValueError("Unsupported content type: " + content_type)
+            content_type = "application/pdf"
+        if content_type == "application/pdf" and not content.startswith(b"%PDF-"):
+            raise ValueError("Invalid PDF response")
+        if content_type == "text/html":
+            title = re.search(br"<title[^>]*>(.*?)</title>", content, re.I | re.S)
+            if title and re.search(br"access denied|just a moment|page not found|403 forbidden", title.group(1), re.I):
+                raise ValueError("Source returned an error or verification page")
+        response_etag = http_validator(response.headers.get("ETag"))
+        response_last_modified = http_validator(response.headers.get("Last-Modified"))
+        if not include_metadata:
+            remember_fetch(url, {
+                "content": content,
+                "content_type": content_type,
+                "etag": response_etag,
+                "last_modified": response_last_modified,
+            })
+        if include_metadata:
+            return {
+                "content": content, "contentType": content_type,
+                "etag": response_etag, "lastModified": response_last_modified,
+                "notModified": False,
+            }
+        return content, content_type
+
+
+fetch.supports_persistent_validators = True
+
+
+class Links(HTMLParser):
+    def __init__(self, base, ticker):
+        super().__init__(convert_charrefs=True)
+        self.base, self.ticker, self.urls = base, ticker, set()
+        self.labels, self.current, self.text = {}, None, []
+
+    def handle_starttag(self, tag, attrs):
+        if tag != "a":
+            return
+        href = dict(attrs).get("href")
+        if not href:
+            return
+        try:
+            url = safe_url(urljoin(self.base, href), self.ticker)
+        except ValueError:
+            return
+        self.current, self.text = article_url(url, self.ticker), []
+        if self.current:
+            self.urls.add(self.current)
+
+    def handle_data(self, value):
+        if self.current:
+            self.text.append(value)
+
+    def handle_endtag(self, tag):
+        if tag == "a" and self.current:
+            label = " ".join(" ".join(self.text).split())[:300]
+            if label and label.lower() not in {"read more", "read article", "learn more", "read press release", "read blog"}:
+                self.labels[self.current] = label
+            self.current, self.text = None, []
+
+
+class SecIndexExhibits(HTMLParser):
+    """Collect same-accession document links from rows typed exactly EX-99.1."""
+
+    def __init__(self, base, ticker, directory):
+        super().__init__(convert_charrefs=True)
+        self.base, self.ticker, self.directory = base, ticker, directory
+        self.row_depth = self.cell_depth = 0
+        self.row_urls, self.cell_text, self.urls = set(), [], set()
+        self.row_is_exhibit = False
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "tr":
+            if self.row_depth == 0:
+                self.row_urls, self.cell_text = set(), []
+                self.row_is_exhibit = False
+            self.row_depth += 1
+            return
+        if not self.row_depth:
+            return
+        if tag in {"td", "th"}:
+            self.cell_depth += 1
+            if self.cell_depth == 1:
+                self.cell_text = []
+            return
+        if tag != "a":
+            return
+        href = dict(attrs).get("href")
+        if not href:
+            return
+        try:
+            url = article_url(safe_url(urljoin(self.base, href), self.ticker), self.ticker)
+        except ValueError:
+            return
+        if not url:
+            return
+        parsed = urlsplit(url)
+        filename = parsed.path.rsplit("/", 1)[-1]
+        if (parsed.hostname == "www.sec.gov"
+                and parsed.path.rsplit("/", 1)[0] + "/" == self.directory
+                and re.search(r"\.(?:html?|pdf)$", filename, re.I)):
+            self.row_urls.add(url)
+
+    def handle_data(self, value):
+        if self.cell_depth:
+            self.cell_text.append(value)
+
+    def handle_endtag(self, tag):
+        if tag in {"td", "th"} and self.cell_depth:
+            self.cell_depth -= 1
+            if self.cell_depth == 0:
+                label = " ".join(" ".join(self.cell_text).split())
+                if re.fullmatch(r"EX(?:HIBIT)?[- .]*99[.\- ]?1", label, re.I):
+                    self.row_is_exhibit = True
+                self.cell_text = []
+            return
+        if tag == "tr" and self.row_depth:
+            self.row_depth -= 1
+            if self.row_depth == 0 and self.row_is_exhibit:
+                self.urls.update(self.row_urls)
+
+
+def sec_exhibit_links(content, filing_url, ticker):
+    """Return explicit EX-99.1 links in the same immutable SEC filing directory.
+
+    Filing HTML is untrusted input. The same-host and same-accession checks prevent
+    it from turning article retrieval into a general-purpose URL fetcher.
+    """
+    parsed = urlsplit(filing_url)
+    directory = parsed.path.rsplit("/", 1)[0] + "/"
+    if (parsed.hostname != "www.sec.gov"
+            or not re.fullmatch(r"/Archives/edgar/data/\d+/\d+/", directory)):
+        return []
+    markup = content[:MAX_EXTRACTED_CHARS * 2].decode("utf-8", "replace")
+    parser = Links(filing_url, ticker)
+    parser.feed(markup)
+    parser.close()
+    candidates = []
+    for url in parser.urls:
+        candidate = urlsplit(url)
+        if candidate.hostname != "www.sec.gov" or candidate.path.rsplit("/", 1)[0] + "/" != directory:
+            continue
+        filename = candidate.path.rsplit("/", 1)[-1]
+        label = parser.labels.get(url, "")
+        identity = re.sub(r"[^a-z0-9]", "", f"{filename} {label}".lower())
+        if not re.search(r"(?:exhibit|ex)99(?:01|1)(?:htm|html|pdf)?$", identity):
+            if not re.search(r"\b(?:exhibit\s*)?99[.\- ]?1\b", label, re.I):
+                continue
+        score = 2 if re.search(r"\bEX(?:HIBIT)?[- .]*99[.\- ]?1\b", label, re.I) else 1
+        candidates.append((score, url))
+    index_parser = SecIndexExhibits(filing_url, ticker, directory)
+    index_parser.feed(markup)
+    index_parser.close()
+    candidates.extend((3, url) for url in index_parser.urls)
+    ranked = {}
+    for score, url in candidates:
+        ranked[url] = max(score, ranked.get(url, 0))
+    return [url for url, _score in sorted(
+        ranked.items(), key=lambda item: (-item[1], item[0])
+    )[:2]]
+
+
+def sec_filing_index_url(filing_url, ticker):
+    """Derive SEC's canonical filing index without guessing another accession."""
+    parsed = urlsplit(filing_url)
+    directory = parsed.path.rsplit("/", 1)[0]
+    accession = directory.rsplit("/", 1)[-1]
+    if parsed.hostname != "www.sec.gov" or not re.fullmatch(r"\d{18}", accession):
+        return None
+    formatted = f"{accession[:10]}-{accession[10:12]}-{accession[12:]}"
+    return article_url(
+        urlunsplit((parsed.scheme, parsed.netloc, f"{directory}/{formatted}-index.html", "", "")),
+        ticker,
+    )
+
+
+def sec_exhibit_evidence(content, filing_url, ticker, transport):
+    """Fetch the first substantive EX-99.1 without leaving the filing directory."""
+    candidates = sec_exhibit_links(content, filing_url, ticker)
+    last_error = None
+    # The primary 8-K/6-K document can contain substantive filing text without
+    # linking its exhibits. The canonical same-accession index is authoritative
+    # for the exhibit Type column, so consult it whenever the primary document
+    # did not yield a safe candidate. Never broaden the lookup beyond the
+    # immutable filing directory derived below.
+    if not candidates:
+        index_url = sec_filing_index_url(filing_url, ticker)
+        if index_url and index_url != filing_url:
+            try:
+                index_content, index_type = transport(index_url, ticker)
+                if index_type != "text/html":
+                    raise ValueError("SEC filing index has unsupported content type")
+                candidates = sec_exhibit_links(index_content, index_url, ticker)
+                if not candidates:
+                    last_error = ValueError("SEC exhibit link not found in filing index")
+            except (HTTPError, URLError, TimeoutError, ValueError) as exc:
+                last_error = exc
+    for url in candidates:
+        try:
+            exhibit, content_type = transport(url, ticker)
+            extracted = extract_text(exhibit, content_type)
+            meaningful = sum(character.isalnum() for character in extracted)
+            if len(extracted) < MIN_SEC_EXHIBIT_CHARS or meaningful < 80:
+                raise ValueError("SEC exhibit has no extractable text")
+            return {
+                "content": exhibit, "contentType": content_type,
+                "extractedText": extracted, "url": url,
+            }
+        except (HTTPError, URLError, TimeoutError, ValueError) as exc:
+            last_error = exc
+    if last_error is not None:
+        return {"error": last_error}
+    return None
+
+
+class ArticleText(HTMLParser):
+    """Extract readable evidence text without retaining scripts or page chrome."""
+
+    ignored = {
+        "script", "style", "noscript", "template", "svg", "canvas", "iframe",
+        "header", "nav", "aside", "footer", "form", "button", "dialog", "menu",
+    }
+    ignored_roles = {"banner", "complementary", "contentinfo", "dialog", "navigation"}
+    ignored_tokens = {
+        "breadcrumb", "breadcrumbs", "consent", "cookie", "cookies", "modal",
+        "newsletter", "promo", "related", "share", "sharing", "social", "subscribe",
+    }
+    void_tags = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+    blocks = {"title", "h1", "h2", "h3", "h4", "p", "li", "blockquote", "figcaption", "td", "th", "time"}
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.parts = []
+        self.ignored_stack = []
+
+    def _is_page_chrome(self, tag, attrs):
+        values = {
+            str(key).lower(): "" if value is None else str(value)
+            for key, value in attrs if key
+        }
+        if tag in self.ignored or "hidden" in values or "data-nosnippet" in values:
+            return True
+        if values.get("aria-hidden", "").lower() == "true":
+            return True
+        if values.get("role", "").lower() in self.ignored_roles:
+            return True
+        style = values.get("style", "").lower()
+        if re.search(r"(?:display\s*:\s*none|visibility\s*:\s*hidden)", style):
+            return True
+        tokens = set(re.split(r"[^a-z0-9]+", " ".join([
+            values.get("id", ""), values.get("class", "")
+        ]).lower()))
+        return bool(tokens & self.ignored_tokens)
+
+    def handle_starttag(self, tag, attrs):
+        tag = tag.lower()
+        if self.ignored_stack:
+            if tag not in self.void_tags:
+                self.ignored_stack.append(tag)
+            return
+        if self._is_page_chrome(tag, attrs):
+            if tag not in self.void_tags:
+                self.ignored_stack.append(tag)
+            return
+        if tag == "meta":
+            values = {key.lower(): value for key, value in attrs if key and value}
+            name = (values.get("name") or values.get("property") or "").lower()
+            if name in {"description", "og:description", "twitter:description"}:
+                self.parts.extend(["\n", values.get("content", ""), "\n"])
+        elif tag in self.blocks or tag == "br":
+            self.parts.append("\n")
+
+    def handle_endtag(self, tag):
+        tag = tag.lower()
+        if self.ignored_stack:
+            if tag in self.ignored_stack:
+                last = len(self.ignored_stack) - 1 - self.ignored_stack[::-1].index(tag)
+                del self.ignored_stack[last:]
+            return
+        if tag in self.blocks:
+            self.parts.append("\n")
+
+    def handle_data(self, value):
+        if not self.ignored_stack:
+            self.parts.append(value)
+
+    def result(self):
+        lines, previous = [], None
+        for part in "".join(self.parts).splitlines():
+            line = " ".join(part.split())
+            if line and line != previous:
+                lines.append(line)
+                previous = line
+        return "\n".join(lines)[:MAX_EXTRACTED_CHARS]
+
+
+class StructuredArticleText(HTMLParser):
+    """Read bounded Schema.org articleBody values without executing page scripts."""
+
+    article_types = {
+        "analysisnewsarticle", "article", "blogposting", "newsarticle", "report",
+        "techarticle",
+    }
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.blocks = []
+        self.blocks_seen = 0
+        self.current = None
+        self.current_chars = 0
+        self.current_overflow = False
+
+    def handle_starttag(self, tag, attrs):
+        if tag.lower() != "script" or self.current is not None:
+            return
+        values = {
+            str(key).lower(): "" if value is None else str(value)
+            for key, value in attrs if key
+        }
+        content_type = values.get("type", "").split(";", 1)[0].strip().lower()
+        if content_type == "application/ld+json" and self.blocks_seen < MAX_JSON_LD_BLOCKS:
+            self.blocks_seen += 1
+            self.current = []
+            self.current_chars = 0
+            self.current_overflow = False
+
+    def handle_data(self, value):
+        if self.current is None or self.current_overflow:
+            return
+        self.current_chars += len(value)
+        if self.current_chars > MAX_JSON_LD_CHARS:
+            self.current = []
+            self.current_overflow = True
+            return
+        self.current.append(value)
+
+    def handle_endtag(self, tag):
+        if tag.lower() != "script" or self.current is None:
+            return
+        if not self.current_overflow:
+            self.blocks.append("".join(self.current))
+        self.current = None
+        self.current_chars = 0
+        self.current_overflow = False
+
+    @staticmethod
+    def _schema_type(value):
+        if not isinstance(value, str):
+            return ""
+        return re.split(r"[/#]", value.strip().lower())[-1]
+
+    @staticmethod
+    def _normalize_body(value):
+        if not isinstance(value, str):
+            return ""
+        lines = [" ".join(line.split()) for line in value.splitlines()]
+        return "\n".join(line for line in lines if line)[:MAX_EXTRACTED_CHARS]
+
+    def result(self):
+        candidates = []
+        nodes_seen = 0
+        for block in self.blocks:
+            try:
+                root = json.loads(block)
+            except (TypeError, ValueError, RecursionError):
+                continue
+            stack = [(root, 0)]
+            while stack and nodes_seen < MAX_JSON_LD_NODES:
+                node, depth = stack.pop()
+                nodes_seen += 1
+                if depth > 8:
+                    continue
+                if isinstance(node, dict):
+                    raw_types = node.get("@type", [])
+                    if isinstance(raw_types, str):
+                        raw_types = [raw_types]
+                    types = {self._schema_type(item) for item in raw_types}
+                    body = self._normalize_body(node.get("articleBody"))
+                    if types & self.article_types:
+                        meaningful = sum(character.isalnum() for character in body)
+                        if len(body) >= MIN_JSON_LD_BODY_CHARS and meaningful >= 80:
+                            candidates.append(body)
+                    stack.extend((value, depth + 1) for value in node.values())
+                elif isinstance(node, list):
+                    stack.extend((value, depth + 1) for value in node)
+        return max(candidates, key=len, default="")
+
+
+def extract_html_text(content):
+    """Prefer visible evidence, using verified JSON-LD only for thin page shells."""
+    decoded = content.decode("utf-8", errors="replace")
+    visible_parser = ArticleText()
+    visible_parser.feed(decoded)
+    visible_parser.close()
+    visible = visible_parser.result()
+
+    structured_parser = StructuredArticleText()
+    structured_parser.feed(decoded)
+    structured_parser.close()
+    structured = structured_parser.result()
+    visible_meaningful = sum(character.isalnum() for character in visible)
+    if structured and visible_meaningful < 120 and len(structured) >= max(240, len(visible) * 2):
+        return structured
+    return visible
+
+
+def extract_pdf_text(content):
+    """Extract PDF evidence in a resource-limited child process."""
+    timeout = environment_seconds("RESEARCH_PDF_EXTRACT_TIMEOUT_SECONDS", 20, 1, 30)
+    child_environment = {
+        "PATH": os.environ.get("PATH", ""),
+        "PYTHONIOENCODING": "utf-8",
+    }
+    try:
+        completed = subprocess.run(
+            [sys.executable, str(Path(__file__).with_name("pdf_extract.py"))],
+            input=content, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+            check=False, close_fds=True, env=child_environment, timeout=timeout,
+            start_new_session=True,
+        )
+    except subprocess.TimeoutExpired as exc:
+        raise ValueError("PDF text extraction timed out") from exc
+    except OSError as exc:
+        raise ValueError("PDF text extraction failed") from exc
+    extraction_errors = {
+        2: "Invalid PDF response",
+        3: "PDF is encrypted",
+        4: "PDF page limit exceeded",
+        5: "PDF has no extractable text",
+    }
+    if completed.returncode != 0:
+        raise ValueError(extraction_errors.get(
+            completed.returncode, "PDF text extraction failed"
+        ))
+    try:
+        extracted = completed.stdout.decode("utf-8")[:MAX_EXTRACTED_CHARS]
+    except UnicodeDecodeError as exc:
+        raise ValueError("PDF text extraction failed") from exc
+    if not extracted:
+        raise ValueError("PDF has no extractable text")
+    return extracted
+
+
+def extract_text(content, content_type):
+    """Return bounded plain text for later evidence-grounded editorial work."""
+    if content_type == "text/html":
+        return extract_html_text(content)
+    if content_type == "application/pdf":
+        return extract_pdf_text(content)
+    if content_type in {"application/rss+xml", "application/atom+xml", "application/xml", "text/xml"}:
+        if b"\x00" in content or re.search(br"<!\s*(DOCTYPE|ENTITY)", content, re.I):
+            raise ValueError("XML declarations with entities are not supported")
+        return "\n".join(" ".join(text.split()) for text in ET.fromstring(content).itertext() if text.strip())[:MAX_EXTRACTED_CHARS]
+    if content_type == "application/json":
+        return json.dumps(json.loads(content), ensure_ascii=False, separators=(",", ":"))[:MAX_EXTRACTED_CHARS]
+    return ""
+
+
+def article_url(url, ticker):
+    try:
+        p = urlsplit(safe_url(url, ticker))
+        if any(p.hostname == rule["host"] and re.search(rule["pattern"], p.path) for rule in PROVIDERS[ticker]["articleRules"]):
+            return urlunsplit((p.scheme, p.netloc, p.path, "", ""))
+    except (ValueError, KeyError):
+        pass
+    return None
+
+
+def _feed_inline_text(element):
+    """Convert one bounded RSS/Atom body field to safe plain-text evidence."""
+    if element is None:
+        return "", 0
+    raw = "\n".join(element.itertext()).strip()
+    if not raw:
+        return "", 0
+    parser = ArticleText()
+    parser.feed(raw[:MAX_EXTRACTED_CHARS * 2])
+    parser.close()
+    text = parser.result()
+    meaningful = sum(character.isalnum() for character in text)
+    if len(text) < MIN_INLINE_FEED_CHARS or meaningful < 80:
+        return "", len(raw.encode("utf-8"))
+    return text, len(raw.encode("utf-8"))
+
+
+def _feed_publication_date(item):
+    """Return a source-stated calendar date without inventing a publication time."""
+    atom = "{http://www.w3.org/2005/Atom}"
+    candidates = [
+        item.findtext("pubDate"), item.findtext(atom + "published"),
+    ]
+    for value in candidates:
+        value = (value or "").strip()
+        if not value:
+            continue
+        try:
+            parsed = parsedate_to_datetime(value)
+        except (TypeError, ValueError, OverflowError):
+            try:
+                parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+            except (TypeError, ValueError, OverflowError):
+                continue
+        return parsed.date().isoformat()
+    return None
+
+
+def feed_links(body, ticker, content_type="application/rss+xml"):
+    """Extract official links and substantive first-party feed evidence."""
+    if b"\x00" in body or re.search(br"<!\s*(DOCTYPE|ENTITY)", body, re.I):
+        raise ValueError("XML declarations with entities are not supported")
+    root = ET.fromstring(body)
+    atom = "{http://www.w3.org/2005/Atom}"
+    content = "{http://purl.org/rss/1.0/modules/content/}"
+    entries = root.findall("./channel/item") + root.findall(atom + "entry")
+    links = {}
+    for item in entries:
+        url = item.findtext("link")
+        if not url:
+            for link in item.findall(atom + "link"):
+                if link.get("rel", "alternate") == "alternate":
+                    url = link.get("href")
+                    break
+        canonical = article_url(url or "", ticker)
+        if canonical:
+            title = item.findtext("title") or item.findtext(atom + "title") or ""
+            title = " ".join(unescape(title).split())[:300] or None
+            evidence_candidates = [
+                _feed_inline_text(item.find(content + "encoded")),
+                _feed_inline_text(item.find(atom + "content")),
+                _feed_inline_text(item.find("description")),
+                _feed_inline_text(item.find(atom + "summary")),
+            ]
+            evidence, content_bytes = max(evidence_candidates, key=lambda candidate: len(candidate[0]))
+            published_on = _feed_publication_date(item)
+            if evidence or published_on:
+                detail = {"title": title, "publishedOn": published_on}
+                if evidence:
+                    detail.update({
+                        "inlineText": evidence,
+                        "contentBytes": content_bytes,
+                        "contentType": content_type,
+                    })
+                links[canonical] = detail
+            else:
+                links[canonical] = title
+    return links
+
+
+def sitemap_links(body, ticker):
+    """Extract approved article URLs from a first-party XML sitemap."""
+    if b"\x00" in body or re.search(br"<!\s*(DOCTYPE|ENTITY)", body, re.I):
+        raise ValueError("XML declarations with entities are not supported")
+    root = ET.fromstring(body)
+    namespace = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+    links = {}
+    for item in root.findall(namespace + "url"):
+        canonical = article_url(item.findtext(namespace + "loc") or "", ticker)
+        if canonical:
+            links[canonical] = None
+    return links
+
+
+def news_json_links(body, ticker, source):
+    """Parse a first-party page's public JSON result shape."""
+    data = json.loads(body)
+    items = data.get(source.get("itemsKey", "items"), [])
+    if not isinstance(items, list):
+        raise ValueError("Invalid news JSON structure")
+    links = {}
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        value = item.get(source.get("urlKey", "pageUrl"))
+        canonical = article_url(urljoin(source["url"], value or ""), ticker)
+        if not canonical:
+            continue
+        title = item.get(source.get("titleKey", "displayName"))
+        links[canonical] = " ".join(unescape(title).split())[:300] if isinstance(title, str) and title.strip() else None
+    return links
+
+
+def roc_date(value):
+    """Convert a strict seven-digit Minguo date to ISO without guessing."""
+    if not re.fullmatch(r"\d{7}", value or ""):
+        raise ValueError("Invalid TWSE material-information date")
+    year = int(value[:3]) + 1911
+    parsed = datetime.strptime(f"{year:04d}{value[3:]}", "%Y%m%d")
+    return parsed.strftime("%Y-%m-%d")
+
+
+def twse_material_links(body, ticker, source):
+    """Extract one company's official material disclosures with inline evidence."""
+    data = json.loads(body)
+    if not isinstance(data, list):
+        raise ValueError("Invalid TWSE material-information structure")
+    company_code = source.get("twseCompanyCode")
+    if not re.fullmatch(r"\d{4,6}", company_code or ""):
+        raise ValueError("Invalid TWSE company code")
+    links = {}
+    for item in data:
+        if not isinstance(item, dict) or item.get("公司代號") != company_code:
+            continue
+        spoken_date = item.get("發言日期", "")
+        spoken_time = item.get("發言時間", "")
+        subject = item.get("主旨 ", "")
+        explanation = item.get("說明", "")
+        if not re.fullmatch(r"\d{1,6}", spoken_time) or not isinstance(subject, str) or not subject.strip():
+            raise ValueError("Incomplete TWSE material-information record")
+        published_on = roc_date(spoken_date)
+        subject = " ".join(subject.split())[:300]
+        explanation = "\n".join(line.strip() for line in str(explanation).splitlines() if line.strip())
+        evidence = "\n".join([
+            f"公司代號: {company_code}",
+            f"公司名稱: {' '.join(str(item.get('公司名稱', '')).split())}",
+            f"發言日期: {spoken_date}",
+            f"發言時間: {spoken_time}",
+            f"主旨: {subject}",
+            f"說明: {explanation}",
+        ])[:MAX_EXTRACTED_CHARS]
+        identity = hashlib.sha256(evidence.encode()).hexdigest()[:16]
+        query = urlencode({"company": company_code, "date": spoken_date, "time": spoken_time, "id": identity})
+        url = safe_url(source["url"] + "?" + query, ticker)
+        links[url] = {
+            "title": subject,
+            "publishedOn": published_on,
+            "inlineText": evidence,
+            "contentBytes": len(json.dumps(item, ensure_ascii=False, separators=(",", ":")).encode()),
+        }
+    return links
+
+
+def sec_submission_links(body, ticker, source):
+    """Turn the SEC submissions columnar JSON into official filing-document URLs."""
+    data = json.loads(body)
+    cik = source.get("cik", "")
+    if not re.fullmatch(r"\d{10}", cik) or str(data.get("cik", "")).zfill(10) != cik:
+        raise ValueError("SEC submissions CIK mismatch")
+    recent = data.get("filings", {}).get("recent", {})
+    forms = recent.get("form", [])
+    accessions = recent.get("accessionNumber", [])
+    documents = recent.get("primaryDocument", [])
+    descriptions = recent.get("primaryDocDescription", [])
+    if not all(isinstance(items, list) for items in (forms, accessions, documents, descriptions)):
+        raise ValueError("Invalid SEC submissions structure")
+    allowed_forms = set(source.get("forms", []))
+    limit = max(1, min(int(source.get("limit", 40)), 100))
+    links = {}
+    for index, form in enumerate(forms):
+        if form not in allowed_forms or index >= len(accessions) or index >= len(documents):
+            continue
+        accession, document = accessions[index], documents[index]
+        if not re.fullmatch(r"\d{10}-\d{2}-\d{6}", accession or "") or not re.fullmatch(r"[A-Za-z0-9._-]+", document or ""):
+            continue
+        url = f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{accession.replace('-', '')}/{document}"
+        canonical = article_url(url, ticker)
+        if not canonical:
+            continue
+        description = descriptions[index] if index < len(descriptions) else ""
+        links[canonical] = " ".join(f"{form} · {description or 'Official filing'}".split())[:300]
+        if len(links) >= limit:
+            break
+    return links
+
+
+def connect(path):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    db = sqlite3.connect(path)
+    db.row_factory = sqlite3.Row
+    db.execute("PRAGMA busy_timeout = 5000")
+    db.execute("PRAGMA journal_mode = WAL")
+    db.execute("PRAGMA foreign_keys = ON")
+    db.executescript("""
+    CREATE TABLE IF NOT EXISTS sources (
+      url TEXT PRIMARY KEY, ticker TEXT NOT NULL, published_on TEXT,
+      discovered_at TEXT NOT NULL, checked_at TEXT, sha256 TEXT,
+      status TEXT NOT NULL DEFAULT 'pending', error TEXT);
+    CREATE TABLE IF NOT EXISTS history (
+      id INTEGER PRIMARY KEY, url TEXT NOT NULL REFERENCES sources(url),
+      at TEXT NOT NULL, kind TEXT NOT NULL, sha256 TEXT, reviewer TEXT, reason TEXT);
+    CREATE TABLE IF NOT EXISTS source_revisions (
+      url TEXT NOT NULL REFERENCES sources(url), sha256 TEXT NOT NULL,
+      observed_at TEXT NOT NULL, content_type TEXT, content_bytes INTEGER,
+      extracted_text TEXT NOT NULL, extracted_chars INTEGER NOT NULL,
+      PRIMARY KEY(url,sha256));
+    CREATE INDEX IF NOT EXISTS source_revisions_url_observed
+      ON source_revisions(url,observed_at DESC);
+    CREATE TABLE IF NOT EXISTS discovery_runs (
+      id INTEGER PRIMARY KEY, ticker TEXT NOT NULL, at TEXT NOT NULL,
+      status TEXT NOT NULL, candidates INTEGER NOT NULL, error TEXT);
+    CREATE TABLE IF NOT EXISTS discovery_poll_batches (
+      id INTEGER PRIMARY KEY, started_at TEXT NOT NULL, completed_at TEXT NOT NULL,
+      duration_ms INTEGER NOT NULL CHECK(duration_ms>=0 AND duration_ms<=3600000),
+      checks INTEGER NOT NULL CHECK(checks>0 AND checks<=1000),
+      degraded INTEGER NOT NULL CHECK(degraded>=0 AND degraded<=checks),
+      new_sources INTEGER NOT NULL CHECK(new_sources>=0 AND new_sources<=1000000),
+      request_duration_total_ms INTEGER NOT NULL CHECK(request_duration_total_ms>=0),
+      request_duration_max_ms INTEGER NOT NULL CHECK(request_duration_max_ms>=0));
+    CREATE INDEX IF NOT EXISTS discovery_poll_batches_completed
+      ON discovery_poll_batches(completed_at DESC);
+    CREATE TABLE IF NOT EXISTS priority_source_runs (
+      process_started_at TEXT PRIMARY KEY, first_completed_at TEXT NOT NULL,
+      last_observed_at TEXT NOT NULL,
+      target_count INTEGER NOT NULL CHECK(target_count>0 AND target_count<=100),
+      configured_count INTEGER NOT NULL CHECK(configured_count>0 AND configured_count<=target_count),
+      healthy INTEGER NOT NULL CHECK(healthy>=0 AND healthy<=configured_count),
+      degraded INTEGER NOT NULL CHECK(degraded>=0 AND degraded<=configured_count),
+      completion_latency_ms INTEGER NOT NULL
+        CHECK(completion_latency_ms>=0 AND completion_latency_ms<=2678400000));
+    CREATE INDEX IF NOT EXISTS priority_source_runs_observed
+      ON priority_source_runs(last_observed_at DESC);
+    CREATE TABLE IF NOT EXISTS discovery_source_cache (
+      ticker TEXT NOT NULL, source_url TEXT NOT NULL,
+      response_etag TEXT, response_last_modified TEXT,
+      candidates_json TEXT NOT NULL, parser_version TEXT NOT NULL DEFAULT '',
+      updated_at TEXT NOT NULL,
+      PRIMARY KEY(ticker,source_url));
+    CREATE TABLE IF NOT EXISTS release_events (
+      id INTEGER PRIMARY KEY, url TEXT NOT NULL UNIQUE REFERENCES sources(url),
+      ticker TEXT NOT NULL, detected_at TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS body_fetch_batches (
+      id INTEGER PRIMARY KEY, polled_at TEXT NOT NULL, completed_at TEXT NOT NULL,
+      duration_ms INTEGER NOT NULL CHECK(duration_ms>=0 AND duration_ms<=3600000),
+      checks INTEGER NOT NULL CHECK(checks>0 AND checks<=1000),
+      errors INTEGER NOT NULL CHECK(errors>=0 AND errors<=checks),
+      not_modified INTEGER NOT NULL CHECK(not_modified>=0 AND not_modified<=checks),
+      detection_latency_samples INTEGER NOT NULL DEFAULT 0,
+      detection_latency_total_ms INTEGER NOT NULL DEFAULT 0,
+      detection_latency_max_ms INTEGER,
+      eligibility_wait_samples INTEGER NOT NULL DEFAULT 0,
+      eligibility_wait_total_ms INTEGER NOT NULL DEFAULT 0,
+      eligibility_wait_max_ms INTEGER,
+      request_duration_samples INTEGER NOT NULL DEFAULT 0,
+      request_duration_total_ms INTEGER NOT NULL DEFAULT 0,
+      request_duration_max_ms INTEGER,
+      request_success_duration_samples INTEGER NOT NULL DEFAULT 0,
+      request_success_duration_total_ms INTEGER NOT NULL DEFAULT 0,
+      request_success_duration_max_ms INTEGER,
+      request_error_duration_samples INTEGER NOT NULL DEFAULT 0,
+      request_error_duration_total_ms INTEGER NOT NULL DEFAULT 0,
+      request_error_duration_max_ms INTEGER,
+      selected_detected_never_fetched INTEGER NOT NULL DEFAULT 0,
+      selected_baseline_never_fetched INTEGER NOT NULL DEFAULT 0,
+      selected_extraction_pending INTEGER NOT NULL DEFAULT 0,
+      selected_recheck INTEGER NOT NULL DEFAULT 0,
+      error_detected_never_fetched INTEGER NOT NULL DEFAULT 0,
+      error_baseline_never_fetched INTEGER NOT NULL DEFAULT 0,
+      error_extraction_pending INTEGER NOT NULL DEFAULT 0,
+      error_recheck INTEGER NOT NULL DEFAULT 0,
+      not_modified_detected_never_fetched INTEGER NOT NULL DEFAULT 0,
+      not_modified_baseline_never_fetched INTEGER NOT NULL DEFAULT 0,
+      not_modified_extraction_pending INTEGER NOT NULL DEFAULT 0,
+      not_modified_recheck INTEGER NOT NULL DEFAULT 0,
+      fetched_detected_never_fetched INTEGER NOT NULL DEFAULT 0,
+      fetched_baseline_never_fetched INTEGER NOT NULL DEFAULT 0,
+      fetched_extraction_pending INTEGER NOT NULL DEFAULT 0,
+      fetched_recheck INTEGER NOT NULL DEFAULT 0,
+      updated_detected_never_fetched INTEGER NOT NULL DEFAULT 0,
+      updated_baseline_never_fetched INTEGER NOT NULL DEFAULT 0,
+      updated_extraction_pending INTEGER NOT NULL DEFAULT 0,
+      updated_recheck INTEGER NOT NULL DEFAULT 0);
+    CREATE INDEX IF NOT EXISTS body_fetch_batches_completed
+      ON body_fetch_batches(completed_at DESC);
+    CREATE TABLE IF NOT EXISTS body_fetch_worker_state (
+      id INTEGER PRIMARY KEY CHECK(id=1),
+      last_polled_at TEXT NOT NULL,
+      pending_count INTEGER NOT NULL CHECK(pending_count>=0 AND pending_count<=1000000));
+    CREATE TABLE IF NOT EXISTS body_host_backoff (
+      host TEXT PRIMARY KEY,
+      failures INTEGER NOT NULL CHECK(failures>0 AND failures<=1000000),
+      error TEXT NOT NULL,
+      retry_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL);
+    CREATE INDEX IF NOT EXISTS body_host_backoff_retry
+      ON body_host_backoff(retry_at);
+    CREATE TABLE IF NOT EXISTS body_host_probe_events (
+      id INTEGER PRIMARY KEY,
+      eligible_at TEXT,
+      attempted_at TEXT NOT NULL,
+      completed_at TEXT NOT NULL,
+      outcome TEXT NOT NULL CHECK(outcome IN ('recovered','restricted','failed')));
+    CREATE INDEX IF NOT EXISTS body_host_probe_events_completed
+      ON body_host_probe_events(completed_at DESC);
+    CREATE TABLE IF NOT EXISTS briefs (
+      url TEXT PRIMARY KEY REFERENCES sources(url), source_sha256 TEXT NOT NULL,
+      summary_ja TEXT NOT NULL, impact_label TEXT NOT NULL, impact_ja TEXT NOT NULL,
+      confidence TEXT NOT NULL, validation_sha256 TEXT,
+      status TEXT NOT NULL DEFAULT 'draft',
+      generated_at TEXT NOT NULL, reviewed_at TEXT, reviewer TEXT, review_reason TEXT);
+    CREATE TABLE IF NOT EXISTS brief_evidence (
+      id INTEGER PRIMARY KEY, url TEXT NOT NULL REFERENCES briefs(url) ON DELETE CASCADE,
+      field TEXT NOT NULL, excerpt TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS brief_review_history (
+      id INTEGER PRIMARY KEY, url TEXT NOT NULL REFERENCES sources(url),
+      source_sha256 TEXT NOT NULL, draft_validation_sha256 TEXT,
+      decision TEXT NOT NULL CHECK(decision IN ('approved','held','rejected')),
+      reviewed_at TEXT NOT NULL, reviewer TEXT NOT NULL, reason TEXT NOT NULL,
+      ai_verification INTEGER NOT NULL DEFAULT 0,
+      full_source_verification INTEGER NOT NULL DEFAULT 0);
+    CREATE INDEX IF NOT EXISTS brief_review_history_url_id
+      ON brief_review_history(url,id DESC);
+    CREATE TABLE IF NOT EXISTS brief_generation_jobs (
+      url TEXT PRIMARY KEY REFERENCES sources(url), source_sha256 TEXT,
+      status TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0,
+      queued_at TEXT NOT NULL, started_at TEXT, completed_at TEXT,
+      next_attempt_at TEXT NOT NULL, error_code TEXT,
+      reserved_tokens INTEGER NOT NULL DEFAULT 0);
+    CREATE TABLE IF NOT EXISTS brief_generation_attempts (
+      id INTEGER PRIMARY KEY, url TEXT NOT NULL REFERENCES sources(url),
+      source_sha256 TEXT NOT NULL, started_at TEXT NOT NULL, completed_at TEXT,
+      outcome TEXT NOT NULL, error_code TEXT,
+      reserved_tokens INTEGER NOT NULL DEFAULT 0,
+      input_tokens INTEGER, output_tokens INTEGER, total_tokens INTEGER);
+    CREATE TABLE IF NOT EXISTS annual_filing_briefs (
+      ticker TEXT NOT NULL, accession_number TEXT NOT NULL, source_sha256 TEXT NOT NULL,
+      brief_id TEXT NOT NULL, summary_ja TEXT NOT NULL, business_model_ja TEXT NOT NULL,
+      risk_points_json TEXT NOT NULL, summary_evidence_ids_json TEXT NOT NULL,
+      business_evidence_ids_json TEXT NOT NULL, evidence_json TEXT NOT NULL,
+      confidence TEXT NOT NULL, generation_method TEXT NOT NULL,
+      validation_sha256 TEXT,
+      status TEXT NOT NULL DEFAULT 'draft', generated_at TEXT NOT NULL,
+      reviewed_at TEXT, reviewer TEXT, review_reason TEXT,
+      PRIMARY KEY(ticker,accession_number));
+    CREATE TABLE IF NOT EXISTS annual_filing_review_history (
+      id INTEGER PRIMARY KEY, ticker TEXT NOT NULL, accession_number TEXT NOT NULL,
+      source_sha256 TEXT NOT NULL, draft_validation_sha256 TEXT,
+      decision TEXT NOT NULL CHECK(decision IN ('approved','held','rejected')),
+      reviewed_at TEXT NOT NULL, reviewer TEXT NOT NULL, reason TEXT NOT NULL,
+      FOREIGN KEY(ticker,accession_number)
+        REFERENCES annual_filing_briefs(ticker,accession_number));
+    CREATE INDEX IF NOT EXISTS annual_filing_review_history_filing_id
+      ON annual_filing_review_history(ticker,accession_number,id DESC);
+    CREATE TABLE IF NOT EXISTS operational_incidents (
+      incident_key TEXT PRIMARY KEY, category TEXT NOT NULL, subject TEXT NOT NULL,
+      severity TEXT NOT NULL CHECK(severity IN ('warning','critical')),
+      status TEXT NOT NULL CHECK(status IN ('open','resolved')),
+      revision INTEGER NOT NULL DEFAULT 1,
+      opened_at TEXT NOT NULL, last_seen_at TEXT NOT NULL, resolved_at TEXT,
+      occurrences INTEGER NOT NULL DEFAULT 1, last_error_code TEXT);
+    CREATE TABLE IF NOT EXISTS incident_events (
+      id INTEGER PRIMARY KEY, incident_key TEXT NOT NULL,
+      revision INTEGER NOT NULL, at TEXT NOT NULL,
+      event TEXT NOT NULL CHECK(event IN ('opened','resolved')),
+      severity TEXT NOT NULL CHECK(severity IN ('warning','critical')), error_code TEXT,
+      FOREIGN KEY(incident_key) REFERENCES operational_incidents(incident_key));
+    CREATE TABLE IF NOT EXISTS incident_notification_outbox (
+      id INTEGER PRIMARY KEY, incident_key TEXT NOT NULL, revision INTEGER NOT NULL,
+      transition TEXT NOT NULL, created_at TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'held'
+        CHECK(status IN ('held','pending','delivered','dead')),
+      attempts INTEGER NOT NULL DEFAULT 0,
+      next_attempt_at TEXT, delivered_at TEXT, last_error_code TEXT,
+      UNIQUE(incident_key, revision, transition),
+      FOREIGN KEY(incident_key) REFERENCES operational_incidents(incident_key));
+    CREATE INDEX IF NOT EXISTS operational_incidents_status_seen
+      ON operational_incidents(status,last_seen_at);
+    CREATE INDEX IF NOT EXISTS incident_outbox_status_created
+      ON incident_notification_outbox(status,created_at);
+    """)
+    if "index_url" not in {row[1] for row in db.execute("PRAGMA table_info(discovery_runs)")}:
+        db.execute("ALTER TABLE discovery_runs ADD COLUMN index_url TEXT")
+    discovery_columns = {row[1] for row in db.execute("PRAGMA table_info(discovery_runs)")}
+    discovery_migrations = {
+        "route": "TEXT",
+        "source_format": "TEXT",
+        "sources_checked": "INTEGER NOT NULL DEFAULT 1",
+        "sources_configured": "INTEGER NOT NULL DEFAULT 1",
+    }
+    for column, declaration in discovery_migrations.items():
+        if column not in discovery_columns:
+            db.execute(f"ALTER TABLE discovery_runs ADD COLUMN {column} {declaration}")
+    discovery_cache_columns = {
+        row[1] for row in db.execute("PRAGMA table_info(discovery_source_cache)")
+    }
+    if "parser_version" not in discovery_cache_columns:
+        db.execute(
+            "ALTER TABLE discovery_source_cache "
+            "ADD COLUMN parser_version TEXT NOT NULL DEFAULT ''"
+        )
+    body_batch_columns = {
+        row[1] for row in db.execute("PRAGMA table_info(body_fetch_batches)")
+    }
+    for column, declaration in {
+        "detection_latency_samples": "INTEGER NOT NULL DEFAULT 0",
+        "detection_latency_total_ms": "INTEGER NOT NULL DEFAULT 0",
+        "detection_latency_max_ms": "INTEGER",
+        "eligibility_wait_samples": "INTEGER NOT NULL DEFAULT 0",
+        "eligibility_wait_total_ms": "INTEGER NOT NULL DEFAULT 0",
+        "eligibility_wait_max_ms": "INTEGER",
+        "request_duration_samples": "INTEGER NOT NULL DEFAULT 0",
+        "request_duration_total_ms": "INTEGER NOT NULL DEFAULT 0",
+        "request_duration_max_ms": "INTEGER",
+        "request_success_duration_samples": "INTEGER NOT NULL DEFAULT 0",
+        "request_success_duration_total_ms": "INTEGER NOT NULL DEFAULT 0",
+        "request_success_duration_max_ms": "INTEGER",
+        "request_error_duration_samples": "INTEGER NOT NULL DEFAULT 0",
+        "request_error_duration_total_ms": "INTEGER NOT NULL DEFAULT 0",
+        "request_error_duration_max_ms": "INTEGER",
+        "selected_detected_never_fetched": "INTEGER NOT NULL DEFAULT 0",
+        "selected_baseline_never_fetched": "INTEGER NOT NULL DEFAULT 0",
+        "selected_extraction_pending": "INTEGER NOT NULL DEFAULT 0",
+        "selected_recheck": "INTEGER NOT NULL DEFAULT 0",
+        "error_detected_never_fetched": "INTEGER NOT NULL DEFAULT 0",
+        "error_baseline_never_fetched": "INTEGER NOT NULL DEFAULT 0",
+        "error_extraction_pending": "INTEGER NOT NULL DEFAULT 0",
+        "error_recheck": "INTEGER NOT NULL DEFAULT 0",
+        "not_modified_detected_never_fetched": "INTEGER NOT NULL DEFAULT 0",
+        "not_modified_baseline_never_fetched": "INTEGER NOT NULL DEFAULT 0",
+        "not_modified_extraction_pending": "INTEGER NOT NULL DEFAULT 0",
+        "not_modified_recheck": "INTEGER NOT NULL DEFAULT 0",
+        "fetched_detected_never_fetched": "INTEGER NOT NULL DEFAULT 0",
+        "fetched_baseline_never_fetched": "INTEGER NOT NULL DEFAULT 0",
+        "fetched_extraction_pending": "INTEGER NOT NULL DEFAULT 0",
+        "fetched_recheck": "INTEGER NOT NULL DEFAULT 0",
+        "updated_detected_never_fetched": "INTEGER NOT NULL DEFAULT 0",
+        "updated_baseline_never_fetched": "INTEGER NOT NULL DEFAULT 0",
+        "updated_extraction_pending": "INTEGER NOT NULL DEFAULT 0",
+        "updated_recheck": "INTEGER NOT NULL DEFAULT 0",
+    }.items():
+        if column not in body_batch_columns:
+            db.execute(
+                f"ALTER TABLE body_fetch_batches ADD COLUMN {column} {declaration}"
+            )
+    body_probe_columns = {
+        row[1] for row in db.execute("PRAGMA table_info(body_host_probe_events)")
+    }
+    if "eligible_at" not in body_probe_columns:
+        db.execute("ALTER TABLE body_host_probe_events ADD COLUMN eligible_at TEXT")
+    if "title" not in {row[1] for row in db.execute("PRAGMA table_info(sources)")}:
+        db.execute("ALTER TABLE sources ADD COLUMN title TEXT")
+    source_columns = {row[1] for row in db.execute("PRAGMA table_info(sources)")}
+    migrations = {
+        "content_type": "TEXT",
+        "content_bytes": "INTEGER",
+        "extracted_text": "TEXT",
+        "extracted_chars": "INTEGER NOT NULL DEFAULT 0",
+        "body_sha256": "TEXT",
+        "raw_sha256": "TEXT",
+        "fetched_at": "TEXT",
+        "fetch_failures": "INTEGER NOT NULL DEFAULT 0",
+        "next_fetch_at": "TEXT",
+        "source_mode": "TEXT NOT NULL DEFAULT 'remote'",
+        "response_etag": "TEXT",
+        "response_last_modified": "TEXT",
+        "evidence_url": "TEXT",
+        "evidence_kind": "TEXT NOT NULL DEFAULT 'direct'",
+    }
+    for column, declaration in migrations.items():
+        if column not in source_columns:
+            db.execute(f"ALTER TABLE sources ADD COLUMN {column} {declaration}")
+    for source in db.execute("""
+      SELECT url,sha256,extracted_text FROM sources
+      WHERE sha256 IS NOT NULL AND extracted_text IS NOT NULL
+        AND (body_sha256 IS NULL OR raw_sha256 IS NULL)
+    """).fetchall():
+        body_sha = hashlib.sha256(source["extracted_text"].encode("utf-8")).hexdigest()
+        db.execute("""
+          UPDATE sources SET body_sha256=COALESCE(body_sha256,?),
+                             raw_sha256=COALESCE(raw_sha256,sha256)
+          WHERE url=?
+        """, (body_sha, source["url"]))
+    brief_columns = {row[1] for row in db.execute("PRAGMA table_info(briefs)")}
+    for column, declaration in {
+        "validation_sha256": "TEXT",
+        "generation_provider": "TEXT", "generation_model": "TEXT", "generation_response_id": "TEXT",
+        "generation_source_truncated": "INTEGER NOT NULL DEFAULT 0",
+        "generation_input_tokens": "INTEGER", "generation_output_tokens": "INTEGER",
+        "generation_total_tokens": "INTEGER",
+    }.items():
+        if column not in brief_columns:
+            db.execute(f"ALTER TABLE briefs ADD COLUMN {column} {declaration}")
+    brief_history_columns = {
+        row[1] for row in db.execute("PRAGMA table_info(brief_review_history)")
+    }
+    if "draft_validation_sha256" not in brief_history_columns:
+        db.execute(
+            "ALTER TABLE brief_review_history ADD COLUMN draft_validation_sha256 TEXT"
+        )
+    if "ai_verification" not in brief_history_columns:
+        db.execute(
+            "ALTER TABLE brief_review_history ADD COLUMN ai_verification INTEGER NOT NULL DEFAULT 0"
+        )
+    if "full_source_verification" not in brief_history_columns:
+        db.execute(
+            "ALTER TABLE brief_review_history ADD COLUMN full_source_verification INTEGER NOT NULL DEFAULT 0"
+        )
+    job_columns = {row[1] for row in db.execute("PRAGMA table_info(brief_generation_jobs)")}
+    if "reserved_tokens" not in job_columns:
+        db.execute("ALTER TABLE brief_generation_jobs ADD COLUMN reserved_tokens INTEGER NOT NULL DEFAULT 0")
+    attempt_columns = {row[1] for row in db.execute("PRAGMA table_info(brief_generation_attempts)")}
+    for column, declaration in {
+        "reserved_tokens": "INTEGER NOT NULL DEFAULT 0", "input_tokens": "INTEGER",
+        "output_tokens": "INTEGER", "total_tokens": "INTEGER",
+    }.items():
+        if column not in attempt_columns:
+            db.execute(f"ALTER TABLE brief_generation_attempts ADD COLUMN {column} {declaration}")
+    annual_columns = {row[1] for row in db.execute("PRAGMA table_info(annual_filing_briefs)")}
+    if "validation_sha256" not in annual_columns:
+        db.execute("ALTER TABLE annual_filing_briefs ADD COLUMN validation_sha256 TEXT")
+    annual_history_columns = {
+        row[1] for row in db.execute("PRAGMA table_info(annual_filing_review_history)")
+    }
+    if "draft_validation_sha256" not in annual_history_columns:
+        db.execute(
+            "ALTER TABLE annual_filing_review_history ADD COLUMN draft_validation_sha256 TEXT"
+        )
+    db.commit()
+    return db
+
+
+def record_discovery_poll_batch(
+    db, started_at, completed_at, duration_ms, checks, degraded, new_sources,
+    request_durations_ms=(),
+):
+    """Persist bounded URL-free official-list polling evidence across restarts."""
+    try:
+        started = datetime.fromisoformat(str(started_at).replace("Z", "+00:00"))
+        completed = datetime.fromisoformat(str(completed_at).replace("Z", "+00:00"))
+        duration_ms, checks = int(duration_ms), int(checks)
+        degraded, new_sources = int(degraded), int(new_sources)
+        request_durations = tuple(int(value) for value in request_durations_ms)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-discovery-poll-batch") from exc
+    if (
+        started.tzinfo is None or completed.tzinfo is None or completed < started
+        or not 0 <= duration_ms <= 3_600_000 or not 1 <= checks <= 1000
+        or not 0 <= degraded <= checks or not 0 <= new_sources <= 1_000_000
+        or len(request_durations) != checks
+        or any(value < 0 or value > 3_600_000 for value in request_durations)
+    ):
+        raise ValueError("invalid-discovery-poll-batch")
+    with db:
+        db.execute("""
+          INSERT INTO discovery_poll_batches(
+            started_at,completed_at,duration_ms,checks,degraded,new_sources,
+            request_duration_total_ms,request_duration_max_ms
+          ) VALUES(?,?,?,?,?,?,?,?)
+        """, (
+            started_at, completed_at, duration_ms, checks, degraded, new_sources,
+            sum(request_durations), max(request_durations),
+        ))
+        db.execute("""
+          DELETE FROM discovery_poll_batches WHERE id IN (
+            SELECT id FROM discovery_poll_batches ORDER BY id DESC LIMIT -1 OFFSET 100000
+          )
+        """)
+
+
+DISCOVERY_POLL_METRIC_WHERE = """
+  typeof(duration_ms)='integer' AND duration_ms BETWEEN 0 AND 3600000
+  AND typeof(checks)='integer' AND checks BETWEEN 1 AND 1000
+  AND typeof(degraded)='integer' AND degraded BETWEEN 0 AND checks
+  AND typeof(new_sources)='integer' AND new_sources BETWEEN 0 AND 1000000
+  AND typeof(request_duration_total_ms)='integer'
+  AND request_duration_total_ms BETWEEN 0 AND checks * 3600000
+  AND typeof(request_duration_max_ms)='integer'
+  AND request_duration_max_ms BETWEEN 0 AND 3600000
+  AND request_duration_max_ms <= request_duration_total_ms
+  AND julianday(started_at) IS NOT NULL AND julianday(completed_at) IS NOT NULL
+  AND julianday(started_at) <= julianday(completed_at)
+"""
+
+
+def discovery_poll_summary(db, reference=None, poll_overdue_after_seconds=60):
+    """Return restart-safe official-list polling metrics without source identities."""
+    reference = reference or now()
+    try:
+        parsed = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            raise ValueError
+        poll_overdue_after_seconds = int(poll_overdue_after_seconds)
+        if not 15 <= poll_overdue_after_seconds <= 86_400:
+            raise ValueError
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-discovery-poll-reference") from exc
+    reference_utc = parsed.astimezone(timezone.utc)
+    window_start = (reference_utc - timedelta(hours=24)).isoformat(timespec="milliseconds")
+    reference_text = reference_utc.isoformat(timespec="milliseconds")
+    latest = None
+    latest_candidates = db.execute(f"""
+      SELECT completed_at,duration_ms,checks,degraded,new_sources,
+             request_duration_total_ms,request_duration_max_ms
+      FROM discovery_poll_batches
+      WHERE {DISCOVERY_POLL_METRIC_WHERE}
+      ORDER BY id DESC LIMIT 100
+    """).fetchall()
+    for candidate in latest_candidates:
+        try:
+            completed_at = datetime.fromisoformat(
+                str(candidate["completed_at"]).replace("Z", "+00:00")
+            )
+            if (
+                completed_at.tzinfo is None
+                or completed_at.astimezone(timezone.utc) > reference_utc
+            ):
+                continue
+        except (TypeError, ValueError):
+            continue
+        latest = candidate
+        break
+    last_completed_at = None
+    last_completed_age_seconds = None
+    if latest:
+        completed_at = datetime.fromisoformat(
+            str(latest["completed_at"]).replace("Z", "+00:00")
+        ).astimezone(timezone.utc)
+        last_completed_at = completed_at.isoformat(timespec="milliseconds")
+        last_completed_age_seconds = max(
+            0, round((reference_utc - completed_at).total_seconds())
+        )
+    totals = db.execute(f"""
+      SELECT count(*) AS runs,COALESCE(sum(checks),0) AS checks,
+             COALESCE(sum(degraded),0) AS degraded,
+             COALESCE(sum(new_sources),0) AS new_sources,
+             COALESCE(sum(request_duration_total_ms),0) AS request_total,
+             max(request_duration_max_ms) AS request_max
+      FROM discovery_poll_batches
+      WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
+        AND {DISCOVERY_POLL_METRIC_WHERE}
+    """, (window_start, reference_text)).fetchone()
+    return {
+        "lastCompletedAt": last_completed_at,
+        "lastCompletedAgeSeconds": last_completed_age_seconds,
+        "pollOverdueAfterSeconds": poll_overdue_after_seconds,
+        "pollOverdue": (
+            last_completed_age_seconds is None
+            or last_completed_age_seconds > poll_overdue_after_seconds
+        ),
+        "lastDurationMs": latest["duration_ms"] if latest else None,
+        "lastChecks": latest["checks"] if latest else 0,
+        "lastDegraded": latest["degraded"] if latest else 0,
+        "lastNewSources": latest["new_sources"] if latest else 0,
+        "lastRequestDurationAverageMs": (
+            round(latest["request_duration_total_ms"] / latest["checks"])
+            if latest and latest["checks"] else None
+        ),
+        "lastRequestDurationMaxMs": latest["request_duration_max_ms"] if latest else None,
+        "runs24Hours": totals["runs"],
+        "checks24Hours": totals["checks"],
+        "degraded24Hours": totals["degraded"],
+        "newSources24Hours": totals["new_sources"],
+        "requestDurationAverageMs24Hours": (
+            round(totals["request_total"] / totals["checks"])
+            if totals["checks"] else None
+        ),
+        "requestDurationMaxMs24Hours": totals["request_max"],
+    }
+
+
+def record_priority_source_run(
+    db, process_started_at, observed_at, target_count, configured_count,
+    healthy, degraded, completion_latency_ms,
+):
+    """Persist one bounded, identity-free priority coverage result per process."""
+    try:
+        started = datetime.fromisoformat(str(process_started_at).replace("Z", "+00:00"))
+        observed = datetime.fromisoformat(str(observed_at).replace("Z", "+00:00"))
+        target_count, configured_count = int(target_count), int(configured_count)
+        healthy, degraded = int(healthy), int(degraded)
+        completion_latency_ms = int(completion_latency_ms)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-priority-source-run") from exc
+    maximum_latency_ms = 31 * 24 * 60 * 60 * 1000
+    if (
+        started.tzinfo is None or observed.tzinfo is None or observed < started
+        or not 1 <= target_count <= 100
+        or not 1 <= configured_count <= target_count
+        or not 0 <= healthy <= configured_count
+        or not 0 <= degraded <= configured_count
+        or healthy + degraded != configured_count
+        or not 0 <= completion_latency_ms <= maximum_latency_ms
+    ):
+        raise ValueError("invalid-priority-source-run")
+    completed = started.astimezone(timezone.utc) + timedelta(milliseconds=completion_latency_ms)
+    if completed > observed.astimezone(timezone.utc):
+        raise ValueError("invalid-priority-source-run")
+    completed_at = completed.isoformat(timespec="milliseconds")
+    with db:
+        db.execute("""
+          INSERT INTO priority_source_runs(
+            process_started_at,first_completed_at,last_observed_at,target_count,
+            configured_count,healthy,degraded,completion_latency_ms
+          ) VALUES(?,?,?,?,?,?,?,?)
+          ON CONFLICT(process_started_at) DO UPDATE SET
+            last_observed_at=excluded.last_observed_at,
+            target_count=excluded.target_count,
+            configured_count=excluded.configured_count,
+            healthy=excluded.healthy,
+            degraded=excluded.degraded
+        """, (
+            process_started_at, completed_at, observed_at, target_count,
+            configured_count, healthy, degraded, completion_latency_ms,
+        ))
+        db.execute("""
+          DELETE FROM priority_source_runs WHERE process_started_at IN (
+            SELECT process_started_at FROM priority_source_runs
+            ORDER BY last_observed_at DESC LIMIT -1 OFFSET 10000
+          )
+        """)
+
+
+PRIORITY_SOURCE_RUN_WHERE = """
+  typeof(target_count)='integer' AND target_count BETWEEN 1 AND 100
+  AND typeof(configured_count)='integer'
+  AND configured_count BETWEEN 1 AND target_count
+  AND typeof(healthy)='integer' AND healthy BETWEEN 0 AND configured_count
+  AND typeof(degraded)='integer' AND degraded BETWEEN 0 AND configured_count
+  AND healthy + degraded = configured_count
+  AND typeof(completion_latency_ms)='integer'
+  AND completion_latency_ms BETWEEN 0 AND 2678400000
+  AND julianday(process_started_at) IS NOT NULL
+  AND julianday(first_completed_at) IS NOT NULL
+  AND julianday(last_observed_at) IS NOT NULL
+  AND julianday(process_started_at) <= julianday(first_completed_at)
+  AND julianday(first_completed_at) <= julianday(last_observed_at)
+"""
+
+
+def priority_source_run_summary(db, reference=None):
+    """Return durable priority completion evidence without per-company details."""
+    reference = reference or now()
+    try:
+        parsed = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            raise ValueError
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-priority-source-run-reference") from exc
+    reference_utc = parsed.astimezone(timezone.utc)
+    reference_text = reference_utc.isoformat(timespec="milliseconds")
+    window_start = (reference_utc - timedelta(hours=24)).isoformat(timespec="milliseconds")
+    latest = db.execute(f"""
+      SELECT first_completed_at,last_observed_at,configured_count,healthy,degraded,
+             completion_latency_ms
+      FROM priority_source_runs
+      WHERE julianday(first_completed_at)<=julianday(?)
+        AND julianday(last_observed_at)<=julianday(?)
+        AND {PRIORITY_SOURCE_RUN_WHERE}
+      ORDER BY julianday(last_observed_at) DESC LIMIT 1
+    """, (reference_text, reference_text)).fetchone()
+    completed_runs = db.execute(f"""
+      SELECT count(*) FROM priority_source_runs
+      WHERE julianday(first_completed_at)>=julianday(?)
+        AND julianday(first_completed_at)<=julianday(?)
+        AND julianday(last_observed_at)<=julianday(?)
+        AND {PRIORITY_SOURCE_RUN_WHERE}
+    """, (window_start, reference_text, reference_text)).fetchone()[0]
+    if not latest:
+        return {
+            "lastCompletedAt": None, "lastObservedAt": None,
+            "lastObservedAgeSeconds": None, "configuredCount": 0,
+            "healthy": 0, "degraded": 0, "completionLatencyMs": None,
+            "completedRuns24Hours": completed_runs,
+        }
+    observed = datetime.fromisoformat(
+        str(latest["last_observed_at"]).replace("Z", "+00:00")
+    ).astimezone(timezone.utc)
+    return {
+        "lastCompletedAt": latest["first_completed_at"],
+        "lastObservedAt": latest["last_observed_at"],
+        "lastObservedAgeSeconds": max(0, round((reference_utc - observed).total_seconds())),
+        "configuredCount": latest["configured_count"],
+        "healthy": latest["healthy"], "degraded": latest["degraded"],
+        "completionLatencyMs": latest["completion_latency_ms"],
+        "completedRuns24Hours": completed_runs,
+    }
+
+
+def record_body_fetch_batch(
+    db, polled_at, completed_at, duration_ms, checks, errors, not_modified,
+    detection_latencies_ms=(), selection_partitions=None, selection_errors=None,
+    selection_not_modified=None, selection_fetched=None, selection_updated=None,
+    eligibility_waits_ms=(), request_durations_ms=(),
+    request_success_durations_ms=(), request_error_durations_ms=(),
+):
+    """Persist bounded URL-free body-fetch evidence across service restarts."""
+    try:
+        polled = datetime.fromisoformat(str(polled_at).replace("Z", "+00:00"))
+        completed = datetime.fromisoformat(str(completed_at).replace("Z", "+00:00"))
+        duration_ms, checks = int(duration_ms), int(checks)
+        errors, not_modified = int(errors), int(not_modified)
+        latencies = tuple(int(value) for value in detection_latencies_ms)
+        eligibility_waits = tuple(int(value) for value in eligibility_waits_ms)
+        request_durations = tuple(int(value) for value in request_durations_ms)
+        request_success_durations = tuple(
+            int(value) for value in request_success_durations_ms
+        )
+        request_error_durations = tuple(
+            int(value) for value in request_error_durations_ms
+        )
+        partitions = selection_partitions or {}
+        selected_detected = int(partitions.get("detectedNeverFetched", 0))
+        selected_baseline = int(partitions.get("baselineNeverFetched", 0))
+        selected_extraction = int(partitions.get("extractionPending", 0))
+        selected_recheck = int(partitions.get("recheck", 0))
+        error_partitions = selection_errors or {}
+        error_detected = int(error_partitions.get("detectedNeverFetched", 0))
+        error_baseline = int(error_partitions.get("baselineNeverFetched", 0))
+        error_extraction = int(error_partitions.get("extractionPending", 0))
+        error_recheck = int(error_partitions.get("recheck", 0))
+        not_modified_partitions = selection_not_modified or {}
+        not_modified_detected = int(
+            not_modified_partitions.get("detectedNeverFetched", 0)
+        )
+        not_modified_baseline = int(
+            not_modified_partitions.get("baselineNeverFetched", 0)
+        )
+        not_modified_extraction = int(
+            not_modified_partitions.get("extractionPending", 0)
+        )
+        not_modified_recheck = int(not_modified_partitions.get("recheck", 0))
+        fetched_partitions = selection_fetched or {}
+        fetched_detected = int(fetched_partitions.get("detectedNeverFetched", 0))
+        fetched_baseline = int(fetched_partitions.get("baselineNeverFetched", 0))
+        fetched_extraction = int(fetched_partitions.get("extractionPending", 0))
+        fetched_recheck = int(fetched_partitions.get("recheck", 0))
+        updated_partitions = selection_updated or {}
+        updated_detected = int(updated_partitions.get("detectedNeverFetched", 0))
+        updated_baseline = int(updated_partitions.get("baselineNeverFetched", 0))
+        updated_extraction = int(updated_partitions.get("extractionPending", 0))
+        updated_recheck = int(updated_partitions.get("recheck", 0))
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-body-fetch-batch") from exc
+    maximum_latency_ms = 31 * 24 * 60 * 60 * 1000
+    if (
+        polled.tzinfo is None or completed.tzinfo is None or completed < polled
+        or not 0 <= duration_ms <= 3_600_000 or not 1 <= checks <= 1000
+        or not 0 <= errors <= checks or not 0 <= not_modified <= checks
+        or len(latencies) > checks
+        or len(eligibility_waits) > checks
+        or len(request_durations) > checks
+        or len(request_success_durations) > checks
+        or len(request_error_durations) > checks
+        or any(value < 0 or value > maximum_latency_ms for value in latencies)
+        or any(value < 0 or value > maximum_latency_ms for value in eligibility_waits)
+        or any(value < 0 or value > 3_600_000 for value in request_durations)
+        or any(value < 0 or value > 3_600_000 for value in request_success_durations)
+        or any(value < 0 or value > 3_600_000 for value in request_error_durations)
+        or len(request_success_durations) + len(request_error_durations)
+            not in {0, len(request_durations)}
+        or (
+            (request_success_durations or request_error_durations)
+            and (
+                len(request_success_durations) != checks - errors
+                or len(request_error_durations) != errors
+            )
+        )
+        or any(value < 0 or value > checks for value in (
+            selected_detected, selected_baseline, selected_extraction, selected_recheck,
+        ))
+        or sum((selected_detected, selected_baseline, selected_extraction, selected_recheck))
+            not in {0, checks}
+        or any(value < 0 for value in (
+            error_detected, error_baseline, error_extraction, error_recheck,
+        ))
+        or error_detected > selected_detected or error_baseline > selected_baseline
+        or error_extraction > selected_extraction or error_recheck > selected_recheck
+        or sum((error_detected, error_baseline, error_extraction, error_recheck))
+            not in {0, errors}
+        or any(value < 0 for value in (
+            not_modified_detected, not_modified_baseline,
+            not_modified_extraction, not_modified_recheck,
+        ))
+        or error_detected + not_modified_detected > selected_detected
+        or error_baseline + not_modified_baseline > selected_baseline
+        or error_extraction + not_modified_extraction > selected_extraction
+        or error_recheck + not_modified_recheck > selected_recheck
+        or sum((
+            not_modified_detected, not_modified_baseline,
+            not_modified_extraction, not_modified_recheck,
+        )) not in {0, not_modified}
+        or any(value < 0 for value in (
+            fetched_detected, fetched_baseline, fetched_extraction, fetched_recheck,
+        ))
+        or error_detected + not_modified_detected + fetched_detected > selected_detected
+        or error_baseline + not_modified_baseline + fetched_baseline > selected_baseline
+        or error_extraction + not_modified_extraction + fetched_extraction > selected_extraction
+        or error_recheck + not_modified_recheck + fetched_recheck > selected_recheck
+        or sum((
+            fetched_detected, fetched_baseline, fetched_extraction, fetched_recheck,
+        )) not in {0, checks - errors - not_modified}
+        or any(value < 0 for value in (
+            updated_detected, updated_baseline, updated_extraction, updated_recheck,
+        ))
+        or updated_detected > fetched_detected or updated_baseline > fetched_baseline
+        or updated_extraction > fetched_extraction or updated_recheck > fetched_recheck
+    ):
+        raise ValueError("invalid-body-fetch-batch")
+    latency_total = sum(latencies)
+    latency_max = max(latencies) if latencies else None
+    eligibility_wait_total = sum(eligibility_waits)
+    eligibility_wait_max = max(eligibility_waits) if eligibility_waits else None
+    request_duration_total = sum(request_durations)
+    request_duration_max = max(request_durations) if request_durations else None
+    request_success_duration_total = sum(request_success_durations)
+    request_success_duration_max = (
+        max(request_success_durations) if request_success_durations else None
+    )
+    request_error_duration_total = sum(request_error_durations)
+    request_error_duration_max = (
+        max(request_error_durations) if request_error_durations else None
+    )
+    with db:
+        db.execute("""
+          INSERT INTO body_fetch_batches(
+            polled_at,completed_at,duration_ms,checks,errors,not_modified,
+            detection_latency_samples,detection_latency_total_ms,detection_latency_max_ms,
+            eligibility_wait_samples,eligibility_wait_total_ms,eligibility_wait_max_ms,
+            request_duration_samples,request_duration_total_ms,request_duration_max_ms,
+            request_success_duration_samples,request_success_duration_total_ms,
+            request_success_duration_max_ms,request_error_duration_samples,
+            request_error_duration_total_ms,request_error_duration_max_ms,
+            selected_detected_never_fetched,selected_baseline_never_fetched,
+            selected_extraction_pending,selected_recheck,
+            error_detected_never_fetched,error_baseline_never_fetched,
+            error_extraction_pending,error_recheck,
+            not_modified_detected_never_fetched,
+            not_modified_baseline_never_fetched,
+            not_modified_extraction_pending,not_modified_recheck,
+            fetched_detected_never_fetched,fetched_baseline_never_fetched,
+            fetched_extraction_pending,fetched_recheck,
+            updated_detected_never_fetched,updated_baseline_never_fetched,
+            updated_extraction_pending,updated_recheck
+          ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        """, (
+            polled_at, completed_at, duration_ms, checks, errors, not_modified,
+            len(latencies), latency_total, latency_max,
+            len(eligibility_waits), eligibility_wait_total, eligibility_wait_max,
+            len(request_durations), request_duration_total, request_duration_max,
+            len(request_success_durations), request_success_duration_total,
+            request_success_duration_max, len(request_error_durations),
+            request_error_duration_total, request_error_duration_max,
+            selected_detected,
+            selected_baseline, selected_extraction, selected_recheck,
+            error_detected, error_baseline, error_extraction, error_recheck,
+            not_modified_detected, not_modified_baseline,
+            not_modified_extraction, not_modified_recheck,
+            fetched_detected, fetched_baseline, fetched_extraction, fetched_recheck,
+            updated_detected, updated_baseline, updated_extraction, updated_recheck,
+        ))
+        db.execute("""
+          DELETE FROM body_fetch_batches WHERE id IN (
+            SELECT id FROM body_fetch_batches ORDER BY id DESC LIMIT -1 OFFSET 20000
+          )
+        """)
+
+
+def record_body_fetch_poll(db, polled_at, pending_count):
+    """Persist one URL-free heartbeat so idle workers remain observable after restart."""
+    try:
+        polled = datetime.fromisoformat(str(polled_at).replace("Z", "+00:00"))
+        pending = int(pending_count)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-body-fetch-poll") from exc
+    if polled.tzinfo is None or not 0 <= pending <= 1_000_000:
+        raise ValueError("invalid-body-fetch-poll")
+    with db:
+        db.execute("""
+          INSERT INTO body_fetch_worker_state(id,last_polled_at,pending_count)
+          VALUES(1,?,?)
+          ON CONFLICT(id) DO UPDATE SET
+            last_polled_at=excluded.last_polled_at,
+            pending_count=excluded.pending_count
+        """, (polled_at, pending))
+
+
+def record_body_host_probe(db, eligible_at, attempted_at, completed_at, outcome):
+    """Persist URL-free recovery-probe evidence across worker restarts."""
+    try:
+        eligible = datetime.fromisoformat(str(eligible_at).replace("Z", "+00:00"))
+        attempted = datetime.fromisoformat(str(attempted_at).replace("Z", "+00:00"))
+        completed = datetime.fromisoformat(str(completed_at).replace("Z", "+00:00"))
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-body-host-probe") from exc
+    if (
+        eligible.tzinfo is None
+        or attempted.tzinfo is None
+        or completed.tzinfo is None
+        or attempted < eligible
+        or attempted - eligible > timedelta(days=31)
+        or completed < attempted
+        or completed - attempted > timedelta(hours=1)
+        or outcome not in {"recovered", "restricted", "failed"}
+    ):
+        raise ValueError("invalid-body-host-probe")
+    with db:
+        db.execute("""
+          INSERT INTO body_host_probe_events(eligible_at,attempted_at,completed_at,outcome)
+          VALUES(?,?,?,?)
+        """, (eligible_at, attempted_at, completed_at, outcome))
+        db.execute("""
+          DELETE FROM body_host_probe_events WHERE id IN (
+            SELECT id FROM body_host_probe_events ORDER BY id DESC LIMIT -1 OFFSET 20000
+          )
+        """)
+
+
+def body_host_probe_summary(db, reference=None):
+    """Return bounded recovery-probe counts without source or host identities."""
+    reference = reference or now()
+    try:
+        parsed = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            raise ValueError
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-body-host-probe-reference") from exc
+    reference_utc = parsed.astimezone(timezone.utc)
+    reference_text = reference_utc.isoformat(timespec="milliseconds")
+    window_start = (reference_utc - timedelta(hours=24)).isoformat(timespec="milliseconds")
+    valid = """
+      outcome IN ('recovered','restricted','failed')
+      AND julianday(attempted_at) IS NOT NULL
+      AND julianday(completed_at) IS NOT NULL
+      AND julianday(attempted_at) <= julianday(completed_at)
+      AND (julianday(completed_at)-julianday(attempted_at))*86400 <= 3600.001
+    """
+    latest = db.execute(f"""
+      SELECT eligible_at,attempted_at,completed_at,outcome FROM body_host_probe_events
+      WHERE julianday(completed_at)<=julianday(?) AND {valid}
+      ORDER BY id DESC LIMIT 1
+    """, (reference_text,)).fetchone()
+    totals = db.execute(f"""
+      SELECT count(*) AS probes,
+             sum(CASE WHEN outcome='recovered' THEN 1 ELSE 0 END) AS recovered,
+             sum(CASE WHEN outcome='restricted' THEN 1 ELSE 0 END) AS restricted,
+             sum(CASE WHEN outcome='failed' THEN 1 ELSE 0 END) AS failed
+      FROM body_host_probe_events
+      WHERE julianday(completed_at)>=julianday(?)
+        AND julianday(completed_at)<=julianday(?) AND {valid}
+    """, (window_start, reference_text)).fetchone()
+    waits = []
+    for row in db.execute(f"""
+      SELECT eligible_at,attempted_at FROM body_host_probe_events
+      WHERE julianday(completed_at)>=julianday(?)
+        AND julianday(completed_at)<=julianday(?) AND {valid}
+        AND julianday(eligible_at) IS NOT NULL
+        AND julianday(eligible_at)<=julianday(attempted_at)
+        AND (julianday(attempted_at)-julianday(eligible_at))*86400<=2678400.001
+    """, (window_start, reference_text)).fetchall():
+        try:
+            eligible = datetime.fromisoformat(
+                str(row["eligible_at"]).replace("Z", "+00:00")
+            )
+            attempted = datetime.fromisoformat(
+                str(row["attempted_at"]).replace("Z", "+00:00")
+            )
+            if eligible.tzinfo is None or attempted.tzinfo is None:
+                continue
+            wait = round((attempted - eligible).total_seconds() * 1000)
+            if 0 <= wait <= 2_678_400_000:
+                waits.append(wait)
+        except (TypeError, ValueError, OverflowError):
+            continue
+    latest_wait = None
+    if latest and latest["eligible_at"] is not None:
+        try:
+            eligible = datetime.fromisoformat(
+                str(latest["eligible_at"]).replace("Z", "+00:00")
+            )
+            attempted = datetime.fromisoformat(
+                str(latest["attempted_at"]).replace("Z", "+00:00")
+            )
+            wait = round((attempted - eligible).total_seconds() * 1000)
+            if (
+                eligible.tzinfo is not None
+                and attempted.tzinfo is not None
+                and 0 <= wait <= 2_678_400_000
+            ):
+                latest_wait = wait
+        except (TypeError, ValueError, OverflowError):
+            pass
+    return {
+        "lastEligibleAt": latest["eligible_at"] if latest_wait is not None else None,
+        "lastAttemptedAt": latest["attempted_at"] if latest else None,
+        "lastCompletedAt": latest["completed_at"] if latest else None,
+        "lastOutcome": latest["outcome"] if latest else None,
+        "lastEligibilityWaitMs": latest_wait,
+        "probes24Hours": int(totals["probes"] or 0),
+        "recovered24Hours": int(totals["recovered"] or 0),
+        "restricted24Hours": int(totals["restricted"] or 0),
+        "failed24Hours": int(totals["failed"] or 0),
+        "eligibilityWaitSamples24Hours": len(waits),
+        "eligibilityWaitAverageMs24Hours": (
+            round(sum(waits) / len(waits)) if waits else None
+        ),
+        "eligibilityWaitMaxMs24Hours": max(waits, default=None),
+    }
+
+
+BODY_FETCH_METRIC_WHERE = """
+  typeof(duration_ms)='integer' AND duration_ms BETWEEN 0 AND 3600000
+  AND typeof(checks)='integer' AND checks BETWEEN 1 AND 1000
+  AND typeof(errors)='integer' AND errors BETWEEN 0 AND checks
+  AND typeof(not_modified)='integer' AND not_modified BETWEEN 0 AND checks
+  AND typeof(detection_latency_samples)='integer'
+  AND detection_latency_samples BETWEEN 0 AND checks
+  AND typeof(detection_latency_total_ms)='integer'
+  AND detection_latency_total_ms >= 0
+  AND (
+    (detection_latency_samples=0 AND detection_latency_total_ms=0
+      AND detection_latency_max_ms IS NULL)
+    OR
+    (detection_latency_samples>0 AND typeof(detection_latency_max_ms)='integer'
+      AND detection_latency_max_ms BETWEEN 0 AND 2678400000
+      AND detection_latency_max_ms <= detection_latency_total_ms
+      AND detection_latency_total_ms <= detection_latency_samples * 2678400000)
+  )
+  AND typeof(eligibility_wait_samples)='integer'
+  AND eligibility_wait_samples BETWEEN 0 AND checks
+  AND typeof(eligibility_wait_total_ms)='integer'
+  AND eligibility_wait_total_ms >= 0
+  AND (
+    (eligibility_wait_samples=0 AND eligibility_wait_total_ms=0
+      AND eligibility_wait_max_ms IS NULL)
+    OR
+    (eligibility_wait_samples>0 AND typeof(eligibility_wait_max_ms)='integer'
+      AND eligibility_wait_max_ms BETWEEN 0 AND 2678400000
+      AND eligibility_wait_max_ms <= eligibility_wait_total_ms
+      AND eligibility_wait_total_ms <= eligibility_wait_samples * 2678400000)
+  )
+  AND typeof(request_duration_samples)='integer'
+  AND request_duration_samples BETWEEN 0 AND checks
+  AND typeof(request_duration_total_ms)='integer'
+  AND request_duration_total_ms >= 0
+  AND (
+    (request_duration_samples=0 AND request_duration_total_ms=0
+      AND request_duration_max_ms IS NULL)
+    OR
+    (request_duration_samples>0 AND typeof(request_duration_max_ms)='integer'
+      AND request_duration_max_ms BETWEEN 0 AND 3600000
+      AND request_duration_max_ms <= request_duration_total_ms
+      AND request_duration_total_ms <= request_duration_samples * 3600000)
+  )
+  AND typeof(request_success_duration_samples)='integer'
+  AND request_success_duration_samples BETWEEN 0 AND checks
+  AND typeof(request_success_duration_total_ms)='integer'
+  AND request_success_duration_total_ms >= 0
+  AND (
+    (request_success_duration_samples=0 AND request_success_duration_total_ms=0
+      AND request_success_duration_max_ms IS NULL)
+    OR
+    (request_success_duration_samples>0
+      AND typeof(request_success_duration_max_ms)='integer'
+      AND request_success_duration_max_ms BETWEEN 0 AND 3600000
+      AND request_success_duration_max_ms <= request_success_duration_total_ms
+      AND request_success_duration_total_ms
+        <= request_success_duration_samples * 3600000)
+  )
+  AND typeof(request_error_duration_samples)='integer'
+  AND request_error_duration_samples BETWEEN 0 AND checks
+  AND typeof(request_error_duration_total_ms)='integer'
+  AND request_error_duration_total_ms >= 0
+  AND (
+    (request_error_duration_samples=0 AND request_error_duration_total_ms=0
+      AND request_error_duration_max_ms IS NULL)
+    OR
+    (request_error_duration_samples>0
+      AND typeof(request_error_duration_max_ms)='integer'
+      AND request_error_duration_max_ms BETWEEN 0 AND 3600000
+      AND request_error_duration_max_ms <= request_error_duration_total_ms
+      AND request_error_duration_total_ms
+        <= request_error_duration_samples * 3600000)
+  )
+  AND request_success_duration_samples + request_error_duration_samples
+    IN (0, request_duration_samples)
+  AND (
+    request_success_duration_samples + request_error_duration_samples=0
+    OR (request_success_duration_samples=checks-errors
+      AND request_error_duration_samples=errors)
+  )
+  AND typeof(selected_detected_never_fetched)='integer'
+  AND selected_detected_never_fetched BETWEEN 0 AND checks
+  AND typeof(selected_baseline_never_fetched)='integer'
+  AND selected_baseline_never_fetched BETWEEN 0 AND checks
+  AND typeof(selected_extraction_pending)='integer'
+  AND selected_extraction_pending BETWEEN 0 AND checks
+  AND typeof(selected_recheck)='integer' AND selected_recheck BETWEEN 0 AND checks
+  AND (
+    selected_detected_never_fetched + selected_baseline_never_fetched
+      + selected_extraction_pending + selected_recheck IN (0, checks)
+  )
+  AND typeof(error_detected_never_fetched)='integer'
+  AND error_detected_never_fetched BETWEEN 0 AND selected_detected_never_fetched
+  AND typeof(error_baseline_never_fetched)='integer'
+  AND error_baseline_never_fetched BETWEEN 0 AND selected_baseline_never_fetched
+  AND typeof(error_extraction_pending)='integer'
+  AND error_extraction_pending BETWEEN 0 AND selected_extraction_pending
+  AND typeof(error_recheck)='integer' AND error_recheck BETWEEN 0 AND selected_recheck
+  AND (
+    error_detected_never_fetched + error_baseline_never_fetched
+      + error_extraction_pending + error_recheck IN (0, errors)
+  )
+  AND typeof(not_modified_detected_never_fetched)='integer'
+  AND not_modified_detected_never_fetched BETWEEN 0 AND selected_detected_never_fetched
+  AND typeof(not_modified_baseline_never_fetched)='integer'
+  AND not_modified_baseline_never_fetched BETWEEN 0 AND selected_baseline_never_fetched
+  AND typeof(not_modified_extraction_pending)='integer'
+  AND not_modified_extraction_pending BETWEEN 0 AND selected_extraction_pending
+  AND typeof(not_modified_recheck)='integer'
+  AND not_modified_recheck BETWEEN 0 AND selected_recheck
+  AND error_detected_never_fetched + not_modified_detected_never_fetched
+    <= selected_detected_never_fetched
+  AND error_baseline_never_fetched + not_modified_baseline_never_fetched
+    <= selected_baseline_never_fetched
+  AND error_extraction_pending + not_modified_extraction_pending
+    <= selected_extraction_pending
+  AND error_recheck + not_modified_recheck <= selected_recheck
+  AND (
+    not_modified_detected_never_fetched + not_modified_baseline_never_fetched
+      + not_modified_extraction_pending + not_modified_recheck IN (0, not_modified)
+  )
+  AND typeof(fetched_detected_never_fetched)='integer'
+  AND fetched_detected_never_fetched BETWEEN 0 AND selected_detected_never_fetched
+  AND typeof(fetched_baseline_never_fetched)='integer'
+  AND fetched_baseline_never_fetched BETWEEN 0 AND selected_baseline_never_fetched
+  AND typeof(fetched_extraction_pending)='integer'
+  AND fetched_extraction_pending BETWEEN 0 AND selected_extraction_pending
+  AND typeof(fetched_recheck)='integer'
+  AND fetched_recheck BETWEEN 0 AND selected_recheck
+  AND error_detected_never_fetched + not_modified_detected_never_fetched
+    + fetched_detected_never_fetched <= selected_detected_never_fetched
+  AND error_baseline_never_fetched + not_modified_baseline_never_fetched
+    + fetched_baseline_never_fetched <= selected_baseline_never_fetched
+  AND error_extraction_pending + not_modified_extraction_pending
+    + fetched_extraction_pending <= selected_extraction_pending
+  AND error_recheck + not_modified_recheck + fetched_recheck <= selected_recheck
+  AND (
+    fetched_detected_never_fetched + fetched_baseline_never_fetched
+      + fetched_extraction_pending + fetched_recheck IN (0, checks-errors-not_modified)
+  )
+  AND typeof(updated_detected_never_fetched)='integer'
+  AND updated_detected_never_fetched BETWEEN 0 AND fetched_detected_never_fetched
+  AND typeof(updated_baseline_never_fetched)='integer'
+  AND updated_baseline_never_fetched BETWEEN 0 AND fetched_baseline_never_fetched
+  AND typeof(updated_extraction_pending)='integer'
+  AND updated_extraction_pending BETWEEN 0 AND fetched_extraction_pending
+  AND typeof(updated_recheck)='integer'
+  AND updated_recheck BETWEEN 0 AND fetched_recheck
+  AND julianday(polled_at) IS NOT NULL AND julianday(completed_at) IS NOT NULL
+  AND julianday(polled_at) <= julianday(completed_at)
+"""
+
+
+def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360):
+    """Return restart-safe aggregate metrics without source identities or bodies."""
+    reference = reference or now()
+    try:
+        parsed = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            raise ValueError
+        poll_overdue_after_seconds = int(poll_overdue_after_seconds)
+        if not 60 <= poll_overdue_after_seconds <= 86_400:
+            raise ValueError
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid-body-fetch-reference") from exc
+    reference_utc = parsed.astimezone(timezone.utc)
+    window_start = (parsed.astimezone(timezone.utc) - timedelta(hours=24)).isoformat(
+        timespec="milliseconds"
+    )
+    heartbeat = db.execute("""
+      SELECT last_polled_at,pending_count FROM body_fetch_worker_state
+      WHERE id=1 AND typeof(pending_count)='integer'
+        AND pending_count BETWEEN 0 AND 1000000
+    """).fetchone()
+    last_polled_at = None
+    last_poll_age_seconds = None
+    if heartbeat:
+        try:
+            heartbeat_at = datetime.fromisoformat(
+                str(heartbeat["last_polled_at"]).replace("Z", "+00:00")
+            )
+            if heartbeat_at.tzinfo is None:
+                raise ValueError
+            age = round((reference_utc - heartbeat_at.astimezone(timezone.utc)).total_seconds())
+            if age < -5:
+                raise ValueError
+            last_polled_at = heartbeat_at.isoformat(timespec="milliseconds")
+            last_poll_age_seconds = max(0, age)
+        except (TypeError, ValueError):
+            pass
+    latest = None
+    latest_candidates = db.execute(f"""
+      SELECT completed_at,duration_ms,checks,errors,not_modified,
+             detection_latency_samples,detection_latency_total_ms,
+             detection_latency_max_ms,eligibility_wait_samples,
+             eligibility_wait_total_ms,eligibility_wait_max_ms,
+             request_duration_samples,request_duration_total_ms,
+             request_duration_max_ms,
+             request_success_duration_samples,request_success_duration_total_ms,
+             request_success_duration_max_ms,request_error_duration_samples,
+             request_error_duration_total_ms,request_error_duration_max_ms,
+             selected_detected_never_fetched,
+             selected_baseline_never_fetched,selected_extraction_pending,
+             selected_recheck,error_detected_never_fetched,
+             error_baseline_never_fetched,error_extraction_pending,error_recheck,
+             not_modified_detected_never_fetched,
+             not_modified_baseline_never_fetched,
+             not_modified_extraction_pending,not_modified_recheck,
+             fetched_detected_never_fetched,fetched_baseline_never_fetched,
+             fetched_extraction_pending,fetched_recheck,
+             updated_detected_never_fetched,updated_baseline_never_fetched,
+             updated_extraction_pending,updated_recheck
+      FROM body_fetch_batches
+      WHERE {BODY_FETCH_METRIC_WHERE}
+      ORDER BY id DESC LIMIT 100
+    """).fetchall()
+    for candidate in latest_candidates:
+        try:
+            completed_at = datetime.fromisoformat(
+                str(candidate["completed_at"]).replace("Z", "+00:00")
+            )
+            if (
+                completed_at.tzinfo is None
+                or completed_at.astimezone(timezone.utc) > reference_utc
+            ):
+                continue
+        except (TypeError, ValueError):
+            continue
+        latest = candidate
+        break
+    totals = db.execute(f"""
+      SELECT count(*) AS runs,COALESCE(sum(checks),0) AS checks,
+             COALESCE(sum(errors),0) AS errors,
+             COALESCE(sum(not_modified),0) AS not_modified,
+             COALESCE(sum(detection_latency_samples),0) AS latency_samples,
+             COALESCE(sum(detection_latency_total_ms),0) AS latency_total,
+             max(detection_latency_max_ms) AS latency_max,
+             COALESCE(sum(eligibility_wait_samples),0) AS eligibility_wait_samples,
+             COALESCE(sum(eligibility_wait_total_ms),0) AS eligibility_wait_total,
+             max(eligibility_wait_max_ms) AS eligibility_wait_max,
+             COALESCE(sum(request_duration_samples),0) AS request_duration_samples,
+             COALESCE(sum(request_duration_total_ms),0) AS request_duration_total,
+             max(request_duration_max_ms) AS request_duration_max,
+             COALESCE(sum(request_success_duration_samples),0)
+               AS request_success_duration_samples,
+             COALESCE(sum(request_success_duration_total_ms),0)
+               AS request_success_duration_total,
+             max(request_success_duration_max_ms) AS request_success_duration_max,
+             COALESCE(sum(request_error_duration_samples),0)
+               AS request_error_duration_samples,
+             COALESCE(sum(request_error_duration_total_ms),0)
+               AS request_error_duration_total,
+             max(request_error_duration_max_ms) AS request_error_duration_max,
+             COALESCE(sum(selected_detected_never_fetched),0) AS selected_detected,
+             COALESCE(sum(selected_baseline_never_fetched),0) AS selected_baseline,
+             COALESCE(sum(selected_extraction_pending),0) AS selected_extraction,
+             COALESCE(sum(selected_recheck),0) AS selected_recheck,
+             COALESCE(sum(error_detected_never_fetched),0) AS error_detected,
+             COALESCE(sum(error_baseline_never_fetched),0) AS error_baseline,
+             COALESCE(sum(error_extraction_pending),0) AS error_extraction,
+             COALESCE(sum(error_recheck),0) AS error_recheck,
+             COALESCE(sum(not_modified_detected_never_fetched),0)
+               AS not_modified_detected,
+             COALESCE(sum(not_modified_baseline_never_fetched),0)
+               AS not_modified_baseline,
+             COALESCE(sum(not_modified_extraction_pending),0)
+               AS not_modified_extraction,
+             COALESCE(sum(not_modified_recheck),0) AS not_modified_recheck,
+             COALESCE(sum(fetched_detected_never_fetched),0) AS fetched_detected,
+             COALESCE(sum(fetched_baseline_never_fetched),0) AS fetched_baseline,
+             COALESCE(sum(fetched_extraction_pending),0) AS fetched_extraction,
+             COALESCE(sum(fetched_recheck),0) AS fetched_recheck,
+             COALESCE(sum(updated_detected_never_fetched),0) AS updated_detected,
+             COALESCE(sum(updated_baseline_never_fetched),0) AS updated_baseline,
+             COALESCE(sum(updated_extraction_pending),0) AS updated_extraction,
+             COALESCE(sum(updated_recheck),0) AS updated_recheck
+      FROM body_fetch_batches
+      WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
+        AND {BODY_FETCH_METRIC_WHERE}
+    """, (window_start, parsed.astimezone(timezone.utc).isoformat(timespec="milliseconds"))).fetchone()
+    outcome_unmeasured = {
+        partition: max(0, int(totals[f"selected_{partition}"] or 0) - sum((
+            int(totals[f"error_{partition}"] or 0),
+            int(totals[f"not_modified_{partition}"] or 0),
+            int(totals[f"fetched_{partition}"] or 0),
+        )))
+        for partition in ("detected", "baseline", "extraction", "recheck")
+    }
+    return {
+        "lastPolledAt": last_polled_at,
+        "lastPollAgeSeconds": last_poll_age_seconds,
+        "pendingAtLastPoll": heartbeat["pending_count"] if heartbeat and last_polled_at else None,
+        "pollOverdueAfterSeconds": poll_overdue_after_seconds,
+        "pollOverdue": (
+            last_poll_age_seconds is None
+            or last_poll_age_seconds > poll_overdue_after_seconds
+        ),
+        "lastCompletedAt": latest["completed_at"] if latest else None,
+        "lastDurationMs": latest["duration_ms"] if latest else None,
+        "lastChecks": latest["checks"] if latest else 0,
+        "lastErrors": latest["errors"] if latest else 0,
+        "lastNotModified": latest["not_modified"] if latest else 0,
+        "lastDetectionLatencySamples": latest["detection_latency_samples"] if latest else 0,
+        "lastDetectionLatencyAverageMs": (
+            round(latest["detection_latency_total_ms"] / latest["detection_latency_samples"])
+            if latest and latest["detection_latency_samples"] else None
+        ),
+        "lastDetectionLatencyMaxMs": latest["detection_latency_max_ms"] if latest else None,
+        "lastEligibilityWaitSamples": latest["eligibility_wait_samples"] if latest else 0,
+        "lastEligibilityWaitAverageMs": (
+            round(latest["eligibility_wait_total_ms"] / latest["eligibility_wait_samples"])
+            if latest and latest["eligibility_wait_samples"] else None
+        ),
+        "lastEligibilityWaitMaxMs": latest["eligibility_wait_max_ms"] if latest else None,
+        "lastRequestDurationSamples": latest["request_duration_samples"] if latest else 0,
+        "lastRequestDurationAverageMs": (
+            round(latest["request_duration_total_ms"] / latest["request_duration_samples"])
+            if latest and latest["request_duration_samples"] else None
+        ),
+        "lastRequestDurationMaxMs": latest["request_duration_max_ms"] if latest else None,
+        "lastRequestSuccessDurationSamples": (
+            latest["request_success_duration_samples"] if latest else 0
+        ),
+        "lastRequestSuccessDurationAverageMs": (
+            round(
+                latest["request_success_duration_total_ms"]
+                / latest["request_success_duration_samples"]
+            )
+            if latest and latest["request_success_duration_samples"] else None
+        ),
+        "lastRequestSuccessDurationMaxMs": (
+            latest["request_success_duration_max_ms"] if latest else None
+        ),
+        "lastRequestErrorDurationSamples": (
+            latest["request_error_duration_samples"] if latest else 0
+        ),
+        "lastRequestErrorDurationAverageMs": (
+            round(
+                latest["request_error_duration_total_ms"]
+                / latest["request_error_duration_samples"]
+            )
+            if latest and latest["request_error_duration_samples"] else None
+        ),
+        "lastRequestErrorDurationMaxMs": (
+            latest["request_error_duration_max_ms"] if latest else None
+        ),
+        "lastSelectedDetectedNeverFetched": (
+            latest["selected_detected_never_fetched"] if latest else 0
+        ),
+        "lastSelectedBaselineNeverFetched": (
+            latest["selected_baseline_never_fetched"] if latest else 0
+        ),
+        "lastSelectedExtractionPending": (
+            latest["selected_extraction_pending"] if latest else 0
+        ),
+        "lastSelectedRecheck": latest["selected_recheck"] if latest else 0,
+        "lastErrorDetectedNeverFetched": (
+            latest["error_detected_never_fetched"] if latest else 0
+        ),
+        "lastErrorBaselineNeverFetched": (
+            latest["error_baseline_never_fetched"] if latest else 0
+        ),
+        "lastErrorExtractionPending": (
+            latest["error_extraction_pending"] if latest else 0
+        ),
+        "lastErrorRecheck": latest["error_recheck"] if latest else 0,
+        "lastNotModifiedDetectedNeverFetched": (
+            latest["not_modified_detected_never_fetched"] if latest else 0
+        ),
+        "lastNotModifiedBaselineNeverFetched": (
+            latest["not_modified_baseline_never_fetched"] if latest else 0
+        ),
+        "lastNotModifiedExtractionPending": (
+            latest["not_modified_extraction_pending"] if latest else 0
+        ),
+        "lastNotModifiedRecheck": latest["not_modified_recheck"] if latest else 0,
+        "lastFetchedDetectedNeverFetched": (
+            latest["fetched_detected_never_fetched"] if latest else 0
+        ),
+        "lastFetchedBaselineNeverFetched": (
+            latest["fetched_baseline_never_fetched"] if latest else 0
+        ),
+        "lastFetchedExtractionPending": (
+            latest["fetched_extraction_pending"] if latest else 0
+        ),
+        "lastFetchedRecheck": latest["fetched_recheck"] if latest else 0,
+        "lastUpdatedDetectedNeverFetched": (
+            latest["updated_detected_never_fetched"] if latest else 0
+        ),
+        "lastUpdatedBaselineNeverFetched": (
+            latest["updated_baseline_never_fetched"] if latest else 0
+        ),
+        "lastUpdatedExtractionPending": (
+            latest["updated_extraction_pending"] if latest else 0
+        ),
+        "lastUpdatedRecheck": latest["updated_recheck"] if latest else 0,
+        "runs24Hours": totals["runs"], "checks24Hours": totals["checks"],
+        "errors24Hours": totals["errors"],
+        "notModified24Hours": totals["not_modified"],
+        "detectionLatencySamples24Hours": totals["latency_samples"],
+        "detectionLatencyAverageMs24Hours": (
+            round(totals["latency_total"] / totals["latency_samples"])
+            if totals["latency_samples"] else None
+        ),
+        "detectionLatencyMaxMs24Hours": totals["latency_max"],
+        "eligibilityWaitSamples24Hours": totals["eligibility_wait_samples"],
+        "eligibilityWaitAverageMs24Hours": (
+            round(totals["eligibility_wait_total"] / totals["eligibility_wait_samples"])
+            if totals["eligibility_wait_samples"] else None
+        ),
+        "eligibilityWaitMaxMs24Hours": totals["eligibility_wait_max"],
+        "requestDurationSamples24Hours": totals["request_duration_samples"],
+        "requestDurationAverageMs24Hours": (
+            round(totals["request_duration_total"] / totals["request_duration_samples"])
+            if totals["request_duration_samples"] else None
+        ),
+        "requestDurationMaxMs24Hours": totals["request_duration_max"],
+        "requestSuccessDurationSamples24Hours": (
+            totals["request_success_duration_samples"]
+        ),
+        "requestSuccessDurationAverageMs24Hours": (
+            round(
+                totals["request_success_duration_total"]
+                / totals["request_success_duration_samples"]
+            )
+            if totals["request_success_duration_samples"] else None
+        ),
+        "requestSuccessDurationMaxMs24Hours": totals["request_success_duration_max"],
+        "requestErrorDurationSamples24Hours": totals["request_error_duration_samples"],
+        "requestErrorDurationAverageMs24Hours": (
+            round(
+                totals["request_error_duration_total"]
+                / totals["request_error_duration_samples"]
+            )
+            if totals["request_error_duration_samples"] else None
+        ),
+        "requestErrorDurationMaxMs24Hours": totals["request_error_duration_max"],
+        "selectedDetectedNeverFetched24Hours": totals["selected_detected"],
+        "selectedBaselineNeverFetched24Hours": totals["selected_baseline"],
+        "selectedExtractionPending24Hours": totals["selected_extraction"],
+        "selectedRecheck24Hours": totals["selected_recheck"],
+        "errorDetectedNeverFetched24Hours": totals["error_detected"],
+        "errorBaselineNeverFetched24Hours": totals["error_baseline"],
+        "errorExtractionPending24Hours": totals["error_extraction"],
+        "errorRecheck24Hours": totals["error_recheck"],
+        "notModifiedDetectedNeverFetched24Hours": totals["not_modified_detected"],
+        "notModifiedBaselineNeverFetched24Hours": totals["not_modified_baseline"],
+        "notModifiedExtractionPending24Hours": totals["not_modified_extraction"],
+        "notModifiedRecheck24Hours": totals["not_modified_recheck"],
+        "fetchedDetectedNeverFetched24Hours": totals["fetched_detected"],
+        "fetchedBaselineNeverFetched24Hours": totals["fetched_baseline"],
+        "fetchedExtractionPending24Hours": totals["fetched_extraction"],
+        "fetchedRecheck24Hours": totals["fetched_recheck"],
+        "outcomeUnmeasuredDetectedNeverFetched24Hours": (
+            outcome_unmeasured["detected"]
+        ),
+        "outcomeUnmeasuredBaselineNeverFetched24Hours": (
+            outcome_unmeasured["baseline"]
+        ),
+        "outcomeUnmeasuredExtractionPending24Hours": (
+            outcome_unmeasured["extraction"]
+        ),
+        "outcomeUnmeasuredRecheck24Hours": outcome_unmeasured["recheck"],
+        "updatedDetectedNeverFetched24Hours": totals["updated_detected"],
+        "updatedBaselineNeverFetched24Hours": totals["updated_baseline"],
+        "updatedExtractionPending24Hours": totals["updated_extraction"],
+        "updatedRecheck24Hours": totals["updated_recheck"],
+    }
+
+
+def _incident_value(value, maximum=80):
+    value = " ".join(str(value or "").split())
+    if not value or len(value) > maximum or not re.fullmatch(r"[A-Za-z0-9:._-]+", value):
+        raise ValueError("invalid-incident-value")
+    return value
+
+
+def record_operational_incident(db, incident_key, category, subject, severity, error_code=None, seen_at=None):
+    """Persist an operational fault once and queue only state transitions.
+
+    Notification rows intentionally remain held. A separately authorized sender can
+    be added later without losing incidents that occurred during a restart.
+    """
+    incident_key = _incident_value(incident_key, 120)
+    category = _incident_value(category)
+    subject = _incident_value(subject)
+    if severity not in {"warning", "critical"}:
+        raise ValueError("invalid-incident-severity")
+    error_code = _incident_value(error_code, 120) if error_code else None
+    seen_at = seen_at or now()
+    with db:
+        row = db.execute(
+            "SELECT status,revision,occurrences FROM operational_incidents WHERE incident_key=?",
+            (incident_key,),
+        ).fetchone()
+        if row is None:
+            revision, transition = 1, "opened"
+            db.execute("""
+              INSERT INTO operational_incidents(
+                incident_key,category,subject,severity,status,revision,opened_at,last_seen_at,
+                occurrences,last_error_code
+              ) VALUES(?,?,?,?,?,?,?,?,?,?)
+            """, (incident_key, category, subject, severity, "open", revision, seen_at,
+                  seen_at, 1, error_code))
+        elif row["status"] == "resolved":
+            revision, transition = row["revision"] + 1, "opened"
+            db.execute("""
+              UPDATE operational_incidents SET category=?,subject=?,severity=?,status='open',
+                revision=?,opened_at=?,last_seen_at=?,resolved_at=NULL,
+                occurrences=occurrences+1,last_error_code=? WHERE incident_key=?
+            """, (category, subject, severity, revision, seen_at, seen_at, error_code, incident_key))
+        else:
+            db.execute("""
+              UPDATE operational_incidents SET category=?,subject=?,severity=?,last_seen_at=?,
+                occurrences=occurrences+1,last_error_code=? WHERE incident_key=?
+            """, (category, subject, severity, seen_at, error_code, incident_key))
+            return "ongoing"
+        db.execute("""
+          INSERT INTO incident_events(incident_key,revision,at,event,severity,error_code)
+          VALUES(?,?,?,?,?,?)
+        """, (incident_key, revision, seen_at, transition, severity, error_code))
+        db.execute("""
+          INSERT OR IGNORE INTO incident_notification_outbox(
+            incident_key,revision,transition,created_at,status
+          ) VALUES(?,?,?,?, 'held')
+        """, (incident_key, revision, transition, seen_at))
+    return transition
+
+
+def resolve_operational_incident(db, incident_key, resolved_at=None):
+    incident_key = _incident_value(incident_key, 120)
+    resolved_at = resolved_at or now()
+    with db:
+        row = db.execute("""
+          SELECT revision,severity FROM operational_incidents
+          WHERE incident_key=? AND status='open'
+        """, (incident_key,)).fetchone()
+        if row is None:
+            return False
+        db.execute("""
+          UPDATE operational_incidents SET status='resolved',resolved_at=?,last_seen_at=?
+          WHERE incident_key=?
+        """, (resolved_at, resolved_at, incident_key))
+        db.execute("""
+          INSERT INTO incident_events(incident_key,revision,at,event,severity)
+          VALUES(?,?,?,'resolved',?)
+        """, (incident_key, row["revision"], resolved_at, row["severity"]))
+        db.execute("""
+          INSERT OR IGNORE INTO incident_notification_outbox(
+            incident_key,revision,transition,created_at,status
+          ) VALUES(?,?, 'resolved',?, 'held')
+        """, (incident_key, row["revision"], resolved_at))
+    return True
+
+
+def resolve_body_incident_if_recovered(db, ticker, resolved_at=None):
+    """Resolve a ticker body incident only when no failed remote body remains."""
+    ticker = _incident_value(ticker, 16)
+    remaining = db.execute("""
+      SELECT 1 FROM sources
+      WHERE ticker=? AND source_mode='remote' AND error IS NOT NULL
+      LIMIT 1
+    """, (ticker,)).fetchone()
+    if remaining:
+        return False
+    return resolve_operational_incident(db, f"body:{ticker}", resolved_at)
+
+
+def claim_incident_notification(db, activated_at, claimed_at=None, lease_seconds=120):
+    """Claim one eligible transition with a retry lease.
+
+    Rows older than the explicit cutover remain held so enabling a destination
+    cannot unexpectedly replay the full incident history.
+    """
+    claimed_at = claimed_at or now()
+    try:
+        activated = datetime.fromisoformat(activated_at.replace("Z", "+00:00"))
+        claimed = datetime.fromisoformat(claimed_at.replace("Z", "+00:00"))
+        if activated.tzinfo is None or claimed.tzinfo is None:
+            raise ValueError
+    except (AttributeError, ValueError) as exc:
+        raise ValueError("invalid-notification-time") from exc
+    lease_seconds = max(30, min(int(lease_seconds), 900))
+    lease_until = (claimed.astimezone(timezone.utc) + timedelta(seconds=lease_seconds)).isoformat(
+        timespec="milliseconds"
+    )
+    with db:
+        db.execute("""
+          UPDATE incident_notification_outbox
+          SET status='pending',next_attempt_at=COALESCE(next_attempt_at,created_at)
+          WHERE status='held' AND julianday(created_at)>=julianday(?)
+        """, (activated.astimezone(timezone.utc).isoformat(timespec="milliseconds"),))
+        row = db.execute("""
+          SELECT o.id,o.incident_key,o.revision,o.transition,o.attempts,
+                 e.at AS occurred_at,e.severity,e.error_code,
+                 i.category,i.subject
+          FROM incident_notification_outbox o
+          JOIN incident_events e ON e.incident_key=o.incident_key
+            AND e.revision=o.revision AND e.event=o.transition
+          JOIN operational_incidents i ON i.incident_key=o.incident_key
+          WHERE o.status='pending' AND julianday(o.next_attempt_at)<=julianday(?)
+          ORDER BY o.created_at,o.id LIMIT 1
+        """, (claimed_at,)).fetchone()
+        if row is None:
+            return None
+        attempts = row["attempts"] + 1
+        updated = db.execute("""
+          UPDATE incident_notification_outbox
+          SET attempts=?,next_attempt_at=?
+          WHERE id=? AND status='pending' AND attempts=?
+        """, (attempts, lease_until, row["id"], row["attempts"])).rowcount
+        if updated != 1:
+            return None
+    return {
+        "id": row["id"], "key": row["incident_key"], "revision": row["revision"],
+        "transition": row["transition"], "occurredAt": row["occurred_at"],
+        "category": row["category"], "subject": row["subject"],
+        "severity": row["severity"], "errorCode": row["error_code"],
+        "attempts": attempts,
+    }
+
+
+def finish_incident_notification(db, claim, error_code=None, completed_at=None, max_attempts=5):
+    completed_at = completed_at or now()
+    notification_id = int(claim["id"])
+    attempts = int(claim["attempts"])
+    max_attempts = max(1, min(int(max_attempts), 20))
+    if error_code is None:
+        with db:
+            updated = db.execute("""
+              UPDATE incident_notification_outbox
+              SET status='delivered',delivered_at=?,next_attempt_at=NULL,last_error_code=NULL
+              WHERE id=? AND status='pending' AND attempts=?
+            """, (completed_at, notification_id, attempts)).rowcount
+        return "delivered" if updated == 1 else "superseded"
+    error_code = _incident_value(error_code, 120)
+    terminal = attempts >= max_attempts
+    delay = min(6 * 60 * 60, 60 * (5 ** max(0, attempts - 1)))
+    try:
+        completed = datetime.fromisoformat(completed_at.replace("Z", "+00:00"))
+        if completed.tzinfo is None:
+            raise ValueError
+    except (AttributeError, ValueError) as exc:
+        raise ValueError("invalid-notification-time") from exc
+    next_attempt = None if terminal else (
+        completed.astimezone(timezone.utc) + timedelta(seconds=delay)
+    ).isoformat(timespec="milliseconds")
+    with db:
+        updated = db.execute("""
+          UPDATE incident_notification_outbox
+          SET status=?,next_attempt_at=?,last_error_code=?
+          WHERE id=? AND status='pending' AND attempts=?
+        """, ("dead" if terminal else "pending", next_attempt, error_code,
+              notification_id, attempts)).rowcount
+    return ("dead" if terminal else "retry") if updated == 1 else "superseded"
+
+
+def operational_incident_summary(db, limit=20, delivery_enabled=False):
+    limit = max(1, min(int(limit), 100))
+    rows = db.execute("""
+      SELECT incident_key,category,subject,severity,status,revision,opened_at,
+             last_seen_at,resolved_at,occurrences,last_error_code
+      FROM operational_incidents ORDER BY status='open' DESC,last_seen_at DESC LIMIT ?
+    """, (limit,)).fetchall()
+    counts = db.execute("""
+      SELECT
+        sum(CASE WHEN status='open' THEN 1 ELSE 0 END) AS open_count,
+        count(*) AS total_count
+      FROM operational_incidents
+    """).fetchone()
+    outbox = db.execute("""
+      SELECT
+        sum(CASE WHEN status='held' THEN 1 ELSE 0 END) AS held_count,
+        sum(CASE WHEN status='pending' THEN 1 ELSE 0 END) AS pending_count,
+        sum(CASE WHEN status='delivered' THEN 1 ELSE 0 END) AS delivered_count,
+        sum(CASE WHEN status='dead' THEN 1 ELSE 0 END) AS dead_count
+      FROM incident_notification_outbox
+    """).fetchone()
+    return {
+        "open": counts["open_count"] or 0,
+        "total": counts["total_count"] or 0,
+        "heldNotifications": outbox["held_count"] or 0,
+        "pendingNotifications": outbox["pending_count"] or 0,
+        "deliveredNotifications": outbox["delivered_count"] or 0,
+        "deadNotifications": outbox["dead_count"] or 0,
+        "deliveryEnabled": bool(delivery_enabled),
+        "recent": [{
+            "key": row["incident_key"], "category": row["category"],
+            "subject": row["subject"], "severity": row["severity"],
+            "status": row["status"], "revision": row["revision"],
+            "openedAt": row["opened_at"], "lastSeenAt": row["last_seen_at"],
+            "resolvedAt": row["resolved_at"], "occurrences": row["occurrences"],
+            "errorCode": row["last_error_code"],
+        } for row in rows],
+    }
+
+
+def add_source(db, ticker, url, published_on=None, title=None):
+    url = safe_url(url, ticker)
+    if published_on:
+        datetime.strptime(published_on, "%Y-%m-%d")
+    with db:
+        db.execute("INSERT OR IGNORE INTO sources(url,ticker,published_on,discovered_at) VALUES(?,?,?,?)", (url, ticker, published_on, now()))
+        if title:
+            db.execute("UPDATE sources SET title=? WHERE url=? AND title IS NULL", (title[:300], url))
+        if published_on:
+            db.execute(
+                "UPDATE sources SET published_on=? WHERE url=? AND published_on IS NULL",
+                (published_on, url),
+            )
+    return url
+
+
+def monitoring_sources(ticker, automatic=False):
+    """Return the primary chain followed by independently collected official sources."""
+    provider = PROVIDERS[ticker]
+    primary = {"url": INDEXES[ticker], "format": provider["format"], "route": "primary"}
+    for key in ("requestJson", "itemsKey", "urlKey", "titleKey", "twseCompanyCode", "allowEmpty"):
+        if key in provider:
+            primary[key] = provider[key]
+    primary_chain = [primary] + [
+        {**source, "route": "fallback"} for source in provider.get("fallbackSources", [])
+    ]
+    if automatic and provider.get("automaticSource") == "fallback":
+        primary_chain.sort(key=lambda source: source["route"] != "fallback")
+    supplemental = [
+        {**source, "route": "supplemental" if index == 0 else "supplemental-fallback"}
+        for index, source in enumerate(provider.get("supplementalSources", []))
+    ]
+    return primary_chain + supplemental
+
+
+def discover_links(body, kind, ticker, source):
+    if source["format"] == "sec-json":
+        if kind != "application/json":
+            raise ValueError("SEC submissions source is not JSON")
+        return sec_submission_links(body, ticker, source)
+    if source["format"] == "rss":
+        return feed_links(body, ticker, kind)
+    if source["format"] == "sitemap":
+        return sitemap_links(body, ticker)
+    if source["format"] == "news-json":
+        if kind != "application/json":
+            raise ValueError("News endpoint is not JSON")
+        return news_json_links(body, ticker, source)
+    if source["format"] == "twse-material-json":
+        if kind != "application/json":
+            raise ValueError("TWSE material-information source is not JSON")
+        return twse_material_links(body, ticker, source)
+    if kind != "text/html":
+        raise ValueError("Index is not HTML")
+    parser = Links(source["url"], ticker)
+    parser.feed(body.decode("utf-8", errors="replace"))
+    return {url: parser.labels.get(url) for url in parser.urls}
+
+
+def normalized_discovery_candidates(ticker, candidates):
+    """Validate cached parsed candidates without trusting mutable SQLite content."""
+    if not isinstance(candidates, dict) or len(candidates) > 500:
+        return None
+    normalized = {}
+    allowed_detail_keys = {
+        "title", "publishedOn", "inlineText", "contentType", "contentBytes",
+    }
+    for url, candidate in candidates.items():
+        if not isinstance(url, str) or not valid_discovery_candidate_url(url, ticker):
+            return None
+        if candidate is None:
+            normalized[url] = None
+            continue
+        if isinstance(candidate, str):
+            if len(candidate) > 300:
+                return None
+            normalized[url] = candidate
+            continue
+        if not isinstance(candidate, dict) or set(candidate) - allowed_detail_keys:
+            return None
+        detail = {}
+        title = candidate.get("title")
+        if title is not None:
+            if not isinstance(title, str) or len(title) > 300:
+                return None
+            detail["title"] = title
+        published_on = candidate.get("publishedOn")
+        if published_on is not None:
+            if not isinstance(published_on, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", published_on):
+                return None
+            detail["publishedOn"] = published_on
+        inline_text = candidate.get("inlineText")
+        if inline_text is not None:
+            if not isinstance(inline_text, str) or len(inline_text) > MAX_EXTRACTED_CHARS:
+                return None
+            detail["inlineText"] = inline_text
+        content_type = candidate.get("contentType")
+        if content_type is not None:
+            if content_type not in SUPPORTED_CONTENT_TYPES:
+                return None
+            detail["contentType"] = content_type
+        content_bytes = candidate.get("contentBytes")
+        if content_bytes is not None:
+            if isinstance(content_bytes, bool) or not isinstance(content_bytes, int):
+                return None
+            if content_bytes < 0 or content_bytes > MAX_BYTES:
+                return None
+            detail["contentBytes"] = content_bytes
+        normalized[url] = detail
+    return normalized
+
+
+def valid_discovery_candidate_url(url, ticker):
+    """Accept configured article URLs and tightly scoped TWSE inline identities."""
+    if article_url(url, ticker) == url:
+        return True
+    try:
+        canonical = safe_url(url, ticker)
+    except ValueError:
+        return False
+    if canonical != url:
+        return False
+    candidate_parts = urlsplit(url)
+    for source in monitoring_sources(ticker):
+        if source.get("format") != "twse-material-json":
+            continue
+        source_parts = urlsplit(source["url"])
+        if (
+            candidate_parts.scheme, candidate_parts.netloc, candidate_parts.path
+        ) != (source_parts.scheme, source_parts.netloc, source_parts.path):
+            continue
+        query = parse_qs(candidate_parts.query, keep_blank_values=True)
+        if set(query) != {"company", "date", "time", "id"} or any(
+            len(values) != 1 for values in query.values()
+        ):
+            return False
+        return (
+            query["company"][0] == source.get("twseCompanyCode")
+            and re.fullmatch(r"\d{7}", query["date"][0]) is not None
+            and re.fullmatch(r"\d{1,6}", query["time"][0]) is not None
+            and re.fullmatch(r"[0-9a-f]{16}", query["id"][0]) is not None
+        )
+    return False
+
+
+def discovery_cache_parser_version(ticker, source_url):
+    """Fingerprint source rules plus the explicit discovery-parser generation."""
+    source = next(
+        (item for item in monitoring_sources(ticker) if item["url"] == source_url),
+        None,
+    )
+    if source is None:
+        return None
+    material = {
+        "version": DISCOVERY_CACHE_PARSER_VERSION,
+        "source": source,
+        "articleRules": PROVIDERS[ticker].get("articleRules", []),
+    }
+    encoded = json.dumps(
+        material, ensure_ascii=True, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def normalized_discovery_cache_state(ticker, state):
+    """Return one bounded cache entry, or None when it must be refetched."""
+    if not isinstance(state, dict):
+        return None
+    etag = http_validator(state.get("etag"))
+    last_modified = http_validator(state.get("lastModified"))
+    candidates = normalized_discovery_candidates(ticker, state.get("candidates"))
+    if candidates is None or not (etag or last_modified):
+        return None
+    encoded = json.dumps(candidates, ensure_ascii=False, separators=(",", ":"))
+    if len(encoded.encode("utf-8")) > DISCOVERY_CACHE_MAX_BYTES:
+        return None
+    return {
+        "etag": etag, "lastModified": last_modified,
+        "candidates": candidates, "encoded": encoded,
+    }
+
+
+def load_discovery_source_cache(db, ticker, include_stats=False):
+    """Load only configured, bounded validators and parsed candidates."""
+    configured = {source["url"] for source in monitoring_sources(ticker)}
+    cache = {}
+    stats = {"storedSources": 0, "loadedSources": 0, "invalidatedSources": 0}
+    for row in db.execute(
+        """SELECT source_url,response_etag,response_last_modified,candidates_json,
+                  parser_version
+           FROM discovery_source_cache WHERE ticker=?""",
+        (ticker,),
+    ):
+        stats["storedSources"] += 1
+        if (
+            row["source_url"] not in configured
+            or row["parser_version"]
+            != discovery_cache_parser_version(ticker, row["source_url"])
+            or len(row["candidates_json"].encode("utf-8")) > DISCOVERY_CACHE_MAX_BYTES
+        ):
+            stats["invalidatedSources"] += 1
+            continue
+        try:
+            candidates = normalized_discovery_candidates(
+                ticker, json.loads(row["candidates_json"])
+            )
+        except (TypeError, ValueError, json.JSONDecodeError, RecursionError):
+            stats["invalidatedSources"] += 1
+            continue
+        state = normalized_discovery_cache_state(ticker, {
+            "etag": row["response_etag"],
+            "lastModified": row["response_last_modified"],
+            "candidates": candidates,
+        })
+        if state is None:
+            stats["invalidatedSources"] += 1
+            continue
+        cache[row["source_url"]] = {
+            "etag": state["etag"], "lastModified": state["lastModified"],
+            "candidates": state["candidates"],
+        }
+        stats["loadedSources"] += 1
+    return (cache, stats) if include_stats else cache
+
+
+def save_discovery_source_cache(db, ticker, cache):
+    """Persist parsed candidates, never raw discovery response bodies."""
+    configured = {source["url"] for source in monitoring_sources(ticker)}
+    normalized = {}
+    for source_url, state in (cache or {}).items():
+        if source_url not in configured:
+            continue
+        state = normalized_discovery_cache_state(ticker, state)
+        if state is None:
+            continue
+        normalized[source_url] = (
+            state["etag"], state["lastModified"], state["encoded"],
+            discovery_cache_parser_version(ticker, source_url),
+        )
+    with db:
+        db.execute("DELETE FROM discovery_source_cache WHERE ticker=?", (ticker,))
+        for source_url, (
+            etag, last_modified, encoded, parser_version
+        ) in normalized.items():
+            db.execute(
+                """INSERT INTO discovery_source_cache(
+                     ticker,source_url,response_etag,response_last_modified,
+                     candidates_json,parser_version,updated_at
+                   ) VALUES(?,?,?,?,?,?,?)""",
+                (
+                    ticker, source_url, etag, last_modified, encoded,
+                    parser_version, now(),
+                ),
+            )
+
+
+def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=None):
+    """Fetch and parse candidates without mutating storage."""
+    sources = monitoring_sources(ticker, automatic=automatic)
+    primary_sources = [source for source in sources if not source["route"].startswith("supplemental")]
+    supplemental_sources = [source for source in sources if source["route"].startswith("supplemental")]
+    failures, links, attempts = [], {}, 0
+    persistent_transport = (
+        cached_sources is not None
+        and getattr(transport, "supports_persistent_validators", False)
+    )
+    source_cache = dict(cached_sources or {})
+    cache_metrics = {
+        "conditionalRequests": 0, "notModifiedResponses": 0,
+        "freshResponses": 0,
+    }
+
+    def collect_first(chain):
+        nonlocal attempts
+        chain_failures = []
+        for source in chain:
+            attempts += 1
+            try:
+                if persistent_transport:
+                    cached = source_cache.get(source["url"])
+                    validators = {
+                        "etag": cached.get("etag") if cached else None,
+                        "last_modified": cached.get("lastModified") if cached else None,
+                    }
+                    if validators["etag"] or validators["last_modified"]:
+                        cache_metrics["conditionalRequests"] += 1
+                    response = transport(
+                        source["url"], ticker, validators=validators,
+                        include_metadata=True,
+                    )
+                    if response["notModified"]:
+                        cache_metrics["notModifiedResponses"] += 1
+                        if not cached:
+                            raise ValueError("Conditional discovery response has no cached candidates")
+                        discovered = cached["candidates"]
+                    else:
+                        cache_metrics["freshResponses"] += 1
+                        body, kind = response["content"], response["contentType"]
+                        discovered = discover_links(body, kind, ticker, source)
+                    etag = http_validator(response.get("etag"))
+                    last_modified = http_validator(response.get("lastModified"))
+                else:
+                    body, kind = transport(source["url"], ticker)
+                    discovered = discover_links(body, kind, ticker, source)
+                if not discovered and not source.get("allowEmpty"):
+                    raise ValueError("No release links parsed; source discovery requires investigation")
+                if len(discovered) > 500:
+                    raise ValueError("Too many source links; narrow the source scope before importing")
+                if persistent_transport:
+                    state = normalized_discovery_cache_state(ticker, {
+                        "etag": etag, "lastModified": last_modified,
+                        "candidates": discovered,
+                    })
+                    if state is None:
+                        source_cache.pop(source["url"], None)
+                    else:
+                        source_cache[source["url"]] = {
+                            "etag": state["etag"],
+                            "lastModified": state["lastModified"],
+                            "candidates": state["candidates"],
+                        }
+                return source, discovered, chain_failures
+            except Exception as exc:
+                chain_failures.append(source_error_code(exc))
+        return None, {}, chain_failures
+
+    primary_source, primary_links, primary_failures = collect_first(primary_sources)
+    failures.extend(primary_failures)
+    links.update(primary_links)
+    supplemental_source, supplemental_links, supplemental_failures = None, {}, []
+    # Interactive/manual discovery retains the legacy failover behavior. The
+    # always-on monitor additionally collects this independent first-party route
+    # even when the company feed is healthy.
+    if supplemental_sources and (automatic or primary_source is None):
+        supplemental_source, supplemental_links, supplemental_failures = collect_first(
+            supplemental_sources
+        )
+        failures.extend(supplemental_failures)
+        links.update(supplemental_links)
+
+    successful_sources = [source for source in (primary_source, supplemental_source) if source]
+    used_source = primary_source or supplemental_source
+    supplemental_required = bool(supplemental_sources and automatic)
+    supplemental_missing = supplemental_required and supplemental_source is None
+    if used_source:
+        recovered_with_fallback = (
+            primary_source is None
+            or (primary_source and primary_source["route"] == "fallback")
+            or (supplemental_source and supplemental_source["route"] == "supplemental-fallback")
+        )
+        if supplemental_missing:
+            status = "degraded"
+        elif recovered_with_fallback:
+            status = "fallback"
+        else:
+            status = "ok"
+        if primary_source and supplemental_source:
+            route = "primary+supplemental"
+        elif primary_source:
+            route = primary_source["route"]
+        else:
+            route = "fallback"
+        formats = []
+        for source in successful_sources:
+            if source["format"] not in formats:
+                formats.append(source["format"])
+        result = {
+            "ticker": ticker, "status": status, "route": route,
+            "sourceUrl": used_source["url"],
+            "sourceFormat": "+".join(formats),
+            "sourcesChecked": attempts,
+            "sourcesConfigured": len(sources),
+            "candidates": len(links),
+            "error": failures[0] if failures and status != "ok" else None,
+        }
+    else:
+        result = {
+            "ticker": ticker, "status": "degraded", "route": "none",
+            "sourceUrl": INDEXES[ticker], "sourceFormat": "none",
+            "sourcesChecked": attempts, "sourcesConfigured": len(sources),
+            "candidates": 0,
+            "error": failures[0] if failures else "No monitoring sources configured",
+        }
+    if persistent_transport:
+        result["_sourceCache"] = source_cache
+        result["_cacheMetrics"] = cache_metrics
+    return result, links
+
+
+def save_discovery(db, ticker, result, links):
+    """Persist one completed discovery result and return newly inserted URLs."""
+    if "_sourceCache" in result:
+        save_discovery_source_cache(db, ticker, result["_sourceCache"])
+    before = {row[0] for row in db.execute("SELECT url FROM sources WHERE ticker=?", (ticker,))}
+    for url, candidate in links.items():
+        detail = candidate if isinstance(candidate, dict) else {"title": candidate}
+        add_source(db, ticker, url, published_on=detail.get("publishedOn"), title=detail.get("title"))
+        if detail.get("inlineText") is not None:
+            with db:
+                db.execute("UPDATE sources SET source_mode='inline' WHERE url=?", (url,))
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            text = detail["inlineText"]
+            save_source_check(db, row, {
+                "sha256": hashlib.sha256(text.encode()).hexdigest(),
+                "contentType": detail.get("contentType", "application/json"),
+                "contentBytes": detail.get("contentBytes", len(text.encode())),
+                "extractedText": text,
+                "extractedChars": len(text),
+            })
+            # An official feed body can recover the evidence without proving
+            # that the linked article hostname accepts direct requests. Clear
+            # only a now-stale ticker incident; save_source_check deliberately
+            # leaves the private hostname circuit intact for inline evidence.
+            resolve_body_incident_if_recovered(db, ticker)
+        else:
+            with db:
+                db.execute(
+                    "UPDATE sources SET source_mode='remote',next_fetch_at=NULL "
+                    "WHERE url=? AND source_mode='inline'",
+                    (url,),
+                )
+    with db:
+        db.execute("""
+          INSERT INTO discovery_runs(
+            ticker,at,status,candidates,error,index_url,route,source_format,
+            sources_checked,sources_configured
+          ) VALUES(?,?,?,?,?,?,?,?,?,?)
+        """, (
+            ticker, now(), result["status"], result["candidates"], result["error"],
+            result["sourceUrl"], result.get("route"), result.get("sourceFormat"),
+            result.get("sourcesChecked", 1), result.get("sourcesConfigured", 1),
+        ))
+    return sorted(set(links) - before)
+
+
+def add_release_events(db, ticker, urls):
+    """Record newly observed URLs once; baseline imports should not call this."""
+    detected_at = now()
+    inserted = []
+    with db:
+        for url in urls:
+            safe = safe_url(url, ticker)
+            cursor = db.execute(
+                "INSERT OR IGNORE INTO release_events(url,ticker,detected_at) VALUES(?,?,?)",
+                (safe, ticker, detected_at),
+            )
+            if cursor.rowcount:
+                inserted.append(safe)
+    return inserted
+
+
+def discover(db, ticker, transport=fetch):
+    """Discover candidates, using an official fallback when the preferred route fails."""
+    cached_sources = (
+        load_discovery_source_cache(db, ticker)
+        if getattr(transport, "supports_persistent_validators", False)
+        else None
+    )
+    result, links = collect_discovery(
+        ticker, transport=transport, cached_sources=cached_sources
+    )
+    result["newCandidates"] = len(save_discovery(db, ticker, result, links))
+    result.pop("_sourceCache", None)
+    result.pop("_cacheMetrics", None)
+    return result
+
+
+def public_error(error):
+    """Export a category, never exception messages containing local paths or secrets."""
+    if not error:
+        return None
+    # source_error_code already reduces these failures to fixed, bounded
+    # operational codes. Preserve them for diagnosis while continuing to
+    # collapse all unknown strings so exception details never reach clients.
+    if error == "no-release-links":
+        return "no-links"
+    if error in {
+        "unsupported-content-type",
+        "empty-or-oversized-source",
+        "no-extractable-text",
+        "sec-exhibit-unavailable",
+        "pdf-encrypted",
+        "pdf-page-limit",
+        "pdf-no-text",
+        "pdf-timeout",
+        "pdf-extract-failed",
+        "invalid-pdf",
+        "verification-page",
+        "too-many-source-links",
+        "invalid-source-response",
+        "fetch-failed",
+    } or re.fullmatch(r"http-[45]\d\d", error):
+        return error
+    if "403" in error:
+        return "http-403"
+    if "timed out" in error.lower() or "timeout" in error.lower():
+        return "timeout"
+    if "No release links" in error:
+        return "no-links"
+    return "fetch-error"
+
+
+def sec_evidence_summary(db, tickers):
+    """Return URL-free SEC body evidence counts for operational health checks."""
+    requested = tuple(dict.fromkeys(str(ticker).strip().upper() for ticker in tickers if ticker))
+    empty = {"total": 0, "exhibit": 0, "direct": 0, "pending": 0, "error": 0}
+    empty_error_kinds = {
+        "accessRestricted": 0,
+        "rateLimited": 0,
+        "timeout": 0,
+        "server": 0,
+        "missingExhibit": 0,
+        "other": 0,
+    }
+    by_ticker = {
+        ticker: {**empty, "errorKinds": dict(empty_error_kinds), "lastCheckedAt": None}
+        for ticker in requested
+    }
+    if not requested:
+        return {
+            **empty, "errorKinds": dict(empty_error_kinds),
+            "lastCheckedAt": None, "byTicker": by_ticker,
+        }
+    placeholders = ",".join("?" for _ in requested)
+    rows = db.execute(f"""
+      SELECT ticker,url,checked_at,sha256,error,evidence_kind
+      FROM sources
+      WHERE ticker IN ({placeholders})
+      ORDER BY ticker,url
+    """, requested).fetchall()
+    last_checked_at = None
+    totals = dict(empty)
+    error_kinds = dict(empty_error_kinds)
+    for row in rows:
+        try:
+            parsed = urlsplit(row["url"])
+        except (TypeError, ValueError):
+            continue
+        if parsed.scheme != "https" or parsed.hostname != "www.sec.gov" \
+                or not parsed.path.lower().startswith("/archives/edgar/data/"):
+            continue
+        if row["error"] == "sec-exhibit-unavailable":
+            state = "error"
+        elif row["evidence_kind"] == "sec-exhibit-99.1":
+            state = "exhibit"
+        elif not row["sha256"]:
+            state = "error" if row["error"] else "pending"
+        else:
+            state = "error" if row["error"] else "direct"
+        ticker_counts = by_ticker[row["ticker"]]
+        totals["total"] += 1
+        totals[state] += 1
+        ticker_counts["total"] += 1
+        ticker_counts[state] += 1
+        if state == "error":
+            error = row["error"]
+            if error == "http-429":
+                error_kind = "rateLimited"
+            elif error in {"http-401", "http-403", "http-451", "verification-page"}:
+                error_kind = "accessRestricted"
+            elif error == "timeout":
+                error_kind = "timeout"
+            elif error and re.fullmatch(r"http-5\d\d", error):
+                error_kind = "server"
+            elif error == "sec-exhibit-unavailable":
+                error_kind = "missingExhibit"
+            else:
+                error_kind = "other"
+            error_kinds[error_kind] += 1
+            ticker_counts["errorKinds"][error_kind] += 1
+        checked_at = row["checked_at"]
+        if checked_at and (ticker_counts["lastCheckedAt"] is None
+                           or checked_at > ticker_counts["lastCheckedAt"]):
+            ticker_counts["lastCheckedAt"] = checked_at
+        if checked_at and (last_checked_at is None or checked_at > last_checked_at):
+            last_checked_at = checked_at
+    return {
+        **totals, "errorKinds": error_kinds,
+        "lastCheckedAt": last_checked_at, "byTicker": by_ticker,
+    }
+
+
+def snapshot(db, recent_per_item=None):
+    """Public-safe, read-only report. Explicit field lists prevent identity leaks."""
+    with db:
+        db.execute("BEGIN")
+        sources = [dict(r) for r in db.execute("""
+          SELECT url,ticker,title,published_on,discovered_at,checked_at,sha256,status,error,
+                 content_type,content_bytes,extracted_chars,fetched_at,
+                 COALESCE(evidence_url,url) AS evidence_url,evidence_kind
+          FROM sources ORDER BY ticker,url
+        """)]
+        if recent_per_item is None:
+            history = [dict(r) for r in db.execute("SELECT id,url,at,kind,sha256 FROM history ORDER BY id DESC")]
+            runs = [dict(r) for r in db.execute("""
+              SELECT id,ticker,at,status,candidates,error,index_url,source_format,
+                     sources_checked,sources_configured
+              FROM discovery_runs ORDER BY id DESC
+            """)]
+        else:
+            history = [dict(r) for r in db.execute("""
+              SELECT id,url,at,kind,sha256 FROM (
+                SELECT id,url,at,kind,sha256,
+                       ROW_NUMBER() OVER (PARTITION BY url ORDER BY id DESC) AS rank
+                FROM history
+              ) WHERE rank <= ? ORDER BY id DESC
+            """, (recent_per_item,))]
+            runs = [dict(r) for r in db.execute("""
+              SELECT id,ticker,at,status,candidates,error,index_url,source_format,
+                     sources_checked,sources_configured FROM (
+                SELECT id,ticker,at,status,candidates,error,index_url,source_format,
+                       sources_checked,sources_configured,
+                       ROW_NUMBER() OVER (PARTITION BY ticker ORDER BY id DESC) AS rank
+                FROM discovery_runs
+              ) WHERE rank <= ? ORDER BY id DESC
+            """, (recent_per_item,))]
+        events = [dict(r) for r in db.execute("""
+          SELECT e.id,e.url,e.ticker,e.detected_at,s.title,s.published_on,
+                 COALESCE((SELECT MIN(h.at) FROM history h
+                           WHERE h.url=s.url AND h.kind='first-fetch'),s.fetched_at) AS body_fetched_at
+          FROM release_events e JOIN sources s ON s.url=e.url
+          ORDER BY e.id DESC LIMIT 200
+        """)]
+        brief_rows = [dict(r) for r in db.execute("""
+          SELECT b.url,s.ticker,s.title,s.published_on,e.detected_at,b.source_sha256,
+                 s.checked_at AS source_checked_at,
+                 b.summary_ja,b.impact_label,b.impact_ja,b.confidence,b.status,
+                 b.generated_at,b.reviewed_at,b.validation_sha256,s.extracted_text,
+                 CASE WHEN b.generation_provider IS NULL THEN 'human'
+                      ELSE 'ai-assisted' END AS generation_method
+          FROM briefs b JOIN sources s ON s.url=b.url
+          LEFT JOIN release_events e ON e.url=b.url
+          WHERE b.status='approved' AND b.source_sha256=s.sha256
+            AND b.validation_sha256 IS NOT NULL
+            AND s.error IS NULL AND s.extracted_chars>0 AND s.checked_at IS NOT NULL
+            AND b.reviewed_at IS NOT NULL
+            AND EXISTS (
+              SELECT 1 FROM brief_review_history h
+              WHERE h.url=b.url AND h.source_sha256=b.source_sha256
+                AND h.draft_validation_sha256=b.validation_sha256
+                AND h.decision='approved' AND h.reviewed_at=b.reviewed_at
+                AND (b.generation_provider IS NULL OR h.ai_verification=1)
+                AND (b.generation_source_truncated=0 OR h.full_source_verification=1)
+            )
+          ORDER BY b.reviewed_at DESC
+        """)]
+        briefs = []
+        for row in brief_rows:
+            if not source_check_is_fresh(row["source_checked_at"]):
+                continue
+            evidence_rows = db.execute(
+                "SELECT field,excerpt FROM brief_evidence WHERE url=? ORDER BY id",
+                (row["url"],),
+            ).fetchall()
+            evidence = {
+                field: [item["excerpt"] for item in evidence_rows if item["field"] == field]
+                for field in ("summary", "impact")
+            }
+            try:
+                summary_ja, impact_ja, cleaned = _validate_brief_payload(
+                    row["extracted_text"], row["summary_ja"], row["impact_label"],
+                    row["impact_ja"], row["confidence"], evidence,
+                )
+            except (TypeError, ValueError):
+                continue
+            validation_sha = _brief_validation_sha(
+                row["source_sha256"], summary_ja, row["impact_label"],
+                impact_ja, row["confidence"], cleaned,
+            )
+            if validation_sha != row["validation_sha256"]:
+                continue
+            row.pop("validation_sha256")
+            row.pop("extracted_text")
+            row["evidence"] = _public_brief_evidence(evidence)
+            briefs.append(row)
+    for row in sources + runs:
+        row["error"] = public_error(row["error"])
+    for row in sources:
+        safe_url(row["url"], row["ticker"])
+    for row in events:
+        row["detection_to_body_ms"] = None
+        if row["body_fetched_at"]:
+            detected = datetime.fromisoformat(row["detected_at"])
+            fetched = datetime.fromisoformat(row["body_fetched_at"])
+            if fetched >= detected:
+                row["detection_to_body_ms"] = round((fetched - detected).total_seconds() * 1000)
+    return {"schemaVersion": 1, "generatedAt": now(), "sources": sources, "history": history, "discoveryRuns": runs, "events": events, "briefs": briefs}
+
+
+def private_brief_queue(db, limit=20, review_filter="all"):
+    """Return bounded source evidence for the authenticated editorial interface only."""
+    limit = max(1, min(int(limit), 50))
+    review_filter = str(review_filter).strip().lower()
+    if review_filter not in {"all", "ready", "blocked", "needs-draft"}:
+        raise ValueError("invalid-review-filter")
+    counts = dict(db.execute("""
+      SELECT count(*) AS total,
+             sum(CASE WHEN b.url IS NULL THEN 1 ELSE 0 END) AS needs_draft,
+             sum(CASE WHEN b.status='draft' THEN 1 ELSE 0 END) AS awaiting_review,
+             sum(CASE WHEN b.status='stale' THEN 1 ELSE 0 END) AS stale,
+             sum(CASE WHEN b.status='held' THEN 1 ELSE 0 END) AS held,
+             sum(CASE WHEN b.status='approved' THEN 1 ELSE 0 END) AS approved,
+             sum(CASE WHEN b.status='rejected' THEN 1 ELSE 0 END) AS rejected
+      FROM sources s LEFT JOIN briefs b ON b.url=s.url
+      WHERE s.sha256 IS NOT NULL AND s.error IS NULL AND s.extracted_chars>0
+    """).fetchone())
+    counts = {key: int(value or 0) for key, value in counts.items()}
+    counts.update({"machine_ready": 0, "machine_blocked": 0})
+    preflight_candidates = db.execute("""
+      SELECT b.*,s.sha256 AS current_sha,s.error AS source_error,
+             s.extracted_text AS source_text,s.checked_at AS source_checked_at
+      FROM briefs b JOIN sources s ON s.url=b.url
+      WHERE s.sha256 IS NOT NULL AND s.error IS NULL AND s.extracted_chars>0
+        AND b.status IN ('draft','stale','held','rejected')
+    """).fetchall()
+    evidence_by_url = {candidate["url"]: [] for candidate in preflight_candidates}
+    if evidence_by_url:
+        placeholders = ",".join("?" for _ in evidence_by_url)
+        for evidence_row in db.execute(f"""
+          SELECT url,field,excerpt FROM brief_evidence
+          WHERE url IN ({placeholders}) ORDER BY url,id
+        """, tuple(evidence_by_url)):
+            evidence_by_url[evidence_row["url"]].append(evidence_row)
+    preflight_by_url = {}
+    for candidate in preflight_candidates:
+        result = _brief_preflight_result(
+            candidate, evidence_by_url[candidate["url"]], candidate["current_sha"]
+        )
+        preflight_by_url[candidate["url"]] = result
+        counts["machine_ready" if result["ready"] else "machine_blocked"] += 1
+
+    filter_sql = ""
+    query_params = []
+    if review_filter == "needs-draft":
+        filter_sql = "AND b.url IS NULL"
+    elif review_filter in {"ready", "blocked"}:
+        expected_ready = review_filter == "ready"
+        filtered_urls = [
+            url for url, result in preflight_by_url.items()
+            if result["ready"] is expected_ready
+        ]
+        if not filtered_urls:
+            rows = []
+        else:
+            placeholders = ",".join("?" for _ in filtered_urls)
+            filter_sql = f"AND s.url IN ({placeholders})"
+            query_params.extend(filtered_urls)
+    if review_filter not in {"ready", "blocked"} or filter_sql:
+        query_params.append(limit)
+        rows = [dict(row) for row in db.execute(f"""
+      SELECT s.url,s.ticker,s.title,s.published_on,s.discovered_at,s.checked_at,s.sha256,
+             s.extracted_text,s.extracted_chars,e.detected_at,
+             b.source_sha256 AS brief_source_sha256,
+             b.summary_ja,b.impact_label,b.impact_ja,b.confidence,b.status AS brief_status,
+             b.validation_sha256 AS brief_validation_sha256,
+             b.generated_at,b.reviewed_at,b.reviewer,b.review_reason,
+             b.generation_provider,b.generation_model,b.generation_response_id,b.generation_source_truncated,
+             b.generation_input_tokens,b.generation_output_tokens,b.generation_total_tokens,
+             j.status AS generation_job_status,j.attempts AS generation_job_attempts,
+             j.next_attempt_at AS generation_job_next_attempt_at,j.error_code AS generation_job_error,
+             j.reserved_tokens AS generation_job_reserved_tokens
+      FROM sources s
+      LEFT JOIN release_events e ON e.url=s.url
+      LEFT JOIN briefs b ON b.url=s.url
+      LEFT JOIN brief_generation_jobs j ON j.url=s.url
+      WHERE s.sha256 IS NOT NULL AND s.error IS NULL AND s.extracted_chars>0
+        {filter_sql}
+      ORDER BY CASE
+                 WHEN b.status='draft' THEN 0
+                 WHEN b.status='stale' THEN 1
+                 WHEN b.status='held' THEN 2
+                 WHEN b.url IS NULL THEN 3
+                 WHEN b.status='rejected' THEN 4
+                 WHEN b.status='approved' THEN 5
+                 ELSE 6
+               END,
+               e.detected_at IS NULL,e.detected_at DESC,s.discovered_at DESC,s.url
+      LIMIT ?
+    """, tuple(query_params))]
+    for row in rows:
+        brief_source_sha = row.pop("brief_source_sha256")
+        brief_validation_sha = row.pop("brief_validation_sha256")
+        brief_current = bool(brief_source_sha and brief_source_sha == row["sha256"] and row["brief_status"] != "stale")
+        row["brief_current"] = brief_current
+        row["draft_validation_sha256"] = brief_validation_sha if brief_current else None
+        evidence_rows = (db.execute(
+            "SELECT field,excerpt FROM brief_evidence WHERE url=? ORDER BY id", (row["url"],)
+        ).fetchall() if brief_source_sha else [])
+        row["previous_brief"] = _validated_previous_brief(
+            db, row, brief_source_sha, brief_validation_sha, evidence_rows
+        )
+        evidence = evidence_rows if brief_current else []
+        row["evidence"] = {
+            "summary": [item["excerpt"] for item in evidence if item["field"] == "summary"],
+            "impact": [item["excerpt"] for item in evidence if item["field"] == "impact"],
+        }
+        preflight_row = {
+            "source_sha256": brief_source_sha,
+            "current_sha": row["sha256"],
+            "source_error": None,
+            "source_text": row["extracted_text"],
+            "source_checked_at": row["checked_at"],
+            "summary_ja": row["summary_ja"],
+            "impact_label": row["impact_label"],
+            "impact_ja": row["impact_ja"],
+            "confidence": row["confidence"],
+            "validation_sha256": brief_validation_sha,
+        }
+        row["review_preflight"] = _brief_preflight_result(
+            preflight_row, evidence_rows, row["sha256"]
+        )
+        row["review_history"] = [{
+            "source_sha256": item["source_sha256"], "decision": item["decision"],
+            "draft_validation_sha256": item["draft_validation_sha256"],
+            "reviewed_at": item["reviewed_at"], "reviewer": item["reviewer"],
+            "reason": item["reason"],
+            "ai_verification": bool(item["ai_verification"]),
+            "full_source_verification": bool(item["full_source_verification"]),
+            "current_revision": (
+                item["source_sha256"] == row["sha256"]
+                and item["draft_validation_sha256"] is not None
+                and item["draft_validation_sha256"] == brief_validation_sha
+            ),
+        } for item in db.execute("""
+          SELECT source_sha256,draft_validation_sha256,decision,reviewed_at,reviewer,reason,
+                 ai_verification,full_source_verification
+          FROM brief_review_history WHERE url=? ORDER BY id DESC LIMIT 10
+        """, (row["url"],))]
+        if not brief_current:
+            for field in (
+                "summary_ja", "impact_label", "impact_ja", "confidence", "generated_at", "reviewed_at",
+                "reviewer", "review_reason", "generation_provider", "generation_model",
+                "generation_response_id", "generation_input_tokens", "generation_output_tokens",
+                "generation_total_tokens",
+            ):
+                row[field] = None
+            row["generation_source_truncated"] = 0
+        text = row.pop("extracted_text") or ""
+        row["revision_evidence"] = source_revision_evidence(
+            db, row["url"], row["sha256"], text
+        )
+        row["source_text"] = text[:80_000]
+        row["source_text_truncated"] = len(text) > 80_000
+    filtered_total = {
+        "all": counts["total"],
+        "ready": counts["machine_ready"],
+        "blocked": counts["machine_blocked"],
+        "needs-draft": counts["needs_draft"],
+    }[review_filter]
+    return {
+        "generatedAt": now(), "filter": review_filter,
+        "filteredTotal": filtered_total, "counts": counts, "items": rows,
+    }
+
+
+def _machine_diff(previous_text, current_text, maximum=6_000):
+    """Return a bounded word-level preview; it makes no semantic correction claim."""
+    previous_all, current_all = previous_text.split(), current_text.split()
+    input_truncated = len(previous_all) > 12_000 or len(current_all) > 12_000
+    previous_words, current_words = previous_all[:12_000], current_all[:12_000]
+    matcher = difflib.SequenceMatcher(None, previous_words, current_words)
+    lines = []
+    for tag, old_start, old_end, new_start, new_end in matcher.get_opcodes():
+        if tag == "equal":
+            continue
+        if old_start != old_end:
+            lines.append("- " + " ".join(
+                previous_words[max(0, old_start - 10):min(len(previous_words), old_end + 10)]
+            ))
+        if new_start != new_end:
+            lines.append("+ " + " ".join(
+                current_words[max(0, new_start - 10):min(len(current_words), new_end + 10)]
+            ))
+        if sum(len(line) + 1 for line in lines) >= maximum:
+            break
+    preview = "\n".join(lines)
+    return preview[:maximum], input_truncated or len(preview) > maximum
+
+
+def source_revision_evidence(db, url, current_sha, current_text):
+    """Build private revision evidence from retained official-source text."""
+    previous = db.execute("""
+      SELECT sha256,observed_at,extracted_text FROM source_revisions
+      WHERE url=? AND sha256<>? ORDER BY observed_at DESC,rowid DESC LIMIT 1
+    """, (url, current_sha)).fetchone()
+    if not previous:
+        return None
+    preview, truncated = _machine_diff(previous["extracted_text"], current_text)
+    return {
+        "previous_sha256": previous["sha256"],
+        "previous_observed_at": previous["observed_at"],
+        "current_sha256": current_sha,
+        "diff_preview": preview,
+        "truncated": truncated,
+        "method": "word-diff",
+    }
+
+
+def _validated_previous_brief(db, row, source_sha, validation_sha, evidence_rows):
+    """Return a read-only stale draft only when its retained evidence still validates."""
+    if (
+        row["brief_status"] != "stale" or not source_sha or not validation_sha
+        or source_sha == row["sha256"]
+        or any(item["field"] not in {"summary", "impact"} for item in evidence_rows)
+    ):
+        return None
+    previous = db.execute("""
+      SELECT extracted_text FROM source_revisions
+      WHERE url=? AND sha256=? ORDER BY observed_at DESC,rowid DESC LIMIT 1
+    """, (row["url"], source_sha)).fetchone()
+    if not previous:
+        return None
+    evidence = {
+        field: [item["excerpt"] for item in evidence_rows if item["field"] == field]
+        for field in ("summary", "impact")
+    }
+    try:
+        summary_ja, impact_ja, cleaned = _validate_brief_payload(
+            previous["extracted_text"], row["summary_ja"], row["impact_label"],
+            row["impact_ja"], row["confidence"], evidence,
+        )
+    except (AttributeError, TypeError, ValueError):
+        return None
+    if _brief_validation_sha(
+        source_sha, summary_ja, row["impact_label"], impact_ja,
+        row["confidence"], cleaned,
+    ) != validation_sha:
+        return None
+    return {
+        "source_sha256": source_sha,
+        "summary_ja": summary_ja,
+        "impact_label": row["impact_label"],
+        "impact_ja": impact_ja,
+        "confidence": row["confidence"],
+        "generated_at": row["generated_at"],
+        "evidence": {
+            field: [excerpt for item_field, excerpt in cleaned if item_field == field]
+            for field in ("summary", "impact")
+        },
+    }
+
+
+def queue_generation_job(db, url, reserved_tokens=0):
+    """Queue one monitored release revision; never backfill sources without a release event."""
+    queued_at = now()
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        row = db.execute("""
+          SELECT s.sha256,s.error,s.extracted_chars
+          FROM sources s JOIN release_events e ON e.url=s.url WHERE s.url=?
+        """, (url,)).fetchone()
+        if not row:
+            raise ValueError("Only a newly detected release event can be queued")
+        ready = bool(row["sha256"] and not row["error"] and row["extracted_chars"] > 0)
+        db.execute("""
+          INSERT INTO brief_generation_jobs(
+            url,source_sha256,status,attempts,queued_at,started_at,completed_at,next_attempt_at,error_code,reserved_tokens
+          ) VALUES(?,?,?,0,?,NULL,NULL,?,NULL,?)
+          ON CONFLICT(url) DO NOTHING
+        """, (url, row["sha256"] if ready else None, "queued" if ready else "waiting-body", queued_at, queued_at,
+              max(0, int(reserved_tokens)) if ready else 0))
+    return {"url": url, "status": "queued" if ready else "waiting-body"}
+
+
+def activate_generation_job(db, url, reserved_tokens=0):
+    """Make a queued release ready after body retrieval, resetting only a changed revision."""
+    activated_at = now()
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        source = db.execute("SELECT sha256,error,extracted_chars FROM sources WHERE url=?", (url,)).fetchone()
+        job = db.execute("SELECT * FROM brief_generation_jobs WHERE url=?", (url,)).fetchone()
+        if not source or not job or not source["sha256"] or source["error"] or source["extracted_chars"] <= 0:
+            return None
+        if (job["source_sha256"] == source["sha256"] and job["status"] != "waiting-body"
+                and job["reserved_tokens"] > 0):
+            return {"url": url, "status": job["status"]}
+        db.execute("""
+          UPDATE brief_generation_jobs SET source_sha256=?,status='queued',attempts=0,
+            queued_at=?,started_at=NULL,completed_at=NULL,next_attempt_at=?,error_code=NULL,reserved_tokens=?
+          WHERE url=?
+        """, (source["sha256"], activated_at, activated_at, max(0, int(reserved_tokens)), url))
+    return {"url": url, "status": "queued"}
+
+
+def recover_generation_jobs(db, stale_minutes=10):
+    """Recover interrupted work without paying twice when a valid generated draft was saved."""
+    recovered_at = now()
+    cutoff = (datetime.now(timezone.utc) - timedelta(minutes=stale_minutes)).isoformat(timespec="milliseconds")
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        completed = db.execute("""
+          UPDATE brief_generation_jobs AS j SET status='succeeded',completed_at=?,next_attempt_at=?,error_code=NULL
+          WHERE status='running' AND EXISTS (
+            SELECT 1 FROM briefs b WHERE b.url=j.url AND b.source_sha256=j.source_sha256
+              AND b.generation_response_id IS NOT NULL
+          )
+        """, (recovered_at, recovered_at)).rowcount
+        db.execute("""
+          UPDATE brief_generation_attempts AS a SET completed_at=?,outcome='succeeded',error_code=NULL
+          WHERE outcome='running' AND EXISTS (
+            SELECT 1 FROM briefs b WHERE b.url=a.url AND b.source_sha256=a.source_sha256
+              AND b.generation_response_id IS NOT NULL
+          )
+        """, (recovered_at,))
+        interrupted = db.execute("""
+          UPDATE brief_generation_jobs SET status='retry',next_attempt_at=?,error_code='worker-interrupted'
+          WHERE status='running' AND started_at<=?
+        """, (recovered_at, cutoff)).rowcount
+        db.execute("""
+          UPDATE brief_generation_attempts SET completed_at=?,outcome='interrupted',error_code='worker-interrupted'
+          WHERE outcome='running' AND started_at<=?
+        """, (recovered_at, cutoff))
+    return {"completed": completed, "interrupted": interrupted}
+
+
+def claim_generation_job(db, daily_limit, max_attempts, token_limit):
+    """Atomically claim one due revision under rolling job and token budgets."""
+    claimed_at = now()
+    window_start = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat(timespec="milliseconds")
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        db.execute("""
+          UPDATE brief_generation_jobs SET status='failed',completed_at=?,error_code='generation-failed'
+          WHERE status IN ('queued','retry') AND attempts>=?
+        """, (claimed_at, max_attempts))
+        used = db.execute(
+            "SELECT count(*) FROM brief_generation_attempts WHERE started_at>=?", (window_start,)
+        ).fetchone()[0]
+        if used >= daily_limit:
+            return None
+        tokens_used = db.execute("""
+          SELECT coalesce(sum(CASE WHEN outcome='succeeded' AND total_tokens IS NOT NULL
+                              THEN total_tokens ELSE reserved_tokens END),0)
+          FROM brief_generation_attempts WHERE started_at>=?
+        """, (window_start,)).fetchone()[0]
+        row = db.execute("""
+          SELECT j.* FROM brief_generation_jobs j
+          JOIN sources s ON s.url=j.url
+          WHERE j.status IN ('queued','retry') AND j.next_attempt_at<=?
+            AND j.attempts<? AND j.source_sha256=s.sha256
+            AND s.error IS NULL AND s.extracted_chars>0
+            AND j.reserved_tokens>0 AND j.reserved_tokens<=?
+          ORDER BY j.queued_at,j.url LIMIT 1
+        """, (claimed_at, max_attempts, max(0, token_limit - tokens_used))).fetchone()
+        if not row:
+            return None
+        attempt = row["attempts"] + 1
+        db.execute("""
+          UPDATE brief_generation_jobs SET status='running',attempts=?,started_at=?,completed_at=NULL,error_code=NULL
+          WHERE url=?
+        """, (attempt, claimed_at, row["url"]))
+        cursor = db.execute("""
+          INSERT INTO brief_generation_attempts(url,source_sha256,started_at,outcome,reserved_tokens)
+          VALUES(?,?,?,'running',?)
+        """, (row["url"], row["source_sha256"], claimed_at, row["reserved_tokens"]))
+    return {"url": row["url"], "sha256": row["source_sha256"], "attempt": attempt,
+            "attemptId": cursor.lastrowid, "reservedTokens": row["reserved_tokens"]}
+
+
+def claim_manual_generation(db, url, expected_sha, reserved_tokens, daily_limit, token_limit):
+    """Reserve rolling budgets for an authenticated one-at-a-time generation."""
+    claimed_at = now()
+    window_start = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat(timespec="milliseconds")
+    reserved_tokens = max(1, int(reserved_tokens))
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        source = db.execute("SELECT sha256,error,extracted_chars FROM sources WHERE url=?", (url,)).fetchone()
+        if (not source or source["sha256"] != expected_sha or source["error"]
+                or source["extracted_chars"] <= 0):
+            raise ValueError("Source is missing, changed, failed, or has no extracted evidence")
+        used, budget_tokens = db.execute("""
+          SELECT count(*),coalesce(sum(CASE WHEN outcome='succeeded' AND total_tokens IS NOT NULL
+                                      THEN total_tokens ELSE reserved_tokens END),0)
+          FROM brief_generation_attempts WHERE started_at>=?
+        """, (window_start,)).fetchone()
+        if used >= daily_limit:
+            raise ValueError("generation-daily-limit-reached")
+        if budget_tokens + reserved_tokens > token_limit:
+            raise ValueError("generation-token-budget-exhausted")
+        cursor = db.execute("""
+          INSERT INTO brief_generation_attempts(url,source_sha256,started_at,outcome,reserved_tokens)
+          VALUES(?,?,?,'running',?)
+        """, (url, expected_sha, claimed_at, reserved_tokens))
+    return {"url": url, "sha256": expected_sha, "attemptId": cursor.lastrowid,
+            "reservedTokens": reserved_tokens}
+
+
+def finish_manual_generation(db, claim, error_code=None, usage=None):
+    completed_at = now()
+    error_code = error_code if error_code in {
+        None, "generation-not-configured", "generation-failed", "validation-failed", "worker-error"
+    } else "worker-error"
+    usage = usage or {}
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        db.execute("""
+          UPDATE brief_generation_attempts SET completed_at=?,outcome=?,error_code=?,
+            input_tokens=?,output_tokens=?,total_tokens=? WHERE id=? AND outcome='running'
+        """, (completed_at, "succeeded" if error_code is None else "failed", error_code,
+              usage.get("inputTokens"), usage.get("outputTokens"), usage.get("totalTokens"), claim["attemptId"]))
+
+
+def finish_generation_job(db, claim, error_code=None, max_attempts=3, usage=None,
+                          retry_after_seconds=None):
+    """Complete or reschedule a claimed generation without storing sensitive errors."""
+    completed_at = now()
+    error_code = error_code if error_code in {
+        None, "generation-not-configured", "generation-failed", "validation-failed", "worker-error"
+    } else "worker-error"
+    if error_code is None:
+        status, retry_seconds = "succeeded", 0
+    elif claim["attempt"] >= max_attempts:
+        status, retry_seconds = "failed", 0
+    else:
+        status = "retry"
+        retry_seconds = min(3600, 60 * (5 ** max(0, claim["attempt"] - 1)))
+        if isinstance(retry_after_seconds, (int, float)) and not isinstance(retry_after_seconds, bool):
+            retry_seconds = max(retry_seconds, min(7 * 24 * 60 * 60, max(0, int(retry_after_seconds))))
+    next_attempt_at = (datetime.now(timezone.utc) + timedelta(seconds=retry_seconds)).isoformat(timespec="milliseconds")
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        current = db.execute("SELECT source_sha256,status FROM brief_generation_jobs WHERE url=?", (claim["url"],)).fetchone()
+        if not current or current["source_sha256"] != claim["sha256"]:
+            status = "superseded"
+        else:
+            db.execute("""
+              UPDATE brief_generation_jobs SET status=?,completed_at=?,next_attempt_at=?,error_code=? WHERE url=?
+            """, (status, completed_at, next_attempt_at, error_code, claim["url"]))
+        usage = usage or {}
+        db.execute("""
+          UPDATE brief_generation_attempts SET completed_at=?,outcome=?,error_code=?,
+            input_tokens=?,output_tokens=?,total_tokens=?
+          WHERE id=? AND outcome='running'
+        """, (completed_at, status, error_code, usage.get("inputTokens"), usage.get("outputTokens"),
+              usage.get("totalTokens"), claim["attemptId"]))
+    return {"url": claim["url"], "status": status, "retrySeconds": retry_seconds}
+
+
+def generation_queue_stats(db, daily_limit, token_limit):
+    window_start = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat(timespec="milliseconds")
+    counts = {row["status"]: row["total"] for row in db.execute(
+        "SELECT status,count(*) AS total FROM brief_generation_jobs GROUP BY status"
+    )}
+    attempt = db.execute("""
+      SELECT count(*) AS total,max(started_at) AS last_attempt_at,
+             max(CASE WHEN outcome='succeeded' THEN completed_at END) AS last_success_at,
+             coalesce(sum(CASE WHEN outcome='succeeded' AND total_tokens IS NOT NULL
+                          THEN total_tokens ELSE reserved_tokens END),0) AS budget_tokens,
+             coalesce(sum(CASE WHEN total_tokens IS NOT NULL THEN total_tokens ELSE 0 END),0) AS measured_tokens
+      FROM brief_generation_attempts WHERE started_at>=?
+    """, (window_start,)).fetchone()
+    error = db.execute("""
+      SELECT error_code FROM brief_generation_attempts
+      WHERE error_code IS NOT NULL ORDER BY id DESC LIMIT 1
+    """).fetchone()
+    remaining_tokens = max(0, token_limit - attempt["budget_tokens"])
+    budget_blocked = db.execute("""
+      SELECT count(*) FROM brief_generation_jobs
+      WHERE status IN ('queued','retry') AND reserved_tokens>?
+    """, (remaining_tokens,)).fetchone()[0]
+    current = datetime.now(timezone.utc)
+    retry_times = []
+    for row in db.execute("""
+      SELECT next_attempt_at FROM brief_generation_jobs
+      WHERE status='retry' AND next_attempt_at IS NOT NULL
+      ORDER BY next_attempt_at LIMIT 1000
+    """):
+        try:
+            retry_at = datetime.fromisoformat(str(row["next_attempt_at"]).replace("Z", "+00:00"))
+            if retry_at.tzinfo is None:
+                retry_at = retry_at.replace(tzinfo=timezone.utc)
+            retry_at = retry_at.astimezone(timezone.utc)
+        except (TypeError, ValueError, OverflowError):
+            continue
+        wait = (retry_at - current).total_seconds()
+        if wait <= MAX_ACCESS_BACKOFF_SECONDS:
+            retry_times.append((retry_at, max(0, int(wait + 0.999))))
+    next_retry_at, next_retry_wait = min(retry_times, default=(None, None))
+    return {
+        "waitingBody": counts.get("waiting-body", 0), "queued": counts.get("queued", 0),
+        "running": counts.get("running", 0), "retry": counts.get("retry", 0),
+        "succeeded": counts.get("succeeded", 0), "failed": counts.get("failed", 0),
+        "attemptsLast24Hours": attempt["total"], "limitReached": attempt["total"] >= daily_limit,
+        "tokenLimit": token_limit, "budgetTokensLast24Hours": attempt["budget_tokens"],
+        "measuredTokensLast24Hours": attempt["measured_tokens"],
+        "tokenLimitReached": attempt["budget_tokens"] >= token_limit,
+        "tokenBudgetBlocked": budget_blocked,
+        "lastAttemptAt": attempt["last_attempt_at"], "lastSuccessAt": attempt["last_success_at"],
+        "lastErrorCode": error["error_code"] if error else None,
+        "nextRetryAt": next_retry_at.isoformat(timespec="milliseconds") if next_retry_at else None,
+        "nextRetryWaitSeconds": next_retry_wait,
+    }
+
+
+def write_snapshot(db, output):
+    """Replace a public snapshot atomically so readers never observe partial JSON."""
+    output = Path(output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    temporary = output.with_name(output.name + ".tmp")
+    data = snapshot(db)
+    temporary.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+    temporary.replace(output)
+    return data
+
+
+def collect_source(row, transport=fetch):
+    """Fetch and extract one source without mutating SQLite, safe for worker threads."""
+    if getattr(transport, "supports_persistent_validators", False):
+        legacy_unextracted_pdf = (
+            row["content_type"] == "application/pdf"
+            and bool(row["sha256"])
+            and not row["extracted_chars"]
+        )
+        sec_filing = urlsplit(row["url"]).hostname == "www.sec.gov"
+        validators = (
+            {"force_unconditional": True}
+            if sec_filing else {}
+            if legacy_unextracted_pdf else {
+                "etag": row["response_etag"],
+                "last_modified": row["response_last_modified"],
+            }
+        )
+        response = transport(
+            row["url"], row["ticker"], validators=validators,
+            include_metadata=True,
+        )
+        if response["notModified"]:
+            return {
+                "notModified": True, "responseEtag": response["etag"],
+                "responseLastModified": response["lastModified"],
+            }
+        content, content_type = response["content"], response["contentType"]
+        response_etag, response_last_modified = response["etag"], response["lastModified"]
+    else:
+        content, content_type = transport(row["url"], row["ticker"])
+        response_etag = response_last_modified = None
+    extracted = extract_text(content, content_type)
+    is_sec_html = content_type == "text/html" and urlsplit(row["url"]).hostname == "www.sec.gov"
+    if not extracted.strip() and not is_sec_html:
+        raise ValueError("Source has no extractable text")
+    evidence_url, evidence_kind = row["url"], "direct"
+    identity_content = content
+    if is_sec_html:
+        exhibit = sec_exhibit_evidence(content, row["url"], row["ticker"], transport)
+        if exhibit and "extractedText" in exhibit:
+            extracted = exhibit["extractedText"]
+            content_type = exhibit["contentType"]
+            evidence_url, evidence_kind = exhibit["url"], "sec-exhibit-99.1"
+            identity_content = content + b"\0SEC-EXHIBIT-99.1\0" + exhibit["content"]
+        elif exhibit and sum(character.isalnum() for character in extracted) < 80:
+            raise ValueError("SEC exhibit evidence unavailable") from exhibit["error"]
+    if not extracted.strip():
+        raise ValueError("Source has no extractable text")
+    return {
+        "sha256": hashlib.sha256(identity_content).hexdigest(),
+        "bodySha256": hashlib.sha256(extracted.encode("utf-8")).hexdigest(),
+        "contentType": content_type,
+        "contentBytes": len(identity_content),
+        "extractedText": extracted,
+        "extractedChars": len(extracted),
+        "responseEtag": response_etag,
+        "responseLastModified": response_last_modified,
+        "evidenceUrl": evidence_url,
+        "evidenceKind": evidence_kind,
+    }
+
+
+def save_source_check(db, row, result):
+    checked_at = now()
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        current = db.execute("SELECT * FROM sources WHERE url=?", (row["url"],)).fetchone()
+        if not current:
+            raise ValueError("Source disappeared before its fetch result was saved")
+        not_modified = bool(result.get("notModified"))
+        if not_modified and not current["sha256"]:
+            raise ValueError("Not-modified response has no stored source body")
+        result_body_sha = None if not_modified else result.get("bodySha256")
+        if not not_modified and not result_body_sha:
+            result_body_sha = hashlib.sha256(
+                result["extractedText"].encode("utf-8")
+            ).hexdigest()
+        changed = False if not_modified else result_body_sha != current["body_sha256"]
+        recheck_seconds = successful_recheck_seconds(
+            db, row["url"], changed, bool(current["sha256"]), checked_at
+        )
+        next_fetch_at = (
+            datetime.fromisoformat(checked_at) + timedelta(seconds=recheck_seconds)
+        ).isoformat(timespec="milliseconds")
+        if changed:
+            db.execute(
+                "INSERT INTO history(url,at,kind,sha256,reason) VALUES(?,?,?,?,?)",
+                (row["url"], checked_at, "changed" if current["sha256"] else "first-fetch", result["sha256"], "Extracted evidence body changed; editorial correction not established"),
+            )
+            db.execute(
+                "UPDATE briefs SET status='stale',reviewed_at=NULL,reviewer=NULL,review_reason=NULL WHERE url=?",
+                (row["url"],),
+            )
+        if current["sha256"] and current["extracted_text"]:
+            db.execute("""
+              INSERT OR IGNORE INTO source_revisions(
+                url,sha256,observed_at,content_type,content_bytes,extracted_text,extracted_chars
+              ) VALUES(?,?,?,?,?,?,?)
+            """, (
+                row["url"], current["sha256"],
+                current["checked_at"] or current["fetched_at"] or checked_at,
+                current["content_type"], current["content_bytes"],
+                current["extracted_text"], current["extracted_chars"],
+            ))
+        if not_modified:
+            db.execute("""
+              UPDATE sources
+              SET checked_at=?,error=NULL,fetch_failures=0,next_fetch_at=?,
+                  response_etag=COALESCE(?,response_etag),
+                  response_last_modified=COALESCE(?,response_last_modified)
+              WHERE url=?
+            """, (
+                checked_at, next_fetch_at, http_validator(result.get("responseEtag")),
+                http_validator(result.get("responseLastModified")), row["url"],
+            ))
+        elif changed:
+            db.execute("""
+              INSERT OR IGNORE INTO source_revisions(
+                url,sha256,observed_at,content_type,content_bytes,extracted_text,extracted_chars
+              ) VALUES(?,?,?,?,?,?,?)
+            """, (
+                row["url"], result["sha256"], checked_at, result["contentType"],
+                result["contentBytes"], result["extractedText"], result["extractedChars"],
+            ))
+            db.execute("""
+              DELETE FROM source_revisions WHERE rowid IN (
+                SELECT rowid FROM source_revisions WHERE url=?
+                ORDER BY observed_at DESC,rowid DESC LIMIT -1 OFFSET 12
+              )
+            """, (row["url"],))
+        if not not_modified:
+            db.execute("""
+          UPDATE sources
+          SET sha256=?,raw_sha256=?,body_sha256=?,checked_at=?,
+              fetched_at=COALESCE(fetched_at,?),error=NULL,status=?,
+              content_type=?,content_bytes=?,extracted_text=?,extracted_chars=?,fetch_failures=0,
+              next_fetch_at=?,response_etag=?,response_last_modified=?,
+              evidence_url=?,evidence_kind=?
+          WHERE url=?
+        """, (
+            result["sha256"] if changed else current["sha256"], result["sha256"],
+            result_body_sha, checked_at, checked_at,
+            "pending" if changed else current["status"],
+            result["contentType"], result["contentBytes"], result["extractedText"],
+            result["extractedChars"], next_fetch_at, http_validator(result.get("responseEtag")),
+            http_validator(result.get("responseLastModified")),
+            result.get("evidenceUrl") or row["url"],
+            result.get("evidenceKind") or "direct", row["url"],
+        ))
+        hostname = source_hostname(row["url"])
+        # Inline RSS/Atom evidence proves that the feed was reachable, not that
+        # the linked article host accepted a direct body request. Keep an
+        # access-control circuit open until that host itself succeeds.
+        if hostname and row["source_mode"] == "remote":
+            db.execute("DELETE FROM body_host_backoff WHERE host=?", (hostname,))
+    status = "not-modified" if not_modified else (
+        "first-fetched" if not current["sha256"] else ("changed" if changed else "unchanged")
+    )
+    return {
+        "url": row["url"], "status": status,
+        "extractedChars": current["extracted_chars"] if not_modified else result["extractedChars"],
+        "recheckSeconds": recheck_seconds,
+    }
+
+
+def save_source_error(db, row, exc):
+    checked_at = now()
+    error_code = source_error_code(exc)
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        current = db.execute("SELECT fetch_failures FROM sources WHERE url=?", (row["url"],)).fetchone()
+        if not current:
+            raise ValueError("Source disappeared before its fetch error was saved")
+        failures = current["fetch_failures"] + 1
+        retry_hint = retry_after_seconds(exc)
+        retry_seconds = source_retry_seconds(error_code, failures, retry_hint)
+        hostname = source_hostname(row["url"])
+        if hostname and error_code in ACCESS_RESTRICTED_ERRORS:
+            host_state = db.execute(
+                "SELECT failures FROM body_host_backoff WHERE host=?", (hostname,)
+            ).fetchone()
+            host_failures = min(1_000_000, (host_state["failures"] if host_state else 0) + 1)
+            host_retry_seconds = source_retry_seconds(
+                error_code, host_failures, retry_hint
+            )
+            retry_seconds = max(retry_seconds, host_retry_seconds)
+        next_fetch_at = (datetime.now(timezone.utc) + timedelta(seconds=retry_seconds)).isoformat(timespec="milliseconds")
+        db.execute(
+            "UPDATE sources SET checked_at=?,error=?,fetch_failures=?,next_fetch_at=? WHERE url=?",
+            (checked_at, error_code, failures, next_fetch_at, row["url"]),
+        )
+        if hostname and error_code in ACCESS_RESTRICTED_ERRORS:
+            db.execute("""
+              INSERT INTO body_host_backoff(host,failures,error,retry_at,updated_at)
+              VALUES(?,?,?,?,?)
+              ON CONFLICT(host) DO UPDATE SET
+                failures=excluded.failures,error=excluded.error,
+                retry_at=excluded.retry_at,updated_at=excluded.updated_at
+            """, (hostname, host_failures, error_code, next_fetch_at, checked_at))
+        db.execute("INSERT INTO history(url,at,kind,reason) VALUES(?,?,?,?)", (row["url"], checked_at, "fetch-error", error_code))
+    return {"url": row["url"], "status": "error", "retrySeconds": retry_seconds, "error": error_code}
+
+
+def check_source(db, row, transport=fetch):
+    try:
+        return save_source_check(db, row, collect_source(row, transport))
+    except Exception as exc:
+        return save_source_error(db, row, exc)
+
+
+def _review_text(value, minimum, maximum):
+    if not isinstance(value, str):
+        raise ValueError("Decision, reviewer, and reason are required")
+    value = value.strip()
+    if not minimum <= len(value) <= maximum or re.search(r"[\x00-\x1f\x7f<>]", value):
+        raise ValueError("Decision, reviewer, and reason are required")
+    return value
+
+
+def review(db, url, expected_sha, decision, reviewer, reason):
+    if decision not in {"approved", "held", "rejected"}:
+        raise ValueError("Decision, reviewer, and reason are required")
+    reviewer, reason = _review_text(reviewer, 2, 120), _review_text(reason, 5, 500)
+    with db:
+        # Acquire a write lock before reading so a concurrent check cannot invalidate approval.
+        db.execute("BEGIN IMMEDIATE")
+        row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+        if not row or not row["sha256"] or row["sha256"] != expected_sha or row["error"]:
+            raise ValueError("Source is missing, changed, or failed its latest check; review current content first")
+        db.execute("INSERT INTO history(url,at,kind,sha256,reviewer,reason) VALUES(?,?,?,?,?,?)", (url, now(), decision, expected_sha, reviewer, reason))
+        db.execute("UPDATE sources SET status=? WHERE url=?", (decision, url))
+
+
+def _brief_numeric_claims(value):
+    """Return explicit numeric claims, including Japanese kanji-number forms.
+
+    A single kanji digit is treated as a number only when followed by a common
+    quantitative unit. This avoids misclassifying ordinary words such as
+    ``一方`` while still catching claims such as ``二社`` and ``十倍``.
+    """
+    arabic = re.findall(r"([$€£¥₩]?\d[\d,.]*%?)(?:億|万|兆|倍|年|月|日)?", value)
+    kanji = re.findall(
+        r"[〇零一二三四五六七八九十百千万億兆]{2,}"
+        r"|[〇零一二三四五六七八九十百千万億兆](?="
+        r"年|月|日|倍|割|分|厘|%|％|円|ドル|件|社|人|台|基|株)",
+        value,
+    )
+    return arabic + kanji
+
+
+def _validate_brief_payload(source_text, summary_ja, impact_label, impact_ja, confidence, evidence):
+    """Return normalized evidence only when both editorial fields remain source-bound."""
+    summary_ja, impact_ja = summary_ja.strip(), impact_ja.strip()
+    if not 20 <= len(summary_ja) <= 600 or not 20 <= len(impact_ja) <= 900:
+        raise ValueError("Japanese summary and impact must be concise but substantive")
+    if not re.search(r"[ぁ-んァ-ヶ一-龯]", summary_ja + impact_ja):
+        raise ValueError("Summary and impact must contain Japanese text")
+    if impact_label not in {"positive", "negative", "mixed", "neutral", "uncertain"}:
+        raise ValueError("Invalid impact label")
+    if confidence not in {"low", "medium", "high"}:
+        raise ValueError("Invalid confidence")
+    if not isinstance(evidence, dict) or set(evidence) != {"summary", "impact"}:
+        raise ValueError("Summary and impact evidence are required")
+    cleaned = []
+    cited_by_field = {}
+    for field in ("summary", "impact"):
+        if (not isinstance(evidence[field], list)
+                or not 1 <= len(evidence[field]) <= 4
+                or not all(isinstance(item, str) for item in evidence[field])):
+            raise ValueError("Each evidence field requires one to four text excerpts")
+        field_excerpts = []
+        for excerpt in evidence[field]:
+            excerpt = " ".join(excerpt.split())
+            if not 12 <= len(excerpt) <= 800 or excerpt not in source_text:
+                raise ValueError("Every evidence excerpt must appear exactly in the current source text")
+            if excerpt in field_excerpts:
+                raise ValueError("Evidence excerpts must be unique within each field")
+            cleaned.append((field, excerpt))
+            field_excerpts.append(excerpt)
+        cited_by_field[field] = " ".join(field_excerpts)
+    for field, text in (("summary", summary_ja), ("impact", impact_ja)):
+        for token in _brief_numeric_claims(text):
+            if token not in cited_by_field[field]:
+                raise ValueError(f"Every numeric {field} claim must appear in its cited evidence")
+    return summary_ja, impact_ja, cleaned
+
+
+def _brief_validation_sha(source_sha, summary_ja, impact_label, impact_ja, confidence, evidence):
+    """Seal the exact normalized news draft that passed evidence and numeric checks."""
+    fields = {
+        "sourceSha256": source_sha,
+        "summaryJa": summary_ja,
+        "impactLabel": impact_label,
+        "impactJa": impact_ja,
+        "confidence": confidence,
+        "evidence": [{"field": field, "excerpt": excerpt} for field, excerpt in evidence],
+    }
+    encoded = json.dumps(
+        fields, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def _validate_brief_for_review(row, evidence_rows, expected_sha):
+    """Run the exact, read-only integrity checks required before a human decision."""
+    if not row or not row["source_sha256"]:
+        raise ValueError("draft-missing")
+    if row["source_sha256"] != expected_sha or row["current_sha"] != expected_sha:
+        raise ValueError("source-revision-mismatch")
+    if row["source_error"] or not row["source_text"]:
+        raise ValueError("source-unavailable")
+    if not source_check_is_fresh(row["source_checked_at"]):
+        raise ValueError("source-check-stale")
+    if any(item["field"] not in {"summary", "impact"} for item in evidence_rows):
+        raise ValueError("draft-evidence-invalid")
+    evidence = {
+        field: [item["excerpt"] for item in evidence_rows if item["field"] == field]
+        for field in ("summary", "impact")
+    }
+    try:
+        summary_ja, impact_ja, cleaned = _validate_brief_payload(
+            row["source_text"], row["summary_ja"], row["impact_label"],
+            row["impact_ja"], row["confidence"], evidence,
+        )
+    except (AttributeError, TypeError, ValueError) as exc:
+        raise ValueError("draft-evidence-invalid") from exc
+    validation_sha = _brief_validation_sha(
+        expected_sha, summary_ja, row["impact_label"], impact_ja,
+        row["confidence"], cleaned,
+    )
+    if not row["validation_sha256"]:
+        raise ValueError("draft-fingerprint-missing")
+    if row["validation_sha256"] != validation_sha:
+        raise ValueError("draft-fingerprint-mismatch")
+    return validation_sha
+
+
+def _brief_preflight_result(row, evidence_rows, expected_sha):
+    """Return the private, read-only review gate result without changing state."""
+    try:
+        _validate_brief_for_review(row, evidence_rows, expected_sha)
+    except ValueError as exc:
+        return {"ready": False, "blockers": [str(exc)], "checks": []}
+    return {
+        "ready": True,
+        "blockers": [],
+        "checks": [
+            "source-revision-current", "source-fetch-successful",
+            "source-check-recent", "evidence-and-numbers-valid",
+            "draft-fingerprint-matched",
+        ],
+    }
+
+
+def _public_brief_evidence(evidence, maximum_items=2, maximum_chars=320):
+    """Expose a small, source-verbatim prefix without leaking editorial metadata."""
+    result = {}
+    for field in ("summary", "impact"):
+        items = []
+        for excerpt in evidence.get(field, [])[:maximum_items]:
+            text = excerpt[:maximum_chars].rstrip()
+            items.append({"text": text, "truncated": len(text) < len(excerpt)})
+        result[field] = items
+    return result
+
+
+def save_brief_draft(db, url, expected_sha, summary_ja, impact_label, impact_ja, confidence, evidence):
+    """Save a private evidence-bound draft; never publish it without a later review."""
+    generated_at = now()
+    with db:
+        # Lock before reading so a concurrent source refresh cannot race the evidence check.
+        db.execute("BEGIN IMMEDIATE")
+        row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+        if not row or not row["sha256"] or row["sha256"] != expected_sha or row["error"] or not row["extracted_text"]:
+            raise ValueError("Source is missing, changed, failed, or has no extracted evidence")
+        previous = db.execute(
+            "SELECT source_sha256,generation_provider FROM briefs WHERE url=?", (url,)
+        ).fetchone()
+        preserve_ai_audit = bool(
+            previous and previous["source_sha256"] == expected_sha
+            and previous["generation_provider"]
+        )
+        summary_ja, impact_ja, cleaned = _validate_brief_payload(
+            row["extracted_text"], summary_ja, impact_label, impact_ja, confidence, evidence
+        )
+        validation_sha = _brief_validation_sha(
+            expected_sha, summary_ja, impact_label, impact_ja, confidence, cleaned
+        )
+        db.execute("""
+          INSERT INTO briefs(url,source_sha256,summary_ja,impact_label,impact_ja,confidence,validation_sha256,status,generated_at,reviewed_at,reviewer,review_reason)
+          VALUES(?,?,?,?,?,?,?,'draft',?,NULL,NULL,NULL)
+          ON CONFLICT(url) DO UPDATE SET source_sha256=excluded.source_sha256,
+            summary_ja=excluded.summary_ja,impact_label=excluded.impact_label,
+            impact_ja=excluded.impact_ja,confidence=excluded.confidence,
+            validation_sha256=excluded.validation_sha256,status='draft',
+            generated_at=excluded.generated_at,reviewed_at=NULL,reviewer=NULL,review_reason=NULL
+        """, (
+            url, expected_sha, summary_ja, impact_label, impact_ja, confidence,
+            validation_sha, generated_at,
+        ))
+        db.execute("DELETE FROM brief_evidence WHERE url=?", (url,))
+        if not preserve_ai_audit:
+            db.execute("""
+              UPDATE briefs SET generation_provider=NULL,generation_model=NULL,generation_response_id=NULL,
+                                generation_source_truncated=0,generation_input_tokens=NULL,
+                                generation_output_tokens=NULL,generation_total_tokens=NULL WHERE url=?
+            """, (url,))
+        db.executemany("INSERT INTO brief_evidence(url,field,excerpt) VALUES(?,?,?)", [(url, field, excerpt) for field, excerpt in cleaned])
+    return {"url": url, "status": "draft", "generatedAt": generated_at, "published": False}
+
+
+def review_brief(
+    db, url, expected_sha, decision, reviewer, reason, expected_validation_sha,
+    ai_verification=False, full_source_verification=False,
+):
+    """Record the mandatory human decision for the current source revision."""
+    if decision not in {"approved", "held", "rejected"}:
+        raise ValueError("Decision, reviewer, and reason are required")
+    reviewer, reason = _review_text(reviewer, 2, 120), _review_text(reason, 5, 500)
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        row = db.execute("""
+          SELECT b.*,s.sha256 AS current_sha,s.error AS source_error,
+                 s.extracted_text AS source_text,s.checked_at AS source_checked_at
+          FROM briefs b JOIN sources s ON s.url=b.url WHERE b.url=?
+        """, (url,)).fetchone()
+        evidence_rows = db.execute(
+            "SELECT field,excerpt FROM brief_evidence WHERE url=? ORDER BY id", (url,)
+        ).fetchall()
+        if (not _ANNUAL_SHA.fullmatch(str(expected_validation_sha)) or not row
+                or row["validation_sha256"] != expected_validation_sha):
+            raise ValueError("draft-revision-mismatch")
+        if (decision == "approved" and row["generation_provider"] is not None
+                and ai_verification is not True):
+            raise ValueError("ai-draft-human-verification-required")
+        if (decision == "approved" and row["generation_provider"] is not None
+                and row["generation_source_truncated"]
+                and full_source_verification is not True):
+            raise ValueError("truncated-ai-draft-full-source-verification-required")
+        try:
+            _validate_brief_for_review(row, evidence_rows, expected_sha)
+        except ValueError as exc:
+            if str(exc) in {
+                "draft-missing", "source-revision-mismatch", "source-unavailable",
+                "source-check-stale",
+            }:
+                raise ValueError(
+                    "Draft evidence is missing, stale, or the official source changed; "
+                    "refresh or regenerate before review"
+                ) from exc
+            raise ValueError(
+                "Draft evidence is missing or invalid; regenerate before review"
+            ) from exc
+        reviewed_at = now()
+        db.execute("""
+          INSERT INTO brief_review_history(
+            url,source_sha256,draft_validation_sha256,decision,reviewed_at,reviewer,reason,
+            ai_verification,full_source_verification
+          ) VALUES(?,?,?,?,?,?,?,?,?)
+        """, (
+            url, expected_sha, row["validation_sha256"], decision,
+            reviewed_at, reviewer, reason,
+            int(row["generation_provider"] is not None and ai_verification is True),
+            int(row["generation_provider"] is not None
+                and row["generation_source_truncated"]
+                and full_source_verification is True),
+        ))
+        db.execute(
+            "UPDATE briefs SET status=?,reviewed_at=?,reviewer=?,review_reason=? WHERE url=?",
+            (decision, reviewed_at, reviewer, reason, url),
+        )
+    return {"url": url, "status": decision, "published": False}
+
+
+_ANNUAL_ID = re.compile(r"^[a-z0-9][a-z0-9._:-]{2,79}$")
+_ANNUAL_TICKER = re.compile(r"^[A-Z0-9][A-Z0-9.-]{0,14}$")
+_ANNUAL_ACCESSION = re.compile(r"^\d{10}-\d{2}-\d{6}$")
+_ANNUAL_SHA = re.compile(r"^[a-f0-9]{64}$")
+
+
+def _annual_text(value, minimum, maximum, japanese=False):
+    if not isinstance(value, str) or value != value.strip() or not minimum <= len(value) <= maximum:
+        raise ValueError("invalid-annual-brief-text")
+    if re.search(r"[\x00-\x1f\x7f<>]", value):
+        raise ValueError("invalid-annual-brief-text")
+    if japanese and not re.search(r"[ぁ-んァ-ヶ一-龯]", value):
+        raise ValueError("annual-brief-text-must-be-japanese")
+    return value
+
+
+def _annual_ids(value, maximum=8):
+    if not isinstance(value, list) or not 1 <= len(value) <= maximum:
+        raise ValueError("invalid-annual-evidence-ids")
+    result = [_annual_text(item, 3, 80) for item in value]
+    if len(set(result)) != len(result):
+        raise ValueError("duplicate-annual-evidence-id")
+    return result
+
+
+def _annual_numbers(value):
+    return {
+        match.group(0).replace(",", "").replace("％", "%")
+        for match in re.finditer(r"\d+(?:[,.]\d+)*(?:%|％)?", value)
+    }
+
+
+def _validate_annual_filing_payload(payload):
+    """Validate an editor draft against the submitted SEC excerpts before storage.
+
+    The excerpts are deliberately not persisted. Public delivery independently checks
+    the stored record against a newly retrieved SEC filing and its current SHA.
+    """
+    if not isinstance(payload, dict):
+        raise ValueError("invalid-annual-brief")
+    ticker = str(payload.get("ticker", ""))
+    accession = str(payload.get("accessionNumber", ""))
+    source_sha = str(payload.get("sourceSha256", ""))
+    brief_id = str(payload.get("id", ""))
+    if not _ANNUAL_TICKER.fullmatch(ticker):
+        raise ValueError("invalid-annual-ticker")
+    if not _ANNUAL_ACCESSION.fullmatch(accession):
+        raise ValueError("invalid-annual-accession")
+    if not _ANNUAL_SHA.fullmatch(source_sha):
+        raise ValueError("invalid-annual-source-sha")
+    if not _ANNUAL_ID.fullmatch(brief_id):
+        raise ValueError("invalid-annual-brief-id")
+    summary = _annual_text(payload.get("summaryJa"), 20, 500, japanese=True)
+    business_model = _annual_text(payload.get("businessModelJa"), 20, 800, japanese=True)
+    confidence = payload.get("confidence")
+    method = payload.get("generationMethod")
+    if confidence not in {"low", "medium", "high"}:
+        raise ValueError("invalid-annual-confidence")
+    if method not in {"human", "ai-assisted"}:
+        raise ValueError("invalid-annual-generation-method")
+    source_business = payload.get("sourceBusiness", "")
+    source_risks = payload.get("sourceRisks", "")
+    if not isinstance(source_business, str) or not isinstance(source_risks, str):
+        raise ValueError("invalid-annual-source-evidence")
+    if len(source_business) > 20_000 or len(source_risks) > 30_000:
+        raise ValueError("annual-source-evidence-too-large")
+
+    evidence_value = payload.get("evidence")
+    if not isinstance(evidence_value, list) or not 2 <= len(evidence_value) <= 12:
+        raise ValueError("invalid-annual-evidence")
+    evidence, evidence_map = [], {}
+    for item in evidence_value:
+        if not isinstance(item, dict):
+            raise ValueError("invalid-annual-evidence")
+        evidence_id = _annual_text(item.get("id"), 3, 80)
+        section = item.get("section")
+        quote = _annual_text(item.get("quote"), 24, 800)
+        if not _ANNUAL_ID.fullmatch(evidence_id) or evidence_id in evidence_map:
+            raise ValueError("invalid-annual-evidence-id")
+        if section not in {"business", "risk"}:
+            raise ValueError("invalid-annual-evidence-section")
+        corpus = source_business if section == "business" else source_risks
+        if quote not in corpus:
+            raise ValueError("annual-evidence-not-in-source")
+        cleaned = {"id": evidence_id, "section": section, "quote": quote}
+        evidence.append(cleaned)
+        evidence_map[evidence_id] = cleaned
+
+    summary_ids = _annual_ids(payload.get("summaryEvidenceIds"))
+    business_ids = _annual_ids(payload.get("businessModelEvidenceIds"))
+    risk_value = payload.get("riskPointsJa")
+    if not isinstance(risk_value, list) or not 1 <= len(risk_value) <= 6:
+        raise ValueError("invalid-annual-risk-points")
+    risks = []
+    for point in risk_value:
+        if not isinstance(point, dict):
+            raise ValueError("invalid-annual-risk-point")
+        risks.append({
+            "text": _annual_text(point.get("text"), 12, 360, japanese=True),
+            "evidenceIds": _annual_ids(point.get("evidenceIds"), 4),
+        })
+    references = summary_ids + business_ids + [ref for point in risks for ref in point["evidenceIds"]]
+    if any(ref not in evidence_map for ref in references):
+        raise ValueError("annual-evidence-reference-missing")
+    if any(evidence_map[ref]["section"] != "business" for ref in summary_ids + business_ids):
+        raise ValueError("annual-business-evidence-section-invalid")
+    if any(evidence_map[ref]["section"] != "risk" for point in risks for ref in point["evidenceIds"]):
+        raise ValueError("annual-risk-evidence-section-invalid")
+    for text, refs in [(summary, summary_ids), (business_model, business_ids)] + [
+        (point["text"], point["evidenceIds"]) for point in risks
+    ]:
+        supported = _annual_numbers(" ".join(evidence_map[ref]["quote"] for ref in refs))
+        if _annual_numbers(text) - supported:
+            raise ValueError("annual-number-not-grounded")
+    return {
+        "ticker": ticker, "accessionNumber": accession, "sourceSha256": source_sha,
+        "id": brief_id, "summaryJa": summary, "businessModelJa": business_model,
+        "riskPointsJa": risks, "summaryEvidenceIds": summary_ids,
+        "businessModelEvidenceIds": business_ids, "evidence": evidence,
+        "confidence": confidence, "generationMethod": method,
+    }
+
+
+def _annual_validation_sha(record):
+    """Seal the exact normalized draft that passed source and numeric checks."""
+    fields = {
+        key: record[key] for key in (
+            "ticker", "accessionNumber", "sourceSha256", "id", "summaryJa",
+            "businessModelJa", "riskPointsJa", "summaryEvidenceIds",
+            "businessModelEvidenceIds", "evidence", "confidence", "generationMethod",
+        )
+    }
+    encoded = json.dumps(
+        fields, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def _annual_record_from_row(row):
+    try:
+        return {
+            "ticker": row["ticker"], "accessionNumber": row["accession_number"],
+            "sourceSha256": row["source_sha256"], "id": row["brief_id"],
+            "summaryJa": row["summary_ja"], "businessModelJa": row["business_model_ja"],
+            "riskPointsJa": json.loads(row["risk_points_json"]),
+            "summaryEvidenceIds": json.loads(row["summary_evidence_ids_json"]),
+            "businessModelEvidenceIds": json.loads(row["business_evidence_ids_json"]),
+            "evidence": json.loads(row["evidence_json"]), "confidence": row["confidence"],
+            "generationMethod": row["generation_method"],
+        }
+    except (json.JSONDecodeError, KeyError, TypeError) as exc:
+        raise ValueError("annual-draft-evidence-invalid") from exc
+
+
+def _validate_annual_review_sources(record, source_business, source_risks):
+    """Recheck stored excerpts against the exact SEC text shown to the reviewer."""
+    if (not isinstance(source_business, str) or not isinstance(source_risks, str)
+            or not source_business or not source_risks):
+        raise ValueError("annual-review-source-invalid")
+    if len(source_business) > 20_000 or len(source_risks) > 30_000:
+        raise ValueError("annual-review-source-too-large")
+    try:
+        return _validate_annual_filing_payload({
+            **record, "sourceBusiness": source_business, "sourceRisks": source_risks,
+        })
+    except ValueError as exc:
+        if str(exc) == "annual-evidence-not-in-source":
+            raise ValueError("annual-review-evidence-mismatch") from exc
+        raise ValueError("annual-draft-evidence-invalid") from exc
+
+
+def save_annual_filing_brief_draft(db, payload):
+    """Persist a source-bound private draft after exact local evidence checks."""
+    record = _validate_annual_filing_payload(payload)
+    generated_at = now()
+    with db:
+        db.execute("""
+          INSERT INTO annual_filing_briefs(
+            ticker,accession_number,source_sha256,brief_id,summary_ja,business_model_ja,
+            risk_points_json,summary_evidence_ids_json,business_evidence_ids_json,
+            evidence_json,confidence,generation_method,validation_sha256,status,generated_at,
+            reviewed_at,reviewer,review_reason
+          ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,'draft',?,NULL,NULL,NULL)
+          ON CONFLICT(ticker,accession_number) DO UPDATE SET
+            source_sha256=excluded.source_sha256,brief_id=excluded.brief_id,
+            summary_ja=excluded.summary_ja,business_model_ja=excluded.business_model_ja,
+            risk_points_json=excluded.risk_points_json,
+            summary_evidence_ids_json=excluded.summary_evidence_ids_json,
+            business_evidence_ids_json=excluded.business_evidence_ids_json,
+            evidence_json=excluded.evidence_json,confidence=excluded.confidence,
+            generation_method=excluded.generation_method,
+            validation_sha256=excluded.validation_sha256,status='draft',
+            generated_at=excluded.generated_at,reviewed_at=NULL,reviewer=NULL,review_reason=NULL
+        """, (
+            record["ticker"], record["accessionNumber"], record["sourceSha256"], record["id"],
+            record["summaryJa"], record["businessModelJa"],
+            json.dumps(record["riskPointsJa"], ensure_ascii=False, separators=(",", ":")),
+            json.dumps(record["summaryEvidenceIds"], separators=(",", ":")),
+            json.dumps(record["businessModelEvidenceIds"], separators=(",", ":")),
+            json.dumps(record["evidence"], ensure_ascii=False, separators=(",", ":")),
+            record["confidence"], record["generationMethod"],
+            _annual_validation_sha(record), generated_at,
+        ))
+    return {"ticker": record["ticker"], "accessionNumber": record["accessionNumber"],
+            "status": "draft", "generatedAt": generated_at, "published": False}
+
+
+def review_annual_filing_brief(
+        db, ticker, accession, expected_sha, decision, reviewer, reason,
+        expected_validation_sha, source_business, source_risks):
+    """Record a human decision for one exact annual filing revision."""
+    if not _ANNUAL_TICKER.fullmatch(str(ticker)) or not _ANNUAL_ACCESSION.fullmatch(str(accession)):
+        raise ValueError("invalid-annual-filing-identity")
+    if not _ANNUAL_SHA.fullmatch(str(expected_sha)):
+        raise ValueError("invalid-annual-source-sha")
+    if decision not in {"approved", "held", "rejected"}:
+        raise ValueError("invalid-annual-review-decision")
+    reviewer = _annual_text(reviewer, 2, 120)
+    reason = _annual_text(reason, 5, 500)
+    reviewed_at = now()
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        row = db.execute("""
+          SELECT * FROM annual_filing_briefs
+          WHERE ticker=? AND accession_number=?
+        """, (ticker, accession)).fetchone()
+        if not row or row["source_sha256"] != expected_sha:
+            raise ValueError("annual-draft-missing-or-source-changed")
+        if (not _ANNUAL_SHA.fullmatch(str(expected_validation_sha))
+                or row["validation_sha256"] != expected_validation_sha):
+            raise ValueError("annual-draft-revision-mismatch")
+        record = _annual_record_from_row(row)
+        record = _validate_annual_review_sources(record, source_business, source_risks)
+        if not row["validation_sha256"] or row["validation_sha256"] != _annual_validation_sha(record):
+            raise ValueError("annual-draft-evidence-invalid")
+        db.execute("""
+          INSERT INTO annual_filing_review_history(
+            ticker,accession_number,source_sha256,draft_validation_sha256,
+            decision,reviewed_at,reviewer,reason
+          ) VALUES(?,?,?,?,?,?,?,?)
+        """, (
+            ticker, accession, expected_sha, row["validation_sha256"],
+            decision, reviewed_at, reviewer, reason,
+        ))
+        db.execute("""
+          UPDATE annual_filing_briefs SET status=?,reviewed_at=?,reviewer=?,review_reason=?
+          WHERE ticker=? AND accession_number=?
+        """, (decision, reviewed_at, reviewer, reason, ticker, accession))
+    return {"ticker": ticker, "accessionNumber": accession, "status": decision,
+            "reviewedAt": reviewed_at, "published": False}
+
+
+def _annual_row(row, private=False):
+    if row is None:
+        return None
+    generated_at = row["generated_at"].replace("+00:00", "Z")
+    reviewed_at = row["reviewed_at"].replace("+00:00", "Z") if row["reviewed_at"] else None
+    value = {
+        "id": row["brief_id"], "ticker": row["ticker"],
+        "accessionNumber": row["accession_number"], "sourceSha256": row["source_sha256"],
+        "summaryJa": row["summary_ja"], "businessModelJa": row["business_model_ja"],
+        "riskPointsJa": json.loads(row["risk_points_json"]),
+        "summaryEvidenceIds": json.loads(row["summary_evidence_ids_json"]),
+        "businessModelEvidenceIds": json.loads(row["business_evidence_ids_json"]),
+        "evidence": json.loads(row["evidence_json"]), "confidence": row["confidence"],
+        "generationMethod": row["generation_method"], "status": row["status"],
+        "generatedAt": generated_at, "reviewedAt": reviewed_at,
+    }
+    if private:
+        value.update({
+            "reviewer": row["reviewer"], "reviewReason": row["review_reason"],
+            "validationSha256": row["validation_sha256"],
+        })
+    return value
+
+
+_ANNUAL_QUEUE_VIEWS = {
+    "all", "actionable", "invalid", "draft", "held", "approved", "rejected",
+}
+
+
+def annual_filing_brief_queue(db, limit=20, review_filter="all"):
+    """Return private annual drafts in human-action order with integrity counts."""
+    limit = max(1, min(int(limit), 50))
+    if review_filter not in _ANNUAL_QUEUE_VIEWS:
+        raise ValueError("invalid-annual-review-filter")
+    rows = db.execute("""
+      SELECT * FROM annual_filing_briefs
+      ORDER BY generated_at DESC,ticker,accession_number
+    """).fetchall()
+    counts = {
+        "total": len(rows), "draft": 0, "held": 0, "approved": 0,
+        "rejected": 0, "integrity_invalid": 0, "actionable": 0,
+    }
+    items = []
+    for row in rows:
+        item = _annual_row(row, private=True)
+        try:
+            integrity_valid = bool(
+                row["validation_sha256"]
+                and row["validation_sha256"] == _annual_validation_sha(
+                    _annual_record_from_row(row)
+                )
+            )
+        except ValueError:
+            integrity_valid = False
+        item["integrityValid"] = integrity_valid
+        status = row["status"] if row["status"] in {"draft", "held", "approved", "rejected"} else "draft"
+        counts[status] += 1
+        if not integrity_valid:
+            counts["integrity_invalid"] += 1
+        if not integrity_valid or status in {"draft", "held"}:
+            counts["actionable"] += 1
+        item["reviewHistory"] = []
+        items.append(item)
+    items_by_key = {(item["ticker"], item["accessionNumber"]): item for item in items}
+    for history in db.execute("""
+      WITH ranked AS (
+        SELECT ticker,accession_number,source_sha256,draft_validation_sha256,
+               decision,reviewed_at,reviewer,reason,
+               ROW_NUMBER() OVER (
+                 PARTITION BY ticker,accession_number ORDER BY id DESC
+               ) AS history_rank
+        FROM annual_filing_review_history
+      )
+      SELECT * FROM ranked WHERE history_rank<=10
+      ORDER BY ticker,accession_number,history_rank
+    """):
+        item = items_by_key.get((history["ticker"], history["accession_number"]))
+        if item is None:
+            continue
+        item["reviewHistory"].append({
+            "sourceSha256": history["source_sha256"], "decision": history["decision"],
+            "draftValidationSha256": history["draft_validation_sha256"],
+            "reviewedAt": history["reviewed_at"].replace("+00:00", "Z"),
+            "reviewer": history["reviewer"], "reason": history["reason"],
+            "currentRevision": (
+                history["source_sha256"] == item["sourceSha256"]
+                and history["draft_validation_sha256"] is not None
+                and history["draft_validation_sha256"] == item["validationSha256"]
+            ),
+        })
+    priority = {"held": 1, "draft": 2, "rejected": 3, "approved": 4}
+    items.sort(key=lambda item: (
+        0 if not item["integrityValid"] else priority.get(item["status"], 5)
+    ))
+    if review_filter == "actionable":
+        filtered = [item for item in items if not item["integrityValid"]
+                    or item["status"] in {"draft", "held"}]
+    elif review_filter == "invalid":
+        filtered = [item for item in items if not item["integrityValid"]]
+    elif review_filter == "all":
+        filtered = items
+    else:
+        filtered = [item for item in items if item["status"] == review_filter]
+    return {
+        "generatedAt": now(), "counts": counts, "view": review_filter,
+        "filteredTotal": len(filtered), "items": filtered[:limit],
+    }
+
+
+def approved_annual_filing_brief(db, ticker, accession, source_sha):
+    """Return only an intact revision with a matching append-only approval."""
+    if (not _ANNUAL_TICKER.fullmatch(str(ticker))
+            or not _ANNUAL_ACCESSION.fullmatch(str(accession))
+            or not _ANNUAL_SHA.fullmatch(str(source_sha))):
+        raise ValueError("invalid-annual-filing-identity")
+    row = db.execute("""
+      SELECT b.* FROM annual_filing_briefs b
+      WHERE b.ticker=? AND b.accession_number=? AND b.source_sha256=?
+        AND b.status='approved' AND b.reviewed_at IS NOT NULL
+        AND b.validation_sha256 IS NOT NULL
+        AND EXISTS (
+          SELECT 1 FROM annual_filing_review_history h
+          WHERE h.ticker=b.ticker AND h.accession_number=b.accession_number
+            AND h.source_sha256=b.source_sha256
+            AND h.draft_validation_sha256=b.validation_sha256
+            AND h.decision='approved' AND h.reviewed_at=b.reviewed_at
+        )
+    """, (ticker, accession, source_sha)).fetchone()
+    if row is None:
+        return None
+    try:
+        if row["validation_sha256"] != _annual_validation_sha(_annual_record_from_row(row)):
+            return None
+    except ValueError:
+        return None
+    return _annual_row(row, private=False)
+
+
+def main():
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--db", default=str(ROOT / ".research-private/intake.sqlite"))
+    sub = p.add_subparsers(dest="command", required=True)
+    sub.add_parser("seed")
+    d = sub.add_parser("discover")
+    d.add_argument("ticker", choices=HOSTS)
+    c = sub.add_parser("check")
+    c.add_argument("--limit", type=int, default=6)
+    c.add_argument("--ticker", choices=HOSTS)
+    sub.add_parser("list")
+    sub.add_parser("history")
+    e = sub.add_parser("export")
+    e.add_argument("--output", required=True, help="JSON report path; reviewer identities and reasons are excluded")
+    refresh = sub.add_parser("refresh")
+    refresh.add_argument("--output", required=True, help="JSON report path; replaced atomically after all companies run")
+    refresh.add_argument("--check-limit", type=int, default=0, help="Also fetch up to this many oldest unchecked source bodies")
+    a = sub.add_parser("add")
+    a.add_argument("ticker", choices=HOSTS)
+    a.add_argument("url")
+    r = sub.add_parser("review")
+    r.add_argument("url")
+    r.add_argument("sha256")
+    r.add_argument("decision", choices=["approved", "held", "rejected"])
+    r.add_argument("--reviewer", required=True)
+    r.add_argument("--reason", required=True)
+    brief = sub.add_parser("draft-brief")
+    brief.add_argument("url")
+    brief.add_argument("sha256")
+    brief.add_argument("--summary-ja", required=True)
+    brief.add_argument("--impact-label", required=True, choices=["positive", "negative", "mixed", "neutral", "uncertain"])
+    brief.add_argument("--impact-ja", required=True)
+    brief.add_argument("--confidence", required=True, choices=["low", "medium", "high"])
+    brief.add_argument("--summary-evidence", required=True, action="append")
+    brief.add_argument("--impact-evidence", required=True, action="append")
+    brief_review = sub.add_parser("review-brief")
+    brief_review.add_argument("url")
+    brief_review.add_argument("sha256")
+    brief_review.add_argument("decision", choices=["approved", "held", "rejected"])
+    brief_review.add_argument("--validation-sha256", required=True)
+    brief_review.add_argument("--reviewer", required=True)
+    brief_review.add_argument("--reason", required=True)
+    brief_review.add_argument(
+        "--ai-verification", action="store_true",
+        help="confirm human comparison of an AI-assisted draft with the official source",
+    )
+    brief_review.add_argument(
+        "--full-source-verification", action="store_true",
+        help="confirm review of the full official source when AI input was truncated",
+    )
+    annual_draft = sub.add_parser(
+        "draft-annual",
+        help="validate and store one private SEC annual-report draft from JSON",
+    )
+    annual_draft.add_argument(
+        "--input", required=True,
+        help="private JSON payload containing current SEC excerpts and cited evidence",
+    )
+    args = p.parse_args()
+    with connect(args.db) as db:
+        if args.command == "seed":
+            seeds = json.loads(Path(__file__).with_name("sources.json").read_text())
+            for source in seeds:
+                add_source(db, source["ticker"], source["url"], source["publishedOn"])
+            result = {"seeded": len(seeds)}
+        elif args.command == "discover":
+            result = discover(db, args.ticker)
+        elif args.command == "check":
+            if not 1 <= args.limit <= 20:
+                p.error("--limit must be between 1 and 20")
+            rows = db.execute("SELECT * FROM sources WHERE (? IS NULL OR ticker=?) ORDER BY checked_at IS NOT NULL, checked_at, url LIMIT ?", (args.ticker, args.ticker, args.limit)).fetchall()
+            result = [check_source(db, row) for row in rows]
+        elif args.command == "add":
+            result = {"url": add_source(db, args.ticker, args.url)}
+        elif args.command == "review":
+            review(db, args.url, args.sha256, args.decision, args.reviewer, args.reason)
+            result = {"status": args.decision, "published": False}
+        elif args.command == "draft-brief":
+            result = save_brief_draft(db, args.url, args.sha256, args.summary_ja, args.impact_label,
+                                      args.impact_ja, args.confidence,
+                                      {"summary": args.summary_evidence, "impact": args.impact_evidence})
+        elif args.command == "review-brief":
+            result = review_brief(
+                db, args.url, args.sha256, args.decision, args.reviewer, args.reason,
+                args.validation_sha256, args.ai_verification,
+                args.full_source_verification,
+            )
+        elif args.command == "draft-annual":
+            candidate_path = Path(args.input)
+            try:
+                if candidate_path.stat().st_size > 60_000:
+                    p.error("--input must be 60 KB or smaller")
+                candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+                p.error(f"could not read --input: {type(exc).__name__}")
+            result = save_annual_filing_brief_draft(db, candidate)
+        elif args.command == "refresh":
+            if not 0 <= args.check_limit <= 200:
+                p.error("--check-limit must be between 0 and 200")
+            discoveries = [discover(db, ticker) for ticker in PROVIDERS]
+            rows = db.execute("SELECT * FROM sources ORDER BY checked_at IS NOT NULL, checked_at, discovered_at, url LIMIT ?", (args.check_limit,)).fetchall()
+            checked = [check_source(db, row) for row in rows]
+            data = write_snapshot(db, args.output)
+            result = {
+                "companies": len(discoveries),
+                "available": sum(row["status"] in {"ok", "fallback"} for row in discoveries),
+                "fallback": sum(row["status"] == "fallback" for row in discoveries),
+                "degraded": sum(row["status"] == "degraded" for row in discoveries),
+                "checked": len(checked),
+                "sources": len(data["sources"]),
+                "exported": str(Path(args.output)),
+                "published": False,
+            }
+        elif args.command == "export":
+            data = write_snapshot(db, args.output)
+            result = {"sources": len(data["sources"]), "exported": str(Path(args.output)), "published": False}
+        else:
+            table = "sources" if args.command == "list" else "history"
+            result = [dict(row) for row in db.execute("SELECT * FROM " + table)]
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    if (isinstance(result, dict) and (result.get("status") == "degraded" or result.get("degraded", 0) > 0)) or (isinstance(result, list) and any(row.get("status") == "error" for row in result)):
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

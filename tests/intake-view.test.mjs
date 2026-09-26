@@ -1,0 +1,403 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { buildCoverageCompanies, coverageCompanyIssues, fetchState, filterSources, intakeCounts, pdfEvidenceCounts, pdfEvidenceState, secEvidenceCounts, secEvidenceState, snapshotIssues, coverageCounts, providers, providerByTicker } from "../lib/research/intake.ts";
+const snapshot = JSON.parse(readFileSync(new URL("../lib/research/intake-snapshot.json", import.meta.url)));
+const liveTypes = readFileSync(new URL("../lib/research/use-live-intake.ts", import.meta.url), "utf8");
+const liveRoute = readFileSync(new URL("../app/api/research/live/route.ts", import.meta.url), "utf8");
+const intakeDashboard = readFileSync(new URL("../app/research/intake/intake-dashboard.tsx", import.meta.url), "utf8");
+const source = snapshot.sources.find(s => s.sha256);
+
+test("snapshot has valid source references and no private review details", () => {
+  assert.deepEqual(snapshotIssues(snapshot), []);
+  for (const h of snapshot.history) {
+    assert.equal("reviewer" in h, false);
+    assert.equal("reason" in h, false);
+  }
+});
+
+test("operations preview exposes verified backup health without storage details", () => {
+  assert.match(liveTypes, /backup\?:/);
+  assert.match(intakeDashboard, /DB保護：正常/);
+  assert.match(intakeDashboard, /backupCount/);
+  assert.match(intakeDashboard, /バックアップ期限超過/);
+  assert.match(intakeDashboard, /monitor-stale/);
+  assert.doesNotMatch(intakeDashboard, /backup\.(sha256|filename|path|directory)/);
+});
+
+test("identical live snapshots share a bounded edge cache without caching failures", () => {
+  assert.match(liveRoute, /Vercel-CDN-Cache-Control/);
+  assert.match(liveRoute, /public, s-maxage=2, stale-while-revalidate=3/);
+  assert.match(liveRoute, /public, max-age=0, must-revalidate/);
+  assert.match(liveRoute, /fallback[\s\S]*Cache-Control[^\n]*no-store/);
+  assert.doesNotMatch(liveTypes, /fetch\("\/api\/research\/live", \{ cache: "no-store" \}\)/);
+});
+
+test("operations preview exposes bounded cache pressure without cached contents", () => {
+  assert.match(liveTypes, /fetchCache\?:/);
+  assert.match(liveTypes, /discoveryCache\?:/);
+  assert.match(liveTypes, /discoveryRuns\?:/);
+  assert.match(liveTypes, /priceTargetStream\?:/);
+  assert.match(liveTypes, /connectionsAccepted/);
+  assert.match(liveTypes, /connectionsRejected/);
+  assert.match(liveTypes, /checkedSinceStart: boolean/);
+  assert.match(liveTypes, /readFailures: number/);
+  assert.match(liveTypes, /recoveries: number/);
+  assert.match(liveTypes, /lastFailureAt: string \| null/);
+  assert.match(liveTypes, /webPush\?:/);
+  assert.match(liveTypes, /attempted24Hours: number/);
+  assert.match(liveTypes, /detectionToAttemptSamples24Hours: number/);
+  assert.match(liveTypes, /providerResponseSamples24Hours: number/);
+  assert.match(liveTypes, /detectionToOutcomeSamples24Hours: number/);
+  assert.match(intakeDashboard, /検知→送信試行/);
+  assert.match(intakeDashboard, /プロバイダー応答/);
+  assert.match(intakeDashboard, /検知→試行完了/);
+  assert.match(liveTypes, /pollOverdueAfterSeconds: number/);
+  assert.match(intakeDashboard, /目標株価共有SSE：/);
+  assert.match(intakeDashboard, /スマホ通知試験：/);
+  assert.match(intakeDashboard, /送信受付/);
+  assert.match(intakeDashboard, /不確定/);
+  assert.match(intakeDashboard, /要確認（巡回停止）/);
+  assert.match(intakeDashboard, /最終巡回/);
+  assert.match(intakeDashboard, /待機中（直近読取あり）/);
+  assert.match(intakeDashboard, /待機中（未読取）/);
+  assert.match(intakeDashboard, /正常読取/);
+  assert.match(intakeDashboard, /最終試行/);
+  assert.match(intakeDashboard, /失敗/);
+  assert.match(intakeDashboard, /回復/);
+  assert.match(intakeDashboard, /上限拒否/);
+  assert.doesNotMatch(intakeDashboard, /priceTargetStream\.(ticket|url|token)/);
+  assert.doesNotMatch(intakeDashboard, /webPush\.(endpoint|subscription|publicKey|privateKey)/);
+  assert.match(liveTypes, /bodyFetch\?:/);
+  assert.match(liveTypes, /maxEntries/);
+  assert.match(liveTypes, /maxBytes/);
+  assert.match(intakeDashboard, /公式一覧の再利用/);
+  assert.match(intakeDashboard, /公式一覧の永続実測/);
+  assert.match(intakeDashboard, /優先5銘柄：現プロセス/);
+  assert.match(liveTypes, /prioritySources/);
+  assert.match(liveTypes, /prioritySourceRuns/);
+  assert.match(liveTypes, /priorityPersistence/);
+  assert.match(liveTypes, /completionLatencyMs/);
+  assert.match(intakeDashboard, /再起動後.*で対象確認/);
+  assert.match(intakeDashboard, /優先5銘柄の永続実績/);
+  assert.match(intakeDashboard, /completedRuns24Hours/);
+  assert.match(intakeDashboard, /requestDurationAverageMs24Hours/);
+  assert.match(liveTypes, /lastCompletedAgeSeconds/);
+  assert.match(liveTypes, /completedSinceStart/);
+  assert.match(liveTypes, /polledSinceStart/);
+  assert.match(intakeDashboard, /現プロセス巡回済み/);
+  assert.match(intakeDashboard, /再起動後の確認待ち/);
+  assert.match(liveTypes, /pollOverdueAfterSeconds/);
+  assert.match(intakeDashboard, /runs\.pollOverdue/);
+  assert.match(intakeDashboard, /304再利用/);
+  assert.match(intakeDashboard, /invalidatedSources/);
+  assert.match(intakeDashboard, /一時応答キャッシュ/);
+  assert.match(intakeDashboard, /本文取得：直近/);
+  assert.match(intakeDashboard, /本文取得：要確認/);
+  assert.match(liveTypes, /nextRetryAt/);
+  assert.match(liveTypes, /nextRetryWaitSeconds/);
+  assert.match(intakeDashboard, /AI下書き生成：OFF（外部送信なし）/);
+  assert.match(intakeDashboard, /AI下書き生成：ON（非公開・人間承認必須）/);
+  assert.match(intakeDashboard, /generation\.nextRetryAt/);
+  assert.match(liveTypes, /bodyBacklog\?:/);
+  assert.match(liveTypes, /scheduledDetectedNeverFetched/);
+  assert.match(liveTypes, /scheduledBaselineNeverFetched/);
+  assert.match(liveTypes, /scheduledExtractionPending/);
+  assert.match(liveTypes, /scheduledRecheck/);
+  assert.match(intakeDashboard, /今回予約：新着本文/);
+  assert.match(intakeDashboard, /エラー再試行待ち/);
+  assert.match(intakeDashboard, /定期再確認待ち/);
+  assert.match(intakeDashboard, /アクセス制限/);
+  assert.match(intakeDashboard, /同一ホスト遮断中/);
+  assert.match(intakeDashboard, /最短再確認/);
+  assert.match(liveTypes, /activeHostCircuits/);
+  assert.match(liveTypes, /nextHostProbeAt/);
+  assert.match(liveTypes, /dueHostCircuits/);
+  assert.match(liveTypes, /scheduledHostProbes/);
+  assert.match(intakeDashboard, /復旧確認待ち/);
+  assert.match(liveTypes, /bodyHostProbes\?:/);
+  assert.match(liveTypes, /lastEligibilityWaitMs/);
+  assert.match(liveTypes, /eligibilityWaitAverageMs24Hours/);
+  assert.match(intakeDashboard, /期限→試行の内部待機/);
+  assert.match(liveTypes, /outcomeUnmeasuredRecheck24Hours/);
+  assert.match(liveTypes, /eligibilityWaitSamples24Hours/);
+  assert.match(liveTypes, /requestDurationSamples24Hours/);
+  assert.match(liveTypes, /requestSuccessDurationSamples24Hours/);
+  assert.match(liveTypes, /requestErrorDurationSamples24Hours/);
+  assert.match(intakeDashboard, /取得可能→試行の内部待機/);
+  assert.match(intakeDashboard, /本文取得・抽出処理/);
+  assert.match(intakeDashboard, /処理時間内訳/);
+  assert.match(intakeDashboard, /結果未計測/);
+  assert.match(intakeDashboard, /body-fetch-failed/);
+  assert.match(intakeDashboard, /retrySeconds/);
+  assert.match(intakeDashboard, /lastBatchDurationMs/);
+  assert.match(liveTypes, /durable\?:/);
+  assert.match(intakeDashboard, /本文取得の永続稼働/);
+  assert.match(liveTypes, /lastPolledAt/);
+  assert.match(liveTypes, /pollOverdue/);
+  assert.match(intakeDashboard, /body-fetch-stale/);
+  assert.match(intakeDashboard, /discovery-poll-stale/);
+  assert.match(intakeDashboard, /priority-source-pending/);
+  assert.match(intakeDashboard, /priority-source-degraded/);
+  assert.match(intakeDashboard, /priority-source-metrics-failed/);
+  assert.match(intakeDashboard, /優先5銘柄の実績保存：正常/);
+  assert.match(intakeDashboard, /最終ポーリング/);
+  assert.match(intakeDashboard, /notModified24Hours/);
+  assert.match(liveTypes, /detectionLatencySamples24Hours/);
+  assert.match(liveTypes, /selectedDetectedNeverFetched24Hours/);
+  assert.match(liveTypes, /selectedBaselineNeverFetched24Hours/);
+  assert.match(liveTypes, /selectedExtractionPending24Hours/);
+  assert.match(liveTypes, /selectedRecheck24Hours/);
+  assert.match(liveTypes, /errorDetectedNeverFetched24Hours/);
+  assert.match(liveTypes, /errorBaselineNeverFetched24Hours/);
+  assert.match(liveTypes, /errorExtractionPending24Hours/);
+  assert.match(liveTypes, /errorRecheck24Hours/);
+  assert.match(liveTypes, /notModifiedDetectedNeverFetched24Hours/);
+  assert.match(liveTypes, /notModifiedBaselineNeverFetched24Hours/);
+  assert.match(liveTypes, /notModifiedExtractionPending24Hours/);
+  assert.match(liveTypes, /notModifiedRecheck24Hours/);
+  assert.match(liveTypes, /fetchedDetectedNeverFetched24Hours/);
+  assert.match(liveTypes, /fetchedBaselineNeverFetched24Hours/);
+  assert.match(liveTypes, /fetchedExtractionPending24Hours/);
+  assert.match(liveTypes, /fetchedRecheck24Hours/);
+  assert.match(liveTypes, /updatedDetectedNeverFetched24Hours/);
+  assert.match(liveTypes, /updatedBaselineNeverFetched24Hours/);
+  assert.match(liveTypes, /updatedExtractionPending24Hours/);
+  assert.match(liveTypes, /updatedRecheck24Hours/);
+  assert.match(intakeDashboard, /24時間予約：/);
+  assert.match(intakeDashboard, /selectedOutcome\("新着本文"/);
+  assert.match(intakeDashboard, /失敗/);
+  assert.match(intakeDashboard, /304再利用/);
+  assert.match(intakeDashboard, /抽出成功/);
+  assert.match(intakeDashboard, /証拠更新/);
+  assert.match(intakeDashboard, /24時間予約内訳：実測待ち/);
+  assert.match(intakeDashboard, /検知→初回本文/);
+  assert.match(intakeDashboard, /実測待ち/);
+  assert.match(intakeDashboard, /cache\.entries/);
+  assert.match(intakeDashboard, /cache\.bytes/);
+  assert.doesNotMatch(intakeDashboard, /cache\.(url|content|body)/);
+});
+
+test("operations preview describes PDF evidence extraction without stale unsupported copy", () => {
+  assert.match(intakeDashboard, /no-extractable-text/);
+  assert.match(intakeDashboard, /PDF取得済み・根拠本文の補完待ち/);
+  for (const code of ["pdf-encrypted", "pdf-page-limit", "pdf-no-text", "pdf-timeout", "pdf-extract-failed"]) {
+    assert.match(intakeDashboard, new RegExp(code));
+  }
+  assert.doesNotMatch(intakeDashboard, /文字抽出は未対応/);
+});
+
+test("PDF evidence totals separate extracted, pending, and latest errors", () => {
+  const pdfUrl = "https://nebius.com/newsroom/official.pdf?revision=1";
+  const pdf = { ...source, url: pdfUrl, content_type: null, extracted_chars: null, error: null };
+  assert.deepEqual(pdfEvidenceCounts([
+    { ...pdf, extracted_chars: 120 },
+    { ...pdf, url: pdfUrl.replace("revision=1", "revision=2") },
+    { ...pdf, url: pdfUrl.replace("revision=1", "revision=3"), error: "invalid-pdf" },
+    { ...pdf, url: "https://nebius.com/newsroom/article", content_type: "text/html" },
+  ]), { total: 3, extracted: 1, pending: 1, error: 1 });
+  assert.equal(pdfEvidenceState({ ...pdf, extracted_chars: 120 }), "extracted");
+  assert.equal(pdfEvidenceState({ ...pdf, error: "pdf-no-text" }), "error");
+  assert.equal(pdfEvidenceState({ ...pdf, url: "https://nebius.com/newsroom/article", content_type: "text/html" }), null);
+  assert.match(intakeDashboard, /PDF根拠：抽出済み/);
+  assert.match(intakeDashboard, /補完待ち/);
+  assert.match(intakeDashboard, /PDF補完待ち/);
+});
+
+test("PDF evidence filters isolate pending, extracted, and failed source work", () => {
+  const pdfUrl = "https://nebius.com/newsroom/official.pdf";
+  const pending = { ...source, url: pdfUrl, content_type: "application/pdf", extracted_chars: 0, error: null };
+  const extracted = { ...pending, url: `${pdfUrl}?revision=2`, extracted_chars: 120 };
+  const failed = { ...pending, url: `${pdfUrl}?revision=3`, error: "pdf-no-text" };
+  const html = { ...source, url: "https://nebius.com/newsroom/article", content_type: "text/html" };
+  const sources = [pending, extracted, failed, html];
+  assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "pending"), [pending]);
+  assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "extracted"), [extracted]);
+  assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "error"), [failed]);
+});
+
+test("SEC evidence totals and filters distinguish exhibits from filing-body fallback", () => {
+  const secUrl = "https://www.sec.gov/Archives/edgar/data/1835632/000119312526123456/form8-k.htm";
+  const direct = { ...source, url: secUrl, evidence_url: secUrl, evidence_kind: "direct", error: null };
+  const exhibit = { ...direct, url: secUrl.replace("123456", "123457"), evidence_url: secUrl.replace("form8-k.htm", "ex991.htm"), evidence_kind: "sec-exhibit-99.1" };
+  const pending = { ...direct, url: secUrl.replace("123456", "123458"), sha256: null, checked_at: null };
+  const failed = { ...pending, url: secUrl.replace("123456", "123459"), error: "sec-exhibit-unavailable" };
+  const company = { ...source, url: "https://investors.example.com/news", evidence_kind: "direct" };
+  const sources = [direct, exhibit, pending, failed, company];
+  assert.deepEqual(secEvidenceCounts(sources), { total: 4, exhibit: 1, direct: 1, pending: 1, error: 1 });
+  assert.equal(secEvidenceState(company), null);
+  assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "all", "exhibit"), [exhibit]);
+  assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "all", "direct"), [direct]);
+  assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "all", "pending"), [pending]);
+  assert.deepEqual(filterSources(sources, "", "all", "all", "all", {}, "all", "all", "error"), [failed]);
+  assert.match(intakeDashboard, /SEC根拠：EX-99\.1取得/);
+  assert.match(intakeDashboard, /SEC根拠エラー/);
+  assert.match(intakeDashboard, /SEC根拠要確認/);
+  assert.match(liveTypes, /secEvidence\?:/);
+  for (const kind of ["accessRestricted", "rateLimited", "timeout", "server", "missingExhibit", "other"]) {
+    assert.match(liveTypes, new RegExp(kind));
+  }
+  assert.match(intakeDashboard, /SEC本文証跡/);
+  assert.match(liveTypes, /signalIntake\?:/);
+  assert.match(intakeDashboard, /公式補完経路/);
+  assert.match(intakeDashboard, /日付のみ/);
+  assert.match(liveTypes, /articlePartial: number/);
+  assert.match(intakeDashboard, /記事一部失敗/);
+  assert.match(intakeDashboard, /routes\.errorKinds \?\?/);
+  assert.match(liveTypes, /unscheduled: number/);
+  assert.match(liveTypes, /byErrorKind\?:/);
+  assert.match(liveTypes, /articleRetrieval\?:/);
+  assert.match(intakeDashboard, /再試行：実行可能/);
+  assert.match(intakeDashboard, /区分別再試行/);
+  assert.match(intakeDashboard, /子記事本文失敗/);
+  assert.match(intakeDashboard, /子記事区分別再試行/);
+  assert.match(liveTypes, /recoveries24Hours\?:/);
+  assert.match(intakeDashboard, /子記事回復の実測/);
+  assert.match(intakeDashboard, /失敗開始→回復/);
+  assert.match(liveTypes, /routeRecoveries24Hours\?:/);
+  assert.match(liveTypes, /routeRetryWait24Hours\?:/);
+  assert.match(intakeDashboard, /経路再試行の内部待機/);
+  assert.match(liveTypes, /activeOutages\?:/);
+  assert.match(intakeDashboard, /経路回復の実測/);
+  assert.match(intakeDashboard, /障害開始→回復/);
+  assert.match(intakeDashboard, /継続中の経路障害/);
+  assert.match(intakeDashboard, /区分別継続障害/);
+  assert.match(intakeDashboard, /計測前/);
+  assert.match(intakeDashboard, /最短/);
+  assert.match(intakeDashboard, /完全な網羅性を意味しません/);
+  assert.match(intakeDashboard, /遮断経路の復旧確認/);
+  assert.match(intakeDashboard, /公式側5xx/);
+  assert.match(intakeDashboard, /evidence\.errorKinds \?\?/);
+  assert.match(liveTypes, /rateLimited\?: number/);
+  assert.match(intakeDashboard, /backlog\.rateLimited \?\? 0/);
+  assert.match(intakeDashboard, /証拠状態：本文未取得/);
+  assert.match(intakeDashboard, /新着検知/);
+  assert.match(intakeDashboard, /履歴基準/);
+  assert.match(intakeDashboard, /最長待機/);
+  assert.match(intakeDashboard, /最古新着の保守枠/);
+  assert.match(intakeDashboard, /時刻検証不可/);
+  assert.match(intakeDashboard, /backlog\?\.detectedNeverFetched != null/);
+  assert.match(intakeDashboard, /backlog\.extractionPending \?\? 0/);
+});
+
+test("operations preview shows durable incident state while external delivery stays off", () => {
+  assert.match(liveTypes, /incidents\?:/);
+  assert.match(liveTypes, /heldNotifications/);
+  assert.match(liveTypes, /pendingNotifications/);
+  assert.match(liveTypes, /deadNotifications/);
+  assert.match(intakeDashboard, /障害台帳：未復旧/);
+  assert.match(intakeDashboard, /外部送信OFF/);
+  assert.match(intakeDashboard, /通知送信ON/);
+  assert.match(intakeDashboard, /再送確認が必要/);
+  assert.match(intakeDashboard, /内部監視正常/);
+  assert.match(intakeDashboard, /障害台帳の内部監視を再試行しています/);
+});
+
+test("operations preview labels simultaneous company and SEC discovery evidence", () => {
+  assert.match(intakeDashboard, /value\.split\("\+"\)/);
+  assert.match(intakeDashboard, /SEC Submissions JSON/);
+  assert.match(intakeDashboard, /件の公式リンクを検出/);
+  assert.doesNotMatch(intakeDashboard, /経路目で取得/);
+});
+
+test("latest failure wins over a previously successful fetch or editorial approval", () => {
+  const errored = { ...source, error: "http-403", status: "approved" };
+  assert.equal(fetchState(errored), "error");
+  assert.equal(fetchState({ ...source, status: "pending" }), "fetched");
+  assert.equal(fetchState({ ...source, sha256: null, checked_at: null }), "unfetched");
+  assert.deepEqual(intakeCounts([errored]), { total: 1, error: 1, fetched: 0, unfetched: 0, pending: 0 });
+});
+
+test("combined filters search displayed titles without changing source records", () => {
+  const titles = { [source.url]: "Quarterly results" };
+  assert.equal(filterSources([source], " RESULTS ", source.ticker, "fetched", "pending", titles).length, 1);
+  assert.equal(filterSources([source], "results", "all", "error", "all", titles).length, 0);
+  assert.equal(filterSources([source], "", "all", "all", "held").length, 0);
+});
+
+test("unsafe links, duplicate records and broken history references fail validation", () => {
+  assert.ok(snapshotIssues({ ...snapshot, sources: [...snapshot.sources, source] }).includes("duplicate-source"));
+  assert.ok(snapshotIssues({ ...snapshot, sources: [{ ...source, url: "javascript:alert(1)" }] }).includes("unsafe-url"));
+  assert.ok(snapshotIssues({ ...snapshot, sources: [{ ...source, evidence_url: "https://evil.test/ex991.htm" }] }).includes("unsafe-evidence-url"));
+  assert.ok(snapshotIssues({ ...snapshot, sources: [{ ...source, evidence_url: `https://${providers.find(p => p.ticker === source.ticker).allowedHosts[0]}/not-an-article` }] }).includes("unsafe-evidence-path"));
+  assert.ok(snapshotIssues({ ...snapshot, sources: [{ ...source, evidence_kind: "unverified" }] }).includes("invalid-evidence-kind"));
+  assert.ok(snapshotIssues({ ...snapshot, history: [{ url: "missing", at: "2026-09-19" }] }).includes("invalid-history"));
+  assert.ok(snapshotIssues({ ...snapshot, events: [{ id: 1, url: "missing", ticker: "NVDA", detected_at: snapshot.generatedAt, title: null, published_on: null }] }).includes("invalid-event"));
+  assert.ok(snapshotIssues({ ...snapshot, events: [{ id: 1, url: source.url, ticker: source.ticker, detected_at: snapshot.generatedAt, title: null, published_on: null, detection_to_body_ms: -1 }] }).includes("invalid-event-latency"));
+  assert.ok(snapshotIssues({ ...snapshot, discoveryRuns: [{ ...snapshot.discoveryRuns[0], sources_checked: 3, sources_configured: 2 }] }).includes("invalid-discovery-evidence"));
+});
+
+test("operations preview explains which official routes were checked", () => {
+  assert.match(intakeDashboard, /取得経路の証跡/);
+  assert.match(intakeDashboard, /sources_checked/);
+  assert.match(intakeDashboard, /SEC Submissions JSON/);
+  assert.match(intakeDashboard, /経路を確認/);
+  assert.match(intakeDashboard, /旧記録 · 経路詳細なし/);
+});
+
+test("reviewed briefs require current source identity, safe copy, status, and timestamps", () => {
+  const brief = {
+    url: source.url, ticker: source.ticker, title: "Official release", published_on: null,
+    detected_at: null, source_sha256: source.sha256, source_checked_at: source.checked_at,
+    summary_ja: "公式発表で確認できた事実を、根拠に沿って簡潔に説明します。",
+    impact_label: "mixed", impact_ja: "好材料と未確認事項を分け、追加確認が必要な点を明示します。",
+    confidence: "medium", status: "approved",
+    generation_method: "human",
+    generated_at: snapshot.generatedAt, reviewed_at: snapshot.generatedAt,
+    evidence: { summary: [{ text: "Official fact.", truncated: false }], impact: [{ text: "Official condition.", truncated: false }] },
+  };
+  assert.deepEqual(snapshotIssues({ ...snapshot, briefs: [brief] }), []);
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, status: "draft" }] }).includes("invalid-brief-status"));
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, generation_method: "automatic" }] }).includes("invalid-brief-status"));
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, source_sha256: "f".repeat(64) }] }).includes("invalid-brief-source"));
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, source_checked_at: "2026-01-01T00:00:00Z" }] }).includes("invalid-brief-source"));
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, summary_ja: "<script>危険</script>" }] }).includes("invalid-brief-copy"));
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, evidence: { summary: [], impact: brief.evidence.impact } }] }).includes("invalid-brief-evidence"));
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, evidence: { summary: [{ text: "x".repeat(321), truncated: true }], impact: brief.evidence.impact } }] }).includes("invalid-brief-evidence"));
+  assert.ok(snapshotIssues({ ...snapshot, briefs: [{ ...brief, reviewed_at: "2099-01-01T00:00:00Z" }] }).includes("invalid-brief-time"));
+});
+
+test("operations preview renders only reviewed briefs with evidence and review metadata", () => {
+  assert.match(intakeDashboard, /人間確認済みの速報要約/);
+  assert.match(intakeDashboard, /根拠となる公式原文/);
+  assert.match(intakeDashboard, /編集確認（JST）/);
+  assert.match(intakeDashboard, /公式原文の最終確認（JST）/);
+  assert.match(intakeDashboard, /下書き作成（JST）/);
+  assert.match(intakeDashboard, /AI下書き＋人間確認/);
+  assert.match(intakeDashboard, /人間作成/);
+  assert.match(intakeDashboard, /確信度/);
+  assert.match(intakeDashboard, /原文識別値/);
+  assert.match(intakeDashboard, /照合した公式原文の抜粋/);
+  assert.match(intakeDashboard, /事実要約の根拠/);
+  assert.match(intakeDashboard, /影響判断の根拠/);
+  assert.doesNotMatch(intakeDashboard, /brief\.reviewer|brief\.reviewReason/);
+});
+
+test("sector and company filters use the shared registry", () => {
+  assert.equal(providers.length, 22);
+  assert.equal(providerByTicker.MRVL.sector, "networking");
+  assert.equal(providerByTicker.BE.sector, "power-cooling");
+  assert.equal(providerByTicker.AMZN, undefined);
+  const sector = providerByTicker[source.ticker].sector;
+  assert.equal(filterSources([source], providerByTicker[source.ticker].name, "all", "all", "all", {}, sector).length, 1);
+  assert.equal(filterSources([source], "", "all", "all", "all", {}, "not-a-sector").length, 0);
+});
+
+test("coverage uses the latest run and never counts untested companies as failures", () => {
+  const counts = coverageCounts({ ...snapshot, discoveryRuns: [
+    { id: 1, ticker: "NVDA", status: "ok" },
+    { id: 3, ticker: "NVDA", status: "degraded" },
+    { id: 2, ticker: "AMD", status: "ok" },
+    { id: 4, ticker: "TSM", status: "fallback" },
+  ] });
+  assert.deepEqual(counts, { registered: 22, discovered: 2, needsCheck: 1, untested: 19 });
+});
+
+test("every registered company has a valid company coverage page model", () => {
+  const companies = buildCoverageCompanies(snapshot);
+  assert.equal(companies.length, 22);
+  assert.deepEqual(coverageCompanyIssues(companies), []);
+  assert.equal(companies.find((company) => company.ticker === "NVDA").counts.total, 20);
+  assert.equal(companies.find((company) => company.ticker === "CRWV").counts.fetched, 1);
+  assert.ok(["fallback", "degraded"].includes(companies.find((company) => company.ticker === "ORCL").discovery.status));
+});

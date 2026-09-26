@@ -1,0 +1,262 @@
+# 公式資料の取り込み・確認待ち管理
+
+Python標準ライブラリのみを使う、公式資料の検知・確認コマンドです。取得記録は `/research/intake` の閲覧用画面へ出力できます。22社一括実行と常駐監視サービスを実装し、確認用ブランチは永続SQLiteを持つ監視コンテナへ接続済みです。追加契約・APIキーは不要です。
+
+## 製品更新・業界記事の補完監視
+
+`signals.py` は発信元単位でRSS/Atomを一度取得し、記事本文を現在の22銘柄へ
+照合します。公式ドキュメントは同じURLの本文変更を記録します。既存の公式
+資料キューとは別の非公開テーブルへ保存し、`/research/review` の「関連情報の
+確認待ち」から編集用トークンで閲覧できます。公開用JSONには含めません。
+
+```sh
+# 契約APIや公開操作なしで、一度だけ取得して保存
+python3 scripts/research/signals.py --db .research-private/signals.sqlite
+
+# ローカル開発用の継続監視。終了はCtrl+C
+python3 scripts/research/signals.py --db .research-private/signals.sqlite --watch
+```
+
+常駐サービスへ組み込む場合は、分離された検証環境で
+`RESEARCH_SIGNALS_ENABLED=1` を設定します（標準は無効）。同じサービスの
+SQLiteを使い、最大3経路を並列取得します。7経路の一覧と間隔は
+`signal_sources.json` にあります。追加元は通常60〜120秒＋通信処理時間で確認し、
+既存の公式IR監視の3〜5秒とは別です。HTTP条件付き取得、失敗時のバックオフ、
+再起動をまたぐ初回基準、経路ごとの保存上限を実装しています。
+
+初回は過去資料として記録し、新規検出は初回基準以後に観測した資料だけです。
+発表が新しいことや株価への重要性は保証しません。企業名への言及・原文抜粋・
+本文差分までの機械処理で、このキューのAI要約、自動公開、外部通知、X連携は
+未接続です。商用利用条件も確認前のままです。実データ検証と残課題は
+`docs/NEWS-COVERAGE-GAPS.md` に記録しています。
+
+## 実行
+
+プロジェクトのルートで実行します。
+
+```sh
+python3 scripts/research/monitor.py seed
+python3 scripts/research/monitor.py discover NBIS
+python3 scripts/research/monitor.py discover MU
+python3 scripts/research/monitor.py check --limit 6
+python3 scripts/research/monitor.py refresh --output lib/research/intake-snapshot.json --check-limit 6
+python3 scripts/research/monitor.py list
+python3 scripts/research/monitor.py history
+```
+
+## 対象銘柄を増やす設定
+
+`lib/research/providers.json` をPythonの取得処理とWeb表示で共用しています。現在22銘柄。会社名、分野、公式一覧またはRSSのURL、取得形式、許可ホスト、発表ページのパス規則を設定します。銘柄追加には設定と実際の取得確認が必要で、未検証の銘柄を取得成功に数えません。
+
+RSS / Atomの取り込みを追加しました。フィードのリンク、見出し、検証できる公開日を取り込みます。公式フィード自身が十分な長さの本文を配信する場合は、スクリプトやナビゲーションを除去したプレーンテキストを一次根拠として保存します。短い紹介文だけなら成功扱いにせず、従来どおりリンク先の本文取得を続けます。一度保存したフィード本文が後の配信から省略された場合も、旧本文を空データで上書きせず、リンク先の再取得へ戻します。外部ホスト、カテゴリー一覧、コメントフィード等は規則に合わなければ取り込みません。XMLの外部定義・エンティティ宣言を拒否し、壊れたフィードは取得異常として扱います。見出しと本文はHTMLやスクリプトとして実行しません。
+
+MRVLは、取得制限のある企業ニュース一覧ではなく、同社Investor Relationsが公開する公式RSSを優先します。RSSに失敗した場合はSEC EDGARの8-Kへ切り替えます。BEもInvestor Relationsの公式RSSを第一経路、SEC 8-Kを第二経路にします。ANETは同社公式Press RoomのRSS、PLTRは同社公式サイトマップ内のpress-releasesだけ、VRTは同社ニュース画面が利用する公開JSON結果を使います。いずれも一般公開された公式経路で、アクセス制御の回避はしません。TSMは、企業Press CenterとSECが監視サーバーを拒否する場合に備え、台湾証券取引所（TWSE）の公式OpenAPI「上市公司每日重大訊息」で会社コード2330の重要開示を監視します。構造化応答が正常でTSMの当日開示が0件なら正常な0件として記録し、応答異常とは分けます。TWSE・SEC経路は重要開示の補完であり、製品ブログを含む企業ニュース全件の代替ではありません。各巡回では、成功までに確認した経路数、設定済み経路数、実際に成功した形式を記録します。これにより企業経路、SEC Submissions JSON、SEC Atomのどこで復旧したかを、URLや例外詳細を公開せず運営画面で確認できます。
+
+```sh
+python3 scripts/research/monitor.py discover NVDA
+python3 scripts/research/monitor.py discover AMD
+python3 scripts/research/monitor.py check --ticker NVDA --limit 1
+```
+
+`refresh` で22社の一覧取得、指定数の本文確認、公開用JSONのアトミックな置換を一度に実行できます。常時運用は後述の `service.py` を使い、永続DBを持つ実行環境へ設置します。
+
+- `seed`：既存記事が参照する6件の公式資料を登録します。これは取得・承認済みの意味ではありません。
+- `discover`：公式ニュース一覧またはRSS / Atomにある発表リンクを確認待ちに追加します。初回は過去資料も入ります。「取得候補」であって速報ではありません。企業一覧に失敗して公式SEC経路へ切り替えた場合は `fallback` を返します。ページ送りやJavaScript実行には未対応。
+- リンクが0件、タイムアウト、HTTPエラーの場合は `degraded` / `error` と終了コード1を返します。「新着なし」「正常監視」と扱わないでください。
+- `check`：未取得、次いで確認日時の古い順に最大20資料を取得します。常駐サービスは新規未取得、根拠本文が空の既存資料、通常の定期再確認の順で処理し、旧資料の補完が通常巡回の後ろへ埋もれないようにします。SHA-256で重複・応答の変化を記録し、HTMLのスクリプトやナビゲーションを除いた本文、またはPDFから抽出した本文を非公開SQLiteへ保存します。SECの8-K／6-K本文にEX-99.1への明示リンクがある場合は、同じCIK・提出番号のアーカイブディレクトリ内だけを最大2件確認し、十分な文字を抽出できた添付資料を根拠本文として保存します。外部ホスト、別提出番号、99.1以外の添付は辿らず、取得した添付URLと方式だけを公開記録へ出します。表示本文が見出し程度しかないHTMLは、JavaScriptを実行せず、サイズ・件数・探索深度を制限して解析したSchema.orgの`Article`系JSON-LDに十分な`articleBody`がある場合だけ補完します。壊れたJSON、商品等の別形式、短い本文、過大なブロックは根拠に採用しません。ナビゲーションやスクリプトしか残らず本文が空になるHTML/XMLは取得成功にせず、固定エラーコードで再試行します。公式配信元がPDFを`application/octet-stream`または`application/x-pdf`として返す場合も、先頭シグネチャが`%PDF-`と一致した資料だけをPDFとして扱います。PDF解析はCPU・メモリ・処理時間を制限した別プロセスへ隔離し、APIキーやプロキシ設定など監視サービスの環境変数を渡しません。抽出時は不可視制御文字を除去し、ページ番号やロゴなど短く反復的な文字だけの結果は根拠本文として採用しません。旧版で本文が空のまま保存されたPDFは、HTTP 304のまま固定されないよう一度だけ無条件で再取得して根拠を埋め直します。公開JSONには本文を含めず、形式・サイズ・抽出文字数だけを出します。画像主体、根拠として十分な文字を抽出できない資料、暗号化、ページ上限超過、時間上限超過、破損を本文や解析ログを含まない固定エラーコードで区別し、根拠なしで成功扱いにせず再試行します。エラーでは最後に取得できたハッシュを保持し、再試行時刻を指数バックオフで延ばします。
+- `refresh`：22社を順に検知し、`--check-limit` 件まで本文を確認してから公開用JSONを一時ファイル経由で置換します。途中の壊れたJSONを画面が読むことを防ぎます。1社でも企業一覧と公式バックアップの両方が失敗すれば終了コード1です。
+- HTMLまたはPDFから抽出した根拠本文が変化した場合だけ`changed`とし、本文外HTMLやPDFメタデータだけの変化は応答SHAで追跡します。`changed`は内容変更の候補であり、財務情報の訂正を意味しません。
+
+公式原文を確認して、掲載候補として採用・保留・却下を記録できます。記録するのは資料の判断であり、要約や数値の正しさを自動認定するものではありません。
+
+```sh
+python3 scripts/research/monitor.py review '原文URL' 'listで表示されたsha256' held --reviewer '担当者の識別名' --reason '確認が必要な点'
+```
+
+判断は `approved` / `held` / `rejected`。担当者・理由・現在のハッシュが必要です。取得前、取得失敗中、古いハッシュでの承認は拒否します。取得内容が変わると `pending` に戻り、過去の判断を履歴に残します。**approvedでも会員ページへの公開は行いません。** 現状の掲載は既存の資料照合・コードレビュー・デプロイの手順です。
+
+## 根拠付き日本語速報の安全ゲート
+
+日本語要約と影響判定は、取得した原文の現在のSHA-256、要約根拠、影響根拠、確信度をまとめて非公開DBへ `draft` として保存します。根拠抜粋は現在の抽出本文に完全一致する必要があり、要約中の数値も根拠にない場合は保存を拒否します。`positive` / `negative` / `mixed` / `neutral` / `uncertain` は市場反応の保証ではなく、編集用の影響分類です。
+
+```sh
+python3 scripts/research/monitor.py draft-brief '原文URL' '現在のsha256' \
+  --summary-ja '日本語の事実要約' --impact-label mixed --impact-ja '日本語の影響と未確認事項' \
+  --confidence medium --summary-evidence '原文に完全一致する抜粋' --impact-evidence '原文に完全一致する抜粋'
+python3 scripts/research/monitor.py review-brief '原文URL' '現在のsha256' approved \
+  --validation-sha256 'レビュー画面で確認した下書き指紋' \
+  --reviewer '担当者の識別名' --reason '原文・数値・解釈を確認'
+```
+
+AI補助の下書きを承認する場合は `--ai-verification` も指定します。さらに、入力上限でAIへ渡した
+原文が短縮された下書きでは、AIへ送信されなかった範囲を含む原文全体と公式リンクを人間が確認し、
+`--full-source-verification` も指定します。必要な確認フラグが欠けた承認は拒否され、保留・却下では
+これらのフラグを必須にしません。
+
+未承認の下書き、根拠抜粋、担当者名、判断理由は共有スナップショットへ出しません。人間が現在の原文ハッシュと検証済み下書き指紋に対して承認した要約だけを共有スナップショットへ出しますが、この操作自体は会員配信を行いません。判断APIだけでなくDB更新を行う下層関数も、画面表示時の下書き指紋を必須とします。同じ原文のまま別の編集者が下書きを更新した場合は古い画面からの判断を拒否し、指紋を省略した内部呼び出しも拒否します。同じ原文でも要約・影響説明・根拠を編集すれば以前の判断は過去扱いになります。承認前と共有スナップショット生成時には公式原文の最終取得が標準8時間以内であることも確認し、監視停止などで古くなった原文は再取得まで承認・表示しません。承認後に原文応答が変わった場合は自動的に `stale` へ戻し、再生成・再確認まで共有対象から外します。
+
+MUの一覧からリンクを抽出できない場合は、公式発表のURLを確認して明示的に登録できます。
+
+2026-09-19に、MUの一覧取得先を `https://www.micron.com/about/press/news` に変更しました。公式サイトのニュース一覧からIR記事11件のリンクを実取得。リンク先 `investors.micron.com` の本文取得は既存記事・追加記事ともHTTP 403のため未解決です。一覧取得に成功しても本文取得・速報配信ができたとは扱いません。
+
+```sh
+python3 scripts/research/monitor.py add MU 'https://investors.micron.com/news/press-release/確認した実際のパス'
+```
+
+発表日は既存資料のseedだけ引き継ぎます。新規候補の発表日は未確認のためnull。検知・取得日時を発表時刻に置き換えません。配信遅延や10秒達成率はまだ計算できません。
+
+## 米国株検索とSEC年次報告書
+
+`/research/stocks` はSEC公式の企業・ティッカー・取引所対応表とSubmissions APIを使い、ティッカーまたは英語企業名から企業識別情報と重要提出書類を確認できます。名簿は24時間、企業提出履歴は1時間キャッシュします。SEC自身が名簿の正確性・網羅性を保証していない点を画面にも表示しています。
+
+最新の10-KはItem 1（Business）とItem 1A（Risk Factors）、20-FはItem 4（Information on the Company）とItem 3.D（Risk Factors）を抽出します。ASMLのように様式項目が年次報告書内の別章を参照する場合は、Form 20-Fの参照表と参照先見出しの両方を検証できた時だけ企業概要・リスク原文を表示します。目次、参照表、継続ページを本文の開始位置として扱わず、構造や十分な文章量を確認できない書類は推測せず非表示にします。
+
+企業が10-Kに `Risk Factors Summary`、20-Fに `Overview of risk factors` を明示している場合は、その一覧だけを提出書類の記載順でリスク原文より先に表示します。企業自身の要約がない書類では一覧を推測生成せず、項目の選別、重要度順位、翻訳もしません。
+
+年次報告書は12秒・30MBを上限に取得し、公開画面へ出す原文は各項目の冒頭最大4,000文字です。提出日、対象期末、取得時刻、SEC原文リンク、抽出範囲、原文SHA-256の短縮値を併記します。これは企業提出の英語原文であり、日本語要約、リスクの重要度順位、売買推奨ではありません。株価と通信社ニュースは表示権を確認するまで別系統のままです。
+
+年次報告書の日本語下書きを手元で準備する場合は、現在のSEC抜粋を含むJSONを `.research-private/` に保存し、次のコマンドで機械照合して非公開DBへ取り込みます。提出番号、原文SHA、引用の完全一致、引用参照、根拠にない数値、文字数を通常の編集APIと同じ規則で検証します。取り込まれる状態は `draft` で、人間による確認・承認や公開は実行しません。原文抜粋を含む入力JSONはGitへ追加しないでください。
+
+```sh
+python3 scripts/research/monitor.py \
+  --db .research-private/intake.sqlite \
+  draft-annual --input .research-private/annual-candidate.json
+```
+
+年次報告書キューは下書き・保留・承認済み・却下・整合性エラーを集計し、整合性エラー、保留、下書きの順で表示します。`view=actionable|invalid|draft|held|approved|rejected`で取得上限を適用する前に絞り込めます。判断履歴は資料ごとの個別照会ではなく一括取得し、各資料の直近10件だけを返します。銘柄を選ぶまでSEC原文は取得せず、選択後に最新提出番号・SHA・根拠を照合します。
+
+## 取得状況の確認画面
+
+```sh
+python3 scripts/research/monitor.py export --output lib/research/intake-snapshot.json
+```
+
+`/research/intake` は出力時点の記録を表示するページです。分野、銘柄、取得状態、編集状態、会社名・資料名・URLで絞り込み、20件ずつのページ切り替え、原文リンクと履歴を確認できます。PDF根拠とSEC根拠は専用の絞り込みを持ち、SEC提出書類ではEX-99.1取得、提出本文利用、未取得、取得エラーを銘柄別にも集計します。会社ごとの「資料を表示」から銘柄を選べます。企業一覧からの直接取得とSECバックアップを分けて表示します。DBの直接参照や自動更新は行いません。更新はexportまたはrefresh後に通常の確認用デプロイを行います。
+
+exportは明示した項目のみ出力し、担当者名・判断理由・原文本文を含めません。例外メッセージも分類コードに変換し、内部パスなどを除きます。公開リポジトリへ送る前に出力内容を確認してください。取得状況画面は共有可能な記録だけを扱い、原文・根拠・判断理由は別トークンで保護した `/research/review` から確認します。会員公開操作は未実装です。
+
+取得済みでも最新試行がエラーの場合は「取得エラー」を優先表示します。資料の発表日、初回検知日時、取得試行日時、記録の出力日時を区別します。資料名は既存の照合済み名称、RSSまたは一覧のリンク文言、URL由来の仮名の順に表示します。取り込み時点で正式表題や内容の照合を終えた扱いにはしません。
+
+過去の一覧取得記録は取得先URLが不明な場合nullです。以降の記録には実際の取得先URLを保存します。
+
+## 保存と運用範囲
+
+デフォルトは `.research-private/intake.sqlite`。Git管理から除外し、会員サイトから直接読み出しません。`--db /absolute/path/intake.sqlite` で永続ディスクを指定できます。Vercelの一時ファイルシステムには保存せず、下記の常駐監視サービスで永続ボリュームを使用します。
+
+手動コマンドは直列取得です。常駐監視サービスは銘柄ごとに並列取得し、公式経路を銘柄ごとに通常3〜5秒間隔で巡回します。TSMのTWSE重要開示は3秒です。この値は巡回要求の基準間隔であり、発表から画面反映までの保証時間ではありません。監視画面では、公式経路の直近応答時間と、新着URLの検知から本文取得完了までを別々に実測します。発表元が秒単位の公開時刻を提供しない資料は、公開から検知まで未計測と明記します。ETagまたはLast-Modifiedを返す取得先には条件付きリクエストを送り、変更がなければ本文を再転送しません。検証済みのHTTPバリデーターと解析済み候補は非公開DBへ保存するため、監視サービスを再起動した後も公式一覧・RSS・SEC一覧の条件付き取得を継続できます。保存時は許可済み公式URLと候補構造を再検証し、1経路2MiBを超える候補は永続キャッシュせず通常取得へ戻します。巡回元の生レスポンス本文はDBへ保存しません。プロセス内の巡回元キャッシュも最大64件・合計24MiBに制限し、個別記事の本文は取得後にメモリキャッシュへ残しません。運営プレビューにはキャッシュの現在件数・合計バイト数・上限だけを表示し、URLや本文は公開しません。`304 Not Modified`では保存済み候補または原文・根拠・初回本文取得時刻を変更せず、不要な再解析やAI下書きキュー投入を行いません。取得失敗時だけ基準間隔の2倍、4倍と自動的に間隔を延ばし、最大5分で再試行します。初回の過去資料は基準データとして保存し、2回目以降に初めて現れた公式URLだけを新着イベントとして記録します。原文本文は新着を優先して別キューで自動取得します。検知後24時間の新着と変更直後の原文は15分、変化のない過去資料は6時間で再確認し、古い記事の巡回が新着取得を圧迫しないようにします。取得失敗後は1分から最大6時間のバックオフで再確認します。429で公式サイトが`Retry-After`を返した場合は公式指定を優先し、アクセス制限用ホスト遮断と同じ最大7日の上限だけを適用します。取得エラーはURL、クエリ、内部パスを保存せず、`http-429`や`timeout`などの限定コードだけをDBと運営画面へ残します。通信応答全体と抽出した根拠本文を別々のSHAで追跡し、本文外HTMLだけの変化では承認済み要約を失効させません。根拠本文が変わった時だけ再確認へ戻し、変更本文を非公開DBへ資料ごとに最大12版保持して、認証付きレビュー画面だけに前版との語単位の機械差分を最大6,000文字で表示します。これは訂正理由、意味、重要度を自動判定する機能ではありません。公開JSONへ本文・旧版・差分は出しません。意味差分の自動判定、自動数値抽出、会員公開操作は未実装です。日本語要約は根拠付き下書きと人間承認の安全ゲートまで実装済みで、自動生成・自動配信は未接続です。
+
+HTTP 401・403・451または検証ページはアクセス制限を回避せず、初回6時間から最大7日まで間隔を延ばします。本文キューでは同じ優先度なら未試行・失敗回数の少ない資料を先にし、さらに会社公式本文をSEC提出本文より先に確認するため、拒否された大量の提出資料が取得可能な根拠を塞ぎません。
+
+本文取得キューは最終ポーリング時刻と直近バッチの処理時間・確認件数・エラー件数・304件数・待機件数を運営画面へ公開します。URL、本文、HTTPバリデーターはこの集計へ含めません。キュー内部で予期しない例外が発生しても公式一覧の巡回ループは継続し、限定エラーコードと連続失敗数を表示します。本文キューだけを標準設定では20秒から最大300秒まで指数バックオフして再試行し、成功時は通常間隔へ戻します。発生・復旧は永続障害台帳へ記録します。
+
+TSM・MRVL・ANET・VRT・PLTRは、現プロセスで一巡した会社数と各社の確認時刻を照合します。一巡後も未確認の銘柄または要確認の公式経路が残る場合は、全体ヘルスを低下させて非公開障害台帳へ集約記録し、正常な再巡回で自動解決します。公開画面には件数と固定状態コードだけを表示し、URL、個別確認時刻、内部例外は含めません。カスタム設定で対象外にした銘柄は障害に数えません。
+
+## 常駐自動監視
+
+`service.py` は起動後、自分で22社を巡回し続けます。SEC・公式RSSは通常3秒、企業HTML一覧は通常5秒です。新しいURL、取得状態、または同一URLで配信されるRSS本文・発表日などの根拠メタデータが変化した時だけSQLiteと公開用スナップショットを更新します。RSS本文を巡回間の署名へ保持せず、候補ごとのハッシュだけで改訂を検知します。初回巡回は過去資料の基準作成に使い、新着件数や速報欄には入れません。TSM・MRVL・ANET・VRT・PLTRは企業公式経路が正常な時もSEC経路を同じ巡回で補完取得します。SEC補完だけが失敗した場合は運用状態を要確認にしますが、取得できた企業公式経路を初回基準と新着判定に使い、企業公式の巡回間隔は延長しません。全公式経路が失敗した場合だけ指数バックオフします。SECではAtomより高速なSubmissions JSONを優先し、失敗時だけAtomへ切り替え、8-Kまたは6-Kだけを抽出します。SEC主文から安全なEX-99.1リンクを得られない場合は、主文の文字量にかかわらず、同じ提出番号から一意に導出したSEC filing indexだけを確認します。indexではリンク名ではなく同じ表行のTypeセルが正確に`EX-99.1`であることを検証し、同一提出ディレクトリ内のHTMLまたはPDFだけを根拠候補にします。本文取得は新着イベントを最優先し、その後に未取得・確認時刻の古い資料を少量ずつ処理します。
+
+`RESEARCH_TICKERS` に旧22社の完全な構成が残っている場合だけ、AMZNからBEへの監視対象変更を起動時に移行します。部分指定や任意の未知銘柄は従来どおり設定ミスとして拒否し、意図しない監視対象への置き換えは行いません。
+
+```sh
+RESEARCH_API_TOKEN='共有トークン' python3 scripts/research/service.py
+```
+
+HTTP APIは `/livez`、`/health`、`/readyz`、`/snapshot`、`/live`。コンテナの生存確認は初回巡回を待たない`/livez`、巡回準備・遅延・バックアップを含む運用状態の取得は常に200を返す`/health`、初回巡回完了の厳密な準備判定は未完了時503の`/readyz`で分離します。`/health` の `secEvidence` はTSM・MRVL・ANET・VRT・PLTRについて、SEC資料総数、EX-99.1取得、提出本文利用、未取得、エラー、最終確認日時を全体・銘柄別に集計します。`signalIntake` は外部調査・任意のX APIを除く企業公式補完経路について、直近成功・期限超過・エラー・初回待ち、公表日時の根拠を集計します。補完経路エラーはアクセス制限、レート制限、タイムアウト、公式側5xx、応答形式、記事一部失敗、その他の固定区分だけを表示し、再試行を実行可能・待機・予定不明へ分離します。最短再試行時刻は7日以内の正常な値だけを集計します。経路状態の変化は再起動をまたいで永続保存し、24時間の回復・再失敗・障害区分変化だけを集計します。同一区分の連続失敗は重複計上しません。経路そのものも最初の障害から回復までの時間と成功を含む試行回数を永続保存し、24時間の件数・平均・最大・最終回復時刻だけを公開集計します。子記事も同じ形のURLなし有界標本として保存します。いずれも既存履歴を推測で補完せず、実測であり再試行や配信時間の保証ではありません。URL、経路名、アクセッション番号、HTTPコード、本文、例外文は含めません。`/snapshot` と `/live` は `RESEARCH_API_TOKEN` を設定した場合にBearer認証が必要です。サイト側の `/api/research/live` がトークンをサーバー内だけで使用し、ブラウザーには渡しません。監視サービスが未接続または停止中なら、画面は保存済みスナップショットへ安全に戻ります。
+
+本文取得の24時間集計はSQLiteへ保存し、再起動後も確認数、エラー、304再利用、バッチ時間を復元します。新着として検知した公式リンクの初回本文取得では、検知時刻から抽出完了までの実測平均・最大・件数も保存します。本文対象が0件の巡回でも、最新ポーリング時刻と待機件数を単一行のハートビートへ保存し、再起動後に古い成功バッチだけを現在の稼働実績として誤表示しません。ハートビートが期限を超過した場合は運用状態を要確認にします。公式一覧の最終完了と本文ハートビートを現在のプロセス開始時刻とも比較し、再起動前から復元した記録と今回のデプロイ後に観測した稼働を区別します。TSM・MRVL・ANET・VRT・PLTRについては、現プロセスで確認済みの社数と正常・要確認・待機の内訳も集計します。個別URL、時刻、エラー詳細はこの集計に含めません。プロセス識別子、URL、本文、ETagは集計へ含めません。この値は検知後の内部処理時間であり、巡回間隔や会員配信時間の保証値ではありません。
+
+編集用APIは `/admin/briefs`、`/admin/briefs/draft`、`/admin/briefs/review`。年次報告書用は `/admin/annual-briefs`、`/admin/annual-briefs/draft`、`/admin/annual-briefs/review` です。別の `RESEARCH_EDITOR_TOKEN` が設定されている時だけ有効になり、未設定なら必ず拒否します。`/research/review` はトークンをURL・Cookie・ローカル保存へ入れず、そのタブのメモリ内だけで使います。速報レビューキューは全対象件数と状態別件数を返し、承認待ち、原文変更、保留、下書き未作成を承認済みより先に表示するため、取得上限内で未対応資料が埋もれません。`/admin/briefs?view=ready|blocked|needs-draft` は取得上限を適用する前に「機械検証通過」「要修正」「下書き未作成」を絞り込み、画面から切り替えられます。保存済み下書きについては最終判断と同じ照合を読み取り専用で再実行し、「機械検証通過」と「要修正」をキュー全体で集計します。承認済みと下書き未作成はこの集計へ含めず、機械検証通過も人間の内容確認を代替しません。速報と年次報告書のどちらも、保存済みSHAが現在の公式原文と違う場合は旧要約・旧根拠をフォームへ読み戻さず、現在の原文から再作成させます。速報側では、保持した旧原文、根拠の完全一致、保存時の下書き指紋をすべて再検証できた場合だけ、失効した旧要約を認証付き画面の別枠へ読み取り専用で表示します。改変、根拠欠落、旧原文欠落のいずれかがあれば表示せず、公開JSONにも含めません。両方の下書きは保存時に内容と根拠を含むSHA-256検証指紋を記録し、最終判断時に再計算するため、保存後に文章・分類・根拠・参照関係が変わった下書きは承認できません。年次報告書タブではティッカーを指定し、現在のSEC事業説明とリスク原文を見ながら、完全一致する根拠引用、日本語要点、確認者、判断理由を記録します。原文抽出テキストと根拠抜粋はこの認証済み経路でだけ取得し、公開スナップショットへは出しません。承認操作は公開候補の状態を記録しますが、会員通知・メール・SNS配信は実行しません。年次報告書の承認済み候補はサーバー間認証された `/annual-brief` だけで取得し、サイト側でも現在のSEC提出番号・原文SHA・完全一致する根拠引用・数値を再検証してから表示します。原文が変わった候補や監視サービスに接続できない場合は英語原文だけへ安全に戻ります。
+
+任意のAI下書き生成は `/admin/briefs/generate` から1件ずつ実行します。`OPENAI_API_KEY` と `RESEARCH_SUMMARY_MODEL` の両方が明示設定されるまで必ず503で停止し、課金も外部送信も行いません。生成結果は既存の原文SHA、完全一致する根拠抜粋、数値照合を通過した場合だけ非公開の `draft` になります。事実要約内の数字は要約根拠だけ、影響説明内の数字は影響根拠だけで個別照合し、別欄の引用に同じ数字が偶然あっても通過させません。アラビア数字に加えて「二〇二八年」「十倍」「二社」のような明示的な漢数字も照合対象です。各欄の根拠は重複のない1〜4件に制限し、保存時と人間の最終判断時に同じ検証を再実行します。拒否・壊れたJSON・根拠不一致は保存せず、人間承認と会員配信は別工程のままです。APIの接続形式は[OpenAI Responses API](https://platform.openai.com/docs/api-reference/responses/create)と[Structured Outputs](https://platform.openai.com/docs/guides/structured-outputs)に合わせています。
+
+AI補助で生成した速報下書きは、人間が編集してもAI補助の作成履歴を保持します。承認者が公式原文と根拠引用を参照し、事実要約・影響解釈・数値を人間として照合したことを専用項目で明示しない限り承認できません。この確認は非公開の判断履歴へ記録します。確認記録のないAI下書きは、DB状態が直接変更されても公開スナップショットから除外します。保留・却下は追加確認を妨げないよう、この照合確認を必須にしません。
+
+新着イベントだけを下書き生成へ渡す永続キューも実装していますが、既定値は停止です。`RESEARCH_AUTO_DRAFTS=true`、有効なAPIキー、モデルの3条件が起動時に揃った場合だけ、その後に初めて検知した新着をキューへ入れます。過去資料は遡って投入しません。本文取得完了後に1件ずつ処理し、失敗時は1分、5分、25分の指数バックオフ（最大1時間）で再試行します。生成APIが有効な`Retry-After`を返した場合は同じ要求をその場で繰り返さず、通常バックオフより長い公式指定を最長7日まで永続キューへ引き継ぎます。応答本文やヘッダー値は保存せず、限定エラーコードと次回時刻だけを保持します。
+
+`RESEARCH_AUTO_DRAFT_DAILY_LIMIT` は成功・失敗を含む生成ジョブの試行回数を直近24時間で制限します。加えて、`RESEARCH_AUTO_DRAFT_TOKEN_LIMIT` の範囲内かを外部送信前に確認します。実際の入力・出力・合計トークン数をAPI応答から監査記録し、成功後は実測合計を予算へ計上します。通信失敗や使用量が返らない場合は、入力UTF-8バイト数・固定プロンプト余裕・最大出力を合算した保守的な予約値を24時間維持します。このため、使用量不明の失敗が続いても無制限に再試行しません。これはモデル単価を仮定しない利用量上限で、円建て費用上限ではありません。モデル価格を確認せず円換算しません。
+
+処理状態、実測トークン、予算計上トークン、上限到達は `/health` へ本文を含めず表示します。プロセス停止後もSQLiteから再開し、すでに現行SHAの下書きが保存済みなら重複生成せず完了扱いに戻します。
+
+監視DBは起動直後と標準1時間ごとに、SQLiteのオンラインバックアップ機能で同じ非公開永続ボリュームへ保存します。完成後に `PRAGMA integrity_check` と必須テーブルを確認し、SHA-256付きマニフェストとともにアトミックに公開します。バックアップ用ディレクトリは所有者だけが読み書き・参照できる権限、DBとマニフェストは所有者だけが読み書きできる権限に固定し、標準24世代を保持します。直近成功が「実行間隔＋猶予時間」を超えた場合は、前回が成功でも `backup-overdue` として運営画面へ警告します。`/health` には成功日時・世代数・経過秒・異常コードだけを出し、保存先・ファイル名・ハッシュは出しません。公式経路の巡回更新が標準60秒止まった場合は `monitor-stale` として区別します。さらに、再起動後に復元した公式一覧の最終完了記録が同じ期限を超えた場合は `discovery-poll-stale` として全体ヘルスを低下させ、URLや内部例外を含まない障害台帳へ記録します。新しい巡回完了で同じ障害を自動解決し、完了記録がまだない初回起動は障害にしません。
+
+公式経路、本文取得、監視停止、バックアップの異常は永続インシデント台帳へ記録します。同じ異常を巡回ごとに新規作成せず、継続回数と最終確認時刻を更新し、復旧時は同じ記録を解決済みにします。監視停止とバックアップ期限超過は、運営画面へのアクセスに依存しない専用ループで確認します。発生・復旧の通知候補もSQLiteの保留キューへ保存するため再起動で失いません。外部通知アダプターと再試行キューは実装済みですが既定で無効です。明示的な送信開始時刻、有効なHTTPS通知先、専用認証トークンがすべて揃うまでメール、Slack、SNS等への通知は行いません。過去の保留通知は送信開始後も自動送信せず、開始時刻以降に発生した通知だけを対象にします。
+
+復元コマンドは既定で検証だけを行います。実際の置換は監視サービスを停止し、対象DBと同じ永続領域でのみ実行してください。`--apply` を付けた場合も、復元用一時DBを再検証してから置換し、古いWAL/SHMを除去します。
+
+```sh
+python3 scripts/research/persistence.py verify --backup /data/backups/research-YYYYMMDDTHHMMSS.sqlite
+python3 scripts/research/persistence.py restore --backup /data/backups/research-YYYYMMDDTHHMMSS.sqlite --db /data/intake.sqlite
+# 上の検証結果を確認し、サービス停止後にだけ実行
+python3 scripts/research/persistence.py restore --backup /data/backups/research-YYYYMMDDTHHMMSS.sqlite --db /data/intake.sqlite --apply
+```
+
+この方式はDB破損や操作ミスからの復旧用です。同じ永続ボリューム自体の消失やホスティング事業者の障害には耐えないため、暗号化した外部保管は別途認証情報・保存先・費用を承認してから接続します。現時点で外部アップロードは行いません。
+
+`Dockerfile.research-monitor` は常駐サービス用です。デプロイ先では `/data` に永続ボリュームを接続し、以下を設定します。
+
+- `RESEARCH_API_TOKEN`：長いランダム値
+- `RESEARCH_EDITOR_TOKEN`：公開APIとは別に生成した長いランダム値。編集用APIは未設定時に無効
+- `OPENAI_API_KEY`：AI下書きを明示的に有効化する場合だけ設定。ブラウザーへ渡さない
+- `RESEARCH_SUMMARY_MODEL`：運営者が承認したStructured Outputs対応モデル名。未設定時は生成無効
+- `RESEARCH_AUTO_DRAFTS`：既定false。有効なキー・モデルとtrueが揃った起動後の新着だけを自動生成待ちへ追加
+- `RESEARCH_AUTO_DRAFT_DAILY_LIMIT`：成功・失敗を含む直近24時間の生成ジョブ試行上限。標準20
+- `RESEARCH_AUTO_DRAFT_TOKEN_LIMIT`：外部送信前に確保する直近24時間のトークン予算。標準100,000、最低10,000
+- `RESEARCH_AUTO_DRAFT_MAX_ATTEMPTS`：1つの原文SHAに対する最大試行回数。標準3
+- `RESEARCH_AUTO_DRAFT_INTERVAL_SECONDS`：キュー確認間隔。標準5秒（発表から生成までの保証ではない）
+- `RESEARCH_FAST_POLL_SECONDS`：標準3秒、最低3秒
+- `RESEARCH_STANDARD_POLL_SECONDS`：標準5秒、最低5秒
+- `RESEARCH_REQUEST_TIMEOUT_SECONDS`：標準20秒。巡回間隔とは別で、遅い公式サイトを誤って障害扱いしないための上限。不正値は標準値へ戻し、1秒未満・取得先の既定上限超過は範囲内へ補正
+- `RESEARCH_MAX_WORKERS`：標準8
+- `RESEARCH_BODY_FETCH_INTERVAL_SECONDS`：本文取得キューの実行間隔。標準10秒、最低5秒
+- `RESEARCH_BODY_FETCH_BATCH`：1回に取得する本文数。標準2件
+- `RESEARCH_REVIEW_SOURCE_MAX_AGE_SECONDS`：速報の承認・公開候補に使える原文最終取得の最大経過秒数。標準8時間、5分〜24時間。監視間隔や配信時間の保証値ではありません
+- `RESEARCH_HOT_BODY_RECHECK_SECONDS`：検知直後・変更直後の本文再確認間隔。標準900秒、最低60秒
+- `RESEARCH_HOT_EVENT_WINDOW_SECONDS`：新着本文を上記の短い間隔で追う期間。標準86400秒
+- `RESEARCH_BODY_RECHECK_SECONDS`：変化のない過去資料の再確認間隔。標準21600秒、最低900秒
+- `RESEARCH_BACKUP_DIR`：検証済みバックアップの保存先。標準はDBと同じディレクトリ内の `backups`
+- `RESEARCH_BACKUP_INTERVAL_SECONDS`：バックアップ間隔。標準3600秒、最低300秒
+- `RESEARCH_BACKUP_GRACE_SECONDS`：予定時刻から期限超過とするまでの猶予。標準600秒、最低60秒
+- `RESEARCH_BACKUP_RETENTION`：保持世代数。標準24、2〜168世代
+- `RESEARCH_MONITOR_STALE_SECONDS`：巡回更新が停止したと判定する時間。標準60秒、最低15秒
+- `RESEARCH_INCIDENT_CHECK_SECONDS`：画面アクセスに依存しない監視停止・バックアップ異常の確認間隔。標準5秒、最低1秒
+- `RESEARCH_INCIDENT_DELIVERY_ENABLED`：障害通知の外部送信。既定false。trueだけでは送信されず、以下の開始時刻・URL・専用トークンも必須
+- `RESEARCH_INCIDENT_DELIVERY_START_AT`：通知を解禁するUTC時刻。この時刻より前の保留通知は再送せず、意図しない過去分の一括送信を防ぐ
+- `RESEARCH_INCIDENT_WEBHOOK_URL`：明示的に承認したHTTPS通知先。ローカル・プライベートIP・認証情報入りURLは拒否
+- `RESEARCH_INCIDENT_WEBHOOK_TOKEN`：通知専用の長いBearerトークン。監視API・編集APIとは分離する
+- `RESEARCH_INCIDENT_DELIVERY_INTERVAL_SECONDS`：通知キューの確認間隔。標準5秒
+- `RESEARCH_INCIDENT_DELIVERY_MAX_ATTEMPTS`：通知失敗時の最大試行数。標準5。1分から最大6時間の指数バックオフ後、上限で停止
+- `RESEARCH_USER_AGENT`：運営サービス名と連絡可能な汎用メールアドレス。SEC等の自動アクセス方針に合わせて設定
+
+Vercel側には監視サービスのHTTPS URLを `RESEARCH_MONITOR_URL`、同じトークンを `RESEARCH_MONITOR_TOKEN` として設定します。`/research/intake` は3秒ごとにAPIを確認し、接続中か保存済み記録かを明示します。
+
+## 検証
+
+```sh
+python3 -m unittest discover -s tests -p 'test_research_intake.py' -v
+```
+
+重複、変更後の再確認、古い判断の拒否、取得エラー、発表日不明、一覧の取得異常、外部URL拒否、再起動後の保持、新着イベントの重複防止を検証します。
+
+Anthropic Newsroom is also registered with an `html-index` adapter. It follows
+approved `/news/`, `/research/` and configured featured article links, checks article bodies before
+company matching, and keeps unassigned material private for review. Each index
+check fetches at most three article bodies; remaining work and failures appear
+in source health. First-index backlog stays baseline across restarts. Existing
+articles are rechecked hourly, not every 120 seconds. Initial access probes returned HTTP 403, but a later one-off monitor run
+successfully acquired 14 article bodies, including root-path featured articles. This
+verifies that run, not continuous availability, full-archive coverage or remote
+deployment. Source failures must remain visible. The top-level route and its
+article-body children use the same bounded retry policy: access restrictions
+start at six hours and grow to at most seven days, ordinary transient failures
+remain capped at six hours, and a valid publisher `Retry-After` is honored up
+to the applicable ceiling. Retry state retains only a fixed error code and the
+next-check time, not response headers or bodies.
+# Offline coverage audit
+
+`python scripts/research/coverage_report.py` lists all 22 official company
+indexes, dedicated supplemental sources and shared sources. Registration alone
+is never reported as working coverage. Add `--db /data/automatic.sqlite` to
+inspect supplemental intake health through a read-only SQLite connection:
+untested, fresh, stale, error or configuration-changed. Official index
+availability is explicitly outside this report's health check. No network
+requests, publication, notifications or paid API calls are made.
