@@ -5,6 +5,8 @@ import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
 import { EventStreamParser, abortableDelay } from "@/lib/research/event-stream";
 
+import NotificationSettings from "./notification-settings";
+
 type Target = {
   id: number; ticker: string; firm: string; previous: number; latest: number;
   source: string; url: string; publishedAt: string; observedAt: string;
@@ -112,6 +114,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
   }).format(new Date(date));
   return <section ref={panelRef} className={styles.panel} aria-label={t("目標株価の速報", "Price target updates")}>
     <div className={styles.head}><div><span className={styles.kicker}>X PRICE TARGET MONITOR · {t("試験表示", "PILOT")}</span><h3>{t("目標株価の変更", "Price target changes")}</h3></div><span className={styles.refresh}>{delivery === "live" ? t("新着を自動表示", "Live updates") : delivery === "polling" ? t("再接続中・15秒ごとに確認", "Reconnecting · checking every 15s") : t("接続中…", "Connecting…")}</span></div>
+    <NotificationSettings lang={lang} />
     {status === "error" && <p role="status" className={styles.state}>{t("現在、目標株価の更新を取得できません。表示内容は最新とは限りません。", "Price target updates are temporarily unavailable. Displayed items may be stale.")}</p>}
     {status === "loading" && <p role="status" className={styles.state}>{t("更新を確認中…", "Checking updates…")}</p>}
     {status === "ready" && items.length === 0 && <p className={styles.state}>{t("条件に合う目標株価の投稿はまだありません。", "No matching price target posts yet.")}</p>}

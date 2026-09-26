@@ -77,3 +77,17 @@ backoff. Initial results are a private baseline, not public notifications.
 Only the latest 20 releases were present; fast bursts may overflow this window.
 This is not complete archival coverage or proof of seconds-level delivery.
 Business Wire and PR Newswire live feed validation remain outstanding.
+
+### Runtime follow-up (September 26, late evening JST)
+
+The exact configured GlobeNewswire feed was rechecked with `signals.fetch` from
+this development environment: 36,518 bytes in 7.33 seconds. Railway's aggregate
+signal health remained 19 fresh / 4 failed, with two timeouts and two access
+restrictions. This does not establish a DNS, TLS, or remote-server root cause;
+no production network bypass or blind timeout increase was applied. GlobeNewswire
+must not yet be described as reliably operational on Railway.
+
+Business Wire's official feed-options page documents a legitimate headline RSS
+and licensed full-text feed route, but no usable endpoint was established here.
+PR Newswire's public RSS catalog is confirmed; live XML validation is outstanding.
+These two integrations remain blocked on obtaining/validating an authorized feed.

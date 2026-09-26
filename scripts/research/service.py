@@ -20,6 +20,7 @@ import incident_delivery
 import persistence
 import signals
 import stock_news
+import web_push
 
 
 # The preview deployment previously pinned the complete 22-company roster in
@@ -409,7 +410,23 @@ class AutomaticMonitor:
             target=self.run_notification_delivery, name="incident-delivery", daemon=True
         )
         self.signals_thread = threading.Thread(target=self.run_signals, name="research-signals", daemon=True)
+        self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
+
+    def run_web_push(self):
+        if not web_push.configuration()["enabled"]:
+            return
+        while not self.stop_event.is_set():
+            try:
+                items = self.public_price_targets()["items"]
+                with web_push.connect(self.db_path) as db:
+                    result = web_push.deliver(db, items)
+                with self.state_lock:
+                    self.state["webPush"] = result
+            except Exception:
+                with self.state_lock:
+                    self.state["webPush"] = {"status": "error"}
+            self.stop_event.wait(5)
 
     def start(self):
         self.thread.start()
@@ -419,6 +436,7 @@ class AutomaticMonitor:
         self.notification_thread.start()
         self.signals_thread.start()
         self.news_thread.start()
+        self.push_thread.start()
 
     def stop(self):
         self.stop_event.set()
@@ -429,6 +447,7 @@ class AutomaticMonitor:
         self.notification_thread.join(timeout=15)
         self.signals_thread.join(timeout=45)
         self.news_thread.join(timeout=25)
+        self.push_thread.join(timeout=15)
 
     def run_stock_news(self):
         # No schema writes or network activity until explicitly enabled.
@@ -1659,6 +1678,13 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed = urlsplit(self.path)
         path = parsed.path
+        if path == "/push/config":
+            if not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            self.send_json(200, {"ok": True, **web_push.configuration(),
+                                "tickers": sorted(set(self.app.tickers) | signals.X_EXTRA_TICKERS)})
+            return
         if path == "/livez":
             self.send_json(200, {"ok": True, "status": "alive"})
             return
@@ -1723,6 +1749,24 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlsplit(self.path).path
+        if path in {"/push/register", "/push/remove"}:
+            if not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            if not web_push.configuration()["enabled"]:
+                self.send_json(503, {"ok": False})
+                return
+            try:
+                payload = self.read_json()
+                with web_push.connect(self.app.db_path) as db:
+                    result = (web_push.remove(db, payload) if path == "/push/remove" else
+                              web_push.register(db, payload, set(self.app.tickers) | signals.X_EXTRA_TICKERS))
+                self.send_json(200, {"ok": True, **result})
+            except ValueError:
+                self.send_json(400, {"ok": False, "error": "invalid-registration"})
+            except Exception:
+                self.send_json(503, {"ok": False})
+            return
         if path not in {
             "/admin/briefs/generate", "/admin/briefs/draft", "/admin/briefs/review",
             "/admin/annual-briefs/draft", "/admin/annual-briefs/review",

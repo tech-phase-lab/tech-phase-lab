@@ -1,0 +1,158 @@
+"""Opt-in private Web Push pilot. Shared source reads; durable per-device dedup.
+
+No delivery until configured. Ambiguous network failures are NOT retried: this
+pilot favors avoiding duplicate alerts; its ledger records uncertain delivery.
+"""
+import base64
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+import re
+import sqlite3
+import time
+from urllib.parse import urlsplit
+
+
+def configuration():
+    ready = all(os.environ.get(k, '').strip() for k in (
+        'WEB_PUSH_PRIVATE_KEY', 'WEB_PUSH_PUBLIC_KEY', 'WEB_PUSH_SUBJECT'))
+    enabled = os.environ.get('WEB_PUSH_ENABLED', '').lower() == 'true' and ready
+    return {'enabled': enabled, 'publicKey': os.environ.get('WEB_PUSH_PUBLIC_KEY', '') if enabled else ''}
+
+
+def connect(path):
+    db = sqlite3.connect(path, timeout=10)
+    db.row_factory = sqlite3.Row
+    db.executescript('''
+    CREATE TABLE IF NOT EXISTS push_devices (
+      id TEXT PRIMARY KEY, subscription TEXT NOT NULL, tickers TEXT NOT NULL,
+      language TEXT NOT NULL, since REAL NOT NULL, active INTEGER NOT NULL DEFAULT 1);
+    CREATE TABLE IF NOT EXISTS push_deliveries (
+      device_id TEXT NOT NULL, event_key TEXT NOT NULL, status TEXT NOT NULL,
+      attempted_at REAL NOT NULL, PRIMARY KEY(device_id,event_key));
+    ''')
+    return db
+
+
+def validate_subscription(value):
+    if not isinstance(value, dict):
+        raise ValueError('invalid-subscription')
+    endpoint = value.get('endpoint', '')
+    if not isinstance(endpoint, str) or len(endpoint) > 2048:
+        raise ValueError('invalid-endpoint')
+    url = urlsplit(endpoint)
+    # Strict push-service allowlist; never POST to user-selected arbitrary hosts.
+    if (url.scheme != 'https' or url.hostname not in {
+        'fcm.googleapis.com', 'updates.push.services.mozilla.com', 'web.push.apple.com'
+    } or url.port not in (None, 443) or url.username or url.password or url.fragment):
+        raise ValueError('unsupported-push-service')
+    keys = value.get('keys', {})
+    for name, size in [('p256dh', 65), ('auth', 16)]:
+        raw = keys.get(name, '') if isinstance(keys, dict) else ''
+        if not isinstance(raw, str) or not re.fullmatch(r'[A-Za-z0-9_-]{16,100}={0,2}', raw):
+            raise ValueError('invalid-push-key')
+        try:
+            decoded = base64.urlsafe_b64decode(raw + '=' * (-len(raw) % 4))
+        except ValueError as exc:
+            raise ValueError('invalid-push-key') from exc
+        if len(decoded) != size or name == 'p256dh' and decoded[0] != 4:
+            raise ValueError('invalid-push-key')
+    return {'endpoint': endpoint, 'keys': {k: keys[k] for k in ('p256dh', 'auth')}}
+
+
+def register(db, payload, allowed, now=None):
+    subscription = validate_subscription(payload.get('subscription'))
+    tickers = payload.get('tickers')
+    lang = payload.get('language', 'ja')
+    if (not isinstance(tickers, list) or not 1 <= len(tickers) <= 50 or
+            any(not isinstance(t, str) or t not in allowed for t in tickers) or lang not in {'ja', 'en'}):
+        raise ValueError('invalid-preferences')
+    device = hashlib.sha256(subscription['endpoint'].encode()).hexdigest()
+    now = time.time() if now is None else now
+    with db:
+        if not db.execute('SELECT 1 FROM push_devices WHERE id=?', (device,)).fetchone() and db.execute(
+                'SELECT COUNT(*) FROM push_devices').fetchone()[0] >= 20:
+            raise ValueError('pilot-device-limit')
+        # Updating preferences resets the baseline, never backfills old alerts.
+        db.execute('''INSERT INTO push_devices VALUES(?,?,?,?,?,1)
+            ON CONFLICT(id) DO UPDATE SET subscription=excluded.subscription,
+            tickers=excluded.tickers,language=excluded.language,since=excluded.since,active=1''',
+            (device, json.dumps(subscription), json.dumps(sorted(set(tickers))), lang, now))
+    return {'registered': True}
+
+
+def remove(db, payload):
+    subscription = validate_subscription(payload.get('subscription'))
+    device = hashlib.sha256(subscription['endpoint'].encode()).hexdigest()
+    with db:
+        db.execute('DELETE FROM push_devices WHERE id=?', (device,))
+        db.execute('DELETE FROM push_deliveries WHERE device_id=?', (device,))
+    return {'registered': False}
+
+
+def event_key(item):
+    # Same broker action reported by several accounts is one notification.
+    date = datetime.fromisoformat(item['publishedAt'].replace('Z', '+00:00')).astimezone(timezone.utc).date().isoformat()
+    facts = [item['ticker'], item['firm'].casefold(), float(item['previous']), float(item['latest']), date]
+    return hashlib.sha256(json.dumps(facts).encode()).hexdigest()
+
+
+def send(subscription, payload):
+    import requests
+    from pywebpush import webpush, WebPushException
+    class NoRedirectSession(requests.Session):
+        def request(self, method, url, **kwargs):
+            kwargs['allow_redirects'] = False
+            return super().request(method, url, **kwargs)
+    try:
+        with NoRedirectSession() as session:
+            response = webpush(subscription_info=subscription, data=json.dumps(payload, ensure_ascii=False),
+                vapid_private_key=os.environ['WEB_PUSH_PRIVATE_KEY'],
+                vapid_claims={'sub': os.environ['WEB_PUSH_SUBJECT']},
+                ttl=300, timeout=10, requests_session=session, headers={'Urgency': 'high'})
+        return response.status_code
+    except WebPushException as exc:
+        return exc.response.status_code if exc.response is not None else 0
+
+
+def deliver(db, items, transport=send, now=None):
+    if not configuration()['enabled']:
+        return {'status': 'disabled', 'attempted': 0}
+    now = time.time() if now is None else now
+    attempted = accepted = uncertain = 0
+    for device in db.execute('SELECT * FROM push_devices WHERE active=1').fetchall():
+        watched = set(json.loads(device['tickers']))
+        for item in items:
+            observed = datetime.fromisoformat(item['observedAt'].replace('Z', '+00:00')).timestamp()
+            if item['ticker'] not in watched or observed <= device['since'] or not 0 <= now - observed <= 300:
+                continue
+            key = event_key(item)
+            # Reserve before network; a restart cannot silently send it twice.
+            with db:
+                claim = db.execute('INSERT OR IGNORE INTO push_deliveries VALUES(?,?,?,?)',
+                                   (device['id'], key, 'uncertain', now)).rowcount
+            if not claim:
+                continue
+            ja = device['language'] == 'ja'
+            payload = {'title': f"{item['ticker']} · " + ('目標株価の変更' if ja else 'Price target update'),
+                       'body': f"{item['firm']}: ${item['previous']:g} → ${item['latest']:g}",
+                       'tag': key, 'url': '/research#what-changed'}
+            try:
+                code = transport(json.loads(device['subscription']), payload)
+            except Exception:
+                code = 0  # Never log endpoint, keys, provider response, or payload.
+            status = 'accepted' if 200 <= code < 300 else 'expired' if code in (404, 410) else 'uncertain'
+            with db:
+                db.execute('UPDATE push_deliveries SET status=? WHERE device_id=? AND event_key=?',
+                           (status, device['id'], key))
+                if status == 'expired':
+                    db.execute('DELETE FROM push_devices WHERE id=?', (device['id'],))
+            attempted += 1
+            accepted += status == 'accepted'
+            uncertain += status == 'uncertain'
+            if status == 'expired':
+                break
+    with db:
+        db.execute('DELETE FROM push_deliveries WHERE attempted_at<?', (now - 7 * 86400,))
+    return {'status': 'ready', 'attempted': attempted, 'accepted': accepted, 'uncertain': uncertain}
