@@ -769,6 +769,9 @@ class ResearchServiceTests(unittest.TestCase):
                 "selected_recheck", "error_detected_never_fetched",
                 "error_baseline_never_fetched", "error_extraction_pending",
                 "error_recheck",
+                "not_modified_detected_never_fetched",
+                "not_modified_baseline_never_fetched",
+                "not_modified_extraction_pending", "not_modified_recheck",
             }.issubset(columns))
             summary = monitor.body_fetch_batch_summary(
                 db, "2026-09-23T00:01:00+00:00"
@@ -784,6 +787,10 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["errorBaselineNeverFetched24Hours"], 0)
         self.assertEqual(summary["errorExtractionPending24Hours"], 0)
         self.assertEqual(summary["errorRecheck24Hours"], 0)
+        self.assertEqual(summary["notModifiedDetectedNeverFetched24Hours"], 0)
+        self.assertEqual(summary["notModifiedBaselineNeverFetched24Hours"], 0)
+        self.assertEqual(summary["notModifiedExtractionPending24Hours"], 0)
+        self.assertEqual(summary["notModifiedRecheck24Hours"], 0)
 
     def test_body_fetch_selection_partitions_must_cover_new_batch(self):
         reference = datetime.now(timezone.utc)
@@ -842,6 +849,44 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["errorBaselineNeverFetched24Hours"], 0)
         self.assertEqual(summary["errorExtractionPending24Hours"], 0)
         self.assertEqual(summary["errorRecheck24Hours"], 1)
+
+    def test_body_fetch_not_modified_partitions_must_match_total_and_outcomes(self):
+        reference = datetime.now(timezone.utc)
+        started = reference - timedelta(seconds=1)
+        selections = {
+            "detectedNeverFetched": 1,
+            "baselineNeverFetched": 1,
+            "extractionPending": 1,
+            "recheck": 1,
+        }
+        errors = {"detectedNeverFetched": 1}
+        with monitor.connect(self.db_path) as db:
+            for not_modified, partitions in (
+                (2, {"recheck": 1}),
+                (1, {"detectedNeverFetched": 1}),
+            ):
+                with self.assertRaisesRegex(ValueError, "invalid-body-fetch-batch"):
+                    monitor.record_body_fetch_batch(
+                        db, started.isoformat(timespec="milliseconds"),
+                        reference.isoformat(timespec="milliseconds"),
+                        1000, 4, 1, not_modified, (), selections, errors, partitions,
+                    )
+            monitor.record_body_fetch_batch(
+                db, started.isoformat(timespec="milliseconds"),
+                reference.isoformat(timespec="milliseconds"),
+                1000, 4, 1, 1, (), selections, errors, {"recheck": 1},
+            )
+            summary = monitor.body_fetch_batch_summary(
+                db, reference.isoformat(timespec="milliseconds")
+            )
+        self.assertEqual(summary["lastNotModifiedDetectedNeverFetched"], 0)
+        self.assertEqual(summary["lastNotModifiedBaselineNeverFetched"], 0)
+        self.assertEqual(summary["lastNotModifiedExtractionPending"], 0)
+        self.assertEqual(summary["lastNotModifiedRecheck"], 1)
+        self.assertEqual(summary["notModifiedDetectedNeverFetched24Hours"], 0)
+        self.assertEqual(summary["notModifiedBaselineNeverFetched24Hours"], 0)
+        self.assertEqual(summary["notModifiedExtractionPending24Hours"], 0)
+        self.assertEqual(summary["notModifiedRecheck24Hours"], 1)
 
     def test_liveness_does_not_wait_for_first_official_source_cycle(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
@@ -907,6 +952,10 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(durable["errorBaselineNeverFetched24Hours"], 0)
         self.assertEqual(durable["errorExtractionPending24Hours"], 0)
         self.assertEqual(durable["errorRecheck24Hours"], 0)
+        self.assertEqual(durable["notModifiedDetectedNeverFetched24Hours"], 0)
+        self.assertEqual(durable["notModifiedBaselineNeverFetched24Hours"], 0)
+        self.assertEqual(durable["notModifiedExtractionPending24Hours"], 0)
+        self.assertEqual(durable["notModifiedRecheck24Hours"], 0)
         self.assertIsInstance(durable["detectionLatencyAverageMs24Hours"], int)
         self.assertIsInstance(durable["detectionLatencyMaxMs24Hours"], int)
         self.assertNotIn("https://", json.dumps(durable))
@@ -1546,6 +1595,11 @@ class ResearchServiceTests(unittest.TestCase):
         durable = app.public_state()["bodyFetch"]["durable"]
         self.assertEqual(durable["lastNotModified"], 1)
         self.assertEqual(durable["notModified24Hours"], 1)
+        self.assertEqual(durable["lastNotModifiedDetectedNeverFetched"], 0)
+        self.assertEqual(durable["lastNotModifiedBaselineNeverFetched"], 0)
+        self.assertEqual(durable["lastNotModifiedExtractionPending"], 0)
+        self.assertEqual(durable["lastNotModifiedRecheck"], 1)
+        self.assertEqual(durable["notModifiedRecheck24Hours"], 1)
 
     def test_empty_body_poll_records_poll_without_overwriting_batch_metrics(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)

@@ -180,10 +180,17 @@ function durableBodyFetchStatus(bodyFetch: MonitorState["bodyFetch"]) {
     + (durable.selectedBaselineNeverFetched24Hours ?? 0)
     + (durable.selectedExtractionPending24Hours ?? 0)
     + (durable.selectedRecheck24Hours ?? 0);
-  const selectedOutcome = (label: string, selected = 0, errors = 0) =>
-    `${label} ${selected}件${errors > 0 ? `（失敗 ${errors}件）` : ""}`;
+  const selectedOutcome = (
+    label: string, selected = 0, errors = 0, notModified = 0,
+  ) => {
+    const outcomes = [
+      errors > 0 ? `失敗 ${errors}件` : "",
+      notModified > 0 ? `304再利用 ${notModified}件` : "",
+    ].filter(Boolean);
+    return `${label} ${selected}件${outcomes.length ? `（${outcomes.join("・")}）` : ""}`;
+  };
   const selectionStatus = selection > 0
-    ? ` · 24時間予約：${selectedOutcome("新着本文", durable.selectedDetectedNeverFetched24Hours, durable.errorDetectedNeverFetched24Hours)}・${selectedOutcome("履歴本文", durable.selectedBaselineNeverFetched24Hours, durable.errorBaselineNeverFetched24Hours)}・${selectedOutcome("抽出不足", durable.selectedExtractionPending24Hours, durable.errorExtractionPending24Hours)}・${selectedOutcome("再確認", durable.selectedRecheck24Hours, durable.errorRecheck24Hours)}`
+    ? ` · 24時間予約：${selectedOutcome("新着本文", durable.selectedDetectedNeverFetched24Hours, durable.errorDetectedNeverFetched24Hours, durable.notModifiedDetectedNeverFetched24Hours)}・${selectedOutcome("履歴本文", durable.selectedBaselineNeverFetched24Hours, durable.errorBaselineNeverFetched24Hours, durable.notModifiedBaselineNeverFetched24Hours)}・${selectedOutcome("抽出不足", durable.selectedExtractionPending24Hours, durable.errorExtractionPending24Hours, durable.notModifiedExtractionPending24Hours)}・${selectedOutcome("再確認", durable.selectedRecheck24Hours, durable.errorRecheck24Hours, durable.notModifiedRecheck24Hours)}`
     : " · 24時間予約内訳：実測待ち";
   return `本文取得の永続稼働：${poll}${deployment} · 24時間 ${durable.runs24Hours}バッチ・${durable.checks24Hours}件 · エラー ${durable.errors24Hours}件 · 304 ${durable.notModified24Hours}件${selectionStatus}${latency} · 最終完了 ${time(durable.lastCompletedAt)} JST`;
 }
