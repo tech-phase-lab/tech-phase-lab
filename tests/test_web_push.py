@@ -61,3 +61,8 @@ class PushTests(unittest.TestCase):
         self.assertEqual(self.db.execute('SELECT COUNT(*) FROM push_deliveries').fetchone()[0],0)
     def test_limit_and_ticker_validation(self):
         with self.assertRaises(ValueError):push.register(self.db,{'subscription':subscription(),'tickers':['BAD']},{'MU'})
+
+    def test_all_targets_includes_new_tickers_without_reregistering(self):
+        push.register(self.db, {'subscription':subscription(),'allTargets':True}, {'MU'}, self.now-10)
+        self.assertEqual(push.deliver(self.db,[event('AAPL'),event('TSLA')],lambda *_:201,self.now)['accepted'],2)
+        self.assertEqual(push.deliver(self.db,[event('AAPL')],lambda *_:self.fail('duplicate'),self.now)['attempted'],0)

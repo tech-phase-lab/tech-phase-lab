@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     }
     if (!["register", "remove"].includes(body.action)) throw new Error("Invalid action");
     const result = await monitor(`/push/${body.action}`, {
-      subscription: body.subscription, tickers: body.tickers, language: body.language,
+      subscription: body.subscription, tickers: body.tickers, allTargets: body.allTargets === true, language: body.language,
     });
     return Response.json(result, { headers });
   } catch { return Response.json({ ok: false }, { status: 400, headers }); }

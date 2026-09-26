@@ -66,7 +66,7 @@ class Redirects(HTTPRedirectHandler):
 
 def fetch(source, validators):
     url = safe_url(source["url"], source)
-    headers = {"User-Agent": "TechPhaseResearch/0.1 (+source-monitor)", "Accept-Encoding": "identity"}
+    headers = {"User-Agent": source.get("userAgent", "TechPhaseResearch/0.1 (+source-monitor)"), "Accept-Encoding": "identity"}
     for key, header in (("etag", "If-None-Match"), ("last_modified", "If-Modified-Since")):
         value = monitor.http_validator(validators.get(key))
         if value:
@@ -774,17 +774,17 @@ def public_price_targets(db, sources=SOURCES, now=None, limit=20):
             url = safe_url(row["url"], source)
             old, new = (float(match.group(2)), float(match.group(1))) if match else (0, 0)
             if (published.tzinfo is None or observed.tzinfo is None or
-                    not timedelta(0) <= now - published <= timedelta(hours=24) or
+                    not timedelta(0) <= now - published <= timedelta(days=7) or
                     not timedelta(0) <= observed - published <= timedelta(minutes=15) or
                     not match or not firm or not isinstance(tickers, list) or len(tickers) != 1 or
-                    tickers[0] not in ALIASES and tickers[0] not in X_EXTRA_TICKERS or
+                    not isinstance(tickers[0], str) or not re.fullmatch(r"[A-Z]{1,5}(?:[.-][A-Z])?", tickers[0]) or
                     not 0 < old <= 100000 or not 0 < new <= 100000 or old == new):
                 continue
         except (ValueError, TypeError, AttributeError, OverflowError):
             continue
         # Multiple monitored accounts can post the same analyst action. Keep
         # its first detection and one source link instead of showing it twice.
-        change = (tickers[0], firm.group(1).casefold(), old, new)
+        change = (tickers[0], firm.group(1).casefold(), old, new, published.astimezone(timezone.utc).date())
         current = by_change.get(change)
         if current is None or (observed.isoformat(), row["id"]) < (current["observedAt"], current["id"]):
             by_change[change] = {"id": row["id"], "ticker": tickers[0], "firm": firm.group(1),

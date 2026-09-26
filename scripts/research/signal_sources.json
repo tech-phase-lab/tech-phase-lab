@@ -406,8 +406,20 @@
     "kind": "publisher-update",
     "format": "x-api",
     "enabledBy": "X_API_ENABLED",
-    "extraTickers": ["LITE", "COHR", "VST", "IREN", "ALAB", "APH", "INTC", "AMAT", "SIMO", "AAOI", "META"],
-    "query": "from:TipRanks ($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\" OR earnings OR \"quarterly results\" OR \"financial results\") -is:retweet -is:reply",
+    "extraTickers": [
+      "LITE",
+      "COHR",
+      "VST",
+      "IREN",
+      "ALAB",
+      "APH",
+      "INTC",
+      "AMAT",
+      "SIMO",
+      "AAOI",
+      "META"
+    ],
+    "query": "from:TipRanks ((\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\") OR (($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (earnings OR \"quarterly results\" OR \"financial results\"))) -is:retweet -is:reply",
     "accounts": [
       "TipRanks"
     ],
@@ -464,8 +476,20 @@
     "kind": "publisher-update",
     "format": "x-api",
     "enabledBy": "X_API_ENABLED",
-    "extraTickers": ["LITE", "COHR", "VST", "IREN", "ALAB", "APH", "INTC", "AMAT", "SIMO", "AAOI", "META"],
-    "query": "from:theflynews ($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\" OR earnings OR \"quarterly results\" OR \"financial results\") -is:retweet -is:reply",
+    "extraTickers": [
+      "LITE",
+      "COHR",
+      "VST",
+      "IREN",
+      "ALAB",
+      "APH",
+      "INTC",
+      "AMAT",
+      "SIMO",
+      "AAOI",
+      "META"
+    ],
+    "query": "from:theflynews ((\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\") OR (($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (earnings OR \"quarterly results\" OR \"financial results\"))) -is:retweet -is:reply",
     "accounts": [
       "theflynews"
     ],
@@ -513,7 +537,7 @@
       "endAt": "2026-09-30T20:50:00Z",
       "intervalSeconds": 60
     },
-    "maxResults": 10,
+    "maxResults": 30,
     "reuse": "review-required"
   },
   {
@@ -522,18 +546,68 @@
     "kind": "publisher-update",
     "format": "x-api",
     "enabledBy": "X_API_ENABLED",
-    "extraTickers": ["LITE", "COHR", "VST", "IREN", "ALAB", "APH", "INTC", "AMAT", "SIMO", "AAOI", "META"],
-    "query": "from:wallstengine ($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\" OR earnings OR \"quarterly results\" OR \"financial results\") -is:retweet -is:reply",
-    "accounts": ["wallstengine"],
-    "tickers": ["MU", "SKHY", "SNDK", "NBIS", "NVDA", "AMD", "AVGO", "ARM", "TSM", "ASML", "MRVL", "ANET", "CRDO", "CRWV", "VRT", "GEV", "DELL", "PLTR", "MSFT", "BE", "GOOGL", "ORCL", "LITE", "COHR", "VST", "IREN", "ALAB", "APH", "INTC", "AMAT", "SIMO", "AAOI", "META"],
-    "allowedHosts": ["x.com"],
+    "extraTickers": [
+      "LITE",
+      "COHR",
+      "VST",
+      "IREN",
+      "ALAB",
+      "APH",
+      "INTC",
+      "AMAT",
+      "SIMO",
+      "AAOI",
+      "META"
+    ],
+    "query": "from:wallstengine ((\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\") OR (($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (earnings OR \"quarterly results\" OR \"financial results\"))) -is:retweet -is:reply",
+    "accounts": [
+      "wallstengine"
+    ],
+    "tickers": [
+      "MU",
+      "SKHY",
+      "SNDK",
+      "NBIS",
+      "NVDA",
+      "AMD",
+      "AVGO",
+      "ARM",
+      "TSM",
+      "ASML",
+      "MRVL",
+      "ANET",
+      "CRDO",
+      "CRWV",
+      "VRT",
+      "GEV",
+      "DELL",
+      "PLTR",
+      "MSFT",
+      "BE",
+      "GOOGL",
+      "ORCL",
+      "LITE",
+      "COHR",
+      "VST",
+      "IREN",
+      "ALAB",
+      "APH",
+      "INTC",
+      "AMAT",
+      "SIMO",
+      "AAOI",
+      "META"
+    ],
+    "allowedHosts": [
+      "x.com"
+    ],
     "intervalSeconds": 60,
     "fastWindow": {
       "startAt": "2026-09-30T19:30:00Z",
       "endAt": "2026-09-30T20:50:00Z",
       "intervalSeconds": 60
     },
-    "maxResults": 10,
+    "maxResults": 30,
     "reuse": "review-required"
   },
   {
@@ -547,6 +621,7 @@
       "globenewswire.com"
     ],
     "intervalSeconds": 30,
-    "reuse": "review-required"
+    "reuse": "review-required",
+    "userAgent": "TechPhaseResearch/1.0 (+https://tech-phase-lab.vercel.app)"
   }
 ]

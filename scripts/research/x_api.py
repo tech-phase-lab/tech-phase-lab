@@ -47,6 +47,11 @@ def parse_response(source, payload, tickers):
             if (ticker in source.get("tickers", []) and
                     re.search(r"(?<!\w)\$" + re.escape(ticker) + r"(?!\w)", text, re.I)):
                 matches[ticker] = ["$" + ticker]
+        if TARGET_PATTERN.search(text):
+            # Explicit cashtags identify targets beyond the fixed research roster.
+            cashtags = set(re.findall(r"(?<!\w)\$([A-Z]{1,5}(?:[.-][A-Z])?)(?![\w.])", text))
+            if cashtags:
+                matches = {ticker: ["$" + ticker] for ticker in cashtags}
         is_earnings = bool(EARNINGS_PATTERN.search(text) and
                            not EARNINGS_PREVIEW_PATTERN.search(text))
         if not matches or not (TARGET_PATTERN.search(text) or is_earnings):

@@ -30,7 +30,7 @@ class XApiTests(unittest.TestCase):
             self.assertEqual(len(source["tickers"]), 33)
             self.assertTrue(all(f"${ticker}" in source["query"] for ticker in added))
             self.assertEqual(source["intervalSeconds"], 60)
-            self.assertEqual(source["maxResults"], 30 if source["id"] == "x-tipranks" else 10)
+            self.assertEqual(source["maxResults"], 30)
             self.assertIn('"price target"', source["query"])
             self.assertIn('"target price"', source["query"])
             self.assertIn('"PT to"', source["query"])
@@ -93,7 +93,7 @@ class XApiTests(unittest.TestCase):
             {"id": "2002", "author_id": "2", "text": "$XYZ price target raised to $20"},
         ], "includes": {"users": [{"id": "2", "username": "wallstengine"}]}}
         items = x_api.parse_response(source, payload, list(monitor.PROVIDERS))
-        self.assertEqual([item["url"] for item in items], ["https://x.com/wallstengine/status/2001"])
+        self.assertEqual([item["url"] for item in items], ["https://x.com/wallstengine/status/2001", "https://x.com/wallstengine/status/2002"])
 
     def test_earnings_posts_are_kept_separate_from_target_changes_and_previews(self):
         source = self.source
@@ -119,7 +119,7 @@ class XApiTests(unittest.TestCase):
         ], "includes": {"users": [{"id": "1", "username": "TipRanks"}]}}
         items = x_api.parse_response(self.source, payload, list(monitor.PROVIDERS))
         self.assertEqual([list(item["matches"]) for item in items],
-                         [["LITE"], ["COHR"], ["IREN"], ["META"]])
+                         [["LITE"], ["COHR"], ["XYZ"], ["IREN"], ["META"]])
         self.assertIn("VST", signals.X_EXTRA_TICKERS)
 
     def test_direct_adapter_call_fails_closed(self):

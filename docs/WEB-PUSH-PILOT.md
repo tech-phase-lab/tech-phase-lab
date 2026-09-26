@@ -44,3 +44,27 @@ On September 26 at 23:52 JST the protected research preview rendered successfull
 After opening “何が変わった？” it showed “新着を自動表示” and a successful snapshot
 sync at 23:52:26 JST. The current list was empty. This verifies a real browser
 received the SSE snapshot, not a new price-target event or phone push delivery.
+
+## September 27 follow-up
+
+The operator authorized secret storage and pilot activation. Dedicated VAPID keys
+were stored in Railway research-staging, the key pair validated, and a branch-only
+Vercel enrollment code saved. No device was registered at activation.
+
+The default registration now requests all detected price-target changes (`allTargets`).
+The durable wildcard subscription also covers newly encountered tickers. Existing
+explicit-ticker subscriptions remain scoped until the owner saves again. The UI
+removes the long checklist. Research/earnings monitoring remains separately scoped;
+the three X search queries now accept target changes without a fixed ticker roster.
+Only explicit cashtags extend identification beyond known company aliases. Ambiguous
+multi-ticker posts are not automatically published as one target action.
+
+Price-target display retains seven days, still requiring a supported broker/old/new
+price extraction and initial detection within fifteen minutes. Historical display
+does not re-notify old records. X search still caps each response at 30 posts and
+uses the existing request budget; this is not guaranteed complete market coverage.
+
+GlobeNewswire: the same Railway server timed out with the old monitor identification,
+but a transparent `TechPhaseResearch/1.0` identification with the project website
+returned HTTP 200 / 36,518 bytes in 0.26 seconds. Apply this only to the Globe feed;
+do not bypass the access denials affecting other providers.

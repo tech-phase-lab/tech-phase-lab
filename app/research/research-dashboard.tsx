@@ -284,7 +284,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
             </article>}
           </div>}
         </section>
-        <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("公式発表に基づく検証用リサーチ。自動監視は運営検証中、会員配信・課金・外部通知は停止したままです。", "A source-linked research preview. Monitoring is under operational review; member delivery, billing, and external notifications remain off.")}</p></footer>
+        <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("公式発表に基づく検証用リサーチ。自動監視は運営検証中、会員配信・課金は未開始。スマホ通知は試験運用中です。", "A source-linked research preview. Monitoring is under operational review; member delivery and billing are not live. Phone notifications are in a private pilot.")}</p></footer>
       </main>
     </div>
   </div>;

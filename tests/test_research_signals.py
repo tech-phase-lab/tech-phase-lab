@@ -60,6 +60,21 @@ class SignalTests(unittest.TestCase):
         self.assertEqual((result["items"][0]["previous"], result["items"][0]["latest"]), (620, 720))
         self.assertNotIn("private raw post text", str(result))
 
+    def test_target_history_retains_unlisted_ticker_for_seven_days(self):
+        signals.schema(self.db)
+        reference = datetime(2026, 9, 27, 12, tzinfo=timezone.utc)
+        for index, age in enumerate([2, 8]):
+            published = reference - timedelta(days=age)
+            self.db.execute("""INSERT INTO signal_events(source_id,url,sha,previous_sha,title,tickers_json,
+              matches_json,event_kind,published_at,observed_at,excerpt,diff,truncated)
+              VALUES(?,?,?,?,?,?,?,?,?,?,?,?,0)""", (
+                "x-tipranks", f"https://x.com/TipRanks/status/{index+1}", str(index), "",
+                "$AAPL price target cut to $200 from $250 at BofA", '["AAPL"]', "{}", "new",
+                published.isoformat(), (published+timedelta(minutes=2)).isoformat(), "", ""))
+        items = signals.public_price_targets(self.db, now=reference)["items"]
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0]["ticker"], "AAPL")
+
     def test_public_target_from_multiple_accounts_uses_first_detection_once(self):
         signals.schema(self.db)
         reference = datetime(2026, 9, 25, 12, tzinfo=timezone.utc)

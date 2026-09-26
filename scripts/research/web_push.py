@@ -63,10 +63,10 @@ def validate_subscription(value):
 
 def register(db, payload, allowed, now=None):
     subscription = validate_subscription(payload.get('subscription'))
-    tickers = payload.get('tickers')
+    tickers = ['*'] if payload.get('allTargets') is True else payload.get('tickers')
     lang = payload.get('language', 'ja')
     if (not isinstance(tickers, list) or not 1 <= len(tickers) <= 50 or
-            any(not isinstance(t, str) or t not in allowed for t in tickers) or lang not in {'ja', 'en'}):
+            any(not isinstance(t, str) or t not in allowed and not (t == '*' and payload.get('allTargets') is True) for t in tickers) or lang not in {'ja', 'en'}):
         raise ValueError('invalid-preferences')
     device = hashlib.sha256(subscription['endpoint'].encode()).hexdigest()
     now = time.time() if now is None else now
@@ -125,7 +125,7 @@ def deliver(db, items, transport=send, now=None):
         watched = set(json.loads(device['tickers']))
         for item in items:
             observed = datetime.fromisoformat(item['observedAt'].replace('Z', '+00:00')).timestamp()
-            if item['ticker'] not in watched or observed <= device['since'] or not 0 <= now - observed <= 300:
+            if ('*' not in watched and item['ticker'] not in watched) or observed <= device['since'] or not 0 <= now - observed <= 300:
                 continue
             key = event_key(item)
             # Reserve before network; a restart cannot silently send it twice.
