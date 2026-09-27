@@ -151,3 +151,12 @@
 .favoriteStar { display:inline-grid; place-items:center; min-width:44px; min-height:44px; padding:0; border:0; background:transparent; color:#97a6b5; font-size:28px; cursor:pointer; }
 .favoriteStar[aria-pressed=true] { color:#e8cc72; }
 .favoriteStar:focus-visible { outline:2px solid #e8cc72; outline-offset:2px; border-radius:8px; }
+
+.header .favoriteStar { display:inline-flex; align-items:center; justify-content:center; gap:6px; min-height:36px; flex-shrink:0; padding:7px 10px; border:1px solid #435562; border-radius:9px; background:#182630; color:#b4c2ca; font:500 12px/1.2 Arial,sans-serif; }
+.header .favoriteStar[aria-pressed=true] { color:#edd17d; border-color:#8e7841; background:#332e1e; }
+.favoriteStar svg { flex-shrink:0; }
+
+.header { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; }
+.header h2 { flex-wrap:wrap; }
+.header > div { min-width:0; }
+.company { overflow-wrap:anywhere; }

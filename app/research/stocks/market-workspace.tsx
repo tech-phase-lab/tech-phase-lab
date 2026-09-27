@@ -18,10 +18,10 @@ export function MarketWorkspace({ ticker, exchange, name, lang, favorite, onTogg
     <header className={styles.header}>
       <div>
         <p className={styles.eyebrow}>TECH PHASE MARKET</p>
-        <h2 id="tech-phase-market-title"><span>{ticker}</span>{onToggleFavorite && <button type="button" className={styles.favoriteStar} onClick={onToggleFavorite} aria-pressed={favorite} aria-label={t(favorite ? "お気に入りから解除" : "お気に入りに追加", favorite ? "Remove from favorites" : "Add to favorites")} title={t(favorite ? "お気に入りから解除" : "お気に入りに追加", favorite ? "Remove from favorites" : "Add to favorites")}>{favorite ? "★" : "☆"}</button>}<small>{exchangeLabel}</small></h2>
+        <h2 id="tech-phase-market-title"><span>{ticker}</span><small>{exchangeLabel}</small></h2>
         <p className={styles.company}>{name}</p>
       </div>
-      <span className={styles.referenceStatus}><i aria-hidden="true" />{t("参考株価を表示", "Reference market data")}</span>
+      {onToggleFavorite && <button type="button" className={styles.favoriteStar} onClick={onToggleFavorite} aria-pressed={favorite} aria-label={t(favorite ? "お気に入りから解除" : "お気に入りに追加", favorite ? "Remove from favorites" : "Add to favorites")} title={t(favorite ? "お気に入りから解除" : "お気に入りに追加", favorite ? "Remove from favorites" : "Add to favorites")}><svg width="18" height="18" viewBox="0 0 24 24" fill={favorite ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" aria-hidden="true"><path d="m12 3 2.8 5.7 6.3.9-4.5 4.4 1.1 6.2-5.7-3-5.7 3 1.1-6.2-4.5-4.4 6.3-.9Z" /></svg><span>{t(favorite ? "登録済み" : "お気に入り", favorite ? "Saved" : "Favorite")}</span></button>}
     </header>
 
     <div className={styles.chartSlot}>
