@@ -99,22 +99,30 @@ def timestamp_at_or_after(value, reference):
         return False
 
 
-def bounded_future_timestamp(value, reference):
-    """Return a valid near-future UTC time, otherwise treat the value as due."""
+def bounded_retry_schedule(value, reference):
+    """Classify a persisted retry time without letting corrupt values block work."""
     if not value:
-        return None
+        return "due", None
     try:
         current = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
         scheduled = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
         if current.tzinfo is None or scheduled.tzinfo is None:
-            return None
+            return "invalid", None
         current = current.astimezone(timezone.utc)
         scheduled = scheduled.astimezone(timezone.utc)
-        if current < scheduled <= current + timedelta(days=7):
-            return scheduled
+        if scheduled <= current:
+            return "due", None
+        if scheduled <= current + timedelta(days=7):
+            return "deferred", scheduled
     except (TypeError, ValueError, OverflowError):
-        pass
-    return None
+        return "invalid", None
+    return "invalid", None
+
+
+def bounded_future_timestamp(value, reference):
+    """Return a valid near-future UTC time, otherwise treat the value as due."""
+    _state, scheduled = bounded_retry_schedule(value, reference)
+    return scheduled
 
 
 def active_body_host_backoff_state(db, reference):
@@ -375,6 +383,7 @@ class AutomaticMonitor:
                 "activeHostCircuits": 0, "nextHostProbeAt": None,
                 "dueHostCircuits": 0, "scheduledHostProbes": 0,
                 "retryDeferred": 0, "accessRestricted": 0, "rateLimited": 0,
+                "invalidRetrySchedules": 0,
                 "recheckDeferred": 0, "neverFetched": 0,
                 "detectedNeverFetched": 0, "baselineNeverFetched": 0,
                 "detectedNeverFetchedMeasured": 0, "detectedNeverFetchedUnmeasured": 0,
@@ -1056,13 +1065,21 @@ class AutomaticMonitor:
               FROM sources WHERE source_mode='remote'
             """).fetchone()
             schedule_rows = db.execute("""
-              SELECT next_fetch_at,error
+              SELECT url,next_fetch_at,error
               FROM sources WHERE source_mode='remote'
             """).fetchall()
-            deferred_rows = [
-                row for row in schedule_rows
-                if bounded_future_timestamp(row["next_fetch_at"], due) is not None
+            schedule_states = [
+                (row, *bounded_retry_schedule(row["next_fetch_at"], due))
+                for row in schedule_rows
             ]
+            deferred_rows = [
+                row for row, state, _scheduled in schedule_states
+                if state == "deferred"
+            ]
+            deferred_urls = {row["url"] for row in deferred_rows}
+            invalid_retry_schedules = sum(
+                1 for _row, state, _scheduled in schedule_states if state == "invalid"
+            )
             deferred_with_error = [row for row in deferred_rows if row["error"] is not None]
             eligible_count = len(schedule_rows) - len(deferred_rows)
             retry_deferred = len(deferred_with_error)
@@ -1111,7 +1128,7 @@ class AutomaticMonitor:
             host_deferred = 0
             eligible_candidates = []
             for candidate in ordered:
-                if bounded_future_timestamp(candidate["next_fetch_at"], due) is not None:
+                if candidate["url"] in deferred_urls:
                     continue
                 hostname = monitor.source_hostname(candidate["url"])
                 if hostname and hostname in blocked_hosts:
@@ -1251,6 +1268,7 @@ class AutomaticMonitor:
                 "retryDeferred": retry_deferred,
                 "accessRestricted": access_restricted,
                 "rateLimited": rate_limited,
+                "invalidRetrySchedules": invalid_retry_schedules,
                 "recheckDeferred": recheck_deferred,
                 "neverFetched": int(backlog["never_fetched"] or 0),
                 "detectedNeverFetched": int(backlog["detected_never_fetched"] or 0),

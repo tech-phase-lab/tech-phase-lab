@@ -156,7 +156,10 @@ function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], backlog?: Monitor
   const dueProbes = backlog?.dueHostCircuits
     ? ` · 復旧確認待ち ${backlog.dueHostCircuits}経路（今回 ${backlog.scheduledHostProbes ?? 0}件）`
     : "";
-  const deferred = backlog ? `${hostDeferred}${dueProbes} · エラー再試行待ち ${backlog.retryDeferred}件（アクセス制限 ${backlog.accessRestricted}件・レート制限 ${backlog.rateLimited ?? 0}件） · 定期再確認待ち ${backlog.recheckDeferred}件` : "";
+  const invalidSchedules = backlog?.invalidRetrySchedules
+    ? ` · 再試行予定異常 ${backlog.invalidRetrySchedules}件（取得可能扱い）`
+    : "";
+  const deferred = backlog ? `${hostDeferred}${dueProbes} · エラー再試行待ち ${backlog.retryDeferred}件（アクセス制限 ${backlog.accessRestricted}件・レート制限 ${backlog.rateLimited ?? 0}件）${invalidSchedules} · 定期再確認待ち ${backlog.recheckDeferred}件` : "";
   const detectedWait = backlog?.detectedNeverFetchedMeasured
     ? `・最長待機 ${duration(backlog.detectedNeverFetchedAgeMaxMs)}・最古検知 ${time(backlog.oldestDetectedNeverFetchedAt ?? null)} JST${backlog.detectedNeverFetchedUnmeasured ? `・時刻検証不可 ${backlog.detectedNeverFetchedUnmeasured}件` : ""}`
     : backlog?.detectedNeverFetchedUnmeasured ? `・時刻検証不可 ${backlog.detectedNeverFetchedUnmeasured}件` : "";

@@ -106,6 +106,8 @@ test("operations preview exposes bounded cache pressure without cached contents"
   assert.match(liveTypes, /scheduledRecheck/);
   assert.match(intakeDashboard, /今回予約：新着本文/);
   assert.match(intakeDashboard, /エラー再試行待ち/);
+  assert.match(liveTypes, /invalidRetrySchedules/);
+  assert.match(intakeDashboard, /再試行予定異常/);
   assert.match(intakeDashboard, /定期再確認待ち/);
   assert.match(intakeDashboard, /アクセス制限/);
   assert.match(intakeDashboard, /同一ホスト遮断中/);

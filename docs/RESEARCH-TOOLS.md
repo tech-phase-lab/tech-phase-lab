@@ -319,6 +319,11 @@ average and maximum wait; legacy batches remain zero-sample instead of receiving
 inferred timestamps. Invalid, future or over-31-day waits are discarded. This
 is internal worker-scheduling evidence, not article-detection or subscriber-
 delivery latency, and it contains no URL, hostname or error detail.
+Malformed, timezone-free or more-than-seven-day future `next_fetch_at` values
+cannot defer article-body work. They are treated as due, counted separately in
+the operator preview and never expose the affected URL, hostname, raw timestamp
+or error. Valid future schedules are parsed once per poll and reused for both
+the aggregate and candidate selection so the two views cannot disagree.
 Each completed article-body attempt also records its bounded processing time
 from worker start through response handling and text extraction. The preview
 exposes only latest and 24-hour sample counts, average and maximum duration;

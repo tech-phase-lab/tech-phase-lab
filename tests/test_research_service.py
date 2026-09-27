@@ -1641,6 +1641,7 @@ class ResearchServiceTests(unittest.TestCase):
             "retryDeferred": 1,
             "accessRestricted": 1,
             "rateLimited": 0,
+            "invalidRetrySchedules": 0,
             "recheckDeferred": 0,
             "neverFetched": 2,
             "detectedNeverFetched": 1,
@@ -2049,6 +2050,7 @@ class ResearchServiceTests(unittest.TestCase):
         backlog = app.public_state()["bodyBacklog"]
         self.assertEqual(backlog["retryDeferred"], 2)
         self.assertEqual(backlog["eligible"], 2)
+        self.assertEqual(backlog["invalidRetrySchedules"], 2)
         self.assertNotIn("not-a-timestamp", json.dumps(backlog))
         self.assertNotIn("2099", json.dumps(backlog))
 
