@@ -1240,6 +1240,42 @@ class IntakeTests(unittest.TestCase):
         })
         self.assertEqual(m.snapshot(self.db)["events"][0]["body_fetched_at"], first_fetched_at)
 
+    def test_snapshot_validates_event_latency_by_absolute_time(self):
+        new_url = "https://nebius.com/newsroom/offset-event"
+        m.add_source(self.db, "NBIS", new_url, title="Offset event")
+        m.add_release_events(self.db, "NBIS", [new_url])
+        row = self.db.execute("SELECT * FROM sources WHERE url=?", (new_url,)).fetchone()
+        m.save_source_check(self.db, row, {
+            "sha256": "d" * 64, "contentType": "text/html", "contentBytes": 40,
+            "extractedText": "Official evidence body.", "extractedChars": 23,
+        })
+        with self.db:
+            self.db.execute(
+                "UPDATE release_events SET detected_at=? WHERE url=?",
+                ("2026-09-28T02:00:00+02:00", new_url),
+            )
+            self.db.execute(
+                "UPDATE history SET at=? WHERE url=? AND kind='first-fetch'",
+                ("2026-09-28T00:05:00+00:00", new_url),
+            )
+        self.assertEqual(
+            m.snapshot(self.db)["events"][0]["detection_to_body_ms"], 300_000
+        )
+
+        with self.db:
+            self.db.execute(
+                "UPDATE release_events SET detected_at='invalid' WHERE url=?",
+                (new_url,),
+            )
+        self.assertIsNone(m.snapshot(self.db)["events"][0]["detection_to_body_ms"])
+
+        with self.db:
+            self.db.execute(
+                "UPDATE release_events SET detected_at=? WHERE url=?",
+                ("2026-08-01T00:00:00+00:00", new_url),
+            )
+        self.assertIsNone(m.snapshot(self.db)["events"][0]["detection_to_body_ms"])
+
     def test_conditional_fetch_reuses_cached_body_on_not_modified(self):
         url = m.INDEXES["NBIS"]
         m._FETCH_CACHE[url] = {

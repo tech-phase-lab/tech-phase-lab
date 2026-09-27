@@ -86,6 +86,18 @@ def stored_utc_datetime(value):
         return None
 
 
+def stored_latency_ms(started_at, completed_at, maximum_seconds=31 * 24 * 60 * 60):
+    """Return a bounded interval after comparing persisted timestamps by instant."""
+    started = stored_utc_datetime(started_at)
+    completed = stored_utc_datetime(completed_at)
+    if started is None or completed is None or completed < started:
+        return None
+    latency_seconds = (completed - started).total_seconds()
+    if latency_seconds > maximum_seconds:
+        return None
+    return round(latency_seconds * 1000)
+
+
 def generation_attempt_window(db, reference):
     """Return attempts from the prior 24 hours using absolute UTC instants."""
     current = stored_utc_datetime(reference)
@@ -3454,12 +3466,9 @@ def snapshot(db, recent_per_item=None):
     for row in sources:
         safe_url(row["url"], row["ticker"])
     for row in events:
-        row["detection_to_body_ms"] = None
-        if row["body_fetched_at"]:
-            detected = datetime.fromisoformat(row["detected_at"])
-            fetched = datetime.fromisoformat(row["body_fetched_at"])
-            if fetched >= detected:
-                row["detection_to_body_ms"] = round((fetched - detected).total_seconds() * 1000)
+        row["detection_to_body_ms"] = stored_latency_ms(
+            row["detected_at"], row["body_fetched_at"]
+        )
     return {"schemaVersion": 1, "generatedAt": now(), "sources": sources, "history": history, "discoveryRuns": runs, "events": events, "briefs": briefs}
 
 

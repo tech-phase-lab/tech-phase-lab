@@ -28,6 +28,12 @@ Micron's earnings call time must not be labeled as its release publication time.
 No paid data subscription, automatic ingestion, external notification, or
 membership feature is enabled by these tools.
 
+Public detection-to-body latency is calculated only from parseable persisted
+timestamps compared as absolute instants. Mixed UTC offsets and legacy naive
+UTC rows are normalized before subtraction; malformed, reversed, or more than
+31-day intervals remain unmeasured instead of stopping the public snapshot or
+publishing a misleading latency.
+
 The operations preview receives public-safe aggregate telemetry for the shared
 price-target SSE gateway: health, active/capacity counts, accepted/disconnected/
 capacity-rejected connections, shared read attempts, successful reads,
