@@ -109,6 +109,16 @@ class SignalTests(unittest.TestCase):
             with self.subTest(message=message):
                 self.assertEqual(monitor.source_error_code(ValueError(message)), expected)
 
+    def test_legacy_source_error_detail_is_reduced_to_fixed_code(self):
+        self.assertEqual(
+            monitor.persisted_source_error_code(
+                'https://private.invalid/news failed with customer detail'
+            ),
+            'fetch-failed',
+        )
+        self.assertEqual(monitor.persisted_source_error_code('http-503'), 'http-503')
+        self.assertIsNone(monitor.persisted_source_error_code(None))
+
     def test_body_only_multicompany_association_and_no_false_ticker(self):
         self.assertEqual(len(signals.ALIASES), 22)
         items = signals.parse(self.feed, feed(), self.tickers)
@@ -1338,6 +1348,37 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(json.loads(result['index_state'])['recoveries'], [])
         self.assertNotIn('private transport detail', result['index_state'])
 
+    def test_legacy_article_error_is_normalized_before_resave(self):
+        from html_signals import collect
+
+        source = next(s for s in signals.SOURCES if s['id'] == 'anthropic-news')
+        article_url = source['url'] + '/test'
+        checked = '2026-09-25T10:00:00+00:00'
+
+        def request(route, validators):
+            self.assertEqual(route['url'], source['url'])
+            return {'body': b'<a href="/news/test">Story</a>'}
+
+        result = collect(source, {'index_state': json.dumps({
+            'initialized': True,
+            'children': {article_url: {
+                'baseline': True,
+                'checked': checked,
+                'next_check': '2026-09-25T11:00:00+00:00',
+                'error': 'https://private.invalid failed with customer detail',
+                'failures': 2,
+                'first_failed_at': '2026-09-25T09:00:00+00:00',
+                'failure_attempts': 2,
+            }},
+        })}, self.tickers, request, lambda: checked)
+
+        child = json.loads(result['index_state'])['children'][article_url]
+        self.assertEqual(child['error'], 'fetch-failed')
+        self.assertEqual(child['first_failed_at'], '2026-09-25T09:00:00+00:00')
+        self.assertEqual(child['failure_attempts'], 2)
+        self.assertNotIn('private.invalid', result['index_state'])
+        self.assertNotIn('customer detail', result['index_state'])
+
     def test_queue_ignores_corrupt_or_unapproved_article_children(self):
         source = next(s for s in signals.SOURCES if s['id'] == 'anthropic-news')
         signals.schema(self.db)
@@ -1345,6 +1386,9 @@ class SignalTests(unittest.TestCase):
             self.db.execute("INSERT INTO signal_index_state VALUES(?,?)", (
                 source['id'], json.dumps({'children': {
                     source['url'] + '/test': 'corrupt-child',
+                    source['url'] + '/legacy': {
+                        'baseline': False, 'error': 'private customer detail',
+                    },
                     'https://private.invalid/news/hidden': {
                         'baseline': False, 'error': 'private-detail',
                     },
@@ -1352,8 +1396,10 @@ class SignalTests(unittest.TestCase):
             ))
 
         route = signals.queue(self.db, sources=[source])['routes'][0]
-        self.assertEqual(route['pendingArticles'], 0)
-        self.assertEqual(route['articleErrors'], [])
+        self.assertEqual(route['pendingArticles'], 1)
+        self.assertEqual(len(route['articleErrors']), 1)
+        self.assertEqual(route['articleErrors'][0]['error'], 'fetch-failed')
+        self.assertNotIn('private customer detail', json.dumps(route))
 
     def test_due_failed_baseline_retries_without_starving_history(self):
         from html_signals import collect

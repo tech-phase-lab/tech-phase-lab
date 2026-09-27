@@ -47,6 +47,22 @@ _FETCH_CACHE_LOCK = threading.Lock()
 ACCESS_RESTRICTED_ERRORS = {
     "http-401", "http-403", "http-429", "http-451", "verification-page",
 }
+PERSISTED_SOURCE_ERRORS = {
+    "timeout", "fetch-failed", "invalid-source-response", "invalid-feed-xml",
+    "signal-content-type", "signal-unapproved-url", "signal-response-limit",
+    "signal-empty-response", "signal-unsafe-xml", "signal-invalid-feed-root",
+    "signal-feed-item-limit", "signal-document-body-invalid",
+    "signal-invalid-sitemap", "signal-invalid-listing", "signal-no-article-links",
+    "signal-article-limit", "signal-unexpected-not-modified",
+    "signal-article-body-invalid", "x-api-budget-invalid", "x-api-daily-limit",
+    "x-api-paced", "x-api-disabled", "x-api-token-missing",
+    "x-api-query-invalid", "x-api-content-type", "x-api-response-limit",
+    "x-api-invalid-json", "x-api-response-error", "unsupported-content-type",
+    "empty-or-oversized-source", "no-extractable-text",
+    "sec-exhibit-unavailable", "pdf-encrypted", "pdf-page-limit",
+    "pdf-no-text", "pdf-timeout", "pdf-extract-failed", "invalid-pdf",
+    "verification-page", "no-release-links", "too-many-source-links",
+}
 MAX_ACCESS_BACKOFF_SECONDS = 7 * 24 * 60 * 60
 
 
@@ -242,6 +258,20 @@ def source_error_code(exc):
             if fragment in lowered:
                 return code
         return "invalid-source-response"
+    return "fetch-failed"
+
+
+def persisted_source_error_code(value):
+    """Normalize legacy child state to a fixed URL-free transport code."""
+    if value is None or value == "":
+        return None
+    if isinstance(value, str):
+        if value in PERSISTED_SOURCE_ERRORS:
+            return value
+        if re.fullmatch(r"http-[45]\d\d", value):
+            return value
+    # A non-empty legacy value is still evidence of a failed attempt, but its
+    # free-form detail must never survive another save or private queue render.
     return "fetch-failed"
 
 

@@ -189,6 +189,10 @@ are discarded rather than copied forward.
 Persisted per-article state is likewise rebuilt from an allowlist of bounded
 scheduling, retry and HTTP-validator fields. Legacy body text, URLs, raw
 transport errors and unknown metadata are discarded before state is re-saved.
+Only error codes emitted by the fixed transport classifier survive; a non-empty
+legacy or unknown error value becomes the generic `fetch-failed` code before
+either re-save or private queue rendering, so free-form exception text cannot
+be carried forward.
 Recovery attempts are retained only when an active failure, a valid
 timezone-aware start and a positive bounded attempt count are all present.
 Inconsistent legacy fields restart measurement at one on the next failure

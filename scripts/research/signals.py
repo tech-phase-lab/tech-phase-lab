@@ -737,13 +737,14 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
                     children[url] = child
         article_errors = []
         for url, child in children.items():
-            if not child.get("error"):
+            error = monitor.persisted_source_error_code(child.get("error"))
+            if not error:
                 continue
             try:
                 url = safe_url(url, source)
             except ValueError:
                 continue
-            article_errors.append({"url": url, "error": child["error"],
+            article_errors.append({"url": url, "error": error,
                                    "nextCheckAt": child.get("next_check"),
                                    "checkedAt": child.get("checked")})
         routes.append({"pendingArticles": sum(not c.get("succeeded") for c in children.values()),
@@ -1001,9 +1002,12 @@ def operational_summary(db, sources=SOURCES, reference=None):
             for index, child in enumerate(children.values()):
                 if index >= 1000:
                     break
-                if not isinstance(child, dict) or not child.get("error"):
+                if not isinstance(child, dict):
                     continue
-                error_kind = signal_error_kind(child["error"])
+                error = monitor.persisted_source_error_code(child.get("error"))
+                if not error:
+                    continue
+                error_kind = signal_error_kind(error)
                 article_retrieval["error"] += 1
                 article_error_kinds[error_kind] += 1
                 record_retry(article_retrieval["retry"], error_kind, child.get("next_check"))

@@ -184,7 +184,7 @@ def sanitize_recovery(value):
     }
 
 
-def sanitize_child_state(value, validator):
+def sanitize_child_state(value, validator, error_validator):
     """Allow only bounded scheduling and HTTP-cache fields for one article."""
     if not isinstance(value, dict):
         return None
@@ -205,12 +205,8 @@ def sanitize_child_state(value, validator):
             continue
         if parsed.tzinfo is not None:
             entry[key] = parsed.isoformat()
-    error = value.get('error')
-    if error is None and 'error' in value:
-        entry['error'] = None
-    elif (isinstance(error, str) and 0 < len(error) <= 100
-          and '\r' not in error and '\n' not in error):
-        entry['error'] = error
+    if 'error' in value:
+        entry['error'] = error_validator(value.get('error'))
     for key, maximum in (('failures', 10), ('failure_attempts', 100)):
         raw = value.get(key)
         entry[key] = raw if (isinstance(raw, int) and not isinstance(raw, bool)
@@ -305,7 +301,9 @@ def collect(source, previous, tickers, request, clock=None):
                 url = signals.safe_url(raw_url, source)
             except ValueError:
                 continue
-            entry = sanitize_child_state(raw_entry, monitor.http_validator)
+            entry = sanitize_child_state(
+                raw_entry, monitor.http_validator, monitor.persisted_source_error_code,
+            )
             if entry is not None:
                 children[url] = entry
     else:
