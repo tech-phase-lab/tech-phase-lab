@@ -316,6 +316,10 @@ counts for access control, rate limiting, timeout, official 5xx, missing
 exhibit evidence and other failures. It never returns the raw HTTP code, URL,
 accession number or exception text. This lets operators verify that a due SEC
 record moved into conservative backoff without exposing source identifiers.
+Its latest-check timestamp is selected by absolute instant and normalized to
+UTC, so equivalent offset spellings cannot reorder observations. Malformed or
+future-dated database values are omitted from that timestamp while their
+URL-free evidence state remains counted.
 When a hostname circuit reaches its retry time, the worker admits only one
 URL from that hostname as a recovery probe. Another access-control response
 immediately reopens the circuit before any second URL on that host is tried.

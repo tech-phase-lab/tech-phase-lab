@@ -3296,8 +3296,12 @@ def public_error(error):
     return "fetch-error"
 
 
-def sec_evidence_summary(db, tickers):
+def sec_evidence_summary(db, tickers, reference=None):
     """Return URL-free SEC body evidence counts for operational health checks."""
+    reference_time = (stored_utc_datetime(reference)
+                      if reference is not None else datetime.now(timezone.utc))
+    if reference_time is None:
+        raise ValueError("reference must be a valid ISO timestamp")
     requested = tuple(dict.fromkeys(str(ticker).strip().upper() for ticker in tickers if ticker))
     empty = {"total": 0, "exhibit": 0, "direct": 0, "pending": 0, "error": 0}
     empty_error_kinds = {
@@ -3325,6 +3329,8 @@ def sec_evidence_summary(db, tickers):
       ORDER BY ticker,url
     """, requested).fetchall()
     last_checked_at = None
+    last_checked_time = None
+    ticker_last_checked_times = {ticker: None for ticker in requested}
     totals = dict(empty)
     error_kinds = dict(empty_error_kinds)
     for row in rows:
@@ -3364,11 +3370,16 @@ def sec_evidence_summary(db, tickers):
                 error_kind = "other"
             error_kinds[error_kind] += 1
             ticker_counts["errorKinds"][error_kind] += 1
-        checked_at = row["checked_at"]
-        if checked_at and (ticker_counts["lastCheckedAt"] is None
-                           or checked_at > ticker_counts["lastCheckedAt"]):
+        checked_time = stored_utc_datetime(row["checked_at"])
+        if checked_time is None or checked_time > reference_time:
+            continue
+        checked_at = checked_time.isoformat(timespec="milliseconds")
+        if (ticker_last_checked_times[row["ticker"]] is None
+                or checked_time > ticker_last_checked_times[row["ticker"]]):
+            ticker_last_checked_times[row["ticker"]] = checked_time
             ticker_counts["lastCheckedAt"] = checked_at
-        if checked_at and (last_checked_at is None or checked_at > last_checked_at):
+        if last_checked_time is None or checked_time > last_checked_time:
+            last_checked_time = checked_time
             last_checked_at = checked_at
     return {
         **totals, "errorKinds": error_kinds,

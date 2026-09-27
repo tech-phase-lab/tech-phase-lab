@@ -2371,11 +2371,48 @@ class ResearchServiceTests(unittest.TestCase):
             {key: evidence[key] for key in ("total", "exhibit", "direct", "pending", "error")},
             {"total": 4, "exhibit": 1, "direct": 1, "pending": 1, "error": 1},
         )
-        self.assertEqual(evidence["lastCheckedAt"], "2026-09-22T00:03:00+00:00")
+        self.assertEqual(evidence["lastCheckedAt"], "2026-09-22T00:03:00.000+00:00")
         self.assertEqual(evidence["byTicker"]["PLTR"]["total"], 0)
         serialized = json.dumps(evidence)
         self.assertNotIn("https://", serialized)
         self.assertNotIn("sec-exhibit-unavailable", serialized)
+
+    def test_sec_evidence_latest_check_compares_instants_and_rejects_future_rows(self):
+        checked = {
+            "TSM": "2026-09-28T03:00:00+02:00",
+            "MRVL": "2026-09-27T22:30:00-04:00",
+            "ANET": "not-a-timestamp",
+            "VRT": "2026-09-28T03:00:00+00:00",
+            "PLTR": "2026-09-28T03:00:00.001+00:00",
+        }
+        with monitor.connect(self.db_path) as db:
+            for index, (ticker, checked_at) in enumerate(checked.items(), start=1):
+                url = (
+                    "https://www.sec.gov/Archives/edgar/data/"
+                    f"{index}/000000000026000001/{ticker.lower()}-8k.htm"
+                )
+                monitor.add_source(db, ticker, url, title=f"{ticker} filing")
+                db.execute(
+                    "UPDATE sources SET checked_at=? WHERE url=?",
+                    (checked_at, url),
+                )
+            db.commit()
+            evidence = monitor.sec_evidence_summary(
+                db, service.PRIORITY_SEC_TICKERS,
+                reference="2026-09-28T03:00:00+00:00",
+            )
+
+        self.assertEqual(evidence["lastCheckedAt"], "2026-09-28T03:00:00.000+00:00")
+        self.assertEqual(
+            evidence["byTicker"]["TSM"]["lastCheckedAt"],
+            "2026-09-28T01:00:00.000+00:00",
+        )
+        self.assertEqual(
+            evidence["byTicker"]["MRVL"]["lastCheckedAt"],
+            "2026-09-28T02:30:00.000+00:00",
+        )
+        self.assertIsNone(evidence["byTicker"]["ANET"]["lastCheckedAt"])
+        self.assertIsNone(evidence["byTicker"]["PLTR"]["lastCheckedAt"])
 
     def test_public_health_exposes_only_aggregate_official_signal_state(self):
         state = service.AutomaticMonitor(self.db_path, self.snapshot_path).public_state()
