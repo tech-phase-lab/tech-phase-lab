@@ -13,3 +13,25 @@
 
 .categories { margin:0; font-size:13px; color:#a5b4bd; }
 .controls select { flex-basis:100%; max-width:270px; font-size:13px; }
+
+.macro { margin-top:28px; }
+.macroHeading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+.macroHeading h2 { margin:0; font-size:18px; font-weight:600; }
+.macroHeading > span { color:#99aaa9; font-size:11px; border:1px solid #34464b; border-radius:5px; padding:4px 7px; }
+.macroGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.macroCard { padding:18px; border:1px solid #30434b; border-radius:12px; background:#101d25; }
+.macroCard a { display:flex; justify-content:space-between; gap:6px; color:#e1ece9; text-decoration:none; font-size:14px; font-weight:600; }
+.macroCard a span { color:#88b9aa; }
+.macroUnit { margin:7px 0 20px; color:#9aaab5; font-size:11px; }
+.macroValue { margin:0; font-size:30px; font-weight:600; font-variant-numeric:tabular-nums; letter-spacing:-.04em; }
+.macroChange { margin:8px 0 12px; font-size:12px; color:#bfd1d0; font-variant-numeric:tabular-nums; }
+.macroCard time { color:#96a7b0; font-size:11px; }
+@media (max-width:600px) {
+  .macroGrid { gap:7px; }
+  .macroCard { padding:12px 8px; border-radius:9px; }
+  .macroCard a { font-size:11px; }
+  .macroUnit { font-size:9px; min-height:24px; margin-bottom:10px; }
+  .macroValue { font-size:23px; }
+  .macroChange { font-size:10px; min-height:24px; }
+  .macroCard time { font-size:10px; }
+}
