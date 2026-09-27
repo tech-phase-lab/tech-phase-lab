@@ -215,6 +215,14 @@ def sanitize_child_state(value, validator):
         raw = value.get(key)
         entry[key] = raw if (isinstance(raw, int) and not isinstance(raw, bool)
                              and 0 <= raw <= maximum) else 0
+    # Recovery latency and total attempts are evidence only when all failure
+    # fields describe the same active incident.  Do not let a legacy/corrupt
+    # timestamp retain an unrelated attempt count and inflate the next measured
+    # recovery.  The next failed request will start a fresh measurement.
+    if (not entry.get('error') or not entry.get('first_failed_at')
+            or entry['failure_attempts'] < 1):
+        entry['first_failed_at'] = None
+        entry['failure_attempts'] = 0
     for key in ('etag', 'last_modified'):
         if (cleaned := validator(value.get(key))) is not None:
             entry[key] = cleaned

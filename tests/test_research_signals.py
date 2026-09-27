@@ -1299,12 +1299,44 @@ class SignalTests(unittest.TestCase):
         child = json.loads(result['index_state'])['children'][article_url]
         self.assertEqual(set(child), {
             'baseline', 'checked', 'succeeded', 'next_check', 'error',
-            'failures', 'failure_attempts', 'etag', 'last_modified',
+            'failures', 'first_failed_at', 'failure_attempts', 'etag', 'last_modified',
         })
+        self.assertIsNone(child['first_failed_at'])
         self.assertEqual(child['etag'], '"safe-validator"')
         self.assertNotIn('private.invalid', result['index_state'])
         self.assertNotIn('private transport detail', result['index_state'])
         self.assertNotIn('private article body', result['index_state'])
+
+    def test_corrupt_article_failure_measurement_restarts_from_one(self):
+        from html_signals import collect
+
+        source = next(s for s in signals.SOURCES if s['id'] == 'anthropic-news')
+        article_url = source['url'] + '/test'
+        checked = '2026-09-25T10:00:00+00:00'
+
+        def request(route, validators):
+            if route['url'] == source['url']:
+                return {'body': b'<a href="/news/test">Story</a>'}
+            raise TimeoutError('private transport detail')
+
+        result = collect(source, {'index_state': json.dumps({
+            'initialized': True,
+            'children': {article_url: {
+                'baseline': True,
+                'next_check': '',
+                'error': 'timeout',
+                'failures': 3,
+                'first_failed_at': 'not-a-timestamp',
+                'failure_attempts': 88,
+            }},
+        })}, self.tickers, request, lambda: checked)
+
+        child = json.loads(result['index_state'])['children'][article_url]
+        self.assertEqual(child['error'], 'timeout')
+        self.assertEqual(child['first_failed_at'], checked)
+        self.assertEqual(child['failure_attempts'], 1)
+        self.assertEqual(json.loads(result['index_state'])['recoveries'], [])
+        self.assertNotIn('private transport detail', result['index_state'])
 
     def test_queue_ignores_corrupt_or_unapproved_article_children(self):
         source = next(s for s in signals.SOURCES if s['id'] == 'anthropic-news')

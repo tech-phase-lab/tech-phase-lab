@@ -189,6 +189,10 @@ are discarded rather than copied forward.
 Persisted per-article state is likewise rebuilt from an allowlist of bounded
 scheduling, retry and HTTP-validator fields. Legacy body text, URLs, raw
 transport errors and unknown metadata are discarded before state is re-saved.
+Recovery attempts are retained only when an active failure, a valid
+timezone-aware start and a positive bounded attempt count are all present.
+Inconsistent legacy fields restart measurement at one on the next failure
+instead of inflating recovery latency or attempts.
 Successful children are excluded, stored state is bounded before aggregation,
 and no child URL, title, HTTP status, validator or raw error reaches this
 operational summary. When a child retry becomes due, one bounded maintenance
