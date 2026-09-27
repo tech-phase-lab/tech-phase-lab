@@ -2989,6 +2989,59 @@ class ResearchServiceTests(unittest.TestCase):
             self.assertEqual(claim["url"], url)
             self.assertEqual(claim["attempt"], 1)
 
+    def test_generation_budget_window_compares_attempt_offsets_as_absolute_instants(self):
+        url = "https://nebius.com/newsroom/new-release"
+        current = "2026-09-28T00:30:00+00:00"
+        with monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            monitor.save_source_check(db, row, {
+                "sha256": "c" * 64, "contentType": "text/html", "contentBytes": 80,
+                "extractedText": "Official evidence remains available for review.", "extractedChars": 47,
+            })
+            monitor.queue_generation_job(db, url, 7_000)
+            # Lexically this is before current, but it is actually 75 minutes
+            # in the future and must not consume the rolling budget.
+            db.execute("""
+              INSERT INTO brief_generation_attempts(
+                url,source_sha256,started_at,outcome,reserved_tokens
+              ) VALUES(?,?,?,'running',?)
+            """, (url, "c" * 64, "2026-09-27T23:45:00-02:00", 9_000))
+            db.commit()
+            with patch.object(monitor, "now", return_value=current):
+                stats = monitor.generation_queue_stats(db, 1, 100_000)
+                self.assertEqual(stats["attemptsLast24Hours"], 0)
+                self.assertEqual(stats["budgetTokensLast24Hours"], 0)
+                claim = monitor.claim_generation_job(db, 1, 3, 100_000)
+            self.assertEqual(claim["url"], url)
+
+            db.execute("DELETE FROM brief_generation_attempts")
+            db.execute("""
+              UPDATE brief_generation_jobs SET status='queued',attempts=0,
+                started_at=NULL,next_attempt_at=? WHERE url=?
+            """, (current, url))
+            # Lexically this is on the prior date, but -03:00 places it inside
+            # the last 24 hours, so it must consume the one-call budget.
+            db.execute("""
+              INSERT INTO brief_generation_attempts(
+                url,source_sha256,started_at,outcome,reserved_tokens,total_tokens
+              ) VALUES(?,?,?,'succeeded',?,?)
+            """, (url, "c" * 64, "2026-09-26T22:00:00-03:00", 9_000, 600))
+            db.commit()
+            with patch.object(monitor, "now", return_value=current):
+                stats = monitor.generation_queue_stats(db, 1, 100_000)
+                self.assertEqual(stats["attemptsLast24Hours"], 1)
+                self.assertEqual(stats["budgetTokensLast24Hours"], 600)
+                self.assertIsNone(monitor.claim_generation_job(db, 1, 3, 100_000))
+
+            db.execute("""
+              UPDATE brief_generation_attempts SET reserved_tokens=-1,total_tokens='invalid'
+            """)
+            db.commit()
+            with patch.object(monitor, "now", return_value=current):
+                stats = monitor.generation_queue_stats(db, 20, 100_000)
+                self.assertTrue(stats["tokenLimitReached"])
+                self.assertIsNone(monitor.claim_generation_job(db, 20, 3, 100_000))
+
     def test_generation_retry_and_rolling_call_limit_are_persistent(self):
         url = "https://nebius.com/newsroom/new-release"
         with monitor.connect(self.db_path) as db:

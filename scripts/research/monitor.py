@@ -65,6 +65,7 @@ PERSISTED_SOURCE_ERRORS = {
 }
 MAX_ACCESS_BACKOFF_SECONDS = 7 * 24 * 60 * 60
 MAX_FAILURE_COUNT = 1_000_000
+MAX_GENERATION_TOKEN_VALUE = 1_000_000_000
 
 
 def now():
@@ -83,6 +84,37 @@ def stored_utc_datetime(value):
         return parsed.astimezone(timezone.utc)
     except (TypeError, ValueError, OverflowError):
         return None
+
+
+def generation_attempt_window(db, reference):
+    """Return attempts from the prior 24 hours using absolute UTC instants."""
+    current = stored_utc_datetime(reference)
+    if current is None:
+        return []
+    window_start = current - timedelta(hours=24)
+    attempts = []
+    for row in db.execute("""
+      SELECT * FROM brief_generation_attempts
+      WHERE julianday(started_at)>=julianday(?) AND julianday(started_at)<=julianday(?)
+    """, (window_start.isoformat(), current.isoformat())):
+        started_at = stored_utc_datetime(row["started_at"])
+        if started_at is not None and window_start <= started_at <= current:
+            attempts.append((row, started_at))
+    return attempts
+
+
+def generation_attempt_usage(attempts):
+    """Calculate fail-closed budget usage without trusting SQLite affinity."""
+    budget_tokens = measured_tokens = 0
+    for row, _ in attempts:
+        reserved = row["reserved_tokens"]
+        if type(reserved) is not int or not 0 <= reserved <= MAX_GENERATION_TOKEN_VALUE:
+            reserved = MAX_GENERATION_TOKEN_VALUE
+        total = row["total_tokens"]
+        valid_total = type(total) is int and 0 <= total <= MAX_GENERATION_TOKEN_VALUE
+        budget_tokens += total if row["outcome"] == "succeeded" and valid_total else reserved
+        measured_tokens += total if valid_total else 0
+    return budget_tokens, measured_tokens
 
 
 def environment_seconds(name, default, minimum, maximum):
@@ -3763,23 +3795,17 @@ def claim_generation_job(db, daily_limit, max_attempts, token_limit):
     claimed_time = stored_utc_datetime(claimed_at)
     if claimed_time is None:
         return None
-    window_start = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat(timespec="milliseconds")
     with db:
         db.execute("BEGIN IMMEDIATE")
         db.execute("""
           UPDATE brief_generation_jobs SET status='failed',completed_at=?,error_code='generation-failed'
           WHERE status IN ('queued','retry') AND attempts>=?
         """, (claimed_at, max_attempts))
-        used = db.execute(
-            "SELECT count(*) FROM brief_generation_attempts WHERE started_at>=?", (window_start,)
-        ).fetchone()[0]
+        attempts = generation_attempt_window(db, claimed_at)
+        used = len(attempts)
         if used >= daily_limit:
             return None
-        tokens_used = db.execute("""
-          SELECT coalesce(sum(CASE WHEN outcome='succeeded' AND total_tokens IS NOT NULL
-                              THEN total_tokens ELSE reserved_tokens END),0)
-          FROM brief_generation_attempts WHERE started_at>=?
-        """, (window_start,)).fetchone()[0]
+        tokens_used, _ = generation_attempt_usage(attempts)
         candidates = db.execute("""
           SELECT j.* FROM brief_generation_jobs j
           JOIN sources s ON s.url=j.url
@@ -3813,7 +3839,6 @@ def claim_generation_job(db, daily_limit, max_attempts, token_limit):
 def claim_manual_generation(db, url, expected_sha, reserved_tokens, daily_limit, token_limit):
     """Reserve rolling budgets for an authenticated one-at-a-time generation."""
     claimed_at = now()
-    window_start = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat(timespec="milliseconds")
     reserved_tokens = max(1, int(reserved_tokens))
     with db:
         db.execute("BEGIN IMMEDIATE")
@@ -3821,11 +3846,9 @@ def claim_manual_generation(db, url, expected_sha, reserved_tokens, daily_limit,
         if (not source or source["sha256"] != expected_sha or source["error"]
                 or source["extracted_chars"] <= 0):
             raise ValueError("Source is missing, changed, failed, or has no extracted evidence")
-        used, budget_tokens = db.execute("""
-          SELECT count(*),coalesce(sum(CASE WHEN outcome='succeeded' AND total_tokens IS NOT NULL
-                                      THEN total_tokens ELSE reserved_tokens END),0)
-          FROM brief_generation_attempts WHERE started_at>=?
-        """, (window_start,)).fetchone()
+        attempts = generation_attempt_window(db, claimed_at)
+        used = len(attempts)
+        budget_tokens, _ = generation_attempt_usage(attempts)
         if used >= daily_limit:
             raise ValueError("generation-daily-limit-reached")
         if budget_tokens + reserved_tokens > token_limit:
@@ -3890,28 +3913,31 @@ def finish_generation_job(db, claim, error_code=None, max_attempts=3, usage=None
 
 
 def generation_queue_stats(db, daily_limit, token_limit):
-    window_start = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat(timespec="milliseconds")
+    current_text = now()
+    current = stored_utc_datetime(current_text)
+    attempts = generation_attempt_window(db, current_text)
+    budget_tokens, measured_tokens = generation_attempt_usage(attempts)
     counts = {row["status"]: row["total"] for row in db.execute(
         "SELECT status,count(*) AS total FROM brief_generation_jobs GROUP BY status"
     )}
-    attempt = db.execute("""
-      SELECT count(*) AS total,max(started_at) AS last_attempt_at,
-             max(CASE WHEN outcome='succeeded' THEN completed_at END) AS last_success_at,
-             coalesce(sum(CASE WHEN outcome='succeeded' AND total_tokens IS NOT NULL
-                          THEN total_tokens ELSE reserved_tokens END),0) AS budget_tokens,
-             coalesce(sum(CASE WHEN total_tokens IS NOT NULL THEN total_tokens ELSE 0 END),0) AS measured_tokens
-      FROM brief_generation_attempts WHERE started_at>=?
-    """, (window_start,)).fetchone()
+    last_attempt_at = max((started for _, started in attempts), default=None)
+    successful = []
+    for row, started in attempts:
+        if row["outcome"] != "succeeded":
+            continue
+        completed = stored_utc_datetime(row["completed_at"])
+        if completed is not None and started <= completed <= current:
+            successful.append(completed)
+    last_success_at = max(successful, default=None)
     error = db.execute("""
       SELECT error_code FROM brief_generation_attempts
       WHERE error_code IS NOT NULL ORDER BY id DESC LIMIT 1
     """).fetchone()
-    remaining_tokens = max(0, token_limit - attempt["budget_tokens"])
+    remaining_tokens = max(0, token_limit - budget_tokens)
     budget_blocked = db.execute("""
       SELECT count(*) FROM brief_generation_jobs
       WHERE status IN ('queued','retry') AND reserved_tokens>?
     """, (remaining_tokens,)).fetchone()[0]
-    current = datetime.now(timezone.utc)
     retry_times = []
     for row in db.execute("""
       SELECT next_attempt_at FROM brief_generation_jobs
@@ -3928,12 +3954,13 @@ def generation_queue_stats(db, daily_limit, token_limit):
         "waitingBody": counts.get("waiting-body", 0), "queued": counts.get("queued", 0),
         "running": counts.get("running", 0), "retry": counts.get("retry", 0),
         "succeeded": counts.get("succeeded", 0), "failed": counts.get("failed", 0),
-        "attemptsLast24Hours": attempt["total"], "limitReached": attempt["total"] >= daily_limit,
-        "tokenLimit": token_limit, "budgetTokensLast24Hours": attempt["budget_tokens"],
-        "measuredTokensLast24Hours": attempt["measured_tokens"],
-        "tokenLimitReached": attempt["budget_tokens"] >= token_limit,
+        "attemptsLast24Hours": len(attempts), "limitReached": len(attempts) >= daily_limit,
+        "tokenLimit": token_limit, "budgetTokensLast24Hours": budget_tokens,
+        "measuredTokensLast24Hours": measured_tokens,
+        "tokenLimitReached": budget_tokens >= token_limit,
         "tokenBudgetBlocked": budget_blocked,
-        "lastAttemptAt": attempt["last_attempt_at"], "lastSuccessAt": attempt["last_success_at"],
+        "lastAttemptAt": last_attempt_at.isoformat(timespec="milliseconds") if last_attempt_at else None,
+        "lastSuccessAt": last_success_at.isoformat(timespec="milliseconds") if last_success_at else None,
         "lastErrorCode": error["error_code"] if error else None,
         "nextRetryAt": next_retry_at.isoformat(timespec="milliseconds") if next_retry_at else None,
         "nextRetryWaitSeconds": next_retry_wait,

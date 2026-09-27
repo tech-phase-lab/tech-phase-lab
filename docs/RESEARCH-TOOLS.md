@@ -63,6 +63,13 @@ provider access. Missing, timezone-naive or non-convertible timestamps,
 non-finite prices, malformed tickers and empty firm names are skipped per item;
 one corrupt persisted event cannot stop delivery of a later valid event.
 
+Automatic Japanese brief generation applies its rolling 24-hour request and
+token limits by parsed UTC instant rather than ISO timestamp text. Valid stored
+offsets cannot move an attempt into or out of the budget window, future and
+malformed attempt times are excluded from current evidence, and invalid token
+values consume the fail-closed ceiling instead of bypassing the configured
+limit. These are internal cost and worker-safety limits, not delivery targets.
+
 The public-safe live operations payload is identical for every viewer. Its
 successful response is shared at the Vercel edge for two seconds, with a
 three-second stale-while-revalidate window, so an open dashboard does not turn
