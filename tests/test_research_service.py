@@ -2020,6 +2020,50 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(app.public_state()["bodyBacklog"]["activeHostCircuits"], 0)
         self.assertIsNone(app.public_state()["bodyBacklog"]["nextHostProbeAt"])
 
+    def test_body_candidates_compare_host_circuit_offsets_as_instants(self):
+        reference = "2026-09-24T05:00:00+00:00"
+        with monitor.connect(self.db_path) as db:
+            db.execute("""
+              INSERT INTO body_host_backoff(host,failures,error,retry_at,updated_at)
+              VALUES('nebius.com',1,'http-403','2026-09-24T04:30:00-02:00',
+                     '2026-09-24T04:00:00+00:00')
+            """)
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        with patch.object(service, "utc_now", return_value=reference):
+            rows, pending = app.body_candidates(reference)
+        backlog = app.public_state()["bodyBacklog"]
+
+        self.assertEqual(rows, [])
+        self.assertEqual(pending, 0)
+        self.assertEqual(backlog["hostDeferred"], 2)
+        self.assertEqual(backlog["activeHostCircuits"], 1)
+        self.assertEqual(
+            backlog["nextHostProbeAt"], "2026-09-24T06:30:00.000+00:00"
+        )
+
+    def test_body_candidates_recognize_expired_positive_offset_circuit(self):
+        reference = "2026-09-24T05:00:00+00:00"
+        with monitor.connect(self.db_path) as db:
+            db.execute("""
+              INSERT INTO body_host_backoff(host,failures,error,retry_at,updated_at)
+              VALUES('nebius.com',1,'http-403','2026-09-24T06:00:00+02:00',
+                     '2026-09-24T02:00:00+00:00')
+            """)
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        with patch.object(service, "utc_now", return_value=reference):
+            rows, pending = app.body_candidates(reference)
+        backlog = app.public_state()["bodyBacklog"]
+
+        self.assertEqual(pending, 2)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(backlog["activeHostCircuits"], 0)
+        self.assertEqual(backlog["dueHostCircuits"], 1)
+        self.assertEqual(backlog["scheduledHostProbes"], 1)
+
     def test_body_candidates_treat_corrupt_or_unbounded_source_retry_as_due(self):
         malformed = "https://investor.marvell.com/news/detail/corrupt-retry"
         unbounded = "https://www.vertiv.com/news/unbounded-retry/"

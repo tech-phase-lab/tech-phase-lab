@@ -162,9 +162,10 @@ seven days, while ordinary transient failures retain the shorter retry path
 and six-hour ceiling. A valid `Retry-After` is honored up to the applicable
 ceiling. Only the fixed error class and next-check time are retained; response
 headers and bodies are not stored in retry state.
-The top-level and child-article schedulers both parse persisted timestamps
-before selecting work and respect valid timezone-aware retry times within that
-seven-day ceiling. A missing, malformed, timezone-free or more-than-seven-day
+The top-level, child-article and per-host circuit schedulers parse persisted
+timestamps as instants before selecting work; they never order ISO offsets as
+text and respect valid timezone-aware retry times within that seven-day
+ceiling. A missing, malformed, timezone-free or more-than-seven-day
 future value is treated as due so corrupt persisted state cannot strand an
 official route or discovered child article indefinitely; the resulting single
 normal request writes a fresh bounded schedule.

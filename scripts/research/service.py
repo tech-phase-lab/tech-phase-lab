@@ -135,10 +135,13 @@ def active_body_host_backoff_state(db, reference):
     except (TypeError, ValueError, OverflowError):
         return {}, None
     active = {}
+    # Do not pre-filter ISO timestamps as text. Valid offsets can invert their
+    # lexical ordering relative to UTC (for example 04:30-02:00 is 06:30Z),
+    # which could otherwise make a live circuit disappear from both states.
     for row in db.execute("""
       SELECT host,failures,error,retry_at,updated_at
-      FROM body_host_backoff WHERE retry_at>? LIMIT 10000
-    """, (reference,)).fetchall():
+      FROM body_host_backoff LIMIT 10000
+    """).fetchall():
         try:
             updated = datetime.fromisoformat(str(row["updated_at"]).replace("Z", "+00:00"))
             retry = datetime.fromisoformat(str(row["retry_at"]).replace("Z", "+00:00"))
@@ -182,8 +185,8 @@ def due_body_host_backoff_state(db, reference):
     due = {}
     for row in db.execute("""
       SELECT host,failures,error,retry_at,updated_at
-      FROM body_host_backoff WHERE retry_at<=? LIMIT 10000
-    """, (reference,)).fetchall():
+      FROM body_host_backoff LIMIT 10000
+    """).fetchall():
         try:
             updated = datetime.fromisoformat(str(row["updated_at"]).replace("Z", "+00:00"))
             retry = datetime.fromisoformat(str(row["retry_at"]).replace("Z", "+00:00"))
