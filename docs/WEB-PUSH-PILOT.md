@@ -101,3 +101,29 @@ GlobeNewswire: the same Railway server timed out with the old monitor identifica
 but a transparent `TechPhaseResearch/1.0` identification with the project website
 returned HTTP 200 / 36,518 bytes in 0.26 seconds. Apply this only to the Globe feed;
 do not bypass the access denials affecting other providers.
+
+## Member migration (September 28 implementation; rollout gated)
+
+The new UI uses the logged-in PRO account instead of a shared enrollment code.
+Configure only the research-staging monitor:
+
+- `WEB_PUSH_MEMBERSHIP_URL`: the approved Vercel preview origin followed by
+  `/api/research/notifications/entitlement`.
+- `WEB_PUSH_MEMBERSHIP_BYPASS`: the protected preview's authorized automation
+  bypass secret, when deployment protection is enabled. Never expose it in UI,
+  URLs, source control or logs. Do not turn off deployment protection.
+- Keep `RESEARCH_API_TOKEN` matching the preview `RESEARCH_MONITOR_TOKEN`.
+- Keep legacy `WEB_PUSH_ALLOW_PILOT` unset. Existing pilot devices need explicit
+  member registration; they must not silently become paid subscriptions.
+
+The worker validates current membership server-to-server only when an eligible,
+not-yet-delivered event exists. Unavailable membership verification blocks sending.
+Browser registration and test requests separately verify the signed-in user.
+An account can own at most ten stored devices. Same-device account reassignment
+requires removing the old subscription first. Automatic renewal does not depend
+on a browser heartbeat: current eligibility is checked by the delivery worker.
+
+Before rollout completion, verify PRO registration/status/test, FREE denial,
+expiry, other-account ownership rejection, browser unsubscribe and actual phone
+receipt. Provider acceptance alone is not receipt. Billing remains unconfigured;
+admin preview overrides do not change a real paid plan.

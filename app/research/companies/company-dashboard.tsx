@@ -111,7 +111,7 @@ export default function CompanyDashboard({ profile, companies }: { profile: Comp
           <article className={styles.timelineArticle}><h3>{event.title[lang]}</h3><p>{event.summary[lang]}</p>
             <details><summary>{t("事実と確認事項を開く", "Read facts and checkpoints")}</summary><div className={styles.timelineDetail}>
               <h4>{t("資料で確認できる事実", "Facts in the source")}</h4><ul>{event.facts.map((fact, index) => <li key={index}>{fact.text[lang]} <EvidenceLinks ids={fact.sourceIds} sources={profile.sources} lang={lang} /></li>)}</ul>
-              <h4>{t("分析・解釈", "Interpretation")}</h4><p>{event.interpretation[lang]}</p><h4>{t("この発表だけでは分からないこと", "What this release does not establish")}</h4><p>{event.unknown[lang]}</p>
+              {event.locked ? <Link href={`/research#what-changed/${event.id}`}>{t("PROの分析を読む", "Read PRO analysis")}</Link> : <><h4>{t("分析・解釈", "Interpretation")}</h4><p>{event.interpretation[lang]}</p><h4>{t("この発表だけでは分からないこと", "What this release does not establish")}</h4><p>{event.unknown[lang]}</p></>}
             </div></details>
           </article>
         </li>)}</ol>

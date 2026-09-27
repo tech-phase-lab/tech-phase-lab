@@ -1,7 +1,7 @@
-import { timingSafeEqual } from "node:crypto";
+import { getMembership } from "@/lib/membership/server";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-const headers = { "Cache-Control": "no-store" };
+const headers = { "Cache-Control": "private, no-store", Vary: "Cookie" };
 
 async function monitor(path: string, body?: unknown) {
   const base = process.env.RESEARCH_MONITOR_URL;
@@ -17,20 +17,25 @@ async function monitor(path: string, body?: unknown) {
   return response.json();
 }
 export async function GET() {
-  if (!process.env.WEB_PUSH_PILOT_CODE) return Response.json({ enabled: false }, { headers });
-  try { return Response.json(await monitor("/push/config"), { headers }); }
-  catch { return Response.json({ enabled: false }, { headers }); }
+  try {
+    const member = await getMembership();
+    if (member.status === "unavailable") return Response.json({ enabled: false }, { status: 503, headers });
+    if (member.status !== "signed-in") return Response.json({ enabled: false, reason: "sign-in" }, { headers });
+    if (member.plan !== "pro") return Response.json({ enabled: false, reason: "pro-required" }, { headers });
+    const config = await monitor("/push/config");
+    return Response.json({ enabled: config.enabled === true && config.memberAccessVersion === 1,
+      publicKey: config.memberAccessVersion === 1 ? config.publicKey : "", validUntil: member.accessExpiresAt }, { headers });
+  } catch { return Response.json({ enabled: false }, { status: 503, headers }); }
 }
 export async function POST(request: Request) {
-  // A private pilot enrollment code is required until member authentication ships.
-  // It is never sent to the client, stored in browser storage, or logged.
   if (request.headers.get("origin") !== new URL(request.url).origin ||
       !request.headers.get("content-type")?.startsWith("application/json")) {
     return Response.json({ ok: false }, { status: 403, headers });
   }
-  const expected = process.env.WEB_PUSH_PILOT_CODE;
-  if (!expected || expected.length < 24) return Response.json({ ok: false }, { status: 503, headers });
   try {
+    const member = await getMembership();
+    if (member.status === "unavailable") return Response.json({ ok: false }, { status: 503, headers });
+    if (member.status !== "signed-in") return Response.json({ ok: false, error: "sign-in" }, { status: 401, headers });
     const reader = request.body?.getReader();
     if (!reader) throw new Error("Missing body");
     const chunks: Uint8Array[] = []; let size = 0;
@@ -42,15 +47,14 @@ export async function POST(request: Request) {
       chunks.push(value);
     }
     const body = JSON.parse(Buffer.concat(chunks).toString());
-    const supplied = Buffer.from(typeof body.code === "string" ? body.code : "");
-    const secret = Buffer.from(expected);
-    if (supplied.length !== secret.length || !timingSafeEqual(supplied, secret)) {
-      return Response.json({ ok: false }, { status: 403, headers });
-    }
     if (!["register", "remove", "status", "test"].includes(body.action)) throw new Error("Invalid action");
-    const result = await monitor(`/push/${body.action}`, {
+    if (body.action !== "remove" && (member.plan !== "pro" || !Number.isFinite(member.accessExpiresAt) || member.accessExpiresAt <= Date.now())) {
+      return Response.json({ ok: false, error: "pro-required" }, { status: 403, headers });
+    }
+    const result = await monitor(`/push/member/${body.action}`, {
+      memberId: member.userId, accessExpiresAt: member.accessExpiresAt / 1000,
       subscription: body.subscription, tickers: body.tickers, allTargets: body.allTargets === true, language: body.language,
     });
     return Response.json(result, { headers });
-  } catch { return Response.json({ ok: false }, { status: 400, headers }); }
+  } catch { return Response.json({ ok: false }, { status: 503, headers }); }
 }

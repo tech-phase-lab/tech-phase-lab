@@ -1860,7 +1860,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlsplit(self.path).path
-        if path in {"/push/register", "/push/remove", "/push/status", "/push/test"}:
+        if path in {"/push/register", "/push/remove", "/push/status", "/push/test", "/push/member/register", "/push/member/remove", "/push/member/status", "/push/member/test", "/push/member/revoke"}:
             if not self.authorized():
                 self.send_json(401, {"ok": False})
                 return
@@ -1870,7 +1870,13 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 payload = self.read_json()
                 with web_push.connect(self.app.db_path) as db:
-                    if path == "/push/status":
+                    if path == "/push/member/register":
+                        result = web_push.register_member(db, payload, set(self.app.tickers) | signals.X_EXTRA_TICKERS)
+                    elif path == "/push/member/revoke":
+                        result = web_push.revoke_member(db, payload)
+                    elif path.startswith("/push/member/"):
+                        result = web_push.member_action(db, payload, path.rsplit("/", 1)[1])
+                    elif path == "/push/status":
                         result = web_push.device_status(db, payload)
                     elif path == "/push/test":
                         result = web_push.test_notification(db, payload)

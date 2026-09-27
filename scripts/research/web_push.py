@@ -12,7 +12,8 @@ import os
 import re
 import sqlite3
 import time
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urlencode, urlunsplit
+from urllib.request import Request, build_opener, HTTPRedirectHandler
 
 DEVICE_LIMIT = 20
 DELIVERY_RETENTION_SECONDS = 7 * 86400
@@ -23,7 +24,34 @@ def configuration():
     ready = all(os.environ.get(k, '').strip() for k in (
         'WEB_PUSH_PRIVATE_KEY', 'WEB_PUSH_PUBLIC_KEY', 'WEB_PUSH_SUBJECT'))
     enabled = os.environ.get('WEB_PUSH_ENABLED', '').lower() == 'true' and ready
-    return {'enabled': enabled, 'publicKey': os.environ.get('WEB_PUSH_PUBLIC_KEY', '') if enabled else ''}
+    return {'memberAccessVersion': 1 if os.environ.get('WEB_PUSH_MEMBERSHIP_URL') else 0, 'enabled': enabled, 'publicKey': os.environ.get('WEB_PUSH_PUBLIC_KEY', '') if enabled else ''}
+
+
+def member_expiry(owner):
+    """Fresh authoritative check. Errors and redirects fail closed; never log credentials."""
+    base = os.environ.get('WEB_PUSH_MEMBERSHIP_URL', '')
+    token = os.environ.get('RESEARCH_API_TOKEN', '')
+    url = urlsplit(base)
+    if url.scheme != 'https' or not url.hostname or url.username or url.password or url.fragment or not token:
+        return 0
+    class NoRedirect(HTTPRedirectHandler):
+        def redirect_request(self, *args, **kwargs):
+            return None
+    headers = {'Authorization': 'Bearer ' + token, 'Accept': 'application/json'}
+    bypass = os.environ.get('WEB_PUSH_MEMBERSHIP_BYPASS', '')
+    if bypass:
+        headers['x-vercel-protection-bypass'] = bypass
+    target = urlunsplit((url.scheme, url.netloc, url.path, urlencode({'memberId': owner}), ''))
+    try:
+        with build_opener(NoRedirect).open(Request(target, headers=headers), timeout=8) as response:
+            raw = response.read(4097)
+            if len(raw) > 4096:
+                return 0
+            data = json.loads(raw)
+        until = data.get('accessExpiresAt')
+        return until if data.get('ok') is True and data.get('pro') is True and isinstance(until, (int, float)) and not isinstance(until, bool) and math.isfinite(until) else 0
+    except Exception:
+        return 0
 
 
 def connect(path):
@@ -43,6 +71,11 @@ def connect(path):
         db.execute('ALTER TABLE push_deliveries ADD COLUMN observed_at REAL')
     if 'provider_duration_ms' not in columns:
         db.execute('ALTER TABLE push_deliveries ADD COLUMN provider_duration_ms REAL')
+    columns = {row['name'] for row in db.execute('PRAGMA table_info(push_devices)')}
+    if 'owner_id' not in columns:
+        db.execute("ALTER TABLE push_devices ADD COLUMN owner_id TEXT")
+    if 'access_until' not in columns:
+        db.execute("ALTER TABLE push_devices ADD COLUMN access_until REAL")
     return db
 
 
@@ -72,7 +105,7 @@ def validate_subscription(value):
     return {'endpoint': endpoint, 'keys': {k: keys[k] for k in ('p256dh', 'auth')}}
 
 
-def register(db, payload, allowed, now=None):
+def register(db, payload, allowed, now=None, device_limit=DEVICE_LIMIT):
     subscription = validate_subscription(payload.get('subscription'))
     tickers = ['*'] if payload.get('allTargets') is True else payload.get('tickers')
     lang = payload.get('language', 'ja')
@@ -83,14 +116,82 @@ def register(db, payload, allowed, now=None):
     now = time.time() if now is None else now
     with db:
         if not db.execute('SELECT 1 FROM push_devices WHERE id=?', (device,)).fetchone() and db.execute(
-                'SELECT COUNT(*) FROM push_devices').fetchone()[0] >= DEVICE_LIMIT:
+                'SELECT COUNT(*) FROM push_devices').fetchone()[0] >= device_limit:
             raise ValueError('pilot-device-limit')
         # Updating preferences resets the baseline, never backfills old alerts.
-        db.execute('''INSERT INTO push_devices VALUES(?,?,?,?,?,1)
+        db.execute('''INSERT INTO push_devices (id,subscription,tickers,language,since,active) VALUES(?,?,?,?,?,1)
             ON CONFLICT(id) DO UPDATE SET subscription=excluded.subscription,
             tickers=excluded.tickers,language=excluded.language,since=excluded.since,active=1''',
             (device, json.dumps(subscription), json.dumps(sorted(set(tickers))), lang, now))
     return {'registered': True}
+
+
+def member_identity(payload):
+    owner = payload.get('memberId')
+    if not isinstance(owner, str) or not re.fullmatch(r'user_[A-Za-z0-9]{1,128}', owner):
+        raise ValueError('invalid-member')
+    return owner
+
+
+def register_member(db, payload, allowed, now=None):
+    owner = member_identity(payload)
+    now = time.time() if now is None else now
+    until = payload.get('accessExpiresAt')
+    if not isinstance(until, (float, int)) or isinstance(until, bool) or not math.isfinite(until) or until <= now:
+        raise ValueError('expired-membership')
+    sub = validate_subscription(payload.get('subscription'))
+    device = hashlib.sha256(sub['endpoint'].encode()).hexdigest()
+    with db:
+        db.execute('BEGIN IMMEDIATE')
+        existing = db.execute('SELECT * FROM push_devices WHERE id=?', (device,)).fetchone()
+        if existing and existing['owner_id'] not in (None, owner):
+            raise ValueError('device-owned-by-another-member')
+        if existing and json.loads(existing['subscription']) != sub:
+            raise ValueError('subscription-mismatch')
+        if not existing and db.execute('SELECT COUNT(*) FROM push_devices WHERE owner_id=?', (owner,)).fetchone()[0] >= 10:
+            raise ValueError('member-device-limit')
+        # Save all fields atomically. Existing delivery history is preserved.
+        tickers = ['*'] if payload.get('allTargets') is True else payload.get('tickers')
+        lang = payload.get('language', 'ja')
+        if (not isinstance(tickers, list) or not 1 <= len(tickers) <= 50 or
+                any(not isinstance(t, str) or t not in allowed and not (t == '*' and payload.get('allTargets') is True) for t in tickers)
+                or lang not in {'ja', 'en'}):
+            raise ValueError('invalid-preferences')
+        db.execute("""INSERT INTO push_devices (id,subscription,tickers,language,since,active,owner_id,access_until)
+          VALUES(?,?,?,?,?,1,?,?) ON CONFLICT(id) DO UPDATE SET tickers=excluded.tickers,
+          language=excluded.language,since=excluded.since,active=1,owner_id=excluded.owner_id,access_until=excluded.access_until""",
+          (device,json.dumps(sub),json.dumps(sorted(set(tickers))),lang,now,owner,until))
+    return {'registered': True}
+
+
+def member_action(db, payload, action, transport=None, now=None):
+    owner = member_identity(payload)
+    now = time.time() if now is None else now
+    sub = validate_subscription(payload.get('subscription'))
+    device = hashlib.sha256(sub['endpoint'].encode()).hexdigest()
+    row = db.execute('SELECT * FROM push_devices WHERE id=?', (device,)).fetchone()
+    owns = bool(row and row['owner_id'] == owner and json.loads(row['subscription']) == sub)
+    if not owns:
+        if action == 'status':
+            return {'registered': False}
+        raise ValueError('not-owned')
+    if action == 'remove':
+        return remove(db, payload)
+    eligible = bool(row['active'] and row['access_until'] and row['access_until'] > now)
+    if action == 'status':
+        return {'registered': eligible}
+    if action != 'test' or not eligible:
+        raise ValueError('expired-membership')
+    if member_expiry(owner) <= now:
+        raise ValueError('expired-membership')
+    return test_notification(db, payload, transport, now)
+
+
+def revoke_member(db, payload):
+    owner = member_identity(payload)
+    with db:
+        db.execute('UPDATE push_devices SET active=0,access_until=0 WHERE owner_id=?', (owner,))
+    return {'revoked': True}
 
 
 def remove(db, payload):
@@ -266,13 +367,16 @@ def public_status(db, now=None):
 
 
 def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
-            wall_now=time.time):
+            wall_now=time.time, entitlement=member_expiry):
     if not configuration()['enabled']:
         return {'status': 'disabled', 'attempted': 0}
     now = wall_now() if now is None else now
     status_now = now
     attempted = accepted = uncertain = 0
     for device in db.execute('SELECT * FROM push_devices WHERE active=1').fetchall():
+        if not device['owner_id'] and os.environ.get('WEB_PUSH_ALLOW_PILOT', '').lower() != 'true':
+            continue
+        verified_until = None
         watched = set(json.loads(device['tickers']))
         for raw_item in items:
             item = normalize_event(raw_item)
@@ -284,7 +388,20 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             key = event_key(item)
             # Record each network attempt when it actually starts. Reusing the
             # batch timestamp understates queueing for later devices.
+            if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone():
+                continue
+            if device['owner_id'] and verified_until is None:
+                try:
+                    verified_until = entitlement(device['owner_id'])
+                except Exception:
+                    verified_until = 0
             attempted_at = wall_now()
+            if device['owner_id'] and (not isinstance(verified_until, (int, float)) or isinstance(verified_until, bool)
+                    or not math.isfinite(verified_until) or verified_until <= attempted_at):
+                continue
+            current = db.execute('SELECT active,owner_id FROM push_devices WHERE id=?', (device['id'],)).fetchone()
+            if not current or not current['active'] or current['owner_id'] != device['owner_id']:
+                continue
             # Reserve before network; a restart cannot silently send it twice.
             with db:
                 claim = db.execute('''INSERT OR IGNORE INTO push_deliveries

@@ -1,6 +1,7 @@
+import { publicEvent } from "@/lib/research/access";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { events } from "@/lib/research/data";
+import { events } from "@/lib/research/content-server";
 import { buildCompanyProfiles, companyProfileIssues } from "@/lib/research/companies";
 import { compareMetrics, evidenceIssues } from "@/lib/research/quality";
 import rawSnapshot from "@/lib/research/intake-snapshot.json";
@@ -10,7 +11,7 @@ import CoverageCompanyDashboard from "../coverage-company-dashboard";
 
 export const dynamicParams = false;
 export function generateStaticParams() { return providers.map((provider) => ({ ticker: provider.ticker })); }
-const profiles = buildCompanyProfiles(events);
+const profiles = buildCompanyProfiles(events.map(publicEvent));
 const snapshot = rawSnapshot as IntakeSnapshot;
 const coverageCompanies = buildCoverageCompanies(snapshot);
 

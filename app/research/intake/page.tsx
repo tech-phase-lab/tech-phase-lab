@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import rawSnapshot from "@/lib/research/intake-snapshot.json";
 import { snapshotIssues, type IntakeSnapshot } from "@/lib/research/intake";
-import { events } from "@/lib/research/data";
+import { events } from "@/lib/research/content-server";
 import IntakeDashboard from "./intake-dashboard";
 
 export const metadata: Metadata = {

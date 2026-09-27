@@ -8,10 +8,17 @@ export async function getMembership() {
   if (!membershipConfigured()) return { status: "unavailable", plan: "free" } as const;
   const { userId } = await auth();
   if (!userId) return { status: "signed-out", plan: "free" } as const;
+  return getMembershipForUser(userId);
+}
+
+/** Internal server-to-server use only; callers must authenticate before selecting an ID. */
+export async function getMembershipForUser(userId: string) {
   // Private metadata cannot be edited by the member. Never trust browser plan claims.
   const user = await (await clerkClient()).users.getUser(userId);
   const isAdmin = resolveAdmin(userId, user.privateMetadata);
   const testPlan = previewPlan(user.privateMetadata, isAdmin, process.env.VERCEL_ENV);
-  return { status: "signed-in", plan: testPlan ?? resolvePlan(user.privateMetadata), userId, isAdmin,
+  const test = user.privateMetadata.membershipPreview as Record<string, string> | undefined;
+  const accessExpiresAt = testPlan !== null ? Math.min(Date.parse(test?.proExpiresAt ?? ""), Date.parse(test?.testUntil ?? "")) : Date.parse(String(user.privateMetadata.proExpiresAt ?? ""));
+  return { accessExpiresAt: Number.isFinite(accessExpiresAt) ? accessExpiresAt : 0, status: "signed-in", plan: testPlan ?? resolvePlan(user.privateMetadata), userId, isAdmin,
     canTest: isAdmin && process.env.VERCEL_ENV === "preview", testing: testPlan !== null } as const;
 }

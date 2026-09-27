@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { events } from "../lib/research/data.ts";
+import { events } from "../lib/research/content.ts";
 import { buildCompanyProfiles, companyProfileIssues } from "../lib/research/companies.ts";
 import { compareMetrics } from "../lib/research/quality.ts";
 

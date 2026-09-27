@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemberArticle } from "./use-member-article";
 import NavigationIcon from "./navigation-icon";
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
@@ -81,7 +82,9 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
     return (ticker === "all" || event.ticker === ticker) && (category === "all" || event.category === category) &&
       (!query.trim() || search.includes(query.trim().toLowerCase())) && (tab !== "saved" || saved.includes(event.id));
   });
-  const active = filtered.find((event) => event.id === activeId) ?? filtered[0];
+  const selected = filtered.find((event) => event.id === activeId) ?? filtered[0];
+  const article = useMemberArticle(selected?.id, Boolean(selected?.locked && (tab === "changes" || tab === "saved")));
+  const active = article.event ?? selected;
   const comparisonPeriods = [...new Set(active?.metrics.flatMap((metric) => {
     const previous = active.previous?.find((item) => item.name === metric.name);
     return previous && compareMetrics(metric, previous).ok ? [`${previous.period} → ${metric.period}`] : [];
@@ -292,12 +295,18 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
                 return <div key={metric.name}><span>{metricNames[metric.name]?.[lang] ?? metric.name}</span><strong>{valueLabel(metric)}</strong><small>{metric.period} · {metric.basis}</small>{previous && <small>{t("前回", "Prior")}: {valueLabel(previous)}</small>}<small>{metric.kind === "guidance" ? t("会社見通し", "Guidance") : metric.kind === "run-rate" ? t("年換算・売上実績とは別", "Annualized run-rate, not actual revenue") : metric.scope}</small>{comparison?.ok && <b>{comparison.value >= 0 ? "+" : ""}{comparison.value.toFixed(1)}{comparison.unit === "pp" ? t("pt", "pp") : "%"}<em>{previous?.period} {t("比", "comparison")}</em></b>}</div>;
               })}</div>}
               <section className={styles.detailSection}><h3><span className={styles.sectionNumber}>01</span>{t("分析の前提となるデータ", "Data behind the analysis")}</h3><ul className={styles.facts}>{active.facts.map((fact, index) => <li key={index}>{fact.text[lang]} {fact.sourceIds.map((id) => <a key={id} href={active.sources.find((source) => source.id === id)?.url} target="_blank" rel="noreferrer" aria-label={t(`根拠資料${active.sources.findIndex((source) => source.id === id) + 1}を開く`, `Open source ${active.sources.findIndex((source) => source.id === id) + 1}`)}>[{active.sources.findIndex((source) => source.id === id) + 1}]</a>)}</li>)}</ul></section>
+              {active.locked ? <section className={styles.detailSection}>
+                <h3>Tech Phase PRO</h3>
+                <p>{article.status === "loading" ? t("会員情報を確認中…", "Checking membership…") : article.status === "error" ? t("接続を確認して、もう一度記事を開いてください。", "Check your connection and reopen the article.") : t("この先の分析はPRO会員向けです。", "The full analysis is available to PRO members.")}</p>
+                <Link href="/research/account">{t("ログイン・会員情報", "Sign in / Membership")}</Link>
+              </section> : <>
               <section className={styles.detailSection}><h3><span className={styles.sectionNumber}>02</span>{t("この先をどう読むか", "Reading what comes next")}<small>{t("分析・解釈", "INTERPRETATION")}</small></h3>{active.interpretation[lang].split("\n\n").map((paragraph, index) => <p key={index}>{paragraph}</p>)}</section>
               {active.analysis?.map((part, index) => <section className={styles.detailSection} key={`analysis-${index}`}><h4 className={styles.analysisHeading}>{part.heading[lang]}</h4><p>{part.body[lang]}</p></section>)}
               {active.valuation && <section className={styles.detailSection}><h3>{t("利益予想が変わると、PERはどう変わるか", "P/E sensitivity to earnings")}</h3><p>{t(`株価 $${active.valuation.price.toLocaleString("en-US")}（${active.valuation.priceDate}米国終値）を固定。${active.valuation.fiscalYear}の調整後EPS予想に対する試算。`, `Price held at $${active.valuation.price.toLocaleString("en-US")} (${active.valuation.priceDate} US close). Sensitivity to ${active.valuation.fiscalYear} adjusted EPS.`)}</p><table className={styles.valuationTable}><thead><tr><th>{t("利益の前提", "EPS assumption")}</th><th>EPS</th><th>PER</th></tr></thead><tbody>{[1, 0.8, 0.6].map((factor) => <tr key={factor}><th>{factor === 1 ? t("掲載予想", "Published estimate") : t(`予想から${Math.round((1-factor)*100)}％減`, `${Math.round((1-factor)*100)}% below estimate`)}</th><td>${(active.valuation!.eps*factor).toFixed(2)}</td><td>{(active.valuation!.price/(active.valuation!.eps*factor)).toFixed(2)}{t("倍", "×")}</td></tr>)}</tbody></table><p>{t("20％減・40％減は感応度を見る仮定であり、当方の業績予想ではありません。将来12カ月PERとも異なります。", "The reductions are stress assumptions, not our earnings forecasts. This is fiscal-year P/E, not next-twelve-month P/E.")}</p></section>}
               {active.scenarios && <section className={styles.detailSection}><h3>{t("見立てが分かれる条件", "Conditions that change the thesis")}</h3><div className={styles.scenarios}>{active.scenarios.map((scenario, index) => <div key={index}><h4>{scenario.heading[lang]}</h4><p>{scenario.body[lang]}</p></div>)}</div></section>}
               <section className={styles.detailSection}><h3>{t("まだ分からないこと", "What remains unknown")}</h3><p>{active.unknown[lang]}</p></section>
               <section className={styles.detailSection}><h3><span className={styles.sectionNumber}>03</span>{t("次に確認すること", "What to watch next")}</h3>{active.next[lang].includes("\n") ? <ul className={styles.facts}>{active.next[lang].split("\n").map((point, index) => <li key={index}>{point}</li>)}</ul> : <p>{active.next[lang]}</p>}</section>
+              </>}
               <div className={styles.sources}><h3>{active.kind === "external-research" ? t("外部調査の原文", "Open external research") : t("根拠資料を開く", "Open supporting sources")}</h3>{active.sources.map((source, i) => <a key={source.id} href={source.url} target="_blank" rel="noreferrer"><span className={styles.sourceIndex}>{String(i + 1).padStart(2, "0")}</span><span><strong>{source.title}</strong><small>{source.publisher} · {source.publishedOn}</small><small>{source.location}</small></span><Arrow /></a>)}</div>
               <p className={styles.revision}>{t("資料照合", "Source review")}: {active.reviewedOn} · {active.analysisAsOf ? "v3" : active.analysis ? "v2" : "v1"}<br/>{active.analysisAsOf ? t("株価・外部予想は記載日の固定値。会社実績、外部予想、独自分析を区別しています。", "Price and forecasts are dated snapshots. Company actuals, external forecasts and our analysis are distinguished.") : active.kind === "external-research" ? t("公開された要約のみを根拠に独自に整理しています。有料記事の本文は転載していません。", "This note is based on the publisher's public summary. The paid article is not reproduced.") : t("発表時点の内容を整理した検証例。以後の変更は自動反映していません。", "A review of the announcement as published. Later changes are not automatically incorporated.")}</p>
             </article>}

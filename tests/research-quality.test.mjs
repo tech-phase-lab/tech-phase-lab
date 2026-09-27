@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { compareMetrics, evidenceIssues } from "../lib/research/quality.ts";
-import { events } from "../lib/research/data.ts";
+import { events } from "../lib/research/content.ts";
 
 const current = events.find((event) => event.id === "nbis-q2-2026").metrics[0];
 const prior = events.find((event) => event.id === "nbis-q2-2026").previous[0];

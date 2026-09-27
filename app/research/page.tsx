@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { publicEvent } from "@/lib/research/access";
 import ResearchDashboard from "./research-dashboard";
-import { events } from "@/lib/research/data";
+import { events } from "@/lib/research/content-server";
 import { evidenceIssues } from "@/lib/research/quality";
 import { buildCompanyProfiles } from "@/lib/research/companies";
 import { providers, sectorNames, sectorNamesEn } from "@/lib/research/intake";
@@ -28,7 +29,7 @@ export default function ResearchPage() {
     verified: verifiedTickers.has(provider.ticker),
   }));
   return <ResearchDashboard
-    events={events.toSorted((a, b) => b.publishedOn.localeCompare(a.publishedOn) || a.id.localeCompare(b.id))}
+    events={events.map(publicEvent).toSorted((a, b) => b.publishedOn.localeCompare(a.publishedOn) || a.id.localeCompare(b.id))}
     monitoredCompanies={monitoredCompanies}
   />;
 }

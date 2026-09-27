@@ -23,12 +23,55 @@ class PushTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory(); self.db=push.connect(Path(self.tmp.name)/'push.sqlite')
         self.now=datetime(2026,9,26,14,0,2,tzinfo=timezone.utc).timestamp()
-        self.env=patch.dict(os.environ,{'WEB_PUSH_ENABLED':'true','WEB_PUSH_PRIVATE_KEY':'test',
+        self.env=patch.dict(os.environ,{'WEB_PUSH_ALLOW_PILOT':'true','WEB_PUSH_ENABLED':'true','WEB_PUSH_PRIVATE_KEY':'test',
             'WEB_PUSH_PUBLIC_KEY':'test','WEB_PUSH_SUBJECT':'mailto:test@example.com'});self.env.start()
     def tearDown(self):
         self.env.stop();self.db.close();self.tmp.cleanup()
     def register(self, now=None):
         push.register(self.db,{'subscription':subscription(),'tickers':['MU'],'language':'ja'}, {'MU','NBIS'},self.now-10 if now is None else now)
+    def member_payload(self, owner='user_owner'):
+        return {'memberId': owner, 'accessExpiresAt': self.now+60, 'subscription': subscription(), 'allTargets': True}
+
+    def test_member_ownership_and_expiry(self):
+        payload = self.member_payload()
+        push.register_member(self.db, payload, {'MU'}, self.now-10)
+        self.assertTrue(push.member_action(self.db, payload, 'status', now=self.now)['registered'])
+        other = self.member_payload('user_other')
+        self.assertFalse(push.member_action(self.db, other, 'status', now=self.now)['registered'])
+        for action in ['remove', 'test']:
+            with self.assertRaises(ValueError):
+                push.member_action(self.db, other, action, now=self.now)
+        with self.assertRaises(ValueError):
+            push.register_member(self.db, other, {'MU'}, self.now)
+        for expiry in [self.now, True, float('nan')]:
+            with self.assertRaises(ValueError):
+                push.register_member(self.db, {**payload, 'accessExpiresAt': expiry}, {'MU'}, self.now)
+        push.revoke_member(self.db, payload)
+        self.assertFalse(push.member_action(self.db, payload, 'status', now=self.now)['registered'])
+
+    def test_member_delivery_rechecks_current_entitlement_and_preserves_dedup(self):
+        push.register_member(self.db, self.member_payload(), {'MU'}, self.now-10)
+        calls=[]
+        transport=lambda *args: calls.append(args) or 201
+        for expiry in [0, self.now-1, float('nan'), True]:
+            result=push.deliver(self.db,[event()],transport,self.now,wall_now=lambda:self.now,entitlement=lambda owner:expiry)
+            self.assertEqual(result['attempted'],0)
+        self.assertEqual(calls,[])
+        result=push.deliver(self.db,[event()],transport,self.now,wall_now=lambda:self.now,entitlement=lambda owner:self.now+60)
+        self.assertEqual(result['accepted'],1)
+        result=push.deliver(self.db,[event()],transport,self.now,wall_now=lambda:self.now,entitlement=lambda owner:self.fail('duplicate rechecked'))
+        self.assertEqual(result['attempted'],0)
+        self.assertEqual(len(calls),1)
+
+    def test_member_test_delivery_rechecks_entitlement(self):
+        payload=self.member_payload()
+        push.register_member(self.db,payload,{'MU'},self.now-10)
+        with patch.object(push,'member_expiry',return_value=0):
+            with self.assertRaises(ValueError):
+                push.member_action(self.db,payload,'test',lambda *_:self.fail('unauthorized'),self.now)
+        with patch.object(push,'member_expiry',return_value=self.now+60):
+            self.assertTrue(push.member_action(self.db,payload,'test',lambda *_:201,self.now)['accepted'])
+
     def test_device_status_checks_registration_and_keys(self):
         self.assertFalse(push.device_status(self.db, {'subscription': subscription()})['registered'])
         self.register()
