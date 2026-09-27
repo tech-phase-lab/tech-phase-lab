@@ -41,5 +41,8 @@ const japanese = {
 export default function AccountScreen(props: {status:string; plan:string; signingUp?:boolean}) {
   const [lang] = useResearchLanguage();
   if (props.status === "unavailable") return <p>会員機能に接続できません。時間をおいて再度お試しください。</p>;
-  return <ClerkProvider localization={lang === "ja" ? japanese : enUS} signInUrl="/research/account" signUpUrl="/research/account/sign-up"><AccountContent {...props} /></ClerkProvider>;
+  return <ClerkProvider appearance={{
+    variables: {colorPrimary:"#9bdec6", colorBackground:"#101e24", colorForeground:"#eaf3f1", colorMutedForeground:"#adc0c6", colorInput:"#0b151d", colorInputForeground:"#eaf3f1", borderRadius:"10px"},
+    elements: {rootBox:{width:"100%"},cardBox:{width:"100%",boxShadow:"none"},card:{padding:"24px",boxShadow:"none"},headerTitle:{fontSize:"20px",lineHeight:"1.5"},formButtonPrimary:{color:"#0b151d"},footerActionLink:{display:"inline",margin:0,color:"#9bdec6"}}
+  }} localization={lang === "ja" ? japanese : enUS} signInUrl="/research/account" signUpUrl="/research/account/sign-up"><AccountContent {...props} /></ClerkProvider>;
 }
