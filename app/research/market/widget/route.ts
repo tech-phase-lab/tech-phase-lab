@@ -11,11 +11,6 @@ export function GET(request: Request) {
         { s: "FOREXCOM:NSXUSD", d: "Nasdaq 100 · CFD" },
         { s: "FOREXCOM:DJI", d: "Dow 30 · CFD" },
       ] },
-      { title: ja ? "米国債利回り" : "Treasury yields", symbols: [
-        { s: "TVC:US02Y", d: ja ? "米国債 2年" : "U.S. 2-year yield" },
-        { s: "TVC:US10Y", d: ja ? "米国債 10年" : "U.S. 10-year yield" },
-        { s: "TVC:US30Y", d: ja ? "米国債 30年" : "U.S. 30-year yield" },
-      ] },
       { title: ja ? "為替" : "Forex", symbols: [
         { s: "FX:USDJPY", d: ja ? "米ドル / 円" : "USD / JPY" },
         { s: "FX:EURUSD", d: ja ? "ユーロ / 米ドル" : "EUR / USD" },
