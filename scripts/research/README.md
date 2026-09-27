@@ -263,4 +263,5 @@ requests, publication, notifications or paid API calls are made.
 Persisted route failures are reduced to the same fixed diagnostic codes used by
 the operator queue; legacy URLs, exception text and response detail are never
 copied into the report. The private X comparison report applies that boundary
-to its route-health field as well.
+to its route-health field as well. The opt-in Stock News queue similarly reduces
+legacy intake errors to its single fixed diagnostic before returning them.

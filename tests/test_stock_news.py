@@ -80,6 +80,17 @@ class StockNewsTests(unittest.TestCase):
         serialized = json.dumps(result) + str(list(self.db.execute("SELECT * FROM news_intake_state")))
         self.assertNotIn("synthetic-key", serialized)
 
+    def test_queue_reduces_legacy_error_detail_to_fixed_code(self):
+        with self.db:
+            news.put_state(
+                self.db, "last_error",
+                "Timeout for https://stocknewsapi.com/api/v1?token=legacy-secret",
+            )
+        result = news.queue(self.db)
+        self.assertEqual(result["lastError"], "stock-news-intake-failed")
+        self.assertNotIn("stocknewsapi.com", str(result))
+        self.assertNotIn("legacy-secret", str(result))
+
     def test_pagination_catches_more_than_100_new_items(self):
         news.poll(self.db, ["MU"], transport=lambda *_: [article(1)])
         self.next_poll()

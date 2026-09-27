@@ -94,6 +94,13 @@ def put_state(db, key, value):
     db.execute("INSERT INTO news_intake_state VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value", (key, value))
 
 
+def persisted_error_code(value):
+    """Reduce legacy intake state to the single fixed public diagnostic."""
+    if value is None or value == "":
+        return None
+    return "stock-news-intake-failed"
+
+
 def reserve_call(db, now, cap):
     """Reserve before network I/O, including failed calls; serialize workers."""
     with db:
@@ -171,7 +178,7 @@ def queue(db, limit=20):
     month = stamp()[:7] + "-01"
     calls = db.execute("SELECT COUNT(*) FROM news_api_calls WHERE at>=?", (month,)).fetchone()[0]
     return {"items": items, "callsThisMonth": calls, "lastSuccessAt": state(db, "last_success"),
-            "lastError": state(db, "last_error"), "publicationEnabled": False}
+            "lastError": persisted_error_code(state(db, "last_error")), "publicationEnabled": False}
 
 
 def poll(db, tickers, *, transport=request_page):
