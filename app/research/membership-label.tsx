@@ -20,9 +20,11 @@ export default function MembershipLabel() {
       } catch { if (!controller.signal.aborted) setPlan(null); }
       finally { busy = false; }
     };
+    const changed = () => { lastChecked = 0; void check(); };
     void check();
+    window.addEventListener("tech-phase:membership-changed", changed);
     window.addEventListener("focus", check);
-    return () => { controller.abort(); window.removeEventListener("focus", check); };
+    return () => { controller.abort(); window.removeEventListener("tech-phase:membership-changed", changed); window.removeEventListener("focus", check); };
   }, []);
   return <small>{plan ? `RESEARCH · ${plan}` : "RESEARCH"}</small>;
 }

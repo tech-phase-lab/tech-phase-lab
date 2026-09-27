@@ -101,3 +101,14 @@ Still required: configure a Clerk application and its publishable/secret keys in
 - Added read-only token-protected `/api/research/member/sync` and a bound Apps Script under `scripts/membership/google-sheets.gs`. Approximately 15-minute full snapshots; owner labeled 運営 and excluded from 一般会員. No browser polling or ChatGPT scheduled task.
 - Script validates the complete snapshot before writing, uses a lock, rejects duplicate IDs and removes retired accounts from the current snapshot. Personal data is not logged. Dedicated sync token is separate from Clerk credentials.
 - NOT LIVE: owner must import the workbook to private Google Sheets, add the script, run setupTechPhase, save its generated token in Vercel Preview as MEMBER_SHEET_SYNC_TOKEN, redeploy, then run startTechPhase. Verify initial row and recurring successful timestamp. Google Drive plugin connection alone does not provide runtime sync.
+
+
+## 2026-09-28 membership continuation and sheet verification
+
+- User verified first private Google Sheet sync at 01:27:37 JST: zero ordinary members, one owner. Recurring execution still needs a later successful timestamp; do not claim the timed run was observed.
+- Working Apps Script uses @OnlyCurrentDoc, the bound active spreadsheet, and VERCEL_BYPASS_SECRET in the x-vercel-protection-bypass header. Repository script now matches those security/connection changes. Existing user setup requires no replacement.
+- The 15-minute sheet sync completes only member reporting, not priority 1. Outstanding priority 1 includes live Free/PRO, sign-out and expiry verification, actual server-side premium content separation, and device ownership/entitlement-aware notification delivery without a pilot code.
+- Added self-service admin-only preview membership testing to avoid the unusable Clerk metadata editor. It changes only membershipPreview private metadata for the verified caller, never billing/real plan metadata or another user. Preview overrides expire after one hour and are ignored in production and for non-admins. Buttons include Free, Pro, expiry after one minute, and restore. No real plan has been changed by implementation.
+- Existing MU evaluation sample remains public by prior agreement. Current public research data is NOT a paid-content boundary; do not claim that hiding controls protects it. Notification pilot remains unchanged until server ownership and delivery-time entitlement checks are implemented.
+- User approves continuing the same queue: (1) membership and access, (2) real intake-to-bilingual-display timing/missed-event/duplicate checks, (3) editor for weekly PRO, Research Q&A and RIZEL notes.
+- Screenshots inspected include names, emails, user IDs and project metadata. No password/secret exposure identified in inspected images; unavailable historical images cannot be certified. Do not ask user to share secret values.

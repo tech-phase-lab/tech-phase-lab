@@ -1,3 +1,4 @@
+/** @OnlyCurrentDoc */
 // Bound to the owner's private Google spreadsheet. No web-app deployment needed.
 function setupTechPhase() {
   var ui = SpreadsheetApp.getUi();
@@ -20,7 +21,9 @@ function syncTechPhase() {
   try {
     var p = PropertiesService.getScriptProperties();
     if (!p.getProperty('SYNC_TOKEN') || !p.getProperty('SHEET_ID')) throw new Error('先に setupTechPhase を実行してください。');
-    var response = UrlFetchApp.fetch('https://tech-phase-lab-git-codex-research-preview-chehon7144-5412.vercel.app/api/research/member/sync', {headers:{Authorization:'Bearer '+p.getProperty('SYNC_TOKEN')},muteHttpExceptions:true,followRedirects:false});
+    var ss=SpreadsheetApp.getActiveSpreadsheet();
+    if(!ss || ss.getId()!==p.getProperty('SHEET_ID')) throw new Error('会員表を確認できません。');
+    var response = UrlFetchApp.fetch('https://tech-phase-lab-git-codex-research-preview-chehon7144-5412.vercel.app/api/research/member/sync', {headers:{Authorization:'Bearer '+p.getProperty('SYNC_TOKEN'),'x-vercel-protection-bypass':p.getProperty('VERCEL_BYPASS_SECRET')||''},muteHttpExceptions:true,followRedirects:false});
     if (response.getResponseCode()!==200) throw new Error('同期失敗 HTTP '+response.getResponseCode()+'。既存データは保持しました。');
     var data = JSON.parse(response.getContentText());
     if (data.version!==1 || data.complete!==true || !Array.isArray(data.members) || data.members.length!==data.total) throw new Error('不完全な取得結果です。既存データは保持しました。');
@@ -32,8 +35,10 @@ function syncTechPhase() {
       seen[m.id]=true;
       return [text(m.id),text(m.kind),text(m.name),text(m.email),text(m.plan),m.verified?'はい':'いいえ',date(m.createdAt),date(m.lastSignInAt),date(m.proExpiresAt)];
     });
-    var ss=SpreadsheetApp.openById(p.getProperty('SHEET_ID'));ss.setSpreadsheetTimeZone('Asia/Tokyo');
+    ss.setSpreadsheetTimeZone('Asia/Tokyo');
     var sh=ss.getSheetByName('会員自動同期')||ss.insertSheet('会員自動同期');
+    if(sh.getMaxRows()<rows.length+5)sh.insertRowsAfter(sh.getMaxRows(),rows.length+5-sh.getMaxRows());
+    if(sh.getMaxColumns()<9)sh.insertColumnsAfter(sh.getMaxColumns(),9-sh.getMaxColumns());
     var oldLast=sh.getLastRow();
     var header=['会員ID','区分','表示名','メールアドレス','プラン','メール確認済み','登録日時（JST）','最終ログイン（JST）','PRO有効期限（JST）'];
     sh.getRange(5,1,rows.length+1,9).setValues([header].concat(rows));

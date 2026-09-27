@@ -10,3 +10,13 @@ export function resolveAdmin(userId: string | null | undefined, metadata: Record
   // Explicitly approved owner account; identifier is not a credential.
   return userId === "user_3JulL4D07KtVl5Eg2zdY1iczKbC" || metadata.role === "admin";
 }
+
+/** Preview-only override for an authenticated administrator; never used in production. */
+export function previewPlan(metadata: Record<string, unknown>, isAdmin: boolean, environment: string | undefined, now = Date.now()) {
+  const test = metadata.membershipPreview;
+  if (!isAdmin || environment !== "preview" || !test || typeof test !== "object") return null;
+  const value = test as Record<string, unknown>;
+  const until = typeof value.testUntil === "string" ? Date.parse(value.testUntil) : NaN;
+  if (!Number.isFinite(until) || until <= now) return null;
+  return resolvePlan(value, now);
+}

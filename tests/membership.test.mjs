@@ -36,3 +36,16 @@ test('sheet sync rejects missing, weak and incorrect credentials',()=>{
  assert.equal(validSyncToken('Bearer short','short'),false);
  assert.equal(validSyncToken('Bearer '+secret,undefined),false);
 });
+
+import {previewPlan} from '../lib/membership/entitlements.ts';
+test('preview overrides cannot grant production or non-admin access and expire closed',()=>{
+ const now=Date.parse('2026-09-28T00:00:00Z');
+ const meta={membershipPreview:{plan:'pro',proExpiresAt:'2026-09-28T00:01:00Z',testUntil:'2026-09-28T01:00:00Z'}};
+ assert.equal(previewPlan(meta,true,'preview',now),'pro');
+ assert.equal(previewPlan(meta,true,'preview',now+60_000),'free');
+ assert.equal(previewPlan(meta,true,'preview',now+3_600_000),null);
+ for(const environment of ['production','development',undefined]) assert.equal(previewPlan(meta,true,environment,now),null);
+ assert.equal(previewPlan(meta,false,'preview',now),null);
+ assert.equal(previewPlan({membershipPreview:{plan:'pro'}},true,'preview',now),null);
+ assert.equal(previewPlan({membershipPreview:null},true,'preview',now),null);
+});

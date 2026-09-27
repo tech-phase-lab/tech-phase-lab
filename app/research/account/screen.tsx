@@ -5,11 +5,12 @@ import Link from "next/link";
 import { jaJP, enUS } from "@clerk/localizations";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
+import PreviewControls from "./preview-controls";
 import styles from "./styles.module.css";
 function AccountContent({ status, plan, signingUp = false }: { status: string; plan: string; signingUp?: boolean }) {
   const [lang, setLang] = useResearchLanguage(); const ja = lang === "ja";
   const { isLoaded, isSignedIn } = useAuth();
-  const [member, setMember] = useState({status, plan, isAdmin: false});
+  const [member, setMember] = useState({status, plan, isAdmin: false, canTest: false, testing: false});
   const [retry, setRetry] = useState(0);
   useEffect(() => {
     if (!isLoaded) return;
@@ -17,12 +18,12 @@ function AccountContent({ status, plan, signingUp = false }: { status: string; p
     fetch("/api/research/member", {cache:"no-store", signal:controller.signal})
       .then(async response => { if (!response.ok) throw new Error("membership"); return response.json(); })
       .then(value => setMember(value))
-      .catch(error => { if (error.name !== "AbortError") setMember({status:"unavailable",plan:"",isAdmin:false}); });
+      .catch(error => { if (error.name !== "AbortError") setMember({status:"unavailable",plan:"",isAdmin:false,canTest:false,testing:false}); });
     return () => controller.abort();
   }, [isLoaded, isSignedIn, retry]);
   const content = <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "マイアカウント" : "My account"} description="">
     <section className={styles.card}>
-      {member.status === "unavailable" ? <><h2>{ja ? "会員情報を確認できませんでした" : "Sign-in is being prepared"}</h2><p>{ja ? "時間をおいて、もう一度お試しください。" : "You can explore the public pages while we prepare member registration."}</p><button onClick={() => setRetry(value => value + 1)}>{ja ? "再確認" : "Try again"}</button><Link href="/research">{ja ? "ホームへ戻る" : "Back to home"}</Link></> : !isLoaded ? <p>{ja ? "読み込み中…" : "Loading…"}</p> : member.status === "signed-out" ? (signingUp ? <SignUp routing="hash" signInUrl="/research/account" forceRedirectUrl="/research/account" /> : <SignIn routing="hash" signUpUrl="/research/account/sign-up" forceRedirectUrl="/research/account" />) : <><span className={styles.plan}>TECH PHASE {member.plan === "pro" ? "PRO" : "FREE"}</span><h2>{ja ? "ログインしています" : "You’re signed in"}</h2><p>{member.plan === "pro" ? (ja ? "PRO会員として登録されています。" : "Your PRO membership is active.") : (ja ? "無料プランをご利用中です。" : "You’re on the Free plan.")}</p><Link href="/research/notifications">{ja ? "スマホ通知設定" : "Phone notifications"}</Link>{member.isAdmin && <Link href="/api/research/member/export">{ja ? "登録者一覧をダウンロード" : "Download member list"}</Link>}<SignOutButton redirectUrl="/research/account"><button>{ja ? "ログアウト" : "Sign out"}</button></SignOutButton></>}
+      {member.status === "unavailable" ? <><h2>{ja ? "会員情報を確認できませんでした" : "Sign-in is being prepared"}</h2><p>{ja ? "時間をおいて、もう一度お試しください。" : "You can explore the public pages while we prepare member registration."}</p><button onClick={() => setRetry(value => value + 1)}>{ja ? "再確認" : "Try again"}</button><Link href="/research">{ja ? "ホームへ戻る" : "Back to home"}</Link></> : !isLoaded ? <p>{ja ? "読み込み中…" : "Loading…"}</p> : member.status === "signed-out" ? (signingUp ? <SignUp routing="hash" signInUrl="/research/account" forceRedirectUrl="/research/account" /> : <SignIn routing="hash" signUpUrl="/research/account/sign-up" forceRedirectUrl="/research/account" />) : <><span className={styles.plan}>TECH PHASE {member.plan === "pro" ? "PRO" : "FREE"}</span><>{member.testing && <p>{ja ? "運営者用の試験状態です（課金なし）" : "Admin test mode — no charge"}</p>}</><h2>{ja ? "ログインしています" : "You’re signed in"}</h2><p>{member.plan === "pro" ? (ja ? "PRO会員として登録されています。" : "Your PRO membership is active.") : (ja ? "無料プランをご利用中です。" : "You’re on the Free plan.")}</p><Link href="/research/notifications">{ja ? "スマホ通知設定" : "Phone notifications"}</Link>{member.isAdmin && <Link href="/api/research/member/export">{ja ? "登録者一覧をダウンロード" : "Download member list"}</Link>}<>{member.canTest && <PreviewControls ja={ja} testing={member.testing} onChange={() => setRetry(value => value + 1)} />}</><SignOutButton redirectUrl="/research/account"><button>{ja ? "ログアウト" : "Sign out"}</button></SignOutButton></>}
     </section>
   </ResearchToolShell>;
   return content;
