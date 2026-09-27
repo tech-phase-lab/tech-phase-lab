@@ -640,6 +640,47 @@ class IntakeTests(unittest.TestCase):
         self.assertNotIn("revision_evidence", public)
         self.assertNotIn("100 units", public)
 
+    def test_source_revision_diff_orders_offsets_as_instants_and_ignores_invalid_time(self):
+        self.check(b"<main><p>Current official evidence.</p></main>")
+        current_sha = self.row()["sha256"]
+        revisions = (
+            ("a" * 64, "2026-09-28T03:00:00+02:00", "Older evidence."),
+            ("b" * 64, "2026-09-27T22:30:00-04:00", "Latest evidence."),
+            ("c" * 64, "not-a-time", "Invalid evidence."),
+        )
+        self.db.executemany("""
+          INSERT INTO source_revisions(
+            url,sha256,observed_at,content_type,content_bytes,extracted_text,extracted_chars
+          ) VALUES(?,?,?,?,?,?,?)
+        """, (
+            (URL, sha, observed_at, "text/html", len(text), text, len(text))
+            for sha, observed_at, text in revisions
+        ))
+        self.db.commit()
+
+        evidence = m.source_revision_evidence(
+            self.db, URL, current_sha, "Current official evidence."
+        )
+
+        self.assertEqual(evidence["previous_sha256"], "b" * 64)
+        self.assertEqual(
+            evidence["previous_observed_at"], "2026-09-27T22:30:00-04:00"
+        )
+        self.assertNotIn("Invalid evidence", evidence["diff_preview"])
+
+    def test_archived_source_revision_normalizes_legacy_offset_time(self):
+        with patch.object(m, "now", return_value="2026-09-28T03:00:00+02:00"):
+            self.check(b"<main><p>Original official evidence.</p></main>")
+        original_sha = self.row()["sha256"]
+
+        with patch.object(m, "now", return_value="2026-09-28T02:00:00+00:00"):
+            self.check(b"<main><p>Updated official evidence.</p></main>")
+
+        archived = self.db.execute("""
+          SELECT observed_at FROM source_revisions WHERE url=? AND sha256=?
+        """, (URL, original_sha)).fetchone()
+        self.assertEqual(archived["observed_at"], "2026-09-28T01:00:00.000+00:00")
+
     def test_source_revision_retention_is_bounded_per_article(self):
         for revision in range(15):
             self.check(
@@ -652,6 +693,37 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(len(revisions), 12)
         self.assertNotIn("revision 0.", " ".join(row[0] for row in revisions))
         self.assertIn("revision 14.", revisions[-1][0])
+
+    def test_source_revision_retention_orders_offsets_as_instants(self):
+        self.check(b"<main><p>Current article evidence.</p></main>")
+        self.db.execute("DELETE FROM source_revisions WHERE url=?", (URL,))
+        regular = [
+            (f"{index + 1:064x}", f"2026-09-28T{index:02d}:00:00+00:00")
+            for index in range(12)
+        ]
+        offset_sha = "f" * 64
+        revisions = regular + [(offset_sha, "2026-09-27T23:30:00-14:00")]
+        self.db.executemany("""
+          INSERT INTO source_revisions(
+            url,sha256,observed_at,content_type,content_bytes,extracted_text,extracted_chars
+          ) VALUES(?,?,?,?,?,?,?)
+        """, (
+            (URL, sha, observed_at, "text/html", 8, f"text {sha[:4]}", 8)
+            for sha, observed_at in revisions
+        ))
+        self.db.commit()
+
+        with patch.object(m, "now", return_value="2026-09-27T21:00:00+00:00"):
+            self.check(b"<main><p>Updated article evidence.</p></main>")
+
+        retained = {
+            row["sha256"] for row in self.db.execute(
+                "SELECT sha256 FROM source_revisions WHERE url=?", (URL,)
+            )
+        }
+        self.assertEqual(len(retained), 12)
+        self.assertIn(offset_sha, retained)
+        self.assertNotIn(regular[0][0], retained)
 
     def test_snapshot_exposes_only_approved_brief_for_current_healthy_source(self):
         body = b'''<html><body><main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main></body></html>'''

@@ -98,6 +98,14 @@ def stored_latency_ms(started_at, completed_at, maximum_seconds=31 * 24 * 60 * 6
     return round(latency_seconds * 1000)
 
 
+def source_revision_observed_at(value, fallback):
+    """Return a canonical UTC observation time for retained source evidence."""
+    observed = stored_utc_datetime(value) or stored_utc_datetime(fallback)
+    if observed is None:
+        raise ValueError("invalid-source-revision-time")
+    return observed.isoformat(timespec="milliseconds")
+
+
 def generation_attempt_window(db, reference):
     """Return attempts from the prior 24 hours using absolute UTC instants."""
     current = stored_utc_datetime(reference)
@@ -3666,7 +3674,8 @@ def source_revision_evidence(db, url, current_sha, current_text):
     """Build private revision evidence from retained official-source text."""
     previous = db.execute("""
       SELECT sha256,observed_at,extracted_text FROM source_revisions
-      WHERE url=? AND sha256<>? ORDER BY observed_at DESC,rowid DESC LIMIT 1
+      WHERE url=? AND sha256<>? AND julianday(observed_at) IS NOT NULL
+      ORDER BY julianday(observed_at) DESC,rowid DESC LIMIT 1
     """, (url, current_sha)).fetchone()
     if not previous:
         return None
@@ -3691,7 +3700,8 @@ def _validated_previous_brief(db, row, source_sha, validation_sha, evidence_rows
         return None
     previous = db.execute("""
       SELECT extracted_text FROM source_revisions
-      WHERE url=? AND sha256=? ORDER BY observed_at DESC,rowid DESC LIMIT 1
+      WHERE url=? AND sha256=? AND julianday(observed_at) IS NOT NULL
+      ORDER BY julianday(observed_at) DESC,rowid DESC LIMIT 1
     """, (row["url"], source_sha)).fetchone()
     if not previous:
         return None
@@ -4094,7 +4104,9 @@ def save_source_check(db, row, result):
               ) VALUES(?,?,?,?,?,?,?)
             """, (
                 row["url"], current["sha256"],
-                current["checked_at"] or current["fetched_at"] or checked_at,
+                source_revision_observed_at(
+                    current["checked_at"] or current["fetched_at"], checked_at
+                ),
                 current["content_type"], current["content_bytes"],
                 current["extracted_text"], current["extracted_chars"],
             ))
@@ -4115,13 +4127,14 @@ def save_source_check(db, row, result):
                 url,sha256,observed_at,content_type,content_bytes,extracted_text,extracted_chars
               ) VALUES(?,?,?,?,?,?,?)
             """, (
-                row["url"], result["sha256"], checked_at, result["contentType"],
+                row["url"], result["sha256"],
+                source_revision_observed_at(checked_at, checked_at), result["contentType"],
                 result["contentBytes"], result["extractedText"], result["extractedChars"],
             ))
             db.execute("""
               DELETE FROM source_revisions WHERE rowid IN (
                 SELECT rowid FROM source_revisions WHERE url=?
-                ORDER BY observed_at DESC,rowid DESC LIMIT -1 OFFSET 12
+                ORDER BY julianday(observed_at) DESC,rowid DESC LIMIT -1 OFFSET 12
               )
             """, (row["url"],))
         if not not_modified:

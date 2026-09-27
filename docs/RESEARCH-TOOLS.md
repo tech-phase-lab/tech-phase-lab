@@ -34,6 +34,12 @@ UTC rows are normalized before subtraction; malformed, reversed, or more than
 31-day intervals remain unmeasured instead of stopping the public snapshot or
 publishing a misleading latency.
 
+Retained article revisions are also ordered by absolute observation time, not
+raw ISO text. Legacy offsets are normalized when a revision is archived, and
+revisions with unparseable observation times are excluded from the private
+machine-diff and stale-draft evidence paths. The 12-version retention limit uses
+the same absolute ordering so an offset cannot evict a newer evidence revision.
+
 The operations preview receives public-safe aggregate telemetry for the shared
 price-target SSE gateway: health, active/capacity counts, accepted/disconnected/
 capacity-rejected connections, shared read attempts, successful reads,
