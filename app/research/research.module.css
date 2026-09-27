@@ -1584,3 +1584,7 @@
   .primaryNav a, .primaryNav button { min-height:44px; padding:8px 12px; font-size:12px; background:#111d28; }
   .primaryNav [aria-current=page] { background:linear-gradient(110deg,#203b38,#15272a); }
 }
+.homeIcon { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; flex-shrink:0; margin-left:8px; border:1px solid #31434d; border-radius:10px; color:#b9e4d5; }
+.homeIcon:hover { background:#203630; }
+.homeIcon:focus-visible { outline:2px solid #93dec5; outline-offset:3px; }
+.homeIcon svg { width:20px; height:20px; }

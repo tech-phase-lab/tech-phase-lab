@@ -49,3 +49,13 @@
   .profileBody dl>div:nth-child(2){border-right:0}
   .profileBody dl>div:nth-child(-n+2){border-bottom:1px solid var(--line)}
 }
+.sourceDrawer { margin:24px 0; border:1px solid #2b3c47; border-radius:12px; color:#bdcbd5; background:#0d1821; }
+.sourceDrawer > summary { display:flex; justify-content:space-between; align-items:center; padding:18px 20px; cursor:pointer; font-size:14px; list-style:none; }
+.sourceDrawer > summary::-webkit-details-marker { display:none; }
+.sourceDrawer[open] > summary span { transform:rotate(45deg); }
+.sourceDrawer > div { padding:0 20px 20px; font-size:13px; }
+.sourceDrawer ul { list-style:none; padding:0; }
+.sourceDrawer li { display:flex; gap:16px; padding:12px 0; border-bottom:1px solid #23313b; }
+.sourceDrawer time { white-space:nowrap; color:#91a1af; }
+.sourceDrawer a { color:#9dddc4; }
+.sourceDrawer summary:focus-visible { outline:2px solid #9dddc4; }

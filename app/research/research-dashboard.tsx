@@ -4,6 +4,7 @@ import NavigationIcon from "./navigation-icon";
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
+import HomeLink from "./home-link";
 import type { Language, ResearchEvent } from "@/lib/research/data";
 import { metricNames } from "@/lib/research/data";
 import { compareMetrics } from "@/lib/research/quality";
@@ -149,7 +150,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
           <button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button>
           <button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button>
         </div>
-      </div>
+      <HomeLink lang={lang} /></div>
     </header>
 
     <div className={styles.shell}>
@@ -242,7 +243,6 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
             <div className={styles.sectionTitle}><h2>{tab === "metrics" ? t("指標一覧", "Metrics") : tab === "saved" ? t("保存した記事", "Saved research") : t("何が変わった？", "What changed?")}</h2><span>{tab === "metrics" ? allMetrics.length : filtered.length}</span></div>
             <label className={styles.search}><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input aria-label={t("銘柄・キーワードで検索", "Search ticker or keyword")} placeholder={t("銘柄・キーワードを検索", "Search ticker or keyword")} value={query} onChange={(e) => setQuery(e.target.value)} /></label>
           </div>
-          {tab === "changes" && <PriceTargetsPanel lang={lang} />}
           <div className={styles.filters}>
             {[{ id: "all", label: t("すべて", "All topics") }, { id: "cloud", label: t("AIクラウド", "AI cloud") }, { id: "memory", label: t("半導体", "Semiconductors") }].map((item) => <button key={item.id} aria-pressed={category === item.id} onClick={() => { setCategory(item.id); setTicker("all"); }}>{item.label}</button>)}
             {ticker !== "all" && <button className={styles.activeTicker} onClick={() => setTicker("all")} aria-label={t(`${ticker}の絞り込みを解除`, `Clear ${ticker} filter`)}>{ticker} ×</button>}

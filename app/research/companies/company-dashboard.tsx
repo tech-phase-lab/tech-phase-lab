@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import HomeLink from "../home-link";
 import type { CompanyComparison, CompanyProfile } from "@/lib/research/companies";
 import type { Language, ResearchEvent } from "@/lib/research/data";
 import { compareMetrics, type Source } from "@/lib/research/quality";
@@ -47,7 +48,7 @@ export default function CompanyDashboard({ profile, companies }: { profile: Comp
       <nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research">{t("ホーム", "Home")}</Link><Link href="/research#what-changed" aria-current="page">{t("何が変わった？", "What changed?")}</Link><Link href="/research/stocks">{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics">{t("決算・指標", "Financials")}</Link><Link className={base.proNav} href="/research#tech-phase-pro">Tech Phase PRO</Link></nav>
       <div className={base.headerRight}><span className={base.edition}>COMPANY RESEARCH <span>02</span></span><div className={base.languages} aria-label={t("言語", "Language")}>
         <button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button><button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button>
-      </div></div>
+      </div><HomeLink lang={lang} /></div>
     </header>
     <main className={styles.main} id="company-main">
       <CompanySwitcher ticker={profile.ticker} companies={companies} lang={lang} />

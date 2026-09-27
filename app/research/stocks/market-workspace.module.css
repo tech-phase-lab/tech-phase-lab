@@ -148,3 +148,6 @@
   .connectionStrip { grid-template-columns:1fr }
   .connectionStrip div+div { border-left:0;border-top:1px solid var(--line) }
 }
+.favoriteStar { display:inline-grid; place-items:center; min-width:44px; min-height:44px; padding:0; border:0; background:transparent; color:#97a6b5; font-size:28px; cursor:pointer; }
+.favoriteStar[aria-pressed=true] { color:#e8cc72; }
+.favoriteStar:focus-visible { outline:2px solid #e8cc72; outline-offset:2px; border-radius:8px; }
