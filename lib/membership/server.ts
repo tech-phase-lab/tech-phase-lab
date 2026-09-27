@@ -10,5 +10,5 @@ export async function getMembership() {
   if (!userId) return { status: "signed-out", plan: "free" } as const;
   // Private metadata cannot be edited by the member. Never trust browser plan claims.
   const user = await (await clerkClient()).users.getUser(userId);
-  return { status: "signed-in", plan: resolvePlan(user.privateMetadata), userId } as const;
+  return { status: "signed-in", plan: resolvePlan(user.privateMetadata), userId, isAdmin: user.privateMetadata.role === "admin" } as const;
 }

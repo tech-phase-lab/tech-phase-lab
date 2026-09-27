@@ -75,3 +75,13 @@ Supersedes the previous numbered task queue (not editorial policy):
 Started membership foundation: Clerk SDK, optional configured middleware, account page and no-store member-status endpoint. PRO comes only from server-fetched private metadata `{plan:"pro",proExpiresAt:"ISO timestamp"}` and expires closed. No client-side role selector. No billing, signup provider provisioning or real account creation performed. Existing MU sample remains public. Notification pilot security remains unchanged until member identity and per-user device ownership can be verified end to end.
 
 Still required: configure a Clerk application and its publishable/secret keys in Vercel Preview, configure allowed origins/redirects and JP/EN auth UI, test actual sign-in/out and expiry with Free/PRO test accounts, then attach account ownership to notification records and remove pilot-code dependence from the member flow. Premium content currently bundled in public research data must be moved server-side before claiming a paywall; hiding UI alone is not access control. Do not claim membership is operational before live identity-provider tests pass.
+
+## 2026-09-27 会員ログイン・登録者管理の追記
+
+- 無料の公開ページ閲覧は登録不要。匿名利用人数はアクセス解析による推定とし、登録者数と区別する。
+- ログイン／新規登録後は `/research/account` に戻す。会員状態は認証変更後にサーバーへ再確認し、FREE/PROを表示する。
+- 日本語の認証画面は「Tech Phaseにログイン」「無料で会員登録」など自然な文言に調整。
+- 登録者CSVは `/api/research/member/export`。Clerk privateMetadata.role が `admin` の会員だけが取得可能。一般会員や未ログインは403。自動的な管理者付与は行わない。
+- CSV項目: 会員ID、登録日時(UTC)、メール、確認済みフラグ、表示名、Free/PRO、有効期限、最終ログイン。パスワード・トークンは含めない。数式注入を無効化する。
+- 未完了: 運営者のClerk会員IDの確認と権限設定、実データのCSV出力確認、保存先シートへの接続。現時点でシートの作成・自動同期が済んだとは案内しない。
+- ユーザーのブラウザでログインは成功との報告。FREE表示は修正後の再確認待ち。こちらのブラウザとセッションは別。

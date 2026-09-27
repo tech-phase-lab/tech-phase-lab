@@ -7,3 +7,10 @@ test('PRO requires an explicit server-managed plan and future expiry',()=>{
  assert.equal(resolvePlan({plan:'pro',proExpiresAt:'2027-01-01'},now),'pro');
  assert.equal(resolvePlan({plan:'pro',proExpiresAt:'2026-09-27T00:00:00Z'},now),'free');
 });
+
+import {csvCell, memberCsv} from '../lib/membership/csv.ts';
+test('member exports escape CSV and neutralize spreadsheet formulas',()=>{
+ assert.equal(csvCell('A,"B"'), '"A,""B"""');
+ for(const value of ['=1+1',' +SUM(A1)','\t@IMPORT','-1']) assert.ok(csvCell(value).startsWith('"\''));
+ assert.equal(memberCsv([['名前','プラン']]), '\uFEFF"名前","プラン"');
+});
