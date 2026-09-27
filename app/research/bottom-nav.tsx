@@ -44,6 +44,7 @@ export default function BottomNav() {
     { href: "/research/market", label: ja ? "マーケット" : "Markets", icon: "metrics", active: pathname === "/research/market" },
   ];
   const links: [string, string, NavigationIconName][] = [
+    ["/research/account", ja ? "マイアカウント" : "My account", "home"],
     ["/research#what-changed", ja ? "何が変わった？" : "What changed?", "changes"],
     ["/research/watchlist", ja ? "お気に入り" : "Favorites", "favorite"],
     ["/research/calendar", ja ? "決算・経済指標" : "Earnings & economy", "calendar"],

@@ -64,3 +64,14 @@ Align Free and PRO bullet insets at zero list padding. Keep only the approved pa
 ## Priority 3 — real device notification controls
 
 Replaced display-only toggle with actual PushManager registration, server registration status, unsubscribe, and rate-limited server test delivery. On requires confirmed registration; browser permission alone is not success. Test provider acceptance and user-confirmed receipt are separate. Reloaded subscriptions start unverified until checked. Private pilot code remains required on authenticated server actions and is held in memory only; production membership authentication is not yet implemented. The user must verify receipt on their own phone. No unsolicited test sent to existing devices.
+
+## New priorities approved September 27, 22:45 JST
+
+Supersedes the previous numbered task queue (not editorial policy):
+1. Membership: sign in/out, server-side Free/PRO entitlement, then restricted research and member notifications. Production notification UX must be a simple on/off switch with no pilot-code entry.
+2. Measure intake → bilingual display with missed-event and duplicate checks.
+3. Editorial publishing UI for weekly PRO, Research Q&A and RIZEL notes.
+
+Started membership foundation: Clerk SDK, optional configured middleware, account page and no-store member-status endpoint. PRO comes only from server-fetched private metadata `{plan:"pro",proExpiresAt:"ISO timestamp"}` and expires closed. No client-side role selector. No billing, signup provider provisioning or real account creation performed. Existing MU sample remains public. Notification pilot security remains unchanged until member identity and per-user device ownership can be verified end to end.
+
+Still required: configure a Clerk application and its publishable/secret keys in Vercel Preview, configure allowed origins/redirects and JP/EN auth UI, test actual sign-in/out and expiry with Free/PRO test accounts, then attach account ownership to notification records and remove pilot-code dependence from the member flow. Premium content currently bundled in public research data must be moved server-side before claiming a paywall; hiding UI alone is not access control. Do not claim membership is operational before live identity-provider tests pass.
