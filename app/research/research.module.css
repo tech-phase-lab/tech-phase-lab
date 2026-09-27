@@ -1009,21 +1009,13 @@
   font-size:12px;
   white-space:nowrap
 }
-.unknown {
-  padding:14px 16px;
-  border:1px solid #393731;
-  border-radius:4px;
-  background:#1b1c19
-}
-.unknown h3 {
-  color:#d7caa0;
-  font-size:12px;
-  margin-bottom:6px
-}
-.unknown p {
-  color:#c4c0b0;
-  font-size:13px
-}
+.detailSection > p + p { margin-top: 12px; }
+.analysisHeading { font-size:15px; line-height:1.65; color:#e0e7ee; margin:0 0 10px; }
+.scenarios { display:grid; gap:16px; }
+.scenarios > div { border-top:1px solid var(--line); padding-top:14px; }
+.scenarios h4 { font-size:14px; line-height:1.65; margin:0 0 7px; color:#e0e7ee; }
+.scenarios p { font-size:14px; line-height:1.9; color:#bbc7d2; margin:0; }
+.detail h2 { text-wrap:balance; }
 .sources {
   margin-top:25px;
   border-top:1px solid var(--line);

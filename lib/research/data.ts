@@ -9,6 +9,8 @@ export type ResearchEvent = {
   publishedOn: string; reviewedOn: string;
   title: Copy; summary: Copy; change: Copy; interpretation: Copy;
   facts: { text: Copy; sourceIds: string[] }[];
+  analysis?: { heading: Copy; body: Copy }[];
+  scenarios?: { heading: Copy; body: Copy }[];
   unknown: Copy; next: Copy;
   sources: Source[]; metrics: Metric[];
   previous?: Metric[];
@@ -87,18 +89,28 @@ export const events: ResearchEvent[] = [
   {
     id: "mu-q3-2026", ticker: "MU", company: "Micron", category: "memory", kind: "earnings",
     publishedOn: "2026-06-24", reviewedOn: "2026-09-27",
-    title: copy("売上74％増、利益率も上昇。次は成長の持続性", "Revenue jumps 74%. Can the momentum last?"),
-    summary: copy("売上の拡大と採算の改善が同時に進んだ決算。次の焦点は、高い利益率を維持しながら成長できるか。", "Sales and profitability improved together. The next question is whether growth can continue at these margins."),
-    change: copy("前四半期比で売上は73.7％増、粗利益率は10.2ポイント上昇。規模の拡大だけでなく、売上から残る利益の割合も高まった。", "Revenue rose 73.7% quarter over quarter and gross margin expanded 10.2 percentage points. More sales also yielded more gross profit per dollar."),
+    title: copy("Micron：値上がりの次は、利益を守れる契約か", "Micron: from rising prices to more durable earnings?"),
+    summary: copy("増収の勢いより、価格が落ち着いた後の利益に注目。長期契約の保護範囲と、増産に伴うコストが次の評価軸になる。", "Look beyond the revenue surge to earnings after pricing normalizes. Contract protection and the cost of expansion become the next tests."),
+    change: copy("売上は前四半期比73.7％増。しかし、この伸び率を将来に延長するより、価格上昇への依存がどこまで契約で補われるかを読む決算。", "Revenue rose 73.7% sequentially. The forward question is how far contracts can cushion dependence on further price increases."),
     facts: [
-      { text: copy("売上：238.60億ドル → 414.56億ドル。", "Revenue: $23.860B → $41.456B."), sourceIds: ["mu-q3"] },
-      { text: copy("粗利益率（米国会計基準）：74.4％ → 84.6％。", "GAAP gross margin: 74.4% → 84.6%."), sourceIds: ["mu-q3"] },
-      { text: copy("Q4の会社予想：売上490〜510億ドル、粗利益率は約86％。実績ではなく、6月24日時点の見通し。", "Q4 guidance: $49–51B revenue and approximately 86% gross margin. These are June 24 forecasts, not actual results."), sourceIds: ["mu-q3"] },
+      { text: copy("売上238.60億→414.56億ドル、GAAP粗利益率74.4％→84.6％。Q4会社予想は売上490〜510億ドル、同利益率約86％。", "Revenue: $23.860B → $41.456B; GAAP gross margin: 74.4% → 84.6%. Q4 guidance: $49–51B and approximately 86%."), sourceIds: ["mu-q3"] },
+      { text: copy("会社は価格上昇を利益率改善の主因と説明。長期の顧客契約16件を締結し、大口契約には価格の上下限を設定。契約期間中の数量ではDRAM約2割・NAND約3分の1が対象。", "Management attributes margin expansion mainly to pricing. Sixteen strategic customer agreements are signed; major agreements have price floors and ceilings. Signed agreements cover roughly 20% of DRAM volume and one-third of NAND volume over their terms."), sourceIds: ["mu-remarks"] },
+      { text: copy("会社は今後の製品高度化・新工場立ち上げに伴うDRAMの単位コスト上昇を想定。", "Management expects DRAM unit costs to rise with more complex products and new-fab ramps."), sourceIds: ["mu-remarks"] },
     ],
-    interpretation: copy("注目したいのは、増収と利益率改善が同時に起きた点です。売上だけが伸びた場合より、事業の採算が改善したことまで確認できます。\n\nただし、この結果をそのまま次の四半期へ延ばすことはできません。販売価格、製品構成、製造コストのどれが改善を支えたかによって、持続性の読み方は変わります。\n\nTech Phaseでは、売上の伸びと利益率を組み合わせて追います。増収が続いても利益率が下がれば、『成長は継続、採算には変化』と分けて捉える必要があります。", "The important combination is higher sales and better margins: growth also improved operating economics.\n\nPersistence is a separate question. Pricing, product mix and manufacturing costs can support margins in different ways; headline results alone do not isolate their contributions.\n\nOur focus is the combination. If sales keep rising but margins fall, growth continues while the profitability story changes."),
-    unknown: copy("利益率改善の要因別の寄与と、その持続性はこの決算概要だけでは判断できません。業績の改善が、そのまま株価の上昇を意味するわけでもありません。", "This release does not isolate the drivers or establish their durability. Better business results do not by themselves imply a higher share price."),
-    next: copy("売上：Q4実績が490〜510億ドルの会社予想に届いたか。\n利益率：約86％の予想に対し、売上の伸びと採算が両立したか。\n次の見通し：成長率や利益率が変わった場合、その理由を価格・製品構成・コストの説明で確かめる。", "Revenue: did Q4 land within the $49–51B guidance range?\nMargin: did profitability hold near the 86% outlook as sales grew?\nNext outlook: if growth or margins change, examine management's explanation of pricing, mix and costs."),
-    sources: [micronSource],
+    interpretation: copy("Tech Phaseの見立ては「成長率の再加速」より「高収益をどこまで残せるか」への移行です。値上げが鈍っても利益の水準が維持されれば、伸び率低下だけで事業の悪化とは読めません。一方、長期契約があるという理由だけで、現在の利益率が固定されたとも考えません。", "Our thesis shifts from accelerating growth to retaining earnings power. Slower price increases need not mean deteriorating operations if profit levels hold. Conversely, long-term agreements do not lock in the current margin."),
+    analysis: [
+      { heading: copy("01｜次の決算は「増収率」だけでは判定できない", "01 | Slower growth is not the same as a reversal"), body: copy("Q4売上予想の中心値500億ドルは、Q3比で約20.6％増です。Q3の73.7％増からは減速しますが、同時に会社は利益率の上昇を見込んでいます。したがって、次に成長率が下がったという見出しだけでは判断を誤ります。確認するのは、価格上昇が緩やかになっても売上と利益の絶対額が増えるか。数量増と単価改善を分けて追い、値上げに頼らず伸ばせる部分が広がるなら、成長の質はむしろ改善する可能性があります。", "The $50B Q4 midpoint implies about 20.6% sequential growth, below Q3’s 73.7%, alongside a higher guided margin. A slower-growth headline would therefore be insufficient evidence of reversal. Separate shipment growth from pricing and ask whether revenue and profit dollars still rise. A broader volume contribution could improve growth quality even as the headline rate slows.") },
+      { heading: copy("02｜長期契約は「上値を譲って、下値を守る」仕組み", "02 | Contract protection has an upside trade-off"), body: copy("価格の下限は、市況が下がったときに売上が全面的に連動して落ちるリスクを和らげます。ただし上限があれば、市況がさらに上昇しても、その契約部分の単価は同じようには伸びません。ここは強気材料と弱気材料を別々に数えるのではなく、収益の振れ幅を抑える交換条件として読むべきです。評価したいのは最大の利益ではなく、次の調整局面に残る利益。現時点の対象はDRAMの約2割・NANDの約3分の1という数量ベースで、全社を覆うものではありません。これを売上の保護割合に置き換えることもできません。契約外の価格と製品ごとの採算が、残る振れ幅を左右します。", "A floor can soften the transmission of weaker market prices into revenue. A ceiling can also restrict participation in further price increases. These are two sides of a trade-off: less variability rather than unlimited upside. The analytical target is profit retained through a downturn, not peak profit. The disclosed volume coverage is partial, not company-wide, and cannot be treated as a revenue-coverage ratio. Uncontracted pricing and product economics still determine residual volatility.") },
+      { heading: copy("03｜価格が守られても、利益率は守られるとは限らない", "03 | Protected pricing is not protected margin"), body: copy("粗利益率は販売価格と製造コストの両方で決まります。価格の下限があっても、新工場の稼働率が低い期間や新製品の製造効率が上がらない期間には、採算が悪化し得ます。次世代製品の付加価値を価格に転嫁できるかが重要です。見る順番は、契約条件、製造コスト、設備投資後に残る現金。契約の拡大と同時に現金創出も維持されるなら、供給拡大を自力で支える構造に近づいたと評価できます。", "Margins depend on costs as well as prices. A price floor cannot prevent underused new capacity or poor manufacturing yields from compressing profitability. The key is whether new-product premiums cover added costs. Follow contract economics, manufacturing efficiency and cash remaining after investment, in that order. Stronger coverage accompanied by sustained cash generation would support a more self-financing expansion.") },
+    ],
+    scenarios: [
+      { heading: copy("基本線｜伸び率は落ち着き、利益水準は維持", "Base case | Growth settles; earnings hold"), body: copy("会社予想に沿って売上と利益率が進み、価格の鈍化を数量・製品構成で補う。これを出発点とし、利益率の伸びが小さいことだけでは見立てを変えない。", "Start with delivery broadly consistent with guidance and volume or mix supporting sales as pricing moderates. Smaller margin gains alone would not overturn the thesis.") },
+      { heading: copy("上振れ｜価格以外の成長が太くなる", "Upside | Growth broadens beyond pricing"), body: copy("出荷の増加と製造効率の改善が同時に進み、投資後の現金も増える場合。単価の上振れだけより、次の期にも続く利益の根拠として強い。", "Higher shipments and better manufacturing efficiency arrive together, with more cash after investment. That is stronger evidence of repeatable earnings than a price-only upside surprise.") },
+      { heading: copy("見直し｜契約の保護よりコスト・需要の悪化が大きい", "Reassessment | Costs or demand overwhelm protection"), body: copy("契約条件の変更や数量の弱さに、利益率低下と現金創出の悪化が重なる場合。「成長率の正常化」では片づけず、収益の持続性という見立てを引き下げる。", "Contract revisions or weaker volumes coincide with margin compression and worse cash generation. That combination would weaken the durability thesis, rather than qualify as simple growth normalization.") },
+    ],
+    unknown: copy("契約別の採算と将来の製造コストは十分に見えません。そのため、下限価格から将来利益や適正株価を逆算する段階ではありません。上記の分岐は6月24日の開示から組み立てた分析で、会社予想とは区別しています。", "Contract-level economics and future manufacturing costs remain incomplete. We cannot derive a future earnings floor or fair share price from contract floors. The scenarios are our June 24 information-set analysis, not company forecasts."),
+    next: copy("次の決算：売上490〜510億ドル・GAAP粗利益率約86％との比較に加え、数量と価格を分けて確認。\n契約の開示：件数だけでなく、対象数量・価格条件の変化を追う。保護が全社にどこまで届くかを見直す。\n増産の進捗：利益率と投資後の現金を組み合わせ、成長が資金負担の増加だけに終わっていないか確かめる。", "Next results: compare revenue and GAAP margin with guidance; separate volume from pricing.\nContract updates: track covered volume and pricing terms, not just agreement counts. Reassess company-wide protection.\nExpansion: assess margins alongside cash after investment to test whether growth is creating value beyond a larger funding burden."),
+    sources: [micronSource, { id: "mu-remarks", publisher: "Micron IR", title: "Fiscal Q3 2026 prepared remarks", url: "https://s25.q4cdn.com/621799436/files/doc_financials/2026/q3/Q3-FY26-Prepared-Remarks.pdf", publishedOn: "2026-06-24", location: "pp. 2–4, 8, 10 · Contracts / Costs / Pricing / Outlook" }],
     metrics: [
       metric("revenue", 41456, { scope: "Micron", period: "FQ3 2026", periodEnd: "2026-05-28", sourceId: "mu-q3" }),
       metric("gross-margin", 84.6, { unit: "percent", currency: null, scope: "Micron", period: "FQ3 2026", periodEnd: "2026-05-28", sourceId: "mu-q3" }),

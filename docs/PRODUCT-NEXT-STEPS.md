@@ -20,3 +20,7 @@ The user will arrange legal review before launching the paid service. Do not pre
 - MU example source: Micron IR, fiscal Q3 2026 earnings release, June 24, 2026.
 - Arithmetic checked: (41,456 / 23,860 - 1) × 100 = 73.7468567%; 84.6 - 74.4 = 10.2 percentage points.
 - Direct preview entry: /research#what-changed/mu-q3-2026.
+
+## Editorial revision — MU v2
+
+The user rejected v1 as too shallow for paid research. Removed colored uncertainty treatment. V2 uses the official prepared remarks alongside the release to distinguish pricing-driven growth, contract floors versus ceilings, and cost exposure. Adds forward scenarios and explicit thesis-reassessment conditions in Japanese and English. This remains a June 24 historical case, not a current forecast. Priority 1 awaits user review; priorities 2 and 3 remain pending.
