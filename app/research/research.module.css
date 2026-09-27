@@ -1630,3 +1630,8 @@
 @media(max-width:760px) {
   .planStack .proBenefits li { font-size:clamp(11px,3.15vw,13px); letter-spacing:-.02em; }
 }
+
+.headerAccount { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:0 12px; border:1px solid #49616a; border-radius:9px; color:#dce9e7; font-size:13px; text-decoration:none; white-space:nowrap; }
+.headerAccount:hover, .headerAccount[aria-current="page"] { background:#20363d; color:#a6e4cd; }
+.headerAccount:focus-visible { outline:2px solid #a6e4cd; outline-offset:3px; }
+@media (max-width: 760px) { .headerAccount { display:none; } }
