@@ -3426,3 +3426,34 @@ press-conference clock times. No calendar event changed.
 Continue with INTC, LRCX, META, MSFT, MU, NFLX, QCOM, SNDK, TSLA and TSM.
 Inaccessible, projected, historical-only and undated placeholder states remain
 pending and must not be promoted to forecast dates.
+
+## One-hundred-fifteenth company batch reviewed on 2026-09-28
+
+The requested ten-company batch was rechecked against first-party schedules,
+announcements and investor-relations pages. Intel still explicitly reports no
+upcoming events, while Micron, Netflix and TSMC still publish the same confirmed
+future earnings events already recorded in the calendar. Those four checks
+advance. The other six attempts remain pending; no forecast date is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| INTC | Checked | The official IR calendar explicitly says that no upcoming events are scheduled. |
+| LRCX | Pending | The official page lists a November 3 annual meeting, not an earnings release or call, and gives no explicit no-events statement for earnings. |
+| META | Pending | The official Upcoming Events page says to stay tuned, without a dated future item or explicit no-events statement. |
+| MSFT | Pending | The official Upcoming Events page did not expose an inspectable dated schedule state through the review connection. |
+| MU | Checked | The official announcement still schedules the fiscal Q4 earnings call for September 30 at 2:30 p.m. Mountain; the existing call entry remains unchanged. |
+| NFLX | Checked | The official announcement still schedules Q3 results for October 20 at approximately 1:01 p.m. Pacific and the management interview for 1:45 p.m.; the existing release entry remains unchanged. |
+| QCOM | Pending | The official Events page exposes an empty Upcoming Events section without an explicit no-events statement. |
+| SNDK | Pending | The official Events page lists only past events through September 9, including the August 5 fiscal Q4 call, without a future earnings announcement or explicit no-events statement. |
+| TSLA | Pending | The official documents and events table still ends with the July 22 Q2 update, without a future earnings announcement or explicit no-events statement. |
+| TSM | Checked | The official Financial Calendar still lists the October 15 Q3 2026 earnings conference and call at 14:00 Asia/Taipei; the existing call entry remains unchanged. |
+
+The BLS October schedule was rechecked on 2026-09-28 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar, last updated September 16, still
+lists the October 27-28 and December 8-9 meetings without future statement or
+press-conference clock times. No calendar event changed.
+
+Continue with AAPL, AMZN, ANET, ARM, AVGO, BE, COHR, CRDO, CRM and CRWV.
+Inaccessible, historical-only and empty dynamic states remain inconclusive and
+must not be promoted to forecast dates.
