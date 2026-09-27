@@ -3179,3 +3179,34 @@ times. No calendar event changed.
 Continue with BE, COHR, CRDO, CRM, CRWV, GOOGL, KLAC, LITE, MRVL and NBIS.
 Empty dynamic sections, historical-only pages and transport failures remain
 inconclusive and must not be promoted to forecast dates.
+
+## One-hundred-seventh company batch reviewed on 2026-09-27
+
+The next ten pending entries were rechecked against their first-party schedule,
+news or investor-relations pages. None supplied a confirmed future earnings
+date or an explicit no-events statement. Their existing same-day
+`lastAttemptedOn` values remain unchanged; every `lastCheckedOn` remains null
+and no forecast date is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| BE | Pending | The official Event Calendar exposes an empty Upcoming Events section without an explicit no-events statement. |
+| COHR | Pending | The official Financial Releases list still ends with the August 12 fiscal Q4 and full-year results and contains no future timing announcement. |
+| CRDO | Pending | The official Events page exposes empty Upcoming & Recent Events and Archived Events sections without an explicit no-events statement. |
+| CRM | Pending | The official Events page exposes an empty Upcoming & Recent Events section and archive heading without an explicit no-events statement. |
+| CRWV | Pending | The official page exposes empty Upcoming & Recent Events and Archived Events sections without an explicit no-events statement. |
+| GOOGL | Pending | The official Events page supplied only its page shell, with no inspectable dated schedule state or explicit no-events statement. |
+| KLAC | Pending | The primary Events & Presentations URL remained inaccessible; the official IR alternate lists a November 4 annual meeting and July 28 as the latest completed earnings call, but no future earnings announcement. |
+| LITE | Pending | The official page exposes empty Latest Events, Latest Presentation and archive sections without a dated future earnings item or explicit no-events statement. |
+| MRVL | Pending | The primary Events & Presentations URL remained inaccessible; the official IR calendar alternate lists an October 6 Investor Day and August 27 as the latest completed earnings call, but no future earnings announcement. |
+| NBIS | Pending | The official Investor Hub lists investor conferences and other past material without a future earnings announcement or explicit no-events statement. |
+
+The BLS October schedule was rechecked on 2026-09-27 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar, last updated September 16, still
+lists the October 27-28 and December 8-9 meetings without future statement or
+press-conference clock times. No calendar event changed.
+
+Continue with NOW, NVDA, ORCL, PANW, PLTR, SKHY, SNOW, VRT, AAPL and AMZN.
+Empty dynamic sections, historical-only pages and transport failures remain
+inconclusive and must not be promoted to forecast dates.
