@@ -4,7 +4,7 @@ export function GET(request: Request) {
   const ja = lang === "ja";
   const config = {
     colorTheme: "dark", dateRange: "1D", locale: lang, width: "100%", height: "100%",
-    showChart: true, showSymbolLogo: true, isTransparent: false,
+    showChart: true, showFloatingTooltip: true, scaleFontColor: "#aab9c4", gridLineColor: "rgba(140,160,175,0.12)", showSymbolLogo: true, isTransparent: false,
     tabs: [
       { title: ja ? "指数" : "Indices", symbols: [
         { s: "FOREXCOM:SPXUSD", d: "S&P 500 · CFD" },

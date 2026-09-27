@@ -12,3 +12,14 @@
   .sheet a:hover { background:#20372f; }
   .sheet a span { color:#8db7a9; }
 }
+
+@media(max-width:760px) {
+  .sheet { padding:18px; border-radius:22px; background:linear-gradient(150deg,#192c35,#101b24); }
+  .sheetHeading { display:flex; align-items:center; justify-content:space-between; padding:0 4px 14px; color:#ecf3f1; font-size:15px; }
+  .sheetHeading button { width:32px; height:32px; border:1px solid #36505d; border-radius:50%; background:#20343e; color:#c6d6dc; font-size:23px; cursor:pointer; }
+  .menuGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .menuGrid a { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:12px; min-height:98px; padding:14px; border:1px solid #2b424e; border-radius:14px; background:#1b2c36; font-size:12px; }
+  .menuGrid a span { color:#dce9e7; }
+  .menuGrid .menuIcon { display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:10px; color:#a3e8ce; background:#28473f; }
+  .menuIcon svg { width:20px; height:20px; }
+}

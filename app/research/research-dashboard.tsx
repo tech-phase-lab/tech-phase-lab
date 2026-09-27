@@ -228,6 +228,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
             <article className={`${styles.accessCard} ${styles.proCard}`}>
               <div className={styles.accessStatus}><span>TECH PHASE PRO</span></div>
               <p className={styles.planPrice}>{t("¥2,980", "$20")}<small>{t(" / 月", " / month")}</small></p>
+              <button className={styles.planCta} disabled>{t("お申し込み準備中", "Coming soon")}</button>
               <h3>{t("重要な変化と、その先をつかむ。", "Understand what changed—and why it matters.")}</h3>
               <ul>{[
                 t("無料プランのすべての機能", "Everything in Free"),
@@ -239,7 +240,6 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
                 t("企業の変化を過去の発表と比較", "Compare company developments with past releases"),
                 t("関連銘柄への影響と次の注目点", "Implications for related stocks and what to watch next"),
               ].map(item => <li key={item}>{item}</li>)}</ul>
-              <button className={styles.planCta} disabled>{t("お申し込み準備中", "Coming soon")}</button>
             </article>
           </div>
         </section>}

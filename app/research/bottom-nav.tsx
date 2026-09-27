@@ -43,17 +43,17 @@ export default function BottomNav() {
     { href: "/research/stocks", label: ja ? "銘柄検索" : "Search", icon: "search", active: pathname.startsWith("/research/stocks") },
     { href: "/research/market", label: ja ? "マーケット" : "Markets", icon: "metrics", active: pathname === "/research/market" },
   ];
-  const links = [
-    ["/research#what-changed", ja ? "何が変わった？" : "What changed?"],
-    ["/research/watchlist", ja ? "お気に入り" : "Favorites"],
-    ["/research/calendar", ja ? "決算・経済指標" : "Earnings & economy"],
-    ["/research/notifications", ja ? "スマホ通知設定" : "Notifications"],
-    ["/research#saved", ja ? "保存したリサーチ" : "Saved research"],
-    ["/research#monitored-companies", ja ? "分析対象企業" : "Company coverage"],
+  const links: [string, string, NavigationIconName][] = [
+    ["/research#what-changed", ja ? "何が変わった？" : "What changed?", "changes"],
+    ["/research/watchlist", ja ? "お気に入り" : "Favorites", "favorite"],
+    ["/research/calendar", ja ? "決算・経済指標" : "Earnings & economy", "calendar"],
+    ["/research/notifications", ja ? "スマホ通知設定" : "Notifications", "bell"],
+    ["/research#saved", ja ? "保存したリサーチ" : "Saved research", "saved"],
+    ["/research#monitored-companies", ja ? "分析対象企業" : "Company coverage", "companies"],
   ];
   return <div className={styles.mobile}>
     {open && <><button className={styles.backdrop} aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus(); }} />
-      <nav ref={panel} id="mobile-more-menu" className={styles.sheet} aria-label={ja ? "その他のメニュー" : "More navigation"}>{links.map(([href, label]) => <Link key={href} href={href} onClick={(event) => navigate(event, href)}>{label}<span aria-hidden="true">→</span></Link>)}</nav></>}
+      <nav ref={panel} id="mobile-more-menu" className={styles.sheet} aria-label={ja ? "その他のメニュー" : "More navigation"}><div className={styles.sheetHeading}><strong>{ja ? "メニュー" : "Explore"}</strong><button aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus(); }}>×</button></div><div className={styles.menuGrid}>{links.map(([href, label, icon]) => <Link key={href} href={href} onClick={(event) => navigate(event, href)}><span className={styles.menuIcon}><NavigationIcon name={icon} /></span><span>{label}</span></Link>)}</div></nav></>}
     <nav className={styles.bar} aria-label={ja ? "メインメニュー" : "Main navigation"}>
       {tabs.map(({ href, label, icon, active }) => <Link key={href} href={href} aria-current={!open && active ? "page" : undefined} onClick={(event) => navigate(event, href)}><NavigationIcon name={icon} /><span>{label}</span></Link>)}
       <button ref={trigger} aria-expanded={open} aria-controls="mobile-more-menu" onClick={() => setOpen(!open)}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg><span>{ja ? "メニュー" : "Menu"}</span></button>

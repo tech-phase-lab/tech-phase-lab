@@ -1,5 +1,6 @@
-export type NavigationIconName = "home" | "changes" | "search" | "companies" | "metrics" | "saved" | "pro" | "calendar" | "favorite";
+export type NavigationIconName = "home" | "changes" | "search" | "companies" | "metrics" | "saved" | "pro" | "calendar" | "favorite" | "bell";
 const paths: Record<NavigationIconName, string> = {
+  bell: "M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4",
   home: "m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9",
   changes: "M3 12h4l3-7 4 14 3-7h4",
   search: "M21 21l-5-5M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0",
