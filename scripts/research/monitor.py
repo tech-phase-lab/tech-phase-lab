@@ -3761,7 +3761,10 @@ def activate_generation_job(db, url, reserved_tokens=0):
 def recover_generation_jobs(db, stale_minutes=10):
     """Recover interrupted work without paying twice when a valid generated draft was saved."""
     recovered_at = now()
-    cutoff = (datetime.now(timezone.utc) - timedelta(minutes=stale_minutes)).isoformat(timespec="milliseconds")
+    recovered_time = stored_utc_datetime(recovered_at)
+    if recovered_time is None:
+        return {"completed": 0, "interrupted": 0}
+    cutoff = (recovered_time - timedelta(minutes=max(0, stale_minutes))).isoformat(timespec="milliseconds")
     with db:
         db.execute("BEGIN IMMEDIATE")
         completed = db.execute("""
@@ -3780,11 +3783,15 @@ def recover_generation_jobs(db, stale_minutes=10):
         """, (recovered_at,))
         interrupted = db.execute("""
           UPDATE brief_generation_jobs SET status='retry',next_attempt_at=?,error_code='worker-interrupted'
-          WHERE status='running' AND started_at<=?
+          WHERE status='running' AND (
+            julianday(started_at) IS NULL OR julianday(started_at)<=julianday(?)
+          )
         """, (recovered_at, cutoff)).rowcount
         db.execute("""
           UPDATE brief_generation_attempts SET completed_at=?,outcome='interrupted',error_code='worker-interrupted'
-          WHERE outcome='running' AND started_at<=?
+          WHERE outcome='running' AND (
+            julianday(started_at) IS NULL OR julianday(started_at)<=julianday(?)
+          )
         """, (recovered_at, cutoff))
     return {"completed": completed, "interrupted": interrupted}
 

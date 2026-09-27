@@ -178,6 +178,10 @@ ceiling. A missing, malformed, timezone-free or more-than-seven-day
 future value is treated as due so corrupt persisted state cannot strand an
 official route or discovered child article indefinitely; the resulting single
 normal request writes a fresh bounded schedule.
+Interrupted Japanese-summary generation is recovered with the same absolute-
+instant rule. A UTC offset cannot make a recent in-flight request appear stale
+or leave an actually stale request running forever. Malformed persisted start
+times are interrupted rather than permanently locking the private draft queue.
 Persisted per-source and per-host failure counters are also type-checked and
 bounded before they affect backoff. A malformed, negative or over-limit value
 restarts at the first retry instead of stopping the body worker or inflating an

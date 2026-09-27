@@ -3179,6 +3179,71 @@ class ResearchServiceTests(unittest.TestCase):
             ).fetchone()[0], "succeeded")
             self.assertEqual(claim["attempt"], 1)
 
+    def test_recovery_compares_running_offsets_as_absolute_instants(self):
+        url = "https://nebius.com/newsroom/new-release"
+        current = "2026-09-28T00:30:00+00:00"
+        with monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            monitor.save_source_check(db, row, {
+                "sha256": "d" * 64, "contentType": "text/html", "contentBytes": 80,
+                "extractedText": "Official evidence remains available for review.", "extractedChars": 47,
+            })
+            monitor.queue_generation_job(db, url, 7_000)
+            with patch.object(monitor, "now", return_value=current):
+                claim = monitor.claim_generation_job(db, 20, 3, 100_000)
+
+            # This sorts before the UTC cutoff as text but is the current
+            # instant, so it must remain running.
+            recent = "2026-09-27T23:30:00-01:00"
+            db.execute(
+                "UPDATE brief_generation_jobs SET started_at=? WHERE url=?", (recent, url)
+            )
+            db.execute(
+                "UPDATE brief_generation_attempts SET started_at=? WHERE id=?",
+                (recent, claim["attemptId"]),
+            )
+            db.commit()
+            with patch.object(monitor, "now", return_value=current):
+                recovered = monitor.recover_generation_jobs(db, stale_minutes=10)
+            self.assertEqual(recovered["interrupted"], 0)
+            self.assertEqual(db.execute(
+                "SELECT status FROM brief_generation_jobs WHERE url=?", (url,)
+            ).fetchone()[0], "running")
+
+            # This sorts after the UTC cutoff as text but is 30 minutes old,
+            # so both the job and its persisted attempt must be recovered.
+            stale = "2026-09-28T01:00:00+01:00"
+            db.execute(
+                "UPDATE brief_generation_jobs SET started_at=? WHERE url=?", (stale, url)
+            )
+            db.execute(
+                "UPDATE brief_generation_attempts SET started_at=? WHERE id=?",
+                (stale, claim["attemptId"]),
+            )
+            db.commit()
+            with patch.object(monitor, "now", return_value=current):
+                recovered = monitor.recover_generation_jobs(db, stale_minutes=10)
+            self.assertEqual(recovered["interrupted"], 1)
+            self.assertEqual(db.execute(
+                "SELECT status FROM brief_generation_jobs WHERE url=?", (url,)
+            ).fetchone()[0], "retry")
+            self.assertEqual(db.execute(
+                "SELECT outcome FROM brief_generation_attempts WHERE id=?", (claim["attemptId"],)
+            ).fetchone()[0], "interrupted")
+
+            db.execute(
+                "UPDATE brief_generation_jobs SET status='running',started_at='invalid' WHERE url=?",
+                (url,),
+            )
+            db.execute(
+                "UPDATE brief_generation_attempts SET outcome='running',started_at='invalid' WHERE id=?",
+                (claim["attemptId"],),
+            )
+            db.commit()
+            with patch.object(monitor, "now", return_value=current):
+                recovered = monitor.recover_generation_jobs(db, stale_minutes=10)
+            self.assertEqual(recovered["interrupted"], 1)
+
     def test_editorial_http_api_is_fail_closed_and_bearer_protected(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         with monitor.connect(self.db_path) as db:
