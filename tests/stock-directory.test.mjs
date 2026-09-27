@@ -390,7 +390,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(dashboard, /米国株を探す/);
   assert.match(dashboard, /Tech Phase PRO/);
   assert.doesNotMatch(dashboard, /変化を追う/);
-  assert.match(dashboard, /情報の先に、確かな判断を。/);
+  assert.match(dashboard, /変化を読み、一歩先へ。/);
   assert.match(dashboard, /お申し込み準備中/);
   assert.match(dashboard, /重要ニュースの要点を日本語・英語で/);
   assert.match(dashboard, /className=\{styles.planCta\} disabled/);
