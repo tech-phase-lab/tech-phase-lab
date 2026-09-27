@@ -122,8 +122,8 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   for (const ticker of ["MU", "NFLX", "TSM"]) assert.equal(checked[ticker], "2026-09-27");
   assert.equal(checked.ORCL, "2026-09-27");
   for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "COHR", "CRDO", "CRM", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NBIS", "NOW", "NVDA", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(checked[ticker], null);
-  for (const ticker of ["BE", "COHR", "CRDO", "CRM", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NBIS"]) assert.equal(byTicker[ticker].lastAttemptedOn, "2026-09-28");
-  for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(byTicker[ticker].lastAttemptedOn, "2026-09-27");
+  for (const ticker of ["AAPL", "AMZN", "BE", "COHR", "CRDO", "CRM", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(byTicker[ticker].lastAttemptedOn, "2026-09-28");
+  for (const ticker of ["ANET", "ARM", "AVGO"]) assert.equal(byTicker[ticker].lastAttemptedOn, "2026-09-27");
   for (const ticker of ["ADBE", "AMAT", "AMD", "ASML", "CRWD", "DELL", "GEV", "INTC", "LRCX", "META"]) assert.equal(byTicker[ticker].lastAttemptedOn, "2026-09-27");
   for (const ticker of ["MSFT", "MU", "NFLX", "QCOM", "SNDK", "TSLA", "TSM"]) assert.equal(byTicker[ticker].lastAttemptedOn, "2026-09-27");
   assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 18);
