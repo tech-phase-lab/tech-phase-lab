@@ -3270,3 +3270,36 @@ times. No calendar event changed.
 Continue with BE, COHR, CRDO, CRM, CRWV, GOOGL, KLAC, LITE, MRVL and NBIS.
 Empty dynamic sections, historical-only pages and transport failures remain
 inconclusive and must not be promoted to forecast dates.
+
+## One-hundred-tenth company batch reviewed on 2026-09-27
+
+The ten companies with the oldest completed coverage dates were rechecked
+against their first-party schedule or investor-relations pages. Adobe, ASML and
+GE Vernova still expose their already-recorded confirmed future events. AMD and
+Intel explicitly report that no upcoming events are scheduled. Those five
+checks advance. The other five attempts remain pending; no forecast date is
+added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| ADBE | Checked | The official page still lists the December 9 Q4 and FY2026 earnings call at 2:00 p.m. Pacific; the existing release/call distinction remains unchanged. |
+| AMAT | Pending | The official calendar labels the November 12 Q4 call as projected and separately lists an October 13 Investor Breakfast. A projected date is not promoted to the calendar. |
+| AMD | Checked | The official IR calendar explicitly says that no upcoming events are scheduled. |
+| ASML | Checked | The official embedded financial calendar still lists October 14 Q3 2026 financial results as its next event; the existing date-only event remains unchanged. |
+| CRWD | Pending | The official page lists September presentations and completed events through the August 26 fiscal Q2 call, without a future earnings item or explicit no-events statement. |
+| DELL | Pending | The official Upcoming Events page says only that more events are coming soon, without a dated event or explicit no-events statement. |
+| GEV | Checked | The official page still lists the October 28 Q3 2026 earnings webcast at 7:30 a.m. Eastern; the existing webcast entry remains unchanged. |
+| INTC | Checked | The official IR calendar explicitly says that no upcoming events are scheduled. |
+| LRCX | Pending | The official page lists a November 3 annual meeting, not an earnings release or call, and gives no explicit no-events statement for earnings. |
+| META | Pending | The official Upcoming Events page says to stay tuned, without a dated future item or explicit no-events statement. |
+
+Applied Materials' projected date remains excluded: projected or estimated
+dates are not evidence-backed calendar events. The BLS October schedule was
+rechecked on 2026-09-27 and still lists the October 2 Employment Situation,
+October 14 CPI and October 15 PPI releases at 08:30 Eastern. The Federal Reserve
+calendar still lists the October 27-28 and December 8-9 meetings without future
+statement or press-conference clock times. No calendar event changed.
+
+Continue with MSFT, MU, NFLX, QCOM, SNDK, TSLA, TSM, AAPL, AMZN and ANET.
+Inaccessible, projected, historical-only and undated placeholder states remain
+pending and must not be promoted to forecast dates.
