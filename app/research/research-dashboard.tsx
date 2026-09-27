@@ -231,19 +231,18 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
               <div className={styles.accessStatus}><span>TECH PHASE PRO</span></div>
               <p className={styles.planPrice}>{t("¥2,980", "$20")}<small>{t(" / 月", " / month")}</small></p>
               <button className={styles.planCta} disabled>{t("お申し込み準備中", "Coming soon")}</button>
-              <h3>{t("重要な変化と、その先をつかむ。", "Understand what changed—and why it matters.")}</h3>
               <p className={styles.planIncludes}>{t("無料プランのすべての機能に加えて", "Everything in Free, plus")}</p>
               <ul className={styles.proBenefits}>{[
-                t("決算の数字と成長性を深く分析", "In-depth earnings research"),
-                t("業界の需給・競争環境を読み解く", "Industry supply and competition"),
-                t("予想利益・PERから株価評価を検証", "Earnings and P/E valuation"),
-                t("今後のシナリオと見直す条件を整理", "Scenarios and reassessment triggers"),
-                t("専門家の評価・業績予想の変化を追跡", "Analyst views and estimate revisions"),
-                t("重要ニュース・目標株価の変更を確認", "Key news and price target changes"),
+                t("決算の裏側まで読み解く独自リサーチ", "In-depth earnings research"),
+                t("業界の動きから企業の競争力を分析", "Industry trends and competitive strengths"),
+                t("予想利益から株価の妥当性を検証", "Earnings and P/E valuation"),
+                t("成長の転換点と、その先の展開を読む", "Growth turning points and what comes next"),
+                t("決算後に変わった専門家の見方を追う", "How analyst views change after earnings"),
+                t("企業の先行きを左右するニュースを厳選", "Key news shaping company prospects"),
                 t("目標株価の変更をスマホに通知", "Price target alerts on your phone"),
               ].map(item => <li key={item}>{item}</li>)}
                 <li><strong>{t("週刊 Tech Phase PRO", "Tech Phase PRO Weekly")}</strong>{t("｜変化と展望", " · Outlook")}</li>
-                <li><strong>{t("リゼルに聞く", "Ask RIZEL")}</strong>{t("｜会員の疑問を深掘り", " · Member questions explored")}</li>
+                <li><strong>{t("リサーチQ&A", "Research Q&A")}</strong>{t("｜会員の疑問を深掘り", " · Member questions explored")}</li>
                 <li><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong>{t("｜相場の着眼点", " · Market perspectives")}</li>
               </ul>
             </article>

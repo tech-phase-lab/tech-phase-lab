@@ -56,3 +56,7 @@ This section supersedes older pending/proposed wording where it conflicts. Prese
 ## September 27 PRO benefit copy approved for implementation
 
 User approved ten benefits and requested one-line rows on mobile. Implement concise bilingual wording, remove redundant language-as-paid-benefit claim, and put Everything in Free above the list. Final three names: 週刊 Tech Phase PRO / Tech Phase PRO Weekly; リゼルに聞く / Ask RIZEL; リゼルのひとりごと / RIZEL’s Notes. Each includes a short descriptive phrase. Preserve full text and accessibility wrapping under enlarged text; no clipping or horizontal scrolling. This changes marketing copy only, not entitlements or scheduling.
+
+## September 27, 20:28 JST visual/copy refinement
+
+Align Free and PRO bullet insets at zero list padding. Keep only the approved page-level tagline; remove the second slogan below the PRO CTA. Reduce repeated middle-dot enumerations in benefits. Replace generic scenario wording with growth turning points and what comes next. User requested a stronger question-section name; current trial label is リサーチQ&A / Research Q&A, preserving 会員の疑問を深掘り. Ten benefits remain.

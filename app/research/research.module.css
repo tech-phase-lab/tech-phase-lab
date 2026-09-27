@@ -1604,7 +1604,7 @@
 .planStack { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; max-width:1100px; margin:24px auto 0; }
 .planPrice { font-size:42px; font-weight:700; letter-spacing:-1px; margin:24px 0 16px; }
 .planPrice small { font-size:14px; font-weight:400; color:#a5b4bd; letter-spacing:0; }
-.planStack ul { display:grid; gap:14px; padding-left:20px; }
+.planStack ul { display:grid; gap:14px; padding-left:0; }
 .planStack li { line-height:1.6; }
 .planCta { width:100%; padding:14px; border:1px solid #cbb879; border-radius:10px; background:#cbb879; color:#172028; font-family:inherit; font-size:15px; font-weight:600; margin-top:20px; }
 
@@ -1624,7 +1624,7 @@
 .valuationTable thead { color:#9eafbf; }
 
 /* Compact benefits retain full text; enlarged accessibility text may wrap. */
-.planIncludes { margin:0 0 14px; color:#9eafbf; font-size:12px; line-height:1.6; }
+.planIncludes { margin:18px 0 14px; color:#9eafbf; font-size:12px; line-height:1.6; }
 .planStack .proBenefits { padding-left:0; gap:13px; }
 .proBenefits strong { color:#d7e7df; font-weight:600; }
 @media(max-width:760px) {
