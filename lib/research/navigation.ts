@@ -12,7 +12,7 @@ export const researchViewHashes: Record<ResearchView, string> = {
 // Every menu destination restores its own view on reload and history navigation.
 export function researchViewFromHash(hash: string): ResearchView | null {
   if (!hash || hash === "#research-main") return "home";
-  if (hash === "#what-changed") return "changes";
+  if (hash === "#what-changed" || /^#what-changed\/[a-z0-9-]+$/.test(hash)) return "changes";
   if (hash === "#metrics") return "metrics";
   if (hash === "#saved") return "saved";
   if (hash === "#monitored-companies") return "companies";
