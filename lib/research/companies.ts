@@ -116,7 +116,7 @@ export function buildCompanyProfiles(records: ResearchEvent[]): CompanyProfile[]
       ],
     },
     {
-      ticker: "MU", name: "Micron", sector: copy("半導体・メモリ", "Semiconductors · Memory"), reviewedOn: "2026-09-19",
+      ticker: "MU", name: "Micron", sector: copy("半導体・メモリ", "Semiconductors · Memory"), reviewedOn: "2026-09-27",
       focus: copy("利益率の改善と、設備投資後に残るキャッシュを追う。", "Track margins and cash remaining after capital investment."),
       events: history("MU"), sources: sources("MU"),
       comparisons: [
@@ -141,7 +141,7 @@ export function buildCompanyProfiles(records: ResearchEvent[]): CompanyProfile[]
       },
       checkpoints: [
         { id: "guidance", title: copy("Q4売上は会社見通しに届いたか", "Did Q4 revenue meet guidance?"), status: "pending",
-          observation: copy("収録資料はQ3発表まで。Q4の結果はまだ比較していない。", "Coverage ends with the Q3 release; Q4 results have not been compared."),
+          observation: copy("実績比較はQ3まで。9月時点の外部予想は実績と分けて収録。", "Actual-result comparisons end at Q3; September forecasts are included separately."),
           watch: copy("Q4実績と$49–51Bの範囲を照合し、途中の見通し修正も確認する。", "Compare Q4 actuals with $49–51B and check for intervening revisions."), sourceIds: ["mu-q3"] },
         { id: "margin", title: copy("利益率の改善は続いたか", "Did margin improvement continue?"), status: "change",
           observation: copy("収録したQ3のGAAP粗利益率は、Q2より改善。", "Included Q3 GAAP gross margin improved from Q2."),

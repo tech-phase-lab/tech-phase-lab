@@ -1617,3 +1617,8 @@
 
 .proPlans { border:0; padding:0; background:transparent; }
 .proPlans .planStack { margin-top:0; }
+
+.valuationTable { width:100%; border-collapse:collapse; margin:16px 0; font-size:13px; }
+.valuationTable th,.valuationTable td { padding:11px 5px; border-bottom:1px solid var(--line); text-align:right; font-variant-numeric:tabular-nums; }
+.valuationTable th:first-child { text-align:left; font-weight:500; }
+.valuationTable thead { color:#9eafbf; }

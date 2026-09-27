@@ -24,3 +24,7 @@ The user will arrange legal review before launching the paid service. Do not pre
 ## Editorial revision — MU v2
 
 The user rejected v1 as too shallow for paid research. Removed colored uncertainty treatment. V2 uses the official prepared remarks alongside the release to distinguish pricing-driven growth, contract floors versus ceilings, and cost exposure. Adds forward scenarios and explicit thesis-reassessment conditions in Japanese and English. This remains a June 24 historical case, not a current forecast. Priority 1 awaits user review; priorities 2 and 3 remain pending.
+
+## MU v3 — deeper valuation and cycle research
+
+V2 was again rejected as too generic. MU now distinguishes September 27 analysis, September 25 market/consensus snapshots, and June 24 historical financials. Includes industry DRAM/HBM/NAND mechanisms, fiscal-year adjusted EPS valuation, analyst target comparisons explicitly not claimed as proprietary models, and EPS stress sensitivity. Free/PRO definition remains pending user assessment. Latest observed CI failure (run 36304544043) was truncated calendar handoff content, restored in 1b7dc165; subsequent runs succeeded. Added mandatory local/remote Git tree equality before publication to prevent clipped-file uploads.
