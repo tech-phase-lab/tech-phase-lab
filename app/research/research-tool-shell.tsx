@@ -19,12 +19,12 @@ export default function ResearchToolShell({ lang, setLang, title, description, c
     </header>
     <main id="tool-main" className={styles.main}>
       <nav className={styles.links} aria-label={lang === "ja" ? "便利な機能" : "Research tools"}>
-        <Link href="/research" aria-current={pathname === "/research" ? "page" : undefined}><NavigationIcon name="home" />{lang === "ja" ? "ホーム" : "Home"}</Link>
         <Link href="/research/stocks" aria-current={pathname === "/research/stocks" ? "page" : undefined}><NavigationIcon name="search" />{lang === "ja" ? "銘柄検索" : "Stock search"}</Link>
         <Link href="/research/watchlist" aria-current={pathname === "/research/watchlist" ? "page" : undefined}><NavigationIcon name="favorite" />{lang === "ja" ? "お気に入り銘柄" : "Favorite stocks"}</Link>
         <Link href="/research/calendar" aria-current={pathname === "/research/calendar" ? "page" : undefined}><NavigationIcon name="calendar" />{lang === "ja" ? "カレンダー" : "Calendar"}</Link>
+        <Link href="/research/market" aria-current={pathname === "/research/market" ? "page" : undefined}><NavigationIcon name="metrics" />{lang === "ja" ? "マーケット" : "Markets"}</Link>
       </nav>
-      <h1>{title}</h1><p className={styles.description}>{description}</p>
+      <h1>{title}</h1>{description && <p className={styles.description}>{description}</p>}
       {children}
     </main>
   </div>;

@@ -122,6 +122,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
   function openView(next: ResearchView) {
     const hash = researchViewHashes[next];
     if (window.location.hash !== hash) window.history.pushState(null, "", hash);
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
     setTab(next);
     if (next === "home") clearFilters();
     requestAnimationFrame(() => {
@@ -136,7 +137,6 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
         <span className={styles.mark}>TP<span /></span><span>TECH PHASE<small>RESEARCH</small></span>
       </Link>
       <nav className={styles.primaryNav} aria-label={t("メインメニュー", "Main navigation")}>
-        <button aria-current={tab === "home" ? "page" : undefined} onClick={() => openView("home")}><NavigationIcon name="home" /><span>{t("ホーム", "Home")}</span></button>
         <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}><NavigationIcon name="changes" /><span>{t("何が変わった？", "What changed?")}</span></button>
         <Link href="/research/stocks"><NavigationIcon name="search" /><span>{t("米国株を探す", "Find stocks")}</span></Link>
         <button aria-current={tab === "companies" ? "page" : undefined} onClick={() => openView("companies")}><NavigationIcon name="companies" /><span>{t("監視対象", "Company watch")}</span></button>
@@ -157,7 +157,6 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
       <aside className={styles.sidebar}>
         <nav className={styles.sideMenu} aria-label={t("サイドメニュー", "Sidebar navigation")}>
           <p className={styles.navLabel}>{t("メインメニュー", "MAIN MENU")}</p>
-          <button aria-current={tab === "home" ? "page" : undefined} onClick={() => openView("home")}><NavigationIcon name="home" /><span>{t("ホーム", "Home")}</span></button>
           <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}><NavigationIcon name="changes" /><span>{t("何が変わった？", "What changed?")}</span></button>
           <Link href="/research/stocks"><NavigationIcon name="search" /><span>{t("米国株を探す", "Find stocks")}</span><span aria-hidden="true">↗</span></Link>
           <button aria-current={tab === "companies" ? "page" : undefined} onClick={() => openView("companies")}><NavigationIcon name="companies" /><span>{t("監視対象", "Company watch")}</span><small>{monitoredCompanies.length}</small></button>
