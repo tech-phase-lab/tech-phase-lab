@@ -232,17 +232,20 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
               <p className={styles.planPrice}>{t("¥2,980", "$20")}<small>{t(" / 月", " / month")}</small></p>
               <button className={styles.planCta} disabled>{t("お申し込み準備中", "Coming soon")}</button>
               <h3>{t("重要な変化と、その先をつかむ。", "Understand what changed—and why it matters.")}</h3>
-              <ul>{[
-                t("無料プランのすべての機能", "Everything in Free"),
-                t("重要ニュースの要点を日本語・英語で", "Key news summarized in Japanese and English"),
-                t("業界の需給・競争環境まで掘り下げる決算分析", "Earnings analysis covering industry supply, demand and competition"),
-                t("目標株価の引き上げ・引き下げ情報", "Analyst price target increases and cuts"),
-                t("目標株価のスマホ通知", "Price target notifications on your phone"),
-                t("予想利益・PERから株価評価を検証", "Valuation tested against earnings estimates and P/E"),
-                t("強気・基本・慎重シナリオと見直す条件", "Bull, base and downside scenarios with reassessment triggers"),
-                t("決算後の専門家の評価・業績予想の変化を追跡", "Follow post-earnings analyst views and estimate revisions"),
-                t("関連銘柄への影響と次の注目点", "Implications for related stocks and what to watch next"),
-              ].map(item => <li key={item}>{item}</li>)}</ul>
+              <p className={styles.planIncludes}>{t("無料プランのすべての機能に加えて", "Everything in Free, plus")}</p>
+              <ul className={styles.proBenefits}>{[
+                t("決算の数字と成長性を深く分析", "In-depth earnings research"),
+                t("業界の需給・競争環境を読み解く", "Industry supply and competition"),
+                t("予想利益・PERから株価評価を検証", "Earnings and P/E valuation"),
+                t("今後のシナリオと見直す条件を整理", "Scenarios and reassessment triggers"),
+                t("専門家の評価・業績予想の変化を追跡", "Analyst views and estimate revisions"),
+                t("重要ニュース・目標株価の変更を確認", "Key news and price target changes"),
+                t("目標株価の変更をスマホに通知", "Price target alerts on your phone"),
+              ].map(item => <li key={item}>{item}</li>)}
+                <li><strong>{t("週刊 Tech Phase PRO", "Tech Phase PRO Weekly")}</strong>{t("｜変化と展望", " · Outlook")}</li>
+                <li><strong>{t("リゼルに聞く", "Ask RIZEL")}</strong>{t("｜会員の疑問を深掘り", " · Member questions explored")}</li>
+                <li><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong>{t("｜相場の着眼点", " · Market perspectives")}</li>
+              </ul>
             </article>
           </div>
         </section>}

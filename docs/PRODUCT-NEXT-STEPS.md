@@ -52,3 +52,7 @@ This section supersedes older pending/proposed wording where it conflicts. Prese
 - Expert reaction summaries: identify source/date, consensus and disagreement, rationale and estimate/target revisions. Separate outside views from Tech Phase analysis. Do not invent reasons from target prices alone or claim access to unseen analyst reports.
 - Consistent research quality across covered companies: sector-specific drivers, valuation, scenarios and conditions that change the thesis.
 - Naming suggestions are not final until the user selects them. No recurring automation, billing or new access restriction is activated by this editorial agreement.
+
+## September 27 PRO benefit copy approved for implementation
+
+User approved ten benefits and requested one-line rows on mobile. Implement concise bilingual wording, remove redundant language-as-paid-benefit claim, and put Everything in Free above the list. Final three names: 週刊 Tech Phase PRO / Tech Phase PRO Weekly; リゼルに聞く / Ask RIZEL; リゼルのひとりごと / RIZEL’s Notes. Each includes a short descriptive phrase. Preserve full text and accessibility wrapping under enlarged text; no clipping or horizontal scrolling. This changes marketing copy only, not entitlements or scheduling.

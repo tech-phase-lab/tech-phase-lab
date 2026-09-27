@@ -1622,3 +1622,11 @@
 .valuationTable th,.valuationTable td { padding:11px 5px; border-bottom:1px solid var(--line); text-align:right; font-variant-numeric:tabular-nums; }
 .valuationTable th:first-child { text-align:left; font-weight:500; }
 .valuationTable thead { color:#9eafbf; }
+
+/* Compact benefits retain full text; enlarged accessibility text may wrap. */
+.planIncludes { margin:0 0 14px; color:#9eafbf; font-size:12px; line-height:1.6; }
+.planStack .proBenefits { padding-left:0; gap:13px; }
+.proBenefits strong { color:#d7e7df; font-weight:600; }
+@media(max-width:760px) {
+  .planStack .proBenefits li { font-size:clamp(11px,3.15vw,13px); letter-spacing:-.02em; }
+}
