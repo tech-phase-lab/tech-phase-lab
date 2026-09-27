@@ -38,3 +38,17 @@ Priority 2 is now a reviewable Free/PRO proposal on the comparison page; billing
 For MU, free scope is headline, reported results and concise change summary with original sources. PRO scope begins with the forward thesis and includes HBM/DRAM/NAND analysis, EPS/P/E sensitivity, scenarios and subsequent revisions. Keep the current complete MU example accessible for evaluation. Implement actual entitlements only after membership design is agreed.
 
 Apply the same editorial depth to other covered companies using sector-appropriate drivers, not a memory template. Post-earnings expert reactions must include named source, date, rationale and estimate revisions; distinguish these from our interpretation. Future collection is not yet scheduled by this change. Priority 3 remains notification delivery/status testing.
+
+## Current operating policy — approved September 27, 18:56 JST
+
+This section supersedes older pending/proposed wording where it conflicts. Preserve this policy across chats.
+
+- Earnings headlines: include the company/earnings identity and the most important result with numbers and comparison basis. Make strong, weak or mixed results apparent. Do not repeat revenue growth for every company; select guidance, margins, orders, profit or another material driver. Keep detailed analysis inside the article. MU numeric headline approved.
+- Japanese and English are available in FREE as well as PRO. Language choice is not a paid advantage. Comparison page copy must not imply otherwise (copy correction still pending).
+- Adopt three recurring editorial pillars: **週刊 Tech Phase PRO** (name explicitly approved), a member question corner (name pending), and RIZEL's personal perspective (name pending).
+- Weekly report: important changes, revised theses and next week's checkpoints. Selected member questions can be answered within the weekly report; do not promise an individual answer to every submission.
+- Personal perspective: occasional short commentary based on the user's actual notes or statements, edited/translated by the assistant. Never invent the user's opinions or trading actions.
+- Additional PRO-only broadcasts may happen very occasionally if the user has capacity. They are optional, not a regular membership entitlement or fixed schedule.
+- Expert reaction summaries: identify source/date, consensus and disagreement, rationale and estimate/target revisions. Separate outside views from Tech Phase analysis. Do not invent reasons from target prices alone or claim access to unseen analyst reports.
+- Consistent research quality across covered companies: sector-specific drivers, valuation, scenarios and conditions that change the thesis.
+- Naming suggestions are not final until the user selects them. No recurring automation, billing or new access restriction is activated by this editorial agreement.
