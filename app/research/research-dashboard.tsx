@@ -222,7 +222,8 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
                 t("指数・債券・為替のマーケット情報", "Indices, bonds and currencies"),
                 t("お気に入り銘柄の登録", "Your stock watchlist"),
                 t("決算・経済指標カレンダー", "Earnings and economic calendar"),
-                t("一部のリサーチ記事", "Selected research articles"),
+                t("決算の主要数字と変化の要点", "Key earnings figures and changes"),
+                t("独自リサーチの無料公開記事", "Selected full research articles"),
               ].map(item => <li key={item}>{item}</li>)}</ul>
               <Link href="/research/stocks">{t("無料で銘柄を探す", "Explore stocks for free")} <Arrow /></Link>
             </article>
@@ -234,11 +235,12 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
               <ul>{[
                 t("無料プランのすべての機能", "Everything in Free"),
                 t("重要ニュースの要点を日本語・英語で", "Key news summarized in Japanese and English"),
-                t("決算の売上・利益・見通しを整理", "Earnings, revenue and guidance at a glance"),
+                t("業界の需給・競争環境まで掘り下げる決算分析", "Earnings analysis covering industry supply, demand and competition"),
                 t("目標株価の引き上げ・引き下げ情報", "Analyst price target increases and cuts"),
                 t("目標株価のスマホ通知", "Price target notifications on your phone"),
-                t("「何が変わった？」の独自リサーチ", "Full What changed? research"),
-                t("企業の変化を過去の発表と比較", "Compare company developments with past releases"),
+                t("予想利益・PERから株価評価を検証", "Valuation tested against earnings estimates and P/E"),
+                t("強気・基本・慎重シナリオと見直す条件", "Bull, base and downside scenarios with reassessment triggers"),
+                t("決算後の専門家の評価・業績予想の変化を追跡", "Follow post-earnings analyst views and estimate revisions"),
                 t("関連銘柄への影響と次の注目点", "Implications for related stocks and what to watch next"),
               ].map(item => <li key={item}>{item}</li>)}</ul>
             </article>
@@ -266,7 +268,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
             <div className={styles.eventList}>
               {filtered.map((event) => <article key={event.id} className={`${styles.eventCard} ${active?.id === event.id ? styles.selected : ""}`}>
                 <div className={styles.eventMeta}><span className={styles.ticker}>{event.ticker}</span><span>{kinds[event.kind]}</span><time dateTime={event.publishedOn}>{dateLabel(event.publishedOn, lang)}</time><button className={styles.saveButton} aria-label={saved.includes(event.id) ? t("保存を解除", "Unsave research") : t("リサーチを保存", "Save research")} aria-pressed={saved.includes(event.id)} onClick={() => toggleSaved(event.id)}><Bookmark filled={saved.includes(event.id)} /></button></div>
-                <button className={styles.eventOpen} aria-pressed={active?.id === event.id} onClick={() => selectEvent(event.id)}><h3>{event.title[lang]}</h3><p>{event.summary[lang]}</p><span className={styles.eventFoot}><span>{event.kind === "external-research" ? t("外部調査", "External research") : t("一次資料", "Primary sources")} {event.sources.length}<span className={styles.dot}>·</span>{t("原文付き", "Evidence linked")}</span><span>{t("詳しく見る", "Read research")} <span aria-hidden="true">→</span></span></span></button>
+                <button className={styles.eventOpen} aria-pressed={active?.id === event.id} onClick={() => selectEvent(event.id)}><h3>{event.title[lang]}</h3><p>{event.summary[lang]}</p><span className={styles.eventFoot}><span>{event.kind === "external-research" ? t("外部調査", "External research") : t("根拠資料", "Sources")} {event.sources.length}<span className={styles.dot}>·</span>{t("原文付き", "Evidence linked")}</span><span>{t("詳しく見る", "Read research")} <span aria-hidden="true">→</span></span></span></button>
               </article>)}
               {!filtered.length && <Empty lang={lang} onReset={clearFilters} saved={tab === "saved"} />}
             </div>

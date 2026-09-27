@@ -28,3 +28,13 @@ The user rejected v1 as too shallow for paid research. Removed colored uncertain
 ## MU v3 — deeper valuation and cycle research
 
 V2 was again rejected as too generic. MU now distinguishes September 27 analysis, September 25 market/consensus snapshots, and June 24 historical financials. Includes industry DRAM/HBM/NAND mechanisms, fiscal-year adjusted EPS valuation, analyst target comparisons explicitly not claimed as proprietary models, and EPS stress sensitivity. Free/PRO definition remains pending user assessment. Latest observed CI failure (run 36304544043) was truncated calendar handoff content, restored in 1b7dc165; subsequent runs succeeded. Added mandatory local/remote Git tree equality before publication to prevent clipped-file uploads.
+
+## September 27 user acceptance and priority 2 proposal
+
+Priority 1 accepted. Headlines must combine earnings identity, important numbers (with comparison basis), and the forward question. MU title now includes revenue +73.7% quarter over quarter and GAAP gross margin 84.6%. Avoid unsupported superlatives.
+
+Priority 2 is now a reviewable Free/PRO proposal on the comparison page; billing and access restrictions remain inactive. Free: search, quotes/charts, markets, watchlist, calendar, earnings key figures and concise changes with source links, plus selected full research samples. PRO: full industry/cycle analysis, earnings-based valuation, scenarios and reassessment triggers, dated analyst reactions/estimate revisions, related-company implications, bilingual news and price-target notifications. No guaranteed delivery latency or promise to deeply cover every listed stock.
+
+For MU, free scope is headline, reported results and concise change summary with original sources. PRO scope begins with the forward thesis and includes HBM/DRAM/NAND analysis, EPS/P/E sensitivity, scenarios and subsequent revisions. Keep the current complete MU example accessible for evaluation. Implement actual entitlements only after membership design is agreed.
+
+Apply the same editorial depth to other covered companies using sector-appropriate drivers, not a memory template. Post-earnings expert reactions must include named source, date, rationale and estimate revisions; distinguish these from our interpretation. Future collection is not yet scheduled by this change. Priority 3 remains notification delivery/status testing.

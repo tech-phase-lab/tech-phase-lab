@@ -93,7 +93,7 @@ export const events: ResearchEvent[] = [
     publishedOn: "2026-06-24", reviewedOn: "2026-09-27",
     analysisAsOf: "2026-09-27",
     valuation: { price: 1082.28, priceDate: "2026-09-25", eps: 159.12, fiscalYear: "FY2027", sourceId: "mu-estimates" },
-    title: copy("MUの予想PER6.8倍をどう読むか。利益の山と、次のメモリサイクル", "MU at 6.8× FY2027 earnings: a discount, or a cycle peak?"),
+    title: copy("MU決算結果｜売上は前四半期比73.7%増、粗利率84.6%。メモリ好況は続くか", "MU earnings: revenue up 73.7% QoQ, gross margin 84.6%. Can the memory boom last?"),
     summary: copy("低PERの理由を、HBM・汎用DRAM・NANDの需給と利益予想から分解。長期契約で変わる部分と、残る循環リスクを読む。", "Connect valuation to HBM, conventional DRAM and NAND supply dynamics. Separate contract protection from the cycle risk that remains."),
     change: copy("論点は好決算かどうかから、FY2027の利益をその後も維持できるかへ。9月25日の株価と予想利益では約6.8倍だが、割安の判断には利益の持続性が必要。", "The question moves from strong results to whether FY2027 earnings can endure. The September 25 price implies about 6.8× that year’s forecast EPS; cheapness depends on durability."),
     facts: [
