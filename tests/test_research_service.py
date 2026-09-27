@@ -309,6 +309,55 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertIsNone(summary["lastCompletedAt"])
         self.assertEqual(summary["completedRuns24Hours"], 0)
 
+    def test_priority_source_run_retention_orders_mixed_offsets_by_instant(self):
+        old_zone = timezone(timedelta(hours=14))
+        new_zone = timezone(timedelta(hours=-12))
+        old_started = datetime(2026, 9, 27, 9, 59, 59, tzinfo=timezone.utc)
+        old_observed = datetime(2026, 9, 27, 10, 0, 0, tzinfo=timezone.utc)
+        with monitor.connect(self.db_path) as db:
+            db.executemany("""
+              INSERT INTO priority_source_runs(
+                process_started_at,first_completed_at,last_observed_at,
+                target_count,configured_count,healthy,degraded,
+                completion_latency_ms
+              ) VALUES(?,?,?,?,?,?,?,?)
+            """, (
+                (
+                    (old_started + timedelta(microseconds=index)).astimezone(
+                        old_zone
+                    ).isoformat(),
+                    (old_started + timedelta(milliseconds=500)).astimezone(
+                        old_zone
+                    ).isoformat(),
+                    (old_observed + timedelta(microseconds=index)).astimezone(
+                        old_zone
+                    ).isoformat(),
+                    5, 5, 5, 0, 500,
+                )
+                for index in range(10_000)
+            ))
+            db.commit()
+
+            newest_started = datetime(
+                2026, 9, 28, 11, 29, 59, tzinfo=timezone.utc
+            ).astimezone(new_zone).isoformat()
+            newest_observed = datetime(
+                2026, 9, 28, 11, 30, 0, tzinfo=timezone.utc
+            ).astimezone(new_zone).isoformat()
+            monitor.record_priority_source_run(
+                db, newest_started, newest_observed, 5, 5, 5, 0, 500,
+            )
+            retained = db.execute(
+                "SELECT count(*) FROM priority_source_runs WHERE process_started_at=?",
+                (newest_started,),
+            ).fetchone()[0]
+            row_count = db.execute(
+                "SELECT count(*) FROM priority_source_runs"
+            ).fetchone()[0]
+
+        self.assertEqual(retained, 1)
+        self.assertEqual(row_count, 10_000)
+
     def test_priority_source_metrics_ignore_utc_conversion_overflow(self):
         boundary = "0001-01-01T00:00:00+14:00"
         with monitor.connect(self.db_path) as db:

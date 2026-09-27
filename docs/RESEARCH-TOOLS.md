@@ -430,6 +430,8 @@ row for every discovery cycle. The operations preview can therefore distinguish
 the current process's pending checks from the last durable completed run after
 a restart. Future-dated, malformed and internally inconsistent rows are
 excluded, and at most 10,000 process results are retained.
+Retention compares parsed absolute instants, so equivalent observations with
+different UTC offsets cannot evict a newer run through lexical timestamp order.
 Polling configuration and observed request time are not delivery latency
 guarantees.
 Issuer-specific discovery timeouts keep a slow first-party index from holding

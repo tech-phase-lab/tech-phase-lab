@@ -1679,7 +1679,8 @@ def record_priority_source_run(
         db.execute("""
           DELETE FROM priority_source_runs WHERE process_started_at IN (
             SELECT process_started_at FROM priority_source_runs
-            ORDER BY last_observed_at DESC LIMIT -1 OFFSET 10000
+            ORDER BY julianday(last_observed_at) DESC, rowid DESC
+            LIMIT -1 OFFSET 10000
           )
         """)
 
