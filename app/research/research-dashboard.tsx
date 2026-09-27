@@ -1,5 +1,7 @@
 "use client";
 
+import NavigationIcon from "./navigation-icon";
+
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import type { Language, ResearchEvent } from "@/lib/research/data";
@@ -133,13 +135,13 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
         <span className={styles.mark}>TP<span /></span><span>TECH PHASE<small>RESEARCH</small></span>
       </Link>
       <nav className={styles.primaryNav} aria-label={t("メインメニュー", "Main navigation")}>
-        <button aria-current={tab === "home" ? "page" : undefined} onClick={() => openView("home")}>{t("ホーム", "Home")}</button>
-        <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}>{t("何が変わった？", "What changed?")}</button>
-        <Link href="/research/stocks">{t("米国株を探す", "Find stocks")}</Link>
-        <button onClick={() => openView("companies")}>{t("監視対象", "Company watch")}</button>
-        <button aria-current={tab === "metrics" ? "page" : undefined} onClick={() => openView("metrics")}>{t("決算・指標", "Financials")}</button>
-        <button aria-current={tab === "saved" ? "page" : undefined} onClick={() => openView("saved")}>{t("保存", "Saved")}<small>{saved.filter((id) => events.some((event) => event.id === id)).length}</small></button>
-        <button className={styles.proNav} onClick={() => openView("pro")}>Tech Phase PRO</button>
+        <button aria-current={tab === "home" ? "page" : undefined} onClick={() => openView("home")}><NavigationIcon name="home" /><span>{t("ホーム", "Home")}</span></button>
+        <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}><NavigationIcon name="changes" /><span>{t("何が変わった？", "What changed?")}</span></button>
+        <Link href="/research/stocks"><NavigationIcon name="search" /><span>{t("米国株を探す", "Find stocks")}</span></Link>
+        <button aria-current={tab === "companies" ? "page" : undefined} onClick={() => openView("companies")}><NavigationIcon name="companies" /><span>{t("監視対象", "Company watch")}</span></button>
+        <button aria-current={tab === "metrics" ? "page" : undefined} onClick={() => openView("metrics")}><NavigationIcon name="metrics" /><span>{t("決算・指標", "Financials")}</span></button>
+        <button aria-current={tab === "saved" ? "page" : undefined} onClick={() => openView("saved")}><NavigationIcon name="saved" /><span>{t("保存", "Saved")}</span><small>{saved.filter((id) => events.some((event) => event.id === id)).length}</small></button>
+        <button className={styles.proNav} aria-current={tab === "pro" ? "page" : undefined} onClick={() => openView("pro")}><NavigationIcon name="pro" /><span>Tech Phase PRO</span></button>
       </nav>
       <div className={styles.headerRight}>
         <span className={styles.edition}>RESEARCH PREVIEW <span>02</span></span>
@@ -154,13 +156,13 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
       <aside className={styles.sidebar}>
         <nav className={styles.sideMenu} aria-label={t("サイドメニュー", "Sidebar navigation")}>
           <p className={styles.navLabel}>{t("メインメニュー", "MAIN MENU")}</p>
-          <button aria-current={tab === "home" ? "page" : undefined} onClick={() => openView("home")}>{t("ホーム", "Home")}</button>
-          <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}>{t("何が変わった？", "What changed?")}</button>
-          <Link href="/research/stocks">{t("米国株を探す", "Find stocks")}<span aria-hidden="true">↗</span></Link>
-          <button onClick={() => openView("companies")}>{t("監視対象", "Company watch")}<small>{monitoredCompanies.length}</small></button>
-          <button aria-current={tab === "metrics" ? "page" : undefined} onClick={() => openView("metrics")}>{t("決算・指標", "Financials")}</button>
-          <button aria-current={tab === "saved" ? "page" : undefined} onClick={() => openView("saved")}>{t("保存", "Saved")}<small>{saved.filter((id) => events.some((event) => event.id === id)).length}</small></button>
-          <button className={styles.sideProNav} onClick={() => openView("pro")}>Tech Phase PRO</button>
+          <button aria-current={tab === "home" ? "page" : undefined} onClick={() => openView("home")}><NavigationIcon name="home" /><span>{t("ホーム", "Home")}</span></button>
+          <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}><NavigationIcon name="changes" /><span>{t("何が変わった？", "What changed?")}</span></button>
+          <Link href="/research/stocks"><NavigationIcon name="search" /><span>{t("米国株を探す", "Find stocks")}</span><span aria-hidden="true">↗</span></Link>
+          <button aria-current={tab === "companies" ? "page" : undefined} onClick={() => openView("companies")}><NavigationIcon name="companies" /><span>{t("監視対象", "Company watch")}</span><small>{monitoredCompanies.length}</small></button>
+          <button aria-current={tab === "metrics" ? "page" : undefined} onClick={() => openView("metrics")}><NavigationIcon name="metrics" /><span>{t("決算・指標", "Financials")}</span></button>
+          <button aria-current={tab === "saved" ? "page" : undefined} onClick={() => openView("saved")}><NavigationIcon name="saved" /><span>{t("保存", "Saved")}</span><small>{saved.filter((id) => events.some((event) => event.id === id)).length}</small></button>
+          <button className={styles.sideProNav} aria-current={tab === "pro" ? "page" : undefined} onClick={() => openView("pro")}><NavigationIcon name="pro" /><span>Tech Phase PRO</span></button>
         </nav>
         <div className={styles.coverage}>
           <div className={styles.filterHeading}><p className={styles.navLabel}>{t("この一覧の銘柄", "FILTER THESE NOTES")}</p><span>{coveredCompanies.length}</span></div>

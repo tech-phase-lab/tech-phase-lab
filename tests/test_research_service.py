@@ -1463,7 +1463,8 @@ class ResearchServiceTests(unittest.TestCase):
 
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         app.body_batch = 2
-        rows, pending = app.body_candidates("2026-09-26T00:00:00+00:00")
+        with patch.object(service, "utc_now", return_value="2026-09-26T00:00:00+00:00"):
+            rows, pending = app.body_candidates("2026-09-26T00:00:00+00:00")
 
         self.assertEqual(pending, 5)
         self.assertEqual([row["url"] for row in rows], [newest, oldest])
@@ -1498,7 +1499,8 @@ class ResearchServiceTests(unittest.TestCase):
 
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         app.body_batch = 2
-        rows, _pending = app.body_candidates("2026-09-26T00:00:00+00:00")
+        with patch.object(service, "utc_now", return_value="2026-09-26T00:00:00+00:00"):
+            rows, _pending = app.body_candidates("2026-09-26T00:00:00+00:00")
 
         selected = [row["url"] for row in rows]
         self.assertEqual(selected, [oldest, other_host])
@@ -1637,7 +1639,8 @@ class ResearchServiceTests(unittest.TestCase):
 
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         app.body_batch = 4
-        rows, _pending = app.body_candidates("2026-09-26T00:00:00+00:00")
+        with patch.object(service, "utc_now", return_value="2026-09-26T00:00:00+00:00"):
+            rows, _pending = app.body_candidates("2026-09-26T00:00:00+00:00")
         backlog = app.public_state()["bodyBacklog"]
 
         self.assertEqual(backlog["scheduledDetectedNeverFetched"], 1)

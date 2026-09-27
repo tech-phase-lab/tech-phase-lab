@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import StockDirectory from "./stock-directory";
 
@@ -8,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function StockDirectoryPage() {
-  return <StockDirectory />;
+  return <Suspense fallback={<p>Loading…</p>}><StockDirectory /></Suspense>;
 }

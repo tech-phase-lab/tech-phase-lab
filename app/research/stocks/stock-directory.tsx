@@ -1,6 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import NavigationIcon from "../navigation-icon";
+import { useSearchParams } from "next/navigation";
+import { useStockFavorites } from "../use-stock-favorites";
 import { useEffect, useRef, useState } from "react";
 import type { AnnualFilingBrief } from "@/lib/research/annual-filing-briefs";
 import type { BusinessSection, RiskSection, StockDirectoryEntry, StockProfile } from "@/lib/research/stock-directory";
@@ -47,7 +50,9 @@ function filingLabel(form: string, lang: "ja" | "en") {
 
 export default function StockDirectory() {
   const [lang, setLang] = useResearchLanguage();
-  const [query, setQuery] = useState("");
+  const searchParams = useSearchParams();
+  const [query, setQuery] = useState(searchParams.get("q") ?? "");
+  const { favorites, toggle: toggleFavorite, error: favoriteError } = useStockFavorites();
   const { history, remember, clear: clearHistory, error: historyError } = useStockHistory();
   const [results, setResults] = useState<StockDirectoryEntry[]>([]);
   const [selectedResultKey, setSelectedResultKey] = useState<string | null>(null);
@@ -188,7 +193,7 @@ export default function StockDirectory() {
     <a className={base.skip} href="#stock-search-main">{t("本文へ移動", "Skip to content")}</a>
     <header className={base.header}>
       <Link href="/research" className={base.brand} aria-label="Tech Phase Research"><span className={base.mark}>TP<span /></span><span>TECH PHASE<small>RESEARCH</small></span></Link>
-      <nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research">{t("ホーム", "Home")}</Link><Link href="/research#what-changed">{t("何が変わった？", "What changed?")}</Link><Link href="/research/stocks" aria-current="page">{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics">{t("決算・指標", "Financials")}</Link><Link className={base.proNav} href="/research#tech-phase-pro">Tech Phase PRO</Link></nav>
+      <nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research"><NavigationIcon name="home" />{t("ホーム", "Home")}</Link><Link href="/research#what-changed"><NavigationIcon name="changes" />{t("何が変わった？", "What changed?")}</Link><Link href="/research/stocks" aria-current="page"><NavigationIcon name="search" />{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics"><NavigationIcon name="metrics" />{t("決算・指標", "Financials")}</Link><Link className={base.proNav} href="/research#tech-phase-pro">Tech Phase PRO</Link></nav>
       <div className={base.headerRight}><span className={base.edition}>US STOCK DIRECTORY <span>PREVIEW</span></span><div className={base.languages} aria-label={t("言語", "Language")}><button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button><button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button></div></div>
     </header>
     <main id="stock-search-main" className={styles.main}>
@@ -222,6 +227,7 @@ export default function StockDirectory() {
         {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} />}
       </div>}
 
+      {profile && <div className={base.stockFavorite}><button type="button" aria-pressed={favorites.includes(profile.ticker)} onClick={() => toggleFavorite(profile.ticker)}>{favorites.includes(profile.ticker) ? "★" : "☆"} {profile.ticker} · {favorites.includes(profile.ticker) ? t("お気に入り登録済み", "In favorites") : t("お気に入りに追加", "Add to favorites")}</button><Link href="/research/watchlist">{t("お気に入りを見る →", "View favorites →")}</Link>{favoriteError && <p role="alert">{t("保存できませんでした。", "Could not save.")}</p>}</div>}
       {profile && <details className={polish.profileDetails}>
         <summary><span><small>SEC COMPANY RECORD</small><strong>{t("企業登録情報", "Company registration data")}</strong></span><em>{t("業種・法人区分などを表示", "Industry, entity type, and more")}</em></summary>
         <div className={polish.profileBody}>
