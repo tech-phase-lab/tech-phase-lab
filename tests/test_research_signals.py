@@ -1219,6 +1219,53 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(list(state['children']), [article_url])
         self.assertTrue(state['children'][article_url]['baseline'])
 
+    def test_article_recovery_history_is_allowlisted_before_resave(self):
+        from html_signals import collect
+
+        source = next(s for s in signals.SOURCES if s['id'] == 'anthropic-news')
+        article_url = source['url'] + '/test'
+        valid = {
+            'failedAt': '2026-09-25T09:55:00Z',
+            'recoveredAt': '2026-09-25T10:00:00+00:00',
+            'attempts': 2,
+            'errorKind': 'timeout',
+            'url': 'https://private.invalid/secret',
+            'rawError': 'private transport detail',
+        }
+        invalid = [
+            {'failedAt': 'bad', 'recoveredAt': '2026-09-25T10:00:00+00:00',
+             'attempts': 2, 'errorKind': 'timeout'},
+            {'failedAt': '2026-09-25T09:55:00+00:00',
+             'recoveredAt': '2026-09-25T10:00:00+00:00',
+             'attempts': True, 'errorKind': 'timeout'},
+            {'failedAt': '2026-09-25T09:55:00+00:00',
+             'recoveredAt': '2026-09-25T10:00:00+00:00',
+             'attempts': 2, 'errorKind': 'private-detail'},
+        ]
+
+        def request(route, validators):
+            if route['url'] == source['url']:
+                return {'body': b'<a href="/news/test">Story</a>'}
+            return {'body': ('<main><h1>Infrastructure</h1><p>'
+                             + 'Nebius infrastructure update. ' * 10
+                             + '</p></main>').encode()}
+
+        result = collect(source, {'index_state': json.dumps({
+            'initialized': True,
+            'children': {article_url: {'baseline': True}},
+            'recoveries': [valid, *invalid, 'corrupt'],
+        })}, self.tickers, request, lambda: '2026-09-25T10:00:00+00:00')
+
+        recoveries = json.loads(result['index_state'])['recoveries']
+        self.assertEqual(recoveries, [{
+            'failedAt': '2026-09-25T09:55:00+00:00',
+            'recoveredAt': '2026-09-25T10:00:00+00:00',
+            'attempts': 2,
+            'errorKind': 'timeout',
+        }])
+        self.assertNotIn('private.invalid', result['index_state'])
+        self.assertNotIn('private transport detail', result['index_state'])
+
     def test_queue_ignores_corrupt_or_unapproved_article_children(self):
         source = next(s for s in signals.SOURCES if s['id'] == 'anthropic-news')
         signals.schema(self.db)

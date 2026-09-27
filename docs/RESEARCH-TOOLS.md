@@ -182,6 +182,10 @@ sample count, average and maximum recovery time, average and maximum attempts,
 and latest recovery time. Invalid, timezone-free, future or over-seven-day
 measurements are excluded. These are observations, not retry or delivery
 guarantees.
+Persisted recovery history is normalized again whenever an HTML index is
+saved. Only those four bounded measurement fields are allowlisted; legacy or
+corrupt URL, response and exception fields are removed, and malformed records
+are discarded rather than copied forward.
 Successful children are excluded, stored state is bounded before aggregation,
 and no child URL, title, HTTP status, validator or raw error reaches this
 operational summary. When a child retry becomes due, one bounded maintenance

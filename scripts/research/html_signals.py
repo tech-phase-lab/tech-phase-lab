@@ -1,6 +1,6 @@
 """Bounded official-news index discovery; no browser or access-control bypass."""
 from html.parser import HTMLParser
-from datetime import datetime
+from datetime import datetime, timedelta
 import re
 from urllib.parse import urljoin, urlsplit
 
@@ -150,6 +150,38 @@ def article_retry_due(next_check, checked):
     # Valid bounded future schedules remain deferred; corrupt unbounded values
     # become due and are replaced after the single normal request attempt.
     return scheduled <= current or scheduled > current + timedelta(days=7)
+
+
+def sanitize_recovery(value):
+    """Allow only bounded, URL-free recovery measurements in persisted state."""
+    if not isinstance(value, dict):
+        return None
+    failed_at = value.get('failedAt')
+    recovered_at = value.get('recoveredAt')
+    attempts = value.get('attempts')
+    error_kind = value.get('errorKind')
+    if (not isinstance(failed_at, str) or not isinstance(recovered_at, str)
+            or not isinstance(attempts, int) or isinstance(attempts, bool)
+            or not 2 <= attempts <= 101
+            or error_kind not in {
+                'accessRestricted', 'rateLimited', 'timeout', 'server',
+                'invalidResponse', 'articlePartial', 'other',
+            }):
+        return None
+    try:
+        failed = datetime.fromisoformat(failed_at.replace('Z', '+00:00'))
+        recovered = datetime.fromisoformat(recovered_at.replace('Z', '+00:00'))
+    except (TypeError, ValueError, OverflowError):
+        return None
+    if (failed.tzinfo is None or recovered.tzinfo is None
+            or not failed <= recovered <= failed + timedelta(days=7)):
+        return None
+    return {
+        'failedAt': failed.isoformat(),
+        'recoveredAt': recovered.isoformat(),
+        'attempts': attempts,
+        'errorKind': error_kind,
+    }
 
 
 def collect(source, previous, tickers, request, clock=None):
@@ -356,7 +388,8 @@ def collect(source, previous, tickers, request, clock=None):
         entry.update(checked=checked, next_check=(datetime.fromisoformat(checked) + timedelta(seconds=delay)).isoformat())
     errors = sum(bool(value.get('error')) for value in children.values())
     waiting = sum(not value.get('succeeded') for value in children.values())
-    recoveries = [item for item in recoveries if isinstance(item, dict)][-100:]
+    recoveries = [measurement for item in recoveries
+                  if (measurement := sanitize_recovery(item)) is not None][-100:]
     return {'_items': items, 'index_state': json.dumps({
                 'initialized': True, 'children': children, 'recoveries': recoveries,
             }),
