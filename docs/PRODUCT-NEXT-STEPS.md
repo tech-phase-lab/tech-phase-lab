@@ -90,3 +90,8 @@ Still required: configure a Clerk application and its publishable/secret keys in
 - メール欄はラベルを残し、入力例のみ表示。続行ボタンの矢印を削除し、新規登録案内は中央に縦揃え。
 - ホーム・検索・企業ページ・各機能ページのブランド下で、ログイン済み会員のFREE/PROを表示。未ログイン・取得失敗時にFREEと決めつけない。表示は権限判定には使用しない。
 - 登録者の実データ取得はClerk運営画面への認証待ち。ユーザーのPCでの会員ログインと、運営管理画面の認証を混同しない。保存先シートは未接続。
+
+### 2026-09-28 owner export access
+- Clerk private metadata editor was unusable in Chrome and Edge; saving inserted `example: "data"`. This field has no entitlement effect.
+- User explicitly supplied their Clerk user ID and authorized owner admin access. `resolveAdmin` now accepts that exact verified session ID, or an existing server-managed admin role. No client-provided ID is trusted; plan remains separate.
+- Owner must verify the member CSV download while signed in. Real-data spreadsheet and automatic sheet synchronization are still pending.

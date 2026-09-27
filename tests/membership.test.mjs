@@ -14,3 +14,16 @@ test('member exports escape CSV and neutralize spreadsheet formulas',()=>{
  for(const value of ['=1+1',' +SUM(A1)','\t@IMPORT','-1']) assert.ok(csvCell(value).startsWith('"\''));
  assert.equal(memberCsv([['名前','プラン']]), '\uFEFF"名前","プラン"');
 });
+
+import {resolveAdmin} from '../lib/membership/entitlements.ts';
+test('only the designated owner or server-granted admins can export members',()=>{
+ const owner='user_3JulL4D07KtVl5Eg2zdY1iczKbC';
+ assert.equal(resolveAdmin(owner,{example:'data'}),true);
+ for(const id of [null,undefined,'',owner+'x',owner.toLowerCase(),'user_other']) {
+  assert.equal(resolveAdmin(id,{}),false);
+ }
+ assert.equal(resolveAdmin(null,{role:'admin'}),false);
+ assert.equal(resolveAdmin('user_other',{role:'admin'}),true);
+ assert.equal(resolveAdmin('user_other',{plan:'pro',role:'Admin'}),false);
+ assert.equal(resolvePlan({example:'data'}),'free');
+});
