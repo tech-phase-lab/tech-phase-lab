@@ -186,6 +186,9 @@ Persisted recovery history is normalized again whenever an HTML index is
 saved. Only those four bounded measurement fields are allowlisted; legacy or
 corrupt URL, response and exception fields are removed, and malformed records
 are discarded rather than copied forward.
+Persisted per-article state is likewise rebuilt from an allowlist of bounded
+scheduling, retry and HTTP-validator fields. Legacy body text, URLs, raw
+transport errors and unknown metadata are discarded before state is re-saved.
 Successful children are excluded, stored state is bounded before aggregation,
 and no child URL, title, HTTP status, validator or raw error reaches this
 operational summary. When a child retry becomes due, one bounded maintenance

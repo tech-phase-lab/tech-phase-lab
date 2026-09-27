@@ -184,6 +184,43 @@ def sanitize_recovery(value):
     }
 
 
+def sanitize_child_state(value, validator):
+    """Allow only bounded scheduling and HTTP-cache fields for one article."""
+    if not isinstance(value, dict):
+        return None
+    entry = {
+        'baseline': value.get('baseline') if isinstance(value.get('baseline'), bool) else True,
+    }
+    for key in ('checked', 'succeeded', 'next_check', 'first_failed_at'):
+        raw = value.get(key)
+        if raw is None:
+            if key == 'first_failed_at' and key in value:
+                entry[key] = None
+            continue
+        if not isinstance(raw, str) or len(raw) > 100:
+            continue
+        try:
+            parsed = datetime.fromisoformat(raw.replace('Z', '+00:00'))
+        except (ValueError, OverflowError):
+            continue
+        if parsed.tzinfo is not None:
+            entry[key] = parsed.isoformat()
+    error = value.get('error')
+    if error is None and 'error' in value:
+        entry['error'] = None
+    elif (isinstance(error, str) and 0 < len(error) <= 100
+          and '\r' not in error and '\n' not in error):
+        entry['error'] = error
+    for key, maximum in (('failures', 10), ('failure_attempts', 100)):
+        raw = value.get(key)
+        entry[key] = raw if (isinstance(raw, int) and not isinstance(raw, bool)
+                             and 0 <= raw <= maximum) else 0
+    for key in ('etag', 'last_modified'):
+        if (cleaned := validator(value.get(key))) is not None:
+            entry[key] = cleaned
+    return entry
+
+
 def collect(source, previous, tickers, request, clock=None):
     # Local import avoids a module initialization cycle.
     import signals
@@ -260,20 +297,9 @@ def collect(source, previous, tickers, request, clock=None):
                 url = signals.safe_url(raw_url, source)
             except ValueError:
                 continue
-            entry = dict(raw_entry)
-            if not isinstance(entry.get('baseline'), bool):
-                entry['baseline'] = True
-            if not isinstance(entry.get('checked', ''), str):
-                entry.pop('checked', None)
-            if not isinstance(entry.get('succeeded', ''), str):
-                entry.pop('succeeded', None)
-            if not isinstance(entry.get('error'), (str, type(None))):
-                entry.pop('error', None)
-            failures = entry.get('failures', 0)
-            if (not isinstance(failures, int) or isinstance(failures, bool)
-                    or not 0 <= failures <= 10):
-                entry['failures'] = 0
-            children[url] = entry
+            entry = sanitize_child_state(raw_entry, monitor.http_validator)
+            if entry is not None:
+                children[url] = entry
     else:
         state_corrupt = True
     recoveries = state.get('recoveries', [])

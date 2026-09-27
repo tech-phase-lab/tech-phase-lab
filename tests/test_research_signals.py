@@ -1266,6 +1266,46 @@ class SignalTests(unittest.TestCase):
         self.assertNotIn('private.invalid', result['index_state'])
         self.assertNotIn('private transport detail', result['index_state'])
 
+    def test_article_child_state_is_allowlisted_before_resave(self):
+        from html_signals import collect
+
+        source = next(s for s in signals.SOURCES if s['id'] == 'anthropic-news')
+        article_url = source['url'] + '/test'
+        checked = '2026-09-25T10:00:00+00:00'
+
+        def request(route, validators):
+            self.assertEqual(route['url'], source['url'])
+            return {'body': b'<a href="/news/test">Story</a>'}
+
+        result = collect(source, {'index_state': json.dumps({
+            'initialized': True,
+            'children': {article_url: {
+                'baseline': True,
+                'checked': checked,
+                'succeeded': checked,
+                'next_check': '2026-09-25T11:00:00+00:00',
+                'error': None,
+                'failures': 0,
+                'failure_attempts': 0,
+                'etag': '"safe-validator"',
+                'last_modified': 'Wed, 24 Sep 2026 10:00:00 GMT',
+                'url': 'https://private.invalid/secret',
+                'rawError': 'private transport detail',
+                'body': 'private article body',
+                'unknown': {'nested': 'private metadata'},
+            }},
+        })}, self.tickers, request, lambda: checked)
+
+        child = json.loads(result['index_state'])['children'][article_url]
+        self.assertEqual(set(child), {
+            'baseline', 'checked', 'succeeded', 'next_check', 'error',
+            'failures', 'failure_attempts', 'etag', 'last_modified',
+        })
+        self.assertEqual(child['etag'], '"safe-validator"')
+        self.assertNotIn('private.invalid', result['index_state'])
+        self.assertNotIn('private transport detail', result['index_state'])
+        self.assertNotIn('private article body', result['index_state'])
+
     def test_queue_ignores_corrupt_or_unapproved_article_children(self):
         source = next(s for s in signals.SOURCES if s['id'] == 'anthropic-news')
         signals.schema(self.db)
