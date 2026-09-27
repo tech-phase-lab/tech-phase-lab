@@ -46,12 +46,18 @@ export default function MarketPage() {
   const [candles, setCandles] = useState(true);
   const [symbol, setSymbol] = useState("FOREXCOM:SPXUSD");
   const ja = lang === "ja";
+  const groups = [
+    { name: ja ? "指数" : "Indices", options: [["FOREXCOM:SPXUSD", "S&P 500 · CFD"], ["FOREXCOM:NSXUSD", "Nasdaq 100 · CFD"], ["FOREXCOM:DJI", "Dow 30 · CFD"]] },
+    { name: ja ? "債券ETF" : "Bond ETFs", options: [["NASDAQ:SHY", "SHY · 1–3Y"], ["NASDAQ:IEF", "IEF · 7–10Y"], ["NASDAQ:TLT", "TLT · 20+Y"]] },
+    { name: ja ? "為替" : "Forex", options: [["FX:USDJPY", "USD / JPY"], ["FX:EURUSD", "EUR / USD"], ["FX:EURJPY", "EUR / JPY"]] },
+  ];
+  const selectedGroup = groups.find(group => group.options.some(([value]) => value === symbol))!;
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "マーケット" : "Markets"} description="">
     <div className={styles.controls}>
-      <p className={styles.categories}>{ja ? "指数・債券ETF・為替" : "Indices · Bond ETFs · Forex"}</p>
+      <div className={styles.categories} role="group" aria-label={ja ? "市場の種類" : "Market category"}>{groups.map(group => <button key={group.name} aria-pressed={group === selectedGroup} onClick={() => setSymbol(group.options[0][0])}>{group.name}</button>)}</div>
       <div className={styles.modes}><button aria-pressed={candles} onClick={() => setCandles(true)}>{ja ? "ローソク足" : "Candlesticks"}</button><button aria-pressed={!candles} onClick={() => setCandles(false)}>{ja ? "ライン" : "Line"}</button></div>
       <select aria-label={ja ? "チャートの対象" : "Chart symbol"} value={symbol} onChange={event => setSymbol(event.target.value)}>
-        {[ ["FOREXCOM:SPXUSD","S&P 500 · CFD"], ["FOREXCOM:NSXUSD","Nasdaq 100 · CFD"], ["FOREXCOM:DJI","Dow 30 · CFD"], ["NASDAQ:SHY", "SHY · 1–3Y"], ["NASDAQ:IEF","IEF · 7–10Y"], ["NASDAQ:TLT","TLT · 20+Y"], ["FX:USDJPY","USD / JPY"], ["FX:EURUSD","EUR / USD"], ["FX:EURJPY","EUR / JPY"] ].map(([value,label]) => <option key={value} value={value}>{label}</option>)}
+        {selectedGroup.options.map(([value,label]) => <option key={value} value={value}>{label}</option>)}
       </select>
     </div>
     <section className={styles.panel} aria-label={ja ? "市場の動き" : "Market overview"}>

@@ -11,7 +11,9 @@
 .modes button[aria-pressed=true] { color:#a5efcf; background:#213c35; }
 .controls select { max-width:100%; padding:12px; border:1px solid #40565e; border-radius:9px; color:#e1e9e5; background:#14212b; font:inherit; }
 
-.categories { margin:0; font-size:13px; color:#a5b4bd; }
+.categories { display:flex; gap:4px; margin-right:auto; }
+.categories button { background:transparent; border:0; border-bottom:2px solid transparent; padding:10px 8px; color:#a5b4bd; font:600 13px/1.2 Arial,sans-serif; cursor:pointer; }
+.categories button[aria-pressed=true] { color:#a5efcf; border-bottom-color:#a5efcf; }
 .controls select { flex-basis:100%; max-width:270px; font-size:13px; }
 
 .macro { margin-top:28px; }
@@ -19,19 +21,19 @@
 .macroHeading h2 { margin:0; font-size:18px; font-weight:600; }
 .macroHeading > span { color:#99aaa9; font-size:11px; border:1px solid #34464b; border-radius:5px; padding:4px 7px; }
 .macroGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
-.macroCard { padding:18px; border:1px solid #30434b; border-radius:12px; background:#101d25; }
+.macroCard { padding:12px 14px; border:1px solid #30434b; border-radius:12px; background:#101d25; }
 .macroCard a { display:flex; justify-content:space-between; gap:6px; color:#e1ece9; text-decoration:none; font-size:14px; font-weight:600; }
 .macroCard a span { color:#88b9aa; }
-.macroUnit { margin:7px 0 20px; color:#9aaab5; font-size:11px; }
-.macroValue { margin:0; font-size:30px; font-weight:600; font-variant-numeric:tabular-nums; letter-spacing:-.04em; }
-.macroChange { margin:8px 0 12px; font-size:12px; color:#bfd1d0; font-variant-numeric:tabular-nums; }
+.macroUnit { margin:3px 0 6px; color:#9aaab5; font-size:11px; }
+.macroValue { margin:0; font-size:27px; font-weight:600; font-variant-numeric:tabular-nums; letter-spacing:-.04em; }
+.macroChange { margin:3px 0 5px; font-size:12px; color:#bfd1d0; font-variant-numeric:tabular-nums; }
 .macroCard time { color:#96a7b0; font-size:11px; }
 @media (max-width:600px) {
   .macroGrid { gap:7px; }
-  .macroCard { padding:12px 8px; border-radius:9px; }
+  .macroCard { padding:9px 8px; border-radius:9px; }
   .macroCard a { font-size:11px; }
-  .macroUnit { font-size:9px; min-height:24px; margin-bottom:10px; }
+  .macroUnit { font-size:9px; margin-bottom:5px; }
   .macroValue { font-size:23px; }
-  .macroChange { font-size:10px; min-height:24px; }
+  .macroChange { font-size:10px; }
   .macroCard time { font-size:10px; }
 }
