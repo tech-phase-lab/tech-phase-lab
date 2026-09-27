@@ -58,6 +58,10 @@ The completed delivery batch advances its aggregate observation boundary to the
 latest attempt it actually claimed, so later devices remain visible without
 admitting unrelated future-dated ledger rows. Standalone and 24-hour status
 reads reject those future rows instead of treating them as current evidence.
+Each candidate price-target event is also validated before device matching or
+provider access. Missing, timezone-naive or non-convertible timestamps,
+non-finite prices, malformed tickers and empty firm names are skipped per item;
+one corrupt persisted event cannot stop delivery of a later valid event.
 
 The public-safe live operations payload is identical for every viewer. Its
 successful response is shared at the Vercel edge for two seconds, with a

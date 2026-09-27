@@ -140,9 +140,51 @@ def test_notification(db, payload, transport=None, now=None):
     return {'accepted': 200 <= code < 300, 'expired': code in (404, 410)}
 
 
+def parse_event_time(value):
+    """Return a bounded aware UTC event time, or None for unusable evidence."""
+    if not isinstance(value, str) or not 1 <= len(value) <= 64:
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
+        if parsed.tzinfo is None:
+            return None
+        return parsed.astimezone(timezone.utc)
+    except (AttributeError, TypeError, ValueError, OverflowError):
+        return None
+
+
+def normalize_event(item):
+    """Validate public change data before it can reach a push provider."""
+    if not isinstance(item, dict):
+        return None
+    ticker, firm = item.get('ticker'), item.get('firm')
+    if (not isinstance(ticker, str) or not re.fullmatch(r'[A-Z][A-Z0-9.-]{0,14}', ticker)
+            or not isinstance(firm, str) or not 1 <= len(firm.strip()) <= 120):
+        return None
+    try:
+        previous, latest = float(item.get('previous')), float(item.get('latest'))
+    except (TypeError, ValueError, OverflowError):
+        return None
+    if (not math.isfinite(previous) or not math.isfinite(latest)
+            or not 0 < previous <= 1_000_000_000 or not 0 < latest <= 1_000_000_000):
+        return None
+    published = parse_event_time(item.get('publishedAt'))
+    observed = parse_event_time(item.get('observedAt'))
+    if published is None or observed is None:
+        return None
+    try:
+        observed_timestamp = observed.timestamp()
+    except (OverflowError, OSError, ValueError):
+        return None
+    return {
+        'ticker': ticker, 'firm': firm.strip(), 'previous': previous, 'latest': latest,
+        'published': published, 'observed_timestamp': observed_timestamp,
+    }
+
+
 def event_key(item):
     # Same broker action reported by several accounts is one notification.
-    date = datetime.fromisoformat(item['publishedAt'].replace('Z', '+00:00')).astimezone(timezone.utc).date().isoformat()
+    date = item['published'].date().isoformat()
     facts = [item['ticker'], item['firm'].casefold(), float(item['previous']), float(item['latest']), date]
     return hashlib.sha256(json.dumps(facts).encode()).hexdigest()
 
@@ -232,8 +274,11 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
     attempted = accepted = uncertain = 0
     for device in db.execute('SELECT * FROM push_devices WHERE active=1').fetchall():
         watched = set(json.loads(device['tickers']))
-        for item in items:
-            observed = datetime.fromisoformat(item['observedAt'].replace('Z', '+00:00')).timestamp()
+        for raw_item in items:
+            item = normalize_event(raw_item)
+            if item is None:
+                continue
+            observed = item['observed_timestamp']
             if ('*' not in watched and item['ticker'] not in watched) or observed <= device['since'] or not 0 <= now - observed <= 300:
                 continue
             key = event_key(item)

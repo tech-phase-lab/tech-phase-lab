@@ -60,6 +60,27 @@ class PushTests(unittest.TestCase):
         self.db.close();self.db=push.connect(Path(self.tmp.name)/'push.sqlite')
         push.deliver(self.db,[event()],send,self.now)
         self.assertEqual(len(calls),1)
+
+    def test_invalid_events_are_skipped_without_stopping_later_delivery(self):
+        self.register(); calls=[]
+        invalid = [
+            None,
+            {**event(), 'publishedAt':'2026-09-26T14:00:00'},
+            {**event(), 'publishedAt':'0001-01-01T00:00:00+14:00'},
+            {**event(), 'observedAt':'9999-12-31T23:59:59-14:00'},
+            {**event(), 'observedAt':None},
+            {**event(), 'previous':float('nan')},
+            {**event(), 'latest':float('inf')},
+            {**event(), 'firm':''},
+            {**event(), 'ticker':'../MU'},
+        ]
+        result = push.deliver(
+            self.db, [*invalid, event()], lambda _, payload: calls.append(payload) or 201,
+            self.now)
+        self.assertEqual(result['attempted'], 1)
+        self.assertEqual(result['accepted'], 1)
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(calls[0]['title'], 'MU · 目標株価の変更')
     def test_registration_never_backfills(self):
         self.register(self.now)
         self.assertEqual(push.deliver(self.db,[event()],lambda *_: self.fail('old event'),self.now)['attempted'],0)
