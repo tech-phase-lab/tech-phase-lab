@@ -95,3 +95,9 @@ Still required: configure a Clerk application and its publishable/secret keys in
 - Clerk private metadata editor was unusable in Chrome and Edge; saving inserted `example: "data"`. This field has no entitlement effect.
 - User explicitly supplied their Clerk user ID and authorized owner admin access. `resolveAdmin` now accepts that exact verified session ID, or an existing server-managed admin role. No client-provided ID is trusted; plan remains separate.
 - Owner must verify the member CSV download while signed in. Real-data spreadsheet and automatic sheet synchronization are still pending.
+
+### 2026-09-28 member sheet automation preparation
+- CSV export was verified by the owner. Its one member is the owner, not a customer.
+- Added read-only token-protected `/api/research/member/sync` and a bound Apps Script under `scripts/membership/google-sheets.gs`. Approximately 15-minute full snapshots; owner labeled 運営 and excluded from 一般会員. No browser polling or ChatGPT scheduled task.
+- Script validates the complete snapshot before writing, uses a lock, rejects duplicate IDs and removes retired accounts from the current snapshot. Personal data is not logged. Dedicated sync token is separate from Clerk credentials.
+- NOT LIVE: owner must import the workbook to private Google Sheets, add the script, run setupTechPhase, save its generated token in Vercel Preview as MEMBER_SHEET_SYNC_TOKEN, redeploy, then run startTechPhase. Verify initial row and recurring successful timestamp. Google Drive plugin connection alone does not provide runtime sync.

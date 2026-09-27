@@ -27,3 +27,12 @@ test('only the designated owner or server-granted admins can export members',()=
  assert.equal(resolveAdmin('user_other',{plan:'pro',role:'Admin'}),false);
  assert.equal(resolvePlan({example:'data'}),'free');
 });
+
+import {validSyncToken} from '../lib/membership/sync-auth.ts';
+test('sheet sync rejects missing, weak and incorrect credentials',()=>{
+ const secret='a'.repeat(48);
+ assert.equal(validSyncToken('Bearer '+secret,secret),true);
+ for(const header of [null,'','Bearer wrong','Basic '+secret,'Bearer '+secret+'x']) assert.equal(validSyncToken(header,secret),false);
+ assert.equal(validSyncToken('Bearer short','short'),false);
+ assert.equal(validSyncToken('Bearer '+secret,undefined),false);
+});
