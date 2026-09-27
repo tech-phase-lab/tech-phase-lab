@@ -3517,3 +3517,33 @@ lists the October 27-28 and December 8-9 meetings. No calendar event changed.
 Continue with SKHY, SNOW, VRT, AAPL, AMZN, ANET, ARM, AVGO, BE and COHR.
 Inaccessible, historical-only, projected and empty dynamic states remain
 inconclusive and must not be promoted to forecast dates.
+
+## One-hundred-eighteenth company batch reviewed on 2026-09-28
+
+The requested ten-company batch was rechecked against first-party schedules,
+announcements and investor-relations pages. None exposed a newly confirmed
+future earnings release or call. Their `lastAttemptedOn` values were already
+2026-09-28, checked state and calendar events remain unchanged, and no forecast
+date is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| SKHY | Pending | The official IR list still ends with the August 19 shareholder-return announcement and July 29 Q2 results, without a future earnings timing announcement. |
+| SNOW | Pending | The official page still exposes an empty Upcoming Events section and archive headings without an explicit no-events statement. |
+| VRT | Pending | The official page still exposes empty Latest Events and Latest Presentation sections; first-party search results contain the completed July 29 Q2 release and no future earnings timing announcement. |
+| AAPL | Pending | The official page still exposes Investor Updates and Quarterly Earnings Reports headings without a dated future item or explicit no-events statement. |
+| AMZN | Pending | The official Events page still exposes empty Upcoming Events and Past Events headings without an explicit no-events statement. |
+| ANET | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| ARM | Pending | The official Events page labels November 4 as a tentatively proposed FYE27 Q2 date, so it remains excluded. |
+| AVGO | Pending | The official Financial News list still ends with the August 3 announcement for the completed September 2 fiscal Q3 results and contains no future timing announcement. |
+| BE | Pending | The official Event Calendar still exposes empty Upcoming Events and Event Archive sections without an explicit no-events statement. |
+| COHR | Pending | The official Financial Releases URL remained inaccessible through the review connection; no conclusive first-party future schedule was available. |
+
+The BLS October schedule was rechecked on 2026-09-28 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar, last updated September 16, still
+lists the October 27-28 and December 8-9 meetings. No calendar event changed.
+
+Continue with CRDO, CRM, CRWV, GOOGL, KLAC, LITE, MRVL, NBIS, NOW and NVDA.
+Inaccessible, historical-only, projected and empty dynamic states remain
+inconclusive and must not be promoted to forecast dates.
