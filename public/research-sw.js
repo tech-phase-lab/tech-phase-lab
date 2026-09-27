@@ -5,12 +5,12 @@ self.addEventListener("push", (event) => {
   if (!payload || typeof payload.title !== "string" || typeof payload.body !== "string") return;
   event.waitUntil(self.registration.showNotification(payload.title.slice(0, 100), {
     body: payload.body.slice(0, 300), tag: String(payload.tag || "tech-phase").slice(0, 100),
-    renotify: false, data: { url: "/research#what-changed" },
+    renotify: false, data: { url: payload.url === "/research/notifications" ? "/research/notifications" : "/research/price-targets" },
   }));
 });
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  const target = new URL("/research#what-changed", self.location.origin).href;
+  const target = new URL(event.notification.data?.url === "/research/notifications" ? "/research/notifications" : "/research/price-targets", self.location.origin).href;
   event.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(async (windows) => {
     for (const client of windows) {
       if (new URL(client.url).origin === self.location.origin && new URL(client.url).pathname.startsWith("/research")) {

@@ -102,6 +102,44 @@ def remove(db, payload):
     return {'registered': False}
 
 
+def device_status(db, payload):
+    subscription = validate_subscription(payload.get('subscription'))
+    device = hashlib.sha256(subscription['endpoint'].encode()).hexdigest()
+    row = db.execute('SELECT * FROM push_devices WHERE id=? AND active=1', (device,)).fetchone()
+    registered = bool(row and json.loads(row['subscription']) == subscription)
+    return {'registered': registered}
+
+
+def test_notification(db, payload, transport=None, now=None):
+    if not configuration()['enabled']:
+        raise ValueError('disabled')
+    subscription = validate_subscription(payload.get('subscription'))
+    if not device_status(db, payload)['registered']:
+        raise ValueError('not-registered')
+    device = hashlib.sha256(subscription['endpoint'].encode()).hexdigest()
+    now = time.time() if now is None else now
+    # Reserve before transport, including ambiguous outcomes; no automatic retry.
+    with db:
+        db.execute('CREATE TABLE IF NOT EXISTS push_test_attempts (device_id TEXT PRIMARY KEY, attempted_at REAL NOT NULL)')
+        claim = db.execute("""INSERT INTO push_test_attempts VALUES(?,?)
+            ON CONFLICT(device_id) DO UPDATE SET attempted_at=excluded.attempted_at
+            WHERE push_test_attempts.attempted_at <= excluded.attempted_at - 60""", (device, now)).rowcount
+    if not claim:
+        return {'accepted': False, 'retryAfter': 60}
+    row = db.execute('SELECT language FROM push_devices WHERE id=?', (device,)).fetchone()
+    ja = row['language'] == 'ja'
+    message = {'title': 'Tech Phase · ' + ('テスト通知' if ja else 'Test notification'),
+               'body': 'この通知が届いたら、設定画面で「届きました」を押してください。' if ja else 'If you see this, select “Received” in notification settings.',
+               'tag': 'tech-phase-test', 'url': '/research/notifications'}
+    try:
+        code = (transport or send)(subscription, message)
+    except Exception:
+        code = 0
+    if code in (404, 410):
+        remove(db, payload)
+    return {'accepted': 200 <= code < 300, 'expired': code in (404, 410)}
+
+
 def event_key(item):
     # Same broker action reported by several accounts is one notification.
     date = datetime.fromisoformat(item['publishedAt'].replace('Z', '+00:00')).astimezone(timezone.utc).date().isoformat()

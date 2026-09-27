@@ -1809,7 +1809,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlsplit(self.path).path
-        if path in {"/push/register", "/push/remove"}:
+        if path in {"/push/register", "/push/remove", "/push/status", "/push/test"}:
             if not self.authorized():
                 self.send_json(401, {"ok": False})
                 return
@@ -1819,8 +1819,14 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 payload = self.read_json()
                 with web_push.connect(self.app.db_path) as db:
-                    result = (web_push.remove(db, payload) if path == "/push/remove" else
-                              web_push.register(db, payload, set(self.app.tickers) | signals.X_EXTRA_TICKERS))
+                    if path == "/push/status":
+                        result = web_push.device_status(db, payload)
+                    elif path == "/push/test":
+                        result = web_push.test_notification(db, payload)
+                    elif path == "/push/remove":
+                        result = web_push.remove(db, payload)
+                    else:
+                        result = web_push.register(db, payload, set(self.app.tickers) | signals.X_EXTRA_TICKERS)
                 self.send_json(200, {"ok": True, **result})
             except ValueError:
                 self.send_json(400, {"ok": False, "error": "invalid-registration"})

@@ -47,7 +47,7 @@ export async function POST(request: Request) {
     if (supplied.length !== secret.length || !timingSafeEqual(supplied, secret)) {
       return Response.json({ ok: false }, { status: 403, headers });
     }
-    if (!["register", "remove"].includes(body.action)) throw new Error("Invalid action");
+    if (!["register", "remove", "status", "test"].includes(body.action)) throw new Error("Invalid action");
     const result = await monitor(`/push/${body.action}`, {
       subscription: body.subscription, tickers: body.tickers, allTargets: body.allTargets === true, language: body.language,
     });

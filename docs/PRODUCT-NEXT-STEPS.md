@@ -60,3 +60,7 @@ User approved ten benefits and requested one-line rows on mobile. Implement conc
 ## September 27, 20:28 JST visual/copy refinement
 
 Align Free and PRO bullet insets at zero list padding. Keep only the approved page-level tagline; remove the second slogan below the PRO CTA. Reduce repeated middle-dot enumerations in benefits. Replace generic scenario wording with growth turning points and what comes next. User requested a stronger question-section name; current trial label is リサーチQ&A / Research Q&A, preserving 会員の疑問を深掘り. Ten benefits remain.
+
+## Priority 3 — real device notification controls
+
+Replaced display-only toggle with actual PushManager registration, server registration status, unsubscribe, and rate-limited server test delivery. On requires confirmed registration; browser permission alone is not success. Test provider acceptance and user-confirmed receipt are separate. Reloaded subscriptions start unverified until checked. Private pilot code remains required on authenticated server actions and is held in memory only; production membership authentication is not yet implemented. The user must verify receipt on their own phone. No unsolicited test sent to existing devices.

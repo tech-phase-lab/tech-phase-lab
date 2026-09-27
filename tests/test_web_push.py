@@ -29,6 +29,30 @@ class PushTests(unittest.TestCase):
         self.env.stop();self.db.close();self.tmp.cleanup()
     def register(self, now=None):
         push.register(self.db,{'subscription':subscription(),'tickers':['MU'],'language':'ja'}, {'MU','NBIS'},self.now-10 if now is None else now)
+    def test_device_status_checks_registration_and_keys(self):
+        self.assertFalse(push.device_status(self.db, {'subscription': subscription()})['registered'])
+        self.register()
+        self.assertTrue(push.device_status(self.db, {'subscription': subscription()})['registered'])
+        changed = subscription(); changed['keys']['auth'] = b64(b'b'*16)
+        self.assertFalse(push.device_status(self.db, {'subscription': changed})['registered'])
+        push.remove(self.db, {'subscription': subscription()})
+        self.assertFalse(push.device_status(self.db, {'subscription': subscription()})['registered'])
+
+    def test_test_notification_requires_registration_and_limits_retries(self):
+        payload = {'subscription': subscription()}
+        with self.assertRaises(ValueError):
+            push.test_notification(self.db, payload, lambda *_: self.fail('unregistered'), self.now)
+        self.register(); calls=[]
+        transport=lambda sub, message: calls.append(message) or 201
+        self.assertTrue(push.test_notification(self.db, payload, transport, self.now)['accepted'])
+        self.assertEqual(calls[0]['url'], '/research/notifications')
+        self.assertEqual(push.test_notification(self.db, payload, transport, self.now+1)['retryAfter'], 60)
+        self.assertEqual(len(calls), 1)
+        self.assertFalse(push.test_notification(self.db, payload, lambda *_: 0, self.now+61)['accepted'])
+        self.assertEqual(push.test_notification(self.db, payload, transport, self.now+62)['retryAfter'], 60)
+        self.assertTrue(push.test_notification(self.db, payload, lambda *_: 410, self.now+122)['expired'])
+        self.assertFalse(push.device_status(self.db, payload)['registered'])
+
     def test_filters_and_deduplicates_across_sources_and_restart(self):
         self.register(); calls=[]
         send=lambda sub,payload: calls.append(payload) or 201
