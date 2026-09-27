@@ -556,6 +556,55 @@ class SignalTests(unittest.TestCase):
         self.assertNotIn(self.doc["id"], serialized)
         self.assertNotIn("private route detail", serialized)
 
+    def test_invalid_active_route_measurement_restarts_without_inflating_recovery(self):
+        signals.schema(self.db)
+        self.db.execute("""INSERT INTO signal_routes(
+          id,initialized,checked_at,next_check_at,failures,error,
+          failure_started_at,failure_attempts) VALUES(?,1,?,?,?,?,?,?)""", (
+            self.doc["id"], "2026-09-25T10:03:00+00:00",
+            "2026-09-25T10:10:00+00:00", 20, "timeout",
+            "2026-09-25T10:01:00", 88,
+        ))
+        self.db.commit()
+
+        def timeout(*_args):
+            raise TimeoutError("private route detail")
+
+        checked = "2026-09-25T11:00:00+00:00"
+        with patch.object(signals, "stamp", return_value=checked):
+            result = signals.check(self.db, self.doc, self.tickers, timeout)
+        self.assertEqual(result["status"], "error")
+        route = self.db.execute(
+            "SELECT failure_started_at,failure_attempts FROM signal_routes WHERE id=?",
+            (self.doc["id"],),
+        ).fetchone()
+        self.assertEqual(dict(route), {
+            "failure_started_at": checked,
+            "failure_attempts": 1,
+        })
+        self.assertEqual(
+            self.db.execute("SELECT COUNT(*) FROM signal_route_recoveries").fetchone()[0],
+            0,
+        )
+
+        self.db.execute(
+            "UPDATE signal_routes SET failure_started_at=?,failure_attempts=? WHERE id=?",
+            ("2026-09-25T11:01:00", 99, self.doc["id"]),
+        )
+        self.db.commit()
+        invalid = self.db.execute(
+            "SELECT * FROM signal_routes WHERE id=?", (self.doc["id"],)
+        ).fetchone()
+        with self.db:
+            self.assertEqual(signals.route_failure_measurement(
+                self.db, self.doc["id"], invalid, None,
+                "2026-09-25T11:02:00+00:00",
+            ), (None, 0))
+        self.assertEqual(
+            self.db.execute("SELECT COUNT(*) FROM signal_route_recoveries").fetchone()[0],
+            0,
+        )
+
     def test_active_route_outages_report_only_bounded_aggregate_measurements(self):
         signals.schema(self.db)
         self.db.execute("""INSERT INTO signal_routes(

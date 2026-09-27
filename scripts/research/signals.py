@@ -471,26 +471,56 @@ def record_route_transition(db, source_id, previous_route, current_error, occurr
       (SELECT id FROM signal_route_transitions ORDER BY id DESC LIMIT 5000)""")
 
 
+def prior_route_failure_measurement(previous_route, occurred_at):
+    """Return only a bounded, timezone-aware active outage measurement."""
+    if not previous_route or not previous_route["error"]:
+        return None
+    try:
+        current = datetime.fromisoformat(str(occurred_at).replace("Z", "+00:00"))
+        if current.tzinfo is None:
+            return None
+        current = current.astimezone(timezone.utc)
+        started_value = previous_route["failure_started_at"]
+        attempts = previous_route["failure_attempts"]
+        if started_value:
+            started = datetime.fromisoformat(str(started_value).replace("Z", "+00:00"))
+        elif not attempts:
+            # A pre-migration failure has only checked_at and failures available.
+            started = datetime.fromisoformat(
+                str(previous_route["checked_at"]).replace("Z", "+00:00")
+            )
+            attempts = previous_route["failures"]
+        else:
+            return None
+        if started.tzinfo is None:
+            return None
+        started = started.astimezone(timezone.utc)
+    except (TypeError, ValueError, OverflowError):
+        return None
+    if (isinstance(attempts, bool) or not isinstance(attempts, int)
+            or not 1 <= attempts <= 100 or started > current
+            or current - started > timedelta(days=7)):
+        return None
+    return started.isoformat(), attempts
+
+
 def route_failure_measurement(db, source_id, previous_route, current_error, occurred_at):
     """Track a bounded outage measurement without exposing route identity publicly."""
+    previous_measurement = prior_route_failure_measurement(previous_route, occurred_at)
     if current_error:
-        continuing = bool(previous_route and previous_route["error"])
-        started_at = ((previous_route["failure_started_at"] or previous_route["checked_at"])
-                      if continuing else None) or occurred_at
-        prior_attempts = ((previous_route["failure_attempts"] or previous_route["failures"])
-                          if continuing else 0)
-        return started_at, min(100, max(0, int(prior_attempts or 0)) + 1)
-    if not previous_route or not previous_route["error"]:
+        if previous_measurement:
+            started_at, prior_attempts = previous_measurement
+            return started_at, min(100, prior_attempts + 1)
+        return occurred_at, 1
+    if not previous_route or not previous_route["error"] or not previous_measurement:
         return None, 0
-    failed_at = previous_route["failure_started_at"] or previous_route["checked_at"]
-    attempts = min(101, max(1, int(
-        previous_route["failure_attempts"] or previous_route["failures"] or 1
-    )) + 1)
+    failed_at, prior_attempts = previous_measurement
+    attempts = min(101, prior_attempts + 1)
     db.execute("""INSERT INTO signal_route_recoveries(
       source_id,failed_at,recovered_at,attempts,error_kind
       ) VALUES(?,?,?,?,?)""", (
-        source_id, failed_at or occurred_at, occurred_at, attempts,
-        signal_error_kind(previous_route["error"]),
+        source_id, failed_at, occurred_at, attempts,
+        signal_error_kind(monitor.persisted_route_error_code(previous_route["error"])),
     ))
     cutoff = (datetime.fromisoformat(occurred_at) - timedelta(days=8)).isoformat()
     db.execute("""DELETE FROM signal_route_recoveries
