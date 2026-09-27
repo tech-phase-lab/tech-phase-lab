@@ -1622,3 +1622,6 @@
   .planStack .accessCard { padding:20px; }
   .planStack .planPrice { margin:14px 0; font-size:36px; }
 }
+
+.proPlans { border:0; padding:0; background:transparent; }
+.proPlans .planStack { margin-top:0; }
