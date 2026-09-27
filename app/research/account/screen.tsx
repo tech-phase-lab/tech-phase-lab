@@ -30,6 +30,7 @@ function AccountContent({ status, plan, signingUp = false }: { status: string; p
 
 const japanese = {
   ...jaJP,
+  formFieldInputPlaceholder__emailAddress: "例：name@example.com",
   socialButtonsBlockButton: "{{provider|titleize}}でログイン",
   signIn: {...jaJP.signIn, start: {...jaJP.signIn?.start,
     title: "Tech Phaseにログイン", titleCombined: "Tech Phaseにログイン",
@@ -43,6 +44,6 @@ export default function AccountScreen(props: {status:string; plan:string; signin
   if (props.status === "unavailable") return <p>会員機能に接続できません。時間をおいて再度お試しください。</p>;
   return <ClerkProvider appearance={{
     variables: {colorPrimary:"#9bdec6", colorBackground:"#101e24", colorForeground:"#eaf3f1", colorMutedForeground:"#adc0c6", colorInput:"#0b151d", colorInputForeground:"#eaf3f1", borderRadius:"10px"},
-    elements: {socialButtonsBlockButton:{color:"#eaf3f1",background:"#1c303b",border:"1px solid #55717c"},socialButtonsBlockButtonText:{color:"#eaf3f1"},rootBox:{width:"100%"},cardBox:{width:"100%",boxShadow:"none"},card:{padding:"24px",boxShadow:"none"},headerTitle:{fontSize:"20px",lineHeight:"1.5"},formButtonPrimary:{color:"#0b151d"},footerActionLink:{display:"inline",margin:0,color:"#9bdec6"}}
+    elements: {buttonArrowIcon:{display:"none"},footerAction:{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:"6px"},footerActionText:{margin:0,textAlign:"center"},socialButtonsBlockButton:{color:"#eaf3f1",background:"#1c303b",border:"1px solid #55717c"},socialButtonsBlockButtonText:{color:"#eaf3f1"},rootBox:{width:"100%"},cardBox:{width:"100%",boxShadow:"none"},card:{padding:"24px",boxShadow:"none"},headerTitle:{fontSize:"20px",lineHeight:"1.5"},formButtonPrimary:{color:"#0b151d"},footerActionLink:{display:"inline",margin:0,color:"#9bdec6"}}
   }} localization={lang === "ja" ? japanese : enUS} signInUrl="/research/account" signUpUrl="/research/account/sign-up"><AccountContent {...props} /></ClerkProvider>;
 }

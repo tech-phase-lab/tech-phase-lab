@@ -4,6 +4,7 @@ import NavigationIcon from "./navigation-icon";
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
+import MembershipLabel from "./membership-label";
 import HeaderPro from "./header-pro";
 import HomeLink from "./home-link";
 import type { Language, ResearchEvent } from "@/lib/research/data";
@@ -138,7 +139,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
     <a className={styles.skip} href="#research-main">{t("本文へ移動", "Skip to content")}</a>
     <header className={styles.header}>
       <Link href="/research" className={styles.brand} aria-label="Tech Phase Research">
-        <span className={styles.mark}>TP<span /></span><span>TECH PHASE<small>RESEARCH</small></span>
+        <span className={styles.mark}>TP<span /></span><span>TECH PHASE<MembershipLabel /></span>
       </Link>
       <nav className={styles.primaryNav} aria-label={t("メインメニュー", "Main navigation")}>
         <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}><NavigationIcon name="changes" /><span>{t("何が変わった？", "What changed?")}</span></button>
