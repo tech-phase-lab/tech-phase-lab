@@ -2958,6 +2958,37 @@ class ResearchServiceTests(unittest.TestCase):
             self.assertEqual(claim["attempt"], 1)
             self.assertIsNone(monitor.claim_generation_job(db, 20, 3, 100_000))
 
+    def test_generation_queue_compares_retry_offsets_as_absolute_instants(self):
+        url = "https://nebius.com/newsroom/new-release"
+        with monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            monitor.save_source_check(db, row, {
+                "sha256": "a" * 64, "contentType": "text/html", "contentBytes": 80,
+                "extractedText": "Official evidence remains available for review.", "extractedChars": 47,
+            })
+            monitor.queue_generation_job(db, url, 7_000)
+            # This value sorts before the claimed UTC string but is actually
+            # 75 minutes in the future, so a lexical comparison would claim it.
+            db.execute(
+                "UPDATE brief_generation_jobs SET next_attempt_at=? WHERE url=?",
+                ("2026-09-27T23:45:00-02:00", url),
+            )
+            db.commit()
+            with patch.object(monitor, "now", return_value="2026-09-28T00:30:00+00:00"):
+                self.assertIsNone(monitor.claim_generation_job(db, 20, 3, 100_000))
+
+            # This value sorts after the claimed UTC string but represents an
+            # instant 30 minutes in the past, so it must be eligible now.
+            db.execute(
+                "UPDATE brief_generation_jobs SET next_attempt_at=? WHERE url=?",
+                ("2026-09-28T03:00:00+03:00", url),
+            )
+            db.commit()
+            with patch.object(monitor, "now", return_value="2026-09-28T00:30:00+00:00"):
+                claim = monitor.claim_generation_job(db, 20, 3, 100_000)
+            self.assertEqual(claim["url"], url)
+            self.assertEqual(claim["attempt"], 1)
+
     def test_generation_retry_and_rolling_call_limit_are_persistent(self):
         url = "https://nebius.com/newsroom/new-release"
         with monitor.connect(self.db_path) as db:

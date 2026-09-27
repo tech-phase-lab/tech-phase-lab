@@ -71,6 +71,20 @@ def now():
     return datetime.now(timezone.utc).isoformat(timespec="milliseconds")
 
 
+def stored_utc_datetime(value):
+    """Parse an internal ISO timestamp by instant, retaining legacy naive UTC rows."""
+    text = str(value)
+    if "T" not in text or not 16 <= len(text) <= 64:
+        return None
+    try:
+        parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone.utc)
+    except (TypeError, ValueError, OverflowError):
+        return None
+
+
 def environment_seconds(name, default, minimum, maximum):
     """Read a bounded interval without letting a bad deployment value stop monitoring."""
     try:
@@ -3746,6 +3760,9 @@ def recover_generation_jobs(db, stale_minutes=10):
 def claim_generation_job(db, daily_limit, max_attempts, token_limit):
     """Atomically claim one due revision under rolling job and token budgets."""
     claimed_at = now()
+    claimed_time = stored_utc_datetime(claimed_at)
+    if claimed_time is None:
+        return None
     window_start = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat(timespec="milliseconds")
     with db:
         db.execute("BEGIN IMMEDIATE")
@@ -3763,15 +3780,21 @@ def claim_generation_job(db, daily_limit, max_attempts, token_limit):
                               THEN total_tokens ELSE reserved_tokens END),0)
           FROM brief_generation_attempts WHERE started_at>=?
         """, (window_start,)).fetchone()[0]
-        row = db.execute("""
+        candidates = db.execute("""
           SELECT j.* FROM brief_generation_jobs j
           JOIN sources s ON s.url=j.url
-          WHERE j.status IN ('queued','retry') AND j.next_attempt_at<=?
-            AND j.attempts<? AND j.source_sha256=s.sha256
+          WHERE j.status IN ('queued','retry') AND j.attempts<? AND j.source_sha256=s.sha256
             AND s.error IS NULL AND s.extracted_chars>0
             AND j.reserved_tokens>0 AND j.reserved_tokens<=?
-          ORDER BY j.queued_at,j.url LIMIT 1
-        """, (claimed_at, max_attempts, max(0, token_limit - tokens_used))).fetchone()
+          ORDER BY j.queued_at,j.url
+        """, (max_attempts, max(0, token_limit - tokens_used))).fetchall()
+        # SQLite compares TEXT lexically, but valid ISO timestamps with
+        # different UTC offsets do not share absolute ordering. Skip invalid
+        # schedules and select the first actually-due job while the write lock
+        # keeps the claim atomic.
+        row = next((candidate for candidate in candidates
+                    if (due := stored_utc_datetime(candidate["next_attempt_at"])) is not None
+                    and due <= claimed_time), None)
         if not row:
             return None
         attempt = row["attempts"] + 1
@@ -3893,14 +3916,9 @@ def generation_queue_stats(db, daily_limit, token_limit):
     for row in db.execute("""
       SELECT next_attempt_at FROM brief_generation_jobs
       WHERE status='retry' AND next_attempt_at IS NOT NULL
-      ORDER BY next_attempt_at LIMIT 1000
     """):
-        try:
-            retry_at = datetime.fromisoformat(str(row["next_attempt_at"]).replace("Z", "+00:00"))
-            if retry_at.tzinfo is None:
-                retry_at = retry_at.replace(tzinfo=timezone.utc)
-            retry_at = retry_at.astimezone(timezone.utc)
-        except (TypeError, ValueError, OverflowError):
+        retry_at = stored_utc_datetime(row["next_attempt_at"])
+        if retry_at is None:
             continue
         wait = (retry_at - current).total_seconds()
         if wait <= MAX_ACCESS_BACKOFF_SECONDS:

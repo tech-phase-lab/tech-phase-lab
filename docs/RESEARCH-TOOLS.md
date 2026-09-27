@@ -126,8 +126,10 @@ The operations preview also shows whether automatic AI drafting is off,
 misconfigured or enabled, plus URL-free queue totals, rolling request and token
 budgets and the earliest aggregate retry time. A provider `Retry-After` can
 therefore be distinguished from an immediate retry without exposing a source
-URL, response header or response body. Generated drafts remain private and
-still require human approval.
+URL, response header or response body. Persisted retry times are compared as
+absolute UTC instants rather than ISO text, so equivalent offsets cannot make
+a draft run early or remain stranded after it is due; malformed schedules are
+not claimed. Generated drafts remain private and still require human approval.
 
 The operations preview exposes a URL-free aggregate for first-party
 supplemental routes. It separates recently successful, stale, failed and
