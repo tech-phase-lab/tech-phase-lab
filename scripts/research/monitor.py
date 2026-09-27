@@ -275,6 +275,15 @@ def persisted_source_error_code(value):
     return "fetch-failed"
 
 
+def persisted_route_error_code(value):
+    """Normalize persisted route state without exposing legacy error detail."""
+    if isinstance(value, str):
+        match = re.fullmatch(r"article-fetch-failed:([1-9]\d{0,3})", value)
+        if match and int(match.group(1)) <= 1000:
+            return value
+    return persisted_source_error_code(value)
+
+
 def retry_after_seconds(exc, reference=None):
     """Parse Retry-After within the relevant URL or hostname backoff ceiling."""
     if not isinstance(exc, HTTPError) or not exc.headers:

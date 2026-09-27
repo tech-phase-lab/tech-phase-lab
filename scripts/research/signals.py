@@ -754,7 +754,7 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
                        "checkedAt": row["checked_at"] if row else None,
                        "succeededAt": row["succeeded_at"] if row else None,
                        "nextCheckAt": row["next_check_at"] if row else None,
-                       "error": row["error"] if row else None,
+                       "error": monitor.persisted_route_error_code(row["error"]) if row else None,
                        "matchedItems": row["matched_items"] if row else 0})
     return {"items": items, "counts": counts, "routes": routes, "xApiUsage": x_api_usage(db, sources=sources), "view": view,
             "ticker": ticker, "generatedAt": stamp(), "publicationEnabled": False}

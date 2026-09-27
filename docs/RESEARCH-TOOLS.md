@@ -193,6 +193,9 @@ Only error codes emitted by the fixed transport classifier survive; a non-empty
 legacy or unknown error value becomes the generic `fetch-failed` code before
 either re-save or private queue rendering, so free-form exception text cannot
 be carried forward.
+Top-level route state is normalized at the same private queue boundary.
+Only fixed transport codes or a bounded `article-fetch-failed:1..1000` count
+are rendered; any legacy free-form route exception becomes `fetch-failed`.
 Recovery attempts are retained only when an active failure, a valid
 timezone-aware start and a positive bounded attempt count are all present.
 Inconsistent legacy fields restart measurement at one on the next failure

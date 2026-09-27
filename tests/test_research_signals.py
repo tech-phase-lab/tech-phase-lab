@@ -119,6 +119,30 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(monitor.persisted_source_error_code('http-503'), 'http-503')
         self.assertIsNone(monitor.persisted_source_error_code(None))
 
+    def test_legacy_route_error_detail_is_reduced_before_queue_render(self):
+        signals.schema(self.db)
+        with self.db:
+            self.db.execute(
+                """INSERT INTO signal_routes(id,initialized,error)
+                   VALUES(?,1,?)""",
+                (self.feed["id"], "https://private.invalid failed with customer detail"),
+            )
+        route = signals.queue(self.db, sources=[self.feed])["routes"][0]
+        self.assertEqual(route["error"], "fetch-failed")
+        self.assertNotIn("private.invalid", json.dumps(route))
+        self.db.execute(
+            "UPDATE signal_routes SET error=? WHERE id=?",
+            ("article-fetch-failed:7", self.feed["id"]),
+        )
+        self.assertEqual(
+            signals.queue(self.db, sources=[self.feed])["routes"][0]["error"],
+            "article-fetch-failed:7",
+        )
+        self.assertEqual(
+            monitor.persisted_route_error_code("article-fetch-failed:1001"),
+            "fetch-failed",
+        )
+
     def test_body_only_multicompany_association_and_no_false_ticker(self):
         self.assertEqual(len(signals.ALIASES), 22)
         items = signals.parse(self.feed, feed(), self.tickers)
