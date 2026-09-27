@@ -31,3 +31,5 @@
 }
 .button:hover { background: #203e31; }
 .button:focus-visible { outline: 2px solid #8be6bf; outline-offset: 4px; }
+
+@media (max-width:760px) { .dock { bottom:calc(88px + env(safe-area-inset-bottom)); } }

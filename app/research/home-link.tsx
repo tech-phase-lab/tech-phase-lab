@@ -23,6 +23,6 @@ export default function HomeLink({ lang }: { lang: "ja" | "en" }) {
     window.dispatchEvent(new HashChangeEvent("hashchange"));
     document.getElementById("research-main")?.scrollIntoView({ behavior: "instant", block: "start" });
   }
-  if (isHome) return <span className={styles.homeIcon} style={{ visibility: "hidden" }} aria-hidden="true" />;
+  if (isHome) return null;
   return <Link href="/research#research-main" onClick={goHome} className={styles.homeIcon} aria-label={lang === "ja" ? "ホームへ戻る" : "Back to home"} title={lang === "ja" ? "ホーム" : "Home"}><NavigationIcon name="home" /></Link>;
 }

@@ -3,8 +3,8 @@ import { useState } from "react";
 import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
 
-export default function NotificationSettings({ lang }: { lang: Language }) {
-  const [open, setOpen] = useState(false);
+export default function NotificationSettings({ lang, initiallyOpen = false }: { lang: Language; initiallyOpen?: boolean }) {
+  const [open, setOpen] = useState(initiallyOpen);
   // Interaction preview only. Never claim to enroll a device without member authentication.
   const [previewEnabled, setPreviewEnabled] = useState(false);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;

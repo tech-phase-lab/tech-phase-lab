@@ -11,6 +11,11 @@ export function GET(request: Request) {
         { s: "FOREXCOM:NSXUSD", d: "Nasdaq 100 · CFD" },
         { s: "FOREXCOM:DJI", d: "Dow 30 · CFD" },
       ] },
+      { title: ja ? "債券ETF" : "Bond ETFs", symbols: [
+        { s: "NASDAQ:SHY", d: ja ? "米国債 1–3年 · SHY" : "1–3 year Treasuries · SHY" },
+        { s: "NASDAQ:IEF", d: ja ? "米国債 7–10年 · IEF" : "7–10 year Treasuries · IEF" },
+        { s: "NASDAQ:TLT", d: ja ? "米国債 20年超 · TLT" : "20+ year Treasuries · TLT" },
+      ] },
       { title: ja ? "為替" : "Forex", symbols: [
         { s: "FX:USDJPY", d: ja ? "米ドル / 円" : "USD / JPY" },
         { s: "FX:EURUSD", d: ja ? "ユーロ / 米ドル" : "EUR / USD" },
