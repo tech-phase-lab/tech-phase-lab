@@ -6,6 +6,7 @@ import { calendarEvents, dateOnlyEvents, selectDateOnlyEarnings, selectDateOnlyE
 
 const coverage = JSON.parse(readFileSync(new URL("../lib/research/calendar-coverage.json", import.meta.url), "utf8"));
 const eventCalendarSource = readFileSync(new URL("../app/research/calendar/event-calendar.tsx", import.meta.url), "utf8");
+const calendarHandoffBytes = readFileSync(new URL("../docs/CALENDAR-HANDOFF.md", import.meta.url));
 
 test("favorite storage tolerates invalid JSON and rejects non-ticker values", () => {
   for (const raw of [null, "{", "null", "{}", '"MU"']) assert.deepEqual(parseFavoriteStocks(raw), []);
@@ -117,10 +118,11 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   for (const ticker of ["ADBE", "AMAT", "AMD", "ASML", "CRWD", "DELL", "GEV", "INTC", "LRCX", "META"]) assert.equal(checked[ticker], "2026-09-25");
   for (const ticker of ["MSFT", "QCOM"]) assert.equal(checked[ticker], "2026-09-23");
   for (const ticker of ["MU", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-09-25");
-  for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "COHR", "CRDO", "CRM", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(checked[ticker], null);
+  assert.equal(checked.ORCL, "2026-09-27");
+  for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "COHR", "CRDO", "CRM", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NBIS", "NOW", "NVDA", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(checked[ticker], null);
   for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "COHR", "CRDO", "CRM", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(byTicker[ticker].lastAttemptedOn, "2026-09-27");
-  assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 17);
-  assert.equal(coverage.filter((company) => company.lastCheckedOn === null).length, 23);
+  assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 18);
+  assert.equal(coverage.filter((company) => company.lastCheckedOn === null).length, 22);
   for (const ticker of ["MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) {
     assert.match(byTicker[ticker].sourceUrl, /(?:events|investor-hub|category\/ir)/i);
   }
@@ -129,6 +131,13 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   assert.equal(byTicker.ARM.sourceUrl, "https://investors.arm.com/");
   assert.equal(byTicker.TSM.lastCheckedOn, "2026-09-25");
   assert.equal(calendarEvents.some((event) => event.ticker === "TSM"), true);
+});
+
+test("calendar handoff remains reviewable UTF-8 markdown", () => {
+  const handoff = new TextDecoder("utf-8", { fatal: true }).decode(calendarHandoffBytes);
+  assert.match(handoff, /^# /);
+  assert.match(handoff, /company batch reviewed on 2026-09-27/);
+  assert.doesNotMatch(handoff, /[\u0000-\u0008\u000B\u000C\u000E-\u001F]/);
 });
 
 test("calendar UI distinguishes a completed source check from an inconclusive review", () => {
