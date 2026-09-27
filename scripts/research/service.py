@@ -70,7 +70,7 @@ def timestamp_age_seconds(value):
         if parsed.tzinfo is None:
             parsed = parsed.replace(tzinfo=timezone.utc)
         return max(0, int((datetime.now(timezone.utc) - parsed.astimezone(timezone.utc)).total_seconds()))
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return None
 
 
@@ -83,7 +83,7 @@ def timestamp_latency_ms(started_at, completed_at):
             return None
         latency = round((completed - started).total_seconds() * 1000)
         return latency if latency <= 31 * 24 * 60 * 60 * 1000 else None
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return None
 
 
@@ -95,7 +95,7 @@ def timestamp_at_or_after(value, reference):
         if observed.tzinfo is None or started.tzinfo is None:
             return False
         return observed.astimezone(timezone.utc) >= started.astimezone(timezone.utc)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return False
 
 
@@ -199,7 +199,7 @@ def process_observation_latency_ms(value, started_at):
             return None
         latency = round((observed - started).total_seconds() * 1000)
         return latency if latency <= 31 * 24 * 60 * 60 * 1000 else None
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return None
 
 

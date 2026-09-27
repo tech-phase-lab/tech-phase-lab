@@ -2146,12 +2146,15 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
         poll_overdue_after_seconds = int(poll_overdue_after_seconds)
         if not 60 <= poll_overdue_after_seconds <= 86_400:
             raise ValueError
-    except (TypeError, ValueError) as exc:
+    except (TypeError, ValueError, OverflowError) as exc:
         raise ValueError("invalid-body-fetch-reference") from exc
-    reference_utc = parsed.astimezone(timezone.utc)
-    window_start = (parsed.astimezone(timezone.utc) - timedelta(hours=24)).isoformat(
-        timespec="milliseconds"
-    )
+    try:
+        reference_utc = parsed.astimezone(timezone.utc)
+        window_start = (reference_utc - timedelta(hours=24)).isoformat(
+            timespec="milliseconds"
+        )
+    except OverflowError as exc:
+        raise ValueError("invalid-body-fetch-reference") from exc
     heartbeat = db.execute("""
       SELECT last_polled_at,pending_count FROM body_fetch_worker_state
       WHERE id=1 AND typeof(pending_count)='integer'
@@ -2171,7 +2174,7 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
                 raise ValueError
             last_polled_at = heartbeat_at.isoformat(timespec="milliseconds")
             last_poll_age_seconds = max(0, age)
-        except (TypeError, ValueError):
+        except (TypeError, ValueError, OverflowError):
             pass
     latest = None
     latest_candidates = db.execute(f"""
@@ -2209,7 +2212,7 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
                 or completed_at.astimezone(timezone.utc) > reference_utc
             ):
                 continue
-        except (TypeError, ValueError):
+        except (TypeError, ValueError, OverflowError):
             continue
         latest = candidate
         break
@@ -2262,7 +2265,7 @@ def body_fetch_batch_summary(db, reference=None, poll_overdue_after_seconds=360)
       FROM body_fetch_batches
       WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
         AND {BODY_FETCH_METRIC_WHERE}
-    """, (window_start, parsed.astimezone(timezone.utc).isoformat(timespec="milliseconds"))).fetchone()
+    """, (window_start, reference_utc.isoformat(timespec="milliseconds"))).fetchone()
     outcome_unmeasured = {
         partition: max(0, int(totals[f"selected_{partition}"] or 0) - sum((
             int(totals[f"error_{partition}"] or 0),

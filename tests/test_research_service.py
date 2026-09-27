@@ -1391,6 +1391,37 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertIsNone(service.timestamp_latency_ms("not-a-timestamp", service.utc_now()))
         self.assertIsNone(service.timestamp_latency_ms(service.utc_now(), "not-a-timestamp"))
 
+    def test_public_timestamp_helpers_ignore_utc_conversion_overflow(self):
+        for invalid in (
+            "0001-01-01T00:00:00+14:00",
+            "9999-12-31T23:59:59-14:00",
+        ):
+            self.assertIsNone(service.timestamp_age_seconds(invalid))
+            self.assertIsNone(
+                service.timestamp_latency_ms(invalid, service.utc_now())
+            )
+            self.assertFalse(
+                service.timestamp_at_or_after(invalid, service.utc_now())
+            )
+            self.assertIsNone(
+                service.process_observation_latency_ms(invalid, service.utc_now())
+            )
+
+    def test_public_state_ignores_overflowing_body_worker_heartbeat(self):
+        with monitor.connect(self.db_path) as db:
+            monitor.record_body_fetch_poll(
+                db, "0001-01-01T00:00:00+14:00", 2
+            )
+
+        durable = service.AutomaticMonitor(
+            self.db_path, self.snapshot_path
+        ).public_state()["bodyFetch"]["durable"]
+
+        self.assertIsNone(durable["lastPolledAt"])
+        self.assertIsNone(durable["lastPollAgeSeconds"])
+        self.assertIsNone(durable["pendingAtLastPoll"])
+        self.assertTrue(durable["pollOverdue"])
+
     def test_body_candidates_prioritize_missing_evidence_before_routine_rechecks(self):
         incomplete = "https://nebius.com/newsroom/legacy-evidence.pdf"
         with monitor.connect(self.db_path) as db:
