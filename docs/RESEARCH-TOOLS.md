@@ -168,6 +168,10 @@ seven-day ceiling. A missing, malformed, timezone-free or more-than-seven-day
 future value is treated as due so corrupt persisted state cannot strand an
 official route or discovered child article indefinitely; the resulting single
 normal request writes a fresh bounded schedule.
+Persisted per-source and per-host failure counters are also type-checked and
+bounded before they affect backoff. A malformed, negative or over-limit value
+restarts at the first retry instead of stopping the body worker or inflating an
+unverified outage history; valid counters remain capped at one million.
 Malformed, oversized or non-object child state and unapproved child URLs are
 discarded before either retrieval or private queue rendering. A currently
 listed article whose saved child record is unusable is conservatively restored

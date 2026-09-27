@@ -691,6 +691,36 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(second_row["fetch_failures"], 2)
         self.assertGreater(second_row["next_fetch_at"], second_row["checked_at"])
 
+    def test_corrupt_failure_counts_restart_bounded_backoff(self):
+        self.db.execute("PRAGMA ignore_check_constraints=ON")
+        with self.db:
+            self.db.execute(
+                "UPDATE sources SET fetch_failures='corrupt' WHERE url=?",
+                (URL,),
+            )
+            self.db.execute(
+                """INSERT INTO body_host_backoff(host,failures,error,retry_at,updated_at)
+                   VALUES(?,?,?,?,?)""",
+                ("nebius.com", "corrupt", "http-403", m.now(), m.now()),
+            )
+        self.db.execute("PRAGMA ignore_check_constraints=OFF")
+
+        forbidden = HTTPError(URL, 403, "Forbidden", {}, None)
+        result = m.save_source_error(self.db, self.row(), forbidden)
+        current = self.row()
+        circuit = self.db.execute(
+            "SELECT * FROM body_host_backoff WHERE host='nebius.com'"
+        ).fetchone()
+
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["retrySeconds"], 6 * 60 * 60)
+        self.assertEqual(current["fetch_failures"], 1)
+        self.assertEqual(circuit["failures"], 1)
+        self.assertEqual(current["next_fetch_at"], circuit["retry_at"])
+        self.assertEqual(m.next_failure_count(-1), 1)
+        self.assertEqual(m.next_failure_count(1_000_001), 1)
+        self.assertEqual(m.next_failure_count(1_000_000), 1_000_000)
+
     def test_access_restrictions_use_slow_bounded_backoff(self):
         forbidden = HTTPError(URL, 403, "Forbidden", {}, None)
         first = m.save_source_error(self.db, self.row(), forbidden)

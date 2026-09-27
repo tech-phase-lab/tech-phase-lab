@@ -64,6 +64,7 @@ PERSISTED_SOURCE_ERRORS = {
     "verification-page", "no-release-links", "too-many-source-links",
 }
 MAX_ACCESS_BACKOFF_SECONDS = 7 * 24 * 60 * 60
+MAX_FAILURE_COUNT = 1_000_000
 
 
 def now():
@@ -333,6 +334,13 @@ def source_retry_seconds(error_code, failures, retry_hint=None):
     if retry_hint is not None:
         retry_seconds = max(retry_seconds, retry_hint)
     return retry_seconds
+
+
+def next_failure_count(value):
+    """Advance a persisted retry counter without trusting SQLite affinity."""
+    if type(value) is not int or not 0 <= value <= MAX_FAILURE_COUNT:
+        return 1
+    return min(MAX_FAILURE_COUNT, value + 1)
 
 
 def source_hostname(url):
@@ -4098,7 +4106,7 @@ def save_source_error(db, row, exc):
         current = db.execute("SELECT fetch_failures FROM sources WHERE url=?", (row["url"],)).fetchone()
         if not current:
             raise ValueError("Source disappeared before its fetch error was saved")
-        failures = current["fetch_failures"] + 1
+        failures = next_failure_count(current["fetch_failures"])
         retry_hint = retry_after_seconds(exc)
         retry_seconds = source_retry_seconds(error_code, failures, retry_hint)
         hostname = source_hostname(row["url"])
@@ -4106,7 +4114,9 @@ def save_source_error(db, row, exc):
             host_state = db.execute(
                 "SELECT failures FROM body_host_backoff WHERE host=?", (hostname,)
             ).fetchone()
-            host_failures = min(1_000_000, (host_state["failures"] if host_state else 0) + 1)
+            host_failures = next_failure_count(
+                host_state["failures"] if host_state else 0
+            )
             host_retry_seconds = source_retry_seconds(
                 error_code, host_failures, retry_hint
             )
