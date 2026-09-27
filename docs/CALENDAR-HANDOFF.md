@@ -3487,3 +3487,33 @@ lists the October 27-28 and December 8-9 meetings. No calendar event changed.
 Continue with GOOGL, KLAC, LITE, MRVL, NBIS, NOW, NVDA, ORCL, PANW and PLTR.
 Inaccessible, historical-only, projected and empty dynamic states remain
 inconclusive and must not be promoted to forecast dates.
+
+## One-hundred-seventeenth company batch reviewed on 2026-09-28
+
+The requested ten-company batch was rechecked against first-party schedules,
+announcements and investor-relations pages. None exposed a newly confirmed
+future earnings release or call. Their `lastAttemptedOn` values were already
+2026-09-28, checked state and calendar events remain unchanged, and no forecast
+date is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| GOOGL | Pending | The official Events & Presentations page exposed only its page shell and heading; the available first-party earnings and news listings contain completed items, not a future earnings announcement. |
+| KLAC | Pending | The primary official Events page remained inaccessible. The first-party IR calendar and press releases show completed fiscal 2026 earnings through July 28 and no future earnings timing announcement. |
+| LITE | Pending | The official Events page exposed empty Latest Events, Latest Presentation and Archived Events sections without an explicit no-events statement. |
+| MRVL | Pending | The primary official Events page remained inaccessible. The first-party IR calendar lists an October 6 Investor Day, while the latest earnings announcement and call were completed on August 27. |
+| NBIS | Pending | The official investor hub lists September investor conferences and no future earnings timing announcement or explicit no-events statement. |
+| NOW | Pending | The official Events page exposes archived headings and no inspectable future earnings timing or explicit no-events statement. |
+| NVDA | Pending | The primary official Events page remained inaccessible. The first-party event listing contains completed events through the June 24 annual meeting, not a future earnings announcement. |
+| ORCL | Checked | The official page still exposes empty Featured Event and Upcoming Events sections. Its existing checked state remains unchanged. |
+| PANW | Pending | The primary official Events page remained inaccessible. First-party releases show the completed September 1 fiscal Q4 call and no later earnings timing announcement. |
+| PLTR | Pending | The official Events page supplied its navigation and contact shell without an inspectable future schedule; the first-party reports listing still ends with Q2 2026 earnings. |
+
+The BLS October schedule was rechecked on 2026-09-28 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar, last updated September 16, still
+lists the October 27-28 and December 8-9 meetings. No calendar event changed.
+
+Continue with SKHY, SNOW, VRT, AAPL, AMZN, ANET, ARM, AVGO, BE and COHR.
+Inaccessible, historical-only, projected and empty dynamic states remain
+inconclusive and must not be promoted to forecast dates.
