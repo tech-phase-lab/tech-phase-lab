@@ -178,9 +178,9 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
       </aside>
 
       <main id="research-main" className={styles.main}>
-        <div className={styles.previewNotice}><span>{t("検証版", "PREVIEW")}</span><p>{t("下の検証レポートは2026年5〜9月の過去事例です。目標株価欄のみ監視中のX投稿を自動更新しています。公式発表の自動レポートと会員配信は開始していません。", "The research reports below are historical examples from May–September 2026. Only the X price target panel updates automatically. Automated reports from official releases and member delivery are not live.")}</p></div>
+        {tab !== "pro" && <div className={styles.previewNotice}><span>{t("検証版", "PREVIEW")}</span><p>{t("下の検証レポートは2026年5〜9月の過去事例です。目標株価欄のみ監視中のX投稿を自動更新しています。公式発表の自動レポートと会員配信は開始していません。", "The research reports below are historical examples from May–September 2026. Only the X price target panel updates automatically. Automated reports from official releases and member delivery are not live.")}</p></div>}
 
-        <div className={styles.heading}><div><p className={styles.eyebrow}>{tab === "home" ? t("ホーム / リサーチデスク", "HOME / THE RESEARCH DESK") : "THE RESEARCH DESK"}</p><h1>{tab === "companies" ? t("監視対象", "Company watch") : tab === "pro" ? "Tech Phase PRO" : tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : tab === "changes" ? t("何が変わった？を、根拠付きで。", "See what changed. Follow the evidence.") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1><p>{t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p></div><div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>2026.09.19</strong></div></div>
+        <div className={styles.heading}><div><p className={styles.eyebrow}>{tab === "home" ? t("ホーム / リサーチデスク", "HOME / THE RESEARCH DESK") : "THE RESEARCH DESK"}</p><h1>{tab === "companies" ? t("監視対象", "Company watch") : tab === "pro" ? "Tech Phase PRO" : tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : tab === "changes" ? t("何が変わった？を、根拠付きで。", "See what changed. Follow the evidence.") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1><p>{t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p></div>{tab !== "pro" && <div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>2026.09.19</strong></div>}</div>
 
         {tab === "home" && <>
           <HomeTools lang={lang} onChanges={() => openView("changes")} />
@@ -208,30 +208,38 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
         </section>}
 
         {tab === "pro" && <section id="tech-phase-pro" className={styles.accessMatrix} aria-labelledby="access-matrix-title">
-          <div className={styles.accessHead}>
-            <div><p className={styles.eyebrow}>FREE / TECH PHASE PRO</p><h2 id="access-matrix-title">{t("無料で調べる。PROなら変化を見逃さない。", "Research for free. Stay ahead of change with PRO.")}</h2></div>
-            <p>{t("課金・会員公開は未開始。現在の実装と提供予定を混ぜずに表示しています。", "Billing and member access are not live. Current features and planned PRO features are labeled separately.")}</p>
-          </div>
-          <div className={styles.accessCards}>
+          <div className={styles.accessHead}><div><p className={styles.eyebrow}>TECH PHASE</p><h2 id="access-matrix-title">{t("あなたに合ったプランを。", "Choose your plan.")}</h2></div></div>
+          <p className={styles.accessNote}>{t("公開時の提供予定です。現在はお申し込み準備中です。", "Planned launch features. Subscriptions are not yet open.")}</p>
+          <div className={styles.planStack}>
             <article className={styles.accessCard}>
-              <div className={styles.accessStatus}><span>FREE</span><em>{t("現在利用可能", "Available now")}</em></div>
-              <h3>{t("一次情報を自分で確認", "Verify the primary source")}</h3>
-              <ul>
-                <li>{t("米国株検索とSEC企業情報", "U.S. stock search and SEC company data")}</li>
-                <li>{t("TradingViewの参考株価・12か月チャート", "TradingView reference quotes and 12-month chart")}</li>
-                <li>{t("公開済みリサーチと公式原文リンク", "Published research with primary-source links")}</li>
-              </ul>
-              <Link href="/research/stocks">{t("米国株を検索する", "Search U.S. stocks")} <Arrow /></Link>
+              <div className={styles.accessStatus}><span>FREE</span></div>
+              <p className={styles.planPrice}>{t("¥0", "$0")}<small>{t(" / 月", " / month")}</small></p>
+              <h3>{t("米国株を調べる、基本の機能。", "The essentials for exploring U.S. stocks.")}</h3>
+              <ul>{[
+                t("米国株の銘柄検索", "U.S. stock search"),
+                t("株価とチャートの確認", "Stock quotes and charts"),
+                t("指数・債券・為替のマーケット情報", "Indices, bonds and currencies"),
+                t("お気に入り銘柄の登録", "Your stock watchlist"),
+                t("決算・経済指標カレンダー", "Earnings and economic calendar"),
+                t("一部のリサーチ記事", "Selected research articles"),
+              ].map(item => <li key={item}>{item}</li>)}</ul>
+              <Link href="/research/stocks">{t("無料で銘柄を探す", "Explore stocks for free")} <Arrow /></Link>
             </article>
             <article className={`${styles.accessCard} ${styles.proCard}`}>
-              <div className={styles.accessStatus}><span>TECH PHASE PRO</span><em>{t("提供準備中", "In development")}</em></div>
-              <h3>{t("重要な変化を短時間で把握", "Understand material change quickly")}</h3>
-              <ul>
-                <li>{t("公式発表を検知した事実速報", "Fact-first alerts from official releases")}</li>
-                <li>{t("原文照合済みの日本語要点・影響分類", "Source-checked Japanese briefs and impact labels")}</li>
-                <li>{t("WHAT CHANGED履歴と優先銘柄の監視", "WHAT CHANGED history and priority-company monitoring")}</li>
-              </ul>
-              <p className={styles.accessNote}>{t("速度・対象範囲は実測後に確定。未承認の要約、契約未確認のニュースや価格は配信しません。", "Speed and coverage will be set only after measurement. Unapproved briefs and unlicensed news or price data will not be delivered.")}</p>
+              <div className={styles.accessStatus}><span>TECH PHASE PRO</span></div>
+              <p className={styles.planPrice}>{t("¥2,980", "$20")}<small>{t(" / 月", " / month")}</small></p>
+              <h3>{t("重要な変化と、その先をつかむ。", "Understand what changed—and why it matters.")}</h3>
+              <ul>{[
+                t("無料プランのすべての機能", "Everything in Free"),
+                t("重要ニュースの要点を日本語・英語で", "Key news summarized in Japanese and English"),
+                t("決算の売上・利益・見通しを整理", "Earnings, revenue and guidance at a glance"),
+                t("目標株価の引き上げ・引き下げ情報", "Analyst price target increases and cuts"),
+                t("目標株価のスマホ通知", "Price target notifications on your phone"),
+                t("「何が変わった？」の独自リサーチ", "Full What changed? research"),
+                t("企業の変化を過去の発表と比較", "Compare company developments with past releases"),
+                t("関連銘柄への影響と次の注目点", "Implications for related stocks and what to watch next"),
+              ].map(item => <li key={item}>{item}</li>)}</ul>
+              <button className={styles.planCta} disabled>{t("お申し込み準備中", "Coming soon")}</button>
             </article>
           </div>
         </section>}

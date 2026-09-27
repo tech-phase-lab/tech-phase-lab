@@ -389,10 +389,10 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(dashboard, /米国株を探す/);
   assert.match(dashboard, /Tech Phase PRO/);
   assert.doesNotMatch(dashboard, /変化を追う/);
-  assert.match(dashboard, /無料で調べる。PROなら変化を見逃さない。/);
-  assert.match(dashboard, /課金・会員公開は未開始/);
-  assert.match(dashboard, /原文照合済みの日本語要点・影響分類/);
-  assert.match(dashboard, /未承認の要約、契約未確認のニュースや価格は配信しません/);
+  assert.match(dashboard, /あなたに合ったプランを。/);
+  assert.match(dashboard, /公開時の提供予定です。現在はお申し込み準備中です。/);
+  assert.match(dashboard, /重要ニュースの要点を日本語・英語で/);
+  assert.match(dashboard, /className=\{styles.planCta\} disabled/);
   assert.match(dashboard, /自動監視は運営検証中、会員配信・課金は未開始/);
   assert.match(review, /根拠付きリサーチレビュー/);
   assert.match(review, /params\.set\("kind", "annual"\)/);

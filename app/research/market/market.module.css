@@ -4,3 +4,9 @@
 @media (max-width:600px) { .widget { height:600px; } .panel { border-radius:12px; } }
 
 .treasury { display:inline-block; margin-top:20px; color:#9adfc8; font-size:14px; text-underline-offset:4px; }
+
+.controls { display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin-top:24px; }
+.modes { display:flex; padding:4px; border:1px solid #30434b; border-radius:12px; }
+.modes button { border:0; border-radius:8px; padding:10px 16px; color:#a5b4bd; background:transparent; font:inherit; cursor:pointer; }
+.modes button[aria-pressed=true] { color:#a5efcf; background:#213c35; }
+.controls select { max-width:100%; padding:12px; border:1px solid #40565e; border-radius:9px; color:#e1e9e5; background:#14212b; font:inherit; }

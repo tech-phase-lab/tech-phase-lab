@@ -1604,5 +1604,14 @@
   .languages button { padding:5px 7px; font-size:11px; }
   .homeIcon,.primaryNav { display:none; }
   .headerPro { min-height:34px; padding:0 10px; font-size:11px; }
-  .app { padding-bottom:calc(78px + env(safe-area-inset-bottom)); }
+  .app { padding-bottom:calc(100px + env(safe-area-inset-bottom)); }
 }
+
+.headerPro { cursor:pointer; }
+.headerPro[aria-expanded=true] { background:#ead08e; color:#172028; }
+.planStack { display:grid; grid-template-columns:minmax(0,1fr); gap:24px; max-width:720px; margin:24px auto 0; }
+.planPrice { font-size:42px; font-weight:700; letter-spacing:-1px; margin:24px 0 16px; }
+.planPrice small { font-size:14px; font-weight:400; color:#a5b4bd; letter-spacing:0; }
+.planStack ul { display:grid; gap:14px; padding-left:20px; }
+.planStack li { line-height:1.6; }
+.planCta { width:100%; padding:14px; border:1px solid #cbb879; border-radius:10px; background:#cbb879; color:#172028; font-family:inherit; font-size:15px; font-weight:600; margin-top:20px; }
