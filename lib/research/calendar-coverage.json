@@ -10,22 +10,22 @@
     "ticker": "ADBE",
     "name": "Adobe",
     "sourceUrl": "https://www.adobe.com/investor-relations/events-presentations.html",
-    "lastAttemptedOn": "2026-09-27",
-    "lastCheckedOn": "2026-09-27"
+    "lastAttemptedOn": "2026-09-28",
+    "lastCheckedOn": "2026-09-28"
   },
   {
     "ticker": "AMAT",
     "name": "Applied Materials",
     "sourceUrl": "https://ir.appliedmaterials.com/events?tab=upcoming",
-    "lastAttemptedOn": "2026-09-27",
+    "lastAttemptedOn": "2026-09-28",
     "lastCheckedOn": "2026-09-25"
   },
   {
     "ticker": "AMD",
     "name": "AMD",
     "sourceUrl": "https://ir.amd.com/news-events/ir-calendar",
-    "lastAttemptedOn": "2026-09-27",
-    "lastCheckedOn": "2026-09-27"
+    "lastAttemptedOn": "2026-09-28",
+    "lastCheckedOn": "2026-09-28"
   },
   {
     "ticker": "AMZN",
@@ -38,28 +38,28 @@
     "ticker": "ANET",
     "name": "Arista Networks",
     "sourceUrl": "https://investors.arista.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-27",
+    "lastAttemptedOn": "2026-09-28",
     "lastCheckedOn": null
   },
   {
     "ticker": "ARM",
     "name": "Arm",
     "sourceUrl": "https://investors.arm.com/",
-    "lastAttemptedOn": "2026-09-27",
+    "lastAttemptedOn": "2026-09-28",
     "lastCheckedOn": null
   },
   {
     "ticker": "ASML",
     "name": "ASML",
     "sourceUrl": "https://www.asml.com/en/investors/financial-calendar",
-    "lastAttemptedOn": "2026-09-27",
+    "lastAttemptedOn": "2026-09-28",
     "lastCheckedOn": "2026-09-27"
   },
   {
     "ticker": "AVGO",
     "name": "Broadcom",
     "sourceUrl": "https://investors.broadcom.com/financial-information/financial-news-releases",
-    "lastAttemptedOn": "2026-09-27",
+    "lastAttemptedOn": "2026-09-28",
     "lastCheckedOn": null
   },
   {
@@ -94,7 +94,7 @@
     "ticker": "CRWD",
     "name": "CrowdStrike",
     "sourceUrl": "https://ir.crowdstrike.com/events-and-presentations/",
-    "lastAttemptedOn": "2026-09-27",
+    "lastAttemptedOn": "2026-09-28",
     "lastCheckedOn": "2026-09-25"
   },
   {
@@ -108,15 +108,15 @@
     "ticker": "DELL",
     "name": "Dell Technologies",
     "sourceUrl": "https://investors.delltechnologies.com/news-events/upcoming-events",
-    "lastAttemptedOn": "2026-09-27",
+    "lastAttemptedOn": "2026-09-28",
     "lastCheckedOn": "2026-09-25"
   },
   {
     "ticker": "GEV",
     "name": "GE Vernova",
     "sourceUrl": "https://www.gevernova.com/investors/events",
-    "lastAttemptedOn": "2026-09-27",
-    "lastCheckedOn": "2026-09-27"
+    "lastAttemptedOn": "2026-09-28",
+    "lastCheckedOn": "2026-09-28"
   },
   {
     "ticker": "GOOGL",

@@ -3395,3 +3395,34 @@ press-conference clock times. No calendar event changed.
 Continue with ANET, ARM, AVGO, ADBE, AMAT, AMD, ASML, CRWD, DELL and GEV.
 Inaccessible, historical-only, projected and empty dynamic states remain
 inconclusive and must not be promoted to forecast dates.
+
+## One-hundred-fourteenth company batch reviewed on 2026-09-28
+
+The requested ten-company batch was rechecked against first-party schedules,
+announcements and investor-relations pages. Adobe and GE Vernova still expose
+their recorded confirmed future calls, and AMD explicitly reports no upcoming
+events. Those three checks advance. The other seven attempts remain pending;
+no forecast date is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| ANET | Pending | The official Events & Presentations URL remained inaccessible through the review connection. |
+| ARM | Pending | The official investor page still exposes July 29 fiscal Q1 2027 results as its latest news, event and quarterly result, with no future earnings announcement or explicit no-events statement. |
+| AVGO | Pending | The official Financial News list still ends with the September 2 fiscal Q3 2026 results announcement and contains no future timing announcement. |
+| ADBE | Checked | The official page still lists the December 9 Q4 and FY2026 earnings call at 2:00 p.m. Pacific; the existing call entry remains unchanged. |
+| AMAT | Pending | The official Events URL remained inaccessible through the review connection. The prior first-party listing labels the November 12 Q4 call as projected, so it remains excluded. |
+| AMD | Checked | The official IR calendar explicitly says that no upcoming events are scheduled. |
+| ASML | Pending | The official page exposes its embedded financial-calendar endpoint, but the dated contents were not inspectable through the review connection. The existing October 14 date-only event remains unchanged and its checked date does not advance. |
+| CRWD | Pending | The official page lists completed events and presentations through September 10, including the August 26 fiscal Q2 call, without a future earnings item or explicit no-events statement. |
+| DELL | Pending | The official investor home page says that more events are coming soon; the dedicated Upcoming Events page was access-restricted and supplied no dated future event. |
+| GEV | Checked | The official page still lists the October 28 Q3 2026 earnings webcast at 7:30 a.m. Eastern; the existing webcast entry remains unchanged. |
+
+The BLS October schedule was rechecked on 2026-09-28 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar, last updated September 16, still
+lists the October 27-28 and December 8-9 meetings without future statement or
+press-conference clock times. No calendar event changed.
+
+Continue with INTC, LRCX, META, MSFT, MU, NFLX, QCOM, SNDK, TSLA and TSM.
+Inaccessible, projected, historical-only and undated placeholder states remain
+pending and must not be promoted to forecast dates.
