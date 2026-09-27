@@ -260,3 +260,7 @@ inspect supplemental intake health through a read-only SQLite connection:
 untested, fresh, stale, error or configuration-changed. Official index
 availability is explicitly outside this report's health check. No network
 requests, publication, notifications or paid API calls are made.
+Persisted route failures are reduced to the same fixed diagnostic codes used by
+the operator queue; legacy URLs, exception text and response detail are never
+copied into the report. The private X comparison report applies that boundary
+to its route-health field as well.

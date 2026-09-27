@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import sqlite3
 from statistics import median
+from monitor import persisted_route_error_code
 from x_api import TARGET_PATTERN
 from signals import SOURCES as SIGNAL_SOURCES
 
@@ -75,7 +76,7 @@ def report(db, now=None, hours=24, ticker=None):
             "tickerCounts": dict(sorted(tickers.items())),
             "samples": samples,
             "lastCheckedAt": route["checked_at"] if route else None,
-            "lastError": route["error"] if route else None,
+            "lastError": persisted_route_error_code(route["error"]) if route else None,
             "lastSearchHitLimit": bool(route and route["matched_items"] >= SOURCE_LIMITS.get(source, 10)),
         }
     return result

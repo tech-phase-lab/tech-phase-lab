@@ -22,7 +22,10 @@ class ComparisonTests(unittest.TestCase):
                 ("x-thefly", "MU product", '["MU"]', "new", "2026-09-25T02:59:00Z", "2026-09-25T03:00:00+00:00", "https://x.com/theflynews/status/1002"),
                 ("x-wallstengine", "NBIS price target raised", '["NBIS"]', "new", "2026-09-25T02:59:10Z", "2026-09-25T03:00:00+00:00", "https://x.com/wallstengine/status/1003"),
             ])
-            db.execute("INSERT INTO signal_routes VALUES (?,?,?,?)", ("x-tipranks", "2026-09-25T03:00:00+00:00", None, 10))
+            db.execute("INSERT INTO signal_routes VALUES (?,?,?,?)", (
+                "x-tipranks", "2026-09-25T03:00:00+00:00",
+                "Timeout for https://secret.example/?token=hidden", 10,
+            ))
             result = report(db, now=now)
             tip = result["sources"]["x-tipranks"]
             self.assertEqual((tip["baselinePosts"], tip["newPosts"], tip["targetMentions"]), (1, 1, 1))
@@ -35,6 +38,9 @@ class ComparisonTests(unittest.TestCase):
             }])
             self.assertEqual(tip["tickerCounts"], {"NBIS": 1})
             self.assertFalse(tip["lastSearchHitLimit"])
+            self.assertEqual(tip["lastError"], "fetch-failed")
+            self.assertNotIn("secret.example", str(result))
+            self.assertNotIn("hidden", str(result))
             self.assertEqual(result["sources"]["x-thefly"]["newPosts"], 0)
             self.assertIsNone(result["sources"]["x-thefly"]["medianArrivalSeconds"])
             self.assertEqual(result["sources"]["x-wallstengine"]["targetMentions"], 1)

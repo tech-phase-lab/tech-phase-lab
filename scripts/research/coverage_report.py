@@ -42,7 +42,8 @@ def report(db_path=None, now=None):
             status = 'configuration-changed'
         routes.append({'id': source['id'], 'name': source['name'], 'url': source.get('url'),
                        'tickers': source.get('tickers', []), 'status': status,
-                       'lastSuccess': row.get('succeeded_at'), 'error': row.get('error'),
+                       'lastSuccess': row.get('succeeded_at'),
+                       'error': monitor.persisted_route_error_code(row.get('error')),
                        'reuse': source['reuse']})
     companies = []
     for ticker, provider in monitor.PROVIDERS.items():

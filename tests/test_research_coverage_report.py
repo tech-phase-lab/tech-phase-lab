@@ -69,10 +69,16 @@ class CoverageReportTests(unittest.TestCase):
             db.execute('UPDATE signal_routes SET succeeded_at=?', ((now - timedelta(hours=2)).isoformat(),))
             db.commit()
             self.assertEqual(next(r for r in coverage_report.report(path)['routes'] if r['id'] == source['id'])['status'], 'stale')
-            db.execute("UPDATE signal_routes SET error='http-503'")
+            db.execute("UPDATE signal_routes SET error=?", (
+                "Timeout while fetching https://secret.example/path?token=hidden",
+            ))
             db.commit()
             before = path.read_bytes()
             result = coverage_report.report(path)
-            self.assertEqual(next(r for r in result['routes'] if r['id'] == source['id'])['status'], 'error')
+            route = next(r for r in result['routes'] if r['id'] == source['id'])
+            self.assertEqual(route['status'], 'error')
+            self.assertEqual(route['error'], 'fetch-failed')
+            self.assertNotIn('secret.example', str(result))
+            self.assertNotIn('hidden', str(result))
             self.assertEqual(path.read_bytes(), before)
             db.close()
