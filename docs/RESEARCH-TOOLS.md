@@ -99,6 +99,9 @@ approval also requires a separate acknowledgement that the reviewer checked
 the full stored source and official link, including the range not sent to the
 model. The private audit history retains this second acknowledgement, and the
 public snapshot fails closed when the matching approval does not contain it.
+Malformed, timezone-naive or non-convertible persisted source-check timestamps
+also fail closed as stale evidence; they cannot crash the review queue or make
+an approved draft public.
 The private news-review header shows the official publication date exactly as
 stored, without manufacturing a clock time, plus the source discovery and most
 recent successful body-check timestamps converted to JST. The AI generation

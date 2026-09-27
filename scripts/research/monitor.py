@@ -84,15 +84,18 @@ def source_check_is_fresh(checked_at, reference=None):
     try:
         checked = datetime.fromisoformat(str(checked_at).replace("Z", "+00:00"))
         if checked.tzinfo is None:
-            checked = checked.replace(tzinfo=timezone.utc)
+            return False
         checked = checked.astimezone(timezone.utc)
-    except (TypeError, ValueError):
+        current = reference or datetime.now(timezone.utc)
+        if current.tzinfo is None:
+            return False
+        current = current.astimezone(timezone.utc)
+        maximum_age = environment_seconds(
+            "RESEARCH_REVIEW_SOURCE_MAX_AGE_SECONDS", 8 * 60 * 60, 5 * 60, 24 * 60 * 60
+        )
+        age = (current - checked).total_seconds()
+    except (AttributeError, TypeError, ValueError, OverflowError):
         return False
-    current = reference or datetime.now(timezone.utc)
-    maximum_age = environment_seconds(
-        "RESEARCH_REVIEW_SOURCE_MAX_AGE_SECONDS", 8 * 60 * 60, 5 * 60, 24 * 60 * 60
-    )
-    age = (current - checked).total_seconds()
     return -5 * 60 <= age <= maximum_age
 
 

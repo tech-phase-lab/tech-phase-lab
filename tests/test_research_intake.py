@@ -2204,6 +2204,21 @@ class IntakeTests(unittest.TestCase):
             "approved",
         )
 
+    def test_invalid_source_check_times_fail_closed_without_crashing(self):
+        reference = datetime(2026, 9, 27, 10, 0, tzinfo=timezone.utc)
+
+        self.assertFalse(
+            m.source_check_is_fresh("0001-01-01T00:00:00+14:00", reference)
+        )
+        self.assertFalse(
+            m.source_check_is_fresh("9999-12-31T23:59:59-14:00", reference)
+        )
+        self.assertFalse(
+            m.source_check_is_fresh(
+                "2026-09-27T09:00:00+00:00", datetime(2026, 9, 27, 10, 0)
+            )
+        )
+
     def test_public_brief_evidence_is_bounded_and_marks_truncation(self):
         result = m._public_brief_evidence({
             "summary": ["A" * 400, "second", "not-public"],
