@@ -705,8 +705,11 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertNotIn("https://", json.dumps(durable))
 
     def test_idle_body_poll_heartbeat_survives_restart_without_source_details(self):
+        retry_at = (datetime.now(timezone.utc) + timedelta(days=1)).isoformat(
+            timespec="milliseconds"
+        )
         with monitor.connect(self.db_path) as db:
-            db.execute("UPDATE sources SET next_fetch_at='2099-01-01T00:00:00+00:00'")
+            db.execute("UPDATE sources SET next_fetch_at=?", (retry_at,))
             db.commit()
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         with ThreadPoolExecutor(max_workers=1) as pool:
@@ -1576,7 +1579,7 @@ class ResearchServiceTests(unittest.TestCase):
         newest = "https://investor.marvell.com/news/detail/999/newest-release"
         other_host = "https://www.vertiv.com/news/middle-release/"
         with monitor.connect(self.db_path) as db:
-            db.execute("UPDATE sources SET next_fetch_at='2099-01-01T00:00:00+00:00'")
+            db.execute("UPDATE sources SET next_fetch_at='2026-09-27T00:00:00+00:00'")
             for ticker, url, detected_at in (
                 ("MRVL", oldest, "2026-09-23T00:00:00+00:00"),
                 ("MRVL", newest, "2026-09-25T00:00:00+00:00"),
@@ -1609,12 +1612,14 @@ class ResearchServiceTests(unittest.TestCase):
     def test_body_backlog_distinguishes_eligible_and_access_restricted_retries(self):
         detected_at = datetime.now(timezone.utc) - timedelta(hours=1)
         detected_at_text = detected_at.isoformat(timespec="milliseconds")
+        retry_at = (datetime.now(timezone.utc) + timedelta(days=1)).isoformat(
+            timespec="milliseconds"
+        )
         with monitor.connect(self.db_path) as db:
             db.execute("""
-              UPDATE sources
-              SET error='http-403',fetch_failures=1,next_fetch_at='2099-01-01T00:00:00+00:00'
+              UPDATE sources SET error='http-403',fetch_failures=1,next_fetch_at=?
               WHERE url LIKE '%older'
-            """)
+            """, (retry_at,))
             db.execute(
                 "UPDATE release_events SET detected_at=?", (detected_at_text,)
             )
@@ -1711,7 +1716,7 @@ class ResearchServiceTests(unittest.TestCase):
         incomplete = "https://www.vertiv.com/en-us/about/news-and-events/corporate-news/2026/batch-incomplete/"
         recheck = "https://investors.palantir.com/news-details/2026/batch-recheck"
         with monitor.connect(self.db_path) as db:
-            db.execute("UPDATE sources SET next_fetch_at='2099-01-01T00:00:00+00:00'")
+            db.execute("UPDATE sources SET next_fetch_at='2026-09-27T00:00:00+00:00'")
             for ticker, url in (
                 ("ANET", detected), ("MRVL", baseline),
                 ("VRT", incomplete), ("PLTR", recheck),
@@ -1749,12 +1754,14 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertNotIn("batch-", json.dumps(backlog))
 
     def test_body_backlog_reports_rate_limits_separately_from_access_controls(self):
+        retry_at = (datetime.now(timezone.utc) + timedelta(days=1)).isoformat(
+            timespec="milliseconds"
+        )
         with monitor.connect(self.db_path) as db:
             db.execute("""
-              UPDATE sources
-              SET error='http-429',fetch_failures=1,next_fetch_at='2099-01-01T00:00:00+00:00'
+              UPDATE sources SET error='http-429',fetch_failures=1,next_fetch_at=?
               WHERE url LIKE '%older'
-            """)
+            """, (retry_at,))
             db.commit()
 
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
@@ -2011,6 +2018,39 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(app.public_state()["bodyBacklog"]["hostDeferred"], 0)
         self.assertEqual(app.public_state()["bodyBacklog"]["activeHostCircuits"], 0)
         self.assertIsNone(app.public_state()["bodyBacklog"]["nextHostProbeAt"])
+
+    def test_body_candidates_treat_corrupt_or_unbounded_source_retry_as_due(self):
+        malformed = "https://investor.marvell.com/news/detail/corrupt-retry"
+        unbounded = "https://www.vertiv.com/news/unbounded-retry/"
+        valid_retry = "2026-09-25T05:00:00+00:00"
+        with monitor.connect(self.db_path) as db:
+            db.execute(
+                "UPDATE sources SET error='timeout',next_fetch_at=?",
+                (valid_retry,),
+            )
+            for ticker, url, retry_at in (
+                ("MRVL", malformed, "not-a-timestamp"),
+                ("VRT", unbounded, "2099-01-01T00:00:00+00:00"),
+            ):
+                monitor.add_source(db, ticker, url, title=ticker)
+                db.execute(
+                    "UPDATE sources SET error='timeout',next_fetch_at=? WHERE url=?",
+                    (retry_at, url),
+                )
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_batch = 5
+        with patch.object(service, "utc_now", return_value="2026-09-24T05:00:00+00:00"):
+            rows, pending = app.body_candidates("2026-09-24T05:00:00+00:00")
+
+        self.assertEqual({row["url"] for row in rows}, {malformed, unbounded})
+        self.assertEqual(pending, 2)
+        backlog = app.public_state()["bodyBacklog"]
+        self.assertEqual(backlog["retryDeferred"], 2)
+        self.assertEqual(backlog["eligible"], 2)
+        self.assertNotIn("not-a-timestamp", json.dumps(backlog))
+        self.assertNotIn("2099", json.dumps(backlog))
 
     def test_body_candidates_try_company_evidence_before_equivalent_sec_backlog(self):
         sec_url = (

@@ -99,6 +99,24 @@ def timestamp_at_or_after(value, reference):
         return False
 
 
+def bounded_future_timestamp(value, reference):
+    """Return a valid near-future UTC time, otherwise treat the value as due."""
+    if not value:
+        return None
+    try:
+        current = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
+        scheduled = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        if current.tzinfo is None or scheduled.tzinfo is None:
+            return None
+        current = current.astimezone(timezone.utc)
+        scheduled = scheduled.astimezone(timezone.utc)
+        if current < scheduled <= current + timedelta(days=7):
+            return scheduled
+    except (TypeError, ValueError, OverflowError):
+        pass
+    return None
+
+
 def active_body_host_backoff_state(db, reference):
     """Load bounded private host circuits and their earliest safe retry."""
     try:
@@ -106,7 +124,7 @@ def active_body_host_backoff_state(db, reference):
         if current.tzinfo is None:
             return {}, None
         current = current.astimezone(timezone.utc)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return {}, None
     active = {}
     for row in db.execute("""
@@ -151,7 +169,7 @@ def due_body_host_backoff_state(db, reference):
         if current.tzinfo is None:
             return {}
         current = current.astimezone(timezone.utc)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return {}
     due = {}
     for row in db.execute("""
@@ -1024,17 +1042,6 @@ class AutomaticMonitor:
             backlog = db.execute("""
               SELECT
                 count(*) AS total,
-                sum(CASE WHEN next_fetch_at IS NULL OR next_fetch_at<=? THEN 1 ELSE 0 END)
-                  AS eligible,
-                sum(CASE WHEN next_fetch_at>? AND error IS NOT NULL THEN 1 ELSE 0 END)
-                  AS retry_deferred,
-                sum(CASE WHEN next_fetch_at>? AND error IN (
-                  'http-401','http-403','http-451','verification-page'
-                ) THEN 1 ELSE 0 END) AS access_restricted,
-                sum(CASE WHEN next_fetch_at>? AND error='http-429' THEN 1 ELSE 0 END)
-                  AS rate_limited,
-                sum(CASE WHEN next_fetch_at>? AND error IS NULL THEN 1 ELSE 0 END)
-                  AS recheck_deferred,
                 sum(CASE WHEN sha256 IS NULL THEN 1 ELSE 0 END) AS never_fetched,
                 sum(CASE WHEN sha256 IS NULL AND EXISTS (
                   SELECT 1 FROM release_events e WHERE e.url=sources.url
@@ -1047,7 +1054,28 @@ class AutomaticMonitor:
                 sum(CASE WHEN sha256 IS NOT NULL AND coalesce(extracted_chars,0)>0
                          THEN 1 ELSE 0 END) AS extracted
               FROM sources WHERE source_mode='remote'
-            """, (due, due, due, due, due)).fetchone()
+            """).fetchone()
+            schedule_rows = db.execute("""
+              SELECT next_fetch_at,error
+              FROM sources WHERE source_mode='remote'
+            """).fetchall()
+            deferred_rows = [
+                row for row in schedule_rows
+                if bounded_future_timestamp(row["next_fetch_at"], due) is not None
+            ]
+            deferred_with_error = [row for row in deferred_rows if row["error"] is not None]
+            eligible_count = len(schedule_rows) - len(deferred_rows)
+            retry_deferred = len(deferred_with_error)
+            access_restricted = sum(
+                1 for row in deferred_with_error
+                if row["error"] in (
+                    "http-401", "http-403", "http-451", "verification-page"
+                )
+            )
+            rate_limited = sum(
+                1 for row in deferred_with_error if row["error"] == "http-429"
+            )
+            recheck_deferred = sum(1 for row in deferred_rows if row["error"] is None)
             detected_waits = []
             for detected in db.execute("""
               SELECT e.detected_at
@@ -1064,9 +1092,9 @@ class AutomaticMonitor:
             probe_host_state = due_body_host_backoff_state(db, due)
             probe_hosts = set(probe_host_state)
             ordered = db.execute("""
-              SELECT s.url,s.sha256,e.detected_at
+              SELECT s.url,s.sha256,s.next_fetch_at,e.detected_at
               FROM sources s LEFT JOIN release_events e ON e.url=s.url
-              WHERE s.source_mode='remote' AND (s.next_fetch_at IS NULL OR s.next_fetch_at<=?)
+              WHERE s.source_mode='remote'
               ORDER BY CASE
                          WHEN e.detected_at IS NOT NULL AND s.sha256 IS NULL THEN 0
                          WHEN s.sha256 IS NOT NULL AND s.extracted_chars=0 THEN 1
@@ -1079,10 +1107,12 @@ class AutomaticMonitor:
                             THEN 1 ELSE 0 END,
                        e.detected_at IS NULL, e.detected_at DESC,
                        s.checked_at IS NOT NULL, s.checked_at, s.discovered_at, s.url
-            """, (due,)).fetchall()
+            """).fetchall()
             host_deferred = 0
             eligible_candidates = []
             for candidate in ordered:
+                if bounded_future_timestamp(candidate["next_fetch_at"], due) is not None:
+                    continue
                 hostname = monitor.source_hostname(candidate["url"])
                 if hostname and hostname in blocked_hosts:
                     host_deferred += 1
@@ -1166,7 +1196,7 @@ class AutomaticMonitor:
                     selected_urls.append(candidate["url"])
                     if hostname:
                         selected_hosts.add(hostname)
-            pending = max(0, int(backlog["eligible"] or 0) - host_deferred)
+            pending = max(0, eligible_count - host_deferred)
             monitor.record_body_fetch_poll(db, polled_at, pending)
             rows = []
             if selected_urls:
@@ -1218,10 +1248,10 @@ class AutomaticMonitor:
                 "nextHostProbeAt": next_host_probe_at,
                 "dueHostCircuits": len(due_probe_hosts),
                 "scheduledHostProbes": len(probe_urls),
-                "retryDeferred": int(backlog["retry_deferred"] or 0),
-                "accessRestricted": int(backlog["access_restricted"] or 0),
-                "rateLimited": int(backlog["rate_limited"] or 0),
-                "recheckDeferred": int(backlog["recheck_deferred"] or 0),
+                "retryDeferred": retry_deferred,
+                "accessRestricted": access_restricted,
+                "rateLimited": rate_limited,
+                "recheckDeferred": recheck_deferred,
                 "neverFetched": int(backlog["never_fetched"] or 0),
                 "detectedNeverFetched": int(backlog["detected_never_fetched"] or 0),
                 "baselineNeverFetched": int(backlog["baseline_never_fetched"] or 0),
