@@ -1415,7 +1415,9 @@ def record_discovery_poll_batch(
         duration_ms, checks = int(duration_ms), int(checks)
         degraded, new_sources = int(degraded), int(new_sources)
         request_durations = tuple(int(value) for value in request_durations_ms)
-    except (TypeError, ValueError) as exc:
+        started.astimezone(timezone.utc)
+        completed.astimezone(timezone.utc)
+    except (TypeError, ValueError, OverflowError) as exc:
         raise ValueError("invalid-discovery-poll-batch") from exc
     if (
         started.tzinfo is None or completed.tzinfo is None or completed < started
@@ -1467,10 +1469,15 @@ def discovery_poll_summary(db, reference=None, poll_overdue_after_seconds=60):
         poll_overdue_after_seconds = int(poll_overdue_after_seconds)
         if not 15 <= poll_overdue_after_seconds <= 86_400:
             raise ValueError
-    except (TypeError, ValueError) as exc:
+    except (TypeError, ValueError, OverflowError) as exc:
         raise ValueError("invalid-discovery-poll-reference") from exc
-    reference_utc = parsed.astimezone(timezone.utc)
-    window_start = (reference_utc - timedelta(hours=24)).isoformat(timespec="milliseconds")
+    try:
+        reference_utc = parsed.astimezone(timezone.utc)
+        window_start = (reference_utc - timedelta(hours=24)).isoformat(
+            timespec="milliseconds"
+        )
+    except OverflowError as exc:
+        raise ValueError("invalid-discovery-poll-reference") from exc
     reference_text = reference_utc.isoformat(timespec="milliseconds")
     latest = None
     latest_candidates = db.execute(f"""
@@ -1490,7 +1497,7 @@ def discovery_poll_summary(db, reference=None, poll_overdue_after_seconds=60):
                 or completed_at.astimezone(timezone.utc) > reference_utc
             ):
                 continue
-        except (TypeError, ValueError):
+        except (TypeError, ValueError, OverflowError):
             continue
         latest = candidate
         break
@@ -1554,7 +1561,9 @@ def record_priority_source_run(
         target_count, configured_count = int(target_count), int(configured_count)
         healthy, degraded = int(healthy), int(degraded)
         completion_latency_ms = int(completion_latency_ms)
-    except (TypeError, ValueError) as exc:
+        started_utc = started.astimezone(timezone.utc)
+        observed_utc = observed.astimezone(timezone.utc)
+    except (TypeError, ValueError, OverflowError) as exc:
         raise ValueError("invalid-priority-source-run") from exc
     maximum_latency_ms = 31 * 24 * 60 * 60 * 1000
     if (
@@ -1567,8 +1576,11 @@ def record_priority_source_run(
         or not 0 <= completion_latency_ms <= maximum_latency_ms
     ):
         raise ValueError("invalid-priority-source-run")
-    completed = started.astimezone(timezone.utc) + timedelta(milliseconds=completion_latency_ms)
-    if completed > observed.astimezone(timezone.utc):
+    try:
+        completed = started_utc + timedelta(milliseconds=completion_latency_ms)
+    except OverflowError as exc:
+        raise ValueError("invalid-priority-source-run") from exc
+    if completed > observed_utc:
         raise ValueError("invalid-priority-source-run")
     completed_at = completed.isoformat(timespec="milliseconds")
     with db:
@@ -1619,20 +1631,43 @@ def priority_source_run_summary(db, reference=None):
         parsed = datetime.fromisoformat(str(reference).replace("Z", "+00:00"))
         if parsed.tzinfo is None:
             raise ValueError
-    except (TypeError, ValueError) as exc:
+    except (TypeError, ValueError, OverflowError) as exc:
         raise ValueError("invalid-priority-source-run-reference") from exc
-    reference_utc = parsed.astimezone(timezone.utc)
+    try:
+        reference_utc = parsed.astimezone(timezone.utc)
+        window_start = (reference_utc - timedelta(hours=24)).isoformat(
+            timespec="milliseconds"
+        )
+    except OverflowError as exc:
+        raise ValueError("invalid-priority-source-run-reference") from exc
     reference_text = reference_utc.isoformat(timespec="milliseconds")
-    window_start = (reference_utc - timedelta(hours=24)).isoformat(timespec="milliseconds")
-    latest = db.execute(f"""
+    latest = None
+    latest_candidates = db.execute(f"""
       SELECT first_completed_at,last_observed_at,configured_count,healthy,degraded,
              completion_latency_ms
       FROM priority_source_runs
       WHERE julianday(first_completed_at)<=julianday(?)
         AND julianday(last_observed_at)<=julianday(?)
         AND {PRIORITY_SOURCE_RUN_WHERE}
-      ORDER BY julianday(last_observed_at) DESC LIMIT 1
-    """, (reference_text, reference_text)).fetchone()
+      ORDER BY julianday(last_observed_at) DESC LIMIT 100
+    """, (reference_text, reference_text)).fetchall()
+    latest_observed_utc = None
+    for candidate in latest_candidates:
+        try:
+            completed = datetime.fromisoformat(
+                str(candidate["first_completed_at"]).replace("Z", "+00:00")
+            )
+            observed = datetime.fromisoformat(
+                str(candidate["last_observed_at"]).replace("Z", "+00:00")
+            )
+            if completed.tzinfo is None or observed.tzinfo is None:
+                continue
+            completed.astimezone(timezone.utc)
+            latest_observed_utc = observed.astimezone(timezone.utc)
+        except (TypeError, ValueError, OverflowError):
+            continue
+        latest = candidate
+        break
     completed_runs = db.execute(f"""
       SELECT count(*) FROM priority_source_runs
       WHERE julianday(first_completed_at)>=julianday(?)
@@ -1647,13 +1682,12 @@ def priority_source_run_summary(db, reference=None):
             "healthy": 0, "degraded": 0, "completionLatencyMs": None,
             "completedRuns24Hours": completed_runs,
         }
-    observed = datetime.fromisoformat(
-        str(latest["last_observed_at"]).replace("Z", "+00:00")
-    ).astimezone(timezone.utc)
     return {
         "lastCompletedAt": latest["first_completed_at"],
         "lastObservedAt": latest["last_observed_at"],
-        "lastObservedAgeSeconds": max(0, round((reference_utc - observed).total_seconds())),
+        "lastObservedAgeSeconds": max(
+            0, round((reference_utc - latest_observed_utc).total_seconds())
+        ),
         "configuredCount": latest["configured_count"],
         "healthy": latest["healthy"], "degraded": latest["degraded"],
         "completionLatencyMs": latest["completion_latency_ms"],

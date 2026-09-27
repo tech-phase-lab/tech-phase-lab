@@ -289,6 +289,12 @@ class ResearchServiceTests(unittest.TestCase):
                 ValueError, "invalid-priority-source-run-reference"
             ):
                 monitor.priority_source_run_summary(db, "not-a-time")
+            with self.assertRaisesRegex(
+                ValueError, "invalid-priority-source-run-reference"
+            ):
+                monitor.priority_source_run_summary(
+                    db, "0001-01-01T00:00:00+14:00"
+                )
 
             future_started = reference + timedelta(hours=1)
             future_observed = future_started + timedelta(seconds=1)
@@ -301,6 +307,33 @@ class ResearchServiceTests(unittest.TestCase):
                 db, reference.isoformat(timespec="milliseconds")
             )
         self.assertIsNone(summary["lastCompletedAt"])
+        self.assertEqual(summary["completedRuns24Hours"], 0)
+
+    def test_priority_source_metrics_ignore_utc_conversion_overflow(self):
+        boundary = "0001-01-01T00:00:00+14:00"
+        with monitor.connect(self.db_path) as db:
+            with self.assertRaisesRegex(ValueError, "invalid-priority-source-run"):
+                monitor.record_priority_source_run(
+                    db, boundary, "0001-01-01T00:00:01+14:00",
+                    5, 5, 5, 0, 0,
+                )
+            db.execute("""
+              INSERT INTO priority_source_runs(
+                process_started_at,first_completed_at,last_observed_at,
+                target_count,configured_count,healthy,degraded,
+                completion_latency_ms
+              ) VALUES(?,?,?,?,?,?,?,?)
+            """, (boundary, boundary, "0001-01-01T00:00:01+14:00",
+                  5, 5, 5, 0, 0))
+            db.commit()
+
+        summary = service.AutomaticMonitor(
+            self.db_path, self.snapshot_path
+        ).public_state()["prioritySourceRuns"]
+
+        self.assertIsNone(summary["lastCompletedAt"])
+        self.assertIsNone(summary["lastObservedAt"])
+        self.assertIsNone(summary["lastObservedAgeSeconds"])
         self.assertEqual(summary["completedRuns24Hours"], 0)
 
     def test_priority_source_run_persistence_failure_is_isolated_and_recovers(self):
@@ -479,7 +512,36 @@ class ResearchServiceTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "invalid-discovery-poll-reference"):
                 monitor.discovery_poll_summary(db, "not-a-time")
             with self.assertRaisesRegex(ValueError, "invalid-discovery-poll-reference"):
+                monitor.discovery_poll_summary(
+                    db, "0001-01-01T00:00:00+14:00"
+                )
+            with self.assertRaisesRegex(ValueError, "invalid-discovery-poll-reference"):
                 monitor.discovery_poll_summary(db, poll_overdue_after_seconds=14)
+
+    def test_discovery_poll_metrics_ignore_utc_conversion_overflow(self):
+        boundary = "0001-01-01T00:00:00+14:00"
+        completed = "0001-01-01T00:00:01+14:00"
+        with monitor.connect(self.db_path) as db:
+            with self.assertRaisesRegex(ValueError, "invalid-discovery-poll-batch"):
+                monitor.record_discovery_poll_batch(
+                    db, boundary, completed, 1000, 1, 0, 0, (100,),
+                )
+            db.execute("""
+              INSERT INTO discovery_poll_batches(
+                started_at,completed_at,duration_ms,checks,degraded,new_sources,
+                request_duration_total_ms,request_duration_max_ms
+              ) VALUES(?,?,?,?,?,?,?,?)
+            """, (boundary, completed, 1000, 1, 0, 0, 100, 100))
+            db.commit()
+
+        summary = service.AutomaticMonitor(
+            self.db_path, self.snapshot_path
+        ).public_state()["discoveryRuns"]
+
+        self.assertIsNone(summary["lastCompletedAt"])
+        self.assertIsNone(summary["lastCompletedAgeSeconds"])
+        self.assertTrue(summary["pollOverdue"])
+        self.assertEqual(summary["runs24Hours"], 0)
 
     def test_discovery_poll_metrics_mark_stale_persisted_evidence(self):
         completed = datetime.now(timezone.utc)
