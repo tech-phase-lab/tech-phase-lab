@@ -59,3 +59,11 @@ the actual editor proxy and member route, covering Free/anonymous/expired PRO,
 active PRO, identity failure, expiry during upstream fetch and private-field
 projection. All test content is synthetic and local. Do not seed live member
 content or claim a real editor save/account transition from these tests.
+
+## Live preview verification follow-up
+
+The editor page deployed successfully. The first member-list browser check
+exposed a missing Clerk proxy matcher for `/api/research/posts`; identity lookup
+failed closed with no content. Added that route to the existing identity proxy
+and a regression using the installed Next matcher utility for every membership
+API. No identity-provider configuration or actual membership was changed.
