@@ -51,7 +51,10 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
         <Link href="/research/qa"><strong>{t("リゼルに聞く", "Ask RIZEL")}</strong><span className={styles.deskSmall}>{t("疑問から、理解を深める", "Questions worth exploring")}</span><span aria-hidden="true">→</span></Link>
         <Link href="/research/weekly"><strong>{t("週刊PRO", "PRO Weekly")}</strong><span className={styles.deskSmall}>{t("一週間の変化と展望", "The week’s shifts & outlook")}</span><span aria-hidden="true">→</span></Link>
       </div>
-      {!isPro && <div className={styles.deskOverlay}><span className={styles.overlayLabel}>TECH PHASE PRO</span><strong>{t("PRO会員限定", "Exclusive to PRO")}</strong></div>}
+      {!isPro && <div className={styles.deskOverlay}>
+        <svg className={styles.deskChain} width="100%" height="24" aria-hidden="true" focusable="false"><defs><pattern id="desk-chain-links" width="36" height="24" patternUnits="userSpaceOnUse"><rect x="2" y="5" width="25" height="14" rx="7" fill="none" stroke="currentColor" strokeWidth="2" /><path d="M22 10h17m-17 4h17" stroke="currentColor" strokeWidth="2" /><path d="M8 8h12" stroke="#d4c9b0" strokeOpacity=".35" strokeWidth="1" /></pattern></defs><rect width="100%" height="24" fill="url(#desk-chain-links)" /></svg>
+        <div className={styles.overlayCaption}><span className={styles.overlayLabel}>TECH PHASE PRO</span><strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong></div>
+      </div>}
     </nav>
   </>;
 }
@@ -59,8 +62,8 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
 export function HomeHelp({ lang }: { lang: Language }) {
   return <nav className={styles.help} aria-label={lang === "ja" ? "学びとご利用案内" : "Learning and help"}>
     <span>{lang === "ja" ? "学びとご利用案内" : "Learning and help"}</span>
-    <Link href="/research/learn"><span className={styles.helpIcon} aria-hidden="true">🔰</span><span><strong>{lang === "ja" ? "米国株のはじめ方" : "US stock basics"}</strong><small>{lang === "ja" ? "口座開設・投資の基本" : "Accounts, orders and investing basics"}</small></span></Link>
-    <Link href="/research/faq"><span className={styles.helpIcon} aria-hidden="true">?</span><span><strong>{lang === "ja" ? "よくある質問・使い方" : "FAQ & help"}</strong><small>{lang === "ja" ? "プラン・通知・使い方" : "Membership, alerts and using Tech Phase"}</small></span></Link>
+    <Link href="/research/learn"><span className={styles.helpIcon} aria-hidden="true">🔰</span><span><strong>{lang === "ja" ? "米国株のはじめ方" : "US stock basics"}</strong></span></Link>
+    <Link href="/research/faq"><span className={styles.helpIcon} aria-hidden="true">?</span><span><strong>{lang === "ja" ? "よくある質問・使い方" : "FAQ & help"}</strong></span></Link>
   </nav>;
 }
 

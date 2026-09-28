@@ -52,15 +52,17 @@
 
 .readingLocked{position:relative;border-color:#1b242b}
 .deskOverlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:rgba(0,0,0,.84);pointer-events:none}
+.deskChain{position:absolute;top:50%;left:-25%;width:150%;height:24px;transform:translateY(-50%) rotate(-14deg);color:#847b68;opacity:.42}
+.overlayCaption{position:relative;display:flex;flex-direction:column;align-items:center;gap:9px;padding:12px 20px;background:radial-gradient(ellipse,#030606 55%,#03060600 74%)}
+.overlayLock{font-size:17px;letter-spacing:0;margin-right:8px}
 .overlayLabel{font:10px var(--font-geist-mono),monospace;letter-spacing:.2em;color:#c5b38c}
 .deskOverlay strong{font-size:16px;font-weight:500;letter-spacing:.1em;color:#e8e4da}
 .help{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px;row-gap:12px;margin:32px 0 16px;padding:22px 0}
 .help>span{grid-column:1/-1;color:var(--muted);font-size:11px;letter-spacing:.04em}
-.help a{display:flex;align-items:flex-start;gap:8px;min-width:0;min-height:64px;padding:12px 0;border-bottom:1px solid #42514f;color:var(--text);text-decoration:none}
+.help a{display:flex;align-items:center;gap:8px;min-width:0;min-height:48px;padding:10px 0;color:var(--text);text-decoration:none}
 .help a>span:last-child{min-width:0}
 .help strong{display:block;font-size:15px;line-height:1.6;font-weight:550;overflow-wrap:anywhere}
-.help small{display:block;margin-top:5px;color:var(--muted);font-size:11px;line-height:1.6}
 .helpIcon{display:grid;place-items:center;flex-shrink:0;width:20px;height:24px;font-size:19px;color:var(--mint)}
-.help a:hover{border-color:var(--mint);color:var(--mint)}
+.help a:hover{color:var(--mint);text-decoration:underline;text-underline-offset:5px}
 .help a:focus-visible{outline:2px solid var(--mint);outline-offset:3px}
-@media(max-width:650px){.help{column-gap:16px}.help a{gap:5px}.help strong{font-size:13px}.help small{font-size:10px}.helpIcon{width:17px;font-size:17px}}
+@media(max-width:650px){.help{column-gap:16px}.help a{gap:5px}.help strong{font-size:13px}.helpIcon{width:17px;font-size:17px}}

@@ -305,3 +305,7 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 ### 2026-09-29 07:04 visual correction
 - Free RIZEL’s Desk uses an 84% black overlay over the original design with centered PRO membership label; underlying text remains barely visible. This is a PRO gate, not a coming-soon claim.
 - Homepage help removes card backgrounds/borders, retaining only bottom rules. Both links remain side by side on mobile with a beginner mark and short descriptions. Supersedes earlier card design.
+
+### 2026-09-29 07:12 lock / help finishing
+- Add the requested lock to the left of PRO会員限定 and a subdued diagonal chain over the black overlay; keep the central caption legible.
+- Simplify homepage help to two side-by-side icon/title links, removing descriptions and individual bottom rules to avoid competing with the footer separator.
