@@ -121,6 +121,18 @@ rendered with its ordinary-news panel. No editor token was entered; live
 generation, approval and publication remain off. The only browser console error
 was emitted by the automation extension, not the application.
 
+The evidence-bound impact-classification update was published later on September
+28 as `2e5f7e65`, with calendar handoff commit `d00b9e6d`. Its exact repository
+tree was `1259601261fb40e7754528994360f343385e1afd`. The final combined suite
+passed 122 Node and 400 Python tests plus lint, production build, compileall and
+diff checks. Vercel and isolated Railway staging checks succeeded. The live news
+page remained in its intentional distribution-preparing state and the protected
+review page rendered the ordinary-news panel with editor controls disabled until
+an editor token is supplied. No token was entered and no live generation, review
+or publication occurred. Direct local Git transport lacked write authentication;
+the authorized repository connector advanced only `codex/research-preview`
+non-forced, while the local read mirror was still delayed after that update.
+
 ## Original backend checkpoint (historical)
 
 The following describes the earlier backend-only stage; the current UI/public
