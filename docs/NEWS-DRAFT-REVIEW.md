@@ -28,8 +28,12 @@ Implemented September 28, 2026. `/research/review` now includes an ordinary-news
 panel using the existing editor token (kept only in component memory). Editors
 can load the latest 50 articles, inspect saved source text, edit Japanese/English
 summaries and up to four exact excerpts, save, and approve/hold/reject. Approval
-requires an explicit bilingual check, reviewer, and reason in the UI; the server
-independently validates the saved revision, translations and evidence.
+requires a reviewer, reason and four explicit checks in the UI: official source
+and saved body, claim-to-evidence support, Japanese/English equivalence, and
+numbers/units/periods/attribution. The server requires the canonical four-key
+object, stores it on the append-only review row and excludes legacy, partial or
+malformed approval records from the public feed. The checkbox state alone can no
+longer authorize publication through a direct API call.
 
 `POST /admin/news/draft` accepts the existing article/revision plus `editVersion`,
 `summaryJa`, `summaryEn`, and `evidence`. The compare-and-save version prevents
@@ -95,6 +99,14 @@ succeeded. The protected review page rendered without application console errors
 the only observed console entry came from the browser automation extension. No
 editor token was entered and no live generation, retry, approval or publication
 was performed.
+
+The auditable-approval update was published later on September 28 as `a7f7361`,
+with calendar handoff commit `84d9164`. The final combined suite passed 122 Node
+and 396 Python tests plus lint, production build, compileall and diff checks.
+Vercel and isolated Railway staging both succeeded, and the protected review page
+rendered with its ordinary-news panel. No editor token was entered; live
+generation, approval and publication remain off. The only browser console error
+was emitted by the automation extension, not the application.
 
 ## Original backend checkpoint (historical)
 
