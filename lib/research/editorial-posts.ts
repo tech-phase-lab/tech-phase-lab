@@ -23,7 +23,7 @@ export function publishedPosts(value: unknown, pro: boolean): EditorialPost[] {
   }).map(item => ({
     id: item.id, version: item.version, kind: item.kind, status: "published",
     titleJa: item.titleJa, titleEn: item.titleEn, introJa: item.introJa, introEn: item.introEn,
-    translationStatus: item.titleEn.trim() && item.introEn.trim() && item.bodyEn.trim() ? "ready" : "pending",
+    translationStatus: item.titleEn.trim() && (!item.introJa.trim() || item.introEn.trim()) && item.bodyEn.trim() ? "ready" : "pending",
     bodyJa: pro ? item.bodyJa : "", bodyEn: pro ? item.bodyEn : "",
     updatedAt: item.updatedAt, publishedAt: item.publishedAt,
     sources: pro ? item.sources.filter(source => {

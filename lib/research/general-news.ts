@@ -4,13 +4,29 @@ export type GeneralNewsItem = {
   impactJa: string; impactEn: string; impactLabel: "positive" | "negative" | "mixed" | "neutral" | "uncertain";
   confidence: "high" | "medium" | "low";
 };
-export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[] };
+export type OfficialUpdate = { id: string; title: string; url: string; publisher: string; tickers: string[]; observedAt: string };
+export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[] };
 
 export function publicNewsPayload(value: unknown): GeneralNewsFeed {
   if (!value || typeof value !== "object") throw new Error("Invalid news feed");
   const payload = value as Record<string, unknown>;
   if (payload.ok !== true || typeof payload.enabled !== "boolean" || !Array.isArray(payload.items) || payload.items.length > 30) throw new Error("Invalid news feed");
-  if (!payload.enabled) return { ok: true, enabled: false, items: [] };
+  const updates: { officialUpdates?: OfficialUpdate[] } = {};
+  if (payload.officialUpdates !== undefined) {
+    if (!Array.isArray(payload.officialUpdates) || payload.officialUpdates.length > 20) throw Error("Invalid updates");
+    updates.officialUpdates = payload.officialUpdates.map(raw => {
+      if (!raw || typeof raw !== "object") throw Error("Invalid update");
+      const v = raw as Record<string, unknown>;
+      for (const key of ["id", "title", "url", "publisher", "observedAt"]) if (typeof v[key] !== "string" || !(v[key] as string).trim()) throw Error("Invalid update field");
+      const url = new URL(v.url as string);
+      if (url.protocol !== "https:" || url.username || url.password || url.port || !["nebius.com", "developer.nvidia.com", "x.com"].includes(url.hostname)) throw Error("Invalid official source");
+      if (url.hostname === "x.com" && !/^\/nebiusai\/status\/\d+$/i.test(url.pathname)) throw Error("Invalid official account");
+      if ((v.title as string).length > 180 || (v.publisher as string).length > 80 || !/^\d+$/.test(v.id as string) || !Number.isFinite(Date.parse(v.observedAt as string))) throw Error("Invalid update");
+      if (!Array.isArray(v.tickers) || v.tickers.length > 5 || !v.tickers.every(t => typeof t === "string" && /^[A-Z][A-Z0-9.-]{0,9}$/.test(t))) throw Error("Invalid update tickers");
+      return { id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[] };
+    });
+  }
+  if (!payload.enabled) return { ok: true, enabled: false, items: [], ...updates };
   const items = payload.items.map((raw): GeneralNewsItem => {
     if (!raw || typeof raw !== "object") throw new Error("Invalid item");
     const item = raw as Record<string, unknown>;
@@ -37,5 +53,5 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       impactJa: field("impactJa", 1200), impactEn: field("impactEn", 1200),
       impactLabel: impactLabel as GeneralNewsItem["impactLabel"], confidence: confidence as GeneralNewsItem["confidence"] };
   });
-  return { ok: true, enabled: true, items };
+  return { ok: true, enabled: true, items, ...updates };
 }

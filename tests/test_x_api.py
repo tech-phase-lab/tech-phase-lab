@@ -21,10 +21,14 @@ class XApiTests(unittest.TestCase):
         added = {"LITE", "COHR", "VST", "IREN", "ALAB", "APH", "INTC",
                  "AMAT", "SIMO", "AAOI", "META"}
         self.assertEqual({source["accounts"][0].lower() for source in x_sources},
-                         {"tipranks", "theflynews", "wallstengine"})
+                         {"tipranks", "theflynews", "wallstengine", "nebiusai"})
         self.assertEqual({ticker for source in x_sources for ticker in source["tickers"]},
                          set(monitor.PROVIDERS) | added)
         for source in x_sources:
+            if source.get("officialUpdates"):
+                self.assertEqual(source["accounts"], ["nebiusai"])
+                self.assertEqual(source["tickers"], ["NBIS"])
+                continue
             self.assertLessEqual(len(source["query"]), 512)
             self.assertEqual(set(source["extraTickers"]), added)
             self.assertEqual(len(source["tickers"]), 33)

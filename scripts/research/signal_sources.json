@@ -651,5 +651,26 @@
     "intervalSeconds": 30,
     "reuse": "review-required",
     "userAgent": "TechPhaseResearch/1.0 (+https://tech-phase-lab.vercel.app)"
+  },
+  {
+    "id": "x-nebius-official",
+    "name": "X · Nebius official",
+    "kind": "publisher-update",
+    "format": "x-api",
+    "enabledBy": "X_API_ENABLED",
+    "officialUpdates": true,
+    "query": "from:nebiusai -is:retweet -is:reply",
+    "accounts": [
+      "nebiusai"
+    ],
+    "tickers": [
+      "NBIS"
+    ],
+    "allowedHosts": [
+      "x.com"
+    ],
+    "intervalSeconds": 120,
+    "maxResults": 30,
+    "reuse": "review-required"
   }
 ]

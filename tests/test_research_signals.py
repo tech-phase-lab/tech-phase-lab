@@ -906,7 +906,7 @@ class SignalTests(unittest.TestCase):
         sources = [source for source in signals.SOURCES if source.get("format") == "x-api"]
         with patch.dict(os.environ, {"X_API_DAILY_REQUEST_LIMIT": "2300"}):
             plan = signals.x_api_request_plan(sources)
-        self.assertEqual(plan["configuredMaxRequestsPerDay"], 4320)
+        self.assertEqual(plan["configuredMaxRequestsPerDay"], 5040)
         self.assertTrue(plan["budgetCapped"])
         self.assertTrue(plan["pacingEnabled"])
         source = sources[0]

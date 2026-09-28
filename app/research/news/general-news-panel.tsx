@@ -33,6 +33,15 @@ export default function GeneralNewsPanel({ lang }: { lang: Language }) {
     : { positive: "Positive", negative: "Negative", mixed: "Mixed", neutral: "Neutral", uncertain: "Uncertain" };
   const confidenceLabels = lang === "ja" ? { high: "高", medium: "中", low: "低" } : { high: "High", medium: "Medium", low: "Low" };
   return <section className={styles.panel} aria-labelledby="general-news-title">
+    {!!data?.officialUpdates?.length && <section aria-label={lang === "ja" ? "公式アップデート" : "Official updates"}>
+      <h2>{lang === "ja" ? "公式アップデート" : "Official updates"}</h2>
+      <p className={styles.note}>{lang === "ja" ? "企業の公式発表・投稿へのリンクです。日本語の要約・影響分析はまだ付いていません。時刻は取得時刻です。" : "Links to official company updates. Summaries and impact analysis are not yet available. Times show when we found each update."}</p>
+      <div className={styles.items}>{data.officialUpdates.map(item => <article key={item.id}>
+        <p className={styles.tickers}>{item.tickers.join(" · ")} · {item.publisher}</p>
+        <h3><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title}</a></h3>
+        <p className={styles.note}>{format(item.observedAt)}</p>
+      </article>)}</div>
+    </section>}
     <div className={styles.head}><h2 id="general-news-title">{lang === "ja" ? "通常ニュース" : "General news"}</h2><button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>
     {error ? <p role="status">{lang === "ja" ? "ニュースを取得できません。しばらくしてから更新してください。" : "News is unavailable. Please refresh shortly."}</p> : !data ? <p role="status">{lang === "ja" ? "読み込み中…" : "Loading…"}</p> : !data.enabled ? <p>{lang === "ja" ? "通常ニュースの配信は準備中です。" : "General news coverage is coming soon."}</p> : <>
       <p className={styles.note}>{lang === "ja" ? "日英の内容を確認した記事を掲載しています。" : "Articles are published after review of both language versions."}</p>

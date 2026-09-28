@@ -69,3 +69,13 @@ test("public route rejects monitor URLs with embedded credentials", async () => 
     }
   }
 });
+
+test('official links remain available without paid news and exclude private content', () => {
+ const update = {id:'42',title:'Official update',url:'https://x.com/nebiusai/status/12345',publisher:'Nebius',tickers:['NBIS'],observedAt:'2026-09-28T09:00:00Z'};
+ const data=publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[{...update,excerpt:'PRIVATE'}]});
+ assert.deepEqual(data.officialUpdates,[update]);
+ assert.equal(JSON.stringify(data).includes('PRIVATE'),false);
+ for (const url of ['https://x.com/impostor/status/12345','https://evil.example/post','javascript:alert(1)']) {
+  assert.throws(()=>publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[{...update,url}]}));
+ }
+});

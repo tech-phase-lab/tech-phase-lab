@@ -14,7 +14,8 @@ from urllib.request import Request, build_opener
 API_URL = "https://api.x.com/2/tweets/search/recent"
 MAX_RESPONSE_BYTES = 2 * 1024 * 1024
 MAX_RESULTS = 30
-ALLOWED_ACCOUNT_NAMES = {"tipranks", "theflynews", "wallstengine"}
+OFFICIAL_ACCOUNTS = {"nebiusai": "NBIS"}
+ALLOWED_ACCOUNT_NAMES = {"tipranks", "theflynews", "wallstengine", *OFFICIAL_ACCOUNTS}
 TARGET_PATTERN = re.compile(
     r"\b(?:price[ -]?target|target price|pt\s+(?:raised|cut|lowered|hiked|boosted|slashed|(?:to|at)\s*\$?\d+))\b",
     re.I,
@@ -42,6 +43,9 @@ def parse_response(source, payload, tickers):
                 or username.lower() not in ALLOWED_ACCOUNT_NAMES):
             continue
         matches = signals_match(text, tickers)
+        official_ticker = OFFICIAL_ACCOUNTS.get(username.lower()) if source.get("officialUpdates") is True else None
+        if official_ticker and official_ticker in tickers:
+            matches[official_ticker] = ["official-account:" + username.lower()]
         # Keep X-only pilot tickers separate from the 22-company research roster.
         for ticker in source.get("extraTickers", []):
             if (ticker in source.get("tickers", []) and
@@ -54,7 +58,7 @@ def parse_response(source, payload, tickers):
                 matches = {ticker: ["$" + ticker] for ticker in cashtags}
         is_earnings = bool(EARNINGS_PATTERN.search(text) and
                            not EARNINGS_PREVIEW_PATTERN.search(text))
-        if not matches or not (TARGET_PATTERN.search(text) or is_earnings):
+        if not matches or not (official_ticker or TARGET_PATTERN.search(text) or is_earnings):
             continue
         url = f"https://x.com/{username}/status/{post_id}"
         items[url] = {

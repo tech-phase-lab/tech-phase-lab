@@ -22,6 +22,7 @@ import signals
 import stock_news
 import news_drafts
 import editorial_posts
+import note_translation
 import web_push
 
 
@@ -470,7 +471,18 @@ class AutomaticMonitor:
         )
         self.signals_thread = threading.Thread(target=self.run_signals, name="research-signals", daemon=True)
         self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
+        self.note_translation_thread = threading.Thread(target=self.run_note_translation, name="note-translation", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
+
+    def run_note_translation(self):
+        if note_translation.configuration(os.environ) is None:
+            return
+        while not self.stop_event.is_set():
+            try:
+                note_translation.run_once(self.db_path)
+            except Exception:
+                print("note-translation-unavailable", flush=True)
+            self.stop_event.wait(30)
 
     def run_web_push(self):
         if not self.web_push_enabled:
@@ -508,6 +520,7 @@ class AutomaticMonitor:
         self.notification_thread.start()
         self.signals_thread.start()
         self.news_thread.start()
+        self.note_translation_thread.start()
         self.push_thread.start()
 
     def stop(self):
@@ -519,6 +532,7 @@ class AutomaticMonitor:
         self.notification_thread.join(timeout=15)
         self.signals_thread.join(timeout=45)
         self.news_thread.join(timeout=25)
+        self.note_translation_thread.join(timeout=45)
         self.push_thread.join(timeout=15)
 
     def run_stock_news(self):
@@ -566,7 +580,7 @@ class AutomaticMonitor:
 
     def public_news(self):
         with stock_news.connect(self.db_path) as db:
-            return news_drafts.public_feed(db)
+            return {**news_drafts.public_feed(db), "officialUpdates": signals.public_official_updates(db)}
 
     def posts_queue(self, limit=20, published=False, offset=0):
         with editorial_posts.connect(self.db_path) as db:

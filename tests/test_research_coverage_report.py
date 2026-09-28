@@ -44,7 +44,7 @@ class CoverageReportTests(unittest.TestCase):
         self.assertEqual(oracle_source['url'], 'https://investor.oracle.com/rss/pressrelease.aspx')
         self.assertIn('anthropic-news', result['sharedSources'])
         x_routes = [route for route in result['routes'] if route['id'].startswith('x-')]
-        self.assertEqual(len(x_routes), 3)
+        self.assertEqual(len(x_routes), 4)
         self.assertTrue(all(route['url'] is None for route in x_routes))
         self.assertNotIn('query', str(x_routes).lower())
 

@@ -1219,3 +1219,45 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def public_official_updates(db, sources=SOURCES, reference=None):
+    """Links/headlines only; never publish private excerpts or unreviewed AI claims."""
+    schema(db)
+    allowed = {s['id']: s for s in sources if s['id'] in {
+        'nebius-blog', 'nvidia-developer', 'x-nebius-official'}}
+    if not allowed:
+        return []
+    cutoff = ((reference or datetime.now(timezone.utc)) - timedelta(days=7)).isoformat()
+    marks = ','.join('?' for _ in allowed)
+    rows = db.execute(f'''SELECT * FROM signal_events WHERE source_id IN ({marks})
+      AND observed_at>=? ORDER BY id DESC LIMIT 120''', (*allowed, cutoff)).fetchall()
+    items, seen = [], set()
+    for row in rows:
+        source = allowed[row['source_id']]
+        try:
+            published = row['published_at'] or row['published_on']
+            if published and published[:10] < cutoff[:10]:
+                continue
+            if row['event_kind'] == 'baseline' and not published:
+                continue
+            url = safe_url(row['url'], source)
+            if url in seen:
+                continue
+            if source['id'] == 'x-nebius-official' and not re.fullmatch(r'https://x.com/nebiusai/status/[0-9]+', url, re.I):
+                continue
+            tickers = [t for t in json.loads(row['tickers_json']) if re.fullmatch(r'[A-Z][A-Z0-9.-]{0,9}', t)][:5]
+            if not tickers:
+                continue
+            observed = datetime.fromisoformat(row['observed_at'])
+            if observed.tzinfo is None:
+                continue
+        except (ValueError, TypeError):
+            continue
+        seen.add(url)
+        items.append({'id': str(row['id']), 'title': row['title'][:180], 'url': url,
+                      'publisher': source['name'], 'tickers': tickers,
+                      'observedAt': observed.isoformat()})
+        if len(items) == 20:
+            break
+    return items
