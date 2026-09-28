@@ -1,2 +1,5 @@
-import ColumnsPage from "../columns/columns";
-export default function Page() { return <ColumnsPage initialKind="qa" />; }
+import type { Metadata } from "next";
+import Questions from "./questions";
+
+export const metadata: Metadata = { title: "リゼルに聞く | Tech Phase Research", robots: { index: false, follow: false } };
+export default function Page() { return <Questions />; }

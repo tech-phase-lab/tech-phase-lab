@@ -15,7 +15,7 @@ const errors: Record<string, string> = {
 export default function EditorialEditor() {
   const [token, setToken] = useState("");
   return <main className={styles.main}>
-    <header><p>TECH PHASE · PRIVATE EDITOR</p><h1>リゼルの投稿デスク</h1><Link href="/research/review">速報レビューへ</Link> · <Link href="/research/columns">会員向けページへ</Link></header>
+    <header><p>TECH PHASE · PRIVATE EDITOR</p><h1>リゼルの投稿デスク</h1><Link href="/research/questions">質問受信箱</Link> · <Link href="/research/review">速報レビューへ</Link> · <Link href="/research/columns">会員向けページへ</Link></header>
     <label className={styles.auth}>編集用トークン<input type="password" autoComplete="off" value={token} onChange={e => setToken(e.target.value)} /></label>
     <p>トークンはこの画面のメモリだけで保持します。トークン変更時は未保存の入力が消えます。本文はプレーンテキストで表示します。</p>
     <Workspace key={token} token={token} />

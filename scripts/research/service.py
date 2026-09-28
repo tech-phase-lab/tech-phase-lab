@@ -22,6 +22,7 @@ import signals
 import stock_news
 import news_drafts
 import editorial_posts
+import questions
 import note_translation
 import web_push
 
@@ -593,6 +594,27 @@ class AutomaticMonitor:
     def save_post(self, payload, review=False):
         with editorial_posts.connect(self.db_path) as db:
             return editorial_posts.review(db, payload) if review else editorial_posts.save(db, payload)
+
+    def submit_question(self, payload):
+        with questions.connect(self.db_path) as db:
+            return questions.submit(db, payload)
+
+    def member_questions(self, owner_key, limit=20):
+        with questions.connect(self.db_path) as db:
+            return questions.member_queue(db, owner_key, limit)
+
+    def question_queue(self, view="pending", limit=50):
+        # Ensure the answer-candidate table exists even on a fresh database.
+        with editorial_posts.connect(self.db_path):
+            pass
+        with questions.connect(self.db_path) as db:
+            return questions.moderation_queue(db, view, limit)
+
+    def review_question(self, payload):
+        with editorial_posts.connect(self.db_path):
+            pass
+        with questions.connect(self.db_path) as db:
+            return questions.review(db, payload)
 
     def signal_queue(self, limit=30, view="all", ticker=None):
         with self.db_lock, monitor.connect(self.db_path) as db:
@@ -1857,14 +1879,15 @@ class Handler(BaseHTTPRequestHandler):
             state = self.app.public_state()
             self.send_json(200 if path == "/health" or state["ready"] else 503, state)
             return
-        if path in {"/admin/briefs", "/admin/annual-briefs", "/admin/signals", "/admin/news", "/admin/posts"}:
+        if path in {"/admin/briefs", "/admin/annual-briefs", "/admin/signals", "/admin/news", "/admin/posts", "/admin/questions"}:
             if not self.editor_authorized():
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
                 return
             try:
                 limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
                 view = parse_qs(parsed.query).get("view", ["all"])[0]
-                queue = (self.app.posts_queue(limit, offset=int(parse_qs(parsed.query).get("offset", ["0"])[0])) if path == "/admin/posts" else
+                queue = (self.app.question_queue(view, limit) if path == "/admin/questions" else
+                         self.app.posts_queue(limit, offset=int(parse_qs(parsed.query).get("offset", ["0"])[0])) if path == "/admin/posts" else
                          self.app.stock_news_queue(limit) if path == "/admin/news" else
                          self.app.signal_queue(limit, view, parse_qs(parsed.query).get("ticker", [None])[0])
                          if path == "/admin/signals" else
@@ -1895,6 +1918,19 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "annual-brief-unavailable"})
             return
+        if path == "/questions":
+            if not self.authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                owner_key = self.headers.get("X-Question-Owner", "")
+                limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
+                self.send_json(200, {"ok": True, **self.app.member_questions(owner_key, limit)})
+            except (TypeError, ValueError) as exc:
+                self.send_json(400, {"ok": False, "error": str(exc)})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "question-list-unavailable"})
+            return
         if path not in {"/snapshot", "/live", "/price-targets", "/news", "/posts"}:
             self.send_json(404, {"ok": False, "error": "not-found"})
             return
@@ -1921,6 +1957,17 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlsplit(self.path).path
+        if path == "/questions":
+            if not self.authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                self.send_json(200, {"ok": True, **self.app.submit_question(self.read_json())})
+            except ValueError as exc:
+                self.send_json(400, {"ok": False, "error": str(exc)})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "question-submit-unavailable"})
+            return
         if path in {"/push/register", "/push/remove", "/push/status", "/push/test", "/push/member/register", "/push/member/remove", "/push/member/status", "/push/member/test", "/push/member/revoke"}:
             if not self.authorized():
                 self.send_json(401, {"ok": False})
@@ -1952,7 +1999,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(503, {"ok": False})
             return
         if path not in {
-            "/admin/posts/draft", "/admin/posts/review",
+            "/admin/posts/draft", "/admin/posts/review", "/admin/questions/review",
             "/admin/news/generate", "/admin/news/retry", "/admin/news/review", "/admin/news/draft",
             "/admin/briefs/generate", "/admin/briefs/draft", "/admin/briefs/review",
             "/admin/annual-briefs/draft", "/admin/annual-briefs/review",
@@ -1964,7 +2011,9 @@ class Handler(BaseHTTPRequestHandler):
             return
         try:
             payload = self.read_json()
-            if path in {"/admin/posts/draft", "/admin/posts/review"}:
+            if path == "/admin/questions/review":
+                result = self.app.review_question(payload)
+            elif path in {"/admin/posts/draft", "/admin/posts/review"}:
                 result = self.app.save_post(payload, review=path.endswith("/review"))
             elif path == "/admin/news/generate":
                 result = self.app.generate_news_draft(payload)

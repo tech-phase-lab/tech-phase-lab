@@ -28,6 +28,19 @@ Micron's earnings call time must not be labeled as its release publication time.
 No paid data subscription, automatic ingestion, external notification, or
 membership feature is enabled by these tools.
 
+## Private questions
+
+`/research/qa` accepts questions only from a verified signed-in account. The
+submission is private and uses an idempotent request ID; the monitor stores an
+opaque owner key rather than the identity-provider user ID. Members can see the
+state of their own submissions, but no member question body is part of a public
+endpoint.
+
+The owner-only `/research/questions` inbox can close a submission or associate
+it with an already-published Research Q&A post. It cannot directly publish the
+raw question. Published, reviewed answers are shown separately at
+`/research/qa/answered`; a submission is not a promise of an answer.
+
 Public detection-to-body latency is calculated only from parseable persisted
 timestamps compared as absolute instants. Mixed UTC offsets and legacy naive
 UTC rows are normalized before subtraction; malformed, reversed, or more than

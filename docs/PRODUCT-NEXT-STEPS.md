@@ -208,3 +208,22 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 - Existing Railway staging RESEARCH_EDITOR_TOKEN saved as Vercel Secret scoped only codex/research-preview, with explicit owner consent. Redeploy FdFLiS3tbA8Vd6FgkZJFiPugfwDv Ready. Live owner composer listing, publication, withdrawal, and draft save verified; test note remains private.
 - Owner clarified notes are casual X-like posts: no headline input or reader headline. Composer accepts body alone. The current persistence layer now stores note title/intro fields empty; owner-only history uses a body excerpt, while Free readers never receive the body. Mobile editor comes before collapsed history; publish control stays near bottom; pending operations have explicit status.
 - Owner unavailable and authorizes autonomous continuation. Existing hourly Tech Phase development task updated, no duplicate created. The latest-note home entry is now implemented with metadata-only projection. Next: private question submission and moderation inbox / answered view, then beginner FAQ. Paid APIs remain deferred until early December. Never invent owner posts or claim untested mobile-device behavior.
+
+## September 29 private-question implementation checkpoint
+
+- Added signed-in private question submission with same-origin writes, bounded
+  text, explicit pending/error states, and idempotent retry IDs. The monitor
+  stores an HMAC-derived owner key rather than the Clerk user ID.
+- Added an owner-only moderation inbox. A question can be closed or linked as
+  answered only to a published Research Q&A post; raw member text is never
+  automatically published. The answered reader page is separate from intake.
+- Reader and owner copy says selected questions may be answered and never
+  promises a response to every submission. No real question or answer content
+  was created during implementation.
+- Local isolated storage, HTTP, Next route, identity-proxy and UI-source tests
+  cover privacy boundaries and state transitions. Live signed-in submission and
+  moderation remain a post-deploy verification item; do not report them as
+  completed until observed.
+- Next finite product priority after deployment verification is the Free
+  beginner guide and service FAQ. Keep investment learning separate from account
+  and product help, beginning with Japan-resident brokerage context.
