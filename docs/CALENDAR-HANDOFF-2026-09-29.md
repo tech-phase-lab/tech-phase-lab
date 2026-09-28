@@ -227,3 +227,35 @@ Next: NOW, NVDA, PANW, PLTR, AAPL, AMZN, ANET, ARM, AVGO and BE. Empty dynamic
 sections, inaccessible endpoints, tentative labels and completed announcements
 remain pending unless a first-party source supplies a confirmed date or an
 explicit current no-events state.
+
+## Follow-up pending-source review (08:45 JST)
+
+Rechecked the queued ten companies against first-party investor calendars,
+events pages and financial-news lists on September 29. None supplied a newly
+confirmed future earnings date. ARM still labels November 4 as tentatively
+proposed, so it remains excluded. No coverage row advanced and no estimated
+date was added.
+
+| Ticker | Result | Official source / exact blocker |
+| --- | --- | --- |
+| NOW | Pending | [Events & Presentations](https://investor.servicenow.com/events-and-presentations/default.aspx) exposes archived-event controls and no inspectable upcoming earnings item or explicit no-events statement. |
+| NVDA | Pending | [Events & Presentations](https://investor.nvidia.com/events-and-presentations/default.aspx) was inaccessible through the official endpoint; retrievable official results end with the completed August 26 fiscal Q2 event. |
+| PANW | Pending | [Events & Presentations](https://investors.paloaltonetworks.com/events-and-presentations/default.aspx) was inaccessible through the official endpoint during this check. No access control was bypassed. |
+| PLTR | Pending | [Events](https://investors.palantir.com/events) exposes only the page shell and supplies no inspectable future earnings item. |
+| AAPL | Pending | [Investor Relations](https://investor.apple.com/investor-relations/default.aspx) exposes Investor Updates and Quarterly Earnings Reports headings; the latest visible call is the completed July 30 fiscal Q3 event. |
+| AMZN | Pending | [Events](https://ir.aboutamazon.com/events/default.aspx) exposes empty Upcoming Events and Past Events sections; the latest official earnings call is the completed July 30 Q2 event. |
+| ANET | Pending | [Investor Relations](https://investors.arista.com/Home/default.aspx) exposes an empty Upcoming Events area and releases ending with the completed August 4 Q2 result and September investor appearances. |
+| ARM | Pending | [Investor Events](https://investors.arm.com/news-events/investor-events-presentations) still labels November 4, 2026 as a tentatively proposed fiscal Q2 date, not a confirmed upcoming event. |
+| AVGO | Pending | [Financial News](https://investors.broadcom.com/financial-information/financial-news-releases) ends with the completed September 2 fiscal Q3 result and contains no later earnings-timing announcement. |
+| BE | Pending | [Events Calendar](https://investor.bloomenergy.com/events-and-presentations/events-calendar/default.aspx) exposes empty Upcoming Events and Event Archive sections; official results end with the completed July 28 Q2 event. |
+
+The BLS annual schedule still lists the October 2 Employment Situation,
+October 14 CPI and October 15 PPI releases at 08:30 Eastern. The Federal Reserve
+calendar, last updated September 16, still lists October 27–28 and December 8–9
+without future statement or press-conference clock times. No economic-calendar
+entry changed.
+
+Next: COHR, CRDO, CRWV, GOOGL, KLAC, LITE, MRVL, SKHY, SNOW and VRT. Keep empty
+dynamic sections, inaccessible sources, tentative labels and completed results
+pending unless a first-party source supplies a confirmed date or an explicit
+current no-events state.

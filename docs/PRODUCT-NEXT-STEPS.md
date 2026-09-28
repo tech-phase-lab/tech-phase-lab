@@ -324,3 +324,19 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 - Remove notification settings from public home help: user expects this as PRO functionality. Restore two public guide links rather than padding the list with utility links.
 - User expected Ask RIZEL to be a PRO-only shared question board. Audit found current implementation is PRIVATE member submissions, available to signed-in Free as well as PRO; only sender and owner see submissions, selected answers are separate articles. This is a requirements mismatch, not a completed board. Board migration is pending; never expose previously private submissions. Public/member-board design must distinguish new posts and audience explicitly.
 - Theme performance needs price history, independent of Stock News API news subscription.
+
+### 2026-09-29 PRO question-board correction and theme preview
+- New Ask RIZEL posts are now a PRO-only shared board. Free and signed-out users
+  cannot read or post. Existing private questions remain private to their
+  original sender and the owner; they are never migrated into the board.
+- Owner moderation can hide and restore a board post or link it to an already
+  published Q&A answer. Posting never guarantees an answer, and no real member
+  question was created during implementation.
+- The Market page now provides a TradingView-rendered five-theme constituent
+  explorer and S&P 500 sector heatmap without scraping or calculating custom
+  rankings. Marketstack remains the only next provider to evaluate if this
+  preview is insufficient; external-display and derived-data rights still need
+  written clarification before activation.
+- Protected live Free/PRO/board/moderation browser verification and owner-supplied
+  FAQ corrections remain pending. No paid API, production branch or billing
+  setting was changed.

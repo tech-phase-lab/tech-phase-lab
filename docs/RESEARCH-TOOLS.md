@@ -28,18 +28,22 @@ Micron's earnings call time must not be labeled as its release publication time.
 No paid data subscription, automatic ingestion, external notification, or
 membership feature is enabled by these tools.
 
-## Private questions
+## PRO question board
 
-`/research/qa` accepts questions only from a verified signed-in account. The
-submission is private and uses an idempotent request ID; the monitor stores an
-opaque owner key rather than the identity-provider user ID. Members can see the
-state of their own submissions, but no member question body is part of a public
-endpoint.
+`/research/qa` is a shared board for verified, signed-in PRO members. Free and
+signed-out visitors cannot read or submit new board posts. New clients must
+explicitly send `audience=pro-board`; an old private-form payload is rejected
+instead of being silently exposed. Requests use an idempotent ID, and the
+monitor stores an opaque HMAC owner key rather than the identity-provider user
+ID. Board results do not expose that key or member names.
 
-The owner-only `/research/questions` inbox can close a submission or associate
-it with an already-published Research Q&A post. It cannot directly publish the
-raw question. Published, reviewed answers are shown separately at
-`/research/qa/answered`; a submission is not a promise of an answer.
+Questions created before the board migration retain `audience=private`. They
+remain visible only to their original sender and the owner, and are never
+promoted into the shared board automatically. The owner-only
+`/research/questions` inbox can hide a board post immediately, restore it to
+pending, or associate it with an already-published Research Q&A post. It cannot
+directly turn raw submitted text into an article. Published, reviewed answers
+remain separate at `/research/qa/answered`; posting does not promise an answer.
 
 Public detection-to-body latency is calculated only from parseable persisted
 timestamps compared as absolute instants. Mixed UTC offsets and legacy naive

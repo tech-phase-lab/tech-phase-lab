@@ -181,24 +181,24 @@ This proves intake of related source material, not the publication or receipt
 of Nebius's exact post. The uploaded screenshot is not used as publishable
 source evidence. The official X route must retrieve the actual post first.
 
-## Private member questions — September 29
+## PRO question board — September 29
 
-`/research/qa` is now an authenticated, private question form rather than a
-second copy of the published Q&A list. The Next.js route verifies Clerk identity,
-applies same-origin and payload bounds, and derives an HMAC owner key before
-sending the question to the monitor. The raw Clerk user ID is not stored in the
-question database or exposed to the moderation UI. A client request ID makes a
-network retry idempotent instead of creating a duplicate question.
+`/research/qa` is now an authenticated board shared only among PRO members.
+The Next.js route rejects Free and signed-out reads and writes, requires an
+explicit `pro-board` audience for new posts, applies same-origin and payload
+bounds, and derives an HMAC owner key before contacting the monitor. The raw
+Clerk user ID is not stored in the question database or returned to readers. A
+client request ID makes a network retry idempotent instead of creating a
+duplicate post, and each owner is limited to ten new board posts per UTC day.
 
-`/research/questions` is the owner-only moderation inbox. It can leave a question
-pending, close it without publication, or mark it answered only by selecting an
-already-published `qa` editorial post. It never publishes the submitted text or
-turns a question directly into an article. `/research/qa/answered` is the separate
-reader view and continues to use the existing PRO projection, translation and
-membership-expiry safeguards. Copy explicitly says that submission does not
-guarantee an answer or publication.
+Existing questions migrate as `private` and remain visible only to the original
+sender and owner; they are never copied to the board. `/research/questions` is
+the owner-only moderation inbox. It can leave a board post pending, hide it,
+restore it, or mark it answered only by selecting an already-published `qa`
+editorial post. It never publishes the submitted text or turns a question
+directly into an article. `/research/qa/answered` remains the separate reviewed
+answer view. Copy explicitly says that a post does not guarantee an answer.
 
 The storage and HTTP tests use isolated synthetic questions. No real member
 question was submitted, no editorial post was published, and the protected
-preview's signed-in form/moderation flow still requires live verification after
-deployment.
+preview's signed-in PRO/Free/moderation flow still requires live verification.
