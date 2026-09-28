@@ -33,6 +33,8 @@ These are separate from official-source draft budgets. Limits use UTC days and
 count attempts before network I/O. The token ceiling is a conservative reservation,
 not actual billed usage: three times the UTF-8 input size plus 8000 per request,
 covering the existing transport's maximum three attempts and 2400 output tokens.
+UTC-day membership is calculated from the absolute instant, so persisted timestamps
+with different valid UTC offsets cannot move an attempt into or out of the budget.
 Failures and interrupted requests retain the reservation. A source revision is
 attempted at most once, across restarts and simultaneous editors. There is no
 automatic retry/release workflow; failed revisions need a future explicit recovery

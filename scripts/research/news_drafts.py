@@ -7,6 +7,7 @@ import hashlib
 import json
 import os
 import re
+from datetime import datetime, timedelta, timezone
 
 import brief_generator
 import stock_news
@@ -66,6 +67,21 @@ def current(db, article_id, revision):
     return row
 
 
+def daily_attempt_usage(db, now):
+    """Count one UTC day by absolute time, not an ISO timestamp prefix."""
+    current = datetime.fromisoformat(str(now).replace("Z", "+00:00"))
+    if current.tzinfo is None:
+        raise ValueError("invalid-news-generation-time")
+    current = current.astimezone(timezone.utc)
+    start = current.replace(hour=0, minute=0, second=0, microsecond=0)
+    end = start + timedelta(days=1)
+    return db.execute("""
+      SELECT COUNT(*),COALESCE(SUM(reserved_tokens),0)
+      FROM news_draft_attempts
+      WHERE julianday(at)>=julianday(?) AND julianday(at)<julianday(?)
+    """, (start.isoformat(), end.isoformat())).fetchone()
+
+
 def generate(db, article_id, revision, *, transport=brief_generator.request_response, env=None):
     """Explicit editor action only; reserve cost and revision before network I/O.
 
@@ -93,7 +109,7 @@ def generate(db, article_id, revision, *, transport=brief_generator.request_resp
         source_input = json.dumps({"title": item["title"], "publisher": item["publisher"], "SOURCE": source}, ensure_ascii=False)
         reservation = 3 * (len(source_input.encode()) + 8000)
         now = stock_news.stamp()
-        attempts = db.execute("SELECT COUNT(*),COALESCE(SUM(reserved_tokens),0) FROM news_draft_attempts WHERE at>=?", (now[:10],)).fetchone()
+        attempts = daily_attempt_usage(db, now)
         if db.execute("SELECT 1 FROM news_draft_attempts WHERE article_id=? AND revision=?", (article_id, revision)).fetchone():
             raise ValueError("news-generation-already-attempted")
         if attempts[0] >= daily_limit or attempts[1] + reservation > token_limit:

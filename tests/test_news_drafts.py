@@ -4,6 +4,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/research"))
 import brief_generator
@@ -115,6 +116,23 @@ class NewsDraftTests(unittest.TestCase):
         second = self.save(SOURCE, index=2)
         with self.assertRaisesRegex(ValueError, "budget"):
             self.generate(lambda *_: self.fail("over daily cap"), {**ENV, "STOCK_NEWS_DRAFT_DAILY_LIMIT": "1"}, second)
+
+    def test_daily_budget_excludes_previous_utc_day_with_later_text_date(self):
+        self.db.execute("INSERT INTO news_draft_attempts VALUES(?,?,?,?,?)", (
+            "older", "revision", "2026-09-28T00:30:00+02:00", 99999, "failed"))
+        self.db.commit()
+        with patch.object(drafts.stock_news, "stamp", return_value="2026-09-28T02:00:00+00:00"):
+            result = self.generate(env={**ENV, "STOCK_NEWS_DRAFT_DAILY_LIMIT": "1"})
+        self.assertEqual(result["status"], "draft")
+
+    def test_daily_budget_includes_current_utc_day_with_earlier_text_date(self):
+        self.db.execute("INSERT INTO news_draft_attempts VALUES(?,?,?,?,?)", (
+            "current", "revision", "2026-09-27T23:30:00-02:00", 1, "failed"))
+        self.db.commit()
+        with patch.object(drafts.stock_news, "stamp", return_value="2026-09-28T02:00:00+00:00"):
+            with self.assertRaisesRegex(ValueError, "budget"):
+                self.generate(lambda *_: self.fail("over daily cap"),
+                              {**ENV, "STOCK_NEWS_DRAFT_DAILY_LIMIT": "1"})
 
     def test_correction_or_manual_edit_during_generation_is_not_overwritten(self):
         def transport(*_):
