@@ -309,3 +309,7 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 ### 2026-09-29 07:12 lock / help finishing
 - Add the requested lock to the left of PRO会員限定 and a subdued diagonal chain over the black overlay; keep the central caption legible.
 - Simplify homepage help to two side-by-side icon/title links, removing descriptions and individual bottom rules to avoid competing with the footer separator.
+
+### 2026-09-29 07:21 visual refinement
+- Replace the single chain with dense corner-to-corner crossed chains (61 links each), keeping the PRO caption clear.
+- Align help icons in equal-sized centered slots, retain small text and no cards/descriptions, add a short central divider for grouping.
