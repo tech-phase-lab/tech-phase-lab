@@ -164,6 +164,53 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(len(signals.queue(self.db, ticker="CRWV")["items"]), 2)
         self.assertEqual(len(signals.queue(self.db, ticker="MU")["items"]), 0)
 
+    def test_document_retention_orders_mixed_offsets_by_absolute_time(self):
+        signals.schema(self.db)
+        source_id = self.feed["id"]
+        rows = [
+            (
+                source_id, f"https://example.com/recent-{index}", str(index),
+                "Recent document", "Recent body", "2026-09-28T03:00:00+00:00",
+                "2026-09-28T03:00:00+00:00",
+            )
+            for index in range(999)
+        ]
+        rows.extend([
+            (
+                source_id, "https://example.com/older-offset", "older",
+                "Older document", "Older body", "2026-09-28T10:00:00+09:00",
+                "2026-09-28T10:00:00+09:00",
+            ),
+            (
+                source_id, "https://example.com/newer-offset", "newer",
+                "Newer document", "Newer body", "2026-09-28T02:30:00+00:00",
+                "2026-09-28T02:30:00+00:00",
+            ),
+            (
+                source_id, "https://example.com/invalid-time", "invalid",
+                "Invalid document", "Invalid body", "not-a-time", "not-a-time",
+            ),
+        ])
+        self.db.executemany(
+            "INSERT INTO signal_documents VALUES(?,?,?,?,?,?,?)", rows
+        )
+        self.db.commit()
+
+        signals.save(
+            self.db, self.feed, [], {}, "2026-09-28T04:00:00+00:00",
+            "retention-test", 1,
+        )
+
+        urls = {
+            row[0] for row in self.db.execute(
+                "SELECT url FROM signal_documents WHERE source_id=?", (source_id,)
+            )
+        }
+        self.assertEqual(len(urls), 1000)
+        self.assertIn("https://example.com/newer-offset", urls)
+        self.assertNotIn("https://example.com/older-offset", urls)
+        self.assertNotIn("https://example.com/invalid-time", urls)
+
     def test_same_url_document_change_and_navigation_noise(self):
         text = "Preemptible VMs support configurable pricing policies. " * 4
         def check(text, nav="Home"):

@@ -635,7 +635,8 @@ def save(db, source, items, response, checked, config_sha, duration):
         record_route_transition(db, source["id"], route, current_error, checked)
         # Bound private retention per publisher; keep enough fingerprints for restarts.
         db.execute("""DELETE FROM signal_documents WHERE source_id=? AND url NOT IN
-          (SELECT url FROM signal_documents WHERE source_id=? ORDER BY last_seen_at DESC LIMIT 1000)""",
+          (SELECT url FROM signal_documents WHERE source_id=?
+           ORDER BY julianday(last_seen_at) DESC,url LIMIT 1000)""",
                    (source["id"], source["id"]))
         db.execute("""DELETE FROM signal_events WHERE source_id=? AND id NOT IN
           (SELECT id FROM signal_events WHERE source_id=? ORDER BY id DESC LIMIT 1000)""",

@@ -276,6 +276,11 @@ evidence. The review screen labels the clock time as unpublished.
 The first pass is historical baseline evidence, not a new-news claim, and all
 items remain private and human-review required.
 
+Private document fingerprints for official signal routes are capped at 1,000
+per publisher. Retention orders their last-seen timestamps as parsed absolute
+instants, not ISO text, so mixed UTC offsets cannot evict a newer document and
+silently remove the previous-body evidence needed for change detection.
+
 Article-body batch metrics are persisted separately from the in-memory worker
 state. The operations preview can therefore show the last completed batch and
 24-hour checks, errors and HTTP 304 reuse after a service restart. For newly
