@@ -924,6 +924,23 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(summary["recent"][0]["revision"], 2)
         self.assertEqual(self.db.execute("SELECT count(*) FROM incident_events").fetchone()[0], 3)
 
+    def test_operational_incident_summary_orders_mixed_offsets_by_absolute_time(self):
+        m.record_operational_incident(
+            self.db, "source:older", "official-source", "OLDER", "warning", "timeout",
+            "2026-09-28T10:00:00+09:00",
+        )
+        m.record_operational_incident(
+            self.db, "source:newer", "official-source", "NEWER", "warning", "timeout",
+            "2026-09-28T02:30:00+00:00",
+        )
+
+        summary = m.operational_incident_summary(self.db)
+
+        self.assertEqual(
+            [incident["key"] for incident in summary["recent"]],
+            ["source:newer", "source:older"],
+        )
+
     def test_operational_incidents_reject_unbounded_or_unsafe_values(self):
         for key in ("source:NBIS\nsecret", "", "x" * 121):
             with self.assertRaisesRegex(ValueError, "invalid-incident-value"):

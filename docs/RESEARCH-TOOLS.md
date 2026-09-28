@@ -391,6 +391,9 @@ a queue-age observation, not a promised fetch or subscriber-delivery time.
 When inline first-party evidence replaces the last failed remote body for a
 ticker, its stale body incident is resolved even though the hostname circuit
 remains in force. Another failed remote body keeps the ticker incident open.
+The recent operational-incident view keeps open incidents first and orders each
+status group by parsed absolute last-seen time. Mixed UTC offsets therefore
+cannot make an older incident appear newer through ISO-text ordering.
 
 Official-list polling batches are also persisted as bounded, URL-free
 operational evidence. The preview retains the last completed batch and

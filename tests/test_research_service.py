@@ -3084,7 +3084,8 @@ class ResearchServiceTests(unittest.TestCase):
                 "sha256": "c" * 64, "contentType": "text/html", "contentBytes": 80,
                 "extractedText": "Official evidence remains available for review.", "extractedChars": 47,
             })
-            monitor.queue_generation_job(db, url, 7_000)
+            with patch.object(monitor, "now", return_value=current):
+                monitor.queue_generation_job(db, url, 7_000)
             # Lexically this is before current, but it is actually 75 minutes
             # in the future and must not consume the rolling budget.
             db.execute("""
@@ -3274,7 +3275,8 @@ class ResearchServiceTests(unittest.TestCase):
                 "sha256": "d" * 64, "contentType": "text/html", "contentBytes": 80,
                 "extractedText": "Official evidence remains available for review.", "extractedChars": 47,
             })
-            monitor.queue_generation_job(db, url, 7_000)
+            with patch.object(monitor, "now", return_value=current):
+                monitor.queue_generation_job(db, url, 7_000)
             with patch.object(monitor, "now", return_value=current):
                 claim = monitor.claim_generation_job(db, 20, 3, 100_000)
 

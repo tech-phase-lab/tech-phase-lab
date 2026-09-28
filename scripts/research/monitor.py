@@ -2760,7 +2760,8 @@ def operational_incident_summary(db, limit=20, delivery_enabled=False):
     rows = db.execute("""
       SELECT incident_key,category,subject,severity,status,revision,opened_at,
              last_seen_at,resolved_at,occurrences,last_error_code
-      FROM operational_incidents ORDER BY status='open' DESC,last_seen_at DESC LIMIT ?
+      FROM operational_incidents
+      ORDER BY status='open' DESC,julianday(last_seen_at) DESC,rowid DESC LIMIT ?
     """, (limit,)).fetchall()
     counts = db.execute("""
       SELECT
