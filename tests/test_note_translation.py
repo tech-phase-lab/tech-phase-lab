@@ -80,3 +80,15 @@ class OfficialFeedTests(unittest.TestCase):
                 self.assertEqual(len(items),1)
                 self.assertNotIn('PRIVATE',json.dumps(items))
                 self.assertEqual(items[0]['url'],'https://x.com/nebiusai/status/123')
+
+    def test_baseline_displays_newest_release_before_later_inserted_old_post(self):
+        import signals
+        from datetime import datetime, timezone
+        with tempfile.TemporaryDirectory() as tmp:
+            with posts.connect(Path(tmp)/'db') as db:
+                signals.schema(db)
+                for post_id, published in [('123', '2026-09-28T09:00:00Z'), ('124', '2026-09-27T09:00:00Z')]:
+                    db.execute("INSERT INTO signal_events(source_id,url,sha,title,tickers_json,matches_json,event_kind,published_at,observed_at,excerpt,diff,truncated) VALUES('x-nebius-official',?,'hash','Official update','[\"NBIS\"]','{}','baseline',?,'2026-09-28T09:01:00Z','','',0)", ('https://x.com/nebiusai/status/'+post_id,published))
+                db.commit()
+                items=signals.public_official_updates(db,reference=datetime(2026,9,28,10,tzinfo=timezone.utc))
+                self.assertTrue(items[0]['url'].endswith('/123'))

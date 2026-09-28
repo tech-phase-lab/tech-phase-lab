@@ -1232,6 +1232,17 @@ def public_official_updates(db, sources=SOURCES, reference=None):
     marks = ','.join('?' for _ in allowed)
     rows = db.execute(f'''SELECT * FROM signal_events WHERE source_id IN ({marks})
       AND observed_at>=? ORDER BY id DESC LIMIT 120''', (*allowed, cutoff)).fetchall()
+    def release_order(row):
+        for value in (row['published_at'], row['published_on'], row['observed_at']):
+            if value:
+                try:
+                    parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
+                    return parsed.replace(tzinfo=parsed.tzinfo or timezone.utc).timestamp()
+                except (ValueError, TypeError):
+                    pass
+        return 0
+    # A baseline can insert newest-first API results in reverse database-ID order.
+    rows = sorted(rows, key=release_order, reverse=True)
     items, seen = [], set()
     for row in rows:
         source = allowed[row['source_id']]
