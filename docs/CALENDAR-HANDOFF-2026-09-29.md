@@ -65,3 +65,36 @@ Continue with SKHY, SNOW, VRT, ASML, AMAT, CRWD, DELL, LRCX, META and QCOM.
 Keep issuer pages that render only empty dynamic sections, historical events or
 general investor appearances pending unless a first-party earnings date or an
 explicit no-events state is actually present.
+
+## One-hundred-thirty-eighth company batch
+
+The next ten-company batch was rechecked against each issuer's official event
+calendar, earnings announcements or investor-relations news list. ASML's
+official embedded financial calendar still confirms the October 14 Q3 2026
+results date without a clock time. CrowdStrike, Dell, Lam Research and Meta
+each expose a current schedule state that contains only past events, a
+non-earnings annual meeting, or an explicit no-upcoming-events message. Their
+source checks are therefore complete, but no new earnings event is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| SKHY | Pending | The official IR news category ends with the completed July 29 Q2 results and July 28 call invitation; it contains no future earnings timing announcement. |
+| SNOW | Pending | The official Events & Presentations page exposes an empty Upcoming Events section without an explicit no-events statement. |
+| VRT | Pending | The official Events & Presentations page exposes an empty Latest Events section without an explicit no-events statement. |
+| ASML | Checked | The official embedded financial calendar still lists Q3 2026 financial results on October 14. The existing date-only event remains unchanged because no release time is published. |
+| AMAT | Pending | The official Upcoming Events endpoint was inaccessible during this check. Retrievable first-party results only describe the completed August 13 fiscal Q3 call, so the future schedule remains inconclusive. |
+| CRWD | Checked | The official Events & Presentations page lists presentations and past events through September 10, with no future earnings item. |
+| DELL | Checked | The official Upcoming Events page explicitly says that more events are coming soon and supplies no current earnings date. |
+| LRCX | Checked | The official Events page currently lists a November 3 annual meeting, not an earnings release or call. No earnings date is inferred from it. |
+| META | Checked | The official Investor Events page explicitly asks readers to stay tuned for upcoming events and supplies no current earnings date. |
+| QCOM | Pending | The official Upcoming Events section is empty without an explicit no-events statement; other official pages expose only past investor events and the completed July 29 fiscal Q3 call. |
+
+The BLS annual schedule was rechecked on 2026-09-29 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar, last updated September 16, still
+lists the October 27-28 and December 8-9 meetings without future statement or
+press-conference clock times. No economic-calendar entry changed.
+
+Continue with ADBE, AMD, CRM, GEV, INTC, NBIS, ORCL, SNDK, TSLA and TSM.
+Keep release and call times separate, preserve date-only announcements, and
+leave inaccessible or merely empty schedules pending.
