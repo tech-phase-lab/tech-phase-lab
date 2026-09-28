@@ -35,7 +35,7 @@ export default function ColumnsPage({ initialKind = "all" }: { initialKind?: Pos
     window.addEventListener("focus", load); window.addEventListener("tech-phase:membership-changed", load);
     return () => { stopped = true; controller?.abort(); clearTimeout(timer); window.removeEventListener("focus", load); window.removeEventListener("tech-phase:membership-changed", load); };
   }, [retry]);
-  return <ResearchToolShell lang={lang} setLang={setLang} title={initialKind === "all" ? ja ? "PROリサーチ・コラム" : "PRO Research & Columns" : postNames[initialKind][lang]} description={ja ? "変化と展望、会員の疑問、リゼルの着眼点。" : "Outlooks, member questions, and RIZEL’s perspectives."}>
+  return <ResearchToolShell lang={lang} setLang={setLang} title={initialKind === "all" ? ja ? "PROリサーチ・コラム" : "PRO Research & Columns" : postNames[initialKind][lang]} description={initialKind === "qa" ? ja ? "いただいた質問から、テーマを選んでお答えします。" : "RIZEL answers selected topics from your questions." : ja ? "変化と展望、会員の疑問、リゼルの着眼点。" : "Outlooks, member questions, and RIZEL’s perspectives."}>
     <div className={styles.tabs} aria-label={ja ? "記事の種類" : "Article category"}>{(["all", "weekly", "qa", "notes"] as const).map(value => <button aria-pressed={kind === value} key={value} onClick={() => setKind(value)}>{value === "all" ? ja ? "すべて" : "All" : postNames[value][lang]}</button>)}</div>
     {result.status === "loading" && <p role="status">{ja ? "記事を確認中…" : "Loading articles…"}</p>}
     {result.status === "error" && <div role="status"><p>{ja ? "記事を読み込めませんでした。" : "Unable to load articles."}</p><button onClick={() => setRetry(v => v + 1)}>{ja ? "再読み込み" : "Retry"}</button></div>}
