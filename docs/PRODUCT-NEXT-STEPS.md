@@ -318,3 +318,9 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 - Restore clearly shaped chain loops. Measure the overlay with ResizeObserver and draw chains in actual pixel proportions, retaining corner-to-corner X geometry without stretching the links.
 - Footer help is now 2x2: beginner guide, FAQ/help, notification settings, My account.
 - User asks about screenshot-style theme performance (memory, neocloud, optical interconnect), not only broad sectors. Proposed first version: defined constituent baskets and equal-weight period returns (1D/5D/1M), clear as-of time and coverage; rotation map later. Not implemented or supplied with live data yet. Need an approved historical price source and external-display rights; TradingView embed alone does not supply custom calculation data. No paid activation authorized.
+
+### 2026-09-29 07:37 user corrections
+- Restore the EXACT initial single-chain SVG pattern from 93ec3f8 (36x24 repeat, 25x14 round links and original connectors), repeat along both diagonals using measured dimensions. Do not substitute denser overlapping link drawings.
+- Remove notification settings from public home help: user expects this as PRO functionality. Restore two public guide links rather than padding the list with utility links.
+- User expected Ask RIZEL to be a PRO-only shared question board. Audit found current implementation is PRIVATE member submissions, available to signed-in Free as well as PRO; only sender and owner see submissions, selected answers are separate articles. This is a requirements mismatch, not a completed board. Board migration is pending; never expose previously private submissions. Public/member-board design must distinguish new posts and audience explicitly.
+- Theme performance needs price history, independent of Stock News API news subscription.
