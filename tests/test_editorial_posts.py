@@ -75,14 +75,21 @@ class EditorialPostsTests(unittest.TestCase):
                 posts.review(self.db, review(item))
         self.assertEqual(posts.queue(self.db, published=True)["items"], [])
 
-    def test_notes_require_owner_memo_and_explicit_verification(self):
-        item = posts.save(self.db, {**draft("notes"), "sources": [], "sourceNotes": ""})["item"]
-        with self.assertRaisesRegex(ValueError, "post-sources-required"):
-            posts.review(self.db, review(item))
-        item = posts.save(self.db, {**item, "sourceNotes": "Actual owner statement for this test"})["item"]
-        with self.assertRaisesRegex(ValueError, "post-review-required"):
-            posts.review(self.db, {**review(item), "verified": "true"})
-        self.assertEqual(posts.review(self.db, review(item))["item"]["status"], "published")
+    def test_notes_publish_japanese_without_translation_or_review_form(self):
+        value = {**draft("notes"), "sources": [], "sourceNotes": "", "titleEn": "", "introEn": "", "bodyEn": "", "bodyJa": "今日のメモ。"}
+        item = posts.save(self.db, value)["item"]
+        item = posts.review(self.db, {**review(item), "verified": False})["item"]
+        self.assertEqual(item["status"], "published")
+        self.assertEqual(item["bodyEn"], "")
+        self.assertEqual(posts.queue(self.db, published=True)["items"][0]["bodyJa"], "今日のメモ。")
+
+    def test_japanese_edit_invalidates_old_english(self):
+        item = posts.save(self.db, draft("notes"))["item"]
+        item = posts.save(self.db, {**item, "bodyJa": "更新された本人の文章です。"})["item"]
+        for key in ("titleEn", "introEn", "bodyEn"):
+            self.assertEqual(item[key], "")
+        with self.assertRaisesRegex(ValueError, "post-conflict"):
+            posts.save(self.db, {**item, "version": 1, "bodyEn": "Stale translation"})
 
     def test_q_and_a_requires_sources_and_safe_links(self):
         item = posts.save(self.db, {**draft("qa"), "sources": []})["item"]

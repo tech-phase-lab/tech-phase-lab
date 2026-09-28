@@ -1,6 +1,7 @@
 export type PostKind = "weekly" | "qa" | "notes";
 export type EditorialPost = {
   id: string; version: number; kind: PostKind; status: "draft" | "published" | "withdrawn";
+  translationStatus?: "ready" | "pending";
   titleJa: string; titleEn: string; introJa: string; introEn: string;
   bodyJa: string; bodyEn: string; sourceNotes?: string;
   sources: { title: string; url: string }[]; updatedAt: string; publishedAt: string | null;
@@ -22,6 +23,7 @@ export function publishedPosts(value: unknown, pro: boolean): EditorialPost[] {
   }).map(item => ({
     id: item.id, version: item.version, kind: item.kind, status: "published",
     titleJa: item.titleJa, titleEn: item.titleEn, introJa: item.introJa, introEn: item.introEn,
+    translationStatus: item.titleEn.trim() && item.introEn.trim() && item.bodyEn.trim() ? "ready" : "pending",
     bodyJa: pro ? item.bodyJa : "", bodyEn: pro ? item.bodyEn : "",
     updatedAt: item.updatedAt, publishedAt: item.publishedAt,
     sources: pro ? item.sources.filter(source => {

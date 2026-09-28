@@ -90,13 +90,19 @@ def queue(db, limit=20, published=False, offset=0):
 def save(db, payload):
     post_id, version = identity(payload)
     kind, value = content(payload)
-    encoded = json.dumps(value, ensure_ascii=False, separators=(",", ":"))
     now = stamp()
     with db:
         db.execute("BEGIN IMMEDIATE")
         row = db.execute("SELECT * FROM editorial_posts WHERE id=?", (post_id,)).fetchone()
         if (row and row["version"] != version) or (not row and version != 0):
             raise ValueError("post-conflict")
+        if row and kind == "notes":
+            previous = json.loads(row["content"])
+            if any(previous.get(key) != value[key] for key in ("titleJa", "introJa", "bodyJa")):
+                # English belongs to the previous Japanese revision; never publish it as current.
+                for key in ("titleEn", "introEn", "bodyEn"):
+                    value[key] = ""
+        encoded = json.dumps(value, ensure_ascii=False, separators=(",", ":"))
         db.execute("""INSERT INTO editorial_posts VALUES(?,?,?,?,?,?,NULL)
           ON CONFLICT(id) DO UPDATE SET version=excluded.version,kind=excluded.kind,
           content=excluded.content,status='draft',updated_at=excluded.updated_at""",
@@ -119,12 +125,13 @@ def review(db, payload):
             raise ValueError("post-conflict")
         value = json.loads(row["content"])
         if decision == "published":
-            if payload.get("verified") is not True:
+            if row["kind"] != "notes" and payload.get("verified") is not True:
                 raise ValueError("post-review-required")
-            for key in ("titleJa", "titleEn", "introJa", "introEn", "bodyJa", "bodyEn"):
-                if not value[key] or (key.startswith("body") and len(value[key]) < 20):
+            required = ("titleJa", "bodyJa") if row["kind"] == "notes" else ("titleJa", "titleEn", "introJa", "introEn", "bodyJa", "bodyEn")
+            for key in required:
+                if not value[key] or (row["kind"] != "notes" and key.startswith("body") and len(value[key]) < 20):
                     raise ValueError("post-bilingual-required")
-            if not value["sourceNotes"] or (row["kind"] != "notes" and not value["sources"]):
+            if row["kind"] != "notes" and (not value["sourceNotes"] or not value["sources"]):
                 raise ValueError("post-sources-required")
         now = stamp()
         published = now if decision == "published" else row["published_at"]

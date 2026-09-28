@@ -15,7 +15,7 @@ keeps the token only in memory and never calls an AI provider. Changing tokens
 resets the workspace; unsaved reload/close receives the browser warning. Save before following another
 page link. Switching records requires saving or explicitly discarding changes.
 
-Drafts allow incomplete translations. Publication requires titles, public intros
+Drafts allow incomplete translations. Weekly and Q&A publication requires titles, public intros
 and bodies in both languages, private evidence/owner notes, a named reviewer,
 a reason and an explicit verification checkbox. Weekly and Q&A also require
 at least one HTTPS source. RIZEL notes must originate in the owner's actual
@@ -85,3 +85,26 @@ exposed a missing Clerk proxy matcher for `/api/research/posts`; identity lookup
 failed closed with no content. Added that route to the existing identity proxy
 and a regression using the installed Next matcher utility for every membership
 API. No identity-provider configuration or actual membership was changed.
+
+## Japanese-first owner notes — September 28 evening
+
+`/research/write` is the simple owner composer: Japanese title and body, save,
+publish and withdraw. `/api/research/author` requires verified signed-in admin
+membership, same-origin JSON writes and a server-only RESEARCH_EDITOR_TOKEN.
+The key must match the backend editor key; missing configuration fails closed.
+Owners never enter this key in the composer. Reader credentials are not editors.
+
+Notes can publish Japanese without English, sources or a manual English review.
+Changing Japanese invalidates the previous English translation. The English
+reader view marks these notes as pending rather than displaying stale English.
+Actual automatic translation, retry processing and provider configuration are
+NOT implemented by this change. OpenAI activation remains deferred to December.
+
+Approved translation policy: natural conversational English a native speaker
+would use in a personal investing note. Prefer contractions and direct, friendly
+phrasing; avoid formal analyst-report language, forced slang and hype. Preserve
+uncertainty, numbers, ticker symbols, personal voice and paragraph meaning. Never
+add opinions, trades, recommendations or certainty. No mandatory human English
+approval step. Planned flow: Japanese publishes immediately, English publishes
+automatically after successful translation of the same revision. Failed jobs
+remain pending and must never restore an obsolete revision.
