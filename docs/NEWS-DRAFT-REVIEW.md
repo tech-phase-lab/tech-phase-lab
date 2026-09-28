@@ -1,5 +1,27 @@
 # Private bilingual news generation and review
 
+## Live connection checkpoint — September 28, 13:34 JST
+
+Read-only Railway console inspection of the running research staging service
+confirmed `STOCK_NEWS_API_KEY` absent, `OPENAI_API_KEY` absent, and
+`RESEARCH_SUMMARY_MODEL` absent. Only presence booleans were printed for secrets;
+no credentials were displayed or copied. `RESEARCH_AUTO_DRAFTS` is `0`.
+`STOCK_NEWS_ENABLED`, `STOCK_NEWS_DRAFTS_ENABLED`,
+`STOCK_NEWS_PUBLICATION_ENABLED`, and the three Stock News budget variables were
+unset, so the implementation's disabled defaults and default ceilings apply.
+
+No live Stock News or model request was made. Provider connection, actual model
+quality and generation latency remain unmeasured; offline tests and deployment
+success are not substitutes. Do not enable publication or invent credentials.
+
+To resume, the owner must enter provider-issued credentials in Railway service
+Variables (never in chat), choose the generation model, and settle the intended
+test spending ceiling and provider distribution permission. Set only the needed
+intake/draft switches for the bounded trial; keep public distribution OFF until
+the content and permission checks are complete. No paid plan was purchased or
+activated in this checkpoint. Connection work is blocked on configuration, not a
+reported provider outage.
+
 ## Current checkpoint — editor UI and gated public display
 
 Implemented September 28, 2026. `/research/review` now includes an ordinary-news
