@@ -256,5 +256,11 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 - Both pages are linked from the home quick tools, desktop research tools and
   mobile menu. They require no login. Local validation passed: lint, 133 Node
   tests, 427 Python tests, production build, Python compilation and whitespace
-  checks. Preview deployment still needs to complete before this finite backlog
-  item is marked shipped.
+  checks.
+- Application commit `6a777cfa18c104474cc4af045f1ecae30262bc04`
+  deployed successfully to Vercel Preview as
+  `dpl_CmHpAVAwmsDvhHFawYqYY76pkkK3`; Vercel and Railway commit statuses both
+  reported success. Local and GitHub trees matched exactly at
+  `174ef9ddf5d204b1db344b62cd1980a1c6a7a12b`. This completes the currently
+  authorized finite product backlog; retain the separately authorized calendar
+  maintenance and do not activate paid news or translation services.
