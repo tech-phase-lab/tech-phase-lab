@@ -7,7 +7,9 @@ function endpoint(path: string) {
   if (!value) throw new Error("not-configured");
   const url = new URL(value);
   const local = ["localhost", "127.0.0.1"].includes(url.hostname);
-  if (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && local)) throw new Error("invalid-monitor-url");
+  if (url.username || url.password || (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && local))) {
+    throw new Error("invalid-monitor-url");
+  }
   url.pathname = `${url.pathname.replace(/\/$/, "")}${path}`;
   url.search = "";
   url.hash = "";

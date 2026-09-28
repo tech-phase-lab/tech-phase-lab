@@ -33,6 +33,25 @@ test("news editor forwards only authenticated explicit actions", async () => {
   }
 });
 
+test("editor proxy rejects monitor URLs with embedded credentials", async () => {
+  const previousUrl = process.env.RESEARCH_MONITOR_URL;
+  const previousFetch = globalThis.fetch;
+  process.env.RESEARCH_MONITOR_URL = "https://user:password@monitor.example.com";
+  let called = false;
+  globalThis.fetch = async () => { called = true; return Response.json({ ok: true }); };
+  try {
+    const response = await GET(new Request("http://localhost/api/research/editor?kind=news", {
+      headers: { Authorization: authorization },
+    }));
+    assert.equal(response.status, 503);
+    assert.equal(called, false);
+  } finally {
+    globalThis.fetch = previousFetch;
+    if (previousUrl === undefined) delete process.env.RESEARCH_MONITOR_URL;
+    else process.env.RESEARCH_MONITOR_URL = previousUrl;
+  }
+});
+
 test("private signals forward filters and require editor credentials", async () => {
   const previousUrl = process.env.RESEARCH_MONITOR_URL;
   const previousFetch = globalThis.fetch;

@@ -48,3 +48,21 @@ test("public route uses server credential and never caches failed or withdrawn n
     }
   }
 });
+
+test("public route rejects monitor URLs with embedded credentials", async () => {
+  const previous = { fetch: globalThis.fetch, url: process.env.RESEARCH_MONITOR_URL, token: process.env.RESEARCH_MONITOR_TOKEN };
+  process.env.RESEARCH_MONITOR_URL = "https://user:password@monitor.example.com";
+  process.env.RESEARCH_MONITOR_TOKEN = "synthetic-server-token";
+  let called = false;
+  globalThis.fetch = async () => { called = true; return Response.json({ ok: true, enabled: false, items: [] }); };
+  try {
+    const response = await GET();
+    assert.equal(response.status, 503);
+    assert.equal(called, false);
+  } finally {
+    globalThis.fetch = previous.fetch;
+    for (const [key, value] of [["RESEARCH_MONITOR_URL", previous.url], ["RESEARCH_MONITOR_TOKEN", previous.token]]) {
+      if (value === undefined) delete process.env[key]; else process.env[key] = value;
+    }
+  }
+});

@@ -43,6 +43,8 @@ fingerprint within one SQLite read snapshot. It returns explicitly selected publ
 fields only, excluding source text, excerpts, review reasons and identities.
 `/api/research/news` uses a server-held monitor credential and applies a second
 public-field allowlist. Both API and browser requests use no-store.
+The public-news and editor proxies reject monitor base URLs containing embedded
+usernames or passwords, so a configuration mistake cannot forward URL credentials.
 
 `/research/news` displays the selected-language summary, publisher link, original
 publication time and review time. It refreshes every 30 seconds, clears old items

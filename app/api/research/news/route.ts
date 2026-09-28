@@ -11,7 +11,9 @@ export async function GET() {
     const token = process.env.RESEARCH_MONITOR_TOKEN;
     if (!base || !token) throw new Error("Not configured");
     const url = new URL(base);
-    if (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && ["localhost", "127.0.0.1"].includes(url.hostname))) throw new Error("Invalid monitor");
+    if (url.username || url.password || (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && ["localhost", "127.0.0.1"].includes(url.hostname)))) {
+      throw new Error("Invalid monitor");
+    }
     url.pathname = `${url.pathname.replace(/\/$/, "")}/news`; url.search = ""; url.hash = "";
     const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` }, cache: "no-store", signal: AbortSignal.timeout(10_000) });
     if (!response.ok) throw new Error("News unavailable");
