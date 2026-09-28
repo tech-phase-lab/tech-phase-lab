@@ -23,3 +23,12 @@
   .menuGrid .menuIcon { display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:10px; color:#a3e8ce; background:#28473f; }
   .menuIcon svg { width:20px; height:20px; }
 }
+
+/* Compact reading destinations, with a comfortable touch target. */
+@media(max-width:760px){
+ .menuGrid{grid-template-columns:1fr;gap:0}
+ .menuGrid a{flex-direction:row;align-items:center;justify-content:flex-start;min-height:48px;padding:8px 10px;gap:12px;border:0;border-bottom:1px solid #2b424e;border-radius:0;background:transparent;font-size:14px}
+ .menuGrid .menuIcon{width:28px;height:28px;flex-shrink:0;border-radius:7px}
+ .sheet{padding:12px;max-height:65vh}
+ .sheetHeading{padding-bottom:8px}
+}

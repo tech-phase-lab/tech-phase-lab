@@ -44,7 +44,9 @@ export default function BottomNav() {
     { href: "/research/market", label: ja ? "マーケット" : "Markets", icon: "metrics", active: pathname === "/research/market" },
   ];
   const links: [string, string, NavigationIconName][] = [
-    ["/research/columns", ja ? "PRO記事・週刊" : "PRO articles & weekly", "pro"],
+    ["/research/notes", ja ? "リゼルのひとりごと" : "RIZEL’s Notes", "pro"],
+    ["/research/qa", ja ? "リサーチQ&A" : "Research Q&A", "changes"],
+    ["/research/weekly", ja ? "週刊PRO" : "PRO Weekly", "saved"],
     ["/research/account", ja ? "マイアカウント" : "My account", "home"],
     ["/research#what-changed", ja ? "何が変わった？" : "What changed?", "changes"],
     ["/research/watchlist", ja ? "お気に入り" : "Favorites", "favorite"],

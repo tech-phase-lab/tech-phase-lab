@@ -8,12 +8,12 @@ import styles from "./home-tools.module.css";
 
 export default function HomeTools({ lang, onChanges }: { lang: Language; onChanges: () => void }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
-  return <nav className={styles.grid} aria-label={t("よく使う機能", "Quick tools")}>
+  return <><nav className={styles.reading} aria-label={t("読む・学ぶ", "Research & perspectives")}><Link href="/research/notes">{t("リゼルのひとりごと", "RIZEL’s Notes")} →</Link><Link href="/research/qa">{t("リサーチQ&A", "Research Q&A")} →</Link><Link href="/research/weekly">{t("週刊PRO", "PRO Weekly")} →</Link></nav><nav className={styles.grid} aria-label={t("よく使う機能", "Quick tools")}>
     <Link href="/research/stocks"><span className={styles.icon} aria-hidden="true">🔍</span><strong>{t("銘柄検索", "Stock search")}</strong><p>{t("株価・チャート・企業情報", "Quotes, charts & company data")}</p><span className={styles.action}>{t("銘柄を探す", "Find stocks")} →</span></Link>
     <Link href="/research/market"><span className={styles.icon} aria-hidden="true">📊</span><strong>{t("マーケット", "Markets")}</strong><p>{t("主要指数・金利・為替", "Indices, yields & currencies")}</p><span className={styles.action}>{t("市場を見る", "View markets")} →</span></Link>
     <Link href="/research/calendar"><span className={styles.icon} aria-hidden="true">🗓️</span><strong>{t("決算・経済指標", "Earnings & economy")}<br />{t("カレンダー", "calendar")}</strong><p>{t("公式予定を日本時間で確認", "Official schedules in U.S. Eastern time")}</p><span className={styles.action}>{t("日程を見る", "View schedule")} →</span></Link>
     <button onClick={onChanges}><span className={styles.icon} aria-hidden="true">♻️</span><strong>{t("何が変わった？", "What changed?")}</strong><p>{t("企業の変化をひと目で", "Company changes at a glance")}</p><span className={styles.action}>{t("リサーチを読む", "Read research")} →</span></button>
-  </nav>;
+  </nav></>;
 }
 
 export function FavoriteResearch({ lang, events, onOpenResearch }: { lang: Language; events: ResearchEvent[]; onOpenResearch: (event: ResearchEvent) => void }) {

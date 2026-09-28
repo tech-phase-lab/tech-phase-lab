@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { postNames, type EditorialPost, type PostKind } from "@/lib/research/editorial-posts";
 import styles from "./styles.module.css";
-const blank = (): EditorialPost => ({ id: crypto.randomUUID(), version: 0, kind: "weekly", status: "draft", titleJa: "", titleEn: "", introJa: "", introEn: "", bodyJa: "", bodyEn: "", sourceNotes: "", sources: [], updatedAt: "", publishedAt: null });
+const blank = (kind: PostKind): EditorialPost => ({ id: crypto.randomUUID(), version: 0, kind, status: "draft", titleJa: "", titleEn: "", introJa: "", introEn: "", bodyJa: "", bodyEn: "", sourceNotes: "", sources: [], updatedAt: "", publishedAt: null });
 const statusNames = { draft: "下書き", published: "公開中", withdrawn: "取り下げ" };
 const errors: Record<string, string> = {
   "post-conflict": "別の操作で更新されています。入力を控えたうえで一覧を再読み込みし、最新版を開いてください。",
@@ -70,7 +70,7 @@ function Workspace({ token }: { token: string }) {
     finally { setBusy(false); }
   }
   return <>
-    <div className={styles.actions}><button disabled={busy || token.length < 24} onClick={() => void load()}>一覧を読み込む</button><button disabled={busy || dirty || token.length < 24} onClick={() => { const value = blank(); setDraft(value); setSaved(""); setVerified(false); setReason(""); }}>新規記事</button></div>
+    <div className={styles.actions}><button disabled={busy || token.length < 24} onClick={() => void load()}>一覧を読み込む</button>{(["notes", "qa", "weekly"] as const).map(kind => <button key={kind} disabled={busy || dirty || token.length < 24} onClick={() => { const value = blank(kind); setDraft(value); setSaved(""); setVerified(false); setReason(""); }}>{kind === "notes" ? "ひとりごとを書く" : kind === "qa" ? "Q&Aの回答を書く" : "週刊を書く"}</button>)}</div>
     <p role="status">{message}</p>
     <div className={styles.layout}><nav aria-label="保存済み記事">{items.map(item => <button disabled={busy || dirty} key={item.id} aria-current={draft?.id === item.id} onClick={() => select(item)}>{item.titleJa || "無題"}<small>{postNames[item.kind].ja} · {statusNames[item.status]}</small></button>)}{nextOffset !== null && <button disabled={busy} onClick={() => void load(true)}>以前の記事を読み込む</button>}</nav>
     {draft && <section className={styles.editor}>
