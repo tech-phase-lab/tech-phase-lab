@@ -1504,6 +1504,51 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(result["etag"], '"article-revision-3"')
         self.assertNotIn(URL, m._FETCH_CACHE)
 
+    def test_fetch_rejects_machine_detected_verification_page_with_benign_title(self):
+        from email.message import Message
+
+        original = m.build_opener
+
+        class Response:
+            def __init__(self):
+                self.headers = Message()
+                self.headers["Content-Type"] = "text/html; charset=utf-8"
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args):
+                return False
+
+            def read(self, _limit):
+                return (
+                    b'<html><head><title>Official Investor Relations</title>'
+                    b'<script src="/cdn-cgi/challenge-platform/h/g/orchestrate/'
+                    b'chl_page/v1"></script></head><body>Please wait</body></html>'
+                )
+
+        class Opener:
+            def open(self, _request, timeout):
+                self.timeout = timeout
+                return Response()
+
+        m.build_opener = lambda *_: Opener()
+        try:
+            with self.assertRaisesRegex(ValueError, "verification page") as caught:
+                m.fetch(URL, "NBIS", include_metadata=True)
+        finally:
+            m.build_opener = original
+        self.assertEqual(m.source_error_code(caught.exception), "verification-page")
+
+    def test_verification_detector_does_not_match_ordinary_article_wording(self):
+        body = (
+            b"<html><head><title>Security update</title></head><body><main>"
+            b"The official release discusses Cloudflare challenge protections "
+            b"and CAPTCHA behavior without embedding access-control markup."
+            b"</main></body></html>"
+        )
+        self.assertFalse(m.is_verification_html(body))
+
     def test_fetch_accepts_only_signature_verified_mislabeled_pdfs(self):
         from email.message import Message
 

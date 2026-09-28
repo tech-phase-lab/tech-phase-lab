@@ -420,6 +420,28 @@ def source_hostname(url):
     return hostname
 
 
+def is_verification_html(content):
+    """Detect access-control HTML without matching ordinary article wording."""
+    title = re.search(br"<title[^>]*>(.*?)</title>", content, re.I | re.S)
+    if title and re.search(
+        br"access denied|just a moment|page not found|403 forbidden",
+        title.group(1),
+        re.I,
+    ):
+        return True
+    # Challenge vendors can return HTTP 200 and preserve the requested page's
+    # title. Match only machine-facing markup near the start of the document;
+    # ordinary release prose may legitimately discuss bot protection.
+    markup = content[:256 * 1024]
+    return bool(re.search(
+        br"(?:/cdn-cgi/challenge-platform/|\bcf-chl-[a-z0-9_-]+|"
+        br"__cf_chl_[a-z0-9_]+|id=[\"']challenge-form[\"']|"
+        br"\bpx-captcha\b|/_incapsula_resource\?)",
+        markup,
+        re.I,
+    ))
+
+
 def fetch(url, ticker, validators=None, include_metadata=False):
     url = safe_url(url, ticker)
     cached = cached_fetch(url)
@@ -475,10 +497,8 @@ def fetch(url, ticker, validators=None, include_metadata=False):
             content_type = "application/pdf"
         if content_type == "application/pdf" and not content.startswith(b"%PDF-"):
             raise ValueError("Invalid PDF response")
-        if content_type == "text/html":
-            title = re.search(br"<title[^>]*>(.*?)</title>", content, re.I | re.S)
-            if title and re.search(br"access denied|just a moment|page not found|403 forbidden", title.group(1), re.I):
-                raise ValueError("Source returned an error or verification page")
+        if content_type == "text/html" and is_verification_html(content):
+            raise ValueError("Source returned an error or verification page")
         response_etag = http_validator(response.headers.get("ETag"))
         response_last_modified = http_validator(response.headers.get("Last-Modified"))
         if not include_metadata:

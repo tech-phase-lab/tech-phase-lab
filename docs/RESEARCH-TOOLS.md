@@ -325,7 +325,10 @@ can satisfy a source without a body request, but it does not prove that the
 linked article host has recovered. The preview exposes only the number of
 host-deferred bodies, not hostnames, URLs or errors. Timeouts and other
 transient failures remain URL-scoped. This reduces repeated traffic without
-bypassing an official site's access controls.
+bypassing an official site's access controls. HTTP 200 HTML is also rejected
+when its title is an error page or its leading markup contains a known
+machine-facing challenge form or vendor challenge endpoint. Ordinary article
+prose that merely discusses bot protection does not trigger this check.
 HTTP 429 rate limits use the same conservative circuit. A valid server
 `Retry-After` is honored up to the circuit's seven-day ceiling instead of
 being shortened to the six-hour transient-failure ceiling. When a short SEC
