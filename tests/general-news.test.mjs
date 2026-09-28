@@ -79,3 +79,9 @@ test('official links remain available without paid news and exclude private cont
   assert.throws(()=>publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[{...update,url}]}));
  }
 });
+
+test('official headlines count Unicode characters consistently with Python', () => {
+ const update={id:'43',title:'🤖'.repeat(180),url:'https://x.com/nebiusai/status/12345',publisher:'Nebius',tickers:['NBIS'],observedAt:'2026-09-28T09:00:00Z'};
+ assert.equal(publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[update]}).officialUpdates[0].title,update.title);
+ assert.throws(()=>publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[{...update,title:update.title+'a'}]}));
+});

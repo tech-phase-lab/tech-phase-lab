@@ -21,7 +21,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       const url = new URL(v.url as string);
       if (url.protocol !== "https:" || url.username || url.password || url.port || !["nebius.com", "developer.nvidia.com", "x.com"].includes(url.hostname)) throw Error("Invalid official source");
       if (url.hostname === "x.com" && !/^\/nebiusai\/status\/\d+$/i.test(url.pathname)) throw Error("Invalid official account");
-      if ((v.title as string).length > 180 || (v.publisher as string).length > 80 || !/^\d+$/.test(v.id as string) || !Number.isFinite(Date.parse(v.observedAt as string))) throw Error("Invalid update");
+      if (Array.from(v.title as string).length > 180 || (v.publisher as string).length > 80 || !/^\d+$/.test(v.id as string) || !Number.isFinite(Date.parse(v.observedAt as string))) throw Error("Invalid update");
       if (!Array.isArray(v.tickers) || v.tickers.length > 5 || !v.tickers.every(t => typeof t === "string" && /^[A-Z][A-Z0-9.-]{0,9}$/.test(t))) throw Error("Invalid update tickers");
       return { id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[] };
     });
