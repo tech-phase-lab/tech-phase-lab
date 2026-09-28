@@ -166,3 +166,31 @@ Continue with SKHY, SNOW, VRT, AMAT, QCOM, CRM, KLAC, LITE, MRVL and MSFT. Keep
 tentative dates, empty dynamic sections, completed results and general investor
 appearances pending unless the issuer publishes a confirmed earnings date or an
 explicit current no-events state.
+
+## Follow-up pending-source review (06:49 JST)
+
+Rechecked ten oldest unconfirmed companies on September 29. All remain pending;
+no event or lastCheckedOn value changed. Existing same-day lastAttemptedOn values
+are retained. This is not evidence that no future earnings event exists.
+
+| Ticker | Official source | Exact blocker |
+| --- | --- | --- |
+| AAPL | [IR schedule](https://investor.apple.com/investor-relations/default.aspx) | Investor Updates and Quarterly Earnings Reports headings only; no inspectable upcoming schedule. |
+| AMZN | [IR schedule](https://ir.aboutamazon.com/events/default.aspx) | Upcoming Events and Past Events headings are empty; no explicit no-events statement. |
+| ANET | [IR schedule](https://investors.arista.com/events-and-presentations/default.aspx) | Official Events URL inaccessible via the web reader (internal access error). |
+| ARM | [IR schedule](https://investors.arm.com/) | IR overview shows the completed July 29 fiscal Q1 2027 event only; no confirmed future date verified in this pass. Prior tentative date is not promoted. |
+| AVGO | [IR schedule](https://investors.broadcom.com/financial-information/financial-news-releases) | Official financial-news endpoint returned HTTP 503 Service Unavailable; transient failure, no bypass attempted. |
+| BE | [IR schedule](https://investor.bloomenergy.com/events-and-presentations/events-calendar/) | Upcoming Events and Event Archive headings contain no inspectable schedule or explicit no-events statement. |
+| COHR | [IR schedule](https://ir.coherent.com/news-events/financial-releases) | Financial releases end with August 12 FY2026 Q4 results; no future timing announcement observed. |
+| CRDO | [IR schedule](https://investors.credosemi.com/news-events/events/default.aspx) | Upcoming & Recent and Archived headings have no inspectable future item. |
+| CRWV | [IR schedule](https://investors.coreweave.com/events-and-presentations/default.aspx) | Upcoming & Recent and Archived headings have no inspectable future item. |
+| GOOGL | [IR schedule](https://abc.xyz/investor/events/default.aspx) | Events & Presentations page exposes only navigation shell. |
+
+BLS [October schedule](https://www.bls.gov/schedule/2026/10_sched.htm) rechecked:
+October 2 Employment Situation, October 14 CPI, October 15 PPI remain 08:30
+Eastern. [Federal Reserve](https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm)
+still lists October 27–28 and December 8–9 meetings without future statement or
+press-conference clock times. Existing date-only records remain date-only.
+
+Next: SKHY, SNOW, VRT, AMAT, QCOM, CRM, KLAC, LITE, MRVL and MSFT, as already
+queued in batch 140. Use this dated handoff rather than the older aggregate file.

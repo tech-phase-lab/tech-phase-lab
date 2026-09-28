@@ -284,3 +284,20 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 ### 2026-09-29 Free homepage / help visibility
 - Keep RIZEL’s Desk entry links visible on Free with a darker background and explicit lock / PRO-only badge. Paid text remains server-protected; styling is display-only.
 - Keep help below the primary content, enlarge into readable cards, add beginner mark to US stock basics. Rename service guide consistently to よくある質問・使い方 (FAQ & help), distinct from Ask RIZEL.
+
+
+### September 29 integrated verification follow-up
+- Preserved and fast-forwarded the parallel owner UI update `81847f7`; no UI or
+  FAQ answer content changed in this follow-up. The previous navigation commit
+  `5208776` is confirmed Ready in Vercel Preview (`dpl_GMzaavwnWSHUyjWdTGmB5oSEj8KT`).
+- Vercel and Railway commit statuses for `81847f7` both report success.
+- Re-ran the integrated tree: lint, 134 Node tests, 427 Python tests, production
+  build and Python compilation pass. These are local automated checks, not a
+  signed-in browser verification.
+- Local mobile browser verification is blocked: agent-browser is unavailable,
+  Playwright has no installed Chrome executable, and the attempted Chrome
+  Headless Shell download fails with an invalid/truncated ZIP archive. No real
+  membership or content was changed. Keep live Free/PRO/downgrade/failure-state
+  verification pending; do not report it as passed.
+- Product backlog remains complete apart from verification and owner-provided
+  FAQ corrections. Continue calendar maintenance using the dated handoff.
