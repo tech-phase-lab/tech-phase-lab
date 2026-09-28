@@ -20,6 +20,7 @@ import incident_delivery
 import persistence
 import signals
 import stock_news
+import news_drafts
 import web_push
 
 
@@ -541,6 +542,17 @@ class AutomaticMonitor:
     def stock_news_queue(self, limit=20):
         with stock_news.connect(self.db_path) as db:
             return stock_news.queue(db, limit)
+
+    def generate_news_draft(self, payload):
+        with stock_news.connect(self.db_path) as db:
+            return news_drafts.generate(db, payload.get("articleId"), payload.get("revision"))
+
+    def review_news_draft(self, payload):
+        with stock_news.connect(self.db_path) as db:
+            return news_drafts.review(
+                db, payload.get("articleId"), payload.get("revision"), payload.get("fingerprint"),
+                payload.get("decision"), payload.get("reviewer"), payload.get("reason"),
+            )
 
     def signal_queue(self, limit=30, view="all", ticker=None):
         with self.db_lock, monitor.connect(self.db_path) as db:
@@ -1891,6 +1903,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(503, {"ok": False})
             return
         if path not in {
+            "/admin/news/generate", "/admin/news/review",
             "/admin/briefs/generate", "/admin/briefs/draft", "/admin/briefs/review",
             "/admin/annual-briefs/draft", "/admin/annual-briefs/review",
         }:
@@ -1901,7 +1914,11 @@ class Handler(BaseHTTPRequestHandler):
             return
         try:
             payload = self.read_json()
-            if path == "/admin/annual-briefs/draft":
+            if path == "/admin/news/generate":
+                result = self.app.generate_news_draft(payload)
+            elif path == "/admin/news/review":
+                result = self.app.review_news_draft(payload)
+            elif path == "/admin/annual-briefs/draft":
                 result = self.app.save_annual_brief(payload)
             elif path == "/admin/annual-briefs/review":
                 result = self.app.decide_annual_brief(payload)

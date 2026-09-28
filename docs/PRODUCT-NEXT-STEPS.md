@@ -1,5 +1,13 @@
 # Approved product priorities — 2026-09-27
 
+## Latest implementation checkpoint — September 28
+
+Private ordinary-news bilingual generation and revision/fingerprint-bound review
+endpoints are implemented; see `NEWS-DRAFT-REVIEW.md`. They remain disabled for
+live paid generation. Approval still does not publish news. Next: editor UI,
+manual correction/retry, reviewed public selection, then live provider/model
+evaluation and source-to-screen timing. Do not mark priority 2 complete yet.
+
 ## Current checkpoint — September 28, 12:05 JST
 
 Owner confirmed test push receipt and pressed Received. VAPID URL correction is

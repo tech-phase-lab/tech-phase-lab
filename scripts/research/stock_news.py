@@ -82,6 +82,8 @@ def connect(path):
         first_seen TEXT NOT NULL, last_seen TEXT NOT NULL,
         summary_ja TEXT, summary_en TEXT, draft_revision TEXT, displayed_at TEXT);
     """)
+    import news_drafts
+    news_drafts.schema(db)
     return db
 
 
@@ -146,6 +148,8 @@ def save_items(db, items, now):
             row = db.execute("SELECT revision FROM news_articles WHERE id=?", (item["id"],)).fetchone()
             added += row is None
             changed += row is not None and row[0] != item["revision"]
+            if row is not None and row[0] != item["revision"]:
+                db.execute("DELETE FROM news_draft_evidence WHERE article_id=?", (item["id"],))
             db.execute("""INSERT INTO news_articles(id,revision,body,first_seen,last_seen)
               VALUES(?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET revision=excluded.revision,
               body=excluded.body,last_seen=excluded.last_seen""", (
@@ -162,9 +166,11 @@ def save_draft(db, article_id, revision, japanese, english):
           WHERE id=? AND revision=?""", (japanese.strip(), english.strip(), revision, article_id, revision))
         if result.rowcount != 1:
             raise ValueError("stale-news-draft")
+        db.execute("DELETE FROM news_draft_evidence WHERE article_id=?", (article_id,))
 
 
 def queue(db, limit=20):
+    import news_drafts
     items = []
     for row in db.execute("SELECT * FROM news_articles ORDER BY first_seen DESC,id LIMIT ?", (max(1, min(50, limit)),)):
         item = json.loads(row["body"])
@@ -174,7 +180,8 @@ def queue(db, limit=20):
                       "publicationToIntakeMs": round(delta*1000) if delta >= 0 else None,
                       "summaryJa": row["summary_ja"] if current_draft else None,
                       "summaryEn": row["summary_en"] if current_draft else None,
-                      "draftCurrent": current_draft, "displayedAt": row["displayed_at"]})
+                      "draftCurrent": current_draft, "displayedAt": row["displayed_at"],
+                      "review": news_drafts.editorial_state(db, row["id"], row["revision"])})
     month = stamp()[:7] + "-01"
     calls = db.execute("SELECT COUNT(*) FROM news_api_calls WHERE at>=?", (month,)).fetchone()[0]
     return {"items": items, "callsThisMonth": calls, "lastSuccessAt": state(db, "last_success"),
