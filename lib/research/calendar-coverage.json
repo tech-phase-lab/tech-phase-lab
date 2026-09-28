@@ -10,8 +10,8 @@
     "ticker": "ADBE",
     "name": "Adobe",
     "sourceUrl": "https://www.adobe.com/investor-relations/events-presentations.html",
-    "lastAttemptedOn": "2026-09-28",
-    "lastCheckedOn": "2026-09-28"
+    "lastAttemptedOn": "2026-09-29",
+    "lastCheckedOn": "2026-09-29"
   },
   {
     "ticker": "AMAT",
@@ -24,8 +24,8 @@
     "ticker": "AMD",
     "name": "AMD",
     "sourceUrl": "https://ir.amd.com/news-events/ir-calendar",
-    "lastAttemptedOn": "2026-09-28",
-    "lastCheckedOn": "2026-09-28"
+    "lastAttemptedOn": "2026-09-29",
+    "lastCheckedOn": "2026-09-29"
   },
   {
     "ticker": "AMZN",
@@ -87,7 +87,7 @@
     "ticker": "CRM",
     "name": "Salesforce",
     "sourceUrl": "https://investor.salesforce.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-28",
+    "lastAttemptedOn": "2026-09-29",
     "lastCheckedOn": "2026-09-28"
   },
   {
@@ -115,8 +115,8 @@
     "ticker": "GEV",
     "name": "GE Vernova",
     "sourceUrl": "https://www.gevernova.com/investors/events",
-    "lastAttemptedOn": "2026-09-28",
-    "lastCheckedOn": "2026-09-28"
+    "lastAttemptedOn": "2026-09-29",
+    "lastCheckedOn": "2026-09-29"
   },
   {
     "ticker": "GOOGL",
@@ -129,8 +129,8 @@
     "ticker": "INTC",
     "name": "Intel",
     "sourceUrl": "https://www.intc.com/news-events/ir-calendar",
-    "lastAttemptedOn": "2026-09-28",
-    "lastCheckedOn": "2026-09-28"
+    "lastAttemptedOn": "2026-09-29",
+    "lastCheckedOn": "2026-09-29"
   },
   {
     "ticker": "KLAC",
@@ -185,8 +185,8 @@
     "ticker": "NBIS",
     "name": "Nebius",
     "sourceUrl": "https://nebius.com/investor-events",
-    "lastAttemptedOn": "2026-09-28",
-    "lastCheckedOn": "2026-09-28"
+    "lastAttemptedOn": "2026-09-29",
+    "lastCheckedOn": "2026-09-29"
   },
   {
     "ticker": "NFLX",
@@ -213,7 +213,7 @@
     "ticker": "ORCL",
     "name": "Oracle",
     "sourceUrl": "https://investor.oracle.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-28",
+    "lastAttemptedOn": "2026-09-29",
     "lastCheckedOn": "2026-09-28"
   },
   {
@@ -248,8 +248,8 @@
     "ticker": "SNDK",
     "name": "Sandisk",
     "sourceUrl": "https://investor.sandisk.com/news-events/events",
-    "lastAttemptedOn": "2026-09-28",
-    "lastCheckedOn": "2026-09-25"
+    "lastAttemptedOn": "2026-09-29",
+    "lastCheckedOn": "2026-09-29"
   },
   {
     "ticker": "SNOW",
@@ -262,15 +262,15 @@
     "ticker": "TSLA",
     "name": "Tesla",
     "sourceUrl": "https://ir.tesla.com/",
-    "lastAttemptedOn": "2026-09-28",
-    "lastCheckedOn": "2026-09-25"
+    "lastAttemptedOn": "2026-09-29",
+    "lastCheckedOn": "2026-09-29"
   },
   {
     "ticker": "TSM",
     "name": "TSMC",
     "sourceUrl": "https://investor.tsmc.com/english/financial-calendar",
-    "lastAttemptedOn": "2026-09-28",
-    "lastCheckedOn": "2026-09-28"
+    "lastAttemptedOn": "2026-09-29",
+    "lastCheckedOn": "2026-09-29"
   },
   {
     "ticker": "VRT",

@@ -98,3 +98,37 @@ press-conference clock times. No economic-calendar entry changed.
 Continue with ADBE, AMD, CRM, GEV, INTC, NBIS, ORCL, SNDK, TSLA and TSM.
 Keep release and call times separate, preserve date-only announcements, and
 leave inaccessible or merely empty schedules pending.
+
+## One-hundred-thirty-ninth company batch
+
+The final ten-company batch in this forty-company refresh cycle was rechecked
+against first-party investor calendars, event pages and results lists. Adobe,
+GE Vernova and TSMC retain their already-recorded future events. AMD, Intel and
+Nebius explicitly report that no events are currently scheduled; Sandisk says
+more events are coming soon; and Tesla's current financial-results table ends
+with Q2 2026. No new earnings date or time was added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| ADBE | Checked | The official calendar still schedules the Q4 and FY2026 earnings call for December 9 at 2:00 p.m. Pacific. The existing call entry remains unchanged. |
+| AMD | Checked | The official IR Calendar explicitly says that no upcoming events are scheduled. |
+| CRM | Pending | The official Events page exposes empty Upcoming & Recent Events and Archived Events sections without a dated item or explicit no-events statement. |
+| GEV | Checked | The official Events page still schedules the Q3 2026 earnings webcast for October 28 at 7:30 a.m. Eastern. The existing webcast entry remains unchanged. |
+| INTC | Checked | The official IR Calendar explicitly says that no upcoming events are scheduled. |
+| NBIS | Checked | The official Events page explicitly says that there are no upcoming events yet. |
+| ORCL | Pending | The official Events page exposes empty Featured Event and Upcoming events sections; official search results surface only the completed June fiscal Q4 event. |
+| SNDK | Checked | The official investor overview says that more events are coming soon and lists only completed September and August events. |
+| TSLA | Checked | The official financial-results table currently ends with Q2 2026, and the official press-release list contains no Q3 timing announcement. No date is inferred. |
+| TSM | Checked | The official financial calendar still schedules the Q3 2026 earnings conference and call for October 15 at 2:00 p.m. Taiwan time. The existing call entry remains unchanged. |
+
+The BLS schedule was rechecked on 2026-09-29 and still lists the October 2
+Employment Situation, October 14 CPI and October 15 PPI releases at 08:30
+Eastern. The Federal Reserve calendar, last updated September 16, still lists
+the October 27-28 and December 8-9 meetings without future statement or
+press-conference clock times. No economic-calendar entry changed.
+
+All forty companies now have a 2026-09-29 attempt recorded. This is a completed
+review cycle, not a claim of complete future-event coverage: twenty companies
+remain pending because their official sources are empty, inaccessible or
+otherwise inconclusive. Continue with the oldest incomplete set: AAPL, AMZN,
+ANET, ARM, AVGO, BE, COHR, CRDO, CRWV and GOOGL.
