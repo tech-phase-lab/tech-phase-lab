@@ -27,19 +27,31 @@ reported provider outage.
 Implemented September 28, 2026. `/research/review` now includes an ordinary-news
 panel using the existing editor token (kept only in component memory). Editors
 can load the latest 50 articles, inspect saved source text, edit Japanese/English
-summaries and up to four exact excerpts, save, and approve/hold/reject. Approval
-requires a reviewer, reason and four explicit checks in the UI: official source
+summaries, bilingual business-impact rationales and up to four exact excerpts,
+save, and approve/hold/reject. Impact direction uses the fixed
+positive/negative/mixed/neutral/uncertain labels plus high/medium/low confidence;
+uncertain is accepted only with low confidence. Approval requires a reviewer,
+reason and five explicit checks in the UI: official source
 and saved body, claim-to-evidence support, Japanese/English equivalence, and
-numbers/units/periods/attribution. The server requires the canonical four-key
-object, stores it on the append-only review row and excludes legacy, partial or
+numbers/units/periods/attribution, plus impact direction/confidence. The server
+requires the canonical five-key object, stores it on the append-only review row
+and excludes legacy, partial or
 malformed approval records from the public feed. The checkbox state alone can no
 longer authorize publication through a direct API call.
 
 `POST /admin/news/draft` accepts the existing article/revision plus `editVersion`,
-`summaryJa`, `summaryEn`, and `evidence`. The compare-and-save version prevents
+`summaryJa`, `summaryEn`, `impactJa`, `impactEn`, `impactLabel`, `confidence`,
+and `evidence`. The compare-and-save version prevents
 overwriting a newer edit or decision. Every manual save, even identical text,
 records a draft event and requires fresh approval. Evidence matching now compares
 whole numeric tokens rather than accepting a substring such as 99 inside 199.
+All numeric claims in either summary or impact rationale must occur in an exact
+saved excerpt. Stock-price predictions, targets and buy/sell recommendations are
+rejected. The draft fingerprint covers the complete impact assessment, so a
+database-side label or confidence change invalidates the review and public item.
+Existing evidence rows migrate with an empty assessment and therefore fail
+closed until an editor saves and reviews the new impact fields; an older approval
+cannot silently authorize the expanded public payload.
 
 `GET /news` is a monitor-token endpoint. It selects only the latest approved
 decision for the current source/draft, then revalidates both summaries and the
@@ -50,8 +62,9 @@ public-field allowlist. Both API and browser requests use no-store.
 The public-news and editor proxies reject monitor base URLs containing embedded
 usernames or passwords, so a configuration mistake cannot forward URL credentials.
 
-`/research/news` displays the selected-language summary, publisher link, original
-publication time and review time. It refreshes every 30 seconds, clears old items
+`/research/news` displays the selected-language summary and impact rationale,
+impact direction, confidence, publisher link, original publication time and
+review time. It refreshes every 30 seconds, clears old items
 on read failure, and has distinct preparing/empty/error states. Review withdrawal
 is effective on the next successful refresh (browser suspension can delay this).
 The browser's fetch time is not phone-receipt or first-display telemetry.
@@ -79,8 +92,8 @@ not automatically retried. The queue exposes only bounded state, attempt count a
 retry eligibility—never provider errors, prompts, credentials or raw usage detail.
 Legacy one-row attempt records migrate idempotently as attempt 1.
 
-Remaining: live provider entitlement and schema verification, bilingual
-model-output evaluation, then actual
+Remaining: live provider entitlement and schema verification, offline bilingual
+model-output evaluation corpus expansion, then actual
 publication-to-screen timing. Manual evidence-backed correction is now available.
 
 Preview verification: the September 28 deployment of `b4d9db4` passed GitHub

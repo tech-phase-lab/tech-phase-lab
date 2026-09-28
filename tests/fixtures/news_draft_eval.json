@@ -1,0 +1,58 @@
+[
+  {
+    "name": "direct recurring revenue expansion",
+    "source": "The company signed a customer contract and said the agreement expands recurring revenue.",
+    "expected": { "impactLabel": "positive", "confidence": "high" },
+    "draft": {
+      "summaryJa": "同社は顧客契約を締結し、継続収益を拡大すると説明しました。",
+      "summaryEn": "The company signed a customer contract that it said expands recurring revenue.",
+      "impactJa": "継続収益の拡大が明記されているため、事業への直接的な影響はプラスです。",
+      "impactEn": "The stated expansion of recurring revenue supports a direct positive business impact.",
+      "impactLabel": "positive",
+      "confidence": "high",
+      "evidence": ["The company signed a customer contract and said the agreement expands recurring revenue."]
+    }
+  },
+  {
+    "name": "production interruption",
+    "source": "An equipment failure interrupted production, and the company said repairs may take several months.",
+    "expected": { "impactLabel": "negative", "confidence": "medium" },
+    "draft": {
+      "summaryJa": "設備故障で生産が中断し、修復には数か月かかる可能性があると説明されました。",
+      "summaryEn": "An equipment failure interrupted production, and repairs may take several months.",
+      "impactJa": "生産中断と長期化の可能性が示されているため、事業への影響はマイナスです。",
+      "impactEn": "The production interruption and possible lengthy repairs indicate negative business impact.",
+      "impactLabel": "negative",
+      "confidence": "medium",
+      "evidence": ["An equipment failure interrupted production, and the company said repairs may take several months."]
+    }
+  },
+  {
+    "name": "operational outlook unchanged",
+    "source": "The board appointed a new director and said the company's operational outlook remains unchanged.",
+    "expected": { "impactLabel": "neutral", "confidence": "medium" },
+    "draft": {
+      "summaryJa": "取締役が新任されましたが、事業見通しは変わらないと会社は説明しました。",
+      "summaryEn": "The board appointed a director while the company's operational outlook remained unchanged.",
+      "impactJa": "会社が事業見通しは変わらないと説明しているため、直接的な影響は中立です。",
+      "impactEn": "Because the company says its operational outlook is unchanged, the direct impact is neutral.",
+      "impactLabel": "neutral",
+      "confidence": "medium",
+      "evidence": ["The board appointed a new director and said the company's operational outlook remains unchanged."]
+    }
+  },
+  {
+    "name": "direction not established",
+    "source": "The company completed a product demonstration but provided no sales or financial implications.",
+    "expected": { "impactLabel": "uncertain", "confidence": "low" },
+    "draft": {
+      "summaryJa": "同社は製品実演を完了しましたが、販売や財務への含意は示しませんでした。",
+      "summaryEn": "The company completed a demonstration without stating sales or financial implications.",
+      "impactJa": "販売や財務への含意が示されていないため、事業への影響方向は判断できません。",
+      "impactEn": "The source gives no sales or financial implications, so the business-impact direction is uncertain.",
+      "impactLabel": "uncertain",
+      "confidence": "low",
+      "evidence": ["The company completed a product demonstration but provided no sales or financial implications."]
+    }
+  }
+]

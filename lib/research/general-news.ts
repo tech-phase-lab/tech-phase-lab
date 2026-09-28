@@ -1,6 +1,8 @@
 export type GeneralNewsItem = {
   id: string; title: string; url: string; publisher: string; tickers: string[];
   publishedAt: string; observedAt: string; approvedAt: string; summaryJa: string; summaryEn: string;
+  impactJa: string; impactEn: string; impactLabel: "positive" | "negative" | "mixed" | "neutral" | "uncertain";
+  confidence: "high" | "medium" | "low";
 };
 export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[] };
 
@@ -24,9 +26,16 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
     const date = (key: string) => { const text = field(key, 50); if (!Number.isFinite(Date.parse(text))) throw new Error("Invalid date"); return text; };
     const tickers = item.tickers;
     if (!Array.isArray(tickers) || tickers.length > 50 || !tickers.every(t => typeof t === "string" && /^[A-Z][A-Z0-9.-]{0,9}$/.test(t))) throw new Error("Invalid tickers");
+    const impactLabel = field("impactLabel", 10);
+    const confidence = field("confidence", 6);
+    if (!["positive", "negative", "mixed", "neutral", "uncertain"].includes(impactLabel)
+        || !["high", "medium", "low"].includes(confidence)
+        || (impactLabel === "uncertain" && confidence !== "low")) throw new Error("Invalid impact");
     return { id, title: field("title", 2000), url: url.href, publisher: field("publisher", 500), tickers,
       publishedAt: date("publishedAt"), observedAt: date("observedAt"), approvedAt: date("approvedAt"),
-      summaryJa: field("summaryJa", 1200), summaryEn: field("summaryEn", 1200) };
+      summaryJa: field("summaryJa", 1200), summaryEn: field("summaryEn", 1200),
+      impactJa: field("impactJa", 1200), impactEn: field("impactEn", 1200),
+      impactLabel: impactLabel as GeneralNewsItem["impactLabel"], confidence: confidence as GeneralNewsItem["confidence"] };
   });
   return { ok: true, enabled: true, items };
 }

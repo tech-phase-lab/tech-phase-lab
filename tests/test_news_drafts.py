@@ -19,7 +19,10 @@ import stock_news as news
 ENV = {"STOCK_NEWS_DRAFTS_ENABLED": "true", "OPENAI_API_KEY": "synthetic-not-a-real-key", "RESEARCH_SUMMARY_MODEL": "test-model"}
 SOURCE = "The company reported revenue growth. Outlook remains uncertain."
 VALUE = {"summaryJa": "同社は売上の増加を報告しました。今後の見通しには不確実性が残ります。",
-         "summaryEn": SOURCE, "evidence": [SOURCE]}
+         "summaryEn": SOURCE,
+         "impactJa": "売上増加は事業にプラスですが、見通しの不確実性も残るため両面の影響です。",
+         "impactEn": "Revenue growth is positive for the business, while the uncertain outlook creates mixed impact.",
+         "impactLabel": "mixed", "confidence": "medium", "evidence": [SOURCE]}
 VERIFICATION = {key: True for key in drafts.APPROVAL_VERIFICATIONS}
 
 
@@ -69,6 +72,7 @@ class NewsDraftTests(unittest.TestCase):
         row = news.queue(self.db)["items"][0]
         self.assertEqual(row["review"]["status"], "draft")
         self.assertEqual(row["summaryEn"], SOURCE)
+        self.assertEqual(row["review"]["impact"]["impactLabel"], "mixed")
         self.assertFalse(self.review(result["fingerprint"])["publicationEnabled"])
         with news.connect(self.path) as other:
             row = news.queue(other)["items"][0]
@@ -124,6 +128,16 @@ class NewsDraftTests(unittest.TestCase):
           reviewer TEXT NOT NULL, reason TEXT NOT NULL, at TEXT NOT NULL);""")
         drafts.schema(db)
         self.assertIn("verification", {row[1] for row in db.execute("PRAGMA table_info(news_draft_reviews)")})
+        db.close()
+
+    def test_legacy_evidence_schema_is_migrated_fail_closed(self):
+        db = sqlite3.connect(":memory:")
+        db.executescript("""CREATE TABLE news_draft_evidence(
+          article_id TEXT PRIMARY KEY, revision TEXT NOT NULL,
+          fingerprint TEXT NOT NULL, evidence TEXT NOT NULL, generated_at TEXT NOT NULL);""")
+        drafts.schema(db)
+        self.assertIn("assessment", {row[1] for row in db.execute("PRAGMA table_info(news_draft_evidence)")})
+        self.assertEqual(db.execute("SELECT COUNT(*) FROM news_draft_evidence").fetchone()[0], 0)
         db.close()
 
     def test_disabled_and_budget_never_call_provider(self):
@@ -253,11 +267,24 @@ class NewsDraftTests(unittest.TestCase):
         for value in ({**VALUE, "evidence": ["This excerpt was invented."]},
                       {**VALUE, "summaryEn": SOURCE + " Growth was 99%."},
                       {**VALUE, "summaryJa": SOURCE},
-                      {**VALUE, "summaryEn": "short"}):
+                      {**VALUE, "summaryEn": "short"},
+                      {**VALUE, "impactLabel": "uncertain", "confidence": "high"},
+                      {**VALUE, "impactEn": "This is a buy recommendation and price target."}):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 drafts.validate(value, SOURCE)
         with self.assertRaises(brief_generator.GenerationFailed):
             self.generate(lambda *_: {"status": "incomplete", "output_text": json.dumps(VALUE)})
+
+    def test_offline_bilingual_impact_evaluation_set(self):
+        fixture = Path(__file__).parent / "fixtures" / "news_draft_eval.json"
+        cases = json.loads(fixture.read_text())
+        self.assertEqual({case["expected"]["impactLabel"] for case in cases},
+                         {"positive", "negative", "neutral", "uncertain"})
+        for case in cases:
+            with self.subTest(case=case["name"]):
+                value = drafts.validate(case["draft"], case["source"])
+                self.assertEqual(value["impactLabel"], case["expected"]["impactLabel"])
+                self.assertEqual(value["confidence"], case["expected"]["confidence"])
 
     def manual(self, value=None, edit_version=None):
         row = news.queue(self.db)["items"][0]
@@ -275,7 +302,9 @@ class NewsDraftTests(unittest.TestCase):
             item = feed["items"][0]
             self.assertEqual(item["summaryJa"], VALUE["summaryJa"])
             self.assertEqual(item["summaryEn"], SOURCE)
-            self.assertEqual(set(item), {"id", "title", "url", "publisher", "tickers", "publishedAt", "observedAt", "approvedAt", "summaryJa", "summaryEn"})
+            self.assertEqual(item["impactLabel"], "mixed")
+            self.assertEqual(item["confidence"], "medium")
+            self.assertEqual(set(item), {"id", "title", "url", "publisher", "tickers", "publishedAt", "observedAt", "approvedAt", "summaryJa", "summaryEn", "impactJa", "impactEn", "impactLabel", "confidence"})
             with self.db:
                 self.db.execute("UPDATE news_draft_reviews SET verification='[]'")
             self.assertEqual(drafts.public_feed(self.db)["items"], [])
@@ -319,6 +348,26 @@ class NewsDraftTests(unittest.TestCase):
         source = SOURCE + " Revenue was 199 million."
         with self.assertRaisesRegex(ValueError, "unsupported-news-number"):
             drafts.validate({**VALUE, "summaryEn": SOURCE + " Revenue was 99 million.", "evidence": [source]}, source)
+
+    def test_impact_fields_are_bound_to_fingerprint_and_require_review(self):
+        result = self.manual()
+        self.review(result["fingerprint"])
+        row = self.db.execute("SELECT assessment FROM news_draft_evidence").fetchone()
+        assessment = json.loads(row["assessment"])
+        assessment["impactLabel"] = "positive"
+        with self.db:
+            self.db.execute("UPDATE news_draft_evidence SET assessment=?", (json.dumps(assessment),))
+        self.assertEqual(news.queue(self.db)["items"][0]["review"]["status"], "pending")
+        with patch.dict("os.environ", {"STOCK_NEWS_PUBLICATION_ENABLED": "true"}):
+            self.assertEqual(drafts.public_feed(self.db)["items"], [])
+
+    def test_malformed_impact_assessment_fails_closed(self):
+        self.manual()
+        with self.db:
+            self.db.execute("UPDATE news_draft_evidence SET assessment='[]'")
+        row = news.queue(self.db)["items"][0]
+        self.assertEqual(row["review"]["status"], "pending")
+        self.assertIsNone(row["review"]["impact"])
 
     def test_http_editor_save_review_public_read_and_withdrawal(self):
         # The service test suite installs its isolated dependency modules during
