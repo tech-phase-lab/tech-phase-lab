@@ -223,6 +223,8 @@ export type MonitorState = {
     scheduledDetectedNeverFetched?: number; scheduledBaselineNeverFetched?: number;
     scheduledExtractionPending?: number; scheduledRecheck?: number;
     extractionPending?: number; extracted?: number;
+    canonicalAliasRows?: number; canonicalDuplicateGroups?: number;
+    canonicalDuplicateRows?: number; canonicalInvalidRows?: number;
     total: number; measuredAt: string | null;
   };
   bodyHostProbes?: {

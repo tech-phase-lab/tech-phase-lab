@@ -179,10 +179,17 @@ function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], backlog?: Monitor
   const evidenceState = backlog && backlog.neverFetched != null
     ? ` · 証拠状態：本文未取得 ${backlog.neverFetched}件${neverFetchedDetail}・抽出不足 ${backlog.extractionPending ?? 0}件・抽出済み ${backlog.extracted ?? 0}件${scheduled}${fairness}`
     : "";
+  const identityAudit = backlog && (
+    (backlog.canonicalAliasRows ?? 0) > 0
+    || (backlog.canonicalDuplicateGroups ?? 0) > 0
+    || (backlog.canonicalInvalidRows ?? 0) > 0
+  )
+    ? ` · URL正規化監査：旧表記 ${backlog.canonicalAliasRows ?? 0}件・重複候補 ${backlog.canonicalDuplicateGroups ?? 0}組（余分 ${backlog.canonicalDuplicateRows ?? 0}件）・検証不能 ${backlog.canonicalInvalidRows ?? 0}件`
+    : "";
   if (!bodyFetch?.lastPollAt) return "本文取得：初回ポーリング待ち";
-  if (bodyFetch.healthy === false) return `本文取得：要確認 · 内部処理を再試行予定（連続 ${bodyFetch.consecutiveFailures}回・${bodyFetch.retrySeconds ?? 0}秒後） · 取得可能 ${eligible}件${deferred}${evidenceState}`;
-  if (!bodyFetch.lastBatchAt) return `本文取得：${time(bodyFetch.lastPollAt)} JSTに確認 · 取得可能 ${eligible}件${deferred}${evidenceState} · 取得実績待ち`;
-  return `本文取得：直近 ${bodyFetch.lastBatchChecks}件 · エラー ${bodyFetch.lastBatchErrors}件 · 304 ${bodyFetch.lastBatchNotModified}件 · ${duration(bodyFetch.lastBatchDurationMs)} · 取得可能 ${eligible}件${deferred}${evidenceState}`;
+  if (bodyFetch.healthy === false) return `本文取得：要確認 · 内部処理を再試行予定（連続 ${bodyFetch.consecutiveFailures}回・${bodyFetch.retrySeconds ?? 0}秒後） · 取得可能 ${eligible}件${deferred}${evidenceState}${identityAudit}`;
+  if (!bodyFetch.lastBatchAt) return `本文取得：${time(bodyFetch.lastPollAt)} JSTに確認 · 取得可能 ${eligible}件${deferred}${evidenceState}${identityAudit} · 取得実績待ち`;
+  return `本文取得：直近 ${bodyFetch.lastBatchChecks}件 · エラー ${bodyFetch.lastBatchErrors}件 · 304 ${bodyFetch.lastBatchNotModified}件 · ${duration(bodyFetch.lastBatchDurationMs)} · 取得可能 ${eligible}件${deferred}${evidenceState}${identityAudit}`;
 }
 function bodyHostProbeStatus(probes?: MonitorState["bodyHostProbes"]) {
   if (!probes?.lastCompletedAt) return "遮断経路の復旧確認：実績待ち";

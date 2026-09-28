@@ -403,6 +403,10 @@ class AutomaticMonitor:
                 "scheduledExtractionPending": 0,
                 "scheduledRecheck": 0,
                 "extractionPending": 0, "extracted": 0,
+                "canonicalAliasRows": 0,
+                "canonicalDuplicateGroups": 0,
+                "canonicalDuplicateRows": 0,
+                "canonicalInvalidRows": 0,
                 "total": 0, "measuredAt": None,
             },
             "tickerCount": len(self.tickers),
@@ -1115,6 +1119,7 @@ class AutomaticMonitor:
                          THEN 1 ELSE 0 END) AS extracted
               FROM sources WHERE source_mode='remote'
             """).fetchone()
+            identity_audit = monitor.canonical_source_identity_audit(db)
             schedule_rows = db.execute("""
               SELECT url,next_fetch_at,error
               FROM sources WHERE source_mode='remote'
@@ -1343,6 +1348,7 @@ class AutomaticMonitor:
                 "scheduledRecheck": scheduled_recheck,
                 "extractionPending": int(backlog["extraction_pending"] or 0),
                 "extracted": int(backlog["extracted"] or 0),
+                **identity_audit,
                 "total": int(backlog["total"] or 0),
                 "measuredAt": polled_at,
             }

@@ -150,6 +150,13 @@ discovery or body-check time must not be presented as the issuer's publication
 time or as subscriber-delivery latency.
 The operations preview also partitions the current body-fetch reservation into
 detected releases, baseline history, extraction retries and periodic rechecks.
+It also audits persisted remote-source identities using the same canonical URL
+rules as new intake. Only aggregate counts for legacy aliases, duplicate groups,
+excess rows and invalid identities are exposed; source URLs and hostnames remain
+private. The audit is intentionally read-only because merging historical rows
+can conflict with retained revisions, evidence, review history and delivery
+state. New discovery and manual intake canonicalize article identities before
+insert, preventing new tracking-query or equivalent-authority aliases.
 Each partition also reports successful non-304 extraction, extracted evidence
 that was newly acquired or changed, failed selections and HTTP 304 validator
 reuse when non-zero, so operators can distinguish fair scheduling, completed

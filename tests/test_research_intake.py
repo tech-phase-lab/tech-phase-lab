@@ -1760,6 +1760,25 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["title"], "Canonical release")
 
+    def test_canonical_source_identity_audit_counts_legacy_aliases_without_urls(self):
+        with self.db:
+            for url in (
+                "https://NEBIUS.com:443/newsroom/legacy-audit?utm_source=feed",
+                "https://nebius.com/newsroom/legacy-audit?utm_source=email",
+            ):
+                self.db.execute(
+                    "INSERT INTO sources(url,ticker,discovered_at) VALUES(?,?,?)",
+                    (url, "NBIS", m.now()),
+                )
+
+        audit = m.canonical_source_identity_audit(self.db)
+
+        self.assertEqual(audit["canonicalAliasRows"], 2)
+        self.assertEqual(audit["canonicalDuplicateGroups"], 1)
+        self.assertEqual(audit["canonicalDuplicateRows"], 1)
+        self.assertEqual(audit["canonicalInvalidRows"], 0)
+        self.assertNotIn("nebius.com", json.dumps(audit))
+
     def test_restart_retains_history(self):
         self.check()
         self.db.close()

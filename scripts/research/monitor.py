@@ -963,6 +963,32 @@ def article_url(url, ticker):
     return None
 
 
+def canonical_source_identity_audit(db):
+    """Count legacy aliases and duplicate article identities without exposing URLs."""
+    identities = {}
+    alias_rows = 0
+    invalid_rows = 0
+    for row in db.execute("SELECT ticker,url FROM sources WHERE source_mode='remote'"):
+        try:
+            canonical = article_url(row["url"], row["ticker"]) or safe_url(
+                row["url"], row["ticker"]
+            )
+        except (KeyError, TypeError, ValueError):
+            invalid_rows += 1
+            continue
+        if canonical != row["url"]:
+            alias_rows += 1
+        key = (row["ticker"], canonical)
+        identities[key] = identities.get(key, 0) + 1
+    duplicate_counts = [count for count in identities.values() if count > 1]
+    return {
+        "canonicalAliasRows": alias_rows,
+        "canonicalDuplicateGroups": len(duplicate_counts),
+        "canonicalDuplicateRows": sum(count - 1 for count in duplicate_counts),
+        "canonicalInvalidRows": invalid_rows,
+    }
+
+
 def _feed_inline_text(element):
     """Convert one bounded RSS/Atom body field to safe plain-text evidence."""
     if element is None:

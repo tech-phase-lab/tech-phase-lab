@@ -1707,12 +1707,38 @@ class ResearchServiceTests(unittest.TestCase):
             "scheduledRecheck": 0,
             "extractionPending": 0,
             "extracted": 0,
+            "canonicalAliasRows": 0,
+            "canonicalDuplicateGroups": 0,
+            "canonicalDuplicateRows": 0,
+            "canonicalInvalidRows": 0,
             "total": 2,
             "measuredAt": "2026-09-24T05:00:00+00:00",
         })
         self.assertGreaterEqual(detected_age_ms, 3600000)
         self.assertLess(detected_age_ms, 3610000)
         self.assertNotIn("https://", json.dumps(backlog))
+
+    def test_body_backlog_reports_legacy_identity_aliases_without_source_details(self):
+        with monitor.connect(self.db_path) as db:
+            for url in (
+                "https://NEBIUS.com:443/newsroom/service-audit?utm_source=feed",
+                "https://nebius.com/newsroom/service-audit?utm_source=email",
+            ):
+                db.execute(
+                    "INSERT INTO sources(url,ticker,discovered_at) VALUES(?,?,?)",
+                    (url, "NBIS", monitor.now()),
+                )
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_candidates("2026-09-24T05:00:00+00:00")
+        backlog = app.public_state()["bodyBacklog"]
+
+        self.assertEqual(backlog["canonicalAliasRows"], 2)
+        self.assertEqual(backlog["canonicalDuplicateGroups"], 1)
+        self.assertEqual(backlog["canonicalDuplicateRows"], 1)
+        self.assertEqual(backlog["canonicalInvalidRows"], 0)
+        self.assertNotIn("nebius.com", json.dumps(backlog))
 
     def test_body_backlog_partitions_evidence_state_without_source_details(self):
         with monitor.connect(self.db_path) as db:
