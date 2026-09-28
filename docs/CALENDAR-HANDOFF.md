@@ -3700,3 +3700,34 @@ No calendar event changed.
 Continue with MSFT, MU, NFLX, AAPL, AMZN, ANET, ARM, AVGO, BE and COHR.
 Inaccessible, historical-only, projected and empty dynamic states remain
 inconclusive and must not be promoted to forecast dates.
+
+## One-hundred-twenty-fourth company batch reviewed on 2026-09-28
+
+The requested ten-company batch was rechecked against first-party schedules,
+announcements and investor-relations pages. Micron and Netflix still publish
+the same confirmed future earnings events already recorded in the calendar.
+The other eight attempts remain pending, checked state and calendar events are
+unchanged, and no forecast date is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| MSFT | Pending | The official Upcoming Events page exposes the investor shell, annual-report links and an earnings-webcast link, but no inspectable dated future schedule. |
+| MU | Checked | The official announcement still schedules the fiscal Q4 earnings call for September 30 at 2:30 p.m. Mountain; the existing call entry remains unchanged. |
+| NFLX | Checked | The official announcement still schedules Q3 results for October 20 at approximately 1:01 p.m. Pacific and the management interview for 1:45 p.m.; the existing release entry remains unchanged. |
+| AAPL | Pending | The official page still exposes Investor Updates and Quarterly Earnings Reports headings without a dated future item or explicit no-events statement. |
+| AMZN | Pending | The official Events page still exposes empty Upcoming Events and Past Events headings without an explicit no-events statement. |
+| ANET | Pending | The official Events & Presentations URL remains inaccessible through the review connection. |
+| ARM | Pending | The official investor page still ends with the completed July 29 fiscal Q1 2027 results and supplies no future earnings announcement or explicit no-events statement. |
+| AVGO | Pending | The official Financial News list still ends with the completed September 2 fiscal Q3 results and contains no future timing announcement. |
+| BE | Pending | The official Event Calendar still exposes empty Upcoming Events and Event Archive sections without an explicit no-events statement. |
+| COHR | Pending | The official Financial Releases list still ends with the August 12 fiscal Q4 results and contains no future timing announcement. |
+
+The BLS October schedule was rechecked on 2026-09-28 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar still lists the October 27-28 and
+December 8-9 meetings without future statement or press-conference clock times.
+No calendar event changed.
+
+Continue with CRDO, CRM, CRWV, GOOGL, KLAC, LITE, MRVL, NBIS, NOW and NVDA.
+Inaccessible, historical-only, projected and empty dynamic states remain
+inconclusive and must not be promoted to forecast dates.
