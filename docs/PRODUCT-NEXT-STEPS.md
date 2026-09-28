@@ -175,7 +175,7 @@ Still required: configure a Clerk application and its publishable/secret keys in
 
 ## 2026-09-28 23:41 JST body-only notes checkpoint
 
-- Owner correction implemented locally: RIZEL notes have no headline or public
+- Owner correction implemented and pushed to codex/research-preview: RIZEL notes have no headline or public
   intro. The compact owner composer accepts only a Japanese body, shows clear
   save/publish/withdraw pending states, and places the editor before history.
   History uses body excerpts instead of synthetic titles.
@@ -187,9 +187,17 @@ Still required: configure a Clerk application and its publishable/secret keys in
   publication date plus a PRO label. That endpoint always applies the Free
   projection and then returns only ID/date/translation status; it cannot return
   a body or legacy headline, even to a signed-in PRO user.
-- No owner opinion was invented and no real note was published. Next product
-  priority after verification/deployment is authenticated private question
-  intake and moderation/answered views.
+- No owner opinion was invented and no real note was published. The next product
+  priority is authenticated private question intake and moderation/answered
+  views.
+- Application commit `858a521a66f31fa1007a6725ad8a61991a46e3b2`
+  deployed successfully to Vercel Preview as
+  `dpl_GimvYXAXNqggrAsA2wKBjyxev8Ri`; Vercel and Railway commit statuses both
+  reported success. Local/GitHub tree SHA matched exactly at
+  `7290d34d94e5e7569971e7a7dfde56c79eb24ff3`. The protected preview returned an
+  SSO redirect to the automated fetch, so no new authenticated browser save or
+  live DOM claim is made for this revision. Existing real/synthetic note state
+  was not changed.
 
 Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, draft. Saved/re-edited/read back; excluded from published feed. User saw empty columns page; explained draft is not visible to PRO. No sample published.
 
