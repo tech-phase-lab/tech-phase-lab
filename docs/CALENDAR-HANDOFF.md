@@ -3916,3 +3916,34 @@ No calendar event changed.
 Continue with CRDO, CRM, CRWV, GOOGL, KLAC, LITE, MRVL, NBIS, NOW and NVDA.
 Inaccessible, historical-only, tentative and empty dynamic states remain
 inconclusive and must not be promoted to forecast dates.
+
+## One-hundred-thirty-first company batch reviewed on 2026-09-28
+
+The next ten-company batch was rechecked against first-party schedules and
+investor-relations pages. Nebius explicitly reports no upcoming events, while
+Salesforce retains its earlier same-day conclusive no-upcoming-event check.
+The other eight sources exposed only partial shells, archived content or an
+inaccessible schedule. No forecast date or calendar event is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| CRDO | Pending | The official Events page exposes Upcoming & Recent and Archived headings without an inspectable future item or explicit no-events statement. |
+| CRM | Checked | The official Events page exposes no future item; the earlier same-day explicit no-upcoming-events check remains the latest conclusive evidence and no event changed. |
+| CRWV | Pending | The official Events page exposes Upcoming & Recent and Archived headings without an inspectable future item or explicit no-events statement. |
+| GOOGL | Pending | The official Events & Presentations page exposes only its page shell, without an inspectable future schedule or explicit no-events statement. |
+| KLAC | Pending | The official investor-events URL was inaccessible during this check, so its schedule could not be verified conclusively. |
+| LITE | Pending | The official Events page exposes Latest Events and Archived headings without an inspectable future item or explicit no-events statement. |
+| MRVL | Pending | The official Events & Presentations URL was inaccessible during this check, so its schedule could not be verified conclusively. |
+| NBIS | Checked | The official Events page explicitly says that there are no upcoming events yet. |
+| NOW | Pending | The official Events page exposes archived events only, without a future earnings announcement or explicit no-events statement. |
+| NVDA | Pending | The official Events & Presentations URL was inaccessible during this check, so its schedule could not be verified conclusively. |
+
+The BLS October schedule was rechecked on 2026-09-28 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar still lists the October 27-28 and
+December 8-9 meetings without future statement or press-conference clock times.
+No calendar event changed.
+
+Continue with ORCL, PANW, PLTR, QCOM, SNDK, TSLA, TSM, INTC, LRCX and META.
+Inaccessible, archived-only and empty dynamic states remain inconclusive and
+must not be promoted to forecast dates.
