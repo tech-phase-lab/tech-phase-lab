@@ -1,5 +1,7 @@
 import base64
+from contextlib import redirect_stdout
 from datetime import datetime, timezone
+from io import StringIO
 import os
 from pathlib import Path
 import sys
@@ -95,6 +97,28 @@ class PushTests(unittest.TestCase):
         self.assertEqual(push.test_notification(self.db, payload, transport, self.now+62)['retryAfter'], 60)
         self.assertTrue(push.test_notification(self.db, payload, lambda *_: 410, self.now+122)['expired'])
         self.assertFalse(push.device_status(self.db, payload)['registered'])
+
+    def test_test_failure_reports_safe_diagnostics(self):
+        self.register()
+        payload = {'subscription': subscription()}
+        output = StringIO()
+        with redirect_stdout(output):
+            rejected = push.test_notification(self.db, payload, lambda *_: 401, self.now)
+            def broken(*_):
+                raise TypeError('secret endpoint and key material')
+            failed = push.test_notification(self.db, payload, broken, self.now + 61)
+        self.assertEqual((rejected['providerStatus'], rejected['failureKind']), (401, None))
+        self.assertEqual((failed['providerStatus'], failed['failureKind']), (0, 'TypeError'))
+        self.assertNotIn('secret endpoint', output.getvalue())
+        self.assertNotIn(subscription()['endpoint'], output.getvalue())
+
+    def test_vapid_subject_uses_origin_for_contact_url_with_path(self):
+        self.assertEqual(push.vapid_subject('https://example.com/research/notifications?x=1'),
+                         'https://example.com')
+        self.assertEqual(push.vapid_subject('mailto:admin@example.com'), 'mailto:admin@example.com')
+        for value in ['http://example.com/path', 'https://admin@example.com/path', 'invalid']:
+            with self.assertRaises(ValueError):
+                push.vapid_subject(value)
 
     def test_filters_and_deduplicates_across_sources_and_restart(self):
         self.register(); calls=[]

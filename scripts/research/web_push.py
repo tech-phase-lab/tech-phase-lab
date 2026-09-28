@@ -232,13 +232,23 @@ def test_notification(db, payload, transport=None, now=None):
     message = {'title': 'Tech Phase · ' + ('テスト通知' if ja else 'Test notification'),
                'body': 'この通知が届いたら、設定画面で「届きました」を押してください。' if ja else 'If you see this, select “Received” in notification settings.',
                'tag': 'tech-phase-test', 'url': '/research/notifications'}
+    failure_kind = None
     try:
         code = (transport or send)(subscription, message)
-    except Exception:
+    except Exception as exc:
         code = 0
+        failure_kind = type(exc).__name__ if type(exc).__name__ in {
+            'ImportError', 'ModuleNotFoundError', 'TypeError', 'ValueError',
+            'ConnectionError', 'ConnectTimeout', 'ReadTimeout', 'Timeout',
+            'SSLError', 'KeyError',
+        } else 'other'
+    if not 200 <= code < 300:
+        # Never record subscription endpoints, keys, request bodies or provider response text.
+        print(f'push-test-failed provider_status={code} failure_kind={failure_kind or "provider"}', flush=True)
     if code in (404, 410):
         remove(db, payload)
-    return {'accepted': 200 <= code < 300, 'expired': code in (404, 410)}
+    return {'accepted': 200 <= code < 300, 'expired': code in (404, 410),
+            'providerStatus': code, 'failureKind': failure_kind}
 
 
 def parse_event_time(value):
@@ -301,11 +311,21 @@ def send(subscription, payload):
         with NoRedirectSession() as session:
             response = webpush(subscription_info=subscription, data=json.dumps(payload, ensure_ascii=False),
                 vapid_private_key=os.environ['WEB_PUSH_PRIVATE_KEY'],
-                vapid_claims={'sub': os.environ['WEB_PUSH_SUBJECT']},
+                vapid_claims={'sub': vapid_subject(os.environ['WEB_PUSH_SUBJECT'])},
                 ttl=300, timeout=10, requests_session=session, headers={'Urgency': 'high'})
         return response.status_code
     except WebPushException as exc:
         return exc.response.status_code if exc.response is not None else 0
+
+
+def vapid_subject(value):
+    """py_vapid requires an HTTPS origin or mailto contact, without a URL path."""
+    if value.startswith('mailto:'):
+        return value
+    parsed = urlsplit(value)
+    if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password:
+        raise ValueError('invalid-vapid-subject')
+    return urlunsplit((parsed.scheme, parsed.netloc, '', '', ''))
 
 
 def public_status(db, now=None):

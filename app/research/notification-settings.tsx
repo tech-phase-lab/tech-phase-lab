@@ -103,7 +103,13 @@ export default function NotificationSettings({ lang, initiallyOpen = false }: { 
         const result = await request("test", subscription);
         if (result.expired) { setState("off"); await subscription.unsubscribe(); }
         setTestSent(result.accepted === true);
-        setMessage(result.accepted ? t("送信を受け付けました。スマホに届いたら「届きました」を押してください。", "Send accepted. Select Received after it appears on your phone.") : t("受信を確認できません。1分後に再試行できます。", "Delivery is unconfirmed. You can retry in one minute."));
+        const failure = result.retryAfter ? t("次のテストは1分後に送れます。", "Wait one minute before testing again.")
+          : result.expired ? t("端末の通知登録が期限切れです。通知をオンにし直してください。", "This device subscription expired. Turn notifications on again.")
+          : result.providerStatus === 401 || result.providerStatus === 403 ? t("通知サービスの送信認証で失敗しました。管理者が設定を確認します。", "Push service authentication failed. The administrator needs to check the configuration.")
+          : result.providerStatus === 429 ? t("通知サービスが送信を制限しています。時間をおいて再試行してください。", "The push service is limiting requests. Try again later.")
+          : result.providerStatus === 0 ? t("通知送信処理でエラーが発生しました。管理者がログを確認します。", "The push sender encountered an error. The administrator needs to inspect the logs.")
+          : t("通知サービスに受け付けられませんでした。1分後に再試行できます。", "The push service did not accept the message. You can retry in one minute.");
+        setMessage(result.accepted ? t("送信を受け付けました。スマホに届いたら「届きました」を押してください。", "Send accepted. Select Received after it appears on your phone.") : failure);
       }
     } catch (error) { setMessage(error instanceof Error ? error.message : t("接続を確認してください。", "Check your connection.")); if (action === "enable") setState(current => current === "sign-in" || current === "pro-required" ? current : "unknown"); }
     finally { setBusy(false); }
