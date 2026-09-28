@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
+import ThemeExplorer from "./themes";
 import styles from "./market.module.css";
 
 type MacroQuote = { id: string; date?: string; value?: number; previous?: number; previousDate?: string; unavailable?: boolean };
@@ -53,6 +54,7 @@ export default function MarketPage() {
   ];
   const selectedGroup = groups.find(group => group.options.some(([value]) => value === symbol))!;
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "マーケット" : "Markets"} description="">
+    <a className={styles.themeJump} href="#market-themes">{ja ? "テーマ別銘柄・セクターヒートマップを見る" : "Explore themes and sector heatmap"} ↓</a>
     <div className={styles.controls}>
       <div className={styles.categories} role="group" aria-label={ja ? "市場の種類" : "Market category"}>{groups.map(group => <button key={group.name} aria-pressed={group === selectedGroup} onClick={() => setSymbol(group.options[0][0])}>{group.name}</button>)}</div>
       <div className={styles.modes}><button aria-pressed={candles} onClick={() => setCandles(true)}>{ja ? "ローソク足" : "Candlesticks"}</button><button aria-pressed={!candles} onClick={() => setCandles(false)}>{ja ? "ライン" : "Line"}</button></div>
@@ -63,6 +65,7 @@ export default function MarketPage() {
     <section className={styles.panel} aria-label={ja ? "市場の動き" : "Market overview"}>
       <iframe key={`${lang}-${candles}-${symbol}`} src={`/research/market/widget?v=6&lang=${lang}&chart=1&style=${candles ? "candles" : "line"}&symbol=${encodeURIComponent(symbol)}`} title={ja ? "指数・債券ETF・為替のチャートと価格" : "Indices, bond ETFs and forex charts and quotes"} className={styles.widget} />
     </section>
+    <ThemeExplorer lang={lang} />
     <MacroCards ja={ja} />
     <a className={styles.treasury} href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve" target="_blank" rel="noopener noreferrer">{ja ? "米国債利回り · 米財務省の公式データ" : "Treasury yields · Official U.S. Treasury data"} ↗</a>
     <p className={styles.note}>{ja ? "指数はCFD参考値、債券はETF価格です。ETFは遅延配信。" : "Indices are indicative CFDs; bonds show ETF prices with delayed quotes."}</p>
