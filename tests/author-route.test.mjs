@@ -9,7 +9,7 @@ test('owner composer enforces identity, origin and server credential; ignores cl
  const previous = process.env.RESEARCH_EDITOR_TOKEN;
  const state = globalThis.__author = {member:{status:'signed-out'},calls:[]};
  const {GET,POST} = await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
- const request = (origin='https://example.com') => new Request('https://example.com/api/research/author',{method:'POST',headers:{origin,'content-type':'application/json',authorization:'Bearer spoof'},body:JSON.stringify({action:'publish',id:'note-example',version:0,titleJa:'見出し',bodyJa:'本文',reviewer:'spoof',bodyEn:'spoof'})});
+ const request = (origin='https://example.com') => new Request('https://example.com/api/research/author',{method:'POST',headers:{origin,'content-type':'application/json',authorization:'Bearer spoof'},body:JSON.stringify({action:'publish',id:'note-example',version:0,bodyJa:'本文',reviewer:'spoof',bodyEn:'spoof'})});
  try {
   process.env.RESEARCH_EDITOR_TOKEN='synthetic-editor-key-long-enough';
   for(const member of [{status:'signed-out',isAdmin:true},{status:'signed-in',isAdmin:false,plan:'pro'}]) {
@@ -25,6 +25,7 @@ test('owner composer enforces identity, origin and server credential; ignores cl
   assert.equal((await POST(request())).status,200);
   assert.equal(state.calls.length,2);
   assert.equal(state.calls[0].body.payload.kind,'notes');
+  assert.equal(state.calls[0].body.payload.titleJa,'リゼルのひとりごと');
   assert.equal(state.calls[1].body.payload.kind,'notes');
   assert.equal(state.calls[0].body.payload.bodyEn,'');
   assert.equal(state.calls[1].body.payload.reviewer,'owner-user');

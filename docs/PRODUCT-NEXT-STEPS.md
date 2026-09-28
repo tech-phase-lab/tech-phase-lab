@@ -174,3 +174,11 @@ Still required: configure a Clerk application and its publishable/secret keys in
 5. Stock News/OpenAI activation remains deferred to early December for January launch. No Vercel upgrade authorized or performed. Hobby is not a lifetime bucket; official docs say no billing cycle and in most limit-exceed cases a 30-day wait. Do not promise an October 1 reset. Hobby is personal/non-commercial; evaluate plan eligibility separately from usage.
 
 Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, draft. Saved/re-edited/read back; excluded from published feed. User saw empty columns page; explained draft is not visible to PRO. No sample published.
+
+
+## September 28 late-evening owner workflow checkpoint
+
+- Owner upgraded Vercel to Pro and set additional budget $10; do not repeat upgrade reminders or modify billing.
+- Existing Railway staging RESEARCH_EDITOR_TOKEN saved as Vercel Secret scoped only codex/research-preview, with explicit owner consent. Redeploy FdFLiS3tbA8Vd6FgkZJFiPugfwDv Ready. Live owner composer listing, publication, withdrawal, and draft save verified; test note remains private.
+- Owner clarified notes are casual X-like posts: no headline input or reader headline. Composer accepts body alone. Internal fixed title keeps existing storage/translation schema compatible and never exposes a body excerpt to Free readers. Owner-only history uses body opening. Mobile editor comes before collapsed history; publish control stays near bottom; pending operations have explicit status.
+- Owner unavailable and authorizes autonomous continuation. Existing hourly Tech Phase development task updated, no duplicate created. Next: latest note home entry with membership-safe projection, private question submission and moderation inbox / answered view, then beginner FAQ. Paid APIs remain deferred until early December. Never invent owner posts or claim untested mobile-device behavior.

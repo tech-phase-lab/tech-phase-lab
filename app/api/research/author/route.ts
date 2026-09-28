@@ -32,14 +32,14 @@ export async function POST(request: Request) {
     const chunks: Uint8Array[] = []; let size = 0;
     while (true) { const { done, value } = await reader.read(); if (done) break; size += value.length; if (size > 64 * 1024) { await reader.cancel(); return reply(413, { ok: false }); } chunks.push(value); }
     const input = JSON.parse(Buffer.concat(chunks).toString());
-    if (!input || !["draft", "publish", "withdraw"].includes(input.action) || typeof input.titleJa !== "string" || typeof input.bodyJa !== "string" || input.titleJa.length > 180 || input.bodyJa.length > 6000) return reply(400, { ok: false, error: "invalid-note" });
+    if (!input || !["draft", "publish", "withdraw"].includes(input.action) || typeof input.bodyJa !== "string" || input.bodyJa.length > 6000) return reply(400, { ok: false, error: "invalid-note" });
     const relay = async (action: string, payload: unknown) => {
       const response = await editPost(new Request(request.url, { method: "POST", headers: auth, body: JSON.stringify({ action, payload }) }));
       return { status: response.status, data: await response.json() };
     };
     const review = (id: string, version: number, decision: string) => relay("post-review", { id, version, kind: "notes", decision, reviewer: member.userId, reason: "Owner selected " + decision });
     if (input.action === "withdraw") { const r = await review(input.id, input.version, "withdrawn"); return reply(r.status, r.data); }
-    const saved = await relay("post-draft", { id: input.id, version: input.version, kind: "notes", titleJa: input.titleJa, bodyJa: input.bodyJa, introJa: "リゼルのひとりごと", titleEn: "", introEn: "", bodyEn: "", sourceNotes: "Owner-authored note", sources: [] });
+    const saved = await relay("post-draft", { id: input.id, version: input.version, kind: "notes", titleJa: "リゼルのひとりごと", bodyJa: input.bodyJa, introJa: "リゼルのひとりごと", titleEn: "", introEn: "", bodyEn: "", sourceNotes: "Owner-authored note", sources: [] });
     if (!saved.data.ok || input.action === "draft") return reply(saved.status, saved.data);
     const published = await review(saved.data.item.id, saved.data.item.version, "published");
     return reply(published.status, published.data.ok ? published.data : { ...published.data, item: saved.data.item });
