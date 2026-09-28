@@ -20,6 +20,8 @@ Source corrections, including a later return to the old text, invalidate approva
 Manual draft saves remove generated evidence and require evidence to be established
 again before review. Review history remains append-only. A later hold/rejection
 supersedes approval. Approval does not enable publication or set `displayedAt`.
+The private review queue orders intake timestamps as absolute instants, including
+when valid persisted rows use different UTC offsets.
 
 ## Activation and budget
 

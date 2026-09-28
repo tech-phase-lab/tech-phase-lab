@@ -133,6 +133,14 @@ class StockNewsTests(unittest.TestCase):
         self.assertIsNone(row["summaryJa"])
         self.assertIsNone(row["summaryEn"])
 
+    def test_queue_orders_mixed_detection_offsets_by_absolute_time(self):
+        older = news.normalize(article(1), ["MU"])
+        newer = news.normalize(article(2), ["MU"])
+        news.save_items(self.db, [older], "2026-09-28T10:00:00+09:00")
+        news.save_items(self.db, [newer], "2026-09-28T02:00:00+00:00")
+        items = news.queue(self.db)["items"]
+        self.assertEqual([row["id"] for row in items], [newer["id"], older["id"]])
+
     def test_service_worker_is_inert_without_explicit_enable(self):
         with patch.dict(os.environ, {"STOCK_NEWS_ENABLED": "false"}):
             # Early exit must not need a database, monitor state or network.

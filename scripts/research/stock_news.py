@@ -172,7 +172,7 @@ def save_draft(db, article_id, revision, japanese, english):
 def queue(db, limit=20):
     import news_drafts
     items = []
-    for row in db.execute("SELECT * FROM news_articles ORDER BY first_seen DESC,id LIMIT ?", (max(1, min(50, limit)),)):
+    for row in db.execute("SELECT * FROM news_articles ORDER BY julianday(first_seen) DESC,id LIMIT ?", (max(1, min(50, limit)),)):
         item = json.loads(row["body"])
         delta = (datetime.fromisoformat(row["first_seen"]) - datetime.fromisoformat(item["publishedAt"])).total_seconds()
         current_draft = row["draft_revision"] == row["revision"]
