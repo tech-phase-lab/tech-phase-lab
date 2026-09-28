@@ -15,7 +15,7 @@ import { valueLabel, dateLabel } from "@/lib/research/presentation";
 import { researchViewFromHash, researchViewHashes, type ResearchView } from "@/lib/research/navigation";
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./research.module.css";
-import HomeTools from "./home-tools";
+import HomeTools, { HomeHelp } from "./home-tools";
 import PriceTargetsPanel from "./price-targets-panel";
 
 const storageKey = "tech-phase:research-saved:v1";
@@ -196,6 +196,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
             <p>{t("ニュース配信を準備中です。", "News delivery is being prepared.")}</p>
           </section>
           <PriceTargetsPanel lang={lang} />
+          <HomeHelp lang={lang} />
         </>}
 
         {tab === "companies" && <section id="monitored-companies" className={styles.companyDirectory} aria-labelledby="monitored-companies-title">

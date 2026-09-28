@@ -6,7 +6,7 @@ import { useResearchLanguage } from "../use-research-language";
 import styles from "../learn/styles.module.css";
 
 const questions = [
-  ["無料で読めるものは？", "What is free?", "投資の基礎、サービスFAQ、公開カレンダーや公開データはログインなしで確認できます。PRO表示の本文や一部機能には、その時点で有効な会員状態が必要です。", "Investing basics, this FAQ, the public calendar and public data are available without signing in. PRO-labeled article bodies and some features require an active membership status."],
+  ["無料で読めるものは？", "What is free?", "投資の基礎、ご利用ガイド、公開カレンダーや公開データはログインなしで確認できます。PRO表示の本文や一部機能には、その時点で有効な会員状態が必要です。", "Investing basics, this FAQ, the public calendar and public data are available without signing in. PRO-labeled article bodies and some features require an active membership status."],
   ["質問すると必ず回答されますか？", "Will every question be answered?", "いいえ。会員は質問を非公開で送れますが、回答や記事化を約束するものではありません。採用したテーマだけを、別の回答ページで公開します。", "No. Members can submit questions privately, but a response or publication is not guaranteed. Only selected topics are published on the separate answered page."],
   ["送った質問は公開されますか？", "Is my submitted question public?", "送信文は自動公開されません。運営者の確認用受信箱と、送信した本人の履歴にだけ表示します。公開回答は、別に編集・公開されたQ&A記事です。個人情報や口座情報は書かないでください。", "The submitted text is never auto-published. It appears only in the owner moderation inbox and the sender's history. A public answer is a separately edited Q&A post. Do not include personal or account information."],
   ["リゼルのひとりごとに見出しはありますか？", "Do RIZEL’s Notes have headlines?", "ありません。短い本文だけの投稿です。ホームには最新投稿日だけを表示し、PRO本文を無料画面へ返しません。", "No. Notes are body-only casual posts. The home page shows only the latest publication date and does not return the PRO body to the free surface."],
@@ -19,8 +19,8 @@ const questions = [
 export default function Faq() {
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
-  return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "サービスFAQ" : "Service FAQ"} description={ja ? "表示、会員機能、質問、カレンダー、通知についての案内です。" : "Answers about content, membership, questions, the calendar and alerts."}>
-    <nav className={styles.localNav} aria-label={ja ? "案内メニュー" : "Help menu"}><Link href="/research/learn">{ja ? "投資の基礎" : "Investing basics"}</Link><span aria-current="page">{ja ? "サービスFAQ" : "Service FAQ"}</span></nav>
+  return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "ご利用ガイド" : "Service guide"} description={ja ? "表示、会員機能、質問、カレンダー、通知についての案内です。" : "Answers about content, membership, questions, the calendar and alerts."}>
+    <nav className={styles.localNav} aria-label={ja ? "案内メニュー" : "Help menu"}><Link href="/research/learn">{ja ? "投資の基礎" : "Investing basics"}</Link><span aria-current="page">{ja ? "ご利用ガイド" : "Service guide"}</span></nav>
     <div className={styles.steps}>{questions.map(([questionJa, questionEn, answerJa, answerEn], index) => <details className={styles.card} key={questionJa} open={index === 0}><summary><span className={styles.number}>{String(index + 1).padStart(2, "0")}</span><strong>{ja ? questionJa : questionEn}</strong></summary><p>{ja ? answerJa : answerEn}</p></details>)}</div>
     <aside className={styles.notice}><strong>{ja ? "問題が解決しないとき" : "If this does not solve it"}</strong><p>{ja ? "会員状態はマイアカウントで確認できます。表示や取得に失敗した場合は、時間をおいて再読み込みしてください。質問フォームにはパスワード、本人確認書類、口座番号を入力しないでください。" : "Check membership status on My account. If a page or data source fails, wait and reload. Never put a password, identity document or account number in the question form."}</p><Link href="/research/account">{ja ? "マイアカウントを確認" : "Check My account"} →</Link></aside>
   </ResearchToolShell>;

@@ -30,3 +30,15 @@ test("beginner guide uses official regulator references without affiliate links"
   assert.match(guide, /investor\.gov\/introduction-investing/);
   assert.doesNotMatch(guide, /affiliate|アフィリエイト/i);
 });
+
+ test("home help is secondary and quick tools omit diagonal arrows", () => {
+  const home = read("app/research/home-tools.tsx");
+  const quick = home.split("<nav className={styles.grid}")[1].split("</nav>")[0];
+  assert.doesNotMatch(quick, /research\/(learn|faq)|↗/);
+  const dashboard = read("app/research/research-dashboard.tsx");
+  assert.ok(dashboard.indexOf("<HomeHelp") > dashboard.indexOf("<PriceTargetsPanel"));
+  const nav = read("app/research/bottom-nav.tsx");
+  assert.ok(nav.indexOf('["/research/learn"') > nav.indexOf('["/research/calendar"'));
+  assert.match(nav, /member\?\.status === "signed-in" && member\?\.plan === "pro"/);
+  assert.match(nav, /proMenu \|\| !\["\/research\/notes", "\/research\/qa", "\/research\/weekly"\]\.includes\(href\)/);
+});

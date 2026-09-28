@@ -264,3 +264,19 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
   `174ef9ddf5d204b1db344b62cd1980a1c6a7a12b`. This completes the currently
   authorized finite product backlog; retain the separately authorized calendar
   maintenance and do not activate paid news or translation services.
+
+## September 29 owner navigation correction
+
+- Moved beginner/service help from the six-card home grid to a quiet text-link
+  section below price targets; the four primary quick tools omit diagonal arrows.
+- Renamed Service FAQ to ご利用ガイド / Service guide across visible entry points.
+  Existing answers are preserved except the renamed label; owner will supply
+  substantive corrections later.
+- Moved beginner/help mobile links to the end. Mobile Notes, Research Q&A and
+  Weekly PRO links now require a fresh signed-in PRO response when opening the
+  menu. Free, signed-out, pending and failed checks hide those entries. Changes
+  to membership and window focus recheck; stale requests cannot restore old PRO
+  links. Server content authorization remains authoritative.
+- Verified locally with lint, 134 Node tests, 427 Python tests; production build, Python compilation and whitespace checks also passed. No authenticated live Free/PRO
+  verification was performed in this change. Home PRO discovery panel is retained;
+  this request changes the mobile menu visibility, not home promotional content.

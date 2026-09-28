@@ -21,12 +21,10 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
   const latestLabel = latestNote ? new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { dateStyle: "medium", timeZone: "Asia/Tokyo" }).format(new Date(latestNote)) : null;
   return <>
     <nav className={styles.grid} aria-label={t("よく使う機能", "Quick tools")}>
-      <Link href="/research/stocks"><span className={styles.icon} aria-hidden="true">🔍</span><strong>{t("銘柄検索", "Stock search")}</strong><p>{t("株価・チャート・企業情報", "Quotes, charts & company data")}</p><span className={styles.action} aria-hidden="true">↗</span></Link>
-      <Link href="/research/market"><span className={styles.icon} aria-hidden="true">📊</span><strong>{t("マーケット", "Markets")}</strong><p>{t("主要指数・金利・為替", "Indices, yields & currencies")}</p><span className={styles.action} aria-hidden="true">↗</span></Link>
-      <Link href="/research/calendar"><span className={styles.icon} aria-hidden="true">🗓️</span><strong>{t("決算・経済指標", "Earnings & economy")}</strong><p>{t("カレンダーで予定を確認", "Upcoming events")}</p><span className={styles.action} aria-hidden="true">↗</span></Link>
-      <button onClick={onChanges}><span className={styles.icon} aria-hidden="true">♻️</span><strong>{t("何が変わった？", "What changed?")}</strong><p>{t("企業の変化と、その根拠", "Company shifts & evidence")}</p><span className={styles.action} aria-hidden="true">↗</span></button>
-      <Link href="/research/learn"><span className={styles.icon} aria-hidden="true">📘</span><strong>{t("米国株のはじめ方", "US stock basics")}</strong><p>{t("口座・注文・決算を順番に", "Accounts, orders & earnings")}</p><span className={styles.action} aria-hidden="true">↗</span></Link>
-      <Link href="/research/faq"><span className={styles.icon} aria-hidden="true">💬</span><strong>{t("サービスFAQ", "Service FAQ")}</strong><p>{t("会員・質問・通知の案内", "Membership, questions & alerts")}</p><span className={styles.action} aria-hidden="true">↗</span></Link>
+      <Link href="/research/stocks"><span className={styles.icon} aria-hidden="true">🔍</span><strong>{t("銘柄検索", "Stock search")}</strong><p>{t("株価・チャート・企業情報", "Quotes, charts & company data")}</p></Link>
+      <Link href="/research/market"><span className={styles.icon} aria-hidden="true">📊</span><strong>{t("マーケット", "Markets")}</strong><p>{t("主要指数・金利・為替", "Indices, yields & currencies")}</p></Link>
+      <Link href="/research/calendar"><span className={styles.icon} aria-hidden="true">🗓️</span><strong>{t("決算・経済指標", "Earnings & economy")}</strong><p>{t("カレンダーで予定を確認", "Upcoming events")}</p></Link>
+      <button onClick={onChanges}><span className={styles.icon} aria-hidden="true">♻️</span><strong>{t("何が変わった？", "What changed?")}</strong><p>{t("企業の変化と、その根拠", "Company shifts & evidence")}</p></button>
     </nav>
     <nav className={styles.reading} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
       <div className={styles.deskHeading}><span>RIZEL’S DESK</span><span className={styles.deskEdition}>TECH PHASE PRO</span></div>
@@ -37,6 +35,14 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
       </div>
     </nav>
   </>;
+}
+
+export function HomeHelp({ lang }: { lang: Language }) {
+  return <nav className={styles.help} aria-label={lang === "ja" ? "学びとご利用案内" : "Learning and help"}>
+    <span>{lang === "ja" ? "学びとご利用案内" : "Learning and help"}</span>
+    <Link href="/research/learn">{lang === "ja" ? "米国株のはじめ方" : "US stock basics"}</Link>
+    <Link href="/research/faq">{lang === "ja" ? "ご利用ガイド" : "Service guide"}</Link>
+  </nav>;
 }
 
 export function FavoriteResearch({ lang, events, onOpenResearch }: { lang: Language; events: ResearchEvent[]; onOpenResearch: (event: ResearchEvent) => void }) {
