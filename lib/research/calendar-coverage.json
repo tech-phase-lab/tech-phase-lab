@@ -80,7 +80,7 @@
     "ticker": "CRDO",
     "name": "Credo",
     "sourceUrl": "https://investors.credosemi.com/news-events/events/default.aspx",
-    "lastAttemptedOn": "2026-09-28",
+    "lastAttemptedOn": "2026-09-29",
     "lastCheckedOn": null
   },
   {
@@ -101,7 +101,7 @@
     "ticker": "CRWV",
     "name": "CoreWeave",
     "sourceUrl": "https://investors.coreweave.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-28",
+    "lastAttemptedOn": "2026-09-29",
     "lastCheckedOn": null
   },
   {
@@ -122,7 +122,7 @@
     "ticker": "GOOGL",
     "name": "Alphabet / Google",
     "sourceUrl": "https://abc.xyz/investor/events/default.aspx",
-    "lastAttemptedOn": "2026-09-28",
+    "lastAttemptedOn": "2026-09-29",
     "lastCheckedOn": null
   },
   {
@@ -136,14 +136,14 @@
     "ticker": "KLAC",
     "name": "KLA",
     "sourceUrl": "https://ir.kla.com/events-presentations/",
-    "lastAttemptedOn": "2026-09-28",
+    "lastAttemptedOn": "2026-09-29",
     "lastCheckedOn": null
   },
   {
     "ticker": "LITE",
     "name": "Lumentum",
     "sourceUrl": "https://investor.lumentum.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-28",
+    "lastAttemptedOn": "2026-09-29",
     "lastCheckedOn": null
   },
   {
@@ -164,7 +164,7 @@
     "ticker": "MRVL",
     "name": "Marvell",
     "sourceUrl": "https://investor.marvell.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-28",
+    "lastAttemptedOn": "2026-09-29",
     "lastCheckedOn": null
   },
   {
@@ -199,14 +199,14 @@
     "ticker": "NOW",
     "name": "ServiceNow",
     "sourceUrl": "https://investor.servicenow.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-28",
+    "lastAttemptedOn": "2026-09-29",
     "lastCheckedOn": null
   },
   {
     "ticker": "NVDA",
     "name": "NVIDIA",
     "sourceUrl": "https://investor.nvidia.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-28",
+    "lastAttemptedOn": "2026-09-29",
     "lastCheckedOn": null
   },
   {
@@ -220,14 +220,14 @@
     "ticker": "PANW",
     "name": "Palo Alto Networks",
     "sourceUrl": "https://investors.paloaltonetworks.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-28",
+    "lastAttemptedOn": "2026-09-29",
     "lastCheckedOn": null
   },
   {
     "ticker": "PLTR",
     "name": "Palantir",
     "sourceUrl": "https://investors.palantir.com/events",
-    "lastAttemptedOn": "2026-09-28",
+    "lastAttemptedOn": "2026-09-29",
     "lastCheckedOn": null
   },
   {
