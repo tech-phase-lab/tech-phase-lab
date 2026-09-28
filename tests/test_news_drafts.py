@@ -1,6 +1,7 @@
 """Private news generation/review flow, using only synthetic local transport."""
 import json
 from pathlib import Path
+import sqlite3
 import sys
 import tempfile
 import threading
@@ -19,6 +20,7 @@ ENV = {"STOCK_NEWS_DRAFTS_ENABLED": "true", "OPENAI_API_KEY": "synthetic-not-a-r
 SOURCE = "The company reported revenue growth. Outlook remains uncertain."
 VALUE = {"summaryJa": "同社は売上の増加を報告しました。今後の見通しには不確実性が残ります。",
          "summaryEn": SOURCE, "evidence": [SOURCE]}
+VERIFICATION = {key: True for key in drafts.APPROVAL_VERIFICATIONS}
 
 
 class NewsDraftTests(unittest.TestCase):
@@ -52,7 +54,8 @@ class NewsDraftTests(unittest.TestCase):
                             transport=transport or (lambda *_: {"output_text": json.dumps(VALUE)}), env=env or ENV)
 
     def review(self, seal, decision="approved"):
-        return drafts.review(self.db, self.item["id"], self.item["revision"], seal, decision, "Test editor", "Both languages checked against evidence.")
+        return drafts.review(self.db, self.item["id"], self.item["revision"], seal, decision,
+                             "Test editor", "Both languages checked against evidence.", VERIFICATION)
 
     def test_generate_review_hold_reopen_keeps_private(self):
         captured = []
@@ -99,6 +102,29 @@ class NewsDraftTests(unittest.TestCase):
             self.review("0" * 64)
         with self.assertRaisesRegex(ValueError, "reviewer"):
             drafts.review(self.db, self.item["id"], self.item["revision"], result["fingerprint"], "approved", "", "Checked carefully")
+
+    def test_approval_requires_and_persists_all_human_verifications(self):
+        result = self.generate()
+        for verification in (None, {"source": True}, {**VERIFICATION, "translations": False}):
+            with self.subTest(verification=verification), self.assertRaisesRegex(ValueError, "verification-required"):
+                drafts.review(self.db, self.item["id"], self.item["revision"], result["fingerprint"],
+                              "approved", "Test editor", "Checked carefully.", verification)
+        drafts.review(self.db, self.item["id"], self.item["revision"], result["fingerprint"],
+                      "approved", "Test editor", "Checked carefully.", VERIFICATION)
+        stored = self.db.execute("SELECT verification FROM news_draft_reviews").fetchone()[0]
+        self.assertEqual(json.loads(stored), list(drafts.APPROVAL_VERIFICATIONS))
+        self.assertEqual(news.queue(self.db)["items"][0]["review"]["verification"],
+                         list(drafts.APPROVAL_VERIFICATIONS))
+
+    def test_legacy_review_schema_is_migrated_fail_closed(self):
+        db = sqlite3.connect(":memory:")
+        db.executescript("""CREATE TABLE news_draft_reviews(
+          id INTEGER PRIMARY KEY AUTOINCREMENT, article_id TEXT NOT NULL,
+          revision TEXT NOT NULL, fingerprint TEXT NOT NULL, decision TEXT NOT NULL,
+          reviewer TEXT NOT NULL, reason TEXT NOT NULL, at TEXT NOT NULL);""")
+        drafts.schema(db)
+        self.assertIn("verification", {row[1] for row in db.execute("PRAGMA table_info(news_draft_reviews)")})
+        db.close()
 
     def test_disabled_and_budget_never_call_provider(self):
         def forbidden(*_):
@@ -250,6 +276,10 @@ class NewsDraftTests(unittest.TestCase):
             self.assertEqual(item["summaryJa"], VALUE["summaryJa"])
             self.assertEqual(item["summaryEn"], SOURCE)
             self.assertEqual(set(item), {"id", "title", "url", "publisher", "tickers", "publishedAt", "observedAt", "approvedAt", "summaryJa", "summaryEn"})
+            with self.db:
+                self.db.execute("UPDATE news_draft_reviews SET verification='[]'")
+            self.assertEqual(drafts.public_feed(self.db)["items"], [])
+            self.review(result["fingerprint"])
             self.review(result["fingerprint"], "held")
             self.assertEqual(drafts.public_feed(self.db)["items"], [])
             self.review(result["fingerprint"])
@@ -315,7 +345,10 @@ class NewsDraftTests(unittest.TestCase):
                 identity = {"articleId": row["id"], "revision": row["revision"]}
                 saved = request("/admin/news/draft", "test-editor", {**identity, "editVersion": row["editVersion"], **VALUE})
                 self.assertEqual(request("/news", "test-reader")["items"], [])
-                review = {**identity, "fingerprint": saved["fingerprint"], "reviewer": "Synthetic editor", "reason": "Both translations checked.", "decision": "approved"}
+                review = {**identity, "fingerprint": saved["fingerprint"], "reviewer": "Synthetic editor", "reason": "Both translations checked.", "decision": "approved", "verification": VERIFICATION}
+                with self.assertRaises(HTTPError) as error:
+                    request("/admin/news/review", "test-editor", {key: value for key, value in review.items() if key != "verification"})
+                self.assertEqual(error.exception.code, 400)
                 request("/admin/news/review", "test-editor", review)
                 feed = request("/news", "test-reader")
                 self.assertEqual(feed["items"][0]["summaryEn"], SOURCE)

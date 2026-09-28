@@ -8,7 +8,7 @@ type Item = {
   publisher: string; text: string; tickers: string[]; publishedAt: string; observedAt: string;
   summaryJa: string | null; summaryEn: string | null; draftCurrent: boolean;
   generation?: { status: "not-attempted" | "reserved" | "failed" | "saved"; attempts: number; retryAllowed: boolean };
-  review: { status: string; fingerprint: string | null; evidence: string[] };
+  review: { status: string; fingerprint: string | null; evidence: string[]; verification?: string[] };
 };
 type Queue = { items: Item[]; generationEnabled: boolean; publicationEnabled: boolean };
 const labels: Record<string, string> = { pending: "下書き待ち", draft: "確認待ち", approved: "承認済み", held: "保留", rejected: "却下" };
@@ -20,6 +20,7 @@ const errors: Record<string, string> = {
   "invalid-news-language": "日英の要約をそれぞれ20〜1,200文字で入力してください。",
   "invalid-news-evidence": "原文と完全一致する根拠を1〜4件、各12〜800文字で入力してください。",
   "unsupported-news-number": "要約中の数値が根拠に含まれていません。数値と単位を確認してください。",
+  "news-approval-verification-required": "承認には4項目すべての照合記録が必要です。最新データを読み直して再確認してください。",
   "news-generation-already-attempted": "この版は生成を試行済みです。保存結果を再取得し、必要なら手動で下書きを作成してください。",
   "news-generation-retry-confirmation-required": "再試行の明示確認がありません。最新データを読み直してください。",
   "news-generation-retry-unavailable": "この版は再試行できません。最新データを読み直してください。",
@@ -78,7 +79,8 @@ function NewsEditor({ item, busy, generationEnabled, run }: { item: Item; busy: 
   const [evidence, setEvidence] = useState(item.review.evidence.length ? item.review.evidence : [""]);
   const [reviewer, setReviewer] = useState("");
   const [reason, setReason] = useState("");
-  const [checked, setChecked] = useState(false);
+  const [verification, setVerification] = useState({ source: false, evidence: false, translations: false, "numbers-and-attribution": false });
+  const resetVerification = () => setVerification({ source: false, evidence: false, translations: false, "numbers-and-attribution": false });
   const dirty = ja !== (item.summaryJa ?? "") || en !== (item.summaryEn ?? "") || JSON.stringify(evidence.filter(Boolean)) !== JSON.stringify(item.review.evidence);
   const identity = { articleId: item.id, revision: item.revision };
   const canReview = !busy && !dirty && !!item.review.fingerprint && reviewer.trim().length >= 2 && reason.trim().length >= 5;
@@ -91,11 +93,11 @@ function NewsEditor({ item, busy, generationEnabled, run }: { item: Item; busy: 
     <fieldset disabled={busy} className={styles.fields}>
       <legend>日英下書き</legend>
       <div className={styles.languages}>
-        <label>日本語<textarea lang="ja" value={ja} maxLength={1200} onChange={event => { setJa(event.target.value); setChecked(false); }} /></label>
-        <label>English<textarea lang="en" value={en} maxLength={1200} onChange={event => { setEn(event.target.value); setChecked(false); }} /></label>
+        <label>日本語<textarea lang="ja" value={ja} maxLength={1200} onChange={event => { setJa(event.target.value); resetVerification(); }} /></label>
+        <label>English<textarea lang="en" value={en} maxLength={1200} onChange={event => { setEn(event.target.value); resetVerification(); }} /></label>
       </div>
       {evidence.map((excerpt, index) => <label key={index}>根拠 {index + 1}（原文からそのまま貼付）
-        <textarea value={excerpt} maxLength={800} onChange={event => { setEvidence(evidence.map((text, i) => i === index ? event.target.value : text)); setChecked(false); }} />
+        <textarea value={excerpt} maxLength={800} onChange={event => { setEvidence(evidence.map((text, i) => i === index ? event.target.value : text)); resetVerification(); }} />
       </label>)}
       <div className={styles.actions}>
         <button type="button" disabled={evidence.length >= 4} onClick={() => setEvidence([...evidence, ""])}>根拠欄を追加</button>
@@ -108,12 +110,16 @@ function NewsEditor({ item, busy, generationEnabled, run }: { item: Item; busy: 
       {item.generation?.status === "failed" && item.generation.attempts >= 2 && <p className={styles.note}>許可された生成試行は2回とも失敗しました。原文を確認して手動で下書きを保存してください。</p>}
     </fieldset>
     <fieldset disabled={busy} className={styles.fields}><legend>公開レビュー</legend>
+      {item.review.status === "approved" && item.review.verification?.length === 4 && <p className={styles.note}>承認監査：原文・根拠・日英一致・数値／単位／期間／帰属の4項目を保存済みです。</p>}
       <label>確認者<input value={reviewer} maxLength={120} autoComplete="off" onChange={event => setReviewer(event.target.value)} /></label>
       <label>判断理由<textarea value={reason} maxLength={500} onChange={event => setReason(event.target.value)} /></label>
-      <label className={styles.check}><input type="checkbox" checked={checked} onChange={event => setChecked(event.target.checked)} />両言語を原文と照合し、意味・数値・単位・帰属を確認しました</label>
+      <label className={styles.check}><input type="checkbox" checked={verification.source} onChange={event => setVerification({ ...verification, source: event.target.checked })} />公式リンクと保存済み原文の対象・更新状態を確認しました</label>
+      <label className={styles.check}><input type="checkbox" checked={verification.evidence} onChange={event => setVerification({ ...verification, evidence: event.target.checked })} />各根拠が原文に存在し、要約の主要主張を支えることを確認しました</label>
+      <label className={styles.check}><input type="checkbox" checked={verification.translations} onChange={event => setVerification({ ...verification, translations: event.target.checked })} />日本語と英語の意味・不確実性・重要な省略が一致することを確認しました</label>
+      <label className={styles.check}><input type="checkbox" checked={verification["numbers-and-attribution"]} onChange={event => setVerification({ ...verification, "numbers-and-attribution": event.target.checked })} />数値・単位・期間・発言者への帰属を原文と照合しました</label>
       {dirty && <p className={styles.note}>未保存の編集があります。保存後の内容を確認してから承認してください。</p>}
       <div className={styles.actions}>{(["approved", "held", "rejected"] as const).map(decision => <button type="button" key={decision}
-        disabled={!canReview || (decision === "approved" && !checked)} onClick={() => void run("news-review", { ...identity, fingerprint: item.review.fingerprint, decision, reviewer, reason })}>{decision === "approved" ? "承認" : decision === "held" ? "保留" : "却下"}</button>)}</div>
+        disabled={!canReview || (decision === "approved" && !Object.values(verification).every(Boolean))} onClick={() => void run("news-review", { ...identity, fingerprint: item.review.fingerprint, decision, reviewer, reason, verification })}>{decision === "approved" ? "承認" : decision === "held" ? "保留" : "却下"}</button>)}</div>
     </fieldset>
   </details>;
 }

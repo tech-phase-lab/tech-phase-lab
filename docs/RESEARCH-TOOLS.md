@@ -117,6 +117,12 @@ reviewer must compare the official source, evidence quotes, factual summary,
 impact interpretation, and numbers. The private audit history retains that
 acknowledgement; public data excludes AI-assisted drafts whose matching
 approval lacks it.
+Ordinary-news approval likewise requires four separate server-validated
+attestations: the official source and saved body are current, exact evidence
+supports the main claims, the Japanese and English meanings agree, and numbers,
+units, periods and attribution match the source. The audit row stores the
+canonical checklist. A UI-only checkbox, a partial object, a legacy approval or
+a malformed stored value cannot make an item public.
 If the AI input was shortened by the configured source-character limit,
 approval also requires a separate acknowledgement that the reviewer checked
 the full stored source and official link, including the range not sent to the

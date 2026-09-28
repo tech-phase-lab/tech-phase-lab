@@ -557,6 +557,7 @@ class AutomaticMonitor:
             return news_drafts.review(
                 db, payload.get("articleId"), payload.get("revision"), payload.get("fingerprint"),
                 payload.get("decision"), payload.get("reviewer"), payload.get("reason"),
+                payload.get("verification"),
             )
 
     def save_news_draft(self, payload):

@@ -13,6 +13,10 @@ import brief_generator
 import stock_news
 
 
+APPROVAL_VERIFICATIONS = ("source", "evidence", "translations", "numbers-and-attribution")
+APPROVAL_VERIFICATION_JSON = json.dumps(APPROVAL_VERIFICATIONS, separators=(",", ":"))
+
+
 def schema(db):
     db.executescript("""
       CREATE TABLE IF NOT EXISTS news_draft_attempts(
@@ -31,9 +35,13 @@ def schema(db):
       CREATE TABLE IF NOT EXISTS news_draft_reviews(
         id INTEGER PRIMARY KEY AUTOINCREMENT, article_id TEXT NOT NULL,
         revision TEXT NOT NULL, fingerprint TEXT NOT NULL, decision TEXT NOT NULL,
-        reviewer TEXT NOT NULL, reason TEXT NOT NULL, at TEXT NOT NULL);
+        reviewer TEXT NOT NULL, reason TEXT NOT NULL, at TEXT NOT NULL,
+        verification TEXT NOT NULL DEFAULT '[]');
       CREATE INDEX IF NOT EXISTS news_reviews_article ON news_draft_reviews(article_id,id);
     """)
+    columns = {row[1] for row in db.execute("PRAGMA table_info(news_draft_reviews)")}
+    if "verification" not in columns:
+        db.execute("ALTER TABLE news_draft_reviews ADD COLUMN verification TEXT NOT NULL DEFAULT '[]'")
 
 
 def fingerprint(revision, japanese, english, evidence):
@@ -217,19 +225,34 @@ def validated_draft(db, article_id, revision, expected_fingerprint):
     return value
 
 
-def review(db, article_id, revision, expected_fingerprint, decision, reviewer, reason):
+def _approval_verification(value, decision):
+    if decision != "approved":
+        return []
+    required = set(APPROVAL_VERIFICATIONS)
+    if not isinstance(value, dict) or set(value) != required:
+        raise ValueError("news-approval-verification-required")
+    if any(value[key] is not True for key in APPROVAL_VERIFICATIONS):
+        raise ValueError("news-approval-verification-required")
+    return list(APPROVAL_VERIFICATIONS)
+
+
+def review(db, article_id, revision, expected_fingerprint, decision, reviewer, reason, verification=None):
     if decision not in {"approved", "held", "rejected"}:
         raise ValueError("invalid-news-decision")
     if not isinstance(reviewer, str) or not 2 <= len(reviewer.strip()) <= 120:
         raise ValueError("news-reviewer-required")
     if not isinstance(reason, str) or not 5 <= len(reason.strip()) <= 500:
         raise ValueError("news-review-reason-required")
+    verified = _approval_verification(verification, decision)
     schema(db)
     with db:
         db.execute("BEGIN IMMEDIATE")
         validated_draft(db, article_id, revision, expected_fingerprint)
-        db.execute("INSERT INTO news_draft_reviews(article_id,revision,fingerprint,decision,reviewer,reason,at) VALUES(?,?,?,?,?,?,?)", (
-            article_id, revision, expected_fingerprint, decision, reviewer.strip(), reason.strip(), stock_news.stamp()))
+        db.execute("""INSERT INTO news_draft_reviews(
+          article_id,revision,fingerprint,decision,reviewer,reason,at,verification
+          ) VALUES(?,?,?,?,?,?,?,?)""", (
+            article_id, revision, expected_fingerprint, decision, reviewer.strip(), reason.strip(),
+            stock_news.stamp(), json.dumps(verified, separators=(",", ":"))))
     return {"status": decision, "publicationEnabled": publication_enabled()}
 
 
@@ -243,8 +266,16 @@ def editorial_state(db, article_id, revision):
     except ValueError:
         return {"status": "pending", "fingerprint": None, "evidence": []}
     latest = db.execute("SELECT * FROM news_draft_reviews WHERE article_id=? ORDER BY id DESC LIMIT 1", (article_id,)).fetchone()
-    decision = latest["decision"] if latest and latest["revision"] == revision and latest["fingerprint"] == saved["fingerprint"] else "draft"
-    return {"status": decision, "fingerprint": saved["fingerprint"], "evidence": value["evidence"]}
+    matches = latest and latest["revision"] == revision and latest["fingerprint"] == saved["fingerprint"]
+    decision = latest["decision"] if matches else "draft"
+    try:
+        verification = json.loads(latest["verification"]) if matches else []
+    except (json.JSONDecodeError, TypeError):
+        verification = []
+    if verification != list(APPROVAL_VERIFICATIONS):
+        verification = []
+    return {"status": decision, "fingerprint": saved["fingerprint"], "evidence": value["evidence"],
+            "verification": verification}
 
 
 def publication_enabled():
@@ -275,8 +306,11 @@ def save_manual(db, payload):
         db.execute("INSERT OR REPLACE INTO news_draft_evidence VALUES(?,?,?,?,?)", (
             article_id, revision, seal, json.dumps(value["evidence"], ensure_ascii=False), stock_news.stamp()))
         # Even a save with identical content or a revert cannot reuse approval.
-        db.execute("INSERT INTO news_draft_reviews(article_id,revision,fingerprint,decision,reviewer,reason,at) VALUES(?,?,?,?,?,?,?)", (
-            article_id, revision, seal, "draft", "system", "Manual draft saved; review required.", stock_news.stamp()))
+        db.execute("""INSERT INTO news_draft_reviews(
+          article_id,revision,fingerprint,decision,reviewer,reason,at,verification
+          ) VALUES(?,?,?,?,?,?,?,?)""", (
+            article_id, revision, seal, "draft", "system", "Manual draft saved; review required.",
+            stock_news.stamp(), "[]"))
     return {"status": "draft", "fingerprint": seal, "publicationEnabled": publication_enabled()}
 
 
@@ -294,9 +328,10 @@ def public_feed(db, limit=30):
           FROM news_articles a JOIN news_draft_reviews r ON r.article_id=a.id
           WHERE r.id=(SELECT MAX(id) FROM news_draft_reviews WHERE article_id=a.id)
             AND r.decision='approved' AND r.revision=a.revision
+            AND r.verification=?
             AND a.draft_revision=a.revision
           ORDER BY julianday(json_extract(a.body,'$.publishedAt')) DESC,a.id
-        """)
+        """, (APPROVAL_VERIFICATION_JSON,))
         for row in rows:
             try:
                 value = validated_draft(db, row["id"], row["revision"], row["approved_fingerprint"])
