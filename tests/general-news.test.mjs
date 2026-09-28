@@ -78,6 +78,9 @@ test('official links remain available without paid news and exclude private cont
  for (const url of ['https://x.com/impostor/status/12345','https://evil.example/post','javascript:alert(1)']) {
   assert.throws(()=>publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[{...update,url}]}));
  }
+ const officialUrls=['https://blogs.arista.com/blog/update','https://investor.marvell.com/news/update',
+  'https://racks.vertiv.com/update','https://pr.tsmc.com/english/news/1','https://www.palantir.com/q2-2026-letter/en/'];
+ for (const url of officialUrls) assert.equal(publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[{...update,url}]}).officialUpdates[0].url,url);
 });
 
 test('official headlines count Unicode characters consistently with Python', () => {

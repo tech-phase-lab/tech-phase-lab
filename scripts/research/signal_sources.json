@@ -23,6 +23,7 @@
     "tickers": [
       "NVDA"
     ],
+    "officialUpdates": true,
     "intervalSeconds": 120,
     "reuse": "review-required"
   },
@@ -124,6 +125,7 @@
     "tickers": [
       "NBIS"
     ],
+    "officialUpdates": true,
     "allowedHosts": [
       "nebius.com"
     ],
@@ -177,6 +179,7 @@
     "tickers": [
       "ANET"
     ],
+    "officialUpdates": true,
     "intervalSeconds": 120,
     "reuse": "review-required"
   },
@@ -259,6 +262,7 @@
     "tickers": [
       "MRVL"
     ],
+    "officialUpdates": true,
     "kind": "publisher-update",
     "format": "feed",
     "intervalSeconds": 120,
@@ -294,6 +298,7 @@
     "tickers": [
       "VRT"
     ],
+    "officialUpdates": true,
     "format": "feed",
     "kind": "publisher-update",
     "intervalSeconds": 300,
@@ -339,6 +344,7 @@
     "tickers": [
       "TSM"
     ],
+    "officialUpdates": true,
     "kind": "publisher-update",
     "format": "html-index",
     "articlePrefixes": [
@@ -357,6 +363,7 @@
     "tickers": [
       "PLTR"
     ],
+    "officialUpdates": true,
     "kind": "publisher-update",
     "format": "html-index",
     "indexFormat": "sitemap",

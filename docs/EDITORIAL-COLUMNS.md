@@ -138,11 +138,15 @@ token as an editor credential; never put the value in chat, logs or git.
 ## Official update links — September 28 evening
 
 The news page now exposes compact official headline/link cards independently of
-paid-provider AI summaries. Initial allowlist: Nebius blog, Nebius @nebiusai,
-NVIDIA developer blog. Private excerpts, diffs, model analysis and reviewer data
-are excluded. URLs are restricted to the configured official hosts/accounts.
+paid-provider AI summaries. The allowlist includes Nebius blog and @nebiusai,
+NVIDIA developer blog, plus the existing first-party TSMC, Marvell, Arista,
+Vertiv and Palantir routes. Private excerpts, diffs, model analysis and reviewer
+data are excluded. URLs are restricted to the configured official hosts/accounts,
+and each displayed ticker must belong to that source's configured company set.
 Latest revision per URL is shown once, capped at 20; old-dated baseline content
-is excluded. Times are explicitly discovery times, never guessed release times.
+is excluded. The seven-day window and release order use absolute instants rather
+than raw ISO text, including mixed UTC offsets. Times are explicitly discovery
+times, never guessed release times.
 The existing news UI refreshes every 30 seconds; this is not a seconds-level
 source-to-screen guarantee. X @nebiusai adds a fourth route under the existing
 shared daily request cap, without raising that cap. Fair pacing can lengthen

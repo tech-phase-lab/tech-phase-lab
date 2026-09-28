@@ -6,6 +6,8 @@ export type GeneralNewsItem = {
 };
 export type OfficialUpdate = { id: string; title: string; url: string; publisher: string; tickers: string[]; observedAt: string };
 export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[] };
+const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
+  "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com"]);
 
 export function publicNewsPayload(value: unknown): GeneralNewsFeed {
   if (!value || typeof value !== "object") throw new Error("Invalid news feed");
@@ -19,7 +21,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       const v = raw as Record<string, unknown>;
       for (const key of ["id", "title", "url", "publisher", "observedAt"]) if (typeof v[key] !== "string" || !(v[key] as string).trim()) throw Error("Invalid update field");
       const url = new URL(v.url as string);
-      if (url.protocol !== "https:" || url.username || url.password || url.port || !["nebius.com", "developer.nvidia.com", "x.com"].includes(url.hostname)) throw Error("Invalid official source");
+      if (url.protocol !== "https:" || url.username || url.password || url.port || !officialUpdateHosts.has(url.hostname)) throw Error("Invalid official source");
       if (url.hostname === "x.com" && !/^\/nebiusai\/status\/\d+$/i.test(url.pathname)) throw Error("Invalid official account");
       if (Array.from(v.title as string).length > 180 || (v.publisher as string).length > 80 || !/^\d+$/.test(v.id as string) || !Number.isFinite(Date.parse(v.observedAt as string))) throw Error("Invalid update");
       if (!Array.isArray(v.tickers) || v.tickers.length > 5 || !v.tickers.every(t => typeof t === "string" && /^[A-Z][A-Z0-9.-]{0,9}$/.test(t))) throw Error("Invalid update tickers");

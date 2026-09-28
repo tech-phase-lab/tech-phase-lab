@@ -81,6 +81,42 @@ class OfficialFeedTests(unittest.TestCase):
                 self.assertNotIn('PRIVATE',json.dumps(items))
                 self.assertEqual(items[0]['url'],'https://x.com/nebiusai/status/123')
 
+    def test_priority_company_official_sources_are_public_link_only(self):
+        import signals
+        from datetime import datetime, timezone
+        records = [
+            ('arista-blog', 'https://blogs.arista.com/blog/update', 'ANET'),
+            ('marvell-investor-news', 'https://investor.marvell.com/news/update', 'MRVL'),
+            ('vertiv-racks-blog', 'https://racks.vertiv.com/update', 'VRT'),
+            ('tsmc-press-center', 'https://pr.tsmc.com/english/news/1', 'TSM'),
+            ('palantir-shareholder-letters', 'https://www.palantir.com/q2-2026-letter/en/', 'PLTR'),
+            ('marvell-investor-news', 'https://investor.marvell.com/news/wrong-ticker', 'NBIS')]
+        with tempfile.TemporaryDirectory() as tmp:
+            with posts.connect(Path(tmp)/'db') as db:
+                signals.schema(db)
+                for index, (source, url, ticker) in enumerate(records):
+                    db.execute('''INSERT INTO signal_events(source_id,url,sha,title,tickers_json,matches_json,event_kind,published_at,observed_at,excerpt,diff,truncated)
+                      VALUES(?,?,?,'Official update',?,'{}','new','2026-09-28T09:00:00Z','2026-09-28T09:01:00Z','PRIVATE','PRIVATE',0)''',
+                               (source, url, str(index), json.dumps([ticker])))
+                db.commit()
+                items = signals.public_official_updates(db, reference=datetime(2026,9,28,10,tzinfo=timezone.utc))
+                self.assertEqual({item['tickers'][0] for item in items}, {'ANET','MRVL','VRT','TSM','PLTR'})
+                self.assertNotIn('PRIVATE', json.dumps(items))
+
+    def test_official_update_window_uses_absolute_instants(self):
+        import signals
+        from datetime import datetime, timezone
+        with tempfile.TemporaryDirectory() as tmp:
+            with posts.connect(Path(tmp)/'db') as db:
+                signals.schema(db)
+                for post_id, observed in [('new', '2026-09-21T06:01:00-04:00'), ('old', '2026-09-21T18:59:00+09:00')]:
+                    db.execute("""INSERT INTO signal_events(source_id,url,sha,title,tickers_json,matches_json,event_kind,published_at,observed_at,excerpt,diff,truncated)
+                      VALUES('nebius-blog',?,?,'Official update','[\"NBIS\"]','{}','new',?,?,'','',0)""",
+                               ('https://nebius.com/blog/posts/'+post_id, post_id, observed, observed))
+                db.commit()
+                items = signals.public_official_updates(db, reference=datetime(2026,9,28,10,tzinfo=timezone.utc))
+                self.assertEqual([item['url'].rsplit('/',1)[-1] for item in items], ['new'])
+
     def test_baseline_displays_newest_release_before_later_inserted_old_post(self):
         import signals
         from datetime import datetime, timezone

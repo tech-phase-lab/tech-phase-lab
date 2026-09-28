@@ -1224,23 +1224,27 @@ if __name__ == "__main__":
 def public_official_updates(db, sources=SOURCES, reference=None):
     """Links/headlines only; never publish private excerpts or unreviewed AI claims."""
     schema(db)
-    allowed = {s['id']: s for s in sources if s['id'] in {
-        'nebius-blog', 'nvidia-developer', 'x-nebius-official'}}
+    allowed = {s['id']: s for s in sources if s.get('officialUpdates') is True
+               and s.get('kind') == 'publisher-update' and s.get('allowedHosts')
+               and s.get('tickers')}
     if not allowed:
         return []
-    cutoff = ((reference or datetime.now(timezone.utc)) - timedelta(days=7)).isoformat()
+    current = reference or datetime.now(timezone.utc)
+    current = current.replace(tzinfo=current.tzinfo or timezone.utc).astimezone(timezone.utc)
+    cutoff = current - timedelta(days=7)
     marks = ','.join('?' for _ in allowed)
     rows = db.execute(f'''SELECT * FROM signal_events WHERE source_id IN ({marks})
-      AND observed_at>=? ORDER BY id DESC LIMIT 120''', (*allowed, cutoff)).fetchall()
+      ORDER BY id DESC LIMIT 500''', tuple(allowed)).fetchall()
+    def instant(value):
+        try:
+            parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
+            return parsed.replace(tzinfo=parsed.tzinfo or timezone.utc).astimezone(timezone.utc)
+        except (AttributeError, ValueError, TypeError):
+            return None
     def release_order(row):
-        for value in (row['published_at'], row['published_on'], row['observed_at']):
-            if value:
-                try:
-                    parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
-                    return parsed.replace(tzinfo=parsed.tzinfo or timezone.utc).timestamp()
-                except (ValueError, TypeError):
-                    pass
-        return 0
+        return next((parsed.timestamp() for parsed in
+                     (instant(row['published_at']), instant(row['published_on']), instant(row['observed_at']))
+                     if parsed), 0)
     # A baseline can insert newest-first API results in reverse database-ID order.
     rows = sorted(rows, key=release_order, reverse=True)
     items, seen = [], set()
@@ -1248,7 +1252,9 @@ def public_official_updates(db, sources=SOURCES, reference=None):
         source = allowed[row['source_id']]
         try:
             published = row['published_at'] or row['published_on']
-            if published and published[:10] < cutoff[:10]:
+            published_at = instant(published) if published else None
+            observed = instant(row['observed_at'])
+            if not observed or observed < cutoff or (published and (not published_at or published_at < cutoff)):
                 continue
             if row['event_kind'] == 'baseline' and not published:
                 continue
@@ -1257,11 +1263,10 @@ def public_official_updates(db, sources=SOURCES, reference=None):
                 continue
             if source['id'] == 'x-nebius-official' and not re.fullmatch(r'https://x.com/nebiusai/status/[0-9]+', url, re.I):
                 continue
-            tickers = [t for t in json.loads(row['tickers_json']) if re.fullmatch(r'[A-Z][A-Z0-9.-]{0,9}', t)][:5]
+            configured_tickers = set(source['tickers'])
+            tickers = [t for t in json.loads(row['tickers_json'])
+                       if t in configured_tickers and re.fullmatch(r'[A-Z][A-Z0-9.-]{0,9}', t)][:5]
             if not tickers:
-                continue
-            observed = datetime.fromisoformat(row['observed_at'])
-            if observed.tzinfo is None:
                 continue
         except (ValueError, TypeError):
             continue
