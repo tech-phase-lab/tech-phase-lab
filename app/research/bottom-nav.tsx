@@ -74,7 +74,7 @@ export default function BottomNav() {
     ["/research#saved", ja ? "保存したリサーチ" : "Saved research", "saved"],
     ["/research#monitored-companies", ja ? "分析対象企業" : "Company coverage", "companies"],
     ["/research/learn", ja ? "米国株のはじめ方" : "US stock basics", "saved"],
-    ["/research/faq", ja ? "ご利用ガイド" : "Service guide", "changes"],
+    ["/research/faq", ja ? "よくある質問・使い方" : "FAQ & help", "changes"],
   ];
   return <div className={styles.mobile}>
     {open && <><button className={styles.backdrop} aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus(); }} />

@@ -9,6 +9,24 @@ import styles from "./home-tools.module.css";
 
 export default function HomeTools({ lang, onChanges }: { lang: Language; onChanges: () => void }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
+  const [isPro, setIsPro] = useState(false);
+  useEffect(() => {
+    const controller = new AbortController();
+    let generation = 0;
+    const check = async () => {
+      const current = ++generation;
+      setIsPro(false);
+      try {
+        const response = await fetch("/api/research/member", { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10_000)]) });
+        const member = response.ok ? await response.json() : null;
+        if (!controller.signal.aborted && current === generation) setIsPro(member?.status === "signed-in" && member?.plan === "pro");
+      } catch { /* Membership styling fails closed; access remains server-controlled. */ }
+    };
+    void check();
+    window.addEventListener("tech-phase:membership-changed", check);
+    window.addEventListener("focus", check);
+    return () => { controller.abort(); window.removeEventListener("tech-phase:membership-changed", check); window.removeEventListener("focus", check); };
+  }, []);
   const [latestNote, setLatestNote] = useState<string | null>(null);
   useEffect(() => {
     const controller = new AbortController();
@@ -26,8 +44,8 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
       <Link href="/research/calendar"><span className={styles.icon} aria-hidden="true">🗓️</span><strong>{t("決算・経済指標", "Earnings & economy")}</strong><p>{t("カレンダーで予定を確認", "Upcoming events")}</p></Link>
       <button onClick={onChanges}><span className={styles.icon} aria-hidden="true">♻️</span><strong>{t("何が変わった？", "What changed?")}</strong><p>{t("企業の変化と、その根拠", "Company shifts & evidence")}</p></button>
     </nav>
-    <nav className={styles.reading} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
-      <div className={styles.deskHeading}><span>RIZEL’S DESK</span><span className={styles.deskEdition}>TECH PHASE PRO</span></div>
+    <nav className={`${styles.reading} ${isPro ? "" : styles.readingLocked}`} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
+      <div className={styles.deskHeading}><span>RIZEL’S DESK</span><span className={styles.deskEdition}>{isPro ? "TECH PHASE PRO" : <><span aria-hidden="true">🔒 </span>{t("PRO限定", "PRO only")}</>}</span></div>
       <Link href="/research/notes" className={styles.deskLead}><div><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong><p>{latestLabel ? t(`最新の投稿 · ${latestLabel}（本文はPRO会員向け）`, `Latest post · ${latestLabel} (PRO body)`) : t("数字の先にある、相場の着眼点。", "A perspective beyond the numbers.")}</p></div><span aria-hidden="true">→</span></Link>
       <div className={styles.deskPair}>
         <Link href="/research/qa"><strong>{t("リゼルに聞く", "Ask RIZEL")}</strong><span className={styles.deskSmall}>{t("疑問から、理解を深める", "Questions worth exploring")}</span><span aria-hidden="true">→</span></Link>
@@ -40,8 +58,8 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
 export function HomeHelp({ lang }: { lang: Language }) {
   return <nav className={styles.help} aria-label={lang === "ja" ? "学びとご利用案内" : "Learning and help"}>
     <span>{lang === "ja" ? "学びとご利用案内" : "Learning and help"}</span>
-    <Link href="/research/learn">{lang === "ja" ? "米国株のはじめ方" : "US stock basics"}</Link>
-    <Link href="/research/faq">{lang === "ja" ? "ご利用ガイド" : "Service guide"}</Link>
+    <Link href="/research/learn"><span className={styles.helpIcon} aria-hidden="true">🔰</span><span><strong>{lang === "ja" ? "米国株のはじめ方" : "US stock basics"}</strong><small>{lang === "ja" ? "口座開設から、投資の基本まで" : "Accounts, orders and investing basics"}</small></span></Link>
+    <Link href="/research/faq"><span className={styles.helpIcon} aria-hidden="true">?</span><span><strong>{lang === "ja" ? "よくある質問・使い方" : "FAQ & help"}</strong><small>{lang === "ja" ? "会員プラン・通知・サービスの使い方" : "Membership, alerts and using Tech Phase"}</small></span></Link>
   </nav>;
 }
 

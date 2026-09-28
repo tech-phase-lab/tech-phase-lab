@@ -280,3 +280,7 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 - Verified locally with lint, 134 Node tests, 427 Python tests; production build, Python compilation and whitespace checks also passed. No authenticated live Free/PRO
   verification was performed in this change. Home PRO discovery panel is retained;
   this request changes the mobile menu visibility, not home promotional content.
+
+### 2026-09-29 Free homepage / help visibility
+- Keep RIZEL’s Desk entry links visible on Free with a darker background and explicit lock / PRO-only badge. Paid text remains server-protected; styling is display-only.
+- Keep help below the primary content, enlarge into readable cards, add beginner mark to US stock basics. Rename service guide consistently to よくある質問・使い方 (FAQ & help), distinct from Ask RIZEL.

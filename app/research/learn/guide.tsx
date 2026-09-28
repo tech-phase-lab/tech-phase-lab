@@ -50,7 +50,7 @@ export default function Guide() {
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "はじめての米国株" : "Getting started with US stocks"} description={ja ? "日本居住者向けの無料ガイド。口座、注文、決算、次の学びを順番に確認します。" : "A free guide for residents of Japan: accounts, orders, earnings and the next concepts to learn."}>
     <nav className={styles.localNav} aria-label={ja ? "学習メニュー" : "Learning menu"}>
       <span aria-current="page">{ja ? "投資の基礎" : "Investing basics"}</span>
-      <Link href="/research/faq">{ja ? "ご利用ガイド" : "Service guide"}</Link>
+      <Link href="/research/faq">{ja ? "よくある質問・使い方" : "FAQ & help"}</Link>
     </nav>
     <aside className={styles.notice}><strong>{ja ? "一般情報です" : "General information only"}</strong><p>{ja ? "個別の投資・税務・法務の助言ではありません。制度、手数料、対象商品は変わるため、取引前に金融庁・証券会社・税務当局などの最新情報を確認してください。" : "This is not personalized investment, tax or legal advice. Rules, fees and eligible products can change; check current information from regulators, brokers and tax authorities before acting."}</p></aside>
     <div className={styles.steps}>{sections.map(section => <section key={section.number} className={styles.card} aria-labelledby={`learn-${section.number}`}>
