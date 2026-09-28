@@ -227,3 +227,18 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 - Next finite product priority after deployment verification is the Free
   beginner guide and service FAQ. Keep investment learning separate from account
   and product help, beginning with Japan-resident brokerage context.
+
+### Preview deployment verification
+
+- Advanced only `codex/research-preview` to application commit
+  `a0ed3316dd9a41d91bbacc9e2442014489dfa2fd`. Vercel Preview deployment
+  `dpl_2qwiicJ5FY56re9wjJhHYLBSokRB` reached Ready, and the Vercel and Railway
+  commit statuses both reported success.
+- Local and GitHub final trees matched exactly at
+  `a61977319923f7ad2822a216cda24ecd769d1776` before local branch alignment.
+  No main or production ref was updated.
+- The protected preview's signed-in question submission, member-owned history,
+  moderation actions and exact answered-post link still require a live owner
+  session. No real question, answer, post or note was created for this check.
+- Next finite product work is the Free beginner guide and service FAQ. Keep the
+  two information types separate and preserve Japan-resident brokerage context.
