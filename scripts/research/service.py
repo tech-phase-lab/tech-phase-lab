@@ -599,9 +599,9 @@ class AutomaticMonitor:
         with questions.connect(self.db_path) as db:
             return questions.submit(db, payload)
 
-    def member_questions(self, owner_key, limit=20):
+    def member_questions(self, owner_key, limit=20, board=False):
         with questions.connect(self.db_path) as db:
-            return questions.member_queue(db, owner_key, limit)
+            return questions.board_queue(db, owner_key, 50) if board else questions.member_queue(db, owner_key, limit)
 
     def question_queue(self, view="pending", limit=50):
         # Ensure the answer-candidate table exists even on a fresh database.
@@ -1925,7 +1925,7 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 owner_key = self.headers.get("X-Question-Owner", "")
                 limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
-                self.send_json(200, {"ok": True, **self.app.member_questions(owner_key, limit)})
+                self.send_json(200, {"ok": True, **self.app.member_questions(owner_key, limit, self.headers.get("X-Question-Audience") == "pro-board")})
             except (TypeError, ValueError) as exc:
                 self.send_json(400, {"ok": False, "error": str(exc)})
             except Exception:

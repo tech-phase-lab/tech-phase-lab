@@ -1,4 +1,4 @@
-"""Private member questions and their human-reviewed answer links."""
+"""PRO board posts, preserved private submissions, and owner moderation."""
 
 import re
 import secrets
@@ -31,6 +31,10 @@ def connect(path):
       CREATE INDEX IF NOT EXISTS idx_member_questions_status
         ON member_questions(status,created_at ASC);
     """)
+    columns = {row["name"] for row in db.execute("PRAGMA table_info(member_questions)")}
+    if "audience" not in columns:
+        db.execute("ALTER TABLE member_questions ADD COLUMN audience TEXT NOT NULL DEFAULT 'private'")
+        db.commit()
     return db
 
 
@@ -52,7 +56,7 @@ def _question_id(value):
 
 def _item(row, include_body=True):
     value = {
-        "id": row["id"], "status": row["status"],
+        "id": row["id"], "status": row["status"], "audience": row["audience"],
         "answerPostId": row["answer_post_id"],
         "createdAt": row["created_at"], "updatedAt": row["updated_at"],
     }
@@ -63,6 +67,9 @@ def _item(row, include_body=True):
 
 def submit(db, payload):
     owner_key = _owner(payload.get("ownerKey"))
+    audience = payload.get("audience", "private")
+    if audience not in {"private", "pro-board"}:
+        raise ValueError("invalid-question-audience")
     body = payload.get("body")
     if not isinstance(body, str) or "\x00" in body:
         raise ValueError("invalid-question-body")
@@ -80,12 +87,16 @@ def submit(db, payload):
             "SELECT * FROM member_questions WHERE id=?", (question_id,)
         ).fetchone()
         if current:
-            if current["owner_key"] != owner_key or current["body"] != body:
+            if current["owner_key"] != owner_key or current["body"] != body or current["audience"] != audience:
                 raise ValueError("question-conflict")
             return {"item": _item(current)}
+        if audience == "pro-board":
+            count = db.execute("SELECT count(*) FROM member_questions WHERE owner_key=? AND audience='pro-board' AND created_at>=?", (owner_key, now[:10])).fetchone()[0]
+            if count >= 10:
+                raise ValueError("question-daily-limit")
         db.execute(
-            "INSERT INTO member_questions VALUES(?,?,?,?,?,?,?)",
-            (question_id, owner_key, body, "pending", None, now, now),
+            "INSERT INTO member_questions(id,owner_key,body,status,answer_post_id,created_at,updated_at,audience) VALUES(?,?,?,?,?,?,?,?)",
+            (question_id, owner_key, body, "pending", None, now, now, audience),
         )
         return {"item": _item(db.execute(
             "SELECT * FROM member_questions WHERE id=?", (question_id,)
@@ -100,6 +111,15 @@ def member_queue(db, owner_key, limit=20):
       ORDER BY created_at DESC,id DESC LIMIT ?
     """, (owner_key, limit)).fetchall()
     return {"items": [_item(row) for row in rows]}
+
+
+def board_queue(db, owner_key, limit=50):
+    owner_key = _owner(owner_key)
+    limit = max(1, min(int(limit), 50))
+    rows = db.execute("SELECT * FROM member_questions WHERE audience='pro-board' AND status!='closed' ORDER BY created_at DESC,id DESC LIMIT ?", (limit,)).fetchall()
+    items = [{**_item(row), "isMine": row["owner_key"] == owner_key} for row in rows]
+    private = db.execute("SELECT * FROM member_questions WHERE owner_key=? AND audience='private' ORDER BY created_at DESC,id DESC LIMIT 20", (owner_key,)).fetchall()
+    return {"items": items, "privateItems": [_item(row) for row in private], "audience": "pro-board"}
 
 
 def moderation_queue(db, view="pending", limit=50):

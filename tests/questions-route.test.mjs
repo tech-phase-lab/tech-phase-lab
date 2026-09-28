@@ -12,15 +12,19 @@ test('member question route requires identity, hashes ownership and keeps retrie
   const saved={fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
   const state=globalThis.__questions={member:{status:'signed-out'},calls:[]};
   process.env.RESEARCH_MONITOR_URL='https://monitor.example';process.env.RESEARCH_MONITOR_TOKEN='monitor-token-at-least-24-characters';
-  globalThis.fetch=async(url,init)=>{state.calls.push({url:String(url),init});return Response.json({ok:true,items:[],item:{id:'q-'+'1'.repeat(32)}});};
+  globalThis.fetch=async(url,init)=>{state.calls.push({url:String(url),init});return Response.json({ok:true,audience:"pro-board",items:[],item:{id:'q-'+'1'.repeat(32)}});};
   try {
     const {GET,POST}=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(memberSource)).toString('base64'));
     assert.equal((await GET()).status,401);assert.equal(state.calls.length,0);
-    state.member={status:'signed-in',userId:'user_private_123'};
+    state.member={status:'signed-in',userId:'user_private_123',plan:'free'};
+    assert.equal((await GET()).status,403);assert.equal(state.calls.length,0);
+    const freeRequest=new Request('https://example.test/api/research/questions',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body:JSON.stringify({audience:'pro-board',requestId:'q-'+'1'.repeat(32),body:'質問の投稿権限を確認します。'})});
+    assert.equal((await POST(freeRequest)).status,403);assert.equal(state.calls.length,0);
+    state.member.plan='pro';
     assert.equal((await GET()).status,200);
     assert.match(state.calls[0].init.headers['X-Question-Owner'],/^[a-f0-9]{64}$/);
     assert.doesNotMatch(JSON.stringify(state.calls),/user_private_123/);
-    const body=JSON.stringify({requestId:'q-'+'1'.repeat(32),body:'決算で最初に見る数字は何ですか？'});
+    const body=JSON.stringify({audience:'pro-board',requestId:'q-'+'1'.repeat(32),body:'決算で最初に見る数字は何ですか？'});
     assert.equal((await POST(new Request('https://example.test/api/research/questions',{method:'POST',headers:{origin:'https://attacker.test','content-type':'application/json'},body}))).status,403);
     assert.equal((await POST(new Request('https://example.test/api/research/questions',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body}))).status,200);
     const sent=JSON.parse(state.calls.at(-1).init.body);assert.match(sent.ownerKey,/^[a-f0-9]{64}$/);assert.equal(sent.body,'決算で最初に見る数字は何ですか？');
@@ -47,7 +51,7 @@ test('moderation route is owner-only and uses the server editor credential', asy
 test('question pages separate private intake, moderation and published answers',()=>{
   const intake=readFileSync(new URL('../app/research/qa/questions.tsx',import.meta.url),'utf8');
   const moderation=readFileSync(new URL('../app/research/questions/moderation.tsx',import.meta.url),'utf8');
-  assert.match(intake,/非公開で送る/);assert.match(intake,/すべての質問への回答はお約束していません/);
+  assert.match(intake,/PRO会員に公開して投稿/);assert.match(intake,/すべての質問への回答はお約束していません/);
   assert.match(moderation,/本文をそのまま公開せず/);assert.match(moderation,/公開済みQ&A/);
   assert.match(readFileSync(new URL('../app/research/qa/answered/page.tsx',import.meta.url),'utf8'),/initialKind="qa"/);
 });

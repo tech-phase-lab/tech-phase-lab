@@ -20,6 +20,7 @@ function configuration() {
 async function identity() {
   const member = await getMembership();
   if (member.status !== "signed-in") return null;
+  if (member.plan !== "pro") return "free" as const;
   const { url, token } = configuration();
   const ownerKey = createHmac("sha256", token).update(`question:${member.userId}`).digest("hex");
   return { url, token, ownerKey };
@@ -35,8 +36,11 @@ export async function GET() {
   try {
     const account = await identity();
     if (!account) return reply(401, { ok: false, error: "sign-in-required" });
-    const response = await fetch(account.url, { headers: { Authorization: `Bearer ${account.token}`, "X-Question-Owner": account.ownerKey }, cache: "no-store", signal: AbortSignal.timeout(10_000) });
-    return reply(response.status, await parse(response));
+    if (account === "free") return reply(403, { ok: false, error: "pro-required" });
+    const response = await fetch(account.url, { headers: { Authorization: `Bearer ${account.token}`, "X-Question-Owner": account.ownerKey, "X-Question-Audience": "pro-board" }, cache: "no-store", signal: AbortSignal.timeout(10_000) });
+    const data = await parse(response);
+    if (response.ok && data.audience !== "pro-board") return reply(503, { ok: false, error: "board-unavailable" });
+    return reply(response.status, data);
   } catch { return reply(503, { ok: false, error: "questions-unavailable" }); }
 }
 
@@ -45,11 +49,12 @@ export async function POST(request: Request) {
   try {
     const account = await identity();
     if (!account) return reply(401, { ok: false, error: "sign-in-required" });
+    if (account === "free") return reply(403, { ok: false, error: "pro-required" });
     const text = await request.text();
     if (!text || new TextEncoder().encode(text).length > 8_000) return reply(400, { ok: false, error: "invalid-request" });
-    const input = JSON.parse(text) as { requestId?: unknown; body?: unknown };
-    if (typeof input.requestId !== "string" || !/^q-[a-f0-9]{32}$/.test(input.requestId) || typeof input.body !== "string" || input.body.trim().length < 10 || input.body.length > 1200 || input.body.includes("\0")) return reply(400, { ok: false, error: "invalid-question" });
-    const response = await fetch(account.url, { method: "POST", headers: { Authorization: `Bearer ${account.token}`, "Content-Type": "application/json" }, body: JSON.stringify({ ownerKey: account.ownerKey, requestId: input.requestId, body: input.body }), cache: "no-store", signal: AbortSignal.timeout(10_000) });
+    const input = JSON.parse(text) as { requestId?: unknown; body?: unknown; audience?: unknown };
+    if (input.audience !== "pro-board" || typeof input.requestId !== "string" || !/^q-[a-f0-9]{32}$/.test(input.requestId) || typeof input.body !== "string" || input.body.trim().length < 10 || input.body.length > 1200 || input.body.includes("\0")) return reply(400, { ok: false, error: "invalid-question" });
+    const response = await fetch(account.url, { method: "POST", headers: { Authorization: `Bearer ${account.token}`, "Content-Type": "application/json" }, body: JSON.stringify({ ownerKey: account.ownerKey, requestId: input.requestId, body: input.body, audience: "pro-board" }), cache: "no-store", signal: AbortSignal.timeout(10_000) });
     return reply(response.status, await parse(response));
   } catch { return reply(503, { ok: false, error: "questions-unavailable" }); }
 }

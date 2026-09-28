@@ -15,7 +15,7 @@ test("free learning and service help stay separate and linked from navigation", 
   assert.match(guide, /日本居住者向け/);
   assert.match(guide, /一般情報です/);
   assert.match(faq, /質問すると必ず回答されますか/);
-  assert.match(faq, /送信文は自動公開されません/);
+  assert.match(faq, /以前の非公開質問は本人と運営者だけ/);
   assert.match(faq, /画面の更新間隔と、発表から端末到着までの実測時間は別/);
   for (const source of [home, nav]) {
     assert.match(source, /\/research\/learn/);

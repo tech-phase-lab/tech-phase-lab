@@ -43,6 +43,31 @@ class QuestionTests(unittest.TestCase):
     def tearDown(self):
         self.db.close(); self.temp.cleanup()
 
+    def test_board_shares_only_new_posts_and_hides_deleted(self):
+        private = questions.submit(self.db, {"ownerKey": OWNER_A, "body": "以前の非公開質問は共有しないでください。"})["item"]
+        payload = {"ownerKey": OWNER_A, "requestId": QUESTION_ID, "body": "新しい質問はPRO会員で共有します。", "audience": "pro-board"}
+        posted = questions.submit(self.db, payload)["item"]
+        board = questions.board_queue(self.db, OWNER_B)
+        self.assertEqual([i["id"] for i in board["items"]], [posted["id"]])
+        self.assertFalse(board["items"][0]["isMine"])
+        self.assertNotIn(OWNER_A, json.dumps(board))
+        self.assertEqual(board["privateItems"], [])
+        self.assertEqual(questions.board_queue(self.db, OWNER_A)["privateItems"][0]["id"], private["id"])
+        with self.assertRaisesRegex(ValueError, "question-conflict"):
+            questions.submit(self.db, {**payload, "audience": "private"})
+        questions.review(self.db, {"id": posted["id"], "decision": "closed"})
+        self.assertEqual(questions.board_queue(self.db, OWNER_B)["items"], [])
+        questions.review(self.db, {"id": posted["id"], "decision": "pending"})
+        self.assertEqual(len(questions.board_queue(self.db, OWNER_B)["items"]), 1)
+
+    def test_board_daily_limit_allows_idempotent_retry(self):
+        payload = {"ownerKey": OWNER_A, "body": "投稿回数制限を検証するための質問です。", "audience": "pro-board"}
+        for i in range(10):
+            questions.submit(self.db, {**payload, "requestId": "q-" + format(i, "032x")})
+        questions.submit(self.db, {**payload, "requestId": "q-" + format(0, "032x")})
+        with self.assertRaisesRegex(ValueError, "question-daily-limit"):
+            questions.submit(self.db, payload)
+
     def test_submit_is_private_owned_and_idempotent(self):
         payload = {"ownerKey": OWNER_A, "requestId": QUESTION_ID, "body": "  決算で最初に見る数字は何ですか？  "}
         first = questions.submit(self.db, payload)["item"]
