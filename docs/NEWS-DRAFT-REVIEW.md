@@ -87,6 +87,15 @@ performed in the live browser. Local gates passed 116 Node and 380 Python tests,
 lint, build, compileall and diff checks. A subsequent copy correction makes the
 top-level review warning consistent with the opt-in approved-news display.
 
+The bounded-retry update was published later on September 28 as `d2d3ee7`, with
+calendar handoff commit `6f271ed`. After rebasing over concurrent PRO-column work,
+the combined suite passed 122 Node and 394 Python tests plus lint, production
+build, compileall and diff checks. Vercel and isolated Railway staging checks both
+succeeded. The protected review page rendered without application console errors;
+the only observed console entry came from the browser automation extension. No
+editor token was entered and no live generation, retry, approval or publication
+was performed.
+
 ## Original backend checkpoint (historical)
 
 The following describes the earlier backend-only stage; the current UI/public
