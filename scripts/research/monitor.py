@@ -194,7 +194,11 @@ def safe_url(url, ticker):
     if (p.scheme != "https" or p.hostname not in HOSTS[ticker]
             or p.username or p.password or p.port not in (None, 443)):
         raise ValueError("URL outside approved official hosts")
-    return urlunsplit((p.scheme, p.netloc, p.path, p.query, ""))
+    # Equivalent authority spellings must not create separate source rows.
+    # Approved hosts are ASCII provider configuration, so the normalized
+    # hostname is also the complete safe authority and an explicit default
+    # HTTPS port can be omitted.
+    return urlunsplit((p.scheme, p.hostname, p.path, p.query, ""))
 
 
 class Redirects(HTTPRedirectHandler):
@@ -2817,7 +2821,12 @@ def operational_incident_summary(db, limit=20, delivery_enabled=False):
 
 
 def add_source(db, ticker, url, published_on=None, title=None):
-    url = safe_url(url, ticker)
+    # Manual and fallback discovery paths share the same article identity as
+    # feed/index parsing: tracking queries and fragments cannot create another
+    # fetch/review record for the same official article. Synthetic inline
+    # identities (for example TWSE rows) are not article-rule URLs and retain
+    # their tightly validated query in the discovery path.
+    url = article_url(url, ticker) or safe_url(url, ticker)
     if published_on:
         datetime.strptime(published_on, "%Y-%m-%d")
     with db:

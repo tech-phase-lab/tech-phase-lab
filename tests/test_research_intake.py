@@ -1731,9 +1731,34 @@ class IntakeTests(unittest.TestCase):
         for url in ["http://nebius.com/newsroom/a", "https://nebius.com.evil.test/a", "https://x:secret@nebius.com/a", "https://nebius.com:8443/a", "https://127.0.0.1/a"]:
             with self.assertRaises(ValueError):
                 m.safe_url(url, "NBIS")
+        self.assertEqual(
+            m.safe_url("https://NEBIUS.com:443/newsroom/a?view=full#section", "NBIS"),
+            "https://nebius.com/newsroom/a?view=full",
+        )
         parser = m.Links(m.INDEXES["NBIS"], "NBIS")
         parser.feed('<a href="https://other.test/newsroom/x">bad</a><a href="/blog/x">blog</a>')
         self.assertEqual(parser.urls, set())
+
+    def test_equivalent_article_urls_share_one_source_identity(self):
+        mixed = m.add_source(
+            self.db,
+            "NBIS",
+            "https://NEBIUS.com:443/newsroom/canonical?utm_source=feed#details",
+            title="Canonical release",
+        )
+        lower = m.add_source(
+            self.db,
+            "NBIS",
+            "https://nebius.com/newsroom/canonical?utm_source=email",
+            title="Duplicate release",
+        )
+        self.assertEqual(mixed, "https://nebius.com/newsroom/canonical")
+        self.assertEqual(lower, mixed)
+        rows = self.db.execute(
+            "SELECT url,title FROM sources WHERE url=?", (mixed,)
+        ).fetchall()
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["title"], "Canonical release")
 
     def test_restart_retains_history(self):
         self.check()

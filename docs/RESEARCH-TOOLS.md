@@ -329,6 +329,11 @@ bypassing an official site's access controls. HTTP 200 HTML is also rejected
 when its title is an error page or its leading markup contains a known
 machine-facing challenge form or vendor challenge endpoint. Ordinary article
 prose that merely discusses bot protection does not trigger this check.
+Official article identities normalize hostname case, omit an explicit default
+HTTPS port and remove query strings and fragments allowed by the article rule.
+The same release discovered through differently tagged feed, email or manual
+URLs therefore shares one fetch, validator, evidence and review record. Query-
+identified inline sources retain their separately validated identity.
 HTTP 429 rate limits use the same conservative circuit. A valid server
 `Retry-After` is honored up to the circuit's seven-day ceiling instead of
 being shortened to the six-hour transient-failure ceiling. When a short SEC
