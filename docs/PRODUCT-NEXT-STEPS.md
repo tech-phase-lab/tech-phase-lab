@@ -313,3 +313,8 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 ### 2026-09-29 07:21 visual refinement
 - Replace the single chain with dense corner-to-corner crossed chains (61 links each), keeping the PRO caption clear.
 - Align help icons in equal-sized centered slots, retain small text and no cards/descriptions, add a short central divider for grouping.
+
+### 2026-09-29 07:27 chain proportions / footer / theme tracker
+- Restore clearly shaped chain loops. Measure the overlay with ResizeObserver and draw chains in actual pixel proportions, retaining corner-to-corner X geometry without stretching the links.
+- Footer help is now 2x2: beginner guide, FAQ/help, notification settings, My account.
+- User asks about screenshot-style theme performance (memory, neocloud, optical interconnect), not only broad sectors. Proposed first version: defined constituent baskets and equal-weight period returns (1D/5D/1M), clear as-of time and coverage; rotation map later. Not implemented or supplied with live data yet. Need an approved historical price source and external-display rights; TradingView embed alone does not supply custom calculation data. No paid activation authorized.

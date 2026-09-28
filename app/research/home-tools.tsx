@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Language, ResearchEvent } from "@/lib/research/data";
 import { dateLabel } from "@/lib/research/presentation";
 import { useStockFavorites } from "./use-stock-favorites";
@@ -10,6 +10,17 @@ import styles from "./home-tools.module.css";
 export default function HomeTools({ lang, onChanges }: { lang: Language; onChanges: () => void }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const [isPro, setIsPro] = useState(false);
+  const chainRef = useRef<SVGSVGElement>(null);
+  const [chainSize, setChainSize] = useState({ width: 360, height: 160 });
+  useEffect(() => {
+    if (isPro || !chainRef.current) return;
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      if (width > 0 && height > 0) setChainSize({ width, height });
+    });
+    observer.observe(chainRef.current);
+    return () => observer.disconnect();
+  }, [isPro]);
   useEffect(() => {
     const controller = new AbortController();
     let generation = 0;
@@ -52,12 +63,10 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
         <Link href="/research/weekly"><strong>{t("週刊PRO", "PRO Weekly")}</strong><span className={styles.deskSmall}>{t("一週間の変化と展望", "The week’s shifts & outlook")}</span><span aria-hidden="true">→</span></Link>
       </div>
       {!isPro && <div className={styles.deskOverlay}>
-        <svg className={styles.deskChain} viewBox="0 0 1000 450" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          {[1, -1].map(direction => <g key={direction}>{Array.from({ length: 61 }, (_, index) => {
-            const x = index * 1000 / 60;
-            const y = direction === 1 ? index * 450 / 60 : 450 - index * 450 / 60;
-            return <g key={index} transform={`translate(${x} ${y}) rotate(${direction * 24.23})`}><rect x="-12" y="-6" width="24" height="12" rx="6" fill="none" stroke="currentColor" strokeWidth="1.4" vectorEffect="non-scaling-stroke" /><path d="M-6 -3h9" stroke="#d4c9b0" strokeOpacity=".3" strokeWidth=".6" vectorEffect="non-scaling-stroke" /></g>;
-          })}</g>)}
+        <svg ref={chainRef} className={styles.deskChain} viewBox={`0 0 ${chainSize.width} ${chainSize.height}`} aria-hidden="true" focusable="false">
+          {[1, -1].map(direction => <g key={direction} transform={`translate(0 ${direction === 1 ? 0 : chainSize.height}) rotate(${direction * Math.atan2(chainSize.height, chainSize.width) * 180 / Math.PI})`}>
+            {Array.from({ length: Math.ceil(Math.hypot(chainSize.width, chainSize.height) / 18) + 1 }, (_, index) => <g key={index} transform={`translate(${index * 18} 0)`}><rect x="-12" y="-6" width="24" height="12" rx="6" fill="none" stroke="currentColor" strokeWidth="1.8" /><path d="M8 -2h11m-11 4h11" stroke="currentColor" strokeWidth="1.6" /><path d="M-6 -3h9" stroke="#d4c9b0" strokeOpacity=".35" strokeWidth=".7" /></g>)}
+          </g>)}
         </svg>
         <div className={styles.overlayCaption}><span className={styles.overlayLabel}>TECH PHASE PRO</span><strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong></div>
       </div>}
@@ -70,6 +79,8 @@ export function HomeHelp({ lang }: { lang: Language }) {
     <span>{lang === "ja" ? "学びとご利用案内" : "Learning and help"}</span>
     <Link href="/research/learn"><span className={styles.helpIcon} aria-hidden="true">🔰</span><span><strong>{lang === "ja" ? "米国株のはじめ方" : "US stock basics"}</strong></span></Link>
     <Link href="/research/faq"><span className={`${styles.helpIcon} ${styles.helpQuestion}`} aria-hidden="true">?</span><span><strong>{lang === "ja" ? "よくある質問・使い方" : "FAQ & help"}</strong></span></Link>
+    <Link href="/research/notifications"><span className={styles.helpIcon} aria-hidden="true">🔔</span><span><strong>{lang === "ja" ? "スマホ通知設定" : "Notifications"}</strong></span></Link>
+    <Link href="/research/account"><span className={styles.helpIcon} aria-hidden="true">👤</span><span><strong>{lang === "ja" ? "マイアカウント" : "My account"}</strong></span></Link>
   </nav>;
 }
 
