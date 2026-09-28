@@ -62,6 +62,24 @@ content or claim a real editor save/account transition from these tests.
 
 ## Live preview verification follow-up
 
+### September 28 afternoon — publication lifecycle and simpler writing
+
+- Saved an explicitly synthetic notes record `verification-note-20260928` through
+  the staging admin HTTP API (version 1), published it (version 2), and observed
+  its title/intro in the signed-out notes page. The body remained behind the PRO
+  requirement. No personal opinion or investment advice was attributed to RIZEL.
+- Withdrew it (version 3), then saved it as draft (version 4). This tests the live
+  backend publication lifecycle, not a browser editor save interaction. The prior
+  private weekly sample was untouched. No push notification was sent.
+- The editor now starts with Japanese writing, with an English toggle, a sticky
+  draft-save bar, character count, and collapsed source/memo fields. Existing
+  bilingual publication requirements and editor-token authentication remain.
+  Account navigation exposes an authoring link only to a verified admin.
+- Remaining live checks: a signed-in PRO viewing this editorial body; browser
+  editing/saving with the editor credential; phone delivery rejection at expiry.
+  The prior signed-in historical-research check does not prove editorial-body
+  display. These are explicit launch gates, not completed tests.
+
 The editor page deployed successfully. The first member-list browser check
 exposed a missing Clerk proxy matcher for `/api/research/posts`; identity lookup
 failed closed with no content. Added that route to the existing identity proxy
