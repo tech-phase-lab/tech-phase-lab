@@ -1,5 +1,14 @@
 # Approved product priorities — 2026-09-27
 
+## Current checkpoint — September 28, 12:05 JST
+
+Owner confirmed test push receipt and pressed Received. VAPID URL correction is
+deployed in `9eed003`; member test provider acceptance was 201. Continue approved
+priority 2 (acquisition → bilingual display, missed-event/duplicate checks).
+See `DELIVERY-VERIFICATION.md` for the live baseline, target replay defect/fix,
+and remaining measurement limits. This checkpoint supersedes older pending
+phone-receipt wording below, not the separate Free/expiry browser checks.
+
 User approved this order. Preserve across sessions.
 
 1. Finish one bilingual “What changed?” research example, verified against primary sources, with a clear lead, comparisons, independent interpretation, uncertainty and next checks. First example: existing MU FQ3 2026 note (June 24 historical release), improved in place; do not duplicate it as breaking news.

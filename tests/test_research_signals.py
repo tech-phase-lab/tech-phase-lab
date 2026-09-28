@@ -95,6 +95,35 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(result["items"][0]["source"], "X · The Fly")
         self.assertEqual(result["items"][0]["observedAt"], (reference - timedelta(minutes=3)).isoformat())
 
+    def insert_target_observation(self, index, published, observed, latest=720):
+        signals.schema(self.db)
+        self.db.execute("""INSERT INTO signal_events(source_id,url,sha,previous_sha,title,tickers_json,
+          matches_json,event_kind,published_at,observed_at,excerpt,diff,truncated)
+          VALUES(?,?,?,?,?,?,?,?,?,?,?,?,0)""", (
+            'x-tipranks', f'https://x.com/TipRanks/status/{index}', str(index), '',
+            f'AMD price target raised to ${latest} from $620 at BofA', '["AMD"]', '{}',
+            'new', published, observed, '', ''))
+
+    def test_target_dedup_and_order_use_absolute_instants(self):
+        reference = datetime(2026, 9, 25, 12, tzinfo=timezone.utc)
+        self.insert_target_observation(1, '2026-09-25T20:55:00+09:00', '2026-09-25T20:56:00+09:00')
+        self.insert_target_observation(2, '2026-09-25T11:55:00+00:00', '2026-09-25T11:57:00+00:00')
+        self.insert_target_observation(3, '2026-09-25T07:58:00-04:00', '2026-09-25T07:59:00-04:00', 730)
+        self.insert_target_observation(4, '2026-09-25T11:59:00+00:00', '2026-09-25T12:01:00+00:00', 740)
+        items = signals.public_price_targets(self.db, now=reference)['items']
+        self.assertEqual([item['latest'] for item in items], [730, 720])
+        self.assertTrue(items[1]['url'].endswith('/1'))
+        self.assertEqual(datetime.fromisoformat(items[1]['observedAt']),
+                         reference - timedelta(minutes=4))
+
+    def test_target_candidate_window_uses_absolute_instants(self):
+        reference = datetime(2026, 9, 25, 12, tzinfo=timezone.utc)
+        for index in range(300):
+            self.insert_target_observation(index + 1, '2026-09-25T20:00:00+09:00', '2026-09-25T20:01:00+09:00')
+        self.insert_target_observation(301, '2026-09-25T11:58:00+00:00', '2026-09-25T11:59:00+00:00', 730)
+        items = signals.public_price_targets(self.db, now=reference)['items']
+        self.assertEqual([item['latest'] for item in items], [730, 720])
+
     def test_signal_route_errors_have_safe_specific_diagnostic_codes(self):
         cases = {
             "unexpected-signal-content-type": "signal-content-type",

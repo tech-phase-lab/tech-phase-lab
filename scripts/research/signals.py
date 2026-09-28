@@ -809,7 +809,7 @@ def public_price_targets(db, sources=SOURCES, now=None, limit=20):
     by_change = {}
     rows = db.execute("""SELECT id,source_id,url,title,tickers_json,published_at,observed_at
                          FROM signal_events WHERE event_kind='new' AND source_id LIKE 'x-%'
-                         ORDER BY observed_at DESC,id DESC LIMIT 300""").fetchall()
+                         ORDER BY julianday(observed_at) DESC,id DESC LIMIT 300""").fetchall()
     for row in rows:
         source = approved.get(row["source_id"])
         if not source:
@@ -823,6 +823,7 @@ def public_price_targets(db, sources=SOURCES, now=None, limit=20):
             url = safe_url(row["url"], source)
             old, new = (float(match.group(2)), float(match.group(1))) if match else (0, 0)
             if (published.tzinfo is None or observed.tzinfo is None or
+                    observed > now or
                     not timedelta(0) <= now - published <= timedelta(days=7) or
                     not timedelta(0) <= observed - published <= timedelta(minutes=15) or
                     not match or not firm or not isinstance(tickers, list) or len(tickers) != 1 or
@@ -835,11 +836,11 @@ def public_price_targets(db, sources=SOURCES, now=None, limit=20):
         # its first detection and one source link instead of showing it twice.
         change = (tickers[0], firm.group(1).casefold(), old, new, published.astimezone(timezone.utc).date())
         current = by_change.get(change)
-        if current is None or (observed.isoformat(), row["id"]) < (current["observedAt"], current["id"]):
+        if current is None or (observed, row["id"]) < (datetime.fromisoformat(current["observedAt"]), current["id"]):
             by_change[change] = {"id": row["id"], "ticker": tickers[0], "firm": firm.group(1),
                                  "previous": old, "latest": new, "source": source["name"], "url": url,
                                  "publishedAt": published.isoformat(), "observedAt": observed.isoformat()}
-    items = sorted(by_change.values(), key=lambda item: item["publishedAt"], reverse=True)[:max(1, min(limit, 30))]
+    items = sorted(by_change.values(), key=lambda item: datetime.fromisoformat(item["publishedAt"]), reverse=True)[:max(1, min(limit, 30))]
     return {"ok": True, "items": items, "generatedAt": stamp()}
 
 

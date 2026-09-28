@@ -10,6 +10,7 @@ import unittest
 from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/research'))
 import web_push as push
+import signals
 
 def b64(value):
     return base64.urlsafe_b64encode(value).decode().rstrip('=')
@@ -119,6 +120,40 @@ class PushTests(unittest.TestCase):
         for value in ['http://example.com/path', 'https://admin@example.com/path', 'invalid']:
             with self.assertRaises(ValueError):
                 push.vapid_subject(value)
+
+    def test_saved_targets_deliver_once_per_language_across_replay_and_restart(self):
+        signals.schema(self.db)
+        for lang, host in [('ja', 'fcm.googleapis.com'), ('en', 'web.push.apple.com')]:
+            push.register_member(self.db, {
+                'memberId': 'user_' + lang, 'accessExpiresAt': self.now + 3600,
+                'subscription': subscription(host), 'allTargets': True, 'language': lang,
+            }, {'MU'}, self.now - 30)
+        reference = datetime.fromtimestamp(self.now, timezone.utc)
+        for index, source in enumerate(['x-tipranks', 'x-thefly']):
+            self.db.execute('''INSERT INTO signal_events(source_id,url,sha,previous_sha,title,tickers_json,
+              matches_json,event_kind,published_at,observed_at,excerpt,diff,truncated)
+              VALUES(?,?,?,?,?,?,?,?,?,?,?,?,0)''', (
+                source, f'https://x.com/example/status/{index + 1}', str(index), '',
+                'MU price target raised to $120 from $100 at BofA', '["MU"]', '{}', 'new',
+                datetime.fromtimestamp(self.now - 20, timezone.utc).isoformat(),
+                datetime.fromtimestamp(self.now - 10 + index, timezone.utc).isoformat(), '', ''))
+        self.db.commit()
+        items = signals.public_price_targets(self.db, now=reference)['items']
+        self.assertEqual(len(items), 1)
+        sent = []
+        transport = lambda _, message: sent.append(message) or 201
+        result = push.deliver(self.db, items, transport, self.now,
+                              wall_now=lambda: self.now, entitlement=lambda _: self.now + 3600)
+        self.assertEqual(result['accepted'], 2)
+        self.assertEqual({message['title'] for message in sent},
+                         {'MU · 目標株価の変更', 'MU · Price target update'})
+        self.assertTrue(all('100' in message['body'] and '120' in message['body'] for message in sent))
+        self.db.close(); self.db = push.connect(Path(self.tmp.name) / 'push.sqlite')
+        replay = signals.public_price_targets(self.db, now=reference)['items']
+        result = push.deliver(self.db, replay, transport, self.now + 1,
+                              wall_now=lambda: self.now + 1, entitlement=lambda _: self.now + 3600)
+        self.assertEqual(result['attempted'], 0)
+        self.assertEqual(len(sent), 2)
 
     def test_filters_and_deduplicates_across_sources_and_restart(self):
         self.register(); calls=[]
