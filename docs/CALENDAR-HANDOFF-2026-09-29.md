@@ -194,3 +194,36 @@ press-conference clock times. Existing date-only records remain date-only.
 
 Next: SKHY, SNOW, VRT, AMAT, QCOM, CRM, KLAC, LITE, MRVL and MSFT, as already
 queued in batch 140. Use this dated handoff rather than the older aggregate file.
+
+## Follow-up pending-source review (07:45 JST)
+
+Rechecked the queued ten companies against their first-party investor pages on
+September 29. Microsoft now explicitly says that its next earnings release will
+be announced soon, so its current schedule state was conclusively checked and
+`lastCheckedOn` advanced to September 29. The other nine sources remain empty,
+historical-only or inaccessible; they stay pending and no estimated date was
+added.
+
+| Ticker | Result | Official source / exact blocker |
+| --- | --- | --- |
+| SKHY | Pending | [IR news](https://news.skhynix.com/en/category/ir/) still ends with the completed July 29 Q2 results and July 28 earnings-call invitation. It has no future earnings announcement. |
+| SNOW | Pending | [Events & Presentations](https://investors.snowflake.com/events-and-presentations/default.aspx) exposes an empty Upcoming Events section without an explicit no-events statement. |
+| VRT | Pending | [Events & Presentations](https://investors.vertiv.com/events-presentations/events-presentations/default.aspx) exposes an empty Latest Events section without an explicit no-events statement. |
+| AMAT | Pending | [Upcoming Events](https://ir.appliedmaterials.com/events?tab=upcoming) was inaccessible through the official endpoint during this check. No access control was bypassed. |
+| QCOM | Pending | [Investor Events](https://investor.qualcomm.com/news-events/investor-events/default.aspx) exposes an empty Upcoming Events section and archived items only. |
+| CRM | Pending | [Events & Presentations](https://investor.salesforce.com/events-and-presentations/default.aspx) exposes empty Upcoming & Recent Events and Archived Events sections. |
+| KLAC | Pending | [Events & Presentations](https://ir.kla.com/events-presentations/) was inaccessible through the official endpoint during this check. No access control was bypassed. |
+| LITE | Pending | [Events & Presentations](https://investor.lumentum.com/events-and-presentations/default.aspx) exposes Latest Events, Latest Presentation and Archived Events headings without an inspectable future item. |
+| MRVL | Pending | [Events & Presentations](https://investor.marvell.com/events-and-presentations/default.aspx) was inaccessible through the official endpoint during this check. No access control was bypassed. |
+| MSFT | Checked | [Investor Relations](https://www.microsoft.com/en-us/investor) explicitly says that the next earnings release will be announced soon. No earnings date is currently published. |
+
+The BLS annual schedule was rechecked on September 29 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar, last updated September 16, still
+lists the October 27–28 and December 8–9 meetings without future statement or
+press-conference clock times. No economic-calendar entry changed.
+
+Next: NOW, NVDA, PANW, PLTR, AAPL, AMZN, ANET, ARM, AVGO and BE. Empty dynamic
+sections, inaccessible endpoints, tentative labels and completed announcements
+remain pending unless a first-party source supplies a confirmed date or an
+explicit current no-events state.
