@@ -21,6 +21,7 @@ import persistence
 import signals
 import stock_news
 import news_drafts
+import editorial_posts
 import web_push
 
 
@@ -561,6 +562,14 @@ class AutomaticMonitor:
     def public_news(self):
         with stock_news.connect(self.db_path) as db:
             return news_drafts.public_feed(db)
+
+    def posts_queue(self, limit=20, published=False, offset=0):
+        with editorial_posts.connect(self.db_path) as db:
+            return editorial_posts.queue(db, limit, published, offset)
+
+    def save_post(self, payload, review=False):
+        with editorial_posts.connect(self.db_path) as db:
+            return editorial_posts.review(db, payload) if review else editorial_posts.save(db, payload)
 
     def signal_queue(self, limit=30, view="all", ticker=None):
         with self.db_lock, monitor.connect(self.db_path) as db:
@@ -1823,14 +1832,15 @@ class Handler(BaseHTTPRequestHandler):
             state = self.app.public_state()
             self.send_json(200 if path == "/health" or state["ready"] else 503, state)
             return
-        if path in {"/admin/briefs", "/admin/annual-briefs", "/admin/signals", "/admin/news"}:
+        if path in {"/admin/briefs", "/admin/annual-briefs", "/admin/signals", "/admin/news", "/admin/posts"}:
             if not self.editor_authorized():
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
                 return
             try:
                 limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
                 view = parse_qs(parsed.query).get("view", ["all"])[0]
-                queue = (self.app.stock_news_queue(limit) if path == "/admin/news" else
+                queue = (self.app.posts_queue(limit, offset=int(parse_qs(parsed.query).get("offset", ["0"])[0])) if path == "/admin/posts" else
+                         self.app.stock_news_queue(limit) if path == "/admin/news" else
                          self.app.signal_queue(limit, view, parse_qs(parsed.query).get("ticker", [None])[0])
                          if path == "/admin/signals" else
                          self.app.annual_editorial_queue(limit, view) if path == "/admin/annual-briefs"
@@ -1860,13 +1870,16 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "annual-brief-unavailable"})
             return
-        if path not in {"/snapshot", "/live", "/price-targets", "/news"}:
+        if path not in {"/snapshot", "/live", "/price-targets", "/news", "/posts"}:
             self.send_json(404, {"ok": False, "error": "not-found"})
             return
         if not self.authorized():
             self.send_json(401, {"ok": False, "error": "unauthorized"})
             return
         try:
+            if path == "/posts":
+                self.send_json(200, {"ok": True, **self.app.posts_queue(published=True)})
+                return
             if path == "/news":
                 self.send_json(200, self.app.public_news())
                 return
@@ -1914,6 +1927,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(503, {"ok": False})
             return
         if path not in {
+            "/admin/posts/draft", "/admin/posts/review",
             "/admin/news/generate", "/admin/news/review", "/admin/news/draft",
             "/admin/briefs/generate", "/admin/briefs/draft", "/admin/briefs/review",
             "/admin/annual-briefs/draft", "/admin/annual-briefs/review",
@@ -1925,7 +1939,9 @@ class Handler(BaseHTTPRequestHandler):
             return
         try:
             payload = self.read_json()
-            if path == "/admin/news/generate":
+            if path in {"/admin/posts/draft", "/admin/posts/review"}:
+                result = self.app.save_post(payload, review=path.endswith("/review"))
+            elif path == "/admin/news/generate":
                 result = self.app.generate_news_draft(payload)
             elif path == "/admin/news/review":
                 result = self.app.review_news_draft(payload)

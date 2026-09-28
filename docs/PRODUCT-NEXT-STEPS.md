@@ -1,5 +1,14 @@
 # Approved product priorities — 2026-09-27
 
+## Latest checkpoint — manual PRO columns, September 28
+
+Stock News API and OpenAI API/model setup are explicitly deferred by the owner.
+Priority 2 is not complete. Continue priority 3: manual bilingual weekly PRO,
+Research Q&A and RIZEL notes now have draft storage, revision-bound publication,
+withdrawal and membership-filtered display. See `EDITORIAL-COLUMNS.md`. No real
+article has been published or AI provider activated by this implementation.
+
+
 ## Latest implementation checkpoint — September 28
 
 Ordinary-news editor UI, evidence-backed manual corrections, bilingual generation,

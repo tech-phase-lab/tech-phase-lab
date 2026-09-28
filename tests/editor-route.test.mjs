@@ -119,3 +119,24 @@ test("editor proxy validates and forwards annual review filters", async () => {
     else process.env.RESEARCH_MONITOR_URL = previousUrl;
   }
 });
+
+test("manual columns proxy authenticates actions and bounds archive pagination", async () => {
+  const saved = { url: process.env.RESEARCH_MONITOR_URL, fetch: globalThis.fetch };
+  process.env.RESEARCH_MONITOR_URL = "https://monitor.example";
+  const calls = [];
+  globalThis.fetch = async (url, init) => { calls.push({ url: new URL(url), init }); return Response.json({ ok: true, items: [] }); };
+  try {
+    assert.equal((await GET(new Request("https://example.test/api/research/editor?kind=posts"))).status, 401);
+    assert.equal(calls.length, 0);
+    assert.equal((await GET(new Request("https://example.test/api/research/editor?kind=posts&offset=20", { headers: { Authorization: authorization } }))).status, 200);
+    assert.equal(calls[0].url.pathname, "/admin/posts");
+    assert.equal(calls[0].url.searchParams.get("offset"), "20");
+    for (const offset of ["-1", "Infinity", "0.5", "100001"]) assert.equal((await GET(new Request(`https://example.test/api/research/editor?kind=posts&offset=${offset}`, { headers: { Authorization: authorization } }))).status, 400);
+    for (const action of ["draft", "review"]) {
+      const body = JSON.stringify({ action: `post-${action}`, payload: { id: "synthetic-column-0001", version: 1 } });
+      assert.equal((await POST(new Request("https://example.test/api/research/editor", { method: "POST", body }))).status, 401);
+      assert.equal((await POST(new Request("https://example.test/api/research/editor", { method: "POST", headers: { Authorization: authorization }, body }))).status, 200);
+      assert.equal(calls.at(-1).url.pathname, `/admin/posts/${action}`);
+    }
+  } finally { globalThis.fetch = saved.fetch; if (saved.url === undefined) delete process.env.RESEARCH_MONITOR_URL; else process.env.RESEARCH_MONITOR_URL = saved.url; }
+});

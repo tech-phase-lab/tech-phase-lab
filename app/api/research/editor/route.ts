@@ -43,15 +43,20 @@ export async function GET(request: Request) {
     const limit = Number.isInteger(requested) ? Math.max(1, Math.min(requested, 50)) : 20;
     const kind = requestUrl.searchParams.get("kind");
     const view = requestUrl.searchParams.get("view") ?? "all";
-    const allowedViews = kind === "news" ? ["all"] : kind === "signals" ? ["all", "new", "changed", "baseline", "targets"] : kind === "annual"
+    const allowedViews = ["posts", "news"].includes(kind ?? "") ? ["all"] : kind === "signals" ? ["all", "new", "changed", "baseline", "targets"] : kind === "annual"
       ? ["all", "actionable", "invalid", "draft", "held", "approved", "rejected"]
       : ["all", "ready", "blocked", "needs-draft"];
     if (!allowedViews.includes(view)) {
       return response(400, { ok: false, error: "invalid-review-filter" });
     }
-    const url = endpoint(kind === "news" ? "/admin/news" : kind === "signals" ? "/admin/signals" : kind === "annual" ? "/admin/annual-briefs" : "/admin/briefs");
+    const url = endpoint(kind === "posts" ? "/admin/posts" : kind === "news" ? "/admin/news" : kind === "signals" ? "/admin/signals" : kind === "annual" ? "/admin/annual-briefs" : "/admin/briefs");
     url.searchParams.set("limit", String(limit));
     url.searchParams.set("view", view);
+    if (kind === "posts") {
+      const offset = Number(requestUrl.searchParams.get("offset") ?? 0);
+      if (!Number.isInteger(offset) || offset < 0 || offset > 100000) return response(400, { ok: false, error: "invalid-offset" });
+      url.searchParams.set("offset", String(offset));
+    }
     if (kind === "signals" && requestUrl.searchParams.has("ticker")) {
       const ticker = requestUrl.searchParams.get("ticker") ?? "";
       if (!/^[A-Z0-9.\-]{1,15}$/.test(ticker)) return response(400, { ok: false, error: "invalid-ticker" });
@@ -71,10 +76,12 @@ export async function POST(request: Request) {
     if (!text || new TextEncoder().encode(text).length > 64 * 1024) return response(400, { ok: false, error: "invalid-request-size" });
     let parsed: { action?: unknown; payload?: unknown };
     try { parsed = JSON.parse(text); } catch { return response(400, { ok: false, error: "invalid-json" }); }
-    if (!parsed || typeof parsed !== "object" || !["generate", "draft", "review", "annual-draft", "annual-review", "news-generate", "news-draft", "news-review"].includes(String(parsed.action)) || !parsed.payload || typeof parsed.payload !== "object" || Array.isArray(parsed.payload)) {
+    if (!parsed || typeof parsed !== "object" || !["generate", "draft", "review", "annual-draft", "annual-review", "news-generate", "news-draft", "news-review", "post-draft", "post-review"].includes(String(parsed.action)) || !parsed.payload || typeof parsed.payload !== "object" || Array.isArray(parsed.payload)) {
       return response(400, { ok: false, error: "invalid-request" });
     }
     const paths: Record<string, string> = {
+      "post-draft": "/admin/posts/draft",
+      "post-review": "/admin/posts/review",
       generate: "/admin/briefs/generate",
       draft: "/admin/briefs/draft",
       review: "/admin/briefs/review",
