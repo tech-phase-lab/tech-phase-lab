@@ -45,12 +45,13 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
       <button onClick={onChanges}><span className={styles.icon} aria-hidden="true">♻️</span><strong>{t("何が変わった？", "What changed?")}</strong><p>{t("企業の変化と、その根拠", "Company shifts & evidence")}</p></button>
     </nav>
     <nav className={`${styles.reading} ${isPro ? "" : styles.readingLocked}`} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
-      <div className={styles.deskHeading}><span>RIZEL’S DESK</span><span className={styles.deskEdition}>{isPro ? "TECH PHASE PRO" : <><span aria-hidden="true">🔒 </span>{t("PRO限定", "PRO only")}</>}</span></div>
+      <div className={styles.deskHeading}><span>RIZEL’S DESK</span><span className={styles.deskEdition}>TECH PHASE PRO</span></div>
       <Link href="/research/notes" className={styles.deskLead}><div><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong><p>{latestLabel ? t(`最新の投稿 · ${latestLabel}（本文はPRO会員向け）`, `Latest post · ${latestLabel} (PRO body)`) : t("数字の先にある、相場の着眼点。", "A perspective beyond the numbers.")}</p></div><span aria-hidden="true">→</span></Link>
       <div className={styles.deskPair}>
         <Link href="/research/qa"><strong>{t("リゼルに聞く", "Ask RIZEL")}</strong><span className={styles.deskSmall}>{t("疑問から、理解を深める", "Questions worth exploring")}</span><span aria-hidden="true">→</span></Link>
         <Link href="/research/weekly"><strong>{t("週刊PRO", "PRO Weekly")}</strong><span className={styles.deskSmall}>{t("一週間の変化と展望", "The week’s shifts & outlook")}</span><span aria-hidden="true">→</span></Link>
       </div>
+      {!isPro && <div className={styles.deskOverlay}><span className={styles.overlayLabel}>TECH PHASE PRO</span><strong>{t("PRO会員限定", "Exclusive to PRO")}</strong></div>}
     </nav>
   </>;
 }
@@ -58,8 +59,8 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
 export function HomeHelp({ lang }: { lang: Language }) {
   return <nav className={styles.help} aria-label={lang === "ja" ? "学びとご利用案内" : "Learning and help"}>
     <span>{lang === "ja" ? "学びとご利用案内" : "Learning and help"}</span>
-    <Link href="/research/learn"><span className={styles.helpIcon} aria-hidden="true">🔰</span><span><strong>{lang === "ja" ? "米国株のはじめ方" : "US stock basics"}</strong><small>{lang === "ja" ? "口座開設から、投資の基本まで" : "Accounts, orders and investing basics"}</small></span></Link>
-    <Link href="/research/faq"><span className={styles.helpIcon} aria-hidden="true">?</span><span><strong>{lang === "ja" ? "よくある質問・使い方" : "FAQ & help"}</strong><small>{lang === "ja" ? "会員プラン・通知・サービスの使い方" : "Membership, alerts and using Tech Phase"}</small></span></Link>
+    <Link href="/research/learn"><span className={styles.helpIcon} aria-hidden="true">🔰</span><span><strong>{lang === "ja" ? "米国株のはじめ方" : "US stock basics"}</strong><small>{lang === "ja" ? "口座開設・投資の基本" : "Accounts, orders and investing basics"}</small></span></Link>
+    <Link href="/research/faq"><span className={styles.helpIcon} aria-hidden="true">?</span><span><strong>{lang === "ja" ? "よくある質問・使い方" : "FAQ & help"}</strong><small>{lang === "ja" ? "プラン・通知・使い方" : "Membership, alerts and using Tech Phase"}</small></span></Link>
   </nav>;
 }
 

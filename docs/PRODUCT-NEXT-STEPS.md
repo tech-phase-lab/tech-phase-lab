@@ -301,3 +301,7 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
   verification pending; do not report it as passed.
 - Product backlog remains complete apart from verification and owner-provided
   FAQ corrections. Continue calendar maintenance using the dated handoff.
+
+### 2026-09-29 07:04 visual correction
+- Free RIZEL’s Desk uses an 84% black overlay over the original design with centered PRO membership label; underlying text remains barely visible. This is a PRO gate, not a coming-soon claim.
+- Homepage help removes card backgrounds/borders, retaining only bottom rules. Both links remain side by side on mobile with a beginner mark and short descriptions. Supersedes earlier card design.
