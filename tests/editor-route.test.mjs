@@ -17,7 +17,7 @@ test("news editor forwards only authenticated explicit actions", async () => {
     assert.equal(calls.length, 0);
     await GET(new Request("http://localhost/api/research/editor?kind=news", { headers: { Authorization: authorization } }));
     assert.equal(new URL(calls[0].url).pathname, "/admin/news");
-    for (const action of ["generate", "draft", "review"]) {
+    for (const action of ["generate", "retry", "draft", "review"]) {
       const result = await POST(new Request("http://localhost/api/research/editor", { method: "POST", headers: { Authorization: authorization }, body: body(`news-${action}`) }));
       assert.equal(result.status, 200);
       const sent = calls.at(-1);

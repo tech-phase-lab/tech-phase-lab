@@ -76,7 +76,7 @@ export async function POST(request: Request) {
     if (!text || new TextEncoder().encode(text).length > 64 * 1024) return response(400, { ok: false, error: "invalid-request-size" });
     let parsed: { action?: unknown; payload?: unknown };
     try { parsed = JSON.parse(text); } catch { return response(400, { ok: false, error: "invalid-json" }); }
-    if (!parsed || typeof parsed !== "object" || !["generate", "draft", "review", "annual-draft", "annual-review", "news-generate", "news-draft", "news-review", "post-draft", "post-review"].includes(String(parsed.action)) || !parsed.payload || typeof parsed.payload !== "object" || Array.isArray(parsed.payload)) {
+    if (!parsed || typeof parsed !== "object" || !["generate", "draft", "review", "annual-draft", "annual-review", "news-generate", "news-retry", "news-draft", "news-review", "post-draft", "post-review"].includes(String(parsed.action)) || !parsed.payload || typeof parsed.payload !== "object" || Array.isArray(parsed.payload)) {
       return response(400, { ok: false, error: "invalid-request" });
     }
     const paths: Record<string, string> = {
@@ -88,6 +88,7 @@ export async function POST(request: Request) {
       "annual-draft": "/admin/annual-briefs/draft",
       "annual-review": "/admin/annual-briefs/review",
       "news-generate": "/admin/news/generate",
+      "news-retry": "/admin/news/retry",
       "news-draft": "/admin/news/draft",
       "news-review": "/admin/news/review",
     };
@@ -96,7 +97,7 @@ export async function POST(request: Request) {
       method: "POST",
       headers: { Authorization: auth, "Content-Type": "application/json" },
       body: JSON.stringify(parsed.payload),
-    }, parsed.action === "news-generate" ? 115_000 : 15_000);
+    }, ["news-generate", "news-retry"].includes(String(parsed.action)) ? 115_000 : 15_000);
   } catch {
     return response(503, { ok: false, error: "editorial-service-unavailable" });
   }

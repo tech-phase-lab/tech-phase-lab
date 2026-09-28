@@ -63,8 +63,20 @@ calls. Additional tests cover stale edits, identical-save invalidation, source
 corrections, altered translations, public-field redaction, proxy authentication
 and disabled publication. Live model quality/provider access remain unverified.
 
-Remaining: explicit failed-generation retry controls, live provider entitlement
-and schema verification, bilingual model-output evaluation, then actual
+Failed-generation recovery is now explicit and bounded. A failed current source
+revision exposes one editor-only retry button. The request carries the current
+`editVersion` and an explicit confirmation flag; the server accepts it only when
+the first attempt is durably `failed`, no current draft exists and the source/edit
+version is unchanged. A transaction prevents simultaneous editors from reserving
+the same retry. The retry receives its own immutable attempt number and full
+conservative token reservation, counts toward the same UTC-day attempt/token
+ceilings, and cannot be attempted a third time. Reserved/interrupted attempts are
+not automatically retried. The queue exposes only bounded state, attempt count and
+retry eligibility—never provider errors, prompts, credentials or raw usage detail.
+Legacy one-row attempt records migrate idempotently as attempt 1.
+
+Remaining: live provider entitlement and schema verification, bilingual
+model-output evaluation, then actual
 publication-to-screen timing. Manual evidence-backed correction is now available.
 
 Preview verification: the September 28 deployment of `b4d9db4` passed GitHub
@@ -114,10 +126,10 @@ not actual billed usage: three times the UTF-8 input size plus 8000 per request,
 covering the existing transport's maximum three attempts and 2400 output tokens.
 UTC-day membership is calculated from the absolute instant, so persisted timestamps
 with different valid UTC offsets cannot move an attempt into or out of the budget.
-Failures and interrupted requests retain the reservation. A source revision is
-attempted at most once, across restarts and simultaneous editors. There is no
-automatic retry/release workflow; failed revisions need a future explicit recovery
-tool. Existing current drafts are never overwritten by generation.
+Failures and interrupted requests retain the reservation. A source revision gets
+one initial attempt and, only after a durable failure, one explicit confirmed retry
+across restarts and simultaneous editors. There is no automatic retry or budget
+release workflow. Existing current drafts are never overwritten by generation.
 
 ## Verification and remaining work
 

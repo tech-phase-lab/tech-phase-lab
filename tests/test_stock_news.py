@@ -152,6 +152,8 @@ class StockNewsTests(unittest.TestCase):
                 return {"items": [], "publicationEnabled": False}
             def generate_news_draft(self, payload):
                 return {"status": "draft", "publicationEnabled": False}
+            def retry_news_draft(self, payload):
+                return {"status": "draft", "publicationEnabled": False}
             def review_news_draft(self, payload):
                 return {"status": "held", "publicationEnabled": False}
             def save_news_draft(self, payload):
@@ -168,7 +170,7 @@ class StockNewsTests(unittest.TestCase):
                 self.assertEqual(error.exception.code, 401)
                 with urlopen(Request(url, headers={"Authorization": "Bearer synthetic-editor-token-more-than-24"}), timeout=2) as response:
                     self.assertFalse(json.load(response)["publicationEnabled"])
-                for action, expected in (("generate", "draft"), ("review", "held"), ("draft", "draft")):
+                for action, expected in (("generate", "draft"), ("retry", "draft"), ("review", "held"), ("draft", "draft")):
                     request = Request(url + "/" + action, data=b"{}", headers={"Content-Type": "application/json"})
                     with self.assertRaises(HTTPError) as error:
                         urlopen(request, timeout=2)

@@ -181,6 +181,7 @@ def queue(db, limit=20):
                       "summaryJa": row["summary_ja"] if current_draft else None,
                       "summaryEn": row["summary_en"] if current_draft else None,
                       "draftCurrent": current_draft, "displayedAt": row["displayed_at"],
+                      "generation": news_drafts.generation_state(db, row["id"], row["revision"]),
                       "review": news_drafts.editorial_state(db, row["id"], row["revision"]),
                       "editVersion": news_drafts.edit_version(db, row)})
     month = stamp()[:7] + "-01"

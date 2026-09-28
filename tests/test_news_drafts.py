@@ -44,6 +44,13 @@ class NewsDraftTests(unittest.TestCase):
         return drafts.generate(self.db, item["id"], item["revision"],
                                transport=transport or (lambda *_: {"output_text": json.dumps(VALUE)}), env=env or ENV)
 
+    def retry(self, transport=None, payload=None, env=None):
+        row = news.queue(self.db)["items"][0]
+        value = {"articleId": self.item["id"], "revision": self.item["revision"],
+                 "editVersion": row["editVersion"], "confirmRetry": True, **(payload or {})}
+        return drafts.retry(self.db, value,
+                            transport=transport or (lambda *_: {"output_text": json.dumps(VALUE)}), env=env or ENV)
+
     def review(self, seal, decision="approved"):
         return drafts.review(self.db, self.item["id"], self.item["revision"], seal, decision, "Test editor", "Both languages checked against evidence.")
 
@@ -100,7 +107,7 @@ class NewsDraftTests(unittest.TestCase):
             self.generate(forbidden, {**ENV, "STOCK_NEWS_DRAFTS_ENABLED": "false"})
         with self.assertRaisesRegex(ValueError, "budget"):
             self.generate(forbidden, {**ENV, "STOCK_NEWS_DRAFT_TOKEN_LIMIT": "1"})
-        self.assertEqual(self.db.execute("SELECT COUNT(*) FROM news_draft_attempts").fetchone()[0], 0)
+        self.assertEqual(self.db.execute("SELECT COUNT(*) FROM news_draft_attempt_runs").fetchone()[0], 0)
 
     def test_failed_attempt_is_durable_sanitized_and_not_retried(self):
         def fail(*_):
@@ -110,8 +117,64 @@ class NewsDraftTests(unittest.TestCase):
         with news.connect(self.path) as other:
             with self.assertRaisesRegex(ValueError, "already-attempted"):
                 drafts.generate(other, self.item["id"], self.item["revision"], transport=fail, env=ENV)
-            self.assertEqual(other.execute("SELECT status FROM news_draft_attempts").fetchone()[0], "failed")
+            self.assertEqual(other.execute("SELECT status FROM news_draft_attempt_runs").fetchone()[0], "failed")
         self.assertNotIn("secret-provider-response", str(news.queue(self.db)))
+
+    def test_failed_attempt_can_be_explicitly_retried_once(self):
+        with self.assertRaises(brief_generator.GenerationFailed):
+            self.generate(lambda *_: (_ for _ in ()).throw(RuntimeError("private failure")))
+        state = news.queue(self.db)["items"][0]["generation"]
+        self.assertEqual(state, {"status": "failed", "attempts": 1, "retryAllowed": True})
+        result = self.retry()
+        self.assertEqual(result["status"], "draft")
+        self.assertEqual([tuple(row) for row in self.db.execute(
+            "SELECT attempt,status FROM news_draft_attempt_runs ORDER BY attempt")], [(1, "failed"), (2, "saved")])
+        self.assertFalse(news.queue(self.db)["items"][0]["generation"]["retryAllowed"])
+
+    def test_retry_requires_confirmation_and_current_edit_version(self):
+        with self.assertRaises(brief_generator.GenerationFailed):
+            self.generate(lambda *_: {"output_text": "invalid"})
+        with self.assertRaisesRegex(ValueError, "confirmation-required"):
+            self.retry(payload={"confirmRetry": False})
+        with self.assertRaisesRegex(ValueError, "stale-news-edit"):
+            self.retry(payload={"editVersion": "stale"})
+        self.assertEqual(self.db.execute("SELECT COUNT(*) FROM news_draft_attempt_runs").fetchone()[0], 1)
+
+    def test_failed_retry_is_final_and_keeps_both_reservations(self):
+        failure = lambda *_: {"output_text": "invalid"}
+        with self.assertRaises(brief_generator.GenerationFailed):
+            self.generate(failure)
+        with self.assertRaises(brief_generator.GenerationFailed):
+            self.retry(failure)
+        with self.assertRaisesRegex(ValueError, "retry-limit"):
+            self.retry()
+        runs = list(self.db.execute("SELECT attempt,reserved_tokens,status FROM news_draft_attempt_runs ORDER BY attempt"))
+        self.assertEqual([(row["attempt"], row["status"]) for row in runs], [(1, "failed"), (2, "failed")])
+        self.assertEqual(runs[0]["reserved_tokens"], runs[1]["reserved_tokens"])
+
+    def test_concurrent_editor_cannot_duplicate_retry(self):
+        with self.assertRaises(brief_generator.GenerationFailed):
+            self.generate(lambda *_: {"output_text": "invalid"})
+        def transport(*_):
+            with news.connect(self.path) as other:
+                row = news.queue(other)["items"][0]
+                with self.assertRaisesRegex(ValueError, "retry-limit"):
+                    drafts.retry(other, {"articleId": self.item["id"], "revision": self.item["revision"],
+                                         "editVersion": row["editVersion"], "confirmRetry": True}, env=ENV)
+            return {"output_text": json.dumps(VALUE)}
+        self.retry(transport)
+        self.assertEqual(self.db.execute("SELECT COUNT(*) FROM news_draft_attempt_runs").fetchone()[0], 2)
+
+    def test_legacy_attempt_is_migrated_and_blocks_new_initial_attempt(self):
+        other = self.save(SOURCE, index=2)
+        self.db.execute("INSERT INTO news_draft_attempts VALUES(?,?,?,?,?)", (
+            other["id"], other["revision"], "2026-09-28T00:00:00+00:00", 123, "failed"))
+        self.db.commit()
+        drafts.schema(self.db)
+        self.assertEqual(drafts.generation_state(self.db, other["id"], other["revision"]),
+                         {"status": "failed", "attempts": 1, "retryAllowed": True})
+        with self.assertRaisesRegex(ValueError, "already-attempted"):
+            self.generate(item=other)
 
     def test_daily_count_counts_failed_requests(self):
         with self.assertRaises(brief_generator.GenerationFailed):
@@ -120,17 +183,24 @@ class NewsDraftTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "budget"):
             self.generate(lambda *_: self.fail("over daily cap"), {**ENV, "STOCK_NEWS_DRAFT_DAILY_LIMIT": "1"}, second)
 
+    def test_retry_is_charged_to_daily_attempt_limit(self):
+        with self.assertRaises(brief_generator.GenerationFailed):
+            self.generate(lambda *_: {"output_text": "invalid"})
+        with self.assertRaisesRegex(ValueError, "budget-exhausted"):
+            self.retry(env={**ENV, "STOCK_NEWS_DRAFT_DAILY_LIMIT": "1"})
+        self.assertEqual(self.db.execute("SELECT COUNT(*) FROM news_draft_attempt_runs").fetchone()[0], 1)
+
     def test_daily_budget_excludes_previous_utc_day_with_later_text_date(self):
-        self.db.execute("INSERT INTO news_draft_attempts VALUES(?,?,?,?,?)", (
-            "older", "revision", "2026-09-28T00:30:00+02:00", 99999, "failed"))
+        self.db.execute("INSERT INTO news_draft_attempt_runs VALUES(?,?,?,?,?,?)", (
+            "older", "revision", 1, "2026-09-28T00:30:00+02:00", 99999, "failed"))
         self.db.commit()
         with patch.object(drafts.stock_news, "stamp", return_value="2026-09-28T02:00:00+00:00"):
             result = self.generate(env={**ENV, "STOCK_NEWS_DRAFT_DAILY_LIMIT": "1"})
         self.assertEqual(result["status"], "draft")
 
     def test_daily_budget_includes_current_utc_day_with_earlier_text_date(self):
-        self.db.execute("INSERT INTO news_draft_attempts VALUES(?,?,?,?,?)", (
-            "current", "revision", "2026-09-27T23:30:00-02:00", 1, "failed"))
+        self.db.execute("INSERT INTO news_draft_attempt_runs VALUES(?,?,?,?,?,?)", (
+            "current", "revision", 1, "2026-09-27T23:30:00-02:00", 1, "failed"))
         self.db.commit()
         with patch.object(drafts.stock_news, "stamp", return_value="2026-09-28T02:00:00+00:00"):
             with self.assertRaisesRegex(ValueError, "budget"):

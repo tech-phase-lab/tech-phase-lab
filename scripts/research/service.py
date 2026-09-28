@@ -548,6 +548,10 @@ class AutomaticMonitor:
         with stock_news.connect(self.db_path) as db:
             return news_drafts.generate(db, payload.get("articleId"), payload.get("revision"))
 
+    def retry_news_draft(self, payload):
+        with stock_news.connect(self.db_path) as db:
+            return news_drafts.retry(db, payload)
+
     def review_news_draft(self, payload):
         with stock_news.connect(self.db_path) as db:
             return news_drafts.review(
@@ -1928,7 +1932,7 @@ class Handler(BaseHTTPRequestHandler):
             return
         if path not in {
             "/admin/posts/draft", "/admin/posts/review",
-            "/admin/news/generate", "/admin/news/review", "/admin/news/draft",
+            "/admin/news/generate", "/admin/news/retry", "/admin/news/review", "/admin/news/draft",
             "/admin/briefs/generate", "/admin/briefs/draft", "/admin/briefs/review",
             "/admin/annual-briefs/draft", "/admin/annual-briefs/review",
         }:
@@ -1943,6 +1947,8 @@ class Handler(BaseHTTPRequestHandler):
                 result = self.app.save_post(payload, review=path.endswith("/review"))
             elif path == "/admin/news/generate":
                 result = self.app.generate_news_draft(payload)
+            elif path == "/admin/news/retry":
+                result = self.app.retry_news_draft(payload)
             elif path == "/admin/news/review":
                 result = self.app.review_news_draft(payload)
             elif path == "/admin/news/draft":

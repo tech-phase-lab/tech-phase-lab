@@ -7,6 +7,7 @@ type Item = {
   id: string; revision: string; editVersion: string; title: string; url: string;
   publisher: string; text: string; tickers: string[]; publishedAt: string; observedAt: string;
   summaryJa: string | null; summaryEn: string | null; draftCurrent: boolean;
+  generation?: { status: "not-attempted" | "reserved" | "failed" | "saved"; attempts: number; retryAllowed: boolean };
   review: { status: string; fingerprint: string | null; evidence: string[] };
 };
 type Queue = { items: Item[]; generationEnabled: boolean; publicationEnabled: boolean };
@@ -20,8 +21,12 @@ const errors: Record<string, string> = {
   "invalid-news-evidence": "原文と完全一致する根拠を1〜4件、各12〜800文字で入力してください。",
   "unsupported-news-number": "要約中の数値が根拠に含まれていません。数値と単位を確認してください。",
   "news-generation-already-attempted": "この版は生成を試行済みです。保存結果を再取得し、必要なら手動で下書きを作成してください。",
+  "news-generation-retry-confirmation-required": "再試行の明示確認がありません。最新データを読み直してください。",
+  "news-generation-retry-unavailable": "この版は再試行できません。最新データを読み直してください。",
+  "news-generation-retry-limit": "この版で許可された再試行は完了しています。手動で下書きを作成してください。",
   "news-draft-already-exists": "下書きがあります。最新データを読み直してください。",
   "news-generation-budget-exhausted": "本日の生成予算上限に達しています。",
+  "generation-failed": "AI生成に失敗しました。最新データを読み直し、再試行可能なら明示ボタンを使用してください。",
   "generation-not-configured": "AI生成は無効、または設定が未完了です。手動保存は利用できます。",
 };
 const time = (value: string) => new Date(value).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo", hour12: false }) + " JST";
@@ -77,6 +82,7 @@ function NewsEditor({ item, busy, generationEnabled, run }: { item: Item; busy: 
   const dirty = ja !== (item.summaryJa ?? "") || en !== (item.summaryEn ?? "") || JSON.stringify(evidence.filter(Boolean)) !== JSON.stringify(item.review.evidence);
   const identity = { articleId: item.id, revision: item.revision };
   const canReview = !busy && !dirty && !!item.review.fingerprint && reviewer.trim().length >= 2 && reason.trim().length >= 5;
+  const retry = item.generation?.retryAllowed === true && !item.draftCurrent;
   return <details className={styles.article}>
     <summary><span>{item.tickers.join(" · ")} · {labels[item.review.status] ?? "要確認"}</span><strong>{item.title}</strong></summary>
     <p className={styles.note}>{item.publisher} · 発表 {time(item.publishedAt)} · 取得 {time(item.observedAt)}</p>
@@ -94,8 +100,12 @@ function NewsEditor({ item, busy, generationEnabled, run }: { item: Item; busy: 
       <div className={styles.actions}>
         <button type="button" disabled={evidence.length >= 4} onClick={() => setEvidence([...evidence, ""])}>根拠欄を追加</button>
         <button type="button" disabled={ja.trim().length < 20 || en.trim().length < 20 || !evidence.some(text => text.length >= 12)} onClick={() => void run("news-draft", { ...identity, editVersion: item.editVersion, summaryJa: ja, summaryEn: en, evidence: evidence.filter(Boolean) })}>日英下書きを保存</button>
-        <button type="button" disabled={!generationEnabled || item.draftCurrent || dirty} onClick={() => void run("news-generate", identity)}>AIで日英下書きを生成</button>
+        {!retry && <button type="button" disabled={!generationEnabled || item.draftCurrent || dirty || item.generation?.status !== "not-attempted"} onClick={() => void run("news-generate", identity)}>AIで日英下書きを生成</button>}
+        {retry && <button type="button" disabled={!generationEnabled || dirty} onClick={() => void run("news-retry", { ...identity, editVersion: item.editVersion, confirmRetry: true })}>失敗したAI生成を1回だけ再試行</button>}
       </div>
+      {!item.generation && <p className={styles.note}>生成履歴を確認できないため、AI生成操作を停止しています。</p>}
+      {item.generation?.status === "reserved" && <p className={styles.note}>生成試行の完了確認待ちです。自動再実行は行いません。</p>}
+      {item.generation?.status === "failed" && item.generation.attempts >= 2 && <p className={styles.note}>許可された生成試行は2回とも失敗しました。原文を確認して手動で下書きを保存してください。</p>}
     </fieldset>
     <fieldset disabled={busy} className={styles.fields}><legend>公開レビュー</legend>
       <label>確認者<input value={reviewer} maxLength={120} autoComplete="off" onChange={event => setReviewer(event.target.value)} /></label>

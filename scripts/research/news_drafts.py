@@ -19,6 +19,12 @@ def schema(db):
         article_id TEXT NOT NULL, revision TEXT NOT NULL, at TEXT NOT NULL,
         reserved_tokens INTEGER NOT NULL, status TEXT NOT NULL,
         PRIMARY KEY(article_id,revision));
+      CREATE TABLE IF NOT EXISTS news_draft_attempt_runs(
+        article_id TEXT NOT NULL, revision TEXT NOT NULL, attempt INTEGER NOT NULL,
+        at TEXT NOT NULL, reserved_tokens INTEGER NOT NULL, status TEXT NOT NULL,
+        PRIMARY KEY(article_id,revision,attempt));
+      INSERT OR IGNORE INTO news_draft_attempt_runs(article_id,revision,attempt,at,reserved_tokens,status)
+        SELECT article_id,revision,1,at,reserved_tokens,status FROM news_draft_attempts;
       CREATE TABLE IF NOT EXISTS news_draft_evidence(
         article_id TEXT PRIMARY KEY, revision TEXT NOT NULL,
         fingerprint TEXT NOT NULL, evidence TEXT NOT NULL, generated_at TEXT NOT NULL);
@@ -78,15 +84,26 @@ def daily_attempt_usage(db, now):
     end = start + timedelta(days=1)
     return db.execute("""
       SELECT COUNT(*),COALESCE(SUM(reserved_tokens),0)
-      FROM news_draft_attempts
+      FROM news_draft_attempt_runs
       WHERE julianday(at)>=julianday(?) AND julianday(at)<julianday(?)
     """, (start.isoformat(), end.isoformat())).fetchone()
 
 
-def generate(db, article_id, revision, *, transport=brief_generator.request_response, env=None):
+def generation_state(db, article_id, revision):
+    rows = db.execute("""SELECT attempt,status FROM news_draft_attempt_runs
+      WHERE article_id=? AND revision=? ORDER BY attempt""", (article_id, revision)).fetchall()
+    stored = rows[-1]["status"] if rows else "not-attempted"
+    latest = stored if stored in {"not-attempted", "reserved", "failed", "saved"} else "reserved"
+    return {"status": latest, "attempts": min(len(rows), 2),
+            "retryAllowed": latest == "failed" and len(rows) == 1}
+
+
+def _generate(db, article_id, revision, *, retry, expected_edit_version=None,
+              transport=brief_generator.request_response, env=None):
     """Explicit editor action only; reserve cost and revision before network I/O.
 
-    Failed/interrupted attempts remain reserved. They are never silently retried.
+    Failed/interrupted attempts remain reserved. They are never silently retried;
+    one failed attempt can be retried only through the explicit retry action.
     The transport's bounded retries fit inside the three-request reservation.
     """
     env = os.environ if env is None else env
@@ -103,6 +120,8 @@ def generate(db, article_id, revision, *, transport=brief_generator.request_resp
         row = current(db, article_id, revision)
         if row["draft_revision"] == revision:
             raise ValueError("news-draft-already-exists")
+        if retry and expected_edit_version != edit_version(db, row):
+            raise ValueError("stale-news-edit")
         item = json.loads(row["body"])
         source = item["text"]
         if not 20 <= len(source) <= 45000:
@@ -110,12 +129,21 @@ def generate(db, article_id, revision, *, transport=brief_generator.request_resp
         source_input = json.dumps({"title": item["title"], "publisher": item["publisher"], "SOURCE": source}, ensure_ascii=False)
         reservation = 3 * (len(source_input.encode()) + 8000)
         now = stock_news.stamp()
-        attempts = daily_attempt_usage(db, now)
-        if db.execute("SELECT 1 FROM news_draft_attempts WHERE article_id=? AND revision=?", (article_id, revision)).fetchone():
+        usage = daily_attempt_usage(db, now)
+        runs = db.execute("""SELECT attempt,status FROM news_draft_attempt_runs
+          WHERE article_id=? AND revision=? ORDER BY attempt""", (article_id, revision)).fetchall()
+        if retry:
+            if len(runs) >= 2:
+                raise ValueError("news-generation-retry-limit")
+            if len(runs) != 1 or runs[-1]["status"] != "failed":
+                raise ValueError("news-generation-retry-unavailable")
+        elif runs:
             raise ValueError("news-generation-already-attempted")
-        if attempts[0] >= daily_limit or attempts[1] + reservation > token_limit:
+        if usage[0] >= daily_limit or usage[1] + reservation > token_limit:
             raise ValueError("news-generation-budget-exhausted")
-        db.execute("INSERT INTO news_draft_attempts VALUES(?,?,?,?,?)", (article_id, revision, now, reservation, "reserved"))
+        attempt = len(runs) + 1
+        db.execute("INSERT INTO news_draft_attempt_runs VALUES(?,?,?,?,?,?)",
+                   (article_id, revision, attempt, now, reservation, "reserved"))
     output_schema = {
         "type": "object", "additionalProperties": False,
         "required": ["summaryJa", "summaryEn", "evidence"],
@@ -151,13 +179,29 @@ def generate(db, article_id, revision, *, transport=brief_generator.request_resp
                 value["summaryJa"], value["summaryEn"], revision, article_id))
             db.execute("INSERT OR REPLACE INTO news_draft_evidence VALUES(?,?,?,?,?)", (
                 article_id, revision, seal, json.dumps(value["evidence"], ensure_ascii=False), stock_news.stamp()))
-            db.execute("UPDATE news_draft_attempts SET status='saved' WHERE article_id=? AND revision=?", (article_id, revision))
+            db.execute("""UPDATE news_draft_attempt_runs SET status='saved'
+              WHERE article_id=? AND revision=? AND attempt=?""", (article_id, revision, attempt))
         return {"articleId": article_id, "revision": revision, "fingerprint": seal, "status": "draft", "publicationEnabled": False}
     except Exception:
         with db:
-            db.execute("UPDATE news_draft_attempts SET status='failed' WHERE article_id=? AND revision=?", (article_id, revision))
+            db.execute("""UPDATE news_draft_attempt_runs SET status='failed'
+              WHERE article_id=? AND revision=? AND attempt=?""", (article_id, revision, attempt))
         # No provider body, key, URL, or arbitrary exception text crosses the API.
         raise brief_generator.GenerationFailed("news-generation-failed") from None
+
+
+def generate(db, article_id, revision, *, transport=brief_generator.request_response, env=None):
+    return _generate(db, article_id, revision, retry=False, transport=transport, env=env)
+
+
+def retry(db, payload, *, transport=brief_generator.request_response, env=None):
+    """One explicit, confirmed retry for a failed current revision."""
+    if payload.get("confirmRetry") is not True:
+        raise ValueError("news-generation-retry-confirmation-required")
+    return _generate(
+        db, payload.get("articleId"), payload.get("revision"), retry=True,
+        expected_edit_version=payload.get("editVersion"), transport=transport, env=env,
+    )
 
 
 def validated_draft(db, article_id, revision, expected_fingerprint):
