@@ -3451,7 +3451,7 @@ def snapshot(db, recent_per_item=None):
                 AND (b.generation_provider IS NULL OR h.ai_verification=1)
                 AND (b.generation_source_truncated=0 OR h.full_source_verification=1)
             )
-          ORDER BY b.reviewed_at DESC
+          ORDER BY julianday(b.reviewed_at) DESC,b.url
         """)]
         briefs = []
         for row in brief_rows:
@@ -4784,7 +4784,7 @@ def annual_filing_brief_queue(db, limit=20, review_filter="all"):
         raise ValueError("invalid-annual-review-filter")
     rows = db.execute("""
       SELECT * FROM annual_filing_briefs
-      ORDER BY generated_at DESC,ticker,accession_number
+      ORDER BY julianday(generated_at) DESC,ticker,accession_number
     """).fetchall()
     counts = {
         "total": len(rows), "draft": 0, "held": 0, "approved": 0,

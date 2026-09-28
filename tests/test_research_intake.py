@@ -2257,6 +2257,50 @@ class IntakeTests(unittest.TestCase):
             ["draft-fingerprint-mismatch"],
         )
 
+    def test_public_briefs_order_mixed_review_offsets_by_absolute_time(self):
+        body = b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main>"
+        summary = "公式発表では、AI向けの供給能力を増やす計画が示されています。"
+        impact = "供給拡大の余地はありますが、需要と実行状況の確認が必要です。"
+        evidence = {
+            "summary": ["Capacity will increase."],
+            "impact": ["Execution remains subject to demand."],
+        }
+
+        def approve(url):
+            if url != URL:
+                m.add_source(self.db, "NBIS", url)
+            row = self.db.execute("SELECT * FROM sources WHERE url=?", (url,)).fetchone()
+            m.check_source(self.db, row, lambda *_: (body, "text/html"))
+            sha = self.db.execute(
+                "SELECT sha256 FROM sources WHERE url=?", (url,)
+            ).fetchone()[0]
+            m.save_brief_draft(
+                self.db, url, sha, summary, "mixed", impact, "medium", evidence,
+            )
+            self.review_brief(url, sha, "approved", "editor", "Evidence reviewed")
+
+        newer_url = "https://nebius.com/newsroom/newer-review"
+        approve(URL)
+        approve(newer_url)
+        timestamps = {
+            URL: "2026-09-28T10:00:00+09:00",
+            newer_url: "2026-09-28T02:30:00+00:00",
+        }
+        for url, reviewed_at in timestamps.items():
+            self.db.execute(
+                "UPDATE briefs SET reviewed_at=? WHERE url=?", (reviewed_at, url)
+            )
+            self.db.execute(
+                "UPDATE brief_review_history SET reviewed_at=? WHERE url=?",
+                (reviewed_at, url),
+            )
+        self.db.commit()
+
+        self.assertEqual(
+            [item["url"] for item in m.snapshot(self.db)["briefs"]],
+            [newer_url, URL],
+        )
+
     def test_brief_review_rejects_a_draft_changed_after_the_editor_loaded_it(self):
         body = b"<main><p>Capacity will increase.</p><p>Execution remains subject to demand.</p></main>"
         self.check(body)
@@ -2643,6 +2687,47 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(approved_only["counts"], queue["counts"])
         with self.assertRaisesRegex(ValueError, "invalid-annual-review-filter"):
             m.annual_filing_brief_queue(self.db, 10, "unknown")
+
+    def test_annual_queue_orders_mixed_generation_offsets_by_absolute_time(self):
+        business = "The company provides accelerated computing systems to enterprise customers."
+        risk = "Demand changes and third-party suppliers may adversely affect product delivery."
+
+        def save(ticker, accession, source_sha):
+            m.save_annual_filing_brief_draft(self.db, {
+                "id": f"{ticker.lower()}-annual-ja", "ticker": ticker,
+                "accessionNumber": accession, "sourceSha256": source_sha,
+                "summaryJa": "企業顧客に向けて、計算基盤を提供する企業です。",
+                "businessModelJa": "企業顧客へ計算基盤を提供し、その対価を収益として受け取ります。",
+                "riskPointsJa": [{
+                    "text": "需要変動や外部供給企業への依存により、製品供給へ影響する可能性があります。",
+                    "evidenceIds": ["risk-1"],
+                }],
+                "summaryEvidenceIds": ["business-1"],
+                "businessModelEvidenceIds": ["business-1"],
+                "evidence": [
+                    {"id": "business-1", "section": "business", "quote": business},
+                    {"id": "risk-1", "section": "risk", "quote": risk},
+                ],
+                "confidence": "medium", "generationMethod": "human",
+                "sourceBusiness": business, "sourceRisks": risk,
+            })
+
+        save("NVDA", "0001045810-26-000021", "a" * 64)
+        save("MRVL", "0001835632-26-000001", "b" * 64)
+        self.db.execute(
+            "UPDATE annual_filing_briefs SET generated_at=? WHERE ticker='NVDA'",
+            ("2026-09-28T10:00:00+09:00",),
+        )
+        self.db.execute(
+            "UPDATE annual_filing_briefs SET generated_at=? WHERE ticker='MRVL'",
+            ("2026-09-28T02:30:00+00:00",),
+        )
+        self.db.commit()
+
+        self.assertEqual(
+            [item["ticker"] for item in m.annual_filing_brief_queue(self.db)["items"]],
+            ["MRVL", "NVDA"],
+        )
 
     def test_annual_filing_brief_requires_exact_evidence_and_human_approval(self):
         business = "NVIDIA designs accelerated computing platforms and software for data centers and other markets."

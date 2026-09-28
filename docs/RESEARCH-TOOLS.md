@@ -400,6 +400,11 @@ The recent operational-incident view keeps open incidents first and orders each
 status group by parsed absolute last-seen time. Mixed UTC offsets therefore
 cannot make an older incident appear newer through ISO-text ordering.
 
+Published human-approved briefs and the private annual-filing review queue also
+order review and generation timestamps by absolute instant rather than raw ISO
+text. Mixed UTC offsets therefore cannot place an older approval or draft ahead
+of a newer item; unparseable legacy timestamps sort after valid evidence.
+
 Official-list polling batches are also persisted as bounded, URL-free
 operational evidence. The preview retains the last completed batch and
 24-hour counts for checked routes, degraded results and newly discovered
