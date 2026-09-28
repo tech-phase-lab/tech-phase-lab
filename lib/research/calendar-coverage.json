@@ -88,7 +88,7 @@
     "name": "Salesforce",
     "sourceUrl": "https://investor.salesforce.com/events-and-presentations/default.aspx",
     "lastAttemptedOn": "2026-09-28",
-    "lastCheckedOn": null
+    "lastCheckedOn": "2026-09-28"
   },
   {
     "ticker": "CRWD",
@@ -184,9 +184,9 @@
   {
     "ticker": "NBIS",
     "name": "Nebius",
-    "sourceUrl": "https://nebius.com/investor-hub",
+    "sourceUrl": "https://nebius.com/investor-events",
     "lastAttemptedOn": "2026-09-28",
-    "lastCheckedOn": null
+    "lastCheckedOn": "2026-09-28"
   },
   {
     "ticker": "NFLX",
