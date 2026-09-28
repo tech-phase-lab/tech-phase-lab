@@ -63,6 +63,11 @@ def content(payload):
         if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password or any(c.isspace() for c in url):
             raise ValueError("invalid-post-sources")
         value["sources"].append({"title": title.strip(), "url": url})
+    if kind == "notes":
+        # RIZEL notes are body-only, casual posts. Do not let older clients or
+        # the general editor turn them back into headline-led articles.
+        for key in ("titleJa", "titleEn", "introJa", "introEn"):
+            value[key] = ""
     return kind, value
 
 
@@ -100,7 +105,7 @@ def save(db, payload):
             raise ValueError("post-kind-conflict")
         if row and kind == "notes":
             previous = json.loads(row["content"])
-            if any(previous.get(key) != value[key] for key in ("titleJa", "introJa", "bodyJa")):
+            if previous.get("bodyJa") != value["bodyJa"]:
                 # English belongs to the previous Japanese revision; never publish it as current.
                 for key in ("titleEn", "introEn", "bodyEn"):
                     value[key] = ""
@@ -134,7 +139,7 @@ def review(db, payload):
         if decision == "published":
             if row["kind"] != "notes" and payload.get("verified") is not True:
                 raise ValueError("post-review-required")
-            required = ("titleJa", "bodyJa") if row["kind"] == "notes" else ("titleJa", "titleEn", "introJa", "introEn", "bodyJa", "bodyEn")
+            required = ("bodyJa",) if row["kind"] == "notes" else ("titleJa", "titleEn", "introJa", "introEn", "bodyJa", "bodyEn")
             for key in required:
                 if not value[key] or (row["kind"] != "notes" and key.startswith("body") and len(value[key]) < 20):
                     raise ValueError("post-bilingual-required")

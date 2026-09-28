@@ -173,6 +173,24 @@ Still required: configure a Clerk application and its publishable/secret keys in
 4. AFTER the above: free beginner guide and FAQ. Separate investment learning from service help. Cover account opening, orders, earnings and beginner/intermediate concepts. Broker content segmented by residency, not just language; start Japan, expand countries deliberately. Affiliate links only after confirmed program approval/terms and with ad disclosure. Owner explicitly requested remembering this across chats.
 5. Stock News/OpenAI activation remains deferred to early December for January launch. No Vercel upgrade authorized or performed. Hobby is not a lifetime bucket; official docs say no billing cycle and in most limit-exceed cases a 30-day wait. Do not promise an October 1 reset. Hobby is personal/non-commercial; evaluate plan eligibility separately from usage.
 
+## 2026-09-28 23:41 JST body-only notes checkpoint
+
+- Owner correction implemented locally: RIZEL notes have no headline or public
+  intro. The compact owner composer accepts only a Japanese body, shows clear
+  save/publish/withdraw pending states, and places the editor before history.
+  History uses body excerpts instead of synthetic titles.
+- The owner API and Python persistence layer both force note title/intro fields
+  empty. Publishing requires only the Japanese body. The reader never renders a
+  heading/intro for notes, while Free/anonymous responses continue to omit the
+  PRO body. The disabled future translator is body-only too.
+- The home now checks a dedicated latest-note endpoint and shows only the newest
+  publication date plus a PRO label. That endpoint always applies the Free
+  projection and then returns only ID/date/translation status; it cannot return
+  a body or legacy headline, even to a signed-in PRO user.
+- No owner opinion was invented and no real note was published. Next product
+  priority after verification/deployment is authenticated private question
+  intake and moderation/answered views.
+
 Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, draft. Saved/re-edited/read back; excluded from published feed. User saw empty columns page; explained draft is not visible to PRO. No sample published.
 
 
@@ -180,5 +198,5 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 
 - Owner upgraded Vercel to Pro and set additional budget $10; do not repeat upgrade reminders or modify billing.
 - Existing Railway staging RESEARCH_EDITOR_TOKEN saved as Vercel Secret scoped only codex/research-preview, with explicit owner consent. Redeploy FdFLiS3tbA8Vd6FgkZJFiPugfwDv Ready. Live owner composer listing, publication, withdrawal, and draft save verified; test note remains private.
-- Owner clarified notes are casual X-like posts: no headline input or reader headline. Composer accepts body alone. Internal fixed title keeps existing storage/translation schema compatible and never exposes a body excerpt to Free readers. Owner-only history uses body opening. Mobile editor comes before collapsed history; publish control stays near bottom; pending operations have explicit status.
-- Owner unavailable and authorizes autonomous continuation. Existing hourly Tech Phase development task updated, no duplicate created. Next: latest note home entry with membership-safe projection, private question submission and moderation inbox / answered view, then beginner FAQ. Paid APIs remain deferred until early December. Never invent owner posts or claim untested mobile-device behavior.
+- Owner clarified notes are casual X-like posts: no headline input or reader headline. Composer accepts body alone. The current persistence layer now stores note title/intro fields empty; owner-only history uses a body excerpt, while Free readers never receive the body. Mobile editor comes before collapsed history; publish control stays near bottom; pending operations have explicit status.
+- Owner unavailable and authorizes autonomous continuation. Existing hourly Tech Phase development task updated, no duplicate created. The latest-note home entry is now implemented with metadata-only projection. Next: private question submission and moderation inbox / answered view, then beginner FAQ. Paid APIs remain deferred until early December. Never invent owner posts or claim untested mobile-device behavior.

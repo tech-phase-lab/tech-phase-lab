@@ -25,10 +25,17 @@ test('owner composer enforces identity, origin and server credential; ignores cl
   assert.equal((await POST(request())).status,200);
   assert.equal(state.calls.length,2);
   assert.equal(state.calls[0].body.payload.kind,'notes');
-  assert.equal(state.calls[0].body.payload.titleJa,'リゼルのひとりごと');
   assert.equal(state.calls[1].body.payload.kind,'notes');
+  assert.equal(state.calls[0].body.payload.titleJa,'');
+  assert.equal(state.calls[0].body.payload.introJa,'');
   assert.equal(state.calls[0].body.payload.bodyEn,'');
   assert.equal(state.calls[1].body.payload.reviewer,'owner-user');
   assert.equal(state.calls[0].auth,'Bearer synthetic-editor-key-long-enough');
  } finally {if(previous===undefined)delete process.env.RESEARCH_EDITOR_TOKEN;else process.env.RESEARCH_EDITOR_TOKEN=previous;delete globalThis.__author;}
+});
+test('owner note composer is body-only and places the editor before history',()=>{
+ const writer=readFileSync(new URL('../app/research/write/writer.tsx',import.meta.url),'utf8');
+ assert.doesNotMatch(writer,/label>見出し|titleJa/);
+ assert.match(writer,/未保存の変更があります/);
+ assert.ok(writer.indexOf('<section className={styles.editor}') < writer.indexOf('<details className={noteStyles.history}>'));
 });

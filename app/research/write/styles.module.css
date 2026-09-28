@@ -1,6 +1,7 @@
+.layout{grid-template-columns:minmax(0,1fr) 240px}
 .history{min-width:0;align-self:start;border:1px solid #304954;border-radius:10px;padding:12px;background:#0f202b}
 .history summary{cursor:pointer;font-size:14px;line-height:1.6;padding:4px}
 .history nav{margin-top:14px;max-height:60vh;overflow:auto}
 .publishBar{position:sticky;bottom:0;padding:12px 0 max(12px,env(safe-area-inset-bottom));background:#0f202b;border-top:1px solid #304954}
 .publishBar button:first-child{background:#a4dfcf;color:#091219;font-weight:700;min-height:48px}
-@media(max-width:900px){.layout>section{grid-row:1}.history{grid-row:2}.main{padding:18px 12px}.main header{margin-bottom:12px}.main h1{margin-bottom:12px}.publishBar button:first-child{flex:1}.history nav{max-height:240px}}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.main{padding:18px 12px}.main header{margin-bottom:12px}.main h1{margin-bottom:12px}.publishBar button:first-child{flex:1}.history nav{max-height:240px}}

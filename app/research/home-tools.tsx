@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import type { Language, ResearchEvent } from "@/lib/research/data";
 import { dateLabel } from "@/lib/research/presentation";
 import { useStockFavorites } from "./use-stock-favorites";
@@ -8,6 +9,16 @@ import styles from "./home-tools.module.css";
 
 export default function HomeTools({ lang, onChanges }: { lang: Language; onChanges: () => void }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
+  const [latestNote, setLatestNote] = useState<string | null>(null);
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/research/posts/latest-note", { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10_000)]) })
+      .then(async response => response.ok ? response.json() : null)
+      .then(data => { if (data?.ok && typeof data.item?.publishedAt === "string") setLatestNote(data.item.publishedAt); })
+      .catch(() => undefined);
+    return () => controller.abort();
+  }, []);
+  const latestLabel = latestNote ? new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { dateStyle: "medium", timeZone: "Asia/Tokyo" }).format(new Date(latestNote)) : null;
   return <>
     <nav className={styles.grid} aria-label={t("よく使う機能", "Quick tools")}>
       <Link href="/research/stocks"><span className={styles.icon} aria-hidden="true">🔍</span><strong>{t("銘柄検索", "Stock search")}</strong><p>{t("株価・チャート・企業情報", "Quotes, charts & company data")}</p><span className={styles.action} aria-hidden="true">↗</span></Link>
@@ -17,7 +28,7 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
     </nav>
     <nav className={styles.reading} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
       <div className={styles.deskHeading}><span>RIZEL’S DESK</span><span className={styles.deskEdition}>TECH PHASE PRO</span></div>
-      <Link href="/research/notes" className={styles.deskLead}><div><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong><p>{t("数字の先にある、相場の着眼点。", "A perspective beyond the numbers.")}</p></div></Link>
+      <Link href="/research/notes" className={styles.deskLead}><div><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong><p>{latestLabel ? t(`最新の投稿 · ${latestLabel}（本文はPRO会員向け）`, `Latest post · ${latestLabel} (PRO body)`) : t("数字の先にある、相場の着眼点。", "A perspective beyond the numbers.")}</p></div><span aria-hidden="true">→</span></Link>
       <div className={styles.deskPair}>
         <Link href="/research/qa"><strong>{t("リゼルに聞く", "Ask RIZEL")}</strong><span className={styles.deskSmall}>{t("疑問から、理解を深める", "Questions worth exploring")}</span><span aria-hidden="true">→</span></Link>
         <Link href="/research/weekly"><strong>{t("週刊PRO", "PRO Weekly")}</strong><span className={styles.deskSmall}>{t("一週間の変化と展望", "The week’s shifts & outlook")}</span><span aria-hidden="true">→</span></Link>

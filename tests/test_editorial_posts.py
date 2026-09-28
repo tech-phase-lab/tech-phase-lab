@@ -80,6 +80,8 @@ class EditorialPostsTests(unittest.TestCase):
         item = posts.save(self.db, value)["item"]
         item = posts.review(self.db, {**review(item), "verified": False})["item"]
         self.assertEqual(item["status"], "published")
+        self.assertEqual(item["titleJa"], "")
+        self.assertEqual(item["introJa"], "")
         self.assertEqual(item["bodyEn"], "")
         self.assertEqual(posts.queue(self.db, published=True)["items"][0]["bodyJa"], "今日のメモ。")
 
@@ -90,6 +92,12 @@ class EditorialPostsTests(unittest.TestCase):
             self.assertEqual(item[key], "")
         with self.assertRaisesRegex(ValueError, "post-conflict"):
             posts.save(self.db, {**item, "version": 1, "bodyEn": "Stale translation"})
+
+    def test_note_headlines_and_intros_are_discarded_server_side(self):
+        item = posts.save(self.db, draft("notes"))["item"]
+        for key in ("titleJa", "titleEn", "introJa", "introEn"):
+            self.assertEqual(item[key], "")
+        self.assertEqual(item["bodyJa"], draft("notes")["bodyJa"])
 
     def test_post_kind_is_immutable_and_review_can_be_scope_bound(self):
         item = posts.save(self.db, draft("weekly"))["item"]

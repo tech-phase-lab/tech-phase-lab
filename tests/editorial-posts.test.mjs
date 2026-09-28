@@ -14,6 +14,11 @@ test('column projection strips private fields and withholds all PRO bodies from 
  const unsafe=publishedPosts({ok:true,items:[{...item,sources:[{title:'bad',url:'javascript:alert(1)'}]}]},true);
  assert.deepEqual(unsafe[0].sources,[]);
 });
+test('body-only notes need only an English body to be translation-ready',()=>{
+ const note={...item,kind:'notes',titleJa:'',titleEn:'',introJa:'',introEn:'',bodyEn:'Conversational note'};
+ assert.equal(publishedPosts({ok:true,items:[note]},true)[0].translationStatus,'ready');
+ assert.equal(publishedPosts({ok:true,items:[{...note,bodyEn:''}]},true)[0].translationStatus,'pending');
+});
 const source=readFileSync(new URL('../app/api/research/posts/route.ts',import.meta.url),'utf8')
  .replace('import { getMembership } from "@/lib/membership/server";', 'const getMembership = async () => { if(globalThis.__posts.error) throw Error("offline"); return globalThis.__posts.member; };')
  .replace('import { publishedPosts } from "@/lib/research/editorial-posts";', 'const publishedPosts = globalThis.__posts.project;');

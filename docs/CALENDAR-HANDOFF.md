@@ -3673,6 +3673,38 @@ Continue with ORCL, PANW, PLTR, QCOM, SNDK, TSLA, TSM, INTC, LRCX and META.
 Historical-only, non-earnings and empty dynamic states remain inconclusive and
 must not be promoted to forecast dates.
 
+## One-hundred-thirty-fifth company batch reviewed on 2026-09-28
+
+The next ten-company batch was rechecked against first-party schedules,
+announcements and investor-relations pages. Oracle explicitly reports no
+scheduled events, TSMC retains the recorded October 15 earnings conference and
+Intel's earlier same-day no-upcoming-events check remains current. The other
+sources expose only historical, non-earnings, empty or inaccessible schedule
+states, so they remain pending. No forecast date or calendar event is added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| ORCL | Checked | The official Events page explicitly says that there are no events scheduled; the existing same-day checked state remains current. |
+| PANW | Pending | The official Events page exposes completed September 10 and September 1 events only, without a future earnings announcement or explicit no-events statement. |
+| PLTR | Pending | The official Events page ends with the completed August 3 Q2 earnings call, without a future announcement or explicit no-events statement. |
+| QCOM | Pending | The official Investor Events page exposes its event shell and completed July 29 Q3 call, without a future earnings announcement or explicit no-events statement. |
+| SNDK | Pending | The official Events page lists completed events through September 9 and says more events are coming soon, but supplies no dated future earnings announcement. |
+| TSLA | Pending | No conclusive current earnings schedule or explicit no-events statement was available from the official documents and events source during this check. |
+| TSM | Checked | The official Financial Calendar still lists the October 15 Q3 2026 earnings conference; the existing 14:00 Asia/Taipei call entry remains unchanged. |
+| INTC | Checked | The earlier same-day official no-upcoming-events check remains current; the official results page still exposes completed events only. |
+| LRCX | Pending | The official page lists a November 3 annual meeting at 09:30 Pacific, not an earnings release or call, and supplies no future earnings schedule. |
+| META | Pending | The official Upcoming Events page says to stay tuned, without a dated future item or explicit no-events statement. |
+
+The BLS October schedule was rechecked on 2026-09-28 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar, last updated September 16, still
+lists the October 27-28 and December 8-9 meetings without future statement or
+press-conference clock times. No calendar event changed.
+
+Continue with MSFT, MU, NFLX, AAPL, AMZN, ANET, ARM, AVGO, BE and COHR.
+Historical-only, non-earnings, inaccessible and empty dynamic states remain
+inconclusive and must not be promoted to forecast dates.
+
 ## One-hundred-twenty-first company batch reviewed on 2026-09-28
 
 The requested ten-company batch was rechecked against first-party schedules,

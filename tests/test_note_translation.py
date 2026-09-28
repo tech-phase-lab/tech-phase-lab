@@ -9,7 +9,7 @@ import note_translation as translation
 import x_api
 
 ENV = {'NOTE_TRANSLATION_ENABLED':'true','OPENAI_API_KEY':'synthetic-test-key-only-1234','NOTE_TRANSLATION_MODEL':'synthetic-model','NOTE_TRANSLATION_DAILY_LIMIT':'3'}
-RESULT = {'titleEn':'A quick thought','introEn':'A note from RIZEL','bodyEn':"I'll wait and see how this plays out."}
+RESULT = {'bodyEn':"I'll wait and see how this plays out."}
 
 def response(payload, key):
     assert payload['store'] is False
@@ -30,6 +30,7 @@ class TranslationTests(unittest.TestCase):
         with posts.connect(self.path) as db:
             item=posts.queue(db,published=True)['items'][0]
             self.assertEqual(item['bodyJa'],self.note['bodyJa']); self.assertEqual(item['bodyEn'],RESULT['bodyEn'])
+            self.assertEqual(item['titleEn'],''); self.assertEqual(item['introEn'],'')
             self.assertEqual(item['publishedAt'],self.note['publishedAt'])
         self.assertEqual(translation.run_once(self.path,lambda *a:self.fail('duplicate'),ENV,now=1001),'idle')
     def test_withdrawal_during_generation_cannot_republish(self):

@@ -18,8 +18,9 @@ page link. Switching records requires saving or explicitly discarding changes.
 Drafts allow incomplete translations. Weekly and Q&A publication requires titles, public intros
 and bodies in both languages, private evidence/owner notes, a named reviewer,
 a reason and an explicit verification checkbox. Weekly and Q&A also require
-at least one HTTPS source. RIZEL notes must originate in the owner's actual
-statements; the UI reminds editors not to invent opinions or transactions.
+at least one HTTPS source. RIZEL notes are body-only casual posts with no
+headline or public intro, and must originate in the owner's actual statements;
+the UI reminds editors not to invent opinions or transactions.
 Q&A is curated editorial content, not an inbox or a promise of individual answers.
 
 ## Persistence and revision rules
@@ -43,7 +44,8 @@ The editor loads 20 records per page, with older records accessible via paginati
 
 `/research/columns` shows the newest 20 published columns, with category filters
 and JP/EN selection. It is linked from My Account. Anonymous and Free visitors
-receive only public titles/intros. PRO bodies are projected only after verified
+receive only public titles/intros for weekly and Q&A posts. Body-only RIZEL notes
+expose only their category/date and the PRO access prompt. PRO bodies are projected only after verified
 server-side membership/expiry checks; neither private evidence notes nor reviewer
 identity is in this response, even for PRO. Route responses are private/no-store.
 Bodies use plain text React rendering, never raw HTML.
@@ -92,8 +94,10 @@ API. No identity-provider configuration or actual membership was changed.
 
 ## Japanese-first owner notes — September 28 evening
 
-`/research/write` is the simple owner composer: Japanese title and body, save,
-publish and withdraw. `/api/research/author` requires verified signed-in admin
+`/research/write` is the simple owner composer: Japanese body only, with save,
+publish and withdraw. The editor appears before post history on small screens;
+history labels use a short body excerpt. Saving, publishing, withdrawing,
+unsaved and saved states are explicit. `/api/research/author` requires verified signed-in admin
 membership, same-origin JSON writes and a server-only RESEARCH_EDITOR_TOKEN.
 The key must match the backend editor key; missing configuration fails closed.
 Owners never enter this key in the composer. Reader credentials are not editors.
@@ -125,15 +129,32 @@ to 6,000 tokens. Jobs use persistent five-minute leases and at most three
 logical attempts per post revision, respecting longer provider Retry-After.
 After exhaustion, Japanese remains public and English pending; owner republishing
 a new revision permits another attempt. Model and numeric token usage are audited.
-The provider receives only Japanese title/intro/body, not source notes or owner
-identity. Successful output updates the same published revision atomically and
+The provider receives only the Japanese body, not a headline, source notes or
+owner identity. Successful output updates the same published revision atomically and
 retains its original publication timestamp. Withdrawal or editing during a call
 invalidates its output. Synthetic tests do not establish natural-language accuracy.
 
-Owner composer setup remains blocked: Vercel Preview lacks RESEARCH_EDITOR_TOKEN
-(last inspected September 28). It must match Railway's existing editor secret,
-be scoped to codex/research-preview and stay server-only. Never use the reader
-token as an editor credential; never put the value in chat, logs or git.
+RESEARCH_EDITOR_TOKEN was configured server-side for codex/research-preview and
+the owner-login composer list, draft save, publish and withdrawal were verified
+live on September 28. It remains scoped to Preview and must stay server-only.
+Never use the reader token as an editor credential; never put the value in chat,
+logs or git. The synthetic `verification-note-20260928` remains non-public.
+
+### Body-only note correction — September 28 late evening
+
+The owner clarified that RIZEL notes are casual X-like posts, not articles. The
+dedicated composer no longer accepts or requires a headline, and it places the
+writing area before history. The owner route discards any client-supplied note
+headline or intro; the backend normalizes those four JP/EN fields to empty even
+when an older client or the general editor submits them. Publication requires
+only a non-empty Japanese body. Reader cards never render a heading or intro for
+notes, and Free/anonymous projection continues to withhold the entire PRO body.
+The dormant translator now requests and accepts only `bodyEn`, so future
+activation cannot silently reintroduce an article headline. No live note was
+created or published by this correction. The home uses a separate latest-note
+endpoint that always applies the Free projection and returns only the newest
+note's ID, publication timestamp and translation state. It never returns the
+PRO body or a legacy headline, including for signed-in PRO sessions.
 
 ## Official update links — September 28 evening
 
