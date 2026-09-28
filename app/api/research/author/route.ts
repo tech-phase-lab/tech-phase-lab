@@ -37,7 +37,7 @@ export async function POST(request: Request) {
       const response = await editPost(new Request(request.url, { method: "POST", headers: auth, body: JSON.stringify({ action, payload }) }));
       return { status: response.status, data: await response.json() };
     };
-    const review = (id: string, version: number, decision: string) => relay("post-review", { id, version, decision, reviewer: member.userId, reason: "Owner selected " + decision });
+    const review = (id: string, version: number, decision: string) => relay("post-review", { id, version, kind: "notes", decision, reviewer: member.userId, reason: "Owner selected " + decision });
     if (input.action === "withdraw") { const r = await review(input.id, input.version, "withdrawn"); return reply(r.status, r.data); }
     const saved = await relay("post-draft", { id: input.id, version: input.version, kind: "notes", titleJa: input.titleJa, bodyJa: input.bodyJa, introJa: "リゼルのひとりごと", titleEn: "", introEn: "", bodyEn: "", sourceNotes: "Owner-authored note", sources: [] });
     if (!saved.data.ok || input.action === "draft") return reply(saved.status, saved.data);

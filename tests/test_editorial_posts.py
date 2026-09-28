@@ -91,6 +91,14 @@ class EditorialPostsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "post-conflict"):
             posts.save(self.db, {**item, "version": 1, "bodyEn": "Stale translation"})
 
+    def test_post_kind_is_immutable_and_review_can_be_scope_bound(self):
+        item = posts.save(self.db, draft("weekly"))["item"]
+        with self.assertRaisesRegex(ValueError, "post-kind-conflict"):
+            posts.save(self.db, {**item, "kind": "notes"})
+        with self.assertRaisesRegex(ValueError, "post-kind-conflict"):
+            posts.review(self.db, {**review(item), "kind": "notes"})
+        self.assertEqual(posts.review(self.db, review(item))["item"]["status"], "published")
+
     def test_q_and_a_requires_sources_and_safe_links(self):
         item = posts.save(self.db, {**draft("qa"), "sources": []})["item"]
         with self.assertRaisesRegex(ValueError, "post-sources-required"):

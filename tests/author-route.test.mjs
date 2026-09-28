@@ -24,6 +24,8 @@ test('owner composer enforces identity, origin and server credential; ignores cl
   process.env.RESEARCH_EDITOR_TOKEN='synthetic-editor-key-long-enough';
   assert.equal((await POST(request())).status,200);
   assert.equal(state.calls.length,2);
+  assert.equal(state.calls[0].body.payload.kind,'notes');
+  assert.equal(state.calls[1].body.payload.kind,'notes');
   assert.equal(state.calls[0].body.payload.bodyEn,'');
   assert.equal(state.calls[1].body.payload.reviewer,'owner-user');
   assert.equal(state.calls[0].auth,'Bearer synthetic-editor-key-long-enough');

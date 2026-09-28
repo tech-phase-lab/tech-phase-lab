@@ -96,6 +96,8 @@ def save(db, payload):
         row = db.execute("SELECT * FROM editorial_posts WHERE id=?", (post_id,)).fetchone()
         if (row and row["version"] != version) or (not row and version != 0):
             raise ValueError("post-conflict")
+        if row and row["kind"] != kind:
+            raise ValueError("post-kind-conflict")
         if row and kind == "notes":
             previous = json.loads(row["content"])
             if any(previous.get(key) != value[key] for key in ("titleJa", "introJa", "bodyJa")):
@@ -116,6 +118,9 @@ def review(db, payload):
     post_id, version = identity(payload)
     decision = payload.get("decision")
     actor, reason = payload.get("reviewer"), payload.get("reason")
+    expected_kind = payload.get("kind")
+    if expected_kind is not None and (not isinstance(expected_kind, str) or expected_kind not in KINDS):
+        raise ValueError("invalid-post-kind")
     if decision not in {"published", "withdrawn"} or not isinstance(actor, str) or not 2 <= len(actor.strip()) <= 120 or not isinstance(reason, str) or not 5 <= len(reason.strip()) <= 500:
         raise ValueError("invalid-post-review")
     with db:
@@ -123,6 +128,8 @@ def review(db, payload):
         row = db.execute("SELECT * FROM editorial_posts WHERE id=?", (post_id,)).fetchone()
         if not row or row["version"] != version:
             raise ValueError("post-conflict")
+        if expected_kind is not None and row["kind"] != expected_kind:
+            raise ValueError("post-kind-conflict")
         value = json.loads(row["content"])
         if decision == "published":
             if row["kind"] != "notes" and payload.get("verified") is not True:

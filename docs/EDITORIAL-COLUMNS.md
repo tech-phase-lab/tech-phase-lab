@@ -30,6 +30,10 @@ version, checked inside `BEGIN IMMEDIATE`. Stale saves and stale approval reques
 fail without overwriting current content. Client-generated IDs make retries of
 creation conflict instead of producing duplicate posts.
 
+An existing record's kind is immutable. The owner-note endpoint also binds review
+and withdrawal requests to `notes`, so a crafted weekly or Q&A ID cannot be
+converted, published or withdrawn through the simpler owner workflow.
+
 Saving any published article puts it back in draft and removes it from the member
 list until explicitly republished. The UI states this before saving. Withdrawal
 retains data and history; there is no destructive delete, scheduler or push send.
