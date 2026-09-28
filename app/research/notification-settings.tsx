@@ -22,19 +22,21 @@ export default function NotificationSettings({ lang, initiallyOpen = false }: { 
     let expiryTimer: ReturnType<typeof setTimeout> | undefined;
     async function inspect() {
       clearTimeout(expiryTimer);
-      if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) {
-        setState("unsupported"); return;
-      }
-      if (Notification.permission === "denied") { setState("blocked"); return; }
       try {
-        const registration = await navigator.serviceWorker.getRegistration("/research");
-        const subscription = await registration?.pushManager.getSubscription();
-        if (!cancelled) setHasSubscription(Boolean(subscription));
         const response = await fetch("/api/research/notifications", { cache: "no-store", signal: AbortSignal.timeout(10_000) });
         const config = await response.json();
         if (cancelled) return;
+        // Resolve membership before device guidance so signed-out and Free users
+        // are not asked to change permissions for a feature they cannot use yet.
+        const supported = "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
+        const registration = supported ? await navigator.serviceWorker.getRegistration("/research") : undefined;
+        const subscription = await registration?.pushManager.getSubscription();
+        if (cancelled) return;
+        setHasSubscription(Boolean(subscription));
         if (config.reason === "sign-in" || config.reason === "pro-required") { setState(config.reason); return; }
-        if (!config.enabled || !config.publicKey) { setState("unavailable"); return; }
+        if (!response.ok || !config.enabled || !config.publicKey) { setState("unavailable"); return; }
+        if (!supported) { setState("unsupported"); return; }
+        if (Notification.permission === "denied") { setState("blocked"); return; }
         setKey(config.publicKey);
         if (subscription) {
           const check = await fetch("/api/research/notifications", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "status", subscription: subscription.toJSON() }), signal: AbortSignal.timeout(15_000) });

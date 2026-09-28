@@ -1,5 +1,24 @@
 # Delivery verification — September 28, 2026
 
+## Membership follow-up, September 28
+
+- The owner explicitly deferred Stock News API and OpenAI API/model setup.
+  Continue work that does not require those services; no paid activation.
+- The live preview browser is signed out. The account page renders the login
+  form, and the NBIS ClusterMAX research detail withholds premium analysis and
+  displays the PRO requirement with the membership link.
+- Found a notification-guidance issue: browser permission denial was displayed
+  before checking membership, hiding the sign-in/PRO requirement. The client now
+  checks the membership response before presenting device permission guidance.
+  Existing subscription discovery and the device-off action are retained.
+- The 10 focused membership/article/notification tests pass, including anonymous,
+  Free, expired, active PRO, unavailable identity, self-only preview changes,
+  and authenticated delivery entitlement checks. These use stubbed identities,
+  not real account transitions. No push was sent during this follow-up.
+- Free/PRO/expiry transitions in an authenticated live browser remain unverified;
+  the signed-out check does not establish them. The earlier phone receipt remains
+  valid evidence for that specific device test.
+
 ## Confirmed phone test
 
 At 12:05 JST the owner confirmed receiving the test push and then pressing
