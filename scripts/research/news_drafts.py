@@ -307,7 +307,13 @@ def editorial_state(db, article_id, revision):
         verification = json.loads(latest["verification"]) if matches else []
     except (json.JSONDecodeError, TypeError):
         verification = []
-    if verification != list(APPROVAL_VERIFICATIONS):
+    if decision == "approved" and verification != list(APPROVAL_VERIFICATIONS):
+        # A legacy or corrupt audit row is not merely excluded from publication:
+        # the editor queue must not describe it as approved either. Present it
+        # as a draft so a reviewer performs the current checklist again.
+        decision = "draft"
+        verification = []
+    elif decision != "approved":
         verification = []
     return {"status": decision, "fingerprint": saved["fingerprint"], "evidence": value["evidence"],
             "impact": {key: value[key] for key in ("impactJa", "impactEn", "impactLabel", "confidence")},

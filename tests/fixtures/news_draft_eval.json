@@ -54,5 +54,19 @@
       "confidence": "low",
       "evidence": ["The company completed a product demonstration but provided no sales or financial implications."]
     }
+  },
+  {
+    "name": "capacity opportunity with execution risk",
+    "source": "The company approved a capacity expansion, while noting that permits and customer demand remain uncertain.",
+    "expected": { "impactLabel": "mixed", "confidence": "medium" },
+    "draft": {
+      "summaryJa": "同社は生産能力の拡張を承認しましたが、許認可と顧客需要には不確実性が残ります。",
+      "summaryEn": "The company approved a capacity expansion while permits and customer demand remain uncertain.",
+      "impactJa": "能力拡張の機会と許認可・需要の不確実性が併存するため、事業への影響は両面です。",
+      "impactEn": "The expansion opportunity and uncertainty around permits and demand support a mixed business impact.",
+      "impactLabel": "mixed",
+      "confidence": "medium",
+      "evidence": ["The company approved a capacity expansion, while noting that permits and customer demand remain uncertain."]
+    }
   }
 ]

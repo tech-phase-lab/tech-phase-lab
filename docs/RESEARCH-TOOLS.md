@@ -127,6 +127,13 @@ uncertain is always low-confidence. The draft fingerprint binds both summaries,
 both impact rationales, the label, confidence and exact source excerpts. The
 audit row stores the canonical checklist. A UI-only checkbox, a partial object,
 a legacy approval or a malformed stored value cannot make an item public.
+The private review queue also downgrades an approval with a missing or malformed
+checklist back to draft, so the editor cannot see a misleading approved badge
+for an item that the public feed correctly withholds. Offline evaluation fixtures
+cover every impact label and confidence level, plus fail-closed cases for
+unsupported numbers, invented or duplicated evidence, investment advice and an
+invalid uncertainty/confidence pairing. They exercise deterministic safeguards,
+not live model quality.
 If the AI input was shortened by the configured source-character limit,
 approval also requires a separate acknowledgement that the reviewer checked
 the full stored source and official link, including the range not sent to the

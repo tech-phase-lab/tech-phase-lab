@@ -279,12 +279,20 @@ class NewsDraftTests(unittest.TestCase):
         fixture = Path(__file__).parent / "fixtures" / "news_draft_eval.json"
         cases = json.loads(fixture.read_text())
         self.assertEqual({case["expected"]["impactLabel"] for case in cases},
-                         {"positive", "negative", "neutral", "uncertain"})
+                         {"positive", "negative", "mixed", "neutral", "uncertain"})
+        self.assertEqual({case["expected"]["confidence"] for case in cases},
+                         {"high", "medium", "low"})
         for case in cases:
             with self.subTest(case=case["name"]):
                 value = drafts.validate(case["draft"], case["source"])
                 self.assertEqual(value["impactLabel"], case["expected"]["impactLabel"])
                 self.assertEqual(value["confidence"], case["expected"]["confidence"])
+
+    def test_offline_bilingual_impact_rejection_set(self):
+        fixture = Path(__file__).parent / "fixtures" / "news_draft_rejection_eval.json"
+        for case in json.loads(fixture.read_text()):
+            with self.subTest(case=case["name"]), self.assertRaisesRegex(ValueError, case["error"]):
+                drafts.validate(case["draft"], case["source"])
 
     def manual(self, value=None, edit_version=None):
         row = news.queue(self.db)["items"][0]
@@ -368,6 +376,17 @@ class NewsDraftTests(unittest.TestCase):
         row = news.queue(self.db)["items"][0]
         self.assertEqual(row["review"]["status"], "pending")
         self.assertIsNone(row["review"]["impact"])
+
+    def test_incomplete_approval_audit_is_not_shown_as_approved(self):
+        result = self.manual()
+        self.review(result["fingerprint"])
+        with self.db:
+            self.db.execute("UPDATE news_draft_reviews SET verification='[]'")
+        row = news.queue(self.db)["items"][0]
+        self.assertEqual(row["review"]["status"], "draft")
+        self.assertEqual(row["review"]["verification"], [])
+        with patch.dict("os.environ", {"STOCK_NEWS_PUBLICATION_ENABLED": "true"}):
+            self.assertEqual(drafts.public_feed(self.db)["items"], [])
 
     def test_http_editor_save_review_public_read_and_withdrawal(self):
         # The service test suite installs its isolated dependency modules during

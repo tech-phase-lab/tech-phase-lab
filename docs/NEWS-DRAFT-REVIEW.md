@@ -38,6 +38,13 @@ requires the canonical five-key object, stores it on the append-only review row
 and excludes legacy, partial or
 malformed approval records from the public feed. The checkbox state alone can no
 longer authorize publication through a direct API call.
+The editor queue also treats an otherwise matching approval with an incomplete
+or malformed audit checklist as a draft, avoiding an approved label for content
+that the public feed correctly withholds. The offline evaluation corpus covers
+all five impact labels and all three confidence levels, plus adversarial cases
+for unsupported numbers, invented or duplicate evidence, investment advice and
+invalid high-confidence uncertainty. These fixtures verify deterministic guards;
+they do not substitute for live bilingual model evaluation.
 
 `POST /admin/news/draft` accepts the existing article/revision plus `editVersion`,
 `summaryJa`, `summaryEn`, `impactJa`, `impactEn`, `impactLabel`, `confidence`,
