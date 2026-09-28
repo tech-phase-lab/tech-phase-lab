@@ -554,6 +554,14 @@ class AutomaticMonitor:
                 payload.get("decision"), payload.get("reviewer"), payload.get("reason"),
             )
 
+    def save_news_draft(self, payload):
+        with stock_news.connect(self.db_path) as db:
+            return news_drafts.save_manual(db, payload)
+
+    def public_news(self):
+        with stock_news.connect(self.db_path) as db:
+            return news_drafts.public_feed(db)
+
     def signal_queue(self, limit=30, view="all", ticker=None):
         with self.db_lock, monitor.connect(self.db_path) as db:
             result = signals.queue(db, limit=limit, view=view, ticker=ticker)
@@ -1852,13 +1860,16 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "annual-brief-unavailable"})
             return
-        if path not in {"/snapshot", "/live", "/price-targets"}:
+        if path not in {"/snapshot", "/live", "/price-targets", "/news"}:
             self.send_json(404, {"ok": False, "error": "not-found"})
             return
         if not self.authorized():
             self.send_json(401, {"ok": False, "error": "unauthorized"})
             return
         try:
+            if path == "/news":
+                self.send_json(200, self.app.public_news())
+                return
             if path == "/price-targets":
                 self.send_json(200, self.app.public_price_targets())
                 return
@@ -1903,7 +1914,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(503, {"ok": False})
             return
         if path not in {
-            "/admin/news/generate", "/admin/news/review",
+            "/admin/news/generate", "/admin/news/review", "/admin/news/draft",
             "/admin/briefs/generate", "/admin/briefs/draft", "/admin/briefs/review",
             "/admin/annual-briefs/draft", "/admin/annual-briefs/review",
         }:
@@ -1918,6 +1929,8 @@ class Handler(BaseHTTPRequestHandler):
                 result = self.app.generate_news_draft(payload)
             elif path == "/admin/news/review":
                 result = self.app.review_news_draft(payload)
+            elif path == "/admin/news/draft":
+                result = self.app.save_news_draft(payload)
             elif path == "/admin/annual-briefs/draft":
                 result = self.app.save_annual_brief(payload)
             elif path == "/admin/annual-briefs/review":

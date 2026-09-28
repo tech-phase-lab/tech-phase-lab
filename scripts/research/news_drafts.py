@@ -26,6 +26,7 @@ def schema(db):
         id INTEGER PRIMARY KEY AUTOINCREMENT, article_id TEXT NOT NULL,
         revision TEXT NOT NULL, fingerprint TEXT NOT NULL, decision TEXT NOT NULL,
         reviewer TEXT NOT NULL, reason TEXT NOT NULL, at TEXT NOT NULL);
+      CREATE INDEX IF NOT EXISTS news_reviews_article ON news_draft_reviews(article_id,id);
     """)
 
 
@@ -53,7 +54,7 @@ def validate(value, source):
     # Mechanical grounding is not semantic verification. A human still reviews
     # meaning, translation equivalence, numerical units and source attribution.
     from monitor import _brief_numeric_claims
-    cited = " ".join(evidence)
+    cited = set(_brief_numeric_claims(" ".join(evidence)))
     for field in ("summaryJa", "summaryEn"):
         if any(token not in cited for token in _brief_numeric_claims(value[field])):
             raise ValueError("unsupported-news-number")
@@ -185,7 +186,7 @@ def review(db, article_id, revision, expected_fingerprint, decision, reviewer, r
         validated_draft(db, article_id, revision, expected_fingerprint)
         db.execute("INSERT INTO news_draft_reviews(article_id,revision,fingerprint,decision,reviewer,reason,at) VALUES(?,?,?,?,?,?,?)", (
             article_id, revision, expected_fingerprint, decision, reviewer.strip(), reason.strip(), stock_news.stamp()))
-    return {"status": decision, "publicationEnabled": False}
+    return {"status": decision, "publicationEnabled": publication_enabled()}
 
 
 def editorial_state(db, article_id, revision):
@@ -200,3 +201,69 @@ def editorial_state(db, article_id, revision):
     latest = db.execute("SELECT * FROM news_draft_reviews WHERE article_id=? ORDER BY id DESC LIMIT 1", (article_id,)).fetchone()
     decision = latest["decision"] if latest and latest["revision"] == revision and latest["fingerprint"] == saved["fingerprint"] else "draft"
     return {"status": decision, "fingerprint": saved["fingerprint"], "evidence": value["evidence"]}
+
+
+def publication_enabled():
+    return os.environ.get("STOCK_NEWS_PUBLICATION_ENABLED", "").lower() == "true"
+
+
+def edit_version(db, row):
+    saved = db.execute("SELECT fingerprint FROM news_draft_evidence WHERE article_id=?", (row["id"],)).fetchone()
+    latest = db.execute("SELECT MAX(id) FROM news_draft_reviews WHERE article_id=?", (row["id"],)).fetchone()[0]
+    return hashlib.sha256(json.dumps([
+        row["revision"], row["draft_revision"], row["summary_ja"], row["summary_en"],
+        saved[0] if saved else None, latest,
+    ], ensure_ascii=False).encode()).hexdigest()
+
+
+def save_manual(db, payload):
+    """Compare-and-save both languages and evidence; always require fresh review."""
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        article_id, revision = payload.get("articleId"), payload.get("revision")
+        row = current(db, article_id, revision)
+        if payload.get("editVersion") != edit_version(db, row):
+            raise ValueError("stale-news-edit")
+        value = validate({key: payload.get(key) for key in ("summaryJa", "summaryEn", "evidence")}, json.loads(row["body"])["text"])
+        seal = fingerprint(revision, value["summaryJa"], value["summaryEn"], value["evidence"])
+        db.execute("UPDATE news_articles SET summary_ja=?,summary_en=?,draft_revision=? WHERE id=?", (
+            value["summaryJa"], value["summaryEn"], revision, article_id))
+        db.execute("INSERT OR REPLACE INTO news_draft_evidence VALUES(?,?,?,?,?)", (
+            article_id, revision, seal, json.dumps(value["evidence"], ensure_ascii=False), stock_news.stamp()))
+        # Even a save with identical content or a revert cannot reuse approval.
+        db.execute("INSERT INTO news_draft_reviews(article_id,revision,fingerprint,decision,reviewer,reason,at) VALUES(?,?,?,?,?,?,?)", (
+            article_id, revision, seal, "draft", "system", "Manual draft saved; review required.", stock_news.stamp()))
+    return {"status": "draft", "fingerprint": seal, "publicationEnabled": publication_enabled()}
+
+
+def public_feed(db, limit=30):
+    """Only approved current revisions; never expose source text or editor data."""
+    enabled = publication_enabled()
+    if not enabled:
+        return {"ok": True, "enabled": False, "items": []}
+    items = []
+    # Read all approval/source/evidence checks from the same SQLite snapshot.
+    with db:
+        db.execute("BEGIN")
+        rows = db.execute("""
+          SELECT a.*,r.fingerprint AS approved_fingerprint,r.at AS approved_at
+          FROM news_articles a JOIN news_draft_reviews r ON r.article_id=a.id
+          WHERE r.id=(SELECT MAX(id) FROM news_draft_reviews WHERE article_id=a.id)
+            AND r.decision='approved' AND r.revision=a.revision
+            AND a.draft_revision=a.revision
+          ORDER BY julianday(json_extract(a.body,'$.publishedAt')) DESC,a.id
+        """)
+        for row in rows:
+            try:
+                value = validated_draft(db, row["id"], row["revision"], row["approved_fingerprint"])
+            except (ValueError, TypeError):
+                continue
+            item = json.loads(row["body"])
+            items.append({"id": row["id"], "title": item["title"], "url": item["url"],
+                          "publisher": item["publisher"], "tickers": item["tickers"],
+                          "publishedAt": item["publishedAt"], "observedAt": row["first_seen"],
+                          "approvedAt": row["approved_at"], "summaryJa": value["summaryJa"],
+                          "summaryEn": value["summaryEn"]})
+            if len(items) >= max(1, min(30, limit)):
+                break
+    return {"ok": True, "enabled": True, "items": items}

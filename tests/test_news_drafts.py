@@ -3,8 +3,11 @@ import json
 from pathlib import Path
 import sys
 import tempfile
+import threading
 import unittest
 from unittest.mock import patch
+from urllib.request import Request, urlopen
+from urllib.error import HTTPError
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/research"))
 import brief_generator
@@ -159,6 +162,98 @@ class NewsDraftTests(unittest.TestCase):
                 drafts.validate(value, SOURCE)
         with self.assertRaises(brief_generator.GenerationFailed):
             self.generate(lambda *_: {"status": "incomplete", "output_text": json.dumps(VALUE)})
+
+    def manual(self, value=None, edit_version=None):
+        row = news.queue(self.db)["items"][0]
+        return drafts.save_manual(self.db, {"articleId": self.item["id"], "revision": self.item["revision"],
+                                  "editVersion": edit_version or row["editVersion"], **(value or VALUE)})
+
+    def test_manual_draft_approval_public_feed_hold_and_correction(self):
+        with patch.dict("os.environ", {"STOCK_NEWS_PUBLICATION_ENABLED": "true"}):
+            self.assertEqual(drafts.public_feed(self.db)["items"], [])
+            result = self.manual()
+            self.assertEqual(drafts.public_feed(self.db)["items"], [])
+            self.review(result["fingerprint"])
+            feed = drafts.public_feed(self.db)
+            self.assertEqual(len(feed["items"]), 1)
+            item = feed["items"][0]
+            self.assertEqual(item["summaryJa"], VALUE["summaryJa"])
+            self.assertEqual(item["summaryEn"], SOURCE)
+            self.assertEqual(set(item), {"id", "title", "url", "publisher", "tickers", "publishedAt", "observedAt", "approvedAt", "summaryJa", "summaryEn"})
+            self.review(result["fingerprint"], "held")
+            self.assertEqual(drafts.public_feed(self.db)["items"], [])
+            self.review(result["fingerprint"])
+            self.save(SOURCE + " Correction.")
+            self.assertEqual(drafts.public_feed(self.db)["items"], [])
+            self.save(SOURCE)
+            self.assertEqual(drafts.public_feed(self.db)["items"], [])
+
+    def test_publication_disabled_even_after_approval(self):
+        result = self.manual()
+        self.review(result["fingerprint"])
+        with patch.dict("os.environ", {"STOCK_NEWS_PUBLICATION_ENABLED": "false"}):
+            self.assertEqual(drafts.public_feed(self.db), {"ok": True, "enabled": False, "items": []})
+
+    def test_manual_save_cannot_overwrite_newer_edit_or_reuse_approval(self):
+        version = news.queue(self.db)["items"][0]["editVersion"]
+        result = self.manual()
+        with self.assertRaisesRegex(ValueError, "stale-news-edit"):
+            self.manual(edit_version=version)
+        version = news.queue(self.db)["items"][0]["editVersion"]
+        self.review(result["fingerprint"])
+        with self.assertRaisesRegex(ValueError, "stale-news-edit"):
+            self.manual(edit_version=version)
+        self.manual()  # Identical content still requires a new review.
+        with patch.dict("os.environ", {"STOCK_NEWS_PUBLICATION_ENABLED": "true"}):
+            self.assertEqual(drafts.public_feed(self.db)["items"], [])
+
+    def test_public_feed_revalidates_stored_translation(self):
+        result = self.manual()
+        self.review(result["fingerprint"])
+        with self.db:
+            self.db.execute("UPDATE news_articles SET summary_en=?", (SOURCE + " Unreviewed edit.",))
+        with patch.dict("os.environ", {"STOCK_NEWS_PUBLICATION_ENABLED": "true"}):
+            self.assertEqual(drafts.public_feed(self.db)["items"], [])
+
+    def test_numeric_substrings_are_not_evidence(self):
+        source = SOURCE + " Revenue was 199 million."
+        with self.assertRaisesRegex(ValueError, "unsupported-news-number"):
+            drafts.validate({**VALUE, "summaryEn": SOURCE + " Revenue was 99 million.", "evidence": [source]}, source)
+
+    def test_http_editor_save_review_public_read_and_withdrawal(self):
+        # The service test suite installs its isolated dependency modules during
+        # discovery. Import afterward so worker mocks refer to the same modules.
+        import service
+        app = object.__new__(service.AutomaticMonitor)
+        app.db_path = self.path
+        server = service.ThreadingHTTPServer(("127.0.0.1", 0), service.Handler)
+        server.app = app
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        base = f"http://127.0.0.1:{server.server_port}"
+        def request(path, token, payload=None):
+            req = Request(base + path, data=json.dumps(payload).encode() if payload is not None else None,
+                          headers={"Authorization": "Bearer " + token, "Content-Type": "application/json"})
+            with urlopen(req, timeout=2) as response:
+                return json.load(response)
+        try:
+            with patch.dict("os.environ", {"RESEARCH_EDITOR_TOKEN": "test-editor", "RESEARCH_API_TOKEN": "test-reader", "STOCK_NEWS_PUBLICATION_ENABLED": "true"}):
+                with self.assertRaises(HTTPError) as error:
+                    request("/admin/news/draft", "test-reader", {})
+                self.assertEqual(error.exception.code, 401)
+                row = request("/admin/news", "test-editor")["items"][0]
+                identity = {"articleId": row["id"], "revision": row["revision"]}
+                saved = request("/admin/news/draft", "test-editor", {**identity, "editVersion": row["editVersion"], **VALUE})
+                self.assertEqual(request("/news", "test-reader")["items"], [])
+                review = {**identity, "fingerprint": saved["fingerprint"], "reviewer": "Synthetic editor", "reason": "Both translations checked.", "decision": "approved"}
+                request("/admin/news/review", "test-editor", review)
+                feed = request("/news", "test-reader")
+                self.assertEqual(feed["items"][0]["summaryEn"], SOURCE)
+                self.assertNotIn("reviewer", str(feed))
+                request("/admin/news/review", "test-editor", {**review, "decision": "held"})
+                self.assertEqual(request("/news", "test-reader")["items"], [])
+        finally:
+            server.shutdown(); server.server_close(); thread.join(timeout=2)
 
 
 if __name__ == "__main__":

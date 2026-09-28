@@ -181,11 +181,14 @@ def queue(db, limit=20):
                       "summaryJa": row["summary_ja"] if current_draft else None,
                       "summaryEn": row["summary_en"] if current_draft else None,
                       "draftCurrent": current_draft, "displayedAt": row["displayed_at"],
-                      "review": news_drafts.editorial_state(db, row["id"], row["revision"])})
+                      "review": news_drafts.editorial_state(db, row["id"], row["revision"]),
+                      "editVersion": news_drafts.edit_version(db, row)})
     month = stamp()[:7] + "-01"
     calls = db.execute("SELECT COUNT(*) FROM news_api_calls WHERE at>=?", (month,)).fetchone()[0]
     return {"items": items, "callsThisMonth": calls, "lastSuccessAt": state(db, "last_success"),
-            "lastError": persisted_error_code(state(db, "last_error")), "publicationEnabled": False}
+            "lastError": persisted_error_code(state(db, "last_error")),
+            "generationEnabled": os.environ.get("STOCK_NEWS_DRAFTS_ENABLED", "").lower() == "true",
+            "publicationEnabled": news_drafts.publication_enabled()}
 
 
 def poll(db, tickers, *, transport=request_page):

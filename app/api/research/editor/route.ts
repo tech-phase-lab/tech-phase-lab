@@ -1,6 +1,6 @@
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export const maxDuration = 20;
+export const maxDuration = 120;
 
 function endpoint(path: string) {
   const value = process.env.RESEARCH_MONITOR_URL;
@@ -23,8 +23,8 @@ function response(status: number, value: unknown) {
   return Response.json(value, { status, headers: { "Cache-Control": "no-store", "Referrer-Policy": "no-referrer", "X-Content-Type-Options": "nosniff" } });
 }
 
-async function relay(url: URL, init: RequestInit) {
-  const upstream = await fetch(url, { ...init, cache: "no-store", signal: AbortSignal.timeout(15_000) });
+async function relay(url: URL, init: RequestInit, timeout = 15_000) {
+  const upstream = await fetch(url, { ...init, cache: "no-store", signal: AbortSignal.timeout(timeout) });
   const text = await upstream.text();
   if (new TextEncoder().encode(text).length > 3_000_000) return response(502, { ok: false, error: "oversized-response" });
   let payload: unknown;
@@ -41,13 +41,13 @@ export async function GET(request: Request) {
     const limit = Number.isInteger(requested) ? Math.max(1, Math.min(requested, 50)) : 20;
     const kind = requestUrl.searchParams.get("kind");
     const view = requestUrl.searchParams.get("view") ?? "all";
-    const allowedViews = kind === "signals" ? ["all", "new", "changed", "baseline", "targets"] : kind === "annual"
+    const allowedViews = kind === "news" ? ["all"] : kind === "signals" ? ["all", "new", "changed", "baseline", "targets"] : kind === "annual"
       ? ["all", "actionable", "invalid", "draft", "held", "approved", "rejected"]
       : ["all", "ready", "blocked", "needs-draft"];
     if (!allowedViews.includes(view)) {
       return response(400, { ok: false, error: "invalid-review-filter" });
     }
-    const url = endpoint(kind === "signals" ? "/admin/signals" : kind === "annual" ? "/admin/annual-briefs" : "/admin/briefs");
+    const url = endpoint(kind === "news" ? "/admin/news" : kind === "signals" ? "/admin/signals" : kind === "annual" ? "/admin/annual-briefs" : "/admin/briefs");
     url.searchParams.set("limit", String(limit));
     url.searchParams.set("view", view);
     if (kind === "signals" && requestUrl.searchParams.has("ticker")) {
@@ -69,7 +69,7 @@ export async function POST(request: Request) {
     if (!text || new TextEncoder().encode(text).length > 64 * 1024) return response(400, { ok: false, error: "invalid-request-size" });
     let parsed: { action?: unknown; payload?: unknown };
     try { parsed = JSON.parse(text); } catch { return response(400, { ok: false, error: "invalid-json" }); }
-    if (!parsed || typeof parsed !== "object" || !["generate", "draft", "review", "annual-draft", "annual-review"].includes(String(parsed.action)) || !parsed.payload || typeof parsed.payload !== "object") {
+    if (!parsed || typeof parsed !== "object" || !["generate", "draft", "review", "annual-draft", "annual-review", "news-generate", "news-draft", "news-review"].includes(String(parsed.action)) || !parsed.payload || typeof parsed.payload !== "object" || Array.isArray(parsed.payload)) {
       return response(400, { ok: false, error: "invalid-request" });
     }
     const paths: Record<string, string> = {
@@ -78,13 +78,16 @@ export async function POST(request: Request) {
       review: "/admin/briefs/review",
       "annual-draft": "/admin/annual-briefs/draft",
       "annual-review": "/admin/annual-briefs/review",
+      "news-generate": "/admin/news/generate",
+      "news-draft": "/admin/news/draft",
+      "news-review": "/admin/news/review",
     };
     const path = paths[String(parsed.action)];
     return await relay(endpoint(path), {
       method: "POST",
       headers: { Authorization: auth, "Content-Type": "application/json" },
       body: JSON.stringify(parsed.payload),
-    });
+    }, parsed.action === "news-generate" ? 115_000 : 15_000);
   } catch {
     return response(503, { ok: false, error: "editorial-service-unavailable" });
   }

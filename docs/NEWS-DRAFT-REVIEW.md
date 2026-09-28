@@ -1,7 +1,52 @@
 # Private bilingual news generation and review
 
-Implemented on September 28, 2026. This is an editor-only backend checkpoint;
-there is no public news feed or editor screen for these actions yet.
+## Current checkpoint — editor UI and gated public display
+
+Implemented September 28, 2026. `/research/review` now includes an ordinary-news
+panel using the existing editor token (kept only in component memory). Editors
+can load the latest 50 articles, inspect saved source text, edit Japanese/English
+summaries and up to four exact excerpts, save, and approve/hold/reject. Approval
+requires an explicit bilingual check, reviewer, and reason in the UI; the server
+independently validates the saved revision, translations and evidence.
+
+`POST /admin/news/draft` accepts the existing article/revision plus `editVersion`,
+`summaryJa`, `summaryEn`, and `evidence`. The compare-and-save version prevents
+overwriting a newer edit or decision. Every manual save, even identical text,
+records a draft event and requires fresh approval. Evidence matching now compares
+whole numeric tokens rather than accepting a substring such as 99 inside 199.
+
+`GET /news` is a monitor-token endpoint. It selects only the latest approved
+decision for the current source/draft, then revalidates both summaries and the
+fingerprint within one SQLite read snapshot. It returns explicitly selected public
+fields only, excluding source text, excerpts, review reasons and identities.
+`/api/research/news` uses a server-held monitor credential and applies a second
+public-field allowlist. Both API and browser requests use no-store.
+
+`/research/news` displays the selected-language summary, publisher link, original
+publication time and review time. It refreshes every 30 seconds, clears old items
+on read failure, and has distinct preparing/empty/error states. Review withdrawal
+is effective on the next successful refresh (browser suspension can delay this).
+The browser's fetch time is not phone-receipt or first-display telemetry.
+
+Public distribution requires `STOCK_NEWS_PUBLICATION_ENABLED=true` on the monitor.
+It remains OFF: no provider entitlement has been verified and no article has
+been approved or published by this development work. Paid generation also remains
+OFF. No new paywall or membership policy was introduced.
+
+Tests exercise the actual local HTTP handler: editor save → approval → public
+read → hold/withdrawal, with synthetic articles, temporary SQLite and no external
+calls. Additional tests cover stale edits, identical-save invalidation, source
+corrections, altered translations, public-field redaction, proxy authentication
+and disabled publication. Live model quality/provider access remain unverified.
+
+Remaining: explicit failed-generation retry controls, live provider entitlement
+and schema verification, bilingual model-output evaluation, then actual
+publication-to-screen timing. Manual evidence-backed correction is now available.
+
+## Original backend checkpoint (historical)
+
+The following describes the earlier backend-only stage; the current UI/public
+selection above supersedes its not-yet-implemented statements.
 
 ## Flow
 

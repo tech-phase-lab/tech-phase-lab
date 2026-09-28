@@ -1,9 +1,37 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { GET } from "../app/api/research/editor/route.ts";
+import { GET, POST } from "../app/api/research/editor/route.ts";
 
 const authorization = "Bearer editor-token-at-least-24-characters";
+
+test("news editor forwards only authenticated explicit actions", async () => {
+  const previousUrl = process.env.RESEARCH_MONITOR_URL;
+  const previousFetch = globalThis.fetch;
+  process.env.RESEARCH_MONITOR_URL = "https://monitor.example.com";
+  const calls = [];
+  globalThis.fetch = async (url, init) => { calls.push({ url: String(url), init }); return Response.json({ ok: true, items: [] }); };
+  try {
+    const body = action => JSON.stringify({ action, payload: { articleId: "saved-id", revision: "current" } });
+    assert.equal((await POST(new Request("http://localhost/api/research/editor", { method: "POST", body: body("news-draft") }))).status, 401);
+    assert.equal(calls.length, 0);
+    await GET(new Request("http://localhost/api/research/editor?kind=news", { headers: { Authorization: authorization } }));
+    assert.equal(new URL(calls[0].url).pathname, "/admin/news");
+    for (const action of ["generate", "draft", "review"]) {
+      const result = await POST(new Request("http://localhost/api/research/editor", { method: "POST", headers: { Authorization: authorization }, body: body(`news-${action}`) }));
+      assert.equal(result.status, 200);
+      const sent = calls.at(-1);
+      assert.equal(new URL(sent.url).pathname, `/admin/news/${action}`);
+      assert.equal(sent.init.headers.Authorization, authorization);
+      assert.deepEqual(JSON.parse(sent.init.body), { articleId: "saved-id", revision: "current" });
+      assert.equal(result.headers.get("Cache-Control"), "no-store");
+    }
+  } finally {
+    globalThis.fetch = previousFetch;
+    if (previousUrl === undefined) delete process.env.RESEARCH_MONITOR_URL;
+    else process.env.RESEARCH_MONITOR_URL = previousUrl;
+  }
+});
 
 test("private signals forward filters and require editor credentials", async () => {
   const previousUrl = process.env.RESEARCH_MONITOR_URL;

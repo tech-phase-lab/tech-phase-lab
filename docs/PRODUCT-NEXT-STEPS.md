@@ -2,11 +2,12 @@
 
 ## Latest implementation checkpoint — September 28
 
-Private ordinary-news bilingual generation and revision/fingerprint-bound review
-endpoints are implemented; see `NEWS-DRAFT-REVIEW.md`. They remain disabled for
-live paid generation. Approval still does not publish news. Next: editor UI,
-manual correction/retry, reviewed public selection, then live provider/model
-evaluation and source-to-screen timing. Do not mark priority 2 complete yet.
+Ordinary-news editor UI, evidence-backed manual corrections, bilingual generation,
+revision/fingerprint-bound review and approved-only public selection are
+implemented; see `NEWS-DRAFT-REVIEW.md`. Live paid generation and public
+distribution remain OFF. Next: live provider entitlement/model evaluation,
+explicit failed-generation retry controls and source-to-screen timing.
+Do not mark priority 2 complete yet.
 
 ## Current checkpoint — September 28, 12:05 JST
 

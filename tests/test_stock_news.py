@@ -154,6 +154,8 @@ class StockNewsTests(unittest.TestCase):
                 return {"status": "draft", "publicationEnabled": False}
             def review_news_draft(self, payload):
                 return {"status": "held", "publicationEnabled": False}
+            def save_news_draft(self, payload):
+                return {"status": "draft", "publicationEnabled": False}
         server = service.ThreadingHTTPServer(("127.0.0.1", 0), service.Handler)
         server.app = App()
         thread = threading.Thread(target=server.serve_forever, daemon=True)
@@ -166,7 +168,7 @@ class StockNewsTests(unittest.TestCase):
                 self.assertEqual(error.exception.code, 401)
                 with urlopen(Request(url, headers={"Authorization": "Bearer synthetic-editor-token-more-than-24"}), timeout=2) as response:
                     self.assertFalse(json.load(response)["publicationEnabled"])
-                for action, expected in (("generate", "draft"), ("review", "held")):
+                for action, expected in (("generate", "draft"), ("review", "held"), ("draft", "draft")):
                     request = Request(url + "/" + action, data=b"{}", headers={"Content-Type": "application/json"})
                     with self.assertRaises(HTTPError) as error:
                         urlopen(request, timeout=2)
