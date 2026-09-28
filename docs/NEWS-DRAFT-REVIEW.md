@@ -43,6 +43,14 @@ Remaining: explicit failed-generation retry controls, live provider entitlement
 and schema verification, bilingual model-output evaluation, then actual
 publication-to-screen timing. Manual evidence-backed correction is now available.
 
+Preview verification: the September 28 deployment of `b4d9db4` passed GitHub
+Actions, Vercel and Railway checks. The live review page shows the new panel and
+disables loading without an editor token; the live news page shows distribution
+preparing, as intended while disabled. No real article/editor submission was
+performed in the live browser. Local gates passed 116 Node and 380 Python tests,
+lint, build, compileall and diff checks. A subsequent copy correction makes the
+top-level review warning consistent with the opt-in approved-news display.
+
 ## Original backend checkpoint (historical)
 
 The following describes the earlier backend-only stage; the current UI/public

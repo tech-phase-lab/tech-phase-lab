@@ -424,7 +424,7 @@ export default function ReviewDashboard() {
 
   return <main className={styles.main}>
     <header><div><p>TECH PHASE · PRIVATE EDITOR</p><h1>根拠付きリサーチレビュー</h1></div><Link href="/research/intake">取得状況へ戻る</Link></header>
-    <aside className={styles.warning}><strong>配信前の運営画面</strong><span>原文・数値・解釈を人間が確認するための画面です。承認操作だけで会員へ配信されることはありません。</span></aside>
+    <aside className={styles.warning}><strong>配信前の運営画面</strong><span>原文・数値・解釈を確認してください。通常ニュースは公開配信がONの場合、承認後にニュース欄へ表示されます。</span></aside>
     <section className={styles.auth} aria-label="編集者認証"><label>編集用トークン<input type="password" autoComplete="off" value={token} onChange={event => setToken(event.target.value)} /></label><div className={styles.authActions}><button disabled={busy || token.length < 24} onClick={() => load()}>レビューキューを読み込む</button><div className={styles.tickerLoad}><input aria-label="年次報告書のティッカー" value={annualTicker} maxLength={15} onChange={event => setAnnualTicker(event.target.value.toUpperCase())} /><button disabled={busy || token.length < 24} onClick={() => loadAnnual()}>年次報告書を開く</button></div></div><p aria-live="polite">{message}</p></section>
     <SignalsPanel key={token} token={token} />
     <NewsPanel key={`news:${token}`} token={token} />
