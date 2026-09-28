@@ -17,10 +17,10 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
     </nav>
     <nav className={styles.reading} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
       <div className={styles.deskHeading}><span>RIZEL’S DESK</span><span className={styles.deskEdition}>TECH PHASE PRO</span></div>
-      <Link href="/research/notes" className={styles.deskLead}><div><span className={styles.deskLabel}>NOTES</span><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong><p>{t("数字の先にある、相場の着眼点。", "A perspective beyond the numbers.")}</p></div><span className={styles.deskArrow} aria-hidden="true">↗</span></Link>
+      <Link href="/research/notes" className={styles.deskLead}><div><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong><p>{t("数字の先にある、相場の着眼点。", "A perspective beyond the numbers.")}</p></div></Link>
       <div className={styles.deskPair}>
-        <Link href="/research/qa"><span className={styles.deskLabel}>Q&A</span><strong>{t("リサーチQ&A", "Research Q&A")}</strong><span className={styles.deskSmall}>{t("疑問から、理解を深める", "Questions worth exploring")}</span><span aria-hidden="true">→</span></Link>
-        <Link href="/research/weekly"><span className={styles.deskLabel}>WEEKLY</span><strong>{t("週刊PRO", "PRO Weekly")}</strong><span className={styles.deskSmall}>{t("一週間の変化と展望", "The week’s shifts & outlook")}</span><span aria-hidden="true">→</span></Link>
+        <Link href="/research/qa"><strong>{t("質問・回答", "Questions & answers")}</strong><span className={styles.deskSmall}>{t("疑問から、理解を深める", "Questions worth exploring")}</span><span aria-hidden="true">→</span></Link>
+        <Link href="/research/weekly"><strong>{t("週刊PRO", "PRO Weekly")}</strong><span className={styles.deskSmall}>{t("一週間の変化と展望", "The week’s shifts & outlook")}</span><span aria-hidden="true">→</span></Link>
       </div>
     </nav>
   </>;
