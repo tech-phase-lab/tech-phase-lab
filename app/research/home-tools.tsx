@@ -25,6 +25,8 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
       <Link href="/research/market"><span className={styles.icon} aria-hidden="true">📊</span><strong>{t("マーケット", "Markets")}</strong><p>{t("主要指数・金利・為替", "Indices, yields & currencies")}</p><span className={styles.action} aria-hidden="true">↗</span></Link>
       <Link href="/research/calendar"><span className={styles.icon} aria-hidden="true">🗓️</span><strong>{t("決算・経済指標", "Earnings & economy")}</strong><p>{t("カレンダーで予定を確認", "Upcoming events")}</p><span className={styles.action} aria-hidden="true">↗</span></Link>
       <button onClick={onChanges}><span className={styles.icon} aria-hidden="true">♻️</span><strong>{t("何が変わった？", "What changed?")}</strong><p>{t("企業の変化と、その根拠", "Company shifts & evidence")}</p><span className={styles.action} aria-hidden="true">↗</span></button>
+      <Link href="/research/learn"><span className={styles.icon} aria-hidden="true">📘</span><strong>{t("米国株のはじめ方", "US stock basics")}</strong><p>{t("口座・注文・決算を順番に", "Accounts, orders & earnings")}</p><span className={styles.action} aria-hidden="true">↗</span></Link>
+      <Link href="/research/faq"><span className={styles.icon} aria-hidden="true">💬</span><strong>{t("サービスFAQ", "Service FAQ")}</strong><p>{t("会員・質問・通知の案内", "Membership, questions & alerts")}</p><span className={styles.action} aria-hidden="true">↗</span></Link>
     </nav>
     <nav className={styles.reading} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
       <div className={styles.deskHeading}><span>RIZEL’S DESK</span><span className={styles.deskEdition}>TECH PHASE PRO</span></div>

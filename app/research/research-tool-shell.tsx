@@ -25,6 +25,8 @@ export default function ResearchToolShell({ lang, setLang, title, description, c
         <Link href="/research/watchlist" aria-current={pathname === "/research/watchlist" ? "page" : undefined}><NavigationIcon name="favorite" />{lang === "ja" ? "お気に入り銘柄" : "Favorite stocks"}</Link>
         <Link href="/research/calendar" aria-current={pathname === "/research/calendar" ? "page" : undefined}><NavigationIcon name="calendar" />{lang === "ja" ? "カレンダー" : "Calendar"}</Link>
         <Link href="/research/market" aria-current={pathname === "/research/market" ? "page" : undefined}><NavigationIcon name="metrics" />{lang === "ja" ? "マーケット" : "Markets"}</Link>
+        <Link href="/research/learn" aria-current={pathname === "/research/learn" ? "page" : undefined}><NavigationIcon name="saved" />{lang === "ja" ? "米国株の基礎" : "Stock basics"}</Link>
+        <Link href="/research/faq" aria-current={pathname === "/research/faq" ? "page" : undefined}><NavigationIcon name="changes" />FAQ</Link>
         <Link href="/research/columns" aria-current={pathname === "/research/columns" ? "page" : undefined}><NavigationIcon name="pro" />{lang === "ja" ? "PRO記事・週刊" : "PRO articles & weekly"}</Link>
       </nav>
       <h1>{title}</h1>{description && <p className={styles.description}>{description}</p>}

@@ -242,3 +242,19 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
   session. No real question, answer, post or note was created for this check.
 - Next finite product work is the Free beginner guide and service FAQ. Keep the
   two information types separate and preserve Japan-resident brokerage context.
+
+## September 29 Free learning and service-help checkpoint
+
+- Added separate public pages for a Japan-resident-first US stock guide and the
+  Tech Phase service FAQ. The guide covers account checks, orders, earnings and
+  intermediate research concepts; it links only to primary FSA and Investor.gov
+  references and contains no broker ranking or affiliate promotion.
+- The FAQ separately explains Free/PRO visibility, private question handling,
+  the no-answer guarantee, body-only RIZEL notes, periodic calendar verification,
+  measured latency versus refresh intervals, translation status and the
+  educational-not-advisory boundary.
+- Both pages are linked from the home quick tools, desktop research tools and
+  mobile menu. They require no login. Local validation passed: lint, 133 Node
+  tests, 427 Python tests, production build, Python compilation and whitespace
+  checks. Preview deployment still needs to complete before this finite backlog
+  item is marked shipped.
