@@ -6,7 +6,7 @@
   .bar svg { width:22px; height:22px; }
   .bar [aria-current=page],.bar [aria-expanded=true] { color:#95e4c6; background:#19332e; }
   .bar :focus-visible,.sheet a:focus-visible { outline:2px solid #95e4c6; outline-offset:2px; }
-  .backdrop { position:fixed; inset:0; z-index:58; border:0; background:#0007; }
+  .backdrop { position:fixed; inset:0; z-index:58; border:0; background:#0007; touch-action:none; }
   .sheet { position:fixed; left:12px; right:12px; bottom:calc(98px + env(safe-area-inset-bottom)); z-index:59; padding:10px; border:1px solid #354b55; border-radius:18px; background:#14212b; box-shadow:0 -12px 48px #0005; max-height:60vh; overflow:auto; }
   .sheet a { display:flex; justify-content:space-between; gap:10px; padding:15px 12px; border-radius:8px; color:#deebe6; text-decoration:none; font:500 14px/1.3 Arial,sans-serif; }
   .sheet a:hover { background:#20372f; }

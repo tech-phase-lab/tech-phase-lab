@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, useSyncExternalStore, type MouseEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type MouseEvent } from "react";
 import NavigationIcon, { type NavigationIconName } from "./navigation-icon";
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./bottom-nav.module.css";
@@ -20,12 +20,40 @@ export default function BottomNav() {
   const [proMenu, setProMenu] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLElement>(null);
+  const unlockScroll = useRef<(() => void) | null>(null);
   const hash = useSyncExternalStore(subscribe, getHash, serverHash);
   const ja = lang === "ja";
+  useLayoutEffect(() => {
+    if (!open) return;
+    const body = document.body;
+    const root = document.documentElement;
+    const x = window.scrollX;
+    const y = window.scrollY;
+    const previous = { position: body.style.position, top: body.style.top, left: body.style.left, width: body.style.width, overflow: body.style.overflow, rootOverflow: root.style.overflow, scrollBehavior: root.style.scrollBehavior };
+    body.style.position = "fixed";
+    body.style.top = `-${y}px`;
+    body.style.left = `-${x}px`;
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+    root.style.overflow = "hidden";
+    let locked = true;
+    const unlock = () => {
+      if (!locked) return;
+      locked = false;
+      Object.assign(body.style, { position: previous.position, top: previous.top, left: previous.left, width: previous.width, overflow: previous.overflow });
+      root.style.overflow = previous.rootOverflow;
+      root.style.scrollBehavior = "auto";
+      window.scrollTo({ left: x, top: y, behavior: "instant" });
+      root.style.scrollBehavior = previous.scrollBehavior;
+      unlockScroll.current = null;
+    };
+    unlockScroll.current = unlock;
+    return unlock;
+  }, [open]);
   useEffect(() => {
     if (!open) return;
-    panel.current?.querySelector<HTMLAnchorElement>("a")?.focus();
-    const close = (event: KeyboardEvent) => { if (event.key === "Escape") { setOpen(false); trigger.current?.focus(); } };
+    panel.current?.querySelector<HTMLAnchorElement>("a")?.focus({ preventScroll: true });
+    const close = (event: KeyboardEvent) => { if (event.key === "Escape") { setOpen(false); trigger.current?.focus({ preventScroll: true }); } };
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
   }, [open]);
@@ -49,6 +77,7 @@ export default function BottomNav() {
   }, [open]);
   if (pathname.endsWith("/widget")) return null;
   function navigate(event: MouseEvent<HTMLAnchorElement>, href: string) {
+    unlockScroll.current?.();
     setOpen(false);
     if (pathname !== "/research" || !href.startsWith("/research#")) return;
     event.preventDefault();
@@ -77,8 +106,8 @@ export default function BottomNav() {
     ["/research/faq", ja ? "よくある質問・使い方" : "FAQ & help", "changes"],
   ];
   return <div className={styles.mobile}>
-    {open && <><button className={styles.backdrop} aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus(); }} />
-      <nav ref={panel} id="mobile-more-menu" className={styles.sheet} aria-label={ja ? "その他のメニュー" : "More navigation"}><div className={styles.sheetHeading}><strong>{ja ? "メニュー" : "Explore"}</strong><button aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus(); }}>×</button></div><div className={styles.menuGrid}>{links.filter(([href]) => proMenu || !["/research/notes", "/research/qa", "/research/weekly"].includes(href)).map(([href, label, icon]) => <Link key={href} href={href} onClick={(event) => navigate(event, href)}><span className={styles.menuIcon}><NavigationIcon name={icon} /></span><span>{label}</span></Link>)}</div></nav></>}
+    {open && <><button className={styles.backdrop} aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus({ preventScroll: true }); }} />
+      <nav ref={panel} id="mobile-more-menu" className={styles.sheet} aria-label={ja ? "その他のメニュー" : "More navigation"}><div className={styles.sheetHeading}><strong>{ja ? "メニュー" : "Explore"}</strong><button aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus({ preventScroll: true }); }}>×</button></div><div className={styles.menuGrid}>{links.filter(([href]) => proMenu || !["/research/notes", "/research/qa", "/research/weekly"].includes(href)).map(([href, label, icon]) => <Link key={href} href={href} onClick={(event) => navigate(event, href)}><span className={styles.menuIcon}><NavigationIcon name={icon} /></span><span>{label}</span></Link>)}</div></nav></>}
     <nav className={styles.bar} aria-label={ja ? "メインメニュー" : "Main navigation"}>
       {tabs.map(({ href, label, icon, active }) => <Link key={href} href={href} aria-current={!open && active ? "page" : undefined} onClick={(event) => navigate(event, href)}><NavigationIcon name={icon} /><span>{label}</span></Link>)}
       <button ref={trigger} aria-expanded={open} aria-controls="mobile-more-menu" onClick={() => { setProMenu(false); setOpen(!open); }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg><span>{ja ? "メニュー" : "Menu"}</span></button>

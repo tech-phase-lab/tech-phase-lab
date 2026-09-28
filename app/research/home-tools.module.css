@@ -51,8 +51,7 @@
 }
 
 .readingLocked{position:relative;border-color:#1b242b}
-.deskOverlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:rgba(0,0,0,.84);pointer-events:none}
-.deskChain{position:absolute;inset:0;width:100%;height:100%;color:#847b68;opacity:.18;mask-image:radial-gradient(ellipse 125px 65px at top left,#000 15%,transparent 100%),radial-gradient(ellipse 125px 65px at top right,#000 15%,transparent 100%),radial-gradient(ellipse 125px 65px at bottom left,#000 15%,transparent 100%),radial-gradient(ellipse 125px 65px at bottom right,#000 15%,transparent 100%)}
+.deskOverlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:rgba(0,0,0,.89);pointer-events:none}
 .overlayCaption{position:relative;display:flex;flex-direction:column;align-items:center;gap:9px;padding:12px 20px;background:radial-gradient(ellipse,#030606 55%,#03060600 74%)}
 .overlayLock{font-size:17px;letter-spacing:0;margin-right:8px}
 .overlayLabel{font:10px var(--font-geist-mono),monospace;letter-spacing:.2em;color:#c5b38c}

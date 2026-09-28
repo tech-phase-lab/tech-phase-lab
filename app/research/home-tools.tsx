@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Language, ResearchEvent } from "@/lib/research/data";
 import { dateLabel } from "@/lib/research/presentation";
 import { useStockFavorites } from "./use-stock-favorites";
@@ -10,17 +10,6 @@ import styles from "./home-tools.module.css";
 export default function HomeTools({ lang, onChanges }: { lang: Language; onChanges: () => void }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const [isPro, setIsPro] = useState(false);
-  const chainRef = useRef<SVGSVGElement>(null);
-  const [chainSize, setChainSize] = useState({ width: 360, height: 160 });
-  useEffect(() => {
-    if (isPro || !chainRef.current) return;
-    const observer = new ResizeObserver(([entry]) => {
-      const { width, height } = entry.contentRect;
-      if (width > 0 && height > 0) setChainSize({ width, height });
-    });
-    observer.observe(chainRef.current);
-    return () => observer.disconnect();
-  }, [isPro]);
   useEffect(() => {
     const controller = new AbortController();
     let generation = 0;
@@ -63,12 +52,6 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
         <Link href="/research/weekly"><strong>{t("週刊PRO", "PRO Weekly")}</strong><span className={styles.deskSmall}>{t("一週間の変化と展望", "The week’s shifts & outlook")}</span><span aria-hidden="true">→</span></Link>
       </div>
       {!isPro && <div className={styles.deskOverlay}>
-        <svg ref={chainRef} className={styles.deskChain} viewBox={`0 0 ${chainSize.width} ${chainSize.height}`} aria-hidden="true" focusable="false">
-          <defs><pattern id="desk-chain-links" width="36" height="24" patternUnits="userSpaceOnUse"><rect x="2" y="5" width="25" height="14" rx="7" fill="none" stroke="currentColor" strokeWidth="2" /><path d="M22 10h17m-17 4h17" stroke="currentColor" strokeWidth="2" /><path d="M8 8h12" stroke="#d4c9b0" strokeOpacity=".35" strokeWidth="1" /></pattern></defs>
-          {[1, -1].map(direction => <g key={direction} transform={`translate(0 ${direction === 1 ? 0 : chainSize.height}) rotate(${direction * Math.atan2(chainSize.height, chainSize.width) * 180 / Math.PI})`}>
-            <rect transform="translate(0 -12)" width={Math.hypot(chainSize.width, chainSize.height)} height="24" fill="url(#desk-chain-links)" />
-          </g>)}
-        </svg>
         <div className={styles.overlayCaption}><span className={styles.overlayLabel}>TECH PHASE PRO</span><strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong></div>
       </div>}
     </nav>
