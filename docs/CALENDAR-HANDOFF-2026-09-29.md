@@ -132,3 +132,37 @@ review cycle, not a claim of complete future-event coverage: twenty companies
 remain pending because their official sources are empty, inaccessible or
 otherwise inconclusive. Continue with the oldest incomplete set: AAPL, AMZN,
 ANET, ARM, AVGO, BE, COHR, CRDO, CRWV and GOOGL.
+
+## One-hundred-fortieth company batch
+
+The oldest ten pending companies were rechecked against first-party investor
+pages, event calendars, earnings lists and news releases. None supplied a new,
+confirmed future earnings release or call. Arm still labels November 4 as only
+tentatively proposed; it therefore remains excluded from the calendar. The
+other sources either expose empty dynamic sections or end with completed
+results. No coverage row is advanced from pending and no forecast date is
+added.
+
+| Ticker | Result | Official source / blocker |
+| --- | --- | --- |
+| AAPL | Pending | The official Investor Relations page still exposes Investor Updates and Quarterly Earnings Reports headings without a dated future item or explicit no-events statement. |
+| AMZN | Pending | The official Events page still exposes empty Upcoming Events and Past Events headings. The latest retrievable official earnings-call announcement is the completed July 30 Q2 call. |
+| ANET | Pending | The official Events page exposes empty Upcoming Events and Past Events sections. Its official releases and overview end with the completed August 4 Q2 result and September investor appearances. |
+| ARM | Pending | The official Events page still calls November 4, 2026 a tentatively proposed fiscal Q2 date and has not promoted it to a confirmed upcoming event. |
+| AVGO | Pending | The official Financial News list ends with the completed September 2 fiscal Q3 results and contains no later earnings-timing announcement. |
+| BE | Pending | The official Event Calendar still exposes empty Upcoming Events and Event Archive sections without an explicit no-events statement. Current official releases describe non-earnings community events, not a result date. |
+| COHR | Pending | The official Financial Releases list ends with the completed August 12 fiscal Q4 and full-year results and contains no future earnings-timing announcement. |
+| CRDO | Pending | The official Events page exposes empty Upcoming & Recent Events and Archived Events sections. Its September releases concern investor and industry conferences, not a future earnings date. |
+| CRWV | Pending | The official Events & Presentations page exposes empty Upcoming & Recent Events and Archived Events sections. The overview and quarterly-results pages end with the completed August 11 Q2 call. |
+| GOOGL | Pending | The official Events page exposes only its navigation shell, while the official earnings and news pages do not supply a future earnings announcement. |
+
+The BLS October schedule was rechecked on 2026-09-29 and still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI releases at
+08:30 Eastern. The Federal Reserve calendar, last updated September 16, still
+lists the October 27-28 and December 8-9 meetings without future statement or
+press-conference clock times. The existing economic entries remain unchanged.
+
+Continue with SKHY, SNOW, VRT, AMAT, QCOM, CRM, KLAC, LITE, MRVL and MSFT. Keep
+tentative dates, empty dynamic sections, completed results and general investor
+appearances pending unless the issuer publishes a confirmed earnings date or an
+explicit current no-events state.
