@@ -7,6 +7,8 @@ import polish from "./tradingview-polish.module.css";
 type WidgetKind = "compact" | "chart";
 
 function tradingViewSymbol(ticker: string, exchange: string) {
+  // SEC groups GLDM under NYSE; TradingView uses its AMEX namespace.
+  if (ticker.toUpperCase() === "GLDM") return "AMEX:GLDM";
   const prefix: Record<string, string> = {
     NASDAQ: "NASDAQ",
     NYSE: "NYSE",
