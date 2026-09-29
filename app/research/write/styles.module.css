@@ -5,3 +5,5 @@
 .publishBar{position:sticky;bottom:0;padding:12px 0 max(12px,env(safe-area-inset-bottom));background:#0f202b;border-top:1px solid #304954}
 .publishBar button:first-child{background:#a4dfcf;color:#091219;font-weight:700;min-height:48px}
 @media(max-width:900px){.layout{grid-template-columns:1fr}.main{padding:18px 12px}.main header{margin-bottom:12px}.main h1{margin-bottom:12px}.publishBar button:first-child{flex:1}.history nav{max-height:240px}}
+
+.main textarea.body{min-height:190px}.main header{margin-bottom:10px}.main>p{font-size:13px;margin-bottom:12px}.main h1{font-size:24px;margin:10px 0}.hint{color:#92aea8;font-size:12px}.main .publishBar{bottom:0}.main fieldset{padding:0;border:0}.main header a{font-size:13px}.main .saveBar{padding:10px 0}@media(max-width:760px){.main textarea.body{min-height:160px}.main label{margin:8px 0}.layout{gap:12px}}

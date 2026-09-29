@@ -58,7 +58,7 @@ export default function BottomNav() {
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
   }, [open]);
-  if (pathname.endsWith("/widget")) return null;
+  if (pathname.endsWith("/widget") || pathname === "/research/write") return null;
   function navigate(event: MouseEvent<HTMLAnchorElement>, href: string) {
     unlockScroll.current?.();
     setOpen(false);

@@ -8,6 +8,7 @@ import Link from "next/link";
 import MembershipLabel from "./membership-label";
 import HeaderPro from "./header-pro";
 import HomeLink from "./home-link";
+import PageRefresh from "./page-refresh";
 import type { Language, ResearchEvent } from "@/lib/research/data";
 import { metricNames } from "@/lib/research/data";
 import { compareMetrics } from "@/lib/research/quality";
@@ -143,9 +144,9 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
   return <div className={styles.app} lang={lang}>
     <a className={styles.skip} href="#research-main">{t("本文へ移動", "Skip to content")}</a>
     <header className={styles.header}>
-      <Link href="/research" className={styles.brand} aria-label="Tech Phase Research">
+      <div className={styles.brandGroup}><Link href="/research" className={styles.brand} aria-label="Tech Phase Research">
         <span className={styles.logoMark} aria-hidden="true" /><span><span className={styles.brandText}>TECH PHASE</span><MembershipLabel /></span>
-      </Link>
+      </Link><PageRefresh lang={lang} /></div>
       <nav className={`${styles.primaryNav} ${tab === "companies" ? styles.companyNav : ""}`} aria-label={t("メインメニュー", "Main navigation")}>
         <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}><NavigationIcon name="changes" /><span>{t("何が変わった？", "What changed?")}</span></button>
         <Link href="/research/stocks"><NavigationIcon name="search" /><span>{t("米国株を探す", "Find stocks")}</span></Link>
