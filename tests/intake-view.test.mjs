@@ -339,6 +339,16 @@ test("unsafe links, duplicate records and broken history references fail validat
   assert.ok(snapshotIssues({ ...snapshot, discoveryRuns: [{ ...snapshot.discoveryRuns[0], sources_checked: 3, sources_configured: 2 }] }).includes("invalid-discovery-evidence"));
 });
 
+test("TSMC exchange announcements pass validation without allowing unrelated exchange paths", () => {
+  const tsm = snapshot.sources.find(item => item.ticker === "TSM");
+  const evidence = "https://openapi.twse.com.tw/v1/opendata/t187ap04_L?company=2330&date=1150929&time=143916&id=0b2ddb673e9e41b9";
+  const payload = { ...snapshot, sources: [{ ...tsm, evidence_url: evidence }], history: [], events: [], briefs: [] };
+  assert.deepEqual(snapshotIssues(payload), []);
+  for (const url of [evidence.replace("t187ap04_L?", "other?"), evidence.replace("t187ap04_L?", "t187ap04_L/extra?"), evidence.replace("openapi.twse.com.tw", "evil.test"), evidence.replace("company=2330", "company=9999"), evidence + "&id=duplicate"]) {
+    assert.ok(snapshotIssues({ ...payload, sources: [{ ...tsm, evidence_url: url }] }).some(issue => issue.startsWith("unsafe-evidence-")));
+  }
+});
+
 test("operations preview explains which official routes were checked", () => {
   assert.match(intakeDashboard, /取得経路の証跡/);
   assert.match(intakeDashboard, /sources_checked/);

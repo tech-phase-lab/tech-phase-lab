@@ -134,7 +134,16 @@ export function snapshotIssues(data: IntakeSnapshot) {
         if (evidence.protocol !== "https:" || !hosts.includes(evidence.hostname) || evidence.username || evidence.password
             || (evidence.port && evidence.port !== "443")) issues.push("unsafe-evidence-url");
         const rules = providerByTicker[s.ticker]?.articleRules ?? [];
-        if (!rules.some(rule => rule.host === evidence.hostname && new RegExp(rule.pattern).test(evidence.pathname))) issues.push("unsafe-evidence-path");
+        // TWSE material disclosures are inline evidence, not remotely fetched articles.
+        // Keep their query identity intact rather than adding them to articleRules.
+        const exchangeEvidence = s.ticker === "TSM" && evidence.hostname === "openapi.twse.com.tw"
+          && evidence.pathname === "/v1/opendata/t187ap04_L"
+          && evidence.searchParams.get("company") === "2330"
+          && [...evidence.searchParams.keys()].sort().join(",") === "company,date,id,time"
+          && /^\d{7}$/.test(evidence.searchParams.get("date") ?? "")
+          && /^\d{1,6}$/.test(evidence.searchParams.get("time") ?? "")
+          && /^[0-9a-f]{16}$/.test(evidence.searchParams.get("id") ?? "");
+        if (!exchangeEvidence && !rules.some(rule => rule.host === evidence.hostname && new RegExp(rule.pattern).test(evidence.pathname))) issues.push("unsafe-evidence-path");
       }
     } catch { issues.push("invalid-url"); }
     if (s.evidence_kind && !["direct", "sec-exhibit-99.1"].includes(s.evidence_kind)) issues.push("invalid-evidence-kind");
