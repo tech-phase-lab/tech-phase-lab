@@ -94,6 +94,7 @@ export default function BottomNav() {
   const links: [string, string, NavigationIconName][] = [
     ["/research/notes", ja ? "リゼルのひとりごと" : "RIZEL’s Notes", "pro"],
     ["/research/qa", ja ? "リサーチQ&A" : "Research Q&A", "changes"],
+    ["/research/compare", ja ? "銘柄比較 · PRO" : "Compare · PRO", "companies"],
     ["/research/weekly", ja ? "週刊PRO" : "PRO Weekly", "saved"],
     ["/research/account", ja ? "マイアカウント" : "My account", "home"],
     ["/research#what-changed", ja ? "何が変わった？" : "What changed?", "changes"],
@@ -107,7 +108,7 @@ export default function BottomNav() {
   ];
   return <div className={styles.mobile}>
     {open && <><button className={styles.backdrop} aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus({ preventScroll: true }); }} />
-      <nav ref={panel} id="mobile-more-menu" className={styles.sheet} aria-label={ja ? "その他のメニュー" : "More navigation"}><div className={styles.sheetHeading}><strong>{ja ? "メニュー" : "Explore"}</strong><button aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus({ preventScroll: true }); }}>×</button></div><div className={styles.menuGrid}>{links.filter(([href]) => proMenu || !["/research/notes", "/research/qa", "/research/weekly"].includes(href)).map(([href, label, icon]) => <Link key={href} href={href} onClick={(event) => navigate(event, href)}><span className={styles.menuIcon}><NavigationIcon name={icon} /></span><span>{label}</span></Link>)}</div></nav></>}
+      <nav ref={panel} id="mobile-more-menu" className={styles.sheet} aria-label={ja ? "その他のメニュー" : "More navigation"}><div className={styles.sheetHeading}><strong>{ja ? "メニュー" : "Explore"}</strong><button aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus({ preventScroll: true }); }}>×</button></div><div className={styles.menuGrid}>{links.filter(([href]) => proMenu || !["/research/notes", "/research/qa", "/research/weekly", "/research/compare"].includes(href)).map(([href, label, icon]) => <Link key={href} href={href} onClick={(event) => navigate(event, href)}><span className={styles.menuIcon}><NavigationIcon name={icon} /></span><span>{label}</span></Link>)}</div></nav></>}
     <nav className={styles.bar} aria-label={ja ? "メインメニュー" : "Main navigation"}>
       {tabs.map(({ href, label, icon, active }) => <Link key={href} href={href} aria-current={!open && active ? "page" : undefined} onClick={(event) => navigate(event, href)}><NavigationIcon name={icon} /><span>{label}</span></Link>)}
       <button ref={trigger} aria-expanded={open} aria-controls="mobile-more-menu" onClick={() => { setProMenu(false); setOpen(!open); }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg><span>{ja ? "メニュー" : "Menu"}</span></button>

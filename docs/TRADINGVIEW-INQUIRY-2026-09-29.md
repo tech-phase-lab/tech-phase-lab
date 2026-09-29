@@ -1,14 +1,20 @@
 # TradingView widget inquiry — draft, not sent
 
-Contact: https://www.tradingview.com/widget-docs/contact/
+Primary form: https://www.tradingview.com/widget-docs/contact/
+
+Fallback: platforms@tradingview.com — official charting-library support contact, not a confirmed widget sales inbox. Ask for forwarding to the widget team. Source checked 2026-09-29: https://www.tradingview.com/free-charting-libraries/
+
+The widget contact form and FAQ form both failed to open on 2026-09-29. Browser console: `Document direction getter is not set, call setDocumentDirGetter to set it`. No inquiry has been submitted.
 
 Subject: Compact index widgets and branding options for Tech Phase Research
 
 Hello TradingView team,
 
+Your widget contact form does not open when I click “Contact us” or “this form.” The browser console reports: “Document direction getter is not set, call setDocumentDirGetter to set it.” Could you please forward this inquiry to the team responsible for widget licensing and branding?
+
 We are developing Tech Phase Research, a bilingual Japanese/English U.S. equity research website with free content and a planned paid research tier.
 
-We currently embed TradingView widgets and retain their original branding and attribution. We would like a compact mobile display for the Dow, Nasdaq 100 and S&P 500. We are testing a single Market Data widget instead of three Single Ticker widgets.
+We currently embed TradingView widgets and retain their original branding and attribution. We would like a compact mobile display for the Dow, Nasdaq 100 and S&P 500. We tested both a combined Market Data widget and three Single Ticker widgets, but have not found a suitable compact layout for mobile.
 
 Could you please clarify:
 

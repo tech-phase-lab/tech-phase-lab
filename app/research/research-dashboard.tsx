@@ -171,6 +171,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
           <button aria-current={tab === "companies" ? "page" : undefined} onClick={() => openView("companies")}><NavigationIcon name="companies" /><span>{t("監視対象", "Company watch")}</span><small>{monitoredCompanies.length}</small></button>
           <button aria-current={tab === "metrics" ? "page" : undefined} onClick={() => openView("metrics")}><NavigationIcon name="metrics" /><span>{t("決算・指標", "Financials")}</span></button>
           <button aria-current={tab === "saved" ? "page" : undefined} onClick={() => openView("saved")}><NavigationIcon name="saved" /><span>{t("保存", "Saved")}</span><small>{saved.filter((id) => events.some((event) => event.id === id)).length}</small></button>
+          <Link href="/research/compare"><NavigationIcon name="companies" /><span>{t("銘柄比較", "Compare stocks")}</span><small>PRO</small></Link>
           <button className={styles.sideProNav} aria-current={tab === "pro" ? "page" : undefined} onClick={() => openView("pro")}><NavigationIcon name="pro" /><span>Tech Phase PRO</span></button>
         </nav>
         <div className={styles.coverage}>
