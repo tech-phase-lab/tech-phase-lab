@@ -136,7 +136,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
     setTab(next);
     if (next === "home") clearFilters();
     requestAnimationFrame(() => {
-      (next === "home" || next === "companies" || next === "pro" ? document.getElementById("research-main") : workspaceRef.current)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      (next === "home" || next === "companies" || next === "pro" || next === "changes" ? document.getElementById("research-main") : workspaceRef.current)?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   }
 

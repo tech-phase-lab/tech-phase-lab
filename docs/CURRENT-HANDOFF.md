@@ -39,3 +39,7 @@ Start here, then read AGENTS.md and docs/AUTONOMOUS-NEXT-2026-09-29.md. Current 
 3. Finish remaining delivery/recovery checks and December activation checklist; no paid calls now.
 
 Owner explicitly wants progression from verification toward production readiness. Prioritize genuine readiness work and article freshness; do not just remove labels or activate deferred paid services.
+
+## September 29 21:20 JST
+- Owner mostly views mobile; explicitly asked for desktop review. Home → What changed must start at main heading, not workspace/articles. Adjusted openView scroll destination for changes to research-main.
+- Stock research empty state intentionally only has search/history currently. Proposed next enhancement: compact theme-based stock discovery below history, hidden during search; no fabricated popularity/ranking or prices. Not implemented pending choice.
