@@ -3,7 +3,7 @@
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
-import styles from "../learn/styles.module.css";
+import styles from "./styles.module.css";
 
 const questions = [
   [

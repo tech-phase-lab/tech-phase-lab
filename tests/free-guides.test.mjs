@@ -45,3 +45,12 @@ test("beginner guide explains orders and risk without fabricated affiliate links
   assert.match(nav, /useMemberDisplay\(\) === "pro"/);
   assert.match(nav, /proMenu \|\| !\["\/research\/compare", "\/research\/notes", "\/research\/qa", "\/research\/weekly"\]\.includes\(href\)/);
 });
+
+test("FAQ owns its styles and every referenced class is defined", () => {
+  const faq = read("app/research/faq/faq.tsx");
+  assert.match(faq, /from "\.\/styles\.module\.css"/);
+  const css = read("app/research/faq/styles.module.css");
+  for (const [, name] of faq.matchAll(/className=\{styles\.(\w+)\}/g)) {
+    assert.ok(css.includes(`.${name}`), `Missing FAQ style: ${name}`);
+  }
+});
