@@ -15,7 +15,7 @@ test("free learning and service help stay separate and linked from navigation", 
   assert.doesNotMatch(guide, /日本居住者向け|NISA|一次情報を確認する|最初は、この順番で/);
   assert.match(faq, /質問をすると必ず回答されますか/);
   assert.doesNotMatch(faq, /以前の非公開質問/);
-  assert.match(faq, /課金はまだ開始していません/);
+  assert.doesNotMatch(faq, /現在は開発プレビューです/);
   assert.doesNotMatch(faq, /12月に開設予定/);
   assert.match(faq, /全質問への回答はお約束できません/);
   assert.doesNotMatch(faq, /無料で読めるものは|通知は何秒|見出しはありますか|カレンダーはリアルタイム|英語表示はいつ/);

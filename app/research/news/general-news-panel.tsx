@@ -6,6 +6,7 @@ import { publicNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-
 import { officialHeadlineJa } from "@/lib/research/official-news-ja";
 import styles from "./general-news.module.css";
 
+import { publishNews } from "@/lib/research/news-snapshot";
 import FeedPagination from "./feed-pagination";
 let snapshot: { data: GeneralNewsFeed; at: string; time: number } | null = null;
 const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
@@ -26,9 +27,9 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
         const response = await fetch("/api/research/news", { cache: "no-store", signal: controller.signal });
         if (!response.ok) throw new Error("unavailable");
         const payload = publicNewsPayload(await response.json());
-        if (!stopped) { const at = new Date().toISOString(); snapshot = { data: payload, at, time: Date.now() }; setData(payload); setError(false); setReceivedAt(at); }
+        if (!stopped) { const at = new Date().toISOString(); snapshot = { data: payload, at, time: Date.now() }; setData(payload); publishNews(payload); setError(false); setReceivedAt(at); }
       } catch {
-        if (!stopped) { setData(null); setError(true); setReceivedAt(null); }
+        if (!stopped) { setData(null); publishNews(null); setError(true); setReceivedAt(null); }
       } finally { if (!stopped) timer = setTimeout(load, 30_000); }
     }
     if (refresh === 0 && recent()) timer = setTimeout(load, Math.max(0, 30_000 - (Date.now() - snapshot!.time)));
@@ -48,8 +49,6 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
   const confidenceLabels = lang === "ja" ? { high: "高", medium: "中", low: "低" } : { high: "High", medium: "Medium", low: "Low" };
   return <section ref={panel} className={styles.panel} aria-label={lang === "ja" ? "ニュース一覧" : "News list"}>
     {!!visibleOfficial.length && <section aria-label={lang === "ja" ? "企業の公式発表" : "Official company updates"}>
-      <h2>{lang === "ja" ? "企業の公式発表" : "Official company updates"}</h2>
-      <p className={styles.note}>{lang === "ja" ? "公式発表・投稿の内容を日本語の見出しで紹介します。時刻は取得日時です。" : "Official company updates. Times show when we found each update."}</p>
       <div className={styles.items}>{visibleOfficial.map(item => { const translated = officialHeadlineJa(item.url); const linkOnly = /^https?:\/\/\S+$/.test(item.title.trim()); return <article key={item.id}>
         <p className={styles.tickers}>{item.tickers.join(" · ")} · {item.publisher}</p>
         <h3><a href={item.url} target="_blank" rel="noopener noreferrer">{lang === "ja" ? translated ?? (linkOnly ? "公式投稿（リンクのみ・本文未取得）" : "公式アップデート（日本語訳を準備中）") : item.title}</a></h3>

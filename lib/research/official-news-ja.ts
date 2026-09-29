@@ -3,6 +3,7 @@
  * Exact URL matching only: unseen stories must never inherit another story's translation.
  */
 const headlines: Record<string, string> = {
+  "https://x.com/nebiusai/status/2104828605725302844": "ShopifyとNebius、モデルの調整と推論コスト削減の事例をGTC Berlinで紹介へ",
   "https://x.com/nebiusai/status/2104496608725372988": "NVIDIA、AIエージェント向け安全基盤「Open Agent Safety Platform」を発表",
   "https://developer.nvidia.com/blog/nvidia-open-agent-safety-platform-a-reference-for-continuous-in-silicon-agent-monitoring/": "NVIDIA、チップ上でAIエージェントを継続監視する安全基盤を紹介",
   "https://developer.nvidia.com/blog/add-runtime-controls-to-ai-agents-with-nvidia-openshell/": "NVIDIA OpenShellでAIエージェントの実行中の動作を制御",
