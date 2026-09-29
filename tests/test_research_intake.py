@@ -1064,10 +1064,16 @@ class IntakeTests(unittest.TestCase):
                     raise RuntimeError("HTTP Error 403")
 
                 result, links = m.collect_discovery(ticker, transport, automatic=True)
+                provider = m.PROVIDERS[ticker]
+                configured_sources = (
+                    1
+                    + len(provider.get("fallbackSources", []))
+                    + len(provider.get("supplementalSources", []))
+                )
                 self.assertEqual(result["status"], "fallback")
                 self.assertEqual(result["sourceFormat"], "rss")
-                self.assertEqual(result["sourcesChecked"], 3)
-                self.assertEqual(result["sourcesConfigured"], 3)
+                self.assertEqual(result["sourcesChecked"], configured_sources)
+                self.assertEqual(result["sourcesConfigured"], configured_sources)
                 self.assertEqual(len(links), 1)
                 m.save_discovery(self.db, ticker, result, links)
                 run = self.db.execute("""
@@ -1076,8 +1082,8 @@ class IntakeTests(unittest.TestCase):
                 """, (ticker,)).fetchone()
                 self.assertEqual(dict(run), {
                     "source_format": "rss",
-                    "sources_checked": 3,
-                    "sources_configured": 3,
+                    "sources_checked": configured_sources,
+                    "sources_configured": configured_sources,
                 })
 
     def test_degraded_discovery_records_completed_route_evidence(self):
@@ -1855,12 +1861,78 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(result["route"], "primary+supplemental")
         self.assertEqual(result["sourceFormat"], "rss+sec-json")
         self.assertEqual(result["sourcesChecked"], 2)
-        self.assertEqual(result["sourcesConfigured"], 3)
+        self.assertEqual(result["sourcesConfigured"], 4)
         self.assertEqual(len(links), 2)
         self.assertIn("Marvell AI release", links.values())
         self.assertEqual(requested, [
             provider["indexUrl"], provider["supplementalSources"][0]["url"],
         ])
+
+    def test_priority_company_feeds_fail_over_to_first_party_release_indexes(self):
+        cases = {
+            "MRVL": {
+                "fallback": "https://www.marvell.com/company/newsroom.html",
+                "contentType": "text/html",
+                "body": b'<a href="https://www.marvell.com/company/newsroom/marvell-ai-update.html">Marvell AI update</a>',
+                "cik": "0001835632",
+                "document": "mrvl-20260929.htm",
+            },
+            "ANET": {
+                "fallback": "https://investors.arista.com/rss/pressrelease.aspx",
+                "contentType": "application/rss+xml",
+                "body": b'''<rss><channel><item><title>Arista AI update</title><link>https://investors.arista.com/Communications/Press-Releases-and-Events/Press-Release-Detail/2026/Arista-AI-Update/default.aspx</link></item></channel></rss>''',
+                "cik": "0001596532",
+                "document": "anet-20260929.htm",
+            },
+            "PLTR": {
+                "fallback": "https://www.palantir.com/newsroom/press-releases/",
+                "contentType": "text/html",
+                "body": b'<a href="https://www.palantir.com/newsroom/press-releases/palantir-ai-update/">Palantir AI update</a>',
+                "cik": "0001321655",
+                "document": "pltr-20260929.htm",
+            },
+        }
+        for ticker, case in cases.items():
+            with self.subTest(ticker=ticker):
+                provider = m.PROVIDERS[ticker]
+                sec_source = next(
+                    source for source in provider["supplementalSources"]
+                    if source["format"] == "sec-json"
+                )
+                sec_body = json.dumps({
+                    "cik": int(case["cik"]),
+                    "filings": {"recent": {
+                        "form": ["8-K"],
+                        "accessionNumber": [
+                            f"{case['cik'][:10]}-26-000001",
+                        ],
+                        "primaryDocument": [case["document"]],
+                        "primaryDocDescription": ["CURRENT REPORT"],
+                    }},
+                }).encode()
+                requested = []
+
+                def transport(url, _ticker):
+                    requested.append(url)
+                    if url == provider["indexUrl"]:
+                        raise TimeoutError("primary unavailable")
+                    if url == case["fallback"]:
+                        return case["body"], case["contentType"]
+                    if url == sec_source["url"]:
+                        return sec_body, "application/json"
+                    raise AssertionError(f"unexpected URL: {url}")
+
+                result, links = m.collect_discovery(
+                    ticker, transport, automatic=True
+                )
+                self.assertEqual(result["status"], "fallback")
+                self.assertEqual(result["route"], "primary+supplemental")
+                self.assertEqual(result["sourcesChecked"], 3)
+                self.assertEqual(result["sourcesConfigured"], 4)
+                self.assertEqual(len(links), 2)
+                self.assertEqual(requested, [
+                    provider["indexUrl"], case["fallback"], sec_source["url"],
+                ])
 
     def test_automatic_monitor_unions_credo_company_and_current_report_routes(self):
         provider = m.PROVIDERS["CRDO"]

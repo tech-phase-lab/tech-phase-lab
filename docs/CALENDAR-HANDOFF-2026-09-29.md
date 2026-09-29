@@ -259,3 +259,36 @@ Next: COHR, CRDO, CRWV, GOOGL, KLAC, LITE, MRVL, SKHY, SNOW and VRT. Keep empty
 dynamic sections, inaccessible sources, tentative labels and completed results
 pending unless a first-party source supplies a confirmed date or an explicit
 current no-events state.
+
+## Follow-up pending-source review (09:42 JST)
+
+Rechecked the queued ten companies against their first-party event pages and
+IR news lists on September 29. Coherent now explicitly says that more events
+are coming soon, so its current schedule state was conclusively checked and
+`lastCheckedOn` advanced to September 29. No earnings date was inferred from
+that statement. The other nine sources remain empty, historical-only or
+inaccessible; no calendar event changed.
+
+| Ticker | Result | Official source / exact blocker |
+| --- | --- | --- |
+| COHR | Checked | [Events](https://ir.coherent.com/news-events/events) explicitly says “More events are coming soon” and lists September 21 as the latest completed event. It publishes no future earnings date. |
+| CRDO | Pending | [Events](https://investors.credosemi.com/news-events/events/default.aspx) exposes empty Upcoming & Recent Events and Archived Events sections without an explicit no-events statement. |
+| CRWV | Pending | [Events & Presentations](https://investors.coreweave.com/events-and-presentations/default.aspx) exposes empty Upcoming & Recent Events and Archived Events sections without an explicit no-events statement. |
+| GOOGL | Pending | [Events & Presentations](https://abc.xyz/investor/events/default.aspx) exposes only its navigation shell and no inspectable future item. |
+| KLAC | Pending | [Events & Presentations](https://ir.kla.com/events-presentations/) was inaccessible through the official endpoint during this check. No access control was bypassed. |
+| LITE | Pending | [Events](https://investor.lumentum.com/events-and-presentations/default.aspx) exposes Latest Events, Latest Presentation and Archived Events headings without an inspectable future item. |
+| MRVL | Pending | [Events & Presentations](https://investor.marvell.com/events-and-presentations/default.aspx) was inaccessible through the official endpoint during this check. No access control was bypassed. |
+| SKHY | Pending | [IR news](https://news.skhynix.com/en/category/ir/) ends with the August 19 shareholder-return update and completed July 29 Q2 results; it has no future earnings announcement. |
+| SNOW | Pending | [Events & Presentations](https://investors.snowflake.com/events-and-presentations/default.aspx) exposes an empty Upcoming Events section without an explicit no-events statement. |
+| VRT | Pending | [Events & Presentations](https://investors.vertiv.com/events-presentations/events-presentations/default.aspx) exposes an empty Latest Events section without an explicit no-events statement. |
+
+The BLS October schedule still lists the October 2 Employment Situation,
+October 14 CPI and October 15 PPI releases at 08:30 Eastern. The Federal Reserve
+calendar, last updated September 16, still lists October 27–28 and December 8–9
+without future statement or press-conference clock times. Existing date-only
+records remain date-only.
+
+Next: AMAT, QCOM, CRM, ORCL, NOW, NVDA, PANW, PLTR, AAPL and AMZN. Keep empty
+dynamic sections, inaccessible sources and completed results pending unless a
+first-party source supplies a confirmed date or an explicit current no-events
+state.

@@ -72,9 +72,9 @@
   {
     "ticker": "COHR",
     "name": "Coherent",
-    "sourceUrl": "https://ir.coherent.com/news-events/financial-releases",
+    "sourceUrl": "https://ir.coherent.com/news-events/events",
     "lastAttemptedOn": "2026-09-29",
-    "lastCheckedOn": null
+    "lastCheckedOn": "2026-09-29"
   },
   {
     "ticker": "CRDO",

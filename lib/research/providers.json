@@ -393,6 +393,13 @@
     "sector": "networking",
     "indexUrl": "https://investor.marvell.com/news-events/press-releases/rss",
     "format": "rss",
+    "fallbackSources": [
+      {
+        "url": "https://www.marvell.com/company/newsroom.html",
+        "format": "html",
+        "label": "Marvell newsroom"
+      }
+    ],
     "supplementalSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001835632.json",
@@ -438,6 +445,13 @@
     "indexUrl": "https://www.arista.com/en/company/news/press-release-rss",
     "format": "rss",
     "requestTimeoutSeconds": 15,
+    "fallbackSources": [
+      {
+        "url": "https://investors.arista.com/rss/pressrelease.aspx",
+        "format": "rss",
+        "label": "Arista investor press releases"
+      }
+    ],
     "supplementalSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001596532.json",
@@ -476,7 +490,7 @@
       },
       {
         "host": "investors.arista.com",
-        "pattern": "^/Communications/Press-Releases-and-Events/Press-Release-Details/.+"
+        "pattern": "^/Communications/Press-Releases-and-Events/Press-Release-Details?/.+"
       },
       {
         "host": "www.sec.gov",
@@ -700,6 +714,13 @@
     "indexUrl": "https://www.palantir.com/sitemap.xml",
     "format": "sitemap",
     "requestTimeoutSeconds": 15,
+    "fallbackSources": [
+      {
+        "url": "https://www.palantir.com/newsroom/press-releases/",
+        "format": "html",
+        "label": "Palantir press releases"
+      }
+    ],
     "supplementalSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001321655.json",

@@ -340,3 +340,20 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 - Protected live Free/PRO/board/moderation browser verification and owner-supplied
   FAQ corrections remain pending. No paid API, production branch or billing
   setting was changed.
+
+### 2026-09-29 official-source and calendar follow-up
+
+- Added issuer-owned discovery fallbacks for MRVL, ANET and PLTR before their
+  independent SEC disclosure routes. Fixed ANET validation to accept the
+  singular `Press-Release-Detail` path used by its official investor site.
+- Added regression coverage for primary-source timeout, issuer fallback and SEC
+  union behavior. These routes use public first-party endpoints only and do not
+  bypass access controls.
+- Rechecked the ten oldest pending calendar companies. COHR's official events
+  page explicitly reports that more events are coming soon, so its schedule was
+  conclusively checked without inventing an earnings date. The other nine
+  remain pending with exact blockers in the dated handoff. BLS and Federal
+  Reserve dates were rechecked with no calendar changes.
+- No paid service, real member content, production branch or billing setting was
+  changed. Live protected-route verification and owner-provided FAQ corrections
+  remain pending.

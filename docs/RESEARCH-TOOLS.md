@@ -476,6 +476,12 @@ For TSM, MRVL, ANET, VRT and PLTR it also reports an aggregate count of
 configured, post-start checked, healthy, degraded and pending companies. This
 shows whether every priority route has actually run after a deployment without
 publishing per-source URLs, timestamps or error details.
+MRVL, ANET and PLTR also have issuer-owned fallback discovery routes. The
+Marvell newsroom, Arista investor press-release RSS and Palantir press-release
+index are used only if each issuer's preferred feed or sitemap fails; SEC
+Submissions JSON and Atom remain the independent disclosure route. Candidate
+URLs still pass the same official-host and article-path rules, so a fallback
+cannot broaden intake to arbitrary pages or bypass access controls.
 Future-dated or malformed company observations do not count as post-start
 checks. Once every configured priority company has run, the preview reports the
 measured interval from process start to the final priority check without
