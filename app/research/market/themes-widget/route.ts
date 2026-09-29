@@ -3,6 +3,10 @@ const groups: Record<string, string[]> = {
   cloud: ["NASDAQ:NBIS", "NASDAQ:CRWV", "NASDAQ:IREN"],
   optical: ["NASDAQ:LITE", "NYSE:COHR", "NASDAQ:CRDO"],
   chips: ["NASDAQ:NVDA", "NASDAQ:AMD", "NASDAQ:AVGO", "NASDAQ:MRVL"],
+  security: ["NASDAQ:CRWD", "NASDAQ:PANW", "NASDAQ:ZS", "NASDAQ:FTNT"],
+  gold: ["NYSE:NEM", "NYSE:AEM", "NYSE:KGC"],
+  software: ["NASDAQ:MSFT", "NYSE:CRM", "NYSE:NOW", "NASDAQ:ADBE"],
+  space: ["NASDAQ:RKLB", "NASDAQ:ASTS", "NASDAQ:IRDM"],
   power: ["NYSE:VRT", "NYSE:GEV", "NYSE:BE", "NYSE:VST"],
 };
 export function GET(request: Request) {

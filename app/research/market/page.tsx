@@ -46,7 +46,7 @@ function MacroCards({ ja }: { ja: boolean }) {
 
 export default function MarketPage() {
   const [lang, setLang] = useResearchLanguage();
-  const [section, setSection] = useState<"chart" | "themes">("chart");
+  const [section, setSection] = useState<"chart" | "themes" | "heatmap">("themes");
   const [candles, setCandles] = useState(true);
   const [symbol, setSymbol] = useState("FOREXCOM:SPXUSD");
   const ja = lang === "ja";
@@ -60,12 +60,12 @@ export default function MarketPage() {
     <IndexStrip lang={lang} />
     <MacroCards ja={ja} />
     <div className={styles.sectionSwitch} role="group" aria-label={ja ? "マーケットの表示" : "Market view"}>
-      <button aria-pressed={section === "chart"} onClick={() => setSection("chart")}>{ja ? "チャート" : "Charts"}</button>
-      <button aria-pressed={section === "themes"} onClick={() => setSection("themes")}>{ja ? "テーマ・セクター" : "Themes & sectors"}</button>
+      {groups.map(group => <button key={group.name} aria-pressed={section === "chart" && group === selectedGroup} onClick={() => { setSymbol(group.options[0][0]); setSection("chart"); }}>{group.name}</button>)}
+      <button aria-pressed={section === "themes"} onClick={() => setSection("themes")}>{ja ? "セクター別騰落率" : "Sector performance"}</button>
+      <button aria-pressed={section === "heatmap"} onClick={() => setSection("heatmap")}>{ja ? "ヒートマップ" : "Heatmap"}</button>
     </div>
     {section === "chart" ? <div>
     <div className={styles.controls}>
-      <div className={styles.categories} role="group" aria-label={ja ? "市場の種類" : "Market category"}>{groups.map(group => <button key={group.name} aria-pressed={group === selectedGroup} onClick={() => setSymbol(group.options[0][0])}>{group.name}</button>)}</div>
       <div className={styles.modes}><button aria-pressed={candles} onClick={() => setCandles(true)}>{ja ? "ローソク足" : "Candlesticks"}</button><button aria-pressed={!candles} onClick={() => setCandles(false)}>{ja ? "ライン" : "Line"}</button></div>
       <select aria-label={ja ? "チャートの対象" : "Chart symbol"} value={symbol} onChange={event => setSymbol(event.target.value)}>
         {selectedGroup.options.map(([value,label]) => <option key={value} value={value}>{label}</option>)}
@@ -76,6 +76,6 @@ export default function MarketPage() {
     </section>
 
     <p className={styles.note}>{ja ? "指数はCFD参考値、債券はETF価格です。ETFは遅延配信。" : "Indices are indicative CFDs; bonds show ETF prices with delayed quotes."}</p>
-    </div> : <ThemeExplorer lang={lang} />}
+    </div> : <ThemeExplorer lang={lang} view={section} />}
   </ResearchToolShell>;
 }

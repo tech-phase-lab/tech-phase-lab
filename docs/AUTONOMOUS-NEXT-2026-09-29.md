@@ -1,6 +1,6 @@
 # Owner-absent continuation — September 29, 17:42 JST
 
-Owner approved continuing unblocked work without their operation. Existing hourly Tech Phase automation stays active; do not create duplicate tasks. Preserve accepted UI (FAQ, guide, compact news/PRO hint, market macro-first layout and chart/theme switch). Follow AGENTS gates, concurrent branch integration and exact Git tree matching. Preview only; no billing, paid activation, main, secrets exposure or outreach.
+Owner approved continuing unblocked work without their operation. Existing hourly Tech Phase automation stays active; do not create duplicate tasks. Preserve accepted UI (FAQ, guide, compact news/PRO hint, market macro-first layout and direct market navigation). Follow AGENTS gates, concurrent branch integration and exact Git tree matching. Preview only; no billing, paid activation, main, secrets exposure or outreach.
 
 ## This checkpoint
 
@@ -41,3 +41,8 @@ Owner approved continuing unblocked work without their operation. Existing hourl
   recovery coverage, preserving auth and public payload boundaries.
 
 Stock News API and OpenAI remain uncontracted/unconfigured by owner choice. Seconds-level Japanese display is a target, not verified. Affiliate links await replies to the three emails the owner already sent. No invented personal posts, recommendations or affiliate approvals. At finite backlog completion stop extra product edits; separately authorized calendar maintenance continues.
+
+## Owner market revision, September 29 evening
+
+- Supersedes the nested chart/theme switch: indices, bond ETFs, FX, sector performance and heatmap are directly visible; sector performance opens by default. Mobile navigation wraps into two rows.
+- Removed the promotional theme heading and intro; added cybersecurity, gold miners, software and space constituent groups. The display remains selected stock returns, not an aggregate sector index.
