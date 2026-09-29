@@ -116,9 +116,12 @@ export default function StockDirectory() {
           themeSelection.current = null;
           const exact = nextResults.find(entry => entry.ticker === q);
           if (exact) openThemeResult(exact);
-          else if (q === "DRAM") {
-            setDirectQuote({ticker:"DRAM",exchange:"CBOE",name:"Roundhill Memory ETF"});
-            setSelectedResultKey("CBOE:DRAM");
+          else if (q === "DRAM" || q === "GLDM") {
+            const quote = q === "DRAM"
+              ? {ticker:q,exchange:"CBOE",name:"Roundhill Memory ETF"}
+              : {ticker:q,exchange:"AMEX",name:"SPDR Gold MiniShares ETF"};
+            setDirectQuote(quote);
+            setSelectedResultKey(`${quote.exchange}:${q}`);
           }
         }
         setAsOf(data.asOf ?? null);

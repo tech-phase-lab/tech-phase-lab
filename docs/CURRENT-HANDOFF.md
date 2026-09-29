@@ -54,3 +54,10 @@ Owner explicitly wants progression from verification toward production readiness
 - Discovery begins with diverse all-themes examples; added finance/healthcare/consumer/energy, SKHY and DRAM, company site icons with initials fallback. SKHY NASDAQ confirmed by Nasdaq ETA2026-40; DRAM Cboe memory ETF confirmed by issuer Roundhill.
 
 DRAM is absent from the SEC operating-company directory. Theme selection falls back to its verified CBOE:DRAM TradingView market view, without inventing SEC filings or a CIK. SKHY exact search is confirmed present. Company icons use domain favicons, not full official wordmarks; failed loads show initials.
+
+
+## 2026-09-29 additional theme stocks
+- Owner requested optical GLW/AAOI/CIEN; space SPCX/PL; software PLTR/APP; AI chips CBRS/ARM; manufacturing ASML/TSM/AEHR; connectivity ALAB/ANET/APH; consumer PM; gold GLDM; drones AVAV/ONDS/RCAT; quantum IONQ/RGTI plus QBTS. All added with site icons.
+- Gold theme renamed 金・金鉱山 because GLDM tracks bullion, not mining companies. Added GLDM quote-only fallback for absent SEC directory results, matching existing DRAM flow.
+- Primary verification: SpaceX IR IPO closing confirms SPCX trading June 12, 2026; Cerebras IPO closing confirms CBRS May 14, 2026; State Street GLDM page confirms gold bullion and NYSE Arca; D-Wave Q2 2026 release confirms NASDAQ QBTS.
+- Theme placement does not expand automatic news monitoring or imply investment recommendations.
