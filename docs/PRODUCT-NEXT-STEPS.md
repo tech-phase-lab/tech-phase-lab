@@ -385,3 +385,19 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 - Rechecked ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL, KLAC, LITE and MRVL. No new
   confirmed earnings event was found; exact blockers and the next queue are in
   the dated calendar handoff. BLS and Federal Reserve entries remain unchanged.
+
+### 2026-09-29 Vertiv issuer-fallback correction
+
+- Added the public Vertiv Investor Relations news index as an issuer-owned
+  fallback after the existing corporate-news JSON endpoint and before the
+  independent SEC 8-K route. Candidate URLs are limited to Vertiv's dated
+  `news-details` pages on the official investor host.
+- Access-control challenges are not bypassed. They retain the existing fixed
+  error classification and bounded retry policy, while a later accessible IR
+  response can recover corporate-only news that is not required to appear in an
+  8-K.
+- Added regression coverage for primary timeout, issuer fallback, SEC union and
+  rejection of the IR index or off-domain links as article candidates.
+- Rechecked SKHY, SNOW, VRT, AMAT, QCOM, CRM, ORCL, NOW, NVDA and PANW. No new
+  confirmed earnings event was found; exact blockers and the next queue are in
+  the dated calendar handoff. BLS and Federal Reserve entries remain unchanged.

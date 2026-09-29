@@ -601,6 +601,13 @@
     "itemsKey": "items",
     "urlKey": "pageUrl",
     "titleKey": "displayName",
+    "fallbackSources": [
+      {
+        "url": "https://investors.vertiv.com/news/",
+        "format": "html",
+        "label": "Vertiv Investor Relations news"
+      }
+    ],
     "supplementalSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001674101.json",
@@ -620,6 +627,7 @@
     ],
     "allowedHosts": [
       "www.vertiv.com",
+      "investors.vertiv.com",
       "data.sec.gov",
       "www.sec.gov"
     ],
@@ -627,6 +635,10 @@
       {
         "host": "www.vertiv.com",
         "pattern": "^/en-us/about/news-and-events/corporate-news/(?:\\d{4}/)?[^/]+/?$"
+      },
+      {
+        "host": "investors.vertiv.com",
+        "pattern": "^/news/news-details/\\d{4}/[^/]+/(?:default\\.aspx)?$"
       },
       {
         "host": "www.sec.gov",

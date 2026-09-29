@@ -1955,6 +1955,13 @@ class IntakeTests(unittest.TestCase):
                 "cik": "0001321655",
                 "document": "pltr-20260929.htm",
             },
+            "VRT": {
+                "fallback": "https://investors.vertiv.com/news/",
+                "contentType": "text/html",
+                "body": b'<a href="https://investors.vertiv.com/news/news-details/2026/Vertiv-AI-Update/default.aspx">Vertiv AI update</a>',
+                "cik": "0001674101",
+                "document": "vrt-20260929.htm",
+            },
         }
         for ticker, case in cases.items():
             with self.subTest(ticker=ticker):
@@ -1975,10 +1982,11 @@ class IntakeTests(unittest.TestCase):
                     }},
                 }).encode()
                 requested = []
+                primary_url = m.INDEXES[ticker]
 
                 def transport(url, _ticker):
                     requested.append(url)
-                    if url == provider["indexUrl"]:
+                    if url == primary_url:
                         raise TimeoutError("primary unavailable")
                     if url == case["fallback"]:
                         return case["body"], case["contentType"]
@@ -1995,7 +2003,7 @@ class IntakeTests(unittest.TestCase):
                 self.assertEqual(result["sourcesConfigured"], 4)
                 self.assertEqual(len(links), 2)
                 self.assertEqual(requested, [
-                    provider["indexUrl"], case["fallback"], sec_source["url"],
+                    primary_url, case["fallback"], sec_source["url"],
                 ])
 
     def test_automatic_monitor_unions_credo_company_and_current_report_routes(self):
@@ -2231,6 +2239,24 @@ class IntakeTests(unittest.TestCase):
         body = b'''{"items":[{"displayName":"Vertiv AI release","pageUrl":"/en-us/about/news-and-events/corporate-news/2026/official-release/"},{"displayName":"Outside","pageUrl":"https://evil.test/release"}]}'''
         links = m.news_json_links(body, "VRT", source)
         self.assertEqual(links, {"https://www.vertiv.com/en-us/about/news-and-events/corporate-news/2026/official-release/": "Vertiv AI release"})
+
+    def test_vertiv_investor_news_fallback_is_scoped_to_release_details(self):
+        sources = m.monitoring_sources("VRT")
+        self.assertEqual(sources[1]["route"], "fallback")
+        self.assertEqual(sources[1]["url"], "https://investors.vertiv.com/news/")
+        body = b'''<a href="/news/news-details/2026/Vertiv-AI-Update/default.aspx">Vertiv AI update</a>
+          <a href="/news/">News index</a><a href="https://evil.test/release">Outside</a>'''
+        result, links = m.collect_discovery(
+            "VRT", lambda url, *_: (
+                (_ for _ in ()).throw(TimeoutError("primary unavailable"))
+                if url == sources[0]["url"] else (body, "text/html")
+            )
+        )
+        self.assertEqual(result["status"], "fallback")
+        self.assertEqual(links, {
+            "https://investors.vertiv.com/news/news-details/2026/Vertiv-AI-Update/default.aspx":
+                "Vertiv AI update",
+        })
 
     def test_brief_draft_requires_current_exact_evidence_and_cited_numbers(self):
         body = b"<main><p>Capacity will increase in 2027.</p><p>Execution remains subject to demand.</p></main>"

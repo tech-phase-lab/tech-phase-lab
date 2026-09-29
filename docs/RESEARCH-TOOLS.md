@@ -481,10 +481,12 @@ the public TWSE material-information API is the lawful fallback when that page
 cannot be fetched or parsed. SEC 6-K discovery remains an independent
 supplemental route, so a healthy company page cannot suppress regulatory
 evidence and a valid empty TWSE response is not mislabeled as an outage.
-MRVL, ANET and PLTR also have issuer-owned fallback discovery routes. The
-Marvell newsroom, Arista investor press-release RSS and Palantir press-release
-index are used only if each issuer's preferred feed or sitemap fails; SEC
-Submissions JSON and Atom remain the independent disclosure route. Candidate
+MRVL, ANET, VRT and PLTR also have issuer-owned fallback discovery routes. The
+Marvell newsroom, Arista investor press-release RSS, Vertiv Investor Relations
+news index and Palantir press-release index are used only if each issuer's
+preferred feed, API or sitemap fails; SEC Submissions JSON and Atom remain the
+independent disclosure route. A challenged Vertiv IR response is not bypassed;
+it follows the same fixed failure classification and bounded backoff. Candidate
 URLs still pass the same official-host and article-path rules, so a fallback
 cannot broaden intake to arbitrary pages or bypass access controls.
 For linked HTML articles, extraction prefers text inside an explicit `main` or
