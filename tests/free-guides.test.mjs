@@ -9,11 +9,10 @@ test("free learning and service help stay separate and linked from navigation", 
   const faq = read("app/research/faq/faq.tsx");
   const home = read("app/research/home-tools.tsx");
   const nav = read("app/research/bottom-nav.tsx");
-  assert.match(guide, /口座を開く前に/);
-  assert.match(guide, /注文画面で止まって確認/);
-  assert.match(guide, /決算を読む順番/);
-  assert.match(guide, /日本居住者向け/);
-  assert.match(guide, /一般情報です/);
+  assert.match(guide, /口座を開く/);
+  assert.match(guide, /注文する/);
+  assert.match(guide, /購入までの4ステップ/);
+  assert.doesNotMatch(guide, /日本居住者向け|NISA|一次情報を確認する|最初は、この順番で/);
   assert.match(faq, /質問をすると必ず回答されますか/);
   assert.doesNotMatch(faq, /以前の非公開質問/);
   assert.match(faq, /課金はまだ開始していません/);
@@ -26,11 +25,12 @@ test("free learning and service help stay separate and linked from navigation", 
   }
 });
 
-test("beginner guide uses official regulator references without affiliate links", () => {
+test("beginner guide explains orders and risk without fabricated affiliate links", () => {
   const guide = read("app/research/learn/guide.tsx");
-  assert.match(guide, /fsa\.go\.jp\/menkyo/);
-  assert.match(guide, /fsa\.go\.jp\/policy\/nisa2/);
-  assert.match(guide, /investor\.gov\/introduction-investing/);
+  assert.match(guide, /成行/);
+  assert.match(guide, /指値/);
+  assert.match(guide, /条件に合わなければ買えません/);
+  assert.match(guide, /損失が出ることもあります/);
   assert.doesNotMatch(guide, /affiliate|アフィリエイト/i);
 });
 

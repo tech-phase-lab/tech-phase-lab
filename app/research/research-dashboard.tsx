@@ -236,7 +236,9 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
               <p className={styles.planPrice}>{t("¥2,980", "$20")}<small>{t(" / 月", " / month")}</small></p>
               <button className={styles.planCta} disabled>{t("お申し込み準備中", "Coming soon")}</button>
               <p className={styles.planIncludes}>{t("無料プランのすべての機能に加えて", "Everything in Free, plus")}</p>
-              <ul className={styles.proBenefits}>{[
+              <ul className={styles.proBenefits}>
+                <li><strong>{t("銘柄比較", "Stock comparison")}</strong>{t("｜気になる2〜3社の成長・利益・財務を比較", " · Compare growth, profitability and financials across 2–3 companies")}</li>
+                {[
                 t("決算の裏側まで読み解く独自リサーチ", "In-depth earnings research"),
                 t("業界の動きから企業の競争力を分析", "Industry trends and competitive strengths"),
                 t("予想利益から株価の妥当性を検証", "Earnings and P/E valuation"),

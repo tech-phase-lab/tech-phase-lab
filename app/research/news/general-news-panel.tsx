@@ -37,10 +37,10 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
   }, [refresh]);
   const official = data?.officialUpdates ?? [];
   const news = officialOnly ? [] : data?.items ?? [];
-  const pages = Math.max(1, Math.ceil((official.length + news.length) / 6));
-  const current = Math.min(page, pages), start = (current - 1) * 6;
-  const visibleOfficial = official.slice(start, start + 6);
-  const visibleNews = news.slice(Math.max(0, start - official.length), Math.max(0, start + 6 - official.length));
+  const pages = Math.max(1, Math.ceil((official.length + news.length) / 5));
+  const current = Math.min(page, pages), start = (current - 1) * 5;
+  const visibleOfficial = official.slice(start, start + 5);
+  const visibleNews = news.slice(Math.max(0, start - official.length), Math.max(0, start + 5 - official.length));
   const format = (value: string) => new Date(value).toLocaleString(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", hour12: false }) + " JST";
   const impactLabels = lang === "ja"
     ? { positive: "プラス", negative: "マイナス", mixed: "両面", neutral: "中立", uncertain: "不明" }
