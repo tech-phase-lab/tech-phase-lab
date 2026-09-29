@@ -1,1 +1,3 @@
 .feed{margin:22px 0}.feed>h2{font-size:18px;font-weight:550}.tabs{display:flex;gap:20px;border-bottom:1px solid #2b3d47;margin-bottom:16px}.tabs button{border:0;border-bottom:2px solid transparent;background:none;color:#a1b3bd;padding:12px 2px;font:inherit;font-size:13px;cursor:pointer}.tabs button[aria-pressed=true]{color:#9bdfc3;border-bottom-color:#9bdfc3}.tabs button:focus-visible{outline:2px solid #9bdfc3}
+
+.newsSection:not([hidden]){margin-bottom:24px}

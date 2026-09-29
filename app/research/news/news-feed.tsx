@@ -10,7 +10,7 @@ export default function NewsFeed({ lang }: { lang: Language }) {
   return <section className={styles.feed} aria-label={ja ? "ニュースと目標株価" : "News and price targets"}>
     <h2>{ja ? "ニュース・企業の動き" : "News & company updates"}</h2>
     <div className={styles.tabs} role="group" aria-label={ja ? "表示するニュース" : "News filter"}>{(["all", "official", "targets"] as const).map(key => <button key={key} aria-pressed={key === view} onClick={() => setView(key)}>{key === "all" ? (ja ? "すべて" : "All") : key === "official" ? (ja ? "公式発表" : "Official") : (ja ? "目標株価" : "Price targets")}</button>)}</div>
-    <div hidden={view === "targets"}><GeneralNewsPanel lang={lang} officialOnly={view === "official"} /></div>
+    <div className={styles.newsSection} hidden={view === "targets"}><GeneralNewsPanel lang={lang} officialOnly={view === "official"} /></div>
     {view !== "official" && <PriceTargetsPanel lang={lang} />}
   </section>;
 }
