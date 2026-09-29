@@ -308,6 +308,14 @@ contains route names, URLs, titles or raw errors. A recently successful route
 is an operational observation only; it does not prove complete coverage or
 subscriber-delivery latency.
 
+The public news validator removes repeated current official URLs and repeated
+reviewed article IDs or URLs only after every candidate passes the existing
+field and host checks. The browser poller clears stale shared/module snapshots
+on failure, retries from five seconds with a 30-second ceiling, and wakes on
+online or visible-page recovery. Concurrent wakeups coalesce and cleanup aborts
+the active request. This is reconnect behavior, not streaming or a delivery
+latency guarantee.
+
 Official-headline translation is a separate opt-in worker. It remains stopped
 unless `OFFICIAL_HEADLINE_TRANSLATION_ENABLED=true`, `OPENAI_API_KEY` and an
 explicit `OFFICIAL_HEADLINE_TRANSLATION_MODEL` are all configured. A rolling

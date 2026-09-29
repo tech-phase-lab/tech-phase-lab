@@ -47,6 +47,23 @@ Stock News API and OpenAI remain uncontracted/unconfigured by owner choice. Seco
 - Supersedes the nested chart/theme switch: indices, bond ETFs, FX, sector performance and heatmap are directly visible; sector performance opens by default. Mobile navigation wraps into two rows.
 - Removed the promotional theme heading and intro; added cybersecurity, gold miners, software and space constituent groups. The display remains selected stock returns, not an aggregate sector index.
 
+## 20:41 JST finite news-readiness completion
+
+- Duplicate current official URLs and reviewed article IDs/URLs are removed at
+  the public validation boundary after every item passes the existing allowlist
+  and field checks. Optional missing official-update lists remain compatible.
+- Failed news reads clear both the home pulse and stale module cache, retry from
+  5 seconds with a 30-second cap, and wake immediately on browser online/visible
+  recovery. Concurrent wakeups coalesce and unmount aborts cleanly.
+- Offline regressions cover duplicate/missing records and failure-to-success,
+  wakeup and abort paths. This completes finite priority 4 without enabling
+  streaming or claiming measured end-to-end delivery latency.
+- The finite news-readiness backlog is now code-complete. Stop discretionary
+  product edits; continue only the separately authorized calendar maintenance,
+  deployment verification and exact blockers. Automatic headline translation
+  remains OFF pending the December provider/model/credential decision, and live
+  preview monitor connectivity remains the outstanding verification blocker.
+
 ## Owner revision 20:44 JST
 
 - Market starts with indices again. Three chart categories show compact familiar examples (S&P/NASDAQ, SHY/IEF/TLT, USD/JPY/EUR). Sector themes use one compact dropdown instead of wrapping chips, removing duplicate headings/constituents and extra explanatory/source paragraphs. Original widget attribution stays intact.

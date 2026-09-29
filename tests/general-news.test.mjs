@@ -95,3 +95,15 @@ test('official headline translations are optional, bounded and trimmed', () => {
  assert.equal(publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[translated]}).officialUpdates[0].translationJa,'ネビウスが新しい基盤を発表');
  for(const translationJa of ['', 'あ'.repeat(181)]) assert.throws(()=>publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[{...update,translationJa}]}));
 });
+
+test('public news removes duplicate current stories and keeps missing official updates compatible', () => {
+ const first={id:'45',title:'Current official update',url:'https://nebius.com/blog/current',publisher:'Nebius',tickers:['NBIS'],observedAt:'2026-09-28T09:00:00Z'};
+ const duplicate={...first,id:'46',title:'Older duplicate'};
+ const official=publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[first,duplicate]});
+ assert.deepEqual(official.officialUpdates,[first]);
+ assert.deepEqual(publicNewsPayload({ok:true,enabled:false,items:[]}),{ok:true,enabled:false,items:[]});
+ const duplicateId={...item,url:'https://publisher.example/duplicate-id'};
+ const duplicateUrl={...item,id:'b'.repeat(64)};
+ const reviewed=publicNewsPayload({ok:true,enabled:true,items:[item,duplicateId,duplicateUrl]});
+ assert.deepEqual(reviewed.items,[item]);
+});

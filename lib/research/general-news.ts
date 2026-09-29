@@ -16,6 +16,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
   const updates: { officialUpdates?: OfficialUpdate[] } = {};
   if (payload.officialUpdates !== undefined) {
     if (!Array.isArray(payload.officialUpdates) || payload.officialUpdates.length > 20) throw Error("Invalid updates");
+    const seenOfficialUrls = new Set<string>();
     updates.officialUpdates = payload.officialUpdates.map(raw => {
       if (!raw || typeof raw !== "object") throw Error("Invalid update");
       const v = raw as Record<string, unknown>;
@@ -40,9 +41,15 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
         publication.publishedOn = v.publishedOn;
       }
       return { id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation };
+    }).filter(item => {
+      if (seenOfficialUrls.has(item.url)) return false;
+      seenOfficialUrls.add(item.url);
+      return true;
     });
   }
   if (!payload.enabled) return { ok: true, enabled: false, items: [], ...updates };
+  const seenIds = new Set<string>();
+  const seenUrls = new Set<string>();
   const items = payload.items.map((raw): GeneralNewsItem => {
     if (!raw || typeof raw !== "object") throw new Error("Invalid item");
     const item = raw as Record<string, unknown>;
@@ -68,6 +75,11 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       summaryJa: field("summaryJa", 1200), summaryEn: field("summaryEn", 1200),
       impactJa: field("impactJa", 1200), impactEn: field("impactEn", 1200),
       impactLabel: impactLabel as GeneralNewsItem["impactLabel"], confidence: confidence as GeneralNewsItem["confidence"] };
+  }).filter(item => {
+    if (seenIds.has(item.id) || seenUrls.has(item.url)) return false;
+    seenIds.add(item.id);
+    seenUrls.add(item.url);
+    return true;
   });
   return { ok: true, enabled: true, items, ...updates };
 }

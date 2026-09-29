@@ -57,3 +57,26 @@ are code-, type-, build- and offline-test-verified, but their live rendered
 values remain pending until the preview-to-monitor connection resumes. Do not
 report this as a translation-worker or provider failure; the worker remains
 deliberately disabled.
+
+## Duplicate, missing-feed and reconnect recovery — 20:41 JST
+
+The public news boundary now validates every candidate and then keeps only the
+first current item for each official URL and each reviewed article ID/URL. This
+is defense in depth for a duplicated monitor row or repeated revision; it does
+not widen allowed hosts or reveal discarded source evidence. A monitor payload
+that legitimately omits the optional official-update list remains compatible.
+
+The client poller now retries a failed read after 5 seconds with bounded
+exponential backoff to the normal 30-second polling interval. Browser `online`
+and visible-page recovery request an immediate read, while overlapping wakeups
+coalesce into one follow-up. Unmount aborts the active request and schedules no
+retry. A failed check clears both the shared home pulse and the module cache, so
+stale items cannot reappear after remount; the next successful read restores the
+feed and regular interval.
+
+Offline tests cover duplicate official/reviewed items, an absent optional
+official list, source records without publication evidence, exclusion of a
+publication-free baseline, failure-to-success reconnect, coalesced wakeups and
+abort cleanup. No streaming, paid provider, delivery path or production setting
+was enabled. These tests verify recovery logic, not live source-to-screen
+latency.

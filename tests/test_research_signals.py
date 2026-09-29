@@ -210,6 +210,43 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(len(signals.queue(self.db, ticker="CRWV")["items"]), 2)
         self.assertEqual(len(signals.queue(self.db, ticker="MU")["items"]), 0)
 
+    def test_public_official_updates_deduplicate_revisions_and_handle_missing_publication(self):
+        source = next(item for item in signals.SOURCES if item["id"] == "nebius-blog")
+        reference = datetime(2026, 9, 29, 12, tzinfo=timezone.utc)
+        rows = [
+            ("https://nebius.com/blog/revised", "old", "Old title", "new",
+             "2026-09-29T10:00:00+00:00", "2026-09-29T10:01:00+00:00"),
+            ("https://nebius.com/blog/revised", "new", "Current title", "changed",
+             "2026-09-29T10:00:00+00:00", "2026-09-29T10:02:00+00:00"),
+            ("https://nebius.com/blog/missing-baseline", "baseline", "Baseline", "baseline",
+             None, "2026-09-29T10:03:00+00:00"),
+            ("https://nebius.com/blog/missing-new", "missing", "New without source time", "new",
+             None, "2026-09-29T10:04:00+00:00"),
+        ]
+        signals.schema(self.db)
+        with self.db:
+            for url, sha, title, kind, published_at, observed_at in rows:
+                self.db.execute("""INSERT INTO signal_events(
+                  source_id,url,sha,previous_sha,title,tickers_json,matches_json,event_kind,
+                  published_at,published_on,observed_at,excerpt,diff,truncated
+                  ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,0)""", (
+                    source["id"], url, sha, "", title, '["NBIS"]', '{}', kind,
+                    published_at, None, observed_at, "private evidence", "private diff",
+                ))
+        updates = signals.public_official_updates(
+            self.db, sources=[source], reference=reference
+        )
+        self.assertEqual([item["title"] for item in updates], [
+            "New without source time", "Current title",
+        ])
+        self.assertNotIn("publishedAt", updates[0])
+        self.assertEqual(updates[0]["observedAt"], "2026-09-29T10:04:00+00:00")
+        self.assertEqual(updates[1]["publishedAt"], "2026-09-29T10:00:00+00:00")
+        serialized = json.dumps(updates)
+        self.assertNotIn("Old title", serialized)
+        self.assertNotIn("private evidence", serialized)
+        self.assertNotIn("private diff", serialized)
+
     def test_document_retention_orders_mixed_offsets_by_absolute_time(self):
         signals.schema(self.db)
         source_id = self.feed["id"]

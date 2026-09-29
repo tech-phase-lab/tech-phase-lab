@@ -5,6 +5,7 @@ import type { Language } from "@/lib/research/data";
 import { publicNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
 import { officialHeadlineJa } from "@/lib/research/official-news-ja";
 import { officialTime } from "@/lib/research/news-time";
+import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-poller";
 import styles from "./general-news.module.css";
 
 import { publishNews } from "@/lib/research/news-snapshot";
@@ -20,22 +21,34 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
   const panel = useRef<HTMLElement>(null);
   const [page, setPage] = useState(1);
   useEffect(() => {
-    let stopped = false;
-    let timer: ReturnType<typeof setTimeout>;
-    const controller = new AbortController();
-    async function load() {
-      try {
-        const response = await fetch("/api/research/news", { cache: "no-store", signal: controller.signal });
+    const cached = refresh === 0 ? recent() : null;
+    const poller = createNewsPoller({
+      load: async signal => {
+        const response = await fetch("/api/research/news", { cache: "no-store", signal });
         if (!response.ok) throw new Error("unavailable");
-        const payload = publicNewsPayload(await response.json());
-        if (!stopped) { const at = new Date().toISOString(); snapshot = { data: payload, at, time: Date.now() }; setData(payload); publishNews(payload); setError(false); setReceivedAt(at); }
-      } catch {
-        if (!stopped) { setData(null); publishNews(null); setError(true); setReceivedAt(null); }
-      } finally { if (!stopped) timer = setTimeout(load, 30_000); }
-    }
-    if (refresh === 0 && recent()) timer = setTimeout(load, Math.max(0, 30_000 - (Date.now() - snapshot!.time)));
-    else void load();
-    return () => { stopped = true; clearTimeout(timer); controller.abort(); };
+        return publicNewsPayload(await response.json());
+      },
+      onSuccess: payload => {
+        const at = new Date().toISOString();
+        snapshot = { data: payload, at, time: Date.now() };
+        setData(payload); publishNews(payload); setError(false); setReceivedAt(at);
+      },
+      onFailure: () => {
+        // A failed check must not let a stale module snapshot reappear after remount.
+        snapshot = null;
+        setData(null); publishNews(null); setError(true); setReceivedAt(null);
+      },
+    });
+    poller.start(cached ? Math.max(0, NEWS_POLL_INTERVAL_MS - (Date.now() - cached.time)) : 0);
+    const wake = () => poller.wake();
+    const wakeWhenVisible = () => { if (document.visibilityState === "visible") wake(); };
+    window.addEventListener("online", wake);
+    document.addEventListener("visibilitychange", wakeWhenVisible);
+    return () => {
+      window.removeEventListener("online", wake);
+      document.removeEventListener("visibilitychange", wakeWhenVisible);
+      poller.stop();
+    };
   }, [refresh]);
   const official = data?.officialUpdates ?? [];
   const news = officialOnly ? [] : data?.items ?? [];
