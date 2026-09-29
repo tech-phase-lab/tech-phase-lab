@@ -41,7 +41,7 @@ export default function HomeTools({ lang, onChanges, onPro }: { lang: Language; 
         <div className={styles.overlayCaption}><span className={styles.overlayLabel}>TECH PHASE PRO</span>{plan === "free" && <strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong>}</div>
       </div>}
     </nav>
-    {!isPro && <button type="button" className={styles.proHint} onClick={onPro}><strong>{t("PRO限定の機能を見る", "Explore PRO-exclusive features")} →</strong></button>}
+    {!isPro && <button type="button" className={styles.proHint} onClick={onPro}><strong>{t("PROの限定機能を見る", "Explore PRO-exclusive features")} →</strong></button>}
   </>;
 }
 

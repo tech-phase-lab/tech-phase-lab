@@ -19,7 +19,7 @@ const questions = [
     "No. Your monthly subscription starts on the day you join, so joining partway through a calendar month won’t shorten your access."
   ],
   [
-    "PROを解約すると、いつまで利用できますか？",
+    "PRO解約後、いつまで利用できますか？",
     "How long can I use PRO after canceling?",
     "解約後も、お支払い済みの期間が終わるまでPROを利用できます。解約すると次回の自動更新が停止します。",
     "You can keep using PRO until the end of the period you’ve paid for. Canceling stops your next automatic renewal."
@@ -39,8 +39,8 @@ const questions = [
   [
     "質問をすると必ず回答されますか？",
     "Will every question be answered?",
-    "リゼルが厳選した質問に回答します。全質問への回答はお約束できません。",
-    "RIZEL chooses which questions to answer. We can’t promise an answer to every question."
+    "私が厳選した質問に回答します。全質問への回答はお約束できません。",
+    "I choose which questions to answer. I can’t promise an answer to every question."
   ],
   [
     "送った質問は公開されますか？",
@@ -49,8 +49,8 @@ const questions = [
     "Yes. Your questions are visible to all PRO members. Please avoid personal details and inappropriate comments."
   ],
   [
-    "銘柄の追加や、取り上げてほしいテーマをリクエストできますか？",
-    "Can I request a stock or topic?",
+    "監視する銘柄の追加や、取り上げてほしいテーマをリクエストできますか？",
+    "Can I request additions to the watch list or topics to cover?",
     "はい。すべてのご要望にはお応えできませんが、同じ銘柄やテーマへのリクエストが多い場合は検討します。",
     "Yes. We can’t accommodate every request, but we’ll consider stocks and topics that many members ask for."
   ],

@@ -237,7 +237,6 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
               <button className={styles.planCta} disabled>{t("お申し込み準備中", "Coming soon")}</button>
               <p className={styles.planIncludes}>{t("無料プランのすべての機能に加えて", "Everything in Free, plus")}</p>
               <ul className={styles.proBenefits}>
-                <li><strong>{t("銘柄比較 PRO", "Stock comparison PRO")}</strong>{t("｜気になる2〜3銘柄を瞬時に判断", " · Assess 2–3 stocks at a glance")}</li>
                 {[
                 t("決算の裏側まで読み解く独自リサーチ", "In-depth earnings research"),
                 t("業界の動きから企業の競争力を分析", "Industry trends and competitive strengths"),
@@ -250,6 +249,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
                 <li><strong>{t("週刊 Tech Phase PRO", "Tech Phase PRO Weekly")}</strong>{t("｜変化と展望", " · Outlook")}</li>
                 <li><strong>{t("リサーチQ&A", "Research Q&A")}</strong>{t("｜会員の疑問を深掘り", " · Member questions explored")}</li>
                 <li><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong>{t("｜相場の着眼点", " · Market perspectives")}</li>
+                <li><strong>{t("銘柄比較 PRO", "Stock comparison PRO")}</strong>{t("｜気になる2〜3銘柄を瞬時に判断", " · Assess 2–3 stocks at a glance")}</li>
               </ul>
             </article>
           </div>
