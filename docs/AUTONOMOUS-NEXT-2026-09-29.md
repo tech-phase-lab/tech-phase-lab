@@ -28,4 +28,16 @@ Owner approved continuing unblocked work without their operation. Existing hourl
 - Next: expose aggregate untranslated/pending/failure diagnostics without
   source text, then add missing/duplicate/stale/reconnect recovery coverage.
 
+## 19:48 JST progress
+
+- Finite priority 3 is implemented: the owner operations view now distinguishes
+  disabled, misconfigured and enabled headline translation, and shows only
+  bounded aggregate counts/timestamps for untranslated backlog, oldest pending,
+  retries, exhausted jobs and 24-hour outcomes.
+- Diagnostics never include URLs, headlines, publisher IDs, source evidence,
+  model names, provider responses or error details. Disabled mode explicitly
+  says no external transmission; no credential or paid-provider change was made.
+- Next finite priority: add duplicate/missing official-news and stale/reconnect
+  recovery coverage, preserving auth and public payload boundaries.
+
 Stock News API and OpenAI remain uncontracted/unconfigured by owner choice. Seconds-level Japanese display is a target, not verified. Affiliate links await replies to the three emails the owner already sent. No invented personal posts, recommendations or affiliate approvals. At finite backlog completion stop extra product edits; separately authorized calendar maintenance continues.

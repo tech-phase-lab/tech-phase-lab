@@ -1,5 +1,5 @@
 """Opt-in, source-revision-bound Japanese translations for official headlines."""
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import json
 import os
 import re
@@ -35,8 +35,7 @@ def configuration(env):
         return None
 
 
-def connect(path):
-    db = monitor.connect(path)
+def schema(db):
     signals.schema(db)
     db.executescript("""
       CREATE TABLE IF NOT EXISTS signal_headline_translation_jobs(
@@ -49,7 +48,98 @@ def connect(path):
         model TEXT NOT NULL, state TEXT NOT NULL, usage TEXT NOT NULL DEFAULT '{}',
         lease TEXT NOT NULL UNIQUE);
     """)
+
+
+def connect(path):
+    db = monitor.connect(path)
+    schema(db)
     return db
+
+
+def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
+    """Return bounded aggregate state without titles, URLs, IDs, models or errors."""
+    env = os.environ if env is None else env
+    now = time.time() if now is None else now
+    schema(db)
+    configured = configuration(env)
+    if env.get("OFFICIAL_HEADLINE_TRANSLATION_ENABLED") != "true":
+        status, daily_limit = "disabled", None
+    elif configured is None:
+        status, daily_limit = "misconfigured", None
+    else:
+        status, daily_limit = "enabled", configured[2]
+    reference = datetime.fromtimestamp(now, tz=timezone.utc)
+    counts = {
+        "eligible": 0, "translated": 0, "pending": 0,
+        "running": 0, "retrying": 0, "exhausted": 0,
+    }
+    oldest_pending = None
+    next_retry = None
+    for item in signals.public_official_updates(db, sources=sources, reference=reference):
+        row = db.execute("SELECT * FROM signal_events WHERE id=?", (item["id"],)).fetchone()
+        if not row or re.fullmatch(r"https?://\S+", row["title"].strip(), re.I):
+            continue
+        counts["eligible"] += 1
+        translated = db.execute('''SELECT 1 FROM signal_headline_translations
+          WHERE source_id=? AND url=? AND sha=?''',
+                                (row["source_id"], row["url"], row["sha"])).fetchone()
+        if translated:
+            counts["translated"] += 1
+            continue
+        counts["pending"] += 1
+        try:
+            observed = datetime.fromisoformat(str(row["observed_at"]).replace("Z", "+00:00"))
+            if observed.tzinfo is not None:
+                observed = observed.astimezone(timezone.utc)
+                if observed <= reference and (oldest_pending is None or observed < oldest_pending):
+                    oldest_pending = observed
+        except (TypeError, ValueError, OverflowError):
+            pass
+        job = db.execute('''SELECT attempts,next_at,state
+          FROM signal_headline_translation_jobs WHERE source_id=? AND url=? AND sha=?''',
+                         (row["source_id"], row["url"], row["sha"])).fetchone()
+        if not job:
+            continue
+        if job["attempts"] >= MAX_ATTEMPTS:
+            counts["exhausted"] += 1
+        elif job["state"] == "running":
+            counts["running"] += 1
+        elif job["state"] in {"retry", "stale"}:
+            counts["retrying"] += 1
+        try:
+            retry_at = datetime.fromtimestamp(float(job["next_at"]), tz=timezone.utc)
+            if (job["state"] in {"retry", "stale"}
+                    and job["attempts"] < MAX_ATTEMPTS and retry_at > reference
+                    and retry_at <= reference + timedelta(days=7)
+                    and (next_retry is None or retry_at < next_retry)):
+                next_retry = retry_at
+        except (TypeError, ValueError, OverflowError, OSError):
+            pass
+    calls = {"total": 0, "failed": 0, "completed": 0, "stale": 0}
+    for row in db.execute(
+            "SELECT at,state FROM signal_headline_translation_calls WHERE at>=? LIMIT 201",
+            (now - 86400,)):
+        try:
+            called_at = float(row["at"])
+        except (TypeError, ValueError, OverflowError):
+            continue
+        if not now - 86400 <= called_at <= now or calls["total"] >= 200:
+            continue
+        calls["total"] += 1
+        if row["state"] == "failed":
+            calls["failed"] += 1
+        elif row["state"] == "done":
+            calls["completed"] += 1
+        elif row["state"] == "stale":
+            calls["stale"] += 1
+    return {
+        "status": status,
+        "dailyLimit": daily_limit,
+        **counts,
+        "oldestPendingAt": oldest_pending.isoformat() if oldest_pending else None,
+        "nextRetryAt": next_retry.isoformat() if next_retry else None,
+        "calls24Hours": calls,
+    }
 
 
 def claim(db, sources, limit, model, now):

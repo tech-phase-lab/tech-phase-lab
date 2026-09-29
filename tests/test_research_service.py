@@ -2574,6 +2574,13 @@ class ResearchServiceTests(unittest.TestCase):
             "count": 0, "waitAverageMs": None, "waitMaxMs": None,
             "lastAttemptedAt": None,
         })
+        self.assertEqual(summary["headlineTranslation"], {
+            "status": "disabled", "dailyLimit": None,
+            "eligible": 0, "translated": 0, "pending": 0,
+            "running": 0, "retrying": 0, "exhausted": 0,
+            "oldestPendingAt": None, "nextRetryAt": None,
+            "calls24Hours": {"total": 0, "failed": 0, "completed": 0, "stale": 0},
+        })
         serialized = json.dumps(summary)
         self.assertNotIn("https://", serialized)
         self.assertNotIn("source", serialized.lower())

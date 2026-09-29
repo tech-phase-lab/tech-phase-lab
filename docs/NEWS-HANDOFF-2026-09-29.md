@@ -30,3 +30,19 @@ headline translation does not approve or publish investment-impact analysis.
 
 December owner approval of the provider/model and credentials remains the exact
 activation blocker. No paid API call or environment change was made.
+
+## Aggregate translation diagnostics — 19:48 JST
+
+The operations state now reports a bounded, evidence-free headline-translation
+summary. It distinguishes OFF, incomplete configuration and enabled states;
+counts eligible, translated and untranslated current items; records the oldest
+pending timestamp; and exposes only aggregate running, retrying, exhausted and
+24-hour completion/failure/stale-output counts. A valid daily limit and the
+nearest bounded retry time are shown only when available.
+
+The payload intentionally contains no headline, URL, publisher/company ID,
+source body, diff, model name, provider response or error string. The owner
+operations UI labels the dormant worker as OFF with no external transmission.
+Offline tests cover enabled retry state, disabled state, incomplete
+configuration, redaction and the authenticated health projection. Translation
+remains disabled pending the December provider/model/credential decision.

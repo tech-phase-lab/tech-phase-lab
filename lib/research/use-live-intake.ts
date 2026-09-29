@@ -313,6 +313,14 @@ export type MonitorState = {
       count: number; latencyAverageMs: number | null; latencyMaxMs: number | null;
       lastObservedAt: string | null;
     };
+    headlineTranslation?: {
+      status: "disabled" | "misconfigured" | "enabled";
+      dailyLimit: number | null;
+      eligible: number; translated: number; pending: number;
+      running: number; retrying: number; exhausted: number;
+      oldestPendingAt: string | null; nextRetryAt: string | null;
+      calls24Hours: { total: number; failed: number; completed: number; stale: number };
+    };
     routeTransitions24Hours?: {
       recoveries: number; failures: number; changes: number;
       lastOutcome: "recovered" | "failed" | "changed" | null;

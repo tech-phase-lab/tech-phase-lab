@@ -107,6 +107,42 @@ class HeadlineTranslationTests(unittest.TestCase):
         limited = {**ENV, "OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT": "1"}
         self.assertEqual(translation.run_once(self.path, response, limited, now=1300, sources=[SOURCE]), "idle")
 
+    def test_diagnostics_are_aggregate_bounded_and_show_retry_recovery_state(self):
+        def failed(*_):
+            raise RuntimeError("private provider response")
+
+        self.assertEqual(
+            translation.run_once(self.path, failed, ENV, now=1000, sources=[SOURCE]),
+            "retry",
+        )
+        with translation.connect(self.path) as db:
+            summary = translation.diagnostics(db, env=ENV, now=1001, sources=[SOURCE])
+        self.assertEqual(summary, {
+            "status": "enabled", "dailyLimit": 3,
+            "eligible": 1, "translated": 0, "pending": 1,
+            "running": 0, "retrying": 1, "exhausted": 0,
+            "oldestPendingAt": "1970-01-01T00:15:10+00:00",
+            "nextRetryAt": "1970-01-01T00:21:40+00:00",
+            "calls24Hours": {"total": 1, "failed": 1, "completed": 0, "stale": 0},
+        })
+        serialized = json.dumps(summary)
+        self.assertNotIn("http", serialized.lower())
+        self.assertNotIn("private", serialized.lower())
+        self.assertNotIn("synthetic-model", serialized)
+
+    def test_diagnostics_distinguish_disabled_and_misconfigured_without_calling_provider(self):
+        with translation.connect(self.path) as db:
+            disabled = translation.diagnostics(db, env={}, now=1000, sources=[SOURCE])
+            misconfigured = translation.diagnostics(
+                db, env={"OFFICIAL_HEADLINE_TRANSLATION_ENABLED": "true"},
+                now=1000, sources=[SOURCE],
+            )
+        self.assertEqual(disabled["status"], "disabled")
+        self.assertIsNone(disabled["dailyLimit"])
+        self.assertEqual(misconfigured["status"], "misconfigured")
+        self.assertEqual(disabled["eligible"], 1)
+        self.assertEqual(misconfigured["pending"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1045,6 +1045,9 @@ class AutomaticMonitor:
             state["bodyHostProbes"] = monitor.body_host_probe_summary(db)
             state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
             state["signalIntake"] = signals.operational_summary(db)
+            state["signalIntake"]["headlineTranslation"] = (
+                headline_translation.diagnostics(db, env=os.environ)
+            )
             state["incidents"] = monitor.operational_incident_summary(
                 db, delivery_enabled=self.notification_enabled
             )

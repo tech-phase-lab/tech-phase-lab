@@ -274,6 +274,15 @@ function signalIntakeStatus(signal: MonitorState["signalIntake"]) {
   const sourceLatencyStatus = sourceLatency?.count
     ? ` · 発表→監視取得の実測：24時間 ${sourceLatency.count}件・平均 ${duration(sourceLatency.latencyAverageMs)}・最大 ${duration(sourceLatency.latencyMaxMs)}（最終取得 ${time(sourceLatency.lastObservedAt)} JST、巡回間隔・画面表示・配信時間とは別）`
     : sourceLatency ? " · 発表→監視取得の実測：24時間の有効標本なし" : "";
+  const translation = signal.headlineTranslation;
+  const translationState = translation?.status === "enabled"
+    ? "ON（公式見出しのみ）"
+    : translation?.status === "misconfigured"
+      ? "設定不足のため停止（外部送信なし）"
+      : "OFF（外部送信なし）";
+  const translationStatus = translation
+    ? ` · 公式見出し翻訳：${translationState} · 対象 ${translation.eligible}・翻訳済み ${translation.translated}・未翻訳 ${translation.pending}${translation.oldestPendingAt ? `（最古 ${time(translation.oldestPendingAt)} JST）` : ""} · 実行中 ${translation.running}・再試行 ${translation.retrying}${translation.nextRetryAt ? `（最短 ${time(translation.nextRetryAt)} JST）` : ""}・上限到達 ${translation.exhausted} · 24時間 ${translation.calls24Hours.total}${translation.dailyLimit ? `/${translation.dailyLimit}` : ""}回（完了 ${translation.calls24Hours.completed}・失敗 ${translation.calls24Hours.failed}・原文更新 ${translation.calls24Hours.stale}）`
+    : "";
   const kinds = routes.errorKinds ?? {
     accessRestricted: 0, rateLimited: 0, timeout: 0, server: 0,
     invalidResponse: 0, articlePartial: 0, other: routes.error,
@@ -344,7 +353,7 @@ function signalIntakeStatus(signal: MonitorState["signalIntake"]) {
       }).join("／")
     : "";
   const activeOutageKindDetail = activeOutageKindStatus ? ` · 区分別継続障害：${activeOutageKindStatus}` : "";
-  return `公式補完経路：直近成功 ${routes.fresh}/${routes.configured}経路 · 期限超過 ${routes.stale} · 要確認 ${routes.error}（アクセス制限 ${kinds.accessRestricted}・レート制限 ${kinds.rateLimited}・タイムアウト ${kinds.timeout}・公式側5xx ${kinds.server}・応答形式 ${kinds.invalidResponse}・記事一部失敗 ${kinds.articlePartial}・その他 ${kinds.other}）${retryStatus}${retryKindDetail}${activeOutageStatus}${activeOutageKindDetail}${articleStatus}${measuredRecoveryStatus}${transitionStatus}${routeRecoveryStatus}${routeRetryWaitStatus} · 初回待ち ${routes.pending} · 公表証拠 ${evidence.total}件（日時あり ${evidence.timestamp}・日付のみ ${evidence.dateOnly}・時刻未取得 ${evidence.missing}）${sourceLatencyStatus}`;
+  return `公式補完経路：直近成功 ${routes.fresh}/${routes.configured}経路 · 期限超過 ${routes.stale} · 要確認 ${routes.error}（アクセス制限 ${kinds.accessRestricted}・レート制限 ${kinds.rateLimited}・タイムアウト ${kinds.timeout}・公式側5xx ${kinds.server}・応答形式 ${kinds.invalidResponse}・記事一部失敗 ${kinds.articlePartial}・その他 ${kinds.other}）${retryStatus}${retryKindDetail}${activeOutageStatus}${activeOutageKindDetail}${articleStatus}${measuredRecoveryStatus}${transitionStatus}${routeRecoveryStatus}${routeRetryWaitStatus} · 初回待ち ${routes.pending} · 公表証拠 ${evidence.total}件（日時あり ${evidence.timestamp}・日付のみ ${evidence.dateOnly}・時刻未取得 ${evidence.missing}）${sourceLatencyStatus}${translationStatus}`;
 }
 function generationStatus(generation: MonitorState["generation"]) {
   if (!generation) return "AI下書き生成：状態取得待ち";
