@@ -10,6 +10,7 @@ import coverage from "@/lib/research/calendar-coverage.json";
 import { useResearchLanguage } from "../use-research-language";
 import ResearchToolShell from "../research-tool-shell";
 import styles from "../research-tools.module.css";
+import calendarStyles from "./event-calendar.module.css";
 
 const earningsFocus: Record<string, { ja: string; en: string }> = {
   MU: { ja: "注目点：DRAM・NANDの売上と価格動向／粗利益率／HBMと設備投資／次四半期の会社見通し", en: "Watch: DRAM/NAND revenue and pricing; gross margin; HBM and capex; next-quarter guidance." },
@@ -46,16 +47,16 @@ export default function EventCalendar() {
     return t(`公式確認試行済み・確認継続（${company.lastAttemptedOn}）`, `Official check attempted; still under review (${company.lastAttemptedOn})`);
   };
   return <ResearchToolShell lang={lang} setLang={(value) => { setLang(value); setZoneOverride(null); setPeriod("upcoming"); }} title={t("決算・経済指標カレンダー", "Earnings & economic calendar")} description={t("公式発表で確認した予定を、日本時間と米国東部時間で。", "Official schedules in U.S. Eastern and Japan time.")}>
-    <p className={styles.notice}>{t("公式予定の確認日", "Schedule checked")}: {calendarReviewedOn} · {t("公式確認済みの予定を掲載。未確認の企業は下の追跡対象に表示します。日程は変更される場合があります。", "Verified schedules only. Companies awaiting date confirmation are listed below. Dates may change.")}</p>
+    <details className={calendarStyles.status}><summary>{t("公式確認", "Verified")} · {calendarReviewedOn}<span>{t("掲載方針", "About this calendar")}</span></summary><p>{t("公式確認済みの予定を掲載。未確認の企業は下の追跡対象に表示します。日程は変更される場合があります。", "Verified schedules only. Companies awaiting date confirmation are listed below. Dates may change.")}</p></details>
     {stale && <p role="status" className={styles.error}>{t("確認から7日以上経過しています。参加・視聴前に公式日程を再確認してください。", "This schedule was checked over 7 days ago. Recheck the official source before attending.")}</p>}
-    <div className={styles.filters}>
+    <div className={calendarStyles.filters}>
       <div role="group" aria-label={t("予定の種類", "Event category")}>{(["all", "earnings", "economic"] as const).map((value) => <button key={value} aria-pressed={kind === value} onClick={() => setKind(value)}>{value === "all" ? t("すべて", "All") : value === "earnings" ? t("決算", "Earnings") : t("経済指標・FOMC", "Economy & FOMC")}</button>)}</div>
       <label>{t("期間", "Period")} ({zoneLabel(zone)})<select value={period} onChange={(event) => setPeriod(event.target.value)}><option value="upcoming">{t("今後の予定", "Upcoming")}</option>{months.map((month) => <option key={month} value={month}>{month}</option>)}</select></label>
-      <label>{t("表示時間", "Time zone")}<select value={zone} onChange={(event) => { setZoneOverride(event.target.value); setPeriod("upcoming"); }}><option value="Asia/Tokyo">JST · Japan</option><option value="America/New_York">ET · U.S. Eastern</option></select></label>
+      <label>{t("表示時間", "Time zone")}<select value={zone} onChange={(event) => { setZoneOverride(event.target.value); setPeriod("upcoming"); }}><option value="Asia/Tokyo">{t("日本時間", "Japan · JST")}</option><option value="America/New_York">{t("米国東部", "U.S. Eastern · ET")}</option></select></label>
     </div>
-    <div className={styles.watchFilter}>
+    <div className={calendarStyles.watchFilter}>
       <label><input type="checkbox" checked={favoritesOnly} onChange={(event) => setFavoritesOnly(event.target.checked)} />{t("お気に入り＋経済指標", "Favorites + economic events")}</label>
-      <Link href="/research/watchlist">{t("お気に入りを編集 →", "Edit favorites →")}</Link>
+      <Link href="/research/watchlist">{t("銘柄を編集", "Edit favorites")}</Link>
     </div>
     {favoritesOnly && favorites.length === 0 && <p role="status" className={styles.description}>{t("お気に入りがまだありません。銘柄を追加すると、その決算予定も表示します。", "No favorites yet. Add companies to include their earnings schedules.")}</p>}
     <p aria-live="polite" className={styles.description}>{now === null ? t("予定を読み込み中…", "Loading schedule…") : t(`${visible.length + visibleDateOnly.length}件の予定`, `${visible.length + visibleDateOnly.length} events`)}</p>
