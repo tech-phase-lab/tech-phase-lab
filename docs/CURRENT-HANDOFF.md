@@ -1,4 +1,4 @@
-# Tech Phase — current handoff, 2026-09-29 21:07 JST
+# Tech Phase — current handoff, 2026-09-29 21:14 JST
 
 Start here, then read AGENTS.md and docs/AUTONOMOUS-NEXT-2026-09-29.md. Current source and newer owner instructions override older documents.
 
@@ -11,9 +11,9 @@ Start here, then read AGENTS.md and docs/AUTONOMOUS-NEXT-2026-09-29.md. Current 
 
 ## Latest accepted UI and owner preferences
 - Avoid repetitive explanations and lists of nouns joined by Japanese middle dots. Short, natural prose; do not add generic AI slogans.
-- Changes page heading: 何が変わった？ only, no subtitle or duplicate section heading.
+- Changes page heading: 何が変わった？ with subtitle 決算や提携、新サービスなど企業の変化を1ページで。 No duplicate section heading or article count badge.
 - Remove top verification banner and RESEARCH PREVIEW label. Removal is presentation only, not launch readiness.
-- External research footer note: 独自に整理しています。
+- External research footer note: 公開要約をもとに独自に整理しています。
 - Shared footer: 変化を読み、一歩先へ。 / Read the shifts. Think ahead. This was documented as approved PRO copy and is now reused in footer.
 - Home news: show full available Japanese headline/summary with wrapping, NO external link. Left/right touch swipe plus keyboard arrows; auto rotation and pause retained. Full source article body is not available here. Touch has not been verified on a physical phone.
 - Market starts on index chart. Category labels just 指数 / 債券ETF / 為替; no explanatory examples. Sector performance and heatmap remain direct choices. Nine themes use one compact dropdown, not chips. Remove extra attribution/explanation paragraphs; original embedded TradingView branding stays intact.
@@ -37,3 +37,5 @@ Start here, then read AGENTS.md and docs/AUTONOMOUS-NEXT-2026-09-29.md. Current 
 1. Verify user's latest screen feedback without reintroducing rejected labels/layouts.
 2. Refresh stored company analysis from verified primary evidence as a separate content task; keep news ingestion and analysis updates distinct.
 3. Finish remaining delivery/recovery checks and December activation checklist; no paid calls now.
+
+Owner explicitly wants progression from verification toward production readiness. Prioritize genuine readiness work and article freshness; do not just remove labels or activate deferred paid services.
