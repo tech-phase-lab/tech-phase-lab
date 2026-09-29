@@ -40,5 +40,3 @@
  .menuGrid{min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:4px}
  .menuGrid a{flex-shrink:0}
 }
-
-.reload{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border:0;border-top:1px solid #263641;background:transparent;color:#a9c5bd;font:inherit;text-align:left;cursor:pointer}.reload:focus-visible{outline:2px solid #9bdec6;outline-offset:-2px}.reload span:first-child{font-size:23px;line-height:1}

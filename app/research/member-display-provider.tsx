@@ -1,17 +1,18 @@
 "use client";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
+type InitialDisplay = { plan: "free" | "pro"; owner: boolean; ownerMode: boolean; accessExpiresAt: number };
 type DisplayPlan = "free" | "pro" | null;
 const MemberDisplay = createContext<DisplayPlan>(null);
 const ResearchOwner = createContext(false);
 const OwnerMode = createContext(false);
 /** In-memory presentation state only. Every protected API still verifies membership server-side. */
-export function MemberDisplayProvider({ children }: { children: ReactNode }) {
-  const [plan, setPlan] = useState<DisplayPlan>(null);
-  const [owner, setOwner] = useState(false);
-  const [ownerMode, setOwnerMode] = useState(false);
+export function MemberDisplayProvider({ children, initial }: { children: ReactNode; initial?: InitialDisplay }) {
+  const [plan, setPlan] = useState<DisplayPlan>(initial?.plan ?? null);
+  const [owner, setOwner] = useState(initial?.owner ?? false);
+  const [ownerMode, setOwnerMode] = useState(initial?.ownerMode ?? false);
   useEffect(() => {
-    let active = true, generation = 0, lastChecked = 0;
+    let active = true, generation = 0, lastChecked = initial ? Date.now() : 0;
     let request: AbortController | null = null;
     let expiry: ReturnType<typeof setTimeout> | undefined;
     async function check(force = false) {
@@ -34,11 +35,12 @@ export function MemberDisplayProvider({ children }: { children: ReactNode }) {
     }
     const changed = () => { void check(true); };
     const focused = () => { void check(); };
+    if (initial?.plan === "pro") expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.max(0, Math.min(initial.accessExpiresAt - Date.now(), 2147483647)));
     void check(); const timer = setInterval(focused, 60_000);
     window.addEventListener("tech-phase:membership-changed", changed);
     window.addEventListener("focus", focused);
     return () => { active = false; request?.abort(); clearTimeout(expiry); clearInterval(timer); window.removeEventListener("tech-phase:membership-changed", changed); window.removeEventListener("focus", focused); };
-  }, []);
+  }, [initial]);
   return <MemberDisplay.Provider value={plan}><ResearchOwner.Provider value={owner}><OwnerMode.Provider value={ownerMode}>{children}</OwnerMode.Provider></ResearchOwner.Provider></MemberDisplay.Provider>;
 }
 export function useMemberDisplay() { return useContext(MemberDisplay); }
