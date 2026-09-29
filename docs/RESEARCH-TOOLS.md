@@ -428,6 +428,12 @@ cycles also do not increment the recovery-probe counters.
 The body backlog reports rate-limited retries separately from other
 access-control retries. Older backends that do not provide this aggregate stay
 display-compatible and are treated as having no observed rate limits.
+Deferred body retries are also grouped into fixed, URL-free categories for
+timeout, first-party 5xx, extraction, invalid response and other failures.
+These bounded counts must sum to the deferred error total; raw URLs, persisted
+error codes, response text and exception details never enter the public state.
+Older backends remain display-compatible by treating unavailable categories as
+zero while retaining their legacy access-control totals.
 It also partitions every remote-body row into never fetched, fetched but still
 missing extracted evidence, or successfully extracted. The three URL-free
 counts must sum to the reported total. This distinguishes missing evidence from

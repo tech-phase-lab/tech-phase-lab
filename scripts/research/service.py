@@ -9,6 +9,7 @@ import hmac
 import json
 import os
 from pathlib import Path
+import re
 import signal
 import threading
 import time
@@ -121,6 +122,30 @@ def bounded_retry_schedule(value, reference):
     except (TypeError, ValueError, OverflowError):
         return "invalid", None
     return "invalid", None
+
+
+def body_error_kind(error):
+    """Return a bounded, URL-free category for a persisted body-fetch error."""
+    if error == "http-429":
+        return "rateLimited"
+    if error in {"http-401", "http-403", "http-451", "verification-page"}:
+        return "accessRestricted"
+    if error == "timeout":
+        return "timeout"
+    if error and re.fullmatch(r"http-5\d\d", error):
+        return "server"
+    if error in {
+        "no-extractable-text", "sec-exhibit-unavailable", "pdf-encrypted",
+        "pdf-page-limit", "pdf-no-text", "pdf-timeout", "pdf-extract-failed",
+        "invalid-pdf",
+    }:
+        return "extraction"
+    if error in {
+        "unsupported-content-type", "empty-or-oversized-source",
+        "invalid-source-response",
+    }:
+        return "invalidResponse"
+    return "other"
 
 
 def bounded_future_timestamp(value, reference):
@@ -390,6 +415,11 @@ class AutomaticMonitor:
                 "activeHostCircuits": 0, "nextHostProbeAt": None,
                 "dueHostCircuits": 0, "scheduledHostProbes": 0,
                 "retryDeferred": 0, "accessRestricted": 0, "rateLimited": 0,
+                "errorKinds": {
+                    "accessRestricted": 0, "rateLimited": 0, "timeout": 0,
+                    "server": 0, "extraction": 0, "invalidResponse": 0,
+                    "other": 0,
+                },
                 "invalidRetrySchedules": 0,
                 "recheckDeferred": 0, "neverFetched": 0,
                 "detectedNeverFetched": 0, "baselineNeverFetched": 0,
@@ -1161,15 +1191,15 @@ class AutomaticMonitor:
             deferred_with_error = [row for row in deferred_rows if row["error"] is not None]
             eligible_count = len(schedule_rows) - len(deferred_rows)
             retry_deferred = len(deferred_with_error)
-            access_restricted = sum(
-                1 for row in deferred_with_error
-                if row["error"] in (
-                    "http-401", "http-403", "http-451", "verification-page"
-                )
-            )
-            rate_limited = sum(
-                1 for row in deferred_with_error if row["error"] == "http-429"
-            )
+            error_kinds = {
+                "accessRestricted": 0, "rateLimited": 0, "timeout": 0,
+                "server": 0, "extraction": 0, "invalidResponse": 0,
+                "other": 0,
+            }
+            for row in deferred_with_error:
+                error_kinds[body_error_kind(row["error"])] += 1
+            access_restricted = error_kinds["accessRestricted"]
+            rate_limited = error_kinds["rateLimited"]
             recheck_deferred = sum(1 for row in deferred_rows if row["error"] is None)
             detected_waits = []
             for detected in db.execute("""
@@ -1346,6 +1376,7 @@ class AutomaticMonitor:
                 "retryDeferred": retry_deferred,
                 "accessRestricted": access_restricted,
                 "rateLimited": rate_limited,
+                "errorKinds": error_kinds,
                 "invalidRetrySchedules": invalid_retry_schedules,
                 "recheckDeferred": recheck_deferred,
                 "neverFetched": int(backlog["never_fetched"] or 0),

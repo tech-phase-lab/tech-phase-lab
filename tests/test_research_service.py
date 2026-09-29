@@ -1690,6 +1690,11 @@ class ResearchServiceTests(unittest.TestCase):
             "retryDeferred": 1,
             "accessRestricted": 1,
             "rateLimited": 0,
+            "errorKinds": {
+                "accessRestricted": 1, "rateLimited": 0, "timeout": 0,
+                "server": 0, "extraction": 0, "invalidResponse": 0,
+                "other": 0,
+            },
             "invalidRetrySchedules": 0,
             "recheckDeferred": 0,
             "neverFetched": 2,
@@ -1847,7 +1852,41 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(backlog["retryDeferred"], 1)
         self.assertEqual(backlog["accessRestricted"], 0)
         self.assertEqual(backlog["rateLimited"], 1)
+        self.assertEqual(backlog["errorKinds"], {
+            "accessRestricted": 0, "rateLimited": 1, "timeout": 0,
+            "server": 0, "extraction": 0, "invalidResponse": 0,
+            "other": 0,
+        })
         self.assertNotIn("http-429", json.dumps(backlog))
+
+    def test_body_backlog_groups_extraction_and_response_failures_without_details(self):
+        retry_at = (datetime.now(timezone.utc) + timedelta(days=1)).isoformat(
+            timespec="milliseconds"
+        )
+        invalid_url = "https://investor.marvell.com/news/detail/invalid-response"
+        with monitor.connect(self.db_path) as db:
+            db.execute("""
+              UPDATE sources SET error='pdf-no-text',fetch_failures=1,next_fetch_at=?
+              WHERE url LIKE '%older'
+            """, (retry_at,))
+            monitor.add_source(db, "MRVL", invalid_url, title="Invalid response")
+            db.execute("""
+              UPDATE sources SET error='invalid-source-response',fetch_failures=1,
+                next_fetch_at=? WHERE url=?
+            """, (retry_at, invalid_url))
+            db.commit()
+
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        app.body_candidates("2026-09-24T05:00:00+00:00")
+        backlog = app.public_state()["bodyBacklog"]
+
+        self.assertEqual(backlog["retryDeferred"], 2)
+        self.assertEqual(backlog["errorKinds"]["extraction"], 1)
+        self.assertEqual(backlog["errorKinds"]["invalidResponse"], 1)
+        self.assertEqual(sum(backlog["errorKinds"].values()), 2)
+        self.assertNotIn("pdf-no-text", json.dumps(backlog))
+        self.assertNotIn("invalid-source-response", json.dumps(backlog))
+        self.assertNotIn("marvell.com", json.dumps(backlog))
 
     def test_body_candidates_defer_same_host_after_access_restriction(self):
         sec_url = (

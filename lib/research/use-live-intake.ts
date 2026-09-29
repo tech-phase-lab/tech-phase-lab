@@ -212,6 +212,10 @@ export type MonitorState = {
     nextHostProbeAt?: string | null; dueHostCircuits?: number; scheduledHostProbes?: number;
     retryDeferred: number; accessRestricted: number;
     rateLimited?: number;
+    errorKinds?: {
+      accessRestricted: number; rateLimited: number; timeout: number;
+      server: number; extraction: number; invalidResponse: number; other: number;
+    };
     invalidRetrySchedules?: number;
     recheckDeferred: number;
     neverFetched?: number; detectedNeverFetched?: number; baselineNeverFetched?: number;

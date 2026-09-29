@@ -159,7 +159,8 @@ function bodyFetchStatus(bodyFetch: MonitorState["bodyFetch"], backlog?: Monitor
   const invalidSchedules = backlog?.invalidRetrySchedules
     ? ` · 再試行予定異常 ${backlog.invalidRetrySchedules}件（取得可能扱い）`
     : "";
-  const deferred = backlog ? `${hostDeferred}${dueProbes} · エラー再試行待ち ${backlog.retryDeferred}件（アクセス制限 ${backlog.accessRestricted}件・レート制限 ${backlog.rateLimited ?? 0}件）${invalidSchedules} · 定期再確認待ち ${backlog.recheckDeferred}件` : "";
+  const kinds = backlog?.errorKinds;
+  const deferred = backlog ? `${hostDeferred}${dueProbes} · エラー再試行待ち ${backlog.retryDeferred}件（アクセス制限 ${kinds?.accessRestricted ?? backlog.accessRestricted}件・レート制限 ${kinds?.rateLimited ?? backlog.rateLimited ?? 0}件・タイムアウト ${kinds?.timeout ?? 0}件・公式側5xx ${kinds?.server ?? 0}件・本文抽出 ${kinds?.extraction ?? 0}件・応答形式 ${kinds?.invalidResponse ?? 0}件・その他 ${kinds?.other ?? 0}件）${invalidSchedules} · 定期再確認待ち ${backlog.recheckDeferred}件` : "";
   const detectedWait = backlog?.detectedNeverFetchedMeasured
     ? `・最長待機 ${duration(backlog.detectedNeverFetchedAgeMaxMs)}・最古検知 ${time(backlog.oldestDetectedNeverFetchedAt ?? null)} JST${backlog.detectedNeverFetchedUnmeasured ? `・時刻検証不可 ${backlog.detectedNeverFetchedUnmeasured}件` : ""}`
     : backlog?.detectedNeverFetchedUnmeasured ? `・時刻検証不可 ${backlog.detectedNeverFetchedUnmeasured}件` : "";

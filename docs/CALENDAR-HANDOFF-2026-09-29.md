@@ -440,3 +440,33 @@ records remain date-only.
 Next: PLTR, AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV and GOOGL. Keep empty,
 historical-only, inaccessible and tentative sources pending unless a first-party
 source supplies a confirmed date or an explicit current no-events state.
+
+## Follow-up company review (15:46 JST)
+
+Rechecked the queued ten first-party investor calendars and financial-news
+pages on September 29. No source supplied a new confirmed earnings date or an
+explicit current no-events statement. No `lastCheckedOn` value or calendar
+event changed, and no tentative date was promoted.
+
+| Ticker | Result | Official source / exact blocker |
+| --- | --- | --- |
+| PLTR | Pending | [Events](https://investors.palantir.com/events) exposes only its investor-events shell and no inspectable future item or explicit no-events statement. |
+| AAPL | Pending | [Investor Relations](https://investor.apple.com/) exposes Investor Updates and Quarterly Earnings Reports headings without a dated future item or explicit no-events statement. |
+| AMZN | Pending | [Events](https://ir.aboutamazon.com/events/default.aspx) exposes empty Upcoming Events and Past Events headings without an explicit no-events statement. |
+| ANET | Pending | [Events & Presentations](https://investors.arista.com/events-and-presentations/default.aspx) was inaccessible through the official endpoint during this check. No access control was bypassed. |
+| ARM | Pending | [Investor Events](https://investors.arm.com/news-events/investor-events-presentations) returned HTTP 403 through the official endpoint during this check. No access control was bypassed. |
+| AVGO | Pending | [Financial News](https://investors.broadcom.com/financial-information/financial-news-releases) ends with the completed September 2 fiscal Q3 result and contains no later earnings-timing announcement. |
+| BE | Pending | [Events Calendar](https://investor.bloomenergy.com/events-and-presentations/events-calendar/default.aspx) exposes empty Upcoming Events and Event Archive sections without an explicit no-events statement. |
+| CRDO | Pending | [Events](https://investors.credosemi.com/news-events/events/default.aspx) exposes empty Upcoming & Recent Events and Archived Events sections without an explicit no-events statement. |
+| CRWV | Pending | [Events & Presentations](https://investors.coreweave.com/events-and-presentations/default.aspx) exposes empty Upcoming & Recent Events and Archived Events sections without an explicit no-events statement. |
+| GOOGL | Pending | [Events & Presentations](https://abc.xyz/investor/events/default.aspx) exposes only its navigation shell and no inspectable future item. |
+
+The BLS annual schedule still lists the October 2 Employment Situation,
+October 14 CPI and October 15 PPI releases at 08:30 Eastern. The Federal Reserve
+calendar, last updated September 16, still lists October 27–28 and December 8–9
+without future statement or press-conference clock times. Existing date-only
+records remain date-only.
+
+Next: KLAC, LITE, MRVL, SKHY, SNOW, VRT, AMAT, QCOM, CRM and ORCL. Keep empty,
+historical-only and inaccessible sources pending unless a first-party source
+supplies a confirmed date or an explicit current no-events state.

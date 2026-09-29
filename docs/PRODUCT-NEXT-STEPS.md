@@ -421,3 +421,16 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 - Added end-to-end regression coverage from HTTP response metadata through body
   extraction. No source body became public and no delivery, paid API or
   production setting was enabled.
+
+### 2026-09-29 body-retry diagnosis follow-up
+
+- Added URL-free failure categories to the article-body retry backlog:
+  access control, rate limit, timeout, official 5xx, extraction, invalid
+  response and other. Their counts are required to sum to the deferred error
+  total without exposing a URL, persisted error code, response text or exception.
+- The operations preview now shows those aggregate counts and remains compatible
+  with an older monitor during a rolling deployment. No article body became
+  public and no automatic delivery was enabled.
+- Rechecked PLTR, AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV and GOOGL. No new
+  confirmed earnings event was found; exact blockers and the next queue are in
+  the dated calendar handoff. BLS and Federal Reserve entries remain unchanged.
