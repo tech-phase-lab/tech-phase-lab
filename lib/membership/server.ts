@@ -1,6 +1,6 @@
 import "server-only";
 import { auth, clerkClient } from "@clerk/nextjs/server";
-import { previewPlan, resolveAdmin, resolvePlan } from "./entitlements";
+import { ownerPreviewMode, previewPlan, resolveAdmin, resolvePlan } from "./entitlements";
 export function membershipConfigured() {
   return Boolean(process.env.CLERK_SECRET_KEY && process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 }
@@ -17,8 +17,9 @@ export async function getMembershipForUser(userId: string) {
   const user = await (await clerkClient()).users.getUser(userId);
   const isAdmin = resolveAdmin(userId, user.privateMetadata);
   const testPlan = previewPlan(user.privateMetadata, isAdmin, process.env.VERCEL_ENV);
+  const ownerMode = ownerPreviewMode(user.privateMetadata, isAdmin, process.env.VERCEL_ENV);
   const test = user.privateMetadata.membershipPreview as Record<string, string> | undefined;
-  const accessExpiresAt = testPlan !== null ? Math.min(Date.parse(test?.proExpiresAt ?? ""), Date.parse(test?.testUntil ?? "")) : Date.parse(String(user.privateMetadata.proExpiresAt ?? ""));
-  return { accessExpiresAt: Number.isFinite(accessExpiresAt) ? accessExpiresAt : 0, status: "signed-in", plan: testPlan ?? resolvePlan(user.privateMetadata), userId, isAdmin,
+  const accessExpiresAt = ownerMode ? Date.now() + 3_600_000 : testPlan !== null ? Math.min(Date.parse(test?.proExpiresAt ?? ""), Date.parse(test?.testUntil ?? "")) : Date.parse(String(user.privateMetadata.proExpiresAt ?? ""));
+  return { accessExpiresAt: Number.isFinite(accessExpiresAt) ? accessExpiresAt : 0, status: "signed-in", plan: ownerMode ? "pro" : testPlan ?? resolvePlan(user.privateMetadata), userId, isAdmin, ownerMode,
     canTest: isAdmin && process.env.VERCEL_ENV === "preview", testing: testPlan !== null } as const;
 }

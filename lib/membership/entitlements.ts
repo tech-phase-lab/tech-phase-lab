@@ -20,3 +20,8 @@ export function previewPlan(metadata: Record<string, unknown>, isAdmin: boolean,
   if (!Number.isFinite(until) || until <= now) return null;
   return resolvePlan(value, now);
 }
+
+/** Verified administrators start in owner mode on the development preview only. */
+export function ownerPreviewMode(metadata: Record<string, unknown>, isAdmin: boolean, environment: string | undefined, now = Date.now()) {
+  return isAdmin && environment === "preview" && previewPlan(metadata, isAdmin, environment, now) === null;
+}

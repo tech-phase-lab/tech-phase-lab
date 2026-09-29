@@ -1,6 +1,7 @@
 "use client";
-import { useMemberDisplay } from "./member-display-provider";
+import { useMemberDisplay, useOwnerMode } from "./member-display-provider";
 export default function MembershipLabel() {
   const plan = useMemberDisplay();
-  return <small>{plan ? `RESEARCH · ${plan.toUpperCase()}` : "RESEARCH"}</small>;
+  const owner = useOwnerMode();
+  return <small>{owner ? "RESEARCH · 運営者" : plan ? `RESEARCH · ${plan.toUpperCase()}` : "RESEARCH"}</small>;
 }

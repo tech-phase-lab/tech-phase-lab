@@ -38,6 +38,15 @@ test('sheet sync rejects missing, weak and incorrect credentials',()=>{
 });
 
 import {previewPlan} from '../lib/membership/entitlements.ts';
+import {ownerPreviewMode} from '../lib/membership/entitlements.ts';
+test('owner preview default requires verified admin and respects active reader previews',()=>{
+ const now=Date.parse('2026-09-30T00:00:00Z');
+ assert.equal(ownerPreviewMode({},true,'preview',now),true);
+ assert.equal(ownerPreviewMode({},false,'preview',now),false);
+ for(const env of ['production','development',undefined]) assert.equal(ownerPreviewMode({},true,env,now),false);
+ for(const plan of ['free','pro']) assert.equal(ownerPreviewMode({membershipPreview:{plan,proExpiresAt:'2026-09-30T01:00:00Z',testUntil:'2026-09-30T01:00:00Z'}},true,'preview',now),false);
+ assert.equal(ownerPreviewMode({membershipPreview:{plan:'free',testUntil:'2026-09-29T00:00:00Z'}},true,'preview',now),true);
+});
 test('preview overrides cannot grant production or non-admin access and expire closed',()=>{
  const now=Date.parse('2026-09-28T00:00:00Z');
  const meta={membershipPreview:{plan:'pro',proExpiresAt:'2026-09-28T00:01:00Z',testUntil:'2026-09-28T01:00:00Z'}};
