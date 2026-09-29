@@ -7,3 +7,26 @@ Home pulse now consumes the same validated public feed as the news list, avoidin
 Before launch: connect automatic headline translation, persist translations server-side by source/revision, carry publisher timestamps separately, measure source→discovery→translation→browser timings, add streaming updates, retry/timeout monitoring. Do not put private excerpts or credentials in client payloads. No promise of seconds from publication until measured against the source's own latency.
 
 FAQ local navigation now matches guide navigation. Removed requested preview banner and ambiguous question-form warning; Ask RIZEL is the PRO public Q&A, not a support form.
+
+## Acquisition measurement and dormant headline translation — 18:48 JST
+
+The URL-free operations summary now measures exact source-publication to first
+monitor-observation latency for official update events observed in the latest
+24 hours. It accepts only timezone-bearing source timestamps, excludes date-only,
+future, reversed, over-seven-day and later-revision rows, and reports count,
+average, maximum and latest observation. This is acquisition evidence, not the
+poll interval, browser display time, subscriber delivery time or an SLA.
+
+An opt-in official-headline translation worker is implemented but remains off.
+It requires `OFFICIAL_HEADLINE_TRANSLATION_ENABLED=true`, an API key and an
+explicit `OFFICIAL_HEADLINE_TRANSLATION_MODEL`; there is no default model.
+Translations are persisted against source ID, canonical URL and exact source
+SHA, so a changed headline cannot inherit stale Japanese. Durable leases,
+three-attempt bounds, retry/backoff, a rolling daily logical-call limit and
+bounded token output are covered by offline fake-provider tests. Only the
+headline is sent; source bodies, diffs, owner identity and evidence are not.
+Existing editorial URL translations remain authoritative. Automatic factual
+headline translation does not approve or publish investment-impact analysis.
+
+December owner approval of the provider/model and credentials remains the exact
+activation blocker. No paid API call or environment change was made.

@@ -25,6 +25,7 @@ import news_drafts
 import editorial_posts
 import questions
 import note_translation
+import headline_translation
 import web_push
 
 
@@ -507,6 +508,7 @@ class AutomaticMonitor:
         self.signals_thread = threading.Thread(target=self.run_signals, name="research-signals", daemon=True)
         self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
         self.note_translation_thread = threading.Thread(target=self.run_note_translation, name="note-translation", daemon=True)
+        self.headline_translation_thread = threading.Thread(target=self.run_headline_translation, name="headline-translation", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
 
     def run_note_translation(self):
@@ -517,6 +519,16 @@ class AutomaticMonitor:
                 note_translation.run_once(self.db_path)
             except Exception:
                 print("note-translation-unavailable", flush=True)
+            self.stop_event.wait(30)
+
+    def run_headline_translation(self):
+        if headline_translation.configuration(os.environ) is None:
+            return
+        while not self.stop_event.is_set():
+            try:
+                headline_translation.run_once(self.db_path)
+            except Exception:
+                print("headline-translation-unavailable", flush=True)
             self.stop_event.wait(30)
 
     def run_web_push(self):
@@ -556,6 +568,7 @@ class AutomaticMonitor:
         self.signals_thread.start()
         self.news_thread.start()
         self.note_translation_thread.start()
+        self.headline_translation_thread.start()
         self.push_thread.start()
 
     def stop(self):
@@ -568,6 +581,7 @@ class AutomaticMonitor:
         self.signals_thread.join(timeout=45)
         self.news_thread.join(timeout=25)
         self.note_translation_thread.join(timeout=45)
+        self.headline_translation_thread.join(timeout=45)
         self.push_thread.join(timeout=15)
 
     def run_stock_news(self):

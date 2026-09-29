@@ -195,6 +195,11 @@ The operations preview exposes a URL-free aggregate for first-party
 supplemental routes. It separates recently successful, stale, failed and
 never-successful routes, and counts publication evidence with an issuer
 timestamp separately from date-only evidence and missing publication time.
+For public official-update routes it also reports a rolling 24-hour aggregate
+from an exact timezone-bearing issuer timestamp to the first stored monitor
+observation. Date-only, future, reversed, over-seven-day and later-revision
+rows are excluded. This measures acquisition only; it is not the configured
+poll interval, browser display time, subscriber delivery time or a latency SLA.
 Failed routes are grouped into access restriction, rate limit, timeout,
 first-party 5xx, invalid response, partial article retrieval and other fixed
 categories.
@@ -302,6 +307,17 @@ The aggregate excludes external-research and opt-in X API routes and never
 contains route names, URLs, titles or raw errors. A recently successful route
 is an operational observation only; it does not prove complete coverage or
 subscriber-delivery latency.
+
+Official-headline translation is a separate opt-in worker. It remains stopped
+unless `OFFICIAL_HEADLINE_TRANSLATION_ENABLED=true`, `OPENAI_API_KEY` and an
+explicit `OFFICIAL_HEADLINE_TRANSLATION_MODEL` are all configured. A rolling
+logical-call limit defaults to 50 per 24 hours and accepts 1–200. Each exact
+source ID, canonical URL and source SHA has its own durable translation record,
+lease and at-most-three logical attempts. Failed or stale revisions never enter
+the public projection. Existing editorial URL translations take precedence.
+Only the source headline is sent, never the stored article body, diff, evidence
+or member/owner identity. This automatic factual translation does not bypass
+the human-review requirement for substantive investment-impact analysis.
 
 Palantir has two separate first-party discovery paths. The investor-news
 pipeline retains the official press-release sitemap filter; the supplemental

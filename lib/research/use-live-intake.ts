@@ -309,6 +309,10 @@ export type MonitorState = {
     publicationEvidence: {
       total: number; timestamp: number; dateOnly: number; missing: number;
     };
+    publicationToDetectionLatency24Hours?: {
+      count: number; latencyAverageMs: number | null; latencyMaxMs: number | null;
+      lastObservedAt: string | null;
+    };
     routeTransitions24Hours?: {
       recoveries: number; failures: number; changes: number;
       lastOutcome: "recovered" | "failed" | "changed" | null;

@@ -15,4 +15,17 @@ Owner approved continuing unblocked work without their operation. Existing hourl
 3. Diagnostics: count untranslated items, oldest pending age, failures and retries; owner-only aggregate UI, no source bodies or secrets in public payloads.
 4. Test missing/duplicate stories, stale feed and reconnect recovery. Streaming delivery must preserve auth and public payload boundaries.
 
+## 18:48 JST progress
+
+- Priority 1 acquisition measurement is implemented as a bounded, URL-free
+  24-hour `source publication → first monitor observation` aggregate. It does
+  not claim browser or delivery latency. The previously observed 111-second
+  Nebius item remains a single observation, not an SLA.
+- Priority 2's dormant worker foundation is implemented: exact source/revision
+  cache binding, deduplication, leases, three logical attempts, retry/backoff,
+  daily limit and offline fake-provider tests. It remains disabled pending the
+  December key/model decision; no paid request was made.
+- Next: expose aggregate untranslated/pending/failure diagnostics without
+  source text, then add missing/duplicate/stale/reconnect recovery coverage.
+
 Stock News API and OpenAI remain uncontracted/unconfigured by owner choice. Seconds-level Japanese display is a target, not verified. Affiliate links await replies to the three emails the owner already sent. No invented personal posts, recommendations or affiliate approvals. At finite backlog completion stop extra product edits; separately authorized calendar maintenance continues.

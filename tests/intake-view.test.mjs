@@ -341,6 +341,8 @@ test("operations preview explains which official routes were checked", () => {
   assert.match(intakeDashboard, /SEC Submissions JSON/);
   assert.match(intakeDashboard, /経路を確認/);
   assert.match(intakeDashboard, /旧記録 · 経路詳細なし/);
+  assert.match(intakeDashboard, /発表→監視取得の実測/);
+  assert.match(intakeDashboard, /巡回間隔・画面表示・配信時間とは別/);
 });
 
 test("reviewed briefs require current source identity, safe copy, status, and timestamps", () => {

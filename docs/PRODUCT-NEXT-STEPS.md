@@ -451,3 +451,18 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 - Next engineering priority: continue observing the priority first-party routes
   and improve lawful issuer alternatives where access restrictions persist,
   without bypassing those controls.
+
+### 2026-09-29 official headline readiness follow-up
+
+- Added an exact, URL-free 24-hour acquisition-latency aggregate from a
+  timezone-bearing source publication timestamp to first monitor observation.
+  Invalid, date-only, future, reversed, over-seven-day and later-revision rows
+  remain unmeasured. This is not screen or delivery latency.
+- Added a dormant automatic Japanese headline translator with source/URL/SHA
+  binding, durable deduplication, leases, bounded attempts, retry/backoff and a
+  rolling daily call limit. Fake-provider tests exercise success, revision
+  invalidation, failures, leases and limits without external calls.
+- Activation remains blocked until the owner approves December credentials and
+  a model. No provider, paid API, subscriber delivery or production setting was
+  enabled. Next priority is aggregate translation diagnostics followed by
+  missing/duplicate/stale/reconnect recovery tests.

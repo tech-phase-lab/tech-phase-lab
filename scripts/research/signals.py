@@ -231,6 +231,11 @@ def schema(db):
         UNIQUE(source_id,url,sha,previous_sha)
       );
       CREATE INDEX IF NOT EXISTS signal_event_time ON signal_events(observed_at);
+      CREATE TABLE IF NOT EXISTS signal_headline_translations (
+        source_id TEXT NOT NULL, url TEXT NOT NULL, sha TEXT NOT NULL,
+        headline_ja TEXT NOT NULL, model TEXT NOT NULL, created_at TEXT NOT NULL,
+        PRIMARY KEY(source_id,url,sha)
+      );
       CREATE TABLE IF NOT EXISTS signal_x_request_attempts (
         id INTEGER PRIMARY KEY, source_id TEXT NOT NULL, attempted_at TEXT NOT NULL
       );
@@ -1017,6 +1022,10 @@ def operational_summary(db, sources=SOURCES, reference=None):
         "count": 0, "waitAverageMs": None, "waitMaxMs": None,
         "lastAttemptedAt": None,
     }
+    source_to_discovery = {
+        "count": 0, "latencyAverageMs": None, "latencyMaxMs": None,
+        "lastObservedAt": None,
+    }
     if configured:
         placeholders = ",".join("?" for _ in configured)
         for row in db.execute(f"""SELECT body FROM signal_index_state
@@ -1148,6 +1157,32 @@ def operational_summary(db, sources=SOURCES, reference=None):
     if retry_waits:
         route_retry_wait["waitAverageMs"] = round(sum(retry_waits) / len(retry_waits))
         route_retry_wait["waitMaxMs"] = max(retry_waits)
+    measurement_sources = {
+        source["id"] for source in sources
+        if source.get("officialUpdates") is True and source.get("kind") == "publisher-update"
+    }
+    if measurement_sources:
+        measurement_marks = ",".join("?" for _ in measurement_sources)
+        cutoff = current - timedelta(hours=24)
+        source_latencies = []
+        for row in db.execute(f"""SELECT published_at,observed_at FROM signal_events
+          WHERE source_id IN ({measurement_marks})
+          AND COALESCE(previous_sha,'')=''""", tuple(measurement_sources)):
+            published = timestamp_value(row["published_at"])
+            observed = timestamp_value(row["observed_at"])
+            if (not published or not observed or observed < cutoff or observed < published
+                    or observed - published > timedelta(days=7)):
+                continue
+            source_latencies.append(round((observed - published).total_seconds() * 1000))
+            if (source_to_discovery["lastObservedAt"] is None
+                    or observed.isoformat() > source_to_discovery["lastObservedAt"]):
+                source_to_discovery["lastObservedAt"] = observed.isoformat()
+        if source_latencies:
+            source_to_discovery["count"] = len(source_latencies)
+            source_to_discovery["latencyAverageMs"] = round(
+                sum(source_latencies) / len(source_latencies)
+            )
+            source_to_discovery["latencyMaxMs"] = max(source_latencies)
     outage_ages = active_outages.pop("_ages", [])
     outage_attempts = active_outages.pop("_attempts", [])
     if outage_ages:
@@ -1167,6 +1202,7 @@ def operational_summary(db, sources=SOURCES, reference=None):
             kind_outages["attemptsMax"] = max(kind_attempts)
     return {"routes": route_counts, "articleRetrieval": article_retrieval,
             "publicationEvidence": evidence,
+            "publicationToDetectionLatency24Hours": source_to_discovery,
             "routeTransitions24Hours": transitions,
             "routeRecoveries24Hours": route_recoveries,
             "routeRetryWait24Hours": route_retry_wait}
@@ -1280,9 +1316,18 @@ def public_official_updates(db, sources=SOURCES, reference=None):
         elif (isinstance(published, str) and published_at and
               re.search(r'T\d{2}:\d{2}.*(?:Z|[+-]\d{2}:\d{2})$', published)):
             publication['publishedAt'] = published_at.isoformat()
+        translated = db.execute('''SELECT headline_ja FROM signal_headline_translations
+          WHERE source_id=? AND url=? AND sha=?''',
+                                (row['source_id'], row['url'], row['sha'])).fetchone()
+        translation = {}
+        if (translated and isinstance(translated['headline_ja'], str)
+                and translated['headline_ja'].strip()
+                and len(translated['headline_ja']) <= 180
+                and '\x00' not in translated['headline_ja']):
+            translation['translationJa'] = translated['headline_ja'].strip()
         items.append({'id': str(row['id']), 'title': row['title'][:180], 'url': url,
                       'publisher': source['name'], 'tickers': tickers,
-                      'observedAt': observed.isoformat(), **publication})
+                      'observedAt': observed.isoformat(), **publication, **translation})
         if len(items) == 20:
             break
     return items

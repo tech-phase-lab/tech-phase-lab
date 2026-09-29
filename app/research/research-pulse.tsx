@@ -15,7 +15,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   const [interacting, setInteracting] = useState(false);
   const ja = lang === "ja";
   const items = [
-    ...(feed?.officialUpdates ?? []).map(item => ({id: `official-${item.id}`, ticker: item.tickers.join(" · "), title: ja ? officialHeadlineJa(item.url) ?? "公式アップデート（日本語訳を準備中）" : item.title, url: item.url, ...officialTime(item)})),
+    ...(feed?.officialUpdates ?? []).map(item => ({id: `official-${item.id}`, ticker: item.tickers.join(" · "), title: ja ? officialHeadlineJa(item.url) ?? item.translationJa ?? "公式アップデート（日本語訳を準備中）" : item.title, url: item.url, ...officialTime(item)})),
     ...(feed?.items ?? []).map(item => ({id: item.id, ticker: item.tickers.join(" · "), title: ja ? item.summaryJa : item.title, url: item.url, at: item.publishedAt, kind: "published" as const}))
   ].sort((a,b) => Date.parse(b.at)-Date.parse(a.at)).slice(0,5);
   const first = items[0]?.id ?? "";

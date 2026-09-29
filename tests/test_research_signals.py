@@ -342,7 +342,7 @@ class SignalTests(unittest.TestCase):
                 ]}),
             ))
             events = [
-                (official[0]["id"], "timestamp", "2026-09-25T06:00:00+00:00", None),
+                (official[1]["id"], "timestamp", "2026-09-25T06:00:00+00:00", None),
                 (official[0]["id"], "missing", "2099-01-01T00:00:00+00:00", "not-a-date"),
                 (official[1]["id"], "date", None, "2026-08-03"),
                 (excluded[0]["id"], "external", "2026-09-25T06:00:00+00:00", None),
@@ -400,6 +400,11 @@ class SignalTests(unittest.TestCase):
         })
         self.assertEqual(summary["publicationEvidence"], {
             "total": 3, "timestamp": 1, "dateOnly": 1, "missing": 1,
+        })
+        self.assertEqual(summary["publicationToDetectionLatency24Hours"], {
+            "count": 1, "latencyAverageMs": 1_800_000,
+            "latencyMaxMs": 1_800_000,
+            "lastObservedAt": "2026-09-25T06:30:00+00:00",
         })
         self.assertEqual(summary["articleRetrieval"]["error"], 2)
         self.assertEqual(summary["articleRetrieval"]["errorKinds"], {

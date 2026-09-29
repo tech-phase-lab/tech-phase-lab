@@ -88,3 +88,10 @@ test('official headlines count Unicode characters consistently with Python', () 
  assert.equal(publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[update]}).officialUpdates[0].title,update.title);
  assert.throws(()=>publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[{...update,title:update.title+'a'}]}));
 });
+
+test('official headline translations are optional, bounded and trimmed', () => {
+ const update={id:'44',title:'Official update',url:'https://x.com/nebiusai/status/12345',publisher:'Nebius',tickers:['NBIS'],observedAt:'2026-09-28T09:00:00Z'};
+ const translated={...update,translationJa:'  ネビウスが新しい基盤を発表  '};
+ assert.equal(publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[translated]}).officialUpdates[0].translationJa,'ネビウスが新しい基盤を発表');
+ for(const translationJa of ['', 'あ'.repeat(181)]) assert.throws(()=>publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[{...update,translationJa}]}));
+});
