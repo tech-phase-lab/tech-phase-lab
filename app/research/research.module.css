@@ -1650,6 +1650,5 @@
 
 .brandGroup{display:flex;align-items:center;gap:9px;flex-shrink:0}@media(max-width:760px){.brandGroup{gap:6px}.headerRight{gap:5px}.headerAccount{max-width:74px;font-size:10px}}
 
-/* Reserve the label width before membership changes so refresh never shifts. */
-.brand > span:last-child{min-width:224px}
-@media(max-width:760px){.brand > span:last-child{min-width:126px}.brand small{letter-spacing:.2em}}
+/* Keep membership compact; refresh is anchored at the right edge. */
+@media(max-width:760px){.brand small{letter-spacing:.2em}}

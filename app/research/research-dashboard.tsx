@@ -146,7 +146,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
     <header className={styles.header}>
       <div className={styles.brandGroup}><Link href="/research" className={styles.brand} aria-label="Tech Phase Research">
         <span className={styles.logoMark} aria-hidden="true" /><span><span className={styles.brandText}>TECH PHASE</span><MembershipLabel /></span>
-      </Link><PageRefresh lang={lang} /></div>
+      </Link></div>
       <nav className={`${styles.primaryNav} ${tab === "companies" ? styles.companyNav : ""}`} aria-label={t("メインメニュー", "Main navigation")}>
         <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}><NavigationIcon name="changes" /><span>{t("何が変わった？", "What changed?")}</span></button>
         <Link href="/research/stocks"><NavigationIcon name="search" /><span>{t("米国株を探す", "Find stocks")}</span></Link>
@@ -160,7 +160,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
           <button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button>
           <button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button>
         </div>
-      <HeaderPro /></div>
+      <HeaderPro /><PageRefresh lang={lang} /></div>
     </header>
 
     <div className={styles.shell}>
