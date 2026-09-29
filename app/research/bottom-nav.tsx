@@ -102,13 +102,13 @@ export default function BottomNav() {
     ["/research/calendar", ja ? "決算・経済指標" : "Earnings & economy", "calendar"],
     ["/research/notifications", ja ? "スマホ通知設定" : "Notifications", "bell"],
     ["/research#saved", ja ? "保存したリサーチ" : "Saved research", "saved"],
-    ["/research#monitored-companies", ja ? "分析対象企業" : "Company coverage", "companies"],
+    ["/research#monitored-companies", ja ? "リサーチ銘柄一覧" : "Research coverage", "companies"],
     ["/research/learn", ja ? "米国株のはじめ方" : "US stock basics", "saved"],
     ["/research/faq", ja ? "よくある質問・使い方" : "FAQ & help", "changes"],
   ];
   return <div className={styles.mobile}>
     {open && <><button className={styles.backdrop} aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus({ preventScroll: true }); }} />
-      <nav ref={panel} id="mobile-more-menu" className={styles.sheet} aria-label={ja ? "その他のメニュー" : "More navigation"}><div className={styles.sheetHeading}><strong>{ja ? "メニュー" : "Explore"}</strong><button aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus({ preventScroll: true }); }}>×</button></div><div className={styles.menuGrid}>{links.filter(([href]) => proMenu || !["/research/notes", "/research/qa", "/research/weekly", "/research/compare"].includes(href)).map(([href, label, icon]) => <Link key={href} href={href} onClick={(event) => navigate(event, href)}><span className={styles.menuIcon}><NavigationIcon name={icon} /></span><span>{label}</span></Link>)}</div></nav></>}
+      <nav ref={panel} id="mobile-more-menu" className={styles.sheet} aria-label={ja ? "その他のメニュー" : "More navigation"}><div className={styles.sheetHeading}><strong>{ja ? "メニュー" : "Explore"}</strong><button aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus({ preventScroll: true }); }}>×</button></div><div className={styles.menuGrid}>{links.filter(([href]) => proMenu || !["/research/notes", "/research/qa", "/research/weekly"].includes(href)).map(([href, label, icon]) => <Link key={href} href={href} onClick={(event) => navigate(event, href)}><span className={styles.menuIcon}><NavigationIcon name={icon} /></span><span>{label}</span></Link>)}</div></nav></>}
     <nav className={styles.bar} aria-label={ja ? "メインメニュー" : "Main navigation"}>
       {tabs.map(({ href, label, icon, active }) => <Link key={href} href={href} aria-current={!open && active ? "page" : undefined} onClick={(event) => navigate(event, href)}><NavigationIcon name={icon} /><span>{label}</span></Link>)}
       <button ref={trigger} aria-expanded={open} aria-controls="mobile-more-menu" onClick={() => { setProMenu(false); setOpen(!open); }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg><span>{ja ? "メニュー" : "Menu"}</span></button>

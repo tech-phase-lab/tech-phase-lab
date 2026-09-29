@@ -12,7 +12,7 @@ export default function CompanySwitcher({ ticker, companies, lang }: { ticker: s
   const router = useRouter();
   const { favorites, toggle, error } = useStockFavorites();
   return <div className={styles.bar}>
-    <Link href="/research#monitored-companies">← {lang === "ja" ? `監視対象${companies.length}社` : `${companies.length} monitored companies`}</Link>
+    <Link href="/research#monitored-companies">← {lang === "ja" ? `リサーチ銘柄一覧 · ${companies.length}社` : `${companies.length} research companies`}</Link>
     <button className={styles.favorite} onClick={() => toggle(ticker)} aria-pressed={favorites.includes(ticker)}>{favorites.includes(ticker) ? "★" : "☆"} {lang === "ja" ? "お気に入り" : "Favorite"}</button>
     <label>
       <span>{lang === "ja" ? "銘柄を切り替える" : "Choose company"}</span>

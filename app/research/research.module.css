@@ -1645,3 +1645,5 @@
 .logoMark{display:block;flex:none;width:42px;height:42px;background:url('/brand/tech-phase-mark.svg') center/contain no-repeat}
 @media(min-width:761px){.sidebar{position:sticky;top:84px;align-self:start;height:calc(100dvh - 84px);min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding-top:24px;padding-bottom:24px}.sidebar>*{flex-shrink:0}}
 @media(max-width:760px){.logoMark{width:30px;height:30px}}@media(max-width:380px){.logoMark{width:24px;height:24px}}
+
+@media(max-width:760px){.primaryNav.companyNav{flex-wrap:wrap;overflow-x:visible;width:100%;margin:0;padding:9px 0;gap:4px}.companyDirectory{min-width:0}.companyGroups{display:grid;grid-template-columns:minmax(0,1fr);column-count:auto}.companyGroups a span{white-space:normal;overflow-wrap:anywhere}}

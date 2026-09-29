@@ -44,6 +44,7 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
       <Link href="/research/calendar"><span className={styles.icon} aria-hidden="true">🗓️</span><strong>{t("決算・経済指標", "Earnings & economy")}</strong><p>{t("カレンダーで予定を確認", "Upcoming events")}</p></Link>
       <button onClick={onChanges}><span className={styles.icon} aria-hidden="true">♻️</span><strong>{t("何が変わった？", "What changed?")}</strong><p>{t("企業の変化と、その根拠", "Company shifts & evidence")}</p></button>
     </nav>
+    <Link className={styles.compareEntry} href="/research/compare"><span><strong>{t("銘柄比較", "Compare stocks")}</strong><small>{t("2〜3社の成長・利益・財務を比較", "Compare growth, profitability and financials across 2–3 stocks")}</small></span><b>PRO</b></Link>
     <nav className={`${styles.reading} ${isPro ? "" : styles.readingLocked}`} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
       <div className={styles.deskHeading}><span>RIZEL’S DESK</span><span className={styles.deskEdition}>TECH PHASE PRO</span></div>
       <Link href="/research/notes" className={styles.deskLead}><div><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong><p>{latestLabel ? t(`最新の投稿 · ${latestLabel}（本文はPRO会員向け）`, `Latest post · ${latestLabel} (PRO body)`) : t("数字の先にある、相場の着眼点。", "A perspective beyond the numbers.")}</p></div><span aria-hidden="true">→</span></Link>
