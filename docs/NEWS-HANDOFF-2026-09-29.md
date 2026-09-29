@@ -46,3 +46,14 @@ operations UI labels the dormant worker as OFF with no external transmission.
 Offline tests cover enabled retry state, disabled state, incomplete
 configuration, redaction and the authenticated health projection. Translation
 remains disabled pending the December provider/model/credential decision.
+
+Deployment checks for commit `73b0040` completed successfully on both Vercel
+preview and Railway staging. The preview intake page loaded without application
+console errors, but `/research/intake` continued to show its saved-snapshot
+fallback rather than a connected automatic-monitor state after Railway became
+green. Vercel runtime logs showed successful HTTP responses and no runtime error
+or warning entries in the checked window. Therefore the aggregate diagnostics
+are code-, type-, build- and offline-test-verified, but their live rendered
+values remain pending until the preview-to-monitor connection resumes. Do not
+report this as a translation-worker or provider failure; the worker remains
+deliberately disabled.
