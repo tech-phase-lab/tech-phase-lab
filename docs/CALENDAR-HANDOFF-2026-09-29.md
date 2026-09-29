@@ -616,3 +616,33 @@ records remain date-only.
 Next: SNOW, VRT, AMAT, QCOM, CRM, ORCL, NOW, NVDA, PANW and PLTR. Keep empty,
 historical-only and inaccessible sources pending unless a first-party source
 supplies a confirmed date or an explicit current no-events state.
+
+## Follow-up company review (22:46 JST)
+
+Rechecked the queued ten first-party investor calendars, events pages and
+first-party indexed announcements on September 29. No source supplied a new
+confirmed earnings date or an explicit current no-events statement. No
+`lastCheckedOn` value or calendar event changed.
+
+| Ticker | Result | Official source / exact blocker |
+| --- | --- | --- |
+| SNOW | Pending | [Events & Presentations](https://investors.snowflake.com/events-and-presentations/default.aspx) exposes empty Upcoming Events, Featured Presentation and Archived Events headings without an explicit no-events statement. First-party indexed results expose only completed fiscal 2026 events. |
+| VRT | Pending | [Events & Presentations](https://investors.vertiv.com/events-presentations/events-presentations/default.aspx) exposes empty Latest Events and Latest Presentation headings. First-party indexed results end with the completed July 29 second-quarter call. |
+| AMAT | Pending | [Events](https://ir.appliedmaterials.com/events?tab=upcoming) remained inaccessible through the official endpoint. First-party indexed results did not expose a future earnings announcement. No access control was bypassed. |
+| QCOM | Pending | [Investor Events](https://investor.qualcomm.com/news-events/investor-events/default.aspx) exposes empty Upcoming Events and Featured Presentation headings. First-party indexed announcements end with the completed July 29 fiscal Q3 call. |
+| CRM | Pending | [Investor Events](https://investor.salesforce.com/events-and-presentations/default.aspx) exposes an empty Upcoming & Recent Events heading. First-party indexed earnings announcements expose completed calls only. |
+| ORCL | Pending | [Events and Presentations](https://investor.oracle.com/events-and-presentations/default.aspx) exposes empty Featured Event and Upcoming events headings. The latest first-party earnings result remains the completed June 10 fiscal Q4 release. |
+| NOW | Pending | [Events and Presentations](https://investor.servicenow.com/events-and-presentations/default.aspx) exposes archived sections and general update prompts but no inspectable current earnings event or explicit no-events statement. |
+| NVDA | Pending | [Events and Presentations](https://investor.nvidia.com/events-and-presentations/default.aspx) remained inaccessible through the official endpoint. First-party indexed results expose the completed August 26 fiscal Q2 event, not a future date. No access control was bypassed. |
+| PANW | Pending | [Events and Presentations](https://investors.paloaltonetworks.com/events-and-presentations/default.aspx) remained inaccessible through the official endpoint. First-party indexed results end with the completed September 1 fiscal Q4 call. No access control was bypassed. |
+| PLTR | Pending | [Events](https://investors.palantir.com/events) exposes only its investor-events shell and no inspectable future item or explicit no-events statement. First-party search exposed no confirmed future earnings announcement. |
+
+The BLS October schedule still lists the October 2 Employment Situation,
+October 14 CPI and October 15 PPI releases at 08:30 Eastern. The Federal Reserve
+calendar, last updated September 16, still lists October 27–28 and December 8–9
+without future statement or press-conference clock times. Existing date-only
+records remain date-only.
+
+Next: AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC. Keep empty,
+historical-only, inaccessible and tentative sources pending unless a first-party
+source supplies a confirmed date or an explicit current no-events state.
