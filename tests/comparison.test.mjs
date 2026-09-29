@@ -81,3 +81,10 @@ test('actual API rejects non-PRO before fetching data, validates selection, and 
   assert.equal((await GET(request)).status,403);
  } finally {delete globalThis.__comparisonTest;}
 });
+
+
+test('comparison endpoint runs through the verified Clerk middleware',async()=>{
+ const {readFileSync}=await import('node:fs');
+ const proxy=readFileSync(new URL('../proxy.ts',import.meta.url),'utf8');
+ assert.match(proxy,/"\/api\/research\/compare"/);
+});
