@@ -1641,3 +1641,7 @@
 .brandText{background:linear-gradient(110deg,#e5eaf0 0%,#e5eaf0 42%,#fff 49%,#a7f1d7 51%,#e5eaf0 58%,#e5eaf0 100%);background-size:300% 100%;background-position:100% 0;background-clip:text;-webkit-background-clip:text;color:transparent;animation:brandGlint 8s ease-in-out infinite}
 @keyframes brandGlint{0%,82%{background-position:100% 0}98%,100%{background-position:0% 0}}
 @media(prefers-reduced-motion:reduce){.brandText{animation:none;background:none;color:var(--text)}}
+
+.logoMark{display:block;flex:none;width:42px;height:42px;background:url('/brand/tech-phase-mark.svg') center/contain no-repeat}
+@media(min-width:761px){.sidebar{position:sticky;top:84px;align-self:start;height:calc(100dvh - 84px);min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding-top:24px;padding-bottom:24px}.sidebar>*{flex-shrink:0}}
+@media(max-width:760px){.logoMark{width:30px;height:30px}}@media(max-width:380px){.logoMark{width:24px;height:24px}}

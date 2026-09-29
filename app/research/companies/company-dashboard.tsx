@@ -46,7 +46,7 @@ export default function CompanyDashboard({ profile, companies }: { profile: Comp
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#company-main">{t("本文へ移動", "Skip to content")}</a>
     <header className={base.header}>
-      <Link href="/research" className={base.brand} aria-label="Tech Phase Research"><span className={base.mark}>TP<span /></span><span>TECH PHASE<MembershipLabel /></span></Link>
+      <Link href="/research" className={base.brand} aria-label="Tech Phase Research"><span className={base.logoMark} aria-hidden="true" /><span>TECH PHASE<MembershipLabel /></span></Link>
       <nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research#what-changed" aria-current="page">{t("何が変わった？", "What changed?")}</Link><Link href="/research/stocks">{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics">{t("決算・指標", "Financials")}</Link></nav>
       <div className={base.headerRight}><span className={base.edition}>COMPANY RESEARCH <span>02</span></span><HomeLink lang={lang} /><div className={base.languages} aria-label={t("言語", "Language")}>
         <button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button><button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button>

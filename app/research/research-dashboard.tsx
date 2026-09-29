@@ -17,6 +17,7 @@ import { useResearchLanguage } from "./use-research-language";
 import styles from "./research.module.css";
 import HomeTools, { HomeHelp } from "./home-tools";
 import NewsFeed from "./news/news-feed";
+import ResearchPulse from "./research-pulse";
 
 const storageKey = "tech-phase:research-saved:v1";
 const notifyName = "tech-phase:research-saved";
@@ -142,7 +143,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
     <a className={styles.skip} href="#research-main">{t("本文へ移動", "Skip to content")}</a>
     <header className={styles.header}>
       <Link href="/research" className={styles.brand} aria-label="Tech Phase Research">
-        <span className={styles.mark}>TP<span /></span><span><span className={styles.brandText}>TECH PHASE</span><MembershipLabel /></span>
+        <span className={styles.logoMark} aria-hidden="true" /><span><span className={styles.brandText}>TECH PHASE</span><MembershipLabel /></span>
       </Link>
       <nav className={styles.primaryNav} aria-label={t("メインメニュー", "Main navigation")}>
         <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}><NavigationIcon name="changes" /><span>{t("何が変わった？", "What changed?")}</span></button>
@@ -190,6 +191,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
         <div className={styles.heading}><div><p className={styles.eyebrow}>{tab === "home" ? t("ホーム / リサーチデスク", "HOME / THE RESEARCH DESK") : "THE RESEARCH DESK"}</p><h1 id="research-page-title">{tab === "companies" ? t("監視対象", "Company watch") : tab === "pro" ? "Tech Phase PRO" : tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : tab === "changes" ? t("何が変わった？を、根拠付きで。", "See what changed. Follow the evidence.") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1><p>{tab === "pro" ? t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.") : t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p></div>{tab !== "pro" && tab !== "home" && <div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>2026.09.19</strong></div>}</div>
 
         {tab === "home" && <>
+          <ResearchPulse events={events} lang={lang} />
           <HomeTools lang={lang} onChanges={() => openView("changes")} />
           <NewsFeed lang={lang} />
           <HomeHelp lang={lang} />
