@@ -33,3 +33,16 @@ Next: AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC. Keep empty,
 historical-only, inaccessible and tentative sources pending unless a
 first-party source supplies a confirmed date or an explicit current no-events
 state.
+
+## Verification and deployment
+
+The complete local gate passed after the September 30 rollover: ESLint had zero
+errors and one pre-existing warning, Node tests passed 159/159, Python tests
+passed 451/451, Next.js built all 55 pages, and `compileall` plus
+`git diff --check` passed. Calendar commit `835ccd3` deployed Ready to the
+Vercel branch preview. Railway staging reported success without redeploying
+because no watched monitor path changed. The Git Data tree exactly matched the
+locally staged tree (`8bf37c9`). A post-deployment canonical-page browser
+refresh was attempted, but the existing Chrome DevTools connection timed out;
+record this as an unverified visual check rather than inferring success from the
+deployment alone.
