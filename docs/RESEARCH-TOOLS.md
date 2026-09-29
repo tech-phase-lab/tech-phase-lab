@@ -327,6 +327,11 @@ state. The operations preview can therefore show the last completed batch and
 24-hour checks, errors and HTTP 304 reuse after a service restart. For newly
 detected release URLs, it also records the measured interval from discovery to
 the first completed body extraction as an average, maximum and sample count.
+HTTP validators are used only when substantive extracted evidence is already
+stored. A legacy HTML or PDF row that has a raw fingerprint or ETag but no
+extracted text receives one unconditional backfill request, and a 304 response
+without stored evidence is rejected. This prevents a stale validator from
+leaving an extraction-pending article permanently empty.
 An independent singleton heartbeat records the most recent worker poll and
 pending count even when no article is due. This prevents an old successful
 batch from looking like current worker activity after a restart or stalled

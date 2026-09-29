@@ -434,3 +434,20 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 - Rechecked PLTR, AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV and GOOGL. No new
   confirmed earnings event was found; exact blockers and the next queue are in
   the dated calendar handoff. BLS and Federal Reserve entries remain unchanged.
+
+### 2026-09-29 extraction-backfill follow-up
+
+- Article-body conditional requests now require stored extracted evidence, not
+  merely a previous raw fingerprint or validator. Legacy HTML and PDF rows with
+  empty evidence make one unconditional backfill request instead of accepting
+  repeated 304 responses that can never populate the review source.
+- The persistence boundary independently rejects a 304 when no substantive
+  extracted evidence is stored. Added regressions for HTML and PDF backfill and
+  the fail-closed 304 path. No source body became public and no automatic
+  delivery, paid API or production setting was enabled.
+- Rechecked KLAC, LITE, MRVL, SKHY, SNOW, VRT, AMAT, QCOM, CRM and ORCL. No new
+  confirmed earnings event was found; exact blockers and the next queue are in
+  the dated calendar handoff. BLS and Federal Reserve entries remain unchanged.
+- Next engineering priority: continue observing the priority first-party routes
+  and improve lawful issuer alternatives where access restrictions persist,
+  without bypassing those controls.

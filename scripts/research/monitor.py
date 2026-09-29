@@ -4166,16 +4166,19 @@ def collect_source(row, transport=fetch):
     """Fetch and extract one source without mutating SQLite, safe for worker threads."""
     declared_encoding = None
     if getattr(transport, "supports_persistent_validators", False):
-        legacy_unextracted_pdf = (
-            row["content_type"] == "application/pdf"
-            and bool(row["sha256"])
-            and not row["extracted_chars"]
+        missing_extracted_evidence = (
+            bool(row["sha256"])
+            and (
+                not row["extracted_text"]
+                or type(row["extracted_chars"]) is not int
+                or row["extracted_chars"] <= 0
+            )
         )
         sec_filing = urlsplit(row["url"]).hostname == "www.sec.gov"
         validators = (
             {"force_unconditional": True}
             if sec_filing else {}
-            if legacy_unextracted_pdf else {
+            if missing_extracted_evidence else {
                 "etag": row["response_etag"],
                 "last_modified": row["response_last_modified"],
             }
@@ -4234,8 +4237,14 @@ def save_source_check(db, row, result):
         if not current:
             raise ValueError("Source disappeared before its fetch result was saved")
         not_modified = bool(result.get("notModified"))
-        if not_modified and not current["sha256"]:
-            raise ValueError("Not-modified response has no stored source body")
+        has_stored_evidence = (
+            bool(current["sha256"])
+            and bool(current["extracted_text"])
+            and type(current["extracted_chars"]) is int
+            and current["extracted_chars"] > 0
+        )
+        if not_modified and not has_stored_evidence:
+            raise ValueError("Not-modified response has no stored source evidence")
         result_body_sha = None if not_modified else result.get("bodySha256")
         if not not_modified and not result_body_sha:
             result_body_sha = hashlib.sha256(

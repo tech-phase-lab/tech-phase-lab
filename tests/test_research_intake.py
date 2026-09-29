@@ -263,6 +263,59 @@ class IntakeTests(unittest.TestCase):
         self.assertGreater(self.row()["extracted_chars"], 0)
         self.assertEqual(self.row()["response_etag"], '"new-pdf"')
 
+    def test_legacy_empty_html_bypasses_304_once_to_backfill_evidence(self):
+        self.db.execute("""
+          UPDATE sources
+          SET sha256=?,raw_sha256=?,body_sha256=?,content_type='text/html',
+              content_bytes=100,extracted_text='',extracted_chars=0,response_etag=?
+          WHERE url=?
+        """, ("a" * 64, "a" * 64, m.hashlib.sha256(b"").hexdigest(), '"old-html"', URL))
+        self.db.commit()
+        captured = {}
+
+        def transport(url, ticker, validators=None, include_metadata=False):
+            captured.update({
+                "url": url, "ticker": ticker, "validators": validators,
+                "includeMetadata": include_metadata,
+            })
+            return {
+                "content": (
+                    b"<main><p>Backfilled official HTML evidence now includes "
+                    b"verified demand and capacity details.</p></main>"
+                ),
+                "contentType": "text/html", "charset": "utf-8",
+                "etag": '"new-html"', "lastModified": None,
+                "notModified": False,
+            }
+
+        transport.supports_persistent_validators = True
+        result = m.collect_source(self.row(), transport)
+        self.assertEqual(captured["validators"], {})
+        self.assertTrue(captured["includeMetadata"])
+        self.assertIn("Backfilled official HTML evidence", result["extractedText"])
+        saved = m.save_source_check(self.db, self.row(), result)
+        self.assertEqual(saved["status"], "changed")
+        self.assertGreater(self.row()["extracted_chars"], 0)
+        self.assertEqual(self.row()["response_etag"], '"new-html"')
+
+    def test_not_modified_without_extracted_evidence_is_rejected(self):
+        self.db.execute("""
+          UPDATE sources
+          SET sha256=?,raw_sha256=?,body_sha256=?,content_type='text/html',
+              content_bytes=100,extracted_text='',extracted_chars=0,response_etag=?
+          WHERE url=?
+        """, ("a" * 64, "a" * 64, m.hashlib.sha256(b"").hexdigest(), '"old-html"', URL))
+        self.db.commit()
+
+        with self.assertRaisesRegex(
+            ValueError, "Not-modified response has no stored source evidence"
+        ):
+            m.save_source_check(self.db, self.row(), {
+                "notModified": True,
+                "responseEtag": '"old-html"',
+                "responseLastModified": None,
+            })
+
     def test_sec_filing_uses_same_accession_exhibit_and_tracks_its_revision(self):
         filing = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/mrvl-20260922.htm"
         filing_index = "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000001/0001835632-26-000001-index.html"
