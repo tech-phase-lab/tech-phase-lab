@@ -61,3 +61,9 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - Gold theme renamed 金・金鉱山 because GLDM tracks bullion, not mining companies. Added GLDM quote-only fallback for absent SEC directory results, matching existing DRAM flow.
 - Primary verification: SpaceX IR IPO closing confirms SPCX trading June 12, 2026; Cerebras IPO closing confirms CBRS May 14, 2026; State Street GLDM page confirms gold bullion and NYSE Arca; D-Wave Q2 2026 release confirms NASDAQ QBTS.
 - Theme placement does not expand automatic news monitoring or imply investment recommendations.
+
+## September 29 22:46 JST continuation
+- Rechecked SNOW, VRT, AMAT, QCOM, CRM, ORCL, NOW, NVDA, PANW and PLTR plus the BLS and Federal Reserve calendars. No new confirmed earnings date or economic-calendar change was found; inconclusive sources remain pending with exact blockers in `CALENDAR-HANDOFF-2026-09-29.md`.
+- Full local gates passed on the integrated tree: ESLint has zero errors and one pre-existing warning, Node 159/159, Python 451/451, Next.js 55 pages, `compileall` and `git diff --check`.
+- Published documentation commit `a305781` to `codex/research-preview` with exact local/connector tree SHA equality. A GitHub Actions or deployment hook did not appear for this connector-written documentation commit; do not report a fresh deployment for it. The preceding application commit `aa6a67b` remains Vercel READY with Railway success, and its preview home loaded successfully.
+- Next calendar batch: AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC. Continue to leave empty, inaccessible, historical-only and tentative sources pending.
