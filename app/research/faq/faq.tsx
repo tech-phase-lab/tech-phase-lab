@@ -33,20 +33,20 @@ const questions = [
   [
     "どの銘柄を取り扱っていますか？",
     "Which stocks do you cover?",
-    "NVIDIA、AMD、Micron、Nebiusなど、AI・半導体を中心に、クラウド、電力・冷却などの関連企業22銘柄を追っています。対象は「監視22銘柄リスト」で確認できます。",
-    "We follow 22 companies across AI, semiconductors, cloud, power and cooling, including NVIDIA, AMD, Micron and Nebius. See the 22-stock watch list for the full lineup."
+    "米国ハイテク株全般を取り扱っています。特に重点的に追っている銘柄は「監視22銘柄リスト」で確認できます。",
+    "We cover US high-tech stocks broadly. For the companies we follow most closely, see our 22-stock watch list."
   ],
   [
     "質問をすると必ず回答されますか？",
     "Will every question be answered?",
-    "リゼルが厳選した質問に回答します。すべての質問への回答はお約束できません。",
+    "リゼルが厳選した質問に回答します。全質問への回答はお約束できません。",
     "RIZEL chooses which questions to answer. We can’t promise an answer to every question."
   ],
   [
     "送った質問は公開されますか？",
     "Will my question be visible to others?",
-    "はい。投稿した質問はPRO会員全員に公開されます。個人情報の記載や、不適切な発言はお控えください。以前の非公開質問は本人と運営者だけが閲覧できます。",
-    "Yes. Your questions are visible to all PRO members. Please avoid personal details and inappropriate comments. Previous private questions remain visible only to you and the team."
+    "はい。投稿した質問はPRO会員全員に公開されます。個人情報の記載や、不適切な発言はお控えください。",
+    "Yes. Your questions are visible to all PRO members. Please avoid personal details and inappropriate comments."
   ],
   [
     "銘柄の追加や、取り上げてほしいテーマをリクエストできますか？",
@@ -57,8 +57,14 @@ const questions = [
   [
     "掲載内容に誤りを見つけた場合、どこに連絡すればよいですか？",
     "How can I report an error?",
-    "リゼルの公式Xアカウントへご連絡ください。アカウントは2026年12月に開設予定です。開設後、このページに連絡先を掲載します。",
-    "Please contact RIZEL’s official X account. It’s planned for December 2026, and we’ll add the contact link here once it’s available."
+    "私のXアカウントから連絡してください。",
+    "Please contact me on X."
+  ],
+  [
+    "おすすめの銘柄や、買うべき銘柄を教えてもらえますか？",
+    "Can you recommend a stock or tell me what to buy?",
+    "「この銘柄がおすすめ」「この銘柄を買うべき」といった個別の売買推奨にはお答えしていません。企業の事業・業績・リスクを理解するための情報を提供します。",
+    "We don’t give individual buy or sell recommendations or tell you which stock to buy. We provide information to help you understand companies, their results and their risks."
   ],
   [
     "これは投資助言ですか？",
@@ -74,7 +80,7 @@ export default function Faq() {
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "よくある質問・使い方" : "FAQ & help"} description={ja ? "利用方法、PRO会員、質問についてのご案内です。" : "Quick answers about getting started, PRO membership and questions."}>
     <nav className={styles.localNav} aria-label={ja ? "案内メニュー" : "Help menu"}><Link href="/research/learn">{ja ? "投資の基礎" : "Investing basics"}</Link><span aria-current="page">{ja ? "よくある質問・使い方" : "FAQ & help"}</span></nav>
     <p className={styles.notice}>{ja ? "現在は開発プレビューです。契約・解約の回答は有料サービス開始時の運用方針で、課金はまだ開始していません。" : "This is a development preview. Subscription and cancellation answers describe our planned launch policy; paid billing hasn’t started yet."}</p>
-    <div className={styles.steps}>{questions.map(([questionJa, questionEn, answerJa, answerEn], index) => <details className={styles.card} key={questionJa} open={index === 0}><summary><span className={styles.number}>{String(index + 1).padStart(2, "0")}</span><strong>{ja ? questionJa : questionEn}</strong></summary><p>{ja ? answerJa : answerEn}</p>{index === 4 && <Link href="/research#monitored-companies">{ja ? "監視22銘柄リストを見る" : "View the 22-stock watch list"}</Link>}</details>)}</div>
+    <div className={styles.steps}>{questions.map(([questionJa, questionEn, answerJa, answerEn], index) => <details className={styles.card} key={questionJa} open={index === 0}><summary><span className={styles.number}>{String(index + 1).padStart(2, "0")}</span><strong>{ja ? questionJa : questionEn}</strong></summary><p>{index === 4 ? (ja ? <>米国ハイテク株全般を取り扱っています。特に重点的に追っている銘柄は「<Link href="/research#monitored-companies">監視22銘柄リスト</Link>」で確認できます。</> : <>We cover US high-tech stocks broadly. For the companies we follow most closely, see our <Link href="/research#monitored-companies">22-stock watch list</Link>.</>) : ja ? answerJa : answerEn}</p></details>)}</div>
     <aside className={styles.notice}><strong>{ja ? "問題が解決しないとき" : "If this does not solve it"}</strong><p>{ja ? "会員状態はマイアカウントで確認できます。表示や取得に失敗した場合は、時間をおいて再読み込みしてください。質問フォームにはパスワード、本人確認書類、口座番号を入力しないでください。" : "Check membership status on My account. If a page or data source fails, wait and reload. Never put a password, identity document or account number in the question form."}</p><Link href="/research/account">{ja ? "マイアカウントを確認" : "Check My account"} →</Link></aside>
   </ResearchToolShell>;
 }

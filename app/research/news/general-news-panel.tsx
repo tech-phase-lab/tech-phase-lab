@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Language } from "@/lib/research/data";
 import { publicNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
+import { officialHeadlineJa } from "@/lib/research/official-news-ja";
 import styles from "./general-news.module.css";
 
 import FeedPagination from "./feed-pagination";
@@ -48,12 +49,13 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
   return <section ref={panel} className={styles.panel} aria-label={lang === "ja" ? "ニュース一覧" : "News list"}>
     {!!visibleOfficial.length && <section aria-label={lang === "ja" ? "企業の公式発表" : "Official company updates"}>
       <h2>{lang === "ja" ? "企業の公式発表" : "Official company updates"}</h2>
-      <p className={styles.note}>{lang === "ja" ? "企業の公式発表・投稿へのリンクです。日本語の要約・影響分析はまだ付いていません。時刻は取得時刻です。" : "Links to official company updates. Summaries and impact analysis are not yet available. Times show when we found each update."}</p>
-      <div className={styles.items}>{visibleOfficial.map(item => <article key={item.id}>
+      <p className={styles.note}>{lang === "ja" ? "公式発表・投稿の内容を日本語の見出しで紹介します。時刻は取得日時です。" : "Official company updates. Times show when we found each update."}</p>
+      <div className={styles.items}>{visibleOfficial.map(item => { const translated = officialHeadlineJa(item.url); const linkOnly = /^https?:\/\/\S+$/.test(item.title.trim()); return <article key={item.id}>
         <p className={styles.tickers}>{item.tickers.join(" · ")} · {item.publisher}</p>
-        <h3><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title}</a></h3>
-        <p className={styles.note}>{lang === "ja" ? "取得日時" : "Found at"} {format(item.observedAt)} · {lang === "ja" ? "原文・日本語要約待ち" : "Original source"}</p>
-      </article>)}</div>
+        <h3><a href={item.url} target="_blank" rel="noopener noreferrer">{lang === "ja" ? translated ?? (linkOnly ? "公式投稿（リンクのみ・本文未取得）" : "公式アップデート（日本語訳を準備中）") : item.title}</a></h3>
+        {lang === "ja" && !linkOnly && <details className={styles.original}><summary>英語の原文を見る</summary><p lang="en">{item.title}</p></details>}
+        <p className={styles.note}>{lang === "ja" ? "取得日時" : "Found at"} {format(item.observedAt)} · {lang === "ja" ? (translated ? "日本語見出し" : "原文リンク") : "Original source"}</p>
+      </article>; })}</div>
     </section>}
     {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}
     {!officialOnly && (visibleNews.length > 0 || !data?.enabled || !news.length) && <><div className={styles.head}><h2 id="general-news-title">{lang === "ja" ? "通常ニュース" : "General news"}</h2><button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>
