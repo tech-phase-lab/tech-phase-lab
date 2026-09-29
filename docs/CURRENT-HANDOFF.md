@@ -1,4 +1,4 @@
-# Tech Phase — current handoff, 2026-09-29 21:14 JST
+# Tech Phase — current handoff, 2026-09-30 00:49 JST
 
 Start here, then read AGENTS.md and docs/AUTONOMOUS-NEXT-2026-09-29.md. Current source and newer owner instructions override older documents.
 
@@ -73,3 +73,10 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - The existing preview commit `92d8c87` remained green on Railway staging and Vercel, and the canonical Japanese research home loaded successfully with live news data timestamped 23:44:13 JST.
 - The finite news-readiness backlog remains complete. No discretionary product code, paid provider, production or external-delivery setting was changed.
 - Next calendar batch: LITE, MRVL, SKHY, SNOW, VRT, AMAT, QCOM, CRM, ORCL and NOW.
+
+## September 30 00:49 JST continuation
+- Rechecked LITE, MRVL, SKHY, SNOW, VRT, AMAT, QCOM, CRM, ORCL and NOW against first-party investor calendars, events pages and indexed official announcements. No new confirmed earnings date or explicit current no-events statement was found. MRVL's October 6 item is Investor Day, not an earnings event.
+- Rechecked the BLS October release schedule and Federal Reserve meeting calendar. The existing October 2 Employment Situation, October 14 CPI, October 15 PPI, October 27–28 FOMC and December 8–9 FOMC records remain unchanged; the FOMC source still omits future statement and press-conference clock times.
+- Advanced `lastAttemptedOn` only for the ten companies actually reviewed and advanced `calendarReviewedOn` for the daily BLS/Federal Reserve verification. No inconclusive company `lastCheckedOn` value, event date or fabricated time was added.
+- Detailed evidence and exact blockers are in `CALENDAR-HANDOFF-2026-09-30.md`. The finite product/news-readiness backlog remains complete and automatic translation remains disabled pending secure credentials and an explicitly approved model.
+- Next calendar batch: AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC.
