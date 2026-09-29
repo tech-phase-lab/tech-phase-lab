@@ -1,6 +1,12 @@
 import type { Copy } from "./data";
 export type ComparisonCompany = { ticker: string; name: string; peer: string; caution: Copy };
 export type Fact = { value: number; unit: string; start: string | null; end: string; filed: string; accession: string; tag: string; basis: string };
+export type BalanceSnapshot = {
+  end: string; sourceUrl: string; filed: string;
+  cash: Fact | null; currentAssets: Fact | null; currentLiabilities: Fact | null;
+  currentRatio: number | null; debtCurrent: Fact | null; debtNoncurrent: Fact | null;
+  shortBorrowings: Fact | null; leaseCurrent: Fact | null; leaseNoncurrent: Fact | null;
+};
 export type Financials = {
   ticker: string; status: "ready" | "unavailable" | "unsupported"; retrievedAt: string;
   revenue: Fact | null; previousRevenue: Fact | null; operatingIncome: Fact | null;
@@ -10,6 +16,7 @@ export type Financials = {
   dilutedShares: Fact | null; previousDilutedShares: Fact | null; dilutedSharesGrowth: number | null;
   quarterRevenue: Fact | null; previousQuarterRevenue: Fact | null; quarterOperatingIncome: Fact | null;
   quarterRevenueGrowth: number | null; quarterOperatingMargin: number | null; quarterSourceUrl: string | null;
+  balance: BalanceSnapshot | null;
   sourceUrl: string | null;
 };
 export type ComparisonResult = { companies: (ComparisonCompany & Financials)[]; comparable: boolean; reasons: Copy[]; conclusion: Copy; generatedAt: string };
@@ -19,7 +26,7 @@ const day = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s) ? Date.parse(s) / 86400
 const duration = (f: Fact) => f.start ? day(f.end) - day(f.start) + 1 : 0;
 export function emptyFinancials(ticker: string, status: "unavailable" | "unsupported", now = new Date().toISOString()): Financials {
   return { ticker, status, retrievedAt: now, revenue: null, previousRevenue: null, operatingIncome: null, operatingCash: null, capex: null, cash: null, revenueGrowth: null, operatingMargin: null, fcfMargin: null, stockCompensation: null, stockCompensationRatio: null, dilutedShares: null, previousDilutedShares: null, dilutedSharesGrowth: null,
-    quarterRevenue: null, previousQuarterRevenue: null, quarterOperatingIncome: null, quarterRevenueGrowth: null, quarterOperatingMargin: null, quarterSourceUrl: null, sourceUrl: null };
+    quarterRevenue: null, previousQuarterRevenue: null, quarterOperatingIncome: null, quarterRevenueGrowth: null, quarterOperatingMargin: null, quarterSourceUrl: null, balance: null, sourceUrl: null };
 }
 export function validateComparisonTickers(value: unknown, allowed: readonly string[]): string[] | null {
   if (!Array.isArray(value) || value.length < 2 || value.length > 3 || value.some(x => typeof x !== "string")) return null;
@@ -86,7 +93,22 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const previousQuarterRevenue = quarterRevenue ? unique(collect(basis, [quarterRevenue.tag], false, "quarter").filter(f => f.accession === quarterRevenue.accession && f.unit === quarterRevenue.unit && day(quarterRevenue.end)-day(f.end) >= 350 && day(quarterRevenue.end)-day(f.end) <= 380 && Math.abs(duration(quarterRevenue)-duration(f)) <= 8 && f.value > 0)) : null;
   const quarterOperatingIncome = quarterRevenue ? unique(collect(basis, tags[basis].operatingIncome, false, "quarter").filter(f => f.accession === quarterRevenue.accession && f.unit === quarterRevenue.unit && f.start === quarterRevenue.start && f.end === quarterRevenue.end)) : null;
   const filingUrl = (f: Fact) => `https://www.sec.gov/Archives/edgar/data/${Number(cik)}/${f.accession.replaceAll("-", "")}/${f.accession}-index.htm`;
-  return { ...result, status: "ready", revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
+  // A single filing/date/currency for the entire balance snapshot. No fallback to older components.
+  const anchor = quarterRevenue ?? revenue;
+  const balancePeriod = quarterRevenue ? "quarter" : "annual";
+  function balanceMetric(name: string): Fact | null {
+    if (basis !== "us-gaap") return null;
+    return unique(collect(basis, [name], true, balancePeriod).filter(f => f.end === anchor.end && f.accession === anchor.accession && f.unit === anchor.unit && f.value >= 0));
+  }
+  const currentAssets = balanceMetric("AssetsCurrent"), currentLiabilities = balanceMetric("LiabilitiesCurrent");
+  const balance: BalanceSnapshot | null = basis === "us-gaap" ? {
+    end: anchor.end, filed: anchor.filed, sourceUrl: filingUrl(anchor),
+    cash: balanceMetric("CashAndCashEquivalentsAtCarryingValue"), currentAssets, currentLiabilities,
+    currentRatio: currentAssets && currentLiabilities && currentLiabilities.value > 0 ? currentAssets.value / currentLiabilities.value : null,
+    debtCurrent: balanceMetric("LongTermDebtCurrent"), debtNoncurrent: balanceMetric("LongTermDebtNoncurrent"),
+    shortBorrowings: balanceMetric("ShortTermBorrowings"), leaseCurrent: balanceMetric("OperatingLeaseLiabilityCurrent"), leaseNoncurrent: balanceMetric("OperatingLeaseLiabilityNoncurrent"),
+  } : null;
+  return { ...result, status: "ready", balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
     stockCompensation, stockCompensationRatio: stockCompensation ? stockCompensation.value / revenue.value * 100 : null,
     dilutedShares, previousDilutedShares, dilutedSharesGrowth: dilutedShares && previousDilutedShares ? (dilutedShares.value / previousDilutedShares.value - 1) * 100 : null,
     quarterRevenue, previousQuarterRevenue, quarterOperatingIncome,
