@@ -4,3 +4,6 @@
 .original{font-size:12px;color:#9eb0bb;margin:6px 0}.original summary{cursor:pointer}.original p{overflow-wrap:anywhere}
 
 .items article>p:last-child{margin-bottom:0}.panel>p:last-child{margin-bottom:0}.tickers{margin-top:0}.panel>section>h2{margin:0 0 6px}.panel>section>.note{margin:0 0 10px}
+
+/* Keep headlines prominent without underlining every line. */
+.items h3 a{color:#e0eae9;font-size:inherit;font-weight:550;text-decoration:none;line-height:1.65}.items h3 a:hover{color:#b2e4d1;text-decoration:underline;text-decoration-color:#638f7f;text-decoration-thickness:1px;text-underline-offset:5px}.items a:focus-visible{outline:2px solid #9ce2cc;outline-offset:4px}.items article{border-top-color:#263842}.items .tickers{color:#93c9b7;font-weight:500;font-size:11px}.items .note{color:#92a4af;font-size:11px}.items a{ text-decoration-color:#496574;text-decoration-thickness:1px}

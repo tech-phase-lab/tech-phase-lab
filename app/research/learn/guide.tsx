@@ -7,8 +7,8 @@ import styles from "./styles.module.css";
 
 const steps = [
   ["口座を開く", "Open an account", "米国株を買える証券会社を選び、本人確認を済ませましょう。使いやすさと、売買・両替にかかる費用が選ぶときのポイントです。", "Choose a broker that offers US shares and complete its identity checks. Look at ease of use, trading fees and currency-conversion costs."],
-  ["入金する", "Add funds", "口座ができたら、使う分だけ入金。円のまま注文できるか、先にドルへ替えるかは証券会社によって異なります。生活費や近いうちに使うお金は分けておきましょう。", "Once your account is ready, add the amount you plan to use. Your broker may convert your currency when you buy or ask you to convert it first. Keep living expenses and money you’ll need soon separate."],
-  ["銘柄を探す", "Find a stock", "会社名か銘柄コードで検索します。たとえばNVIDIAなら「NVDA」。似た名前の商品もあるので、会社名とコードの両方を確認してください。", "Search by company name or ticker—for example, NVDA for NVIDIA. Check both the name and ticker so you don’t select a similarly named product."],
+  ["入金する", "Add funds", "口座開設が完了したら、使う分だけ入金します。生活費や近いうちに使うお金は分けておきましょう。", "Once your account is ready, add the amount you plan to use. Keep living expenses and money you’ll need soon separate."],
+  ["銘柄を探す", "Find a stock", "会社名か銘柄コードで検索します。例えばNVIDIAなら「NVDA」、Micronなら「MU」といった感じです。似た名前の商品もあるので、会社名とコードの両方を確認してください。", "Search by company name or ticker—for example, NVDA for NVIDIA or MU for Micron. Check both the name and ticker so you don’t select a similarly named product."],
   ["注文する", "Place an order", "買う株数と注文方法を選び、手数料込みの金額を確認して注文します。送信後は注文履歴へ。「約定」と表示されていれば、その株数の売買が成立しています。", "Choose the number of shares and order type, check the total including fees, then submit. Check your order history afterward: a filled quantity means that many shares have traded."],
 ] as const;
 
@@ -30,7 +30,7 @@ export default function Guide() {
     <ol className={styles.flow} aria-label={ja ? "購入までの4ステップ" : "Four steps to buying shares"}>{steps.map(([titleJa,titleEn],i) => <li key={titleEn}><a href={`#step-${i+1}`}><span className={styles.flowIcon}><StepIcon index={i}/></span><small>0{i+1}</small><strong>{ja ? titleJa : titleEn}</strong></a></li>)}</ol>
     <div className={styles.steps}>{steps.map(([titleJa,titleEn,bodyJa,bodyEn],i) => <section id={`step-${i+1}`} key={titleEn} className={styles.step}>
       <div className={styles.stepHeading}><span>0{i+1}</span><h2>{ja ? titleJa : titleEn}</h2></div><p>{ja ? bodyJa : bodyEn}</p>
-      {i === 1 && <figure className={styles.moneyFlow}><figcaption>{ja ? "入金したお金で株を買う" : "How your money reaches the investment"}</figcaption><div><span><small>{ja ? "銀行" : "Bank"}</small><strong>{ja ? "自分の口座" : "Your account"}</strong></span><b aria-hidden="true">→</b><span><small>{ja ? "入金" : "Transfer"}</small><strong>{ja ? "証券口座" : "Brokerage"}</strong></span><b aria-hidden="true">→</b><span><small>{ja ? "注文・約定" : "Order & fill"}</small><strong>{ja ? "米国株" : "US shares"}</strong></span></div><p>{ja ? "ドルへの両替は、購入前または注文時。証券会社によって方法が異なります。" : "Currency conversion happens before or when you buy, depending on your broker."}</p></figure>}
+      {i === 1 && <figure className={styles.moneyFlow}><figcaption>{ja ? "入金したお金で株を買う" : "How your money reaches the investment"}</figcaption><div><span><small>{ja ? "銀行" : "Bank"}</small><strong>{ja ? "自分の口座" : "Your account"}</strong></span><b aria-hidden="true">→</b><span><small>{ja ? "入金" : "Transfer"}</small><strong>{ja ? "証券口座" : "Brokerage"}</strong></span><b aria-hidden="true">→</b><span><small>{ja ? "注文・約定" : "Order & fill"}</small><strong>{ja ? "米国株" : "US shares"}</strong></span></div></figure>}
       {i === 2 && <Link className={styles.textLink} href="/research/stocks">{ja ? "Tech Phaseで銘柄を探す" : "Find a stock on Tech Phase"} →</Link>}
       {i === 3 && <div className={styles.orders} aria-label={ja ? "成行と指値の違い" : "Market versus limit orders"}>
         <div><span>{ja ? "成行" : "Market"}</span><strong>{ja ? "価格を指定しない" : "No set price"}</strong><p>{ja ? "成立時の価格で売買。表示されている株価とはずれることがあります。" : "Trades at the available price, which may differ from the quote you saw."}</p></div>
