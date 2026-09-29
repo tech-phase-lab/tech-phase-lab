@@ -67,3 +67,9 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - Full local gates passed on the integrated tree: ESLint has zero errors and one pre-existing warning, Node 159/159, Python 451/451, Next.js 55 pages, `compileall` and `git diff --check`.
 - Published the calendar and continuation handoff as documentation-only commits on `codex/research-preview` with exact local/connector tree SHA equality. The status hooks were initially delayed, then both Railway staging and Vercel reported success for final commit `bf621e1`; no GitHub Actions workflow run was associated with it. The canonical preview home also loaded successfully.
 - Next calendar batch: AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC. Continue to leave empty, inaccessible, historical-only and tentative sources pending.
+
+## September 29 23:45 JST continuation
+- Rechecked AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC plus the BLS and Federal Reserve calendars. No new confirmed date was found; Arm's November 4 date remains explicitly tentative and all inconclusive sources remain pending with exact blockers in `CALENDAR-HANDOFF-2026-09-29.md`.
+- The existing preview commit `92d8c87` remained green on Railway staging and Vercel, and the canonical Japanese research home loaded successfully with live news data timestamped 23:44:13 JST.
+- The finite news-readiness backlog remains complete. No discretionary product code, paid provider, production or external-delivery setting was changed.
+- Next calendar batch: LITE, MRVL, SKHY, SNOW, VRT, AMAT, QCOM, CRM, ORCL and NOW.
