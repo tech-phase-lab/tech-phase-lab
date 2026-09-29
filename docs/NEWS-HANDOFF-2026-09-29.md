@@ -1,10 +1,10 @@
 # News display and translation status
 
-Official Japanese headlines are still an editorial URL map, not automatic translation. Added the Sep 29 Nebius/Shopify GTC Berlin headline from the fetched English excerpt, without claiming full article analysis. OpenAI credentials remain deferred by user until December. Seconds-level production delivery is a target, not verified functionality.
+Official Japanese headlines are still an editorial URL map, not automatic translation. Added the Sep 29 Nebius/Shopify GTC Berlin headline from the fetched English excerpt, without claiming full article analysis. No translation provider credential or model is configured. The newest owner checkpoint authorizes automatic translation setup and timing once that secure configuration is available, but does not authorize a new paid contract. Seconds-level production delivery is a target, not verified functionality.
 
 Home pulse now consumes the same validated public feed as the news list, avoiding a second poll. New leading IDs restart at the latest item. Mobile shows date and time in JST. Official times remain explicitly labelled Found/取得 because the current public feed exposes observedAt only. Do not present observedAt as publication time. NEW expires after one hour relative to the feed check; stale feed errors clear the pulse. The poll remains 30 seconds, including when the price-target tab is selected; reduced-motion and pause controls remain.
 
-Before launch: connect automatic headline translation, persist translations server-side by source/revision, carry publisher timestamps separately, measure source→discovery→translation→browser timings, add streaming updates, retry/timeout monitoring. Do not put private excerpts or credentials in client payloads. No promise of seconds from publication until measured against the source's own latency.
+Before launch: securely configure and live-verify automatic headline translation, carry publisher timestamps separately, measure source→discovery→translation→browser timings, and preserve retry/timeout monitoring. Source/revision persistence and the dormant worker are implemented. Do not put private excerpts or credentials in client payloads. No promise of seconds from publication until measured against the source's own latency.
 
 FAQ local navigation now matches guide navigation. Removed requested preview banner and ambiguous question-form warning; Ask RIZEL is the PRO public Q&A, not a support form.
 
@@ -28,8 +28,9 @@ headline is sent; source bodies, diffs, owner identity and evidence are not.
 Existing editorial URL translations remain authoritative. Automatic factual
 headline translation does not approve or publish investment-impact analysis.
 
-December owner approval of the provider/model and credentials remains the exact
-activation blocker. No paid API call or environment change was made.
+The owner has now authorized activation and timing once a provider credential
+and explicit model can be configured securely. Neither is currently available,
+and no new paid contract, API call or environment change was made.
 
 ## Aggregate translation diagnostics — 19:48 JST
 
@@ -80,3 +81,21 @@ publication-free baseline, failure-to-success reconnect, coalesced wakeups and
 abort cleanup. No streaming, paid provider, delivery path or production setting
 was enabled. These tests verify recovery logic, not live source-to-screen
 latency.
+
+## Live operations connection verified — 21:46 JST
+
+The latest Vercel preview `/research/intake` transitioned from its bundled
+snapshot fallback to the authenticated Railway automatic-monitor state on its
+normal client refresh. The rendered page showed a last poll at 21:46:43 JST,
+22/22 companies with successful list intake, current body-fetch and SSE
+activity, and the headline translation worker explicitly OFF with no external
+transmission. No credential or private evidence value was displayed or logged.
+
+The rendered acquisition aggregate contained three valid 24-hour samples with
+an average of 22,588 seconds and a maximum of 67,549 seconds. These are
+source-publication to first-monitor-observation samples only; they are not the
+poll interval, browser rendering time, subscriber delivery latency or an SLA.
+The earlier live-rendering blocker is therefore closed. Remaining operational
+limits are the source-specific lawful access/retry states shown in aggregate
+and the missing secure provider credential/model configuration for the
+deliberately disabled translation worker.

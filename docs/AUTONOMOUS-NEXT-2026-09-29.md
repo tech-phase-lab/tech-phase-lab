@@ -40,7 +40,7 @@ Owner approved continuing unblocked work without their operation. Existing hourl
 - Next finite priority: add duplicate/missing official-news and stale/reconnect
   recovery coverage, preserving auth and public payload boundaries.
 
-Stock News API and OpenAI remain uncontracted/unconfigured by owner choice. Seconds-level Japanese display is a target, not verified. Affiliate links await replies to the three emails the owner already sent. No invented personal posts, recommendations or affiliate approvals. At finite backlog completion stop extra product edits; separately authorized calendar maintenance continues.
+Stock News API and OpenAI remain unconfigured. The newest owner checkpoint authorizes automatic headline translation activation and timing once a secure credential and explicit model are available, but does not authorize a new paid contract. Seconds-level Japanese display is a target, not verified. Affiliate links await replies to the three emails the owner already sent. No invented personal posts, recommendations or affiliate approvals. At finite backlog completion stop extra product edits; separately authorized calendar maintenance continues.
 
 ## Owner market revision, September 29 evening
 
@@ -61,8 +61,22 @@ Stock News API and OpenAI remain uncontracted/unconfigured by owner choice. Seco
 - The finite news-readiness backlog is now code-complete. Stop discretionary
   product edits; continue only the separately authorized calendar maintenance,
   deployment verification and exact blockers. Automatic headline translation
-  remains OFF pending the December provider/model/credential decision, and live
-  preview monitor connectivity remains the outstanding verification blocker.
+  remains OFF because no secure provider credential or explicit model is
+  configured; the newest owner checkpoint authorizes activation and timing once
+  those are available without entering a new paid contract.
+
+## 21:46 JST live-verification completion
+
+- The latest Vercel preview `/research/intake` advanced from its bundled
+  snapshot fallback to the authenticated Railway automatic-monitor state during
+  the normal client refresh. It rendered a 21:46:43 JST poll, 22/22 successful
+  company list intake, current body-fetch/SSE activity and the translation
+  worker explicitly OFF with no external transmission.
+- The live diagnostics blocker is closed. The finite news-readiness backlog now
+  has code, offline-test, deployment and live-rendering evidence. Do not add
+  discretionary product work; continue the separately authorized calendar
+  maintenance. The remaining translation blocker is secure provider
+  credential/model configuration, not additional worker implementation.
 
 ## Owner revision 20:44 JST
 
