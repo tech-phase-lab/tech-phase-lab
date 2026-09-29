@@ -6,6 +6,10 @@ export type Financials = {
   revenue: Fact | null; previousRevenue: Fact | null; operatingIncome: Fact | null;
   operatingCash: Fact | null; capex: Fact | null; cash: Fact | null;
   revenueGrowth: number | null; operatingMargin: number | null; fcfMargin: number | null;
+  stockCompensation: Fact | null; stockCompensationRatio: number | null;
+  dilutedShares: Fact | null; previousDilutedShares: Fact | null; dilutedSharesGrowth: number | null;
+  quarterRevenue: Fact | null; previousQuarterRevenue: Fact | null; quarterOperatingIncome: Fact | null;
+  quarterRevenueGrowth: number | null; quarterOperatingMargin: number | null; quarterSourceUrl: string | null;
   sourceUrl: string | null;
 };
 export type ComparisonResult = { companies: (ComparisonCompany & Financials)[]; comparable: boolean; reasons: Copy[]; conclusion: Copy; generatedAt: string };
@@ -14,7 +18,8 @@ const obj = (value: unknown): Record<string, unknown> => value !== null && typeo
 const day = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s) ? Date.parse(s) / 86400000 : NaN;
 const duration = (f: Fact) => f.start ? day(f.end) - day(f.start) + 1 : 0;
 export function emptyFinancials(ticker: string, status: "unavailable" | "unsupported", now = new Date().toISOString()): Financials {
-  return { ticker, status, retrievedAt: now, revenue: null, previousRevenue: null, operatingIncome: null, operatingCash: null, capex: null, cash: null, revenueGrowth: null, operatingMargin: null, fcfMargin: null, sourceUrl: null };
+  return { ticker, status, retrievedAt: now, revenue: null, previousRevenue: null, operatingIncome: null, operatingCash: null, capex: null, cash: null, revenueGrowth: null, operatingMargin: null, fcfMargin: null, stockCompensation: null, stockCompensationRatio: null, dilutedShares: null, previousDilutedShares: null, dilutedSharesGrowth: null,
+    quarterRevenue: null, previousQuarterRevenue: null, quarterOperatingIncome: null, quarterRevenueGrowth: null, quarterOperatingMargin: null, quarterSourceUrl: null, sourceUrl: null };
 }
 export function validateComparisonTickers(value: unknown, allowed: readonly string[]): string[] | null {
   if (!Array.isArray(value) || value.length < 2 || value.length > 3 || value.some(x => typeof x !== "string")) return null;
@@ -27,24 +32,24 @@ export function comparisonAccess(member: { status: string; plan: string; accessE
   return member.plan === "pro" && Number.isFinite(member.accessExpiresAt) && member.accessExpiresAt! > now ? 200 : 403;
 }
 const tags = {
-  "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "SalesRevenueNet"], operatingIncome: ["OperatingIncomeLoss"], operatingCash: ["NetCashProvidedByUsedInOperatingActivities"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment"], cash: ["CashAndCashEquivalentsAtCarryingValue"] },
-  "ifrs-full": { revenue: ["Revenue"], operatingIncome: ["ProfitLossFromOperatingActivities"], operatingCash: ["CashFlowsFromUsedInOperatingActivities"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"], cash: ["CashAndCashEquivalents"] },
+  "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "SalesRevenueNet"], operatingIncome: ["OperatingIncomeLoss"], operatingCash: ["NetCashProvidedByUsedInOperatingActivities"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
+  "ifrs-full": { revenue: ["Revenue"], operatingIncome: ["ProfitLossFromOperatingActivities"], operatingCash: ["CashFlowsFromUsedInOperatingActivities"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: [] },
 } as const;
-/** Annual, consolidated standard facts only; never combine quarterly/YTD facts or currencies. */
+/** Standard consolidated facts. Annual and standalone-quarter periods remain separate. */
 export function extractFinancials(ticker: string, cik: string, payload: unknown, now = Date.now()): Financials {
   const result = emptyFinancials(ticker, "unsupported", new Date(now).toISOString());
   const root = obj(payload);
   if (Number(root.cik) !== Number(cik)) return result;
   const facts = obj(root.facts);
-  function collect(basis: keyof typeof tags, names: readonly string[], instant = false): Fact[] {
+  function collect(basis: keyof typeof tags, names: readonly string[], instant = false, period: "annual" | "quarter" = "annual", shares = false): Fact[] {
     return names.flatMap(tag => Object.entries(obj(obj(obj(facts[basis])[tag]).units)).flatMap(([unit, values]) => {
-      if (!/^[A-Z]{3}$/.test(unit) || !Array.isArray(values)) return [];
+      if ((shares ? unit !== "shares" : !/^[A-Z]{3}$/.test(unit)) || !Array.isArray(values)) return [];
       return values.flatMap(raw => {
         const f = obj(raw);
-        if (typeof f.val !== "number" || !Number.isFinite(f.val) || typeof f.end !== "string" || typeof f.filed !== "string" || typeof f.accn !== "string" || !/^\d{10}-\d{2}-\d{6}$/.test(f.accn) || !["10-K", "10-K/A", "20-F", "20-F/A"].includes(String(f.form))) return [];
+        if (typeof f.val !== "number" || !Number.isFinite(f.val) || typeof f.end !== "string" || typeof f.filed !== "string" || typeof f.accn !== "string" || !/^\d{10}-\d{2}-\d{6}$/.test(f.accn) || !(period === "quarter" ? ["10-Q", "10-Q/A"] : ["10-K", "10-K/A", "20-F", "20-F/A"]).includes(String(f.form))) return [];
         if (!Number.isFinite(day(f.end)) || !Number.isFinite(day(f.filed)) || day(f.filed) > now / 86400000 || day(f.end) > day(f.filed)) return [];
         const fact: Fact = { value: f.val, unit, start: typeof f.start === "string" ? f.start : null, end: f.end, filed: f.filed, accession: f.accn, tag, basis };
-        if (instant ? fact.start !== null : duration(fact) < 350 || duration(fact) > 380 || !Number.isFinite(duration(fact))) return [];
+        if (instant ? fact.start !== null : duration(fact) < (period === "quarter" ? 75 : 350) || duration(fact) > (period === "quarter" ? 105 : 380) || !Number.isFinite(duration(fact))) return [];
         return [fact];
       });
     }));
@@ -59,7 +64,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const revenue = candidate;
   const basis = revenue.basis as keyof typeof tags;
   const samePeriod = (f: Fact) => f.unit === revenue.unit && f.end === revenue.end && f.start === revenue.start && f.accession === revenue.accession;
-  function metric(key: "operatingIncome" | "operatingCash" | "capex" | "cash") {
+  function metric(key: "operatingIncome" | "operatingCash" | "capex" | "cash" | "stockCompensation") {
     const values = collect(basis, tags[basis][key], key === "cash").filter(f => key === "cash" ? f.unit === revenue.unit && f.end === revenue.end && f.accession === revenue.accession : samePeriod(f));
     return values.length && new Set(values.map(f => f.value)).size === 1 ? values[0] : null;
   }
@@ -68,7 +73,26 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const previousRevenue = prior.length && new Set(prior.map(f => `${f.end}/${f.value}`)).size === 1 ? prior[0] : null;
   const operatingIncome = metric("operatingIncome"), operatingCash = metric("operatingCash"), capexRaw = metric("capex"), cash = metric("cash");
   const capex = capexRaw && capexRaw.value >= 0 ? capexRaw : null;
+  const stockCompensationRaw = metric("stockCompensation");
+  const stockCompensation = stockCompensationRaw && stockCompensationRaw.value >= 0 ? stockCompensationRaw : null;
+  const unique = (values: Fact[]) => values.length && new Set(values.map(f => `${f.start}/${f.end}/${f.value}/${f.unit}`)).size === 1 ? values[0] : null;
+  const shares = collect(basis, tags[basis].dilutedShares, false, "annual", true).filter(f => f.accession === revenue.accession && f.value > 0);
+  const dilutedShares = unique(shares.filter(f => f.start === revenue.start && f.end === revenue.end));
+  const previousDilutedShares = dilutedShares && previousRevenue ? unique(shares.filter(f => f.start === previousRevenue.start && f.end === previousRevenue.end && f.tag === dilutedShares.tag)) : null;
+  // Only a directly reported standalone quarter AFTER the annual period. Never treat YTD as a quarter.
+  const quarters = collect(basis, tags[basis].revenue, false, "quarter").filter(f => f.end > revenue.end && f.unit === revenue.unit && f.value > 0).sort((a,b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed));
+  const latestQuarter = quarters[0];
+  const quarterRevenue = latestQuarter ? unique(quarters.filter(f => f.end === latestQuarter.end && f.filed === latestQuarter.filed)) : null;
+  const previousQuarterRevenue = quarterRevenue ? unique(collect(basis, [quarterRevenue.tag], false, "quarter").filter(f => f.accession === quarterRevenue.accession && f.unit === quarterRevenue.unit && day(quarterRevenue.end)-day(f.end) >= 350 && day(quarterRevenue.end)-day(f.end) <= 380 && Math.abs(duration(quarterRevenue)-duration(f)) <= 8 && f.value > 0)) : null;
+  const quarterOperatingIncome = quarterRevenue ? unique(collect(basis, tags[basis].operatingIncome, false, "quarter").filter(f => f.accession === quarterRevenue.accession && f.unit === quarterRevenue.unit && f.start === quarterRevenue.start && f.end === quarterRevenue.end)) : null;
+  const filingUrl = (f: Fact) => `https://www.sec.gov/Archives/edgar/data/${Number(cik)}/${f.accession.replaceAll("-", "")}/${f.accession}-index.htm`;
   return { ...result, status: "ready", revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
+    stockCompensation, stockCompensationRatio: stockCompensation ? stockCompensation.value / revenue.value * 100 : null,
+    dilutedShares, previousDilutedShares, dilutedSharesGrowth: dilutedShares && previousDilutedShares ? (dilutedShares.value / previousDilutedShares.value - 1) * 100 : null,
+    quarterRevenue, previousQuarterRevenue, quarterOperatingIncome,
+    quarterRevenueGrowth: quarterRevenue && previousQuarterRevenue ? (quarterRevenue.value / previousQuarterRevenue.value - 1) * 100 : null,
+    quarterOperatingMargin: quarterRevenue && quarterOperatingIncome ? quarterOperatingIncome.value / quarterRevenue.value * 100 : null,
+    quarterSourceUrl: quarterRevenue ? filingUrl(quarterRevenue) : null,
     revenueGrowth: previousRevenue ? (revenue.value / previousRevenue.value - 1) * 100 : null,
     operatingMargin: operatingIncome ? operatingIncome.value / revenue.value * 100 : null,
     fcfMargin: operatingCash && capex ? (operatingCash.value-capex.value) / revenue.value * 100 : null,

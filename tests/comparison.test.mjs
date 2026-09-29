@@ -88,3 +88,28 @@ test('comparison endpoint runs through the verified Clerk middleware',async()=>{
  const proxy=readFileSync(new URL('../proxy.ts',import.meta.url),'utf8');
  assert.match(proxy,/"\/api\/research\/compare"/);
 });
+
+test('standalone quarter excludes YTD and uses same-filing prior-year comparison',()=>{
+ const p=payload(), f=p.facts['us-gaap'];
+ const q=(v,start,end)=>entry(v,start,end,{form:'10-Q',filed:'2026-08-01',accn:'0000000001-26-000002'});
+ f.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD.push(q(50,'2026-04-01','2026-06-30'),q(40,'2025-04-01','2025-06-30'),q(90,'2026-01-01','2026-06-30'));
+ f.OperatingIncomeLoss.units.USD.push(q(10,'2026-04-01','2026-06-30'),q(15,'2026-01-01','2026-06-30'));
+ const r=parse(p);assert.equal(r.quarterRevenue.value,50);assert.equal(r.quarterRevenueGrowth,25);assert.equal(r.quarterOperatingMargin,20);assert.match(r.quarterSourceUrl,/0000000001-26-000002/);
+ f.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD.at(-2).accn='0000000001-25-000002';assert.equal(parse(p).quarterRevenueGrowth,null);
+});
+test('no quarter invented from cumulative, old, future or conflicting reports',()=>{
+ const p=payload(),f=p.facts['us-gaap'];const a=f.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD;
+ a.push(entry(90,'2026-01-01','2026-06-30',{form:'10-Q',filed:'2026-08-01'}));assert.equal(parse(p).quarterRevenue,null);
+ a.push(entry(20,'2025-04-01','2025-06-30',{form:'10-Q',filed:'2025-08-01'}));assert.equal(parse(p).quarterRevenue,null);
+ a.push(entry(50,'2026-07-01','2026-09-30',{form:'10-Q',filed:'2026-11-01'}));assert.equal(parse(p).quarterRevenue,null);
+ a.push(entry(50,'2026-04-01','2026-06-30',{form:'10-Q',filed:'2026-08-01'}));
+ f.Revenues={units:{USD:[entry(51,'2026-04-01','2026-06-30',{form:'10-Q',filed:'2026-08-01'})]}};assert.equal(parse(p).quarterRevenue,null);
+});
+test('share compensation and diluted shares retain units, period and split-restated same-filing provenance',()=>{
+ const p=payload(),f=p.facts['us-gaap'];f.ShareBasedCompensation={units:{USD:[entry(12)]}};
+ f.WeightedAverageNumberOfDilutedSharesOutstanding={units:{shares:[entry(110),entry(100,'2024-01-01','2024-12-31')]}};
+ let r=parse(p);assert.equal(r.stockCompensationRatio,10);assert.ok(Math.abs(r.dilutedSharesGrowth-10)<1e-8);assert.equal(r.dilutedShares.unit,'shares');
+ f.WeightedAverageNumberOfDilutedSharesOutstanding.units.shares[1].accn='0000000001-25-000001';assert.equal(parse(p).dilutedSharesGrowth,null);
+ f.ShareBasedCompensation.units.USD[0].start='2025-02-01';assert.equal(parse(p).stockCompensationRatio,null);
+ f.WeightedAverageNumberOfDilutedSharesOutstanding.units.shares[0].val=0;assert.equal(parse(p).dilutedShares,null);
+});

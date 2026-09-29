@@ -1,10 +1,10 @@
-# TradingView widget inquiry — draft, not sent
+# TradingView widget inquiry — user reports email sent
 
 Primary form: https://www.tradingview.com/widget-docs/contact/
 
 Fallback: platforms@tradingview.com — official charting-library support contact, not a confirmed widget sales inbox. Ask for forwarding to the widget team. Source checked 2026-09-29: https://www.tradingview.com/free-charting-libraries/
 
-The widget contact form and FAQ form both failed to open on 2026-09-29. Browser console: `Document direction getter is not set, call setDocumentDirGetter to set it`. No inquiry has been submitted.
+The widget contact form and FAQ form both failed to open on 2026-09-29. Browser console: `Document direction getter is not set, call setDocumentDirGetter to set it`. The user reported sending the email on 2026-09-29; awaiting reply. The text below is the earlier drafting reference, not a verified copy of the sent email.
 
 Subject: Compact index widgets and branding options for Tech Phase Research
 

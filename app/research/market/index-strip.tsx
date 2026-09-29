@@ -6,14 +6,25 @@ const subscribe = (callback: () => void) => { const media = window.matchMedia("(
 function QuoteFrame({ src, title }: { src: string; title: string }) {
   const container = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
+  const frame = useRef<HTMLIFrameElement>(null);
+  const [height, setHeight] = useState(180);
   useEffect(() => {
     const element = container.current;
     if (!element) return;
-    const observer = new ResizeObserver(([entry]) => setScale(Math.min(1, entry.contentRect.width / 220)));
+    const observer = new ResizeObserver(([entry]) => setScale(Math.min(1, entry.contentRect.width / 200)));
     observer.observe(element);
     return () => observer.disconnect();
   }, []);
-  return <div ref={container} className={styles.quoteViewport} style={{ height: 180 * scale }}><iframe src={src} title={title} style={{ width: scale < 1 ? 220 : "100%", transform: `scale(${scale})` }} /></div>;
+  useEffect(() => {
+    function resize(event: MessageEvent) {
+      if (event.origin !== window.location.origin || event.source !== frame.current?.contentWindow) return;
+      const data = event.data;
+      if (data?.type === "tech-phase-quote-height" && Number.isFinite(data.height) && data.height >= 40 && data.height <= 400) setHeight(Math.ceil(data.height));
+    }
+    window.addEventListener("message", resize);
+    return () => window.removeEventListener("message", resize);
+  }, []);
+  return <div ref={container} className={styles.quoteViewport} style={{ height: height * scale }}><iframe ref={frame} src={src} title={title} style={{ height, width: scale < 1 ? 200 : "100%", transform: `scale(${scale})` }} /></div>;
 }
 export default function IndexStrip({ lang, compact = false }: { lang: Language; compact?: boolean }) {
   const reduced = useSyncExternalStore(subscribe, () => window.matchMedia("(prefers-reduced-motion: reduce)").matches, () => true);

@@ -12,5 +12,16 @@ export function GET(request: Request) {
     ? { symbol: selected.proName, width: "100%", colorTheme: "dark", isTransparent: true, locale: lang }
     : { symbols, colorTheme: "dark", isTransparent: true, showSymbolLogo: false, displayMode: "regular", locale: lang, isMoving: params.get("moving") === "1" };
   const type = single !== null ? "single-quote" : "ticker-tape";
-  return new Response(`<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;background:#0b121a;color:#a4b9be;font:10px sans-serif}.tradingview-widget-container{width:100%}a{color:#a4b9be}.tradingview-widget-copyright{text-align:center;line-height:20px}</style></head><body><div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/markets/" target="_blank" rel="noopener nofollow">Quotes by TradingView</a></div><script src="https://s3.tradingview.com/external-embedding/embed-widget-${type}.js" async>${JSON.stringify(config)}</script></div></body></html>`, { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300", "X-Content-Type-Options": "nosniff", "Content-Security-Policy": "frame-ancestors 'self'" } });
+  return new Response(`<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;background:#0b121a;color:#a4b9be;font:10px sans-serif}.tradingview-widget-container{width:100%}a{color:#a4b9be}.tradingview-widget-copyright{text-align:center;line-height:20px}</style></head><body><div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/markets/" target="_blank" rel="noopener nofollow">Quotes by TradingView</a></div><script src="https://s3.tradingview.com/external-embedding/embed-widget-${type}.js" async>${JSON.stringify(config)}</script></div>${single !== null ? `<script>
+(function(){
+  const container=document.querySelector('.tradingview-widget-container');
+  function report(){
+    if(!container.querySelector('iframe')) return;
+    const height=Math.ceil(container.getBoundingClientRect().height)+2;
+    if(height>=40&&height<=400) parent.postMessage({type:'tech-phase-quote-height',height},location.origin);
+  }
+  new ResizeObserver(report).observe(container);
+  window.addEventListener('load',report);
+})();
+</script>` : ""}</body></html>`, { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300", "X-Content-Type-Options": "nosniff", "Content-Security-Policy": "frame-ancestors 'self'" } });
 }

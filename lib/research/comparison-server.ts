@@ -18,7 +18,7 @@ const directory = unstable_cache(async () => parseSecDirectory(await secJson("ht
 const financials = unstable_cache(async (ticker: string, cik: string) => {
   const data = await secJson(`https://data.sec.gov/api/xbrl/companyfacts/CIK${cik.padStart(10,"0")}.json`, 15_000_000);
   return extractFinancials(ticker, cik, data);
-}, ["comparison-annual-v1"], { revalidate: 3600 });
+}, ["comparison-financials-v2"], { revalidate: 3600 });
 export async function loadComparisonFinancials(ticker: string) {
   try {
     const provider = providers.find(p => p.ticker === ticker);
