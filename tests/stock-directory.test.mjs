@@ -394,7 +394,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(dashboard, /お申し込み準備中/);
   assert.match(dashboard, /企業の先行きを左右するニュースを厳選/);
   assert.match(dashboard, /className=\{styles.planCta\} disabled/);
-  assert.match(dashboard, /自動監視は運営検証中、会員配信・課金は未開始/);
+  assert.match(dashboard, /米国ハイテク株のニュースと企業分析。/);
   assert.match(review, /根拠付きリサーチレビュー/);
   assert.match(review, /params\.set\("kind", "annual"\)/);
   assert.match(review, /action: "annual-draft"/);

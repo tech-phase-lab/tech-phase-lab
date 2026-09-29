@@ -68,3 +68,9 @@ Stock News API and OpenAI remain uncontracted/unconfigured by owner choice. Seco
 
 - Market starts with indices again. Three chart categories show compact familiar examples (S&P/NASDAQ, SHY/IEF/TLT, USD/JPY/EUR). Sector themes use one compact dropdown instead of wrapping chips, removing duplicate headings/constituents and extra explanatory/source paragraphs. Original widget attribution stays intact.
 - Home news supports horizontal touch swipes and keyboard left/right navigation, preserves vertical scrolling, suppresses link activation after a swipe and pauses automatic rotation while touching.
+
+## Owner revision 20:58 JST
+
+- Home rotating news shows its full available headline/summary with wrapping and no external link. Swipes remain supported. This does not imply the full source article is available.
+- Market labels reverted to plain indices / bond ETFs / forex; compact theme dropdown retained.
+- Changes view now explains earnings / partnerships / business plans, removes duplicate title, derives review date from stored records, and shortens attribution/footer. It is still curated stored research, not automatically updated from the official-news feed. Do not claim live analysis or refresh old article dates without reviewing sources.

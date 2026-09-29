@@ -78,6 +78,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
     };
   }, []);
 
+  const latestReview = events.map(event => event.reviewedOn).sort().at(-1);
   const filtered = events.filter((event) => {
     const search = [event.ticker, event.company, event.title.ja, event.title.en, event.summary.ja, event.summary.en].join(" ").toLowerCase();
     return (ticker === "all" || event.ticker === ticker) && (category === "all" || event.category === category) &&
@@ -189,7 +190,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
       <main id="research-main" className={styles.main}>
         {tab !== "pro" && tab !== "home" && <div className={styles.previewNotice}><span>{t("検証版", "PREVIEW")}</span><p>{t("下の検証レポートは2026年5〜9月の過去事例です。目標株価欄のみ監視中のX投稿を自動更新しています。公式発表の自動レポートと会員配信は開始していません。", "The research reports below are historical examples from May–September 2026. Only the X price target panel updates automatically. Automated reports from official releases and member delivery are not live.")}</p></div>}
 
-        <div className={styles.heading}><div><p className={styles.eyebrow}>{tab === "home" ? t("ホーム / リサーチデスク", "HOME / THE RESEARCH DESK") : "THE RESEARCH DESK"}</p><h1 id="research-page-title">{tab === "companies" ? t("監視22銘柄リスト", "22-stock watch list") : tab === "pro" ? "Tech Phase PRO" : tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : tab === "changes" ? t("何が変わった？を、根拠付きで。", "See what changed. Follow the evidence.") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1><p>{tab === "pro" ? t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.") : t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p></div>{tab !== "pro" && tab !== "home" && <div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>2026.09.19</strong></div>}</div>
+        <div className={styles.heading}><div><p className={styles.eyebrow}>{tab === "home" ? t("ホーム / リサーチデスク", "HOME / THE RESEARCH DESK") : "THE RESEARCH DESK"}</p><h1 id="research-page-title">{tab === "companies" ? t("監視22銘柄リスト", "22-stock watch list") : tab === "pro" ? "Tech Phase PRO" : tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : tab === "changes" ? t("決算・提携・事業計画の変化", "Changes in earnings, partnerships and business plans") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1><p>{tab === "pro" ? t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.") : tab === "changes" ? t("売上・利益の伸び、提携、新サービスを記事ごとに整理。", "Earnings growth, partnerships and new services, covered article by article.") : t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p></div>{tab !== "pro" && tab !== "home" && <div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>{latestReview?.replaceAll("-", ".") ?? "—"}</strong></div>}</div>
 
         {tab === "home" && <>
           <ResearchPulse lang={lang} />
@@ -259,7 +260,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
           <span id="metrics" className={styles.anchorTarget} aria-hidden="true" />
           <span id="saved" className={styles.anchorTarget} aria-hidden="true" />
           <div className={styles.toolbar}>
-            <div className={styles.sectionTitle}><h2>{tab === "metrics" ? t("指標一覧", "Metrics") : tab === "saved" ? t("保存した記事", "Saved research") : t("何が変わった？", "What changed?")}</h2><span>{tab === "metrics" ? allMetrics.length : filtered.length}</span></div>
+            <div className={styles.sectionTitle}>{tab !== "changes" && <h2>{tab === "metrics" ? t("指標一覧", "Metrics") : tab === "saved" ? t("保存した記事", "Saved research") : t("何が変わった？", "What changed?")}</h2>}<span>{tab === "metrics" ? allMetrics.length : filtered.length}</span></div>
             <label className={styles.search}><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input aria-label={t("銘柄・キーワードで検索", "Search ticker or keyword")} placeholder={t("銘柄・キーワードを検索", "Search ticker or keyword")} value={query} onChange={(e) => setQuery(e.target.value)} /></label>
           </div>
           <div className={styles.filters}>
@@ -310,11 +311,11 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
               <section className={styles.detailSection}><h3><span className={styles.sectionNumber}>03</span>{t("次に確認すること", "What to watch next")}</h3>{active.next[lang].includes("\n") ? <ul className={styles.facts}>{active.next[lang].split("\n").map((point, index) => <li key={index}>{point}</li>)}</ul> : <p>{active.next[lang]}</p>}</section>
               </>}
               <div className={styles.sources}><h3>{active.kind === "external-research" ? t("外部調査の原文", "Open external research") : t("根拠資料を開く", "Open supporting sources")}</h3>{active.sources.map((source, i) => <a key={source.id} href={source.url} target="_blank" rel="noreferrer"><span className={styles.sourceIndex}>{String(i + 1).padStart(2, "0")}</span><span><strong>{source.title}</strong><small>{source.publisher} · {source.publishedOn}</small><small>{source.location}</small></span><Arrow /></a>)}</div>
-              <p className={styles.revision}>{t("資料照合", "Source review")}: {active.reviewedOn} · {active.analysisAsOf ? "v3" : active.analysis ? "v2" : "v1"}<br/>{active.analysisAsOf ? t("株価・外部予想は記載日の固定値。会社実績、外部予想、独自分析を区別しています。", "Price and forecasts are dated snapshots. Company actuals, external forecasts and our analysis are distinguished.") : active.kind === "external-research" ? t("公開された要約のみを根拠に独自に整理しています。有料記事の本文は転載していません。", "This note is based on the publisher's public summary. The paid article is not reproduced.") : t("発表時点の内容を整理した検証例。以後の変更は自動反映していません。", "A review of the announcement as published. Later changes are not automatically incorporated.")}</p>
+              <p className={styles.revision}>{t("資料照合", "Source review")}: {active.reviewedOn} · {active.analysisAsOf ? "v3" : active.analysis ? "v2" : "v1"}<br/>{active.analysisAsOf ? t("株価・外部予想は記載日の固定値。会社実績、外部予想、独自分析を区別しています。", "Price and forecasts are dated snapshots. Company actuals, external forecasts and our analysis are distinguished.") : active.kind === "external-research" ? t("公開要約をもとに独自に整理。", "Independently reviewed from the public summary.") : t("発表時点の内容を整理した検証例。以後の変更は自動反映していません。", "A review of the announcement as published. Later changes are not automatically incorporated.")}</p>
             </article>}
           </div>}
         </section>}
-        <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("公式発表に基づく検証用リサーチ。自動監視は運営検証中、会員配信・課金は未開始。スマホ通知は試験運用中です。", "A source-linked research preview. Monitoring is under operational review; member delivery and billing are not live. Phone notifications are in a private pilot.")}</p></footer>
+        <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("米国ハイテク株のニュースと企業分析。", "News and company research on U.S. technology stocks.")}</p></footer>
       </main>
     </div>
   </div>;

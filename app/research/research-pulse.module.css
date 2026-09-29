@@ -2,3 +2,11 @@
 .fresh{color:#a9eccb;font-size:9px;margin-left:5px;font-weight:600}.item{ text-decoration:none}.item:focus-visible{outline:2px solid #91dfc4;outline-offset:3px}@media(max-width:600px){.item{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 7px}.item time{display:block;grid-column:1/-1;margin-left:0;font-size:9px}.label{width:auto;align-self:flex-start;margin-top:3px}}
 
 .pulse{touch-action:pan-y pinch-zoom}
+
+/* Read the entire news text here, without opening an external page. */
+.item{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:5px 10px}
+.item span{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;line-height:1.65}
+.item time{grid-column:2;margin-left:0}
+.pulse{align-items:flex-start}
+.label{padding-top:3px}
+@media(max-width:600px){.item{gap:4px 7px}.item time{grid-column:1/-1}.item span{font-size:12px}}

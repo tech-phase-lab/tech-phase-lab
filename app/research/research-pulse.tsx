@@ -43,7 +43,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     onKeyDown={event => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); move(event.key === "ArrowRight" ? 1 : -1); } }}
     onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)} onFocusCapture={() => setInteracting(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false); }}>
     <span className={styles.label}>{ja ? "ニュース" : "NEWS"}</span>
-    <a key={item.id} className={styles.item} href={item.url} target="_blank" rel="noopener noreferrer"><strong>{item.ticker}</strong><span>{item.title}</span><time dateTime={item.at}>{item.kind === "observed" ? (ja ? "取得 " : "Found ") : ""}{timestamp} {fresh && <b className={styles.fresh}>NEW</b>}</time></a>
+    <div key={item.id} className={styles.item} tabIndex={0}><strong>{item.ticker}</strong><span>{item.title}</span><time dateTime={item.at}>{item.kind === "observed" ? (ja ? "取得 " : "Found ") : ""}{timestamp} {fresh && <b className={styles.fresh}>NEW</b>}</time></div>
     <button type="button" onClick={() => setPaused(value => !value)} disabled={reduced} aria-label={paused ? (ja ? "自動切替を再開" : "Resume rotation") : (ja ? "自動切替を停止" : "Pause rotation")}>{paused || reduced ? "▶" : "Ⅱ"}</button>
     {!stopped && items.length > 1 && <i key={`${item.id}-progress`} className={styles.progress} aria-hidden="true" />}
   </section>;
