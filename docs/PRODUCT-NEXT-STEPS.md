@@ -369,3 +369,19 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 - Rechecked AMAT, QCOM, CRM, ORCL, NOW, NVDA, PANW, PLTR, AAPL and AMZN. No new
   confirmed earnings event was found, so all ten remain pending with exact
   blockers in the dated handoff. BLS and Federal Reserve dates remain unchanged.
+
+### 2026-09-29 TSMC discovery-route correction
+
+- Corrected an implementation/documentation mismatch: the automatic monitor now
+  tries TSMC's issuer-owned Latest News page first instead of leaving the
+  configured Press Center URL unused.
+- TWSE material information is the lawful fallback when the issuer page cannot
+  be fetched or parsed; SEC 6-K remains an independent supplemental route. A
+  valid empty TWSE result remains a successful empty check, not a fabricated
+  outage or news event.
+- Added regression coverage for the route order, TSMC/SEC union and persisted
+  TWSE candidate identity. No access controls, paid APIs, member content or
+  production settings were changed.
+- Rechecked ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL, KLAC, LITE and MRVL. No new
+  confirmed earnings event was found; exact blockers and the next queue are in
+  the dated calendar handoff. BLS and Federal Reserve entries remain unchanged.

@@ -476,6 +476,11 @@ For TSM, MRVL, ANET, VRT and PLTR it also reports an aggregate count of
 configured, post-start checked, healthy, degraded and pending companies. This
 shows whether every priority route has actually run after a deployment without
 publishing per-source URLs, timestamps or error details.
+TSM now uses the issuer's Latest News page as its preferred discovery route;
+the public TWSE material-information API is the lawful fallback when that page
+cannot be fetched or parsed. SEC 6-K discovery remains an independent
+supplemental route, so a healthy company page cannot suppress regulatory
+evidence and a valid empty TWSE response is not mislabeled as an outage.
 MRVL, ANET and PLTR also have issuer-owned fallback discovery routes. The
 Marvell newsroom, Arista investor press-release RSS and Palantir press-release
 index are used only if each issuer's preferred feed or sitemap fails; SEC

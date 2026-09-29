@@ -307,13 +307,19 @@
     "ticker": "TSM",
     "name": "TSMC",
     "sector": "semiconductors",
-    "indexUrl": "https://pr.tsmc.com/english/news",
-    "monitorUrl": "https://openapi.twse.com.tw/v1/opendata/t187ap04_L",
-    "format": "twse-material-json",
+    "indexUrl": "https://pr.tsmc.com/english/latest-news",
+    "format": "html",
     "requestTimeoutSeconds": 15,
     "pollSeconds": 3,
-    "twseCompanyCode": "2330",
-    "allowEmpty": true,
+    "fallbackSources": [
+      {
+        "url": "https://openapi.twse.com.tw/v1/opendata/t187ap04_L",
+        "format": "twse-material-json",
+        "label": "TWSE material information",
+        "twseCompanyCode": "2330",
+        "allowEmpty": true
+      }
+    ],
     "supplementalSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001046179.json",

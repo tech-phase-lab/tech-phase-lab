@@ -1125,12 +1125,42 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(result["sourceFormat"], "none")
         self.assertEqual(result["sourcesChecked"], result["sourcesConfigured"])
 
-    def test_automatic_monitor_prefers_twse_material_information(self):
-        source = m.monitoring_sources("TSM", automatic=True)[0]
+    def test_automatic_monitor_prefers_tsmc_press_center_then_twse(self):
+        sources = m.monitoring_sources("TSM", automatic=True)
+        source = sources[0]
         self.assertEqual(source["route"], "primary")
-        self.assertEqual(source["format"], "twse-material-json")
-        self.assertEqual(source["twseCompanyCode"], "2330")
-        self.assertTrue(source["allowEmpty"])
+        self.assertEqual(source["format"], "html")
+        self.assertEqual(source["url"], "https://pr.tsmc.com/english/latest-news")
+        fallback = sources[1]
+        self.assertEqual(fallback["route"], "fallback")
+        self.assertEqual(fallback["format"], "twse-material-json")
+        self.assertEqual(fallback["twseCompanyCode"], "2330")
+        self.assertTrue(fallback["allowEmpty"])
+
+    def test_automatic_tsmc_press_center_is_combined_with_sec(self):
+        provider = m.PROVIDERS["TSM"]
+        press_body = b'<a href="https://pr.tsmc.com/english/news/3123">TSMC AI update</a>'
+        sec_body = b'''{"cik":1046179,"filings":{"recent":{"form":["6-K"],"accessionNumber":["0001046179-26-000658"],"primaryDocument":["tsm-20260929.htm"],"primaryDocDescription":["REPORT OF FOREIGN ISSUER"]}}}'''
+        requested = []
+
+        def transport(url, _ticker):
+            requested.append(url)
+            if url == provider["indexUrl"]:
+                return press_body, "text/html"
+            if url == provider["supplementalSources"][0]["url"]:
+                return sec_body, "application/json"
+            raise AssertionError(f"unexpected URL: {url}")
+
+        result, links = m.collect_discovery("TSM", transport, automatic=True)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["route"], "primary+supplemental")
+        self.assertEqual(result["sourceFormat"], "html+sec-json")
+        self.assertEqual(result["sourcesChecked"], 2)
+        self.assertEqual(result["sourcesConfigured"], 4)
+        self.assertEqual(len(links), 2)
+        self.assertEqual(requested, [
+            provider["indexUrl"], provider["supplementalSources"][0]["url"],
+        ])
 
     def test_sec_submissions_json_filters_form_and_builds_official_document_url(self):
         source = next(source for source in m.monitoring_sources("TSM", automatic=True) if source["format"] == "sec-json")
@@ -1147,7 +1177,7 @@ class IntakeTests(unittest.TestCase):
             {"發言日期":"1150918","發言時間":"160000","公司代號":"9999","公司名稱":"其他公司","主旨 ":"不應匯入","說明":"其他"},
         ], ensure_ascii=False).encode()
         result = m.discover(self.db, "TSM", lambda *_: (body, "application/json"))
-        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["status"], "fallback")
         self.assertEqual(result["candidates"], 1)
         row = self.db.execute("SELECT * FROM sources WHERE ticker='TSM'").fetchone()
         self.assertEqual(row["published_on"], "2026-09-18")
@@ -1161,7 +1191,7 @@ class IntakeTests(unittest.TestCase):
     def test_twse_valid_empty_company_result_is_not_a_false_failure(self):
         body = b'[{"company":"other"}]'
         result, links = m.collect_discovery("TSM", lambda *_: (body, "application/json"))
-        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["status"], "fallback")
         self.assertEqual(result["candidates"], 0)
         self.assertEqual(links, {})
 
@@ -1317,10 +1347,14 @@ class IntakeTests(unittest.TestCase):
         result = m.discover(self.db, "TSM", transport)
         self.assertEqual(result["candidates"], 1)
         cache = m.load_discovery_source_cache(self.db, "TSM")
-        candidate_url = next(iter(cache[m.INDEXES["TSM"]]["candidates"]))
+        twse_url = next(
+            source["url"] for source in m.monitoring_sources("TSM")
+            if source["format"] == "twse-material-json"
+        )
+        candidate_url = next(iter(cache[twse_url]["candidates"]))
         self.assertTrue(m.valid_discovery_candidate_url(candidate_url, "TSM"))
         self.assertFalse(m.valid_discovery_candidate_url(
-            m.INDEXES["TSM"] + "?company=2330&date=1150918&time=153643&id=not-safe",
+            twse_url + "?company=2330&date=1150918&time=153643&id=not-safe",
             "TSM",
         ))
 
@@ -3200,7 +3234,7 @@ class IntakeTests(unittest.TestCase):
                 self.assertEqual(m.safe_url(p["monitorUrl"], ticker), p["monitorUrl"])
             for source in p.get("fallbackSources", []):
                 self.assertEqual(m.safe_url(source["url"], ticker), source["url"])
-                self.assertIn(source["format"], {"html", "rss", "sec-json", "sitemap", "news-json"})
+                self.assertIn(source["format"], {"html", "rss", "sec-json", "sitemap", "news-json", "twse-material-json"})
             for source in p.get("supplementalSources", []):
                 self.assertEqual(m.safe_url(source["url"], ticker), source["url"])
                 self.assertIn(source["format"], {"html", "rss", "sec-json", "sitemap", "news-json"})
