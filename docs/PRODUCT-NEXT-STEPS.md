@@ -401,3 +401,12 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 - Rechecked SKHY, SNOW, VRT, AMAT, QCOM, CRM, ORCL, NOW, NVDA and PANW. No new
   confirmed earnings event was found; exact blockers and the next queue are in
   the dated calendar handoff. BLS and Federal Reserve entries remain unchanged.
+
+### 2026-09-29 legacy HTML evidence decoding follow-up
+
+- Official linked HTML now honors a bounded allowlist of early BOM/meta charset
+  declarations instead of assuming every older investor-relations template is
+  UTF-8. Windows-1252 and ISO-8859-1 smart punctuation remains intact for exact
+  evidence review; unknown codec names cannot select an arbitrary Python codec.
+- Added a regression using a synthetic Windows-1252 official article. No source
+  body became public and no delivery, paid API or production setting was enabled.

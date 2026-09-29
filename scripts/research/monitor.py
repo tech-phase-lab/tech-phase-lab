@@ -31,6 +31,17 @@ MAX_JSON_LD_NODES = 2_000
 MIN_JSON_LD_BODY_CHARS = 120
 MIN_INLINE_FEED_CHARS = 120
 MIN_SEC_EXHIBIT_CHARS = 120
+HTML_ENCODING_ALIASES = {
+    "cp1252": "cp1252",
+    "iso-8859-1": "cp1252",
+    "iso8859-1": "cp1252",
+    "latin-1": "cp1252",
+    "latin1": "cp1252",
+    "us-ascii": "ascii",
+    "utf-8": "utf-8",
+    "utf8": "utf-8",
+    "windows-1252": "cp1252",
+}
 SUPPORTED_CONTENT_TYPES = {
     "text/html", "application/pdf", "application/json", "application/rss+xml",
     "application/atom+xml", "application/xml", "text/xml",
@@ -902,9 +913,46 @@ class StructuredArticleText(HTMLParser):
         return max(candidates, key=len, default="")
 
 
+def decode_html_document(content):
+    """Decode a bounded HTML response without trusting arbitrary codec names."""
+    if content.startswith((b"\xff\xfe", b"\xfe\xff")):
+        return content.decode("utf-16", errors="replace")
+    if content.startswith(b"\xef\xbb\xbf"):
+        return content.decode("utf-8-sig", errors="replace")
+
+    # HTML encoding declarations must appear early. Keep the scan bounded and
+    # allow only the small set needed by the official sources we monitor; a
+    # page cannot make the worker load an arbitrary Python codec.
+    prefix = content[:8192]
+    match = re.search(
+        br"<meta\b[^>]{0,1024}\bcharset\s*=\s*[\"']?\s*([a-z0-9._-]{1,40})",
+        prefix,
+        re.I,
+    )
+    if match is None:
+        match = re.search(
+            br"<meta\b[^>]{0,1024}\bcontent\s*=\s*[\"'][^\"']{0,512}"
+            br"\bcharset\s*=\s*([a-z0-9._-]{1,40})",
+            prefix,
+            re.I,
+        )
+    if match is not None:
+        declared = match.group(1).decode("ascii", errors="ignore").lower().replace("_", "-")
+        codec = HTML_ENCODING_ALIASES.get(declared)
+        if codec:
+            return content.decode(codec, errors="replace")
+
+    try:
+        return content.decode("utf-8")
+    except UnicodeDecodeError:
+        # CP1252 is the browser-compatible interpretation of legacy Latin-1
+        # HTML and preserves smart punctuation used by older IR templates.
+        return content.decode("cp1252", errors="replace")
+
+
 def extract_html_text(content):
     """Prefer visible evidence, using verified JSON-LD only for thin page shells."""
-    decoded = content.decode("utf-8", errors="replace")
+    decoded = decode_html_document(content)
     visible_parser = ArticleText()
     visible_parser.feed(decoded)
     visible_parser.close()

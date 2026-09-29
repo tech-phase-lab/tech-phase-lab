@@ -543,6 +543,20 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(public["extracted_chars"], row["extracted_chars"])
         self.assertNotIn("extracted_text", public)
 
+    def test_declared_legacy_html_encoding_preserves_official_evidence(self):
+        article = (
+            "The company’s official release — including management’s outlook — "
+            "confirms that deployment remains subject to demand and final contracts."
+        )
+        body = (
+            '<html><head><meta charset="windows-1252"></head>'
+            f"<body><main><p>{article}</p></main></body></html>"
+        ).encode("cp1252")
+        result = self.check(body)
+        self.assertEqual(result["status"], "first-fetched")
+        self.assertEqual(self.row()["extracted_text"], article)
+        self.assertNotIn("�", self.row()["extracted_text"])
+
     def test_empty_article_shell_fails_closed_and_uses_retry_backoff(self):
         body = b"<html><body><nav>Navigation only</nav><script>renderLater()</script></body></html>"
         result = self.check(body)

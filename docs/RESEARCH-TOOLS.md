@@ -495,6 +495,10 @@ A thin semantic shell does not become evidence by itself: the worker may use a
 bounded, parsed Schema.org article type only when its `articleBody` passes the
 existing type and minimum-content checks. Scripts are never executed, and the
 public snapshot still exposes only evidence counts rather than article text.
+HTML decoding accepts only a bounded allowlist of early BOM/meta declarations.
+This preserves smart punctuation from legacy Windows-1252 and ISO-8859-1 IR
+templates without allowing a page to select an arbitrary runtime codec; unknown
+declarations fall back to UTF-8 and browser-compatible CP1252 decoding.
 Future-dated or malformed company observations do not count as post-start
 checks. Once every configured priority company has run, the preview reports the
 measured interval from process start to the final priority check without
