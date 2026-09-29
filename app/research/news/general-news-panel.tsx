@@ -53,8 +53,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
       <div className={styles.items}>{visibleOfficial.map(item => { const translated = officialHeadlineJa(item.url); const linkOnly = /^https?:\/\/\S+$/.test(item.title.trim()); return <article key={item.id}>
         <p className={styles.tickers}>{item.tickers.join(" · ")} · {item.publisher}</p>
         <h3><a href={item.url} target="_blank" rel="noopener noreferrer">{lang === "ja" ? translated ?? (linkOnly ? "公式投稿（リンクのみ・本文未取得）" : "公式アップデート（日本語訳を準備中）") : item.title}</a></h3>
-        {lang === "ja" && !linkOnly && <details className={styles.original}><summary>英語の原文を見る</summary><p lang="en">{item.title}</p></details>}
-        <p className={styles.note}>{lang === "ja" ? "取得日時" : "Found at"} {format(item.observedAt)} · {lang === "ja" ? (translated ? "日本語見出し" : "原文リンク") : "Original source"}</p>
+        <p className={styles.note}>{lang === "ja" ? "取得日時" : "Found at"} {format(item.observedAt)}</p>
       </article>; })}</div>
     </section>}
     {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}

@@ -144,7 +144,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
         return age >= 0 && age < 24 * 60 * 60 * 1000;
       });
       return <article key={item.id} className={styles.card}>
-        <span className={styles.ticker}>{item.ticker}</span>
+        <a className={styles.ticker} href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`${item.ticker} ${item.firm} ${t("の目標株価の投稿を見る", "price target source post")}`}>{item.ticker}</a>
         <div className={styles.body}>
           <div className={styles.firm}>{item.firm}{isNew && <span className={styles.newBadge} aria-label={t("24時間以内の新着", "New within 24 hours")}>NEW</span>}</div>
           <div className={styles.targetChange}>
@@ -153,7 +153,6 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
           </div>
           <small>{item.source.replace(/^X\s*[·・]\s*/, "")} · {t("X投稿日時", "X post time")} <time dateTime={item.publishedAt}>{time(item.publishedAt)}</time></small>
         </div>
-        <a href={item.url} target="_blank" rel="noopener noreferrer">{t("投稿を確認 ↗", "View post ↗")}</a>
       </article>;
     })}</div>}
     <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { setPage(n); panelRef.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />

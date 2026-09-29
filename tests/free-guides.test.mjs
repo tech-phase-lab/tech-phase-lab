@@ -43,5 +43,5 @@ test("beginner guide uses official regulator references without affiliate links"
   const nav = read("app/research/bottom-nav.tsx");
   assert.ok(nav.indexOf('["/research/learn"') > nav.indexOf('["/research/calendar"'));
   assert.match(nav, /useMemberDisplay\(\) === "pro"/);
-  assert.match(nav, /proMenu \|\| !\["\/research\/notes", "\/research\/qa", "\/research\/weekly"\]\.includes\(href\)/);
+  assert.match(nav, /proMenu \|\| !\["\/research\/compare", "\/research\/notes", "\/research\/qa", "\/research\/weekly"\]\.includes\(href\)/);
 });

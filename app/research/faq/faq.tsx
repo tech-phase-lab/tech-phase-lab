@@ -63,8 +63,8 @@ const questions = [
   [
     "おすすめの銘柄や、買うべき銘柄を教えてもらえますか？",
     "Can you recommend a stock or tell me what to buy?",
-    "「この銘柄がおすすめ」「この銘柄を買うべき」といった個別の売買推奨にはお答えしていません。企業の事業・業績・リスクを理解するための情報を提供します。",
-    "We don’t give individual buy or sell recommendations or tell you which stock to buy. We provide information to help you understand companies, their results and their risks."
+    "投資助言に該当する恐れがあるためお答えしていません。",
+    "We don’t answer these requests because they could constitute investment advice."
   ],
   [
     "これは投資助言ですか？",
@@ -80,7 +80,7 @@ export default function Faq() {
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "よくある質問・使い方" : "FAQ & help"} description={ja ? "利用方法、PRO会員、質問についてのご案内です。" : "Quick answers about getting started, PRO membership and questions."}>
     <nav className={styles.localNav} aria-label={ja ? "案内メニュー" : "Help menu"}><Link href="/research/learn">{ja ? "投資の基礎" : "Investing basics"}</Link><span aria-current="page">{ja ? "よくある質問・使い方" : "FAQ & help"}</span></nav>
     <p className={styles.notice}>{ja ? "現在は開発プレビューです。契約・解約の回答は有料サービス開始時の運用方針で、課金はまだ開始していません。" : "This is a development preview. Subscription and cancellation answers describe our planned launch policy; paid billing hasn’t started yet."}</p>
-    <div className={styles.steps}>{questions.map(([questionJa, questionEn, answerJa, answerEn], index) => <details className={styles.card} key={questionJa} open={index === 0}><summary><span className={styles.number}>{String(index + 1).padStart(2, "0")}</span><strong>{ja ? questionJa : questionEn}</strong></summary><p>{index === 4 ? (ja ? <>米国ハイテク株全般を取り扱っています。特に重点的に追っている銘柄は「<Link href="/research#monitored-companies">監視22銘柄リスト</Link>」で確認できます。</> : <>We cover US high-tech stocks broadly. For the companies we follow most closely, see our <Link href="/research#monitored-companies">22-stock watch list</Link>.</>) : ja ? answerJa : answerEn}</p></details>)}</div>
+    <div className={styles.steps}>{questions.map(([questionJa, questionEn, answerJa, answerEn], index) => <details className={styles.card} key={questionJa}><summary><span className={styles.number}>{String(index + 1).padStart(2, "0")}</span><strong>{ja ? questionJa : questionEn}</strong></summary><p>{index === 4 ? (ja ? <>米国ハイテク株全般を取り扱っています。特に重点的に追っている銘柄は「<Link href="/research#monitored-companies">監視22銘柄リスト</Link>」で確認できます。</> : <>We cover US high-tech stocks broadly. For the companies we follow most closely, see our <Link href="/research#monitored-companies">22-stock watch list</Link>.</>) : ja ? answerJa : answerEn}</p></details>)}</div>
     <aside className={styles.notice}><strong>{ja ? "問題が解決しないとき" : "If this does not solve it"}</strong><p>{ja ? "会員状態はマイアカウントで確認できます。表示や取得に失敗した場合は、時間をおいて再読み込みしてください。質問フォームにはパスワード、本人確認書類、口座番号を入力しないでください。" : "Check membership status on My account. If a page or data source fails, wait and reload. Never put a password, identity document or account number in the question form."}</p><Link href="/research/account">{ja ? "マイアカウントを確認" : "Check My account"} →</Link></aside>
   </ResearchToolShell>;
 }
