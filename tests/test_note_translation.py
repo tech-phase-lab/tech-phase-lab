@@ -81,6 +81,7 @@ class OfficialFeedTests(unittest.TestCase):
                 self.assertEqual(len(items),1)
                 self.assertNotIn('PRIVATE',json.dumps(items))
                 self.assertEqual(items[0]['url'],'https://x.com/nebiusai/status/123')
+                self.assertEqual(items[0]['publishedAt'], '2026-09-28T09:00:00+00:00')
 
     def test_priority_company_official_sources_are_public_link_only(self):
         import signals
@@ -129,3 +130,18 @@ class OfficialFeedTests(unittest.TestCase):
                 db.commit()
                 items=signals.public_official_updates(db,reference=datetime(2026,9,28,10,tzinfo=timezone.utc))
                 self.assertTrue(items[0]['url'].endswith('/123'))
+
+    def test_public_dates_preserve_precision(self):
+        import signals
+        from datetime import datetime, timezone
+        with tempfile.TemporaryDirectory() as tmp:
+            with posts.connect(Path(tmp)/'db') as db:
+                signals.schema(db)
+                for ident, published in [('date','2026-09-28'),('naive','2026-09-28T09:00:00')]:
+                    db.execute("INSERT INTO signal_events(source_id,url,sha,title,tickers_json,matches_json,event_kind,published_at,observed_at,excerpt,diff,truncated) VALUES('nebius-blog',?,'hash','Example','[\"NBIS\"]','{}','new',?,'2026-09-28T09:01:00Z','','',0)", ('https://nebius.com/blog/'+ident,published))
+                db.commit()
+                items=signals.public_official_updates(db,reference=datetime(2026,9,28,10,tzinfo=timezone.utc))
+                by_url={item['url'].rsplit('/',1)[-1]:item for item in items}
+                self.assertEqual(by_url['date']['publishedOn'],'2026-09-28')
+                self.assertNotIn('publishedAt',by_url['date'])
+                self.assertNotIn('publishedAt',by_url['naive'])

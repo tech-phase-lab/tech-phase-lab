@@ -4,7 +4,7 @@ export type GeneralNewsItem = {
   impactJa: string; impactEn: string; impactLabel: "positive" | "negative" | "mixed" | "neutral" | "uncertain";
   confidence: "high" | "medium" | "low";
 };
-export type OfficialUpdate = { id: string; title: string; url: string; publisher: string; tickers: string[]; observedAt: string };
+export type OfficialUpdate = { id: string; title: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string };
 export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[] };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
   "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com"]);
@@ -25,7 +25,16 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       if (url.hostname === "x.com" && !/^\/nebiusai\/status\/\d+$/i.test(url.pathname)) throw Error("Invalid official account");
       if (Array.from(v.title as string).length > 180 || (v.publisher as string).length > 80 || !/^\d+$/.test(v.id as string) || !Number.isFinite(Date.parse(v.observedAt as string))) throw Error("Invalid update");
       if (!Array.isArray(v.tickers) || v.tickers.length > 5 || !v.tickers.every(t => typeof t === "string" && /^[A-Z][A-Z0-9.-]{0,9}$/.test(t))) throw Error("Invalid update tickers");
-      return { id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[] };
+      const publication: { publishedAt?: string; publishedOn?: string } = {};
+      if (v.publishedAt !== undefined) {
+        if (typeof v.publishedAt !== "string" || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(v.publishedAt) || !Number.isFinite(Date.parse(v.publishedAt))) throw Error("Invalid publication time");
+        publication.publishedAt = new Date(v.publishedAt).toISOString();
+      }
+      if (v.publishedOn !== undefined) {
+        if (typeof v.publishedOn !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(v.publishedOn) || !Number.isFinite(Date.parse(v.publishedOn)) || new Date(v.publishedOn).toISOString().slice(0,10) !== v.publishedOn) throw Error("Invalid publication date");
+        publication.publishedOn = v.publishedOn;
+      }
+      return { id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication };
     });
   }
   if (!payload.enabled) return { ok: true, enabled: false, items: [], ...updates };

@@ -1273,9 +1273,16 @@ def public_official_updates(db, sources=SOURCES, reference=None):
         except (ValueError, TypeError):
             continue
         seen.add(url)
+        publication = {}
+        # Preserve precision: a date is not a midnight publication timestamp.
+        if isinstance(published, str) and re.fullmatch(r'\d{4}-\d{2}-\d{2}', published):
+            publication['publishedOn'] = published
+        elif (isinstance(published, str) and published_at and
+              re.search(r'T\d{2}:\d{2}.*(?:Z|[+-]\d{2}:\d{2})$', published)):
+            publication['publishedAt'] = published_at.isoformat()
         items.append({'id': str(row['id']), 'title': row['title'][:180], 'url': url,
                       'publisher': source['name'], 'tickers': tickers,
-                      'observedAt': observed.isoformat()})
+                      'observedAt': observed.isoformat(), **publication})
         if len(items) == 20:
             break
     return items

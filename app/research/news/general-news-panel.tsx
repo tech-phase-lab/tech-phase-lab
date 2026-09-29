@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Language } from "@/lib/research/data";
 import { publicNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
 import { officialHeadlineJa } from "@/lib/research/official-news-ja";
+import { officialTime } from "@/lib/research/news-time";
 import styles from "./general-news.module.css";
 
 import { publishNews } from "@/lib/research/news-snapshot";
@@ -49,10 +50,10 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
   const confidenceLabels = lang === "ja" ? { high: "高", medium: "中", low: "低" } : { high: "High", medium: "Medium", low: "Low" };
   return <section ref={panel} className={styles.panel} aria-label={lang === "ja" ? "ニュース一覧" : "News list"}>
     {!!visibleOfficial.length && <section aria-label={lang === "ja" ? "企業の公式発表" : "Official company updates"}>
-      <div className={styles.items}>{visibleOfficial.map(item => { const translated = officialHeadlineJa(item.url); const linkOnly = /^https?:\/\/\S+$/.test(item.title.trim()); return <article key={item.id}>
+      <div className={styles.items}>{visibleOfficial.map(item => { const publication = officialTime(item); const translated = officialHeadlineJa(item.url); const linkOnly = /^https?:\/\/\S+$/.test(item.title.trim()); return <article key={item.id}>
         <p className={styles.tickers}>{item.tickers.join(" · ")} · {item.publisher}</p>
         <h3><a href={item.url} target="_blank" rel="noopener noreferrer">{lang === "ja" ? translated ?? (linkOnly ? "公式投稿（リンクのみ・本文未取得）" : "公式アップデート（日本語訳を準備中）") : item.title}</a></h3>
-        <p className={styles.note}>{lang === "ja" ? "取得日時" : "Found at"} {format(item.observedAt)}</p>
+        <p className={styles.note}>{publication.kind === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} {publication.kind === "date" ? publication.at : format(publication.at)}</p>
       </article>; })}</div>
     </section>}
     {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}
