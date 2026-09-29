@@ -7,6 +7,7 @@ import { EventStreamParser, abortableDelay } from "@/lib/research/event-stream";
 
 import { formatTargetTime } from "@/lib/research/price-target-time";
 
+import FeedPagination from "./news/feed-pagination";
 import NotificationSettings from "./notification-settings";
 
 type Target = {
@@ -14,12 +15,18 @@ type Target = {
   source: string; url: string; publishedAt: string; observedAt: string;
 };
 
+let snapshot: { items: Target[]; at: string; time: number } | null = null;
+const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
+
 export default function PriceTargetsPanel({ lang }: { lang: Language }) {
   const panelRef = useRef<HTMLElement>(null);
-  const [items, setItems] = useState<Target[]>([]);
-  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
-  const [updatedAt, setUpdatedAt] = useState<string | null>(null);
+  const [items, setItems] = useState<Target[]>(() => recent()?.items ?? []);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">(() => recent() ? "ready" : "loading");
+  const [updatedAt, setUpdatedAt] = useState<string | null>(() => recent()?.at ?? null);
   const [delivery, setDelivery] = useState<"connecting" | "live" | "polling">("connecting");
+  const [page, setPage] = useState(1);
+  const pages = Math.max(1, Math.ceil(items.length / 4));
+  const current = Math.min(page, pages);
   useEffect(() => {
     let active = true;
     let visible = false;
@@ -28,7 +35,8 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
     const applySnapshot = (data: { ok: boolean; items: Target[] }, signal: AbortSignal) => {
       if (!data.ok || !Array.isArray(data.items) || data.items.length > 30) throw new Error("Invalid feed");
       if (active && !signal.aborted) {
-        setItems(data.items); setStatus("ready"); setUpdatedAt(new Date().toISOString());
+        const at = new Date().toISOString(); snapshot = { items: data.items, at, time: Date.now() };
+        setItems(data.items); setStatus("ready"); setUpdatedAt(at);
       }
     };
     const readFallback = async (signal: AbortSignal) => {
@@ -127,9 +135,9 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
   return <section ref={panelRef} className={styles.panel} aria-label={t("目標株価の速報", "Price target updates")}>
     <div className={styles.head}><h3>{t("目標株価の変更（過去1週間）", "Price target changes (past week)")}</h3></div>
     {status === "error" && <p role="status" className={styles.state}>{t("現在、目標株価の更新を取得できません。表示内容は最新とは限りません。", "Price target updates are temporarily unavailable. Displayed items may be stale.")}</p>}
-    {status === "loading" && <p role="status" className={styles.state}>{t("更新を確認中…", "Checking updates…")}</p>}
+    {status === "loading" && <div aria-busy="true" aria-label={t("目標株価を取得中", "Fetching price targets")} className={styles.pending} />}
     {status === "ready" && items.length === 0 && <p className={styles.state}>{t("条件に合う目標株価の投稿はまだありません。", "No matching price target posts yet.")}</p>}
-    {items.length > 0 && <div className={styles.list}>{items.map((item) => {
+    {items.length > 0 && <div className={styles.list}>{items.slice((current - 1) * 4, current * 4).map((item) => {
       const number = (value: number) => value.toLocaleString("en-US", { maximumFractionDigits: 2 });
       const isNew = [item.publishedAt, item.observedAt].every(date => {
         const age = Date.now() - Date.parse(date);
@@ -148,6 +156,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
         <a href={item.url} target="_blank" rel="noopener noreferrer">{t("投稿を確認 ↗", "View post ↗")}</a>
       </article>;
     })}</div>}
+    <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { setPage(n); panelRef.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
     <div className={styles.footer}>
       <NotificationSettings lang={lang} />
       <div className={styles.syncMeta}>

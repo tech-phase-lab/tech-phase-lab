@@ -14,6 +14,7 @@ function AccountContent({ status, plan, signingUp = false }: { status: string; p
   const [retry, setRetry] = useState(0);
   useEffect(() => {
     if (!isLoaded) return;
+    window.dispatchEvent(new Event("tech-phase:membership-changed"));
     const controller = new AbortController();
     fetch("/api/research/member", {cache:"no-store", signal:controller.signal})
       .then(async response => { if (!response.ok) throw new Error("membership"); return response.json(); })

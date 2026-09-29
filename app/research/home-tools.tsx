@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemberDisplay } from "./member-display-provider";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { Language, ResearchEvent } from "@/lib/research/data";
@@ -9,24 +10,8 @@ import styles from "./home-tools.module.css";
 
 export default function HomeTools({ lang, onChanges }: { lang: Language; onChanges: () => void }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
-  const [isPro, setIsPro] = useState(false);
-  useEffect(() => {
-    const controller = new AbortController();
-    let generation = 0;
-    const check = async () => {
-      const current = ++generation;
-      setIsPro(false);
-      try {
-        const response = await fetch("/api/research/member", { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10_000)]) });
-        const member = response.ok ? await response.json() : null;
-        if (!controller.signal.aborted && current === generation) setIsPro(member?.status === "signed-in" && member?.plan === "pro");
-      } catch { /* Membership styling fails closed; access remains server-controlled. */ }
-    };
-    void check();
-    window.addEventListener("tech-phase:membership-changed", check);
-    window.addEventListener("focus", check);
-    return () => { controller.abort(); window.removeEventListener("tech-phase:membership-changed", check); window.removeEventListener("focus", check); };
-  }, []);
+  const plan = useMemberDisplay();
+  const isPro = plan === "pro";
   const [latestNote, setLatestNote] = useState<string | null>(null);
   useEffect(() => {
     const controller = new AbortController();
@@ -52,8 +37,8 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
         <Link href="/research/qa"><strong>{t("リゼルに聞く", "Ask RIZEL")}</strong><span className={styles.deskSmall}>{t("疑問から、理解を深める", "Questions worth exploring")}</span><span aria-hidden="true">→</span></Link>
         <Link href="/research/weekly"><strong>{t("週刊PRO", "PRO Weekly")}</strong><span className={styles.deskSmall}>{t("一週間の変化と展望", "The week’s shifts & outlook")}</span><span aria-hidden="true">→</span></Link>
       </div>
-      {!isPro && <div className={styles.deskOverlay}>
-        <div className={styles.overlayCaption}><span className={styles.overlayLabel}>TECH PHASE PRO</span><strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong></div>
+      {!isPro && <div className={styles.deskOverlay} aria-busy={plan === null}>
+        <div className={styles.overlayCaption}><span className={styles.overlayLabel}>TECH PHASE PRO</span>{plan === "free" && <strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong>}</div>
       </div>}
     </nav>
   </>;

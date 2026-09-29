@@ -39,6 +39,6 @@ test("beginner guide uses official regulator references without affiliate links"
   assert.ok(dashboard.indexOf("<HomeHelp") > dashboard.indexOf("<PriceTargetsPanel"));
   const nav = read("app/research/bottom-nav.tsx");
   assert.ok(nav.indexOf('["/research/learn"') > nav.indexOf('["/research/calendar"'));
-  assert.match(nav, /member\?\.status === "signed-in" && member\?\.plan === "pro"/);
+  assert.match(nav, /useMemberDisplay\(\) === "pro"/);
   assert.match(nav, /proMenu \|\| !\["\/research\/notes", "\/research\/qa", "\/research\/weekly"\]\.includes\(href\)/);
 });
