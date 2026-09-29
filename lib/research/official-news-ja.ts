@@ -28,3 +28,10 @@ const headlines: Record<string, string> = {
 export function officialHeadlineJa(url: string): string | null {
   return Object.hasOwn(headlines, url) ? headlines[url] : null;
 }
+
+const pulseHeadlines: Record<string,string> = {
+ "https://x.com/nebiusai/status/2104904708980953430": "Nebius、GTC Berlinに出展",
+ "https://x.com/nebiusai/status/2104828605725302844": "Shopify、Nebius活用事例を紹介へ",
+ "https://x.com/nebiusai/status/2104496608725372988": "NVIDIA、AIエージェント安全基盤を発表",
+};
+export function officialPulseHeadlineJa(url:string):string|null { return Object.hasOwn(pulseHeadlines,url)?pulseHeadlines[url]:null; }

@@ -47,3 +47,10 @@ Owner explicitly wants progression from verification toward production readiness
 ## September 29 21:25 JST request
 - Theme discovery approved and implemented under stock search history: nine themes, compact dropdown, company names, exact directory match opens profile; hidden while searching. HOT deferred: no invented popularity metric.
 - Owner flagged untranslated Nebius X post 2104904708980953430 (published 21:02:44 JST). Visible source excerpt says Diamond Sponsor at NVIDIA GTC Berlin Oct 20–22, booth 3013, demos/experts. Added manual Japanese headline from this excerpt. This is NOT automatic-translation latency measurement; worker remains disabled. Record browser verification time separately, never equate manual release time with API speed.
+
+## September 29 21:36 JST owner direction
+- Owner now explicitly authorizes automatic translation setup and timing; this supersedes December deferral for translation activation, but does not authorize a new paid contract. No OPENAI_API_KEY in local environment; Railway variables tab timed out twice. Not activated and no real-provider timing yet. Need secure API key/model configuration. Do not claim done.
+- Home pulse default is two rows including date, compact Japanese editorial headline where available, tap expands full text without leaving site. Swipes preserved.
+- Discovery begins with diverse all-themes examples; added finance/healthcare/consumer/energy, SKHY and DRAM, company site icons with initials fallback. SKHY NASDAQ confirmed by Nasdaq ETA2026-40; DRAM Cboe memory ETF confirmed by issuer Roundhill.
+
+DRAM is absent from the SEC operating-company directory. Theme selection falls back to its verified CBOE:DRAM TradingView market view, without inventing SEC filings or a CIK. SKHY exact search is confirmed present. Company icons use domain favicons, not full official wordmarks; failed loads show initials.

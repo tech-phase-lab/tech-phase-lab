@@ -10,3 +10,11 @@
 .pulse{align-items:flex-start}
 .label{padding-top:3px}
 @media(max-width:600px){.item{gap:4px 7px}.item time{grid-column:1/-1}.item span{font-size:12px}}
+
+/* Two compact rows by default; tap to read the complete headline in place. */
+.pulse{gap:10px;align-items:center}.pulse>.label{display:none}
+.pulse button.item{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 8px;flex:1;min-width:0;text-align:left;padding:0;color:#dae7e5;cursor:pointer;font:inherit}
+.item strong{grid-column:1;grid-row:1;font-size:11px;line-height:18px}
+.pulse .item span{grid-column:2;grid-row:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;line-height:18px}
+.pulse .item time{grid-column:1/-1;grid-row:2;line-height:14px;margin:0;font-size:9px}
+.pulse[data-expanded=true] .item span{white-space:normal;overflow:visible}

@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { Language } from "@/lib/research/data";
 import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";
-import { officialHeadlineJa } from "@/lib/research/official-news-ja";
+import { officialHeadlineJa, officialPulseHeadlineJa } from "@/lib/research/official-news-ja";
 import { officialTime, recentPublication, shortNewsTime } from "@/lib/research/news-time";
 import styles from "./research-pulse.module.css";
 const subscribe = (callback: () => void) => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
@@ -11,6 +11,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   const feed = snapshot?.data;
   const reduced = useSyncExternalStore(subscribe, () => window.matchMedia("(prefers-reduced-motion: reduce)").matches, () => true);
   const [position, setPosition] = useState({first: "", index: 0});
+  const [expandedId, setExpandedId] = useState<string | null>(null);
   const [paused, setPaused] = useState(false);
   const [interacting, setInteracting] = useState(false);
   const touch = useRef<{x: number; y: number} | null>(null);
@@ -21,7 +22,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     ...(feed?.items ?? []).map(item => ({id: item.id, ticker: item.tickers.join(" · "), title: ja ? item.summaryJa : item.title, url: item.url, at: item.publishedAt, kind: "published" as const}))
   ].sort((a,b) => Date.parse(b.at)-Date.parse(a.at)).slice(0,5);
   const first = items[0]?.id ?? "";
-  const stopped = paused || interacting || reduced;
+  const stopped = paused || interacting || reduced || expandedId !== null;
   useEffect(() => {
     if (stopped || items.length < 2) return;
     const timer = setInterval(() => { if (!document.hidden) setPosition(value => ({first, index: ((value.first === first ? value.index : 0) + 1) % items.length})); }, 8000);
@@ -29,13 +30,14 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   }, [stopped, items.length, first]);
   function move(direction: number) {
     if (items.length < 2) return;
+    setExpandedId(null);
     setPosition(value => ({first, index: ((value.first === first ? value.index : 0) + direction + items.length) % items.length}));
   }
   const item = items[(position.first === first ? position.index : 0) % items.length];
   if (!item) return null;
   const timestamp = shortNewsTime(item.at, item.kind);
   const fresh = recentPublication(item.at, item.kind, snapshot?.checkedAt ?? 0);
-  return <section className={styles.pulse} aria-label={ja ? "新着ニュース" : "Latest news"} data-paused={stopped}
+  return <section className={styles.pulse} aria-label={ja ? "新着ニュース" : "Latest news"} data-paused={stopped} data-expanded={expandedId === item.id}
     onTouchStart={event => { suppressClick.current = false; const point = event.touches[0]; touch.current = event.touches.length === 1 ? {x: point.clientX, y: point.clientY} : null; setInteracting(true); }}
     onTouchEnd={event => { const start = touch.current; const end = event.changedTouches[0]; touch.current = null; setInteracting(false); if (!start || !end) return; const dx = end.clientX - start.x; const dy = end.clientY - start.y; if (Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy) * 1.5) { suppressClick.current = true; move(dx < 0 ? 1 : -1); } }}
     onTouchCancel={() => { touch.current = null; setInteracting(false); }}
@@ -43,7 +45,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     onKeyDown={event => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); move(event.key === "ArrowRight" ? 1 : -1); } }}
     onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)} onFocusCapture={() => setInteracting(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false); }}>
     <span className={styles.label}>{ja ? "ニュース" : "NEWS"}</span>
-    <div key={item.id} className={styles.item} tabIndex={0}><strong>{item.ticker}</strong><span>{item.title}</span><time dateTime={item.at}>{item.kind === "observed" ? (ja ? "取得 " : "Found ") : ""}{timestamp} {fresh && <b className={styles.fresh}>NEW</b>}</time></div>
+    <button type="button" key={item.id} className={styles.item} aria-expanded={expandedId === item.id} onClick={() => setExpandedId(value => value === item.id ? null : item.id)}><strong>{item.ticker}</strong><span>{expandedId === item.id || !ja ? item.title : officialPulseHeadlineJa(item.url) ?? item.title}</span><time dateTime={item.at}>{item.kind === "observed" ? (ja ? "取得 " : "Found ") : ""}{timestamp} {fresh && <b className={styles.fresh}>NEW</b>}</time></button>
     <button type="button" onClick={() => setPaused(value => !value)} disabled={reduced} aria-label={paused ? (ja ? "自動切替を再開" : "Resume rotation") : (ja ? "自動切替を停止" : "Pause rotation")}>{paused || reduced ? "▶" : "Ⅱ"}</button>
     {!stopped && items.length > 1 && <i key={`${item.id}-progress`} className={styles.progress} aria-hidden="true" />}
   </section>;

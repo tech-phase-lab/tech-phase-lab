@@ -60,6 +60,7 @@ export default function StockDirectory() {
   const { history, remember, clear: clearHistory, error: historyError } = useStockHistory();
   const [results, setResults] = useState<StockDirectoryEntry[]>([]);
   const [selectedResultKey, setSelectedResultKey] = useState<string | null>(null);
+  const [directQuote, setDirectQuote] = useState<{ticker:string; exchange:string; name:string} | null>(null);
   const [profile, setProfile] = useState<StockProfile | null>(null);
   const [brief, setBrief] = useState<AnnualFilingBrief | null>(null);
   const [briefStatus, setBriefStatus] = useState<BriefStatus>("idle");
@@ -72,7 +73,7 @@ export default function StockDirectory() {
   const profileRequest = useRef(0);
   const businessRequest = useRef(0);
   const marketTarget = useRef<HTMLDivElement>(null);
-  const marketTicker = profile?.ticker ?? null;
+  const marketTicker = profile?.ticker ?? directQuote?.ticker ?? null;
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
 
   useEffect(() => {
@@ -91,6 +92,7 @@ export default function StockDirectory() {
     profileRequest.current += 1;
     businessRequest.current += 1;
     setProfile(null);
+    setDirectQuote(null);
     setProfileLoading(false);
     setResults([]);
     setSelectedResultKey(null);
@@ -114,6 +116,10 @@ export default function StockDirectory() {
           themeSelection.current = null;
           const exact = nextResults.find(entry => entry.ticker === q);
           if (exact) openThemeResult(exact);
+          else if (q === "DRAM") {
+            setDirectQuote({ticker:"DRAM",exchange:"CBOE",name:"Roundhill Memory ETF"});
+            setSelectedResultKey("CBOE:DRAM");
+          }
         }
         setAsOf(data.asOf ?? null);
       } catch (reason) {
@@ -206,7 +212,7 @@ export default function StockDirectory() {
 
       {historyError && <p className={polish.resultHint} role="status">{t("このブラウザーで履歴を保存・消去できませんでした。", "Could not update history in this browser.")}</p>}
 
-      {(query.trim() || errorMessage) && <div className={`${styles.layout} ${polish.resultLayout}`}>
+      {(query.trim() || errorMessage) && !directQuote && <div className={`${styles.layout} ${polish.resultLayout}`}>
         <section className={`${styles.results} ${polish.searchResults}`} aria-labelledby="results-title" aria-busy={loading}>
           <div className={styles.sectionHeading}><h2 id="results-title">{t("検索結果", "Matches")}</h2><span aria-live="polite">{loading ? t("検索中…", "Searching…") : `${results.length}${t("件", " results")}`}</span></div>
           {errorMessage && <div className={styles.error} role="alert"><strong>{t("取得経路を確認中", "Source unavailable")}</strong><p>{errorMessage}</p></div>}
@@ -218,8 +224,9 @@ export default function StockDirectory() {
 
       </div>}
 
-      {(profileLoading || profile) && <div ref={marketTarget} className={polish.marketTarget}>
+      {(profileLoading || profile || directQuote) && <div ref={marketTarget} className={polish.marketTarget}>
         {profileLoading && <div className={polish.profileLoading} role="status"><span className={styles.loader} /><strong>{t("銘柄情報を読み込み中…", "Loading company…")}</strong></div>}
+        {directQuote && !profile && <MarketWorkspace key={`${directQuote.ticker}:${lang}`} {...directQuote} lang={lang} favorite={favorites.includes(directQuote.ticker)} onToggleFavorite={() => toggleFavorite(directQuote.ticker)} />}
         {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} favorite={favorites.includes(profile.ticker)} onToggleFavorite={() => toggleFavorite(profile.ticker)} />}
       </div>}
 
