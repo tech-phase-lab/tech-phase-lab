@@ -6,6 +6,9 @@ import BackToTop from "./back-to-top";
 import QuickNote from "./quick-note";
 import { getMembership } from "@/lib/membership/server";
 
+// Membership is request-specific; never prerender a shared anonymous header.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = { appleWebApp: { capable: true, title: "Tech Phase" }, icons: { apple: "/tech-phase-192.png" } };
 
 export default async function ResearchLayout({ children }: { children: ReactNode }) {
