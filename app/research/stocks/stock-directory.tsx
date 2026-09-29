@@ -7,7 +7,7 @@ import HomeLink from "../home-link";
 import NavigationIcon from "../navigation-icon";
 import { useSearchParams } from "next/navigation";
 import { useStockFavorites } from "../use-stock-favorites";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import type { AnnualFilingBrief } from "@/lib/research/annual-filing-briefs";
 import type { StockDirectoryEntry, StockProfile } from "@/lib/research/stock-directory";
 import { useResearchLanguage } from "../use-research-language";
@@ -16,6 +16,7 @@ import styles from "./stocks.module.css";
 import polish from "./stock-polish.module.css";
 import filingStyles from "./filings.module.css";
 import { MarketWorkspace } from "./market-workspace";
+import StockThemeDiscovery from "./stock-theme-discovery";
 import StockSearchHistory from "./stock-search-history";
 import { useStockHistory } from "./use-stock-history";
 
@@ -66,6 +67,7 @@ export default function StockDirectory() {
   const [profileLoading, setProfileLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [asOf, setAsOf] = useState<string | null>(null);
+  const themeSelection = useRef<string | null>(null);
   const searchRequest = useRef(0);
   const profileRequest = useRef(0);
   const businessRequest = useRef(0);
@@ -80,6 +82,8 @@ export default function StockDirectory() {
     });
     return () => window.cancelAnimationFrame(frame);
   }, [marketTicker, profileLoading, selectedResultKey]);
+
+  const openThemeResult = useEffectEvent((entry: StockDirectoryEntry) => { void selectStock(entry); });
 
   useEffect(() => {
     const q = query.trim();
@@ -106,6 +110,11 @@ export default function StockDirectory() {
         if (!response.ok || !data.ok) throw new Error(data.error || "search-failed");
         const nextResults = data.results ?? [];
         setResults(nextResults);
+        if (themeSelection.current === q) {
+          themeSelection.current = null;
+          const exact = nextResults.find(entry => entry.ticker === q);
+          if (exact) openThemeResult(exact);
+        }
         setAsOf(data.asOf ?? null);
       } catch (reason) {
         if (controller.signal.aborted || requestId !== searchRequest.current) return;
@@ -187,11 +196,13 @@ export default function StockDirectory() {
         <p>STOCK DISCOVERY</p>
         <h1><span className={polish.desktopTitle}>{t("米国株を、すぐ調べる。", "Find a U.S. stock in seconds.")}</span><span className={polish.mobileTitle}>{t("米国株リサーチ", "U.S. stock research")}</span></h1>
 
-        <label className={`${styles.search} ${polish.searchBox}`}><span aria-hidden="true">⌕</span><input autoComplete="off" inputMode="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("例：NVDA、Micron、Palantir", "Try NVDA, Micron, or Palantir")} aria-label={t("米国株を検索", "Search U.S. stocks")} /></label>
+        <label className={`${styles.search} ${polish.searchBox}`}><span aria-hidden="true">⌕</span><input autoComplete="off" inputMode="search" value={query} onChange={(event) => { themeSelection.current = null; setQuery(event.target.value); }} placeholder={t("例：NVDA、Micron、Palantir", "Try NVDA, Micron, or Palantir")} aria-label={t("米国株を検索", "Search U.S. stocks")} /></label>
 
       </section>
 
       <StockSearchHistory lang={lang} history={history} onSelect={setQuery} onClear={clearHistory} />
+
+      {!query.trim() && !profile && <StockThemeDiscovery lang={lang} onSelect={ticker => { themeSelection.current = ticker; setQuery(ticker); }} />}
 
       {historyError && <p className={polish.resultHint} role="status">{t("このブラウザーで履歴を保存・消去できませんでした。", "Could not update history in this browser.")}</p>}
 

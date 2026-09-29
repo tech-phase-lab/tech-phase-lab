@@ -43,3 +43,7 @@ Owner explicitly wants progression from verification toward production readiness
 ## September 29 21:20 JST
 - Owner mostly views mobile; explicitly asked for desktop review. Home → What changed must start at main heading, not workspace/articles. Adjusted openView scroll destination for changes to research-main.
 - Stock research empty state intentionally only has search/history currently. Proposed next enhancement: compact theme-based stock discovery below history, hidden during search; no fabricated popularity/ranking or prices. Not implemented pending choice.
+
+## September 29 21:25 JST request
+- Theme discovery approved and implemented under stock search history: nine themes, compact dropdown, company names, exact directory match opens profile; hidden while searching. HOT deferred: no invented popularity metric.
+- Owner flagged untranslated Nebius X post 2104904708980953430 (published 21:02:44 JST). Visible source excerpt says Diamond Sponsor at NVIDIA GTC Berlin Oct 20–22, booth 3013, demos/experts. Added manual Japanese headline from this excerpt. This is NOT automatic-translation latency measurement; worker remains disabled. Record browser verification time separately, never equate manual release time with API speed.
