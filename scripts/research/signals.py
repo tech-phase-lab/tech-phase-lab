@@ -792,12 +792,13 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
 
 
 PRICE_TARGET_TEXT = re.compile(
-    r"price target (?:raised|lowered|cut|hiked) to \$(\d+(?:\.\d+)?) from \$(\d+(?:\.\d+)?)",
-    re.I,
+    r"(?:price target|target price|PT)\s+(?:(?:raised|lowered|cut|hiked|increased|reduced)\s+)?to\s*\$(\d+(?:\.\d+)?)\s+from\s*\$(\d+(?:\.\d+)?)", re.I,
+)
+PRICE_TARGET_REVERSED = re.compile(
+    r"(?:price target|target price|PT)\s+(?:(?:raised|lowered|cut|hiked|increased|reduced)\s+)?from\s*\$(\d+(?:\.\d+)?)\s+to\s*\$(\d+(?:\.\d+)?)", re.I,
 )
 PRICE_TARGET_FIRM = re.compile(
-    r"(?:at|by) (BofA|BNP Paribas|Citi|Citizens|KeyBanc|Stifel|UBS|JPMorgan|Seaport Research)\b",
-    re.I,
+    r"(?:at|by) (BofA|Bank of America|BNP Paribas|Citi(?:group)?|Citizens|KeyBanc|Stifel|UBS|J\.?P\.?\s?Morgan|Seaport Research|Morgan Stanley|Goldman Sachs|Barclays|Wells Fargo|Deutsche Bank|Jefferies|Mizuho|Baird|Piper Sandler|RBC Capital|RBC|Oppenheimer|Needham|Cantor Fitzgerald|Cantor|Wedbush|Truist|TD Cowen|Raymond James|Rosenblatt|Evercore ISI|Evercore|Bernstein|B. Riley|DA Davidson|Loop Capital|Susquehanna|BMO Capital|BMO)\b", re.I,
 )
 
 
@@ -808,7 +809,7 @@ def public_price_targets(db, sources=SOURCES, now=None, limit=20):
     approved = {s["id"]: s for s in sources if s.get("format") == "x-api"}
     by_change = {}
     rows = db.execute("""SELECT id,source_id,url,title,tickers_json,published_at,observed_at
-                         FROM signal_events WHERE event_kind='new' AND source_id LIKE 'x-%'
+                         FROM signal_events WHERE event_kind IN ('new','baseline') AND source_id IN ('x-tipranks','x-thefly','x-wallstengine')
                          ORDER BY julianday(observed_at) DESC,id DESC LIMIT 300""").fetchall()
     for row in rows:
         source = approved.get(row["source_id"])
@@ -819,14 +820,15 @@ def public_price_targets(db, sources=SOURCES, now=None, limit=20):
             observed = datetime.fromisoformat(row["observed_at"].replace("Z", "+00:00"))
             tickers = json.loads(row["tickers_json"])
             match = PRICE_TARGET_TEXT.search(row["title"].replace(",", ""))
+            reversed_match = PRICE_TARGET_REVERSED.search(row["title"].replace(",", ""))
             firm = PRICE_TARGET_FIRM.search(row["title"])
             url = safe_url(row["url"], source)
-            old, new = (float(match.group(2)), float(match.group(1))) if match else (0, 0)
+            old, new = (float(match.group(2)), float(match.group(1))) if match else ((float(reversed_match.group(1)), float(reversed_match.group(2))) if reversed_match else (0, 0))
             if (published.tzinfo is None or observed.tzinfo is None or
                     observed > now or
                     not timedelta(0) <= now - published <= timedelta(days=7) or
-                    not timedelta(0) <= observed - published <= timedelta(minutes=15) or
-                    not match or not firm or not isinstance(tickers, list) or len(tickers) != 1 or
+                    observed < published or
+                    (not match and not reversed_match) or not firm or not isinstance(tickers, list) or len(tickers) != 1 or
                     not isinstance(tickers[0], str) or not re.fullmatch(r"[A-Z]{1,5}(?:[.-][A-Z])?", tickers[0]) or
                     not 0 < old <= 100000 or not 0 < new <= 100000 or old == new):
                 continue

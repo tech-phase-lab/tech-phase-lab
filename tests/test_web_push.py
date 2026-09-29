@@ -183,6 +183,11 @@ class PushTests(unittest.TestCase):
         self.assertEqual(result['accepted'], 1)
         self.assertEqual(len(calls), 1)
         self.assertEqual(calls[0]['title'], 'MU · 目標株価の変更')
+    def test_recently_observed_old_publication_does_not_push(self):
+        self.register()
+        stale = {**event(), "publishedAt": "2026-09-25T14:00:00+00:00"}
+        self.assertEqual(push.deliver(self.db, [stale], lambda *_: self.fail("stale publication"), self.now)["attempted"], 0)
+
     def test_registration_never_backfills(self):
         self.register(self.now)
         self.assertEqual(push.deliver(self.db,[event()],lambda *_: self.fail('old event'),self.now)['attempted'],0)

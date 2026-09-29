@@ -56,9 +56,26 @@ class SignalTests(unittest.TestCase):
                 "private raw post text", "",
             ))
         result = signals.public_price_targets(self.db, now=reference)
-        self.assertEqual(len(result["items"]), 1)
+        self.assertEqual(len(result["items"]), 3)
         self.assertEqual((result["items"][0]["previous"], result["items"][0]["latest"]), (620, 720))
         self.assertNotIn("private raw post text", str(result))
+
+    def test_target_alternative_wording_and_late_baseline(self):
+        signals.schema(self.db)
+        reference = datetime(2026, 9, 29, 0, tzinfo=timezone.utc)
+        for index, title in enumerate([
+            "$MU PT raised to $550 from $500 at Morgan Stanley",
+            "$NBIS target price increased from $250 to $300 by Goldman Sachs",
+        ]):
+            self.db.execute("""INSERT INTO signal_events(source_id,url,sha,previous_sha,title,tickers_json,
+                matches_json,event_kind,published_at,observed_at,excerpt,diff,truncated)
+                VALUES(?,?,?,?,?,?,?,?,?,?,?,?,0)""", (
+                "x-wallstengine", f"https://x.com/wallstengine/status/{index+1}", str(index), "", title,
+                '["MU"]' if index == 0 else '["NBIS"]', "{}", "baseline",
+                (reference-timedelta(hours=12)).isoformat(), reference.isoformat(), "", ""))
+        items = signals.public_price_targets(self.db, now=reference)["items"]
+        self.assertEqual({(x["ticker"], x["previous"], x["latest"]) for x in items},
+                         {("MU", 500, 550), ("NBIS", 250, 300)})
 
     def test_target_history_retains_unlisted_ticker_for_seven_days(self):
         signals.schema(self.db)

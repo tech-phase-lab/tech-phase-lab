@@ -403,6 +403,9 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             if item is None:
                 continue
             observed = item['observed_timestamp']
+            # Late discoveries belong in history, never in a fresh-news push.
+            if not 0 <= now - item['published'].timestamp() <= 900:
+                continue
             if ('*' not in watched and item['ticker'] not in watched) or observed <= device['since'] or not 0 <= now - observed <= 300:
                 continue
             key = event_key(item)

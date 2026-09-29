@@ -16,7 +16,8 @@ import { researchViewFromHash, researchViewHashes, type ResearchView } from "@/l
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./research.module.css";
 import HomeTools, { HomeHelp } from "./home-tools";
-import PriceTargetsPanel from "./price-targets-panel";
+import NewsFeed from "./news/news-feed";
+import IndexStrip from "./market/index-strip";
 
 const storageKey = "tech-phase:research-saved:v1";
 const notifyName = "tech-phase:research-saved";
@@ -190,12 +191,9 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
         <div className={styles.heading}><div><p className={styles.eyebrow}>{tab === "home" ? t("ホーム / リサーチデスク", "HOME / THE RESEARCH DESK") : "THE RESEARCH DESK"}</p><h1 id="research-page-title">{tab === "companies" ? t("監視対象", "Company watch") : tab === "pro" ? "Tech Phase PRO" : tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : tab === "changes" ? t("何が変わった？を、根拠付きで。", "See what changed. Follow the evidence.") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1><p>{tab === "pro" ? t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.") : t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p></div>{tab !== "pro" && tab !== "home" && <div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>2026.09.19</strong></div>}</div>
 
         {tab === "home" && <>
+          <IndexStrip lang={lang} compact />
           <HomeTools lang={lang} onChanges={() => openView("changes")} />
-          <section className={styles.homeNews} aria-labelledby="home-news-title">
-            <h2 id="home-news-title">{t("速報ニュース", "Breaking news")}</h2>
-            <p>{t("ニュース配信を準備中です。", "News delivery is being prepared.")}</p>
-          </section>
-          <PriceTargetsPanel lang={lang} />
+          <NewsFeed lang={lang} />
           <HomeHelp lang={lang} />
         </>}
 
@@ -275,7 +273,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
             <div className={styles.eventList}>
               {filtered.map((event) => <article key={event.id} className={`${styles.eventCard} ${active?.id === event.id ? styles.selected : ""}`}>
                 <div className={styles.eventMeta}><span className={styles.ticker}>{event.ticker}</span><span>{kinds[event.kind]}</span><time dateTime={event.publishedOn}>{dateLabel(event.publishedOn, lang)}</time><button className={styles.saveButton} aria-label={saved.includes(event.id) ? t("保存を解除", "Unsave research") : t("リサーチを保存", "Save research")} aria-pressed={saved.includes(event.id)} onClick={() => toggleSaved(event.id)}><Bookmark filled={saved.includes(event.id)} /></button></div>
-                <button className={styles.eventOpen} aria-pressed={active?.id === event.id} onClick={() => selectEvent(event.id)}><h3>{event.title[lang]}</h3><p>{event.summary[lang]}</p><span className={styles.eventFoot}><span>{event.kind === "external-research" ? t("外部調査", "External research") : t("根拠資料", "Sources")} {event.sources.length}<span className={styles.dot}>·</span>{t("原文付き", "Evidence linked")}</span><span>{t("詳しく見る", "Read research")} <span aria-hidden="true">→</span></span></span></button>
+                <button className={styles.eventOpen} aria-pressed={active?.id === event.id} onClick={() => selectEvent(event.id)}><h3>{event.title[lang]}</h3>{event.id === "mu-q3-2026" && <small>{t("PRO分析の無料サンプル", "Free sample of PRO research")}</small>}<p>{event.summary[lang]}</p><span className={styles.eventFoot}><span>{event.kind === "external-research" ? t("外部調査", "External research") : t("根拠資料", "Sources")} {event.sources.length}<span className={styles.dot}>·</span>{t("原文付き", "Evidence linked")}</span><span>{t("詳しく見る", "Read research")} <span aria-hidden="true">→</span></span></span></button>
               </article>)}
               {!filtered.length && <Empty lang={lang} onReset={clearFilters} saved={tab === "saved"} />}
             </div>
@@ -283,7 +281,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
             {active && <article ref={detailRef} tabIndex={-1} className={styles.detail} aria-label={t("リサーチ詳細", "Research detail")}>
               <div className={styles.detailTop}><span className={styles.eyebrow}>RESEARCH NOTE</span><span className={styles.version}>{active.analysisAsOf ? "v3" : active.analysis ? "v2" : "v1"} · {active.analysisAsOf ? t("分析更新", "Updated analysis") : t("過去事例", "Historical")}</span></div>
               <div className={styles.detailCompany}><Link className={styles.detailTicker} href={`/research/companies/${active.ticker}`} aria-label={t(`${active.ticker}の銘柄ページ`, `${active.ticker} company research`)}>{active.ticker} ↗</Link><span>{active.company}</span></div>
-              <h2>{active.title[lang]}</h2>
+              <h2>{active.title[lang]}</h2>{active.id === "mu-q3-2026" && <p>{t("PRO分析の無料サンプルです。ほかの詳細分析はPRO会員向けです。", "A free sample of PRO research. Other in-depth analysis requires PRO membership.")}</p>}
               <dl className={styles.announcementContext}>
                 {active.analysisAsOf && <div><dt>{t("分析基準日", "Analysis as of")}</dt><dd>{dateLabel(active.analysisAsOf, lang)}</dd></div>}
                 <div><dt>{t("発表日", "Announced")}</dt><dd><time dateTime={active.publishedOn}>{dateLabel(active.publishedOn, lang)}</time></dd></div>

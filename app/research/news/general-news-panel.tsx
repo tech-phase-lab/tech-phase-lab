@@ -5,7 +5,7 @@ import type { Language } from "@/lib/research/data";
 import { publicNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
 import styles from "./general-news.module.css";
 
-export default function GeneralNewsPanel({ lang }: { lang: Language }) {
+export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang: Language; officialOnly?: boolean }) {
   const [data, setData] = useState<GeneralNewsFeed | null>(null);
   const [error, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
@@ -33,16 +33,17 @@ export default function GeneralNewsPanel({ lang }: { lang: Language }) {
     : { positive: "Positive", negative: "Negative", mixed: "Mixed", neutral: "Neutral", uncertain: "Uncertain" };
   const confidenceLabels = lang === "ja" ? { high: "高", medium: "中", low: "低" } : { high: "High", medium: "Medium", low: "Low" };
   return <section className={styles.panel} aria-labelledby="general-news-title">
-    {!!data?.officialUpdates?.length && <section aria-label={lang === "ja" ? "公式アップデート" : "Official updates"}>
-      <h2>{lang === "ja" ? "公式アップデート" : "Official updates"}</h2>
+    {!!data?.officialUpdates?.length && <section aria-label={lang === "ja" ? "企業の公式発表" : "Official company updates"}>
+      <h2>{lang === "ja" ? "企業の公式発表" : "Official company updates"}</h2>
       <p className={styles.note}>{lang === "ja" ? "企業の公式発表・投稿へのリンクです。日本語の要約・影響分析はまだ付いていません。時刻は取得時刻です。" : "Links to official company updates. Summaries and impact analysis are not yet available. Times show when we found each update."}</p>
       <div className={styles.items}>{data.officialUpdates.map(item => <article key={item.id}>
         <p className={styles.tickers}>{item.tickers.join(" · ")} · {item.publisher}</p>
         <h3><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title}</a></h3>
-        <p className={styles.note}>{format(item.observedAt)}</p>
+        <p className={styles.note}>{lang === "ja" ? "取得日時" : "Found at"} {format(item.observedAt)} · {lang === "ja" ? "原文・日本語要約待ち" : "Original source"}</p>
       </article>)}</div>
     </section>}
-    <div className={styles.head}><h2 id="general-news-title">{lang === "ja" ? "通常ニュース" : "General news"}</h2><button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>
+    {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}
+    {!officialOnly && <><div className={styles.head}><h2 id="general-news-title">{lang === "ja" ? "通常ニュース" : "General news"}</h2><button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>
     {error ? <p role="status">{lang === "ja" ? "ニュースを取得できません。しばらくしてから更新してください。" : "News is unavailable. Please refresh shortly."}</p> : !data ? <p role="status">{lang === "ja" ? "読み込み中…" : "Loading…"}</p> : !data.enabled ? <p>{lang === "ja" ? "通常ニュースの配信は準備中です。" : "General news coverage is coming soon."}</p> : <>
       <p className={styles.note}>{lang === "ja" ? "日英の内容を確認した記事を掲載しています。" : "Articles are published after review of both language versions."}</p>
       {!data.items.length && <p>{lang === "ja" ? "現在、公開中の記事はありません。" : "No articles are currently published."}</p>}
@@ -54,6 +55,7 @@ export default function GeneralNewsPanel({ lang }: { lang: Language }) {
         <a href={item.url} target="_blank" rel="noopener noreferrer">{item.publisher} ↗</a>
       </article>)}</div>
       {receivedAt && <p className={styles.note}>{lang === "ja" ? "画面取得" : "Fetched"} {format(receivedAt)} · {lang === "ja" ? "30秒ごとに更新" : "Refreshes every 30 seconds"}</p>}
+    </>}
     </>}
   </section>;
 }

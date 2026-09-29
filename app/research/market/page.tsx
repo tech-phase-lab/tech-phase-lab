@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
+import IndexStrip from "./index-strip";
 import ThemeExplorer from "./themes";
 import styles from "./market.module.css";
 
@@ -54,6 +55,7 @@ export default function MarketPage() {
   ];
   const selectedGroup = groups.find(group => group.options.some(([value]) => value === symbol))!;
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "マーケット" : "Markets"} description="">
+    <IndexStrip lang={lang} />
     <a className={styles.themeJump} href="#market-themes">{ja ? "テーマ別銘柄・セクターヒートマップを見る" : "Explore themes and sector heatmap"} ↓</a>
     <div className={styles.controls}>
       <div className={styles.categories} role="group" aria-label={ja ? "市場の種類" : "Market category"}>{groups.map(group => <button key={group.name} aria-pressed={group === selectedGroup} onClick={() => setSymbol(group.options[0][0])}>{group.name}</button>)}</div>
