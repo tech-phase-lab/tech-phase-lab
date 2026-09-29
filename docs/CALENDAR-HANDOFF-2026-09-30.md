@@ -77,3 +77,10 @@ Next: ADBE, AMD, ASML, COHR, CRWD, DELL, GEV, INTC, LRCX and META. Continue
 rotating through the full roster; retain tentative, empty, historical-only and
 inaccessible sources as pending unless first-party evidence becomes
 conclusive.
+
+Calendar commit `9240613` used the exact locally staged tree
+(`ecf4aa5`). Vercel deployed it Ready to the branch preview and Railway staging
+reported success without redeploying because no watched monitor path changed.
+The canonical Japanese calendar loaded in the browser with 17 schedules,
+including the unchanged October BLS releases and date-only October 28 and
+December 9 FOMC entries.
