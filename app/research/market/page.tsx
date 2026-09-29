@@ -46,21 +46,21 @@ function MacroCards({ ja }: { ja: boolean }) {
 
 export default function MarketPage() {
   const [lang, setLang] = useResearchLanguage();
-  const [section, setSection] = useState<"chart" | "themes" | "heatmap">("themes");
+  const [section, setSection] = useState<"chart" | "themes" | "heatmap">("chart");
   const [candles, setCandles] = useState(true);
   const [symbol, setSymbol] = useState("FOREXCOM:SPXUSD");
   const ja = lang === "ja";
   const groups = [
-    { name: ja ? "指数" : "Indices", options: [["FOREXCOM:SPXUSD", "S&P 500 · CFD"], ["FOREXCOM:NSXUSD", "Nasdaq 100 · CFD"], ["FOREXCOM:DJI", "Dow 30 · CFD"]] },
-    { name: ja ? "債券ETF" : "Bond ETFs", options: [["NASDAQ:SHY", "SHY · 1–3Y"], ["NASDAQ:IEF", "IEF · 7–10Y"], ["NASDAQ:TLT", "TLT · 20+Y"]] },
-    { name: ja ? "為替" : "Forex", options: [["FX:USDJPY", "USD / JPY"], ["FX:EURUSD", "EUR / USD"], ["FX:EURJPY", "EUR / JPY"]] },
+    { name: ja ? "株価指数" : "Indices", detail: "S&P 500 / NASDAQ", options: [["FOREXCOM:SPXUSD", "S&P 500 · CFD"], ["FOREXCOM:NSXUSD", "Nasdaq 100 · CFD"], ["FOREXCOM:DJI", "Dow 30 · CFD"]] },
+    { name: ja ? "債券ETF" : "Bond ETFs", detail: "SHY / IEF / TLT", options: [["NASDAQ:SHY", "SHY · 1–3Y"], ["NASDAQ:IEF", "IEF · 7–10Y"], ["NASDAQ:TLT", "TLT · 20+Y"]] },
+    { name: ja ? "為替" : "Forex", detail: ja ? "ドル円 / ユーロ" : "USD/JPY / EUR", options: [["FX:USDJPY", "USD / JPY"], ["FX:EURUSD", "EUR / USD"], ["FX:EURJPY", "EUR / JPY"]] },
   ];
   const selectedGroup = groups.find(group => group.options.some(([value]) => value === symbol))!;
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "マーケット" : "Markets"} description="">
     <IndexStrip lang={lang} />
     <MacroCards ja={ja} />
     <div className={styles.sectionSwitch} role="group" aria-label={ja ? "マーケットの表示" : "Market view"}>
-      {groups.map(group => <button key={group.name} aria-pressed={section === "chart" && group === selectedGroup} onClick={() => { setSymbol(group.options[0][0]); setSection("chart"); }}>{group.name}</button>)}
+      {groups.map(group => <button key={group.name} aria-pressed={section === "chart" && group === selectedGroup} onClick={() => { setSymbol(group.options[0][0]); setSection("chart"); }}><span>{group.name}</span><small>{group.detail}</small></button>)}
       <button aria-pressed={section === "themes"} onClick={() => setSection("themes")}>{ja ? "セクター別騰落率" : "Sector performance"}</button>
       <button aria-pressed={section === "heatmap"} onClick={() => setSection("heatmap")}>{ja ? "ヒートマップ" : "Heatmap"}</button>
     </div>

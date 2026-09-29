@@ -46,3 +46,8 @@ Stock News API and OpenAI remain uncontracted/unconfigured by owner choice. Seco
 
 - Supersedes the nested chart/theme switch: indices, bond ETFs, FX, sector performance and heatmap are directly visible; sector performance opens by default. Mobile navigation wraps into two rows.
 - Removed the promotional theme heading and intro; added cybersecurity, gold miners, software and space constituent groups. The display remains selected stock returns, not an aggregate sector index.
+
+## Owner revision 20:44 JST
+
+- Market starts with indices again. Three chart categories show compact familiar examples (S&P/NASDAQ, SHY/IEF/TLT, USD/JPY/EUR). Sector themes use one compact dropdown instead of wrapping chips, removing duplicate headings/constituents and extra explanatory/source paragraphs. Original widget attribution stays intact.
+- Home news supports horizontal touch swipes and keyboard left/right navigation, preserves vertical scrolling, suppresses link activation after a swipe and pauses automatic rotation while touching.

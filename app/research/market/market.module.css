@@ -52,3 +52,9 @@
 .themeChips{gap:7px;margin:12px 0 18px}
 .themeChips button{padding:8px 11px;font-size:12px}
 @media(max-width:600px){.sectionSwitch{gap:0 10px;margin-top:20px}.sectionSwitch button{grid-column:span 2;padding:12px 0}.sectionSwitch button:nth-child(n+4){grid-column:span 3}.controls select{flex-basis:auto;flex:1;min-width:0}.controls{gap:8px}.modes button{padding:8px}.themeHeading span{font-size:11px}}
+
+.sectionSwitch button span{display:block;font-weight:600;font-size:14px;color:inherit}
+.sectionSwitch button small{display:block;margin-top:5px;color:#9aaab5;font-size:10px;font-weight:400;white-space:normal}
+.themePicker{margin:10px 0 12px}
+.themePicker select{max-width:100%;width:220px;padding:9px 12px;border:1px solid #40565e;border-radius:8px;background:#14212b;color:#e1e9e5;font:inherit;font-size:13px}
+.themePicker select:focus-visible{outline:2px solid #a6d9ca;outline-offset:3px}
