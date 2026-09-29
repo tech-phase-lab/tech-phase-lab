@@ -728,7 +728,14 @@ class ArticleText(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.parts = []
+        self.scoped_parts = []
+        self.content_scope_depth = 0
         self.ignored_stack = []
+
+    def _append(self, value):
+        self.parts.append(value)
+        if self.content_scope_depth:
+            self.scoped_parts.append(value)
 
     def _is_page_chrome(self, tag, attrs):
         values = {
@@ -759,13 +766,15 @@ class ArticleText(HTMLParser):
             if tag not in self.void_tags:
                 self.ignored_stack.append(tag)
             return
+        if tag in {"article", "main"}:
+            self.content_scope_depth += 1
         if tag == "meta":
             values = {key.lower(): value for key, value in attrs if key and value}
             name = (values.get("name") or values.get("property") or "").lower()
             if name in {"description", "og:description", "twitter:description"}:
                 self.parts.extend(["\n", values.get("content", ""), "\n"])
         elif tag in self.blocks or tag == "br":
-            self.parts.append("\n")
+            self._append("\n")
 
     def handle_endtag(self, tag):
         tag = tag.lower()
@@ -775,20 +784,30 @@ class ArticleText(HTMLParser):
                 del self.ignored_stack[last:]
             return
         if tag in self.blocks:
-            self.parts.append("\n")
+            self._append("\n")
+        if tag in {"article", "main"} and self.content_scope_depth:
+            self.content_scope_depth -= 1
 
     def handle_data(self, value):
         if not self.ignored_stack:
-            self.parts.append(value)
+            self._append(value)
 
     def result(self):
-        lines, previous = [], None
-        for part in "".join(self.parts).splitlines():
-            line = " ".join(part.split())
-            if line and line != previous:
-                lines.append(line)
-                previous = line
-        return "\n".join(lines)[:MAX_EXTRACTED_CHARS]
+        def normalized(parts):
+            lines, previous = [], None
+            for part in "".join(parts).splitlines():
+                line = " ".join(part.split())
+                if line and line != previous:
+                    lines.append(line)
+                    previous = line
+            return "\n".join(lines)[:MAX_EXTRACTED_CHARS]
+
+        # First-party templates often leave promotional or legal text in plain
+        # divs outside their semantic article container. Prefer an explicit
+        # article/main body whenever it contains text; a thin scoped shell can
+        # still fall through to the separately validated JSON-LD articleBody.
+        scoped = normalized(self.scoped_parts)
+        return scoped or normalized(self.parts)
 
 
 class StructuredArticleText(HTMLParser):

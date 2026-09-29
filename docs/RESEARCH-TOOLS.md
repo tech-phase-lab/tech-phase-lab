@@ -482,6 +482,12 @@ index are used only if each issuer's preferred feed or sitemap fails; SEC
 Submissions JSON and Atom remain the independent disclosure route. Candidate
 URLs still pass the same official-host and article-path rules, so a fallback
 cannot broaden intake to arbitrary pages or bypass access controls.
+For linked HTML articles, extraction prefers text inside an explicit `main` or
+`article` container over visible template promotions outside that container.
+A thin semantic shell does not become evidence by itself: the worker may use a
+bounded, parsed Schema.org article type only when its `articleBody` passes the
+existing type and minimum-content checks. Scripts are never executed, and the
+public snapshot still exposes only evidence counts rather than article text.
 Future-dated or malformed company observations do not count as post-start
 checks. Once every configured priority company has run, the preview reports the
 measured interval from process start to the final priority check without

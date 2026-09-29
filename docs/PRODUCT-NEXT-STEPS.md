@@ -357,3 +357,15 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
 - No paid service, real member content, production branch or billing setting was
   changed. Live protected-route verification and owner-provided FAQ corrections
   remain pending.
+
+### 2026-09-29 semantic article-body extraction follow-up
+
+- Linked official HTML now prefers an explicit `main` or `article` body over
+  visible promotional/template copy outside that semantic container. A thin
+  semantic shell can still use a separately validated Schema.org article body.
+- Added regressions for both template-noise exclusion and the thin-shell JSON-LD
+  fallback. This changes private evidence extraction only; it does not publish
+  source bodies or enable automatic delivery.
+- Rechecked AMAT, QCOM, CRM, ORCL, NOW, NVDA, PANW, PLTR, AAPL and AMZN. No new
+  confirmed earnings event was found, so all ten remain pending with exact
+  blockers in the dated handoff. BLS and Federal Reserve dates remain unchanged.

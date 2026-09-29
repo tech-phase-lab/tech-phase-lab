@@ -599,6 +599,36 @@ class IntakeTests(unittest.TestCase):
         self.assertIn("visible official release", self.row()["extracted_text"])
         self.assertNotIn("Different structured", self.row()["extracted_text"])
 
+    def test_semantic_article_body_excludes_visible_template_promotions(self):
+        promotional = (
+            "Explore our products, customer stories, careers, events, and partner resources. "
+            * 8
+        )
+        article = (
+            "The company announced a verified expansion of its official AI platform. "
+            "Deployment will begin in 2027 and remains subject to customer demand, "
+            "available power, final contracts, and regulatory approvals."
+        )
+        body = f'''<html><body><div class="site-content">{promotional}</div><main><article><h1>Official update</h1><p>{article}</p></article></main><div class="site-content">{promotional}</div></body></html>'''.encode()
+        result = self.check(body)
+        self.assertEqual(result["status"], "first-fetched")
+        self.assertIn("verified expansion", self.row()["extracted_text"])
+        self.assertNotIn("Explore our products", self.row()["extracted_text"])
+
+    def test_thin_semantic_shell_does_not_hide_valid_json_ld_body(self):
+        article_body = (
+            "The official release confirms a phased AI infrastructure expansion through 2027. "
+            "It identifies customer demand, available power, permitting, and final contracts "
+            "as dependencies and says updated capacity figures will follow. Management also "
+            "states that the schedule remains subject to the completion of those conditions."
+        )
+        promotional = "Explore products, events, careers, and customer stories. " * 12
+        body = f'''<html><body><div>{promotional}</div><main><h1>Official update</h1></main><script type="application/ld+json">{{"@type":"NewsArticle","articleBody":{json.dumps(article_body)}}}</script></body></html>'''.encode()
+        result = self.check(body)
+        self.assertEqual(result["status"], "first-fetched")
+        self.assertEqual(self.row()["extracted_text"], article_body)
+        self.assertNotIn("Explore products", self.row()["extracted_text"])
+
     def test_empty_recheck_preserves_last_good_evidence_and_blocks_review(self):
         self.check(b"<main><p>Previously verified official evidence remains stored.</p></main>")
         previous_sha = self.row()["sha256"]

@@ -292,3 +292,33 @@ Next: AMAT, QCOM, CRM, ORCL, NOW, NVDA, PANW, PLTR, AAPL and AMZN. Keep empty
 dynamic sections, inaccessible sources and completed results pending unless a
 first-party source supplies a confirmed date or an explicit current no-events
 state.
+
+## Follow-up company review (10:41 JST)
+
+Rechecked the queued ten first-party investor calendars on September 29. No
+source supplied a new confirmed earnings date or an explicit current no-events
+statement, so no `lastCheckedOn` value or calendar event changed.
+
+| Ticker | Result | Official source / exact blocker |
+| --- | --- | --- |
+| AMAT | Pending | [Events](https://ir.appliedmaterials.com/events?tab=upcoming) was inaccessible through the official endpoint during this check. No access control was bypassed. |
+| QCOM | Pending | [Investor Events](https://investor.qualcomm.com/news-events/investor-events/default.aspx) exposes an empty Upcoming Events heading without an explicit no-events statement. |
+| CRM | Pending | [Investor Events](https://investor.salesforce.com/events-and-presentations/default.aspx) exposes an empty Upcoming & Recent Events heading without an explicit no-events statement. |
+| ORCL | Pending | [Events and Presentations](https://investor.oracle.com/events-and-presentations/default.aspx) exposes empty Featured Event and Upcoming events headings without an explicit no-events statement. |
+| NOW | Pending | [Events and Presentations](https://investor.servicenow.com/events-and-presentations/default.aspx) exposes archived sections but no inspectable current earnings event or explicit no-events statement. |
+| NVDA | Pending | [Events and Presentations](https://investor.nvidia.com/events-and-presentations/default.aspx) was inaccessible through the official endpoint during this check. No access control was bypassed. |
+| PANW | Pending | [Events and Presentations](https://investors.paloaltonetworks.com/events-and-presentations/default.aspx) was inaccessible through the official endpoint during this check. No access control was bypassed. |
+| PLTR | Pending | [Events](https://investors.palantir.com/events) exposes the investor shell without an inspectable current event or explicit no-events statement. |
+| AAPL | Pending | [Investor Relations](https://investor.apple.com/investor-relations/default.aspx) exposes an empty Investor Updates section and quarterly-results navigation without an explicit no-events statement. |
+| AMZN | Pending | [Events](https://ir.aboutamazon.com/events/default.aspx) exposes an empty Upcoming Events section without an explicit no-events statement. |
+
+The BLS schedule still lists the October 2 Employment Situation, October 14 CPI
+and October 15 PPI releases at 08:30 Eastern. The Federal Reserve page, last
+updated September 16, still lists October 27–28 and December 8–9 without future
+statement or press-conference clock times. Existing date-only records remain
+date-only.
+
+Next: ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL, KLAC, LITE and MRVL. Retain empty,
+tentative, historical-only and inaccessible sources as pending until a
+first-party source supplies a confirmed date or an explicit current no-events
+state.
