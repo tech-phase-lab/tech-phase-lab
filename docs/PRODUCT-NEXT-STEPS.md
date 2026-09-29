@@ -410,3 +410,14 @@ Private weekly sample: staging id weekly-sample-20260622-micron, revision 2, dra
   evidence review; unknown codec names cannot select an arbitrary Python codec.
 - Added a regression using a synthetic Windows-1252 official article. No source
   body became public and no delivery, paid API or production setting was enabled.
+
+### 2026-09-29 HTTP charset evidence decoding follow-up
+
+- Extended the same bounded legacy-encoding allowlist to an official HTML
+  response's HTTP `Content-Type` charset. This covers older IR pages that omit a
+  meta charset while preserving Windows-1252 punctuation in the private evidence.
+- Unknown or oversized charset names cannot select a Python codec and continue
+  through the existing bounded document sniffing and UTF-8/CP1252 fallback.
+- Added end-to-end regression coverage from HTTP response metadata through body
+  extraction. No source body became public and no delivery, paid API or
+  production setting was enabled.

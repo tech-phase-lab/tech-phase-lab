@@ -411,3 +411,32 @@ records remain date-only.
 Next: SKHY, SNOW, VRT, AMAT, QCOM, CRM, ORCL, NOW, NVDA and PANW. Keep empty,
 historical-only and inaccessible sources pending unless a first-party source
 supplies a confirmed date or an explicit current no-events state.
+
+## Follow-up company review (14:49 JST)
+
+Rechecked the queued ten first-party investor calendars and IR news pages on
+September 29. No source supplied a new confirmed earnings date or an explicit
+current no-events statement. No `lastCheckedOn` value or calendar event changed.
+
+| Ticker | Result | Official source / exact blocker |
+| --- | --- | --- |
+| SKHY | Pending | [IR news](https://news.skhynix.com/en/category/ir/) still ends with the August 19 shareholder-return update and completed July 29 Q2 results. It has no future earnings announcement. |
+| SNOW | Pending | [Events & Presentations](https://investors.snowflake.com/events-and-presentations/default.aspx) exposes empty Upcoming Events, Featured Presentation and Archived Events headings without an explicit no-events statement. |
+| VRT | Pending | [Events & Presentations](https://investors.vertiv.com/events-presentations/events-presentations/default.aspx) exposes empty Latest Events, Latest Presentation and Archived Events headings without an explicit no-events statement. |
+| AMAT | Pending | [Events](https://ir.appliedmaterials.com/events?tab=upcoming) was inaccessible through the official endpoint during this check. No access control was bypassed. |
+| QCOM | Pending | [Investor Events](https://investor.qualcomm.com/news-events/investor-events/default.aspx) exposes empty Upcoming Events, Featured Presentation and Archived Events headings without an explicit no-events statement. |
+| CRM | Pending | [Investor Events](https://investor.salesforce.com/events-and-presentations/default.aspx) exposes an empty Upcoming & Recent Events heading without an explicit no-events statement. |
+| ORCL | Pending | [Events and Presentations](https://investor.oracle.com/events-and-presentations/default.aspx) exposes empty Featured Event and Upcoming events headings without an explicit no-events statement. |
+| NOW | Pending | [Events and Presentations](https://investor.servicenow.com/events-and-presentations/default.aspx) exposes archived sections but no inspectable current earnings event or explicit no-events statement. |
+| NVDA | Pending | [Events and Presentations](https://investor.nvidia.com/events-and-presentations/default.aspx) was inaccessible through the official endpoint during this check. No access control was bypassed. |
+| PANW | Pending | [Events and Presentations](https://investors.paloaltonetworks.com/events-and-presentations/default.aspx) was inaccessible through the official endpoint during this check. No access control was bypassed. |
+
+The BLS October schedule still lists the October 2 Employment Situation,
+October 14 CPI and October 15 PPI releases at 08:30 Eastern. The Federal Reserve
+calendar, last updated September 16, still lists October 27–28 and December 8–9
+without future statement or press-conference clock times. Existing date-only
+records remain date-only.
+
+Next: PLTR, AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV and GOOGL. Keep empty,
+historical-only, inaccessible and tentative sources pending unless a first-party
+source supplies a confirmed date or an explicit current no-events state.

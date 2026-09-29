@@ -239,6 +239,16 @@ def http_validator(value):
     return value
 
 
+def html_encoding(value):
+    """Return one allowlisted HTML codec from an HTTP or document declaration."""
+    if not isinstance(value, str):
+        return None
+    declared = value.strip().lower().replace("_", "-")
+    if not declared or len(declared) > 40:
+        return None
+    return HTML_ENCODING_ALIASES.get(declared)
+
+
 def cached_fetch(url):
     """Return and refresh a bounded discovery-response cache entry."""
     with _FETCH_CACHE_LOCK:
@@ -492,6 +502,7 @@ def fetch(url, ticker, validators=None, include_metadata=False):
             error_headers = exc.headers or {}
             return {
                 "content": None, "contentType": None,
+                "charset": None,
                 "etag": http_validator(error_headers.get("ETag")) or etag,
                 "lastModified": http_validator(error_headers.get("Last-Modified")) or last_modified,
                 "notModified": True,
@@ -516,6 +527,10 @@ def fetch(url, ticker, validators=None, include_metadata=False):
             raise ValueError("Source returned an error or verification page")
         response_etag = http_validator(response.headers.get("ETag"))
         response_last_modified = http_validator(response.headers.get("Last-Modified"))
+        response_charset = (
+            html_encoding(response.headers.get_content_charset())
+            if content_type == "text/html" else None
+        )
         if not include_metadata:
             remember_fetch(url, {
                 "content": content,
@@ -526,6 +541,7 @@ def fetch(url, ticker, validators=None, include_metadata=False):
         if include_metadata:
             return {
                 "content": content, "contentType": content_type,
+                "charset": response_charset,
                 "etag": response_etag, "lastModified": response_last_modified,
                 "notModified": False,
             }
@@ -913,12 +929,19 @@ class StructuredArticleText(HTMLParser):
         return max(candidates, key=len, default="")
 
 
-def decode_html_document(content):
+def decode_html_document(content, declared_encoding=None):
     """Decode a bounded HTML response without trusting arbitrary codec names."""
     if content.startswith((b"\xff\xfe", b"\xfe\xff")):
         return content.decode("utf-16", errors="replace")
     if content.startswith(b"\xef\xbb\xbf"):
         return content.decode("utf-8-sig", errors="replace")
+
+    # HTTP Content-Type is authoritative when it names one of the explicitly
+    # supported encodings. Unknown or oversized values cannot select a codec
+    # and fall through to the same bounded document sniffing as before.
+    codec = html_encoding(declared_encoding)
+    if codec:
+        return content.decode(codec, errors="replace")
 
     # HTML encoding declarations must appear early. Keep the scan bounded and
     # allow only the small set needed by the official sources we monitor; a
@@ -937,8 +960,8 @@ def decode_html_document(content):
             re.I,
         )
     if match is not None:
-        declared = match.group(1).decode("ascii", errors="ignore").lower().replace("_", "-")
-        codec = HTML_ENCODING_ALIASES.get(declared)
+        declared = match.group(1).decode("ascii", errors="ignore")
+        codec = html_encoding(declared)
         if codec:
             return content.decode(codec, errors="replace")
 
@@ -950,9 +973,9 @@ def decode_html_document(content):
         return content.decode("cp1252", errors="replace")
 
 
-def extract_html_text(content):
+def extract_html_text(content, declared_encoding=None):
     """Prefer visible evidence, using verified JSON-LD only for thin page shells."""
-    decoded = decode_html_document(content)
+    decoded = decode_html_document(content, declared_encoding)
     visible_parser = ArticleText()
     visible_parser.feed(decoded)
     visible_parser.close()
@@ -1005,10 +1028,10 @@ def extract_pdf_text(content):
     return extracted
 
 
-def extract_text(content, content_type):
+def extract_text(content, content_type, declared_encoding=None):
     """Return bounded plain text for later evidence-grounded editorial work."""
     if content_type == "text/html":
-        return extract_html_text(content)
+        return extract_html_text(content, declared_encoding)
     if content_type == "application/pdf":
         return extract_pdf_text(content)
     if content_type in {"application/rss+xml", "application/atom+xml", "application/xml", "text/xml"}:
@@ -4141,6 +4164,7 @@ def write_snapshot(db, output):
 
 def collect_source(row, transport=fetch):
     """Fetch and extract one source without mutating SQLite, safe for worker threads."""
+    declared_encoding = None
     if getattr(transport, "supports_persistent_validators", False):
         legacy_unextracted_pdf = (
             row["content_type"] == "application/pdf"
@@ -4166,11 +4190,12 @@ def collect_source(row, transport=fetch):
                 "responseLastModified": response["lastModified"],
             }
         content, content_type = response["content"], response["contentType"]
+        declared_encoding = response.get("charset")
         response_etag, response_last_modified = response["etag"], response["lastModified"]
     else:
         content, content_type = transport(row["url"], row["ticker"])
         response_etag = response_last_modified = None
-    extracted = extract_text(content, content_type)
+    extracted = extract_text(content, content_type, declared_encoding)
     is_sec_html = content_type == "text/html" and urlsplit(row["url"]).hostname == "www.sec.gov"
     if not extracted.strip() and not is_sec_html:
         raise ValueError("Source has no extractable text")

@@ -557,6 +557,55 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(self.row()["extracted_text"], article)
         self.assertNotIn("�", self.row()["extracted_text"])
 
+    def test_http_charset_reaches_article_extraction_without_meta_tag(self):
+        from email.message import Message
+
+        article = (
+            "The company’s official release — including management’s outlook — "
+            "confirms that deployment remains subject to demand and final contracts."
+        )
+        body = f"<html><body><main><p>{article}</p></main></body></html>".encode(
+            "cp1252"
+        )
+        original = m.build_opener
+
+        class Response:
+            def __init__(self):
+                self.headers = Message()
+                self.headers["Content-Type"] = "text/html; charset=windows-1252"
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args):
+                return False
+
+            def read(self, _limit):
+                return body
+
+        class Opener:
+            def open(self, _request, timeout):
+                self.timeout = timeout
+                return Response()
+
+        m.build_opener = lambda *_: Opener()
+        try:
+            result = m.collect_source(self.row(), m.fetch)
+        finally:
+            m.build_opener = original
+
+        self.assertEqual(result["extractedText"], article)
+        self.assertNotIn("�", result["extractedText"])
+
+    def test_unknown_http_charset_cannot_select_an_arbitrary_codec(self):
+        self.assertIsNone(m.html_encoding("utf-7"))
+        self.assertIsNone(m.html_encoding("x-user-supplied-codec"))
+        body = b"<html><body><main><p>Official UTF-8 evidence.</p></main></body></html>"
+        self.assertEqual(
+            m.extract_html_text(body, "x-user-supplied-codec"),
+            "Official UTF-8 evidence.",
+        )
+
     def test_empty_article_shell_fails_closed_and_uses_retry_backoff(self):
         body = b"<html><body><nav>Navigation only</nav><script>renderLater()</script></body></html>"
         result = self.check(body)
