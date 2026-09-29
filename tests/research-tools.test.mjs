@@ -125,8 +125,29 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
     .filter((company) => company.lastAttemptedOn === "2026-09-30")
     .map((company) => company.ticker)
     .sort();
-  assert.deepEqual(attemptedOnSeptember30, ["AMAT", "CRM", "LITE", "MRVL", "NOW", "ORCL", "QCOM", "SKHY", "SNOW", "VRT"]);
-  assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-29").length, 30);
+  assert.deepEqual(attemptedOnSeptember30, [
+    "AAPL",
+    "AMAT",
+    "AMZN",
+    "ANET",
+    "ARM",
+    "AVGO",
+    "BE",
+    "CRDO",
+    "CRM",
+    "CRWV",
+    "GOOGL",
+    "KLAC",
+    "LITE",
+    "MRVL",
+    "NOW",
+    "ORCL",
+    "QCOM",
+    "SKHY",
+    "SNOW",
+    "VRT",
+  ]);
+  assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-29").length, 20);
   assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 21);
   assert.equal(coverage.filter((company) => company.lastCheckedOn === null).length, 19);
   for (const ticker of ["MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) {

@@ -1,4 +1,4 @@
-# Tech Phase — current handoff, 2026-09-30 00:49 JST
+# Tech Phase — current handoff, 2026-09-30 01:43 JST
 
 Start here, then read AGENTS.md and docs/AUTONOMOUS-NEXT-2026-09-29.md. Current source and newer owner instructions override older documents.
 
@@ -82,3 +82,9 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - Next calendar batch: AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC.
 - Calendar commit `835ccd3` passed the complete local gate (ESLint zero errors with one pre-existing warning, Node 159/159, Python 451/451, Next.js 55 pages, `compileall`, and `git diff --check`) and deployed Ready to the Vercel branch preview. Railway staging reported success with “No deployment needed — watched paths not modified.” The connector-created tree exactly matched the locally staged tree (`8bf37c9`).
 - A direct canonical-page browser refresh was attempted after deployment, but the existing Chrome DevTools connection timed out twice. Do not claim a new visual browser verification for this commit; the deployment status and prior canonical preview remain the available evidence.
+
+## September 30 01:43 JST continuation
+- Rechecked AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC against first-party investor pages and indexed official announcements. No new confirmed earnings date was found. Arm's November 4 date remains explicitly tentative; inaccessible, empty and historical-only sources remain pending.
+- Rechecked the BLS October schedule and Federal Reserve calendar. The existing October 2 Employment Situation, October 14 CPI, October 15 PPI, October 27–28 FOMC and December 8–9 FOMC records remain unchanged; no missing clock time was inferred.
+- Advanced `lastAttemptedOn` only for the ten companies actually reviewed. No pending `lastCheckedOn`, calendar event, product code, paid provider, production or delivery setting changed.
+- Next calendar batch: ADBE, AMD, ASML, COHR, CRWD, DELL, GEV, INTC, LRCX and META. The finite product/news-readiness backlog remains complete; automatic translation remains disabled pending secure credentials and an explicitly approved model.
