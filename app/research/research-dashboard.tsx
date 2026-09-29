@@ -193,7 +193,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
 
         {tab === "home" && <>
           <ResearchPulse events={events} lang={lang} />
-          <HomeTools lang={lang} onChanges={() => openView("changes")} />
+          <HomeTools lang={lang} onChanges={() => openView("changes")} onPro={() => openView("pro")} />
           <NewsFeed lang={lang} />
           <HomeHelp lang={lang} />
         </>}

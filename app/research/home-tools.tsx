@@ -8,7 +8,7 @@ import { dateLabel } from "@/lib/research/presentation";
 import { useStockFavorites } from "./use-stock-favorites";
 import styles from "./home-tools.module.css";
 
-export default function HomeTools({ lang, onChanges }: { lang: Language; onChanges: () => void }) {
+export default function HomeTools({ lang, onChanges, onPro }: { lang: Language; onChanges: () => void; onPro: () => void }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const plan = useMemberDisplay();
   const isPro = plan === "pro";
@@ -41,7 +41,7 @@ export default function HomeTools({ lang, onChanges }: { lang: Language; onChang
         <div className={styles.overlayCaption}><span className={styles.overlayLabel}>TECH PHASE PRO</span>{plan === "free" && <strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong>}</div>
       </div>}
     </nav>
-    {!isPro && <Link className={styles.proHint} href="/research#tech-phase-pro"><span>{t("PROなら、気になる2〜3銘柄をまとめて比較。", "With PRO, compare 2–3 stocks side by side.")}</span><strong>{t("PROの機能を見る", "Explore PRO")} →</strong></Link>}
+    {!isPro && <button type="button" className={styles.proHint} onClick={onPro}><span>{t("PROなら、気になる2〜3銘柄をまとめて比較。", "With PRO, compare 2–3 stocks side by side.")}</span><strong>{t("PROの機能を見る", "Explore PRO")} →</strong></button>}
   </>;
 }
 
