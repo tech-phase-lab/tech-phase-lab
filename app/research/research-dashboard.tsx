@@ -156,11 +156,11 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
 
       </nav>
       <div className={styles.headerRight}>
-        <HomeLink lang={lang} /><div className={styles.languages} aria-label={t("言語", "Language")}>
+        <HomeLink lang={lang} /><PageRefresh lang={lang} /><div className={styles.languages} aria-label={t("言語", "Language")}>
           <button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button>
           <button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button>
         </div>
-      <HeaderPro /><PageRefresh lang={lang} /></div>
+      <HeaderPro /></div>
     </header>
 
     <div className={styles.shell}>

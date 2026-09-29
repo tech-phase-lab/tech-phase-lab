@@ -52,7 +52,7 @@ export default function Questions() {
     } catch { setMessage(ja ? "送信を完了できませんでした。入力は残っています。通信を確認して、もう一度お試しください。" : "Submission did not complete. Your text is still here; check the connection and try again."); }
     finally { setBusy(false); }
   }
-  return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "リゼルに聞く" : "Ask RIZEL"} description={ja ? "PRO会員の質問をみんなで読み、リゼルが選んだテーマに回答するコーナーです。" : "A shared question board for PRO members. RIZEL picks topics to answer."}>
+  return <ResearchToolShell desk lang={lang} setLang={setLang} title={ja ? "リゼルに聞く" : "Ask RIZEL"} description={ja ? "PRO会員の質問をみんなで読み、リゼルが選んだテーマに回答するコーナーです。" : "A shared question board for PRO members. RIZEL picks topics to answer."}>
     <nav className={styles.views} aria-label={ja ? "質問メニュー" : "Question views"}><span aria-current="page">{ja ? "質問掲示板" : "Question board"}</span><Link href="/research/qa/answered">{ja ? "公開された回答" : "Published answers"}</Link></nav>
     {state === "loading" && <p role="status">{ja ? "会員情報を確認中…" : "Checking your account…"}</p>}
     {(state === "signed-out" || state === "pro-required") && <section className={styles.card}><h2>{ja ? "閲覧・投稿はPRO会員限定です" : "PRO membership required"}</h2><p>{ja ? "PRO会員になると質問の投稿と閲覧ができます。すべての質問への回答はお約束していません。" : "PRO members can post and read questions. Not every question will receive an answer."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in / Membership"}</Link></section>}

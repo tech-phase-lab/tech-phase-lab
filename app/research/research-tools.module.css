@@ -64,3 +64,16 @@
 .links a:focus-visible { outline:2px solid #93dec5; outline-offset:2px; }
 
 @media(max-width:760px) { .links { display:none; } }
+
+.desk{max-width:900px;min-height:calc(100dvh - 84px);background:radial-gradient(ellipse at 12% 0%,#8b6e3420,transparent 48%);padding-top:32px}
+.deskSignature{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#d5bc8d;border-bottom:1px solid #a58b5552;padding:0 0 15px;font:11px var(--font-geist-mono),monospace;letter-spacing:.18em}
+.deskSignature>span::before{content:"◆";font-size:7px;margin-right:9px;color:#dfc894;text-shadow:0 0 12px #d7b67066}
+.deskSignature small{font-size:9px;letter-spacing:.09em;color:#a99876}
+.desk h1{color:#f4efe5;font-weight:500;letter-spacing:.015em}
+.deskNav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:25px 0 28px;border-bottom:1px solid #8f78513d;gap:12px}
+.deskNav a{padding:12px 4px;text-align:center;white-space:nowrap;text-decoration:none;font-size:13px;color:#9e9f9b;border-bottom:2px solid transparent;transition:color .15s,background .15s}
+.deskNav a[aria-current=page]{color:#ead5ab;border-color:#c8aa70;background:linear-gradient(0deg,#c8aa7012,transparent)}
+.deskNav a:hover{color:#f2dfbb}
+.desk>article,.desk>section{border-color:#967d4c48;background:linear-gradient(125deg,#1c1c1c,#111820 75%);box-shadow:inset 0 1px 0 #edd9a509,0 12px 35px #00000018}
+.desk>article>p:first-child{color:#bda982;font-size:11px;letter-spacing:.05em}
+@media(max-width:700px){.desk{padding-top:24px;min-height:calc(100dvh - 64px)}.deskSignature{font-size:10px}.deskNav{gap:6px;margin:20px 0 24px}.deskNav a{font-size:12px;padding:11px 2px}}
