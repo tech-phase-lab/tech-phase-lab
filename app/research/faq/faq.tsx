@@ -6,22 +6,75 @@ import { useResearchLanguage } from "../use-research-language";
 import styles from "../learn/styles.module.css";
 
 const questions = [
-  ["無料で読めるものは？", "What is free?", "投資の基礎、よくある質問・使い方、公開カレンダーや公開データはログインなしで確認できます。PRO表示の本文や一部機能には、その時点で有効な会員状態が必要です。", "Investing basics, this FAQ, the public calendar and public data are available without signing in. PRO-labeled article bodies and some features require an active membership status."],
-  ["質問すると必ず回答されますか？", "Will every question be answered?", "いいえ。PRO会員が投稿し、ほかのPRO会員も読める掲示板です。リゼルが選んだテーマに回答します。すべての質問への回答はお約束していません。", "No. PRO members can post and read questions. RIZEL picks topics to answer; answers are not guaranteed."],
-  ["送った質問は公開されますか？", "Who can read my question?", "新しい投稿はPRO会員全員に公開されます。Free会員は投稿・閲覧できません。以前の非公開質問は本人と運営者だけが閲覧できます。個人情報や口座情報は書かないでください。不適切な投稿は削除し、悪質な投稿が増えた場合は掲示板を休止・閉鎖することがあります。", "New posts are shared with all PRO members. Free members cannot post or read them. Previous private questions stay private. Never include personal or account details. Inappropriate posts are removed; repeated abuse may lead to suspension or closure."],
-  ["リゼルのひとりごとに見出しはありますか？", "Do RIZEL’s Notes have headlines?", "ありません。短い本文だけの投稿です。ホームには最新投稿日だけを表示し、PRO本文を無料画面へ返しません。", "No. Notes are body-only casual posts. The home page shows only the latest publication date and does not return the PRO body to the free surface."],
-  ["カレンダーはリアルタイムですか？", "Is the calendar real-time?", "いいえ。公式発表を定期的に確認する予定表で、ライブ配信ではありません。確認できた日付・時刻だけを掲載し、日付しか公表されていない予定に時刻を足しません。表示タイムゾーンも確認してください。", "No. It is a periodically verified schedule, not a live feed. Only confirmed dates and times are included; a date-only announcement is not given an invented time. Check the displayed time zone."],
-  ["通知は何秒で届きますか？", "How many seconds do alerts take?", "到着時間は保証しません。取得間隔、公式サイトの公開方法、ネットワーク、端末設定で変わります。画面の更新間隔と、発表から端末到着までの実測時間は別です。", "Delivery time is not guaranteed. It varies with polling, the source site, networks and device settings. A screen refresh interval is not the same as measured release-to-device latency."],
-  ["英語表示はいつ使えますか？", "When is English available?", "日本語を基準にし、英訳が確認できたものだけ英語で表示します。英訳が未完了なら待機中として扱い、日本語の内容から推測して補いません。", "Japanese is the source language. English appears only after a translation is available and checked. Pending English is not guessed from the Japanese text."],
-  ["これは投資助言ですか？", "Is this investment advice?", "いいえ。企業調査と学習のための一般情報で、売買や利益を勧めるものではありません。判断には価格、損失可能性、税務、生活資金など個別事情があります。", "No. This is general company-research and educational information, not a recommendation to trade or a promise of returns. Decisions depend on price, possible loss, taxes and personal finances."],
+  [
+    "投資初心者でも利用できますか？",
+    "Can I use this as a beginner?",
+    "もちろん利用できます。「米国株のはじめ方」も用意していますので、基礎を確認しながらご利用ください。",
+    "Absolutely. Our US stock basics guide can help you get started and learn as you go."
+  ],
+  [
+    "PRO版は月頭に契約したほうがいいですか？",
+    "Should I join PRO at the start of the month?",
+    "いいえ。契約日を起点とする月額制なので、月の途中からでも利用期間が短くなることはありません。",
+    "No. Your monthly subscription starts on the day you join, so joining partway through a calendar month won’t shorten your access."
+  ],
+  [
+    "PROを解約すると、いつまで利用できますか？",
+    "How long can I use PRO after canceling?",
+    "解約後も、お支払い済みの期間が終わるまでPROを利用できます。解約すると次回の自動更新が停止します。",
+    "You can keep using PRO until the end of the period you’ve paid for. Canceling stops your next automatic renewal."
+  ],
+  [
+    "スマホとパソコンの両方で利用できますか？",
+    "Can I use both my phone and computer?",
+    "はい。同じアカウントでログインすれば、スマホ・パソコンの両方で利用できます。",
+    "Yes. Sign in with the same account on your phone or computer."
+  ],
+  [
+    "どの銘柄を取り扱っていますか？",
+    "Which stocks do you cover?",
+    "NVIDIA、AMD、Micron、Nebiusなど、AI・半導体を中心に、クラウド、電力・冷却などの関連企業22銘柄を追っています。対象は「監視22銘柄リスト」で確認できます。",
+    "We follow 22 companies across AI, semiconductors, cloud, power and cooling, including NVIDIA, AMD, Micron and Nebius. See the 22-stock watch list for the full lineup."
+  ],
+  [
+    "質問をすると必ず回答されますか？",
+    "Will every question be answered?",
+    "リゼルが厳選した質問に回答します。すべての質問への回答はお約束できません。",
+    "RIZEL chooses which questions to answer. We can’t promise an answer to every question."
+  ],
+  [
+    "送った質問は公開されますか？",
+    "Will my question be visible to others?",
+    "はい。投稿した質問はPRO会員全員に公開されます。個人情報の記載や、不適切な発言はお控えください。以前の非公開質問は本人と運営者だけが閲覧できます。",
+    "Yes. Your questions are visible to all PRO members. Please avoid personal details and inappropriate comments. Previous private questions remain visible only to you and the team."
+  ],
+  [
+    "銘柄の追加や、取り上げてほしいテーマをリクエストできますか？",
+    "Can I request a stock or topic?",
+    "はい。すべてのご要望にはお応えできませんが、同じ銘柄やテーマへのリクエストが多い場合は検討します。",
+    "Yes. We can’t accommodate every request, but we’ll consider stocks and topics that many members ask for."
+  ],
+  [
+    "掲載内容に誤りを見つけた場合、どこに連絡すればよいですか？",
+    "How can I report an error?",
+    "リゼルの公式Xアカウントへご連絡ください。アカウントは2026年12月に開設予定です。開設後、このページに連絡先を掲載します。",
+    "Please contact RIZEL’s official X account. It’s planned for December 2026, and we’ll add the contact link here once it’s available."
+  ],
+  [
+    "これは投資助言ですか？",
+    "Is this investment advice?",
+    "いいえ。企業調査と学習のための一般情報で、特定の銘柄の売買を勧めたり、利益を保証したりするものではありません。",
+    "No. We provide general information for company research and learning, not recommendations to buy or sell specific stocks or guarantees of returns."
+  ]
 ] as const;
 
 export default function Faq() {
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
-  return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "よくある質問・使い方" : "FAQ & help"} description={ja ? "表示、会員機能、質問、カレンダー、通知についての案内です。" : "Answers about content, membership, questions, the calendar and alerts."}>
+  return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "よくある質問・使い方" : "FAQ & help"} description={ja ? "利用方法、PRO会員、質問についてのご案内です。" : "Quick answers about getting started, PRO membership and questions."}>
     <nav className={styles.localNav} aria-label={ja ? "案内メニュー" : "Help menu"}><Link href="/research/learn">{ja ? "投資の基礎" : "Investing basics"}</Link><span aria-current="page">{ja ? "よくある質問・使い方" : "FAQ & help"}</span></nav>
-    <div className={styles.steps}>{questions.map(([questionJa, questionEn, answerJa, answerEn], index) => <details className={styles.card} key={questionJa} open={index === 0}><summary><span className={styles.number}>{String(index + 1).padStart(2, "0")}</span><strong>{ja ? questionJa : questionEn}</strong></summary><p>{ja ? answerJa : answerEn}</p></details>)}</div>
+    <p className={styles.notice}>{ja ? "現在は開発プレビューです。契約・解約の回答は有料サービス開始時の運用方針で、課金はまだ開始していません。" : "This is a development preview. Subscription and cancellation answers describe our planned launch policy; paid billing hasn’t started yet."}</p>
+    <div className={styles.steps}>{questions.map(([questionJa, questionEn, answerJa, answerEn], index) => <details className={styles.card} key={questionJa} open={index === 0}><summary><span className={styles.number}>{String(index + 1).padStart(2, "0")}</span><strong>{ja ? questionJa : questionEn}</strong></summary><p>{ja ? answerJa : answerEn}</p>{index === 4 && <Link href="/research#monitored-companies">{ja ? "監視22銘柄リストを見る" : "View the 22-stock watch list"}</Link>}</details>)}</div>
     <aside className={styles.notice}><strong>{ja ? "問題が解決しないとき" : "If this does not solve it"}</strong><p>{ja ? "会員状態はマイアカウントで確認できます。表示や取得に失敗した場合は、時間をおいて再読み込みしてください。質問フォームにはパスワード、本人確認書類、口座番号を入力しないでください。" : "Check membership status on My account. If a page or data source fails, wait and reload. Never put a password, identity document or account number in the question form."}</p><Link href="/research/account">{ja ? "マイアカウントを確認" : "Check My account"} →</Link></aside>
   </ResearchToolShell>;
 }

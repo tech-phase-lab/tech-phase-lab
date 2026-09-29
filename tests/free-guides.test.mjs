@@ -14,9 +14,11 @@ test("free learning and service help stay separate and linked from navigation", 
   assert.match(guide, /決算を読む順番/);
   assert.match(guide, /日本居住者向け/);
   assert.match(guide, /一般情報です/);
-  assert.match(faq, /質問すると必ず回答されますか/);
+  assert.match(faq, /質問をすると必ず回答されますか/);
   assert.match(faq, /以前の非公開質問は本人と運営者だけ/);
-  assert.match(faq, /画面の更新間隔と、発表から端末到着までの実測時間は別/);
+  assert.match(faq, /課金はまだ開始していません/);
+  assert.match(faq, /2026年12月に開設予定/);
+  assert.doesNotMatch(faq, /無料で読めるものは|通知は何秒|見出しはありますか|カレンダーはリアルタイム|英語表示はいつ/);
   for (const source of [home, nav]) {
     assert.match(source, /\/research\/learn/);
     assert.match(source, /\/research\/faq/);
