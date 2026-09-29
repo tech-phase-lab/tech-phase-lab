@@ -11,6 +11,7 @@ import { useResearchLanguage } from "../use-research-language";
 import ResearchToolShell from "../research-tool-shell";
 import styles from "../research-tools.module.css";
 import calendarStyles from "./event-calendar.module.css";
+import { calendarInsight } from "./calendar-insights";
 
 const earningsFocus: Record<string, { ja: string; en: string }> = {
   MU: { ja: "注目点：DRAM・NANDの売上と価格動向／粗利益率／HBMと設備投資／次四半期の会社見通し", en: "Watch: DRAM/NAND revenue and pricing; gross margin; HBM and capex; next-quarter guidance." },
@@ -20,6 +21,12 @@ const earningsFocus: Record<string, { ja: string; en: string }> = {
   NFLX: { ja: "注目点：売上成長／営業利益率／広告事業の進捗／フリーキャッシュフローと見通し", en: "Watch: revenue growth; operating margin; advertising progress; free cash flow and guidance." },
   ADBE: { ja: "注目点：継続収益の成長／部門別売上／利益率／AI製品の収益化と会社見通し", en: "Watch: recurring-revenue growth; segment revenue; margins; AI monetization and guidance." },
 };
+
+function IndicatorGuide({ id, lang }: { id: string; lang: "ja" | "en" }) {
+  const guide = calendarInsight(id, lang);
+  if (!guide) return null;
+  return <dl className={calendarStyles.insights}><dt>{lang === "ja" ? "どんな指標？" : "What it is"}</dt><dd>{guide.what}</dd><dt>{lang === "ja" ? "見るポイント" : "What to watch"}</dt><dd>{guide.watch}</dd><dt>{lang === "ja" ? "読み方" : "How to read it"}</dt><dd>{guide.reading}</dd></dl>;
+}
 
 export default function EventCalendar() {
   const [lang, setLang] = useResearchLanguage();
@@ -68,10 +75,11 @@ export default function EventCalendar() {
           <span className={calendarStyles.expand} aria-hidden="true">＋</span>
         </summary>
         <div className={calendarStyles.eventDetails}>
+          <IndicatorGuide id={event.id} lang={lang} />
           {event.note && <p>{event.note[lang]}</p>}
           {event.ticker && earningsFocus[event.ticker] && <p>{earningsFocus[event.ticker][lang]}</p>}
-          <small>{stamp(event.startsAt, zone)} · {zoneLabel(zone)} · {calendarDateKey(event.startsAt, zone).slice(0, 4)}<br />{stamp(event.startsAt, otherZone)} · {zoneLabel(otherZone)}</small>
-          <a href={event.sourceUrl} target="_blank" rel="noreferrer">{t("公式日程", "Official schedule")} · {event.sourceName} ↗</a>
+          <details className={calendarStyles.sourceDetails}><summary>{t("日時・出典", "Time & source")}</summary><small>{stamp(event.startsAt, zone)} · {zoneLabel(zone)} · {calendarDateKey(event.startsAt, zone).slice(0, 4)}<br />{stamp(event.startsAt, otherZone)} · {zoneLabel(otherZone)}</small>
+          <a href={event.sourceUrl} target="_blank" rel="noreferrer">{event.sourceName} ↗</a></details>
         </div>
       </details>
     </li>)}</ol>
@@ -80,7 +88,8 @@ export default function EventCalendar() {
       {visibleDateOnly.length > 0 && <><h2>{t("時刻未公表の予定", "Dates awaiting a time")}</h2>
       <ol className={calendarStyles.agenda}>{visibleDateOnly.map((event) => <li key={event.id}><details>
         <summary><time dateTime={event.date}>{event.date.slice(5).replace("-", "/")}<small>{t("時刻未定", "Time TBD")}</small></time><span className={calendarStyles.eventName}>{event.title[lang]}</span><span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
-        <div className={calendarStyles.eventDetails}>{event.ticker && earningsFocus[event.ticker] && <p>{earningsFocus[event.ticker][lang]}</p>}<p>{event.note?.[lang] ?? t("公式掲載日です。時刻未公表のためET/JSTへの日付換算はしていません。", "Official calendar date; not converted to ET/JST because no time has been confirmed.")}</p><small>{event.date}</small><a href={event.sourceUrl} target="_blank" rel="noreferrer">{t("公式日程", "Official schedule")} · {event.sourceName} ↗</a></div>
+        <div className={calendarStyles.eventDetails}>
+          <IndicatorGuide id={event.id} lang={lang} />{event.ticker && earningsFocus[event.ticker] && <p>{earningsFocus[event.ticker][lang]}</p>}<p>{event.note?.[lang] ?? t("公式掲載日です。時刻未公表のためET/JSTへの日付換算はしていません。", "Official calendar date; not converted to ET/JST because no time has been confirmed.")}</p><details className={calendarStyles.sourceDetails}><summary>{t("日付・出典", "Date & source")}</summary><small>{event.date}</small><a href={event.sourceUrl} target="_blank" rel="noreferrer">{event.sourceName} ↗</a></details></div>
       </details></li>)}</ol></>}
 
       <details className={styles.coverage}>
