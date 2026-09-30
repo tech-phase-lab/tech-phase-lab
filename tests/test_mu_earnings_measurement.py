@@ -9,6 +9,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/research')
 import monitor
 import mu_earnings_measurement as measurement
 
+ENV = {
+    'OFFICIAL_HEADLINE_TRANSLATION_ENABLED': 'true',
+    'OPENAI_API_KEY': 'synthetic-test-key-only-1234',
+    'OFFICIAL_HEADLINE_TRANSLATION_MODEL': 'synthetic-model',
+}
+
 class MeasurementTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -43,12 +49,12 @@ class MeasurementTests(unittest.TestCase):
                             (self.url, '2026-09-30T13:00:00-07:00'))
         source = measurement.candidate(self.db)
         self.assertEqual(source['published_at'], '2026-09-30T13:00:00-07:00')
-        with patch.object(measurement, 'stamp', return_value='2026-09-30T20:00:10+00:00'), patch.object(measurement.headline_translation, 'configuration', return_value=('secret-key','model',50)):
+        with patch.object(measurement, 'stamp', return_value='2026-09-30T20:00:10+00:00'):
             outputs = iter((
                 {'output_text': json.dumps({'titleJa':'マイクロン、決算を発表'})},
                 {'output_text': json.dumps({'summaryJa':'売上高は120億ドル。','summaryEn':'Revenue was $12 billion.'})},
             ))
-            measurement.run_once(self.path, transport=lambda *_: next(outputs))
+            measurement.run_once(self.path, env=ENV, transport=lambda *_: next(outputs))
         metrics = measurement.diagnostics(self.db)
         self.assertEqual(metrics['publicationPrecision'], 'timestamp')
         self.assertEqual(metrics['publicationToDetectionMs'], 1000)
@@ -68,9 +74,9 @@ class MeasurementTests(unittest.TestCase):
             calls.append(payload)
             output={'titleJa':'マイクロン、決算を発表'} if len(calls)==1 else {'summaryJa':'売上高は120億ドル。','summaryEn':'Revenue was $12 billion.'}
             return {'output_text': json.dumps(output)}
-        with patch.object(measurement, 'stamp', return_value='2026-09-30T20:00:10+00:00'), patch.object(measurement.headline_translation, 'configuration', return_value=('secret-key','model',50)):
-            measurement.run_once(self.path,transport=transport)
-            measurement.run_once(self.path,transport=transport)
+        with patch.object(measurement, 'stamp', return_value='2026-09-30T20:00:10+00:00'):
+            measurement.run_once(self.path,env=ENV,transport=transport)
+            measurement.run_once(self.path,env=ENV,transport=transport)
         self.assertEqual(len(calls),2)
         metrics=measurement.diagnostics(self.db)
         self.assertEqual(metrics['status'],'complete')
@@ -84,10 +90,34 @@ class MeasurementTests(unittest.TestCase):
         self.assertNotIn('売上高',json.dumps(metrics,ensure_ascii=False))
         self.assertNotIn('secret',json.dumps(metrics))
     def test_experiment_expires_without_billable_requests(self):
-        with patch.object(measurement, 'stamp', return_value='2026-10-02T00:00:01+00:00'), patch.object(measurement.headline_translation, 'configuration', return_value=('key','model',50)):
-            measurement.run_once(self.path, transport=lambda *_: self.fail('expired request'))
+        with patch.object(measurement, 'stamp', return_value='2026-10-02T00:00:01+00:00'):
+            measurement.run_once(self.path, env=ENV, transport=lambda *_: self.fail('expired request'))
             with monitor.connect(Path(self.temp.name)/'empty.sqlite') as empty:
                 metrics=measurement.diagnostics(empty)
         self.assertEqual(metrics['status'],'expired-without-release')
         self.assertIsNone(metrics['detectionToBodyMs'])
         self.assertIsNone(metrics['modelRequestTotalMs'])
+
+    def test_scoped_configuration_uses_explicit_enable_without_general_approval(self):
+        self.assertEqual(measurement.configuration(ENV),
+                         ('synthetic-test-key-only-1234', 'synthetic-model'))
+        self.assertIsNone(measurement.configuration({**ENV,
+                                                     'OFFICIAL_HEADLINE_TRANSLATION_ENABLED': 'false'}))
+        self.assertIsNone(measurement.configuration({
+            **ENV, 'OPENAI_API_KEY': '',
+            'OFFICIAL_HEADLINE_TRANSLATION_APPROVED_ON': '2026-12-01',
+        }))
+
+    def test_missing_general_approval_does_not_block_authorised_mu_measurement(self):
+        calls = []
+        outputs = iter((
+            {'output_text': json.dumps({'titleJa': 'マイクロン、決算を発表'})},
+            {'output_text': json.dumps({'summaryJa': '売上高は120億ドル。',
+                                        'summaryEn': 'Revenue was $12 billion.'})},
+        ))
+        with patch.object(measurement, 'stamp', return_value='2026-09-30T20:00:10+00:00'):
+            measurement.run_once(
+                self.path, env=ENV,
+                transport=lambda *_: calls.append(1) or next(outputs),
+            )
+        self.assertEqual(len(calls), 2)

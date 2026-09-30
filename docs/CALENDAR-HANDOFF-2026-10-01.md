@@ -155,3 +155,19 @@ The October 1 BLS and Federal Reserve daily checks were already complete. Their
 stored October 2/14/15 releases and October 27–28/December 8–9 meetings were not
 reinterpreted or assigned new clock times. The next rotation starts with LITE,
 MRVL, NOW, NVDA, PANW, PLTR, SKHY, SNOW, VRT and QCOM.
+
+## Pending-first company review (05:44 JST)
+
+Rechecked LITE, MRVL, NOW, NVDA, PANW, PLTR, SKHY, SNOW, VRT and QCOM through
+their configured first-party investor pages. No new confirmed earnings release
+or call was found. Lumentum, Snowflake, Vertiv and Qualcomm exposed empty
+upcoming-event sections; Marvell's October 6 item is Investor Day rather than an
+earnings event; ServiceNow showed archived sections only; Palantir exposed no
+inspectable event; and SK hynix's latest earnings announcement remained its
+July 29 Q2 release. The configured NVIDIA and Palo Alto Networks pages remained
+inaccessible through the lawful retrieval path. Those two sources therefore
+remain pending rather than being marked checked or replaced with an estimate.
+
+All ten already had an October 1 attempt, so no coverage timestamp was
+rewritten. The October 1 BLS and Federal Reserve daily reviews were also already
+complete; no economic release or FOMC time was changed or inferred.

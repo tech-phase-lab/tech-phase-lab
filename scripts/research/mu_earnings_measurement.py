@@ -10,12 +10,30 @@ import re
 import time
 from urllib.parse import urlsplit
 import brief_generator
-import headline_translation
 import monitor
 
 EVENT = "mu-fq4-2026"
 START = "2026-09-30T19:00:00+00:00"
 END = "2026-10-02T00:00:00+00:00"
+
+
+def configuration(env=None):
+    """Reuse the approved provider only for this time-bounded MU rehearsal.
+
+    General headline translation has a separate December approval gate. The
+    owner explicitly approved this one release measurement, so sharing that
+    later gate would incorrectly stop the finite worker after deployment.
+    """
+    env = os.environ if env is None else env
+    if env.get("OFFICIAL_HEADLINE_TRANSLATION_ENABLED") != "true":
+        return None
+    try:
+        return brief_generator.configuration({
+            "OPENAI_API_KEY": env.get("OPENAI_API_KEY", ""),
+            "RESEARCH_SUMMARY_MODEL": env.get("OFFICIAL_HEADLINE_TRANSLATION_MODEL", ""),
+        })
+    except (ValueError, brief_generator.GenerationUnavailable):
+        return None
 
 
 def schema(db):
@@ -79,10 +97,10 @@ def candidate(db):
 
 
 def run_once(path, env=None, transport=brief_generator.request_response):
-    config = headline_translation.configuration(env)
+    config = configuration(env)
     if config is None or not START <= stamp() < END:
         return
-    key, model, _ = config
+    key, model = config
     with monitor.connect(path) as db:
         schema(db)
         source = candidate(db)
@@ -142,7 +160,7 @@ def diagnostics(db):
     row = db.execute("SELECT * FROM mu_earnings_measurement WHERE event=?", (EVENT,)).fetchone()
     if row is None:
         return {"status": "waiting-for-release" if stamp() < END else "expired-without-release",
-                "configured": headline_translation.configuration(os.environ) is not None, "experimentExpiresAt": END,
+                "configured": configuration(os.environ) is not None, "experimentExpiresAt": END,
                 "publicationToDetectionMs": None, "detectionToBodyMs": None,
                 "translationMs": None, "summaryMs": None, "bodyToSummaryMs": None,
                 "detectionToSummaryMs": None, "modelRequestTotalMs": None,
