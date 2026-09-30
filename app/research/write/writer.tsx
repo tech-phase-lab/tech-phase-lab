@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ClerkProvider, SignIn } from "@clerk/nextjs";
-import { jaJP } from "@clerk/localizations";
+import { SignIn } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
 import type { EditorialPost } from "@/lib/research/editorial-posts";
 import styles from "../editorial/styles.module.css";
@@ -57,5 +56,5 @@ function WriterContent() {
 export default function Writer() {
   const key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
   if (!key) return <main className={styles.main}><h1>ひとりごとを書く</h1><p>投稿画面に接続できませんでした。</p><Link href="/research">ホームへ戻る</Link></main>;
-  return <ClerkProvider publishableKey={key} localization={jaJP}><WriterContent /></ClerkProvider>;
+  return <WriterContent />;
 }
