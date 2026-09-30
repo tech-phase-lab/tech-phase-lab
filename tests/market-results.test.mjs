@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {parseResultBriefs,resultEvents} from '../lib/research/market-results.ts';
+import {publicNewsPayload} from '../lib/research/general-news.ts';
 import {publicEvent} from '../lib/research/access.ts';
 import {evidenceIssues} from '../lib/research/quality.ts';
 const brief={id:'777',researchId:'x-result-777',kind:'earnings',ticker:'MU',period:'Q4 2026',
@@ -20,4 +21,12 @@ test('automatic factual results make bilingual articles without premium leakage'
 });
 test('macro results are not misrepresented as company earnings',()=>{
  assert.equal(resultEvents(parseResultBriefs([{...brief,kind:'economic',ticker:'ECON'}])).length,0);
+});
+
+test('the public news consumer accepts result links only with a matching validated result',()=>{
+ const update={id:brief.id,researchId:brief.researchId,title:brief.titleEn,translationJa:brief.titleJa,url:brief.url,publisher:brief.publisher,tickers:['MU'],observedAt:brief.observedAt,publishedAt:brief.publishedAt};
+ const payload={ok:true,enabled:false,items:[],resultBriefs:[brief],officialUpdates:[update]};
+ assert.equal(publicNewsPayload(payload).officialUpdates[0].researchId,brief.researchId);
+ assert.throws(()=>publicNewsPayload({...payload,resultBriefs:[]}));
+ assert.throws(()=>publicNewsPayload({...payload,officialUpdates:[{...update,url:'https://x.com/tipranks/status/9876'}]}));
 });

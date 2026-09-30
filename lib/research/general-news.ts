@@ -44,7 +44,8 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
         if (typeof v.publishedOn !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(v.publishedOn) || !Number.isFinite(Date.parse(v.publishedOn)) || new Date(v.publishedOn).toISOString().slice(0,10) !== v.publishedOn) throw Error("Invalid publication date");
         publication.publishedOn = v.publishedOn;
       }
-      if (v.researchId !== undefined && (!verifiedMu || v.researchId !== 'mu-q4-2026')) throw Error('Invalid research reference');
+      const resultReference = updates.resultBriefs?.some(r => r.kind === 'earnings' && r.researchId === v.researchId && r.url === url.href);
+      if (v.researchId !== undefined && !(verifiedMu && v.researchId === 'mu-q4-2026') && !resultReference) throw Error('Invalid research reference');
       return { id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}) };
     }).filter(item => {
       if (seenOfficialUrls.has(item.url)) return false;
