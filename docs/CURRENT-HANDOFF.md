@@ -109,3 +109,5 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - September 30 12:11 JST: User prefers avatar beside bubble for a stronger speaking effect, and timestamp below the text. Latest layout uses compact left avatar (32px mobile), left-pointing tail, and small right-aligned date/time under body. This supersedes overlap/above-bubble trials.
 
 - September 30 12:18 JST: Move the side avatar 5px left, and reduce timestamp top margin from 10px to 6px. Keep bubble width and text size unchanged.
+
+- September 30 12:24 JST: Current trial moves date/time to the top-left inside the speech bubble; compact side avatar stays 5px left. If user dislikes this final trial, restore previous timestamp-bottom layout from commit 2d3500db6cb3ee4f9a2281412f4f7a6b6ee8c7c4.
