@@ -63,6 +63,23 @@ Final integrated-tree checks passed: Node 171/171, Python 467/467, production
 build, compileall and diff whitespace checks. ESLint has zero errors and the
 existing unused-variable warning in `tests/comparison.test.mjs` only.
 
+Live verification completed October 1, 00:19–00:22 JST for commit
+`7b12d3cdbd5dd89336eb20195ca717c2e1313eb2`:
+
+- GitHub Actions run `36735645890` succeeded. Vercel preview deployment
+  `dpl_CH1X88J5ZQs5fu6fkGdL2M3NNZAb` is Ready; Railway research-monitor-staging
+  deployment status is Success. No production branch/settings changed.
+- `/research/news` and home show the automatically acquired BEA item with all
+  four price changes, Japanese and English factual headlines and the exact
+  September 30 21:30:00 JST publication clock. The calendar changes from the
+  saved snapshot to the automatic four-measure result without duplicate rows.
+- Calendar shows October 29 21:30 JST and November 25/December 23 22:30 JST.
+  Switching to Eastern shows 08:30 ET; November filtering retains only four
+  November events and hides September results. Japanese display was restored.
+- Browser errors observed were Chrome-extension metadata errors only, with
+  no application error in the inspected calendar/news logs. This confirms a
+  late initial import; it is not a release-time latency measurement.
+
 Limits: combined-month releases and changed BEA prose such as unsupported
 unchanged/less-than wording intentionally fail closed pending a tested parser
 update. Automatic news retains seven days; saved August actuals remain available
