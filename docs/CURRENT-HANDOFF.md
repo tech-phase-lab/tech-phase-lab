@@ -157,3 +157,12 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - Full-width inline answer editor overrides metadata flex rules. All relevant inputs are at least 16px; mobile bottom navigation/top button hidden during input focus; comparison list max132px, autocomplete disabled.
 - Notes avatar 48px desktop/42px mobile, vertically centred with matching bubble tail. Timestamp stays above message.
 - Removed top owner answer-management link. Published answers show Question and RIZEL’s answer labels, divider and indented answer block. Existing real user answer must not be replaced by test content.
+
+
+## 2026-09-30 18:57 JST — speaker alignment and intake diagnosis
+- UI commit `2af5db16ba8abf3ac8c8a8f9a8dd1d79e43e4496`: note avatar and bubble tail at 40% height; avatar moved 5px farther left (left:-10px). Approved artwork and top timestamp preserved. Published Q&A answers use the same avatar. Compare suggestions render only for non-empty input, including keyboard Enter behavior.
+- Verified deployed notes and published real answer visually; empty comparison focus showed no options, typing M showed matching candidates. No new note/answer was published.
+- Health diagnostics commit `b8523cafa389c628f33ab4030967c028eab268d1`: adds aggregate-only X intake health (budget, request spacing, success/error counts and timestamps). No source IDs, tokens, URLs, queries or post bodies exposed. Privacy regression added; original aggregate privacy tests preserved. All local gates passed including 456 Python tests; GitHub Actions, Vercel and Railway success.
+- Live health at 18:55 JST: X enabled/configured, 4179/4400 requests in trailing 24h, limit not reached, four routes checked with zero errors, all successful within preceding ~80sec. Do not raise paid request budget without authorization.
+- Deployed home observed: newest official update NVDA published 9/30 04:10:51 JST; latest NBIS 9/29 21:02:44 JST. Headline translation 19 eligible/19 translated, zero pending. Latest displayed target remains AMD BofA $620 to $720, 9/25 19:50:28 JST. Data-read timestamp is NOT article publication timestamp.
+- X fetching is not stopped. Target parser accepts only known-firm, explicit old/new dollar target changes on a single ticker; reaffirmed targets and other formats excluded. Completeness against latest original posts remains unverified; do not claim no new target changes exist. Private raw queue still requires editor token, which was not entered or retrieved. No authentication was weakened.
