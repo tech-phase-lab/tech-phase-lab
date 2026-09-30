@@ -114,3 +114,12 @@ date-only.
 Next: MSFT, MU, NBIS, NFLX, NVDA, PANW, PLTR, SNDK, TSLA and TSM. This will
 finish the September 30 rotation through all 40 companies. Continue to retain
 inaccessible or inconclusive sources as pending.
+
+Calendar commit `e784e87` used the exact locally staged and connector-created
+tree (`1bf3130`). The complete local gate passed: ESLint had zero errors and one
+pre-existing warning, Node tests passed 163/163, Python tests passed 451/451,
+Next.js built all 55 routes, and `compileall` plus `git diff --check` passed.
+Vercel deployment `dpl_EwZRZucxgH9zkM9fNtqVeaUQK2JY` reached Ready; Railway
+staging reported success without redeploying because no watched monitor path
+changed. The canonical Japanese calendar loaded with the September 30 official
+confirmation date, 17 schedules, and unchanged date-only ASML/FOMC entries.
