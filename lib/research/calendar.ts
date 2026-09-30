@@ -70,6 +70,12 @@ export const calendarEvents: CalendarEvent[] = [
     note: { ja: "公開は予定時刻の前後です。経営陣インタビューは44分後を予定しています。", en: "Approximate release time. The management interview is scheduled 44 minutes later." },
   },
   {
+    id: "sndk-fq1-2027-call", ticker: "SNDK", kind: "earnings" as const, title: { ja: "Sandisk 決算説明会（2027年度Q1）", en: "Sandisk fiscal Q1 2027 earnings call" },
+    startsAt: "2026-10-29T16:30:00-04:00", sourceTimezone: "America/New_York", sourceName: "Sandisk IR",
+    sourceUrl: "https://investor.sandisk.com/news-events/events",
+    note: { ja: "説明会の開始予定です。決算資料の公開時刻を示すものではありません。", en: "Scheduled call start, not the publication time of the earnings release." },
+  },
+  {
     id: "tsm-q3-2026-call", ticker: "TSM", kind: "earnings" as const, title: { ja: "TSMC 決算説明会（2026年Q3）", en: "TSMC Q3 2026 earnings conference and call" },
     startsAt: "2026-10-15T14:00:00+08:00", sourceTimezone: "Asia/Taipei", sourceName: "TSMC IR",
     sourceUrl: "https://investor.tsmc.com/english/financial-calendar",

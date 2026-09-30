@@ -107,3 +107,35 @@ Only the ten reviewed companies advanced `lastAttemptedOn`; the six conclusive
 pages advanced `lastCheckedOn`. Empty, inaccessible or widget-only sources
 remain pending with their prior completed-check dates. Next rotation begins with
 INTC, LRCX, META, MSFT, MU, NBIS, NFLX, SNDK, TSLA and TSM.
+
+## Oldest-source rotation (03:47 JST)
+
+Reviewed the next ten oldest company attempts against current first-party
+investor pages. Sandisk newly confirmed its fiscal Q1 2027 earnings call for
+October 29, 2026 at 4:30 p.m. EDT; the calendar now records that call start and
+does not treat it as the results publication time. The other nine sources
+either reconfirmed an existing event or made the absence of a new earnings
+date conclusive.
+
+| Ticker | Result | Official source / evidence |
+| --- | --- | --- |
+| INTC | Checked | [IR calendar](https://www.intc.com/news-events/ir-calendar) explicitly says there are no upcoming events. |
+| LRCX | Checked | [Events](https://investor.lamresearch.com/events) lists only the November 3 annual meeting as upcoming, not an earnings release or call. |
+| META | Checked | [Investor events](https://investor.atmeta.com/investor-events/) explicitly says to stay tuned for upcoming events. |
+| MSFT | Checked | [Investor Relations](https://www.microsoft.com/en-us/investor/default) says the next earnings release will be announced soon. |
+| MU | Checked | [Micron's announcement](https://investors.micron.com/news/press-release/2026/Micron-Technology-to-Report-Fiscal-Fourth-Quarter-Results-on-September-30-2026/default.aspx) still confirms the September 30 call at 2:30 p.m. Mountain; this is not a release-publication time. |
+| NBIS | Checked | [Investor events](https://nebius.com/investor-events) explicitly says there are no upcoming events. |
+| NFLX | Checked | [Netflix's announcement](https://ir.netflix.net/investor-news-and-events/financial-releases/press-release-details/2026/Netflix-to-Announce-Third-Quarter-2026-Financial-Results/default.aspx) still confirms the October 20 approximate 1:01 p.m. Pacific results release and 1:45 p.m. interview. |
+| SNDK | Added | [Events](https://investor.sandisk.com/news-events/events) confirms the fiscal Q1 2027 earnings call on October 29 at 4:30 p.m. EDT. |
+| TSLA | Checked | [Investor Relations](https://ir.tesla.com/) has a 2026 Q3 row but still leaves its earnings date blank. |
+| TSM | Checked | [Financial calendar](https://investor.tsmc.com/english/financial-calendar) still confirms the October 15 Q3 call at 2:00 p.m. Asia/Taipei. |
+
+All 40 roster companies now have an October 1 review attempt. The BLS and
+Federal Reserve daily checks were already completed earlier on October 1, so
+they were not redundantly advanced or altered. The next rotation can restart
+with AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC, preserving
+their exact pending blockers unless new first-party evidence appears.
+
+Verification for this tree: ESLint completed with zero errors and one
+pre-existing warning; Node passed 172/172, Python passed 469/469, the Next.js
+production build completed, and `compileall` plus `git diff --check` passed.

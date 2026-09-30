@@ -50,7 +50,7 @@ test("registered schedules are ordered, unique and linked to official sources", 
     assert.ok(Number.isFinite(timestamp) && timestamp >= previous);
     previous = timestamp;
     assert.ok(event.title.ja && event.title.en);
-    assert.ok(["www.bls.gov", "www.bea.gov", "investors.micron.com", "ir.netflix.net", "investor.tsmc.com", "www.gevernova.com", "www.adobe.com"].includes(new URL(event.sourceUrl).hostname));
+    assert.ok(["www.bls.gov", "www.bea.gov", "investors.micron.com", "ir.netflix.net", "investor.sandisk.com", "investor.tsmc.com", "www.gevernova.com", "www.adobe.com"].includes(new URL(event.sourceUrl).hostname));
     if (event.sourceName === "BLS") {
       assert.equal(new Intl.DateTimeFormat("en-GB", { timeZone: event.sourceTimezone, hour: "2-digit", minute: "2-digit" }).format(new Date(event.startsAt)), "08:30");
     }
@@ -87,6 +87,16 @@ test("Taiwan and Pacific timestamps convert to the right Eastern and Japan dates
   assert.match(tsm.note.en, /conference start.*not the publication time/i);
   assert.equal(time(netflix.startsAt, "America/New_York"), "16:01");
   assert.equal(calendarDateKey(netflix.startsAt), "2026-10-21");
+});
+
+test("Sandisk call keeps the official Eastern time and release/call distinction", () => {
+  const sandisk = calendarEvents.find((event) => event.id === "sndk-fq1-2027-call");
+  const time = (date, zone) => new Intl.DateTimeFormat("en-GB", { timeZone: zone, hour: "2-digit", minute: "2-digit" }).format(new Date(date));
+  assert.equal(sandisk.sourceTimezone, "America/New_York");
+  assert.equal(time(sandisk.startsAt, "America/New_York"), "16:30");
+  assert.equal(time(sandisk.startsAt, "Asia/Tokyo"), "05:30");
+  assert.equal(calendarDateKey(sandisk.startsAt), "2026-10-30");
+  assert.match(sandisk.note.en, /call start, not the publication time/i);
 });
 
 test("date-only earnings keep the official date without fabricating a time", () => {
@@ -129,37 +139,22 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   const byTicker = Object.fromEntries(coverage.map((company) => [company.ticker, company]));
   const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
   assert.ok(coverage.every((company) => /^2026-(?:09-(?:2[3-9]|30)|10-01)$/.test(company.lastAttemptedOn)));
-  for (const ticker of ["ADBE", "AMD", "COHR", "CRWD", "DELL", "GEV"]) assert.equal(checked[ticker], "2026-10-01");
-  for (const ticker of ["INTC", "LRCX", "META", "MSFT", "MU", "NBIS", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-09-30");
+  for (const ticker of ["ADBE", "AMD", "COHR", "CRWD", "DELL", "GEV", "INTC", "LRCX", "META", "MSFT", "MU", "NBIS", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-10-01");
   assert.equal(checked.ASML, "2026-09-29");
   for (const ticker of ["CRM", "ORCL"]) assert.equal(checked[ticker], "2026-09-28");
   assert.equal(checked.AMAT, "2026-09-25");
   assert.equal(checked.QCOM, "2026-09-23");
   for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "CRDO", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NOW", "NVDA", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(checked[ticker], null);
-  const attemptedOnSeptember30 = coverage
-    .filter((company) => company.lastAttemptedOn === "2026-09-30")
-    .map((company) => company.ticker)
-    .sort();
-  assert.deepEqual(attemptedOnSeptember30, [
-    "INTC",
-    "LRCX",
-    "META",
-    "MSFT",
-    "MU",
-    "NBIS",
-    "NFLX",
-    "SNDK",
-    "TSLA",
-    "TSM",
-  ]);
+  assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-30").length, 0);
   const attemptedOnOctober1 = coverage
     .filter((company) => company.lastAttemptedOn === "2026-10-01")
     .map((company) => company.ticker)
     .sort();
   assert.deepEqual(attemptedOnOctober1, [
     "AAPL", "ADBE", "AMAT", "AMD", "AMZN", "ANET", "ARM", "ASML", "AVGO", "BE",
-    "COHR", "CRDO", "CRM", "CRWD", "CRWV", "DELL", "GEV", "GOOGL", "KLAC", "LITE",
-    "MRVL", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "QCOM", "SKHY", "SNOW", "VRT",
+    "COHR", "CRDO", "CRM", "CRWD", "CRWV", "DELL", "GEV", "GOOGL", "INTC", "KLAC",
+    "LITE", "LRCX", "META", "MRVL", "MSFT", "MU", "NBIS", "NFLX", "NOW", "NVDA",
+    "ORCL", "PANW", "PLTR", "QCOM", "SKHY", "SNDK", "SNOW", "TSLA", "TSM", "VRT",
   ]);
   assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-29").length, 0);
   assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 21);
@@ -172,8 +167,9 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   assert.equal(byTicker.ARM.sourceUrl, "https://investors.arm.com/");
   assert.equal(byTicker.COHR.sourceUrl, "https://ir.coherent.com/news-events/events");
   assert.equal(byTicker.MSFT.sourceUrl, "https://www.microsoft.com/en-us/investor/default");
-  assert.equal(byTicker.TSM.lastCheckedOn, "2026-09-30");
+  assert.equal(byTicker.TSM.lastCheckedOn, "2026-10-01");
   assert.equal(calendarEvents.some((event) => event.ticker === "TSM"), true);
+  assert.equal(calendarEvents.some((event) => event.ticker === "SNDK"), true);
 });
 
 test("calendar handoff remains reviewable UTF-8 markdown", () => {
