@@ -321,6 +321,21 @@ export type MonitorState = {
       oldestPendingAt: string | null; nextRetryAt: string | null;
       calls24Hours: { total: number; failed: number; completed: number; stale: number };
     };
+    xIntake?: {
+      usage: {
+        requested: boolean; configured: boolean; enabled: boolean;
+        attemptsLast24Hours: number; dailyLimit: number; limitReached: boolean;
+      };
+      routes: {
+        checked: number; error: number; latestCheckedAt: string | null;
+        latestSucceededAt: string | null;
+      };
+      items24Hours?: {
+        total: number; analystRatings: number; priceTargets: number;
+        earnings: number; officialUpdates: number; other: number;
+        latestObservedAt: string | null;
+      };
+    };
     routeTransitions24Hours?: {
       recoveries: number; failures: number; changes: number;
       lastOutcome: "recovered" | "failed" | "changed" | null;

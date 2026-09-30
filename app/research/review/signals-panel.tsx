@@ -6,7 +6,7 @@ import styles from "./signals-panel.module.css";
 
 type Signal = {
   id: number; source: string; sourceKind: string; reuse: string; url: string; title: string;
-  tickers: string[]; eventKind: string; publishedAt: string | null; publishedOn?: string | null; observedAt: string;
+  tickers: string[]; eventKind: string; contentKind?: string | null; publishedAt: string | null; publishedOn?: string | null; observedAt: string;
   excerpt: string; diff: string; truncated: boolean;
 };
 type Route = {
@@ -27,6 +27,10 @@ const kindNames: Record<string, string> = {
 };
 const sourceNames: Record<string, string> = {
   "external-research": "外部調査", "publisher-update": "発信元の更新", "official-document": "公式ドキュメント",
+};
+const contentNames: Record<string, string> = {
+  "analyst-rating": "アナリスト評価", "price-target": "目標株価", earnings: "決算投稿",
+  "official-update": "企業公式", "publisher-update": "発信元投稿",
 };
 const timeLabel = (value: string | null) => value ? new Date(value).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo", hour12: false }) + " JST" : "未取得";
 const publicationLabel = (publishedAt: string | null, publishedOn?: string | null) => {
@@ -86,7 +90,7 @@ export default function SignalsPanel({ token }: { token: string }) {
       {data.xApiUsage && <p className={styles.note}>
         X API：{data.xApiUsage.enabled ? "読取のみ有効" : data.xApiUsage.requested ? "設定不足で停止" : "OFF"}
         {` · 24時間 ${data.xApiUsage.attemptsLast24Hours}/${data.xApiUsage.dailyLimit}回`}
-        {` · ${data.xApiUsage.sourceCount}発信元・目標株価と決算投稿`}
+        {` · ${data.xApiUsage.sourceCount}発信元・目標株価／評価変更／決算投稿`}
         {` · 設定上最大 ${data.xApiUsage.configuredMaxRequestsPerDay}回/日`}
         {data.xApiUsage.budgetCapped ? ` · ローカル上限 ${data.xApiUsage.localMaxRequestsPerDay}回/日` : ""}
         {typeof data.xApiUsage.minimumSpacingSeconds === "number" && data.xApiUsage.minimumSpacingSeconds > 0 ? ` · API送信間隔 ${durationLabel(data.xApiUsage.minimumSpacingSeconds)}以上` : ""}
@@ -109,12 +113,12 @@ export default function SignalsPanel({ token }: { token: string }) {
       </details>
       <div className={styles.filters}>
         <label>銘柄<select value={ticker} onChange={event => setTicker(event.target.value)}><option value="">すべて</option>{tickers.map(item => <option key={item}>{item}</option>)}</select></label>
-        <label>種別<select value={view} onChange={event => setView(event.target.value)}><option value="targets">目標株価・表示実験</option><option value="all">すべて</option><option value="new">新規検出</option><option value="changed">内容変更</option><option value="baseline">初回取得</option></select></label>
+        <label>種別<select value={view} onChange={event => setView(event.target.value)}><option value="targets">目標株価・表示実験</option><option value="ratings">アナリスト評価変更</option><option value="all">すべて</option><option value="new">新規検出</option><option value="changed">内容変更</option><option value="baseline">初回取得</option></select></label>
         <span>{data.counts[view] ?? 0}件中 {data.items.length}件を表示</span>
       </div>
       {view === "targets" && <p className={styles.note}>この画面は15秒ごとに更新します。画面取得 {timeLabel(displayedAt)}。画面を開いていない間の表示時刻は計測しません。</p>}
       <div className={styles.items}>{data.items.map(item => <article key={item.id}>
-        <div className={styles.tags}><b>{item.tickers.join(" · ") || "銘柄未判定"}</b><span>{kindNames[item.eventKind]}</span><span>{sourceNames[item.sourceKind]}</span></div>
+        <div className={styles.tags}><b>{item.tickers.join(" · ") || "銘柄未判定"}</b><span>{kindNames[item.eventKind]}</span>{item.contentKind && <span>{contentNames[item.contentKind] ?? item.contentKind}</span>}<span>{sourceNames[item.sourceKind]}</span></div>
         {view === "targets" && targetPreview(item.title, item.tickers) ? <>
           <h3>{targetPreview(item.title, item.tickers)?.heading}</h3>
           <p className={styles.previewSummary}>{targetPreview(item.title, item.tickers)?.summary}</p>

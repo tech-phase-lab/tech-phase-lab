@@ -353,7 +353,15 @@ function signalIntakeStatus(signal: MonitorState["signalIntake"]) {
       }).join("／")
     : "";
   const activeOutageKindDetail = activeOutageKindStatus ? ` · 区分別継続障害：${activeOutageKindStatus}` : "";
-  return `公式補完経路：直近成功 ${routes.fresh}/${routes.configured}経路 · 期限超過 ${routes.stale} · 要確認 ${routes.error}（アクセス制限 ${kinds.accessRestricted}・レート制限 ${kinds.rateLimited}・タイムアウト ${kinds.timeout}・公式側5xx ${kinds.server}・応答形式 ${kinds.invalidResponse}・記事一部失敗 ${kinds.articlePartial}・その他 ${kinds.other}）${retryStatus}${retryKindDetail}${activeOutageStatus}${activeOutageKindDetail}${articleStatus}${measuredRecoveryStatus}${transitionStatus}${routeRecoveryStatus}${routeRetryWaitStatus} · 初回待ち ${routes.pending} · 公表証拠 ${evidence.total}件（日時あり ${evidence.timestamp}・日付のみ ${evidence.dateOnly}・時刻未取得 ${evidence.missing}）${sourceLatencyStatus}${translationStatus}`;
+  const x = signal.xIntake;
+  const xState = x
+    ? x.usage.enabled ? "ON（読取のみ・自動公開なし）" : x.usage.requested ? "設定不足で停止" : "OFF"
+    : null;
+  const xItems = x?.items24Hours;
+  const xStatus = x
+    ? ` · X補完：${xState} · 24時間API ${x.usage.attemptsLast24Hours}/${x.usage.dailyLimit}回 · 経路エラー ${x.routes.error}件${xItems ? ` · 24時間取得 ${xItems.total}件（区分は重複あり：評価変更 ${xItems.analystRatings}・目標株価 ${xItems.priceTargets}・決算 ${xItems.earnings}・企業公式 ${xItems.officialUpdates}・その他 ${xItems.other}）${xItems.latestObservedAt ? `（最終 ${time(xItems.latestObservedAt)} JST）` : ""}` : ""}`
+    : "";
+  return `公式補完経路：直近成功 ${routes.fresh}/${routes.configured}経路 · 期限超過 ${routes.stale} · 要確認 ${routes.error}（アクセス制限 ${kinds.accessRestricted}・レート制限 ${kinds.rateLimited}・タイムアウト ${kinds.timeout}・公式側5xx ${kinds.server}・応答形式 ${kinds.invalidResponse}・記事一部失敗 ${kinds.articlePartial}・その他 ${kinds.other}）${retryStatus}${retryKindDetail}${activeOutageStatus}${activeOutageKindDetail}${articleStatus}${measuredRecoveryStatus}${transitionStatus}${routeRecoveryStatus}${routeRetryWaitStatus} · 初回待ち ${routes.pending} · 公表証拠 ${evidence.total}件（日時あり ${evidence.timestamp}・日付のみ ${evidence.dateOnly}・時刻未取得 ${evidence.missing}）${sourceLatencyStatus}${translationStatus}${xStatus}`;
 }
 function generationStatus(generation: MonitorState["generation"]) {
   if (!generation) return "AI下書き生成：状態取得待ち";

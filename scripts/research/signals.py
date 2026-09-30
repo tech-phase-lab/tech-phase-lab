@@ -717,14 +717,30 @@ def check(db, source, tickers, transport=None):
         return {"source": source["id"], "status": "error", "error": error, "events": 0}
 
 
+def x_content_kind(source, title):
+    """Classify an X item without changing its review/publication status."""
+    if source.get("format") != "x-api":
+        return None
+    if source.get("officialUpdates") is True:
+        return "official-update"
+    if x_api.RATING_PATTERN.search(title):
+        return "analyst-rating"
+    if x_api.TARGET_PATTERN.search(title):
+        return "price-target"
+    if (x_api.EARNINGS_PATTERN.search(title) and
+            not x_api.EARNINGS_PREVIEW_PATTERN.search(title)):
+        return "earnings"
+    return "publisher-update"
+
+
 def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
     schema(db)
-    if view not in {"all", "new", "changed", "baseline", "targets"} or (
+    if view not in {"all", "new", "changed", "baseline", "targets", "ratings"} or (
             ticker and ticker not in ALIASES and ticker not in X_EXTRA_TICKERS):
         raise ValueError("invalid-signal-filter")
     configured = {source["id"]: source for source in sources}
     items = []
-    counts = {"all": 0, "new": 0, "changed": 0, "baseline": 0, "targets": 0}
+    counts = {"all": 0, "new": 0, "changed": 0, "baseline": 0, "targets": 0, "ratings": 0}
     for row in db.execute("SELECT * FROM signal_events ORDER BY observed_at DESC,id DESC"):
         if row["source_id"] not in configured:
             continue
@@ -733,18 +749,24 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
             continue
         counts["all"] += 1
         counts[row["event_kind"]] += 1
+        source = configured[row["source_id"]]
+        content_kind = x_content_kind(source, row["title"])
         is_target = (row["source_id"].startswith("x-") and
                      row["event_kind"] == "new" and x_api.TARGET_PATTERN.search(row["title"]))
         if is_target:
             counts["targets"] += 1
-        if (view == "targets" and not is_target) or (view not in {"all", "targets"} and
+        is_rating = bool(row["source_id"].startswith("x-") and
+                         x_api.RATING_PATTERN.search(row["title"]))
+        if is_rating:
+            counts["ratings"] += 1
+        if (view == "targets" and not is_target) or (view == "ratings" and not is_rating) or (view not in {"all", "targets", "ratings"} and
             row["event_kind"] != view) or len(items) >= max(1, min(50, limit)):
             continue
-        source = configured[row["source_id"]]
         items.append({"id": row["id"], "source": source["name"], "sourceKind": source["kind"],
                       "reuse": source["reuse"], "url": safe_url(row["url"], source),
                       "title": row["title"], "tickers": tickers,
                       "matches": json.loads(row["matches_json"]), "eventKind": row["event_kind"],
+                      "contentKind": content_kind,
                       "publishedAt": row["published_at"], "publishedOn": row["published_on"],
                       "observedAt": row["observed_at"],
                       "excerpt": row["excerpt"], "diff": row["diff"], "truncated": bool(row["truncated"]),
@@ -872,9 +894,14 @@ def signal_error_kind(error):
     return "other"
 
 
-def x_operational_summary(db, sources=SOURCES):
+def x_operational_summary(db, sources=SOURCES, reference=None):
     """Public-safe X intake diagnostics: no credentials, queries or post bodies."""
     schema(db)
+    current = reference or datetime.now(timezone.utc)
+    if current.tzinfo is None:
+        raise ValueError("x-summary-reference-timezone")
+    current = current.astimezone(timezone.utc)
+    x_sources = {source["id"]: source for source in sources if source.get("format") == "x-api"}
     routes = []
     for source in sources:
         if source.get("format") != "x-api":
@@ -895,6 +922,47 @@ def x_operational_summary(db, sources=SOURCES):
     for route in routes:
         if route["error"]:
             errors[route["error"]] = errors.get(route["error"], 0) + 1
+    item_counts = {
+        "total": 0, "analystRatings": 0, "priceTargets": 0,
+        "earnings": 0, "officialUpdates": 0, "other": 0,
+        "latestObservedAt": None,
+    }
+    cutoff = current - timedelta(hours=24)
+    for row in db.execute(
+            "SELECT source_id,title,observed_at FROM signal_events "
+            "WHERE source_id IN (%s)" % ",".join("?" for _ in x_sources),
+            tuple(x_sources)) if x_sources else ():
+        try:
+            observed = datetime.fromisoformat(str(row["observed_at"]).replace("Z", "+00:00"))
+            if observed.tzinfo is None:
+                continue
+            observed = observed.astimezone(timezone.utc)
+        except (TypeError, ValueError, OverflowError):
+            continue
+        if not cutoff < observed <= current:
+            continue
+        source = x_sources[row["source_id"]]
+        title = row["title"]
+        item_counts["total"] += 1
+        matched_category = False
+        if x_api.RATING_PATTERN.search(title):
+            item_counts["analystRatings"] += 1
+            matched_category = True
+        if x_api.TARGET_PATTERN.search(title):
+            item_counts["priceTargets"] += 1
+            matched_category = True
+        if (x_api.EARNINGS_PATTERN.search(title) and
+                not x_api.EARNINGS_PREVIEW_PATTERN.search(title)):
+            item_counts["earnings"] += 1
+            matched_category = True
+        if source.get("officialUpdates") is True:
+            item_counts["officialUpdates"] += 1
+            matched_category = True
+        if not matched_category:
+            item_counts["other"] += 1
+        stamp_value = observed.isoformat()
+        if not item_counts["latestObservedAt"] or stamp_value > item_counts["latestObservedAt"]:
+            item_counts["latestObservedAt"] = stamp_value
     return {"usage": usage, "routes": {
         "checked": sum(bool(r["checkedAt"]) for r in routes),
         "error": sum(bool(r["error"]) for r in routes),
@@ -903,7 +971,7 @@ def x_operational_summary(db, sources=SOURCES):
         "oldestSucceededAt": min((r["succeededAt"] for r in routes if r["succeededAt"]), default=None),
         "latestSucceededAt": max((r["succeededAt"] for r in routes if r["succeededAt"]), default=None),
         "nextCheckAt": min((r["nextCheckAt"] for r in routes if r["nextCheckAt"]), default=None),
-    }}
+    }, "items24Hours": item_counts}
 
 
 def operational_summary(db, sources=SOURCES, reference=None):

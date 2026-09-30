@@ -268,6 +268,10 @@ test("SEC evidence totals and filters distinguish exhibits from filing-body fall
   assert.match(liveTypes, /headlineTranslation\?:/);
   assert.match(intakeDashboard, /公式見出し翻訳/);
   assert.match(intakeDashboard, /外部送信なし/);
+  assert.match(liveTypes, /xIntake\?:/);
+  assert.match(liveTypes, /analystRatings: number/);
+  assert.match(intakeDashboard, /X補完/);
+  assert.match(intakeDashboard, /評価変更/);
   assert.match(intakeDashboard, /上限到達/);
   assert.match(liveTypes, /activeOutages\?:/);
   assert.match(intakeDashboard, /経路回復の実測/);

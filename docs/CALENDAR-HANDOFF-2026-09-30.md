@@ -251,3 +251,29 @@ Reserve still lists October 27–28 and December 8–9 without future statement 
 press-conference clock times. No time was inferred. Because every reviewed
 company already has a September 30 attempt and the conclusive results already
 have a September 30 completed check, no coverage date was rewritten.
+
+## Evening oldest-source verification (22:42 JST)
+
+Rechecked the next ten oldest or inconclusive company sources after the prior
+rotation. No first-party source supplied a new confirmed earnings date, so no
+calendar event or coverage timestamp changed.
+
+| Ticker | Result | Official source / evidence |
+| --- | --- | --- |
+| GEV | Confirmed unchanged | [Investor events](https://www.gevernova.com/investors/events) still lists the October 28 fiscal Q3 webcast at 7:30 a.m. Eastern, matching the registered webcast. |
+| INTC | Confirmed no current event | [IR calendar](https://www.intc.com/news-events/ir-calendar) still says there are no upcoming events scheduled. |
+| LRCX | Confirmed no future earnings item | [Events](https://investor.lamresearch.com/events) lists a November 3 annual meeting, not an earnings release or call. |
+| META | Confirmed no current event | [Investor events](https://investor.atmeta.com/investor-events/) still shows completed events and no current earnings item. |
+| MSFT | Confirmed no announced date | [Investor Relations](https://www.microsoft.com/en-us/investor/default) continues to say the next earnings release will be announced soon. |
+| MU | Confirmed unchanged | [Fiscal Q4 announcement](https://investors.micron.com/news/press-release/2026/Micron-Technology-to-Report-Fiscal-Fourth-Quarter-Results-on-September-30-2026/default.aspx) still lists September 30 at 2:30 p.m. Mountain, matching the registered call. |
+| NBIS | Confirmed no current event | [Investor events](https://nebius.com/investor-events) still says there are no upcoming events yet. |
+| NFLX | Confirmed unchanged | [Q3 announcement](https://ir.netflix.net/investor-news-and-events/financial-releases/press-release-details/2026/Netflix-to-Announce-Third-Quarter-2026-Financial-Results/default.aspx) still lists October 20 at approximately 1:01 p.m. Pacific, matching the registered release. |
+| SNDK | Confirmed no future earnings item | [Events](https://investor.sandisk.com/news-events/events) continues to show only completed events; its latest listed earnings event is the August 5 call. |
+| TSLA | Confirmed no announced date | [Investor Relations](https://ir.tesla.com/) still leaves the earnings-date field blank for the 2026 Q3 row; the newer delivery-consensus item is not an earnings-date announcement. |
+
+The BLS October schedule remains October 2 for the Employment Situation,
+October 14 for CPI and October 15 for PPI, each at 08:30 Eastern. The Federal
+Reserve still lists October 27–28 and December 8–9 without future statement or
+press-conference clock times. No date or clock time was inferred. Continue the
+next rotation with the oldest pending sources; keep inaccessible and shell-only
+pages pending until first-party evidence becomes conclusive.

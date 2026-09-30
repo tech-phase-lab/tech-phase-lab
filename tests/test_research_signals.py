@@ -1019,6 +1019,40 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(queue["counts"]["targets"], 1)
         self.assertEqual(queue["items"][0]["eventKind"], "new")
 
+    def test_x_rating_events_have_a_private_filter_and_safe_aggregate(self):
+        source = next(item for item in signals.SOURCES if item["id"] == "x-tipranks")
+        signals.schema(self.db)
+        observed = "2026-09-30T12:02:00+00:00"
+        rows = [
+            ("https://x.com/TipRanks/status/1234567891",
+             "NBIS initiated with Buy rating at BofA", '["NBIS"]'),
+            ("https://x.com/TipRanks/status/1234567892",
+             "NBIS initiated with Buy rating and $180 price target at BofA", '["NBIS"]'),
+        ]
+        with self.db:
+            for index, (url, title, tickers) in enumerate(rows, start=1):
+                self.db.execute("""INSERT INTO signal_events(
+                  source_id,url,sha,title,tickers_json,matches_json,event_kind,
+                  published_at,observed_at,excerpt,diff,truncated)
+                  VALUES(?,?,?,?,?,'{}','new','2026-09-30T12:00:00+00:00',?,'','',0)""",
+                                (source["id"], url, str(index) * 64, title, tickers, observed))
+        queue = signals.queue(self.db, view="ratings")
+        self.assertEqual(queue["counts"]["ratings"], 2)
+        self.assertEqual(queue["counts"]["targets"], 1)
+        self.assertEqual(len(queue["items"]), 2)
+        self.assertEqual(queue["items"][0]["contentKind"], "analyst-rating")
+        self.assertEqual(queue["items"][1]["contentKind"], "analyst-rating")
+        summary = signals.x_operational_summary(
+            self.db, reference=datetime(2026, 9, 30, 13, 0, tzinfo=timezone.utc)
+        )
+        self.assertEqual(summary["items24Hours"]["total"], 2)
+        self.assertEqual(summary["items24Hours"]["analystRatings"], 2)
+        self.assertEqual(summary["items24Hours"]["priceTargets"], 1)
+        serialized = json.dumps(summary)
+        self.assertNotIn("NBIS", serialized)
+        self.assertNotIn("BofA", serialized)
+        self.assertNotIn("https://", serialized)
+
     def test_x_api_budget_is_evenly_paced_and_rotates_due_sources(self):
         sources = [
             {"id": source_id, "format": "x-api", "intervalSeconds": 120}
