@@ -38,6 +38,9 @@ class MeasurementTests(unittest.TestCase):
             self.db.execute("UPDATE sources SET published_on=NULL")
         self.assertEqual(measurement.candidate(self.db)['url'], self.url)
         with self.db:
+            self.db.execute("UPDATE sources SET published_on='2026-09-30T20:00:00+00:00'")
+        self.assertEqual(measurement.candidate(self.db)['url'], self.url)
+        with self.db:
             self.db.execute("UPDATE sources SET title='Micron to Report Fiscal Fourth Quarter Results'")
         self.assertIsNone(measurement.candidate(self.db))
         with self.db:
@@ -51,6 +54,14 @@ class MeasurementTests(unittest.TestCase):
         with self.db:
             self.db.execute("UPDATE sources SET extracted_text=?",
                             ('x' * (measurement.MIN_OFFICIAL_TEXT_CHARS - 1),))
+        self.assertIsNone(measurement.candidate(self.db))
+
+    def test_unknown_source_date_remains_unconfirmed_instead_of_blocking_event(self):
+        with self.db:
+            self.db.execute("UPDATE sources SET published_on='source-date-unconfirmed'")
+        self.assertEqual(measurement.candidate(self.db)['url'], self.url)
+        with self.db:
+            self.db.execute("UPDATE sources SET published_on='2026-06-30T13:00:00-07:00'")
         self.assertIsNone(measurement.candidate(self.db))
 
     def test_exact_same_url_signal_time_enables_publication_latency(self):

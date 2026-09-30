@@ -15,7 +15,8 @@ import monitor
 EVENT = "mu-fq4-2026"
 START = "2026-09-30T19:00:00+00:00"
 END = "2026-10-02T00:00:00+00:00"
-MIN_OFFICIAL_TEXT_CHARS = 500
+MIN_OFFICIAL_TEXT_CHARS = 300
+ALLOWED_PUBLICATION_DATES = {"2026-09-30", "2026-10-01"}
 
 
 def configuration(env=None):
@@ -85,9 +86,11 @@ def candidate(db):
       AND julianday(e.detected_at)<julianday(?) ORDER BY e.id""", (START, END))
     for row in rows:
         title = str(row["title"] or "")
+        published = str(row["published_on"] or "").strip()
+        publication_date = re.match(r"^(\d{4}-\d{2}-\d{2})(?:$|T)", published)
         if (urlsplit(row["url"]).hostname != "investors.micron.com"
-                or (row["published_on"]
-                    and row["published_on"] not in {"2026-09-30", "2026-10-01"})
+                or (publication_date
+                    and publication_date.group(1) not in ALLOWED_PUBLICATION_DATES)
                 or not all(re.search(pattern, title, re.I) for pattern in (r"\b(?:reports|announces)\b", r"fourth.quarter|\bq4\b", r"\bresults\b"))
                 or re.search(r"to report|will report|conference call", title, re.I)
                 or len(row["extracted_text"] or "") < MIN_OFFICIAL_TEXT_CHARS):
