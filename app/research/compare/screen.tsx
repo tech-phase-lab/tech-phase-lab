@@ -1,4 +1,6 @@
 "use client";
+import { recoverMember } from "@/lib/research/member-recovery";
+import { useIdentityRefresh } from "../identity-provider";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
@@ -9,6 +11,7 @@ import styles from "./styles.module.css";
 const percent = (n: number | null) => n === null ? "—" : `${n.toFixed(1)}%`;
 function money(f: Fact | null, lang: string) { return f ? `${new Intl.NumberFormat(lang === "ja" ? "ja-JP" : "en-US", { notation: "compact", maximumFractionDigits: 2 }).format(f.value)} ${f.unit}` : "—"; }
 export default function ComparisonScreen() {
+  const refreshIdentity = useIdentityRefresh();
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
   const t = (a: string, b: string) => ja ? a : b;
@@ -28,8 +31,7 @@ export default function ComparisonScreen() {
     async function check() {
       controller?.abort(); controller = new AbortController(); const current = controller;
       try {
-        const response = await fetch("/api/research/member", { cache: "no-store", signal: AbortSignal.any([current.signal, AbortSignal.timeout(10000)]) });
-        const m = await response.json();
+        const { response, member: m } = await recoverMember(refreshIdentity, AbortSignal.any([current.signal, AbortSignal.timeout(10000)]));
         if (!active || current.signal.aborted) return;
         const state = !response.ok || m.status === "unavailable" ? "error" : m.status !== "signed-in" ? "signed-out" : m.plan === "pro" ? "pro" : "free";
         setMembership(state);
@@ -38,7 +40,7 @@ export default function ComparisonScreen() {
     }
     void check(); window.addEventListener("focus", check); const timer = setInterval(check, 60000);
     return () => { active = false; controller?.abort(); request.current?.abort(); window.removeEventListener("focus", check); clearInterval(timer); };
-  }, []);
+  }, [refreshIdentity]);
   useEffect(() => {
     if (!result) return;
     const timer = setTimeout(() => { setResult(null); setMembership("free"); }, Math.max(0, Math.min(validUntil - Date.now(), 2147483647)));
@@ -110,7 +112,7 @@ export default function ComparisonScreen() {
     {(membership === "free" || membership === "signed-out") && <section className={styles.lock}><span aria-hidden="true">🔒</span><h2>{t("比較・評価はPRO会員限定", "Comparison is exclusive to PRO")}</h2><p>{t("2〜3社を選び、結論・実績・成長性・注意点をまとめて確認できます。", "Choose two or three companies to explore the conclusion, performance, growth and caveats.")}</p><Link href="/research/account">{t("ログイン・会員情報", "Sign in / Membership")}</Link></section>}
     {membership === "pro" && <>
       <section className={styles.picker} aria-label={t("比較する銘柄", "Select companies")}>
-        <div className={styles.slots}>{[0,1,2].map(i => <div key={i} className={styles.stockSlot}><label htmlFor={`stock-${i}`}>{i === 2 ? t("3社目（任意）", "Third (optional)") : t(`${i+1}社目`, `Company ${i+1}`)}</label><input id={`stock-${i}`} role="combobox" aria-expanded={openSlot === i} aria-controls={`stock-options-${i}`} autoComplete="off" value={queries[i]} placeholder={t("会社名・銘柄コード", "Company or ticker")} onFocus={() => setOpenSlot(i)} onBlur={() => setTimeout(() => setOpenSlot(current => current === i ? null : current), 150)} onChange={event => {
+        <div className={styles.slots}>{[0,1,2].map(i => <div key={i} className={styles.stockSlot}><label htmlFor={`stock-${i}`}>{i === 2 ? t("3社目（任意）", "Third (optional)") : t(`${i+1}社目`, `Company ${i+1}`)}</label><input id={`stock-${i}`} name={`comparison-ticker-${i}`} autoCorrect="off" autoCapitalize="characters" spellCheck={false} role="combobox" aria-expanded={openSlot === i} aria-controls={`stock-options-${i}`} autoComplete="off" value={queries[i]} placeholder={t("会社名・銘柄コード", "Company or ticker")} onFocus={() => setOpenSlot(i)} onBlur={() => setTimeout(() => setOpenSlot(current => current === i ? null : current), 150)} onChange={event => {
           const value = event.target.value; setQueries(current => current.map((q,index) => index === i ? value : q)); setOpenSlot(i);
           request.current?.abort(); setResult(null); setBusy(false); setSelection(current => { const next = [...current]; next[i] = ""; return next; });
         }} onKeyDown={event => { if (event.key === "Escape") setOpenSlot(null); if (event.key === "Enter") { event.preventDefault(); const match = suggestions[i].find(c => c.ticker.toLowerCase() === queries[i].trim().toLowerCase()) || suggestions[i][0]; if (match) selectCompany(i,match); } }} />{openSlot === i && <div id={`stock-options-${i}`} role="listbox" className={styles.options}>{(queries[i].trim() ? suggestions[i] : comparisonCatalog).filter(c => !selection.some((ticker,index) => index !== i && ticker === c.ticker)).slice(0,10).map(c => <button type="button" role="option" aria-selected={selection[i] === c.ticker} key={c.ticker} onMouseDown={event => event.preventDefault()} onClick={() => selectCompany(i,c)}><strong>{c.ticker}</strong><span>{c.name}</span></button>)}</div>}</div>)}</div>

@@ -13,7 +13,7 @@ export const metadata: Metadata = { appleWebApp: { capable: true, title: "Tech P
 
 export default async function ResearchLayout({ children }: { children: ReactNode }) {
   const member = await getMembership().catch(() => null);
-  const initial = member && member.status !== "unavailable" ? {
+  const initial = member && member.status === "signed-in" ? {
     plan: member.plan,
     owner: member.status === "signed-in" && member.isAdmin,
     ownerMode: member.status === "signed-in" && member.ownerMode,

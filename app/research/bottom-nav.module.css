@@ -40,3 +40,5 @@
  .menuGrid{min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:4px}
  .menuGrid a{flex-shrink:0}
 }
+
+@media(max-width:760px){:global(body:has(input:focus,textarea:focus,[contenteditable="true"]:focus)) .mobile{display:none}}

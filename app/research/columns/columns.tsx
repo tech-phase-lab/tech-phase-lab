@@ -1,4 +1,5 @@
 "use client";
+import { useIdentityRefresh } from "../identity-provider";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,6 +13,7 @@ import NoteComposer from "../notes/composer";
 import { useMemberDisplay, useOwnerMode } from "../member-display-provider";
 type Result = { items: EditorialPost[]; access: string; status: string; validUntil?: number };
 export default function ColumnsPage({ initialKind = "all", initial }: { initialKind?: PostKind | "all"; initial?: Result } = {}) {
+  const refreshIdentity = useIdentityRefresh();
   const [lang, setLang] = useResearchLanguage();
   const kind = initialKind;
   const memberPlan = useMemberDisplay();
@@ -45,6 +47,7 @@ export default function ColumnsPage({ initialKind = "all", initial }: { initialK
         setResult(latest.current);
       }
       try {
+        await refreshIdentity();
         const response = await fetch("/api/research/posts", { cache: "no-store", signal: AbortSignal.any([current.signal, AbortSignal.timeout(15_000)]) });
         const data = await response.json();
         if (current.signal.aborted || stopped) return;
@@ -69,7 +72,7 @@ export default function ColumnsPage({ initialKind = "all", initial }: { initialK
     const changed = () => { void load(true); };
     window.addEventListener("focus", focused); window.addEventListener("tech-phase:membership-changed", changed);
     return () => { stopped = true; controller?.abort(); cancelLease?.(); window.removeEventListener("focus", focused); window.removeEventListener("tech-phase:membership-changed", changed); };
-  }, [retry, initial, memberPlan]);
+  }, [retry, initial, memberPlan, refreshIdentity]);
   const membershipMismatch = memberPlan !== null && result.status === "ready" && (result.access === "pro") !== (memberPlan === "pro");
   const shown = membershipMismatch ? { items: [], access: "", status: "loading" } : result;
   return <ResearchToolShell desk lang={lang} setLang={setLang} title={initialKind === "all" ? "RIZEL’S DESK" : initialKind === "qa" ? ja ? "リゼルに聞く" : "Ask RIZEL" : postNames[initialKind][lang]} description="">
@@ -78,15 +81,15 @@ export default function ColumnsPage({ initialKind = "all", initial }: { initialK
     {shown.status === "loading" && <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "記事を読み込んでいます" : "Loading articles"} />}
     {shown.status === "error" && <div role="status"><p>{ja ? "記事を読み込めませんでした。" : "Unable to load articles."}</p><button onClick={() => setRetry(v => v + 1)}>{ja ? "再読み込み" : "Retry"}</button></div>}
     {shown.status === "ready" && !shown.items.filter(item => kind === "all" || item.kind === kind).length && <section className={styles.article}><h2>{kind === "all" ? ja ? "公開記事は準備中です" : "Articles are being prepared" : ja ? "この種類の記事はまだありません" : "No articles in this category yet"}</h2><p>{ja ? "公開された投稿がここに並びます。" : "Published posts will appear here."}</p><Link href="/research/account">{ja ? "会員情報を確認する" : "View membership"}</Link></section>}
-    {shown.items.filter(item => kind === "all" || item.kind === kind).map(item => <article className={`${styles.article} ${item.kind === "notes" ? styles.note : ""}`} id={item.id} key={item.id}>
+    {shown.items.filter(item => kind === "all" || item.kind === kind).map(item => <article className={`${styles.article} ${item.kind === "notes" ? styles.note : item.kind === "qa" ? styles.qaArticle : ""}`} id={item.id} key={item.id}>
       <div className={item.kind === "notes" ? styles.noteHeader : undefined}>
       {item.kind === "notes" && <div className={styles.noteAvatar}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={46} height={46} unoptimized /></div>}
       {item.kind !== "notes" && <p className={styles.meta}>{postNames[item.kind][lang]} · <time dateTime={item.publishedAt!}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { dateStyle: "medium", timeZone: "Asia/Tokyo" }).format(new Date(item.publishedAt!))}</time></p>}
       </div>
       <div className={item.kind === "notes" ? styles.noteBubble : undefined}>
       {item.kind === "notes" && <p className={styles.meta}><time dateTime={item.publishedAt!}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { dateStyle: "medium", timeStyle: "short", hourCycle: "h23", timeZone: "Asia/Tokyo" }).format(new Date(item.publishedAt!))}<small className={styles.zone}> JST</small></time></p>}
-      {item.kind !== "notes" && <><h2>{ja ? item.titleJa : item.titleEn}</h2><p className={styles.text}>{ja ? item.introJa : item.introEn}</p></>}
-      {!ja && item.translationStatus === "pending" ? <p>Translation pending.</p> : shown.access === "pro" ? <><div className={styles.text}>{ja ? item.bodyJa : item.bodyEn}</div>{item.sources.length > 0 && <footer><h3>{ja ? "出典" : "Sources"}</h3>{item.sources.map((source, index) => <a key={index} href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a>)}</footer>}</> : <aside><p>{ja ? "この先の本文はPRO会員向けです。" : "The full article is available to PRO members."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in / Membership"}</Link></aside>}
+      {item.kind !== "notes" && <>{item.kind === "qa" && <p className={styles.questionLabel}>{ja ? "質問" : "QUESTION"}</p>}<h2>{ja ? item.titleJa : item.titleEn}</h2><p className={styles.text}>{ja ? item.introJa : item.introEn}</p></>}
+      {!ja && item.translationStatus === "pending" ? <p>Translation pending.</p> : shown.access === "pro" ? <>{item.kind === "qa" && <p className={styles.answerLabel}>{ja ? "リゼルの回答" : "RIZEL’S ANSWER"}</p>}<div className={`${styles.text} ${item.kind === "qa" ? styles.qaBody : ""}`}>{ja ? item.bodyJa : item.bodyEn}</div>{item.sources.length > 0 && <footer><h3>{ja ? "出典" : "Sources"}</h3>{item.sources.map((source, index) => <a key={index} href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a>)}</footer>}</> : <aside><p>{ja ? "この先の本文はPRO会員向けです。" : "The full article is available to PRO members."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in / Membership"}</Link></aside>}
 
       </div>
     </article>)}

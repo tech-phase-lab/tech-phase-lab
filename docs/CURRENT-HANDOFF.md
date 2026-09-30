@@ -149,3 +149,11 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - BLS still lists October 2 Employment Situation, October 14 CPI and October 15 PPI at 08:30 Eastern. The Federal Reserve still lists October 27–28 and December 8–9 without future decision times. No calendar data or company `lastCheckedOn` value changed.
 - The integrated tree passed ESLint with one pre-existing warning, Node 164/164, Python 455/455, the Next.js production build, `compileall` and `git diff --check`. Vercel deployment `dpl_5ZJ94KjM1x8rGUfB5yceLPqFYtA9` for `afabd50` is Ready; the protected preview Q&A route returned 200 in signed-out mode and kept PRO content gated.
 - Next calendar batch: LITE, MRVL, NOW, NVDA, PANW, PLTR, SKHY, SNOW, VRT and QCOM. The finite news-readiness backlog remains complete; do not add discretionary product work.
+
+
+## 2026-09-30 17:58 JST — Safari return and mobile editing
+- Request: owner goes to Free after phone screen suspension; keyboard obstructs reply/compare; remove redundant owner answer link; make published answers visibly answers; enlarge/centre notes avatar.
+- Identity refresh bridge waits for Clerk SDK and token renewal before entitlement fetch; forced renewal on visibility/pageshow/focus, one retry for signed-out server response. Server still exclusively grants all roles; no local role cache. Signed-out SSR header uses neutral state until client verification. Actual expiry/sign-out still revoke privileges.
+- Full-width inline answer editor overrides metadata flex rules. All relevant inputs are at least 16px; mobile bottom navigation/top button hidden during input focus; comparison list max132px, autocomplete disabled.
+- Notes avatar 48px desktop/42px mobile, vertically centred with matching bubble tail. Timestamp stays above message.
+- Removed top owner answer-management link. Published answers show Question and RIZEL’s answer labels, divider and indented answer block. Existing real user answer must not be replaced by test content.
