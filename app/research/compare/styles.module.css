@@ -2,3 +2,5 @@
 @media(max-width:380px){.slots>div{padding:4px;gap:3px}.slots strong{font-size:14px}.slots button{padding:0;min-width:24px;min-height:40px;font-size:18px}.slots span{font-size:10px}.row>span{font-size:11px}}
 
 .detailNumbers{border-top:1px solid #36525d;padding-top:18px}.detailNumbers>summary{cursor:pointer;color:#a5d6c2;padding:10px 0}.detailNumbers[open]>summary{margin-bottom:16px}
+
+.picker{padding:16px}.slots{margin-bottom:12px;gap:8px}.slots>div{min-height:36px;padding:6px 8px}.slots strong{font-size:18px}.search input{padding:10px 12px;margin:6px 0 10px}.choices{gap:5px;max-height:112px}.choices button{padding:6px 9px;font-size:13px}.choices span{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.submit{margin-top:14px}.picker>.note{margin:10px 0 0}@media(max-width:600px){.picker{padding:12px}.choices button{padding:6px 9px}.slots>div{min-height:32px;padding:5px}.search input{padding:9px 10px}.submit button{padding:10px 14px}}

@@ -25,6 +25,7 @@ import news_drafts
 import editorial_posts
 import questions
 import note_translation
+import question_translation
 import headline_translation
 import web_push
 
@@ -517,6 +518,7 @@ class AutomaticMonitor:
         while not self.stop_event.is_set():
             try:
                 note_translation.run_once(self.db_path)
+                question_translation.run_once(self.db_path)
             except Exception:
                 print("note-translation-unavailable", flush=True)
             self.stop_event.wait(30)

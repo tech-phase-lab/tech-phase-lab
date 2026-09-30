@@ -63,7 +63,7 @@ export default function ComparisonScreen() {
     } catch { if (!controller.signal.aborted) setError(true); }
     finally { if (!controller.signal.aborted) setBusy(false); }
   }
-  const matches = comparisonCatalog.filter(c => `${c.ticker} ${c.name}`.toLowerCase().includes(query.trim().toLowerCase()));
+  const matches = comparisonCatalog.filter(c => `${c.ticker} ${c.name}`.toLowerCase().includes(query.trim().toLowerCase())).slice(0, query.trim() ? 8 : 6);
   const rows: [string, (c: ComparisonResult["companies"][number]) => string][] = [
     [t("決算期末（年次）", "Fiscal year end"), c => c.revenue?.end || "—"],
     [t("売上高", "Revenue"), c => money(c.revenue, lang)],
@@ -101,9 +101,9 @@ export default function ComparisonScreen() {
         <div className={styles.slots}>{[0,1,2].map(i => <div key={i}>{selection[i] ? <><strong>{selection[i]}</strong><button onClick={() => choose(selection[i])} aria-label={`${selection[i]} ${t("を外す", "Remove")}`}>×</button></> : <span>{i === 2 ? t("3社目 · 任意", "Third · optional") : t(`${i+1}社目を選択`, `Choose company ${i+1}`)}</span>}</div>)}</div>
         <label className={styles.search}>{t("銘柄コード・会社名", "Ticker or company name")}<input value={query} onChange={e => setQuery(e.target.value)} placeholder={t("例：MU、NVIDIA、Nebius", "e.g. MU, NVIDIA, Nebius")} autoComplete="off" maxLength={50} /></label>
         <div className={styles.choices}>{matches.map(c => <button key={c.ticker} aria-pressed={selection.includes(c.ticker)} disabled={selection.length === 3 && !selection.includes(c.ticker)} onClick={() => choose(c.ticker)}><strong>{c.ticker}</strong><span>{c.name}</span></button>)}</div>
-        {!matches.length && <p>{t("対象銘柄が見つかりません。現在は監視対象の22社から選べます。", "No match. Choose from the 22 companies currently covered.")}</p>}
+        {query.trim() && !matches.length && <p>{t("対象銘柄が見つかりません。現在は監視対象の22社から選べます。", "No match. Choose from the 22 companies currently covered.")}</p>}
         <div className={styles.submit}><small>{selection.length} / 3 {t("社を選択", "selected")}</small><button disabled={busy || selection.length < 2} onClick={() => void compare()}>{busy ? t("精査中…", "Analyzing…") : t("この銘柄を比較する", "Compare these stocks")}</button></div>
-        <p className={styles.note}>{t("SEC開示の年次実績と、取得できた直近の四半期実績を比較します。株価・予想利益が未接続のため、割安判定は保留します。", "Compare SEC annual results and available recent quarterly results. Valuation awaits licensed prices and earnings forecasts.")}</p>
+        <p className={styles.note}>{t("SEC開示を比較。割安評価は株価データ接続後に対応。", "Compare SEC filings. Valuation awaits price data.")}</p>
       </section>
       {busy && <div className={styles.loading} role="status"><span className={styles.spinner} aria-hidden="true"/><strong>{t("開示資料と比較条件を精査中…", "Checking filings and comparability…")}</strong><p>{t("期間・通貨・会計基準を確認しています。初回は時間がかかる場合があります。", "Checking periods, currencies and accounting bases. The first request may take longer.")}</p></div>}
       {error && <p role="alert">{t("比較結果を取得できませんでした。選択は残っています。もう一度お試しください。", "Could not retrieve the comparison. Your selection is saved; please try again.")}</p>}

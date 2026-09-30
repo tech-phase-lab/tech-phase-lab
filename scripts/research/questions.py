@@ -35,6 +35,9 @@ def connect(path):
     if "audience" not in columns:
         db.execute("ALTER TABLE member_questions ADD COLUMN audience TEXT NOT NULL DEFAULT 'private'")
         db.commit()
+    if "body_en" not in columns:
+        db.execute("ALTER TABLE member_questions ADD COLUMN body_en TEXT NOT NULL DEFAULT ''")
+        db.commit()
     return db
 
 
@@ -62,6 +65,7 @@ def _item(row, include_body=True):
     }
     if include_body:
         value["body"] = row["body"]
+        value["bodyEn"] = row["body_en"]
     return value
 
 

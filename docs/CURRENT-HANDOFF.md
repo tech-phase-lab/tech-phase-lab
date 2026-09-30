@@ -126,3 +126,9 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - All 40 roster companies now have a September 30 attempt. No calendar event, product UI, paid-provider setting, production environment or external delivery changed. Restart the next rotation from the oldest or still-unreviewed sources, preserving exact pending blockers.
 - The complete local gate passed: ESLint reported zero errors and one pre-existing warning, Node tests passed 163/163, Python tests passed 451/451, Next.js production build succeeded, and `compileall` plus `git diff --check` passed.
 - Calendar commit `f335fcc` used the exact local/connector tree `83cc89d`; Vercel deployment `dpl_EvkzCRjKyP76fZ6MX4VUvLLZgMcL` reached Ready. The canonical Japanese calendar loaded with 17 schedules and retained date-only ASML/FOMC entries.
+
+## September 30 15:39 JST owner request
+- Hide question composer in owner mode; RIZEL reads member questions rather than posting questions to himself. Existing owner test posts preserved. PRO reader preview still shows composer.
+- Add durable English question translation using configured note translation credentials/model. Board-only backlog, no owner identity in model input, store:false, 3 attempts and bounded daily calls. English view uses bodyEn, pending message instead of Japanese fallback.
+- Comparison picker condensed: six initial suggestions, eight filtered matches maximum, smaller slots/input/chips. Brief SEC/valuation pending note retained without claiming valuation works.
+- Affiliate applications deferred until public website ready; TG denial cause unknown. Existing moomoo agreement needs confirmation of referral cap vs publisher terms.

@@ -23,7 +23,7 @@ async function identity() {
   if (member.plan !== "pro") return "free" as const;
   const { url, token } = configuration();
   const ownerKey = createHmac("sha256", token).update(`question:${member.userId}`).digest("hex");
-  return { url, token, ownerKey };
+  return { url, token, ownerKey, ownerMode: member.ownerMode };
 }
 
 async function parse(response: Response) {
@@ -50,6 +50,7 @@ export async function POST(request: Request) {
     const account = await identity();
     if (!account) return reply(401, { ok: false, error: "sign-in-required" });
     if (account === "free") return reply(403, { ok: false, error: "pro-required" });
+    if (account.ownerMode) return reply(403, { ok: false, error: "owner-posting-disabled" });
     const text = await request.text();
     if (!text || new TextEncoder().encode(text).length > 8_000) return reply(400, { ok: false, error: "invalid-request" });
     const input = JSON.parse(text) as { requestId?: unknown; body?: unknown; audience?: unknown };

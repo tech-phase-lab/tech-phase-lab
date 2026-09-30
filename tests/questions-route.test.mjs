@@ -27,6 +27,8 @@ test('member question route requires identity, hashes ownership and keeps retrie
     const body=JSON.stringify({audience:'pro-board',requestId:'q-'+'1'.repeat(32),body:'決算で最初に見る数字は何ですか？'});
     assert.equal((await POST(new Request('https://example.test/api/research/questions',{method:'POST',headers:{origin:'https://attacker.test','content-type':'application/json'},body}))).status,403);
     assert.equal((await POST(new Request('https://example.test/api/research/questions',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body}))).status,200);
+    state.member.ownerMode=true;
+    assert.equal((await POST(new Request('https://example.test/api/research/questions',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body}))).status,403);
     const sent=JSON.parse(state.calls.at(-1).init.body);assert.match(sent.ownerKey,/^[a-f0-9]{64}$/);assert.equal(sent.body,'決算で最初に見る数字は何ですか？');
   } finally {globalThis.fetch=saved.fetch;delete globalThis.__questions;for(const [key,value] of [['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_MONITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
 });
