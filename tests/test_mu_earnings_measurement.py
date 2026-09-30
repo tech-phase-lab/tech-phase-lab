@@ -74,6 +74,15 @@ class MeasurementTests(unittest.TestCase):
         })
         self.assertNotIn(self.url, json.dumps(audit))
 
+    def test_official_results_slug_binds_event_when_stored_title_is_generic(self):
+        results_url = ('https://investors.micron.com/news/press-release/2026/'
+                       'Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-'
+                       'and-Full-Year-2026-Results/default.aspx')
+        with self.db:
+            self.db.execute("UPDATE sources SET title='Micron to Report Fiscal Fourth Quarter Results'")
+        self.add(results_url, 'Press release')
+        self.assertEqual(measurement.candidate(self.db)['url'], results_url)
+
     def test_exact_same_url_signal_time_enables_publication_latency(self):
         with self.db:
             self.db.execute("""CREATE TABLE signal_events(

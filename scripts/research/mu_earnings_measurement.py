@@ -88,16 +88,18 @@ def candidate_rows(db):
 
 def candidate_rejection(row):
     title = str(row["title"] or "")
+    path_words = urlsplit(row["url"]).path.replace("-", " ")
+    identity = f"{title} {path_words}"
     published = str(row["published_on"] or "").strip()
     publication_date = re.match(r"^(\d{4}-\d{2}-\d{2})(?:$|T)", published)
     if urlsplit(row["url"]).hostname != "investors.micron.com":
         return "non-micron-host"
     if publication_date and publication_date.group(1) not in ALLOWED_PUBLICATION_DATES:
         return "outside-event-date"
-    if not all(re.search(pattern, title, re.I) for pattern in (
+    if not all(re.search(pattern, identity, re.I) for pattern in (
             r"\b(?:reports|announces)\b", r"fourth.quarter|\bq4\b", r"\bresults\b")):
         return "non-results-title"
-    if re.search(r"to report|will report|conference call", title, re.I):
+    if re.search(r"to report|will report|conference call", identity, re.I):
         return "preannouncement"
     if len(row["extracted_text"] or "") < MIN_OFFICIAL_TEXT_CHARS:
         return "official-text-too-short"
