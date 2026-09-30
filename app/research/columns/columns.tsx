@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { postNames, type EditorialPost, type PostKind } from "@/lib/research/editorial-posts";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import styles from "./styles.module.css";
+import { scheduleLeaseRenewal } from "@/lib/research/display-lease";
 import NoteComposer from "../notes/composer";
 import { useMemberDisplay, useOwnerMode } from "../member-display-provider";
 type Result = { items: EditorialPost[]; access: string; status: string; validUntil?: number };
@@ -15,37 +16,58 @@ export default function ColumnsPage({ initialKind = "all", initial }: { initialK
   const memberPlan = useMemberDisplay();
   const ownerMode = useOwnerMode();
   const [result, setResult] = useState<Result>(initial ?? { items: [], access: "", status: "loading" });
+  const latest = useRef(result);
+  useEffect(() => { latest.current = result; }, [result]);
   const [retry, setRetry] = useState(0);
   const ja = lang === "ja";
   useEffect(() => {
     let stopped = false;
     let controller: AbortController | undefined;
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    async function load() {
+    let cancelLease: (() => void) | undefined;
+    function accept(data: Result) {
+      cancelLease?.();
+      latest.current = data; setResult(data);
+      cancelLease = scheduleLeaseRenewal(data.validUntil!, () => { void load(); }, () => {
+        latest.current = { items: [], access: "", status: "loading" };
+        setResult(latest.current);
+      });
+    }
+    async function load(invalidate = false) {
       if (stopped) return;
-      controller?.abort(); clearTimeout(timer);
+      controller?.abort();
       const current = new AbortController(); controller = current;
-      setResult({ items: [], access: "", status: "loading" });
+      // Background renewal keeps the current server-authorized body on screen.
+      // Explicit identity changes invalidate it immediately.
+      if (invalidate || latest.current.status !== "ready" || !(latest.current.validUntil! > Date.now())) {
+        cancelLease?.();
+        latest.current = { items: [], access: "", status: "loading" };
+        setResult(latest.current);
+      }
       try {
         const response = await fetch("/api/research/posts", { cache: "no-store", signal: AbortSignal.any([current.signal, AbortSignal.timeout(15_000)]) });
         const data = await response.json();
         if (current.signal.aborted || stopped) return;
         if (!response.ok || !data.ok || !Array.isArray(data.items) || !Number.isFinite(data.validUntil) || data.validUntil <= Date.now()) throw new Error("unavailable");
-        setResult({ items: data.items, access: data.access, status: "ready" });
-        // Never retain a premium body beyond the server's short entitlement lease.
-        timer = setTimeout(() => { setResult({ items: [], access: "", status: "loading" }); void load(); }, Math.max(0, Math.min(data.validUntil - Date.now(), 60_000)));
-      } catch { if (!current.signal.aborted && !stopped) setResult({ items: [], access: "", status: "error" }); }
+        accept({ items: data.items, access: data.access, status: "ready", validUntil: data.validUntil });
+      } catch { if (!current.signal.aborted && !stopped) {
+        cancelLease?.(); latest.current = { items: [], access: "", status: "error" }; setResult(latest.current);
+      } }
     }
     // A reused route can carry an older Free projection after the member switches to PRO.
     // Only reuse server data that agrees with the current verified display state.
     const initialMatches = memberPlan === null || (initial?.access === "pro") === (memberPlan === "pro");
     if (initial && retry === 0 && initial.validUntil! > Date.now() && initialMatches) {
-      setResult(initial);
-      timer = setTimeout(() => { setResult({ items: [], access: "", status: "loading" }); void load(); }, Math.min(initial.validUntil! - Date.now(), 60_000));
+      accept(initial);
     }
-    else void load();
-    window.addEventListener("focus", load); window.addEventListener("tech-phase:membership-changed", load);
-    return () => { stopped = true; controller?.abort(); clearTimeout(timer); window.removeEventListener("focus", load); window.removeEventListener("tech-phase:membership-changed", load); };
+    else {
+      // Re-arm the expiry guard if this effect restarts during a valid lease.
+      if (latest.current.status === "ready" && latest.current.validUntil! > Date.now()) accept(latest.current);
+      void load();
+    }
+    const focused = () => { void load(); };
+    const changed = () => { void load(true); };
+    window.addEventListener("focus", focused); window.addEventListener("tech-phase:membership-changed", changed);
+    return () => { stopped = true; controller?.abort(); cancelLease?.(); window.removeEventListener("focus", focused); window.removeEventListener("tech-phase:membership-changed", changed); };
   }, [retry, initial, memberPlan]);
   const membershipMismatch = memberPlan !== null && result.status === "ready" && (result.access === "pro") !== (memberPlan === "pro");
   const shown = membershipMismatch ? { items: [], access: "", status: "loading" } : result;
