@@ -78,27 +78,51 @@ def precise_publication_at(db, url, detected_at):
     return None
 
 
-def candidate(db):
-    rows = db.execute("""SELECT s.url,s.title,s.extracted_text,s.published_on,e.detected_at,
+def candidate_rows(db):
+    return db.execute("""SELECT s.url,s.title,s.extracted_text,s.published_on,e.detected_at,
       COALESCE((SELECT MIN(h.at) FROM history h WHERE h.url=s.url AND h.kind='first-fetch'),s.fetched_at) AS body_ready_at
       FROM release_events e JOIN sources s ON s.url=e.url
       WHERE e.ticker='MU' AND julianday(e.detected_at)>=julianday(?)
       AND julianday(e.detected_at)<julianday(?) ORDER BY e.id""", (START, END))
+
+
+def candidate_rejection(row):
+    title = str(row["title"] or "")
+    published = str(row["published_on"] or "").strip()
+    publication_date = re.match(r"^(\d{4}-\d{2}-\d{2})(?:$|T)", published)
+    if urlsplit(row["url"]).hostname != "investors.micron.com":
+        return "non-micron-host"
+    if publication_date and publication_date.group(1) not in ALLOWED_PUBLICATION_DATES:
+        return "outside-event-date"
+    if not all(re.search(pattern, title, re.I) for pattern in (
+            r"\b(?:reports|announces)\b", r"fourth.quarter|\bq4\b", r"\bresults\b")):
+        return "non-results-title"
+    if re.search(r"to report|will report|conference call", title, re.I):
+        return "preannouncement"
+    if len(row["extracted_text"] or "") < MIN_OFFICIAL_TEXT_CHARS:
+        return "official-text-too-short"
+    return None
+
+
+def candidate(db):
+    rows = candidate_rows(db)
     for row in rows:
-        title = str(row["title"] or "")
-        published = str(row["published_on"] or "").strip()
-        publication_date = re.match(r"^(\d{4}-\d{2}-\d{2})(?:$|T)", published)
-        if (urlsplit(row["url"]).hostname != "investors.micron.com"
-                or (publication_date
-                    and publication_date.group(1) not in ALLOWED_PUBLICATION_DATES)
-                or not all(re.search(pattern, title, re.I) for pattern in (r"\b(?:reports|announces)\b", r"fourth.quarter|\bq4\b", r"\bresults\b"))
-                or re.search(r"to report|will report|conference call", title, re.I)
-                or len(row["extracted_text"] or "") < MIN_OFFICIAL_TEXT_CHARS):
+        if candidate_rejection(row):
             continue
         result = dict(row)
         result["published_at"] = precise_publication_at(db, row["url"], row["detected_at"])
         return result
     return None
+
+
+def candidate_audit(db):
+    """Return only bounded reason codes and counts; never source text or URLs."""
+    rows = list(candidate_rows(db))
+    reasons = {}
+    for row in rows:
+        reason = candidate_rejection(row) or "eligible"
+        reasons[reason] = reasons.get(reason, 0) + 1
+    return {"eventRows": len(rows), "candidateReasons": reasons}
 
 
 def run_once(path, env=None, transport=brief_generator.request_response):
@@ -166,6 +190,7 @@ def diagnostics(db):
     if row is None:
         return {"status": "waiting-for-release" if stamp() < END else "expired-without-release",
                 "configured": configuration(os.environ) is not None, "experimentExpiresAt": END,
+                **candidate_audit(db),
                 "publicationToDetectionMs": None, "detectionToBodyMs": None,
                 "translationMs": None, "summaryMs": None, "bodyToSummaryMs": None,
                 "detectionToSummaryMs": None, "modelRequestTotalMs": None,

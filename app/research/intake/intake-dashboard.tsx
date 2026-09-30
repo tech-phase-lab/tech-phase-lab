@@ -369,7 +369,10 @@ function muEarningsMeasurementStatus(measurement: MonitorState["muEarningsMeasur
   if (!measurement) return "MU決算実測：状態取得待ち";
   if (measurement.status === "waiting-for-release") {
     const setup = measurement.configured ? "計測準備済み" : "設定不足のため停止";
-    return `MU決算実測：公式発表待ち · ${setup} · 終了 ${time(measurement.experimentExpiresAt ?? null)} JST · 発表→検知は公式の正確な公開時刻を確認できた場合だけ算出`;
+    const reasons = Object.entries(measurement.candidateReasons ?? {})
+      .filter(([, count]) => count > 0).map(([reason, count]) => `${reason} ${count}`).join("／");
+    const audit = measurement.eventRows == null ? "" : ` · 候補監査 ${measurement.eventRows}件${reasons ? `（${reasons}）` : ""}`;
+    return `MU決算実測：公式発表待ち · ${setup}${audit} · 終了 ${time(measurement.experimentExpiresAt ?? null)} JST · 発表→検知は公式の正確な公開時刻を確認できた場合だけ算出`;
   }
   if (measurement.status === "expired-without-release") {
     return "MU決算実測：期限内に条件を満たす公式本文を取得できず終了";

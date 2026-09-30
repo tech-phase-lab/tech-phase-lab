@@ -119,6 +119,7 @@ export type MonitorState = {
   muEarningsMeasurement?: {
     status: "waiting-for-release" | "waiting" | "running" | "retry" | "complete" | "expired-without-release";
     configured?: boolean; experimentExpiresAt?: string; attempts?: number;
+    eventRows?: number; candidateReasons?: Record<string, number>;
     detectedAt?: string; bodyReadyAt?: string | null;
     detectionToBodyMs: number | null;
     translationStartedAt?: string | null; translationCompletedAt?: string | null;

@@ -279,6 +279,7 @@ test("SEC evidence totals and filters distinguish exhibits from filing-body fall
   assert.match(liveTypes, /"not-yet-confirmed" \| "date-only" \| "timestamp"/);
   assert.match(liveTypes, /detectionToSummaryMs: number \| null/);
   assert.match(intakeDashboard, /MU決算実測：公式発表待ち/);
+  assert.match(intakeDashboard, /候補監査/);
   assert.match(intakeDashboard, /発表→検知 未算出（公式公開時刻は日付精度）/);
   assert.match(intakeDashboard, /見出し翻訳API/);
   assert.match(intakeDashboard, /本文要約API/);
