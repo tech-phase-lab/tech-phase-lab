@@ -159,3 +159,9 @@ The complete local gate passed after the final batch: ESLint reported zero
 errors and one pre-existing warning, Node tests passed 163/163, Python tests
 passed 451/451, the Next.js production build succeeded, and `compileall` plus
 `git diff --check` passed.
+
+Calendar commit `f335fcc` used the exact locally staged and connector-created
+tree (`83cc89d`). Vercel deployment
+`dpl_EvkzCRjKyP76fZ6MX4VUvLLZgMcL` reached Ready. The canonical Japanese
+calendar loaded with the September 30 official confirmation date, 17 schedules,
+the unchanged Micron/TSMC/Netflix calls, and date-only ASML/FOMC entries.
