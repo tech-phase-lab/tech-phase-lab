@@ -5,11 +5,11 @@ import { postNames, type EditorialPost, type PostKind } from "@/lib/research/edi
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import styles from "./styles.module.css";
-type Result = { items: EditorialPost[]; access: string; status: string };
-export default function ColumnsPage({ initialKind = "all" }: { initialKind?: PostKind | "all" } = {}) {
+type Result = { items: EditorialPost[]; access: string; status: string; validUntil?: number };
+export default function ColumnsPage({ initialKind = "all", initial }: { initialKind?: PostKind | "all"; initial?: Result } = {}) {
   const [lang, setLang] = useResearchLanguage();
   const kind = initialKind;
-  const [result, setResult] = useState<Result>({ items: [], access: "", status: "loading" });
+  const [result, setResult] = useState<Result>(initial ?? { items: [], access: "", status: "loading" });
   const [retry, setRetry] = useState(0);
   const ja = lang === "ja";
   useEffect(() => {
@@ -31,12 +31,13 @@ export default function ColumnsPage({ initialKind = "all" }: { initialKind?: Pos
         timer = setTimeout(() => { setResult({ items: [], access: "", status: "loading" }); void load(); }, Math.max(0, Math.min(data.validUntil - Date.now(), 60_000)));
       } catch { if (!current.signal.aborted && !stopped) setResult({ items: [], access: "", status: "error" }); }
     }
-    void load();
+    if (initial && retry === 0 && initial.validUntil! > Date.now()) timer = setTimeout(() => { setResult({ items: [], access: "", status: "loading" }); void load(); }, Math.min(initial.validUntil! - Date.now(), 60_000));
+    else void load();
     window.addEventListener("focus", load); window.addEventListener("tech-phase:membership-changed", load);
     return () => { stopped = true; controller?.abort(); clearTimeout(timer); window.removeEventListener("focus", load); window.removeEventListener("tech-phase:membership-changed", load); };
-  }, [retry]);
+  }, [retry, initial]);
   return <ResearchToolShell desk lang={lang} setLang={setLang} title={initialKind === "all" ? "RIZEL’S DESK" : initialKind === "qa" ? ja ? "リゼルに聞く" : "Ask RIZEL" : postNames[initialKind][lang]} description="">
-    {result.status === "loading" && <p role="status">{ja ? "記事を確認中…" : "Loading articles…"}</p>}
+    {result.status === "loading" && <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "記事を読み込んでいます" : "Loading articles"} />}
     {result.status === "error" && <div role="status"><p>{ja ? "記事を読み込めませんでした。" : "Unable to load articles."}</p><button onClick={() => setRetry(v => v + 1)}>{ja ? "再読み込み" : "Retry"}</button></div>}
     {result.status === "ready" && !result.items.filter(item => kind === "all" || item.kind === kind).length && <section className={styles.article}><h2>{kind === "all" ? ja ? "公開記事は準備中です" : "Articles are being prepared" : ja ? "この種類の記事はまだありません" : "No articles in this category yet"}</h2><p>{ja ? "公開された投稿がここに並びます。" : "Published posts will appear here."}</p><Link href="/research/account">{ja ? "会員情報を確認する" : "View membership"}</Link></section>}
     {result.items.filter(item => kind === "all" || item.kind === kind).map(item => <article className={styles.article} id={item.id} key={item.id}>

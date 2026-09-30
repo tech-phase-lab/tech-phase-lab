@@ -1,15 +1,16 @@
 import "server-only";
+import { cache } from "react";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import { ownerPreviewMode, previewPlan, resolveAdmin, resolvePlan } from "./entitlements";
 export function membershipConfigured() {
   return Boolean(process.env.CLERK_SECRET_KEY && process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 }
-export async function getMembership() {
+export const getMembership = cache(async function getMembership() {
   if (!membershipConfigured()) return { status: "unavailable", plan: "free" } as const;
   const { userId } = await auth();
   if (!userId) return { status: "signed-out", plan: "free" } as const;
   return getMembershipForUser(userId);
-}
+});
 
 /** Internal server-to-server use only; callers must authenticate before selecting an ID. */
 export async function getMembershipForUser(userId: string) {

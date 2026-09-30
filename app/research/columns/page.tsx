@@ -1,2 +1,2 @@
-import Columns from "./columns";
-export default function Page() { return <Columns />; }
+import ServerPosts from "./server-posts";
+export default function Page() { return <ServerPosts initialKind="all" />; }

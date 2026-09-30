@@ -1,2 +1,2 @@
-import ColumnsPage from "../columns/columns";
-export default function Page() { return <ColumnsPage initialKind="weekly" />; }
+import ServerPosts from "../columns/server-posts";
+export default function Page() { return <ServerPosts initialKind="weekly" />; }
