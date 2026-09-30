@@ -115,11 +115,11 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   const byTicker = Object.fromEntries(coverage.map((company) => [company.ticker, company]));
   const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
   assert.ok(coverage.every((company) => /^2026-09-(?:2[3-9]|30)$/.test(company.lastAttemptedOn)));
-  for (const ticker of ["ADBE", "AMD", "ASML", "CRWD", "DELL", "GEV", "INTC", "LRCX", "META", "MSFT", "MU", "NBIS", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-09-29");
+  for (const ticker of ["ADBE", "AMD", "COHR", "CRWD", "DELL", "GEV", "INTC", "LRCX", "META"]) assert.equal(checked[ticker], "2026-09-30");
+  for (const ticker of ["ASML", "MSFT", "MU", "NBIS", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-09-29");
   for (const ticker of ["CRM", "ORCL"]) assert.equal(checked[ticker], "2026-09-28");
   assert.equal(checked.AMAT, "2026-09-25");
   assert.equal(checked.QCOM, "2026-09-23");
-  assert.equal(checked.COHR, "2026-09-29");
   for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "CRDO", "CRWV", "GOOGL", "KLAC", "LITE", "MRVL", "NOW", "NVDA", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) assert.equal(checked[ticker], null);
   const attemptedOnSeptember30 = coverage
     .filter((company) => company.lastAttemptedOn === "2026-09-30")
@@ -127,18 +127,28 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
     .sort();
   assert.deepEqual(attemptedOnSeptember30, [
     "AAPL",
+    "ADBE",
     "AMAT",
+    "AMD",
     "AMZN",
     "ANET",
     "ARM",
+    "ASML",
     "AVGO",
     "BE",
+    "COHR",
     "CRDO",
     "CRM",
+    "CRWD",
     "CRWV",
+    "DELL",
+    "GEV",
     "GOOGL",
+    "INTC",
     "KLAC",
     "LITE",
+    "LRCX",
+    "META",
     "MRVL",
     "NOW",
     "ORCL",
@@ -147,7 +157,7 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
     "SNOW",
     "VRT",
   ]);
-  assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-29").length, 20);
+  assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-29").length, 10);
   assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 21);
   assert.equal(coverage.filter((company) => company.lastCheckedOn === null).length, 19);
   for (const ticker of ["MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) {

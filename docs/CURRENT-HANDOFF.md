@@ -1,4 +1,4 @@
-# Tech Phase — current handoff, 2026-09-30 01:43 JST
+# Tech Phase — current handoff, 2026-09-30 13:49 JST
 
 Start here, then read AGENTS.md and docs/AUTONOMOUS-NEXT-2026-09-29.md. Current source and newer owner instructions override older documents.
 
@@ -111,3 +111,9 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - September 30 12:18 JST: Move the side avatar 5px left, and reduce timestamp top margin from 10px to 6px. Keep bubble width and text size unchanged.
 
 - September 30 12:24 JST: Current trial moves date/time to the top-left inside the speech bubble; compact side avatar stays 5px left. If user dislikes this final trial, restore previous timestamp-bottom layout from commit 2d3500db6cb3ee4f9a2281412f4f7a6b6ee8c7c4.
+
+## September 30 13:49 JST continuation
+- Fast-forwarded the clean local checkout across 23 concurrent preview commits before editing, preserving the accepted RIZEL avatar, note layout, membership boundaries and translation recovery work.
+- Rechecked ADBE, AMD, ASML, COHR, CRWD, DELL, GEV, INTC, LRCX and META against current first-party investor event pages. Adobe and GE Vernova still match their registered calls; AMD, Coherent, Dell, Intel and Meta explicitly show no current upcoming event. CrowdStrike shows only presentations and past events, while Lam's only upcoming item is its annual meeting rather than earnings. ASML's redirected official calendar remained inaccessible, so its completed-check date did not advance.
+- Rechecked the BLS October schedule and Federal Reserve calendar. The existing October 2 Employment Situation, October 14 CPI, October 15 PPI, October 27–28 FOMC and December 8–9 FOMC records remain unchanged; no clock time was inferred for future FOMC decisions.
+- No calendar event, product UI, paid-provider setting, production environment or external delivery changed. Next calendar batch: MSFT, MU, NBIS, NFLX, NVDA, PANW, PLTR, SNDK, TSLA and TSM.

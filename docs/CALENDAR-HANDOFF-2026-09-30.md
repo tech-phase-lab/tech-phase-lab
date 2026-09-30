@@ -84,3 +84,33 @@ reported success without redeploying because no watched monitor path changed.
 The canonical Japanese calendar loaded in the browser with 17 schedules,
 including the unchanged October BLS releases and date-only October 28 and
 December 9 FOMC entries.
+
+## Midday company review (13:49 JST)
+
+Reviewed the next ten oldest company sources. Nine checks were conclusive and
+advance both `lastAttemptedOn` and `lastCheckedOn`; ASML's official redirect
+remained inaccessible, so only its attempt date advances. No new calendar event
+was added because the two confirmed calls already match the registered records.
+
+| Ticker | Result | Official source / evidence |
+| --- | --- | --- |
+| ADBE | Confirmed unchanged | [Events and presentations](https://www.adobe.com/investor-relations/events-presentations.html) still lists the fiscal Q4 and FY2026 earnings call on December 9 at 2:00 p.m. Pacific, matching the registered call. |
+| AMD | Confirmed no current event | [IR calendar](https://ir.amd.com/news-events/ir-calendar) explicitly says there are no upcoming events scheduled. |
+| ASML | Pending | The former [official financial calendar](https://www.asml.com/en/investors/financial-calendar) redirects to `investor.asml.com/financial-events`, which remained inaccessible through the available lawful endpoint. The existing October 14 date-only record is unchanged and no access control was bypassed. |
+| COHR | Confirmed no current event | [Events](https://ir.coherent.com/news-events/events) says more events are coming soon and shows only completed events. |
+| CRWD | Confirmed no future earnings item | [Events and presentations](https://ir.crowdstrike.com/events-and-presentations/) lists presentations and past events only; no future earnings event is shown. |
+| DELL | Confirmed no current event | [Upcoming events](https://investors.delltechnologies.com/news-events/upcoming-events) says more events are coming soon. |
+| GEV | Confirmed unchanged | [Investor events](https://www.gevernova.com/investors/events) still lists the October 28 fiscal Q3 webcast at 7:30 a.m. Eastern, matching the registered webcast. |
+| INTC | Confirmed no current event | [IR calendar](https://www.intc.com/news-events/ir-calendar) explicitly says there are no upcoming events scheduled. |
+| LRCX | Confirmed no future earnings item | [Events](https://investor.lamresearch.com/events) lists a November 3 annual meeting, not an earnings release or call. |
+| META | Confirmed no current event | [Investor events](https://investor.atmeta.com/investor-events/) says to stay tuned for upcoming events and shows no current item. |
+
+The BLS October schedule remains unchanged: Employment Situation on October 2,
+CPI on October 14 and PPI on October 15, each at 08:30 Eastern. The Federal
+Reserve still lists its October 27–28 and December 8–9 meetings without future
+statement or press-conference clock times. Existing date-only records remain
+date-only.
+
+Next: MSFT, MU, NBIS, NFLX, NVDA, PANW, PLTR, SNDK, TSLA and TSM. This will
+finish the September 30 rotation through all 40 companies. Continue to retain
+inaccessible or inconclusive sources as pending.
