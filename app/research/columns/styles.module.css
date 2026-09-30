@@ -12,3 +12,10 @@
 @media(max-width:700px){.article.note{padding:18px 20px;margin-bottom:30px}.note::after{left:23px}.note .text{font-size:15px}}
 
 .writeAction{display:flex;justify-content:flex-end;margin:-10px 0 14px}.writeAction a{display:inline-flex;align-items:center;min-height:36px;padding:0 13px;border:1px solid #a58b5552;border-radius:8px;color:#dfc894;background:#9b7b2710;text-decoration:none;font-size:12px}.writeAction a:hover{background:#9b7b2726}.writeAction a:focus-visible{outline:2px solid #dfc894;outline-offset:3px}
+
+/* The approved RIZEL avatar speaks from beside each note, without adding a text heading. */
+.article.note{margin-left:62px;border-radius:5px 18px 18px 18px}
+.note::after{bottom:auto;top:24px;left:-7px;border-right:0;border-left:1px solid #a68c574d;background:#1d1d1d}
+.noteAvatar{position:absolute;top:0;left:-62px;width:46px;height:46px;overflow:hidden;border-radius:50%;border:1px solid #a68c5780;background:#111d2b;box-shadow:0 3px 12px #00000030}
+.noteAvatar img{display:block;width:100%;height:100%;object-fit:cover}
+@media(max-width:700px){.article.note{margin-left:49px;padding:15px 16px}.noteAvatar{left:-49px;width:37px;height:37px}.note::after{left:-7px;top:19px}}

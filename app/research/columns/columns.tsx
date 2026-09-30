@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { postNames, type EditorialPost, type PostKind } from "@/lib/research/editorial-posts";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
@@ -54,6 +55,7 @@ export default function ColumnsPage({ initialKind = "all", initial }: { initialK
     {shown.status === "error" && <div role="status"><p>{ja ? "記事を読み込めませんでした。" : "Unable to load articles."}</p><button onClick={() => setRetry(v => v + 1)}>{ja ? "再読み込み" : "Retry"}</button></div>}
     {shown.status === "ready" && !shown.items.filter(item => kind === "all" || item.kind === kind).length && <section className={styles.article}><h2>{kind === "all" ? ja ? "公開記事は準備中です" : "Articles are being prepared" : ja ? "この種類の記事はまだありません" : "No articles in this category yet"}</h2><p>{ja ? "公開された投稿がここに並びます。" : "Published posts will appear here."}</p><Link href="/research/account">{ja ? "会員情報を確認する" : "View membership"}</Link></section>}
     {shown.items.filter(item => kind === "all" || item.kind === kind).map(item => <article className={`${styles.article} ${item.kind === "notes" ? styles.note : ""}`} id={item.id} key={item.id}>
+      {item.kind === "notes" && <div className={styles.noteAvatar}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={46} height={46} unoptimized /></div>}
       <p className={styles.meta}>{item.kind !== "notes" && <>{postNames[item.kind][lang]} · </>}<time dateTime={item.publishedAt!}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { dateStyle: "medium", ...(item.kind === "notes" ? { timeStyle: "short" as const, hourCycle: "h23" as const } : {}), timeZone: "Asia/Tokyo" }).format(new Date(item.publishedAt!))}{item.kind === "notes" && <small className={styles.zone}> JST</small>}</time></p>
       {item.kind !== "notes" && <><h2>{ja ? item.titleJa : item.titleEn}</h2><p className={styles.text}>{ja ? item.introJa : item.introEn}</p></>}
       {!ja && item.translationStatus === "pending" ? <p>Translation pending.</p> : shown.access === "pro" ? <><div className={styles.text}>{ja ? item.bodyJa : item.bodyEn}</div>{item.sources.length > 0 && <footer><h3>{ja ? "出典" : "Sources"}</h3>{item.sources.map((source, index) => <a key={index} href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a>)}</footer>}</> : <aside><p>{ja ? "この先の本文はPRO会員向けです。" : "The full article is available to PRO members."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in / Membership"}</Link></aside>}
