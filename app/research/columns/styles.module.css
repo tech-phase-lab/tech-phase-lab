@@ -8,10 +8,10 @@
 
 /* A compact avatar beside the bubble, with timestamp below the message. */
 .article.note{position:relative;margin:25px 0 30px;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
-.noteHeader{position:absolute;top:0;left:0}
+.noteHeader{position:absolute;top:0;left:-5px}
 .noteAvatar{width:38px;height:38px;overflow:hidden;border-radius:50%;border:1px solid #a68c5780;background:#111d2b;box-shadow:0 3px 12px #00000030}
 .noteAvatar img{display:block;width:100%;height:100%;object-fit:cover}
-.note .meta{margin:10px 0 0;text-align:right;font-size:10px;letter-spacing:.035em;color:#a6987d}
+.note .meta{margin:6px 0 0;text-align:right;font-size:10px;letter-spacing:.035em;color:#a6987d}
 .zone{font-size:9px;color:#8d8d83;letter-spacing:.06em}
 .noteBubble{position:relative;margin-left:49px;padding:16px 20px;border:1px solid #a68c574d;border-radius:4px 14px 14px 14px;background:linear-gradient(125deg,#201e1b,#121a21);box-shadow:inset 0 1px 0 #ead5a510,0 12px 30px #00000018}
 .noteBubble::before{content:"";position:absolute;top:14px;left:-7px;width:12px;height:12px;transform:rotate(45deg);border-bottom:1px solid #a68c574d;border-left:1px solid #a68c574d;background:#201e1b;pointer-events:none}

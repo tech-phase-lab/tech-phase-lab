@@ -107,3 +107,5 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - September 30 12:06 JST: User found the overlapping-icon/top-notch version unnatural. Current trial: avatar and date/time in a row above a full-width bubble, with an upward tail aligned under the avatar. Keep approved art and silent lease renewal unchanged.
 
 - September 30 12:11 JST: User prefers avatar beside bubble for a stronger speaking effect, and timestamp below the text. Latest layout uses compact left avatar (32px mobile), left-pointing tail, and small right-aligned date/time under body. This supersedes overlap/above-bubble trials.
+
+- September 30 12:18 JST: Move the side avatar 5px left, and reduce timestamp top margin from 10px to 6px. Keep bubble width and text size unchanged.
