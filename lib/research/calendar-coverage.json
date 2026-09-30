@@ -10,22 +10,22 @@
     "ticker": "ADBE",
     "name": "Adobe",
     "sourceUrl": "https://www.adobe.com/investor-relations/events-presentations.html",
-    "lastAttemptedOn": "2026-09-30",
-    "lastCheckedOn": "2026-09-30"
+    "lastAttemptedOn": "2026-10-01",
+    "lastCheckedOn": "2026-10-01"
   },
   {
     "ticker": "AMAT",
     "name": "Applied Materials",
     "sourceUrl": "https://ir.appliedmaterials.com/events?tab=upcoming",
-    "lastAttemptedOn": "2026-09-30",
+    "lastAttemptedOn": "2026-10-01",
     "lastCheckedOn": "2026-09-25"
   },
   {
     "ticker": "AMD",
     "name": "AMD",
     "sourceUrl": "https://ir.amd.com/news-events/ir-calendar",
-    "lastAttemptedOn": "2026-09-30",
-    "lastCheckedOn": "2026-09-30"
+    "lastAttemptedOn": "2026-10-01",
+    "lastCheckedOn": "2026-10-01"
   },
   {
     "ticker": "AMZN",
@@ -52,7 +52,7 @@
     "ticker": "ASML",
     "name": "ASML",
     "sourceUrl": "https://www.asml.com/en/investors/financial-calendar",
-    "lastAttemptedOn": "2026-09-30",
+    "lastAttemptedOn": "2026-10-01",
     "lastCheckedOn": "2026-09-29"
   },
   {
@@ -73,8 +73,8 @@
     "ticker": "COHR",
     "name": "Coherent",
     "sourceUrl": "https://ir.coherent.com/news-events/events",
-    "lastAttemptedOn": "2026-09-30",
-    "lastCheckedOn": "2026-09-30"
+    "lastAttemptedOn": "2026-10-01",
+    "lastCheckedOn": "2026-10-01"
   },
   {
     "ticker": "CRDO",
@@ -87,15 +87,15 @@
     "ticker": "CRM",
     "name": "Salesforce",
     "sourceUrl": "https://investor.salesforce.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-30",
+    "lastAttemptedOn": "2026-10-01",
     "lastCheckedOn": "2026-09-28"
   },
   {
     "ticker": "CRWD",
     "name": "CrowdStrike",
     "sourceUrl": "https://ir.crowdstrike.com/events-and-presentations/",
-    "lastAttemptedOn": "2026-09-30",
-    "lastCheckedOn": "2026-09-30"
+    "lastAttemptedOn": "2026-10-01",
+    "lastCheckedOn": "2026-10-01"
   },
   {
     "ticker": "CRWV",
@@ -108,15 +108,15 @@
     "ticker": "DELL",
     "name": "Dell Technologies",
     "sourceUrl": "https://investors.delltechnologies.com/news-events/upcoming-events",
-    "lastAttemptedOn": "2026-09-30",
-    "lastCheckedOn": "2026-09-30"
+    "lastAttemptedOn": "2026-10-01",
+    "lastCheckedOn": "2026-10-01"
   },
   {
     "ticker": "GEV",
     "name": "GE Vernova",
     "sourceUrl": "https://www.gevernova.com/investors/events",
-    "lastAttemptedOn": "2026-09-30",
-    "lastCheckedOn": "2026-09-30"
+    "lastAttemptedOn": "2026-10-01",
+    "lastCheckedOn": "2026-10-01"
   },
   {
     "ticker": "GOOGL",
@@ -213,7 +213,7 @@
     "ticker": "ORCL",
     "name": "Oracle",
     "sourceUrl": "https://investor.oracle.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-30",
+    "lastAttemptedOn": "2026-10-01",
     "lastCheckedOn": "2026-09-28"
   },
   {

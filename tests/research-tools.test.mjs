@@ -129,7 +129,8 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   const byTicker = Object.fromEntries(coverage.map((company) => [company.ticker, company]));
   const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
   assert.ok(coverage.every((company) => /^2026-(?:09-(?:2[3-9]|30)|10-01)$/.test(company.lastAttemptedOn)));
-  for (const ticker of ["ADBE", "AMD", "COHR", "CRWD", "DELL", "GEV", "INTC", "LRCX", "META", "MSFT", "MU", "NBIS", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-09-30");
+  for (const ticker of ["ADBE", "AMD", "COHR", "CRWD", "DELL", "GEV"]) assert.equal(checked[ticker], "2026-10-01");
+  for (const ticker of ["INTC", "LRCX", "META", "MSFT", "MU", "NBIS", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-09-30");
   assert.equal(checked.ASML, "2026-09-29");
   for (const ticker of ["CRM", "ORCL"]) assert.equal(checked[ticker], "2026-09-28");
   assert.equal(checked.AMAT, "2026-09-25");
@@ -140,15 +141,6 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
     .map((company) => company.ticker)
     .sort();
   assert.deepEqual(attemptedOnSeptember30, [
-    "ADBE",
-    "AMAT",
-    "AMD",
-    "ASML",
-    "COHR",
-    "CRM",
-    "CRWD",
-    "DELL",
-    "GEV",
     "INTC",
     "LRCX",
     "META",
@@ -156,7 +148,6 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
     "MU",
     "NBIS",
     "NFLX",
-    "ORCL",
     "SNDK",
     "TSLA",
     "TSM",
@@ -166,8 +157,9 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
     .map((company) => company.ticker)
     .sort();
   assert.deepEqual(attemptedOnOctober1, [
-    "AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "CRDO", "CRWV", "GOOGL", "KLAC",
-    "LITE", "MRVL", "NOW", "NVDA", "PANW", "PLTR", "QCOM", "SKHY", "SNOW", "VRT",
+    "AAPL", "ADBE", "AMAT", "AMD", "AMZN", "ANET", "ARM", "ASML", "AVGO", "BE",
+    "COHR", "CRDO", "CRM", "CRWD", "CRWV", "DELL", "GEV", "GOOGL", "KLAC", "LITE",
+    "MRVL", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "QCOM", "SKHY", "SNOW", "VRT",
   ]);
   assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-29").length, 0);
   assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 21);

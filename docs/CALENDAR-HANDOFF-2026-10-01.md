@@ -82,3 +82,28 @@ remain unmeasured. This lets `publicationToDetectionMs` become exact when the
 official feed supplies a clock time while preserving the existing null/date-only
 fallback. Existing measurement rows are backfilled safely on a later worker pass;
 no generated body, model output or credential enters public diagnostics.
+
+## Oldest-source rotation (02:46 JST)
+
+Reviewed the ten oldest company attempts against current first-party investor
+pages. No source confirmed a new earnings date or changed an existing calendar
+record. The daily BLS and Federal Reserve check had already been completed
+earlier on October 1, so no second inferred update was added.
+
+| Ticker | Result | Official source / exact blocker |
+| --- | --- | --- |
+| AMAT | Pending | The configured [events page](https://ir.appliedmaterials.com/events?tab=upcoming) remained inaccessible through the available lawful endpoint. No access control was bypassed. |
+| CRM | Pending | [Investor events](https://investor.salesforce.com/events-and-presentations/default.aspx) exposes Upcoming & Recent Events and Archived Events headings without an inspectable current item. |
+| ORCL | Pending | [Events and presentations](https://investor.oracle.com/events-and-presentations/default.aspx) exposes Featured Event, Upcoming Events and Archived Events headings without an inspectable item. |
+| ASML | Pending | The configured calendar now redirects to [financial events](https://investor.asml.com/financial-events), which exposes only a general events description and an external widget; the already registered October 14 date remains unchanged. |
+| ADBE | Checked | [Events and presentations](https://www.adobe.com/investor-relations/events-presentations.html) still confirms the December 9, 2026 Q4/FY2026 call at 2:00 p.m. Pacific. |
+| AMD | Checked | [IR calendar](https://ir.amd.com/news-events/ir-calendar) explicitly says there are no upcoming events; the latest earnings call remains August 4. |
+| COHR | Checked | [Events](https://ir.coherent.com/news-events/events) explicitly says more events are coming soon and lists only past events, with no future earnings item. |
+| CRWD | Checked | [Events and presentations](https://ir.crowdstrike.com/events-and-presentations/) lists presentations and past events through September 10, with no future earnings event. |
+| DELL | Checked | [Upcoming events](https://investors.delltechnologies.com/news-events/upcoming-events) explicitly says more events are coming soon and supplies no scheduled item. |
+| GEV | Checked | [Investor events](https://www.gevernova.com/investors/events) still confirms the October 28, 2026 Q3 webcast at 7:30 a.m. Eastern. |
+
+Only the ten reviewed companies advanced `lastAttemptedOn`; the six conclusive
+pages advanced `lastCheckedOn`. Empty, inaccessible or widget-only sources
+remain pending with their prior completed-check dates. Next rotation begins with
+INTC, LRCX, META, MSFT, MU, NBIS, NFLX, SNDK, TSLA and TSM.
