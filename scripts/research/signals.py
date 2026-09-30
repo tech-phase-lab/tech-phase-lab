@@ -872,6 +872,40 @@ def signal_error_kind(error):
     return "other"
 
 
+def x_operational_summary(db, sources=SOURCES):
+    """Public-safe X intake diagnostics: no credentials, queries or post bodies."""
+    schema(db)
+    routes = []
+    for source in sources:
+        if source.get("format") != "x-api":
+            continue
+        row = db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
+        routes.append({
+            "id": source["id"],
+            "checkedAt": row["checked_at"] if row else None,
+            "succeededAt": row["succeeded_at"] if row else None,
+            "nextCheckAt": row["next_check_at"] if row else None,
+            "error": monitor.persisted_route_error_code(row["error"]) if row else None,
+            "matchedItems": row["matched_items"] if row else 0,
+        })
+    usage = x_api_usage(db, sources=sources)
+    usage["routeCount"] = usage.pop("sourceCount")
+    usage["minimumRouteSpacingSeconds"] = usage.pop("minimumSourceSpacingSeconds")
+    errors = {}
+    for route in routes:
+        if route["error"]:
+            errors[route["error"]] = errors.get(route["error"], 0) + 1
+    return {"usage": usage, "routes": {
+        "checked": sum(bool(r["checkedAt"]) for r in routes),
+        "error": sum(bool(r["error"]) for r in routes),
+        "errors": errors,
+        "latestCheckedAt": max((r["checkedAt"] for r in routes if r["checkedAt"]), default=None),
+        "oldestSucceededAt": min((r["succeededAt"] for r in routes if r["succeededAt"]), default=None),
+        "latestSucceededAt": max((r["succeededAt"] for r in routes if r["succeededAt"]), default=None),
+        "nextCheckAt": min((r["nextCheckAt"] for r in routes if r["nextCheckAt"]), default=None),
+    }}
+
+
 def operational_summary(db, sources=SOURCES, reference=None):
     """Return URL-free health and publication-evidence totals for official routes."""
     schema(db)

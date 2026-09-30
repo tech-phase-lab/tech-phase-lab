@@ -1053,6 +1053,7 @@ class AutomaticMonitor:
             state["bodyHostProbes"] = monitor.body_host_probe_summary(db)
             state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
             state["signalIntake"] = signals.operational_summary(db)
+            state["signalIntake"]["xIntake"] = signals.x_operational_summary(db)
             state["signalIntake"]["headlineTranslation"] = (
                 headline_translation.diagnostics(db, env=os.environ)
             )

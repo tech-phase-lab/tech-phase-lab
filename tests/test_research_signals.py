@@ -36,6 +36,22 @@ class SignalTests(unittest.TestCase):
         self.db.close()
         self.temp.cleanup()
 
+    def test_public_x_diagnostics_exclude_secrets_and_content(self):
+        signals.schema(self.db)
+        source = next(s for s in signals.SOURCES if s.get("format") == "x-api")
+        self.db.execute("INSERT INTO signal_routes(id, checked_at, error, matched_items) VALUES(?,?,?,?)",
+                        (source["id"], "2026-09-30T09:00:00+00:00", "secret-response-payload", 2))
+        with patch.dict(os.environ, {"X_BEARER_TOKEN": "secret-bearer-value", "X_API_ENABLED": "true"}):
+            result = signals.x_operational_summary(self.db)
+        self.assertTrue(result["usage"]["enabled"])
+        self.assertEqual(result["routes"]["checked"], 1)
+        self.assertEqual(result["routes"]["latestCheckedAt"], "2026-09-30T09:00:00+00:00")
+        encoded = json.dumps(result)
+        self.assertNotIn("secret-", encoded)
+        self.assertNotIn("query", encoded)
+        self.assertNotIn(source["id"], encoded)
+        self.assertNotIn("matchedItems", encoded)
+
     def check_feed(self, content, **response):
         return signals.check(self.db, self.feed, self.tickers, lambda *_: {"body": content, **response})
 
