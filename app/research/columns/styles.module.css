@@ -10,3 +10,5 @@
 .zone{font-size:9px;color:#8d8d83;letter-spacing:.06em}
 .note .text{margin:12px 0 4px;color:#f0ece4;line-height:1.9}
 @media(max-width:700px){.article.note{padding:18px 20px;margin-bottom:30px}.note::after{left:23px}.note .text{font-size:15px}}
+
+.writeAction{display:flex;justify-content:flex-end;margin:-10px 0 14px}.writeAction a{display:inline-flex;align-items:center;min-height:36px;padding:0 13px;border:1px solid #a58b5552;border-radius:8px;color:#dfc894;background:#9b7b2710;text-decoration:none;font-size:12px}.writeAction a:hover{background:#9b7b2726}.writeAction a:focus-visible{outline:2px solid #dfc894;outline-offset:3px}

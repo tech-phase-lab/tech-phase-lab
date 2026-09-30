@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import { MemberDisplayProvider } from "./member-display-provider";
 import BottomNav from "./bottom-nav";
 import BackToTop from "./back-to-top";
-import QuickNote from "./quick-note";
 import { getMembership } from "@/lib/membership/server";
 
 // Membership is request-specific; never prerender a shared anonymous header.
@@ -19,5 +18,5 @@ export default async function ResearchLayout({ children }: { children: ReactNode
     ownerMode: member.status === "signed-in" && member.ownerMode,
     accessExpiresAt: member.status === "signed-in" ? member.accessExpiresAt : 0,
   } : undefined;
-  return <MemberDisplayProvider initial={initial}>{children}<QuickNote /><BackToTop /><BottomNav /></MemberDisplayProvider>;
+  return <MemberDisplayProvider initial={initial}>{children}<BackToTop /><BottomNav /></MemberDisplayProvider>;
 }
