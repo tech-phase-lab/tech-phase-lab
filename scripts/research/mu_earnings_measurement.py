@@ -85,7 +85,8 @@ def candidate(db):
     for row in rows:
         title = str(row["title"] or "")
         if (urlsplit(row["url"]).hostname != "investors.micron.com"
-                or row["published_on"] not in {"2026-09-30", "2026-10-01"}
+                or (row["published_on"]
+                    and row["published_on"] not in {"2026-09-30", "2026-10-01"})
                 or not all(re.search(pattern, title, re.I) for pattern in (r"\b(?:reports|announces)\b", r"fourth.quarter|\bq4\b", r"\bresults\b"))
                 or re.search(r"to report|will report|conference call", title, re.I)
                 or len(row["extracted_text"] or "") < 1200):

@@ -35,6 +35,9 @@ class MeasurementTests(unittest.TestCase):
             self.db.execute("UPDATE sources SET title='Micron Reports Results for the Fourth Quarter and Full Year of Fiscal 2026'")
         self.assertEqual(measurement.candidate(self.db)['url'], self.url)
         with self.db:
+            self.db.execute("UPDATE sources SET published_on=NULL")
+        self.assertEqual(measurement.candidate(self.db)['url'], self.url)
+        with self.db:
             self.db.execute("UPDATE sources SET title='Micron to Report Fiscal Fourth Quarter Results'")
         self.assertIsNone(measurement.candidate(self.db))
         with self.db:
