@@ -47,10 +47,19 @@ class MeasurementTests(unittest.TestCase):
         metrics=measurement.diagnostics(self.db)
         self.assertEqual(metrics['status'],'complete')
         self.assertIsNone(metrics['publicationToDetectionMs'])
+        self.assertEqual(metrics['detectionToBodyMs'],1000)
+        self.assertEqual(metrics['bodyToSummaryMs'],8000)
         self.assertEqual(metrics['detectionToSummaryMs'],9000)
+        self.assertIsInstance(metrics['modelRequestTotalMs'],int)
+        self.assertGreaterEqual(metrics['modelRequestTotalMs'],0)
         self.assertEqual(metrics['summaryPublication'],'private-draft')
         self.assertNotIn('売上高',json.dumps(metrics,ensure_ascii=False))
         self.assertNotIn('secret',json.dumps(metrics))
     def test_experiment_expires_without_billable_requests(self):
         with patch.object(measurement, 'stamp', return_value='2026-10-02T00:00:01+00:00'), patch.object(measurement.headline_translation, 'configuration', return_value=('key','model',50)):
             measurement.run_once(self.path, transport=lambda *_: self.fail('expired request'))
+            with monitor.connect(Path(self.temp.name)/'empty.sqlite') as empty:
+                metrics=measurement.diagnostics(empty)
+        self.assertEqual(metrics['status'],'expired-without-release')
+        self.assertIsNone(metrics['detectionToBodyMs'])
+        self.assertIsNone(metrics['modelRequestTotalMs'])

@@ -112,14 +112,22 @@ def diagnostics(db):
     if row is None:
         return {"status": "waiting-for-release" if stamp() < END else "expired-without-release",
                 "configured": headline_translation.configuration(os.environ) is not None, "experimentExpiresAt": END,
-                "publicationToDetectionMs": None,
+                "publicationToDetectionMs": None, "detectionToBodyMs": None,
+                "translationMs": None, "summaryMs": None, "bodyToSummaryMs": None,
+                "detectionToSummaryMs": None, "modelRequestTotalMs": None,
                 "publicationPrecision": "not-yet-confirmed", "translationScope": "headline", "summaryPublication": "private-draft"}
+    model_request_total_ms = None
+    if isinstance(row["translation_ms"], int) and isinstance(row["summary_ms"], int):
+        model_request_total_ms = row["translation_ms"] + row["summary_ms"]
     return {"status": row["state"], "attempts": row["attempts"],
             "detectedAt": row["detected_at"], "bodyReadyAt": row["body_ready_at"],
+            "detectionToBodyMs": monitor.stored_latency_ms(row["detected_at"], row["body_ready_at"]),
             "translationStartedAt": row["translation_started_at"], "translationCompletedAt": row["translation_completed_at"],
             "translationMs": row["translation_ms"], "translationScope": "headline",
             "summaryStartedAt": row["summary_started_at"], "summaryCompletedAt": row["summary_completed_at"],
             "summaryMs": row["summary_ms"], "summaryPublication": "private-draft",
+            "bodyToSummaryMs": monitor.stored_latency_ms(row["body_ready_at"], row["summary_completed_at"]),
             "detectionToSummaryMs": monitor.stored_latency_ms(row["detected_at"], row["summary_completed_at"]),
+            "modelRequestTotalMs": model_request_total_ms,
             "publicationToDetectionMs": None, "publicationPrecision": "date-only",
             "inputChars": row["input_chars"], "inputTruncated": bool(row["input_truncated"])}
