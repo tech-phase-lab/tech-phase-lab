@@ -145,3 +145,21 @@ class OfficialFeedTests(unittest.TestCase):
                 self.assertEqual(by_url['date']['publishedOn'],'2026-09-28')
                 self.assertNotIn('publishedAt',by_url['date'])
                 self.assertNotIn('publishedAt',by_url['naive'])
+
+class AnswerTranslationTests(unittest.TestCase):
+    def test_owner_answer_translates_without_inventing_an_answer(self):
+        import questions
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/'qa.sqlite'
+            with posts.connect(path): pass
+            with questions.connect(path) as db:
+                q=questions.submit(db,{'ownerKey':'a'*64,'body':'決算で最初に見る数字は何ですか？','audience':'pro-board'})['item']
+                questions.answer(db,{'id':q['id'],'body':'売上の伸びと見通しを確認します。'})
+            def response(payload,key):
+                self.assertIn('Do not answer',payload['instructions'])
+                return {'status':'completed','output_text':json.dumps({'titleEn':'What do you check first in earnings?','bodyEn':'I check revenue growth and guidance.'})}
+            self.assertEqual(translation.run_once(path,response,ENV,now=1000),'done')
+            with posts.connect(path) as db:
+                item=posts.queue(db,published=True)['items'][0]
+                self.assertEqual(item['bodyEn'],'I check revenue growth and guidance.')
+                self.assertEqual(item['bodyJa'],'売上の伸びと見通しを確認します。')

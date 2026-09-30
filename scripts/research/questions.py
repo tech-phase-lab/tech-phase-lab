@@ -191,3 +191,36 @@ def review(db, payload):
         return {"item": _item(db.execute(
             "SELECT * FROM member_questions WHERE id=?", (question_id,)
         ).fetchone())}
+
+
+def answer(db, payload):
+    """Publish an owner-authored reply and link it atomically; retries are idempotent."""
+    import json
+    import editorial_posts
+    question_id = _question_id(payload.get("id"))
+    body = payload.get("body")
+    if not isinstance(body, str) or not 1 <= len(body.strip()) <= 6000 or "\x00" in body:
+        raise ValueError("invalid-answer-body")
+    body = body.strip()
+    now = stamp()
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        row = db.execute("SELECT * FROM member_questions WHERE id=?", (question_id,)).fetchone()
+        if not row or row["audience"] != "pro-board" or row["status"] == "closed":
+            raise ValueError("question-not-found")
+        post_id = "qa-" + question_id[2:]
+        current = db.execute("SELECT * FROM editorial_posts WHERE id=?", (post_id,)).fetchone()
+        if current:
+            if current["status"] != "published" or json.loads(current["content"])["bodyJa"] != body or row["answer_post_id"] != post_id:
+                raise ValueError("answer-conflict")
+            return {"item": _item(row), "post": editorial_posts.item(current)}
+        if row["status"] == "answered":
+            raise ValueError("answer-conflict")
+        content = {key: "" for key in editorial_posts.FIELDS}
+        content.update(titleJa=row["body"][:180], introJa="", bodyJa=body,
+                       sourceNotes="owner-question-answer", sources=[])
+        encoded = json.dumps(content, ensure_ascii=False)
+        db.execute("INSERT INTO editorial_posts VALUES(?,1,'qa',?,'published',?,?)", (post_id,encoded,now,now))
+        db.execute("INSERT INTO editorial_post_history(post_id,version,action,content,actor,reason,at) VALUES(?,1,'published',?,'authenticated-owner','Direct owner reply',?)", (post_id,json.dumps({"kind":"qa",**content},ensure_ascii=False),now))
+        db.execute("UPDATE member_questions SET status='answered',answer_post_id=?,updated_at=? WHERE id=?", (post_id,now,question_id))
+        return {"item": _item(db.execute("SELECT * FROM member_questions WHERE id=?", (question_id,)).fetchone())}

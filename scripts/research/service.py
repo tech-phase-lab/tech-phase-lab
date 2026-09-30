@@ -662,6 +662,12 @@ class AutomaticMonitor:
         with questions.connect(self.db_path) as db:
             return questions.review(db, payload)
 
+    def answer_question(self, payload):
+        with editorial_posts.connect(self.db_path):
+            pass
+        with questions.connect(self.db_path) as db:
+            return questions.answer(db, payload)
+
     def signal_queue(self, limit=30, view="all", ticker=None):
         with self.db_lock, monitor.connect(self.db_path) as db:
             result = signals.queue(db, limit=limit, view=view, ticker=ticker)
@@ -2049,7 +2055,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(503, {"ok": False})
             return
         if path not in {
-            "/admin/posts/draft", "/admin/posts/review", "/admin/questions/review",
+            "/admin/posts/draft", "/admin/posts/review", "/admin/questions/review", "/admin/questions/answer",
             "/admin/news/generate", "/admin/news/retry", "/admin/news/review", "/admin/news/draft",
             "/admin/briefs/generate", "/admin/briefs/draft", "/admin/briefs/review",
             "/admin/annual-briefs/draft", "/admin/annual-briefs/review",
@@ -2061,7 +2067,9 @@ class Handler(BaseHTTPRequestHandler):
             return
         try:
             payload = self.read_json()
-            if path == "/admin/questions/review":
+            if path == "/admin/questions/answer":
+                result = self.app.answer_question(payload)
+            elif path == "/admin/questions/review":
                 result = self.app.review_question(payload)
             elif path in {"/admin/posts/draft", "/admin/posts/review"}:
                 result = self.app.save_post(payload, review=path.endswith("/review"))

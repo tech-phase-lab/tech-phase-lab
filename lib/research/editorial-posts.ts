@@ -17,6 +17,7 @@ export function publishedPosts(value: unknown, pro: boolean): EditorialPost[] {
   if (raw?.ok !== true || !Array.isArray(raw.items)) throw new Error("invalid-posts");
   return raw.items.slice(0, 20).filter((item): item is EditorialPost => {
     if (!item || typeof item !== "object" || item.status !== "published" || !Object.hasOwn(postNames, item.kind)) return false;
+    if (!pro && item.kind === "qa" && typeof item.id === "string" && /^qa-[a-f0-9]{32}$/.test(item.id)) return false;
     if (typeof item.id !== "string" || !/^[a-z0-9-]{16,64}$/.test(item.id) || !Number.isInteger(item.version)) return false;
     if (!["titleJa", "titleEn", "introJa", "introEn", "bodyJa", "bodyEn", "updatedAt", "publishedAt"].every(key => typeof item[key] === "string" && item[key].length <= 6000)) return false;
     return Number.isFinite(Date.parse(item.publishedAt)) && Array.isArray(item.sources) && item.sources.length <= 8;

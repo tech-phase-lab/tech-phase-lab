@@ -145,3 +145,21 @@ class QuestionTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class DirectAnswerTests(unittest.TestCase):
+    def test_atomic_publication_and_retry(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)/"q.db"
+            with editorial_posts.connect(path): pass
+            with questions.connect(path) as db:
+                questions.submit(db,{"ownerKey":OWNER_A,"requestId":QUESTION_ID,"body":"決算で最初に見る数字は何ですか？","audience":"pro-board"})
+                answer=questions.answer(db,{"id":QUESTION_ID,"body":"売上の伸びと見通しを確認します。"})
+                self.assertEqual(answer["item"]["status"],"answered")
+                self.assertEqual(questions.answer(db,{"id":QUESTION_ID,"body":"売上の伸びと見通しを確認します。"})["item"]["answerPostId"],answer["item"]["answerPostId"])
+                self.assertEqual(db.execute("SELECT count(*) FROM editorial_posts").fetchone()[0],1)
+                with self.assertRaises(ValueError): questions.answer(db,{"id":QUESTION_ID,"body":"別の回答です。"})
+                post=editorial_posts.queue(db,published=True)["items"][0]
+                self.assertEqual(post["bodyEn"],"")
+                self.assertEqual(post["bodyJa"],"売上の伸びと見通しを確認します。")
+                private=questions.submit(db,{"ownerKey":OWNER_B,"body":"これは以前の非公開の質問です。"})["item"]
+                with self.assertRaises(ValueError): questions.answer(db,{"id":private["id"],"body":"公開しない"})

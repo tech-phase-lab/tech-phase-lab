@@ -1,5 +1,6 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
+import { comparisonCatalog } from "./comparison-catalog";
 import providers from "./providers.json";
 import { parseSecDirectory } from "./stock-directory";
 import { extractFinancials, emptyFinancials } from "./comparison";
@@ -22,10 +23,16 @@ const financials = unstable_cache(async (ticker: string, cik: string) => {
 export async function loadComparisonFinancials(ticker: string) {
   try {
     const provider = providers.find(p => p.ticker === ticker);
-    if (!provider) return emptyFinancials(ticker, "unsupported");
-    let cik: string | undefined = provider.supplementalSources?.find(s => "cik" in s && s.cik)?.cik;
+    let cik: string | undefined = provider?.supplementalSources?.find(s => "cik" in s && s.cik)?.cik;
     if (!cik) cik = (await directory()).find(c => c.ticker === ticker)?.cik.toString();
     if (!cik || !/^\d{1,10}$/.test(cik)) return emptyFinancials(ticker, "unsupported");
     return await financials(ticker, cik);
   } catch { return emptyFinancials(ticker, "unavailable"); }
+}
+
+export async function resolveComparisonCompany(ticker: string) {
+  const known = comparisonCatalog.find(c => c.ticker === ticker);
+  if (known) return known;
+  const entry = (await directory()).find(c => c.ticker === ticker);
+  return entry ? { ticker, name: entry.name, peer: ticker, caution: { ja: "事業構成や決算期間の違いを確認してください。", en: "Review differences in business mix and reporting periods." } } : null;
 }

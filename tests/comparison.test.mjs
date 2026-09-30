@@ -67,7 +67,7 @@ test('actual API rejects non-PRO before fetching data, validates selection, and 
   .replace('import { getMembership } from "@/lib/membership/server";','const getMembership=async()=>globalThis.__comparisonTest.member;')
   .replace('import { comparisonCatalog } from "@/lib/research/comparison-catalog";','const comparisonCatalog=globalThis.__comparisonTest.catalog;')
   .replace('import { buildComparison, comparisonAccess, validateComparisonTickers } from "@/lib/research/comparison";','const {buildComparison,comparisonAccess,validateComparisonTickers}=globalThis.__comparisonTest;')
-  .replace('import { loadComparisonFinancials } from "@/lib/research/comparison-server";','const loadComparisonFinancials=(ticker)=>globalThis.__comparisonTest.load(ticker);');
+  .replace('import { loadComparisonFinancials, resolveComparisonCompany } from "@/lib/research/comparison-server";','const loadComparisonFinancials=(ticker)=>globalThis.__comparisonTest.load(ticker); const resolveComparisonCompany=async ticker=>globalThis.__comparisonTest.catalog.find(c=>c.ticker===ticker) || null;');
  try {
   const {GET}=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
   const request=new Request('https://example.com/api/research/compare?tickers=AAA,BBB');
@@ -76,6 +76,9 @@ test('actual API rejects non-PRO before fetching data, validates selection, and 
   }
   globalThis.__comparisonTest.member={status:'signed-in',plan:'pro',accessExpiresAt:Date.now()+30000};
   assert.equal((await GET(new Request('https://example.com/api/research/compare?tickers=AAA,AAA'))).status,400);
+  assert.equal((await GET(new Request('https://example.com/api/research/compare?tickers=AAA,UNKNOWN'))).status,400);
+  globalThis.__comparisonTest.catalog.push(company('EXTRA'));
+  assert.equal((await GET(new Request('https://example.com/api/research/compare?tickers=AAA,EXTRA'))).status,200);
   const response=await GET(request);assert.equal(response.status,200);assert.match(response.headers.get('cache-control'),/private, no-store/);assert.equal(response.headers.get('vary'),'Cookie');assert.equal((await response.json()).result.companies.length,2);
   globalThis.__comparisonTest.load=async()=>{globalThis.__comparisonTest.member.accessExpiresAt=Date.now()-1;return parse(payload());};
   assert.equal((await GET(request)).status,403);

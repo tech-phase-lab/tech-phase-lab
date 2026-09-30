@@ -46,3 +46,9 @@ test('actual columns route gates bodies using verified membership, expiry and pr
   assert.equal((await (await GET()).json()).items[0].bodyEn,'');
  } finally {globalThis.fetch=original.fetch;delete globalThis.__posts;for(const [key,val] of [['RESEARCH_MONITOR_URL',original.base],['RESEARCH_MONITOR_TOKEN',original.token]]){if(val===undefined)delete process.env[key];else process.env[key]=val;}}
 });
+
+test('direct member-question replies never expose question titles or answers to Free',()=>{
+ const answer={...item,id:'qa-'+'a'.repeat(32),kind:'qa'};
+ assert.deepEqual(publishedPosts({ok:true,items:[answer]},false),[]);
+ assert.equal(publishedPosts({ok:true,items:[answer]},true)[0].bodyJa,item.bodyJa);
+});

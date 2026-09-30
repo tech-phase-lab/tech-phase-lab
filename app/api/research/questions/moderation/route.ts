@@ -43,8 +43,13 @@ export async function POST(request: Request) {
   try {
     if (!await owner()) return reply(403, { ok: false, error: "owner-required" });
     const text = await request.text();
-    if (!text || new TextEncoder().encode(text).length > 8_000) return reply(400, { ok: false, error: "invalid-request" });
-    const input = JSON.parse(text) as { id?: unknown; decision?: unknown; answerPostId?: unknown };
+    if (!text || new TextEncoder().encode(text).length > 32_000) return reply(400, { ok: false, error: "invalid-request" });
+    const input = JSON.parse(text) as { id?: unknown; decision?: unknown; answerPostId?: unknown; body?: unknown };
+    if (input.decision === "reply") {
+      if (typeof input.id !== "string" || !/^q-[a-f0-9]{32}$/.test(input.id) || typeof input.body !== "string" || !input.body.trim() || input.body.length > 6000 || input.body.includes("\0")) return reply(400, { ok: false, error: "invalid-answer" });
+      const { url, token } = configuration("/admin/questions/answer");
+      return relay(url, token, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: input.id, body: input.body }) });
+    }
     if (typeof input.id !== "string" || !/^q-[a-f0-9]{32}$/.test(input.id) || !["pending", "answered", "closed"].includes(String(input.decision)) || (input.answerPostId != null && (typeof input.answerPostId !== "string" || input.answerPostId.length > 64))) return reply(400, { ok: false, error: "invalid-request" });
     const { url, token } = configuration("/admin/questions/review");
     return relay(url, token, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(input) });

@@ -136,3 +136,9 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 ## September 30 15:55 JST
 - Owner asks how to answer questions. Current legacy flow is /research/questions → /research/editorial to publish bilingual QA with token and sources → link published answer in question inbox. Do not claim inline answering or automatic QA answer translation exists; only member questions and notes auto-translate currently. Added owner-only entry and reciprocal Questions/Published answers tabs.
 - Compare picker changed from suggested ticker chips to three native selects, all supported companies in each; third optional, no duplicates, first two required. Mobile rows compact.
+
+## September 30 16:07 JST
+- Owner requested direct per-question reply. Pending PRO board questions have owner-only inline Answer → Japanese body → Publish answer. Authenticated admin relay to /admin/questions/answer creates published QA and links question atomically; deterministic ID/retries prevent duplicate answers, private/closed questions rejected. No token entry, English entry or manual linking required for this new flow. Legacy editorial review constraints unchanged.
+- New owner-authored QA answers auto-translate via configured note worker, preserving title/body and publication time. Does not invent RIZEL answers. Existing test question left unanswered; owner should write their actual opinion.
+- Comparison uses searchable company inputs with SEC directory candidates beyond monitored 22; backend resolves names/CIKs server-side, marks unsupported/missing data. Gold/navy PRO palette. Never imply ETF or arbitrary global company fundamentals always available.
+- Notes avatar moved 10px desktop/8px mobile lower to align with bubble tail. Exact approved artwork preserved.

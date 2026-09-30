@@ -17,3 +17,5 @@
 .noteBubble::before{content:"";position:absolute;top:14px;left:-7px;width:12px;height:12px;transform:rotate(45deg);border-bottom:1px solid #a68c574d;border-left:1px solid #a68c574d;background:#201e1b;pointer-events:none}
 .note .text{margin:0;color:#f0ece4;line-height:1.9}
 @media(max-width:700px){.noteAvatar{width:32px;height:32px}.noteBubble{margin-left:40px;padding:13px 12px}.noteBubble::before{top:10px}.note .text{font-size:15px}}
+
+.noteHeader{top:10px}@media(max-width:700px){.noteHeader{top:8px}}

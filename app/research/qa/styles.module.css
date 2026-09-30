@@ -5,3 +5,5 @@
 .postingNotice{font-size:12px;line-height:1.7;margin:0;color:#afbbc0}.postingNotice span{display:block}.status:empty{display:none}@media(max-width:600px){.postingNotice{font-size:clamp(10px,2.8vw,12px)}.views{margin:16px 0}.card label{margin-top:12px}}
 
 .ownerLink{color:#d0bc90;font-size:13px;text-decoration:none;border-bottom:1px solid #8b7757;padding-bottom:3px}
+
+.answer{margin-top:12px;padding-top:12px;border-top:1px solid #a8905b35}.answer>button{padding:6px 12px;border:1px solid #a8905b70;border-radius:6px;background:#a8905b15;color:#dcc89a;font-size:12px;cursor:pointer}.answer textarea{min-height:100px}.answer .submit{justify-content:flex-start}.answer .submit button:last-child{background:transparent;color:#aeb7b5;border-color:#53605b}

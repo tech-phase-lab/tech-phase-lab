@@ -44,6 +44,12 @@ test('moderation route is owner-only and uses the server editor credential', asy
     state.member={status:'signed-in',isAdmin:true,userId:'owner'};
     assert.equal((await GET(new Request('https://example.test/api/research/questions/moderation?view=pending'))).status,200);
     assert.equal(new URL(state.calls[0].url).pathname,'/admin/questions');assert.equal(state.calls[0].init.headers.Authorization,'Bearer editor-token-at-least-24-characters');
+    const replyBody=JSON.stringify({id:'q-'+'1'.repeat(32),decision:'reply',body:'運営者の回答です。'});
+    state.member.isAdmin=false;
+    assert.equal((await POST(new Request('https://example.test/api/research/questions/moderation',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body:replyBody}))).status,403);
+    state.member.isAdmin=true;
+    assert.equal((await POST(new Request('https://example.test/api/research/questions/moderation',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body:replyBody}))).status,200);
+    assert.equal(new URL(state.calls.at(-1).url).pathname,'/admin/questions/answer');
     const body=JSON.stringify({id:'q-'+'1'.repeat(32),decision:'closed'});
     assert.equal((await POST(new Request('https://example.test/api/research/questions/moderation',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body}))).status,200);
     assert.equal(new URL(state.calls.at(-1).url).pathname,'/admin/questions/review');
