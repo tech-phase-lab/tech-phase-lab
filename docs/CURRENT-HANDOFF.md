@@ -1,4 +1,4 @@
-# Tech Phase — current handoff, 2026-09-30 13:49 JST
+# Tech Phase — current handoff, 2026-09-30 14:47 JST
 
 Start here, then read AGENTS.md and docs/AUTONOMOUS-NEXT-2026-09-29.md. Current source and newer owner instructions override older documents.
 
@@ -118,3 +118,10 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - Rechecked the BLS October schedule and Federal Reserve calendar. The existing October 2 Employment Situation, October 14 CPI, October 15 PPI, October 27–28 FOMC and December 8–9 FOMC records remain unchanged; no clock time was inferred for future FOMC decisions.
 - No calendar event, product UI, paid-provider setting, production environment or external delivery changed. Next calendar batch: MSFT, MU, NBIS, NFLX, NVDA, PANW, PLTR, SNDK, TSLA and TSM.
 - Calendar commit `e784e87` used the exact locally staged and connector-created tree (`1bf3130`). The complete gate passed: ESLint zero errors with one pre-existing warning, Node 163/163, Python 451/451, Next.js 55 routes, `compileall` and `git diff --check`. Vercel deployment `dpl_EwZRZucxgH9zkM9fNtqVeaUQK2JY` reached Ready; Railway staging reported success without redeploying because no watched monitor path changed. The canonical Japanese calendar loaded with the September 30 confirmation date, 17 schedules, and unchanged date-only ASML/FOMC items.
+
+## September 30 14:47 JST continuation
+- Rechecked MSFT, MU, NBIS, NFLX, NVDA, PANW, PLTR, SNDK, TSLA and TSM against first-party investor sources. Microsoft explicitly says its next earnings release will be announced soon; Nebius explicitly has no upcoming event; Sandisk shows past events only; Tesla's 2026 Q3 row still has no earnings date. Micron, Netflix and TSM still match their registered calls.
+- NVIDIA and Palo Alto Networks remained inaccessible through their lawful official endpoints. Palantir exposed only an uninspectable events-page shell. These three remain pending; no access control was bypassed and their `lastCheckedOn` values did not advance.
+- Rechecked the BLS October schedule and Federal Reserve calendar. The existing October 2 Employment Situation, October 14 CPI, October 15 PPI, October 27–28 FOMC and December 8–9 FOMC records remain unchanged; no clock time was inferred for future FOMC decisions.
+- All 40 roster companies now have a September 30 attempt. No calendar event, product UI, paid-provider setting, production environment or external delivery changed. Restart the next rotation from the oldest or still-unreviewed sources, preserving exact pending blockers.
+- The complete local gate passed: ESLint reported zero errors and one pre-existing warning, Node tests passed 163/163, Python tests passed 451/451, Next.js production build succeeded, and `compileall` plus `git diff --check` passed.

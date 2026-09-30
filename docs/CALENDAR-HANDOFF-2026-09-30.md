@@ -123,3 +123,39 @@ Vercel deployment `dpl_EwZRZucxgH9zkM9fNtqVeaUQK2JY` reached Ready; Railway
 staging reported success without redeploying because no watched monitor path
 changed. The canonical Japanese calendar loaded with the September 30 official
 confirmation date, 17 schedules, and unchanged date-only ASML/FOMC entries.
+
+## Final company review (14:47 JST)
+
+Reviewed the final ten company sources in the September 30 rotation. Seven
+checks were conclusive and advance both `lastAttemptedOn` and `lastCheckedOn`;
+three inaccessible or uninspectable sources advance only `lastAttemptedOn`.
+No new calendar event was added because the confirmed calls already match the
+registered records and the remaining conclusive sources publish no date.
+
+| Ticker | Result | Official source / evidence |
+| --- | --- | --- |
+| MSFT | Confirmed no announced date | [Investor Relations](https://www.microsoft.com/en-us/investor/default) says the next earnings release will be announced soon. This current-status page replaces the empty upcoming-events URL as the tracked source. |
+| MU | Confirmed unchanged | [Fiscal Q4 announcement](https://investors.micron.com/news/press-release/2026/Micron-Technology-to-Report-Fiscal-Fourth-Quarter-Results-on-September-30-2026/default.aspx) still lists September 30 at 2:30 p.m. Mountain, matching the registered call. |
+| NBIS | Confirmed no current event | [Investor events](https://nebius.com/investor-events) explicitly says there are no upcoming events yet. |
+| NFLX | Confirmed unchanged | [Q3 announcement](https://ir.netflix.net/investor-news-and-events/financial-releases/press-release-details/2026/Netflix-to-Announce-Third-Quarter-2026-Financial-Results/default.aspx) still lists October 20 at approximately 1:01 p.m. Pacific, matching the registered release. |
+| NVDA | Pending | [Events and presentations](https://investor.nvidia.com/events-and-presentations/default.aspx) remained inaccessible through the available lawful endpoint. No access control was bypassed. |
+| PANW | Pending | [Events and presentations](https://investors.paloaltonetworks.com/events-and-presentations/default.aspx) remained inaccessible through the available lawful endpoint. No access control was bypassed. |
+| PLTR | Pending | [Events](https://investors.palantir.com/events) exposed only the page shell without an inspectable event list or explicit no-events statement. |
+| SNDK | Confirmed no future earnings item | [Events](https://investor.sandisk.com/news-events/events) shows past events only; its latest listed earnings event is the completed August 5 call. |
+| TSLA | Confirmed no announced date | [Investor Relations](https://ir.tesla.com/) lists a 2026 Q3 row with the earnings-date field still blank. |
+| TSM | Confirmed unchanged | [Financial calendar](https://investor.tsmc.com/english/financial-calendar) still lists the October 15 results conference and call at 14:00 Asia/Taipei, matching the registered call. |
+
+The BLS October schedule remains unchanged: Employment Situation on October 2,
+CPI on October 14 and PPI on October 15, each at 08:30 Eastern. The Federal
+Reserve still lists its October 27–28 and December 8–9 meetings without future
+statement or press-conference clock times. Existing date-only records remain
+date-only.
+
+All 40 roster companies now have a September 30 attempt. Restart the next
+rotation from the oldest or still-unreviewed sources; retain inaccessible and
+uninspectable sources as pending until first-party evidence becomes conclusive.
+
+The complete local gate passed after the final batch: ESLint reported zero
+errors and one pre-existing warning, Node tests passed 163/163, Python tests
+passed 451/451, the Next.js production build succeeded, and `compileall` plus
+`git diff --check` passed.

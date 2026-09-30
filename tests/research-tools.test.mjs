@@ -115,8 +115,8 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   const byTicker = Object.fromEntries(coverage.map((company) => [company.ticker, company]));
   const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
   assert.ok(coverage.every((company) => /^2026-09-(?:2[3-9]|30)$/.test(company.lastAttemptedOn)));
-  for (const ticker of ["ADBE", "AMD", "COHR", "CRWD", "DELL", "GEV", "INTC", "LRCX", "META"]) assert.equal(checked[ticker], "2026-09-30");
-  for (const ticker of ["ASML", "MSFT", "MU", "NBIS", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-09-29");
+  for (const ticker of ["ADBE", "AMD", "COHR", "CRWD", "DELL", "GEV", "INTC", "LRCX", "META", "MSFT", "MU", "NBIS", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-09-30");
+  assert.equal(checked.ASML, "2026-09-29");
   for (const ticker of ["CRM", "ORCL"]) assert.equal(checked[ticker], "2026-09-28");
   assert.equal(checked.AMAT, "2026-09-25");
   assert.equal(checked.QCOM, "2026-09-23");
@@ -150,14 +150,24 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
     "LRCX",
     "META",
     "MRVL",
+    "MSFT",
+    "MU",
+    "NBIS",
+    "NFLX",
     "NOW",
+    "NVDA",
     "ORCL",
+    "PANW",
+    "PLTR",
     "QCOM",
     "SKHY",
+    "SNDK",
     "SNOW",
+    "TSLA",
+    "TSM",
     "VRT",
   ]);
-  assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-29").length, 10);
+  assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-29").length, 0);
   assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 21);
   assert.equal(coverage.filter((company) => company.lastCheckedOn === null).length, 19);
   for (const ticker of ["MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) {
@@ -167,7 +177,8 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   assert.equal(byTicker.ANET.sourceUrl, "https://investors.arista.com/events-and-presentations/default.aspx");
   assert.equal(byTicker.ARM.sourceUrl, "https://investors.arm.com/");
   assert.equal(byTicker.COHR.sourceUrl, "https://ir.coherent.com/news-events/events");
-  assert.equal(byTicker.TSM.lastCheckedOn, "2026-09-29");
+  assert.equal(byTicker.MSFT.sourceUrl, "https://www.microsoft.com/en-us/investor/default");
+  assert.equal(byTicker.TSM.lastCheckedOn, "2026-09-30");
   assert.equal(calendarEvents.some((event) => event.ticker === "TSM"), true);
 });
 
