@@ -225,3 +225,29 @@ The full pending-first pass is complete for September 30. On the next date
 rotation, restart with AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and
 KLAC unless a newer first-party announcement makes another company higher
 priority.
+
+## Oldest-source verification (19:46 JST)
+
+Rechecked the ten companies with the oldest conclusive check dates, while
+retaining the pending/conclusive distinction used throughout this file. No
+official source supplied a new earnings date, so no calendar event changed.
+
+| Ticker | Result | Official source / evidence |
+| --- | --- | --- |
+| QCOM | Pending | [Investor events](https://investor.qualcomm.com/news-events/investor-events/default.aspx) still exposes an empty Upcoming Events section without an explicit no-events statement. |
+| AMAT | Pending | [Events](https://ir.appliedmaterials.com/events?tab=upcoming) remained inaccessible through the available lawful endpoint. No access control was bypassed. |
+| CRM | Pending | [Investor events](https://investor.salesforce.com/events-and-presentations/default.aspx) exposes an Upcoming & Recent Events heading without an inspectable current item or explicit no-events statement. |
+| ORCL | Pending | [Events and presentations](https://investor.oracle.com/events-and-presentations/default.aspx) exposes Featured Event and Upcoming events headings without an inspectable item or explicit no-events statement. |
+| ASML | Pending | The former [official financial calendar](https://www.asml.com/en/investors/financial-calendar) still redirects to `investor.asml.com/financial-events`, which remained inaccessible through the available lawful endpoint. |
+| ADBE | Confirmed unchanged | [Events and presentations](https://www.adobe.com/investor-relations/events-presentations.html) still lists the fiscal Q4 and FY2026 earnings call on December 9 at 2:00 p.m. Pacific, matching the registered call. |
+| AMD | Confirmed no current event | [IR calendar](https://ir.amd.com/news-events/ir-calendar) explicitly says there are no upcoming events scheduled. |
+| COHR | Confirmed no current event | [Events](https://ir.coherent.com/news-events/events) says more events are coming soon and shows only completed events. |
+| CRWD | Confirmed no future earnings item | [Events and presentations](https://ir.crowdstrike.com/events-and-presentations/) lists presentations and past events only; no future earnings event is shown. |
+| DELL | Confirmed no current event | [Upcoming events](https://investors.delltechnologies.com/news-events/upcoming-events) says more events are coming soon. |
+
+The BLS October schedule remains October 2 for the Employment Situation,
+October 14 for CPI and October 15 for PPI, each at 08:30 Eastern. The Federal
+Reserve still lists October 27–28 and December 8–9 without future statement or
+press-conference clock times. No time was inferred. Because every reviewed
+company already has a September 30 attempt and the conclusive results already
+have a September 30 completed check, no coverage date was rewritten.
