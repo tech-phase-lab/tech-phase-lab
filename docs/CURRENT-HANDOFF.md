@@ -1,3 +1,11 @@
+# Automatic result recovery — October 1, 2026
+
+Owner requires immediate earnings and macro intake, bilingual flashes and what-changed pages. Wall St Engine already existed; FabyMETAL4 is newly authorized. Existing three reporters plus Faby now share one 30-second route, Nebius stays 120 seconds; nominal 3,600 requests/day within unchanged configured cap. Old separate reporter routes disabled to avoid duplicate charges. Incremental cursor/pagination is persisted; initial bounded recovery window is 12 hours.
+
+Recognized earnings numbers are projected into bilingual fact labels without an LLM roundtrip. Unsupported/preview/ambiguous formats remain private. Consensus and commentary are not copied or blended. Result stage timestamps are stored separately; numeric projection milliseconds are NOT API translation timings or end-to-end SLA. Dynamic result articles preserve membership authorization. Macro facts also reach the calendar. Browser visible polling is five seconds, hidden tabs pause requests. Full official-document verification and complete narrative analysis remain launch work; do not describe a numerical flash as a complete analysis.
+
+Current implementation must be verified on actual API responses after deployment; no claims of fresh seconds-level delivery from backfill timing.
+
 # Immediate recovery — owner instruction 2026-10-01
 
 This section overrides stale December holds below. The owner already configured OpenAI on September 29 and explicitly requires immediate automatic news translation on October 1. Do not reinstate a December approval gate. Stock News activation remains separate.

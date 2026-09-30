@@ -1,3 +1,4 @@
+import { loadLiveResultEvents } from "@/lib/research/live-result-events";
 import type { Metadata } from "next";
 import { publicEvent } from "@/lib/research/access";
 import ResearchDashboard from "./research-dashboard";
@@ -13,8 +14,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function ResearchPage() {
-  for (const event of events) {
+export default async function ResearchPage() {
+  const currentEvents = [...await loadLiveResultEvents(), ...events];
+  for (const event of currentEvents) {
     const issues = evidenceIssues({ ...event, metrics: [...event.metrics, ...(event.previous ?? [])] });
     if (issues.length) throw new Error(`Invalid research record ${event.id}: ${issues.join(", ")}`);
   }
@@ -29,7 +31,7 @@ export default function ResearchPage() {
     verified: verifiedTickers.has(provider.ticker),
   }));
   return <ResearchDashboard
-    events={events.map(publicEvent).toSorted((a, b) => b.publishedOn.localeCompare(a.publishedOn) || a.id.localeCompare(b.id))}
+    events={currentEvents.map(publicEvent).toSorted((a, b) => b.publishedOn.localeCompare(a.publishedOn) || a.id.localeCompare(b.id))}
     monitoredCompanies={monitoredCompanies}
   />;
 }

@@ -27,6 +27,7 @@ import questions
 import note_translation
 import question_translation
 import headline_translation
+import market_results
 import mu_earnings_measurement
 import web_push
 
@@ -530,6 +531,7 @@ class AutomaticMonitor:
             return
         while not self.stop_event.is_set():
             try:
+                market_results.run_once(self.db_path, signals.SOURCES)
                 headline_translation.run_once(self.db_path)
             except Exception:
                 print("headline-translation-unavailable", flush=True)
@@ -643,7 +645,7 @@ class AutomaticMonitor:
 
     def public_news(self):
         with stock_news.connect(self.db_path) as db:
-            return {**news_drafts.public_feed(db), "officialUpdates": signals.public_official_updates(db)}
+            return {**news_drafts.public_feed(db), "officialUpdates": signals.public_official_updates(db), "resultBriefs":market_results.public_feed(db)}
 
     def posts_queue(self, limit=20, published=False, offset=0):
         with editorial_posts.connect(self.db_path) as db:
@@ -1070,6 +1072,7 @@ class AutomaticMonitor:
             state["signalIntake"]["headlineTranslation"] = (
                 headline_translation.diagnostics(db, env=os.environ)
             )
+            state["signalIntake"]["resultPublication"] = market_results.diagnostics(db)
             state["incidents"] = monitor.operational_incident_summary(
                 db, delivery_enabled=self.notification_enabled
             )

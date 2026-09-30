@@ -14,7 +14,7 @@ import x_api
 
 class XApiTests(unittest.TestCase):
     def setUp(self):
-        self.source = next(s for s in signals.SOURCES if s["id"] == "x-tipranks")
+        self.source = {**next(s for s in signals.SOURCES if s["id"] == "x-tipranks"), "enabled": True}
 
     def test_rating_start_and_changes_without_numeric_targets(self):
         payload = {"data": [{"id": "6001", "author_id": "1", "text": "Nebius $NBIS initiated with an Outperform at William Blair"}, {"id": "6002", "author_id": "1", "text": "$MU downgraded to Neutral"}, {"id": "6003", "author_id": "1", "text": "$NBIS interesting stock today"}], "includes": {"users": [{"id": "1", "username": "TipRanks"}]}}
@@ -38,8 +38,9 @@ class XApiTests(unittest.TestCase):
             self.assertLessEqual(len(source["query"]), 512)
             self.assertEqual(set(source["extraTickers"]), added)
             self.assertEqual(len(source["tickers"]), 33)
-            self.assertTrue(all(f"${ticker}" in source["query"] for ticker in added))
-            self.assertEqual(source["intervalSeconds"], 60)
+            if source["id"] != "x-wallstengine":
+                self.assertTrue(all(f"${ticker}" in source["query"] for ticker in added))
+            self.assertEqual(source["intervalSeconds"], 30 if source["id"] == "x-wallstengine" else 60)
             self.assertEqual(source["maxResults"], 30)
             self.assertIn('"price target"', source["query"])
             self.assertIn('"target price"', source["query"])
@@ -131,6 +132,31 @@ class XApiTests(unittest.TestCase):
         self.assertEqual([list(item["matches"]) for item in items],
                          [["LITE"], ["COHR"], ["XYZ"], ["IREN"], ["META"]])
         self.assertIn("VST", signals.X_EXTRA_TICKERS)
+
+    def test_pagination_keeps_high_watermark_until_every_page_is_consumed(self):
+        import io, json
+        from email.message import Message
+        from urllib.parse import urlsplit, parse_qs
+        requests = []
+        pages = [{"meta":{"newest_id":"9000","next_token":"page2"}}, {"meta":{"newest_id":"8000"}}]
+        class Response(io.BytesIO):
+            headers = Message()
+        Response.headers['Content-Type']='application/json'
+        class Opener:
+            def open(self, request, timeout):
+                requests.append(parse_qs(urlsplit(request.full_url).query))
+                return Response(json.dumps(pages.pop(0)).encode())
+        with patch.dict(os.environ, {"X_API_ENABLED":"true","X_BEARER_TOKEN":"synthetic"}):
+            first=x_api.fetch_posts(self.source, [], lambda:Opener(), {'index_state':json.dumps({'sinceId':'7000'})})
+            cursor=json.loads(first['cursor_update'])
+            self.assertEqual(cursor['sinceId'],'7000')
+            self.assertEqual(cursor['newestId'],'9000')
+            second=x_api.fetch_posts(self.source, [], lambda:Opener(), {'index_state':first['cursor_update']})
+            self.assertEqual(json.loads(second['cursor_update']), {'sinceId':'9000'})
+        self.assertEqual(requests[1]['next_token'],['page2'])
+        self.assertEqual(requests[1]['since_id'],['7000'])
+        self.assertNotIn('start_time', requests[1])
+        self.assertEqual(requests[0]['post.fields'],['created_at,author_id,lang,note_post'])
 
     def test_direct_adapter_call_fails_closed(self):
         with patch.dict(os.environ, {"X_API_ENABLED": "false", "X_BEARER_TOKEN": "secret"}, clear=False):

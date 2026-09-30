@@ -17,8 +17,12 @@
     "kind": "publisher-update",
     "url": "https://www.bea.gov/news/current-releases",
     "format": "html-index",
-    "articlePathPatterns": ["/news/20[0-9]{2}/personal-income-and-outlays-[a-z]+-20[0-9]{2}"],
-    "allowedHosts": ["www.bea.gov"],
+    "articlePathPatterns": [
+      "/news/20[0-9]{2}/personal-income-and-outlays-[a-z]+-20[0-9]{2}"
+    ],
+    "allowedHosts": [
+      "www.bea.gov"
+    ],
     "intervalSeconds": 120,
     "retainUnmatched": true,
     "officialUpdates": true,
@@ -503,7 +507,8 @@
       "intervalSeconds": 60
     },
     "maxResults": 30,
-    "reuse": "review-required"
+    "reuse": "review-required",
+    "enabled": false
   },
   {
     "id": "x-thefly",
@@ -573,11 +578,12 @@
       "intervalSeconds": 60
     },
     "maxResults": 30,
-    "reuse": "review-required"
+    "reuse": "review-required",
+    "enabled": false
   },
   {
     "id": "x-wallstengine",
-    "name": "X · Wall St Engine",
+    "name": "X · Market reporters",
     "kind": "publisher-update",
     "format": "x-api",
     "enabledBy": "X_API_ENABLED",
@@ -594,9 +600,12 @@
       "AAOI",
       "META"
     ],
-    "query": "from:wallstengine ((\"price target\" OR \"target price\" OR \"PT to\") OR (($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (earnings OR \"quarterly results\" OR \"financial results\" OR initiated OR upgraded OR downgraded OR reiterated OR maintained))) -is:retweet -is:reply",
+    "query": "(from:wallstengine OR from:tipranks OR from:theflynews OR from:FABYMETAL4) (\"price target\" OR \"target price\" OR \"PT to\" OR earnings OR \"quarterly results\" OR \"financial results\" OR results OR highlights OR EPS OR 決算 OR initiated OR upgraded OR downgraded OR ADP OR CPI OR PPI OR PCE OR FOMC OR NFP OR GDP OR \"nonfarm payrolls\") -is:retweet -is:reply",
     "accounts": [
-      "wallstengine"
+      "wallstengine",
+      "tipranks",
+      "theflynews",
+      "FABYMETAL4"
     ],
     "tickers": [
       "MU",
@@ -636,12 +645,7 @@
     "allowedHosts": [
       "x.com"
     ],
-    "intervalSeconds": 60,
-    "fastWindow": {
-      "startAt": "2026-09-30T19:30:00Z",
-      "endAt": "2026-09-30T20:50:00Z",
-      "intervalSeconds": 60
-    },
+    "intervalSeconds": 30,
     "maxResults": 30,
     "reuse": "review-required"
   },

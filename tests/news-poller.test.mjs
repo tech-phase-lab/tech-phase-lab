@@ -41,7 +41,7 @@ test("news poll retry is bounded and a successful reconnect restores the regular
   assert.deepEqual(clock.pending(), [0]);
   await clock.run();
   assert.deepEqual(received, [{ ok: true }]);
-  assert.deepEqual(clock.pending(), [30_000]);
+  assert.deepEqual(clock.pending(), [5_000]);
   poller.stop();
   assert.deepEqual(clock.pending(), []);
 });

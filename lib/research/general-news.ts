@@ -1,3 +1,4 @@
+import { parseResultBriefs, type ResultBrief } from "./market-results.ts";
 export type GeneralNewsItem = {
   id: string; title: string; url: string; publisher: string; tickers: string[];
   publishedAt: string; observedAt: string; approvedAt: string; summaryJa: string; summaryEn: string;
@@ -5,7 +6,7 @@ export type GeneralNewsItem = {
   confidence: "high" | "medium" | "low";
 };
 export type OfficialUpdate = { id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string };
-export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[] };
+export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; resultBriefs?: ResultBrief[] };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
   "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com", "www.bea.gov"]);
 
@@ -13,7 +14,8 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
   if (!value || typeof value !== "object") throw new Error("Invalid news feed");
   const payload = value as Record<string, unknown>;
   if (payload.ok !== true || typeof payload.enabled !== "boolean" || !Array.isArray(payload.items) || payload.items.length > 30) throw new Error("Invalid news feed");
-  const updates: { officialUpdates?: OfficialUpdate[] } = {};
+  const updates: { officialUpdates?: OfficialUpdate[]; resultBriefs?: ResultBrief[] } = {};
+  if (payload.resultBriefs !== undefined) updates.resultBriefs = parseResultBriefs(payload.resultBriefs);
   if (payload.officialUpdates !== undefined) {
     if (!Array.isArray(payload.officialUpdates) || payload.officialUpdates.length > 20) throw Error("Invalid updates");
     const seenOfficialUrls = new Set<string>();
@@ -24,7 +26,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       const url = new URL(v.url as string);
       const verifiedMu = url.href === 'https://www.sec.gov/Archives/edgar/data/723125/000072312526000018/a2026q4ex991-pressrelease.htm';
       if (url.protocol !== "https:" || url.username || url.password || url.port || (!officialUpdateHosts.has(url.hostname) && !verifiedMu)) throw Error("Invalid official source");
-      if (url.hostname === "x.com" && !/^\/nebiusai\/status\/\d+$/i.test(url.pathname)) throw Error("Invalid official account");
+      if (url.hostname === "x.com" && !/^\/(nebiusai|tipranks|theflynews|wallstengine|fabymetal4)\/status\/\d+$/i.test(url.pathname)) throw Error("Invalid official account");
       if (url.hostname === "www.bea.gov" && (!/^\/news\/20\d{2}\/personal-income-and-outlays-[a-z]+-20\d{2}$/.test(url.pathname) || url.search || url.hash)) throw Error("Invalid BEA release");
       if (Array.from(v.title as string).length > 180 || (v.publisher as string).length > 80 || !/^\d+$/.test(v.id as string) || !Number.isFinite(Date.parse(v.observedAt as string))) throw Error("Invalid update");
       if (!Array.isArray(v.tickers) || v.tickers.length > 5 || !v.tickers.every(t => typeof t === "string" && /^[A-Z][A-Z0-9.-]{0,9}$/.test(t))) throw Error("Invalid update tickers");

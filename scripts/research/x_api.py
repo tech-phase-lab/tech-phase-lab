@@ -7,6 +7,7 @@ import json
 import os
 import re
 import time
+from datetime import datetime, timezone, timedelta
 from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, build_opener
@@ -15,13 +16,13 @@ API_URL = "https://api.x.com/2/tweets/search/recent"
 MAX_RESPONSE_BYTES = 2 * 1024 * 1024
 MAX_RESULTS = 30
 OFFICIAL_ACCOUNTS = {"nebiusai": "NBIS"}
-ALLOWED_ACCOUNT_NAMES = {"tipranks", "theflynews", "wallstengine", *OFFICIAL_ACCOUNTS}
+ALLOWED_ACCOUNT_NAMES = {"tipranks", "theflynews", "wallstengine", "fabymetal4", *OFFICIAL_ACCOUNTS}
 TARGET_PATTERN = re.compile(
     r"\b(?:price[ -]?target|target price|pt\s+(?:raised|cut|lowered|hiked|boosted|slashed|(?:to|at)\s*\$?\d+))\b",
     re.I,
 )
 RATING_PATTERN = re.compile(r"\b(?:initiated|initiat(?:es|ing)\s+(?:coverage|with)|upgraded|downgraded|reiterat(?:es|ed)|maintain(?:s|ed))\b", re.I)
-EARNINGS_PATTERN = re.compile(r"\b(?:earnings|quarterly results|financial results)\b", re.I)
+EARNINGS_PATTERN = re.compile(r"(?:\b(?:earnings|quarterly results|financial results|Q[1-4].{0,30}(?:results|highlights))\b|決算)", re.I)
 EARNINGS_PREVIEW_PATTERN = re.compile(
     r"\b(?:earnings preview|ahead of (?:its |the )?earnings|upcoming earnings|"
     r"scheduled to report|expected to report|will report (?:its )?earnings)\b", re.I,
@@ -36,7 +37,8 @@ def parse_response(source, payload, tickers):
         if not isinstance(post, dict):
             continue
         post_id = str(post.get("id", ""))
-        text = post.get("text")
+        note = post.get("note_post") or post.get("note_tweet")
+        text = note.get("text") if isinstance(note, dict) and isinstance(note.get("text"), str) else post.get("text")
         author = users.get(str(post.get("author_id", "")), {})
         username = str(author.get("username", ""))
         if (not post_id.isdigit() or not isinstance(text, str) or not text.strip()
@@ -59,7 +61,11 @@ def parse_response(source, payload, tickers):
                 matches = {ticker: ["$" + ticker] for ticker in cashtags}
         is_earnings = bool(EARNINGS_PATTERN.search(text) and
                            not EARNINGS_PREVIEW_PATTERN.search(text))
-        if not matches or not (official_ticker or TARGET_PATTERN.search(text) or is_earnings or RATING_PATTERN.search(text)):
+        is_economic = bool(re.search(r'\b(?:ADP|CPI|PPI|PCE|FOMC|NFP|GDP|nonfarm payrolls|unemployment rate)\b', text, re.I)
+                           and re.search(r'(?:actual|実績|結果)\s*[:=]?\s*[-+−]?\d', text, re.I))
+        if is_economic:
+            matches = {'ECON':['economic-result']}
+        if not matches or not (official_ticker or TARGET_PATTERN.search(text) or is_earnings or is_economic or RATING_PATTERN.search(text)):
             continue
         url = f"https://x.com/{username}/status/{post_id}"
         items[url] = {
@@ -79,7 +85,7 @@ def signals_match(text, tickers):
     return signals.match_companies(text, tickers)
 
 
-def fetch_posts(source, tickers, opener_factory=build_opener):
+def fetch_posts(source, tickers, opener_factory=build_opener, validators=None):
     token = os.environ.get("X_BEARER_TOKEN", "").strip()
     if os.environ.get("X_API_ENABLED", "").strip().lower() not in {"1", "true", "yes"}:
         raise ValueError("x-api-disabled")
@@ -89,13 +95,29 @@ def fetch_posts(source, tickers, opener_factory=build_opener):
     if not query or len(query) > 512:
         raise ValueError("x-api-query-invalid")
     max_results = max(10, min(MAX_RESULTS, int(source.get("maxResults", MAX_RESULTS))))
-    params = urlencode({
+    params_dict = {
         "query": query,
         "max_results": max_results,
-        "tweet.fields": "created_at,author_id,lang",
+        "post.fields": "created_at,author_id,lang,note_post",
         "expansions": "author_id",
         "user.fields": "username",
-    })
+    }
+    cursor = {}
+    try:
+        cursor = json.loads((validators or {}).get('index_state', '{}'))
+    except (ValueError, TypeError):
+        pass
+    if not isinstance(cursor, dict):
+        cursor = {}
+    since = cursor.get('sinceId')
+    if isinstance(since,str) and since.isdigit():
+        params_dict['since_id'] = since
+    else:
+        params_dict['start_time'] = cursor.get('startTime') or (datetime.now(timezone.utc)-timedelta(hours=12)).isoformat(timespec='seconds').replace('+00:00','Z')
+    token_page = cursor.get('nextToken')
+    if isinstance(token_page,str) and len(token_page)<=2048:
+        params_dict['next_token'] = token_page
+    params = urlencode(params_dict)
     request = Request(f"{API_URL}?{params}", headers={
         "Authorization": f"Bearer {token}",
         "Accept": "application/json",
@@ -123,4 +145,12 @@ def fetch_posts(source, tickers, opener_factory=build_opener):
         raise ValueError("x-api-invalid-json") from exc
     if not isinstance(payload, dict) or payload.get("errors"):
         raise ValueError("x-api-response-error")
-    return {"_items": parse_response(source, payload, tickers)}
+    meta = payload.get('meta') or {}
+    newest = cursor.get('newestId') or meta.get('newest_id') or since
+    if newest is not None and (not isinstance(newest, str) or not newest.isdigit()):
+        raise ValueError('x-api-invalid-cursor')
+    next_token = meta.get('next_token')
+    if next_token is not None and (not isinstance(next_token, str) or not 1 <= len(next_token) <= 2048):
+        raise ValueError('x-api-invalid-cursor')
+    update = {'sinceId':since,'newestId':newest,'nextToken':next_token,'startTime':params_dict.get('start_time')} if next_token else {'sinceId':newest}
+    return {"_items": parse_response(source, payload, tickers), "cursor_update":json.dumps(update)}

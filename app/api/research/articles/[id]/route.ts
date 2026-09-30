@@ -1,3 +1,4 @@
+import { loadLiveResultEvents } from "@/lib/research/live-result-events";
 import { events } from "@/lib/research/content-server";
 import { isPublicSample } from "@/lib/research/access";
 import { getMembership } from "@/lib/membership/server";
@@ -5,7 +6,7 @@ export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "private, no-store", Vary: "Cookie" };
 export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
   const { id } = await context.params;
-  const event = events.find(item => item.id === id);
+  const event = events.find(item => item.id === id) ?? (/^x-result-\d+$/.test(id) ? (await loadLiveResultEvents()).find(item => item.id === id) : undefined);
   if (!event) return Response.json({ error: "not-found" }, { status: 404, headers });
   if (isPublicSample(id)) return Response.json({ event: { ...event, locked: false } }, { headers });
   try {

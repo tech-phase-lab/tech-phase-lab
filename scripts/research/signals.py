@@ -102,7 +102,7 @@ def enabled_sources(sources=SOURCES):
     enabled = os.environ.get("X_API_ENABLED", "").strip().lower() in {"1", "true", "yes"}
     token = os.environ.get("X_BEARER_TOKEN", "").strip()
     return [source for source in sources
-            if not source.get("enabledBy") or (enabled and bool(token))]
+            if source.get("enabled", True) and (not source.get("enabledBy") or (enabled and bool(token)))]
 
 
 def acquire(source, validators, tickers=None):
@@ -110,7 +110,7 @@ def acquire(source, validators, tickers=None):
         if source not in enabled_sources([source]):
             raise ValueError("x-api-disabled")
         import x_api
-        return x_api.fetch_posts(source, tickers or list(ALIASES))
+        return x_api.fetch_posts(source, tickers or list(ALIASES), validators=validators)
     if source["format"] == "html-index":
         from html_signals import collect
         return collect(source, validators, tickers or list(ALIASES), fetch, stamp)
@@ -292,7 +292,7 @@ def x_api_daily_limit():
 
 def x_api_request_plan(sources=SOURCES):
     """Return a query-free upper bound from configured polling intervals."""
-    x_sources = [source for source in sources if source.get("format") == "x-api"]
+    x_sources = [source for source in sources if source.get("format") == "x-api" and source.get("enabled", True)]
     configured_max = 0
     for source in x_sources:
         normal = max(30, int(source["intervalSeconds"]))
@@ -615,6 +615,9 @@ def save(db, source, items, response, checked, config_sha, duration):
               text=excluded.text,last_seen_at=excluded.last_seen_at""", (
                 source["id"], item["url"], digest, item["title"], item["text"], checked, checked,
             ))
+        if source.get('format') == 'x-api' and response.get('cursor_update'):
+            db.execute('INSERT INTO signal_index_state VALUES(?,?) ON CONFLICT(source_id) DO UPDATE SET body=excluded.body',
+                       (source['id'],response['cursor_update']))
         next_check = (datetime.fromisoformat(checked) + timedelta(
             seconds=source_interval_seconds(source, datetime.fromisoformat(checked)))).isoformat()
         failure_started_at, failure_attempts = route_failure_measurement(

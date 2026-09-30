@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { ResultBrief } from "@/lib/research/market-results";
 import { calendarDateKey } from "@/lib/research/calendar";
 import { publicNewsPayload, type OfficialUpdate } from "@/lib/research/general-news";
 import { mergeEconomicResults } from "@/lib/research/pce-results";
@@ -10,6 +11,7 @@ import calendarStyles from "./event-calendar.module.css";
 
 export default function EconomicResultsPanel({ lang, zone, period }: { lang: "ja" | "en"; zone: string; period: string }) {
   const [updates, setUpdates] = useState<OfficialUpdate[]>([]);
+  const [briefs, setBriefs] = useState<ResultBrief[]>([]);
   const [failed, setFailed] = useState(false);
   useEffect(() => {
     const poller = createNewsPoller({
@@ -18,8 +20,8 @@ export default function EconomicResultsPanel({ lang, zone, period }: { lang: "ja
         if (!response.ok) throw Error("unavailable");
         return publicNewsPayload(await response.json());
       },
-      onSuccess: payload => { setUpdates(payload.officialUpdates ?? []); setFailed(false); },
-      onFailure: () => { setUpdates([]); setFailed(true); },
+      onSuccess: payload => { setUpdates(payload.officialUpdates ?? []); setBriefs(payload.resultBriefs ?? []); setFailed(false); },
+      onFailure: () => { setUpdates([]); setBriefs([]); setFailed(true); },
     });
     poller.start();
     const wake = () => poller.wake();
@@ -33,7 +35,7 @@ export default function EconomicResultsPanel({ lang, zone, period }: { lang: "ja
     };
   }, []);
   const ja = lang === "ja";
-  const results = mergeEconomicResults(updates).filter(event => period === "upcoming" || calendarDateKey(event.releasedAt, zone).startsWith(period));
+  const results = mergeEconomicResults(updates, briefs).filter(event => period === "upcoming" || calendarDateKey(event.releasedAt, zone).startsWith(period));
   const zoneLabel = zone === "Asia/Tokyo" ? "JST" : "ET";
   return <section className={styles.section} aria-label={ja ? "発表済みの結果" : "Released results"}>
     <h2>{ja ? "発表済みの結果" : "Released results"}</h2>

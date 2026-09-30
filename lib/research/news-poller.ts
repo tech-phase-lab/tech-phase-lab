@@ -1,10 +1,10 @@
-export const NEWS_POLL_INTERVAL_MS = 30_000;
+export const NEWS_POLL_INTERVAL_MS = 5_000;
 export const NEWS_RETRY_BASE_MS = 5_000;
 
 export function newsPollDelay(consecutiveFailures: number) {
   if (consecutiveFailures <= 0) return NEWS_POLL_INTERVAL_MS;
   return Math.min(
-    NEWS_POLL_INTERVAL_MS,
+    30_000,
     NEWS_RETRY_BASE_MS * (2 ** Math.min(consecutiveFailures - 1, 3)),
   );
 }
@@ -46,6 +46,7 @@ export function createNewsPoller<T>({
 
   const poll = async () => {
     if (stopped) return;
+    if (typeof document !== "undefined" && document.visibilityState === "hidden") { schedulePoll(30_000); return; }
     if (active) {
       queued = true;
       return;
