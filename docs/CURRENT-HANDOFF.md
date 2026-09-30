@@ -1,3 +1,7 @@
+# News selection — owner instruction October 1, 07:16 JST
+
+Official status alone does not make a post public news. Course/webinar/workshop/recruiting/registration promotions stay in private acquisition and are excluded before headline translation/public feed. Material earnings, acquisitions and business changes remain eligible. News headline display strips CTA tails and raw URLs in both languages, including existing stored translations. No data deletion, account removal or membership changes. The Nebius Agentic AI course promotion reported by the owner must disappear from the visible news and ticker after deployment.
+
 # Automatic result recovery — October 1, 2026
 
 Owner requires immediate earnings and macro intake, bilingual flashes and what-changed pages. Wall St Engine already existed; FabyMETAL4 is newly authorized. Existing three reporters plus Faby now share one 30-second route, Nebius stays 120 seconds; nominal 3,600 requests/day within unchanged configured cap. Old separate reporter routes disabled to avoid duplicate charges. Incremental cursor/pagination is persisted; initial bounded recovery window is 12 hours.

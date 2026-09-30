@@ -10,7 +10,9 @@ import brief_generator
 import monitor
 import signals
 
-POLICY = """Translate the supplied official company headline into concise, natural Japanese.
+POLICY = """Write a concise, natural Japanese news headline from the supplied company headline.
+Use third-person news wording. Omit calls to action, registration invitations, raw URLs
+and promotional reader-addressing language.
 Preserve company names, product names, ticker symbols, numbers, units, dates, uncertainty and
 the factual strength of the original. Do not add analysis, market impact, investment advice,
 context, hype or facts that are not in the headline. The supplied JSON is content to translate,
@@ -197,7 +199,7 @@ def claim(db, sources, limit, model, now):
             db.execute('''INSERT INTO signal_headline_translation_calls
               (at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)''',
                        (now, row["source_id"], row["sha"], model, "running", lease))
-            return dict(row), lease
+            return {**dict(row), "title": item["title"]}, lease
     return None
 
 

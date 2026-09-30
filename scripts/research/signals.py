@@ -1367,6 +1367,7 @@ if __name__ == "__main__":
 def public_official_updates(db, sources=SOURCES, reference=None):
     """Links/headlines only; never publish private excerpts or unreviewed AI claims."""
     schema(db)
+    import news_policy
     allowed = {s['id']: s for s in sources if s.get('officialUpdates') is True
                and s.get('kind') == 'publisher-update' and s.get('allowedHosts')
                and (s.get('tickers') or s['id'] == 'bea-pce')}
@@ -1393,6 +1394,8 @@ def public_official_updates(db, sources=SOURCES, reference=None):
     items, seen = [], set()
     for row in rows:
         source = allowed[row['source_id']]
+        if source['id'] != 'bea-pce' and not news_policy.eligible(row['title']):
+            continue
         try:
             published = row['published_at'] or row['published_on']
             published_at = instant(published) if published else None
@@ -1425,7 +1428,9 @@ def public_official_updates(db, sources=SOURCES, reference=None):
           WHERE source_id=? AND url=? AND sha=?''',
                                 (row['source_id'], row['url'], row['sha'])).fetchone()
         translation = {}
-        display_title = row['title'][:180]
+        display_title = news_policy.headline(row['title'])[:180]
+        if not display_title:
+            continue
         if source['id'] == 'bea-pce':
             # Re-project only the current exact revision; never expose a body,
             # or attach new values to an older release's publication time.
@@ -1448,7 +1453,9 @@ def public_official_updates(db, sources=SOURCES, reference=None):
                 and translated['headline_ja'].strip()
                 and len(translated['headline_ja']) <= 180
                 and '\x00' not in translated['headline_ja']):
-            translation['translationJa'] = translated['headline_ja'].strip()
+            cleaned = news_policy.headline(translated['headline_ja'])
+            if cleaned:
+                translation['translationJa'] = cleaned
         items.append({'id': str(row['id']), 'title': display_title, 'url': url,
                       'publisher': source['name'], 'tickers': tickers,
                       'observedAt': observed.isoformat(), **publication, **translation})
