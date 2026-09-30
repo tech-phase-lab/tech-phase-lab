@@ -18,9 +18,10 @@ test('preview route enforces environment, authenticated admin, same-origin and s
   assert.equal((await POST(req())).status,404);
   process.env.VERCEL_ENV='preview';
   assert.equal((await POST(req({},'https://attacker.test'))).status,403);
-  for(const member of [{status:'signed-out'},{status:'signed-in',userId:'other',isAdmin:false}]) {
+  for(const member of [{status:'signed-out'},{status:'signed-in',userId:'other',isAdmin:false,plan:'free'},{status:'signed-in',userId:'other',isAdmin:false,plan:'pro'}]) {
    globalThis.__previewTest.member=member;
-   assert.equal((await POST(req())).status,403);
+   assert.equal((await POST(req({mode:'pro',userId:'verified-owner',role:'admin'}))).status,403);
+   assert.equal((await POST(req({mode:'restore',isAdmin:true}))).status,403);
   }
   assert.equal(calls.length,0);
   globalThis.__previewTest.member={status:'signed-in',userId:'verified-owner',isAdmin:true};

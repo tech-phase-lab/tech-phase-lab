@@ -3,7 +3,8 @@ import type { ReactNode } from "react";
 import { MemberDisplayProvider } from "./member-display-provider";
 import BottomNav from "./bottom-nav";
 import BackToTop from "./back-to-top";
-import { getMembership } from "@/lib/membership/server";
+import ResearchIdentityProvider from "./identity-provider";
+import { membershipConfigured, getMembership } from "@/lib/membership/server";
 
 // Membership is request-specific; never prerender a shared anonymous header.
 export const dynamic = "force-dynamic";
@@ -18,5 +19,5 @@ export default async function ResearchLayout({ children }: { children: ReactNode
     ownerMode: member.status === "signed-in" && member.ownerMode,
     accessExpiresAt: member.status === "signed-in" ? member.accessExpiresAt : 0,
   } : undefined;
-  return <MemberDisplayProvider initial={initial}>{children}<BackToTop /><BottomNav /></MemberDisplayProvider>;
+  return <ResearchIdentityProvider enabled={membershipConfigured()}><MemberDisplayProvider initial={initial}>{children}<BackToTop /><BottomNav /></MemberDisplayProvider></ResearchIdentityProvider>;
 }

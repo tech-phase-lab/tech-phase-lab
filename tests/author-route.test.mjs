@@ -12,7 +12,7 @@ test('owner composer enforces identity, origin and server credential; ignores cl
  const request = (origin='https://example.com') => new Request('https://example.com/api/research/author',{method:'POST',headers:{origin,'content-type':'application/json',authorization:'Bearer spoof'},body:JSON.stringify({action:'publish',id:'note-example',version:0,bodyJa:'本文',reviewer:'spoof',bodyEn:'spoof'})});
  try {
   process.env.RESEARCH_EDITOR_TOKEN='synthetic-editor-key-long-enough';
-  for(const member of [{status:'signed-out',isAdmin:true},{status:'signed-in',isAdmin:false,plan:'pro'}]) {
+  for(const member of [{status:'signed-out',isAdmin:true},{status:'signed-in',isAdmin:false,plan:'free'},{status:'signed-in',isAdmin:false,plan:'pro'}]) {
    state.member=member; assert.equal((await GET(request())).status,403); assert.equal((await POST(request())).status,403);
   }
   state.member={status:'signed-in',isAdmin:true,userId:'owner-user'};
