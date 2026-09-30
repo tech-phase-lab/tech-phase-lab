@@ -277,6 +277,8 @@ function signalIntakeStatus(signal: MonitorState["signalIntake"]) {
   const translation = signal.headlineTranslation;
   const translationState = translation?.status === "enabled"
     ? "ON（公式見出しのみ）"
+    : translation?.status === "approval-required"
+      ? "承認記録なしのため停止（外部送信なし）"
     : translation?.status === "misconfigured"
       ? "設定不足のため停止（外部送信なし）"
       : "OFF（外部送信なし）";

@@ -266,7 +266,9 @@ test("SEC evidence totals and filters distinguish exhibits from filing-body fall
   assert.match(liveTypes, /routeRetryWait24Hours\?:/);
   assert.match(intakeDashboard, /経路再試行の内部待機/);
   assert.match(liveTypes, /headlineTranslation\?:/);
+  assert.match(liveTypes, /"approval-required"/);
   assert.match(intakeDashboard, /公式見出し翻訳/);
+  assert.match(intakeDashboard, /承認記録なしのため停止/);
   assert.match(intakeDashboard, /外部送信なし/);
   assert.match(liveTypes, /xIntake\?:/);
   assert.match(liveTypes, /analystRatings: number/);

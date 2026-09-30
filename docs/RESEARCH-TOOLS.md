@@ -318,7 +318,11 @@ latency guarantee.
 
 Official-headline translation is a separate opt-in worker. It remains stopped
 unless `OFFICIAL_HEADLINE_TRANSLATION_ENABLED=true`, `OPENAI_API_KEY` and an
-explicit `OFFICIAL_HEADLINE_TRANSLATION_MODEL` are all configured. A rolling
+explicit `OFFICIAL_HEADLINE_TRANSLATION_MODEL` are all configured. It also
+requires a separate `OFFICIAL_HEADLINE_TRANSLATION_APPROVED_ON` owner-approval
+date on or after 2026-12-01. The enable flag, key and model cannot activate the
+worker without that dated approval, and the date does not enable it by itself.
+A rolling
 logical-call limit defaults to 50 per 24 hours and accepts 1–200. Each exact
 source ID, canonical URL and source SHA has its own durable translation record,
 lease and at-most-three logical attempts. Failed or stale revisions never enter

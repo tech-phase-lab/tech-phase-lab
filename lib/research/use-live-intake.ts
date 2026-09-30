@@ -329,7 +329,7 @@ export type MonitorState = {
       lastObservedAt: string | null;
     };
     headlineTranslation?: {
-      status: "disabled" | "misconfigured" | "enabled";
+      status: "disabled" | "approval-required" | "misconfigured" | "enabled";
       dailyLimit: number | null;
       eligible: number; translated: number; pending: number;
       running: number; retrying: number; exhausted: number;

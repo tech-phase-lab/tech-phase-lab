@@ -139,3 +139,19 @@ their exact pending blockers unless new first-party evidence appears.
 Verification for this tree: ESLint completed with zero errors and one
 pre-existing warning; Node passed 172/172, Python passed 469/469, the Next.js
 production build completed, and `compileall` plus `git diff --check` passed.
+
+## Pending-first company review (04:43 JST)
+
+Rechecked AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC through
+their current first-party pages and indexed first-party announcements. No new
+confirmed earnings release or call was found. Arm's official page now exposes
+November 4, 2026 for fiscal Q2 2027, but labels the entire list "Tentatively
+proposed earnings dates"; it remains pending and was not promoted into the
+calendar. Empty, historical-only, inaccessible and shell-only sources remain
+pending under the exact blockers already recorded above. Because all ten had
+already received an October 1 attempt, no coverage timestamp was rewritten.
+
+The October 1 BLS and Federal Reserve daily checks were already complete. Their
+stored October 2/14/15 releases and October 27–28/December 8–9 meetings were not
+reinterpreted or assigned new clock times. The next rotation starts with LITE,
+MRVL, NOW, NVDA, PANW, PLTR, SKHY, SNOW, VRT and QCOM.

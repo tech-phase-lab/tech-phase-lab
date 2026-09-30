@@ -99,3 +99,19 @@ The earlier live-rendering blocker is therefore closed. Remaining operational
 limits are the source-specific lawful access/retry states shown in aggregate
 and the missing secure provider credential/model configuration for the
 deliberately disabled translation worker.
+
+## Fail-closed December approval gate — October 1 04:43 JST
+
+The live preview later exposed an unexpected configuration drift: general
+official-headline translation was enabled and had made four logical calls in
+the preceding 24 hours. The owner instruction still holds general activation
+until a December-or-later credential/model decision. Code now requires a
+separate `OFFICIAL_HEADLINE_TRANSLATION_APPROVED_ON` date on or after
+2026-12-01, rejects a future-dated approval, and reports `approval-required`
+without calling the provider. The existing enable flag, key and model are no
+longer sufficient by themselves. This safeguard does not alter the separately
+authorized, finite MU earnings measurement path.
+
+Offline coverage verifies missing, pre-December and future approval dates never
+call the provider, while a valid December-or-later approval preserves the
+existing source/SHA binding, lease, deduplication, retry and budget behavior.
