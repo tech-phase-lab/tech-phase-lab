@@ -3,3 +3,5 @@
 .guidelines{margin-top:18px;border-top:1px solid #6a604039;padding-top:13px;color:#a7a6a0;font-size:12px}.guidelines summary{cursor:pointer;color:#c3b58f}.guidelines p{margin:10px 0;line-height:1.7}.card label{font-size:13px}
 
 .postingNotice{font-size:12px;line-height:1.7;margin:0;color:#afbbc0}.postingNotice span{display:block}.status:empty{display:none}@media(max-width:600px){.postingNotice{font-size:clamp(10px,2.8vw,12px)}.views{margin:16px 0}.card label{margin-top:12px}}
+
+.ownerLink{color:#d0bc90;font-size:13px;text-decoration:none;border-bottom:1px solid #8b7757;padding-bottom:3px}

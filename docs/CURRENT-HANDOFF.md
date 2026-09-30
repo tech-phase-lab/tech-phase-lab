@@ -132,3 +132,7 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - Add durable English question translation using configured note translation credentials/model. Board-only backlog, no owner identity in model input, store:false, 3 attempts and bounded daily calls. English view uses bodyEn, pending message instead of Japanese fallback.
 - Comparison picker condensed: six initial suggestions, eight filtered matches maximum, smaller slots/input/chips. Brief SEC/valuation pending note retained without claiming valuation works.
 - Affiliate applications deferred until public website ready; TG denial cause unknown. Existing moomoo agreement needs confirmation of referral cap vs publisher terms.
+
+## September 30 15:55 JST
+- Owner asks how to answer questions. Current legacy flow is /research/questions → /research/editorial to publish bilingual QA with token and sources → link published answer in question inbox. Do not claim inline answering or automatic QA answer translation exists; only member questions and notes auto-translate currently. Added owner-only entry and reciprocal Questions/Published answers tabs.
+- Compare picker changed from suggested ticker chips to three native selects, all supported companies in each; third optional, no duplicates, first two required. Mobile rows compact.

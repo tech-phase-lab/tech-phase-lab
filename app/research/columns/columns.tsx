@@ -5,6 +5,7 @@ import Image from "next/image";
 import { postNames, type EditorialPost, type PostKind } from "@/lib/research/editorial-posts";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
+import questionStyles from "../qa/styles.module.css";
 import styles from "./styles.module.css";
 import { scheduleLeaseRenewal } from "@/lib/research/display-lease";
 import NoteComposer from "../notes/composer";
@@ -72,6 +73,7 @@ export default function ColumnsPage({ initialKind = "all", initial }: { initialK
   const membershipMismatch = memberPlan !== null && result.status === "ready" && (result.access === "pro") !== (memberPlan === "pro");
   const shown = membershipMismatch ? { items: [], access: "", status: "loading" } : result;
   return <ResearchToolShell desk lang={lang} setLang={setLang} title={initialKind === "all" ? "RIZEL’S DESK" : initialKind === "qa" ? ja ? "リゼルに聞く" : "Ask RIZEL" : postNames[initialKind][lang]} description="">
+    {initialKind === "qa" && <nav className={questionStyles.views} aria-label={ja ? "質問メニュー" : "Question views"}><Link href="/research/qa">{ja ? "みんなの質問" : "Questions"}</Link><span aria-current="page">{ja ? "公開された回答" : "Published answers"}</span></nav>}
     {initialKind === "notes" && ownerMode && <NoteComposer onPublished={() => setRetry(value => value + 1)} />}
     {shown.status === "loading" && <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "記事を読み込んでいます" : "Loading articles"} />}
     {shown.status === "error" && <div role="status"><p>{ja ? "記事を読み込めませんでした。" : "Unable to load articles."}</p><button onClick={() => setRetry(v => v + 1)}>{ja ? "再読み込み" : "Retry"}</button></div>}
