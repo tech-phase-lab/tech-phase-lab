@@ -128,7 +128,7 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   assert.equal(new Set(coverage.map((company) => company.ticker)).size, 40);
   const byTicker = Object.fromEntries(coverage.map((company) => [company.ticker, company]));
   const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
-  assert.ok(coverage.every((company) => /^2026-09-(?:2[3-9]|30)$/.test(company.lastAttemptedOn)));
+  assert.ok(coverage.every((company) => /^2026-(?:09-(?:2[3-9]|30)|10-01)$/.test(company.lastAttemptedOn)));
   for (const ticker of ["ADBE", "AMD", "COHR", "CRWD", "DELL", "GEV", "INTC", "LRCX", "META", "MSFT", "MU", "NBIS", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-09-30");
   assert.equal(checked.ASML, "2026-09-29");
   for (const ticker of ["CRM", "ORCL"]) assert.equal(checked[ticker], "2026-09-28");
@@ -140,26 +140,16 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
     .map((company) => company.ticker)
     .sort();
   assert.deepEqual(attemptedOnSeptember30, [
-    "AAPL",
     "ADBE",
     "AMAT",
     "AMD",
-    "AMZN",
-    "ANET",
-    "ARM",
     "ASML",
-    "AVGO",
-    "BE",
     "COHR",
-    "CRDO",
     "CRM",
     "CRWD",
-    "CRWV",
     "DELL",
     "GEV",
-    "GOOGL",
     "INTC",
-    "KLAC",
     "LITE",
     "LRCX",
     "META",
@@ -180,6 +170,13 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
     "TSLA",
     "TSM",
     "VRT",
+  ]);
+  const attemptedOnOctober1 = coverage
+    .filter((company) => company.lastAttemptedOn === "2026-10-01")
+    .map((company) => company.ticker)
+    .sort();
+  assert.deepEqual(attemptedOnOctober1, [
+    "AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "CRDO", "CRWV", "GOOGL", "KLAC",
   ]);
   assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-29").length, 0);
   assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 21);

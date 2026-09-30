@@ -116,6 +116,21 @@ export type MonitorState = {
     lastAttemptAt: string | null; lastSuccessAt: string | null;
     healthy: boolean | null; lastError: string | null;
   };
+  muEarningsMeasurement?: {
+    status: "waiting-for-release" | "waiting" | "running" | "retry" | "complete" | "expired-without-release";
+    configured?: boolean; experimentExpiresAt?: string; attempts?: number;
+    detectedAt?: string; bodyReadyAt?: string | null;
+    detectionToBodyMs: number | null;
+    translationStartedAt?: string | null; translationCompletedAt?: string | null;
+    translationMs: number | null; translationScope: "headline";
+    summaryStartedAt?: string | null; summaryCompletedAt?: string | null;
+    summaryMs: number | null; summaryPublication: "private-draft";
+    bodyToSummaryMs: number | null; detectionToSummaryMs: number | null;
+    modelRequestTotalMs: number | null;
+    publicationToDetectionMs: number | null;
+    publicationPrecision: "not-yet-confirmed" | "date-only";
+    inputChars?: number; inputTruncated?: boolean;
+  };
   bodyFetch?: {
     lastPollAt: string | null; lastBatchAt: string | null;
     lastBatchDurationMs: number | null; lastBatchChecks: number;

@@ -273,6 +273,14 @@ test("SEC evidence totals and filters distinguish exhibits from filing-body fall
   assert.match(intakeDashboard, /X補完/);
   assert.match(intakeDashboard, /評価変更/);
   assert.match(intakeDashboard, /上限到達/);
+  assert.match(liveTypes, /muEarningsMeasurement\?:/);
+  assert.match(liveTypes, /detectionToSummaryMs: number \| null/);
+  assert.match(intakeDashboard, /MU決算実測：公式発表待ち/);
+  assert.match(intakeDashboard, /発表→検知 未算出（公式公開時刻は日付精度）/);
+  assert.match(intakeDashboard, /見出し翻訳API/);
+  assert.match(intakeDashboard, /本文要約API/);
+  assert.match(intakeDashboard, /要約は非公開下書き/);
+  assert.doesNotMatch(intakeDashboard, /muEarningsMeasurement\.(translation|summary)(?!Ms|StartedAt|CompletedAt)/);
   assert.match(liveTypes, /activeOutages\?:/);
   assert.match(intakeDashboard, /経路回復の実測/);
   assert.match(intakeDashboard, /障害開始→回復/);
