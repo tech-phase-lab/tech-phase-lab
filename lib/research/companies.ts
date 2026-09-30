@@ -116,7 +116,7 @@ export function buildCompanyProfiles(records: ResearchEvent[]): CompanyProfile[]
       ],
     },
     {
-      ticker: "MU", name: "Micron", sector: copy("半導体・メモリ", "Semiconductors · Memory"), reviewedOn: "2026-09-27",
+      ticker: "MU", name: "Micron", sector: copy("半導体・メモリ", "Semiconductors · Memory"), reviewedOn: history("MU").reduce((latest, event) => event.reviewedOn > latest ? event.reviewedOn : latest, "2026-09-27"),
       focus: copy("利益率の改善と、設備投資後に残るキャッシュを追う。", "Track margins and cash remaining after capital investment."),
       events: history("MU"), sources: sources("MU"),
       comparisons: [

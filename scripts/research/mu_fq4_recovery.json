@@ -1,0 +1,24 @@
+{
+  "releaseUrl": "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx",
+  "evidenceUrl": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000018/a2026q4ex991-pressrelease.htm",
+  "reviewedOn": "2026-10-01",
+  "publishedOn": "2026-09-30",
+  "title": "Micron Reports Fiscal Fourth Quarter and Full Year 2026 Results",
+  "headlineJa": "MU決算：売上542.29億ドル、調整後EPS33.42ドル。次四半期売上見通し600〜630億ドル",
+  "headlineEn": "MU earnings: revenue $54.229B, adjusted EPS $33.42; next-quarter revenue outlook $60–63B",
+  "facts": {
+    "period": "FQ4 2026",
+    "revenueMillionUSD": 54229,
+    "previousQuarterRevenueMillionUSD": 41456,
+    "gaapEPS": 32.87,
+    "adjustedEPS": 33.42,
+    "previousQuarterAdjustedEPS": 25.11,
+    "adjustedGrossMarginPercent": 87.0,
+    "previousQuarterAdjustedGrossMarginPercent": 84.9,
+    "nextQuarter": "FQ1 2027",
+    "revenueGuidanceBillionUSD": {"midpoint": 61.5, "range": 1.5},
+    "adjustedEPSGuidance": {"midpoint": 38.15, "range": 1.0},
+    "adjustedGrossMarginGuidancePercent": 86.25
+  },
+  "recoveryNote": "Reviewed factual input from the issuer's SEC Exhibit 99.1. A recovery replay, not a measurement of the original live publication. No consensus or share-price claims."
+}

@@ -533,7 +533,7 @@ class AutomaticMonitor:
                 headline_translation.run_once(self.db_path)
             except Exception:
                 print("headline-translation-unavailable", flush=True)
-            self.stop_event.wait(30)
+            self.stop_event.wait(5)
 
     def run_mu_measurement(self):
         while not self.stop_event.is_set():

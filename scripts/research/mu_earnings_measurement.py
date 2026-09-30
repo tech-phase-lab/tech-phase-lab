@@ -11,8 +11,11 @@ import time
 from urllib.parse import urlsplit
 import brief_generator
 import monitor
+from pathlib import Path
 
-EVENT = "mu-fq4-2026"
+RECOVERY = json.loads(Path(__file__).with_name('mu_fq4_recovery.json').read_text())
+
+EVENT = "mu-fq4-2026-recovery-20261001"
 START = "2026-09-30T19:00:00+00:00"
 END = "2026-10-02T00:00:00+00:00"
 MIN_OFFICIAL_TEXT_CHARS = 300
@@ -22,9 +25,8 @@ ALLOWED_PUBLICATION_DATES = {"2026-09-30", "2026-10-01"}
 def configuration(env=None):
     """Reuse the approved provider only for this time-bounded MU rehearsal.
 
-    General headline translation has a separate December approval gate. The
-    owner explicitly approved this one release measurement, so sharing that
-    later gate would incorrectly stop the finite worker after deployment.
+    The owner explicitly approved immediate headline translation and this
+    release measurement. The finite worker still expires independently.
     """
     env = os.environ if env is None else env
     if env.get("OFFICIAL_HEADLINE_TRANSLATION_ENABLED") != "true":
@@ -109,9 +111,14 @@ def candidate_rejection(row):
 def candidate(db):
     rows = candidate_rows(db)
     for row in rows:
-        if candidate_rejection(row):
+        recovery = row['url'] == RECOVERY['releaseUrl']
+        checked = dict(row)
+        if recovery:
+            checked['title'] = RECOVERY['title']
+            checked['extracted_text'] = json.dumps({'source': RECOVERY['evidenceUrl'], 'facts': RECOVERY['facts']})
+        if candidate_rejection(checked):
             continue
-        result = dict(row)
+        result = checked
         result["published_at"] = precise_publication_at(db, row["url"], row["detected_at"])
         return result
     return None
@@ -191,6 +198,7 @@ def diagnostics(db):
     row = db.execute("SELECT * FROM mu_earnings_measurement WHERE event=?", (EVENT,)).fetchone()
     if row is None:
         return {"status": "waiting-for-release" if stamp() < END else "expired-without-release",
+                "processingMode": "recovery-replay",
                 "configured": configuration(os.environ) is not None, "experimentExpiresAt": END,
                 **candidate_audit(db),
                 "publicationToDetectionMs": None, "detectionToBodyMs": None,
@@ -203,6 +211,7 @@ def diagnostics(db):
     publication_to_detection_ms = monitor.stored_latency_ms(
         row["published_at"], row["detected_at"], maximum_seconds=7 * 24 * 60 * 60)
     return {"status": row["state"], "attempts": row["attempts"],
+            "processingMode": "recovery-replay", "inputScope": "reviewed-sec-facts" if row['url'] == RECOVERY['releaseUrl'] else "official-excerpt",
             "detectedAt": row["detected_at"], "bodyReadyAt": row["body_ready_at"],
             "detectionToBodyMs": monitor.stored_latency_ms(row["detected_at"], row["body_ready_at"]),
             "translationStartedAt": row["translation_started_at"], "translationCompletedAt": row["translation_completed_at"],

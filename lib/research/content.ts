@@ -1,5 +1,6 @@
 import type { Metric, Source } from "./quality";
 import type { Copy, ResearchEvent } from "./data";
+import { muLatest } from './mu-latest.ts';
 
 const copy = (ja: string, en: string): Copy => ({ ja, en });
 const nebiusRelease: Source = {
@@ -180,5 +181,5 @@ export const events: ResearchEvent[] = [
     sources: [{ id: "nbis-clustermax-2026", publisher: "SemiAnalysis · paid industry research", title: "ClusterMAX 3.0: The Industry Standard GPU Cloud Rating System Returns", publishedOn: "2026-09-23", location: "Public executive summary; Nebius rating and research scope", url: "https://newsletter.semianalysis.com/p/clustermax-30-the-industry-standard" }],
     metrics: [],
   },
+  muLatest,
 ];
-

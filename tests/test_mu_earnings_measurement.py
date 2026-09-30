@@ -56,6 +56,20 @@ class MeasurementTests(unittest.TestCase):
                             ('x' * (measurement.MIN_OFFICIAL_TEXT_CHARS - 1),))
         self.assertIsNone(measurement.candidate(self.db))
 
+    def test_reviewed_exact_release_recovers_missing_title_and_partial_body(self):
+        with self.db:
+            self.db.execute('DELETE FROM release_events')
+            self.db.execute('DELETE FROM sources')
+        self.add(measurement.RECOVERY['releaseUrl'], '')
+        with self.db:
+            self.db.execute("UPDATE sources SET extracted_text='partial body'")
+        source = measurement.candidate(self.db)
+        self.assertEqual(json.loads(source['extracted_text'])['facts']['revenueMillionUSD'], 54229)
+        self.assertEqual(json.loads(source['extracted_text'])['source'], measurement.RECOVERY['evidenceUrl'])
+        with self.db:
+            self.db.execute("UPDATE sources SET published_on='2026-06-30'")
+        self.assertIsNone(measurement.candidate(self.db))
+
     def test_unknown_source_date_remains_unconfirmed_instead_of_blocking_event(self):
         with self.db:
             self.db.execute("UPDATE sources SET published_on='source-date-unconfirmed'")

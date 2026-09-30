@@ -4,7 +4,7 @@ export type GeneralNewsItem = {
   impactJa: string; impactEn: string; impactLabel: "positive" | "negative" | "mixed" | "neutral" | "uncertain";
   confidence: "high" | "medium" | "low";
 };
-export type OfficialUpdate = { id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string };
+export type OfficialUpdate = { id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string };
 export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[] };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
   "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com", "www.bea.gov"]);
@@ -22,7 +22,8 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       const v = raw as Record<string, unknown>;
       for (const key of ["id", "title", "url", "publisher", "observedAt"]) if (typeof v[key] !== "string" || !(v[key] as string).trim()) throw Error("Invalid update field");
       const url = new URL(v.url as string);
-      if (url.protocol !== "https:" || url.username || url.password || url.port || !officialUpdateHosts.has(url.hostname)) throw Error("Invalid official source");
+      const verifiedMu = url.href === 'https://www.sec.gov/Archives/edgar/data/723125/000072312526000018/a2026q4ex991-pressrelease.htm';
+      if (url.protocol !== "https:" || url.username || url.password || url.port || (!officialUpdateHosts.has(url.hostname) && !verifiedMu)) throw Error("Invalid official source");
       if (url.hostname === "x.com" && !/^\/nebiusai\/status\/\d+$/i.test(url.pathname)) throw Error("Invalid official account");
       if (url.hostname === "www.bea.gov" && (!/^\/news\/20\d{2}\/personal-income-and-outlays-[a-z]+-20\d{2}$/.test(url.pathname) || url.search || url.hash)) throw Error("Invalid BEA release");
       if (Array.from(v.title as string).length > 180 || (v.publisher as string).length > 80 || !/^\d+$/.test(v.id as string) || !Number.isFinite(Date.parse(v.observedAt as string))) throw Error("Invalid update");
@@ -41,7 +42,8 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
         if (typeof v.publishedOn !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(v.publishedOn) || !Number.isFinite(Date.parse(v.publishedOn)) || new Date(v.publishedOn).toISOString().slice(0,10) !== v.publishedOn) throw Error("Invalid publication date");
         publication.publishedOn = v.publishedOn;
       }
-      return { id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation };
+      if (v.researchId !== undefined && (!verifiedMu || v.researchId !== 'mu-q4-2026')) throw Error('Invalid research reference');
+      return { id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}) };
     }).filter(item => {
       if (seenOfficialUrls.has(item.url)) return false;
       seenOfficialUrls.add(item.url);

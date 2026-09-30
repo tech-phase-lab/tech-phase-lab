@@ -1,4 +1,5 @@
 import { publicNewsPayload } from "@/lib/research/general-news";
+import { muFlash } from '@/lib/research/mu-latest';
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -19,8 +20,10 @@ export async function GET() {
     if (!response.ok) throw new Error("News unavailable");
     const text = await response.text();
     if (new TextEncoder().encode(text).length > 500_000) throw new Error("Oversized response");
-    return Response.json(publicNewsPayload(JSON.parse(text)), { headers });
+    const payload = publicNewsPayload(JSON.parse(text));
+    payload.officialUpdates = [muFlash, ...(payload.officialUpdates ?? []).filter(item => item.url !== muFlash.url)].slice(0,20);
+    return Response.json(payload, { headers });
   } catch {
-    return Response.json({ ok: false, items: [] }, { status: 503, headers });
+    return Response.json({ ok: true, enabled:false, items: [], officialUpdates:[muFlash] }, { headers });
   }
 }

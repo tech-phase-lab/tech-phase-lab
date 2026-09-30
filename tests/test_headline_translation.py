@@ -54,20 +54,24 @@ class HeadlineTranslationTests(unittest.TestCase):
             "disabled",
         )
 
-    def test_enable_flag_without_dated_owner_approval_never_calls_provider(self):
-        unapproved = {key: value for key, value in ENV.items()
-                      if key != "OFFICIAL_HEADLINE_TRANSLATION_APPROVED_ON"}
+    def test_invalid_or_future_approval_never_calls_provider(self):
+        unapproved = {**ENV, "OFFICIAL_HEADLINE_TRANSLATION_APPROVED_ON": ""}
         self.assertEqual(
             translation.run_once(self.path, lambda *_: self.fail("provider called"),
                                  env=unapproved, now=NOW, sources=[SOURCE]),
             "disabled",
         )
-        early = {**ENV, "OFFICIAL_HEADLINE_TRANSLATION_APPROVED_ON": "2026-11-30"}
+        early = {**ENV, "OFFICIAL_HEADLINE_TRANSLATION_APPROVED_ON": "2026-09-28"}
         self.assertEqual(
             translation.run_once(self.path, lambda *_: self.fail("provider called"),
                                  env=early, now=NOW, sources=[SOURCE]),
             "disabled",
         )
+
+    def test_owner_october_activation_is_recorded_without_environment_edit(self):
+        approved = {key: value for key, value in ENV.items()
+                    if key != "OFFICIAL_HEADLINE_TRANSLATION_APPROVED_ON"}
+        self.assertEqual(translation.approval_status(approved, now=NOW), "approved")
         future = {**ENV, "OFFICIAL_HEADLINE_TRANSLATION_APPROVED_ON": "2027-01-02"}
         self.assertEqual(
             translation.run_once(self.path, lambda *_: self.fail("provider called"),
@@ -157,7 +161,7 @@ class HeadlineTranslationTests(unittest.TestCase):
         with translation.connect(self.path) as db:
             disabled = translation.diagnostics(db, env={}, now=NOW, sources=[SOURCE])
             unapproved = translation.diagnostics(
-                db, env={"OFFICIAL_HEADLINE_TRANSLATION_ENABLED": "true"},
+                db, env={"OFFICIAL_HEADLINE_TRANSLATION_ENABLED": "true", "OFFICIAL_HEADLINE_TRANSLATION_APPROVED_ON": ""},
                 now=NOW, sources=[SOURCE],
             )
             misconfigured = translation.diagnostics(

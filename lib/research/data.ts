@@ -21,6 +21,7 @@ export type ResearchEvent = {
 
 const copy = (ja: string, en: string): Copy => ({ ja, en });
 export const metricNames: Record<string, Copy> = {
+  "adjusted-eps": copy("調整後EPS", "Adjusted EPS"),
   revenue: copy("売上高", "Revenue"),
   arr: copy("AIクラウド ARR", "AI cloud ARR"),
   "net-income-continuing": copy("継続事業の純損益", "Net income · continuing operations"),

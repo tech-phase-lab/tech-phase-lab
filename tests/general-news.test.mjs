@@ -6,7 +6,8 @@ import { publicNewsPayload } from "../lib/research/general-news.ts";
 
 const helper = new URL("../lib/research/general-news.ts", import.meta.url).href;
 const source = (await readFile(new URL("../app/api/research/news/route.ts", import.meta.url), "utf8"))
-  .replace('"@/lib/research/general-news"', JSON.stringify(helper));
+  .replace('"@/lib/research/general-news"', JSON.stringify(helper))
+  .replace("'@/lib/research/mu-latest'", JSON.stringify(new URL("../lib/research/mu-latest.ts", import.meta.url).href));
 const { GET } = await import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(source)).toString("base64"));
 const item = { id: "a".repeat(64), title: "Synthetic report", url: "https://publisher.example/report", publisher: "Publisher", tickers: ["MU"],
   publishedAt: "2026-09-28T00:00:00Z", observedAt: "2026-09-28T00:01:00Z", approvedAt: "2026-09-28T00:02:00Z",
@@ -42,8 +43,12 @@ test("public route uses server credential and never caches failed or withdrawn n
     assert.deepEqual((await (await GET()).json()).items, []);
     globalThis.fetch = async () => { throw new Error("private monitor detail"); };
     const failure = await GET();
-    assert.equal(failure.status, 503);
-    assert.deepEqual(await failure.json(), { ok: false, items: [] });
+    assert.equal(failure.status, 200);
+    const safe = await failure.json();
+    assert.deepEqual(safe.items, []);
+    assert.equal(safe.enabled, false);
+    assert.equal(safe.officialUpdates[0].researchId, "mu-q4-2026");
+    assert.equal(JSON.stringify(safe).includes("private monitor detail"), false);
   } finally {
     globalThis.fetch = previous.fetch;
     for (const [key, value] of [["RESEARCH_MONITOR_URL", previous.url], ["RESEARCH_MONITOR_TOKEN", previous.token]]) {
@@ -60,7 +65,7 @@ test("public route rejects monitor URLs with embedded credentials", async () => 
   globalThis.fetch = async () => { called = true; return Response.json({ ok: true, enabled: false, items: [] }); };
   try {
     const response = await GET();
-    assert.equal(response.status, 503);
+    assert.equal(response.status, 200);
     assert.equal(called, false);
   } finally {
     globalThis.fetch = previous.fetch;
@@ -107,3 +112,11 @@ test('public news removes duplicate current stories and keeps missing official u
  const reviewed=publicNewsPayload({ok:true,enabled:true,items:[item,duplicateId,duplicateUrl]});
  assert.deepEqual(reviewed.items,[item]);
 });
+
+ test('reviewed MU flash allows only its exact SEC source and internal article', async () => {
+ const {muFlash} = await import('../lib/research/mu-latest.ts');
+ const payload = (update) => publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[update]});
+ assert.equal(payload(muFlash).officialUpdates[0].researchId, 'mu-q4-2026');
+ assert.throws(() => payload({...muFlash,url:muFlash.url+'?unreviewed=1'}));
+ assert.throws(() => payload({...muFlash,researchId:'private-editor'}));
+ });

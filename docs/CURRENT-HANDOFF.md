@@ -1,3 +1,13 @@
+# Immediate recovery — owner instruction 2026-10-01
+
+This section overrides stale December holds below. The owner already configured OpenAI on September 29 and explicitly requires immediate automatic news translation on October 1. Do not reinstate a December approval gate. Stock News activation remains separate.
+
+- Translation uses existing enabled flag, approved provider/model and daily cap, with a five-second worker poll.
+- MU current results are manually verified against SEC Exhibit 99.1, available as a numerical flash and bilingual what-changed event. This recovery is not proof of a general automatic publication pipeline.
+- The original MU release was detected around 05:18:32 JST; partial 614-character body around 05:18:44. Original translation/summary/publication measurements were missed. Do not invent them.
+- A new finite recovery replay uses reviewed SEC facts, preserves the original event log, records two actual provider durations, and remains a private generated draft. Report replay processing durations separately from original discovery latency and manual publication.
+- Full official source acquisition, numeric validation and automatic bilingual publication for future company events remain launch blockers. FREE/PRO/editor boundaries must not change.
+
 # Tech Phase — current handoff, 2026-09-30 14:47 JST
 
 Start here, then read AGENTS.md and docs/AUTONOMOUS-NEXT-2026-09-29.md. Current source and newer owner instructions override older documents.
