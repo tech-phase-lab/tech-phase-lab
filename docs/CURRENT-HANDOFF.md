@@ -103,3 +103,5 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - Idle blink root cause: ColumnsPage cleared all posts at every 60-second lease renewal. Renew in the background 20 seconds before expiry; retain only the still-valid server projection and independently clear it at the original deadline if renewal stalls. Explicit membership change, failed requests, and mismatched plans still hide private content; API authorization unchanged.
 
 - September 30 11:53 JST: User likes the overlapping avatar but explicitly wants the speech bubble tail retained. Added an upward tail immediately beside the avatar; full-width text and silent renewal remain.
+
+- September 30 12:06 JST: User found the overlapping-icon/top-notch version unnatural. Current trial: avatar and date/time in a row above a full-width bubble, with an upward tail aligned under the avatar. Keep approved art and silent lease renewal unchanged.
