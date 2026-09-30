@@ -20,12 +20,16 @@ MAX_HEADLINE_CHARS = 180
 EARLIEST_APPROVAL_DATE = "2026-09-29"
 # Owner explicitly renewed activation on October 1 after reporting stopped news.
 # Keep the enable flag, existing model/key, daily cap and revision checks.
-OWNER_APPROVED_ON = "2026-10-01"
+OWNER_APPROVED_ON = "2026-09-30"  # October 1 JST, September 30 UTC
 
 
 def approval_status(env, now=None):
     """Require a separate dated owner approval; enabling alone never spends."""
     value = env.get("OFFICIAL_HEADLINE_TRANSLATION_APPROVED_ON", OWNER_APPROVED_ON).strip()
+    # The owner revoked the old December hold. Do not let a legacy deployment
+    # setting override the newer, explicitly recorded authorization.
+    if value == "2026-12-01":
+        value = OWNER_APPROVED_ON
     try:
         approved_on = datetime.strptime(value, "%Y-%m-%d").date()
     except (TypeError, ValueError):

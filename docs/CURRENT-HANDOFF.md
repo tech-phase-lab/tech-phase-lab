@@ -2,10 +2,10 @@
 
 This section overrides stale December holds below. The owner already configured OpenAI on September 29 and explicitly requires immediate automatic news translation on October 1. Do not reinstate a December approval gate. Stock News activation remains separate.
 
-- Translation uses existing enabled flag, approved provider/model and daily cap, with a five-second worker poll.
+- Translation uses existing enabled flag, approved provider/model and daily cap, with a five-second worker poll. Authorization date is September 30 UTC / October 1 JST; the specifically superseded December 1 environment date cannot reinstate the old hold.
 - MU current results are manually verified against SEC Exhibit 99.1, available as a numerical flash and bilingual what-changed event. This recovery is not proof of a general automatic publication pipeline.
-- The original MU release was detected around 05:18:32 JST; partial 614-character body around 05:18:44. Original translation/summary/publication measurements were missed. Do not invent them.
-- A new finite recovery replay uses reviewed SEC facts, preserves the original event log, records two actual provider durations, and remains a private generated draft. Report replay processing durations separately from original discovery latency and manual publication.
+- The MU release was detected 05:18:32.104 JST and its partial 614-character body was ready 05:18:44.545 (12.441 seconds). Original delayed rehearsal started 06:24:12.023: translation 2.070 seconds, summary 2.124 seconds, total API time 4.194 seconds. Its completion at 06:24:16.222 was 3,944.118 seconds after detection and remained a private draft. No original automatic subscriber delivery occurred.
+- The reviewed SEC-fact replay ran 06:30:37.805–06:30:45.669 JST: headline API 4.507 seconds, bilingual summary API 3.353 seconds, total 7.860 seconds. It preserves the original log and remains a private generated draft. Numerical flash and reviewed JP/EN current article were separately deployed in 29a0461 and observed in the browser by 06:33 JST. That is a manual recovery, not original automatic publication or a live SLA.
 - Full official source acquisition, numeric validation and automatic bilingual publication for future company events remain launch blockers. FREE/PRO/editor boundaries must not change.
 
 # Tech Phase — current handoff, 2026-09-30 14:47 JST

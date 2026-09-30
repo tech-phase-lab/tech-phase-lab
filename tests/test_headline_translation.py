@@ -68,6 +68,12 @@ class HeadlineTranslationTests(unittest.TestCase):
             "disabled",
         )
 
+    def test_owner_activation_uses_utc_date_and_overrides_legacy_december_hold(self):
+        from datetime import datetime, timezone
+        now = datetime(2026, 9, 30, 21, 30, tzinfo=timezone.utc).timestamp()
+        self.assertEqual(translation.approval_status(ENV, now=now), 'approved')
+        self.assertIsNotNone(translation.configuration(ENV, now=now))
+
     def test_owner_october_activation_is_recorded_without_environment_edit(self):
         approved = {key: value for key, value in ENV.items()
                     if key != "OFFICIAL_HEADLINE_TRANSLATION_APPROVED_ON"}
