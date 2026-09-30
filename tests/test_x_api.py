@@ -16,6 +16,12 @@ class XApiTests(unittest.TestCase):
     def setUp(self):
         self.source = next(s for s in signals.SOURCES if s["id"] == "x-tipranks")
 
+    def test_rating_start_and_changes_without_numeric_targets(self):
+        payload = {"data": [{"id": "6001", "author_id": "1", "text": "Nebius $NBIS initiated with an Outperform at William Blair"}, {"id": "6002", "author_id": "1", "text": "$MU downgraded to Neutral"}, {"id": "6003", "author_id": "1", "text": "$NBIS interesting stock today"}], "includes": {"users": [{"id": "1", "username": "TipRanks"}]}}
+        items = x_api.parse_response(self.source, payload, list(monitor.PROVIDERS))
+        self.assertEqual(len(items), 2)
+        self.assertTrue(all(word in self.source["query"] for word in ("initiated", "upgraded", "downgraded", "reiterated")))
+
     def test_x_source_scope_adds_requested_x_only_companies(self):
         x_sources = [source for source in signals.SOURCES if source.get("format") == "x-api"]
         added = {"LITE", "COHR", "VST", "IREN", "ALAB", "APH", "INTC",

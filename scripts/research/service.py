@@ -27,6 +27,7 @@ import questions
 import note_translation
 import question_translation
 import headline_translation
+import mu_earnings_measurement
 import web_push
 
 
@@ -510,6 +511,7 @@ class AutomaticMonitor:
         self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
         self.note_translation_thread = threading.Thread(target=self.run_note_translation, name="note-translation", daemon=True)
         self.headline_translation_thread = threading.Thread(target=self.run_headline_translation, name="headline-translation", daemon=True)
+        self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
 
     def run_note_translation(self):
@@ -532,6 +534,14 @@ class AutomaticMonitor:
             except Exception:
                 print("headline-translation-unavailable", flush=True)
             self.stop_event.wait(30)
+
+    def run_mu_measurement(self):
+        while not self.stop_event.is_set():
+            try:
+                mu_earnings_measurement.run_once(self.db_path, env=os.environ)
+            except Exception:
+                print("mu-measurement-unavailable", flush=True)
+            self.stop_event.wait(5)
 
     def run_web_push(self):
         if not self.web_push_enabled:
@@ -571,6 +581,7 @@ class AutomaticMonitor:
         self.news_thread.start()
         self.note_translation_thread.start()
         self.headline_translation_thread.start()
+        self.mu_measurement_thread.start()
         self.push_thread.start()
 
     def stop(self):
@@ -584,6 +595,7 @@ class AutomaticMonitor:
         self.news_thread.join(timeout=25)
         self.note_translation_thread.join(timeout=45)
         self.headline_translation_thread.join(timeout=45)
+        self.mu_measurement_thread.join(timeout=45)
         self.push_thread.join(timeout=15)
 
     def run_stock_news(self):
@@ -1052,6 +1064,7 @@ class AutomaticMonitor:
             state["prioritySourceRuns"] = monitor.priority_source_run_summary(db)
             state["bodyHostProbes"] = monitor.body_host_probe_summary(db)
             state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
+            state["muEarningsMeasurement"] = mu_earnings_measurement.diagnostics(db)
             state["signalIntake"] = signals.operational_summary(db)
             state["signalIntake"]["xIntake"] = signals.x_operational_summary(db)
             state["signalIntake"]["headlineTranslation"] = (

@@ -108,3 +108,13 @@ export function selectDateOnlyEvents(events: DateOnlyCalendarEvent[], kind: "all
 export function selectDateOnlyEarnings(period: string, now: number) {
   return selectDateOnlyEvents(dateOnlyEarnings, "earnings", period, now);
 }
+
+// Confirmed official releases, separate from scheduled future events.
+export const economicResults = [{
+  id: "adp-2026-09", title: { ja: "ADP雇用統計（9月）", en: "ADP employment report (September)" },
+  releasedAt: "2026-09-30T08:15:00-04:00",
+  result: { ja: "民間雇用 +9万人", en: "Private employment +90,000" },
+  detail: { ja: "基本給は前年比3.2%増。", en: "Base pay rose 3.2% year over year." },
+  sourceUrl: "https://mediacenter.adp.com/2026-09-30-ADP-National-Employment-Report-Private-Sector-Employment-Increased-by-90,000-Jobs-in-September",
+  verifiedOn: "2026-09-30",
+}];

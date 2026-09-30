@@ -441,7 +441,7 @@
       "AAOI",
       "META"
     ],
-    "query": "from:TipRanks ((\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\") OR (($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (earnings OR \"quarterly results\" OR \"financial results\"))) -is:retweet -is:reply",
+    "query": "from:TipRanks ((\"price target\" OR \"target price\" OR \"PT to\") OR (($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (earnings OR \"quarterly results\" OR \"financial results\" OR initiated OR upgraded OR downgraded OR reiterated OR maintained))) -is:retweet -is:reply",
     "accounts": [
       "TipRanks"
     ],
@@ -511,7 +511,7 @@
       "AAOI",
       "META"
     ],
-    "query": "from:theflynews ((\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\") OR (($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (earnings OR \"quarterly results\" OR \"financial results\"))) -is:retweet -is:reply",
+    "query": "from:theflynews ((\"price target\" OR \"target price\" OR \"PT to\") OR (($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (earnings OR \"quarterly results\" OR \"financial results\" OR initiated OR upgraded OR downgraded OR reiterated OR maintained))) -is:retweet -is:reply",
     "accounts": [
       "theflynews"
     ],
@@ -581,7 +581,7 @@
       "AAOI",
       "META"
     ],
-    "query": "from:wallstengine ((\"price target\" OR \"target price\" OR \"PT to\" OR \"PT at\" OR \"PT raised\" OR \"PT cut\" OR \"PT lowered\" OR \"PT hiked\") OR (($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (earnings OR \"quarterly results\" OR \"financial results\"))) -is:retweet -is:reply",
+    "query": "from:wallstengine ((\"price target\" OR \"target price\" OR \"PT to\") OR (($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (earnings OR \"quarterly results\" OR \"financial results\" OR initiated OR upgraded OR downgraded OR reiterated OR maintained))) -is:retweet -is:reply",
     "accounts": [
       "wallstengine"
     ],

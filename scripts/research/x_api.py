@@ -20,6 +20,7 @@ TARGET_PATTERN = re.compile(
     r"\b(?:price[ -]?target|target price|pt\s+(?:raised|cut|lowered|hiked|boosted|slashed|(?:to|at)\s*\$?\d+))\b",
     re.I,
 )
+RATING_PATTERN = re.compile(r"\b(?:initiated|initiat(?:es|ing)\s+(?:coverage|with)|upgraded|downgraded|reiterat(?:es|ed)|maintain(?:s|ed))\b", re.I)
 EARNINGS_PATTERN = re.compile(r"\b(?:earnings|quarterly results|financial results)\b", re.I)
 EARNINGS_PREVIEW_PATTERN = re.compile(
     r"\b(?:earnings preview|ahead of (?:its |the )?earnings|upcoming earnings|"
@@ -58,7 +59,7 @@ def parse_response(source, payload, tickers):
                 matches = {ticker: ["$" + ticker] for ticker in cashtags}
         is_earnings = bool(EARNINGS_PATTERN.search(text) and
                            not EARNINGS_PREVIEW_PATTERN.search(text))
-        if not matches or not (official_ticker or TARGET_PATTERN.search(text) or is_earnings):
+        if not matches or not (official_ticker or TARGET_PATTERN.search(text) or is_earnings or RATING_PATTERN.search(text)):
             continue
         url = f"https://x.com/{username}/status/{post_id}"
         items[url] = {
