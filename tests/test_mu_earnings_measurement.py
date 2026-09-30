@@ -34,6 +34,34 @@ class MeasurementTests(unittest.TestCase):
         with self.db:
             self.db.execute("UPDATE sources SET title='Micron Reports Fourth Quarter Results',published_on='2026-06-30'")
         self.assertIsNone(measurement.candidate(self.db))
+
+    def test_exact_same_url_signal_time_enables_publication_latency(self):
+        with self.db:
+            self.db.execute("""CREATE TABLE signal_events(
+              url TEXT NOT NULL, published_at TEXT)""")
+            self.db.execute("INSERT INTO signal_events VALUES(?,?)",
+                            (self.url, '2026-09-30T13:00:00-07:00'))
+        source = measurement.candidate(self.db)
+        self.assertEqual(source['published_at'], '2026-09-30T13:00:00-07:00')
+        with patch.object(measurement, 'stamp', return_value='2026-09-30T20:00:10+00:00'), patch.object(measurement.headline_translation, 'configuration', return_value=('secret-key','model',50)):
+            outputs = iter((
+                {'output_text': json.dumps({'titleJa':'マイクロン、決算を発表'})},
+                {'output_text': json.dumps({'summaryJa':'売上高は120億ドル。','summaryEn':'Revenue was $12 billion.'})},
+            ))
+            measurement.run_once(self.path, transport=lambda *_: next(outputs))
+        metrics = measurement.diagnostics(self.db)
+        self.assertEqual(metrics['publicationPrecision'], 'timestamp')
+        self.assertEqual(metrics['publicationToDetectionMs'], 1000)
+
+    def test_naive_future_or_different_url_signal_time_is_not_exact(self):
+        with self.db:
+            self.db.execute("CREATE TABLE signal_events(url TEXT NOT NULL,published_at TEXT)")
+            self.db.executemany("INSERT INTO signal_events VALUES(?,?)", [
+                (self.url, '2026-09-30T20:00:00'),
+                (self.url, '2026-09-30T20:00:02+00:00'),
+                (self.url + '?other=1', '2026-09-30T20:00:00+00:00'),
+            ])
+        self.assertIsNone(measurement.candidate(self.db)['published_at'])
     def test_two_stages_record_private_draft_once_and_no_invented_publication_time(self):
         calls=[]
         def transport(payload,key):

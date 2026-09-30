@@ -143,7 +143,7 @@
     "ticker": "LITE",
     "name": "Lumentum",
     "sourceUrl": "https://investor.lumentum.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-30",
+    "lastAttemptedOn": "2026-10-01",
     "lastCheckedOn": null
   },
   {
@@ -164,7 +164,7 @@
     "ticker": "MRVL",
     "name": "Marvell",
     "sourceUrl": "https://investor.marvell.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-30",
+    "lastAttemptedOn": "2026-10-01",
     "lastCheckedOn": null
   },
   {
@@ -199,14 +199,14 @@
     "ticker": "NOW",
     "name": "ServiceNow",
     "sourceUrl": "https://investor.servicenow.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-30",
+    "lastAttemptedOn": "2026-10-01",
     "lastCheckedOn": null
   },
   {
     "ticker": "NVDA",
     "name": "NVIDIA",
     "sourceUrl": "https://investor.nvidia.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-30",
+    "lastAttemptedOn": "2026-10-01",
     "lastCheckedOn": null
   },
   {
@@ -220,28 +220,28 @@
     "ticker": "PANW",
     "name": "Palo Alto Networks",
     "sourceUrl": "https://investors.paloaltonetworks.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-30",
+    "lastAttemptedOn": "2026-10-01",
     "lastCheckedOn": null
   },
   {
     "ticker": "PLTR",
     "name": "Palantir",
     "sourceUrl": "https://investors.palantir.com/events",
-    "lastAttemptedOn": "2026-09-30",
+    "lastAttemptedOn": "2026-10-01",
     "lastCheckedOn": null
   },
   {
     "ticker": "QCOM",
     "name": "Qualcomm",
     "sourceUrl": "https://investor.qualcomm.com/news-events/investor-events/default.aspx",
-    "lastAttemptedOn": "2026-09-30",
+    "lastAttemptedOn": "2026-10-01",
     "lastCheckedOn": "2026-09-23"
   },
   {
     "ticker": "SKHY",
     "name": "SK hynix",
     "sourceUrl": "https://news.skhynix.com/en/category/ir/",
-    "lastAttemptedOn": "2026-09-30",
+    "lastAttemptedOn": "2026-10-01",
     "lastCheckedOn": null
   },
   {
@@ -255,7 +255,7 @@
     "ticker": "SNOW",
     "name": "Snowflake",
     "sourceUrl": "https://investors.snowflake.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-30",
+    "lastAttemptedOn": "2026-10-01",
     "lastCheckedOn": null
   },
   {
@@ -276,7 +276,7 @@
     "ticker": "VRT",
     "name": "Vertiv",
     "sourceUrl": "https://investors.vertiv.com/events-presentations/events-presentations/default.aspx",
-    "lastAttemptedOn": "2026-09-30",
+    "lastAttemptedOn": "2026-10-01",
     "lastCheckedOn": null
   }
 ]

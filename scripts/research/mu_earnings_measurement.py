@@ -21,16 +21,41 @@ END = "2026-10-02T00:00:00+00:00"
 def schema(db):
     db.execute("""CREATE TABLE IF NOT EXISTS mu_earnings_measurement(
       event TEXT PRIMARY KEY, url TEXT NOT NULL, detected_at TEXT NOT NULL,
-      body_ready_at TEXT, state TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0,
+      body_ready_at TEXT, published_at TEXT, state TEXT NOT NULL,
+      attempts INTEGER NOT NULL DEFAULT 0,
       retry_at REAL NOT NULL DEFAULT 0, translation_started_at TEXT,
       translation_completed_at TEXT, translation_ms INTEGER, translation TEXT,
       summary_started_at TEXT, summary_completed_at TEXT, summary_ms INTEGER,
       summary TEXT, error TEXT, input_chars INTEGER NOT NULL DEFAULT 0,
       input_truncated INTEGER NOT NULL DEFAULT 0)""")
+    columns = {row[1] for row in db.execute("PRAGMA table_info(mu_earnings_measurement)")}
+    if "published_at" not in columns:
+        db.execute("ALTER TABLE mu_earnings_measurement ADD COLUMN published_at TEXT")
 
 
 def stamp():
     return datetime.now(timezone.utc).isoformat(timespec="milliseconds")
+
+
+def precise_publication_at(db, url, detected_at):
+    """Use only a same-URL, timezone-bearing official signal timestamp."""
+    table = db.execute("""SELECT 1 FROM sqlite_master
+      WHERE type='table' AND name='signal_events'""").fetchone()
+    if table is None:
+        return None
+    columns = {row[1] for row in db.execute("PRAGMA table_info(signal_events)")}
+    if not {"url", "published_at"}.issubset(columns):
+        return None
+    rows = db.execute("""SELECT published_at FROM signal_events
+      WHERE url=? AND published_at IS NOT NULL AND published_at!=''
+      ORDER BY rowid DESC LIMIT 10""", (url,))
+    for row in rows:
+        value = str(row["published_at"])
+        if not re.search(r"(?:Z|[+-]\d{2}:\d{2})$", value):
+            continue
+        if monitor.stored_latency_ms(value, detected_at, maximum_seconds=7 * 24 * 60 * 60) is not None:
+            return value
+    return None
 
 
 def candidate(db):
@@ -47,7 +72,9 @@ def candidate(db):
                 or re.search(r"to report|will report|conference call", title, re.I)
                 or len(row["extracted_text"] or "") < 1200):
             continue
-        return row
+        result = dict(row)
+        result["published_at"] = precise_publication_at(db, row["url"], row["detected_at"])
+        return result
     return None
 
 
@@ -63,8 +90,12 @@ def run_once(path, env=None, transport=brief_generator.request_response):
             return
         with db:
             db.execute("""INSERT OR IGNORE INTO mu_earnings_measurement
-              (event,url,detected_at,body_ready_at,state) VALUES(?,?,?,?, 'waiting')""",
-                       (EVENT, source["url"], source["detected_at"], source["body_ready_at"]))
+              (event,url,detected_at,body_ready_at,published_at,state)
+              VALUES(?,?,?,?,?, 'waiting')""",
+                       (EVENT, source["url"], source["detected_at"], source["body_ready_at"], source["published_at"]))
+            db.execute("""UPDATE mu_earnings_measurement
+              SET published_at=COALESCE(published_at,?) WHERE event=?""",
+                       (source["published_at"], EVENT))
         job = db.execute("SELECT * FROM mu_earnings_measurement WHERE event=?", (EVENT,)).fetchone()
         if job["state"] == "complete" or job["attempts"] >= 3 or job["retry_at"] > time.time():
             return
@@ -119,6 +150,8 @@ def diagnostics(db):
     model_request_total_ms = None
     if isinstance(row["translation_ms"], int) and isinstance(row["summary_ms"], int):
         model_request_total_ms = row["translation_ms"] + row["summary_ms"]
+    publication_to_detection_ms = monitor.stored_latency_ms(
+        row["published_at"], row["detected_at"], maximum_seconds=7 * 24 * 60 * 60)
     return {"status": row["state"], "attempts": row["attempts"],
             "detectedAt": row["detected_at"], "bodyReadyAt": row["body_ready_at"],
             "detectionToBodyMs": monitor.stored_latency_ms(row["detected_at"], row["body_ready_at"]),
@@ -129,5 +162,6 @@ def diagnostics(db):
             "bodyToSummaryMs": monitor.stored_latency_ms(row["body_ready_at"], row["summary_completed_at"]),
             "detectionToSummaryMs": monitor.stored_latency_ms(row["detected_at"], row["summary_completed_at"]),
             "modelRequestTotalMs": model_request_total_ms,
-            "publicationToDetectionMs": None, "publicationPrecision": "date-only",
+            "publicationToDetectionMs": publication_to_detection_ms,
+            "publicationPrecision": "timestamp" if publication_to_detection_ms is not None else "date-only",
             "inputChars": row["input_chars"], "inputTruncated": bool(row["input_truncated"])}

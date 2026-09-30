@@ -47,3 +47,38 @@ rolling window with persisted global pacing, so older attempts expire while new
 ones are admitted; the observed near-cap total does not by itself imply that the
 MU window will run out. No paid limit, query cadence, provider activation,
 subscriber delivery or production setting changed.
+
+## Pending-first company review (02:06 JST)
+
+Reviewed the next ten oldest pending company sources. No first-party source
+confirmed a new future earnings release or call, so only `lastAttemptedOn`
+advanced and every inconclusive `lastCheckedOn` remained unchanged.
+
+| Ticker | Result | Official source / exact blocker |
+| --- | --- | --- |
+| LITE | Pending | [Events](https://investor.lumentum.com/events-and-presentations/default.aspx) exposes Latest Events and archive headings without an inspectable current item. |
+| MRVL | Pending | The configured events page remained inaccessible. The [official IR calendar](https://investor.marvell.com/news-events/ir-calendar) exposes an October 6 Investor Day, not a future earnings release or call. |
+| NOW | Pending | [Events](https://investor.servicenow.com/events-and-presentations/default.aspx) exposes archived sections without an inspectable current earnings item. |
+| NVDA | Pending | The configured first-party events endpoint remained inaccessible. No access control was bypassed. |
+| PANW | Pending | The configured first-party events endpoint remained inaccessible. No access control was bypassed. |
+| PLTR | Pending | [Events](https://investors.palantir.com/events) exposes only the investor page shell without an inspectable event. |
+| SKHY | Pending | [IR newsroom](https://news.skhynix.com/en/category/ir/) still ends its earnings entries with the completed July 29 Q2 result and provides no future earnings announcement. |
+| SNOW | Pending | [Events and presentations](https://investors.snowflake.com/events-and-presentations/default.aspx) exposes an empty Upcoming Events heading without an explicit no-events statement. |
+| VRT | Pending | The configured first-party events URL returned 404. Searchable official results expose completed investor conferences, not a future earnings announcement. |
+| QCOM | Pending | [Investor events](https://investor.qualcomm.com/news-events/investor-events/default.aspx) exposes navigation without an inspectable future earnings item; official search results still end with the completed fiscal Q3 release. |
+
+The BLS October schedule remains October 2 Employment Situation, October 14 CPI
+and October 15 PPI at 08:30 Eastern. The Federal Reserve calendar remains
+October 27–28 and December 8–9 without future statement or press-conference
+clock times. No calendar event or inferred time was added.
+
+## Exact MU publication-time evidence
+
+The finite MU worker can now bind a same-URL, timezone-bearing publication
+timestamp from the already validated official-signal evidence to the measured
+release. Only a non-future timestamp no more than seven days before detection is
+accepted. Naive timestamps, another URL, reversed time and date-only evidence
+remain unmeasured. This lets `publicationToDetectionMs` become exact when the
+official feed supplies a clock time while preserving the existing null/date-only
+fallback. Existing measurement rows are backfilled safely on a later worker pass;
+no generated body, model output or credential enters public diagnostics.

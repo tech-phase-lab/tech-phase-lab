@@ -128,7 +128,7 @@ export type MonitorState = {
     bodyToSummaryMs: number | null; detectionToSummaryMs: number | null;
     modelRequestTotalMs: number | null;
     publicationToDetectionMs: number | null;
-    publicationPrecision: "not-yet-confirmed" | "date-only";
+    publicationPrecision: "not-yet-confirmed" | "date-only" | "timestamp";
     inputChars?: number; inputTruncated?: boolean;
   };
   bodyFetch?: {
