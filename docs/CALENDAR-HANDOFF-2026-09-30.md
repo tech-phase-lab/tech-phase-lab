@@ -165,3 +165,32 @@ tree (`83cc89d`). Vercel deployment
 `dpl_EvkzCRjKyP76fZ6MX4VUvLLZgMcL` reached Ready. The canonical Japanese
 calendar loaded with the September 30 official confirmation date, 17 schedules,
 the unchanged Micron/TSMC/Netflix calls, and date-only ASML/FOMC entries.
+
+## Second rotation, pending-first review (17:49 JST)
+
+Rechecked the first ten still-unreviewed company sources after completing the
+40-company daily rotation. No source supplied a new confirmed earnings date.
+Because every company already has a September 30 attempt, no duplicate
+`lastAttemptedOn` value was written; pending `lastCheckedOn` values remain
+unchanged.
+
+| Ticker | Result | Official source / evidence |
+| --- | --- | --- |
+| AAPL | Pending | [Investor Relations](https://investor.apple.com/investor-relations/default.aspx) exposed the Investor Updates and Quarterly Earnings Reports headings without an inspectable current item. |
+| AMZN | Pending | [Events](https://ir.aboutamazon.com/events/default.aspx) exposed empty Upcoming and Past Events sections without an explicit current-status statement. |
+| ANET | Pending | [Events and presentations](https://investors.arista.com/events-and-presentations/default.aspx) remained inaccessible through the available lawful endpoint. No access control was bypassed. |
+| ARM | Pending | [Investor Relations](https://investors.arm.com/) still showed the completed July 29 quarter as its latest investor event; no confirmed future earnings item was present. |
+| AVGO | Pending | [Financial news](https://investors.broadcom.com/financial-information/financial-news-releases) still ended with the completed September 2 fiscal Q3 result and contained no future earnings announcement. |
+| BE | Pending | [Events calendar](https://investor.bloomenergy.com/events-and-presentations/events-calendar/) exposed an empty Upcoming Events section without an explicit no-events statement. |
+| CRDO | Pending | [Events](https://investors.credosemi.com/news-events/events/default.aspx) exposed section headings without an inspectable future item. |
+| CRWV | Pending | [Events and presentations](https://investors.coreweave.com/events-and-presentations/default.aspx) exposed section headings without an inspectable future item. |
+| GOOGL | Pending | [Events and presentations](https://abc.xyz/investor/events/default.aspx) exposed the page shell without an inspectable current event. |
+| KLAC | Pending | [Events and presentations](https://ir.kla.com/events-presentations/) remained inaccessible through the available lawful endpoint. No access control was bypassed. |
+
+The BLS October schedule remains October 2 for the Employment Situation,
+October 14 for CPI and October 15 for PPI, each at 08:30 Eastern. The Federal
+Reserve still lists October 27–28 and December 8–9 without future statement or
+press-conference clock times. No calendar record changed.
+
+Next: LITE, MRVL, NOW, NVDA, PANW, PLTR, SKHY, SNOW, VRT and QCOM. Preserve
+all pending blockers until first-party evidence becomes conclusive.

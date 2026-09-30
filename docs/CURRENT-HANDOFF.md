@@ -142,3 +142,10 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - New owner-authored QA answers auto-translate via configured note worker, preserving title/body and publication time. Does not invent RIZEL answers. Existing test question left unanswered; owner should write their actual opinion.
 - Comparison uses searchable company inputs with SEC directory candidates beyond monitored 22; backend resolves names/CIKs server-side, marks unsupported/missing data. Gold/navy PRO palette. Never imply ETF or arbitrary global company fundamentals always available.
 - Notes avatar moved 10px desktop/8px mobile lower to align with bubble tail. Exact approved artwork preserved.
+
+## September 30 17:49 JST continuation
+- Fast-forwarded the clean checkout to `afabd50`, preserving the owner-requested inline question replies, automatic translation of owner-authored answers and searchable PRO comparison.
+- Rechecked AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC against first-party investor sources. No new confirmed earnings date was found. Empty, historical-only, inaccessible and shell-only sources remain pending; no access control was bypassed.
+- BLS still lists October 2 Employment Situation, October 14 CPI and October 15 PPI at 08:30 Eastern. The Federal Reserve still lists October 27–28 and December 8–9 without future decision times. No calendar data or company `lastCheckedOn` value changed.
+- The integrated tree passed ESLint with one pre-existing warning, Node 164/164, Python 455/455, the Next.js production build, `compileall` and `git diff --check`. Vercel deployment `dpl_5ZJ94KjM1x8rGUfB5yceLPqFYtA9` for `afabd50` is Ready; the protected preview Q&A route returned 200 in signed-out mode and kept PRO content gated.
+- Next calendar batch: LITE, MRVL, NOW, NVDA, PANW, PLTR, SKHY, SNOW, VRT and QCOM. The finite news-readiness backlog remains complete; do not add discretionary product work.
