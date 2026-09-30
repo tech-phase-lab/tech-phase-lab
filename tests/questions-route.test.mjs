@@ -51,7 +51,7 @@ test('moderation route is owner-only and uses the server editor credential', asy
 test('question pages separate private intake, moderation and published answers',()=>{
   const intake=readFileSync(new URL('../app/research/qa/questions.tsx',import.meta.url),'utf8');
   const moderation=readFileSync(new URL('../app/research/questions/moderation.tsx',import.meta.url),'utf8');
-  assert.match(intake,/PRO会員に公開して投稿/);assert.match(intake,/すべての質問への回答はお約束していません/);
+  assert.match(intake,/PRO会員全員に公開/);assert.match(intake,/1日10件まで、10〜1,200文字/);assert.match(intake,/すべての質問への回答はお約束していません/);
   assert.match(moderation,/本文をそのまま公開せず/);assert.match(moderation,/公開済みQ&A/);
   assert.match(readFileSync(new URL('../app/research/qa/answered/page.tsx',import.meta.url),'utf8'),/initialKind="qa"/);
 });

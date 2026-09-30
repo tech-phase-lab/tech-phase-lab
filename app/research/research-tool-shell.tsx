@@ -12,7 +12,7 @@ import type { Language } from "@/lib/research/data";
 import base from "./research.module.css";
 import styles from "./research-tools.module.css";
 
-export default function ResearchToolShell({ lang, setLang, title, description, children, desk = false }: { lang: Language; setLang: (lang: Language) => void; title: string; description: string; children: ReactNode; desk?: boolean }) {
+export default function ResearchToolShell({ lang, setLang, title, description, children, desk = false, showTools = true }: { lang: Language; setLang: (lang: Language) => void; title: string; description: string; children: ReactNode; desk?: boolean; showTools?: boolean }) {
   const pathname = usePathname();
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#tool-main">{lang === "ja" ? "本文へ移動" : "Skip to content"}</a>
@@ -21,7 +21,7 @@ export default function ResearchToolShell({ lang, setLang, title, description, c
       <div className={base.headerRight}><HomeLink lang={lang} /><PageRefresh lang={lang} /><div className={base.languages} aria-label={lang === "ja" ? "言語" : "Language"}><button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button><button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button></div><HeaderPro /></div>
     </header>
     <main id="tool-main" className={`${styles.main} ${desk ? styles.desk : ""}`}>
-      {!desk && <nav className={styles.links} aria-label={lang === "ja" ? "便利な機能" : "Research tools"}>
+      {!desk && showTools && <nav className={styles.links} aria-label={lang === "ja" ? "便利な機能" : "Research tools"}>
         <Link href="/research/stocks" aria-current={pathname === "/research/stocks" ? "page" : undefined}><NavigationIcon name="search" />{lang === "ja" ? "銘柄検索" : "Stock search"}</Link>
         <Link href="/research/watchlist" aria-current={pathname === "/research/watchlist" ? "page" : undefined}><NavigationIcon name="favorite" />{lang === "ja" ? "お気に入り銘柄" : "Favorite stocks"}</Link>
         <Link href="/research/calendar" aria-current={pathname === "/research/calendar" ? "page" : undefined}><NavigationIcon name="calendar" />{lang === "ja" ? "カレンダー" : "Calendar"}</Link>
