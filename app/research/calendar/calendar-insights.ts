@@ -18,6 +18,10 @@ const insights: Record<string, Record<Language, Insight>> = {
     ja: { what: "FRBが金融政策を決める会合です。金利の決定だけでなく、今後の判断方針も確認します。", watch: "政策金利、声明文の前回からの変更、反対票、議長会見。経済見通し・金利見通しは公表される会合で確認。", reading: "今回の決定と今後の見通しを分けて読みます。金利据え置きでも声明文が変わることがあり、見通しは将来の金利を約束するものではありません。" },
     en: { what: "The Federal Reserve's monetary-policy meeting. The decision and guidance both matter.", watch: "The policy rate, changes to the statement, dissents and the chair's press conference. Review economic and rate projections when released.", reading: "Separate today's decision from the outlook. A hold can still bring changes in language, and projections are not a promise of future rates." },
   },
+  pce: {
+    ja: { what: "米国の個人消費に関わるモノ・サービスの物価変化を測る指標です。BEAの個人所得・消費支出で公表されます。", watch: "総合と、食品・エネルギーを除くコアの前月比・前年比。消費支出の伸びとは別の数字として確認。", reading: "PCE消費支出とPCE物価指数は異なります。前年比と前月比を併せて読み、年次改定があれば過去値の修正も確認します。" },
+    en: { what: "Measures price changes in U.S. personal consumption. BEA publishes it in Personal Income and Outlays.", watch: "Headline and core monthly and annual changes. Core excludes food and energy. Keep price changes separate from spending growth.", reading: "PCE spending and the PCE price index are different measures. Read monthly and annual inflation together and check revisions when an annual update is released." },
+  },
 };
 export function calendarInsight(id: string, lang: Language): Insight | undefined {
   return insights[id.split("-")[0]]?.[lang];

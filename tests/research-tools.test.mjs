@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { parseFavoriteStocks, toggleFavoriteStock } from "../lib/research/favorites.ts";
-import { calendarEvents, dateOnlyEvents, selectDateOnlyEarnings, selectDateOnlyEvents, calendarDateKey, selectCalendarEvents } from "../lib/research/calendar.ts";
+import { calendarEvents, economicResults, dateOnlyEvents, selectDateOnlyEarnings, selectDateOnlyEvents, calendarDateKey, selectCalendarEvents } from "../lib/research/calendar.ts";
 
 const coverage = JSON.parse(readFileSync(new URL("../lib/research/calendar-coverage.json", import.meta.url), "utf8"));
 const eventCalendarSource = readFileSync(new URL("../app/research/calendar/event-calendar.tsx", import.meta.url), "utf8");
@@ -50,11 +50,25 @@ test("registered schedules are ordered, unique and linked to official sources", 
     assert.ok(Number.isFinite(timestamp) && timestamp >= previous);
     previous = timestamp;
     assert.ok(event.title.ja && event.title.en);
-    assert.ok(["www.bls.gov", "investors.micron.com", "ir.netflix.net", "investor.tsmc.com", "www.gevernova.com", "www.adobe.com"].includes(new URL(event.sourceUrl).hostname));
+    assert.ok(["www.bls.gov", "www.bea.gov", "investors.micron.com", "ir.netflix.net", "investor.tsmc.com", "www.gevernova.com", "www.adobe.com"].includes(new URL(event.sourceUrl).hostname));
     if (event.sourceName === "BLS") {
       assert.equal(new Intl.DateTimeFormat("en-GB", { timeZone: event.sourceTimezone, hour: "2-digit", minute: "2-digit" }).format(new Date(event.startsAt)), "08:30");
     }
   }
+});
+
+test("PCE schedules and actuals preserve official periods, Eastern DST and price measures", () => {
+  const pce = calendarEvents.filter(event => event.id.startsWith("pce-"));
+  assert.deepEqual(pce.map(event => event.id), ["pce-2026-08", "pce-2026-09", "pce-2026-10", "pce-2026-11"]);
+  const time = date => new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit" }).format(new Date(date));
+  assert.deepEqual(pce.map(event => time(event.startsAt)), ["21:30", "21:30", "22:30", "22:30"]);
+  assert.equal(selectCalendarEvents(pce, "economic", "upcoming", Date.parse("2026-09-30T14:00Z")).length, 3);
+  const result = economicResults.find(event => event.id === "pce-2026-08");
+  assert.equal(result.sourceName, "BEA");
+  assert.equal(result.releasedAt, pce[0].startsAt);
+  assert.match(result.result.ja, /前月比\+0\.3%・前年比\+3\.4%/);
+  assert.match(result.detail.ja, /前月比\+0\.2%・前年比\+3\.0%/);
+  assert.equal(new Set(economicResults.map(event => event.id)).size, economicResults.length);
 });
 
 test("Eastern month filters follow the displayed date across the Japan midnight boundary", () => {

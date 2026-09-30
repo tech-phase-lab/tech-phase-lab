@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { calendarDateKey, economicResults, dateOnlyEvents, selectDateOnlyEarnings, selectDateOnlyEvents, calendarEvents, calendarReviewedOn, selectCalendarEvents, type CalendarEvent } from "@/lib/research/calendar";
+import { calendarDateKey, dateOnlyEvents, selectDateOnlyEarnings, selectDateOnlyEvents, calendarEvents, calendarReviewedOn, selectCalendarEvents, type CalendarEvent } from "@/lib/research/calendar";
 import { filterFavoriteEvents } from "@/lib/research/favorites";
 import { useStockFavorites } from "../use-stock-favorites";
 import { useCalendarClock } from "../use-calendar-clock";
@@ -12,6 +12,7 @@ import ResearchToolShell from "../research-tool-shell";
 import styles from "../research-tools.module.css";
 import calendarStyles from "./event-calendar.module.css";
 import { calendarInsight } from "./calendar-insights";
+import EconomicResultsPanel from "./economic-results-panel";
 
 const earningsFocus: Record<string, { ja: string; en: string }> = {
   MU: { ja: "注目点：DRAM・NANDの売上と価格動向／粗利益率／HBMと設備投資／次四半期の会社見通し", en: "Watch: DRAM/NAND revenue and pricing; gross margin; HBM and capex; next-quarter guidance." },
@@ -67,7 +68,7 @@ export default function EventCalendar() {
     </div>
     {favoritesOnly && favorites.length === 0 && <p role="status" className={styles.description}>{t("お気に入りがまだありません。銘柄を追加すると、その決算予定も表示します。", "No favorites yet. Add companies to include their earnings schedules.")}</p>}
     <p aria-live="polite" className={styles.description}>{now === null ? t("予定を読み込み中…", "Loading schedule…") : t(`${visible.length + visibleDateOnly.length}件の予定`, `${visible.length + visibleDateOnly.length} events`)}</p>
-    {kind !== "earnings" && <section className={styles.section} aria-label={t("発表済みの結果", "Released results")}><h2>{t("発表済みの結果", "Released results")}</h2><ol className={calendarStyles.agenda}>{economicResults.filter(event => period === "upcoming" || calendarDateKey(event.releasedAt, zone).startsWith(period)).map(event => <li key={event.id}><details><summary><time dateTime={event.releasedAt}>{calendarDateKey(event.releasedAt, zone).slice(5).replace("-", "/")}<small>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(event.releasedAt))} {zoneLabel(zone)}</small></time><span className={calendarStyles.eventName}>{event.title[lang]}<small>{event.result[lang]}</small></span><span className={calendarStyles.expand} aria-hidden="true">＋</span></summary><div className={calendarStyles.eventDetails}><p>{event.detail[lang]}</p><a href={event.sourceUrl} target="_blank" rel="noreferrer">ADP ↗</a></div></details></li>)}</ol></section>}
+    {kind !== "earnings" && <EconomicResultsPanel lang={lang} zone={zone} period={period} />}
     <ol className={calendarStyles.agenda}>{visible.map((event) => <li key={event.id}>
       <details>
         <summary>
@@ -99,7 +100,7 @@ export default function EventCalendar() {
         <ul>{coverage.map((company) => <li key={company.ticker}><a href={company.sourceUrl} target="_blank" rel="noreferrer"><strong>{company.ticker}</strong> {company.name} ↗</a><small>{coverageStatus(company)}</small></li>)}</ul>
       </details>
     </section>
-    <p className={styles.notice}>{t("市場予想との比較・結果の自動更新・自動通知は未対応です。", "Consensus comparisons, automatic result updates and notifications are not yet available.")}</p>
+    <p className={styles.notice}>{t("PCEは公式本文の照合後に結果を更新します。市場予想との比較・PCE以外の結果の自動更新・自動通知は未対応です。", "PCE results update after checks against the official release. Consensus comparisons, automatic updates for other results and notifications are not yet available.")}</p>
     <p className={styles.footnote}>{t("日付・期間は選択した時間帯が基準です。米国の夏時間・冬時間を反映しています。", "Dates and month filters follow the selected time zone. ET accounts for U.S. daylight saving.")}</p>
   </ResearchToolShell>;
 }

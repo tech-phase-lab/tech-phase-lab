@@ -12,6 +12,19 @@
     "reuse": "permission-required"
   },
   {
+    "id": "bea-pce",
+    "name": "BEA",
+    "kind": "publisher-update",
+    "url": "https://www.bea.gov/news/current-releases",
+    "format": "html-index",
+    "articlePathPatterns": ["/news/20[0-9]{2}/personal-income-and-outlays-[a-z]+-20[0-9]{2}"],
+    "allowedHosts": ["www.bea.gov"],
+    "intervalSeconds": 120,
+    "retainUnmatched": true,
+    "officialUpdates": true,
+    "reuse": "factual-results-only"
+  },
+  {
     "id": "nvidia-developer",
     "name": "NVIDIA Developer Blog",
     "kind": "publisher-update",

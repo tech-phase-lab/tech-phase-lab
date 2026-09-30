@@ -45,6 +45,18 @@ const blsReleases = [
 ];
 export const calendarEvents: CalendarEvent[] = [
   ...blsReleases.map(([type, startsAt]) => ({ id: `${type}-${startsAt.slice(0, 10)}`, kind: "economic" as const, title: labels[type], startsAt, sourceTimezone: "America/New_York", sourceName: "BLS", sourceUrl: blsUrl })),
+  ...[
+    ["2026-08", "2026-09-30T08:30:00-04:00"],
+    ["2026-09", "2026-10-29T08:30:00-04:00"],
+    ["2026-10", "2026-11-25T08:30:00-05:00"],
+    ["2026-11", "2026-12-23T08:30:00-05:00"],
+  ].map(([period, startsAt]) => ({
+    id: `pce-${period}`, kind: "economic" as const,
+    title: { ja: `米国PCE物価指数（${Number(period.slice(5))}月）`, en: `U.S. PCE price index (${period})` },
+    startsAt, sourceTimezone: "America/New_York", sourceName: "BEA",
+    sourceUrl: "https://www.bea.gov/news/schedule/full",
+    note: { ja: "個人所得・消費支出の発表に含まれます。総合・コアの前月比と前年比を確認します。", en: "Part of Personal Income and Outlays. Check headline and core monthly and annual changes." },
+  })),
   {
     id: "mu-fq4-2026-call", ticker: "MU", kind: "earnings" as const, title: { ja: "MU 決算説明会（2026年度Q4）", en: "MU fiscal Q4 2026 earnings call" },
     startsAt: "2026-09-30T14:30:00-06:00", sourceTimezone: "America/Denver", sourceName: "Micron IR",
@@ -112,9 +124,17 @@ export function selectDateOnlyEarnings(period: string, now: number) {
 // Confirmed official releases, separate from scheduled future events.
 export const economicResults = [{
   id: "adp-2026-09", title: { ja: "ADP雇用統計（9月）", en: "ADP employment report (September)" },
+  sourceName: "ADP",
   releasedAt: "2026-09-30T08:15:00-04:00",
   result: { ja: "民間雇用 +9万人", en: "Private employment +90,000" },
   detail: { ja: "基本給は前年比3.2%増。", en: "Base pay rose 3.2% year over year." },
   sourceUrl: "https://mediacenter.adp.com/2026-09-30-ADP-National-Employment-Report-Private-Sector-Employment-Increased-by-90,000-Jobs-in-September",
+  verifiedOn: "2026-09-30",
+}, {
+  id: "pce-2026-08", title: { ja: "米国PCE物価指数（8月）", en: "U.S. PCE price index (August)" },
+  sourceName: "BEA", releasedAt: "2026-09-30T08:30:00-04:00",
+  result: { ja: "総合：前月比+0.3%・前年比+3.4%", en: "Headline: +0.3% month over month; +3.4% year over year" },
+  detail: { ja: "コア（食品・エネルギー除く）：前月比+0.2%・前年比+3.0%。BEA公式発表を確認して掲載。", en: "Core (excluding food and energy): +0.2% month over month; +3.0% year over year. Checked against the official BEA release." },
+  sourceUrl: "https://www.bea.gov/news/2026/personal-income-and-outlays-august-2026",
   verifiedOn: "2026-09-30",
 }];

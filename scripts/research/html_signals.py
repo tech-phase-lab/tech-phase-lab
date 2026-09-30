@@ -237,7 +237,6 @@ def collect(source, previous, tickers, request, clock=None):
     response = request({**source, 'format': 'feed' if sitemap else 'document'}, {})
     parser = NewsHTML()
     if sitemap:
-        import re
         import xml.etree.ElementTree as ET
         if re.search(br'<!\s*(DOCTYPE|ENTITY)\b', response['body'], re.I):
             raise ValueError('unsafe-signal-xml')
@@ -362,12 +361,20 @@ def collect(source, previous, tickers, request, clock=None):
                     raise ValueError('signal-article-body-limit')
                 truncated = len(text) >= signals.MAX_TEXT
                 text = text[:signals.MAX_TEXT]
+                publication = signals.date_value(article.published or '')
+                if source['id'] == 'bea-pce':
+                    from bea_pce import parse_release, release_title
+                    if truncated:
+                        raise ValueError('bea-pce-truncated-release')
+                    if title == 'News Release':
+                        title = release_title(text)
+                    publication = parse_release(title, text, url)['publishedAt']
                 matches = signals.match_companies(title + '\n' + text, tickers)
                 for ticker in source.get('tickers', []):
                     if ticker in tickers:
                         matches.setdefault(ticker, ['publisher-company'])
                 items.append({'url': url, 'title': title, 'text': text,
-                              'publishedAt': signals.date_value(article.published or ''),
+                              'publishedAt': publication,
                               'publishedOn': visible_date(
                                   text,
                                   source.get('nextDataArticlePublishedDatePattern'),

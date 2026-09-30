@@ -1366,7 +1366,7 @@ def public_official_updates(db, sources=SOURCES, reference=None):
     schema(db)
     allowed = {s['id']: s for s in sources if s.get('officialUpdates') is True
                and s.get('kind') == 'publisher-update' and s.get('allowedHosts')
-               and s.get('tickers')}
+               and (s.get('tickers') or s['id'] == 'bea-pce')}
     if not allowed:
         return []
     current = reference or datetime.now(timezone.utc)
@@ -1403,10 +1403,10 @@ def public_official_updates(db, sources=SOURCES, reference=None):
                 continue
             if source['id'] == 'x-nebius-official' and not re.fullmatch(r'https://x.com/nebiusai/status/[0-9]+', url, re.I):
                 continue
-            configured_tickers = set(source['tickers'])
+            configured_tickers = set(source.get('tickers', []))
             tickers = [t for t in json.loads(row['tickers_json'])
                        if t in configured_tickers and re.fullmatch(r'[A-Z][A-Z0-9.-]{0,9}', t)][:5]
-            if not tickers:
+            if not tickers and source['id'] != 'bea-pce':
                 continue
         except (ValueError, TypeError):
             continue
@@ -1422,12 +1422,31 @@ def public_official_updates(db, sources=SOURCES, reference=None):
           WHERE source_id=? AND url=? AND sha=?''',
                                 (row['source_id'], row['url'], row['sha'])).fetchone()
         translation = {}
-        if (translated and isinstance(translated['headline_ja'], str)
+        display_title = row['title'][:180]
+        if source['id'] == 'bea-pce':
+            # Re-project only the current exact revision; never expose a body,
+            # or attach new values to an older release's publication time.
+            from bea_pce import parse_release
+            document = db.execute('''SELECT title,text,sha FROM signal_documents
+              WHERE source_id=? AND url=?''', (row['source_id'], row['url'])).fetchone()
+            if not document or document['sha'] != row['sha'] or row['truncated']:
+                continue
+            try:
+                projection = parse_release(document['title'], document['text'], url)
+                release_time = instant(projection['publishedAt'])
+                if not release_time or not cutoff <= release_time <= current:
+                    continue
+            except (ValueError, TypeError):
+                continue
+            display_title = projection['title']
+            translation['translationJa'] = projection['translationJa']
+            publication = {'publishedAt': projection['publishedAt']}
+        if (source['id'] != 'bea-pce' and translated and isinstance(translated['headline_ja'], str)
                 and translated['headline_ja'].strip()
                 and len(translated['headline_ja']) <= 180
                 and '\x00' not in translated['headline_ja']):
             translation['translationJa'] = translated['headline_ja'].strip()
-        items.append({'id': str(row['id']), 'title': row['title'][:180], 'url': url,
+        items.append({'id': str(row['id']), 'title': display_title, 'url': url,
                       'publisher': source['name'], 'tickers': tickers,
                       'observedAt': observed.isoformat(), **publication, **translation})
         if len(items) == 20:
