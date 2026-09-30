@@ -44,6 +44,15 @@ class MeasurementTests(unittest.TestCase):
             self.db.execute("UPDATE sources SET title='Micron Reports Fourth Quarter Results',published_on='2026-06-30'")
         self.assertIsNone(measurement.candidate(self.db))
 
+    def test_bounded_rehearsal_accepts_current_official_excerpt_but_not_short_text(self):
+        with self.db:
+            self.db.execute("UPDATE sources SET extracted_text=?", ('x' * 614,))
+        self.assertEqual(measurement.candidate(self.db)['url'], self.url)
+        with self.db:
+            self.db.execute("UPDATE sources SET extracted_text=?",
+                            ('x' * (measurement.MIN_OFFICIAL_TEXT_CHARS - 1),))
+        self.assertIsNone(measurement.candidate(self.db))
+
     def test_exact_same_url_signal_time_enables_publication_latency(self):
         with self.db:
             self.db.execute("""CREATE TABLE signal_events(

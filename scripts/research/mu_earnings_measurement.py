@@ -15,6 +15,7 @@ import monitor
 EVENT = "mu-fq4-2026"
 START = "2026-09-30T19:00:00+00:00"
 END = "2026-10-02T00:00:00+00:00"
+MIN_OFFICIAL_TEXT_CHARS = 500
 
 
 def configuration(env=None):
@@ -89,7 +90,7 @@ def candidate(db):
                     and row["published_on"] not in {"2026-09-30", "2026-10-01"})
                 or not all(re.search(pattern, title, re.I) for pattern in (r"\b(?:reports|announces)\b", r"fourth.quarter|\bq4\b", r"\bresults\b"))
                 or re.search(r"to report|will report|conference call", title, re.I)
-                or len(row["extracted_text"] or "") < 1200):
+                or len(row["extracted_text"] or "") < MIN_OFFICIAL_TEXT_CHARS):
             continue
         result = dict(row)
         result["published_at"] = precise_publication_at(db, row["url"], row["detected_at"])
