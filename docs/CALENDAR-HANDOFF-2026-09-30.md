@@ -194,3 +194,34 @@ press-conference clock times. No calendar record changed.
 
 Next: LITE, MRVL, NOW, NVDA, PANW, PLTR, SKHY, SNOW, VRT and QCOM. Preserve
 all pending blockers until first-party evidence becomes conclusive.
+
+## Second rotation, remaining pending sources (18:44 JST)
+
+Rechecked the remaining pending-first batch against current first-party pages.
+No source supplied a new confirmed earnings date. Because each company already
+has a September 30 attempt, no duplicate `lastAttemptedOn` value was written;
+inconclusive `lastCheckedOn` values remain unchanged.
+
+| Ticker | Result | Official source / evidence |
+| --- | --- | --- |
+| LITE | Pending | [Events and presentations](https://investor.lumentum.com/events-and-presentations/default.aspx) exposed Latest Events and archived-section headings without an inspectable current item or explicit no-events statement. |
+| MRVL | Pending | [Events and presentations](https://investor.marvell.com/events-and-presentations/default.aspx) remained inaccessible through the available lawful endpoint. No access control was bypassed. |
+| NOW | Pending | [Events and presentations](https://investor.servicenow.com/events-and-presentations/default.aspx) exposed archived sections but no inspectable current event or explicit no-events statement. |
+| NVDA | Pending | [Events and presentations](https://investor.nvidia.com/events-and-presentations/default.aspx) remained inaccessible through the available lawful endpoint. No access control was bypassed. |
+| PANW | Pending | [Events and presentations](https://investors.paloaltonetworks.com/events-and-presentations/default.aspx) remained inaccessible through the available lawful endpoint. No access control was bypassed. |
+| PLTR | Pending | [Events](https://investors.palantir.com/events) again exposed only the page shell without an inspectable event list or explicit no-events statement. |
+| SKHY | Pending | [Official IR newsroom](https://news.skhynix.com/en/category/ir/) still ended with the completed July 29 Q2 result and contained no confirmed future earnings announcement. |
+| SNOW | Pending | [Events and presentations](https://investors.snowflake.com/events-and-presentations/default.aspx) exposed an empty Upcoming Events section without an explicit no-events statement. |
+| VRT | Pending | [Events and presentations](https://investors.vertiv.com/events-presentations/events-presentations/default.aspx) exposed the investor navigation and a 2026 Investor Conference link but no confirmed future earnings event. |
+| QCOM | Pending | [Investor events](https://investor.qualcomm.com/news-events/investor-events/default.aspx) exposed an empty Upcoming Events section without an explicit no-events statement. |
+
+The BLS schedule still lists the October 2 Employment Situation, October 14
+CPI and October 15 PPI at 08:30 Eastern. The Federal Reserve still lists the
+October 27–28 and December 8–9 meetings without future statement or
+press-conference clock times. No economic-calendar record changed and no time
+was inferred.
+
+The full pending-first pass is complete for September 30. On the next date
+rotation, restart with AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and
+KLAC unless a newer first-party announcement makes another company higher
+priority.
