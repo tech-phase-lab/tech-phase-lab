@@ -265,3 +265,8 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 
 - Live verification succeeded after the Clerk matcher fix: weekly GET/POST returned 200, Japanese MU draft saved privately, English appeared by the UI observation 35.626 seconds after clicking save (observation upper bound, not exact provider latency/SLA). Reloading and reopening the archive preserved Japanese, English and sources. Draft title: 週刊PRO 下書き｜MU決算を振り返る; market review and next-week schedule remain placeholders; do not publish until completed/reviewed.
 - Vercel and Railway deployment checks and GitHub Actions were successful for e34763abb49ada4c507f66f7fe193ac5a6674189. Final integrated checks passed: 180 Node / 490 Python tests, lint, build, compileall, diff check.
+
+## October 1 15:50 JST — supplemental-route recovery observed
+- The live operations preview retried the single supplemental official route previously classified as `other` and recovered it at 15:50:42 JST. Current supplemental coverage is 23/26 successful routes; `other` is now zero.
+- Three routes remain pending: two access restrictions with the earliest retry at October 2 20:16:46 JST, and one timeout with the earliest retry at October 1 17:27:11 JST. These are lawful wait states; do not bypass access controls or present 23/26 as complete coverage.
+- Priority coverage remained healthy at 5/5 and general official-headline translation remained 19/19 with no pending, retry or exhausted item. No provider, polling interval, paid service, subscriber-delivery or production setting changed.
