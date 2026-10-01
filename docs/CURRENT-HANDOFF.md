@@ -1,3 +1,44 @@
+# Safe live-monitor fallback diagnostics — October 2, 2026 07:41–07:59 JST
+
+Vercel runtime evidence showed 196 requests to `/api/research/live` during the
+review window, with no route-level 4xx/5xx response and no uncaught runtime
+exception. The route intentionally returned a saved snapshot with HTTP 200
+after its upstream monitor request failed, but the previous response exposed
+only a generic fallback state. Existing `console.warn` output was also absent
+from the Vercel runtime-log view, so operators could not distinguish timeout,
+connection, upstream status, invalid JSON or invalid payload without protected
+diagnostics.
+
+Commit `a4632086bf0a0338e05424e169f5b162f2993600` adds a fixed, aggregate-safe
+fallback reason to the JSON response and to `X-Tech-Phase-Monitor-Mode` /
+`X-Tech-Phase-Monitor-Reason` headers. Successful automatic responses report
+only `automatic`; fallback responses report only one of the predefined reason
+codes. URLs, route IDs, response bodies, exception strings, tokens and other
+private evidence are never returned. Focused regressions cover the fixed header
+surface and intake-response wiring.
+
+The integrated tree passed ESLint with zero errors and one pre-existing warning,
+Node 194/194, Python 514/514, the Next.js production build, `compileall` and
+`git diff --check`. Vercel deployment `dpl_FqjQPrAeq669b94YHNhR6ADRUvc8` reached
+Ready and Railway staging succeeded for the same commit.
+
+Live browser verification at 07:59 JST still showed `自動監視サービスの接続待ち`
+and the saved September 19 snapshot, so the intermittent Vercel-to-monitor
+failure remains active. The protected preview allowed the page itself but
+blocked direct API navigation, and the deployment connector returned the Vercel
+Authentication redirect; therefore the deployed reason code could not be read
+back in this run. Do not infer a specific cause from the fallback banner alone.
+Use the new fixed reason on the next authenticated API observation, then confirm
+recovery without exposing raw upstream evidence. The timeout route is not due
+for its next lawful retry until 10:32:40 JST, and the two access-restricted
+routes are not due before 20:16:46 JST.
+
+Calendar maintenance made no marker change: all 40 companies already had an
+actual October 2 attempt, and BLS/Federal Reserve dates had already received
+their required daily review. No estimated date or time was added.
+
+---
+
 # Scheduled retry and preview fallback checkpoint — October 2, 2026 06:47 JST
 
 The deployed operations preview showed the live monitor at 06:47:42 JST long
