@@ -115,7 +115,7 @@ def claim(db, reference, model, limit):
             if published and published['sha']==r['sha']:
                 continue
             job=db.execute('SELECT * FROM official_research_jobs WHERE event_id=?',(r['id'],)).fetchone()
-            quote_recovery=bool(job and job['state']=='retry' and job['attempts']==4 and job['failure_kind']=='unsupported-quote')
+            quote_recovery=bool(job and job['state']=='retry' and ((job['attempts']==4 and job['failure_kind']=='unsupported-quote') or (job['attempts']==5 and job['failure_kind']=='unsupported-number')))
             legacy_probe=bool(job and job['state']=='retry' and job['attempts']==3 and job['failure_kind'] is None)
             if job and job['sha']==r['sha'] and ((job['attempts']>=3 and not legacy_probe and not quote_recovery) or job['next_at']>now):
                 continue
@@ -145,7 +145,10 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     row,lease=claimed
     started=time.monotonic()
     excerpts={str(i):row['body'][start:start+600] for i,start in enumerate(range(0,min(len(row['body']),45000),600))}
-    payload={'model':model,'store':False,'max_output_tokens':2400,'instructions':POLICY,
+    policy=POLICY
+    if not re.search(r'financial results|earnings|quarter.*results',row['title'],re.I):
+        policy += '\nFor this non-earnings announcement, omit numerical figures and dates. Use no digits in Japanese or English, including generic phrases such as 1つ. Describe the business change qualitatively without inventing scale.'
+    payload={'model':model,'store':False,'max_output_tokens':2400,'instructions':policy,
              'input':json.dumps({'ticker':row['ticker'],'title':row['title'],'evidenceExcerpts':excerpts},ensure_ascii=False),
              'text':{'format':{'type':'json_schema','name':'issuer_factual_note','strict':True,'schema':response_schema()}}}
     usage={}
