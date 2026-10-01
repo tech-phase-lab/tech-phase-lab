@@ -185,6 +185,25 @@ class HeadlineTranslationTests(unittest.TestCase):
         self.assertEqual(translation.run_once(self.path, response, ENV, now=NOW + 900, sources=[SOURCE]), "idle")
         self.assertNotIn(b"sensitive provider response", self.path.read_bytes())
 
+    def test_unchanged_headline_reuses_translation_even_at_budget_limit(self):
+        self.assertEqual(translation.run_once(self.path,response,ENV,now=NOW,sources=[SOURCE]),'done')
+        with translation.connect(self.path) as db:
+            db.execute("UPDATE signal_events SET sha='body-only-change'")
+        limited={**ENV,'OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT':'1'}
+        self.assertEqual(translation.run_once(self.path,lambda *_:self.fail('duplicate spend'),limited,now=NOW+1,sources=[SOURCE]),'idle')
+        with translation.connect(self.path) as db:
+            self.assertIsNotNone(db.execute("SELECT 1 FROM signal_headline_translations WHERE sha='body-only-change'").fetchone())
+            self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0],1)
+
+    def test_changed_translation_input_never_reuses_old_copy(self):
+        self.assertEqual(translation.run_once(self.path,response,ENV,now=NOW,sources=[SOURCE]),'done')
+        with translation.connect(self.path) as db:
+            db.execute("UPDATE signal_events SET sha='new-headline',title='Nebius launches a different service'")
+        limited={**ENV,'OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT':'1'}
+        translation.run_once(self.path,lambda *_:self.fail('over budget'),limited,now=NOW+1,sources=[SOURCE])
+        with translation.connect(self.path) as db:
+            self.assertIsNone(db.execute("SELECT 1 FROM signal_headline_translations WHERE sha='new-headline'").fetchone())
+
     def test_live_lease_and_daily_limit_prevent_duplicate_calls(self):
         with translation.connect(self.path) as db:
             self.assertIsNotNone(translation.claim(db, [SOURCE], 3, "synthetic-model", NOW))

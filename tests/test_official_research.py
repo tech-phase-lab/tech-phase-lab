@@ -92,6 +92,33 @@ class OfficialResearchTests(unittest.TestCase):
         with research.connect(self.path) as db:
             for i in range(3):db.execute('INSERT INTO signal_headline_translation_calls(at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)',(NOW.timestamp(),'test','test','test','done',str(i)))
         self.assertEqual(self.run_note(lambda *_:self.fail('over budget')),'idle')
+
+    def test_research_subcap_reserves_headline_capacity(self):
+        with research.connect(self.path) as db:
+            for i in range(20):
+                db.execute('INSERT INTO signal_headline_translation_calls(at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)',
+                           (NOW.timestamp(),'research:test','test','test','failed',str(i)))
+        env={**ENV,'OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT':'200'}
+        self.assertEqual(research.run_once(self.path,lambda *_:self.fail('research stole headline reserve'),env,NOW.timestamp()),'idle')
+
+    def test_evidence_windows_keep_product_number_and_context_together(self):
+        body='Background. '*46+'Microsoft 365 Copilot supports meeting summaries.\n'+('Further context. '*90)
+        excerpts=research.evidence_excerpts(body)
+        self.assertTrue(any('Microsoft 365 Copilot supports meeting summaries.' in q for q in excerpts.values()))
+        for quote in excerpts.values():
+            self.assertIn(quote,body)
+            self.assertLessEqual(len(quote),research.MAX_EVIDENCE_CHARS)
+        altered=json.loads(json.dumps(NOTE));altered['facts'][0]['en']='Revenue increased by 9999 percent.'
+        with self.assertRaisesRegex(ValueError,'unsupported-number'):
+            research.validate(altered,BODY)
+
+    def test_corrected_window_gets_one_final_bounded_recovery(self):
+        with research.connect(self.path) as db:
+            row=research.candidates(db,NOW)[0]
+            db.execute("INSERT INTO official_research_jobs(event_id,sha,attempts,next_at,lease,state,failure_kind) VALUES(?,?,6,0,'old','retry','unsupported-number')",(row['id'],row['sha']))
+        def fail(*args):raise ValueError('unsupported-number')
+        self.assertEqual(self.run_note(fail),'retry')
+        self.assertEqual(self.run_note(lambda *_:self.fail('unbounded retry')),'idle')
     def test_legacy_unclassified_failure_has_one_bounded_diagnostic_retry(self):
         with research.connect(self.path) as db:
             rows=research.candidates(db,NOW)

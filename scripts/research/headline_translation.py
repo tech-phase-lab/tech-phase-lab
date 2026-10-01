@@ -78,6 +78,8 @@ def schema(db):
     )}
     if "source_title" not in columns:
         db.execute("ALTER TABLE signal_headline_translation_jobs ADD COLUMN source_title TEXT")
+    if "translation_input" not in columns:
+        db.execute("ALTER TABLE signal_headline_translation_jobs ADD COLUMN translation_input TEXT")
 
 
 def connect(path):
@@ -204,9 +206,6 @@ def claim(db, sources, limit, model, now):
     db.commit()
     with db:
         db.execute("BEGIN IMMEDIATE")
-        if db.execute("SELECT count(*) FROM signal_headline_translation_calls WHERE at>=?",
-                      (now - 86400,)).fetchone()[0] >= limit:
-            return None
         for item in items:
             row = db.execute("SELECT * FROM signal_events WHERE id=?", (item["id"],)).fetchone()
             if not row or re.fullmatch(r"https?://\S+", row["title"].strip(), re.I):
@@ -215,6 +214,24 @@ def claim(db, sources, limit, model, now):
               WHERE source_id=? AND url=? AND sha=?''',
                                   (row["source_id"], row["url"], row["sha"])).fetchone()
             if existing:
+                continue
+            # Body/HTML revisions do not invalidate an unchanged headline.
+            # Reuse only the exact input on the same source and URL; changed
+            # wording and transformed display titles still require translation.
+            cached = db.execute('''SELECT t.headline_ja,t.model,t.created_at
+              FROM signal_headline_translations t
+              JOIN signal_headline_translation_jobs j USING(source_id,url,sha)
+              WHERE t.source_id=? AND t.url=? AND j.translation_input=? AND j.state='done'
+              ORDER BY t.created_at DESC LIMIT 1''',
+              (row['source_id'],row['url'],item['title'])).fetchone()
+            import official_release_bridge
+            if cached and official_release_bridge.is_current(db,row):
+                db.execute('''INSERT OR IGNORE INTO signal_headline_translations
+                  (source_id,url,sha,headline_ja,model,created_at) VALUES(?,?,?,?,?,?)''',
+                  (row['source_id'],row['url'],row['sha'],cached['headline_ja'],cached['model'],cached['created_at']))
+                continue
+            if db.execute("SELECT count(*) FROM signal_headline_translation_calls WHERE at>=?",
+                          (now - 86400,)).fetchone()[0] >= limit:
                 continue
             job = db.execute('''SELECT * FROM signal_headline_translation_jobs
               WHERE source_id=? AND url=? AND sha=?''',
@@ -237,6 +254,9 @@ def claim(db, sources, limit, model, now):
               source_title=excluded.source_title''',
                        (row["source_id"], row["url"], row["sha"], now + 300, lease,
                         row["title"]))
+            db.execute('''UPDATE signal_headline_translation_jobs SET translation_input=?
+              WHERE source_id=? AND url=? AND sha=? AND lease=?''',
+              (item['title'],row['source_id'],row['url'],row['sha'],lease))
             db.execute('''INSERT INTO signal_headline_translation_calls
               (at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)''',
                        (now, row["source_id"], row["sha"], model, "running", lease))
