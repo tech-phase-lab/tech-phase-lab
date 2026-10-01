@@ -22,6 +22,15 @@ latency SLA. The next safe diagnostic priority is protected inspection of the
 fixed persisted codes behind `invalidResponse` and `other`; do not expose
 route identities, URLs, exception text or private evidence publicly.
 
+Calendar commit `7f6e383` used the exact local and Git Data tree
+`6a3c9e9`; Vercel and Railway staging checks succeeded. The complete gate
+passed: ESLint zero errors with one pre-existing warning, Node 190/190,
+Python 510/510, Next.js production build, `compileall` and
+`git diff --check`. Post-deployment browser verification showed 24 upcoming
+schedules, with ASML results at 14:00 JST and its separate call at 22:00 JST.
+The time-unpublished section now retains only the date-only KLA release and
+FOMC meeting dates.
+
 # Calendar refresh and explicit route failure categories — October 2, 2026 00:18–00:29 JST
 
 Reviewed AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and LITE against
