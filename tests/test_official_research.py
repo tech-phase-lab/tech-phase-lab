@@ -88,6 +88,16 @@ class OfficialResearchTests(unittest.TestCase):
         for field,bad in [('evidenceQuote','This unsupported claim does not occur in the body.'),('ja','売上は99%増加した。'),('en','Sign up https://example.com')]:
             note=json.loads(json.dumps(NOTE));note['facts'][0][field]=bad
             with self.subTest(field=field), self.assertRaises(ValueError):research.validate(note,BODY)
+
+    def test_planned_acquisition_cannot_be_translated_as_completed(self):
+        note=json.loads(json.dumps(NOTE))
+        with self.assertRaisesRegex(ValueError,'invalid-copy'):
+            research.validate(note,BODY,'Nebius to Acquire Inferize')
+        note['title']['ja']='Nebius、Inferize買収へ'
+        note['summary']['ja']='NebiusがInferizeの買収契約を締結。'
+        note['title']['en']='Nebius to acquire Inferize'
+        note['summary']['en']='Nebius entered an agreement to acquire Inferize.'
+        research.validate(note,BODY,'Nebius to Acquire Inferize')
     def test_shared_daily_budget_prevents_extra_provider_calls(self):
         with research.connect(self.path) as db:
             for i in range(3):db.execute('INSERT INTO signal_headline_translation_calls(at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)',(NOW.timestamp(),'test','test','test','done',str(i)))

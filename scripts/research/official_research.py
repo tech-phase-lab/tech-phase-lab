@@ -76,7 +76,7 @@ def normalized(text):
     return re.sub(r'\s+', ' ', text).strip()
 
 
-def validate(value, body):
+def validate(value, body, source_title=''):
     if not isinstance(value, dict) or set(value) != {'title','summary','facts','purpose'}:
         raise ValueError('invalid-note')
     if not isinstance(value['facts'], list) or not 3 <= len(value['facts']) <= 5:
@@ -96,6 +96,11 @@ def validate(value, body):
             # No invented/conversion-derived numbers. Preserve literal source values.
             if any(n not in quote for n in re.findall(r'\d+(?:[.,]\d+)*',text)):
                 raise ValueError('unsupported-number')
+    if re.search(r'\bto acquire\b', source_title, re.I):
+        for item in (value['title'], value['summary']):
+            if (not re.search(r'計画|予定|契約|合意|買収へ|買収する方針', item['ja'])
+                    or not re.search(r'\bto acquire\b|agreement|plans?|intends?|will acquire|proposed|pending', item['en'], re.I)):
+                raise ValueError('invalid-copy')
     return value
 
 
@@ -247,6 +252,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     policy=POLICY
     if not re.search(r'financial results|earnings|quarter.*results',row['title'],re.I):
         policy += '\nFor this non-earnings announcement, omit numerical figures and dates. Use no digits in Japanese or English, including generic phrases such as 1つ. Describe the business change qualitatively without inventing scale.'
+    if re.search(r'\bto acquire\b',row['title'],re.I):
+        policy += '\nThis is a PLANNED acquisition, not a completed transaction. In BOTH title and summary preserve that status in both languages. Use 買収へ in the Japanese title and 買収契約 or 買収予定 in the Japanese summary. English must retain to acquire, agreement or planned wording.'
     payload={'model':model,'store':False,'max_output_tokens':2400,'instructions':policy,
              'input':json.dumps({'ticker':row['ticker'],'title':row['title'],'evidenceExcerpts':excerpts},ensure_ascii=False),
              'text':{'format':{'type':'json_schema','name':'issuer_factual_note','strict':True,'schema':response_schema()}}}
@@ -262,7 +269,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                 if not isinstance(evidence_id,str) or evidence_id not in excerpts:
                     raise ValueError('unsupported-quote')
                 item['evidenceQuote']=excerpts[evidence_id]
-        note=validate(value,row['body'][:45000])
+        note=validate(value,row['body'][:45000],row['title'])
         usage={k:v for k,v in (response.get('usage') or {}).items()
                if k in ('input_tokens','output_tokens','total_tokens') and type(v) is int}
     except Exception as exc:
