@@ -114,5 +114,6 @@ and were not rewritten.
 
 `lastAttemptedOn` and `lastCheckedOn` advanced to `2026-10-02` for all 10
 entries after the schedule pages were checked. This completes a same-day
-attempt across all 40 tracked companies; 13 older sources remain pending
-from earlier inaccessible, tentative or otherwise inconclusive checks.
+attempt across all 40 tracked companies. In total, 26 companies have a
+conclusive October 2 check; 14 remain pending from inaccessible, tentative or
+otherwise inconclusive evidence, including AMAT's explicitly projected date.

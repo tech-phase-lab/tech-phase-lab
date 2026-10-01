@@ -4,9 +4,10 @@ Reviewed the final rotation batch: ORCL, PANW, PLTR, QCOM, SKHY, SNDK, SNOW,
 TSLA, TSM and VRT. Sandisk and TSMC reconfirmed their existing stored calls;
 the other official pages published no later firm earnings date. No estimated
 date or time was added. All 40 tracked companies now have an October 2 review
-attempt; 27 have conclusive current checks and 13 older inaccessible,
-tentative or otherwise inconclusive sources remain pending. Exact evidence is
-in `CALENDAR-HANDOFF-2026-10-02.md`.
+attempt; 26 have conclusive October 2 checks and 14 remain pending from
+inaccessible, tentative or otherwise inconclusive evidence. The 14 include
+AMAT's explicitly projected date, whose older completed-check date was
+deliberately retained. Exact evidence is in `CALENDAR-HANDOFF-2026-10-02.md`.
 
 Before this edit, the deployed intake view showed 22/22 company lists and all
 five priority issuers healthy. Supplementary routes were 21/26: two access
