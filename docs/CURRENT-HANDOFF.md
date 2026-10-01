@@ -45,6 +45,39 @@ All concurrent calendar edits through `e4f12f9` are preserved.
 
 ---
 
+# Supplemental-route recovery checkpoint — October 2, 2026 05:45 JST
+
+The deployed operations preview was reloaded after the bounded retries recorded
+in the prior handoff. Supplemental first-party routes improved from 21/26 to
+23/26. The prior `invalid response` and `other` failures both cleared through
+the normal retry path; no code, credential, source substitution or access-control
+bypass was used. The core lists remained 22/22 and all five priority issuers
+remained healthy.
+
+Three supplemental routes were still waiting: two access restrictions and one
+long-running timeout. The timeout had 55 bounded attempts and a measured active
+age of 551,876 seconds; its next scheduled retry was 06:16:20 JST. The access
+restrictions were scheduled no earlier than 20:16:46 JST. Those are point-in-time
+worker observations, not polling or delivery guarantees. The public-safe page
+does not expose route identities, URLs or raw errors, so resolving the remaining
+timeout beyond the lawful scheduled retry still requires protected staging
+diagnostics.
+
+The same live view showed automatic headline translation still at the rolling
+50/50 request limit with three items pending. Body evidence remained 208
+extracted, 783 not extracted, with 791 rows on three host circuits and six
+bounded retry waits. A newly detected NBIS SEC 6-K had no body evidence yet;
+the page classified SEC body errors as access restrictions. Do not treat the
+filing metadata as an extracted article body or work around the SEC restriction.
+
+Calendar maintenance did not rewrite any marker in this checkpoint: all 40
+companies already had an actual October 2 attempt, while BLS and Federal Reserve
+dates had already received their required daily review. The existing 14 pending
+companies retain their exact blockers and older completed-check dates where
+appropriate; no estimated date or time was added.
+
+---
+
 # Micron official-item live verification and reader deduplication — October 2, 2026 04:42–04:46 JST
 
 The deployed intake view confirms that the Micron issuer page is now extracted
