@@ -217,7 +217,6 @@ URL; it does not treat the call time as the earnings-release publication time.
 | MSFT | Checked | [Investor Relations](https://www.microsoft.com/en-us/investor/default) still does not publish a specific future earnings event. |
 | MU | Checked | [Events](https://investors.micron.com/events-and-presentations) contains the completed September 30 fiscal Q4 event and no later earnings announcement. |
 | NBIS | Checked | [Investor events](https://nebius.com/investor-events) contains completed investor-conference and Q2 items, with no future earnings announcement. |
-| NFLX | Checked | [Netflix's announcement](https://ir.netflix.net/investor-news-and-events/financial-releases/press-release-details/2026/Netflix-to-Announce-Third-Quarter-2026-Financial-Results/default.aspx) still confirms the stored October 20 approximate 1:01 p.m. Pacific release and 1:45 p.m. interview. |
 | SNDK | Checked | [Events](https://investor.sandisk.com/news-events/events) still confirms the stored October 29 fiscal Q1 2027 call at 4:30 p.m. Eastern. |
 | TSLA | Checked | [Investor Relations](https://ir.tesla.com/) still provides no first-party Q3 earnings date. |
 | TSM | Checked | [Financial calendar](https://investor.tsmc.com/english/financial-calendar) still confirms the stored October 15 Q3 call at 2:00 p.m. Asia/Taipei. |
@@ -225,3 +224,33 @@ URL; it does not treat the call time as the earnings-release publication time.
 All ten companies already had October 1 attempt and completed-check dates, so
 the coverage ledger was not rewritten. The October 1 BLS and Federal Reserve
 daily checks were already complete; no economic date or clock time changed.
+
+## Pending-first company review (22:45 JST)
+
+Rechecked AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC against
+current first-party investor pages and announcements. KLA's October 1
+announcement newly confirms fiscal Q1 2027 results on October 28 after the U.S.
+stock market closes and an earnings webcast at 2:00 p.m. Pacific that day. The
+calendar now keeps these as two separate facts: a date-only results release and
+an exact Pacific webcast start. It does not fabricate an after-close release
+clock time.
+
+| Ticker | Result | Official source / exact blocker |
+| --- | --- | --- |
+| AAPL | Pending | [Investor Relations](https://investor.apple.com/investor-relations/default.aspx) still ends with fiscal Q3 2026 results and provides no future earnings announcement. |
+| AMZN | Pending | [Events](https://ir.aboutamazon.com/events/default.aspx) still ends with the completed July 30 Q2 call and provides no future earnings announcement. |
+| ANET | Pending | The first-party search result still ends with completed Q2 results and the events page provides no confirmed future earnings event. |
+| ARM | Pending | [Investor events](https://investors.arm.com/news-events/investor-events-presentations) lists November 4 for fiscal Q2 2027 only under “Tentatively proposed earnings dates”; it remains excluded. |
+| AVGO | Pending | [Financial news](https://investors.broadcom.com/financial-information/financial-news-releases) still provides no post-Q3 announcement for a future earnings event. |
+| BE | Pending | The latest first-party earnings announcement remains the completed July 28 Q2 result; no future earnings event is confirmed. |
+| CRDO | Pending | [Investor Relations](https://investors.credosemi.com/) shows product and conference updates plus the latest completed quarterly result, not a future earnings announcement. |
+| CRWV | Pending | [Quarterly results](https://investors.coreweave.com/financials/quarterly-results/) still ends with completed Q2 2026 results and provides no future earnings announcement. |
+| GOOGL | Pending | [Investor Relations](https://abc.xyz/investor/) still ends with completed Q2 2026 results and provides no future earnings announcement. |
+| KLAC | Added / checked | [Fiscal Q1 2027 announcement](https://ir.kla.com/news-events/press-releases/detail/522/kla-announces-first-quarter-fiscal-year-2027-earnings-date) confirms October 28 results after market close and a 2:00 p.m. Pacific webcast. |
+
+KLA's completed-check date advances to October 1; the other nine remain pending
+because their sources are historical-only, tentative or inconclusive. The BLS
+October schedule still confirms October 2 Employment Situation, October 14 CPI
+and October 15 PPI at 08:30 Eastern. The Federal Reserve still lists October
+27–28 and December 8–9 without future policy-statement or press-conference clock
+times. No economic event or inferred time changed.

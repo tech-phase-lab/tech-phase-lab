@@ -88,6 +88,12 @@ export const calendarEvents: CalendarEvent[] = [
     note: { ja: "説明会の開始予定です。決算資料の公開時刻を示すものではありません。", en: "Scheduled call start, not the publication time of the earnings release." },
   },
   {
+    id: "klac-fq1-2027-call", ticker: "KLAC", kind: "earnings" as const, title: { ja: "KLA 決算説明会（2027年度Q1）", en: "KLA fiscal Q1 2027 earnings webcast" },
+    startsAt: "2026-10-28T14:00:00-07:00", sourceTimezone: "America/Los_Angeles", sourceName: "KLA IR",
+    sourceUrl: "https://ir.kla.com/news-events/press-releases/detail/522/kla-announces-first-quarter-fiscal-year-2027-earnings-date",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled webcast start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
     id: "gev-q3-2026-webcast", ticker: "GEV", kind: "earnings" as const, title: { ja: "GE Vernova 決算説明会（2026年Q3）", en: "GE Vernova Q3 2026 earnings webcast" },
     startsAt: "2026-10-28T07:30:00-04:00", sourceTimezone: "America/New_York", sourceName: "GE Vernova IR",
     sourceUrl: "https://www.gevernova.com/investors/events/3rd-quarter-2026-earnings-webcast",
@@ -115,6 +121,12 @@ export const dateOnlyEvents: DateOnlyCalendarEvent[] = [
     id: "asml-q3-2026-results", kind: "earnings", ticker: "ASML", date: "2026-10-14", sourceTimezone: "Europe/Amsterdam",
     title: { ja: "ASML 決算発表（2026年Q3）", en: "ASML Q3 2026 results" }, sourceName: "ASML IR",
     sourceUrl: "https://www.asml.com/en/investors/financial-calendar", checkedOn: "2026-09-23",
+  },
+  {
+    id: "klac-fq1-2027-results", kind: "earnings", ticker: "KLAC", date: "2026-10-28", sourceTimezone: "America/Los_Angeles",
+    title: { ja: "KLA 決算発表（2027年度Q1）", en: "KLA fiscal Q1 2027 results" }, sourceName: "KLA IR",
+    sourceUrl: "https://ir.kla.com/news-events/press-releases/detail/522/kla-announces-first-quarter-fiscal-year-2027-earnings-date", checkedOn: "2026-10-01",
+    note: { ja: "米国市場終了後の公開予定です。公式発表に正確な公開時刻がないため、日付のみ掲載しています。", en: "Due after the U.S. market closes. Only the date is shown because the announcement does not give an exact publication time." },
   },
   ...["2026-10-28", "2026-12-09"].map((date): DateOnlyCalendarEvent => ({
     id: `fomc-${date}`, kind: "economic", date, sourceTimezone: "America/New_York",
