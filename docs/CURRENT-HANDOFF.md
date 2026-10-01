@@ -1,3 +1,26 @@
+# Live bilingual NBIS publication recovery — October 1, 2026 23:06–23:11 JST
+
+Current code commit d427c6b003b213dca493ef833ae845b3f21ee3be (after 82ce99c). GitHub Research preview checks, Vercel and Railway all succeeded. Integrated KLA calendar work f005c6a preserved. Final gates: 186 Node tests, 508 Python tests, lint zero errors/one existing warning, Next production build, compileall, diff check.
+
+NBIS Inferize acquisition is now automatically published as ir-result-1106. Browser verified home news -> internal what-changed detail -> Japanese and English titles, summary and four factual points. No manual insertion of this article. Public URL: https://tech-phase-lab-git-codex-research-preview-chehon7144-5412.vercel.app/research?result=ir-result-1106#what-changed/ir-result-1106 . Official date unknown remains explicitly labelled detection, not invented publication time. Screenshot techphase-nbis-bilingual-20261001.jpg retained as libfile_fcd968eb79d08191b9f306d209c16669.
+
+Measured source detection 20:00:29 JST, body ready 20:00:41 JST, public at 23:06:22 JST. Final successful generation/publication processing 6.9 seconds; detection-to-public 11,153 seconds (~3h05m53s). This is incident recovery, NOT a timely delivery success or seconds-level SLA.
+
+Root causes fixed in this active investigation:
+- Numerical flash worker had been coupled to the headline LLM loop/config. It now independently runs every 5 seconds even with OpenAI absent. Never attribute a polling interval to achieved end-to-end latency.
+- Issuer full-body notes were missing from automatic what-changed events. Added revision-bound bilingual factual notes, shared existing model/call budget, private evidence, validated issuer URLs and existing FREE/PRO analysis gates. Existing private drafts/review approvals untouched.
+- Actual note failures were unsupported-quote: model-written quotations did not exactly match source. Notes now select evidence excerpt IDs; code resolves exact source strings before validation.
+- Subsequent unsupported-number failures were exposed. Non-earnings notes omit figures/date digits to avoid invented or converted quantities. Earnings notes retain strict literal numeric verification. Legacy failures receive only explicitly bounded recovery attempts (up to 6 for the identified quote/number migrations); fresh normal attempts remain max3. No budget or access protection weakened.
+- Invalid issuer-note parsing no longer suppresses otherwise valid numerical flashes/news. Dates distinguish detection vs official publication.
+
+Remaining launch blockers; do not claim all fixed:
+- MU official release is still extracted as only 614 characters. The prior rehearsal sent 570 chars and remained a private draft; headline API4.5s + summary API3.4s did NOT mean public end-to-end success. Browser showed Cloudflare security verification on MU IR, still blocked after one reload; local official URL fetch HTTP403. No bypass attempted. We do not have the raw successful full HTML to establish the extraction defect precisely.
+- MU WallStEngine automatic bilingual numerical flash x-result-1051 exists: source05:01:11 JST, recovered detection07:04:26.110, public07:04:28.763. Detection-to-public2.653s, source-to-detection123m15.110s. This is backfill, NOT real-time success. Its actual record lacks guidance. Static manual MU article is separate; do not present it as automatically generated analysis.
+- One older issuer job1098 remains held after6 attempts unsupported-number. NBIS1106 is done. At23:07 diagnostics headline45/45, calls48/50 rolling24h, note published1/pending1. Further failures must not silently loop or increase paid quotas. Existing operational incident records flag overdue material notes; external notification remains OFF.
+- Broad earnings/macro format coverage and fresh event timings still need work. Supplementary routes22/26 at observation with2 access restrictions,1timeout,1other; this is not total coverage.
+
+OpenAI API is ACTIVE since September29 (older handoff lines saying unconfigured are stale). Vercel Pro active; $10 is additional usage budget, not subscription price. Do not request keys in chat or change billing. Work only codex/research-preview, never main. User wants prompt real results and no premature completion; keep status factual and clearly separate recovered incidents from unresolved launch readiness.
+
 # NBIS publication recovery verified — October 1, 2026 21:50–21:52 JST
 
 Deployed code 489c997 + 39bf79b on codex/research-preview. Railway and Vercel success; GitHub Lint/test/build check success. Fix gates: 181 Node tests, 499 Python tests; after integrating concurrent Lam calendar update 371842b, 182 Node tests and 499 Python tests pass. Final gates also include lint (one pre-existing unused-ticker warning), build, compileall, diff check.
