@@ -45,6 +45,36 @@ All concurrent calendar edits through `e4f12f9` are preserved.
 
 ---
 
+# Micron official-item live verification and reader deduplication — October 2, 2026 04:42–04:46 JST
+
+The deployed intake view confirms that the Micron issuer page is now extracted
+and published without an LLM round trip: `ir-result-1126` was public at
+03:58:47 JST, with a reported generation time of 0.0 seconds. The source was
+first detected at 05:18:32 JST on October 1 and its body was ready 12 seconds
+later; the displayed 81,615-second detection-to-public interval is incident
+recovery, not an SLA. Core lists were 22/22 and all five priority issuers were
+healthy. Supplementary routes were 21/26, with two access restrictions, one
+timeout, one invalid response and one short-lived `other` failure, all waiting
+for bounded retry. No access control was bypassed.
+
+The live Japanese and English research detail for `ir-result-1126` preserves
+the issuer-backed figures: $54.23B revenue, $33.42 adjusted diluted EPS,
+$43.97B operating cash flow, $61.5B ± $1.5B next-quarter revenue guidance and
+$38.15 ± $1.00 adjusted diluted EPS guidance, with a direct Micron source link.
+The reader list also exposed three representations of the same September 30 MU
+earnings event (issuer note, checked-in fallback and X flash). Research assembly
+now keeps the first, highest-priority earnings representation for each
+ticker/publication date. It intentionally does not collapse non-earnings items,
+because multiple distinct product or partnership releases can share a date.
+Two regressions cover both behaviors.
+
+The integrated local gate passed: ESLint had zero errors and one pre-existing
+warning, Node 192/192, Python 514/514, Next.js production build, `compileall`
+and `git diff --check`. Deployment and post-deployment browser verification of
+the single-card reader result remain pending at this checkpoint.
+
+---
+
 # Full October 2 calendar rotation and live intake observation — October 2, 2026 03:47 JST
 
 Reviewed the final rotation batch: ORCL, PANW, PLTR, QCOM, SKHY, SNDK, SNOW,

@@ -7,6 +7,7 @@ import { evidenceIssues } from "@/lib/research/quality";
 import { buildCompanyProfiles } from "@/lib/research/companies";
 import { providers, sectorNames, sectorNamesEn } from "@/lib/research/intake";
 import { verifiedChanges } from "@/lib/research/verified-changes";
+import { deduplicateResearchEvents } from "@/lib/research/deduplicate-events";
 
 export const metadata: Metadata = {
   title: "Tech Phase Research | Research preview",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ResearchPage() {
-  const currentEvents = [...await loadLiveResultEvents(), ...events];
+  const currentEvents = deduplicateResearchEvents([...await loadLiveResultEvents(), ...events]);
   for (const event of currentEvents) {
     const issues = evidenceIssues({ ...event, metrics: [...event.metrics, ...(event.previous ?? [])] });
     if (issues.length) throw new Error(`Invalid research record ${event.id}: ${issues.join(", ")}`);
