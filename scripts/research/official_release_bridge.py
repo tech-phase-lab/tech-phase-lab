@@ -6,6 +6,7 @@ private. No additional network requests or provider-budget changes are involved.
 from datetime import datetime, timedelta, timezone
 import hashlib
 import json
+import re
 from urllib.parse import urlsplit
 
 import monitor
@@ -43,7 +44,8 @@ def sync(db, reference):
       WHERE e.detected_at>=? AND r.extracted_chars>0 AND s.status NOT IN ('rejected','held') ORDER BY e.id DESC LIMIT 500''', (cutoff,)).fetchall()
     for row in rows:
         title = row['title']
-        if not title or not news_policy.eligible(title):
+        if (not title or not news_policy.eligible(title)
+                or re.fullmatch(r'(?:read (?:story|more)|learn more|press release|news)', title.strip(), re.I)):
             continue
         # Generic SEC filings are evidence, not issuer news headlines.
         if urlsplit(row['url']).hostname in {'www.sec.gov', 'data.sec.gov'}:
@@ -51,9 +53,11 @@ def sync(db, reference):
         try:
             if monitor.article_url(row['url'], row['ticker']) != row['url']:
                 continue
-            published = datetime.fromisoformat(row['published_on']).replace(tzinfo=timezone.utc)
+            published = (datetime.fromisoformat(row['published_on']).replace(tzinfo=timezone.utc)
+                         if row['published_on'] else None)
             observed = datetime.fromisoformat(row['detected_at'].replace('Z', '+00:00'))
-            if not reference - timedelta(days=7) <= published <= reference or observed > reference:
+            if ((published and not reference - timedelta(days=7) <= published <= reference)
+                    or not reference - timedelta(days=7) <= observed <= reference):
                 continue
         except (KeyError, ValueError, TypeError):
             continue

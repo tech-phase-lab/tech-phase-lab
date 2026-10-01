@@ -49,6 +49,17 @@ class PrimaryReleasePublicationTests(unittest.TestCase):
         self.assertEqual(translation.run_once(self.path, lambda *_: self.fail('duplicate translation'),
                                              ENV, now=NOW.timestamp()+1), 'idle')
 
+    def test_new_release_with_unknown_publication_date_keeps_detection_time(self):
+        with translation.connect(self.path) as db:
+            db.execute('UPDATE sources SET published_on=NULL')
+        items = self.feed()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0]['observedAt'], '2026-10-01T11:00:29+00:00')
+        self.assertNotIn('publishedOn', items[0])
+        self.assertNotIn('publishedAt', items[0])
+        self.assertEqual(translation.run_once(self.path, response, ENV, now=NOW.timestamp()), 'done')
+        self.assertIn('translationJa', self.feed()[0])
+
     def test_stalled_queue_records_incident_and_translation_resolves_it(self):
         with translation.connect(self.path) as db:
             self.assertEqual(translation.sync_incident(db, ENV, NOW.timestamp()),
@@ -70,7 +81,7 @@ class PrimaryReleasePublicationTests(unittest.TestCase):
     def test_unfetched_old_and_promotion_never_publish(self):
         self.assertEqual(len(self.feed()), 1)
         for field, value in [('sha256', 'unfetched'), ('published_on', '2026-09-01'),
-                             ('title', 'Register today for our free course'), ('status', 'rejected'), ('status', 'held')]:
+                             ('title', 'Register today for our free course'), ('title', 'Read story'), ('status', 'rejected'), ('status', 'held')]:
             with self.subTest(field=field):
                 with translation.connect(self.path) as db:
                     original = db.execute(f'SELECT {field} FROM sources').fetchone()[0]
