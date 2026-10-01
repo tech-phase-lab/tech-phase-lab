@@ -921,6 +921,9 @@ class AutomaticMonitor:
                 )
             else:
                 monitor.resolve_operational_incident(db, "body:worker")
+            publication_issue = headline_translation.sync_incident(db)
+            if publication_issue:
+                issues.append(publication_issue)
         return issues
 
     def check_incident_watch_once(self):

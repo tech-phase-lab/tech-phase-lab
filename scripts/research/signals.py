@@ -1364,17 +1364,21 @@ if __name__ == "__main__":
     main()
 
 
-def public_official_updates(db, sources=SOURCES, reference=None):
+def public_official_updates(db, sources=SOURCES, reference=None, limit=20):
     """Links/headlines only; never publish private excerpts or unreviewed AI claims."""
     schema(db)
     import news_policy
+    import official_release_bridge
+    current = reference or datetime.now(timezone.utc)
+    current = current.replace(tzinfo=current.tzinfo or timezone.utc).astimezone(timezone.utc)
+    if sources is SOURCES:
+        official_release_bridge.sync(db, current)
+        sources = [*sources, *official_release_bridge.publishers()]
     allowed = {s['id']: s for s in sources if s.get('officialUpdates') is True
                and s.get('kind') == 'publisher-update' and s.get('allowedHosts')
                and (s.get('tickers') or s['id'] == 'bea-pce')}
     if not allowed:
         return []
-    current = reference or datetime.now(timezone.utc)
-    current = current.replace(tzinfo=current.tzinfo or timezone.utc).astimezone(timezone.utc)
     cutoff = current - timedelta(days=7)
     marks = ','.join('?' for _ in allowed)
     rows = db.execute(f'''SELECT * FROM signal_events WHERE source_id IN ({marks})
@@ -1394,6 +1398,8 @@ def public_official_updates(db, sources=SOURCES, reference=None):
     items, seen = [], set()
     for row in rows:
         source = allowed[row['source_id']]
+        if not official_release_bridge.is_current(db, row):
+            continue
         if source['id'] != 'bea-pce' and not news_policy.eligible(row['title']):
             continue
         try:
@@ -1459,6 +1465,6 @@ def public_official_updates(db, sources=SOURCES, reference=None):
         items.append({'id': str(row['id']), 'title': display_title, 'url': url,
                       'publisher': source['name'], 'tickers': tickers,
                       'observedAt': observed.isoformat(), **publication, **translation})
-        if len(items) == 20:
+        if len(items) == limit:
             break
     return items

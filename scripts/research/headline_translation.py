@@ -107,7 +107,7 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
     }
     oldest_pending = None
     next_retry = None
-    for item in signals.public_official_updates(db, sources=sources, reference=reference):
+    for item in signals.public_official_updates(db, sources=sources, reference=reference, limit=500):
         row = db.execute("SELECT * FROM signal_events WHERE id=?", (item["id"],)).fetchone()
         if not row or re.fullmatch(r"https?://\S+", row["title"].strip(), re.I):
             continue
@@ -174,14 +174,40 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
     }
 
 
+
+def sync_incident(db, env=None, now=None):
+    """Detect a stalled publication queue even when no visitor opens the site."""
+    now = time.time() if now is None else now
+    state = diagnostics(db, env=env, now=now)
+    code = None
+    if state['pending'] and state['status'] != 'disabled':
+        if state['status'] != 'enabled':
+            code = 'headline-translation-configuration'
+        elif state['exhausted']:
+            code = 'headline-translation-exhausted'
+        elif state['calls24Hours']['total'] >= state['dailyLimit']:
+            code = 'headline-translation-budget'
+        elif state['oldestPendingAt'] and now - datetime.fromisoformat(state['oldestPendingAt']).timestamp() >= 300:
+            code = 'headline-translation-overdue'
+    at = datetime.fromtimestamp(now, timezone.utc).isoformat()
+    if code:
+        monitor.record_operational_incident(db, 'publication:headlines', 'publication',
+                                           'headlines', 'critical', code, seen_at=at)
+    else:
+        monitor.resolve_operational_incident(db, 'publication:headlines', resolved_at=at)
+    return code
+
+
 def claim(db, sources, limit, model, now):
     reference = datetime.fromtimestamp(now, tz=timezone.utc)
+    items = signals.public_official_updates(db, sources=sources, reference=reference, limit=500)
+    db.commit()
     with db:
         db.execute("BEGIN IMMEDIATE")
         if db.execute("SELECT count(*) FROM signal_headline_translation_calls WHERE at>=?",
                       (now - 86400,)).fetchone()[0] >= limit:
             return None
-        for item in signals.public_official_updates(db, sources=sources, reference=reference):
+        for item in items:
             row = db.execute("SELECT * FROM signal_events WHERE id=?", (item["id"],)).fetchone()
             if not row or re.fullmatch(r"https?://\S+", row["title"].strip(), re.I):
                 continue
@@ -273,7 +299,9 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         active = db.execute('''SELECT lease FROM signal_headline_translation_jobs
           WHERE source_id=? AND url=? AND sha=?''',
                             (row["source_id"], row["url"], row["sha"])).fetchone()
-        valid = current and current["title"] == row["title"] and active and active["lease"] == lease
+        import official_release_bridge
+        valid = (current and current["title"] == row["title"] and active
+                 and active["lease"] == lease and official_release_bridge.is_current(db, row))
         state = "done" if valid else "stale"
         if valid:
             db.execute('''INSERT INTO signal_headline_translations

@@ -120,3 +120,16 @@ test('public news removes duplicate current stories and keeps missing official u
  assert.throws(() => payload({...muFlash,url:muFlash.url+'?unreviewed=1'}));
  assert.throws(() => payload({...muFlash,researchId:'private-editor'}));
  });
+
+test('issuer IR release headlines use the monitored company article rules', () => {
+  const update = {id:'90',title:'NVIDIA announces quarterly financial results',
+    url:'https://nvidianews.nvidia.com/news/nvidia-announces-financial-results',
+    publisher:'NVIDIA IR',tickers:['NVDA'],observedAt:'2026-10-01T11:00:29Z',publishedOn:'2026-10-01'};
+  const payload = v => ({ok:true,enabled:false,items:[],officialUpdates:[v]});
+  assert.equal(publicNewsPayload(payload(update)).officialUpdates[0].url,update.url);
+  for (const changed of [{tickers:['NBIS']}, {url:'https://nvidianews.nvidia.com/login'},
+    {url:'https://evil.example/news/nvidia-announces-financial-results'},
+    {url:update.url+'?redirect=elsewhere'}]) {
+    assert.throws(()=>publicNewsPayload(payload({...update,...changed})));
+  }
+});

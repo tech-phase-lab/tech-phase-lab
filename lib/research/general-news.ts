@@ -1,3 +1,4 @@
+import providers from "./providers.json" with { type: "json" };
 import { parseResultBriefs, type ResultBrief } from "./market-results.ts";
 export type GeneralNewsItem = {
   id: string; title: string; url: string; publisher: string; tickers: string[];
@@ -25,7 +26,10 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       for (const key of ["id", "title", "url", "publisher", "observedAt"]) if (typeof v[key] !== "string" || !(v[key] as string).trim()) throw Error("Invalid update field");
       const url = new URL(v.url as string);
       const verifiedMu = url.href === 'https://www.sec.gov/Archives/edgar/data/723125/000072312526000018/a2026q4ex991-pressrelease.htm';
-      if (url.protocol !== "https:" || url.username || url.password || url.port || (!officialUpdateHosts.has(url.hostname) && !verifiedMu)) throw Error("Invalid official source");
+      const issuerRelease = providers.some(provider => Array.isArray(v.tickers) && v.tickers.includes(provider.ticker)
+        && provider.articleRules.some(rule => rule.host === url.hostname && new RegExp(rule.pattern).test(url.pathname))
+        && url.hostname !== "www.sec.gov" && url.hostname !== "data.sec.gov" && !url.search && !url.hash);
+      if (url.protocol !== "https:" || url.username || url.password || url.port || (!officialUpdateHosts.has(url.hostname) && !verifiedMu && !issuerRelease)) throw Error("Invalid official source");
       if (url.hostname === "x.com" && !/^\/(nebiusai|tipranks|theflynews|wallstengine|fabymetal4)\/status\/\d+$/i.test(url.pathname)) throw Error("Invalid official account");
       if (url.hostname === "www.bea.gov" && (!/^\/news\/20\d{2}\/personal-income-and-outlays-[a-z]+-20\d{2}$/.test(url.pathname) || url.search || url.hash)) throw Error("Invalid BEA release");
       if (Array.from(v.title as string).length > 180 || (v.publisher as string).length > 80 || !/^\d+$/.test(v.id as string) || !Number.isFinite(Date.parse(v.observedAt as string))) throw Error("Invalid update");
