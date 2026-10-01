@@ -37,3 +37,30 @@ future schedule was confirmed.
 The existing date-only FOMC records remain date-only; no midnight or estimated
 time was introduced. `calendarReviewedOn` advanced only after both schedules
 were checked.
+
+## Second company batch
+
+The next 10 oldest company records were reviewed against first-party investor
+pages. ASML's official quarterly-results page now supplies both clock times, so
+the former date-only record was replaced by a 07:00 Amsterdam results release
+and a separate 15:00 investor call on October 14. Adobe and GE Vernova were
+reconfirmed without changing their stored schedules. No estimated date was
+added.
+
+| Ticker | Official source reviewed | Result / exact blocker |
+| --- | --- | --- |
+| ADBE | https://www.adobe.com/investor-relations/events-presentations.html | Reconfirmed the existing December 9 fiscal Q4/FY2026 call at 14:00 Pacific. |
+| AMAT | https://ir.appliedmaterials.com/events?tab=upcoming | The page labels November 12 only as projected, so the earnings date remains pending and `lastCheckedOn` did not advance. |
+| AMD | https://ir.amd.com/news-events/ir-calendar | The official calendar explicitly showed no upcoming events; no future earnings announcement was published. |
+| ASML | https://investor.asml.com/quarterly-results | Confirmed October 14 results release at 07:00 and investor call at 15:00 Amsterdam time; recorded as separate events. |
+| COHR | https://ir.coherent.com/news-events/events | Official events still end with the August 12 FY2026 Q4 call; no future earnings event was published. |
+| CRM | https://investor.salesforce.com/events-and-presentations/default.aspx | Upcoming events contain no earnings event; official earnings material remains at FY2027 Q2. |
+| CRWD | https://ir.crowdstrike.com/events-and-presentations/ | The official page says more events are coming soon and lists no future earnings event. |
+| DELL | https://investors.delltechnologies.com/news-events/upcoming-events | The official page says more events are coming soon; no future earnings event was published. |
+| GEV | https://www.gevernova.com/investors/events/3rd-quarter-2026-earnings-webcast | Reconfirmed the existing October 28 Q3 webcast at 07:30 Eastern. |
+| INTC | https://www.intc.com/news-events/ir-calendar | The official calendar explicitly showed no upcoming events; no future earnings announcement was published. |
+
+`lastAttemptedOn` advanced to `2026-10-02` for all 10 entries. The nine
+conclusive/reconfirmed checks advanced `lastCheckedOn`; AMAT remains pending on
+its explicitly projected date. The BLS and Federal Reserve schedules had
+already been checked earlier on the same date and were not rewritten.

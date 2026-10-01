@@ -1,3 +1,27 @@
+# ASML exact release/call times and second October 2 calendar batch — October 2, 2026 01:44–02:00 JST
+
+Reviewed ADBE, AMAT, AMD, ASML, COHR, CRM, CRWD, DELL, GEV and INTC against
+current first-party investor sources. ASML's official quarterly-results page
+now confirms an October 14 results release at 07:00 and a separate investor
+call at 15:00 Amsterdam time. The prior date-only item was replaced by those
+two exact events; Adobe and GE Vernova were reconfirmed, and no tentative or
+estimated date was added. AMAT remains pending because its page describes
+November 12 only as projected. The day's BLS and Federal Reserve review was
+already complete and unchanged. Exact evidence and blockers are in
+`CALENDAR-HANDOFF-2026-10-02.md`.
+
+Before edits, the canonical preview first served its saved September 19
+fallback snapshot, then reconnected to the live monitor after the normal
+refresh. The recovered view showed 22/22 core company lists and priority 5/5
+healthy. Supplementary routes were 21/26: two access restrictions, one timeout,
+one invalid response and one other failure. Child-article failures were zero;
+body-host blocks remained 790 rows across four routes. Headline translation
+was active at the observation point and had used its 50/50 rolling 24-hour
+call budget. These are point-in-time observations, not complete coverage or a
+latency SLA. The next safe diagnostic priority is protected inspection of the
+fixed persisted codes behind `invalidResponse` and `other`; do not expose
+route identities, URLs, exception text or private evidence publicly.
+
 # Calendar refresh and explicit route failure categories — October 2, 2026 00:18–00:29 JST
 
 Reviewed AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and LITE against

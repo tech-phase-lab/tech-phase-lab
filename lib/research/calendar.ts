@@ -70,6 +70,18 @@ export const calendarEvents: CalendarEvent[] = [
     note: { ja: "公開は予定時刻の前後です。経営陣インタビューは44分後を予定しています。", en: "Approximate release time. The management interview is scheduled 44 minutes later." },
   },
   {
+    id: "asml-q3-2026-release", ticker: "ASML", kind: "earnings" as const, title: { ja: "ASML 決算発表（2026年Q3）", en: "ASML Q3 2026 results release" },
+    startsAt: "2026-10-14T07:00:00+02:00", sourceTimezone: "Europe/Amsterdam", sourceName: "ASML IR",
+    sourceUrl: "https://investor.asml.com/quarterly-results",
+    note: { ja: "公式IRが示す決算資料の公開予定時刻です。ウェブ掲載はその直後を予定しています。", en: "Official scheduled results release time; website publication is expected shortly afterward." },
+  },
+  {
+    id: "asml-q3-2026-call", ticker: "ASML", kind: "earnings" as const, title: { ja: "ASML 決算説明会（2026年Q3）", en: "ASML Q3 2026 investor call" },
+    startsAt: "2026-10-14T15:00:00+02:00", sourceTimezone: "Europe/Amsterdam", sourceName: "ASML IR",
+    sourceUrl: "https://investor.asml.com/quarterly-results",
+    note: { ja: "説明会の開始予定です。決算資料の公開時刻とは別です。", en: "Scheduled investor call start, separate from the results release time." },
+  },
+  {
     id: "sndk-fq1-2027-call", ticker: "SNDK", kind: "earnings" as const, title: { ja: "Sandisk 決算説明会（2027年度Q1）", en: "Sandisk fiscal Q1 2027 earnings call" },
     startsAt: "2026-10-29T16:30:00-04:00", sourceTimezone: "America/New_York", sourceName: "Sandisk IR",
     sourceUrl: "https://investor.sandisk.com/news-events/events",
@@ -117,11 +129,6 @@ export function selectCalendarEvents(events: CalendarEvent[], kind: "all" | Cale
 
 // Date-only announcements must never be turned into fictitious midnight timestamps.
 export const dateOnlyEvents: DateOnlyCalendarEvent[] = [
-  {
-    id: "asml-q3-2026-results", kind: "earnings", ticker: "ASML", date: "2026-10-14", sourceTimezone: "Europe/Amsterdam",
-    title: { ja: "ASML 決算発表（2026年Q3）", en: "ASML Q3 2026 results" }, sourceName: "ASML IR",
-    sourceUrl: "https://www.asml.com/en/investors/financial-calendar", checkedOn: "2026-09-23",
-  },
   {
     id: "klac-fq1-2027-results", kind: "earnings", ticker: "KLAC", date: "2026-10-28", sourceTimezone: "America/Los_Angeles",
     title: { ja: "KLA 決算発表（2027年度Q1）", en: "KLA fiscal Q1 2027 results" }, sourceName: "KLA IR",
