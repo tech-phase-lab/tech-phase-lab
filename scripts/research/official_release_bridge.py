@@ -38,12 +38,21 @@ def sync(db, reference):
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='release_events'").fetchone():
         return
     cutoff = (reference - timedelta(days=7)).isoformat()
-    rows = db.execute('''SELECT e.detected_at,s.url,s.ticker,s.title,s.sha256,s.published_on
+    rows = db.execute('''SELECT e.detected_at,s.url,s.ticker,s.title,s.sha256,s.published_on,r.extracted_text
       FROM release_events e JOIN sources s ON s.url=e.url
       JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256
       WHERE e.detected_at>=? AND r.extracted_chars>0 AND s.status NOT IN ('rejected','held') ORDER BY e.id DESC LIMIT 500''', (cutoff,)).fetchall()
     for row in rows:
         title = row['title']
+        # Some issuer index links carry no title. Recover only an explicit
+        # release heading present in the fetched evidence, never from a URL slug.
+        if not title and row['ticker'] == 'MU':
+            heading = re.search(r'^Micron Technology,? Inc\.? Reports[^\n]{1,230}Results\s*$',
+                                row['extracted_text'][:3000], re.M)
+            if heading:
+                title = heading[0].strip()
+                db.execute('UPDATE sources SET title=? WHERE url=? AND sha256=? AND title IS NULL',
+                           (title,row['url'],row['sha256']))
         if (not title or not news_policy.eligible(title)
                 or re.fullmatch(r'(?:read (?:story|more)|learn more|press release|news)', title.strip(), re.I)):
             continue

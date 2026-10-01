@@ -5,7 +5,8 @@ import test_official_research as base
 NOW=base.NOW
 import official_research as research
 
-BODY='''Fiscal Q4 2026 Highlights
+BODY='''Micron Technology, Inc. Reports Record Fiscal Fourth-Quarter and Full-Year 2026 Results
+Fiscal Q4 2026 Highlights
 Revenue of $54.23 billion versus $41.46 billion for the prior quarter and $11.32 billion for the same period last year
 GAAP net income of $37.70 billion, or $32.87 per diluted share
 Non-GAAP net income of $38.40 billion, or $33.42 per diluted share
@@ -40,7 +41,7 @@ class IssuerEarningsTests(unittest.TestCase):
             db.execute("PRAGMA defer_foreign_keys=ON")
             for table in ('sources','source_revisions','release_events'):
                 db.execute(f'UPDATE {table} SET url=?',(url,))
-            db.execute("UPDATE sources SET ticker='MU',title='Micron Reports Fiscal Fourth-Quarter and Full-Year 2026 Results'")
+            db.execute("UPDATE sources SET ticker='MU',title=NULL")
             db.execute("UPDATE source_revisions SET extracted_text=?,extracted_chars=?",(BODY,len(BODY)))
         no_call=lambda *_:self.fail('must not consume API budget')
         self.assertEqual(research.run_once(self.path,no_call,{},NOW.timestamp()),'done')

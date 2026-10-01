@@ -30,7 +30,8 @@ export async function GET() {
       return event ? { ...item, researchId: event.id, title: event.title.en, translationJa: event.title.ja } : item;
     });
     const resultUpdates = (payload.resultBriefs ?? []).map(r => ({id:r.id,title:r.titleEn,translationJa:r.titleJa,url:r.url,publisher:r.publisher,tickers:[r.ticker],observedAt:r.observedAt,publishedAt:r.publishedAt,researchId:r.kind === 'earnings' ? r.researchId : undefined}));
-    const merged: OfficialUpdate[] = [...resultUpdates, muFlash, ...(payload.officialUpdates ?? []).filter(item => item.url !== muFlash.url && !resultUpdates.some(r => r.url === item.url))];
+    const fallback = issuerEvents.some(e => e.ticker === "MU" && e.kind === "earnings") ? [] : [muFlash];
+    const merged: OfficialUpdate[] = [...resultUpdates, ...fallback, ...(payload.officialUpdates ?? []).filter(item => item.url !== muFlash.url && !resultUpdates.some(r => r.url === item.url))];
     payload.officialUpdates = merged.toSorted((a,b)=>Date.parse(b.publishedAt ?? b.observedAt)-Date.parse(a.publishedAt ?? a.observedAt)).slice(0,20);
     return Response.json(payload, { headers });
   } catch {

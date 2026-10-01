@@ -155,3 +155,25 @@ test('issuer research links reach news while premium purpose and raw evidence st
     }
   }
 });
+
+test('live MU earnings replace the manually recovered flash', async () => {
+  const previous={fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
+  process.env.RESEARCH_MONITOR_URL='https://monitor.example.com';process.env.RESEARCH_MONITOR_TOKEN='synthetic-server-token';
+  const url='https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx';
+  const copy={ja:'Inferizeを買収',en:'Acquired Inferize'};
+  try {
+    globalThis.fetch=async()=>Response.json({ok:true,enabled:false,items:[],officialUpdates:[{id:'123',title:'Acquired Inferize',url,publisher:'NBIS IR',tickers:['MU'],observedAt:'2026-10-01T11:00:29Z'}],
+      officialResearch:[{id:'ir-result-123',ticker:'MU',kind:'earnings',title:copy,summary:copy,facts:[copy,copy,copy],purpose:{ja:'非公開の目的',en:'PRIVATE-PURPOSE'},url,sourceTitle:'Nebius acquires Inferize',publishedOn:'2026-10-01',dateBasis:'detection',publicAt:'2026-10-01T14:00:00Z',evidence:'PRIVATE-EVIDENCE'}]});
+    const result=await (await GET()).json();
+    const update=result.officialUpdates.find(x=>x.url===url);
+    assert.equal(update.researchId,'ir-result-123');
+    assert.equal(result.officialUpdates.some(x=>x.researchId==='mu-q4-2026'),false);
+    assert.equal(publicNewsPayload(result).officialUpdates.find(x=>x.url===url).researchId,'ir-result-123');
+    assert.equal(JSON.stringify(result).includes('PRIVATE-'),false);
+  } finally {
+    globalThis.fetch=previous.fetch;
+    for(const [key,value] of [['RESEARCH_MONITOR_URL',previous.url],['RESEARCH_MONITOR_TOKEN',previous.token]]) {
+      if(value===undefined)delete process.env[key];else process.env[key]=value;
+    }
+  }
+});
