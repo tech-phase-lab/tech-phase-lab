@@ -165,7 +165,7 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   assert.equal(new Set(coverage.map((company) => company.ticker)).size, 40);
   const byTicker = Object.fromEntries(coverage.map((company) => [company.ticker, company]));
   const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
-  assert.ok(coverage.every((company) => /^2026-(?:09-(?:2[3-9]|30)|10-01)$/.test(company.lastAttemptedOn)));
+  assert.ok(coverage.every((company) => /^2026-(?:09-(?:2[3-9]|30)|10-0[12])$/.test(company.lastAttemptedOn)));
   for (const ticker of ["ADBE", "AMD", "ASML", "COHR", "CRWD", "DELL", "GEV", "INTC", "KLAC", "LRCX", "META", "MSFT", "MU", "NBIS", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-10-01");
   for (const ticker of ["CRM", "ORCL"]) assert.equal(checked[ticker], "2026-09-28");
   assert.equal(checked.AMAT, "2026-09-25");
@@ -177,10 +177,16 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
     .map((company) => company.ticker)
     .sort();
   assert.deepEqual(attemptedOnOctober1, [
-    "AAPL", "ADBE", "AMAT", "AMD", "AMZN", "ANET", "ARM", "ASML", "AVGO", "BE",
-    "COHR", "CRDO", "CRM", "CRWD", "CRWV", "DELL", "GEV", "GOOGL", "INTC", "KLAC",
-    "LITE", "LRCX", "META", "MRVL", "MSFT", "MU", "NBIS", "NFLX", "NOW", "NVDA",
+    "ADBE", "AMAT", "AMD", "ASML", "COHR", "CRM", "CRWD", "DELL", "GEV", "INTC",
+    "KLAC", "LRCX", "META", "MRVL", "MSFT", "MU", "NBIS", "NFLX", "NOW", "NVDA",
     "ORCL", "PANW", "PLTR", "QCOM", "SKHY", "SNDK", "SNOW", "TSLA", "TSM", "VRT",
+  ]);
+  const attemptedOnOctober2 = coverage
+    .filter((company) => company.lastAttemptedOn === "2026-10-02")
+    .map((company) => company.ticker)
+    .sort();
+  assert.deepEqual(attemptedOnOctober2, [
+    "AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "CRDO", "CRWV", "GOOGL", "LITE",
   ]);
   assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-29").length, 0);
   assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 22);
