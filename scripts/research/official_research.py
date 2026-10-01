@@ -42,6 +42,8 @@ def schema(db):
         payload TEXT NOT NULL, evidence TEXT NOT NULL, started_at TEXT NOT NULL,
         public_at TEXT NOT NULL, generation_ms INTEGER NOT NULL);
     ''')
+    if 'failure_kind' not in {r[1] for r in db.execute('PRAGMA table_info(official_research_jobs)')}:
+        db.execute("ALTER TABLE official_research_jobs ADD COLUMN failure_kind TEXT")
 
 
 def connect(path):
@@ -116,7 +118,7 @@ def claim(db, reference, model, limit):
             if job and job['sha']==r['sha'] and (job['attempts']>=3 or job['next_at']>now):
                 continue
             lease=uuid.uuid4().hex
-            db.execute('''INSERT INTO official_research_jobs VALUES(?,?,1,?,?,'running')
+            db.execute('''INSERT INTO official_research_jobs(event_id,sha,attempts,next_at,lease,state) VALUES(?,?,1,?,?,'running')
               ON CONFLICT(event_id) DO UPDATE SET attempts=CASE WHEN sha=excluded.sha THEN attempts+1 ELSE 1 END,
               sha=excluded.sha,next_at=excluded.next_at,lease=excluded.lease,state='running' ''',
                        (r['id'],r['sha'],now+300,lease))
@@ -151,9 +153,10 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         note=validate(json.loads(brief_generator.output_text(response)),row['body'][:45000])
         usage={k:v for k,v in (response.get('usage') or {}).items()
                if k in ('input_tokens','output_tokens','total_tokens') and type(v) is int}
-    except Exception:
+    except Exception as exc:
+        reason=str(exc) if type(exc) is ValueError and str(exc) in {'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete'} else 'provider-unavailable'
         with connect(path) as db, db:
-            db.execute("UPDATE official_research_jobs SET state='retry',next_at=? WHERE event_id=? AND lease=?",(now+60,row['id'],lease))
+            db.execute("UPDATE official_research_jobs SET state='retry',next_at=?,failure_kind=? WHERE event_id=? AND lease=?",(now+60,reason,row['id'],lease))
             db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?",(lease,))
         return 'retry'
     public_at=datetime.now(timezone.utc).isoformat(timespec='milliseconds')
@@ -207,7 +210,8 @@ def diagnostics(db):
     items=feed(db)
     pending=len(candidates(db,datetime.now(timezone.utc)))-len(items)
     return {'published':len(items),'pending':max(0,pending),
-            'latest':[{k:x[k] for k in ('id','ticker','observedAt','bodyReadyAt','generationStartedAt','publicAt','generationMs','detectionToPublicMs')} for x in items[:5]]}
+            'latest':[{k:x[k] for k in ('id','ticker','observedAt','bodyReadyAt','generationStartedAt','publicAt','generationMs','detectionToPublicMs')} for x in items[:5]],
+            'jobs':[dict(r) for r in db.execute('SELECT event_id,state,attempts,failure_kind FROM official_research_jobs ORDER BY event_id DESC LIMIT 5')]}
 
 
 def sync_incident(db, env=None, reference=None):

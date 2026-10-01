@@ -285,6 +285,8 @@ function signalIntakeStatus(signal: MonitorState["signalIntake"]) {
   const translationStatus = translation
     ? ` · 公式見出し翻訳：${translationState} · 対象 ${translation.eligible}・翻訳済み ${translation.translated}・未翻訳 ${translation.pending}${translation.oldestPendingAt ? `（最古 ${time(translation.oldestPendingAt)} JST）` : ""} · 実行中 ${translation.running}・再試行 ${translation.retrying}${translation.nextRetryAt ? `（最短 ${time(translation.nextRetryAt)} JST）` : ""}・上限到達 ${translation.exhausted} · 24時間 ${translation.calls24Hours.total}${translation.dailyLimit ? `/${translation.dailyLimit}` : ""}回（完了 ${translation.calls24Hours.completed}・失敗 ${translation.calls24Hours.failed}・原文更新 ${translation.calls24Hours.stale}）`
     : "";
+  const research = signal.officialResearch;
+  const researchStatus = research ? ` · 公式本文の日英記事：公開 ${research.published}・未公開 ${research.pending}${research.latest.map(r => `／${r.ticker} ${r.id} 生成 ${duration(r.generationMs)}・公開 ${time(r.publicAt)} JST・検知→公開 ${duration(r.detectionToPublicMs)}`).join("")}${research.jobs.filter(j => j.state !== "done").map(j => `／${j.event_id} ${j.state} ${j.attempts}回 ${j.failure_kind ?? ""}`).join("")}` : "";
   const kinds = routes.errorKinds ?? {
     accessRestricted: 0, rateLimited: 0, timeout: 0, server: 0,
     invalidResponse: 0, articlePartial: 0, other: routes.error,
@@ -363,7 +365,7 @@ function signalIntakeStatus(signal: MonitorState["signalIntake"]) {
   const xStatus = x
     ? ` · X補完：${xState} · 24時間API ${x.usage.attemptsLast24Hours}/${x.usage.dailyLimit}回 · 経路エラー ${x.routes.error}件${xItems ? ` · 24時間取得 ${xItems.total}件（区分は重複あり：評価変更 ${xItems.analystRatings}・目標株価 ${xItems.priceTargets}・決算 ${xItems.earnings}・企業公式 ${xItems.officialUpdates}・その他 ${xItems.other}）${xItems.latestObservedAt ? `（最終 ${time(xItems.latestObservedAt)} JST）` : ""}` : ""}`
     : "";
-  return `公式補完経路：直近成功 ${routes.fresh}/${routes.configured}経路 · 期限超過 ${routes.stale} · 要確認 ${routes.error}（アクセス制限 ${kinds.accessRestricted}・レート制限 ${kinds.rateLimited}・タイムアウト ${kinds.timeout}・公式側5xx ${kinds.server}・応答形式 ${kinds.invalidResponse}・記事一部失敗 ${kinds.articlePartial}・その他 ${kinds.other}）${retryStatus}${retryKindDetail}${activeOutageStatus}${activeOutageKindDetail}${articleStatus}${measuredRecoveryStatus}${transitionStatus}${routeRecoveryStatus}${routeRetryWaitStatus} · 初回待ち ${routes.pending} · 公表証拠 ${evidence.total}件（日時あり ${evidence.timestamp}・日付のみ ${evidence.dateOnly}・時刻未取得 ${evidence.missing}）${sourceLatencyStatus}${translationStatus}${xStatus}`;
+  return `公式補完経路：直近成功 ${routes.fresh}/${routes.configured}経路 · 期限超過 ${routes.stale} · 要確認 ${routes.error}（アクセス制限 ${kinds.accessRestricted}・レート制限 ${kinds.rateLimited}・タイムアウト ${kinds.timeout}・公式側5xx ${kinds.server}・応答形式 ${kinds.invalidResponse}・記事一部失敗 ${kinds.articlePartial}・その他 ${kinds.other}）${retryStatus}${retryKindDetail}${activeOutageStatus}${activeOutageKindDetail}${articleStatus}${measuredRecoveryStatus}${transitionStatus}${routeRecoveryStatus}${routeRetryWaitStatus} · 初回待ち ${routes.pending} · 公表証拠 ${evidence.total}件（日時あり ${evidence.timestamp}・日付のみ ${evidence.dateOnly}・時刻未取得 ${evidence.missing}）${sourceLatencyStatus}${translationStatus}${researchStatus}${xStatus}`;
 }
 function muEarningsMeasurementStatus(measurement: MonitorState["muEarningsMeasurement"]) {
   if (!measurement) return "MU決算実測：状態取得待ち";

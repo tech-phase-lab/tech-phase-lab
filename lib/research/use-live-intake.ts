@@ -329,6 +329,7 @@ export type MonitorState = {
       count: number; latencyAverageMs: number | null; latencyMaxMs: number | null;
       lastObservedAt: string | null;
     };
+    officialResearch?: { published: number; pending: number; latest: { id: string; ticker: string; observedAt: string; bodyReadyAt: string; generationStartedAt: string; publicAt: string; generationMs: number; detectionToPublicMs: number | null }[]; jobs: { event_id: number; state: string; attempts: number; failure_kind: string | null }[] };
     headlineTranslation?: {
       status: "disabled" | "approval-required" | "misconfigured" | "enabled";
       dailyLimit: number | null;
