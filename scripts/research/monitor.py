@@ -25,7 +25,7 @@ INDEXES = {t: p.get("monitorUrl", p["indexUrl"]) for t, p in PROVIDERS.items()}
 HOSTS = {t: set(p["allowedHosts"]) for t, p in PROVIDERS.items()}
 MAX_BYTES = 12 * 1024 * 1024
 MAX_EXTRACTED_CHARS = 160_000
-HTML_EXTRACTOR_VERSION = "2026-10-01-server-form"
+HTML_EXTRACTOR_VERSION = "2026-10-01-server-form-v2"
 MAX_JSON_LD_CHARS = 512 * 1024
 MAX_JSON_LD_BLOCKS = 20
 MAX_JSON_LD_NODES = 2_000
@@ -776,7 +776,7 @@ class ArticleText(HTMLParser):
         # ASP.NET issuer sites wrap the whole document (including the release)
         # in their server form. Keep that wrapper, not arbitrary user forms.
         if tag == "form" and not (
-            values.get("id", "").lower() in {"form1", "aspnetform"}
+            values.get("id", "").lower() in {"form1", "aspnetform", "fmform1"}
             and values.get("method", "").lower() == "post"
         ):
             return True

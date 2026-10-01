@@ -500,7 +500,7 @@ class AutomaticMonitor:
             },
             "companies": {},
         }
-        self.thread = threading.Thread(target=self.run, name="research-monitor", daemon=True)
+        self.thread = threading.Thread(target=self.run_supervised, name="research-monitor", daemon=True)
         self.generation_thread = threading.Thread(target=self.run_generation, name="brief-generator", daemon=True)
         self.backup_thread = threading.Thread(target=self.run_backup, name="database-backup", daemon=True)
         self.incident_thread = threading.Thread(
@@ -593,6 +593,11 @@ class AutomaticMonitor:
             self.stop_event.wait(WEB_PUSH_POLL_SECONDS)
 
     def start(self):
+        # Complete migrations before translation/result workers open their own
+        # connections. Parallel PRAGMA checks followed by ALTER TABLE can race
+        # on an existing volume and silently kill the discovery worker.
+        with self.db_lock, monitor.connect(self.db_path):
+            pass
         self.thread.start()
         self.generation_thread.start()
         self.backup_thread.start()
@@ -1735,6 +1740,20 @@ class AutomaticMonitor:
         while not self.stop_event.is_set():
             self.perform_backup()
             self.stop_event.wait(self.backup_interval)
+
+    def run_supervised(self):
+        failures = 0
+        while not self.stop_event.is_set():
+            try:
+                self.run()
+                return
+            except Exception as exc:
+                failures += 1
+                with self.state_lock:
+                    self.state["ready"] = False
+                # Exception messages can contain source data; log only type.
+                print("research-monitor-restarting " + type(exc).__name__, flush=True)
+                self.stop_event.wait(min(30, 2 ** min(failures, 5)))
 
     def run(self):
         next_due = {ticker: 0.0 for ticker in self.tickers}

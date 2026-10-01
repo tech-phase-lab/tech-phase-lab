@@ -43,6 +43,38 @@ service_spec.loader.exec_module(service)
 
 
 class ResearchServiceTests(unittest.TestCase):
+    def test_start_migrates_existing_database_before_any_worker_starts(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'monitor.sqlite'
+            with monitor.connect(path) as db:
+                db.execute('ALTER TABLE sources DROP COLUMN extractor_version')
+            app = service.AutomaticMonitor(path, Path(folder) / 'snapshot.json')
+            observed = []
+            def start_worker(thread):
+                with sqlite3.connect(path) as db:
+                    observed.append('extractor_version' in {
+                        row[1] for row in db.execute('PRAGMA table_info(sources)')
+                    })
+            with patch.object(threading.Thread, 'start', start_worker):
+                app.start()
+            self.assertEqual(len(observed), 13)
+            self.assertTrue(all(observed))
+
+    def test_monitor_recovers_after_an_unexpected_worker_exception(self):
+        with tempfile.TemporaryDirectory() as folder:
+            app = service.AutomaticMonitor(Path(folder) / 'db.sqlite', Path(folder) / 'snapshot.json')
+            calls = []
+            def run():
+                calls.append(True)
+                if len(calls) == 1:
+                    raise sqlite3.OperationalError('private detail')
+                app.stop_event.set()
+            with patch.object(app, 'run', run), patch.object(app.stop_event, 'wait') as waiting, patch('builtins.print') as logged:
+                app.run_supervised()
+            self.assertEqual(len(calls), 2)
+            waiting.assert_called_once_with(2)
+            logged.assert_called_once_with('research-monitor-restarting OperationalError', flush=True)
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.db_path = Path(self.temp.name) / "automatic.sqlite"

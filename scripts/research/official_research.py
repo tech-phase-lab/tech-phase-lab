@@ -27,7 +27,9 @@ Produce a short title, one-sentence summary, three to five distinct factual poin
 and one sentence explaining the company's stated business purpose. Each item must
 include an evidenceId selected from the supplied evidence excerpts. Never rewrite an excerpt. Every claim in both
 languages must be supported by that quote. Use numbers exactly as quoted, without
-converting units. Do not turn company expectations into achieved results.
+converting units. In Japanese monetary figures, retain the source's numeric spelling
+and English unit (million or billion); do not convert into 億 or 兆. Use ひとつ,
+not 1つ, for generic Japanese wording. Do not turn company expectations into achieved results.
 Titles should fit roughly two lines on a phone; no ticker prefix is needed."""
 
 
@@ -130,9 +132,78 @@ def claim(db, reference, model, limit):
     return None
 
 
+def earnings_note(row):
+    # Bounded issuer adapter; no estimates or LLM calls.
+    if row['ticker'] != 'MU' or not re.search(r'quarter.*results', row['title'], re.I):
+        return None
+    body=normalized(row['body'])
+    section=re.search(r'Fiscal Q[1-4] \d{4} Highlights (.*?)(?:Fiscal \d{4} Highlights|Business Outlook)',body)
+    if not section:
+        return None
+    money=r'(\d+(?:\.\d+)?)'
+    rev=re.search(r'Revenue of \$'+money+r' billion versus \$'+money+r' billion for the prior quarter and \$'+money+r' billion for the same period last year',section[1])
+    eps=re.search(r'Non-GAAP net income of \$'+money+r' billion, or \$'+money+r' per diluted share',section[1])
+    cash=re.search(r'Operating cash flow of \$'+money+r' billion versus \$'+money+r' billion for the prior quarter and \$'+money+r' billion for the same period last year',section[1])
+    outlook=re.search(r'Business Outlook (.{1,600}?)Further information',body)
+    if not all((rev,eps,cash,outlook)):
+        return None
+    guide=outlook[0].removesuffix('Further information').strip()
+    if not re.search(r'GAAP\(1\) Outlook Non-GAAP\(2\) Outlook',guide):
+        return None
+    grev=re.search(r'Revenue \$'+money+r' billion ± \$'+money+r' billion',guide)
+    geps=re.search(r'Diluted earnings per share \$'+money+r' ± \$'+money+r' \$'+money+r' ± \$'+money,guide)
+    if not grev or not geps:
+        return None
+    def item(ja,en,quote):return {'ja':ja,'en':en,'evidenceQuote':quote}
+    facts=[
+        item(f'売上高は${rev[1]} billion。前四半期は${rev[2]} billion、前年同期は${rev[3]} billion。',f'Revenue was ${rev[1]} billion, versus ${rev[2]} billion in the prior quarter and ${rev[3]} billion a year earlier.',rev[0]),
+        item(f'調整後EPSは${eps[2]}。',f'Non-GAAP diluted EPS was ${eps[2]}.',eps[0]),
+        item(f'営業キャッシュフローは${cash[1]} billion。前四半期は${cash[2]} billion。',f'Operating cash flow was ${cash[1]} billion, versus ${cash[2]} billion in the prior quarter.',cash[0]),
+        item(f'次四半期の売上高見通しは${grev[1]} billion ± ${grev[2]} billion。',f'Next-quarter revenue guidance is ${grev[1]} billion ± ${grev[2]} billion.',guide),
+        item(f'次四半期の調整後EPS見通しは${geps[3]} ± ${geps[4]}。',f'Next-quarter non-GAAP diluted EPS guidance is ${geps[3]} ± ${geps[4]}.',guide)]
+    note={'title':item(f'Micron決算、売上高${rev[1]} billion',f'Micron reports revenue of ${rev[1]} billion',rev[0]),
+          'summary':facts[0], 'facts':facts,
+          'purpose':item('次四半期の売上高とEPSの会社見通しを公表した。','Micron published its next-quarter revenue and earnings outlook.',guide)}
+    return validate(note,row['body'])
+
+
+def publish_earnings(path,reference):
+    started=time.monotonic()
+    with connect(path) as db:
+        rows=candidates(db,reference)
+        db.commit()
+        for row in rows:
+            previous=db.execute('SELECT sha FROM official_research_publications WHERE event_id=?',(row['id'],)).fetchone()
+            if previous and previous['sha']==row['sha']:
+                continue
+            note=earnings_note(row)
+            if note is None:
+                continue
+            with db:
+                db.execute('BEGIN IMMEDIATE')
+                if not bridge.is_current(db,row):
+                    continue
+                previous=db.execute('SELECT sha FROM official_research_publications WHERE event_id=?',(row['id'],)).fetchone()
+                if previous and previous['sha']==row['sha']:
+                    continue
+                note['generationMethod']='issuer-format-v1'
+                db.execute('''INSERT INTO official_research_publications VALUES(?,?,?,?,?,?,?,?)
+                  ON CONFLICT(event_id) DO UPDATE SET sha=excluded.sha,body_sha=excluded.body_sha,
+                  payload=excluded.payload,evidence=excluded.evidence,started_at=excluded.started_at,
+                  public_at=excluded.public_at,generation_ms=excluded.generation_ms''',
+                  (row['id'],row['sha'],row['body_sha'],json.dumps(note,ensure_ascii=False),'[]',
+                   reference.isoformat(),datetime.now(timezone.utc).isoformat(timespec='milliseconds'),
+                   round((time.monotonic()-started)*1000)))
+            return True
+    return False
+
+
 def run_once(path, transport=brief_generator.request_response, env=None, now=None):
     env=os.environ if env is None else env
     now=time.time() if now is None else now
+    reference=datetime.fromtimestamp(now,timezone.utc)
+    if publish_earnings(path,reference):
+        return 'done'
     config=headline_translation.configuration(env,now=now)
     if config is None:
         return 'disabled'

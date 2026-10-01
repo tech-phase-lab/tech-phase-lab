@@ -742,6 +742,8 @@ class IntakeTests(unittest.TestCase):
           </form><form><p>Contact us today</p></form></body></html>'''
         text = m.extract_html_text(body)
         self.assertIn("Revenue was $54.23 billion", text)
+        # The observed Micron Q4 template uses fmForm1, not form1.
+        self.assertEqual(text, m.extract_html_text(body.replace(b'id="form1"', b'id="fmForm1"')))
         for excluded in ("Investor navigation", "secret", "Choose account", "Personal message",
                          "Subscribe label", "Sign up", "Legal footer", "Contact us"):
             self.assertNotIn(excluded, text)
