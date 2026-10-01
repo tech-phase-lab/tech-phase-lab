@@ -2,6 +2,7 @@ import rawSnapshot from "@/lib/research/intake-snapshot.json";
 import { snapshotIssues, type IntakeSnapshot } from "@/lib/research/intake";
 import {
   createMonitorFallbackLogger,
+  monitorDiagnosticHeaders,
   monitorExceptionReason,
   monitorStatusReason,
   type MonitorFallbackReason,
@@ -38,8 +39,8 @@ function endpoint() {
 function fallback(error: "not-configured" | "monitor-unavailable", reason: MonitorFallbackReason) {
   monitorLog.failure(reason);
   return Response.json(
-    { ok: false, mode: "snapshot", error, snapshot: bundled },
-    { headers: { "Cache-Control": "no-store" } },
+    { ok: false, mode: "snapshot", error, diagnosticReason: reason, snapshot: bundled },
+    { headers: { "Cache-Control": "no-store", ...monitorDiagnosticHeaders(reason) } },
   );
 }
 
@@ -67,7 +68,9 @@ export async function GET() {
       return fallback("monitor-unavailable", "invalid-payload");
     }
     monitorLog.recovered();
-    return Response.json(payload, { headers: liveHeaders });
+    return Response.json(payload, {
+      headers: { ...liveHeaders, "X-Tech-Phase-Monitor-Mode": "automatic" },
+    });
   } catch (error) {
     return fallback("monitor-unavailable", monitorExceptionReason(error));
   }

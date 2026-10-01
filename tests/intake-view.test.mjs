@@ -37,6 +37,9 @@ test("live fallback diagnostics stay categorical and reject credential-bearing U
   assert.match(liveRoute, /url\.username \|\| url\.password/);
   assert.match(liveRoute, /monitorLog\.failure/);
   assert.match(liveRoute, /monitorLog\.recovered/);
+  assert.match(liveRoute, /diagnosticReason: reason/);
+  assert.match(liveRoute, /monitorDiagnosticHeaders\(reason\)/);
+  assert.match(liveRoute, /X-Tech-Phase-Monitor-Mode/);
   assert.doesNotMatch(liveRoute, /console\.(?:warn|error)\([^\n]*(?:error|url|token)/i);
 });
 

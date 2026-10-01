@@ -24,6 +24,13 @@ export function monitorExceptionReason(error: unknown): MonitorFallbackReason {
   return "network";
 }
 
+export function monitorDiagnosticHeaders(reason: MonitorFallbackReason) {
+  return {
+    "X-Tech-Phase-Monitor-Mode": "snapshot",
+    "X-Tech-Phase-Monitor-Reason": reason,
+  } as const;
+}
+
 export function createMonitorFallbackLogger(logger: SafeLogger = console, quietMs = 300_000) {
   let lastFailure: { reason: MonitorFallbackReason; loggedAt: number; startedAt: number } | null = null;
 

@@ -3,6 +3,7 @@ import test from "node:test";
 
 import {
   createMonitorFallbackLogger,
+  monitorDiagnosticHeaders,
   monitorExceptionReason,
   monitorStatusReason,
 } from "../lib/research/live-monitor-observability.ts";
@@ -14,6 +15,13 @@ test("live monitor failures use bounded categories without upstream details", ()
   assert.equal(monitorExceptionReason(new SyntaxError("private response body")), "invalid-json");
   assert.equal(monitorExceptionReason(new DOMException("private timeout detail", "TimeoutError")), "timeout");
   assert.equal(monitorExceptionReason(new Error("https://user:secret@private.example/path")), "network");
+});
+
+test("live monitor fallback headers expose only the fixed safe category", () => {
+  assert.deepEqual(monitorDiagnosticHeaders("timeout"), {
+    "X-Tech-Phase-Monitor-Mode": "snapshot",
+    "X-Tech-Phase-Monitor-Reason": "timeout",
+  });
 });
 
 test("live monitor logging coalesces failures and records one recovery without private evidence", () => {
