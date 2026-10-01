@@ -19,10 +19,13 @@ active-outage and child-article aggregates. Older backend payloads render both
 new values as zero during rollout. No route IDs, URLs, exception text, evidence
 bodies or credentials are exposed.
 
-The preview observation predates this classification deployment. After the
-branch and Railway update, verify that the oscillating route moves out of
-`other` when its persisted safe code is one of the two recognized categories;
-do not claim the route recovered merely because its label became more precise.
+Post-deployment browser verification at 00:41 JST showed the new 取得失敗 and
+リンク未検出 labels in the preview, both at zero, while `other` remained one.
+Therefore the current persisted safe code is outside the newly recognized
+`fetchFailure` and `noLinks` sets; this route was not reclassified or recovered.
+Next inspect protected staging diagnostics, or add another allowlisted fixed
+code only after evidence confirms it, without exposing route identity or
+private evidence.
 
 # Live monitor recovery and safe proxy diagnostics — October 1, 2026 23:49–23:56 JST
 
