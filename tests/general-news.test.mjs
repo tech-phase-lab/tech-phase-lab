@@ -7,6 +7,7 @@ import { publicNewsPayload } from "../lib/research/general-news.ts";
 const helper = new URL("../lib/research/general-news.ts", import.meta.url).href;
 const source = (await readFile(new URL("../app/api/research/news/route.ts", import.meta.url), "utf8"))
   .replace('"@/lib/research/general-news"', JSON.stringify(helper))
+  .replace('"@/lib/research/official-result-events"', JSON.stringify(new URL("../lib/research/official-result-events.ts", import.meta.url).href))
   .replace("'@/lib/research/mu-latest'", JSON.stringify(new URL("../lib/research/mu-latest.ts", import.meta.url).href));
 const { GET } = await import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(source)).toString("base64"));
 const item = { id: "a".repeat(64), title: "Synthetic report", url: "https://publisher.example/report", publisher: "Publisher", tickers: ["MU"],
@@ -131,5 +132,26 @@ test('issuer IR release headlines use the monitored company article rules', () =
     {url:'https://evil.example/news/nvidia-announces-financial-results'},
     {url:update.url+'?redirect=elsewhere'}]) {
     assert.throws(()=>publicNewsPayload(payload({...update,...changed})));
+  }
+});
+
+test('issuer research links reach news while premium purpose and raw evidence stay server-side', async () => {
+  const previous={fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
+  process.env.RESEARCH_MONITOR_URL='https://monitor.example.com';process.env.RESEARCH_MONITOR_TOKEN='synthetic-server-token';
+  const url='https://nebius.com/newsroom/nebius-acquires-inferize-to-strengthen-nebius-token-factorys-production-inference-stack';
+  const copy={ja:'Inferizeを買収',en:'Acquired Inferize'};
+  try {
+    globalThis.fetch=async()=>Response.json({ok:true,enabled:false,items:[],officialUpdates:[{id:'123',title:'Acquired Inferize',url,publisher:'NBIS IR',tickers:['NBIS'],observedAt:'2026-10-01T11:00:29Z'}],
+      officialResearch:[{id:'ir-result-123',ticker:'NBIS',kind:'acquisition',title:copy,summary:copy,facts:[copy,copy,copy],purpose:{ja:'非公開の目的',en:'PRIVATE-PURPOSE'},url,sourceTitle:'Nebius acquires Inferize',publishedOn:'2026-10-01',dateBasis:'detection',publicAt:'2026-10-01T14:00:00Z',evidence:'PRIVATE-EVIDENCE'}]});
+    const result=await (await GET()).json();
+    const update=result.officialUpdates.find(x=>x.url===url);
+    assert.equal(update.researchId,'ir-result-123');
+    assert.equal(publicNewsPayload(result).officialUpdates.find(x=>x.url===url).researchId,'ir-result-123');
+    assert.equal(JSON.stringify(result).includes('PRIVATE-'),false);
+  } finally {
+    globalThis.fetch=previous.fetch;
+    for(const [key,value] of [['RESEARCH_MONITOR_URL',previous.url],['RESEARCH_MONITOR_TOKEN',previous.token]]) {
+      if(value===undefined)delete process.env[key];else process.env[key]=value;
+    }
   }
 });

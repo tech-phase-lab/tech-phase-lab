@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "private, no-store", Vary: "Cookie" };
 export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
   const { id } = await context.params;
-  const event = events.find(item => item.id === id) ?? (/^x-result-\d+$/.test(id) ? (await loadLiveResultEvents()).find(item => item.id === id) : undefined);
+  const event = events.find(item => item.id === id) ?? (/^(?:x|ir)-result-\d+$/.test(id) ? (await loadLiveResultEvents()).find(item => item.id === id) : undefined);
   if (!event) return Response.json({ error: "not-found" }, { status: 404, headers });
   if (isPublicSample(id)) return Response.json({ event: { ...event, locked: false } }, { headers });
   try {

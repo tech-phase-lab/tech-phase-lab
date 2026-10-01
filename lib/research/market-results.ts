@@ -41,7 +41,7 @@ export function resultEvents(briefs:ResultBrief[]): ResearchEvent[] {
     return {id:r.researchId,ticker:r.ticker,company:r.ticker,category: ['MU','SKHY','SNDK','NVDA','AMD','ARM','TSM','ASML','AMAT','INTC','AEHR'].includes(r.ticker)?'memory':['NBIS','IREN','MSFT','AMZN','GOOGL','META','PLTR','APP'].includes(r.ticker)?'cloud':'other',kind:'earnings',
       publishedOn:r.publishedAt.slice(0,10),reviewedOn:r.publicAt.slice(0,10),
       title:copy(r.titleJa,r.titleEn),summary:copy(r.titleJa,r.titleEn),change:copy(r.titleJa,r.titleEn),facts,
-      interpretation:copy('実績と次四半期の見通しを分けて掲載しています。','Reported results and next-quarter guidance are shown separately.'),
+      interpretation:r.facts.some(f=>f.key.startsWith('guidance-')) ? copy('実績と次四半期の見通しを分けて掲載しています。','Reported results and next-quarter guidance are shown separately.') : copy('投稿に記載された決算実績を整理しています。','This note summarises the reported results in the source post.'),
       unknown:copy('X投稿の速報です。会社公式資料との照合前で、市場予想は比較していません。','This is an X-sourced flash, pending comparison with the company release. Consensus is not compared.'),
       next:copy('会社の決算資料で実績と見通しを確認します。','Confirm the results and guidance against the company release.'),
       sources:[{id:r.researchId,url:r.url,title:r.period+' earnings',publisher:r.publisher,publishedOn:r.publishedAt.slice(0,10),location:'Reported numbers in the source post'}],metrics:[]};

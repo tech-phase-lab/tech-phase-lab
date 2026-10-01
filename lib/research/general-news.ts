@@ -49,7 +49,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
         publication.publishedOn = v.publishedOn;
       }
       const resultReference = updates.resultBriefs?.some(r => r.kind === 'earnings' && r.researchId === v.researchId && r.url === url.href);
-      if (v.researchId !== undefined && !(verifiedMu && v.researchId === 'mu-q4-2026') && !resultReference) throw Error('Invalid research reference');
+      if (v.researchId !== undefined && !(verifiedMu && v.researchId === 'mu-q4-2026') && !resultReference && !(issuerRelease && v.researchId === `ir-result-${v.id}`)) throw Error('Invalid research reference');
       return { id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}) };
     }).filter(item => {
       if (seenOfficialUrls.has(item.url)) return false;

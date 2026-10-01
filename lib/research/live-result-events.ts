@@ -1,5 +1,6 @@
 import 'server-only';
 import { parseResultBriefs, resultEvents } from './market-results';
+import { officialResultEvents } from './official-result-events';
 
 export async function loadLiveResultEvents() {
   try {
@@ -11,6 +12,7 @@ export async function loadLiveResultEvents() {
     const response=await fetch(url,{headers:{Authorization:`Bearer ${token}`},cache:'no-store',signal:AbortSignal.timeout(5000)});
     if(!response.ok)return [];
     const text=await response.text();if(new TextEncoder().encode(text).length>500000)return [];
-    return resultEvents(parseResultBriefs(JSON.parse(text).resultBriefs));
+    const payload=JSON.parse(text);
+    return [...officialResultEvents(payload.officialResearch), ...resultEvents(parseResultBriefs(payload.resultBriefs))];
   }catch{return [];}
 }

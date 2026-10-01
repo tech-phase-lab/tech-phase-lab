@@ -6,7 +6,7 @@ export type ResearchEvent = {
   locked?: boolean;
   id: string; ticker: string; company: string;
   category: "cloud" | "memory" | "other";
-  kind: "partnership" | "earnings" | "capacity" | "financing" | "product" | "external-research";
+  kind: "acquisition" | "partnership" | "earnings" | "capacity" | "financing" | "product" | "external-research";
   publishedOn: string; reviewedOn: string;
   title: Copy; summary: Copy; change: Copy; interpretation: Copy;
   facts: { text: Copy; sourceIds: string[] }[];

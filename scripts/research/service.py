@@ -28,6 +28,7 @@ import note_translation
 import question_translation
 import headline_translation
 import market_results
+import official_research
 import mu_earnings_measurement
 import web_push
 
@@ -512,6 +513,8 @@ class AutomaticMonitor:
         self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
         self.note_translation_thread = threading.Thread(target=self.run_note_translation, name="note-translation", daemon=True)
         self.headline_translation_thread = threading.Thread(target=self.run_headline_translation, name="headline-translation", daemon=True)
+        self.result_thread = threading.Thread(target=self.run_results, name="result-publication", daemon=True)
+        self.official_research_thread = threading.Thread(target=self.run_official_research, name="official-research", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
 
@@ -531,10 +534,26 @@ class AutomaticMonitor:
             return
         while not self.stop_event.is_set():
             try:
-                market_results.run_once(self.db_path, signals.SOURCES)
                 headline_translation.run_once(self.db_path)
             except Exception:
                 print("headline-translation-unavailable", flush=True)
+            self.stop_event.wait(5)
+
+    def run_results(self):
+        # Numerical flashes must not wait for an LLM or require an API key.
+        while not self.stop_event.is_set():
+            try:
+                market_results.run_once(self.db_path, signals.SOURCES)
+            except Exception:
+                print("result-publication-unavailable", flush=True)
+            self.stop_event.wait(5)
+
+    def run_official_research(self):
+        while not self.stop_event.is_set():
+            try:
+                official_research.run_once(self.db_path)
+            except Exception:
+                print("official-research-unavailable", flush=True)
             self.stop_event.wait(5)
 
     def run_mu_measurement(self):
@@ -583,6 +602,8 @@ class AutomaticMonitor:
         self.news_thread.start()
         self.note_translation_thread.start()
         self.headline_translation_thread.start()
+        self.result_thread.start()
+        self.official_research_thread.start()
         self.mu_measurement_thread.start()
         self.push_thread.start()
 
@@ -597,6 +618,8 @@ class AutomaticMonitor:
         self.news_thread.join(timeout=25)
         self.note_translation_thread.join(timeout=45)
         self.headline_translation_thread.join(timeout=45)
+        self.result_thread.join(timeout=15)
+        self.official_research_thread.join(timeout=45)
         self.mu_measurement_thread.join(timeout=45)
         self.push_thread.join(timeout=15)
 
@@ -645,7 +668,7 @@ class AutomaticMonitor:
 
     def public_news(self):
         with stock_news.connect(self.db_path) as db:
-            return {**news_drafts.public_feed(db), "officialUpdates": signals.public_official_updates(db), "resultBriefs":market_results.public_feed(db)}
+            return {**news_drafts.public_feed(db), "officialUpdates": signals.public_official_updates(db), "resultBriefs":market_results.public_feed(db), "officialResearch": official_research.feed(db)}
 
     def posts_queue(self, limit=20, published=False, offset=0):
         with editorial_posts.connect(self.db_path) as db:
@@ -924,6 +947,9 @@ class AutomaticMonitor:
             publication_issue = headline_translation.sync_incident(db)
             if publication_issue:
                 issues.append(publication_issue)
+            research_issue = official_research.sync_incident(db)
+            if research_issue:
+                issues.append(research_issue)
         return issues
 
     def check_incident_watch_once(self):
@@ -1076,6 +1102,7 @@ class AutomaticMonitor:
                 headline_translation.diagnostics(db, env=os.environ)
             )
             state["signalIntake"]["resultPublication"] = market_results.diagnostics(db)
+            state["signalIntake"]["officialResearch"] = official_research.diagnostics(db)
             state["incidents"] = monitor.operational_incident_summary(
                 db, delivery_enabled=self.notification_enabled
             )

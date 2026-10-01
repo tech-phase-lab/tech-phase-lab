@@ -37,7 +37,7 @@ export default function CompanyDashboard({ profile, companies }: { profile: Comp
   const [lang, setLang] = useResearchLanguage();
   const [topic, setTopic] = useState<ResearchEvent["kind"] | "all">("all");
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
-  const kinds = { earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding"), partnership: t("提携", "Partnership"), product: t("製品・料金", "Product & pricing"), "external-research": t("外部調査・評価", "External research") };
+  const kinds = { acquisition: t("買収", "Acquisition"), earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding"), partnership: t("提携", "Partnership"), product: t("製品・料金", "Product & pricing"), "external-research": t("外部調査・評価", "External research") };
   const filtered = profile.events.filter((event) => topic === "all" || event.kind === topic);
   const availableTopics = [...new Set(profile.events.map((event) => event.kind))];
   const firstRow = profile.comparisons[0];
