@@ -28,3 +28,8 @@ test('weekly section parser preserves unstructured text and bilingual report par
  assert.deepEqual(weeklySections(body),[{title:'今週',body:'売上 $54.23B\n\n利益率 87%'},{title:'Next week',body:'Check guidance.'}]);
  assert.deepEqual(weeklySections('Preface\n'+body),[{title:'',body:'Preface\n'+body}]);
 });
+
+test('weekly author endpoint receives Clerk middleware identity',()=>{
+ const proxy=readFileSync(new URL('../proxy.ts',import.meta.url),'utf8');
+ assert.match(proxy,/"\/api\/research\/weekly-author"/);
+});
