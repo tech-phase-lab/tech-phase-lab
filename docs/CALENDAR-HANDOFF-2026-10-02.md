@@ -89,3 +89,30 @@ already been checked earlier on the same date and were not rewritten.
 `lastAttemptedOn` advanced to `2026-10-02` for all 10 entries. The seven
 conclusive/reconfirmed checks advanced `lastCheckedOn`; MRVL, NOW and NVDA
 remain pending without an estimated date.
+
+## Fourth company batch
+
+The final 10 records in the 40-company rotation were reviewed against current
+first-party investor pages. Sandisk and TSMC reconfirmed their existing stored
+calls. The other eight sources published no later firm earnings date, so no
+calendar event was added and no estimated date or time was introduced. The BLS
+and Federal Reserve schedules had already been checked earlier on the same date
+and were not rewritten.
+
+| Ticker | Official source reviewed | Result / exact blocker |
+| --- | --- | --- |
+| ORCL | https://investor.oracle.com/ | The latest official event remains the September 10 fiscal Q1 2027 call; no later earnings schedule was published. |
+| PANW | https://investors.paloaltonetworks.com/news-and-events/events-presentations | The official page contains the completed fiscal Q4 2026 call and no future earnings event. |
+| PLTR | https://investors.palantir.com/events.html | The official events page still ends with Q2 2026 earnings; no Q3 date was published. |
+| QCOM | https://investor.qualcomm.com/news-events/investor-events/default.aspx | The official events page still ends with fiscal Q3 2026 results; no later earnings event was published. |
+| SKHY | https://news.skhynix.com/en/category/ir/ | The current IR feed reaches Q2 2026 results and contains no Q3 earnings invitation. |
+| SNDK | https://investor.sandisk.com/news-events/events | Reconfirmed the October 29 fiscal Q1 2027 earnings call at 16:30 Eastern. |
+| SNOW | https://investors.snowflake.com/events-and-presentations/default.aspx | The current official page reaches September 2 fiscal Q2 2027 earnings and lists no future earnings event. |
+| TSLA | https://ir.tesla.com/ | The official IR page still reaches Q2 2026 results; no Q3 webcast date was published. |
+| TSM | https://investor.tsmc.com/english/financial-calendar | Reconfirmed the October 15 Q3 2026 conference and call at 14:00 Taipei time. |
+| VRT | https://investors.vertiv.com/news/ | Current official investor news reaches Q2 2026 earnings and later non-earnings items; no Q3 date was published. |
+
+`lastAttemptedOn` and `lastCheckedOn` advanced to `2026-10-02` for all 10
+entries after the schedule pages were checked. This completes a same-day
+attempt across all 40 tracked companies; 13 older sources remain pending
+from earlier inaccessible, tentative or otherwise inconclusive checks.

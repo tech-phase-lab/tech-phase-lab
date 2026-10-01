@@ -1,3 +1,22 @@
+# Full October 2 calendar rotation and live intake observation — October 2, 2026 03:47 JST
+
+Reviewed the final rotation batch: ORCL, PANW, PLTR, QCOM, SKHY, SNDK, SNOW,
+TSLA, TSM and VRT. Sandisk and TSMC reconfirmed their existing stored calls;
+the other official pages published no later firm earnings date. No estimated
+date or time was added. All 40 tracked companies now have an October 2 review
+attempt; 27 have conclusive current checks and 13 older inaccessible,
+tentative or otherwise inconclusive sources remain pending. Exact evidence is
+in `CALENDAR-HANDOFF-2026-10-02.md`.
+
+Before this edit, the deployed intake view showed 22/22 company lists and all
+five priority issuers healthy. Supplementary routes were 21/26: two access
+restrictions, one timeout, one invalid response and one short-lived `other`
+failure, all in bounded backoff. Child-article failures were zero. The live
+24-hour source-publication-to-monitor sample was nine items, averaging 4,572
+seconds with a 40,711-second maximum. These are point-in-time measurements,
+not complete coverage or a latency SLA. Deployment and post-deployment calendar
+verification for this batch are still pending.
+
 # Third October 2 calendar batch and live intake observation — October 2, 2026 02:41–02:48 JST
 
 Reviewed KLAC, LRCX, META, MRVL, MSFT, MU, NBIS, NFLX, NOW and NVDA against
