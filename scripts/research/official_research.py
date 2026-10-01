@@ -25,7 +25,7 @@ predictions, investment advice, market consensus, invented context or calculated
 figures. Distinguish a completed acquisition from a partnership or a future plan.
 Produce a short title, one-sentence summary, three to five distinct factual points,
 and one sentence explaining the company's stated business purpose. Each item must
-include a verbatim evidenceQuote from the supplied body. Every claim in both
+include an evidenceId selected from the supplied evidence excerpts. Never rewrite an excerpt. Every claim in both
 languages must be supported by that quote. Use numbers exactly as quoted, without
 converting units. Do not turn company expectations into achieved results.
 Titles should fit roughly two lines on a phone; no ticker prefix is needed."""
@@ -95,8 +95,8 @@ def validate(value, body):
 
 
 def response_schema():
-    item={'type':'object','additionalProperties':False,'required':['ja','en','evidenceQuote'],
-          'properties':{k:{'type':'string'} for k in ('ja','en','evidenceQuote')}}
+    item={'type':'object','additionalProperties':False,'required':['ja','en','evidenceId'],
+          'properties':{k:{'type':'string'} for k in ('ja','en','evidenceId')}}
     return {'type':'object','additionalProperties':False,'required':['title','summary','facts','purpose'],
             'properties':{'title':item,'summary':item,'purpose':item,
                           'facts':{'type':'array','minItems':3,'maxItems':5,'items':item}}}
@@ -115,8 +115,9 @@ def claim(db, reference, model, limit):
             if published and published['sha']==r['sha']:
                 continue
             job=db.execute('SELECT * FROM official_research_jobs WHERE event_id=?',(r['id'],)).fetchone()
+            quote_recovery=bool(job and job['state']=='retry' and job['attempts']==4 and job['failure_kind']=='unsupported-quote')
             legacy_probe=bool(job and job['state']=='retry' and job['attempts']==3 and job['failure_kind'] is None)
-            if job and job['sha']==r['sha'] and ((job['attempts']>=3 and not legacy_probe) or job['next_at']>now):
+            if job and job['sha']==r['sha'] and ((job['attempts']>=3 and not legacy_probe and not quote_recovery) or job['next_at']>now):
                 continue
             lease=uuid.uuid4().hex
             db.execute('''INSERT INTO official_research_jobs(event_id,sha,attempts,next_at,lease,state) VALUES(?,?,1,?,?,'running')
@@ -143,15 +144,23 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         return 'idle'
     row,lease=claimed
     started=time.monotonic()
+    excerpts={str(i):row['body'][start:start+600] for i,start in enumerate(range(0,min(len(row['body']),45000),600))}
     payload={'model':model,'store':False,'max_output_tokens':2400,'instructions':POLICY,
-             'input':json.dumps({'ticker':row['ticker'],'title':row['title'],'body':row['body'][:45000]},ensure_ascii=False),
+             'input':json.dumps({'ticker':row['ticker'],'title':row['title'],'evidenceExcerpts':excerpts},ensure_ascii=False),
              'text':{'format':{'type':'json_schema','name':'issuer_factual_note','strict':True,'schema':response_schema()}}}
     usage={}
     try:
         response=transport(payload,key)
         if response.get('status')!='completed':
             raise ValueError('incomplete')
-        note=validate(json.loads(brief_generator.output_text(response)),row['body'][:45000])
+        value=json.loads(brief_generator.output_text(response))
+        for item in [value.get('title'),value.get('summary'),*(value.get('facts') or []),value.get('purpose')]:
+            if isinstance(item,dict) and 'evidenceId' in item:
+                evidence_id=item.pop('evidenceId')
+                if not isinstance(evidence_id,str) or evidence_id not in excerpts:
+                    raise ValueError('unsupported-quote')
+                item['evidenceQuote']=excerpts[evidence_id]
+        note=validate(value,row['body'][:45000])
         usage={k:v for k,v in (response.get('usage') or {}).items()
                if k in ('input_tokens','output_tokens','total_tokens') and type(v) is int}
     except Exception as exc:

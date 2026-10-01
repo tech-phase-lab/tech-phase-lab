@@ -46,6 +46,31 @@ class OfficialResearchTests(unittest.TestCase):
         self.assertIn('generationMs',item);self.assertNotIn('evidenceQuote',json.dumps(item))
         self.assertNotIn('background',json.dumps(item))
         self.assertEqual(self.run_note(lambda *_:self.fail('duplicate call')),'idle')
+    def test_evidence_ids_resolve_to_exact_source_without_model_rewriting(self):
+        def selected(payload,key):
+            excerpts=json.loads(payload['input'])['evidenceExcerpts']
+            note=json.loads(json.dumps(NOTE))
+            for item in [note['title'],note['summary'],*note['facts'],note['purpose']]:
+                item.pop('evidenceQuote');item['evidenceId']='0'
+            self.assertIn(QUOTES[0],excerpts['0'])
+            return {'status':'completed','output':[{'type':'message','content':[{'type':'output_text','text':json.dumps(note)}]}]}
+        self.assertEqual(self.run_note(selected),'done')
+        self.assertEqual(len(self.feed()),1)
+
+    def test_corrected_quote_failure_can_recover_once_and_invalid_ids_stay_private(self):
+        with research.connect(self.path) as db:
+            row=research.candidates(db,NOW)[0]
+            db.execute("INSERT INTO official_research_jobs(event_id,sha,attempts,next_at,lease,state,failure_kind) VALUES(?,?,4,0,'old','retry','unsupported-quote')",(row['id'],row['sha']))
+        def invalid(payload,key):
+            note=json.loads(json.dumps(NOTE))
+            note['title'].pop('evidenceQuote');note['title']['evidenceId']='unknown'
+            return {'status':'completed','output':[{'type':'message','content':[{'type':'output_text','text':json.dumps(note)}]}]}
+        self.assertEqual(self.run_note(invalid),'retry')
+        self.assertEqual(self.feed(),[])
+        self.assertEqual(self.run_note(lambda *_:self.fail('unbounded corrected retry')),'idle')
+        with research.connect(self.path) as db:
+            self.assertEqual(db.execute('SELECT attempts FROM official_research_jobs').fetchone()[0],5)
+
     def test_revision_changed_during_generation_cannot_publish(self):
         def revise(*args):
             with research.connect(self.path) as db:db.execute("UPDATE sources SET sha256='v2'")

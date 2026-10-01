@@ -39,7 +39,7 @@ export function officialResultEvents(value: unknown): ResearchEvent[] {
     const factual = r.facts.map(f => ({ text: copy(f), sourceIds: [id] }));
     return {
       id, ticker, company: ticker, category: ['NBIS','CRWV','MSFT','GOOGL','ORCL','PLTR'].includes(ticker) ? 'cloud' : ['MU','SKHY','SNDK','NVDA','AMD','ARM','TSM','ASML'].includes(ticker) ? 'memory' : 'other',
-      kind: kind as ResearchEvent['kind'], publishedOn, reviewedOn: publicAt.slice(0,10),
+      kind: kind as ResearchEvent['kind'], dateBasis: r.dateBasis as ResearchEvent['dateBasis'], publishedOn, reviewedOn: publicAt.slice(0,10),
       title: copy(r.title), summary: copy(r.summary), change: copy(r.summary), facts: factual,
       interpretation: copy(r.purpose),
       unknown: { ja: '売上や利益への影響は、今後の決算で確認します。', en: 'The effect on revenue and profit remains to be checked in subsequent earnings.' },

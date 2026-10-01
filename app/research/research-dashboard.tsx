@@ -287,7 +287,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
               <h2>{active.title[lang]}</h2>{active.id === "mu-q3-2026" && <p>{t("PRO分析の無料サンプルです。ほかの詳細分析はPRO会員向けです。", "A free sample of PRO research. Other in-depth analysis requires PRO membership.")}</p>}
               <dl className={styles.announcementContext}>
                 {active.analysisAsOf && <div><dt>{t("分析基準日", "Analysis as of")}</dt><dd>{dateLabel(active.analysisAsOf, lang)}</dd></div>}
-                <div><dt>{t("発表日", "Announced")}</dt><dd><time dateTime={active.publishedOn}>{dateLabel(active.publishedOn, lang)}</time></dd></div>
+                <div><dt>{active.dateBasis === "detection" ? t("取得日", "Detected") : t("発表日", "Announced")}</dt><dd><time dateTime={active.publishedOn}>{dateLabel(active.publishedOn, lang)}</time></dd></div>
                 <div><dt>{t("比較の基準", "Comparison basis")}</dt><dd>{comparisonPeriods.length ? comparisonPeriods.map((period) => <span key={period}>{period}</span>) : t("この発表で確認した内容", "Findings from this announcement")}</dd></div>
               </dl>
               <div className={styles.change}><span>{t("今回の変化", "WHAT CHANGED")}</span><p>{active.change[lang]}</p></div>

@@ -6,7 +6,7 @@ export function publicEvent(event: ResearchEvent): ResearchEvent {
   // Explicit allowlist: new analysis fields must never leak through object spread.
   return {
     id: event.id, ticker: event.ticker, company: event.company, category: event.category,
-    kind: event.kind, publishedOn: event.publishedOn, reviewedOn: event.reviewedOn,
+    kind: event.kind, ...(event.dateBasis ? { dateBasis: event.dateBasis } : {}), publishedOn: event.publishedOn, reviewedOn: event.reviewedOn,
     title: event.title, summary: event.summary, change: event.change, facts: event.facts,
     sources: event.sources, metrics: event.metrics, previous: event.previous,
     interpretation: { ja: "", en: "" }, unknown: { ja: "", en: "" }, next: { ja: "", en: "" }, locked: true,

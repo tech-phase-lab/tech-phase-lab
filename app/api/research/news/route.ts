@@ -23,7 +23,8 @@ export async function GET() {
     if (new TextEncoder().encode(text).length > 500_000) throw new Error("Oversized response");
     const raw = JSON.parse(text);
     const payload = publicNewsPayload(raw);
-    const issuerEvents = officialResultEvents(raw.officialResearch);
+    let issuerEvents: ReturnType<typeof officialResultEvents> = [];
+    try { issuerEvents=officialResultEvents(raw.officialResearch); } catch { /* An invalid note must not suppress valid news. */ }
     payload.officialUpdates = (payload.officialUpdates ?? []).map(item => {
       const event = issuerEvents.find(e => e.sources[0].url === item.url);
       return event ? { ...item, researchId: event.id, title: event.title.en, translationJa: event.title.ja } : item;

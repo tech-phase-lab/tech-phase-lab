@@ -16,3 +16,9 @@ test('official current-source notes reach bilingual research without leaking ana
  assert.equal(JSON.stringify(publicEvent(event)).includes('PRIVATE-PURPOSE'),false);
  for(const changes of [{url:'https://evil.example/newsroom/release'},{ticker:'MU'},{id:'operator-token'},{url:note.url+'?secret=1'},{kind:'trade'}])assert.throws(()=>officialResultEvents([{...note,...changes}]));
 });
+
+test('detected dates remain explicitly distinguished from official publication dates',()=>{
+ const [event]=officialResultEvents([{...note,dateBasis:'detection'}]);
+ assert.equal(event.dateBasis,'detection');
+ assert.equal(publicEvent(event).dateBasis,'detection');
+});

@@ -13,6 +13,10 @@ export async function loadLiveResultEvents() {
     if(!response.ok)return [];
     const text=await response.text();if(new TextEncoder().encode(text).length>500000)return [];
     const payload=JSON.parse(text);
-    return [...officialResultEvents(payload.officialResearch), ...resultEvents(parseResultBriefs(payload.resultBriefs))];
+    let issuerEvents: ReturnType<typeof officialResultEvents> = [];
+    let numericalEvents: ReturnType<typeof resultEvents> = [];
+    try { issuerEvents=officialResultEvents(payload.officialResearch); } catch { /* Hold invalid issuer notes only. */ }
+    try { numericalEvents=resultEvents(parseResultBriefs(payload.resultBriefs)); } catch { /* Hold invalid flashes only. */ }
+    return [...issuerEvents, ...numericalEvents];
   }catch{return [];}
 }
