@@ -1,3 +1,50 @@
+# MU automatic publication recovery — October 2, 2026
+
+Verified deployment: `f1af6f8f13ee45134f39b2243701792e01adfb9e` (Railway,
+Vercel, GitHub preview checks all success). Core fix: `c3295f8`.
+All concurrent calendar edits through `e4f12f9` are preserved.
+
+- Exact root causes: HTML extraction skipped Micron's ASP.NET `fmForm1`;
+  source title was NULL so the issuer bridge excluded the release; concurrent
+  startup schema migration crashed the monitor thread with duplicate-column
+  OperationalError. Translation's rolling 24-hour budget was also at 50/50.
+- Fixed fmForm1 extraction, revision-bound re-extraction, synchronous schema
+  initialization before 13 workers, monitor supervisor/retry, and missing MU
+  titles recovered only from an explicit heading in the fetched official body.
+- Added a bounded MU issuer-format adapter: quarterly revenue, non-GAAP EPS,
+  operating cash flow, next-quarter revenue/EPS guidance. No invented consensus,
+  no unit conversion, no extra OpenAI call, no budget increase. Unknown formats
+  fail closed. This is a factual earnings brief, not complete qualitative PRO analysis.
+- Existing record repair: requeued only the healthy MU source with old extractor
+  version; normal worker fetched 18,733 chars (previously 614). Recovered its
+  missing title from the same stored official body; recurring title repair now
+  deployed. Financial values were not manually inserted into the publication.
+- Worker automatically published exactly one MU issuer note `ir-result-1126`.
+  First detection: 2026-09-30T20:18:32.104Z (Oct 1 05:18:32.104 JST).
+  Complete body: 2026-10-01T18:53:53.271Z (Oct 2 03:53:53.271 JST).
+  Generation start: 2026-10-01T18:58:47.563458Z.
+  Publication: 2026-10-01T18:58:47.579Z (Oct 2 03:58:47.579 JST).
+  Generation/publication processing: 16 ms, deterministic/no API.
+  First detection to public: 81,615,475 ms = 22h 40m 15.475s.
+  These are RECOVERY timings, not a successful real-time earnings SLA.
+- Actual deployed Japanese and English detail UI verified (5 facts and exact
+  revenue/EPS/guidance). URL:
+  https://tech-phase-lab-git-codex-research-preview-chehon7144-5412.vercel.app/research?result=ir-result-1126#what-changed/ir-result-1126
+- News route now omits the manual MU fallback when a valid live MU earnings
+  note is present. Other historical research cards are retained. API URL cannot
+  be directly opened by this browser (ERR_BLOCKED_BY_CLIENT); do not bypass.
+- Final local checks: lint 0 errors/1 existing warning, Node 191/191,
+  Python 514/514, build, compileall, diff check. Equivalent checked tree verified
+  before connector ref updates. Remote code gates passed.
+- Remaining: no promise of all-news launch readiness. Other issuer notes still
+  show unsupported-number failures and the 50-call budget is exhausted. Global
+  translation backlog/quotas, alert delivery, general earnings formats and true
+  next-event end-to-end SLA need separate resolution. Never report 16 ms as
+  announcement-to-public speed. Existing old MU rehearsal input570 chars is not
+  evidence of full-body automatic publication.
+
+---
+
 # Full October 2 calendar rotation and live intake observation — October 2, 2026 03:47 JST
 
 Reviewed the final rotation batch: ORCL, PANW, PLTR, QCOM, SKHY, SNDK, SNOW,
