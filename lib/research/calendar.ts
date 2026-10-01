@@ -82,6 +82,12 @@ export const calendarEvents: CalendarEvent[] = [
     note: { ja: "公式カレンダーに掲載された説明会の開始予定です。決算資料の公開時刻を示すものではありません。", en: "Scheduled conference start from the official calendar, not the publication time of the earnings release." },
   },
   {
+    id: "lrcx-september-2026-call", ticker: "LRCX", kind: "earnings" as const, title: { ja: "Lam Research 決算説明会（2026年9月期）", en: "Lam Research September 2026 quarter earnings call" },
+    startsAt: "2026-10-21T14:00:00-07:00", sourceTimezone: "America/Los_Angeles", sourceName: "Lam Research IR",
+    sourceUrl: "https://investor.lamresearch.com/2026-09-30-Lam-Research-Corporation-Announces-September-Quarter-Financial-Conference-Call",
+    note: { ja: "説明会の開始予定です。決算資料の公開時刻を示すものではありません。", en: "Scheduled call start, not the publication time of the earnings release." },
+  },
+  {
     id: "gev-q3-2026-webcast", ticker: "GEV", kind: "earnings" as const, title: { ja: "GE Vernova 決算説明会（2026年Q3）", en: "GE Vernova Q3 2026 earnings webcast" },
     startsAt: "2026-10-28T07:30:00-04:00", sourceTimezone: "America/New_York", sourceName: "GE Vernova IR",
     sourceUrl: "https://www.gevernova.com/investors/events/3rd-quarter-2026-earnings-webcast",

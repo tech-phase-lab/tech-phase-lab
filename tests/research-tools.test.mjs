@@ -50,7 +50,7 @@ test("registered schedules are ordered, unique and linked to official sources", 
     assert.ok(Number.isFinite(timestamp) && timestamp >= previous);
     previous = timestamp;
     assert.ok(event.title.ja && event.title.en);
-    assert.ok(["www.bls.gov", "www.bea.gov", "investors.micron.com", "ir.netflix.net", "investor.sandisk.com", "investor.tsmc.com", "www.gevernova.com", "www.adobe.com"].includes(new URL(event.sourceUrl).hostname));
+    assert.ok(["www.bls.gov", "www.bea.gov", "investors.micron.com", "ir.netflix.net", "investor.sandisk.com", "investor.tsmc.com", "investor.lamresearch.com", "www.gevernova.com", "www.adobe.com"].includes(new URL(event.sourceUrl).hostname));
     if (event.sourceName === "BLS") {
       assert.equal(new Intl.DateTimeFormat("en-GB", { timeZone: event.sourceTimezone, hour: "2-digit", minute: "2-digit" }).format(new Date(event.startsAt)), "08:30");
     }
@@ -123,6 +123,17 @@ test("GE Vernova webcast keeps the official Eastern time and release/call distin
   assert.match(gev.note.en, /webcast start, not the publication time/i);
   assert.equal(calendarDateKey(gev.startsAt, "America/New_York"), "2026-10-28");
   assert.equal(calendarDateKey(gev.startsAt, "Asia/Tokyo"), "2026-10-28");
+});
+
+test("Lam Research call keeps the official Pacific time and release/call distinction", () => {
+  const lam = calendarEvents.find((event) => event.id === "lrcx-september-2026-call");
+  const time = (date, zone) => new Intl.DateTimeFormat("en-GB", { timeZone: zone, hour: "2-digit", minute: "2-digit" }).format(new Date(date));
+  assert.equal(lam.startsAt, "2026-10-21T14:00:00-07:00");
+  assert.equal(lam.sourceTimezone, "America/Los_Angeles");
+  assert.equal(time(lam.startsAt, "America/New_York"), "17:00");
+  assert.equal(time(lam.startsAt, "Asia/Tokyo"), "06:00");
+  assert.equal(calendarDateKey(lam.startsAt, "Asia/Tokyo"), "2026-10-22");
+  assert.match(lam.note.en, /call start, not the publication time/i);
 });
 
 test("FOMC meetings stay date-only until the Federal Reserve publishes clock times", () => {

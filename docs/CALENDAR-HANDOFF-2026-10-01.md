@@ -199,3 +199,29 @@ and were not redundantly advanced. Existing October 2/14/15 BLS releases and
 October 27–28/December 8–9 FOMC meetings remain unchanged, with no inferred
 time. The next oldest-source rotation begins with INTC, LRCX, META, MSFT, MU,
 NBIS, NFLX, SNDK, TSLA and TSM.
+
+## Official-source rotation (21:45 JST)
+
+Rechecked INTC, LRCX, META, MSFT, MU, NBIS, NFLX, SNDK, TSLA and TSM against
+current first-party investor pages and announcements. Lam Research's September
+30 first-party announcement newly confirms its September 2026 quarter financial
+conference call for October 21, 2026 at 2:00 p.m. Pacific / 5:00 p.m. Eastern.
+The calendar now stores the Pacific call start, fiscal period and exact source
+URL; it does not treat the call time as the earnings-release publication time.
+
+| Ticker | Result | Official source / evidence |
+| --- | --- | --- |
+| INTC | Checked | [IR calendar](https://www.intc.com/news-events/ir-calendar) explicitly says there are no upcoming events. |
+| LRCX | Added | [September-quarter call announcement](https://investor.lamresearch.com/2026-09-30-Lam-Research-Corporation-Announces-September-Quarter-Financial-Conference-Call) confirms October 21 at 2:00 p.m. PDT / 5:00 p.m. EDT. |
+| META | Checked | [Investor events](https://investor.atmeta.com/investor-events/) still exposes no later earnings announcement after the completed July 29 event. |
+| MSFT | Checked | [Investor Relations](https://www.microsoft.com/en-us/investor/default) still does not publish a specific future earnings event. |
+| MU | Checked | [Events](https://investors.micron.com/events-and-presentations) contains the completed September 30 fiscal Q4 event and no later earnings announcement. |
+| NBIS | Checked | [Investor events](https://nebius.com/investor-events) contains completed investor-conference and Q2 items, with no future earnings announcement. |
+| NFLX | Checked | [Netflix's announcement](https://ir.netflix.net/investor-news-and-events/financial-releases/press-release-details/2026/Netflix-to-Announce-Third-Quarter-2026-Financial-Results/default.aspx) still confirms the stored October 20 approximate 1:01 p.m. Pacific release and 1:45 p.m. interview. |
+| SNDK | Checked | [Events](https://investor.sandisk.com/news-events/events) still confirms the stored October 29 fiscal Q1 2027 call at 4:30 p.m. Eastern. |
+| TSLA | Checked | [Investor Relations](https://ir.tesla.com/) still provides no first-party Q3 earnings date. |
+| TSM | Checked | [Financial calendar](https://investor.tsmc.com/english/financial-calendar) still confirms the stored October 15 Q3 call at 2:00 p.m. Asia/Taipei. |
+
+All ten companies already had October 1 attempt and completed-check dates, so
+the coverage ledger was not rewritten. The October 1 BLS and Federal Reserve
+daily checks were already complete; no economic date or clock time changed.
