@@ -64,3 +64,28 @@ added.
 conclusive/reconfirmed checks advanced `lastCheckedOn`; AMAT remains pending on
 its explicitly projected date. The BLS and Federal Reserve schedules had
 already been checked earlier on the same date and were not rewritten.
+
+## Third company batch
+
+The next 10 oldest company records were reviewed against first-party investor
+pages. KLA, Lam Research and Netflix reconfirmed their existing stored
+schedules. No additional earnings date or clock time was published, so the
+calendar itself did not change. The BLS and Federal Reserve schedules had
+already been checked earlier on the same date and were not rewritten.
+
+| Ticker | Official source reviewed | Result / exact blocker |
+| --- | --- | --- |
+| KLAC | https://ir.kla.com/events-presentations/ | Reconfirmed the October 28 date-only results release and separate 14:00 Pacific earnings call. |
+| LRCX | https://investor.lamresearch.com/events | Reconfirmed the October 21 14:00 Pacific earnings call. |
+| META | https://investor.atmeta.com/investor-events/ | The current official page still exposes only prior Q2 2026 material; no future earnings event was published. |
+| MRVL | https://investor.marvell.com/events-and-presentations/default.aspx | The only upcoming item is October 6 Investor Day, not an earnings release or call. A future earnings schedule remains pending, so `lastCheckedOn` did not advance. |
+| MSFT | https://www.microsoft.com/en-us/investor/default | Official investor material remains at FY2026 Q4 and says FY2027 Q1 will be announced soon; no firm date was published. |
+| MU | https://investors.micron.com/events-and-presentations/default.aspx | The September 30 fiscal Q4 call and results were reconfirmed; no later earnings schedule was published. |
+| NBIS | https://nebius.com/investor-events | The official page explicitly says there are no upcoming events; no future earnings schedule was published. |
+| NFLX | https://ir.netflix.net/investor-news-and-events/financial-releases/press-release-details/2026/Netflix-to-Announce-Third-Quarter-2026-Financial-Results/default.aspx | Reconfirmed the October 20 results publication at approximately 13:01 Pacific and separate 13:45 video interview. The calendar retains the release time only. |
+| NOW | https://investor.servicenow.com/events-and-presentations/default.aspx | The official page could not be retrieved conclusively and indexed first-party evidence did not expose a future earnings event. Pending; `lastCheckedOn` did not advance. |
+| NVDA | https://investor.nvidia.com/financial-info/financial-reports/default.aspx | The official page labels the next earnings event only as “Coming soon,” without a date or time. Pending; `lastCheckedOn` did not advance. |
+
+`lastAttemptedOn` advanced to `2026-10-02` for all 10 entries. The seven
+conclusive/reconfirmed checks advanced `lastCheckedOn`; MRVL, NOW and NVDA
+remain pending without an estimated date.

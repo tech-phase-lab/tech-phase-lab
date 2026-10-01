@@ -1,3 +1,26 @@
+# Third October 2 calendar batch and live intake observation — October 2, 2026 02:41–02:48 JST
+
+Reviewed KLAC, LRCX, META, MRVL, MSFT, MU, NBIS, NFLX, NOW and NVDA against
+current first-party investor sources. KLA, Lam Research and Netflix reconfirmed
+their existing stored schedules; no new firm earnings date or clock time was
+published. Marvell's October 6 item is Investor Day rather than earnings,
+ServiceNow's official page remained inconclusive, and NVIDIA says only that the
+next earnings event is coming soon, so those three remain pending without an
+estimated date. The day's BLS and Federal Reserve review was already complete.
+Exact evidence and blockers are in `CALENDAR-HANDOFF-2026-10-02.md`.
+
+The canonical preview first showed its saved September 19 fallback, then
+reconnected automatically to the live monitor. At observation, core company
+lists were 22/22 and priority sources 5/5 healthy. Supplementary routes were
+21/26: two access restrictions, one timeout, one invalid response and one other
+failure, all with bounded retries; child-article failures were zero. Source
+publication-to-monitor latency had seven 24-hour samples averaging 5,868
+seconds with a 40,711-second maximum. These are point-in-time incident metrics,
+not complete coverage or a latency SLA. The public preview intentionally lacks
+private route identities/evidence; no discretionary diagnostics endpoint was
+added because the finite news-readiness backlog is complete. Protected staging
+diagnostics remain the exact blocker if further classification is authorized.
+
 # ASML exact release/call times and second October 2 calendar batch — October 2, 2026 01:44–02:00 JST
 
 Reviewed ADBE, AMAT, AMD, ASML, COHR, CRM, CRWD, DELL, GEV and INTC against

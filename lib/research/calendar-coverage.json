@@ -136,8 +136,8 @@
     "ticker": "KLAC",
     "name": "KLA",
     "sourceUrl": "https://ir.kla.com/events-presentations/",
-    "lastAttemptedOn": "2026-10-01",
-    "lastCheckedOn": "2026-10-01"
+    "lastAttemptedOn": "2026-10-02",
+    "lastCheckedOn": "2026-10-02"
   },
   {
     "ticker": "LITE",
@@ -150,63 +150,63 @@
     "ticker": "LRCX",
     "name": "Lam Research",
     "sourceUrl": "https://investor.lamresearch.com/events",
-    "lastAttemptedOn": "2026-10-01",
-    "lastCheckedOn": "2026-10-01"
+    "lastAttemptedOn": "2026-10-02",
+    "lastCheckedOn": "2026-10-02"
   },
   {
     "ticker": "META",
     "name": "Meta Platforms",
     "sourceUrl": "https://investor.atmeta.com/investor-events/",
-    "lastAttemptedOn": "2026-10-01",
-    "lastCheckedOn": "2026-10-01"
+    "lastAttemptedOn": "2026-10-02",
+    "lastCheckedOn": "2026-10-02"
   },
   {
     "ticker": "MRVL",
     "name": "Marvell",
     "sourceUrl": "https://investor.marvell.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-10-01",
+    "lastAttemptedOn": "2026-10-02",
     "lastCheckedOn": null
   },
   {
     "ticker": "MSFT",
     "name": "Microsoft",
     "sourceUrl": "https://www.microsoft.com/en-us/investor/default",
-    "lastAttemptedOn": "2026-10-01",
-    "lastCheckedOn": "2026-10-01"
+    "lastAttemptedOn": "2026-10-02",
+    "lastCheckedOn": "2026-10-02"
   },
   {
     "ticker": "MU",
     "name": "Micron",
     "sourceUrl": "https://investors.micron.com/news/press-release/2026/Micron-Technology-to-Report-Fiscal-Fourth-Quarter-Results-on-September-30-2026/default.aspx",
-    "lastAttemptedOn": "2026-10-01",
-    "lastCheckedOn": "2026-10-01"
+    "lastAttemptedOn": "2026-10-02",
+    "lastCheckedOn": "2026-10-02"
   },
   {
     "ticker": "NBIS",
     "name": "Nebius",
     "sourceUrl": "https://nebius.com/investor-events",
-    "lastAttemptedOn": "2026-10-01",
-    "lastCheckedOn": "2026-10-01"
+    "lastAttemptedOn": "2026-10-02",
+    "lastCheckedOn": "2026-10-02"
   },
   {
     "ticker": "NFLX",
     "name": "Netflix",
     "sourceUrl": "https://ir.netflix.net/investor-news-and-events/financial-releases/press-release-details/2026/Netflix-to-Announce-Third-Quarter-2026-Financial-Results/default.aspx",
-    "lastAttemptedOn": "2026-10-01",
-    "lastCheckedOn": "2026-10-01"
+    "lastAttemptedOn": "2026-10-02",
+    "lastCheckedOn": "2026-10-02"
   },
   {
     "ticker": "NOW",
     "name": "ServiceNow",
     "sourceUrl": "https://investor.servicenow.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-10-01",
+    "lastAttemptedOn": "2026-10-02",
     "lastCheckedOn": null
   },
   {
     "ticker": "NVDA",
     "name": "NVIDIA",
     "sourceUrl": "https://investor.nvidia.com/events-and-presentations/default.aspx",
-    "lastAttemptedOn": "2026-10-01",
+    "lastAttemptedOn": "2026-10-02",
     "lastCheckedOn": null
   },
   {
