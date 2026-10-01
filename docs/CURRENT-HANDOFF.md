@@ -270,3 +270,8 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - The live operations preview retried the single supplemental official route previously classified as `other` and recovered it at 15:50:42 JST. Current supplemental coverage is 23/26 successful routes; `other` is now zero.
 - Three routes remain pending: two access restrictions with the earliest retry at October 2 20:16:46 JST, and one timeout with the earliest retry at October 1 17:27:11 JST. These are lawful wait states; do not bypass access controls or present 23/26 as complete coverage.
 - Priority coverage remained healthy at 5/5 and general official-headline translation remained 19/19 with no pending, retry or exhausted item. No provider, polling interval, paid service, subscriber-delivery or production setting changed.
+
+## October 1 17:47 JST — supplemental-route relapse observed
+- The 15:50 recovery above was transient. The same supplemental route later failed again as `other`; its 17:47:16 JST retry did not recover it and the next lawful retry is October 1 17:55:16 JST. Current live coverage is therefore back to 22/26, not 23/26.
+- The separate timeout route also failed its 17:27 retry and now waits until October 1 21:43:32 JST. Together with two access-restricted routes waiting until October 2 20:16:46 JST, four routes remain pending: two access restrictions, one timeout and one `other` failure.
+- Priority coverage remains healthy at 5/5, article-body child failures remain zero, and official-headline translation remains 19/19 with no pending or failed item. Treat route recoveries as point-in-time observations rather than stable coverage or a latency guarantee; do not bypass access controls.
