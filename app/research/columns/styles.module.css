@@ -31,3 +31,13 @@
 @media(max-width:700px){.noteBubble{margin-left:48px}.answerLabel img{width:30px;height:30px}}
 
 .weeklySection{border-top:1px solid #a68b5430;padding:14px 0;white-space:normal}.weeklySection summary{cursor:pointer;font-size:16px;font-weight:600;color:#e2cda2}.weeklySection p{white-space:pre-wrap;margin:12px 0 0;line-height:1.8}
+
+/* Keep weekly evidence available without competing with the report. */
+.article footer.weeklySourceFooter{margin-top:10px;padding-top:8px}
+.weeklySources{font-size:12px;line-height:1.6;color:#a7aaa7}
+.weeklySources summary{display:list-item;cursor:pointer;padding:6px 0;font-size:12px;font-weight:400;color:#a7aaa7}
+.weeklySources ul{list-style:none;padding:0;margin:6px 0 0}
+.weeklySources li{margin:0}
+.article .weeklySources a{display:block;padding:5px 0;font-size:12px;line-height:1.6;font-weight:400;color:#b5bbb7;text-decoration:none;overflow-wrap:anywhere}
+.article .weeklySources a:hover{text-decoration:underline;color:#d8ded9}
+.weeklySources :focus-visible{outline:2px solid #d8c398;outline-offset:3px}
