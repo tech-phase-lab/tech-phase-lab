@@ -1,3 +1,13 @@
+# NBIS publication recovery verified — October 1, 2026 21:50–21:52 JST
+
+Deployed code 489c997 + 39bf79b on codex/research-preview. Railway and Vercel success; GitHub Lint/test/build check success. Fix gates: 181 Node tests, 499 Python tests; after integrating concurrent Lam calendar update 371842b, 182 Node tests and 499 Python tests pass. Final gates also include lint (one pre-existing unused-ticker warning), build, compileall, diff check.
+
+Live home on the branch alias shows "Nebius、Inferizeを買収しNebius Token Factoryの推論スタックを強化へ 2026年10月1日" with "取得 2026/10/1 20:00:29 JST". Observed in browser at 21:50:31 JST; screenshot captured 21:51. This is the existing translator's automatic output, not a manually inserted headline. The source DB publication date was NULL although the source title included a date; fresh release_events with verified bodies now stay eligible with unknown publication date, without fabricating a timestamp. Generic Read story headlines excluded.
+
+Live intake afterward: eligible42, translated42, pending0, running0, retrying0, exhausted0; calls24h32/50 (completed29, failed0, prior stale3). This is recovery evidence, NOT a seconds-level original publication SLA, and NOT proof all external sources are healthy or full earnings analysis is complete. Prior 20/20 did not include the primary IR pipeline. Official-source access/backoff gaps elsewhere still require work; no bypass or quota increase made.
+
+Screenshot retained: libfile_64923f4e9d38819181d3e920bcd3a0b3, techphase-nbis-recovered-1790859067420.jpg. Final current source tree before this documentation: 5c520d239c23de28c5e4a5f8dcf91c4235f9b07e.
+
 # Primary IR publication gap — October 1, 2026 evening
 
 Root cause of missing Nebius/Inferize acquisition: primary monitor persisted the release in sources/source_revisions/release_events, but service.public_news used only supplementary signal_events. The official IR release was never eligible for headline translation or the homepage. Detection 20:00:29 JST, fetched body 20:00:41 JST. Prior 20/20 translation recovery measured supplementary items only, NOT this acquisition. Never describe that as end-to-end coverage.
