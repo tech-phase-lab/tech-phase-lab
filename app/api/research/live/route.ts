@@ -1,11 +1,18 @@
 import rawSnapshot from "@/lib/research/intake-snapshot.json";
 import { snapshotIssues, type IntakeSnapshot } from "@/lib/research/intake";
+import {
+  createMonitorFallbackLogger,
+  monitorExceptionReason,
+  monitorStatusReason,
+  type MonitorFallbackReason,
+} from "@/lib/research/live-monitor-observability";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 15;
 
 const bundled = rawSnapshot as IntakeSnapshot;
+const monitorLog = createMonitorFallbackLogger();
 const liveHeaders = {
   "Cache-Control": "public, max-age=0, must-revalidate",
   // The payload is public-safe and identical for every viewer. Keep the
@@ -19,7 +26,7 @@ function endpoint() {
   if (!value) return null;
   const url = new URL(value);
   const local = ["localhost", "127.0.0.1"].includes(url.hostname);
-  if (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && local)) {
+  if (url.username || url.password || (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && local))) {
     throw new Error("RESEARCH_MONITOR_URL must use HTTPS");
   }
   url.pathname = `${url.pathname.replace(/\/$/, "")}/live`;
@@ -28,7 +35,8 @@ function endpoint() {
   return url;
 }
 
-function fallback(error: "not-configured" | "monitor-unavailable") {
+function fallback(error: "not-configured" | "monitor-unavailable", reason: MonitorFallbackReason) {
+  monitorLog.failure(reason);
   return Response.json(
     { ok: false, mode: "snapshot", error, snapshot: bundled },
     { headers: { "Cache-Control": "no-store" } },
@@ -40,9 +48,9 @@ export async function GET() {
   try {
     url = endpoint();
   } catch {
-    return fallback("not-configured");
+    return fallback("not-configured", "invalid-config");
   }
-  if (!url) return fallback("not-configured");
+  if (!url) return fallback("not-configured", "not-configured");
 
   try {
     const token = process.env.RESEARCH_MONITOR_TOKEN;
@@ -51,15 +59,16 @@ export async function GET() {
       headers: token ? { Authorization: `Bearer ${token}` } : undefined,
       signal: AbortSignal.timeout(10_000),
     });
-    if (!response.ok) return fallback("monitor-unavailable");
+    if (!response.ok) return fallback("monitor-unavailable", monitorStatusReason(response.status));
     const length = Number(response.headers.get("content-length") ?? 0);
-    if (length > 3_000_000) return fallback("monitor-unavailable");
+    if (length > 3_000_000) return fallback("monitor-unavailable", "oversized-response");
     const payload = await response.json() as { ok?: boolean; mode?: string; monitor?: unknown; snapshot?: IntakeSnapshot };
     if (!payload.ok || payload.mode !== "automatic" || !payload.snapshot || snapshotIssues(payload.snapshot).length) {
-      return fallback("monitor-unavailable");
+      return fallback("monitor-unavailable", "invalid-payload");
     }
+    monitorLog.recovered();
     return Response.json(payload, { headers: liveHeaders });
-  } catch {
-    return fallback("monitor-unavailable");
+  } catch (error) {
+    return fallback("monitor-unavailable", monitorExceptionReason(error));
   }
 }

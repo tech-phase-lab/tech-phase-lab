@@ -254,3 +254,30 @@ October schedule still confirms October 2 Employment Situation, October 14 CPI
 and October 15 PPI at 08:30 Eastern. The Federal Reserve still lists October
 27–28 and December 8–9 without future policy-statement or press-conference clock
 times. No economic event or inferred time changed.
+
+## Pending-first company review (23:49 JST)
+
+Rechecked LITE, MRVL, NOW, NVDA, PANW, PLTR, SKHY, SNOW, VRT and QCOM against
+current first-party investor pages and announcements. No new confirmed earnings
+release or call was found. Marvell's October 6 Investor Day is an investor event,
+not an earnings announcement, so it was not promoted into the earnings calendar.
+
+| Ticker | Result | Official source / exact blocker |
+| --- | --- | --- |
+| LITE | Pending | [Events](https://investor.lumentum.com/events-and-presentations) still ends with the completed August 11 fiscal Q4 2026 call and provides no future earnings announcement. |
+| MRVL | Pending | [IR calendar](https://investor.marvell.com/events-and-presentations/default.aspx) lists an October 6 Investor Day, while the latest earnings event remains August 27; no future earnings date is confirmed. |
+| NOW | Pending | The current first-party investor results surfaced no future earnings announcement; the schedule remains inconclusive. |
+| NVDA | Pending | [Financial community events](https://investor.nvidia.com/events-and-presentations/events-and-presentations/default.aspx) provides conference and completed-result material but no future earnings announcement. |
+| PANW | Pending | The current first-party result remains a completed fiscal Q1 2026 announcement; no future earnings event is confirmed. |
+| PLTR | Pending | [Investor Relations](https://investors.palantir.com/) and current filings provide completed results and filings, not a future earnings announcement. |
+| SKHY | Pending | The latest first-party earnings announcement remains the completed July 29 Q2 2026 result; no future earnings event is confirmed. |
+| SNOW | Pending | [Investor Relations](https://investors.snowflake.com/) still presents completed fiscal Q2 2027 material and no future earnings announcement. |
+| VRT | Pending | [News](https://investors.vertiv.com/news-events/news/default.aspx) still ends with completed Q2 2026 results and provides no future earnings announcement. |
+| QCOM | Pending | [Investor Relations](https://investor.qualcomm.com/) still presents completed fiscal Q3 2026 results and no future fiscal Q4 date. |
+
+All ten companies already had an October 1 review attempt, so no coverage
+timestamp was rewritten. The BLS October schedule still confirms October 2
+Employment Situation, October 14 CPI and October 15 PPI at 08:30 Eastern. The
+Federal Reserve calendar still lists October 27–28 and December 8–9, and still
+does not publish future statement or press-conference clock times. No economic
+record or inferred time changed.

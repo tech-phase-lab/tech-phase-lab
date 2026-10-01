@@ -33,6 +33,13 @@ test("identical live snapshots share a bounded edge cache without caching failur
   assert.doesNotMatch(liveTypes, /fetch\("\/api\/research\/live", \{ cache: "no-store" \}\)/);
 });
 
+test("live fallback diagnostics stay categorical and reject credential-bearing URLs", () => {
+  assert.match(liveRoute, /url\.username \|\| url\.password/);
+  assert.match(liveRoute, /monitorLog\.failure/);
+  assert.match(liveRoute, /monitorLog\.recovered/);
+  assert.doesNotMatch(liveRoute, /console\.(?:warn|error)\([^\n]*(?:error|url|token)/i);
+});
+
 test("operations preview exposes bounded cache pressure without cached contents", () => {
   assert.match(liveTypes, /fetchCache\?:/);
   assert.match(liveTypes, /discoveryCache\?:/);

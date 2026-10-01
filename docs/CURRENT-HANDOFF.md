@@ -1,3 +1,29 @@
+# Live monitor recovery and safe proxy diagnostics — October 1, 2026 23:49–23:56 JST
+
+The latest branch deployment at ac998c3 is Ready on Vercel. An authenticated
+browser check at 23:52:41 JST confirmed the live intake had recovered: 22/22
+company lists, priority 5/5 healthy, headline translation 45/45, and the NBIS
+issuer-note line visibly reported one published and one unpublished item. The
+published ir-result-1106 still shows 6.9 seconds for its final generation and
+11,153 seconds from detection to publication; the latter is incident recovery,
+not an SLA. Supplementary routes were 22/26 with two access restrictions, one
+timeout and one other retry, so total official coverage is not claimed.
+
+The Vercel proxy had previously returned its checked-in fallback snapshot
+without a safe causal log. `/api/research/live` now emits only fixed diagnostic
+categories, coalesces the same failure for five minutes per warm instance, and
+emits one recovery record with elapsed time. It rejects credential-bearing
+monitor URLs and never logs URLs, tokens, response bodies, exception text or
+private evidence. The public fallback payload and cache behavior are unchanged.
+
+Rechecked LITE, MRVL, NOW, NVDA, PANW, PLTR, SKHY, SNOW, VRT and QCOM against
+current first-party investor sources. No new confirmed earnings event was found;
+Marvell's October 6 Investor Day is not an earnings release. BLS still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI at 08:30
+Eastern; the Federal Reserve still lists October 27–28 and December 8–9 without
+future statement or press-conference times. Existing October 1 coverage dates
+were not rewritten. Exact blockers are in `CALENDAR-HANDOFF-2026-10-01.md`.
+
 # Live bilingual NBIS publication recovery — October 1, 2026 23:06–23:11 JST
 
 Current code commit d427c6b003b213dca493ef833ae845b3f21ee3be (after 82ce99c). GitHub Research preview checks, Vercel and Railway all succeeded. Integrated KLA calendar work f005c6a preserved. Final gates: 186 Node tests, 508 Python tests, lint zero errors/one existing warning, Next production build, compileall, diff check.

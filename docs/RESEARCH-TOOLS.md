@@ -565,6 +565,16 @@ the complete concurrent polling batch. The timeout only advances that issuer
 to its configured official RSS or SEC route; it does not retry around an
 access control or turn the polling interval into a delivery guarantee.
 
+The preview's `/api/research/live` proxy records a bounded operational signal
+when it has to return the checked-in fallback snapshot. The log contains only a
+fixed failure category (`not-configured`, invalid configuration, upstream
+status class, oversized response, invalid JSON/payload, timeout or network),
+coalesces an unchanged failure for five minutes per warm instance, and records
+one recovery with elapsed time. It never includes the monitor URL, credentials,
+response body, exception text or private evidence. The public fallback shape
+and `no-store` behavior are unchanged; these logs diagnose the proxy path and
+are not source-to-display latency evidence.
+
 Validation: `npm run lint`, `node --experimental-strip-types --test tests/*.test.mjs`,
 and `npm run build`. Browser checks cover favorites persistence, company-page
 toggles, calendar filters, and the four home destinations.
