@@ -257,6 +257,9 @@ test("SEC evidence totals and filters distinguish exhibits from filing-body fall
   assert.match(intakeDashboard, /公式補完経路/);
   assert.match(intakeDashboard, /日付のみ/);
   assert.match(liveTypes, /articlePartial: number/);
+  assert.match(liveTypes, /fetchFailure\?: number; noLinks\?: number/);
+  assert.match(intakeDashboard, /fetchFailure: "取得失敗"/);
+  assert.match(intakeDashboard, /noLinks: "リンク未検出"/);
   assert.match(intakeDashboard, /記事一部失敗/);
   assert.match(intakeDashboard, /routes\.errorKinds \?\?/);
   assert.match(liveTypes, /unscheduled: number/);

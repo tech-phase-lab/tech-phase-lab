@@ -420,7 +420,7 @@ class SignalTests(unittest.TestCase):
             "errorKinds": {
                 "accessRestricted": 1, "rateLimited": 0, "timeout": 0,
                 "server": 0, "invalidResponse": 0,
-                "articlePartial": 0, "other": 0,
+                "articlePartial": 0, "fetchFailure": 0, "noLinks": 0, "other": 0,
             },
             "retry": {
                 "due": 0, "deferred": 1, "unscheduled": 0,
@@ -435,6 +435,8 @@ class SignalTests(unittest.TestCase):
                     "server": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
                     "invalidResponse": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
                     "articlePartial": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
+                    "fetchFailure": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
+                    "noLinks": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
                     "other": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
                 },
             },
@@ -463,7 +465,7 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(summary["articleRetrieval"]["errorKinds"], {
             "accessRestricted": 1, "rateLimited": 0, "timeout": 1,
             "server": 0, "invalidResponse": 0,
-            "articlePartial": 0, "other": 0,
+            "articlePartial": 0, "fetchFailure": 0, "noLinks": 0, "other": 0,
         })
         article_retry = summary["articleRetrieval"]["retry"]
         self.assertEqual(
@@ -550,6 +552,10 @@ class SignalTests(unittest.TestCase):
             "signal-invalid-feed-root": "invalidResponse",
             "unsupported-content-type": "invalidResponse",
             "article-fetch-failed:2": "articlePartial",
+            "fetch-failed": "fetchFailure",
+            "fetch-error": "fetchFailure",
+            "no-links": "noLinks",
+            "no-release-links": "noLinks",
             "unexpected-private-detail": "other",
         }
         for error, expected in cases.items():
@@ -590,6 +596,8 @@ class SignalTests(unittest.TestCase):
                     "due": 0, "deferred": 1, "unscheduled": 0,
                     "nextAt": "2026-09-25T07:10:00+00:00",
                 },
+                "fetchFailure": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
+                "noLinks": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
                 "other": {"due": 0, "deferred": 0, "unscheduled": 0, "nextAt": None},
             },
         })

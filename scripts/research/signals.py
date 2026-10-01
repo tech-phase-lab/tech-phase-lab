@@ -889,6 +889,10 @@ def signal_error_kind(error):
         return "server"
     if value.startswith("article-fetch-failed:"):
         return "articlePartial"
+    if value in {"fetch-failed", "fetch-error"}:
+        return "fetchFailure"
+    if value in {"no-links", "no-release-links"}:
+        return "noLinks"
     if value.startswith("signal-") or value in {
         "invalid-source-response", "unsupported-content-type",
         "empty-or-oversized-source", "no-extractable-text",
@@ -1010,7 +1014,7 @@ def operational_summary(db, sources=SOURCES, reference=None):
 
     error_kinds = {kind: 0 for kind in (
         "accessRestricted", "rateLimited", "timeout", "server",
-        "invalidResponse", "articlePartial", "other",
+        "invalidResponse", "articlePartial", "fetchFailure", "noLinks", "other",
     )}
 
     def retry_summary():

@@ -1,3 +1,29 @@
+# Calendar refresh and explicit route failure categories — October 2, 2026 00:18–00:29 JST
+
+Reviewed AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and LITE against
+current first-party investor sources. No firm future earnings release/call date
+was published; Arm's November 4 date remains explicitly tentative. The BLS
+October schedule and Federal Reserve meeting calendar still match the stored
+events, so no event or invented time was added. Advanced only the 10 attempted
+company markers and the macro review date. Exact sources and blockers are in
+`CALENDAR-HANDOFF-2026-10-02.md`.
+
+The live preview remained healthy for the core pipeline at 00:28 JST: 22/22
+company lists and priority 5/5 healthy. Supplementary coverage remained 22/26,
+with two access restrictions, one long-running timeout and one rapidly
+recovering/refailing route reported only as `other`; this is not complete
+coverage. A new safe aggregate classification maps only fixed persisted codes
+to `fetchFailure` and `noLinks`, leaving arbitrary/legacy detail in `other`.
+The owner UI now shows 取得失敗 and リンク未検出 separately for route, retry,
+active-outage and child-article aggregates. Older backend payloads render both
+new values as zero during rollout. No route IDs, URLs, exception text, evidence
+bodies or credentials are exposed.
+
+The preview observation predates this classification deployment. After the
+branch and Railway update, verify that the oscillating route moves out of
+`other` when its persisted safe code is one of the two recognized categories;
+do not claim the route recovered merely because its label became more precise.
+
 # Live monitor recovery and safe proxy diagnostics — October 1, 2026 23:49–23:56 JST
 
 The latest branch deployment at ac998c3 is Ready on Vercel. An authenticated

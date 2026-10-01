@@ -280,13 +280,14 @@ export type MonitorState = {
       stale: number; error: number; pending: number;
       errorKinds?: {
         accessRestricted: number; rateLimited: number; timeout: number;
-        server: number; invalidResponse: number; articlePartial: number; other: number;
+        server: number; invalidResponse: number; articlePartial: number;
+        fetchFailure?: number; noLinks?: number; other: number;
       };
       retry?: {
         due: number; deferred: number; unscheduled: number; nextAt: string | null;
         byErrorKind?: Partial<Record<
           "accessRestricted" | "rateLimited" | "timeout" | "server" |
-          "invalidResponse" | "articlePartial" | "other",
+          "invalidResponse" | "articlePartial" | "fetchFailure" | "noLinks" | "other",
           { due: number; deferred: number; unscheduled: number; nextAt: string | null }
         >>;
       };
@@ -296,7 +297,7 @@ export type MonitorState = {
         oldestStartedAt: string | null;
         byErrorKind?: Partial<Record<
           "accessRestricted" | "rateLimited" | "timeout" | "server" |
-          "invalidResponse" | "articlePartial" | "other",
+          "invalidResponse" | "articlePartial" | "fetchFailure" | "noLinks" | "other",
           { measured: number; unmeasured: number; ageMaxMs: number | null;
             attemptsAverage: number | null; attemptsMax: number | null;
             oldestStartedAt: string | null }
@@ -307,13 +308,14 @@ export type MonitorState = {
       error: number;
       errorKinds: {
         accessRestricted: number; rateLimited: number; timeout: number;
-        server: number; invalidResponse: number; articlePartial: number; other: number;
+        server: number; invalidResponse: number; articlePartial: number;
+        fetchFailure?: number; noLinks?: number; other: number;
       };
       retry: {
         due: number; deferred: number; unscheduled: number; nextAt: string | null;
         byErrorKind?: Partial<Record<
           "accessRestricted" | "rateLimited" | "timeout" | "server" |
-          "invalidResponse" | "articlePartial" | "other",
+          "invalidResponse" | "articlePartial" | "fetchFailure" | "noLinks" | "other",
           { due: number; deferred: number; unscheduled: number; nextAt: string | null }
         >>;
       };
