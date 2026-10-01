@@ -1,14 +1,6 @@
-export type MonitorFallbackReason =
-  | "not-configured"
-  | "invalid-config"
-  | "upstream-4xx"
-  | "upstream-5xx"
-  | "upstream-other-status"
-  | "oversized-response"
-  | "invalid-json"
-  | "invalid-payload"
-  | "timeout"
-  | "network";
+import type { MonitorFallbackReason } from "./live-monitor-diagnostics";
+
+export type { MonitorFallbackReason } from "./live-monitor-diagnostics";
 
 type SafeLogger = Pick<Console, "info" | "warn">;
 

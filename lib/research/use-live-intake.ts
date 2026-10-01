@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { snapshotIssues, type IntakeSnapshot } from "./intake";
+import { parseMonitorFallbackReason, type MonitorFallbackReason } from "./live-monitor-diagnostics";
 
 export type MonitorState = {
   ready: boolean;
@@ -380,10 +381,11 @@ type LiveState = {
   mode: "automatic" | "snapshot";
   monitor: MonitorState | null;
   error: "not-configured" | "monitor-unavailable" | null;
+  diagnosticReason: MonitorFallbackReason | null;
 };
 
 export function useLiveIntake(initialSnapshot: IntakeSnapshot, intervalMs = 60_000) {
-  const [state, setState] = useState<LiveState>({ snapshot: initialSnapshot, mode: "snapshot", monitor: null, error: null });
+  const [state, setState] = useState<LiveState>({ snapshot: initialSnapshot, mode: "snapshot", monitor: null, error: null, diagnosticReason: null });
 
   useEffect(() => {
     let active = true;
@@ -393,16 +395,17 @@ export function useLiveIntake(initialSnapshot: IntakeSnapshot, intervalMs = 60_0
       inFlight = true;
       try {
         const response = await fetch("/api/research/live");
-        const payload = await response.json() as { mode?: "automatic" | "snapshot"; monitor?: MonitorState; error?: LiveState["error"]; snapshot?: IntakeSnapshot };
+        const payload = await response.json() as { mode?: "automatic" | "snapshot"; monitor?: MonitorState; error?: LiveState["error"]; diagnosticReason?: unknown; snapshot?: IntakeSnapshot };
         if (!active || !payload.snapshot || snapshotIssues(payload.snapshot).length) return;
         setState({
           snapshot: payload.snapshot,
           mode: payload.mode === "automatic" ? "automatic" : "snapshot",
           monitor: payload.mode === "automatic" ? payload.monitor ?? null : null,
           error: payload.error ?? null,
+          diagnosticReason: payload.mode === "automatic" ? null : parseMonitorFallbackReason(payload.diagnosticReason),
         });
       } catch {
-        if (active) setState((current) => ({ ...current, mode: "snapshot", monitor: null, error: "monitor-unavailable" }));
+        if (active) setState((current) => ({ ...current, mode: "snapshot", monitor: null, error: "monitor-unavailable", diagnosticReason: null }));
       } finally {
         inFlight = false;
       }

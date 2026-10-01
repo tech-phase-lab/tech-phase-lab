@@ -7,6 +7,22 @@ import {
   monitorExceptionReason,
   monitorStatusReason,
 } from "../lib/research/live-monitor-observability.ts";
+import {
+  monitorFallbackLabel,
+  monitorFallbackReasons,
+  parseMonitorFallbackReason,
+} from "../lib/research/live-monitor-diagnostics.ts";
+
+test("live monitor diagnostic UI accepts only fixed safe categories", () => {
+  for (const reason of monitorFallbackReasons) {
+    assert.equal(parseMonitorFallbackReason(reason), reason);
+    assert.equal(typeof monitorFallbackLabel(reason), "string");
+  }
+  for (const value of [null, 503, "", "https://user:secret@private.example/path", "private response body"]) {
+    assert.equal(parseMonitorFallbackReason(value), null);
+  }
+  assert.equal(monitorFallbackLabel(null), null);
+});
 
 test("live monitor failures use bounded categories without upstream details", () => {
   assert.equal(monitorStatusReason(401), "upstream-4xx");
