@@ -21,6 +21,16 @@ private route identities/evidence; no discretionary diagnostics endpoint was
 added because the finite news-readiness backlog is complete. Protected staging
 diagnostics remain the exact blocker if further classification is authorized.
 
+Calendar refresh commit `f05a53a` used the exact local and Git Data tree
+`c64a60ce`; Vercel and Railway staging both succeeded. The complete gate
+passed: ESLint zero errors with one pre-existing warning, Node 190/190, Python
+510/510, Next.js production build, `compileall` and `git diff --check`.
+Post-deployment browser verification showed the October 2 review date, 24
+upcoming schedules and 40 tracked companies. The live intake had recovered to
+22/26 supplementary routes: two access restrictions, one timeout and one
+invalid response; the prior `other` failure cleared. The next calendar batch is
+ORCL, PANW, PLTR, QCOM, SKHY, SNDK, SNOW, TSLA, TSM and VRT.
+
 # ASML exact release/call times and second October 2 calendar batch — October 2, 2026 01:44–02:00 JST
 
 Reviewed ADBE, AMAT, AMD, ASML, COHR, CRM, CRWD, DELL, GEV and INTC against
