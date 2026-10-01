@@ -9,6 +9,8 @@ import { useResearchLanguage } from "../use-research-language";
 import questionStyles from "../qa/styles.module.css";
 import styles from "./styles.module.css";
 import { scheduleLeaseRenewal } from "@/lib/research/display-lease";
+import WeeklyComposer from "../weekly/composer";
+import { weeklySections } from "@/lib/research/weekly";
 import NoteComposer from "../notes/composer";
 import { useMemberDisplay, useOwnerMode } from "../member-display-provider";
 type Result = { items: EditorialPost[]; access: string; status: string; validUntil?: number };
@@ -76,6 +78,8 @@ export default function ColumnsPage({ initialKind = "all", initial }: { initialK
   const membershipMismatch = memberPlan !== null && result.status === "ready" && (result.access === "pro") !== (memberPlan === "pro");
   const shown = membershipMismatch ? { items: [], access: "", status: "loading" } : result;
   return <ResearchToolShell desk lang={lang} setLang={setLang} title={initialKind === "all" ? "RIZEL’S DESK" : initialKind === "qa" ? ja ? "リゼルに聞く" : "Ask RIZEL" : postNames[initialKind][lang]} description="">
+    {initialKind === "weekly" && ownerMode && <WeeklyComposer onPublished={() => setRetry(value => value + 1)} />}
+    {initialKind === "all" && <nav className={styles.writeAction}><Link href="/research/weekly">{ja ? "週刊 Tech Phase PRO" : "Tech Phase PRO Weekly"}</Link></nav>}
     {initialKind === "qa" && <nav className={questionStyles.views} aria-label={ja ? "質問メニュー" : "Question views"}><Link href="/research/qa">{ja ? "みんなの質問" : "Questions"}</Link><span aria-current="page">{ja ? "公開された回答" : "Published answers"}</span></nav>}
     {initialKind === "notes" && ownerMode && <NoteComposer onPublished={() => setRetry(value => value + 1)} />}
     {shown.status === "loading" && <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "記事を読み込んでいます" : "Loading articles"} />}
@@ -89,7 +93,7 @@ export default function ColumnsPage({ initialKind = "all", initial }: { initialK
       <div className={item.kind === "notes" ? styles.noteBubble : undefined}>
       {item.kind === "notes" && <p className={styles.meta}><time dateTime={item.publishedAt!}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { dateStyle: "medium", timeStyle: "short", hourCycle: "h23", timeZone: "Asia/Tokyo" }).format(new Date(item.publishedAt!))}<small className={styles.zone}> JST</small></time></p>}
       {item.kind !== "notes" && <>{item.kind === "qa" && <p className={styles.questionLabel}>{ja ? "質問" : "QUESTION"}</p>}<h2>{ja ? item.titleJa : item.titleEn}</h2><p className={styles.text}>{ja ? item.introJa : item.introEn}</p></>}
-      {!ja && item.translationStatus === "pending" ? <p>Translation pending.</p> : shown.access === "pro" ? <>{item.kind === "qa" && <div className={styles.answerLabel}><span>{ja ? "リゼルの回答" : "RIZEL’S ANSWER"}</span><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={32} height={32} unoptimized /></div>}<div className={`${styles.text} ${item.kind === "qa" ? styles.qaBody : ""}`}>{ja ? item.bodyJa : item.bodyEn}</div>{item.sources.length > 0 && <footer><h3>{ja ? "出典" : "Sources"}</h3>{item.sources.map((source, index) => <a key={index} href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a>)}</footer>}</> : <aside><p>{ja ? "この先の本文はPRO会員向けです。" : "The full article is available to PRO members."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in / Membership"}</Link></aside>}
+      {!ja && item.translationStatus === "pending" ? <p>Translation pending.</p> : shown.access === "pro" ? <>{item.kind === "qa" && <div className={styles.answerLabel}><span>{ja ? "リゼルの回答" : "RIZEL’S ANSWER"}</span><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={32} height={32} unoptimized /></div>}<div className={`${styles.text} ${item.kind === "qa" ? styles.qaBody : ""}`}>{item.kind === "weekly" ? weeklySections(ja ? item.bodyJa : item.bodyEn).map((section,index)=><details key={index} className={styles.weeklySection} open={index===0}><summary>{section.title || (ja ? "本文" : "Report")}</summary><p>{section.body}</p></details>) : ja ? item.bodyJa : item.bodyEn}</div>{item.sources.length > 0 && <footer><h3>{ja ? "出典" : "Sources"}</h3>{item.sources.map((source, index) => <a key={index} href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a>)}</footer>}</> : <aside><p>{ja ? "この先の本文はPRO会員向けです。" : "The full article is available to PRO members."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in / Membership"}</Link></aside>}
 
       </div>
     </article>)}

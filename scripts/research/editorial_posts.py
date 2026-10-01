@@ -103,9 +103,9 @@ def save(db, payload):
             raise ValueError("post-conflict")
         if row and row["kind"] != kind:
             raise ValueError("post-kind-conflict")
-        if row and kind == "notes":
+        if row and kind in {"notes", "weekly"}:
             previous = json.loads(row["content"])
-            if previous.get("bodyJa") != value["bodyJa"]:
+            if any(previous.get(k) != value[k] for k in (("titleJa", "introJa", "bodyJa") if kind == "weekly" else ("bodyJa",))):
                 # English belongs to the previous Japanese revision; never publish it as current.
                 for key in ("titleEn", "introEn", "bodyEn"):
                     value[key] = ""
