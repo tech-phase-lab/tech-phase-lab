@@ -731,6 +731,51 @@ class IntakeTests(unittest.TestCase):
         self.assertIn("verified expansion", self.row()["extracted_text"])
         self.assertNotIn("Explore our products", self.row()["extracted_text"])
 
+    def test_aspnet_server_form_preserves_release_but_not_controls_or_chrome(self):
+        body = b'''<html><head><title>Release</title></head><body>
+          <form method="post" id="form1" action="default.aspx">
+          <nav>Investor navigation</nav><main><h1>Quarterly results</h1>
+          <p>Revenue was $54.23 billion and adjusted EPS was $33.42.</p>
+          <input value="secret"><select><option>Choose account</option></select>
+          <textarea>Personal message</textarea><label>Subscribe label</label>
+          <div class="newsletter">Sign up now</div></main><footer>Legal footer</footer>
+          </form><form><p>Contact us today</p></form></body></html>'''
+        text = m.extract_html_text(body)
+        self.assertIn("Revenue was $54.23 billion", text)
+        for excluded in ("Investor navigation", "secret", "Choose account", "Personal message",
+                         "Subscribe label", "Sign up", "Legal footer", "Contact us"):
+            self.assertNotIn(excluded, text)
+        self.assertNotIn("Quarterly results", m.extract_html_text(
+            body.replace(b'id="form1"', b'id="newsletter"')))
+
+    def test_thin_legacy_html_is_reextracted_once_even_with_same_raw_etag(self):
+        body = b'<form id="form1" method="post"><main><p>Official quarterly results.</p></main></form>'
+        with patch.object(m, "extract_text", return_value="Legacy short metadata"):
+            self.check(body)
+        old_sha = self.row()["sha256"]
+        self.db.execute("UPDATE sources SET extractor_version='',response_etag=? WHERE url=?",
+                        ('"unchanged"', URL))
+        self.db.commit()
+        seen = []
+        def transport(url, ticker, validators=None, include_metadata=False):
+            seen.append(validators)
+            return {"content": body, "contentType": "text/html", "charset": "utf-8",
+                    "etag": '"unchanged"', "lastModified": None, "notModified": False}
+        transport.supports_persistent_validators = True
+        row = self.row()
+        m.save_source_check(self.db, row, m.collect_source(row, transport))
+        self.assertEqual(seen[0], {"force_unconditional": True})
+        self.assertEqual(self.row()["extracted_text"], "Official quarterly results.")
+        self.assertNotEqual(self.row()["sha256"], old_sha)
+        self.assertEqual(self.row()["raw_sha256"], old_sha)
+        revision = self.db.execute("SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?",
+                                   (URL, self.row()["sha256"])).fetchone()
+        self.assertEqual(revision[0], "Official quarterly results.")
+        self.assertEqual(self.db.execute("SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?",
+                                        (URL, old_sha)).fetchone()[0], "Legacy short metadata")
+        m.collect_source(self.row(), transport)
+        self.assertEqual(seen[1], {"etag": '"unchanged"', "last_modified": None})
+
     def test_thin_semantic_shell_does_not_hide_valid_json_ld_body(self):
         article_body = (
             "The official release confirms a phased AI infrastructure expansion through 2027. "

@@ -25,6 +25,7 @@ INDEXES = {t: p.get("monitorUrl", p["indexUrl"]) for t, p in PROVIDERS.items()}
 HOSTS = {t: set(p["allowedHosts"]) for t, p in PROVIDERS.items()}
 MAX_BYTES = 12 * 1024 * 1024
 MAX_EXTRACTED_CHARS = 160_000
+HTML_EXTRACTOR_VERSION = "2026-10-01-server-form"
 MAX_JSON_LD_CHARS = 512 * 1024
 MAX_JSON_LD_BLOCKS = 20
 MAX_JSON_LD_NODES = 2_000
@@ -742,7 +743,8 @@ class ArticleText(HTMLParser):
 
     ignored = {
         "script", "style", "noscript", "template", "svg", "canvas", "iframe",
-        "header", "nav", "aside", "footer", "form", "button", "dialog", "menu",
+        "header", "nav", "aside", "footer", "button", "dialog", "menu",
+        "input", "select", "textarea", "label",
     }
     ignored_roles = {"banner", "complementary", "contentinfo", "dialog", "navigation"}
     ignored_tokens = {
@@ -770,6 +772,13 @@ class ArticleText(HTMLParser):
             for key, value in attrs if key
         }
         if tag in self.ignored or "hidden" in values or "data-nosnippet" in values:
+            return True
+        # ASP.NET issuer sites wrap the whole document (including the release)
+        # in their server form. Keep that wrapper, not arbitrary user forms.
+        if tag == "form" and not (
+            values.get("id", "").lower() in {"form1", "aspnetform"}
+            and values.get("method", "").lower() == "post"
+        ):
             return True
         if values.get("aria-hidden", "").lower() == "true":
             return True
@@ -1557,6 +1566,7 @@ def connect(path):
         "response_last_modified": "TEXT",
         "evidence_url": "TEXT",
         "evidence_kind": "TEXT NOT NULL DEFAULT 'direct'",
+        "extractor_version": "TEXT NOT NULL DEFAULT ''",
     }
     for column, declaration in migrations.items():
         if column not in source_columns:
@@ -4175,9 +4185,14 @@ def collect_source(row, transport=fetch):
             )
         )
         sec_filing = urlsplit(row["url"]).hostname == "www.sec.gov"
+        stale_thin_html = (
+            row["content_type"] == "text/html"
+            and 0 < (row["extracted_chars"] or 0) < 1200
+            and row["extractor_version"] != HTML_EXTRACTOR_VERSION
+        )
         validators = (
             {"force_unconditional": True}
-            if sec_filing else {}
+            if sec_filing or stale_thin_html else {}
             if missing_extracted_evidence else {
                 "etag": row["response_etag"],
                 "last_modified": row["response_last_modified"],
@@ -4251,6 +4266,20 @@ def save_source_check(db, row, result):
                 result["extractedText"].encode("utf-8")
             ).hexdigest()
         changed = False if not_modified else result_body_sha != current["body_sha256"]
+        raw_sha = None if not_modified else result["sha256"]
+        if changed:
+            prior_revision = db.execute(
+                "SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?",
+                (row["url"], raw_sha),
+            ).fetchone()
+            if prior_revision and prior_revision["extracted_text"] != result["extractedText"]:
+                # A parser repair can change evidence without changing raw HTML.
+                # Keep the old revision immutable and bind generation to the new
+                # extraction, rather than INSERT OR IGNORE retaining the old body.
+                result = dict(result)
+                result["sha256"] = hashlib.sha256(
+                    (raw_sha + "\0EXTRACTED\0" + result_body_sha).encode("utf-8")
+                ).hexdigest()
         recheck_seconds = successful_recheck_seconds(
             db, row["url"], changed, bool(current["sha256"]), checked_at
         )
@@ -4313,17 +4342,17 @@ def save_source_check(db, row, result):
               fetched_at=COALESCE(fetched_at,?),error=NULL,status=?,
               content_type=?,content_bytes=?,extracted_text=?,extracted_chars=?,fetch_failures=0,
               next_fetch_at=?,response_etag=?,response_last_modified=?,
-              evidence_url=?,evidence_kind=?
+              evidence_url=?,evidence_kind=?,extractor_version=?
           WHERE url=?
         """, (
-            result["sha256"] if changed else current["sha256"], result["sha256"],
+            result["sha256"] if changed else current["sha256"], raw_sha,
             result_body_sha, checked_at, checked_at,
             "pending" if changed else current["status"],
             result["contentType"], result["contentBytes"], result["extractedText"],
             result["extractedChars"], next_fetch_at, http_validator(result.get("responseEtag")),
             http_validator(result.get("responseLastModified")),
             result.get("evidenceUrl") or row["url"],
-            result.get("evidenceKind") or "direct", row["url"],
+            result.get("evidenceKind") or "direct", HTML_EXTRACTOR_VERSION, row["url"],
         ))
         hostname = source_hostname(row["url"])
         # Inline RSS/Atom evidence proves that the feed was reachable, not that
