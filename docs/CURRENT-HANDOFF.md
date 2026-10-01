@@ -1,3 +1,38 @@
+# Scheduled retry and preview fallback checkpoint — October 2, 2026 06:47 JST
+
+The deployed operations preview showed the live monitor at 06:47:42 JST long
+enough to verify that the long-running supplemental-route timeout retried after
+its 06:16:20 schedule and failed again. Its bounded attempt count increased
+from 55 to 56; the next retry is scheduled for 10:32:40 JST. Supplemental
+coverage therefore remains 23/26, with two access restrictions and one timeout.
+The access-restricted routes are not due before 20:16:46 JST. Core lists were
+still 22/22 and all five priority issuers were healthy. These are point-in-time
+worker observations, not polling or delivery guarantees.
+
+The same live state showed one additional extracted body (209 total) and a new
+Microsoft official item detected at 06:27:27 JST with body evidence ready at
+06:27:37 JST, a measured 11-second detection-to-body interval. The official
+source exposed only a publication date, not an exact source time, so no
+publication-to-detection latency is reported. Across the four new body samples
+shown by the worker, detection-to-body averaged 446 seconds with a 1,747-second
+maximum; these are recovery samples, not an SLA. Headline translation remained
+at its rolling 50/50 request limit with 47 translated and three pending.
+
+Immediately after the live observation, the same page switched to its saved
+September 19 fallback. One normal reload still showed that fallback, so this
+checkpoint does not claim that the preview proxy reconnected. The worker was
+healthy in the last live observation; the exact remaining blocker is the
+intermittent Vercel-to-monitor connection, and the public-safe fallback does not
+expose private route identities, URLs or raw errors. No access control was
+bypassed and no protected diagnostics were published.
+
+Calendar maintenance made no marker change: all 40 companies already had an
+actual October 2 attempt, and BLS and Federal Reserve dates had already received
+their required daily review. The 14 inconclusive companies keep their exact
+pending blockers; no estimated date or time was added.
+
+---
+
 # MU automatic publication recovery — October 2, 2026
 
 Verified deployment: `f1af6f8f13ee45134f39b2243701792e01adfb9e` (Railway,
