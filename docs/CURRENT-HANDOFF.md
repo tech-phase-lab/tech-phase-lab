@@ -68,10 +68,15 @@ ticker/publication date. It intentionally does not collapse non-earnings items,
 because multiple distinct product or partnership releases can share a date.
 Two regressions cover both behaviors.
 
-The integrated local gate passed: ESLint had zero errors and one pre-existing
-warning, Node 192/192, Python 514/514, Next.js production build, `compileall`
-and `git diff --check`. Deployment and post-deployment browser verification of
-the single-card reader result remain pending at this checkpoint.
+After integrating the concurrent title-recovery/news-preference commits, the
+final gate passed: ESLint had zero errors and one pre-existing warning, Node
+193/193, Python 514/514, Next.js production build, `compileall` and
+`git diff --check`. Commit `112c7ff` used the exact local/Git Data tree
+`12ab7e5f`; Railway staging and Vercel both succeeded. Post-deployment browser
+verification showed exactly one September 30 MU earnings card in Japanese and
+English. The older June 24 analysis remains separately visible, so legitimate
+historical research was not removed. The selected item retained all five
+issuer-backed facts and its direct Micron link.
 
 ---
 
