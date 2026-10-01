@@ -66,13 +66,18 @@ def schema(db):
       CREATE TABLE IF NOT EXISTS signal_headline_translation_jobs(
         source_id TEXT NOT NULL, url TEXT NOT NULL, sha TEXT NOT NULL,
         attempts INTEGER NOT NULL, next_at REAL NOT NULL,
-        lease TEXT NOT NULL, state TEXT NOT NULL,
+        lease TEXT NOT NULL, state TEXT NOT NULL, source_title TEXT,
         PRIMARY KEY(source_id,url,sha));
       CREATE TABLE IF NOT EXISTS signal_headline_translation_calls(
         at REAL NOT NULL, source_id TEXT NOT NULL, sha TEXT NOT NULL,
         model TEXT NOT NULL, state TEXT NOT NULL, usage TEXT NOT NULL DEFAULT '{}',
         lease TEXT NOT NULL UNIQUE);
     """)
+    columns = {row[1] for row in db.execute(
+        "PRAGMA table_info(signal_headline_translation_jobs)"
+    )}
+    if "source_title" not in columns:
+        db.execute("ALTER TABLE signal_headline_translation_jobs ADD COLUMN source_title TEXT")
 
 
 def connect(path):
@@ -188,18 +193,28 @@ def claim(db, sources, limit, model, now):
             job = db.execute('''SELECT * FROM signal_headline_translation_jobs
               WHERE source_id=? AND url=? AND sha=?''',
                              (row["source_id"], row["url"], row["sha"])).fetchone()
-            if job and (job["state"] == "done" or job["attempts"] >= MAX_ATTEMPTS
+            recoverable_legacy_stale = bool(
+                job and job["state"] == "stale" and job["attempts"] >= MAX_ATTEMPTS
+                and job["source_title"] is None
+            )
+            if job and (job["state"] == "done"
+                        or (job["attempts"] >= MAX_ATTEMPTS and not recoverable_legacy_stale)
                         or job["next_at"] > now):
                 continue
             lease = uuid.uuid4().hex
-            db.execute('''INSERT INTO signal_headline_translation_jobs
-              VALUES(?,?,?,1,?,?,'running') ON CONFLICT(source_id,url,sha) DO UPDATE SET
-              attempts=attempts+1,next_at=excluded.next_at,lease=excluded.lease,state='running' ''',
-                       (row["source_id"], row["url"], row["sha"], now + 300, lease))
+            db.execute('''INSERT INTO signal_headline_translation_jobs(
+              source_id,url,sha,attempts,next_at,lease,state,source_title)
+              VALUES(?,?,?,1,?,?,'running',?) ON CONFLICT(source_id,url,sha) DO UPDATE SET
+              attempts=CASE WHEN state='stale' AND source_title IS NULL
+                THEN 1 ELSE attempts+1 END,
+              next_at=excluded.next_at,lease=excluded.lease,state='running',
+              source_title=excluded.source_title''',
+                       (row["source_id"], row["url"], row["sha"], now + 300, lease,
+                        row["title"]))
             db.execute('''INSERT INTO signal_headline_translation_calls
               (at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)''',
                        (now, row["source_id"], row["sha"], model, "running", lease))
-            return {**dict(row), "title": item["title"]}, lease
+            return {**dict(row), "translation_title": item["title"]}, lease
     return None
 
 
@@ -222,7 +237,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     payload = {
         "model": model, "store": False, "max_output_tokens": 300,
         "instructions": POLICY,
-        "input": json.dumps({"title": row["title"]}, ensure_ascii=False),
+        "input": json.dumps({"title": row["translation_title"]}, ensure_ascii=False),
         "text": {"format": {"type": "json_schema", "name": "official_headline_translation",
                             "strict": True, "schema": schema}},
     }

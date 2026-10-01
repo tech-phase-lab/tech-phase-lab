@@ -171,3 +171,31 @@ remain pending rather than being marked checked or replaced with an estimate.
 All ten already had an October 1 attempt, so no coverage timestamp was
 rewritten. The October 1 BLS and Federal Reserve daily reviews were also already
 complete; no economic release or FOMC time was changed or inferred.
+
+## Official-source rotation (20:49 JST)
+
+Rechecked AMAT, CRM, ORCL, ASML, ADBE, AMD, COHR, CRWD, DELL and GEV against
+their current first-party investor pages and announcements. No new earnings
+event or clock time was added. ASML's first-party quarterly-results page
+conclusively reconfirms the already registered October 14, 2026 Q3 results
+date, so only ASML's `lastCheckedOn` advanced. Every other stored event and
+coverage timestamp already matched the evidence or remained pending.
+
+| Ticker | Result | Official source / exact blocker |
+| --- | --- | --- |
+| AMAT | Pending | [Events](https://ir.appliedmaterials.com/events?tab=upcoming) still exposes only the completed Q3 2026 earnings call; no future earnings event is announced. |
+| CRM | Pending | [Investor events](https://investor.salesforce.com/events-and-presentations/default.aspx) lists Dreamforce investor programming and the completed August 26 earnings event, not a future earnings release or call. |
+| ORCL | Pending | The latest first-party earnings announcement is the completed September 10 fiscal Q1 2027 release; [events and presentations](https://investor.oracle.com/events-and-presentations/default.aspx) does not confirm a later earnings event. |
+| ASML | Checked | [Quarterly results](https://www.asml.com/en/investors/financial-results/quarterly-results) reconfirms Q3 2026 results on Wednesday, October 14, 2026. The stored date-only record remains unchanged. |
+| ADBE | Checked | [Events and presentations](https://www.adobe.com/investor-relations/events-presentations.html) still confirms the December 9, 2026 Q4/FY2026 call at 2:00 p.m. Pacific. |
+| AMD | Checked | [IR calendar](https://ir.amd.com/news-events/ir-calendar) explicitly says there are no upcoming events. |
+| COHR | Checked | [Events](https://ir.coherent.com/news-events/events) says more events are coming soon and lists only past events. |
+| CRWD | Checked | [Events and presentations](https://ir.crowdstrike.com/events-and-presentations/) lists presentations and past events through September 10, with no future earnings event. |
+| DELL | Checked | [Upcoming events](https://investors.delltechnologies.com/news-events/upcoming-events) says more events are coming soon; its latest earnings result remains the completed September 1 release. |
+| GEV | Checked | [Investor events](https://www.gevernova.com/investors/events) reconfirms the October 28, 2026 Q3 webcast from 7:30 to 8:30 a.m. Eastern. |
+
+The BLS and Federal Reserve daily reviews were already completed on October 1
+and were not redundantly advanced. Existing October 2/14/15 BLS releases and
+October 27–28/December 8–9 FOMC meetings remain unchanged, with no inferred
+time. The next oldest-source rotation begins with INTC, LRCX, META, MSFT, MU,
+NBIS, NFLX, SNDK, TSLA and TSM.

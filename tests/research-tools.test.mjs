@@ -139,8 +139,7 @@ test("calendar coverage tracks 40 unique companies and only conclusive checks ad
   const byTicker = Object.fromEntries(coverage.map((company) => [company.ticker, company]));
   const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
   assert.ok(coverage.every((company) => /^2026-(?:09-(?:2[3-9]|30)|10-01)$/.test(company.lastAttemptedOn)));
-  for (const ticker of ["ADBE", "AMD", "COHR", "CRWD", "DELL", "GEV", "INTC", "LRCX", "META", "MSFT", "MU", "NBIS", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-10-01");
-  assert.equal(checked.ASML, "2026-09-29");
+  for (const ticker of ["ADBE", "AMD", "ASML", "COHR", "CRWD", "DELL", "GEV", "INTC", "LRCX", "META", "MSFT", "MU", "NBIS", "NFLX", "SNDK", "TSLA", "TSM"]) assert.equal(checked[ticker], "2026-10-01");
   for (const ticker of ["CRM", "ORCL"]) assert.equal(checked[ticker], "2026-09-28");
   assert.equal(checked.AMAT, "2026-09-25");
   assert.equal(checked.QCOM, "2026-09-23");

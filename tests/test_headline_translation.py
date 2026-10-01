@@ -1,8 +1,10 @@
 import json
 from pathlib import Path
+import sqlite3
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/research"))
 import headline_translation as translation
@@ -46,6 +48,20 @@ class HeadlineTranslationTests(unittest.TestCase):
                 "PRIVATE SOURCE BODY", "PRIVATE DIFF",
             ))
             self.event_id = cursor.lastrowid
+
+    def test_legacy_job_schema_adds_source_title_marker(self):
+        legacy_path = Path(self.tmp.name) / "legacy.sqlite"
+        with sqlite3.connect(legacy_path) as db:
+            db.execute('''CREATE TABLE signal_headline_translation_jobs(
+              source_id TEXT NOT NULL, url TEXT NOT NULL, sha TEXT NOT NULL,
+              attempts INTEGER NOT NULL, next_at REAL NOT NULL,
+              lease TEXT NOT NULL, state TEXT NOT NULL,
+              PRIMARY KEY(source_id,url,sha))''')
+        with translation.connect(legacy_path) as db:
+            columns = {row[1] for row in db.execute(
+                "PRAGMA table_info(signal_headline_translation_jobs)"
+            )}
+        self.assertIn("source_title", columns)
 
     def test_disabled_never_calls_provider(self):
         self.assertEqual(
@@ -102,6 +118,46 @@ class HeadlineTranslationTests(unittest.TestCase):
                                  ENV, now=NOW + 1, sources=[SOURCE]),
             "idle",
         )
+
+    def test_projected_headline_can_differ_from_raw_source_title(self):
+        original = signals.public_official_updates
+
+        def projected(*args, **kwargs):
+            items = original(*args, **kwargs)
+            return [{**item, "title": "Nebius announces a new AI platform — projected"}
+                    for item in items]
+
+        def translated(payload, key):
+            self.assertEqual(
+                json.loads(payload["input"])["title"],
+                "Nebius announces a new AI platform — projected",
+            )
+            return response(payload, key)
+
+        with patch.object(signals, "public_official_updates", projected):
+            self.assertEqual(
+                translation.run_once(self.path, translated, ENV, now=NOW, sources=[SOURCE]),
+                "done",
+            )
+
+    def test_legacy_stale_exhaustion_gets_one_revision_bound_recovery(self):
+        with translation.connect(self.path) as db, db:
+            db.execute('''INSERT INTO signal_headline_translation_jobs(
+              source_id,url,sha,attempts,next_at,lease,state,source_title)
+              VALUES(?,?,?,?,?,?,?,NULL)''', (
+                SOURCE["id"], "https://nebius.com/blog/example", "sha-1", 3,
+                NOW - 1, "legacy-stale-lease", "stale",
+            ))
+        self.assertEqual(
+            translation.run_once(self.path, response, ENV, now=NOW, sources=[SOURCE]),
+            "done",
+        )
+        with translation.connect(self.path) as db:
+            job = db.execute('''SELECT attempts,state,source_title
+              FROM signal_headline_translation_jobs''').fetchone()
+        self.assertEqual(job["attempts"], 1)
+        self.assertEqual(job["state"], "done")
+        self.assertEqual(job["source_title"], "Nebius announces a new AI platform")
 
     def test_new_revision_never_inherits_old_translation(self):
         self.assertEqual(translation.run_once(self.path, response, ENV, now=NOW, sources=[SOURCE]), "done")
