@@ -66,6 +66,18 @@ class OfficialResearchTests(unittest.TestCase):
         with research.connect(self.path) as db:
             for i in range(3):db.execute('INSERT INTO signal_headline_translation_calls(at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)',(NOW.timestamp(),'test','test','test','done',str(i)))
         self.assertEqual(self.run_note(lambda *_:self.fail('over budget')),'idle')
+    def test_legacy_unclassified_failure_has_one_bounded_diagnostic_retry(self):
+        with research.connect(self.path) as db:
+            rows=research.candidates(db,NOW)
+            row=rows[0]
+            db.execute("INSERT INTO official_research_jobs(event_id,sha,attempts,next_at,lease,state) VALUES(?,?,3,0,'legacy','retry')",(row['id'],row['sha']))
+        def fail(*args):raise ValueError('incomplete')
+        self.assertEqual(self.run_note(fail),'retry')
+        self.assertEqual(self.run_note(lambda *_:self.fail('unbounded retry')),'idle')
+        with research.connect(self.path) as db:
+            job=db.execute('SELECT attempts,failure_kind FROM official_research_jobs').fetchone()
+            self.assertEqual(job['attempts'],4);self.assertEqual(job['failure_kind'],'incomplete')
+
     def test_numerical_worker_runs_even_when_translation_is_unconfigured(self):
         import service
         with patch.dict('os.environ',{},clear=True):app=service.AutomaticMonitor(self.path,Path(self.tmp.name)/'snapshot.json')

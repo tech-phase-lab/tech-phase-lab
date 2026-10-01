@@ -115,12 +115,13 @@ def claim(db, reference, model, limit):
             if published and published['sha']==r['sha']:
                 continue
             job=db.execute('SELECT * FROM official_research_jobs WHERE event_id=?',(r['id'],)).fetchone()
-            if job and job['sha']==r['sha'] and (job['attempts']>=3 or job['next_at']>now):
+            legacy_probe=bool(job and job['state']=='retry' and job['attempts']==3 and job['failure_kind'] is None)
+            if job and job['sha']==r['sha'] and ((job['attempts']>=3 and not legacy_probe) or job['next_at']>now):
                 continue
             lease=uuid.uuid4().hex
             db.execute('''INSERT INTO official_research_jobs(event_id,sha,attempts,next_at,lease,state) VALUES(?,?,1,?,?,'running')
               ON CONFLICT(event_id) DO UPDATE SET attempts=CASE WHEN sha=excluded.sha THEN attempts+1 ELSE 1 END,
-              sha=excluded.sha,next_at=excluded.next_at,lease=excluded.lease,state='running' ''',
+              sha=excluded.sha,next_at=excluded.next_at,lease=excluded.lease,state='running',failure_kind='classified-attempt' ''',
                        (r['id'],r['sha'],now+300,lease))
             db.execute('''INSERT INTO signal_headline_translation_calls(at,source_id,sha,model,state,lease)
               VALUES(?,?,?,?, 'running',?)''',(now,'research:'+r['source_id'],r['sha'],model,lease))
@@ -154,7 +155,9 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         usage={k:v for k,v in (response.get('usage') or {}).items()
                if k in ('input_tokens','output_tokens','total_tokens') and type(v) is int}
     except Exception as exc:
-        reason=str(exc) if type(exc) is ValueError and str(exc) in {'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete'} else 'provider-unavailable'
+        cause=getattr(exc,'__cause__',None)
+        provider_status=getattr(cause,'code',None)
+        reason=str(exc) if type(exc) is ValueError and str(exc) in {'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete'} else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
         with connect(path) as db, db:
             db.execute("UPDATE official_research_jobs SET state='retry',next_at=?,failure_kind=? WHERE event_id=? AND lease=?",(now+60,reason,row['id'],lease))
             db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?",(lease,))
