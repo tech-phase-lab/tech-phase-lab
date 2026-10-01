@@ -14,8 +14,15 @@ restrictions, one timeout, one invalid response and one short-lived `other`
 failure, all in bounded backoff. Child-article failures were zero. The live
 24-hour source-publication-to-monitor sample was nine items, averaging 4,572
 seconds with a 40,711-second maximum. These are point-in-time measurements,
-not complete coverage or a latency SLA. Deployment and post-deployment calendar
-verification for this batch are still pending.
+not complete coverage or a latency SLA.
+
+Calendar refresh commit `4c24f5e` preserved the concurrent Micron recovery
+commit and used the exact local/Git Data tree `1c4063b0`. Railway staging and
+Vercel both succeeded. The integrated gate passed: ESLint zero errors with one
+pre-existing warning, Node 190/190, Python 514/514, Next.js production build,
+`compileall` and `git diff --check`. Post-deployment browser verification showed
+the October 2 review date, 24 upcoming schedules and 40 tracked companies;
+TSMC and Sandisk retained their exact source times.
 
 # Third October 2 calendar batch and live intake observation — October 2, 2026 02:41–02:48 JST
 
