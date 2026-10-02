@@ -1,3 +1,40 @@
+# Scheduled retry and translation recovery — October 2, 2026 10:47–10:52 JST
+
+The deployed operations preview initially rendered its bundled September 19
+snapshot, then reconnected through the normal client refresh without a forced
+worker action. At 10:51 JST it showed 22/22 current company-list results and all
+five priority issuers healthy. Vercel's reviewed one-hour preview window had no
+runtime error cluster; `/api/research/live` and `/api/research/news` returned
+HTTP 200. The six HTTP 503 responses in that window were confined to the
+separate price-target route. This is a point-in-time connection check, not an
+availability or delivery guarantee.
+
+The long-running supplemental timeout received its next lawful retry after the
+previous 10:32:40 JST schedule, failed again, and advanced from 56 to 57 bounded
+attempts. Supplemental coverage remains 23/26: two access restrictions and one
+timeout. The timeout is next due at 14:49:01 JST; the access-restricted routes
+remain deferred until 20:16:46 JST. Do not force either class early or describe
+23/26 as complete coverage.
+
+The deployed headline worker recovered the earlier three-item backlog: 49/49
+eligible official headlines were translated, with zero missing, running,
+retrying, exhausted or daily-limit-blocked jobs at observation. The rolling
+24-hour aggregate was 121/200 logical calls (51 completed, 67 failed and three
+discarded after source revision). This verifies current queue recovery after
+the bounded failure-classification and token-limit fixes; it does not establish
+publication-to-Japanese latency or an SLA. The body extractor remained at 209
+stored extractions, with lawful host blocks and retry waits still visible in
+aggregate.
+
+Calendar files were reviewed first. All 40 companies already had an actual
+October 2 attempt and BLS/Federal Reserve dates already had their daily review,
+so no event, time or coverage marker changed. The 14 inconclusive companies
+retain the exact blockers in `docs/CALENDAR-HANDOFF-2026-10-02.md`. The finite
+news-readiness backlog remains complete; no discretionary product feature,
+paid service, external delivery, production setting or access control changed.
+
+---
+
 # Abbreviated financial-unit validation — October 2, 2026 09:42–09:53 JST
 
 Commit `f1b0e9d61d0947a0b92493eb8d436ca3a7ba3627` closes a fail-open
