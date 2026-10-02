@@ -84,6 +84,114 @@
         "currentExposedError": "x-api-paced",
         "note": "Intentional local budget-pacing pattern; the transition table does not retain the raw cause for independent per-transition proof."
       }
+    },
+    {
+      "capturedAt": "2026-10-02T05:50:04.331621+00:00",
+      "health": {
+        "workerStartedAt": "2026-10-02T04:40:09.824+00:00",
+        "lastCycleAt": "2026-10-02T05:50:07.158+00:00",
+        "cycles": 1784,
+        "sourceChecks": 128,
+        "sourceFetchErrors": 0,
+        "routes": {
+          "configured": 24,
+          "suspended": 2,
+          "fresh": 24,
+          "error": 0,
+          "pending": 0
+        },
+        "articleRetrieval": {
+          "error": 0,
+          "retries": 0
+        },
+        "headlineTranslation": {
+          "eligible": 49,
+          "translated": 49,
+          "pending": 0,
+          "running": 0,
+          "retrying": 0,
+          "exhausted": 0
+        },
+        "officialResearch": {
+          "published": 4,
+          "pending": 0
+        },
+        "xMarketNews": {
+          "eligible": 1,
+          "published": 1,
+          "pending": 0
+        },
+        "latestXSucceededAt": "2026-10-02T05:49:43.794+00:00",
+        "sandiskNews": {
+          "documents": 15,
+          "succeeded": 15,
+          "errors": 0
+        },
+        "prNewswirePublic": {
+          "documents": 34,
+          "succeeded": 34,
+          "errors": 0
+        }
+      },
+      "newEvidence": {
+        "storedEventsObservedInWindow": 3,
+        "eligibleSourcePublicationsInWindow": 0,
+        "headlineTranslations": 0,
+        "officialResearchPublications": 0,
+        "xMarketPublications": 0,
+        "marketResultPublications": 0,
+        "status": "untested-no-new-eligible-events",
+        "delayedBackfill": {
+          "sourceId": "skhynix-news",
+          "items": 3,
+          "sourcePublishedAtFirst": "2026-10-02T00:00:20+00:00",
+          "sourcePublishedAtLast": "2026-10-02T00:00:41+00:00",
+          "observedAtFirst": "2026-10-02T05:06:55.153+00:00",
+          "observedAtLast": "2026-10-02T05:08:58.621+00:00",
+          "note": "Three URLs in one AI-ecosystem series; source publication preceded the acceptance window, so these are not new-delivery successes."
+        }
+      },
+      "frontend": {
+        "observationRecordedAt": "2026-10-02T05:55:46.075726+00:00",
+        "dataFetchedAt": "2026-10-02T05:45:24+00:00",
+        "eligibleNewItemVisible": false,
+        "bilingualAccuracyStatus": "untested-no-new-eligible-item"
+      },
+      "inventoryReconciliation": {
+        "checked": [
+          "skhynix-news",
+          "sandisk-news",
+          "prnewswire-public"
+        ],
+        "result": "No source publication after the acceptance-window start was found in the three checked inventories.",
+        "remainingConfiguredSources": "unverified-this-snapshot"
+      },
+      "xPacingTransitions": {
+        "cutoff": "2026-10-02T05:50:04.331621+00:00",
+        "failed": 149,
+        "recovered": 150,
+        "bySource": {
+          "x-barchart": {
+            "failed": 30,
+            "recovered": 30
+          },
+          "x-nebius-official": {
+            "failed": 30,
+            "recovered": 30
+          },
+          "x-trendspider": {
+            "failed": 29,
+            "recovered": 30
+          },
+          "x-wallstengine": {
+            "failed": 60,
+            "recovered": 60
+          }
+        },
+        "storedKind": "other",
+        "currentRouteErrors": 0,
+        "note": "Timing and code paths are consistent with budget pacing, but the transition table does not retain the raw cause. One recovered transition began before the window."
+      }
     }
   ],
   "invalidatedAt": "2026-10-02T03:24:00+00:00",

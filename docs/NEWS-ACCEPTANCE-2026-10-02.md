@@ -37,14 +37,14 @@ only because two known source failures were active at its start. It cannot be
 used for an acceptance decision. The baseline is a point-in-time public health
 response, not a completed audit.
 
-The repaired observation window began at **2026-10-02 04:00:13.253461 UTC**
-(13:00:13.253461 JST) and ends at **2026-10-03 04:00:13.253461 UTC**
-(13:00:13.253461 JST). This is an in-progress observation window, not an
-acceptance result. Its start was recorded only after commit `871c4d7` was live
-on Vercel preview and Railway staging, both repaired routes had completed real
-article retrieval, and several normal PR Newswire listing cycles had succeeded.
-Any relevant failure during this interval invalidates a clean-window claim and
-must remain in the evidence.
+The prior repaired-route diagnostic interval began at
+**2026-10-02 04:00:13.253461 UTC** (13:00:13.253461 JST). It established that
+commit `871c4d7` was live on Vercel preview and Railway staging, both repaired
+routes had completed real article retrieval, and several normal PR Newswire
+listing cycles had succeeded. It was superseded before acceptance by the
+publication-recovery work through `198317b`; it is not the current acceptance
+window and must not be combined with it. Its failures and observations remain
+diagnostic evidence.
 Use first source publication and first detection times. Keep updates/revisions
 separate. Do not count old backfills, reruns or duplicate URLs as new successes.
 
@@ -90,7 +90,7 @@ the repair commit and its historical failures, then put the exact new continuous
 fields are present, scheduled reports must say that no valid acceptance window
 has started.
 
-## Repaired-window start evidence
+## Prior repaired-route diagnostic start evidence
 
 - Repair commit: `871c4d77bd79ef3247d8251bc4b09e148dd59a00`.
 - Vercel deployment `dpl_BmCN6dksRQRcQrTddo113QADxYsJ` and Railway deployment
@@ -112,7 +112,7 @@ has started.
   and therefore are not repaired-window results. New eligible items must be
   measured individually from this start; zero arrivals remain untested.
 
-### Initial interim snapshot — 2026-10-02 04:05 UTC
+### Prior diagnostic interim snapshot — 2026-10-02 04:05 UTC
 
 - No `signal_events` row had `observed_at` at or after the window start. There
   were consequently zero new headline translations, X market publications or
@@ -133,6 +133,44 @@ has started.
 - Commit `45fc182597cf8319126467cd78c7247d7a380540` saved the window start and
   evidence. Vercel reported a successful preview deployment; Railway correctly
   skipped a worker redeploy because this follow-up changed documentation only.
+
+### Current-window interim snapshot — 2026-10-02 05:50 UTC
+
+- The sanitized health response was ready at 05:50:04.331621 UTC. Its latest
+  cycle was 05:50:07.158 UTC: 24/24 enabled official routes were fresh with
+  zero route errors or pending routes; article errors and retries were zero.
+  Sandisk remained 15/15 and PR Newswire 34/34 with no child error. Headline
+  translation was 49/49 with no pending, running, retrying or exhausted job;
+  official research was 4 published/0 pending and X market news 1/1.
+- Read-only stored-stage reconciliation found three new `signal_events` rows
+  after the current window start, all from SK hynix. Their source publication
+  times were 00:00:20–00:00:41 UTC, before the 04:43:12.282254 UTC start, while
+  first observations were 05:06:55.153–05:08:58.621 UTC. They are three URLs in
+  one AI-ecosystem series and are delayed backfills, not current-window delivery
+  successes. No in-window headline translation, official-research publication,
+  X market publication or deterministic result publication was stored.
+- The Japanese preview observation was recorded by 05:55:46 UTC with data fetched at
+  05:45:24 UTC. Its newest displayed story still predated the current window;
+  none of the three backfills appeared in the delivery list. With zero eligible
+  newly published item, source-to-browser latency and JA/EN accuracy remain
+  **untested**, not passed. The English view was not used as a substitute for a
+  missing eligible item.
+- Independent checks of the SK hynix official newsroom found the two October 2
+  story groups already present in stored evidence; no later item was found.
+  The PR Newswire All News Releases index had entries through 00:22 ET
+  (04:22 UTC), before the window start, and the Sandisk investor newsroom still
+  showed its August 5 release as latest. These checks cover only those three
+  inventories; the remaining configured source inventories are unverified in
+  this snapshot.
+- Stored X-route transitions through 05:50:04 UTC contained 149 `failed` and
+  150 `recovered` transitions: Barchart 30/30, Nebius official 30/30,
+  TrendSpider 29/30 and Wall St Engine 60/60. All stored failure kinds were the
+  generic `other`; recoveries averaged about 13.5–21.1 seconds by route and the
+  current health had zero X route error. Timing and code paths are consistent
+  with intentional shared-budget pacing, including one recovery whose failure
+  began before the window, but the transition table does not preserve the raw
+  cause. Preserve this as observability noise/risk; do not misreport it as 149
+  independently proven upstream failures or erase it from the acceptance record.
 
 ## Access and stored evidence
 
