@@ -16,7 +16,24 @@ API_URL = "https://api.x.com/2/tweets/search/recent"
 MAX_RESPONSE_BYTES = 2 * 1024 * 1024
 MAX_RESULTS = 30
 OFFICIAL_ACCOUNTS = {"nebiusai": "NBIS"}
-ALLOWED_ACCOUNT_NAMES = {"tipranks", "wallstengine", "fabymetal4", *OFFICIAL_ACCOUNTS}
+ALLOWED_ACCOUNT_NAMES = {"tipranks", "wallstengine", "fabymetal4", "trendspider", "barchart", *OFFICIAL_ACCOUNTS}
+INDEX = re.compile(r'\b(?:S\s*&\s*P\s*500|SPX|Nasdaq[ -]?(?:100)?|NDX)\b',re.I)
+MEMBERSHIP = re.compile(r'\b(?:rebalanc(?:e|ing)|reconstitution|add(?:s|ed|ition|itions|ing)?|remov(?:e|es|ed|al|als|ing)|join(?:s|ed|ing)?|replac(?:e|es|ed|ing)|inclusion|exclusion|delet(?:e|es|ed|ion|ions))\b|組み入れ|採用|除外|リバランス',re.I)
+BONDS = re.compile(r'\b(?:Treasuries|Treasury (?:yields?|bonds?|notes?|bills?|auctions?)|government bonds?|sovereign bonds?|JGBs?|bunds?|gilts?)\b|\b(?:U\.?S\.?|United States|Japan(?:ese)?|German(?:y)?|Brit(?:ain|ish)|U\.?K\.?)\b.{0,60}\b(?:bonds? (?:yields?|market)|[0-9]+[ -]year bonds?)\b|国債',re.I)
+OIL = re.compile(r'\b(?:crude(?: oil)?|WTI|Brent|oil (?:prices?|futures|production|supply|demand)|barrels?|OPEC\+?)\b|原油',re.I)
+
+
+def market_topic(username,text):
+    if username.lower()=='trendspider':
+        if re.search(r'\b(?:trading tools|chart indicators|webinar|subscribe|giveaway)\b',text,re.I):
+            return None
+        event=bool(re.search(r'\brebalanc(?:e|ing)|\breconstitution|リバランス',text,re.I)
+                   or re.search(r'\$[A-Z]{1,6}\b',text)
+                   or re.search(r'\b(?:joins?|joining|replaces?|replacing|removed from|added to)\b.{0,100}\b(?:index|S\s*&\s*P\s*500|Nasdaq)',text,re.I))
+        return 'index-membership' if INDEX.search(text) and MEMBERSHIP.search(text) and event else None
+    if username.lower()=='barchart':
+        return 'government-bonds' if BONDS.search(text) else 'crude-oil' if OIL.search(text) else None
+    return None
 TARGET_PATTERN = re.compile(
     r"\b(?:price[ -]?target|target price|pt\s+(?:raised|cut|lowered|hiked|boosted|slashed|(?:to|at)\s*\$?\d+))\b",
     re.I,
@@ -46,6 +63,11 @@ def parse_response(source, payload, tickers):
                 or username.lower() not in ALLOWED_ACCOUNT_NAMES):
             continue
         matches = signals_match(text, tickers)
+        if source.get('marketTopics'):
+            topic=market_topic(username,text)
+            if topic not in source['marketTopics']:
+                continue
+            matches={'MARKET':[topic]}
         official_ticker = OFFICIAL_ACCOUNTS.get(username.lower()) if source.get("officialUpdates") is True else None
         if official_ticker and official_ticker in tickers:
             matches[official_ticker] = ["official-account:" + username.lower()]
@@ -65,7 +87,7 @@ def parse_response(source, payload, tickers):
                            and re.search(r'(?:actual|実績|結果)\s*[:=]?\s*[-+−]?\d', text, re.I))
         if is_economic:
             matches = {'ECON':['economic-result']}
-        if not matches or not (official_ticker or TARGET_PATTERN.search(text) or is_earnings or is_economic or RATING_PATTERN.search(text)):
+        if not matches or not (source.get('marketTopics') or official_ticker or TARGET_PATTERN.search(text) or is_earnings or is_economic or RATING_PATTERN.search(text)):
             continue
         url = f"https://x.com/{username}/status/{post_id}"
         items[url] = {

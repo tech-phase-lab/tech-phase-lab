@@ -303,7 +303,8 @@
     "articleBodyClass": "cmp-blogs-details__desc",
     "articleTitleClass": "cmp-blogs-details__heading",
     "intervalSeconds": 120,
-    "reuse": "review-required"
+    "reuse": "review-required",
+    "enabled": false
   },
   {
     "id": "vertiv-racks-blog",
@@ -368,7 +369,8 @@
       "/english/news/"
     ],
     "intervalSeconds": 120,
-    "reuse": "review-required"
+    "reuse": "review-required",
+    "enabled": false
   },
   {
     "id": "palantir-shareholder-letters",
@@ -624,5 +626,48 @@
     "intervalSeconds": 120,
     "maxResults": 30,
     "reuse": "review-required"
+  },
+  {
+    "id": "x-trendspider",
+    "name": "X · TrendSpider",
+    "kind": "publisher-update",
+    "format": "x-api",
+    "enabledBy": "X_API_ENABLED",
+    "query": "from:TrendSpider (\"S&P 500\" OR S&P500 OR SPX OR Nasdaq OR NDX) (rebalance OR rebalancing OR reconstitution OR add OR added OR additions OR removed OR removals OR join OR joins OR joining OR replace OR replaces OR replacing OR inclusion OR exclusion OR deletions) -is:retweet -is:reply",
+    "accounts": [
+      "TrendSpider"
+    ],
+    "tickers": [],
+    "marketTopics": [
+      "index-membership"
+    ],
+    "allowedHosts": [
+      "x.com"
+    ],
+    "intervalSeconds": 120,
+    "maxResults": 30,
+    "reuse": "factual-results-only"
+  },
+  {
+    "id": "x-barchart",
+    "name": "X · Barchart",
+    "kind": "publisher-update",
+    "format": "x-api",
+    "enabledBy": "X_API_ENABLED",
+    "query": "from:Barchart (Treasury OR Treasuries OR \"government bond\" OR \"government bonds\" OR \"sovereign bond\" OR \"bond yield\" OR \"bond yields\" OR JGB OR Bund OR Bunds OR gilt OR gilts OR crude OR WTI OR Brent OR \"oil price\" OR \"oil prices\" OR \"oil futures\" OR \"oil production\" OR \"oil supply\" OR \"oil demand\" OR OPEC OR 国債 OR 原油) -is:retweet -is:reply",
+    "accounts": [
+      "Barchart"
+    ],
+    "tickers": [],
+    "marketTopics": [
+      "government-bonds",
+      "crude-oil"
+    ],
+    "allowedHosts": [
+      "x.com"
+    ],
+    "intervalSeconds": 120,
+    "maxResults": 30,
+    "reuse": "factual-results-only"
   }
 ]

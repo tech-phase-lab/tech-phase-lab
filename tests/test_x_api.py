@@ -13,6 +13,29 @@ import x_api
 
 
 class XApiTests(unittest.TestCase):
+    def test_requested_market_accounts_only_accept_the_requested_topics(self):
+        samples = {
+            'TrendSpider': [('S&P 500 rebalance: additions $VYLR $TWLO; removals $CTVA $WDB', 'index-membership'), ('$MRNA will join Nasdaq 100, replacing $WBD', 'index-membership'), ('Nasdaq trading tools: add a chart indicator for $MRNA', None), ('$MU reports Q4 earnings', None)],
+            'Barchart': [('US 30-year Treasury yield rises to its highest since 2002', 'government-bonds'), ('Japanese 10-year bond yields reach a 30-year high', 'government-bonds'), ('Brent crude oil rises 3%', 'crude-oil'), ('Treasury Secretary announces tariffs', None), ('$MU reports earnings', None)],
+        }
+        for account, posts in samples.items():
+            source = next(s for s in signals.SOURCES if s['id'] == 'x-' + account.lower())
+            self.assertLessEqual(len(source['query']), 512)
+            self.assertIn('-is:reply', source['query'])
+            payload = {'includes': {'users': [{'id': '1', 'username': account}]}, 'data': [
+                {'id': str(9000 + n), 'author_id': '1', 'text': text} for n, (text, _) in enumerate(posts)]}
+            accepted = x_api.parse_response(source, payload, list(monitor.PROVIDERS))
+            self.assertEqual([p['text'] for p in accepted], [text for text, topic in posts if topic])
+            for text, topic in posts:
+                self.assertEqual(x_api.market_topic(account, text), topic)
+
+    def test_blocked_supplemental_routes_do_not_remove_company_ir(self):
+        for source_id in ('marvell-blog', 'tsmc-press-center'):
+            self.assertIs(next(s for s in signals.SOURCES if s['id'] == source_id)['enabled'], False)
+        self.assertIn('MRVL', monitor.PROVIDERS)
+        self.assertIn('TSM', monitor.PROVIDERS)
+        self.assertIsNot(next(s for s in signals.SOURCES if s['id'] == 'marvell-investor-news').get('enabled'), False)
+
     def setUp(self):
         self.source = {**next(s for s in signals.SOURCES if s["id"] == "x-tipranks"), "enabled": True}
 
@@ -34,7 +57,7 @@ class XApiTests(unittest.TestCase):
         self.assertEqual(x_api.parse_response(stale,payload,list(monitor.PROVIDERS)),[])
 
     def test_x_source_scope_adds_requested_x_only_companies(self):
-        x_sources = [source for source in signals.SOURCES if source.get("format") == "x-api"]
+        x_sources = [source for source in signals.SOURCES if source.get("format") == "x-api" and not source.get("marketTopics")]
         added = {"LITE", "COHR", "VST", "IREN", "ALAB", "APH", "INTC",
                  "AMAT", "SIMO", "AAOI", "META"}
         self.assertEqual({source["accounts"][0].lower() for source in x_sources},
