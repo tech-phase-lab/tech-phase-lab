@@ -25,7 +25,7 @@ INDEXES = {t: p.get("monitorUrl", p["indexUrl"]) for t, p in PROVIDERS.items()}
 HOSTS = {t: set(p["allowedHosts"]) for t, p in PROVIDERS.items()}
 MAX_BYTES = 12 * 1024 * 1024
 MAX_EXTRACTED_CHARS = 160_000
-HTML_EXTRACTOR_VERSION = "2026-10-02-original-publication-v3"
+HTML_EXTRACTOR_VERSION = "2026-10-02-original-publication-v4"
 MAX_JSON_LD_CHARS = 512 * 1024
 MAX_JSON_LD_BLOCKS = 20
 MAX_JSON_LD_NODES = 2_000
@@ -943,7 +943,7 @@ class StructuredArticleText(HTMLParser):
 def original_publication_date(value):
     """Keep a publisher's calendar day, never convert it into an observed time."""
     if not isinstance(value, str) or not re.fullmatch(
-        r"\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,6})?)?(?:Z|[+-]\d{2}:\d{2})?)?",
+        r"\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,6})?)?(?:Z|[+-](?:[01]\d|2[0-3]):?[0-5]\d)?)?",
         value,
     ):
         return None
@@ -982,7 +982,9 @@ class ArticlePublication(StructuredArticleText):
         super().handle_starttag(tag, attrs)
         if tag.lower() == "meta":
             values = {key.lower(): value for key, value in attrs if key and value}
-            if (values.get("property") or values.get("name") or "").lower() == "article:published_time":
+            if (values.get("property") or values.get("name") or "").lower() in {
+                'article:published_time', 'sc:publication_date',
+            }:
                 self.meta_dates.append(values.get("content"))
 
     def publication_date(self):

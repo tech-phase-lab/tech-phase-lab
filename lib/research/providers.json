@@ -359,13 +359,19 @@
     "name": "ASML",
     "sector": "semiconductors",
     "indexUrl": "https://www.asml.com/en/news/press-releases",
+    "monitorUrl": "https://investor.asml.com/news/press-releases-and-announcements",
     "format": "html",
     "allowedHosts": [
       "data.sec.gov",
+      "investor.asml.com",
       "www.asml.com",
       "www.sec.gov"
     ],
     "articleRules": [
+      {
+        "host": "investor.asml.com",
+        "pattern": "^/news-releases/news-release-details/[a-z0-9]+(?:-[a-z0-9]+)*/?$"
+      },
       {
         "host": "www.asml.com",
         "pattern": "^/en/news/press-releases/\\d{4}/.+"

@@ -289,3 +289,70 @@ historical entries cannot be reconstructed from these aggregate diagnostics.
 
 The retention candidate passed 247 Node and 681 Python tests, lint, build/type
 checking, compileall and whitespace checks, plus independent review.
+
+## Retention rollout and remaining primary-source classification
+
+Retention commit `54eac6cf6ad1778a620cd6f2bf0561bb267226e2` passed Actions
+`37046631379`, Vercel `dpl_GDiFhixdQnqZoTqX8uyaVvHyta9Y` and Railway
+`f9152619-eba2-426d-8c45-eb3111270f86`. Tree
+`1aae1e35b020b0d6cd76f3a2c21d7d66c2810bcc` matched the tested local tree.
+MSFT's ordinary recheck corrected its original date to October 1 by the API
+observation at 18:16:58.403 UTC, preserving acquisition at 17:45:51.992. Both
+Japanese and English date/detail views were checked onscreen at 18:23 UTC.
+
+One news HTTP 503 was observed at 18:20:13 during replacement of the monitor
+(worker start 18:20:01); it recovered to HTTP 200 by 18:21:32 and an independent
+18:22:10 check. A target warning in an offscreen panel cleared without reload
+when normal scrolling resumed its intentionally suspended connection. At
+18:21:27 the panel showed live updates. Neither observation establishes a
+new-source latency result.
+
+At 18:24 UTC supplemental routes were 24/24 fresh, with zero current article
+errors/admission overflow and zero SSE read failures. This does not describe
+all primary issuer records. The primary backlog still had 92 detected records
+without bodies: 83 SEC documents and nine TSMC articles. The latter were
+explicitly dated June 4–September 10 in original titles, then discovered as a
+historical group on September 29. Large BE/CRDO SEC groups were historical
+imports; generic 6-K/8-K titles alone do not prove they are irrelevant.
+
+The recent MU cover document is accession `000072312526000018`, matching the
+already-reviewed Ex99.1 recovery evidence and independently accessible issuer
+Q4 release. Earnings-content coverage is established separately; the blocked
+cover-document route is not called recovered. NBIS's October 1 accession
+`000110465926112824` remains unread. Its independently accessible October 1
+Inferize acquisition is already acquired/displayed, but exact overlap with the
+6-K cannot be established from the generic filing title.
+
+Three primary access-restricted retries, three invalid-response retries and
+three active host circuits remain distinct from supplemental zeros. Exact
+per-host retry schedules are not available in the public payload; its earliest
+advertised host probe was October 2 22:34:30.153 UTC. No protected host schedule
+was reset, and no bulk historical backfill was requested. Three pending issuer
+notes still require the existing editor authentication on the latest diagnostic
+view for classification.
+
+## ASML verified issuer-domain migration
+
+ASML's own old press-release listing and original release URLs now redirect to
+`investor.asml.com`. An ordinary source check reproduced the old failure as
+`URL outside approved official hosts`. The provider registry now permits only
+that exact additional issuer host and its observed single-release path, retaining
+the old article paths and SEC routes. The canonical monitor listing is
+`https://investor.asml.com/news/press-releases-and-announcements`; using that
+origin is necessary for its root-relative article links.
+
+With the registry change the same original Eindhoven URL fetched successfully
+(59,963 HTML bytes, 6,291 extracted characters), and the canonical index yielded
+ten release URLs. Captured original metadata uses `datePublished` with a basic
+ISO numeric timezone offset (`+0200`) and `sc:publication_date`. Both identify
+September 8. The parser now accepts these explicit original-publication forms,
+rejects invalid numeric offsets and conflicting dates, and ignores modification
+dates. The actual captured HTML yields September 8 for both original and
+canonical identities. No date is inferred from the URL or acquisition clock.
+Normal source retries, existing identity/observation clocks and public source
+validation remain in place. Runtime retrieval of the old failed records still
+requires post-deployment verification.
+
+The integrated ASML/date candidate passed 250 Node and 688 Python tests (938
+total), lint, production build/type checking, compileall and whitespace checks,
+plus independent review including the actual captured issuer metadata.

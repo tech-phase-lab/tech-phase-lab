@@ -125,6 +125,16 @@ class SourcePublicationDateTests(unittest.TestCase):
         self.assertEqual(self.row()['source_mode'], 'remote')
         self.assertEqual(self.row()['published_on'], '2026-10-01')
 
+    def test_basic_iso_offsets_preserve_day_and_invalid_offsets_are_rejected(self):
+        for value in ('2026-09-08T13:20:43+0200', '2026-09-08T23:20:43-0700'):
+            self.assertEqual(monitor.original_publication_date(value), '2026-09-08')
+        for value in ('2026-09-08T13:20:43+0260', '2026-09-08T13:20:43+24:00',
+                      '2026-09-08T13:20:43+2', '2026-09-08T13:20:43+02:99'):
+            self.assertIsNone(monitor.original_publication_date(value))
+        conflicting = article('<meta property="sc:publication_date" content="2026-09-08T11:20:07Z">',
+                              {'@type': 'Article', 'url': URL, 'datePublished': '2026-09-09T13:20:43+0200'})
+        self.assertIsNone(monitor.article_publication_date(conflicting, URL))
+
     def test_stale_extractor_rechecks_article_metadata_even_for_long_unchanged_body(self):
         self.check(article())
         self.db.execute("UPDATE sources SET extractor_version='old',extracted_chars=2000,response_etag='stored' WHERE url=?", (URL,))
