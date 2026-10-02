@@ -777,6 +777,8 @@ def x_content_kind(source, title):
     if (x_api.EARNINGS_PATTERN.search(title) and
             not x_api.EARNINGS_PREVIEW_PATTERN.search(title)):
         return "earnings"
+    if source.get('financingUpdates') is True and x_api.FINANCING_PATTERN.search(title):
+        return "corporate-financing"
     return "publisher-update"
 
 

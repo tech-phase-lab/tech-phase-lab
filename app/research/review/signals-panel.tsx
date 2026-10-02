@@ -31,6 +31,7 @@ const sourceNames: Record<string, string> = {
 const contentNames: Record<string, string> = {
   "analyst-rating": "アナリスト評価", "price-target": "目標株価", earnings: "決算投稿",
   "official-update": "企業公式", "publisher-update": "発信元投稿",
+  "corporate-financing": "資金調達・転換社債",
 };
 const timeLabel = (value: string | null) => value ? new Date(value).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo", hour12: false }) + " JST" : "未取得";
 const publicationLabel = (publishedAt: string | null, publishedOn?: string | null) => {

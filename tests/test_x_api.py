@@ -13,6 +13,36 @@ import x_api
 
 
 class XApiTests(unittest.TestCase):
+    def test_requested_financing_scope_preserves_full_source_and_requires_company(self):
+        source = next(s for s in signals.SOURCES if s['id'] == 'x-wallstengine')
+        samples = [
+            ('$AVGO is assembling roughly $60B of financing; $18B junior debt; $BX is expected to commit $9B', True),
+            ('$NBIS announces a proposed offering of $1.5 billion convertible notes', True),
+            ('$MU announces $500M convertible senior unsecured notes', True),
+            ('$NBIS announces a convertible bond offering', True),
+            ('$MU plans a capital raise; funding has not been secured', True),
+            ('$IREN announces convertible bonds refinancing', True),
+            ('$NBIS $500M convertible debt offering was cancelled', True),
+            ('マイクロン $MU が資金調達を検討、転換社債の発行は未確定', True),
+            ('$NBIS completes a fundraising round', True),
+            ('$UNMONITORED raises $3B of funding', False),
+            ('$MU convertible laptop promotion', False),
+        ]
+        payload = {'includes': {'users': [{'id': '1', 'username': 'wallstengine'}]},
+                   'data': [{'id': str(8000+i), 'author_id': '1', 'text': text,
+                             'created_at': '2026-10-02T10:17:22Z'}
+                            for i, (text, _) in enumerate(samples)]}
+        items = x_api.parse_response(source, payload, list(monitor.PROVIDERS))
+        self.assertEqual([v['text'] for v in items], [t for t, accepted in samples if accepted])
+        self.assertTrue(all(v['publishedAt']=='2026-10-02T10:17:22Z' for v in items))
+        self.assertEqual(signals.x_content_kind(source, samples[0][0]), 'corporate-financing')
+        without_scope = dict(source, financingUpdates=False)
+        self.assertEqual(x_api.parse_response(without_scope, payload, list(monitor.PROVIDERS)), [])
+        self.assertLessEqual(len(source['query']), 512)
+        for word in ('funding', 'financing', 'fundraising', 'capital raise',
+                     'capital raising', 'convertible', '資金調達', '転換社債'):
+            self.assertIn(word, source['query'])
+
     def test_requested_market_accounts_only_accept_the_requested_topics(self):
         samples = {
             'TrendSpider': [('S&P 500 rebalance: additions $VYLR $TWLO; removals $CTVA $WDB', 'index-membership'), ('$MRNA will join Nasdaq 100, replacing $WBD', 'index-membership'), ('Nasdaq trading tools: add a chart indicator for $MRNA', None), ('$MU reports Q4 earnings', None)],

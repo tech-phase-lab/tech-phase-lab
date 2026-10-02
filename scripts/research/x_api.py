@@ -44,6 +44,11 @@ EARNINGS_PREVIEW_PATTERN = re.compile(
     r"\b(?:earnings preview|ahead of (?:its |the )?earnings|upcoming earnings|"
     r"scheduled to report|expected to report|will report (?:its )?earnings)\b", re.I,
 )
+FINANCING_PATTERN = re.compile(
+    r"\b(?:funding|financing|fundrais(?:ing|e)|capital rais(?:e|ing)|"
+    r"convertible(?:[ -](?:senior|subordinated|unsecured|secured)){0,3}"
+    r"[ -](?:notes?|bonds?|debt))\b|資金調達|転換社債", re.I,
+)
 
 
 def parse_response(source, payload, tickers):
@@ -87,7 +92,8 @@ def parse_response(source, payload, tickers):
                            and re.search(r'(?:actual|実績|結果)\s*[:=]?\s*[-+−]?\d', text, re.I))
         if is_economic:
             matches = {'ECON':['economic-result']}
-        if not matches or not (source.get('marketTopics') or official_ticker or TARGET_PATTERN.search(text) or is_earnings or is_economic or RATING_PATTERN.search(text)):
+        is_financing = source.get('financingUpdates') is True and FINANCING_PATTERN.search(text)
+        if not matches or not (source.get('marketTopics') or official_ticker or TARGET_PATTERN.search(text) or is_earnings or is_economic or RATING_PATTERN.search(text) or is_financing):
             continue
         url = f"https://x.com/{username}/status/{post_id}"
         items[url] = {
