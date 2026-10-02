@@ -192,6 +192,124 @@
         "currentRouteErrors": 0,
         "note": "Timing and code paths are consistent with budget pacing, but the transition table does not retain the raw cause. One recovered transition began before the window."
       }
+    },
+    {
+      "capturedAt": "2026-10-02T06:58:56.431466+00:00",
+      "health": {
+        "observedAt": "2026-10-02T06:51:48.938+00:00",
+        "workerStartedAt": "2026-10-02T06:21:31.882+00:00",
+        "lastCycleAt": "2026-10-02T06:51:48.938+00:00",
+        "cycles": 782,
+        "sourceChecks": 10,
+        "status": "ready",
+        "issues": [],
+        "routes": {
+          "configured": 24,
+          "suspended": 2,
+          "fresh": 24,
+          "stale": 0,
+          "error": 0,
+          "pending": 0
+        },
+        "articleRetrieval": {
+          "error": 0,
+          "retrying": 0
+        },
+        "headlineTranslation": {
+          "eligible": 49,
+          "translated": 49,
+          "pending": 0,
+          "running": 0,
+          "retrying": 0,
+          "exhausted": 0
+        },
+        "officialResearch": {
+          "published": 4,
+          "pending": 0
+        },
+        "xMarketNews": {
+          "eligible": 1,
+          "published": 1,
+          "pending": 0
+        }
+      },
+      "xPacingAfterRepair": {
+        "deferrals": 91,
+        "bySource": {
+          "x-barchart": 15,
+          "x-nebius-official": 15,
+          "x-trendspider": 15,
+          "x-wallstengine": 46
+        },
+        "postRestartTransitions": 0,
+        "preservedEarlierAmbiguousTransitions": 439,
+        "actualSucceededAt": {
+          "x-barchart": "2026-10-02T06:53:50.487+00:00",
+          "x-nebius-official": "2026-10-02T06:54:11.057+00:00",
+          "x-trendspider": "2026-10-02T06:55:22.565+00:00",
+          "x-wallstengine": "2026-10-02T06:55:02.527+00:00"
+        }
+      },
+      "offlineAudit": {
+        "codeCommit": "c5b62e9741787668b45742071629de4b46f15425",
+        "sha256": "eccbdc01deab444c7f169b693bbb97f7e9eda01b41e16987b0d33983f6739143",
+        "asOf": "2026-10-02T06:58:56.431466+00:00",
+        "acceptance": "not-assessed",
+        "eventCounts": {
+          "historical-backfill": 3,
+          "new-source-publication": 1,
+          "revision": 1
+        },
+        "newPublicationEligibilityCounts": {
+          "excluded": 1
+        },
+        "rawIntakeSeconds": {
+          "count": 1,
+          "mean": 73.581,
+          "median": 73.581,
+          "p95": 73.581,
+          "max": 73.581
+        },
+        "eligibleServiceLatencySampleCount": 0,
+        "requiredSources": 51,
+        "sourcesWithoutCompleteInventory": 51,
+        "missingEvidenceTables": [],
+        "timestampedHistory": {
+          "signalRouteTransitions": 439,
+          "incidentEvents": 0,
+          "officialResearchAttemptFailures": 0,
+          "translationCallFailures": 0,
+          "carryInIncidents": 21
+        }
+      },
+      "reviewedCandidates": [
+        {
+          "eventId": 1167,
+          "sourceId": "prnewswire-public",
+          "sourcePublishedAt": "2026-10-02T06:00:00+00:00",
+          "detectedAt": "2026-10-02T06:01:13.581+00:00",
+          "classification": "excluded-unrelated-hotel-release",
+          "rawIntakeSeconds": 73.581,
+          "eligibleDeliverySample": false
+        },
+        {
+          "eventId": 1168,
+          "sourceId": "nebius-blog",
+          "sourcePublishedAt": "2026-09-22T00:00:00+00:00",
+          "detectedAt": "2026-10-02T06:18:47.857+00:00",
+          "classification": "revision-not-new-publication",
+          "eligibleDeliverySample": false
+        }
+      ],
+      "frontend": {
+        "previewLoadedJa": true,
+        "previewLoadedEn": true,
+        "homeMarketNewsIntegrationObserved": true,
+        "eligibleNewItemObserved": false,
+        "bilingualAccuracyStatus": "untested-no-new-eligible-item"
+      },
+      "status": "observing-untested-no-new-eligible-delivery",
+      "acceptanceWindowRestarted": false
     }
   ],
   "invalidatedAt": "2026-10-02T03:24:00+00:00",

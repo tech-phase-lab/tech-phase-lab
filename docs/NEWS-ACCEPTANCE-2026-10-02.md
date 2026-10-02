@@ -245,3 +245,47 @@ failed/recovered transitions after restart. WallStEngine was deferred again at
 108 ms: waiting did not fake a fresh successful fetch. The observation-window
 transition count remained **439**, retained from before deployment. This is a
 short runtime check, not 24-hour acceptance or new-story translation evidence.
+
+### Current-window interim snapshot — 2026-10-02 06:58 UTC
+
+- The sanitized health response was ready with an empty issue list. The worker
+  still had the X pacing repair start time `06:21:31.882 UTC`; the latest observed
+  cycle was `06:51:48.938 UTC`. All 24 enabled official routes were fresh with
+  zero route error or pending route, article errors/retries were zero, headline
+  translation was 49/49 with no pending/running/retrying/exhausted job, official
+  research was 4 published/0 pending and X market news was 1/1.
+- A read-only query found **91** explicitly classified pacing deferrals after the
+  repaired worker start: Barchart 15, Nebius official 15, TrendSpider 15 and
+  WallStEngine 46. No new `signal_route_transitions` row was created after the
+  restart. Each enabled X route also completed a real fetch after those waits:
+  Barchart `06:53:50.487`, Nebius official `06:54:11.057`, TrendSpider
+  `06:55:22.565` and WallStEngine `06:55:02.527` UTC. The earlier **439** ambiguous
+  transitions remain preserved; the repair does not relabel them.
+- The inspected, pinned offline audit (`c5b62e9`, SHA-256
+  `eccbdc01deab444c7f169b693bbb97f7e9eda01b41e16987b0d33983f6739143`)
+  was rerun against the live database at a fixed `06:58:56.431466 UTC` cutoff.
+  It reported three historical backfills, one new-source-publication candidate
+  and one revision. The only new candidate was PR Newswire event 1167, source
+  time `06:00:00 UTC`, first observed `06:01:13.581 UTC`: a MIMARU Osaka hotel
+  opening release, independently reviewed as outside Tech Phase scope. Its
+  **73.581 seconds** is retained only in the raw intake diagnostic and is not a
+  service-latency success. It had no eligible Japanese/English delivery to review.
+- Nebius Blog event 1168 (`Introducing spot pricing for preemptible VMs`) was a
+  changed revision first observed at `06:18:47.857 UTC`; the official article is
+  dated September 22, 2026. It is not a new publication in this window.
+- The reviewed audit therefore reported `excluded: 1`, zero independently
+  reviewed eligible new publications, and a zero-sample/null service-latency
+  distribution. Its exact-window history still retained 439 route transitions,
+  zero incident event, zero new research attempt failure, zero translation-call
+  failure and 21 carry-in incidents. These records are not recategorized as
+  current upstream errors.
+- The audit declared all 51 required source IDs. The two targeted source checks
+  above were deliberately partial, so all 51 complete independent inventories
+  remain unverified. No eligible new item existed for a revision-bound bilingual
+  browser observation. Separately, the preview loaded successfully in Japanese
+  and English; the home carousel included the previously published TrendSpider
+  Nasdaq-100 update in Japanese and the equivalent English headline. That check
+  verifies the home-market-news integration, not in-window news acceptance.
+- Acceptance remains **observing / untested for new eligible delivery**. The
+  original `04:43:12.282254 UTC` start is unchanged; no clean-window reset was
+  made and no zero-event category is treated as passed.
