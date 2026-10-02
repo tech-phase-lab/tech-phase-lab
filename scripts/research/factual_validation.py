@@ -125,8 +125,8 @@ def validate_acquisition(text, source, language, require_status=False):
 
 
 SEMANTIC_POLARITIES = (
-    (r'\b(?:increas(?:e|ed|es|ing)|rose|grew|growth|higher)\b|増加|増収|増益|上昇',
-     r'\b(?:decreas(?:e|ed|es|ing)|fell|declin(?:e|ed|es)|lower)\b|減少|減収|減益|下落'),
+    (r'\b(?:increas(?:e|ed|es|ing)|ris(?:e|es|ing)|rose|grew|growth|higher|surg(?:e|es|ed|ing))\b|増加|増収|増益|上昇|急騰',
+     r'\b(?:decreas(?:e|ed|es|ing)|fall(?:s|ing)?|fell|declin(?:e|ed|es|ing)|lower|drop(?:s|ped|ping)?)\b|減少|減収|減益|下落|急落'),
     (r'\b(?:net income|net profit)\b|純利益', r'\bnet loss\b|純損失'),
 )
 

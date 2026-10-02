@@ -342,6 +342,7 @@ export type MonitorState = {
       oldestPendingAt: string | null; nextRetryAt: string | null;
       calls24Hours: { total: number; failed: number; completed: number; stale: number };
     };
+    xMarketNews?: { accounts: number; eligible: number; published: number; pending: number; failureKinds: Record<string, number> };
     xIntake?: {
       usage: {
         requested: boolean; configured: boolean; enabled: boolean;

@@ -7,7 +7,8 @@ export type GeneralNewsItem = {
   confidence: "high" | "medium" | "low";
 };
 export type OfficialUpdate = { id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string };
-export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; resultBriefs?: ResultBrief[] };
+export type MarketUpdate = { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
+export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; resultBriefs?: ResultBrief[] };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
   "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com", "www.bea.gov"]);
 
@@ -15,7 +16,25 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
   if (!value || typeof value !== "object") throw new Error("Invalid news feed");
   const payload = value as Record<string, unknown>;
   if (payload.ok !== true || typeof payload.enabled !== "boolean" || !Array.isArray(payload.items) || payload.items.length > 30) throw new Error("Invalid news feed");
-  const updates: { officialUpdates?: OfficialUpdate[]; resultBriefs?: ResultBrief[] } = {};
+  const updates: { officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; resultBriefs?: ResultBrief[] } = {};
+  if (payload.marketUpdates !== undefined) {
+    if (!Array.isArray(payload.marketUpdates) || payload.marketUpdates.length > 20) throw Error("Invalid market updates");
+    updates.marketUpdates = payload.marketUpdates.map(raw => {
+      if (!raw || typeof raw !== "object") throw Error("Invalid market update");
+      const v = raw as Record<string, unknown>;
+      for (const key of ["id", "titleJa", "titleEn", "url", "publishedAt", "observedAt"]) {
+        if (typeof v[key] !== "string" || !(v[key] as string).trim() || (v[key] as string).length > 4000 || (v[key] as string).includes("\0")) throw Error("Invalid market field");
+      }
+      const url = new URL(v.url as string);
+      const account = /^\/(TrendSpider|Barchart)\/status\/\d+$/i.exec(url.pathname)?.[1].toLowerCase();
+      if (url.protocol !== "https:" || url.hostname !== "x.com" || url.username || url.password || url.port || url.search || url.hash || !account || !/^\d+$/.test(v.id as string)) throw Error("Invalid market source");
+      if (account === "trendspider" ? v.topic !== "index-membership" : !["government-bonds", "crude-oil"].includes(v.topic as string)) throw Error("Invalid market topic");
+      for (const key of ["publishedAt", "observedAt"]) {
+        if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(v[key] as string) || !Number.isFinite(Date.parse(v[key] as string))) throw Error("Invalid market date");
+      }
+      return { id: v.id as string, titleJa: v.titleJa as string, titleEn: v.titleEn as string, url: url.href, topic: v.topic as MarketUpdate["topic"], publishedAt: v.publishedAt as string, observedAt: v.observedAt as string };
+    });
+  }
   if (payload.resultBriefs !== undefined) updates.resultBriefs = parseResultBriefs(payload.resultBriefs);
   if (payload.officialUpdates !== undefined) {
     if (!Array.isArray(payload.officialUpdates) || payload.officialUpdates.length > 20) throw Error("Invalid updates");

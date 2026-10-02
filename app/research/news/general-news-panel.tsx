@@ -52,25 +52,39 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
   }, [refresh]);
   const official = data?.officialUpdates ?? [];
   const news = officialOnly ? [] : data?.items ?? [];
-  const pages = Math.max(1, Math.ceil((official.length + news.length) / 5));
+  const market = officialOnly ? [] : data?.marketUpdates ?? [];
+  const updates = [
+    ...official.map(item => ({ kind: "official" as const, item, at: officialTime(item).at })),
+    ...market.map(item => ({ kind: "market" as const, item, at: item.publishedAt })),
+  ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
+  const pages = Math.max(1, Math.ceil((updates.length + news.length) / 5));
   const current = Math.min(page, pages), start = (current - 1) * 5;
-  const visibleOfficial = official.slice(start, start + 5);
-  const visibleNews = news.slice(Math.max(0, start - official.length), Math.max(0, start + 5 - official.length));
+  const visibleUpdates = updates.slice(start, start + 5);
+  const visibleNews = news.slice(Math.max(0, start - updates.length), Math.max(0, start + 5 - updates.length));
   const format = (value: string) => new Date(value).toLocaleString(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", hour12: false }) + " JST";
   const impactLabels = lang === "ja"
     ? { positive: "プラス", negative: "マイナス", mixed: "両面", neutral: "中立", uncertain: "不明" }
     : { positive: "Positive", negative: "Negative", mixed: "Mixed", neutral: "Neutral", uncertain: "Uncertain" };
   const confidenceLabels = lang === "ja" ? { high: "高", medium: "中", low: "低" } : { high: "High", medium: "Medium", low: "Low" };
   return <section ref={panel} className={styles.panel} aria-label={lang === "ja" ? "ニュース一覧" : "News list"}>
-    {!!visibleOfficial.length && <section aria-label={lang === "ja" ? "公式発表" : "Official updates"}>
-      <div className={styles.items}>{visibleOfficial.map(item => { const publication = officialTime(item); const translated = officialHeadlineJa(item.url) ?? item.translationJa; const linkOnly = /^https?:\/\/\S+$/.test(item.title.trim()); return <article key={item.id}>
+    {!!visibleUpdates.length && <section aria-label={lang === "ja" ? "ニュース速報" : "News updates"}>
+      <div className={styles.items}>{visibleUpdates.map(update => {
+        if (update.kind === "market") {
+          const item = update.item;
+          const topics = lang === "ja" ? { "index-membership": "指数の組み入れ・除外", "government-bonds": "国債", "crude-oil": "原油" } : { "index-membership": "Index membership", "government-bonds": "Government bonds", "crude-oil": "Crude oil" };
+          return <article key={`market-${item.id}`}><p className={styles.tickers}>{topics[item.topic]}</p>
+            <h3><a href={item.url} target="_blank" rel="noopener noreferrer" lang={lang}>{lang === "ja" ? item.titleJa : item.titleEn}</a></h3>
+            <p className={styles.note}>{lang === "ja" ? "発表" : "Published"} {format(item.publishedAt)}</p></article>;
+        }
+        const item = update.item;
+        const publication = officialTime(item); const translated = officialHeadlineJa(item.url) ?? item.translationJa; const linkOnly = /^https?:\/\/\S+$/.test(item.title.trim()); return <article key={item.id}>
         <p className={styles.tickers}>{[item.tickers.join(" · "), item.researchId?.startsWith("x-result-") ? "" : item.publisher].filter(Boolean).join(" · ")}</p>
         <h3><a href={item.researchId ? `/research?result=${item.researchId}#what-changed/${item.researchId}` : item.url} target={item.researchId ? undefined : '_blank'} rel="noopener noreferrer">{lang === "ja" ? translated ?? (linkOnly ? "公式投稿（リンクのみ・本文未取得）" : "公式アップデート（日本語訳を準備中）") : item.title}</a></h3>
         <p className={styles.note}>{publication.kind === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} {publication.kind === "date" ? publication.at : format(publication.at)}</p>
       </article>; })}</div>
     </section>}
     {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}
-    {!officialOnly && (visibleNews.length > 0 || (!official.length && (!data?.enabled || !news.length))) && <><div className={styles.head}><h2 id="general-news-title">{lang === "ja" ? "通常ニュース" : "General news"}</h2><button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>
+    {!officialOnly && (visibleNews.length > 0 || (!updates.length && (!data?.enabled || !news.length))) && <><div className={styles.head}><h2 id="general-news-title">{lang === "ja" ? "通常ニュース" : "General news"}</h2><button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>
     {error ? <p role="status">{lang === "ja" ? "ニュースを取得できません。しばらくしてから更新してください。" : "News is unavailable. Please refresh shortly."}</p> : !data ? <div className={styles.placeholder} aria-busy="true" aria-label={lang === "ja" ? "ニュースを取得中" : "Fetching news"} /> : !data.enabled ? <p>{lang === "ja" ? "通常ニュースの配信は準備中です。" : "General news coverage is coming soon."}</p> : <>
       <p className={styles.note}>{lang === "ja" ? "日英の内容を確認した記事を掲載しています。" : "Articles are published after review of both language versions."}</p>
       {!data.items.length && <p>{lang === "ja" ? "現在、公開中の記事はありません。" : "No articles are currently published."}</p>}

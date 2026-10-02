@@ -177,3 +177,11 @@ test('live MU earnings replace the manually recovered flash', async () => {
     }
   }
 });
+
+test('scoped market updates preserve both languages and never expose private originals', () => {
+ const market = { id:'123', url:'https://x.com/Barchart/status/123', topic:'government-bonds', titleJa:'日本の10年物国債利回りが上昇。', titleEn:'Japan 10-year bond yields rise.', publishedAt:'2026-10-02T00:00:00Z', observedAt:'2026-10-02T00:01:00Z' };
+ assert.deepEqual(publicNewsPayload({ok:true,enabled:false,items:[],marketUpdates:[{...market,body:'private original'}]}).marketUpdates,[market]);
+ for (const changes of [{url:'https://x.com/Other/status/123'},{topic:'index-membership'},{titleEn:''},{url:market.url+'?unreviewed=1'}]) {
+   assert.throws(()=>publicNewsPayload({ok:true,enabled:false,items:[],marketUpdates:[{...market,...changes}]}));
+ }
+});
