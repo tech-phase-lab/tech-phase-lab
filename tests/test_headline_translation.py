@@ -203,13 +203,37 @@ class HeadlineTranslationTests(unittest.TestCase):
             self.assertEqual(items[0]["id"], str(latest_id))
             self.assertNotIn("translationJa", items[0])
 
-    def test_failures_retry_three_times_without_persisting_provider_error(self):
+    def test_failures_slow_down_then_recover_without_persisting_provider_error(self):
         def failed(*_):
             raise RuntimeError("sensitive provider response")
-        for now in (NOW, NOW + 300, NOW + 600):
-            self.assertEqual(translation.run_once(self.path, failed, ENV, now=now, sources=[SOURCE]), "retry")
-        self.assertEqual(translation.run_once(self.path, response, ENV, now=NOW + 900, sources=[SOURCE]), "idle")
+        retry_env = {**ENV, "OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT": "10"}
+        for now in (NOW, NOW + 60, NOW + 180):
+            self.assertEqual(translation.run_once(self.path, failed, retry_env, now=now, sources=[SOURCE]), "retry")
+        self.assertEqual(translation.run_once(self.path, response, retry_env, now=NOW + 900, sources=[SOURCE]), "idle")
+        with translation.connect(self.path) as db:
+            state = translation.diagnostics(db, env=retry_env, now=NOW+900, sources=[SOURCE])
+            self.assertEqual(state["retrying"], 1)
+            self.assertEqual(state["exhausted"], 0)
+        self.assertEqual(translation.run_once(self.path, response, retry_env, now=NOW + 3780, sources=[SOURCE]), "done")
         self.assertNotIn(b"sensitive provider response", self.path.read_bytes())
+
+    def test_existing_three_attempt_job_recovers_without_manual_reset(self):
+        with translation.connect(self.path) as db:
+            db.execute("INSERT INTO signal_headline_translation_jobs(source_id,url,sha,attempts,next_at,lease,state,source_title) VALUES(?,?,?,3,0,'old','retry',?)", (SOURCE['id'], 'https://nebius.com/blog/example', 'sha-1', 'Nebius announces a new AI platform'))
+        self.assertEqual(translation.run_once(self.path, response, ENV, now=NOW, sources=[SOURCE]), 'done')
+
+    def test_retry_after_is_respected_and_new_headline_precedes_failed_old_one(self):
+        def limited(*args):
+            error = RuntimeError('private')
+            error.retry_after_seconds = 900
+            raise error
+        self.assertEqual(translation.run_once(self.path, limited, ENV, now=NOW, sources=[SOURCE]), 'retry')
+        self.assertEqual(translation.run_once(self.path, response, ENV, now=NOW+899, sources=[SOURCE]), 'idle')
+        with translation.connect(self.path) as db:
+            db.execute("INSERT INTO signal_events(source_id,url,sha,previous_sha,title,tickers_json,matches_json,event_kind,published_at,observed_at,excerpt,diff,truncated) SELECT source_id,url||'-new','new-sha',previous_sha,title,tickers_json,matches_json,event_kind,'2027-01-01T00:17:00+00:00','2027-01-01T00:17:10+00:00',excerpt,diff,truncated FROM signal_events")
+        self.assertEqual(translation.run_once(self.path, response, ENV, now=NOW+901, sources=[SOURCE]), 'done')
+        with translation.connect(self.path) as db:
+            self.assertEqual(db.execute("SELECT sha FROM signal_headline_translations").fetchone()[0], 'new-sha')
 
     def test_unchanged_headline_reuses_translation_even_at_budget_limit(self):
         self.assertEqual(translation.run_once(self.path,response,ENV,now=NOW,sources=[SOURCE]),'done')
@@ -256,7 +280,7 @@ class HeadlineTranslationTests(unittest.TestCase):
             "eligible": 1, "translated": 0, "pending": 1,
             "running": 0, "retrying": 1, "exhausted": 0,
             "oldestPendingAt": "2027-01-01T00:15:10+00:00",
-            "nextRetryAt": "2027-01-01T00:21:40+00:00",
+            "nextRetryAt": "2027-01-01T00:17:40+00:00",
             "calls24Hours": {"total": 1, "failed": 1, "completed": 0, "stale": 0},
         })
         serialized = json.dumps(summary)

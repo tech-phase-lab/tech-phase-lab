@@ -182,14 +182,14 @@ class OfficialResearchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'unsupported-number'):
             research.validate(altered,BODY)
 
-    def test_corrected_window_gets_one_final_bounded_recovery(self):
+    def test_repeated_failure_waits_for_backoff_before_retry(self):
         with research.connect(self.path) as db:
             row=research.candidates(db,NOW)[0]
             db.execute("INSERT INTO official_research_jobs(event_id,sha,attempts,next_at,lease,state,failure_kind) VALUES(?,?,6,0,'old','retry','unsupported-number')",(row['id'],row['sha']))
         def fail(*args):raise ValueError('unsupported-number')
         self.assertEqual(self.run_note(fail),'retry')
         self.assertEqual(self.run_note(lambda *_:self.fail('unbounded retry')),'idle')
-    def test_legacy_unclassified_failure_has_one_bounded_diagnostic_retry(self):
+    def test_legacy_unclassified_failure_retries_with_backoff(self):
         with research.connect(self.path) as db:
             rows=research.candidates(db,NOW)
             row=rows[0]
@@ -200,6 +200,13 @@ class OfficialResearchTests(unittest.TestCase):
         with research.connect(self.path) as db:
             job=db.execute('SELECT attempts,failure_kind FROM official_research_jobs').fetchone()
             self.assertEqual(job['attempts'],4);self.assertEqual(job['failure_kind'],'incomplete')
+
+    def test_stopped_article_job_recovers_after_backoff_without_manual_reset(self):
+        with research.connect(self.path) as db:
+            row=research.candidates(db,NOW)[0]
+            db.execute("INSERT INTO official_research_jobs(event_id,sha,attempts,next_at,lease,state,failure_kind) VALUES(?,?,8,?, 'old','retry','provider-unavailable')", (row['id'], row['sha'], NOW.timestamp()+60))
+        self.assertEqual(self.run_note(lambda *_:self.fail('before retry deadline')), 'idle')
+        self.assertEqual(research.run_once(self.path,response,ENV,NOW.timestamp()+60), 'done')
 
     def test_numerical_worker_runs_even_when_translation_is_unconfigured(self):
         import service

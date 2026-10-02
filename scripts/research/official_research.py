@@ -130,11 +130,9 @@ def claim(db, reference, model, limit):
                 except (ValueError, TypeError):
                     pass
             job=db.execute('SELECT * FROM official_research_jobs WHERE event_id=?',(r['id'],)).fetchone()
-            quote_recovery=bool(job and job['state']=='retry' and ((job['attempts']==4 and job['failure_kind']=='unsupported-quote') or (job['attempts'] in (5,6) and job['failure_kind']=='unsupported-number')))
-            legacy_probe=bool(job and job['state']=='retry' and job['attempts']==3 and job['failure_kind'] is None)
             if job and job['state']=='done':
-                job=None  # A stored publication failing current validation must be regenerated.
-            if job and job['sha']==r['sha'] and ((job['attempts']>=3 and not legacy_probe and not quote_recovery) or job['next_at']>now):
+                job=None  # Regenerate an invalid saved publication.
+            if job and job['sha']==r['sha'] and job['next_at']>now:
                 continue
             lease=uuid.uuid4().hex
             db.execute('''INSERT INTO official_research_jobs(event_id,sha,attempts,next_at,lease,state) VALUES(?,?,1,?,?,'running')
@@ -281,7 +279,9 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         provider_status=getattr(cause,'code',None)
         reason=str(exc) if type(exc) is ValueError and str(exc) in {'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete'} else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
         with connect(path) as db, db:
-            db.execute("UPDATE official_research_jobs SET state='retry',next_at=?,failure_kind=? WHERE event_id=? AND lease=?",(now+60,reason,row['id'],lease))
+            job=db.execute("SELECT attempts FROM official_research_jobs WHERE event_id=? AND lease=?",(row['id'],lease)).fetchone()
+            delay=max(headline_translation.retry_delay(job[0] if job else 1), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
+            db.execute("UPDATE official_research_jobs SET state='retry',next_at=?,failure_kind=? WHERE event_id=? AND lease=?",(now+delay,reason,row['id'],lease))
             db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?",(lease,))
         return 'retry'
     public_at=datetime.now(timezone.utc).isoformat(timespec='milliseconds')
