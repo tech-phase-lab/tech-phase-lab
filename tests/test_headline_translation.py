@@ -217,6 +217,18 @@ class HeadlineTranslationTests(unittest.TestCase):
         self.assertEqual(translation.run_once(self.path, response, retry_env, now=NOW + 3780, sources=[SOURCE]), "done")
         self.assertNotIn(b"sensitive provider response", self.path.read_bytes())
 
+    def test_token_exhaustion_retries_with_more_output_room_and_no_looser_validation(self):
+        budgets=[]
+        def truncated(payload, key):
+            budgets.append(payload['max_output_tokens'])
+            return {'status': 'incomplete', 'incomplete_details': {'reason': 'max_output_tokens'}} if len(budgets)==1 else response(payload,key)
+        self.assertEqual(translation.run_once(self.path, truncated, ENV, now=NOW, sources=[SOURCE]), 'retry')
+        with translation.connect(self.path) as db:
+            state=translation.diagnostics(db, env=ENV, now=NOW+1, sources=[SOURCE])
+            self.assertEqual(state['failureKinds'], {'output-token-limit': 1})
+        self.assertEqual(translation.run_once(self.path, truncated, ENV, now=NOW+5, sources=[SOURCE]), 'done')
+        self.assertEqual(budgets, [300,1200])
+
     def test_existing_three_attempt_job_recovers_without_manual_reset(self):
         with translation.connect(self.path) as db:
             db.execute("INSERT INTO signal_headline_translation_jobs(source_id,url,sha,attempts,next_at,lease,state,source_title) VALUES(?,?,?,3,0,'old','retry',?)", (SOURCE['id'], 'https://nebius.com/blog/example', 'sha-1', 'Nebius announces a new AI platform'))
@@ -282,6 +294,7 @@ class HeadlineTranslationTests(unittest.TestCase):
             "oldestPendingAt": "2027-01-01T00:15:10+00:00",
             "nextRetryAt": "2027-01-01T00:17:40+00:00",
             "calls24Hours": {"total": 1, "failed": 1, "completed": 0, "stale": 0},
+            "failureKinds": {"provider-unavailable": 1},
         })
         serialized = json.dumps(summary)
         self.assertNotIn("http", serialized.lower())

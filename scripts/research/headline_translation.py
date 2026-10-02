@@ -86,6 +86,10 @@ def schema(db):
         db.execute("ALTER TABLE signal_headline_translation_jobs ADD COLUMN source_title TEXT")
     if "translation_input" not in columns:
         db.execute("ALTER TABLE signal_headline_translation_jobs ADD COLUMN translation_input TEXT")
+    if "failure_kind" not in columns:
+        db.execute("ALTER TABLE signal_headline_translation_jobs ADD COLUMN failure_kind TEXT")
+        # One-time recovery of old stopped jobs so their failure can be diagnosed.
+        db.execute("UPDATE signal_headline_translation_jobs SET next_at=0 WHERE state='retry'")
 
 
 def connect(path):
@@ -115,6 +119,7 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
     }
     oldest_pending = None
     next_retry = None
+    failure_kinds = {}
     for item in signals.public_official_updates(db, sources=sources, reference=reference, limit=500):
         row = db.execute("SELECT * FROM signal_events WHERE id=?", (item["id"],)).fetchone()
         if not row or re.fullmatch(r"https?://\S+", row["title"].strip(), re.I):
@@ -135,11 +140,14 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
                     oldest_pending = observed
         except (TypeError, ValueError, OverflowError):
             pass
-        job = db.execute('''SELECT attempts,next_at,state
+        job = db.execute('''SELECT attempts,next_at,state,failure_kind
           FROM signal_headline_translation_jobs WHERE source_id=? AND url=? AND sha=?''',
                          (row["source_id"], row["url"], row["sha"])).fetchone()
         if not job:
             continue
+        if job['failure_kind'] in {'output-token-limit', 'incomplete', 'invalid-translation', 'unsupported-number', 'invalid-copy', 'invalid-json', 'provider-unavailable', 'provider-rate-limit', 'provider-auth', 'provider-timeout'}:
+            kind = job['failure_kind']
+            failure_kinds[kind] = failure_kinds.get(kind, 0) + 1
         if job["state"] == "running":
             counts["running"] += 1
         elif job["state"] in {"retry", "stale"}:
@@ -177,6 +185,7 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
         "oldestPendingAt": oldest_pending.isoformat() if oldest_pending else None,
         "nextRetryAt": next_retry.isoformat() if next_retry else None,
         "calls24Hours": calls,
+        **({"failureKinds": failure_kinds} if failure_kinds else {}),
     }
 
 
@@ -251,10 +260,6 @@ def claim(db, sources, limit, model, now):
             job = db.execute('''SELECT * FROM signal_headline_translation_jobs
               WHERE source_id=? AND url=? AND sha=?''',
                              (row["source_id"], row["url"], row["sha"])).fetchone()
-            recoverable_legacy_stale = bool(
-                job and job["state"] == "stale" and job["attempts"] >= FAST_RETRY_ATTEMPTS
-                and job["source_title"] is None
-            )
             if job and job["state"] == "done" and existing:
                 job=None
             if job and (job["state"] == "done"
@@ -276,7 +281,7 @@ def claim(db, sources, limit, model, now):
             db.execute('''INSERT INTO signal_headline_translation_calls
               (at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)''',
                        (now, row["source_id"], row["sha"], model, "running", lease))
-            return {**dict(row), "translation_title": item["title"]}, lease
+            return {**dict(row), "translation_title": item["title"], "output_tokens": 1200 if job and job["failure_kind"] == "output-token-limit" else 300}, lease
     return None
 
 
@@ -297,7 +302,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         "properties": {"titleJa": {"type": "string"}},
     }
     payload = {
-        "model": model, "store": False, "max_output_tokens": 300,
+        "model": model, "store": False, "max_output_tokens": row["output_tokens"],
         "instructions": POLICY,
         "input": json.dumps({"title": row["translation_title"]}, ensure_ascii=False),
         "text": {"format": {"type": "json_schema", "name": "official_headline_translation",
@@ -307,7 +312,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     try:
         response = transport(payload, key)
         if response.get("status") != "completed":
-            raise ValueError("incomplete")
+            raise ValueError("output-token-limit" if (response.get("incomplete_details") or {}).get("reason") == "max_output_tokens" else "incomplete")
         result = json.loads(brief_generator.output_text(response))
         title_ja = result.get("titleJa") if isinstance(result, dict) and set(result) == {"titleJa"} else None
         if (not isinstance(title_ja, str) or not title_ja.strip()
@@ -324,11 +329,20 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     except Exception as exc:
         with connect(path) as db:
             attempt = db.execute("SELECT attempts FROM signal_headline_translation_jobs WHERE lease=?", (lease,)).fetchone()
-        retry = max(retry_delay(attempt[0] if attempt else 1), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
+        cause = getattr(exc, '__cause__', None)
+        status = getattr(cause, 'code', None)
+        kind = ('invalid-json' if isinstance(exc, json.JSONDecodeError)
+                else str(exc) if type(exc) is ValueError and str(exc) in {'output-token-limit', 'incomplete', 'invalid-translation', 'unsupported-number', 'invalid-copy'}
+                else 'provider-rate-limit' if status == 429
+                else 'provider-auth' if status in (401, 403)
+                else 'provider-timeout' if isinstance(exc, TimeoutError) or isinstance(cause, TimeoutError)
+                else 'provider-unavailable')
+        delay = 5 if kind == 'output-token-limit' and row['output_tokens'] < 1200 else retry_delay(attempt[0] if attempt else 1)
+        retry = max(delay, min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
         with connect(path) as db, db:
-            db.execute('''UPDATE signal_headline_translation_jobs SET state='retry',next_at=?
+            db.execute('''UPDATE signal_headline_translation_jobs SET state='retry',next_at=?,failure_kind=?
               WHERE source_id=? AND url=? AND sha=? AND lease=?''',
-                       (now + retry, row["source_id"], row["url"], row["sha"], lease))
+                       (now + retry, kind, row["source_id"], row["url"], row["sha"], lease))
             db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?",
                        (lease,))
         return "retry"
