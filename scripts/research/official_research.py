@@ -75,24 +75,30 @@ def candidates(db, reference):
     stories = []
     for row in db.execute('''SELECT e.*, b.body_sha, b.body, b.fetched_at AS body_at
       FROM signal_events e JOIN official_story_bodies b ON e.id=b.event_id AND e.sha=b.sha
-      JOIN signal_documents d ON d.source_id=e.source_id AND d.url=e.url AND d.sha=e.sha
-      WHERE length(b.body)>0 ORDER BY e.id DESC LIMIT 100'''):
+      LEFT JOIN signal_documents d ON d.source_id=e.source_id AND d.url=e.url AND d.sha=e.sha
+      WHERE length(b.body)>0 AND (d.sha IS NOT NULL OR e.source_id LIKE 'primary-ir-%') ORDER BY e.id DESC LIMIT 100'''):
         tickers = json.loads(row['tickers_json'])
-        if row['id'] in visible_ids and row['id'] not in primary_ids and tickers:
-            stories.append({**dict(row), 'ticker': tickers[0]})
+        if row['id'] in visible_ids and row['id'] not in primary_ids and tickers and bridge.is_current(db,row):
+            stories.append({**dict(row), 'ticker': tickers[0], 'body_cached': True})
     return primary + stories
 
 
-def prepare_story_body(path, reference, request=signals.fetch):
+def prepare_story_body(path, reference, request=None):
     """Fetch one already-public publisher story without delaying its headline."""
     from html_signals import NewsHTML
+    request = request or signals.fetch
     with connect(path) as db:
-        sources = {s['id']: s for s in signals.SOURCES if s.get('officialUpdates')
+        sources = {s['id']: s for s in [*signals.SOURCES,*[{**p,'format':'feed'} for p in bridge.publishers()]] if s.get('officialUpdates')
                    and s.get('enabled') is not False and s.get('format') != 'x-api'}
         for item in signals.public_official_updates(db, reference=reference, limit=20):
             row = db.execute('SELECT * FROM signal_events WHERE id=?',(item['id'],)).fetchone()
             if not row or row['source_id'] not in sources or row['truncated']:
                 continue
+            if row['source_id'].startswith('primary-ir-'):
+                original=db.execute('''SELECT length(r.extracted_text) FROM sources s
+                  JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256 WHERE s.url=?''',(row['url'],)).fetchone()
+                if original and original[0]>=1200:
+                    continue
             source = sources[row['source_id']]
             cached = db.execute('SELECT * FROM official_story_bodies WHERE event_id=?',(row['id'],)).fetchone()
             if cached and cached['sha'] == row['sha'] and cached['next_at'] > reference.timestamp():
@@ -131,7 +137,12 @@ def prepare_story_body(path, reference, request=signals.fetch):
 
 def current_revision(db, row):
     if row['source_id'].startswith('primary-ir-'):
-        return bridge.is_current(db, row)
+        if not bridge.is_current(db,row):
+            return False
+        if not row.get('body_cached'):
+            return True
+        current=db.execute('SELECT sha,body_sha FROM official_story_bodies WHERE event_id=?',(row['id'],)).fetchone()
+        return bool(current and current['sha']==row['sha'] and current['body_sha']==row['body_sha'])
     current = db.execute('''SELECT d.sha,b.body_sha FROM signal_documents d
       JOIN official_story_bodies b ON b.event_id=? AND b.sha=d.sha
       WHERE d.source_id=? AND d.url=?''',(row['id'],row['source_id'],row['url'])).fetchone()
@@ -142,11 +153,14 @@ def public_story_body(db, row):
     """Only validated bilingual news copy; no raw article or private purpose."""
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='official_story_bodies'").fetchone():
         return {}
+    if not bridge.is_current(db,row):
+        return {}
     saved = db.execute('''SELECT p.payload,b.body FROM official_research_publications p
       JOIN official_story_bodies b ON b.event_id=p.event_id AND b.sha=p.sha AND b.body_sha=p.body_sha
-      JOIN signal_documents d ON d.source_id=? AND d.url=? AND d.sha=p.sha
-      WHERE p.event_id=? AND p.sha=? AND length(b.body)>0''',
-      (row['source_id'],row['url'],row['id'],row['sha'])).fetchone()
+      LEFT JOIN signal_documents d ON d.source_id=? AND d.url=? AND d.sha=p.sha
+      WHERE p.event_id=? AND p.sha=? AND length(b.body)>0
+      AND (d.sha IS NOT NULL OR ? LIKE 'primary-ir-%')''',
+      (row['source_id'],row['url'],row['id'],row['sha'],row['source_id'])).fetchone()
     if not saved:
         return {}
     try:

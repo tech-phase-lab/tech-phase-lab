@@ -121,7 +121,8 @@ class OfficialResearchTests(unittest.TestCase):
         with research.connect(self.path) as db:
             db.execute("UPDATE sources SET status='pending'")
             db.execute("UPDATE source_revisions SET extracted_text='Incomplete body'")
-        self.assertEqual(self.run_note(),'idle')
+        with patch.object(research.signals,'fetch',return_value={'body':b'<article>Incomplete body</article>'}):
+            self.assertEqual(self.run_note(),'idle')
     def test_unsupported_evidence_and_numbers_are_rejected(self):
         for field,bad in [('evidenceQuote','This unsupported claim does not occur in the body.'),('ja','売上は99%増加した。'),('en','Sign up https://example.com')]:
             note=json.loads(json.dumps(NOTE));note['facts'][0][field]=bad

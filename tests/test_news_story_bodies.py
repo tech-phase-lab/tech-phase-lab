@@ -68,3 +68,26 @@ class NewsStoryBodyTests(unittest.TestCase):
         with research.connect(self.path) as db:
             self.assertEqual(len(signals.public_official_updates(db,reference=NOW)),1)
             self.assertGreater(db.execute('SELECT next_at FROM official_story_bodies').fetchone()[0],NOW.timestamp())
+
+    def test_primary_feed_teaser_fetches_full_article_and_invalidates_on_revision(self):
+        url='https://blogs.nvidia.com/blog/new-developer-platform/'
+        with research.connect(self.path) as db:
+            db.execute('DELETE FROM signal_events')
+            db.execute('INSERT INTO sources(url,ticker,title,published_on,discovered_at,sha256) VALUES(?,?,?,?,?,?)',
+                       (url,'NVDA',self.item['title'],'2026-10-02',NOW.isoformat(),'teaser-v1'))
+            db.execute('INSERT INTO release_events(url,ticker,detected_at) VALUES(?,?,?)',(url,'NVDA',NOW.isoformat()))
+            db.execute('INSERT INTO source_revisions(url,sha256,observed_at,extracted_text,extracted_chars) VALUES(?,?,?,?,?)',
+                       (url,'teaser-v1',NOW.isoformat(),'Short feed teaser',16))
+        def request(source,validators):
+            self.assertEqual(source['url'],url)
+            return {'body':('<article>'+BODY+'</article>').encode()}
+        self.assertEqual(research.prepare_story_body(self.path,NOW,request),'ready')
+        def response(*args):return {'status':'completed','output_text':json.dumps(NOTE)}
+        self.assertEqual(research.run_once(self.path,response,ENV,NOW.timestamp()),'done')
+        with research.connect(self.path) as db:
+            self.assertIn(NOTE['facts'][1]['ja'],signals.public_official_updates(db,reference=NOW)[0]['bodyJa'])
+            self.assertEqual(len(research.feed(db,NOW)),1)
+            row=research.candidates(db,NOW)[0]
+            db.execute("UPDATE sources SET sha256='teaser-v2'")
+            self.assertFalse(research.current_revision(db,row))
+            self.assertEqual(research.public_story_body(db,row),{})
