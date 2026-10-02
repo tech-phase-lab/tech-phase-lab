@@ -7,6 +7,41 @@ import factual_validation as validation
 
 
 class FactualValidationTests(unittest.TestCase):
+    def test_purpose_cannot_be_translated_as_achieved_benefit(self):
+        for ja, en in (
+            ('買収し、性能を向上させた。', 'It acquired the company to improve performance.'),
+            ('コストを削減した。', 'It aims to reduce costs.'),
+            ('能力の拡大を目指す。', 'It expanded capacity.'),
+        ):
+            with self.subTest(ja=ja), self.assertRaisesRegex(ValueError, 'invalid-copy'):
+                validation.validate_pair(ja, en)
+        validation.validate_pair('性能改善を目指して買収した。', 'It acquired the company to improve performance.')
+        validation.validate_pair('性能を改善した。', 'It improved performance.')
+        validation.validate_pair('事業を拡大し、コスト削減を目指す。', 'It expanded the business and aims to reduce costs.')
+
+    def test_gpu_overhead_metaphor_does_not_become_taxation(self):
+        source = 'The technology cuts the idle GPU tax by reducing unused capacity.'
+        with self.assertRaisesRegex(ValueError, 'invalid-copy'):
+            validation.validate_semantics('アイドルGPU課税を削減する。', source)
+        validation.validate_semantics('GPUの遊休コストを削減する。', source)
+        validation.validate_semantics('政府が課税を開始した。', 'The government introduced a tax.')
+
+    def test_future_integration_does_not_become_work_already_underway(self):
+        source = 'Engineers will work across the platform, starting with the integration of their technology.'
+        for text in ('Engineers are now integrating the technology.', '技術統合を進めている。', '技術を統合した。'):
+            with self.subTest(text=text), self.assertRaisesRegex(ValueError, 'invalid-copy'):
+                validation.validate_semantics(text, source)
+        validation.validate_semantics('技術統合から取り組む予定。', source)
+        validation.validate_semantics('The team will integrate its technology.', source)
+        validation.validate_semantics('技術統合を進めている。', 'Engineers are integrating the technology.')
+
+    def test_spelled_duration_cannot_be_omitted_or_changed_in_other_language(self):
+        validation.validate_pair('3か月以内に開発した。', 'It developed a prototype within three months.')
+        for ja in ('短期間で開発した。', '4か月以内に開発した。'):
+            with self.subTest(ja=ja), self.assertRaisesRegex(ValueError, 'unsupported-number'):
+                validation.validate_pair(ja, 'It developed a prototype within three months.')
+        validation.validate_pair('チームが加わった。', 'One of the teams joined.')
+
     def test_real_headline_calendar_and_amount_formats_keep_exact_values(self):
         for source, ja in (
             ('Acquisition announced October 1, 2026', '買収を2026年10月1日に発表'),

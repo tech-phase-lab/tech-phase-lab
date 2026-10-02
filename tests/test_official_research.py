@@ -58,6 +58,18 @@ class OfficialResearchTests(unittest.TestCase):
         self.assertEqual(self.run_note(selected),'done')
         self.assertEqual(len(self.feed()),1)
 
+    def test_saved_mistranslation_is_revalidated_and_automatically_regenerated(self):
+        self.assertEqual(self.run_note(), 'done')
+        with research.connect(self.path) as db:
+            payload=json.loads(db.execute('SELECT payload FROM official_research_publications').fetchone()[0])
+            payload['summary']['ja']='買収し、性能を向上させた。'
+            payload['summary']['en']='It acquired Inferize to improve performance.'
+            db.execute('UPDATE official_research_publications SET payload=?', (json.dumps(payload),))
+        self.assertEqual(self.feed(), [])
+        self.assertEqual(self.run_note(), 'done')
+        self.assertEqual(self.feed()[0]['summary']['ja'], NOTE['summary']['ja'])
+        self.assertEqual(self.run_note(lambda *_:self.fail('duplicate regeneration')), 'idle')
+
     def test_corrected_quote_failure_can_recover_once_and_invalid_ids_stay_private(self):
         with research.connect(self.path) as db:
             row=research.candidates(db,NOW)[0]

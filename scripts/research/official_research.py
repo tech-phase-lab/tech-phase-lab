@@ -33,6 +33,13 @@ languages must be supported by that quote. Use numbers exactly as quoted, withou
 converting units. In Japanese monetary figures, retain the source's numeric spelling
 and English unit (million or billion); do not convert into 億 or 兆. Use ひとつ,
 not 1つ, for generic Japanese wording. Do not turn company expectations into achieved results.
+Japanese and English must express the same claims, quantities and time/status.
+A completed acquisition does not mean its intended benefits have already occurred.
+Preserve purpose (to improve = 改善を目指す), future work (will integrate = 統合する予定),
+and ongoing work separately. Do not change will work/integrate to is now integrating.
+Translate metaphors by their meaning: idle GPU tax means the cost of unused GPU
+capacity (GPUの遊休コスト), never 課税 or a government tax.
+Check each Japanese/English pair against the selected excerpt before returning it.
 Titles should fit roughly two lines on a phone; no ticker prefix is needed.
 Each title must be at most 180 characters; each summary, fact and purpose at most 400 characters."""
 
@@ -255,7 +262,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     excerpts=evidence_excerpts(row['body'])
     policy=POLICY
     if not re.search(r'financial results|earnings|quarter.*results',row['title'],re.I):
-        policy += '\nFor this non-earnings announcement, omit numerical figures and dates. Use no digits in Japanese or English, including generic phrases such as 1つ. Describe the business change qualitatively without inventing scale.'
+        policy += '\nFor this non-earnings announcement, omit numerical figures and dates in both languages, including spelled-out durations such as three months. Use no digits in Japanese or English, including generic phrases such as 1つ. Describe the business change qualitatively without inventing scale.'
     if re.search(r'\bto acquire\b',row['title'],re.I):
         policy += '\nThis is a PLANNED acquisition, not a completed transaction. In BOTH title and summary preserve that status in both languages. Use 買収へ in the Japanese title and 買収契約 or 買収予定 in the Japanese summary. English must retain to acquire, agreement or planned wording.'
     payload={'model':model,'store':False,'max_output_tokens':2400,'instructions':policy,

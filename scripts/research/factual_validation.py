@@ -21,6 +21,8 @@ UNIT_SCALE = { 'k': 1000, 'thousand': 1000, '千': 1000,
 MONTHS = {name: i for i, name in enumerate(('January','February','March','April','May','June','July','August','September','October','November','December'), 1)}
 MONTH_PATTERN = r'\b(' + '|'.join(MONTHS) + r')\b'
 ORDINALS = {'first': 1, 'second': 2, 'third': 3, 'fourth': 4, '一': 1, '二': 2, '三': 3, '四': 4}
+SMALL_NUMBERS = {word: i for i, word in enumerate(
+    ('zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'))}
 
 
 def quarter_values(text):
@@ -69,6 +71,11 @@ def numeric_values(text):
     values.extend((Decimal(MONTHS[m[1].capitalize()]), 'number') for m in re.finditer(MONTH_PATTERN, text, re.I))
     values.extend((Decimal(ORDINALS[x.lower()]), 'number') for x in re.findall(r'\b(first|second|third|fourth)[ -]+quarter\b', text, re.I))
     values.extend((Decimal(ORDINALS[x]), 'number') for x in re.findall(r'第([一二三四])四半期', text))
+    # A spelled duration is still a factual number, not optional English prose.
+    # Restrict this to explicit time units so articles/idioms such as "one of"
+    # do not cause blanket rejections of otherwise equivalent translations.
+    values.extend((Decimal(SMALL_NUMBERS[x.lower()]), 'number') for x in re.findall(
+        r'\b(' + '|'.join(SMALL_NUMBERS) + r')[ -]+(?:seconds?|minutes?|hours?|days?|weeks?|months?|years?)\b', text, re.I))
     return values
 
 
@@ -132,6 +139,14 @@ SEMANTIC_POLARITIES = (
 
 
 def validate_semantics(text, evidence):
+    if re.search(r'idle GPU tax', evidence, re.I) and re.search(r'課税|税金|税負担', text):
+        raise ValueError('invalid-copy')  # Resource overhead metaphor, not taxation.
+    future_integration = r'\bwill (?:integrate|work\b[^.!?]{0,240}\bintegration)\b'
+    ongoing_integration = r'\b(?:is|are|now)\s+(?:\w+\s+){0,3}integrating\b|\b(?:has|have) integrated\b'
+    if (re.search(future_integration, evidence, re.I)
+            and not re.search(ongoing_integration, evidence, re.I)
+            and re.search(ongoing_integration + r'|統合(?:を進めている|中|した|済み|を完了)', text, re.I)):
+        raise ValueError('invalid-copy')
     for positive, negative in SEMANTIC_POLARITIES:
         if re.search(positive,text,re.I) and re.search(negative,evidence,re.I) and not re.search(positive,evidence,re.I):
             raise ValueError('invalid-copy')
@@ -144,6 +159,21 @@ def validate_pair(ja, en):
     validate_numbers(en, ja)
     if Counter(numeric_values(ja))!=Counter(numeric_values(en)):
         raise ValueError('unsupported-number')
+    # Match the outcome being qualified, not a blanket "aim" anywhere in the
+    # sentence: a completed acquisition may legitimately have a future purpose.
+    for english, japanese, past in (
+        (r'improv\w*|enhanc\w*', r'改善|向上', r'improved|enhanced'),
+        (r'reduc\w*|cut\w*', r'削減|短縮|低減', r'reduced'),
+        (r'increas\w*', r'増加', r'increased'),
+        (r'expand\w*', r'拡大|拡張', r'expanded'),
+        (r'strengthen\w*', r'強化', r'strengthened'),
+    ):
+        en_goal = re.search(r'\b(?:to|will|would|could|may) (?:' + english + r')\b', en, re.I)
+        ja_achieved = re.search(r'(?:' + japanese + r')(?:させた|した|しました|された|を実現した)', ja)
+        ja_goal = re.search(r'(?:' + japanese + r')[^。、]{0,12}(?:目指|目的|狙|見込|予定|ため)', ja)
+        en_achieved = re.search(r'\b(?:' + past + r')\b', en, re.I)
+        if (en_goal and ja_achieved) or (ja_goal and en_achieved and not en_goal):
+            raise ValueError('invalid-copy')
     for positive, negative in SEMANTIC_POLARITIES:
         if ((re.search(positive,ja,re.I) and re.search(negative,en,re.I))
                 or (re.search(negative,ja,re.I) and re.search(positive,en,re.I))):
