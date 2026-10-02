@@ -1,15 +1,30 @@
 # New-information acceptance observation
 
-## Current status — October 2 13:12 JST owner correction
+## Current status — publication recovered; new window observing
 
-Acceptance is paused while a known publication blocker is repaired. The 04:00:13
-UTC start below is retained as diagnostic history, not an eligible clean window.
-Event 1119 (NBIS Inferize acquisition) remains unpublished: one invalid-copy
-attempt exhausted the separate 20-call research subquota after earlier jobs had
-used the other calls, while the shared budget still had 76 of 200 slots available.
-Resume only after deployed automatic recovery, bilingual evidence review and
-frontend delivery verification. Record the new full window in the baseline JSON.
+New acceptance observation: **2026-10-02T04:43:12.282254+00:00 → 2026-10-03T04:43:12.282254+00:00**
+(UTC; JST is UTC+9). This is a new 24-hour observation, not a pass.
 
+Code `198317bac576ceebf887eb6599bc3e1ddace7f7b` passed Actions 36965517076,
+201 Node and 575 Python tests, lint, build, compileall and diff checks. Vercel
+preview and Railway staging deployments succeeded. At 04:41:10.749617 UTC,
+24/24 enabled official routes were fresh; route/article errors and pending
+article/headline/market queues were zero. Sandisk was 15/15 and PR Newswire 34/34.
+Two previously suspended sources remain outside coverage; do not count them as
+successful. The full measured baseline is in `recoveredPublicationBaseline`.
+
+Event 1119 auto-published at 04:33:03.958 UTC after retry recovery and bilingual
+fidelity fixes. Both language details were observed in the actual preview UI;
+brand spelling correction was confirmed at 04:41 UTC. Recovery of this old item
+is not evidence that a new announcement was delivered quickly. Preserve the
+previous invalid copy and retry history described in NEWS-ARTICLE-RECOVERY-2026-10-02.md.
+The shared 200 calls/24h cap remains; no new paid plan or higher cap was enabled.
+
+All earlier windows below are diagnostic history only. Measure newly published
+eligible items, independently reconcile source inventories, and distinguish backend
+publication timestamps from observed frontend delivery. Unobserved sources and
+zero-event categories remain unverified. Report any in-window errors and repairs;
+do not silently erase or restart a failed window to claim success.
 
 Owner instruction, October 2 11:55 JST: acceptance requires a full day of newly
 published information arriving promptly, correct Japanese and English, no missed

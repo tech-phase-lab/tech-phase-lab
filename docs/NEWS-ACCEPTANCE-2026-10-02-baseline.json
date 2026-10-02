@@ -2,11 +2,11 @@
   "windowStart": "2026-10-02T02:57:53.058536+00:00",
   "windowEnd": "2026-10-03T02:57:53.058536+00:00",
   "windowStatus": "diagnostic-only-known-source-errors",
-  "acceptanceEligible": false,
-  "acceptanceStatus": "waiting-for-publication-recovery",
-  "acceptanceWindowStart": null,
-  "acceptanceWindowEnd": null,
-  "repairCommit": "871c4d77bd79ef3247d8251bc4b09e148dd59a00",
+  "acceptanceEligible": true,
+  "acceptanceStatus": "observing-not-yet-passed",
+  "acceptanceWindowStart": "2026-10-02T04:43:12.282254+00:00",
+  "acceptanceWindowEnd": "2026-10-03T04:43:12.282254+00:00",
+  "repairCommit": "198317bac576ceebf887eb6599bc3e1ddace7f7b",
   "repairedBaselineCapturedAt": "2026-10-02T04:00:13.253461+00:00",
   "repairedBaseline": {
     "workerStartedAt": "2026-10-02T03:54:43.999+00:00",
@@ -492,5 +492,72 @@
       "status": "diagnostic-only-known-publication-blocker",
       "reason": "Official research event 1119 remained unpublished after invalid-copy because the separate 20-call article quota was exhausted despite available shared capacity."
     }
-  ]
+  ],
+  "recoveredPublicationBaseline": {
+    "observedAt": "2026-10-02T04:41:10.749617+00:00",
+    "workerStartedAt": "2026-10-02T04:40:09.824+00:00",
+    "lastCycleAt": "2026-10-02T04:41:03.245+00:00",
+    "routes": {
+      "configured": 24,
+      "suspended": 2,
+      "fresh": 24,
+      "error": 0,
+      "pending": 0
+    },
+    "articleRetrieval": {
+      "error": 0,
+      "retryDue": 0,
+      "retryDeferred": 0
+    },
+    "headlineTranslation": {
+      "eligible": 49,
+      "translated": 49,
+      "pending": 0,
+      "running": 0,
+      "retrying": 0
+    },
+    "officialResearch": {
+      "published": 4,
+      "pending": 0
+    },
+    "xMarketNews": {
+      "eligible": 1,
+      "published": 1,
+      "pending": 0
+    },
+    "sandiskNews": {
+      "documents": 15,
+      "succeeded": 15,
+      "error": 0
+    },
+    "prNewswirePublic": {
+      "documents": 34,
+      "succeeded": 34,
+      "error": 0
+    },
+    "health": {
+      "status": "ready",
+      "issues": []
+    },
+    "nbisRecovery": {
+      "eventId": 1119,
+      "publicAt": "2026-10-02T04:33:03.958+00:00",
+      "generationMs": 5649,
+      "attemptsAfterFidelityFix": 3,
+      "bilingualBodyReviewed": true,
+      "frontendJaEnObserved": true,
+      "historicalBackfillNotAcceptanceSuccess": true
+    },
+    "validation": {
+      "nodeTests": 201,
+      "pythonTests": 575,
+      "lintErrors": 0,
+      "build": "passed",
+      "actionsRun": 36965517076,
+      "actionsConclusion": "success",
+      "vercel": "success",
+      "railway": "success"
+    },
+    "scopeNote": "Two previously suspended routes remain excluded; no assertion of universal source coverage. Known historical translation failures and earlier failed windows remain diagnostic evidence."
+  }
 }
