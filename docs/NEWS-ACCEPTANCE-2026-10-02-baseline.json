@@ -1,6 +1,12 @@
 {
   "windowStart": "2026-10-02T02:57:53.058536+00:00",
   "windowEnd": "2026-10-03T02:57:53.058536+00:00",
+  "windowStatus": "diagnostic-only-known-source-errors",
+  "acceptanceEligible": false,
+  "acceptanceWindowStart": null,
+  "acceptanceWindowEnd": null,
+  "invalidatedAt": "2026-10-02T03:24:00+00:00",
+  "invalidatedReason": "Sandisk investor newsroom timeout and recurring PR Newswire RSS HTTP 404 were active before repair verification.",
   "capturedAt": "2026-10-02T02:57:53.058536+00:00",
   "baselineOnly": true,
   "health": {

@@ -602,15 +602,18 @@
     "id": "prnewswire-public",
     "name": "PR Newswire public releases",
     "kind": "publisher-update",
-    "format": "feed",
-    "url": "https://www.prnewswire.com/rss/news-releases-list.rss",
+    "format": "html-index",
+    "url": "https://www.prnewswire.com/news-releases/news-releases-list/",
     "allowedHosts": [
       "www.prnewswire.com"
     ],
+    "articlePathPatterns": [
+      "^/news-releases/.+-[0-9]+\\.html$"
+    ],
+    "articleJsonLdPublishedField": "datePublished",
     "intervalSeconds": 30,
     "reuse": "review-required",
-    "userAgent": "TechPhaseResearch/1.0 (+https://tech-phase-lab.vercel.app)",
-    "conditionalRequests": false
+    "userAgent": "TechPhaseResearch/1.0 (+https://tech-phase-lab.vercel.app)"
   },
   {
     "id": "x-nebius-official",

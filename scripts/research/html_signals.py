@@ -1,12 +1,13 @@
 """Bounded official-news index discovery; no browser or access-control bypass."""
 from html.parser import HTMLParser
 from datetime import datetime, timedelta
+import json
 import re
 from urllib.parse import urljoin, urlsplit
 
 
 class NewsHTML(HTMLParser):
-    def __init__(self, body_class=None, title_class=None):
+    def __init__(self, body_class=None, title_class=None, published_json_ld_field=None):
         super().__init__(convert_charrefs=True)
         self.links, self.title, self.published = [], [], None
         self.link_classes = {}
@@ -18,6 +19,9 @@ class NewsHTML(HTMLParser):
         self.next_data = []
         self.body_class = body_class
         self.title_class = title_class
+        self.published_json_ld_field = published_json_ld_field
+        self.in_json_ld = False
+        self.json_ld = []
         self.selected = []
         self.selected_depth = 0
 
@@ -25,6 +29,10 @@ class NewsHTML(HTMLParser):
         values = dict(attrs)
         if tag == 'script' and values.get('id') == '__NEXT_DATA__':
             self.in_next_data = True
+        if (tag == 'script' and self.published_json_ld_field
+                and values.get('type', '').lower() == 'application/ld+json'):
+            self.in_json_ld = True
+            self.json_ld = []
         if tag == 'a' and values.get('href'):
             self.links.append(values['href'])
             self.link_classes[values['href']] = values.get('class', '')
@@ -56,6 +64,22 @@ class NewsHTML(HTMLParser):
         if self.selected_depth:
             self.selected.append(f'</{tag}>')
             self.selected_depth -= 1
+        if tag == 'script' and self.in_json_ld:
+            raw = ''.join(self.json_ld)
+            if len(raw) <= 100_000:
+                try:
+                    decoded = json.loads(raw)
+                except (TypeError, ValueError):
+                    decoded = None
+                candidates = decoded if isinstance(decoded, list) else [decoded]
+                for candidate in candidates:
+                    value = (candidate.get(self.published_json_ld_field)
+                             if isinstance(candidate, dict) else None)
+                    if isinstance(value, str) and len(value) <= 100:
+                        self.published = value
+                        break
+            self.in_json_ld = False
+            self.json_ld = []
         if tag == 'script':
             self.in_next_data = False
         if tag == 'h1':
@@ -72,6 +96,8 @@ class NewsHTML(HTMLParser):
             self.selected.append(escape(value))
         if self.in_next_data:
             self.next_data.append(value)
+        if self.in_json_ld:
+            self.json_ld.append(value)
         if self.in_h1:
             self.title.append(value)
         if self.capture:
@@ -351,7 +377,11 @@ def collect(source, previous, tickers, request, clock=None):
                 if not entry.get('succeeded'):
                     raise ValueError('signal-304-without-article')
             else:
-                article = NewsHTML(source.get('articleBodyClass'), source.get('articleTitleClass'))
+                article = NewsHTML(
+                    source.get('articleBodyClass'),
+                    source.get('articleTitleClass'),
+                    source.get('articleJsonLdPublishedField'),
+                )
                 article.feed(fetched['body'].decode('utf-8', errors='replace'))
                 title = ' '.join(' '.join(article.title).split())[:500]
                 content = ''.join(article.selected if source.get('articleBodyClass') else article.article or article.main)

@@ -5,9 +5,14 @@ published information arriving promptly, correct Japanese and English, no missed
 eligible news, and no errors. Repeated retrieval of old stories is not evidence
 of acceptance. The owner makes the acceptance decision from measured results.
 
-The exact 24-hour window is `windowStart` through `windowEnd` in
-`NEWS-ACCEPTANCE-2026-10-02-baseline.json` (UTC, display in Asia/Tokyo).
-The baseline is a point-in-time public health response, not a completed audit.
+Owner correction, October 2 12:24 JST: the interval recorded as `windowStart`
+through `windowEnd` in `NEWS-ACCEPTANCE-2026-10-02-baseline.json` is diagnostic
+only because two known source failures were active at its start. It cannot be
+used for an acceptance decision. The baseline is a point-in-time public health
+response, not a completed audit. A new acceptance start and end remain null
+until Sandisk and PR Newswire retrieval are both repaired, deployed and verified
+through actual successful retrieval. A temporary zero-error snapshot is not
+enough.
 Use first source publication and first detection times. Keep updates/revisions
 separate. Do not count old backfills, reruns or duplicate URLs as new successes.
 
@@ -46,6 +51,12 @@ and time evidence. If there are no new events for a category, it is untested.
 If a fix changes the relevant pipeline, record its commit/time and distinguish
 the pre-fix failure; do not retroactively call the window clean. Resume a full
 clean window for any acceptance claim affected by that failure.
+
+Do not overwrite or reinterpret the diagnostic interval after a repair. Record
+the repair commit and its historical failures, then put the exact new continuous
+24-hour start and end in both this document and the baseline JSON. Until those
+fields are present, scheduled reports must say that no valid acceptance window
+has started.
 
 ## Access and stored evidence
 

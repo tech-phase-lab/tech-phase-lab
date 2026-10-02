@@ -23,8 +23,8 @@ class Response(io.BytesIO):
 
 
 class SourceTransportRecoveryTests(unittest.TestCase):
-    def test_prnewswire_avoids_broken_conditional_response_but_other_sources_keep_it(self):
-        source = next(s for s in signals.SOURCES if s['id'] == 'prnewswire-public')
+    def test_conditional_requests_can_be_disabled_without_changing_default(self):
+        source = next(s for s in signals.SOURCES if s['id'] == 'globenewswire-public')
         validators = {'etag': '"previous"', 'last_modified': 'Fri, 02 Oct 2026 03:31:04 GMT'}
         for conditional in (False, True):
             with self.subTest(conditional=conditional), patch.object(signals, 'build_opener') as opener:
@@ -33,7 +33,43 @@ class SourceTransportRecoveryTests(unittest.TestCase):
                 request = opener.return_value.open.call_args.args[0]
                 self.assertEqual(request.get_header('If-none-match'), '"previous"' if conditional else None)
                 self.assertEqual(request.get_header('If-modified-since'), validators['last_modified'] if conditional else None)
-        self.assertIs(source['conditionalRequests'], False)
+
+    def test_prnewswire_uses_stable_official_html_and_json_ld_publication_time(self):
+        source = next(s for s in signals.SOURCES if s['id'] == 'prnewswire-public')
+        first_url = ('https://www.prnewswire.com/news-releases/'
+                     'nvidia-announces-results-302896001.html')
+        second_url = ('https://www.prnewswire.com/news-releases/'
+                      'amd-announces-results-302896002.html')
+        urls = [first_url]
+
+        def request(request_source, validators):
+            if request_source['url'] == source['url']:
+                links = ''.join(f'<a href="{url}">release</a>' for url in urls)
+                return {'body': f'<html><main>{links}</main></html>'.encode()}
+            publication = ('2026-10-02T03:50:00-04:00' if request_source['url'] == first_url
+                           else '2026-10-02T03:51:00-04:00')
+            ticker = 'NVIDIA' if request_source['url'] == first_url else 'AMD'
+            return {'body': (
+                '<html><script type="application/ld+json">'
+                + json.dumps({'@type': 'NewsArticle', 'datePublished': publication})
+                + f'</script><article><h1>{ticker} results</h1><p>'
+                + f'{ticker} reported official financial results. ' * 10
+                + '</p></article></html>').encode()}
+
+        self.assertEqual(source['format'], 'html-index')
+        self.assertEqual(source['url'],
+                         'https://www.prnewswire.com/news-releases/news-releases-list/')
+        first = collect(source, {}, ['NVDA', 'AMD'], request,
+                        lambda: '2026-10-02T07:52:00+00:00')
+        self.assertEqual(first['_items'][0]['publishedAt'], '2026-10-02T07:50:00+00:00')
+        self.assertTrue(first['_items'][0]['baseline'])
+
+        urls.insert(0, second_url)
+        second = collect(source, {'index_state': first['index_state']}, ['NVDA', 'AMD'], request,
+                         lambda: '2026-10-02T07:53:00+00:00')
+        self.assertEqual([item['url'] for item in second['_items']], [second_url])
+        self.assertEqual(second['_items'][0]['publishedAt'], '2026-10-02T07:51:00+00:00')
+        self.assertFalse(second['_items'][0]['baseline'])
 
     def test_gzip_decodes_official_json_and_html_without_losing_text(self):
         source = next(s for s in signals.SOURCES if s['id'] == 'sandisk-news')

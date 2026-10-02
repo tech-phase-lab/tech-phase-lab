@@ -46,3 +46,27 @@ times below. Local tests alone do not close these incidents. Historical failure
 measurements must remain visible. Acceptance must not start on a transient zero
 error count, with unresolved article failures, or without evidence of retrieval.
 The previous worker change and all earlier observations remain diagnostic.
+
+## Deployed result and RSS relapse
+
+Commit `f24c20a` deployed successfully to Railway at 03:41:04 UTC. Sandisk
+recovered from the preserved timeout incident at 03:42:10.107 UTC after 58
+measured attempts. By 03:46:13 UTC, the route had stored nine of 15 bounded
+baseline articles (74,059 characters total; 962 minimum and 29,963 maximum),
+with zero child errors and six historical articles still pending.
+
+The conditional-header change did not repair PR Newswire. Its RSS route recovered
+at 03:44:44.216 UTC, then an ordinary request with conditional headers disabled
+returned HTTP 404 at 03:45:45.460 UTC. This relapse is preserved in
+`signal_route_transitions`; the transient recovery and the temporary 24/24
+snapshot are not acceptance evidence.
+
+The replacement under test uses PR Newswire's own public All News Releases HTML
+listing instead of the unstable RSS representation. A normal Railway request at
+approximately 03:50 UTC returned 25 strictly matched release links. A bounded
+article request returned 1,149 extracted characters and an exact issuer
+`datePublished` value from the page's JSON-LD. The configured path expression
+accepts only numbered `/news-releases/...html` articles on the approved host.
+Initial HTML history remains baseline; a newly listed URL becomes a new event.
+This replacement must pass the complete repository gates and live deployment
+verification before the new acceptance window can start.
