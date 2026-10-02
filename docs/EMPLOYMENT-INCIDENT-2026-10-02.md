@@ -1,74 +1,70 @@
-# Employment release delivery failure — October 2, 2026
+# September employment report: delivery failure and recovery
 
-The September release was scheduled for 12:30 UTC / 21:30 JST. This event
-failed timely delivery. Do not reset or pass the existing acceptance window.
+The October 2, 2026 U.S. September employment release failed timely delivery.
+The existing acceptance observation remains failed; it has not been reset.
 
-The bounded sampler was armed at 12:27:24.415 UTC, sampled the readonly DB
-and authenticated news API every five seconds from 12:29:30 to 12:40 UTC,
-and recorded no ECON event or result publication through 12:37:23 UTC.
-Eight heartbeats and no sampler errors were present at that observation.
-Read-only live inspection also found no new signal event since 12:29 UTC.
-The API returned HTTP 200; an empty result was not evidence of no source post.
+## Observed timing (JST)
 
-An independent, budget-reserved X recent search found one post with no next
-page in the checked 12:29 UTC to audit-time-minus-20-seconds interval:
-https://x.com/wallstengine/status/2105998888536846505
-Source publication: **2026-10-02T12:30:07.000Z**. It reported payrolls +29K,
-unemployment 4.2% and average hourly earnings YoY 3.0%, with separately
-labelled estimates. The old parser returned None because it required Actual
-or a colon; it also did not recognize AVG. and retained only one metric.
-The adapter discarded the post before storing an event. There is consequently
-no first-ingestion/translation/publication timestamp for the failed path.
+- Scheduled official release: 21:30:00. Actual first official HTTP publication
+  was not continuously observed.
+- Wall St Engine source post: 21:30:37.000.
+- First recovered service acquisition: 21:49:12.663.
+- Japanese/English backend publication: 21:49:15.319.
+- Source-to-acquisition: 1115.663 seconds (18 minutes 35.663 seconds).
+- Acquisition-to-publication: 2.656 seconds.
+- Source-to-publication: 1118.319 seconds (18 minutes 38.319 seconds).
+- Numeric bilingual generation: deterministic labels, rounded processing time
+  0 ms; this does not prove literally zero elapsed time or an LLM translation.
+- Five-second observation through 21:40 found no delivered employment result,
+  with no measurement errors. Later recovery is not an on-time success.
+- Final API observation at 21:59:57.899727 showed the recovered result.
+- Calendar Japanese/English results and same-day schedule were observed by
+  21:59:34. Home Japanese/English news and Japanese top carousel were observed
+  by 22:02. These are observation upper bounds, not exact first-render clocks.
 
-The independently retrieved source body is retained privately under
-`/data/audits/employment-x-independent-20261002.json`; do not copy its prose
-into public documentation. This is diagnostic retrieval, not successful service
-delivery. The post lacks hourly earnings MoM and prior-month revisions.
+The source clock was rechecked as 21:30:37. An earlier commentary misread the
+seconds as 07 and overstated acquisition latency by 30 seconds. The corrected
+measurements above are authoritative.
 
-The calendar had the correct `jobs-2026-10-02` event at 08:30 EDT. Its default
-upcoming-only filter hid it after the scheduled clock. The repair defaults to
-today-and-upcoming in the chosen display timezone and keeps same-day events
-visible after their scheduled time, without asserting that results arrived.
+## Failure and repair
 
-The repair recognizes separator-free labelled numbers, keeps each metric's
-actual separate from estimates, supports AVG. hourly earnings and both wage
-periods, and publishes supported metrics from a combined post. Source-to-DB
-and DB-to-public clocks remain separate. Numeric bilingual generation is
-deterministic, not an LLM translation. A query fingerprint change enables a
-bounded ordinary recovery backfill; recovery is not an on-time success.
+The source post existed. Intake discarded separator-free labels such as
+NONFARM PAYROLLS +29K; it also did not recognize AVG. hourly earnings or retain
+all supported fields from a combined post. The repair preserves metric/value
+association, signs, units and monthly/annual wage periods, with estimates kept
+separate. The recovered post reports +29K payrolls, unemployment 4.2% and wage
+ growth 3.0% YoY; it does not contain wages MoM or prior-month revisions.
 
-Official comparison source:
-https://www.bls.gov/news.release/archives/empsit_10022026.htm
-The archived September release reports +29,000 payrolls, unemployment 4.2%,
-wages +0.1% MoM/+3.0% YoY; July +21,000 revised to -10,000 and August +162,000
-to +133,000. The generic nr0 search representation was still August when read;
-it must not be used as September evidence. Official actual HTTP publication
-time and browser first-render time were not continuously observed.
+The calendar already contained the correct October 2 schedule, but the default
+upcoming-only filter hid it after 21:30. Today-and-upcoming now retains it in
+both selected display timezones, without claiming that scheduled events arrived.
 
-Pre-ref-update gates: 209 Node and 602 Python tests, lint, build, compileall
-and diff checks. Deployment/recovery evidence must be appended after observation.
+The first repair also exposed two invalid historical projections: a scheduled
+08:30 clock was interpreted as payrolls 08, and Eurozone CPI was presented as
+unqualified CPI. Both were observed in the public backend feed and are part of
+the accuracy failure. The final repair rejects schedule/date numbers and
+explicit non-U.S. indicators. Final public API observation confirmed both
+invalid projections were absent. Historical diagnostic evidence is preserved.
 
-The automated server's direct request to BLS nr0 returned HTTP 403. This is
-an access limitation, not evidence that BLS had not released the report.
-The full September result and July/August revisions were separately verified
-from the official archived release and added to the calendar's saved official
-results. This is a reviewed recovery entry, not automatic BLS ingestion or an
-on-time delivery success. The X post itself still lacks MoM/revisions; these
-must never be invented from its YoY figure or estimates.
+## Official results and limitations
 
-Initial repair 746c3a5 caused a second observed publication defect during its
-12-hour recovery backfill: event 1178 interpreted the 08:30 schedule clock as
-payrolls 08, and event 1177 presented Eurozone core CPI as an unqualified CPI
-result. Both were present in the public backend feed observed during recovery;
-do not omit them from the accuracy audit. The follow-up rejects schedule/date
-numbers, requires units for separator-free payroll results, retains the stricter
-non-employment separator rule and excludes explicitly non-U.S. indicators from
-this U.S. flash channel. Existing stored payloads are preserved privately and
-re-projected on every public read, so unsupported records disappear publicly.
+Official September values: payrolls +29,000; unemployment 4.2%; average hourly
+earnings +0.1% MoM and +3.0% YoY. July payrolls were revised from +21,000 to
+-10,000; August from +162,000 to +133,000, a combined 60,000 downward revision.
 
-Actual event 1176: source 12:30:07.000 UTC, recovery acquisition
-12:49:12.663 UTC, bilingual backend publication 12:49:15.319 UTC.
-Source-to-intake **1145.663 s**, intake-to-public **2.656 s**,
-source-to-public **1148.319 s**. Deterministic processing was rounded to
-**0 ms**, not proven zero elapsed time. The five-second release sampler ended
-before recovery, so it cannot supply recovery API/browser first-observation.
+The calendar's complete official result was separately verified and saved.
+This is reviewed recovery, not automated official-source ingestion. Direct
+server access to the official release returned HTTP 403. The calendar shows
+source-post and verified official result entries separately for one release.
+No claim of complete automatic coverage, full-day accuracy or future no-miss
+performance is justified.
+
+Final integrated validation passed: 209 Node tests, 602 Python tests, lint,
+production build, source compilation and whitespace checks. Application checks
+and both preview deployments succeeded. Main and billing caps were unchanged.
+
+## Public source references
+
+- https://x.com/wallstengine/status/2105998888536846505
+- https://www.bls.gov/news.release/archives/empsit_10022026.htm
+- https://www.bls.gov/schedule/news_release/empsit.htm
