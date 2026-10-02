@@ -3,7 +3,7 @@
   "windowEnd": "2026-10-03T02:57:53.058536+00:00",
   "windowStatus": "diagnostic-only-known-source-errors",
   "acceptanceEligible": true,
-  "acceptanceStatus": "observing-not-yet-passed",
+  "acceptanceStatus": "observing-in-window-failures-not-passed",
   "acceptanceWindowStart": "2026-10-02T04:43:12.282254+00:00",
   "acceptanceWindowEnd": "2026-10-03T04:43:12.282254+00:00",
   "repairCommit": "198317bac576ceebf887eb6599bc3e1ddace7f7b",
@@ -309,6 +309,112 @@
         "bilingualAccuracyStatus": "untested-no-new-eligible-item"
       },
       "status": "observing-untested-no-new-eligible-delivery",
+      "acceptanceWindowRestarted": false
+    },
+    {
+      "capturedAt": "2026-10-02T22:49:17+00:00",
+      "codeCommit": "c27406a021161155890abbb58ebee5f10f315d56",
+      "health": {
+        "workerStartedAt": "2026-10-02T20:14:53.690+00:00",
+        "lastCycleAt": "2026-10-02T22:49:13.598+00:00",
+        "cycles": 43631,
+        "sourceChecks": 127,
+        "sourceFetchErrorsSinceWorkerStart": 2,
+        "status": "ready-with-active-partial-route",
+        "routes": {
+          "configured": 24,
+          "suspended": 2,
+          "fresh": 23,
+          "error": 1,
+          "pending": 0,
+          "errorKind": "articlePartial"
+        },
+        "articleRetrieval": {
+          "error": 1,
+          "retryDeferred": 1,
+          "nextRetryAt": "2026-10-02T22:59:53.152+00:00",
+          "rolling24HourRecoveries": 21,
+          "rolling24HourLastRecoveredAt": "2026-10-02T22:47:47.350+00:00"
+        },
+        "headlineTranslation": {
+          "eligible": 47,
+          "translated": 47,
+          "pending": 0,
+          "running": 0,
+          "retrying": 0,
+          "exhausted": 0,
+          "rolling24HourCalls": 153,
+          "rolling24HourFailedCalls": 110
+        },
+        "officialResearch": {
+          "published": 20,
+          "pending": 3,
+          "visibleRetryJobs": {
+            "1226": {
+              "attempts": 3,
+              "failureKind": "unsupported-number"
+            },
+            "1214": {
+              "attempts": 5,
+              "failureKind": "unsupported-number"
+            }
+          }
+        }
+      },
+      "newEligibleDelivery": {
+        "eventId": 1221,
+        "sourceId": "x-barchart",
+        "sourcePublishedAt": "2026-10-02T19:07:25+00:00",
+        "detectedAt": "2026-10-02T19:08:01.778+00:00",
+        "backendPublishedAt": "2026-10-02T19:08:05.017936+00:00",
+        "sourceToDetectionMs": 36778,
+        "detectionToBackendPublicationMs": 3240,
+        "sourceToBackendPublicationMs": 40018,
+        "englishFrontendObservedBy": "2026-10-02T19:09:13+00:00",
+        "japaneseFrontendObservedBy": "2026-10-02T19:10:18+00:00",
+        "sourceToFirstFrontendObservationUpperBoundMs": 108000,
+        "exactFirstRenderKnown": false,
+        "originalPublicPostRetrieval": "unverified",
+        "bilingualFactsReviewed": true,
+        "compactTitlesReviewed": true
+      },
+      "inWindowFailures": [
+        {
+          "sourceId": "coreweave-blog",
+          "failedAt": "2026-10-02T22:31:39.436+00:00",
+          "kind": "articlePartial",
+          "articleError": "http-404",
+          "articleUrl": "https://www.coreweave.com/blog/testing-race-cars-faster-how-jotas-engineers-learned-from-every-run-with-coreweaves-ai-powered-recommendation-tool",
+          "sourcePublishedOn": "2026-09-10",
+          "statusAtSnapshot": "active-retrying",
+          "disabledToPass": false
+        },
+        {
+          "sourceId": "prnewswire-public",
+          "failedAt": "2026-10-02T22:43:34.338+00:00",
+          "kind": "articlePartial",
+          "recoveredAt": "2026-10-02T22:47:47.715+00:00",
+          "statusAtSnapshot": "recovered"
+        }
+      ],
+      "previewApi": {
+        "observedAt": "2026-10-02T22:36:53+00:00",
+        "httpStatus": 200,
+        "marketUpdates": 2,
+        "officialUpdates": 20,
+        "resultBriefs": 1,
+        "event1221CompactJapanese": "米国10年物国債利回り急上昇",
+        "event1221CompactEnglish": "U.S. 10-Year Treasury Yield Rising"
+      },
+      "verificationLimits": [
+        "The rolling 24-hour recovery and translation-call counters are not acceptance-window cumulative counters.",
+        "The current cloud-browser page request was client-blocked, so this snapshot does not add a new exact frontend-render timestamp.",
+        "The protected Vercel API returned HTTP 200, but an API response alone does not prove current reader delivery.",
+        "Complete independent inventories for every required source remain unverified.",
+        "Three official-research jobs remain pending; only two retry jobs are included in the public sanitized job sample.",
+        "The original acceptance start and end are unchanged; in-window failures prevent a clean full-day acceptance claim."
+      ],
+      "status": "observing-in-window-failures-not-passed",
       "acceptanceWindowRestarted": false
     }
   ],

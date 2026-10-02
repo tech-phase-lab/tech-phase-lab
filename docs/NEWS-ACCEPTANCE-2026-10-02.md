@@ -313,3 +313,47 @@ and worker restart timestamps in the report and split before/after observations.
 Synthetic unknown-URL tests cover the new display pipeline; do not describe them
 as evidence of actual new live news arrival. Translation latency and omissions
 still require the ongoing live observation.
+
+## Current-window observation — October 2 22:49 UTC
+
+- The continuous window remains `2026-10-02T04:43:12.282254Z` through
+  `2026-10-03T04:43:12.282254Z`. It was not reset. This is still an observation,
+  and the in-window failures below mean it is not a clean 24-hour pass.
+- Sanitized health at 22:49:17 UTC was ready, but not clean: 23/24 enabled
+  routes were fresh, one route had `articlePartial`, and one article retrieval
+  remained deferred for retry. Headline translation was 47/47 with no current
+  queue, official research was 20 published/3 pending, and X market news was
+  2/2 published. The 153 translation calls/110 failed calls and 21 article
+  recoveries are rolling 24-hour counters; they are preserved as diagnostics
+  and are not subtracted or presented as window totals.
+- Read-only stored evidence identified the active route as `coreweave-blog`.
+  Its retained September 10 JOTA article began returning HTTP 404 at
+  22:31:39.436 UTC. A direct request at 22:44 UTC also returned HTTP 404, while
+  an older search-engine copy still retained the article. The route continues
+  normal retries; it was not disabled or marked successful to improve the
+  acceptance result. A separate `prnewswire-public` article-partial transition
+  began at 22:43:34.338 and recovered at 22:47:47.715 UTC. Both transitions
+  remain part of the acceptance evidence.
+- Barchart event 1221 is the one independently reviewed eligible new-delivery
+  sample so far. Source publication was 19:07:25, first detection
+  19:08:01.778, and backend publication 19:08:05.017936 UTC: 36.778 seconds
+  source-to-detection, 3.240 seconds detection-to-backend and 40.018 seconds
+  source-to-backend. English was observed by 19:09:13 and Japanese by 19:10:18,
+  giving a 108-second source-to-first-observation upper bound rather than an
+  exact first-render measurement or latency SLA.
+- The protected preview news API returned HTTP 200 at 22:36:53 UTC with two
+  market updates, 20 official updates and one result brief. Event 1221 now
+  exercises the optional live compact titles: `米国10年物国債利回り急上昇` and
+  `U.S. 10-Year Treasury Yield Rising`. Both retain the 10-year tenor and upward
+  direction. This is the first real compact-title observation; it does not
+  replace the full bilingual headline or prove current browser delivery.
+- Current reader delivery could not be newly timed in this snapshot because the
+  cloud browser blocked its direct API request at the client. The protected API
+  success and earlier 19:09–19:10 UI observations remain separate evidence.
+  The original Barchart post was not independently retrievable in a public X
+  reader, so its source clock remains attributed to authorized stored metadata.
+- Official-research jobs 1226 and 1214 remained in retry after three and five
+  attempts respectively with `unsupported-number`; public health reported one
+  additional pending job outside its bounded sample. Complete independent
+  inventories for every required source also remain unverified. These gaps and
+  the active CoreWeave 404 preclude an acceptance claim.
