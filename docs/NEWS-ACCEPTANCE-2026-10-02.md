@@ -227,3 +227,21 @@ audit predates the new table, so additionally query `signal_route_deferrals`
 by `deferred_at` in the observation interval and report these as local scheduling
 waits separately from network failures. The absence of new transitions alone
 does not establish freshness; verify actual successful request clocks per route.
+
+Deployment evidence: repair `6108cb63403e7d5e5b449f0a46df611b170125cc`,
+Actions `36973123148` succeeded; 201 Node + 591 Python tests, lint, build,
+compileall and diff checks passed. Vercel preview and Railway staging succeeded.
+Railway deployment `1f4f8afa-40c7-43ac-8a16-43af86391051`; new worker start
+**2026-10-02T06:21:31.882+00:00**. This restart is part of the observation history.
+
+Read-only live observation at **06:23:16.800258 UTC (15:23:16 JST)**:
+health ready, issue list empty; official route/article errors 0/0 and pending
+headline/research/market queues 0/0/0. All four enabled X routes had a genuine
+successful fetch after restart (UTC): TrendSpider 06:21:57.650, WallStEngine
+06:22:17.941, Barchart 06:22:38.659, Nebius official 06:23:01.915. All errors null.
+Six pacing deferrals were recorded separately (1/3/1/1 respectively), with no
+failed/recovered transitions after restart. WallStEngine was deferred again at
+06:23:01.780 while its success clock remained 06:22:17.941 and last real duration
+108 ms: waiting did not fake a fresh successful fetch. The observation-window
+transition count remained **439**, retained from before deployment. This is a
+short runtime check, not 24-hour acceptance or new-story translation evidence.
