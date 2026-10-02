@@ -31,3 +31,17 @@ observation. This is a pipeline change within the original 24-hour window. Keep
 the original window and pre-change evidence; do not present it as 24 hours on
 the new implementation or silently reset the owner's scheduled report.
 No real new-source-to-browser latency has yet been measured for this change.
+
+## Deployment observation
+
+- Application commit: `583e80271d1998acd18cac6332d6799bab657794`.
+- Vercel preview and Railway staging deployment statuses both succeeded.
+- New live process `startedAt`: `2026-10-02T03:19:19.620+00:00`
+  (October 2 12:19:19 JST).
+- Health observed at `2026-10-02T03:19:39.224898+00:00`: ready; last completed
+  cycle `03:19:33.170+00:00`; official headline translations 49/49, pending 0;
+  scoped market posts 1/1, pending 0. These remain point-in-time queue counts.
+- Official supplemental routes still show 22 fresh / 24 active, with one timeout
+  and one `other` error. The change does not claim to repair those sources.
+- Local validation passed: 201 Node tests, 561 Python tests, production build,
+  lint (one pre-existing warning), compileall, and diff check.
