@@ -2,8 +2,9 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { Language } from "@/lib/research/data";
 import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";
-import { officialHeadlineJa, officialPulseHeadlineJa } from "@/lib/research/official-news-ja";
-import { officialTime, recentPublication, shortNewsTime } from "@/lib/research/news-time";
+import { officialPulseHeadlineJa } from "@/lib/research/official-news-ja";
+import { newsPulseItems } from "@/lib/research/news-pulse-items";
+import { recentPublication, shortNewsTime } from "@/lib/research/news-time";
 import styles from "./research-pulse.module.css";
 const subscribe = (callback: () => void) => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
 export default function ResearchPulse({ lang }: { lang: Language }) {
@@ -17,10 +18,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   const touch = useRef<{x: number; y: number} | null>(null);
   const suppressClick = useRef(false);
   const ja = lang === "ja";
-  const items = [
-    ...(feed?.officialUpdates ?? []).map(item => ({id: `official-${item.id}`, ticker: item.tickers.join(" · ") || item.publisher, title: ja ? officialHeadlineJa(item.url) ?? item.translationJa ?? "公式アップデート（日本語訳を準備中）" : item.title, url: item.url, ...officialTime(item)})),
-    ...(feed?.items ?? []).map(item => ({id: item.id, ticker: item.tickers.join(" · "), title: ja ? item.summaryJa : item.title, url: item.url, at: item.publishedAt, kind: "published" as const}))
-  ].sort((a,b) => Date.parse(b.at)-Date.parse(a.at)).slice(0,5);
+  const items = newsPulseItems(feed, lang);
   const first = items[0]?.id ?? "";
   const stopped = paused || interacting || reduced || expandedId !== null;
   useEffect(() => {
