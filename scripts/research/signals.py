@@ -224,6 +224,13 @@ def parse(source, body, tickers):
 def schema(db):
     db.executescript("""
       CREATE TABLE IF NOT EXISTS signal_index_state (source_id TEXT PRIMARY KEY, body TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS signal_x_acquisition (
+        source_id TEXT NOT NULL, url TEXT NOT NULL, sha TEXT NOT NULL,
+        title TEXT NOT NULL, text TEXT NOT NULL, published_at TEXT,
+        first_seen_at TEXT NOT NULL, last_seen_at TEXT NOT NULL,
+        truncated INTEGER NOT NULL, selected_for_processing INTEGER NOT NULL,
+        PRIMARY KEY(source_id,url,sha)
+      );
       CREATE TABLE IF NOT EXISTS signal_routes (
         id TEXT PRIMARY KEY, initialized INTEGER NOT NULL DEFAULT 0,
         checked_at TEXT, succeeded_at TEXT, next_check_at TEXT,
@@ -603,6 +610,24 @@ def save(db, source, items, response, checked, config_sha, duration):
     current_error = (f"article-fetch-failed:{response['article_errors']}"
                      if response.get("article_errors") else None)
     with db:
+        if source.get('format') == 'x-api':
+            selected = {item['url'] for item in items}
+            for post in response.get('_acquired_posts', []):
+                digest = hashlib.sha256((post['title'] + '\n' + post['text']).encode()).hexdigest()
+                db.execute('''INSERT INTO signal_x_acquisition VALUES(?,?,?,?,?,?,?,?,?,?)
+                  ON CONFLICT(source_id,url,sha) DO UPDATE SET
+                  last_seen_at=excluded.last_seen_at,
+                  selected_for_processing=excluded.selected_for_processing''', (
+                    source['id'], post['url'], digest, post['title'], post['text'],
+                    post['publishedAt'], checked, checked, int(post['truncated']),
+                    int(post['url'] in selected),
+                ))
+            # Private evidence is committed atomically with the cursor below.
+            # Never interpret selection as successful bilingual publication.
+            db.execute('''DELETE FROM signal_x_acquisition WHERE source_id=? AND rowid NOT IN
+              (SELECT rowid FROM signal_x_acquisition WHERE source_id=?
+               ORDER BY julianday(last_seen_at) DESC,rowid DESC LIMIT 1000)''',
+                       (source['id'], source['id']))
         for item in items:
             if not item["matches"] and not source.get("retainUnmatched"):
                 continue
@@ -710,7 +735,11 @@ def check(db, source, tickers, transport=None):
         count = save(db, source, items, response, checked, config_sha,
                      round((time.monotonic() - started) * 1000))
         return {"source": source["id"], "status": "partial" if response.get("article_errors") else "ok",
-                "matchedItems": len(items), "events": count, "pendingArticles": response.get("article_pending", 0)}
+                "matchedItems": len(items), "events": count, "pendingArticles": response.get("article_pending", 0),
+                **({"acquiredPosts": len(response['_acquired_posts']),
+                    "unselectedPosts": sum(post['url'] not in {item['url'] for item in items}
+                                           for post in response['_acquired_posts'])}
+                   if '_acquired_posts' in response else {})}
     except XApiPacing as exc:
         # No network request was made. Preserve freshness, existing failures and
         # outage measurements; only a real fetch can establish recovery.

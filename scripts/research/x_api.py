@@ -51,10 +51,15 @@ FINANCING_PATTERN = re.compile(
 )
 
 
-def parse_response(source, payload, tickers):
+def acquired_posts(source, payload):
+    """Keep approved query results independently of downstream interpretation.
+
+    These are private acquisition evidence, not publishable news. In particular,
+    an unfamiliar result or target format must survive cursor advancement.
+    """
     users = {str(user.get("id")): user for user in payload.get("includes", {}).get("users", [])
              if isinstance(user, dict)}
-    items = {}
+    posts = {}
     for post in payload.get("data", []) or []:
         if not isinstance(post, dict):
             continue
@@ -67,6 +72,17 @@ def parse_response(source, payload, tickers):
                 or username.lower() not in {name.lower() for name in source.get("accounts", [])}
                 or username.lower() not in ALLOWED_ACCOUNT_NAMES):
             continue
+        url = f"https://x.com/{username}/status/{post_id}"
+        posts[url] = {"url": url, "title": " ".join(text.split())[:500],
+                      "text": text[:160000], "publishedAt": post.get("created_at"),
+                      "truncated": len(text) > 160000, "username": username}
+    return list(posts.values())
+
+
+def parse_response(source, payload, tickers):
+    items = {}
+    for acquired in acquired_posts(source, payload):
+        text, username = acquired["text"], acquired["username"]
         matches = signals_match(text, tickers)
         if source.get('marketTopics'):
             topic=market_topic(username,text)
@@ -95,15 +111,9 @@ def parse_response(source, payload, tickers):
         is_financing = source.get('financingUpdates') is True and FINANCING_PATTERN.search(text)
         if not matches or not (source.get('marketTopics') or official_ticker or TARGET_PATTERN.search(text) or is_earnings or is_economic or RATING_PATTERN.search(text) or is_financing):
             continue
-        url = f"https://x.com/{username}/status/{post_id}"
-        items[url] = {
-            "url": url,
-            "title": " ".join(text.split())[:500],
-            "text": text[:160000],
-            "publishedAt": post.get("created_at"),
-            "matches": matches,
-            "truncated": len(text) > 160000,
-        }
+        url = acquired["url"]
+        items[url] = {key: value for key, value in acquired.items() if key != "username"}
+        items[url]["matches"] = matches
     return list(items.values())
 
 
@@ -181,4 +191,6 @@ def fetch_posts(source, tickers, opener_factory=build_opener, validators=None):
     if next_token is not None and (not isinstance(next_token, str) or not 1 <= len(next_token) <= 2048):
         raise ValueError('x-api-invalid-cursor')
     update = {'sinceId':since,'newestId':newest,'nextToken':next_token,'startTime':params_dict.get('start_time')} if next_token else {'sinceId':newest}
-    return {"_items": parse_response(source, payload, tickers), "cursor_update":json.dumps(update)}
+    return {"_items": parse_response(source, payload, tickers),
+            "_acquired_posts": acquired_posts(source, payload),
+            "cursor_update":json.dumps(update)}

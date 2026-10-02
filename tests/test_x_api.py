@@ -13,6 +13,66 @@ import x_api
 
 
 class XApiTests(unittest.TestCase):
+    def test_unrecognized_results_and_targets_survive_cursor_advancement_privately(self):
+        import io, json
+        from email.message import Message
+        payload = {'data': [
+            {'id': '9101', 'author_id': '1', 'created_at': '2026-10-02T12:30:37Z',
+             'text': 'SEPTEMBER JOBS REPORT: payroll employment increased by twenty-nine thousand'},
+            {'id': '9102', 'author_id': '1', 'created_at': '2026-10-02T12:31:00Z',
+             'text': 'Micron objective revised to sixty-five dollars from eighty-five'},
+            {'id': '9103', 'author_id': '2', 'text': 'unapproved source'},
+        ], 'includes': {'users': [{'id': '1', 'username': 'TipRanks'},
+                                  {'id': '2', 'username': 'unapproved_account'}]},
+           'meta': {'newest_id': '9103'}}
+        class Response(io.BytesIO):
+            headers = Message()
+        Response.headers['Content-Type'] = 'application/json'
+        class Opener:
+            def open(self, request, timeout):
+                return Response(json.dumps(payload).encode())
+        with patch.dict(os.environ, {'X_API_ENABLED': 'true', 'X_BEARER_TOKEN': 'synthetic'}):
+            response = x_api.fetch_posts(self.source, list(monitor.PROVIDERS), lambda: Opener())
+        self.assertEqual(response['_items'], [])
+        with sqlite3.connect(':memory:') as db:
+            db.row_factory = sqlite3.Row
+            result = signals.check(db, self.source, list(monitor.PROVIDERS),
+                                   transport=lambda source, validators: response)
+            self.assertEqual((result['acquiredPosts'], result['unselectedPosts']), (2, 2))
+            rows = db.execute('SELECT * FROM signal_x_acquisition ORDER BY url').fetchall()
+            self.assertEqual([row['text'] for row in rows], [p['text'] for p in payload['data'][:2]])
+            self.assertEqual(rows[0]['published_at'], '2026-10-02T12:30:37Z')
+            self.assertTrue(all(row['selected_for_processing'] == 0 for row in rows))
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM signal_events').fetchone()[0], 0)
+            self.assertEqual(json.loads(db.execute('SELECT body FROM signal_index_state').fetchone()[0]),
+                             {'sinceId': '9103'})
+            signals.check(db, self.source, list(monitor.PROVIDERS),
+                          transport=lambda source, validators: response)
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM signal_x_acquisition').fetchone()[0], 2)
+            self.assertEqual(db.execute('SELECT first_seen_at FROM signal_x_acquisition ORDER BY url').fetchone()[0],
+                             rows[0]['first_seen_at'])
+
+    def test_acquisition_storage_failure_does_not_advance_cursor(self):
+        import json
+        post = {'url': 'https://x.com/TipRanks/status/9101', 'title': 'Jobs report',
+                'text': 'Jobs report: unfamiliar result format',
+                'publishedAt': '2026-10-02T12:30:37Z', 'truncated': False}
+        response = {'_items': [], '_acquired_posts': [post],
+                    'cursor_update': json.dumps({'sinceId': '9101'})}
+        with sqlite3.connect(':memory:') as db:
+            db.row_factory = sqlite3.Row
+            signals.schema(db)
+            db.execute('INSERT INTO signal_index_state VALUES(?,?)',
+                       (self.source['id'], json.dumps({'sinceId': '9000'})))
+            db.execute("""CREATE TRIGGER reject_acquisition BEFORE INSERT ON signal_x_acquisition
+                          BEGIN SELECT RAISE(ABORT, 'synthetic-storage-failure'); END""")
+            db.commit()
+            result = signals.check(db, self.source, list(monitor.PROVIDERS),
+                                   transport=lambda source, validators: response)
+            self.assertEqual(result['status'], 'error')
+            self.assertEqual(json.loads(db.execute('SELECT body FROM signal_index_state').fetchone()[0]),
+                             {'sinceId': '9000'})
+
     def test_requested_financing_scope_preserves_full_source_and_requires_company(self):
         source = next(s for s in signals.SOURCES if s['id'] == 'x-wallstengine')
         samples = [
