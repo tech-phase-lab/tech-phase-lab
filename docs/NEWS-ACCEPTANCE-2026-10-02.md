@@ -86,6 +86,28 @@ has started.
   and therefore are not repaired-window results. New eligible items must be
   measured individually from this start; zero arrivals remain untested.
 
+### Initial interim snapshot — 2026-10-02 04:05 UTC
+
+- No `signal_events` row had `observed_at` at or after the window start. There
+  were consequently zero new headline translations, X market publications or
+  deterministic result publications to review. This is **untested**, not passed.
+- Public health remained ready: 24/24 configured routes were fresh, the ordinary
+  source fetch error count was zero, and article retrieval had zero errors or
+  pending retries. The latest successful X check was 04:04:55.233 UTC.
+- Stored transitions contained 13 X-route `failed`/`recovered` pairs after the
+  start: Barchart 3, Nebius official 2, TrendSpider 3 and Wall St Engine 5. They
+  match the service's intentional budget-pacing pattern, and current health
+  exposed one `x-api-paced` deferral. However, `signal_route_transitions` stores
+  these as generic `other` and does not retain the raw cause, so the cause of
+  every historical pair cannot be independently proven from that table alone.
+  These records are preserved and are not counted as upstream HTTP failures or
+  new-event successes. Explicit pacing classification remains an observability
+  risk to address after this finite window unless a real retrieval failure
+  appears first.
+- Commit `45fc182597cf8319126467cd78c7247d7a380540` saved the window start and
+  evidence. Vercel reported a successful preview deployment; Railway correctly
+  skipped a worker redeploy because this follow-up changed documentation only.
+
 ## Access and stored evidence
 
 - Repo: `tech-phase-lab/tech-phase-lab`, `codex/research-preview` only.

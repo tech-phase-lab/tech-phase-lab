@@ -50,6 +50,42 @@
       "Zero new eligible events remains untested."
     ]
   },
+  "interimSnapshots": [
+    {
+      "capturedAt": "2026-10-02T04:05:04.161118+00:00",
+      "health": {
+        "lastCycleAt": "2026-10-02T04:05:06.294+00:00",
+        "routesFresh": 24,
+        "routeErrors": 0,
+        "articleErrors": 0,
+        "sourceFetchErrors": 0,
+        "latestXSucceededAt": "2026-10-02T04:04:55.233+00:00",
+        "currentXErrors": {
+          "x-api-paced": 1
+        }
+      },
+      "newEvidence": {
+        "events": 0,
+        "headlineTranslations": 0,
+        "xMarketPublications": 0,
+        "marketResultPublications": 0,
+        "status": "untested-no-new-eligible-events"
+      },
+      "xPacingTransitions": {
+        "failed": 13,
+        "recovered": 13,
+        "bySource": {
+          "x-barchart": 3,
+          "x-nebius-official": 2,
+          "x-trendspider": 3,
+          "x-wallstengine": 5
+        },
+        "storedKind": "other",
+        "currentExposedError": "x-api-paced",
+        "note": "Intentional local budget-pacing pattern; the transition table does not retain the raw cause for independent per-transition proof."
+      }
+    }
+  ],
   "invalidatedAt": "2026-10-02T03:24:00+00:00",
   "invalidatedReason": "Sandisk investor newsroom timeout and recurring PR Newswire RSS HTTP 404 were active before repair verification.",
   "capturedAt": "2026-10-02T02:57:53.058536+00:00",
