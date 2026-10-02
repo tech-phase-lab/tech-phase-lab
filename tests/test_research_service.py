@@ -43,6 +43,42 @@ service_spec.loader.exec_module(service)
 
 
 class ResearchServiceTests(unittest.TestCase):
+    def test_market_and_direct_facts_continue_while_other_translations_wait(self):
+        with tempfile.TemporaryDirectory() as folder:
+            app = service.AutomaticMonitor(Path(folder)/'monitor.sqlite', Path(folder)/'snapshot.json')
+            headline_started, market_started, direct_done = (threading.Event() for _ in range(3))
+            release = threading.Event()
+            def blocked_headline(path):
+                headline_started.set()
+                release.wait(5)
+            def blocked_market(path):
+                market_started.set()
+                release.wait(5)
+            def direct(path):
+                direct_done.set()
+                app.stop_event.set()
+            workers = [app.headline_translation_thread, app.market_translation_thread, app.result_thread]
+            with patch.dict(os.environ, {'OFFICIAL_HEADLINE_TRANSLATION_ENABLED':'true'}), \
+                 patch.object(service.headline_translation, 'configuration', return_value=('key','model',3)), \
+                 patch.object(service.headline_translation, 'run_once', side_effect=blocked_headline), \
+                 patch.object(service.x_market_news, 'run_once', side_effect=blocked_market), \
+                 patch.object(service.x_market_news, 'publish_direct_once', side_effect=direct), \
+                 patch.object(service.market_results, 'run_once', side_effect=RuntimeError('synthetic failure')):
+                try:
+                    workers[0].start()
+                    self.assertTrue(headline_started.wait(2))
+                    workers[1].start()
+                    self.assertTrue(market_started.wait(2))
+                    workers[2].start()
+                    self.assertTrue(direct_done.wait(2))
+                    self.assertFalse(release.is_set())
+                finally:
+                    app.stop_event.set()
+                    release.set()
+                    for worker in workers:
+                        if worker.ident is not None:
+                            worker.join(timeout=5)
+
     def test_start_migrates_existing_database_before_any_worker_starts(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / 'monitor.sqlite'
@@ -57,7 +93,7 @@ class ResearchServiceTests(unittest.TestCase):
                     })
             with patch.object(threading.Thread, 'start', start_worker):
                 app.start()
-            self.assertEqual(len(observed), 13)
+            self.assertEqual(len(observed), 14)
             self.assertTrue(all(observed))
 
     def test_monitor_recovers_after_an_unexpected_worker_exception(self):

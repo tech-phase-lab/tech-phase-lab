@@ -6,6 +6,8 @@ import sys
 import tempfile
 import time
 import unittest
+import threading
+from concurrent.futures import ThreadPoolExecutor
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/research'))
 import headline_translation
@@ -18,6 +20,43 @@ ENV = {'OFFICIAL_HEADLINE_TRANSLATION_ENABLED': 'true', 'OPENAI_API_KEY': 'synth
 
 
 class MarketNewsTests(unittest.TestCase):
+    def test_new_direct_story_publishes_during_an_inflight_market_translation(self):
+        now = time.time()
+        original = 'US 30-year Treasury yield rises +0.3% to its highest since 2002'
+        started, release = threading.Event(), threading.Event()
+        def provider(payload, key):
+            started.set()
+            release.wait(5)
+            return {'status':'completed', 'output_text':json.dumps({
+                'titleJa':'米国30年物国債利回りは+0.3%上昇し、2002年以来の最高水準。',
+                'titleEn':original})}
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp)/'signals.sqlite'
+            self.seed(path, original, now)
+            with ThreadPoolExecutor(max_workers=1) as pool:
+                future = pool.submit(news.run_once, path, transport=provider, env=ENV, now=now)
+                try:
+                    self.assertTrue(started.wait(2))
+                    source = next(s for s in signals.SOURCES if s['id']=='x-trendspider')
+                    at = datetime.fromtimestamp(now-0.1, timezone.utc).isoformat()
+                    payload = {'data':[{'id':'456','author_id':'1','created_at':at,
+                        'text':'BREAKING: Moderna $MRNA will join the Nasdaq-100 index, replacing Warner Bros Discovery $WBD'}],
+                        'includes':{'users':[{'id':'1','username':'TrendSpider'}]}}
+                    with headline_translation.connect(path) as db:
+                        signals.save(db,source,x_api.parse_response(source,payload,[]),{},at,'synthetic-config',1)
+                    self.assertEqual(news.publish_direct_once(path,now=now),'done')
+                    self.assertFalse(future.done())
+                    self.assertEqual(news.publish_direct_once(path,now=now),'idle')
+                    with headline_translation.connect(path) as db:
+                        self.assertEqual([r['url'] for r in news.public_feed(db,now=now)],['https://x.com/TrendSpider/status/456'])
+                        self.assertEqual(db.execute('SELECT COUNT(*) FROM signal_headline_translation_calls').fetchone()[0],1)
+                finally:
+                    release.set()
+                self.assertEqual(future.result(timeout=5),'done')
+            with headline_translation.connect(path) as db:
+                self.assertEqual({r['url'] for r in news.public_feed(db,now=now)},
+                                 {'https://x.com/TrendSpider/status/456','https://x.com/Barchart/status/123'})
+
     def test_signed_numbers_maturity_direction_and_record_year(self):
         original = 'US 30-year Treasury yield rises +0.3% to its highest since 2002'
         valid = {'titleJa': '米国30年物国債利回りは+0.3%上昇し、2002年以来の最高水準。',

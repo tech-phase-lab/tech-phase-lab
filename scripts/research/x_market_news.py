@@ -128,16 +128,15 @@ def publication_payload(row, result):
             'publishedAt': row['published_at'], 'observedAt': row['observed_at'], **result}
 
 
-def run_once(path, transport=brief_generator.request_response, env=None, now=None):
-    env = os.environ if env is None else env
+def publish_direct_once(path, now=None):
+    """Publish supported facts independently of any in-flight model request."""
     now = time.time() if now is None else now
-    configured = headline_translation.configuration(env, now=now)
-    if not configured:
-        return 'disabled'
-    # Exact supported grammar does not consume or wait for the model budget.
     with headline_translation.connect(path) as db:
         for row in candidates(db, now=now):
-            result = direct_membership_copy(row['body']) if row['topic'] == 'index-membership' else None
+            try:
+                result = direct_membership_copy(row['body']) if row['topic'] == 'index-membership' else None
+            except ValueError:
+                continue  # A single unsupported copy must not hold other facts.
             if not result:
                 continue
             identity = (row['source_id'], row['url'], row['sha'])
@@ -146,12 +145,26 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
             db.commit()
             with db:
                 db.execute('BEGIN IMMEDIATE')
+                if db.execute('SELECT 1 FROM x_market_publications WHERE source_id=? AND url=? AND sha=?', identity).fetchone():
+                    return 'idle'  # Another worker published while this one waited.
                 current = db.execute('SELECT sha FROM signal_documents WHERE source_id=? AND url=?', identity[:2]).fetchone()
                 if current and current['sha'] == row['sha']:
                     db.execute('INSERT OR REPLACE INTO x_market_publications VALUES(?,?,?,?,?)', (*identity, json.dumps(publication_payload(row, result), ensure_ascii=False), datetime.now(timezone.utc).isoformat()))
                     db.execute("UPDATE x_market_jobs SET state='done',failure_kind=NULL,lease='' WHERE source_id=? AND url=? AND sha=?", identity)
                     return 'done'
             return 'stale'
+    return 'idle'
+
+
+def run_once(path, transport=brief_generator.request_response, env=None, now=None):
+    env = os.environ if env is None else env
+    now = time.time() if now is None else now
+    configured = headline_translation.configuration(env, now=now)
+    if not configured:
+        return 'disabled'
+    direct = publish_direct_once(path, now=now)
+    if direct != 'idle':
+        return direct
     key, model, limit = configured
     lease = uuid.uuid4().hex
     selected = None

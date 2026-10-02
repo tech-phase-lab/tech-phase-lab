@@ -514,6 +514,7 @@ class AutomaticMonitor:
         self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
         self.note_translation_thread = threading.Thread(target=self.run_note_translation, name="note-translation", daemon=True)
         self.headline_translation_thread = threading.Thread(target=self.run_headline_translation, name="headline-translation", daemon=True)
+        self.market_translation_thread = threading.Thread(target=self.run_market_translation, name="market-translation", daemon=True)
         self.result_thread = threading.Thread(target=self.run_results, name="result-publication", daemon=True)
         self.official_research_thread = threading.Thread(target=self.run_official_research, name="official-research", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
@@ -536,9 +537,18 @@ class AutomaticMonitor:
         while not self.stop_event.is_set():
             try:
                 headline_translation.run_once(self.db_path)
-                x_market_news.run_once(self.db_path)
             except Exception:
                 print("headline-translation-unavailable", flush=True)
+            self.stop_event.wait(5)
+
+    def run_market_translation(self):
+        if headline_translation.configuration(os.environ) is None:
+            return
+        while not self.stop_event.is_set():
+            try:
+                x_market_news.run_once(self.db_path)
+            except Exception:
+                print("market-translation-unavailable", flush=True)
             self.stop_event.wait(5)
 
     def run_results(self):
@@ -548,6 +558,11 @@ class AutomaticMonitor:
                 market_results.run_once(self.db_path, signals.SOURCES)
             except Exception:
                 print("result-publication-unavailable", flush=True)
+            if os.environ.get("OFFICIAL_HEADLINE_TRANSLATION_ENABLED") == "true":
+                try:
+                    x_market_news.publish_direct_once(self.db_path)
+                except Exception:
+                    print("market-facts-publication-unavailable", flush=True)
             self.stop_event.wait(5)
 
     def run_official_research(self):
@@ -609,6 +624,7 @@ class AutomaticMonitor:
         self.news_thread.start()
         self.note_translation_thread.start()
         self.headline_translation_thread.start()
+        self.market_translation_thread.start()
         self.result_thread.start()
         self.official_research_thread.start()
         self.mu_measurement_thread.start()
@@ -625,6 +641,7 @@ class AutomaticMonitor:
         self.news_thread.join(timeout=25)
         self.note_translation_thread.join(timeout=45)
         self.headline_translation_thread.join(timeout=45)
+        self.market_translation_thread.join(timeout=45)
         self.result_thread.join(timeout=15)
         self.official_research_thread.join(timeout=45)
         self.mu_measurement_thread.join(timeout=45)
