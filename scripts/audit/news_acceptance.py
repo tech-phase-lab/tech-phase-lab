@@ -129,6 +129,7 @@ def build_report(db, start, end, as_of, inventories=(), observations=(), require
     fresh = [r for r in records if r['category']=='new-source-publication']
     inventory_results = []
     independently_covered = set()
+    scope_reviews = defaultdict(set)
     known_urls = {(r['source_id'],r['url']) for r in events
                   if timestamp(r['observed_at']) and timestamp(r['observed_at']) < cutoff}
     for inventory in inventories:
@@ -138,6 +139,9 @@ def build_report(db, start, end, as_of, inventories=(), observations=(), require
         valid_items = isinstance(items,list) and all(isinstance(x,dict) and isinstance(x.get('url'),str)
             and x['url'].startswith('https://') and type(x.get('eligible')) is bool
             and timestamp(x.get('publishedAt')) for x in items)
+        if inventory.get('method')=='independent-source-inventory' and inventory.get('evidence') and valid_items:
+            for item in items:
+                scope_reviews[(sid,item['url'],timestamp(item['publishedAt']))].add(item['eligible'])
         complete = bool(sid and inventory.get('method')=='independent-source-inventory'
             and inventory.get('evidence') and inventory.get('complete') is True
             and began and ended and began <= start and ended >= cutoff
@@ -149,6 +153,11 @@ def build_report(db, start, end, as_of, inventories=(), observations=(), require
         urls = sorted({x.get('url') for x in expected if isinstance(x.get('url'),str)})
         inventory_results.append({'sourceId':sid,'coverage':'declared-complete' if complete else 'unverified',
             'eligibleUrls':len(urls),'missingFromIntake':[u for u in urls if (sid,u) not in known_urls]})
+    for record in records:
+        decisions=scope_reviews.get((record['sourceId'],record['url'],timestamp(record['sourcePublishedAt'])),set())
+        record['publicationEligibility']=('eligible' if decisions=={True} else 'excluded' if decisions=={False}
+            else 'conflicting-review' if len(decisions)>1 else 'unreviewed')
+    eligible=[r for r in fresh if r['publicationEligibility']=='eligible']
     failures = {}
     carry_in = {}
     for table, clock, columns in (
@@ -175,15 +184,19 @@ def build_report(db, start, end, as_of, inventories=(), observations=(), require
         'windowStatus':'elapsed-needs-review' if as_of>=end else 'in-progress',
         'acceptance':'not-assessed','eventCounts':dict(Counter(r['category'] for r in records)),
         'newSourcePublications':len(fresh),'duplicateStoredEventIds':duplicate_event_rows,
-        'latency':{'sourceToDetection':distribution(r['sourceToDetectionSeconds'] for r in fresh),
-            'detectionToStored':{ch:distribution(r['detectionToStoredSeconds'].get(ch) for r in fresh)
+        'newPublicationEligibilityCounts':dict(Counter(r['publicationEligibility'] for r in fresh)),
+        'intakeLatencyAllNewCandidates':distribution(r['sourceToDetectionSeconds'] for r in fresh),
+        'latencyPopulation':'independently-reviewed-eligible-new-source-publications',
+        'latency':{'sourceToDetection':distribution(r['sourceToDetectionSeconds'] for r in eligible),
+            'detectionToStored':{ch:distribution(r['detectionToStoredSeconds'].get(ch) for r in eligible)
                 for ch in ('headlineJa','marketBilingual','resultBilingual','researchBilingual')},
-            'sourceToBrowser':{lang:distribution(r['sourceToBrowserSeconds'].get(lang) for r in fresh) for lang in ('ja','en')}},
+            'sourceToBrowser':{lang:distribution(r['sourceToBrowserSeconds'].get(lang) for r in eligible) for lang in ('ja','en')}},
         'records':records,'independentInventories':inventory_results,
         'inventoryScope':'explicit-required-sources' if required_sources else 'not-specified',
         'sourcesWithoutCompleteInventory':sorted((set(required_sources)|{r['sourceId'] for r in records})-independently_covered),
         'invalidBrowserObservations':invalid_observations,'timestampedHistory':failures,
         'incidentsOpenAtWindowStart':[r for r in carry_in.values() if r['event']=='opened'],
+        'incidentHistoryScope':'all-database-incidents-including-legacy-body-fetch',
         'missingEvidenceTables':sorted(missing),
         'limitations':[
             'Persisted output timestamps do not establish API eligibility, first-ever publication, or browser display.',

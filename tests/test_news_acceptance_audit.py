@@ -49,12 +49,12 @@ class AcceptanceAuditTests(unittest.TestCase):
         r=self.report()
         self.assertEqual(r['newSourcePublications'],1)
         self.assertEqual(r['eventCounts'],{'new-source-publication':1,'historical-backfill':1,'baseline':1,'revision':2,'source-time-unknown':1,'clock-conflict':1})
-        self.assertEqual(r['latency']['sourceToDetection']['medianSeconds'],30)
+        self.assertEqual(r['intakeLatencyAllNewCandidates']['medianSeconds'],30)
         self.assertEqual(r['acceptance'],'not-assessed')
     def test_source_clock_offsets_and_window_boundary_are_respected(self):
         self.event(1,posted='2026-10-02T13:00:00+09:00',observed='2026-10-02T04:00:05Z')
         self.event(2,posted='2026-10-03T04:00:00Z',observed='2026-10-03T04:00:00Z')
-        self.assertEqual(self.report()['latency']['sourceToDetection']['maxSeconds'],5)
+        self.assertEqual(self.report()['intakeLatencyAllNewCandidates']['maxSeconds'],5)
     def test_current_revision_outputs_are_not_browser_delivery(self):
         self.event(1)
         self.db.executemany('INSERT INTO signal_headline_translations VALUES(?,?,?,?)',[
@@ -69,7 +69,9 @@ class AcceptanceAuditTests(unittest.TestCase):
         self.event(1)
         def view(lang,time,sha='a'):
             return {'sourceId':'source','url':'https://example.com/1','sha':sha,'language':lang,'observedAt':time,'evidence':'browser capture file'}
-        r=self.report(observations=[view('ja','2026-10-02T04:02:00Z'),view('en','2026-10-02T04:02:10Z'),
+        inventory={'sourceId':'source','method':'independent-source-inventory','evidence':'capture',
+            'items':[{'url':'https://example.com/1','publishedAt':'2026-10-02T04:01:00Z','eligible':True}]}
+        r=self.report(inventories=[inventory],observations=[view('ja','2026-10-02T04:02:00Z'),view('en','2026-10-02T04:02:10Z'),
             view('ja','2026-10-02T04:01:40Z','old'),view('en','2026-10-02T04:01:10Z'),view('ja','2026-10-03T04:02:00Z')])
         self.assertEqual(r['latency']['sourceToBrowser']['ja']['maxSeconds'],60)
         self.assertEqual(r['latency']['sourceToBrowser']['en']['maxSeconds'],70)
@@ -118,7 +120,21 @@ class AcceptanceAuditTests(unittest.TestCase):
         r=self.report()
         self.assertEqual(r['newSourcePublications'],1)
         self.assertEqual(r['duplicateStoredEventIds'],[2])
-        self.assertEqual(r['latency']['sourceToDetection']['count'],1)
+        self.assertEqual(r['intakeLatencyAllNewCandidates']['count'],1)
+    def test_unrelated_new_article_is_not_a_service_delivery_success(self):
+        self.event(1)
+        self.assertEqual(self.report()['newPublicationEligibilityCounts'],{'unreviewed':1})
+        inventory={'sourceId':'source','method':'independent-source-inventory','evidence':'actual source review',
+            'items':[{'url':'https://example.com/1','publishedAt':'2026-10-02T04:01:00Z','eligible':False}]}
+        r=self.report(inventories=[inventory])
+        self.assertEqual(r['newPublicationEligibilityCounts'],{'excluded':1})
+        self.assertEqual(r['latency']['sourceToDetection']['count'],0)
+        self.assertEqual(r['intakeLatencyAllNewCandidates']['count'],1)
+        contrary=json.loads(json.dumps(inventory));contrary['items'][0]['eligible']=True
+        r=self.report(inventories=[inventory,contrary])
+        self.assertEqual(r['newPublicationEligibilityCounts'],{'conflicting-review':1})
+        self.assertEqual(r['latency']['sourceToDetection']['count'],0)
+
     def test_read_only_snapshot_does_not_mutate_or_create_database(self):
         self.event(1);self.db.commit()
         before=hashlib.sha256(self.path.read_bytes()).hexdigest()

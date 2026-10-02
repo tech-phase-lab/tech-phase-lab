@@ -36,6 +36,11 @@ Read directly with SQLite, or use an authorized consistent backup.
 - New **source publications** require both a source clock in the window and a
   first `new` intake record. Baselines, historical backfills, revisions, missing
   source clocks and impossible clock order are separate categories.
+- `newPublicationEligibilityCounts` separately marks reviewed eligible,
+  excluded, unreviewed and conflicting scope decisions. An unrelated press
+  release must not become a service delivery success. The primary `latency`
+  population includes only independently reviewed eligible new publications;
+  `intakeLatencyAllNewCandidates` is a separate raw discovery diagnostic.
 - Each sample retains source, URL, revision, detection and available stored-output
   clocks. No summary count or average stands in for individual missing items.
 - Latencies report count, mean, median, nearest-rank p95 and maximum. No sample
@@ -94,6 +99,8 @@ cannot independently verify the truth of the supplied capture. A missed URL in
 an independent inventory is reported even when absent from the DB entirely.
 For in-progress checks set `--as-of` to the inventory's actual checked-through
 clock; later unobserved time must stay unverified.
+Individual eligibility decisions must match source ID, URL and publication clock.
+Opposite decisions stay `conflicting-review`, not silently last-write-wins.
 
 ## Browser observation input
 
@@ -110,3 +117,29 @@ only an offline audit utility, regression tests and these instructions. No
 translation rules, source eligibility, prices, membership, polling interval,
 provider contract or billing cap changes. Do not reset the accepted observation
 window for this utility; retain any deployment/restart evidence separately.
+
+## Live smoke check — October 2 15:03 JST
+
+The first published audit utility (`ae4fa82ddfd8005f9acf404f86903a36fe024e04`)
+was read from this repository by commit and SHA-256 checked before execution.
+It read the live DB with no schema initialization or worker action. At
+06:03:59.061882 UTC it found three historical backfills and one newly published
+PR Newswire candidate. No evidence tables were missing, no duplicate stored
+event ID was counted and no in-window translation/model failure was stored.
+The new candidate was a hotel announcement (event 1167), with a raw discovery
+lag of 73.581 seconds and no stored bilingual output. It is not proof of an
+eligible Tech Phase story delivered in that time. No independent source listing
+or browser observation input was supplied to this smoke check; all 51 declared
+source inventories remained unverified by this invocation.
+
+The audit also retained 360 route transitions and 21 incidents open before the
+window according to the incident-event journal. These are all-database records,
+including historical body-fetch blocks; they are not 21 newly failing enabled
+news routes. Keep this scope separate from the 06:00:23 UTC health observation:
+24/24 enabled official routes fresh, route errors/pending zero; headline49/49,
+research4/4, market1/1, with no pending job. Historical evidence must remain
+visible without relabeling it as a present upstream outage.
+
+Railway explicitly skipped worker deployment for the utility commit because no
+watched runtime path changed. Vercel preview succeeded and Actions36971709957
+passed. The original 04:43:12.282254 UTC acceptance start remains unchanged.
