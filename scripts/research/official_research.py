@@ -18,7 +18,6 @@ import monitor
 import official_release_bridge as bridge
 import signals
 
-RESEARCH_DAILY_LIMIT = 20  # Reserve the shared budget for fast headlines.
 MAX_EVIDENCE_CHARS = 1800
 
 MATERIAL = re.compile(r'\b(acquir(?:es|ed|e)|acquisition|partner(?:s|ship)?|agreement|quarter.*results|financial results|earnings|launch(?:es|ed)?|expand(?:s|ed)?|investment|capacity)\b', re.I)
@@ -34,7 +33,8 @@ languages must be supported by that quote. Use numbers exactly as quoted, withou
 converting units. In Japanese monetary figures, retain the source's numeric spelling
 and English unit (million or billion); do not convert into 億 or 兆. Use ひとつ,
 not 1つ, for generic Japanese wording. Do not turn company expectations into achieved results.
-Titles should fit roughly two lines on a phone; no ticker prefix is needed."""
+Titles should fit roughly two lines on a phone; no ticker prefix is needed.
+Each title must be at most 180 characters; each summary, fact and purpose at most 400 characters."""
 
 
 def schema(db):
@@ -113,13 +113,15 @@ def response_schema():
 
 def claim(db, reference, model, limit):
     rows=candidates(db,reference)
+    # Reserve capacity for actual untranslated headlines, not a separate daily
+    # quota that strands article retries while the shared budget is still free.
+    headline_pending=headline_translation.diagnostics(db,now=reference.timestamp())['pending']
     db.commit()
     now=reference.timestamp()
     with db:
         db.execute('BEGIN IMMEDIATE')
-        if db.execute('SELECT count(*) FROM signal_headline_translation_calls WHERE at>=?',(now-86400,)).fetchone()[0] >= limit:
-            return None
-        if db.execute("SELECT count(*) FROM signal_headline_translation_calls WHERE at>=? AND source_id LIKE 'research:%'",(now-86400,)).fetchone()[0] >= min(RESEARCH_DAILY_LIMIT, max(1,limit//2)):
+        used=db.execute('SELECT count(*) FROM signal_headline_translation_calls WHERE at>=?',(now-86400,)).fetchone()[0]
+        if used + headline_pending >= limit:
             return None
         for r in rows:
             published=db.execute('SELECT sha,payload FROM official_research_publications WHERE event_id=?',(r['id'],)).fetchone()

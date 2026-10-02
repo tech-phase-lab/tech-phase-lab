@@ -1,5 +1,16 @@
 # New-information acceptance observation
 
+## Current status — October 2 13:12 JST owner correction
+
+Acceptance is paused while a known publication blocker is repaired. The 04:00:13
+UTC start below is retained as diagnostic history, not an eligible clean window.
+Event 1119 (NBIS Inferize acquisition) remains unpublished: one invalid-copy
+attempt exhausted the separate 20-call research subquota after earlier jobs had
+used the other calls, while the shared budget still had 76 of 200 slots available.
+Resume only after deployed automatic recovery, bilingual evidence review and
+frontend delivery verification. Record the new full window in the baseline JSON.
+
+
 Owner instruction, October 2 11:55 JST: acceptance requires a full day of newly
 published information arriving promptly, correct Japanese and English, no missed
 eligible news, and no errors. Repeated retrieval of old stories is not evidence

@@ -2,10 +2,10 @@
   "windowStart": "2026-10-02T02:57:53.058536+00:00",
   "windowEnd": "2026-10-03T02:57:53.058536+00:00",
   "windowStatus": "diagnostic-only-known-source-errors",
-  "acceptanceEligible": true,
-  "acceptanceStatus": "in-progress-repair-verified",
-  "acceptanceWindowStart": "2026-10-02T04:00:13.253461+00:00",
-  "acceptanceWindowEnd": "2026-10-03T04:00:13.253461+00:00",
+  "acceptanceEligible": false,
+  "acceptanceStatus": "waiting-for-publication-recovery",
+  "acceptanceWindowStart": null,
+  "acceptanceWindowEnd": null,
   "repairCommit": "871c4d77bd79ef3247d8251bc4b09e148dd59a00",
   "repairedBaselineCapturedAt": "2026-10-02T04:00:13.253461+00:00",
   "repairedBaseline": {
@@ -484,5 +484,13 @@
       "issues": [],
       "monitorStaleAfterSeconds": 60
     }
-  }
+  },
+  "supersededAcceptanceWindows": [
+    {
+      "start": "2026-10-02T04:00:13.253461+00:00",
+      "end": "2026-10-03T04:00:13.253461+00:00",
+      "status": "diagnostic-only-known-publication-blocker",
+      "reason": "Official research event 1119 remained unpublished after invalid-copy because the separate 20-call article quota was exhausted despite available shared capacity."
+    }
+  ]
 }

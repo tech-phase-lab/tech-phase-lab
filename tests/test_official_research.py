@@ -163,13 +163,31 @@ class OfficialResearchTests(unittest.TestCase):
             for i in range(3):db.execute('INSERT INTO signal_headline_translation_calls(at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)',(NOW.timestamp(),'test','test','test','done',str(i)))
         self.assertEqual(self.run_note(lambda *_:self.fail('over budget')),'idle')
 
-    def test_research_subcap_reserves_headline_capacity(self):
+    def test_twenty_historical_failures_do_not_strand_retry_with_shared_capacity(self):
         with research.connect(self.path) as db:
             for i in range(20):
                 db.execute('INSERT INTO signal_headline_translation_calls(at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)',
                            (NOW.timestamp(),'research:test','test','test','failed',str(i)))
+            row=research.candidates(db,NOW)[0]
+            db.execute("INSERT INTO official_research_jobs(event_id,sha,attempts,next_at,lease,state,failure_kind) VALUES(?,?,1,0,'old','retry','invalid-copy')",(row['id'],row['sha']))
         env={**ENV,'OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT':'200'}
-        self.assertEqual(research.run_once(self.path,lambda *_:self.fail('research stole headline reserve'),env,NOW.timestamp()),'idle')
+        self.assertEqual(research.run_once(self.path,response,env,NOW.timestamp()),'done')
+        self.assertEqual(len(self.feed()),1)
+        with research.connect(self.path) as db:
+            self.assertEqual(db.execute('SELECT attempts FROM official_research_jobs').fetchone()[0],2)
+            self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0],21)
+
+    def test_pending_headline_reserves_last_shared_slot_then_article_can_use_it(self):
+        with research.connect(self.path) as db:
+            for i in range(2):
+                db.execute('INSERT INTO signal_headline_translation_calls(at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)',
+                           (NOW.timestamp(),'research:test','test','test','failed',str(i)))
+        self.assertEqual(self.run_note(lambda *_:self.fail('stole pending headline slot')),'idle')
+        with research.connect(self.path) as db:
+            row=research.candidates(db,NOW)[0]
+            db.execute('INSERT INTO signal_headline_translations(source_id,url,sha,headline_ja,model,created_at) VALUES(?,?,?,?,?,?)',
+                       (row['source_id'],row['url'],row['sha'],'Nebius、Inferizeを買収','synthetic',NOW.isoformat()))
+        self.assertEqual(self.run_note(),'done')
 
     def test_evidence_windows_keep_product_number_and_context_together(self):
         body='Background. '*46+'Microsoft 365 Copilot supports meeting summaries.\n'+('Further context. '*90)
