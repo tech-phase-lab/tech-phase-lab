@@ -1,3 +1,41 @@
+# Safe fallback reason in the operations UI — October 2, 2026 08:49–09:03 JST
+
+Commit `31beeae85e6601282e9a7f42a0ab889c05c42385` preserves the fixed
+server-side fallback categories and now carries only a validated category into
+the client state. The operations preview renders a Japanese `接続診断` label
+only while it is showing the saved snapshot. Automatic responses clear the
+reason. A shared runtime parser rejects unknown values, URLs, numbers and raw
+response or exception text, so the UI cannot turn an untrusted diagnostic
+string into private evidence.
+
+The complete gate passed: Node 195/195, Python 520/520, ESLint zero errors with
+one pre-existing warning, the Next.js production build, `compileall`, and
+`git diff --check`. The connector-created and local Git trees matched exactly
+at `71588067230e30e46d5e90ab344c151784655396`. Vercel deployment
+`dpl_EXjuVEUembTMn86VRXPbG1xSvk38` reached Ready and Railway staging succeeded.
+The deployment's reviewed runtime window had no 4xx/5xx request, warning,
+error, or fatal log.
+
+The deployed page initially rendered the saved September 19 snapshot, then its
+client refresh reconnected and showed automatic data at 09:01:17 JST. At
+09:02:12 JST the monitor and all five priority issuers remained healthy, all
+22 registered issuers had a current list result, and 49/49 eligible official
+headlines had translations. Because the monitor recovered, this run verified
+that the fallback reason is cleared on recovery; the new reason label itself
+was not live-observable during an active fallback and remains covered by the
+offline fixed-category regressions.
+
+The supplemental `other` route was lawfully retried at 09:01:42 JST, failed
+again, and was deferred to 09:03:42 JST; do not mark it recovered. The separate
+long-running timeout remains scheduled for 10:32:40 JST and the two
+access-restricted routes remain deferred until 20:16:46 JST. These are worker
+retry times, not polling or subscriber-delivery guarantees. Calendar files were
+reviewed first; all 40 companies already had an actual October 2 attempt and
+BLS/Federal Reserve dates already had their daily review, so no marker, date or
+time was changed.
+
+---
+
 # Safe live-monitor fallback diagnostics — October 2, 2026 07:41–07:59 JST
 
 Vercel runtime evidence showed 196 requests to `/api/research/live` during the
