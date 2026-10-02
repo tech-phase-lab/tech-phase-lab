@@ -287,4 +287,22 @@ class OfficialResearchTests(unittest.TestCase):
             return response()
         self.assertEqual(research.run_once(self.path,corrected,ENV,NOW.timestamp()+61),'done')
 
+    def test_wrong_adjacent_evidence_id_can_rebind_but_changed_number_cannot(self):
+        first='The device supports 100 billion parameters. '+('Background details. '*20)
+        second='The device supports 100 billion parameters and two units support 200 billion parameters.'
+        row={'body':first+second,'title':'Device capacity'}
+        item={'ja':'1000億および2000億パラメータをサポートする。',
+              'en':'Supports 100 billion and 200 billion parameters.'}
+        excerpts={'0':first,'1':second}
+        research.bind_evidence(item,'0',excerpts,row)
+        self.assertEqual(item['evidenceQuote'],second)
+        research.validate_item('fact',item,row['body'],row['title'])
+        wrong={**item,'ja':'1000億および3000億パラメータをサポートする。'}
+        research.bind_evidence(wrong,'0',excerpts,row)
+        with self.assertRaisesRegex(ValueError,'unsupported-number'):
+            research.validate_item('fact',wrong,row['body'],row['title'])
+        ambiguous={k:v for k,v in item.items() if k!='evidenceQuote'}
+        research.bind_evidence(ambiguous,'1',{'0':second,'1':first,'2':second},row)
+        self.assertEqual(ambiguous['evidenceQuote'],first)
+
 if __name__=='__main__':unittest.main()

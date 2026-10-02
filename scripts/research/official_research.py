@@ -349,6 +349,29 @@ def evidence_excerpts(body):
     return excerpts
 
 
+def bind_evidence(item, evidence_id, excerpts, row):
+    """Repair one unambiguous adjacent-window reference without changing copy."""
+    item['evidenceQuote']=excerpts[evidence_id]
+    try:
+        validate_item('fact',item,row['body'],row['title'])
+        return
+    except ValueError as exc:
+        if str(exc)!='unsupported-number':
+            return
+    matches=[]
+    for adjacent in (str(int(evidence_id)-1),str(int(evidence_id)+1)):
+        if adjacent not in excerpts:
+            continue
+        candidate={**item,'evidenceQuote':excerpts[adjacent]}
+        try:
+            validate_item('fact',candidate,row['body'],row['title'])
+        except ValueError:
+            continue
+        matches.append(excerpts[adjacent])
+    if len(matches)==1:
+        item['evidenceQuote']=matches[0]
+
+
 def retry_feedback(db, row):
     """Return only currently rejected fields, so retries do not repeat blindly."""
     failure=db.execute('SELECT payload FROM official_research_attempt_failures WHERE event_id=? AND sha=? ORDER BY failed_at DESC LIMIT 1',
@@ -411,7 +434,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                 evidence_id=item.pop('evidenceId')
                 if not isinstance(evidence_id,str) or evidence_id not in excerpts:
                     raise ValueError('unsupported-quote')
-                item['evidenceQuote']=excerpts[evidence_id]
+                bind_evidence(item,evidence_id,excerpts,row)
         note=validate(value,row['body'],row['title'])
         usage={k:v for k,v in (response.get('usage') or {}).items()
                if k in ('input_tokens','output_tokens','total_tokens') and type(v) is int}
