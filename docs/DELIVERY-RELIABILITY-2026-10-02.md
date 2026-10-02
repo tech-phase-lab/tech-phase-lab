@@ -356,3 +356,77 @@ requires post-deployment verification.
 The integrated ASML/date candidate passed 250 Node and 688 Python tests (938
 total), lint, production build/type checking, compileall and whitespace checks,
 plus independent review including the actual captured issuer metadata.
+
+## Primary discovery and body completion barriers
+
+ASML migration commit `6e6e2b99394147b93b26a72c738b2da602ac9115` passed Actions
+`37049490748`, Vercel `dpl_F9ggG3SsQFHLLdCVb45BP5NKiUs8` and Railway
+`410d8f1f-fe3b-4f6a-acbe-8a1e97ed376f`; the uploaded tree exactly matched
+`0addfc28272b0de2396578c695da5a133fcdb4ca`. Its first runtime canonical-index
+attempt and an ordinary repeat at 18:50:55 both timed out after about 20 seconds.
+The configured SEC metadata fallback continued working, but no new canonical
+ASML articles were acquired. Local success is not claimed as runtime recovery;
+the old failed rechecks retain their normal schedules.
+
+This exposed a separate correctable latency defect: primary discovery waited
+for all ticker futures before saving any completed result. Body fetching also
+waited for every body before saving its completed peers. The replacement uses
+one bounded shared pool with the existing configured worker ceiling, commits
+completed evidence immediately, wakes publication workers only after commit,
+and reschedules issuers fairly at their existing completion-based cadence.
+Pending/active ticker and body identities cannot be dispatched twice.
+
+Body admission continues at the existing body interval and outstanding
+body-batch capacity while an older peer remains slow. Non-SEC host exclusions
+preserve issuer courtesy. Merely having a configured SEC fallback does not
+reserve that host while a different issuer is being contacted. The actual
+initial/redirect SEC requests share a thread-safe process-wide rolling ceiling
+of 10 requests/second across `www.sec.gov` and `data.sec.gov`, consistent with
+https://www.sec.gov/files/about/webmaster-faq.htm . This does not reset an
+access-control circuit or authorize blocked requests, and does not claim a
+cross-process/account-wide limiter. X request/billing settings are unchanged.
+
+Evidence and per-source state updates are immediate; discovery batch metrics
+alone aggregate on a five-second interval with a 1,000-check bound. This avoids
+truncating the existing 100,000-row telemetry history in less than a day after
+restoring the intended issuer cadence. Normal shutdown discards late results;
+a failed loop drains its old network pool before a supervised restart.
+
+An existing test fixture stubbed the old body method; it was corrected for the
+new asynchronous entry point before further validation. The final Python test
+harness explicitly denies and audits external DNS/socket attempts, permits only
+local loopback fixture servers, and fails even if application code catches an
+attempt. Regression tests never request real provider data.
+
+## First genuinely new post observed during this repair
+
+Barchart item `1221`, https://x.com/Barchart/status/2106098746266136677,
+reported the U.S. 10-year Treasury yield rising sharply again. Stored source
+time is 19:07:25 UTC and acquisition is 19:08:01.778 UTC (36.778 seconds).
+The item was absent in the 19:08:01.356 API observation and present at
+19:08:58.199. The untouched live English home contained it by 19:09:13, and
+Japanese was checked by 19:10:18 with a settled screenshot at 19:10:42. Both
+versions preserve the 10-year tenor and show 04:07:25 JST on October 3; neither
+invents a numeric yield percentage.
+
+The observation establishes delivery of a new eligible post, not a five-second
+source-to-screen SLA. Acquisition-to-English-observation upper bound is 71.222
+seconds; stored-source-to-observation upper bound is 108 seconds. A public X
+reader could not independently retrieve the original, so the source clock is
+attributed to authorized ingestion metadata. Historical corrections/backfills
+remain excluded. Exact first render is not known from one-minute sampling.
+
+The existing market-publication table retains the actual original publication
+clock. Bounded diagnostics now expose that clock only for currently valid
+public items (latest five within 24 hours), alongside source/acquisition clocks
+and calculated intervals. Unreleased private, invalid, superseded or invalidly
+timed rows are excluded. Reading these metrics never rewrites a publication
+time or substitutes a replay/poll time. Runtime measurement of item 1221 will
+be recorded separately after this diagnostic change is deployed.
+
+The final integrated queue/courtesy/timing candidate passed 250 Node and 713
+Python tests (963 total), all required lint/build/type/compile/whitespace gates,
+and independent review. The Python gate recorded zero external DNS/socket
+attempts. The existing authenticated editorial view also corroborated the
+retained Barchart original, its 10-year tenor and source/acquisition clocks;
+this is retained ingestion evidence, not independent public-web verification.

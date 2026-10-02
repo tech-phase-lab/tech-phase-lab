@@ -1,5 +1,6 @@
 """Official-source research intake. No scheduler, summarization, or publishing side effects."""
 import argparse
+from collections import deque
 import difflib
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
@@ -18,6 +19,7 @@ from urllib.parse import parse_qs, urlencode, urljoin, urlsplit, urlunsplit
 from urllib.error import HTTPError, URLError
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 import threading
+import time
 
 ROOT = Path(__file__).resolve().parents[2]
 PROVIDERS = {p["ticker"]: p for p in json.loads((ROOT / "lib/research/providers.json").read_text())}
@@ -219,7 +221,45 @@ class Redirects(HTTPRedirectHandler):
 
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         safe_url(newurl, self.ticker)
-        return super().redirect_request(req, fp, code, msg, headers, newurl)
+        redirected = super().redirect_request(req, fp, code, msg, headers, newurl)
+        if redirected is not None:
+            wait_for_source_courtesy(newurl)
+        return redirected
+
+
+class SourceRequestWindow:
+    """Thread-shared rolling request starts; waiting never holds the mutex."""
+    def __init__(self, limit=10, seconds=1.0, clock=None, sleeper=None):
+        self.limit = limit
+        self.seconds = seconds
+        self.clock = clock or time.monotonic
+        self.sleep = sleeper or time.sleep
+        self.started = deque()
+        self.lock = threading.Lock()
+
+    def wait(self):
+        while True:
+            with self.lock:
+                current = self.clock()
+                while self.started and self.started[0] <= current - self.seconds:
+                    self.started.popleft()
+                if len(self.started) < self.limit:
+                    self.started.append(current)
+                    return current
+                delay = max(0.001, self.started[0] + self.seconds - current)
+            self.sleep(delay)
+
+
+# The existing SEC discovery and filing requests share its published 10/s
+# courtesy ceiling, including redirects. This is a process-wide safety cap,
+# not permission to retry a blocked host or change its persisted backoff.
+_SEC_REQUEST_WINDOW = SourceRequestWindow()
+
+
+def wait_for_source_courtesy(url):
+    if urlsplit(url).hostname in {'www.sec.gov', 'data.sec.gov'}:
+        return _SEC_REQUEST_WINDOW.wait()
+    return None
 
 
 def source_configuration(url, ticker):
@@ -499,6 +539,7 @@ def fetch(url, ticker, validators=None, include_metadata=False):
     timeout = PROVIDERS[ticker].get("requestTimeoutSeconds", 20) if url == INDEXES[ticker] else 20
     timeout = environment_seconds("RESEARCH_REQUEST_TIMEOUT_SECONDS", timeout, 1, timeout)
     try:
+        wait_for_source_courtesy(url)
         response = build_opener(Redirects(ticker)).open(req, timeout=timeout)
     except HTTPError as exc:
         if exc.code == 304 and include_metadata and (etag or last_modified):

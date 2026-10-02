@@ -267,12 +267,42 @@ def public_feed(db, limit=20, now=None):
 
 
 def diagnostics(db, now=None):
+    now = time.time() if now is None else now
     rows = candidates(db, now=now)
-    published = len(public_feed(db, limit=200, now=now))
+    public_items = public_feed(db, limit=200, now=now)
+    public_ids = {item['id'] for item in public_items}
+    published = len(public_items)
+    latest = []
     failures = {}
     for row in rows:
         job = db.execute('SELECT state,failure_kind FROM x_market_jobs WHERE source_id=? AND url=? AND sha=?', (row['source_id'], row['url'], row['sha'])).fetchone()
         if job and job['state'] == 'retry' and job['failure_kind'] in FAILURES:
             kind = job['failure_kind']
             failures[kind] = failures.get(kind, 0)+1
-    return {'accounts': 2, 'eligible': len(rows), 'published': published, 'pending': len(rows)-published, 'failureKinds': failures}
+        if str(row['id']) not in public_ids:
+            continue  # Private, invalid and superseded originals have no public timing row.
+        publication = db.execute('''SELECT published_at FROM x_market_publications
+          WHERE source_id=? AND url=? AND sha=?''',
+                                 (row['source_id'], row['url'], row['sha'])).fetchone()
+        if not publication:
+            continue
+        try:
+            source_at, acquired_at, public_at = (
+                datetime.fromisoformat(value.replace('Z', '+00:00'))
+                for value in (row['published_at'], row['observed_at'], publication['published_at'])
+            )
+            if (any(value.tzinfo is None for value in (source_at, acquired_at, public_at))
+                    or not source_at <= acquired_at <= public_at
+                    or not now - 86400 <= public_at.timestamp() <= now):
+                continue
+        except (AttributeError, TypeError, ValueError, OverflowError):
+            continue
+        # Read the original persisted publication clock. Never use this poll's
+        # time, a replay time or a reconstructed estimate as publication evidence.
+        latest.append({'id': str(row['id']), 'publishedAt': row['published_at'],
+                       'observedAt': row['observed_at'], 'publicAt': public_at.astimezone(timezone.utc).isoformat(),
+                       'sourceToDetectionMs': round((acquired_at - source_at).total_seconds() * 1000),
+                       'detectionToPublicMs': round((public_at - acquired_at).total_seconds() * 1000)})
+    latest.sort(key=lambda item: item['publicAt'], reverse=True)
+    return {'accounts': 2, 'eligible': len(rows), 'published': published, 'pending': len(rows)-published,
+            'failureKinds': failures, 'latest': latest[:5]}

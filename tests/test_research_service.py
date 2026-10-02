@@ -976,7 +976,7 @@ class ResearchServiceTests(unittest.TestCase):
             "sourcesChecked": 1, "sourcesConfigured": 1, "candidates": 0,
             "error": "timeout",
         }, {}, 123)
-        app.fetch_bodies_safely = lambda _pool: True
+        app.begin_body_batch = lambda **_selection: None
         app.thread.start()
         try:
             for _ in range(100):

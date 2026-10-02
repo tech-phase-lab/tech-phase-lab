@@ -47,6 +47,8 @@ LEGACY_FULL_TICKERS = (
 PRIORITY_SEC_TICKERS = ("TSM", "MRVL", "ANET", "VRT", "PLTR")
 WEB_PUSH_POLL_SECONDS = 5
 WEB_PUSH_STALE_SECONDS = 30
+DISCOVERY_METRICS_FLUSH_SECONDS = 5
+DISCOVERY_METRICS_MAX_CHECKS = 1000
 
 
 def utc_now():
@@ -1338,8 +1340,12 @@ class AutomaticMonitor:
             monitor.write_snapshot(db, self.snapshot_path)
             return result
 
-    def body_candidates(self, polled_at=None):
+    def body_candidates(self, polled_at=None, *, excluded_urls=(),
+                        excluded_tickers=(), excluded_hosts=(), max_candidates=None):
         """Prioritize unseen releases, then missing evidence, then routine rechecks."""
+        batch_limit = self.body_batch if max_candidates is None else min(
+            self.body_batch, max(0, int(max_candidates))
+        )
         due = utc_now()
         polled_at = polled_at or due
         with self.db_lock, monitor.connect(self.db_path) as db:
@@ -1405,7 +1411,7 @@ class AutomaticMonitor:
             probe_host_state = due_body_host_backoff_state(db, due)
             probe_hosts = set(probe_host_state)
             ordered = db.execute("""
-              SELECT s.url,s.sha256,s.next_fetch_at,e.detected_at
+              SELECT s.url,s.ticker,s.sha256,s.next_fetch_at,e.detected_at
               FROM sources s LEFT JOIN release_events e ON e.url=s.url
               WHERE s.source_mode='remote'
               ORDER BY CASE
@@ -1430,6 +1436,10 @@ class AutomaticMonitor:
                 if hostname and hostname in blocked_hosts:
                     host_deferred += 1
                     continue
+                if (candidate["url"] in excluded_urls
+                        or candidate["ticker"] in excluded_tickers
+                        or hostname in excluded_hosts):
+                    continue
                 eligible_candidates.append(candidate)
             eligible_hosts = {
                 monitor.source_hostname(candidate["url"])
@@ -1447,7 +1457,7 @@ class AutomaticMonitor:
             fairness_age_ms = None
             fairness_shared_host = False
             oldest_release = None
-            if self.body_batch > 1 and eligible_candidates:
+            if batch_limit > 1 and eligible_candidates:
                 probe_candidates = []
                 seen_probe_hosts = set()
                 for candidate in eligible_candidates:
@@ -1458,12 +1468,12 @@ class AutomaticMonitor:
                 pinned = [eligible_candidates[0]]
                 pinned_urls = {eligible_candidates[0]["url"]}
                 for candidate in probe_candidates:
-                    if len(pinned) >= self.body_batch:
+                    if len(pinned) >= batch_limit:
                         break
                     if candidate["url"] not in pinned_urls:
                         pinned.append(candidate)
                         pinned_urls.add(candidate["url"])
-                if len(pinned) < self.body_batch:
+                if len(pinned) < batch_limit:
                     valid_unfetched_releases = []
                     for candidate in eligible_candidates:
                         if candidate["sha256"] is not None or candidate["detected_at"] is None:
@@ -1505,7 +1515,7 @@ class AutomaticMonitor:
                 hostname = monitor.source_hostname(candidate["url"])
                 if hostname and hostname in selected_hosts:
                     continue
-                if len(selected_urls) < self.body_batch:
+                if len(selected_urls) < batch_limit:
                     selected_urls.append(candidate["url"])
                     if hostname:
                         selected_hosts.add(hostname)
@@ -1595,12 +1605,16 @@ class AutomaticMonitor:
             }
         return rows, pending
 
-    def fetch_bodies(self, pool):
+    def begin_body_batch(self, **selection):
+        """Select one bounded batch without occupying a network worker."""
         cycle_started = time.monotonic()
         polled_at = utc_now()
-        rows, pending = self.body_candidates(polled_at)
+        rows, pending = self.body_candidates(polled_at, **selection)
         probe_urls = set(self.body_probe_urls)
         probe_eligible_at = dict(self.body_probe_eligible_at)
+        with self.state_lock:
+            self.state["pendingBodies"] = pending
+            self.state["bodyFetch"]["lastPollAt"] = polled_at
         if not rows:
             with self.state_lock:
                 self.state["pendingBodies"] = pending
@@ -1610,80 +1624,93 @@ class AutomaticMonitor:
                     "retrySeconds": 0, "nextRetryAt": None,
                 })
             return
-        def collect_body(row):
-            attempted_at = utc_now()
-            request_started = time.monotonic()
-            try:
-                result = monitor.collect_source(row, monitor.fetch)
-                error = None
-            except Exception as exc:
-                result = None
-                error = exc
-            request_duration_ms = max(
-                0, round((time.monotonic() - request_started) * 1000)
-            )
-            return attempted_at, request_duration_ms, result, error
+        return {
+            "cycle_started": cycle_started, "polled_at": polled_at,
+            "rows": rows, "pending": pending, "probe_urls": probe_urls,
+            "probe_eligible_at": probe_eligible_at, "completed": [],
+            "saved_outcomes": {}, "saved_at": {}, "failed": False,
+        }
 
-        futures = {pool.submit(collect_body, row): row for row in rows}
-        completed = []
-        for future in as_completed(futures):
-            row = futures[future]
-            attempted_at, request_duration_ms, result, error = future.result()
-            completed.append((row, attempted_at, request_duration_ms, result, error))
-        errors = 0
-        not_modified = 0
-        completed_at = None
-        duration_ms = None
+    @staticmethod
+    def collect_body_timed(row):
+        attempted_at = utc_now()
+        request_started = time.monotonic()
+        try:
+            result = monitor.collect_source(row, monitor.fetch)
+            error = None
+        except Exception as exc:
+            result = None
+            error = exc
+        request_duration_ms = max(
+            0, round((time.monotonic() - request_started) * 1000)
+        )
+        return attempted_at, request_duration_ms, result, error
+
+    def save_body_completion(self, batch, completed):
+        """Commit and publish one body without waiting for its batch peers."""
+        row, _attempted_at, _request_duration_ms, result, error = completed
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            if error is None:
+                outcome = monitor.save_source_check(db, row, result)["status"]
+                if not result.get("notModified"):
+                    monitor.activate_generation_job(
+                        db, row["url"], brief_generator.token_reservation(result["extractedText"])
+                    )
+            else:
+                monitor.save_source_error(db, row, error)
+                outcome = None
+            if row["url"] in batch["probe_urls"]:
+                if error is None:
+                    probe_outcome = "recovered"
+                elif monitor.source_error_code(error) in monitor.ACCESS_RESTRICTED_ERRORS:
+                    probe_outcome = "restricted"
+                else:
+                    probe_outcome = "failed"
+                monitor.record_body_host_probe(
+                    db, batch["probe_eligible_at"].get(row["url"]), batch["polled_at"],
+                    utc_now(), probe_outcome,
+                )
+            remaining = db.execute("""
+              SELECT error FROM sources
+              WHERE ticker=? AND source_mode='remote' AND error IS NOT NULL
+              ORDER BY checked_at DESC LIMIT 1
+            """, (row["ticker"],)).fetchone()
+            if remaining:
+                monitor.record_operational_incident(
+                    db, f"body:{row['ticker']}", "article-body", row["ticker"], "warning",
+                    monitor.public_error(remaining["error"]) or "body-fetch-failed",
+                )
+            else:
+                monitor.resolve_body_incident_if_recovered(db, row["ticker"])
+            monitor.write_snapshot(db, self.snapshot_path)
+        batch["completed"].append(completed)
+        batch["saved_outcomes"][row["url"]] = outcome
+        batch["saved_at"][row["url"]] = utc_now()
+        with self.state_lock:
+            self.state["sourceChecks"] += 1
+            self.state["sourceFetchErrors"] += int(error is not None)
+            self.state["sourceNotModified"] += int(error is None and bool(result.get("notModified")))
+            self.state["pendingBodies"] = max(0, self.state["pendingBodies"] - 1)
+        if outcome in {"first-fetched", "changed"}:
+            self.wake_publication_workers()
+
+    def finish_body_batch(self, batch):
+        """Record aggregate metrics; source evidence is already committed."""
+        cycle_started = batch["cycle_started"]
+        polled_at = batch["polled_at"]
+        completed = batch["completed"]
+        errors = sum(error is not None for _row, _at, _ms, _result, error in completed)
+        not_modified = sum(
+            error is None and bool(result.get("notModified"))
+            for _row, _at, _ms, result, error in completed
+        )
         detection_latencies_ms = []
         eligibility_waits_ms = []
-        request_durations_ms = []
-        request_success_durations_ms = []
-        request_error_durations_ms = []
-        saved_outcomes = {}
+        request_durations_ms = [entry[2] for entry in completed]
+        request_success_durations_ms = [entry[2] for entry in completed if entry[4] is None]
+        request_error_durations_ms = [entry[2] for entry in completed if entry[4] is not None]
+        saved_outcomes = batch["saved_outcomes"]
         with self.db_lock, monitor.connect(self.db_path) as db:
-            affected_tickers = {row["ticker"] for row, _, _, _, _ in completed}
-            for row, attempted_at, request_duration_ms, result, error in completed:
-                request_durations_ms.append(request_duration_ms)
-                if error is None:
-                    request_success_durations_ms.append(request_duration_ms)
-                    saved_outcomes[row["url"]] = monitor.save_source_check(
-                        db, row, result
-                    )["status"]
-                    if result.get("notModified"):
-                        not_modified += 1
-                    else:
-                        monitor.activate_generation_job(
-                            db, row["url"], brief_generator.token_reservation(result["extractedText"])
-                        )
-                else:
-                    request_error_durations_ms.append(request_duration_ms)
-                    monitor.save_source_error(db, row, error)
-                    errors += 1
-                if row["url"] in probe_urls:
-                    if error is None:
-                        probe_outcome = "recovered"
-                    elif monitor.source_error_code(error) in monitor.ACCESS_RESTRICTED_ERRORS:
-                        probe_outcome = "restricted"
-                    else:
-                        probe_outcome = "failed"
-                    monitor.record_body_host_probe(
-                        db, probe_eligible_at.get(row["url"]), polled_at,
-                        utc_now(), probe_outcome,
-                    )
-            for ticker in affected_tickers:
-                remaining = db.execute("""
-                  SELECT error FROM sources
-                  WHERE ticker=? AND source_mode='remote' AND error IS NOT NULL
-                  ORDER BY checked_at DESC LIMIT 1
-                """, (ticker,)).fetchone()
-                incident_key = f"body:{ticker}"
-                if remaining:
-                    monitor.record_operational_incident(
-                        db, incident_key, "article-body", ticker, "warning",
-                        monitor.public_error(remaining["error"]) or "body-fetch-failed",
-                    )
-                else:
-                    monitor.resolve_body_incident_if_recovered(db, ticker)
             completed_at = utc_now()
             duration_ms = max(0, round((time.monotonic() - cycle_started) * 1000))
             selection_partitions = {
@@ -1723,7 +1750,9 @@ class AutomaticMonitor:
                         selection_updated[partition] += 1
                 if error is not None or result.get("notModified") or row["sha256"] is not None:
                     continue
-                latency = timestamp_latency_ms(row["release_detected_at"], completed_at)
+                latency = timestamp_latency_ms(
+                    row["release_detected_at"], batch["saved_at"][row["url"]]
+                )
                 if latency is not None:
                     detection_latencies_ms.append(latency)
             monitor.record_body_fetch_batch(
@@ -1736,14 +1765,9 @@ class AutomaticMonitor:
                 request_success_durations_ms=request_success_durations_ms,
                 request_error_durations_ms=request_error_durations_ms,
             )
-            monitor.write_snapshot(db, self.snapshot_path)
         with self.state_lock:
-            self.state["sourceChecks"] += len(completed)
-            self.state["sourceFetchErrors"] += errors
-            self.state["sourceNotModified"] += not_modified
-            self.state["pendingBodies"] = max(0, pending - len(completed))
             self.state["bodyFetch"].update({
-                "lastPollAt": polled_at,
+                "lastPollAt": max(self.state["bodyFetch"]["lastPollAt"] or polled_at, polled_at),
                 "lastBatchAt": completed_at,
                 "lastBatchDurationMs": duration_ms,
                 "lastBatchChecks": len(completed),
@@ -1756,25 +1780,40 @@ class AutomaticMonitor:
                 "nextRetryAt": None,
             })
 
+    def fetch_bodies(self, pool):
+        """Synchronous entry point retained for manual callers and diagnostics."""
+        batch = self.begin_body_batch()
+        if batch is None:
+            return
+        futures = {pool.submit(self.collect_body_timed, row): row for row in batch["rows"]}
+        for future in as_completed(futures):
+            self.save_body_completion(batch, (futures[future], *future.result()))
+        self.finish_body_batch(batch)
+
+    def record_body_fetch_failure(self):
+        """Apply the same retry policy to selection, collection, and save faults."""
+        with self.state_lock:
+            body_fetch = self.state["bodyFetch"]
+            failures = body_fetch["consecutiveFailures"] + 1
+            retry_seconds = min(300, self.body_interval * (2 ** min(failures, 5)))
+            body_fetch.update({
+                "lastPollAt": utc_now(),
+                "healthy": False,
+                "consecutiveFailures": failures,
+                "lastError": "body-fetch-failed",
+                "retrySeconds": retry_seconds,
+                "nextRetryAt": (
+                    datetime.now(timezone.utc) + timedelta(seconds=retry_seconds)
+                ).isoformat(timespec="milliseconds"),
+            })
+        return retry_seconds
+
     def fetch_bodies_safely(self, pool):
         """Keep a body-queue fault from stopping official-source discovery."""
         try:
             self.fetch_bodies(pool)
         except Exception:
-            with self.state_lock:
-                body_fetch = self.state["bodyFetch"]
-                failures = body_fetch["consecutiveFailures"] + 1
-                retry_seconds = min(300, self.body_interval * (2 ** min(failures, 5)))
-                body_fetch.update({
-                    "lastPollAt": utc_now(),
-                    "healthy": False,
-                    "consecutiveFailures": failures,
-                    "lastError": "body-fetch-failed",
-                    "retrySeconds": retry_seconds,
-                    "nextRetryAt": (
-                        datetime.now(timezone.utc) + timedelta(seconds=retry_seconds)
-                    ).isoformat(timespec="milliseconds"),
-                })
+            self.record_body_fetch_failure()
             return False
         return True
 
@@ -1874,6 +1913,7 @@ class AutomaticMonitor:
         baseline_ready = {}
         failure_streak = {ticker: 0 for ticker in self.tickers}
         next_body_fetch = 0.0
+        body_admission_due = 0.0
         with self.db_lock, monitor.connect(self.db_path) as db:
             invalidated_sources = 0
             for ticker in self.tickers:
@@ -1897,150 +1937,285 @@ class AutomaticMonitor:
                 "invalidatedSources": invalidated_sources,
             })
 
-        with ThreadPoolExecutor(max_workers=self.workers, thread_name_prefix="source") as pool:
-            while not self.stop_event.is_set():
-                current = time.monotonic()
-                due = [ticker for ticker, at in next_due.items() if at <= current]
-                if not due:
-                    self.stop_event.wait(min(1.0, max(0.1, min(next_due.values()) - current)))
-                    continue
+        # Retain the existing telemetry row budget: source evidence is saved
+        # immediately, but URL-free polling metrics are grouped independently.
+        # The bounded list also matches record_discovery_poll_batch's ceiling.
+        pending_metrics = []
+        next_metrics_flush = time.monotonic() + DISCOVERY_METRICS_FLUSH_SECONDS
 
-                cycle_started = time.monotonic()
-                cycle_started_at = utc_now()
-                futures = {
-                    pool.submit(
-                        self.collect_discovery_timed, ticker, discovery_caches[ticker]
-                    ): ticker for ticker in due
+        def flush_discovery_metrics(force=False):
+            nonlocal next_metrics_flush
+            if not pending_metrics or (not force and time.monotonic() < next_metrics_flush):
+                return
+            first = min(pending_metrics, key=lambda metric: metric[0])
+            last = pending_metrics[-1]
+            with self.db_lock, monitor.connect(self.db_path) as db:
+                monitor.record_discovery_poll_batch(
+                    db, first[1], last[3], max(0, round((last[2] - first[0]) * 1000)),
+                    len(pending_metrics), sum(metric[5] for metric in pending_metrics),
+                    sum(metric[6] for metric in pending_metrics),
+                    (metric[4] for metric in pending_metrics),
+                )
+            pending_metrics.clear()
+            next_metrics_flush = time.monotonic() + DISCOVERY_METRICS_FLUSH_SECONDS
+
+        def persist_completion(ticker, future, cycle_started, cycle_started_at):
+            try:
+                result, links, request_duration_ms = future.result()
+            except Exception as exc:
+                request_duration_ms = max(0, round((time.monotonic() - cycle_started) * 1000))
+                result = {
+                    "ticker": ticker, "status": "degraded", "route": "none",
+                    "sourceUrl": monitor.INDEXES[ticker], "candidates": 0,
+                    "error": monitor.source_error_code(exc),
                 }
-                collected = []
-                for future in as_completed(futures):
-                    ticker = futures[future]
-                    try:
-                        result, links, request_duration_ms = future.result()
-                    except Exception as exc:
-                        request_duration_ms = max(0, round((time.monotonic() - cycle_started) * 1000))
-                        result = {
-                            "ticker": ticker,
-                            "status": "degraded",
-                            "route": "none",
-                            "sourceUrl": monitor.INDEXES[ticker],
-                            "candidates": 0,
-                            "error": monitor.source_error_code(exc),
-                        }
-                        links = {}
-                    collected.append((ticker, result, links, request_duration_ms))
-                    if discovery_requires_backoff(result):
-                        failure_streak[ticker] += 1
+                links = {}
+            failure_streak[ticker] = (
+                failure_streak[ticker] + 1 if discovery_requires_backoff(result) else 0
+            )
+            delay = min(300, self.interval_for(ticker) * (2 ** min(failure_streak[ticker], 6)))
+            next_due[ticker] = time.monotonic() + delay
+            result["nextPollSeconds"] = delay
+            collected = [(ticker, result, links, request_duration_ms)]
+            changed = False
+            new_count = 0
+            checked_at = utc_now()
+            company_states = {}
+            cache_metrics = {
+                "conditionalRequests": 0, "notModifiedResponses": 0,
+                "freshResponses": 0,
+            }
+            with self.db_lock, monitor.connect(self.db_path) as db:
+                for ticker, result, links, request_duration_ms in collected:
+                    source_cache = result.get("_sourceCache", discovery_caches[ticker])
+                    result_cache_metrics = result.pop("_cacheMetrics", {})
+                    for metric in cache_metrics:
+                        cache_metrics[metric] += int(result_cache_metrics.get(metric, 0))
+                    cache_changed = source_cache != discovery_caches[ticker]
+                    signature = discovery_signature(result, links)
+                    new_urls = set(links) - known[ticker]
+                    if signatures.get(ticker) != signature or new_urls:
+                        inserted = monitor.save_discovery(db, ticker, result, links)
+                        known[ticker].update(inserted)
+                        if baseline_ready[ticker]:
+                            events = monitor.add_release_events(db, ticker, inserted)
+                            if self.auto_drafts_enabled:
+                                for url in events:
+                                    source = db.execute("SELECT extracted_text FROM sources WHERE url=?", (url,)).fetchone()
+                                    reservation = brief_generator.token_reservation(source["extracted_text"] if source else "")
+                                    monitor.queue_generation_job(db, url, reservation)
+                            new_count += len(events)
+                        elif discovery_has_verified_route(result):
+                            baseline_ready[ticker] = True
+                        changed = True
+                    elif cache_changed:
+                        monitor.save_discovery_source_cache(db, ticker, source_cache)
+                    discovery_caches[ticker] = source_cache
+                    result.pop("_sourceCache", None)
+                    signatures[ticker] = signature
+                    incident_key = f"source:{ticker}"
+                    if result["status"] == "degraded":
+                        monitor.record_operational_incident(
+                            db, incident_key, "official-source", ticker, "warning",
+                            monitor.public_error(result["error"]) or "source-fetch-failed",
+                            checked_at,
+                        )
                     else:
-                        failure_streak[ticker] = 0
-                    delay = min(300, self.interval_for(ticker) * (2 ** min(failure_streak[ticker], 6)))
-                    next_due[ticker] = time.monotonic() + delay
-                    result["nextPollSeconds"] = delay
+                        monitor.resolve_operational_incident(db, incident_key, checked_at)
+                    company_states[ticker] = {
+                        "status": result["status"],
+                        "route": result["route"],
+                        "candidates": result["candidates"],
+                        "checkedAt": checked_at,
+                        "pollSeconds": result["nextPollSeconds"],
+                        "basePollSeconds": self.interval_for(ticker),
+                        "nextPollSeconds": result["nextPollSeconds"],
+                        "requestDurationMs": request_duration_ms,
+                        "error": monitor.public_error(result["error"]),
+                    }
+                if changed:
+                    monitor.write_snapshot(db, self.snapshot_path)
 
-                changed = False
-                new_count = 0
-                checked_at = utc_now()
-                company_states = {}
-                cache_metrics = {
-                    "conditionalRequests": 0, "notModifiedResponses": 0,
-                    "freshResponses": 0,
-                }
-                with self.db_lock, monitor.connect(self.db_path) as db:
-                    for ticker, result, links, request_duration_ms in collected:
-                        source_cache = result.get("_sourceCache", discovery_caches[ticker])
-                        result_cache_metrics = result.pop("_cacheMetrics", {})
-                        for metric in cache_metrics:
-                            cache_metrics[metric] += int(result_cache_metrics.get(metric, 0))
-                        cache_changed = source_cache != discovery_caches[ticker]
-                        signature = discovery_signature(result, links)
-                        new_urls = set(links) - known[ticker]
-                        if signatures.get(ticker) != signature or new_urls:
-                            inserted = monitor.save_discovery(db, ticker, result, links)
-                            known[ticker].update(inserted)
-                            if baseline_ready[ticker]:
-                                events = monitor.add_release_events(db, ticker, inserted)
-                                if self.auto_drafts_enabled:
-                                    for url in events:
-                                        source = db.execute("SELECT extracted_text FROM sources WHERE url=?", (url,)).fetchone()
-                                        reservation = brief_generator.token_reservation(source["extracted_text"] if source else "")
-                                        monitor.queue_generation_job(db, url, reservation)
-                                new_count += len(events)
-                            elif discovery_has_verified_route(result):
-                                baseline_ready[ticker] = True
-                            changed = True
-                        elif cache_changed:
-                            monitor.save_discovery_source_cache(db, ticker, source_cache)
-                        discovery_caches[ticker] = source_cache
-                        result.pop("_sourceCache", None)
-                        signatures[ticker] = signature
-                        incident_key = f"source:{ticker}"
-                        if result["status"] == "degraded":
-                            monitor.record_operational_incident(
-                                db, incident_key, "official-source", ticker, "warning",
-                                monitor.public_error(result["error"]) or "source-fetch-failed",
-                                checked_at,
+                cycle_duration_ms = max(
+                    0, round((time.monotonic() - cycle_started) * 1000)
+                )
+                completed_at = utc_now()
+
+            pending_metrics.append((
+                cycle_started, cycle_started_at, time.monotonic(), completed_at,
+                request_duration_ms, int(result["status"] == "degraded"), new_count,
+            ))
+            if len(pending_metrics) >= DISCOVERY_METRICS_MAX_CHECKS:
+                flush_discovery_metrics(force=True)
+
+            with self.state_lock:
+                self.state["ready"] = True
+                self.state["lastCycleAt"] = completed_at
+                self.state["lastCycleDurationMs"] = cycle_duration_ms
+                self.state["lastCycleCompanies"] = 1
+                self.state["cycles"] += 1
+                self.state["newSources"] += new_count
+                self.state["companies"].update(company_states)
+                discovery_cache = self.state["discoveryCache"]
+                discovery_cache["persistedSources"] = sum(
+                    len(cache) for cache in discovery_caches.values()
+                )
+                for metric, count in cache_metrics.items():
+                    discovery_cache[metric] += count
+                discovery_cache["lastUpdatedAt"] = checked_at
+                if new_count:
+                    self.state["lastChangeAt"] = checked_at
+                priority_coverage = self.current_priority_source_coverage(
+                    self.state, remember_completion=True
+                )
+                process_started_at = self.state["startedAt"]
+
+            self.persist_priority_source_coverage_if_due(
+                process_started_at, completed_at, priority_coverage
+            )
+
+            if changed:
+                # Publication workers must only see committed source evidence.
+                self.wake_publication_workers()
+
+        # Discovery and bodies share the configured network-worker budget. One
+        # slot is reserved for each lane, without a second executor or an
+        # executor backlog. A single-worker installation alternates due lanes.
+        lane_limit = max(1, self.workers - 1)
+        discovery_hosts = {
+            ticker: {
+                monitor.source_hostname(source["url"])
+                for source in monitor.monitoring_sources(ticker, automatic=True)
+                # Shared SEC endpoints use the actual-request rate gate. An
+                # unused SEC fallback must not reserve a host for every issuer.
+                if monitor.source_hostname(source["url"]) not in {"www.sec.gov", "data.sec.gov"}
+            } for ticker in next_due
+        }
+        in_flight = {}
+        body_futures = {}
+        body_batches = []
+        last_lane = "body"
+        pool = ThreadPoolExecutor(max_workers=self.workers, thread_name_prefix="source")
+        try:
+            while not self.stop_event.is_set():
+                # Save each completed issuer independently, before dispatching
+                # more work or waiting for a different issuer/body request.
+                for ticker, (future, started, started_at) in list(in_flight.items()):
+                    if future.done():
+                        persist_completion(ticker, future, started, started_at)
+                        del in_flight[ticker]
+
+                for future, (batch, row) in list(body_futures.items()):
+                    if future.done():
+                        try:
+                            self.save_body_completion(batch, (row, *future.result()))
+                        except Exception:
+                            batch["failed"] = True
+                        batch["in_flight"] -= 1
+                        del body_futures[future]
+                for batch in list(body_batches):
+                    if batch["remaining"] or batch["in_flight"]:
+                        continue
+                    try:
+                        if batch["failed"]:
+                            next_body_fetch = max(
+                                next_body_fetch, time.monotonic() + self.record_body_fetch_failure()
                             )
                         else:
-                            monitor.resolve_operational_incident(db, incident_key, checked_at)
-                        company_states[ticker] = {
-                            "status": result["status"],
-                            "route": result["route"],
-                            "candidates": result["candidates"],
-                            "checkedAt": checked_at,
-                            "pollSeconds": result["nextPollSeconds"],
-                            "basePollSeconds": self.interval_for(ticker),
-                            "nextPollSeconds": result["nextPollSeconds"],
-                            "requestDurationMs": request_duration_ms,
-                            "error": monitor.public_error(result["error"]),
-                        }
-                    if changed:
-                        monitor.write_snapshot(db, self.snapshot_path)
+                            self.finish_body_batch(batch)
+                            # Successful persistence clears the global worker
+                            # fault; clear its matching scheduler hold too.
+                            # Source/host retry schedules remain in the DB.
+                            next_body_fetch = body_admission_due
+                    except Exception:
+                        next_body_fetch = max(
+                            next_body_fetch, time.monotonic() + self.record_body_fetch_failure()
+                        )
+                    body_batches.remove(batch)
 
-                    cycle_duration_ms = max(
-                        0, round((time.monotonic() - cycle_started) * 1000)
-                    )
-                    completed_at = utc_now()
-                    monitor.record_discovery_poll_batch(
-                        db, cycle_started_at, completed_at, cycle_duration_ms,
-                        len(due),
-                        sum(1 for _, result, _, _ in collected if result["status"] == "degraded"),
-                        new_count,
-                        (request_duration_ms for _, _, _, request_duration_ms in collected),
-                    )
+                body_rows = [row for batch in body_batches for row in batch["remaining"]]
+                body_rows += [row for _batch, row in body_futures.values()]
+                capacity = self.body_batch - len(body_rows)
+                if capacity > 0 and time.monotonic() >= next_body_fetch:
+                    try:
+                        batch = self.begin_body_batch(
+                            excluded_urls={row["url"] for row in body_rows},
+                            excluded_tickers={row["ticker"] for row in body_rows},
+                            excluded_hosts={monitor.source_hostname(row["url"]) for row in body_rows},
+                            max_candidates=capacity,
+                        )
+                        if batch is not None:
+                            batch["remaining"] = list(batch["rows"])
+                            batch["in_flight"] = 0
+                            body_batches.append(batch)
+                            body_rows += batch["remaining"]
+                        # Cadence is admission-based: a slow previous body does
+                        # not defer a newly eligible source's next selection.
+                        # Across batches, queued plus running rows never exceed
+                        # the existing configured body-batch allowance.
+                        body_admission_due = time.monotonic() + self.body_interval
+                        next_body_fetch = body_admission_due
+                    except Exception:
+                        next_body_fetch = time.monotonic() + self.record_body_fetch_failure()
 
-                with self.state_lock:
-                    self.state["ready"] = True
-                    self.state["lastCycleAt"] = completed_at
-                    self.state["lastCycleDurationMs"] = cycle_duration_ms
-                    self.state["lastCycleCompanies"] = len(due)
-                    self.state["cycles"] += 1
-                    self.state["newSources"] += new_count
-                    self.state["companies"].update(company_states)
-                    discovery_cache = self.state["discoveryCache"]
-                    discovery_cache["persistedSources"] = sum(
-                        len(cache) for cache in discovery_caches.values()
-                    )
-                    for metric, count in cache_metrics.items():
-                        discovery_cache[metric] += count
-                    discovery_cache["lastUpdatedAt"] = checked_at
-                    if new_count:
-                        self.state["lastChangeAt"] = checked_at
-                    priority_coverage = self.current_priority_source_coverage(
-                        self.state, remember_completion=True
-                    )
-                    process_started_at = self.state["startedAt"]
-
-                self.persist_priority_source_coverage_if_due(
-                    process_started_at, completed_at, priority_coverage
+                # Pending bodies reserve their ticker/host before another
+                # discovery starts there. Existing requests drain naturally;
+                # unrelated discovery continues and host courtesy is retained.
+                body_tickers = {row["ticker"] for row in body_rows}
+                body_hosts = {monitor.source_hostname(row["url"]) for row in body_rows}
+                active_hosts = set().union(*(discovery_hosts[ticker] for ticker in in_flight))
+                current = time.monotonic()
+                due = sorted(
+                    (ticker for ticker in next_due
+                     if ticker not in in_flight and next_due[ticker] <= current
+                     and ticker not in body_tickers
+                     and not discovery_hosts[ticker].intersection(body_hosts)),
+                    key=lambda ticker: next_due[ticker],
                 )
-
-                if time.monotonic() >= next_body_fetch:
-                    succeeded = self.fetch_bodies_safely(pool)
-                    with self.state_lock:
-                        retry_seconds = self.state["bodyFetch"]["retrySeconds"]
-                    next_body_fetch = time.monotonic() + (
-                        self.body_interval if succeeded else retry_seconds
+                while len(in_flight) + len(body_futures) < self.workers and not self.stop_event.is_set():
+                    active_body_tickers = {row["ticker"] for _batch, row in body_futures.values()}
+                    body_choice = next(((batch, row) for batch in body_batches
+                                        for row in batch["remaining"]
+                                        if row["ticker"] not in in_flight
+                                        and row["ticker"] not in active_body_tickers
+                                        and monitor.source_hostname(row["url"]) not in active_hosts), None)
+                    can_discover = bool(due) and len(in_flight) < lane_limit
+                    # Give an idle body lane first use of the reserved slot.
+                    # With one worker, alternating prevents either lane from
+                    # consuming every newly free slot indefinitely.
+                    choose_body = body_choice is not None and len(body_futures) < lane_limit and (
+                        not can_discover or (self.workers > 1 and not body_futures)
+                        or (self.workers == 1 and last_lane == "discovery")
                     )
+                    if choose_body:
+                        batch, body_row = body_choice
+                        future = pool.submit(self.collect_body_timed, body_row)
+                        body_futures[future] = (batch, body_row)
+                        batch["remaining"].remove(body_row)
+                        batch["in_flight"] += 1
+                        last_lane = "body"
+                    elif can_discover:
+                        ticker = due.pop(0)
+                        started, started_at = time.monotonic(), utc_now()
+                        future = pool.submit(self.collect_discovery_timed, ticker, discovery_caches[ticker])
+                        in_flight[ticker] = (future, started, started_at)
+                        active_hosts.update(discovery_hosts[ticker])
+                        last_lane = "discovery"
+                    else:
+                        break
+                flush_discovery_metrics()
+                # Short interruptible waits bound completion/publication latency
+                # and stop responsiveness, independent of network timeouts.
+                self.stop_event.wait(0.05)
+        finally:
+            # Running requests cannot be forcibly interrupted, but they perform
+            # no DB writes. Do not let shutdown wait for a slow publisher. On a
+            # recoverable loop failure drain before supervised restart, avoiding
+            # overlapping same-ticker requests across executor generations.
+            try:
+                flush_discovery_metrics(force=True)
+            finally:
+                pool.shutdown(wait=not self.stop_event.is_set(), cancel_futures=True)
 
 
 class Handler(BaseHTTPRequestHandler):
