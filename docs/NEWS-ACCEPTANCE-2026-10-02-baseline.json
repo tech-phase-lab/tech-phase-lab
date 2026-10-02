@@ -406,6 +406,14 @@
         "event1221CompactJapanese": "米国10年物国債利回り急上昇",
         "event1221CompactEnglish": "U.S. 10-Year Treasury Yield Rising"
       },
+      "followUp": {
+        "capturedAt": "2026-10-02T23:00:32+00:00",
+        "coreweaveArticleErrorStillActive": true,
+        "articleErrors": 1,
+        "nextArticleRetryAt": "2026-10-02T23:32:13.003+00:00",
+        "prNewswireRecoveryStillRetained": true,
+        "officialResearchPending": 3
+      },
       "verificationLimits": [
         "The rolling 24-hour recovery and translation-call counters are not acceptance-window cumulative counters.",
         "The current cloud-browser page request was client-blocked, so this snapshot does not add a new exact frontend-render timestamp.",

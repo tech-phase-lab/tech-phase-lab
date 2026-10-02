@@ -357,3 +357,8 @@ still require the ongoing live observation.
   additional pending job outside its bounded sample. Complete independent
   inventories for every required source also remain unverified. These gaps and
   the active CoreWeave 404 preclude an acceptance claim.
+- The normal CoreWeave retry was observed again by 23:00:32 UTC and did not
+  recover the removed JOTA URL; one article error remained and its next stored
+  retry moved to 23:32:13.003 UTC. PR Newswire's recovery remained recorded and
+  official research still had three pending jobs. This follow-up confirms a
+  persistent current blocker rather than a one-cycle aggregate fluctuation.
