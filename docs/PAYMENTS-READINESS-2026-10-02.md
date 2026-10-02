@@ -1,8 +1,9 @@
 # Overseas subscription readiness — 2026-10-02
 
 Owner priority: resolve whether Tech Phase can accept overseas membership
-payments before spending more time on cosmetic improvements. No provider
-application, external inquiry, contract or live payment activation was made.
+payments before spending more time on cosmetic improvements. The owner has
+sent inquiries; no provider approval, contract or live payment activation has
+been established. See the current status below.
 
 ## Existing implementation
 
@@ -16,22 +17,44 @@ terms, not evidence that payment or cancellation is implemented.
 
 ## Provider shortlist, subject to actual underwriting
 
-1. **Stripe: first inquiry candidate.** Its restricted-business rules require
-   additional diligence for restricted categories, including financial services;
-   approval is not guaranteed. The rules do not by themselves establish that this
-   publication is either permitted or prohibited. Submit representative material
-   and ask for an explicit assessment of this exact membership offering.
-2. **PayPal: backup inquiry candidate.** Its AUP requires prior approval for
-   specified investment transactions, such as buying, selling or brokering
-   securities. This is not a blanket determination about financial publications.
-   Confirm this publication's eligibility and recurring overseas billing.
-3. **Paddle: low priority.** Its AUP explicitly lists investment/financial advice,
-   trading signals and strategies among prohibited offerings. Do not assume that
-   a software interface or merchant-of-record arrangement makes Tech Phase eligible.
+1. **Stripe: owner inquiry escalated, eligibility unconfirmed.** Japan-specific
+   prohibited categories include consulting/advisory offerings providing guidance,
+   information or tools on profiting from financial-product/crypto trading or
+   investment. Do not describe this solely as a restricted-category review or
+   assume the publication is eligible. Its actual news, analysis, valuation
+   scenarios and Q&A need assessment. On October 2 at about 17:30 JST, support
+   agent Ayush said the owner's request would be transferred immediately; no
+   response timeline was available. The owner supplied contact details and the
+   account ID. Email follow-up is expected but was not explicitly confirmed.
+   Prior sales-form attempts rejected Gmail and iCloud with Japan selected;
+   cause unconfirmed. Sales email auto-replied with the same form; the owner
+   also emailed Japanese support. Do not repeat inquiries or change country.
+2. **PAY.JP: inquiry sent by owner, awaiting response.** Overseas-issued cards
+   are supported, but payments are JPY-denominated. Investment-related tools and
+   consulting may be submitted but are flagged as likely to fail review; actual
+   Tech Phase eligibility is unknown.
+3. **UnivaPay: owner used inquiry form; no eligibility answer yet.** The form
+   groups stock investment under “investment / finance / gambling”; selecting
+   that group is not evidence of rejection. The official digital-content page
+   explicitly describes investment information and member communities with
+   recurring payments. Ask about this exact content, operator entity type,
+   overseas cards, and USD recurring billing. External-currency processing and
+   MCP are distinct products; do not assume MCP supports subscriptions.
+4. **PayPal: backup candidate.** Publication eligibility and overseas recurring
+   billing remain unconfirmed.
+5. **Paddle: low priority.** Its AUP lists investment/financial advice, trading
+   signals and strategies among prohibited offerings. A software interface or
+   merchant-of-record arrangement does not establish eligibility.
 
 Official sources checked on 2026-10-02:
 - https://stripe.com/jp/legal/restricted-businesses (updated 2026-09-22)
 - https://stripe.com/jp/billing
+- https://support.stripe.com/questions/why-some-messages-do-not-appear-in-the-support-center?locale=ja-JP
+- https://help.pay.jp/ja/
+- https://univapay.com/digital-contents/
+- https://univapay.com/contactus-onlinepaymentservice/
+- https://univapay.com/service/credit/credit-multiple-currency/
+- https://univapay.com/service/credit/multi-currency-pricing/
 - https://www.paypal.com/jp/legalhub/paypal/acceptableuse-full
 - https://www.paddle.com/help/start/intro-to-paddle/what-am-i-not-allowed-to-sell-on-paddle
 
@@ -77,3 +100,23 @@ jurisdictions where needed before launch.
 Commercial permission for displayed market/news data remains a separate launch
 dependency. The owner's Alpaca/FMP correspondence does not authorize commercial
 redistribution. This inspection did not change providers or their subscriptions.
+
+## Public introduction (owner requested publication October 2, 17:32 JST)
+
+`public/intro/` is a self-contained JA/EN static introduction: index.html,
+en.html, style.css and mark.svg. It can be deployed separately with that folder
+as the project root, Framework “Other”, no build/install command and no
+application environment variables. It contains planned prices/features and an
+explicitly illustrative interface, with no live news, customer information,
+authentication, checkout or data-provider integration. Do not make the entire
+research preview public merely to expose this page.
+
+The existing Vercel project has SSO protection on `all_except_custom_domains`.
+A signed-in preview screenshot does not establish public accessibility. The
+connected Vercel deployment tool returned UNAVAILABLE on October 2; no CLI token
+was configured. Publication is incomplete until the standalone public deployment
+is created and anonymous GET requests verify both languages and local assets.
+
+Before taking paid orders, obtain actual operator/contact/disclosure details,
+final tax/cancellation/refund terms, provider eligibility and commercial data
+permissions. None of those unknown details is fabricated on the introduction.
