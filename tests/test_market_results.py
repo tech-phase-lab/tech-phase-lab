@@ -31,10 +31,27 @@ class ResultTests(unittest.TestCase):
                      'includes':{'users':[{'id':'1','username':'wallstengine'}]}}
             self.assertEqual(x_api.parse_response(source,payload,[])[0]['matches'],{'ECON':['economic-result']})
         for text in ['FORECAST NFP: +90K','EST NFP: +90K','NFP: +90K EST', 'NFP: +90K expected', 'NFP ACTUAL: +90,00K',
-                     'UNEMPLOYMENT RATE ACTUAL: 4.1','AVERAGE HOURLY EARNINGS ACTUAL: 3.2%',
-                     'NFP: see unemployment rate ACTUAL: 4.1%']:
+                     'UNEMPLOYMENT RATE ACTUAL: 4.1','AVERAGE HOURLY EARNINGS ACTUAL: 3.2%']:
             self.assertIsNone(results.projection(text,['ECON']))
+        r=results.projection('NFP: see unemployment rate ACTUAL: 4.1%',['ECON'])
+        self.assertIn('失業率',r['titleJa'])
+        self.assertNotIn('Nonfarm',r['titleEn'])
         self.assertNotEqual(results.projection(cases[3][0],['ECON'])['period'],results.projection(cases[4][0],['ECON'])['period'])
+
+    def test_separator_free_employment_post_keeps_all_metrics_and_estimates_separate(self):
+        text='SEPTEMBER U.S. JOBS REPORT\nNONFARM PAYROLLS +29K, (Est. +90K)\nUNEMPLOYMENT RATE 4.2%, (Est. 4.1%)\nAVG. HOURLY EARNINGS YoY 3.0%, (Est. 3.1%)'
+        r=results.projection(text,['ECON'])
+        self.assertEqual({f['key']:f['value'] for f in r['facts']}, {'nonfarm-payrolls':'+29K','unemployment-rate':'4.2%','hourly-earnings-yoy':'3.0%'})
+        self.assertEqual(r['period'],'SEPTEMBER JOBS REPORT')
+        self.assertNotIn('90K',r['titleEn']);self.assertNotIn('3.1%',r['titleJa'])
+        self.assertNotIn('前月比',r['titleJa'])
+        r=results.projection('NFP -29K\nUnemployment rate 4.2%\nAverage hourly earnings MoM -0.1%\nAverage hourly earnings YoY +3.0%',['ECON'])
+        self.assertEqual([f['value'] for f in r['facts']],['-29K','4.2%','-0.1%','+3.0%'])
+        source=next(s for s in signals.SOURCES if s['id']=='x-wallstengine')
+        p={'data':[{'id':'1234','author_id':'1','text':text}], 'includes':{'users':[{'id':'1','username':'wallstengine'}]}}
+        self.assertEqual(x_api.parse_response(source,p,[])[0]['matches'],{'ECON':['economic-result']})
+        for preview in ['EST NONFARM PAYROLLS +29K', 'UNEMPLOYMENT RATE 4.2% expected', 'AVG. HOURLY EARNINGS 3.0%']:
+            self.assertIsNone(results.projection(preview,['ECON']))
 
     def test_earnings_preserve_actuals_ranges_and_ignore_different_consensus(self):
         r=results.projection(TEXT,['MU'])

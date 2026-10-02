@@ -536,7 +536,7 @@
       "AAOI",
       "META"
     ],
-    "query": "(from:wallstengine OR from:tipranks OR from:FABYMETAL4) (\"price target\" OR \"target price\" OR \"PT to\" OR earnings OR \"quarterly results\" OR \"financial results\" OR results OR highlights OR EPS OR 決算 OR initiated OR upgraded OR downgraded OR ADP OR CPI OR PPI OR PCE OR FOMC OR NFP OR GDP OR payrolls OR \"unemployment rate\" OR \"hourly earnings\" OR funding OR financing OR fundraising OR \"capital raise\" OR \"capital raising\" OR convertible OR 資金調達 OR 転換社債) -is:retweet -is:reply",
+    "query": "(from:wallstengine OR from:tipranks OR from:FABYMETAL4) (\"price target\" OR \"target price\" OR \"PT to\" OR earnings OR \"quarterly results\" OR \"financial results\" OR results OR highlights OR EPS OR 決算 OR initiated OR upgraded OR downgraded OR ADP OR CPI OR PPI OR PCE OR FOMC OR NFP OR GDP OR payrolls OR \"jobs report\" OR \"unemployment rate\" OR \"hourly earnings\" OR funding OR financing OR fundraising OR \"capital raise\" OR \"capital raising\" OR convertible OR 資金調達 OR 転換社債) -is:retweet -is:reply",
     "accounts": [
       "wallstengine",
       "tipranks",

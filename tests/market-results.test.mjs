@@ -23,6 +23,17 @@ test('macro results are not misrepresented as company earnings',()=>{
  assert.equal(resultEvents(parseResultBriefs([{...brief,kind:'economic',ticker:'ECON'}])).length,0);
 });
 
+test('employment result fields survive the public news contract in both languages',()=>{
+ const facts=[{key:'nonfarm-payrolls',ja:'非農業部門雇用者数',en:'Nonfarm payrolls',value:'+29K'},
+ {key:'unemployment-rate',ja:'失業率',en:'Unemployment rate',value:'4.2%'},
+ {key:'hourly-earnings-yoy',ja:'平均時給（前年比）',en:'Average hourly earnings (YoY)',value:'3.0%'}];
+ const r={...brief,kind:'economic',ticker:'ECON',period:'SEPTEMBER JOBS REPORT',facts,
+ titleJa:'非農業部門雇用者数 +29K／失業率 4.2%／平均時給（前年比） 3.0%',
+ titleEn:'Nonfarm payrolls +29K; Unemployment rate 4.2%; Average hourly earnings (YoY) 3.0%'};
+ assert.deepEqual(parseResultBriefs([r])[0].facts,facts);
+ assert.deepEqual(publicNewsPayload({ok:true,enabled:false,items:[],resultBriefs:[r]}).resultBriefs[0].facts,facts);
+});
+
 test('the public news consumer accepts result links only with a matching validated result',()=>{
  const update={id:brief.id,researchId:brief.researchId,title:brief.titleEn,translationJa:brief.titleJa,url:brief.url,publisher:brief.publisher,tickers:['MU'],observedAt:brief.observedAt,publishedAt:brief.publishedAt};
  const payload={ok:true,enabled:false,items:[],resultBriefs:[brief],officialUpdates:[update]};

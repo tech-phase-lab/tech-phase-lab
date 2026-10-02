@@ -35,7 +35,7 @@ export default function EconomicResultsPanel({ lang, zone, period }: { lang: "ja
     };
   }, []);
   const ja = lang === "ja";
-  const results = mergeEconomicResults(updates, briefs).filter(event => period === "upcoming" || calendarDateKey(event.releasedAt, zone).startsWith(period));
+  const results = mergeEconomicResults(updates, briefs).filter(event => (period === "upcoming" || period === "today-upcoming") || calendarDateKey(event.releasedAt, zone).startsWith(period));
   const zoneLabel = zone === "Asia/Tokyo" ? "JST" : "ET";
   return <section className={styles.section} aria-label={ja ? "発表済みの結果" : "Released results"}>
     <h2>{ja ? "発表済みの結果" : "Released results"}</h2>

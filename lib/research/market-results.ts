@@ -24,7 +24,7 @@ export function parseResultBriefs(value: unknown): ResultBrief[] {
       if(!f||typeof f!=='object')throw Error('Invalid fact');
       const o=f as Record<string,unknown>;
       for(const k of ['key','ja','en','value'])if(typeof o[k]!=='string'||!(o[k] as string).trim()||(o[k] as string).length>80)throw Error('Invalid fact');
-      if(!/^(?:guidance-)?(?:revenue|eps|gross-margin|operating-cash-flow|actual)$/.test(o.key as string)
+      if(!/^(?:guidance-)?(?:revenue|eps|gross-margin|operating-cash-flow|actual|nonfarm-payrolls|unemployment-rate|hourly-earnings-mom|hourly-earnings-yoy)$/.test(o.key as string)
         ||!/^\$?[-+]?\d+(?:\.\d+)?[BMK%]?(?: ± \$?\d+(?:\.\d+)?[BMK%]?)?$/i.test(o.value as string))throw Error('Invalid fact value');
       return {key:o.key as string,ja:o.ja as string,en:o.en as string,value:o.value as string};
     });

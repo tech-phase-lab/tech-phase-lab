@@ -124,7 +124,7 @@ export function calendarDateKey(startsAt: string, timezone = "Asia/Tokyo") {
   return ["year", "month", "day"].map((type) => parts.find((part) => part.type === type)?.value).join("-");
 }
 export function selectCalendarEvents(events: CalendarEvent[], kind: "all" | CalendarEvent["kind"], period: string, now: number, timezone = "Asia/Tokyo") {
-  return events.filter((event) => (kind === "all" || event.kind === kind) && (period === "upcoming" ? Date.parse(event.startsAt) >= now : calendarDateKey(event.startsAt, timezone).startsWith(period)));
+  return events.filter((event) => (kind === "all" || event.kind === kind) && (period === "today-upcoming" ? calendarDateKey(event.startsAt, timezone) >= calendarDateKey(new Date(now).toISOString(), timezone) : period === "upcoming" ? Date.parse(event.startsAt) >= now : calendarDateKey(event.startsAt, timezone).startsWith(period)));
 }
 
 // Date-only announcements must never be turned into fictitious midnight timestamps.
@@ -144,7 +144,7 @@ export const dateOnlyEvents: DateOnlyCalendarEvent[] = [
 ];
 export const dateOnlyEarnings = dateOnlyEvents.filter((event) => event.kind === "earnings");
 export function selectDateOnlyEvents(events: DateOnlyCalendarEvent[], kind: "all" | CalendarEvent["kind"], period: string, now: number) {
-  return events.filter((event) => (kind === "all" || event.kind === kind) && (period === "upcoming"
+  return events.filter((event) => (kind === "all" || event.kind === kind) && ((period === "upcoming" || period === "today-upcoming")
     ? event.date >= calendarDateKey(new Date(now).toISOString(), event.sourceTimezone)
     : event.date.startsWith(period)));
 }

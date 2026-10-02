@@ -42,6 +42,14 @@ test("calendar filters use Japan months and exclude past events from upcoming", 
   assert.ok(selectCalendarEvents(calendarEvents, "economic", "upcoming", now).every((event) => Date.parse(event.startsAt) >= now && event.kind === "economic"));
 });
 
+test("today and upcoming keeps the employment release after its scheduled time", () => {
+  const now = Date.parse("2026-10-02T12:39:00Z");
+  const events = selectCalendarEvents(calendarEvents, "economic", "today-upcoming", now);
+  assert.ok(events.some(event => event.id === "jobs-2026-10-02"));
+  assert.ok(!selectCalendarEvents(calendarEvents, "economic", "today-upcoming", Date.parse("2026-10-02T15:00:00Z")).some(event => event.id === "jobs-2026-10-02"));
+  assert.ok(selectCalendarEvents(calendarEvents, "economic", "today-upcoming", Date.parse("2026-10-02T15:00:00Z"), "America/New_York").some(event => event.id === "jobs-2026-10-02"));
+});
+
 test("registered schedules are ordered, unique and linked to official sources", () => {
   assert.equal(new Set(calendarEvents.map((event) => event.id)).size, calendarEvents.length);
   let previous = 0;
