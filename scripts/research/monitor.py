@@ -374,6 +374,8 @@ def persisted_source_error_code(value):
 def persisted_route_error_code(value):
     """Normalize persisted route state without exposing legacy error detail."""
     if isinstance(value, str):
+        if value == 'article-queue-overflow':
+            return value
         match = re.fullmatch(r"article-fetch-failed:([1-9]\d{0,3})", value)
         if match and int(match.group(1)) <= 1000:
             return value

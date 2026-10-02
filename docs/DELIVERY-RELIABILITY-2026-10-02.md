@@ -246,3 +246,46 @@ limit and Japanese/English pulse ordering. The article-markup fixture around
 the observed Microsoft URL/date pair is explicitly synthetic, not a captured
 copy of the inaccessible page. Live correction still requires verification;
 no publication date is inferred or patched from the URL alone.
+
+Date/order commit `43c29817a8da61171c4f243ad4c90251b9017bd6` passed 247 Node
+and 676 Python tests plus all required gates. Tree
+`4e99c8c5c1a60ec810b37d27a4c6d3b96f186363` matched the checked staged tree.
+Actions `37044925007`, Vercel `dpl_3DhmXGCBm9vSomSoEXyW4v1fdekP` and Railway
+`2984ac6a-8e38-4402-b203-69c6508e0df5` succeeded. A single diagnostic `/live`
+timeout at 18:00 UTC recovered to automatic mode by 18:06:39; news and target
+endpoints continued returning HTTP 200. MSFT's displayed date remained October
+2 at 18:05 UTC, before its next ordinary article recheck. Other existing NVIDIA
+URLs acquired new date-inclusive revision IDs while retaining their original
+observation clocks. These are revisions, not fresh-delivery samples.
+
+## Retained article retries versus disappearing errors
+
+By 18:05 UTC the private PR Newswire article error had disappeared, before its
+recorded 18:06:45 retry. At 18:06:39 the supplemental aggregate showed zero
+article errors, but its most recent measured article recovery was still the
+Anthropic recovery at 17:11:19. This is not evidence that PR Newswire's live
+retry succeeded. Its corrected local parser extraction remains verified
+separately; the exact live article result is unconfirmed.
+
+A deterministic reproduction exposed coverage loss in the rolling index cache:
+one stored failed URL with a future retry, followed by 100 newly listed URLs,
+removed the failed URL without requesting it. It returned zero errors and no
+recovery. The replacement separates current-index admission from retained work:
+non-sitemap indexes retain at most 200 child records, sitemap indexes keep their
+existing 1,000-record bound. Existing unresolved children take precedence over
+evictable completed history. Deferred access-control retries keep their exact
+schedules; a due rotated failure can use the existing third request slot rather
+than starving behind continuously arriving current links. At most three article
+requests are still made per route cycle.
+
+A saturated queue continues processing retained work and explicitly reports
+unadmitted current links with `article-queue-overflow`. Bounded aggregate
+observation count, maximum unadmitted count and last-overflow time survive later
+healthy cycles; these are observations, not unique lost-story counts. No article
+recovery is fabricated. Synthetic tests cover successive rotations and reloads,
+full unresolved capacity, progress under overflow, HTTP 403 backoff preservation,
+completed-history eviction and public-safe overflow diagnostics. Already-evicted
+historical entries cannot be reconstructed from these aggregate diagnostics.
+
+The retention candidate passed 247 Node and 681 Python tests, lint, build/type
+checking, compileall and whitespace checks, plus independent review.

@@ -611,7 +611,8 @@ def save(db, source, items, response, checked, config_sha, duration):
         )
     )
     inserted = 0
-    current_error = (f"article-fetch-failed:{response['article_errors']}"
+    current_error = ('article-queue-overflow' if response.get('article_queue_overflow') else
+                     f"article-fetch-failed:{response['article_errors']}"
                      if response.get("article_errors") else None)
     with db:
         if source.get('format') == 'x-api':
@@ -748,8 +749,9 @@ def check(db, source, tickers, transport=None):
         items = response["_items"] if "_items" in response else parse(source, response["body"], tickers)
         count = save(db, source, items, response, checked, config_sha,
                      round((time.monotonic() - started) * 1000))
-        return {"source": source["id"], "status": "partial" if response.get("article_errors") else "ok",
+        return {"source": source["id"], "status": "partial" if response.get("article_errors") or response.get('article_queue_overflow') else "ok",
                 "matchedItems": len(items), "events": count, "pendingArticles": response.get("article_pending", 0),
+                "unadmittedArticles": response.get('article_queue_overflow', 0),
                 **({"acquiredPosts": len(response['_acquired_posts']),
                     "unselectedPosts": sum(post['url'] not in {item['url'] for item in items}
                                            for post in response['_acquired_posts'])}
@@ -1244,7 +1246,7 @@ def signal_error_kind(error):
         return "timeout"
     if re.fullmatch(r"http-5\d\d", value):
         return "server"
-    if value.startswith("article-fetch-failed:"):
+    if value.startswith("article-fetch-failed:") or value == 'article-queue-overflow':
         return "articlePartial"
     if value in {"fetch-failed", "fetch-error"}:
         return "fetchFailure"
@@ -1470,6 +1472,8 @@ def operational_summary(db, sources=SOURCES, reference=None):
     article_error_kinds = {kind: 0 for kind in error_kinds}
     article_retrieval = {
         "error": 0,
+        "admissionOverflow": {"routes": 0, "unadmitted": 0, "observations": 0,
+                              "maxUnadmitted": 0, "lastAt": None},
         "errorKinds": article_error_kinds,
         "retry": retry_summary(),
         "recoveries24Hours": {
@@ -1510,6 +1514,15 @@ def operational_summary(db, sources=SOURCES, reference=None):
                 continue
             if not isinstance(children, dict):
                 continue
+            from html_signals import sanitize_queue_overflow
+            overflow = sanitize_queue_overflow(state.get('queueOverflow'))
+            coverage = article_retrieval['admissionOverflow']
+            coverage['routes'] += int(overflow['current'] > 0)
+            coverage['unadmitted'] += overflow['current']
+            coverage['observations'] += overflow['observations']
+            coverage['maxUnadmitted'] = max(coverage['maxUnadmitted'], overflow['maxUnadmitted'])
+            if overflow['lastAt'] and (coverage['lastAt'] is None or overflow['lastAt'] > coverage['lastAt']):
+                coverage['lastAt'] = overflow['lastAt']
             for index, child in enumerate(children.values()):
                 if index >= 1000:
                     break

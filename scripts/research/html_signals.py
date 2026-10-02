@@ -263,6 +263,26 @@ def sanitize_child_state(value, validator, error_validator):
     return entry
 
 
+def sanitize_queue_overflow(value):
+    """Bounded observations of unadmitted links, not unique lost-story counts."""
+    result = {'current': 0, 'observations': 0, 'maxUnadmitted': 0, 'lastAt': None}
+    if not isinstance(value, dict):
+        return result
+    for key, maximum in (('current', 1000), ('observations', 1_000_000), ('maxUnadmitted', 1000)):
+        raw = value.get(key)
+        if isinstance(raw, int) and not isinstance(raw, bool) and 0 <= raw <= maximum:
+            result[key] = raw
+    raw = value.get('lastAt')
+    if isinstance(raw, str) and len(raw) <= 100:
+        try:
+            parsed = datetime.fromisoformat(raw.replace('Z', '+00:00'))
+            if parsed.tzinfo is not None:
+                result['lastAt'] = parsed.isoformat()
+        except (ValueError, OverflowError):
+            pass
+    return result
+
+
 def collect(source, previous, tickers, request, clock=None):
     # Local import avoids a module initialization cycle.
     import signals
@@ -273,6 +293,7 @@ def collect(source, previous, tickers, request, clock=None):
     sitemap = source.get('indexFormat') == 'sitemap'
     json_index = source.get('indexFormat') == 'json'
     capacity = 1000 if sitemap else 100
+    retention_capacity = min(1000, capacity * 2)
     response = request({**source, 'format': 'json' if json_index else 'feed' if sitemap else 'document'}, {})
     parser = NewsHTML()
     if json_index:
@@ -337,7 +358,7 @@ def collect(source, previous, tickers, request, clock=None):
     children = {}
     invalid_children = set()
     if isinstance(raw_children, dict):
-        for raw_url, raw_entry in list(raw_children.items())[:capacity]:
+        for raw_url, raw_entry in list(raw_children.items())[:retention_capacity]:
             if not isinstance(raw_url, str) or not isinstance(raw_entry, dict):
                 if isinstance(raw_url, str):
                     invalid_children.add(raw_url)
@@ -361,12 +382,21 @@ def collect(source, previous, tickers, request, clock=None):
     # the same timestamp as route persistence. Direct callers retain the
     # production clock as a safe default.
     checked = (clock or signals.stamp)()
-    # Retain a bounded set of recently discovered articles even after index rotation.
-    for url in urls:
+    # Index rotation must not delete an unresolved retry before its lawful
+    # next_check. Completed history is evictable; unresolved stored work is not.
+    unresolved = [url for url, child in children.items()
+                  if child.get('error') or not child.get('succeeded')]
+    keep = list(dict.fromkeys(unresolved + urls + list(children)))[:retention_capacity]
+    overflow = sanitize_queue_overflow(state.get('queueOverflow'))
+    overflow['current'] = sum(url not in keep for url in urls)
+    if overflow['current']:
+        overflow.update(observations=min(1_000_000, overflow['observations'] + 1),
+                        maxUnadmitted=max(overflow['maxUnadmitted'], overflow['current']),
+                        lastAt=checked)
+    for url in keep:
         children.setdefault(url, {
             'baseline': initial or state_corrupt or url in invalid_children,
         })
-    keep = list(dict.fromkeys(urls + list(children)))[:capacity]
     children = {url: children[url] for url in keep}
     pending = [url for url in keep
                if article_retry_due(children[url].get('next_check'), checked)]
@@ -377,7 +407,11 @@ def collect(source, previous, tickers, request, clock=None):
     fresh = [url for url in pending if not children[url].get('baseline')
              and not children[url].get('succeeded')]
     retries = [url for url in pending if children[url].get('error') and url not in fresh]
-    selected = fresh[:2] + retries[:1]
+    # A rotated fresh failure must not starve behind perpetually new unchecked
+    # links. Reuse the existing third slot, never add requests or reset backoff.
+    rotated_retries = [url for url in pending if url not in urls and children[url].get('error')]
+    selected = fresh[:2]
+    selected += [url for url in rotated_retries + retries if url not in selected][:1]
     selected += [url for url in pending if url not in selected][:3 - len(selected)]
     items = []
     for url in selected:
@@ -481,5 +515,7 @@ def collect(source, previous, tickers, request, clock=None):
                   if (measurement := sanitize_recovery(item)) is not None][-100:]
     return {'_items': items, 'index_state': json.dumps({
                 'initialized': True, 'children': children, 'recoveries': recoveries,
+                'queueOverflow': overflow,
             }),
-            'article_errors': errors, 'article_pending': waiting}
+            'article_errors': errors, 'article_pending': waiting,
+            'article_queue_overflow': overflow['current']}
