@@ -30,3 +30,22 @@ test('the public news consumer accepts result links only with a matching validat
  assert.throws(()=>publicNewsPayload({...payload,resultBriefs:[]}));
  assert.throws(()=>publicNewsPayload({...payload,officialUpdates:[{...update,url:'https://x.com/tipranks/status/9876'}]}));
 });
+
+test('disagreement publishes the newest attributed post without blending or hiding its figures',()=>{
+ const newer={...brief,id:'778',researchId:'x-result-778',publisher:'FabyΔ',url:'https://x.com/fabymetal4/status/12346',
+   publishedAt:'2026-10-01T00:01:00Z',titleJa:'MU決算：売上$54.24B',titleEn:'MU earnings: revenue $54.24B',
+   facts:[{key:'revenue',ja:'売上高',en:'Revenue',value:'$54.24B'},{key:'eps',ja:'調整後EPS',en:'Adjusted EPS',value:'$-1.21'}]};
+ for(const order of [[brief,newer],[newer,brief]]){
+   const [event]=resultEvents(parseResultBriefs(order));
+   assert.equal(event.id,newer.researchId);
+   assert.equal(event.summary.ja,newer.titleJa);
+   assert.equal(event.summary.en,newer.titleEn);
+   assert.equal(event.summary.ja.includes('FabyΔ')||event.summary.en.includes('FabyΔ'),false);
+   assert.equal(event.sources[0].url,newer.url);
+   assert.ok(event.facts.some(f=>f.text.ja.includes('$54.24B')&&f.text.en.includes('$54.24B')));
+   assert.ok(event.facts.some(f=>f.text.ja.includes('$-1.21')&&f.text.en.includes('$-1.21')));
+   assert.equal(JSON.stringify(event).includes('$54.23B'),false);
+   assert.equal(JSON.stringify(event).includes('確認中'),false);
+ }
+ assert.throws(()=>parseResultBriefs([{...brief,facts:[]}]));
+});

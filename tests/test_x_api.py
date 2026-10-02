@@ -22,12 +22,23 @@ class XApiTests(unittest.TestCase):
         self.assertEqual(len(items), 2)
         self.assertTrue(all(word in self.source["query"] for word in ("initiated", "upgraded", "downgraded", "reiterated")))
 
+    def test_the_fly_is_not_requested_or_accepted_even_from_stale_route_config(self):
+        for source in signals.SOURCES:
+            if source.get('format') == 'x-api':
+                self.assertNotIn('theflynews',source['query'].lower())
+                self.assertNotIn('theflynews',{a.lower() for a in source['accounts']})
+        self.assertFalse(any(source['id']=='x-thefly' for source in signals.SOURCES))
+        stale={**self.source,'accounts':['theflynews']}
+        payload={'data':[{'id':'999','author_id':'1','text':'$MU Q4 earnings Revenue $54.23B'}],
+                 'includes':{'users':[{'id':'1','username':'theflynews'}]}}
+        self.assertEqual(x_api.parse_response(stale,payload,list(monitor.PROVIDERS)),[])
+
     def test_x_source_scope_adds_requested_x_only_companies(self):
         x_sources = [source for source in signals.SOURCES if source.get("format") == "x-api"]
         added = {"LITE", "COHR", "VST", "IREN", "ALAB", "APH", "INTC",
                  "AMAT", "SIMO", "AAOI", "META"}
         self.assertEqual({source["accounts"][0].lower() for source in x_sources},
-                         {"tipranks", "theflynews", "wallstengine", "nebiusai"})
+                         {"tipranks", "wallstengine", "nebiusai"})
         self.assertEqual({ticker for source in x_sources for ticker in source["tickers"]},
                          set(monitor.PROVIDERS) | added)
         for source in x_sources:

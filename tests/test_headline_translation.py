@@ -63,6 +63,32 @@ class HeadlineTranslationTests(unittest.TestCase):
             )}
         self.assertIn("source_title", columns)
 
+    def test_wrong_headline_number_and_completed_acquisition_stay_private(self):
+        for source, translated in (
+            ('Nebius announces $15 billion investment', 'ネビウスが$5 billion投資を発表'),
+            ('Nebius to acquire Example', 'ネビウスがExampleを買収した'),
+        ):
+            with self.subTest(source=source):
+                with translation.connect(self.path) as db:
+                    db.execute('DELETE FROM signal_headline_translation_jobs')
+                    db.execute('DELETE FROM signal_headline_translation_calls')
+                    db.execute('UPDATE signal_events SET title=?', (source,))
+                def bad(*args):
+                    return {'status':'completed','output_text':json.dumps({'titleJa':translated})}
+                self.assertEqual(translation.run_once(self.path,bad,ENV,now=NOW,sources=[SOURCE]),'retry')
+                with translation.connect(self.path) as db:
+                    self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translations').fetchone()[0],0)
+
+    def test_stored_wrong_translation_is_hidden_and_regenerated(self):
+        self.assertEqual(translation.run_once(self.path,response,ENV,now=NOW,sources=[SOURCE]),'done')
+        with translation.connect(self.path) as db:
+            db.execute("UPDATE signal_headline_translations SET headline_ja='ネビウスが9999台を導入'")
+            items=signals.public_official_updates(db,sources=[SOURCE],reference=translation.datetime.fromtimestamp(NOW,tz=translation.timezone.utc))
+            self.assertNotIn('translationJa',items[0])
+            state=translation.diagnostics(db,env=ENV,now=NOW,sources=[SOURCE])
+            self.assertEqual(state['pending'],1)
+        self.assertEqual(translation.run_once(self.path,response,ENV,now=NOW+1,sources=[SOURCE]),'done')
+
     def test_disabled_never_calls_provider(self):
         self.assertEqual(
             translation.run_once(self.path, lambda *_: self.fail("provider called"),

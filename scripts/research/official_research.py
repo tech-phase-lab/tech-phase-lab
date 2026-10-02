@@ -12,6 +12,7 @@ import time
 import uuid
 
 import brief_generator
+import factual_validation
 import headline_translation
 import monitor
 import official_release_bridge as bridge
@@ -94,13 +95,11 @@ def validate(value, body, source_title=''):
                     or '\x00' in text or re.search(r'https?://|申し込|申込|登録はこちら|sign up|register now',text,re.I)):
                 raise ValueError('invalid-copy')
             # No invented/conversion-derived numbers. Preserve literal source values.
-            if any(n not in quote for n in re.findall(r'\d+(?:[.,]\d+)*',text)):
-                raise ValueError('unsupported-number')
-    if re.search(r'\bto acquire\b', source_title, re.I):
-        for item in (value['title'], value['summary']):
-            if (not re.search(r'計画|予定|契約|合意|買収へ|買収する方針', item['ja'])
-                    or not re.search(r'\bto acquire\b|agreement|plans?|intends?|will acquire|proposed|pending', item['en'], re.I)):
-                raise ValueError('invalid-copy')
+            factual_validation.validate_numbers(text, quote)
+            factual_validation.validate_semantics(text, quote)
+            factual_validation.validate_acquisition(text, source_title, lang, require_status=name in ('title', 'summary'))
+            factual_validation.validate_acquisition(text, quote, lang)
+        factual_validation.validate_pair(item['ja'], item['en'])
     return value
 
 
@@ -123,17 +122,23 @@ def claim(db, reference, model, limit):
         if db.execute("SELECT count(*) FROM signal_headline_translation_calls WHERE at>=? AND source_id LIKE 'research:%'",(now-86400,)).fetchone()[0] >= min(RESEARCH_DAILY_LIMIT, max(1,limit//2)):
             return None
         for r in rows:
-            published=db.execute('SELECT sha FROM official_research_publications WHERE event_id=?',(r['id'],)).fetchone()
+            published=db.execute('SELECT sha,payload FROM official_research_publications WHERE event_id=?',(r['id'],)).fetchone()
             if published and published['sha']==r['sha']:
-                continue
+                try:
+                    validate({k:v for k,v in json.loads(published['payload']).items() if k in ('title','summary','facts','purpose')}, r['body'], r['title'])
+                    continue
+                except (ValueError, TypeError):
+                    pass
             job=db.execute('SELECT * FROM official_research_jobs WHERE event_id=?',(r['id'],)).fetchone()
             quote_recovery=bool(job and job['state']=='retry' and ((job['attempts']==4 and job['failure_kind']=='unsupported-quote') or (job['attempts'] in (5,6) and job['failure_kind']=='unsupported-number')))
             legacy_probe=bool(job and job['state']=='retry' and job['attempts']==3 and job['failure_kind'] is None)
+            if job and job['state']=='done':
+                job=None  # A stored publication failing current validation must be regenerated.
             if job and job['sha']==r['sha'] and ((job['attempts']>=3 and not legacy_probe and not quote_recovery) or job['next_at']>now):
                 continue
             lease=uuid.uuid4().hex
             db.execute('''INSERT INTO official_research_jobs(event_id,sha,attempts,next_at,lease,state) VALUES(?,?,1,?,?,'running')
-              ON CONFLICT(event_id) DO UPDATE SET attempts=CASE WHEN sha=excluded.sha THEN attempts+1 ELSE 1 END,
+              ON CONFLICT(event_id) DO UPDATE SET attempts=CASE WHEN sha=excluded.sha AND state!='done' THEN attempts+1 ELSE 1 END,
               sha=excluded.sha,next_at=excluded.next_at,lease=excluded.lease,state='running',failure_kind='classified-attempt' ''',
                        (r['id'],r['sha'],now+300,lease))
             db.execute('''INSERT INTO signal_headline_translation_calls(at,source_id,sha,model,state,lease)
@@ -215,7 +220,6 @@ def evidence_excerpts(body):
     The overlap prevents a 600-character boundary from severing e.g. Microsoft
     365 from the sentence describing it. Validation stays fail-closed.
     """
-    body = body[:45000]
     excerpts = {}
     start = 0
     while start < len(body):
@@ -269,7 +273,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                 if not isinstance(evidence_id,str) or evidence_id not in excerpts:
                     raise ValueError('unsupported-quote')
                 item['evidenceQuote']=excerpts[evidence_id]
-        note=validate(value,row['body'][:45000],row['title'])
+        note=validate(value,row['body'],row['title'])
         usage={k:v for k,v in (response.get('usage') or {}).items()
                if k in ('input_tokens','output_tokens','total_tokens') and type(v) is int}
     except Exception as exc:
@@ -309,6 +313,10 @@ def feed(db, reference=None):
         if not r or r['sha']!=p['sha'] or r['body_sha']!=p['body_sha']:
             continue
         note=json.loads(p['payload'])
+        try:
+            validate({k:v for k,v in note.items() if k in ('title','summary','facts','purpose')}, r['body'], r['title'])
+        except (ValueError, TypeError):
+            continue
         # Evidence quotes/source body are never serialized to the public app.
         copy=lambda x:{k:x[k] for k in ('ja','en')}
         kind=('acquisition' if re.search(r'\bacquir|\bacquisition',r['title'],re.I) else

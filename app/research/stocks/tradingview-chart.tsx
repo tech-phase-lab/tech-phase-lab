@@ -21,7 +21,7 @@ function tradingViewSymbol(ticker: string, exchange: string) {
   return market ? `${market}:${ticker}` : ticker;
 }
 
-function TradingViewEmbed({ kind, symbol, lang, attempt }: { kind: WidgetKind; symbol: string; lang: "ja" | "en"; attempt: number }) {
+function TradingViewEmbed({ kind, symbol, lang, attempt, onReady }: { kind: WidgetKind; symbol: string; lang: "ja" | "en"; attempt: number; onReady: (kind: WidgetKind, attempt: number) => void }) {
   const frameRef = useRef<HTMLIFrameElement>(null);
   const [height, setHeight] = useState(220);
   const [failedAttempt, setFailedAttempt] = useState<number | null>(null);
@@ -41,7 +41,7 @@ function TradingViewEmbed({ kind, symbol, lang, attempt }: { kind: WidgetKind; s
 
   return <>
     <div className={`${styles.embed} ${polish.embed} ${kind === "chart" ? styles.chartEmbed : styles.compactEmbed}`} style={kind === "compact" ? { height } : undefined}>
-      <iframe key={src} ref={frameRef} src={src} title={`${symbol} TradingView ${kind}`} className={styles.widgetFrame} onError={() => setFailedAttempt(attempt)} />
+      <iframe key={src} ref={frameRef} src={src} title={`${symbol} TradingView ${kind}`} className={styles.widgetFrame} onLoad={() => onReady(kind, attempt)} onError={() => { setFailedAttempt(attempt); onReady(kind, attempt); }} />
     </div>
     {failedAttempt === attempt && <p className={styles.error} role="status">{lang === "ja" ? "表示を読み込めませんでした。再読み込みボタンをお試しください。" : "Unable to load the market view. Please use the reload button."}</p>}
   </>;
@@ -57,6 +57,14 @@ function TradingViewPanels({ symbol, lang }: { symbol: string; lang: "ja" | "en"
   const [chartOpened, setChartOpened] = useState(false);
   const [attempts, setAttempts] = useState({ compact: 0, chart: 0 });
   const id = useId();
+  const [reloading, setReloading] = useState<{ kind: WidgetKind; attempt: number } | null>(null);
+  useEffect(() => {
+    if (!reloading) return;
+    const timer = window.setTimeout(() => setReloading(null), 15_000);
+    return () => window.clearTimeout(timer);
+  }, [reloading]);
+  const ready = (kind: WidgetKind, attempt: number) => setReloading(current => current?.kind === kind && current.attempt === attempt ? null : current);
+  const pending = reloading?.kind === view;
 
   return <section className={`${styles.market} ${polish.market}`} aria-labelledby="market-chart-title">
     <div className={`${styles.heading} ${polish.heading}`}>
@@ -70,14 +78,14 @@ function TradingViewPanels({ symbol, lang }: { symbol: string; lang: "ja" | "en"
         give responsive widgets a zero-width container during tab switches. */}
     <div className={styles.panels}>
       <div id={`${id}-quote-panel`} role="tabpanel" aria-labelledby={`${id}-quote-tab`} className={styles.panel} data-active={view === "compact"} aria-hidden={view !== "compact"} inert={view !== "compact"}>
-        <TradingViewEmbed kind="compact" symbol={symbol} lang={lang} attempt={attempts.compact} />
+        <TradingViewEmbed kind="compact" symbol={symbol} lang={lang} attempt={attempts.compact} onReady={ready} />
       </div>
       <div id={`${id}-chart-panel`} role="tabpanel" aria-labelledby={`${id}-chart-tab`} className={styles.panel} data-active={view === "chart"} aria-hidden={view !== "chart"} inert={view !== "chart"}>
-        {chartOpened && <TradingViewEmbed kind="chart" symbol={symbol} lang={lang} attempt={attempts.chart} />}
+        {chartOpened && <TradingViewEmbed kind="chart" symbol={symbol} lang={lang} attempt={attempts.chart} onReady={ready} />}
       </div>
     </div>
     <div className={styles.reloadControl}>
-      <button type="button" onClick={() => setAttempts((current) => ({ ...current, [view]: current[view] + 1 }))}><span aria-hidden="true">▶</span>{lang === "ja" ? (view === "chart" ? "チャートを再読み込みする" : "株価・指標を再読み込みする") : "Reload market view"}</button>
+      <button type="button" aria-busy={pending} disabled={pending} onClick={() => { const attempt = attempts[view] + 1; setReloading({ kind: view, attempt }); setAttempts((current) => ({ ...current, [view]: current[view] + 1 })); }}><span aria-hidden="true">▶</span>{pending ? (lang === "ja" ? "再読み込み中…" : "Reloading…") : lang === "ja" ? (view === "chart" ? "チャートを再読み込みする" : "株価・指標を再読み込みする") : "Reload market view"}</button>
     </div>
     <div className={`${styles.note} ${polish.note}`}>
       <p>{lang === "ja" ? "TradingViewの15分遅延データです。" : "TradingView data delayed by 15 minutes."}<br />{lang === "ja" ? "Tech Phaseの速報判定には使用しません。" : "Not used for Tech Phase alert decisions."}</p>

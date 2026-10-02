@@ -97,7 +97,67 @@ class OfficialResearchTests(unittest.TestCase):
         note['summary']['ja']='NebiusがInferizeの買収契約を締結。'
         note['title']['en']='Nebius to acquire Inferize'
         note['summary']['en']='Nebius entered an agreement to acquire Inferize.'
+        for item in note['facts']:
+            if 'acquired' in item['en']:
+                item['en']='Nebius entered an agreement to acquire Inferize.'
+                item['ja']='Inferizeの買収契約を締結した。'
         research.validate(note,BODY,'Nebius to Acquire Inferize')
+    def test_numeric_substrings_and_changed_units_are_rejected(self):
+        quote='Revenue was $15 billion and operating margin was 25 percent.'
+        for text in ('Revenue was $5 billion.', 'Revenue was $15 million.', 'Margin was 5%.'):
+            note=json.loads(json.dumps(NOTE))
+            note['facts'][0]=copy('原文の数値を確認した。', text, quote)
+            with self.subTest(text=text), self.assertRaisesRegex(ValueError, 'unsupported-number'):
+                research.validate(note, BODY+' '+quote)
+
+    def test_completed_fact_cannot_hide_behind_planned_title_and_summary(self):
+        quote='The company signed an agreement to acquire Inferize. Closing is expected next year.'
+        note=json.loads(json.dumps(NOTE))
+        for field in ('title','summary'):
+            note[field]=copy('Inferize買収へ。', 'Agreement to acquire Inferize.',quote)
+        note['facts'][0]=copy('Inferizeの買収を完了した。','Completed the acquisition of Inferize.',quote)
+        with self.assertRaisesRegex(ValueError,'invalid-copy'):
+            research.validate(note,BODY+' '+quote,'Nebius to acquire Inferize')
+        # A neutral title does not disable evidence-level status validation.
+        with self.assertRaisesRegex(ValueError,'invalid-copy'):
+            research.validate(note,BODY+' '+quote,'Nebius announces strategic transaction')
+
+    def test_long_body_tail_is_included_without_silent_truncation(self):
+        body=('Background context. '*3000)+'TAIL_GUIDANCE_END'
+        excerpts=research.evidence_excerpts(body)
+        self.assertTrue(any('TAIL_GUIDANCE_END' in q for q in excerpts.values()))
+        for quote in excerpts.values():
+            self.assertIn(quote,body)
+            self.assertLessEqual(len(quote),research.MAX_EVIDENCE_CHARS)
+
+    def test_stored_invalid_publication_is_hidden_and_regenerated(self):
+        self.assertEqual(research.run_once(self.path,response,{**ENV,'OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT':'200'},NOW.timestamp()),'done')
+        with research.connect(self.path) as db:
+            payload=json.loads(db.execute('SELECT payload FROM official_research_publications').fetchone()[0])
+            payload['facts'][0]['en']='Revenue was 9999 billion.'
+            db.execute('UPDATE official_research_publications SET payload=?',(json.dumps(payload),))
+        self.assertEqual(self.feed(),[])
+        self.assertEqual(research.run_once(self.path,response,{**ENV,'OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT':'200'},NOW.timestamp()),'done')
+        self.assertEqual(len(self.feed()),1)
+
+    def test_sign_digit_polarity_and_bilingual_mismatches_are_rejected(self):
+        cases=[
+            ('結果は+32。','Actual was +32.','Actual was -32.'),
+            ('EPSは$-1.20。','EPS was $-1.20.','EPS was $-1.21.'),
+            ('売上高は5%増加。','Revenue increased 5%.','Revenue decreased 5%.'),
+            ('純利益は$5 billion。','Net income was $5 billion.','Net loss was $5 billion.'),
+            ('EPSは$-1.20。','EPS was $1.20.','EPS was $-1.20 and prior EPS was $1.20.'),
+        ]
+        for ja,en,quote in cases:
+            note=json.loads(json.dumps(NOTE))
+            note['facts'][0]=copy(ja,en,quote)
+            with self.subTest(quote=quote), self.assertRaises(ValueError):
+                research.validate(note,BODY+' '+quote)
+        import factual_validation as validation
+        validation.validate_numbers('EPS was $-1.20.','EPS was ($1.20).')
+        with self.assertRaises(ValueError):
+            validation.validate_numbers('EPS was $1.20.','EPS was ($1.20).')
+
     def test_shared_daily_budget_prevents_extra_provider_calls(self):
         with research.connect(self.path) as db:
             for i in range(3):db.execute('INSERT INTO signal_headline_translation_calls(at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)',(NOW.timestamp(),'test','test','test','done',str(i)))

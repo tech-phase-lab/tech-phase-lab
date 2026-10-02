@@ -5,6 +5,7 @@ bodies, not just titles. Documents produce revisions at the same URL. The first
 successful fetch is a baseline, including after errors but not after restarts.
 """
 import argparse
+import factual_validation
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 import difflib
@@ -853,7 +854,20 @@ def public_price_targets(db, sources=SOURCES, now=None, limit=20):
             reversed_match = PRICE_TARGET_REVERSED.search(row["title"].replace(",", ""))
             firm = PRICE_TARGET_FIRM.search(row["title"])
             url = safe_url(row["url"], source)
+            if re.match(r'^/theflynews/status/',urlsplit(url).path,re.I):
+                continue
             old, new = (float(match.group(2)), float(match.group(1))) if match else ((float(reversed_match.group(1)), float(reversed_match.group(2))) if reversed_match else (0, 0))
+            # A post with several actions/firms cannot be attributed by taking
+            # the first price pair and the first firm independently.
+            action_matches=list(PRICE_TARGET_TEXT.finditer(row['title'].replace(',', '')))+list(PRICE_TARGET_REVERSED.finditer(row['title'].replace(',', '')))
+            firm_matches=list(PRICE_TARGET_FIRM.finditer(row['title']))
+            if len(action_matches)!=1 or len(firm_matches)!=1:
+                continue
+            action=action_matches[0].group(0)
+            if ((re.search(r'raised|hiked|increased',action,re.I) and new<=old)
+                    or (re.search(r'lowered|cut|reduced',action,re.I) and new>=old)):
+                continue
+
             if (published.tzinfo is None or observed.tzinfo is None or
                     observed > now or
                     not timedelta(0) <= now - published <= timedelta(days=7) or
@@ -1465,7 +1479,12 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20):
                 and '\x00' not in translated['headline_ja']):
             cleaned = news_policy.headline(translated['headline_ja'])
             if cleaned:
-                translation['translationJa'] = cleaned
+                try:
+                    factual_validation.validate_numbers(cleaned, display_title)
+                    factual_validation.validate_acquisition(cleaned, display_title, 'ja', require_status=True)
+                    translation['translationJa'] = cleaned
+                except ValueError:
+                    pass
         items.append({'id': str(row['id']), 'title': display_title, 'url': url,
                       'publisher': source['name'], 'tickers': tickers,
                       'observedAt': observed.isoformat(), **publication, **translation})

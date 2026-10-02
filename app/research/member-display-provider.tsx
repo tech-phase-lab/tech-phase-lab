@@ -20,7 +20,10 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
     let request: AbortController | null = null;
     let expiry: ReturnType<typeof setTimeout> | undefined;
     async function check(force = false, resume = false) {
-      if (!force && !resume && Date.now() - lastChecked < 30_000) return;
+      // focus, pageshow and visibilitychange can arrive together on resume.
+      // Reuse the running verification instead of aborting/restarting it.
+      if (!force && request && !request.signal.aborted) return;
+      if (!force && Date.now() - lastChecked < (resume ? 1_000 : 30_000)) return;
       lastChecked = Date.now(); const current = ++generation;
       request?.abort(); request = new AbortController(); const signal = request.signal;
       if (force) { setPlan(null); setOwner(false); setOwnerMode(false); }
@@ -35,6 +38,7 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
         setPlan(pro ? "pro" : "free");
         if (pro) expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.min(member.accessExpiresAt - Date.now(), 2147483647));
       } catch (error) { if (error instanceof Error && error.message === "identity-loading") return; if (active && !signal.aborted && current === generation) { setPlan(null); setOwner(false); setOwnerMode(false); } }
+      finally { if (current === generation) request = null; }
     }
     const changed = () => { void check(true); };
     const focused = () => { if (document.visibilityState === "visible") void check(false, true); };

@@ -7,6 +7,7 @@ import time
 import uuid
 
 import brief_generator
+import factual_validation
 import monitor
 import signals
 
@@ -117,7 +118,7 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
         translated = db.execute('''SELECT 1 FROM signal_headline_translations
           WHERE source_id=? AND url=? AND sha=?''',
                                 (row["source_id"], row["url"], row["sha"])).fetchone()
-        if translated:
+        if translated and item.get("translationJa"):
             counts["translated"] += 1
             continue
         counts["pending"] += 1
@@ -210,11 +211,16 @@ def claim(db, sources, limit, model, now):
             row = db.execute("SELECT * FROM signal_events WHERE id=?", (item["id"],)).fetchone()
             if not row or re.fullmatch(r"https?://\S+", row["title"].strip(), re.I):
                 continue
-            existing = db.execute('''SELECT 1 FROM signal_headline_translations
+            existing = db.execute('''SELECT headline_ja FROM signal_headline_translations
               WHERE source_id=? AND url=? AND sha=?''',
                                   (row["source_id"], row["url"], row["sha"])).fetchone()
             if existing:
-                continue
+                try:
+                    factual_validation.validate_numbers(existing['headline_ja'], item['title'])
+                    factual_validation.validate_acquisition(existing['headline_ja'], item['title'], 'ja', require_status=True)
+                    continue
+                except ValueError:
+                    pass
             # Body/HTML revisions do not invalidate an unchanged headline.
             # Reuse only the exact input on the same source and URL; changed
             # wording and transformed display titles still require translation.
@@ -225,6 +231,12 @@ def claim(db, sources, limit, model, now):
               ORDER BY t.created_at DESC LIMIT 1''',
               (row['source_id'],row['url'],item['title'])).fetchone()
             import official_release_bridge
+            if cached:
+                try:
+                    factual_validation.validate_numbers(cached['headline_ja'], item['title'])
+                    factual_validation.validate_acquisition(cached['headline_ja'], item['title'], 'ja', require_status=True)
+                except ValueError:
+                    cached=None
             if cached and official_release_bridge.is_current(db,row):
                 db.execute('''INSERT OR IGNORE INTO signal_headline_translations
                   (source_id,url,sha,headline_ja,model,created_at) VALUES(?,?,?,?,?,?)''',
@@ -240,6 +252,8 @@ def claim(db, sources, limit, model, now):
                 job and job["state"] == "stale" and job["attempts"] >= MAX_ATTEMPTS
                 and job["source_title"] is None
             )
+            if job and job["state"] == "done" and existing:
+                job=None
             if job and (job["state"] == "done"
                         or (job["attempts"] >= MAX_ATTEMPTS and not recoverable_legacy_stale)
                         or job["next_at"] > now):
@@ -248,7 +262,7 @@ def claim(db, sources, limit, model, now):
             db.execute('''INSERT INTO signal_headline_translation_jobs(
               source_id,url,sha,attempts,next_at,lease,state,source_title)
               VALUES(?,?,?,1,?,?,'running',?) ON CONFLICT(source_id,url,sha) DO UPDATE SET
-              attempts=CASE WHEN state='stale' AND source_title IS NULL
+              attempts=CASE WHEN state='done' OR (state='stale' AND source_title IS NULL)
                 THEN 1 ELSE attempts+1 END,
               next_at=excluded.next_at,lease=excluded.lease,state='running',
               source_title=excluded.source_title''',
@@ -298,6 +312,9 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                 or len(title_ja.strip()) > MAX_HEADLINE_CHARS or "\x00" in title_ja):
             raise ValueError("invalid-translation")
         title_ja = title_ja.strip()
+        factual_validation.validate_numbers(title_ja, row['translation_title'])
+        factual_validation.validate_semantics(title_ja, row['translation_title'])
+        factual_validation.validate_acquisition(title_ja, row['translation_title'], 'ja', require_status=True)
         raw_usage = response.get("usage") or {}
         usage = {key: value for key, value in raw_usage.items()
                  if key in ("input_tokens", "output_tokens", "total_tokens")
@@ -326,7 +343,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         if valid:
             db.execute('''INSERT INTO signal_headline_translations
               (source_id,url,sha,headline_ja,model,created_at) VALUES(?,?,?,?,?,?)
-              ON CONFLICT(source_id,url,sha) DO NOTHING''',
+              ON CONFLICT(source_id,url,sha) DO UPDATE SET headline_ja=excluded.headline_ja,model=excluded.model,created_at=excluded.created_at''',
                        (row["source_id"], row["url"], row["sha"], title_ja, model,
                         datetime.now(timezone.utc).isoformat(timespec="milliseconds")))
         db.execute('''UPDATE signal_headline_translation_jobs SET state=?

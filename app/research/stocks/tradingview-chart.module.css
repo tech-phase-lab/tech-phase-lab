@@ -47,3 +47,5 @@
   .note{display:block;padding:14px 18px}
   .note a{display:inline-block;margin-top:10px}
 }
+
+.reloadControl button:active{background:#9bdec629;color:#d7ffed}.reloadControl button[aria-busy=true]{background:#9bdec61c;color:#d7ffed;cursor:wait}

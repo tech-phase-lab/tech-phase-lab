@@ -76,6 +76,23 @@ class SignalTests(unittest.TestCase):
         self.assertEqual((result["items"][0]["previous"], result["items"][0]["latest"]), (620, 720))
         self.assertNotIn("private raw post text", str(result))
 
+    def test_ambiguous_or_directionally_inconsistent_targets_are_not_published(self):
+        signals.schema(self.db)
+        reference=datetime(2026,9,29,0,tzinfo=timezone.utc)
+        titles=[
+            '$MU PT raised to $90 from $100 at Citi',
+            '$MU PT cut to $110 from $100 at Citi',
+            '$MU PT raised to $110 from $100 at Citi and PT raised to $120 from $100 at UBS',
+            '$MU PT raised to $110 from $100 at Citi following commentary by UBS',
+        ]
+        for index,title in enumerate(titles):
+            self.db.execute("""INSERT INTO signal_events(source_id,url,sha,previous_sha,title,tickers_json,
+              matches_json,event_kind,published_at,observed_at,excerpt,diff,truncated)
+              VALUES(?,?,?,?,?,?,?,?,?,?,?,?,0)""",(
+                'x-wallstengine',f'https://x.com/wallstengine/status/{index+1}',str(index),'',title,
+                '["MU"]','{}','new',(reference-timedelta(seconds=60)).isoformat(),reference.isoformat(),'',''))
+        self.assertEqual(signals.public_price_targets(self.db,now=reference)['items'],[])
+
     def test_target_alternative_wording_and_late_baseline(self):
         signals.schema(self.db)
         reference = datetime(2026, 9, 29, 0, tzinfo=timezone.utc)
@@ -108,7 +125,7 @@ class SignalTests(unittest.TestCase):
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0]["ticker"], "AAPL")
 
-    def test_public_target_from_multiple_accounts_uses_first_detection_once(self):
+    def test_public_target_ignores_removed_source_and_uses_first_active_detection_once(self):
         signals.schema(self.db)
         reference = datetime(2026, 9, 25, 12, tzinfo=timezone.utc)
         for index, (source_id, observed) in enumerate([
@@ -125,8 +142,8 @@ class SignalTests(unittest.TestCase):
             ))
         result = signals.public_price_targets(self.db, now=reference)
         self.assertEqual(len(result["items"]), 1)
-        self.assertEqual(result["items"][0]["source"], "X · The Fly")
-        self.assertEqual(result["items"][0]["observedAt"], (reference - timedelta(minutes=3)).isoformat())
+        self.assertEqual(result["items"][0]["source"], "X · TipRanks")
+        self.assertEqual(result["items"][0]["observedAt"], (reference - timedelta(minutes=2)).isoformat())
 
     def insert_target_observation(self, index, published, observed, latest=720):
         signals.schema(self.db)
@@ -136,6 +153,12 @@ class SignalTests(unittest.TestCase):
             'x-tipranks', f'https://x.com/TipRanks/status/{index}', str(index), '',
             f'AMD price target raised to ${latest} from $620 at BofA', '["AMD"]', '{}',
             'new', published, observed, '', ''))
+
+    def test_saved_thefly_post_is_excluded_even_when_stored_under_aggregate_route(self):
+        reference=datetime(2026,9,25,12,tzinfo=timezone.utc)
+        self.insert_target_observation(999,'2026-09-25T11:55:00Z','2026-09-25T11:56:00Z')
+        self.db.execute("UPDATE signal_events SET source_id='x-wallstengine',url='https://x.com/theflynews/status/999'")
+        self.assertEqual(signals.public_price_targets(self.db,now=reference)['items'],[])
 
     def test_target_dedup_and_order_use_absolute_instants(self):
         reference = datetime(2026, 9, 25, 12, tzinfo=timezone.utc)

@@ -16,7 +16,7 @@ API_URL = "https://api.x.com/2/tweets/search/recent"
 MAX_RESPONSE_BYTES = 2 * 1024 * 1024
 MAX_RESULTS = 30
 OFFICIAL_ACCOUNTS = {"nebiusai": "NBIS"}
-ALLOWED_ACCOUNT_NAMES = {"tipranks", "theflynews", "wallstengine", "fabymetal4", *OFFICIAL_ACCOUNTS}
+ALLOWED_ACCOUNT_NAMES = {"tipranks", "wallstengine", "fabymetal4", *OFFICIAL_ACCOUNTS}
 TARGET_PATTERN = re.compile(
     r"\b(?:price[ -]?target|target price|pt\s+(?:raised|cut|lowered|hiked|boosted|slashed|(?:to|at)\s*\$?\d+))\b",
     re.I,

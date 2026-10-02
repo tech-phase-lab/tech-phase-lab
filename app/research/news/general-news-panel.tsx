@@ -64,7 +64,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
   return <section ref={panel} className={styles.panel} aria-label={lang === "ja" ? "ニュース一覧" : "News list"}>
     {!!visibleOfficial.length && <section aria-label={lang === "ja" ? "公式発表" : "Official updates"}>
       <div className={styles.items}>{visibleOfficial.map(item => { const publication = officialTime(item); const translated = officialHeadlineJa(item.url) ?? item.translationJa; const linkOnly = /^https?:\/\/\S+$/.test(item.title.trim()); return <article key={item.id}>
-        <p className={styles.tickers}>{[item.tickers.join(" · "), item.publisher].filter(Boolean).join(" · ")}</p>
+        <p className={styles.tickers}>{[item.tickers.join(" · "), item.researchId?.startsWith("x-result-") ? "" : item.publisher].filter(Boolean).join(" · ")}</p>
         <h3><a href={item.researchId ? `/research?result=${item.researchId}#what-changed/${item.researchId}` : item.url} target={item.researchId ? undefined : '_blank'} rel="noopener noreferrer">{lang === "ja" ? translated ?? (linkOnly ? "公式投稿（リンクのみ・本文未取得）" : "公式アップデート（日本語訳を準備中）") : item.title}</a></h3>
         <p className={styles.note}>{publication.kind === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} {publication.kind === "date" ? publication.at : format(publication.at)}</p>
       </article>; })}</div>

@@ -10,14 +10,14 @@ import time
 from urllib.parse import urlsplit
 import monitor
 
-ACCOUNTS = {'tipranks', 'theflynews', 'wallstengine', 'fabymetal4'}
-NAMES = {'tipranks': 'TipRanks', 'theflynews': 'The Fly',
+ACCOUNTS = {'tipranks', 'wallstengine', 'fabymetal4'}
+NAMES = {'tipranks': 'TipRanks',
          'wallstengine': 'Wall St Engine', 'fabymetal4': 'FabyΔ'}
 VALUE = r'([-+−]?\d[\d,]*(?:\.\d+)?)\s*(B|M|K|billion|million|thousand|%)?'
 METRICS = [
     ('revenue', '売上高', 'Revenue', r'(?:revenue|sales|売上高?)', True),
-    ('eps', 'EPS', 'EPS', r'(?:(?:adjusted|non[- ]?GAAP|調整後)\s*)?EPS', False),
-    ('gross-margin', '粗利益率', 'Gross margin', r'(?:(?:adjusted|non[- ]?GAAP|調整後)\s*)?(?:gross margin|粗利(?:益)?率)', False),
+    ('eps', 'EPS', 'EPS', r'(?:(?:adjusted|adj\.?|non[- ]?GAAP|GAAP|調整後)\s*)?EPS', False),
+    ('gross-margin', '粗利益率', 'Gross margin', r'(?:(?:adjusted|adj\.?|non[- ]?GAAP|GAAP|調整後)\s*)?(?:gross margin|粗利(?:益)?率)', False),
     ('operating-cash-flow', '営業キャッシュフロー', 'Operating cash flow', r'(?:operating cash flow|営業キャッシュフロー)', True),
 ]
 MACRO = re.compile(r'\b(?:ADP|CPI|PPI|PCE|FOMC|NFP|nonfarm payrolls|GDP|unemployment rate)\b', re.I)
@@ -56,10 +56,18 @@ def projection(text, tickers):
         for key, ja, en, pattern, money in METRICS:
             if section and key not in {'revenue', 'eps'}:
                 continue
-            m = re.search(r'(?<!\w)(' + pattern + r')\s*[:=]?\s*\$?\s*' + VALUE, part, re.I)
+            m = None
+            for candidate in re.finditer(r'(?<!\w)(' + pattern + r')\s*[:=]?\s*\$?\s*' + VALUE, part, re.I):
+                prefix = re.split(r'[\n;|]', part[:candidate.start()])[-1]
+                if re.search(r'(?:est(?:imate[ds]?)?|expected|consensus|forecast|prior(?: quarter| year)?|previous(?: quarter| year)?)\s*[:=]?\s*$', prefix, re.I):
+                    continue
+                m = candidate
+                break
             if not m:
                 continue
             number, unit = m[2].replace(',', '').replace('−', '-'), m[3] or ''
+            if key!='gross-margin' and '$' not in m[0]:
+                continue  # Never silently assume USD for a currency-free or foreign-currency value.
             if money and unit.lower() not in {'b','m','k','billion','million','thousand'}:
                 continue
             if key == 'gross-margin' and unit != '%':
@@ -68,10 +76,13 @@ def projection(text, tickers):
                 continue
             unit = {'billion':'B','million':'M','thousand':'K'}.get(unit.lower(),unit.upper() if unit != '%' else '%')
             value = ('$' if key != 'gross-margin' else '') + number + unit
-            if re.search(r'adjusted|non[- ]?GAAP|調整後', m[1], re.I):
+            if re.search(r'adjusted|adj\.?|non[- ]?GAAP|調整後', m[1], re.I):
                 ja, en = '調整後' + ja, 'Adjusted ' + en
+            elif re.search(r'\bGAAP\b', m[1], re.I):
+                ja, en = 'GAAP ' + ja, 'GAAP ' + en
             if section:
-                ja, en = '次四半期 ' + ja, 'Next-quarter ' + en
+                annual = bool(re.search(r'(?:full[- ]year|annual|通期|FY\s*20\d{2})\s*$', guidance[0].strip(), re.I) or re.search(r'full[- ]year|annual|通期', part[:m.start()], re.I))
+                ja, en = ('通期 ' + ja, 'Full-year ' + en) if annual else ('会社見通し ' + ja, 'Guidance ' + en)
             # Ranges are preserved only when explicitly present next to the value.
             tail = part[m.end():m.end()+35]
             spread = re.match(r'\s*(?:±|\+/-)\s*\$?\s*' + VALUE, tail, re.I)
@@ -124,10 +135,24 @@ def run_once(path, sources, reference=None):
                             datetime.now(timezone.utc).isoformat(timespec='milliseconds'),round((time.monotonic()-started)*1000)))
 
 
+def latest_source_posts(items):
+    """Keep attributed source figures, even when publishers disagree.
+
+    A newer post supersedes the same publisher's older post for that period.
+    Never merge values across posts or replace a reported value with a hold.
+    """
+    latest={}
+    for item in items:
+        key=(item['ticker'],item['period'],item['publisher'])
+        if key not in latest or datetime.fromisoformat(item['publishedAt'])>datetime.fromisoformat(latest[key]['publishedAt']):
+            latest[key]=item
+    return [item for item in items if latest[(item['ticker'],item['period'],item['publisher'])] is item]
+
+
 def public_feed(db, reference=None):
     schema(db)
     cutoff = ((reference or datetime.now(timezone.utc))-timedelta(hours=24)).isoformat()
-    rows = db.execute('''SELECT p.payload,p.published_at,p.processing_ms,e.observed_at,e.published_at AS source_at
+    rows = db.execute('''SELECT p.payload,p.published_at,p.processing_ms,e.observed_at,e.published_at AS source_at,d.text AS body,e.tickers_json
       FROM market_result_publications p JOIN signal_documents d
       ON d.source_id=p.source_id AND d.url=p.url AND d.sha=p.sha
       JOIN signal_events e ON e.id=p.event_id
@@ -135,12 +160,21 @@ def public_feed(db, reference=None):
     items = []
     for row in rows:
         item = json.loads(row['payload'])
+        account = re.fullmatch(r'/([A-Za-z0-9_]+)/status/\d+', urlsplit(item['url']).path)
+        if not account or account[1].lower() not in ACCOUNTS:
+            continue
+        # Re-project stored flashes with the current parser, so earlier parsing
+        # mistakes are not kept public merely because the source SHA is unchanged.
+        current=projection(row['body'],json.loads(row['tickers_json']))
+        if current is None:
+            continue
+        item.update(current)
         item['publicAt'] = row['published_at']
         item['processingMs'] = row['processing_ms']
         item['sourceToDetectionMs'] = monitor.stored_latency_ms(row['source_at'],row['observed_at'])
         item['detectionToPublicMs'] = monitor.stored_latency_ms(row['observed_at'],row['published_at'])
         items.append(item)
-    return items
+    return latest_source_posts(items)
 
 
 def diagnostics(db):

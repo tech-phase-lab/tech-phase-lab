@@ -511,77 +511,6 @@
     "enabled": false
   },
   {
-    "id": "x-thefly",
-    "name": "X · The Fly",
-    "kind": "publisher-update",
-    "format": "x-api",
-    "enabledBy": "X_API_ENABLED",
-    "extraTickers": [
-      "LITE",
-      "COHR",
-      "VST",
-      "IREN",
-      "ALAB",
-      "APH",
-      "INTC",
-      "AMAT",
-      "SIMO",
-      "AAOI",
-      "META"
-    ],
-    "query": "from:theflynews ((\"price target\" OR \"target price\" OR \"PT to\") OR (($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (earnings OR \"quarterly results\" OR \"financial results\" OR initiated OR upgraded OR downgraded OR reiterated OR maintained))) -is:retweet -is:reply",
-    "accounts": [
-      "theflynews"
-    ],
-    "tickers": [
-      "MU",
-      "SKHY",
-      "SNDK",
-      "NBIS",
-      "NVDA",
-      "AMD",
-      "AVGO",
-      "ARM",
-      "TSM",
-      "ASML",
-      "MRVL",
-      "ANET",
-      "CRDO",
-      "CRWV",
-      "VRT",
-      "GEV",
-      "DELL",
-      "PLTR",
-      "MSFT",
-      "BE",
-      "GOOGL",
-      "ORCL",
-      "LITE",
-      "COHR",
-      "VST",
-      "IREN",
-      "ALAB",
-      "APH",
-      "INTC",
-      "AMAT",
-      "SIMO",
-      "AAOI",
-      "META"
-    ],
-    "allowedHosts": [
-      "x.com"
-    ],
-    "intervalSeconds": 60,
-    "fastWindow": {
-      "startAt": "2026-09-30T19:30:00Z",
-      "endAt": "2026-09-30T20:50:00Z",
-      "intervalSeconds": 60
-    },
-    "maxResults": 30,
-    "reuse": "review-required",
-    "enabled": false
-  },
-  {
     "id": "x-wallstengine",
     "name": "X · Market reporters",
     "kind": "publisher-update",
@@ -600,11 +529,10 @@
       "AAOI",
       "META"
     ],
-    "query": "(from:wallstengine OR from:tipranks OR from:theflynews OR from:FABYMETAL4) (\"price target\" OR \"target price\" OR \"PT to\" OR earnings OR \"quarterly results\" OR \"financial results\" OR results OR highlights OR EPS OR 決算 OR initiated OR upgraded OR downgraded OR ADP OR CPI OR PPI OR PCE OR FOMC OR NFP OR GDP OR \"nonfarm payrolls\") -is:retweet -is:reply",
+    "query": "(from:wallstengine OR from:tipranks OR from:FABYMETAL4) (\"price target\" OR \"target price\" OR \"PT to\" OR earnings OR \"quarterly results\" OR \"financial results\" OR results OR highlights OR EPS OR 決算 OR initiated OR upgraded OR downgraded OR ADP OR CPI OR PPI OR PCE OR FOMC OR NFP OR GDP OR \"nonfarm payrolls\") -is:retweet -is:reply",
     "accounts": [
       "wallstengine",
       "tipranks",
-      "theflynews",
       "FABYMETAL4"
     ],
     "tickers": [
