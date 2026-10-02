@@ -29,10 +29,14 @@ terms, not evidence that payment or cancellation is implemented.
    Prior sales-form attempts rejected Gmail and iCloud with Japan selected;
    cause unconfirmed. Sales email auto-replied with the same form; the owner
    also emailed Japanese support. Do not repeat inquiries or change country.
-2. **PAY.JP: inquiry sent by owner, awaiting response.** Overseas-issued cards
-   are supported, but payments are JPY-denominated. Investment-related tools and
-   consulting may be submitted but are flagged as likely to fail review; actual
-   Tech Phase eligibility is unknown.
+2. **PAY.JP: owner received a written reply at 18:34 JST October 2.**
+   The reply says the described service is not prohibited and may be submitted;
+   this is not advance approval. Paid stock/market analysis is carefully reviewed,
+   including actual site wording. Overseas-issued cards may in principle be used
+   for JPY recurring charges on supported and approved brands; issuer declines
+   remain possible. A high international-card share may require the Standard plan
+   at 3.30% for all brands. The reply assumed Japan is the main audience; disclose
+   the actual Japanese/English launch scope. USD recurring charges are not confirmed.
 3. **UnivaPay: owner used inquiry form; no eligibility answer yet.** The form
    groups stock investment under “investment / finance / gambling”; selecting
    that group is not evidence of rejection. The official digital-content page
@@ -120,3 +124,33 @@ is created and anonymous GET requests verify both languages and local assets.
 Before taking paid orders, obtain actual operator/contact/disclosure details,
 final tax/cancellation/refund terms, provider eligibility and commercial data
 permissions. None of those unknown details is fabricated on the introduction.
+
+## Actual service review pages — October 2, 20:00 JST preparation
+
+The owner requested a serious review site representing the actual service, not
+an illustrative substitute. The static overview now uses actual JA/EN home
+screens captured October 2 and an actual price-target screen, explicitly dated
+as development screens. It describes the real Free/PRO offering, valuation
+research, comparison, Q&A visibility, notifications, intended billing/access flow,
+and coverage limitations. Domestic price is owner-confirmed JPY 2,980 tax included.
+The international US$20 price is intended; currency and international taxes are
+not finalized. No billing has been activated.
+
+JA/EN terms, privacy, commercial-disclosure and operator/contact pages are
+review drafts, not finalized policies. Outstanding: legal seller/entity identity,
+address and phone disclosure method, actual support email, refund/duplicate-charge/
+prolonged-outage terms, exact cancellation procedure and deadline, privacy
+retention/request procedures and international-processing details. Do not
+represent drafts as application-ready or invent operator facts.
+
+PAY.JP official help checked October 2:
+https://help.pay.jp/ja/articles/3438214
+https://help.pay.jp/ja/articles/3438268
+The service and three policy URLs must be fixed at application; changes to the
+service URL after applying require another review. An unopened service can be
+submitted with sufficiently specific service material.
+
+A separate public deployment attempt was rejected by automatic approval review:
+prior intro publication had been paused and authorization for the exact new
+public deployment was not established. No public project was created. Continue
+review preparation in the existing protected preview; no browser workaround.
