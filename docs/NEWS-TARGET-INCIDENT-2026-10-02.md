@@ -47,3 +47,21 @@ competitor attribution, ambiguous subjects, and a second action hidden after
 the old 500-character boundary. Record deployment and live publication below
 once observed. Preserve the original 24-hour observation window; this miss
 means that interval must not be described as error-free or fully passed.
+
+## Deployment and observed recovery
+
+Repair commit: `b173d8e680346cce9821b69bd4a46379010448d5`. GitHub Actions
+run 36992334095 completed successfully; Vercel and Railway deployment checks
+succeeded. Local gates passed: 207 Node tests, 599 Python tests, build,
+compileall and diff check. Lint had zero errors and one existing warning.
+
+The replacement worker started at 2026-10-02T09:53:28.138Z. Its health was
+ready at 09:54:29 UTC. The Japanese home feed was confirmed recovered by
+18:54:11 JST, showing ASTS / B. Riley / USD 85 → USD 65 / 引き下げ. Switching
+to English showed the same numbers with Lowered. The exact first-publication
+time was not measured; the first confirmed recovery was about 70 minutes
+after acquisition. A Japanese screenshot at 18:55:36 JST also shows the row.
+
+This repairs the reproduced parser omission, not proof of complete source
+coverage or future translation correctness. The original observation interval
+remains failed for timely publication.
