@@ -53,6 +53,20 @@ def dates(text):
 
 def numeric_values(text):
     """Canonical exact magnitudes, preserving signs and percent dimensions."""
+    # Japanese amounts can combine a scaled part and a remainder: 15万6,000.
+    # Normalize only contiguous descending integer components, never separate
+    # amounts, decimals, or ascending/repeated units.
+    def compound(match):
+        parts = re.findall(r'(\d+(?:,\d{3})*)([兆億万千]?)', match[0])
+        scales = [UNIT_SCALE.get(unit, 1) for _, unit in parts]
+        if len(parts) < 2 or any(a <= b for a, b in zip(scales, scales[1:])):
+            return match[0]
+        if any(Decimal(n.replace(',', '')) * scale >= previous
+               for (n, _), scale, previous in zip(parts[1:], scales[1:], scales)):
+            return match[0]
+        return str(sum(Decimal(n.replace(',', '')) * scale
+                       for (n, _), scale in zip(parts, scales)))
+    text = re.sub(r'(?<![\d.,])\d+(?:,\d{3})*[兆億万千](?:\d+(?:,\d{3})*[兆億万千])*(?:\d+(?:,\d{3})*)?(?![\d.,])', compound, text)
     remaining = list(text)
     values = []
     for m in QUANTITY_PATTERN.finditer(text):

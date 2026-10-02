@@ -94,6 +94,16 @@ class FactualValidationTests(unittest.TestCase):
 
 
 
+    def test_compound_japanese_amounts_preserve_exact_magnitude_and_sign(self):
+        validation.validate_pair('15万6,000ドル超', 'over $156,000')
+        validation.validate_pair('1億2500万6000ドル', '$125,006,000')
+        validation.validate_pair('-15万6000ドル', '-$156,000')
+        validation.validate_pair('15万円と6000円', '150,000 yen and 6,000 yen')
+        for wrong in ('15万600ドル', '15万6001ドル', '-15万6000ドル',
+                      '156万ドル', '15万6000万ドル'):
+            with self.assertRaisesRegex(ValueError, 'unsupported-number'):
+                validation.validate_pair(wrong, '$156,000')
+
     def test_hyphenated_magnitudes_and_spelled_hardware_counts(self):
         validation.validate_pair('1000億パラメータのモデル', '100-billion-parameter models')
         validation.validate_pair('2台のDGX Spark', 'two DGX Spark units')
