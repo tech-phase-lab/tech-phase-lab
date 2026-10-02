@@ -9,10 +9,16 @@ Owner correction, October 2 12:24 JST: the interval recorded as `windowStart`
 through `windowEnd` in `NEWS-ACCEPTANCE-2026-10-02-baseline.json` is diagnostic
 only because two known source failures were active at its start. It cannot be
 used for an acceptance decision. The baseline is a point-in-time public health
-response, not a completed audit. A new acceptance start and end remain null
-until Sandisk and PR Newswire retrieval are both repaired, deployed and verified
-through actual successful retrieval. A temporary zero-error snapshot is not
-enough.
+response, not a completed audit.
+
+The repaired observation window began at **2026-10-02 04:00:13.253461 UTC**
+(13:00:13.253461 JST) and ends at **2026-10-03 04:00:13.253461 UTC**
+(13:00:13.253461 JST). This is an in-progress observation window, not an
+acceptance result. Its start was recorded only after commit `871c4d7` was live
+on Vercel preview and Railway staging, both repaired routes had completed real
+article retrieval, and several normal PR Newswire listing cycles had succeeded.
+Any relevant failure during this interval invalidates a clean-window claim and
+must remain in the evidence.
 Use first source publication and first detection times. Keep updates/revisions
 separate. Do not count old backfills, reruns or duplicate URLs as new successes.
 
@@ -57,6 +63,28 @@ the repair commit and its historical failures, then put the exact new continuous
 24-hour start and end in both this document and the baseline JSON. Until those
 fields are present, scheduled reports must say that no valid acceptance window
 has started.
+
+## Repaired-window start evidence
+
+- Repair commit: `871c4d77bd79ef3247d8251bc4b09e148dd59a00`.
+- Vercel deployment `dpl_BmCN6dksRQRcQrTddo113QADxYsJ` and Railway deployment
+  `26cedbf0-4a57-45d6-95f0-73553c1c90e5` both completed successfully. The
+  Railway worker started at 2026-10-02 03:54:43.999 UTC.
+- Sandisk completed 15 of 15 bounded newsroom article bodies with zero child
+  errors (107,631 stored characters). This followed the preserved timeout
+  recovery at 03:42:10.107 UTC after 58 measured attempts.
+- PR Newswire used its official All News Releases HTML index rather than the
+  unstable RSS representation. At 03:59:41.390 UTC it had completed 28 of 28
+  discovered article bodies with zero errors or pending children. Route checks
+  advanced normally after deployment and no PR Newswire failure transition was
+  recorded after the 03:54:43.999 UTC worker start.
+- The sanitized public snapshot immediately before the start was ready with
+  24/24 routes fresh, zero route errors, zero article errors, zero pending route
+  retries, and a 04:00:07.274 UTC last cycle. These aggregate values do not prove
+  translation accuracy, frontend delivery, source completeness, or a clean day.
+- Publication-to-detection counters in that snapshot covered seven older events
+  and therefore are not repaired-window results. New eligible items must be
+  measured individually from this start; zero arrivals remain untested.
 
 ## Access and stored evidence
 

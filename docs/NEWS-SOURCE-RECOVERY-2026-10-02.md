@@ -70,3 +70,34 @@ accepts only numbered `/news-releases/...html` articles on the approved host.
 Initial HTML history remains baseline; a newly listed URL becomes a new event.
 This replacement must pass the complete repository gates and live deployment
 verification before the new acceptance window can start.
+
+## Verified replacement and new observation start
+
+Commit `871c4d77bd79ef3247d8251bc4b09e148dd59a00` replaced the failing RSS
+representation with PR Newswire's official All News Releases HTML index. Link
+discovery is restricted to numbered release article paths on the approved host,
+and exact article publication time is read from the bounded JSON-LD
+`datePublished` field. The source ID, 30-second check interval, error reporting,
+retry behavior and deduplication remain intact; the route was not disabled.
+
+The full repository gates passed before deployment: lint had zero errors and one
+pre-existing warning, 201 Node tests and 567 Python tests passed, and the Next
+build, Python compile check and diff check completed. Vercel deployment
+`dpl_BmCN6dksRQRcQrTddo113QADxYsJ` and Railway deployment
+`26cedbf0-4a57-45d6-95f0-73553c1c90e5` both succeeded. The Railway worker
+started at 03:54:43.999 UTC.
+
+Live stored evidence then showed Sandisk at 15/15 completed article bodies with
+zero child errors (107,631 characters), and PR Newswire advancing across several
+normal listing cycles. At 03:59:41.390 UTC PR Newswire had 28/28 discovered
+article bodies completed, zero child errors and zero pending children, with no
+failure transition after the repaired deployment. The public health snapshot at
+04:00:13 UTC reported 24/24 routes fresh, zero route errors, zero article errors
+and no pending retries.
+
+The replacement is therefore sufficiently verified to begin, but not complete,
+a new continuous observation. The new window is 2026-10-02 04:00:13.253461 UTC
+through 2026-10-03 04:00:13.253461 UTC. The earlier 02:57:53 UTC interval and all
+Sandisk/RSS failures remain diagnostic evidence. No acceptance conclusion may be
+drawn until the new window ends and per-item source, bilingual, publication,
+frontend and miss reconciliation is complete.

@@ -2,9 +2,54 @@
   "windowStart": "2026-10-02T02:57:53.058536+00:00",
   "windowEnd": "2026-10-03T02:57:53.058536+00:00",
   "windowStatus": "diagnostic-only-known-source-errors",
-  "acceptanceEligible": false,
-  "acceptanceWindowStart": null,
-  "acceptanceWindowEnd": null,
+  "acceptanceEligible": true,
+  "acceptanceStatus": "in-progress-repair-verified",
+  "acceptanceWindowStart": "2026-10-02T04:00:13.253461+00:00",
+  "acceptanceWindowEnd": "2026-10-03T04:00:13.253461+00:00",
+  "repairCommit": "871c4d77bd79ef3247d8251bc4b09e148dd59a00",
+  "repairedBaselineCapturedAt": "2026-10-02T04:00:13.253461+00:00",
+  "repairedBaseline": {
+    "workerStartedAt": "2026-10-02T03:54:43.999+00:00",
+    "lastCycleAt": "2026-10-02T04:00:07.274+00:00",
+    "routes": {
+      "configured": 24,
+      "fresh": 24,
+      "error": 0,
+      "pending": 0,
+      "retryDue": 0,
+      "retryDeferred": 0
+    },
+    "articleRetrieval": {
+      "error": 0,
+      "retryDue": 0,
+      "retryDeferred": 0
+    },
+    "sandiskNews": {
+      "documents": 15,
+      "succeeded": 15,
+      "errors": 0,
+      "pending": 0,
+      "storedCharacters": 107631
+    },
+    "prNewswirePublic": {
+      "checkedAt": "2026-10-02T03:59:41.390+00:00",
+      "documents": 28,
+      "succeeded": 28,
+      "errors": 0,
+      "pending": 0,
+      "failureTransitionsSinceWorkerStart": 0
+    },
+    "publicationToDetectionLatency24Hours": {
+      "count": 7,
+      "note": "Rolling pre-window events; not an acceptance-window result."
+    },
+    "verificationLimits": [
+      "Aggregate health does not prove source completeness.",
+      "Aggregate health does not prove bilingual factual accuracy.",
+      "Aggregate health does not prove frontend delivery.",
+      "Zero new eligible events remains untested."
+    ]
+  },
   "invalidatedAt": "2026-10-02T03:24:00+00:00",
   "invalidatedReason": "Sandisk investor newsroom timeout and recurring PR Newswire RSS HTTP 404 were active before repair verification.",
   "capturedAt": "2026-10-02T02:57:53.058536+00:00",
