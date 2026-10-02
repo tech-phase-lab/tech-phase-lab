@@ -1002,8 +1002,9 @@ def operational_summary(db, sources=SOURCES, reference=None):
     if current.tzinfo is None:
         raise ValueError("signal-summary-reference-timezone")
     current = current.astimezone(timezone.utc)
-    official = [source for source in sources
+    all_official = [source for source in sources
                 if source.get("kind") != "external-research" and source.get("format") != "x-api"]
+    official = [source for source in all_official if source.get('enabled', True)]
     configured = {source["id"]: source for source in official}
 
     def timestamp_value(value):
@@ -1065,7 +1066,7 @@ def operational_summary(db, sources=SOURCES, reference=None):
         "attemptsAverage": None, "attemptsMax": None, "oldestStartedAt": None,
         "byErrorKind": {},
     }
-    route_counts = {"configured": len(official), "checked": 0, "fresh": 0,
+    route_counts = {"configured": len(official), "suspended": len(all_official)-len(official), "checked": 0, "fresh": 0,
                     "stale": 0, "error": 0, "pending": 0,
                     "errorKinds": error_kinds, "retry": retry,
                     "activeOutages": active_outages}

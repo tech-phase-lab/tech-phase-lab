@@ -48,6 +48,34 @@ class MarketNewsTests(unittest.TestCase):
         news.validate({'titleJa': '米国国債利回りは+0.3%上昇、日本国債利回りは-0.2%下落。',
                        'titleEn': original}, original)
 
+    def test_unambiguous_membership_announcement_has_direct_bilingual_copy(self):
+        original = 'BREAKING: Moderna $MRNA will join the Nasdaq-100 index, replacing Warner Bros Discovery $WBD https://t.co/synthetic123'
+        result = news.direct_membership_copy(original)
+        self.assertIn('追加予定 Moderna（$MRNA）', result['titleJa'])
+        self.assertIn('除外予定 Warner Bros Discovery（$WBD）', result['titleJa'])
+        self.assertIn('Added (scheduled): Moderna $MRNA', result['titleEn'])
+        self.assertIsNone(news.direct_membership_copy(original.replace('will join', 'might join')))
+        self.assertIsNone(news.direct_membership_copy(original.replace('Nasdaq-100', 'Nasdaq Composite')))
+
+    def test_direct_membership_publication_does_not_wait_for_model_budget(self):
+        now = time.time()
+        at = datetime.fromtimestamp(now-1, timezone.utc).isoformat()
+        source = next(s for s in signals.SOURCES if s['id'] == 'x-trendspider')
+        original = 'BREAKING: Moderna $MRNA will join the Nasdaq-100 index, replacing Warner Bros Discovery $WBD https://t.co/synthetic123'
+        payload = {'data': [{'id': '456', 'author_id': '1', 'created_at': at, 'text': original}], 'includes': {'users': [{'id': '1', 'username': 'TrendSpider'}]}}
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp)/'signals.sqlite'
+            with headline_translation.connect(path) as db:
+                signals.save(db, source, x_api.parse_response(source, payload, []), {}, at, 'synthetic-config', 1)
+                for n in range(3):
+                    db.execute("INSERT INTO signal_headline_translation_calls(at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)", (now,'other','sha','synthetic-model','done',f'budget-{n}'))
+            def unexpected_provider(payload, key):
+                self.fail('Exact membership grammar must not use the model')
+            self.assertEqual(news.run_once(path, transport=unexpected_provider, env=ENV, now=now), 'done')
+            with headline_translation.connect(path) as db:
+                self.assertEqual(news.public_feed(db, now=now)[0]['topic'], 'index-membership')
+                self.assertEqual(db.execute('SELECT COUNT(*) FROM signal_headline_translation_calls').fetchone()[0], 3)
+
     def seed(self, path, original, now):
         source = next(s for s in signals.SOURCES if s['id'] == 'x-barchart')
         at = datetime.fromtimestamp(now-1, timezone.utc).isoformat()

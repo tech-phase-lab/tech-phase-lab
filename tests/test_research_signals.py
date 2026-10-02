@@ -438,7 +438,7 @@ class SignalTests(unittest.TestCase):
             self.db, sources=official + excluded, reference=reference
         )
         self.assertEqual(summary["routes"], {
-            "configured": 2, "checked": 2, "fresh": 1,
+            "configured": 2, "suspended": 0, "checked": 2, "fresh": 1,
             "stale": 0, "error": 1, "pending": 0,
             "errorKinds": {
                 "accessRestricted": 1, "rateLimited": 0, "timeout": 0,

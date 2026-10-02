@@ -36,6 +36,20 @@ class XApiTests(unittest.TestCase):
         self.assertIn('TSM', monitor.PROVIDERS)
         self.assertIsNot(next(s for s in signals.SOURCES if s['id'] == 'marvell-investor-news').get('enabled'), False)
 
+    def test_suspended_routes_are_not_counted_as_retrying_or_recovered(self):
+        source = next(s for s in signals.SOURCES if s['id'] == 'marvell-blog')
+        with sqlite3.connect(':memory:') as db:
+            db.row_factory = sqlite3.Row
+            signals.schema(db)
+            db.execute("INSERT INTO signal_routes(id,error) VALUES(?,?)", (source['id'], 'http-403'))
+            summary = signals.operational_summary(db, sources=[source])['routes']
+            self.assertEqual(summary['configured'], 0)
+            self.assertEqual(summary['suspended'], 1)
+            self.assertEqual(summary['error'], 0)
+            self.assertEqual(summary['fresh'], 0)
+            self.assertEqual(summary['retry']['unscheduled'], 0)
+            self.assertEqual(db.execute('SELECT error FROM signal_routes').fetchone()[0], 'http-403')
+
     def setUp(self):
         self.source = {**next(s for s in signals.SOURCES if s["id"] == "x-tipranks"), "enabled": True}
 

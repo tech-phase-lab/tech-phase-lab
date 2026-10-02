@@ -277,7 +277,7 @@ export type MonitorState = {
   };
   signalIntake?: {
     routes: {
-      configured: number; checked: number; fresh: number;
+      configured: number; suspended?: number; checked: number; fresh: number;
       stale: number; error: number; pending: number;
       errorKinds?: {
         accessRestricted: number; rateLimited: number; timeout: number;

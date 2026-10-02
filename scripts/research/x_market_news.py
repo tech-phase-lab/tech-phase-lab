@@ -76,6 +76,9 @@ def maturities(text):
 
 
 def validate(result, original):
+    # Link identifiers are not reported financial quantities. Keep the stored
+    # original intact, but compare factual text rather than t.co token digits.
+    original = re.sub(r'https?://\S+', '', original).strip()
     if not isinstance(result, dict) or set(result) != {'titleJa', 'titleEn'}:
         raise ValueError('invalid-translation')
     roles = membership_roles(original)
@@ -108,12 +111,47 @@ def validate(result, original):
     return {key: value.strip() for key, value in result.items()}
 
 
+def direct_membership_copy(original):
+    """Translate one unambiguous announcement grammar without an API wait."""
+    facts = re.sub(r'https?://\S+', '', original).strip()
+    match = re.fullmatch(r'(?:BREAKING:\s*)?([A-Za-z][A-Za-z &\x27.-]{1,80})\s+\$([A-Z]{1,6})\s+will join (?:the )?(Nasdaq[ -]100|S\s*&\s*P\s*500) index, replacing ([A-Za-z][A-Za-z &\x27.-]{1,80})\s+\$([A-Z]{1,6})[.!]?', facts, re.I)
+    if not match or match[2].upper() == match[5].upper():
+        return None
+    joining, added, index, leaving, removed = match.groups()
+    copy = {'titleJa': f'{index}指数：追加予定 {joining}（${added}）、除外予定 {leaving}（${removed}）。',
+            'titleEn': f'{index} index: Added (scheduled): {joining} ${added}; Removed (scheduled): {leaving} ${removed}.'}
+    return validate(copy, original)
+
+
+def publication_payload(row, result):
+    return {'id': str(row['id']), 'url': row['url'], 'topic': row['topic'],
+            'publishedAt': row['published_at'], 'observedAt': row['observed_at'], **result}
+
+
 def run_once(path, transport=brief_generator.request_response, env=None, now=None):
     env = os.environ if env is None else env
     now = time.time() if now is None else now
     configured = headline_translation.configuration(env, now=now)
     if not configured:
         return 'disabled'
+    # Exact supported grammar does not consume or wait for the model budget.
+    with headline_translation.connect(path) as db:
+        for row in candidates(db, now=now):
+            result = direct_membership_copy(row['body']) if row['topic'] == 'index-membership' else None
+            if not result:
+                continue
+            identity = (row['source_id'], row['url'], row['sha'])
+            if db.execute('SELECT 1 FROM x_market_publications WHERE source_id=? AND url=? AND sha=?', identity).fetchone():
+                continue
+            db.commit()
+            with db:
+                db.execute('BEGIN IMMEDIATE')
+                current = db.execute('SELECT sha FROM signal_documents WHERE source_id=? AND url=?', identity[:2]).fetchone()
+                if current and current['sha'] == row['sha']:
+                    db.execute('INSERT OR REPLACE INTO x_market_publications VALUES(?,?,?,?,?)', (*identity, json.dumps(publication_payload(row, result), ensure_ascii=False), datetime.now(timezone.utc).isoformat()))
+                    db.execute("UPDATE x_market_jobs SET state='done',failure_kind=NULL,lease='' WHERE source_id=? AND url=? AND sha=?", identity)
+                    return 'done'
+            return 'stale'
     key, model, limit = configured
     lease = uuid.uuid4().hex
     selected = None
@@ -171,8 +209,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         active = db.execute('SELECT lease FROM x_market_jobs WHERE source_id=? AND url=? AND sha=?', identity).fetchone()
         state = 'done' if current and current['sha'] == selected['sha'] and active and active['lease'] == lease else 'stale'
         if state == 'done':
-            publication = {'id': str(selected['id']), 'url': selected['url'], 'topic': selected['topic'],
-                           'publishedAt': selected['published_at'], 'observedAt': selected['observed_at'], **result}
+            publication = publication_payload(selected, result)
             db.execute('INSERT OR REPLACE INTO x_market_publications VALUES(?,?,?,?,?)', (*identity, json.dumps(publication, ensure_ascii=False), datetime.now(timezone.utc).isoformat()))
         db.execute('UPDATE x_market_jobs SET state=? WHERE source_id=? AND url=? AND sha=? AND lease=?', (state, *identity, lease))
         db.execute('UPDATE signal_headline_translation_calls SET state=? WHERE lease=?', (state, lease))
