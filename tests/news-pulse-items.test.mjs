@@ -63,3 +63,22 @@ test('compact home headline is separate from the complete published headline', (
   assert.equal(item.shortTitle,'DOCAスキルでBlueField開発を加速');
   assert.ok(item.shortTitle.length<item.title.length);
 });
+
+test('late acquired date-only source stays on its original day in both home languages', () => {
+  const feed=availableNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[{
+    id:'1210',tickers:['MSFT'],publisher:'Microsoft',
+    url:'https://www.microsoft.com/en-us/security/blog/2026/10/01/insights-from-the-2026-microsoft-digital-defense-report/',
+    title:'Insights from the 2026 Microsoft Digital Defense Report',translationJa:'2026年Microsoftデジタル防御レポートの知見',
+    publishedOn:'2026-10-01',observedAt:'2026-10-02T17:45:51.992Z',
+  },{
+    id:'1211',tickers:['NBIS'],publisher:'Nebius',url:'https://nebius.com/blog/newer',
+    title:'Newer official update',translationJa:'新しい公式発表',
+    publishedOn:'2026-10-02',observedAt:'2026-10-02T12:00:00Z',
+  }]});
+  for(const lang of ['ja','en']) {
+    const pulse=newsPulseItems(feed,lang);
+    assert.deepEqual(pulse.map(x=>x.id),['official-1211','official-1210']);
+    assert.equal(pulse[1].at,'2026-10-01');
+    assert.equal(pulse[1].kind,'date');
+  }
+});

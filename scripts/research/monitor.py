@@ -25,7 +25,7 @@ INDEXES = {t: p.get("monitorUrl", p["indexUrl"]) for t, p in PROVIDERS.items()}
 HOSTS = {t: set(p["allowedHosts"]) for t, p in PROVIDERS.items()}
 MAX_BYTES = 12 * 1024 * 1024
 MAX_EXTRACTED_CHARS = 160_000
-HTML_EXTRACTOR_VERSION = "2026-10-01-server-form-v2"
+HTML_EXTRACTOR_VERSION = "2026-10-02-original-publication-v3"
 MAX_JSON_LD_CHARS = 512 * 1024
 MAX_JSON_LD_BLOCKS = 20
 MAX_JSON_LD_NODES = 2_000
@@ -53,7 +53,7 @@ FETCH_CACHE_MAX_BYTES = 24 * 1024 * 1024
 DISCOVERY_CACHE_MAX_BYTES = 2 * 1024 * 1024
 # Increment this whenever discovery parsing semantics change. Persisted validators
 # must not make a new deployment reuse candidates produced by an older parser.
-DISCOVERY_CACHE_PARSER_VERSION = 1
+DISCOVERY_CACHE_PARSER_VERSION = 2
 _FETCH_CACHE = {}
 _FETCH_CACHE_LOCK = threading.Lock()
 ACCESS_RESTRICTED_ERRORS = {
@@ -938,6 +938,101 @@ class StructuredArticleText(HTMLParser):
         return max(candidates, key=len, default="")
 
 
+def original_publication_date(value):
+    """Keep a publisher's calendar day, never convert it into an observed time."""
+    if not isinstance(value, str) or not re.fullmatch(
+        r"\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,6})?)?(?:Z|[+-]\d{2}:\d{2})?)?",
+        value,
+    ):
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00")).date().isoformat()
+    except (TypeError, ValueError, OverflowError):
+        return None
+
+
+class ArticlePublication(StructuredArticleText):
+    """Read original-date metadata for this article, excluding related items."""
+
+    def __init__(self, url):
+        super().__init__()
+        self.url = self.identity(url)
+        self.meta_dates = []
+
+    @staticmethod
+    def identity(value):
+        if isinstance(value, dict):
+            value = value.get("@id") or value.get("url")
+        if not isinstance(value, str):
+            return None
+        try:
+            parsed = urlsplit(value)
+            if parsed.scheme not in {"http", "https"} or not parsed.hostname:
+                return None
+            if (parsed.username or parsed.password
+                    or parsed.port not in {None, 443 if parsed.scheme == "https" else 80}):
+                return None
+            return parsed.scheme, parsed.hostname.lower(), parsed.path.rstrip("/"), parsed.query
+        except ValueError:
+            return None
+
+    def handle_starttag(self, tag, attrs):
+        super().handle_starttag(tag, attrs)
+        if tag.lower() == "meta":
+            values = {key.lower(): value for key, value in attrs if key and value}
+            if (values.get("property") or values.get("name") or "").lower() == "article:published_time":
+                self.meta_dates.append(values.get("content"))
+
+    def publication_date(self):
+        candidates = list(self.meta_dates)
+        nodes_seen = 0
+        for block in self.blocks:
+            try:
+                root = json.loads(block)
+            except (TypeError, ValueError, RecursionError):
+                continue
+            # Only top-level schema entities or @graph members can describe the
+            # current page. Never descend into mentions, hasPart or ItemLists.
+            roots = root if isinstance(root, list) else [root]
+            nodes = []
+            for item in roots[:MAX_JSON_LD_NODES]:
+                if isinstance(item, dict):
+                    nodes.append(item)
+                    graph = item.get("@graph")
+                    if isinstance(graph, list):
+                        nodes.extend(graph[:MAX_JSON_LD_NODES])
+            for node in nodes:
+                nodes_seen += 1
+                if nodes_seen > MAX_JSON_LD_NODES:
+                    return None
+                if not isinstance(node, dict):
+                    continue
+                raw_types = node.get("@type", [])
+                if isinstance(raw_types, str):
+                    raw_types = [raw_types]
+                if not isinstance(raw_types, list):
+                    continue
+                types = {self._schema_type(item) for item in raw_types}
+                if not types & (self.article_types | {"webpage"}):
+                    continue
+                references = [node[key] for key in ("url", "@id", "mainEntityOfPage") if key in node]
+                identities = [self.identity(value) for value in references]
+                if self.url not in identities or any(identity != self.url for identity in identities):
+                    continue
+                # dateModified, uploadDate and HTTP Last-Modified are never
+                # evidence of original publication, even when more recent.
+                candidates.append(node.get("datePublished"))
+        dates = {date for value in candidates if (date := original_publication_date(value))}
+        return dates.pop() if len(dates) == 1 else None
+
+
+def article_publication_date(content, url, declared_encoding=None):
+    parser = ArticlePublication(url)
+    parser.feed(decode_html_document(content, declared_encoding))
+    parser.close()
+    return parser.publication_date()
+
+
 def decode_html_document(content, declared_encoding=None):
     """Decode a bounded HTML response without trusting arbitrary codec names."""
     if content.startswith((b"\xff\xfe", b"\xfe\xff")):
@@ -1126,7 +1221,7 @@ def _feed_publication_date(item):
     return None
 
 
-def feed_links(body, ticker, content_type="application/rss+xml"):
+def feed_links(body, ticker, content_type="application/rss+xml", source_url=None):
     """Extract official links and substantive first-party feed evidence."""
     if b"\x00" in body or re.search(br"<!\s*(DOCTYPE|ENTITY)", body, re.I):
         raise ValueError("XML declarations with entities are not supported")
@@ -1146,6 +1241,14 @@ def feed_links(body, ticker, content_type="application/rss+xml"):
         if canonical:
             title = item.findtext("title") or item.findtext(atom + "title") or ""
             title = " ".join(unescape(title).split())[:300] or None
+            feed_host = urlsplit(source_url or INDEXES[ticker]).hostname
+            if urlsplit(canonical).hostname != feed_host:
+                # A first-party aggregator can re-list another first-party
+                # article later. Its pubDate and summary are not authoritative
+                # original-article evidence. Keep this already-approved URL on
+                # the ordinary remote queue, including previously inline rows.
+                links[canonical] = title
+                continue
             evidence_candidates = [
                 _feed_inline_text(item.find(content + "encoded")),
                 _feed_inline_text(item.find(atom + "content")),
@@ -2992,7 +3095,7 @@ def discover_links(body, kind, ticker, source):
             raise ValueError("SEC submissions source is not JSON")
         return sec_submission_links(body, ticker, source)
     if source["format"] == "rss":
-        return feed_links(body, ticker, kind)
+        return feed_links(body, ticker, kind, source["url"])
     if source["format"] == "sitemap":
         return sitemap_links(body, ticker)
     if source["format"] == "news-json":
@@ -3289,7 +3392,12 @@ def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=N
             supplemental_sources
         )
         failures.extend(supplemental_failures)
-        links.update(supplemental_links)
+        for url, candidate in supplemental_links.items():
+            # A relay's title-only discovery must not replace the primary
+            # origin feed's already-validated inline evidence and date.
+            if isinstance(links.get(url), dict) and not isinstance(candidate, dict):
+                continue
+            links[url] = candidate
 
     successful_sources = [source for source in (primary_source, supplemental_source) if source]
     used_source = primary_source or supplemental_source
@@ -4185,14 +4293,14 @@ def collect_source(row, transport=fetch):
             )
         )
         sec_filing = urlsplit(row["url"]).hostname == "www.sec.gov"
-        stale_thin_html = (
+        stale_html_extractor = (
             row["content_type"] == "text/html"
-            and 0 < (row["extracted_chars"] or 0) < 1200
+            and (row["extracted_chars"] or 0) > 0
             and row["extractor_version"] != HTML_EXTRACTOR_VERSION
         )
         validators = (
             {"force_unconditional": True}
-            if sec_filing or stale_thin_html else {}
+            if sec_filing or stale_html_extractor else {}
             if missing_extracted_evidence else {
                 "etag": row["response_etag"],
                 "last_modified": row["response_last_modified"],
@@ -4241,6 +4349,8 @@ def collect_source(row, transport=fetch):
         "responseLastModified": response_last_modified,
         "evidenceUrl": evidence_url,
         "evidenceKind": evidence_kind,
+        "publishedOn": article_publication_date(content, row["url"], declared_encoding)
+        if content_type == "text/html" and evidence_kind == "direct" else None,
     }
 
 
@@ -4336,6 +4446,13 @@ def save_source_check(db, row, result):
               )
             """, (row["url"],))
         if not not_modified:
+            # A lawful direct article recheck can correct an existing feed date.
+            # Keep discovery/detection timestamps and evidence revisions intact;
+            # the bridge's date-inclusive revision invalidates stale projections.
+            published_on = original_publication_date(result.get("publishedOn"))
+            if published_on and published_on <= checked_at[:10]:
+                db.execute("UPDATE sources SET published_on=? WHERE url=?",
+                           (published_on, row["url"]))
             db.execute("""
           UPDATE sources
           SET sha256=?,raw_sha256=?,body_sha256=?,checked_at=?,

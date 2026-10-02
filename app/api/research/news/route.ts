@@ -50,7 +50,9 @@ export async function GET() {
     const fallback = issuerEvents.some(e => e.ticker === "MU" && e.kind === "earnings") ? [] : [{...muFlash, bodyJa: muLatest.facts.map(f => f.text.ja).join("\n\n"), bodyEn: muLatest.facts.map(f => f.text.en).join("\n\n")}];
     const merged: OfficialUpdate[] = [...resultUpdates, ...fallback, ...(payload.officialUpdates ?? []).filter(item => item.url !== muFlash.url && !resultUpdates.some(r => r.url === item.url))];
     payload.officialUpdates = mergeResultNews(merged, payload.resultBriefs ?? [])
-      .toSorted((a,b)=>Date.parse(b.publishedAt ?? b.observedAt)-Date.parse(a.publishedAt ?? a.observedAt)).slice(0,20);
+      // Apply the same source-clock precedence as the list/pulse before the
+      // limit; a newly acquired older date-only article must not crowd them out.
+      .toSorted((a,b)=>Date.parse(b.publishedAt ?? b.publishedOn ?? b.observedAt)-Date.parse(a.publishedAt ?? a.publishedOn ?? a.observedAt)).slice(0,20);
     return Response.json(availableNewsPayload(payload), { headers });
   } catch {
     // A monitor outage is not an empty, successfully refreshed news feed.

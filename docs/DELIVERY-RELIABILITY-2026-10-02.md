@@ -188,3 +188,61 @@ recovered on the normal retry at 17:11:19.706 UTC. Its future publication clock
 from the publisher is left unchanged. This source-side incident is distinct
 from the PR Newswire parser repair, whose pre-deployment failed attempt remains
 scheduled for 18:06:45.389 UTC verification.
+
+## Third rollout: restored publications verified on the live home page
+
+Commit `8a0f1eeb54e5ebf73dc53848a626e1e7b7cea7b3` passed the final integrated
+245 Node / 670 Python tests, lint, production build/type checking, compileall
+and whitespace checks. Its uploaded Git tree exactly matched
+`9c2ae5d15323f04b7b9784012f75ddb9a880c755` before the non-forced branch update.
+Actions `37041649910`, Vercel `dpl_BwSZH91RY2K7RmYL3Rj2btxHdarR` and Railway
+`df856682-2a1a-44de-a14d-54b369996159` all succeeded for that commit.
+
+At 17:36:37 UTC the existing preview's target API simultaneously returned:
+ASTS / B. Riley / 85 to 65 (two sources), MSFT / Wells Fargo / 700 to 725,
+AMZN / Rosenblatt / 335 to 360, MSFT / Piper Sandler / 550 to 610, and
+MRNA / Citi / 60 to 80. At 17:38 UTC the already-open live home reflected the
+restored records without a manual reload. Japanese and English views and the
+second target page were checked. The ASTS origins stayed on one card; the two
+MSFT brokers stayed separate. These are recovery observations, not new-source
+latency samples.
+
+The protected issuer diagnostic endpoint rejected an unauthenticated request
+with HTTP 401. The authorized browser remains on an older immutable preview,
+so its current editor-token session does not expose the new diagnostic view.
+No token was extracted or persisted and no authentication bridge was added.
+The three pending issuer notes therefore remain unclassified until the latest
+view can be used with normal editor authentication.
+
+## Newly acquired older article: source-date reconciliation
+
+Passive observation began at 17:41:40 UTC. Microsoft article event 1210 was
+first seen in the news API between 17:45:12.053 and 17:46:11.898 UTC, with
+`observedAt=2026-10-02T17:45:51.992+00:00` and `publishedOn=2026-10-02`.
+The original article visibly states October 1:
+https://www.microsoft.com/en-us/security/blog/2026/10/01/insights-from-the-2026-microsoft-digital-defense-report/
+
+This is older-source acquisition and a publication-date mismatch, not a
+successful new-event latency sample. Exact raw feed/article schema access
+returned HTTP 403 during the investigation. Visible text establishes the
+mismatch, but does not establish the precise relisting/schema cause.
+
+Code inspection identified an independent, reproducible defect: article
+collection discarded original-publication metadata and could never correct a
+non-null feed date. Standards-based, same-article original metadata can now
+reconcile that date on ordinary direct rechecks, without changing observation
+or detection clocks. Modified dates and conflicting/unrelated metadata are not
+original-publication evidence. Cross-host first-party aggregator entries use
+the approved remote-article queue rather than promoting the aggregator's
+summary/date as original article evidence. Existing cache/extractor versions
+are invalidated for normal rechecks; schedules, source scopes and X budgets
+are unchanged.
+
+The API also now applies source timestamp, then source calendar date, then
+observation time before limiting its top 20. Previously, date-only older items
+could crowd newer items out by their recent acquisition clock even though the
+UI sorted the received subset correctly. Regression fixtures cover the API
+limit and Japanese/English pulse ordering. The article-markup fixture around
+the observed Microsoft URL/date pair is explicitly synthetic, not a captured
+copy of the inaccessible page. Live correction still requires verification;
+no publication date is inferred or patched from the URL alone.

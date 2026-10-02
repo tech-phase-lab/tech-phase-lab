@@ -286,3 +286,29 @@ test('news API consolidates cross-publisher earnings without losing sources or c
     }
   }
 });
+
+test('news API ranks source dates before recent acquisition clocks when limiting the feed', async () => {
+  const previous = {fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
+  process.env.RESEARCH_MONITOR_URL='https://monitor.example.com';
+  process.env.RESEARCH_MONITOR_TOKEN='synthetic-server-token';
+  try {
+    const officialUpdates = Array.from({length:20}, (_,i)=>({
+      id:String(300+i),title:`Official update ${i}`,url:`https://nebius.com/blog/date-${i}`,
+      publisher:'Nebius',tickers:['NBIS'],publishedOn:i === 0 ? '2026-09-28' : '2026-10-02',
+      observedAt:i === 0 ? '2026-10-02T17:45:51.992Z' : '2026-10-02T01:00:00Z',
+    }));
+    globalThis.fetch=async()=>Response.json({ok:true,enabled:false,items:[],officialUpdates});
+    const response=await GET();
+    assert.equal(response.status,200);
+    const updates=(await response.json()).officialUpdates;
+    assert.equal(updates.length,20);
+    assert.deepEqual(updates.slice(0,19).map(x=>x.id),officialUpdates.slice(1).map(x=>x.id));
+    assert.equal(updates.some(x=>x.id==='300'),false);
+    assert.equal(updates[19].researchId,'mu-q4-2026');
+  } finally {
+    globalThis.fetch=previous.fetch;
+    for (const [key,value] of [['RESEARCH_MONITOR_URL',previous.url],['RESEARCH_MONITOR_TOKEN',previous.token]]) {
+      if(value===undefined) delete process.env[key]; else process.env[key]=value;
+    }
+  }
+});
