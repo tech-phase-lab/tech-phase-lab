@@ -1,3 +1,42 @@
+# Abbreviated financial-unit validation — October 2, 2026 09:42–09:53 JST
+
+Commit `f1b0e9d61d0947a0b92493eb8d436ca3a7ba3627` closes a fail-open
+numeric-validation gap in the automatic Japanese headline and official-research
+paths. Previously, evidence containing `$10B` could support generated copy that
+said `$10M`, because the shared validator compared the number but did not bind
+single-letter magnitude abbreviations to it. The validator now normalizes
+K/M/B/T with thousand/million/billion/trillion and normalizes `%`, `％`,
+`percent` and `パーセント`, while still requiring the same literal number.
+Focused regressions cover changed magnitudes, an unrelated same-unit number,
+spelled/abbreviated equivalence and Japanese text immediately following the
+unit.
+
+A concurrent approved change, commit
+`e9a96994ade02f6af60d2a0d89f27d4c308719a4`, landed before publication and was
+integrated before the final gates. The combined tree passed Node 198/198,
+Python 544/544, ESLint with zero errors and one pre-existing warning, the
+Next.js production build, `compileall` and `git diff --check`. The local and
+GitHub Git Data trees matched exactly at
+`05206795e6f2affbfe23db464d5a5e5c1692cc80`. Vercel deployment
+`dpl_HwZ2MYs7sjAWveqiCvm9b2bHM4VA` reached Ready and Railway staging reported
+success.
+
+The deployed branch preview was reloaded at 09:53 JST. Current official news
+and the target-price stream rendered, the newest-news carousel remained
+populated, and no The Fly item appeared in the loaded public page. This is a
+point-in-time UI check, not a delivery-latency guarantee. The long-running
+supplemental-route timeout is not due before 10:32:40 JST, and the two
+access-restricted routes remain deferred until 20:16:46 JST; do not force an
+early retry or infer recovery before those normal attempts.
+
+Calendar files and the October 2 handoff were reviewed first. All 40 companies
+already had an actual October 2 attempt and BLS/Federal Reserve had their daily
+review, so no date, time or coverage marker changed. Fourteen inconclusive
+companies remain pending with the exact blockers recorded in
+`docs/CALENDAR-HANDOFF-2026-10-02.md`.
+
+---
+
 # Safe fallback reason in the operations UI — October 2, 2026 08:49–09:03 JST
 
 Commit `31beeae85e6601282e9a7f42a0ab889c05c42385` preserves the fixed
