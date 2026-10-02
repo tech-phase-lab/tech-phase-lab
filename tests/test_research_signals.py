@@ -110,6 +110,43 @@ class SignalTests(unittest.TestCase):
         self.assertEqual({(x["ticker"], x["previous"], x["latest"]) for x in items},
                          {("MU", 500, 550), ("NBIS", 250, 300)})
 
+    def test_directional_target_uses_subject_not_competitor_and_full_revision(self):
+        reference = datetime(2026, 10, 2, 9, tzinfo=timezone.utc)
+        self.insert_target_observation(990, '2026-10-02T08:43:00Z', '2026-10-02T08:44:00Z')
+        text = ("SatelliteCo $ASTS downgraded to Neutral from Buy at B. Riley\n"
+                "B. Riley downgraded SatelliteCo with a price target of $65, down from $85.\n"
+                + "The analyst discussed competitive pressure. " * 15
+                + "A competitor, PeerCo ($VSAT), was mentioned.")
+        self.db.execute("UPDATE signal_events SET source_id=?,title=?,tickers_json=?,sha=?",
+                        ('x-wallstengine', text[:500], '["ASTS","VSAT"]', 'revision-a'))
+        self.db.execute("INSERT INTO signal_documents VALUES(?,?,?,?,?,?,?)",
+                        ('x-wallstengine', 'https://x.com/TipRanks/status/990', 'revision-a',
+                         text[:500], text, reference.isoformat(), reference.isoformat()))
+        items = signals.public_price_targets(self.db, now=reference)['items']
+        self.assertEqual([(x['ticker'], x['firm'], x['previous'], x['latest']) for x in items],
+                         [('ASTS', 'B. Riley', 85, 65)])
+        self.assertNotIn('competitive pressure', str(items))
+        # A second action beyond the stored title must not be silently dropped.
+        self.db.execute("UPDATE signal_documents SET text=?", (text + '\n$VSAT PT cut to $10 from $20 at Citi',))
+        self.assertEqual(signals.public_price_targets(self.db, now=reference)['items'], [])
+
+    def test_directional_target_rejects_inverted_numbers_and_ambiguous_subject(self):
+        reference = datetime(2026, 10, 2, 9, tzinfo=timezone.utc)
+        self.insert_target_observation(991, '2026-10-02T08:43:00Z', '2026-10-02T08:44:00Z')
+        for title, tickers in [
+            ('$ASTS price target of $85, down from $65 at Citi', '["ASTS"]'),
+            ('$ASTS price target at $65, up from $85 at Citi', '["ASTS"]'),
+            ('$ASTS and $VSAT price target of $65, down from $85 at Citi', '["ASTS","VSAT"]'),
+            ('$ASTS downgraded at Citi. $VSAT price target of $65, down from $85', '["ASTS","VSAT"]'),
+        ]:
+            with self.subTest(title=title):
+                self.db.execute('UPDATE signal_events SET title=?,tickers_json=?', (title, tickers))
+                self.assertEqual(signals.public_price_targets(self.db, now=reference)['items'], [])
+        self.db.execute('UPDATE signal_events SET title=?,tickers_json=?',
+                        ('$ASTS price target at $85, up from $65 at Citi', '["ASTS"]'))
+        item = signals.public_price_targets(self.db, now=reference)['items'][0]
+        self.assertEqual((item['previous'], item['latest']), (65, 85))
+
     def test_target_history_retains_unlisted_ticker_for_seven_days(self):
         signals.schema(self.db)
         reference = datetime(2026, 9, 27, 12, tzinfo=timezone.utc)

@@ -1,6 +1,16 @@
 # New-information acceptance observation
 
-## Current status — publication recovered; new window observing
+## Current status — confirmed in-window price-target publication miss
+
+At 18:41–18:46 JST the owner reported no visible updates. Read-only live
+inspection confirmed that X event 1170 (ASTS / B. Riley, USD 85 → USD 65),
+published 08:43:48 UTC and acquired 08:44:16.476 UTC, was omitted by the public
+target parser. This is a real delivery failure despite zero current fetch
+errors and empty translation queues. See `NEWS-TARGET-INCIDENT-2026-10-02.md`
+for evidence, repair scope and regression coverage. Preserve this miss and
+the original observation window; do not mark the interval passed after repair.
+
+## Earlier status — publication recovered; new window observing
 
 New acceptance observation: **2026-10-02T04:43:12.282254+00:00 → 2026-10-03T04:43:12.282254+00:00**
 (UTC; JST is UTC+9). This is a new 24-hour observation, not a pass.

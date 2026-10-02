@@ -871,6 +871,13 @@ PRICE_TARGET_TEXT = re.compile(
 PRICE_TARGET_REVERSED = re.compile(
     r"(?:price target|target price|PT)\s+(?:(?:raised|lowered|cut|hiked|increased|reduced)\s+)?from\s*\$(\d+(?:\.\d+)?)\s+to\s*\$(\d+(?:\.\d+)?)", re.I,
 )
+PRICE_TARGET_DIRECTIONAL = re.compile(
+    r"(?:price target|target price|PT)\s+(?:of|at)\s*\$(\d+(?:\.\d+)?)\s*,?\s*(down|up)\s+from\s*\$(\d+(?:\.\d+)?)", re.I,
+)
+PRICE_TARGET_SUBJECT = re.compile(
+    r"^[^$\n]{0,100}\$([A-Z]{1,5}(?:[.-][A-Z])?)\s+"
+    r"(?:downgraded|upgraded|initiated|reiterated|price target|PT)\b", re.I,
+)
 PRICE_TARGET_FIRM = re.compile(
     r"(?:at|by) (BofA|Bank of America|BNP Paribas|Citi(?:group)?|Citizens|KeyBanc|Stifel|UBS|J\.?P\.?\s?Morgan|Seaport Research|Morgan Stanley|Goldman Sachs|Barclays|Wells Fargo|Deutsche Bank|Jefferies|Mizuho|Baird|Piper Sandler|RBC Capital|RBC|Oppenheimer|Needham|Cantor Fitzgerald|Cantor|Wedbush|Truist|TD Cowen|Raymond James|Rosenblatt|Evercore ISI|Evercore|Bernstein|B. Riley|DA Davidson|Loop Capital|Susquehanna|BMO Capital|BMO)\b", re.I,
 )
@@ -882,9 +889,12 @@ def public_price_targets(db, sources=SOURCES, now=None, limit=20):
     now = now or datetime.now(timezone.utc)
     approved = {s["id"]: s for s in sources if s.get("format") == "x-api"}
     by_change = {}
-    rows = db.execute("""SELECT id,source_id,url,title,tickers_json,published_at,observed_at
-                         FROM signal_events WHERE event_kind IN ('new','baseline') AND source_id IN ('x-tipranks','x-thefly','x-wallstengine')
-                         ORDER BY julianday(observed_at) DESC,id DESC LIMIT 300""").fetchall()
+    rows = db.execute("""SELECT e.id,e.source_id,e.url,e.title,e.tickers_json,e.published_at,e.observed_at,
+                         d.text AS document_text
+                         FROM signal_events e LEFT JOIN signal_documents d
+                         ON d.source_id=e.source_id AND d.url=e.url AND d.sha=e.sha
+                         WHERE e.event_kind IN ('new','baseline') AND e.source_id IN ('x-tipranks','x-thefly','x-wallstengine')
+                         ORDER BY julianday(e.observed_at) DESC,e.id DESC LIMIT 300""").fetchall()
     for row in rows:
         source = approved.get(row["source_id"])
         if not source:
@@ -893,29 +903,47 @@ def public_price_targets(db, sources=SOURCES, now=None, limit=20):
             published = datetime.fromisoformat(row["published_at"].replace("Z", "+00:00"))
             observed = datetime.fromisoformat(row["observed_at"].replace("Z", "+00:00"))
             tickers = json.loads(row["tickers_json"])
-            match = PRICE_TARGET_TEXT.search(row["title"].replace(",", ""))
-            reversed_match = PRICE_TARGET_REVERSED.search(row["title"].replace(",", ""))
-            firm = PRICE_TARGET_FIRM.search(row["title"])
+            # Use the revision-bound full post so a competitor mention or a
+            # second action after the 500-character title cannot be overlooked.
+            text = row["document_text"] or row["title"]
+            normalized = text.replace(",", "")
+            match = PRICE_TARGET_TEXT.search(normalized)
+            reversed_match = PRICE_TARGET_REVERSED.search(normalized)
+            directional = PRICE_TARGET_DIRECTIONAL.search(normalized)
+            firm = PRICE_TARGET_FIRM.search(text)
             url = safe_url(row["url"], source)
             if re.match(r'^/theflynews/status/',urlsplit(url).path,re.I):
                 continue
-            old, new = (float(match.group(2)), float(match.group(1))) if match else ((float(reversed_match.group(1)), float(reversed_match.group(2))) if reversed_match else (0, 0))
+            old, new = (float(match.group(2)), float(match.group(1))) if match else ((float(reversed_match.group(1)), float(reversed_match.group(2))) if reversed_match else ((float(directional.group(3)), float(directional.group(1))) if directional else (0, 0)))
             # A post with several actions/firms cannot be attributed by taking
             # the first price pair and the first firm independently.
-            action_matches=list(PRICE_TARGET_TEXT.finditer(row['title'].replace(',', '')))+list(PRICE_TARGET_REVERSED.finditer(row['title'].replace(',', '')))
-            firm_matches=list(PRICE_TARGET_FIRM.finditer(row['title']))
+            action_matches=list(PRICE_TARGET_TEXT.finditer(normalized))+list(PRICE_TARGET_REVERSED.finditer(normalized))+list(PRICE_TARGET_DIRECTIONAL.finditer(normalized))
+            firm_matches=list(PRICE_TARGET_FIRM.finditer(text))
             if len(action_matches)!=1 or len(firm_matches)!=1:
                 continue
             action=action_matches[0].group(0)
-            if ((re.search(r'raised|hiked|increased',action,re.I) and new<=old)
-                    or (re.search(r'lowered|cut|reduced',action,re.I) and new>=old)):
+            if ((re.search(r'raised|hiked|increased|\bup\b',action,re.I) and new<=old)
+                    or (re.search(r'lowered|cut|reduced|\bdown\b',action,re.I) and new>=old)):
                 continue
+
+            if isinstance(tickers, list) and len(tickers) > 1:
+                # The opening analyst-action headline identifies the subject.
+                # Other cashtags are allowed only after the complete target
+                # statement (e.g. a competitor in explanatory commentary).
+                subject = PRICE_TARGET_SUBJECT.search(normalized)
+                before_target = set(re.findall(r'\$([A-Z]{1,5}(?:[.-][A-Z])?)\b',
+                                               normalized[:action_matches[0].end()]))
+                if (not subject or subject.group(1).upper() not in tickers or
+                        before_target != {subject.group(1).upper()} or
+                        not PRICE_TARGET_FIRM.search(normalized[:action_matches[0].start()])):
+                    continue
+                tickers = [subject.group(1).upper()]
 
             if (published.tzinfo is None or observed.tzinfo is None or
                     observed > now or
                     not timedelta(0) <= now - published <= timedelta(days=7) or
                     observed < published or
-                    (not match and not reversed_match) or not firm or not isinstance(tickers, list) or len(tickers) != 1 or
+                    (not match and not reversed_match and not directional) or not firm or not isinstance(tickers, list) or len(tickers) != 1 or
                     not isinstance(tickers[0], str) or not re.fullmatch(r"[A-Z]{1,5}(?:[.-][A-Z])?", tickers[0]) or
                     not 0 < old <= 100000 or not 0 < new <= 100000 or old == new):
                 continue
