@@ -5,20 +5,71 @@ These checks reject known contradictions; they do not prove semantic accuracy.
 import re
 from decimal import Decimal
 from collections import Counter
+from datetime import date
 
 
 QUANTITY_PATTERN = re.compile(
-    r'(?<![A-Za-z\d.,])(?P<number>\d+(?:[.,]\d+)*)\s*'
-    r'(?P<unit>thousand\b|million\b|billion\b|trillion\b|percent\b|パーセント|[KMBT](?![A-Za-z])|[%％])',
+    r'(?<![\d.,])(?P<before>[+＋\-−]?)\s*(?:[$€£¥]\s*)?'
+    r'(?P<after>[+＋\-−]?)\s*(?P<number>\d+(?:,\d{3})*(?:\.\d+)?)\s*'
+    r'(?P<unit>thousand\b|million\b|billion\b|trillion\b|percent\b|パーセント|[KMBT](?![A-Za-z])|[%％]|千|万|億|兆)',
     re.I,
 )
-UNIT_KEYS = {
-    'k': 'thousand', 'thousand': 'thousand',
-    'm': 'million', 'million': 'million',
-    'b': 'billion', 'billion': 'billion',
-    't': 'trillion', 'trillion': 'trillion',
-    '%': 'percent', '％': 'percent', 'percent': 'percent', 'パーセント': 'percent',
-}
+UNIT_SCALE = { 'k': 1000, 'thousand': 1000, '千': 1000,
+    'm': 1000000, 'million': 1000000, '万': 10000,
+    'b': 1000000000, 'billion': 1000000000, '億': 100000000,
+    't': 1000000000000, 'trillion': 1000000000000, '兆': 1000000000000 }
+MONTHS = {name: i for i, name in enumerate(('January','February','March','April','May','June','July','August','September','October','November','December'), 1)}
+MONTH_PATTERN = r'\b(' + '|'.join(MONTHS) + r')\b'
+ORDINALS = {'first': 1, 'second': 2, 'third': 3, 'fourth': 4, '一': 1, '二': 2, '三': 3, '四': 4}
+
+
+def quarter_values(text):
+    values = []
+    values.extend(int(x) for x in re.findall(r'第([1-4])四半期', text))
+    values.extend(int(x) for x in re.findall(r'\bQ([1-4])\b', text, re.I))
+    values.extend(ORDINALS[x.lower()] for x in re.findall(r'\b(first|second|third|fourth)[ -]+quarter\b', text, re.I))
+    values.extend(ORDINALS[x] for x in re.findall(r'第([一二三四])四半期', text))
+    return values
+
+
+def dates(text):
+    result = []
+    for m in re.finditer(MONTH_PATTERN + r'\s+(\d{1,2})(?!\d)(?:,?\s+(\d{4}))?', text, re.I):
+        month = MONTHS[m[1].capitalize()]
+        result.append((int(m[3]) if m[3] else None, month, int(m[2])))
+    for year, month, day in re.findall(r'(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日', text):
+        result.append((int(year) if year else None, int(month), int(day)))
+    for year, month, day in re.findall(r'(?<!\d)(\d{4})-(\d{2})-(\d{2})(?!\d)', text):
+        result.append((int(year), int(month), int(day)))
+    for year, month, day in result:
+        try:
+            date(year or 2000, month, day)
+        except ValueError as exc:
+            raise ValueError('unsupported-number') from exc
+    return result
+
+
+def numeric_values(text):
+    """Canonical exact magnitudes, preserving signs and percent dimensions."""
+    remaining = list(text)
+    values = []
+    for m in QUANTITY_PATTERN.finditer(text):
+        unit = m['unit'].lower()
+        if unit in ('k', 'm', 'b', 't') and m.start('number') > 0 and text[m.start('number')-1].isascii() and text[m.start('number')-1].isalpha():
+            continue  # Product identifiers such as GH100B are not monetary scales.
+        value = Decimal(m['number'].replace(',', ''))
+        if (m['after'] or m['before']) in ('-', '−') or (unit in UNIT_SCALE and (m['after'] or m['before']) not in ('+', '＋') and text[:m.start()].rstrip().endswith('(') and text[m.end():].lstrip().startswith(')')):
+            value = -value
+        unit = m['unit'].lower()
+        values.append((value * UNIT_SCALE.get(unit, 1), 'number' if unit in UNIT_SCALE else 'percent'))
+        remaining[m.start():m.end()] = ' ' * (m.end() - m.start())
+    values.extend((v, 'number') for v in signed_numbers(''.join(remaining)))
+    # Spelled calendar terms have numeric Japanese equivalents; no arbitrary
+    # number is admitted, and date/quarter relationships are checked separately.
+    values.extend((Decimal(MONTHS[m[1].capitalize()]), 'number') for m in re.finditer(MONTH_PATTERN, text, re.I))
+    values.extend((Decimal(ORDINALS[x.lower()]), 'number') for x in re.findall(r'\b(first|second|third|fourth)[ -]+quarter\b', text, re.I))
+    values.extend((Decimal(ORDINALS[x]), 'number') for x in re.findall(r'第([一二三四])四半期', text))
+    return values
 
 
 def numbers(text):
@@ -44,19 +95,15 @@ def signed_numbers(text):
 
 
 def validate_numbers(text, evidence):
-    # Whole values and signs: +32 is not -32, and 5 is not 15 or 500.
-    if not set(signed_numbers(text)).issubset(set(signed_numbers(evidence))):
+    # Compare exact quantities rather than numeric spelling: $150B equals
+    # 1500億ドル; $15B, 1500万ドル and -1500億ドル do not.
+    if not set(numeric_values(text)).issubset(set(numeric_values(evidence))):
         raise ValueError('unsupported-number')
-    # A matching literal alone is insufficient: $10M must not be accepted from
-    # evidence that says $10B. Treat common financial abbreviations and their
-    # spelled-out forms as equivalent while preserving the magnitude.
-    evidence_quantities = {
-        (match['number'], UNIT_KEYS[match['unit'].lower()])
-        for match in QUANTITY_PATTERN.finditer(evidence)
-    }
-    for match in QUANTITY_PATTERN.finditer(text):
-        quantity = (match['number'], UNIT_KEYS[match['unit'].lower()])
-        if quantity not in evidence_quantities:
+    if not set(quarter_values(text)).issubset(set(quarter_values(evidence))):
+        raise ValueError('unsupported-number')
+    source_dates = dates(evidence)
+    for year, month, day in dates(text):
+        if not any(month == sm and day == sd and (year is None or year == sy) for sy, sm, sd in source_dates):
             raise ValueError('unsupported-number')
 
 
@@ -93,7 +140,9 @@ def validate_semantics(text, evidence):
 
 
 def validate_pair(ja, en):
-    if Counter(signed_numbers(ja))!=Counter(signed_numbers(en)):
+    validate_numbers(ja, en)
+    validate_numbers(en, ja)
+    if Counter(numeric_values(ja))!=Counter(numeric_values(en)):
         raise ValueError('unsupported-number')
     for positive, negative in SEMANTIC_POLARITIES:
         if ((re.search(positive,ja,re.I) and re.search(negative,en,re.I))
