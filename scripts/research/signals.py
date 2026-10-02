@@ -251,6 +251,11 @@ def schema(db):
         headline_ja TEXT NOT NULL, model TEXT NOT NULL, created_at TEXT NOT NULL,
         PRIMARY KEY(source_id,url,sha)
       );
+      CREATE TABLE IF NOT EXISTS signal_compact_headlines (
+        source_id TEXT NOT NULL, url TEXT NOT NULL, sha TEXT NOT NULL,
+        source_title TEXT NOT NULL, title_ja TEXT NOT NULL, title_en TEXT NOT NULL,
+        PRIMARY KEY(source_id,url,sha)
+      );
       CREATE TABLE IF NOT EXISTS signal_x_request_attempts (
         id INTEGER PRIMARY KEY, source_id TEXT NOT NULL, attempted_at TEXT NOT NULL
       );
@@ -1524,6 +1529,13 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20):
                     translation['translationJa'] = cleaned
                 except ValueError:
                     pass
+        compact = db.execute("""SELECT source_title,title_ja,title_en FROM signal_compact_headlines
+          WHERE source_id=? AND url=? AND sha=?""", (row['source_id'], row['url'], row['sha'])).fetchone()
+        if compact and compact['source_title'] == display_title and translation.get('translationJa'):
+            import compact_headlines
+            translation.update(compact_headlines.validated(
+                {'shortTitleJa': compact['title_ja'], 'shortTitleEn': compact['title_en']},
+                translation['translationJa'], display_title))
         items.append({'id': str(row['id']), 'title': display_title, 'url': url,
                       'publisher': source['name'], 'tickers': tickers,
                       'observedAt': observed.isoformat(), **publication, **translation})

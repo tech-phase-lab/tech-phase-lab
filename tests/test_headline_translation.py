@@ -33,6 +33,36 @@ def response(payload, key):
 
 
 class HeadlineTranslationTests(unittest.TestCase):
+    def test_future_short_titles_publish_with_one_call_and_are_bound_to_input(self):
+        def provider(payload, key):
+            result = response(payload, key)
+            result['output_text'] = json.dumps({'titleJa':'ネビウスが新しいAI基盤を発表',
+                'shortTitleJa':'ネビウス、新AI基盤を発表',
+                'shortTitleEn':'Nebius announces new AI platform'})
+            return result
+        self.assertEqual(translation.run_once(self.path,provider,ENV,now=NOW,sources=[SOURCE]), 'done')
+        with translation.connect(self.path) as db:
+            def published():
+                return signals.public_official_updates(db,sources=[SOURCE],reference=translation.datetime.fromtimestamp(NOW,tz=translation.timezone.utc))[0]
+            self.assertEqual(published()['shortTitleJa'], 'ネビウス、新AI基盤を発表')
+            self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0],1)
+            db.execute("UPDATE signal_compact_headlines SET source_title='outdated source'")
+            self.assertNotIn('shortTitleJa',published())
+            self.assertIn('translationJa',published())
+
+    def test_invalid_short_copy_does_not_retry_or_hide_complete_news(self):
+        def provider(payload,key):
+            result=response(payload,key)
+            result['output_text']=json.dumps({'titleJa':'ネビウスが新しいAI基盤を発表',
+                'shortTitleJa':'ネビウス、9999台を発表','shortTitleEn':'Nebius announces 9999 units'})
+            return result
+        self.assertEqual(translation.run_once(self.path,provider,ENV,now=NOW,sources=[SOURCE]),'done')
+        with translation.connect(self.path) as db:
+            items=signals.public_official_updates(db,sources=[SOURCE],reference=translation.datetime.fromtimestamp(NOW,tz=translation.timezone.utc))
+            self.assertIn('translationJa',items[0])
+            self.assertNotIn('shortTitleJa',items[0])
+            self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0],1)
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
@@ -227,7 +257,7 @@ class HeadlineTranslationTests(unittest.TestCase):
             state=translation.diagnostics(db, env=ENV, now=NOW+1, sources=[SOURCE])
             self.assertEqual(state['failureKinds'], {'output-token-limit': 1})
         self.assertEqual(translation.run_once(self.path, truncated, ENV, now=NOW+5, sources=[SOURCE]), 'done')
-        self.assertEqual(budgets, [300,1200])
+        self.assertEqual(budgets, [600,1200])
 
     def test_existing_three_attempt_job_recovers_without_manual_reset(self):
         with translation.connect(self.path) as db:

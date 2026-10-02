@@ -289,3 +289,17 @@ short runtime check, not 24-hour acceptance or new-story translation evidence.
 - Acceptance remains **observing / untested for new eligible delivery**. The
   original `04:43:12.282254 UTC` start is unchanged; no clean-window reset was
   made and no zero-event category is treated as passed.
+
+## October 2 optional future headline display change
+
+Owner approved short headlines for future news, with ellipsis when shortening
+would distort meaning. The next deployment adds optional JA/EN compact copy to
+the existing official-headline and X market translation requests. Invalid compact
+copy falls back to the full headline and does not suppress news or retry the job.
+The original call cap, source acquisition schedule, acceptance start/end and
+October 3 13:50 JST report remain unchanged. Official output-token allowance is
+600 (previously 300), with the existing 1200-token limit retry. Keep deployment
+and worker restart timestamps in the report and split before/after observations.
+Synthetic unknown-URL tests cover the new display pipeline; do not describe them
+as evidence of actual new live news arrival. Translation latency and omissions
+still require the ongoing live observation.

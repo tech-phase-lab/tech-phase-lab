@@ -1,6 +1,24 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { newsPulseItems } from '../lib/research/news-pulse-items.ts';
+import { availableNewsPayload } from '../lib/research/general-news.ts';
+
+test('previously unknown incoming story keeps compact bilingual copy through feed validation', () => {
+  const incoming = {ok:true,enabled:false,items:[],officialUpdates:[{
+    id:'98765',tickers:['NBIS'],publisher:'Nebius',url:'https://nebius.com/blog/new-unknown-story',
+    title:'Nebius announces a new AI platform',translationJa:'ネビウスが新しいAI基盤を発表',
+    shortTitleJa:'ネビウス、新AI基盤を発表',shortTitleEn:'Nebius announces new AI platform',
+    observedAt:'2026-10-02T07:00:00Z'
+  }]};
+  const feed = availableNewsPayload(incoming);
+  assert.equal(newsPulseItems(feed,'ja')[0].shortTitle,incoming.officialUpdates[0].shortTitleJa);
+  assert.equal(newsPulseItems(feed,'en')[0].shortTitle,incoming.officialUpdates[0].shortTitleEn);
+  assert.equal(newsPulseItems(feed,'ja')[0].title,incoming.officialUpdates[0].translationJa);
+  incoming.officialUpdates[0].shortTitleJa = 'bad\0copy';
+  const fallback = newsPulseItems(availableNewsPayload(incoming),'ja');
+  assert.equal(fallback.length,1);
+  assert.equal(fallback[0].shortTitle,incoming.officialUpdates[0].translationJa);
+});
 
 const market = (id, topic, publishedAt) => ({ id, topic, publishedAt,
   observedAt:'2026-10-02T06:00:00Z', url:`https://x.com/Barchart/status/${id}`,

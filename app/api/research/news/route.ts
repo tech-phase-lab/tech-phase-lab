@@ -27,7 +27,7 @@ export async function GET() {
     try { issuerEvents=officialResultEvents(raw.officialResearch); } catch { /* An invalid note must not suppress valid news. */ }
     payload.officialUpdates = (payload.officialUpdates ?? []).map(item => {
       const event = issuerEvents.find(e => e.sources[0].url === item.url);
-      return event ? { ...item, researchId: event.id, title: event.title.en, translationJa: event.title.ja } : item;
+      return event ? { ...item, shortTitleJa: undefined, shortTitleEn: undefined, researchId: event.id, title: event.title.en, translationJa: event.title.ja } : item;
     });
     const resultUpdates = (payload.resultBriefs ?? []).map(r => ({id:r.id,title:r.titleEn,translationJa:r.titleJa,url:r.url,publisher:r.publisher,tickers:[r.ticker],observedAt:r.observedAt,publishedAt:r.publishedAt,researchId:r.kind === 'earnings' ? r.researchId : undefined}));
     const fallback = issuerEvents.some(e => e.ticker === "MU" && e.kind === "earnings") ? [] : [muFlash];

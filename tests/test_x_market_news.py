@@ -20,6 +20,26 @@ ENV = {'OFFICIAL_HEADLINE_TRANSLATION_ENABLED': 'true', 'OPENAI_API_KEY': 'synth
 
 
 class MarketNewsTests(unittest.TestCase):
+    def test_optional_compact_copy_preserves_source_and_cannot_block_full_post(self):
+        now = time.time()
+        original = 'Japan 10-year government bond yield reaches its highest in over 30 years.'
+        copy = {'titleJa':'日本の10年物国債利回りが30年以上ぶりの高水準に到達。', 'titleEn':original,
+                'shortTitleJa':'日本10年債利回り、30年以上ぶり高水準',
+                'shortTitleEn':'Japan 10-year bond yield highest in over 30 years'}
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'signals.sqlite'
+            self.seed(path,original,now)
+            self.assertEqual(news.run_once(path,lambda *_:{'status':'completed','output_text':json.dumps(copy)},ENV,now),'done')
+            with headline_translation.connect(path) as db:
+                item=news.public_feed(db,now=now)[0]
+                self.assertEqual(item['shortTitleJa'],copy['shortTitleJa'])
+                item['shortTitleJa']=item['shortTitleJa'].replace('10年','20年')
+                db.execute('UPDATE x_market_publications SET payload=?',(json.dumps(item),))
+                fallback=news.public_feed(db,now=now)[0]
+                self.assertEqual(fallback['titleJa'],copy['titleJa'])
+                self.assertNotIn('shortTitleJa',fallback)
+                self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0],1)
+
     def test_new_direct_story_publishes_during_an_inflight_market_translation(self):
         now = time.time()
         original = 'US 30-year Treasury yield rises +0.3% to its highest since 2002'

@@ -1,16 +1,25 @@
 import providers from "./providers.json" with { type: "json" };
 import { parseResultBriefs, type ResultBrief } from "./market-results.ts";
-export type GeneralNewsItem = {
+type CompactTitles = { shortTitleJa?: string; shortTitleEn?: string };
+export type GeneralNewsItem = CompactTitles & {
   id: string; title: string; url: string; publisher: string; tickers: string[];
   publishedAt: string; observedAt: string; approvedAt: string; summaryJa: string; summaryEn: string;
   impactJa: string; impactEn: string; impactLabel: "positive" | "negative" | "mixed" | "neutral" | "uncertain";
   confidence: "high" | "medium" | "low";
 };
-export type OfficialUpdate = { id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string };
-export type MarketUpdate = { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
+export type OfficialUpdate = CompactTitles & { id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string };
+export type MarketUpdate = CompactTitles & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
 export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; resultBriefs?: ResultBrief[] };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
   "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com", "www.bea.gov"]);
+
+// Optional display copy must never make a valid full article disappear.
+function compactTitles(value: Record<string, unknown>): CompactTitles {
+  const ja = value.shortTitleJa, en = value.shortTitleEn;
+  const valid = (text: unknown): text is string => typeof text === "string"
+    && !!text.trim() && Array.from(text).length <= 180 && !/[\0\r\n]/.test(text);
+  return valid(ja) && valid(en) ? { shortTitleJa: ja.trim(), shortTitleEn: en.trim() } : {};
+}
 
 // Keep the strict validator for every article, but isolate a rejected article
 // from unrelated valid stories. Never substitute previously cached publications.
@@ -55,7 +64,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       for (const key of ["publishedAt", "observedAt"]) {
         if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(v[key] as string) || !Number.isFinite(Date.parse(v[key] as string))) throw Error("Invalid market date");
       }
-      return { id: v.id as string, titleJa: v.titleJa as string, titleEn: v.titleEn as string, url: url.href, topic: v.topic as MarketUpdate["topic"], publishedAt: v.publishedAt as string, observedAt: v.observedAt as string };
+      return { ...compactTitles(v), id: v.id as string, titleJa: v.titleJa as string, titleEn: v.titleEn as string, url: url.href, topic: v.topic as MarketUpdate["topic"], publishedAt: v.publishedAt as string, observedAt: v.observedAt as string };
     });
   }
   if (payload.resultBriefs !== undefined) updates.resultBriefs = parseResultBriefs(payload.resultBriefs);
@@ -92,7 +101,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       }
       const resultReference = updates.resultBriefs?.some(r => r.kind === 'earnings' && r.researchId === v.researchId && r.url === url.href);
       if (v.researchId !== undefined && !(verifiedMu && v.researchId === 'mu-q4-2026') && !resultReference && !(issuerRelease && v.researchId === `ir-result-${v.id}`)) throw Error('Invalid research reference');
-      return { id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}) };
+      return { ...compactTitles(v), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}) };
     }).filter(item => {
       if (seenOfficialUrls.has(item.url)) return false;
       seenOfficialUrls.add(item.url);
@@ -122,7 +131,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
     if (!["positive", "negative", "mixed", "neutral", "uncertain"].includes(impactLabel)
         || !["high", "medium", "low"].includes(confidence)
         || (impactLabel === "uncertain" && confidence !== "low")) throw new Error("Invalid impact");
-    return { id, title: field("title", 2000), url: url.href, publisher: field("publisher", 500), tickers,
+    return { ...compactTitles(item), id, title: field("title", 2000), url: url.href, publisher: field("publisher", 500), tickers,
       publishedAt: date("publishedAt"), observedAt: date("observedAt"), approvedAt: date("approvedAt"),
       summaryJa: field("summaryJa", 1200), summaryEn: field("summaryEn", 1200),
       impactJa: field("impactJa", 1200), impactEn: field("impactEn", 1200),
