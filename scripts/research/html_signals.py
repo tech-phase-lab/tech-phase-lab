@@ -233,10 +233,18 @@ def collect(source, previous, tickers, request, clock=None):
     import json
 
     sitemap = source.get('indexFormat') == 'sitemap'
+    json_index = source.get('indexFormat') == 'json'
     capacity = 1000 if sitemap else 100
-    response = request({**source, 'format': 'feed' if sitemap else 'document'}, {})
+    response = request({**source, 'format': 'json' if json_index else 'feed' if sitemap else 'document'}, {})
     parser = NewsHTML()
-    if sitemap:
+    if json_index:
+        listing = json_path(json.loads(response['body']), source['jsonListingPath'])
+        if (not isinstance(listing, list) or len(listing) > capacity
+                or any(not isinstance(item, dict) or not isinstance(item.get('url'), str)
+                       for item in listing)):
+            raise ValueError('signal-index-invalid-listing')
+        parser.links = [item['url'] for item in listing]
+    elif sitemap:
         import xml.etree.ElementTree as ET
         if re.search(br'<!\s*(DOCTYPE|ENTITY)\b', response['body'], re.I):
             raise ValueError('unsafe-signal-xml')

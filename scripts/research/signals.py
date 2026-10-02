@@ -10,6 +10,8 @@ from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 import difflib
 import hashlib
+import gzip
+import io
 import json
 import os
 from pathlib import Path
@@ -69,13 +71,13 @@ def fetch(source, validators):
     url = safe_url(source["url"], source)
     headers = {"User-Agent": source.get("userAgent", "TechPhaseResearch/0.1 (+source-monitor)"), "Accept-Encoding": "identity"}
     for key, header in (("etag", "If-None-Match"), ("last_modified", "If-Modified-Since")):
-        value = monitor.http_validator(validators.get(key))
+        value = monitor.http_validator(validators.get(key)) if source.get("conditionalRequests", True) else None
         if value:
             headers[header] = value
     try:
         with build_opener(Redirects(source)).open(Request(url, headers=headers), timeout=20) as response:
             content_type = response.headers.get_content_type()
-            allowed = ({"text/html"} if source["format"] == "document" else {
+            allowed = ({"application/json"} if source["format"] == "json" else {"text/html"} if source["format"] == "document" else {
                 "application/rss+xml", "application/atom+xml", "application/xml", "text/xml",
             })
             if content_type not in allowed:
@@ -90,6 +92,18 @@ def fetch(source, validators):
                     raise ValueError("signal-response-limit")
             if not body:
                 raise ValueError("empty-signal-response")
+            # Some official sites send gzip even when identity was requested.
+            # Bound the expanded bytes as well as the downloaded representation.
+            encoding = (response.headers.get("Content-Encoding") or "identity").lower().strip()
+            if encoding == "gzip":
+                with gzip.GzipFile(fileobj=io.BytesIO(body)) as compressed:
+                    body = compressed.read(MAX_BYTES + 1)
+                if len(body) > MAX_BYTES:
+                    raise ValueError("signal-response-limit")
+                if not body:
+                    raise ValueError("empty-signal-response")
+            elif encoding != "identity":
+                raise ValueError("unexpected-signal-content-type")
             return {"body": bytes(body), "etag": monitor.http_validator(response.headers.get("ETag")),
                     "last_modified": monitor.http_validator(response.headers.get("Last-Modified"))}
     except HTTPError as exc:

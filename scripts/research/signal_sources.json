@@ -410,10 +410,10 @@
   },
   {
     "id": "sandisk-news",
-    "name": "Sandisk Investor News Releases",
-    "url": "https://investor.sandisk.com/news-events/news-releases",
+    "name": "Sandisk Official Newsroom",
+    "url": "https://www.sandisk.com/tools/api/globalsearchquery?q=%2A&locale=en-us&fl=title%2Curl%2Cdescription%2CprimaryImage%2CdocumentType%2CdocumentTypeDate&fq=documentType%3APress+Release&from=0&rows=15&sort=documentTypeDate",
     "allowedHosts": [
-      "investor.sandisk.com"
+      "www.sandisk.com"
     ],
     "tickers": [
       "SNDK"
@@ -421,10 +421,15 @@
     "kind": "publisher-update",
     "format": "html-index",
     "articlePrefixes": [
-      "/news-releases/news-release-details/"
+      "/company/newsroom/press-releases/"
     ],
     "intervalSeconds": 120,
-    "reuse": "review-required"
+    "reuse": "review-required",
+    "indexFormat": "json",
+    "jsonListingPath": [
+      "docs"
+    ],
+    "articleBodyClass": "para-text"
   },
   {
     "id": "oracle-investor-news",
@@ -604,7 +609,8 @@
     ],
     "intervalSeconds": 30,
     "reuse": "review-required",
-    "userAgent": "TechPhaseResearch/1.0 (+https://tech-phase-lab.vercel.app)"
+    "userAgent": "TechPhaseResearch/1.0 (+https://tech-phase-lab.vercel.app)",
+    "conditionalRequests": false
   },
   {
     "id": "x-nebius-official",
