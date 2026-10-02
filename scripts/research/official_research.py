@@ -119,7 +119,7 @@ def validate_item(name, item, body, source_title):
         def brand_case(match):
             forms=set(re.findall(r'\b' + re.escape(match[0]) + r'\b', source_title, re.I))
             return next(iter(forms)) if len(forms)==1 else match[0]
-        text=re.sub(r'\b[A-Z]{2,}[a-z]+\b', brand_case, text)
+        text=re.sub(r'(?<![A-Za-z0-9_])[A-Z]{2,}[a-z]+(?![A-Za-z0-9_])', brand_case, text)
         item[lang]=text
         # No invented/conversion-derived numbers. Preserve literal source values.
         factual_validation.validate_numbers(text, quote)

@@ -88,9 +88,9 @@ class OfficialResearchTests(unittest.TestCase):
 
     def test_only_unambiguous_source_name_case_is_normalized(self):
         note=json.loads(json.dumps(NOTE))
-        note['title']['ja']='NEbius、Inferizeを買収'
+        note['title']['ja']='NEbius、Inferizeを買収しNEbius Token Factoryを強化'
         result=research.validate(note, BODY, TITLE)
-        self.assertEqual(result['title']['ja'], 'Nebius、Inferizeを買収')
+        self.assertEqual(result['title']['ja'], 'Nebius、Inferizeを買収しNebius Token Factoryを強化')
         note['title']['ja']='OTHERbrand、Inferizeを買収'
         self.assertEqual(research.validate(note, BODY, TITLE)['title']['ja'], note['title']['ja'])
 
