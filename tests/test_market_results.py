@@ -52,6 +52,9 @@ class ResultTests(unittest.TestCase):
         self.assertEqual(x_api.parse_response(source,p,[])[0]['matches'],{'ECON':['economic-result']})
         for preview in ['EST NONFARM PAYROLLS +29K', 'UNEMPLOYMENT RATE 4.2% expected', 'AVG. HOURLY EARNINGS 3.0%']:
             self.assertIsNone(results.projection(preview,['ECON']))
+        for schedule in ['NONFARM PAYROLLS 08:30 ET', 'NONFARM PAYROLLS (September) 08:30', 'NFP 10/02', 'NFP 08']:
+            self.assertIsNone(results.projection(schedule,['ECON']))
+        self.assertIsNone(results.projection('Eurozone September CPI rose 3.8% YoY. Core CPI: 2.5% YoY.',['ECON']))
 
     def test_earnings_preserve_actuals_ranges_and_ignore_different_consensus(self):
         r=results.projection(TEXT,['MU'])

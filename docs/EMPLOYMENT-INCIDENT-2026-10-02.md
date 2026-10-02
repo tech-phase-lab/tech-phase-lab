@@ -47,3 +47,28 @@ time and browser first-render time were not continuously observed.
 
 Pre-ref-update gates: 209 Node and 602 Python tests, lint, build, compileall
 and diff checks. Deployment/recovery evidence must be appended after observation.
+
+The automated server's direct request to BLS nr0 returned HTTP 403. This is
+an access limitation, not evidence that BLS had not released the report.
+The full September result and July/August revisions were separately verified
+from the official archived release and added to the calendar's saved official
+results. This is a reviewed recovery entry, not automatic BLS ingestion or an
+on-time delivery success. The X post itself still lacks MoM/revisions; these
+must never be invented from its YoY figure or estimates.
+
+Initial repair 746c3a5 caused a second observed publication defect during its
+12-hour recovery backfill: event 1178 interpreted the 08:30 schedule clock as
+payrolls 08, and event 1177 presented Eurozone core CPI as an unqualified CPI
+result. Both were present in the public backend feed observed during recovery;
+do not omit them from the accuracy audit. The follow-up rejects schedule/date
+numbers, requires units for separator-free payroll results, retains the stricter
+non-employment separator rule and excludes explicitly non-U.S. indicators from
+this U.S. flash channel. Existing stored payloads are preserved privately and
+re-projected on every public read, so unsupported records disappear publicly.
+
+Actual event 1176: source 12:30:07.000 UTC, recovery acquisition
+12:49:12.663 UTC, bilingual backend publication 12:49:15.319 UTC.
+Source-to-intake **1145.663 s**, intake-to-public **2.656 s**,
+source-to-public **1148.319 s**. Deterministic processing was rounded to
+**0 ms**, not proven zero elapsed time. The five-second release sampler ended
+before recovery, so it cannot supply recovery API/browser first-observation.

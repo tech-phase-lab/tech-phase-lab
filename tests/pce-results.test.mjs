@@ -28,9 +28,9 @@ test("automatic exact-period PCE revisions replace the saved result once and pre
   const initial = mergeEconomicResults();
   const merged = mergeEconomicResults([update, update]);
   assert.equal(merged.length, initial.length);
-  assert.equal(merged[0].id, "pce-2026-08");
-  assert.equal(merged[0].result.ja, update.translationJa);
-  assert.equal(merged[0].sourceName, "BEA");
+  const pce = merged.find(item => item.id === "pce-2026-08");
+  assert.equal(pce.result.ja, update.translationJa);
+  assert.equal(pce.sourceName, "BEA");
   assert.deepEqual(merged.find(item => item.id === "adp-2026-09"), initial.find(item => item.id === "adp-2026-09"));
   for (const changes of [{ publisher: "Other" }, { publishedAt: undefined }, { translationJa: undefined }, { url: update.url.replace("august", "unknown") }]) {
     assert.deepEqual(mergeEconomicResults([{ ...update, ...changes }]), initial);

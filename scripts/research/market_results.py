@@ -42,21 +42,29 @@ def economic_metric(text):
     segment = tail[:next_label.start()] if next_label else tail
     actual = re.search(r'(?:actual|実績|結果)\s*[:=]?\s*' + VALUE, segment, re.I)
     if not actual:
-        # Structured result labels can omit "Actual". Require a separator
-        # and never promote forecasts/previous readings into actuals.
+        # Employment result labels can omit Actual and separators. Other
+        # indicators retain the explicit separator requirement.
         prefix = re.split(r'[\n;|]', text[:label.start()])[-1]
         if re.search(r'\best\b|forecast|expected|estimate|consensus|previous|prior|予想|前回', prefix, re.I):
+            return None
+        employment = re.fullmatch(r'NFP|non[- ]?farm payrolls|unemployment rate|(?:average|avg\.?) hourly earnings', label[0], re.I)
+        if not employment and not re.match(r'\s*(?:\([^\n()]{1,30}\)\s*)*[:=]',segment):
             return None
         actual = re.match(r'\s*(?:(?:\([^\n()]{1,30}\)|MoM|YoY|M/M|Y/Y)\s*)*(?:[:=]\s*|(?=[-+−\d]))' + VALUE, segment, re.I)
     if not actual or re.match(r'\s*(?:est\b|expected|forecast|estimate|consensus|previous|prior|予想|前回)', segment[actual.end():], re.I):
         return None
     if not re.fullmatch(r'[-+−]?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?',actual[1]):
         return None
+    # A schedule's 08:30 or a date must never become an actual result.
+    if re.match(r'\s*[:/]|[\d.]',segment[actual.end():]):
+        return None
     number = actual[1].replace(',', '').replace('−', '-') + (actual[2] or '')
     period = label[0].upper()
     ja, en = period, period
     if re.fullmatch(r'NFP|non[- ]?farm payrolls',label[0],re.I):
         if actual[2] == '%':
+            return None
+        if not actual[2] and not re.search(r'actual|実績|結果', segment[:actual.start()+8], re.I):
             return None
         ja, en = '非農業部門雇用者数', 'Nonfarm payrolls'
     elif label[0].lower() == 'unemployment rate':
@@ -80,6 +88,9 @@ def economic_metric(text):
 
 
 def economic_projection(text):
+    # This flash channel covers U.S. indicators, not a generic international CPI.
+    if re.search(r'\b(?:Eurozone|Euro area|United Kingdom|UK|Japan|Germany|France|China|Canada)\b', text, re.I):
+        return None
     labels = list(MACRO.finditer(text))
     parts = []
     for index, label in enumerate(labels):

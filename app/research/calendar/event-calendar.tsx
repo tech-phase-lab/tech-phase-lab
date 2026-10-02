@@ -100,7 +100,7 @@ export default function EventCalendar() {
         <ul>{coverage.map((company) => <li key={company.ticker}><a href={company.sourceUrl} target="_blank" rel="noreferrer"><strong>{company.ticker}</strong> {company.name} ↗</a><small>{coverageStatus(company)}</small></li>)}</ul>
       </details>
     </section>
-    <p className={styles.notice}>{t("PCEは公式本文の照合後に結果を更新します。市場予想との比較・PCE以外の結果の自動更新・自動通知は未対応です。", "PCE results update after checks against the official release. Consensus comparisons, automatic updates for other results and notifications are not yet available.")}</p>
+    <p className={styles.notice}>{t("公式本文と照合した結果と、投稿から取得した数値速報を掲載しています。市場予想との比較・自動通知は未対応です。", "Results checked against official releases and numeric flashes from source posts are shown here. Consensus comparisons and automatic notifications are not yet available.")}</p>
     <p className={styles.footnote}>{t("日付・期間は選択した時間帯が基準です。米国の夏時間・冬時間を反映しています。", "Dates and month filters follow the selected time zone. ET accounts for U.S. daylight saving.")}</p>
   </ResearchToolShell>;
 }

@@ -154,6 +154,13 @@ export function selectDateOnlyEarnings(period: string, now: number) {
 
 // Confirmed official releases, separate from scheduled future events.
 export const economicResults = [{
+  id: "jobs-2026-09", title: { ja: "米国雇用統計（9月）", en: "U.S. employment report (September 2026)" },
+  sourceName: "BLS", releasedAt: "2026-10-02T08:30:00-04:00",
+  result: { ja: "非農業部門雇用者数 +29,000人／失業率 4.2%", en: "Nonfarm payrolls +29,000; unemployment rate 4.2%" },
+  detail: { ja: "平均時給：前月比+0.1%・前年比+3.0%。雇用者数修正：7月 +21,000人→-10,000人、8月 +162,000人→+133,000人。2か月合計で60,000人の下方修正。BLS公式本文と照合して掲載。", en: "Average hourly earnings: +0.1% MoM and +3.0% YoY. Payroll revisions: July +21,000 to -10,000; August +162,000 to +133,000. Combined downward revision: 60,000. Checked against the official BLS release." },
+  sourceUrl: "https://www.bls.gov/news.release/archives/empsit_10022026.htm",
+  verifiedOn: "2026-10-02",
+}, {
   id: "adp-2026-09", title: { ja: "ADP雇用統計（9月）", en: "ADP employment report (September)" },
   sourceName: "ADP",
   releasedAt: "2026-09-30T08:15:00-04:00",
