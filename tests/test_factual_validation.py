@@ -116,5 +116,15 @@ class FactualValidationTests(unittest.TestCase):
             validation.validate_pair('3台のDGX Spark','two DGX Spark units')
         validation.validate_pair('GPUのうちひとつ', 'one of the GPUs')
 
+    def test_spelled_person_counts_and_exact_percentages(self):
+        validation.validate_pair('最大8人の話者', 'up to eight speakers')
+        validation.validate_pair('2人の参加者', 'two participants')
+        validation.validate_pair('従業員のひとり', 'one of the employees')
+        for wrong in ('最大7人の話者', '最大80人の話者'):
+            with self.assertRaisesRegex(ValueError, 'unsupported-number'):
+                validation.validate_pair(wrong, 'up to eight speakers')
+        with self.assertRaisesRegex(ValueError, 'unsupported-number'):
+            validation.validate_numbers('about 55%', '55.05%')
+
 if __name__ == "__main__":
     unittest.main()

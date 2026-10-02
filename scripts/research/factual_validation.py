@@ -90,12 +90,12 @@ def numeric_values(text):
     # do not cause blanket rejections of otherwise equivalent translations.
     values.extend((Decimal(SMALL_NUMBERS[x.lower()]), 'number') for x in re.findall(
         r'\b(' + '|'.join(SMALL_NUMBERS) + r')[ -]+(?:seconds?|minutes?|hours?|days?|weeks?|months?|years?)\b', text, re.I))
-    # Explicit hardware counts may spell the number before a product name.
+    # Explicit object/person counts may spell the number before a noun.
     # Exclude 'one of ...' idioms, which do not assert a standalone quantity.
     values.extend((Decimal(SMALL_NUMBERS[m[1].lower()]), 'number') for m in re.finditer(
         r'\b(' + '|'.join(SMALL_NUMBERS) + r')\s+(?!(?:of|another)\b)'
         r'(?:(?!(?:of|another)\b)[A-Za-z0-9.-]+\s+){0,4}'
-        r'(?:units?|GPUs?|DPUs?|servers?|devices?|chips?|layers?|encoders?)\b', text, re.I))
+        r'(?:units?|GPUs?|DPUs?|servers?|devices?|chips?|layers?|encoders?|speakers?|people|persons?|students?|participants?|employees?)\b', text, re.I))
     return values
 
 
