@@ -88,8 +88,8 @@ def parse_response(source, payload, tickers):
                 matches = {ticker: ["$" + ticker] for ticker in cashtags}
         is_earnings = bool(EARNINGS_PATTERN.search(text) and
                            not EARNINGS_PREVIEW_PATTERN.search(text))
-        is_economic = bool(re.search(r'\b(?:ADP|CPI|PPI|PCE|FOMC|NFP|GDP|nonfarm payrolls|unemployment rate)\b', text, re.I)
-                           and re.search(r'(?:actual|実績|結果)\s*[:=]?\s*[-+−]?\d', text, re.I))
+        import market_results
+        is_economic = market_results.projection(text, ['ECON']) is not None
         if is_economic:
             matches = {'ECON':['economic-result']}
         is_financing = source.get('financingUpdates') is True and FINANCING_PATTERN.search(text)

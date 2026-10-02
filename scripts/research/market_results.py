@@ -20,7 +20,7 @@ METRICS = [
     ('gross-margin', '粗利益率', 'Gross margin', r'(?:(?:adjusted|adj\.?|non[- ]?GAAP|GAAP|調整後)\s*)?(?:gross margin|粗利(?:益)?率)', False),
     ('operating-cash-flow', '営業キャッシュフロー', 'Operating cash flow', r'(?:operating cash flow|営業キャッシュフロー)', True),
 ]
-MACRO = re.compile(r'\b(?:ADP|CPI|PPI|PCE|FOMC|NFP|nonfarm payrolls|GDP|unemployment rate)\b', re.I)
+MACRO = re.compile(r'\b(?:ADP|CPI|PPI|PCE|FOMC|NFP|non[- ]?farm payrolls|GDP|unemployment rate|average hourly earnings)\b', re.I)
 PREVIEW = re.compile(r'earnings preview|upcoming|ahead of|will report|scheduled to|expected to report', re.I)
 
 
@@ -37,14 +37,49 @@ def projection(text, tickers):
     economic = 'ECON' in tickers
     if economic:
         label = MACRO.search(text)
-        actual = re.search(r'(?:actual|実績|結果)\s*[:=]?\s*' + VALUE, text, re.I)
-        if not label or not actual:
+        if not label:
+            return None
+        tail = text[label.end():]
+        # Do not associate the first result with another metric later in a post.
+        next_label = MACRO.search(tail)
+        segment = tail[:next_label.start()] if next_label else tail
+        actual = re.search(r'(?:actual|実績|結果)\s*[:=]?\s*' + VALUE, segment, re.I)
+        if not actual:
+            # Structured result labels can omit "Actual". Require a separator
+            # and never promote forecasts/previous readings into actuals.
+            prefix = re.split(r'[\n;|]', text[:label.start()])[-1]
+            if re.search(r'\best\b|forecast|expected|estimate|consensus|previous|prior|予想|前回', prefix, re.I):
+                return None
+            actual = re.match(r'\s*(?:\([^\n()]{1,30}\)\s*)*[:=]\s*' + VALUE, segment, re.I)
+        if not actual or re.match(r'\s*(?:est\b|expected|forecast|estimate|consensus|previous|prior|予想|前回)', segment[actual.end():], re.I):
+            return None
+        if not re.fullmatch(r'[-+−]?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?',actual[1]):
             return None
         number = actual[1].replace(',', '').replace('−', '-') + (actual[2] or '')
-        return {'kind': 'economic', 'ticker': 'ECON', 'period': label[0].upper(),
+        period = label[0].upper()
+        ja, en = period, period
+        if re.fullmatch(r'NFP|non[- ]?farm payrolls',label[0],re.I):
+            if actual[2] == '%':
+                return None
+            ja, en = '非農業部門雇用者数', 'Nonfarm payrolls'
+        elif label[0].lower() == 'unemployment rate':
+            if actual[2] != '%':
+                return None
+            ja, en = '失業率', 'Unemployment rate'
+        elif label[0].lower() == 'average hourly earnings':
+            if actual[2] != '%':
+                return None
+            basis = re.search(r'\b(MoM|YoY)\b|M/M|Y/Y|month.over.month|year.over.year',segment[:actual.end()],re.I)
+            if not basis:
+                return None
+            monthly = bool(re.fullmatch(r'MoM|M/M|month.over.month',basis[0],re.I))
+            suffix = 'MoM' if monthly else 'YoY'
+            period += ' ('+suffix+')'
+            ja, en = '平均時給（'+('前月比' if monthly else '前年比')+'）', 'Average hourly earnings ('+suffix+')'
+        return {'kind': 'economic', 'ticker': 'ECON', 'period': period,
                 'facts': [{'key':'actual', 'ja':'結果', 'en':'Actual', 'value':number}],
-                'titleJa': label[0].upper() + '：結果 ' + number,
-                'titleEn': label[0].upper() + ': actual ' + number}
+                'titleJa': ja + '：結果 ' + number,
+                'titleEn': en + ': actual ' + number}
     if len(tickers) != 1 or not re.search(r'earnings|results|highlights|決算', text, re.I):
         return None
     period = re.search(r'(?:(?:FY)?\s*(20\d{2})\s*)?Q([1-4])(?:\s*(?:FY)?\s*(20\d{2}))?', text, re.I)

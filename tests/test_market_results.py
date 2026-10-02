@@ -13,6 +13,29 @@ import x_api
 TEXT = '$MU Q4 2026 earnings highlights\nRevenue: $54.23B (Est $51.07B)\nAdjusted EPS: $33.42 (Est $31.61)\nAdjusted gross margin: 87.0%\nQ1 guidance: Revenue: $61.5B ± $1.5B\nAdjusted EPS: $38.15 ± $1.00'
 
 class ResultTests(unittest.TestCase):
+    def test_employment_results_keep_signs_units_and_wage_periods(self):
+        cases = [
+            ('US NONFARM PAYROLLS (SEP) ACTUAL: +90K; EST +85K', '+90K', '非農業部門雇用者数'),
+            ('US NON-FARM PAYROLLS: -90K; EST +85K', '-90K', '非農業部門雇用者数'),
+            ('US UNEMPLOYMENT RATE (SEP) ACTUAL: 4.1%; EST 4.0%', '4.1%', '失業率'),
+            ('US AVERAGE HOURLY EARNINGS (MoM) (SEP) ACTUAL: -0.1%; EST +0.2%', '-0.1%', '平均時給（前月比）'),
+            ('US AVERAGE HOURLY EARNINGS (YoY) ACTUAL: +3.2%; EST 3.0%', '+3.2%', '平均時給（前年比）'),
+            ('US AVERAGE HOURLY EARNINGS (MoM): +0.3%; EST +0.2%', '+0.3%', '平均時給（前月比）'),
+        ]
+        source=next(s for s in signals.SOURCES if s['id']=='x-wallstengine')
+        for text, value, ja in cases:
+            r=results.projection(text,['ECON'])
+            self.assertEqual(r['facts'][0]['value'],value)
+            self.assertIn(ja,r['titleJa']); self.assertIn(value,r['titleEn'])
+            payload={'data':[{'id':'8001','author_id':'1','text':text}],
+                     'includes':{'users':[{'id':'1','username':'wallstengine'}]}}
+            self.assertEqual(x_api.parse_response(source,payload,[])[0]['matches'],{'ECON':['economic-result']})
+        for text in ['FORECAST NFP: +90K','EST NFP: +90K','NFP: +90K EST', 'NFP: +90K expected', 'NFP ACTUAL: +90,00K',
+                     'UNEMPLOYMENT RATE ACTUAL: 4.1','AVERAGE HOURLY EARNINGS ACTUAL: 3.2%',
+                     'NFP: see unemployment rate ACTUAL: 4.1%']:
+            self.assertIsNone(results.projection(text,['ECON']))
+        self.assertNotEqual(results.projection(cases[3][0],['ECON'])['period'],results.projection(cases[4][0],['ECON'])['period'])
+
     def test_earnings_preserve_actuals_ranges_and_ignore_different_consensus(self):
         r=results.projection(TEXT,['MU'])
         self.assertEqual(r['period'],'Q4 2026')
