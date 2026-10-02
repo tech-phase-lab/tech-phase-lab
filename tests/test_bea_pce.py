@@ -26,6 +26,49 @@ PRIVATE EVIDENCE SENTINEL
 
 
 class PceTests(unittest.TestCase):
+    def test_bea_front_controller_alias_is_scoped_to_exact_canonical_pce_release(self):
+        alias = URL.replace('/news/', '/index.php/news/')
+        self.assertEqual(bea_pce.canonical_release_url(alias), URL)
+        self.assertEqual(bea_pce.canonical_release_url(URL), URL)
+        for invalid in (alias.replace('www.bea.gov', 'evil.example'),
+                        alias.replace('https:', 'http:'), alias + '?private=1',
+                        alias + '/attachment', alias + '#section',
+                        alias.replace('/index.php/', '/other.php/'),
+                        alias.replace('personal-income-and-outlays', 'gdp')):
+            with self.subTest(url=invalid):
+                self.assertIsNone(bea_pce.canonical_release_url(invalid))
+        # Public evidence still uses only the original clean release identity.
+        self.assertFalse(bea_pce.is_release_url(alias))
+
+    def test_bea_index_alias_and_clean_link_share_one_retained_article_identity(self):
+        source = next(s for s in signals.SOURCES if s['id'] == 'bea-pce')
+        alias = URL.replace('/news/', '/index.php/news/')
+        checked = '2026-10-02T20:10:00+00:00'
+        calls = []
+        previous = {'index_state': json.dumps({'initialized': True, 'children': {
+            URL: {'baseline': False, 'succeeded': '2026-09-30T13:00:00+00:00',
+                  'checked': '2026-09-30T13:00:00+00:00',
+                  'next_check': '2026-10-02T20:00:00+00:00', 'etag': '"pce"'},
+        }})}
+        def request(config, validators):
+            calls.append(config['url'])
+            if config['url'] == source['url']:
+                # Structure and alias were captured from BEA's actual index;
+                # surrounding link text is a small synthetic fixture.
+                return {'body': (f'<table><tr><td><a href="{alias}" hreflang="en">PCE</a></td></tr>'
+                                 f'<tr><td><a href="{URL}">PCE again</a></td></tr></table>').encode()}
+            self.assertEqual(config['url'], URL)
+            self.assertEqual(validators['etag'], '"pce"')
+            return {'not_modified': True}
+        result = html_signals.collect(source, previous, list(monitor.PROVIDERS), request, lambda: checked)
+        self.assertEqual(calls, [source['url'], URL])
+        self.assertEqual(result['article_errors'], 0)
+        self.assertEqual(result['_items'], [])
+        state = json.loads(result['index_state'])
+        self.assertEqual(list(state['children']), [URL])
+        self.assertFalse(state['children'][URL]['baseline'])
+        self.assertEqual(state['children'][URL]['succeeded'], checked)
+
     def test_projection_distinguishes_spending_and_prices(self):
         result = bea_pce.parse_release(TITLE, TEXT, URL)
         self.assertEqual(result["publishedAt"], "2026-09-30T08:30:00-04:00")

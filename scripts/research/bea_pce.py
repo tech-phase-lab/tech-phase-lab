@@ -2,7 +2,7 @@
 from datetime import datetime
 from decimal import Decimal
 import re
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urlunsplit
 from zoneinfo import ZoneInfo
 
 MONTHS = "January February March April May June July August September October November December".split()
@@ -23,6 +23,14 @@ def is_release_url(url):
             and not parsed.username and not parsed.password and not parsed.port
             and not parsed.query and not parsed.fragment
             and re.fullmatch(PATH, parsed.path) is not None)
+
+
+def canonical_release_url(url):
+    """Collapse BEA's observed Drupal front-controller alias, only for PCE."""
+    parsed = urlsplit(url)
+    path = parsed.path.removeprefix('/index.php') if parsed.path.startswith('/index.php/news/') else parsed.path
+    candidate = urlunsplit((parsed.scheme, parsed.netloc, path, parsed.query, parsed.fragment))
+    return candidate if is_release_url(candidate) else None
 
 
 def parse_release(title, text, url):

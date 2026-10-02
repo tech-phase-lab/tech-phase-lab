@@ -329,6 +329,11 @@ def collect(source, previous, tickers, request, clock=None):
     for href in parser.links:
         try:
             url = signals.safe_url(urljoin(source['url'], href), source)
+            if source['id'] == 'bea-pce':
+                from bea_pce import canonical_release_url
+                url = canonical_release_url(url)
+                if url is None:
+                    continue
         except ValueError:
             continue
         path = urlsplit(url).path

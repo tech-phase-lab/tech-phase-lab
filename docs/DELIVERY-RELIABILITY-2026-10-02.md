@@ -430,3 +430,46 @@ and independent review. The Python gate recorded zero external DNS/socket
 attempts. The existing authenticated editorial view also corroborated the
 retained Barchart original, its 10-year tenor and source/acquisition clocks;
 this is retained ingestion evidence, not independent public-web verification.
+
+## Seventh rollout and closed observation window
+
+Commit `daf9d51787c4ae21bacd5de8b94a7f66c508db6f` passed Actions
+`37053950995`, Vercel `dpl_BGoCB23FBmnPQYYS82wpaSnzDbEB` and Railway
+`b58b000d-06c6-4827-a3ef-6f24521145ce`. Tree
+`141318259376a25993e222f39f7b8bcb3ab339ad` matched the checked staged tree.
+The worker started at 19:25:31.946 UTC. One news 503 at 19:25:38.876 overlapped
+replacement and recovered on the next ordinary probe at 19:26:12.669.
+
+Item 1221's original stored backend-publication clock is
+`2026-10-02T19:08:05.017936+00:00`: acquisition-to-publication 3.239936 seconds,
+and stored-source-to-publication 40.017936 seconds. It was not replaced with the
+later diagnostic rollout time. The fresh-observation window closed at 20:00 UTC
+with one genuinely new eligible item, no new price-target sample, 342 successful
+polling responses and two recovered replacement-overlap news 503s. Exact browser
+first-render timing remains unknown. This is not a few-second end-to-end SLA.
+
+## BEA routing variant discovered during the final check
+
+A new BEA `signal-no-article-links` failure began at 20:01:19 UTC, after its
+19:59:18 success. An ordinary capture of the current official listing contained
+104 links, including `/index.php/news/2026/personal-income-and-outlays-august-2026`.
+The configured exact clean `/news/...` pattern consequently found none. The
+same original release is available at the existing clean URL. The repair
+normalizes only this observed BEA front-controller prefix and only when the
+result passes the existing strict PCE URL validator. It applies before article
+selection and retained-child lookup, preserving the same URL/revision identity,
+HTTP validators and source dates rather than creating a newly dated duplicate.
+No broader government paths, other hosts, query-bearing release URLs or numeric
+publication gates are admitted.
+
+Independently, a new PR Newswire CME article returned HTTP 404 at 20:02:18 and
+recovered at the scheduled attempt at 20:06:32.319 (measured article recovery
+count increased from 15 to 16). A different Allison article returned 404 at
+20:06:02 with a normal 20:10:02 retry. These are newly observed upstream article
+incidents, not evidence that the earlier evicted Green Water record recovered.
+The 20:00 fresh-delivery observation window is not extended or rewritten by
+this separate error follow-through.
+
+The BEA routing candidate passed 250 Node and 715 Python tests (965 total),
+all required gates and independent review. External DNS/socket audit: zero
+attempts. The separate fresh-event timing window remains closed at 20:00 UTC.
