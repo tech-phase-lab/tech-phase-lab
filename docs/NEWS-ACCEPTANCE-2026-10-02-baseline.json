@@ -1,0 +1,401 @@
+{
+  "windowStart": "2026-10-02T02:57:53.058536+00:00",
+  "windowEnd": "2026-10-03T02:57:53.058536+00:00",
+  "capturedAt": "2026-10-02T02:57:53.058536+00:00",
+  "baselineOnly": true,
+  "health": {
+    "ready": true,
+    "startedAt": "2026-10-02T02:21:12.045+00:00",
+    "lastCycleAt": "2026-10-02T02:57:52.344+00:00",
+    "cycles": 935,
+    "sourceChecks": 12,
+    "sourceFetchErrors": 0,
+    "pendingBodies": 0,
+    "signalIntake": {
+      "routes": {
+        "configured": 24,
+        "suspended": 2,
+        "checked": 24,
+        "fresh": 22,
+        "stale": 0,
+        "error": 2,
+        "pending": 0,
+        "errorKinds": {
+          "accessRestricted": 0,
+          "rateLimited": 0,
+          "timeout": 1,
+          "server": 0,
+          "invalidResponse": 0,
+          "articlePartial": 0,
+          "fetchFailure": 0,
+          "noLinks": 0,
+          "other": 1
+        },
+        "retry": {
+          "due": 0,
+          "deferred": 2,
+          "unscheduled": 0,
+          "nextAt": "2026-10-02T02:59:24.594000+00:00",
+          "byErrorKind": {
+            "accessRestricted": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "rateLimited": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "timeout": {
+              "due": 0,
+              "deferred": 1,
+              "unscheduled": 0,
+              "nextAt": "2026-10-02T05:49:01.886000+00:00"
+            },
+            "server": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "invalidResponse": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "articlePartial": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "fetchFailure": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "noLinks": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "other": {
+              "due": 0,
+              "deferred": 1,
+              "unscheduled": 0,
+              "nextAt": "2026-10-02T02:59:24.594000+00:00"
+            }
+          }
+        },
+        "activeOutages": {
+          "measured": 2,
+          "unmeasured": 0,
+          "ageMaxMs": 574202370,
+          "attemptsAverage": 29.5,
+          "attemptsMax": 57,
+          "oldestStartedAt": "2026-09-25T11:27:50.250000+00:00",
+          "byErrorKind": {
+            "timeout": {
+              "measured": 1,
+              "unmeasured": 0,
+              "ageMaxMs": 574202370,
+              "attemptsAverage": 57.0,
+              "attemptsMax": 57,
+              "oldestStartedAt": "2026-09-25T11:27:50.250000+00:00"
+            },
+            "other": {
+              "measured": 1,
+              "unmeasured": 0,
+              "ageMaxMs": 88758,
+              "attemptsAverage": 2.0,
+              "attemptsMax": 2,
+              "oldestStartedAt": "2026-10-02T02:56:23.862000+00:00"
+            }
+          }
+        }
+      },
+      "articleRetrieval": {
+        "error": 0,
+        "errorKinds": {
+          "accessRestricted": 0,
+          "rateLimited": 0,
+          "timeout": 0,
+          "server": 0,
+          "invalidResponse": 0,
+          "articlePartial": 0,
+          "fetchFailure": 0,
+          "noLinks": 0,
+          "other": 0
+        },
+        "retry": {
+          "due": 0,
+          "deferred": 0,
+          "unscheduled": 0,
+          "nextAt": null,
+          "byErrorKind": {
+            "accessRestricted": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "rateLimited": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "timeout": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "server": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "invalidResponse": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "articlePartial": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "fetchFailure": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "noLinks": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            },
+            "other": {
+              "due": 0,
+              "deferred": 0,
+              "unscheduled": 0,
+              "nextAt": null
+            }
+          }
+        },
+        "recoveries24Hours": {
+          "count": 0,
+          "latencyAverageMs": null,
+          "latencyMaxMs": null,
+          "attemptsAverage": null,
+          "attemptsMax": null,
+          "lastRecoveredAt": null
+        }
+      },
+      "publicationEvidence": {
+        "total": 979,
+        "timestamp": 360,
+        "dateOnly": 11,
+        "missing": 608
+      },
+      "publicationToDetectionLatency24Hours": {
+        "count": 7,
+        "latencyAverageMs": 5853508,
+        "latencyMaxMs": 40711209,
+        "lastObservedAt": "2026-10-01T18:14:02.996000+00:00"
+      },
+      "routeTransitions24Hours": {
+        "recoveries": 358,
+        "failures": 359,
+        "changes": 0,
+        "lastOutcome": "failed",
+        "lastOccurredAt": "2026-10-02T02:56:23.862000+00:00"
+      },
+      "routeRecoveries24Hours": {
+        "count": 358,
+        "latencyAverageMs": 207341,
+        "latencyMaxMs": 14646466,
+        "attemptsAverage": 2.5,
+        "attemptsMax": 8,
+        "lastRecoveredAt": "2026-10-02T02:55:52.428000+00:00"
+      },
+      "routeRetryWait24Hours": {
+        "count": 545,
+        "waitAverageMs": 1677,
+        "waitMaxMs": 26581,
+        "lastAttemptedAt": "2026-10-02T02:57:24.583000+00:00"
+      },
+      "xIntake": {
+        "usage": {
+          "requested": true,
+          "configured": true,
+          "enabled": true,
+          "attemptsLast24Hours": 3514,
+          "dailyLimit": 4400,
+          "limitReached": false,
+          "nextAvailableAt": null,
+          "pacedUntil": "2026-10-02T02:58:00.916852+00:00",
+          "scope": "analyst-price-target-or-earnings",
+          "configuredMaxRequestsPerDay": 5040,
+          "localMaxRequestsPerDay": 4400,
+          "budgetCapped": true,
+          "pacingEnabled": true,
+          "minimumSpacingSeconds": 20,
+          "routeCount": 4,
+          "minimumRouteSpacingSeconds": 80
+        },
+        "routes": {
+          "checked": 5,
+          "error": 0,
+          "errors": {},
+          "latestCheckedAt": "2026-10-02T02:57:41.092+00:00",
+          "oldestSucceededAt": "2026-09-30T22:04:05.923+00:00",
+          "latestSucceededAt": "2026-10-02T02:57:41.092+00:00",
+          "nextCheckAt": "2026-09-30T22:05:05.923000+00:00"
+        },
+        "items24Hours": {
+          "total": 11,
+          "analystRatings": 2,
+          "priceTargets": 5,
+          "earnings": 2,
+          "officialUpdates": 3,
+          "other": 1,
+          "latestObservedAt": "2026-10-02T02:01:40.280000+00:00"
+        }
+      },
+      "xMarketNews": {
+        "accounts": 2,
+        "eligible": 1,
+        "published": 1,
+        "pending": 0,
+        "failureKinds": {}
+      },
+      "headlineTranslation": {
+        "status": "enabled",
+        "dailyLimit": 200,
+        "eligible": 49,
+        "translated": 49,
+        "pending": 0,
+        "running": 0,
+        "retrying": 0,
+        "exhausted": 0,
+        "oldestPendingAt": null,
+        "nextRetryAt": null,
+        "calls24Hours": {
+          "total": 124,
+          "failed": 70,
+          "completed": 51,
+          "stale": 3
+        }
+      },
+      "resultPublication": {
+        "status": "running",
+        "publishedLast24Hours": 0,
+        "latest": [],
+        "unsupportedFormats": "held-private",
+        "numericTranslation": "bilingual-field-labels"
+      },
+      "officialResearch": {
+        "published": 3,
+        "pending": 1,
+        "latest": [
+          {
+            "id": "ir-result-1122",
+            "ticker": "MSFT",
+            "observedAt": "2026-10-01T17:13:30.242+00:00",
+            "bodyReadyAt": "2026-10-01T17:42:37.324+00:00",
+            "generationStartedAt": "2026-10-02T00:30:09.149519+00:00",
+            "publicAt": "2026-10-02T00:30:15.271+00:00",
+            "generationMs": 5521,
+            "detectionToPublicMs": 26205029
+          },
+          {
+            "id": "ir-result-1098",
+            "ticker": "AMD",
+            "observedAt": "2026-09-28T20:05:14.722+00:00",
+            "bodyReadyAt": "2026-09-29T01:53:16.141+00:00",
+            "generationStartedAt": "2026-10-01T23:04:57.625223+00:00",
+            "publicAt": "2026-10-01T23:05:03.603+00:00",
+            "generationMs": 5950,
+            "detectionToPublicMs": 269988881
+          },
+          {
+            "id": "ir-result-1128",
+            "ticker": "MU",
+            "observedAt": "2026-09-30T20:18:32.104+00:00",
+            "bodyReadyAt": "2026-10-01T20:09:26.711+00:00",
+            "generationStartedAt": "2026-10-01T20:09:31.352735+00:00",
+            "publicAt": "2026-10-01T20:09:31.369+00:00",
+            "generationMs": 17,
+            "detectionToPublicMs": 85859265
+          }
+        ],
+        "jobs": [
+          {
+            "event_id": 1122,
+            "state": "done",
+            "attempts": 1,
+            "failure_kind": "classified-attempt"
+          },
+          {
+            "event_id": 1119,
+            "state": "retry",
+            "attempts": 1,
+            "failure_kind": "invalid-copy"
+          },
+          {
+            "event_id": 1106,
+            "state": "done",
+            "attempts": 6,
+            "failure_kind": "classified-attempt"
+          },
+          {
+            "event_id": 1098,
+            "state": "done",
+            "attempts": 8,
+            "failure_kind": "classified-attempt"
+          }
+        ]
+      }
+    },
+    "priceTargetStream": {
+      "healthy": true,
+      "active": true,
+      "checkedSinceStart": true,
+      "clients": 1,
+      "maxClients": 3500,
+      "connectionsAccepted": 5,
+      "connectionsRejected": 0,
+      "disconnects": 4,
+      "readAttempts": 1297,
+      "snapshotReads": 1296,
+      "readFailures": 0,
+      "consecutiveFailures": 0,
+      "recoveries": 0,
+      "changes": 1,
+      "bytesSent": 5265,
+      "lastReadAt": "2026-10-02T02:57:52.669+00:00",
+      "lastSuccessAt": "2026-10-02T02:57:51.666+00:00",
+      "lastFailureAt": null,
+      "startedAt": "2026-10-02T02:21:12.360+00:00",
+      "measuredAt": "2026-10-02T02:57:52.802+00:00"
+    },
+    "health": {
+      "status": "ready",
+      "issues": [],
+      "monitorStaleAfterSeconds": 60
+    }
+  }
+}
