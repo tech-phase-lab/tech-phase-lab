@@ -237,17 +237,22 @@ def run_once(path, sources, reference=None):
 
 
 def latest_source_posts(items):
-    """Keep attributed source figures, even when publishers disagree.
+    """Keep separately attributed posts, including a publisher's follow-up facts.
 
-    A newer post supersedes the same publisher's older post for that period.
-    Never merge values across posts or replace a reported value with a hold.
+    An EPS-only update at a different URL does not retract the earlier revenue
+    post. Current-SHA checks above handle same-URL corrections/withdrawals; only
+    repeated copies of that exact source post are collapsed here.
     """
     latest={}
+    def identity(item):
+        return item.get('url') or id(item), item['publisher']
+    def observed(item):
+        return datetime.fromisoformat(item.get('observedAt') or item['publishedAt'])
     for item in items:
-        key=(item['ticker'],item['period'],item['publisher'])
-        if key not in latest or datetime.fromisoformat(item['publishedAt'])>datetime.fromisoformat(latest[key]['publishedAt']):
+        key=identity(item)
+        if key not in latest or observed(item)>observed(latest[key]):
             latest[key]=item
-    return [item for item in items if latest[(item['ticker'],item['period'],item['publisher'])] is item]
+    return [item for item in items if latest[identity(item)] is item]
 
 
 def public_feed(db, reference=None):

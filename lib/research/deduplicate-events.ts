@@ -3,11 +3,29 @@ import type { ResearchEvent } from "./data";
 /** Only compare recognized fiscal periods, never guess from the ticker/date. */
 export function normalizedEarningsPeriod(value: string): string | null {
   const normalized = value.toUpperCase().replace(/\s+/g, " ").trim();
-  const quarter = /\b(?:FQ|Q)([1-4])(?:\s*(?:FY)?\s*(20\d{2}))?\b/.exec(normalized);
-  if (quarter) {
+  const periods = new Set<string>();
+  for (const quarter of normalized.matchAll(/\b(?:FQ|Q)([1-4])(?:\s*(?:FY)?\s*(20\d{2}))?\b/g)) {
     const before = /(?:FY)?\s*(20\d{2})\s*$/.exec(normalized.slice(0, quarter.index));
-    return `Q${quarter[1]}${quarter[2] || before?.[1] ? ` ${quarter[2] || before?.[1]}` : ""}`;
+    if (quarter[2] && before?.[1] && quarter[2] !== before[1]) return null;
+    const year = quarter[2] || before?.[1];
+    periods.add(`Q${quarter[1]}${year ? ` ${year}` : ""}`);
   }
+  const ordinals: Record<string, number> = { FIRST: 1, SECOND: 2, THIRD: 3, FOURTH: 4 };
+  for (const quarter of normalized.matchAll(/\b(FIRST|SECOND|THIRD|FOURTH)[ -]+QUARTER\b/g)) {
+    const tail = normalized.slice(quarter.index + quarter[0].length);
+    const after = /^\s+(?:(?:OF\s+)?FISCAL(?:\s+YEAR)?\s+|FY\s*)?(20\d{2})\b/.exec(tail)
+      ?? /^\s+(?:AND|&)\s+(?:FULL[ -]+(?:FISCAL[ -]+)?YEAR|FISCAL[ -]+YEAR)\s+(20\d{2})\b/.exec(tail);
+    const before = /(?:\bFY\s*|\b)(20\d{2})\s+(?:FISCAL\s+)?$/.exec(normalized.slice(0, quarter.index));
+    if (after?.[1] && before?.[1] && after[1] !== before[1]) return null;
+    const year = after?.[1] || before?.[1];
+    // Only the explicit fiscal-period phrase supplies a year. A publication
+    // date later in a title must not turn a yearless quarter into an identity.
+    if (!year) return null;
+    periods.add(`Q${ordinals[quarter[1]]} ${year}`);
+  }
+  // Combined quarter/full-year release titles identify the quarter. Multiple
+  // distinct reported quarters/years remain separate rather than guessing.
+  if (periods.size) return periods.size === 1 ? [...periods][0] : null;
   const annual = /\bFY\s*(20\d{2})\b/.exec(normalized);
   return annual ? `FY ${annual[1]}` : null;
 }

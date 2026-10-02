@@ -86,6 +86,48 @@ class TargetPublicationTests(unittest.TestCase):
                 self.assertEqual(status, reason)
         self.assertEqual(signals.public_price_targets(self.db, now=self.now)['items'], [])
 
+    def test_explicit_named_company_target_uses_direction_and_full_revision(self):
+        # Synthetic paraphrase of the verified qualifier grammar; source prose
+        # is not included in fixtures or the structured publication payload.
+        headline = 'Microsoft $MSFT selected for a focus list at Wells Fargo.'
+        for index, (action, new, old) in enumerate([
+            ("raised the firm's", 735, 710),
+            ('lowered its', 690, 710),
+            ('increased', 740, 710),
+        ], 1):
+            with self.subTest(action=action):
+                self.db.execute('DELETE FROM signal_events')
+                self.db.execute('DELETE FROM signal_documents')
+                body = headline + '\n' + 'Synthetic analyst context. ' * 24 + (
+                    f"An analyst {action} price target on Microsoft to ${new} from ${old}.")
+                self.add(index, body[:500], tickers='["MSFT"]', body=body)
+                items = signals.public_price_targets(self.db, now=self.now)['items']
+                self.assertEqual([(item['ticker'], item['firm'], item['previous'], item['latest']) for item in items],
+                                 [('MSFT', 'Wells Fargo', old, new)])
+                self.assertNotIn('Synthetic analyst context', json.dumps(items))
+                self.assertNotIn('focus list', json.dumps(items))
+
+    def test_named_company_target_preserves_attribution_direction_and_ambiguity_gates(self):
+        headline = 'Microsoft $MSFT selected for a focus list at Wells Fargo.\n'
+        cases = [
+            ('An analyst raised its price target on Microsoft to $690 from $710.', '["MSFT"]', 'inconsistent-direction'),
+            ('An analyst lowered its price target on Microsoft to $735 from $710.', '["MSFT"]', 'inconsistent-direction'),
+            ('An analyst raised its price target on Amazon to $735 from $710.', '["MSFT"]', 'ambiguous-subject'),
+            ('An analyst raised its price target on Microsoft and Amazon to $735 from $710.', '["MSFT"]', 'ambiguous-subject'),
+            ('An analyst raised its price target on the company to $735 from $710.', '["MSFT"]', 'ambiguous-subject'),
+            ('An analyst raised its price target on Microsoft to $735 from $710. $AMD was also discussed.', '["MSFT","AMD"]', 'ambiguous-subject'),
+            ('An analyst raised its price target on Microsoft to $735 from $710. Price target to $740 from $700.', '["MSFT"]', 'ambiguous-target-actions'),
+            ('An analyst raised its price target on Microsoft to $735 from $710. Another analyst lowered its price target on Microsoft to $680 from $700.', '["MSFT"]', 'ambiguous-target-actions'),
+            ('An analyst raised its price target on Microsoft to $735 from $710 at Citi.', '["MSFT"]', 'ambiguous-firms'),
+            ('An analyst set a price target on Microsoft to $735 from $710.', '["MSFT"]', 'unsupported-target-syntax'),
+        ]
+        for index, (body, tickers, reason) in enumerate(cases, 1):
+            with self.subTest(body=body):
+                text = headline + body
+                self.add(index, text[:500], tickers=tickers, body=text)
+                self.assertEqual(signals.price_target_observation(self.row(index), self.source, self.now), (None, reason))
+        self.assertEqual(signals.public_price_targets(self.db, now=self.now)['items'], [])
+
     def test_current_revision_replaces_old_target_and_unsafe_revision_removes_it(self):
         self.add(1, body='$MU PT raised to $110 from $100 at Citi')
         row = dict(self.row(1))

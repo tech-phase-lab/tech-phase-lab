@@ -91,3 +91,50 @@ Reconnects, provider delays and translation retries can take longer. A future
 acceptance claim requires newly published eligible items, independent source
 reconciliation, accurate JA/EN output, and separately measured source,
 acquisition, backend-publication and actual browser clocks.
+
+## First rollout and live follow-through
+
+Commit `33c0ad7a3a567109070d6c51ce17c83374281cf4` was verified on the remote
+preview branch. Its uploaded tree matched the checked local Git tree exactly.
+Actions run `37035662812`, Vercel deployment `dpl_5reEnqqcehPB4XdBUHZPNARQn19B`
+and Railway deployment `bfe5c396-5640-405f-8435-8132baed419f` succeeded.
+The existing branch alias points to that preview; no production promotion was
+performed.
+
+By 16:49 UTC the live alias home page showed the employment result in English,
+including the expanded +29K/4.2%/YoY 3.0% details, and live target cards with source
+attribution. At 16:54 UTC the home news list's fourth page showed MU's $54.23B
+revenue, $33.42 adjusted EPS and $61.5B plus/minus $1.5B revenue guidance in both
+English and Japanese. These later observations do not improve the historical
+arrival times.
+
+Authenticated inspection identified the remaining article failure as the
+PR Newswire release:
+https://www.prnewswire.com/news-releases/green-water-and-power-partners-with-goodwill-socal-to-offer-on-the-job-training-in-electrical-trades-302897221.html
+
+An ordinary fetch returned HTTP 200. Three gallery tiles use non-void `<div/>`
+elements with subsequent closing tags; the old parser incorrectly synthesized
+an immediate close and retained only 62 characters. HTML-correct self-closing
+handling and matching-tag scopes recover 4,170 characters through the final
+source line. The release matches none of the 22 tracked companies. Its valid
+extraction must not create an unrelated company-news event. The stored live
+retry/error still requires post-deployment verification; it is not silently
+cleared or reclassified as a missing tracked-stock story.
+
+The same inspection found the explicit Wells Fargo MSFT $700 to $725 action at
+https://x.com/TipRanks/status/2105612496354545795 withheld by the unsupported
+`price target on Company to` grammar. A narrow directional adapter requires
+that the named company exactly match the resolved ticker's known alias; the
+existing source, firm, subject, value, multiple-action and revision gates remain.
+
+Live UI checks also caught MU issuer/SEC duplication because the original source
+title spelled out “Fourth Quarter and Full Year 2026”. Explicit adjacent fiscal
+quarter/year recognition now merges that Q4 release while retaining the Q3
+event separately. Exact repeated summary/fact paragraphs are displayed once.
+Separate same-publisher follow-up URLs retain their own facts rather than an
+EPS-only post removing the earlier revenue. Same-URL corrections still supersede
+old revisions, and different-URL disagreements remain attributed.
+
+The integrated follow-through changes passed 243 Node and 653 Python tests,
+lint (zero errors, the same existing warning), production build/type checking,
+compileall and whitespace checks before their subsequent rollout.

@@ -215,7 +215,8 @@ test('long issuer titles and an invalid adjacent note cannot erase the public ne
       assert.equal(update.title, headline.title);
       assert.equal(update.translationJa, headline.translationJa);
       assert.equal(update.researchId, note.id);
-      assert.ok(update.bodyEn.includes(copy.en));
+      assert.equal(update.bodyEn, copy.en);
+      assert.equal(update.bodyJa, copy.ja);
       assert.equal(JSON.stringify(result).includes('PRIVATE-PURPOSE'), false);
     }
   } finally {

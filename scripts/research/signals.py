@@ -919,6 +919,12 @@ PRICE_TARGET_REVERSED = re.compile(
 PRICE_TARGET_DIRECTIONAL = re.compile(
     r"(?:price target|target price|PT)\s+(?:of|at)\s*\$(\d+(?:\.\d+)?)\s*,?\s*(down|up)\s+from\s*\$(\d+(?:\.\d+)?)", re.I,
 )
+PRICE_TARGET_NAMED_SUBJECT = re.compile(
+    r"\b(?:raised|lowered|cut|hiked|increased|reduced)\s+"
+    r"(?:(?:the\s+firm['’]s|its)\s+)?(?:price target|target price|PT)\s+on\s+"
+    r"(?P<subject>[A-Za-z][A-Za-z0-9 .&'’()-]{0,79}?)\s+to\s*"
+    r"\$(?P<new>\d+(?:\.\d+)?)\s+from\s*\$(?P<old>\d+(?:\.\d+)?)", re.I,
+)
 PRICE_TARGET_SUBJECT = re.compile(
     r"^[^$\n]{0,100}\$([A-Z]{1,5}(?:[.-][A-Z])?)\s+"
     r"(?:downgraded|upgraded|initiated|reiterated|price target|PT)\b", re.I,
@@ -1006,7 +1012,9 @@ def price_target_observation(row, source, now):
                [(match, float(match.group(1)), float(match.group(2)))
                 for match in PRICE_TARGET_REVERSED.finditer(normalized)] +
                [(match, float(match.group(3)), float(match.group(1)))
-                for match in PRICE_TARGET_DIRECTIONAL.finditer(normalized)])
+                for match in PRICE_TARGET_DIRECTIONAL.finditer(normalized)] +
+               [(match, float(match.group("old")), float(match.group("new")))
+                for match in PRICE_TARGET_NAMED_SUBJECT.finditer(normalized)])
     if not matches:
         return None, "unsupported-target-syntax"
     if len(matches) != 1:
@@ -1034,6 +1042,15 @@ def price_target_observation(row, source, now):
                 not PRICE_TARGET_FIRM.search(normalized[:match.start()])):
             return None, "ambiguous-subject"
         tickers = [subject.group(1).upper()]
+    if match.re is PRICE_TARGET_NAMED_SUBJECT:
+        # The company between "on" and "to" is an explicit attribution, not
+        # filler to skip. Bind it to the resolved subject using only existing
+        # exact aliases; a different company or an unknown name stays private.
+        named_subject = " ".join(match.group("subject").split()).casefold()
+        approved_names = {" ".join(name.split()).casefold()
+                          for name in [tickers[0], *ALIASES.get(tickers[0], [])]}
+        if named_subject not in approved_names:
+            return None, "ambiguous-subject"
     return {"id": row["id"], "ticker": tickers[0], "firm": firm.group(1),
             "previous": old, "latest": new, "source": source["name"], "url": url,
             "publishedAt": published.isoformat(), "observedAt": observed.isoformat()}, "eligible"

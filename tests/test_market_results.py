@@ -145,12 +145,35 @@ class ResultTests(unittest.TestCase):
         items=[]
         for publisher,value,at in [('One','$10B','2026-10-02T00:00:00Z'),('One','$11B','2026-10-02T00:01:00Z'),('Two','$11B','2026-10-02T00:01:00Z')]:
             item=results.projection('$MU Q4 2026 earnings Revenue '+value,['MU'])
-            item.update({'publisher':publisher,'publishedAt':at})
+            item.update({'publisher':publisher,'publishedAt':at,
+                         'url': 'https://x.com/TipRanks/status/1' if publisher == 'One' else 'https://x.com/wallstengine/status/2'})
             items.append(item)
         public=results.latest_source_posts(items)
         self.assertEqual(len(public),2)
         self.assertTrue(all('pendingFacts' not in item for item in public))
         self.assertTrue(all(item['facts'][0]['value']=='$11B' for item in public))
+
+    def test_separate_followup_post_preserves_revenue_and_new_eps(self):
+        revenue = results.projection('$MU Q4 2026 earnings Revenue $54.23B', ['MU'])
+        revenue.update({'publisher': 'Wall St Engine', 'url': 'https://x.com/wallstengine/status/1',
+                        'publishedAt': '2026-10-02T00:00:00Z'})
+        eps = results.projection('$MU Q4 2026 earnings Adjusted EPS $33.42', ['MU'])
+        eps.update({'publisher': 'Wall St Engine', 'url': 'https://x.com/wallstengine/status/2',
+                    'publishedAt': '2026-10-02T00:01:00Z'})
+        public = results.latest_source_posts([eps, revenue])
+        self.assertEqual(len(public), 2)
+        self.assertEqual({f['key']: f['value'] for item in public for f in item['facts']},
+                         {'revenue': '$54.23B', 'eps': '$33.42'})
+
+    def test_separate_disagreeing_post_is_not_an_assumed_retraction(self):
+        items = []
+        for index, value in enumerate(('$10B', '$11B'), 1):
+            item = results.projection('$MU Q4 2026 earnings Revenue '+value, ['MU'])
+            item.update({'publisher': 'Wall St Engine', 'url': f'https://x.com/wallstengine/status/{index}',
+                         'publishedAt': f'2026-10-02T00:0{index}:00Z'})
+            items.append(item)
+        self.assertEqual(len(results.latest_source_posts(items)), 2)
+        self.assertEqual([item['facts'][0]['value'] for item in results.latest_source_posts(items)], ['$10B', '$11B'])
 
     def test_indicator_keeps_negative_result_without_inventing_stock_association(self):
         r=results.projection('US ADP SEPTEMBER ACTUAL -32K; EST +50K; PREV +54K',['ECON'])

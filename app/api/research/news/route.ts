@@ -39,7 +39,7 @@ export async function GET() {
       const titles = Array.from(event.title.en).length <= 180 && Array.from(event.title.ja).length <= 180
         ? { shortTitleJa: undefined, shortTitleEn: undefined, title: event.title.en, translationJa: event.title.ja }
         : {};
-      const enriched = { ...item, ...titles, researchId: event.id, bodyJa: [event.summary.ja, ...event.facts.map(f => f.text.ja)].join("\n\n"), bodyEn: [event.summary.en, ...event.facts.map(f => f.text.en)].join("\n\n") };
+      const enriched = { ...item, ...titles, researchId: event.id, bodyJa: [...new Set([event.summary.ja, ...event.facts.map(f => f.text.ja)])].join("\n\n"), bodyEn: [...new Set([event.summary.en, ...event.facts.map(f => f.text.en)])].join("\n\n") };
       try {
         return publicNewsPayload({ ...payload, officialUpdates: [enriched] }).officialUpdates![0];
       } catch {

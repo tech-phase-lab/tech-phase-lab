@@ -1,6 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { deduplicateResearchEvents, normalizedEarningsPeriod } from "../lib/research/deduplicate-events.ts";
+import { officialResultEvents } from "../lib/research/official-result-events.ts";
+import { muLatest } from "../lib/research/mu-latest.ts";
+import { events } from "../lib/research/content.ts";
+import { evidenceIssues } from "../lib/research/quality.ts";
+import recovery from "../scripts/research/mu_fq4_recovery.json" with { type: "json" };
 
 const copy = { ja: "要約", en: "Summary" };
 function event(id, kind = "earnings", publishedOn = "2026-09-30") {
@@ -84,4 +89,49 @@ test("source/actual-metric fiscal periods match explicit normalized metadata", (
   const issuer = { ...event("issuer"), earningsPeriod: undefined };
   issuer.sources[0].title = "Micron FQ4 2026 earnings release";
   assert.equal(deduplicateResearchEvents([issuer, event("flash")]).length, 1);
+});
+
+
+test("reviewed MU issuer title and SEC recovery yield one Q4 event, keeping Q3 separate", () => {
+  // Reuse reviewed release evidence; this replay does not claim live delivery.
+  const [issuer] = officialResultEvents([{
+    id: "ir-result-1126", ticker: "MU", kind: "earnings", title: muLatest.title,
+    summary: muLatest.summary, facts: muLatest.facts.map(fact => fact.text), purpose: copy,
+    url: recovery.releaseUrl, sourceTitle: recovery.title, publishedOn: recovery.publishedOn,
+    dateBasis: "publication", publicAt: `${recovery.reviewedOn}T00:00:00Z`,
+  }]);
+  const q3 = events.find(item => item.id === "mu-q3-2026");
+  assert.ok(q3);
+  assert.equal(normalizedEarningsPeriod(recovery.title), "Q4 2026");
+  const merged = deduplicateResearchEvents([issuer, muLatest, q3]);
+  assert.deepEqual(merged.map(item => item.id), [issuer.id, q3.id]);
+  assert.deepEqual(new Set(merged[0].sources.map(source => source.url)), new Set([recovery.releaseUrl, recovery.evidenceUrl]));
+  assert.deepEqual(evidenceIssues(merged[0]), []);
+  assert.ok(merged[0].facts.every(fact => fact.sourceIds.includes(issuer.id) && fact.sourceIds.includes("mu-q4-sec")));
+});
+
+test("spelled quarters require an explicit nearby four-digit fiscal year", () => {
+  const ordinals = ["First", "Second", "Third", "Fourth"];
+  for (const [index, ordinal] of ordinals.entries()) {
+    for (const title of [
+      `Company Reports Fiscal ${ordinal} Quarter 2026 Results`,
+      `Company Reports ${ordinal} Quarter of Fiscal Year 2026 Results`,
+      `Company Reports ${ordinal} Quarter Fiscal 2026 Results`,
+      `Company Reports ${ordinal}-Quarter FY2026 Results`,
+      `Company Reports Fiscal 2026 ${ordinal} Quarter Results`,
+      `Company Reports 2026 Fiscal ${ordinal} Quarter Results`,
+    ]) assert.equal(normalizedEarningsPeriod(title), `Q${index + 1} 2026`, title);
+  }
+  for (const title of [
+    "Company Reports Fiscal Fourth Quarter and Full Year 2026 Results",
+    "Company Reports Fourth Quarter & Full Fiscal Year 2026 Results",
+  ]) assert.equal(normalizedEarningsPeriod(title), "Q4 2026", title);
+  for (const title of [
+    "Company Reports Fiscal Fourth Quarter Results",
+    "Company Reports Fourth Quarter Results on September 30, 2026",
+    "Company Reports Fiscal Fourth Quarter 26 Results",
+    "Company Reports Third Quarter 2026 and Fourth Quarter 2026 Results",
+    "Company Reports Fourth Quarter 2025 and Q4 2026 Results",
+    "Company Reports Fiscal 2025 Fourth Quarter 2026 Results",
+  ]) assert.equal(normalizedEarningsPeriod(title), null, title);
 });

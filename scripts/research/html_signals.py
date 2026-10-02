@@ -7,6 +7,8 @@ from urllib.parse import urljoin, urlsplit
 
 
 class NewsHTML(HTMLParser):
+    void_tags = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
+
     def __init__(self, body_class=None, title_class=None, published_json_ld_field=None):
         super().__init__(convert_charrefs=True)
         self.links, self.title, self.published = [], [], None
@@ -14,7 +16,7 @@ class NewsHTML(HTMLParser):
         self.in_h1 = False
         self.article, self.main = [], []
         self.capture = None
-        self.depth = 0
+        self.capture_stack = []
         self.in_next_data = False
         self.next_data = []
         self.body_class = body_class
@@ -23,7 +25,16 @@ class NewsHTML(HTMLParser):
         self.in_json_ld = False
         self.json_ld = []
         self.selected = []
-        self.selected_depth = 0
+        self.selected_stack = []
+
+    @staticmethod
+    def close_scope(stack, tag):
+        # Ignore unmatched end tags and close any unclosed descendants with
+        # their matching ancestor. A raw depth counter can end the article
+        # early or leak page chrome when publisher markup is unbalanced.
+        if tag in stack:
+            index = len(stack) - 1 - stack[::-1].index(tag)
+            del stack[index:]
 
     def handle_starttag(self, tag, attrs):
         values = dict(attrs)
@@ -38,32 +49,33 @@ class NewsHTML(HTMLParser):
             self.link_classes[values['href']] = values.get('class', '')
         if tag == 'h1' and not self.title and (not self.title_class or self.title_class in values.get('class', '').split()):
             self.in_h1 = True
-        void = tag in {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
-        if self.selected_depth:
+        void = tag in self.void_tags
+        if self.selected_stack:
             if not void:
-                self.selected_depth += 1
+                self.selected_stack.append(tag)
             self.selected.append(self.get_starttag_text())
         elif self.body_class and not self.selected and self.body_class in values.get('class', '').split() and not void:
-            self.selected_depth = 1
+            self.selected_stack = [tag]
             self.selected.append(self.get_starttag_text())
         if tag == 'meta' and (values.get('property') or values.get('name')) == 'article:published_time':
             self.published = values.get('content')
         if tag in {'article', 'main'} and not self.capture:
-            self.capture, self.depth = tag, 1
-        elif self.capture and tag not in {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}:
-            self.depth += 1
+            self.capture, self.capture_stack = tag, [tag]
+        elif self.capture and not void:
+            self.capture_stack.append(tag)
         if self.capture:
             getattr(self, self.capture).append(self.get_starttag_text())
 
     def handle_startendtag(self, tag, attrs):
+        # In HTML, a trailing slash does not close non-void elements. PR
+        # Newswire gallery tiles use <div/> followed by a real </div>; treating
+        # the tile as XML prematurely closes the surrounding article capture.
         self.handle_starttag(tag, attrs)
-        if tag not in {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}:
-            self.handle_endtag(tag)
 
     def handle_endtag(self, tag):
-        if self.selected_depth:
+        if self.selected_stack:
             self.selected.append(f'</{tag}>')
-            self.selected_depth -= 1
+            self.close_scope(self.selected_stack, tag)
         if tag == 'script' and self.in_json_ld:
             raw = ''.join(self.json_ld)
             if len(raw) <= 100_000:
@@ -86,12 +98,12 @@ class NewsHTML(HTMLParser):
             self.in_h1 = False
         if self.capture:
             getattr(self, self.capture).append(f'</{tag}>')
-            self.depth -= 1
-            if self.depth <= 0:
+            self.close_scope(self.capture_stack, tag)
+            if not self.capture_stack:
                 self.capture = None
 
     def handle_data(self, value):
-        if self.selected_depth:
+        if self.selected_stack:
             from html import escape
             self.selected.append(escape(value))
         if self.in_next_data:
