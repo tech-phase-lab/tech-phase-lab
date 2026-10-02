@@ -202,3 +202,28 @@ has started.
 This observation does not authorize billing changes, uncapped paid backfills,
 subscriber messages or a main/production deployment. Existing preview fixes
 remain authorized, with AGENTS.md checks and concurrent-work preservation.
+
+## X pacing bookkeeping repair during observation — October 2
+
+The reservation path raises `XApiPacing` before any network request. The old
+`signals.check` handler stored it as a route error and created failed/recovered
+transitions even though its exponential failure count did not increase. The
+worker also overwrote the previous real request duration with the local wait.
+
+The repair records `status=deferred`, changes only `next_check_at`, and writes
+`signal_route_deferrals(source_id,deferred_at,retry_at,reason)` separately
+(retention: eight days, at most 100,000 records). It preserves checked/succeeded
+clocks, validators, cursor, duration, active real errors and outage attempts.
+A pacing deferral is not a retry attempt or a recovery. HTTP 429, timeout and
+local daily-budget exhaustion still follow the existing error path. Request
+budget, polling configuration, source filters and translation rules are unchanged.
+
+Historical generic `other` transitions are preserved and remain ambiguous;
+do not retroactively reclassify all of them as pacing or subtract them as if
+proven. The existing acceptance window and reporting time are unchanged. Record
+the deployment time and split pre/post-repair observations; this is not proof
+of a clean full-day run or improved delivery latency. The read-only acceptance
+audit predates the new table, so additionally query `signal_route_deferrals`
+by `deferred_at` in the observation interval and report these as local scheduling
+waits separately from network failures. The absence of new transitions alone
+does not establish freshness; verify actual successful request clocks per route.

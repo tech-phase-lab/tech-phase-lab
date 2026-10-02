@@ -781,9 +781,10 @@ class AutomaticMonitor:
                 raise failure
             return response
         with self.db_lock, monitor.connect(self.db_path) as db:
-            signals.check(db, source, self.tickers, transport=cached_transport)
-            db.execute("UPDATE signal_routes SET last_duration_ms=? WHERE id=?",
-                       (round((time.monotonic() - started) * 1000), source["id"]))
+            result = signals.check(db, source, self.tickers, transport=cached_transport)
+            if result["status"] != "deferred":
+                db.execute("UPDATE signal_routes SET last_duration_ms=? WHERE id=?",
+                           (round((time.monotonic() - started) * 1000), source["id"]))
 
     def interval_for(self, ticker):
         provider = monitor.PROVIDERS[ticker]

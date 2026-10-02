@@ -1117,6 +1117,73 @@ class SignalTests(unittest.TestCase):
         )]
         self.assertEqual(attempts, ["x-a", "x-b", "x-c"])
 
+    def test_x_pacing_preserves_route_evidence_without_false_failures(self):
+        source = next(s for s in signals.SOURCES if s.get("format") == "x-api")
+        signals.check(self.db, source, self.tickers, lambda *_: {"_items": []})
+        before = dict(self.db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone())
+        retry_at = (datetime.now(timezone.utc) + timedelta(seconds=20)).isoformat()
+        for _ in range(2):
+            result = signals.check(self.db, source, self.tickers,
+                lambda *_: (_ for _ in ()).throw(signals.XApiPacing(retry_at)))
+            self.assertEqual(result["status"], "deferred")
+        after = dict(self.db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone())
+        self.assertEqual(after, {**before, "next_check_at": retry_at})
+        self.assertEqual(self.db.execute("SELECT count(*) FROM signal_route_deferrals").fetchone()[0], 2)
+        for table in ("signal_route_transitions", "signal_route_recoveries", "signal_route_retry_attempts", "signal_x_request_attempts"):
+            self.assertEqual(self.db.execute(f"SELECT count(*) FROM {table}").fetchone()[0], 0)
+        signals.check(self.db, source, self.tickers, lambda *_: {"_items": []})
+        self.assertEqual(self.db.execute("SELECT count(*) FROM signal_route_recoveries").fetchone()[0], 0)
+
+    def test_x_pacing_does_not_hide_real_outage_or_count_as_retry(self):
+        source = next(s for s in signals.SOURCES if s.get("format") == "x-api")
+        signals.check(self.db, source, self.tickers, lambda *_: {"_items": []})
+        for failure in (TimeoutError(), HTTPError("https://example.invalid", 429, "rate limited", {}, None)):
+            result = signals.check(self.db, source, self.tickers,
+                lambda *_: (_ for _ in ()).throw(failure))
+            self.assertEqual(result["status"], "error")
+            self.db.execute("UPDATE signal_routes SET next_check_at=? WHERE id=?",
+                ((datetime.now(timezone.utc) - timedelta(seconds=1)).isoformat(), source["id"]))
+            self.db.commit()
+            before = dict(self.db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone())
+            retry_at = (datetime.now(timezone.utc) - timedelta(milliseconds=1)).isoformat()
+            signals.check(self.db, source, self.tickers,
+                lambda *_: (_ for _ in ()).throw(signals.XApiPacing(retry_at)))
+            after = dict(self.db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone())
+            self.assertEqual(after, {**before, "next_check_at": retry_at})
+        self.assertEqual(self.db.execute("SELECT count(*) FROM signal_route_retry_attempts").fetchone()[0], 1)
+        self.assertEqual(self.db.execute("SELECT count(*) FROM signal_route_recoveries").fetchone()[0], 0)
+        signals.check(self.db, source, self.tickers, lambda *_: {"_items": []})
+        transitions = list(self.db.execute("SELECT outcome,current_kind FROM signal_route_transitions ORDER BY id"))
+        self.assertEqual([tuple(r) for r in transitions], [("failed", "timeout"), ("changed", "rateLimited"), ("recovered", None)])
+        recovered = self.db.execute("SELECT attempts,error_kind FROM signal_route_recoveries").fetchone()
+        self.assertEqual(tuple(recovered), (3, "rateLimited"))
+        self.assertEqual(self.db.execute("SELECT count(*) FROM signal_route_retry_attempts").fetchone()[0], 2)
+
+    def test_first_x_pacing_is_unchecked_and_respects_schedule(self):
+        source = next(s for s in signals.SOURCES if s.get("format") == "x-api")
+        retry_at = (datetime.now(timezone.utc) + timedelta(seconds=20)).isoformat()
+        signals.check(self.db, source, self.tickers,
+            lambda *_: (_ for _ in ()).throw(signals.XApiPacing(retry_at)))
+        route = self.db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
+        self.assertIsNone(route["checked_at"])
+        self.assertIsNone(route["succeeded_at"])
+        self.assertIsNone(route["error"])
+        self.assertEqual(route["initialized"], 0)
+        self.assertNotIn(source, signals.due(self.db, sources=[source]))
+
+    def test_signal_worker_pacing_preserves_duration_and_makes_no_network_request(self):
+        source = next(s for s in signals.SOURCES if s.get("format") == "x-api")
+        signals.check(self.db, source, self.tickers, lambda *_: {"_items": []})
+        self.db.execute("UPDATE signal_routes SET last_duration_ms=321 WHERE id=?", (source["id"],))
+        self.db.commit()
+        app = service.AutomaticMonitor(self.path, Path(self.temp.name) / "snapshot.json")
+        with patch.object(signals, "reserve_x_api_request", side_effect=signals.XApiPacing(
+                (datetime.now(timezone.utc) + timedelta(seconds=20)).isoformat())), patch.object(signals, "acquire") as acquire:
+            app.check_signal_source(source)
+            acquire.assert_not_called()
+        route = self.db.execute("SELECT error,last_duration_ms FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
+        self.assertEqual(tuple(route), (None, 321))
+
     def test_x_api_rolling_window_excludes_exactly_twenty_four_hours_old_attempt(self):
         source = {"id": "x-test", "format": "x-api", "intervalSeconds": 120}
         now = datetime(2026, 9, 25, 1, 0, tzinfo=timezone.utc)

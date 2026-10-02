@@ -255,6 +255,12 @@ def schema(db):
         id INTEGER PRIMARY KEY, source_id TEXT NOT NULL, attempted_at TEXT NOT NULL
       );
       CREATE INDEX IF NOT EXISTS signal_x_request_time ON signal_x_request_attempts(attempted_at);
+      CREATE TABLE IF NOT EXISTS signal_route_deferrals (
+        id INTEGER PRIMARY KEY, source_id TEXT NOT NULL, deferred_at TEXT NOT NULL,
+        retry_at TEXT NOT NULL, reason TEXT NOT NULL
+      );
+      CREATE INDEX IF NOT EXISTS signal_route_deferral_time
+        ON signal_route_deferrals(deferred_at);
       CREATE TABLE IF NOT EXISTS signal_route_transitions (
         id INTEGER PRIMARY KEY, source_id TEXT NOT NULL, occurred_at TEXT NOT NULL,
         outcome TEXT NOT NULL, previous_kind TEXT, current_kind TEXT
@@ -671,8 +677,7 @@ def check(db, source, tickers, transport=None):
     schema(db)
     row = db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
     attempted_at = datetime.now(timezone.utc).isoformat(timespec="milliseconds")
-    with db:
-        record_route_retry_attempt(db, source["id"], row, attempted_at)
+    deferred = False
     config_sha = fingerprint(source, tickers)
     validators = validators_for(db, source, tickers)
     started = time.monotonic()
@@ -701,12 +706,27 @@ def check(db, source, tickers, transport=None):
                      round((time.monotonic() - started) * 1000))
         return {"source": source["id"], "status": "partial" if response.get("article_errors") else "ok",
                 "matchedItems": len(items), "events": count, "pendingArticles": response.get("article_pending", 0)}
+    except XApiPacing as exc:
+        # No network request was made. Preserve freshness, existing failures and
+        # outage measurements; only a real fetch can establish recovery.
+        deferred = True
+        checked = stamp()
+        retry_at = exc.retry_at or (datetime.fromisoformat(checked) + timedelta(seconds=30)).isoformat()
+        with db:
+            db.execute("""INSERT INTO signal_routes(id,next_check_at) VALUES(?,?)
+              ON CONFLICT(id) DO UPDATE SET next_check_at=excluded.next_check_at""",
+              (source["id"], retry_at))
+            db.execute("""INSERT INTO signal_route_deferrals(source_id,deferred_at,retry_at,reason)
+              VALUES(?,?,?,?)""", (source["id"], checked, retry_at, "x-api-paced"))
+            cutoff = (datetime.fromisoformat(checked) - timedelta(days=8)).isoformat()
+            db.execute("DELETE FROM signal_route_deferrals WHERE deferred_at<?", (cutoff,))
+            db.execute("""DELETE FROM signal_route_deferrals WHERE id NOT IN
+              (SELECT id FROM signal_route_deferrals ORDER BY id DESC LIMIT 100000)""")
+        return {"source": source["id"], "status": "deferred", "reason": "x-api-paced",
+                "nextCheckAt": retry_at, "events": 0}
     except Exception as exc:
         checked = stamp()
-        paced = isinstance(exc, XApiPacing)
-        failures = (row["failures"] if row else 0) if paced else min(
-            20, (row["failures"] if row else 0) + 1
-        )
+        failures = min(20, (row["failures"] if row else 0) + 1)
         error = monitor.source_error_code(exc)
         if isinstance(exc, ET.ParseError):
             error = "invalid-feed-xml"
@@ -716,7 +736,7 @@ def check(db, source, tickers, transport=None):
             monitor.source_retry_seconds(error, failures, retry_hint),
         )
         next_check = (datetime.fromisoformat(checked) + timedelta(seconds=delay)).isoformat()
-        if isinstance(exc, (XApiDailyLimit, XApiPacing)) and exc.retry_at:
+        if isinstance(exc, XApiDailyLimit) and exc.retry_at:
             next_check = exc.retry_at
         with db:
             failure_started_at, failure_attempts = route_failure_measurement(
@@ -733,6 +753,10 @@ def check(db, source, tickers, transport=None):
             ))
             record_route_transition(db, source["id"], row, error, checked)
         return {"source": source["id"], "status": "error", "error": error, "events": 0}
+    finally:
+        if not deferred:
+            with db:
+                record_route_retry_attempt(db, source["id"], row, attempted_at)
 
 
 def x_content_kind(source, title):
