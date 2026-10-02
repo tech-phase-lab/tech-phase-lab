@@ -48,7 +48,9 @@ class OfficialResearchTests(unittest.TestCase):
         self.assertEqual(self.run_note(lambda *_:self.fail('duplicate call')),'idle')
     def test_evidence_ids_resolve_to_exact_source_without_model_rewriting(self):
         def selected(payload,key):
-            self.assertIn('Use no digits',payload['instructions'])
+            self.assertNotIn('Use no digits',payload['instructions'])
+            self.assertNotIn('omit numerical figures',payload['instructions'])
+            self.assertIn('literal numbers',payload['instructions'])
             excerpts=json.loads(payload['input'])['evidenceExcerpts']
             note=json.loads(json.dumps(NOTE))
             for item in [note['title'],note['summary'],*note['facts'],note['purpose']]:

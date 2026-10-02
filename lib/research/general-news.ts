@@ -1,5 +1,6 @@
 import providers from "./providers.json" with { type: "json" };
 import { parseResultBriefs, type ResultBrief } from "./market-results.ts";
+type NewsBody = { bodyJa?: string; bodyEn?: string };
 type CompactTitles = { shortTitleJa?: string; shortTitleEn?: string };
 export type GeneralNewsItem = CompactTitles & {
   id: string; title: string; url: string; publisher: string; tickers: string[];
@@ -7,7 +8,7 @@ export type GeneralNewsItem = CompactTitles & {
   impactJa: string; impactEn: string; impactLabel: "positive" | "negative" | "mixed" | "neutral" | "uncertain";
   confidence: "high" | "medium" | "low";
 };
-export type OfficialUpdate = CompactTitles & { id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string };
+export type OfficialUpdate = CompactTitles & NewsBody & { id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string };
 export type MarketUpdate = CompactTitles & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
 export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; resultBriefs?: ResultBrief[] };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
@@ -19,6 +20,14 @@ function compactTitles(value: Record<string, unknown>): CompactTitles {
   const valid = (text: unknown): text is string => typeof text === "string"
     && !!text.trim() && Array.from(text).length <= 180 && !/[\0\r\n]/.test(text);
   return valid(ja) && valid(en) ? { shortTitleJa: ja.trim(), shortTitleEn: en.trim() } : {};
+}
+
+// Optional approved story text never admits private source bodies or analysis.
+function newsBody(value: Record<string, unknown>): NewsBody {
+  const valid = (v: unknown): v is string => typeof v === "string" && !!v.trim()
+    && v.length <= 12000 && !v.includes("\0");
+  return valid(value.bodyJa) && valid(value.bodyEn)
+    ? { bodyJa: value.bodyJa, bodyEn: value.bodyEn } : {};
 }
 
 // Keep the strict validator for every article, but isolate a rejected article
@@ -101,7 +110,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       }
       const resultReference = updates.resultBriefs?.some(r => r.kind === 'earnings' && r.researchId === v.researchId && r.url === url.href);
       if (v.researchId !== undefined && !(verifiedMu && v.researchId === 'mu-q4-2026') && !resultReference && !(issuerRelease && v.researchId === `ir-result-${v.id}`)) throw Error('Invalid research reference');
-      return { ...compactTitles(v), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}) };
+      return { ...compactTitles(v), ...newsBody(v), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}) };
     }).filter(item => {
       if (seenOfficialUrls.has(item.url)) return false;
       seenOfficialUrls.add(item.url);

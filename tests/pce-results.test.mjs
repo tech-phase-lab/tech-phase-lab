@@ -39,3 +39,24 @@ test("automatic exact-period PCE revisions replace the saved result once and pre
   assert.equal(next.length, initial.length + 1);
   assert.equal(next[0].id, "pce-2026-09");
 });
+
+test('employment sources collapse into one localized release and retain the verified official result', () => {
+  const brief = {id:'1176', researchId:'x-result-1176',kind:'economic',ticker:'ECON',period:'SEPTEMBER JOBS REPORT',
+    titleJa:'非農業部門雇用者数 +29K／失業率 4.2%',titleEn:'Nonfarm payrolls +29K; unemployment rate 4.2%',
+    facts:[{key:'nonfarm-payrolls',ja:'非農業部門雇用者数',en:'Nonfarm payrolls',value:'+29K'}],
+    publisher:'Wall St Engine',url:'https://x.com/wallstengine/status/123',publishedAt:'2026-10-02T12:30:37Z',publicAt:'2026-10-02T12:49:15Z'};
+  const merged = mergeEconomicResults([], [brief, {...brief,id:'1179',researchId:'x-result-1179',publisher:'Other'}]);
+  const jobs = merged.filter(r => r.id.startsWith('jobs-') && r.releasedAt.startsWith('2026-10-02'));
+  assert.equal(jobs.length,1);
+  assert.equal(jobs[0].sourceName,'BLS');
+  assert.match(jobs[0].title.ja,/米国雇用統計/);
+  assert.doesNotMatch(jobs[0].title.ja,/SEPTEMBER/);
+  assert.match(jobs[0].detail.ja,/前月比/);
+  const next = mergeEconomicResults([], [
+    {...brief,period:'OCTOBER JOBS REPORT',publishedAt:'2026-11-06T13:30:37Z'},
+    {...brief,id:'1180',researchId:'x-result-1180',period:'OCTOBER JOBS REPORT',publishedAt:'2026-11-06T13:31:00Z'},
+  ]).filter(r=>r.id==='jobs-2026-10');
+  assert.equal(next.length,1);
+  assert.equal(next[0].title.ja,'米国雇用統計（10月）');
+  assert.equal(next[0].title.en,'U.S. employment report (October 2026)');
+});

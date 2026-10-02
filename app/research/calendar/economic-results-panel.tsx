@@ -39,10 +39,10 @@ export default function EconomicResultsPanel({ lang, zone, period }: { lang: "ja
   const zoneLabel = zone === "Asia/Tokyo" ? "JST" : "ET";
   return <section className={styles.section} aria-label={ja ? "発表済みの結果" : "Released results"}>
     <h2>{ja ? "発表済みの結果" : "Released results"}</h2>
-    {failed && <p role="status" className={styles.description}>{ja ? "PCEの自動取得に接続できません。保存済みの公式確認結果を表示しています。" : "Automatic PCE updates are unavailable. Showing saved, verified results."}</p>}
+    {failed && <p role="status" className={styles.description}>{ja ? "最新の結果を取得できません。保存済みの公式確認結果を表示しています。" : "Latest results are unavailable. Showing saved, verified results."}</p>}
     <ol className={calendarStyles.agenda}>{results.map(event => <li key={event.id}><details>
       <summary><time dateTime={event.releasedAt}>{calendarDateKey(event.releasedAt, zone).slice(5).replace("-", "/")}<small>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(event.releasedAt))} {zoneLabel}</small></time><span className={calendarStyles.eventName}>{event.title[lang]}<small>{event.result[lang]}</small></span><span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
-      <div className={calendarStyles.eventDetails}><p>{event.detail[lang]}</p><a href={event.sourceUrl} target="_blank" rel="noreferrer">{event.sourceName} ↗</a></div>
+      <div className={calendarStyles.eventDetails}><p>{event.detail[lang]}</p>{!event.sourceUrl.startsWith("https://x.com/") && <a href={event.sourceUrl} target="_blank" rel="noreferrer">{event.sourceName} ↗</a>}</div>
     </details></li>)}</ol>
   </section>;
 }

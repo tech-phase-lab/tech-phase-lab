@@ -10,7 +10,11 @@ export function marketNewsDisplay(item: MarketUpdate, lang: Language) {
   const title = ja ? item.titleJa : item.titleEn;
   if (ja && item.topic === "index-membership") {
     const match = /^(Nasdaq-100|S&P 500)指数：追加予定 [^（）$]+（(\$[A-Z]{1,6})）、除外予定 [^（）$]+（(\$[A-Z]{1,6})）。?$/.exec(title);
-    if (match) return { label: match[1], title: `追加予定 ${match[2]}　除外予定 ${match[3]}` };
+    if (match) return { label: labels[item.topic], title: `${match[1]}：追加予定 ${match[2]}　除外予定 ${match[3]}` };
   }
   return { label: labels[item.topic], title };
+}
+
+export function marketNewsBody(item: MarketUpdate, lang: Language) {
+  return lang === "ja" ? item.titleJa.replace(/（(\$[A-Z]{1,6})）/g, " $1").replace(/。$/, "") : item.titleEn;
 }

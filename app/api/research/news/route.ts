@@ -1,6 +1,6 @@
 import { availableNewsPayload, type OfficialUpdate } from "@/lib/research/general-news";
 import { officialResultEvents } from "@/lib/research/official-result-events";
-import { muFlash } from '@/lib/research/mu-latest';
+import { muFlash, muLatest } from '@/lib/research/mu-latest';
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -27,10 +27,10 @@ export async function GET() {
     try { issuerEvents=officialResultEvents(raw.officialResearch); } catch { /* An invalid note must not suppress valid news. */ }
     payload.officialUpdates = (payload.officialUpdates ?? []).map(item => {
       const event = issuerEvents.find(e => e.sources[0].url === item.url);
-      return event ? { ...item, shortTitleJa: undefined, shortTitleEn: undefined, researchId: event.id, title: event.title.en, translationJa: event.title.ja } : item;
+      return event ? { ...item, shortTitleJa: undefined, shortTitleEn: undefined, researchId: event.id, title: event.title.en, translationJa: event.title.ja, bodyJa: [event.summary.ja, ...event.facts.map(f => f.text.ja)].join("\n\n"), bodyEn: [event.summary.en, ...event.facts.map(f => f.text.en)].join("\n\n") } : item;
     });
-    const resultUpdates = (payload.resultBriefs ?? []).map(r => ({id:r.id,title:r.titleEn,translationJa:r.titleJa,url:r.url,publisher:r.publisher,tickers:[r.ticker],observedAt:r.observedAt,publishedAt:r.publishedAt,researchId:r.kind === 'earnings' ? r.researchId : undefined}));
-    const fallback = issuerEvents.some(e => e.ticker === "MU" && e.kind === "earnings") ? [] : [muFlash];
+    const resultUpdates = (payload.resultBriefs ?? []).map(r => ({id:r.id,title:r.titleEn,translationJa:r.titleJa,bodyJa:r.facts.map(f => `${f.ja}：${f.value}`).join("\n"),bodyEn:r.facts.map(f => `${f.en}: ${f.value}`).join("\n"),url:r.url,publisher:r.publisher,tickers:[r.ticker],observedAt:r.observedAt,publishedAt:r.publishedAt,researchId:r.kind === 'earnings' ? r.researchId : undefined}));
+    const fallback = issuerEvents.some(e => e.ticker === "MU" && e.kind === "earnings") ? [] : [{...muFlash, bodyJa: muLatest.facts.map(f => f.text.ja).join("\n\n"), bodyEn: muLatest.facts.map(f => f.text.en).join("\n\n")}];
     const merged: OfficialUpdate[] = [...resultUpdates, ...fallback, ...(payload.officialUpdates ?? []).filter(item => item.url !== muFlash.url && !resultUpdates.some(r => r.url === item.url))];
     payload.officialUpdates = merged.toSorted((a,b)=>Date.parse(b.publishedAt ?? b.observedAt)-Date.parse(a.publishedAt ?? a.observedAt)).slice(0,20);
     return Response.json(payload, { headers });
