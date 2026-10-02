@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 import { stripTypeScriptTypes } from "node:module";
-import { publicNewsPayload } from "../lib/research/general-news.ts";
+import { availableNewsPayload, publicNewsPayload } from "../lib/research/general-news.ts";
 
 const helper = new URL("../lib/research/general-news.ts", import.meta.url).href;
 const source = (await readFile(new URL("../app/api/research/news/route.ts", import.meta.url), "utf8"))
@@ -15,6 +15,41 @@ const item = { id: "a".repeat(64), title: "Synthetic report", url: "https://publ
   summaryJa: "これは合成テスト用の確認済みニュース要約です。", summaryEn: "This is a reviewed synthetic news summary.",
   impactJa: "合成テストでは事業への影響を両面と評価しています。", impactEn: "The synthetic test assesses mixed business impact.",
   impactLabel: "mixed", confidence: "medium" };
+
+test('one rejected story does not suppress valid stories in any news section', () => {
+  const official = {id:'42',title:'Official update',url:'https://x.com/nebiusai/status/12345',publisher:'Nebius',tickers:['NBIS'],observedAt:'2026-09-28T09:00:00Z'};
+  const market = {id:'43',titleJa:'指数への追加予定',titleEn:'Scheduled index addition',url:'https://x.com/TrendSpider/status/43',topic:'index-membership',publishedAt:'2026-09-28T09:00:00Z',observedAt:'2026-09-28T09:01:00Z'};
+  const data = availableNewsPayload({ok:true,enabled:true,items:[{...item,summaryEn:null},item],
+    officialUpdates:[{...official,url:'https://evil.example/post'},official],
+    marketUpdates:[{...market,topic:'crude-oil'},market],resultBriefs:[{id:'invalid'}]});
+  assert.deepEqual(data.items,[item]);
+  assert.deepEqual(data.officialUpdates,[official]);
+  assert.deepEqual(data.marketUpdates,[market]);
+  assert.deepEqual(data.resultBriefs,[]);
+  assert.throws(()=>availableNewsPayload({ok:false,enabled:true,items:[item]}));
+  assert.deepEqual(availableNewsPayload({ok:true,enabled:false,items:[item]}).items,[]);
+  assert.deepEqual(availableNewsPayload({ok:true,enabled:true,items:[item],marketUpdates:{invalid:true}}).items,[item]);
+});
+
+test('news API retains valid news when another article fails validation', async () => {
+  const previous = {fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
+  process.env.RESEARCH_MONITOR_URL='https://monitor.example.com';
+  process.env.RESEARCH_MONITOR_TOKEN='synthetic-server-token';
+  try {
+    globalThis.fetch=async()=>Response.json({ok:true,enabled:true,items:[item,{...item,id:'invalid'}],marketUpdates:[{}]});
+    const response=await GET();
+    assert.equal(response.status,200);
+    const data=await response.json();
+    assert.equal(data.enabled,true);
+    assert.deepEqual(data.items,[item]);
+    assert.deepEqual(data.marketUpdates,[]);
+  } finally {
+    globalThis.fetch=previous.fetch;
+    for (const [key,value] of [['RESEARCH_MONITOR_URL',previous.url],['RESEARCH_MONITOR_TOKEN',previous.token]]) {
+      if(value===undefined) delete process.env[key]; else process.env[key]=value;
+    }
+  }
+});
 
 test("public payload strips private source, evidence and reviewer data", () => {
   assert.deepEqual(publicNewsPayload({ ok: true, enabled: true, secret: "not public", items: [{ ...item, text: "private source", evidence: ["private"], reviewer: "editor" }] }),

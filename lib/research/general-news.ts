@@ -12,6 +12,29 @@ export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsIt
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
   "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com", "www.bea.gov"]);
 
+// Keep the strict validator for every article, but isolate a rejected article
+// from unrelated valid stories. Never substitute previously cached publications.
+export function availableNewsPayload(value: unknown): GeneralNewsFeed {
+  if (!value || typeof value !== "object") throw Error("Invalid news feed");
+  const raw = value as Record<string, unknown>;
+  const base = publicNewsPayload({ ok: raw.ok, enabled: raw.enabled, items: [] });
+  const accepted: Record<string, unknown[]> = {};
+  for (const [key, limit] of [["resultBriefs", 20], ["officialUpdates", 20], ["marketUpdates", 20], ["items", 30]] as const) {
+    if (raw[key] === undefined && key !== "items") continue;
+    const rows = raw[key];
+    accepted[key] = [];
+    if (!Array.isArray(rows) || rows.length > limit) continue;
+    for (const row of rows) {
+      try {
+        const checked = publicNewsPayload({ ...base, resultBriefs: accepted.resultBriefs,
+          [key]: [row] });
+        accepted[key].push(...(checked[key] ?? []));
+      } catch { /* Only the rejected article is omitted. */ }
+    }
+  }
+  return publicNewsPayload({ ...base, ...accepted });
+}
+
 export function publicNewsPayload(value: unknown): GeneralNewsFeed {
   if (!value || typeof value !== "object") throw new Error("Invalid news feed");
   const payload = value as Record<string, unknown>;

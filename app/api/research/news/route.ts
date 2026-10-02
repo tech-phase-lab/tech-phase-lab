@@ -1,4 +1,4 @@
-import { publicNewsPayload, type OfficialUpdate } from "@/lib/research/general-news";
+import { availableNewsPayload, type OfficialUpdate } from "@/lib/research/general-news";
 import { officialResultEvents } from "@/lib/research/official-result-events";
 import { muFlash } from '@/lib/research/mu-latest';
 
@@ -22,7 +22,7 @@ export async function GET() {
     const text = await response.text();
     if (new TextEncoder().encode(text).length > 500_000) throw new Error("Oversized response");
     const raw = JSON.parse(text);
-    const payload = publicNewsPayload(raw);
+    const payload = availableNewsPayload(raw);
     let issuerEvents: ReturnType<typeof officialResultEvents> = [];
     try { issuerEvents=officialResultEvents(raw.officialResearch); } catch { /* An invalid note must not suppress valid news. */ }
     payload.officialUpdates = (payload.officialUpdates ?? []).map(item => {
