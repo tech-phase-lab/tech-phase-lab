@@ -1,3 +1,47 @@
+# Scoped market feeds and suspended-route verification — October 2, 2026 11:46–11:51 JST
+
+Four concurrent branch commits through `422e95d60948f7ff6d465ac67cc76e8fb2fdd3e3`
+were integrated before verification. They scope the two newly requested X
+accounts to TrendSpider index-membership changes and Barchart government-bond
+or crude-oil facts, add revision-bound bilingual publication with strict
+number/status checks, label persistently blocked supplemental routes as
+suspended, and keep valid news visible when an unrelated candidate fails
+strict validation. No general X firehose, paid service, external delivery or
+investment-impact auto-publication was enabled.
+
+The complete integrated gate passed: Node 201/201, Python 559/559, ESLint with
+zero errors and one pre-existing warning, the Next.js production build and
+TypeScript check, `compileall`, and `git diff --check`. Vercel deployment
+`dpl_9KKjtT2ADmNJ7DZqftHDKyLVriWD` reached Ready for `422e95d`; Railway staging
+also reported success.
+
+The deployed operations preview was live at 11:48 JST with 22/22 company lists
+and all five priority issuers healthy. Supplemental coverage now reports 23/24
+instead of 23/26 because the persistently access-restricted Marvell Blog and
+TSMC Press Center routes are explicitly suspended rather than misreported as
+recovered or left to retry forever. MRVL remains monitored through its IR RSS
+and SEC route; TSM remains monitored through TWSE disclosures and SEC. One
+long-running timeout remains at bounded attempt 57, with its next normal retry
+at 14:49:01 JST. This route count is a point-in-time observation, not complete
+coverage or a delivery guarantee.
+
+The Japanese and English news views both rendered the revision-bound
+TrendSpider Nasdaq-100 membership item detected at 09:24:57 JST: Moderna
+`$MRNA` added on a scheduled basis and Warner Bros Discovery `$WBD` removed on
+a scheduled basis. The exact supported grammar used deterministic bilingual
+copy without waiting for a model call. Current NVIDIA and Nebius items remained
+visible beside it, live-verifying that one invalid article no longer suppresses
+otherwise valid news. Headline translation remained 49/49 with no pending,
+running, retrying or exhausted item at observation.
+
+Calendar files were reviewed first. All 40 companies already had an actual
+October 2 attempt and BLS/Federal Reserve schedules already had their daily
+review, so no event, time or coverage marker changed. The 14 inconclusive
+companies retain their exact blockers in
+`docs/CALENDAR-HANDOFF-2026-10-02.md`.
+
+---
+
 # Scheduled retry and translation recovery — October 2, 2026 10:47–10:52 JST
 
 The deployed operations preview initially rendered its bundled September 19
