@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Language } from "@/lib/research/data";
 import { publicNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
 import { officialHeadlineJa } from "@/lib/research/official-news-ja";
+import { marketNewsDisplay } from "@/lib/research/market-news-display";
 import { officialTime } from "@/lib/research/news-time";
 import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-poller";
 import styles from "./general-news.module.css";
@@ -71,9 +72,9 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
       <div className={styles.items}>{visibleUpdates.map(update => {
         if (update.kind === "market") {
           const item = update.item;
-          const topics = lang === "ja" ? { "index-membership": "指数の組み入れ・除外", "government-bonds": "国債", "crude-oil": "原油" } : { "index-membership": "Index membership", "government-bonds": "Government bonds", "crude-oil": "Crude oil" };
-          return <article key={`market-${item.id}`}><p className={styles.tickers}>{topics[item.topic]}</p>
-            <h3><a href={item.url} target="_blank" rel="noopener noreferrer" lang={lang}>{lang === "ja" ? item.titleJa : item.titleEn}</a></h3>
+          const display = marketNewsDisplay(item, lang);
+          return <article key={`market-${item.id}`}><p className={styles.tickers}>{display.label}</p>
+            <h3><a href={item.url} target="_blank" rel="noopener noreferrer" lang={lang}>{display.title}</a></h3>
             <p className={styles.note}>{lang === "ja" ? "発表" : "Published"} {format(item.publishedAt)}</p></article>;
         }
         const item = update.item;

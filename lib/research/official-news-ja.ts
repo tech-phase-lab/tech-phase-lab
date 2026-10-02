@@ -30,6 +30,11 @@ export function officialHeadlineJa(url: string): string | null {
 }
 
 const pulseHeadlines: Record<string,string> = {
+ "https://developer.nvidia.com/blog/build-applications-on-nvidia-bluefield-faster-with-nvidia-doca-agent-skills/": "DOCAスキルでBlueField開発を加速",
+ "https://developer.nvidia.com/blog/build-local-ai-apps-with-c-and-nvidia-tensorrt-rtx-samples/": "C++とTensorRT RTXでローカルAI開発",
+ "https://x.com/nebiusai/status/2105659333052916008": "InferizeAIを迎え、推論機能を強化へ",
+ "https://x.com/nebiusai/status/2105623455639220248": "AIの構築・展開とエージェント向けツールを紹介",
+
  "https://x.com/nebiusai/status/2104904708980953430": "Nebius、GTC Berlinに出展",
  "https://x.com/nebiusai/status/2104828605725302844": "Shopify、Nebius活用事例を紹介へ",
  "https://x.com/nebiusai/status/2104496608725372988": "NVIDIA、AIエージェント安全基盤を発表",

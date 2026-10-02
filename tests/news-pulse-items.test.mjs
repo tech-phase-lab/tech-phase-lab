@@ -14,8 +14,8 @@ test('home rotation includes published index, bond and oil news with exact bilin
   }],marketUpdates:[market('1','index-membership','2026-10-02T00:24:57Z'),market('2','government-bonds','2026-10-02T00:00:00Z'),market('3','crude-oil','2026-10-01T23:00:00Z')]};
   const ja=newsPulseItems(feed,'ja'), en=newsPulseItems(feed,'en');
   assert.deepEqual(ja.map(x=>x.id),['market-1','market-2','market-3','official-4']);
-  assert.deepEqual(ja.slice(0,3).map(x=>x.ticker),['指数','国債','原油']);
-  assert.deepEqual(en.slice(0,3).map(x=>x.ticker),['INDICES','BONDS','OIL']);
+  assert.deepEqual(ja.slice(0,3).map(x=>x.ticker),['指数の組み入れ・除外','国債','原油']);
+  assert.deepEqual(en.slice(0,3).map(x=>x.ticker),['Index membership','Government bonds','Crude oil']);
   assert.equal(ja[0].title,feed.marketUpdates[0].titleJa);
   assert.equal(en[0].title,feed.marketUpdates[0].titleEn);
   assert.equal(ja[0].at,feed.marketUpdates[0].publishedAt);
@@ -32,4 +32,16 @@ test('home rotation keeps latest five across feeds and preserves unknown publica
   assert.equal(items.length,5);
   assert.deepEqual(items.map(x=>x.id),['official-4','news','market-5','market-4','market-3']);
   assert.equal(items[0].kind,'observed');
+});
+
+
+test('compact home headline is separate from the complete published headline', () => {
+  const title='NVIDIA DOCAエージェントスキルでNVIDIA BlueField上のアプリケーション開発を加速';
+  const item=newsPulseItems({ok:true,enabled:false,items:[],officialUpdates:[{
+    id:'10',tickers:['NVDA'],publisher:'NVIDIA',title:'Build applications on NVIDIA BlueField faster with NVIDIA DOCA Agent Skills',translationJa:title,
+    url:'https://developer.nvidia.com/blog/build-applications-on-nvidia-bluefield-faster-with-nvidia-doca-agent-skills/',observedAt:'2026-10-02T00:00:00Z'
+  }]},'ja')[0];
+  assert.equal(item.title,title);
+  assert.equal(item.shortTitle,'DOCAスキルでBlueField開発を加速');
+  assert.ok(item.shortTitle.length<item.title.length);
 });
