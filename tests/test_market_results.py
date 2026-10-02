@@ -192,3 +192,76 @@ class ResultTests(unittest.TestCase):
         self.assertEqual(items[0]['text'],TEXT)
         payload['includes']['users'][0]['username']='FakeFaby'
         self.assertEqual(x_api.parse_response(source,payload,list(monitor.PROVIDERS)),[])
+
+
+class ResultWindowTests(unittest.TestCase):
+    def setUp(self):
+        from datetime import timedelta
+        self.temp = tempfile.TemporaryDirectory()
+        self.path = Path(self.temp.name) / 'results.sqlite'
+        self.reference = datetime(2026, 10, 2, 12, tzinfo=timezone.utc)
+        self.published = (self.reference - timedelta(minutes=2)).isoformat()
+        self.observed = (self.reference - timedelta(minutes=1)).isoformat()
+        self.source = next(s for s in signals.SOURCES if s['id'] == 'x-wallstengine')
+        with monitor.connect(self.path) as db:
+            signals.schema(db)
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def add(self, index, body=TEXT, *, source=None, tickers='["MU"]', observed=None, truncated=0):
+        source = source or self.source['id']
+        observed = observed or self.observed
+        url = f'https://x.com/wallstengine/status/{index}'
+        with monitor.connect(self.path) as db:
+            db.execute('''INSERT INTO signal_events
+              (id,source_id,url,sha,title,tickers_json,matches_json,event_kind,
+               published_at,observed_at,excerpt,diff,truncated)
+              VALUES(?,?,?,?,?,?,'{}','new',?,?,'','',?)''',
+              (index, source, url, str(index), body[:500], tickers,
+               self.published, observed, truncated))
+            db.execute('INSERT INTO signal_documents VALUES(?,?,?,?,?,?,?)',
+                       (source, url, str(index), body[:500], body, observed, observed))
+
+    def test_unrelated_newer_posts_do_not_hide_unpublished_result(self):
+        self.add(1)
+        for index in range(2, 252):
+            self.add(index, '$MU price target raised to $110 from $100 at Citi')
+        for index in range(252, 453):
+            self.add(index, 'Private official publication', source='other-route')
+        results.run_once(self.path, signals.SOURCES, self.reference)
+        with monitor.connect(self.path) as db:
+            self.assertEqual(db.execute('SELECT count(*) FROM market_result_publications').fetchone()[0], 1)
+            self.assertEqual([item['id'] for item in results.public_feed(db, self.reference)], ['1'])
+
+    def test_already_published_rows_are_not_reprocessed(self):
+        from unittest.mock import patch
+        self.add(1)
+        results.run_once(self.path, signals.SOURCES, self.reference)
+        with patch.object(results, 'projection', side_effect=AssertionError('already published')):
+            results.run_once(self.path, signals.SOURCES, self.reference)
+        with monitor.connect(self.path) as db:
+            self.assertEqual(db.execute('SELECT count(*) FROM market_result_publications').fetchone()[0], 1)
+
+    def test_invalid_row_does_not_stop_later_valid_results(self):
+        self.add(1, tickers='invalid JSON')
+        self.add(2, tickers='{"MU": true}')
+        self.add(3, tickers='[{}]')
+        self.add(4)
+        results.run_once(self.path, signals.SOURCES, self.reference)
+        with monitor.connect(self.path) as db:
+            self.assertEqual([item['id'] for item in results.public_feed(db, self.reference)], ['4'])
+
+    def test_future_stale_truncated_and_unapproved_rows_remain_private(self):
+        from datetime import timedelta
+        self.add(1, observed=(self.reference + timedelta(seconds=1)).isoformat())
+        self.add(2, observed=(self.reference - timedelta(hours=25)).isoformat())
+        self.add(3, truncated=1)
+        self.add(4, source='unknown-route')
+        self.add(5)
+        with monitor.connect(self.path) as db:
+            db.execute("UPDATE signal_documents SET sha='new-revision' WHERE url LIKE '%/5'")
+        results.run_once(self.path, signals.SOURCES, self.reference)
+        with monitor.connect(self.path) as db:
+            self.assertEqual(results.public_feed(db, self.reference), [])
+        results.run_once(self.path, [], self.reference)

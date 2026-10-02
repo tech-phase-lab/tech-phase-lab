@@ -7,6 +7,7 @@ import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/research"))
 from x_comparison import report
+import signals
 
 
 class ComparisonTests(unittest.TestCase):
@@ -14,15 +15,16 @@ class ComparisonTests(unittest.TestCase):
         now = datetime(2026, 9, 25, 3, 0, tzinfo=timezone.utc)
         with sqlite3.connect(":memory:") as db:
             db.row_factory = sqlite3.Row
-            db.execute("CREATE TABLE signal_events (source_id TEXT,title TEXT,tickers_json TEXT,event_kind TEXT,published_at TEXT,observed_at TEXT,url TEXT)")
-            db.execute("CREATE TABLE signal_routes (id TEXT,checked_at TEXT,error TEXT,matched_items INTEGER)")
-            db.executemany("INSERT INTO signal_events VALUES (?,?,?,?,?,?,?)", [
+            signals.schema(db)
+            db.executemany("""INSERT INTO signal_events
+                (source_id,title,tickers_json,event_kind,published_at,observed_at,url,sha,matches_json,excerpt,diff,truncated)
+                VALUES (?,?,?,?,?,?,?,'revision','{}','','',0)""", [
                 ("x-tipranks", "Micron price target raised", '["MU"]', "baseline", "2026-09-21T00:00:00Z", "2026-09-25T02:00:00+00:00", "https://x.com/TipRanks/status/1000"),
                 ("x-tipranks", "Nebius price target raised", '["NBIS"]', "new", "2026-09-25T02:49:30Z", "2026-09-25T02:50:00+00:00", "https://x.com/TipRanks/status/1001"),
                 ("x-thefly", "MU product", '["MU"]', "new", "2026-09-25T02:59:00Z", "2026-09-25T03:00:00+00:00", "https://x.com/theflynews/status/1002"),
                 ("x-wallstengine", "NBIS price target raised", '["NBIS"]', "new", "2026-09-25T02:59:10Z", "2026-09-25T03:00:00+00:00", "https://x.com/wallstengine/status/1003"),
             ])
-            db.execute("INSERT INTO signal_routes VALUES (?,?,?,?)", (
+            db.execute("INSERT INTO signal_routes (id,checked_at,error,matched_items) VALUES (?,?,?,?)", (
                 "x-tipranks", "2026-09-25T03:00:00+00:00",
                 "Timeout for https://secret.example/?token=hidden", 10,
             ))
@@ -35,6 +37,7 @@ class ComparisonTests(unittest.TestCase):
                 "postedAt": "2026-09-25T02:49:30+00:00",
                 "firstSeenAt": "2026-09-25T02:50:00+00:00",
                 "postToFirstSeenSeconds": 30,
+                "publicationStatus": "unsupported-target-syntax",
             }])
             self.assertEqual(tip["tickerCounts"], {"NBIS": 1})
             self.assertFalse(tip["lastSearchHitLimit"])

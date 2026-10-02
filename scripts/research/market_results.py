@@ -188,10 +188,20 @@ def run_once(path, sources, reference=None):
     allowed = {s['id']:s for s in sources if s.get('format') == 'x-api'}
     with monitor.connect(path) as db:
         schema(db)
+        if not allowed:
+            return
+        # Read every unpublished, current revision in the bounded source window.
+        # An arbitrary newest-event page can otherwise permanently hide a valid
+        # result behind unrelated posts, even after every newer row is examined.
         rows = db.execute('''SELECT e.*,d.text AS body,d.sha AS current_sha
-          FROM signal_events e JOIN signal_documents d ON d.source_id=e.source_id AND d.url=e.url
-          WHERE julianday(e.observed_at)>=julianday(?) ORDER BY e.id DESC LIMIT 200''',
-                         ((reference-timedelta(hours=24)).isoformat(),)).fetchall()
+          FROM signal_events e JOIN signal_documents d
+            ON d.source_id=e.source_id AND d.url=e.url AND d.sha=e.sha
+          LEFT JOIN market_result_publications p ON p.event_id=e.id
+          WHERE e.source_id IN (''' + ','.join('?' for _ in allowed) + ''')
+            AND e.truncated=0 AND p.event_id IS NULL
+            AND julianday(e.observed_at) BETWEEN julianday(?) AND julianday(?)
+          ORDER BY julianday(e.observed_at),e.id''',
+          (*allowed, (reference-timedelta(hours=24)).isoformat(), reference.isoformat())).fetchall()
         for row in rows:
             if row['source_id'] not in allowed or row['truncated'] or row['sha'] != row['current_sha']:
                 continue
@@ -208,7 +218,13 @@ def run_once(path, sources, reference=None):
             except (TypeError,ValueError,AttributeError):
                 continue
             started = time.monotonic()
-            result = projection(row['body'], json.loads(row['tickers_json']))
+            try:
+                tickers = json.loads(row['tickers_json'])
+            except (TypeError, ValueError):
+                continue
+            if not isinstance(tickers, list) or not all(isinstance(ticker, str) for ticker in tickers):
+                continue
+            result = projection(row['body'], tickers)
             if not result:
                 continue
             result.update({'id':str(row['id']), 'url':row['url'], 'publisher':NAMES[match[1].lower()],

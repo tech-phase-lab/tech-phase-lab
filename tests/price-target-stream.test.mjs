@@ -2,7 +2,31 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { createHmac } from "node:crypto";
 import { GET } from "../app/api/research/price-targets/stream/route.ts";
-import { EventStreamParser, abortableDelay } from "../lib/research/event-stream.ts";
+import { EventStreamParser, abortableDelay, createSnapshotRevisionGuard } from "../lib/research/event-stream.ts";
+
+test("a slow initial price-target GET cannot overwrite a newer reconnect GET", () => {
+  const guard = createSnapshotRevisionGuard();
+  const initial = guard.beginFallback();
+  const reconnect = guard.beginFallback();
+  let displayed;
+  if (reconnect()) displayed = "new target";
+  if (initial()) displayed = "older feed without target";
+  assert.equal(displayed, "new target");
+  assert.equal(initial(), false, "an older failed GET must not mark the recovered feed unavailable");
+});
+
+test("streamed snapshots invalidate all pending fallback reads, then allow a fresh reconnect", () => {
+  const guard = createSnapshotRevisionGuard();
+  const initial = guard.beginFallback();
+  const retry = guard.beginFallback();
+  guard.streamUpdated();
+  assert.equal(initial(), false);
+  assert.equal(retry(), false);
+  const reconnect = guard.beginFallback();
+  assert.equal(reconnect(), true);
+  guard.streamUpdated();
+  assert.equal(reconnect(), false);
+});
 
 test("SSE preserves chunk boundaries, multiple events and multiline data", () => {
   const parser = new EventStreamParser();

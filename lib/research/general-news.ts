@@ -8,7 +8,8 @@ export type GeneralNewsItem = CompactTitles & {
   impactJa: string; impactEn: string; impactLabel: "positive" | "negative" | "mixed" | "neutral" | "uncertain";
   confidence: "high" | "medium" | "low";
 };
-export type OfficialUpdate = CompactTitles & NewsBody & { id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string };
+export type OfficialNewsSource = { id: string; url: string; publisher: string; publishedAt: string; observedAt: string };
+export type OfficialUpdate = CompactTitles & NewsBody & { id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[] };
 export type MarketUpdate = CompactTitles & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
 export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; resultBriefs?: ResultBrief[] };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
@@ -23,9 +24,9 @@ function compactTitles(value: Record<string, unknown>): CompactTitles {
 }
 
 // Optional approved story text never admits private source bodies or analysis.
-function newsBody(value: Record<string, unknown>): NewsBody {
+function newsBody(value: Record<string, unknown>, maxLength = 12000): NewsBody {
   const valid = (v: unknown): v is string => typeof v === "string" && !!v.trim()
-    && v.length <= 12000 && !v.includes("\0");
+    && v.length <= maxLength && !v.includes("\0");
   return valid(value.bodyJa) && valid(value.bodyEn)
     ? { bodyJa: value.bodyJa, bodyEn: value.bodyEn } : {};
 }
@@ -110,7 +111,22 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       }
       const resultReference = updates.resultBriefs?.some(r => r.kind === 'earnings' && r.researchId === v.researchId && r.url === url.href);
       if (v.researchId !== undefined && !(verifiedMu && v.researchId === 'mu-q4-2026') && !resultReference && !(issuerRelease && v.researchId === `ir-result-${v.id}`)) throw Error('Invalid research reference');
-      return { ...compactTitles(v), ...newsBody(v), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}) };
+      const sources: OfficialNewsSource[] = [];
+      if (Array.isArray(v.sources) && v.sources.length <= 20) {
+        for (const raw of v.sources) {
+          if (!raw || typeof raw !== "object") continue;
+          const source = raw as Record<string, unknown>;
+          const brief = updates.resultBriefs?.find(r => r.id === source.id && r.url === source.url
+            && (v.tickers as string[]).includes(r.ticker));
+          if (!brief || sources.some(s => s.url === brief.url)) continue;
+          // Reconstruct only from independently validated public result briefs.
+          // Arbitrary links, source bodies and analysis never pass through.
+          sources.push({ id: brief.id, url: brief.url, publisher: brief.publisher,
+            publishedAt: brief.publishedAt, observedAt: brief.observedAt });
+        }
+      }
+      const mergedResult = sources.length > 1 && Array.isArray(v.sources) && sources.length === v.sources.length;
+      return { ...compactTitles(v), ...newsBody(v, mergedResult ? 40000 : 12000), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}), ...(sources.length ? { sources } : {}) };
     }).filter(item => {
       if (seenOfficialUrls.has(item.url)) return false;
       seenOfficialUrls.add(item.url);

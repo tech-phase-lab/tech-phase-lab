@@ -42,21 +42,41 @@ test('the public news consumer accepts result links only with a matching validat
  assert.throws(()=>publicNewsPayload({...payload,officialUpdates:[{...update,url:'https://x.com/tipranks/status/9876'}]}));
 });
 
-test('disagreement publishes the newest attributed post without blending or hiding its figures',()=>{
+test('disagreement retains all attributed posts without blending or hiding figures',()=>{
  const newer={...brief,id:'778',researchId:'x-result-778',publisher:'FabyΔ',url:'https://x.com/fabymetal4/status/12346',
    publishedAt:'2026-10-01T00:01:00Z',titleJa:'MU決算：売上$54.24B',titleEn:'MU earnings: revenue $54.24B',
    facts:[{key:'revenue',ja:'売上高',en:'Revenue',value:'$54.24B'},{key:'eps',ja:'調整後EPS',en:'Adjusted EPS',value:'$-1.21'}]};
  for(const order of [[brief,newer],[newer,brief]]){
    const [event]=resultEvents(parseResultBriefs(order));
    assert.equal(event.id,newer.researchId);
-   assert.equal(event.summary.ja,newer.titleJa);
-   assert.equal(event.summary.en,newer.titleEn);
+   assert.match(event.summary.ja,/数値の相違/);
+   assert.match(event.summary.en,/source figures differ/);
    assert.equal(event.summary.ja.includes('FabyΔ')||event.summary.en.includes('FabyΔ'),false);
    assert.equal(event.sources[0].url,newer.url);
-   assert.ok(event.facts.some(f=>f.text.ja.includes('$54.24B')&&f.text.en.includes('$54.24B')));
+   assert.ok(event.facts.some(f=>f.text.ja.includes('$54.24B')&&f.text.en.includes('$54.24B (FabyΔ)')));
    assert.ok(event.facts.some(f=>f.text.ja.includes('$-1.21')&&f.text.en.includes('$-1.21')));
-   assert.equal(JSON.stringify(event).includes('$54.23B'),false);
+   assert.ok(event.facts.some(f=>f.text.en.includes('$54.23B')&&f.sourceIds.includes(brief.researchId)));
+   assert.deepEqual(event.sources.map(s=>s.id),[newer.researchId,brief.researchId]);
+   assert.deepEqual(evidenceIssues(event),[]);
    assert.equal(JSON.stringify(event).includes('確認中'),false);
  }
  assert.throws(()=>parseResultBriefs([{...brief,facts:[]}]));
+});
+
+
+test('identical syndicated earnings consolidate one fact with both sources',()=>{
+ const syndicated={...brief,id:'779',researchId:'x-result-779',publisher:'TipRanks',url:'https://x.com/tipranks/status/12349'};
+ const events=resultEvents(parseResultBriefs([brief,syndicated]));
+ assert.equal(events.length,1);
+ assert.equal(events[0].facts.length,1);
+ assert.equal(events[0].facts[0].sourceIds.length,2);
+ assert.equal(events[0].sources.length,2);
+});
+
+test('earnings period/day boundaries preserve genuine later and different-quarter releases',()=>{
+ const nextDay={...brief,id:'779',researchId:'x-result-779',publishedAt:'2026-10-02T00:01:00Z',publicAt:'2026-10-02T00:02:00Z'};
+ const otherPeriod={...brief,id:'780',researchId:'x-result-780',period:'Q3 2026'};
+ assert.equal(resultEvents(parseResultBriefs([brief,nextDay,otherPeriod])).length,3);
+ const sameInstant={...brief,id:'781',researchId:'x-result-781',url:'https://x.com/tipranks/status/12348',publishedAt:'2026-09-30T20:00:00-04:00'};
+ assert.equal(resultEvents(parseResultBriefs([brief,sameInstant])).length,1);
 });

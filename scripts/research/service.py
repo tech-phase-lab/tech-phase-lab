@@ -501,6 +501,9 @@ class AutomaticMonitor:
             },
             "companies": {},
         }
+        self.publication_wakes = {name: threading.Event() for name in (
+            "headlines", "market", "results", "official",
+        )}
         self.thread = threading.Thread(target=self.run_supervised, name="research-monitor", daemon=True)
         self.generation_thread = threading.Thread(target=self.run_generation, name="brief-generator", daemon=True)
         self.backup_thread = threading.Thread(target=self.run_backup, name="database-backup", daemon=True)
@@ -534,26 +537,34 @@ class AutomaticMonitor:
     def run_headline_translation(self):
         if headline_translation.configuration(os.environ) is None:
             return
+        wake = self.publication_wakes["headlines"]
         while not self.stop_event.is_set():
+            wake.clear()
             try:
                 headline_translation.run_once(self.db_path)
             except Exception:
                 print("headline-translation-unavailable", flush=True)
-            self.stop_event.wait(5)
+            if not self.stop_event.is_set():
+                wake.wait(5)
 
     def run_market_translation(self):
         if headline_translation.configuration(os.environ) is None:
             return
+        wake = self.publication_wakes["market"]
         while not self.stop_event.is_set():
+            wake.clear()
             try:
                 x_market_news.run_once(self.db_path)
             except Exception:
                 print("market-translation-unavailable", flush=True)
-            self.stop_event.wait(5)
+            if not self.stop_event.is_set():
+                wake.wait(5)
 
     def run_results(self):
         # Numerical flashes must not wait for an LLM or require an API key.
+        wake = self.publication_wakes["results"]
         while not self.stop_event.is_set():
+            wake.clear()
             try:
                 market_results.run_once(self.db_path, signals.SOURCES)
             except Exception:
@@ -563,15 +574,25 @@ class AutomaticMonitor:
                     x_market_news.publish_direct_once(self.db_path)
                 except Exception:
                     print("market-facts-publication-unavailable", flush=True)
-            self.stop_event.wait(5)
+            if not self.stop_event.is_set():
+                wake.wait(5)
 
     def run_official_research(self):
+        wake = self.publication_wakes["official"]
         while not self.stop_event.is_set():
+            wake.clear()
             try:
                 official_research.run_once(self.db_path)
             except Exception:
                 print("official-research-unavailable", flush=True)
-            self.stop_event.wait(5)
+            if not self.stop_event.is_set():
+                wake.wait(5)
+
+    def wake_publication_workers(self):
+        # Notifications are local hints, not publication approval. Every worker
+        # still enforces its own source, revision, retry and spending gates.
+        for wake in self.publication_wakes.values():
+            wake.set()
 
     def run_mu_measurement(self):
         while not self.stop_event.is_set():
@@ -632,6 +653,7 @@ class AutomaticMonitor:
 
     def stop(self):
         self.stop_event.set()
+        self.wake_publication_workers()
         self.thread.join(timeout=15)
         self.generation_thread.join(timeout=45)
         self.backup_thread.join(timeout=15)
@@ -742,15 +764,75 @@ class AutomaticMonitor:
     def run_signals(self):
         if not self.signals_enabled:
             return
-        with ThreadPoolExecutor(max_workers=3, thread_name_prefix="signal-source") as pool:
+        try:
+            import x_replay
+            with self.db_lock, monitor.connect(self.db_path) as db:
+                replay = x_replay.replay_acquired(db, signals.enabled_sources(), self.tickers)
+            if replay['recovered'] or replay['invalidated']:
+                self.wake_publication_workers()
+        except Exception:
+            # A replay problem must not stop fresh intake. Retained evidence
+            # remains available for diagnosis and a later repaired restart.
+            print('{"event":"signal-replay-error"}', flush=True)
+        workers = 3
+        # Do not wait for a whole batch: one slow publisher must not postpone
+        # every other route's next due check. Keep only one request per source
+        # in flight and no executor backlog, with the existing concurrency cap.
+        in_flight = {}
+        last_dispatched = {}
+        dispatch_order = 0
+        with ThreadPoolExecutor(max_workers=workers, thread_name_prefix="signal-source") as pool:
             while not self.stop_event.is_set():
+                for source_id, (future, _source) in list(in_flight.items()):
+                    if not future.done():
+                        continue
+                    del in_flight[source_id]
+                    try:
+                        future.result()
+                    except Exception:
+                        print('{"event":"signal-worker-error"}', flush=True)
                 try:
                     with self.db_lock, monitor.connect(self.db_path) as db:
                         pending = signals.due(db)
+                    pending = [source for source in pending if source["id"] not in in_flight]
+                    # Oldest-dispatched first prevents frequent routes at the
+                    # start of the config from starving the remaining routes.
+                    pending.sort(key=lambda source: last_dispatched.get(source["id"], 0))
                     x_due_ids = [source["id"] for source in pending if source.get("format") == "x-api"]
-                    futures = [pool.submit(self.check_signal_source, source, x_due_ids) for source in pending]
-                    for future in as_completed(futures):
-                        future.result()
+                    x_enabled = any(source.get('format') == 'x-api' for source in signals.enabled_sources())
+                    selected = pending[:workers - len(in_flight)]
+                    if x_enabled:
+                        # Reserve one of the existing three slots for X, even
+                        # while it is not yet due. Two slow article publishers
+                        # cannot consume the lane needed by the next X poll.
+                        active_x = sum(source.get('format') == 'x-api'
+                                       for _future, source in in_flight.values())
+                        active_other = len(in_flight) - active_x
+                        selected = [s for s in pending if s.get('format') != 'x-api'][:max(0, 2-active_other)]
+                        if not active_x and x_due_ids:
+                            # Match the reservation layer's least-served choice;
+                            # a source not dispatched must not block the chosen
+                            # lane merely because it appears earlier in config.
+                            current = datetime.now(timezone.utc)
+                            with self.db_lock, monitor.connect(self.db_path) as db:
+                                usage = {r['source_id']: r for r in db.execute('''
+                                  SELECT source_id,count(*) AS attempts,max(attempted_at) AS latest
+                                  FROM signal_x_request_attempts
+                                  WHERE datetime(attempted_at)>datetime(?) AND datetime(attempted_at)<=datetime(?)
+                                  GROUP BY source_id''',
+                                  ((current-timedelta(hours=24)).isoformat(), current.isoformat()))}
+                            x_choice = min(x_due_ids, key=lambda source_id: (
+                                usage.get(source_id, {'attempts': 0})['attempts'],
+                                usage.get(source_id, {'latest': ''})['latest'] or '',
+                                x_due_ids.index(source_id),
+                            ))
+                            selected.insert(0, next(s for s in pending if s['id'] == x_choice))
+                    for source in selected:
+                        if self.stop_event.is_set():
+                            break
+                        in_flight[source["id"]] = (pool.submit(self.check_signal_source, source, x_due_ids), source)
+                        dispatch_order += 1
+                        last_dispatched[source["id"]] = dispatch_order
                 except Exception:
                     print('{"event":"signal-worker-error"}', flush=True)
                 self.stop_event.wait(1)
@@ -785,6 +867,10 @@ class AutomaticMonitor:
             if result["status"] != "deferred":
                 db.execute("UPDATE signal_routes SET last_duration_ms=? WHERE id=?",
                            (round((time.monotonic() - started) * 1000), source["id"]))
+        if result.get("events", 0) > 0:
+            # Wake only after the transaction has committed and released the
+            # shared lock; no worker should see an uncommitted source revision.
+            self.wake_publication_workers()
 
     def interval_for(self, ticker):
         provider = monitor.PROVIDERS[ticker]

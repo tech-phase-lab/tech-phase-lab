@@ -34,6 +34,8 @@
 .raised{color:#a7efcc;background:#214138}.lowered{color:#ffb6b0;background:#482e32}
 .firm .newBadge{margin:0 0 0 8px}
 .body small{font-size:11px}
+.sources{display:grid;gap:3px;margin:7px 0 0;padding:0;list-style:none;color:#b2c5c4;font-size:11px;line-height:1.5}
+.sources li{overflow-wrap:anywhere}.card .sources a{font-size:inherit;text-decoration:underline;text-underline-offset:3px}
 .panel .notificationActions button{font-size:13px;min-height:44px}
 @media(max-width:700px){
   .panel{padding:16px}.head h3{font-size:17px;line-height:1.5}

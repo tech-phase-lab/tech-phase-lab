@@ -43,6 +43,181 @@ service_spec.loader.exec_module(service)
 
 
 class ResearchServiceTests(unittest.TestCase):
+    def test_slow_publishers_cannot_fill_reserved_x_lane(self):
+        with tempfile.TemporaryDirectory() as folder:
+            with patch.dict(os.environ, {'RESEARCH_SIGNALS_ENABLED': '1'}):
+                app = service.AutomaticMonitor(Path(folder)/'monitor.sqlite', Path(folder)/'snapshot.json')
+            release, slow_started, x_repeated = (threading.Event() for _ in range(3))
+            lock = threading.Lock()
+            counts = {}
+            sources = [{'id': f'slow-{i}', 'format': 'feed'} for i in range(3)] + [{'id': 'fast-x', 'format': 'x-api'}]
+
+            def check(source, x_due_ids):
+                with lock:
+                    counts[source['id']] = counts.get(source['id'], 0) + 1
+                    if len([key for key in counts if key.startswith('slow-')]) == 2:
+                        slow_started.set()
+                if source['format'] != 'x-api':
+                    release.wait(5)
+                elif counts['fast-x'] >= 2:
+                    self.assertEqual(x_due_ids, ['fast-x'])
+                    x_repeated.set()
+
+            with patch.object(service.signals, 'due', return_value=sources), \
+                 patch.object(service.signals, 'enabled_sources', return_value=sources), \
+                 patch.object(app, 'check_signal_source', side_effect=check):
+                try:
+                    app.signals_thread.start()
+                    self.assertTrue(slow_started.wait(2))
+                    self.assertTrue(x_repeated.wait(3))
+                    self.assertNotIn('slow-2', counts)
+                    self.assertFalse(release.is_set())
+                finally:
+                    app.stop_event.set()
+                    release.set()
+                    app.signals_thread.join(timeout=5)
+                self.assertFalse(app.signals_thread.is_alive())
+
+    def test_new_signal_wakes_publication_only_after_commit(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)/'monitor.sqlite'
+            app = service.AutomaticMonitor(path, Path(folder)/'snapshot.json')
+            with monitor.connect(path) as db:
+                service.signals.schema(db)
+                db.execute('CREATE TABLE wake_evidence(value INTEGER)')
+
+            def save(db, *_args, **_kwargs):
+                db.execute('INSERT INTO wake_evidence VALUES(1)')
+                return {'status': 'ok', 'events': 1}
+
+            def wake():
+                with sqlite3.connect(path) as db:
+                    self.assertEqual(db.execute('SELECT COUNT(*) FROM wake_evidence').fetchone()[0], 1)
+
+            with patch.object(service.signals, 'validators_for', return_value={}), \
+                 patch.object(service.signals, 'reserve_x_api_request'), \
+                 patch.object(service.signals, 'acquire', return_value={'_items': []}), \
+                 patch.object(service.signals, 'check', side_effect=save), \
+                 patch.object(app, 'wake_publication_workers', side_effect=wake) as notified:
+                app.check_signal_source({'id': 'test', 'format': 'feed'})
+                notified.assert_called_once_with()
+            with patch.object(service.signals, 'validators_for', return_value={}), \
+                 patch.object(service.signals, 'reserve_x_api_request'), \
+                 patch.object(service.signals, 'acquire', return_value={'_items': []}), \
+                 patch.object(service.signals, 'check', return_value={'status': 'unchanged', 'events': 0}), \
+                 patch.object(app, 'wake_publication_workers') as notified:
+                app.check_signal_source({'id': 'test', 'format': 'feed'})
+                notified.assert_not_called()
+
+    def test_saved_signal_wakes_results_without_waiting_for_poll_interval(self):
+        with tempfile.TemporaryDirectory() as folder:
+            app = service.AutomaticMonitor(Path(folder)/'monitor.sqlite', Path(folder)/'snapshot.json')
+            waiting, published = threading.Event(), threading.Event()
+            wake = app.publication_wakes['results']
+            real_wait = wake.wait
+            calls = []
+
+            def wait(timeout):
+                waiting.set()
+                return real_wait(timeout)
+
+            def publish(*_args):
+                calls.append(True)
+                if len(calls) == 2:
+                    published.set()
+                    app.stop_event.set()
+
+            with patch.object(service.market_results, 'run_once', side_effect=publish), \
+                 patch.object(service.x_market_news, 'publish_direct_once', return_value='idle'), \
+                 patch.object(wake, 'wait', side_effect=wait):
+                try:
+                    app.result_thread.start()
+                    self.assertTrue(waiting.wait(2))
+                    app.wake_publication_workers()
+                    self.assertTrue(published.wait(2), 'new signal waited for five-second idle poll')
+                finally:
+                    app.stop_event.set()
+                    app.wake_publication_workers()
+                    app.result_thread.join(timeout=3)
+                self.assertFalse(app.result_thread.is_alive())
+
+    def test_signal_routes_continue_while_one_publisher_is_slow(self):
+        with tempfile.TemporaryDirectory() as folder:
+            with patch.dict(os.environ, {'RESEARCH_SIGNALS_ENABLED': '1'}):
+                app = service.AutomaticMonitor(Path(folder)/'monitor.sqlite', Path(folder)/'snapshot.json')
+            release, slow_started, fast_repeated = (threading.Event() for _ in range(3))
+            calls = {'slow': 0, 'fast': 0}
+            sources = [{'id': key, 'format': 'feed'} for key in calls]
+
+            def check(source, _x_due_ids):
+                calls[source['id']] += 1
+                if source['id'] == 'slow':
+                    slow_started.set()
+                    release.wait(5)
+                elif calls['fast'] >= 2:
+                    fast_repeated.set()
+
+            with patch.object(service.signals, 'due', return_value=sources), \
+                 patch.object(app, 'check_signal_source', side_effect=check):
+                try:
+                    app.signals_thread.start()
+                    self.assertTrue(slow_started.wait(2))
+                    self.assertTrue(fast_repeated.wait(3), 'fast route waited for unrelated slow route')
+                    self.assertEqual(calls['slow'], 1, 'in-flight route must not be duplicated')
+                    self.assertFalse(release.is_set())
+                finally:
+                    app.stop_event.set()
+                    release.set()
+                    app.signals_thread.join(timeout=5)
+                self.assertFalse(app.signals_thread.is_alive())
+
+    def test_signal_scheduler_bounds_concurrency_and_serves_later_routes_after_failure(self):
+        with tempfile.TemporaryDirectory() as folder:
+            with patch.dict(os.environ, {'RESEARCH_SIGNALS_ENABLED': '1'}):
+                app = service.AutomaticMonitor(Path(folder)/'monitor.sqlite', Path(folder)/'snapshot.json')
+            release, three_started, later_served = (threading.Event() for _ in range(3))
+            lock = threading.Lock()
+            active, maximum = 0, 0
+            counts = {}
+            sources = [{'id': str(index), 'format': 'feed'} for index in range(5)]
+
+            def check(source, _x_due_ids):
+                nonlocal active, maximum
+                with lock:
+                    active += 1
+                    maximum = max(maximum, active)
+                    counts[source['id']] = counts.get(source['id'], 0) + 1
+                    if active == 3:
+                        three_started.set()
+                    if '3' in counts and '4' in counts:
+                        later_served.set()
+                try:
+                    if source['id'] in {'0', '1', '2'}:
+                        release.wait(5)
+                    if source['id'] == '0':
+                        raise RuntimeError('private synthetic details')
+                finally:
+                    with lock:
+                        active -= 1
+
+            with patch.object(service.signals, 'due', return_value=sources), \
+                 patch.object(app, 'check_signal_source', side_effect=check), \
+                 patch('builtins.print') as logged:
+                try:
+                    app.signals_thread.start()
+                    self.assertTrue(three_started.wait(2))
+                    self.assertEqual(len(counts), 3)
+                    release.set()
+                    self.assertTrue(later_served.wait(3))
+                    self.assertLessEqual(maximum, 3)
+                    self.assertLessEqual(counts['0'], 2, 'later due sources must not be starved by repeated routes')
+                    logged.assert_any_call('{"event":"signal-worker-error"}', flush=True)
+                finally:
+                    app.stop_event.set()
+                    release.set()
+                    app.signals_thread.join(timeout=5)
+                self.assertFalse(app.signals_thread.is_alive())
+
     def test_market_and_direct_facts_continue_while_other_translations_wait(self):
         with tempfile.TemporaryDirectory() as folder:
             app = service.AutomaticMonitor(Path(folder)/'monitor.sqlite', Path(folder)/'snapshot.json')

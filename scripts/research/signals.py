@@ -253,6 +253,10 @@ def schema(db):
         UNIQUE(source_id,url,sha,previous_sha)
       );
       CREATE INDEX IF NOT EXISTS signal_event_time ON signal_events(observed_at);
+      CREATE INDEX IF NOT EXISTS signal_target_publication_window
+        ON signal_events(source_id,julianday(published_at));
+      CREATE INDEX IF NOT EXISTS signal_source_observation_window
+        ON signal_events(source_id,julianday(observed_at));
       CREATE TABLE IF NOT EXISTS signal_headline_translations (
         source_id TEXT NOT NULL, url TEXT NOT NULL, sha TEXT NOT NULL,
         headline_ja TEXT NOT NULL, model TEXT NOT NULL, created_at TEXT NOT NULL,
@@ -622,6 +626,16 @@ def save(db, source, items, response, checked, config_sha, duration):
                     post['publishedAt'], checked, checked, int(post['truncated']),
                     int(post['url'] in selected),
                 ))
+                if post['url'] not in selected:
+                    # A correction/retraction need not match any news grammar.
+                    # Its newer source revision still invalidates previously
+                    # published facts at this exact source+URL. Keep the copy
+                    # private and do not synthesize a publication event for it.
+                    db.execute('''UPDATE signal_documents
+                      SET sha=?,title=?,text=?,last_seen_at=?
+                      WHERE source_id=? AND url=? AND sha<>?''',
+                      (digest, post['title'], post['text'], checked,
+                       source['id'], post['url'], digest))
             # Private evidence is committed atomically with the cursor below.
             # Never interpret selection as successful bilingual publication.
             db.execute('''DELETE FROM signal_x_acquisition WHERE source_id=? AND rowid NOT IN
@@ -914,82 +928,220 @@ PRICE_TARGET_FIRM = re.compile(
 )
 
 
+PRICE_TARGET_SOURCE_IDS = ("x-tipranks", "x-thefly", "x-wallstengine")
+PRICE_TARGET_LABEL = re.compile(r"\b(?:price[ -]?target|target price|PT)\b", re.I)
+
+
+def price_target_rows(db, since, now, time_column="published_at"):
+    """Read the whole relevant time window, not the newest mixed-event page.
+
+    This reader does not initialize schema, so private comparison reports can
+    use it on a read-only database. Values, including absolute-time bounds,
+    remain parameters; the only selectable columns are fixed here.
+    """
+    if time_column not in {"published_at", "observed_at"}:
+        raise ValueError("invalid-target-window")
+    return db.execute(f"""SELECT e.id,e.source_id,e.url,e.sha,e.title,e.tickers_json,
+                         e.event_kind,e.published_at,e.observed_at,e.truncated,
+                         d.sha AS current_document_sha,
+                         CASE WHEN d.sha=e.sha THEN d.text END AS document_text
+                         FROM signal_events e LEFT JOIN signal_documents d
+                         ON d.source_id=e.source_id AND d.url=e.url
+                         WHERE e.source_id IN (?,?,?)
+                         AND julianday(e.{time_column}) BETWEEN julianday(?) AND julianday(?)
+                         ORDER BY julianday(e.observed_at) DESC,e.id DESC""",
+                      (*PRICE_TARGET_SOURCE_IDS, since.isoformat(), now.isoformat()))
+
+
+def price_target_observation(row, source, now):
+    """Apply publication gates once and return a fixed, body-free reason code.
+
+    The same assessment powers the public feed and private gap diagnostics;
+    mentioning a price target is never reported as successful publication.
+    """
+    if not source:
+        return None, "source-not-approved"
+    if row["event_kind"] not in {"new", "baseline", "changed"}:
+        return None, "event-kind-not-published"
+    if row["current_document_sha"] and row["current_document_sha"] != row["sha"]:
+        return None, "superseded-revision"
+    if row["event_kind"] == "changed" and not row["document_text"]:
+        return None, "revision-evidence-missing"
+    text = row["document_text"] or row["title"]
+    if not isinstance(text, str) or not PRICE_TARGET_LABEL.search(text):
+        return None, "not-target"
+    if row["truncated"]:
+        return None, "truncated-evidence"
+    try:
+        published = datetime.fromisoformat(row["published_at"].replace("Z", "+00:00"))
+        observed = datetime.fromisoformat(row["observed_at"].replace("Z", "+00:00"))
+    except (ValueError, TypeError, AttributeError, OverflowError):
+        return None, "invalid-timestamp"
+    if published.tzinfo is None or observed.tzinfo is None:
+        return None, "invalid-timestamp"
+    if observed > now:
+        return None, "future-observation"
+    if not timedelta(0) <= now - published <= timedelta(days=7):
+        return None, "outside-publication-window"
+    if observed < published:
+        return None, "observation-before-publication"
+    try:
+        url = safe_url(row["url"], source)
+    except (ValueError, TypeError, AttributeError):
+        return None, "source-url-not-approved"
+    if re.match(r'^/theflynews/status/', urlsplit(url).path, re.I):
+        return None, "source-url-not-approved"
+    try:
+        tickers = json.loads(row["tickers_json"])
+    except (ValueError, TypeError):
+        return None, "invalid-tickers"
+    if (not isinstance(tickers, list) or not tickers or
+            any(not isinstance(ticker, str) or not re.fullmatch(r"[A-Z]{1,5}(?:[.-][A-Z])?", ticker)
+                for ticker in tickers)):
+        return None, "invalid-tickers"
+
+    normalized = text.replace(",", "")
+    matches = ([(match, float(match.group(2)), float(match.group(1)))
+                for match in PRICE_TARGET_TEXT.finditer(normalized)] +
+               [(match, float(match.group(1)), float(match.group(2)))
+                for match in PRICE_TARGET_REVERSED.finditer(normalized)] +
+               [(match, float(match.group(3)), float(match.group(1)))
+                for match in PRICE_TARGET_DIRECTIONAL.finditer(normalized)])
+    if not matches:
+        return None, "unsupported-target-syntax"
+    if len(matches) != 1:
+        return None, "ambiguous-target-actions"
+    match, old, new = matches[0]
+    firms = list(PRICE_TARGET_FIRM.finditer(text))
+    if not firms:
+        return None, "firm-not-recognized"
+    if len(firms) != 1:
+        return None, "ambiguous-firms"
+    firm = firms[0]
+    action = match.group(0)
+    if ((re.search(r'raised|hiked|increased|\bup\b', action, re.I) and new <= old)
+            or (re.search(r'lowered|cut|reduced|\bdown\b', action, re.I) and new >= old)):
+        return None, "inconsistent-direction"
+    if not 0 < old <= 100000 or not 0 < new <= 100000 or old == new:
+        return None, "invalid-target-values"
+    if len(tickers) > 1:
+        # The opening analyst-action headline identifies the subject. Other
+        # cashtags may occur only after the complete, firmly attributed target.
+        subject = PRICE_TARGET_SUBJECT.search(normalized)
+        before_target = set(re.findall(r'\$([A-Z]{1,5}(?:[.-][A-Z])?)\b', normalized[:match.end()]))
+        if (not subject or subject.group(1).upper() not in tickers or
+                before_target != {subject.group(1).upper()} or
+                not PRICE_TARGET_FIRM.search(normalized[:match.start()])):
+            return None, "ambiguous-subject"
+        tickers = [subject.group(1).upper()]
+    return {"id": row["id"], "ticker": tickers[0], "firm": firm.group(1),
+            "previous": old, "latest": new, "source": source["name"], "url": url,
+            "publishedAt": published.isoformat(), "observedAt": observed.isoformat()}, "eligible"
+
+
+PRICE_TARGET_FIRM_ALIASES = {
+    "bofa": "BofA", "bankofamerica": "BofA",
+    "citi": "Citi", "citigroup": "Citi",
+    "jpmorgan": "JPMorgan",
+    "rbc": "RBC", "rbccapital": "RBC",
+    "evercore": "Evercore", "evercoreisi": "Evercore",
+    "cantor": "Cantor Fitzgerald", "cantorfitzgerald": "Cantor Fitzgerald",
+    "bmo": "BMO", "bmocapital": "BMO",
+}
+PRICE_TARGET_PUBLISHERS = {
+    "tipranks": "X · TipRanks", "wallstengine": "X · Wall St Engine", "fabymetal4": "X · FabyΔ",
+}
+
+
+def canonical_target_firm(firm):
+    # Aliases are explicit broker identities already recognized by the parser;
+    # do not merge different firms or infer an identity from arbitrary prose.
+    key = re.sub(r"[.\s]", "", firm).casefold()
+    return PRICE_TARGET_FIRM_ALIASES.get(key, firm)
+
+
+def target_source_evidence(item, source):
+    account = re.fullmatch(r"/([A-Za-z0-9_]+)/status/\d+", urlsplit(item["url"]).path)
+    name = item["source"]
+    if account and account[1].lower() in {value.lower() for value in source.get("accounts", [])}:
+        name = PRICE_TARGET_PUBLISHERS.get(account[1].lower(), name)
+    return {"id": item["id"], "source": name, "url": item["url"],
+            "publishedAt": item["publishedAt"], "observedAt": item["observedAt"]}
+
+
+def target_observation_order(item):
+    return datetime.fromisoformat(item["observedAt"]), item["id"]
+
+
 def public_price_targets(db, sources=SOURCES, now=None, limit=20):
     """Publish only recent structured observations, never the X post body."""
     schema(db)
     now = now or datetime.now(timezone.utc)
     approved = {s["id"]: s for s in sources if s.get("format") == "x-api"}
     by_change = {}
-    rows = db.execute("""SELECT e.id,e.source_id,e.url,e.title,e.tickers_json,e.published_at,e.observed_at,
-                         d.text AS document_text
-                         FROM signal_events e LEFT JOIN signal_documents d
-                         ON d.source_id=e.source_id AND d.url=e.url AND d.sha=e.sha
-                         WHERE e.event_kind IN ('new','baseline') AND e.source_id IN ('x-tipranks','x-thefly','x-wallstengine')
-                         ORDER BY julianday(e.observed_at) DESC,e.id DESC LIMIT 300""").fetchall()
-    for row in rows:
-        source = approved.get(row["source_id"])
-        if not source:
+    # Non-target posts must not crowd a valid target out of an arbitrary row
+    # limit. Bound by the seven-day publication window before parsing instead.
+    for row in price_target_rows(db, now - timedelta(days=7), now):
+        item, _ = price_target_observation(row, approved.get(row["source_id"]), now)
+        if item is None:
             continue
-        try:
-            published = datetime.fromisoformat(row["published_at"].replace("Z", "+00:00"))
-            observed = datetime.fromisoformat(row["observed_at"].replace("Z", "+00:00"))
-            tickers = json.loads(row["tickers_json"])
-            # Use the revision-bound full post so a competitor mention or a
-            # second action after the 500-character title cannot be overlooked.
-            text = row["document_text"] or row["title"]
-            normalized = text.replace(",", "")
-            match = PRICE_TARGET_TEXT.search(normalized)
-            reversed_match = PRICE_TARGET_REVERSED.search(normalized)
-            directional = PRICE_TARGET_DIRECTIONAL.search(normalized)
-            firm = PRICE_TARGET_FIRM.search(text)
-            url = safe_url(row["url"], source)
-            if re.match(r'^/theflynews/status/',urlsplit(url).path,re.I):
-                continue
-            old, new = (float(match.group(2)), float(match.group(1))) if match else ((float(reversed_match.group(1)), float(reversed_match.group(2))) if reversed_match else ((float(directional.group(3)), float(directional.group(1))) if directional else (0, 0)))
-            # A post with several actions/firms cannot be attributed by taking
-            # the first price pair and the first firm independently.
-            action_matches=list(PRICE_TARGET_TEXT.finditer(normalized))+list(PRICE_TARGET_REVERSED.finditer(normalized))+list(PRICE_TARGET_DIRECTIONAL.finditer(normalized))
-            firm_matches=list(PRICE_TARGET_FIRM.finditer(text))
-            if len(action_matches)!=1 or len(firm_matches)!=1:
-                continue
-            action=action_matches[0].group(0)
-            if ((re.search(r'raised|hiked|increased|\bup\b',action,re.I) and new<=old)
-                    or (re.search(r'lowered|cut|reduced|\bdown\b',action,re.I) and new>=old)):
-                continue
-
-            if isinstance(tickers, list) and len(tickers) > 1:
-                # The opening analyst-action headline identifies the subject.
-                # Other cashtags are allowed only after the complete target
-                # statement (e.g. a competitor in explanatory commentary).
-                subject = PRICE_TARGET_SUBJECT.search(normalized)
-                before_target = set(re.findall(r'\$([A-Z]{1,5}(?:[.-][A-Z])?)\b',
-                                               normalized[:action_matches[0].end()]))
-                if (not subject or subject.group(1).upper() not in tickers or
-                        before_target != {subject.group(1).upper()} or
-                        not PRICE_TARGET_FIRM.search(normalized[:action_matches[0].start()])):
-                    continue
-                tickers = [subject.group(1).upper()]
-
-            if (published.tzinfo is None or observed.tzinfo is None or
-                    observed > now or
-                    not timedelta(0) <= now - published <= timedelta(days=7) or
-                    observed < published or
-                    (not match and not reversed_match and not directional) or not firm or not isinstance(tickers, list) or len(tickers) != 1 or
-                    not isinstance(tickers[0], str) or not re.fullmatch(r"[A-Z]{1,5}(?:[.-][A-Z])?", tickers[0]) or
-                    not 0 < old <= 100000 or not 0 < new <= 100000 or old == new):
-                continue
-        except (ValueError, TypeError, AttributeError, OverflowError):
-            continue
-        # Multiple monitored accounts can post the same analyst action. Keep
-        # its first detection and one source link instead of showing it twice.
-        change = (tickers[0], firm.group(1).casefold(), old, new, published.astimezone(timezone.utc).date())
+        published = datetime.fromisoformat(item["publishedAt"])
+        observed = datetime.fromisoformat(item["observedAt"])
+        item["firm"] = canonical_target_firm(item["firm"])
+        change = (item["ticker"], item["firm"].casefold(), item["previous"], item["latest"],
+                  published.astimezone(timezone.utc).date())
+        evidence = target_source_evidence(item, approved[row["source_id"]])
         current = by_change.get(change)
-        if current is None or (observed, row["id"]) < (datetime.fromisoformat(current["observedAt"]), current["id"]):
-            by_change[change] = {"id": row["id"], "ticker": tickers[0], "firm": firm.group(1),
-                                 "previous": old, "latest": new, "source": source["name"], "url": url,
-                                 "publishedAt": published.isoformat(), "observedAt": observed.isoformat()}
+        if current is None:
+            item["sources"] = [evidence]
+            by_change[change] = item
+            continue
+        # Combine source evidence only after every post independently passes
+        # the strict publication gates. Repeated acquisition of the same URL
+        # adds no extra publisher, and the first detection stays canonical.
+        source_posts = {entry["url"]: entry for entry in current["sources"]}
+        previous = source_posts.get(evidence["url"])
+        if previous is None or target_observation_order(evidence) < target_observation_order(previous):
+            source_posts[evidence["url"]] = evidence
+        combined = sorted(source_posts.values(), key=target_observation_order)
+        if (observed, item["id"]) < target_observation_order(current):
+            item["sources"] = combined
+            by_change[change] = item
+        else:
+            current["sources"] = combined
     items = sorted(by_change.values(), key=lambda item: datetime.fromisoformat(item["publishedAt"]), reverse=True)[:max(1, min(limit, 30))]
     return {"ok": True, "items": items, "generatedAt": stamp()}
+
+
+def price_target_publication_summary(db, sources=SOURCES, now=None, hours=24):
+    """Public-safe eligibility counts, never a claim of browser delivery."""
+    now = now or datetime.now(timezone.utc)
+    approved = {s["id"]: s for s in sources if s.get("format") == "x-api"}
+    summary = {"windowHours": hours, "candidatePosts": 0, "eligiblePosts": 0,
+               "withheldPosts": 0, "withheldReasons": {},
+               "acquiredTargetPosts": 0, "unselectedAcquiredTargetPosts": 0}
+    # Acquisition precedes interpretation and cursor advancement. Count target
+    # mentions that never reached signal_events too, without exposing post text.
+    for row in db.execute("""SELECT text,selected_for_processing FROM signal_x_acquisition
+            WHERE source_id IN (?,?,?)
+            AND julianday(first_seen_at) BETWEEN julianday(?) AND julianday(?)""",
+            (*PRICE_TARGET_SOURCE_IDS, (now - timedelta(hours=hours)).isoformat(), now.isoformat())):
+        if PRICE_TARGET_LABEL.search(row["text"]):
+            summary["acquiredTargetPosts"] += 1
+            if not row["selected_for_processing"]:
+                summary["unselectedAcquiredTargetPosts"] += 1
+    for row in price_target_rows(db, now - timedelta(hours=hours), now, "observed_at"):
+        text = row["document_text"] or row["title"]
+        if not isinstance(text, str) or not PRICE_TARGET_LABEL.search(text):
+            continue
+        summary["candidatePosts"] += 1
+        item, reason = price_target_observation(row, approved.get(row["source_id"]), now)
+        if item:
+            summary["eligiblePosts"] += 1
+        else:
+            summary["withheldPosts"] += 1
+            summary["withheldReasons"][reason] = summary["withheldReasons"].get(reason, 0) + 1
+    return summary
 
 
 def signal_error_kind(error):
@@ -1094,7 +1246,8 @@ def x_operational_summary(db, sources=SOURCES, reference=None):
         "oldestSucceededAt": min((r["succeededAt"] for r in routes if r["succeededAt"]), default=None),
         "latestSucceededAt": max((r["succeededAt"] for r in routes if r["succeededAt"]), default=None),
         "nextCheckAt": min((r["nextCheckAt"] for r in routes if r["nextCheckAt"]), default=None),
-    }, "items24Hours": item_counts}
+    }, "items24Hours": item_counts,
+        "priceTargetPublication": price_target_publication_summary(db, sources=sources, now=current)}
 
 
 def operational_summary(db, sources=SOURCES, reference=None):

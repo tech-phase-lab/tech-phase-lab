@@ -35,7 +35,7 @@ def market_topic(username,text):
         return 'government-bonds' if BONDS.search(text) else 'crude-oil' if OIL.search(text) else None
     return None
 TARGET_PATTERN = re.compile(
-    r"\b(?:price[ -]?target|target price|pt\s+(?:raised|cut|lowered|hiked|boosted|slashed|(?:to|at)\s*\$?\d+))\b",
+    r"\b(?:price[ -]?target|target price|pt\s+(?:raised|cut|lowered|hiked|increased|reduced|boosted|slashed|(?:to|at|of|from)\s*\$?\d+))\b",
     re.I,
 )
 RATING_PATTERN = re.compile(r"\b(?:initiated|initiat(?:es|ing)\s+(?:coverage|with)|upgraded|downgraded|reiterat(?:es|ed)|maintain(?:s|ed))\b", re.I)

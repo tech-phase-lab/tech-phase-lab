@@ -83,6 +83,9 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
         return <article key={item.id}><details className={styles.story}>
           <summary><span className={styles.tickers}>{display.label}</span><span className={styles.headline} lang={lang}>{display.title}</span><span className={styles.note}>{publication.kind === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} {publication.kind === "date" ? publication.at : format(publication.at)}</span><span className={styles.expand} aria-hidden="true">＋</span></summary>
           <div className={styles.body} lang={lang}>{display.body}</div>
+          {!!item.sources?.length && <ul className={styles.note} aria-label={lang === "ja" ? "情報源" : "Sources"}>
+            {item.sources.map(source => <li key={source.url}>{source.publisher} · <time dateTime={source.publishedAt}>{format(source.publishedAt)}</time></li>)}
+          </ul>}
         </details></article>; })}</div>
     </section>}
     {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}
@@ -95,7 +98,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
         <div className={styles.body}><p className={styles.summary} lang={lang}>{lang === "ja" ? item.summaryJa : item.summaryEn}</p>
         <div className={styles.impact}><p><strong>{lang === "ja" ? "事業への影響" : "Business impact"}</strong><span>{impactLabels[item.impactLabel]} · {lang === "ja" ? "確信度" : "Confidence"} {confidenceLabels[item.confidence]}</span></p><p lang={lang}>{lang === "ja" ? item.impactJa : item.impactEn}</p></div></div>
       </details></article>)}</div>
-      {receivedAt && <p className={styles.note}>{lang === "ja" ? "画面取得" : "Fetched"} {format(receivedAt)} · {lang === "ja" ? "60秒ごとに更新" : "Refreshes every 60 seconds"}</p>}
+      {receivedAt && <p className={styles.note}>{lang === "ja" ? "画面取得" : "Fetched"} {format(receivedAt)} · {lang === "ja" ? `約${NEWS_POLL_INTERVAL_MS / 1000}秒ごとに更新` : `Refreshes about every ${NEWS_POLL_INTERVAL_MS / 1000} seconds`}</p>}
     </>}
     </>}
     <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { setPage(n); panel.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />

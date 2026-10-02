@@ -143,6 +143,39 @@ class XApiTests(unittest.TestCase):
     def setUp(self):
         self.source = {**next(s for s in signals.SOURCES if s["id"] == "x-tipranks"), "enabled": True}
 
+    def test_supported_target_shorthand_reaches_strict_publication_gate(self):
+        from datetime import datetime, timezone
+        now = datetime(2026, 10, 2, 12, tzinfo=timezone.utc)
+        samples = [
+            '$ZZZZ PT increased to $110 from $100 by Citi',
+            '$ZZZZ PT reduced from $110 to $100 by Citi',
+            '$ZZZZ PT from $100 to $110 by Citi',
+            '$ZZZZ PT of $110, up from $100 at Citi',
+            '$ZZZZ PT at $100, down from $110 at Citi',
+            '$ZZZZ PT increased to $90 from $100 by Citi',
+        ]
+        for index, text in enumerate(samples, 1):
+            with self.subTest(text=text):
+                payload = {'data': [{'id': str(index), 'author_id': '1', 'text': text,
+                                      'created_at': '2026-10-02T11:59:00Z'}],
+                           'includes': {'users': [{'id': '1', 'username': 'TipRanks'}]}}
+                items = x_api.parse_response(self.source, payload, list(monitor.PROVIDERS))
+                self.assertEqual(len(items), 1)
+                self.assertEqual(items[0]['matches'], {'ZZZZ': ['$ZZZZ']})
+                with sqlite3.connect(':memory:') as db:
+                    db.row_factory = sqlite3.Row
+                    signals.schema(db)
+                    signals.save(db, self.source, items, {}, now.isoformat(), 'synthetic', 1)
+                    public = signals.public_price_targets(db, now=now)['items']
+                    if index == len(samples):
+                        self.assertEqual(public, [])  # Admission never overrides direction.
+                    else:
+                        self.assertEqual(len(public), 1)
+                        self.assertEqual(public[0]['ticker'], 'ZZZZ')
+        payload = {'data': [{'id': '99', 'author_id': '1', 'text': '$ZZZZ PT session on Tuesday'}],
+                   'includes': {'users': [{'id': '1', 'username': 'TipRanks'}]}}
+        self.assertEqual(x_api.parse_response(self.source, payload, list(monitor.PROVIDERS)), [])
+
     def test_rating_start_and_changes_without_numeric_targets(self):
         payload = {"data": [{"id": "6001", "author_id": "1", "text": "Nebius $NBIS initiated with an Outperform at William Blair"}, {"id": "6002", "author_id": "1", "text": "$MU downgraded to Neutral"}, {"id": "6003", "author_id": "1", "text": "$NBIS interesting stock today"}], "includes": {"users": [{"id": "1", "username": "TipRanks"}]}}
         items = x_api.parse_response(self.source, payload, list(monitor.PROVIDERS))

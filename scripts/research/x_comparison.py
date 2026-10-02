@@ -8,11 +8,12 @@ from pathlib import Path
 import sqlite3
 from statistics import median
 from monitor import persisted_route_error_code
-from x_api import TARGET_PATTERN
-from signals import SOURCES as SIGNAL_SOURCES
+from signals import (SOURCES as SIGNAL_SOURCES, PRICE_TARGET_SOURCE_IDS, PRICE_TARGET_LABEL,
+                     price_target_rows, price_target_observation)
 
 
-SOURCES = ("x-tipranks", "x-thefly", "x-wallstengine")
+SOURCES = PRICE_TARGET_SOURCE_IDS
+APPROVED_SOURCES = {source["id"]: source for source in SIGNAL_SOURCES if source.get("format") == "x-api"}
 SOURCE_LIMITS = {source["id"]: int(source.get("maxResults", 10)) for source in SIGNAL_SOURCES if source.get("format") == "x-api"}
 
 
@@ -22,7 +23,7 @@ def parse_time(value):
     try:
         parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
         return parsed.astimezone(timezone.utc) if parsed.tzinfo else None
-    except (TypeError, ValueError):
+    except (AttributeError, TypeError, ValueError, OverflowError):
         return None
 
 
@@ -30,32 +31,49 @@ def report(db, now=None, hours=24, ticker=None):
     now = now or datetime.now(timezone.utc)
     since = now - timedelta(hours=hours)
     result = {"generatedAt": now.isoformat(), "windowHours": hours,
-              "note": "Post-to-first-seen measures monitor discovery. Analyst publication time and missed posts require independent references.",
+              "note": "Post-to-first-seen measures monitor discovery. Eligibility is not browser delivery. Analyst publication time and missed posts require independent references.",
               "sources": {}}
+    rows_by_source = {source: [] for source in SOURCES}
+    for row in price_target_rows(db, since, now, "observed_at"):
+        rows_by_source[row["source_id"]].append(row)
     for source in SOURCES:
-        rows = db.execute("""SELECT url,title,tickers_json,event_kind,published_at,observed_at
-            FROM signal_events WHERE source_id=? ORDER BY observed_at""", (source,)).fetchall()
+        rows = rows_by_source[source]
         fresh = []
         baseline = 0
+        changed = 0
+        reasons = Counter()
+        eligible = 0
         for row in rows:
             observed = parse_time(row["observed_at"])
-            if not observed or observed < since:
+            if not observed or not since <= observed <= now:
                 continue
-            if not TARGET_PATTERN.search(row["title"]) or (
-                    ticker and ticker not in json.loads(row["tickers_json"])):
+            text = row["document_text"] or row["title"]
+            try:
+                matched = json.loads(row["tickers_json"])
+            except (TypeError, ValueError):
+                matched = []
+            if not isinstance(matched, list):
+                matched = []
+            if not PRICE_TARGET_LABEL.search(text) or (ticker and ticker not in matched):
                 continue
+            item, reason = price_target_observation(row, APPROVED_SOURCES.get(source), now)
+            if item:
+                eligible += 1
+            else:
+                reasons[reason] += 1
             if row["event_kind"] == "baseline":
                 baseline += 1
                 continue
+            if row["event_kind"] == "changed":
+                changed += 1
             if row["event_kind"] != "new":
                 continue
-            fresh.append((row, observed))
+            fresh.append((row, observed, matched, reason))
         lag_seconds = []
         tickers = Counter()
         samples = []
-        for row, observed in fresh:
-            matched = json.loads(row["tickers_json"])
-            tickers.update(matched)
+        for row, observed, matched, reason in fresh:
+            tickers.update(item for item in matched if isinstance(item, str))
             published = parse_time(row["published_at"])
             seconds = (observed - published).total_seconds() if published and published <= observed else None
             if seconds is not None:
@@ -65,14 +83,18 @@ def report(db, now=None, hours=24, ticker=None):
                 "postedAt": published.isoformat() if published else None,
                 "firstSeenAt": observed.isoformat(),
                 "postToFirstSeenSeconds": seconds,
+                "publicationStatus": reason,
             })
         route = db.execute("SELECT checked_at,error,matched_items FROM signal_routes WHERE id=?", (source,)).fetchone()
         result["sources"][source] = {
             "baselinePosts": baseline,
             "newPosts": len(fresh),
-            "targetMentions": sum(bool(TARGET_PATTERN.search(row["title"])) for row, _ in fresh),
+            "targetMentions": len(fresh),
+            "changedPosts": changed,
+            "publication": {"eligiblePosts": eligible, "withheldPosts": sum(reasons.values()),
+                            "withheldReasons": dict(sorted(reasons.items()))},
             "medianArrivalSeconds": median(lag_seconds) if lag_seconds else None,
-            "latestNewPostAt": max((observed.isoformat() for _, observed in fresh), default=None),
+            "latestNewPostAt": max((observed.isoformat() for _, observed, _, _ in fresh), default=None),
             "tickerCounts": dict(sorted(tickers.items())),
             "samples": samples,
             "lastCheckedAt": route["checked_at"] if route else None,

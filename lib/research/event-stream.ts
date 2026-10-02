@@ -18,6 +18,18 @@ export class EventStreamParser {
   }
 }
 
+/** Prevent older HTTP reads from replacing newer HTTP or streamed snapshots. */
+export function createSnapshotRevisionGuard() {
+  let revision = 0;
+  return {
+    beginFallback() {
+      const requestRevision = ++revision;
+      return () => revision === requestRevision;
+    },
+    streamUpdated() { revision += 1; },
+  };
+}
+
 export function abortableDelay(ms: number, signal: AbortSignal): Promise<void> {
   return new Promise((resolve, reject) => {
     if (signal.aborted) { reject(signal.reason); return; }

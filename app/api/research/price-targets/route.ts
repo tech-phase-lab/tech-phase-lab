@@ -1,3 +1,5 @@
+import { publicPriceTargets } from "../../../../lib/research/price-targets.ts";
+
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 15;
@@ -17,7 +19,7 @@ export async function GET() {
   try {
     const url = new URL(base);
     const local = ["localhost", "127.0.0.1"].includes(url.hostname);
-    if (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && local)) throw new Error("HTTPS required");
+    if (url.username || url.password || (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && local))) throw new Error("HTTPS required");
     url.pathname = `${url.pathname.replace(/\/$/, "")}/price-targets`;
     url.search = "";
     url.hash = "";
@@ -25,10 +27,9 @@ export async function GET() {
       headers: { Authorization: `Bearer ${token}` }, cache: "no-store", signal: AbortSignal.timeout(10_000),
     });
     if (!response.ok || Number(response.headers.get("content-length") ?? 0) > 100_000) throw new Error("Monitor unavailable");
-    const payload: unknown = await response.json();
-    if (!payload || typeof payload !== "object" || !("ok" in payload) || payload.ok !== true ||
-        !("items" in payload) || !Array.isArray(payload.items) || payload.items.length > 30) throw new Error("Invalid payload");
-    return Response.json(payload, { headers: feedHeaders });
+    const text = await response.text();
+    if (new TextEncoder().encode(text).length > 100_000) throw new Error("Oversized feed");
+    return Response.json(publicPriceTargets(JSON.parse(text)), { headers: feedHeaders });
   } catch {
     return Response.json({ ok: false, items: [] }, { status: 503, headers: errorHeaders });
   }

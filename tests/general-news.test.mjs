@@ -8,6 +8,7 @@ const helper = new URL("../lib/research/general-news.ts", import.meta.url).href;
 const source = (await readFile(new URL("../app/api/research/news/route.ts", import.meta.url), "utf8"))
   .replace('"@/lib/research/general-news"', JSON.stringify(helper))
   .replace('"@/lib/research/official-result-events"', JSON.stringify(new URL("../lib/research/official-result-events.ts", import.meta.url).href))
+  .replace('"@/lib/research/result-news"', JSON.stringify(new URL("../lib/research/result-news.ts", import.meta.url).href))
   .replace("'@/lib/research/mu-latest'", JSON.stringify(new URL("../lib/research/mu-latest.ts", import.meta.url).href));
 const { GET } = await import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(source)).toString("base64"));
 const item = { id: "a".repeat(64), title: "Synthetic report", url: "https://publisher.example/report", publisher: "Publisher", tickers: ["MU"],
@@ -79,11 +80,13 @@ test("public route uses server credential and never caches failed or withdrawn n
     assert.deepEqual((await (await GET()).json()).items, []);
     globalThis.fetch = async () => { throw new Error("private monitor detail"); };
     const failure = await GET();
-    assert.equal(failure.status, 200);
+    assert.equal(failure.status, 503);
+    assert.equal(failure.headers.get("Cache-Control"), "no-store");
     const safe = await failure.json();
+    assert.equal(safe.ok, false);
     assert.deepEqual(safe.items, []);
     assert.equal(safe.enabled, false);
-    assert.equal(safe.officialUpdates[0].researchId, "mu-q4-2026");
+    assert.equal(safe.officialUpdates, undefined);
     assert.equal(JSON.stringify(safe).includes("private monitor detail"), false);
   } finally {
     globalThis.fetch = previous.fetch;
@@ -101,7 +104,7 @@ test("public route rejects monitor URLs with embedded credentials", async () => 
   globalThis.fetch = async () => { called = true; return Response.json({ ok: true, enabled: false, items: [] }); };
   try {
     const response = await GET();
-    assert.equal(response.status, 200);
+    assert.equal(response.status, 503);
     assert.equal(called, false);
   } finally {
     globalThis.fetch = previous.fetch;
@@ -191,6 +194,38 @@ test('issuer research links reach news while premium purpose and raw evidence st
   }
 });
 
+test('long issuer titles and an invalid adjacent note cannot erase the public news feed', async () => {
+  const previous = { fetch: globalThis.fetch, url: process.env.RESEARCH_MONITOR_URL, token: process.env.RESEARCH_MONITOR_TOKEN };
+  process.env.RESEARCH_MONITOR_URL = 'https://monitor.example.com';
+  process.env.RESEARCH_MONITOR_TOKEN = 'synthetic-server-token';
+  const url = 'https://nebius.com/newsroom/nebius-acquires-inferize-to-strengthen-nebius-token-factorys-production-inference-stack';
+  const headline = { id: '123', title: 'Acquired Inferize', translationJa: 'Inferizeを買収', url, publisher: 'NBIS IR', tickers: ['NBIS'], observedAt: '2026-10-01T11:00:29Z' };
+  const copy = { ja: '確認済みの企業発表', en: 'A verified company announcement' };
+  const note = { id: 'ir-result-123', ticker: 'NBIS', kind: 'acquisition', title: { ja: 'あ'.repeat(181), en: 'A'.repeat(181) },
+    summary: copy, facts: [copy, copy, copy], purpose: { ja: '非公開の目的', en: 'PRIVATE-PURPOSE' },
+    url, sourceTitle: 'Nebius acquires Inferize', publishedOn: '2026-10-01', dateBasis: 'detection', publicAt: '2026-10-01T14:00:00Z' };
+  try {
+    for (const officialResearch of [[note], [{ ...note, id: 'invalid' }, note]]) {
+      globalThis.fetch = async () => Response.json({ ok: true, enabled: true, items: [item], officialUpdates: [headline], officialResearch });
+      const response = await GET();
+      assert.equal(response.status, 200);
+      const result = publicNewsPayload(await response.json());
+      assert.deepEqual(result.items, [item]);
+      const update = result.officialUpdates.find(update => update.url === url);
+      assert.equal(update.title, headline.title);
+      assert.equal(update.translationJa, headline.translationJa);
+      assert.equal(update.researchId, note.id);
+      assert.ok(update.bodyEn.includes(copy.en));
+      assert.equal(JSON.stringify(result).includes('PRIVATE-PURPOSE'), false);
+    }
+  } finally {
+    globalThis.fetch = previous.fetch;
+    for (const [key, value] of [['RESEARCH_MONITOR_URL', previous.url], ['RESEARCH_MONITOR_TOKEN', previous.token]]) {
+      if (value === undefined) delete process.env[key]; else process.env[key] = value;
+    }
+  }
+});
+
 test('live MU earnings replace the manually recovered flash', async () => {
   const previous={fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
   process.env.RESEARCH_MONITOR_URL='https://monitor.example.com';process.env.RESEARCH_MONITOR_TOKEN='synthetic-server-token';
@@ -219,4 +254,34 @@ test('scoped market updates preserve both languages and never expose private ori
  for (const changes of [{url:'https://x.com/Other/status/123'},{topic:'index-membership'},{titleEn:''},{url:market.url+'?unreviewed=1'}]) {
    assert.throws(()=>publicNewsPayload({ok:true,enabled:false,items:[],marketUpdates:[{...market,...changes}]}));
  }
+});
+
+test('news API consolidates cross-publisher earnings without losing sources or conflicting figures', async () => {
+  const previous = { fetch: globalThis.fetch, url: process.env.RESEARCH_MONITOR_URL, token: process.env.RESEARCH_MONITOR_TOKEN };
+  process.env.RESEARCH_MONITOR_URL = 'https://monitor.example.com';
+  process.env.RESEARCH_MONITOR_TOKEN = 'synthetic-server-token';
+  const brief = { id: '801', researchId: 'x-result-801', kind: 'earnings', ticker: 'MU', period: 'Q4 2026',
+    titleJa: 'MU決算：売上$10B', titleEn: 'MU earnings: revenue $10B', facts: [{ key: 'revenue', ja: '売上高', en: 'Revenue', value: '$10B' }],
+    url: 'https://x.com/wallstengine/status/801', publisher: 'Wall St Engine', publishedAt: '2026-10-02T10:00:00Z', observedAt: '2026-10-02T10:00:01Z', publicAt: '2026-10-02T10:00:02Z', processingMs: 1, sourceToDetectionMs: 1000, detectionToPublicMs: 1000 };
+  const correction = { ...brief, id: '802', researchId: 'x-result-802', publisher: 'TipRanks', url: 'https://x.com/TipRanks/status/802',
+    titleJa: 'MU決算：売上$11B', titleEn: 'MU earnings: revenue $11B', facts: [{ ...brief.facts[0], value: '$11B' }],
+    publishedAt: '2026-10-02T10:01:00Z', observedAt: '2026-10-02T10:01:01Z', publicAt: '2026-10-02T10:01:02Z' };
+  try {
+    globalThis.fetch = async () => Response.json({ ok: true, enabled: false, items: [], resultBriefs: [brief, correction] });
+    const response = await GET();
+    assert.equal(response.status, 200);
+    const result = publicNewsPayload(await response.json());
+    const merged = result.officialUpdates.filter(item => item.url.startsWith('https://x.com/'));
+    assert.equal(merged.length, 1);
+    assert.equal(merged[0].sources.length, 2);
+    assert.ok(merged[0].bodyEn.includes('$10B'));
+    assert.ok(merged[0].bodyEn.includes('$11B'));
+    assert.ok(merged[0].bodyEn.includes('Wall St Engine'));
+    assert.ok(merged[0].bodyEn.includes('TipRanks'));
+  } finally {
+    globalThis.fetch = previous.fetch;
+    for (const [key, value] of [['RESEARCH_MONITOR_URL', previous.url], ['RESEARCH_MONITOR_TOKEN', previous.token]]) {
+      if (value === undefined) delete process.env[key]; else process.env[key] = value;
+    }
+  }
 });

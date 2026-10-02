@@ -3,17 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
-import { EventStreamParser, abortableDelay } from "@/lib/research/event-stream";
+import { EventStreamParser, abortableDelay, createSnapshotRevisionGuard } from "@/lib/research/event-stream";
 
 import { formatTargetTime } from "@/lib/research/price-target-time";
+import { publicPriceTargets, priceTargetSources, priceTargetSourceName, type PriceTarget as Target } from "@/lib/research/price-targets";
 
 import FeedPagination from "./news/feed-pagination";
 import NotificationSettings from "./notification-settings";
-
-type Target = {
-  id: number; ticker: string; firm: string; previous: number; latest: number;
-  source: string; url: string; publishedAt: string; observedAt: string;
-};
 
 let snapshot: { items: Target[]; at: string; time: number } | null = null;
 const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
@@ -31,23 +27,23 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
     let active = true;
     let visible = false;
     let session: AbortController | null = null;
-    let streamRevision = 0;
-    const applySnapshot = (data: { ok: boolean; items: Target[] }, signal: AbortSignal) => {
-      if (!data.ok || !Array.isArray(data.items) || data.items.length > 30) throw new Error("Invalid feed");
+    const snapshotRevision = createSnapshotRevisionGuard();
+    const applySnapshot = (value: unknown, signal: AbortSignal) => {
+      const data = publicPriceTargets(value);
       if (active && !signal.aborted) {
         const at = new Date().toISOString(); snapshot = { items: data.items, at, time: Date.now() };
         setItems(data.items); setStatus("ready"); setUpdatedAt(at);
       }
     };
     const readFallback = async (signal: AbortSignal) => {
-      const revision = streamRevision;
+      const isCurrent = snapshotRevision.beginFallback();
       try {
         const response = await fetch("/api/research/price-targets", { signal: AbortSignal.any([signal, AbortSignal.timeout(10_000)]) });
         if (!response.ok) throw new Error("Feed unavailable");
         const snapshot = await response.json();
-        // A slow initial GET must not replace a newer streamed snapshot.
-        if (revision === streamRevision) applySnapshot(snapshot, signal);
-      } catch { if (active && !signal.aborted && revision === streamRevision) setStatus("error"); }
+        // An initial GET can overlap the reconnect GET as well as SSE.
+        if (isCurrent()) applySnapshot(snapshot, signal);
+      } catch { if (active && !signal.aborted && isCurrent()) setStatus("error"); }
     };
     const run = async (signal: AbortSignal) => {
       let failures = 0;
@@ -74,6 +70,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
           const parser = new EventStreamParser();
           while (!signal.aborted) {
             const chunk = await reader.read();
+            if (!active || signal.aborted) break;
             if (chunk.done) break;
             clearTimeout(watchdog);
             watchdog = setTimeout(() => connection.abort(), 45_000);
@@ -81,7 +78,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
               if (event.event === "unavailable") throw new Error("Feed unavailable");
               if (event.event === "snapshot") {
                 applySnapshot(JSON.parse(event.data), signal);
-                streamRevision += 1;
+                snapshotRevision.streamUpdated();
                 clearTimeout(firstSnapshotDeadline);
                 if (active && !signal.aborted) setDelivery("live");
                 failures = 0;
@@ -151,7 +148,12 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
             <strong>${number(item.previous)} → ${number(item.latest)}</strong>
             <span className={item.latest > item.previous ? styles.raised : styles.lowered}>{item.latest > item.previous ? t("引き上げ", "Raised") : t("引き下げ", "Lowered")}</span>
           </div>
-          <small>{item.source.replace(/^X\s*[·・]\s*/, "")} · {t("X投稿日時", "X post time")} <time dateTime={item.publishedAt}>{time(item.publishedAt)}</time></small>
+          <ul className={styles.sources} aria-label={t("情報源", "Sources")}>
+            {priceTargetSources(item).map(source => <li key={source.url}>
+              <a href={source.url} target="_blank" rel="noopener noreferrer">{priceTargetSourceName(source)}</a>
+              <span> · {t("X投稿日時", "X post time")} <time dateTime={source.publishedAt}>{time(source.publishedAt)}</time></span>
+            </li>)}
+          </ul>
         </div>
       </article>;
     })}</div>}
