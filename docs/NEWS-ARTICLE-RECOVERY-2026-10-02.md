@@ -44,3 +44,17 @@ future business purposes remain allowed; ordinary tax news remains allowed.
 These deterministic checks catch known contradictions, not all possible semantic
 errors. Review the regenerated actual output and frontend before restarting any
 acceptance window. Prior failures and superseded windows remain diagnostic evidence.
+
+At 04:33:03.958 UTC the deployed worker recovered event 1119 on its third
+normal attempt after the fidelity change. Earlier two retries failed validation;
+retain this history. The original invalid publication was replaced automatically.
+The new note uses idle GPU costs, distinguishes the completed acquisition from
+its purpose, and has matching bilingual period information. Japanese and English
+research-detail rendering were observed after manual page refresh at about 04:35 UTC.
+A malformed mixed-case brand spelling (`NEbius`) is normalized only when the
+source title provides one unambiguous case-equivalent spelling. No spelling,
+number, entity or semantic substitutions are made by that normalization.
+
+For future failures, retain revision-bound rejected model copy, field and reason
+in private `official_research_attempt_failures`. Neither public feed nor health
+returns this table. This avoids blind retries when an invalid-copy check fails.

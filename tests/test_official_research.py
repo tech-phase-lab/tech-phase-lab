@@ -70,6 +70,30 @@ class OfficialResearchTests(unittest.TestCase):
         self.assertEqual(self.feed()[0]['summary']['ja'], NOTE['summary']['ja'])
         self.assertEqual(self.run_note(lambda *_:self.fail('duplicate regeneration')), 'idle')
 
+    def test_failed_copy_has_private_revision_bound_audit_evidence(self):
+        def wrong(*args):
+            result=response()
+            note=json.loads(json.dumps(NOTE))
+            note['summary']['ja']='買収し、性能を向上させた。'
+            note['summary']['en']='It acquired Inferize to improve performance.'
+            result['output'][0]['content'][0]['text']=json.dumps(note)
+            return result
+        self.assertEqual(self.run_note(wrong), 'retry')
+        with research.connect(self.path) as db:
+            failure=db.execute('SELECT * FROM official_research_attempt_failures').fetchone()
+            self.assertEqual(failure['reason'], 'invalid-copy')
+            self.assertEqual(failure['detail'], 'summary')
+            self.assertEqual(json.loads(failure['payload'])['summary']['ja'], '買収し、性能を向上させた。')
+        self.assertEqual(self.feed(), [])
+
+    def test_only_unambiguous_source_name_case_is_normalized(self):
+        note=json.loads(json.dumps(NOTE))
+        note['title']['ja']='NEbius、Inferizeを買収'
+        result=research.validate(note, BODY, TITLE)
+        self.assertEqual(result['title']['ja'], 'Nebius、Inferizeを買収')
+        note['title']['ja']='OTHERbrand、Inferizeを買収'
+        self.assertEqual(research.validate(note, BODY, TITLE)['title']['ja'], note['title']['ja'])
+
     def test_corrected_quote_failure_can_recover_once_and_invalid_ids_stay_private(self):
         with research.connect(self.path) as db:
             row=research.candidates(db,NOW)[0]

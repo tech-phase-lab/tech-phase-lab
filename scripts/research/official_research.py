@@ -50,6 +50,10 @@ def schema(db):
       CREATE TABLE IF NOT EXISTS official_research_jobs(
         event_id INTEGER PRIMARY KEY, sha TEXT NOT NULL, attempts INTEGER NOT NULL,
         next_at REAL NOT NULL, lease TEXT NOT NULL, state TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS official_research_attempt_failures(
+        lease TEXT PRIMARY KEY, event_id INTEGER NOT NULL, sha TEXT NOT NULL,
+        failed_at TEXT NOT NULL, reason TEXT NOT NULL, detail TEXT NOT NULL,
+        payload TEXT);
       CREATE TABLE IF NOT EXISTS official_research_publications(
         event_id INTEGER PRIMARY KEY, sha TEXT NOT NULL, body_sha TEXT NOT NULL,
         payload TEXT NOT NULL, evidence TEXT NOT NULL, started_at TEXT NOT NULL,
@@ -91,23 +95,38 @@ def validate(value, body, source_title=''):
         raise ValueError('invalid-facts')
     for name, item in [('title',value['title']),('summary',value['summary']),
                        *[('fact',x) for x in value['facts']],('purpose',value['purpose'])]:
-        if not isinstance(item, dict) or set(item) != {'ja','en','evidenceQuote'}:
-            raise ValueError('invalid-item')
-        quote = item['evidenceQuote']
-        if not isinstance(quote,str) or not 16 <= len(quote) <= MAX_EVIDENCE_CHARS or normalized(quote) not in normalized(body):
-            raise ValueError('unsupported-quote')
-        for lang in ('ja','en'):
-            text = item[lang]
-            if (not isinstance(text,str) or not text.strip() or len(text) > (180 if name=='title' else 400)
-                    or '\x00' in text or re.search(r'https?://|申し込|申込|登録はこちら|sign up|register now',text,re.I)):
-                raise ValueError('invalid-copy')
-            # No invented/conversion-derived numbers. Preserve literal source values.
-            factual_validation.validate_numbers(text, quote)
-            factual_validation.validate_semantics(text, quote)
-            factual_validation.validate_acquisition(text, source_title, lang, require_status=name in ('title', 'summary'))
-            factual_validation.validate_acquisition(text, quote, lang)
-        factual_validation.validate_pair(item['ja'], item['en'])
+        try:
+            validate_item(name, item, body, source_title)
+        except ValueError as exc:
+            exc.add_note(name)
+            raise
     return value
+
+
+def validate_item(name, item, body, source_title):
+    if not isinstance(item, dict) or set(item) != {'ja','en','evidenceQuote'}:
+        raise ValueError('invalid-item')
+    quote = item['evidenceQuote']
+    if not isinstance(quote,str) or not 16 <= len(quote) <= MAX_EVIDENCE_CHARS or normalized(quote) not in normalized(body):
+        raise ValueError('unsupported-quote')
+    for lang in ('ja','en'):
+        text = item[lang]
+        if (not isinstance(text,str) or not text.strip() or len(text) > (180 if name=='title' else 400)
+                or '\x00' in text or re.search(r'https?://|申し込|申込|登録はこちら|sign up|register now',text,re.I)):
+            raise ValueError('invalid-copy')
+        # Correct malformed mixed-case names only when the original title gives
+        # one unambiguous spelling. No spelling/meaning/number substitutions.
+        def brand_case(match):
+            forms=set(re.findall(r'\b' + re.escape(match[0]) + r'\b', source_title, re.I))
+            return next(iter(forms)) if len(forms)==1 else match[0]
+        text=re.sub(r'\b[A-Z]{2,}[a-z]+\b', brand_case, text)
+        item[lang]=text
+        # No invented/conversion-derived numbers. Preserve literal source values.
+        factual_validation.validate_numbers(text, quote)
+        factual_validation.validate_semantics(text, quote)
+        factual_validation.validate_acquisition(text, source_title, lang, require_status=name in ('title', 'summary'))
+        factual_validation.validate_acquisition(text, quote, lang)
+    factual_validation.validate_pair(item['ja'], item['en'])
 
 
 def response_schema():
@@ -269,6 +288,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
              'input':json.dumps({'ticker':row['ticker'],'title':row['title'],'evidenceExcerpts':excerpts},ensure_ascii=False),
              'text':{'format':{'type':'json_schema','name':'issuer_factual_note','strict':True,'schema':response_schema()}}}
     usage={}
+    value=None
     try:
         response=transport(payload,key)
         if response.get('status')!='completed':
@@ -288,6 +308,12 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         provider_status=getattr(cause,'code',None)
         reason=str(exc) if type(exc) is ValueError and str(exc) in {'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete'} else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
         with connect(path) as db, db:
+            # Private audit evidence for a failed attempt; never returned by feed.
+            # Preserve the rejected copy so retries can be diagnosed, not guessed.
+            rejected=json.dumps(value,ensure_ascii=False) if isinstance(value,dict) else None
+            db.execute('INSERT OR IGNORE INTO official_research_attempt_failures VALUES(?,?,?,?,?,?,?)',
+                       (lease,row['id'],row['sha'],datetime.now(timezone.utc).isoformat(),reason,
+                        ','.join(getattr(exc,'__notes__',[])),rejected if rejected and len(rejected)<=131072 else None))
             job=db.execute("SELECT attempts FROM official_research_jobs WHERE event_id=? AND lease=?",(row['id'],lease)).fetchone()
             delay=max(headline_translation.retry_delay(job[0] if job else 1), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
             db.execute("UPDATE official_research_jobs SET state='retry',next_at=?,failure_kind=? WHERE event_id=? AND lease=?",(now+delay,reason,row['id'],lease))
