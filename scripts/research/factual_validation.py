@@ -7,6 +7,20 @@ from decimal import Decimal
 from collections import Counter
 
 
+QUANTITY_PATTERN = re.compile(
+    r'(?<![A-Za-z\d.,])(?P<number>\d+(?:[.,]\d+)*)\s*'
+    r'(?P<unit>thousand\b|million\b|billion\b|trillion\b|percent\b|パーセント|[KMBT](?![A-Za-z])|[%％])',
+    re.I,
+)
+UNIT_KEYS = {
+    'k': 'thousand', 'thousand': 'thousand',
+    'm': 'million', 'million': 'million',
+    'b': 'billion', 'billion': 'billion',
+    't': 'trillion', 'trillion': 'trillion',
+    '%': 'percent', '％': 'percent', 'percent': 'percent', 'パーセント': 'percent',
+}
+
+
 def numbers(text):
     return re.findall(r'\d+(?:[.,]\d+)*', text)
 
@@ -33,10 +47,16 @@ def validate_numbers(text, evidence):
     # Whole values and signs: +32 is not -32, and 5 is not 15 or 500.
     if not set(signed_numbers(text)).issubset(set(signed_numbers(evidence))):
         raise ValueError('unsupported-number')
-    for match in re.finditer(r'(\d+(?:[.,]\d+)*)\s*(million\b|billion\b|trillion\b|%|percent\b)', text, re.I):
-        number, unit = match.groups()
-        unit_pattern = r'(?:%|percent)' if unit.lower() in ('%', 'percent') else re.escape(unit)
-        if not re.search(r'(?<![\d.,])' + re.escape(number) + r'(?![\d.,])\s*' + unit_pattern, evidence, re.I):
+    # A matching literal alone is insufficient: $10M must not be accepted from
+    # evidence that says $10B. Treat common financial abbreviations and their
+    # spelled-out forms as equivalent while preserving the magnitude.
+    evidence_quantities = {
+        (match['number'], UNIT_KEYS[match['unit'].lower()])
+        for match in QUANTITY_PATTERN.finditer(evidence)
+    }
+    for match in QUANTITY_PATTERN.finditer(text):
+        quantity = (match['number'], UNIT_KEYS[match['unit'].lower()])
+        if quantity not in evidence_quantities:
             raise ValueError('unsupported-number')
 
 
