@@ -349,6 +349,31 @@ def evidence_excerpts(body):
     return excerpts
 
 
+def retry_feedback(db, row):
+    """Return only currently rejected fields, so retries do not repeat blindly."""
+    failure=db.execute('SELECT payload FROM official_research_attempt_failures WHERE event_id=? AND sha=? ORDER BY failed_at DESC LIMIT 1',
+                       (row['id'],row['sha'])).fetchone()
+    if not failure or not failure['payload']:
+        return []
+    try:
+        note=json.loads(failure['payload'])
+        fields=[('title',note.get('title')),('summary',note.get('summary')),
+                *[('fact',x) for x in note.get('facts',[])[:5]],('purpose',note.get('purpose'))]
+        result=[]
+        for name,item in fields:
+            if not isinstance(item,dict):
+                continue
+            try:
+                validate_item(name,item,row['body'],row['title'])
+            except ValueError as exc:
+                result.append({'field':name,'issue':str(exc),
+                               'rejectedJa':str(item.get('ja',''))[:400],
+                               'rejectedEn':str(item.get('en',''))[:400]})
+        return result
+    except (ValueError,TypeError,KeyError):
+        return []
+
+
 def run_once(path, transport=brief_generator.request_response, env=None, now=None):
     env=os.environ if env is None else env
     now=time.time() if now is None else now
@@ -369,8 +394,10 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     started=time.monotonic()
     excerpts=evidence_excerpts(row['body'])
     policy=POLICY
+    with connect(path) as db:
+        corrections=retry_feedback(db,row)
     payload={'model':model,'store':False,'max_output_tokens':2400,'instructions':policy,
-             'input':json.dumps({'ticker':row['ticker'],'title':row['title'],'evidenceExcerpts':excerpts},ensure_ascii=False),
+             'input':json.dumps({'ticker':row['ticker'],'title':row['title'],'evidenceExcerpts':excerpts,'correctionsRequired':corrections},ensure_ascii=False),
              'text':{'format':{'type':'json_schema','name':'issuer_factual_note','strict':True,'schema':response_schema()}}}
     usage={}
     value=None

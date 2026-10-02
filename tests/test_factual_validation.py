@@ -93,5 +93,18 @@ class FactualValidationTests(unittest.TestCase):
             validation.validate_numbers("Revenue was $10B.", "Revenue was $10M and backlog was $9B.")
 
 
+
+    def test_hyphenated_magnitudes_and_spelled_hardware_counts(self):
+        validation.validate_pair('1000億パラメータのモデル', '100-billion-parameter models')
+        validation.validate_pair('2台のDGX Spark', 'two DGX Spark units')
+        validation.validate_pair('2台の64GBユニット', 'two 64GB units')
+        validation.validate_pair('Q3にリリースした。', 'Released in Q3.')
+        for wrong in ('100億パラメータ', '-1000億パラメータ', '1001億パラメータ'):
+            with self.assertRaisesRegex(ValueError,'unsupported-number'):
+                validation.validate_pair(wrong,'100-billion-parameter models')
+        with self.assertRaisesRegex(ValueError,'unsupported-number'):
+            validation.validate_pair('3台のDGX Spark','two DGX Spark units')
+        validation.validate_pair('GPUのうちひとつ', 'one of the GPUs')
+
 if __name__ == "__main__":
     unittest.main()

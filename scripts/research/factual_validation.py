@@ -10,7 +10,7 @@ from datetime import date
 
 QUANTITY_PATTERN = re.compile(
     r'(?<![\d.,])(?P<before>[+＋\-−]?)\s*(?:[$€£¥]\s*)?'
-    r'(?P<after>[+＋\-−]?)\s*(?P<number>\d+(?:,\d{3})*(?:\.\d+)?)\s*'
+    r'(?P<after>[+＋\-−]?)\s*(?P<number>\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:[-‑]\s*)?'
     r'(?P<unit>thousand\b|million\b|billion\b|trillion\b|percent\b|パーセント|[KMBT](?![A-Za-z])|[%％]|千|万|億|兆)',
     re.I,
 )
@@ -28,7 +28,7 @@ SMALL_NUMBERS = {word: i for i, word in enumerate(
 def quarter_values(text):
     values = []
     values.extend(int(x) for x in re.findall(r'第([1-4])四半期', text))
-    values.extend(int(x) for x in re.findall(r'\bQ([1-4])\b', text, re.I))
+    values.extend(int(x) for x in re.findall(r'(?<![A-Za-z0-9])Q([1-4])(?![A-Za-z0-9])', text, re.I))
     values.extend(ORDINALS[x.lower()] for x in re.findall(r'\b(first|second|third|fourth)[ -]+quarter\b', text, re.I))
     values.extend(ORDINALS[x] for x in re.findall(r'第([一二三四])四半期', text))
     return values
@@ -76,6 +76,12 @@ def numeric_values(text):
     # do not cause blanket rejections of otherwise equivalent translations.
     values.extend((Decimal(SMALL_NUMBERS[x.lower()]), 'number') for x in re.findall(
         r'\b(' + '|'.join(SMALL_NUMBERS) + r')[ -]+(?:seconds?|minutes?|hours?|days?|weeks?|months?|years?)\b', text, re.I))
+    # Explicit hardware counts may spell the number before a product name.
+    # Exclude 'one of ...' idioms, which do not assert a standalone quantity.
+    values.extend((Decimal(SMALL_NUMBERS[m[1].lower()]), 'number') for m in re.finditer(
+        r'\b(' + '|'.join(SMALL_NUMBERS) + r')\s+(?!(?:of|another)\b)'
+        r'(?:(?!(?:of|another)\b)[A-Za-z0-9.-]+\s+){0,4}'
+        r'(?:units?|GPUs?|DPUs?|servers?|devices?|chips?|layers?|encoders?)\b', text, re.I))
     return values
 
 

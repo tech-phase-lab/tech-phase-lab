@@ -274,4 +274,17 @@ class OfficialResearchTests(unittest.TestCase):
         self.assertIsNot(app.result_thread,app.headline_translation_thread)
         self.assertIsNot(app.official_research_thread,app.headline_translation_thread)
 
+
+    def test_retry_receives_specific_rejected_fields_with_same_source(self):
+        def wrong(*args):
+            note=json.loads(json.dumps(NOTE));note['facts'][0]['ja']='売上は99%増加した。'
+            return {'status':'completed','output_text':json.dumps(note)}
+        self.assertEqual(self.run_note(wrong),'retry')
+        def corrected(payload,key):
+            corrections=json.loads(payload['input'])['correctionsRequired']
+            self.assertEqual(corrections[0]['issue'],'unsupported-number')
+            self.assertIn('99%',corrections[0]['rejectedJa'])
+            return response()
+        self.assertEqual(research.run_once(self.path,corrected,ENV,NOW.timestamp()+61),'done')
+
 if __name__=='__main__':unittest.main()
