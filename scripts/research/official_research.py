@@ -57,8 +57,8 @@ def connect(path):
     return db
 
 
-def candidates(db, reference):
-    published = signals.public_official_updates(db, reference=reference, limit=100)
+def candidates(db, reference, *, read_only=False):
+    published = signals.public_official_updates(db, reference=reference, limit=100, read_only=read_only)
     visible_ids = {int(item['id']) for item in published}
     primary = []
     if db.execute("SELECT 1 FROM sqlite_master WHERE name='release_events'").fetchone():

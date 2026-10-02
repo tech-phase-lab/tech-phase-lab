@@ -5,6 +5,32 @@ import { GET, POST } from "../app/api/research/editor/route.ts";
 
 const authorization = "Bearer editor-token-at-least-24-characters";
 
+test("issuer diagnostics are editor-authenticated GET-only with bounded filters and no raw-copy flag", async () => {
+  const saved = { url: process.env.RESEARCH_MONITOR_URL, fetch: globalThis.fetch };
+  process.env.RESEARCH_MONITOR_URL = "https://monitor.example";
+  const calls = [];
+  globalThis.fetch = async (url, init) => { calls.push({ url: new URL(url), init }); return Response.json({ ok: true, items: [], rawCopyIncluded: false }); };
+  try {
+    assert.equal((await GET(new Request("https://example.test/api/research/editor?kind=official-research"))).status, 401);
+    assert.equal(calls.length, 0);
+    const response = await GET(new Request("https://example.test/api/research/editor?kind=official-research&limit=100&includeEvidence=true", { headers: { Authorization: authorization } }));
+    assert.equal(response.status, 200);
+    assert.equal(calls[0].url.pathname, "/admin/official-research");
+    assert.equal(calls[0].url.searchParams.get("limit"), "50");
+    assert.equal(calls[0].url.searchParams.get("view"), "pending");
+    assert.equal(calls[0].url.searchParams.has("includeEvidence"), false);
+    assert.equal(calls[0].init.headers.Authorization, authorization);
+    assert.equal(response.headers.get("Cache-Control"), "no-store");
+    assert.equal((await GET(new Request("https://example.test/api/research/editor?kind=official-research&view=raw", { headers: { Authorization: authorization } }))).status, 400);
+    assert.equal((await POST(new Request("https://example.test/api/research/editor", { method: "POST", headers: { Authorization: authorization }, body: JSON.stringify({ action: "official-research-retry", payload: {} }) }))).status, 400);
+    assert.equal(calls.length, 1);
+  } finally {
+    globalThis.fetch = saved.fetch;
+    if (saved.url === undefined) delete process.env.RESEARCH_MONITOR_URL;
+    else process.env.RESEARCH_MONITOR_URL = saved.url;
+  }
+});
+
 test("news editor forwards only authenticated explicit actions", async () => {
   const previousUrl = process.env.RESEARCH_MONITOR_URL;
   const previousFetch = globalThis.fetch;
@@ -71,6 +97,16 @@ test("private signals forward filters and require editor credentials", async () 
     assert.equal(requests[0].init.headers.Authorization, authorization);
     const invalid = await GET(new Request("http://localhost/api/research/editor?kind=signals&view=approved", { headers: { Authorization: authorization } }));
     assert.equal(invalid.status, 400);
+    const unauthRatings = await GET(new Request("http://localhost/api/research/editor?kind=signals&view=ratings"));
+    assert.equal(unauthRatings.status, 401);
+    assert.equal(requests.length, 1);
+    const ratings = await GET(new Request("http://localhost/api/research/editor?kind=signals&view=ratings&ticker=MSFT", { headers: { Authorization: authorization } }));
+    assert.equal(ratings.status, 200);
+    assert.equal(requests.length, 2);
+    assert.equal(new URL(requests[1].url).pathname, "/admin/signals");
+    assert.equal(new URL(requests[1].url).searchParams.get("view"), "ratings");
+    assert.equal(new URL(requests[1].url).searchParams.get("ticker"), "MSFT");
+    assert.equal(requests[1].init.headers.Authorization, authorization);
   } finally {
     globalThis.fetch = previousFetch;
     if (previousUrl === undefined) delete process.env.RESEARCH_MONITOR_URL;

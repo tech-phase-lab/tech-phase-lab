@@ -934,6 +934,58 @@ PRICE_TARGET_FIRM = re.compile(
 )
 
 
+PRICE_TARGET_EXPLICIT_PREFIX = re.compile(
+    r"^\s*(B\. Riley)\s+Downgrades\s+\$(?P<subject>[A-Z]{1,5}(?:[.-][A-Z])?)"
+    r"\s+to\s+Neutral\s+from\s+Buy\s*,?\s+Cuts\s+"
+    r"(?P<target>PT\s+to\s*\$\d+(?:\.\d+)?\s+from\s*\$\d+(?:\.\d+)?)", re.I,
+)
+
+
+# Target-only identity evidence; this does not expand the research-company
+# roster, acquisition queries or request budgets.
+PRICE_TARGET_COMPANY_ALIASES = {"AMZN": ("Amazon",)}
+PRICE_TARGET_ECHO_FIRM = re.compile(
+    PRICE_TARGET_FIRM.pattern.removeprefix(r"(?:at|by) ") +
+    r"(?:\s+analyst(?:\s+[A-Za-z][A-Za-z.'’-]*){1,6})?\s*$", re.I,
+)
+
+
+def target_company_names(ticker):
+    return {" ".join(name.split()).casefold()
+            for name in [ticker, *ALIASES.get(ticker, []),
+                         *PRICE_TARGET_COMPANY_ALIASES.get(ticker, ())]}
+
+
+def price_target_echo_subject(matches, text, tickers, firm):
+    """Recognize a strict target headline echoed by its named-company body.
+
+    Equal numbers alone are insufficient: every body echo must identify the
+    same company and broker, and no competing cashtag may precede its end.
+    """
+    heading = matches[0][0]
+    if (heading.re is PRICE_TARGET_NAMED_SUBJECT or
+            any(match.re is not PRICE_TARGET_NAMED_SUBJECT for match, _, _ in matches[1:])):
+        return None, "ambiguous-target-actions"
+    subject = PRICE_TARGET_SUBJECT.search(text)
+    if not subject or subject[1].upper() not in tickers:
+        return None, "ambiguous-subject"
+    ticker = subject[1].upper()
+    before_actions = set(re.findall(r'\$([A-Z]{1,5}(?:[.-][A-Z])?)\b', text[:matches[-1][0].end()]))
+    if before_actions != {ticker}:
+        return None, "ambiguous-subject"
+    heading_firm = PRICE_TARGET_FIRM.search(text)
+    if not heading_firm or not heading.end() <= heading_firm.start() < matches[1][0].start():
+        return None, "ambiguous-firms"
+    for match, _, _ in matches[1:]:
+        name = " ".join(match.group("subject").split()).casefold()
+        if name not in target_company_names(ticker):
+            return None, "ambiguous-subject"
+        actor = PRICE_TARGET_ECHO_FIRM.search(text[max(heading.end(), match.start() - 200):match.start()])
+        if not actor or canonical_target_firm(actor[1]).casefold() != canonical_target_firm(firm[1]).casefold():
+            return None, "ambiguous-firms"
+    return ticker, None
+
+
 PRICE_TARGET_SOURCE_IDS = ("x-tipranks", "x-thefly", "x-wallstengine")
 PRICE_TARGET_LABEL = re.compile(r"\b(?:price[ -]?target|target price|PT)\b", re.I)
 
@@ -1017,22 +1069,44 @@ def price_target_observation(row, source, now):
                 for match in PRICE_TARGET_NAMED_SUBJECT.finditer(normalized)])
     if not matches:
         return None, "unsupported-target-syntax"
-    if len(matches) != 1:
+    matches.sort(key=lambda record: record[0].start())
+    if len({(old, new) for _, old, new in matches}) != 1:
         return None, "ambiguous-target-actions"
     match, old, new = matches[0]
+    prefix = PRICE_TARGET_EXPLICIT_PREFIX.search(normalized)
     firms = list(PRICE_TARGET_FIRM.finditer(text))
+    if prefix:
+        # Only the observed, fully explicit broker/action/cashtag construction
+        # supplies an opening firm. Do not infer a firm from a free noun mention.
+        firms.insert(0, prefix)
     if not firms:
         return None, "firm-not-recognized"
     if len(firms) != 1:
         return None, "ambiguous-firms"
     firm = firms[0]
-    action = match.group(0)
-    if ((re.search(r'raised|hiked|increased|\bup\b', action, re.I) and new <= old)
-            or (re.search(r'lowered|cut|reduced|\bdown\b', action, re.I) and new >= old)):
+    for action_match, _, _ in matches:
+        action = action_match.group(0)
+        if ((re.search(r'raised|hiked|increased|\bup\b', action, re.I) and new <= old)
+                or (re.search(r'lowered|cut|reduced|\bdown\b', action, re.I) and new >= old)):
+            return None, "inconsistent-direction"
+    if prefix and new >= old:  # This exact prefix explicitly says "Cuts PT".
         return None, "inconsistent-direction"
     if not 0 < old <= 100000 or not 0 < new <= 100000 or old == new:
         return None, "invalid-target-values"
-    if len(tickers) > 1:
+    if prefix:
+        if len(matches) != 1 or match.span() != prefix.span("target"):
+            return None, "ambiguous-target-actions"
+        ticker = prefix.group("subject").upper()
+        before_target = set(re.findall(r'\$([A-Z]{1,5}(?:[.-][A-Z])?)\b', normalized[:match.end()]))
+        if ticker not in tickers or before_target != {ticker}:
+            return None, "ambiguous-subject"
+        tickers = [ticker]
+    elif len(matches) > 1:
+        ticker, reason = price_target_echo_subject(matches, normalized, tickers, firm)
+        if reason:
+            return None, reason
+        tickers = [ticker]
+    elif len(tickers) > 1:
         # The opening analyst-action headline identifies the subject. Other
         # cashtags may occur only after the complete, firmly attributed target.
         subject = PRICE_TARGET_SUBJECT.search(normalized)
@@ -1047,9 +1121,7 @@ def price_target_observation(row, source, now):
         # filler to skip. Bind it to the resolved subject using only existing
         # exact aliases; a different company or an unknown name stays private.
         named_subject = " ".join(match.group("subject").split()).casefold()
-        approved_names = {" ".join(name.split()).casefold()
-                          for name in [tickers[0], *ALIASES.get(tickers[0], [])]}
-        if named_subject not in approved_names:
+        if named_subject not in target_company_names(tickers[0]):
             return None, "ambiguous-subject"
     return {"id": row["id"], "ticker": tickers[0], "firm": firm.group(1),
             "previous": old, "latest": new, "source": source["name"], "url": url,
@@ -1655,15 +1727,17 @@ if __name__ == "__main__":
     main()
 
 
-def public_official_updates(db, sources=SOURCES, reference=None, limit=20):
+def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, read_only=False):
     """Links/headlines only; never publish private excerpts or unreviewed AI claims."""
-    schema(db)
+    if not read_only:
+        schema(db)
     import news_policy
     import official_release_bridge
     current = reference or datetime.now(timezone.utc)
     current = current.replace(tzinfo=current.tzinfo or timezone.utc).astimezone(timezone.utc)
     if sources is SOURCES:
-        official_release_bridge.sync(db, current)
+        if not read_only:
+            official_release_bridge.sync(db, current)
         sources = [*sources, *official_release_bridge.publishers()]
     allowed = {s['id']: s for s in sources if s.get('officialUpdates') is True
                and s.get('kind') == 'publisher-update' and s.get('allowedHosts')

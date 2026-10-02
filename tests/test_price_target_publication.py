@@ -12,6 +12,28 @@ import signals
 import x_comparison
 
 
+def observed_target_grammar_replay():
+    """Public facts with synthetic surrounding prose, not a retained-DB copy."""
+    return [
+        ('MSFT', ['MSFT'], 'Piper Sandler', 550, 610,
+         "Microsoft $MSFT price target raised to $610 from $550 at Piper Sandler.\n"
+         "Piper Sandler analyst Alex Example raised the firm's price target on Microsoft to $610 from $550."),
+        ('AMZN', ['AMZN'], 'Rosenblatt', 335, 360,
+         "Amazon $AMZN price target raised to $360 from $335 at Rosenblatt.\n"
+         "Rosenblatt raised the firm's price target on Amazon to $360 from $335."),
+        ('MSFT', ['MSFT'], 'Wells Fargo', 700, 725,
+         "Microsoft $MSFT selected for a focus list at Wells Fargo.\n"
+         "Wells Fargo analyst Alex Example raised the firm's price target on Microsoft to $725 from $700."),
+        ('ASTS', ['ASTS', 'VSAT'], 'B. Riley', 85, 65,
+         "Satellite company $ASTS downgraded to Neutral at B. Riley.\n"
+         "The analyst assigned a price target of $65, down from $85.\n"
+         "Peer company $VSAT was also discussed."),
+        ('MRNA', ['MRNA'], 'Citi', 60, 80,
+         "$MRNA downgraded to Sell from Neutral at Citi.\n"
+         "The analyst assigned a price target of $80, up from $60."),
+    ]
+
+
 class TargetPublicationTests(unittest.TestCase):
     def setUp(self):
         self.db = sqlite3.connect(':memory:')
@@ -125,6 +147,110 @@ class TargetPublicationTests(unittest.TestCase):
             with self.subTest(body=body):
                 text = headline + body
                 self.add(index, text[:500], tickers=tickers, body=text)
+                self.assertEqual(signals.price_target_observation(self.row(index), self.source, self.now), (None, reason))
+        self.assertEqual(signals.public_price_targets(self.db, now=self.now)['items'], [])
+
+    def test_observed_grammar_corpus_preserves_old_targets_and_adds_wells_fargo(self):
+        corpus = observed_target_grammar_replay()
+        for index, (_, tickers, _, _, _, body) in enumerate(corpus, 1):
+            self.add(index, body.split('\n')[0], tickers=json.dumps(tickers), body=body)
+        items = signals.public_price_targets(self.db, now=self.now)['items']
+        self.assertEqual({(item['ticker'], item['firm'], item['previous'], item['latest']) for item in items},
+                         {(ticker, firm, old, new) for ticker, _, firm, old, new, _ in corpus})
+        self.assertEqual(len(items), 5)
+        # A rating downgrade must not invert the separately stated target rise.
+        moderna = next(item for item in items if item['ticker'] == 'MRNA')
+        self.assertEqual((moderna['previous'], moderna['latest']), (60, 80))
+
+    def test_headline_and_named_body_echo_preserve_observed_target_pairs(self):
+        for index, (company, ticker, firm, old, new) in enumerate([
+            ('Microsoft', 'MSFT', 'Piper Sandler', 550, 610),
+            ('Amazon', 'AMZN', 'Rosenblatt', 335, 360),
+        ], 1):
+            with self.subTest(ticker=ticker, firm=firm):
+                headline = f'{company} ${ticker} price target raised to ${new} from ${old} at {firm}.'
+                body = headline + f"\n{firm} analyst Alex Example raised the firm's price target on {company} to ${new} from ${old}."
+                self.add(index, headline, tickers=json.dumps([ticker]), body=body)
+        items = signals.public_price_targets(self.db, now=self.now)['items']
+        self.assertEqual({(item['ticker'], item['firm'], item['previous'], item['latest']) for item in items},
+                         {('MSFT', 'Piper Sandler', 550, 610), ('AMZN', 'Rosenblatt', 335, 360)})
+        self.assertNotIn('AMZN', signals.ALIASES)
+        self.assertNotIn('Alex Example', json.dumps(items))
+
+    def test_equal_numbers_do_not_coalesce_conflicting_echo_attribution(self):
+        headline = 'Microsoft $MSFT price target raised to $610 from $550 at Piper Sandler.\n'
+        cases = [
+            ('Piper Sandler analyst Alex Example raised its price target on Microsoft to $620 from $550.', 'ambiguous-target-actions'),
+            ('Piper Sandler analyst Alex Example raised its price target on Microsoft to $610 from $560.', 'ambiguous-target-actions'),
+            ('Piper Sandler analyst Alex Example lowered its price target on Microsoft to $610 from $550.', 'inconsistent-direction'),
+            ('Piper Sandler analyst Alex Example raised its price target on Amazon to $610 from $550.', 'ambiguous-subject'),
+            ('Rosenblatt analyst Alex Example raised its price target on Microsoft to $610 from $550.', 'ambiguous-firms'),
+            ('An analyst raised its price target on Microsoft to $610 from $550.', 'ambiguous-firms'),
+            ('$AMD: Piper Sandler analyst Alex Example raised its price target on Microsoft to $610 from $550.', 'ambiguous-subject'),
+            ('PT raised to $610 from $550.', 'ambiguous-target-actions'),
+        ]
+        for index, (echo, reason) in enumerate(cases, 1):
+            with self.subTest(echo=echo):
+                body = headline + echo
+                self.add(index, headline, tickers='["MSFT"]', body=body)
+                self.assertEqual(signals.price_target_observation(self.row(index), self.source, self.now), (None, reason))
+        self.assertEqual(signals.public_price_targets(self.db, now=self.now)['items'], [])
+
+    def test_hidden_action_after_valid_echo_is_not_discarded(self):
+        headline = 'Amazon $AMZN price target raised to $360 from $335 at Rosenblatt.'
+        body = headline + "\nRosenblatt analyst Alex Example raised its price target on Amazon to $360 from $335."
+        body += '\nSynthetic commentary. ' * 30
+        self.add(1, headline, tickers='["AMZN"]', body=body)
+        self.assertEqual(signals.public_price_targets(self.db, now=self.now)['items'][0]['latest'], 360)
+        self.db.execute('UPDATE signal_documents SET text=?',
+                        (body + '\nRosenblatt analyst Alex Example cut its price target on Amazon to $320 from $335.',))
+        self.assertEqual(signals.price_target_observation(self.row(1), self.source, self.now),
+                         (None, 'ambiguous-target-actions'))
+        self.assertEqual(signals.public_price_targets(self.db, now=self.now)['items'], [])
+
+    def test_explicit_b_riley_prefix_merges_second_origin_without_losing_corpus(self):
+        corpus = observed_target_grammar_replay()
+        for index, (_, tickers, _, _, _, body) in enumerate(corpus, 1):
+            self.add(index, body.split('\n')[0], tickers=json.dumps(tickers), body=body)
+        original_url = 'https://x.com/TipRanks/status/2105941809176162413'
+        second_url = 'https://x.com/wallstengine/status/2105958528741785966'
+        self.db.execute('UPDATE signal_events SET url=?,published_at=?,observed_at=? WHERE id=4',
+                        (original_url, '2026-10-02T08:43:48Z', '2026-10-02T08:44:16.476Z'))
+        self.db.execute('UPDATE signal_documents SET url=? WHERE url=?',
+                        (original_url, 'https://x.com/wallstengine/status/4'))
+        text = 'B. Riley Downgrades $ASTS to Neutral from Buy, Cuts PT to $65 from $85'
+        self.add(6, text, tickers='["ASTS"]', body=text)
+        self.db.execute('UPDATE signal_events SET url=?,published_at=?,observed_at=? WHERE id=6',
+                        (second_url, '2026-10-02T09:50:14Z', '2026-10-02T09:51:21Z'))
+        self.db.execute('UPDATE signal_documents SET url=? WHERE url=?',
+                        (second_url, 'https://x.com/wallstengine/status/6'))
+        items = signals.public_price_targets(self.db, now=self.now)['items']
+        self.assertEqual({(item['ticker'], item['firm'], item['previous'], item['latest']) for item in items},
+                         {(ticker, firm, old, new) for ticker, _, firm, old, new, _ in corpus})
+        asts = next(item for item in items if item['ticker'] == 'ASTS')
+        self.assertEqual(asts['id'], 4)
+        self.assertEqual(asts['url'], original_url)
+        self.assertEqual(asts['observedAt'], '2026-10-02T08:44:16.476000+00:00')
+        self.assertEqual([entry['url'] for entry in asts['sources']], [original_url, second_url])
+        self.assertEqual([entry['source'] for entry in asts['sources']], ['X · TipRanks', 'X · Wall St Engine'])
+        self.assertEqual([entry['publishedAt'] for entry in asts['sources']],
+                         ['2026-10-02T08:43:48+00:00', '2026-10-02T09:50:14+00:00'])
+        self.assertEqual([entry['observedAt'] for entry in asts['sources']],
+                         ['2026-10-02T08:44:16.476000+00:00', '2026-10-02T09:51:21+00:00'])
+
+    def test_explicit_prefix_does_not_relax_firm_subject_direction_or_action_gates(self):
+        cases = [
+            ('Unknown Firm Downgrades $ASTS to Neutral from Buy, Cuts PT to $65 from $85', '["ASTS"]', 'firm-not-recognized'),
+            ('Goldman Sachs Downgrades $ASTS to Neutral from Buy, Cuts PT to $65 from $85', '["ASTS"]', 'firm-not-recognized'),
+            ('B. Riley Downgrades $ASTS to Neutral from Buy, Cuts PT to $85 from $65', '["ASTS"]', 'inconsistent-direction'),
+            ('B. Riley Downgrades $VSAT to Neutral from Buy, Cuts PT to $65 from $85', '["ASTS"]', 'ambiguous-subject'),
+            ('B. Riley Downgrades $ASTS to Neutral from Buy, Cuts PT to $65 from $85 at Citi', '["ASTS"]', 'ambiguous-firms'),
+            ('B. Riley Downgrades $ASTS to Neutral from Buy, Cuts PT to $65 from $85. PT raised to $90 from $85', '["ASTS"]', 'ambiguous-target-actions'),
+            ('B. Riley Downgrades $ASTS to Neutral from Buy, Cuts PT to $65 from $85. PT to $65 from $85', '["ASTS"]', 'ambiguous-target-actions'),
+        ]
+        for index, (text, tickers, reason) in enumerate(cases, 1):
+            with self.subTest(text=text):
+                self.add(index, text, tickers=tickers, body=text)
                 self.assertEqual(signals.price_target_observation(self.row(index), self.source, self.now), (None, reason))
         self.assertEqual(signals.public_price_targets(self.db, now=self.now)['items'], [])
 

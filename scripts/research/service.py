@@ -30,6 +30,7 @@ import headline_translation
 import x_market_news
 import market_results
 import official_research
+import official_research_diagnostics
 import mu_earnings_measurement
 import web_push
 
@@ -691,6 +692,9 @@ class AutomaticMonitor:
     def stock_news_queue(self, limit=20):
         with stock_news.connect(self.db_path) as db:
             return stock_news.queue(db, limit)
+
+    def official_research_queue(self, limit=20, view="pending"):
+        return official_research_diagnostics.queue(self.db_path, limit, view)
 
     def generate_news_draft(self, payload):
         with stock_news.connect(self.db_path) as db:
@@ -2108,14 +2112,15 @@ class Handler(BaseHTTPRequestHandler):
             state = self.app.public_state()
             self.send_json(200 if path == "/health" or state["ready"] else 503, state)
             return
-        if path in {"/admin/briefs", "/admin/annual-briefs", "/admin/signals", "/admin/news", "/admin/posts", "/admin/questions"}:
+        if path in {"/admin/briefs", "/admin/annual-briefs", "/admin/signals", "/admin/news", "/admin/posts", "/admin/questions", "/admin/official-research"}:
             if not self.editor_authorized():
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
                 return
             try:
                 limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
-                view = parse_qs(parsed.query).get("view", ["all"])[0]
-                queue = (self.app.question_queue(view, limit) if path == "/admin/questions" else
+                view = parse_qs(parsed.query).get("view", ["pending" if path == "/admin/official-research" else "all"])[0]
+                queue = (self.app.official_research_queue(limit, view) if path == "/admin/official-research" else
+                         self.app.question_queue(view, limit) if path == "/admin/questions" else
                          self.app.posts_queue(limit, offset=int(parse_qs(parsed.query).get("offset", ["0"])[0])) if path == "/admin/posts" else
                          self.app.stock_news_queue(limit) if path == "/admin/news" else
                          self.app.signal_queue(limit, view, parse_qs(parsed.query).get("ticker", [None])[0])

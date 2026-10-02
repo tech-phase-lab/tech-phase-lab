@@ -42,14 +42,14 @@ export async function GET(request: Request) {
     const requested = Number(requestUrl.searchParams.get("limit") ?? 20);
     const limit = Number.isInteger(requested) ? Math.max(1, Math.min(requested, 50)) : 20;
     const kind = requestUrl.searchParams.get("kind");
-    const view = requestUrl.searchParams.get("view") ?? "all";
-    const allowedViews = ["posts", "news"].includes(kind ?? "") ? ["all"] : kind === "signals" ? ["all", "new", "changed", "baseline", "targets"] : kind === "annual"
+    const view = requestUrl.searchParams.get("view") ?? (kind === "official-research" ? "pending" : "all");
+    const allowedViews = kind === "official-research" ? ["pending", "all"] : ["posts", "news"].includes(kind ?? "") ? ["all"] : kind === "signals" ? ["all", "new", "changed", "baseline", "targets", "ratings"] : kind === "annual"
       ? ["all", "actionable", "invalid", "draft", "held", "approved", "rejected"]
       : ["all", "ready", "blocked", "needs-draft"];
     if (!allowedViews.includes(view)) {
       return response(400, { ok: false, error: "invalid-review-filter" });
     }
-    const url = endpoint(kind === "posts" ? "/admin/posts" : kind === "news" ? "/admin/news" : kind === "signals" ? "/admin/signals" : kind === "annual" ? "/admin/annual-briefs" : "/admin/briefs");
+    const url = endpoint(kind === "official-research" ? "/admin/official-research" : kind === "posts" ? "/admin/posts" : kind === "news" ? "/admin/news" : kind === "signals" ? "/admin/signals" : kind === "annual" ? "/admin/annual-briefs" : "/admin/briefs");
     url.searchParams.set("limit", String(limit));
     url.searchParams.set("view", view);
     if (kind === "posts") {

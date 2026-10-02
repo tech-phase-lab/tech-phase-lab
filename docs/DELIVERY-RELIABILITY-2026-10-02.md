@@ -138,3 +138,53 @@ old revisions, and different-URL disagreements remain attributed.
 The integrated follow-through changes passed 243 Node and 653 Python tests,
 lint (zero errors, the same existing warning), production build/type checking,
 compileall and whitespace checks before their subsequent rollout.
+
+## Preserved-publication corpus and protected diagnostics
+
+Follow-through commit `f5a81aa97e54b351c57f38273d53c3034181103e` passed Actions
+`37038068367` and both linked deployments. Subsequent actual UI checks found a
+regression: a normal target heading followed by an identical named-company body
+statement was counted as two conflicting actions. AMZN/Rosenblatt $335 to $360
+and MSFT/Piper Sandler $550 to $610 disappeared, while the newly supported
+MSFT/Wells Fargo $700 to $725 appeared. This temporary omission is preserved as
+a failure, not described as an error-free rollout.
+
+A representative grammar replay now compares the same five observed fact
+patterns against both earlier commits and the repaired candidate: `33c0ad7`
+returns four, `f5a81aa` returns three, and the repaired candidate returns all five.
+The replay uses observed facts/grammar with synthetic surrounding prose; it is
+not a complete export of the retained production originals. Identical echoes
+require the same price pair, direction, explicit subject and broker actor.
+Different firms, companies, additional actions and contradictory directions
+remain withheld.
+
+The explicit B. Riley opening/cashtag/action construction is also supported.
+These two originals normalize to ASTS / B. Riley / 85 to 65 / 2026-10-02 UTC:
+
+- https://x.com/TipRanks/status/2105941809176162413 — source 08:43:48 UTC;
+  first observed 08:44:16.476 UTC.
+- https://x.com/wallstengine/status/2105958528741785966 — source 09:50:14 UTC;
+  first observed 09:51:21 UTC.
+
+The combined item retains both origins and the earliest observation. The two
+MSFT actions remain separate because their firms, dates and price pairs differ.
+
+An editor-token-protected, GET-only issuer diagnostic view was added to inspect
+the outstanding generation candidates. It uses SQLite `mode=ro` and
+`query_only`, bypasses schema/metadata synchronization, and does not generate,
+retry or publish anything. It returns current revision/job metadata and bounded
+numeric/quarter/date validation differences, never rejected prose, source bodies
+or evidence quotations. No cookie bridge, new credential or permission is added.
+The existing ratings filter is forwarded consistently with its UI and backend.
+
+The live three issuer-note failures are not classified merely by building this
+view. Historical failure rows do not record body SHA; replay against the current
+body is explicitly distinguished from reproducing the historical validation.
+Machine rejection alone is not evidence of fabricated facts. Actual editor
+authentication is still required for live diagnosis.
+
+Anthropic's newly indexed academy article briefly returned HTTP 404, then
+recovered on the normal retry at 17:11:19.706 UTC. Its future publication clock
+from the publisher is left unchanged. This source-side incident is distinct
+from the PR Newswire parser repair, whose pre-deployment failed attempt remains
+scheduled for 18:06:45.389 UTC verification.
