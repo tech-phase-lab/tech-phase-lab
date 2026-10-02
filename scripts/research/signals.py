@@ -1595,6 +1595,8 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20):
             translation.update(compact_headlines.validated(
                 {'shortTitleJa': compact['title_ja'], 'shortTitleEn': compact['title_en']},
                 translation['translationJa'], display_title))
+        from official_research import public_story_body
+        translation.update(public_story_body(db, row))
         items.append({'id': str(row['id']), 'title': display_title, 'url': url,
                       'publisher': source['name'], 'tickers': tickers,
                       'observedAt': observed.isoformat(), **publication, **translation})

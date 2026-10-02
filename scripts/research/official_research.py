@@ -6,6 +6,7 @@ quotes stay private; only concise paraphrases are sent to the authenticated API.
 """
 from datetime import datetime, timedelta, timezone
 import json
+import hashlib
 import os
 import re
 import time
@@ -30,6 +31,10 @@ Use third-person news wording. Omit promotion, calls to action and registration 
 def schema(db):
     headline_translation.schema(db)
     db.executescript('''
+      CREATE TABLE IF NOT EXISTS official_story_bodies(
+        event_id INTEGER PRIMARY KEY, sha TEXT NOT NULL, body_sha TEXT NOT NULL,
+        body TEXT NOT NULL, fetched_at TEXT NOT NULL, next_at REAL NOT NULL,
+        error TEXT);
       CREATE TABLE IF NOT EXISTS official_research_jobs(
         event_id INTEGER PRIMARY KEY, sha TEXT NOT NULL, attempts INTEGER NOT NULL,
         next_at REAL NOT NULL, lease TEXT NOT NULL, state TEXT NOT NULL);
@@ -53,18 +58,104 @@ def connect(path):
 
 
 def candidates(db, reference):
-    if not db.execute("SELECT 1 FROM sqlite_master WHERE name='release_events'").fetchone():
-        return []
-    signals.public_official_updates(db, reference=reference, limit=500)
-    return [dict(r) for r in db.execute('''SELECT e.*, s.sha256 AS body_sha,
-      s.ticker, r.extracted_text AS body, r.observed_at AS body_at
-      FROM signal_events e JOIN sources s ON s.url=e.url
-      JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256
-      WHERE e.source_id LIKE 'primary-ir-%' AND s.status NOT IN ('held','rejected')
-      AND julianday(e.observed_at)>=julianday(?)
-      ORDER BY e.id DESC LIMIT 100''', ((reference-timedelta(days=7)).isoformat(),))
-      if bridge.is_current(db, r) and MATERIAL.search(r['title'])
-      and 1200 <= len(r['body'] or '') <= 160000]
+    published = signals.public_official_updates(db, reference=reference, limit=100)
+    visible_ids = {int(item['id']) for item in published}
+    primary = []
+    if db.execute("SELECT 1 FROM sqlite_master WHERE name='release_events'").fetchone():
+        primary = [dict(r) for r in db.execute('''SELECT e.*, s.sha256 AS body_sha,
+          s.ticker, r.extracted_text AS body, r.observed_at AS body_at
+          FROM signal_events e JOIN sources s ON s.url=e.url
+          JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256
+          WHERE e.source_id LIKE 'primary-ir-%' AND s.status NOT IN ('held','rejected')
+          AND julianday(e.observed_at)>=julianday(?)
+          ORDER BY e.id DESC LIMIT 100''', ((reference-timedelta(days=7)).isoformat(),))
+          if bridge.is_current(db, r) and (MATERIAL.search(r['title']) or r['id'] in visible_ids)
+          and 1200 <= len(r['body'] or '') <= 160000]
+    primary_ids = {r['id'] for r in primary}
+    stories = []
+    for row in db.execute('''SELECT e.*, b.body_sha, b.body, b.fetched_at AS body_at
+      FROM signal_events e JOIN official_story_bodies b ON e.id=b.event_id AND e.sha=b.sha
+      JOIN signal_documents d ON d.source_id=e.source_id AND d.url=e.url AND d.sha=e.sha
+      WHERE length(b.body)>0 ORDER BY e.id DESC LIMIT 100'''):
+        tickers = json.loads(row['tickers_json'])
+        if row['id'] in visible_ids and row['id'] not in primary_ids and tickers:
+            stories.append({**dict(row), 'ticker': tickers[0]})
+    return primary + stories
+
+
+def prepare_story_body(path, reference, request=signals.fetch):
+    """Fetch one already-public publisher story without delaying its headline."""
+    from html_signals import NewsHTML
+    with connect(path) as db:
+        sources = {s['id']: s for s in signals.SOURCES if s.get('officialUpdates')
+                   and s.get('enabled') is not False and s.get('format') != 'x-api'}
+        for item in signals.public_official_updates(db, reference=reference, limit=20):
+            row = db.execute('SELECT * FROM signal_events WHERE id=?',(item['id'],)).fetchone()
+            if not row or row['source_id'] not in sources or row['truncated']:
+                continue
+            source = sources[row['source_id']]
+            cached = db.execute('SELECT * FROM official_story_bodies WHERE event_id=?',(row['id'],)).fetchone()
+            if cached and cached['sha'] == row['sha'] and cached['next_at'] > reference.timestamp():
+                continue
+            try:
+                if source['format'] in {'html-index','document'}:
+                    doc = db.execute('SELECT text FROM signal_documents WHERE source_id=? AND url=? AND sha=?',
+                                     (row['source_id'],row['url'],row['sha'])).fetchone()
+                    body = doc['text'] if doc else ''
+                else:
+                    fetched = request({**source,'url':row['url'],'format':'document'}, {})
+                    article = NewsHTML(source.get('articleBodyClass'))
+                    article.feed(fetched['body'].decode('utf-8',errors='replace'))
+                    markup = ''.join(article.selected if source.get('articleBodyClass') else article.article or article.main)
+                    body = monitor.extract_html_text(markup.encode())
+                if not 120 <= len(body) <= 160000:
+                    raise ValueError('article-body-unavailable')
+                digest = hashlib.sha256(body.encode()).hexdigest()
+                error, next_at = None, reference.timestamp() + 900
+            except Exception as exc:
+                body, digest = '', ''
+                if cached and cached['sha'] == row['sha']:
+                    body, digest = cached['body'], cached['body_sha']
+                error = monitor.source_error_code(exc)
+                next_at = reference.timestamp() + (21600 if getattr(exc,'code',None) in {401,403,451} else 300)
+            with db:
+                db.execute('''INSERT INTO official_story_bodies VALUES(?,?,?,?,?,?,?)
+                  ON CONFLICT(event_id) DO UPDATE SET sha=excluded.sha,body_sha=excluded.body_sha,
+                  body=excluded.body,fetched_at=excluded.fetched_at,next_at=excluded.next_at,error=excluded.error''',
+                  (row['id'],row['sha'],digest,body,reference.isoformat(),next_at,error))
+                db.execute('''DELETE FROM official_story_bodies WHERE event_id NOT IN
+                  (SELECT event_id FROM official_story_bodies ORDER BY fetched_at DESC LIMIT 200)''')
+            return 'retry' if error else 'ready'
+    return 'idle'
+
+
+def current_revision(db, row):
+    if row['source_id'].startswith('primary-ir-'):
+        return bridge.is_current(db, row)
+    current = db.execute('''SELECT d.sha,b.body_sha FROM signal_documents d
+      JOIN official_story_bodies b ON b.event_id=? AND b.sha=d.sha
+      WHERE d.source_id=? AND d.url=?''',(row['id'],row['source_id'],row['url'])).fetchone()
+    return bool(current and current['sha']==row['sha'] and current['body_sha']==row['body_sha'])
+
+
+def public_story_body(db, row):
+    """Only validated bilingual news copy; no raw article or private purpose."""
+    if not db.execute("SELECT 1 FROM sqlite_master WHERE name='official_story_bodies'").fetchone():
+        return {}
+    saved = db.execute('''SELECT p.payload,b.body FROM official_research_publications p
+      JOIN official_story_bodies b ON b.event_id=p.event_id AND b.sha=p.sha AND b.body_sha=p.body_sha
+      JOIN signal_documents d ON d.source_id=? AND d.url=? AND d.sha=p.sha
+      WHERE p.event_id=? AND p.sha=? AND length(b.body)>0''',
+      (row['source_id'],row['url'],row['id'],row['sha'])).fetchone()
+    if not saved:
+        return {}
+    try:
+        note=json.loads(saved['payload'])
+        validate({k:v for k,v in note.items() if k in ('title','summary','facts','purpose')}, saved['body'], row['title'])
+        return {key:'\n\n'.join(dict.fromkeys([note['summary'][lang],*[f[lang] for f in note['facts']]]))
+                for key,lang in [('bodyJa','ja'),('bodyEn','en')]}
+    except (ValueError,TypeError,KeyError):
+        return {}
 
 
 def normalized(text):
@@ -133,8 +224,8 @@ def claim(db, reference, model, limit):
         if used + headline_pending >= limit:
             return None
         for r in rows:
-            published=db.execute('SELECT sha,payload FROM official_research_publications WHERE event_id=?',(r['id'],)).fetchone()
-            if published and published['sha']==r['sha']:
+            published=db.execute('SELECT sha,body_sha,payload FROM official_research_publications WHERE event_id=?',(r['id'],)).fetchone()
+            if published and published['sha']==r['sha'] and published['body_sha']==r['body_sha']:
                 try:
                     validate({k:v for k,v in json.loads(published['payload']).items() if k in ('title','summary','facts','purpose')}, r['body'], r['title'])
                     continue
@@ -205,7 +296,7 @@ def publish_earnings(path,reference):
                 continue
             with db:
                 db.execute('BEGIN IMMEDIATE')
-                if not bridge.is_current(db,row):
+                if not current_revision(db,row):
                     continue
                 previous=db.execute('SELECT sha FROM official_research_publications WHERE event_id=?',(row['id'],)).fetchone()
                 if previous and previous['sha']==row['sha']:
@@ -254,6 +345,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     if config is None:
         return 'disabled'
     key,model,limit=config
+    prepare_story_body(path, reference)
     reference=datetime.fromtimestamp(now,timezone.utc)
     with connect(path) as db:
         claimed=claim(db,reference,model,limit)
@@ -302,7 +394,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     with connect(path) as db, db:
         db.execute('BEGIN IMMEDIATE')
         active=db.execute('SELECT lease FROM official_research_jobs WHERE event_id=?',(row['id'],)).fetchone()
-        valid=bool(active and active['lease']==lease and bridge.is_current(db,row))
+        valid=bool(active and active['lease']==lease and current_revision(db,row))
         state='done' if valid else 'stale'
         if valid:
             db.execute('''INSERT INTO official_research_publications VALUES(?,?,?,?,?,?,?,?)
@@ -324,7 +416,7 @@ def feed(db, reference=None):
     items=[]
     for p in db.execute('SELECT * FROM official_research_publications ORDER BY public_at DESC LIMIT 30'):
         r=current.get(p['event_id'])
-        if not r or r['sha']!=p['sha'] or r['body_sha']!=p['body_sha']:
+        if not r or not r['source_id'].startswith('primary-ir-') or r['sha']!=p['sha'] or r['body_sha']!=p['body_sha']:
             continue
         note=json.loads(p['payload'])
         try:
@@ -351,8 +443,11 @@ def feed(db, reference=None):
 
 def diagnostics(db):
     items=feed(db)
-    pending=len(candidates(db,datetime.now(timezone.utc)))-len(items)
-    return {'published':len(items),'pending':max(0,pending),
+    rows=candidates(db,datetime.now(timezone.utc))
+    story_count=sum(bool(public_story_body(db,r)) for r in rows if not r['source_id'].startswith('primary-ir-'))
+    published=len(items)+story_count
+    pending=len(rows)-published
+    return {'published':published,'pending':max(0,pending),
             'latest':[{k:x[k] for k in ('id','ticker','observedAt','bodyReadyAt','generationStartedAt','publicAt','generationMs','detectionToPublicMs')} for x in items[:5]],
             'jobs':[dict(r) for r in db.execute('SELECT event_id,state,attempts,failure_kind FROM official_research_jobs ORDER BY event_id DESC LIMIT 5')]}
 
