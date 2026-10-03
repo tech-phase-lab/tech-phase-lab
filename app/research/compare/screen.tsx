@@ -9,6 +9,7 @@ import { searchStocks } from "@/lib/research/stock-search";
 import { comparisonCatalog } from "@/lib/research/comparison-catalog";
 import type { ComparisonResult, Fact } from "@/lib/research/comparison";
 import styles from "./styles.module.css";
+import TickerSearch from "./ticker-search";
 const percent = (n: number | null) => n === null ? "—" : `${n.toFixed(1)}%`;
 function money(f: Fact | null, lang: string) { return f ? `${new Intl.NumberFormat(lang === "ja" ? "ja-JP" : "en-US", { notation: "compact", maximumFractionDigits: 2 }).format(f.value)} ${f.unit}` : "—"; }
 export default function ComparisonScreen() {
@@ -113,6 +114,7 @@ export default function ComparisonScreen() {
     {(membership === "free" || membership === "signed-out") && <section className={styles.lock}><span aria-hidden="true">🔒</span><h2>{t("比較・評価はPRO会員限定", "Comparison is exclusive to PRO")}</h2><p>{t("2〜3社を選び、結論・実績・成長性・注意点をまとめて確認できます。", "Choose two or three companies to explore the conclusion, performance, growth and caveats.")}</p><Link href="/research/account">{t("ログイン・会員情報", "Sign in / Membership")}</Link></section>}
     {membership === "pro" && <>
       <section className={styles.picker} aria-label={t("比較する銘柄", "Select companies")}>
+        <TickerSearch lang={lang} selection={selection} onSelect={selectCompany} />
         <div className={styles.slots}>{[0,1,2].map(i => <div key={i} className={styles.stockSlot}><label htmlFor={`stock-${i}`}>{i === 2 ? t("3社目（任意）", "Company 3 (optional)") : t(`${i+1}社目`, `Company ${i+1}`)}</label><input id={`stock-${i}`} name={`comparison-ticker-${i}`} autoCorrect="off" autoCapitalize="characters" spellCheck={false} role="combobox" aria-expanded={openSlot === i && Boolean(queries[i].trim())} aria-controls={`stock-options-${i}`} autoComplete="off" value={queries[i]} placeholder={t("会社名・銘柄コード", "Company or ticker")} onFocus={() => setOpenSlot(i)} onBlur={() => setTimeout(() => setOpenSlot(current => current === i ? null : current), 150)} onChange={event => {
           const value = event.target.value; setQueries(current => current.map((q,index) => index === i ? value : q)); setOpenSlot(i);
           request.current?.abort(); setResult(null); setBusy(false); setSelection(current => { const next = [...current]; next[i] = ""; return next; });

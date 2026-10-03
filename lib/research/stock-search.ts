@@ -1,4 +1,8 @@
-// Explicit issuer aliases; unknown Japanese names must not become broad ASCII searches.
+import japaneseDirectory from "./japanese-company-names.json" with { type: "json" };
+
+// Match public Japanese names by SEC issuer ID, never by a guessed ticker.
+const namesByCik: Record<string, string[]> = japaneseDirectory.namesByCik;
+// Additional common spellings for the instant local comparison suggestions.
 const japaneseNames: Record<string, string[]> = {
   MU: ["マイクロン", "マイクロンテクノロジー"],
   SKHY: ["SKハイニックス", "エスケーハイニックス"],
@@ -17,20 +21,20 @@ const japaneseNames: Record<string, string[]> = {
 };
 
 function normalizedSearch(value: string) {
-  return value.normalize("NFKC")
+  return value.normalize("NFKC").replace(/[・･]/g, "")
     .replace(/[ぁ-ゖ]/g, char => String.fromCharCode(char.charCodeAt(0) + 0x60))
     .toLocaleUpperCase("en-US")
     .replace(/[^\p{L}\p{N}.-]+/gu, " ").trim();
 }
 
-export function searchStocks<T extends { ticker: string; name: string; tracked?: boolean }>(entries: T[], query: string, limit = 24): T[] {
+export function searchStocks<T extends { ticker: string; name: string; tracked?: boolean; cik?: number }>(entries: T[], query: string, limit = 24): T[] {
   const q = normalizedSearch(query).slice(0, 80);
   if (!q) return [];
   const terms = q.split(/\s+/);
   return entries.flatMap(entry => {
     const ticker = normalizedSearch(entry.ticker);
     const name = normalizedSearch(entry.name);
-    const aliases = (japaneseNames[entry.ticker] ?? []).map(normalizedSearch);
+    const aliases = [...(japaneseNames[entry.ticker] ?? []), ...(entry.cik ? namesByCik[String(entry.cik)] ?? [] : [])].map(normalizedSearch);
     const fields = [ticker, name, ...aliases];
     if (!terms.every(term => fields.some(field => field.includes(term)))) return [];
     const score = ticker === q ? 0 : aliases.includes(q) ? 5 : ticker.startsWith(q) ? 10 : name.startsWith(q) || aliases.some(alias => alias.startsWith(q)) ? 20 : name.includes(q) || aliases.some(alias => alias.includes(q)) ? 30 : ticker.includes(q) ? 40 : 50;

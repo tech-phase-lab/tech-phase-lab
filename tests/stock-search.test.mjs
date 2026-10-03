@@ -27,3 +27,16 @@ test("partial Japanese names work without turning unknown names into unrelated m
   assert.equal(searchStocks(entries, "MU")[0].ticker, "MU");
   assert.equal(searchStocks(entries, "マイクロ", 1).length, 1);
 });
+
+test("Japanese issuer directory extends beyond monitored companies using SEC identity", () => {
+  const directory = [
+    { ticker: "TSLA", name: "Tesla, Inc.", cik: 1318605, tracked: false, exchange: "Nasdaq" },
+    { ticker: "SBUX", name: "STARBUCKS CORP", cik: 829224, tracked: false, exchange: "Nasdaq" },
+    { ticker: "OTHER", name: "Unrelated company", cik: 99999999, tracked: false, exchange: "Nasdaq" },
+  ];
+  assert.equal(searchDirectory(directory, "テスラ")[0]?.ticker, "TSLA");
+  assert.equal(searchDirectory(directory, "スターバックス")[0]?.ticker, "SBUX");
+  assert.equal(searchDirectory(directory, "ｽﾀｰﾊﾞｯｸｽ")[0]?.ticker, "SBUX");
+  assert.deepEqual(searchDirectory(directory.filter(entry => entry.ticker !== "TSLA"), "テスラ"), []);
+  assert.deepEqual(searchDirectory([{ ...directory[0], cik: 99999999 }], "テスラ"), []);
+});
