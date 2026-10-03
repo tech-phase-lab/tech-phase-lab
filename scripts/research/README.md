@@ -278,3 +278,26 @@ allocation. Provider in-flight billing can exceed local observations.
 Stopping preserves all accounting, quarantine and ownership evidence. It does not
 implicitly restart legacy polling or authorize another trial. A reviewed rollback
 is required. The original polling path is unchanged on unactivated installations.
+
+## Issuer-syndication body preparation
+
+`issuer_syndication.py` privately prepares recent, retained GlobeNewswire and PR
+Newswire business-release candidates, one allowlisted article request per worker
+pass. It verifies canonical URL, title, publication time, source organization and
+scoped release body. Missing/headline-only bodies, issuer ambiguity and unsupported
+facts have separate fixed diagnostic reasons under `signalIntake.issuerSyndication`.
+The queue holds at most 500 current entries; a full queue does not evict live
+access-control retry clocks. Conditional 304 reuse requires an intact cached body.
+
+Neither distributor feed is broadly public or eligible for paid generation. The
+initial deterministic policy accepts the verified issuer-to-Nebius binding AI
+capacity-contract grammar only, with source-bound capacity, initial term, planned
+financing and separate utility-power facts. It emits Japanese/English through the
+existing news payload with explicit issuer/distributor attribution. Other business
+announcements remain private. This policy has no event-ID/date-specific allowlist,
+no X queries and no model calls; it does not change existing generation caps.
+
+The feed revision, fetched article body hash, issuer and policy are bound separately.
+RSS repolls cannot overwrite the richer evidence. Source publication/observation
+clocks remain unchanged; body-ready/publication times are separate private records.
+Historical repair is not proof of newly observed end-to-end delivery latency.

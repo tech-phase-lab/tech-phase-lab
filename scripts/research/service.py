@@ -37,6 +37,7 @@ import x_preflight_service
 import x_stream_trial_service
 import market_results
 import official_research
+import issuer_syndication
 import official_research_diagnostics
 import mu_earnings_measurement
 import web_push
@@ -647,6 +648,10 @@ class AutomaticMonitor:
                 official_research.run_once(self.db_path)
             except Exception:
                 print("official-research-unavailable", flush=True)
+            try:
+                issuer_syndication.run_once(self.db_path, datetime.now(timezone.utc))
+            except Exception:
+                print("issuer-syndication-unavailable", flush=True)
             if not self.stop_event.is_set():
                 wake.wait(5)
 
@@ -1303,6 +1308,7 @@ class AutomaticMonitor:
             )
             state["signalIntake"]["resultPublication"] = market_results.diagnostics(db)
             state["signalIntake"]["officialResearch"] = official_research.diagnostics(db)
+            state["signalIntake"]["issuerSyndication"] = issuer_syndication.diagnostics(db)
             state["incidents"] = monitor.operational_incident_summary(
                 db, delivery_enabled=self.notification_enabled
             )

@@ -1,6 +1,7 @@
 import providers from "./providers.json" with { type: "json" };
 import { parseResultBriefs, type ResultBrief } from "./market-results.ts";
 import { parseAnalystUpdates, type AnalystUpdate } from "./analyst-news.ts";
+type Syndication = { policy: "issuer-capacity-contract-v1"; issuer: string; distributor: "GlobeNewswire" | "PR Newswire" };
 type NewsBody = { bodyJa?: string; bodyEn?: string };
 type CompactTitles = { shortTitleJa?: string; shortTitleEn?: string };
 export type GeneralNewsItem = CompactTitles & {
@@ -10,7 +11,7 @@ export type GeneralNewsItem = CompactTitles & {
   confidence: "high" | "medium" | "low";
 };
 export type OfficialNewsSource = { id: string; url: string; publisher: string; publishedAt: string; observedAt: string };
-export type OfficialUpdate = CompactTitles & NewsBody & { id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[] };
+export type OfficialUpdate = CompactTitles & NewsBody & { syndication?: Syndication; id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[] };
 export type MarketUpdate = CompactTitles & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
 export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[] };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
@@ -95,10 +96,36 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
         && v.title === "Oracle Announces Commitment to Absorb $300 Million in Rising Point Beach Energy Costs for Wisconsin Residents"
         && Array.isArray(v.tickers) && v.tickers.length === 1 && v.tickers[0] === "ORCL"
         && url.href === "https://www.prnewswire.com/news-releases/oracle-announces-commitment-to-absorb-300-million-in-rising-point-beach-energy-costs-for-wisconsin-residents-302896645.html";
+      // The API admits only verified source-bound bilingual contract facts.
+      // A syndicated host or a company mention alone cannot admit a story.
+      const rawSyndication = v.syndication as Record<string, unknown> | undefined;
+      let syndication: Syndication | undefined;
+      const syndicationSubject = typeof v.title === "string"
+        ? /^(.+) Signs Contract with (.+) for AI Data Center Capacity$/.exec(v.title) : null;
+      const syndicatedIssuer = typeof rawSyndication?.issuer === "string"
+        ? rawSyndication.issuer.replace(/(?:,?\s+(?:Inc\.?|Corporation|Corp\.?|Ltd\.?|Limited))$/, "") : null;
+      const syndicatedPartners: Record<string, string[]> = { NBIS: ["Nebius"] };
+      if (rawSyndication && rawSyndication.policy === "issuer-capacity-contract-v1"
+        && typeof rawSyndication.issuer === "string" && /^[A-Za-z][A-Za-z0-9 .,&'()-]{1,69}$/.test(rawSyndication.issuer)
+        && ((rawSyndication.distributor === "GlobeNewswire" && ["www.globenewswire.com", "globenewswire.com"].includes(url.hostname)
+            && /^\/news-release\/20\d{2}\/\d{2}\/\d{2}\/\d+\/0\/en\/[a-z0-9-]+\.html$/i.test(url.pathname))
+          || (rawSyndication.distributor === "PR Newswire" && url.hostname === "www.prnewswire.com"
+            && /^\/news-releases\/[a-z0-9-]+-\d+\.html$/i.test(url.pathname)))
+        && !url.search && !url.hash
+        && v.publisher === `${rawSyndication.issuer} / ${rawSyndication.distributor}`
+        && typeof v.title === "string" && /^[A-Za-z][A-Za-z0-9 .,&'()-]+ Signs Contract with [A-Za-z][A-Za-z0-9 .-]+ for AI Data Center Capacity$/.test(v.title)
+        && typeof v.translationJa === "string" && !!v.translationJa.trim()
+        && Array.isArray(v.tickers) && v.tickers.length === 1 && typeof v.tickers[0] === "string"
+        && syndicationSubject?.[1] === syndicatedIssuer
+        && (syndicatedPartners[v.tickers[0]] ?? []).includes(syndicationSubject?.[2] ?? "")
+        && !!newsBody(v).bodyJa && typeof v.publishedAt === "string") {
+        syndication = { policy: "issuer-capacity-contract-v1", issuer: rawSyndication.issuer, distributor: rawSyndication.distributor };
+      }
+      if (v.syndication !== undefined && !syndication) throw Error("Invalid syndicated release");
       const issuerRelease = providers.some(provider => Array.isArray(v.tickers) && v.tickers.includes(provider.ticker)
         && provider.articleRules.some(rule => rule.host === url.hostname && new RegExp(rule.pattern).test(url.pathname))
         && url.hostname !== "www.sec.gov" && url.hostname !== "data.sec.gov" && !url.search && !url.hash);
-      if (url.protocol !== "https:" || url.username || url.password || url.port || (!officialUpdateHosts.has(url.hostname) && !verifiedMu && !issuerRelease && !reviewedOracle)) throw Error("Invalid official source");
+      if (url.protocol !== "https:" || url.username || url.password || url.port || (!officialUpdateHosts.has(url.hostname) && !verifiedMu && !issuerRelease && !reviewedOracle && !syndication)) throw Error("Invalid official source");
       if (url.hostname === "x.com" && !/^\/(nebiusai|tipranks|theflynews|wallstengine|fabymetal4)\/status\/\d+$/i.test(url.pathname)) throw Error("Invalid official account");
       if (url.hostname === "www.bea.gov" && (!/^\/news\/20\d{2}\/personal-income-and-outlays-[a-z]+-20\d{2}$/.test(url.pathname) || url.search || url.hash)) throw Error("Invalid BEA release");
       if (Array.from(v.title as string).length > 180 || (v.publisher as string).length > 80 || !/^\d+$/.test(v.id as string) || !Number.isFinite(Date.parse(v.observedAt as string))) throw Error("Invalid update");
@@ -134,7 +161,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
         }
       }
       const mergedResult = sources.length > 1 && Array.isArray(v.sources) && sources.length === v.sources.length;
-      return { ...compactTitles(v), ...newsBody(v, mergedResult ? 40000 : 12000), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}), ...(sources.length ? { sources } : {}) };
+      return { ...(syndication ? { syndication } : {}), ...compactTitles(v), ...newsBody(v, mergedResult ? 40000 : 12000), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}), ...(sources.length ? { sources } : {}) };
     }).filter(item => {
       if (seenOfficialUrls.has(item.url)) return false;
       seenOfficialUrls.add(item.url);

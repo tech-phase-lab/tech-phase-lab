@@ -207,7 +207,7 @@ def numeric_values(text):
     values.extend((Decimal(SMALL_NUMBERS[m[1].lower()]), 'number') for m in re.finditer(
         r'\b(' + '|'.join(SMALL_NUMBERS) + r')\s+(?!(?:of|another)\b)'
         r'(?:(?!(?:of|another)\b)[A-Za-z0-9.-]+\s+){0,4}'
-        r'(?:units?|GPUs?|DPUs?|servers?|devices?|chips?|layers?|encoders?|speakers?|people|persons?|students?|participants?|employees?)\b', text, re.I))
+        r'(?:units?|GPUs?|DPUs?|servers?|devices?|chips?|layers?|encoders?|speakers?|people|persons?|students?|participants?|employees?|halls?)\b', text, re.I))
     return values
 
 

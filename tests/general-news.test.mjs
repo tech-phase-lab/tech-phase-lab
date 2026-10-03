@@ -312,3 +312,27 @@ test('news API ranks source dates before recent acquisition clocks when limiting
     }
   }
 });
+
+test('verified issuer-syndication capacity contracts require explicit attribution and both languages', () => {
+  const item = {id:'2468', title:'Delta Data Centers Signs Contract with Nebius for AI Data Center Capacity',
+    translationJa:'Delta Data Centers、NebiusとAIデータセンター容量の契約を締結',
+    url:'https://www.globenewswire.com/news-release/2026/09/30/1234567/0/en/delta-contracts-nebius.html',
+    publisher:'Delta Data Centers Inc. / GlobeNewswire',tickers:['NBIS'],
+    observedAt:'2026-09-30T12:19:12.432+00:00',publishedAt:'2026-09-30T12:17:00Z',
+    bodyJa:'Delta Data Centersは容量契約を締結したと発表した。',
+    bodyEn:'Delta Data Centers announced a capacity contract.',
+    syndication:{policy:'issuer-capacity-contract-v1',issuer:'Delta Data Centers Inc.',distributor:'GlobeNewswire'}};
+  const parse = v => publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[v]}).officialUpdates[0];
+  const parsed = parse(item);
+  assert.deepEqual(parsed.syndication,item.syndication);
+  assert.equal(parsed.observedAt,item.observedAt);
+  assert.equal(parsed.bodyEn,item.bodyEn);
+  for (const change of [{syndication:undefined},{bodyJa:undefined},{bodyEn:undefined},
+    {translationJa:undefined},{tickers:['NVDA']},{publisher:'Nebius'},
+    {url:item.url+'?key=secret'},
+    {syndication:{...item.syndication,issuer:'Different Issuer'},publisher:'Different Issuer / GlobeNewswire'},
+    {syndication:{...item.syndication,policy:'unverified'}},
+    {title:'Delta Data Centers Announces Debt Offering with Nebius'}]) {
+    assert.throws(()=>parse({...item,...change}));
+  }
+});

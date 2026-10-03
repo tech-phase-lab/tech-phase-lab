@@ -1976,4 +1976,13 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
                       'observedAt': observed.isoformat(), **publication, **translation})
         if len(items) == limit:
             break
+    if include_reviewed_oracle:
+        import issuer_syndication
+        # Only fully validated deterministic copy joins the existing display.
+        # The distributor feed itself never becomes official/AI-eligible.
+        items.extend(issuer_syndication.public_items(db, current))
+        items.sort(key=lambda item: next((stamp.timestamp() for value in
+                   (item.get('publishedAt'), item.get('publishedOn'), item.get('observedAt'))
+                   if (stamp := instant(value))), 0), reverse=True)
+        items = list({item['url']: item for item in items}.values())[:limit]
     return items
