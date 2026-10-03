@@ -58,6 +58,7 @@ def schema(db):
         db.execute("ALTER TABLE official_research_jobs ADD COLUMN failure_kind TEXT")
     content_repair.schema(db)
     editorial_recovery.schema(db)
+    general_source_news.revalidation_schema(db)
 
 
 def connect(path):
@@ -482,6 +483,9 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     if config is None:
         return 'disabled'
     key,model,limit=config
+    with connect(path) as db:
+        if general_source_news.recover_reviewed_terminology(db,reference,model):
+            return 'done'
     prepare_story_body(path, reference)
     reference=datetime.fromtimestamp(now,timezone.utc)
     with connect(path) as db:
@@ -498,8 +502,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     with connect(path) as db:
         corrections=retry_feedback(db,row,excerpts)
         if general:
-            failure=db.execute('SELECT reason,detail FROM official_research_attempt_failures WHERE event_id=? AND sha=? ORDER BY failed_at DESC LIMIT 1',(row['id'],row['sha'])).fetchone()
-            corrections=[{'issue':failure['reason'],'field':failure['detail']}] if failure else []
+            failure=db.execute('SELECT reason,detail,payload FROM official_research_attempt_failures WHERE event_id=? AND sha=? ORDER BY failed_at DESC LIMIT 1',(row['id'],row['sha'])).fetchone()
+            corrections=(general_source_news.retry_feedback(failure['payload'],row) or [{'issue':failure['reason'],'field':failure['detail']}]) if failure else []
     payload={'model':model,'store':False,'max_output_tokens':2400,'instructions':policy,
              'input':json.dumps({'ticker':row['ticker'],'title':row['title'],'evidenceExcerpts':excerpts,'correctionsRequired':corrections},ensure_ascii=False),
              'text':{'format':{'type':'json_schema','name':'issuer_factual_note','strict':True,'schema':general_source_news.response_schema() if general else response_schema()}}}
