@@ -9,41 +9,25 @@ import { comparisonCatalog } from "@/lib/research/comparison-catalog";
 import type { ComparisonResult, Fact } from "@/lib/research/comparison";
 import styles from "./styles.module.css";
 import TickerSearch from "./ticker-search";
-import { comparisonScores, radarPoint, quarterlyHighlights, quarterlyTakeaway } from "@/lib/research/comparison-scorecard";
+import { comparisonScores, quarterlyHighlights, quarterlyTakeaway } from "@/lib/research/comparison-scorecard";
 import { comparisonChoices, enterChoice, moveChoice } from "@/lib/research/comparison-selection";
 const percent = (n: number | null) => n === null ? "—" : `${n.toFixed(1)}%`;
 function money(f: Fact | null, lang: string) { return f ? `${new Intl.NumberFormat(lang === "ja" ? "ja-JP" : "en-US", { notation: "compact", maximumFractionDigits: 2 }).format(f.value)} ${f.unit}` : "—"; }
-function ScoreRadar({scores,lang}: {scores:ReturnType<typeof comparisonScores>;lang:"ja"|"en"}) {
-  const points=scores.map((s,i)=>radarPoint(s.value,i,scores.length));
-  return <svg className={styles.radar} viewBox="0 0 300 300" role="img" aria-label={lang==="ja" ? "企業スコア。未取得の項目は描画しません。" : "Company scores. Unavailable factors are not plotted."}>
-    {[2,4,6,8,10].map(level=><polygon key={level} points={scores.map((_,i)=>radarPoint(level,i,scores.length)).join(" ")} fill="none" stroke="#50606a" strokeOpacity=".45"/>)}
-    {scores.map((score,i)=>{const [x,y]=radarPoint(10,i,scores.length)!.split(","); const angle=-Math.PI/2+i*2*Math.PI/scores.length;return <g key={score.id}><line x1="150" y1="150" x2={x} y2={y} stroke="#50606a" strokeOpacity=".6"/><text x={150+Math.cos(angle)*122} y={154+Math.sin(angle)*115} textAnchor="middle" fill="#afc6c2" fontSize={lang==="ja" ? 10 : 8}>{score.label[lang]}</text></g>;})}
-    {points.every(p=>p!==null) && <polygon points={points.join(" ")} fill="#d4b77b35" stroke="#d4b77b" strokeWidth="2"/>}
-    {points.map((point,i)=>point===null ? null : <circle key={scores[i].id} cx={point.split(",")[0]} cy={point.split(",")[1]} r="4" fill="#e0c68c"><title>{scores[i].label[lang]}: {scores[i].value}/10</title></circle>)}
-  </svg>;
-}
 function ScoreOverview({companies,lang,now}: {companies:ComparisonResult["companies"];lang:"ja"|"en";now:number}) {
-  const factors=comparisonScores(companies[0],now), ja=lang==="ja";
-  return <section className={styles.scoreOverview}><h2>{ja ? "企業スコアを比較" : "Compare company scores"}</h2>
-    <div className={styles.scoreLegend}>{companies.map((c,i)=><span key={c.ticker}><i data-company={i}/>{c.ticker}</span>)}</div>
-    <div className={styles.compareFactors}>{factors.map(f=><div className={styles.compareFactor} key={f.id}><h3>{f.label[lang]}<small>/ 10</small></h3>{companies.map((c,i)=>{const score=comparisonScores(c,now).find(s=>s.id===f.id)!;return <div className={styles.compareBar} key={c.ticker}><span>{c.ticker}</span><div className={styles.scoreTrack} role={score.value===null ? undefined : "meter"} aria-label={`${c.ticker} ${f.label[lang]}`} aria-valuemin={0} aria-valuemax={10} aria-valuenow={score.value??undefined}>{score.value!==null && <i data-company={i} style={{width:`${score.value*10}%`}}/>}</div><strong>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div>;})}</div>)}</div>
-    <p className={styles.note}>{ja ? "— は未取得。スコアは取得済みの四半期実績による参考値です。" : "— means unavailable. Scores are reference values based on retrieved quarterly results."}</p>
+  const scoreSets=companies.map(c=>comparisonScores(c,now)), factors=scoreSets[0], ja=lang==="ja";
+  return <section className={styles.scoreOverview}><div className={styles.scoreHeading}><h2>{ja ? "比較スナップショット" : "Comparison snapshot"}</h2><small>{ja ? "参考スコア / 10" : "Reference score / 10"}</small></div>
+    <table className={styles.snapshotTable} style={{"--companies":companies.length} as React.CSSProperties}><caption className={styles.srOnly}>{ja ? "各項目の企業別スコア" : "Company scores by factor"}</caption>
+      <thead><tr><th scope="col">{ja ? "項目" : "Factor"}</th>{companies.map((c,i)=><th key={c.ticker} scope="col" data-company={i}>{c.ticker}</th>)}</tr></thead>
+      <tbody>{factors.map((f,index)=><tr key={f.id}><th scope="row">{f.label[lang]}</th>{companies.map((c,i)=>{const score=scoreSets[i][index];return <td key={c.ticker}><div className={styles.snapshotValue}><span className={styles.scoreTrack} aria-hidden="true">{score.value!==null && <i data-company={i} style={{width:`${score.value*10}%`}}/>}</span><strong>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div></td>;})}</tr>)}</tbody>
+    </table><p className={styles.snapshotNote}>{ja ? "— 未取得" : "— Unavailable"}</p>
   </section>;
 }
 function CompanyScoreCard({company:c,lang,now}: {company:ComparisonResult["companies"][number];lang:"ja"|"en";now:number}) {
   const scores=comparisonScores(c,now), highlights=quarterlyHighlights(c,lang,now), ja=lang==="ja";
   return <article className={styles.scoreCard}>
-    <p className={styles.eyebrow}>{c.ticker}</p><h3>{c.name}</h3>
-    <p className={styles.note}>{c.quarterRevenue ? `${ja ? "四半期" : "Quarter"} · ${c.quarterRevenue.end}` : ja ? "四半期データ未取得" : "Quarterly data unavailable"}</p>
+    <header className={styles.companyHeading}><h3 title={`${c.name}(${c.ticker})`}>{c.name}({c.ticker})</h3><span>{c.quarterRevenue ? `${ja ? "四半期" : "Quarter"} ${c.quarterRevenue.end}` : ja ? "四半期未取得" : "Quarter unavailable"}</span></header>
     <div className={styles.highlights}><p><b>{ja ? "長所" : "Strengths"}</b>{highlights.strengths.length ? highlights.strengths.join(" / ") : ja ? "判定に必要なデータが不足" : "Insufficient data"}</p>
       <p><b>{ja ? "短所" : "Weaknesses"}</b>{highlights.weaknesses.length ? highlights.weaknesses.join(" / ") : ja ? "この実績だけでは特定できません" : "Not established by these results alone"}</p></div>
-    <details className={styles.factorDetails}><summary>{ja ? "スコアの詳細・グラフ" : "Score details & chart"}</summary>
-    <div className={styles.scoreScroll}><table className={styles.factorTable}><caption>{ja ? "項目別の参考スコア" : "Factor reference scores"}</caption>
-      <thead><tr><th scope="col">{ja ? "項目" : "Factor"}</th><th scope="col">{ja ? "スコア" : "Score"}</th><th scope="col">{ja ? "同業種平均" : "Industry average"}</th><th scope="col">{ja ? "同業種順位" : "Industry rank"}</th></tr></thead>
-      <tbody>{scores.map(score=><tr key={score.id}><th scope="row">{score.label[lang]}</th><td><div className={styles.factorValue}><span className={styles.scoreTrack} aria-hidden="true">{score.value!==null && <i style={{width:`${score.value*10}%`}}/>}</span><strong>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div></td><td>—</td><td>—</td></tr>)}</tbody>
-    </table></div><ScoreRadar scores={scores} lang={lang}/>
-    <p className={styles.note}>{ja ? "同業種データは接続待ち。未取得の項目はグラフに描きません。" : "Industry data await connection. Unavailable factors are not plotted."}</p>
-    </details>
     {c.dataWarnings?.map(message=><p key={message.en} className={styles.warning}>{message[lang]}</p>)}
     {scores.every(score=>score.value===null) && <p className={styles.warning}>{ja ? "評価できる直近四半期のデータが不足しています。" : "Recent quarterly data are insufficient for scoring."}</p>}
   </article>;
