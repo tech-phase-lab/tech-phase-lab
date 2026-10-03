@@ -121,7 +121,7 @@ def x_assess(row, source, reference, heads):
         return None,'covered-earnings-results'
     cleaned=re.sub(r'https?://\S+','',body).strip()
     aliases=signals.ALIASES.get(ticker,[])
-    opening=(r'^[^A-Za-z0-9$]*?(?:'+'|'.join(re.escape(a) for a in aliases)
+    opening=(r'^[^\w$]*?(?:'+'|'.join(re.escape(a) for a in aliases)
              +r')(?:[’\']s)?\s+\$'+re.escape(ticker)+r'(?![\w.])')
     if not aliases or not re.match(opening,cleaned,re.I):
         return None,'unbound-material-subject'
@@ -195,7 +195,9 @@ def assess(row, source, reference, heads):
     if names-{ticker} or tags-{ticker} or ticker not in json.loads(row['tickers_json']):
         return None,reason
     aliases=signals.ALIASES.get(ticker,[])
-    opening=r'^[^A-Za-z0-9$]*(?:\$'+re.escape(ticker)+r'(?![\w.])|(?:'+'|'.join(re.escape(a) for a in aliases)+r')(?![A-Za-z0-9_]))'
+    # Unicode letters in a leading speaker clause are not punctuation. They
+    # must reach the same actor binding as an English-language speaker clause.
+    opening=r'^[^\w$]*(?:\$'+re.escape(ticker)+r'(?![\w.])|(?:'+'|'.join(re.escape(a) for a in aliases)+r')(?![A-Za-z0-9_]))'
     if not aliases:
         return None,reason
     actor_led=not re.match(opening,body,re.I)

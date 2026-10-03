@@ -200,6 +200,29 @@ class ActorGroundingTests(unittest.TestCase):
         with research.connect(case.path) as db:
             self.assertEqual(len(news.public_items(db, fixture.NOW)), 1)
 
+    def test_non_latin_speaker_prefix_cannot_bypass_actor_grounding(self):
+        # The former ASCII-only punctuation prefix consumed this entire speaker
+        # clause. Test both fallback wording and a recognized fast-path verb.
+        for prefix in ['田中記者によると、', '据报道，']:
+            for claim in ['is sending trial memory devices to industrial customers.',
+                          'launched trial memory devices for industrial customers.']:
+                with self.subTest(prefix=prefix, claim=claim):
+                    body = prefix + 'Micron $MU ' + claim
+                    row, reason = assessment(body)
+                    self.assertEqual(reason, 'eligible-semantic-assessment')
+                    self.assertIn('actorGrounding', row['units'][0])
+                    self.assertFalse(row['units'][0]['actorGrounding']['supported'])
+                    self.assert_terminal_review(body, ENTREPRENEUR_COPY)
+
+    def test_leading_punctuation_does_not_turn_company_into_an_actor_clause(self):
+        for prefix in ['🚨 ', '“', '【速報】']:
+            body = prefix + 'Micron $MU is sending trial memory devices to industrial customers.'
+            row, _ = assessment(body)
+            self.assertIsNotNone(row)
+            # Letters inside a bracketed label need review, unlike plain emoji
+            # or quotation punctuation. Nothing is silently dropped.
+            self.assertEqual('actorGrounding' in row['units'][0], prefix == '【速報】')
+
     def test_invented_ceo_employee_and_affiliations_are_rejected(self):
         relationships = [
             ('CEO', 'CEO'), ('employee', '従業員'), ('adviser', '顧問'),
