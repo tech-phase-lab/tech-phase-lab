@@ -124,6 +124,8 @@ def signals_match(text, tickers):
 
 
 def fetch_posts(source, tickers, opener_factory=build_opener, validators=None):
+    if os.environ.get("X_FILTERED_STREAM_ENABLED", "").strip().lower() in {"1", "true", "yes"}:
+        raise ValueError("x-api-stream-supervisor-required")
     token = os.environ.get("X_BEARER_TOKEN", "").strip()
     if os.environ.get("X_API_ENABLED", "").strip().lower() not in {"1", "true", "yes"}:
         raise ValueError("x-api-disabled")

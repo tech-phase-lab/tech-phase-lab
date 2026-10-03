@@ -114,6 +114,11 @@ def fetch(source, validators):
 
 def enabled_sources(sources=SOURCES):
     """Keep billable X reads opt-in even when a bearer token is present."""
+    # The reviewed stream supervisor exclusively owns ALL X reads/writes in
+    # its mode, including fallback. An invalid preflight must not fall through
+    # into the old unmetered polling path or touch credentials here.
+    if os.environ.get("X_FILTERED_STREAM_ENABLED", "").strip().lower() in {"1", "true", "yes"}:
+        return [source for source in sources if source.get("enabled", True) and source.get("format") != "x-api" and not source.get("enabledBy")]
     enabled = os.environ.get("X_API_ENABLED", "").strip().lower() in {"1", "true", "yes"}
     token = os.environ.get("X_BEARER_TOKEN", "").strip()
     return [source for source in sources
@@ -370,7 +375,7 @@ def source_interval_seconds(source, checked_at):
     return normal
 
 
-def x_api_usage(db, now=None, sources=SOURCES, ensure_schema=True):
+def x_api_usage(db, now=None, sources=SOURCES, ensure_schema=True, include_configuration=True):
     if ensure_schema:
         schema(db)
     current = now or datetime.now(timezone.utc)
@@ -394,8 +399,9 @@ def x_api_usage(db, now=None, sources=SOURCES, ensure_schema=True):
     retry_at = None
     if attempted >= limit and oldest:
         retry_at = (datetime.fromisoformat(oldest["attempted_at"]) + timedelta(hours=24)).isoformat()
-    requested = os.environ.get("X_API_ENABLED", "").strip().lower() in {"1", "true", "yes"}
-    configured = bool(os.environ.get("X_BEARER_TOKEN", "").strip())
+    include_configuration = include_configuration and os.environ.get("X_FILTERED_STREAM_ENABLED", "").strip().lower() not in {"1", "true", "yes"}
+    requested = include_configuration and os.environ.get("X_API_ENABLED", "").strip().lower() in {"1", "true", "yes"}
+    configured = include_configuration and bool(os.environ.get("X_BEARER_TOKEN", "").strip())
     plan = x_api_request_plan(sources)
     paced_until = None
     if newest and plan["pacingEnabled"]:
@@ -412,19 +418,24 @@ def x_api_usage(db, now=None, sources=SOURCES, ensure_schema=True):
     }
 
 
-def reserve_x_api_request(db, source, now=None, eligible_source_ids=None):
+def reserve_x_api_request(db, source, now=None, eligible_source_ids=None, include_configuration=True):
     """Persist one billable attempt before network I/O without storing query or token."""
     if source.get("format") != "x-api":
         return None
     current = now or datetime.now(timezone.utc)
     schema(db)
+    if include_configuration and db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='x_stream_runtime'").fetchone():
+        if db.execute('SELECT 1 FROM x_stream_runtime').fetchone():
+            # After first activation, disabling the flag is a stop, not an
+            # unmetered legacy fallback. Rollback requires an explicit review.
+            raise ValueError('x-api-stream-supervisor-required')
     attempted_at = current.isoformat()
     cutoff = (current - timedelta(days=8)).isoformat()
     with db:
         # Serialize the usage check, fair-source selection and reservation even
         # when more than one worker process shares the SQLite database.
         db.execute("BEGIN IMMEDIATE")
-        usage = x_api_usage(db, current, ensure_schema=False)
+        usage = x_api_usage(db, current, ensure_schema=False, include_configuration=include_configuration)
         if usage["limitReached"]:
             raise XApiDailyLimit(usage["nextAvailableAt"])
         if usage["pacingEnabled"]:
@@ -454,11 +465,11 @@ def reserve_x_api_request(db, source, now=None, eligible_source_ids=None):
           (source["id"], attempted_at, (current - timedelta(hours=24)).isoformat(),
            current.isoformat(), usage["dailyLimit"]))
         if cursor.rowcount != 1:
-            refreshed = x_api_usage(db, current, ensure_schema=False)
+            refreshed = x_api_usage(db, current, ensure_schema=False, include_configuration=include_configuration)
             raise XApiDailyLimit(refreshed["nextAvailableAt"])
         db.execute("""DELETE FROM signal_x_request_attempts
           WHERE datetime(attempted_at) IS NULL OR datetime(attempted_at)<datetime(?)""", (cutoff,))
-    return x_api_usage(db, current)
+    return x_api_usage(db, current, include_configuration=include_configuration)
 
 
 def fingerprint(source, tickers):
@@ -602,6 +613,82 @@ def record_route_retry_attempt(db, source_id, previous_route, attempted_at):
     return True
 
 
+def save_evidence(db, source, items, response, checked, initial=False):
+    """Persist revisions inside the caller transaction without transport state.
+
+    Behavior-preserving extraction shared by polling and the prepared stream
+    adapter. Does not commit, change cursors/routes, or wake publication workers.
+    """
+    inserted = 0
+    if source.get('format') == 'x-api':
+        selected = {item['url'] for item in items}
+        for post in response.get('_acquired_posts', []):
+            digest = hashlib.sha256((post['title'] + '\n' + post['text']).encode()).hexdigest()
+            db.execute('''INSERT INTO signal_x_acquisition VALUES(?,?,?,?,?,?,?,?,?,?)
+              ON CONFLICT(source_id,url,sha) DO UPDATE SET
+              last_seen_at=excluded.last_seen_at,
+              selected_for_processing=excluded.selected_for_processing''', (
+                source['id'], post['url'], digest, post['title'], post['text'],
+                post['publishedAt'], checked, checked, int(post['truncated']),
+                int(post['url'] in selected),
+            ))
+            if post['url'] not in selected:
+                # A correction/retraction need not match any news grammar.
+                # Its newer source revision still invalidates previously
+                # published facts at this exact source+URL. Keep the copy
+                # private and do not synthesize a publication event for it.
+                db.execute('''UPDATE signal_documents
+                  SET sha=?,title=?,text=?,last_seen_at=?
+                  WHERE source_id=? AND url=? AND sha<>?''',
+                  (digest, post['title'], post['text'], checked,
+                   source['id'], post['url'], digest))
+        # Private evidence is committed atomically with the cursor below.
+        # Never interpret selection as successful bilingual publication.
+        db.execute('''DELETE FROM signal_x_acquisition WHERE source_id=? AND rowid NOT IN
+          (SELECT rowid FROM signal_x_acquisition WHERE source_id=?
+           ORDER BY julianday(last_seen_at) DESC,rowid DESC LIMIT 1000)''',
+                   (source['id'], source['id']))
+    for item in items:
+        if not item["matches"] and not source.get("retainUnmatched"):
+            continue
+        digest = hashlib.sha256((item["title"] + "\n" + item["text"]).encode()).hexdigest()
+        old = db.execute("SELECT * FROM signal_documents WHERE source_id=? AND url=?",
+                         (source["id"], item["url"])).fetchone()
+        if not old or old["sha"] != digest:
+            kind = "baseline" if initial or item.get("baseline") else "changed" if old else "new"
+            diff = ""
+            if old and kind == "changed":
+                diff = "\n".join(difflib.unified_diff(
+                    old["text"].splitlines(), item["text"].splitlines(),
+                    fromfile="previous", tofile="current", n=2,
+                ))[:6000]
+            cursor = db.execute("""INSERT OR IGNORE INTO signal_events(
+              source_id,url,sha,previous_sha,title,tickers_json,matches_json,event_kind,
+              published_at,published_on,observed_at,excerpt,diff,truncated
+              ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", (
+                source["id"], item["url"], digest, old["sha"] if old else "",
+                item["title"], json.dumps(sorted(item["matches"])), json.dumps(item["matches"]),
+                kind, item["publishedAt"], item.get("publishedOn"), checked,
+                evidence_excerpt(item), diff, int(item["truncated"]),
+            ))
+            inserted += cursor.rowcount
+        if item.get("publishedOn"):
+            # Enrich an unchanged historical baseline after this column is
+            # deployed, without creating a new event or rewriting evidence.
+            db.execute("""UPDATE signal_events SET published_on=?
+              WHERE source_id=? AND url=? AND sha=?
+              AND (published_on IS NULL OR published_on='')""", (
+                item["publishedOn"], source["id"], item["url"], digest,
+            ))
+        # Retain document bodies privately for meaningful same-URL changes.
+        db.execute("""INSERT INTO signal_documents VALUES(?,?,?,?,?,?,?)
+          ON CONFLICT(source_id,url) DO UPDATE SET sha=excluded.sha,title=excluded.title,
+          text=excluded.text,last_seen_at=excluded.last_seen_at""", (
+            source["id"], item["url"], digest, item["title"], item["text"], checked, checked,
+        ))
+    return inserted
+
+
 def save(db, source, items, response, checked, config_sha, duration):
     route = db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
     initial = not route or not route["initialized"] or (
@@ -615,72 +702,7 @@ def save(db, source, items, response, checked, config_sha, duration):
                      f"article-fetch-failed:{response['article_errors']}"
                      if response.get("article_errors") else None)
     with db:
-        if source.get('format') == 'x-api':
-            selected = {item['url'] for item in items}
-            for post in response.get('_acquired_posts', []):
-                digest = hashlib.sha256((post['title'] + '\n' + post['text']).encode()).hexdigest()
-                db.execute('''INSERT INTO signal_x_acquisition VALUES(?,?,?,?,?,?,?,?,?,?)
-                  ON CONFLICT(source_id,url,sha) DO UPDATE SET
-                  last_seen_at=excluded.last_seen_at,
-                  selected_for_processing=excluded.selected_for_processing''', (
-                    source['id'], post['url'], digest, post['title'], post['text'],
-                    post['publishedAt'], checked, checked, int(post['truncated']),
-                    int(post['url'] in selected),
-                ))
-                if post['url'] not in selected:
-                    # A correction/retraction need not match any news grammar.
-                    # Its newer source revision still invalidates previously
-                    # published facts at this exact source+URL. Keep the copy
-                    # private and do not synthesize a publication event for it.
-                    db.execute('''UPDATE signal_documents
-                      SET sha=?,title=?,text=?,last_seen_at=?
-                      WHERE source_id=? AND url=? AND sha<>?''',
-                      (digest, post['title'], post['text'], checked,
-                       source['id'], post['url'], digest))
-            # Private evidence is committed atomically with the cursor below.
-            # Never interpret selection as successful bilingual publication.
-            db.execute('''DELETE FROM signal_x_acquisition WHERE source_id=? AND rowid NOT IN
-              (SELECT rowid FROM signal_x_acquisition WHERE source_id=?
-               ORDER BY julianday(last_seen_at) DESC,rowid DESC LIMIT 1000)''',
-                       (source['id'], source['id']))
-        for item in items:
-            if not item["matches"] and not source.get("retainUnmatched"):
-                continue
-            digest = hashlib.sha256((item["title"] + "\n" + item["text"]).encode()).hexdigest()
-            old = db.execute("SELECT * FROM signal_documents WHERE source_id=? AND url=?",
-                             (source["id"], item["url"])).fetchone()
-            if not old or old["sha"] != digest:
-                kind = "baseline" if initial or item.get("baseline") else "changed" if old else "new"
-                diff = ""
-                if old and kind == "changed":
-                    diff = "\n".join(difflib.unified_diff(
-                        old["text"].splitlines(), item["text"].splitlines(),
-                        fromfile="previous", tofile="current", n=2,
-                    ))[:6000]
-                cursor = db.execute("""INSERT OR IGNORE INTO signal_events(
-                  source_id,url,sha,previous_sha,title,tickers_json,matches_json,event_kind,
-                  published_at,published_on,observed_at,excerpt,diff,truncated
-                  ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", (
-                    source["id"], item["url"], digest, old["sha"] if old else "",
-                    item["title"], json.dumps(sorted(item["matches"])), json.dumps(item["matches"]),
-                    kind, item["publishedAt"], item.get("publishedOn"), checked,
-                    evidence_excerpt(item), diff, int(item["truncated"]),
-                ))
-                inserted += cursor.rowcount
-            if item.get("publishedOn"):
-                # Enrich an unchanged historical baseline after this column is
-                # deployed, without creating a new event or rewriting evidence.
-                db.execute("""UPDATE signal_events SET published_on=?
-                  WHERE source_id=? AND url=? AND sha=?
-                  AND (published_on IS NULL OR published_on='')""", (
-                    item["publishedOn"], source["id"], item["url"], digest,
-                ))
-            # Retain document bodies privately for meaningful same-URL changes.
-            db.execute("""INSERT INTO signal_documents VALUES(?,?,?,?,?,?,?)
-              ON CONFLICT(source_id,url) DO UPDATE SET sha=excluded.sha,title=excluded.title,
-              text=excluded.text,last_seen_at=excluded.last_seen_at""", (
-                source["id"], item["url"], digest, item["title"], item["text"], checked, checked,
-            ))
+        inserted = save_evidence(db, source, items, response, checked, initial)
         if source.get('format') == 'x-api' and response.get('cursor_update'):
             db.execute('INSERT INTO signal_index_state VALUES(?,?) ON CONFLICT(source_id) DO UPDATE SET body=excluded.body',
                        (source['id'],response['cursor_update']))

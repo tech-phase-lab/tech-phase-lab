@@ -28,6 +28,9 @@ import note_translation
 import question_translation
 import headline_translation
 import x_market_news
+import x_stream_runtime
+import x_stream_pilot
+import x_preflight_service
 import market_results
 import official_research
 import official_research_diagnostics
@@ -383,6 +386,8 @@ class AutomaticMonitor:
         self.web_push_enabled = bool(web_push.configuration()["enabled"])
         self.tickers = configured_tickers(os.environ.get("RESEARCH_TICKERS", ""))
         self.signals_enabled = os.environ.get("RESEARCH_SIGNALS_ENABLED", "").lower() in {"1", "true", "yes"}
+        self.x_stream_requested = x_stream_runtime.requested()
+        self.x_stream_status = {"mode": "waiting"} if self.x_stream_requested else None
         self.priority_completion_latency_ms = None
         self.priority_metrics_interval = positive_int(
             "RESEARCH_PRIORITY_METRICS_INTERVAL_SECONDS", 300, 30
@@ -517,6 +522,10 @@ class AutomaticMonitor:
             target=self.run_notification_delivery, name="incident-delivery", daemon=True
         )
         self.signals_thread = threading.Thread(target=self.run_signals, name="research-signals", daemon=True)
+        self.x_stream_thread = (threading.Thread(target=self.run_x_stream, name="x-filtered-stream", daemon=True)
+                                if self.x_stream_requested else None)
+        self.x_preflight_thread = (threading.Thread(target=self.run_x_preflight, name="x-metadata-preflight", daemon=True)
+                                   if x_preflight_service.requested() else None)
         self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
         self.note_translation_thread = threading.Thread(target=self.run_note_translation, name="note-translation", daemon=True)
         self.headline_translation_thread = threading.Thread(target=self.run_headline_translation, name="headline-translation", daemon=True)
@@ -525,6 +534,18 @@ class AutomaticMonitor:
         self.official_research_thread = threading.Thread(target=self.run_official_research, name="official-research", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
+
+    def run_x_preflight(self):
+        x_preflight_service.run_once(self.db_path, self.stop_event)
+
+    def run_x_stream(self):
+        if not self.x_stream_requested:
+            return
+        def report(state):
+            with self.state_lock:
+                self.x_stream_status = state
+        x_stream_pilot.PilotSupervisor(self.db_path, self.tickers, self.stop_event,
+                                    self.wake_publication_workers, report=report).run()
 
     def run_note_translation(self):
         if note_translation.configuration(os.environ) is None:
@@ -645,6 +666,10 @@ class AutomaticMonitor:
         self.incident_thread.start()
         self.notification_thread.start()
         self.signals_thread.start()
+        if self.x_preflight_thread:
+            self.x_preflight_thread.start()
+        if self.x_stream_thread:
+            self.x_stream_thread.start()
         self.news_thread.start()
         self.note_translation_thread.start()
         self.headline_translation_thread.start()
@@ -663,6 +688,10 @@ class AutomaticMonitor:
         self.incident_thread.join(timeout=15)
         self.notification_thread.join(timeout=15)
         self.signals_thread.join(timeout=45)
+        if self.x_preflight_thread:
+            self.x_preflight_thread.join(timeout=45)
+        if self.x_stream_thread:
+            self.x_stream_thread.join(timeout=45)
         self.news_thread.join(timeout=25)
         self.note_translation_thread.join(timeout=45)
         self.headline_translation_thread.join(timeout=45)
@@ -800,12 +829,13 @@ class AutomaticMonitor:
                 try:
                     with self.db_lock, monitor.connect(self.db_path) as db:
                         pending = signals.due(db)
-                    pending = [source for source in pending if source["id"] not in in_flight]
+                    pending = [source for source in pending if source["id"] not in in_flight
+                               and not (self.x_stream_requested and source.get("format") == "x-api")]
                     # Oldest-dispatched first prevents frequent routes at the
                     # start of the config from starving the remaining routes.
                     pending.sort(key=lambda source: last_dispatched.get(source["id"], 0))
                     x_due_ids = [source["id"] for source in pending if source.get("format") == "x-api"]
-                    x_enabled = any(source.get('format') == 'x-api' for source in signals.enabled_sources())
+                    x_enabled = not self.x_stream_requested and any(source.get('format') == 'x-api' for source in signals.enabled_sources())
                     selected = pending[:workers - len(in_flight)]
                     if x_enabled:
                         # Reserve one of the existing three slots for X, even
@@ -844,6 +874,8 @@ class AutomaticMonitor:
                 self.stop_event.wait(1)
 
     def check_signal_source(self, source, x_due_ids=None):
+        if self.x_stream_requested and source.get('format') == 'x-api':
+            return  # Supervisor owns guarded stream/reconciliation/fallback.
         if self.stop_event.is_set():
             return
         # Network I/O and article parsing must not hold the shared database lock.
@@ -1215,6 +1247,9 @@ class AutomaticMonitor:
             state["muEarningsMeasurement"] = mu_earnings_measurement.diagnostics(db)
             state["signalIntake"] = signals.operational_summary(db)
             state["signalIntake"]["xIntake"] = signals.x_operational_summary(db)
+            if self.x_stream_requested:
+                with self.state_lock:
+                    state["signalIntake"]["xStream"] = dict(self.x_stream_status)
             state["signalIntake"]["xMarketNews"] = x_market_news.diagnostics(db)
             state["signalIntake"]["headlineTranslation"] = (
                 headline_translation.diagnostics(db, env=os.environ)

@@ -265,3 +265,16 @@ the operator queue; legacy URLs, exception text and response detail are never
 copied into the report. The private X comparison report applies that boundary
 to its route-health field as well. The opt-in Stock News queue similarly reduces
 legacy intake errors to its single fixed diagnostic before returning them.
+
+## Default-off X Filtered Stream intake
+
+The opt-in stream supervisor shares monetary admission with bounded Search recovery.
+It requires current reviewed account/rule evidence in a private service file, the
+existing X intake flags, and a separate one-shot pilot configuration. The service
+keeps the feature disabled by default. Pilot deadlines are limited to 15 minutes
+and survive restarts without rearming; local admission cannot exceed its reviewed
+allocation. Provider in-flight billing can exceed local observations.
+
+Stopping preserves all accounting, quarantine and ownership evidence. It does not
+implicitly restart legacy polling or authorize another trial. A reviewed rollback
+is required. The original polling path is unchanged on unactivated installations.
