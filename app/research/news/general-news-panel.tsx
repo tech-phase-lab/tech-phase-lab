@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Language } from "@/lib/research/data";
-import { publicNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
+import { availableNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
 import { officialNewsDisplay } from "@/lib/research/news-presentation";
 import { marketNewsBody, marketNewsDisplay } from "@/lib/research/market-news-display";
+import { analystNewsDisplay } from "@/lib/research/analyst-news";
 import { officialTime } from "@/lib/research/news-time";
 import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-poller";
 import styles from "./general-news.module.css";
@@ -28,7 +29,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
       load: async signal => {
         const response = await fetch("/api/research/news", { cache: "no-store", signal });
         if (!response.ok) throw new Error("unavailable");
-        return publicNewsPayload(await response.json());
+        return availableNewsPayload(await response.json());
       },
       onSuccess: payload => {
         const at = new Date().toISOString();
@@ -55,9 +56,11 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
   const official = data?.officialUpdates ?? [];
   const news = officialOnly ? [] : data?.items ?? [];
   const market = officialOnly ? [] : data?.marketUpdates ?? [];
+  const analyst = officialOnly ? [] : data?.analystUpdates ?? [];
   const updates = [
     ...official.map(item => ({ kind: "official" as const, item, at: officialTime(item).at })),
     ...market.map(item => ({ kind: "market" as const, item, at: item.publishedAt })),
+    ...analyst.map(item => ({ kind: "analyst" as const, item, at: item.publishedAt })),
   ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
   const pages = Math.max(1, Math.ceil((updates.length + news.length) / 5));
   const current = Math.min(page, pages), start = (current - 1) * 5;
@@ -71,6 +74,11 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
   return <section ref={panel} className={styles.panel} aria-label={lang === "ja" ? "ニュース一覧" : "News list"}>
     {!!visibleUpdates.length && <section aria-label={lang === "ja" ? "ニュース速報" : "News updates"}>
       <div className={styles.items}>{visibleUpdates.map(update => {
+        if (update.kind === "analyst") {
+          const item = update.item, display = analystNewsDisplay(item, lang);
+          return <article key={`analyst-${item.id}`}><NewsStory label={display.label} title={display.title} body={display.body} lang={lang}
+            publication={`${lang === "ja" ? "発表" : "Published"} ${format(item.publishedAt)}`} /></article>;
+        }
         if (update.kind === "market") {
           const item = update.item;
           const display = marketNewsDisplay(item, lang);

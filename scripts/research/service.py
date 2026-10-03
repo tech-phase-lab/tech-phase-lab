@@ -30,6 +30,7 @@ import note_translation
 import question_translation
 import headline_translation
 import x_market_news
+import analyst_news
 import x_stream_runtime
 import x_stream_pilot
 import x_preflight_service
@@ -623,6 +624,10 @@ class AutomaticMonitor:
         while not self.stop_event.is_set():
             wake.clear()
             try:
+                analyst_news.run_once(self.db_path)
+            except Exception:
+                print("analyst-news-publication-unavailable", flush=True)
+            try:
                 market_results.run_once(self.db_path, signals.SOURCES)
             except Exception:
                 print("result-publication-unavailable", flush=True)
@@ -786,7 +791,7 @@ class AutomaticMonitor:
 
     def public_news(self):
         with stock_news.connect(self.db_path) as db:
-            return {**news_drafts.public_feed(db), "officialUpdates": signals.public_official_updates(db), "marketUpdates": x_market_news.public_feed(db), "resultBriefs":market_results.public_feed(db), "officialResearch": official_research.feed(db)}
+            return {**news_drafts.public_feed(db), "officialUpdates": signals.public_official_updates(db), "marketUpdates": x_market_news.public_feed(db), "analystUpdates": analyst_news.public_feed(db), "resultBriefs":market_results.public_feed(db), "officialResearch": official_research.feed(db)}
 
     def posts_queue(self, limit=20, published=False, offset=0):
         with editorial_posts.connect(self.db_path) as db:
@@ -1292,6 +1297,7 @@ class AutomaticMonitor:
                 with self.state_lock:
                     state["signalIntake"]["xStream"] = dict(self.x_stream_status)
             state["signalIntake"]["xMarketNews"] = x_market_news.diagnostics(db)
+            state["signalIntake"]["analystNews"] = analyst_news.diagnostics(db)
             state["signalIntake"]["headlineTranslation"] = (
                 headline_translation.diagnostics(db, env=os.environ)
             )

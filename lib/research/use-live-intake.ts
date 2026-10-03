@@ -343,6 +343,7 @@ export type MonitorState = {
       calls24Hours: { total: number; failed: number; completed: number; stale: number };
     };
     xMarketNews?: { accounts: number; eligible: number; published: number; pending: number; failureKinds: Record<string, number> };
+    analystNews?: { eligible: number; published: number; pending: number; excluded: number; rejectionReasons: Record<string, number> };
     xIntake?: {
       usage: {
         requested: boolean; configured: boolean; enabled: boolean;

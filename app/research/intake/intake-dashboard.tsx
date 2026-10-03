@@ -95,6 +95,20 @@ function priceTargetStreamStatus(stream: MonitorState["priceTargetStream"]) {
   const reads = `正常読取 ${stream.snapshotReads}/${stream.readAttempts}回・失敗 ${stream.readFailures}回（連続 ${stream.consecutiveFailures}）・回復 ${stream.recoveries}回`;
   return `目標株価共有SSE：${state} · 接続中 ${stream.clients}/${stream.maxClients} · 受付 ${stream.connectionsAccepted}・切断 ${stream.disconnects}・上限拒否 ${stream.connectionsRejected} · ${reads}・変更 ${stream.changes}回・送信 ${sent}KiB · 最終試行 ${time(stream.lastReadAt)} JST · 計測開始 ${time(stream.startedAt)} JST`;
 }
+export function analystNewsStatus(state: NonNullable<MonitorState["signalIntake"]>["analystNews"]) {
+  if (!state) return "";
+  if (![state.eligible, state.published, state.pending, state.excluded].every(n => Number.isSafeInteger(n) && n >= 0)) return " · アナリスト動向：状態取得待ち";
+  const labels: Record<string, string> = {
+    "source-not-approved": "対象外の発信元", "event-kind-not-published": "対象外の種別", "superseded-or-missing-revision": "旧版・版情報なし",
+    "truncated-or-missing-evidence": "根拠不足・省略", "evidence-integrity-mismatch": "根拠の不一致", "invalid-source-clock": "時刻の不備",
+    "invalid-subject-evidence": "銘柄根拠の不備", "retracted-or-corrected-evidence": "撤回・訂正", "unsupported-analyst-syntax": "未対応の表現",
+    "no-new-analyst-action": "新しい判断なし", "ambiguous-subject": "銘柄が曖昧", "ambiguous-firms": "証券会社が曖昧",
+    "ambiguous-rating": "評価が曖昧", "ambiguous-target": "目標株価が曖昧", "ambiguous-action": "判断が曖昧",
+  };
+  const reasons = Object.entries(state.rejectionReasons ?? {}).filter(([, n]) => Number.isSafeInteger(n) && n > 0)
+    .map(([code, n]) => `${Object.hasOwn(labels, code) ? labels[code] : "未対応"} ${n}件`).join("・");
+  return ` · アナリスト動向：対象 ${state.eligible}・公開 ${state.published}・保留 ${state.pending}・除外 ${state.excluded}${reasons ? `（${reasons}）` : ""}`;
+}
 function webPushStatus(push: MonitorState["webPush"]) {
   if (!push) return "スマホ通知試験：状態取得待ち";
   if (!push.enabled || push.status === "disabled") return "スマホ通知試験：外部送信OFF";
@@ -372,7 +386,7 @@ function signalIntakeStatus(signal: MonitorState["signalIntake"]) {
   const xStatus = x
     ? `${marketStatus} · X補完：${xState} · 24時間API ${x.usage.attemptsLast24Hours}/${x.usage.dailyLimit}回 · 経路エラー ${x.routes.error}件${xItems ? ` · 24時間取得 ${xItems.total}件（区分は重複あり：評価変更 ${xItems.analystRatings}・目標株価 ${xItems.priceTargets}・決算 ${xItems.earnings}・企業公式 ${xItems.officialUpdates}・その他 ${xItems.other}）${xItems.latestObservedAt ? `（最終 ${time(xItems.latestObservedAt)} JST）` : ""}` : ""}`
     : "";
-  return `公式補完経路：直近成功 ${routes.fresh}/${routes.configured}経路${routes.suspended ? ` · 停止中 ${routes.suspended}経路（回復済みには含めません）` : ""} · 期限超過 ${routes.stale} · 要確認 ${routes.error}（アクセス制限 ${kinds.accessRestricted}・レート制限 ${kinds.rateLimited}・タイムアウト ${kinds.timeout}・公式側5xx ${kinds.server}・応答形式 ${kinds.invalidResponse}・記事一部失敗 ${kinds.articlePartial}・取得失敗 ${kinds.fetchFailure ?? 0}・リンク未検出 ${kinds.noLinks ?? 0}・その他 ${kinds.other}）${retryStatus}${retryKindDetail}${activeOutageStatus}${activeOutageKindDetail}${articleStatus}${measuredRecoveryStatus}${transitionStatus}${routeRecoveryStatus}${routeRetryWaitStatus} · 初回待ち ${routes.pending} · 公表証拠 ${evidence.total}件（日時あり ${evidence.timestamp}・日付のみ ${evidence.dateOnly}・時刻未取得 ${evidence.missing}）${sourceLatencyStatus}${translationStatus}${researchStatus}${xStatus}`;
+  return `公式補完経路：直近成功 ${routes.fresh}/${routes.configured}経路${routes.suspended ? ` · 停止中 ${routes.suspended}経路（回復済みには含めません）` : ""} · 期限超過 ${routes.stale} · 要確認 ${routes.error}（アクセス制限 ${kinds.accessRestricted}・レート制限 ${kinds.rateLimited}・タイムアウト ${kinds.timeout}・公式側5xx ${kinds.server}・応答形式 ${kinds.invalidResponse}・記事一部失敗 ${kinds.articlePartial}・取得失敗 ${kinds.fetchFailure ?? 0}・リンク未検出 ${kinds.noLinks ?? 0}・その他 ${kinds.other}）${retryStatus}${retryKindDetail}${activeOutageStatus}${activeOutageKindDetail}${articleStatus}${measuredRecoveryStatus}${transitionStatus}${routeRecoveryStatus}${routeRetryWaitStatus} · 初回待ち ${routes.pending} · 公表証拠 ${evidence.total}件（日時あり ${evidence.timestamp}・日付のみ ${evidence.dateOnly}・時刻未取得 ${evidence.missing}）${sourceLatencyStatus}${translationStatus}${researchStatus}${analystNewsStatus(signal.analystNews)}${xStatus}`;
 }
 function muEarningsMeasurementStatus(measurement: MonitorState["muEarningsMeasurement"]) {
   if (!measurement) return "MU決算実測：状態取得待ち";

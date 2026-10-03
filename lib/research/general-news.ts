@@ -1,5 +1,6 @@
 import providers from "./providers.json" with { type: "json" };
 import { parseResultBriefs, type ResultBrief } from "./market-results.ts";
+import { parseAnalystUpdates, type AnalystUpdate } from "./analyst-news.ts";
 type NewsBody = { bodyJa?: string; bodyEn?: string };
 type CompactTitles = { shortTitleJa?: string; shortTitleEn?: string };
 export type GeneralNewsItem = CompactTitles & {
@@ -11,7 +12,7 @@ export type GeneralNewsItem = CompactTitles & {
 export type OfficialNewsSource = { id: string; url: string; publisher: string; publishedAt: string; observedAt: string };
 export type OfficialUpdate = CompactTitles & NewsBody & { id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[] };
 export type MarketUpdate = CompactTitles & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
-export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; resultBriefs?: ResultBrief[] };
+export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[] };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
   "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com", "www.bea.gov"]);
 
@@ -38,7 +39,7 @@ export function availableNewsPayload(value: unknown): GeneralNewsFeed {
   const raw = value as Record<string, unknown>;
   const base = publicNewsPayload({ ok: raw.ok, enabled: raw.enabled, items: [] });
   const accepted: Record<string, unknown[]> = {};
-  for (const [key, limit] of [["resultBriefs", 20], ["officialUpdates", 20], ["marketUpdates", 20], ["items", 30]] as const) {
+  for (const [key, limit] of [["resultBriefs", 20], ["officialUpdates", 20], ["marketUpdates", 20], ["analystUpdates", 30], ["items", 30]] as const) {
     if (raw[key] === undefined && key !== "items") continue;
     const rows = raw[key];
     accepted[key] = [];
@@ -58,7 +59,8 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
   if (!value || typeof value !== "object") throw new Error("Invalid news feed");
   const payload = value as Record<string, unknown>;
   if (payload.ok !== true || typeof payload.enabled !== "boolean" || !Array.isArray(payload.items) || payload.items.length > 30) throw new Error("Invalid news feed");
-  const updates: { officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; resultBriefs?: ResultBrief[] } = {};
+  const updates: { officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[] } = {};
+  if (payload.analystUpdates !== undefined) updates.analystUpdates = parseAnalystUpdates(payload.analystUpdates);
   if (payload.marketUpdates !== undefined) {
     if (!Array.isArray(payload.marketUpdates) || payload.marketUpdates.length > 20) throw Error("Invalid market updates");
     updates.marketUpdates = payload.marketUpdates.map(raw => {

@@ -38,7 +38,7 @@ TARGET_PATTERN = re.compile(
     r"\b(?:price[ -]?target|target price|pt\s+(?:raised|cut|lowered|hiked|increased|reduced|boosted|slashed|(?:to|at|of|from)\s*\$?\d+))\b",
     re.I,
 )
-RATING_PATTERN = re.compile(r"\b(?:initiated|initiat(?:es|ing)\s+(?:coverage|with)|upgraded|downgraded|reiterat(?:es|ed)|maintain(?:s|ed))\b", re.I)
+RATING_PATTERN = re.compile(r"\b(?:initiated|initiat(?:es|ing)\s+(?:coverage|with)|upgraded|downgraded|reiterat(?:es|ed)|maintain(?:s|ed)|(?:reinstated|restored|named|selected)\s+as\s+(?:a\s+)?Top Pick|added\s+to\s+(?:(?:US|Q[1-4])\s+)?[\"\']?(?:Conviction List|Tactical Ideas list))\b", re.I)
 EARNINGS_PATTERN = re.compile(r"(?:\b(?:earnings|quarterly results|financial results|Q[1-4].{0,30}(?:results|highlights))\b|決算)", re.I)
 EARNINGS_PREVIEW_PATTERN = re.compile(
     r"\b(?:earnings preview|ahead of (?:its |the )?earnings|upcoming earnings|"
