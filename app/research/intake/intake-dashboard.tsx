@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { fetchState, filterSources, intakeCounts, pdfEvidenceCounts, secEvidenceCounts, secEvidenceState, sourceTitle, coverageCounts, providers, providerByTicker, sectorNames, type IntakeSnapshot } from "@/lib/research/intake";
+import { fetchState, filterSources, intakeCounts, pdfEvidenceCounts, secEvidenceCounts, secEvidenceState, sourceTitle, coverageCounts, latestDiscoveryRuns, providers, providerByTicker, sectorNames, type IntakeSnapshot } from "@/lib/research/intake";
 import { monitorFallbackLabel } from "@/lib/research/live-monitor-diagnostics";
 import { useLiveIntake, type MonitorState } from "@/lib/research/use-live-intake";
 import styles from "./intake.module.css";
@@ -445,6 +445,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
   const pdfEvidence = pdfEvidenceCounts(snapshot.sources);
   const secEvidence = secEvidenceCounts(snapshot.sources);
   const coverage = coverageCounts(snapshot);
+  const latestRuns = latestDiscoveryRuns(snapshot);
   const events = snapshot.events ?? [];
   const briefs = snapshot.briefs ?? [];
   const visible = filterSources(snapshot.sources, query, ticker, state, review, titles, sector, pdfEvidenceFilter, secEvidenceFilter);
@@ -489,7 +490,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
         <div className={styles.health}>{selectedProviders.map(provider => {
           const symbol = provider.ticker;
           const runs = snapshot.discoveryRuns.filter(r => r.ticker === symbol).toSorted((a, b) => b.id - a.id);
-          const latest = runs[0];
+          const latest = latestRuns.find(run => run.ticker === symbol);
           const totals = intakeCounts(snapshot.sources.filter(s => s.ticker === symbol));
           const companyPdfEvidence = pdfEvidenceCounts(snapshot.sources.filter(s => s.ticker === symbol));
           const companySecEvidence = secEvidenceCounts(snapshot.sources.filter(s => s.ticker === symbol));

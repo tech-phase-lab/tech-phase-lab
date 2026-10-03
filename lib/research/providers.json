@@ -842,7 +842,8 @@
     "sector": "power-cooling",
     "indexUrl": "https://investor.bloomenergy.com/rss/pressrelease.aspx",
     "format": "rss",
-    "fallbackSources": [
+    "independentSupplemental": true,
+    "supplementalSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0001664703.json",
         "format": "sec-json",

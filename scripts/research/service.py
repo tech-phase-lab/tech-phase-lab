@@ -350,6 +350,50 @@ def discovery_requires_backoff(result):
     return result.get("status") == "degraded" and not discovery_has_verified_route(result)
 
 
+def discovery_jobs(tickers):
+    """Opt in only configured issuers to independently bounded SEC jobs."""
+    jobs = {}
+    for ticker in tickers:
+        if monitor.PROVIDERS[ticker].get("independentSupplemental"):
+            jobs[ticker] = (ticker, "primary")
+            jobs[ticker + ":supplemental"] = (ticker, "supplemental")
+        else:
+            jobs[ticker] = (ticker, None)
+    return jobs
+
+
+def discovery_phase_cache(ticker, phase, current, incoming):
+    """A late phase may update only its own validators, never another phase's."""
+    if phase is None:
+        return incoming
+    urls = {source["url"] for source in monitor.monitoring_sources(ticker, scope=phase)}
+    return {**{url: state for url, state in current.items() if url not in urls},
+            **{url: state for url, state in incoming.items() if url in urls}}
+
+
+def combined_discovery_state(primary, supplemental):
+    """Expose missing/failed SEC coverage without slowing a verified issuer."""
+    phases = {"primary": primary, "supplemental": supplemental}
+    complete = [state for state in phases.values() if state is not None]
+    latest = max(complete, key=lambda state: state["checkedAt"])
+    verified = {name: state for name, state in phases.items()
+                if state is not None and discovery_has_verified_route(state)}
+    missing = any(state is None for state in phases.values())
+    failed = any(state is not None and state["status"] == "degraded" for state in phases.values())
+    status = ("degraded" if missing or failed else
+              "fallback" if any(state["status"] == "fallback" for state in complete) else "ok")
+    route = ("primary+supplemental" if len(verified) == 2 else
+             "primary" if "primary" in verified else
+             "supplemental" if "supplemental" in verified else "none")
+    return {
+        **latest, "status": status, "route": route,
+        "candidates": sum(state["candidates"] for state in complete),
+        "error": next((state["error"] for state in complete if state["status"] == "degraded"), None),
+        "pendingPhases": [name for name, state in phases.items() if state is None],
+        "phases": {name: dict(state) for name, state in phases.items() if state is not None},
+    }
+
+
 class AutomaticMonitor:
     def __init__(self, db_path, snapshot_path):
         self.db_path = Path(db_path)
@@ -985,11 +1029,12 @@ class AutomaticMonitor:
             return self.fast_seconds
         return self.standard_seconds
 
-    def collect_discovery_timed(self, ticker, cached_sources=None):
+    def collect_discovery_timed(self, ticker, cached_sources=None, source_scope=None):
         """Measure one official-source request separately from its polling interval."""
         started = time.monotonic()
+        options = {"source_scope": source_scope} if source_scope is not None else {}
         result, links = monitor.collect_discovery(
-            ticker, monitor.fetch, True, cached_sources
+            ticker, monitor.fetch, True, cached_sources, **options
         )
         return result, links, max(0, round((time.monotonic() - started) * 1000))
 
@@ -1447,7 +1492,8 @@ class AutomaticMonitor:
             return result
 
     def body_candidates(self, polled_at=None, *, excluded_urls=(),
-                        excluded_tickers=(), excluded_hosts=(), max_candidates=None):
+                        excluded_tickers=(), excluded_hosts=(), max_candidates=None,
+                        excluded_sec_tickers=()):
         """Prioritize unseen releases, then missing evidence, then routine rechecks."""
         batch_limit = self.body_batch if max_candidates is None else min(
             self.body_batch, max(0, int(max_candidates))
@@ -1544,7 +1590,9 @@ class AutomaticMonitor:
                     continue
                 if (candidate["url"] in excluded_urls
                         or candidate["ticker"] in excluded_tickers
-                        or hostname in excluded_hosts):
+                        or hostname in excluded_hosts
+                        or (candidate["ticker"] in excluded_sec_tickers
+                            and hostname in {"www.sec.gov", "data.sec.gov"})):
                     continue
                 eligible_candidates.append(candidate)
             eligible_hosts = {
@@ -2030,12 +2078,30 @@ class AutomaticMonitor:
                 self.stop_event.wait(min(30, 2 ** min(failures, 5)))
 
     def run(self):
-        next_due = {ticker: 0.0 for ticker in self.tickers}
+        jobs = discovery_jobs(self.tickers)
+        independent_tickers = {ticker for ticker, phase in jobs.values() if phase == "primary"}
+
+        def body_job_key(row):
+            # Only opted-in BE bodies use host-scoped reservations. Other
+            # issuers retain the existing whole-ticker exclusion policy.
+            if row["ticker"] in independent_tickers:
+                return (row["ticker"], monitor.source_hostname(row["url"]))
+            return row["ticker"]
+
+        def independent_sec_body(row):
+            return (row["ticker"] in independent_tickers and
+                    monitor.source_hostname(row["url"]) in {"www.sec.gov", "data.sec.gov"})
+
+        # The primary result is persisted before the first supplemental job is
+        # admitted. Subsequent SEC polls have their own completion/backoff clock.
+        next_due = {job: float("inf") if phase == "supplemental" else 0.0
+                    for job, (_ticker, phase) in jobs.items()}
+        phase_states = {}
         signatures = {}
         known = {}
         discovery_caches = {}
         baseline_ready = {}
-        failure_streak = {ticker: 0 for ticker in self.tickers}
+        failure_streak = {job: 0 for job in jobs}
         next_body_fetch = 0.0
         body_admission_due = 0.0
         with self.db_lock, monitor.connect(self.db_path) as db:
@@ -2046,13 +2112,17 @@ class AutomaticMonitor:
                     db, ticker, include_stats=True
                 )
                 invalidated_sources += cache_stats["invalidatedSources"]
-                baseline_ready[ticker] = db.execute(
+            for job, (ticker, phase) in jobs.items():
+                phase_urls = [source["url"] for source in monitor.monitoring_sources(ticker, scope=phase)]
+                scope_clause = (" AND index_url IN (" + ",".join("?" for _ in phase_urls) + ")"
+                                if phase is not None else "")
+                params = (ticker, *phase_urls) if phase is not None else (ticker,)
+                baseline_ready[job] = db.execute(
                     """SELECT 1 FROM discovery_runs
                        WHERE ticker=? AND (
                          status IN ('ok','fallback')
                          OR (status='degraded' AND route IS NOT NULL AND route!='none')
-                       ) LIMIT 1""",
-                    (ticker,),
+                       )""" + scope_clause + " LIMIT 1", params,
                 ).fetchone() is not None
             monitor.write_snapshot(db, self.snapshot_path)
         with self.state_lock:
@@ -2083,22 +2153,25 @@ class AutomaticMonitor:
             pending_metrics.clear()
             next_metrics_flush = time.monotonic() + DISCOVERY_METRICS_FLUSH_SECONDS
 
-        def persist_completion(ticker, future, cycle_started, cycle_started_at):
+        def persist_completion(job, future, cycle_started, cycle_started_at):
+            ticker, phase = jobs[job]
             try:
                 result, links, request_duration_ms = future.result()
             except Exception as exc:
                 request_duration_ms = max(0, round((time.monotonic() - cycle_started) * 1000))
                 result = {
                     "ticker": ticker, "status": "degraded", "route": "none",
-                    "sourceUrl": monitor.INDEXES[ticker], "candidates": 0,
+                    "sourceUrl": monitor.monitoring_sources(ticker, scope=phase)[0]["url"], "candidates": 0,
                     "error": monitor.source_error_code(exc),
                 }
                 links = {}
-            failure_streak[ticker] = (
-                failure_streak[ticker] + 1 if discovery_requires_backoff(result) else 0
+            failure_streak[job] = (
+                failure_streak[job] + 1 if discovery_requires_backoff(result) else 0
             )
-            delay = min(300, self.interval_for(ticker) * (2 ** min(failure_streak[ticker], 6)))
-            next_due[ticker] = time.monotonic() + delay
+            delay = min(300, self.interval_for(ticker) * (2 ** min(failure_streak[job], 6)))
+            next_due[job] = time.monotonic() + delay
+            if phase == "primary" and next_due[ticker + ":supplemental"] == float("inf"):
+                next_due[ticker + ":supplemental"] = time.monotonic()
             result["nextPollSeconds"] = delay
             collected = [(ticker, result, links, request_duration_ms)]
             changed = False
@@ -2111,17 +2184,22 @@ class AutomaticMonitor:
             }
             with self.db_lock, monitor.connect(self.db_path) as db:
                 for ticker, result, links, request_duration_ms in collected:
-                    source_cache = result.get("_sourceCache", discovery_caches[ticker])
+                    source_cache = discovery_phase_cache(
+                        ticker, phase, discovery_caches[ticker],
+                        result.get("_sourceCache", discovery_caches[ticker]),
+                    )
+                    if "_sourceCache" in result:
+                        result["_sourceCache"] = source_cache
                     result_cache_metrics = result.pop("_cacheMetrics", {})
                     for metric in cache_metrics:
                         cache_metrics[metric] += int(result_cache_metrics.get(metric, 0))
                     cache_changed = source_cache != discovery_caches[ticker]
                     signature = discovery_signature(result, links)
                     new_urls = set(links) - known[ticker]
-                    if signatures.get(ticker) != signature or new_urls:
+                    if signatures.get(job) != signature or new_urls:
                         inserted = monitor.save_discovery(db, ticker, result, links)
                         known[ticker].update(inserted)
-                        if baseline_ready[ticker]:
+                        if baseline_ready[job]:
                             events = monitor.add_release_events(db, ticker, inserted)
                             if self.auto_drafts_enabled:
                                 for url in events:
@@ -2130,14 +2208,14 @@ class AutomaticMonitor:
                                     monitor.queue_generation_job(db, url, reservation)
                             new_count += len(events)
                         elif discovery_has_verified_route(result):
-                            baseline_ready[ticker] = True
+                            baseline_ready[job] = True
                         changed = True
                     elif cache_changed:
                         monitor.save_discovery_source_cache(db, ticker, source_cache)
                     discovery_caches[ticker] = source_cache
                     result.pop("_sourceCache", None)
-                    signatures[ticker] = signature
-                    incident_key = f"source:{ticker}"
+                    signatures[job] = signature
+                    incident_key = f"source:{ticker}" + (":supplemental" if phase == "supplemental" else "")
                     if result["status"] == "degraded":
                         monitor.record_operational_incident(
                             db, incident_key, "official-source", ticker, "warning",
@@ -2146,7 +2224,7 @@ class AutomaticMonitor:
                         )
                     else:
                         monitor.resolve_operational_incident(db, incident_key, checked_at)
-                    company_states[ticker] = {
+                    company_state = {
                         "status": result["status"],
                         "route": result["route"],
                         "candidates": result["candidates"],
@@ -2157,6 +2235,12 @@ class AutomaticMonitor:
                         "requestDurationMs": request_duration_ms,
                         "error": monitor.public_error(result["error"]),
                     }
+                    if phase is not None:
+                        phase_states[job] = company_state
+                        company_state = combined_discovery_state(
+                            phase_states.get(ticker), phase_states.get(ticker + ":supplemental"),
+                        )
+                    company_states[ticker] = company_state
                 if changed:
                     monitor.write_snapshot(db, self.snapshot_path)
 
@@ -2207,13 +2291,14 @@ class AutomaticMonitor:
         # executor backlog. A single-worker installation alternates due lanes.
         lane_limit = max(1, self.workers - 1)
         discovery_hosts = {
-            ticker: {
+            job: {
                 monitor.source_hostname(source["url"])
-                for source in monitor.monitoring_sources(ticker, automatic=True)
-                # Shared SEC endpoints use the actual-request rate gate. An
-                # unused SEC fallback must not reserve a host for every issuer.
+                for source in monitor.monitoring_sources(ticker, automatic=True, scope=phase)
+                # Shared SEC endpoints retain the actual-request courtesy gate.
+                # A separate SEC phase cannot reserve an issuer's article host
+                # or reserve SEC hosts against unrelated filing-body workers.
                 if monitor.source_hostname(source["url"]) not in {"www.sec.gov", "data.sec.gov"}
-            } for ticker in next_due
+            } for job, (ticker, phase) in jobs.items()
         }
         in_flight = {}
         body_futures = {}
@@ -2224,10 +2309,10 @@ class AutomaticMonitor:
             while not self.stop_event.is_set():
                 # Save each completed issuer independently, before dispatching
                 # more work or waiting for a different issuer/body request.
-                for ticker, (future, started, started_at) in list(in_flight.items()):
+                for job, (future, started, started_at) in list(in_flight.items()):
                     if future.done():
-                        persist_completion(ticker, future, started, started_at)
-                        del in_flight[ticker]
+                        persist_completion(job, future, started, started_at)
+                        del in_flight[job]
 
                 for future, (batch, row) in list(body_futures.items()):
                     if future.done():
@@ -2264,9 +2349,15 @@ class AutomaticMonitor:
                     try:
                         batch = self.begin_body_batch(
                             excluded_urls={row["url"] for row in body_rows},
-                            excluded_tickers={row["ticker"] for row in body_rows},
+                            excluded_tickers={row["ticker"] for row in body_rows
+                                              if row["ticker"] not in independent_tickers},
                             excluded_hosts={monitor.source_hostname(row["url"]) for row in body_rows},
                             max_candidates=capacity,
+                            # Do not fill a one-row body admission batch with a
+                            # SEC body that cannot run while the other worker is
+                            # already collecting the BE supplemental chain.
+                            excluded_sec_tickers=(independent_tickers if self.workers == 2
+                                and any(jobs[job][1] == "supplemental" for job in in_flight) else ()),
                         )
                         if batch is not None:
                             batch["remaining"] = list(batch["rows"])
@@ -2285,30 +2376,53 @@ class AutomaticMonitor:
                 # Pending bodies reserve their ticker/host before another
                 # discovery starts there. Existing requests drain naturally;
                 # unrelated discovery continues and host courtesy is retained.
-                body_tickers = {row["ticker"] for row in body_rows}
+                body_tickers = {row["ticker"] for row in body_rows
+                                if row["ticker"] not in independent_tickers}
+                sec_body_active = any(independent_sec_body(row) for _batch, row in body_futures.values())
                 body_hosts = {monitor.source_hostname(row["url"]) for row in body_rows}
-                active_hosts = set().union(*(discovery_hosts[ticker] for ticker in in_flight))
+                active_hosts = set().union(*(discovery_hosts[job] for job in in_flight))
                 current = time.monotonic()
                 due = sorted(
-                    (ticker for ticker in next_due
-                     if ticker not in in_flight and next_due[ticker] <= current
-                     and ticker not in body_tickers
-                     and not discovery_hosts[ticker].intersection(body_hosts)),
-                    key=lambda ticker: next_due[ticker],
+                    (job for job in next_due
+                     if job not in in_flight and next_due[job] <= current
+                     and (jobs[job][1] == "supplemental" or jobs[job][0] not in body_tickers)
+                     and not (self.workers == 2 and sec_body_active and jobs[job][1] == "supplemental")
+                     and not discovery_hosts[job].intersection(body_hosts)),
+                    key=lambda job: next_due[job],
                 )
                 while len(in_flight) + len(body_futures) < self.workers and not self.stop_event.is_set():
-                    active_body_tickers = {row["ticker"] for _batch, row in body_futures.values()}
+                    active_body_keys = {body_job_key(row) for _batch, row in body_futures.values()}
+                    supplemental_active = any(jobs[job][1] == "supplemental" for job in in_flight)
                     body_choice = next(((batch, row) for batch in body_batches
                                         for row in batch["remaining"]
-                                        if row["ticker"] not in in_flight
-                                        and row["ticker"] not in active_body_tickers
+                                        if (row["ticker"] not in in_flight or row["ticker"] in independent_tickers)
+                                        and body_job_key(row) not in active_body_keys
+                                        and not (self.workers == 2 and supplemental_active and independent_sec_body(row))
                                         and monitor.source_hostname(row["url"]) not in active_hosts), None)
-                    can_discover = bool(due) and len(in_flight) < lane_limit
+                    body_lane_count = sum(
+                        not (self.workers == 2 and independent_sec_body(row))
+                        for _batch, row in body_futures.values()
+                    )
+                    # With two physical workers, a slow supplemental phase may
+                    # share the discovery lane while the remaining slot serves
+                    # primary discovery or an already-ready body (body wins).
+                    # Larger installations keep the existing reserved body lane.
+                    supplemental_only = bool(in_flight) and all(
+                        jobs[job][1] == "supplemental" for job in in_flight
+                    )
+                    eligible_due = [job for job in due if not (
+                        self.workers == 2 and jobs[job][1] == "supplemental"
+                        and any(independent_sec_body(row) for _batch, row in body_futures.values())
+                    )]
+                    can_discover = bool(eligible_due) and (
+                        len(in_flight) < lane_limit
+                        or (self.workers == 2 and supplemental_only)
+                    )
                     # Give an idle body lane first use of the reserved slot.
                     # With one worker, alternating prevents either lane from
                     # consuming every newly free slot indefinitely.
-                    choose_body = body_choice is not None and len(body_futures) < lane_limit and (
-                        not can_discover or (self.workers > 1 and not body_futures)
+                    choose_body = body_choice is not None and body_lane_count < lane_limit and (
+                        not can_discover or (self.workers > 1 and not body_lane_count)
                         or (self.workers == 1 and last_lane == "discovery")
                     )
                     if choose_body:
@@ -2319,11 +2433,16 @@ class AutomaticMonitor:
                         batch["in_flight"] += 1
                         last_lane = "body"
                     elif can_discover:
-                        ticker = due.pop(0)
+                        job = eligible_due[0]
+                        due.remove(job)
+                        ticker, phase = jobs[job]
                         started, started_at = time.monotonic(), utc_now()
-                        future = pool.submit(self.collect_discovery_timed, ticker, discovery_caches[ticker])
-                        in_flight[ticker] = (future, started, started_at)
-                        active_hosts.update(discovery_hosts[ticker])
+                        args = (ticker, discovery_caches[ticker])
+                        if phase is not None:
+                            args += (phase,)
+                        future = pool.submit(self.collect_discovery_timed, *args)
+                        in_flight[job] = (future, started, started_at)
+                        active_hosts.update(discovery_hosts[job])
                         last_lane = "discovery"
                     else:
                         break

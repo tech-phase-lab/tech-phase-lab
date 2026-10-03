@@ -102,8 +102,7 @@ export function filterSources(sources: IntakeSource[], query: string, ticker: st
 }
 
 export function coverageCounts(data: IntakeSnapshot) {
-  const latest = new Map<string, IntakeSnapshot["discoveryRuns"][number]>();
-  for (const r of data.discoveryRuns) if (!latest.has(r.ticker) || latest.get(r.ticker)!.id < r.id) latest.set(r.ticker, r);
+  const latest = new Map(latestDiscoveryRuns(data).map(run => [run.ticker, run]));
   return {
     registered: providers.length,
     discovered: providers.filter(p => ["ok", "fallback"].includes(latest.get(p.ticker)?.status ?? "")).length,
@@ -204,10 +203,58 @@ export type CoverageCompany = {
   sources: CoverageSource[];
 };
 
+function coverageDiscovery(
+  provider: (typeof providers)[number],
+  runs: IntakeSnapshot["discoveryRuns"],
+): CoverageCompany["discovery"] {
+  const latest = runs[0];
+  if (!latest) return { status: "untested", candidates: 0, checkedAt: null, error: null,
+    sourceFormat: null, sourcesChecked: 0, sourcesConfigured: 1 };
+  const ordinary: CoverageCompany["discovery"] = {
+    status: latest.status === "ok" || latest.status === "fallback" ? latest.status : "degraded",
+    candidates: latest.candidates, checkedAt: latest.at, error: latest.error,
+    sourceFormat: latest.source_format ?? null,
+    sourcesChecked: latest.sources_checked ?? 1,
+    sourcesConfigured: latest.sources_configured ?? 1,
+  };
+  const primary = new Set([provider.monitorUrl ?? provider.indexUrl,
+    ...(provider.fallbackSources ?? []).map(source => source.url)]);
+  if (!provider.independentSupplemental) return ordinary;
+  // Independently completed BE phases must not let a newer healthy RSS row
+  // hide failed or as-yet-unobserved SEC coverage in the existing coverage UI.
+  const supplemental = new Set((provider.supplementalSources ?? []).map(source => source.url));
+  const phases = [runs.find(run => primary.has(run.index_url ?? "")),
+    runs.find(run => supplemental.has(run.index_url ?? ""))];
+  const completed = phases.filter((run): run is IntakeSnapshot["discoveryRuns"][number] => Boolean(run));
+  const failed = completed.find(run => run.status === "degraded");
+  return {
+    ...ordinary,
+    status: failed || completed.length < 2 ? "degraded" :
+      completed.some(run => run.status === "fallback") ? "fallback" : "ok",
+    candidates: completed.reduce((sum, run) => sum + run.candidates, 0),
+    error: failed?.error ?? null,
+    sourceFormat: [...new Set(completed.flatMap(run => (run.source_format ?? "").split("+")).filter(Boolean))].join("+") || null,
+    sourcesChecked: completed.reduce((sum, run) => sum + (run.sources_checked ?? 1), 0),
+    sourcesConfigured: primary.size + supplemental.size,
+  };
+}
+
+export function latestDiscoveryRuns(snapshot: IntakeSnapshot): IntakeSnapshot["discoveryRuns"] {
+  return providers.flatMap(provider => {
+    const runs = snapshot.discoveryRuns.filter(run => run.ticker === provider.ticker).toSorted((a, b) => b.id - a.id);
+    const latest = runs[0];
+    if (!latest) return [];
+    const discovery = coverageDiscovery(provider, runs);
+    return [{ ...latest, status: discovery.status === "untested" ? "degraded" : discovery.status,
+      candidates: discovery.candidates, error: discovery.error,
+      source_format: discovery.sourceFormat, sources_checked: discovery.sourcesChecked,
+      sources_configured: discovery.sourcesConfigured }];
+  });
+}
+
 export function buildCoverageCompanies(snapshot: IntakeSnapshot): CoverageCompany[] {
   return providers.map((provider) => {
     const runs = snapshot.discoveryRuns.filter((run) => run.ticker === provider.ticker).toSorted((a, b) => b.id - a.id);
-    const latest = runs[0];
     const companySources = snapshot.sources.filter((source) => source.ticker === provider.ticker);
     return {
       ticker: provider.ticker,
@@ -216,16 +263,7 @@ export function buildCoverageCompanies(snapshot: IntakeSnapshot): CoverageCompan
       sectorKey: provider.sector,
       indexUrl: provider.indexUrl,
       format: provider.format,
-      discovery: latest ? {
-        status: latest.status === "ok" || latest.status === "fallback" ? latest.status : "degraded",
-        candidates: latest.candidates,
-        checkedAt: latest.at,
-        error: latest.error,
-        sourceFormat: latest.source_format ?? null,
-        sourcesChecked: latest.sources_checked ?? 1,
-        sourcesConfigured: latest.sources_configured ?? 1,
-      } : { status: "untested", candidates: 0, checkedAt: null, error: null,
-        sourceFormat: null, sourcesChecked: 0, sourcesConfigured: 1 },
+      discovery: coverageDiscovery(provider, runs),
       counts: intakeCounts(companySources),
       sources: companySources.map((source) => ({ ...source, displayTitle: source.title || sourceTitle(source.url), fetchState: fetchState(source) })),
     };

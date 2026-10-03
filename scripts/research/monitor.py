@@ -3119,7 +3119,7 @@ def add_source(db, ticker, url, published_on=None, title=None):
     return url
 
 
-def monitoring_sources(ticker, automatic=False):
+def monitoring_sources(ticker, automatic=False, scope=None):
     """Return the primary chain followed by independently collected official sources."""
     provider = PROVIDERS[ticker]
     primary = {"url": INDEXES[ticker], "format": provider["format"], "route": "primary"}
@@ -3135,6 +3135,12 @@ def monitoring_sources(ticker, automatic=False):
         {**source, "route": "supplemental" if index == 0 else "supplemental-fallback"}
         for index, source in enumerate(provider.get("supplementalSources", []))
     ]
+    if scope not in (None, "primary", "supplemental"):
+        raise ValueError("Unknown discovery source scope")
+    if scope == "primary":
+        return primary_chain
+    if scope == "supplemental":
+        return supplemental
     return primary_chain + supplemental
 
 
@@ -3359,9 +3365,9 @@ def save_discovery_source_cache(db, ticker, cache):
             )
 
 
-def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=None):
+def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=None, *, source_scope=None):
     """Fetch and parse candidates without mutating storage."""
-    sources = monitoring_sources(ticker, automatic=automatic)
+    sources = monitoring_sources(ticker, automatic=automatic, scope=source_scope)
     primary_sources = [source for source in sources if not source["route"].startswith("supplemental")]
     supplemental_sources = [source for source in sources if source["route"].startswith("supplemental")]
     failures, links, attempts = [], {}, 0
@@ -3458,13 +3464,19 @@ def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=N
             or (primary_source and primary_source["route"] == "fallback")
             or (supplemental_source and supplemental_source["route"] == "supplemental-fallback")
         )
+        if source_scope == "supplemental":
+            recovered_with_fallback = bool(
+                supplemental_source and supplemental_source["route"] == "supplemental-fallback"
+            )
         if supplemental_missing:
             status = "degraded"
         elif recovered_with_fallback:
             status = "fallback"
         else:
             status = "ok"
-        if primary_source and supplemental_source:
+        if source_scope == "supplemental" and supplemental_source:
+            route = supplemental_source["route"]
+        elif primary_source and supplemental_source:
             route = "primary+supplemental"
         elif primary_source:
             route = primary_source["route"]
@@ -3486,7 +3498,8 @@ def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=N
     else:
         result = {
             "ticker": ticker, "status": "degraded", "route": "none",
-            "sourceUrl": INDEXES[ticker], "sourceFormat": "none",
+            "sourceUrl": sources[0]["url"] if source_scope is not None and sources else INDEXES[ticker],
+            "sourceFormat": "none",
             "sourcesChecked": attempts, "sourcesConfigured": len(sources),
             "candidates": 0,
             "error": failures[0] if failures else "No monitoring sources configured",
@@ -3735,6 +3748,29 @@ def snapshot(db, recent_per_item=None):
                 FROM discovery_runs
               ) WHERE rank <= ? ORDER BY id DESC
             """, (recent_per_item,))]
+        # Keep the latest observation from each opted-in phase even when a
+        # fast issuer's newer rows exhaust the per-ticker history window. Phase
+        # identity is the configured source URL, including total-failure rows.
+        if recent_per_item is not None:
+            present_ids = {row["id"] for row in runs}
+            for ticker, provider in PROVIDERS.items():
+                if not provider.get("independentSupplemental"):
+                    continue
+                for phase in ("primary", "supplemental"):
+                    urls = [source["url"] for source in monitoring_sources(ticker, scope=phase)]
+                    if not urls:
+                        continue
+                    placeholders = ",".join("?" for _ in urls)
+                    row = db.execute(
+                        "SELECT id,ticker,at,status,candidates,error,index_url,source_format,"
+                        "sources_checked,sources_configured FROM discovery_runs "
+                        f"WHERE ticker=? AND index_url IN ({placeholders}) ORDER BY id DESC LIMIT 1",
+                        (ticker, *urls),
+                    ).fetchone()
+                    if row is not None and row["id"] not in present_ids:
+                        runs.append(dict(row))
+                        present_ids.add(row["id"])
+            runs.sort(key=lambda row: row["id"], reverse=True)
         events = [dict(r) for r in db.execute("""
           SELECT e.id,e.url,e.ticker,e.detected_at,s.title,s.published_on,
                  COALESCE((SELECT MIN(h.at) FROM history h
