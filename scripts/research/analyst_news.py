@@ -268,9 +268,44 @@ def public_copy(facts):
 
 
 def action_key(facts):
+    # Optional rating/target context does not create a second list addition.
+    # Scope and period remain identity; different explicit context is checked
+    # separately below rather than being silently merged.
     return (facts['ticker'], facts['firm'].casefold(), facts['action'], bool(facts.get('restored')),
-            facts.get('rating'), facts.get('previousRating'), facts.get('target'), facts.get('sector'), facts.get('region'), facts.get('quarter'),
+            facts.get('sector'), facts.get('region'), facts.get('quarter'),
             reconciliation.instant(facts['publishedAt']).date().isoformat())
+
+
+def observation_order(facts):
+    return (reconciliation.instant(facts['publishedAt']),
+            reconciliation.instant(facts['observedAt']),int(facts['id']))
+
+
+def publication_groups(records):
+    """Merge only identical facts or one unambiguous optional-fact subset.
+
+    A partial report must never bridge contradictory fully explicit reports.
+    Groups retain source rows; public copy/clocks come from one actual report,
+    never a composite of facts inferred across sources.
+    """
+    optional = ('rating','previousRating','target')
+    groups = {}
+    for record in sorted((r for r in records if r[1]),
+                         key=lambda r:(-sum(r[1].get(k) is not None for k in optional),
+                                       observation_order(r[1]))):
+        facts = record[1]
+        attributes = {key:facts[key] for key in optional if facts.get(key) is not None}
+        candidates = groups.setdefault(action_key(facts),[])
+        exact = [group for group in candidates if group['attributes']==attributes]
+        compatible = exact or [group for group in candidates
+                               if all(group['attributes'].get(key)==value for key,value in attributes.items())]
+        if len(compatible)==1:
+            compatible[0]['records'].append(record)
+        else:
+            # Zero matches means new information. Multiple matches means the
+            # partial evidence cannot identify which conflicting report it is.
+            candidates.append({'attributes':attributes,'records':[record]})
+    return [group['records'] for candidates in groups.values() for group in candidates]
 
 
 def origin_heads(db, sources, now):
@@ -361,31 +396,24 @@ def active_publications(db, sources, now):
 def public_feed(db, sources=signals.SOURCES, now=None, limit=30):
     now = now or datetime.now(timezone.utc)
     schema(db)
-    groups = {}
-    for _, facts, _, saved in active_publications(db, sources, now):
-        if not facts or not saved:
-            continue
-        key = action_key(facts)
-        # Keep the earliest source report/observation, not a duplicate's fresh
-        # clock. All supporting origins remain in private publication storage.
-        order = (reconciliation.instant(facts['publishedAt']), reconciliation.instant(facts['observedAt']), int(facts['id']))
-        if key not in groups or order < groups[key][0]:
-            groups[key] = order, public_copy(facts)
-    return [record[1] for record in sorted(groups.values(), key=lambda record:record[0], reverse=True)][:limit]
+    items = []
+    for group in publication_groups(list(active_publications(db,sources,now))):
+        saved = [record[1] for record in group if record[3]]
+        if saved:
+            # Preserve the earliest actual report and its acquisition clock.
+            # Later/partial copies must never make the same action look new.
+            facts = min(saved,key=observation_order)
+            items.append((observation_order(facts),public_copy(facts)))
+    return [record[1] for record in sorted(items,key=lambda record:record[0],reverse=True)][:limit]
 
 
 def diagnostics(db, sources=signals.SOURCES, now=None):
     now = now or datetime.now(timezone.utc)
     schema(db)
-    rejected, eligible, published = Counter(), set(), set()
-    for _, facts, reason, saved in active_publications(db, sources, now):
-        if facts:
-            key = action_key(facts)
-            eligible.add(key)
-            if saved:
-                published.add(key)
-        else:
-            rejected[reason] += 1
-    return {'eligible':len(eligible),'published':len(published),
-            'pending':len(eligible-published),'excluded':sum(rejected.values()),
+    records = list(active_publications(db,sources,now))
+    rejected = Counter(reason for _,facts,reason,_ in records if not facts)
+    groups = publication_groups(records)
+    published = sum(any(record[3] for record in group) for group in groups)
+    return {'eligible':len(groups),'published':published,
+            'pending':len(groups)-published,'excluded':sum(rejected.values()),
             'rejectionReasons':dict(sorted(rejected.items()))}

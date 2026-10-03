@@ -299,6 +299,70 @@ class AnalystNewsTests(unittest.TestCase):
         self.assertEqual(self.diagnostics()['published'],0)
         self.assertEqual(self.diagnostics()['rejectionReasons'],{'invalid-source-clock':1})
 
+    def test_live_msft_optional_context_duplicate_preserves_earlier_report(self):
+        full=CASES[6][1]
+        partial="Microsoft $MSFT added to Q4 'Tactical Ideas list' at Wells Fargo"
+        self.seed(full,'MSFT',1081,published='2026-10-01T10:39:04Z',observed='2026-10-01T10:39:43.123Z')
+        self.seed(partial,'MSFT',1082,account='wallstengine',published='2026-10-01T10:55:14Z',observed='2026-10-01T10:56:00.456Z')
+        news.run_once(self.path,now=NOW)
+        feed=self.feed()
+        self.assertEqual(len(feed),1)
+        self.assertEqual(feed[0]['publishedAt'],'2026-10-01T10:39:04Z')
+        self.assertEqual(feed[0]['observedAt'],'2026-10-01T10:39:43.123Z')
+        self.assertIn('Overweight',feed[0]['bodyEn'])
+        self.assertIn('$725',feed[0]['bodyEn'])
+        self.assertEqual(self.diagnostics()['eligible'],1)
+        self.assertEqual(self.diagnostics()['published'],1)
+        self.assertEqual(self.diagnostics()['pending'],0)
+        with monitor.connect(self.path) as db:
+            self.assertEqual(db.execute('SELECT count(*) FROM analyst_news_publications').fetchone()[0],2)
+
+    def test_partial_report_cannot_bridge_conflicting_explicit_reports(self):
+        full=CASES[6][1]
+        partial="Microsoft $MSFT added to Q4 'Tactical Ideas list' at Wells Fargo"
+        self.seed(full,'MSFT',1)
+        self.seed(full.replace('$725','$700'),'MSFT',2)
+        self.seed(partial,'MSFT',3)
+        self.seed(partial,'MSFT',4,account='wallstengine')
+        news.run_once(self.path,now=NOW)
+        feed=self.feed()
+        self.assertEqual(len(feed),3)
+        self.assertEqual(sum('$725' in item['bodyEn'] for item in feed),1)
+        self.assertEqual(sum('$700' in item['bodyEn'] for item in feed),1)
+        self.assertEqual(self.diagnostics()['published'],3)
+        self.assertEqual(self.diagnostics()['eligible'],3)
+
+    def test_distinct_explicit_ratings_and_periods_remain_separate(self):
+        self.seed(CASES[6][1],'MSFT',1)
+        self.seed(CASES[6][1].replace('Overweight','Underweight'),'MSFT',2)
+        self.seed(CASES[6][1].replace('Q4','Q1'),'MSFT',3)
+        news.run_once(self.path,now=NOW)
+        self.assertEqual(len(self.feed()),3)
+
+    def test_earlier_partial_copy_is_not_enriched_with_later_facts_or_clock(self):
+        partial="Microsoft $MSFT added to Q4 'Tactical Ideas list' at Wells Fargo"
+        self.seed(partial,'MSFT',1,published='2026-10-01T10:00:00Z',observed='2026-10-01T10:01:00Z')
+        self.seed(CASES[6][1],'MSFT',2,published='2026-10-01T11:00:00Z',observed='2026-10-01T11:01:00Z')
+        news.run_once(self.path,now=NOW)
+        feed=self.feed()
+        self.assertEqual(len(feed),1)
+        self.assertEqual(feed[0]['publishedAt'],'2026-10-01T10:00:00Z')
+        self.assertEqual(feed[0]['observedAt'],'2026-10-01T10:01:00Z')
+        self.assertNotIn('$725',feed[0]['bodyEn'])
+        self.assertNotIn('Overweight',feed[0]['bodyEn'])
+
+    def test_retracted_full_copy_cannot_enrich_remaining_valid_partial_origin(self):
+        self.seed(CASES[6][1],'MSFT',1,published='2026-10-01T10:00:00Z',observed='2026-10-01T10:01:00Z')
+        partial="Microsoft $MSFT added to Q4 'Tactical Ideas list' at Wells Fargo"
+        self.seed(partial,'MSFT',2,published='2026-10-01T11:00:00Z',observed='2026-10-01T11:01:00Z')
+        news.run_once(self.path,now=NOW)
+        self.seed('Correction: the report was retracted.','MSFT',1,published='2026-10-01T10:00:00Z',observed=(NOW-timedelta(minutes=1)).isoformat())
+        feed=self.feed()
+        self.assertEqual(len(feed),1)
+        self.assertEqual(feed[0]['publishedAt'],'2026-10-01T11:00:00Z')
+        self.assertNotIn('$725',feed[0]['bodyEn'])
+        self.assertEqual(self.diagnostics()['published'],1)
+
     def test_existing_acquisition_selection_recognizes_monitored_list_action(self):
         payload={'data':[{'id':'123','text':'Nvidia $NVDA reinstated as Top Pick at Morgan Stanley','created_at':NOW.isoformat(),'author_id':'1'}],
                  'includes':{'users':[{'id':'1','username':'TipRanks'}]}}
