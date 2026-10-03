@@ -1,6 +1,5 @@
 "use client";
-import { recoverMember } from "@/lib/research/member-recovery";
-import { useIdentityRefresh } from "../identity-provider";
+import { useMemberDisplay } from "../member-display-provider";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
@@ -13,11 +12,11 @@ import TickerSearch from "./ticker-search";
 const percent = (n: number | null) => n === null ? "—" : `${n.toFixed(1)}%`;
 function money(f: Fact | null, lang: string) { return f ? `${new Intl.NumberFormat(lang === "ja" ? "ja-JP" : "en-US", { notation: "compact", maximumFractionDigits: 2 }).format(f.value)} ${f.unit}` : "—"; }
 export default function ComparisonScreen() {
-  const refreshIdentity = useIdentityRefresh();
+  const memberPlan = useMemberDisplay();
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
   const t = (a: string, b: string) => ja ? a : b;
-  const [membership, setMembership] = useState("loading");
+  const membership = memberPlan ?? "loading";
   const [queries, setQueries] = useState(["", "", ""]);
   const [suggestions, setSuggestions] = useState<{ ticker: string; name: string }[][]>([[], [], []]);
   const [openSlot, setOpenSlot] = useState<number | null>(null);
@@ -29,23 +28,12 @@ export default function ComparisonScreen() {
   const request = useRef<AbortController | null>(null);
   const conclusion = useRef<HTMLElement | null>(null);
   useEffect(() => {
-    let active = true; let controller: AbortController | null = null;
-    async function check() {
-      controller?.abort(); controller = new AbortController(); const current = controller;
-      try {
-        const { response, member: m } = await recoverMember(refreshIdentity, AbortSignal.any([current.signal, AbortSignal.timeout(10000)]));
-        if (!active || current.signal.aborted) return;
-        const state = !response.ok || m.status === "unavailable" ? "error" : m.status !== "signed-in" ? "signed-out" : m.plan === "pro" ? "pro" : "free";
-        setMembership(state);
-        if (state !== "pro") { request.current?.abort(); setResult(null); setBusy(false); }
-      } catch { if (active && !current.signal.aborted) { setMembership("error"); setResult(null); request.current?.abort(); setBusy(false); } }
-    }
-    void check(); window.addEventListener("focus", check); const timer = setInterval(check, 60000);
-    return () => { active = false; controller?.abort(); request.current?.abort(); window.removeEventListener("focus", check); clearInterval(timer); };
-  }, [refreshIdentity]);
+    if (memberPlan !== "pro") { request.current?.abort(); setResult(null); setBusy(false); }
+    return () => { request.current?.abort(); };
+  }, [memberPlan]);
   useEffect(() => {
     if (!result) return;
-    const timer = setTimeout(() => { setResult(null); setMembership("free"); }, Math.max(0, Math.min(validUntil - Date.now(), 2147483647)));
+    const timer = setTimeout(() => { setResult(null); }, Math.max(0, Math.min(validUntil - Date.now(), 2147483647)));
     conclusion.current?.scrollIntoView({ block: "start", behavior: "instant" });
     conclusion.current?.focus({ preventScroll: true });
     return () => clearTimeout(timer);
@@ -74,7 +62,7 @@ export default function ComparisonScreen() {
       const response = await fetch(`/api/research/compare?tickers=${encodeURIComponent(tickers.join(","))}`, { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(30000)]) });
       const data = await response.json();
       if (controller.signal.aborted) return;
-      if (response.status === 401 || response.status === 403) { setMembership(response.status === 401 ? "signed-out" : "free"); return; }
+      if (response.status === 401 || response.status === 403) { setResult(null); window.dispatchEvent(new Event("tech-phase:membership-changed")); return; }
       if (!response.ok || !data.ok || !data.result || !Number.isFinite(data.validUntil) || data.validUntil <= Date.now()) throw Error();
       setValidUntil(data.validUntil); setResult(data.result);
     } catch { if (!controller.signal.aborted) setError(true); }
@@ -110,8 +98,7 @@ export default function ComparisonScreen() {
   return <ResearchToolShell lang={lang} setLang={setLang} title={t("銘柄比較", "Compare stocks")} description={t("最大3社。数字の差から、投資判断の論点へ。", "Up to three companies. Go from numbers to the questions that matter.")}>
     <div className={styles.eyebrow}>TECH PHASE PRO <span>{t("開発プレビュー · 決算比較", "PREVIEW · FINANCIAL COMPARISON")}</span></div>
     {membership === "loading" && <p role="status">{t("会員情報を確認中…", "Checking membership…")}</p>}
-    {membership === "error" && <p role="alert">{t("会員情報を確認できません。再読み込みしてください。", "Membership could not be verified. Please reload.")}</p>}
-    {(membership === "free" || membership === "signed-out") && <section className={styles.lock}><span aria-hidden="true">🔒</span><h2>{t("比較・評価はPRO会員限定", "Comparison is exclusive to PRO")}</h2><p>{t("2〜3社を選び、結論・実績・成長性・注意点をまとめて確認できます。", "Choose two or three companies to explore the conclusion, performance, growth and caveats.")}</p><Link href="/research/account">{t("ログイン・会員情報", "Sign in / Membership")}</Link></section>}
+    {membership === "free" && <section className={styles.lock}><span aria-hidden="true">🔒</span><h2>{t("比較・評価はPRO会員限定", "Comparison is exclusive to PRO")}</h2><p>{t("2〜3社を選び、結論・実績・成長性・注意点をまとめて確認できます。", "Choose two or three companies to explore the conclusion, performance, growth and caveats.")}</p><Link href="/research/account">{t("ログイン・会員情報", "Sign in / Membership")}</Link></section>}
     {membership === "pro" && <>
       <section className={styles.picker} aria-label={t("比較する銘柄", "Select companies")}>
         <div className={styles.slots}>{[0,1,2].map(i => <div key={i} className={styles.stockSlot}><label htmlFor={`stock-${i}`}>{i === 2 ? t("3社目（任意）", "Company 3 (optional)") : t(`${i+1}社目`, `Company ${i+1}`)}</label><input id={`stock-${i}`} name={`comparison-ticker-${i}`} autoCorrect="off" autoCapitalize="characters" spellCheck={false} role="combobox" aria-expanded={openSlot === i && Boolean(queries[i].trim())} aria-controls={`stock-options-${i}`} autoComplete="off" value={queries[i]} placeholder={t("会社名・銘柄コード", "Company or ticker")} onFocus={() => setOpenSlot(i)} onBlur={() => setTimeout(() => setOpenSlot(current => current === i ? null : current), 150)} onChange={event => {
