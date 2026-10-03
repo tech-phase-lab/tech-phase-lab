@@ -1,6 +1,5 @@
 import type { Language } from "./data";
 import type { MarketUpdate } from "./general-news";
-import { additionalNewsDetail } from "./news-detail.ts";
 
 /** Compact only the known index template; do not infer roles from arbitrary prose. */
 export function marketNewsDisplay(item: MarketUpdate, lang: Language) {
@@ -16,6 +15,6 @@ export function marketNewsDisplay(item: MarketUpdate, lang: Language) {
   return { label: labels[item.topic], title };
 }
 
-export function marketNewsBody(item: MarketUpdate, lang: Language) {
-  return additionalNewsDetail(marketNewsDisplay(item, lang).title, lang === "ja" ? item.titleJa : item.titleEn);
-}
+/** The market feed contains only headline fields, not a separate verified body.
+ * Expanding company names in a compact headline does not add reporting. */
+export const marketNewsBody: (item: MarketUpdate, lang: Language) => undefined = () => undefined;

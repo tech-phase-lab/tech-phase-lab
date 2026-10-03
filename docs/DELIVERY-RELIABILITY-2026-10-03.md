@@ -91,3 +91,52 @@ The independent recheck found no remaining blocking issue in this scope.
 Deployment, browser verification and the two NVIDIA jobs' scheduled retries
 remain distinct runtime acceptance stages; test success alone does not establish
 that those saved jobs have regenerated or been published.
+
+## Ninth rollout: verified runtime state
+
+Commit `fe5762a9858046de2e997a5530a0b917a8a5b90e` deployed with the exact
+checked tree `29c30c4f253664dad5e64e68d5e3d82f2d50e738`. Actions
+`37085481051`, Vercel `dpl_3ED86kiYcVt3oysUxgynzjGuz3zs` and Railway
+`3370f94d-c335-4604-a6db-a5aaf00e42b3` succeeded. The new worker started at
+01:17:17.899 UTC.
+
+At 01:18 UTC, Vertiv's stored original date was July 29 and its September
+discovery/body clocks and body revision were unchanged. Current candidates
+fell from 23 to 22, with two pending NVIDIA notes. Treasury's main list row
+had no disclosure in either language. Employment details added only the
+source's unemployment forecast of 4.1%, distinct from the 4.2% actual; both
+languages and a 388-CSS-pixel responsive layout were verified without horizontal
+overflow. A remaining Japanese index-name-only disclosure was identified and
+is corrected by treating every current market-update payload as headline-only.
+
+The two NVIDIA notes had retried at 01:09 UTC, before this deployment, and
+failed under the old policy. Their next ordinary deadlines were 07:09:01 and
+07:09:19 UTC. Those attempts are not evidence that the new prompt failed or
+succeeded. A bounded repair of those exact retained revisions is tracked
+separately, preserving the prior failures, budgets and original clocks.
+
+The persistent CoreWeave article failure and primary-source access gaps remain
+separate. A passing fresh, continuous 24-hour acceptance window has not been
+established; the historical failed window is not relabeled after these repairs.
+
+## One-time repair for the two older-policy failures
+
+The existing worker can admit one audited attempt for exactly NVDA events
+1213 and 1214, pinned to their current source URL, title, publication day and
+retained revision. The latest same-lease failure must be `unsupported-number`,
+after the original observation and before the new prompt's 01:17:17.899 rollout.
+Running jobs, provider failures, different or stale source bodies, already
+published revisions and other events cannot use this override. The cohort
+expires on October 4 at 01:17:17.899 UTC.
+
+A durable policy/revision audit stores the old attempt count, retry deadline
+and failure identity. Its reservation shares the existing budget/lease
+transaction; normal attempts consume the same marker. Source clocks and
+failure history remain unchanged, and a failed repaired attempt returns to
+ordinary backoff. No new HTTP action, credentials, source request or spending
+limit is introduced. This is not a recurring retry reset or bulk regeneration.
+
+The combined one-time repair and remaining headline-only display correction
+passed 258 Node and 746 Python tests (1,004 total), the required lint/build/type,
+compile and whitespace gates, and independent review. External DNS/socket
+audit: zero attempts. Runtime regeneration results must still be observed.

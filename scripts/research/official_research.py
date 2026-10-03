@@ -17,6 +17,7 @@ import factual_validation
 import headline_translation
 import monitor
 import official_release_bridge as bridge
+import official_research_content_repair as content_repair
 import signals
 
 MAX_EVIDENCE_CHARS = 1800
@@ -51,6 +52,7 @@ def schema(db):
     ''')
     if 'failure_kind' not in {r[1] for r in db.execute('PRAGMA table_info(official_research_jobs)')}:
         db.execute("ALTER TABLE official_research_jobs ADD COLUMN failure_kind TEXT")
+    content_repair.schema(db)
 
 
 def connect(path):
@@ -240,6 +242,8 @@ def claim(db, reference, model, limit):
         if used + headline_pending >= limit:
             return None
         for r in rows:
+            if not current_revision(db,r):
+                continue
             published=db.execute('SELECT sha,body_sha,payload FROM official_research_publications WHERE event_id=?',(r['id'],)).fetchone()
             if published and published['sha']==r['sha'] and published['body_sha']==r['body_sha']:
                 try:
@@ -248,11 +252,17 @@ def claim(db, reference, model, limit):
                 except (ValueError, TypeError):
                     pass
             job=db.execute('SELECT * FROM official_research_jobs WHERE event_id=?',(r['id'],)).fetchone()
+            repair_candidate=content_repair.matches(db,r,reference)
+            expedited=False
             if job and job['state']=='done':
                 job=None  # Regenerate an invalid saved publication.
             if job and job['sha']==r['sha'] and job['next_at']>now:
-                continue
+                expedited=repair_candidate and content_repair.can_expedite(db,r,job)
+                if not expedited:
+                    continue
             lease=uuid.uuid4().hex
+            if repair_candidate:
+                content_repair.record_claim(db,r,job,lease,reference,expedited)
             db.execute('''INSERT INTO official_research_jobs(event_id,sha,attempts,next_at,lease,state) VALUES(?,?,1,?,?,'running')
               ON CONFLICT(event_id) DO UPDATE SET attempts=CASE WHEN sha=excluded.sha AND state!='done' THEN attempts+1 ELSE 1 END,
               sha=excluded.sha,next_at=excluded.next_at,lease=excluded.lease,state='running',failure_kind='classified-attempt' ''',

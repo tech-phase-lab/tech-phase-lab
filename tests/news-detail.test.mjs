@@ -7,7 +7,7 @@ import ts from 'typescript';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { additionalNewsDetail } from '../lib/research/news-detail.ts';
-import { marketNewsBody } from '../lib/research/market-news-display.ts';
+import { marketNewsBody, marketNewsDisplay } from '../lib/research/market-news-display.ts';
 import { officialNewsDisplay } from '../lib/research/news-presentation.ts';
 import { resultFactText, resultNewsUpdate, mergeResultNews } from '../lib/research/result-news.ts';
 import { parseResultBriefs } from '../lib/research/market-results.ts';
@@ -52,6 +52,19 @@ test('brief rendering has one headline, accessible original and no fake disclosu
   assert.doesNotMatch(html,/<details|<summary|＋|短報|4\.32%|basis points/);
   assert.ok(html.includes(props.source.url));
   assert.match(html,/Barchart · 原文/);
+});
+
+test('JA and EN index and Treasury cards keep their headline and source without a plus',()=>{
+  const index={topic:'index-membership',titleJa:'Nasdaq-100指数：追加予定 Moderna（$MRNA）、除外予定 Warner Bros Discovery（$WBD）。',
+    titleEn:'Moderna will join the Nasdaq-100 index, replacing Warner Bros Discovery.'};
+  for(const update of [index,bond]) for(const lang of ['ja','en']) {
+    const display=marketNewsDisplay(update,lang);
+    const source=update===index ? {publisher:'TrendSpider',url:'https://x.com/TrendSpider/status/777'} : props.source;
+    const html=renderToStaticMarkup(React.createElement(NewsStory,{...props,...display,lang,source,body:marketNewsBody(update,lang)}));
+    assert.equal(html.split(display.title).length-1,1);
+    assert.doesNotMatch(html,/<details|<summary|＋/);
+    assert.ok(html.includes(source.url));
+  }
 });
 
 test('only real added facts use native keyboard and touch accessible disclosure',()=>{
