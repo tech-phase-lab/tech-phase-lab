@@ -64,3 +64,6 @@
 - Seven factors: financial strength, profitability, valuation, stability, price momentum, growth and cash generation. Valuation/stability/momentum remain unknown until required quote/estimate/history inputs are available.
 - Industry universe and classification are not connected. Average and rank are unknown, never inferred from the compared 2–3 companies. No third-party rating or industry classification is copied.
 - Overall rating is unknown whenever any factor is unknown. Radar plots omit missing factors and do not join an incomplete polygon. These absolute reference scales are not industry percentiles.
+
+## Mobile refinement
+Reference images convey score comparisons, not a request for a replica. The default view now leads with concise takeaways and company strengths/weaknesses, followed by grouped horizontal bars per factor with consistent company colors. Dense industry tables and radar details are expandable rather than requiring horizontal scrolling in the main flow.
