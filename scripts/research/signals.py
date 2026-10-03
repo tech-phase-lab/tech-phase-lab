@@ -946,7 +946,8 @@ PRICE_TARGET_DIRECTIONAL = re.compile(
 PRICE_TARGET_NAMED_SUBJECT = re.compile(
     r"\b(?:raised|lowered|cut|hiked|increased|reduced)\s+"
     r"(?:(?:the\s+firm['’]s|its)\s+)?(?:price target|target price|PT)\s+on\s+"
-    r"(?P<subject>[A-Za-z][A-Za-z0-9 .&'’()-]{0,79}?)\s+to\s*"
+    r"(?P<subject>[A-Za-z][A-Za-z0-9 .&'’()-]{0,79}?)\s+"
+    r"(?:\$(?P<cashtag>[A-Z]{1,5}(?:[.-][A-Z])?)\s+)?to\s*"
     r"\$(?P<new>\d+(?:\.\d+)?)\s+from\s*\$(?P<old>\d+(?:\.\d+)?)", re.I,
 )
 PRICE_TARGET_SUBJECT = re.compile(
@@ -954,7 +955,7 @@ PRICE_TARGET_SUBJECT = re.compile(
     r"(?:downgraded|upgraded|initiated|reiterated|price target|PT)\b", re.I,
 )
 PRICE_TARGET_FIRM = re.compile(
-    r"(?:at|by) (BofA|Bank of America|BNP Paribas|Citi(?:group)?|Citizens|KeyBanc|Stifel|UBS|J\.?P\.?\s?Morgan|Seaport Research|Morgan Stanley|Goldman Sachs|Barclays|Wells Fargo|Deutsche Bank|Jefferies|Mizuho|Baird|Piper Sandler|RBC Capital|RBC|Oppenheimer|Needham|Cantor Fitzgerald|Cantor|Wedbush|Truist|TD Cowen|Raymond James|Rosenblatt|Evercore ISI|Evercore|Bernstein|B. Riley|DA Davidson|Loop Capital|Susquehanna|BMO Capital|BMO)\b", re.I,
+    r"(?:at|by) (BofA|Bank of America|BNP Paribas|Citi(?:group)?|Citizens|KeyBanc|Stifel|UBS|J\.?P\.?\s?Morgan|Seaport Research|Morgan Stanley|Goldman Sachs|Barclays|Wells Fargo|Deutsche Bank|Jefferies|Mizuho|Baird|Piper Sandler|RBC Capital|RBC|Oppenheimer|Needham|Cantor Fitzgerald|Cantor|Wedbush|Truist|TD Cowen|Raymond James|Rosenblatt|Evercore ISI|Evercore|Bernstein|B. Riley|DA Davidson|Loop Capital|Susquehanna|BMO Capital|BMO|BTIG|Monness Crespi)\b", re.I,
 )
 
 
@@ -965,19 +966,43 @@ PRICE_TARGET_EXPLICIT_PREFIX = re.compile(
 )
 
 
+# These opening brokers must be the explicit grammatical actor of the target,
+# never merely a name somewhere in the post. The rating form is deliberately
+# limited to the observed upgrade construction; the separately stated target
+# verb still determines price-target direction.
+PRICE_TARGET_NAMED_PREFIX = re.compile(
+    r"^\s*" + PRICE_TARGET_FIRM.pattern.removeprefix(r"(?:at|by) ") +
+    r"\s+(?P<target>" + PRICE_TARGET_NAMED_SUBJECT.pattern + r")", re.I,
+)
+PRICE_TARGET_UPGRADE_PREFIX = re.compile(
+    r"^\s*" + PRICE_TARGET_FIRM.pattern.removeprefix(r"(?:at|by) ") +
+    r"\s+upgraded\s+(?P<subject>[A-Za-z][A-Za-z0-9 .&'’()-]{0,79}?)"
+    r"\s+to\s+Buy\s+from\s+Neutral\s+and\s+"
+    r"(?P<direction>raised|lowered|cut|hiked|increased|reduced)\s+its\s+"
+    r"(?P<target>(?:price target|target price|PT)\s+to\s*"
+    r"\$\d+(?:\.\d+)?\s+from\s*\$\d+(?:\.\d+)?)", re.I,
+)
+
+
 # Target-only identity evidence; this does not expand the research-company
 # roster, acquisition queries or request budgets.
 PRICE_TARGET_COMPANY_ALIASES = {"AMZN": ("Amazon",)}
+PRICE_TARGET_EXPLICIT_COMPANY_ALIASES = {
+    "OXY": ("Occidental",), "HOOD": ("Robinhood",), "META": ("Meta Platforms",),
+}
 PRICE_TARGET_ECHO_FIRM = re.compile(
     PRICE_TARGET_FIRM.pattern.removeprefix(r"(?:at|by) ") +
     r"(?:\s+analyst(?:\s+[A-Za-z][A-Za-z.'’-]*){1,6})?\s*$", re.I,
 )
 
 
-def target_company_names(ticker):
-    return {" ".join(name.split()).casefold()
-            for name in [ticker, *ALIASES.get(ticker, []),
-                         *PRICE_TARGET_COMPANY_ALIASES.get(ticker, ())]}
+def target_company_names(ticker, *, explicit_actor=False):
+    names = [ticker, *ALIASES.get(ticker, []), *PRICE_TARGET_COMPANY_ALIASES.get(ticker, ())]
+    # New company aliases are identity evidence only where the grammatical
+    # broker actor is explicitly verified, never in legacy at/by fallback.
+    if explicit_actor:
+        names.extend(PRICE_TARGET_EXPLICIT_COMPANY_ALIASES.get(ticker, ()))
+    return {" ".join(name.split()).casefold() for name in names}
 
 
 def price_target_echo_subject(matches, text, tickers, firm):
@@ -1002,7 +1027,8 @@ def price_target_echo_subject(matches, text, tickers, firm):
         return None, "ambiguous-firms"
     for match, _, _ in matches[1:]:
         name = " ".join(match.group("subject").split()).casefold()
-        if name not in target_company_names(ticker):
+        if (name not in target_company_names(ticker, explicit_actor=True) or
+                (match.group("cashtag") and match.group("cashtag").upper() != ticker)):
             return None, "ambiguous-subject"
         actor = PRICE_TARGET_ECHO_FIRM.search(text[max(heading.end(), match.start() - 200):match.start()])
         if not actor or canonical_target_firm(actor[1]).casefold() != canonical_target_firm(firm[1]).casefold():
@@ -1012,6 +1038,17 @@ def price_target_echo_subject(matches, text, tickers, firm):
 
 PRICE_TARGET_SOURCE_IDS = ("x-tipranks", "x-thefly", "x-wallstengine")
 PRICE_TARGET_LABEL = re.compile(r"\b(?:price[ -]?target|target price|PT)\b", re.I)
+PRICE_TARGET_EXTRA_ACTION = re.compile(
+    r"\btargets?\b[^.!?\n]{0,100}\$\s*\d"
+    r"|\b(?:raised|lowered|cut|hiked|increased|reduced)\b[^.!?\n]{0,60}\btargets?\b", re.I,
+)
+PRICE_TARGET_REVOCATION = re.compile(
+    r"\b(?:correction|retraction)\s*:"
+    r"|\b(?:report|claim|post|tweet|headline|(?:price\s+)?target)\b"
+    r"[^.!?\n]{0,80}\b(?:retracted|withdrawn|rescinded|cancelled|canceled|corrected|incorrect|erroneous|false)\b"
+    r"|\b(?:retracted|withdrew|withdrawn|rescinded|cancelled|canceled|corrected)\b"
+    r"[^.!?\n]{0,80}\b(?:report|claim|post|tweet|headline|(?:price\s+)?target)\b", re.I,
+)
 
 
 def price_target_rows(db, since, now, time_column="published_at"):
@@ -1098,16 +1135,31 @@ def price_target_observation(row, source, now):
         return None, "ambiguous-target-actions"
     match, old, new = matches[0]
     prefix = PRICE_TARGET_EXPLICIT_PREFIX.search(normalized)
+    named_prefix = (PRICE_TARGET_NAMED_PREFIX.search(normalized) or
+                    PRICE_TARGET_UPGRADE_PREFIX.search(normalized))
+    # Matching the current document hash is necessary, but a current revision
+    # may quote its old target and then retract it. Fail closed for explicit
+    # report/target revocations in these newly supported opening grammars.
+    if named_prefix and PRICE_TARGET_REVOCATION.search(text):
+        return None, "retracted-target-evidence"
     firms = list(PRICE_TARGET_FIRM.finditer(text))
     if prefix:
         # Only the observed, fully explicit broker/action/cashtag construction
         # supplies an opening firm. Do not infer a firm from a free noun mention.
         firms.insert(0, prefix)
+    elif named_prefix:
+        firms.insert(0, named_prefix)
     if not firms:
         return None, "firm-not-recognized"
     if len(firms) != 1:
         return None, "ambiguous-firms"
     firm = firms[0]
+    # An inline cashtag is a newly supported grammar, not permission to fall
+    # back to an unrelated "at/by" firm elsewhere. Require its anchored actor
+    # or the separately verified headline/body echo association below.
+    if (len(matches) == 1 and match.re is PRICE_TARGET_NAMED_SUBJECT and
+            match.group("cashtag") and not named_prefix):
+        return None, "ambiguous-firms"
     for action_match, _, _ in matches:
         action = action_match.group(0)
         if ((re.search(r'raised|hiked|increased|\bup\b', action, re.I) and new <= old)
@@ -1115,6 +1167,11 @@ def price_target_observation(row, source, now):
             return None, "inconsistent-direction"
     if prefix and new >= old:  # This exact prefix explicitly says "Cuts PT".
         return None, "inconsistent-direction"
+    if named_prefix and named_prefix.re is PRICE_TARGET_UPGRADE_PREFIX:
+        direction = named_prefix.group("direction").casefold()
+        if ((direction in {"raised", "hiked", "increased"} and new <= old) or
+                (direction in {"lowered", "cut", "reduced"} and new >= old)):
+            return None, "inconsistent-direction"
     if not 0 < old <= 100000 or not 0 < new <= 100000 or old == new:
         return None, "invalid-target-values"
     if prefix:
@@ -1123,6 +1180,31 @@ def price_target_observation(row, source, now):
         ticker = prefix.group("subject").upper()
         before_target = set(re.findall(r'\$([A-Z]{1,5}(?:[.-][A-Z])?)\b', normalized[:match.end()]))
         if ticker not in tickers or before_target != {ticker}:
+            return None, "ambiguous-subject"
+        tickers = [ticker]
+    elif named_prefix:
+        # A new opening-firm grammar publishes a single complete action only.
+        # Also reject unsupported extra target clauses instead of silently
+        # discarding them just because the ordinary parsers cannot read them.
+        if (len(matches) != 1 or match.span() != named_prefix.span("target") or
+                len(PRICE_TARGET_LABEL.findall(normalized)) != 1 or
+                PRICE_TARGET_EXTRA_ACTION.search(normalized[named_prefix.end():])):
+            return None, "ambiguous-target-actions"
+        name = " ".join(named_prefix.group("subject").split()).casefold()
+        subjects = {ticker for ticker in tickers
+                    if name in target_company_names(ticker, explicit_actor=True)}
+        if len(subjects) != 1:
+            return None, "ambiguous-subject"
+        ticker = subjects.pop()
+        cashtag = (named_prefix.group("cashtag")
+                   if named_prefix.re is PRICE_TARGET_NAMED_PREFIX else None)
+        before_target = set(re.findall(r'\$([A-Z]{1,5}(?:[.-][A-Z])?)\b',
+                                       normalized[:match.end()]))
+        if (cashtag and cashtag.upper() != ticker) or before_target - {ticker}:
+            return None, "ambiguous-subject"
+        # With no inline cashtag (e.g. Occidental followed by $OXY in the
+        # next paragraph), require one unambiguous retained ticker identity.
+        if not cashtag and set(tickers) != {ticker}:
             return None, "ambiguous-subject"
         tickers = [ticker]
     elif len(matches) > 1:
@@ -1145,7 +1227,8 @@ def price_target_observation(row, source, now):
         # filler to skip. Bind it to the resolved subject using only existing
         # exact aliases; a different company or an unknown name stays private.
         named_subject = " ".join(match.group("subject").split()).casefold()
-        if named_subject not in target_company_names(tickers[0]):
+        if (named_subject not in target_company_names(tickers[0], explicit_actor=bool(named_prefix)) or
+                (match.group("cashtag") and match.group("cashtag").upper() != tickers[0])):
             return None, "ambiguous-subject"
     return {"id": row["id"], "ticker": tickers[0], "firm": firm.group(1),
             "previous": old, "latest": new, "source": source["name"], "url": url,

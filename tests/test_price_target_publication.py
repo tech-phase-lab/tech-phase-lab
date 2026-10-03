@@ -254,6 +254,170 @@ class TargetPublicationTests(unittest.TestCase):
                 self.assertEqual(signals.price_target_observation(self.row(index), self.source, self.now), (None, reason))
         self.assertEqual(signals.public_price_targets(self.db, now=self.now)['items'], [])
 
+    def test_acquired_opening_firm_targets_recover_without_rewriting_provenance(self):
+        # Verified public facts and observed grammar with synthetic context.
+        # These are historical carry-in posts, never fresh/timely acquisitions.
+        fixtures = [
+            ('OXY', 'Goldman Sachs', 63, 69, 'x-wallstengine',
+             'https://x.com/wallstengine/status/2105584663016476934',
+             '2026-10-01T09:04:38Z', '2026-10-01T09:05:11Z',
+             'Goldman Sachs upgraded Occidental to Buy from Neutral and raised its PT to $69 from $63.\n\n'
+             '$OXY synthetic business context.'),
+            ('HOOD', 'BTIG', 125, 135, 'x-tipranks',
+             'https://x.com/TipRanks/status/2104838028636151841',
+             '2026-09-29T07:37:46Z', '2026-09-29T07:39:14Z',
+             "BTIG raised the firm's price target on Robinhood $HOOD to $135 from $125.\n\n"
+             'Synthetic trading-volume context.'),
+            ('META', 'Monness Crespi', 730, 830, 'x-tipranks',
+             'https://x.com/TipRanks/status/2104542833365463489',
+             '2026-09-28T12:04:46Z', '2026-09-28T12:04:58Z',
+             "Monness Crespi raised the firm's price target on Meta Platforms $META to $830 from $730.\n\n"
+             'Synthetic product context.'),
+        ]
+        roster_before = dict(signals.ALIASES)
+        for index, (ticker, _, _, _, source_id, url, published, observed, text) in enumerate(fixtures, 1):
+            self.add(index, text[:500], tickers=json.dumps([ticker]), body=text)
+            self.db.execute("""UPDATE signal_events SET source_id=?,url=?,published_at=?,observed_at=?
+                             WHERE id=?""", (source_id, url, published, observed, index))
+            self.db.execute("""UPDATE signal_documents SET source_id=?,url=?,first_seen_at=?,last_seen_at=?
+                             WHERE url=?""", (source_id, url, observed, observed,
+                                               f'https://x.com/wallstengine/status/{index}'))
+        before = list(self.db.iterdump())
+        items = signals.public_price_targets(self.db, now=self.now)['items']
+        self.assertEqual(len(items), 3)
+        for item, fixture in zip(items, fixtures):
+            ticker, firm, old, new, _, url, published, observed, _ = fixture
+            self.assertEqual((item['ticker'], item['firm'], item['previous'], item['latest']),
+                             (ticker, firm, old, new))
+            self.assertEqual(item['url'], url)
+            self.assertEqual(item['publishedAt'], datetime.fromisoformat(published.replace('Z', '+00:00')).isoformat())
+            self.assertEqual(item['observedAt'], datetime.fromisoformat(observed.replace('Z', '+00:00')).isoformat())
+            self.assertEqual(item['sources'][0]['url'], url)
+            self.assertEqual(item['sources'][0]['publishedAt'], item['publishedAt'])
+            self.assertEqual(item['sources'][0]['observedAt'], item['observedAt'])
+        self.assertEqual(list(self.db.iterdump()), before)
+        self.assertEqual(signals.ALIASES, roster_before)
+        self.assertEqual(signals.price_target_publication_summary(self.db, now=self.now)['candidatePosts'], 0)
+        for index, (_, tickers, _, _, _, body) in enumerate(observed_target_grammar_replay(), 4):
+            self.add(index, body.split('\n')[0], tickers=json.dumps(tickers), body=body)
+        self.assertEqual(len(signals.public_price_targets(self.db, now=self.now)['items']), 8)
+        self.assertNotIn('Synthetic', json.dumps(items))
+
+    def test_opening_firm_actions_preserve_subject_broker_and_direction_guards(self):
+        cases = [
+            ("Unknown Bank raised the firm's price target on Robinhood $HOOD to $135 from $125.", ['HOOD'], 'firm-not-recognized'),
+            ("BTIG discussed Robinhood. An analyst raised its price target on Robinhood $HOOD to $135 from $125.", ['HOOD'], 'firm-not-recognized'),
+            ("BTIG did not raise its price target on Robinhood $HOOD to $135 from $125.", ['HOOD'], 'unsupported-target-syntax'),
+            ("BTIG reportedly raised its price target on Robinhood $HOOD to $135 from $125.", ['HOOD'], 'firm-not-recognized'),
+            ("BTIG raised its price target on Microsoft $HOOD to $135 from $125.", ['HOOD'], 'ambiguous-subject'),
+            ("BTIG raised its price target on Robinhood $MSFT to $135 from $125.", ['HOOD', 'MSFT'], 'ambiguous-subject'),
+            ("BTIG raised its price target on Robinhood $HOOD to $135 from $125.", ['MSFT'], 'ambiguous-subject'),
+            ("BTIG raised its price target on Robinhood and Microsoft $HOOD to $135 from $125.", ['HOOD'], 'ambiguous-subject'),
+            ("BTIG raised its price target on the company $HOOD to $135 from $125.", ['HOOD'], 'ambiguous-subject'),
+            ("BTIG raised its price target on Robinhood $HOOD to $115 from $125.", ['HOOD'], 'inconsistent-direction'),
+            ("Monness Crespi cut its price target on Meta Platforms $META to $830 from $730.", ['META'], 'inconsistent-direction'),
+            ("Goldman Sachs upgraded Occidental to Buy from Neutral and raised its PT to $63 from $69. $OXY", ['OXY'], 'inconsistent-direction'),
+            ("Goldman Sachs upgraded Occidental to Buy from Neutral and cut its PT to $69 from $63. $OXY", ['OXY'], 'inconsistent-direction'),
+            ("Goldman Sachs upgraded Microsoft to Buy from Neutral and raised its PT to $69 from $63. $OXY", ['OXY'], 'ambiguous-subject'),
+            ("Goldman Sachs upgraded Occidental to Buy from Neutral and raised its PT to $69 from $63. $OXY $MSFT", ['OXY', 'MSFT'], 'ambiguous-subject'),
+            ("BTIG raised its price target on Robinhood $HOOD to $135 from $125 at Citi.", ['HOOD'], 'ambiguous-firms'),
+        ]
+        for index, (text, tickers, reason) in enumerate(cases, 1):
+            with self.subTest(text=text):
+                self.add(index, text, tickers=json.dumps(tickers), body=text)
+                self.assertEqual(signals.price_target_observation(self.row(index), self.source, self.now), (None, reason))
+        self.assertEqual(signals.public_price_targets(self.db, now=self.now)['items'], [])
+
+    def test_inline_cashtag_does_not_borrow_a_firm_from_unrelated_prose(self):
+        for index, prefix in enumerate(['Unknown Bank', 'BTIG reportedly', 'An analyst'], 1):
+            text = (f"{prefix} raised its price target on Robinhood $HOOD to $135 from $125. "
+                    "A separate analyst at Citi discussed Robinhood.")
+            self.add(index, text, tickers='["HOOD"]', body=text)
+            self.assertEqual(signals.price_target_observation(self.row(index), self.source, self.now),
+                             (None, 'ambiguous-firms'))
+        self.assertEqual(signals.public_price_targets(self.db, now=self.now)['items'], [])
+
+    def test_new_company_aliases_do_not_expand_legacy_unrelated_firm_fallback(self):
+        for index, (company, ticker) in enumerate([
+            ('Robinhood', 'HOOD'), ('Occidental', 'OXY'), ('Meta Platforms', 'META'),
+        ], 1):
+            text = (f"Unknown Bank raised its price target on {company} to $135 from $125. "
+                    f"A separate analyst at Citi discussed {company}. ${ticker}")
+            self.add(index, text, tickers=json.dumps([ticker]), body=text)
+            self.assertEqual(signals.price_target_observation(self.row(index), self.source, self.now),
+                             (None, 'ambiguous-subject'))
+        self.assertEqual(signals.public_price_targets(self.db, now=self.now)['items'], [])
+
+    def test_opening_firm_single_action_rejects_supported_and_unsupported_extras(self):
+        for index, extra in enumerate([
+            ' PT raised to $140 from $125.',
+            ' PT to $135 from $125.',
+            ' PT boosted to $150 from $125.',
+            ' Another broker set a price target of $120.',
+            ' Citi raised its target on Robinhood to $145 from $125.',
+            ' Another target of $135 was reported.',
+            ' Citi cut its target on Robinhood.',
+            " Monness Crespi raised its price target on Meta Platforms $META to $830 from $730.",
+        ], 1):
+            with self.subTest(extra=extra):
+                text = "BTIG raised the firm's price target on Robinhood $HOOD to $135 from $125." + extra
+                self.add(index, text[:500], tickers='["HOOD"]', body=text)
+                self.assertEqual(signals.price_target_observation(self.row(index), self.source, self.now),
+                                 (None, 'ambiguous-target-actions'))
+
+    def test_opening_firm_target_separates_rating_from_target_direction(self):
+        text = 'Goldman Sachs upgraded Occidental to Buy from Neutral and cut its PT to $63 from $69. $OXY'
+        self.add(1, text, tickers='["OXY"]', body=text)
+        item = signals.public_price_targets(self.db, now=self.now)['items'][0]
+        self.assertEqual((item['ticker'], item['previous'], item['latest']), ('OXY', 69, 63))
+
+    def test_inline_cashtag_target_keeps_explicit_subject_when_peer_follows(self):
+        text = "BTIG raised the firm's price target on Robinhood $HOOD to $135 from $125. Peer $MSFT discussed."
+        self.add(1, text, tickers='["MSFT","HOOD"]', body=text)
+        item = signals.public_price_targets(self.db, now=self.now)['items'][0]
+        self.assertEqual(item['ticker'], 'HOOD')
+
+    def test_opening_firm_target_revision_and_retraction_invalidate_old_facts(self):
+        text = "BTIG raised the firm's price target on Robinhood $HOOD to $135 from $125."
+        self.add(1, text, tickers='["HOOD"]', body=text)
+        self.assertEqual(len(signals.public_price_targets(self.db, now=self.now)['items']), 1)
+        self.db.execute("UPDATE signal_documents SET sha='correction',text='The prior target report is withdrawn.'")
+        self.assertEqual(signals.price_target_observation(self.row(1), self.source, self.now),
+                         (None, 'superseded-revision'))
+        self.assertEqual(signals.public_price_targets(self.db, now=self.now)['items'], [])
+        self.db.execute("UPDATE signal_documents SET sha='1',text=?", (text,))
+        self.db.execute("UPDATE signal_events SET event_kind='changed'")
+        self.assertEqual(len(signals.public_price_targets(self.db, now=self.now)['items']), 1)
+        self.db.execute('DELETE FROM signal_documents')
+        self.assertEqual(signals.price_target_observation(self.row(1), self.source, self.now),
+                         (None, 'revision-evidence-missing'))
+
+    def test_current_revision_cannot_republish_a_quoted_retracted_opening_target(self):
+        openings = [
+            ('HOOD', "BTIG raised its price target on Robinhood $HOOD to $135 from $125."),
+            ('META', "Monness Crespi raised its price target on Meta Platforms $META to $830 from $730."),
+            ('OXY', "Goldman Sachs upgraded Occidental to Buy from Neutral and raised its PT to $69 from $63. $OXY"),
+        ]
+        index = 0
+        for ticker, opening in openings:
+            for correction in [
+                ' This report was retracted.',
+                ' Correction: the earlier information is incorrect.',
+                ' The target has been withdrawn.',
+                ' The analyst withdrew this claim.',
+            ]:
+                for kind in ['new', 'baseline', 'changed']:
+                    with self.subTest(ticker=ticker, correction=correction, kind=kind):
+                        index += 1
+                        text = opening + correction
+                        self.add(index, text, tickers=json.dumps([ticker]), kind=kind, body=text)
+                        self.assertEqual(signals.price_target_observation(self.row(index), self.source, self.now),
+                                         (None, 'retracted-target-evidence'))
+        self.assertEqual(signals.public_price_targets(self.db, now=self.now)['items'], [])
+        text = openings[0][1] + ' The company withdrew an acquisition offer.'
+        self.add(index + 1, text, tickers='["HOOD"]', body=text)
+        self.assertEqual(len(signals.public_price_targets(self.db, now=self.now)['items']), 1)
+
     def test_current_revision_replaces_old_target_and_unsafe_revision_removes_it(self):
         self.add(1, body='$MU PT raised to $110 from $100 at Citi')
         row = dict(self.row(1))
