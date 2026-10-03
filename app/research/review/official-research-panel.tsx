@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { SignalSourceInspection } from "./signals-panel";
 import styles from "./news-panel.module.css";
 
 type Validation = { status: "valid" | "invalid" | "unavailable"; issues: { field: string; issue: string; checks: Record<string, unknown>[] }[] };
@@ -71,6 +72,7 @@ function OfficialResearchSession({ token }: { token: string }) {
         <p className={styles.note}>イベント {item.eventId} · {item.sourceId}</p>
         <a href={item.url} target="_blank" rel="noopener noreferrer">発信元のページを確認 ↗</a>
         <p className={styles.note}>検知 {time(item.observedAt)} · 本文取得 {time(item.bodyReadyAt)}</p>
+        <SignalSourceInspection token={token} eventId={item.eventId} />
         <p>{item.job ? `${states[item.job.state] ?? "状態不明"} · ${item.job.attempts}回 · ${item.job.failureKind ?? "失敗区分なし"}${item.job.currentRevision ? "" : " · ジョブは旧版"}` : "現在の生成ジョブなし"}</p>
         {item.job && <p className={styles.note}>{item.job.state === "running" ? "実行期限" : "次の実行可能時刻"} {time(item.job.nextRetryAt)}（実行・公開の確約ではありません）</p>}
         <details><summary>現在の版と保存記事</summary>

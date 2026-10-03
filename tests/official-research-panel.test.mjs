@@ -6,10 +6,14 @@ import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
 
 const require = createRequire(import.meta.url);
+const signalsSource = await readFile(new URL("../app/research/review/signals-panel.tsx", import.meta.url), "utf8");
+const signalsCompiled = ts.transpileModule(signalsSource, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
+const signalsLoaded = { exports: {} };
+new Function("require", "module", "exports", signalsCompiled)(name => name.endsWith(".module.css") ? { default: {} } : name === "@/lib/research/x-target-preview" ? require("../lib/research/x-target-preview.ts") : require(name), signalsLoaded, signalsLoaded.exports);
 const source = await readFile(new URL("../app/research/review/official-research-panel.tsx", import.meta.url), "utf8");
 const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
 const loaded = { exports: {} };
-new Function("require", "module", "exports", compiled)(name => name.endsWith(".module.css") ? { default: {} } : require(name), loaded, loaded.exports);
+new Function("require", "module", "exports", compiled)(name => name.endsWith(".module.css") ? { default: {} } : name === "./signals-panel" ? signalsLoaded.exports : require(name), loaded, loaded.exports);
 const Panel = loaded.exports.default;
 
 test("diagnostics encapsulates all state in a credential-keyed session without exposing the token", () => {

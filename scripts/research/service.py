@@ -20,6 +20,8 @@ import brief_generator
 import incident_delivery
 import persistence
 import signals
+import price_target_reconciliation
+import signal_source_detail
 import stock_news
 import news_drafts
 import editorial_posts
@@ -824,8 +826,12 @@ class AutomaticMonitor:
     def signal_queue(self, limit=30, view="all", ticker=None):
         with self.db_lock, monitor.connect(self.db_path) as db:
             result = signals.queue(db, limit=limit, view=view, ticker=ticker)
+            result["priceTargetReconciliation"] = price_target_reconciliation.report(db)
         return {**result, "enabled": self.signals_enabled, "tickers": self.tickers,
                 "workerAlive": self.signals_thread.is_alive()}
+
+    def signal_source_detail(self, event_id):
+        return signal_source_detail.detail(self.db_path, event_id)
 
     def public_price_targets(self):
         with self.db_lock, monitor.connect(self.db_path) as db:
@@ -2380,6 +2386,14 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
                 return
             try:
+                query = parse_qs(parsed.query, keep_blank_values=True)
+                if "eventId" in query:
+                    if path != "/admin/signals" or len(query["eventId"]) != 1:
+                        raise ValueError("invalid-event-id")
+                    detail = self.app.signal_source_detail(query["eventId"][0])
+                    self.send_json(200 if detail else 404, {"ok": bool(detail),
+                                   **({"detail": detail} if detail else {"error": "source-not-found"})})
+                    return
                 limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
                 view = parse_qs(parsed.query).get("view", ["pending" if path == "/admin/official-research" else "all"])[0]
                 queue = (self.app.official_research_queue(limit, view) if path == "/admin/official-research" else

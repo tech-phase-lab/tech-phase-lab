@@ -1269,9 +1269,8 @@ def target_observation_order(item):
     return datetime.fromisoformat(item["observedAt"]), item["id"]
 
 
-def public_price_targets(db, sources=SOURCES, now=None, limit=20):
-    """Publish only recent structured observations, never the X post body."""
-    schema(db)
+def price_target_projection(db, sources=SOURCES, now=None):
+    """Read-only, uncapped projection shared by public feed and private checks."""
     now = now or datetime.now(timezone.utc)
     approved = {s["id"]: s for s in sources if s.get("format") == "x-api"}
     by_change = {}
@@ -1305,7 +1304,13 @@ def public_price_targets(db, sources=SOURCES, now=None, limit=20):
             by_change[change] = item
         else:
             current["sources"] = combined
-    items = sorted(by_change.values(), key=lambda item: datetime.fromisoformat(item["publishedAt"]), reverse=True)[:max(1, min(limit, 30))]
+    return sorted(by_change.values(), key=lambda item: datetime.fromisoformat(item["publishedAt"]), reverse=True)
+
+
+def public_price_targets(db, sources=SOURCES, now=None, limit=20):
+    """Publish only recent structured observations, never the X post body."""
+    schema(db)
+    items = price_target_projection(db, sources, now)[:max(1, min(limit, 30))]
     return {"ok": True, "items": items, "generatedAt": stamp()}
 
 

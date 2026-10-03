@@ -176,3 +176,43 @@ test("manual columns proxy authenticates actions and bounds archive pagination",
     }
   } finally { globalThis.fetch = saved.fetch; if (saved.url === undefined) delete process.env.RESEARCH_MONITOR_URL; else process.env.RESEARCH_MONITOR_URL = saved.url; }
 });
+
+test("stored signal evidence is explicit editor-only bounded GET and cannot become an action", async () => {
+  const saved = { url: process.env.RESEARCH_MONITOR_URL, fetch: globalThis.fetch };
+  process.env.RESEARCH_MONITOR_URL = "https://monitor.example";
+  const calls = [];
+  globalThis.fetch = async (url, init) => {
+    calls.push({ url: new URL(url), init });
+    return Response.json({ ok: true, detail: { eventId: 123, text: "PRIVATE RETAINED EVIDENCE" } });
+  };
+  const get = query => GET(new Request(`https://example.test/api/research/editor?${query}`, { headers: { Authorization: authorization } }));
+  try {
+    assert.equal((await GET(new Request("https://example.test/api/research/editor?kind=signals&eventId=123"))).status, 401);
+    assert.equal(calls.length, 0);
+    const result = await get("kind=signals&eventId=123&sourceUrl=https://evil.example&includeEvidence=true");
+    assert.equal(result.status, 200);
+    assert.equal(calls[0].url.pathname, "/admin/signals");
+    assert.equal(calls[0].url.searchParams.get("eventId"), "123");
+    assert.equal(calls[0].url.searchParams.has("sourceUrl"), false);
+    assert.equal(calls[0].url.searchParams.has("includeEvidence"), false);
+    assert.equal(calls[0].init.headers.Authorization, authorization);
+    assert.equal(calls[0].init.cache, "no-store");
+    assert.equal(result.headers.get("Cache-Control"), "no-store");
+    for (const query of ["kind=signals&eventId=", "kind=signals&eventId=0", "kind=signals&eventId=01",
+      "kind=signals&eventId=-1", "kind=signals&eventId=1.5", "kind=signals&eventId=1000000000000",
+      "kind=signals&eventId=1&eventId=2", "kind=news&eventId=123", "kind=official-research&eventId=123"]) {
+      assert.equal((await get(query)).status, 400, query);
+    }
+    assert.equal(calls.length, 1);
+    const blocked = await POST(new Request("https://example.test/api/research/editor", {
+      method: "POST", headers: { Authorization: authorization },
+      body: JSON.stringify({ action: "source-detail", payload: { eventId: 123 } }),
+    }));
+    assert.equal(blocked.status, 400);
+    assert.equal(calls.length, 1);
+  } finally {
+    globalThis.fetch = saved.fetch;
+    if (saved.url === undefined) delete process.env.RESEARCH_MONITOR_URL;
+    else process.env.RESEARCH_MONITOR_URL = saved.url;
+  }
+});

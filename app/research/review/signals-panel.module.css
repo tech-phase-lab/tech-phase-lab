@@ -2,3 +2,4 @@
 
 .routes details{min-width:0}.routes details ul{grid-template-columns:minmax(0,1fr)}.routes a{overflow-wrap:anywhere;color:#a0d8be}
 .previewSummary{color:#dae9dd;font-size:14px;line-height:1.65;margin:8px 0}.items .note a{color:#8ae7bd}
+.routes li{min-width:0;overflow-wrap:anywhere}

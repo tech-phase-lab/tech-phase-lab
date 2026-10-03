@@ -42,6 +42,10 @@ export async function GET(request: Request) {
     const requested = Number(requestUrl.searchParams.get("limit") ?? 20);
     const limit = Number.isInteger(requested) ? Math.max(1, Math.min(requested, 50)) : 20;
     const kind = requestUrl.searchParams.get("kind");
+    const eventIds = requestUrl.searchParams.getAll("eventId");
+    if (eventIds.length && (kind !== "signals" || eventIds.length !== 1 || !/^[1-9][0-9]{0,11}$/.test(eventIds[0]))) {
+      return response(400, { ok: false, error: "invalid-event-id" });
+    }
     const view = requestUrl.searchParams.get("view") ?? (kind === "official-research" ? "pending" : "all");
     const allowedViews = kind === "official-research" ? ["pending", "all"] : ["posts", "news"].includes(kind ?? "") ? ["all"] : kind === "signals" ? ["all", "new", "changed", "baseline", "targets", "ratings"] : kind === "annual"
       ? ["all", "actionable", "invalid", "draft", "held", "approved", "rejected"]
@@ -52,6 +56,7 @@ export async function GET(request: Request) {
     const url = endpoint(kind === "official-research" ? "/admin/official-research" : kind === "posts" ? "/admin/posts" : kind === "news" ? "/admin/news" : kind === "signals" ? "/admin/signals" : kind === "annual" ? "/admin/annual-briefs" : "/admin/briefs");
     url.searchParams.set("limit", String(limit));
     url.searchParams.set("view", view);
+    if (eventIds.length) url.searchParams.set("eventId", eventIds[0]);
     if (kind === "posts") {
       const offset = Number(requestUrl.searchParams.get("offset") ?? 0);
       if (!Number.isInteger(offset) || offset < 0 || offset > 100000) return response(400, { ok: false, error: "invalid-offset" });
