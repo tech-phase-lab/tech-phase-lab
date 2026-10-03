@@ -30,3 +30,183 @@ test("diagnostics encapsulates all state in a credential-keyed session without e
   }
   assert.match(renderToStaticMarkup(cleared), /disabled=""/);
 });
+
+const { NewsPipelineOverview, OfficialResearchResults } = loaded.exports;
+const editorToken = "synthetic-private-pipeline-editor-token";
+const timestamp = "2026-10-03T10:00:00Z";
+const rawRecord = {
+  sourceId: "x-fixture-review", url: "https://x.com/fixture/status/123", sha: "raw-review-source-sha",
+  bodySha: "raw-review-body-sha", publishedAt: timestamp, firstSeenAt: timestamp, lastSeenAt: timestamp,
+  acquisitionSelected: true, currentRevision: true, eventId: 123, representativeEventId: 456,
+  disposition: "review-required", reason: "unbound-material-subject", representativeValidatedPublication: false,
+};
+const issuerRecord = {
+  eventId: 789, sourceId: "issuer-fixture", url: "https://example.com/issuer-news", title: "Fixture issuer news",
+  sourceSha: "issuer-source-sha", bodySha: "issuer-body-sha", preparationReason: "unsupported-facts",
+  generationDisposition: "held-before-generation", generationEligibilityReason: "company-role-unresolved",
+  companyRoleEvidence: null, job: null, nextPreparationAt: null, nextGenerationAt: null,
+};
+function pipelineFixture() {
+  return {
+    check: "editor-only-news-pipeline-metadata", configuredModel: "gpt-4.1-mini",
+    issuerPreparation: {
+      scope: "current-issuer-preparation", readOnly: true, total: 1, counts: { "unsupported-facts": 1 },
+      records: [{ ...issuerRecord }], recordsOmitted: 0,
+      notice: "Preparation statuses overlap generation/publication lanes; they are not additional missing-story counts.",
+    },
+    retainedIntake: {
+      readOnly: true, scope: "retained-approved-account-revisions", windowDays: 7,
+      counts: {
+        retainedRevisionRows: 2, acquisitionSelectedRows: 1, rowsWithEvent: 1, eligibleRetainedRows: 0,
+        representedRows: 0, validatedPublicationRows: 0, deduplicatedRows: 0, awaitingAdmissionRows: 0,
+        acquisitionOnlyGapRows: 0, excludedRows: 1, reviewRequiredRows: 1, independentRouteRows: 0,
+        assessedReviewRows: 0, assessmentPendingRows: 0, currentOrigins: 2,
+      },
+      reasons: { "unbound-material-subject": 1, "outside-news-window": 1 },
+      records: [{ ...rawRecord }, {
+        ...rawRecord, sourceId: "x-fixture-excluded", url: null, sha: "raw-excluded-source-sha", bodySha: null,
+        eventId: null, representativeEventId: null, disposition: "excluded", reason: "outside-news-window",
+        acquisitionSelected: false, currentRevision: false,
+      }],
+      recordLimit: 50, recordsTruncated: false,
+      coverage: {
+        retainedOnly: true, retentionTargetRows: 1000, retentionTargetIsSoft: true, sourcesAboveRetentionTarget: 0,
+        completeUpstreamCoverage: false, browserDeliveryVerified: false,
+      },
+    },
+    acquisitionCoverage: {
+      "x-fixture-review": {
+        retainedOnly: true, completeUpstreamCoverage: false, assessmentCoverage: "not-measured-by-acquisition",
+        retentionTargetRows: 1000, retentionTargetIsSoft: true, retainedAcquisitionRows: 2, rowsAboveRetentionTarget: 0,
+        trackingStartedAt: timestamp, historicalOmissionsBeforeTrackingUnknown: true,
+        knownOmittedAcquisitionRows: 7, knownOmittedDocumentRows: 8, knownOmittedEventRows: 9,
+        currentQueryTracked: true, paginationPending: true, awaitingFirstPage: false, initialWindowExpired: false,
+        acquisitionState: "pagination-pending", generationStartedAt: timestamp, coverageStartedAt: timestamp,
+        pagesSaved: 2, postObservationsSaved: 2, excludedAuthorRows: 0, truncatedPostObservations: 0,
+      },
+    },
+  };
+}
+const emptyQueue = pipelineDiagnostics => ({
+  items: [], generatedAt: timestamp, filteredTotal: 0,
+  counts: { candidates: 4, validatedPublications: 4, pending: 0 }, pipelineDiagnostics,
+});
+const renderOverview = data => renderToStaticMarkup(NewsPipelineOverview({ data, token: editorToken }));
+const renderResults = data => renderToStaticMarkup(OfficialResearchResults({ data, token: editorToken }));
+
+test("zero pending articles still exposes retained review and excluded records independently of queue counts", () => {
+  const queue = emptyQueue(pipelineFixture());
+  const before = structuredClone(queue);
+  const html = renderResults(queue);
+  for (const text of [
+    "現在の生成対象 4件", "有効な保存記事 4件", "未公開 0件", "0/0件を表示",
+    "x-fixture-review", "x-fixture-excluded", "raw-review-source-sha", "raw-review-body-sha",
+    "raw-excluded-source-sha", "unbound-material-subject", "outside-news-window", "投稿ID 123 · イベント 123", "対応する代表イベント 456",
+    "要確認 1行", "対象外 1行", "イベント未作成のため",
+    "issuer-fixture", "issuer-source-sha", "issuer-body-sha", "unsupported-facts", "company-role-unresolved",
+  ]) assert.ok(html.includes(text), text);
+  assert.match(html, /現在の生成対象に未公開記事はありません/);
+  assert.match(html, /未公開0件は全投稿の取得・掲載完了を意味しません/);
+  assert.match(html, /追加の未公開件数として合算しません/);
+  assert.deepEqual(queue, before);
+  assert.equal(queue.counts.pending, 0);
+});
+
+test("private overview shows configured model metadata without rendering the editor credential", () => {
+  const html = renderOverview(pipelineFixture());
+  assert.match(html, /gpt-4\.1-mini/);
+  assert.match(html, /編集者用|非公開/);
+  assert.match(html, /読取専用/);
+  assert.doesNotMatch(html, /synthetic-private-pipeline-editor-token|Bearer |<input|<form/);
+  assert.doesNotMatch(renderResults(emptyQueue(pipelineFixture())), /synthetic-private-pipeline-editor-token/);
+  const absentModel = pipelineFixture();
+  absentModel.configuredModel = null;
+  assert.match(renderOverview(absentModel), /識別子を確認できません/);
+  assert.doesNotMatch(renderOverview(absentModel), /gpt-4\.1-mini/);
+});
+
+test("absent pipeline metadata is unavailable even when the publication queue has no pending articles", () => {
+  for (const missing of [undefined, null]) {
+    const html = renderResults(emptyQueue(missing));
+    assert.match(html, /未公開 0件/);
+    assert.match(html, /取得・分類の概要は未取得/);
+    assert.match(html, /未公開0件だけでは網羅性を確認できません/);
+    assert.doesNotMatch(html, /全件取得済み|全件公開済み|すべて取得済み|すべて公開済み|網羅済み|gpt-4\.1-mini/);
+  }
+});
+
+test("overview discloses retained-only coverage, unknown historical omissions and bounded record omissions", () => {
+  const data = pipelineFixture();
+  data.retainedIntake.recordsTruncated = true;
+  data.retainedIntake.responseOmittedRecords = 3;
+  data.issuerPreparation.recordsOmitted = 4;
+  data.issuerPreparation.responseOmittedRecords = 5;
+  const html = renderOverview(data);
+  assert.match(html, /保存済みの版だけが対象/);
+  assert.match(html, /全投稿の網羅性は保証せず/);
+  assert.match(html, /ブラウザ[ー]?.*(?:未検証|未確認)/);
+  assert.match(html, /計測開始前の欠落数は不明/);
+  assert.equal((html.match(/一部省略されています/g) ?? []).length, 2);
+  assert.match(html, /上の集計は表示分だけの件数ではありません/);
+  assert.match(html, /pagination-pending/);
+  assert.match(html, /計測済み省略: 投稿 7行 \/ 文書 8行 \/ イベント 9行/);
+  assert.doesNotMatch(html, /全件取得済み|全件公開済み|網羅済み/);
+});
+
+test("source inspection controls are offered only for positive safe integer event IDs", () => {
+  for (const eventId of [null, 0, -1, 1.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1, "123", true, 123, Number.MAX_SAFE_INTEGER]) {
+    const data = pipelineFixture();
+    data.retainedIntake.records = [{ ...rawRecord, eventId, representativeEventId: null }];
+    data.issuerPreparation.records = [{ ...issuerRecord, eventId }];
+    const html = renderOverview(data);
+    const controls = html.match(/保存原文を確認（編集者用）/g) ?? [];
+    assert.equal(controls.length, Number.isSafeInteger(eventId) && eventId > 0 ? 2 : 0, String(eventId));
+    assert.doesNotMatch(html, /synthetic-private-pipeline-editor-token/);
+  }
+});
+
+test("pipeline record links reject unsafe URLs and embedded credentials in both evidence lanes", () => {
+  const urls = ["https://example.com/safe", "javascript:alert(1)", "data:text/html,test", "//example.com/post", "/post", "https://fixture:secret@example.com/post", "not a url", null];
+  const data = pipelineFixture();
+  data.retainedIntake.records = urls.map((url, index) => ({ ...rawRecord, url, eventId: index + 1, representativeEventId: null }));
+  data.issuerPreparation.records = urls.map((url, index) => ({ ...issuerRecord, url, eventId: index + 1 }));
+  const html = renderOverview(data);
+  assert.equal((html.match(/<a /g) ?? []).length, 2);
+  assert.equal((html.match(/href="https:\/\/example\.com\/safe"/g) ?? []).length, 2);
+  assert.equal((html.match(/rel="noopener noreferrer"/g) ?? []).length, 2);
+  assert.doesNotMatch(html, /javascript:|data:text|fixture:secret/);
+});
+
+function inspectionIds(element) {
+  if (Array.isArray(element)) return element.flatMap(inspectionIds);
+  if (!element || typeof element !== "object") return [];
+  if (element.type === signalsLoaded.exports.SignalSourceInspection) return [element.props.eventId];
+  return inspectionIds(element.props?.children);
+}
+
+test("raw source inspection uses a safe representative only when the original event is absent or invalid", () => {
+  for (const [eventId, representativeEventId, expected] of [[null, 456, [456]], [123, 456, [123]], [0, 456, [456]], [null, -1, []], [null, "456", []], [null, Number.MAX_SAFE_INTEGER + 1, []]]) {
+    const data = pipelineFixture();
+    data.retainedIntake.records = [{ ...rawRecord, eventId, representativeEventId }];
+    data.issuerPreparation.records = [];
+    assert.deepEqual(inspectionIds(NewsPipelineOverview({ data, token: editorToken })), expected);
+  }
+});
+
+test("each record omission signal warns independently and oversized lists remain bounded", () => {
+  for (const [lane, key] of [["retainedIntake", "recordsTruncated"], ["retainedIntake", "responseOmittedRecords"], ["issuerPreparation", "recordsOmitted"], ["issuerPreparation", "responseOmittedRecords"]]) {
+    const data = pipelineFixture();
+    data[lane][key] = key === "recordsTruncated" ? true : 1;
+    assert.equal((renderOverview(data).match(/一部省略されています/g) ?? []).length, 1, `${lane}.${key}`);
+  }
+  const data = pipelineFixture();
+  data.retainedIntake.counts.retainedRevisionRows = data.issuerPreparation.total = 51;
+  data.retainedIntake.records = Array.from({ length: 51 }, (_, index) => ({ ...rawRecord, sourceId: `raw-${index}`, eventId: index + 1 }));
+  data.issuerPreparation.records = Array.from({ length: 51 }, (_, index) => ({ ...issuerRecord, sourceId: `issuer-${index}`, eventId: index + 1 }));
+  const html = renderOverview(data);
+  assert.match(html, /50\/51行表示/);
+  assert.match(html, /50\/51件表示/);
+  assert.doesNotMatch(html, /raw-50|issuer-50/);
+  assert.equal((html.match(/一部省略されています/g) ?? []).length, 2);
+  assert.equal(data.retainedIntake.counts.retainedRevisionRows, 51);
+});
