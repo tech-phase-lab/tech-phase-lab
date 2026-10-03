@@ -9,6 +9,7 @@ export type BalanceSnapshot = {
 };
 export type Financials = {
   ticker: string; status: "ready" | "unavailable" | "unsupported"; retrievedAt: string;
+  dataWarnings?: Copy[];
   revenue: Fact | null; previousRevenue: Fact | null; operatingIncome: Fact | null;
   operatingCash: Fact | null; capex: Fact | null; cash: Fact | null;
   revenueGrowth: number | null; operatingMargin: number | null; fcfMargin: number | null;
@@ -16,6 +17,7 @@ export type Financials = {
   dilutedShares: Fact | null; previousDilutedShares: Fact | null; dilutedSharesGrowth: number | null;
   quarterRevenue: Fact | null; previousQuarterRevenue: Fact | null; quarterOperatingIncome: Fact | null;
   quarterRevenueGrowth: number | null; quarterOperatingMargin: number | null; quarterSourceUrl: string | null;
+  quarterFcfMargin?: number | null; quarterStockCompensationRatio?: number | null; quarterDilutedSharesGrowth?: number | null;
   balance: BalanceSnapshot | null;
   sourceUrl: string | null;
 };
@@ -43,7 +45,7 @@ const tags = {
   "ifrs-full": { revenue: ["Revenue", "RevenueFromContractsWithCustomers"], operatingIncome: ["ProfitLossFromOperatingActivities"], operatingCash: ["CashFlowsFromUsedInOperatingActivities"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: [] },
 } as const;
 /** Standard consolidated facts. Annual and standalone-quarter periods remain separate. */
-export function extractFinancials(ticker: string, cik: string, payload: unknown, now = Date.now(), reportingCurrency?: string): Financials {
+export function extractFinancials(ticker: string, cik: string, payload: unknown, now = Date.now(), reportingCurrency?: string, primaryRevenueTag?: string): Financials {
   const result = emptyFinancials(ticker, "unsupported", new Date(now).toISOString());
   const root = obj(payload);
   if (Number(root.cik) !== Number(cik)) return result;
@@ -53,7 +55,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
       if ((shares ? unit !== "shares" : !/^[A-Z]{3}$/.test(unit)) || !Array.isArray(values)) return [];
       return values.flatMap(raw => {
         const f = obj(raw);
-        if (typeof f.val !== "number" || !Number.isFinite(f.val) || typeof f.end !== "string" || typeof f.filed !== "string" || typeof f.accn !== "string" || !/^\d{10}-\d{2}-\d{6}$/.test(f.accn) || !(period === "quarter" ? ["10-Q", "10-Q/A"] : ["10-K", "10-K/A", "20-F", "20-F/A"]).includes(String(f.form))) return [];
+        if (typeof f.val !== "number" || !Number.isFinite(f.val) || typeof f.end !== "string" || typeof f.filed !== "string" || typeof f.accn !== "string" || !/^\d{10}-\d{2}-\d{6}$/.test(f.accn) || !(period === "quarter" ? ["10-Q", "10-Q/A", "6-K", "6-K/A", "8-K", "8-K/A"] : ["10-K", "10-K/A", "20-F", "20-F/A", "40-F", "40-F/A"]).includes(String(f.form))) return [];
         if (!Number.isFinite(day(f.end)) || !Number.isFinite(day(f.filed)) || day(f.filed) > now / 86400000 || day(f.end) > day(f.filed)) return [];
         const fact: Fact = { value: f.val, unit, start: typeof f.start === "string" ? f.start : null, end: f.end, filed: f.filed, accession: f.accn, tag, basis };
         if (instant ? fact.start !== null : duration(fact) < (period === "quarter" ? 75 : 350) || duration(fact) > (period === "quarter" ? 105 : 380) || !Number.isFinite(duration(fact))) return [];
@@ -62,7 +64,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     }));
   }
   const revenues = (Object.keys(tags) as (keyof typeof tags)[]).flatMap(b => collect(b, tags[b].revenue))
-    .filter(f => f.value > 0).sort((a,b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed));
+    .filter(f => f.value > 0 && (!primaryRevenueTag || `${f.basis}:${f.tag}` === primaryRevenueTag)).sort((a,b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed));
   const latest = revenues[0];
   if (!latest) return result;
   // A verified reporting currency distinguishes native values from convenience
@@ -91,15 +93,21 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const dilutedShares = unique(shares.filter(f => f.start === revenue.start && f.end === revenue.end));
   const previousDilutedShares = dilutedShares && previousRevenue ? unique(shares.filter(f => f.start === previousRevenue.start && f.end === previousRevenue.end && f.tag === dilutedShares.tag)) : null;
   // Only a directly reported standalone quarter AFTER the annual period. Never treat YTD as a quarter.
-  const quarters = collect(basis, tags[basis].revenue, false, "quarter").filter(f => f.end > revenue.end && f.unit === revenue.unit && f.value > 0).sort((a,b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed));
+  const quarters = collect(basis, tags[basis].revenue, false, "quarter").filter(f => f.end > revenue.end && f.unit === revenue.unit && f.value > 0 && (!primaryRevenueTag || `${f.basis}:${f.tag}` === primaryRevenueTag)).sort((a,b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed));
   const latestQuarter = quarters[0];
   const quarterRevenue = latestQuarter ? unique(quarters.filter(f => f.end === latestQuarter.end && f.filed === latestQuarter.filed)) : null;
   const previousQuarterRevenue = quarterRevenue ? unique(collect(basis, [quarterRevenue.tag], false, "quarter").filter(f => f.accession === quarterRevenue.accession && f.unit === quarterRevenue.unit && day(quarterRevenue.end)-day(f.end) >= 350 && day(quarterRevenue.end)-day(f.end) <= 380 && Math.abs(duration(quarterRevenue)-duration(f)) <= 8 && f.value > 0)) : null;
   const quarterOperatingIncome = quarterRevenue ? unique(collect(basis, tags[basis].operatingIncome, false, "quarter").filter(f => f.accession === quarterRevenue.accession && f.unit === quarterRevenue.unit && f.start === quarterRevenue.start && f.end === quarterRevenue.end)) : null;
+  const quarterMetric = (key: "operatingCash" | "capex" | "stockCompensation") => quarterRevenue ? unique(collect(basis,tags[basis][key],false,"quarter").filter(f => f.accession===quarterRevenue.accession && f.unit===quarterRevenue.unit && f.start===quarterRevenue.start && f.end===quarterRevenue.end)) : null;
+  const quarterOperatingCash=quarterMetric("operatingCash"), quarterCapex=quarterMetric("capex"), quarterCompensation=quarterMetric("stockCompensation");
+  const quarterShares = quarterRevenue ? unique(collect(basis,tags[basis].dilutedShares,false,"quarter",true).filter(f=>f.accession===quarterRevenue.accession && f.start===quarterRevenue.start && f.end===quarterRevenue.end && f.value>0)) : null;
+  const previousQuarterShares = quarterShares && previousQuarterRevenue ? unique(collect(basis,[quarterShares.tag],false,"quarter",true).filter(f=>f.accession===quarterShares.accession && f.start===previousQuarterRevenue.start && f.end===previousQuarterRevenue.end && f.value>0)) : null;
   const filingUrl = (f: Fact) => `https://www.sec.gov/Archives/edgar/data/${Number(cik)}/${f.accession.replaceAll("-", "")}/${f.accession}-index.htm`;
   // A single filing/date/currency for the entire balance snapshot. No fallback to older components.
-  const anchor = quarterRevenue ?? revenue;
-  const balancePeriod = quarterRevenue ? "quarter" : "annual";
+  const balanceTags = basis === "us-gaap" ? ["CashAndCashEquivalentsAtCarryingValue", "AssetsCurrent", "LiabilitiesCurrent"] : ["CashAndCashEquivalents", "CurrentAssets", "CurrentLiabilities"];
+  const quarterHasBalance = quarterRevenue && collect(basis,balanceTags,true,"quarter").some(f => f.end === quarterRevenue.end && f.accession === quarterRevenue.accession && f.unit === quarterRevenue.unit && f.value >= 0);
+  const anchor = quarterHasBalance ? quarterRevenue! : revenue;
+  const balancePeriod = quarterHasBalance ? "quarter" : "annual";
   function balanceMetric(name: string): Fact | null {
     const ifrsNames: Record<string, string> = { CashAndCashEquivalentsAtCarryingValue: "CashAndCashEquivalents", AssetsCurrent: "CurrentAssets", LiabilitiesCurrent: "CurrentLiabilities" };
     const tag = basis === "us-gaap" ? name : ifrsNames[name];
@@ -121,6 +129,9 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     quarterRevenueGrowth: quarterRevenue && previousQuarterRevenue ? (quarterRevenue.value / previousQuarterRevenue.value - 1) * 100 : null,
     quarterOperatingMargin: quarterRevenue && quarterOperatingIncome ? quarterOperatingIncome.value / quarterRevenue.value * 100 : null,
     quarterSourceUrl: quarterRevenue ? filingUrl(quarterRevenue) : null,
+    quarterFcfMargin: quarterRevenue && quarterOperatingCash && quarterCapex && quarterCapex.value>=0 ? (quarterOperatingCash.value-quarterCapex.value)/quarterRevenue.value*100 : null,
+    quarterStockCompensationRatio: quarterRevenue && quarterCompensation && quarterCompensation.value>=0 ? quarterCompensation.value/quarterRevenue.value*100 : null,
+    quarterDilutedSharesGrowth: quarterShares && previousQuarterShares ? (quarterShares.value/previousQuarterShares.value-1)*100 : null,
     revenueGrowth: previousRevenue ? (revenue.value / previousRevenue.value - 1) * 100 : null,
     operatingMargin: operatingIncome ? operatingIncome.value / revenue.value * 100 : null,
     fcfMargin: operatingCash && capex ? (operatingCash.value-capex.value) / revenue.value * 100 : null,
@@ -130,6 +141,7 @@ export function buildComparison(companies: ComparisonResult["companies"], now = 
   const reasons: Copy[] = [];
   if (companies.length < 2 || companies.length > 3) throw Error("invalid-company-count");
   if (companies.some(c => c.status !== "ready" || !c.revenue)) reasons.push(copy("一部の会社は比較可能な年次開示を取得できていません。", "Comparable annual filings are missing for some companies."));
+  if (companies.some(c => c.dataWarnings?.length)) reasons.push(copy("新しい開示から未取得の数値があります。", "Some figures from newer filings are unavailable."));
   const revenues = companies.flatMap(c => c.revenue ? [c.revenue] : []);
   if (revenues.some(f => now / 86400000 - day(f.end) > 450)) reasons.push(copy("決算期末から450日超のデータが含まれます。最新性を確認するまで順位を付けません。", "Some fiscal year ends are over 450 days old. No ranking until freshness is verified."));
   if (new Set(companies.map(c => c.peer)).size > 1) reasons.push(copy("事業モデルが異なるため、単純な優劣は付けません。", "Different business models: no like-for-like ranking."));

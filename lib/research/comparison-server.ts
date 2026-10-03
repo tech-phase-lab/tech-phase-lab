@@ -3,8 +3,9 @@ import { unstable_cache } from "next/cache";
 import { comparisonCatalog } from "./comparison-catalog";
 import providers from "./providers.json";
 import { parseSecDirectory } from "./stock-directory";
-import { extractFinancials, emptyFinancials } from "./comparison";
-async function secJson(url: string, limit: number) {
+import { emptyFinancials } from "./comparison";
+import { loadSecComparison } from "./comparison-loader";
+async function secText(url: string, limit: number) {
   const response = await fetch(url, { cache: "no-store", headers: { Accept: "application/json", "User-Agent": process.env.RESEARCH_USER_AGENT || "TechPhaseResearch/1.0 research-preview" }, signal: AbortSignal.timeout(12_000) });
   if (!response.ok || !response.body) throw Error("sec-unavailable");
   const reader = response.body.getReader();
@@ -12,17 +13,14 @@ async function secJson(url: string, limit: number) {
   try {
     for (;;) { const { done, value } = await reader.read(); if (done) break; bytes += value.byteLength; if (bytes > limit) throw Error("sec-too-large"); text += decoder.decode(value, { stream: true }); }
     text += decoder.decode();
-    return JSON.parse(text) as unknown;
+    return text;
   } finally { await reader.cancel(); }
 }
+async function secJson(url: string, limit: number) { return JSON.parse(await secText(url,limit)) as unknown; }
 const directory = unstable_cache(async () => parseSecDirectory(await secJson("https://www.sec.gov/files/company_tickers_exchange.json", 2_000_000)), ["comparison-sec-directory-v1"], { revalidate: 86400 });
 const financials = unstable_cache(async (ticker: string, cik: string) => {
-  const data = await secJson(`https://data.sec.gov/api/xbrl/companyfacts/CIK${cik.padStart(10,"0")}.json`, 15_000_000);
-  // TSMC publishes in New Taiwan dollars; USD amounts are convenience translations.
-  // Official annual report: https://investor.tsmc.com/sites/ir/sec-filings/2024%2020-F.pdf
-  const reportingCurrency = ticker === "TSM" && Number(cik) === 1046179 ? "TWD" : undefined;
-  return extractFinancials(ticker, cik, data, Date.now(), reportingCurrency);
-}, ["comparison-financials-v4"], { revalidate: 3600 });
+  return loadSecComparison(ticker,cik,secText);
+}, ["comparison-financials-v5"], { revalidate: 300 });
 export async function loadComparisonFinancials(ticker: string) {
   try {
     const provider = providers.find(p => p.ticker === ticker);
