@@ -55,6 +55,8 @@ def validation_report(payload, row):
         if row.get('general_source'):
             if 'generalSourceVersion' in note:
                 research.validate_row(note,row)
+            elif row.get('semantic_assessment'):
+                research.general_source_news.bind_assessment(note,row)
             else:
                 research.general_source_news.bind_note(note,row)
             return {'status':'valid','issues':[]}
@@ -160,7 +162,7 @@ def current_failed_context(db,row,job,failure,reference):
     """
     if not (row.get('general_source') or row.get('issuer_business')):
         return None
-    if (not job or not failure or job['state']!='retry' or job['sha']!=row['sha']
+    if (not job or not failure or job['state'] not in {'retry','review'} or job['sha']!=row['sha']
         or failure['sha']!=row['sha'] or job['lease']!=failure['lease']
         or not research.current_revision(db,row)):
         return None
@@ -172,6 +174,13 @@ def current_failed_context(db,row,job,failure,reference):
         return None
     proof=(db.execute('SELECT source_sha,body_sha FROM official_research_attempt_body_proofs WHERE lease=?',(failure['lease'],)).fetchone()
            if db.execute("SELECT 1 FROM sqlite_master WHERE name='official_research_attempt_body_proofs'").fetchone() else None)
+    if job['state']=='review':
+        review=research.general_source_news.semantic_review(db,row,reference)
+        # A terminal assessment is a separate current, proven decision, never a
+        # retry job. Its failed output requires the recorded generation body.
+        if (not review or review['lease']!=job['lease'] or not proof
+            or proof['source_sha']!=row['sha'] or proof['body_sha']!=row['body_sha']):
+            return None
     if row.get('general_source'):
         # The retained post SHA already binds its complete title and body.
         provenance='verified-current-retained-body'
@@ -243,6 +252,55 @@ def current_failed_context(db,row,job,failure,reference):
     return result if len(json.dumps(result,ensure_ascii=False).encode())<=48000 else None
 
 
+def terminal_review_diagnostics(db,reference,limit,remaining_context_bytes):
+    """Read current stopped semantic decisions separately from the work queue."""
+    table=db.execute("SELECT 1 FROM sqlite_master WHERE name='general_source_semantic_reviews'").fetchone()
+    if not table or not db.execute('SELECT 1 FROM general_source_semantic_reviews LIMIT 1').fetchone():
+        return {'items':[],'total':0,'omitted':0},False
+    rows=research.general_source_news.candidates(db,reference,include_review=True)
+    items,total,raw_copy_included=[],0,False
+    for row in sorted(rows,key=lambda item:item['id'],reverse=True):
+        review=research.general_source_news.semantic_review(db,row,reference)
+        job=db.execute('SELECT sha,state,attempts,next_at,failure_kind,lease FROM official_research_jobs WHERE event_id=?',(row['id'],)).fetchone()
+        if (not review or not job or job['state']!='review' or job['sha']!=row['sha']
+            or job['lease']!=review['lease'] or not research.current_revision(db,row)):
+            continue
+        total+=1
+        if len(items)>=limit:
+            continue
+        publication=db.execute('SELECT sha,body_sha,payload FROM official_research_publications WHERE event_id=?',(row['id'],)).fetchone()
+        current_publication=bool(publication and publication['sha']==row['sha'] and publication['body_sha']==row['body_sha'])
+        failure=db.execute('SELECT sha,failed_at,reason,payload,lease FROM official_research_attempt_failures WHERE event_id=? AND sha=? AND lease=?',
+                           (row['id'],row['sha'],job['lease'])).fetchone()
+        rejected=validation_report(failure['payload'],row) if failure else None
+        context=current_failed_context(db,row,job,failure,reference)
+        context_state='unavailable'
+        if context:
+            encoded=len(json.dumps(context,ensure_ascii=False).encode())
+            if encoded<=remaining_context_bytes:
+                if not rejected['issues']:
+                    rejected['issues'].append({'field':'note','issue':'stored-attempt-failed','checks':[]})
+                rejected['issues'][0]['checks'].append(context)
+                remaining_context_bytes-=encoded
+                raw_copy_included=True
+                context_state='included'
+            else:
+                context_state='response-budget'
+        items.append({
+            'eventId':row['id'],'sourceId':row['source_id'],'url':row['url'],'title':row['title'][:500],
+            'ticker':row['ticker'],'currentSha':row['sha'],'bodySha':row['body_sha'],
+            'observedAt':row['observed_at'],'bodyReadyAt':row['body_at'],'status':'terminal-review',
+            'review':{'reason':review['reason'],'decidedAt':review['decided_at']},
+            'publication':{'present':bool(publication),'currentRevision':current_publication,
+                           'validation':validation_report(publication['payload'],row) if current_publication else {'status':'unavailable','issues':[]}},
+            'job':{'state':'review','attempts':job['attempts'],'nextRetryAt':None,
+                   'currentRevision':True,'failureKind':failure_kind(job['failure_kind'])},
+            'latestFailure':{'failedAt':failure['failed_at'],'reason':failure_kind(failure['reason']),
+                             'currentSourceRevision':True,'validation':rejected,'failedCopyContext':context_state} if failure else None,
+        })
+    return {'items':items,'total':total,'omitted':total-len(items)},raw_copy_included
+
+
 def queue(path, limit=20, view='pending', reference=None):
     if type(limit) is not int or not 1 <= limit <= 50 or view not in {'pending', 'all'}:
         raise ValueError('invalid-request')
@@ -301,6 +359,8 @@ def queue(path, limit=20, view='pending', reference=None):
                                   'currentSourceRevision': True, 'bodyRevisionRecorded': body_revision_recorded,
                                   'validation': rejected,'failedCopyContext':context_state} if failure else None,
             })
+        terminal_reviews,terminal_copy_included=terminal_review_diagnostics(db,reference,limit,remaining_context_bytes)
+        raw_copy_included=raw_copy_included or terminal_copy_included
         pipeline=news_pipeline_diagnostics.snapshot(db,reference)
         # Existing editor clients already render checks JSON. Keep this distinct
         # from the host record's failed copy and do not change lane counts.
@@ -309,7 +369,7 @@ def queue(path, limit=20, view='pending', reference=None):
             if not host['issues']:
                 host['issues'].append({'field':'pipeline','issue':'read-only-metadata','checks':[]})
             host['issues'][0]['checks'].append(pipeline)
-        return {'pipelineDiagnostics':pipeline,'items': result, 'view': view, 'readOnly': True, 'generatedAt': reference.isoformat(),
+        return {'pipelineDiagnostics':pipeline,'terminalReviews':terminal_reviews,'items': result, 'view': view, 'readOnly': True, 'generatedAt': reference.isoformat(),
                 'counts': {'candidates': len(rows), 'validatedPublications': published, 'pending': len(rows) - published},
                 'filteredTotal': len(rows) if view == 'all' else len(rows) - published,
                 'scope': 'current-worker-candidates', 'rawCopyIncluded': raw_copy_included}

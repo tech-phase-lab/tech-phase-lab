@@ -12,6 +12,12 @@ type Item = {
   job: { state: string; attempts: number; nextRetryAt: string | null; currentRevision: boolean; failureKind: string | null } | null;
   latestFailure: { failedAt: string; reason: string | null; validation: Validation } | null;
 };
+type TerminalReview = Item & {
+  status: "terminal-review";
+  review: { reason: string; decidedAt: string };
+  job: NonNullable<Item["job"]> & { state: "review"; nextRetryAt: null };
+};
+type TerminalReviews = { items: TerminalReview[]; total: number; omitted: number };
 type IntakeRecord = {
   sourceId: string; url: string | null; sha: string; bodySha?: string | null;
   eventId: number | null; representativeEventId?: number | null;
@@ -41,7 +47,8 @@ type Pipeline = {
   acquisitionCoverage: Record<string, Coverage>;
 };
 type Queue = { items: Item[]; generatedAt: string; filteredTotal: number;
-  counts: { candidates: number; validatedPublications: number; pending: number }; pipelineDiagnostics?: Pipeline };
+  counts: { candidates: number; validatedPublications: number; pending: number }; pipelineDiagnostics?: Pipeline;
+  terminalReviews?: TerminalReviews };
 const time = (value: string | null) => value ? new Date(value).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo", hour12: false }) + " JST" : "未記録";
 const states: Record<string, string> = { retry: "再試行待ち", running: "生成中", done: "処理済み", stale: "旧版", unknown: "状態不明" };
 const verdicts: Record<Validation["status"], string> = { valid: "現在の機械検証を通過", invalid: "現在の機械検証で拒否", unavailable: "再検証用の記録なし" };
@@ -65,6 +72,37 @@ const safeUrl = (value: string | null) => {
   } catch { return null; }
 };
 const validEvent = (id: number | null | undefined): id is number => typeof id === "number" && Number.isSafeInteger(id) && id > 0;
+
+export function TerminalReviewOverview({ data, token }: { data?: TerminalReviews; token: string }) {
+  if (!data) return null;
+  const records = data.items.slice(0, 50);
+  const omitted = Math.max(data.omitted + data.items.length - records.length, data.total - records.length, 0);
+  return <section aria-label="要確認（自動再試行なし）">
+    <h3>要確認（自動再試行なし）</h3>
+    <p className={styles.note}>編集者用・読取専用です。意味検証で処理を停止した記録を表示します。自動生成対象の未公開件数には含みません。この表示は生成・再試行・公開を実行しません。</p>
+    <p>要確認 {data.total}件（{records.length}/{data.total}件表示） · 省略 {omitted}件</p>
+    {omitted > 0 && <p className={styles.note}>件数・応答容量の上限により一部省略されています。</p>}
+    <div className={styles.items}>{records.map(item => {
+      const url = safeUrl(item.url);
+      return <article key={item.eventId} className={styles.article}>
+        <h4>{item.ticker} · {item.title}</h4>
+        <p className={styles.note}>イベント {item.eventId} · {item.sourceId}</p>
+        <p>要確認の理由: {item.review.reason}</p>
+        <p className={styles.note}>判定 {time(item.review.decidedAt)} · 検知 {time(item.observedAt)} · 本文取得 {time(item.bodyReadyAt)}</p>
+        {url && <a href={url.href} target="_blank" rel="noopener noreferrer">発信元のページを確認 ↗</a>}
+        {validEvent(item.eventId) && <SignalSourceInspection token={token} eventId={item.eventId} />}
+        <details><summary>現在の原文版</summary>
+          <pre className={styles.source}>{`Source SHA: ${item.currentSha}\nBody SHA: ${item.bodySha}`}</pre>
+        </details>
+        {item.latestFailure ? <details open><summary>同じ原文版の直近失敗 · {item.latestFailure.reason ?? "区分なし"}</summary>
+          <p className={styles.note}>記録 {time(item.latestFailure.failedAt)} · facts[0] は1件目の事実</p>
+          <Report report={item.latestFailure.validation} />
+        </details> : <p className={styles.note}>同じ原文版の失敗記録はありません。</p>}
+      </article>;
+    })}</div>
+    {data.total === 0 && records.length === 0 && <p>保存済みの要確認記録はありません。</p>}
+  </section>;
+}
 
 export function NewsPipelineOverview({ data, token }: { data?: Pipeline; token: string }) {
   if (!data) return <p className={styles.note}>取得・分類の概要は未取得です。未公開0件だけでは網羅性を確認できません。</p>;
@@ -180,6 +218,7 @@ export function OfficialResearchResults({ data, token }: { data: Queue; token: s
       <p className={styles.note}>取得 {time(data.generatedAt)} · 現在の生成対象 {data.counts.candidates}件 · 有効な保存記事 {data.counts.validatedPublications}件 · 未公開 {data.counts.pending}件（{data.items.length}/{data.filteredTotal}件を表示）</p>
       <p className={styles.note}>生成処理と同じ対象範囲の診断です。公開一覧の表示件数上限による省略を、生成待ちには数えません。</p>
       <NewsPipelineOverview data={data.pipelineDiagnostics} token={token} />
+      <TerminalReviewOverview data={data.terminalReviews} token={token} />
       <h3>自動生成対象の未公開記事</h3>
       <div className={styles.items}>{data.items.map(item => <article key={item.eventId} className={styles.article}>
         <h3>{item.ticker} · {item.title}</h3>

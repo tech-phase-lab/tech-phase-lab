@@ -5,6 +5,43 @@ import { GET, POST } from "../app/api/research/editor/route.ts";
 
 const authorization = "Bearer editor-token-at-least-24-characters";
 
+test("terminal review diagnostics use the existing protected GET without adding retry or review actions", async () => {
+  const saved = { url: process.env.RESEARCH_MONITOR_URL, fetch: globalThis.fetch };
+  process.env.RESEARCH_MONITOR_URL = "https://monitor.example";
+  const payload = { ok: true, items: [], counts: { pending: 0 }, terminalReviews: {
+    items: [{ eventId: 321, status: "terminal-review", review: { reason: "company-actor-mismatch", decidedAt: "2026-10-03T10:00:00Z" } }],
+    total: 1, omitted: 0,
+  } };
+  const calls = [];
+  globalThis.fetch = async (url, init) => { calls.push({ url: new URL(url), init }); return Response.json(payload); };
+  const url = "https://example.test/api/research/editor?kind=official-research&view=pending&limit=50";
+  try {
+    assert.equal((await GET(new Request(url))).status, 401);
+    assert.equal(calls.length, 0);
+    const response = await GET(new Request(url, { headers: { Authorization: authorization } }));
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), payload);
+    assert.equal(calls.length, 1);
+    assert.equal(calls[0].url.pathname, "/admin/official-research");
+    assert.equal(calls[0].url.searchParams.get("view"), "pending");
+    assert.equal(calls[0].init.headers.Authorization, authorization);
+    assert.equal(calls[0].init.method ?? "GET", "GET");
+    assert.equal(calls[0].init.cache, "no-store");
+    assert.equal(response.headers.get("Cache-Control"), "no-store");
+    for (const action of ["official-research-retry", "official-research-review", "terminal-review-retry"]) {
+      const blocked = await POST(new Request("https://example.test/api/research/editor", {
+        method: "POST", headers: { Authorization: authorization }, body: JSON.stringify({ action, payload: { eventId: 321 } }),
+      }));
+      assert.equal(blocked.status, 400, action);
+    }
+    assert.equal(calls.length, 1);
+  } finally {
+    globalThis.fetch = saved.fetch;
+    if (saved.url === undefined) delete process.env.RESEARCH_MONITOR_URL;
+    else process.env.RESEARCH_MONITOR_URL = saved.url;
+  }
+});
+
 test("issuer diagnostics are editor-authenticated GET-only with bounded filters and no raw-copy flag", async () => {
   const saved = { url: process.env.RESEARCH_MONITOR_URL, fetch: globalThis.fetch };
   process.env.RESEARCH_MONITOR_URL = "https://monitor.example";

@@ -31,7 +31,7 @@ test("diagnostics encapsulates all state in a credential-keyed session without e
   assert.match(renderToStaticMarkup(cleared), /disabled=""/);
 });
 
-const { NewsPipelineOverview, OfficialResearchResults } = loaded.exports;
+const { NewsPipelineOverview, OfficialResearchResults, TerminalReviewOverview } = loaded.exports;
 const editorToken = "synthetic-private-pipeline-editor-token";
 const timestamp = "2026-10-03T10:00:00Z";
 const rawRecord = {
@@ -209,4 +209,84 @@ test("each record omission signal warns independently and oversized lists remain
   assert.doesNotMatch(html, /raw-50|issuer-50/);
   assert.equal((html.match(/一部省略されています/g) ?? []).length, 2);
   assert.equal(data.retainedIntake.counts.retainedRevisionRows, 51);
+});
+
+const terminalRecord = {
+  eventId: 321, sourceId: "terminal-fixture", url: "https://example.com/terminal-news",
+  title: "Semantic review fixture", ticker: "MSFT", currentSha: "terminal-source-sha", bodySha: "terminal-body-sha",
+  observedAt: timestamp, bodyReadyAt: timestamp, status: "terminal-review",
+  review: { reason: "company-actor-mismatch", decidedAt: timestamp },
+  publication: { present: false, currentRevision: false, validation: { status: "unavailable", issues: [] } },
+  job: { state: "review", attempts: 1, nextRetryAt: null, currentRevision: true, failureKind: "unsupported-facts" },
+  latestFailure: {
+    failedAt: timestamp, reason: "unsupported-facts", validation: { status: "invalid", issues: [{
+      field: "facts[0]", issue: "company-actor-mismatch", checks: [{
+        failedJa: "失敗した日本語の文章", failedEn: "Failed English copy", sourceEvidence: "Exact saved source evidence",
+      }],
+    }] },
+  },
+};
+const renderTerminal = data => renderToStaticMarkup(TerminalReviewOverview({ data, token: editorToken }));
+
+test("zero pending articles still shows terminal semantic review with failed copy and independent totals", () => {
+  for (const pipelineDiagnostics of [undefined, pipelineFixture()]) {
+    const queue = { ...emptyQueue(pipelineDiagnostics), terminalReviews: { items: [terminalRecord], total: 1, omitted: 0 } };
+    const before = structuredClone(queue);
+    const html = renderResults(queue);
+    for (const text of ["未公開 0件", "0/0件を表示", "要確認（自動再試行なし）", "要確認 1件（1/1件表示）", "省略 0件",
+      "Semantic review fixture", "イベント 321", "terminal-source-sha", "terminal-body-sha", "要確認の理由: company-actor-mismatch",
+      "unsupported-facts", "facts[0]", "失敗した日本語の文章", "Failed English copy", "Exact saved source evidence",
+      "自動生成対象の未公開件数には含みません", "現在の生成対象に未公開記事はありません"]) assert.ok(html.includes(text), text);
+    assert.deepEqual(queue, before);
+    assert.equal(queue.counts.pending, 0);
+  }
+});
+
+test("terminal review display stays read-only, reuses source inspection and never renders retry scheduling", () => {
+  const data = { items: [terminalRecord], total: 1, omitted: 0 };
+  const html = renderTerminal(data);
+  assert.match(html, /編集者用・読取専用/);
+  assert.match(html, /生成・再試行・公開を実行しません/);
+  assert.equal((html.match(/<button/g) ?? []).length, 1);
+  assert.match(html, /保存原文を確認（編集者用）/);
+  assert.deepEqual(inspectionIds(TerminalReviewOverview({ data, token: editorToken })), [321]);
+  assert.doesNotMatch(html, /次の実行可能時刻|実行期限|再試行待ち|生成中|公開済み|掲載済み|<form|<input|Bearer |synthetic-private-pipeline-editor-token/);
+  const noFailure = renderTerminal({ ...data, items: [{ ...terminalRecord, latestFailure: null }] });
+  assert.match(noFailure, /同じ原文版の失敗記録はありません/);
+  assert.doesNotMatch(noFailure, /失敗した日本語の文章|Failed English copy|Exact saved source evidence/);
+});
+
+test("terminal review lists bound browser display to 50 and disclose server and browser omissions", () => {
+  const items = Array.from({ length: 51 }, (_, index) => ({ ...terminalRecord, eventId: index + 1, title: `terminal-record-${index}` }));
+  const data = { items, total: 55, omitted: 4 };
+  const before = structuredClone(data);
+  const html = renderTerminal(data);
+  assert.equal((html.match(/<article/g) ?? []).length, 50);
+  assert.match(html, /50\/55件表示/);
+  assert.match(html, /省略 5件/);
+  assert.match(html, /一部省略されています/);
+  assert.doesNotMatch(html, /terminal-record-50/);
+  assert.deepEqual(data, before);
+  const allOmitted = renderTerminal({ items: [], total: 3, omitted: 3 });
+  assert.match(allOmitted, /0\/3件表示/);
+  assert.match(allOmitted, /省略 3件/);
+  assert.doesNotMatch(allOmitted, /保存済みの要確認記録はありません/);
+});
+
+test("terminal-empty is explicit while older API responses remain compatible without a false empty claim", () => {
+  for (const missing of [undefined, null]) {
+    assert.equal(renderTerminal(missing), "");
+    const html = renderResults({ ...emptyQueue(), terminalReviews: missing });
+    assert.match(html, /現在の生成対象に未公開記事はありません/);
+    assert.doesNotMatch(html, /要確認（自動再試行なし）|保存済みの要確認記録はありません/);
+  }
+  const html = renderResults({ ...emptyQueue(), terminalReviews: { items: [], total: 0, omitted: 0 } });
+  assert.match(html, /要確認 0件（0\/0件表示）/);
+  assert.match(html, /保存済みの要確認記録はありません/);
+  assert.doesNotMatch(html, /保存原文を確認（編集者用）|Semantic review fixture|全件公開済み/);
+});
+
+test("terminal review source inspection validates event IDs and rejects unsafe source links", () => {
+  const html = renderTerminal({ items: [{ ...terminalRecord, eventId: -1, url: "https://fixture:secret@example.com/post" }], total: 1, omitted: 0 });
+  assert.doesNotMatch(html, /<a |fixture:secret|保存原文を確認（編集者用）/);
 });
