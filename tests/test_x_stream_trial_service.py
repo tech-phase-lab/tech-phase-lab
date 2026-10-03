@@ -101,7 +101,8 @@ class ReadinessTransport:
 
     def assert_claim(self, path, request_id):
         t = self.test
-        row = t.db.execute('SELECT cost_status,reserved_micros FROM x_stream_trial_readiness_requests WHERE request_id=?', (request_id,)).fetchone()
+        table = getattr(t, 'readiness_request_table', 'x_stream_trial_readiness_requests')
+        row = t.db.execute('SELECT cost_status,reserved_micros FROM ' + table + ' WHERE request_id=?', (request_id,)).fetchone()
         t.assertEqual(row, ('unknown', None)); t.assertFalse(t.db.in_transaction)
         t.assertTrue(self.options['admission'](request_id, path))
         t.assertFalse(self.options['admission'](request_id, path))
@@ -441,6 +442,148 @@ class ControllerTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(diagnostic['x_stream_trial_run']['state'],'blocked')
         self.assertEqual(diagnostic['x_stream_trial_readiness']['state'],'blocked')
         self.assertEqual(diagnostic['x_stream_supervisor_owner']['rows'],1)
+
+
+
+class ContinuationTests(unittest.IsolatedAsyncioTestCase):
+    setUp = ControllerTests.setUp
+    controller = ControllerTests.controller
+
+    async def asyncSetUp(self):
+        original=self.controller(); original.initialize(); await original._readiness()
+        installer=x_stream_rules.Installer(db=self.db,enabled=True,config=original._rules_config(),
+            token_provider=self.token,reviewed_admission=original._review_rules,storage_preflight=original._storage,
+            clock=lambda:NOW)
+        installer.initialize()
+        # Synthetic snapshot of the observed interrupted post-claimed ledger.
+        with self.db:
+            self.db.execute("UPDATE x_stream_rule_setup SET state='post-claimed',post_claimed=1")
+        self.old_tables=('x_metadata_preflight_runs','x_metadata_preflight_requests',
+                         'x_stream_trial_run','x_stream_trial_readiness','x_stream_trial_readiness_requests','x_stream_rule_setup')
+        self.historical={name:self.db.execute('SELECT * FROM '+name).fetchall() for name in self.old_tables}
+        self.cont_now=NOW+timedelta(minutes=10)
+        self.cont_plan=dict(version=1,continuation_id='synthetic-continuation',original_plan_sha256=trial.digest(self.plan),
+            prepared_at=self.cont_now.isoformat(),end_at=(self.cont_now+timedelta(minutes=5)).isoformat(),
+            reviewed_continuation=True,existing_unknown_cost_contingency_covers_reads=True)
+        self.backup.side_effect=lambda *_:dict(healthy=True,verified_at=self.cont_now.isoformat(),
+                                              next_backup_at=(self.cont_now+timedelta(hours=1)).isoformat())
+        self.data[x_preflight.RULES]=page(rules())
+        self.data[x_preflight.COUNTS]['data'].update(project_rules_count='4',
+            client_app_rules_count={'client_app_id':'111','rule_count':4},
+            all_project_client_apps=[{'client_app_id':'111','rule_count':4}])
+        self.readiness_request_table='x_stream_trial_continuation_requests'
+        self.calls.clear(); self.logs.clear(); self.token.reset_mock()
+
+    def continuation(self, **changes):
+        kw=dict(db=self.db,enabled=True,plan=self.plan,continuation=self.cont_plan,token_provider=self.token,
+            backup_readiness=self.backup,storage_preflight=self.storage,stop_event=self.stop,emit=self.logs.append,
+            clock=lambda:self.cont_now,monotonic=lambda:1.0,
+            readiness_transport_factory=lambda **opts:ReadinessTransport(self,**opts),
+            rules_transport_factory=Mock(side_effect=AssertionError('POST transport forbidden')),
+            stream_transport_factory=lambda **opts:StreamTransport(self,**opts))
+        kw.update(changes); return trial.Continuation(**kw)
+
+    def assert_history_unchanged(self):
+        for name in self.old_tables:
+            self.assertEqual(self.db.execute('SELECT * FROM '+name).fetchall(),self.historical[name],name)
+
+    async def test_exact_inventory_five_additive_gets_then_one_unused_probe(self):
+        c=self.continuation(); result=await c.run()
+        self.assertEqual(result['status'],'ended',result)
+        self.assertEqual(self.calls,[('GET',p) for p in trial.ORDER]+[('GET','stream')])
+        self.assertTrue(self.closed); self.assertEqual(result['connection_attempts'],1)
+        self.assertEqual(result['control_cost_status'],'unknown'); self.assertFalse(result['cost_reconciled'])
+        self.assertEqual(c.probe_config['local_aim_micros'],self.plan['local_aim_micros'])
+        self.assertEqual(c.probe_config['rule_control_contingency_micros'],self.plan['setup_readiness_contingency_micros'])
+        self.assertEqual(c.probe_config['approved_at'],self.plan['approved_at'])
+        self.assertEqual(c.probe_config['end_at'],x_stream.stamp(self.cont_now+timedelta(seconds=120)))
+        self.assert_history_unchanged()
+        self.assertEqual(self.db.execute('SELECT cost_status,reserved_micros,requests_admitted FROM x_stream_trial_continuation_readiness').fetchone(),('unknown',None,5))
+        diagnostic=json.loads(self.logs[-1].split(' ',1)[1])
+        self.assertEqual(diagnostic['x_stream_rule_setup']['post_claimed'],1)
+        self.assertEqual(diagnostic['x_stream_rule_setup']['get_claimed'],0)
+        self.assertEqual(diagnostic['x_stream_rule_setup']['state'],'post-claimed')
+        self.assertEqual(diagnostic['x_stream_supervisor_owner']['rows'],0)
+        self.assertEqual(diagnostic['x_stream_probe_run']['attempts'],1)
+        self.assertEqual(diagnostic['x_stream_probe_run']['close_confirmed'],1)
+        self.assertEqual(diagnostic['x_stream_trial_continuation_readiness']['requests_admitted'],5)
+        self.token.reset_mock(); again=await self.continuation().run()
+        self.assertEqual(again['reason'],'x-trial-continuation-already-used'); self.token.assert_not_called()
+
+    async def test_missing_rules_stops_after_one_get_without_post(self):
+        self.data[x_preflight.RULES]=page(rules()[:2])
+        result=await self.continuation().run()
+        self.assertEqual(result['reason'],'x-trial-continuation-rules-incomplete',result)
+        self.assertEqual(result['inventory_count'],2); self.assertEqual(len(result['missing_route_ids']),2)
+        self.assertEqual(self.calls,[('GET',x_preflight.RULES)])
+        self.assertTrue(self.db.execute('SELECT 1 FROM x_stream_supervisor_owner').fetchone())
+        self.assert_history_unchanged()
+
+    async def test_empty_rules_stops_with_all_route_ids(self):
+        self.data[x_preflight.RULES]=page([])
+        result=await self.continuation().run()
+        self.assertEqual(result['reason'],'x-trial-continuation-rules-incomplete')
+        self.assertEqual(result['missing_route_ids'],[r['source_id'] for r in x_stream.manifest()])
+        self.assertEqual(len(self.calls),1); self.assert_history_unchanged()
+
+    async def test_foreign_rule_stops_after_one_get(self):
+        self.data[x_preflight.RULES]=page([dict(id='999',value='foreign',tag='foreign')])
+        result=await self.continuation().run()
+        self.assertEqual(result['reason'],'x-preflight-foreign-or-unknown-rule')
+        self.assertEqual(len(self.calls),1); self.assert_history_unchanged()
+
+    async def test_active_connection_stops_before_usage_or_probe(self):
+        self.data[x_preflight.CONNECTIONS]=page([dict(id='connection-fixture',endpoint_name='filtered_stream',
+                                                  connected_at=NOW.isoformat())])
+        result=await self.continuation().run()
+        self.assertEqual(result['reason'],'x-trial-active-consumer-present'); self.assertEqual(len(self.calls),3)
+        self.assert_history_unchanged()
+
+    async def test_approval_budget_expiry_and_owner_mismatch_block_before_token(self):
+        original=deepcopy(self.cont_plan)
+        self.cont_plan['existing_unknown_cost_contingency_covers_reads']=False
+        result=await self.continuation().run()
+        self.assertEqual(result['reason'],'x-trial-continuation-approval-invalid'); self.token.assert_not_called()
+        self.cont_plan=deepcopy(original); self.cont_plan['end_at']=(self.cont_now-timedelta(seconds=1)).isoformat()
+        result=await self.continuation().run()
+        self.assertEqual(result['reason'],'x-trial-continuation-expired'); self.token.assert_not_called()
+        self.cont_plan=deepcopy(original)
+        with self.db:self.db.execute("UPDATE x_stream_supervisor_owner SET owner='different-owner'")
+        result=await self.continuation().run()
+        self.assertEqual(result['reason'],'x-trial-another-owner-present'); self.token.assert_not_called()
+
+    async def test_changed_original_budget_cannot_create_fresh_aim(self):
+        self.plan['stream_allowance_micros']+=1
+        result=await self.continuation().run()
+        self.assertEqual(result['reason'],'x-trial-continuation-approval-invalid'); self.token.assert_not_called()
+
+    async def test_crash_after_continuation_claim_never_replays(self):
+        self.continuation().initialize()
+        result=await self.continuation().run()
+        self.assertEqual(result['reason'],'x-trial-continuation-already-used'); self.token.assert_not_called()
+        self.assert_history_unchanged()
+
+    async def test_fresh_credit_support_is_compared_to_prior_readiness(self):
+        self.data[x_preflight.CREDITS]['data'].update(prepaid_balance=3,total_balance=3)
+        result=await self.continuation().run()
+        self.assertEqual(result['reason'],'x-trial-credit-adjustment-or-unexplained-decrease')
+        self.assertEqual(len(self.calls),5); self.assert_history_unchanged()
+
+    async def test_credit_decline_allowance_cannot_stack_between_observations(self):
+        c=self.continuation(); c.frozen=deepcopy(self.plan)
+        c.original_report=deepcopy(self.report); c.prior_readiness=deepcopy(self.report)
+        c.prior_readiness['credits'].update(prepaid_balance='1.991',total_balance='1.991')
+        current=deepcopy(self.report['credits']); current.update(prepaid_balance='1.982',total_balance='1.982')
+        with self.assertRaisesRegex(trial.TrialBlocked,'credit-adjustment-or-unexplained-decrease'):
+            c._credits(current)
+        self.token.assert_not_called(); self.assert_history_unchanged()
+
+    async def test_backup_not_healthy_stops_without_new_claim_or_token(self):
+        self.backup.side_effect=lambda *_:dict(healthy=False)
+        result=await self.continuation().run()
+        self.assertEqual(result['reason'],'x-trial-backup-unavailable-or-overlap'); self.token.assert_not_called()
+        self.assert_history_unchanged()
+
 
 
 class ServiceTests(unittest.TestCase):
