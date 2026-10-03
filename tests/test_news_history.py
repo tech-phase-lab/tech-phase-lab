@@ -88,8 +88,11 @@ class NewsHistoryTests(unittest.TestCase):
         app=service.AutomaticMonitor.__new__(service.AutomaticMonitor)
         with tempfile.TemporaryDirectory() as tmp:
             app.db_path=Path(tmp)/'test.sqlite'
-            with patch.object(service.news_drafts,'public_feed',return_value={'ok':True,'enabled':False,'items':[]}), \
-                 patch.object(service.signals,'public_official_updates',return_value=[row(i) for i in range(49)]) as public, \
+            def sync_headlines(db, **kwargs):
+                db.execute("INSERT INTO news_intake_state(key,value) VALUES('sync','1')")
+                return [row(i) for i in range(49)]
+            with patch.object(service.news_drafts,'publication_enabled',return_value=True), \
+                 patch.object(service.signals,'public_official_updates',side_effect=sync_headlines) as public, \
                  patch.object(service.x_market_news,'public_feed',return_value=[]), \
                  patch.object(service.analyst_news,'public_feed',return_value=[]), \
                  patch.object(service.market_results,'public_feed',return_value=[]), \
@@ -98,6 +101,7 @@ class NewsHistoryTests(unittest.TestCase):
                 self.assertEqual(public.call_args.kwargs['limit'],500)
                 self.assertIsInstance(public.call_args.kwargs['reference'],datetime)
                 self.assertEqual(len(result['officialUpdates']),49)
+                self.assertTrue(result['enabled'])
         self.assertEqual(signals.public_official_updates.__defaults__[2],20)
 
     def test_extended_history_still_excludes_future_and_older_than_seven_days(self):

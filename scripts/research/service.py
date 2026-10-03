@@ -799,11 +799,12 @@ class AutomaticMonitor:
 
     def public_news(self):
         with stock_news.connect(self.db_path) as db:
+            drafts = news_drafts.public_feed(db)
             reference = datetime.now(timezone.utc)
             # Reuse this request's verified headlines. Research enrichment used
             # to run the same bridge sync and publication scan a second time.
             official = signals.public_official_updates(db, reference=reference, limit=500)
-            return news_history.bounded({**news_drafts.public_feed(db),
+            return news_history.bounded({**drafts,
                 "officialUpdates": official,
                 "marketUpdates": x_market_news.public_feed(db),
                 "analystUpdates": analyst_news.public_feed(db),
