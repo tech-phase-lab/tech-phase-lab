@@ -6,6 +6,7 @@ import { availableNewsPayload, publicNewsPayload, boundedOfficialHistory } from 
 
 const helper = new URL("../lib/research/general-news.ts", import.meta.url).href;
 const source = (await readFile(new URL("../app/api/research/news/route.ts", import.meta.url), "utf8"))
+  .replace('"@/lib/research/public-news-response"', JSON.stringify(new URL("../lib/research/public-news-response.ts", import.meta.url).href))
   .replace('"@/lib/research/general-news"', JSON.stringify(helper))
   .replace('"@/lib/research/official-result-events"', JSON.stringify(new URL("../lib/research/official-result-events.ts", import.meta.url).href))
   .replace('"@/lib/research/result-news"', JSON.stringify(new URL("../lib/research/result-news.ts", import.meta.url).href))

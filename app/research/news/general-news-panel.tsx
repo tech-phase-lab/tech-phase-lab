@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Language } from "@/lib/research/data";
-import { availableNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
+import { availableNewsPayload, type GeneralNewsFeed, type InitialNewsSnapshot } from "@/lib/research/general-news";
 import { officialNewsDisplay } from "@/lib/research/news-presentation";
 import { marketNewsBody, marketNewsDisplay } from "@/lib/research/market-news-display";
 import { analystNewsDisplay } from "@/lib/research/analyst-news";
@@ -15,16 +15,27 @@ import FeedPagination from "./feed-pagination";
 import NewsStory from "./news-story";
 let snapshot: { data: GeneralNewsFeed; at: string; time: number } | null = null;
 const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
+let lastFailedAt = 0;
+function initialSnapshot(initialNews?: InitialNewsSnapshot | null) {
+  const cached = recent();
+  if (!initialNews || initialNews.checkedAt <= lastFailedAt || Date.now() - initialNews.checkedAt >= 120_000
+    || (cached && cached.time >= initialNews.checkedAt)) return cached;
+  return { data: initialNews.data, time: initialNews.checkedAt, at: new Date(initialNews.checkedAt).toISOString() };
+}
 
-export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang: Language; officialOnly?: boolean }) {
-  const [data, setData] = useState<GeneralNewsFeed | null>(() => recent()?.data ?? null);
+export default function GeneralNewsPanel({ lang, officialOnly = false, initialNews }: { lang: Language; officialOnly?: boolean; initialNews?: InitialNewsSnapshot | null }) {
+  const [data, setData] = useState<GeneralNewsFeed | null>(() => initialSnapshot(initialNews)?.data ?? null);
   const [error, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
-  const [receivedAt, setReceivedAt] = useState<string | null>(() => recent()?.at ?? null);
+  const [receivedAt, setReceivedAt] = useState<string | null>(() => initialSnapshot(initialNews)?.at ?? null);
   const panel = useRef<HTMLElement>(null);
   const [page, setPage] = useState(1);
   useEffect(() => {
-    const cached = refresh === 0 ? recent() : null;
+    const cached = refresh === 0 ? initialSnapshot(initialNews) : null;
+    if (cached) {
+      snapshot = cached;
+      publishNews(cached.data);
+    }
     const poller = createNewsPoller({
       load: async signal => {
         const response = await fetch("/api/research/news", { cache: "no-store", signal });
@@ -39,6 +50,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
       onFailure: () => {
         // A failed check must not let a stale module snapshot reappear after remount.
         snapshot = null;
+        lastFailedAt = Date.now();
         setData(null); publishNews(null); setError(true); setReceivedAt(null);
       },
     });
@@ -52,7 +64,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
       document.removeEventListener("visibilitychange", wakeWhenVisible);
       poller.stop();
     };
-  }, [refresh]);
+  }, [refresh, initialNews]);
   const official = data?.officialUpdates ?? [];
   const news = officialOnly ? [] : data?.items ?? [];
   const market = officialOnly ? [] : data?.marketUpdates ?? [];

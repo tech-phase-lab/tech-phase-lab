@@ -17,6 +17,7 @@ import { researchViewFromHash, researchViewHashes, type ResearchView } from "@/l
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./research.module.css";
 import HomeTools, { HomeHelp } from "./home-tools";
+import type { InitialNewsSnapshot } from "@/lib/research/general-news";
 import NewsFeed from "./news/news-feed";
 import ResearchPulse from "./research-pulse";
 
@@ -47,7 +48,7 @@ type MonitoredCompany = {
   verified: boolean;
 };
 
-export default function ResearchDashboard({ events, monitoredCompanies }: { events: ResearchEvent[]; monitoredCompanies: MonitoredCompany[] }) {
+export default function ResearchDashboard({ events, monitoredCompanies, initialNews }: { events: ResearchEvent[]; monitoredCompanies: MonitoredCompany[]; initialNews?: InitialNewsSnapshot | null }) {
   const [lang, setLang] = useResearchLanguage();
   const [tab, setTab] = useState<ResearchView>("home");
   const [ticker, setTicker] = useState("all");
@@ -194,7 +195,7 @@ export default function ResearchDashboard({ events, monitoredCompanies }: { even
         {tab === "home" && <>
           <ResearchPulse lang={lang} />
           <HomeTools lang={lang} onChanges={() => openView("changes")} onPro={() => openView("pro")} />
-          <NewsFeed lang={lang} />
+          <NewsFeed lang={lang} initialNews={initialNews} />
           <HomeHelp lang={lang} />
         </>}
 

@@ -108,7 +108,7 @@ test('analyst pulse is merged into latest-five ordering by publication, never ob
 
 test('public news API carries accepted analyst reporting without reclassifying it as official', async () => {
   let source = await readFile(new URL('../app/api/research/news/route.ts', import.meta.url), 'utf8');
-  for (const name of ['general-news', 'official-result-events', 'result-news', 'mu-latest']) {
+  for (const name of ['public-news-response', 'general-news', 'official-result-events', 'result-news', 'mu-latest']) {
     source = source.replace(new RegExp(`["']@/lib/research/${name}["']`, 'g'),
       JSON.stringify(new URL(`../lib/research/${name}.ts`, import.meta.url).href));
   }

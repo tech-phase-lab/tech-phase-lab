@@ -1,4 +1,4 @@
-import { loadLiveResultEvents } from "@/lib/research/live-result-events";
+import { loadLiveHomeNews } from "@/lib/research/live-result-events";
 import type { Metadata } from "next";
 import { publicEvent } from "@/lib/research/access";
 import ResearchDashboard from "./research-dashboard";
@@ -16,7 +16,8 @@ export const metadata: Metadata = {
 };
 
 export default async function ResearchPage() {
-  const currentEvents = deduplicateResearchEvents([...await loadLiveResultEvents(), ...events]);
+  const live = await loadLiveHomeNews();
+  const currentEvents = deduplicateResearchEvents([...live.events, ...events]);
   for (const event of currentEvents) {
     const issues = evidenceIssues({ ...event, metrics: [...event.metrics, ...(event.previous ?? [])] });
     if (issues.length) throw new Error(`Invalid research record ${event.id}: ${issues.join(", ")}`);
@@ -33,6 +34,7 @@ export default async function ResearchPage() {
   }));
   return <ResearchDashboard
     events={currentEvents.map(publicEvent).toSorted((a, b) => b.publishedOn.localeCompare(a.publishedOn) || a.id.localeCompare(b.id))}
+    initialNews={live.news}
     monitoredCompanies={monitoredCompanies}
   />;
 }

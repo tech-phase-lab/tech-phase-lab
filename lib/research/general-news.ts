@@ -258,3 +258,5 @@ export function boundedOfficialHistory(value: GeneralNewsFeed): GeneralNewsFeed 
   }
   return result;
 }
+
+export type InitialNewsSnapshot = { data: GeneralNewsFeed; checkedAt: number };
