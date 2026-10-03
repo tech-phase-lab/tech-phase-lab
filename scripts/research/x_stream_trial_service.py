@@ -23,6 +23,7 @@ import x_stream_rules
 
 ENABLED = 'X_STREAM_TRIAL_ENABLED'
 PLAN = 'X_STREAM_TRIAL_PLAN_JSON'
+LOCAL = 'X_STREAM_TRIAL_LOCAL_DIAGNOSTICS'
 REQUIRED = frozenset('version trial_id approval_id approved_at prepared_at session_expires_at probe_end_at '
     'original_metadata_request_id original_metadata_result_sha256 original_account_anchor_sha256 '
     'expected_app_id manifest_sha256 account_evidence_ref storage_evidence_ref reconciliation_evidence_ref '
@@ -69,7 +70,8 @@ def _int(value, low=0, high=10**12):
 
 
 def requested(env=None):
-    return str((os.environ if env is None else env).get(ENABLED, '')).strip().lower() == 'true'
+    env = os.environ if env is None else env
+    return any(str(env.get(key, '')).strip().lower() == 'true' for key in (ENABLED, LOCAL))
 
 
 def validate_plan(plan, now):
@@ -141,6 +143,49 @@ def _schema(db):
     ''')
 
 
+def _error_class(error):
+    """Finite local classification; exception/provider text is never returned."""
+    if isinstance(error, sqlite3.Error):
+        code = getattr(error, 'sqlite_errorcode', 0) & 255
+        if code in (sqlite3.SQLITE_BUSY, sqlite3.SQLITE_LOCKED):
+            return 'sqlite-busy'
+        if code == sqlite3.SQLITE_FULL:
+            return 'sqlite-full'
+        return 'sqlite-error'
+    for kind, name in ((TypeError, 'type-error'), (KeyError, 'key-error'),
+                       (ValueError, 'value-error'), (OSError, 'os-error')):
+        if isinstance(error, kind):
+            return name
+    return 'other-error'
+
+
+def _ledger_diagnostic(db):
+    """Bounded read-only counts/fixed states; never IDs, bodies or evidence."""
+    if not isinstance(db, sqlite3.Connection):
+        return {'available': False}
+    result = {'available': True}
+    names = ('x_stream_trial_run', 'x_stream_trial_readiness', 'x_stream_trial_readiness_requests',
+             'x_stream_rule_setup', 'x_stream_probe_run', 'x_stream_supervisor_owner')
+    states = frozenset(('running', 'reserved', 'blocked', 'observed', 'verified', 'ended',
+                        'post-claimed', 'post-verified', 'get-claimed'))
+    try:
+        for name in names:
+            if not x_stream_rules._table(db, name):
+                result[name] = {'present': False}
+                continue
+            count = db.execute('SELECT COUNT(*) FROM (SELECT 1 FROM ' + name + ' LIMIT 1025)').fetchone()[0]
+            item = {'present': True, 'rows': count}
+            if count == 1 and name in ('x_stream_trial_run', 'x_stream_trial_readiness',
+                                      'x_stream_rule_setup', 'x_stream_probe_run'):
+                column = 'status' if name == 'x_stream_trial_run' else 'state'
+                state = db.execute('SELECT ' + column + ' FROM ' + name + ' LIMIT 1').fetchone()[0]
+                item['state'] = state if state in states else 'unrecognized'
+            result[name] = item
+    except Exception:
+        result['available'] = False
+    return result
+
+
 class Controller:
     def __init__(self, *, db=None, enabled=False, plan=None, token_provider=None, backup_readiness=None,
                  storage_preflight=None, stop_event=None, emit=None, clock=None, monotonic=None,
@@ -156,6 +201,7 @@ class Controller:
         self.frozen = self.plan_sha = self.original_snapshot = self.original_exposure = None
         self.original_report = self.fresh = self.rule_result = None
         self.claimed = False
+        self.stage = 'not-started'
         self.capabilities = set()
 
     def _log(self, phase, value):
@@ -243,24 +289,30 @@ class Controller:
         self._storage()
 
     def initialize(self):
+        self.stage = 'plan-validation'
         validate_plan(self.plan, self.clock())
         if not isinstance(self.db, sqlite3.Connection) or self.db.in_transaction or not callable(self.token_provider):
             _block('durable-ledger-required')
+        self.stage = 'database-location'
         location = self.db.execute('PRAGMA database_list').fetchone()
         if not location or not location[2] or (self.storage_preflight is None and not Path(location[2]).resolve().is_relative_to('/data')):
             _block('service-volume-required')
         self.frozen = x_preflight._json(_json(self.plan)); self.plan_sha = digest(self.frozen)
         self.monotonic_end = self.monotonic() + (_utc(self.frozen['probe_end_at']) - _utc(self.clock())).total_seconds()
+        self.stage = 'storage-readiness'
         reserve = x_stream_probe.storage_reserve(self.db, dict(self.frozen, max_reads=64, max_metadata_bytes=65536))
         self.required_storage = max(x_stream_rules.MIN_FREE_BYTES, x_stream_probe.REVIEWED_STORAGE_FLOOR,
                                     reserve['required_free_bytes'])
         self._storage()
-        self.db.execute('PRAGMA synchronous=FULL'); self.db.execute('PRAGMA busy_timeout=100')
+        self.stage = 'database-durability'
+        self.db.execute('PRAGMA synchronous=FULL'); self.db.execute('PRAGMA busy_timeout=5000')
         if self.db.execute('PRAGMA synchronous').fetchone()[0] < 2:
             _block('durability-required')
+        self.stage = 'database-schema'
         _schema(self.db)
         self.readiness_id = digest(['x-stream-trial-readiness-v1', self.plan_sha])
         self.owner = 'trial-readiness:' + self.readiness_id
+        self.stage = 'trial-reservation'
         with self.db:
             self.db.execute('BEGIN IMMEDIATE')
             if self.db.execute('SELECT 1 FROM x_stream_trial_run').fetchone():
@@ -268,8 +320,10 @@ class Controller:
             for table in ('x_stream_probe_run', 'x_stream_rule_setup'):
                 if x_stream_rules._table(self.db, table) and self.db.execute('SELECT 1 FROM ' + table).fetchone():
                     _block('another-trial-present')
+            self.stage = 'original-evidence'
             self.original_snapshot, self.original_exposure, self.original_report = self._original()
             self._guards()
+            self.stage = 'trial-claim'
             p = self.frozen; stamp = x_stream.stamp(self.clock())
             self.db.execute("INSERT INTO x_stream_trial_run VALUES(1,?,?,NULL,'running',NULL,?,?,?,?,'unknown',NULL)",
                 (self.plan_sha, stamp, p['prior_exposure_contingency_micros'], p['setup_readiness_contingency_micros'],
@@ -294,6 +348,7 @@ class Controller:
         return True
 
     async def _get(self, transport, path):
+        self.stage = 'readiness-claim'
         with self.db:
             self.db.execute('BEGIN IMMEDIATE'); self._guards(self.owner)
             count = self.db.execute('SELECT requests_admitted FROM x_stream_trial_readiness').fetchone()[0]
@@ -306,6 +361,7 @@ class Controller:
         capability = identity, path
         self.capabilities.add(capability)
         try:
+            self.stage = 'readiness-request'
             return await transport.get(path, dict(x_preflight.BASE_PARAMS[path]), identity)
         finally:
             self.capabilities.discard(capability)
@@ -343,6 +399,7 @@ class Controller:
         if usage['other_app_usage_posts_one_day']:
             _block('other-app-usage-present')
         credits = x_preflight._credits(await self._get(transport, ORDER[4])); self._credits(credits)
+        self.stage = 'readiness-persistence'
         started = self.db.execute('SELECT started_at FROM x_stream_trial_readiness').fetchone()[0]
         present = {(row['value'], row['tag']) for row in inventory}
         missing = [row for row in x_stream.manifest() if (row['value'], row['tag']) not in present]
@@ -447,13 +504,16 @@ class Controller:
         try:
             self.initialize()
             await self._readiness()
+            self.stage = 'rule-setup'
             self.rule_result = await x_stream_rules.Installer(db=self.db, enabled=True, config=self._rules_config(),
                 token_provider=self.token_provider, reviewed_admission=self._review_rules, storage_preflight=self._storage,
                 transport_factory=self.rules_factory, stop_event=self.stop_event, clock=self.clock).run()
             self._log('rules', {k: self.rule_result[k] for k in ('status', 'reason')})
             if self.rule_result.get('status') != 'verified' or self.rule_result.get('owner_released') is not True:
                 _block('rule-setup-blocked')
+            self.stage = 'probe-setup'
             self.probe_config = self._probe_config()
+            self.stage = 'probe-run'
             result = await x_stream_probe.Probe(db=self.db, enabled=True, config=self.probe_config,
                 token_provider=self.token_provider, reviewed_admission=self._review_probe, storage_preflight=self._storage,
                 transport_factory=self._stream_transport, stop_event=self.stop_event, clock=self.clock,
@@ -465,8 +525,9 @@ class Controller:
             raise
         except (TrialBlocked, x_preflight.PreflightBlocked, x_stream_rules.RuleSetupBlocked) as exc:
             result = {'status': 'blocked', 'reason': str(exc)}
-        except Exception:
-            result = {'status': 'blocked', 'reason': 'x-trial-internal-failure'}
+        except Exception as exc:
+            result = {'status': 'blocked', 'reason': 'x-trial-internal-failure',
+                      'stage': self.stage, 'error_class': _error_class(exc), 'ledger': _ledger_diagnostic(self.db)}
         finally:
             if self.claimed:
                 try:
@@ -482,12 +543,30 @@ class Controller:
         return result
 
 
+def local_diagnostic(db_path):
+    """Open the existing volume DB read-only; never initialize, claim or connect."""
+    db = None
+    try:
+        db = sqlite3.connect(Path(db_path).resolve().as_uri() + '?mode=ro', uri=True, timeout=5)
+        db.execute('PRAGMA query_only=ON')
+        return _ledger_diagnostic(db)
+    except Exception as exc:
+        return {'available': False, 'error_class': _error_class(exc)}
+    finally:
+        if db is not None:
+            db.close()
+
+
 def run_once(db_path, stop_event, *, env=None, emit=None, backup_readiness=None):
     """Service-thread entry point. Existing bearer is accessed only after claims."""
     env = os.environ if env is None else env
     if not requested(env) or stop_event.is_set():
         return
     emit = emit or (lambda value: print(value, flush=True))
+    if str(env.get(LOCAL, '')).strip().lower() == 'true':
+        emit('x-stream-trial-local ' + _json(local_diagnostic(db_path)))
+    if str(env.get(ENABLED, '')).strip().lower() != 'true' or stop_event.is_set():
+        return
     db = None
     try:
         raw = env.get(PLAN, '')

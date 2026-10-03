@@ -10,6 +10,7 @@ import sqlite3
 import sys
 import tempfile
 import threading
+import time
 import unittest
 from unittest.mock import Mock, patch
 
@@ -296,12 +297,84 @@ class ControllerTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result['reason'],'x-trial-already-used'); self.token.assert_not_called()
 
 
+    async def test_real_monitor_row_factory_waits_for_competing_writer(self):
+        import monitor
+        path=Path(self.tmp.name)/'production.sqlite'
+        db=monitor.connect(path); self.addCleanup(db.close)
+        self.assertIs(db.row_factory,sqlite3.Row)
+        x_preflight.schema(db)
+        with db:
+            db.executemany('INSERT INTO x_metadata_preflight_runs VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',self.saved_original)
+            db.executemany('INSERT INTO x_metadata_preflight_storage_resume VALUES(?,?,?,?)',
+                           self.db.execute('SELECT * FROM x_metadata_preflight_storage_resume').fetchall())
+        acquired=threading.Event(); released=threading.Event(); errors=[]
+        def competing_writer():
+            other=sqlite3.connect(path)
+            try:
+                other.execute('BEGIN IMMEDIATE'); acquired.set()
+                time.sleep(0.35)
+                other.commit()
+            except Exception as exc:
+                errors.append(type(exc).__name__)
+            finally:
+                other.close(); released.set()
+        thread=threading.Thread(target=competing_writer); thread.start()
+        self.addCleanup(thread.join)
+        self.assertTrue(acquired.wait(2))
+        started=time.monotonic()
+        controller=self.controller(db=db); controller.initialize()
+        self.assertGreaterEqual(time.monotonic()-started,0.2)
+        self.assertTrue(released.wait(2)); self.assertEqual(errors,[])
+        self.assertEqual(db.execute('PRAGMA busy_timeout').fetchone()[0],5000)
+        self.assertTrue(controller.claimed); self.token.assert_not_called()
+        again=await self.controller(db=db).run()
+        self.assertEqual(again['reason'],'x-trial-already-used')
+
+    async def test_unexpected_failure_logs_only_fixed_stage_class_and_counts(self):
+        c=self.controller()
+        with patch.object(c,'_original',side_effect=TypeError(PRIVATE)):
+            result=await c.run()
+        self.assertEqual(result['reason'],'x-trial-internal-failure')
+        self.assertEqual(result['stage'],'original-evidence')
+        self.assertEqual(result['error_class'],'type-error')
+        self.assertEqual(result['ledger']['x_stream_trial_run']['rows'],0)
+        self.assertNotIn(PRIVATE,json.dumps(result)); self.token.assert_not_called()
+
+    async def test_unexpected_failure_after_claim_never_rearms(self):
+        c=self.controller()
+        with patch.object(c,'_readiness',side_effect=TypeError(PRIVATE)):
+            result=await c.run()
+        self.assertEqual(result['ledger']['x_stream_trial_run']['rows'],1)
+        self.assertEqual(result['ledger']['x_stream_trial_readiness_requests']['rows'],0)
+        again=await self.controller().run()
+        self.assertEqual(again['reason'],'x-trial-already-used'); self.token.assert_not_called()
+        diagnostic=trial.local_diagnostic(Path(self.tmp.name)/'service.sqlite')
+        self.assertEqual(diagnostic['x_stream_trial_run']['state'],'blocked')
+        self.assertEqual(diagnostic['x_stream_trial_readiness']['state'],'blocked')
+        self.assertEqual(diagnostic['x_stream_supervisor_owner']['rows'],1)
+
+
 class ServiceTests(unittest.TestCase):
     def test_default_off_does_not_open_database_or_load_token(self):
         env={}; stop=threading.Event()
         with patch.object(sqlite3,'connect',side_effect=AssertionError('db forbidden')):
             self.assertIsNone(trial.run_once('/not-a-database',stop,env=env))
         self.assertFalse(trial.requested(env))
+
+    def test_diagnostics_only_uses_existing_db_read_only_without_plan_or_token(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'service.sqlite'
+            db=sqlite3.connect(path); trial._schema(db); db.close()
+            before=path.read_bytes(); logs=[]
+            env={trial.LOCAL:'true',trial.ENABLED:'false',trial.PLAN:PRIVATE,'X_BEARER_TOKEN':SECRET}
+            with patch.object(trial.Controller,'initialize',side_effect=AssertionError('claim forbidden')):
+                trial.run_once(path,threading.Event(),env=env,emit=logs.append)
+            self.assertEqual(len(logs),1); self.assertTrue(logs[0].startswith('x-stream-trial-local '))
+            self.assertEqual(json.loads(logs[0].split(' ',1)[1])['x_stream_trial_run']['rows'],0)
+            self.assertEqual(path.read_bytes(),before)
+            self.assertNotIn(SECRET,logs[0]); self.assertNotIn(PRIVATE,logs[0])
+            missing=Path(directory)/'missing.sqlite'
+            self.assertFalse(trial.local_diagnostic(missing)['available']); self.assertFalse(missing.exists())
 
     def test_invalid_plan_is_sanitized(self):
         logs=[]
