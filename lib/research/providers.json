@@ -894,7 +894,7 @@
     "articleRules": [
       {
         "host": "blog.google",
-        "pattern": "^/(?:technology|products|company-news|inside-google|outreach-initiatives|around-the-globe|feed)/.+"
+        "pattern": "^/(?:technology|products|company-news|inside-google|outreach-initiatives|around-the-globe|feed|innovation-and-ai|products-and-platforms)/.+"
       },
       {
         "host": "www.sec.gov",
