@@ -1901,7 +1901,7 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
             published = row['published_at'] or row['published_on']
             published_at = instant(published) if published else None
             observed = instant(row['observed_at'])
-            if not observed or observed < cutoff or (published and (not published_at or published_at < cutoff)):
+            if not observed or not cutoff <= observed <= current or (published and (not published_at or not cutoff <= published_at <= current)):
                 continue
             if row['event_kind'] == 'baseline' and not published:
                 continue

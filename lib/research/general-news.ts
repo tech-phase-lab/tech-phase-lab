@@ -2,6 +2,8 @@ import providers from "./providers.json" with { type: "json" };
 import { parseResultBriefs, type ResultBrief } from "./market-results.ts";
 import { parseAnalystUpdates, type AnalystUpdate } from "./analyst-news.ts";
 type Syndication = { policy: "issuer-capacity-contract-v1"; issuer: string; distributor: "GlobeNewswire" | "PR Newswire" };
+export const OFFICIAL_NEWS_HISTORY_LIMIT = 100;
+export type OfficialHistory = { limit: number; sourceEligible: number; returned: number; omitted: number; hasMore: boolean; byteLimited: boolean; coreOverTarget: boolean };
 type NewsBody = { bodyJa?: string; bodyEn?: string };
 type CompactTitles = { shortTitleJa?: string; shortTitleEn?: string };
 export type GeneralNewsItem = CompactTitles & {
@@ -13,7 +15,7 @@ export type GeneralNewsItem = CompactTitles & {
 export type OfficialNewsSource = { id: string; url: string; publisher: string; publishedAt: string; observedAt: string };
 export type OfficialUpdate = CompactTitles & NewsBody & { syndication?: Syndication; id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[] };
 export type MarketUpdate = CompactTitles & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
-export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[] };
+export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; officialHistory?: OfficialHistory };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
   "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com", "www.bea.gov"]);
 
@@ -38,9 +40,9 @@ function newsBody(value: Record<string, unknown>, maxLength = 12000): NewsBody {
 export function availableNewsPayload(value: unknown): GeneralNewsFeed {
   if (!value || typeof value !== "object") throw Error("Invalid news feed");
   const raw = value as Record<string, unknown>;
-  const base = publicNewsPayload({ ok: raw.ok, enabled: raw.enabled, items: [] });
+  const base = publicNewsPayload({ ok: raw.ok, enabled: raw.enabled, items: [], officialHistory: raw.officialHistory });
   const accepted: Record<string, unknown[]> = {};
-  for (const [key, limit] of [["resultBriefs", 20], ["officialUpdates", 20], ["marketUpdates", 20], ["analystUpdates", 30], ["items", 30]] as const) {
+  for (const [key, limit] of [["resultBriefs", 20], ["officialUpdates", OFFICIAL_NEWS_HISTORY_LIMIT], ["marketUpdates", 20], ["analystUpdates", 30], ["items", 30]] as const) {
     if (raw[key] === undefined && key !== "items") continue;
     const rows = raw[key];
     accepted[key] = [];
@@ -60,7 +62,16 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
   if (!value || typeof value !== "object") throw new Error("Invalid news feed");
   const payload = value as Record<string, unknown>;
   if (payload.ok !== true || typeof payload.enabled !== "boolean" || !Array.isArray(payload.items) || payload.items.length > 30) throw new Error("Invalid news feed");
-  const updates: { officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[] } = {};
+  const updates: { officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; officialHistory?: OfficialHistory } = {};
+  if (payload.officialHistory && typeof payload.officialHistory === "object") {
+    const h = payload.officialHistory as Record<string, unknown>;
+    if (h.limit === OFFICIAL_NEWS_HISTORY_LIMIT
+      && ["sourceEligible", "returned", "omitted"].every(k => Number.isInteger(h[k]) && Number(h[k]) >= 0 && Number(h[k]) <= 600)
+      && Number(h.returned) <= OFFICIAL_NEWS_HISTORY_LIMIT
+      && ["hasMore", "byteLimited", "coreOverTarget"].every(k => typeof h[k] === "boolean")) {
+      updates.officialHistory = { limit: OFFICIAL_NEWS_HISTORY_LIMIT, sourceEligible: Number(h.sourceEligible), returned: Number(h.returned), omitted: Number(h.omitted), hasMore: h.hasMore as boolean, byteLimited: h.byteLimited as boolean, coreOverTarget: h.coreOverTarget as boolean };
+    }
+  }
   if (payload.analystUpdates !== undefined) updates.analystUpdates = parseAnalystUpdates(payload.analystUpdates);
   if (payload.marketUpdates !== undefined) {
     if (!Array.isArray(payload.marketUpdates) || payload.marketUpdates.length > 20) throw Error("Invalid market updates");
@@ -82,7 +93,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
   }
   if (payload.resultBriefs !== undefined) updates.resultBriefs = parseResultBriefs(payload.resultBriefs);
   if (payload.officialUpdates !== undefined) {
-    if (!Array.isArray(payload.officialUpdates) || payload.officialUpdates.length > 20) throw Error("Invalid updates");
+    if (!Array.isArray(payload.officialUpdates) || payload.officialUpdates.length > OFFICIAL_NEWS_HISTORY_LIMIT) throw Error("Invalid updates");
     const seenOfficialUrls = new Set<string>();
     updates.officialUpdates = payload.officialUpdates.map(raw => {
       if (!raw || typeof raw !== "object") throw Error("Invalid update");
@@ -203,4 +214,32 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
     return true;
   });
   return { ok: true, enabled: true, items, ...updates };
+}
+
+// Apply the same wire-size target after frontend result merging can add copy.
+// Other sections stay intact; any omitted official history is explicit metadata.
+export function boundedOfficialHistory(value: GeneralNewsFeed): GeneralNewsFeed {
+  const original = value.officialUpdates ?? [];
+  const officialUpdates = original.slice(0, OFFICIAL_NEWS_HISTORY_LIMIT);
+  const prior = value.officialHistory;
+  const result: GeneralNewsFeed = { ...value, officialUpdates };
+  const metadata = (byteLimited: boolean): OfficialHistory => ({
+    limit: OFFICIAL_NEWS_HISTORY_LIMIT, sourceEligible: prior?.sourceEligible ?? original.length,
+    returned: officialUpdates.length, omitted: (prior?.omitted ?? 0) + original.length - officialUpdates.length,
+    hasMore: !!prior?.hasMore || officialUpdates.length < original.length,
+    byteLimited: !!prior?.byteLimited || byteLimited, coreOverTarget: false,
+  });
+  const size = () => new TextEncoder().encode(JSON.stringify(result)).length;
+  result.officialHistory = metadata(false);
+  while (size() > 450_000 && officialUpdates.length) {
+    officialUpdates.pop(); result.officialHistory = metadata(true);
+  }
+  if (size() > 450_000) result.officialHistory.coreOverTarget = true;
+  if (size() > 500_000) {
+    // Optional new diagnostics must not poison an otherwise valid near-limit core.
+    delete result.officialHistory;
+    if (size() > 500_000) throw Error("Oversized news core");
+    console.warn("news-history-diagnostics-omitted-response-limit");
+  }
+  return result;
 }

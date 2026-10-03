@@ -1,4 +1,4 @@
-import { availableNewsPayload, publicNewsPayload, type OfficialUpdate } from "@/lib/research/general-news";
+import { availableNewsPayload, publicNewsPayload, boundedOfficialHistory, OFFICIAL_NEWS_HISTORY_LIMIT, type OfficialUpdate } from "@/lib/research/general-news";
 import { officialResultEvents } from "@/lib/research/official-result-events";
 import { mergeResultNews, resultNewsUpdate } from "@/lib/research/result-news";
 import { muFlash, muLatest } from '@/lib/research/mu-latest';
@@ -49,11 +49,18 @@ export async function GET() {
     const resultUpdates = (payload.resultBriefs ?? []).map(resultNewsUpdate);
     const fallback = issuerEvents.some(e => e.ticker === "MU" && e.kind === "earnings") ? [] : [{...muFlash, bodyJa: muLatest.facts.map(f => f.text.ja).join("\n\n"), bodyEn: muLatest.facts.map(f => f.text.en).join("\n\n")}];
     const merged: OfficialUpdate[] = [...resultUpdates, ...fallback, ...(payload.officialUpdates ?? []).filter(item => item.url !== muFlash.url && !resultUpdates.some(r => r.url === item.url))];
-    payload.officialUpdates = mergeResultNews(merged, payload.resultBriefs ?? [])
+    const history = mergeResultNews(merged, payload.resultBriefs ?? [])
       // Apply the same source-clock precedence as the list/pulse before the
       // limit; a newly acquired older date-only article must not crowd them out.
-      .toSorted((a,b)=>Date.parse(b.publishedAt ?? b.publishedOn ?? b.observedAt)-Date.parse(a.publishedAt ?? a.publishedOn ?? a.observedAt)).slice(0,20);
-    return Response.json(availableNewsPayload(payload), { headers });
+      .toSorted((a,b)=>Date.parse(b.publishedAt ?? b.publishedOn ?? b.observedAt)-Date.parse(a.publishedAt ?? a.publishedOn ?? a.observedAt));
+    payload.officialUpdates = history.slice(0, OFFICIAL_NEWS_HISTORY_LIMIT);
+    if (payload.officialHistory) {
+      const omitted = Math.max(0, history.length - OFFICIAL_NEWS_HISTORY_LIMIT);
+      payload.officialHistory = { ...payload.officialHistory, returned: payload.officialUpdates.length,
+        omitted: payload.officialHistory.omitted + omitted,
+        hasMore: payload.officialHistory.hasMore || omitted > 0 };
+    }
+    return Response.json(boundedOfficialHistory(availableNewsPayload(payload)), { headers });
   } catch {
     // A monitor outage is not an empty, successfully refreshed news feed.
     return Response.json({ ok: false, enabled: false, items: [] }, { status: 503, headers });

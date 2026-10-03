@@ -301,3 +301,25 @@ The feed revision, fetched article body hash, issuer and policy are bound separa
 RSS repolls cannot overwrite the richer evidence. Source publication/observation
 clocks remain unchanged; body-ready/publication times are separate private records.
 Historical repair is not proof of newly observed end-to-end delivery latency.
+
+The public news display now requests up to 500 already-validated recent records,
+then returns at most 100 official updates for the existing five-item pagination.
+This display-only window does not alter source intake or paid-generation queues.
+The complete runtime response, including duplicated research copy and other news
+sections, targets 450,000 serialized UTF-8 bytes. Oldest official history rows are
+removed when needed and `officialHistory` reports returned/omitted counts,
+`hasMore`, `byteLimited` and `coreOverTarget`. This is a bounded recent window,
+not a complete-history promise. Other sections remain unchanged; a pre-existing
+core above the target but below the existing 500,000-byte hard guard is preserved
+without added official rows. The hard guard remains unchanged. Source publication
+time controls ordering and NEW status; historical repair never resets that clock.
+
+In these diagnostics, `sourceEligible` counts the monitor's validated source
+window, while `returned` counts the final display after existing result merging
+and the Micron fallback. They need not sum with `omitted`: `omitted`/`hasMore`
+describe count/byte-window truncation, not invalid records rejected by the
+existing frontend validator or duplicate records consolidated into one story.
+The hard limit includes the added diagnostics envelope itself. If only that new,
+optional envelope pushes a previously valid core over 500,000 bytes, the envelope
+is omitted and a fixed server-side warning records the reason. Other public
+sections are preserved; truly oversized cores still fail the unchanged guard.

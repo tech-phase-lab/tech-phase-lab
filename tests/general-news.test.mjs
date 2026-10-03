@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 import { stripTypeScriptTypes } from "node:module";
-import { availableNewsPayload, publicNewsPayload } from "../lib/research/general-news.ts";
+import { availableNewsPayload, publicNewsPayload, boundedOfficialHistory } from "../lib/research/general-news.ts";
 
 const helper = new URL("../lib/research/general-news.ts", import.meta.url).href;
 const source = (await readFile(new URL("../app/api/research/news/route.ts", import.meta.url), "utf8"))
@@ -292,7 +292,7 @@ test('news API ranks source dates before recent acquisition clocks when limiting
   process.env.RESEARCH_MONITOR_URL='https://monitor.example.com';
   process.env.RESEARCH_MONITOR_TOKEN='synthetic-server-token';
   try {
-    const officialUpdates = Array.from({length:20}, (_,i)=>({
+    const officialUpdates = Array.from({length:100}, (_,i)=>({
       id:String(300+i),title:`Official update ${i}`,url:`https://nebius.com/blog/date-${i}`,
       publisher:'Nebius',tickers:['NBIS'],publishedOn:i === 0 ? '2026-09-28' : '2026-10-02',
       observedAt:i === 0 ? '2026-10-02T17:45:51.992Z' : '2026-10-02T01:00:00Z',
@@ -301,10 +301,10 @@ test('news API ranks source dates before recent acquisition clocks when limiting
     const response=await GET();
     assert.equal(response.status,200);
     const updates=(await response.json()).officialUpdates;
-    assert.equal(updates.length,20);
-    assert.deepEqual(updates.slice(0,19).map(x=>x.id),officialUpdates.slice(1).map(x=>x.id));
+    assert.equal(updates.length,100);
+    assert.deepEqual(updates.slice(0,99).map(x=>x.id),officialUpdates.slice(1).map(x=>x.id));
     assert.equal(updates.some(x=>x.id==='300'),false);
-    assert.equal(updates[19].researchId,'mu-q4-2026');
+    assert.equal(updates[99].researchId,'mu-q4-2026');
   } finally {
     globalThis.fetch=previous.fetch;
     for (const [key,value] of [['RESEARCH_MONITOR_URL',previous.url],['RESEARCH_MONITOR_TOKEN',previous.token]]) {
@@ -335,4 +335,74 @@ test('verified issuer-syndication capacity contracts require explicit attributio
     {title:'Delta Data Centers Announces Debt Offering with Nebius'}]) {
     assert.throws(()=>parse({...item,...change}));
   }
+});
+
+test('recent history retains a source-bound older contract beyond twenty rows without making it NEW', async () => {
+  const previous={fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
+  process.env.RESEARCH_MONITOR_URL='https://monitor.example.com';
+  process.env.RESEARCH_MONITOR_TOKEN='synthetic-server-token';
+  try {
+    const rows=Array.from({length:48},(_,i)=>({id:String(4000+i),title:`Company news ${i}`,
+      url:`https://nebius.com/blog/history-${i}`,publisher:'Nebius',tickers:['NBIS'],
+      publishedAt:new Date(Date.parse('2026-10-03T07:00:00Z')-i*3600000).toISOString(),
+      observedAt:'2026-10-03T07:01:00Z',bodyJa:'会社が発表した内容。',bodyEn:'Company announcement.'}));
+    const older={id:'1018',title:'AIB Data Centers Signs Contract with Nebius for AI Data Center Capacity',
+      translationJa:'AIB Data Centers、NebiusとAIデータセンター容量の契約を締結',
+      url:'https://www.globenewswire.com/news-release/2026/09/30/3371855/0/en/aib-data-centers-signs-contract-with-nebius-for-ai-data-center-capacity.html',
+      publisher:'AIB Data Centers Inc. / GlobeNewswire',tickers:['NBIS'],publishedAt:'2026-09-30T12:17:00Z',
+      observedAt:'2026-09-30T12:19:12.432+00:00',bodyJa:'AIB Data Centersが容量契約を発表した。',bodyEn:'AIB Data Centers announced a capacity contract.',
+      syndication:{policy:'issuer-capacity-contract-v1',issuer:'AIB Data Centers Inc.',distributor:'GlobeNewswire'}};
+    const history={limit:100,sourceEligible:49,returned:49,omitted:0,hasMore:false,byteLimited:false,coreOverTarget:false};
+    globalThis.fetch=async()=>Response.json({ok:true,enabled:false,items:[],officialUpdates:[...rows,older],officialHistory:history});
+    const response=await GET();assert.equal(response.status,200);
+    const payload=await response.json();
+    assert.equal(payload.officialUpdates.find(x=>x.id==='1018').observedAt,older.observedAt);
+    assert.equal(payload.officialUpdates.find(x=>x.id==='1018').publishedAt,'2026-09-30T12:17:00.000Z');
+    assert.ok(payload.officialUpdates.findIndex(x=>x.id==='1018')>20);
+    assert.equal(payload.officialHistory.hasMore,false);
+    const {officialTime,recentPublication}=await import('../lib/research/news-time.ts');
+    const time=officialTime(payload.officialUpdates.find(x=>x.id==='1018'));
+    assert.equal(recentPublication(time.at,time.kind,Date.parse('2026-10-03T08:00:00Z')),false);
+  } finally {
+    globalThis.fetch=previous.fetch;
+    for (const [key,value] of [['RESEARCH_MONITOR_URL',previous.url],['RESEARCH_MONITOR_TOKEN',previous.token]]) {
+      if(value===undefined) delete process.env[key]; else process.env[key]=value;
+    }
+  }
+});
+
+test('history overflow diagnostics survive sanitization without weakening count or response guards', async () => {
+  const h={limit:100,sourceEligible:150,returned:0,omitted:150,hasMore:true,byteLimited:true,coreOverTarget:false};
+  const payload=availableNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[],officialHistory:{...h,private:'SECRET'}});
+  assert.deepEqual(payload.officialHistory,h);
+  assert.throws(()=>publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:Array(101).fill({})}));
+});
+
+
+test('post-merge bilingual history is byte bounded without changing other public sections', () => {
+  const rows=Array.from({length:100},(_,i)=>({id:String(i),title:'Company update',url:`https://nebius.com/blog/bytes-${i}`,
+    publisher:'Nebius',tickers:['NBIS'],observedAt:'2026-10-03T08:00:00Z',bodyJa:'あ'.repeat(12000),bodyEn:'x'.repeat(12000)}));
+  const input={ok:true,enabled:false,items:[],officialUpdates:rows,analystUpdates:[],marketUpdates:[]};
+  const result=boundedOfficialHistory(input);
+  assert.ok(new TextEncoder().encode(JSON.stringify(result)).length<=450000);
+  assert.ok(result.officialHistory.hasMore);assert.ok(result.officialHistory.byteLimited);
+  assert.deepEqual(result.officialUpdates,rows.slice(0,result.officialUpdates.length));
+  assert.deepEqual(result.analystUpdates,input.analystUpdates);assert.deepEqual(result.marketUpdates,input.marketUpdates);
+  assert.equal(input.officialUpdates.length,100);
+});
+
+
+test('exact 499900-byte core survives optional new diagnostics without widening the hard guard', () => {
+  const input={ok:true,enabled:false,items:[],officialUpdates:[],fixture:''};
+  const size=v=>new TextEncoder().encode(JSON.stringify(v)).length;
+  input.fixture='x'.repeat(499900-size(input));
+  assert.equal(size(input),499900);
+  const oldWarn=console.warn,warnings=[];
+  try {
+    console.warn=message=>warnings.push(message);
+    const result=boundedOfficialHistory(input);
+    assert.deepEqual(result,input);assert.equal(size(result),499900);
+    assert.deepEqual(warnings,['news-history-diagnostics-omitted-response-limit']);
+    assert.throws(()=>boundedOfficialHistory({...input,fixture:input.fixture+'x'.repeat(1000)}),/Oversized news core/);
+  } finally {console.warn=oldWarn;}
 });

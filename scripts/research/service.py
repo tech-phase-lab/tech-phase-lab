@@ -24,6 +24,7 @@ import price_target_reconciliation
 import signal_source_detail
 import stock_news
 import news_drafts
+import news_history
 import editorial_posts
 import questions
 import note_translation
@@ -796,7 +797,12 @@ class AutomaticMonitor:
 
     def public_news(self):
         with stock_news.connect(self.db_path) as db:
-            return {**news_drafts.public_feed(db), "officialUpdates": signals.public_official_updates(db), "marketUpdates": x_market_news.public_feed(db), "analystUpdates": analyst_news.public_feed(db), "resultBriefs":market_results.public_feed(db), "officialResearch": official_research.feed(db)}
+            return news_history.bounded({**news_drafts.public_feed(db),
+                "officialUpdates": signals.public_official_updates(db, limit=500),
+                "marketUpdates": x_market_news.public_feed(db),
+                "analystUpdates": analyst_news.public_feed(db),
+                "resultBriefs": market_results.public_feed(db),
+                "officialResearch": official_research.feed(db)})
 
     def posts_queue(self, limit=20, published=False, offset=0):
         with editorial_posts.connect(self.db_path) as db:
