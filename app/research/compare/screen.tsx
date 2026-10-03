@@ -9,23 +9,41 @@ import { comparisonCatalog } from "@/lib/research/comparison-catalog";
 import type { ComparisonResult, Fact } from "@/lib/research/comparison";
 import styles from "./styles.module.css";
 import TickerSearch from "./ticker-search";
-import { comparisonScores, quarterlyHighlights, quarterlyTakeaway } from "@/lib/research/comparison-scorecard";
+import { comparisonScores, radarPoint, quarterlyHighlights, quarterlyTakeaway } from "@/lib/research/comparison-scorecard";
 import { comparisonChoices, enterChoice, moveChoice } from "@/lib/research/comparison-selection";
 const percent = (n: number | null) => n === null ? "—" : `${n.toFixed(1)}%`;
 function money(f: Fact | null, lang: string) { return f ? `${new Intl.NumberFormat(lang === "ja" ? "ja-JP" : "en-US", { notation: "compact", maximumFractionDigits: 2 }).format(f.value)} ${f.unit}` : "—"; }
+const companyColors = ["#ddc38a", "#9ed8c3", "#a5badf"];
+function StatusChart({companies,lang,now}: {companies:ComparisonResult["companies"];lang:"ja"|"en";now:number}) {
+  const sets=companies.map(c=>comparisonScores(c,now)), factors=sets[0];
+  const labels=lang==="ja" ? ["財務", "収益", "割安", "安定", "株価", "成長", "資金"] : ["Finance", "Profit", "Value", "Stability", "Momentum", "Growth", "Cash"];
+  const available=sets.some(scores=>scores.some(s=>s.value!==null));
+  return <div className={styles.statusChart}>
+    <div className={styles.statusLegend}>{companies.map((c,i)=><span key={c.ticker} style={{color:companyColors[i]}}>{c.ticker}</span>)}</div>
+    <svg viewBox="0 0 300 300" role="img" aria-label={lang==="ja" ? "企業ステータス比較。未取得の項目は描画しません。" : "Company status comparison. Missing factors are not plotted."}>
+      {[2,4,6,8,10].map(level=><polygon key={level} points={factors.map((_,i)=>radarPoint(level,i,factors.length)).join(" ")} fill="none" stroke="#435b60" strokeOpacity=".55"/>)}
+      {factors.map((f,i)=>{const [x,y]=radarPoint(10,i,factors.length)!.split(","),angle=-Math.PI/2+i*2*Math.PI/factors.length;return <g key={f.id}><line x1="150" y1="150" x2={x} y2={y} stroke="#435b60" strokeOpacity=".5"/><text x={150+Math.cos(angle)*119} y={154+Math.sin(angle)*111} textAnchor="middle" fill="#b3c6c4" fontSize="11">{labels[i]}</text></g>;})}
+      {sets.map((scores,cIndex)=>{const points=scores.map((s,i)=>radarPoint(s.value,i,scores.length));return <g key={companies[cIndex].ticker} fill={companyColors[cIndex]} stroke={companyColors[cIndex]}>{points.every(p=>p!==null) && <polygon points={points.join(" ")} fillOpacity=".12" strokeWidth="1.6"/>}{points.map((point,i)=>point===null ? null : <circle key={scores[i].id} cx={point.split(",")[0]} cy={point.split(",")[1]} r={4+cIndex} fillOpacity=".7" strokeWidth="1"><title>{companies[cIndex].ticker} {scores[i].label[lang]}: {scores[i].value}/10</title></circle>)}</g>;})}
+      {!available && <text x="150" y="154" textAnchor="middle" fill="#b2c2c7" fontSize="12">{lang==="ja" ? "データ未取得" : "Data unavailable"}</text>}
+    </svg>
+    <p className={styles.snapshotNote}>{lang==="ja" ? "未取得の項目は非表示" : "Missing factors are not plotted"}</p>
+  </div>;
+}
 function ScoreOverview({companies,lang,now}: {companies:ComparisonResult["companies"];lang:"ja"|"en";now:number}) {
+  const [view,setView]=useState<"scores"|"status">("scores");
   const scoreSets=companies.map(c=>comparisonScores(c,now)), factors=scoreSets[0], ja=lang==="ja";
   return <section className={styles.scoreOverview}><div className={styles.scoreHeading}><h2>{ja ? "比較スナップショット" : "Comparison snapshot"}</h2><small>{ja ? "参考スコア / 10" : "Reference score / 10"}</small></div>
-    <table className={styles.snapshotTable} style={{"--companies":companies.length} as React.CSSProperties}><caption className={styles.srOnly}>{ja ? "各項目の企業別スコア" : "Company scores by factor"}</caption>
+    <div className={styles.scoreViewSwitch} role="group" aria-label={ja ? "比較の表示切替" : "Comparison view"}><button type="button" aria-pressed={view==="scores"} onClick={()=>setView("scores")}>{ja ? "スコア" : "Scores"}</button><button type="button" aria-pressed={view==="status"} onClick={()=>setView("status")}>{ja ? "ステータス" : "Status"}</button></div>
+    {view==="status" ? <StatusChart companies={companies} lang={lang} now={now}/> : <><table className={styles.snapshotTable} style={{"--companies":companies.length} as React.CSSProperties}><caption className={styles.srOnly}>{ja ? "各項目の企業別スコア" : "Company scores by factor"}</caption>
       <thead><tr><th scope="col">{ja ? "項目" : "Factor"}</th>{companies.map((c,i)=><th key={c.ticker} scope="col" data-company={i}>{c.ticker}</th>)}</tr></thead>
       <tbody>{factors.map((f,index)=><tr key={f.id}><th scope="row">{f.label[lang]}</th>{companies.map((c,i)=>{const score=scoreSets[i][index];return <td key={c.ticker}><div className={styles.snapshotValue}><span className={styles.scoreTrack} aria-hidden="true">{score.value!==null && <i data-company={i} style={{width:`${score.value*10}%`}}/>}</span><strong>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div></td>;})}</tr>)}</tbody>
-    </table><p className={styles.snapshotNote}>{ja ? "— 未取得" : "— Unavailable"}</p>
+    </table><p className={styles.snapshotNote}>{ja ? "— 未取得" : "— Unavailable"}</p></>}
   </section>;
 }
 function CompanyScoreCard({company:c,lang,now}: {company:ComparisonResult["companies"][number];lang:"ja"|"en";now:number}) {
   const scores=comparisonScores(c,now), highlights=quarterlyHighlights(c,lang,now), ja=lang==="ja";
   return <article className={styles.scoreCard}>
-    <header className={styles.companyHeading}><h3 title={`${c.name}(${c.ticker})`}>{c.name}({c.ticker})</h3><span>{c.quarterRevenue ? `${ja ? "四半期" : "Quarter"} ${c.quarterRevenue.end}` : ja ? "四半期未取得" : "Quarter unavailable"}</span></header>
+    <header className={styles.companyHeading}><h3 title={`${c.name}（${c.ticker}）`}>{c.name}（{c.ticker}）</h3><span>{c.quarterRevenue ? `${ja ? "四半期" : "Quarter"} ${c.quarterRevenue.end}` : ja ? "四半期未取得" : "Quarter unavailable"}</span></header>
     <div className={styles.highlights}><p><b>{ja ? "長所" : "Strengths"}</b>{highlights.strengths.length ? highlights.strengths.join(" / ") : ja ? "判定に必要なデータが不足" : "Insufficient data"}</p>
       <p><b>{ja ? "短所" : "Weaknesses"}</b>{highlights.weaknesses.length ? highlights.weaknesses.join(" / ") : ja ? "この実績だけでは特定できません" : "Not established by these results alone"}</p></div>
     {c.dataWarnings?.map(message=><p key={message.en} className={styles.warning}>{message[lang]}</p>)}
@@ -48,7 +66,8 @@ export default function ComparisonScreen() {
   const [result, setResult] = useState<ComparisonResult | null>(null);
   const [validUntil, setValidUntil] = useState(0);
   const request = useRef<AbortController | null>(null);
-  const conclusion = useRef<HTMLElement | null>(null);
+  const conclusion = useRef<HTMLDivElement | null>(null);
+  const picker = useRef<HTMLElement | null>(null);
   useEffect(() => {
     if (memberPlan !== "pro") { request.current?.abort(); setResult(null); setBusy(false); }
     return () => { request.current?.abort(); };
@@ -119,12 +138,13 @@ export default function ComparisonScreen() {
     [t("営業リース負債 · 流動分", "Operating lease liability · current"), c => money(c.balance?.leaseCurrent ?? null, lang)],
     [t("営業リース負債 · 非流動分", "Operating lease liability · noncurrent"), c => money(c.balance?.leaseNoncurrent ?? null, lang)],
   ];
-  return <ResearchToolShell lang={lang} setLang={setLang} title={t("銘柄比較", "Compare stocks")} description={t("最大3社。数字の差から、投資判断の論点へ。", "Up to three companies. Go from numbers to the questions that matter.")}>
-    <div className={styles.eyebrow}>TECH PHASE PRO <span>{t("開発プレビュー · 決算比較", "PREVIEW · FINANCIAL COMPARISON")}</span></div>
+  return <ResearchToolShell showTools={!result} showHeading={!result} lang={lang} setLang={setLang} title={t("銘柄比較", "Compare stocks")} description={t("最大3社。数字の差から、投資判断の論点へ。", "Up to three companies. Go from numbers to the questions that matter.")}>
+    {!result && <div className={styles.eyebrow}>TECH PHASE PRO <span>{t("開発プレビュー · 決算比較", "PREVIEW · FINANCIAL COMPARISON")}</span></div>}
     {membership === "loading" && <p role="status">{t("会員情報を確認中…", "Checking membership…")}</p>}
     {membership === "free" && <section className={styles.lock}><span aria-hidden="true">🔒</span><h2>{t("比較・評価はPRO会員限定", "Comparison is exclusive to PRO")}</h2><p>{t("2〜3社を選び、結論・実績・成長性・注意点をまとめて確認できます。", "Choose two or three companies to explore the conclusion, performance, growth and caveats.")}</p><Link href="/research/account">{t("ログイン・会員情報", "Sign in / Membership")}</Link></section>}
     {membership === "pro" && <>
-      <section className={styles.picker} aria-label={t("比較する銘柄", "Select companies")}>
+      {!result && <>
+      <section ref={picker} tabIndex={-1} className={styles.picker} aria-label={t("比較する銘柄", "Select companies")}>
         <div className={styles.slots}>{[0,1,2].map(i => {
           const choices = comparisonChoices(suggestions[i], selection, i);
           const expanded = openSlot === i && Boolean(queries[i].trim()) && choices.length > 0;
@@ -162,10 +182,12 @@ export default function ComparisonScreen() {
         <p className={styles.note}>{t("SEC開示を比較。割安評価は株価データ接続後に対応。", "Compare SEC filings. Valuation awaits price data.")}</p>
       </section>
       <TickerSearch lang={lang} selection={selection} onSelect={selectCompany} />
+      </>}
       {busy && <div className={styles.loading} role="status"><span className={styles.spinner} aria-hidden="true"/><strong>{t("開示資料と比較条件を精査中…", "Checking filings and comparability…")}</strong><p>{t("期間・通貨・会計基準を確認しています。初回は時間がかかる場合があります。", "Checking periods, currencies and accounting bases. The first request may take longer.")}</p></div>}
       {error && <p role="alert">{t("比較結果を取得できませんでした。選択は残っています。もう一度お試しください。", "Could not retrieve the comparison. Your selection is saved; please try again.")}</p>}
-      {result && <div className={styles.results}>
-        <section ref={conclusion} tabIndex={-1} className={styles.conclusion} aria-label={t("比較の結論", "Comparison conclusion")}><p className={styles.eyebrow}>{t("比較の結論", "THE TAKEAWAY")}</p><h2>{quarterlyTakeaway(result.companies,lang,Date.parse(result.generatedAt))}</h2><p>{t("割安度：最新株価・PER・PEGの接続待ち。", "Valuation awaits current price, P/E and PEG data.")}</p>{result.reasons.length > 0 && <details><summary>{t("比較条件・注意点", "Comparison caveats")}</summary><ul>{result.reasons.map(r => <li key={r.en}>{r[lang]}</li>)}</ul></details>}<small>{t("比較作成", "Compared at")}: {new Date(result.generatedAt).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo" })} JST</small></section>
+      {result && <div ref={conclusion} tabIndex={-1} className={`${styles.results} ${styles.resultView}`}>
+        <button type="button" className={styles.backToCompare} onClick={()=>{setResult(null);requestAnimationFrame(()=>{picker.current?.scrollIntoView({block:"start",behavior:"instant"});picker.current?.focus({preventScroll:true});});}}>{t("▶ 銘柄比較PROに戻る", "▶ Back to Compare PRO")}</button>
+        <section className={styles.conclusion} aria-label={t("比較の結論", "Comparison conclusion")}><p className={styles.eyebrow}>{t("比較の結論", "THE TAKEAWAY")}</p><h2>{quarterlyTakeaway(result.companies,lang,Date.parse(result.generatedAt))}</h2><p>{t("割安度：最新株価・PER・PEGの接続待ち。", "Valuation awaits current price, P/E and PEG data.")}</p>{result.reasons.length > 0 && <details><summary>{t("比較条件・注意点", "Comparison caveats")}</summary><ul>{result.reasons.map(r => <li key={r.en}>{r[lang]}</li>)}</ul></details>}<small>{t("比較作成", "Compared at")}: {new Date(result.generatedAt).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo" })} JST</small></section>
         <div className={styles.companyCards}>{result.companies.map(c=><CompanyScoreCard key={c.ticker} company={c} lang={lang} now={Date.parse(result.generatedAt)}/>)}</div><ScoreOverview companies={result.companies} lang={lang} now={Date.parse(result.generatedAt)}/>
         <details className={styles.scoreMethod}><summary>{t("評価基準", "Scoring methodology")}</summary><p>{t("参考スコアです。取得した180日以内の四半期実績だけを採点し、年次実績で穴埋めしません。高い点ほど良好ですが、業種差・買収・一時要因は未調整です。— は未取得で、0点ではありません。", "Reference scores use retrieved quarters ending within 180 days, without annual substitutes. Higher is better. Industry differences, acquisitions and one-offs are not adjusted; — is unavailable, not zero.")}</p><p>{t("成長性：売上前年比0%で5点、50%で10点。収益力：営業利益率0%で0点、50%で10点。財務：四半期の流動比率と現金／開示された長期債務で採点。資金創出：四半期簡易FCF率0%で5点、25%で10点。割安性・安定性・株価モメンタムは必要な時系列・株価・予想データが未接続です。0〜10点に収めます。", "Growth: 0% YoY = 5, 50% = 10. Profitability: 0% operating margin = 0, 50% = 10. Financial strength uses quarterly liquidity and cash versus disclosed long-term debt. Cash generation: 0% simple FCF margin = 5, 25% = 10. Valuation, stability and momentum await the required historical, quote and estimate data. Scores are bounded to 0–10.")}</p></details>
         <details className={styles.detailNumbers}><summary>{t("詳しい数値・出典を見る", "View detailed numbers and sources")}</summary><div className={styles.results}>

@@ -12,7 +12,7 @@ import type { Language } from "@/lib/research/data";
 import base from "./research.module.css";
 import styles from "./research-tools.module.css";
 
-export default function ResearchToolShell({ lang, setLang, title, description, children, desk = false, showTools = true }: { lang: Language; setLang: (lang: Language) => void; title: string; description: string; children: ReactNode; desk?: boolean; showTools?: boolean }) {
+export default function ResearchToolShell({ lang, setLang, title, description, children, desk = false, showTools = true, showHeading = true }: { lang: Language; setLang: (lang: Language) => void; title: string; description: string; children: ReactNode; desk?: boolean; showTools?: boolean; showHeading?: boolean }) {
   const pathname = usePathname();
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#tool-main">{lang === "ja" ? "本文へ移動" : "Skip to content"}</a>
@@ -32,7 +32,7 @@ export default function ResearchToolShell({ lang, setLang, title, description, c
         <Link href="/research/columns" aria-current={pathname === "/research/columns" ? "page" : undefined}><NavigationIcon name="pro" />{lang === "ja" ? "PRO記事・週刊" : "PRO articles & weekly"}</Link>
       </nav>}
       {desk && <div className={styles.deskSignature}><span>RIZEL’S DESK</span><small>TECH PHASE PRO</small></div>}
-      <h1>{title}</h1>{description && <p className={styles.description}>{description}</p>}
+      {showHeading && <><h1>{title}</h1>{description && <p className={styles.description}>{description}</p>}</>}
       {desk && <nav className={styles.deskNav} aria-label={lang === "ja" ? "RIZEL’S DESKメニュー" : "RIZEL’S DESK navigation"}>
         <Link href="/research/notes" aria-current={pathname === "/research/notes" ? "page" : undefined}>{lang === "ja" ? "ひとりごと" : "Notes"}</Link>
         <Link href="/research/qa" aria-current={pathname?.startsWith("/research/qa") ? "page" : undefined}>{lang === "ja" ? "リゼルに聞く" : "Ask RIZEL"}</Link>
