@@ -32,6 +32,8 @@ import question_translation
 import headline_translation
 import x_market_news
 import analyst_news
+import general_source_news
+import issuer_business_news
 import x_stream_runtime
 import x_stream_pilot
 import x_preflight_service
@@ -1309,12 +1311,14 @@ class AutomaticMonitor:
                     state["signalIntake"]["xStream"] = dict(self.x_stream_status)
             state["signalIntake"]["xMarketNews"] = x_market_news.diagnostics(db)
             state["signalIntake"]["analystNews"] = analyst_news.diagnostics(db)
+            state["signalIntake"]["businessNews"] = general_source_news.diagnostics(db,datetime.now(timezone.utc))
             state["signalIntake"]["headlineTranslation"] = (
                 headline_translation.diagnostics(db, env=os.environ)
             )
             state["signalIntake"]["resultPublication"] = market_results.diagnostics(db)
             state["signalIntake"]["officialResearch"] = official_research.diagnostics(db)
             state["signalIntake"]["issuerSyndication"] = issuer_syndication.diagnostics(db)
+            state["signalIntake"]["issuerBusinessNews"] = issuer_business_news.diagnostics(db,datetime.now(timezone.utc))
             state["incidents"] = monitor.operational_incident_summary(
                 db, delivery_enabled=self.notification_enabled
             )

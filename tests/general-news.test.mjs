@@ -406,3 +406,18 @@ test('exact 499900-byte core survives optional new diagnostics without widening 
     assert.throws(()=>boundedOfficialHistory({...input,fixture:input.fixture+'x'.repeat(1000)}),/Oversized news core/);
   } finally {console.warn=oldWarn;}
 });
+
+test('verified semantic issuer policy stays bound to issuer, source, body and tracked subject', () => {
+  const item = { id: '1250', title: 'Nebius Acquires Inferize to Expand Inference Capacity', translationJa: 'Nebius、Inferizeを買収',
+    url: 'https://www.globenewswire.com/news-release/2026/09/30/9876543/0/en/nebius-acquires-inferize.html',
+    publisher: 'Nebius / GlobeNewswire', tickers: ['NBIS'], observedAt: '2026-09-30T12:19:12Z', publishedAt: '2026-09-30T12:17:00Z',
+    bodyJa: 'NebiusはInferizeを買収した。', bodyEn: 'Nebius completed its acquisition of Inferize.',
+    syndication: { policy: 'issuer-business-news-v1', issuer: 'Nebius', distributor: 'GlobeNewswire' } };
+  const feed = publicNewsPayload({ ok: true, enabled: false, items: [], officialUpdates: [item] });
+  assert.equal(feed.officialUpdates[0].syndication.policy, 'issuer-business-news-v1');
+  for (const change of [{ syndication: undefined }, { title: 'Unrelated issuer launches a product' },
+    { tickers: ['UNTRACKED'] }, { bodyJa: undefined }, { publisher: 'X · Some Reporter' },
+    { url: item.url + '?unverified=1' }, { title: 'Nebius conference presentation' }]) {
+    assert.throws(() => publicNewsPayload({ ok: true, enabled: false, items: [], officialUpdates: [{ ...item, ...change }] }));
+  }
+});

@@ -1,7 +1,7 @@
 import providers from "./providers.json" with { type: "json" };
 import { parseResultBriefs, type ResultBrief } from "./market-results.ts";
 import { parseAnalystUpdates, type AnalystUpdate } from "./analyst-news.ts";
-type Syndication = { policy: "issuer-capacity-contract-v1"; issuer: string; distributor: "GlobeNewswire" | "PR Newswire" };
+type Syndication = { policy: "issuer-capacity-contract-v1" | "issuer-business-news-v1"; issuer: string; distributor: "GlobeNewswire" | "PR Newswire" };
 export const OFFICIAL_NEWS_HISTORY_LIMIT = 100;
 export type OfficialHistory = { limit: number; sourceEligible: number; returned: number; omitted: number; hasMore: boolean; byteLimited: boolean; coreOverTarget: boolean };
 type NewsBody = { bodyJa?: string; bodyEn?: string };
@@ -131,6 +131,21 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
         && (syndicatedPartners[v.tickers[0]] ?? []).includes(syndicationSubject?.[2] ?? "")
         && !!newsBody(v).bodyJa && typeof v.publishedAt === "string") {
         syndication = { policy: "issuer-capacity-contract-v1", issuer: rawSyndication.issuer, distributor: rawSyndication.distributor };
+      }
+      if (rawSyndication?.policy === "issuer-business-news-v1"
+        && typeof rawSyndication.issuer === "string" && /^[A-Za-z][A-Za-z0-9 .,&'()-]{1,69}$/.test(rawSyndication.issuer)
+        && ((rawSyndication.distributor === "GlobeNewswire" && ["www.globenewswire.com", "globenewswire.com"].includes(url.hostname)
+            && /^\/news-release\/20\d{2}\/\d{2}\/\d{2}\/\d+\/0\/en\/[a-z0-9-]+\.html$/i.test(url.pathname))
+          || (rawSyndication.distributor === "PR Newswire" && url.hostname === "www.prnewswire.com"
+            && /^\/news-releases\/[a-z0-9-]+-\d+\.html$/i.test(url.pathname)))
+        && !url.search && !url.hash && v.publisher === `${rawSyndication.issuer} / ${rawSyndication.distributor}`
+        && typeof v.title === "string" && !!syndicatedIssuer && v.title.toLowerCase().startsWith(syndicatedIssuer.toLowerCase() + " ")
+        && /\b(contract|agreement|partnership|acqui(re|res|red|sition)|launch(es|ed)?|introduc(es|ed)|capacity|production|business outlook|guidance)\b/i.test(v.title)
+        && !/\b(lawsuit|class action|shareholder alert|webinar|conference|presentation)\b/i.test(v.title)
+        && Array.isArray(v.tickers) && v.tickers.length === 1 && providers.some(p => p.ticker === (v.tickers as string[])[0])
+        && typeof v.translationJa === "string" && !!v.translationJa.trim()
+        && !!newsBody(v).bodyJa && typeof v.publishedAt === "string") {
+        syndication = { policy: "issuer-business-news-v1", issuer: rawSyndication.issuer, distributor: rawSyndication.distributor };
       }
       if (v.syndication !== undefined && !syndication) throw Error("Invalid syndicated release");
       const issuerRelease = providers.some(provider => Array.isArray(v.tickers) && v.tickers.includes(provider.ticker)

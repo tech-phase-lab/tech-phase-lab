@@ -21,6 +21,8 @@ import official_research_content_repair as content_repair
 import official_research_editorial_recovery as editorial_recovery
 import oracle_reviewed_recovery
 import signals
+import general_source_news
+import issuer_business_news
 
 MAX_EVIDENCE_CHARS = 1800
 
@@ -87,7 +89,7 @@ def candidates(db, reference, *, read_only=False):
         tickers = json.loads(row['tickers_json'])
         if row['id'] in visible_ids and row['id'] not in primary_ids and tickers and bridge.is_current(db,row):
             stories.append({**dict(row), 'ticker': tickers[0], 'body_cached': True})
-    return primary + stories
+    return primary + stories + general_source_news.candidates(db,reference) + issuer_business_news.candidates(db,reference)
 
 
 def prepare_story_body(path, reference, request=None):
@@ -143,6 +145,10 @@ def prepare_story_body(path, reference, request=None):
 
 
 def current_revision(db, row):
+    if row.get('issuer_business'):
+        return issuer_business_news.current_revision(db,row)
+    if row.get('general_source'):
+        return general_source_news.current_revision(db,row)
     if row['source_id'].startswith('primary-ir-'):
         if not bridge.is_current(db,row):
             return False
@@ -181,6 +187,26 @@ def public_story_body(db, row):
 
 def normalized(text):
     return re.sub(r'\s+', ' ', text).strip()
+
+
+def publication_clock_valid(saved,row,reference):
+    if not (row.get('general_source') or row.get('issuer_business')):
+        return True
+    instant=general_source_news.reconciliation.instant
+    started,public=instant(saved['started_at']),instant(saved['public_at'])
+    observed,body_at=instant(row['observed_at']),instant(row['body_at'])
+    return bool(started and public and observed and body_at and observed<=body_at<=started<=public<=reference)
+
+
+def validate_row(note,row):
+    if row.get('general_source'):
+        return general_source_news.validate_note(note,row)
+    validated=validate({k:v for k,v in note.items() if k in ('title','summary','facts','purpose')},row['body'],row['title'])
+    if row.get('issuer_business'):
+        if note.get('issuerBusinessPolicy')!=issuer_business_news.POLICY:
+            raise ValueError('invalid-note')
+        issuer_business_news.validate_paraphrase(validated)
+    return validated
 
 
 def validate(value, body, source_title=''):
@@ -247,10 +273,10 @@ def claim(db, reference, model, limit):
         for r in rows:
             if not current_revision(db,r):
                 continue
-            published=db.execute('SELECT sha,body_sha,payload FROM official_research_publications WHERE event_id=?',(r['id'],)).fetchone()
-            if published and published['sha']==r['sha'] and published['body_sha']==r['body_sha']:
+            published=db.execute('SELECT sha,body_sha,payload,started_at,public_at FROM official_research_publications WHERE event_id=?',(r['id'],)).fetchone()
+            if published and published['sha']==r['sha'] and published['body_sha']==r['body_sha'] and publication_clock_valid(published,r,reference):
                 try:
-                    validate({k:v for k,v in json.loads(published['payload']).items() if k in ('title','summary','facts','purpose')}, r['body'], r['title'])
+                    validate_row(json.loads(published['payload']),r)
                     continue
                 except (ValueError, TypeError):
                     pass
@@ -464,13 +490,21 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         return 'idle'
     row,lease=claimed
     started=time.monotonic()
-    excerpts=evidence_excerpts(row['body'])
-    policy=POLICY
+    general=bool(row.get('general_source'))
+    excerpts=general_source_news.evidence_excerpts(row) if general else evidence_excerpts(row['body'])
+    policy=general_source_news.POLICY if general else POLICY
     with connect(path) as db:
         corrections=retry_feedback(db,row,excerpts)
+        if general:
+            failure=db.execute('SELECT reason,detail FROM official_research_attempt_failures WHERE event_id=? AND sha=? ORDER BY failed_at DESC LIMIT 1',(row['id'],row['sha'])).fetchone()
+            corrections=[{'issue':failure['reason'],'field':failure['detail']}] if failure else []
     payload={'model':model,'store':False,'max_output_tokens':2400,'instructions':policy,
              'input':json.dumps({'ticker':row['ticker'],'title':row['title'],'evidenceExcerpts':excerpts,'correctionsRequired':corrections},ensure_ascii=False),
-             'text':{'format':{'type':'json_schema','name':'issuer_factual_note','strict':True,'schema':response_schema()}}}
+             'text':{'format':{'type':'json_schema','name':'issuer_factual_note','strict':True,'schema':general_source_news.response_schema() if general else response_schema()}}}
+    if general:
+        input_data=json.loads(payload['input'])
+        input_data['evidenceContext']={u['id']:{'actor':u['actor'],'requiredTopics':sorted(general_source_news.concepts(u['quote'],'en'))} for u in row['units']}
+        payload['input']=json.dumps(input_data,ensure_ascii=False)
     usage={}
     value=None
     try:
@@ -478,19 +512,25 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         if response.get('status')!='completed':
             raise ValueError('incomplete')
         value=json.loads(brief_generator.output_text(response))
-        for item in [value.get('title'),value.get('summary'),*(value.get('facts') or []),value.get('purpose')]:
-            if isinstance(item,dict) and 'evidenceId' in item:
-                evidence_id=item.pop('evidenceId')
-                if not isinstance(evidence_id,str) or evidence_id not in excerpts:
-                    raise ValueError('unsupported-quote')
-                bind_evidence(item,evidence_id,excerpts,row)
-        note=validate(value,row['body'],row['title'])
+        if general:
+            note=general_source_news.bind_note(value,row)
+        else:
+            for item in [value.get('title'),value.get('summary'),*(value.get('facts') or []),value.get('purpose')]:
+                if isinstance(item,dict) and 'evidenceId' in item:
+                    evidence_id=item.pop('evidenceId')
+                    if not isinstance(evidence_id,str) or evidence_id not in excerpts:
+                        raise ValueError('unsupported-quote')
+                    bind_evidence(item,evidence_id,excerpts,row)
+            note=validate(value,row['body'],row['title'])
+            if row.get('issuer_business'):
+                note['issuerBusinessPolicy']=issuer_business_news.POLICY
+                issuer_business_news.validate_paraphrase(note)
         usage={k:v for k,v in (response.get('usage') or {}).items()
                if k in ('input_tokens','output_tokens','total_tokens') and type(v) is int}
     except Exception as exc:
         cause=getattr(exc,'__cause__',None)
         provider_status=getattr(cause,'code',None)
-        reason=str(exc) if type(exc) is ValueError and str(exc) in {'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete'} else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
+        reason=str(exc) if type(exc) is ValueError and str(exc) in ({'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete','lost-forecast-modality','lost-negation','reversed-supply-demand','lost-fiscal-basis','lost-comparison','invented-broker-action','source-copy-overlap','unsupported-actor','lost-action-status'} | general_source_news.FAILURE_CODES) else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
         with connect(path) as db, db:
             # Private audit evidence for a failed attempt; never returned by feed.
             # Preserve the rejected copy so retries can be diagnosed, not guessed.
@@ -515,7 +555,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
               payload=excluded.payload,evidence=excluded.evidence,started_at=excluded.started_at,
               public_at=excluded.public_at,generation_ms=excluded.generation_ms''',
                        (row['id'],row['sha'],row['body_sha'],json.dumps(note,ensure_ascii=False),
-                        json.dumps([x['evidenceQuote'] for x in [note['title'],note['summary'],*note['facts'],note['purpose']]]),
+                        json.dumps([x['evidenceQuote'] for x in (note['facts'] if general else [note['title'],note['summary'],*note['facts'],note['purpose']])]),
                         reference.isoformat(),public_at,round((time.monotonic()-started)*1000)))
         db.execute('UPDATE official_research_jobs SET state=? WHERE event_id=? AND lease=?',(state,row['id'],lease))
         db.execute('UPDATE signal_headline_translation_calls SET state=?,usage=? WHERE lease=?',(state,json.dumps(usage),lease))
@@ -532,13 +572,13 @@ def validated_publications(db, rows):
     for p in db.execute('SELECT * FROM official_research_publications '
                         'WHERE event_id IN ('+placeholders+') ORDER BY public_at DESC', tuple(current)):
         r=current[p['event_id']]
-        if r['sha']!=p['sha'] or r['body_sha']!=p['body_sha'] or not current_revision(db,r):
+        if r['sha']!=p['sha'] or r['body_sha']!=p['body_sha'] or not current_revision(db,r) or not publication_clock_valid(p,r,datetime.now(timezone.utc)):
             continue
         try:
             note=json.loads(p['payload'])
             if not isinstance(note,dict):
                 continue
-            validate({k:v for k,v in note.items() if k in ('title','summary','facts','purpose')}, r['body'], r['title'])
+            validate_row(note,r)
         except (ValueError, TypeError, KeyError):
             continue
         publications.append((r,p,note))

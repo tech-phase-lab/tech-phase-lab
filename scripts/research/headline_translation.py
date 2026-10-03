@@ -124,7 +124,7 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
         translated = db.execute('''SELECT 1 FROM signal_headline_translations
           WHERE source_id=? AND url=? AND sha=?''',
                                 (row["source_id"], row["url"], row["sha"])).fetchone()
-        if (translated or item.get('syndication')) and item.get("translationJa"):
+        if (translated or item.get('syndication') or item.get('generalSource')) and item.get("translationJa"):
             counts["translated"] += 1
             continue
         counts["pending"] += 1
@@ -216,8 +216,8 @@ def claim(db, sources, limit, model, now):
     with db:
         db.execute("BEGIN IMMEDIATE")
         for item in items:
-            if item.get('syndication'):
-                # Deterministic bilingual releases never expand paid eligibility.
+            if item.get('syndication') or item.get('generalSource'):
+                # These validated bilingual titles need no second paid translation.
                 continue
             row = db.execute("SELECT * FROM signal_events WHERE id=?", (item["id"],)).fetchone()
             if not row or re.fullmatch(r"https?://\S+", row["title"].strip(), re.I):

@@ -20,7 +20,7 @@ QUEUE_CAPACITY = 500
 CONTRACT_PARTNERS = {'NBIS': ['Nebius']}
 SOURCES = {'globenewswire-public': ('GlobeNewswire', 'article-body'),
            'prnewswire-public': ('PR Newswire', 'release-body')}
-MATERIAL = re.compile(r'\b(?:contract|agreement|partnership|acqui(?:re|res|red|sition)|capacity|commitment)\b', re.I)
+MATERIAL = re.compile(r'\b(?:contract|agreement|partnership|acqui(?:re|res|red|sition)|capacity|commitment|launch(?:es|ed)?|introduc(?:es|ed)|production|business outlook|guidance)\b', re.I)
 EXCLUDED = re.compile(r'\b(?:lawsuit|class action|investigation|shareholder alert|offering|debentures|warrants|webinar|conference|presentation)\b', re.I)
 
 
@@ -150,7 +150,7 @@ def extract(source, row, raw):
                   'distributor': SOURCES[source['id']][0]}
 
 
-def candidates(db, reference):
+def candidates(db, reference, *, include_research=False):
     marks = ','.join('?' for _ in SOURCES)
     rows = db.execute(f'''SELECT e.*,d.text AS retained_body,d.first_seen_at
       FROM signal_events e JOIN signal_documents d
@@ -176,8 +176,16 @@ def candidates(db, reference):
             continue
         # Already reviewed original publications (including Oracle) are untouched.
         if db.execute("SELECT 1 FROM sqlite_master WHERE name='official_research_publications'").fetchone():
-            if db.execute('SELECT 1 FROM official_research_publications WHERE event_id=? AND sha=?', (row['id'], row['sha'])).fetchone():
-                continue
+            previous=db.execute('SELECT payload FROM official_research_publications WHERE event_id=? AND sha=?', (row['id'],row['sha'])).fetchone()
+            if previous and not include_research:
+                try:
+                    semantic=json.loads(previous['payload']).get('issuerBusinessPolicy')=='issuer-business-news-v1'
+                except (ValueError,TypeError,AttributeError):
+                    semantic=False
+                if not semantic:
+                    continue
+                # Our semantic notes still need normal body refreshes: a
+                # same-headline article correction must revoke old copy.
         result.append(row)
     return result
 

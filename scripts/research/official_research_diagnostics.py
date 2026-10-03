@@ -16,7 +16,7 @@ import official_research_content_repair as repair
 
 
 ISSUES = {'invalid-note', 'invalid-facts', 'invalid-item', 'unsupported-quote',
-          'invalid-copy', 'unsupported-number', 'incomplete'}
+          'invalid-copy', 'unsupported-number', 'incomplete', 'lost-forecast-modality', 'lost-negation', 'reversed-supply-demand', 'lost-fiscal-basis', 'lost-comparison', 'invented-broker-action', 'source-copy-overlap', 'unsupported-actor', 'lost-action-status'} | research.general_source_news.FAILURE_CODES
 
 
 def failure_kind(value):
@@ -47,6 +47,15 @@ def validation_report(payload, row):
         note = json.loads(payload)
         if not isinstance(note, dict):
             raise ValueError('invalid-note')
+        if row.get('issuer_business'):
+            research.validate_row(note,row)
+            return {'status':'valid','issues':[]}
+        if row.get('general_source'):
+            if 'generalSourceVersion' in note:
+                research.validate_row(note,row)
+            else:
+                research.general_source_news.bind_note(note,row)
+            return {'status':'valid','issues':[]}
         note = {key: value for key, value in note.items() if key in ('title', 'summary', 'facts', 'purpose')}
         research.validate(note, row['body'], row['title'])
         return {'status': 'valid', 'issues': []}
@@ -154,10 +163,10 @@ def queue(path, limit=20, view='pending', reference=None):
         rows = research.candidates(db, reference, read_only=True)
         result, published, raw_copy_included = [], 0, False
         for row in sorted(rows, key=lambda item: item['id'], reverse=True):
-            publication = db.execute('SELECT sha,body_sha,payload,public_at FROM official_research_publications WHERE event_id=?', (row['id'],)).fetchone()
+            publication = db.execute('SELECT sha,body_sha,payload,started_at,public_at FROM official_research_publications WHERE event_id=?', (row['id'],)).fetchone()
             current_publication = bool(publication and publication['sha'] == row['sha'] and publication['body_sha'] == row['body_sha'])
             saved = validation_report(publication['payload'], row) if current_publication else {'status': 'unavailable', 'issues': []}
-            valid = current_publication and saved['status'] == 'valid'
+            valid = current_publication and saved['status'] == 'valid' and research.publication_clock_valid(publication,row,reference)
             published += int(valid)
             if view == 'pending' and valid:
                 continue

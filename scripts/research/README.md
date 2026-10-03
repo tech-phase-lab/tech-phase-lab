@@ -323,3 +323,44 @@ The hard limit includes the added diagnostics envelope itself. If only that new,
 optional envelope pushes a previously valid core over 500,000 bytes, the envelope
 is omitted and a fixed server-side warning records the reason. Other public
 sections are preserved; truly oversized cores still fail the unchanged guard.
+
+### Source-bound business and outlook news
+
+The existing `official_research` worker also handles bounded, current retained
+business news. It reuses the already enabled/dated-approved headline model/key,
+atomic rolling-24-hour call ledger (including failures), configured cap, headline
+reserve, 2,400-output-token ceiling and persistent retry/backoff. This does not
+enable private research auto-drafts, add X queries, or grant new source hosts.
+
+`general_source_news` assesses full retained TipRanks/WallStEngine posts within
+the existing seven-day source window. The opening approved company/cashtag must
+bind the subject. Contract, acquisition, product, capacity, management-outlook
+and substantive broker-commentary posts are eligible; promotions, bare rating
+reiterations, independently covered analyst/target/results actions, malformed
+clocks, incomplete/hash-mismatched bodies, corrections and ambiguous multi-party
+relations receive separate private reason codes. Inputs are at most 3,600
+characters, eight evidence units, 800 characters per unit. No queued candidate
+is marked published merely because it is eligible or omitted by a display page.
+
+Each evidence unit produces a concise JA/EN paraphrase, with deterministic
+reported-speaker headers and literal broker rating/current-target bindings.
+Current targets are never synthesized into changes. Numeric order, fiscal
+basis, forecast/negation/comparison meaning, known company/broker actors and
+business-topic contradictions are rechecked, including at public read. Long
+verbatim English overlap is rejected. These deterministic guards catch known
+contradictions; they are not independent proof of every natural-language claim.
+Rejected attempts retain private evidence/diagnostic context and retry through
+the same bounded ledger. Raw bodies, rejected copy and source account names are
+not public story text. Original publication/capture clocks never become the
+new generation time.
+
+`issuer_business_news` admits only source-identity/issuer/date-verified enriched
+distributor bodies, with a monitored company in the announcement title and a
+32,000-character input ceiling. The deterministic capacity-contract path keeps
+priority. Unsupported but fully verified contract/acquisition/product/capacity/
+outlook releases use the existing issuer semantic-note schema. A scoped public
+syndication-policy marker preserves issuer attribution without enabling all
+GlobeNewswire/PR Newswire stories. Multi-company relations that need additional
+binding, missing body proof and integrity failures remain privately diagnosed.
+The publisher rechecks current body and metadata before committing and reading
+public copy; correction/retraction revisions revoke stale publications.
