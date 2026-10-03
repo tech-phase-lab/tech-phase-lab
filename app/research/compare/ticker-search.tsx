@@ -28,12 +28,10 @@ export default function TickerSearch({ lang, selection, onSelect }: { lang: "ja"
 
   return <details className={styles.tickerSearch}>
     <summary>{t("ティッカー検索", "Find a ticker")}</summary>
-    <p>{t("会社名から銘柄コードを探し、比較欄に追加できます。", "Find a ticker by company name and add it to your comparison.")}</p>
-    <label htmlFor="comparison-ticker-search">{t("会社名・ティッカー", "Company name or ticker")}</label>
-    <input id="comparison-ticker-search" type="search" value={query} autoComplete="off" spellCheck={false} placeholder={t("例：テスラ、Tesla、TSLA", "e.g. Tesla, TSLA, テスラ")} onChange={event => {
+    <input id="comparison-ticker-search" type="search" aria-label={t("ティッカー検索", "Find a ticker")} value={query} autoComplete="off" spellCheck={false} placeholder={t("例：テスラ、Tesla、TSLA", "e.g. Tesla, TSLA, テスラ")} onChange={event => {
       const value = event.target.value; setQuery(value); setResults([]); setStatus(value.trim() ? "loading" : "idle");
     }} />
-    <small>{t("日本語名が見つからない場合は英語名でも検索できます。", "If a Japanese name is unavailable, try the English company name.")}</small>
+    <small>{t("日本語名、英語名どちらでも検索できます。", "Search by Japanese or English company name.")}</small>
     <div role="status" aria-live="polite">
       {status === "loading" && <p>{t("検索中…", "Searching…")}</p>}
       {status === "error" && <p>{t("検索結果を取得できませんでした。もう一度入力してください。", "Could not retrieve results. Please enter your search again.")}</p>}
