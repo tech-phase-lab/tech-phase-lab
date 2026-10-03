@@ -352,7 +352,7 @@ clocks, incomplete/hash-mismatched bodies, corrections and ambiguous multi-party
 relations receive separate private reason codes. Inputs are at most 3,600
 characters, eight evidence units, 800 characters per unit. No queued candidate
 is marked published merely because it is eligible or omitted by a display page.
-
+Broker-led industry/company outlooks can also reach the same one-call assessment without a company-first or cashtag header. A single explicitly named broker is bound to literal atomic source spans; estimate-list headers remain private context. Sector, company and peer claims keep separate quantities, periods and metrics. Forecasts, calendar-year labels, percentage inequalities, order discussions and current coverage cannot be silently converted into different claims. Explicit or ambiguous stock-price/rating actions remain in the existing financial route or a visible review disposition. No historical review, retry clock or budget is reset.
 Newly admitted actor-led units retain their complete original evidence. A small,
 source-derived reporting/claim-scope contract permits automatic publication only
 when it can bind the company as the claim's actor and preserve the literal speaker.
