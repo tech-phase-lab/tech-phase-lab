@@ -15,6 +15,7 @@ import { publicNewsPayload } from '../lib/research/general-news.ts';
 
 const require=createRequire(import.meta.url);
 const source=(await readFile(new URL('../app/research/news/news-story.tsx',import.meta.url),'utf8'))
+  .replace('import { additionalNewsDetail } from "@/lib/research/news-detail";', `import { additionalNewsDetail } from ${JSON.stringify(new URL('../lib/research/news-detail.ts', import.meta.url).href)};`)
   .replace('import styles from "./general-news.module.css";', 'const styles={story:"story",shortStory:"shortStory",tickers:"tickers",headline:"headline",note:"note",expand:"expand",body:"body",source:"source",srOnly:"srOnly"};');
 const compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext}}).outputText
   .replace('"react/jsx-runtime"',JSON.stringify(pathToFileURL(require.resolve('react/jsx-runtime')).href));
@@ -137,4 +138,87 @@ test('merged news hides source labels while preserving differing supported facts
   }
   assert.equal(JSON.stringify(merged),before);
   assert.equal(merged.sources.length,2);
+});
+
+
+test('the live jobs-shaped numeric card shows actual and forecast once without a disclosure', () => {
+  // Captured visible title/body shape. Other facts have no retained comparisons.
+  const [brief] = parseResultBriefs([{...jobs, facts:jobs.facts.map(fact => ({...fact,
+    comparisons:fact.key === 'unemployment-rate' ? {forecast:'4.1%'} : undefined}))}]);
+  const update = resultNewsUpdate(brief), before = JSON.stringify(update);
+  for (const lang of ['ja','en']) {
+    const display = officialNewsDisplay(update,lang,[brief]);
+    const html = renderToStaticMarkup(React.createElement(NewsStory,{...props,...display,lang}));
+    assert.equal(display.body,undefined);
+    assert.doesNotMatch(html,/<details|<summary|＋/);
+    for (const number of ['+29K','4.2%','4.1%','3.0%']) assert.equal(html.split(number).length-1,1);
+    assert.ok(display.title.includes(lang === 'ja' ? '失業率 4.2%（予想 4.1%）' : 'Unemployment rate 4.2% (Forecast 4.1%)'));
+  }
+  assert.equal(JSON.stringify(update),before);
+});
+
+test('inline comparisons are generic, source-bound, idempotent and never choose a conflicting forecast', () => {
+  const [brief] = parseResultBriefs([jobs]);
+  const update = resultNewsUpdate(brief);
+  for (const lang of ['ja','en']) {
+    const display = officialNewsDisplay(update,lang,[brief]);
+    assert.equal(display.body,undefined);
+    for(const number of ['+90K','4.1%','3.1%']) assert.ok(display.title.includes(number));
+    const repeated = officialNewsDisplay({...update,title:display.title,translationJa:display.title},lang,[brief]);
+    assert.equal(repeated.title,display.title);
+    const unrelated = officialNewsDisplay(update,lang,[{...brief,id:'999'}]);
+    assert.equal(unrelated.title,lang === 'ja' ? jobs.titleJa : jobs.titleEn);
+    assert.ok(unrelated.body.includes('+90K'));
+  }
+  const [other] = parseResultBriefs([{...jobs,id:'1177',researchId:'x-result-1177',url:'https://x.com/TipRanks/status/778',publisher:'TipRanks',
+    facts:[{...jobs.facts[0],comparisons:{forecast:'+85K'}}]}]);
+  const briefs=[brief,other], [merged]=mergeResultNews(briefs.map(resultNewsUpdate),briefs);
+  for(const lang of ['ja','en']) {
+    const display=officialNewsDisplay(merged,lang,briefs);
+    assert.ok(display.body.includes('+90K'));
+    assert.ok(display.body.includes('+85K'));
+    assert.ok(!display.title.includes('+90K'));
+    assert.ok(!display.title.includes('+85K'));
+  }
+});
+
+test('final disclosure guard compares every visible field and preserves real article prose', () => {
+  const html=renderToStaticMarkup(React.createElement(NewsStory,{...props,body:[props.label,props.title,props.publication].join('\n')}));
+  assert.doesNotMatch(html,/<details|<summary|＋/);
+  const body='DGX Spark uses unified memory and integrated networking.\n\nThe verified performance test used two connected systems.';
+  const article=renderToStaticMarkup(React.createElement(NewsStory,{...props,title:'NVIDIA introduces DGX Spark',body}));
+  assert.match(article,/<details/);
+  assert.ok(article.includes('The verified performance test used two connected systems.'));
+});
+
+
+test('inline comparisons never attach to a longer population or basis label', () => {
+  const [brief] = parseResultBriefs([{...jobs,facts:[jobs.facts[1]]}]);
+  const update = {...resultNewsUpdate(brief),title:'Youth unemployment rate 4.2%',translationJa:'若年失業率 4.2%'};
+  for(const lang of ['ja','en']) {
+    const display=officialNewsDisplay(update,lang,[brief]);
+    assert.equal(display.title,lang === 'ja' ? update.translationJa : update.title);
+    assert.ok(display.body.includes('4.1%'));
+    assert.ok(display.body.includes('4.2%'));
+  }
+});
+
+
+test('numeric fact dedupe keeps population and value boundaries even when forecasts are already visible', () => {
+  assert.equal(additionalNewsDetail('Youth unemployment rate 4.2% (Forecast 4.1%)','Unemployment rate: 4.2% (Forecast 4.1%)'), 'Unemployment rate: 4.2% (Forecast 4.1%)');
+  assert.equal(additionalNewsDetail('若年失業率 4.2%（予想4.1%）','失業率：4.2%（予想4.1%）'), '失業率：4.2%（予想4.1%）');
+  assert.equal(additionalNewsDetail('Revenue 1000','Revenue: 100'), 'Revenue: 100');
+  assert.equal(additionalNewsDetail('Revenue 100B','Revenue: 100'), 'Revenue: 100');
+  assert.equal(additionalNewsDetail('NFP +29K; Unemployment rate 4.2% (Forecast 4.1%; Previous 4.0%)','Unemployment rate: 4.2% (Forecast 4.1%; Previous 4.0%)'), undefined);
+});
+
+test('a forecast shown for a different population does not satisfy the matched actual clause', () => {
+  const [brief] = parseResultBriefs([{...jobs,facts:[jobs.facts[1]]}]);
+  const update = {...resultNewsUpdate(brief),title:'Unemployment rate 4.2%; Youth unemployment rate 4.2% (Forecast 4.1%)',
+    translationJa:'失業率 4.2%／若年失業率 4.2%（予想 4.1%）'};
+  for(const lang of ['ja','en']) {
+    const display=officialNewsDisplay(update,lang,[brief]);
+    assert.ok(display.title.startsWith(lang === 'ja' ? '失業率 4.2%（予想 4.1%）／若年' : 'Unemployment rate 4.2% (Forecast 4.1%); Youth'));
+    assert.equal(display.body,undefined);
+  }
 });

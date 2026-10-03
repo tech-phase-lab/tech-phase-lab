@@ -78,7 +78,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
             publication={`${lang === "ja" ? "発表" : "Published"} ${format(item.publishedAt)}`} /></article>;
         }
         const item = update.item;
-        const publication = officialTime(item), display = officialNewsDisplay(item, lang);
+        const publication = officialTime(item), display = officialNewsDisplay(item, lang, data?.resultBriefs);
         return <article key={item.id}><NewsStory label={display.label} title={display.title} body={display.body} lang={lang}
           publication={`${publication.kind === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} ${publication.kind === "date" ? publication.at : format(publication.at)}`} /></article>; })}</div>
     </section>}
