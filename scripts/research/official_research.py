@@ -519,19 +519,33 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     return state
 
 
-def feed(db, reference=None):
-    schema(db)
-    reference=reference or datetime.now(timezone.utc)
-    current={r['id']:r for r in candidates(db,reference)}
-    items=[]
-    for p in db.execute('SELECT * FROM official_research_publications ORDER BY public_at DESC LIMIT 30'):
-        r=current.get(p['event_id'])
-        if not r or not r['source_id'].startswith('primary-ir-') or r['sha']!=p['sha'] or r['body_sha']!=p['body_sha']:
+def validated_publications(db, rows):
+    """Complete valid set for current candidates, independent of display limits."""
+    current={r['id']:r for r in rows}
+    if not current:
+        return []
+    placeholders=','.join('?' for _ in current)
+    publications=[]
+    for p in db.execute('SELECT * FROM official_research_publications '
+                        'WHERE event_id IN ('+placeholders+') ORDER BY public_at DESC', tuple(current)):
+        r=current[p['event_id']]
+        if r['sha']!=p['sha'] or r['body_sha']!=p['body_sha'] or not current_revision(db,r):
             continue
-        note=json.loads(p['payload'])
         try:
+            note=json.loads(p['payload'])
+            if not isinstance(note,dict):
+                continue
             validate({k:v for k,v in note.items() if k in ('title','summary','facts','purpose')}, r['body'], r['title'])
-        except (ValueError, TypeError):
+        except (ValueError, TypeError, KeyError):
+            continue
+        publications.append((r,p,note))
+    return publications
+
+
+def primary_publication_items(publications):
+    items=[]
+    for r,p,note in publications:
+        if not r['source_id'].startswith('primary-ir-'):
             continue
         # Evidence quotes/source body are never serialized to the public app.
         copy=lambda x:{k:x[k] for k in ('ja','en')}
@@ -548,14 +562,23 @@ def feed(db, reference=None):
                       'generationStartedAt':p['started_at'],'publicAt':p['public_at'],
                       'generationMs':p['generation_ms'],
                       'detectionToPublicMs':monitor.stored_latency_ms(r['observed_at'],p['public_at'])})
-    return items[:20]
+    return items
+
+
+def feed(db, reference=None):
+    schema(db)
+    reference=reference or datetime.now(timezone.utc)
+    publications=validated_publications(db,candidates(db,reference))
+    return primary_publication_items(publications)[:20]
 
 
 def diagnostics(db):
-    items=feed(db)
-    rows=candidates(db,datetime.now(timezone.utc))
-    story_count=sum(bool(public_story_body(db,r)) for r in rows if not r['source_id'].startswith('primary-ir-'))
-    published=len(items)+story_count
+    schema(db)
+    reference=datetime.now(timezone.utc)
+    rows=candidates(db,reference)
+    publications=validated_publications(db,rows)
+    items=primary_publication_items(publications)
+    published=len(publications)
     pending=len(rows)-published
     return {'published':published,'pending':max(0,pending),
             'latest':[{k:x[k] for k in ('id','ticker','observedAt','bodyReadyAt','generationStartedAt','publicAt','generationMs','detectionToPublicMs')} for x in items[:5]],
@@ -566,8 +589,8 @@ def sync_incident(db, env=None, reference=None):
     schema(db)
     reference=reference or datetime.now(timezone.utc)
     rows=candidates(db,reference)
-    published={x['id'] for x in feed(db,reference)}
-    pending=[r for r in rows if 'ir-result-'+str(r['id']) not in published]
+    published={r['id'] for r,_,_ in validated_publications(db,rows)}
+    pending=[r for r in rows if r['id'] not in published]
     overdue=any(monitor.stored_latency_ms(r['observed_at'],reference.isoformat()) is not None
                 and monitor.stored_latency_ms(r['observed_at'],reference.isoformat()) >= 300000 for r in pending)
     config=headline_translation.configuration(os.environ if env is None else env,now=reference.timestamp())
