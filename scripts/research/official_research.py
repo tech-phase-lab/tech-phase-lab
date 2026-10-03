@@ -508,6 +508,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     policy=general_source_news.POLICY if general else POLICY
     if semantic:
         policy+='\n'+general_source_news.ASSESSMENT_POLICY
+        if any('actorGrounding' in unit for unit in row['units']):
+            policy+='\n'+general_source_news.ACTOR_POLICY
     if row.get('issuer_business'):
         policy+='\n'+issuer_business_news.FINANCIAL_POLICY
     with connect(path) as db:
@@ -521,6 +523,16 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     if general:
         input_data=json.loads(payload['input'])
         input_data['evidenceContext']={u['id']:{'actor':u['actor'],'requiredTopics':sorted(general_source_news.concepts(u['quote'],'en'))} for u in row['units']}
+        for unit in row['units']:
+            if 'actorGrounding' in unit:
+                grounding=unit['actorGrounding']
+                # Reuse the bounded original evidence rather than duplicating
+                # a potentially full-length claim in the model's input.
+                context={key:value for key,value in grounding.items() if key not in {'claimScope','attributionJa'}}
+                if grounding.get('supported'):
+                    context['claimStart']=unit['quote'].index(grounding['claimScope'])
+                    context['claimEnd']=context['claimStart']+len(grounding['claimScope'])
+                input_data['evidenceContext'][unit['id']]['actorGrounding']=context
         payload['input']=json.dumps(input_data,ensure_ascii=False)
     usage={}
     value=None

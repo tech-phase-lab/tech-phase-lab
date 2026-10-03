@@ -339,8 +339,9 @@ omissions and unknown pre-tracking coverage are separately reported. Acquisition
 progress never asserts assessment or publication completion.
 
 `general_source_news` assesses full retained TipRanks/WallStEngine posts within
-the existing seven-day source window. The opening approved company/cashtag must
-bind the subject. Contract, acquisition, product, capacity, management-outlook
+the existing seven-day source window. Approved company/cashtag evidence can occur
+anywhere in a post; the leading person's identity never implies company affiliation.
+Contract, acquisition, product, capacity, management-outlook
 and substantive broker-commentary posts use existing supported paths. Other
 company-bound wording can receive one combined materiality/JA/EN assessment within
 the same ledger. Negative or unsubstantiated completed assessments become
@@ -351,6 +352,16 @@ clocks, incomplete/hash-mismatched bodies, corrections and ambiguous multi-party
 relations receive separate private reason codes. Inputs are at most 3,600
 characters, eight evidence units, 800 characters per unit. No queued candidate
 is marked published merely because it is eligible or omitted by a display page.
+
+Newly admitted actor-led units retain their complete original evidence. A small,
+source-derived reporting/claim-scope contract permits automatic publication only
+when it can bind the company as the claim's actor and preserve the literal speaker.
+The application attaches that attribution; the model paraphrases only the bound
+claim. Unsupported affiliations, action transfers and tentative/future-to-completed
+status changes are rejected in both languages and at public read. Unknown or mixed
+actor/status syntax still reaches the one-call assessment but stays in explicit
+review. This is a bounded structural check, not a general semantic proof or a new
+acquisition keyword filter. Completed historical reviews are not reopened.
 
 Each evidence unit produces a concise JA/EN paraphrase, with deterministic
 reported-speaker headers and literal broker rating/current-target bindings.
