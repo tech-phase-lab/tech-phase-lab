@@ -87,10 +87,16 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       for (const key of ["id", "title", "url", "publisher", "observedAt"]) if (typeof v[key] !== "string" || !(v[key] as string).trim()) throw Error("Invalid update field");
       const url = new URL(v.url as string);
       const verifiedMu = url.href === 'https://www.sec.gov/Archives/edgar/data/723125/000072312526000018/a2026q4ex991-pressrelease.htm';
+      // One reviewed issuer announcement retained from its syndicated source.
+      // This does not admit the PR Newswire host or other issuer mentions.
+      const reviewedOracle = v.id === "1179" && v.publisher === "Oracle / PR Newswire"
+        && v.title === "Oracle Announces Commitment to Absorb $300 Million in Rising Point Beach Energy Costs for Wisconsin Residents"
+        && Array.isArray(v.tickers) && v.tickers.length === 1 && v.tickers[0] === "ORCL"
+        && url.href === "https://www.prnewswire.com/news-releases/oracle-announces-commitment-to-absorb-300-million-in-rising-point-beach-energy-costs-for-wisconsin-residents-302896645.html";
       const issuerRelease = providers.some(provider => Array.isArray(v.tickers) && v.tickers.includes(provider.ticker)
         && provider.articleRules.some(rule => rule.host === url.hostname && new RegExp(rule.pattern).test(url.pathname))
         && url.hostname !== "www.sec.gov" && url.hostname !== "data.sec.gov" && !url.search && !url.hash);
-      if (url.protocol !== "https:" || url.username || url.password || url.port || (!officialUpdateHosts.has(url.hostname) && !verifiedMu && !issuerRelease)) throw Error("Invalid official source");
+      if (url.protocol !== "https:" || url.username || url.password || url.port || (!officialUpdateHosts.has(url.hostname) && !verifiedMu && !issuerRelease && !reviewedOracle)) throw Error("Invalid official source");
       if (url.hostname === "x.com" && !/^\/(nebiusai|tipranks|theflynews|wallstengine|fabymetal4)\/status\/\d+$/i.test(url.pathname)) throw Error("Invalid official account");
       if (url.hostname === "www.bea.gov" && (!/^\/news\/20\d{2}\/personal-income-and-outlays-[a-z]+-20\d{2}$/.test(url.pathname) || url.search || url.hash)) throw Error("Invalid BEA release");
       if (Array.from(v.title as string).length > 180 || (v.publisher as string).length > 80 || !/^\d+$/.test(v.id as string) || !Number.isFinite(Date.parse(v.observedAt as string))) throw Error("Invalid update");

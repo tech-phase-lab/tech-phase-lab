@@ -19,6 +19,7 @@ import monitor
 import official_release_bridge as bridge
 import official_research_content_repair as content_repair
 import official_research_editorial_recovery as editorial_recovery
+import oracle_reviewed_recovery
 import signals
 
 MAX_EVIDENCE_CHARS = 1800
@@ -443,6 +444,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     now=time.time() if now is None else now
     reference=datetime.fromtimestamp(now,timezone.utc)
     with connect(path) as db:
+        if oracle_reviewed_recovery.publish(db, reference, validate):
+            return 'done'
         recovery=editorial_recovery.publish(db,candidates(db,reference,read_only=True),
                                             reference,validate,current_revision)
     if recovery is not None:

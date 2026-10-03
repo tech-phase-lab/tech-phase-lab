@@ -1858,6 +1858,7 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
     import official_release_bridge
     current = reference or datetime.now(timezone.utc)
     current = current.replace(tzinfo=current.tzinfo or timezone.utc).astimezone(timezone.utc)
+    include_reviewed_oracle = sources is SOURCES
     if sources is SOURCES:
         if not read_only:
             official_release_bridge.sync(db, current)
@@ -1871,6 +1872,12 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
     marks = ','.join('?' for _ in allowed)
     rows = db.execute(f'''SELECT * FROM signal_events WHERE source_id IN ({marks})
       ORDER BY id DESC LIMIT 500''', tuple(allowed)).fetchall()
+    if include_reviewed_oracle:
+        import oracle_reviewed_recovery
+        reviewed = oracle_reviewed_recovery.public_event(db, current)
+        if reviewed is not None:
+            allowed[reviewed['source_id']] = oracle_reviewed_recovery.publisher()
+            rows.append(reviewed)
     def instant(value):
         try:
             parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
