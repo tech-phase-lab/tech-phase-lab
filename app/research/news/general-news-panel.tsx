@@ -74,17 +74,13 @@ export default function GeneralNewsPanel({ lang, officialOnly = false }: { lang:
         if (update.kind === "market") {
           const item = update.item;
           const display = marketNewsDisplay(item, lang);
-          return <article key={`market-${item.id}`}><NewsStory label={display.label} title={display.title} body={marketNewsBody(item, lang)} lang={lang} source={{url:item.url,publisher:/\/Barchart\//i.test(item.url) ? "Barchart" : "TrendSpider"}}
+          return <article key={`market-${item.id}`}><NewsStory label={display.label} title={display.title} body={marketNewsBody(item, lang)} lang={lang}
             publication={`${lang === "ja" ? "発表" : "Published"} ${format(item.publishedAt)}`} /></article>;
         }
         const item = update.item;
         const publication = officialTime(item), display = officialNewsDisplay(item, lang);
-        return <article key={item.id}><NewsStory label={display.label} title={display.title} body={display.body} lang={lang} source={item.sources?.length ? undefined : {url:item.url,publisher:item.publisher}}
-          publication={`${publication.kind === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} ${publication.kind === "date" ? publication.at : format(publication.at)}`} >
-          {!!item.sources?.length && <ul className={styles.note} aria-label={lang === "ja" ? "情報源" : "Sources"}>
-            {item.sources.map(source => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.publisher} ↗</a> · <time dateTime={source.publishedAt}>{format(source.publishedAt)}</time></li>)}
-          </ul>}
-        </NewsStory></article>; })}</div>
+        return <article key={item.id}><NewsStory label={display.label} title={display.title} body={display.body} lang={lang}
+          publication={`${publication.kind === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} ${publication.kind === "date" ? publication.at : format(publication.at)}`} /></article>; })}</div>
     </section>}
     {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}
     {!officialOnly && (visibleNews.length > 0 || (!updates.length && (!data?.enabled || !news.length))) && <><div className={styles.head}><h2 id="general-news-title">{lang === "ja" ? "通常ニュース" : "General news"}</h2><button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>

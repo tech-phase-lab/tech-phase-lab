@@ -46,15 +46,14 @@ test('headline duplicates and reformatted metric lists cannot claim additional d
   assert.equal(additionalNewsDetail('NFP +29K','NFP: +29K (Wall St Engine / TipRanks)',['Wall St Engine','TipRanks']),undefined);
 });
 
-test('brief rendering has one headline, accessible original and no fake disclosure or badge',()=>{
+test('brief rendering has one headline and no source row, fake disclosure or badge',()=>{
   const html=renderToStaticMarkup(React.createElement(NewsStory,{...props,body:marketNewsBody(bond,'ja')}));
   assert.equal(html.split(props.title).length-1,1);
   assert.doesNotMatch(html,/<details|<summary|＋|短報|4\.32%|basis points/);
-  assert.ok(html.includes(props.source.url));
-  assert.match(html,/Barchart · 原文/);
+  assert.doesNotMatch(html, /Barchart|原文|Source|href=/);
 });
 
-test('JA and EN index and Treasury cards keep their headline and source without a plus',()=>{
+test('JA and EN index and Treasury cards keep their headline without source links or a plus',()=>{
   const index={topic:'index-membership',titleJa:'Nasdaq-100指数：追加予定 Moderna（$MRNA）、除外予定 Warner Bros Discovery（$WBD）。',
     titleEn:'Moderna will join the Nasdaq-100 index, replacing Warner Bros Discovery.'};
   for(const update of [index,bond]) for(const lang of ['ja','en']) {
@@ -63,7 +62,8 @@ test('JA and EN index and Treasury cards keep their headline and source without 
     const html=renderToStaticMarkup(React.createElement(NewsStory,{...props,...display,lang,source,body:marketNewsBody(update,lang)}));
     assert.equal(html.split(display.title).length-1,1);
     assert.doesNotMatch(html,/<details|<summary|＋/);
-    assert.ok(html.includes(source.url));
+    assert.ok(!html.includes(source.url));
+    assert.doesNotMatch(html, /Barchart|TrendSpider|原文|Source|href=/);
   }
 });
 
@@ -76,6 +76,7 @@ test('only real added facts use native keyboard and touch accessible disclosure'
     assert.ok(html.includes(lang==='ja'?'詳細を開閉':'Toggle details'));
     assert.equal(html.split(props.title).length-1,1);
     assert.equal(html.split('Additional verified fact').length-1,1);
+    assert.doesNotMatch(html, /Barchart|原文|Source|href=/);
   }
 });
 
@@ -117,4 +118,23 @@ test('merged sources cannot erase or blend distinct forecasts for the same actua
   assert.match(merged.bodyEn,/Forecast:?[ ]\+90K.*Wall St Engine/);
   assert.match(merged.bodyEn,/Forecast:?[ ]\+85K.*TipRanks/);
   assert.equal(merged.title,jobs.titleEn);
+});
+
+
+test('merged news hides source labels while preserving differing supported facts and retained provenance', () => {
+  const other={...jobs,id:'1177',researchId:'x-result-1177',url:'https://x.com/tipranks/status/778',publisher:'TipRanks',
+    facts:[{...jobs.facts[0],comparisons:{forecast:'+85K'}}]};
+  const briefs=parseResultBriefs([jobs,other]);
+  const [merged]=mergeResultNews(briefs.map(resultNewsUpdate),briefs);
+  const before=JSON.stringify(merged);
+  for(const lang of ['ja','en']) {
+    const display=officialNewsDisplay(merged,lang);
+    const html=renderToStaticMarkup(React.createElement(NewsStory,{...props,...display,lang}));
+    assert.match(html,/\+90K/);
+    assert.match(html,/\+85K/);
+    assert.doesNotMatch(html,/Wall St Engine|TipRanks|x\.com|原文|href=/);
+    assert.match(html,/<details/);
+  }
+  assert.equal(JSON.stringify(merged),before);
+  assert.equal(merged.sources.length,2);
 });

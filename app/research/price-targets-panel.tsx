@@ -6,9 +6,11 @@ import styles from "./price-targets-panel.module.css";
 import { EventStreamParser, abortableDelay, createSnapshotRevisionGuard } from "@/lib/research/event-stream";
 
 import { formatTargetTime } from "@/lib/research/price-target-time";
-import { publicPriceTargets, priceTargetSources, priceTargetSourceName, type PriceTarget as Target } from "@/lib/research/price-targets";
+import { publicPriceTargets, type PriceTarget as Target } from "@/lib/research/price-targets";
 
 import FeedPagination from "./news/feed-pagination";
+import { useCalendarClock } from "./use-calendar-clock";
+import PriceTargetCard from "./price-target-card";
 import NotificationSettings from "./notification-settings";
 
 let snapshot: { items: Target[]; at: string; time: number } | null = null;
@@ -16,6 +18,7 @@ const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot
 
 export default function PriceTargetsPanel({ lang }: { lang: Language }) {
   const panelRef = useRef<HTMLElement>(null);
+  const now = useCalendarClock();
   const [items, setItems] = useState<Target[]>(() => recent()?.items ?? []);
   const [status, setStatus] = useState<"loading" | "ready" | "error">(() => recent() ? "ready" : "loading");
   const [updatedAt, setUpdatedAt] = useState<string | null>(() => recent()?.at ?? null);
@@ -134,29 +137,9 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
     {status === "error" && <p role="status" className={styles.state}>{t("現在、目標株価の更新を取得できません。表示内容は最新とは限りません。", "Price target updates are temporarily unavailable. Displayed items may be stale.")}</p>}
     {status === "loading" && <div aria-busy="true" aria-label={t("目標株価を取得中", "Fetching price targets")} className={styles.pending} />}
     {status === "ready" && items.length === 0 && <p className={styles.state}>{t("条件に合う目標株価の投稿はまだありません。", "No matching price target posts yet.")}</p>}
-    {items.length > 0 && <div className={styles.list}>{items.slice((current - 1) * 4, current * 4).map((item) => {
-      const number = (value: number) => value.toLocaleString("en-US", { maximumFractionDigits: 2 });
-      const isNew = [item.publishedAt, item.observedAt].every(date => {
-        const age = Date.now() - Date.parse(date);
-        return age >= 0 && age < 24 * 60 * 60 * 1000;
-      });
-      return <article key={item.id} className={styles.card}>
-        <a className={styles.ticker} href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`${item.ticker} ${item.firm} ${t("の目標株価の投稿を見る", "price target source post")}`}>{item.ticker}</a>
-        <div className={styles.body}>
-          <div className={styles.firm}>{item.firm}{isNew && <span className={styles.newBadge} aria-label={t("24時間以内の新着", "New within 24 hours")}>NEW</span>}</div>
-          <div className={styles.targetChange}>
-            <strong>${number(item.previous)} → ${number(item.latest)}</strong>
-            <span className={item.latest > item.previous ? styles.raised : styles.lowered}>{item.latest > item.previous ? t("引き上げ", "Raised") : t("引き下げ", "Lowered")}</span>
-          </div>
-          <ul className={styles.sources} aria-label={t("情報源", "Sources")}>
-            {priceTargetSources(item).map(source => <li key={source.url}>
-              <a href={source.url} target="_blank" rel="noopener noreferrer">{priceTargetSourceName(source)}</a>
-              <span> · {t("X投稿日時", "X post time")} <time dateTime={source.publishedAt}>{time(source.publishedAt)}</time></span>
-            </li>)}
-          </ul>
-        </div>
-      </article>;
-    })}</div>}
+    {items.length > 0 && <div className={styles.list}>{items.slice((current - 1) * 4, current * 4).map(item =>
+      <PriceTargetCard key={item.id} item={item} lang={lang} now={now} />
+    )}</div>}
     <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { setPage(n); panelRef.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
     <div className={styles.footer}>
       <NotificationSettings lang={lang} />

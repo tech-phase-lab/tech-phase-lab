@@ -5,12 +5,14 @@ export function additionalNewsDetail(title: string, body?: string, sourceNames: 
     .replace(/[^\p{L}\p{N}+\-.%$]+/gu, "");
   const headline = comparable(title);
   const seen = new Set<string>();
-  const paragraphs = (body ?? "").trim().split(/\n+/).map(text => text.trim()).filter(text => {
-    // Attribution has its own source links. It cannot turn repeated figures
-    // into purported additional reporting in a merged result card.
+  const paragraphs = (body ?? "").trim().split(/\n+/).map(text => text.trim()).map(text => {
+    // Source identities stay in retained metadata, not the public story body.
+    // Only strip a generated suffix made entirely of known source names.
     const factualText = text.replace(/[（(]([^()（）]+)[）)]\s*$/, (suffix, names: string) =>
       names.split(" / ").every(name => sourceNames.includes(name.trim())) ? "" : suffix);
-    const key = comparable(factualText);
+    return factualText.trim();
+  }).filter(text => {
+    const key = comparable(text);
     if (!key || headline.includes(key) || seen.has(key)) return false;
     seen.add(key);
     return true;

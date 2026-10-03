@@ -34,8 +34,7 @@
 .raised{color:#a7efcc;background:#214138}.lowered{color:#ffb6b0;background:#482e32}
 .firm .newBadge{margin:0 0 0 8px}
 .body small{font-size:11px}
-.sources{display:grid;gap:3px;margin:7px 0 0;padding:0;list-style:none;color:#b2c5c4;font-size:11px;line-height:1.5}
-.sources li{overflow-wrap:anywhere}.card .sources a{font-size:inherit;text-decoration:underline;text-underline-offset:3px}
+.published{display:block;margin-top:4px;color:#b2c5c4;font-size:11px;line-height:1.5;font-variant-numeric:tabular-nums}
 .panel .notificationActions button{font-size:13px;min-height:44px}
 @media(max-width:700px){
   .panel{padding:16px}.head h3{font-size:17px;line-height:1.5}
@@ -57,4 +56,4 @@
 
 .pending{min-height:48px;border-radius:8px;background:#122430}.panel{scroll-margin-top:100px}
 
-.card a.ticker{font-size:14px;text-decoration:underline;text-underline-offset:4px;min-height:36px;display:inline-flex;align-items:center;justify-content:center;align-self:start}.card a.ticker:focus-visible{outline:2px solid #a8ecd0;outline-offset:3px}@media(max-width:700px){.card{grid-template-columns:auto minmax(0,1fr);gap:10px}.targetChange strong{font-size:16px;white-space:normal}.body small{margin-top:4px}.ticker{grid-column:1}.body{grid-column:2}}
+.card .ticker{font-size:14px;min-height:36px;display:inline-flex;align-items:center;justify-content:center;align-self:start}@media(max-width:700px){.card{grid-template-columns:auto minmax(0,1fr);gap:10px}.targetChange strong{font-size:16px;white-space:normal}.body small{margin-top:4px}.ticker{grid-column:1}.body{grid-column:2}}
