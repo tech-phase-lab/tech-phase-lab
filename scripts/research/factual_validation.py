@@ -29,6 +29,103 @@ MONTH_PATTERN = (r'\b(' + '|'.join(MONTHS) + r'|(?:'
 ORDINALS = {'first': 1, 'second': 2, 'third': 3, 'fourth': 4, '一': 1, '二': 2, '三': 3, '四': 4}
 SMALL_NUMBERS = {word: i for i, word in enumerate(
     ('zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'))}
+RANGE_ENDPOINT = r'(?:\d+(?:\.\d+)?|' + '|'.join(list(SMALL_NUMBERS)[:11]) + r')'
+DURATION_RANGE = re.compile(
+    r'(?<![A-Za-z0-9_.])(?P<first>' + RANGE_ENDPOINT + r')\s*(?:-to-|to|[–—−\-〜～])\s*'
+    r'(?P<last>' + RANGE_ENDPOINT + r')\s*[- ]?\s*'
+    r'(?P<unit>seconds?\b|minutes?\b|hours?\b|days?\b|weeks?\b|months?\b|years?\b|年間?|か月|ヶ月|日|時間|分|秒)', re.I)
+MW_BASIS = re.compile(
+    r'\b(?:per|each)\s+(?:(?P<en>[+\-−]?\d+(?:\.\d+)?|one)\s*)?'
+    r'(?:megawatts?\b|MW(?![A-Za-z0-9])|メガワット)'
+    r'|(?<![A-Za-z0-9_.])(?P<ja>[+\-−]?\d+(?:\.\d+)?)?\s*'
+    r'(?:メガワット|MW(?![A-Za-z0-9]))\s*(?:当たり|あたり|につき|毎)', re.I)
+MODEL = re.compile(r'(?<![A-Za-z0-9])(?:A100|H100|GB300\s+NVL72)(?![A-Za-z0-9])', re.I)
+YEAR_INTERVAL = re.compile(
+    r'(?<![A-Za-z0-9_.])(?P<first>' + RANGE_ENDPOINT + r'|eleven|twelve)'
+    r'(?:\s*–\s*(?P<last>' + RANGE_ENDPOINT + r'))?\s*[- ]?\s*(?:years?\b|年間?)', re.I)
+USEFUL_LIFE = re.compile(r'\b(?:useful|service)\s+life(?:span)?\b|有効寿命|耐用年数|寿命', re.I)
+ESTIMATED_LIFE = re.compile(r'\b(?:estimat\w*|project\w*|expect\w*)\b|推定|見積|予測', re.I)
+RESALE_ESTIMATE = re.compile(r'\bbased on\b[^.!?;]{0,80}\b(?:resale|resell)\b', re.I)
+OBSERVED_SERVICE = re.compile(
+    r'\b(?:commercial(?:ly)?\s+(?:service|use[ds]?|valuable|viable)|in\s+service|'
+    r'(?:still|remains?|continued?|continues?)\s+(?:\w+\s+){0,3}(?:used|operat\w*)|'
+    r'has\s+(?:been\s+)?operat\w*|lasted)\b|商用(?:サービス|利用)|稼働(?:して|し続け|年数)|使われて|利用されて', re.I)
+
+
+def duration_ranges(text):
+    """Normalize only explicit temporal ranges, never free-standing cardinals."""
+    def endpoint(value):
+        return str(SMALL_NUMBERS[value.lower()]) if value.lower() in SMALL_NUMBERS else value
+    return DURATION_RANGE.sub(lambda m: endpoint(m['first']) + '–' + endpoint(m['last'])
+                              + ' ' + m['unit'], text)
+
+
+def duration_value(value):
+    return Decimal(SMALL_NUMBERS.get(value.lower(), value))
+
+
+def model_year_facts(text):
+    """Extract a small set of explicit GPU lifetime/service-age relationships.
+
+    A parallel 'five to six years for H100 and nine to 10 years for GB300
+    NVL72' list may share a leading useful-life estimate qualifier. Other
+    clauses do not supply a model or duration for one another.
+    """
+    facts = set()
+    for sentence in re.split(r'[.!?。！？;；\n]', duration_ranges(text)):
+        models, periods = list(MODEL.finditer(sentence)), list(YEAR_INTERVAL.finditer(sentence))
+        if not models or not periods:
+            continue
+        leading = sentence[:min(models[0].start(), periods[0].start())]
+        shared = leading if USEFUL_LIFE.search(leading) else ''
+        # Keep explicit continued-service predicates with their subject. Split
+        # independent coordinated claims, including the two parallel estimates.
+        clauses = re.split(r'\s+(?:and|while|whereas|but)'
+                           r'(?!\s+(?:still|remains?|continues?|is|are)\b)\s+'
+                           r'|,(?!\s*(?:shipped|introduced|launched|released|first|now|still|remains?|'
+                           r'continues?|is|are|was|were|has|have|which|whose)\b)\s*|一方|他方|別の|他の',
+                           sentence, flags=re.I)
+        for clause in clauses:
+            models = list(MODEL.finditer(clause))
+            periods = list(YEAR_INTERVAL.finditer(clause))
+            for period in periods:
+                first = duration_value(period['first'])
+                last = duration_value(period['last'] or period['first'])
+                if first >= 1000 or last >= 1000:
+                    continue  # Calendar years are not service-age intervals.
+                before = [m for m in models if m.end() <= period.start()]
+                after = [m for m in models if m.start() >= period.end()]
+                model = None
+                parallel = False
+                if after and re.fullmatch(
+                        r'\s+(?:of\s+(?:useful|service)\s+life\s+)?for\s+'
+                        r'(?:(?:an?|the)\s+)?(?:(?:eight|8)[- ]GPU\s+)?',
+                        clause[period.end():after[0].start()], re.I):
+                    model = after[0]
+                    parallel = True
+                elif before and period.start() - before[-1].end() <= 180:
+                    model = before[-1]
+                    # A second period elsewhere in this clause cannot inherit
+                    # the model merely because its digits occur nearby.
+                    if any(model.end() < p.start() < period.start() for p in periods
+                           if duration_value(p['first']) < 1000):
+                        model = None
+                if model is None:
+                    continue
+                # Limit qualification to this relation and a leading list
+                # qualifier. A neighboring model's assertion is not evidence.
+                left = max((m.end() for m in models if m.end() <= min(model.start(), period.start())), default=0)
+                right = min((m.start() for m in models if m.start() >= max(model.end(), period.end())), default=len(clause))
+                context = (shared if parallel else '') + ' ' + clause[left:right]
+                if USEFUL_LIFE.search(context):
+                    estimated = ESTIMATED_LIFE.search(context) or (parallel and shared and RESALE_ESTIMATE.search(sentence))
+                    basis = 'estimated-useful-life' if estimated else 'useful-life'
+                elif OBSERVED_SERVICE.search(context):
+                    basis = 'observed-service-age'
+                else:
+                    continue
+                facts.add((' '.join(model[0].upper().split()), first, last, basis))
+    return facts
 
 
 def quarter_values(text):
@@ -59,6 +156,16 @@ def dates(text):
 
 def numeric_values(text):
     """Canonical exact magnitudes, preserving signs and percent dimensions."""
+    text = duration_ranges(text)
+    values = []
+    def per_mw(match):
+        denominator = match['en'] or match['ja'] or '1'
+        value = Decimal(1) if denominator.lower() == 'one' else Decimal(denominator.replace('−', '-'))
+        values.append((value, 'per-MW'))
+        # An explicit denominator is represented once, with its basis; it must
+        # never supply a generic 1 for an invented year, GPU, or GW quantity.
+        return ' ' * len(match[0])
+    text = MW_BASIS.sub(per_mw, text)
     # Japanese amounts can combine a scaled part and a remainder: 15万6,000.
     # Normalize only contiguous descending integer components, never separate
     # amounts, decimals, or ascending/repeated units.
@@ -74,7 +181,6 @@ def numeric_values(text):
                        for (n, _), scale in zip(parts, scales)))
     text = re.sub(r'(?<![\d.,])\d+(?:,\d{3})*[兆億万千](?:\d+(?:,\d{3})*[兆億万千])*(?:\d+(?:,\d{3})*)?(?![\d.,])', compound, text)
     remaining = list(text)
-    values = []
     for m in QUANTITY_PATTERN.finditer(text):
         unit = m['unit'].lower()
         if unit in ('k', 'm', 'b', 't') and m.start('number') > 0 and text[m.start('number')-1].isascii() and text[m.start('number')-1].isalpha():
@@ -138,6 +244,8 @@ def validate_numbers(text, evidence):
     for year, month, day in dates(text):
         if not any(month == sm and day == sd and (year is None or year == sy) for sy, sm, sd in source_dates):
             raise ValueError('unsupported-number')
+    if not model_year_facts(text).issubset(model_year_facts(evidence)):
+        raise ValueError('unsupported-number')
 
 
 def quantities(values):
@@ -171,6 +279,12 @@ def number_checks(item):
                                'unsupported': unsupported_dates[:20], 'truncated': len(unsupported_dates) > 20})
         except ValueError:
             result.append({'check': language + '-invalid-calendar-date'})
+        unsupported_facts = sorted(model_year_facts(text) - model_year_facts(evidence))
+        if unsupported_facts:
+            result.append({'check': language + '-evidence-model-duration', 'unsupported': [
+                {'model': model, 'minYears': str(first), 'maxYears': str(last), 'basis': basis}
+                for model, first, last, basis in unsupported_facts[:20]],
+                'truncated': len(unsupported_facts) > 20})
     ja, en = Counter(numeric_values(item['ja'])), Counter(numeric_values(item['en']))
     if ja != en:
         result.append({'check': 'bilingual-quantity-count', 'jaOnly': quantities((ja - en).elements()),

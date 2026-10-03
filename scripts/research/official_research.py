@@ -18,6 +18,7 @@ import headline_translation
 import monitor
 import official_release_bridge as bridge
 import official_research_content_repair as content_repair
+import official_research_editorial_recovery as editorial_recovery
 import signals
 
 MAX_EVIDENCE_CHARS = 1800
@@ -53,6 +54,7 @@ def schema(db):
     if 'failure_kind' not in {r[1] for r in db.execute('PRAGMA table_info(official_research_jobs)')}:
         db.execute("ALTER TABLE official_research_jobs ADD COLUMN failure_kind TEXT")
     content_repair.schema(db)
+    editorial_recovery.schema(db)
 
 
 def connect(path):
@@ -440,6 +442,11 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     env=os.environ if env is None else env
     now=time.time() if now is None else now
     reference=datetime.fromtimestamp(now,timezone.utc)
+    with connect(path) as db:
+        recovery=editorial_recovery.publish(db,candidates(db,reference,read_only=True),
+                                            reference,validate,current_revision)
+    if recovery is not None:
+        return 'done' if recovery=='done' else 'idle'
     if publish_earnings(path,reference):
         return 'done'
     config=headline_translation.configuration(env,now=now)

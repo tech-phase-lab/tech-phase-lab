@@ -7,6 +7,120 @@ import factual_validation as validation
 
 
 class FactualValidationTests(unittest.TestCase):
+    GPU_LIFE_SOURCE = (
+        'The A100 GPU shipped in 2020 and remains in commercial service six years later. '
+        'An analyst puts useful life at five to six years for an eight-GPU H100 system '
+        'and nine to 10 years for GB300 NVL72, based on resale values.'
+    )
+
+    def test_megawatt_per_unit_basis_matches_explicit_japanese_denominator(self):
+        source = 'Each megawatt costs roughly $60 million.'
+        for ja in ('1メガワットあたり約6000万ドル', '1MW当たり約6,000万ドル',
+                   'メガワットあたり約6000万ドル', 'メガワット当たり約6000万ドル', 'メガワット毎に約6000万ドル'):
+            for en in ('$60 million per megawatt', '$60 million per MW', '$60 million per 1 MW'):
+                with self.subTest(ja=ja, en=en):
+                    validation.validate_numbers(ja, source)
+                    validation.validate_numbers(en, source)
+                    validation.validate_pair(ja, en)
+                    self.assertEqual(validation.number_checks({'ja': ja, 'en': en, 'evidenceQuote': source}), [])
+        self.assertEqual(validation.numeric_values('1MW当たり'), [(validation.Decimal(1), 'per-MW')])
+        self.assertEqual(validation.numeric_values('per one megawatt'), [(validation.Decimal(1), 'per-MW')])
+
+    def test_per_megawatt_does_not_authorize_unrelated_one_or_changed_basis(self):
+        for source in ('Each megawatt costs roughly $60 million.', '$60 million per 1 MW'):
+            for wrong in ('1年で6000万ドル', '1GPUあたり6000万ドル', '1GWあたり6000万ドル',
+                          '2MW当たり6000万ドル', '-1MW当たり6000万ドル', '1MW当たり600万ドル',
+                          '6000万ドルの1%'):
+                with self.subTest(source=source, wrong=wrong), self.assertRaisesRegex(ValueError, 'unsupported-number'):
+                    validation.validate_numbers(wrong, source)
+        with self.assertRaisesRegex(ValueError, 'unsupported-number'):
+            validation.validate_pair('1MW当たり6000万ドル', '$60 million')
+        validation.validate_pair('2MW当たり6000万ドル', '$60 million per 2 megawatts')
+
+    def test_spelled_duration_range_endpoints_have_only_temporal_scope(self):
+        validation.validate_pair('5〜6年と9〜10年', 'five to six years and nine to 10 years')
+        validation.validate_pair('5〜6か月', 'five to six months')
+        validation.validate_pair('9〜10年', 'nine-to-ten-year')
+        with self.assertRaisesRegex(ValueError, 'unsupported-number'):
+            validation.validate_numbers('5〜6年', 'five to six alternatives and 6 years')
+        for text in ('nine to 10 alternatives', 'Eleven announced a product.', 'one of the teams'):
+            self.assertNotIn((validation.Decimal(9 if text.startswith('nine') else 11 if text.startswith('Eleven') else 1), 'number'),
+                             validation.numeric_values(text))
+        with self.assertRaisesRegex(ValueError, 'unsupported-number'):
+            validation.validate_pair('5〜7年', 'five to six years')
+
+    def test_gpu_observed_age_and_attributed_life_estimates_validate(self):
+        for ja, en in (
+            ('同社によると、2020年出荷のA100 GPUは6年後も商用利用が続いている。',
+             'NVIDIA says the A100 GPU, shipped in 2020, remains commercially used six years later.'),
+            ('Barkrは転売価格に基づき、GB300 NVL72の有効寿命を9〜10年と推定している。',
+             'Barkr estimates GB300 NVL72 useful life at nine to 10 years, based on resale values.'),
+            ('BarkrはH100システムの有効寿命を5〜6年と推定している。',
+             'Barkr estimates useful life at five to six years for an H100 system.'),
+        ):
+            with self.subTest(ja=ja):
+                validation.validate_numbers(ja, self.GPU_LIFE_SOURCE)
+                validation.validate_numbers(en, self.GPU_LIFE_SOURCE)
+                validation.validate_pair(ja, en)
+                self.assertEqual(validation.number_checks({'ja': ja, 'en': en, 'evidenceQuote': self.GPU_LIFE_SOURCE}), [])
+
+    def test_model_lifetime_cannot_borrow_another_models_interval(self):
+        for wrong in (
+            'A100 has an estimated useful life of 9–10 years.',
+            'A100の有効寿命は9〜10年と推定されている。',
+            'H100 has an estimated useful life of 9–10 years.',
+            'GB300 NVL72 has an estimated useful life of 5–6 years.',
+            'A100 remains in commercial service nine to 10 years later.',
+            'The 2020-launched A100 GPU is still commercially valuable up to 9 to 10 years later, '
+            'as supported by extended depreciation schedules.',
+        ):
+            with self.subTest(wrong=wrong), self.assertRaisesRegex(ValueError, 'unsupported-number'):
+                validation.validate_numbers(wrong, self.GPU_LIFE_SOURCE)
+
+    def test_gpu_estimate_cannot_become_observed_history_or_certain_lifetime(self):
+        for wrong in (
+            'GB300 NVL72 has been in service nine to 10 years.',
+            'GB300 NVL72は9〜10年間稼働している。',
+            'GB300 NVL72 has a useful life of nine to 10 years.',
+            'GB300 NVL72の有効寿命は9〜10年だ。',
+            'A100 has an estimated useful life of six years.',
+        ):
+            with self.subTest(wrong=wrong), self.assertRaisesRegex(ValueError, 'unsupported-number'):
+                validation.validate_numbers(wrong, self.GPU_LIFE_SOURCE)
+        with self.assertRaisesRegex(ValueError, 'unsupported-number'):
+            validation.validate_pair('GB300 NVL72は9〜10年間稼働している。',
+                                     'GB300 NVL72 has an estimated useful life of nine to 10 years.')
+
+    def test_unrelated_years_and_clauses_do_not_support_model_life_claim(self):
+        claim = 'A100 has an estimated useful life of nine to 10 years.'
+        for source in (
+            'A100 shipped in 2020. Studies estimated useful life at nine to 10 years.',
+            'A100 shipped in 2020, while unrelated studies estimated useful life at nine to 10 years.',
+            'A100 shipped in 2020, unrelated studies estimated useful life at nine to 10 years.',
+            'A100 is used commercially six years later. There are 9 labs and 10 teams.',
+            'A100 has an estimated useful life of nine years. A different project lasts 10 years.',
+        ):
+            with self.subTest(source=source), self.assertRaisesRegex(ValueError, 'unsupported-number'):
+                validation.validate_numbers(claim, source)
+        self.assertEqual(validation.model_year_facts('The A100 launch was in 2020. There are 10 studies.'), set())
+        with self.assertRaisesRegex(ValueError, 'unsupported-number'):
+            validation.validate_numbers('A100 has an estimated useful life of 10 years.',
+                                        'A100 has an estimated useful life of nine years with an unrelated plan lasting 10 years.')
+        validation.validate_numbers('A100 remains in commercial service six years later.',
+                                    'Barkr estimates useful life at nine to 10 years for GB300 NVL72 '
+                                    'and A100 remains in commercial service six years later.')
+
+    def test_model_duration_failures_have_scoped_diagnostics(self):
+        checks = validation.number_checks({
+            'ja': 'A100の有効寿命を9〜10年と推定している。',
+            'en': 'A100 has an estimated useful life of nine to 10 years.',
+            'evidenceQuote': self.GPU_LIFE_SOURCE,
+        })
+        self.assertEqual(checks, [
+            {'check': language + '-evidence-model-duration', 'unsupported': [
+                {'model': 'A100', 'minYears': '9', 'maxYears': '10', 'basis': 'estimated-useful-life'}],
+             'truncated': False} for language in ('ja', 'en')])
+
     def test_purpose_cannot_be_translated_as_achieved_benefit(self):
         for ja, en in (
             ('買収し、性能を向上させた。', 'It acquired the company to improve performance.'),
