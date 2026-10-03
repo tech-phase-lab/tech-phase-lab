@@ -50,7 +50,7 @@ export function quarterlyHighlights(c: Financials, lang: "ja"|"en", now=Date.now
   if(valid("profitability") && c.quarterOperatingMargin!<0) weaknesses.push(lang==="ja" ? `営業赤字（利益率 ${c.quarterOperatingMargin!.toFixed(1)}%）` : `Operating loss (${c.quarterOperatingMargin!.toFixed(1)}% margin)`);
   if(valid("growth") && finite(c.quarterDilutedSharesGrowth) && c.quarterDilutedSharesGrowth>5) weaknesses.push(lang==="ja" ? `平均株式数 +${c.quarterDilutedSharesGrowth!.toFixed(1)}%` : `Average shares +${c.quarterDilutedSharesGrowth!.toFixed(1)}%`);
   if(valid("cash") && c.quarterFcfMargin!<0) weaknesses.push(lang==="ja" ? "四半期の簡易FCFがマイナス" : "Negative quarterly simple FCF");
-  return {strengths:strengths.slice(0,2),weaknesses:weaknesses.slice(0,2)};
+  return {strengths,weaknesses};
 }
 export function quarterlyTakeaway(companies: (Financials & {ticker:string})[], lang:"ja"|"en", now=Date.now()) {
   const usable=companies.filter(c=>comparisonScores(c,now).find(s=>s.id==="growth")?.value!==null && finite(c.quarterRevenueGrowth) && finite(c.quarterOperatingMargin));

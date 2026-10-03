@@ -35,7 +35,7 @@ function ScoreOverview({companies,lang,now}: {companies:ComparisonResult["compan
   return <section className={styles.scoreOverview}><div className={styles.scoreHeading}><h2>{ja ? "比較スナップショット" : "Comparison snapshot"}</h2><small>{ja ? "参考スコア / 10" : "Reference score / 10"}</small></div>
     <div className={styles.scoreViewSwitch} role="group" aria-label={ja ? "比較の表示切替" : "Comparison view"}><button type="button" aria-pressed={view==="scores"} onClick={()=>setView("scores")}>{ja ? "スコア" : "Scores"}</button><button type="button" aria-pressed={view==="status"} onClick={()=>setView("status")}>{ja ? "ステータス" : "Status"}</button></div>
     {view==="status" ? <StatusChart companies={companies} lang={lang} now={now}/> : <><table className={styles.snapshotTable} style={{"--companies":companies.length} as React.CSSProperties}><caption className={styles.srOnly}>{ja ? "各項目の企業別スコア" : "Company scores by factor"}</caption>
-      <thead><tr><th scope="col">{ja ? "項目" : "Factor"}</th>{companies.map((c,i)=><th key={c.ticker} scope="col" data-company={i}>{c.ticker}</th>)}</tr></thead>
+      <thead><tr><th scope="col">{ja ? "項目" : "Factor"}</th>{companies.map((c,i)=><th key={c.ticker} scope="col" data-company={i}><span className={styles.snapshotTicker}>{c.ticker}</span></th>)}</tr></thead>
       <tbody>{factors.map((f,index)=><tr key={f.id}><th scope="row">{f.label[lang]}</th>{companies.map((c,i)=>{const score=scoreSets[i][index];return <td key={c.ticker}><div className={styles.snapshotValue}><span className={styles.scoreTrack} aria-hidden="true">{score.value!==null && <i data-company={i} style={{width:`${score.value*10}%`}}/>}</span><strong>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div></td>;})}</tr>)}</tbody>
     </table><p className={styles.snapshotNote}>{ja ? "— 未取得" : "— Unavailable"}</p></>}
   </section>;
@@ -44,8 +44,22 @@ function CompanyScoreCard({company:c,lang,now}: {company:ComparisonResult["compa
   const scores=comparisonScores(c,now), highlights=quarterlyHighlights(c,lang,now), ja=lang==="ja";
   return <article className={styles.scoreCard}>
     <header className={styles.companyHeading}><h3 title={`${c.name}（${c.ticker}）`}>{c.name}（{c.ticker}）</h3><span>{c.quarterRevenue ? `${ja ? "四半期" : "Quarter"} ${c.quarterRevenue.end}` : ja ? "四半期未取得" : "Quarter unavailable"}</span></header>
-    <div className={styles.highlights}><p><b>{ja ? "長所" : "Strengths"}</b>{highlights.strengths.length ? highlights.strengths.join(" / ") : ja ? "判定に必要なデータが不足" : "Insufficient data"}</p>
-      <p><b>{ja ? "短所" : "Weaknesses"}</b>{highlights.weaknesses.length ? highlights.weaknesses.join(" / ") : ja ? "この実績だけでは特定できません" : "Not established by these results alone"}</p></div>
+    <div className={styles.companyProfile}>
+      <div className={styles.traitBoxes}>
+        <section className={styles.traitBox} aria-label={ja ? "長所" : "Strengths"}>
+          <h4>{ja ? "長所" : "Strengths"}</h4>
+          {highlights.strengths.length ? <ul>{highlights.strengths.map(item=><li key={item}>{item}</li>)}</ul> : <p>{ja ? "判定に必要なデータが不足" : "Insufficient data"}</p>}
+        </section>
+        <section className={`${styles.traitBox} ${styles.weaknessBox}`} aria-label={ja ? "短所" : "Weaknesses"}>
+          <h4>{ja ? "短所" : "Weaknesses"}</h4>
+          {highlights.weaknesses.length ? <ul>{highlights.weaknesses.map(item=><li key={item}>{item}</li>)}</ul> : <p>{ja ? "この実績だけでは特定できません" : "Not established by these results alone"}</p>}
+        </section>
+      </div>
+      <section className={styles.companyStatus} aria-label={ja ? `${c.name}のステータス` : `${c.name} status`}>
+        <h4>{ja ? "ステータス" : "Status"}<small>{ja ? "参考スコア / 10" : "Reference score / 10"}</small></h4>
+        <StatusChart companies={[c]} lang={lang} now={now}/>
+      </section>
+    </div>
     {c.dataWarnings?.map(message=><p key={message.en} className={styles.warning}>{message[lang]}</p>)}
     {scores.every(score=>score.value===null) && <p className={styles.warning}>{ja ? "評価できる直近四半期のデータが不足しています。" : "Recent quarterly data are insufficient for scoring."}</p>}
   </article>;
