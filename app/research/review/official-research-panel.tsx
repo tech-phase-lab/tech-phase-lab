@@ -59,7 +59,7 @@ function OfficialResearchSession({ token }: { token: string }) {
   return <section className={styles.panel} aria-labelledby="official-research-diagnostics-heading">
     <div className={styles.head}><div><p>公式本文の日英記事 · 編集者用</p><h2 id="official-research-diagnostics-heading">未公開記事の検証状況</h2></div>
       <button type="button" disabled={busy || token.length < 24} onClick={() => void load()}>{busy ? "読み込み中…" : "未公開記事の診断を読み込む"}</button></div>
-    <p className={styles.note}>保存済み記録の読取専用です。生成・再試行・公開は実行しません。原文本文、未公開の文章、根拠引用は返しません。</p>
+    <p className={styles.note}>保存済み記録の読取専用です。生成・再試行・公開は実行しません。通常は文章や引用を返しません。期限内の承認済み2件に限り、修復監査と最新失敗・本文版の一致を確認し、未公開の日英文章と現在の本文に完全一致する選択済み根拠を文字数制限付きで表示します。</p>
     <p className={styles.note}>機械検証の拒否は誤情報の確定ではありません。数値の表記差や対応箇所を調べる手掛かりです。保存済みの失敗を現在の原文で再検証し、当時の本文版が記録されていない場合は当時の判定の完全再現とは区別します。</p>
     {error && <p role="alert">{error}{data ? " 下記は前回取得時の記録です。" : ""}</p>}
     {busy && <p role="status">保存済みの検証記録を取得中…</p>}

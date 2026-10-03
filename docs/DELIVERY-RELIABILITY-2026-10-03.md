@@ -140,3 +140,29 @@ The combined one-time repair and remaining headline-only display correction
 passed 258 Node and 746 Python tests (1,004 total), the required lint/build/type,
 compile and whitespace gates, and independent review. External DNS/socket
 audit: zero attempts. Runtime regeneration results must still be observed.
+
+Commit `3cc1250847b4c9feab54c3c154be3d81ece457ec` deployed this candidate;
+Actions `37086912509`, Vercel `dpl_GmppeEbvpgr6TnGLjqsZza8DAzeD` and Railway
+`636a2c1d-b4d3-4c19-8c86-0492e9fbe69a` succeeded. The worker started at
+01:39:47.092 UTC. Both exact jobs advanced once from attempt 6 to 7, but both
+were still rejected. ROI's remaining issue was a Japanese `1` in its first
+fact; the games note introduced unsupported 2023 dates. Their next ordinary
+deadlines became 07:39:47 and 07:40:00 UTC. These are failed recovery attempts,
+not completed publications. No second policy bump or additional paid retry is
+used to hide this result. Source/fact context must be checked before changing
+a numeric rule or deciding whether a verified editorial recovery is suitable.
+
+The final headline-only market correction was verified live in Japanese:
+Treasury and the Nasdaq membership item have original-source links and no
+disclosure. Employment retains the additional unemployment forecast detail.
+
+The next diagnostic change is read-only and editor-token protected. Only these
+two exact, expiring revisions can include bounded rejected pairs, independently
+validated pairs and literal selected source evidence, and only when the latest
+failure is tied to the consumed repair audit's lease/body revision. Other
+records retain quantity-only diagnostics. No public feed, generation or retry
+is changed. The existing panel's diagnostics renderer shows an explicit scoped
+context notice; no token extraction, transfer or credential persistence is
+required. This diagnostic candidate passed 258 Node and 756 Python tests
+(1,014 total), all required gates and independent review, with zero external
+DNS/socket attempts.

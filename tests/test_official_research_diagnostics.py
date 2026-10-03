@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import timedelta
 from pathlib import Path
 import sqlite3
 import sys
@@ -14,7 +15,10 @@ from urllib.request import Request, urlopen
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/research'))
 import official_research as research
 import official_research_diagnostics as diagnostics
+import official_research_content_repair as repair
+import test_official_research_content_repair as repair_tests
 from test_official_research import NOW, URL, TITLE, BODY, NOTE, copy
+from test_official_research_content_repair import NOW as REPAIR_NOW, NOTE as REPAIR_NOTE, BODY as REPAIR_BODY, QUOTE as REPAIR_QUOTE
 
 
 class OfficialResearchDiagnosticsTests(unittest.TestCase):
@@ -176,6 +180,229 @@ class OfficialResearchDiagnosticsTests(unittest.TestCase):
                 self.assertEqual(error.exception.code, 401)
         finally:
             server.shutdown(); server.server_close(); thread.join(timeout=2)
+
+
+class BoundedRepairContextTests(unittest.TestCase):
+    # Share the exact pinned identity fixture without inheriting worker tests.
+    fixture = repair_tests.ContentRepairTests.fixture
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.number = 0
+        self.reference = REPAIR_NOW + timedelta(minutes=15)
+        self.note = json.loads(json.dumps(REPAIR_NOTE))
+        self.note['facts'][0]['ja'] = 'NVIDIAが1MWあたりのソフトウェアを発表した。'
+        for obj, attr in [(research.signals, 'fetch'), (research.brief_generator, 'request_response')]:
+            mocked = patch.object(obj, attr, side_effect=AssertionError('external call'))
+            mocked.start()
+            self.addCleanup(mocked.stop)
+
+    def consumed(self, ids=(1213,), note=None):
+        path = self.fixture(ids)
+        note = self.note if note is None else note
+        with research.connect(path) as db:
+            for row in research.candidates(db, REPAIR_NOW):
+                job = db.execute('SELECT * FROM official_research_jobs WHERE event_id=?', (row['id'],)).fetchone()
+                lease = f'consumed-repair-{row["id"]}'
+                repair.record_claim(db, row, job, lease, REPAIR_NOW, True)
+                db.execute("UPDATE official_research_jobs SET attempts=7,lease=? WHERE event_id=?", (lease, row['id']))
+                db.execute('INSERT INTO official_research_attempt_failures VALUES(?,?,?,?,?,?,?)',
+                           (lease, row['id'], row['sha'], (REPAIR_NOW + timedelta(minutes=10)).isoformat(),
+                            'unsupported-number', 'PRIVATE-PROVIDER-DETAIL', json.dumps(note)))
+        return path
+
+    def queue(self, path, **kwargs):
+        return diagnostics.queue(path, reference=kwargs.pop('reference', self.reference), **kwargs)
+
+    def context(self, item):
+        return [check for issue in item['latestFailure']['validation']['issues'] for check in issue['checks']
+                if check.get('check') == 'editor-only-authorized-bounded-context']
+
+    def assert_no_context(self, result):
+        self.assertFalse(result['rawCopyIncluded'])
+        encoded = json.dumps(result, ensure_ascii=False)
+        for private in [self.note['facts'][0]['ja'], REPAIR_QUOTE, 'rejectedFields', 'validatedFields', 'consumed-repair-', 'PRIVATE-PROVIDER-DETAIL']:
+            self.assertNotIn(private, encoded)
+
+    def test_exact_both_repair_failures_include_original_pairs_and_literal_evidence(self):
+        path = self.consumed((1213, 1214))
+        result = self.queue(path)
+        self.assertTrue(result['rawCopyIncluded'])
+        self.assertEqual({item['eventId'] for item in result['items']}, {1213, 1214})
+        for item in result['items']:
+            self.assertTrue(item['latestFailure']['bodyRevisionRecorded'])
+            contexts = self.context(item)
+            self.assertEqual(len(contexts), 1)
+            context = contexts[0]
+            self.assertIn('editor-only authorized bounded context', context['notice'])
+            rejected = context['rejectedFields']
+            self.assertEqual(len(rejected), 1)
+            self.assertEqual(rejected[0]['field'], 'facts[0]')
+            self.assertEqual(rejected[0]['ja'], self.note['facts'][0]['ja'])
+            self.assertEqual(rejected[0]['en'], self.note['facts'][0]['en'])
+            self.assertEqual(rejected[0]['selectedEvidence'], REPAIR_QUOTE)
+            self.assertTrue(rejected[0]['selectedEvidenceIsLiteralCurrentBody'])
+            self.assertEqual([pair['field'] for pair in context['validatedFields']],
+                             ['title', 'summary', 'facts[1]', 'facts[2]', 'purpose'])
+        encoded = json.dumps(result, ensure_ascii=False)
+        for private in [REPAIR_BODY, 'PRIVATE-PROVIDER-DETAIL', 'consumed-repair-', 'previous-']:
+            self.assertNotIn(private, encoded)
+
+    def test_missing_audit_failure_job_or_wrong_proof_never_includes_prose(self):
+        changes = [
+            'DROP TABLE official_research_content_repairs',
+            'DELETE FROM official_research_content_repairs',
+            'DELETE FROM official_research_attempt_failures',
+            'DELETE FROM official_research_jobs',
+            "UPDATE official_research_content_repairs SET event_id=9999",
+            "UPDATE official_research_content_repairs SET source_id='primary-ir-AMD'",
+            "UPDATE official_research_content_repairs SET sha='old-source'",
+            "UPDATE official_research_content_repairs SET body_sha='old-body'",
+            "UPDATE official_research_content_repairs SET policy_id='another-policy'",
+            "UPDATE official_research_content_repairs SET lease='another-lease'",
+            "UPDATE official_research_content_repairs SET mode='unapproved'",
+            "UPDATE official_research_content_repairs SET claimed_at='invalid'",
+            "UPDATE official_research_content_repairs SET claimed_at='2026-10-03T01:41:00+00:00'",
+            "UPDATE official_research_content_repairs SET claimed_at='2026-10-03T01:00:00+00:00'",
+            "UPDATE official_research_content_repairs SET previous_attempts=5",
+            "UPDATE official_research_jobs SET lease='later-job'",
+            "UPDATE official_research_jobs SET sha='old-source'",
+            "UPDATE official_research_jobs SET state='running'",
+            "UPDATE official_research_jobs SET failure_kind='provider-unavailable'",
+            "UPDATE official_research_attempt_failures SET sha='old-source'",
+            "UPDATE official_research_attempt_failures SET reason='invalid-copy'",
+            "UPDATE official_research_attempt_failures SET failed_at='2026-10-03T01:50:00+00:00'",
+        ]
+        for sql in changes:
+            with self.subTest(sql=sql):
+                path = self.consumed()
+                with sqlite3.connect(path) as db:
+                    db.execute(sql)
+                self.assert_no_context(self.queue(path))
+
+    def test_exact_cohort_and_retained_row_are_rechecked_even_for_a_stale_candidate(self):
+        changes = [
+            "UPDATE signal_events SET id=9999",
+            "UPDATE signal_events SET source_id='primary-ir-AMD'",
+            "UPDATE signal_events SET title=title || ' changed'",
+            "UPDATE sources SET sha256='old-body'",
+            "UPDATE sources SET status='held'",
+            "UPDATE sources SET error='source-http-429'",
+            "UPDATE source_revisions SET extracted_text=extracted_text || ' changed'",
+            'DELETE FROM source_revisions',
+        ]
+        for sql in changes:
+            with self.subTest(sql=sql):
+                path = self.consumed()
+                with research.connect(path) as db:
+                    rows = research.candidates(db, self.reference)
+                    db.execute(sql)
+                with patch.object(research, 'candidates', return_value=rows):
+                    self.assert_no_context(self.queue(path))
+        path = self.consumed()
+        with research.connect(path) as db:
+            row = research.candidates(db, self.reference)[0]
+        for modified in ({**row, 'id': 9999}, {**row, 'source_id': 'primary-ir-AMD'}, {**row, 'body_cached': True}):
+            with self.subTest(modified=modified['id']), patch.object(research, 'candidates', return_value=[modified]):
+                self.assert_no_context(self.queue(path))
+
+    def test_expiry_and_newer_failure_of_any_revision_close_context(self):
+        path = self.consumed()
+        for reference in (repair.DEPLOYED_AT - timedelta(microseconds=1), repair.EXPIRES_AT):
+            self.assert_no_context(self.queue(path, reference=reference))
+        with research.connect(path) as db:
+            row = research.candidates(db, self.reference)[0]
+            db.execute('INSERT INTO official_research_attempt_failures VALUES(?,?,?,?,?,?,?)',
+                       ('newer-unrelated', row['id'], 'another-source-sha', self.reference.isoformat(),
+                        'provider-unavailable', '', None))
+        self.assert_no_context(self.queue(path))
+
+    def test_snippets_are_bounded_and_unknown_payload_fields_never_escape(self):
+        note = json.loads(json.dumps(self.note))
+        note['facts'][0] = {'ja': '長' * 500, 'en': 'E' * 500, 'evidenceQuote': REPAIR_BODY + ' appended literal text' * 30}
+        note['request'] = {'headers': 'SECRET-PROVIDER-HEADERS'}
+        note['facts'][1]['request'] = 'SECRET-ITEM-REQUEST'
+        path = self.consumed(note=note)
+        with sqlite3.connect(path) as db:
+            db.execute('UPDATE source_revisions SET extracted_text=?', (note['facts'][0]['evidenceQuote'],))
+        context = self.context(self.queue(path)['items'][0])[0]
+        rejected = context['rejectedFields'][0]
+        self.assertEqual((len(rejected['ja']), len(rejected['en']), len(rejected['selectedEvidence'])), (400, 400, 1800))
+        self.assertTrue(rejected['jaTruncated'] and rejected['enTruncated'] and rejected['evidenceTruncated'])
+        self.assertNotIn('SECRET-', json.dumps(context))
+        self.assertNotIn('facts[1]', [pair['field'] for pair in context['validatedFields']])
+
+    def test_normalized_or_invented_quote_is_never_returned_as_literal_evidence(self):
+        for quote in [REPAIR_QUOTE.replace(' ', '  '), 'An invented evidence quote that is absent from the retained body.']:
+            with self.subTest(quote=quote):
+                note = json.loads(json.dumps(self.note))
+                note['facts'][0]['evidenceQuote'] = quote
+                context = self.context(self.queue(self.consumed(note=note))['items'][0])[0]
+                rejected = context['rejectedFields'][0]
+                self.assertFalse(rejected['selectedEvidenceIsLiteralCurrentBody'])
+                self.assertNotIn('selectedEvidence', rejected)
+                self.assertNotIn(quote, json.dumps(context))
+
+    def test_invalid_payload_or_valid_note_does_not_mark_raw_copy_included(self):
+        for payload in ('{bad', '[]', json.dumps({'facts': []}), 'x' * 131073, json.dumps(REPAIR_NOTE)):
+            with self.subTest(payload=payload[:30]):
+                path = self.consumed()
+                with sqlite3.connect(path) as db:
+                    db.execute('UPDATE official_research_attempt_failures SET payload=?', (payload,))
+                self.assert_no_context(self.queue(path))
+
+    def test_validated_pairs_preserve_original_copy_before_brand_case_normalization(self):
+        note = json.loads(json.dumps(self.note))
+        note['facts'][1]['en'] = 'GEForce software is available.'
+        result = self.queue(self.consumed(note=note))
+        pairs = self.context(result['items'][0])[0]['validatedFields']
+        self.assertEqual(next(pair for pair in pairs if pair['field'] == 'facts[1]')['en'], note['facts'][1]['en'])
+
+    def test_scoped_prose_is_only_accessible_with_existing_editor_token(self):
+        import service
+        path = self.consumed()
+        queue = Mock(side_effect=lambda limit, view: self.queue(path, limit=limit, view=view))
+        server = service.ThreadingHTTPServer(('127.0.0.1', 0), service.Handler)
+        server.app = SimpleNamespace(official_research_queue=queue)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        url = f'http://127.0.0.1:{server.server_port}/admin/official-research'
+        try:
+            with patch.dict(os.environ, {'RESEARCH_EDITOR_TOKEN': 'synthetic-editor-token', 'RESEARCH_API_TOKEN': 'synthetic-api-token'}):
+                for auth in [None, 'Bearer wrong-token', 'Bearer synthetic-api-token']:
+                    with self.assertRaises(HTTPError) as error:
+                        urlopen(Request(url, headers={'Authorization': auth} if auth else {}), timeout=2)
+                    self.assertEqual(error.exception.code, 401)
+                queue.assert_not_called()
+                with urlopen(Request(url, headers={'Authorization': 'Bearer synthetic-editor-token'}), timeout=2) as response:
+                    result = json.loads(response.read())
+                    self.assertTrue(result['rawCopyIncluded'])
+                    self.assertEqual(len(self.context(result['items'][0])), 1)
+                    self.assertEqual(response.headers['Cache-Control'], 'no-store')
+                queue.assert_called_once_with(20, 'pending')
+        finally:
+            server.shutdown(); server.server_close(); thread.join(timeout=2)
+
+    def test_scope_read_does_not_write_generate_or_change_public_feeds(self):
+        path = self.consumed()
+        with research.connect(path) as db:
+            public_before = research.feed(db, self.reference)
+            public_updates = research.signals.public_official_updates(db, reference=self.reference, read_only=True)
+            before = list(db.iterdump())
+        with patch.object(research, 'run_once', side_effect=AssertionError('generation')), \
+             patch.object(research.signals, 'schema', side_effect=AssertionError('schema write')), \
+             patch.object(research.bridge, 'sync', side_effect=AssertionError('metadata sync')):
+            self.assertTrue(self.queue(path)['rawCopyIncluded'])
+        with sqlite3.connect(path) as db:
+            self.assertEqual(list(db.iterdump()), before)
+        with research.connect(path) as db:
+            self.assertEqual(research.feed(db, self.reference), public_before)
+            self.assertEqual(research.signals.public_official_updates(db, reference=self.reference, read_only=True), public_updates)
+        def attempted_write(db, *args):
+            db.execute('DELETE FROM official_research_content_repairs')
+        with patch.object(diagnostics, 'context_authorized', side_effect=attempted_write), self.assertRaises(sqlite3.OperationalError):
+            self.queue(path)
 
 
 if __name__ == '__main__':
