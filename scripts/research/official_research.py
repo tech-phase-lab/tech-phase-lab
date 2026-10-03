@@ -49,6 +49,8 @@ def schema(db):
         lease TEXT PRIMARY KEY, event_id INTEGER NOT NULL, sha TEXT NOT NULL,
         failed_at TEXT NOT NULL, reason TEXT NOT NULL, detail TEXT NOT NULL,
         payload TEXT);
+      CREATE TABLE IF NOT EXISTS official_research_attempt_body_proofs(
+        lease TEXT PRIMARY KEY, source_sha TEXT NOT NULL, body_sha TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS official_research_publications(
         event_id INTEGER PRIMARY KEY, sha TEXT NOT NULL, body_sha TEXT NOT NULL,
         payload TEXT NOT NULL, evidence TEXT NOT NULL, started_at TEXT NOT NULL,
@@ -544,6 +546,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
             db.execute('INSERT OR IGNORE INTO official_research_attempt_failures VALUES(?,?,?,?,?,?,?)',
                        (lease,row['id'],row['sha'],datetime.now(timezone.utc).isoformat(),reason,
                         ','.join(getattr(exc,'__notes__',[])),rejected if rejected and len(rejected)<=131072 else None))
+            db.execute('INSERT OR IGNORE INTO official_research_attempt_body_proofs VALUES(?,?,?)',
+                       (lease,row['sha'],row['body_sha']))
             job=db.execute("SELECT attempts FROM official_research_jobs WHERE event_id=? AND lease=?",(row['id'],lease)).fetchone()
             delay=max(headline_translation.retry_delay(job[0] if job else 1), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
             db.execute("UPDATE official_research_jobs SET state='retry',next_at=?,failure_kind=? WHERE event_id=? AND lease=?",(now+delay,reason,row['id'],lease))

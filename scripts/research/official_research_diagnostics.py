@@ -165,8 +165,21 @@ def current_failed_context(db,row,job,failure,reference):
         return None
     failed_at=research.general_source_news.reconciliation.instant(failure['failed_at'])
     body_at=research.general_source_news.reconciliation.instant(row['body_at'])
-    if not failed_at or not body_at or not body_at<=failed_at<=reference:
+    if not failed_at or not body_at or not failed_at<=reference or body_at>reference:
         return None
+    if row.get('general_source') and body_at>failed_at:
+        return None
+    proof=(db.execute('SELECT source_sha,body_sha FROM official_research_attempt_body_proofs WHERE lease=?',(failure['lease'],)).fetchone()
+           if db.execute("SELECT 1 FROM sqlite_master WHERE name='official_research_attempt_body_proofs'").fetchone() else None)
+    if row.get('general_source'):
+        # The retained post SHA already binds its complete title and body.
+        provenance='verified-current-retained-body'
+    elif proof and proof['source_sha']==row['sha'] and proof['body_sha']==row['body_sha']:
+        provenance='verified-current-generation-body'
+    elif proof:
+        provenance='generation-body-differs-from-current'
+    else:
+        provenance='unverified-generation-body-not-recorded'
     latest=db.execute('SELECT lease FROM official_research_attempt_failures WHERE event_id=? ORDER BY julianday(failed_at) DESC,rowid DESC LIMIT 1',(row['id'],)).fetchone()
     if not latest or latest['lease']!=failure['lease']:
         return None
@@ -221,7 +234,10 @@ def current_failed_context(db,row,job,failure,reference):
         return None
     result={'check':'editor-only-current-failed-output','eventId':row['id'],
             'sourceSha':row['sha'],'currentBodySha':row['body_sha'],'failedAt':failure['failed_at'],
-            'notice':'Private failed model output, not approved news. Only selected evidence literal in the current verified body is included.',
+            'generationBodyProvenance':provenance,
+            'generationBodyVerified':provenance.startswith('verified-'),
+            'recordedGenerationBodySha':proof['body_sha'] if proof else None,
+            'notice':'Private failed model output, not approved news. Generation-body provenance is reported separately; missing or different proof never approves this copy. Only selected evidence literal in the current verified body is included.',
             'fields':records,'fieldsTruncated':len(raw_facts)>(8 if row.get('general_source') else 5)}
     return result if len(json.dumps(result,ensure_ascii=False).encode())<=48000 else None
 
