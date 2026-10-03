@@ -1,0 +1,35 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { readFile } from 'node:fs/promises';
+import { extractFinancials } from '../lib/research/comparison.ts';
+const fixture = JSON.parse(await readFile(new URL('./fixtures/tsm-companyfacts-excerpt.json', import.meta.url), 'utf8'));
+const now = Date.parse('2026-10-03T00:00:00Z');
+const parse = data => extractFinancials('TSM', '1046179', data, now, 'TWD');
+test('TSMC native currency yields same-filing revenue, growth, margins, cash flow and balance data', () => {
+  assert.equal(extractFinancials('TSM', '1046179', fixture, now).status, 'unsupported');
+  const r = parse(fixture);
+  assert.equal(r.status, 'ready');
+  assert.equal(r.revenue.unit, 'TWD');
+  assert.equal(r.revenue.value, 2894307700000);
+  assert.equal(r.previousRevenue.value, 2161735800000);
+  assert.equal(r.operatingIncome.value, 1322053000000);
+  assert.ok(Math.abs(r.revenueGrowth - 33.888) < .001);
+  assert.ok(Math.abs(r.operatingMargin - 45.6777) < .001);
+  assert.equal(r.operatingCash.unit, 'TWD');
+  assert.equal(r.capex.unit, 'TWD');
+  assert.equal(r.balance.cash.unit, 'TWD');
+  assert.equal(r.balance.currentAssets.unit, 'TWD');
+  assert.equal(r.balance.currentLiabilities.unit, 'TWD');
+  assert.equal(r.balance.debtNoncurrent, null);
+  for (const f of [r.previousRevenue,r.operatingIncome,r.operatingCash,r.capex,r.balance.cash]) assert.equal(f.accession,r.revenue.accession);
+  assert.equal(r.quarterRevenue,null);
+});
+test('native-currency selection still rejects conflicting data, a different CIK and missing current native amounts', () => {
+  const p = structuredClone(fixture);
+  p.facts['ifrs-full'].Revenue.units.TWD.find(f => f.end === '2024-12-31').val++;
+  assert.equal(parse(p).status,'unsupported');
+  assert.equal(parse({...fixture,cik:999}).status,'unsupported');
+  const missing = structuredClone(fixture);
+  for (const tag of ['Revenue','RevenueFromContractsWithCustomers']) missing.facts['ifrs-full'][tag].units.TWD = missing.facts['ifrs-full'][tag].units.TWD.filter(f => f.end !== '2024-12-31');
+  assert.equal(parse(missing).status,'unsupported');
+});

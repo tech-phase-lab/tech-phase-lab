@@ -40,10 +40,10 @@ export function comparisonAccess(member: { status: string; plan: string; accessE
 }
 const tags = {
   "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "SalesRevenueNet"], operatingIncome: ["OperatingIncomeLoss"], operatingCash: ["NetCashProvidedByUsedInOperatingActivities"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
-  "ifrs-full": { revenue: ["Revenue"], operatingIncome: ["ProfitLossFromOperatingActivities"], operatingCash: ["CashFlowsFromUsedInOperatingActivities"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: [] },
+  "ifrs-full": { revenue: ["Revenue", "RevenueFromContractsWithCustomers"], operatingIncome: ["ProfitLossFromOperatingActivities"], operatingCash: ["CashFlowsFromUsedInOperatingActivities"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: [] },
 } as const;
 /** Standard consolidated facts. Annual and standalone-quarter periods remain separate. */
-export function extractFinancials(ticker: string, cik: string, payload: unknown, now = Date.now()): Financials {
+export function extractFinancials(ticker: string, cik: string, payload: unknown, now = Date.now(), reportingCurrency?: string): Financials {
   const result = emptyFinancials(ticker, "unsupported", new Date(now).toISOString());
   const root = obj(payload);
   if (Number(root.cik) !== Number(cik)) return result;
@@ -63,10 +63,14 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   }
   const revenues = (Object.keys(tags) as (keyof typeof tags)[]).flatMap(b => collect(b, tags[b].revenue))
     .filter(f => f.value > 0).sort((a,b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed));
-  const candidate = revenues[0];
+  const latest = revenues[0];
+  if (!latest) return result;
+  // A verified reporting currency distinguishes native values from convenience
+  // translations. Never fall back to an older year if the latest lacks it.
+  const sameDate = revenues.filter(f => f.end === latest.end && f.filed === latest.filed && (!reportingCurrency || f.unit === reportingCurrency));
+  const candidate = sameDate[0];
   if (!candidate) return result;
-  // Ambiguous reporting currency/accounting basis is not guessed.
-  const sameDate = revenues.filter(f => f.end === candidate.end && f.filed === candidate.filed);
+  // Ambiguous accounting basis or conflicting native values are still held.
   if (new Set(sameDate.map(f => `${f.unit}/${f.basis}`)).size !== 1 || new Set(sameDate.map(f => f.value)).size !== 1) return result;
   const revenue = candidate;
   const basis = revenue.basis as keyof typeof tags;
@@ -97,17 +101,19 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const anchor = quarterRevenue ?? revenue;
   const balancePeriod = quarterRevenue ? "quarter" : "annual";
   function balanceMetric(name: string): Fact | null {
-    if (basis !== "us-gaap") return null;
-    return unique(collect(basis, [name], true, balancePeriod).filter(f => f.end === anchor.end && f.accession === anchor.accession && f.unit === anchor.unit && f.value >= 0));
+    const ifrsNames: Record<string, string> = { CashAndCashEquivalentsAtCarryingValue: "CashAndCashEquivalents", AssetsCurrent: "CurrentAssets", LiabilitiesCurrent: "CurrentLiabilities" };
+    const tag = basis === "us-gaap" ? name : ifrsNames[name];
+    if (!tag) return null;
+    return unique(collect(basis, [tag], true, balancePeriod).filter(f => f.end === anchor.end && f.accession === anchor.accession && f.unit === anchor.unit && f.value >= 0));
   }
   const currentAssets = balanceMetric("AssetsCurrent"), currentLiabilities = balanceMetric("LiabilitiesCurrent");
-  const balance: BalanceSnapshot | null = basis === "us-gaap" ? {
+  const balance: BalanceSnapshot = {
     end: anchor.end, filed: anchor.filed, sourceUrl: filingUrl(anchor),
     cash: balanceMetric("CashAndCashEquivalentsAtCarryingValue"), currentAssets, currentLiabilities,
     currentRatio: currentAssets && currentLiabilities && currentLiabilities.value > 0 ? currentAssets.value / currentLiabilities.value : null,
     debtCurrent: balanceMetric("LongTermDebtCurrent"), debtNoncurrent: balanceMetric("LongTermDebtNoncurrent"),
     shortBorrowings: balanceMetric("ShortTermBorrowings"), leaseCurrent: balanceMetric("OperatingLeaseLiabilityCurrent"), leaseNoncurrent: balanceMetric("OperatingLeaseLiabilityNoncurrent"),
-  } : null;
+  };
   return { ...result, status: "ready", balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
     stockCompensation, stockCompensationRatio: stockCompensation ? stockCompensation.value / revenue.value * 100 : null,
     dilutedShares, previousDilutedShares, dilutedSharesGrowth: dilutedShares && previousDilutedShares ? (dilutedShares.value / previousDilutedShares.value - 1) * 100 : null,
