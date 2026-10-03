@@ -397,6 +397,7 @@ class AutomaticMonitor:
         self.body_probe_urls = set()
         self.body_probe_eligible_at = {}
         self.stop_event = threading.Event()
+        self.backup_initial_complete = threading.Event()
         self.db_lock = threading.Lock()
         self.state_lock = threading.Lock()
         self.state = {
@@ -536,7 +537,12 @@ class AutomaticMonitor:
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
 
     def run_x_preflight(self):
-        x_preflight_service.run_once(self.db_path, self.stop_event)
+        # Startup backup may temporarily require one full extra DB-sized copy.
+        # Observe the volume only after that work (or recovery) has completed.
+        completed = self.backup_initial_complete.wait(30)
+        with self.state_lock:
+            backup_ready = completed and self.state["backup"]["healthy"] is True
+        x_preflight_service.run_once(self.db_path, self.stop_event, allow_metadata=backup_ready)
 
     def run_x_stream(self):
         if not self.x_stream_requested:
@@ -1922,8 +1928,26 @@ class AutomaticMonitor:
         # database file keeps a new deployment from reporting a false backup fault.
         while not self.stop_event.is_set() and not self.db_path.is_file():
             self.stop_event.wait(1)
+        if self.stop_event.is_set():
+            self.backup_initial_complete.set()
+            return
+        try:
+            recent = persistence.recover_latest_backup(self.backup_dir, self.backup_interval)
+        except Exception:
+            recent = None
+        if recent:
+            with self.state_lock:
+                self.state["backup"].update({"healthy": True, "lastSuccessAt": recent["createdAt"],
+                    "backupCount": recent["backupCount"], "lastError": None})
+            self.backup_initial_complete.set()
+            remaining = max(0, self.backup_interval - (timestamp_age_seconds(recent["createdAt"]) or 0))
+            if self.stop_event.wait(remaining):
+                return
         while not self.stop_event.is_set():
-            self.perform_backup()
+            try:
+                self.perform_backup()
+            finally:
+                self.backup_initial_complete.set()
             self.stop_event.wait(self.backup_interval)
 
     def run_supervised(self):

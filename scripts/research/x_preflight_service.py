@@ -11,6 +11,7 @@ import stat
 ENABLED = 'X_METADATA_PREFLIGHT_ENABLED'
 APPROVAL = 'X_METADATA_PREFLIGHT_APPROVAL_JSON'
 LOCAL = 'X_PREFLIGHT_LOCAL_DIAGNOSTICS'
+RESUME = 'X_METADATA_PREFLIGHT_RESUME_AFTER_STORAGE'
 
 
 def requested(env=None):
@@ -25,6 +26,8 @@ def local_file_sizes(*, scandir=None):
     groups = {name: {'files': 0, 'bytes': 0} for name in ('database', 'wal', 'backups', 'other')}
     result = {'categories': groups, 'skipped_links': 0, 'unscanned_directories': 0,
               'inventory_complete': True}
+    result['backup_types'] = {name: {'files': 0, 'bytes': 0} for name in ('snapshots', 'manifests', 'wal', 'shm', 'temporary', 'other')}
+    backup_names, sidecars = set(), []
     remaining = 2048
     pending = [('/data', False)]
     try:
@@ -50,6 +53,15 @@ def local_file_sizes(*, scandir=None):
                                     else 'database' if entry.name.endswith(('.sqlite', '.db')) else 'other')
                         groups[category]['files'] += 1
                         groups[category]['bytes'] += max(0, info.st_size)
+                        if backup:
+                            backup_names.add(entry.name)
+                            kind = ('wal' if entry.name.endswith('-wal') else 'shm' if entry.name.endswith('-shm')
+                                    else 'temporary' if '.tmp' in entry.name else 'snapshots' if entry.name.endswith('.sqlite')
+                                    else 'manifests' if entry.name.endswith('.json') else 'other')
+                            result['backup_types'][kind]['files'] += 1
+                            result['backup_types'][kind]['bytes'] += max(0, info.st_size)
+                            if kind in ('wal', 'shm'):
+                                sidecars.append((entry.name[:-4], max(0, info.st_size)))
                     else:
                         result['inventory_complete'] = False
     except Exception:
@@ -57,7 +69,7 @@ def local_file_sizes(*, scandir=None):
     return result
 
 
-def run_once(db_path, stop_event, *, env=None, emit=None):
+def run_once(db_path, stop_event, *, env=None, emit=None, allow_metadata=True):
     env = os.environ if env is None else env
     if not requested(env) or stop_event.is_set():
         return
@@ -71,6 +83,9 @@ def run_once(db_path, stop_event, *, env=None, emit=None):
         except Exception:
             emit('x-preflight-local unavailable')
     if str(env.get(ENABLED, '')).strip().lower() != 'true' or stop_event.is_set():
+        return
+    if allow_metadata is not True:
+        emit('x-preflight-result {"status":"blocked","reason":"startup-backup-unavailable"}')
         return
     try:
         raw = env.get(APPROVAL, '')
@@ -86,6 +101,7 @@ def run_once(db_path, stop_event, *, env=None, emit=None):
         db = monitor.connect(db_path)
         result = asyncio.run(x_preflight.Checker(
             db=db, enabled=True, approval=approval,
+            resume_after_storage=str(env.get(RESUME, '')).strip().lower() == 'true',
             token_provider=lambda: env.get('X_BEARER_TOKEN', ''),
             reserve_request=lambda **_kwargs: not stop_event.is_set(),
         ).run())

@@ -117,6 +117,48 @@ class CheckerTests(unittest.IsolatedAsyncioTestCase):
                                  token_provider=self.token, transport_factory=self.factory,
                                  statvfs=self.storage, clock=lambda: NOW, **kwargs)
 
+    async def test_explicit_storage_resume_preserves_costs_and_original_deadline(self):
+        cfg = approval(unknown=True, pages=2)
+        self.storage.side_effect = lambda _path: disk(1) if len(self.calls) >= 2 else disk()
+        first = await self.checker(cfg).run()
+        self.assertEqual(first['reason'], 'x-preflight-volume-space-insufficient')
+        self.assertEqual(first['requests_admitted'], 2)
+        self.storage.side_effect = None
+        later = NOW + timedelta(minutes=20)
+        resumed = dict(cfg, run_prepared_at=later.isoformat(), expires_at=(later+timedelta(minutes=10)).isoformat())
+        worker = self.checker(resumed, resume_after_storage=True)
+        worker.clock = lambda: later
+        result = await worker.run()
+        self.assertEqual(result['status'], 'observed')
+        self.assertEqual(result['requests_admitted'], 7)
+        self.assertEqual(len(self.calls), 7)
+        self.assertEqual(preflight.reserved_exposure(self.db)['unknown_runs'], 1)
+        original = self.db.execute('SELECT approved_at,run_prepared_at,expires_at,reserved_micros FROM x_metadata_preflight_runs').fetchone()
+        self.assertEqual(original, (cfg['approved_at'], cfg['run_prepared_at'], cfg['expires_at'], None))
+        self.assertEqual(self.db.execute('SELECT prior_requests FROM x_metadata_preflight_storage_resume').fetchone()[0], 2)
+        again = self.checker(resumed, resume_after_storage=True); again.clock = lambda: later
+        self.assertEqual((await again.run())['reason'], 'x-preflight-storage-resume-unavailable')
+        self.assertEqual(len(self.calls), 7)
+
+    async def test_storage_resume_cannot_bypass_provider_failure(self):
+        cfg = approval(unknown=True, pages=2)
+        self.data[preflight.COUNTS] = preflight.PreflightBlocked('x-preflight-scope-denied')
+        first = await self.checker(cfg).run()
+        self.assertEqual(first['reason'], 'x-preflight-scope-denied')
+        result = await self.checker(cfg, resume_after_storage=True).run()
+        self.assertEqual(result['reason'], 'x-preflight-storage-resume-unavailable')
+        self.assertEqual(len(self.calls), 2)
+
+    async def test_storage_resume_cannot_change_anchor_or_request_allowance(self):
+        cfg = approval(unknown=True, pages=2)
+        self.storage.side_effect = lambda _path: disk(1) if len(self.calls) >= 2 else disk()
+        await self.checker(cfg).run(); self.storage.side_effect = None
+        changed = deepcopy(cfg); changed['account_evidence']['baseline_micros'] += 1
+        result = await self.checker(changed, resume_after_storage=True).run()
+        self.assertEqual(result['reason'], 'x-preflight-storage-resume-unavailable')
+        self.assertEqual(len(self.calls), 2)
+        self.assertEqual(self.db.execute('SELECT COUNT(*) FROM x_metadata_preflight_storage_resume').fetchone()[0], 0)
+
     async def test_default_off_is_inert(self):
         result = await preflight.Checker(db=self.db, approval=approval(), token_provider=self.token,
                                         transport_factory=self.factory, statvfs=self.storage).run()

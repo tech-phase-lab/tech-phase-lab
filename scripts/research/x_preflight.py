@@ -80,6 +80,7 @@ FIXED_REASONS = frozenset('x-preflight-' + code for code in (
     'account-evidence-stale',
     'active-consumer-present',
     'already-attempted',
+    'storage-resume-unavailable',
     'approval-reference-invalid',
     'approval-required',
     'approval-schema-invalid',
@@ -367,6 +368,8 @@ def schema(db):
         max_requests INTEGER NOT NULL, status TEXT NOT NULL, result TEXT NOT NULL,
         CHECK((cost_status='unknown' AND reserved_micros IS NULL) OR
               (cost_status='bounded' AND reserved_micros IS NOT NULL)));
+      CREATE TABLE IF NOT EXISTS x_metadata_preflight_storage_resume (
+        run_id TEXT PRIMARY KEY, prepared_at TEXT NOT NULL, expires_at TEXT NOT NULL, prior_requests INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS x_metadata_preflight_requests (
         request_id TEXT PRIMARY KEY, run_id TEXT NOT NULL, path TEXT NOT NULL,
         admitted_at TEXT NOT NULL, unit_bound_micros INTEGER);
@@ -425,6 +428,44 @@ def _reserve_run(db, approval):
                     approval.get('run_prepared_at', approval['approved_at']), approval['expires_at'],
                     json.dumps(approval['account_evidence'], sort_keys=True), reserve, 'unknown' if reserve is None else 'bounded', approval['max_requests'], 'reserved',
                     '{"status":"blocked","reason":"x-preflight-incomplete-or-interrupted"}'))
+    return identity
+
+
+
+def _resume_after_storage(db, approval):
+    """One explicit operator continuation; preserve all original time/cost records.
+
+    A fresh short dispatch may collect fresh observations after a local-space
+    failure. It is never an automatic retry, never applies to provider/auth/data
+    failures, and gets only the original run's unused request allowance.
+    """
+    if db.in_transaction:
+        _blocked('ledger-transaction-open')
+    identity = hashlib.sha256(('x-metadata-v1:' + approval['approval_id']).encode()).hexdigest()
+    with db:
+        db.execute('BEGIN IMMEDIATE')
+        _assert_no_live_stream(db)
+        row = db.execute('SELECT approved_at,account_anchor,max_requests,cost_status,requests_admitted,status,result '
+                         'FROM x_metadata_preflight_runs WHERE request_id=? AND approval_id=?',
+                         (identity, approval['approval_id'])).fetchone()
+        if not row:
+            _blocked('storage-resume-unavailable')
+        try:
+            old_result = json.loads(row[6])
+        except (ValueError, TypeError):
+            _blocked('storage-resume-unavailable')
+        paths = [r[0] for r in db.execute('SELECT path FROM x_metadata_preflight_requests WHERE run_id=?', (identity,))]
+        if (approval['cost_mode'] != 'unknown-explicitly-approved' or row[0] != approval['approved_at']
+                or row[1] != json.dumps(approval['account_evidence'], sort_keys=True)
+                or row[2] != approval['max_requests'] or row[2] - row[4] < 5
+                or row[3] != 'unknown' or row[4] != 2 or row[5] != 'blocked'
+                or old_result.get('reason') != 'x-preflight-volume-space-insufficient'
+                or sorted(paths) != sorted([RULES, COUNTS])
+                or db.execute('SELECT 1 FROM x_metadata_preflight_storage_resume WHERE run_id=?', (identity,)).fetchone()):
+            _blocked('storage-resume-unavailable')
+        db.execute('INSERT INTO x_metadata_preflight_storage_resume VALUES(?,?,?,?)',
+                   (identity, approval['run_prepared_at'], approval['expires_at'], row[4]))
+        db.execute("UPDATE x_metadata_preflight_runs SET status='reserved' WHERE request_id=?", (identity,))
     return identity
 
 
@@ -799,7 +840,7 @@ class Checker:
     reservation and one-shot claim are already committed at that point.
     """
     def __init__(self, *, db=None, enabled=False, approval=None, token_provider=None,
-                 transport_factory=None, reserve_request=None, clock=None, statvfs=None):
+                 transport_factory=None, reserve_request=None, clock=None, statvfs=None, resume_after_storage=False):
         self.db = db
         self.enabled = enabled
         self.approval = approval
@@ -810,6 +851,7 @@ class Checker:
         self.statvfs = statvfs
         self.run_id = None
         self.required_storage = None
+        self.resume_after_storage = resume_after_storage is True
         self.client = None
         self.claims = set()
         self.report = {'status': 'disabled', 'reason': 'x-preflight-disabled'}
@@ -903,7 +945,10 @@ class Checker:
             self.required_storage = metadata_storage_reserve(self.db, self.approval['max_requests'])
             self._check_storage()
             schema(self.db)
-            self.run_id = _reserve_run(self.db, self.approval)
+            self.run_id = (_resume_after_storage(self.db, self.approval) if self.resume_after_storage
+                           else _reserve_run(self.db, self.approval))
+            if self.resume_after_storage:
+                self.report["storage_resume_prepared_at"] = self.approval["run_prepared_at"]
             self.report['request_id'] = self.run_id
             self.report['reserved_micros'] = self.approval.get('metadata_reserve_micros')
             self.report['cost_status'] = 'bounded' if self.report['reserved_micros'] is not None else 'unknown'
