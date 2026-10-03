@@ -18,7 +18,7 @@ import news_pipeline_diagnostics
 
 
 ISSUES = {'invalid-note', 'invalid-facts', 'invalid-item', 'unsupported-quote',
-          'invalid-copy', 'unsupported-number', 'incomplete', 'lost-forecast-modality', 'lost-negation', 'reversed-supply-demand', 'lost-fiscal-basis', 'lost-comparison', 'invented-broker-action', 'source-copy-overlap', 'unsupported-actor', 'lost-action-status'} | research.general_source_news.FAILURE_CODES
+          'invalid-copy', 'unsupported-number', 'incomplete', 'lost-forecast-modality', 'lost-negation', 'reversed-supply-demand', 'lost-fiscal-basis', 'lost-comparison', 'unsupported-comparison-baseline', 'invented-broker-action', 'source-copy-overlap', 'unsupported-actor', 'lost-action-status'} | research.general_source_news.FAILURE_CODES
 
 
 def failure_kind(value):

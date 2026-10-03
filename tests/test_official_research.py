@@ -71,6 +71,74 @@ class OfficialResearchTests(unittest.TestCase):
         self.assertEqual(self.run_note(selected),'done')
         self.assertEqual(len(self.feed()),1)
 
+    def comparison_fixture(self, japanese):
+        quote = 'The model detects 50% more emissions than human experts.'
+        note = json.loads(json.dumps(NOTE))
+        note['facts'][2] = copy(japanese, 'The model detects 50% more emissions than human experts.', quote)
+        with research.connect(self.path) as db:
+            db.execute('UPDATE source_revisions SET extracted_text=?,extracted_chars=?',
+                       (BODY + ' ' + quote, len(BODY + ' ' + quote)))
+        def transport(*args):
+            result = response()
+            result['output'][0]['content'][0]['text'] = json.dumps(note)
+            return result
+        return transport
+
+    def test_changed_comparison_baseline_is_rejected_before_publication(self):
+        transport = self.comparison_fixture('既知より50％多い排出を検出。')
+        self.assertEqual(self.run_note(transport), 'retry')
+        self.assertEqual(self.feed(), [])
+        with research.connect(self.path) as db:
+            self.assertEqual(db.execute('SELECT count(*) FROM official_research_publications').fetchone()[0], 0)
+            failure = db.execute('SELECT reason,detail FROM official_research_attempt_failures').fetchone()
+            self.assertEqual(tuple(failure), ('unsupported-comparison-baseline', 'fact'))
+
+    def test_saved_wrong_baseline_is_hidden_without_mutation_or_extra_model_call(self):
+        transport = self.comparison_fixture('既知より50％多い排出を検出。')
+        # Reproduce a publication written before this guard was introduced.
+        with patch.object(research.factual_validation, 'validate_comparison_baselines'):
+            self.assertEqual(self.run_note(transport), 'done')
+        with research.connect(self.path) as db:
+            row = research.candidates(db, NOW)[0]
+            db.execute('INSERT INTO official_story_bodies VALUES(?,?,?,?,?,?,?)',
+                       (row['id'], row['sha'], row['body_sha'], row['body'], row['body_at'], 0, None))
+            before = {table: [tuple(r) for r in db.execute('SELECT * FROM ' + table)] for table in
+                      ('sources', 'source_revisions', 'signal_events', 'release_events',
+                       'official_research_publications', 'official_research_jobs', 'signal_headline_translation_calls')}
+            with patch.object(research.factual_validation, 'validate_comparison_baselines'):
+                self.assertIn('bodyJa', research.public_story_body(db, row))
+                public_before = research.signals.public_official_updates(db, reference=NOW)
+            self.assertEqual(research.public_story_body(db, row), {})
+            public_after = research.signals.public_official_updates(db, reference=NOW)
+            self.assertEqual(public_after, [{key: value for key, value in item.items()
+                                            if key not in ('bodyJa', 'bodyEn')} for item in public_before])
+            self.assertEqual(public_after[0]['title'], TITLE)
+            self.assertEqual(public_after[0]['publishedOn'], '2026-10-01')
+            self.assertEqual(public_after[0]['observedAt'], NOW.isoformat())
+        self.assertEqual(self.feed(), [])
+        with patch.object(research.signals, 'fetch', side_effect=AssertionError('external fetch')):
+            self.assertEqual(self.run_note(lambda *_: self.fail('extra model call')), 'idle')
+        with research.connect(self.path) as db:
+            after = {table: [tuple(r) for r in db.execute('SELECT * FROM ' + table)] for table in before}
+        self.assertEqual(after, before)
+        import official_research_diagnostics as diagnostics
+        queue = diagnostics.queue(self.path, reference=NOW)
+        self.assertEqual(queue['counts']['validatedPublications'], 0)
+        self.assertEqual(queue['counts']['pending'], 1)
+        item = queue['items'][0]
+        self.assertEqual(item['status'], 'pending')
+        self.assertEqual(item['publication']['validation'], {'status': 'invalid', 'issues': [
+            {'field': 'facts[2]', 'issue': 'unsupported-comparison-baseline', 'checks': []}]})
+
+    def test_valid_comparison_publication_keeps_source_clocks_and_normal_eligibility(self):
+        self.assertEqual(self.run_note(self.comparison_fixture('人間の専門家より50％多い排出を検出。')), 'done')
+        published = self.feed()[0]
+        self.assertEqual(published['facts'][2]['ja'], '人間の専門家より50％多い排出を検出。')
+        self.assertEqual(published['publishedOn'], '2026-10-01')
+        self.assertEqual(published['observedAt'], NOW.isoformat())
+        self.assertEqual(published['bodyReadyAt'], NOW.isoformat())
+        self.assertEqual(self.run_note(lambda *_: self.fail('duplicate call')), 'idle')
+
     def test_saved_mistranslation_is_revalidated_and_automatically_regenerated(self):
         self.assertEqual(self.run_note(), 'done')
         with research.connect(self.path) as db:

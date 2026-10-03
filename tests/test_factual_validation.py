@@ -13,6 +13,53 @@ class FactualValidationTests(unittest.TestCase):
         'and nine to 10 years for GB300 NVL72, based on resale values.'
     )
 
+    def test_percentage_comparison_keeps_baseline_in_both_languages(self):
+        source = 'The model detects 50% more emissions than human experts.'
+        for ja in ('人間の専門家より50％多い排出を検出する。',
+                   '人間の専門家による検出量よりも50パーセント多く検出する。',
+                   '専門家と比べて排出を50％多く検出する。'):
+            for en in ('The model detects 50% more emissions than human experts.',
+                       'Compared with human experts, the model detects 50 percent more emissions.'):
+                with self.subTest(ja=ja, en=en):
+                    validation.validate_semantics(ja, source)
+                    validation.validate_semantics(en, source)
+                    validation.validate_pair(ja, en)
+        validation.validate_pair('専門家より12.5％少ない誤検出。',
+                                 '12.5% fewer false positives than human experts.')
+        validation.validate_pair('既知より50％多い排出。',
+                                 '50% more emissions than previously known.')
+
+    def test_percentage_comparison_rejects_changed_missing_or_detached_baseline(self):
+        source = 'The model detects 50% more emissions than human experts.'
+        for wrong in ('既知より50％多い排出を検出。',
+                      '従来より50％多い排出を検出。',
+                      '50％多い排出を検出。',
+                      '人間の専門家より50％少ない排出を検出。',
+                      '人間の専門家と共同開発した。既知より50％多い排出を検出。',
+                      '人間の専門家と共同開発し、既知より50％多い排出を検出。',
+                      'The model detects 50% more emissions than previously known.',
+                      'Human experts built a model detecting 50% more emissions than last year.'):
+            with self.subTest(wrong=wrong), self.assertRaisesRegex(ValueError, 'unsupported-comparison-baseline'):
+                validation.validate_semantics(wrong, source)
+            with self.subTest(pair=wrong), self.assertRaisesRegex(ValueError, 'unsupported-comparison-baseline'):
+                validation.validate_pair(wrong, source)
+
+    def test_percentage_baseline_scope_does_not_infer_from_unrelated_experts(self):
+        validation.validate_semantics('追加のモデルを発表した。',
+                                      'The model detects 50% more emissions than human experts.')
+        validation.validate_semantics('人間の専門家は稼働率50％と報告した。',
+                                      'Human experts reported utilization at 50%.')
+        self.assertEqual(validation.percentage_comparisons(
+            'Experts developed the model, which detects 50% more emissions than last year.'), set())
+        self.assertEqual(validation.percentage_comparisons(
+            'The model detects 50% more emissions. Human experts checked the work.'), set())
+        validation.validate_semantics('前年より50％多い排出を検出。',
+                                      'Experts developed the model, which detects 50% more emissions than last year.')
+        # A recognized baseline cannot be borrowed from another comparison.
+        with self.assertRaisesRegex(ValueError, 'unsupported-comparison-baseline'):
+            validation.validate_semantics('専門家より20％多い結果。既知より50％多い排出。',
+                                          '20% more results than experts; 50% more emissions than experts.')
+
     def test_megawatt_per_unit_basis_matches_explicit_japanese_denominator(self):
         source = 'Each megawatt costs roughly $60 million.'
         for ja in ('1メガワットあたり約6000万ドル', '1MW当たり約6,000万ドル',

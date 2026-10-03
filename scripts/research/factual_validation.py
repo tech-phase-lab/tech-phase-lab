@@ -321,7 +321,71 @@ SEMANTIC_POLARITIES = (
 )
 
 
+# Only explicit, translatable comparator identities are recognized. These are
+# baseline classes, not publisher/model/article keywords. Unknown comparators
+# remain outside this deterministic check; recognized ones must not disappear
+# or be replaced merely because the percentage still matches.
+COMPARISON_BASELINES = {
+    'human-experts': (
+        r'(?:human\s+)?experts?\b',
+        r'(?:人間の?|ヒトの?|人の)?専門家',
+    ),
+    'previously-known': (
+        r'(?:previously|already)\s+(?:known|identified|detected|recorded)\b',
+        r'既知|既存の検出(?:結果|数|量)?|従来知られていた(?:もの|排出)?',
+    ),
+}
+COMPARISON_DIRECTIONS = {
+    'more': (r'more|higher|greater|faster', r'多(?:い|く)|高(?:い|く)|大き(?:い|く)|速(?:い|く)'),
+    'less': (r'less|fewer|lower|slower', r'少な(?:い|く)|低(?:い|く)|小さ(?:い|く)|遅(?:い|く)'),
+}
+COMPARISON_PERCENT = (r'(?<![\d.])(?P<amount>\d+(?:\.\d+)?)\s*'
+                      r'(?:[%％]|percent\b|パーセント)')
+COMPARISON_CLAUSE = r'[^.!?。！？;；\n]'
+
+
+def percentage_comparisons(text):
+    """Bind percent, direction, and an explicit bilingual comparison baseline.
+
+    A baseline mentioned elsewhere cannot supply a missing comparator. Keep
+    each match inside its own clause, with the baseline next to than/より/etc.
+    This intentionally does not infer identities for arbitrary names or prose.
+    """
+    result = set()
+    for baseline, (english, japanese) in COMPARISON_BASELINES.items():
+        for direction, (en_direction, ja_direction) in COMPARISON_DIRECTIONS.items():
+            patterns = (
+                COMPARISON_PERCENT + r'\s+(?:' + en_direction + r')\b'
+                + COMPARISON_CLAUSE + r'{0,90}?\b(?:than|compared (?:with|to)|versus|vs\.?)[ ]+'
+                r'(?:the\s+)?(?:' + english + r')',
+                r'\b(?:compared (?:with|to)|versus|vs\.?)[ ]+(?:the\s+)?(?:' + english + r')'
+                + COMPARISON_CLAUSE + r'{0,90}?' + COMPARISON_PERCENT
+                + r'\s+(?:' + en_direction + r')\b',
+                r'(?:' + japanese + r')'
+                r'(?:(?:の|による|が)(?:検出|測定)(?:する|した)?(?:結果|数|量)?)?'
+                r'(?:より(?:も)?|と比べ(?:て)?|と比較して)'
+                + COMPARISON_CLAUSE + r'{0,60}?' + COMPARISON_PERCENT
+                + r'\s*(?:ほど|程度|約)?(?:' + ja_direction + r')',
+            )
+            for pattern in patterns:
+                result.update((Decimal(match['amount']), direction, baseline)
+                              for match in re.finditer(pattern, text, re.I))
+    return result
+
+
+def validate_comparison_baselines(text, evidence):
+    source = percentage_comparisons(evidence)
+    if not source:
+        return
+    percentages = {value for value, dimension in numeric_values(text) if dimension == 'percent'}
+    required = {relation for relation in source if relation[0] in percentages}
+    actual = percentage_comparisons(text)
+    if required != {relation for relation in actual if relation[0] in {r[0] for r in required}}:
+        raise ValueError('unsupported-comparison-baseline')
+
+
 def validate_semantics(text, evidence):
+    validate_comparison_baselines(text, evidence)
     if re.search(r'idle GPU tax', evidence, re.I) and re.search(r'課税|税金|税負担', text):
         raise ValueError('invalid-copy')  # Resource overhead metaphor, not taxation.
     future_integration = r'\bwill (?:integrate|work\b[^.!?]{0,240}\bintegration)\b'
@@ -338,6 +402,8 @@ def validate_semantics(text, evidence):
 
 
 def validate_pair(ja, en):
+    validate_comparison_baselines(ja, en)
+    validate_comparison_baselines(en, ja)
     validate_numbers(ja, en)
     validate_numbers(en, ja)
     if Counter(numeric_values(ja))!=Counter(numeric_values(en)):

@@ -284,7 +284,12 @@ def claim(db, reference, model, limit):
                 try:
                     validate_row(json.loads(published['payload']),r)
                     continue
-                except (ValueError, TypeError):
+                except ValueError as exc:
+                    if str(exc) == 'unsupported-comparison-baseline':
+                        # Withhold a saved mistranslation without causing a paid
+                        # regeneration. A source-bound correction may replace it.
+                        continue
+                except TypeError:
                     pass
             job=db.execute('SELECT * FROM official_research_jobs WHERE event_id=?',(r['id'],)).fetchone()
             repair_candidate=content_repair.matches(db,r,reference)
@@ -564,7 +569,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     except Exception as exc:
         cause=getattr(exc,'__cause__',None)
         provider_status=getattr(cause,'code',None)
-        reason=str(exc) if type(exc) is ValueError and str(exc) in ({'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete','lost-forecast-modality','lost-negation','reversed-supply-demand','lost-fiscal-basis','lost-comparison','invented-broker-action','source-copy-overlap','unsupported-actor','lost-action-status'} | general_source_news.FAILURE_CODES) else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
+        reason=str(exc) if type(exc) is ValueError and str(exc) in ({'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete','lost-forecast-modality','lost-negation','reversed-supply-demand','lost-fiscal-basis','lost-comparison','unsupported-comparison-baseline','invented-broker-action','source-copy-overlap','unsupported-actor','lost-action-status'} | general_source_news.FAILURE_CODES) else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
         with connect(path) as db, db:
             db.execute('BEGIN IMMEDIATE')
             # Private audit evidence for a failed attempt; never returned by feed.
