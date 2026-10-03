@@ -41,7 +41,7 @@ export async function GET() {
         : {};
       const enriched = { ...item, ...titles, researchId: event.id, bodyJa: [...new Set([event.summary.ja, ...event.facts.map(f => f.text.ja)])].join("\n\n"), bodyEn: [...new Set([event.summary.en, ...event.facts.map(f => f.text.en)])].join("\n\n") };
       try {
-        return publicNewsPayload({ ...payload, officialUpdates: [enriched] }).officialUpdates![0];
+        return publicNewsPayload({ ok: true, enabled: payload.enabled, items: [], resultBriefs: payload.resultBriefs, officialUpdates: [enriched] }).officialUpdates![0];
       } catch {
         return item;
       }

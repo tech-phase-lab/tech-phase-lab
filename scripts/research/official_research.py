@@ -71,8 +71,9 @@ def connect(path):
     return db
 
 
-def candidates(db, reference, *, read_only=False):
-    published = signals.public_official_updates(db, reference=reference, limit=100, read_only=read_only)
+def candidates(db, reference, *, read_only=False, published_updates=None):
+    published = (signals.public_official_updates(db, reference=reference, limit=100, read_only=read_only)
+                 if published_updates is None else published_updates[:100])
     visible_ids = {int(item['id']) for item in published}
     primary = []
     if db.execute("SELECT 1 FROM sqlite_master WHERE name='release_events'").fetchone():
@@ -646,10 +647,10 @@ def primary_publication_items(publications):
     return items
 
 
-def feed(db, reference=None):
+def feed(db, reference=None, *, published_updates=None):
     schema(db)
     reference=reference or datetime.now(timezone.utc)
-    publications=validated_publications(db,candidates(db,reference))
+    publications=validated_publications(db,candidates(db,reference,published_updates=published_updates))
     return primary_publication_items(publications)[:20]
 
 

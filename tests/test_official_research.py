@@ -38,6 +38,17 @@ class OfficialResearchTests(unittest.TestCase):
     def feed(self):
         with research.connect(self.path) as db:return research.feed(db,NOW)
     def run_note(self,transport=response):return research.run_once(self.path,transport,ENV,NOW.timestamp())
+    def test_request_headline_reuse_preserves_publication_and_withdrawal_checks(self):
+        self.assertEqual(self.run_note(), 'done')
+        with research.connect(self.path) as db:
+            expected = research.feed(db, NOW)
+            published = research.signals.public_official_updates(db, reference=NOW, limit=500)
+            with patch.object(research.signals, 'public_official_updates', side_effect=AssertionError('duplicate scan')):
+                self.assertEqual(research.feed(db, NOW, published_updates=published), expected)
+                # A retained request list must not bypass current body/revision checks.
+                db.execute("UPDATE official_research_publications SET body_sha='withdrawn'")
+                self.assertEqual(research.feed(db, NOW, published_updates=published), [])
+
     def test_current_body_automatically_publishes_both_languages_and_timestamps(self):
         self.assertEqual(self.run_note(),'done')
         item=self.feed()[0]

@@ -95,7 +95,8 @@ class NewsHistoryTests(unittest.TestCase):
                  patch.object(service.market_results,'public_feed',return_value=[]), \
                  patch.object(service.official_research,'feed',return_value=[]):
                 result=app.public_news()
-                self.assertEqual(public.call_args.kwargs,{'limit':500})
+                self.assertEqual(public.call_args.kwargs['limit'],500)
+                self.assertIsInstance(public.call_args.kwargs['reference'],datetime)
                 self.assertEqual(len(result['officialUpdates']),49)
         self.assertEqual(signals.public_official_updates.__defaults__[2],20)
 
