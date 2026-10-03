@@ -17,6 +17,25 @@ MAX_INPUT=32000
 MATERIAL=re.compile(r'\b(?:contract|agreement|partnership|acqui(?:re|res|red|sition)|launch(?:es|ed)?|introduc(?:es|ed)|capacity|production|business outlook|guidance)\b',re.I)
 
 
+def company_role(row,metadata,ticker,body):
+    """A monitored issuer or explicit company counterparty, not a brand mention."""
+    def canonical(name):
+        return re.sub(r'(?:,?\s+(?:Inc\.?|Corporation|Corp\.?|Ltd\.?|Limited|LLC|plc))+$','',name,flags=re.I).strip().casefold()
+    aliases=signals.ALIASES.get(ticker,[])
+    if canonical(metadata['issuer']) in {canonical(a) for a in aliases}:
+        return 'monitored-issuer'
+    names='(?:'+'|'.join(re.escape(a) for a in aliases)+')'
+    if not aliases:return None
+    contract=r'\b(?:contract|agreement|partnership)\s+with\s+'+names+r'\b'
+    if re.search(contract,row['title'],re.I) and re.search(contract,body,re.I):
+        return 'explicit-contract-counterparty'
+    # Buying a tracked company is different from buying its branded products.
+    acquired=r'\b(?:acquires?|acquired|acquisition of|to acquire)\s+'+names+r'(?:\s+(?:Inc\.?|Corporation|Corp\.?|Ltd\.?|Limited))?(?=[,.;]|$|\s+for\b)'
+    if re.search(acquired,row['title'],re.I) and re.search(acquired,body,re.I):
+        return 'explicit-acquisition-subject'
+    return None
+
+
 def assessments(db,reference):
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='issuer_syndication_bodies'").fetchone():
         return
@@ -46,6 +65,12 @@ def assessments(db,reference):
             subjects=set(signals.match_companies(row['title'],list(signals.ALIASES))).intersection(json.loads(row['tickers_json']))
             if len(subjects)!=1:
                 yield row,None,'multi-entity-relation-needs-binding';continue
+            ticker=next(iter(subjects))
+            role=company_role(row,metadata,ticker,saved['body'])
+            row['company_role_evidence']={'issuer':issuer,'monitoredTicker':ticker,'role':role,
+                'title':row['title'],'sourceSha':row['sha'],'bodySha':saved['body_sha']}
+            if role is None:
+                yield row,None,'incidental-platform-or-brand-mention';continue
             direct=db.execute('SELECT 1 FROM issuer_syndication_publications WHERE event_id=? AND sha=? AND body_sha=?',(row['id'],row['sha'],saved['body_sha'])).fetchone()
             if direct:
                 yield row,None,'covered-deterministic-issuer';continue
