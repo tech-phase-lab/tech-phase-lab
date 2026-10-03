@@ -26,7 +26,9 @@ export default function TickerSearch({ lang, selection, onSelect }: { lang: "ja"
     return () => { clearTimeout(timer); controller.abort(); };
   }, [query]);
 
-  return <details className={styles.tickerSearch}>
+  return <section className={styles.tickerHelp}>
+    <p className={styles.tickerHelpTitle}>{t("会社名・銘柄コードが分からない人へ", "Need help finding a company or ticker?")}</p>
+    <details className={styles.tickerSearch}>
     <summary>{t("ティッカー検索", "Find a ticker")}</summary>
     <input id="comparison-ticker-search" type="search" aria-label={t("ティッカー検索", "Find a ticker")} value={query} autoComplete="off" spellCheck={false} placeholder={t("例：テスラ、Tesla、TSLA", "e.g. Tesla, TSLA, テスラ")} onChange={event => {
       const value = event.target.value; setQuery(value); setResults([]); setStatus(value.trim() ? "loading" : "idle");
@@ -41,5 +43,6 @@ export default function TickerSearch({ lang, selection, onSelect }: { lang: "ja"
       <div><strong>{company.name} ({company.ticker})</strong><small>{company.exchange}</small></div>
       <div className={styles.tickerActions}>{[0, 1, 2].map(slot => <button key={slot} type="button" disabled={selection.some(ticker => ticker === company.ticker)} onClick={() => onSelect(slot, company)} aria-label={t(`${company.ticker}を${slot + 1}社目に追加`, `Add ${company.ticker} as Company ${slot + 1}`)}>{t(`${slot + 1}社目へ`, `Company ${slot + 1}`)}</button>)}</div>
     </li>)}</ul>}
-  </details>;
+    </details>
+  </section>;
 }

@@ -40,3 +40,19 @@ test("Japanese issuer directory extends beyond monitored companies using SEC ide
   assert.deepEqual(searchDirectory(directory.filter(entry => entry.ticker !== "TSLA"), "テスラ"), []);
   assert.deepEqual(searchDirectory([{ ...directory[0], cik: 99999999 }], "テスラ"), []);
 });
+
+test("small-cap Japanese names and partial searches include the intended issuer", () => {
+  const companies = [
+    { ticker: "QUIK", name: "QUICKLOGIC Corp", cik: 882508, tracked: false, exchange: "Nasdaq" },
+    { ticker: "CAN", name: "Canaan Inc.", cik: 1780652, tracked: false, exchange: "Nasdaq" },
+    { ticker: "SIMO", name: "Silicon Motion Technology CORP", cik: 1329394, tracked: false, exchange: "Nasdaq" },
+    { ticker: "AAOI", name: "APPLIED OPTOELECTRONICS, INC.", cik: 1158114, tracked: false, exchange: "Nasdaq" },
+    { ticker: "AMAT", name: "APPLIED MATERIALS INC /DE", cik: 6951, tracked: false, exchange: "Nasdaq" },
+    { ticker: "POET", name: "POET TECHNOLOGIES INC.", cik: 1437424, tracked: false, exchange: "Nasdaq" },
+  ];
+  for (const [query, ticker] of [["クイックロジック", "QUIK"], ["カナン", "CAN"], ["シリコン", "SIMO"], ["シリコンモーションテクノロジー", "SIMO"], ["シリコン・モーション", "SIMO"], ["アプライド", "AAOI"], ["ポエット", "POET"]]) {
+    assert.ok(searchDirectory(companies, query).some(entry => entry.ticker === ticker), query);
+  }
+  assert.deepEqual(new Set(searchDirectory(companies, "アプライド").map(entry => entry.ticker)), new Set(["AAOI", "AMAT"]));
+  assert.deepEqual(searchDirectory(companies, "アプライドオプト").map(entry => entry.ticker), ["AAOI"]);
+});
