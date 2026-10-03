@@ -4,6 +4,7 @@ import { comparisonCatalog } from "./comparison-catalog";
 import providers from "./providers.json";
 import { parseSecDirectory } from "./stock-directory";
 import { emptyFinancials } from "./comparison";
+import { prepareComparisonAnalysis, currentComparisonAnalysis } from "./comparison-analysis";
 import { loadSecComparison } from "./comparison-loader";
 async function secText(url: string, limit: number) {
   const response = await fetch(url, { cache: "no-store", headers: { Accept: "application/json", "User-Agent": process.env.RESEARCH_USER_AGENT || "TechPhaseResearch/1.0 research-preview" }, signal: AbortSignal.timeout(12_000) });
@@ -19,15 +20,17 @@ async function secText(url: string, limit: number) {
 async function secJson(url: string, limit: number) { return JSON.parse(await secText(url,limit)) as unknown; }
 const directory = unstable_cache(async () => parseSecDirectory(await secJson("https://www.sec.gov/files/company_tickers_exchange.json", 2_000_000)), ["comparison-sec-directory-v1"], { revalidate: 86400 });
 const financials = unstable_cache(async (ticker: string, cik: string) => {
-  return loadSecComparison(ticker,cik,secText);
-}, ["comparison-financials-v5"], { revalidate: 300 });
+  const data = await loadSecComparison(ticker,cik,secText);
+  return { ...data, preparedAnalysis: prepareComparisonAnalysis(data) };
+}, ["comparison-financials-v6-prepared-analysis"], { revalidate: 300 });
 export async function loadComparisonFinancials(ticker: string) {
   try {
     const provider = providers.find(p => p.ticker === ticker);
     let cik: string | undefined = provider?.supplementalSources?.find(s => "cik" in s && s.cik)?.cik;
     if (!cik) cik = (await directory()).find(c => c.ticker === ticker)?.cik.toString();
     if (!cik || !/^\d{1,10}$/.test(cik)) return emptyFinancials(ticker, "unsupported");
-    return await financials(ticker, cik);
+    const data = await financials(ticker, cik);
+    return { ...data, preparedAnalysis: currentComparisonAnalysis(data) };
   } catch { return emptyFinancials(ticker, "unavailable"); }
 }
 

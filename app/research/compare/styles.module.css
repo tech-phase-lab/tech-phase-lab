@@ -57,3 +57,5 @@
 @media(max-width:359px){.companyProfile{grid-template-columns:1fr}.companyStatus{border-left:0;padding-left:0}.companyStatus .statusChart svg{max-width:240px}}
 
 @media(min-width:601px){.picker .submit{margin-top:30px}}
+
+.analysisDetails{border-top:1px solid #78908730;padding-top:12px;font-size:12px;color:#aebfbe}.analysisDetails>summary{cursor:pointer;color:#b4d6c7;padding:6px 0}.analysisDetails section{padding:16px 0;border-bottom:1px solid #78908724}.analysisDetails h3{font-size:16px;color:#a6ddcc;margin:0 0 4px}.analysisDetails small{color:#8b9fa7}.analysisDetails ul{padding-left:18px;display:grid;gap:12px}.analysisDetails strong{color:#a6ddcc;font-weight:500}.analysisDetails strong[data-kind="weakness"]{color:#d4ba86}.analysisDetails p{margin:4px 0;line-height:1.8;overflow-wrap:anywhere}.analysisDetails a{color:#b5c9d4}

@@ -1,3 +1,4 @@
+import type { PreparedComparisonAnalysis } from "./comparison-analysis";
 import type { Copy } from "./data";
 export type ComparisonCompany = { ticker: string; name: string; peer: string; caution: Copy };
 export type Fact = { value: number; unit: string; start: string | null; end: string; filed: string; accession: string; tag: string; basis: string };
@@ -10,6 +11,7 @@ export type BalanceSnapshot = {
 export type Financials = {
   ticker: string; status: "ready" | "unavailable" | "unsupported"; retrievedAt: string;
   dataWarnings?: Copy[];
+  preparedAnalysis?: PreparedComparisonAnalysis;
   revenue: Fact | null; previousRevenue: Fact | null; operatingIncome: Fact | null;
   operatingCash: Fact | null; capex: Fact | null; cash: Fact | null;
   revenueGrowth: number | null; operatingMargin: number | null; fcfMargin: number | null;
