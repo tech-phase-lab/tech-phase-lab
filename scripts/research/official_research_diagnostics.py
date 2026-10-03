@@ -1,8 +1,9 @@
 """Editor-only, read-only diagnosis of the current issuer-note candidate set.
 
-Normally returns no rejected copy or evidence. The expiring, exact repair cohort
-may include explicitly authorized bounded editor context with revision proof.
-Never returns full source bodies or provider data.
+Unrelated research retains its expiring exact repair-cohort context gate.
+Current failed source-bound business jobs may expose sanitized bounded copy and
+literal selected evidence to the existing editor-only queue. Never returns full
+source bodies, arbitrary payload fields or provider arguments.
 Replaying validation explains a gate; it does not establish factual correctness.
 """
 from datetime import datetime, timezone
@@ -149,6 +150,82 @@ def bounded_failure_context(payload, row, report):
             'rejectedFields': rejected, 'validatedFields': validated}
 
 
+def current_failed_context(db,row,job,failure,reference):
+    """Sanitized failed output for the current source-bound business job only.
+
+    These generation routes already verify full retained/enriched-body integrity.
+    This is an editor-only read, never a publication/retry or a provider request.
+    Older unrelated research retains its existing explicit context gate.
+    """
+    if not (row.get('general_source') or row.get('issuer_business')):
+        return None
+    if (not job or not failure or job['state']!='retry' or job['sha']!=row['sha']
+        or failure['sha']!=row['sha'] or job['lease']!=failure['lease']
+        or not research.current_revision(db,row)):
+        return None
+    failed_at=research.general_source_news.reconciliation.instant(failure['failed_at'])
+    body_at=research.general_source_news.reconciliation.instant(row['body_at'])
+    if not failed_at or not body_at or not body_at<=failed_at<=reference:
+        return None
+    latest=db.execute('SELECT lease FROM official_research_attempt_failures WHERE event_id=? ORDER BY julianday(failed_at) DESC,rowid DESC LIMIT 1',(row['id'],)).fetchone()
+    if not latest or latest['lease']!=failure['lease']:
+        return None
+    payload=failure['payload']
+    if not isinstance(payload,str) or not payload or len(payload.encode('utf-8'))>131072:
+        return None
+    try:
+        value=json.loads(payload)
+    except (ValueError,TypeError):
+        return None
+    if not isinstance(value,dict):
+        return None
+    fields=[]
+    if row.get('general_source'):
+        raw_facts=value.get('facts')
+        if not isinstance(raw_facts,list):
+            return None
+        fields=[(f'facts[{index}]',item) for index,item in enumerate(raw_facts[:8])]
+        units={unit['id']:unit for unit in row['units']}
+    else:
+        raw_facts=value.get('facts')
+        if not isinstance(raw_facts,list):
+            return None
+        fields=[('title',value.get('title')),('summary',value.get('summary')),
+                *[(f'facts[{index}]',item) for index,item in enumerate(raw_facts[:5])],
+                ('purpose',value.get('purpose'))]
+        units={}
+    records=[]
+    for field,item in fields[:10]:
+        if not isinstance(item,dict) or not all(isinstance(item.get(lang),str) for lang in ('ja','en')):
+            continue
+        record={'field':field,'ja':item['ja'][:600],'en':item['en'][:600],
+                'jaTruncated':len(item['ja'])>600,'enTruncated':len(item['en'])>600}
+        evidence_id=item.get('evidenceId')
+        unit=units.get(evidence_id) if isinstance(evidence_id,str) else None
+        quote=unit['quote'] if unit else item.get('evidenceQuote')
+        literal=isinstance(quote,str) and 16<=len(quote)<=1800 and quote in row['body']
+        record['selectedEvidenceIsLiteralCurrentBody']=literal
+        if literal:
+            record['selectedEvidence']=quote
+            if unit:
+                record['evidenceId']=unit['id']
+                source=research.general_source_news.concepts(quote,'en')
+                for lang in ('ja','en'):
+                    actual=research.general_source_news.concepts(item[lang],lang)
+                    if lang=='ja' and '需給' in item[lang]:
+                        actual.add('demand')
+                    record[lang+'MissingTopics']=sorted(source-actual)
+                    record[lang+'AddedConsequentialTopics']=sorted((actual-source)&research.general_source_news.CONSEQUENTIAL)
+        records.append(record)
+    if not records:
+        return None
+    result={'check':'editor-only-current-failed-output','eventId':row['id'],
+            'sourceSha':row['sha'],'currentBodySha':row['body_sha'],'failedAt':failure['failed_at'],
+            'notice':'Private failed model output, not approved news. Only selected evidence literal in the current verified body is included.',
+            'fields':records,'fieldsTruncated':len(raw_facts)>(8 if row.get('general_source') else 5)}
+    return result if len(json.dumps(result,ensure_ascii=False).encode())<=48000 else None
+
+
 def queue(path, limit=20, view='pending', reference=None):
     if type(limit) is not int or not 1 <= limit <= 50 or view not in {'pending', 'all'}:
         raise ValueError('invalid-request')
@@ -162,6 +239,7 @@ def queue(path, limit=20, view='pending', reference=None):
         db.execute('BEGIN')
         rows = research.candidates(db, reference, read_only=True)
         result, published, raw_copy_included = [], 0, False
+        remaining_context_bytes=200000
         for row in sorted(rows, key=lambda item: item['id'], reverse=True):
             publication = db.execute('SELECT sha,body_sha,payload,started_at,public_at FROM official_research_publications WHERE event_id=?', (row['id'],)).fetchone()
             current_publication = bool(publication and publication['sha'] == row['sha'] and publication['body_sha'] == row['body_sha'])
@@ -177,9 +255,21 @@ def queue(path, limit=20, view='pending', reference=None):
             rejected = validation_report(failure['payload'], row) if failure else None
             body_revision_recorded = bool(not valid and context_authorized(db, row, job, failure, reference))
             context = bounded_failure_context(failure['payload'], row, rejected) if body_revision_recorded else None
+            if context is None:
+                context=current_failed_context(db,row,job,failure,reference)
+            context_state='unavailable'
             if context:
-                rejected['issues'][0]['checks'].append(context)
-                raw_copy_included = True
+                encoded=len(json.dumps(context,ensure_ascii=False).encode())
+                if encoded<=remaining_context_bytes:
+                    if not rejected['issues']:
+                        rejected['issues'].append({'field':'note','issue':'stored-attempt-failed','checks':[]})
+                    rejected['issues'][0]['checks'].append(context)
+                    raw_copy_included = True
+                    remaining_context_bytes-=encoded
+                    context_state='included'
+                else:
+                    context_state='response-budget'
+
             result.append({
                 'eventId': row['id'], 'sourceId': row['source_id'], 'url': row['url'], 'title': row['title'][:500],
                 'ticker': row['ticker'], 'currentSha': row['sha'], 'bodySha': row['body_sha'],
@@ -192,7 +282,7 @@ def queue(path, limit=20, view='pending', reference=None):
                         'currentRevision': job['sha'] == row['sha'], 'failureKind': failure_kind(job['failure_kind'])} if job else None,
                 'latestFailure': {'failedAt': failure['failed_at'], 'reason': failure_kind(failure['reason']),
                                   'currentSourceRevision': True, 'bodyRevisionRecorded': body_revision_recorded,
-                                  'validation': rejected} if failure else None,
+                                  'validation': rejected,'failedCopyContext':context_state} if failure else None,
             })
         return {'items': result, 'view': view, 'readOnly': True, 'generatedAt': reference.isoformat(),
                 'counts': {'candidates': len(rows), 'validatedPublications': published, 'pending': len(rows) - published},

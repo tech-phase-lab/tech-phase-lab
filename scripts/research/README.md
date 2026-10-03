@@ -364,3 +364,15 @@ GlobeNewswire/PR Newswire stories. Multi-company relations that need additional
 binding, missing body proof and integrity failures remain privately diagnosed.
 The publisher rechecks current body and metadata before committing and reading
 public copy; correction/retraction revisions revoke stale publications.
+
+For the source-bound business adapters, the existing editor-authenticated
+`/admin/official-research` queue can include sanitized output from the latest
+failed current-revision job in its existing validation-check details. This is a
+read-only diagnostic, never public news or a retry. It requires a current retry
+lease and source revision, a verified body no newer than the failure, and literal
+current-body evidence. Only known JA/EN copy fields and selected evidence are
+returned; provider arguments, instructions, credentials and arbitrary fields
+are excluded. Limits are 131,072 UTF-8 bytes for the stored input, 600 characters
+per language field, 1,800 per evidence unit, 48,000 bytes per context and 200,000
+bytes per queue response. `failedCopyContext` reports included, unavailable or
+response-budget status. Unrelated research keeps its existing context gate.
