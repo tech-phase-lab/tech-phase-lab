@@ -493,6 +493,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     general=bool(row.get('general_source'))
     excerpts=general_source_news.evidence_excerpts(row) if general else evidence_excerpts(row['body'])
     policy=general_source_news.POLICY if general else POLICY
+    if row.get('issuer_business'):
+        policy+='\n'+issuer_business_news.FINANCIAL_POLICY
     with connect(path) as db:
         corrections=retry_feedback(db,row,excerpts)
         if general:

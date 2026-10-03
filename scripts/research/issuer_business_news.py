@@ -69,7 +69,33 @@ def current_revision(db,row):
                for r in candidates(db,datetime.now(timezone.utc)))
 
 
+FINANCIAL = r'\b(?:revenues?|cash[ -]?flows?|income|returns?)\b'
+EXPECTED_FINANCIAL = re.compile(r'\b(?:expect(?:s|ed|ing)?|anticipat(?:es|ed|ing)|project(?:s|ed|ing)|forecast(?:s|ed)?)\b[^.;\n]{0,200}'+FINANCIAL,re.I)
+JA_FINANCIAL = re.compile(r'収益|売上|収入|キャッシュフロー|キャッシュ・フロー|現金収入|リターン')
+JA_EXPECTED = re.compile(r'見込|予想|予測|期待|予定|想定|見通し|可能性')
+FINANCIAL_POLICY = """Keep expected financial outcomes explicitly forward-looking in both languages. Completed asset acquisition or leasing does not make expected cash flows or recurring revenue already established. Attach the forecast qualifier to the financial outcome itself, not to a separate corporate review or plan. Preserve completed leasing when the evidence says assets have been leased; do not change it to a plan to lease."""
+
+
+def validate_financial_modality(item):
+    source=item['evidenceQuote']
+    en,ja=item['en'],item['ja']
+    source_future=EXPECTED_FINANCIAL.search(source)
+    output_future=EXPECTED_FINANCIAL.search(en)
+    if output_future or (source_future and re.search(FINANCIAL,en,re.I)):
+        if not output_future:
+            raise ValueError('lost-forecast-modality')
+        financial_clauses=[clause for clause in re.split(r'[。！？;；]|、(?=(?:AI|同社|また|さらに|一方|不動産))',ja)
+                           if JA_FINANCIAL.search(clause)]
+        if not financial_clauses or any(not JA_EXPECTED.search(clause) for clause in financial_clauses):
+            raise ValueError('lost-forecast-modality')
+    if (re.search(r'\b(?:assets?|GPUs?)\b[^.;\n]{0,50}\b(?:have been|were|are) leased\b|\b(?:has|have) leased\b|\bleased (?:those|these|the) (?:assets?|GPUs?) back\b',source,re.I)
+        and re.search(r'\b(?:plans?|intends?) to lease\b|\bwill lease\b',en,re.I)):
+        raise ValueError('lost-action-status')
+
+
 def validate_paraphrase(note):
+    for item in [note['title'],note['summary'],*note['facts'],note['purpose']]:
+        validate_financial_modality(item)
     for item in [note['summary'],*note['facts']]:
         words=re.findall(r"[a-z0-9']+",item['en'].lower())
         source=re.findall(r"[a-z0-9']+",item['evidenceQuote'].lower())
