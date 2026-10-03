@@ -14,6 +14,7 @@ import sqlite3
 import factual_validation as facts
 import official_research as research
 import official_research_content_repair as repair
+import news_pipeline_diagnostics
 
 
 ISSUES = {'invalid-note', 'invalid-facts', 'invalid-item', 'unsupported-quote',
@@ -300,7 +301,15 @@ def queue(path, limit=20, view='pending', reference=None):
                                   'currentSourceRevision': True, 'bodyRevisionRecorded': body_revision_recorded,
                                   'validation': rejected,'failedCopyContext':context_state} if failure else None,
             })
-        return {'items': result, 'view': view, 'readOnly': True, 'generatedAt': reference.isoformat(),
+        pipeline=news_pipeline_diagnostics.snapshot(db,reference)
+        # Existing editor clients already render checks JSON. Keep this distinct
+        # from the host record's failed copy and do not change lane counts.
+        host=next((item['latestFailure']['validation'] for item in result if item['latestFailure']),None)
+        if host is not None:
+            if not host['issues']:
+                host['issues'].append({'field':'pipeline','issue':'read-only-metadata','checks':[]})
+            host['issues'][0]['checks'].append(pipeline)
+        return {'pipelineDiagnostics':pipeline,'items': result, 'view': view, 'readOnly': True, 'generatedAt': reference.isoformat(),
                 'counts': {'candidates': len(rows), 'validatedPublications': published, 'pending': len(rows) - published},
                 'filteredTotal': len(rows) if view == 'all' else len(rows) - published,
                 'scope': 'current-worker-candidates', 'rawCopyIncluded': raw_copy_included}

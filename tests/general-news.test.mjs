@@ -421,3 +421,50 @@ test('verified semantic issuer policy stays bound to issuer, source, body and tr
     assert.throws(() => publicNewsPayload({ ok: true, enabled: false, items: [], officialUpdates: [{ ...item, ...change }] }));
   }
 });
+
+test('keyword-free author response survives bounded assessment and the public news API', async () => {
+  const { execFileSync } = await import('node:child_process');
+  const script = `
+import sys,json
+sys.path[:0]=['tests','scripts/research']
+import test_general_semantic_assessment as fixture
+import official_research as research
+import signals,x_api
+case=fixture.GeneralSemanticAssessmentTests()
+case.setUp()
+try:
+ payload={'includes':{'users':[{'id':'1','username':'wallstengine'}]},'data':[{'id':'1044','author_id':'1','text':fixture.BODY,'created_at':fixture.fixture.PUBLISHED}]}
+ assert x_api.parse_response(fixture.fixture.SOURCE,payload,list(signals.ALIASES))==[]
+ with research.connect(case.path) as db:
+  signals.save(db,fixture.fixture.SOURCE,[],{'_acquired_posts':x_api.acquired_posts(fixture.fixture.SOURCE,payload)},fixture.fixture.FIRST,'synthetic',1)
+ assert case.run_once(lambda *_:fixture.result())=='done'
+ with research.connect(case.path) as db:
+  items=signals.public_official_updates(db,reference=fixture.NOW)
+  assert len(items)==1
+ print(json.dumps(items))
+finally:
+ case.doCleanups()
+`;
+  const official = JSON.parse(execFileSync('python3', ['-c', script], { encoding: 'utf8' }));
+  const previous = {fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
+  process.env.RESEARCH_MONITOR_URL='https://monitor.example.com';
+  process.env.RESEARCH_MONITOR_TOKEN='synthetic-server-token';
+  try {
+    globalThis.fetch=async()=>Response.json({ok:true,enabled:true,items:[],officialUpdates:official});
+    const response=await GET();
+    assert.equal(response.status,200);
+    const result=await response.json();
+    const story=result.officialUpdates.find(item=>item.url===official[0].url);
+    assert.ok(story);
+    assert.match(story.bodyJa,/サンプル提供/);
+    assert.match(story.bodyEn,/providing samples/);
+    assert.equal(Date.parse(story.publishedAt),Date.parse(official[0].publishedAt));
+    assert.equal(Date.parse(story.observedAt),Date.parse(official[0].observedAt));
+    assert.doesNotMatch(JSON.stringify(result),/semanticAssessment|evidenceQuote|api_key|bearer|sampling its next-generation/i);
+  } finally {
+    globalThis.fetch=previous.fetch;
+    for(const [key,value] of [['RESEARCH_MONITOR_URL',previous.url],['RESEARCH_MONITOR_TOKEN',previous.token]]) {
+      if(value===undefined)delete process.env[key];else process.env[key]=value;
+    }
+  }
+});

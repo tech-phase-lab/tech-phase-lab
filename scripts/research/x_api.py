@@ -3,6 +3,7 @@
 This module never publishes. X reads remain disabled unless both X_API_ENABLED
 and X_BEARER_TOKEN are configured in the monitor service environment.
 """
+import hashlib
 import json
 import os
 import re
@@ -123,6 +124,63 @@ def signals_match(text, tickers):
     return signals.match_companies(text, tickers)
 
 
+def query_generation(source):
+    """Bind pagination to acquisition scope, independently of parser/settings."""
+    identity = [API_URL, str(source.get('query', '')).strip(),
+                sorted(str(name).lower() for name in source.get('accounts', []))]
+    return hashlib.sha256(json.dumps(identity, separators=(',', ':')).encode()).hexdigest()
+
+
+def window_expired(cursor, now=None):
+    """A pinned recent-search lower bound is never silently moved forward."""
+    value = cursor.get('startTime')
+    if not value:
+        return False
+    try:
+        start = datetime.fromisoformat(value.replace('Z', '+00:00'))
+        if not start.tzinfo:
+            raise ValueError
+    except (AttributeError, TypeError, ValueError) as exc:
+        raise ValueError('x-api-invalid-cursor') from exc
+    return (now or datetime.now(timezone.utc)) - start > timedelta(days=7)
+
+
+def page_evidence(source, payload):
+    """Every returned row must be retained or explicitly excluded by author.
+
+    Missing author expansion/body is incomplete evidence, not an empty page.
+    Fail before advancing the cursor so a retry cannot skip an unknown record.
+    """
+    rows = payload.get('data', [])
+    includes = payload.get('includes', {})
+    if not isinstance(rows, list) or len(rows) > MAX_RESULTS or not isinstance(includes, dict):
+        raise ValueError('x-api-incomplete-evidence')
+    users = includes.get('users', [])
+    if not isinstance(users, list) or any(not isinstance(u, dict) for u in users):
+        raise ValueError('x-api-incomplete-evidence')
+    authors = {str(u.get('id')): u.get('username') for u in users}
+    approved = {str(name).lower() for name in source.get('accounts', [])} & ALLOWED_ACCOUNT_NAMES
+    excluded = 0
+    for row in rows:
+        if not isinstance(row, dict) or not str(row.get('id', '')).isdigit():
+            raise ValueError('x-api-incomplete-evidence')
+        username = authors.get(str(row.get('author_id', '')))
+        if not isinstance(username, str) or not username:
+            raise ValueError('x-api-incomplete-evidence')
+        if username.lower() not in approved:
+            excluded += 1
+            continue
+        note = row.get('note_post') or row.get('note_tweet')
+        body = note.get('text') if isinstance(note, dict) and isinstance(note.get('text'), str) else row.get('text')
+        if not isinstance(body, str) or not body.strip():
+            raise ValueError('x-api-incomplete-evidence')
+    posts = acquired_posts(source, payload)
+    # Duplicate source IDs with conflicting text must not silently disappear.
+    if len(posts) + excluded != len(rows):
+        raise ValueError('x-api-incomplete-evidence')
+    return posts, excluded
+
+
 def fetch_posts(source, tickers, opener_factory=build_opener, validators=None):
     if os.environ.get("X_FILTERED_STREAM_ENABLED", "").strip().lower() in {"1", "true", "yes"}:
         raise ValueError("x-api-stream-supervisor-required")
@@ -147,8 +205,12 @@ def fetch_posts(source, tickers, opener_factory=build_opener, validators=None):
         cursor = json.loads((validators or {}).get('index_state', '{}'))
     except (ValueError, TypeError):
         pass
-    if not isinstance(cursor, dict):
+    generation = query_generation(source)
+    if not isinstance(cursor, dict) or cursor.get('queryGeneration') != generation:
+        # Unbound legacy state cannot establish coverage for a wider query.
         cursor = {}
+    if window_expired(cursor):
+        raise ValueError('x-api-window-expired')
     since = cursor.get('sinceId')
     if isinstance(since,str) and since.isdigit():
         params_dict['since_id'] = since
@@ -186,13 +248,31 @@ def fetch_posts(source, tickers, opener_factory=build_opener, validators=None):
     if not isinstance(payload, dict) or payload.get("errors"):
         raise ValueError("x-api-response-error")
     meta = payload.get('meta') or {}
-    newest = cursor.get('newestId') or meta.get('newest_id') or since
-    if newest is not None and (not isinstance(newest, str) or not newest.isdigit()):
+    if not isinstance(meta, dict):
         raise ValueError('x-api-invalid-cursor')
+    posts, excluded = page_evidence(source, payload)
+    if 'result_count' in meta and (type(meta['result_count']) is not int or
+                                   meta['result_count'] != len(payload.get('data', []))):
+        raise ValueError('x-api-incomplete-evidence')
+    ids = [value for value in (cursor.get('newestId'), meta.get('newest_id'), since)
+           if value is not None]
+    if any(not isinstance(value, str) or not value.isdigit() for value in ids):
+        raise ValueError('x-api-invalid-cursor')
+    newest = max(ids, key=int) if ids else None
     next_token = meta.get('next_token')
     if next_token is not None and (not isinstance(next_token, str) or not 1 <= len(next_token) <= 2048):
         raise ValueError('x-api-invalid-cursor')
-    update = {'sinceId':since,'newestId':newest,'nextToken':next_token,'startTime':params_dict.get('start_time')} if next_token else {'sinceId':newest}
+    update = ({'sinceId': since, 'newestId': newest, 'nextToken': next_token,
+               'startTime': params_dict.get('start_time')} if next_token else {'sinceId': newest})
+    def count(key):
+        value = cursor.get(key, 0)
+        return value if type(value) is int and value >= 0 else 0
+    update.update({'queryGeneration': generation,
+                   'generationStartedAt': cursor.get('generationStartedAt') or datetime.now(timezone.utc).isoformat(),
+                   'coverageStartedAt': cursor.get('coverageStartedAt') or params_dict.get('start_time'),
+                   'pagesSaved': count('pagesSaved') + 1,
+                   'postsSaved': count('postsSaved') + len(posts),
+                   'excludedAuthorRows': count('excludedAuthorRows') + excluded,
+                   'truncatedRows': count('truncatedRows') + sum(p['truncated'] for p in posts)})
     return {"_items": parse_response(source, payload, tickers),
-            "_acquired_posts": acquired_posts(source, payload),
-            "cursor_update":json.dumps(update)}
+            "_acquired_posts": posts, "cursor_update": json.dumps(update)}

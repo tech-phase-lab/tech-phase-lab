@@ -44,8 +44,11 @@ class XApiTests(unittest.TestCase):
             self.assertEqual(rows[0]['published_at'], '2026-10-02T12:30:37Z')
             self.assertTrue(all(row['selected_for_processing'] == 0 for row in rows))
             self.assertEqual(db.execute('SELECT COUNT(*) FROM signal_events').fetchone()[0], 0)
-            self.assertEqual(json.loads(db.execute('SELECT body FROM signal_index_state').fetchone()[0]),
-                             {'sinceId': '9103'})
+            cursor = json.loads(db.execute('SELECT body FROM signal_index_state').fetchone()[0])
+            self.assertEqual(cursor['sinceId'], '9103')
+            self.assertEqual(cursor['postsSaved'], 2)
+            self.assertEqual(cursor['excludedAuthorRows'], 1)
+            self.assertEqual(cursor['queryGeneration'], x_api.query_generation(self.source))
             signals.check(db, self.source, list(monitor.PROVIDERS),
                           transport=lambda source, validators: response)
             self.assertEqual(db.execute('SELECT COUNT(*) FROM signal_x_acquisition').fetchone()[0], 2)
@@ -63,7 +66,7 @@ class XApiTests(unittest.TestCase):
             db.row_factory = sqlite3.Row
             signals.schema(db)
             db.execute('INSERT INTO signal_index_state VALUES(?,?)',
-                       (self.source['id'], json.dumps({'sinceId': '9000'})))
+                       (self.source['id'], json.dumps({'sinceId': '9000', 'queryGeneration': x_api.query_generation(self.source)})))
             db.execute("""CREATE TRIGGER reject_acquisition BEFORE INSERT ON signal_x_acquisition
                           BEGIN SELECT RAISE(ABORT, 'synthetic-storage-failure'); END""")
             db.commit()
@@ -71,7 +74,7 @@ class XApiTests(unittest.TestCase):
                                    transport=lambda source, validators: response)
             self.assertEqual(result['status'], 'error')
             self.assertEqual(json.loads(db.execute('SELECT body FROM signal_index_state').fetchone()[0]),
-                             {'sinceId': '9000'})
+                             {'sinceId': '9000', 'queryGeneration': x_api.query_generation(self.source)})
 
     def test_requested_financing_scope_preserves_full_source_and_requires_company(self):
         source = next(s for s in signals.SOURCES if s['id'] == 'x-wallstengine')
@@ -318,12 +321,13 @@ class XApiTests(unittest.TestCase):
                 requests.append(parse_qs(urlsplit(request.full_url).query))
                 return Response(json.dumps(pages.pop(0)).encode())
         with patch.dict(os.environ, {"X_API_ENABLED":"true","X_BEARER_TOKEN":"synthetic"}):
-            first=x_api.fetch_posts(self.source, [], lambda:Opener(), {'index_state':json.dumps({'sinceId':'7000'})})
+            first=x_api.fetch_posts(self.source, [], lambda:Opener(), {'index_state':json.dumps({'sinceId':'7000', 'queryGeneration': x_api.query_generation(self.source)})})
             cursor=json.loads(first['cursor_update'])
             self.assertEqual(cursor['sinceId'],'7000')
             self.assertEqual(cursor['newestId'],'9000')
             second=x_api.fetch_posts(self.source, [], lambda:Opener(), {'index_state':first['cursor_update']})
-            self.assertEqual(json.loads(second['cursor_update']), {'sinceId':'9000'})
+            self.assertEqual(json.loads(second['cursor_update'])['sinceId'], '9000')
+            self.assertNotIn('nextToken', json.loads(second['cursor_update']))
         self.assertEqual(requests[1]['next_token'],['page2'])
         self.assertEqual(requests[1]['since_id'],['7000'])
         self.assertNotIn('start_time', requests[1])

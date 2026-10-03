@@ -1035,7 +1035,7 @@ class SignalTests(unittest.TestCase):
         with patch.dict(os.environ, {"X_API_DAILY_REQUEST_LIMIT": "100"}, clear=False):
             plan = signals.x_api_request_plan(sources)
         self.assertEqual(plan["sourceCount"], 2)
-        self.assertEqual(plan["scope"], "analyst-price-target-or-earnings")
+        self.assertEqual(plan["scope"], "configured-approved-queries")
         self.assertEqual(plan["configuredMaxRequestsPerDay"], 744)
         self.assertEqual(plan["localMaxRequestsPerDay"], 100)
         self.assertTrue(plan["budgetCapped"])

@@ -62,6 +62,7 @@ def schema(db):
     content_repair.schema(db)
     editorial_recovery.schema(db)
     general_source_news.revalidation_schema(db)
+    general_source_news.assessment_schema(db)
 
 
 def connect(path):
@@ -487,6 +488,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         return 'disabled'
     key,model,limit=config
     with connect(path) as db:
+        general_source_news.admit_retained(db,reference)
         if general_source_news.recover_reviewed_terminology(db,reference,model):
             return 'done'
         if reviewed_business_news.publish(db,reference,model,clock=lambda:datetime.now(timezone.utc)):
@@ -500,8 +502,11 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     row,lease=claimed
     started=time.monotonic()
     general=bool(row.get('general_source'))
+    semantic=bool(row.get('semantic_assessment'))
     excerpts=general_source_news.evidence_excerpts(row) if general else evidence_excerpts(row['body'])
     policy=general_source_news.POLICY if general else POLICY
+    if semantic:
+        policy+='\n'+general_source_news.ASSESSMENT_POLICY
     if row.get('issuer_business'):
         policy+='\n'+issuer_business_news.FINANCIAL_POLICY
     with connect(path) as db:
@@ -511,19 +516,24 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
             corrections=(general_source_news.retry_feedback(failure['payload'],row) or [{'issue':failure['reason'],'field':failure['detail']}]) if failure else []
     payload={'model':model,'store':False,'max_output_tokens':2400,'instructions':policy,
              'input':json.dumps({'ticker':row['ticker'],'title':row['title'],'evidenceExcerpts':excerpts,'correctionsRequired':corrections},ensure_ascii=False),
-             'text':{'format':{'type':'json_schema','name':'issuer_factual_note','strict':True,'schema':general_source_news.response_schema() if general else response_schema()}}}
+             'text':{'format':{'type':'json_schema','name':'issuer_factual_note','strict':True,'schema':general_source_news.assessment_response_schema() if semantic else general_source_news.response_schema() if general else response_schema()}}}
     if general:
         input_data=json.loads(payload['input'])
         input_data['evidenceContext']={u['id']:{'actor':u['actor'],'requiredTopics':sorted(general_source_news.concepts(u['quote'],'en'))} for u in row['units']}
         payload['input']=json.dumps(input_data,ensure_ascii=False)
     usage={}
     value=None
+    completed=False
+    review_reason=None
     try:
         response=transport(payload,key)
         if response.get('status')!='completed':
             raise ValueError('incomplete')
+        completed=True
         value=json.loads(brief_generator.output_text(response))
-        if general:
+        if semantic:
+            note,review_reason=general_source_news.bind_assessment(value,row)
+        elif general:
             note=general_source_news.bind_note(value,row)
         else:
             for item in [value.get('title'),value.get('summary'),*(value.get('facts') or []),value.get('purpose')]:
@@ -543,6 +553,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         provider_status=getattr(cause,'code',None)
         reason=str(exc) if type(exc) is ValueError and str(exc) in ({'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete','lost-forecast-modality','lost-negation','reversed-supply-demand','lost-fiscal-basis','lost-comparison','invented-broker-action','source-copy-overlap','unsupported-actor','lost-action-status'} | general_source_news.FAILURE_CODES) else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
         with connect(path) as db, db:
+            db.execute('BEGIN IMMEDIATE')
             # Private audit evidence for a failed attempt; never returned by feed.
             # Preserve the rejected copy so retries can be diagnosed, not guessed.
             rejected=json.dumps(value,ensure_ascii=False) if isinstance(value,dict) else None
@@ -551,6 +562,17 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                         ','.join(getattr(exc,'__notes__',[])),rejected if rejected and len(rejected)<=131072 else None))
             db.execute('INSERT OR IGNORE INTO official_research_attempt_body_proofs VALUES(?,?,?)',
                        (lease,row['sha'],row['body_sha']))
+            if semantic and completed:
+                active=db.execute('SELECT lease FROM official_research_jobs WHERE event_id=?',(row['id'],)).fetchone()
+                valid=bool(active and active['lease']==lease and current_revision(db,row))
+                state='review' if valid else 'stale'
+                if valid:
+                    general_source_news.save_semantic_review(db,row,lease,reference.isoformat(),
+                        datetime.now(timezone.utc).isoformat(timespec='milliseconds'),'unsubstantiated-model-output')
+                db.execute('UPDATE official_research_jobs SET state=?,failure_kind=? WHERE event_id=? AND lease=?',
+                           (state,reason,row['id'],lease))
+                db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?",(lease,))
+                return state
             job=db.execute("SELECT attempts FROM official_research_jobs WHERE event_id=? AND lease=?",(row['id'],lease)).fetchone()
             delay=max(headline_translation.retry_delay(job[0] if job else 1), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
             db.execute("UPDATE official_research_jobs SET state='retry',next_at=?,failure_kind=? WHERE event_id=? AND lease=?",(now+delay,reason,row['id'],lease))
@@ -561,8 +583,10 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         db.execute('BEGIN IMMEDIATE')
         active=db.execute('SELECT lease FROM official_research_jobs WHERE event_id=?',(row['id'],)).fetchone()
         valid=bool(active and active['lease']==lease and current_revision(db,row))
-        state='done' if valid else 'stale'
-        if valid:
+        state=('review' if review_reason else 'done') if valid else 'stale'
+        if valid and review_reason:
+            general_source_news.save_semantic_review(db,row,lease,reference.isoformat(),public_at,review_reason)
+        elif valid:
             db.execute('''INSERT INTO official_research_publications VALUES(?,?,?,?,?,?,?,?)
               ON CONFLICT(event_id) DO UPDATE SET sha=excluded.sha,body_sha=excluded.body_sha,
               payload=excluded.payload,evidence=excluded.evidence,started_at=excluded.started_at,
@@ -571,7 +595,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                         json.dumps([x['evidenceQuote'] for x in (note['facts'] if general else [note['title'],note['summary'],*note['facts'],note['purpose']])]),
                         reference.isoformat(),public_at,round((time.monotonic()-started)*1000)))
         db.execute('UPDATE official_research_jobs SET state=? WHERE event_id=? AND lease=?',(state,row['id'],lease))
-        db.execute('UPDATE signal_headline_translation_calls SET state=?,usage=? WHERE lease=?',(state,json.dumps(usage),lease))
+        db.execute('UPDATE signal_headline_translation_calls SET state=?,usage=? WHERE lease=?',
+                   ('done' if state=='review' else state,json.dumps(usage),lease))
     return state
 
 

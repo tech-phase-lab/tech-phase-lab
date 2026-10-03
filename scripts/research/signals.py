@@ -31,6 +31,8 @@ MAX_TEXT = 160_000
 MAX_ITEMS = 500
 X_API_DAILY_REQUEST_LIMIT_DEFAULT = 100
 X_API_DAILY_REQUEST_LIMIT_MAX = 10_000
+X_AUTHOR_INTAKE_SOURCE_IDS = frozenset({"x-tipranks", "x-wallstengine"})
+X_RETENTION_TARGET = 1000
 ALIASES = {ticker: [p["name"]] for ticker, p in monitor.PROVIDERS.items()}
 ALIASES.update({
     "ARM": ["Arm Holdings"], "BE": ["Bloom Energy"],
@@ -137,12 +139,78 @@ def acquire(source, validators, tickers=None):
     return fetch(source, validators)
 
 
+def prepare_x_query_window(db, source, now=None):
+    """Pin the approved first window before reservation or network, not coverage.
+
+    This commits only acquisition intent. Existing source evidence, route
+    freshness, completed watermarks and saved-page counts are never invented.
+    """
+    if (source.get('format') != 'x-api' or source['id'] not in X_AUTHOR_INTAKE_SOURCE_IDS
+            or os.environ.get('X_FILTERED_STREAM_ENABLED', '').strip().lower() in {'1', 'true', 'yes'}):
+        return
+    current = now or datetime.now(timezone.utc)
+    generation = x_api.query_generation(source)
+    with db:
+        db.execute('BEGIN IMMEDIATE')
+        stored = db.execute('SELECT body FROM signal_index_state WHERE source_id=?', (source['id'],)).fetchone()
+        try:
+            cursor = json.loads(stored['body']) if stored else {}
+        except (ValueError, TypeError):
+            cursor = {}
+        if not isinstance(cursor, dict) or cursor.get('queryGeneration') != generation:
+            start = (current-timedelta(hours=12)).isoformat(timespec='seconds').replace('+00:00', 'Z')
+            cursor = {'queryGeneration': generation, 'generationStartedAt': current.isoformat(),
+                      'startTime': start, 'coverageStartedAt': start, 'sinceId': None,
+                      'pagesSaved': 0, 'postsSaved': 0, 'excludedAuthorRows': 0, 'truncatedRows': 0}
+            db.execute('INSERT INTO signal_index_state VALUES(?,?) ON CONFLICT(source_id) DO UPDATE SET body=excluded.body',
+                       (source['id'], json.dumps(cursor)))
+    if x_api.window_expired(cursor, current):
+        # Fail before a request-budget reservation; recovery needs an explicit
+        # scoped decision, not a newly fabricated recent-history lower bound.
+        raise ValueError('x-api-window-expired')
+
+
+def require_x_polling_storage(db, source):
+    """Backpressure before author-intake request admission; never prune to fit.
+
+    Reuse the existing 8 MiB metadata floor on the database's actual filesystem.
+    It is an admission floor, not a guarantee against other writers or WAL growth.
+    In-memory databases have no disk-backed evidence volume to measure.
+    """
+    if (source.get('format') != 'x-api' or source['id'] not in X_AUTHOR_INTAKE_SOURCE_IDS
+            or os.environ.get('X_FILTERED_STREAM_ENABLED', '').strip().lower() in {'1', 'true', 'yes'}):
+        return
+    try:
+        path = next(row[2] for row in db.execute('PRAGMA database_list') if row[1] == 'main')
+        if not path:
+            return
+        from x_preflight import MIN_FREE_BYTES
+        stat = os.statvfs(path)
+        if (type(stat.f_frsize) is not int or stat.f_frsize <= 0
+                or type(stat.f_bavail) is not int or stat.f_bavail < 0
+                or stat.f_frsize * stat.f_bavail < MIN_FREE_BYTES):
+            raise ValueError
+    except Exception as exc:
+        raise ValueError('x-api-storage-low-or-unavailable') from exc
+
+
 def validators_for(db, source, tickers):
     row = db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
+    state = db.execute("SELECT body FROM signal_index_state WHERE source_id=?", (source["id"],)).fetchone()
+    if source.get('format') == 'x-api':
+        try:
+            cursor = json.loads(state['body']) if state else {}
+        except (ValueError, TypeError):
+            cursor = {}
+        # Pagination belongs to the query, not mutable route/parser settings.
+        # A budget pause or parser deployment cannot reset a durable page chain;
+        # a widened query must never borrow the old chain or its watermark.
+        if isinstance(cursor, dict) and cursor.get('queryGeneration') == x_api.query_generation(source):
+            return {**(dict(row) if row else {}), 'index_state': state['body']}
+        return {}
     if not row or row["config_sha"] != fingerprint(source, tickers):
         return {}
     result = dict(row)
-    state = db.execute("SELECT body FROM signal_index_state WHERE source_id=?", (source["id"],)).fetchone()
     if state:
         result["index_state"] = state["body"]
     return result
@@ -235,6 +303,12 @@ def schema(db):
         first_seen_at TEXT NOT NULL, last_seen_at TEXT NOT NULL,
         truncated INTEGER NOT NULL, selected_for_processing INTEGER NOT NULL,
         PRIMARY KEY(source_id,url,sha)
+      );
+      CREATE TABLE IF NOT EXISTS signal_x_retention (
+        source_id TEXT PRIMARY KEY, tracking_started_at TEXT NOT NULL,
+        acquisition_rows_omitted INTEGER NOT NULL DEFAULT 0,
+        document_rows_omitted INTEGER NOT NULL DEFAULT 0,
+        event_rows_omitted INTEGER NOT NULL DEFAULT 0, last_omitted_at TEXT
       );
       CREATE TABLE IF NOT EXISTS signal_routes (
         id TEXT PRIMARY KEY, initialized INTEGER NOT NULL DEFAULT 0,
@@ -354,7 +428,7 @@ def x_api_request_plan(sources=SOURCES):
     minimum_spacing = (86400 + daily_limit - 1) // daily_limit if budget_capped else 0
     return {
         "sourceCount": len(x_sources),
-        "scope": "analyst-price-target-or-earnings",
+        "scope": "configured-approved-queries",
         "configuredMaxRequestsPerDay": configured_max,
         "localMaxRequestsPerDay": local_max,
         "budgetCapped": budget_capped,
@@ -613,6 +687,97 @@ def record_route_retry_attempt(db, source_id, previous_route, attempted_at):
     return True
 
 
+def _x_durable_event_ids(db):
+    """Existing jobs/publications keep their source evidence, including failures."""
+    tables = ('official_research_jobs', 'official_research_publications',
+              'official_research_attempt_failures', 'analyst_news_publications')
+    present = {row[0] for row in db.execute(
+        "SELECT name FROM sqlite_master WHERE type='table'")}
+    return ' UNION '.join('SELECT event_id FROM ' + table for table in tables if table in present) or 'SELECT NULL WHERE 0'
+
+
+def _prune_x_evidence(db, source, checked, kind):
+    """1,000 is a soft target for the two approved author-intake routes.
+
+    Keep every recent row (including unclassified/review-required raw copy) and
+    all existing job evidence. Historical omissions are measured atomically;
+    these counters cannot reconstruct rows lost before this tracking existed.
+    """
+    table, column, order, clock = {
+        'acquisition': ('signal_x_acquisition', 'acquisition_rows_omitted',
+                        'julianday(last_seen_at) DESC,rowid DESC', 'last_seen_at'),
+        'document': ('signal_documents', 'document_rows_omitted',
+                     'julianday(last_seen_at) DESC,url', 'last_seen_at'),
+        'event': ('signal_events', 'event_rows_omitted', 'id DESC', 'observed_at'),
+    }[kind]
+    db.execute('INSERT OR IGNORE INTO signal_x_retention(source_id,tracking_started_at) VALUES(?,?)',
+               (source['id'], checked))
+    predicate, params = '', [source['id'], source['id'], X_RETENTION_TARGET]
+    if source['id'] in X_AUTHOR_INTAKE_SOURCE_IDS:
+        cutoff = (datetime.fromisoformat(checked.replace('Z', '+00:00')) - timedelta(days=7)).isoformat()
+        durable = _x_durable_event_ids(db)
+        linked = (f'rowid IN ({durable})' if kind == 'event' else
+                  f'EXISTS(SELECT 1 FROM signal_events e WHERE e.source_id={table}.source_id '
+                  f'AND e.url={table}.url AND e.id IN ({durable}))')
+        # Invalid clocks cannot justify eviction of an unassessed row either.
+        predicate = f' AND julianday({clock}) IS NOT NULL AND julianday({clock})<julianday(?)'
+        params.append(cutoff)
+        if kind != 'document':
+            predicate += ' AND (published_at IS NULL OR (julianday(published_at) IS NOT NULL AND julianday(published_at)<julianday(?)))'
+            params.append(cutoff)
+        predicate += ' AND NOT (' + linked + ')'
+    removed = db.execute(f'DELETE FROM {table} WHERE source_id=? AND rowid NOT IN '
+                         f'(SELECT rowid FROM {table} WHERE source_id=? ORDER BY {order} LIMIT ?)' + predicate,
+                         params).rowcount
+    if removed:
+        db.execute(f'UPDATE signal_x_retention SET {column}={column}+?,last_omitted_at=? WHERE source_id=?',
+                   (removed, checked, source['id']))
+
+
+def x_intake_coverage(db, source, reference=None):
+    """Read-only measured acquisition coverage, never downstream completion."""
+    state = db.execute('SELECT body FROM signal_index_state WHERE source_id=?', (source['id'],)).fetchone()
+    try:
+        cursor = json.loads(state['body']) if state else {}
+    except (TypeError, ValueError):
+        cursor = {}
+    tracked = isinstance(cursor, dict) and cursor.get('queryGeneration') == x_api.query_generation(source)
+    cursor = cursor if tracked else {}
+    def count(key):
+        value = cursor.get(key, 0)
+        return value if type(value) is int and value >= 0 else 0
+    retained = db.execute('SELECT COUNT(*) FROM signal_x_acquisition WHERE source_id=?', (source['id'],)).fetchone()[0]
+    metrics = None
+    if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='signal_x_retention'").fetchone():
+        metrics = db.execute('SELECT * FROM signal_x_retention WHERE source_id=?', (source['id'],)).fetchone()
+    pending = bool(cursor.get('nextToken'))
+    try:
+        expired = x_api.window_expired(cursor, reference)
+    except ValueError:
+        expired = False
+    awaiting = tracked and not count('pagesSaved')
+    return {'retainedOnly': True, 'completeUpstreamCoverage': False,
+            'assessmentCoverage': 'not-measured-by-acquisition',
+            'retentionTargetRows': X_RETENTION_TARGET,
+            'retentionTargetIsSoft': source['id'] in X_AUTHOR_INTAKE_SOURCE_IDS,
+            'retainedAcquisitionRows': retained,
+            'rowsAboveRetentionTarget': max(0, retained-X_RETENTION_TARGET),
+            'trackingStartedAt': metrics['tracking_started_at'] if metrics else None,
+            'historicalOmissionsBeforeTrackingUnknown': True,
+            'knownOmittedAcquisitionRows': metrics['acquisition_rows_omitted'] if metrics else 0,
+            'knownOmittedDocumentRows': metrics['document_rows_omitted'] if metrics else 0,
+            'knownOmittedEventRows': metrics['event_rows_omitted'] if metrics else 0,
+            'currentQueryTracked': tracked, 'paginationPending': pending,
+            'awaitingFirstPage': awaiting, 'initialWindowExpired': expired,
+            'acquisitionState': ('initial-window-expired' if expired else 'awaiting-first-page' if awaiting else
+                                 'pagination-pending' if pending else 'retrieved-pages-saved') if tracked else 'not-tracked-for-current-query',
+            'generationStartedAt': cursor.get('generationStartedAt'),
+            'coverageStartedAt': cursor.get('coverageStartedAt'),
+            'pagesSaved': count('pagesSaved'), 'postObservationsSaved': count('postsSaved'),
+            'excludedAuthorRows': count('excludedAuthorRows'),
+            'truncatedPostObservations': count('truncatedRows')}
+
+
 def save_evidence(db, source, items, response, checked, initial=False):
     """Persist revisions inside the caller transaction without transport state.
 
@@ -644,10 +809,7 @@ def save_evidence(db, source, items, response, checked, initial=False):
                    source['id'], post['url'], digest))
         # Private evidence is committed atomically with the cursor below.
         # Never interpret selection as successful bilingual publication.
-        db.execute('''DELETE FROM signal_x_acquisition WHERE source_id=? AND rowid NOT IN
-          (SELECT rowid FROM signal_x_acquisition WHERE source_id=?
-           ORDER BY julianday(last_seen_at) DESC,rowid DESC LIMIT 1000)''',
-                   (source['id'], source['id']))
+        _prune_x_evidence(db, source, checked, 'acquisition')
     for item in items:
         if not item["matches"] and not source.get("retainUnmatched"):
             continue
@@ -704,6 +866,14 @@ def save(db, source, items, response, checked, config_sha, duration):
     with db:
         inserted = save_evidence(db, source, items, response, checked, initial)
         if source.get('format') == 'x-api' and response.get('cursor_update'):
+            cursor = json.loads(response['cursor_update'])
+            if not isinstance(cursor, dict) or cursor.get('queryGeneration') != x_api.query_generation(source):
+                raise ValueError('x-api-invalid-cursor')
+            for post in response.get('_acquired_posts', []):
+                digest = hashlib.sha256((post['title']+'\n'+post['text']).encode()).hexdigest()
+                if not db.execute('SELECT 1 FROM signal_x_acquisition WHERE source_id=? AND url=? AND sha=?',
+                                  (source['id'], post['url'], digest)).fetchone():
+                    raise ValueError('x-api-incomplete-evidence')
             db.execute('INSERT INTO signal_index_state VALUES(?,?) ON CONFLICT(source_id) DO UPDATE SET body=excluded.body',
                        (source['id'],response['cursor_update']))
         next_check = (datetime.fromisoformat(checked) + timedelta(
@@ -729,14 +899,18 @@ def save(db, source, items, response, checked, config_sha, duration):
             db.execute("INSERT INTO signal_index_state VALUES(?,?) ON CONFLICT(source_id) DO UPDATE SET body=excluded.body",
                        (source["id"], response["index_state"]))
         record_route_transition(db, source["id"], route, current_error, checked)
-        # Bound private retention per publisher; keep enough fingerprints for restarts.
-        db.execute("""DELETE FROM signal_documents WHERE source_id=? AND url NOT IN
-          (SELECT url FROM signal_documents WHERE source_id=?
-           ORDER BY julianday(last_seen_at) DESC,url LIMIT 1000)""",
-                   (source["id"], source["id"]))
-        db.execute("""DELETE FROM signal_events WHERE source_id=? AND id NOT IN
-          (SELECT id FROM signal_events WHERE source_id=? ORDER BY id DESC LIMIT 1000)""",
-                   (source["id"], source["id"]))
+        # Active author-intake and job evidence must survive queue backlogs.
+        if source.get('format') == 'x-api':
+            _prune_x_evidence(db, source, checked, 'document')
+            _prune_x_evidence(db, source, checked, 'event')
+        else:
+            db.execute("""DELETE FROM signal_documents WHERE source_id=? AND url NOT IN
+              (SELECT url FROM signal_documents WHERE source_id=?
+               ORDER BY julianday(last_seen_at) DESC,url LIMIT 1000)""",
+                       (source["id"], source["id"]))
+            db.execute("""DELETE FROM signal_events WHERE source_id=? AND id NOT IN
+              (SELECT id FROM signal_events WHERE source_id=? ORDER BY id DESC LIMIT 1000)""",
+                       (source["id"], source["id"]))
     return inserted
 
 
@@ -746,9 +920,11 @@ def check(db, source, tickers, transport=None):
     attempted_at = datetime.now(timezone.utc).isoformat(timespec="milliseconds")
     deferred = False
     config_sha = fingerprint(source, tickers)
-    validators = validators_for(db, source, tickers)
     started = time.monotonic()
     try:
+        prepare_x_query_window(db, source)
+        require_x_polling_storage(db, source)
+        validators = validators_for(db, source, tickers)
         response = transport(source, validators) if transport else acquire(source, validators, tickers)
         checked = stamp()
         if response.get("not_modified"):
@@ -929,7 +1105,9 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
                        "succeededAt": row["succeeded_at"] if row else None,
                        "nextCheckAt": row["next_check_at"] if row else None,
                        "error": monitor.persisted_route_error_code(row["error"]) if row else None,
-                       "matchedItems": row["matched_items"] if row else 0})
+                       "matchedItems": row["matched_items"] if row else 0,
+                       **({'acquisitionCoverage': x_intake_coverage(db, source)}
+                          if source.get('format') == 'x-api' else {})})
     return {"items": items, "counts": counts, "routes": routes, "xApiUsage": x_api_usage(db, sources=sources), "view": view,
             "ticker": ticker, "generatedAt": stamp(), "publicationEnabled": False}
 
@@ -1390,6 +1568,7 @@ def x_operational_summary(db, sources=SOURCES, reference=None):
             "nextCheckAt": row["next_check_at"] if row else None,
             "error": monitor.persisted_route_error_code(row["error"]) if row else None,
             "matchedItems": row["matched_items"] if row else 0,
+            "acquisitionCoverage": x_intake_coverage(db, source, current),
         })
     usage = x_api_usage(db, sources=sources)
     usage["routeCount"] = usage.pop("sourceCount")
@@ -1439,7 +1618,21 @@ def x_operational_summary(db, sources=SOURCES, reference=None):
         stamp_value = observed.isoformat()
         if not item_counts["latestObservedAt"] or stamp_value > item_counts["latestObservedAt"]:
             item_counts["latestObservedAt"] = stamp_value
-    return {"usage": usage, "routes": {
+    coverages = [route['acquisitionCoverage'] for route in routes]
+    coverage = {'completeUpstreamCoverage': False,
+                'assessmentCoverage': 'not-measured-by-acquisition',
+                'trackedQueryRoutes': sum(c['currentQueryTracked'] for c in coverages),
+                'untrackedQueryRoutes': sum(not c['currentQueryTracked'] for c in coverages),
+                'paginationPendingRoutes': sum(c['paginationPending'] for c in coverages),
+                'awaitingFirstPageRoutes': sum(c['awaitingFirstPage'] for c in coverages),
+                'expiredWindowRoutes': sum(c['initialWindowExpired'] for c in coverages),
+                'historicalOmissionsBeforeTrackingUnknown': True}
+    for key in ('retainedAcquisitionRows', 'rowsAboveRetentionTarget',
+                'knownOmittedAcquisitionRows', 'knownOmittedDocumentRows',
+                'knownOmittedEventRows', 'pagesSaved', 'postObservationsSaved',
+                'excludedAuthorRows', 'truncatedPostObservations'):
+        coverage[key] = sum(c[key] for c in coverages)
+    return {"usage": usage, "acquisitionCoverage": coverage, "routes": {
         "checked": sum(bool(r["checkedAt"]) for r in routes),
         "error": sum(bool(r["error"]) for r in routes),
         "errors": errors,

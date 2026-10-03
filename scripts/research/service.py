@@ -940,8 +940,11 @@ class AutomaticMonitor:
         # Network I/O and article parsing must not hold the shared database lock.
         reservation_error = None
         with self.db_lock, monitor.connect(self.db_path) as db:
-            validators = signals.validators_for(db, source, self.tickers)
+            validators = {}
             try:
+                signals.prepare_x_query_window(db, source)
+                signals.require_x_polling_storage(db, source)
+                validators = signals.validators_for(db, source, self.tickers)
                 signals.reserve_x_api_request(db, source, eligible_source_ids=x_due_ids)
             except Exception as exc:
                 reservation_error = exc

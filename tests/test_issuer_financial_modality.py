@@ -31,6 +31,12 @@ class FinancialModalityTests(unittest.TestCase):
             news.validate_financial_modality(self.pair(source=source,en='The company plans to lease assets expected to generate recurring cash flows.',ja='同社は資産をリースする予定で、継続的なキャッシュフローを生むと見込む。'))
         news.validate_financial_modality(self.pair(source=source,en='The company acquired and leased back the GPUs, which are expected to generate recurring cash flows.',ja='同社はGPUを取得してリースバックした。継続的なキャッシュフローを見込んでいる。'))
 
+    def test_leaseback_must_not_be_translated_as_reversal(self):
+        source='The company acquired the GPUs and leased those assets back under a long-term lease.'
+        with self.assertRaisesRegex(ValueError,'lost-action-status'):
+            news.validate_financial_modality(self.pair(source=source,en='The firm acquired GPUs and leased them back.',ja='同社はGPUを取得し長期リースで反転し、事業を進めた。'))
+        news.validate_financial_modality(self.pair(source=source,en='The firm acquired GPUs and leased them back.',ja='同社はGPUを取得してリースバックした。'))
+
     def test_completed_lease_cannot_be_rewritten_as_intent(self):
         with self.assertRaisesRegex(ValueError,'lost-action-status'):
             news.validate_financial_modality(self.pair(en='The company plans to lease assets expected to generate recurring cash flows.',ja='同社は資産をリースする予定で、継続的なキャッシュフローを生むと見込む。'))

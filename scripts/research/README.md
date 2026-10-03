@@ -330,12 +330,22 @@ The existing `official_research` worker also handles bounded, current retained
 business news. It reuses the already enabled/dated-approved headline model/key,
 atomic rolling-24-hour call ledger (including failures), configured cap, headline
 reserve, 2,400-output-token ceiling and persistent retry/backoff. This does not
-enable private research auto-drafts, add X queries, or grant new source hosts.
+enable private research auto-drafts or grant new source hosts. The approved
+TipRanks/WallStEngine acquisition query is author-based; FABY retains its former
+keyword scope, and reply/retweet exclusions and all route/request limits remain.
+Query-bound polling continuations survive pauses. Recent seven-day raw evidence
+and existing job evidence survive the 1,000-row soft retention target; known
+omissions and unknown pre-tracking coverage are separately reported. Acquisition
+progress never asserts assessment or publication completion.
 
 `general_source_news` assesses full retained TipRanks/WallStEngine posts within
 the existing seven-day source window. The opening approved company/cashtag must
 bind the subject. Contract, acquisition, product, capacity, management-outlook
-and substantive broker-commentary posts are eligible; promotions, bare rating
+and substantive broker-commentary posts use existing supported paths. Other
+company-bound wording can receive one combined materiality/JA/EN assessment within
+the same ledger. Negative or unsubstantiated completed assessments become
+source/body-bound review records rather than repeated calls. Unknown target or
+broker actions stay in explicit review. Promotions, bare rating
 reiterations, independently covered analyst/target/results actions, malformed
 clocks, incomplete/hash-mismatched bodies, corrections and ambiguous multi-party
 relations receive separate private reason codes. Inputs are at most 3,600
@@ -376,3 +386,8 @@ are excluded. Limits are 131,072 UTF-8 bytes for the stored input, 600 character
 per language field, 1,800 per evidence unit, 48,000 bytes per context and 200,000
 bytes per queue response. `failedCopyContext` reports included, unavailable or
 response-budget status. Unrelated research keeps its existing context gate.
+
+The existing editor response also includes bounded, read-only pipeline metadata
+(maximum 60 KB per snapshot): retained raw dispositions, acquisition coverage,
+cross-lane issuer preparation reasons and the configured model identifier only.
+Raw acquisition text, query tokens, credentials and environment dumps are excluded.
