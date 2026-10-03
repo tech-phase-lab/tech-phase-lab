@@ -41,7 +41,7 @@ function ScoreOverview({companies,lang,now}: {companies:ComparisonResult["compan
   </section>;
 }
 function CompanyScoreCard({company:c,lang,now}: {company:ComparisonResult["companies"][number];lang:"ja"|"en";now:number}) {
-  const scores=comparisonScores(c,now), highlights=quarterlyHighlights(c,lang,now), ja=lang==="ja";
+  const highlights=quarterlyHighlights(c,lang,now), ja=lang==="ja";
   return <article className={styles.scoreCard}>
     <header className={styles.companyHeading}><h3 title={`${c.name}（${c.ticker}）`}>{c.name}（{c.ticker}）</h3><span>{c.quarterRevenue ? `${ja ? "四半期" : "Quarter"} ${c.quarterRevenue.end}` : ja ? "四半期未取得" : "Quarter unavailable"}</span></header>
     <div className={styles.companyProfile}>
@@ -60,8 +60,6 @@ function CompanyScoreCard({company:c,lang,now}: {company:ComparisonResult["compa
         <StatusChart companies={[c]} lang={lang} now={now}/>
       </section>
     </div>
-    {c.dataWarnings?.map(message=><p key={message.en} className={styles.warning}>{message[lang]}</p>)}
-    {scores.every(score=>score.value===null) && <p className={styles.warning}>{ja ? "評価できる直近四半期のデータが不足しています。" : "Recent quarterly data are insufficient for scoring."}</p>}
   </article>;
 }
 export default function ComparisonScreen() {

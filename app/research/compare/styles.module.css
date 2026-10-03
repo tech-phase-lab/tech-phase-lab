@@ -55,3 +55,5 @@
  .snapshotTicker{margin-right:28px}
 }
 @media(max-width:359px){.companyProfile{grid-template-columns:1fr}.companyStatus{border-left:0;padding-left:0}.companyStatus .statusChart svg{max-width:240px}}
+
+@media(min-width:601px){.picker .submit{margin-top:30px}}
