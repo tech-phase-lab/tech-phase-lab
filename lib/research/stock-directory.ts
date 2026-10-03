@@ -1,3 +1,4 @@
+import { searchStocks } from "./stock-search.ts";
 import providers from "./providers.json" with { type: "json" };
 
 export type StockDirectoryEntry = {
@@ -137,25 +138,8 @@ export function parseSecDirectory(payload: unknown): StockDirectoryEntry[] {
   return entries;
 }
 
-function normalizedSearch(value: string) {
-  return value.normalize("NFKC").toLocaleUpperCase("en-US").replace(/[^A-Z0-9.-]+/g, " ").trim();
-}
-
 export function searchDirectory(entries: StockDirectoryEntry[], query: string, limit = 24) {
-  const q = normalizedSearch(query).slice(0, 80);
-  if (!q) return [];
-  const terms = q.split(/\s+/).filter(Boolean);
-  return entries
-    .flatMap((entry) => {
-      const ticker = normalizedSearch(entry.ticker);
-      const name = normalizedSearch(entry.name);
-      if (!terms.every((term) => ticker.includes(term) || name.includes(term))) return [];
-      const score = ticker === q ? 0 : ticker.startsWith(q) ? 10 : name.startsWith(q) ? 20 : name.includes(q) ? 30 : ticker.includes(q) ? 40 : 50;
-      return [{ entry, score }];
-    })
-    .toSorted((a, b) => a.score - b.score || Number(b.entry.tracked) - Number(a.entry.tracked) || a.entry.ticker.localeCompare(b.entry.ticker))
-    .slice(0, Math.min(Math.max(1, limit), 40))
-    .map(({ entry }) => entry);
+  return searchStocks(entries, query, limit);
 }
 
 export function parseSecProfile(entry: StockDirectoryEntry, payload: unknown): StockProfile {

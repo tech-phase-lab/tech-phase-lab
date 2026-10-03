@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
+import { searchStocks } from "@/lib/research/stock-search";
 import { comparisonCatalog } from "@/lib/research/comparison-catalog";
 import type { ComparisonResult, Fact } from "@/lib/research/comparison";
 import styles from "./styles.module.css";
@@ -51,7 +52,7 @@ export default function ComparisonScreen() {
   useEffect(() => {
     if (openSlot === null || !queries[openSlot].trim()) return;
     const slot = openSlot, query = queries[slot]; const controller = new AbortController();
-    setSuggestions(current => current.map((v,index) => index === slot ? comparisonCatalog.filter(c => `${c.ticker} ${c.name}`.toLowerCase().includes(query.toLowerCase())) : v));
+    setSuggestions(current => current.map((v,index) => index === slot ? searchStocks(comparisonCatalog, query, 10) : v));
     const timer = setTimeout(async () => { try {
       const response = await fetch(`/api/research/stocks?q=${encodeURIComponent(query)}&limit=10`, { signal: controller.signal }); const data = await response.json();
       if (!controller.signal.aborted && data.ok && Array.isArray(data.results)) setSuggestions(current => current.map((v,index) => index === slot ? data.results : v));
@@ -112,10 +113,10 @@ export default function ComparisonScreen() {
     {(membership === "free" || membership === "signed-out") && <section className={styles.lock}><span aria-hidden="true">🔒</span><h2>{t("比較・評価はPRO会員限定", "Comparison is exclusive to PRO")}</h2><p>{t("2〜3社を選び、結論・実績・成長性・注意点をまとめて確認できます。", "Choose two or three companies to explore the conclusion, performance, growth and caveats.")}</p><Link href="/research/account">{t("ログイン・会員情報", "Sign in / Membership")}</Link></section>}
     {membership === "pro" && <>
       <section className={styles.picker} aria-label={t("比較する銘柄", "Select companies")}>
-        <div className={styles.slots}>{[0,1,2].map(i => <div key={i} className={styles.stockSlot}><label htmlFor={`stock-${i}`}>{i === 2 ? t("3社目（任意）", "Third (optional)") : t(`${i+1}社目`, `Company ${i+1}`)}</label><input id={`stock-${i}`} name={`comparison-ticker-${i}`} autoCorrect="off" autoCapitalize="characters" spellCheck={false} role="combobox" aria-expanded={openSlot === i && Boolean(queries[i].trim())} aria-controls={`stock-options-${i}`} autoComplete="off" value={queries[i]} placeholder={t("会社名・銘柄コード", "Company or ticker")} onFocus={() => setOpenSlot(i)} onBlur={() => setTimeout(() => setOpenSlot(current => current === i ? null : current), 150)} onChange={event => {
+        <div className={styles.slots}>{[0,1,2].map(i => <div key={i} className={styles.stockSlot}><label htmlFor={`stock-${i}`}>{i === 2 ? t("3社目（任意）", "Company 3 (optional)") : t(`${i+1}社目`, `Company ${i+1}`)}</label><input id={`stock-${i}`} name={`comparison-ticker-${i}`} autoCorrect="off" autoCapitalize="characters" spellCheck={false} role="combobox" aria-expanded={openSlot === i && Boolean(queries[i].trim())} aria-controls={`stock-options-${i}`} autoComplete="off" value={queries[i]} placeholder={t("会社名・銘柄コード", "Company or ticker")} onFocus={() => setOpenSlot(i)} onBlur={() => setTimeout(() => setOpenSlot(current => current === i ? null : current), 150)} onChange={event => {
           const value = event.target.value; setQueries(current => current.map((q,index) => index === i ? value : q)); setOpenSlot(i);
           request.current?.abort(); setResult(null); setBusy(false); setSelection(current => { const next = [...current]; next[i] = ""; return next; });
-        }} onKeyDown={event => { if (event.key === "Escape") setOpenSlot(null); if (event.key === "Enter" && queries[i].trim()) { event.preventDefault(); const match = suggestions[i].find(c => c.ticker.toLowerCase() === queries[i].trim().toLowerCase()) || suggestions[i][0]; if (match) selectCompany(i,match); } }} />{openSlot === i && Boolean(queries[i].trim()) && <div id={`stock-options-${i}`} role="listbox" className={styles.options}>{suggestions[i].filter(c => !selection.some((ticker,index) => index !== i && ticker === c.ticker)).slice(0,10).map(c => <button type="button" role="option" aria-selected={selection[i] === c.ticker} key={c.ticker} onMouseDown={event => event.preventDefault()} onClick={() => selectCompany(i,c)}><strong>{c.ticker}</strong><span>{c.name}</span></button>)}</div>}</div>)}</div>
+        }} onKeyDown={event => { if (event.key === "Escape") setOpenSlot(null); if (event.key === "Enter" && !event.nativeEvent.isComposing && queries[i].trim()) { event.preventDefault(); const match = suggestions[i].find(c => c.ticker.toLowerCase() === queries[i].trim().toLowerCase()) || suggestions[i][0]; if (match) selectCompany(i,match); } }} />{openSlot === i && Boolean(queries[i].trim()) && <div id={`stock-options-${i}`} role="listbox" className={styles.options}>{suggestions[i].filter(c => !selection.some((ticker,index) => index !== i && ticker === c.ticker)).slice(0,10).map(c => <button type="button" role="option" aria-selected={selection[i] === c.ticker} key={c.ticker} onMouseDown={event => event.preventDefault()} onClick={() => selectCompany(i,c)}><strong>{c.ticker}</strong><span>{c.name}</span></button>)}</div>}</div>)}</div>
         <div className={styles.submit}><small>{selection.filter(Boolean).length} / 3 {t("社を選択", "selected")}</small><button disabled={busy || !selection[0] || !selection[1]} onClick={() => void compare()}>{busy ? t("精査中…", "Analyzing…") : t("この銘柄を比較する", "Compare these stocks")}</button></div>
         <p className={styles.note}>{t("SEC開示を比較。割安評価は株価データ接続後に対応。", "Compare SEC filings. Valuation awaits price data.")}</p>
       </section>
