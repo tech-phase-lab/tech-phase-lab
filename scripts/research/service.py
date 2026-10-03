@@ -31,6 +31,7 @@ import x_market_news
 import x_stream_runtime
 import x_stream_pilot
 import x_preflight_service
+import x_stream_trial_service
 import market_results
 import official_research
 import official_research_diagnostics
@@ -527,6 +528,8 @@ class AutomaticMonitor:
                                 if self.x_stream_requested else None)
         self.x_preflight_thread = (threading.Thread(target=self.run_x_preflight, name="x-metadata-preflight", daemon=True)
                                    if x_preflight_service.requested() else None)
+        self.x_stream_trial_thread = (threading.Thread(target=self.run_x_stream_trial, name="x-receive-only-trial", daemon=True)
+                                      if x_stream_trial_service.requested() else None)
         self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
         self.note_translation_thread = threading.Thread(target=self.run_note_translation, name="note-translation", daemon=True)
         self.headline_translation_thread = threading.Thread(target=self.run_headline_translation, name="headline-translation", daemon=True)
@@ -543,6 +546,28 @@ class AutomaticMonitor:
         with self.state_lock:
             backup_ready = completed and self.state["backup"]["healthy"] is True
         x_preflight_service.run_once(self.db_path, self.stop_event, allow_metadata=backup_ready)
+
+    def trial_backup_readiness(self, probe_end_at, margin_seconds):
+        now = datetime.now(timezone.utc)
+        with self.state_lock:
+            backup = dict(self.state["backup"])
+        try:
+            success = datetime.fromisoformat(backup["lastSuccessAt"].replace("Z", "+00:00")).astimezone(timezone.utc)
+            attempted = (datetime.fromisoformat(backup["lastAttemptAt"].replace("Z", "+00:00")).astimezone(timezone.utc)
+                         if backup["lastAttemptAt"] else None)
+            next_due = success + timedelta(seconds=self.backup_interval)
+            healthy = (self.backup_initial_complete.is_set() and backup["healthy"] is True
+                       and not self.stop_event.is_set() and (attempted is None or attempted <= success)
+                       and next_due > probe_end_at + timedelta(seconds=margin_seconds))
+            return {"healthy": healthy, "next_backup_at": next_due.isoformat(), "verified_at": now.isoformat()}
+        except (TypeError, ValueError, AttributeError):
+            return {"healthy": False, "next_backup_at": None, "verified_at": now.isoformat()}
+
+    def run_x_stream_trial(self):
+        if not self.backup_initial_complete.wait(30) or self.stop_event.is_set():
+            return
+        x_stream_trial_service.run_once(self.db_path, self.stop_event,
+                                       backup_readiness=self.trial_backup_readiness)
 
     def run_x_stream(self):
         if not self.x_stream_requested:
@@ -676,6 +701,8 @@ class AutomaticMonitor:
             self.x_preflight_thread.start()
         if self.x_stream_thread:
             self.x_stream_thread.start()
+        if self.x_stream_trial_thread:
+            self.x_stream_trial_thread.start()
         self.news_thread.start()
         self.note_translation_thread.start()
         self.headline_translation_thread.start()
@@ -698,6 +725,8 @@ class AutomaticMonitor:
             self.x_preflight_thread.join(timeout=45)
         if self.x_stream_thread:
             self.x_stream_thread.join(timeout=45)
+        if self.x_stream_trial_thread:
+            self.x_stream_trial_thread.join(timeout=45)
         self.news_thread.join(timeout=25)
         self.note_translation_thread.join(timeout=45)
         self.headline_translation_thread.join(timeout=45)
