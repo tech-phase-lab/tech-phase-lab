@@ -119,6 +119,8 @@ class RuleTransport:
         t.assertFalse(self.options['admission'](request_id, method, trial.digest(additions)))
         self.options['token_provider']()
         t.calls.append((method, 'rules'))
+        if t.rule_hook:
+            t.rule_hook(method)
         if t.rule_error and method == 'POST':
             return {'data': rules()[:1], 'errors': [{'detail': PRIVATE}]}
         return {'data': rules(), 'meta': {'summary': {}}} if method == 'POST' else page(rules())
@@ -168,7 +170,7 @@ class ControllerTests(unittest.IsolatedAsyncioTestCase):
                               next_backup_at=(NOW+timedelta(hours=1)).isoformat()))
         self.storage = Mock(return_value={'metadata_storage_sufficient': True, 'available_bytes': 50_000_000})
         self.stop = threading.Event(); self.calls=[]; self.logs=[]; self.chunks=[]
-        self.rule_error=False; self.stream_error=None; self.closed=False; self.read_hook=None
+        self.rule_error=False; self.stream_error=None; self.closed=False; self.read_hook=None; self.rule_hook=None
         for obj, name in ((aiohttp, 'ClientSession'), (x_preflight.os, 'statvfs'), (x_stream, 'schema'), (x_stream, 'Coordinator')):
             guard=patch.object(obj, name, side_effect=AssertionError('real operation forbidden'))
             guard.start(); self.addCleanup(guard.stop)
@@ -296,6 +298,93 @@ class ControllerTests(unittest.IsolatedAsyncioTestCase):
         result=await self.controller().run()
         self.assertEqual(result['reason'],'x-trial-already-used'); self.token.assert_not_called()
 
+
+    def hold_competing_writer(self, seconds=0.35):
+        path=Path(self.tmp.name)/'service.sqlite'
+        acquired=threading.Event(); errors=[]
+        def writer():
+            db=sqlite3.connect(path)
+            try:
+                db.execute('BEGIN IMMEDIATE'); acquired.set(); time.sleep(seconds); db.commit()
+            except Exception as exc:
+                errors.append(type(exc).__name__)
+            finally:
+                db.close()
+        thread=threading.Thread(target=writer); thread.start(); self.addCleanup(thread.join)
+        self.assertTrue(acquired.wait(2))
+        return thread,errors
+
+    async def test_rule_post_persistence_waits_and_all_helpers_keep_5000ms(self):
+        threads=[]
+        def hold_after_post(method):
+            self.assertFalse(self.db.in_transaction)
+            self.assertEqual(self.db.execute('PRAGMA busy_timeout').fetchone()[0],5000)
+            if method == 'POST':
+                threads.append(self.hold_competing_writer())
+        self.rule_hook=hold_after_post
+        started=time.monotonic(); result=await self.controller().run()
+        self.assertEqual(result['status'],'ended',result)
+        self.assertGreaterEqual(time.monotonic()-started,0.2)
+        self.assertEqual(self.db.execute('PRAGMA busy_timeout').fetchone()[0],5000)
+        self.assertEqual(len(self.calls),8)
+        for thread,errors in threads:
+            thread.join(); self.assertEqual(errors,[])
+        diagnostic=trial.local_diagnostic(Path(self.tmp.name)/'service.sqlite')
+        self.assertEqual(diagnostic['x_stream_trial_readiness']['requests_admitted'],5)
+        self.assertEqual(diagnostic['x_stream_rule_setup']['post_claimed'],1)
+        self.assertEqual(diagnostic['x_stream_rule_setup']['get_claimed'],1)
+        self.assertEqual(diagnostic['x_stream_probe_run']['attempts'],1)
+        self.assertEqual(diagnostic['x_stream_probe_run']['close_confirmed'],1)
+
+    async def test_probe_writer_wait_does_not_extend_receive_deadline_or_retry(self):
+        now=[NOW]; self.plan['max_probe_seconds']=1; self.chunks=[b'\n',b'\n']
+        threads=[]
+        def hold_then_expire():
+            self.assertFalse(self.db.in_transaction)
+            self.assertEqual(self.db.execute('PRAGMA busy_timeout').fetchone()[0],5000)
+            threads.append(self.hold_competing_writer()); now[0]+=timedelta(seconds=2)
+        self.read_hook=hold_then_expire
+        started=time.monotonic(); c=self.controller(clock=lambda:now[0]); result=await c.run()
+        self.assertEqual(result['reason'],'deadline',result)
+        self.assertEqual(result['read_calls'],1); self.assertTrue(self.closed)
+        self.assertEqual(c.probe_config['end_at'],x_stream.stamp(NOW+timedelta(seconds=1)))
+        self.assertGreaterEqual(time.monotonic()-started,0.2)
+        self.assertLess(time.monotonic()-started,15)
+        self.assertEqual(len(self.calls),8)
+        for thread,errors in threads:
+            thread.join(); self.assertEqual(errors,[])
+
+    async def test_receive_deadline_keeps_shutdown_headroom_inside_plan_end(self):
+        self.plan['probe_end_at']=(NOW+timedelta(seconds=130)).isoformat()
+        c=self.controller(); result=await c.run()
+        self.assertEqual(result['status'],'ended',result)
+        self.assertEqual(c.probe_config['end_at'],x_stream.stamp(NOW+timedelta(seconds=100)))
+        self.assertLess(trial._utc(c.probe_config['end_at']),trial._utc(self.plan['probe_end_at']))
+
+    async def test_rule_finalization_error_is_fixed_and_retains_claims(self):
+        denied=[]
+        def fail_only_finalization(method):
+            if method == 'GET':
+                def authorizer(action,table,column,_database,_trigger):
+                    if action == sqlite3.SQLITE_UPDATE and table == 'x_stream_rule_setup' and column == 'reason':
+                        denied.append(True); return sqlite3.SQLITE_DENY
+                    return sqlite3.SQLITE_OK
+                self.db.set_authorizer(authorizer)
+        self.rule_hook=fail_only_finalization
+        result=await self.controller().run()
+        self.db.set_authorizer(None)
+        self.assertTrue(denied); self.assertEqual(result['reason'],'x-trial-rule-setup-blocked')
+        rule_log=next(line for line in self.logs if line.startswith('x-stream-trial-rules '))
+        info=json.loads(rule_log.split(' ',1)[1])
+        self.assertEqual(info['reason'],'x-rule-setup-persistence-failed')
+        self.assertEqual(info['stage'],'finalization'); self.assertEqual(info['error_class'],'sqlite-error')
+        diagnostic=trial.local_diagnostic(Path(self.tmp.name)/'service.sqlite')
+        self.assertEqual(diagnostic['x_stream_rule_setup']['post_claimed'],1)
+        self.assertEqual(diagnostic['x_stream_rule_setup']['get_claimed'],1)
+        self.assertEqual(diagnostic['x_stream_supervisor_owner']['rows'],1)
+        again=await self.controller().run()
+        self.assertEqual(again['reason'],'x-trial-already-used')
+        self.assertEqual(len(self.calls),7)
 
     async def test_real_monitor_row_factory_waits_for_competing_writer(self):
         import monitor

@@ -24,6 +24,7 @@ MAX_ERROR_BYTES = 16 * 1024
 CONNECT_SECONDS = 15
 SEARCH_SECONDS = 20
 ERROR_SECONDS = 2
+CLOSE_SECONDS = 5
 MAX_RETRY_SECONDS = 86400
 JSON_TYPES = {'application/json'}
 STREAM_TYPES = JSON_TYPES | {'application/x-ndjson'}
@@ -129,31 +130,39 @@ async def _http_failure(response):
 
 
 async def _close_owned(response, session):
-    """Close this request only, and finish closing despite repeated cancellation."""
+    """Finite owned cleanup; uncertain closure prevents replacement/recovery."""
     failed = False
     try:
         if response is not None:
             response.close()
     except Exception:
         failed = True
-    closing = asyncio.create_task(session.close())
+    try:
+        closing = asyncio.create_task(session.close())
+    except Exception:
+        raise x_stream.TransportFailure(None, connection_conflict=True) from None
+    deadline = asyncio.get_running_loop().time() + CLOSE_SECONDS
     cancelled = False
     while not closing.done():
+        remaining = deadline - asyncio.get_running_loop().time()
+        if remaining <= 0:
+            closing.cancel()
+            raise x_stream.TransportFailure(None, connection_conflict=True) from None
         try:
-            await asyncio.shield(closing)
+            await asyncio.wait_for(asyncio.shield(closing), remaining)
         except asyncio.CancelledError:
             cancelled = True
         except Exception:
             failed = True
-    if not closing.cancelled():
-        failed |= closing.exception() is not None
+            break
     try:
+        failed |= closing.cancelled() or not closing.done() or closing.exception() is not None
         failed |= session.closed is not True or (response is not None and response.closed is not True)
     except Exception:
         failed = True
-    if failed or closing.cancelled():
-        # Unknown socket ownership must prevent a replacement stream or paid
-        # fallback, including when cancellation overlapped failed cleanup.
+    if failed:
+        if not closing.done():
+            closing.cancel()
         raise x_stream.TransportFailure(None, connection_conflict=True) from None
     if cancelled:
         raise asyncio.CancelledError

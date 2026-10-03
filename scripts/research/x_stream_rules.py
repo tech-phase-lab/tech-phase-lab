@@ -74,6 +74,16 @@ class RuleSetupBlocked(ValueError):
                          else 'x-rule-setup-internal-failure')
 
 
+def _error_class(error):
+    """Only fixed local failure classes; never exception/provider text."""
+    if isinstance(error, sqlite3.Error):
+        code = getattr(error, 'sqlite_errorcode', 0) & 255
+        if code in (sqlite3.SQLITE_BUSY, sqlite3.SQLITE_LOCKED):
+            return 'sqlite-busy'
+        return 'sqlite-error'
+    return 'local-error'
+
+
 def _block(code):
     raise RuleSetupBlocked('x-rule-setup-' + code) from None
 
@@ -357,6 +367,7 @@ class Installer:
         self.existing, self.missing, self.observed, self.verified = [], [], [], []
         self.claimed, self.success, self.attempted = False, False, False
         self.capabilities = set()
+        self.stage = 'not-started'
         self.result = {'status': 'disabled', 'reason': 'x-rule-setup-disabled'}
 
     def _storage(self):
@@ -529,7 +540,7 @@ class Installer:
         if self.storage_preflight is None and not Path(location[2]).resolve().is_relative_to('/data'):
             _block('service-volume-required')
         self.db.execute('PRAGMA synchronous=FULL')
-        self.db.execute('PRAGMA busy_timeout=100')
+        self.db.execute('PRAGMA busy_timeout=5000')
         if self.db.execute('PRAGMA synchronous').fetchone()[0] < 2:
             _block('durability-required')
         self.frozen = json.loads(_json(self.config)); self.fingerprint = digest(self.frozen)
@@ -567,6 +578,7 @@ class Installer:
         return True
 
     async def _request(self, transport, method, additions):
+        self.stage = 'post-claim' if method == 'POST' else 'get-claim'
         with self.db:
             self.db.execute('BEGIN IMMEDIATE')
             self._review(ours=True)
@@ -578,6 +590,7 @@ class Installer:
         capability = (digest([self.fingerprint, method]), method, digest(additions))
         self.capabilities.add(capability)
         try:
+            self.stage = 'post-request' if method == 'POST' else 'get-request'
             return await transport.request(method, additions, capability[0])
         finally:
             self.capabilities.discard(capability)
@@ -589,6 +602,7 @@ class Installer:
             return {'status': 'blocked', 'reason': 'x-rule-setup-already-used'}
         interrupted = False
         try:
+            self.stage = 'initialization'
             self.initialize()
             if not self.missing:
                 self.verified = self.existing
@@ -600,6 +614,7 @@ class Installer:
                 payload = await self._request(transport, 'POST', self.missing)
                 # Preserve exact known IDs from a structurally valid partial response
                 # before classifying it as ambiguous; never retain errors/raw bodies.
+                self.stage = 'post-persistence'
                 if type(payload) is dict and type(payload.get('data')) is list:
                     self.observed = inventory(payload['data'])
                     with self.db:
@@ -611,6 +626,7 @@ class Installer:
                 with self.db:
                     self.db.execute("UPDATE x_stream_rule_setup SET state='post-verified'")
                 self.verified = verified_inventory(await self._request(transport, 'GET', None), expected)
+                self.stage = 'final-review'
                 with self.db:
                     self.db.execute('BEGIN IMMEDIATE')
                     self._review(ours=True)
@@ -623,8 +639,9 @@ class Installer:
         except RuleSetupBlocked as exc:
             self.observed = getattr(exc, 'observed_inventory', None) or self.observed
             self.result = {'status': 'blocked', 'reason': str(exc)}
-        except Exception:
-            self.result = {'status': 'blocked', 'reason': 'x-rule-setup-internal-failure'}
+        except Exception as exc:
+            self.result = {'status': 'blocked', 'reason': 'x-rule-setup-internal-failure',
+                           'stage': self.stage, 'error_class': _error_class(exc)}
         finally:
             if self.claimed:
                 try:
@@ -637,8 +654,9 @@ class Installer:
                     self.result.update(cost_status='unknown', reserved_micros=None,
                         cost_reconciled=False, observed_post_inventory=self.observed, inventory=self.verified,
                         manifest_sha256=self.frozen['manifest_sha256'], owner_released=self.success or not self.attempted)
-                except Exception:
-                    self.result = {'status': 'blocked', 'reason': 'x-rule-setup-persistence-failed'}
+                except Exception as exc:
+                    self.result = {'status': 'blocked', 'reason': 'x-rule-setup-persistence-failed',
+                                   'stage': 'finalization', 'error_class': _error_class(exc)}
         if interrupted:
             raise asyncio.CancelledError
         return dict(self.result)

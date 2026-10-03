@@ -559,6 +559,20 @@ class TransportTests(unittest.IsolatedAsyncioTestCase):
         self.assertNotIn('synthetic-private', repr(failure))
         self.assert_closed()
 
+    async def test_hanging_cancellable_close_has_finite_deadline_and_conflict(self):
+        self.session.close_wait = asyncio.Event()
+        started = asyncio.get_running_loop().time()
+        with patch.object(transport, 'CLOSE_SECONDS', 0.03):
+            with self.assertRaises(x_stream.TransportFailure) as raised:
+                async with self.client.stream_factory(transport.STREAM_URL, dict(x_stream.STREAM_PARAMS)):
+                    pass
+        self.assertTrue(raised.exception.connection_conflict)
+        self.assertTrue(self.session.response.closed)
+        self.assertFalse(self.session.closed)
+        self.assertLess(asyncio.get_running_loop().time() - started, 1)
+        self.assertEqual(len(self.session.calls), 1)
+        self.assertNotIn(TOKEN, str(raised.exception))
+
     async def test_response_close_failure_still_closes_session_and_blocks_replacement(self):
         self.session.response.close = Mock(side_effect=RuntimeError('private response diagnostic'))
         with self.assertRaises(x_stream.TransportFailure) as raised:

@@ -299,7 +299,7 @@ class Probe:
         if not location or not location[2]:
             _block('durable-ledger-required')
         self.db.execute('PRAGMA synchronous=FULL')
-        self.db.execute('PRAGMA busy_timeout=100')
+        self.db.execute('PRAGMA busy_timeout=5000')
         if self.db.execute('PRAGMA synchronous').fetchone()[0] < 2:
             _block('durability-required')
         if self.storage_preflight is None and not Path(location[2]).resolve().is_relative_to('/data'):
@@ -552,6 +552,8 @@ class Probe:
             self.reason = self.reason or 'metadata-bound'
 
     async def _settle_read(self):
+        # The pinned aiohttp reader cooperates with cancellation; arbitrary
+        # noncooperative injected readers are outside this shutdown guarantee.
         task, self.pending_read = self.pending_read, None
         if task is None:
             return None
@@ -656,6 +658,7 @@ class Probe:
                 self.reason = self.reason or 'transport-error'
 
     async def _finish_connection(self):
+        # Pinned cancellable reads plus transport's finite5s owned cleanup.
         task = self.connection_task
         if task is None:
             return

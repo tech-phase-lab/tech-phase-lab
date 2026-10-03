@@ -24,6 +24,7 @@ import x_stream_rules
 ENABLED = 'X_STREAM_TRIAL_ENABLED'
 PLAN = 'X_STREAM_TRIAL_PLAN_JSON'
 LOCAL = 'X_STREAM_TRIAL_LOCAL_DIAGNOSTICS'
+SHUTDOWN_MARGIN_SECONDS = 30
 REQUIRED = frozenset('version trial_id approval_id approved_at prepared_at session_expires_at probe_end_at '
     'original_metadata_request_id original_metadata_result_sha256 original_account_anchor_sha256 '
     'expected_app_id manifest_sha256 account_evidence_ref storage_evidence_ref reconciliation_evidence_ref '
@@ -180,6 +181,12 @@ def _ledger_diagnostic(db):
                 column = 'status' if name == 'x_stream_trial_run' else 'state'
                 state = db.execute('SELECT ' + column + ' FROM ' + name + ' LIMIT 1').fetchone()[0]
                 item['state'] = state if state in states else 'unrecognized'
+                fields = {'x_stream_trial_readiness': (('requests_admitted', 5),),
+                          'x_stream_rule_setup': (('post_claimed', 1), ('get_claimed', 1)),
+                          'x_stream_probe_run': (('attempts', 1), ('close_confirmed', 1))}.get(name, ())
+                for field, maximum in fields:
+                    value = db.execute('SELECT ' + field + ' FROM ' + name + ' LIMIT 1').fetchone()[0]
+                    item[field] = value if type(value) is int and 0 <= value <= maximum else 'unrecognized'
             result[name] = item
     except Exception:
         result['available'] = False
@@ -449,7 +456,9 @@ class Controller:
 
     def _probe_config(self):
         p = self.frozen
-        end = min(_utc(p['probe_end_at']), _utc(self.clock()) + timedelta(seconds=p['max_probe_seconds']))
+        # Finite SQLite waits and owned transport cleanup consume shutdown headroom.
+        end = min(_utc(p['probe_end_at']) - timedelta(seconds=SHUTDOWN_MARGIN_SECONDS),
+                  _utc(self.clock()) + timedelta(seconds=p['max_probe_seconds']))
         self._backup(end)
         return dict(version=1, probe_id=p['trial_id'], approval_id=p['approval_id'], approved_at=p['approved_at'],
             verified_at=self.fresh['verified_at'], end_at=x_stream.stamp(end), manifest_sha256=p['manifest_sha256'],
@@ -508,7 +517,8 @@ class Controller:
             self.rule_result = await x_stream_rules.Installer(db=self.db, enabled=True, config=self._rules_config(),
                 token_provider=self.token_provider, reviewed_admission=self._review_rules, storage_preflight=self._storage,
                 transport_factory=self.rules_factory, stop_event=self.stop_event, clock=self.clock).run()
-            self._log('rules', {k: self.rule_result[k] for k in ('status', 'reason')})
+            self._log('rules', {k: self.rule_result[k] for k in ('status', 'reason', 'stage', 'error_class')
+                                if k in self.rule_result})
             if self.rule_result.get('status') != 'verified' or self.rule_result.get('owner_released') is not True:
                 _block('rule-setup-blocked')
             self.stage = 'probe-setup'
@@ -537,8 +547,10 @@ class Controller:
                         # A failed readiness retains its exclusion row and unknown
                         # request claims. No automatic recovery/replay after restart.
                         self.db.execute("UPDATE x_stream_trial_readiness SET state='blocked' WHERE state='running'")
-                except Exception:
-                    result = {'status': 'blocked', 'reason': 'x-trial-persistence-failed'}
+                except Exception as exc:
+                    result = {'status': 'blocked', 'reason': 'x-trial-persistence-failed',
+                              'stage': 'finalization', 'error_class': _error_class(exc),
+                              'ledger': _ledger_diagnostic(self.db)}
             self._log('result', result)
         return result
 
