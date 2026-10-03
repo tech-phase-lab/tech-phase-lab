@@ -1,4 +1,5 @@
 "use client";
+import { waitForIdentity } from "@/lib/research/member-recovery";
 import { ClerkProvider, useAuth } from "@clerk/nextjs";
 import { jaJP, enUS } from "@clerk/localizations";
 import { createContext, useCallback, useContext, useRef, type ReactNode } from "react";
@@ -11,7 +12,7 @@ function IdentitySession({ children }: { children: ReactNode }) {
   const refresh = useCallback(async (force = false) => {
     if (!isLoaded) throw Error("identity-loading");
     if (pending.current) return pending.current;
-    const task = getToken({ skipCache: force }).then(() => {});
+    const task = waitForIdentity(getToken({ skipCache: force }), AbortSignal.timeout(10_000)).then(() => {});
     pending.current = task;
     try { await task; } finally { if (pending.current === task) pending.current = null; }
   }, [isLoaded, getToken]);
