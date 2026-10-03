@@ -3,7 +3,6 @@
 Never returns rejected copy, evidence excerpts, source bodies or provider data.
 Replaying validation explains a gate; it does not establish factual correctness.
 """
-from collections import Counter
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -32,47 +31,9 @@ def instant(value):
         return None
 
 
-def quantities(values):
-    counts = Counter(values)
-    ordered = sorted(counts, key=lambda item: (item[1], item[0]))
-    return [{'value': str(value), 'dimension': unit, 'count': counts[(value, unit)]}
-            for value, unit in ordered[:20]]
-
-
-def number_checks(item):
-    """Expose only parsed quantities/relationships, never surrounding prose."""
-    if not all(isinstance(item.get(key), str) for key in ('ja', 'en', 'evidenceQuote')):
-        return []
-    result = []
-    for language in ('ja', 'en'):
-        text, evidence = item[language], item['evidenceQuote']
-        unsupported = set(facts.numeric_values(text)) - set(facts.numeric_values(evidence))
-        if unsupported:
-            result.append({'check': language + '-evidence-quantity',
-                           'unsupported': quantities(unsupported), 'truncated': len(unsupported) > 20})
-        quarters = sorted(set(facts.quarter_values(text)) - set(facts.quarter_values(evidence)))
-        if quarters:
-            result.append({'check': language + '-evidence-quarter', 'unsupported': quarters})
-        try:
-            source_dates = facts.dates(evidence)
-            unsupported_dates = [list(value) for value in facts.dates(text)
-                                 if not any(value[1:] == source[1:] and (value[0] is None or value[0] == source[0])
-                                            for source in source_dates)]
-            if unsupported_dates:
-                result.append({'check': language + '-evidence-date',
-                               'unsupported': unsupported_dates[:20], 'truncated': len(unsupported_dates) > 20})
-        except ValueError:
-            result.append({'check': language + '-invalid-calendar-date'})
-    ja, en = Counter(facts.numeric_values(item['ja'])), Counter(facts.numeric_values(item['en']))
-    if ja != en:
-        result.append({'check': 'bilingual-quantity-count', 'jaOnly': quantities((ja - en).elements()),
-                       'enOnly': quantities((en - ja).elements()), 'truncated': len(ja - en) > 20 or len(en - ja) > 20})
-    for language, other in [('ja', 'en'), ('en', 'ja')]:
-        try:
-            facts.validate_numbers(item[language], item[other])
-        except ValueError:
-            result.append({'check': language + '-other-language-numbers'})
-    return result
+# The provider retry and editor diagnosis use the same exact checks.
+quantities = facts.quantities
+number_checks = facts.number_checks
 
 
 def validation_report(payload, row):

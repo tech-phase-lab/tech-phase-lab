@@ -13,6 +13,50 @@ import monitor
 import news_policy
 
 PREFIX = 'primary-ir-'
+VERTIV_DATELINE_LIMIT = 12000
+
+
+def vertiv_retained_publication_date(ticker, url, text):
+    """Recover only Vertiv's issuer dateline from retained IR release evidence."""
+    if ticker != 'VRT' or not isinstance(text, str):
+        return None
+    try:
+        parsed = urlsplit(url)
+    except (TypeError, ValueError):
+        return None
+    if (parsed.scheme != 'https' or parsed.netloc != 'investors.vertiv.com'
+            or parsed.query or parsed.fragment):
+        return None
+    path = re.fullmatch(r'/news/news-details/(\d{4})/Vertiv-[A-Za-z0-9-]+/default\.aspx', parsed.path)
+    if not path:
+        return None
+    # This is the verified release's PRNewswire dateline, not a generic date
+    # search. Refuse other/partial datelines rather than selecting one date out
+    # of a mixed article or related-release excerpt.
+    excerpt = text[:VERTIV_DATELINE_LIMIT]
+    markers = re.findall(r'/\s*PRNewswire\s*/', excerpt, re.I)
+    datelines = list(re.finditer(
+        r'^[ \t]*COLUMBUS\s*,\s*Ohio\s*,\s*'
+        r'(?P<month>[A-Za-z]+)\.?\s+(?P<day>\d{1,2})\s*,\s*(?P<year>\d{4})'
+        r'\s+/\s*PRNewswire\s*/\s*(?:--|\u2013|\u2014)\s*'
+        r'Vertiv\s+Holdings\s+Co\.?\s*\(\s*NYSE\s*:\s*VRT\s*\)(?=[\s,.])',
+        excerpt, re.I | re.M,
+    ))
+    if not datelines or len(datelines) != len(markers):
+        return None
+    months = {name: number for number, name in enumerate(
+        'january february march april may june july august september october november december'.split(), 1
+    )}
+    dates = set()
+    for dateline in datelines:
+        if dateline['year'] != path[1] or not excerpt[dateline.end():].strip():
+            return None
+        try:
+            dates.add(datetime(int(dateline['year']), months[dateline['month'].lower()],
+                               int(dateline['day'])).date().isoformat())
+        except (KeyError, ValueError):
+            return None
+    return dates.pop() if len(dates) == 1 else None
 
 
 def publishers():
@@ -62,8 +106,18 @@ def sync(db, reference):
         try:
             if monitor.article_url(row['url'], row['ticker']) != row['url']:
                 continue
-            published = (datetime.fromisoformat(row['published_on']).replace(tzinfo=timezone.utc)
-                         if row['published_on'] else None)
+            published_on = row['published_on']
+            if not published_on:
+                recovered = vertiv_retained_publication_date(row['ticker'], row['url'], row['extracted_text'])
+                if recovered:
+                    updated = db.execute('''UPDATE sources SET published_on=?
+                      WHERE url=? AND sha256=? AND (published_on IS NULL OR published_on='')''',
+                                         (recovered, row['url'], row['sha256']))
+                    if updated.rowcount != 1:
+                        continue
+                    published_on = recovered
+            published = (datetime.fromisoformat(published_on).replace(tzinfo=timezone.utc)
+                         if published_on else None)
             observed = datetime.fromisoformat(row['detected_at'].replace('Z', '+00:00'))
             if ((published and not reference - timedelta(days=7) <= published <= reference)
                     or not reference - timedelta(days=7) <= observed <= reference):
@@ -74,5 +128,5 @@ def sync(db, reference):
           source_id,url,sha,previous_sha,title,tickers_json,matches_json,event_kind,
           published_on,observed_at,excerpt,diff,truncated)
           VALUES(?,?,?,'',?,?, '{}','new',?,?,'','',0)''',
-                   (PREFIX + row['ticker'], row['url'], revision(title, row['sha256'], row['published_on']),
-                    title, json.dumps([row['ticker']]), row['published_on'], row['detected_at']))
+                   (PREFIX + row['ticker'], row['url'], revision(title, row['sha256'], published_on),
+                    title, json.dumps([row['ticker']]), published_on, row['detected_at']))

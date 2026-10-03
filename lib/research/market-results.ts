@@ -1,9 +1,11 @@
 import type { ResearchEvent } from './data';
 import { deduplicateResearchEvents } from './deduplicate-events.ts';
 
+export type ResultComparisons = { forecast?: string; previous?: string; previousRevisedFrom?: string };
+export type ResultFact = { key:string; ja:string; en:string; value:string; comparisons?:ResultComparisons };
 export type ResultBrief = {
   id:string; researchId:string; kind:'earnings'|'economic'; ticker:string; period:string;
-  titleJa:string; titleEn:string; facts:{key:string;ja:string;en:string;value:string}[];
+  titleJa:string; titleEn:string; facts:ResultFact[];
   url:string; publisher:string; publishedAt:string; observedAt:string; publicAt:string;
   processingMs:number; sourceToDetectionMs:number|null; detectionToPublicMs:number|null;
 };
@@ -27,7 +29,21 @@ export function parseResultBriefs(value: unknown): ResultBrief[] {
       for(const k of ['key','ja','en','value'])if(typeof o[k]!=='string'||!(o[k] as string).trim()||(o[k] as string).length>80)throw Error('Invalid fact');
       if(!/^(?:guidance-)?(?:revenue|eps|gross-margin|operating-cash-flow|actual|nonfarm-payrolls|unemployment-rate|hourly-earnings-mom|hourly-earnings-yoy)$/.test(o.key as string)
         ||!/^\$?[-+]?\d+(?:\.\d+)?[BMK%]?(?: ± \$?\d+(?:\.\d+)?[BMK%]?)?$/i.test(o.value as string))throw Error('Invalid fact value');
-      return {key:o.key as string,ja:o.ja as string,en:o.en as string,value:o.value as string};
+      const comparisons: ResultComparisons = {};
+      // Optional detail is isolated from the already validated actual. It is
+      // never allowed to turn an earnings estimate into an economic result.
+      if (kind === 'economic' && o.comparisons && typeof o.comparisons === 'object' && !Array.isArray(o.comparisons)) {
+        const raw = o.comparisons as Record<string, unknown>;
+        const unit = /[BMK%]$/i.exec(o.value as string)?.[0].toUpperCase() ?? '';
+        for (const key of ['forecast', 'previous', 'previousRevisedFrom'] as const) {
+          const value = raw[key];
+          if (typeof value === 'string' && value.length <= 80 && /^[-+]?\d+(?:\.\d+)?[BMK%]?$/i.test(value)
+            && (/[BMK%]$/i.exec(value)?.[0].toUpperCase() ?? '') === unit) comparisons[key] = value;
+        }
+        if (!comparisons.previous) delete comparisons.previousRevisedFrom;
+      }
+      return {key:o.key as string,ja:o.ja as string,en:o.en as string,value:o.value as string,
+        ...(Object.keys(comparisons).length ? {comparisons} : {})};
     });
     const duration=(name:string,nullable=false)=>{const v=r[name];if(nullable&&v===null)return null;if(typeof v!=='number'||!Number.isInteger(v)||v<0||v>7*86400000)throw Error('Invalid duration');return v;};
     return {id,researchId,kind:kind as ResultBrief['kind'],ticker,period:field('period',40),titleJa:field('titleJa'),titleEn:field('titleEn'),facts,url:url.href,publisher:field('publisher',80),publishedAt:date('publishedAt'),observedAt:date('observedAt'),publicAt:date('publicAt'),processingMs:duration('processingMs')!,sourceToDetectionMs:duration('sourceToDetectionMs',true),detectionToPublicMs:duration('detectionToPublicMs',true)};

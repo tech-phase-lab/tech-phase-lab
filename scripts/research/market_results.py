@@ -31,6 +31,55 @@ def schema(db):
       processing_ms INTEGER NOT NULL)''')
 
 
+def economic_comparisons(segment, actual_end, actual_unit):
+    """Admit only a complete contiguous list of explicit comparison fields.
+
+    Unknown prose, period qualifiers, malformed values or ambiguous grammar
+    omit optional detail. They must never prevent publication of the actual.
+    """
+    tail = segment[actual_end:]
+    unit = lambda value: {'billion': 'B', 'million': 'M', 'thousand': 'K'}.get(value.lower(), value.upper())
+    expected_unit = unit(actual_unit or '')
+    amount = VALUE.replace(r'\s*', r'[ \t]*')
+    field = re.compile(r'(\()?[ \t]*(est\.?|estimate|forecast|consensus|expected|予想|prev\.?|previous|prior|前回)'
+                       r'[ \t]*[:=]?[ \t]*' + amount
+                       + r'(?:[ \t]*\(revised from[ \t]*' + amount + r'[ \t]*\))?'
+                       r'[ \t]*(\))?', re.I)
+
+    def value(number, suffix):
+        if (not re.fullmatch(r'[-+−]?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?', number)
+                or unit(suffix or '') != expected_unit):
+            return None
+        return number.replace(',', '').replace('−', '-') + unit(suffix or '')
+
+    pairs = {'forecast': set(), 'previous': set()}
+    while tail.strip(' \t\r\n,;|'):
+        # Consume separators only between complete fields. Never search past
+        # an unknown clause such as "October outlook" for a later number.
+        tail = tail.lstrip(' \t\r\n,;|')
+        match = field.match(tail)
+        if not match or bool(match[1]) != bool(match[7]):
+            return {}
+        key = 'previous' if re.fullmatch(r'prev\.?|previous|prior|前回', match[2], re.I) else 'forecast'
+        actual = value(match[3], match[4])
+        revised_from = value(match[5], match[6]) if match[5] else None
+        if actual is None or (match[5] and (key != 'previous' or revised_from is None)):
+            return {}
+        pairs[key].add((actual, revised_from))
+        tail = tail[match.end():]
+        if tail and not re.match(r'[,;|\r\n]', tail):
+            return {}  # Includes trailing period/basis qualifiers and ranges.
+
+    out = {}
+    for key, values in pairs.items():
+        if len(values) == 1:
+            actual, revised_from = next(iter(values))
+            out[key] = actual
+            if revised_from is not None:
+                out['previousRevisedFrom'] = revised_from
+    return out
+
+
 
 def economic_metric(text):
     label = MACRO.search(text)
@@ -81,8 +130,10 @@ def economic_metric(text):
         suffix = 'MoM' if monthly else 'YoY'
         period += ' ('+suffix+')'
         ja, en = '平均時給（'+('前月比' if monthly else '前年比')+'）', 'Average hourly earnings ('+suffix+')'
+    comparisons = economic_comparisons(segment, actual.end(), actual[2])
     return {'kind': 'economic', 'ticker': 'ECON', 'period': period,
-            'facts': [{'key':'actual', 'ja':'結果', 'en':'Actual', 'value':number}],
+            'facts': [{'key':'actual', 'ja':'結果', 'en':'Actual', 'value':number,
+                       **({'comparisons': comparisons} if comparisons else {})}],
             'titleJa': ja + '：結果 ' + number,
             'titleEn': en + ': actual ' + number}
 
@@ -114,7 +165,7 @@ def economic_projection(text):
         key = {'Nonfarm payrolls':'nonfarm-payrolls', 'Unemployment rate':'unemployment-rate',
                'Average hourly earnings (MoM)':'hourly-earnings-mom', 'Average hourly earnings (YoY)':'hourly-earnings-yoy'}.get(en)
         if key:
-            fact = {'key':key, 'ja':ja, 'en':en, 'value':item['facts'][0]['value']}
+            fact = {**item['facts'][0], 'key':key, 'ja':ja, 'en':en}
             if fact not in facts:
                 facts.append(fact)
     if not facts:

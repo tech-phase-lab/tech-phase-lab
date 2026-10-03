@@ -1,5 +1,6 @@
 import type { Language } from "./data";
 import type { MarketUpdate } from "./general-news";
+import { additionalNewsDetail } from "./news-detail.ts";
 
 /** Compact only the known index template; do not infer roles from arbitrary prose. */
 export function marketNewsDisplay(item: MarketUpdate, lang: Language) {
@@ -16,5 +17,5 @@ export function marketNewsDisplay(item: MarketUpdate, lang: Language) {
 }
 
 export function marketNewsBody(item: MarketUpdate, lang: Language) {
-  return lang === "ja" ? item.titleJa.replace(/（(\$[A-Z]{1,6})）/g, " $1").replace(/。$/, "") : item.titleEn;
+  return additionalNewsDetail(marketNewsDisplay(item, lang).title, lang === "ja" ? item.titleJa : item.titleEn);
 }

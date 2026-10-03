@@ -282,10 +282,50 @@ class OfficialResearchTests(unittest.TestCase):
         self.assertEqual(self.run_note(wrong),'retry')
         def corrected(payload,key):
             corrections=json.loads(payload['input'])['correctionsRequired']
+            self.assertEqual(corrections[0]['field'],'facts[0]')
             self.assertEqual(corrections[0]['issue'],'unsupported-number')
             self.assertIn('99%',corrections[0]['rejectedJa'])
+            self.assertIn({'check':'ja-evidence-quantity','unsupported':[{'value':'99','dimension':'percent','count':1}],
+                           'truncated':False},corrections[0]['checks'])
+            self.assertEqual(corrections[0]['evidenceConstraints']['quantities'],[])
             return response()
         self.assertEqual(research.run_once(self.path,corrected,ENV,NOW.timestamp()+61),'done')
+
+    def test_retry_distinguishes_rounded_amounts_wrong_years_and_evidence_selection(self):
+        source='Revenue was $3,274 million in the second quarter of 2026. The release date was October 1, 2026.'
+        body=source+' '+('Issuer background. '*90)
+        with research.connect(self.path) as db:
+            db.execute('UPDATE source_revisions SET extracted_text=?,extracted_chars=?',(body,len(body)))
+        def wrong(payload,key):
+            note=json.loads(json.dumps(NOTE))
+            note['facts'][0]={'ja':'売上高は$3.27 billion。','en':'Revenue was $3.27 billion.','evidenceId':'0'}
+            note['facts'][1]={'ja':'2024年10月1日の発表。','en':'The announcement on October 1, 2024.','evidenceId':'0'}
+            return {'status':'completed','output_text':json.dumps(note)}
+        self.assertEqual(self.run_note(wrong),'retry')
+        with research.connect(self.path) as db:
+            row=research.candidates(db,NOW)[0]
+            corrections=research.retry_feedback(db,row,research.evidence_excerpts(row['body']))
+        indexed={item['field']:item for item in corrections}
+        amount=indexed['facts[0]']
+        self.assertEqual(amount['evidenceId'],'0')
+        self.assertIn({'value':'3274000000','dimension':'number','count':1},amount['evidenceConstraints']['quantities'])
+        self.assertNotIn({'value':'3270000000.00','dimension':'number','count':1},amount['evidenceConstraints']['quantities'])
+        self.assertIn([2026,10,1],indexed['facts[1]']['evidenceConstraints']['dates'])
+        self.assertTrue(any(item['check']=='ja-evidence-date' and [2024,10,1] in item['unsupported']
+                            for item in indexed['facts[1]']['checks']))
+        self.assertEqual(self.feed(),[])
+
+    def test_retry_does_not_treat_obsolete_quote_as_current_evidence(self):
+        self.assertEqual(self.run_note(lambda *_:{'status':'completed','output_text':json.dumps({
+            **NOTE,'summary':copy('99%増加。','Increased 99%.','An invented source passage with a 99% increase.')})}),'retry')
+        with research.connect(self.path) as db:
+            row=research.candidates(db,NOW)[0]
+            feedback=research.retry_feedback(db,row,research.evidence_excerpts(row['body']))
+        summary=next(item for item in feedback if item['field']=='summary')
+        self.assertEqual(summary['issue'],'unsupported-quote')
+        self.assertNotIn('evidenceConstraints',summary)
+        self.assertNotIn('evidenceId',summary)
+        self.assertEqual(self.feed(),[])
 
     def test_wrong_adjacent_evidence_id_can_rebind_but_changed_number_cannot(self):
         first='The device supports 100 billion parameters. '+('Background details. '*20)

@@ -13,6 +13,85 @@ import x_api
 TEXT = '$MU Q4 2026 earnings highlights\nRevenue: $54.23B (Est $51.07B)\nAdjusted EPS: $33.42 (Est $31.61)\nAdjusted gross margin: 87.0%\nQ1 guidance: Revenue: $61.5B ± $1.5B\nAdjusted EPS: $38.15 ± $1.00'
 
 class ResultTests(unittest.TestCase):
+    def test_details_retain_only_explicit_same_metric_forecasts(self):
+        text='SEPTEMBER U.S. JOBS REPORT\nNONFARM PAYROLLS +29K, (Est. +90K)\nUNEMPLOYMENT RATE 4.2%, (Est. 4.1%)\nAVG. HOURLY EARNINGS YoY 3.0%, (Est. 3.1%)'
+        result=results.projection(text,['ECON'])
+        self.assertEqual([f['comparisons'] for f in result['facts']],
+                         [{'forecast':'+90K'},{'forecast':'4.1%'},{'forecast':'3.1%'}])
+        self.assertEqual([f['value'] for f in result['facts']],['+29K','4.2%','3.0%'])
+        self.assertNotIn('90K',result['titleJa'])
+        self.assertNotIn('previous',json.dumps(result))
+        self.assertNotIn('MoM',json.dumps(result))
+
+    def test_optional_detail_never_substitutes_a_forecast_or_crosses_metric_boundaries(self):
+        result=results.projection('NFP +29K; Est +90K\nUnemployment rate 4.2%\nAverage hourly earnings YoY 3.0%; Est 3.1%',['ECON'])
+        self.assertNotIn('comparisons',result['facts'][1])
+        self.assertEqual(result['facts'][2]['comparisons'],{'forecast':'3.1%'})
+        self.assertIsNone(results.projection('Forecast NFP +90K',['ECON']))
+        for suffix in ['Est +90,00K', 'Est +90', 'Est 4.1%', 'Est +90K; Forecast +85K',
+                       'Est +80K to +90K', 'Est +80K–90K', 'Next month forecast +90K',
+                       '\nCompany revenue outlook; Est +90K']:
+            fact=results.projection('NFP +29K; '+suffix,['ECON'])['facts'][0]
+            self.assertEqual(fact['value'],'+29K')
+            self.assertNotIn('comparisons',fact,suffix)
+
+    def test_explicit_prior_and_revision_pair_preserves_roles_signs_and_units(self):
+        fact=results.projection('NFP -29K; Est +90K; Previous +54K (revised from +60K)',['ECON'])['facts'][0]
+        self.assertEqual(fact['comparisons'],{'forecast':'+90K','previous':'+54K','previousRevisedFrom':'+60K'})
+        for tail in ['Previous +54K revised to +40K', 'Previous +54K (revised from 4.1%)',
+                     'Previous revised from +60K to +54K', 'Previous +54K (revised from +60K to +50K)']:
+            fact=results.projection('NFP -29K; '+tail,['ECON'])['facts'][0]
+            self.assertEqual(fact['value'],'-29K')
+            self.assertNotIn('comparisons',fact,tail)
+
+    def test_unknown_clauses_or_period_qualifiers_omit_all_optional_comparisons(self):
+        for tail in ['October outlook; Forecast +90K', 'Company revenue outlook; Est +90K',
+                     'Forecast +90K (October)', 'Forecast +90K jobs next month',
+                     'Forecast +90K for next month', 'Forecast +90K; October outlook',
+                     'Forecast +90K; Previous +54K for August',
+                     'Forecast +90K\nOctober outlook; Previous +54K',
+                     'Forecast +90K; Previous +54K (revised from +60K) for August',
+                     '(Forecast +90K', 'Forecast +90K)', 'Forecast +90K (revised from +80K)']:
+            with self.subTest(tail=tail):
+                fact=results.projection('NFP +29K; '+tail,['ECON'])['facts'][0]
+                self.assertEqual(fact['value'],'+29K')
+                self.assertNotIn('comparisons',fact)
+
+    def test_duplicate_previous_fields_require_the_same_complete_revision_pair(self):
+        for tail in ['Previous +54K (revised from +60K); Previous +54K (revised from +70K)',
+                     'Previous +54K; Previous +54K (revised from +60K)',
+                     'Previous +54K (revised from +60K); Previous +55K (revised from +60K)']:
+            fact=results.projection('NFP +29K; Forecast +90K; '+tail,['ECON'])['facts'][0]
+            self.assertEqual(fact['value'],'+29K')
+            self.assertEqual(fact['comparisons'],{'forecast':'+90K'})
+        repeated='Previous +54K (revised from +60K); Previous +54K (revised from +60K)'
+        fact=results.projection('NFP +29K; '+repeated,['ECON'])['facts'][0]
+        self.assertEqual(fact['comparisons'],{'previous':'+54K','previousRevisedFrom':'+60K'})
+
+    def test_comparisons_are_reprojected_from_retained_revision_without_new_provider_calls(self):
+        reference=datetime.now(timezone.utc)
+        source=next(s for s in signals.SOURCES if s['id']=='x-wallstengine')
+        with tempfile.TemporaryDirectory() as temp:
+            path=Path(temp)/'db.sqlite'
+            with monitor.connect(path) as db:
+                signals.schema(db)
+                text='NFP +29K; Est +90K'
+                item={'url':'https://x.com/wallstengine/status/777','title':text,'text':text,
+                      'publishedAt':reference.isoformat(),'matches':{'ECON':['economic-result']},'truncated':False}
+                signals.save(db,source,[item],{},reference.isoformat(),'synthetic',1)
+            results.run_once(path,signals.SOURCES,reference)
+            with monitor.connect(path) as db:
+                payload=json.loads(db.execute('SELECT payload FROM market_result_publications').fetchone()[0])
+                payload['facts'][0].pop('comparisons')
+                db.execute('UPDATE market_result_publications SET payload=?',(json.dumps(payload),))
+                current=results.public_feed(db,reference)[0]
+                self.assertEqual(current['facts'][0]['comparisons'],{'forecast':'+90K'})
+                self.assertEqual(current['publishedAt'],reference.isoformat())
+                self.assertEqual(current['observedAt'],reference.isoformat())
+                self.assertIsNone(db.execute("SELECT name FROM sqlite_master WHERE name='signal_headline_translation_calls'").fetchone())
+                db.execute("UPDATE signal_documents SET sha='changed'")
+                self.assertEqual(results.public_feed(db,reference),[])
+
     def test_employment_results_keep_signs_units_and_wage_periods(self):
         cases = [
             ('US NONFARM PAYROLLS (SEP) ACTUAL: +90K; EST +85K', '+90K', '非農業部門雇用者数'),

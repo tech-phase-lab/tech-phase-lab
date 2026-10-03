@@ -1,9 +1,26 @@
 import type { OfficialUpdate } from "./general-news";
-import type { ResultBrief } from "./market-results";
+import type { ResultBrief, ResultFact } from "./market-results";
 import { normalizedEarningsPeriod } from "./deduplicate-events.ts";
 
 type ResultSource = { id: string; url: string; publisher: string; publishedAt: string; observedAt: string };
 type MergedResultUpdate = OfficialUpdate & { sources?: ResultSource[] };
+
+export function resultFactText(fact: ResultFact, lang: "ja" | "en"): string {
+  const ja = lang === "ja", comparisons = fact.comparisons;
+  const detail = [];
+  if (comparisons?.forecast) detail.push(`${ja ? "予想" : "Forecast"} ${comparisons.forecast}`);
+  if (comparisons?.previous) detail.push(`${ja ? "前回" : "Previous"} ${comparisons.previous}${comparisons.previousRevisedFrom
+    ? ja ? `［${comparisons.previousRevisedFrom}から改定］` : ` [revised from ${comparisons.previousRevisedFrom}]` : ""}`);
+  return `${fact[lang]}${ja ? "：" : ": "}${fact.value}${detail.length ? ja ? `（${detail.join("／")}）` : ` (${detail.join("; ")})` : ""}`;
+}
+
+export function resultNewsUpdate(result: ResultBrief): OfficialUpdate {
+  return {id:result.id,title:result.titleEn,translationJa:result.titleJa,
+    bodyJa:result.facts.map(f => resultFactText(f, "ja")).join("\n"),
+    bodyEn:result.facts.map(f => resultFactText(f, "en")).join("\n"),
+    url:result.url,publisher:result.publisher,tickers:[result.ticker],observedAt:result.observedAt,publishedAt:result.publishedAt,
+    ...(result.kind === "earnings" ? {researchId:result.researchId} : {})};
+}
 
 export function resultNewsReleaseKey(result: ResultBrief): string {
   const period = result.kind === "earnings" ? normalizedEarningsPeriod(result.period)
@@ -42,7 +59,7 @@ export function mergeResultNews(updates: OfficialUpdate[], briefs: ResultBrief[]
       const metricKey = JSON.stringify([fact.key, fact.ja, fact.en]);
       const valueSet = valuesByMetric.get(metricKey) ?? new Set<string>();
       valueSet.add(fact.value); valuesByMetric.set(metricKey, valueSet);
-      const key = JSON.stringify([metricKey, fact.value]);
+      const key = JSON.stringify([metricKey, fact.value, fact.comparisons ?? null]);
       const entry = facts.get(key) ?? { fact, publishers: new Set<string>() };
       entry.publishers.add(brief.publisher); facts.set(key, entry);
     }
@@ -54,7 +71,7 @@ export function mergeResultNews(updates: OfficialUpdate[], briefs: ResultBrief[]
       : {};
     const body = (lang: "ja" | "en") => [...facts.values()].map(({ fact, publishers }) => {
       const attribution = [...publishers].join(" / ");
-      return lang === "ja" ? `${fact.ja}：${fact.value}（${attribution}）` : `${fact.en}: ${fact.value} (${attribution})`;
+      return resultFactText(fact, lang) + (lang === "ja" ? `（${attribution}）` : ` (${attribution})`);
     }).join("\n");
     merged.push({ ...primary.update, ...titles, ...(conflict ? { shortTitleJa: undefined, shortTitleEn: undefined } : {}),
       bodyJa: body("ja"), bodyEn: body("en"), sources });

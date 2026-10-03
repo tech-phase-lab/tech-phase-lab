@@ -11,13 +11,13 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
   return [
     ...(feed?.officialUpdates ?? []).map(item => {
       const display = officialNewsDisplay(item, lang);
-      return { id: `official-${item.id}`, ticker: display.label, title: display.title, body: display.body,
+      return { id: `official-${item.id}`, ticker: display.label, title: display.title, body: display.body ? `${display.title}\n\n${display.body}` : display.title,
         shortTitle: ja ? officialPulseHeadlineJa(item.url) ?? item.shortTitleJa : item.shortTitleEn,
         url: item.url, ...officialTime(item) };
     }),
     ...(feed?.marketUpdates ?? []).map(item => {
       const display = marketNewsDisplay(item, lang);
-      return { id: `market-${item.id}`, ticker: display.label, title: display.title, body: marketNewsBody(item, lang), shortTitle: display.title !== (ja ? item.titleJa : item.titleEn) ? display.title : ja ? item.shortTitleJa : item.shortTitleEn, url: item.url, at: item.publishedAt, kind: "published" as const };
+      return { id: `market-${item.id}`, ticker: display.label, title: display.title, body: marketNewsBody(item, lang) ?? display.title, shortTitle: display.title !== (ja ? item.titleJa : item.titleEn) ? display.title : ja ? item.shortTitleJa : item.shortTitleEn, url: item.url, at: item.publishedAt, kind: "published" as const };
     }),
     ...(feed?.items ?? []).map(item => ({ id: item.id, ticker: item.tickers.join(" · "), title: ja ? item.summaryJa : item.title, body: ja ? item.summaryJa : item.summaryEn, shortTitle: ja ? item.shortTitleJa : item.shortTitleEn, url: item.url, at: item.publishedAt, kind: "published" as const })),
   ].map(item => ({ ...item, shortTitle: item.shortTitle ?? item.title })).sort((a, b) => Date.parse(b.at) - Date.parse(a.at)).slice(0, 5);

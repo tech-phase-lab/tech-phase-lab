@@ -6,7 +6,7 @@ const item={id:'1176',title:'Nonfarm payrolls +29K',translationJa:'非農業部�
 test('news categories never use publishers and story text follows the selected language',()=>{
   const ja=officialNewsDisplay(item,'ja'),en=officialNewsDisplay(item,'en');
   assert.equal(ja.label,'経済指標');assert.equal(en.label,'Economic indicators');
-  assert.equal(ja.body,item.bodyJa);assert.equal(en.body,item.bodyEn);
+  assert.equal(ja.body,"失業率：4.2%");assert.equal(en.body,"Unemployment rate: 4.2%");
   for(const publisher of ['Wall St Engine','FABY','NVIDIA IR']) assert.ok(!ja.label.includes(publisher));
   assert.equal(officialNewsDisplay({...item,tickers:['NVDA']},'ja').label,'企業ニュース · NVDA');
 });

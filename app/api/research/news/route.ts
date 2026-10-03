@@ -1,6 +1,6 @@
 import { availableNewsPayload, publicNewsPayload, type OfficialUpdate } from "@/lib/research/general-news";
 import { officialResultEvents } from "@/lib/research/official-result-events";
-import { mergeResultNews } from "@/lib/research/result-news";
+import { mergeResultNews, resultNewsUpdate } from "@/lib/research/result-news";
 import { muFlash, muLatest } from '@/lib/research/mu-latest';
 
 export const runtime = "nodejs";
@@ -46,7 +46,7 @@ export async function GET() {
         return item;
       }
     });
-    const resultUpdates = (payload.resultBriefs ?? []).map(r => ({id:r.id,title:r.titleEn,translationJa:r.titleJa,bodyJa:r.facts.map(f => `${f.ja}：${f.value}`).join("\n"),bodyEn:r.facts.map(f => `${f.en}: ${f.value}`).join("\n"),url:r.url,publisher:r.publisher,tickers:[r.ticker],observedAt:r.observedAt,publishedAt:r.publishedAt,researchId:r.kind === 'earnings' ? r.researchId : undefined}));
+    const resultUpdates = (payload.resultBriefs ?? []).map(resultNewsUpdate);
     const fallback = issuerEvents.some(e => e.ticker === "MU" && e.kind === "earnings") ? [] : [{...muFlash, bodyJa: muLatest.facts.map(f => f.text.ja).join("\n\n"), bodyEn: muLatest.facts.map(f => f.text.en).join("\n\n")}];
     const merged: OfficialUpdate[] = [...resultUpdates, ...fallback, ...(payload.officialUpdates ?? []).filter(item => item.url !== muFlash.url && !resultUpdates.some(r => r.url === item.url))];
     payload.officialUpdates = mergeResultNews(merged, payload.resultBriefs ?? [])

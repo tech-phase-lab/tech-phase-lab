@@ -19,7 +19,13 @@ UNIT_SCALE = { 'k': 1000, 'thousand': 1000, '千': 1000,
     'b': 1000000000, 'billion': 1000000000, '億': 100000000,
     't': 1000000000000, 'trillion': 1000000000000, '兆': 1000000000000 }
 MONTHS = {name: i for i, name in enumerate(('January','February','March','April','May','June','July','August','September','October','November','December'), 1)}
-MONTH_PATTERN = r'\b(' + '|'.join(MONTHS) + r')\b'
+MONTH_ABBREVIATIONS = {'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'Jun': 6,
+    'Jul': 7, 'Aug': 8, 'Sep': 9, 'Sept': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12}
+MONTH_VALUES = {**MONTHS, **MONTH_ABBREVIATIONS}
+# Short month tokens need an explicit following calendar number. This supports
+# issuer dates such as "Oct. 1" without treating a bare name like "Mar" as 3.
+MONTH_PATTERN = (r'\b(' + '|'.join(MONTHS) + r'|(?:'
+                 + '|'.join(MONTH_ABBREVIATIONS) + r')(?=\.?\s+\d))\b\.?')
 ORDINALS = {'first': 1, 'second': 2, 'third': 3, 'fourth': 4, '一': 1, '二': 2, '三': 3, '四': 4}
 SMALL_NUMBERS = {word: i for i, word in enumerate(
     ('zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'))}
@@ -37,7 +43,7 @@ def quarter_values(text):
 def dates(text):
     result = []
     for m in re.finditer(MONTH_PATTERN + r'\s+(\d{1,2})(?!\d)(?:,?\s+(\d{4}))?', text, re.I):
-        month = MONTHS[m[1].capitalize()]
+        month = MONTH_VALUES[m[1].capitalize()]
         result.append((int(m[3]) if m[3] else None, month, int(m[2])))
     for year, month, day in re.findall(r'(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日', text):
         result.append((int(year) if year else None, int(month), int(day)))
@@ -82,7 +88,7 @@ def numeric_values(text):
     values.extend((v, 'number') for v in signed_numbers(''.join(remaining)))
     # Spelled calendar terms have numeric Japanese equivalents; no arbitrary
     # number is admitted, and date/quarter relationships are checked separately.
-    values.extend((Decimal(MONTHS[m[1].capitalize()]), 'number') for m in re.finditer(MONTH_PATTERN, text, re.I))
+    values.extend((Decimal(MONTH_VALUES[m[1].capitalize()]), 'number') for m in re.finditer(MONTH_PATTERN, text, re.I))
     values.extend((Decimal(ORDINALS[x.lower()]), 'number') for x in re.findall(r'\b(first|second|third|fourth)[ -]+quarter\b', text, re.I))
     values.extend((Decimal(ORDINALS[x]), 'number') for x in re.findall(r'第([一二三四])四半期', text))
     # A spelled duration is still a factual number, not optional English prose.
@@ -132,6 +138,49 @@ def validate_numbers(text, evidence):
     for year, month, day in dates(text):
         if not any(month == sm and day == sd and (year is None or year == sy) for sy, sm, sd in source_dates):
             raise ValueError('unsupported-number')
+
+
+def quantities(values):
+    counts = Counter(values)
+    ordered = sorted(counts, key=lambda item: (item[1], item[0]))
+    return [{'value': str(value), 'dimension': unit, 'count': counts[(value, unit)]}
+            for value, unit in ordered[:20]]
+
+
+def number_checks(item):
+    """Explain numeric failures using quantities/relationships, never prose."""
+    if not all(isinstance(item.get(key), str) for key in ('ja', 'en', 'evidenceQuote')):
+        return []
+    result = []
+    for language in ('ja', 'en'):
+        text, evidence = item[language], item['evidenceQuote']
+        unsupported = set(numeric_values(text)) - set(numeric_values(evidence))
+        if unsupported:
+            result.append({'check': language + '-evidence-quantity',
+                           'unsupported': quantities(unsupported), 'truncated': len(unsupported) > 20})
+        quarters = sorted(set(quarter_values(text)) - set(quarter_values(evidence)))
+        if quarters:
+            result.append({'check': language + '-evidence-quarter', 'unsupported': quarters})
+        try:
+            source_dates = dates(evidence)
+            unsupported_dates = [list(value) for value in dates(text)
+                                 if not any(value[1:] == source[1:] and (value[0] is None or value[0] == source[0])
+                                            for source in source_dates)]
+            if unsupported_dates:
+                result.append({'check': language + '-evidence-date',
+                               'unsupported': unsupported_dates[:20], 'truncated': len(unsupported_dates) > 20})
+        except ValueError:
+            result.append({'check': language + '-invalid-calendar-date'})
+    ja, en = Counter(numeric_values(item['ja'])), Counter(numeric_values(item['en']))
+    if ja != en:
+        result.append({'check': 'bilingual-quantity-count', 'jaOnly': quantities((ja - en).elements()),
+                       'enOnly': quantities((en - ja).elements()), 'truncated': len(ja - en) > 20 or len(en - ja) > 20})
+    for language, other in [('ja', 'en'), ('en', 'ja')]:
+        try:
+            validate_numbers(item[language], item[other])
+        except ValueError:
+            result.append({'check': language + '-other-language-numbers'})
+    return result
 
 
 def planned_acquisition(text):

@@ -74,6 +74,57 @@ class FactualValidationTests(unittest.TestCase):
             with self.subTest(ja=ja), self.assertRaises(ValueError):
                 validation.validate_pair(ja,en)
 
+    def test_standard_abbreviated_months_keep_exact_calendar_values(self):
+        for abbreviation, month in (
+            ('Jan', 1), ('Feb', 2), ('Mar', 3), ('Apr', 4), ('May', 5),
+            ('Jun', 6), ('Jul', 7), ('Aug', 8), ('Sep', 9), ('Sept', 9),
+            ('Oct', 10), ('Nov', 11), ('Dec', 12),
+        ):
+            for suffix in ('', '.'):
+                with self.subTest(abbreviation=abbreviation, suffix=suffix):
+                    validation.validate_pair(f'2026年{month}月1日', f'{abbreviation}{suffix} 1, 2026')
+                    validation.validate_pair(f'{month}月1日', f'{abbreviation.lower()}{suffix} 1')
+        validation.validate_pair('10月1日から11月1日まで', 'From Oct. 1 to Nov. 1')
+        validation.validate_pair('9月29日に発売', 'Launched Sept. 29')
+
+    def test_abbreviated_months_do_not_allow_inferred_years_or_recombined_dates(self):
+        for text, evidence in (
+            ('2024年10月1日', 'Oct. 1, 2026'),
+            ('2026年10月1日', 'Oct. 1. A separate roadmap covers 2026.'),
+            ('10月2日', 'Oct. 1 and Nov. 2'),
+            ('2024年10月1日', 'Oct. 1, 2026 and Nov. 2, 2024'),
+            ('9月29日', 'Oct. 29'),
+        ):
+            with self.subTest(text=text, evidence=evidence), self.assertRaisesRegex(ValueError, 'unsupported-number'):
+                validation.validate_numbers(text, evidence)
+        for invalid in ('Feb. 30, 2026', 'Sept. 31', 'Apr. 0'):
+            with self.subTest(invalid=invalid), self.assertRaisesRegex(ValueError, 'unsupported-number'):
+                validation.dates(invalid)
+        for text in ('Mar leads the project.', 'An Octopus model.', 'MAR2026', 'Oct. release'):
+            with self.subTest(text=text):
+                self.assertEqual(validation.dates(text), [])
+                self.assertNotIn((validation.Decimal(3), 'number'), validation.numeric_values(text))
+                self.assertNotIn((validation.Decimal(10), 'number'), validation.numeric_values(text))
+
+    def test_reusable_numeric_checks_preserve_exact_diagnostic_format(self):
+        item = {'ja': '2024年10月1日', 'en': 'Oct. 1, 2026',
+                'evidenceQuote': 'The service launches Oct. 1, 2026.'}
+        self.assertEqual(validation.number_checks(item), [
+            {'check': 'ja-evidence-quantity', 'unsupported': [
+                {'value': '2024', 'dimension': 'number', 'count': 1}], 'truncated': False},
+            {'check': 'ja-evidence-date', 'unsupported': [[2024, 10, 1]], 'truncated': False},
+            {'check': 'bilingual-quantity-count',
+             'jaOnly': [{'value': '2024', 'dimension': 'number', 'count': 1}],
+             'enOnly': [{'value': '2026', 'dimension': 'number', 'count': 1}], 'truncated': False},
+            {'check': 'ja-other-language-numbers'},
+            {'check': 'en-other-language-numbers'},
+        ])
+        self.assertEqual(validation.number_checks({'ja': '', 'en': '', 'evidenceQuote': None}), [])
+        quantities = validation.quantities([(validation.Decimal(4), 'number')] * 2
+                                          + [(validation.Decimal(3), 'percent')])
+        self.assertEqual(quantities, [{'value': '4', 'dimension': 'number', 'count': 2},
+                                      {'value': '3', 'dimension': 'percent', 'count': 1}])
+
     def test_accounting_loss_sign_survives_unit_conversion(self):
         validation.validate_numbers('-12億ドル', 'Net loss was ($1.2B).')
         with self.assertRaises(ValueError):
