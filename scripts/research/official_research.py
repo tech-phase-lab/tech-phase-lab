@@ -515,6 +515,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         policy+='\n'+general_source_news.ASSESSMENT_POLICY
         if any('actorGrounding' in unit for unit in row['units']):
             policy+='\n'+general_source_news.ACTOR_POLICY
+        if any('brokerCommentary' in unit for unit in row['units']):
+            policy+='\n'+general_source_news.BROKER_POLICY
     if row.get('issuer_business'):
         policy+='\n'+issuer_business_news.FINANCIAL_POLICY
     with connect(path) as db:
@@ -529,6 +531,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         input_data=json.loads(payload['input'])
         input_data['evidenceContext']={u['id']:{'actor':u['actor'],'requiredTopics':sorted(general_source_news.concepts(u['quote'],'en'))} for u in row['units']}
         for unit in row['units']:
+            if 'brokerCommentary' in unit:
+                input_data['evidenceContext'][unit['id']]['brokerCommentary']=unit['brokerCommentary']
             if 'actorGrounding' in unit:
                 grounding=unit['actorGrounding']
                 # Reuse the bounded original evidence rather than duplicating
