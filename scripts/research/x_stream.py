@@ -30,14 +30,36 @@ class StreamBlocked(ValueError):
     pass
 
 
+TRANSPORT_FAILURE_CATEGORIES = frozenset((
+    'transport-error', 'preaccept-deadline', 'post-connect-header-deadline', 'connection-timeout',
+    'dns-error', 'tls-error', 'socket-connect-error', 'response-header-read-idle-timeout',
+    'body-read-idle-timeout', 'body-read-error', 'http-status',
+    'content-type-rejected', 'content-encoding-rejected', 'owned-close-unconfirmed',
+))
+
+
+def transport_diagnostic(category, http_status):
+    """Allowlist every diagnostic on both write and read; never format exceptions."""
+    return {
+        'transport_failure_category': (category if type(category) is str
+            and category in TRANSPORT_FAILURE_CATEGORIES else 'transport-error'),
+        'transport_http_status': (http_status if type(http_status) is int
+            and 100 <= http_status <= 599 else None),
+    }
+
+
 class TransportFailure(Exception):
-    """Transport exposes only a status and bounded retry hint, never a body."""
-    def __init__(self, status, *, retry_after=0, quota=False, connection_conflict=False):
+    """Fixed diagnostics only; status retains existing failure-policy semantics."""
+    def __init__(self, status, *, retry_after=0, quota=False, connection_conflict=False,
+                 category='transport-error', http_status=None):
         super().__init__('x-stream-transport-failure')
         self.status = status
         self.retry_after = retry_after
         self.quota = quota
         self.connection_conflict = connection_conflict
+        diagnostic = transport_diagnostic(category, http_status)
+        self.category = diagnostic['transport_failure_category']
+        self.http_status = diagnostic['transport_http_status']
 
 
 def stamp(value):

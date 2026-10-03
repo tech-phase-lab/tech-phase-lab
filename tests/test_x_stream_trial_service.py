@@ -269,12 +269,19 @@ class ControllerTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(self.db.execute('SELECT 1 FROM x_stream_supervisor_owner').fetchone())
 
     async def test_stream_denied_has_no_retry_or_search(self):
-        self.stream_error=x_stream.TransportFailure(403)
+        self.stream_error=x_stream.TransportFailure(403, category='http-status', http_status=403)
         result=await self.controller().run()
         self.assertEqual(result['reason'],'authentication-or-entitlement-denied')
         self.assertEqual(result['connection_attempts'],1); self.assertFalse(result['stream_entitlement_verified'])
         self.assertEqual(len(self.calls),8)
         self.assertFalse(any('x-stream-trial-connection ' in line for line in self.logs))
+        self.assertEqual(result['transport_failure_category'], 'http-status')
+        self.assertEqual(result['transport_http_status'], 403)
+        logged = json.loads(self.logs[-1].split(' ', 1)[1])
+        self.assertEqual(logged['transport_failure_category'], 'http-status')
+        local = trial._ledger_diagnostic(self.db)['x_stream_probe_run']
+        self.assertEqual(local['transport_http_status'], 403)
+        self.assertEqual(local['transport_failure_category'], 'http-status')
 
     async def test_read_backup_failure_closes_stream(self):
         self.chunks=[b'\n']

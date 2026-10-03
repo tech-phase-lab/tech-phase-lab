@@ -26,6 +26,8 @@ PLAN = 'X_STREAM_TRIAL_PLAN_JSON'
 LOCAL = 'X_STREAM_TRIAL_LOCAL_DIAGNOSTICS'
 CONTINUATION_ENABLED = 'X_STREAM_TRIAL_CONTINUATION_ENABLED'
 CONTINUATION = 'X_STREAM_TRIAL_CONTINUATION_JSON'
+SECOND_ENABLED = 'X_STREAM_SECOND_DIAGNOSTIC_ENABLED'
+SECOND = 'X_STREAM_SECOND_DIAGNOSTIC_JSON'
 SHUTDOWN_MARGIN_SECONDS = 30
 REQUIRED = frozenset('version trial_id approval_id approved_at prepared_at session_expires_at probe_end_at '
     'original_metadata_request_id original_metadata_result_sha256 original_account_anchor_sha256 '
@@ -74,7 +76,7 @@ def _int(value, low=0, high=10**12):
 
 def requested(env=None):
     env = os.environ if env is None else env
-    return any(str(env.get(key, '')).strip().lower() == 'true' for key in (ENABLED, LOCAL, CONTINUATION_ENABLED))
+    return any(str(env.get(key, '')).strip().lower() == 'true' for key in (ENABLED, LOCAL, CONTINUATION_ENABLED, SECOND_ENABLED))
 
 
 def validate_plan(plan, now):
@@ -169,7 +171,9 @@ def _ledger_diagnostic(db):
     result = {'available': True}
     names = ('x_stream_trial_run', 'x_stream_trial_readiness', 'x_stream_trial_readiness_requests',
              'x_stream_rule_setup', 'x_stream_probe_run', 'x_stream_supervisor_owner',
-             'x_stream_trial_continuation', 'x_stream_trial_continuation_readiness', 'x_stream_trial_continuation_requests')
+             'x_stream_trial_continuation', 'x_stream_trial_continuation_readiness', 'x_stream_trial_continuation_requests',
+             'x_stream_second_diagnostic', 'x_stream_second_readiness', 'x_stream_second_requests',
+             'x_stream_second_probe_run')
     states = frozenset(('running', 'reserved', 'blocked', 'observed', 'verified', 'ended',
                         'post-claimed', 'post-verified', 'get-claimed'))
     try:
@@ -181,17 +185,27 @@ def _ledger_diagnostic(db):
             item = {'present': True, 'rows': count}
             if count == 1 and name in ('x_stream_trial_run', 'x_stream_trial_readiness',
                                       'x_stream_rule_setup', 'x_stream_probe_run', 'x_stream_trial_continuation',
-                                      'x_stream_trial_continuation_readiness'):
+                                      'x_stream_trial_continuation_readiness', 'x_stream_second_diagnostic',
+                                      'x_stream_second_readiness', 'x_stream_second_probe_run'):
                 column = 'status' if name == 'x_stream_trial_run' else 'state'
                 state = db.execute('SELECT ' + column + ' FROM ' + name + ' LIMIT 1').fetchone()[0]
                 item['state'] = state if state in states else 'unrecognized'
                 fields = {'x_stream_trial_readiness': (('requests_admitted', 5),),
                           'x_stream_trial_continuation_readiness': (('requests_admitted', 5),),
                           'x_stream_rule_setup': (('post_claimed', 1), ('get_claimed', 1)),
-                          'x_stream_probe_run': (('attempts', 1), ('close_confirmed', 1))}.get(name, ())
+                          'x_stream_probe_run': (('attempts', 1), ('close_confirmed', 1)),
+                          'x_stream_second_readiness': (('requests_admitted', 5),),
+                          'x_stream_second_probe_run': (('attempts', 1), ('close_confirmed', 1))}.get(name, ())
                 for field, maximum in fields:
                     value = db.execute('SELECT ' + field + ' FROM ' + name + ' LIMIT 1').fetchone()[0]
                     item[field] = value if type(value) is int and 0 <= value <= maximum else 'unrecognized'
+            if name == 'x_stream_probe_run' and count == 1:
+                item.update(x_stream_probe.transport_diagnostic(db))
+                cursor = db.execute('SELECT * FROM x_stream_probe_run WHERE singleton=1')
+                row = cursor.fetchone()
+                item['row_sha256'] = digest(dict(zip((c[0] for c in cursor.description), row)))
+            if name == 'x_stream_second_probe_run' and count == 1:
+                item.update(x_stream_probe.transport_diagnostic(db, _second_diagnostic=True))
             result[name] = item
     except Exception:
         result['available'] = False
@@ -829,9 +843,10 @@ def run_once(db_path, stop_event, *, env=None, emit=None, backup_readiness=None)
         emit('x-stream-trial-local ' + _json(local_diagnostic(db_path)))
     initial = str(env.get(ENABLED, '')).strip().lower() == 'true'
     continuation_enabled = str(env.get(CONTINUATION_ENABLED, '')).strip().lower() == 'true'
-    if (not initial and not continuation_enabled) or stop_event.is_set():
+    second_enabled = str(env.get(SECOND_ENABLED, '')).strip().lower() == 'true'
+    if not any((initial, continuation_enabled, second_enabled)) or stop_event.is_set():
         return
-    if initial and continuation_enabled:
+    if sum((initial, continuation_enabled, second_enabled)) > 1:
         emit('x-stream-trial-result {"status":"blocked","reason":"x-trial-conflicting-modes"}')
         return
     db = None
@@ -840,8 +855,15 @@ def run_once(db_path, stop_event, *, env=None, emit=None, backup_readiness=None)
         if type(raw) is not str or not 1 <= len(raw.encode()) <= 16384:
             _block('plan-invalid')
         plan = x_preflight._json(raw)
-        continuation = None
-        if continuation_enabled:
+        continuation = diagnostic = None
+        if second_enabled:
+            import x_stream_second_diagnostic as second
+            diagnostic_raw = env.get(SECOND, '')
+            if type(diagnostic_raw) is not str or not 1 <= len(diagnostic_raw.encode()) <= 4096:
+                _block('second-plan-invalid')
+            diagnostic = x_preflight._json(diagnostic_raw)
+            second.validate(diagnostic, plan, datetime.now(timezone.utc))
+        elif continuation_enabled:
             continuation_raw = env.get(CONTINUATION, '')
             if type(continuation_raw) is not str or not 1 <= len(continuation_raw.encode()) <= 4096:
                 _block('continuation-approval-invalid')
@@ -851,8 +873,9 @@ def run_once(db_path, stop_event, *, env=None, emit=None, backup_readiness=None)
             validate_plan(plan, datetime.now(timezone.utc))
         import monitor
         db = monitor.connect(db_path)
-        cls = Continuation if continuation_enabled else Controller
-        extra = {'continuation': continuation} if continuation_enabled else {}
+        cls = second.SecondDiagnostic if second_enabled else Continuation if continuation_enabled else Controller
+        extra = ({'diagnostic': diagnostic} if second_enabled else
+                 {'continuation': continuation} if continuation_enabled else {})
         return asyncio.run(cls(db=db, enabled=True, plan=plan, stop_event=stop_event,
             token_provider=lambda: env.get('X_BEARER_TOKEN', ''), backup_readiness=backup_readiness, emit=emit, **extra).run())
     except Exception:

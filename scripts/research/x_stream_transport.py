@@ -32,10 +32,34 @@ STREAM_TYPES = JSON_TYPES | {'application/x-ndjson'}
 
 class AmbiguousSearchResponse(x_stream.TransportFailure):
     """A paid request may have delivered unmeterable data: freeze the ledger."""
-    def __init__(self, status=200):
-        super().__init__(status, quota=True)
+    def __init__(self, status=200, *, category='transport-error', http_status=None):
+        super().__init__(status, quota=True, category=category, http_status=http_status)
         self.args = ('x-search-ambiguous-billing',)
         self.ambiguous_billing = True
+
+
+def _failure_category(error, *, body=False, connection_established=False):
+    """Pinned aiohttp classes, never class names/messages from untrusted errors.
+
+    The outer deadline covers the entire GET, including DNS/TLS/connect.
+    Only connection_create_end proves local connection setup completed; even
+    then request write/response-header acceptance is unresolved. aiohttp's
+    connection timeout can include pool wait and TLS, not just TCP.
+    SocketTimeoutError before acceptance concerns headers; afterwards, the body.
+    """
+    if isinstance(error, aiohttp.ClientConnectorDNSError):
+        return 'dns-error'
+    if isinstance(error, aiohttp.ClientSSLError):
+        return 'tls-error'
+    if isinstance(error, aiohttp.ConnectionTimeoutError):
+        return 'connection-timeout'
+    if isinstance(error, aiohttp.ClientConnectorError):
+        return 'socket-connect-error'
+    if isinstance(error, aiohttp.SocketTimeoutError):
+        return 'body-read-idle-timeout' if body else 'response-header-read-idle-timeout'
+    if isinstance(error, asyncio.TimeoutError) and not body:
+        return 'post-connect-header-deadline' if connection_established else 'preaccept-deadline'
+    return 'body-read-error' if body else 'transport-error'
 
 
 def service_token():
@@ -126,7 +150,8 @@ async def _http_failure(response):
     except (ValueError, TypeError, RecursionError, aiohttp.ClientError, OSError, asyncio.TimeoutError):
         pass  # Untrusted error bodies are neither retained nor surfaced.
     return x_stream.TransportFailure(status, retry_after=_retry_hint(response.headers),
-                                     quota=quota, connection_conflict=conflict)
+                                     quota=quota, connection_conflict=conflict,
+                                     category='http-status', http_status=status)
 
 
 async def _close_owned(response, session):
@@ -140,14 +165,16 @@ async def _close_owned(response, session):
     try:
         closing = asyncio.create_task(session.close())
     except Exception:
-        raise x_stream.TransportFailure(None, connection_conflict=True) from None
+        raise x_stream.TransportFailure(None, connection_conflict=True,
+                                        category='owned-close-unconfirmed') from None
     deadline = asyncio.get_running_loop().time() + CLOSE_SECONDS
     cancelled = False
     while not closing.done():
         remaining = deadline - asyncio.get_running_loop().time()
         if remaining <= 0:
             closing.cancel()
-            raise x_stream.TransportFailure(None, connection_conflict=True) from None
+            raise x_stream.TransportFailure(None, connection_conflict=True,
+                                        category='owned-close-unconfirmed') from None
         try:
             await asyncio.wait_for(asyncio.shield(closing), remaining)
         except asyncio.CancelledError:
@@ -163,7 +190,8 @@ async def _close_owned(response, session):
     if failed:
         if not closing.done():
             closing.cancel()
-        raise x_stream.TransportFailure(None, connection_conflict=True) from None
+        raise x_stream.TransportFailure(None, connection_conflict=True,
+                                        category='owned-close-unconfirmed') from None
     if cancelled:
         raise asyncio.CancelledError
 
@@ -180,8 +208,9 @@ class _StreamReader:
             if not isinstance(value, bytes) or len(value) > size:
                 raise ValueError
             return value
-        except (ValueError, aiohttp.ClientError, OSError, asyncio.TimeoutError):
-            raise x_stream.TransportFailure(None) from None
+        except (ValueError, aiohttp.ClientError, OSError, asyncio.TimeoutError) as exc:
+            raise x_stream.TransportFailure(None, category=_failure_category(exc, body=True),
+                                            http_status=self.response.status) from None
 
 
 class AiohttpTransport:
@@ -221,9 +250,17 @@ class AiohttpTransport:
         token = None
         factory = self.session_factory if self.session_factory is not None else aiohttp.ClientSession
         response, session = None, None
+        connection_established = False
+
+        async def connected(_session, _context, _params):
+            nonlocal connection_established
+            connection_established = True  # No trace parameters are read or retained.
+
+        trace = aiohttp.TraceConfig()
+        trace.on_connection_create_end.append(connected)
         try:
             try:
-                session = factory(trust_env=False, auth=None, cookie_jar=aiohttp.DummyCookieJar(),
+                session = factory(trace_configs=[trace], trust_env=False, auth=None, cookie_jar=aiohttp.DummyCookieJar(),
                                   auto_decompress=False, raise_for_status=False,
                                   timeout=aiohttp.ClientTimeout(total=None, connect=CONNECT_SECONDS,
                                                                 sock_read=x_stream.HEARTBEAT_SECONDS))
@@ -242,20 +279,27 @@ class AiohttpTransport:
                     ssl=True, proxy=None, auth=None), CONNECT_SECONDS)
             except x_stream.StreamBlocked:
                 raise
-            except Exception:
+            except Exception as exc:
+                category = _failure_category(exc, connection_established=connection_established)
                 if expected == SEARCH_URL:
-                    raise AmbiguousSearchResponse(status=None) from None
-                raise x_stream.TransportFailure(None) from None
+                    raise AmbiguousSearchResponse(status=None, category=category) from None
+                raise x_stream.TransportFailure(None, category=category) from None
             finally:
                 headers.clear()
             if response.status != 200:
                 raise await _http_failure(response)
             allowed = STREAM_TYPES if expected == STREAM_URL else JSON_TYPES
-            if (_content_type(response) not in allowed
-                    or response.headers.get('Content-Encoding', 'identity').lower() != 'identity'):
+            category = None
+            if _content_type(response) not in allowed:
+                category = 'content-type-rejected'
+            elif response.headers.get('Content-Encoding', 'identity').lower() != 'identity':
+                category = 'content-encoding-rejected'
+            if category:
                 if expected == SEARCH_URL:
-                    raise AmbiguousSearchResponse()
-                raise x_stream.TransportFailure(400)
+                    raise AmbiguousSearchResponse(category=category, http_status=response.status)
+                # Keep synthetic 400 for the established failure policy; record
+                # the actual HTTP 200 separately, without any header values.
+                raise x_stream.TransportFailure(400, category=category, http_status=response.status)
             yield response
         finally:
             if session is not None:

@@ -254,6 +254,8 @@ class LoopbackTransportTests(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(transport.AmbiguousSearchResponse) as raised:
             await self._search()
         self.assertIsNone(raised.exception.status)
+        self.assertEqual(raised.exception.category, 'tls-error')
+        self.assertIsNone(raised.exception.http_status)
         self.assertEqual(self.server_requests, [])
         self.assertEqual(len(self.connection_attempts), 1)
         await self._closed()
@@ -391,6 +393,8 @@ class LoopbackTransportTests(unittest.IsolatedAsyncioTestCase):
                     async with self.client.stream_factory(transport.STREAM_URL, {}) as reader:
                         await reader.read(65536)
         self.assertIsNone(raised.exception.status)
+        self.assertEqual(raised.exception.category, 'body-read-idle-timeout')
+        self.assertEqual(raised.exception.http_status, 200)
         self.assertEqual(self.sessions[0].timeout.sock_read, .1)
         self.assertEqual(str(raised.exception), 'x-stream-transport-failure')
         await self._closed()
@@ -425,6 +429,8 @@ class LoopbackTransportTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIsNone(raised.exception.status)
                 self.assertEqual(isinstance(raised.exception, transport.AmbiguousSearchResponse), kind == 'search')
                 self.assertEqual(self.sessions[-1].timeout.connect, .1)
+                self.assertEqual(raised.exception.category, 'post-connect-header-deadline')
+                self.assertIsNone(raised.exception.http_status)
         self.assertEqual(len(self.server_requests), 2)
         await self._closed()
 
@@ -444,6 +450,8 @@ class LoopbackTransportTests(unittest.IsolatedAsyncioTestCase):
                 await self._search()
             failure = raised.exception
             self.assertEqual(failure.status, status)
+            self.assertEqual(failure.category, 'http-status')
+            self.assertEqual(failure.http_status, status)
             self.assertEqual(failure.retry_after, 7)
             self.assertEqual(failure.quota, quota)
             self.assertEqual(failure.connection_conflict, conflict)
@@ -467,6 +475,35 @@ class LoopbackTransportTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(len(self.server_requests), 1)
         self.assertEqual(len(self.connection_attempts), 1)
         self.assertNotIn('external.invalid', repr(raised.exception))
+        await self._closed()
+
+    async def test_real_socket_refusal_is_connect_error_with_no_http_status(self):
+        await self.site.stop()
+        with self.assertRaises(x_stream.TransportFailure) as raised:
+            async with self.client.stream_factory(transport.STREAM_URL, {}):
+                self.fail('closed listener accepted request')
+        self.assertEqual(raised.exception.category, 'socket-connect-error')
+        self.assertIsNone(raised.exception.http_status)
+        self.assertEqual(len(self.connection_attempts), 1)
+        self.assertEqual(self.server_requests, [])
+        await self._closed()
+
+    async def test_real_tls_200_content_type_and_encoding_rejections(self):
+        cases = (({'Content-Type': 'text/plain'}, 'content-type-rejected'),
+                 ({'Content-Type': 'application/json', 'Content-Encoding': 'gzip'}, 'content-encoding-rejected'))
+        for headers, category in cases:
+            async def handler(request, headers=headers):
+                return web.Response(body=b'PRIVATE BODY', headers=headers)
+            self.handler = handler
+            with self.subTest(category=category), self.assertRaises(x_stream.TransportFailure) as raised:
+                async with self.client.stream_factory(transport.STREAM_URL, {}):
+                    self.fail('invalid response accepted')
+            self.assertEqual(raised.exception.category, category)
+            self.assertEqual(raised.exception.http_status, 200)
+            self.assertEqual(raised.exception.status, 400)
+            self.assertNotIn('PRIVATE', repr(vars(raised.exception)))
+        self.assertEqual(len(self.server_requests), 2)
+        self.assertEqual(len(self.connection_attempts), 2)
         await self._closed()
 
     async def test_truncated_http_search_body_is_ambiguous(self):

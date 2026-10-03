@@ -208,7 +208,8 @@ class ProbeTests(unittest.IsolatedAsyncioTestCase):
         self.token.assert_called_once()
         self.assertEqual(len(self.transports[0].calls), 1)
         self.assertTrue(self.transports[0].closed)
-        self.assertEqual(self.tables(), {'x_stream_probe_run', 'x_stream_probe_receipts', 'x_stream_supervisor_owner'})
+        self.assertEqual(self.tables(), {'x_stream_probe_run', 'x_stream_probe_receipts', 'x_stream_supervisor_owner',
+                                              'x_stream_probe_transport_diagnostic'})
 
     async def test_probe_never_creates_canonical_migration_marker(self):
         await self.worker.run()
@@ -438,6 +439,66 @@ class ProbeTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result['connection_attempts'], 1)
         self.assertNotIn('SECRET', json.dumps(result))
         self.assertEqual(len(self.transports), 1)
+
+    async def test_preaccept_category_persisted_without_retry_or_rearming(self):
+        async def fail():
+            raise x_stream.TransportFailure(None, category='post-connect-header-deadline')
+        self.connect = fail
+        result = await self.worker.run()
+        self.assertEqual(result['transport_failure_category'], 'post-connect-header-deadline')
+        self.assertIsNone(result['transport_http_status'])
+        self.assertIsNone(result['connected_at'])
+        self.assertEqual(result['connection_attempts'], 1)
+        self.assertEqual(result['read_calls'], 0)
+        self.assertEqual(result['close_confirmed'], 1)
+        before = self.db.execute('SELECT * FROM x_stream_probe_run').fetchall()
+        diagnostic = self.db.execute('SELECT * FROM x_stream_probe_transport_diagnostic').fetchall()
+        self.token.reset_mock()
+        again = await self.make_worker().run()
+        self.assertEqual(again['status'], 'blocked')
+        self.token.assert_not_called()
+        self.assertEqual(self.db.execute('SELECT * FROM x_stream_probe_run').fetchall(), before)
+        self.assertEqual(self.db.execute('SELECT * FROM x_stream_probe_transport_diagnostic').fetchall(), diagnostic)
+
+    async def test_read_idle_diagnostic_survives_settle_read_and_cleanup(self):
+        self.reader.chunks = [x_stream.TransportFailure(None, category='body-read-idle-timeout', http_status=200)]
+        result = await self.worker.run()
+        self.assertEqual(result['transport_failure_category'], 'body-read-idle-timeout')
+        self.assertEqual(result['transport_http_status'], 200)
+        self.assertIsNotNone(result['connected_at'])
+        self.assertEqual(result['unknown_delivery'], 1)
+        self.assertEqual(result['close_confirmed'], 1)
+        self.assertEqual(result['connection_attempts'], 1)
+        self.assertFalse(self.db.execute('SELECT 1 FROM x_stream_supervisor_owner').fetchone())
+
+    async def test_rejected_200_diagnostics_are_safe_in_database_and_report(self):
+        from test_x_stream_transport import Response, Session
+        session = Session(Response(b'PRIVATE BODY', headers={'Content-Type': 'text/PRIVATE 192.0.2.1'}))
+        self.worker.transport_factory = lambda **opts: x_stream_transport.AiohttpTransport(
+            **opts, session_factory=lambda **_options: session)
+        result = await self.worker.run()
+        self.assertEqual(result['transport_failure_category'], 'content-type-rejected')
+        self.assertEqual(result['transport_http_status'], 200)
+        self.assertIsNone(result['connected_at'])
+        self.assertEqual(result['reason'], 'transport-error')
+        self.assertEqual(result['read_calls'], 0)
+        self.assertEqual(result['wire_bytes'], 0)
+        self.assertEqual(result['close_confirmed'], 1)
+        self.assertNotIn('PRIVATE', json.dumps(result))
+        self.assertNotIn('PRIVATE', '\n'.join(self.db.iterdump()))
+        self.assertEqual(len(session.calls), 1)
+
+    async def test_diagnostic_read_is_allowlisted_and_old_ledgers_stay_unknown(self):
+        self.assertEqual(probe.transport_diagnostic(self.db), {})
+        await self.worker.run()
+        self.assertEqual(probe.transport_diagnostic(self.db), {})
+        with self.db:
+            self.db.execute('INSERT INTO x_stream_probe_transport_diagnostic VALUES(1,?,?)',
+                            ('PRIVATE 192.0.2.1', None))
+        result = self.worker.report()
+        self.assertEqual(result['transport_failure_category'], 'transport-error')
+        self.assertIsNone(result['transport_http_status'])
+        self.assertNotIn('PRIVATE', json.dumps(result))
 
     async def test_failed_close_retains_owner_and_uncertainty(self):
         self.close_error = x_stream.TransportFailure(None, connection_conflict=True)

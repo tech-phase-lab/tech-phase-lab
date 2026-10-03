@@ -185,9 +185,9 @@ def metadata_exposure(db):
             'fingerprint': _digest([list(row) for row in rows])}
 
 
-def _schema(db):
+def _schema(db, *, _second_diagnostic=False):
     # No call to x_stream.schema/signals.schema, and never a runtime marker.
-    db.executescript('''
+    script = '''
       CREATE TABLE IF NOT EXISTS x_stream_probe_run (
         singleton INTEGER PRIMARY KEY CHECK(singleton=1), config_sha TEXT NOT NULL,
         probe_id TEXT NOT NULL, approval_id TEXT NOT NULL, end_at TEXT NOT NULL,
@@ -203,6 +203,9 @@ def _schema(db):
         read_calls INTEGER NOT NULL DEFAULT 0, wire_bytes INTEGER NOT NULL DEFAULT 0, metadata_bytes INTEGER NOT NULL DEFAULT 0,
         dropped_rows INTEGER NOT NULL DEFAULT 0, unknown_delivery INTEGER NOT NULL DEFAULT 0,
         close_confirmed INTEGER NOT NULL DEFAULT 0);
+      CREATE TABLE IF NOT EXISTS x_stream_probe_transport_diagnostic (
+        singleton INTEGER PRIMARY KEY CHECK(singleton=1), category TEXT NOT NULL,
+        http_status INTEGER CHECK(http_status IS NULL OR http_status BETWEEN 100 AND 599));
       CREATE TABLE IF NOT EXISTS x_stream_probe_receipts (
         sequence INTEGER PRIMARY KEY, source_ids TEXT NOT NULL, verified_source_ids TEXT NOT NULL,
         post_id_or_hash TEXT NOT NULL, post_created_at TEXT, raw_received_at TEXT NOT NULL,
@@ -211,7 +214,24 @@ def _schema(db):
         raw_latency_ms INTEGER, durable_latency_ms INTEGER);
       CREATE TABLE IF NOT EXISTS x_stream_supervisor_owner (
         singleton INTEGER PRIMARY KEY CHECK(singleton=1), owner TEXT NOT NULL, started_at TEXT NOT NULL);
-    ''')
+    '''
+    if _second_diagnostic is True:
+        # Closed, code-owned namespace; no operator-supplied SQL names.
+        for old, new in (('x_stream_probe_run', 'x_stream_second_probe_run'),
+                         ('x_stream_probe_receipts', 'x_stream_second_probe_receipts'),
+                         ('x_stream_probe_transport_diagnostic', 'x_stream_second_probe_transport_diagnostic')):
+            script = script.replace(old, new)
+    db.executescript(script)
+
+
+def transport_diagnostic(db, *, _second_diagnostic=False):
+    """Read-only and old-ledger compatible; no schema creation or ledger reset."""
+    table = ('x_stream_second_probe_transport_diagnostic' if _second_diagnostic is True
+             else 'x_stream_probe_transport_diagnostic')
+    if not _table(db, table):
+        return {}
+    row = db.execute('SELECT category,http_status FROM ' + table + ' WHERE singleton=1').fetchone()
+    return x_stream.transport_diagnostic(*row) if row else {}
 
 
 class _Decoder(x_stream.Decoder):
@@ -252,6 +272,23 @@ class _Decoder(x_stream.Decoder):
 
 
 class Probe:
+    run_table = 'x_stream_probe_run'
+    receipts_table = 'x_stream_probe_receipts'
+    diagnostic_table = 'x_stream_probe_transport_diagnostic'
+
+    def _schema(self):
+        _schema(self.db)
+
+    def _transport_diagnostic(self):
+        return transport_diagnostic(self.db)
+
+    def _check_prior_exposure(self, exposure):
+        if exposure['known_reserved_micros'] > self.frozen['prior_exposure_bound_micros']:
+            _block('prior-exposure-uncovered')
+        if exposure['unknown_runs'] and (self.frozen['unknown_prior_cost_approved'] is not True
+                                           or self.frozen['prior_exposure_bound_micros'] == 0):
+            _block('prior-unknown-cost-unapproved')
+
     def __init__(self, *, db=None, enabled=False, config=None, token_provider=None,
                  reviewed_admission=None, clock=None, monotonic=None, stop_event=None,
                  storage_preflight=None, transport_factory=None):
@@ -267,6 +304,7 @@ class Probe:
         self.owner = None
         self.attempted = self.claimed = self.delivery_unknown = False
         self.reason = None
+        self.failure_diagnostic = None
         self.pending_read = None
         self.connection_task = None
         self.connection_entered = self.connection_closed = False
@@ -317,19 +355,15 @@ class Probe:
         self.monotonic_end = mono + remaining
         self.rule_map = x_stream.verified_rule_map(self.frozen['inventory'], x_stream.manifest())
         self.owner = 'receive-probe:' + self.fingerprint
-        _schema(self.db)
+        self._schema()
         with self.db:
             self.db.execute('BEGIN IMMEDIATE')
-            if self.db.execute('SELECT 1 FROM x_stream_probe_run').fetchone():
+            if self.db.execute(f'SELECT 1 FROM {self.run_table}').fetchone():
                 _block('already-used')
             self._check_ownership()
             self._check_storage()
             exposure = metadata_exposure(self.db)
-            if exposure['known_reserved_micros'] > self.frozen['prior_exposure_bound_micros']:
-                _block('prior-exposure-uncovered')
-            if exposure['unknown_runs'] and (self.frozen['unknown_prior_cost_approved'] is not True
-                                               or self.frozen['prior_exposure_bound_micros'] == 0):
-                _block('prior-unknown-cost-unapproved')
+            self._check_prior_exposure(exposure)
             # The integration MUST validate the reviewed account-wide anchor,
             # continuing ordinary polling and any unknown preflight-cost bound.
             if self.reviewed_admission(json.loads(_json(self.frozen)), dict(exposure)) is not True:
@@ -346,7 +380,7 @@ class Probe:
             c = self.frozen
             reserve = sum(c[key] for key in ('prior_exposure_bound_micros',
                                              'rule_control_contingency_micros', 'stream_allowance_micros'))
-            self.db.execute('INSERT INTO x_stream_probe_run '
+            self.db.execute(f'INSERT INTO {self.run_table} '
                 '(singleton,config_sha,probe_id,approval_id,end_at,started_at,state,local_aim_micros,'
                 'retained_reservation_micros,prior_bound_micros,prior_cost_unknown,control_cost_unknown,polling_contingency_micros,'
                 'control_contingency_micros,stream_allowance_micros,post_micros,user_micros) '
@@ -398,10 +432,10 @@ class Probe:
             self._check_storage()
             if metadata_exposure(self.db) != self.exposure:
                 _block('metadata-changed')
-            row = self.db.execute('SELECT config_sha,attempts,state FROM x_stream_probe_run').fetchone()
+            row = self.db.execute(f'SELECT config_sha,attempts,state FROM {self.run_table}').fetchone()
             if not row or row[0] != self.fingerprint or row[1] != 0 or row[2] != 'reserved':
                 _block('admission-inactive')
-            self.db.execute("UPDATE x_stream_probe_run SET attempts=1,state='running' WHERE singleton=1")
+            self.db.execute(f"UPDATE {self.run_table} SET attempts=1,state='running' WHERE singleton=1")
         self.attempted = True
         return True
 
@@ -479,7 +513,7 @@ class Probe:
         if not isinstance(chunk, bytes) or len(chunk) > READ_BYTES:
             self.reason = 'invalid-read'
             with self.db:
-                self.db.execute('UPDATE x_stream_probe_run SET unknown_delivery=1')
+                self.db.execute(f'UPDATE {self.run_table} SET unknown_delivery=1')
             return
         items, ambiguous = [], False
         incoming = chunk
@@ -504,7 +538,7 @@ class Probe:
         with self.db:
             self.db.execute('BEGIN IMMEDIATE')
             row = self.db.execute('SELECT receipts,metadata_bytes,delivered_estimate_micros,wire_bytes '
-                                  ',read_calls FROM x_stream_probe_run').fetchone()
+                                  f',read_calls FROM {self.run_table}').fetchone()
             sequence, metadata_bytes, spend, wire, read_calls = row
             for item in items:
                 sequence += 1
@@ -517,17 +551,17 @@ class Probe:
                          and metadata_bytes + size <= self.frozen['max_metadata_bytes'])
                 if store:
                     metadata_bytes += size
-                    self.db.execute('INSERT INTO x_stream_probe_receipts VALUES(?,?,?,?,?,?,NULL,?,?,?,?,?,?,NULL)',
+                    self.db.execute(f'INSERT INTO {self.receipts_table} VALUES(?,?,?,?,?,?,NULL,?,?,?,?,?,?,NULL)',
                         (sequence, _json(item['source_ids']), _json(item['verified_source_ids']), item['post_id_or_hash'],
                          item['post_created_at'], item['raw_received_at'], item['posts'], item['users'],
                          item['query_match'], item['source_author_verified'], item['quote'], item['raw_latency_ms']))
                     inserted.append((sequence, item['post_created_at']))
                 else:
                     self.reason = self.reason or 'metadata-bound'
-                self.db.execute('UPDATE x_stream_probe_run SET posts=posts+?,users=users+?,dropped_rows=dropped_rows+?',
+                self.db.execute(f'UPDATE {self.run_table} SET posts=posts+?,users=users+?,dropped_rows=dropped_rows+?',
                                 (item['posts'], item['users'], int(not store)))
             wire += len(chunk)
-            self.db.execute('UPDATE x_stream_probe_run SET receipts=?,metadata_bytes=?,delivered_estimate_micros=?,'
+            self.db.execute(f'UPDATE {self.run_table} SET receipts=?,metadata_bytes=?,delivered_estimate_micros=?,'
                             'wire_bytes=?,read_calls=read_calls+1,unknown_delivery=MAX(unknown_delivery,?),'
                             'retained_reservation_micros=prior_bound_micros+control_contingency_micros+'
                             'MAX(stream_allowance_micros,?)',
@@ -540,7 +574,7 @@ class Probe:
                 latency = round((durable_at - _utc(created)).total_seconds() * 1000) if created else None
                 if latency is not None and latency < 0:
                     latency = None
-                self.db.execute('UPDATE x_stream_probe_receipts SET durable_received_at=?,durable_latency_ms=? WHERE sequence=?',
+                self.db.execute(f'UPDATE {self.receipts_table} SET durable_received_at=?,durable_latency_ms=? WHERE sequence=?',
                                 (x_stream.stamp(durable_at), latency, sequence))
         if spend >= self.frozen['stream_allowance_micros']:
             self.reason = self.reason or 'stream-allowance'
@@ -550,6 +584,12 @@ class Probe:
             self.reason = self.reason or 'read-bound'
         if sequence >= self.frozen['max_rows'] or metadata_bytes + 1024 > self.frozen['max_metadata_bytes']:
             self.reason = self.reason or 'metadata-bound'
+
+    def _capture_transport_failure(self, failure):
+        # Retain the first surfaced transport failure; cleanup still controls
+        # reason/close_confirmed and owner release exactly as before.
+        if self.failure_diagnostic is None:
+            self.failure_diagnostic = x_stream.transport_diagnostic(failure.category, failure.http_status)
 
     async def _settle_read(self):
         # The pinned aiohttp reader cooperates with cancellation; arbitrary
@@ -572,7 +612,9 @@ class Probe:
             return None
         try:
             return task.result()
-        except Exception:
+        except Exception as exc:
+            if isinstance(exc, x_stream.TransportFailure):
+                self._capture_transport_failure(exc)
             self.delivery_unknown = True
             self.reason = self.reason or 'transport-error'
             return None
@@ -615,17 +657,18 @@ class Probe:
         row = self.db.execute('SELECT state,reason,attempts,receipts,posts,users,delivered_estimate_micros,'
             'local_aim_micros,retained_reservation_micros,prior_bound_micros,prior_cost_unknown,control_cost_unknown,'
             'polling_contingency_micros,control_contingency_micros,stream_allowance_micros,'
-            'read_calls,wire_bytes,metadata_bytes,dropped_rows,unknown_delivery,close_confirmed,connected_at FROM x_stream_probe_run').fetchone()
+            f'read_calls,wire_bytes,metadata_bytes,dropped_rows,unknown_delivery,close_confirmed,connected_at FROM {self.run_table}').fetchone()
         keys = ('status', 'reason', 'connection_attempts', 'complete_deliveries', 'post_resources', 'user_resources',
                 'delivered_estimate_micros', 'local_aim_micros', 'retained_reservation_micros', 'prior_bound_micros',
                 'prior_cost_unknown', 'control_cost_unknown', 'polling_contingency_micros', 'rule_control_contingency_micros',
                 'stream_allowance_micros', 'read_calls', 'wire_bytes', 'metadata_bytes', 'metadata_rows_dropped',
                 'unknown_delivery', 'close_confirmed', 'connected_at')
         result = dict(zip(keys, row))
+        result.update(self._transport_diagnostic())
         result['stream_entitlement_verified'] = result['connected_at'] is not None
         result['entitlement_scope'] = 'this-connection-attempt-only'
         samples = self.db.execute('SELECT COUNT(*),MIN(durable_latency_ms),MAX(durable_latency_ms) '
-                                 'FROM x_stream_probe_receipts WHERE source_author_verified=1 '
+                                 f'FROM {self.receipts_table} WHERE source_author_verified=1 '
                                  'AND durable_latency_ms IS NOT NULL').fetchone()
         result.update(source_original_latency_samples=samples[0], source_to_durable_min_ms=samples[1],
                       source_to_durable_max_ms=samples[2], metric='source-created-to-durable-receipt',
@@ -638,7 +681,7 @@ class Probe:
             async with client.stream_factory(x_stream.STREAM_URL, dict(PARAMS)) as reader:
                 self.connection_entered = True
                 with self.db:
-                    self.db.execute('UPDATE x_stream_probe_run SET connected_at=?', (x_stream.stamp(self.clock()),))
+                    self.db.execute(f'UPDATE {self.run_table} SET connected_at=?', (x_stream.stamp(self.clock()),))
                 try:
                     await self._receive(reader)
                 finally:
@@ -647,6 +690,7 @@ class Probe:
                         self._meter(*pending)
             self.connection_closed = True
         except x_stream.TransportFailure as exc:
+            self._capture_transport_failure(exc)
             self.connection_closed = not exc.connection_conflict
             if exc.connection_conflict:
                 self.reason = 'owned-close-unconfirmed'
@@ -712,7 +756,12 @@ class Probe:
                     self.reason = self.reason or 'incomplete-frame'
                 self.decoder.buffer.clear()  # No post body survives terminal reporting.
                 with self.db:
-                    self.db.execute('UPDATE x_stream_probe_run SET state=\'ended\',ended_at=?,reason=?,'
+                    if self.failure_diagnostic is not None:
+                        self.db.execute(f'INSERT INTO {self.diagnostic_table} '
+                                        '(singleton,category,http_status) VALUES(1,?,?)',
+                                        (self.failure_diagnostic['transport_failure_category'],
+                                         self.failure_diagnostic['transport_http_status']))
+                    self.db.execute(f'UPDATE {self.run_table} SET state=\'ended\',ended_at=?,reason=?,'
                                     'unknown_delivery=MAX(unknown_delivery,?),close_confirmed=?',
                                     (x_stream.stamp(self.clock()), self.reason or 'stopped',
                                      int(self.delivery_unknown or partial or (self.attempted and not self.connection_closed)),

@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import sys
 import sqlite3
+import ssl
 import unittest
 from unittest.mock import Mock, patch
 
@@ -304,6 +305,8 @@ class TransportTests(unittest.IsolatedAsyncioTestCase):
                 with self.assertRaises(x_stream.TransportFailure) as raised:
                     await self.search()
                 self.assertEqual(raised.exception.status, status)
+                self.assertEqual(raised.exception.category, 'http-status')
+                self.assertEqual(raised.exception.http_status, status)
                 self.assertEqual(raised.exception.quota, status == 402)
                 self.assertEqual(raised.exception.connection_conflict, status == 409)
                 self.assertEqual(str(raised.exception), 'x-stream-transport-failure')
@@ -486,6 +489,83 @@ class TransportTests(unittest.IsolatedAsyncioTestCase):
         with patch.object(transport, 'MAX_SEARCH_BYTES', len(body)):
             self.assertEqual(await self.search(), EMPTY)
         self.assert_closed()
+
+    async def test_fixed_preaccept_exception_categories_without_private_details(self):
+        private = 'PRIVATE https://private.invalid/token 192.0.2.1'
+        cases = (
+            (aiohttp.ClientConnectorDNSError(None, OSError(private)), 'dns-error'),
+            (aiohttp.ClientConnectorCertificateError(None, ssl.CertificateError(private)), 'tls-error'),
+            (aiohttp.ClientConnectorSSLError(None, ssl.SSLError(private)), 'tls-error'),
+            (aiohttp.ClientConnectorError(None, OSError(private)), 'socket-connect-error'),
+            (aiohttp.ConnectionTimeoutError(private), 'connection-timeout'),
+            (aiohttp.SocketTimeoutError(private), 'response-header-read-idle-timeout'),
+            (asyncio.TimeoutError(private), 'preaccept-deadline'),
+            (aiohttp.ClientConnectionError(private), 'transport-error'),
+        )
+        for error, category in cases:
+            with self.subTest(category=category):
+                self.session = Session(error=error)
+                self.factory.return_value = self.session
+                with self.assertRaises(x_stream.TransportFailure) as raised:
+                    async with self.client.stream_factory(transport.STREAM_URL, {}):
+                        self.fail('failed request accepted')
+                failure = raised.exception
+                self.assertEqual(failure.category, category)
+                self.assertIsNone(failure.http_status)
+                self.assertIsNone(failure.status)
+                self.assertNotIn('PRIVATE', repr(vars(failure)))
+                self.assertTrue(failure.__suppress_context__)
+                self.assertTrue(self.session.closed)
+                self.assertEqual(len(self.session.calls), 1)
+
+    async def test_outer_deadline_without_connection_milestone_stays_unresolved(self):
+        self.session.block = True
+        with patch.object(transport, 'CONNECT_SECONDS', .01):
+            with self.assertRaises(x_stream.TransportFailure) as raised:
+                async with self.client.stream_factory(transport.STREAM_URL, {}):
+                    self.fail('deadline accepted')
+        self.assertEqual(raised.exception.category, 'preaccept-deadline')
+        self.assertIsNone(raised.exception.http_status)
+        self.assertTrue(self.session.closed)
+        self.assertEqual(len(self.session.calls), 1)
+
+    async def test_body_idle_and_payload_errors_keep_actual_200(self):
+        for error, category in ((aiohttp.SocketTimeoutError('PRIVATE'), 'body-read-idle-timeout'),
+                                (aiohttp.ClientPayloadError('PRIVATE'), 'body-read-error')):
+            with self.subTest(category=category):
+                self.session = Session(Response(error=error))
+                self.factory.return_value = self.session
+                with self.assertRaises(x_stream.TransportFailure) as raised:
+                    async with self.client.stream_factory(transport.STREAM_URL, {}) as reader:
+                        await reader.read(100)
+                self.assertEqual(raised.exception.category, category)
+                self.assertEqual(raised.exception.http_status, 200)
+                self.assertIsNone(raised.exception.status)
+                self.assertNotIn('PRIVATE', repr(vars(raised.exception)))
+                self.assert_closed()
+
+    async def test_200_rejections_preserve_existing_policy_without_reading_body(self):
+        for headers, category in (({'Content-Type': 'text/PRIVATE'}, 'content-type-rejected'),
+                                  ({'Content-Encoding': 'PRIVATE'}, 'content-encoding-rejected')):
+            with self.subTest(category=category):
+                self.session = Session(Response(b'PRIVATE BODY', headers=headers))
+                self.factory.return_value = self.session
+                with self.assertRaises(x_stream.TransportFailure) as raised:
+                    async with self.client.stream_factory(transport.STREAM_URL, {}):
+                        self.fail('invalid response accepted')
+                self.assertEqual(raised.exception.status, 400)  # Existing policy.
+                self.assertEqual(raised.exception.http_status, 200)  # Actual wire status.
+                self.assertEqual(raised.exception.category, category)
+                self.assertEqual(self.session.response.content.reads, [])
+                self.assertNotIn('PRIVATE', repr(vars(raised.exception)))
+                self.assert_closed()
+
+    def test_diagnostic_fields_are_strictly_allowlisted(self):
+        for category in ('https://private.invalid', ['dns-error'], None, 200):
+            for status in (True, '200', 99, 600, ['PRIVATE']):
+                failure = x_stream.TransportFailure(None, category=category, http_status=status)
+                self.assertEqual(failure.category, 'transport-error')
+                self.assertIsNone(failure.http_status)
 
     async def test_connect_error_closes_session_without_retry(self):
         self.session.error = aiohttp.ClientConnectionError('secret url headers token')
