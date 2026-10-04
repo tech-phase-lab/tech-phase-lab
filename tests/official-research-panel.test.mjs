@@ -10,10 +10,14 @@ const signalsSource = await readFile(new URL("../app/research/review/signals-pan
 const signalsCompiled = ts.transpileModule(signalsSource, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
 const signalsLoaded = { exports: {} };
 new Function("require", "module", "exports", signalsCompiled)(name => name.endsWith(".module.css") ? { default: {} } : name === "@/lib/research/x-target-preview" ? require("../lib/research/x-target-preview.ts") : require(name), signalsLoaded, signalsLoaded.exports);
+const proofSource = await readFile(new URL("../app/research/review/research-proof.tsx", import.meta.url), "utf8");
+const proofCompiled = ts.transpileModule(proofSource, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
+const proofLoaded = { exports: {} };
+new Function("require", "module", "exports", proofCompiled)(name => name.endsWith(".module.css") ? { default: {} } : require(name), proofLoaded, proofLoaded.exports);
 const source = await readFile(new URL("../app/research/review/official-research-panel.tsx", import.meta.url), "utf8");
 const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
 const loaded = { exports: {} };
-new Function("require", "module", "exports", compiled)(name => name.endsWith(".module.css") ? { default: {} } : name === "./signals-panel" ? signalsLoaded.exports : require(name), loaded, loaded.exports);
+new Function("require", "module", "exports", compiled)(name => name.endsWith(".module.css") ? { default: {} } : name === "./signals-panel" ? signalsLoaded.exports : name === "./research-proof" ? proofLoaded.exports : require(name), loaded, loaded.exports);
 const Panel = loaded.exports.default;
 
 test("diagnostics encapsulates all state in a credential-keyed session without exposing the token", () => {
@@ -318,7 +322,7 @@ function sessionHarness(token = null) {
     useEffect(effect) { if (!cleanup) cleanup = effect(); },
   };
   const sessionModule = { exports: {} };
-  new Function("require", "module", "exports", compiled)(name => name === "react" ? react : name.endsWith(".module.css") ? { default: {} } : name === "./signals-panel" ? signalsLoaded.exports : require(name), sessionModule, sessionModule.exports);
+  new Function("require", "module", "exports", compiled)(name => name === "react" ? react : name.endsWith(".module.css") ? { default: {} } : name === "./signals-panel" ? signalsLoaded.exports : name === "./research-proof" ? proofLoaded.exports : require(name), sessionModule, sessionModule.exports);
   const entry = sessionModule.exports.default({ token });
   const render = () => { index = 0; return entry.type(entry.props); };
   function find(element, predicate) {

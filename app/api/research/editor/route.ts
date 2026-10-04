@@ -43,8 +43,17 @@ export async function GET(request: Request) {
     const limit = Number.isInteger(requested) ? Math.max(1, Math.min(requested, 50)) : 20;
     const kind = requestUrl.searchParams.get("kind");
     const eventIds = requestUrl.searchParams.getAll("eventId");
-    if (eventIds.length && (kind !== "signals" || eventIds.length !== 1 || !/^[1-9][0-9]{0,11}$/.test(eventIds[0]))) {
+    if (eventIds.length && (!["signals", "official-research"].includes(kind ?? "") || eventIds.length !== 1 || !/^[1-9][0-9]{0,11}$/.test(eventIds[0]))) {
       return response(400, { ok: false, error: "invalid-event-id" });
+    }
+    const proofHashes: Record<string, string> = {};
+    for (const key of ["expectedSourceSha", "expectedBodySha"]) {
+      const values = requestUrl.searchParams.getAll(key);
+      const researchDetail = kind === "official-research" && eventIds.length === 1;
+      if (researchDetail ? values.length !== 1 || !/^[a-f0-9]{64}$/.test(values[0]) : values.length > 0) {
+        return response(400, { ok: false, error: "invalid-revision-hash" });
+      }
+      if (researchDetail) proofHashes[key] = values[0];
     }
     const view = requestUrl.searchParams.get("view") ?? (kind === "official-research" ? "pending" : "all");
     const allowedViews = kind === "official-research" ? ["pending", "all"] : ["posts", "news"].includes(kind ?? "") ? ["all"] : kind === "signals" ? ["all", "new", "changed", "baseline", "targets", "ratings"] : kind === "annual"
@@ -57,6 +66,7 @@ export async function GET(request: Request) {
     url.searchParams.set("limit", String(limit));
     url.searchParams.set("view", view);
     if (eventIds.length) url.searchParams.set("eventId", eventIds[0]);
+    for (const [key, value] of Object.entries(proofHashes)) url.searchParams.set(key, value);
     for (const key of ["beforeEventId", "terminalBeforeEventId"]) {
       const values = requestUrl.searchParams.getAll(key);
       if (!values.length) continue;

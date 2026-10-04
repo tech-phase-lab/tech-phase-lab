@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { SignalSourceInspection } from "./signals-panel";
+import { ResearchProofInspection } from "./research-proof";
 import styles from "./news-panel.module.css";
 
 type Validation = { status: "valid" | "invalid" | "unavailable"; issues: { field: string; issue: string; checks: Record<string, unknown>[] }[] };
@@ -276,6 +277,7 @@ export function OfficialResearchResults({ data, token }: { data: Queue; token: s
         <p className={styles.note}>同じ原文版の最古の保存公開監査 {time(item.publication.earliestAuditedPublicationAt ?? null)} · 現在の文章に一致する公開・修正監査 {time(item.publication.currentPayloadAuditedAt ?? null)}</p>
         <p className={styles.note}>監査は全履歴を保証しません。初回の検証通過・ブラウザー表示時刻は不明です。本文版の取得時刻や直近の再確認時刻から推定しません。日付のみの原文から所要時間を計算しません。</p>
         <SignalSourceInspection token={token} eventId={item.eventId} />
+        <ResearchProofInspection token={token} eventId={item.eventId} sourceSha={item.currentSha} bodySha={item.bodySha} />
         <p>{item.job ? `${states[item.job.state] ?? "状態不明"} · ${item.job.attempts}回 · ${item.job.failureKind ?? "失敗区分なし"}${item.job.currentRevision ? "" : " · ジョブは旧版"}` : "現在の生成ジョブなし"}</p>
         {item.job && <p className={styles.note}>{item.job.state === "running" ? "実行期限" : "次の実行可能時刻"} {time(item.job.nextRetryAt)}（実行・公開の確約ではありません）</p>}
         <details><summary>現在の版と保存記事</summary>

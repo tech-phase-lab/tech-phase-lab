@@ -44,6 +44,7 @@ import market_results
 import official_research
 import issuer_syndication
 import official_research_diagnostics
+import official_research_detail
 import mu_earnings_measurement
 import web_push
 
@@ -859,6 +860,9 @@ class AutomaticMonitor:
     def stock_news_queue(self, limit=20):
         with stock_news.connect(self.db_path) as db:
             return stock_news.queue(db, limit)
+
+    def official_research_detail(self, event_id, expected_source_sha, expected_body_sha):
+        return official_research_detail.detail(self.db_path, event_id, expected_source_sha, expected_body_sha)
 
     def official_research_queue(self, limit=20, view="pending", **cursors):
         return official_research_diagnostics.queue(self.db_path, limit, view, **cursors)
@@ -2580,12 +2584,25 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 query = parse_qs(parsed.query, keep_blank_values=True)
                 if "eventId" in query:
-                    if path != "/admin/signals" or len(query["eventId"]) != 1:
+                    if path not in {"/admin/signals", "/admin/official-research"} or len(query["eventId"]) != 1:
                         raise ValueError("invalid-event-id")
-                    detail = self.app.signal_source_detail(query["eventId"][0])
+                    if path == "/admin/official-research":
+                        hashes = []
+                        for key in ("expectedSourceSha", "expectedBodySha"):
+                            values = query.get(key, [])
+                            if len(values) != 1:
+                                raise ValueError("invalid-revision-hash")
+                            hashes.append(official_research_detail.revision_hash(values[0]))
+                        detail = self.app.official_research_detail(query["eventId"][0], *hashes)
+                    else:
+                        if any(key in query for key in ("expectedSourceSha", "expectedBodySha")):
+                            raise ValueError("invalid-request")
+                        detail = self.app.signal_source_detail(query["eventId"][0])
                     self.send_json(200 if detail else 404, {"ok": bool(detail),
                                    **({"detail": detail} if detail else {"error": "source-not-found"})})
                     return
+                if any(key in query for key in ("expectedSourceSha", "expectedBodySha")):
+                    raise ValueError("invalid-request")
                 limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
                 view = parse_qs(parsed.query).get("view", ["pending" if path == "/admin/official-research" else "all"])[0]
                 cursors = {}

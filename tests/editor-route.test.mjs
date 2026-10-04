@@ -277,3 +277,25 @@ test("official ledger cursors are bounded, unambiguous and forwarded on the prot
     if (previous.url === undefined) delete process.env.RESEARCH_MONITOR_URL; else process.env.RESEARCH_MONITOR_URL = previous.url;
   }
 });
+
+test("one-row research proof relays only authenticated, exact source/body revisions", async () => {
+  const saved = { url: process.env.RESEARCH_MONITOR_URL, fetch: globalThis.fetch };
+  process.env.RESEARCH_MONITOR_URL = "https://monitor.example";
+  const calls = [];
+  globalThis.fetch = async (url, init) => { calls.push({ url: new URL(url), init }); return Response.json({ ok: true, detail: { eventId: 1233, readOnly: true } }); };
+  const valid = `kind=official-research&eventId=1233&expectedSourceSha=${"a".repeat(64)}&expectedBodySha=${"b".repeat(64)}`;
+  const read = (query, authorized = true) => GET(new Request(`https://example.test/api/research/editor?${query}`, { headers: authorized ? { Authorization: authorization } : {} }));
+  try {
+    assert.equal((await read(valid, false)).status, 401); assert.equal(calls.length, 0);
+    const response = await read(valid);
+    assert.equal(response.status, 200);
+    assert.equal(calls[0].url.pathname, "/admin/official-research");
+    assert.equal(calls[0].url.searchParams.get("eventId"), "1233");
+    assert.equal(calls[0].url.searchParams.get("expectedSourceSha"), "a".repeat(64));
+    assert.equal(calls[0].url.searchParams.get("expectedBodySha"), "b".repeat(64));
+    assert.equal(calls[0].init.cache, "no-store");
+    for (const query of [valid.replace("eventId=1233", "eventId=0"), valid + "&eventId=1234", valid + "&expectedBodySha=" + "b".repeat(64), valid.replace("expectedSourceSha=", "unexpected="), valid.replace("kind=official-research", "kind=signals"), valid.replace("&eventId=1233", ""), valid.replace("b".repeat(64), "secret"), "kind=official-research&eventId=1233"]) assert.equal((await read(query)).status, 400, query);
+    assert.equal(calls.length, 1);
+    assert.equal(response.headers.get("cache-control"), "no-store");
+  } finally { globalThis.fetch = saved.fetch; if (saved.url === undefined) delete process.env.RESEARCH_MONITOR_URL; else process.env.RESEARCH_MONITOR_URL = saved.url; }
+});
