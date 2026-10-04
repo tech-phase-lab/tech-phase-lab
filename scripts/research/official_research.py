@@ -521,7 +521,7 @@ def claim(db, reference, model, limit):
         for r in rows:
             # A retained source derivation never authorizes a paid replacement.
             # Valid copy is already public; a damaged audit/copy stays held.
-            if buyback_structured_publication.recorded(db,r):
+            if buyback_structured_publication.recorded(db,r) or general_source_news.related_company_news.recorded(db,r) or general_source_news.related_company_news.closed_attempt(db,r):
                 continue
             if not current_revision(db,r,primary_urls=primary_urls):
                 continue
@@ -774,6 +774,10 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     policy=general_source_news.POLICY if general else POLICY
     if semantic:
         policy+='\n'+general_source_news.ASSESSMENT_POLICY
+        if row.get('source_news'):
+            policy+='\n'+general_source_news.source_news_grounding.POLICY
+        if general_source_news.related_company_news.structured(row):
+            policy+='\n'+general_source_news.related_company_news.POLICY
         if any('actorGrounding' in unit for unit in row['units']):
             policy+='\n'+general_source_news.ACTOR_POLICY
         if any('brokerCommentary' in unit for unit in row['units']):
@@ -794,6 +798,9 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         input_data=json.loads(payload['input'])
         input_data['evidenceContext']={u['id']:{'actor':u['actor'],'requiredTopics':sorted(general_source_news.concepts(u['quote'],'en'))} for u in row['units']}
         for unit in row['units']:
+            for name in ('sourceNews','relatedSubject'):
+                if name in unit:
+                    input_data['evidenceContext'][unit['id']][name]=unit[name]
             if 'buyback' in unit:
                 input_data['evidenceContext'][unit['id']]['buyback']=unit['buyback']
             if 'brokerCommentary' in unit:
@@ -810,6 +817,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         payload['input']=json.dumps(input_data,ensure_ascii=False)
     usage={}
     value=None
+    raw_response_text=None
     completed=False
     review_reason=None
     try:
@@ -817,7 +825,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         if response.get('status')!='completed':
             raise ValueError('incomplete')
         completed=True
-        value=json.loads(brief_generator.output_text(response))
+        raw_response_text=brief_generator.output_text(response)
+        value=json.loads(raw_response_text)
         if semantic:
             note,review_reason=general_source_news.bind_assessment(value,row)
         elif general:
@@ -878,6 +887,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         if valid and review_reason:
             general_source_news.save_semantic_review(db,row,lease,reference.isoformat(),public_at,review_reason)
         elif valid:
+            if general_source_news.related_company_news.structured(row):
+                general_source_news.related_company_news.record(db,row,raw_response_text,note,lease,reference.isoformat(),public_at)
             db.execute('''INSERT INTO official_research_publications VALUES(?,?,?,?,?,?,?,?)
               ON CONFLICT(event_id) DO UPDATE SET sha=excluded.sha,body_sha=excluded.body_sha,
               payload=excluded.payload,evidence=excluded.evidence,started_at=excluded.started_at,
@@ -912,6 +923,8 @@ def validated_publications(db, rows):
                     and not buyback_structured_publication.publication_valid(db,r,p,datetime.now(timezone.utc))):
                 continue
             validate_row(note,r)
+            if general_source_news.related_company_news.structured(r) and not general_source_news.related_company_news.publication_valid(db,r,p,note):
+                continue
         except (ValueError, TypeError, KeyError):
             continue
         publications.append((r,p,note))

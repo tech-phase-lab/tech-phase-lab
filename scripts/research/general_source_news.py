@@ -15,6 +15,8 @@ import buyback_news
 import buyback_recap
 import buyback_structured
 import actor_grounding
+import related_company_news
+import source_news_grounding
 import broker_commentary
 import factual_validation
 import news_policy
@@ -39,7 +41,7 @@ FAILURE_CODES = frozenset({
     'actor-grounding-required','unsupported-affiliation','changed-claim-actor',
     'changed-claim-status','changed-source-attribution','changed-amount-relation',
     'unsupported-buyback-structure',
-}) | broker_commentary.FAILURE_CODES | buyback_news.FAILURE_CODES
+}) | broker_commentary.FAILURE_CODES | buyback_news.FAILURE_CODES | {related_company_news.FAILURE, source_news_grounding.FAILURE, source_news_grounding.CONDITION_FAILURE, source_news_grounding.RELATION_FAILURE}
 SOURCE_IDS = (*analyst_news.SOURCE_IDS, 'x-trendspider')
 ACCOUNTS = analyst_news.ACCOUNTS | {'trendspider', 'fabymetal4'}
 
@@ -145,7 +147,7 @@ def x_assess(row, source, reference, heads):
         return None,'promotion'
     try:
         tickers=json.loads(row['tickers_json'])
-        if (not isinstance(tickers,list) or not tickers
+        if (not isinstance(tickers,list)
                 or any(not isinstance(t,str) or not re.fullmatch(analyst_news.TICKER,t) for t in tickers)):
             return None,'invalid-subject-evidence'
         cashtags=set(re.findall(r'\$('+analyst_news.TICKER+r')(?![\w.])',body))
@@ -233,7 +235,7 @@ def x_assess(row, source, reference, heads):
 
 def assess(row, source, reference, heads):
     candidate,reason=x_assess(row,source,reference,heads)
-    if candidate or reason not in {'no-supported-material-category','ambiguous-or-unapproved-subject','unbound-material-subject'}:
+    if candidate or reason not in {'no-supported-material-category','ambiguous-or-unapproved-subject','unbound-material-subject','multi-entity-relation-needs-binding'}:
         return candidate,reason
     # These reasons occur only AFTER exact source/head/body/clock/retraction and
     # promotion gates. Unknown financial actions stay in the explicit review
@@ -244,10 +246,12 @@ def assess(row, source, reference, heads):
     approved=set(source.get('tickers',[]))|set(source.get('extraTickers',[]))|set(source.get('buybackTickers',[]))
     subjects=(names|tags)&approved
     if len(subjects)!=1 or len(tags)>1:
-        return None,reason
+        return source_assess(row,source,reason)
     ticker=next(iter(subjects))
-    if names-{ticker} or tags-{ticker} or ticker not in json.loads(row['tickers_json']):
-        return None,reason
+    if names-{ticker} or tags-{ticker}:
+        return source_assess(row,source,reason)
+    if ticker not in json.loads(row['tickers_json']):
+        return source_assess(row,source,reason) if json.loads(row['tickers_json'])==[] else (None,reason)
     broker_units,broker_reason=broker_commentary.prepare(body,ticker)
     if broker_units:
         return {**dict(row),'body_sha':digest(body),'body_at':row['observed_at'],'ticker':ticker,
@@ -255,6 +259,10 @@ def assess(row, source, reference, heads):
                 'units':broker_units},'eligible-semantic-assessment'
     if broker_reason!='not-broker-led-commentary':
         return None,broker_reason
+    source_actor=source_news_grounding.context(body)['actor']
+    if (re.match(related_company_news.NAME+r'-backed ',body)
+            or (source_actor and not named_companies(source_actor))):
+        return source_assess(row,source,reason)
     if FINANCIAL_ASSESSMENT_HOLD.search(body) or re.search(r'\b'+analyst_news.FIRM+r'\b',body,re.I):
         return None,reason
     aliases=signals.ALIASES.get(ticker,[])
@@ -273,6 +281,47 @@ def assess(row, source, reference, heads):
             unit['actorGrounding']=actor_grounding.derive(unit['quote'],ticker,aliases)
     return {**dict(row),'body_sha':digest(body),'body_at':row['observed_at'],'ticker':ticker,
             'general_source':True,'semantic_assessment':True,'category':'company-development','units':units},'eligible-semantic-assessment'
+
+
+def source_assess(row, source, original_reason):
+    """Source-first materiality assessment; tickers are optional enrichment.
+
+    Only called after the exact approved origin/head/body/clock/withdrawal
+    gates. Do not borrow this route for existing rating/earnings/buyback flows.
+    """
+    body=row['body']
+    tickers=json.loads(row['tickers_json'])
+    if analyst_news.projection(body,tickers)[0]:
+        return None,'covered-analyst-action'
+    # Money inside business news is not inherently a stock-price action.
+    financial_text=re.sub(r'\$\s*\d+(?:[,.]\d+)*','',body)
+    if (FINANCIAL_ASSESSMENT_HOLD.search(financial_text) or buyback_news.CUE.search(body)
+            or re.search(r'\b'+analyst_news.FIRM+r'\b',body,re.I)):
+        return None,original_reason
+    if re.search(r'\b(?:revenue|EPS)\s*:',body,re.I) or re.search(r'\bearnings highlights\b',body,re.I):
+        return None,'covered-earnings-results'
+    for match in re.finditer(r'('+source_news_grounding.NAME+r')\s+\$('+analyst_news.TICKER+r')(?![\w.])',body):
+        named=named_companies(match[1])
+        if named and match[2] not in named:
+            return None,'invalid-subject-evidence'
+    approved=set(source.get('tickers',[]))|set(source.get('extraTickers',[]))|set(source.get('buybackTickers',[]))
+    typed=related_company_news.prepare(body,approved,set(tickers),signals.ALIASES)
+    # A source-level story is never assigned to an investor as its actor.
+    base={**dict(row),'body_sha':digest(body),'body_at':row['observed_at'],'ticker':None,
+          'general_source':True,'source_news':True,'semantic_assessment':True,
+          'category':'company-development','related_tickers':sorted(set(tickers)&approved)}
+    if typed:
+        return {**base,**typed},'eligible-source-news-assessment'
+    cleaned=re.sub(r'(?:\s+https?://[^\s]+)+$','',body.strip())
+    # Every source clause is retained, including unknown named entities. No
+    # successful relation parser is required for admission or materiality.
+    parts=[part for part in re.split(r'\n\s*\n',cleaned) if part]
+    if not 1<=len(parts)<=MAX_UNITS or any(not 16<=len(part)<=MAX_UNIT or part not in body for part in parts):
+        return None,'evidence-unit-limit'
+    units=[{'id':str(index),'quote':part,'actor':'report','ticker':None,
+            'sourceNews':source_news_grounding.context(part)} for index,part in enumerate(parts)]
+    subject=units[0]['sourceNews']['actor']
+    return {**base,'related_subject':subject,'units':units},'eligible-source-news-assessment'
 
 
 def assessments(db,reference,sources=signals.SOURCES,*,skip_held_recap_context=False,authorization_context=None):
@@ -358,7 +407,7 @@ def retained_assessments(db, reference, sources=signals.SOURCES):
 
 def retained_group(row):
     event=buyback_news.event_key(row) if row['category']=='share-buyback' else None
-    return event or (row['ticker'],row['category'],row['body_sha'],reconciliation.instant(row['published_at']).date())
+    return event or ('source-news' if row.get('source_news') else row['ticker'],row['category'],row['body_sha'],reconciliation.instant(row['published_at']).date())
 
 
 def retained_event(db, raw, candidate, reference):
@@ -431,7 +480,7 @@ def admit_retained(db, reference):
                   published_at,observed_at,excerpt,diff,truncated)
                   VALUES(?,?,?,?,?,?,?,'baseline',?,?,'','',0)''',
                   (row['source_id'],row['url'],row['sha'],document['sha'] if document else '',
-                   row['title'],row['tickers_json'],json.dumps({row['ticker']:['$'+row['ticker']]}),
+                   row['title'],row['tickers_json'],json.dumps({} if row.get('source_news') else {row['ticker']:['$'+row['ticker']]}),
                    row['published_at'],row['observed_at']))
                 row['id']=cursor.lastrowid
                 inserted+=1
@@ -620,7 +669,10 @@ def bind_assessment(value,row):
         return None,value['reason']
     if value['disposition']!='publish' or value['reason']!='material-company-development':
         raise ValueError('invalid-note')
-    note=bind_note({'facts':value['facts']},row)
+    derived=related_company_news.render(value,row) if related_company_news.structured(row) else value
+    note=bind_note({'facts':derived['facts']},row)
+    if related_company_news.structured(row):
+        note[related_company_news.MARKER]={'version':related_company_news.VERSION}
     note['semanticAssessment']={'version':ASSESSMENT_VERSION,'disposition':'publish','reason':'material-company-development'}
     validate_note(note,row)
     return note,None
@@ -698,7 +750,7 @@ def validate_anchors(text, quote, unit, language):
         raise ValueError('changed-business-topic')
     # Actor-grounded claims have already checked the exact action stage. A
     # Japanese planned action can faithfully use 予定 without implying a forecast.
-    modal=(MODAL_JA+(r'|予定|計画|意向|方針' if unit.get('actorGrounding') else '')
+    modal=(MODAL_JA+(r'|予定|計画|意向|方針' if unit.get('actorGrounding') or unit.get('sourceNews') or unit.get('relatedSubject') else '')
            if language=='ja' else FORECAST.pattern)
     source_clauses=semantic_clauses(quote,'en')
     for topic in source_concepts:
@@ -717,6 +769,12 @@ def validate_anchors(text, quote, unit, language):
 
 def validate_pair(item,unit):
     quote=unit['quote']
+    if 'relatedSubject' in unit:
+        related_company_news.validate(item,unit)
+        # A signed compute deal is an agreement, not an invented contract.
+        quote=re.sub(r'\bdeals\b','agreements',quote)
+    if 'sourceNews' in unit:
+        source_news_grounding.validate(item,quote,unit['sourceNews'])
     if 'buyback' in unit:
         buyback_news.validate(item,quote,required=True)
     if 'brokerCommentary' in unit:
@@ -733,8 +791,13 @@ def validate_pair(item,unit):
         factual_validation.validate_numbers(numeric_text(quote),numeric_text(text))
         factual_validation.validate_semantics(text,quote)
         factual_validation.validate_acquisition(text,quote,lang,require_status=True)
+        if 'relatedSubject' in unit:
+            # Whole-clause typed re-derivation already proves actor, action,
+            # status and topics. A competition forecast must not be applied
+            # to the separate preparation clause by the legacy topic regex.
+            continue
         validate_anchors(text,quote,unit,lang)
-        modal_ja=MODAL_JA+(r'|予定|計画|意向|方針' if unit.get('actorGrounding') else '')
+        modal_ja=MODAL_JA+(r'|予定|計画|意向|方針' if unit.get('actorGrounding') or unit.get('sourceNews') or unit.get('relatedSubject') else '')
         if FORECAST.search(quote) and not re.search(modal_ja if lang=='ja' else FORECAST.pattern,text,re.I):
             raise ValueError('lost-forecast-modality')
         if re.search(r'\b(?:not|never|no longer|underappreciated|underestimated)\b',quote,re.I) and not re.search(r'ない|ず|未|過小|十分.*(?:評価|織り込)|軽視' if lang=='ja' else r'\b(?:not|never|no longer|under\w*|little|insufficient\w*|unrecogn\w*)\b',text,re.I):
@@ -790,6 +853,10 @@ def bind_note(value,row):
 
 def validate_note(note,row):
     expected={'generalSourceVersion','facts'}|({'semanticAssessment'} if row.get('semantic_assessment') else set())
+    if related_company_news.structured(row):
+        expected.add(related_company_news.MARKER)
+        if not isinstance(note,dict) or note.get(related_company_news.MARKER)!={'version':related_company_news.VERSION}:
+            raise ValueError('invalid-note')
     structured=isinstance(note,dict) and buyback_structured.MARKER in note
     if structured:expected.add(buyback_structured.MARKER)
     if not isinstance(note,dict) or set(note)!=expected or note['generalSourceVersion']!=VERSION or not isinstance(note['facts'],list) or len(note['facts'])!=len(row['units']):
@@ -936,8 +1003,14 @@ def public_item(row,note):
         date=row['units'][0]['buyback'].get('eventDate')
         if date and not recap:
             clocks={'publishedOn':date,'sourcePublishedAt':row['published_at'],'observedAt':row['observed_at']}
-    return {'id':str(row['id']),'title':f"{row['ticker']}: {title_en}",'translationJa':f"{row['ticker']}：{title_ja}",
-            'url':row['url'],'publisher':'Reported company news','tickers':[row['ticker']],
+    label=row.get('related_subject') if row.get('source_news') else row['ticker']
+    title_en=(f'{label}: {title_en}' if label else 'Reported business news')
+    title_ja=(f'{label}：{title_ja}' if label else '事業・技術に関する報道')
+    preparation_title=related_company_news.preparation_title(row)
+    if preparation_title:
+        title_en,title_ja=preparation_title['en'],preparation_title['ja']
+    return {'id':str(row['id']),'title':title_en,'translationJa':title_ja,
+            'url':row['url'],'publisher':'Reported company news','tickers':row.get('related_tickers',[])[:5] if row.get('source_news') else [row['ticker']],
             **clocks,
             'bodyJa':'\n\n'.join(paragraphs['ja']),'bodyEn':'\n\n'.join(paragraphs['en']),
             'generalSource':VERSION}
@@ -973,6 +1046,8 @@ def publications(db,reference,*,authorization_context=None):
             else:
                 if semantic_review(db,row,reference):continue
                 note=validate_note(note,row)
+                if related_company_news.structured(row) and not related_company_news.publication_valid(db,row,saved,note):
+                    continue
         except (ValueError,TypeError,KeyError):
             continue
         result.append((row,saved,note))

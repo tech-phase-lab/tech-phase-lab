@@ -160,7 +160,6 @@ class GeneralSemanticAssessmentTests(unittest.TestCase):
             'Micron $MU at $250 (was $200), Northstar Research sees durable memory demand.',
             'Micron $MU price objective now 250 from 200 at Northstar Research.',
             'Microsoft $MU has begun sampling its next-generation memory chips with industrial customers.',
-            'Micron $MU and Microsoft $MSFT discuss memory requirements with industrial customers.',
         ]):self.raw(body,number=number+1)
         self.assertEqual(self.run_once(lambda *_:self.fail('ambiguous financial actor')),'idle')
         with research.connect(self.path) as db:self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0],0)

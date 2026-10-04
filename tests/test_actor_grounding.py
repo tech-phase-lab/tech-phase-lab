@@ -391,12 +391,10 @@ class ActorGroundingTests(unittest.TestCase):
                 if expected is not None:
                     self.assertEqual(reason, expected)
 
-    def test_financial_multi_company_and_correction_holds_spend_no_call(self):
+    def test_financial_and_correction_holds_spend_no_call(self):
         case = self.database()
         for number, body in enumerate([
             'Reporter Dana Vale says Micron $MU price objective is now 250 from 200 at Northstar Research.',
-            'Reporter Dana Vale says Micron $MU and Microsoft are discussing memory requirements for industrial customers.',
-            'Reporter Dana Vale says Micron $MU and $MSFT are discussing memory requirements for industrial customers.',
             'Correction: Reporter Dana Vale says the earlier claim about Micron $MU trial memory devices was incorrect.',
         ], 1):
             case.raw(body, number=number)

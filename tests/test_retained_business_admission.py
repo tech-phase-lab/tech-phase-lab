@@ -260,7 +260,6 @@ class RetainedBusinessAdmissionTests(unittest.TestCase):
     def test_rejections_never_create_events(self):
         cases=[{'text':'Micron $MU launches a webinar. Register now for our course.'},
                {'text':'Microsoft $MU launches a cloud service for new industrial customers.'},
-               {'text':'Micron $MU signed an agreement with Microsoft $MSFT for expanded production.'},
                {'account':'FABYMETAL4'}, {'truncated':1}, {'sha':'bad'},
                {'first_seen_at':'2026-10-01'}, {'last_seen_at':PUBLISHED},
                {'published_at':(NOW-timedelta(days=8)).isoformat()},
