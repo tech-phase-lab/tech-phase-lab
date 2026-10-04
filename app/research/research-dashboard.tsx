@@ -108,8 +108,13 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   }, [events]);
   const companyGroups = useMemo(() => {
     const groups = new Map<string, MonitoredCompany[]>();
+    const semiconductorGroups: Record<string, { ja: string; en: string }> = {
+        MU: { ja: "メモリ", en: "Memory" }, SKHY: { ja: "メモリ", en: "Memory" }, SNDK: { ja: "メモリ", en: "Memory" },
+        NVDA: { ja: "半導体設計", en: "Chip design" }, AMD: { ja: "半導体設計", en: "Chip design" }, AVGO: { ja: "半導体設計", en: "Chip design" }, ARM: { ja: "半導体設計", en: "Chip design" },
+        TSM: { ja: "製造・装置", en: "Foundry & equipment" }, ASML: { ja: "製造・装置", en: "Foundry & equipment" },
+      };
     for (const company of monitoredCompanies) {
-      const key = company.sector[lang];
+      const key = (semiconductorGroups[company.ticker] ?? company.sector)[lang];
       groups.set(key, [...(groups.get(key) ?? []), company]);
     }
     return [...groups.entries()];
