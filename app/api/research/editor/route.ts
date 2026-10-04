@@ -1,0 +1,109 @@
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const maxDuration = 120;
+
+function endpoint(path: string) {
+  const value = process.env.RESEARCH_MONITOR_URL;
+  if (!value) throw new Error("not-configured");
+  const url = new URL(value);
+  const local = ["localhost", "127.0.0.1"].includes(url.hostname);
+  if (url.username || url.password || (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && local))) {
+    throw new Error("invalid-monitor-url");
+  }
+  url.pathname = `${url.pathname.replace(/\/$/, "")}${path}`;
+  url.search = "";
+  url.hash = "";
+  return url;
+}
+
+function authorization(request: Request) {
+  const value = request.headers.get("authorization") ?? "";
+  return /^Bearer [\x21-\x7e]{24,512}$/.test(value) ? value : null;
+}
+
+function response(status: number, value: unknown) {
+  return Response.json(value, { status, headers: { "Cache-Control": "no-store", "Referrer-Policy": "no-referrer", "X-Content-Type-Options": "nosniff" } });
+}
+
+async function relay(url: URL, init: RequestInit, timeout = 15_000) {
+  const upstream = await fetch(url, { ...init, cache: "no-store", signal: AbortSignal.timeout(timeout) });
+  const text = await upstream.text();
+  if (new TextEncoder().encode(text).length > 3_000_000) return response(502, { ok: false, error: "oversized-response" });
+  let payload: unknown;
+  try { payload = JSON.parse(text); } catch { payload = { ok: false, error: "invalid-response" }; }
+  return response(upstream.status, payload);
+}
+
+export async function GET(request: Request) {
+  const auth = authorization(request);
+  if (!auth) return response(401, { ok: false, error: "unauthorized" });
+  try {
+    const requestUrl = new URL(request.url);
+    const requested = Number(requestUrl.searchParams.get("limit") ?? 20);
+    const limit = Number.isInteger(requested) ? Math.max(1, Math.min(requested, 50)) : 20;
+    const kind = requestUrl.searchParams.get("kind");
+    const eventIds = requestUrl.searchParams.getAll("eventId");
+    if (eventIds.length && (kind !== "signals" || eventIds.length !== 1 || !/^[1-9][0-9]{0,11}$/.test(eventIds[0]))) {
+      return response(400, { ok: false, error: "invalid-event-id" });
+    }
+    const view = requestUrl.searchParams.get("view") ?? (kind === "official-research" ? "pending" : "all");
+    const allowedViews = kind === "official-research" ? ["pending", "all"] : ["posts", "news"].includes(kind ?? "") ? ["all"] : kind === "signals" ? ["all", "new", "changed", "baseline", "targets", "ratings"] : kind === "annual"
+      ? ["all", "actionable", "invalid", "draft", "held", "approved", "rejected"]
+      : ["all", "ready", "blocked", "needs-draft"];
+    if (!allowedViews.includes(view)) {
+      return response(400, { ok: false, error: "invalid-review-filter" });
+    }
+    const url = endpoint(kind === "official-research" ? "/admin/official-research" : kind === "posts" ? "/admin/posts" : kind === "news" ? "/admin/news" : kind === "signals" ? "/admin/signals" : kind === "annual" ? "/admin/annual-briefs" : "/admin/briefs");
+    url.searchParams.set("limit", String(limit));
+    url.searchParams.set("view", view);
+    if (eventIds.length) url.searchParams.set("eventId", eventIds[0]);
+    if (kind === "posts") {
+      const offset = Number(requestUrl.searchParams.get("offset") ?? 0);
+      if (!Number.isInteger(offset) || offset < 0 || offset > 100000) return response(400, { ok: false, error: "invalid-offset" });
+      url.searchParams.set("offset", String(offset));
+    }
+    if (kind === "signals" && requestUrl.searchParams.has("ticker")) {
+      const ticker = requestUrl.searchParams.get("ticker") ?? "";
+      if (!/^[A-Z0-9.\-]{1,15}$/.test(ticker)) return response(400, { ok: false, error: "invalid-ticker" });
+      url.searchParams.set("ticker", ticker);
+    }
+    return await relay(url, { headers: { Authorization: auth } });
+  } catch {
+    return response(503, { ok: false, error: "editorial-service-unavailable" });
+  }
+}
+
+export async function POST(request: Request) {
+  const auth = authorization(request);
+  if (!auth) return response(401, { ok: false, error: "unauthorized" });
+  try {
+    const text = await request.text();
+    if (!text || new TextEncoder().encode(text).length > 64 * 1024) return response(400, { ok: false, error: "invalid-request-size" });
+    let parsed: { action?: unknown; payload?: unknown };
+    try { parsed = JSON.parse(text); } catch { return response(400, { ok: false, error: "invalid-json" }); }
+    if (!parsed || typeof parsed !== "object" || !["generate", "draft", "review", "annual-draft", "annual-review", "news-generate", "news-retry", "news-draft", "news-review", "post-draft", "post-review"].includes(String(parsed.action)) || !parsed.payload || typeof parsed.payload !== "object" || Array.isArray(parsed.payload)) {
+      return response(400, { ok: false, error: "invalid-request" });
+    }
+    const paths: Record<string, string> = {
+      "post-draft": "/admin/posts/draft",
+      "post-review": "/admin/posts/review",
+      generate: "/admin/briefs/generate",
+      draft: "/admin/briefs/draft",
+      review: "/admin/briefs/review",
+      "annual-draft": "/admin/annual-briefs/draft",
+      "annual-review": "/admin/annual-briefs/review",
+      "news-generate": "/admin/news/generate",
+      "news-retry": "/admin/news/retry",
+      "news-draft": "/admin/news/draft",
+      "news-review": "/admin/news/review",
+    };
+    const path = paths[String(parsed.action)];
+    return await relay(endpoint(path), {
+      method: "POST",
+      headers: { Authorization: auth, "Content-Type": "application/json" },
+      body: JSON.stringify(parsed.payload),
+    }, ["news-generate", "news-retry"].includes(String(parsed.action)) ? 115_000 : 15_000);
+  } catch {
+    return response(503, { ok: false, error: "editorial-service-unavailable" });
+  }
+}

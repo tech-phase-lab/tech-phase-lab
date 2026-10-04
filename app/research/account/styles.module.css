@@ -1,0 +1,7 @@
+.card {max-width:540px;margin:28px auto;padding:28px;border:1px solid #304449;border-radius:18px;background:#101e24;color:#eaf3f1;}
+.card > h2 {font-size:1.3rem;margin:12px 0;}.card > p {line-height:1.7;color:#abbfc2;}.card > a {display:block;color:#94d8c1;margin:20px 0;}.card > button {padding:10px 18px;border:1px solid #55717c;border-radius:9px;cursor:pointer;}.plan {font-size:.8rem;letter-spacing:.16em;color:#d1bc7b;}
+@media(max-width:480px){.card{padding:20px;}}
+
+.preview{margin-top:24px;border-top:1px solid #304449;padding-top:18px}.preview summary{cursor:pointer;color:#adc0c6}.preview p{font-size:.85rem;line-height:1.6}.testButtons{display:flex;flex-wrap:wrap;gap:8px}.testButtons button{padding:10px 12px;border:1px solid #55717c;border-radius:8px;background:#172d35;color:#eaf3f1;cursor:pointer}.testButtons button:disabled{opacity:.5}
+
+.placeholder{height:160px;border-radius:8px;background:#ffffff03}

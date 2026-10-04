@@ -1,0 +1,19 @@
+.sourceTimeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 14px;
+  padding: 11px 13px;
+  border: 1px solid #203431;
+  border-radius: 8px;
+  background: #091210;
+  color: #81968f;
+  font-size: 12px;
+}
+
+.sourceTimeline b {
+  margin-left: 5px;
+  color: #c8dad4;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 500;
+}

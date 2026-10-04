@@ -1,0 +1,64 @@
+{
+  "policy": "reviewed-retained-announcement-v1",
+  "startsAt": "2026-10-04T00:00:00+00:00",
+  "expiresAt": "2026-10-05T00:00:00+00:00",
+  "announcements": [
+    {
+      "sourceId": "primary-ir-NVDA",
+      "ticker": "NVDA",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-announces-a-150-billion-share-repurchase-authorization-increase",
+      "title": "NVIDIA Announces a $150 Billion Share Repurchase Authorization Increase",
+      "publishedOn": "2026-09-28",
+      "observedAt": "2026-09-28T11:05:29.215000+00:00",
+      "bodyTextSha": "f34631ef55ea4e22b1b01fda91db238c6f23966f899d6bafebc630a68220b07b",
+      "bodyChars": 1007,
+      "extractorVersion": "2026-10-04-article-document-v5",
+      "copy": {
+        "title": {
+          "ja": "NVIDIA、自社株買い承認枠の1500億ドル増額を発表",
+          "en": "NVIDIA announces a $150 billion share repurchase authorization increase",
+          "anchors": [
+            "NVIDIA Announces a $150 Billion"
+          ]
+        },
+        "summary": {
+          "ja": "NVIDIA取締役会は自社株買い承認枠を1500億ドル追加し、残る承認枠は2350億ドルとなった。",
+          "en": "NVIDIA’s board authorized an additional $150 billion for share repurchases, bringing the remaining authorization to $235 billion.",
+          "anchors": [
+            "NVIDIA today announced"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "取締役会は自社株買い承認枠を1500億ドル増額した。",
+            "en": "The board increased the share repurchase authorization by $150 billion.",
+            "anchors": [
+              "NVIDIA today announced"
+            ]
+          },
+          {
+            "ja": "自社株買い承認枠の残額は2350億ドルとなった。",
+            "en": "The remaining share repurchase authorization totals $235 billion.",
+            "anchors": [
+              "NVIDIA today announced"
+            ]
+          },
+          {
+            "ja": "会社は、残る自社株買い計画を2028会計年度にかけて実行する見込みとしている。",
+            "en": "The company expects to execute the remaining share repurchase program through fiscal year 2028.",
+            "anchors": [
+              "The company expects"
+            ]
+          }
+        ],
+        "purpose": {
+          "ja": "会社は、資金創出力により技術への投資と株主への資本還元を行えるとしている。",
+          "en": "The company says its cash generation gives it capacity to invest in technology and return capital to shareholders.",
+          "anchors": [
+            "“NVIDIA’s growth"
+          ]
+        }
+      }
+    }
+  ]
+}

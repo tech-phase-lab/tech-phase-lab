@@ -1,0 +1,36 @@
+{
+  "title": {
+    "ja": "Oracle、Point Beachの電力費用（約$300 million）を負担する計画",
+    "en": "Oracle plans to absorb approximately $300 million in Point Beach energy costs"
+  },
+  "summary": {
+    "ja": "OracleはPoint Beach原子力発電所の発電量の一部を購入する方針を発表。ウィスコンシン州の電力利用者の燃料費軽減額は約$300 million と見込んでいる。",
+    "en": "Oracle announced a commitment to buy part of Point Beach’s electricity output, with expected fuel-cost savings of approximately $300 million for Wisconsin utility customers."
+  },
+  "facts": [
+    {
+      "ja": "Oracleは上昇する電力費用（約$300 million）を負担し、ウィスコンシン州の電力利用者100万人超を保護する方針。",
+      "en": "Oracle plans to absorb approximately $300 million in rising energy costs, benefiting more than 1 million Wisconsin utility customers."
+    },
+    {
+      "ja": "対象は既存のPoint Beach原子力発電所。同発電所は50年以上にわたり、ウィスコンシン州に安定したカーボンフリーの電力を供給してきた。",
+      "en": "The commitment concerns the existing Point Beach Nuclear Plant, which has supplied dependable carbon-free power to Wisconsin for more than 50 years."
+    },
+    {
+      "ja": "電力購入契約の一部への参加計画には、ウィスコンシン州公益事業委員会の承認が必要。",
+      "en": "The planned participation in the Point Beach power-purchase arrangement remains subject to approval by the Public Service Commission of Wisconsin."
+    },
+    {
+      "ja": "Port Washingtonのデータセンター計画Project Lighthouseでは、地域経済への効果が$11 billion 超、3年間の熟練建設雇用が4,000人超、継続的な運営職が1,000人となる見込み。",
+      "en": "Project Lighthouse in Port Washington is expected to generate more than $11 billion locally, create over 4,000 skilled construction jobs over three years, and support 1,000 ongoing operations positions."
+    },
+    {
+      "ja": "OracleはProject Lighthouseの電力費用を全額負担し、電力利用者の請求額を保護して送電網の信頼性を支える方針。",
+      "en": "Oracle will fully fund Project Lighthouse’s energy costs to protect ratepayers’ electricity bills and support grid reliability."
+    }
+  ],
+  "purpose": {
+    "ja": "発電所の費用上昇から利用者を保護し、家庭の電気料金への圧力を和らげ、州内の安定した電力供給を支えることを目指す。",
+    "en": "The stated aim is to shield customers from rising plant costs, ease pressure on household electricity bills, and sustain reliable power for Wisconsin."
+  }
+}

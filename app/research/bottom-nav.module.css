@@ -1,0 +1,44 @@
+.mobile { display:none; }
+@media (max-width:760px) {
+  .mobile { display:block; }
+  .bar { position:fixed; bottom:0; left:0; right:0; z-index:60; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); padding:8px 8px calc(24px + env(safe-area-inset-bottom)); background:#0d171ff5; backdrop-filter:blur(16px); border-top:1px solid #2b3d47; }
+  .bar a,.bar button { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; min-height:47px; padding:3px 0; border:0; border-radius:9px; color:#93a3ae; background:transparent; text-decoration:none; font:500 10px/1.25 Arial,sans-serif; cursor:pointer; }
+  .bar svg { width:22px; height:22px; }
+  .bar [aria-current=page],.bar [aria-expanded=true] { color:#95e4c6; background:#19332e; }
+  .bar :focus-visible,.sheet a:focus-visible { outline:2px solid #95e4c6; outline-offset:2px; }
+  .backdrop { position:fixed; inset:0; z-index:58; border:0; background:#0007; touch-action:none; }
+  .sheet { position:fixed; left:12px; right:12px; bottom:calc(98px + env(safe-area-inset-bottom)); z-index:59; padding:10px; border:1px solid #354b55; border-radius:18px; background:#14212b; box-shadow:0 -12px 48px #0005; max-height:60vh; overflow:auto; }
+  .sheet a { display:flex; justify-content:space-between; gap:10px; padding:15px 12px; border-radius:8px; color:#deebe6; text-decoration:none; font:500 14px/1.3 Arial,sans-serif; }
+  .sheet a:hover { background:#20372f; }
+  .sheet a span { color:#8db7a9; }
+}
+
+@media(max-width:760px) {
+  .sheet { padding:18px; border-radius:22px; background:linear-gradient(150deg,#192c35,#101b24); }
+  .sheetHeading { display:flex; align-items:center; justify-content:space-between; padding:0 4px 14px; color:#ecf3f1; font-size:15px; }
+  .sheetHeading button { width:32px; height:32px; border:1px solid #36505d; border-radius:50%; background:#20343e; color:#c6d6dc; font-size:23px; cursor:pointer; }
+  .menuGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .menuGrid a { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:12px; min-height:98px; padding:14px; border:1px solid #2b424e; border-radius:14px; background:#1b2c36; font-size:12px; }
+  .menuGrid a span { color:#dce9e7; }
+  .menuGrid .menuIcon { display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:10px; color:#a3e8ce; background:#28473f; }
+  .menuIcon svg { width:20px; height:20px; }
+}
+
+/* Compact reading destinations, with a comfortable touch target. */
+@media(max-width:760px){
+ .menuGrid{grid-template-columns:1fr;gap:0}
+ .menuGrid a{flex-direction:row;align-items:center;justify-content:flex-start;min-height:48px;padding:8px 10px;gap:12px;border:0;border-bottom:1px solid #2b424e;border-radius:0;background:transparent;font-size:14px}
+ .menuGrid .menuIcon{width:28px;height:28px;flex-shrink:0;border-radius:7px}
+ .sheet{padding:12px;max-height:65vh}
+ .sheetHeading{padding-bottom:8px}
+}
+
+@media(max-width:760px){
+ .sheet{display:flex;flex-direction:column;overflow:hidden;max-height:min(65dvh,calc(100dvh - 130px - env(safe-area-inset-top) - env(safe-area-inset-bottom)))}
+ .sheetHeading{flex-shrink:0;min-height:48px;padding:0 4px 8px;border-bottom:1px solid #2b424e}
+ .sheetHeading button{width:44px;height:44px}
+ .menuGrid{min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:4px}
+ .menuGrid a{flex-shrink:0}
+}
+
+@media(max-width:760px){:global(body:has(input:focus,textarea:focus,[contenteditable="true"]:focus)) .mobile{display:none}}

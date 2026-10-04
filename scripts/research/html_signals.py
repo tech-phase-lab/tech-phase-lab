@@ -1,0 +1,526 @@
+"""Bounded official-news index discovery; no browser or access-control bypass."""
+from html.parser import HTMLParser
+from datetime import datetime, timedelta
+import json
+import re
+from urllib.parse import urljoin, urlsplit
+
+
+class NewsHTML(HTMLParser):
+    void_tags = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
+
+    def __init__(self, body_class=None, title_class=None, published_json_ld_field=None):
+        super().__init__(convert_charrefs=True)
+        self.links, self.title, self.published = [], [], None
+        self.link_classes = {}
+        self.in_h1 = False
+        self.article, self.main = [], []
+        self.capture = None
+        self.capture_stack = []
+        self.in_next_data = False
+        self.next_data = []
+        self.body_class = body_class
+        self.title_class = title_class
+        self.published_json_ld_field = published_json_ld_field
+        self.in_json_ld = False
+        self.json_ld = []
+        self.selected = []
+        self.selected_stack = []
+
+    @staticmethod
+    def close_scope(stack, tag):
+        # Ignore unmatched end tags and close any unclosed descendants with
+        # their matching ancestor. A raw depth counter can end the article
+        # early or leak page chrome when publisher markup is unbalanced.
+        if tag in stack:
+            index = len(stack) - 1 - stack[::-1].index(tag)
+            del stack[index:]
+
+    def handle_starttag(self, tag, attrs):
+        values = dict(attrs)
+        if tag == 'script' and values.get('id') == '__NEXT_DATA__':
+            self.in_next_data = True
+        if (tag == 'script' and self.published_json_ld_field
+                and values.get('type', '').lower() == 'application/ld+json'):
+            self.in_json_ld = True
+            self.json_ld = []
+        if tag == 'a' and values.get('href'):
+            self.links.append(values['href'])
+            self.link_classes[values['href']] = values.get('class', '')
+        if tag == 'h1' and not self.title and (not self.title_class or self.title_class in values.get('class', '').split()):
+            self.in_h1 = True
+        void = tag in self.void_tags
+        if self.selected_stack:
+            if not void:
+                self.selected_stack.append(tag)
+            self.selected.append(self.get_starttag_text())
+        elif self.body_class and not self.selected and self.body_class in values.get('class', '').split() and not void:
+            self.selected_stack = [tag]
+            self.selected.append(self.get_starttag_text())
+        if tag == 'meta' and (values.get('property') or values.get('name')) == 'article:published_time':
+            self.published = values.get('content')
+        if tag in {'article', 'main'} and not self.capture:
+            self.capture, self.capture_stack = tag, [tag]
+        elif self.capture and not void:
+            self.capture_stack.append(tag)
+        if self.capture:
+            getattr(self, self.capture).append(self.get_starttag_text())
+
+    def handle_startendtag(self, tag, attrs):
+        # In HTML, a trailing slash does not close non-void elements. PR
+        # Newswire gallery tiles use <div/> followed by a real </div>; treating
+        # the tile as XML prematurely closes the surrounding article capture.
+        self.handle_starttag(tag, attrs)
+
+    def handle_endtag(self, tag):
+        if self.selected_stack:
+            self.selected.append(f'</{tag}>')
+            self.close_scope(self.selected_stack, tag)
+        if tag == 'script' and self.in_json_ld:
+            raw = ''.join(self.json_ld)
+            if len(raw) <= 100_000:
+                try:
+                    decoded = json.loads(raw)
+                except (TypeError, ValueError):
+                    decoded = None
+                candidates = decoded if isinstance(decoded, list) else [decoded]
+                for candidate in candidates:
+                    value = (candidate.get(self.published_json_ld_field)
+                             if isinstance(candidate, dict) else None)
+                    if isinstance(value, str) and len(value) <= 100:
+                        self.published = value
+                        break
+            self.in_json_ld = False
+            self.json_ld = []
+        if tag == 'script':
+            self.in_next_data = False
+        if tag == 'h1':
+            self.in_h1 = False
+        if self.capture:
+            getattr(self, self.capture).append(f'</{tag}>')
+            self.close_scope(self.capture_stack, tag)
+            if not self.capture_stack:
+                self.capture = None
+
+    def handle_data(self, value):
+        if self.selected_stack:
+            from html import escape
+            self.selected.append(escape(value))
+        if self.in_next_data:
+            self.next_data.append(value)
+        if self.in_json_ld:
+            self.json_ld.append(value)
+        if self.in_h1:
+            self.title.append(value)
+        if self.capture:
+            # Preserve literal angle brackets as text, not new markup.
+            from html import escape
+            getattr(self, self.capture).append(escape(value))
+
+
+def json_path(value, path):
+    """Read one configured path from publisher-owned JSON without guessing keys."""
+    for key in path:
+        if not isinstance(value, dict) or key not in value:
+            raise ValueError('signal-article-next-data-path')
+        value = value[key]
+    return value
+
+
+def rich_text(value, max_nodes=20_000, max_depth=20):
+    """Extract bounded Contentful rich-text leaves, excluding metadata/navigation."""
+    parts = []
+    nodes = 0
+    stack = [(value, 0)]
+    while stack:
+        node, depth = stack.pop()
+        nodes += 1
+        if nodes > max_nodes or depth > max_depth:
+            raise ValueError('signal-article-next-data-limit')
+        if isinstance(node, list):
+            stack.extend((child, depth + 1) for child in reversed(node))
+        elif isinstance(node, dict):
+            if node.get('nodeType') == 'text' and isinstance(node.get('value'), str):
+                parts.append(node['value'])
+                continue
+            stack.extend(
+                (child, depth + 1) for child in reversed(list(node.values()))
+                if isinstance(child, (dict, list))
+            )
+    return parts
+
+
+def visible_date(text, pattern, date_format):
+    """Return an ISO date only when the configured visible-body format matches."""
+    if not pattern or not date_format:
+        return None
+    match = re.search(pattern, text)
+    if not match:
+        return None
+    try:
+        parsed = datetime.strptime(match.group(0), date_format)
+    except ValueError as exc:
+        raise ValueError('signal-article-published-date') from exc
+    return parsed.date().isoformat()
+
+
+def article_retry_due(next_check, checked):
+    """Keep corrupt persisted child schedules from deferring an article forever."""
+    from datetime import timedelta, timezone
+
+    try:
+        current = datetime.fromisoformat(str(checked).replace('Z', '+00:00'))
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError('signal-article-reference-time') from exc
+    if current.tzinfo is None:
+        raise ValueError('signal-article-reference-timezone')
+    current = current.astimezone(timezone.utc)
+    if not next_check:
+        return True
+    try:
+        scheduled = datetime.fromisoformat(str(next_check).replace('Z', '+00:00'))
+        if scheduled.tzinfo is None:
+            return True
+        scheduled = scheduled.astimezone(timezone.utc)
+    except (TypeError, ValueError, OverflowError):
+        return True
+    # Seven days is the longest lawful access-control backoff used below.
+    # Valid bounded future schedules remain deferred; corrupt unbounded values
+    # become due and are replaced after the single normal request attempt.
+    return scheduled <= current or scheduled > current + timedelta(days=7)
+
+
+def sanitize_recovery(value):
+    """Allow only bounded, URL-free recovery measurements in persisted state."""
+    if not isinstance(value, dict):
+        return None
+    failed_at = value.get('failedAt')
+    recovered_at = value.get('recoveredAt')
+    attempts = value.get('attempts')
+    error_kind = value.get('errorKind')
+    if (not isinstance(failed_at, str) or not isinstance(recovered_at, str)
+            or not isinstance(attempts, int) or isinstance(attempts, bool)
+            or not 2 <= attempts <= 101
+            or error_kind not in {
+                'accessRestricted', 'rateLimited', 'timeout', 'server',
+                'invalidResponse', 'articlePartial', 'other',
+            }):
+        return None
+    try:
+        failed = datetime.fromisoformat(failed_at.replace('Z', '+00:00'))
+        recovered = datetime.fromisoformat(recovered_at.replace('Z', '+00:00'))
+    except (TypeError, ValueError, OverflowError):
+        return None
+    if (failed.tzinfo is None or recovered.tzinfo is None
+            or not failed <= recovered <= failed + timedelta(days=7)):
+        return None
+    return {
+        'failedAt': failed.isoformat(),
+        'recoveredAt': recovered.isoformat(),
+        'attempts': attempts,
+        'errorKind': error_kind,
+    }
+
+
+def sanitize_child_state(value, validator, error_validator):
+    """Allow only bounded scheduling and HTTP-cache fields for one article."""
+    if not isinstance(value, dict):
+        return None
+    entry = {
+        'baseline': value.get('baseline') if isinstance(value.get('baseline'), bool) else True,
+    }
+    for key in ('checked', 'succeeded', 'next_check', 'first_failed_at'):
+        raw = value.get(key)
+        if raw is None:
+            if key == 'first_failed_at' and key in value:
+                entry[key] = None
+            continue
+        if not isinstance(raw, str) or len(raw) > 100:
+            continue
+        try:
+            parsed = datetime.fromisoformat(raw.replace('Z', '+00:00'))
+        except (ValueError, OverflowError):
+            continue
+        if parsed.tzinfo is not None:
+            entry[key] = parsed.isoformat()
+    if 'error' in value:
+        entry['error'] = error_validator(value.get('error'))
+    for key, maximum in (('failures', 10), ('failure_attempts', 100)):
+        raw = value.get(key)
+        entry[key] = raw if (isinstance(raw, int) and not isinstance(raw, bool)
+                             and 0 <= raw <= maximum) else 0
+    # Recovery latency and total attempts are evidence only when all failure
+    # fields describe the same active incident.  Do not let a legacy/corrupt
+    # timestamp retain an unrelated attempt count and inflate the next measured
+    # recovery.  The next failed request will start a fresh measurement.
+    if (not entry.get('error') or not entry.get('first_failed_at')
+            or entry['failure_attempts'] < 1):
+        entry['first_failed_at'] = None
+        entry['failure_attempts'] = 0
+    for key in ('etag', 'last_modified'):
+        if (cleaned := validator(value.get(key))) is not None:
+            entry[key] = cleaned
+    return entry
+
+
+def sanitize_queue_overflow(value):
+    """Bounded observations of unadmitted links, not unique lost-story counts."""
+    result = {'current': 0, 'observations': 0, 'maxUnadmitted': 0, 'lastAt': None}
+    if not isinstance(value, dict):
+        return result
+    for key, maximum in (('current', 1000), ('observations', 1_000_000), ('maxUnadmitted', 1000)):
+        raw = value.get(key)
+        if isinstance(raw, int) and not isinstance(raw, bool) and 0 <= raw <= maximum:
+            result[key] = raw
+    raw = value.get('lastAt')
+    if isinstance(raw, str) and len(raw) <= 100:
+        try:
+            parsed = datetime.fromisoformat(raw.replace('Z', '+00:00'))
+            if parsed.tzinfo is not None:
+                result['lastAt'] = parsed.isoformat()
+        except (ValueError, OverflowError):
+            pass
+    return result
+
+
+def collect(source, previous, tickers, request, clock=None):
+    # Local import avoids a module initialization cycle.
+    import signals
+    import monitor
+    from datetime import datetime, timedelta
+    import json
+
+    sitemap = source.get('indexFormat') == 'sitemap'
+    json_index = source.get('indexFormat') == 'json'
+    capacity = 1000 if sitemap else 100
+    retention_capacity = min(1000, capacity * 2)
+    response = request({**source, 'format': 'json' if json_index else 'feed' if sitemap else 'document'}, {})
+    parser = NewsHTML()
+    if json_index:
+        listing = json_path(json.loads(response['body']), source['jsonListingPath'])
+        if (not isinstance(listing, list) or len(listing) > capacity
+                or any(not isinstance(item, dict) or not isinstance(item.get('url'), str)
+                       for item in listing)):
+            raise ValueError('signal-index-invalid-listing')
+        parser.links = [item['url'] for item in listing]
+    elif sitemap:
+        import xml.etree.ElementTree as ET
+        if re.search(br'<!\s*(DOCTYPE|ENTITY)\b', response['body'], re.I):
+            raise ValueError('unsafe-signal-xml')
+        root = ET.fromstring(response['body'])
+        if signals.local_name(root) != 'urlset' or len(root) > 10000:
+            raise ValueError('signal-index-invalid-sitemap')
+        parser.links = [signals.child_text(node, 'loc') for node in root
+                        if signals.local_name(node) == 'url']
+    else:
+        parser.feed(response['body'].decode('utf-8', errors='replace'))
+    # Some publishers render the article listing from public Next.js page data,
+    # with no article anchors in the initial HTML. Read only the configured path;
+    # do not crawl arbitrary hydration state or execute publisher JavaScript.
+    if source.get('nextDataListingPath'):
+        listing = json.loads(''.join(parser.next_data))
+        for key in source['nextDataListingPath']:
+            listing = listing[key]
+        if not isinstance(listing, list) or len(listing) > 100:
+            raise ValueError('signal-index-invalid-listing')
+        parser.links.extend(item['url'] for item in listing
+                            if isinstance(item, dict) and isinstance(item.get('url'), str))
+    urls = []
+    for href in parser.links:
+        try:
+            url = signals.safe_url(urljoin(source['url'], href), source)
+            if source['id'] == 'bea-pce':
+                from bea_pce import canonical_release_url
+                url = canonical_release_url(url)
+                if url is None:
+                    continue
+        except ValueError:
+            continue
+        path = urlsplit(url).path
+        is_article = any(path.startswith(prefix) for prefix in source.get('articlePrefixes', []))
+        is_article = is_article or any(
+            re.fullmatch(pattern, path) for pattern in source.get('articlePathPatterns', [])
+        )
+        is_feature = any(marker in parser.link_classes.get(href, '') for marker in source.get('articleLinkClasses', []))
+        excluded = any(urlsplit(url).path.startswith(prefix) for prefix in source.get('excludeArticlePrefixes', []))
+        excluded = excluded or len(urlsplit(url).path.strip('/').split('/')) < source.get('minArticlePathSegments', 0)
+        if (is_article or is_feature) and not excluded and url not in urls:
+            urls.append(url)
+    if not urls:
+        raise ValueError('signal-index-no-articles')
+    if len(urls) > capacity:
+        raise ValueError('signal-index-article-limit')
+
+    serialized_state = previous.get('index_state') or '{}'
+    state_corrupt = not isinstance(serialized_state, str) or len(serialized_state) > 2_000_000
+    try:
+        state = json.loads(serialized_state) if not state_corrupt else {}
+    except (TypeError, ValueError):
+        state, state_corrupt = {}, True
+    if not isinstance(state, dict):
+        state, state_corrupt = {}, True
+    raw_children = state.get('children', {})
+    children = {}
+    invalid_children = set()
+    if isinstance(raw_children, dict):
+        for raw_url, raw_entry in list(raw_children.items())[:retention_capacity]:
+            if not isinstance(raw_url, str) or not isinstance(raw_entry, dict):
+                if isinstance(raw_url, str):
+                    invalid_children.add(raw_url)
+                continue
+            try:
+                url = signals.safe_url(raw_url, source)
+            except ValueError:
+                continue
+            entry = sanitize_child_state(
+                raw_entry, monitor.http_validator, monitor.persisted_source_error_code,
+            )
+            if entry is not None:
+                children[url] = entry
+    else:
+        state_corrupt = True
+    recoveries = state.get('recoveries', [])
+    if not isinstance(recoveries, list):
+        recoveries = []
+    initial = state.get('initialized') is not True
+    # The caller supplies its clock so alternate module loaders and tests use
+    # the same timestamp as route persistence. Direct callers retain the
+    # production clock as a safe default.
+    checked = (clock or signals.stamp)()
+    # Index rotation must not delete an unresolved retry before its lawful
+    # next_check. Completed history is evictable; unresolved stored work is not.
+    unresolved = [url for url, child in children.items()
+                  if child.get('error') or not child.get('succeeded')]
+    keep = list(dict.fromkeys(unresolved + urls + list(children)))[:retention_capacity]
+    overflow = sanitize_queue_overflow(state.get('queueOverflow'))
+    overflow['current'] = sum(url not in keep for url in urls)
+    if overflow['current']:
+        overflow.update(observations=min(1_000_000, overflow['observations'] + 1),
+                        maxUnadmitted=max(overflow['maxUnadmitted'], overflow['current']),
+                        lastAt=checked)
+    for url in keep:
+        children.setdefault(url, {
+            'baseline': initial or state_corrupt or url in invalid_children,
+        })
+    children = {url: children[url] for url in keep}
+    pending = [url for url in keep
+               if article_retry_due(children[url].get('next_check'), checked)]
+    pending.sort(key=lambda url: (children[url].get('checked', ''), keep.index(url)))
+    # Retry newly discovered news before unfinished historical imports. Otherwise
+    # a temporary failure pushes a new story behind every unchecked baseline.
+    # Reserve one slot for history/revisions so a busy publisher cannot starve them.
+    fresh = [url for url in pending if not children[url].get('baseline')
+             and not children[url].get('succeeded')]
+    retries = [url for url in pending if children[url].get('error') and url not in fresh]
+    # A rotated fresh failure must not starve behind perpetually new unchecked
+    # links. Reuse the existing third slot, never add requests or reset backoff.
+    rotated_retries = [url for url in pending if url not in urls and children[url].get('error')]
+    selected = fresh[:2]
+    selected += [url for url in rotated_retries + retries if url not in selected][:1]
+    selected += [url for url in pending if url not in selected][:3 - len(selected)]
+    items = []
+    for url in selected:
+        entry = children[url]
+        previous_error = entry.get('error')
+        try:
+            fetched = request({**source, 'url': url, 'format': 'document'}, entry)
+            if fetched.get('not_modified'):
+                if not entry.get('succeeded'):
+                    raise ValueError('signal-304-without-article')
+            else:
+                article = NewsHTML(
+                    source.get('articleBodyClass'),
+                    source.get('articleTitleClass'),
+                    source.get('articleJsonLdPublishedField'),
+                )
+                article.feed(fetched['body'].decode('utf-8', errors='replace'))
+                title = ' '.join(' '.join(article.title).split())[:500]
+                content = ''.join(article.selected if source.get('articleBodyClass') else article.article or article.main)
+                text = monitor.extract_html_text(content.encode())
+                if source.get('nextDataArticleBodyPath'):
+                    next_data = json.loads(''.join(article.next_data))
+                    body = json_path(next_data, source['nextDataArticleBodyPath'])
+                    text = '\n'.join(' '.join(part.split()) for part in rich_text(body) if part.strip())
+                    if source.get('nextDataArticleTitlePath'):
+                        next_title = json_path(next_data, source['nextDataArticleTitlePath'])
+                        if not isinstance(next_title, str):
+                            raise ValueError('signal-article-next-data-title')
+                        title = ' '.join(next_title.split())[:500]
+                if not title or len(text) < 120:
+                    raise ValueError('signal-article-body-limit')
+                truncated = len(text) >= signals.MAX_TEXT
+                text = text[:signals.MAX_TEXT]
+                publication = signals.date_value(article.published or '')
+                if source['id'] == 'bea-pce':
+                    from bea_pce import parse_release, release_title
+                    if truncated:
+                        raise ValueError('bea-pce-truncated-release')
+                    if title == 'News Release':
+                        title = release_title(text)
+                    publication = parse_release(title, text, url)['publishedAt']
+                matches = signals.match_companies(title + '\n' + text, tickers)
+                for ticker in source.get('tickers', []):
+                    if ticker in tickers:
+                        matches.setdefault(ticker, ['publisher-company'])
+                items.append({'url': url, 'title': title, 'text': text,
+                              'publishedAt': publication,
+                              'publishedOn': visible_date(
+                                  text,
+                                  source.get('nextDataArticlePublishedDatePattern'),
+                                  source.get('nextDataArticlePublishedDateFormat'),
+                              ),
+                              'matches': matches,
+                              'truncated': truncated,
+                              'baseline': entry['baseline'] and not entry.get('succeeded')})
+                entry.update(etag=fetched.get('etag'), last_modified=fetched.get('last_modified'))
+            first_failed_at = entry.get('first_failed_at')
+            failed_attempts = entry.get('failure_attempts')
+            if previous_error and isinstance(first_failed_at, str) and isinstance(failed_attempts, int):
+                try:
+                    failed = datetime.fromisoformat(first_failed_at)
+                    recovered = datetime.fromisoformat(checked)
+                    if (failed.tzinfo is not None and recovered.tzinfo is not None
+                            and failed <= recovered <= failed + timedelta(days=7)
+                            and 1 <= failed_attempts <= 100):
+                        # Keep only URL-free measurements. The successful request
+                        # is included in the attempt count.
+                        recoveries.append({
+                            'failedAt': failed.isoformat(),
+                            'recoveredAt': recovered.isoformat(),
+                            'attempts': failed_attempts + 1,
+                            'errorKind': signals.signal_error_kind(previous_error),
+                        })
+                except ValueError:
+                    pass
+            entry.update(succeeded=checked, error=None, failures=0,
+                         first_failed_at=None, failure_attempts=0)
+            delay = 3600
+        except Exception as exc:
+            failures = min(10, entry.get('failures', 0) + 1)
+            error = monitor.source_error_code(exc)
+            first_failed_at = entry.get('first_failed_at')
+            if not previous_error or not isinstance(first_failed_at, str):
+                first_failed_at = checked
+            failed_attempts = entry.get('failure_attempts', 0)
+            if (not isinstance(failed_attempts, int) or isinstance(failed_attempts, bool)
+                    or failed_attempts < 0):
+                failed_attempts = 0
+            entry.update(error=error, failures=failures,
+                         first_failed_at=first_failed_at,
+                         failure_attempts=min(100, failed_attempts + 1))
+            retry_hint = monitor.retry_after_seconds(exc, datetime.fromisoformat(checked))
+            delay = max(
+                min(3600, 120 * 2 ** failures),
+                monitor.source_retry_seconds(error, failures, retry_hint),
+            )
+        entry.update(checked=checked, next_check=(datetime.fromisoformat(checked) + timedelta(seconds=delay)).isoformat())
+    errors = sum(bool(value.get('error')) for value in children.values())
+    waiting = sum(not value.get('succeeded') for value in children.values())
+    recoveries = [measurement for item in recoveries
+                  if (measurement := sanitize_recovery(item)) is not None][-100:]
+    return {'_items': items, 'index_state': json.dumps({
+                'initialized': True, 'children': children, 'recoveries': recoveries,
+                'queueOverflow': overflow,
+            }),
+            'article_errors': errors, 'article_pending': waiting,
+            'article_queue_overflow': overflow['current']}

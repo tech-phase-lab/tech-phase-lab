@@ -1,0 +1,71 @@
+{
+  "status": "editorial-review-draft-not-published",
+  "notes": [
+    {
+      "eventId": 1214,
+      "sourceUrl": "https://blogs.nvidia.com/blog/productive-durable-fungible-ai-factories/",
+      "sourceDate": "2026-10-01",
+      "title": {
+        "ja": "NVIDIA、AIファクトリーの費用・GPU活用・開発基盤を説明",
+        "en": "NVIDIA explains AI-factory cost, GPU use and developer ecosystem"
+      },
+      "summary": {
+        "ja": "同社は生産性、耐久性、多用途性がAIファクトリーの投資収益を左右すると説明している。",
+        "en": "NVIDIA describes productivity, durability and versatility as drivers of AI-factory returns."
+      },
+      "facts": [
+        {
+          "ja": "NVIDIAはAIファクトリーの費用を1MW当たり約6,000万ドルと説明している。",
+          "en": "NVIDIA estimates AI-factory cost at roughly $60 million per MW."
+        },
+        {
+          "ja": "同社によると、2020年出荷のA100 GPUは6年後も商用利用が続いている。",
+          "en": "NVIDIA says the A100 GPU, shipped in 2020, remains commercially used six years later."
+        },
+        {
+          "ja": "Barkrは再販価格に基づき、GB300 NVL72の有効寿命を9〜10年と推定している。",
+          "en": "Barkr estimates GB300 NVL72 useful life at nine to 10 years, based on resale values."
+        },
+        {
+          "ja": "同社はCUDA-Xライブラリが1,000超あり、それらを利用する開発者が1,000万人超と説明している。",
+          "en": "NVIDIA cites more than 1,000 CUDA-X libraries and more than 10 million developers building on them."
+        }
+      ],
+      "purpose": {
+        "ja": "同社は処理能力、継続的なハードウェア活用、幅広い用途を通じて投資収益を高めるとしている。",
+        "en": "NVIDIA aims to improve returns through throughput, continued hardware use and broader workloads."
+      }
+    },
+    {
+      "eventId": 1213,
+      "sourceUrl": "https://blogs.nvidia.com/blog/geforce-now-thursday-october-2026-games-list/",
+      "sourceDate": "2026-10-01",
+      "title": {
+        "ja": "GeForce NOW、10月に計25作品の追加を案内",
+        "en": "GeForce NOW announces 25 game additions for October"
+      },
+      "summary": {
+        "ja": "NVIDIAは10月の追加ラインアップと、すでに配信されている作品を案内した。",
+        "en": "NVIDIA outlined October additions and titles already streaming."
+      },
+      "facts": [
+        {
+          "ja": "『The Witcher 3: Wild Hunt – Remastered』は9月29日発売で、記事時点でPerformanceおよびUltimate会員向けに配信中とされている。",
+          "en": "Released September 29, The Witcher 3: Wild Hunt – Remastered was already streaming for Performance and Ultimate members, according to the article."
+        },
+        {
+          "ja": "Ultimate会員には、クラウド上でGeForce RTX 5080相当の性能を提供するとしている。",
+          "en": "Ultimate members are offered GeForce RTX 5080-class performance in the cloud."
+        },
+        {
+          "ja": "一覧の発売日は各ストアの日付であり、GeForce NOWへの追加時期とは異なる場合がある。",
+          "en": "The listed dates are store release dates; GeForce NOW availability can vary as games are added."
+        }
+      ],
+      "purpose": {
+        "ja": "記事は、クラウドで描画・ダウンロード・保存を処理し、高価な機器更新や長いインストールを不要にすると説明している。",
+        "en": "The article says cloud rendering, downloads and storage avoid costly local hardware upgrades and lengthy installations."
+      }
+    }
+  ]
+}

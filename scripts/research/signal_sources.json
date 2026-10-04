@@ -1,0 +1,721 @@
+[
+  {
+    "id": "semianalysis",
+    "name": "SemiAnalysis",
+    "kind": "external-research",
+    "url": "https://newsletter.semianalysis.com/feed",
+    "format": "feed",
+    "allowedHosts": [
+      "newsletter.semianalysis.com"
+    ],
+    "intervalSeconds": 60,
+    "reuse": "permission-required"
+  },
+  {
+    "id": "bea-pce",
+    "name": "BEA",
+    "kind": "publisher-update",
+    "url": "https://www.bea.gov/news/current-releases",
+    "format": "html-index",
+    "articlePathPatterns": [
+      "/news/20[0-9]{2}/personal-income-and-outlays-[a-z]+-20[0-9]{2}"
+    ],
+    "allowedHosts": [
+      "www.bea.gov"
+    ],
+    "intervalSeconds": 120,
+    "retainUnmatched": true,
+    "officialUpdates": true,
+    "reuse": "factual-results-only"
+  },
+  {
+    "id": "nvidia-developer",
+    "name": "NVIDIA Developer Blog",
+    "kind": "publisher-update",
+    "url": "https://developer.nvidia.com/blog/feed/",
+    "format": "feed",
+    "allowedHosts": [
+      "developer.nvidia.com"
+    ],
+    "tickers": [
+      "NVDA"
+    ],
+    "officialUpdates": true,
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "skhynix-news",
+    "name": "SK hynix Newsroom",
+    "kind": "publisher-update",
+    "url": "https://news.skhynix.com/feed/",
+    "format": "feed",
+    "tickers": [
+      "SKHY"
+    ],
+    "allowedHosts": [
+      "news.skhynix.com"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "microsoft-blog",
+    "name": "Microsoft Blog",
+    "kind": "publisher-update",
+    "url": "https://blogs.microsoft.com/feed/",
+    "format": "feed",
+    "tickers": [
+      "MSFT"
+    ],
+    "allowedHosts": [
+      "blogs.microsoft.com"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "nebius-preemptible",
+    "name": "Nebius · Preemptible VMs",
+    "kind": "official-document",
+    "url": "https://docs.nebius.com/compute/virtual-machines/preemptible",
+    "format": "document",
+    "tickers": [
+      "NBIS"
+    ],
+    "allowedHosts": [
+      "docs.nebius.com"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "nebius-changelog",
+    "name": "Nebius · Product changelog",
+    "kind": "official-document",
+    "url": "https://docs.nebius.com/changelog",
+    "format": "document",
+    "tickers": [
+      "NBIS"
+    ],
+    "allowedHosts": [
+      "docs.nebius.com"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "anthropic-news",
+    "name": "Anthropic Newsroom",
+    "kind": "publisher-update",
+    "url": "https://www.anthropic.com/news",
+    "format": "html-index",
+    "articlePrefixes": [
+      "/news/",
+      "/research/"
+    ],
+    "allowedHosts": [
+      "www.anthropic.com"
+    ],
+    "intervalSeconds": 120,
+    "retainUnmatched": true,
+    "reuse": "review-required",
+    "articleLinkClasses": [
+      "FeaturedGrid-"
+    ]
+  },
+  {
+    "id": "nebius-blog",
+    "name": "Nebius Blog",
+    "kind": "publisher-update",
+    "url": "https://nebius.com/blog",
+    "format": "html-index",
+    "articlePrefixes": [
+      "/blog/posts/"
+    ],
+    "nextDataListingPath": [
+      "props",
+      "pageProps",
+      "initialListing",
+      "items"
+    ],
+    "tickers": [
+      "NBIS"
+    ],
+    "officialUpdates": true,
+    "allowedHosts": [
+      "nebius.com"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "dell-blog",
+    "name": "Dell Technologies Blog",
+    "kind": "publisher-update",
+    "url": "https://www.dell.com/en-us/blog/feed/",
+    "format": "feed",
+    "tickers": [
+      "DELL"
+    ],
+    "allowedHosts": [
+      "www.dell.com"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "coreweave-blog",
+    "name": "CoreWeave Blog",
+    "kind": "publisher-update",
+    "url": "https://www.coreweave.com/blog",
+    "format": "html-index",
+    "articlePrefixes": [
+      "/blog/"
+    ],
+    "tickers": [
+      "CRWV"
+    ],
+    "allowedHosts": [
+      "www.coreweave.com",
+      "coreweave.com"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required",
+    "articleBodyClass": "article-content-container"
+  },
+  {
+    "id": "arista-blog",
+    "name": "Arista Networks Blog",
+    "kind": "publisher-update",
+    "url": "https://blogs.arista.com/blog/rss.xml",
+    "format": "feed",
+    "allowedHosts": [
+      "blogs.arista.com"
+    ],
+    "tickers": [
+      "ANET"
+    ],
+    "officialUpdates": true,
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "amd-news-blogs",
+    "name": "AMD News Blogs",
+    "kind": "publisher-update",
+    "url": "https://newsroom.amd.com/rss.xml?content-type=news-blogs",
+    "format": "feed",
+    "allowedHosts": [
+      "newsroom.amd.com",
+      "www.amd.com"
+    ],
+    "tickers": [
+      "AMD"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "bloom-blog",
+    "name": "Bloom Energy Blog",
+    "url": "https://www.bloomenergy.com/feed/",
+    "allowedHosts": [
+      "www.bloomenergy.com"
+    ],
+    "tickers": [
+      "BE"
+    ],
+    "kind": "publisher-update",
+    "format": "feed",
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "google-cloud-blog",
+    "name": "Google Blog · Cloud",
+    "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/rss/",
+    "allowedHosts": [
+      "blog.google"
+    ],
+    "tickers": [
+      "GOOGL"
+    ],
+    "kind": "publisher-update",
+    "format": "feed",
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "micron-blog",
+    "name": "Micron Blog · Sitemap",
+    "url": "https://www.micron.com/sitemap.xml",
+    "allowedHosts": [
+      "www.micron.com"
+    ],
+    "tickers": [
+      "MU"
+    ],
+    "kind": "publisher-update",
+    "format": "html-index",
+    "indexFormat": "sitemap",
+    "articlePrefixes": [
+      "/about/blog/"
+    ],
+    "excludeArticlePrefixes": [
+      "/about/blog/blog-authors/"
+    ],
+    "minArticlePathSegments": 5,
+    "intervalSeconds": 300,
+    "reuse": "review-required"
+  },
+  {
+    "id": "marvell-investor-news",
+    "name": "Marvell Investor News RSS",
+    "url": "https://investor.marvell.com/rss-news-feed",
+    "allowedHosts": [
+      "investor.marvell.com"
+    ],
+    "tickers": [
+      "MRVL"
+    ],
+    "officialUpdates": true,
+    "kind": "publisher-update",
+    "format": "feed",
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "marvell-blog",
+    "name": "Marvell Blog",
+    "url": "https://www.marvell.com/blogs.html",
+    "allowedHosts": [
+      "www.marvell.com"
+    ],
+    "tickers": [
+      "MRVL"
+    ],
+    "kind": "publisher-update",
+    "format": "html-index",
+    "articlePrefixes": [
+      "/blogs/"
+    ],
+    "articleBodyClass": "cmp-blogs-details__desc",
+    "articleTitleClass": "cmp-blogs-details__heading",
+    "intervalSeconds": 120,
+    "reuse": "review-required",
+    "enabled": false
+  },
+  {
+    "id": "vertiv-racks-blog",
+    "name": "Vertiv Racks Blog",
+    "url": "https://racks.vertiv.com/category/blog/feed/",
+    "allowedHosts": [
+      "racks.vertiv.com"
+    ],
+    "tickers": [
+      "VRT"
+    ],
+    "officialUpdates": true,
+    "format": "feed",
+    "kind": "publisher-update",
+    "intervalSeconds": 300,
+    "reuse": "review-required"
+  },
+  {
+    "id": "arm-blog",
+    "name": "Arm Company News RSS",
+    "url": "https://newsroom.arm.com/topics/company/feed",
+    "allowedHosts": [
+      "newsroom.arm.com"
+    ],
+    "tickers": [
+      "ARM"
+    ],
+    "kind": "publisher-update",
+    "format": "feed",
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "broadcom-news",
+    "name": "Broadcom Investor News RSS",
+    "url": "https://investors.broadcom.com/rss/news-releases.xml",
+    "allowedHosts": [
+      "investors.broadcom.com"
+    ],
+    "tickers": [
+      "AVGO"
+    ],
+    "kind": "publisher-update",
+    "format": "feed",
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "tsmc-press-center",
+    "name": "TSMC Press Center",
+    "url": "https://pr.tsmc.com/english/latest-news",
+    "allowedHosts": [
+      "pr.tsmc.com"
+    ],
+    "tickers": [
+      "TSM"
+    ],
+    "officialUpdates": true,
+    "kind": "publisher-update",
+    "format": "html-index",
+    "articlePrefixes": [
+      "/english/news/"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required",
+    "enabled": false
+  },
+  {
+    "id": "palantir-shareholder-letters",
+    "name": "Palantir Shareholder Letters",
+    "url": "https://www.palantir.com/sitemap.xml",
+    "allowedHosts": [
+      "www.palantir.com"
+    ],
+    "tickers": [
+      "PLTR"
+    ],
+    "officialUpdates": true,
+    "kind": "publisher-update",
+    "format": "html-index",
+    "indexFormat": "sitemap",
+    "articlePathPatterns": [
+      "/q[1-4]-20[0-9]{2}-letter/en/"
+    ],
+    "nextDataArticleBodyPath": [
+      "props",
+      "pageProps",
+      "page",
+      "fields",
+      "blocks"
+    ],
+    "nextDataArticleTitlePath": [
+      "props",
+      "pageProps",
+      "page",
+      "fields",
+      "pageTitle"
+    ],
+    "nextDataArticlePublishedDatePattern": "\\b[A-Z][a-z]+ [0-9]{1,2}, 20[0-9]{2}\\b",
+    "nextDataArticlePublishedDateFormat": "%B %d, %Y",
+    "intervalSeconds": 300,
+    "reuse": "review-required"
+  },
+  {
+    "id": "sandisk-news",
+    "name": "Sandisk Official Newsroom",
+    "url": "https://www.sandisk.com/tools/api/globalsearchquery?q=%2A&locale=en-us&fl=title%2Curl%2Cdescription%2CprimaryImage%2CdocumentType%2CdocumentTypeDate&fq=documentType%3APress+Release&from=0&rows=15&sort=documentTypeDate",
+    "allowedHosts": [
+      "www.sandisk.com"
+    ],
+    "tickers": [
+      "SNDK"
+    ],
+    "kind": "publisher-update",
+    "format": "html-index",
+    "articlePrefixes": [
+      "/company/newsroom/press-releases/"
+    ],
+    "intervalSeconds": 120,
+    "reuse": "review-required",
+    "indexFormat": "json",
+    "jsonListingPath": [
+      "docs"
+    ],
+    "articleBodyClass": "para-text"
+  },
+  {
+    "id": "oracle-investor-news",
+    "name": "Oracle Investor News RSS",
+    "url": "https://investor.oracle.com/rss/pressrelease.aspx",
+    "allowedHosts": [
+      "investor.oracle.com"
+    ],
+    "tickers": [
+      "ORCL"
+    ],
+    "kind": "publisher-update",
+    "format": "feed",
+    "intervalSeconds": 120,
+    "reuse": "review-required"
+  },
+  {
+    "id": "x-tipranks",
+    "name": "X · TipRanks",
+    "kind": "publisher-update",
+    "format": "x-api",
+    "enabledBy": "X_API_ENABLED",
+    "extraTickers": [
+      "LITE",
+      "COHR",
+      "VST",
+      "IREN",
+      "ALAB",
+      "APH",
+      "INTC",
+      "AMAT",
+      "SIMO",
+      "AAOI",
+      "META"
+    ],
+    "query": "from:TipRanks ((\"price target\" OR \"target price\" OR \"PT to\") OR (($MU OR $SNDK OR $NBIS OR $NVDA OR $AMD OR $AVGO OR $ARM OR $TSM OR $ASML OR $MRVL OR $ANET OR $CRDO OR $CRWV OR $VRT OR $GEV OR $DELL OR $PLTR OR $MSFT OR $BE OR $GOOGL OR $ORCL OR $LITE OR $COHR OR $VST OR $IREN OR $ALAB OR $APH OR $INTC OR $AMAT OR $SIMO OR $AAOI OR $META OR \"SK hynix\") (earnings OR \"quarterly results\" OR \"financial results\" OR initiated OR upgraded OR downgraded OR reiterated OR maintained))) -is:retweet -is:reply",
+    "accounts": [
+      "TipRanks"
+    ],
+    "tickers": [
+      "MU",
+      "SKHY",
+      "SNDK",
+      "NBIS",
+      "NVDA",
+      "AMD",
+      "AVGO",
+      "ARM",
+      "TSM",
+      "ASML",
+      "MRVL",
+      "ANET",
+      "CRDO",
+      "CRWV",
+      "VRT",
+      "GEV",
+      "DELL",
+      "PLTR",
+      "MSFT",
+      "BE",
+      "GOOGL",
+      "ORCL",
+      "LITE",
+      "COHR",
+      "VST",
+      "IREN",
+      "ALAB",
+      "APH",
+      "INTC",
+      "AMAT",
+      "SIMO",
+      "AAOI",
+      "META"
+    ],
+    "allowedHosts": [
+      "x.com"
+    ],
+    "intervalSeconds": 60,
+    "fastWindow": {
+      "startAt": "2026-09-30T19:30:00Z",
+      "endAt": "2026-09-30T20:50:00Z",
+      "intervalSeconds": 60
+    },
+    "maxResults": 30,
+    "reuse": "review-required",
+    "enabled": false,
+    "buybackUpdates": true
+  },
+  {
+    "id": "x-wallstengine",
+    "name": "X · Market reporters",
+    "kind": "publisher-update",
+    "format": "x-api",
+    "enabledBy": "X_API_ENABLED",
+    "extraTickers": [
+      "LITE",
+      "COHR",
+      "VST",
+      "IREN",
+      "ALAB",
+      "APH",
+      "INTC",
+      "AMAT",
+      "SIMO",
+      "AAOI",
+      "META"
+    ],
+    "query": "(from:wallstengine OR from:tipranks OR (from:FABYMETAL4 (\"price target\" OR \"target price\" OR \"PT to\" OR earnings OR results OR highlights OR EPS OR 決算 OR initiated OR upgraded OR downgraded OR ADP OR CPI OR PPI OR PCE OR FOMC OR NFP OR GDP OR payrolls OR \"jobs report\" OR \"unemployment rate\" OR \"hourly earnings\" OR funding OR financing OR fundraising OR \"capital raise\" OR \"capital raising\" OR convertible OR 資金調達 OR 転換社債 OR buyback OR buybacks OR repurchase OR repurchases OR 自社株買い))) -is:retweet -is:reply",
+    "accounts": [
+      "wallstengine",
+      "tipranks",
+      "FABYMETAL4"
+    ],
+    "tickers": [
+      "MU",
+      "SKHY",
+      "SNDK",
+      "NBIS",
+      "NVDA",
+      "AMD",
+      "AVGO",
+      "ARM",
+      "TSM",
+      "ASML",
+      "MRVL",
+      "ANET",
+      "CRDO",
+      "CRWV",
+      "VRT",
+      "GEV",
+      "DELL",
+      "PLTR",
+      "MSFT",
+      "BE",
+      "GOOGL",
+      "ORCL",
+      "LITE",
+      "COHR",
+      "VST",
+      "IREN",
+      "ALAB",
+      "APH",
+      "INTC",
+      "AMAT",
+      "SIMO",
+      "AAOI",
+      "META"
+    ],
+    "allowedHosts": [
+      "x.com"
+    ],
+    "intervalSeconds": 30,
+    "maxResults": 30,
+    "reuse": "review-required",
+    "financingUpdates": true,
+    "buybackUpdates": true
+  },
+  {
+    "id": "globenewswire-public",
+    "name": "GlobeNewswire public companies",
+    "kind": "publisher-update",
+    "format": "feed",
+    "url": "https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire%20-%20News%20about%20Public%20Companies",
+    "allowedHosts": [
+      "www.globenewswire.com",
+      "globenewswire.com"
+    ],
+    "intervalSeconds": 30,
+    "reuse": "review-required",
+    "userAgent": "TechPhaseResearch/1.0 (+https://tech-phase-lab.vercel.app)"
+  },
+  {
+    "id": "prnewswire-public",
+    "name": "PR Newswire public releases",
+    "kind": "publisher-update",
+    "format": "html-index",
+    "url": "https://www.prnewswire.com/news-releases/news-releases-list/",
+    "allowedHosts": [
+      "www.prnewswire.com"
+    ],
+    "articlePathPatterns": [
+      "^/news-releases/.+-[0-9]+\\.html$"
+    ],
+    "articleJsonLdPublishedField": "datePublished",
+    "intervalSeconds": 30,
+    "reuse": "review-required",
+    "userAgent": "TechPhaseResearch/1.0 (+https://tech-phase-lab.vercel.app)"
+  },
+  {
+    "id": "x-nebius-official",
+    "name": "X · Nebius official",
+    "kind": "publisher-update",
+    "format": "x-api",
+    "enabledBy": "X_API_ENABLED",
+    "officialUpdates": true,
+    "query": "from:nebiusai -is:retweet -is:reply",
+    "accounts": [
+      "nebiusai"
+    ],
+    "tickers": [
+      "NBIS"
+    ],
+    "allowedHosts": [
+      "x.com"
+    ],
+    "intervalSeconds": 120,
+    "maxResults": 30,
+    "reuse": "review-required"
+  },
+  {
+    "id": "x-trendspider",
+    "name": "X · TrendSpider",
+    "kind": "publisher-update",
+    "format": "x-api",
+    "enabledBy": "X_API_ENABLED",
+    "query": "from:TrendSpider (((\"S&P 500\" OR S&P500 OR SPX OR Nasdaq OR NDX) (rebalance OR rebalancing OR reconstitution OR add OR added OR additions OR removed OR removals OR join OR joins OR joining OR replace OR replaces OR replacing OR inclusion OR exclusion OR deletions)) OR (buyback OR buybacks OR repurchase OR repurchases OR repurchased OR repurchasing OR \"bought back\" OR \"buy back\" OR \"buying back\" OR 自社株買い OR 自己株式取得)) -is:retweet -is:reply",
+    "accounts": [
+      "TrendSpider"
+    ],
+    "tickers": [],
+    "marketTopics": [
+      "index-membership"
+    ],
+    "allowedHosts": [
+      "x.com"
+    ],
+    "intervalSeconds": 120,
+    "maxResults": 30,
+    "reuse": "factual-results-only",
+    "buybackUpdates": true,
+    "buybackTickers": [
+      "MU",
+      "SKHY",
+      "SNDK",
+      "NBIS",
+      "NVDA",
+      "AMD",
+      "AVGO",
+      "ARM",
+      "TSM",
+      "ASML",
+      "MRVL",
+      "ANET",
+      "CRDO",
+      "CRWV",
+      "VRT",
+      "GEV",
+      "DELL",
+      "PLTR",
+      "MSFT",
+      "BE",
+      "GOOGL",
+      "ORCL",
+      "LITE",
+      "COHR",
+      "VST",
+      "IREN",
+      "ALAB",
+      "APH",
+      "INTC",
+      "AMAT",
+      "SIMO",
+      "AAOI",
+      "META"
+    ]
+  },
+  {
+    "id": "x-barchart",
+    "name": "X · Barchart",
+    "kind": "publisher-update",
+    "format": "x-api",
+    "enabledBy": "X_API_ENABLED",
+    "query": "from:Barchart (Treasury OR Treasuries OR \"government bond\" OR \"government bonds\" OR \"sovereign bond\" OR \"bond yield\" OR \"bond yields\" OR JGB OR Bund OR Bunds OR gilt OR gilts OR crude OR WTI OR Brent OR \"oil price\" OR \"oil prices\" OR \"oil futures\" OR \"oil production\" OR \"oil supply\" OR \"oil demand\" OR OPEC OR 国債 OR 原油) -is:retweet -is:reply",
+    "accounts": [
+      "Barchart"
+    ],
+    "tickers": [],
+    "marketTopics": [
+      "government-bonds",
+      "crude-oil"
+    ],
+    "allowedHosts": [
+      "x.com"
+    ],
+    "intervalSeconds": 120,
+    "maxResults": 30,
+    "reuse": "factual-results-only"
+  }
+]

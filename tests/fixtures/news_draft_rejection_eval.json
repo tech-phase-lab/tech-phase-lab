@@ -1,0 +1,75 @@
+[
+  {
+    "name": "uncertain cannot claim high confidence",
+    "source": "The company completed a product demonstration but provided no sales or financial implications.",
+    "error": "invalid-news-impact-confidence",
+    "draft": {
+      "summaryJa": "同社は製品実演を完了しましたが、販売や財務への含意は示しませんでした。",
+      "summaryEn": "The company completed a demonstration without stating sales or financial implications.",
+      "impactJa": "販売や財務への含意が示されていないため、事業への影響方向は判断できません。",
+      "impactEn": "The source gives no sales or financial implications, so the business-impact direction is uncertain.",
+      "impactLabel": "uncertain",
+      "confidence": "high",
+      "evidence": ["The company completed a product demonstration but provided no sales or financial implications."]
+    }
+  },
+  {
+    "name": "impact number must be grounded",
+    "source": "The company said annual recurring revenue reached 24 million dollars.",
+    "error": "unsupported-news-number",
+    "draft": {
+      "summaryJa": "同社は年間継続収益が24 million dollarsに達したと説明しました。",
+      "summaryEn": "The company said annual recurring revenue reached 24 million dollars.",
+      "impactJa": "継続収益が42 million dollarsに達したため、事業への直接的な影響はプラスです。",
+      "impactEn": "Recurring revenue reaching 42 million dollars indicates a direct positive business impact.",
+      "impactLabel": "positive",
+      "confidence": "high",
+      "evidence": ["The company said annual recurring revenue reached 24 million dollars."]
+    }
+  },
+  {
+    "name": "invented evidence is rejected",
+    "source": "The company opened a new research facility and did not disclose financial guidance.",
+    "error": "invalid-news-evidence",
+    "draft": {
+      "summaryJa": "同社は新しい研究施設を開設し、財務ガイダンスは開示しませんでした。",
+      "summaryEn": "The company opened a research facility without disclosing financial guidance.",
+      "impactJa": "財務的な含意が示されていないため、事業への影響方向は判断できません。",
+      "impactEn": "Without stated financial implications, the direction of business impact is uncertain.",
+      "impactLabel": "uncertain",
+      "confidence": "low",
+      "evidence": ["The company opened a profitable research facility with strong demand."]
+    }
+  },
+  {
+    "name": "investment advice is rejected",
+    "source": "The company signed a multi-year supply agreement with an existing customer.",
+    "error": "invalid-news-impact-advice",
+    "draft": {
+      "summaryJa": "同社は既存顧客と複数年の供給契約を締結したと発表しました。",
+      "summaryEn": "The company signed a multi-year supply agreement with an existing customer.",
+      "impactJa": "複数年契約は事業にプラスであり、この株は買い推奨と判断できます。",
+      "impactEn": "The multi-year agreement is positive for the business and supports a buy recommendation.",
+      "impactLabel": "positive",
+      "confidence": "medium",
+      "evidence": ["The company signed a multi-year supply agreement with an existing customer."]
+    }
+  },
+  {
+    "name": "duplicate excerpts are rejected",
+    "source": "The company said its operational outlook remains unchanged after the appointment.",
+    "error": "invalid-news-evidence",
+    "draft": {
+      "summaryJa": "同社は人事後も事業見通しは変わらないと説明しました。",
+      "summaryEn": "The company said its operational outlook remains unchanged after the appointment.",
+      "impactJa": "事業見通しが変わらないと説明されているため、直接的な影響は中立です。",
+      "impactEn": "The unchanged operational outlook supports a neutral direct business impact.",
+      "impactLabel": "neutral",
+      "confidence": "medium",
+      "evidence": [
+        "The company said its operational outlook remains unchanged after the appointment.",
+        "The company said its operational outlook remains unchanged after the appointment."
+      ]
+    }
+  }
+]
