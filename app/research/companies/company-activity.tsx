@@ -17,35 +17,39 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
   const [data, setData] = useState<GeneralNewsFeed | null>(null);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
-  const [open, setOpen] = useState(false);
+  const [checkedAt, setCheckedAt] = useState<string | null>(null);
   const ja = lang === "ja";
   useEffect(() => {
-    if (!open) return;
     const poller = createNewsPoller({
       load: async signal => {
         const response = await fetch("/api/research/news", { cache: "no-store", signal });
         if (!response.ok) throw new Error("unavailable");
         return availableNewsPayload(await response.json());
       },
-      onSuccess: feed => { setData(feed); setFailed(false); },
+      onSuccess: feed => { setData(feed); setFailed(false); setCheckedAt(new Date().toISOString()); },
       onFailure: () => { setFailed(true); },
     });
     poller.start(0);
     const stop = observePageActivity(() => poller.resume(), () => poller.pause());
     return () => { stop(); poller.stop(); };
-  }, [attempt, open]);
+  }, [attempt]);
   const rows = [
-    ...(data?.officialUpdates ?? []).filter(item => item.tickers.includes(ticker)).map(item => ({ id: `official-${item.id}`, ...officialNewsDisplay(item, lang, data?.resultBriefs), ...officialTime(item) })),
-    ...(data?.analystUpdates ?? []).filter(item => item.ticker === ticker).map(item => ({ id: `analyst-${item.id}`, ...analystNewsDisplay(item, lang), at: item.publishedAt, kind: "published" })),
-    ...(data?.items ?? []).filter(item => item.tickers.includes(ticker)).map(item => ({ id: `news-${item.id}`, label: ja ? "企業ニュース" : "Company news", title: ja ? item.summaryJa : item.summaryEn, body: ja ? item.impactJa : item.impactEn, at: item.publishedAt, kind: "published" })),
+    ...(data?.officialUpdates ?? []).filter(item => item.tickers.includes(ticker)).map(item => ({ id: `official-${item.id}`, observedAt: item.observedAt, ...officialNewsDisplay(item, lang, data?.resultBriefs), ...officialTime(item) })),
+    ...(data?.analystUpdates ?? []).filter(item => item.ticker === ticker).map(item => ({ id: `analyst-${item.id}`, observedAt: item.observedAt, ...analystNewsDisplay(item, lang), at: item.publishedAt, kind: "published" })),
+    ...(data?.items ?? []).filter(item => item.tickers.includes(ticker)).map(item => ({ id: `news-${item.id}`, observedAt: item.observedAt, label: ja ? "企業ニュース" : "Company news", title: ja ? item.summaryJa : item.summaryEn, body: ja ? item.impactJa : item.impactEn, at: item.publishedAt, kind: "published" })),
   ].sort((a,b) => Date.parse(b.at)-Date.parse(a.at));
-  return <details className={styles.activity} onToggle={event => { if (event.target === event.currentTarget) setOpen(event.currentTarget.open); }}>
-    <summary className={styles.heading}><span>{ja ? "関連ニュース" : "Related news"}</span><small>{ticker}</small></summary>
+  const publication = (row: typeof rows[number]) => {
+    const first = `${row.kind === "observed" ? (ja ? "取得" : "Found") : (ja ? "発表" : "Published")} ${shortNewsTime(row.at, row.kind)}`;
+    return row.kind === "observed" ? first : `${first} · ${ja ? "取得" : "Detected"} ${shortNewsTime(row.observedAt, "observed")}`;
+  };
+  return <section className={`${styles.activity} ${styles.monitor}`} aria-label={ja?'銘柄監視':'Company monitor'}>
+    <div className={styles.monitorHeading}><h2>{ja?'最新の変化':'Latest developments'}</h2><span data-failed={failed}>{failed?(ja?'接続を再確認中':'Reconnecting'):data?(ja?'自動更新':'Auto-updating'):(ja?'接続中':'Connecting')}</span></div>
+    {checkedAt && <p className={styles.note}>{ja?'配信確認':'Feed checked'} {new Intl.DateTimeFormat(ja?'ja-JP':'en-GB',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).format(new Date(checkedAt))} JST</p>}
     {failed && <p className={styles.state} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{data && (ja ? " 前回取得した記事を表示しています。" : " Showing previously loaded articles.")} <button onClick={() => setAttempt(value => value + 1)}>{ja ? "再試行" : "Retry"}</button></p>}
     {!data && !failed && <p className={styles.state} role="status">{ja ? "配信済み記事を読み込んでいます…" : "Loading published updates…"}</p>}
-    {data && !rows.length && <p className={styles.state}>{ja ? "現在の配信データ内にMUの記事はありません。ニュースが発生していないことを示すものではありません。" : "No MU articles appear in the current feed window. This does not mean no news occurred."}</p>}
-    {!!rows.length && <div className={styles.list}>{rows.slice(0, 5).map(row => <article key={row.id}><NewsStory lang={lang} label={row.label} title={row.title} body={row.body} publication={`${row.kind === "observed" ? (ja ? "取得" : "Found") : (ja ? "発表" : "Published")} ${shortNewsTime(row.at, row.kind)}`}/></article>)}</div>}
-    {rows.length > 5 && <details className={styles.more}><summary>{ja ? `ほか${rows.length - 5}件を見る` : `Show ${rows.length - 5} more`}</summary>{rows.slice(5).map(row => <article key={row.id}><NewsStory lang={lang} label={row.label} title={row.title} body={row.body} publication={`${row.kind === "observed" ? (ja ? "取得" : "Found") : (ja ? "発表" : "Published")} ${shortNewsTime(row.at, row.kind)}`}/></article>)}</details>}
-    {data && <p className={styles.note}>{ja ? "直近の配信済み記事を表示。全期間の履歴ではありません。" : "Recent published feed; not a complete historical archive."}</p>}
-  </details>;
+    {data && !rows.length && <p className={styles.state}>{ja ? "現在の配信データ内に該当銘柄の記事はありません。" : "No matching articles in the current feed window."}</p>}
+    {!!rows.length && <div className={styles.list}>{rows.slice(0, 3).map(row => <article key={row.id}><NewsStory lang={lang} label={row.label} title={row.title} body={row.body} publication={publication(row)}/></article>)}</div>}
+    {rows.length > 3 && <details className={styles.more}><summary>{ja ? `ほか${rows.length - 3}件を見る` : `Show ${rows.length - 3} more`}</summary>{rows.slice(3).map(row => <article key={row.id}><NewsStory lang={lang} label={row.label} title={row.title} body={row.body} publication={publication(row)}/></article>)}</details>}
+    {data && <p className={styles.note}>{ja ? "配信済み情報を自動確認。未取得の情報・全期間の履歴は含みません。" : "Auto-checking published updates; excludes uncollected information and older history."}</p>}
+  </section>;
 }
