@@ -386,7 +386,64 @@ def validate_comparison_baselines(text, evidence):
         raise ValueError('unsupported-comparison-baseline')
 
 
+
+
+def validate_execution_and_capacity(text, evidence):
+    """Keep a through-period distinct from a deadline, and ability from action.
+
+    These are narrow relation checks on explicit fiscal periods and financial
+    capabilities. Unrelated use of a year or operational capacity is unchanged.
+    """
+    periods = set(re.findall(r'\bthrough\s+(?:fiscal(?:\s+year)?\s+|FY\s*)(20\d{2})\b', evidence, re.I))
+    for year in periods:
+        if re.search(r'(?:' + year + r'(?:会計)?年度?|FY\s*' + year + r')[^。;；\n]{0,12}までに', text, re.I):
+            raise ValueError('changed-execution-period')
+        if re.search(r'\bby\s+(?:the\s+end\s+of\s+)?(?:fiscal(?:\s+year)?\s+|FY\s*)' + year + r'\b', text, re.I):
+            raise ValueError('changed-execution-period')
+    # Qualify the actual actions in the capacity clause, not another unrelated
+    # "can" elsewhere in the announcement or an achieved cash-flow amount.
+    topics = (r'\binvest(?:s|ed|ing|ments?)?\b|投資',
+              r'\b(?:return(?:s|ed|ing)?\s+capital|capital\s+returns?)\b|株主[^。;；\n]{0,12}(?:還元|資本)|資本還元|株主還元')
+    capacity = r'\b(?:capacity|ability)\s+to\b|\b(?:can|able\s+to)\b|能力|余力|可能|できる|行える'
+    # Bare coordinated verbs can inherit a shared modal ('can invest and
+    # return'). A separately tensed/modal predicate cannot borrow that modal
+    # ('can invest and has returned'). Include past forms in the topic match.
+    predicate = r'(?:(?:it|they|we|the\s+company)\s+)?(?:has|have|had|is|are|was|were|will|shall|must|can|invests|invested|investing|returns|returned|returning)\b'
+    boundary = (r'(?<=[.!?])\s+|[。;；\n]|,\s*(?=' + predicate + r')'
+                r'|\b(?:and|but|while|whereas)\s+(?=' + predicate + r')'
+                r'|一方|しかし|だが|(?<=できる)が[、]?')
+    source_clauses = re.split(boundary, evidence, flags=re.I)
+    output_clauses = re.split(boundary, text, flags=re.I)
+    for topic in topics:
+        if not any(re.search(topic, clause, re.I) and re.search(capacity, clause, re.I) for clause in source_clauses):
+            continue
+        for clause in output_clauses:
+            if re.search(topic, clause, re.I) and not re.search(capacity, clause, re.I):
+                raise ValueError('changed-action-capacity')
+            # Japanese coordination can retain a 読点 rather than a sentence
+            # boundary. Bind an explicit action predicate to its preceding
+            # topic; a neighboring investment's できる cannot qualify a capital
+            # return already 実施した (or the reverse). Shared noun lists such
+            # as 投資と株主還元を行える remain valid.
+            starts = [match.start() for item in topics for match in re.finditer(item, clause, re.I)]
+            for match in re.finditer(topic, clause, re.I):
+                if not re.search(r'[一-龯ぁ-んァ-ン]', match[0]):
+                    continue
+                end = min((start for start in starts if start > match.start()), default=len(clause))
+                predicate_text = clause[match.end():end]
+                action = (r'^(?:を|も|は|に|が)?\s*(?:した|している|しており|する)'
+                          r'|(?:実施|実行|完了|開始)(?:した|している|しており|する|し(?=[、，]))'
+                          r'|行(?:った|っている|っており|う)')
+                # 行う能力/することができる qualify this same action, unlike
+                # an earlier unrelated investment's ability elsewhere.
+                qualified = r'\s*(?:能力|余力|こと(?:が|は|の)(?:できる|可能))'
+                if any(not re.match(qualified, predicate_text[action_match.end():])
+                       for action_match in re.finditer(action, predicate_text)):
+                    raise ValueError('changed-action-capacity')
+
+
 def validate_semantics(text, evidence):
+    validate_execution_and_capacity(text, evidence)
     validate_amount_relations(text, evidence)
     validate_comparison_baselines(text, evidence)
     if re.search(r'idle GPU tax', evidence, re.I) and re.search(r'課税|税金|税負担', text):
@@ -405,6 +462,8 @@ def validate_semantics(text, evidence):
 
 
 def validate_pair(ja, en):
+    validate_execution_and_capacity(ja, en)
+    validate_execution_and_capacity(en, ja)
     validate_amount_relations(ja, en)
     validate_amount_relations(en, ja)
     validate_comparison_baselines(ja, en)

@@ -40,16 +40,26 @@ def monetary_relations(text):
         before = re.split(r'[;；。\n]|,\s+(?=[A-Za-z])', before)[-1]
         after = re.split(r'[;；。\n]|,\s+(?=[A-Za-z])', after)[0]
         role = None
-        if (re.search(r'\b(?:additional|another)\s*$', before, re.I)
+        # These local noun phrases still describe an increment, even when
+        # 'additional' follows the amount. An explicit remaining/total qualifier
+        # cannot borrow that increment sense from a neighboring phrase.
+        local_increment = bool(
+            re.search(r'追加(?:の)?(?:(?:自社株買い|買い戻し|承認|取得))?枠\s*$', before)
+            or re.match(r'\s+(?:in|of)\s+additional\s+(?:(?:share|stock)\s+)?'
+                        r'(?:buyback|repurchase)\s+(?:authority|authorization)\b', after, re.I))
+        local_increment = local_increment and not re.search(
+            r'\b(?:total|remaining|balance)\b|総額|合計|残り|残る|残額', before, re.I)
+        if (local_increment or re.search(r'\b(?:additional|another)\s*$', before, re.I)
                 or re.search(r'\b(?:increas\w*|rais\w*|expand\w*|boost\w*)\b[^;。]{0,65}\bby\s*$', before, re.I)
                 or re.match(r'\s*(?:の)?(?:追加|増額|上積み|増加)', after)
                 or re.match(r'\s*(?:を|分)?(?:追加|増額|上積み|増加)', after)
                 or re.match(r'\s*(?:(?:share|stock)\s+repurchase\s+)?(?:authorization\s+)?increase\b', after, re.I)):
             role = 'increment'
-        elif (re.search(r'\b(?:increas\w*|rais\w*|expand\w*|boost\w*|bringing)\b[^;。]{0,85}\bto\s*$', before, re.I)
+        elif (re.search(r'\b(?:totals?|totaling|totalling)\s*$', before, re.I)
+                or re.search(r'\b(?:increas\w*|rais\w*|expand\w*|boost\w*|bringing)\b[^;。]{0,85}\bto\s*$', before, re.I)
                 or re.search(r'\b(?:total|remaining|balance)\b[^;。]{0,45}(?:to|of|is)\s*$', before, re.I)
                 or re.match(r'\s*(?:に|へ)(?:拡大|増額|引き上げ|増加)', after)
-                or re.search(r'(?:総額|合計|残り|残額)(?:は|を|が)?\s*$', before)):
+                or re.search(r'(?:総額|合計|残り|残る|残額)[^、。;；]{0,20}?(?:は|を|が)?\s*$', before)):
             role = 'total'
         if role:
             result.add((*money_value(match[0]), role))
@@ -61,6 +71,10 @@ def validate_amount_relations(text, evidence):
     if not original:
         return
     output_amounts = {money_value(match[0]) for match in MONEY.finditer(text)}
+    for currency, number in output_amounts:
+        source_currencies = {c for c, value, _ in original if value == number}
+        if source_currencies and currency not in source_currencies:
+            raise ValueError('changed-amount-relation')
     required = {relation for relation in original if relation[:2] in output_amounts}
     actual = {relation for relation in monetary_relations(text) if relation[:2] in {r[:2] for r in required}}
     if actual != required:

@@ -1568,7 +1568,8 @@ class AutomaticMonitor:
               WHERE s.source_mode='remote'
               ORDER BY CASE
                          WHEN e.detected_at IS NOT NULL AND s.sha256 IS NULL THEN 0
-                         WHEN s.sha256 IS NOT NULL AND s.extracted_chars=0 THEN 1
+                         WHEN s.sha256 IS NOT NULL AND (s.extracted_chars=0
+                           OR (s.content_type IS NOT NULL AND s.content_type NOT IN ('text/html','application/pdf'))) THEN 1
                          WHEN e.detected_at IS NOT NULL THEN 2
                          WHEN s.sha256 IS NULL THEN 3
                          ELSE 4

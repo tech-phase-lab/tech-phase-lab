@@ -134,7 +134,8 @@ class RetainedBusinessAdmissionTests(unittest.TestCase):
                '"unemployment rate" OR "hourly earnings" OR funding OR financing OR fundraising OR '
                '"capital raise" OR "capital raising" OR convertible OR 資金調達 OR 転換社債')
         query='(from:wallstengine OR from:tipranks OR (from:FABYMETAL4 ('+terms+'))) -is:retweet -is:reply'
-        self.assertEqual(SOURCE['query'],query);self.assertEqual(len(query),493)
+        query=query.replace(' OR \"quarterly results\" OR \"financial results\"','').replace(' OR 転換社債',' OR 転換社債 OR buyback OR buybacks OR repurchase OR repurchases OR 自社株買い')
+        self.assertEqual(SOURCE['query'],query);self.assertEqual(len(query),508)
         self.assertEqual(SOURCE['maxResults'],30);self.assertEqual(SOURCE['intervalSeconds'],30)
         self.assertEqual(len(x_stream.manifest()),4)
         self.assertFalse(TIP['enabled'])

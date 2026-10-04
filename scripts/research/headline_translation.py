@@ -141,7 +141,7 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
                          (row["source_id"], row["url"], row["sha"])).fetchone()
         if not job:
             continue
-        if job['failure_kind'] in {'output-token-limit', 'incomplete', 'invalid-translation', 'unsupported-number', 'changed-amount-relation', 'invalid-copy', 'invalid-json', 'provider-unavailable', 'provider-rate-limit', 'provider-auth', 'provider-timeout'}:
+        if job['failure_kind'] in {'output-token-limit', 'incomplete', 'invalid-translation', 'unsupported-number', 'changed-amount-relation', 'changed-execution-period', 'changed-action-capacity', 'invalid-copy', 'invalid-json', 'provider-unavailable', 'provider-rate-limit', 'provider-auth', 'provider-timeout'}:
             kind = job['failure_kind']
             failure_kinds[kind] = failure_kinds.get(kind, 0) + 1
         if job["state"] == "running":
@@ -233,7 +233,7 @@ def claim(db, sources, limit, model, now):
             if existing:
                 try:
                     factual_validation.validate_numbers(existing['headline_ja'], item['title'])
-                    factual_validation.validate_amount_relations(existing['headline_ja'], item['title'])
+                    factual_validation.validate_semantics(existing['headline_ja'], item['title'])
                     factual_validation.validate_acquisition(existing['headline_ja'], item['title'], 'ja', require_status=True)
                     continue
                 except ValueError:
@@ -251,7 +251,7 @@ def claim(db, sources, limit, model, now):
             if cached:
                 try:
                     factual_validation.validate_numbers(cached['headline_ja'], item['title'])
-                    factual_validation.validate_amount_relations(cached['headline_ja'], item['title'])
+                    factual_validation.validate_semantics(cached['headline_ja'], item['title'])
                     factual_validation.validate_acquisition(cached['headline_ja'], item['title'], 'ja', require_status=True)
                 except ValueError:
                     cached=None
@@ -339,7 +339,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         cause = getattr(exc, '__cause__', None)
         status = getattr(cause, 'code', None)
         kind = ('invalid-json' if isinstance(exc, json.JSONDecodeError)
-                else str(exc) if type(exc) is ValueError and str(exc) in {'output-token-limit', 'incomplete', 'invalid-translation', 'unsupported-number', 'changed-amount-relation', 'invalid-copy'}
+                else str(exc) if type(exc) is ValueError and str(exc) in {'output-token-limit', 'incomplete', 'invalid-translation', 'unsupported-number', 'changed-amount-relation', 'changed-execution-period', 'changed-action-capacity', 'invalid-copy'}
                 else 'provider-rate-limit' if status == 429
                 else 'provider-auth' if status in (401, 403)
                 else 'provider-timeout' if isinstance(exc, TimeoutError) or isinstance(cause, TimeoutError)

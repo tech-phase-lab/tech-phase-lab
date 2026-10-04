@@ -1627,7 +1627,7 @@ class ResearchServiceTests(unittest.TestCase):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         app.body_batch = 1
         original_fetch = monitor.fetch
-        monitor.fetch = lambda *_: (b"<main><h1>New release</h1><p>Evidence body.</p></main>", "text/html")
+        monitor.fetch = lambda *_: (b"<main><h1>New</h1><p>Evidence body.</p></main>", "text/html")
         try:
             with ThreadPoolExecutor(max_workers=1) as pool:
                 app.fetch_bodies(pool)
@@ -2308,8 +2308,9 @@ class ResearchServiceTests(unittest.TestCase):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
         app.body_batch = 5
         original_fetch = monitor.fetch
-        monitor.fetch = lambda *_args, **_kwargs: (
-            b"<main><h1>Recovered</h1><p>Direct official evidence.</p></main>",
+        monitor.fetch = lambda url, *_args, **_kwargs: (
+            ("<main><h1>" + ("New" if url.endswith("new-release") else "Older")
+             + "</h1><p>Direct official evidence.</p></main>").encode(),
             "text/html",
         )
         try:

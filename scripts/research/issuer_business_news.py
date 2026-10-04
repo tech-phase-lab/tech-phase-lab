@@ -11,6 +11,7 @@ import re
 
 import issuer_syndication as syndication
 import signals
+import buyback_news
 
 POLICY='issuer-business-news-v1'
 MAX_INPUT=32000
@@ -41,7 +42,7 @@ def assessments(db,reference):
         return
     for original in syndication.candidates(db,reference,include_research=True):
         row=dict(original)
-        if not MATERIAL.search(row['title']):
+        if not (MATERIAL.search(row['title']) or buyback_news.CUE.search(row['title'])):
             continue
         saved=db.execute('SELECT * FROM issuer_syndication_bodies WHERE event_id=? AND sha=?',(row['id'],row['sha'])).fetchone()
         if not saved or saved['error']:

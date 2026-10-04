@@ -45,6 +45,12 @@ def digest(value):
 
 
 def schema(db):
+    db.execute('''CREATE TABLE IF NOT EXISTS reviewed_retained_announcement_recoveries(
+      manifest_sha TEXT NOT NULL, source_url TEXT NOT NULL, body_text_sha TEXT NOT NULL,
+      event_id INTEGER NOT NULL, event_sha TEXT NOT NULL, source_revision TEXT NOT NULL,
+      source_observed_at TEXT NOT NULL, source_body_at TEXT NOT NULL,
+      started_at TEXT NOT NULL, public_at TEXT NOT NULL, payload_sha TEXT NOT NULL,
+      PRIMARY KEY(manifest_sha,source_url,body_text_sha))''')
     db.execute('''CREATE TABLE IF NOT EXISTS official_research_editorial_recoveries(
       event_id INTEGER NOT NULL, source_id TEXT NOT NULL, sha TEXT NOT NULL,
       body_sha TEXT NOT NULL, policy_id TEXT NOT NULL, recovery_id TEXT NOT NULL,
@@ -189,3 +195,108 @@ def publish(db, rows, reference, validator, current_revision):
                 raise ValueError('changed-editorial-recovery-job')
             return 'done'
     return None
+
+
+RETAINED_COPY_PATH = Path(__file__).with_name('reviewed_retained_announcements.json')
+RETAINED_COPY_SHA = '3ce2b505390d880a82cf2249f8b97b47744f620e9d52959635adeffb55b66514'
+
+
+def retained_candidate(db, pin, reference):
+    """Require newly validated article evidence, never legacy XML/feed text."""
+    import official_release_bridge as bridge
+    row = db.execute("""SELECT e.*,s.sha256 AS source_revision,s.content_type,
+      s.extractor_version,s.error,s.status,r.extracted_text AS body,r.observed_at AS body_at,
+      s.title AS source_title,s.published_on AS source_date
+      FROM signal_events e JOIN sources s ON s.url=e.url
+      JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256
+      WHERE e.source_id=? AND e.url=? ORDER BY e.id DESC LIMIT 1""",
+                     (pin['sourceId'], pin['url'])).fetchone()
+    if (not row or not bridge.is_current(db, row) or row['truncated']
+            or row['title'] != pin['title'] or row['source_title'] != pin['title']
+            or row['published_on'] != pin['publishedOn'] or row['source_date'] != pin['publishedOn']
+            or repair.instant(row['observed_at']) != repair.instant(pin['observedAt'])
+            or row['content_type'] != 'text/html'
+            or row['extractor_version'] != pin['extractorVersion'] or row['error']
+            or row['status'] in {'held', 'rejected'} or len(row['body']) != pin['bodyChars']
+            or digest(row['body']) != pin['bodyTextSha']):
+        return None
+    try:
+        if json.loads(row['tickers_json']) != [pin['ticker']]:
+            return None
+    except (ValueError, TypeError):
+        return None
+    observed, body_at = repair.instant(row['observed_at']), repair.instant(row['body_at'])
+    if (not observed or not body_at or not observed <= body_at <= reference
+            or (reference - observed).total_seconds() > 7 * 86400):
+        return None
+    return row
+
+
+def retained_note(row, pin):
+    copy = pin['copy']
+    if set(copy) != {'title', 'summary', 'facts', 'purpose'} or not 3 <= len(copy['facts']) <= 5:
+        raise ValueError('changed-reviewed-copy')
+    def bind(item):
+        if set(item) != {'ja', 'en', 'anchors'}:
+            raise ValueError('changed-reviewed-copy')
+        return {'ja': item['ja'], 'en': item['en'],
+                'evidenceQuote': selected_paragraphs(row['body'], item['anchors'])}
+    return {**{key: bind(copy[key]) for key in ('title', 'summary', 'purpose')},
+            'facts': [bind(item) for item in copy['facts']]}
+
+
+def publish_retained(db, reference, validator):
+    """Apply reviewed source-bound copy once through the existing worker.
+
+    This extension does not acquire sources, retry models or turn a prior
+    provider failure into success. It preserves all source/job/call histories.
+    """
+    try:
+        raw = RETAINED_COPY_PATH.read_bytes()
+        if hashlib.sha256(raw).hexdigest() != RETAINED_COPY_SHA:
+            return False
+        manifest = json.loads(raw)
+        start, expiry = repair.instant(manifest['startsAt']), repair.instant(manifest['expiresAt'])
+        if (manifest['policy'] != 'reviewed-retained-announcement-v1' or not start or not expiry
+                or not start <= reference < expiry):
+            return False
+    except (ValueError, TypeError, KeyError, OSError):
+        return False
+    db.commit()
+    with db:
+        db.execute('BEGIN IMMEDIATE')
+        for pin in manifest['announcements']:
+            row = retained_candidate(db, pin, reference)
+            if (row is None or db.execute('SELECT 1 FROM official_research_publications WHERE event_id=?', (row['id'],)).fetchone()
+                    or db.execute('SELECT 1 FROM reviewed_retained_announcement_recoveries WHERE manifest_sha=? AND source_url=? AND body_text_sha=?',
+                                  (RETAINED_COPY_SHA, pin['url'], pin['bodyTextSha'])).fetchone()):
+                continue
+            cached = db.execute('SELECT * FROM official_story_bodies WHERE event_id=?', (row['id'],)).fetchone()
+            if cached and (cached['sha'] != row['sha'] or cached['body_sha'] != pin['bodyTextSha']
+                           or cached['body'] != row['body'] or cached['error']):
+                continue
+            started = time.monotonic()
+            started_at = datetime.now(timezone.utc).isoformat(timespec='milliseconds')
+            try:
+                note = retained_note(row, pin)
+                exact = json.dumps(note, ensure_ascii=False, sort_keys=True)
+                validator(note, row['body'], row['title'])
+                if json.dumps(note, ensure_ascii=False, sort_keys=True) != exact:
+                    return False
+            except (ValueError, TypeError, KeyError):
+                return False
+            public_at = datetime.now(timezone.utc).isoformat(timespec='milliseconds')
+            note.update(generationMethod=GENERATION_METHOD, reviewedCopySha256=RETAINED_COPY_SHA)
+            payload = json.dumps(note, ensure_ascii=False)
+            if not cached:
+                db.execute('INSERT INTO official_story_bodies VALUES(?,?,?,?,?,?,?)',
+                           (row['id'], row['sha'], pin['bodyTextSha'], row['body'], row['body_at'], reference.timestamp()+900, None))
+            db.execute('INSERT INTO official_research_publications VALUES(?,?,?,?,?,?,?,?)',
+                       (row['id'], row['sha'], pin['bodyTextSha'], payload,
+                        json.dumps([item['evidenceQuote'] for item in [note['title'], note['summary'], *note['facts'], note['purpose']]]),
+                        started_at, public_at, round((time.monotonic()-started)*1000)))
+            db.execute('INSERT INTO reviewed_retained_announcement_recoveries VALUES(?,?,?,?,?,?,?,?,?,?,?)',
+                       (RETAINED_COPY_SHA, pin['url'], pin['bodyTextSha'], row['id'], row['sha'], row['source_revision'],
+                        row['observed_at'], row['body_at'], started_at, public_at, digest(payload)))
+            return True
+    return False

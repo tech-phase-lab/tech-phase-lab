@@ -8,6 +8,8 @@ import json
 import os
 import re
 import time
+
+import buyback_news
 from datetime import datetime, timezone, timedelta
 from urllib.error import HTTPError
 from urllib.parse import urlencode
@@ -85,11 +87,20 @@ def parse_response(source, payload, tickers):
     for acquired in acquired_posts(source, payload):
         text, username = acquired["text"], acquired["username"]
         matches = signals_match(text, tickers)
+        is_buyback = source.get('buybackUpdates') is True and buyback_news.CUE.search(text)
         if source.get('marketTopics'):
             topic=market_topic(username,text)
-            if topic not in source['marketTopics']:
+            if topic in source['marketTopics']:
+                matches={'MARKET':[topic]}
+            elif is_buyback:
+                matches=signals_match(text, tickers)
+                approved=set(source.get('buybackTickers',tickers))
+                matches={ticker:why for ticker,why in matches.items() if ticker in approved}
+                for ticker in approved-set(tickers):
+                    if re.search(r'(?<!\w)\$'+re.escape(ticker)+r'(?!\w)',text,re.I):
+                        matches[ticker]=['$'+ticker]
+            else:
                 continue
-            matches={'MARKET':[topic]}
         official_ticker = OFFICIAL_ACCOUNTS.get(username.lower()) if source.get("officialUpdates") is True else None
         if official_ticker and official_ticker in tickers:
             matches[official_ticker] = ["official-account:" + username.lower()]
@@ -110,7 +121,7 @@ def parse_response(source, payload, tickers):
         if is_economic:
             matches = {'ECON':['economic-result']}
         is_financing = source.get('financingUpdates') is True and FINANCING_PATTERN.search(text)
-        if not matches or not (source.get('marketTopics') or official_ticker or TARGET_PATTERN.search(text) or is_earnings or is_economic or RATING_PATTERN.search(text) or is_financing):
+        if not matches or not (source.get('marketTopics') or official_ticker or TARGET_PATTERN.search(text) or is_earnings or is_economic or RATING_PATTERN.search(text) or is_financing or is_buyback):
             continue
         url = acquired["url"]
         items[url] = {key: value for key, value in acquired.items() if key != "username"}

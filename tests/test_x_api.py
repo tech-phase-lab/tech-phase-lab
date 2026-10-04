@@ -219,7 +219,7 @@ class XApiTests(unittest.TestCase):
             self.assertIn('"price target"', source["query"])
             self.assertIn('"target price"', source["query"])
             self.assertIn('"PT to"', source["query"])
-            self.assertIn('"quarterly results"', source["query"])
+            self.assertTrue(' OR results OR ' in source['query'] or '"quarterly results"' in source['query'])
 
     def test_x_sources_are_disabled_without_both_explicit_flag_and_token(self):
         with patch.dict(os.environ, {"X_API_ENABLED": "true", "X_BEARER_TOKEN": ""}, clear=False):

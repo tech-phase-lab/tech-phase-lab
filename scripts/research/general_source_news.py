@@ -11,6 +11,7 @@ import json
 import re
 
 import analyst_news
+import buyback_news
 import actor_grounding
 import broker_commentary
 import factual_validation
@@ -34,9 +35,13 @@ FAILURE_CODES = frozenset({
     'invented-broker-action','source-copy-overlap','unsupported-fiscal-basis',
     'earnings-call-terminology','earnings-announcement-terminology','unsupported-causality',
     'actor-grounding-required','unsupported-affiliation','changed-claim-actor',
-    'changed-claim-status','changed-source-attribution',
-}) | broker_commentary.FAILURE_CODES
+    'changed-claim-status','changed-source-attribution','changed-amount-relation',
+}) | broker_commentary.FAILURE_CODES | buyback_news.FAILURE_CODES
+SOURCE_IDS = (*analyst_news.SOURCE_IDS, 'x-trendspider')
+ACCOUNTS = analyst_news.ACCOUNTS | {'trendspider', 'fabymetal4'}
+
 CATEGORIES = {
+    'share-buyback': ('自社株買いに関する報道', 'Reported share buyback'),
     'management-outlook': ('経営陣の事業見通し', 'Management business outlook'),
     'broker-commentary': ('証券各社の事業見通し', 'Broker views on the business'),
     'contract': ('契約・提携に関する報道', 'Reported contract or partnership'),
@@ -76,11 +81,45 @@ def named_companies(text):
                    for alias in aliases)}
 
 
+def safe_reference(value, source):
+    if not source or not isinstance(value,str) or len(value)>250:return None
+    match=re.fullmatch(r'https://x\.com/([A-Za-z0-9_]+)/status/\d+',value,re.I)
+    return (value if match and match[1].lower() in ACCOUNTS
+            and match[1].lower() in {name.lower() for name in source.get('accounts',[])} else None)
+
+
+def origin_heads(db,sources,reference):
+    approved={s['id']:s for s in sources if s['id'] in SOURCE_IDS}
+    heads={}
+    for table in ('signal_documents','signal_x_acquisition'):
+        for row in db.execute('SELECT source_id,url,sha,last_seen_at FROM '+table+' WHERE source_id IN (?,?,?)',SOURCE_IDS):
+            url=safe_reference(row['url'],approved.get(row['source_id']))
+            if not url:continue
+            seen=reconciliation.instant(row['last_seen_at'])
+            order=seen or datetime.max.replace(tzinfo=timezone.utc)
+            sha=row['sha'] if seen and seen<=reference else None
+            old=heads.get(url.casefold())
+            if not old or order>old[0]:heads[url.casefold()]=(order,sha)
+            elif order==old[0] and sha!=old[1]:heads[url.casefold()]=(order,None)
+    return {url:value[1] for url,value in heads.items()}
+
+
+def evidence_rows(db,reference):
+    return db.execute('''SELECT e.*,d.sha AS current_sha,d.title AS document_title,d.text AS body
+      FROM signal_events e LEFT JOIN signal_documents d ON e.source_id=d.source_id AND e.url=d.url
+      WHERE e.source_id IN (?,?,?) AND julianday(e.published_at) BETWEEN julianday(?) AND julianday(?)
+      ORDER BY julianday(e.published_at) DESC,julianday(e.observed_at),e.id''',
+      (*SOURCE_IDS,(reference-timedelta(days=7)).isoformat(),reference.isoformat()))
+
+
 def x_assess(row, source, reference, heads):
     if not source or source.get('format') != 'x-api':
         return None,'source-not-approved'
-    url = reconciliation.safe_reference(row['url'],source)
-    if not url or url.split('/')[3].lower() not in analyst_news.ACCOUNTS:
+    url = safe_reference(row['url'],source)
+    if not url or url.split('/')[3].lower() not in ACCOUNTS:
+        return None,'source-not-approved'
+    if (url.split('/')[3].lower() not in analyst_news.ACCOUNTS
+            and not (source.get('buybackUpdates') and buyback_news.CUE.search(row['body'] if isinstance(row['body'],str) else ''))):
         return None,'source-not-approved'
     if row['event_kind'] not in {'new','changed','baseline'}:
         return None,'event-kind-not-published'
@@ -106,12 +145,13 @@ def x_assess(row, source, reference, heads):
                 or any(not isinstance(t,str) or not re.fullmatch(analyst_news.TICKER,t) for t in tickers)):
             return None,'invalid-subject-evidence'
         cashtags=set(re.findall(r'\$('+analyst_news.TICKER+r')(?![\w.])',body))
-        approved=set(source.get('tickers',[]))|set(source.get('extraTickers',[]))
+        approved=set(source.get('tickers',[]))|set(source.get('extraTickers',[]))|set(source.get('buybackTickers',[]))
         if len(cashtags)>1:
             return None,'multi-entity-relation-needs-binding'
-        if len(cashtags)!=1 or not cashtags.issubset(set(tickers)&approved):
+        subjects=(cashtags|named_companies(body)) if source.get('buybackUpdates') and buyback_news.CUE.search(body) else cashtags
+        if len(subjects)!=1 or not subjects.issubset(set(tickers)&approved):
             return None,'ambiguous-or-unapproved-subject'
-        ticker=next(iter(cashtags))
+        ticker=next(iter(subjects))
     except (ValueError,TypeError):
         return None,'invalid-subject-evidence'
     # These independent routes retain priority and their existing behavior.
@@ -121,6 +161,16 @@ def x_assess(row, source, reference, heads):
         return None,'covered-target-action'
     if re.search(r'\b(?:revenue|EPS)\s*:',body,re.I) or re.search(r'\bearnings highlights\b',body,re.I):
         return None,'covered-earnings-results'
+    if source.get('buybackUpdates') and buyback_news.CUE.search(body):
+        if named_companies(body)-{ticker}:return None,'multi-entity-relation-needs-binding'
+        units,reason=buyback_news.prepare(body,ticker,signals.ALIASES.get(ticker,[]))
+        if not units:return None,reason
+        event_date=units[0]['buyback']['eventDate']
+        if event_date and event_date>published.date().isoformat():return None,'invalid-source-clock'
+        return {**dict(row),'body_sha':digest(body),'body_at':row['observed_at'],'ticker':ticker,
+                'general_source':True,'semantic_assessment':True,'category':'share-buyback','units':units},'eligible-buyback'
+    if url.split('/')[3].lower() not in analyst_news.ACCOUNTS:
+        return None,'source-not-approved'
     cleaned=re.sub(r'https?://\S+','',body).strip()
     aliases=signals.ALIASES.get(ticker,[])
     opening=(r'^[^\w$]*?(?:'+'|'.join(re.escape(a) for a in aliases)
@@ -187,7 +237,7 @@ def assess(row, source, reference, heads):
     body=row['body']
     names=named_companies(body)
     tags=set(re.findall(r'\$('+analyst_news.TICKER+r')(?![\w.])',body))
-    approved=set(source.get('tickers',[]))|set(source.get('extraTickers',[]))
+    approved=set(source.get('tickers',[]))|set(source.get('extraTickers',[]))|set(source.get('buybackTickers',[]))
     subjects=(names|tags)&approved
     if len(subjects)!=1 or len(tags)>1:
         return None,reason
@@ -222,10 +272,10 @@ def assess(row, source, reference, heads):
 
 
 def assessments(db,reference,sources=signals.SOURCES):
-    approved={s['id']:s for s in sources if s['id'] in analyst_news.SOURCE_IDS}
-    heads=analyst_news.origin_heads(db,sources,reference)
+    approved={s['id']:s for s in sources if s['id'] in SOURCE_IDS}
+    heads=origin_heads(db,sources,reference)
     seen=set()
-    for row in analyst_news.evidence_rows(db,reference):
+    for row in evidence_rows(db,reference):
         key=(row['source_id'],row['url'],row['sha'])
         if key in seen:
             continue
@@ -241,7 +291,7 @@ def candidates(db,reference,*,include_review=False):
         if row:
             # Same exact body/current origin through migrated acquisition routes
             # or duplicate report has one job, preserving its earliest clocks.
-            key=(row['ticker'],row['category'],row['body_sha'],reconciliation.instant(row['published_at']).date())
+            key=retained_group(row)
             old=unique.get(key)
             if old is None or order(row)<order(old):
                 unique[key]=row
@@ -258,15 +308,15 @@ def retained_assessments(db, reference, sources=signals.SOURCES):
     an unselected correction can revoke an older business post across routes.
     The prospective event has no invented ID or observation time.
     """
-    approved={s['id']:s for s in sources if s['id'] in analyst_news.SOURCE_IDS}
-    heads=analyst_news.origin_heads(db,sources,reference)
-    for raw in db.execute('''SELECT * FROM signal_x_acquisition WHERE source_id IN (?,?)
-      ORDER BY julianday(published_at),julianday(first_seen_at),source_id,url,sha''', analyst_news.SOURCE_IDS):
+    approved={s['id']:s for s in sources if s['id'] in SOURCE_IDS}
+    heads=origin_heads(db,sources,reference)
+    for raw in db.execute('''SELECT * FROM signal_x_acquisition WHERE source_id IN (?,?,?)
+      ORDER BY julianday(published_at),julianday(first_seen_at),source_id,url,sha''', SOURCE_IDS):
         raw=dict(raw)
         source=approved.get(raw['source_id'])
         body=raw['text']
         tickers=(sorted((set(re.findall(r'\$('+analyst_news.TICKER+r')(?![\w.])',body))|named_companies(body))
-                        & (set(source.get('tickers',[]))|set(source.get('extraTickers',[]))))
+                        & (set(source.get('tickers',[]))|set(source.get('extraTickers',[]))|set(source.get('buybackTickers',[]))))
                  if source and isinstance(body,str) else [])
         row={**raw,'id':None,'body':body,'document_title':raw['title'],
              'current_sha':heads.get(raw['url'].casefold()),'event_kind':'baseline',
@@ -282,7 +332,8 @@ def retained_assessments(db, reference, sources=signals.SOURCES):
 
 
 def retained_group(row):
-    return row['ticker'],row['category'],row['body_sha'],reconciliation.instant(row['published_at']).date()
+    event=buyback_news.event_key(row) if row['category']=='share-buyback' else None
+    return event or (row['ticker'],row['category'],row['body_sha'],reconciliation.instant(row['published_at']).date())
 
 
 def retained_event(db, raw, candidate, reference):
@@ -381,13 +432,13 @@ def retained_intake(db, reference, *, include_records=False):
             event=db.execute('SELECT url,sha FROM signal_events WHERE id=?',(evidence['id'],)).fetchone()
             if event:
                 target_publications.add((event['url'].casefold(),event['sha']))
-    heads=analyst_news.origin_heads(db,signals.SOURCES,reference)
+    heads=origin_heads(db,signals.SOURCES,reference)
     counts=Counter();reasons=Counter();sources=Counter();records=[];origins=set()
     for raw,candidate,reason in retained_assessments(db,reference):
         counts['retainedRevisionRows']+=1;sources[raw['source_id']]+=1
         counts['acquisitionSelectedRows']+=int(bool(raw['selected_for_processing']))
         source=next(s for s in signals.SOURCES if s['id']==raw['source_id'])
-        url=reconciliation.safe_reference(raw['url'],source)
+        url=safe_reference(raw['url'],source)
         current=bool(url and heads.get(url.casefold())==raw['sha'])
         if current:
             origins.add(url.casefold())
@@ -427,7 +478,7 @@ def retained_intake(db, reference, *, include_records=False):
             body=raw['text'] if isinstance(raw['text'],str) else ''
             subjects=(named_companies(body)|
                       set(re.findall(r'\$('+analyst_news.TICKER+r')(?![\w.])',body))) & set(source.get('tickers',[]))
-            needs_review=(reason.startswith('broker-') or reason in {'no-supported-material-category','unbound-material-subject',
+            needs_review=(reason.startswith(('broker-','buyback-')) or reason in {'no-supported-material-category','unbound-material-subject',
                                     'multi-entity-relation-needs-binding','ambiguous-broker-binding','no-substantive-broker-view'}
                           or (reason=='ambiguous-or-unapproved-subject' and bool(subjects)))
             if reason=='covered-target-action':
@@ -633,6 +684,8 @@ def validate_anchors(text, quote, unit, language):
 
 def validate_pair(item,unit):
     quote=unit['quote']
+    if 'buyback' in unit:
+        buyback_news.validate(item,quote,required=True)
     if 'brokerCommentary' in unit:
         broker_commentary.validate(item,unit)
     if 'actorGrounding' in unit:
@@ -833,9 +886,14 @@ def public_item(row,note):
                          if lang=='ja' else unit['actorGrounding']['attribution'])
                 prefix=f'{speaker}によると、' if lang=='ja' else f'According to {speaker}, '
             paragraphs[lang].append(prefix+item[lang])
+    clocks={'publishedAt':row['published_at'],'observedAt':row['observed_at']}
+    if row['category']=='share-buyback':
+        date=row['units'][0]['buyback'].get('eventDate')
+        if date:
+            clocks={'publishedOn':date,'sourcePublishedAt':row['published_at'],'observedAt':row['observed_at']}
     return {'id':str(row['id']),'title':f"{row['ticker']}: {title_en}",'translationJa':f"{row['ticker']}：{title_ja}",
             'url':row['url'],'publisher':'Reported company news','tickers':[row['ticker']],
-            'publishedAt':row['published_at'],'observedAt':row['observed_at'],
+            **clocks,
             'bodyJa':'\n\n'.join(paragraphs['ja']),'bodyEn':'\n\n'.join(paragraphs['en']),
             'generalSource':VERSION}
 

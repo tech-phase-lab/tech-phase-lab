@@ -515,7 +515,8 @@
     },
     "maxResults": 30,
     "reuse": "review-required",
-    "enabled": false
+    "enabled": false,
+    "buybackUpdates": true
   },
   {
     "id": "x-wallstengine",
@@ -536,7 +537,7 @@
       "AAOI",
       "META"
     ],
-    "query": "(from:wallstengine OR from:tipranks OR (from:FABYMETAL4 (\"price target\" OR \"target price\" OR \"PT to\" OR earnings OR \"quarterly results\" OR \"financial results\" OR results OR highlights OR EPS OR 決算 OR initiated OR upgraded OR downgraded OR ADP OR CPI OR PPI OR PCE OR FOMC OR NFP OR GDP OR payrolls OR \"jobs report\" OR \"unemployment rate\" OR \"hourly earnings\" OR funding OR financing OR fundraising OR \"capital raise\" OR \"capital raising\" OR convertible OR 資金調達 OR 転換社債))) -is:retweet -is:reply",
+    "query": "(from:wallstengine OR from:tipranks OR (from:FABYMETAL4 (\"price target\" OR \"target price\" OR \"PT to\" OR earnings OR results OR highlights OR EPS OR 決算 OR initiated OR upgraded OR downgraded OR ADP OR CPI OR PPI OR PCE OR FOMC OR NFP OR GDP OR payrolls OR \"jobs report\" OR \"unemployment rate\" OR \"hourly earnings\" OR funding OR financing OR fundraising OR \"capital raise\" OR \"capital raising\" OR convertible OR 資金調達 OR 転換社債 OR buyback OR buybacks OR repurchase OR repurchases OR 自社株買い))) -is:retweet -is:reply",
     "accounts": [
       "wallstengine",
       "tipranks",
@@ -583,7 +584,8 @@
     "intervalSeconds": 30,
     "maxResults": 30,
     "reuse": "review-required",
-    "financingUpdates": true
+    "financingUpdates": true,
+    "buybackUpdates": true
   },
   {
     "id": "globenewswire-public",
@@ -643,7 +645,7 @@
     "kind": "publisher-update",
     "format": "x-api",
     "enabledBy": "X_API_ENABLED",
-    "query": "from:TrendSpider (\"S&P 500\" OR S&P500 OR SPX OR Nasdaq OR NDX) (rebalance OR rebalancing OR reconstitution OR add OR added OR additions OR removed OR removals OR join OR joins OR joining OR replace OR replaces OR replacing OR inclusion OR exclusion OR deletions) -is:retweet -is:reply",
+    "query": "from:TrendSpider (((\"S&P 500\" OR S&P500 OR SPX OR Nasdaq OR NDX) (rebalance OR rebalancing OR reconstitution OR add OR added OR additions OR removed OR removals OR join OR joins OR joining OR replace OR replaces OR replacing OR inclusion OR exclusion OR deletions)) OR (buyback OR buybacks OR \"share repurchase\" OR \"stock repurchase\" OR 自社株買い OR 自己株式取得)) -is:retweet -is:reply",
     "accounts": [
       "TrendSpider"
     ],
@@ -656,7 +658,43 @@
     ],
     "intervalSeconds": 120,
     "maxResults": 30,
-    "reuse": "factual-results-only"
+    "reuse": "factual-results-only",
+    "buybackUpdates": true,
+    "buybackTickers": [
+      "MU",
+      "SKHY",
+      "SNDK",
+      "NBIS",
+      "NVDA",
+      "AMD",
+      "AVGO",
+      "ARM",
+      "TSM",
+      "ASML",
+      "MRVL",
+      "ANET",
+      "CRDO",
+      "CRWV",
+      "VRT",
+      "GEV",
+      "DELL",
+      "PLTR",
+      "MSFT",
+      "BE",
+      "GOOGL",
+      "ORCL",
+      "LITE",
+      "COHR",
+      "VST",
+      "IREN",
+      "ALAB",
+      "APH",
+      "INTC",
+      "AMAT",
+      "SIMO",
+      "AAOI",
+      "META"
+    ]
   },
   {
     "id": "x-barchart",

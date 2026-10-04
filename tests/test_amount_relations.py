@@ -29,6 +29,28 @@ class AmountRelationTests(unittest.TestCase):
                       'NVIDIA increases share repurchase authorization by $150 billion'):
             relation.validate_amount_relations(right, correction.TITLE)
 
+    def test_additional_authorization_noun_phrases_keep_increment_relation(self):
+        source='NVIDIA authorized an additional $150 billion for share repurchases.'
+        good=(
+            'NVIDIAは自社株買いの追加枠$150 billion を承認した。',
+            'NVIDIAは追加の承認枠1500億ドルを承認した。',
+            'NVIDIA has approved $150 billion in additional share buyback authority.',
+            'NVIDIA approved $150 billion of additional stock repurchase authorization.',
+        )
+        for text in good:
+            with self.subTest(text=text):
+                relation.validate_amount_relations(text,source)
+                with self.assertRaisesRegex(ValueError,'changed-amount-relation'):
+                    relation.validate_amount_relations(text,'NVIDIA increased total remaining authorization to $150 billion.')
+        for text in (
+            'NVIDIAは残る追加枠1500億ドルを承認した。',
+            'NVIDIA approved a total $150 billion in additional share buyback authority.',
+            'NVIDIA approved $150 billion in remaining share buyback authority.',
+            'NVIDIA approved $235 billion in additional share buyback authority, with a remaining balance of $150 billion.',
+        ):
+            with self.subTest(text=text),self.assertRaisesRegex(ValueError,'changed-amount-relation'):
+                relation.validate_amount_relations(text,source)
+
     def test_two_amounts_cannot_swap_roles_or_borrow_relation(self):
         source = 'NVIDIA authorized an additional $150 billion, increasing the total remaining authorization to $235 billion.'
         good = 'NVIDIAは1500億ドル追加し、残りは2350億ドルに拡大。'
@@ -94,6 +116,92 @@ class AmountRelationTests(unittest.TestCase):
             db.execute("UPDATE sources SET sha256='new-revision'")
             self.assertEqual(signals.public_official_updates(db, reference=datetime(2026, 10, 4, tzinfo=timezone.utc), read_only=True), [])
 
+
+
+class ExecutionAndCapacityTests(unittest.TestCase):
+    def test_through_fiscal_year_is_not_a_deadline(self):
+        evidence = 'The company expects to execute the remaining program through fiscal year 2028.'
+        for wrong in ('会社は2028会計年度までに実行する見込みとしている。',
+                      'The company expects to execute the program by fiscal year 2028.',
+                      'The company expects to execute it by the end of FY2028.'):
+            with self.subTest(wrong=wrong), self.assertRaisesRegex(ValueError, 'changed-execution-period'):
+                factual_validation.validate_semantics(wrong, evidence)
+        factual_validation.validate_semantics('会社は2028会計年度にかけて実行する見込みとしている。', evidence)
+        factual_validation.validate_semantics('The company expects execution through FY2028.', evidence)
+        factual_validation.validate_semantics('会社は2028年度までに実行する。', 'The company will complete the program by fiscal year 2028.')
+
+    def test_fiscal_year_optional_and_growth_percent_never_becomes_a_year(self):
+        evidence = 'The company expects execution through fiscal year 2028.'
+        for wrong in ('The company expects execution by the end of fiscal 2028.',
+                      'The company expects execution by fiscal 2028.'):
+            with self.assertRaisesRegex(ValueError, 'changed-execution-period'):
+                factual_validation.validate_semantics(wrong, evidence)
+        factual_validation.validate_semantics('The company expects execution through fiscal 2028.', evidence)
+        factual_validation.validate_semantics('会社は2028会計年度にかけて実行する見込みとしている。',
+                                             'The company expects execution through fiscal 2028.')
+        # A percentage is not a year. Keep the successful baseline on this
+        # release tree, including the shared official-item validation hook.
+        growth = 'The company expects revenue to grow by 20%.'
+        factual_validation.validate_semantics('売上高は20％増加する見込み。', growth)
+        factual_validation.validate_pair('売上高は20％増加する見込み。', growth)
+        official_research.validate_item('fact', {'ja': '売上高は20％増加する見込み。',
+            'en': growth, 'evidenceQuote': growth}, growth, 'Company outlook')
+
+    def test_separately_tensed_coordinated_actions_do_not_borrow_capability(self):
+        evidence = 'Our cash generation gives us the capacity to invest in technologies and return capital to shareholders.'
+        for wrong in ('The company can invest in technology and has returned capital to shareholders.',
+                      'The company can invest in technology and will return capital to shareholders.',
+                      'The company can invest in technology and returned capital to shareholders.',
+                      'The company has invested in technology and can return capital to shareholders.',
+                      'The company can invest in technology, has returned capital to shareholders.',
+                      'The company can invest in technology while it returns capital to shareholders.',
+                      '会社は技術に投資できるが、株主に資本を還元した。',
+                      '会社は技術に投資できるとしており、株主への資本還元を実施した。',
+                      '会社は株主への資本還元を実施しており、技術に投資できるとしている。',
+                      '会社は技術に投資したとしており、資本還元を行えるとしている。'):
+            with self.subTest(wrong=wrong), self.assertRaisesRegex(ValueError, 'changed-action-capacity'):
+                factual_validation.validate_semantics(wrong, evidence)
+        for right in ('The company can invest in technology and return capital to shareholders.',
+                      'The company can invest in technology and can return capital to shareholders.',
+                      'The company has the ability to invest in technology and return capital to shareholders.',
+                      '会社は技術への投資と株主への資本還元を行えるとしている。'):
+            factual_validation.validate_semantics(right, evidence)
+
+    def test_bilingual_coordinated_financial_action_matrix(self):
+        evidence = 'Our cash generation gives us the capacity to invest in technologies and return capital to shareholders.'
+        japanese_actions = ('実施した', '行った', '行っている', '実行した', '行うとしている')
+        for action in japanese_actions:
+            for wrong in (f'会社は技術に投資できるとしており、株主への資本還元を{action}。',
+                          f'会社は株主への資本還元を行えるとしており、技術への投資を{action}。',
+                          f'会社は技術への投資を{action}が、株主への資本還元を行える。',
+                          f'会社は投資能力を有しており、株主への資本還元を{action}。'):
+                with self.subTest(wrong=wrong), self.assertRaisesRegex(ValueError, 'changed-action-capacity'):
+                    factual_validation.validate_semantics(wrong, evidence)
+        for conjunction in ('and', 'but', 'while'):
+            for action in ('has returned', 'will return', 'is returning', 'returned', 'returns'):
+                wrong = f'The company can invest in technology {conjunction} {action} capital to shareholders.'
+                with self.subTest(wrong=wrong), self.assertRaisesRegex(ValueError, 'changed-action-capacity'):
+                    factual_validation.validate_semantics(wrong, evidence)
+        for right in ('会社は投資や株主還元を行える。', '会社は投資と資本還元ができる。',
+                      '会社は投資と株主還元を行う能力がある。',
+                      '会社は投資と株主還元を行うことができる。',
+                      'The company can invest and return capital.',
+                      'The company has capacity to invest and is able to return capital.'):
+            factual_validation.validate_semantics(right, evidence)
+
+    def test_capability_does_not_become_commitment_or_completed_action(self):
+        evidence = 'Our cash generation gives us the capacity to invest in technologies and return capital to shareholders.'
+        for wrong in ('会社は技術への投資と株主還元を行うとしている。',
+                      'The company is investing in technologies and returning capital to shareholders.',
+                      'The company will invest in technology and return capital to shareholders.',
+                      '会社は投資と株主還元を実施した。性能を改善できる。'):
+            with self.subTest(wrong=wrong), self.assertRaisesRegex(ValueError, 'changed-action-capacity'):
+                factual_validation.validate_semantics(wrong, evidence)
+        for right in ('会社は技術への投資と株主への資本還元を行えるとしている。',
+                      'The company says it has capacity to invest in technology and return capital to shareholders.'):
+            factual_validation.validate_semantics(right, evidence)
+        factual_validation.validate_semantics('会社は設備に投資した。', 'The company invested in equipment.')
+        factual_validation.validate_semantics('工場の生産能力は拡大した。', 'The factory increased production capacity.')
 
 if __name__ == '__main__':
     unittest.main()

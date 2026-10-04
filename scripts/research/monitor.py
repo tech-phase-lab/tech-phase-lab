@@ -27,7 +27,7 @@ INDEXES = {t: p.get("monitorUrl", p["indexUrl"]) for t, p in PROVIDERS.items()}
 HOSTS = {t: set(p["allowedHosts"]) for t, p in PROVIDERS.items()}
 MAX_BYTES = 12 * 1024 * 1024
 MAX_EXTRACTED_CHARS = 160_000
-HTML_EXTRACTOR_VERSION = "2026-10-02-original-publication-v4"
+HTML_EXTRACTOR_VERSION = "2026-10-04-article-document-v5"
 MAX_JSON_LD_CHARS = 512 * 1024
 MAX_JSON_LD_BLOCKS = 20
 MAX_JSON_LD_NODES = 2_000
@@ -496,7 +496,7 @@ def is_verification_html(content):
     """Detect access-control HTML without matching ordinary article wording."""
     title = re.search(br"<title[^>]*>(.*?)</title>", content, re.I | re.S)
     if title and re.search(
-        br"access denied|just a moment|page not found|403 forbidden",
+        br"access denied|just a moment|page not found|403 forbidden|404 not found|410 gone|503 service unavailable|500 internal server error",
         title.group(1),
         re.I,
     ):
@@ -525,7 +525,8 @@ def fetch(url, ticker, validators=None, include_metadata=False):
                 conditional[key] = cached[key]
     headers = {
         "User-Agent": os.environ.get("RESEARCH_USER_AGENT", "TechPhaseResearch-SourceCheck/0.1"),
-        "Accept": "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf",
+        "Accept": ("text/html,application/pdf;q=0.9" if article_url(url, ticker)
+                   else "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf"),
     }
     source = source_configuration(url, ticker)
     request_body = source.get("requestJson")
@@ -1133,6 +1134,18 @@ def extract_html_text(content, declared_encoding=None):
     visible_parser.feed(decoded)
     visible_parser.close()
     visible = visible_parser.result()
+
+    # Many IR templates use a single div.article instead of semantic tags.
+    # Choose only an explicit unique region; never concatenate article cards.
+    if not visible_parser.scoped_parts:
+        from article_document import explicit_body
+        region = explicit_body(decoded)
+        if region:
+            scoped_parser = ArticleText()
+            scoped_parser.feed(region)
+            scoped_parser.close()
+            if sum(character.isalnum() for character in scoped_parser.result()) >= 80:
+                visible = scoped_parser.result()
 
     structured_parser = StructuredArticleText()
     structured_parser.feed(decoded)
@@ -1779,8 +1792,34 @@ def connect(path):
         db.execute(
             "ALTER TABLE annual_filing_review_history ADD COLUMN draft_validation_sha256 TEXT"
         )
+    queue_invalid_article_evidence(db)
     db.commit()
     return db
+
+
+def queue_invalid_article_evidence(db):
+    """Queue one ordinary recheck of a legacy successful non-document article.
+
+    This invalidates only its successful-cache timer. It never clears a source
+    error, a host circuit, an HTTP restriction, retained body or source clock.
+    The existing bounded body scheduler remains the only fetch entry point.
+    """
+    db.execute("""CREATE TABLE IF NOT EXISTS article_response_rechecks(
+      url TEXT NOT NULL, sha256 TEXT NOT NULL, queued_at TEXT NOT NULL,
+      previous_next_fetch_at TEXT, PRIMARY KEY(url,sha256))""")
+    for row in db.execute("""SELECT url,ticker,sha256,next_fetch_at FROM sources
+      WHERE source_mode='remote' AND sha256 IS NOT NULL AND error IS NULL
+        AND status NOT IN ('held','rejected') AND next_fetch_at IS NOT NULL
+        AND content_type IS NOT NULL AND content_type NOT IN ('text/html','application/pdf')
+        AND NOT EXISTS(SELECT 1 FROM article_response_rechecks q WHERE q.url=sources.url AND q.sha256=sources.sha256)
+      LIMIT 1000""").fetchall():
+        if article_url(row['url'], row['ticker']) is None:
+            continue
+        inserted = db.execute('INSERT OR IGNORE INTO article_response_rechecks VALUES(?,?,?,?)',
+                              (row['url'], row['sha256'], now(), row['next_fetch_at']))
+        if inserted.rowcount:
+            db.execute('UPDATE sources SET next_fetch_at=NULL WHERE url=? AND sha256=? AND error IS NULL',
+                       (row['url'], row['sha256']))
 
 
 def record_discovery_poll_batch(
@@ -4367,7 +4406,10 @@ def write_snapshot(db, output):
 
 def collect_source(row, transport=fetch):
     """Fetch and extract one source without mutating SQLite, safe for worker threads."""
+    from article_document import ARTICLE_TYPES, validate as validate_article_document
     declared_encoding = None
+    article = article_url(row["url"], row["ticker"]) is not None
+    stale_document_type = article and row["content_type"] is not None and row["content_type"] not in ARTICLE_TYPES
     if getattr(transport, "supports_persistent_validators", False):
         missing_extracted_evidence = (
             bool(row["sha256"])
@@ -4385,7 +4427,7 @@ def collect_source(row, transport=fetch):
         )
         validators = (
             {"force_unconditional": True}
-            if sec_filing or stale_html_extractor else {}
+            if sec_filing or stale_html_extractor or stale_document_type else {}
             if missing_extracted_evidence else {
                 "etag": row["response_etag"],
                 "last_modified": row["response_last_modified"],
@@ -4396,6 +4438,8 @@ def collect_source(row, transport=fetch):
             include_metadata=True,
         )
         if response["notModified"]:
+            if stale_document_type:
+                raise ValueError("article-response-not-document")
             return {
                 "notModified": True, "responseEtag": response["etag"],
                 "responseLastModified": response["lastModified"],
@@ -4406,6 +4450,16 @@ def collect_source(row, transport=fetch):
     else:
         content, content_type = transport(row["url"], row["ticker"])
         response_etag = response_last_modified = None
+    if article and content_type not in ARTICLE_TYPES:
+        raise ValueError("article-response-not-document")
+    document_identity = None
+    if article and content_type == "text/html":
+        if is_verification_html(content):
+            raise ValueError("Source returned an error or verification page")
+        document_identity = validate_article_document(
+            decode_html_document(content, declared_encoding), row["url"],
+            None if urlsplit(row["url"]).hostname == "www.sec.gov" else row["title"],
+        )
     extracted = extract_text(content, content_type, declared_encoding)
     is_sec_html = content_type == "text/html" and urlsplit(row["url"]).hostname == "www.sec.gov"
     if not extracted.strip() and not is_sec_html:
@@ -4434,7 +4488,8 @@ def collect_source(row, transport=fetch):
         "responseLastModified": response_last_modified,
         "evidenceUrl": evidence_url,
         "evidenceKind": evidence_kind,
-        "publishedOn": article_publication_date(content, row["url"], declared_encoding)
+        "publishedOn": (article_publication_date(content, row["url"], declared_encoding)
+                        or (document_identity.original_visible_date() if document_identity else None))
         if content_type == "text/html" and evidence_kind == "direct" else None,
     }
 

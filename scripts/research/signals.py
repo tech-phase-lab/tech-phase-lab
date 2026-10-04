@@ -1013,6 +1013,8 @@ def x_content_kind(source, title):
         return None
     if source.get("officialUpdates") is True:
         return "official-update"
+    if source.get('buybackUpdates') is True and x_api.buyback_news.CUE.search(title):
+        return 'share-buyback'
     if x_api.RATING_PATTERN.search(title):
         return "analyst-rating"
     if x_api.TARGET_PATTERN.search(title):
@@ -2151,7 +2153,7 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
             if cleaned:
                 try:
                     factual_validation.validate_numbers(cleaned, display_title)
-                    factual_validation.validate_amount_relations(cleaned, display_title)
+                    factual_validation.validate_semantics(cleaned, display_title)
                     factual_validation.validate_acquisition(cleaned, display_title, 'ja', require_status=True)
                     translation['translationJa'] = cleaned
                 except ValueError:

@@ -13,6 +13,7 @@ import time
 import uuid
 
 import brief_generator
+import buyback_news
 import factual_validation
 import headline_translation
 import monitor
@@ -81,13 +82,14 @@ def candidates(db, reference, *, read_only=False, published_updates=None):
     primary = []
     if db.execute("SELECT 1 FROM sqlite_master WHERE name='release_events'").fetchone():
         primary = [dict(r) for r in db.execute('''SELECT e.*, s.sha256 AS body_sha,
-          s.ticker, r.extracted_text AS body, r.observed_at AS body_at
+          s.ticker, s.content_type, s.source_mode, r.extracted_text AS body, r.observed_at AS body_at
           FROM signal_events e JOIN sources s ON s.url=e.url
           JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256
           WHERE e.source_id LIKE 'primary-ir-%' AND s.status NOT IN ('held','rejected')
           AND julianday(e.observed_at)>=julianday(?)
           ORDER BY e.id DESC LIMIT 100''', ((reference-timedelta(days=7)).isoformat(),))
-          if bridge.is_current(db, r) and (MATERIAL.search(r['title']) or r['id'] in visible_ids)
+          if bridge.is_current(db, r) and (MATERIAL.search(r['title']) or buyback_news.CUE.search(r['title']) or r['id'] in visible_ids)
+          and (r['source_mode'] == 'inline' or r['content_type'] in {None, 'text/html', 'application/pdf'})
           and 1200 <= len(r['body'] or '') <= 160000]
     primary_ids = {r['id'] for r in primary}
     stories = []
@@ -128,9 +130,21 @@ def prepare_story_body(path, reference, request=None):
                     body = doc['text'] if doc else ''
                 else:
                     fetched = request({**source,'url':row['url'],'format':'document'}, {})
+                    from article_document import validate as validate_article_document, explicit_body
+                    if monitor.is_verification_html(fetched['body']):
+                        raise ValueError('Source returned an error or verification page')
+                    document = monitor.decode_html_document(fetched['body'])
+                    identity = validate_article_document(document, row['url'], row['title'])
+                    actual_date = (monitor.article_publication_date(fetched['body'], row['url'])
+                                   or identity.original_visible_date())
+                    expected_date = monitor.original_publication_date(row['published_on'] or row['published_at'])
+                    if actual_date and expected_date and actual_date != expected_date:
+                        raise ValueError('article-response-date-mismatch')
                     article = NewsHTML(source.get('articleBodyClass'))
-                    article.feed(fetched['body'].decode('utf-8',errors='replace'))
+                    article.feed(document)
                     markup = ''.join(article.selected if source.get('articleBodyClass') else article.article or article.main)
+                    if not markup:
+                        markup = explicit_body(document) or ''
                     body = monitor.extract_html_text(markup.encode())
                 if not 120 <= len(body) <= 160000:
                     raise ValueError('article-body-unavailable')
@@ -142,7 +156,13 @@ def prepare_story_body(path, reference, request=None):
                     body, digest = cached['body'], cached['body_sha']
                 error = monitor.source_error_code(exc)
                 next_at = reference.timestamp() + (21600 if getattr(exc,'code',None) in {401,403,451} else 300)
+            db.commit()
             with db:
+                db.execute('BEGIN IMMEDIATE')
+                current = db.execute('SELECT * FROM signal_events WHERE id=?', (row['id'],)).fetchone()
+                if (not current or any(current[key] != row[key] for key in ('sha', 'title', 'url', 'published_on', 'published_at'))
+                        or not bridge.is_current(db, current)):
+                    return 'stale'
                 db.execute('''INSERT INTO official_story_bodies VALUES(?,?,?,?,?,?,?)
                   ON CONFLICT(event_id) DO UPDATE SET sha=excluded.sha,body_sha=excluded.body_sha,
                   body=excluded.body,fetched_at=excluded.fetched_at,next_at=excluded.next_at,error=excluded.error''',
@@ -257,6 +277,7 @@ def validate_item(name, item, body, source_title):
         factual_validation.validate_acquisition(text, source_title, lang, require_status=name in ('title', 'summary'))
         factual_validation.validate_acquisition(text, quote, lang)
     factual_validation.validate_pair(item['ja'], item['en'])
+    buyback_news.validate(item, quote)
 
 
 def response_schema():
@@ -486,6 +507,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     with connect(path) as db:
         if oracle_reviewed_recovery.publish(db, reference, validate):
             return 'done'
+        if editorial_recovery.publish_retained(db, reference, validate):
+            return 'done'
         recovery=editorial_recovery.publish(db,candidates(db,reference,read_only=True),
                                             reference,validate,current_revision)
     if recovery is not None:
@@ -522,6 +545,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
             policy+='\n'+general_source_news.ACTOR_POLICY
         if any('brokerCommentary' in unit for unit in row['units']):
             policy+='\n'+general_source_news.BROKER_POLICY
+    if buyback_news.CUE.search(row['body']):
+        policy+='\n'+buyback_news.POLICY
     if row.get('issuer_business'):
         policy+='\n'+issuer_business_news.FINANCIAL_POLICY
     with connect(path) as db:
@@ -536,6 +561,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         input_data=json.loads(payload['input'])
         input_data['evidenceContext']={u['id']:{'actor':u['actor'],'requiredTopics':sorted(general_source_news.concepts(u['quote'],'en'))} for u in row['units']}
         for unit in row['units']:
+            if 'buyback' in unit:
+                input_data['evidenceContext'][unit['id']]['buyback']=unit['buyback']
             if 'brokerCommentary' in unit:
                 input_data['evidenceContext'][unit['id']]['brokerCommentary']=unit['brokerCommentary']
             if 'actorGrounding' in unit:
@@ -578,7 +605,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     except Exception as exc:
         cause=getattr(exc,'__cause__',None)
         provider_status=getattr(cause,'code',None)
-        reason=str(exc) if type(exc) is ValueError and str(exc) in ({'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete','lost-forecast-modality','lost-negation','reversed-supply-demand','lost-fiscal-basis','lost-comparison','unsupported-comparison-baseline','invented-broker-action','source-copy-overlap','unsupported-actor','lost-action-status'} | general_source_news.FAILURE_CODES) else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
+        reason=str(exc) if type(exc) is ValueError and str(exc) in ({'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete','lost-forecast-modality','lost-negation','reversed-supply-demand','lost-fiscal-basis','lost-comparison','unsupported-comparison-baseline','changed-amount-relation','changed-execution-period','changed-action-capacity','invented-broker-action','source-copy-overlap','unsupported-actor','lost-action-status'} | general_source_news.FAILURE_CODES) else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
         with connect(path) as db, db:
             db.execute('BEGIN IMMEDIATE')
             # Private audit evidence for a failed attempt; never returned by feed.
