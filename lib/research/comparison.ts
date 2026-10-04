@@ -1,14 +1,15 @@
 import type { PreparedComparisonAnalysis } from "./comparison-analysis";
 import type { Copy } from "./data";
 export type ComparisonCompany = { ticker: string; name: string; peer: string; caution: Copy };
-export type Fact = { value: number; unit: string; start: string | null; end: string; filed: string; accession: string; tag: string; basis: string };
+export type Fact = { value: number; unit: string; start: string | null; end: string; filed: string | null; accession: string | null; tag: string; basis: string };
 export type BalanceSnapshot = {
-  end: string; sourceUrl: string; filed: string;
+  end: string; sourceUrl: string; filed: string | null;
   cash: Fact | null; currentAssets: Fact | null; currentLiabilities: Fact | null;
   currentRatio: number | null; debtCurrent: Fact | null; debtNoncurrent: Fact | null;
   shortBorrowings: Fact | null; leaseCurrent: Fact | null; leaseNoncurrent: Fact | null;
 };
 export type Financials = {
+  twelveData?: import("./twelve-data-factors").TwelveFactorEvidence;
   referenceEvaluation?: import("./comparison-reference").ReferenceEvaluation;
   ticker: string; status: "ready" | "unavailable" | "unsupported"; retrievedAt: string;
   dataWarnings?: Copy[];
@@ -53,14 +54,14 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const root = obj(payload);
   if (Number(root.cik) !== Number(cik)) return result;
   const facts = obj(root.facts);
-  function collect(basis: keyof typeof tags, names: readonly string[], instant = false, period: "annual" | "quarter" = "annual", shares = false): Fact[] {
+  function collect(basis: keyof typeof tags, names: readonly string[], instant = false, period: "annual" | "quarter" = "annual", shares = false): (Fact & {filed:string;accession:string})[] {
     return names.flatMap(tag => Object.entries(obj(obj(obj(facts[basis])[tag]).units)).flatMap(([unit, values]) => {
       if ((shares ? unit !== "shares" : !/^[A-Z]{3}$/.test(unit)) || !Array.isArray(values)) return [];
       return values.flatMap(raw => {
         const f = obj(raw);
         if (typeof f.val !== "number" || !Number.isFinite(f.val) || typeof f.end !== "string" || typeof f.filed !== "string" || typeof f.accn !== "string" || !/^\d{10}-\d{2}-\d{6}$/.test(f.accn) || !(period === "quarter" ? ["10-Q", "10-Q/A", "6-K", "6-K/A", "8-K", "8-K/A"] : ["10-K", "10-K/A", "20-F", "20-F/A", "40-F", "40-F/A"]).includes(String(f.form))) return [];
         if (!Number.isFinite(day(f.end)) || !Number.isFinite(day(f.filed)) || day(f.filed) > now / 86400000 || day(f.end) > day(f.filed)) return [];
-        const fact: Fact = { value: f.val, unit, start: typeof f.start === "string" ? f.start : null, end: f.end, filed: f.filed, accession: f.accn, tag, basis };
+        const fact: Fact & {filed:string;accession:string} = { value: f.val, unit, start: typeof f.start === "string" ? f.start : null, end: f.end, filed: f.filed, accession: f.accn, tag, basis };
         if (instant ? fact.start !== null : duration(fact) < (period === "quarter" ? 75 : 350) || duration(fact) > (period === "quarter" ? 105 : 380) || !Number.isFinite(duration(fact))) return [];
         return [fact];
       });
@@ -105,7 +106,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const quarterOperatingCash=quarterMetric("operatingCash"), quarterCapex=quarterMetric("capex"), quarterCompensation=quarterMetric("stockCompensation");
   const quarterShares = quarterRevenue ? unique(collect(basis,tags[basis].dilutedShares,false,"quarter",true).filter(f=>f.accession===quarterRevenue.accession && f.start===quarterRevenue.start && f.end===quarterRevenue.end && f.value>0)) : null;
   const previousQuarterShares = quarterShares && previousQuarterRevenue ? unique(collect(basis,[quarterShares.tag],false,"quarter",true).filter(f=>f.accession===quarterShares.accession && f.start===previousQuarterRevenue.start && f.end===previousQuarterRevenue.end && f.value>0)) : null;
-  const filingUrl = (f: Fact) => `https://www.sec.gov/Archives/edgar/data/${Number(cik)}/${f.accession.replaceAll("-", "")}/${f.accession}-index.htm`;
+  const filingUrl = (f: Fact) => `https://www.sec.gov/Archives/edgar/data/${Number(cik)}/${f.accession!.replaceAll("-", "")}/${f.accession}-index.htm`;
   // A single filing/date/currency for the entire balance snapshot. No fallback to older components.
   const balanceTags = basis === "us-gaap" ? ["CashAndCashEquivalentsAtCarryingValue", "AssetsCurrent", "LiabilitiesCurrent"] : ["CashAndCashEquivalents", "CurrentAssets", "CurrentLiabilities"];
   const quarterHasBalance = quarterRevenue && collect(basis,balanceTags,true,"quarter").some(f => f.end === quarterRevenue.end && f.accession === quarterRevenue.accession && f.unit === quarterRevenue.unit && f.value >= 0);

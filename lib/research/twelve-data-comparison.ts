@@ -1,3 +1,5 @@
+import { twelveNumber } from "./twelve-data-values.ts";
+export { twelveNumber } from "./twelve-data-values.ts";
 import { createHash } from "node:crypto";
 
 /** Offline ingestion boundary. No network calls, API key, or paid-feed activation. */
@@ -7,20 +9,14 @@ export type TwelveComparisonSnapshot = {
   schema: 1; provider: "twelve-data"; ticker: string; currency: string;
   retrievedAt: string; periodEnd: string; releasedAt: null;
   fiscalYear: number; fiscalQuarter: number;
-  revenue: number | null; operatingIncome: number | null; dilutedEps: number | null;
+  revenue: number | null; previousRevenue: number | null; previousPeriodEnd: string | null; operatingIncome: number | null; dilutedEps: number | null;
   revenueGrowthPct: number | null; operatingMarginPct: number | null;
   operatingCashFlow: number | null; signedCapex: number | null;
   freeCashFlow: number | null; freeCashFlowMarginPct: number | null;
   warnings: string[];
 };
 const object = (x: unknown): Row => x !== null && typeof x === "object" && !Array.isArray(x) ? x as Row : {};
-// Never coerce null, an empty string or a boolean to zero, nor strip K/M/% suffixes.
-export function twelveNumber(x: unknown): number | null {
-  if (typeof x === "number") return Number.isFinite(x) ? x : null;
-  if (typeof x !== "string" || !/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(x.trim())) return null;
-  const n = Number(x.trim());
-  return Number.isFinite(n) ? n : null;
-}
+
 function date(x: unknown): string | null {
   if (typeof x !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(x)) return null;
   const t = Date.parse(x);
@@ -95,7 +91,7 @@ export function normalizeTwelveComparison(ticker: string, income: unknown, cashF
   const growth = revenue !== null && previousRevenue !== null ? percent(revenue - previousRevenue, previousRevenue) : null;
   return { schema: 1, provider: "twelve-data", ticker, currency: inc.currency, retrievedAt: new Date(now).toISOString(),
     periodEnd: end, releasedAt: null, fiscalYear: year, fiscalQuarter: quarter,
-    revenue, operatingIncome, dilutedEps, revenueGrowthPct: growth, operatingMarginPct: percent(operatingIncome, revenue),
+    revenue, previousRevenue, previousPeriodEnd: previousRevenue !== null ? String(prior[0].fiscal_date) : null, operatingIncome, dilutedEps, revenueGrowthPct: growth, operatingMarginPct: percent(operatingIncome, revenue),
     operatingCashFlow, signedCapex, freeCashFlow, freeCashFlowMarginPct: percent(freeCashFlow, revenue), warnings };
 }
 

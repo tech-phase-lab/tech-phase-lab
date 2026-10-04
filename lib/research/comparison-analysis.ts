@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import type { Financials } from "./comparison.ts";
-import { comparisonScores } from "./comparison-scorecard.ts";
+import { comparisonScores, hasRecentQuarter } from "./comparison-scorecard.ts";
 
 type Copy = { ja: string; en: string };
 export type PreparedComparisonAnalysis = {
@@ -13,7 +13,7 @@ export function comparisonEvidenceRevision(c: Financials) {
   return createHash("sha256").update(JSON.stringify([
     c.ticker,c.status,c.quarterRevenue,c.previousQuarterRevenue,c.quarterOperatingIncome,
     c.quarterRevenueGrowth,c.quarterOperatingMargin,c.quarterFcfMargin,
-    c.quarterDilutedSharesGrowth,c.quarterSourceUrl,c.balance,c.dataWarnings ?? [],
+    c.quarterDilutedSharesGrowth,c.quarterSourceUrl,c.balance,c.dataWarnings ?? [],c.twelveData ?? null,
   ])).digest("hex");
 }
 const copy = (ja:string,en:string):Copy => ({ja,en});
@@ -21,7 +21,7 @@ const amount = (value:number,unit:string) => `${value.toLocaleString("en-US",{ma
 /** Runs once per financial cache refresh, never calls an LLM or external service. */
 export function prepareComparisonAnalysis(c: Financials, now=Date.now()): PreparedComparisonAnalysis | undefined {
   const started=performance.now();
-  if(c.status!=="ready" || !c.quarterRevenue || !c.quarterSourceUrl) return undefined;
+  if(c.status!=="ready" || !c.quarterRevenue || !c.quarterSourceUrl || !hasRecentQuarter(c,now)) return undefined;
   const scores=comparisonScores(c,now);
   const valid=(id:string)=>scores.some(s=>s.id===id && s.value!==null);
   if(!scores.some(s=>s.value!==null)) return undefined;
@@ -60,8 +60,13 @@ export function prepareComparisonAnalysis(c: Financials, now=Date.now()): Prepar
 /** Reuse only the saved analysis matching this exact evidence and a usable quarter. */
 export function currentComparisonAnalysis(c: Financials, now=Date.now()) {
   const saved=c.preparedAnalysis;
-  if(!saved || saved.version!==1 || saved.sourceRevision!==comparisonEvidenceRevision(c)
+  if(!saved || !hasRecentQuarter(c,now) || saved.version!==1 || saved.sourceRevision!==comparisonEvidenceRevision(c)
     || !Number.isFinite(Date.parse(saved.preparedAt)) || Date.parse(saved.preparedAt)>now
     || !comparisonScores(c,now).some(s=>s.value!==null)) return undefined;
+  if(c.twelveData) {
+    const scores=comparisonScores(c,now);
+    const marketIds=["financial","valuation","stability","momentum"];
+    return {...saved,items:saved.items.filter(item=>!marketIds.includes(item.id) || scores.some(s=>s.id===item.id && s.value!==null))};
+  }
   return saved;
 }

@@ -1,6 +1,6 @@
 # Twelve Data comparison preparation — 2026-10-04
 
-Status: offline ingestion boundary and cache implemented; **no live Twelve Data
+Status: offline ingestion, seven-factor scoring, production display adapter and cache implemented; **no live Twelve Data
 request, subscription change, or comparison-route activation**. Existing comparison
 UI, SEC loader, authorization and news paths are unchanged.
 
@@ -28,8 +28,10 @@ UI, SEC loader, authorization and news paths are unchanged.
 The server preparation entry point is `prepareTwelveComparisonPayload`. It accepts
 already-fetched response objects; it is not a public endpoint. Cache lifetime is
 one day for prepared text only, **not** a one-day financial-data polling interval.
-The existing SEC analysis/scoring remains active. This adapter does not yet feed
-its values or scores into the comparison screen.
+The existing SEC loader remains active. `prepareTwelveComparisonForDisplay` now
+returns the same Financials contract used by the production comparison screen,
+including bilingual points and scores. The live comparison route has not yet been
+switched to a Twelve Data collector. No synthetic data is shown to subscribers.
 
 ## Remaining activation work
 
@@ -40,18 +42,47 @@ its values or scores into the comparison screen.
    with shared credit/rate limits, timeout/retry policy and per-symbol in-flight
    deduplication. Do not fetch full statements independently for every comparison.
    Framework preparation caching alone is not a durable audit store or scheduler.
-3. Verify balance-sheet/statistics/quote/earnings response schemas before mapping
-   them. Prices and forecasts need independent timestamps, units and share basis.
+3. Verify actual statistics/time_series responses against the documented schemas
+   now mapped. Balance-sheet/quote/earnings mapping remains outstanding. Prices and
+   forecasts need independent timestamps, units and share basis.
    Do not assume Entry Venture includes every endpoint from a public symbol page.
-4. Connect provider-neutral snapshots to the existing Financials/scoring contract;
-   preserve unknown release/filing dates and source names. Do not forge SEC
-   accessions or label Twelve Data figures as SEC filings. Check known newer releases
-   against the returned reporting period before calling anything “latest.”
-5. Save scores alongside prepared bilingual points using a versioned scoring rule;
-   recompute on evidence/rule changes and recheck freshness when serving. Current
-   adapter computes financial metrics, **not seven complete investment scores**.
-6. Verify real API → stored snapshot → JA/EN comparison → browser, including
-   three-company comparisons and missing data. Record actual latency and costs.
+4. Connect the licensed collector to `prepareTwelveComparisonForDisplay` and the
+   route. The Financials bridge now preserves unknown filing/release dates as null,
+   and the screen labels the source Twelve Data rather than SEC. Financials from
+   unknown accounting standards use a provider-standardized label, not US GAAP.
+   Check known newer releases before describing the received quarter as “latest.”
+5. Test real API → stored snapshot → JA/EN comparison → browser, including
+   three-company comparisons. Record actual latency and costs. Schema fixtures and
+   server-rendered production components pass, but do not establish live coverage.
+
+## Seven-factor reference model (version 1)
+
+The radar, bars and leader highlights share `comparisonScores`. These are explicit
+reference bands, not trained investment forecasts or peer percentiles. Missing
+values remain null. A full composite is not produced from incomplete factors.
+
+| Factor | Input | Scale |
+| --- | --- | --- |
+| Growth | latest-quarter revenue YoY | 5 + growth percentage / 10 |
+| Profitability | latest-quarter operating margin | margin percentage / 5 |
+| Cash | same-quarter simple FCF margin | 5 + margin percentage / 5 |
+| Financial | statistics for matching most_recent_quarter | up to 5 at current ratio 2, plus up to 5 at cash/total debt 1 |
+| Valuation | positive provider forward_pe | 11 − forward P/E / 5 |
+| Stability | four complete consecutive quarterly operating margins | profitable fraction × (5 + 5 × max(0, 1 − margin standard deviation / 20)) |
+| Momentum | split-adjusted completed daily closes roughly 90 days apart | 5 + price return percentage / 10 |
+
+All scores are clamped to 0–10 and rounded to one decimal. The prior-quarter
+start date is never invented. Unknown debt is not zero. Positive forward P/E can
+coexist with current losses (future estimates), but it never substitutes trailing
+P/E or claims the business is currently profitable. The valuation scale does not
+normalize cyclical peak earnings; that limitation is shown in the collapsed method.
+
+Statistics retrieval time expires after 36 hours; it is not mislabelled as the
+provider's update date. Momentum requires a completed close within seven calendar
+days and split-adjustment provenance. Incomplete current-day candles are excluded.
+Cached copy loses expired market-factor bullets when read; quarter-based factors
+can remain usable. Each card shows up to four points per side; all prepared points
+remain in the evidence disclosure. The existing compact layout is preserved.
 
 Official schema reference: https://twelvedata.com/docs (standard financial statements).
 No live speed, freshness, licensing or complete-symbol coverage is claimed here.

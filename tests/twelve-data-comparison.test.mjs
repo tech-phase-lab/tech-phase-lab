@@ -66,7 +66,7 @@ test("saved bilingual evidence is reused for unchanged facts and invalidated for
 test("ingestion cache reuses prepared text across repeated reads and updates on new evidence",async()=>{
   let text=await readFile(new URL("../lib/research/twelve-data-comparison-server.ts",import.meta.url),"utf8");
   const moduleURL=new URL("../lib/research/twelve-data-comparison.ts",import.meta.url).href;
-  text=text.replace('import "server-only";','').replace('import { unstable_cache } from "next/cache";',`const values=new Map();
+  text=text.replace(/^import .* from "\.\/(twelve-data-financials|comparison-scorecard|comparison-analysis)";\n/gm,'').replace('import "server-only";','').replace('import { unstable_cache } from "next/cache";',`const values=new Map();
     const unstable_cache=(fn,keys)=>async()=>{const key=JSON.stringify(keys); if(!values.has(key))values.set(key,await fn());return values.get(key);};`)
     .replace('"./twelve-data-comparison"',JSON.stringify(moduleURL));
   // Node's TS stripping is only needed for the typed function parameters.

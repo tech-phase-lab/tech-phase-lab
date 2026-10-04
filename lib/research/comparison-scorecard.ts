@@ -1,3 +1,4 @@
+import { twelveExtraFactors, twelveFactorMetric } from "./twelve-data-factors.ts";
 import type { Financials } from "./comparison.ts";
 export type ScoreId = "valuation" | "growth" | "profitability" | "financial" | "cash" | "stability" | "momentum";
 export type ComparisonScore = { id: ScoreId; label: {ja:string;en:string}; value: number | null };
@@ -46,12 +47,13 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
   const financial = recent && balance && balance.end===c.quarterRevenue?.end && finite(balance.currentRatio) && balance.cash && balance.debtCurrent && balance.debtNoncurrent
     ? clamp(5*Math.min(balance.currentRatio,2)/2 + 5*Math.min(balance.cash.value/Math.max(balance.debtCurrent.value+balance.debtNoncurrent.value,1),1)) : null;
   const cash = recent && finite(c.quarterFcfMargin) ? clamp(5+c.quarterFcfMargin/5) : null;
+  const extra=c.twelveData ? twelveExtraFactors(c.twelveData,now) : null;
   const scores: ComparisonScore[] = [
-    {id:"financial",label:{ja:"財務健全性",en:"Financial strength"},value:financial},
+    {id:"financial",label:{ja:"財務健全性",en:"Financial strength"},value:recent ? extra?.financial ?? financial : null},
     {id:"profitability",label:{ja:"収益性",en:"Profitability"},value:profitability},
-    {id:"valuation",label:{ja:"割安性",en:"Valuation"},value:null},
-    {id:"stability",label:{ja:"安定性",en:"Stability"},value:null},
-    {id:"momentum",label:{ja:"株価モメンタム",en:"Price momentum"},value:null},
+    {id:"valuation",label:{ja:"割安性",en:"Valuation"},value:recent ? extra?.valuation ?? null : null},
+    {id:"stability",label:{ja:"安定性",en:"Stability"},value:recent ? extra?.stability ?? null : null},
+    {id:"momentum",label:{ja:"株価モメンタム",en:"Price momentum"},value:extra?.momentum ?? null},
     {id:"growth",label:{ja:"成長性",en:"Growth"},value:growth},
     {id:"cash",label:{ja:"資金創出",en:"Cash generation"},value:cash},
   ];
@@ -61,10 +63,12 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
 
 /** Display actual measurements beside the reference bars, including unscored factors. */
 export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", now=Date.now()): string {
-  if(!hasRecentQuarter(c,now)) return lang==="ja" ? "最新値未確認" : "Latest value unverified";
+  if(!hasRecentQuarter(c,now) && !(id==="momentum" && c.twelveData && twelveExtraFactors(c.twelveData,now).momentum!==null)) return lang==="ja" ? "最新値未確認" : "Latest value unverified";
   const reference=c.referenceEvaluation?.factors.find(f=>f.id===id);
   if(reference) return reference.metric[lang];
   const ja=lang==="ja";
+  const providerMetric=c.twelveData ? twelveFactorMetric(c.twelveData,id,lang,now) : null;
+  if(providerMetric)return providerMetric;
   if(id==="growth" && finite(c.quarterRevenueGrowth)) return `${ja?"売上前年比":"Revenue YoY"} ${c.quarterRevenueGrowth>0?"+":""}${c.quarterRevenueGrowth.toFixed(1)}%`;
   if(id==="profitability" && finite(c.quarterOperatingMargin)) return `${ja?"営業利益率":"Operating margin"} ${c.quarterOperatingMargin.toFixed(1)}%`;
   if(id==="cash" && finite(c.quarterFcfMargin)) return `${ja?"簡易FCF率":"Simple FCF margin"} ${c.quarterFcfMargin.toFixed(1)}%`;

@@ -23,10 +23,10 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
   // TSM's untagged earnings exhibits have a separate, verified actuals parser.
   const tsmRelease = ticker === "TSM" && Number(cik) === 1046179 ? filings.find(f => f.form.startsWith("6-K") && /\/tsm-\d{8}x6k\.htm$/.test(f.url) && ["03-31","06-30","09-30","12-31"].includes(f.end.slice(5)) && (!annual || f.end > annual.end)) : undefined;
   const tsmStatement = ticker === "TSM" && Number(cik) === 1046179 ? filings.find(f => f.form.startsWith("6-K") && /\/tsm-fsx\d{8}x6k\.htm$/.test(f.url) && (!annual || f.end > annual.end)) : undefined;
-  const wanted = [annual && (!initial.revenue || initial.revenue.end < annual.end || initial.revenue.filed < annual.filed) ? annual : undefined,
-    quarter && (!initial.quarterRevenue || initial.quarterRevenue.end < quarter.end || initial.quarterRevenue.filed < quarter.filed) ? quarter : undefined,
+  const wanted = [annual && (!initial.revenue || initial.revenue.end < annual.end || (initial.revenue.filed ?? "") < annual.filed) ? annual : undefined,
+    quarter && (!initial.quarterRevenue || initial.quarterRevenue.end < quarter.end || (initial.quarterRevenue.filed ?? "") < quarter.filed) ? quarter : undefined,
     tsmRelease && (!initial.quarterRevenue || initial.quarterRevenue.end < tsmRelease.end) ? tsmRelease : undefined,
-    tsmStatement && (!initial.quarterRevenue || initial.quarterRevenue.end < tsmStatement.end || initial.quarterRevenue.filed < tsmStatement.filed) ? tsmStatement : undefined,
+    tsmStatement && (!initial.quarterRevenue || initial.quarterRevenue.end < tsmStatement.end || (initial.quarterRevenue.filed ?? "") < tsmStatement.filed) ? tsmStatement : undefined,
   ].filter((f): f is FinancialFiling => !!f);
   const additions: SecFacts[] = [];
   let primaryRevenueTag: string | undefined;
@@ -56,9 +56,9 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
   }));
   const result = extractFinancials(ticker,cik,mergeFinancialFacts(factsResponse.status === "fulfilled" ? factsResponse.value : null, additions,cik),now,currency,primaryRevenueTag);
   const dataWarnings = [];
-  if (annual && (!result.revenue || result.revenue.end < annual.end || result.revenue.filed < annual.filed)) dataWarnings.push(warning(`${annual.end}期の年次提出書類から数値を取得できていません。`, `Figures from the annual filing for ${annual.end} are unavailable.`));
+  if (annual && (!result.revenue || result.revenue.end < annual.end || (result.revenue.filed ?? "") < annual.filed)) dataWarnings.push(warning(`${annual.end}期の年次提出書類から数値を取得できていません。`, `Figures from the annual filing for ${annual.end} are unavailable.`));
   const latestQuarter = [quarter,tsmRelease,tsmStatement].filter((f): f is FinancialFiling=>!!f).sort((a,b)=>b.end.localeCompare(a.end)||b.filed.localeCompare(a.filed))[0];
-  if (latestQuarter && (!result.quarterRevenue || result.quarterRevenue.end < latestQuarter.end || result.quarterRevenue.filed < latestQuarter.filed)) dataWarnings.push(warning(`${latestQuarter.end}期の四半期提出書類から数値を取得できていません。`, `Figures from the quarterly filing for ${latestQuarter.end} are unavailable.`));
+  if (latestQuarter && (!result.quarterRevenue || result.quarterRevenue.end < latestQuarter.end || (result.quarterRevenue.filed ?? "") < latestQuarter.filed)) dataWarnings.push(warning(`${latestQuarter.end}期の四半期提出書類から数値を取得できていません。`, `Figures from the quarterly filing for ${latestQuarter.end} are unavailable.`));
   const earnings=filings.filter(f=>f.earnings).sort((a,b)=>b.filed.localeCompare(a.filed))[0];
   const newestFigures=[result.revenue?.filed,result.quarterRevenue?.filed].filter((d):d is string=>!!d).sort().at(-1);
   if(earnings && (!newestFigures || earnings.filed>newestFigures)) dataWarnings.push(warning(`${earnings.filed}の新しい決算発表は数値の反映が未確認です。`, `Figures from the newer earnings release on ${earnings.filed} are not verified.`));
