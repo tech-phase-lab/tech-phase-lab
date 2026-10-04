@@ -5,6 +5,7 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 15;
 
 export async function GET() {
+  const startedAt = performance.now();
   const headers = { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" };
   try {
     const base = process.env.RESEARCH_MONITOR_URL;
@@ -19,8 +20,12 @@ export async function GET() {
     if (!response.ok) throw new Error("News unavailable");
     const text = await response.text();
     if (new TextEncoder().encode(text).length > 500_000) throw new Error("Oversized response");
+    const upstreamMs = performance.now() - startedAt;
     const raw = JSON.parse(text);
-    return Response.json(buildPublicNews(raw), { headers });
+    const feed = buildPublicNews(raw);
+    return Response.json(feed, { headers: { ...headers,
+      "Server-Timing": `upstream;dur=${upstreamMs.toFixed(1)},total;dur=${(performance.now() - startedAt).toFixed(1)}`,
+    } });
   } catch {
     // A monitor outage is not an empty, successfully refreshed news feed.
     return Response.json({ ok: false, enabled: false, items: [] }, { status: 503, headers });

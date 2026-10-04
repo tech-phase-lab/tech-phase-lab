@@ -10,6 +10,7 @@ import { officialTime } from "@/lib/research/news-time";
 import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-poller";
 import styles from "./general-news.module.css";
 
+import { takeNewsStartup } from "@/lib/research/news-startup";
 import { publishNews } from "@/lib/research/news-snapshot";
 import FeedPagination from "./feed-pagination";
 import NewsStory from "./news-story";
@@ -40,11 +41,19 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
   useEffect(() => {
     const cached = refresh === 0 ? initialSnapshot(initialNews) : null;
     if (cached) {
+      // A newer server/memory snapshot wins over an earlier bootstrap request.
+      void takeNewsStartup();
       snapshot = cached;
       publishNews(cached.data);
     }
     const poller = createNewsPoller({
       load: async signal => {
+        const started = takeNewsStartup();
+        if (started) {
+          const result = await started;
+          if (result.error) throw new Error("unavailable");
+          return availableNewsPayload(result.data);
+        }
         const response = await fetch("/api/research/news", { cache: "no-store", signal });
         if (!response.ok) throw new Error("unavailable");
         return availableNewsPayload(await response.json());

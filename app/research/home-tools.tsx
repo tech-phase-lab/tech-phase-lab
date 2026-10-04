@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemberDisplay } from "./member-display-provider";
+import { useMemberDisplay, useResearchOwner } from "./member-display-provider";
 import Link from "next/link";
 import type { Language, ResearchEvent } from "@/lib/research/data";
 import { dateLabel } from "@/lib/research/presentation";
@@ -10,7 +10,8 @@ import styles from "./home-tools.module.css";
 export default function HomeTools({ lang, onChanges, onPro }: { lang: Language; onChanges: () => void; onPro: () => void }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const plan = useMemberDisplay();
-  const isPro = plan === "pro";
+  const owner = useResearchOwner();
+  const locked = plan === "free" && !owner;
   return <>
     <nav className={styles.grid} aria-label={t("よく使う機能", "Quick tools")}>
       <Link href="/research/stocks"><span className={styles.icon} aria-hidden="true">🔍</span><strong>{t("銘柄検索", "Stock search")}</strong><p>{t("株価・チャート・企業情報", "Quotes, charts & company data")}</p></Link>
@@ -18,18 +19,18 @@ export default function HomeTools({ lang, onChanges, onPro }: { lang: Language; 
       <Link href="/research/calendar"><span className={styles.icon} aria-hidden="true">🗓️</span><strong>{t("決算・経済指標", "Earnings & economy")}</strong><p>{t("カレンダーで予定を確認", "Upcoming events")}</p></Link>
       <button onClick={onChanges}><span className={styles.icon} aria-hidden="true">♻️</span><strong>{t("何が変わった？", "What changed?")}</strong><p>{t("企業の変化と、その根拠", "Company shifts & evidence")}</p></button>
     </nav>
-    <nav className={`${styles.reading} ${isPro ? "" : styles.readingLocked}`} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
+    <nav className={`${styles.reading} ${locked ? styles.readingLocked : ""}`} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
       <div className={styles.deskHeading}><span>RIZEL’S DESK</span><span className={styles.deskEdition}>TECH PHASE PRO</span></div>
       <Link href="/research/notes" className={styles.deskLead}><div><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong><p>{t("数字の先にある、相場の着眼点。", "A perspective beyond the numbers.")}</p></div><span aria-hidden="true">→</span></Link>
       <div className={styles.deskPair}>
         <Link href="/research/qa"><strong>{t("リゼルに聞く", "Ask RIZEL")}</strong><span className={styles.deskSmall}>{t("疑問から、理解を深める", "Questions worth exploring")}</span><span aria-hidden="true">→</span></Link>
         <Link href="/research/weekly"><strong>{t("週刊PRO", "PRO Weekly")}</strong><span className={styles.deskSmall}>{t("一週間の変化と展望", "The week’s shifts & outlook")}</span><span aria-hidden="true">→</span></Link>
       </div>
-      {!isPro && <div className={styles.deskOverlay} aria-busy={plan === null}>
+      {locked && <div className={styles.deskOverlay}>
         <div className={styles.overlayCaption}><span className={styles.overlayLabel}>TECH PHASE PRO</span>{plan === "free" && <strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong>}</div>
       </div>}
     </nav>
-    {!isPro && <button type="button" className={styles.proHint} onClick={onPro}><strong>{t("PROの限定機能を見る", "Explore PRO-exclusive features")} →</strong></button>}
+    {locked && <button type="button" className={styles.proHint} onClick={onPro}><strong>{t("PROの限定機能を見る", "Explore PRO-exclusive features")} →</strong></button>}
   </>;
 }
 

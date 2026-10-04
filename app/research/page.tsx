@@ -1,6 +1,7 @@
 import { loadLiveHomeNews } from "@/lib/research/live-result-events";
 import type { Metadata } from "next";
 import { publicEvent } from "@/lib/research/access";
+import { newsStartupScript } from "@/lib/research/news-startup";
 import { Suspense } from "react";
 import HomeDashboard, { LiveHomeUpdate } from "./home-dashboard";
 import { events } from "@/lib/research/content-server";
@@ -37,8 +38,8 @@ export default function ResearchPage() {
     sector: { ja: sectorNames[provider.sector], en: sectorNamesEn[provider.sector] },
     verified: verifiedTickers.has(provider.ticker),
   }));
-  return <HomeDashboard
+  return <><script dangerouslySetInnerHTML={{ __html: newsStartupScript }} /><HomeDashboard
     events={events.map(publicEvent).toSorted((a, b) => b.publishedOn.localeCompare(a.publishedOn) || a.id.localeCompare(b.id))}
     monitoredCompanies={monitoredCompanies}
-  ><Suspense fallback={null}><LiveHomeData /></Suspense></HomeDashboard>;
+  ><Suspense fallback={null}><LiveHomeData /></Suspense></HomeDashboard></>;
 }
