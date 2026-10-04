@@ -24,7 +24,8 @@ SCALE_NAMES = {1: '', 1000: 'thousand', 10**6: 'million', 10**9: 'billion', 10**
 CURRENCIES = {'$': 'USD', 'US$': 'USD', 'USD': 'USD', '€': 'EUR', 'EUR': 'EUR',
               '£': 'GBP', 'GBP': 'GBP', '¥': 'JPY', 'JPY': 'JPY'}
 SYMBOLS = {'USD': '$', 'EUR': '€', 'GBP': '£', 'JPY': '¥'}
-PERIOD = r'(?:(?:last|prior|previous) (?:quarter|year)|in Q[1-4] FY20\d{2}|on 20\d{2}-\d{2}-\d{2})'
+RELATIVE_PERIOD = r'(?:(?:during|in) (?:the )?)?(?:last|prior|previous) (?:quarter|year)'
+PERIOD = rf'(?:{RELATIVE_PERIOD}|in Q[1-4] FY20\d{{2}}|on 20\d{{2}}-\d{{2}}-\d{{2}})'
 
 
 class Unrecognized(ValueError):
@@ -130,9 +131,9 @@ def parse_claim(unit,ticker,context):
     quote=unit['quote'];actor=signals.ALIASES[ticker][0]
     subject=issuer_pattern(ticker)+(r'|it|the company' if context else '')
     subject=r'(?:'+subject+r')'
-    executed=(rf'(?:{subject}\s+(?:repurchased|bought back)\s+{money_pattern("a")}'
+    executed=(rf'(?:{subject}\s+(?:has\s+)?(?:repurchased|bought back)\s+{money_pattern("a")}'
               rf'(?:\s+of its (?:own )?shares)?\s+(?P<period>{PERIOD})'
-              rf'|(?P<passive>{money_pattern("p")})\s+repurchased\s+(?P<passive_period>{PERIOD}))'
+              rf'|(?P<passive>{money_pattern("p")})\s+(?:(?:was|were)\s+)?repurchased\s+(?P<passive_period>{PERIOD}))'
               rf'(?:,\s*(?:equivalent to|equal to|representing)\s*(?:(?P<pctq>{QUALIFIER})\s*)?'
               rf'(?P<pct>{NUMBER})%\s+of (?:its )?(?:free cash flow|FCF))?\.?')
     match=re.fullmatch(executed,quote,re.I)
@@ -141,6 +142,11 @@ def parse_claim(unit,ticker,context):
         if passive and not context:
             raise Unrecognized()
         period=match['passive_period'] if passive else match['period']
+        # Only an explicit preposition/article around the same relative period
+        # is normalized. Amount qualifiers and every other source token remain
+        # independently typed and the complete claim must still match.
+        if re.fullmatch(RELATIVE_PERIOD,period,re.I):
+            period=re.sub(r'^(?:during|in) (?:the )?','',period,flags=re.I)
         period=period.lower() if not period.startswith('in ') else period
         action_date=period[3:] if period.lower().startswith('on ') else None
         if action_date:date.fromisoformat(action_date)

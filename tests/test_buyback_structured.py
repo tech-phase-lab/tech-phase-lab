@@ -169,5 +169,102 @@ class StructuredBuybackTests(unittest.TestCase):
         changed=deepcopy(note);changed['facts'][1]['ja']=changed['facts'][0]['ja']
         with self.assertRaises(ValueError):news.validate_note(changed,row)
 
+    def test_source_wording_is_normalized_with_each_qualifier_family(self):
+        qualifiers=(('nearly','nearly','200億ドル弱'),('almost','nearly','200億ドル弱'),
+                    ('just under','nearly','200億ドル弱'),('about','about','約200億ドル'),
+                    ('approximately','about','約200億ドル'),('roughly','about','約200億ドル'),
+                    ('~','about','約200億ドル'))
+        for source,meaning,japanese in qualifiers:
+            bodies=(f'NVIDIA $NVDA has repurchased {source} $20B during the previous quarter.',
+                    f'NVIDIA $NVDA has bought back {source} $20B in the prior quarter.',
+                    f'NVIDIA $NVDA buyback update.\n\n{source.capitalize()} $20B was repurchased last quarter.',
+                    f'NVIDIA $NVDA buyback update.\n\n{source.capitalize()} $20B were repurchased in the last quarter.')
+            for body in bodies:
+                with self.subTest(source=source,body=body):
+                    row,note=self.accepted(body)
+                    claim=structured.parse(row)[0]
+                    self.assertEqual(claim.amount.qualifier,meaning)
+                    self.assertEqual(claim.amount.amount,20_000_000_000)
+                    self.assertEqual(claim.status,'executed')
+                    self.assertIn(japanese,note['facts'][0]['ja'])
+                    self.assertIn('前四半期',note['facts'][0]['ja'])
+                    self.assertIn('recap',news.public_item(row,note)['title'])
+                    self.assertEqual(note['facts'][0]['evidenceQuote'],row['units'][0]['quote'])
+        for period in ('during last year','in prior year','during the previous year'):
+            with self.subTest(period=period):
+                row,note=self.accepted(f'Microsoft $MSFT has repurchased about $4B {period}.','MSFT')
+                self.assertIn('昨年',note['facts'][0]['ja'])
+                self.assertEqual(structured.parse(row)[0].amount.amount,4_000_000_000)
+        for qualifier in ('JUST UNDER','Just Under','ROUGHLY','Approximately'):
+            with self.subTest(qualifier=qualifier):
+                self.accepted(f'NVIDIA $NVDA buyback update.\n\n{qualifier} $20B was repurchased last quarter.')
+
+    def test_wording_normalization_never_changes_material_claims_or_proof(self):
+        for qualifier in ('nearly','about'):
+            row,note=self.accepted(f'NVIDIA $NVDA has repurchased {qualifier} $20B during the previous quarter.')
+            for change in ('amount','currency','actor','status','period','qualifier'):
+                damaged=deepcopy(note)
+                text=damaged['facts'][0]['en']
+                if change=='amount':text=text.replace('$20','$21')
+                elif change=='currency':text=text.replace('$20','¥20')
+                elif change=='actor':text=text.replace('NVIDIA','Microsoft')
+                elif change=='status':text=text.replace('bought back its own shares','authorized share repurchases')
+                elif change=='period':text=text.replace('previous quarter','previous year')
+                else:text=text.replace(qualifier,'about' if qualifier=='nearly' else 'nearly')
+                damaged['facts'][0]['en']=text
+                with self.subTest(qualifier=qualifier,change=change),self.assertRaises(ValueError):
+                    news.validate_note(damaged,row)
+
+    def test_new_forms_keep_qualifiers_bound_to_money_and_cashflow_separately(self):
+        for money_qualifier,pct_qualifier in (('nearly','approximately'),('about','almost')):
+            body=(f'Microsoft $MSFT buyback update.\n\n{money_qualifier.capitalize()} $20B was repurchased '
+                  f'during the prior quarter, equivalent to {pct_qualifier} 92% of free cash flow.')
+            row,note=self.accepted(body,'MSFT')
+            claim=structured.parse(row)[0]
+            self.assertEqual(claim.amount.qualifier,'nearly' if money_qualifier=='nearly' else 'about')
+            self.assertEqual(claim.cashflow_qualifier,'about' if pct_qualifier=='approximately' else 'nearly')
+            self.assertEqual(claim.cashflow_percent,'92')
+            self.assertEqual(note[structured.MARKER]['source']['sha'],row['sha'])
+            self.assertEqual(note[structured.MARKER]['source']['body_sha'],row['body_sha'])
+            self.assertEqual(note['facts'][0]['evidenceQuote'],row['units'][0]['quote'])
+            for change in ('percent','cashflow-basis','revised-source'):
+                damaged=deepcopy(note)
+                if change=='percent':damaged['facts'][0]['en']=damaged['facts'][0]['en'].replace('92%','93%')
+                elif change=='cashflow-basis':damaged['facts'][0]['en']=damaged['facts'][0]['en'].replace('free cash flow','revenue')
+                else:
+                    changed=candidate(body.replace('92%','93%'),'MSFT')
+                    with self.assertRaises(ValueError):news.validate_note(damaged,changed)
+                    continue
+                with self.subTest(change=change),self.assertRaises(ValueError):news.validate_note(damaged,row)
+
+    def test_existing_just_execution_intake_is_preserved(self):
+        # Intake remains wider than deterministic rendering; existing selected
+        # forms must not disappear when adding passive auxiliary variants.
+        row=candidate('NVIDIA $NVDA buyback update.\n\nNearly $20B just repurchased last quarter.')
+        self.assertIsNotNone(row)
+        self.assertEqual(row['units'][0]['buyback']['status'],'executed')
+
+    def test_new_execution_wrappers_do_not_erase_uncertainty_or_other_actors(self):
+        for body in (
+            'NVIDIA $NVDA has not repurchased nearly $20B during the previous quarter.',
+            'NVIDIA $NVDA might have repurchased about $20B in the last quarter.',
+            'NVIDIA $NVDA reportedly has repurchased nearly $20B in the last quarter.',
+            'NVIDIA $NVDA has repurchased nearly $20B during the previous quarter, if confirmed.',
+            'NVIDIA $NVDA has repurchased about $20B in the last quarter. The company denies this.',
+            'NVIDIA $NVDA has repurchased nearly $20B during the previous quarter, according to Apple.',
+            'NVIDIA $NVDA has repurchased nearly $20B during the previous fiscal quarter.',
+            'NVIDIA $NVDA has repurchased nearly $20B during the previous quarter and Apple bought $3B.',
+            'NVIDIA $NVDA buyback update.\n\nAbout $20B was not repurchased last quarter.',
+            'NVIDIA $NVDA buyback update.\n\nAbout $20B could have been repurchased last quarter.',
+            'NVIDIA $NVDA buyback update.\n\nNearly $20B was repurchased last quarter by Microsoft.',
+            'NVIDIA $NVDA buyback update.\n\n"Nearly $20B was repurchased last quarter," said Acme.',
+            'NVIDIA $NVDA buyback update.\n\nApproximately $20B was repurchased last quarter. This was only hypothetical.',
+            'NVIDIA $NVDA and Microsoft $MSFT buyback update.\n\nNearly $20B was repurchased last quarter.',
+            'NVIDIA $NVDA buyback update.\n\nNearly $20B was authorized last quarter.',
+            'NVIDIA $NVDA buyback update.\n\nIT has repurchased nearly $20B during the previous quarter.',
+            'NVIDIA $NVDA buyback update.\n\nTHE company has repurchased nearly $20B during the previous quarter.',
+        ):
+            with self.subTest(body=body):self.rejected(body)
+
 
 if __name__=='__main__':unittest.main()

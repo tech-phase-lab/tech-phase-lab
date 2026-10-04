@@ -82,7 +82,8 @@ def _context_units(text,ticker,aliases):
         if re.search(r'\b(?:bonds?|debt|notes|Treasur(?:y|ies))\b|国債|社債',quote,re.I):return None
         # Explicit same-company/pronominal subject, or a quantified passive
         # clause such as "Nearly $20B repurchased" / "Another $150B authorized".
-        passive=r'(?:(?:nearly|almost|about|approximately|another|additional)\s+)?'+MONEY+r'\s+(?:just\s+)?(?:repurchased|authorized|approved)\b'
+        passive=(r'(?:(?:nearly|almost|just under|about|approximately|roughly|another|additional)\s+|~\s*)?'+MONEY+
+                 r'\s+(?:(?:(?:was|were|just)\s+)?repurchased|(?:just\s+)?(?:authorized|approved))\b')
         explicit=subject+r'(?:(?:has|had)\s+)?(?:(?:just|also)\s+)?(?:authorized|approved|repurchased|bought back|plans?\s+(?:to\s+)?(?:buy back|repurchase))\b'
         if not re.match(r'(?:'+explicit+r'|'+passive+r')',quote,re.I):return None
         residue=quote
@@ -90,7 +91,7 @@ def _context_units(text,ticker,aliases):
             residue=re.sub(r'(?<![A-Za-z0-9_])\$?'+re.escape(alias)+r'(?![A-Za-z0-9_])','',residue,flags=re.I)
         residue=QUANTITY.sub('',residue)
         residue=re.sub(r'\b(?:FY\s*\d{2,4}|Q[1-4]|FCF)\b','',residue)
-        residue=re.sub(r'^(?:It|The|Nearly|Almost|About|Approximately|Another|Additional)\b','',residue)
+        residue=re.sub(r'^(?:It|The|(?i:Nearly|Almost|Just under|About|Approximately|Roughly)|Another|Additional)\b','',residue)
         if re.search(r'\b[A-Z][A-Za-z]+\b',residue):return None
         # A new speaker or capitalized subject later in the paragraph is not
         # an implicit continuation. Permit the separate remaining-capacity sum.

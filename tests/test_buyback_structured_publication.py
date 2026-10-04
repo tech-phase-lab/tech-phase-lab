@@ -143,6 +143,43 @@ class StructuredBuybackPublicationTests(unittest.TestCase):
             self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0], 0)
         self.assertEqual(self.run_worker(), 'idle')
 
+    def test_source_correctable_qualifiers_publish_before_model_without_blocking_queue(self):
+        # Unknown wording receives an explicit item-level review, while later
+        # fully recognized sources keep flowing through the same worker.
+        self.seed('Microsoft $MSFT plans $7 billion in share buybacks.',number=500)
+        self.assertEqual(self.run_worker(),'review')
+        for index,word in enumerate(('nearly','almost','just under','about','approximately','roughly','~')):
+            self.seed(f'Microsoft $MSFT has repurchased {word} $20B during the previous quarter.',number=501+index)
+            self.assertEqual(self.run_worker(),'done')
+        with research.connect(self.path) as db:
+            items=news.public_items(db,NOW)
+            self.assertEqual(len(items),7)
+            self.assertEqual(sum('200億ドル弱' in item['bodyJa'] for item in items),3)
+            self.assertEqual(sum('約200億ドル' in item['bodyJa'] for item in items),4)
+            self.assertTrue(all('前四半期' in item['bodyJa'] and 'recap' in item['title'] for item in items))
+            self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0],0)
+            self.assertEqual(db.execute('SELECT count(*) FROM official_research_jobs').fetchone()[0],0)
+            self.assertEqual(db.execute('SELECT reason FROM general_source_semantic_reviews').fetchone()[0],structured.FAILURE)
+        self.assertEqual(self.run_worker(),'idle')
+
+    def test_previously_unrecognized_wording_recovers_without_replacing_review(self):
+        for index,word in enumerate(('nearly','approximately')):
+            self.seed(f'Microsoft $MSFT buyback update.\n\n{word.capitalize()} $20B was repurchased in the last quarter.',number=700+index)
+            row=next(row for row in self.rows() if row['url'].endswith(str(700+index)))
+            with research.connect(self.path) as db:
+                news.save_semantic_review(db,row,f'synthetic-syntax-review-{index}',START.isoformat(),
+                                         (START+timedelta(seconds=1)).isoformat(),structured.FAILURE)
+                before=publication.review_for(db,row)
+            self.assertEqual(self.run_worker(),'done')
+            with research.connect(self.path) as db:
+                self.assertEqual(publication.review_for(db,row),before)
+                self.assertTrue(publication.resolves(db,row,before,NOW))
+                item=next(item for item in news.public_items(db,NOW) if item['id']==str(row['id']))
+                self.assertIn('200億ドル弱' if word=='nearly' else '約200億ドル',item['bodyJa'])
+                self.assertEqual(item['publishedAt'],row['published_at'])
+                self.assertEqual(item['observedAt'],row['observed_at'])
+                self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0],0)
+
     def test_materiality_and_ambiguity_reviews_are_not_overridden(self):
         self.seed()
         row = self.rows()[0]
