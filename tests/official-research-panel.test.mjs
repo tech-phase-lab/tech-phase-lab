@@ -422,3 +422,26 @@ test("retained no-event rows can open only their exact stored source URL and SHA
   assert.match(html, /<button type="button">この保存投稿版の取得本文を確認（編集者用）/);
   assert.doesNotMatch(html, /イベント未作成のため|保存原文を確認（編集者用）|Stored body SHA-256/);
 });
+
+test("read-only macro refusal metadata reaches the existing held-row proof display", async () => {
+  const { execFileSync } = await import("node:child_process");
+  const data = JSON.parse(execFileSync("python3", ["-c", String.raw`
+import json,sys
+sys.path[:0]=['scripts/research','tests']
+import test_macro_source_publication as fixture
+import official_research_diagnostics as diagnostics
+case=fixture.MacroPublicationTests();case.setUp()
+try:
+    row=case.hold()
+    with fixture.research.connect(case.path) as db:
+        db.execute('UPDATE official_research_jobs SET attempts=2 WHERE event_id=?',(row['id'],))
+    print(json.dumps(diagnostics.queue(case.path,reference=fixture.NOW)['terminalReviews']))
+finally:case.doCleanups()
+`], { cwd: new URL("..", import.meta.url), encoding: "utf8", env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" } }));
+  const html = renderToStaticMarkup(TerminalReviewOverview({ data, token: editorToken }));
+  for (const label of ["editor-only-macro-recovery", "closed-attempt-proof-unverified",
+    "jobSingleAttempt", "currentCalls", "originalPositiveEnvelope", "publicationAuthorized"])
+    assert.ok(html.includes(label), label);
+  assert.ok(html.includes("unsubstantiated-model-output"));
+  assert.doesNotMatch(html, /macro-901|synthetic-private-pipeline-editor-token/);
+});

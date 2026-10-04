@@ -503,6 +503,19 @@ def terminal_review_diagnostics(db,reference,limit,remaining_context_bytes,befor
                 context_state='included'
             else:
                 context_state='response-budget'
+        # Metadata-only guard diagnostics do not require disclosing failed copy.
+        # Existing owner Report renders these bounded checks, including when a
+        # missing generation proof correctly prevents selected-copy disclosure.
+        if failure:
+            import macro_source_diagnostics
+            macro_probe=macro_source_diagnostics.recovery_probe(db,row,reference)
+            if macro_probe is not None:
+                encoded=len(json.dumps(macro_probe,ensure_ascii=False).encode())
+                if encoded<=remaining_context_bytes:
+                    if not rejected['issues']:
+                        rejected['issues'].append({'field':'macro-recovery','issue':'read-only-metadata','checks':[]})
+                    rejected['issues'][0]['checks'].append(macro_probe)
+                    remaining_context_bytes-=encoded
         items.append({
             'eventId':row['id'],'sourceId':row['source_id'],'url':row['url'],'title':row['title'][:500],
             'ticker':row['ticker'],'currentSha':row['sha'],'bodySha':row['body_sha'],
