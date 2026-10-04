@@ -8,6 +8,7 @@ import { marketNewsBody, marketNewsDisplay } from "@/lib/research/market-news-di
 import { analystNewsDisplay } from "@/lib/research/analyst-news";
 import { officialTime } from "@/lib/research/news-time";
 import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-poller";
+import { observePageActivity } from "@/lib/research/page-activity";
 import styles from "./general-news.module.css";
 
 import { takeNewsStartup } from "@/lib/research/news-startup";
@@ -71,13 +72,9 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
       },
     });
     poller.start(cached ? Math.max(0, NEWS_POLL_INTERVAL_MS - (Date.now() - cached.time)) : 0);
-    const wake = () => poller.wake();
-    const wakeWhenVisible = () => { if (document.visibilityState === "visible") wake(); };
-    window.addEventListener("online", wake);
-    document.addEventListener("visibilitychange", wakeWhenVisible);
+    const stopObserving = observePageActivity(() => poller.resume(), () => poller.pause());
     return () => {
-      window.removeEventListener("online", wake);
-      document.removeEventListener("visibilitychange", wakeWhenVisible);
+      stopObserving();
       poller.stop();
     };
   }, [refresh, initialNews]);

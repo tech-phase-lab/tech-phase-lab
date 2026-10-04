@@ -32,6 +32,7 @@ export function createNewsPoller<T>({
   let queued = false;
   let failures = 0;
   let session = 0;
+  let resumedAt = -Infinity;
 
   const clearTimer = () => {
     if (timer !== null) cancel(timer);
@@ -46,9 +47,21 @@ export function createNewsPoller<T>({
     }, delay);
   };
 
+  const pause = () => {
+    session += 1;
+    queued = false;
+    resumedAt = -Infinity;
+    clearTimer();
+    if (active) {
+      cancel(active.timeout);
+      active.controller.abort();
+      active = null;
+    }
+  };
+
   const poll = async () => {
     if (stopped) return;
-    if (typeof document !== "undefined" && document.visibilityState === "hidden") { schedulePoll(30_000); return; }
+    if (typeof document !== "undefined" && document.visibilityState === "hidden") { pause(); return; }
     if (active) {
       queued = true;
       return;
@@ -99,16 +112,17 @@ export function createNewsPoller<T>({
       if (active) queued = true;
       else schedulePoll(0);
     },
+    pause,
+    resume() {
+      if (stopped || active || Date.now() - resumedAt < 1_000) return;
+      resumedAt = Date.now();
+      // Resume never waits behind a fetch which was suspended in the background.
+      // Coalesce focus/pageshow/visibilitychange into one fresh read.
+      schedulePoll(0);
+    },
     stop() {
       stopped = true;
-      session += 1;
-      queued = false;
-      clearTimer();
-      if (active) {
-        cancel(active.timeout);
-        active.controller.abort();
-      }
-      active = null;
+      pause();
     },
   };
 }

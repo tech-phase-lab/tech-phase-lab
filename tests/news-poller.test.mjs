@@ -145,3 +145,22 @@ test("an aborted previous session cannot reschedule or fail a restarted poller",
   assert.deepEqual(clock.pending(), [5_000]);
   poller.stop();
 });
+
+test('pause discards a stalled request and resume coalesces lifecycle events without a timeout wait', async () => {
+  const clock = scheduler();
+  let oldSignal, resolveOld, calls = 0, failures = 0;
+  const values = [];
+  const poller = createNewsPoller({
+    load: signal => ++calls === 1 ? (oldSignal = signal, new Promise(resolve => { resolveOld = resolve; })) : Promise.resolve('current'),
+    onSuccess: value => values.push(value), onFailure: () => failures++,
+    schedule: clock.schedule, cancel: clock.cancel,
+  });
+  poller.start(); await clock.run(); poller.pause();
+  assert.equal(oldSignal.aborted, true); assert.deepEqual(clock.pending(), []);
+  poller.resume(); poller.resume(); await flush();
+  assert.deepEqual(clock.pending(), [0]); await clock.run();
+  assert.deepEqual(values, ['current']); assert.equal(calls, 2); assert.equal(failures, 0);
+  poller.resume(); assert.deepEqual(clock.pending(), [5000]);
+  resolveOld('old'); await flush(); assert.deepEqual(values, ['current']);
+  poller.stop();
+});

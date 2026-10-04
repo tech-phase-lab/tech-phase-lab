@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
 import { EventStreamParser, abortableDelay, createSnapshotRevisionGuard } from "@/lib/research/event-stream";
+import { observePageActivity } from "@/lib/research/page-activity";
 
 import { formatTargetTime } from "@/lib/research/price-target-time";
 import { publicPriceTargets, type PriceTarget as Target } from "@/lib/research/price-targets";
@@ -29,8 +30,9 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
   useEffect(() => {
     let active = true;
     let visible = false;
-    let initialPending = true;
     let session: AbortController | null = null;
+    let fallbackRequest: AbortController | null = null;
+    let resumedAt = -Infinity;
     const snapshotRevision = createSnapshotRevisionGuard();
     const applySnapshot = (value: unknown, signal: AbortSignal) => {
       const data = publicPriceTargets(value);
@@ -40,14 +42,26 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
       }
     };
     const readFallback = async (signal: AbortSignal) => {
+      if (signal.aborted || fallbackRequest) return;
+      const request = new AbortController();
+      fallbackRequest = request;
+      const requestSignal = AbortSignal.any([signal, request.signal, AbortSignal.timeout(10_000)]);
       const isCurrent = snapshotRevision.beginFallback();
       try {
-        const response = await fetch("/api/research/price-targets", { signal: AbortSignal.any([signal, AbortSignal.timeout(10_000)]) });
+        const response = await fetch("/api/research/price-targets", { signal: requestSignal });
         if (!response.ok) throw new Error("Feed unavailable");
         const snapshot = await response.json();
         // An initial GET can overlap the reconnect GET as well as SSE.
-        if (isCurrent()) applySnapshot(snapshot, signal);
-      } catch { if (active && !signal.aborted && isCurrent()) setStatus("error"); }
+        if (isCurrent()) applySnapshot(snapshot, requestSignal);
+      } catch {
+        if (active && !signal.aborted && !request.signal.aborted && isCurrent()) {
+          // Keep mounted items with the existing stale warning, but never
+          // remount a failed check as a fresh, ready in-memory snapshot.
+          snapshot = null;
+          setStatus("error");
+        }
+      }
+      finally { if (fallbackRequest === request) fallbackRequest = null; }
     };
     const run = async (signal: AbortSignal) => {
       let failures = 0;
@@ -116,15 +130,28 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
         if (!session) {
           session = new AbortController();
           // Display the shared snapshot immediately; SSE connects independently.
-          if (!initialPending) void readFallback(session.signal);
+          void readFallback(session.signal);
           void run(session.signal);
         }
       } else { session?.abort(); session = null; }
     };
     // Start the initial snapshot immediately, even below the fold. Only the
     // long-lived SSE connection depends on viewport visibility.
-    const initialRequest = new AbortController();
-    void readFallback(initialRequest.signal).finally(() => { initialPending = false; });
+    const lifetime = new AbortController();
+    const pause = () => {
+      // iOS may suspend network callbacks and timeout clocks while hidden.
+      // Invalidate the initial GET too, so resume cannot wait behind it.
+      fallbackRequest?.abort(); fallbackRequest = null;
+      session?.abort(); session = null;
+      resumedAt = -Infinity;
+    };
+    const resume = () => {
+      if (Date.now() - resumedAt < 1_000) return;
+      resumedAt = Date.now();
+      void readFallback(lifetime.signal);
+      syncVisibility();
+    };
+    if (!document.hidden) resume();
     const panel = panelRef.current;
     const observer = typeof IntersectionObserver === "undefined" ? null : new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
@@ -132,8 +159,8 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
     }, { rootMargin: "300px" });
     if (observer && panel) observer.observe(panel);
     else { visible = true; syncVisibility(); }
-    document.addEventListener("visibilitychange", syncVisibility);
-    return () => { active = false; initialRequest.abort(); session?.abort(); observer?.disconnect(); document.removeEventListener("visibilitychange", syncVisibility); };
+    const stopObserving = observePageActivity(resume, pause);
+    return () => { active = false; lifetime.abort(); pause(); observer?.disconnect(); stopObserving(); };
   }, []);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const time = (date: string) => formatTargetTime(date, lang);

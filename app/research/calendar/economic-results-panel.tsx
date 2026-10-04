@@ -6,6 +6,7 @@ import { calendarDateKey } from "@/lib/research/calendar";
 import { publicNewsPayload, type OfficialUpdate } from "@/lib/research/general-news";
 import { mergeEconomicResults } from "@/lib/research/pce-results";
 import { createNewsPoller } from "@/lib/research/news-poller";
+import { observePageActivity } from "@/lib/research/page-activity";
 import styles from "../research-tools.module.css";
 import calendarStyles from "./event-calendar.module.css";
 
@@ -24,13 +25,9 @@ export default function EconomicResultsPanel({ lang, zone, period }: { lang: "ja
       onFailure: () => { setUpdates([]); setBriefs([]); setFailed(true); },
     });
     poller.start();
-    const wake = () => poller.wake();
-    const visible = () => { if (document.visibilityState === "visible") wake(); };
-    window.addEventListener("online", wake);
-    document.addEventListener("visibilitychange", visible);
+    const stopObserving = observePageActivity(() => poller.resume(), () => poller.pause());
     return () => {
-      window.removeEventListener("online", wake);
-      document.removeEventListener("visibilitychange", visible);
+      stopObserving();
       poller.stop();
     };
   }, []);
