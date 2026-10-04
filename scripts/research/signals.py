@@ -2045,7 +2045,7 @@ if __name__ == "__main__":
     main()
 
 
-def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, read_only=False):
+def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, read_only=False, include_bodies=True):
     """Links/headlines only; never publish private excerpts or unreviewed AI claims."""
     if not read_only:
         schema(db)
@@ -2173,8 +2173,9 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
             translation.update(compact_headlines.validated(
                 {'shortTitleJa': compact['title_ja'], 'shortTitleEn': compact['title_en']},
                 translation['translationJa'], display_title))
-        from official_research import public_story_body
-        translation.update(public_story_body(db, row))
+        if include_bodies:
+            from official_research import public_story_body
+            translation.update(public_story_body(db, row))
         items.append({'id': str(row['id']), 'title': display_title, 'url': url,
                       'publisher': source['name'], 'tickers': tickers,
                       'observedAt': observed.isoformat(), **publication, **translation})

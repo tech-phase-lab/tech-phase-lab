@@ -116,7 +116,7 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
     oldest_pending = None
     next_retry = None
     failure_kinds = {}
-    for item in signals.public_official_updates(db, sources=sources, reference=reference, limit=500):
+    for item in signals.public_official_updates(db, sources=sources, reference=reference, limit=500, include_bodies=False):
         row = db.execute("SELECT * FROM signal_events WHERE id=?", (item["id"],)).fetchone()
         if not row or re.fullmatch(r"https?://\S+", row["title"].strip(), re.I):
             continue
@@ -211,7 +211,7 @@ def sync_incident(db, env=None, now=None):
 
 def claim(db, sources, limit, model, now):
     reference = datetime.fromtimestamp(now, tz=timezone.utc)
-    items = signals.public_official_updates(db, sources=sources, reference=reference, limit=500)
+    items = signals.public_official_updates(db, sources=sources, reference=reference, limit=500, include_bodies=False)
     db.commit()
     with db:
         db.execute("BEGIN IMMEDIATE")

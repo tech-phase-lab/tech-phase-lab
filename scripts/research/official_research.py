@@ -81,7 +81,7 @@ def connect(path):
 
 
 def candidates(db, reference, *, read_only=False, published_updates=None):
-    published = (signals.public_official_updates(db, reference=reference, limit=100, read_only=read_only)
+    published = (signals.public_official_updates(db, reference=reference, limit=100, read_only=read_only, include_bodies=False)
                  if published_updates is None else published_updates[:100])
     visible_ids = {int(item['id']) for item in published}
     primary = []
@@ -115,7 +115,7 @@ def prepare_story_body(path, reference, request=None):
     with connect(path) as db:
         sources = {s['id']: s for s in [*signals.SOURCES,*[{**p,'format':'feed'} for p in bridge.publishers()]] if s.get('officialUpdates')
                    and s.get('enabled') is not False and s.get('format') != 'x-api'}
-        items = signals.public_official_updates(db, reference=reference, limit=100)
+        items = signals.public_official_updates(db, reference=reference, limit=100, include_bodies=False)
         # The primary bridge may write even when its INSERT is ignored. Release
         # that writer slot before any article HTTP request; the save below still
         # rechecks the complete current source identity in a fresh transaction.
