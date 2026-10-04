@@ -35,7 +35,8 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
         setOwner(member.status === "signed-in" && member.isAdmin === true);
         setOwnerMode(member.status === "signed-in" && member.isAdmin === true && member.ownerMode === true);
         const pro = member.status === "signed-in" && member.plan === "pro" && Number.isFinite(member.accessExpiresAt) && member.accessExpiresAt > Date.now();
-        setPlan(pro ? "pro" : "free");
+        // A signed-out or restoring session is not a verified FREE membership.
+        setPlan(member.status === "signed-in" ? (pro ? "pro" : "free") : null);
         if (pro) expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.min(member.accessExpiresAt - Date.now(), 2147483647));
       } catch (error) { if (error instanceof Error && error.message === "identity-loading") return; if (active && !signal.aborted && current === generation) { setPlan(null); setOwner(false); setOwnerMode(false); } }
       finally { if (current === generation) request = null; }
