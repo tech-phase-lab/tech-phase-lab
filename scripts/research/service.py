@@ -46,6 +46,7 @@ import official_research
 import issuer_syndication
 import official_research_diagnostics
 import official_research_detail
+import watch_earnings
 import mu_earnings_measurement
 import web_push
 
@@ -631,6 +632,7 @@ class AutomaticMonitor:
         self.market_translation_thread = threading.Thread(target=self.run_market_translation, name="market-translation", daemon=True)
         self.result_thread = threading.Thread(target=self.run_results, name="result-publication", daemon=True)
         self.official_research_thread = threading.Thread(target=self.run_official_research, name="official-research", daemon=True)
+        self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
 
@@ -752,6 +754,14 @@ class AutomaticMonitor:
         for wake in self.publication_wakes.values():
             wake.set()
 
+    def run_watch_earnings(self):
+        while not self.stop_event.is_set():
+            try:
+                watch_earnings.run_once(self.db_path)
+            except Exception:
+                print("watch-earnings-unavailable", flush=True)
+            self.stop_event.wait(5)
+
     def run_mu_measurement(self):
         while not self.stop_event.is_set():
             try:
@@ -792,8 +802,8 @@ class AutomaticMonitor:
         # Complete migrations before translation/result workers open their own
         # connections. Parallel PRAGMA checks followed by ALTER TABLE can race
         # on an existing volume and silently kill the discovery worker.
-        with self.db_lock, monitor.connect(self.db_path):
-            pass
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            watch_earnings.schema(db)
         self.thread.start()
         self.generation_thread.start()
         self.backup_thread.start()
@@ -813,6 +823,7 @@ class AutomaticMonitor:
         self.result_thread.start()
         self.official_research_thread.start()
         self.mu_measurement_thread.start()
+        self.watch_earnings_thread.start()
         self.push_thread.start()
 
     def stop(self):
@@ -837,6 +848,7 @@ class AutomaticMonitor:
         self.result_thread.join(timeout=15)
         self.official_research_thread.join(timeout=45)
         self.mu_measurement_thread.join(timeout=45)
+        self.watch_earnings_thread.join(timeout=10)
         self.push_thread.join(timeout=15)
 
     def run_stock_news(self):
@@ -2576,6 +2588,15 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed = urlsplit(self.path)
         path = parsed.path
+        if path == "/watch-earnings":
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                self.send_json(200, watch_earnings.feed(self.app.db_path))
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "watch-earnings-unavailable"})
+            return
         if path == "/push/config":
             if not self.authorized():
                 self.send_json(401, {"ok": False})

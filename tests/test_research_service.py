@@ -268,7 +268,7 @@ class ResearchServiceTests(unittest.TestCase):
                     })
             with patch.object(threading.Thread, 'start', start_worker):
                 app.start()
-            self.assertEqual(len(observed), 14)
+            self.assertEqual(len(observed), 15)
             self.assertTrue(all(observed))
 
     def test_monitor_recovers_after_an_unexpected_worker_exception(self):
