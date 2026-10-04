@@ -272,7 +272,7 @@ def assess(row, source, reference, heads):
             'general_source':True,'semantic_assessment':True,'category':'company-development','units':units},'eligible-semantic-assessment'
 
 
-def assessments(db,reference,sources=signals.SOURCES):
+def assessments(db,reference,sources=signals.SOURCES,*,skip_held_recap_context=False):
     approved={s['id']:s for s in sources if s['id'] in SOURCE_IDS}
     heads=origin_heads(db,sources,reference)
     seen=set()
@@ -284,15 +284,23 @@ def assessments(db,reference,sources=signals.SOURCES):
         seen.add(key)
         candidate,reason=assess(row,approved.get(row['source_id']),reference,heads)
         if candidate and candidate['category']=='share-buyback' and any(u['buyback'].get('historical') for u in candidate['units']):
-            if recap_context is None:recap_context=buyback_recap.published_context(db,reference)
-            candidate,reason=buyback_recap.relate(candidate,recap_context)
+            # An executed unit can never be suppressed as an already-covered
+            # authorization. Keep its held row in duplicate selection, but omit
+            # decoration that the normal candidates filter will never expose.
+            # Review/diagnostic readers retain the complete relation context.
+            if (skip_held_recap_context and any(u['buyback'].get('status')=='executed' for u in candidate['units'])
+                    and semantic_review(db,candidate,reference)):
+                reason='eligible-buyback-recap'
+            else:
+                if recap_context is None:recap_context=buyback_recap.published_context(db,reference)
+                candidate,reason=buyback_recap.relate(candidate,recap_context)
         yield dict(row),candidate,reason
 
 
 def candidates(db,reference,*,include_review=False):
     unique={}
     order=lambda row:(reconciliation.instant(row['published_at']),reconciliation.instant(row['observed_at']),row['id'])
-    for _,row,_ in assessments(db,reference):
+    for _,row,_ in assessments(db,reference,skip_held_recap_context=not include_review):
         if row:
             # Same exact body/current origin through migrated acquisition routes
             # or duplicate report has one job, preserving its earliest clocks.
