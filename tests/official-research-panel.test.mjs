@@ -14,10 +14,14 @@ const proofSource = await readFile(new URL("../app/research/review/research-proo
 const proofCompiled = ts.transpileModule(proofSource, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
 const proofLoaded = { exports: {} };
 new Function("require", "module", "exports", proofCompiled)(name => name.endsWith(".module.css") ? { default: {} } : require(name), proofLoaded, proofLoaded.exports);
+const retainedSource = await readFile(new URL("../app/research/review/retained-source-proof.tsx", import.meta.url), "utf8");
+const retainedCompiled = ts.transpileModule(retainedSource, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
+const retainedLoaded = { exports: {} };
+new Function("require", "module", "exports", retainedCompiled)(name => name.endsWith(".module.css") ? { default: {} } : require(name), retainedLoaded, retainedLoaded.exports);
 const source = await readFile(new URL("../app/research/review/official-research-panel.tsx", import.meta.url), "utf8");
 const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
 const loaded = { exports: {} };
-new Function("require", "module", "exports", compiled)(name => name.endsWith(".module.css") ? { default: {} } : name === "./signals-panel" ? signalsLoaded.exports : name === "./research-proof" ? proofLoaded.exports : require(name), loaded, loaded.exports);
+new Function("require", "module", "exports", compiled)(name => name.endsWith(".module.css") ? { default: {} } : name === "./signals-panel" ? signalsLoaded.exports : name === "./research-proof" ? proofLoaded.exports : name === "./retained-source-proof" ? retainedLoaded.exports : require(name), loaded, loaded.exports);
 const Panel = loaded.exports.default;
 
 test("diagnostics encapsulates all state in a credential-keyed session without exposing the token", () => {
@@ -106,7 +110,7 @@ test("zero pending articles still exposes retained review and excluded records i
     "現在の生成対象 4件", "有効な保存記事 4件", "未公開 0件", "0/0件を表示",
     "x-fixture-review", "x-fixture-excluded", "raw-review-source-sha", "raw-review-body-sha",
     "raw-excluded-source-sha", "unbound-material-subject", "outside-news-window", "投稿ID 123 · イベント 123", "対応する代表イベント 456",
-    "要確認 1行", "対象外 1行", "イベント未作成のため",
+    "要確認 1行", "対象外 1行", "この保存投稿版の取得本文を確認（編集者用）",
     "issuer-fixture", "issuer-source-sha", "issuer-body-sha", "unsupported-facts", "company-role-unresolved",
   ]) assert.ok(html.includes(text), text);
   assert.match(html, /現在の生成対象に未公開記事はありません/);
@@ -322,7 +326,7 @@ function sessionHarness(token = null) {
     useEffect(effect) { if (!cleanup) cleanup = effect(); },
   };
   const sessionModule = { exports: {} };
-  new Function("require", "module", "exports", compiled)(name => name === "react" ? react : name.endsWith(".module.css") ? { default: {} } : name === "./signals-panel" ? signalsLoaded.exports : name === "./research-proof" ? proofLoaded.exports : require(name), sessionModule, sessionModule.exports);
+  new Function("require", "module", "exports", compiled)(name => name === "react" ? react : name.endsWith(".module.css") ? { default: {} } : name === "./signals-panel" ? signalsLoaded.exports : name === "./research-proof" ? proofLoaded.exports : name === "./retained-source-proof" ? retainedLoaded.exports : require(name), sessionModule, sessionModule.exports);
   const entry = sessionModule.exports.default({ token });
   const render = () => { index = 0; return entry.type(entry.props); };
   function find(element, predicate) {
@@ -405,4 +409,16 @@ test("malformed, impossible and date-only acquisition/public clocks never render
     assert.match(html, /現在版の検証済み保存公開時刻 未記録/);
     assert.doesNotMatch(html, /Invalid Date|2026\/3\/2|2026\/10\/1 9:00:00/);
   }
+});
+
+
+test("retained no-event rows can open only their exact stored source URL and SHA", () => {
+  const input = pipelineFixture();
+  input.issuerPreparation.records = [];
+  input.retainedIntake.records = [{ ...rawRecord, eventId: null, representativeEventId: null,
+    sourceId: "x-wallstengine", url: "https://x.com/wallstengine/status/2106737247274065925", sha: "a".repeat(64) }];
+  const html = renderToStaticMarkup(NewsPipelineOverview({ data: input, token: null }));
+  assert.match(html, /イベント 未作成/);
+  assert.match(html, /<button type="button">この保存投稿版の取得本文を確認（編集者用）/);
+  assert.doesNotMatch(html, /イベント未作成のため|保存原文を確認（編集者用）|Stored body SHA-256/);
 });

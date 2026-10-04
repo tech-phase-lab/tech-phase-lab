@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { SignalSourceInspection } from "./signals-panel";
 import { ResearchProofInspection } from "./research-proof";
+import { RetainedSourceProofInspection } from "./retained-source-proof";
 import styles from "./news-panel.module.css";
 
 type Validation = { status: "valid" | "invalid" | "unavailable"; issues: { field: string; issue: string; checks: Record<string, unknown>[] }[] };
@@ -150,10 +151,11 @@ export function NewsPipelineOverview({ data, token }: { data?: Pipeline; token: 
           <h4>{record.sourceId} · {dispositions[record.disposition] ?? record.disposition}</h4>
           <p>理由: {record.reason} · {record.currentRevision ? "現在の版" : "旧版"}</p>
           <p>投稿ID {postId ?? "未記録"} · イベント {record.eventId ?? "未作成"}{record.representativeEventId && record.representativeEventId !== record.eventId ? ` · 対応する代表イベント ${record.representativeEventId}` : ""}</p>
-          <p className={styles.note}>投稿 {time(record.publishedAt)} · 初回取得 {time(record.firstSeenAt)} · 最終取得 {time(record.lastSeenAt)}</p>
+          <p className={styles.note}>投稿 {time(record.publishedAt)} · 初回取得 {time(record.firstSeenAt)} · 最終再観測 {time(record.lastSeenAt)}</p>
           <pre className={styles.source}>{`Source SHA: ${record.sha}\nBody SHA: ${record.bodySha ?? "未記録"}`}</pre>
           {url && <a href={url.href} target="_blank" rel="noopener noreferrer">投稿元を確認 ↗</a>}
-          {eventId !== null ? <SignalSourceInspection token={token} eventId={eventId} /> : <p className={styles.note}>イベント未作成のため、既存のイベント原文確認は利用できません。</p>}
+          {record.url && <RetainedSourceProofInspection token={token} sourceId={record.sourceId} url={record.url} sourceSha={record.sha} />}
+          {eventId !== null && <SignalSourceInspection token={token} eventId={eventId} />}
         </article>;
       })}
       {records.length === 0 && <p>表示できる保存投稿の記録はありません。取得網羅性の確認とは異なります。</p>}

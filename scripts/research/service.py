@@ -24,6 +24,7 @@ import persistence
 import signals
 import price_target_reconciliation
 import signal_source_detail
+import retained_source_detail
 import stock_news
 import news_drafts
 import news_history
@@ -941,6 +942,9 @@ class AutomaticMonitor:
             result["priceTargetReconciliation"] = price_target_reconciliation.report(db)
         return {**result, "enabled": self.signals_enabled, "tickers": self.tickers,
                 "workerAlive": self.signals_thread.is_alive()}
+
+    def retained_source_detail(self, source_id, url, expected_sha):
+        return retained_source_detail.detail(self.db_path, source_id, url, expected_sha)
 
     def signal_source_detail(self, event_id):
         return signal_source_detail.detail(self.db_path, event_id)
@@ -2582,6 +2586,16 @@ class Handler(BaseHTTPRequestHandler):
                 return
             try:
                 query = parse_qs(parsed.query, keep_blank_values=True)
+                if any(key in query for key in ("retainedSourceId", "retainedUrl")):
+                    keys = ("retainedSourceId", "retainedUrl", "expectedSourceSha")
+                    if (path != "/admin/official-research" or set(query) != set(keys)
+                            or any(len(query.get(key, [])) != 1 for key in keys)):
+                        raise ValueError("invalid-retained-selector")
+                    values = retained_source_detail.selector(*(query[key][0] for key in keys))
+                    detail = self.app.retained_source_detail(*values)
+                    self.send_json(200 if detail else 404, {"ok": bool(detail),
+                                   **({"detail": detail} if detail else {"error": "source-not-found"})})
+                    return
                 if "eventId" in query:
                     if path not in {"/admin/signals", "/admin/official-research"} or len(query["eventId"]) != 1:
                         raise ValueError("invalid-event-id")

@@ -42,6 +42,24 @@ export async function GET(request: Request) {
     const requested = Number(requestUrl.searchParams.get("limit") ?? 20);
     const limit = Number.isInteger(requested) ? Math.max(1, Math.min(requested, 50)) : 20;
     const kind = requestUrl.searchParams.get("kind");
+    const retainedKeys = ["retainedSourceId", "retainedUrl", "expectedSourceSha"];
+    if (["retainedSourceId", "retainedUrl"].some(key => requestUrl.searchParams.has(key))) {
+      const allowed = new Set(["kind", ...retainedKeys]);
+      const single = (key: string) => requestUrl.searchParams.getAll(key).length === 1;
+      const sourceId = requestUrl.searchParams.get("retainedSourceId") ?? "";
+      const retainedUrl = requestUrl.searchParams.get("retainedUrl") ?? "";
+      const expectedSha = requestUrl.searchParams.get("expectedSourceSha") ?? "";
+      if (kind !== "official-research" || !single("kind") || !retainedKeys.every(single)
+          || [...requestUrl.searchParams.keys()].some(key => !allowed.has(key))
+          || !/^[a-z][a-z0-9-]{0,79}$/.test(sourceId)
+          || !/^https:\/\/x\.com\/[A-Za-z0-9_]{1,15}\/status\/[1-9][0-9]{0,19}$/.test(retainedUrl)
+          || !/^[a-f0-9]{64}$/.test(expectedSha)) {
+        return response(400, { ok: false, error: "invalid-retained-selector" });
+      }
+      const url = endpoint("/admin/official-research");
+      for (const key of retainedKeys) url.searchParams.set(key, requestUrl.searchParams.get(key)!);
+      return await relay(url, { headers: { Authorization: auth } });
+    }
     const eventIds = requestUrl.searchParams.getAll("eventId");
     if (eventIds.length && (!["signals", "official-research"].includes(kind ?? "") || eventIds.length !== 1 || !/^[1-9][0-9]{0,11}$/.test(eventIds[0]))) {
       return response(400, { ok: false, error: "invalid-event-id" });
