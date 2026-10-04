@@ -8,13 +8,13 @@ import { useStockFavorites } from "../use-stock-favorites";
 
 export type CompanyOption = { ticker: string; name: string };
 
-export default function CompanySwitcher({ ticker, companies, lang }: { ticker: string; companies: CompanyOption[]; lang: Language }) {
+export default function CompanySwitcher({ ticker, companies, lang, compact = false }: { compact?: boolean; ticker: string; companies: CompanyOption[]; lang: Language }) {
   const router = useRouter();
   const { favorites, toggle, error } = useStockFavorites();
-  return <div className={styles.bar}>
+  return <div className={`${styles.bar} ${compact ? styles.compact : ""}`}>
     <Link href="/research#monitored-companies">← {lang === "ja" ? `監視${companies.length}銘柄リスト` : `${companies.length} research companies`}</Link>
     <button className={styles.favorite} onClick={() => toggle(ticker)} aria-pressed={favorites.includes(ticker)}>{favorites.includes(ticker) ? "★" : "☆"} {lang === "ja" ? "お気に入り" : "Favorite"}</button>
-    <label>
+    {!compact && <label>
       <span>{lang === "ja" ? "銘柄を切り替える" : "Choose company"}</span>
       <select value={ticker} onChange={(event) => {
         const next = companies.find((company) => company.ticker === event.target.value);
@@ -22,7 +22,7 @@ export default function CompanySwitcher({ ticker, companies, lang }: { ticker: s
       }}>
         {companies.map((company) => <option key={company.ticker} value={company.ticker}>{company.ticker} · {company.name}</option>)}
       </select>
-    </label>
+    </label>}
     {error && <p role="alert">{lang === "ja" ? "お気に入りを保存できませんでした。" : "Could not save favorite."}</p>}
   </div>;
 }

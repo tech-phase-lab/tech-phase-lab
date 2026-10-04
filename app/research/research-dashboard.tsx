@@ -190,21 +190,22 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
 
       <main id="research-main" className={styles.main}>
 
-        <div className={styles.heading}><div><p className={styles.eyebrow}>{tab === "home" ? t("ホーム / リサーチデスク", "HOME / THE RESEARCH DESK") : "THE RESEARCH DESK"}</p><h1 id="research-page-title">{tab === "companies" ? t("監視22銘柄リスト", "22-stock watch list") : tab === "pro" ? "Tech Phase PRO" : tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : tab === "changes" ? t("何が変わった？", "What changed?") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1>{<p>{tab === "changes" ? t("決算や提携、新サービスなど企業の変化を1ページで。", "Earnings, partnerships, new services and other company changes, all on one page.") : tab === "pro" ? t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.") : t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p>}</div>{tab !== "pro" && tab !== "home" && <div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>{latestReview?.replaceAll("-", ".") ?? "—"}</strong></div>}</div>
+        {tab !== "companies" && <div className={styles.heading}><div><p className={styles.eyebrow}>{tab === "home" ? t("ホーム / リサーチデスク", "HOME / THE RESEARCH DESK") : "THE RESEARCH DESK"}</p><h1 id="research-page-title">{tab === "pro" ? "Tech Phase PRO" : tab === "metrics" ? t("数字を、正しく比べる。", "Compare the right numbers.") : tab === "saved" ? t("あとで、深く読む。", "Your research, kept close.") : tab === "changes" ? t("何が変わった？", "What changed?") : t("米国株の変化を、根拠付きで。", "U.S. stock change, backed by evidence.")}</h1>{<p>{tab === "changes" ? t("決算や提携、新サービスなど企業の変化を1ページで。", "Earnings, partnerships, new services and other company changes, all on one page.") : tab === "pro" ? t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.") : t("事実、解釈、次の確認点をひとつの画面に。", "The facts, the interpretation, and what to watch next.")}</p>}</div>{tab !== "pro" && tab !== "home" && <div className={styles.reviewDate}><span>{t("資料照合日", "REVIEWED ON")}</span><strong>{latestReview?.replaceAll("-", ".") ?? "—"}</strong></div>}</div>}
 
         {tab === "home" && <>
           <ResearchPulse lang={lang} />
           <HomeTools lang={lang} onChanges={() => openView("changes")} onPro={() => openView("pro")} />
+          <Link className={styles.watchEntry} href="/research#monitored-companies" onClick={() => openView("companies")}><span><small>COMPANY WATCH</small><strong>{t("監視22銘柄", "22-stock watch")}</strong></span><span>{t("企業ごとの動きを見る", "Follow company changes")} <b aria-hidden="true">›</b></span></Link>
           <NewsFeed lang={lang} initialNews={initialNews} />
           <HomeHelp lang={lang} />
         </>}
 
         {tab === "companies" && <section id="monitored-companies" className={styles.companyDirectory} aria-labelledby="monitored-companies-title">
           <div className={styles.directoryHead}>
-            <div><p className={styles.eyebrow}>OFFICIAL SOURCE WATCH</p><h2 id="monitored-companies-title">{t(`監視${monitoredCompanies.length}銘柄リスト`, `${monitoredCompanies.length} research companies`)}</h2></div>
+            <div><p className={styles.eyebrow}>OFFICIAL SOURCE WATCH</p><h1 id="monitored-companies-title">{t(`監視${monitoredCompanies.length}銘柄リスト`, `${monitoredCompanies.length} research companies`)}</h1></div>
             <div className={styles.directoryLegend}><span><i className={styles.verifiedDot} aria-hidden="true" />{t("数値比較を公開済み", "Verified comparison")}</span><span><i aria-hidden="true" />{t("取得状況を公開", "Intake status")}</span></div>
           </div>
-          <p className={styles.directoryNote}>{t("Tech Phaseが追っている銘柄をテーマ別に探せます。銘柄を押すと、公式資料・公開リサーチ・次の確認点へ進みます。緑の印は数値を照合したリサーチがある銘柄です。速報配信や全資料の分析完了を示すものではありません。", "Browse the companies Tech Phase follows by theme. Select a company for official sources, published research and next checks. Green marks indicate source-checked research, not live delivery or complete analysis of every release.")}</p>
+          <p className={styles.directoryNote}>{t("銘柄を選んで、企業の変化・決算・確認点へ。", "Select a company for developments, earnings and checkpoints.")}</p>
           <div className={styles.companyGroups}>
             {companyGroups.map(([sector, companies]) => <section key={sector} aria-label={sector}>
               <h3>{sector}<span>{companies.length}</span></h3>
@@ -213,6 +214,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
               </Link>)}</div>
             </section>)}
           </div>
+          <details className={styles.directoryInfo}><summary>{t("掲載状況について", "About coverage")}</summary><p>{t("緑の印は数値を照合したリサーチがある銘柄です。速報配信や全資料の分析完了を示すものではありません。", "Green marks indicate source-checked research, not live delivery or complete analysis of every release.")}</p></details>
         </section>}
 
         {tab === "pro" && <section id="tech-phase-pro" className={`${styles.accessMatrix} ${styles.proPlans}`} aria-labelledby="research-page-title">

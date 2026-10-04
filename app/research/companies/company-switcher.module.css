@@ -13,3 +13,5 @@
   .bar select { width: 100%; }
   .favorite { margin-left: 0; align-self: flex-start; }
 }
+
+.compact{flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:14px}.compact>a{font-size:12px}.compact .favorite{margin-left:auto;align-self:auto;min-height:36px;padding:5px 8px;font-size:12px;background:transparent}
