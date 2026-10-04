@@ -12,6 +12,7 @@ import re
 import time
 import uuid
 
+import amount_relations
 import brief_generator
 import buyback_news
 import factual_validation
@@ -28,8 +29,13 @@ import micron_reviewed_recovery
 import news_delivery_status
 import issuer_business_news
 import rollout_validation
+from validation_success import ValidationSuccess
 
 MAX_EVIDENCE_CHARS = 1800
+# Guard or constant changes require a version bump and process restart. Nothing
+# is persisted; callable identities also invalidate reuse during test/reload.
+VALIDATION_REUSE_VERSION = 1
+_validation_success = ValidationSuccess()
 NO_AUTOMATIC_REGENERATION=frozenset({'unsupported-comparison-baseline', 'source-event-identity-mismatch', rollout_validation.FAILURE})
 
 MATERIAL = re.compile(r'\b(acquir(?:es|ed|e)|acquisition|partner(?:s|ship)?|agreement|quarter.*results|financial results|earnings|launch(?:es|ed)?|expand(?:s|ed)?|investment|capacity)\b', re.I)
@@ -300,12 +306,24 @@ def validate_source_event(body, source_title, note=None):
                     raise ValueError('source-event-identity-mismatch')
 
 
+def validation_policy():
+    return (VALIDATION_REUSE_VERSION, os.getpid(), MAX_EVIDENCE_CHARS,
+            validate_item, normalized,
+            tuple((module.__name__, name, member)
+                  for module in (factual_validation, amount_relations, buyback_news, rollout_validation)
+                  for name, member in vars(module).items() if callable(member)))
+
+
 def validate(value, body, source_title=''):
     if not isinstance(value, dict) or set(value) != {'title','summary','facts','purpose'}:
         raise ValueError('invalid-note')
     validate_source_event(body, source_title, value)
     if not isinstance(value['facts'], list) or not 3 <= len(value['facts']) <= 5:
         raise ValueError('invalid-facts')
+    policy = validation_policy()
+    if (_validation_success.contains(_validation_success.key(value, body, source_title), policy)
+            and validation_policy() == policy):
+        return value
     source_context=(body,normalized(body),rollout_validation.source_context(body))
     for name, item in [('title',value['title']),('summary',value['summary']),
                        *[('fact',x) for x in value['facts']],('purpose',value['purpose'])]:
@@ -314,6 +332,10 @@ def validate(value, body, source_title=''):
         except ValueError as exc:
             exc.add_note(name)
             raise
+    # validate_item mutates brand case. Cache only the successful normalized
+    # payload, so differently spelled inputs still execute that normalization.
+    if validation_policy() == policy:
+        _validation_success.remember(_validation_success.key(value, body, source_title), policy)
     return value
 
 

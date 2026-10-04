@@ -1,4 +1,4 @@
-"""Source work is reused only inside one complete current-copy validation."""
+"""Source work is reused only for an exact successful current-copy validation."""
 from copy import deepcopy
 import unittest
 from unittest.mock import patch
@@ -10,13 +10,28 @@ import rollout_validation as rollout
 
 
 class ValidationSourceContextTests(unittest.TestCase):
-    def test_body_is_analyzed_once_per_note_and_again_on_every_validation(self):
+    def setUp(self):
+        self.reuse = patch.object(research, '_validation_success', research.ValidationSuccess())
+        self.reuse.start(); self.addCleanup(self.reuse.stop)
+
+    def test_body_is_analyzed_once_then_exact_success_reuses_it(self):
         with patch.object(rollout,'source_context',wraps=rollout.source_context) as parse:
             with patch.object(research,'normalized',wraps=research.normalized) as normalize:
                 for _ in range(2):
                     self.assertEqual(research.validate(deepcopy(fixture.NOTE),fixture.BODY,fixture.TITLE),fixture.NOTE)
-                self.assertEqual(parse.call_count,2)
-                self.assertEqual(sum(call.args[0] is fixture.BODY for call in normalize.call_args_list),2)
+                self.assertEqual(parse.call_count,1)
+                self.assertEqual(sum(call.args[0] is fixture.BODY for call in normalize.call_args_list),1)
+                research.validate(deepcopy(fixture.NOTE),fixture.BODY+' More background.',fixture.TITLE)
+                research.validate(deepcopy(fixture.NOTE),fixture.BODY,fixture.TITLE+' update')
+                changed=deepcopy(fixture.NOTE);changed['title']['en']+='.'
+                research.validate(changed,fixture.BODY,fixture.TITLE)
+                self.assertEqual(parse.call_count,4)
+                research._validation_success.clear()
+                research.validate(deepcopy(fixture.NOTE),fixture.BODY,fixture.TITLE)
+                with patch.object(research,'VALIDATION_REUSE_VERSION',research.VALIDATION_REUSE_VERSION+1):
+                    research.validate(deepcopy(fixture.NOTE),fixture.BODY,fixture.TITLE)
+                research.validate(deepcopy(fixture.NOTE),fixture.BODY,fixture.TITLE)
+                self.assertEqual(parse.call_count,7)
 
     def test_note_context_and_standalone_field_checks_have_the_same_outcomes(self):
         cases=[(deepcopy(fixture.NOTE),fixture.BODY)]
