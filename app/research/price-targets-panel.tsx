@@ -29,6 +29,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
   useEffect(() => {
     let active = true;
     let visible = false;
+    let initialPending = true;
     let session: AbortController | null = null;
     const snapshotRevision = createSnapshotRevisionGuard();
     const applySnapshot = (value: unknown, signal: AbortSignal) => {
@@ -115,11 +116,15 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
         if (!session) {
           session = new AbortController();
           // Display the shared snapshot immediately; SSE connects independently.
-          void readFallback(session.signal);
+          if (!initialPending) void readFallback(session.signal);
           void run(session.signal);
         }
       } else { session?.abort(); session = null; }
     };
+    // Start the initial snapshot immediately, even below the fold. Only the
+    // long-lived SSE connection depends on viewport visibility.
+    const initialRequest = new AbortController();
+    void readFallback(initialRequest.signal).finally(() => { initialPending = false; });
     const panel = panelRef.current;
     const observer = typeof IntersectionObserver === "undefined" ? null : new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
@@ -128,7 +133,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
     if (observer && panel) observer.observe(panel);
     else { visible = true; syncVisibility(); }
     document.addEventListener("visibilitychange", syncVisibility);
-    return () => { active = false; session?.abort(); observer?.disconnect(); document.removeEventListener("visibilitychange", syncVisibility); };
+    return () => { active = false; initialRequest.abort(); session?.abort(); observer?.disconnect(); document.removeEventListener("visibilitychange", syncVisibility); };
   }, []);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const time = (date: string) => formatTargetTime(date, lang);

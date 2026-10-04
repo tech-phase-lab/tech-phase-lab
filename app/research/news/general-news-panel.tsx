@@ -24,10 +24,17 @@ function initialSnapshot(initialNews?: InitialNewsSnapshot | null) {
 }
 
 export default function GeneralNewsPanel({ lang, officialOnly = false, initialNews }: { lang: Language; officialOnly?: boolean; initialNews?: InitialNewsSnapshot | null }) {
-  const [data, setData] = useState<GeneralNewsFeed | null>(() => initialSnapshot(initialNews)?.data ?? null);
-  const [error, setError] = useState(false);
+  const [fetchedData, setData] = useState<GeneralNewsFeed | null>(() => initialSnapshot(initialNews)?.data ?? null);
+  const [failed, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
-  const [receivedAt, setReceivedAt] = useState<string | null>(() => initialSnapshot(initialNews)?.at ?? null);
+  const [fetchedAt, setReceivedAt] = useState<string | null>(() => initialSnapshot(initialNews)?.at ?? null);
+  // Streamed server data can arrive after this panel has already mounted.
+  // Use whichever verified snapshot is newer; never wait for another poll.
+  const seed = initialSnapshot(initialNews);
+  const useSeed = !!seed && seed.time > (fetchedAt ? Date.parse(fetchedAt) : 0);
+  const error = failed && !useSeed;
+  const data = useSeed ? seed.data : fetchedData;
+  const receivedAt = useSeed ? seed.at : fetchedAt;
   const panel = useRef<HTMLElement>(null);
   const [page, setPage] = useState(1);
   useEffect(() => {

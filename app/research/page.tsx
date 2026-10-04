@@ -23,7 +23,7 @@ async function LiveHomeData() {
     const issues = evidenceIssues({ ...event, metrics: [...event.metrics, ...(event.previous ?? [])] });
     if (issues.length) throw new Error(`Invalid research record ${event.id}: ${issues.join(", ")}`);
   }
-  return <LiveHomeUpdate events={currentEvents.map(publicEvent)} />;
+  return <LiveHomeUpdate events={currentEvents.map(publicEvent)} news={live.news} />;
 }
 
 export default function ResearchPage() {
