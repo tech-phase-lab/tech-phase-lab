@@ -27,9 +27,10 @@ import reviewed_business_news
 import micron_reviewed_recovery
 import news_delivery_status
 import issuer_business_news
+import rollout_validation
 
 MAX_EVIDENCE_CHARS = 1800
-NO_AUTOMATIC_REGENERATION=frozenset({'unsupported-comparison-baseline'})
+NO_AUTOMATIC_REGENERATION=frozenset({'unsupported-comparison-baseline', 'source-event-identity-mismatch', rollout_validation.FAILURE})
 
 MATERIAL = re.compile(r'\b(acquir(?:es|ed|e)|acquisition|partner(?:s|ship)?|agreement|quarter.*results|financial results|earnings|launch(?:es|ed)?|expand(?:s|ed)?|investment|capacity)\b', re.I)
 POLICY = """Write factual Japanese and English news from the supplied issuer announcement.
@@ -155,14 +156,16 @@ def prepare_story_body(path, reference, request=None):
                         raise ValueError('article-response-date-mismatch')
                     article = NewsHTML(source.get('articleBodyClass'))
                     article.feed(document)
-                    markup = ''.join(article.selected if source.get('articleBodyClass') else article.article or article.main)
-                    if not markup:
-                        markup = explicit_body(document) or ''
+                    # Explicit publisher article containers outrank generic
+                    # <article> tiles in related-news widgets on the same page.
+                    markup = (''.join(article.selected) if source.get('articleBodyClass') else
+                              explicit_body(document) or ''.join(article.article or article.main))
                     body = monitor.extract_html_text(markup.encode())
                     proof = {'published_on': actual_date,
                              'raw_sha': hashlib.sha256(fetched['body']).hexdigest()}
                 if not 120 <= len(body) <= 160000:
                     raise ValueError('article-body-unavailable')
+                validate_source_event(body, row['title'])
                 digest = hashlib.sha256(body.encode()).hexdigest()
                 error, next_at = None, reference.timestamp() + 900
             except Exception as exc:
@@ -263,9 +266,40 @@ def validate_row(note,row):
     return validated
 
 
+def validate_source_event(body, source_title, note=None):
+    """Bind capital-return copy to the current source event, not another page.
+
+    Quote membership alone cannot establish identity: an index can supply
+    internally consistent quotes from unrelated announcements.
+    """
+    if not buyback_news.CUE.search(source_title or ''):
+        return
+    if not buyback_news.CUE.search(body or ''):
+        raise ValueError('source-event-identity-mismatch')
+    if buyback_news.AUTH.search(source_title) and not buyback_news.AUTH.search(body):
+        raise ValueError('source-event-identity-mismatch')
+    amounts = {buyback_news.quantity_value(m[0]) for m in buyback_news.QUANTITY.finditer(source_title)}
+    body_amounts = {buyback_news.quantity_value(m[0]) for m in buyback_news.QUANTITY.finditer(body)}
+    if not amounts <= body_amounts:
+        raise ValueError('source-event-identity-mismatch')
+    if note is not None:
+        if not isinstance(note, dict):
+            raise ValueError('source-event-identity-mismatch')
+        for name in ('title', 'summary'):
+            item = note.get(name)
+            if not isinstance(item, dict):
+                raise ValueError('source-event-identity-mismatch')
+            for lang in ('ja', 'en'):
+                text = item.get(lang, '')
+                if not isinstance(text, str) or not (buyback_news.CUE.search(text)
+                        or (lang == 'ja' and re.search(r'株式.{0,20}買い戻', text))):
+                    raise ValueError('source-event-identity-mismatch')
+
+
 def validate(value, body, source_title=''):
     if not isinstance(value, dict) or set(value) != {'title','summary','facts','purpose'}:
         raise ValueError('invalid-note')
+    validate_source_event(body, source_title, value)
     if not isinstance(value['facts'], list) or not 3 <= len(value['facts']) <= 5:
         raise ValueError('invalid-facts')
     for name, item in [('title',value['title']),('summary',value['summary']),
@@ -301,6 +335,7 @@ def validate_item(name, item, body, source_title):
         factual_validation.validate_semantics(text, quote)
         factual_validation.validate_acquisition(text, source_title, lang, require_status=name in ('title', 'summary'))
         factual_validation.validate_acquisition(text, quote, lang)
+        rollout_validation.validate(text, body)
     factual_validation.validate_pair(item['ja'], item['en'])
     buyback_news.validate(item, quote)
 
@@ -328,7 +363,20 @@ def claim(db, reference, model, limit):
         for r in rows:
             if not current_revision(db,r):
                 continue
+            try:
+                validate_source_event(r['body'], r['title'])
+            except ValueError:
+                # A cached article from another event cannot become a new paid
+                # attempt. Retain it for diagnosis; ordinary fetch backoff applies.
+                continue
             published=db.execute('SELECT sha,body_sha,payload,started_at,public_at FROM official_research_publications WHERE event_id=?',(r['id'],)).fetchone()
+            if published and published['sha'] == r['sha']:
+                try:
+                    validate_source_event(r['body'], r['title'], json.loads(published['payload']))
+                except (ValueError, TypeError):
+                    # Correct reacquisition does not authorize paying to replace
+                    # a saved cross-event publication. Require audited recovery.
+                    continue
             if published and published['sha']==r['sha'] and published['body_sha']==r['body_sha'] and publication_clock_valid(published,r,reference):
                 try:
                     validate_row(json.loads(published['payload']),r)
@@ -632,7 +680,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     except Exception as exc:
         cause=getattr(exc,'__cause__',None)
         provider_status=getattr(cause,'code',None)
-        reason=str(exc) if type(exc) is ValueError and str(exc) in ({'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete','lost-forecast-modality','lost-negation','reversed-supply-demand','lost-fiscal-basis','lost-comparison','unsupported-comparison-baseline','changed-amount-relation','changed-execution-period','changed-action-capacity','invented-broker-action','source-copy-overlap','unsupported-actor','lost-action-status'} | general_source_news.FAILURE_CODES) else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
+        reason=str(exc) if type(exc) is ValueError and str(exc) in ({'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete','lost-forecast-modality','lost-negation','reversed-supply-demand','lost-fiscal-basis','lost-comparison','unsupported-comparison-baseline','changed-amount-relation','changed-execution-period','changed-action-capacity','source-event-identity-mismatch','invented-broker-action','source-copy-overlap','unsupported-actor','lost-action-status'} | general_source_news.FAILURE_CODES | {rollout_validation.FAILURE}) else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
         with connect(path) as db, db:
             db.execute('BEGIN IMMEDIATE')
             # Private audit evidence for a failed attempt; never returned by feed.
