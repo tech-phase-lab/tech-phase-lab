@@ -11,6 +11,8 @@ from test_issuer_earnings import BODY
 
 URL='https://investors.micron.com/news/press-release/2026/results/default.aspx'
 TITLE='Micron Reports Fiscal Fourth Quarter and Full Year 2026 Results'
+TABLES=(Path(__file__).parent/'fixtures/mu-watch-quarterly-tables.txt').read_text()
+TABLE_BODY=BODY.replace('Business Outlook',TABLES+'Business Outlook')
 
 class WatchTests(unittest.TestCase):
     def setUp(self):
@@ -74,6 +76,54 @@ class WatchTests(unittest.TestCase):
     def test_date_only_never_produces_fake_latency(self):
         self.assertIsNone(watch.latency('2026-09-30','2026-10-01T00:00:00Z'))
         self.assertEqual(watch.latency('2026-09-30T12:00:00Z','2026-09-30T12:00:01Z'),1000)
+
+    def test_tables_match_period_basis_and_segment_totals(self):
+        self.insert(TABLE_BODY);watch.run_once(self.path);snap=watch.feed(self.path)['snapshot'];m=snap['metrics']
+        self.assertEqual(m['revenueMillionUSD'],54229)
+        self.assertEqual(m['previousRevenueMillionUSD'],41456)
+        self.assertEqual(m['adjustedGrossMarginPercent'],87)
+        self.assertEqual(m['previousAdjustedGrossMarginPercent'],84.9)
+        self.assertEqual(m['guidanceAdjustedGrossMarginPercent'],86.25)
+        self.assertEqual(m['segments']['core']['revenueMillionUSD'],18002)
+        self.assertEqual(m['segments']['cloud']['operatingMarginPercent'],76)
+        self.assertEqual(m['segmentResidualMillionUSD'],{'revenueMillionUSD':6,'previousRevenueMillionUSD':8})
+        cards=snap['cards']
+        self.assertIn('50.7%',cards[0]['detail']['ja'])
+        self.assertIn('+2.1ポイント',cards[1]['detail']['ja'])
+        self.assertIn('78% → 76%',json.dumps(cards[2],ensure_ascii=False))
+        self.assertIn('86.25%',json.dumps(cards[3]))
+        self.assertNotIn('81.1%',json.dumps(cards))  # Annual margin is excluded.
+
+    def test_invalid_optional_tables_preserve_highlights_without_stale_facts(self):
+        for table in (TABLES.replace('FQ3-26','FQ2-26'),TABLES.replace('in millions','in billions'),TABLES.replace('18,002','180,002'),TABLES.replace('87.0 %','870 %'),TABLES.replace('Percent of revenue','Unknown margin')):
+            with self.subTest(table=table[:70]):
+                self.insert(BODY.replace('Business Outlook',table+'Business Outlook'))
+                watch.run_once(self.path);m=watch.feed(self.path)['snapshot']['metrics']
+                self.assertIn('revenueMillionUSD',m)
+                if '180,002' in table or 'FQ2-26' in table or 'in billions' in table:
+                    self.assertNotIn('segments',m)
+                if '870 %' in table or 'Unknown margin' in table or 'FQ2-26' in table or 'in billions' in table:
+                    self.assertNotIn('adjustedGrossMarginPercent',m)
+        self.insert(BODY);watch.run_once(self.path);m=watch.feed(self.path)['snapshot']['metrics']
+        self.assertNotIn('segments',m);self.assertNotIn('adjustedGrossMarginPercent',m)
+
+    def test_margin_decline_and_zero_company_change_do_not_invent_contribution(self):
+        parsed=watch.parse({'body':TABLE_BODY,'title':TITLE})
+        parsed['metrics']['adjustedGrossMarginPercent']=80
+        parsed['metrics']['previousRevenueMillionUSD']=parsed['metrics']['revenueMillionUSD']
+        result=watch.presentation(parsed)
+        self.assertNotIn('50.7',json.dumps(result))
+        self.assertIn('-4.9ポイント',result['cards'][1]['detail']['ja'])
+        self.assertIn('粗利益率が前四半期から低下',json.dumps(result,ensure_ascii=False))
+
+    def test_negative_margins_keep_signs_in_both_languages(self):
+        body=TABLE_BODY.replace('87.0 %','−7.0 %').replace('76 % 78 % 48 %','−16 % 78 % 48 %').replace('Approximately 86.25%','Approximately -6.25%')
+        parsed=watch.parse({'body':body,'title':TITLE})
+        self.assertEqual(parsed['metrics']['adjustedGrossMarginPercent'],-7)
+        self.assertEqual(parsed['metrics']['segments']['cloud']['operatingMarginPercent'],-16)
+        result=watch.presentation(parsed)
+        self.assertIn('78% → -16%',json.dumps(result,ensure_ascii=False))
+        self.assertIn('-6.25%',json.dumps(result,ensure_ascii=False))
 
     def test_endpoint_requires_token_and_serves_persisted_revision(self):
         import os
