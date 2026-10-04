@@ -34,7 +34,7 @@ function ScoreOverview({companies,lang,now}: {companies:ComparisonResult["compan
   return <section className={styles.scoreOverview}><div className={styles.scoreHeading}><h2>{ja ? "比較スナップショット" : "Comparison snapshot"}</h2><small>{ja ? "参考スコア / 10" : "Reference score / 10"}</small></div>
     <table className={styles.snapshotTable} style={{"--companies":companies.length} as React.CSSProperties}><caption className={styles.srOnly}>{ja ? "各項目の企業別スコア" : "Company scores by factor"}</caption>
       <thead><tr><th scope="col">{ja ? "項目" : "Factor"}</th>{companies.map((c,i)=><th key={c.ticker} scope="col" data-company={i}><span className={styles.snapshotTicker}>{c.ticker}</span></th>)}</tr></thead>
-      <tbody>{factors.map((f,index)=><tr key={f.id}><th scope="row">{f.label[lang]}</th>{companies.map((c,i)=>{const score=scoreSets[i][index];return <td key={c.ticker}><div className={styles.snapshotValue}><span className={styles.scoreTrack} aria-hidden="true">{score.value!==null && <i data-company={i} style={{width:`${score.value*10}%`}}/>}</span><strong>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div></td>;})}</tr>)}</tbody>
+      <tbody>{factors.map((f,index)=><tr key={f.id}><th scope="row">{f.label[lang]}</th>{companies.map((c,i)=>{const score=scoreSets[i][index];const values=scoreSets.map(set=>set[index].value);const winner=values.every(v=>v!==null) && score.value!==null && values.some(v=>v!<score.value!) && score.value===Math.max(...values as number[]);return <td key={c.ticker} data-winner={winner}><div className={styles.snapshotValue}><span className={styles.scoreTrack} aria-hidden="true">{score.value!==null && <i data-company={i} style={{width:`${score.value*10}%`}}/>}</span><strong>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div>{c.referenceEvaluation && <small className={styles.factorMetric}>{c.referenceEvaluation.factors.find(f=>f.id===score.id)?.metric[lang]}</small>}</td>;})}</tr>)}</tbody>
     </table><p className={styles.snapshotNote}>{ja ? "— 未取得" : "— Unavailable"}</p>
   </section>;
 }
@@ -42,16 +42,16 @@ function CompanyScoreCard({company:c,lang,now}: {company:ComparisonResult["compa
   const items=c.preparedAnalysis?.items ?? [], ja=lang==="ja";
   const highlights={strengths:items.filter(i=>i.kind==="strength").map(i=>i.short[lang]),weaknesses:items.filter(i=>i.kind==="weakness").map(i=>i.short[lang])};
   return <article className={styles.scoreCard}>
-    <header className={styles.companyHeading}><h3 title={`${c.name}（${c.ticker}）`}>{c.name}（{c.ticker}）</h3><span>{c.quarterRevenue ? `${ja ? "四半期" : "Quarter"} ${c.quarterRevenue.end}` : ja ? "四半期未取得" : "Quarter unavailable"}</span></header>
+    <header className={styles.companyHeading}><h3 title={`${c.name}（${c.ticker}）`}>{c.name}（{c.ticker}）</h3><span>{c.referenceEvaluation ? `${ja ? "決算発表" : "Released"} ${c.referenceEvaluation.announced}${ja ? "（米国）" : " (US)"}` : c.quarterRevenue ? `${ja ? "決算期末" : "Period ended"} ${c.quarterRevenue.end}` : ja ? "四半期未取得" : "Quarter unavailable"}</span></header>
     <div className={styles.companyProfile}>
       <div className={styles.traitBoxes}>
         <section className={styles.traitBox} aria-label={ja ? "長所" : "Strengths"}>
           <h4>{ja ? "長所" : "Strengths"}</h4>
-          {highlights.strengths.length ? <ul>{highlights.strengths.map(item=><li key={item}>{item}</li>)}</ul> : <p>{ja ? "判定に必要なデータが不足" : "Insufficient data"}</p>}
+          {highlights.strengths.length ? <ul>{highlights.strengths.map(item=><li key={item} title={item}>{item}</li>)}</ul> : <p>{ja ? "判定に必要なデータが不足" : "Insufficient data"}</p>}
         </section>
         <section className={`${styles.traitBox} ${styles.weaknessBox}`} aria-label={ja ? "短所" : "Weaknesses"}>
           <h4>{ja ? "短所" : "Weaknesses"}</h4>
-          {highlights.weaknesses.length ? <ul>{highlights.weaknesses.map(item=><li key={item}>{item}</li>)}</ul> : <p>{ja ? "この実績だけでは特定できません" : "Not established by these results alone"}</p>}
+          {highlights.weaknesses.length ? <ul>{highlights.weaknesses.map(item=><li key={item} title={item}>{item}</li>)}</ul> : <p>{ja ? "この実績だけでは特定できません" : "Not established by these results alone"}</p>}
         </section>
       </div>
       <section className={styles.companyStatus} aria-label={ja ? `${c.name}のステータス` : `${c.name} status`}>
@@ -107,13 +107,13 @@ export default function ComparisonScreen() {
     setSelection(current => { const next = [...current]; next[slot] = company.ticker; return next; });
     setQueries(current => current.map((q,index) => index === slot ? company.ticker : q)); setOpenSlot(null);
   }
-  async function compare() {
-    const tickers = selection.filter(Boolean);
-    if (!selection[0] || !selection[1] || tickers.length > 3 || membership !== "pro") return;
+  async function compare(trial=false) {
+    const tickers = trial ? ["MU","SNDK"] : selection.filter(Boolean);
+    if ((!trial && (!selection[0] || !selection[1])) || tickers.length > 3 || membership !== "pro") return;
     request.current?.abort(); const controller = new AbortController(); request.current = controller;
     setResult(null); setError(false); setBusy(true);
     try {
-      const response = await fetch(`/api/research/compare?tickers=${encodeURIComponent(tickers.join(","))}`, { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(30000)]) });
+      const response = await fetch(`/api/research/compare?tickers=${encodeURIComponent(tickers.join(","))}${trial ? "&trial=mu-sndk-20261004" : ""}`, { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(30000)]) });
       const data = await response.json();
       if (controller.signal.aborted) return;
       if (response.status === 401 || response.status === 403) { setResult(null); window.dispatchEvent(new Event("tech-phase:membership-changed")); return; }
@@ -192,13 +192,14 @@ export default function ComparisonScreen() {
         <div className={styles.submit}><small>{selection.filter(Boolean).length} / 3 {t("社を選択", "selected")}</small><button disabled={busy || !selection[0] || !selection[1]} onClick={() => void compare()}>{busy ? t("精査中…", "Analyzing…") : t("この銘柄を比較する", "Compare these stocks")}</button></div>
         <p className={styles.note}>{t("SEC開示を比較。割安評価は株価データ接続後に対応。", "Compare SEC filings. Valuation awaits price data.")}</p>
       </section>
+      <button type="button" className={styles.trialButton} disabled={busy} onClick={()=>void compare(true)}>{t("MU・SNDK 実データ比較 · 10/4", "MU / SNDK data trial · Oct 4")}</button>
       <TickerSearch lang={lang} selection={selection} onSelect={selectCompany} />
       </>}
       {busy && <div className={styles.loading} role="status"><span className={styles.spinner} aria-hidden="true"/><strong>{t("開示資料と比較条件を精査中…", "Checking filings and comparability…")}</strong><p>{t("期間・通貨・会計基準を確認しています。初回は時間がかかる場合があります。", "Checking periods, currencies and accounting bases. The first request may take longer.")}</p></div>}
       {error && <p role="alert">{t("比較結果を取得できませんでした。選択は残っています。もう一度お試しください。", "Could not retrieve the comparison. Your selection is saved; please try again.")}</p>}
       {result && <div ref={conclusion} tabIndex={-1} className={`${styles.results} ${styles.resultView}`}>
         <button type="button" className={styles.backToCompare} onClick={()=>{setResult(null);requestAnimationFrame(()=>{picker.current?.scrollIntoView({block:"start",behavior:"instant"});picker.current?.focus({preventScroll:true});});}}>{t("▶ 銘柄比較PROに戻る", "▶ Back to Compare PRO")}</button>
-        <section className={styles.conclusion} aria-label={t("結果", "Results")}><p className={styles.eyebrow}>{t("結果", "RESULTS")}</p><h2>{quarterlyTakeaway(result.companies,lang,Date.parse(result.generatedAt))}</h2><p>{t("割安度：最新株価・PER・PEGの接続待ち。", "Valuation awaits current price, P/E and PEG data.")}</p>{result.reasons.length > 0 && <details><summary>{t("比較条件・注意点", "Comparison caveats")}</summary><ul>{result.reasons.map(r => <li key={r.en}>{r[lang]}</li>)}</ul></details>}<small>{t("比較作成", "Compared at")}: {new Date(result.generatedAt).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo" })} JST</small></section>
+        <section className={styles.conclusion} aria-label={t("結果", "Results")}><p className={styles.eyebrow}>{t("結果", "RESULTS")}</p><h2>{result.trial ? result.conclusion[lang] : quarterlyTakeaway(result.companies,lang,Date.parse(result.generatedAt))}</h2><p>{result.trial ? result.trial.description[lang] : t("割安度：最新株価・PER・PEGの接続待ち。", "Valuation awaits current price, P/E and PEG data.")}</p>{result.reasons.length > 0 && <details><summary>{t("比較条件・注意点", "Comparison caveats")}</summary><ul>{result.reasons.map(r => <li key={r.en}>{r[lang]}</li>)}</ul></details>}<small>{t("比較作成", "Compared at")}: {new Date(result.generatedAt).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo" })} JST</small></section>
         <div className={styles.companyCards}>{result.companies.map(c=><CompanyScoreCard key={c.ticker} company={c} lang={lang} now={Date.parse(result.generatedAt)}/>)}</div><ScoreOverview companies={result.companies} lang={lang} now={Date.parse(result.generatedAt)}/>
         {result.companies.some(c=>c.preparedAnalysis?.items.length) && <details className={styles.analysisDetails}>
           <summary>{t("長所・短所の詳しい根拠", "Evidence behind strengths and weaknesses")}</summary>
@@ -209,6 +210,8 @@ export default function ComparisonScreen() {
             <a href={c.preparedAnalysis!.sourceUrl} target="_blank" rel="noreferrer">{t("決算資料", "Financial filing")}</a>
           </section>)}
         </details>}
+        {result.trial && <details className={styles.scoreMethod}><summary>{t("評価基準・対象期間・出典", "Methodology, periods and sources")}</summary><p>{result.trial.notes[lang]}</p><p>{t("固定した実データを用いる検証です。自動更新・同業順位の採点ではありません。前受金や調整FCFの定義差は長所・短所の根拠に記載しています。", "This trial uses a fixed reviewed dataset, not an auto-updating feed or peer-percentile model. Prepayments and adjusted FCF differences are explained in the evidence.")}</p>{result.companies[0].referenceEvaluation?.factors.map(f=><p key={f.id}><strong>{comparisonScores(result.companies[0]).find(s=>s.id===f.id)?.label[lang]}</strong>：{f.method[lang]}</p>)}<div>{result.companies.map(c=><section key={c.ticker}><h3>{c.name}（{c.ticker}）</h3>{c.referenceEvaluation?.observations?.map(o=><p key={o.en}>{o[lang]}</p>)}</section>)}</div><ul>{result.companies[0].referenceEvaluation?.sources.map(source=><li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label}</a></li>)}</ul></details>}
+        {!result.trial && <>
         <details className={styles.scoreMethod}><summary>{t("評価基準", "Scoring methodology")}</summary><p>{t("参考スコアです。取得した180日以内の四半期実績だけを採点し、年次実績で穴埋めしません。高い点ほど良好ですが、業種差・買収・一時要因は未調整です。— は未取得で、0点ではありません。", "Reference scores use retrieved quarters ending within 180 days, without annual substitutes. Higher is better. Industry differences, acquisitions and one-offs are not adjusted; — is unavailable, not zero.")}</p><p>{t("成長性：売上前年比0%で5点、50%で10点。収益力：営業利益率0%で0点、50%で10点。財務：四半期の流動比率と現金／開示された長期債務で採点。資金創出：四半期簡易FCF率0%で5点、25%で10点。割安性・安定性・株価モメンタムは必要な時系列・株価・予想データが未接続です。0〜10点に収めます。", "Growth: 0% YoY = 5, 50% = 10. Profitability: 0% operating margin = 0, 50% = 10. Financial strength uses quarterly liquidity and cash versus disclosed long-term debt. Cash generation: 0% simple FCF margin = 5, 25% = 10. Valuation, stability and momentum await the required historical, quote and estimate data. Scores are bounded to 0–10.")}</p></details>
         <details className={styles.detailNumbers}><summary>{t("詳しい数値・出典を見る", "View detailed numbers and sources")}</summary><div className={styles.results}>
         <section className={styles.numbers}><h2>{t("直近の四半期を確認", "Recent quarterly performance")}</h2><p className={styles.note}>{t("取得した決算資料にある3か月実績です。各社の期間を明記します。未取得は — 。", "Standalone quarterly results from retrieved filings. Reporting periods are shown; — means unavailable.")}</p><div className={styles.table} style={{ "--companies": result.companies.length } as React.CSSProperties} role="table" aria-label={t("四半期比較", "Quarterly comparison")}><div role="row" className={styles.tableHead}><span role="columnheader">{t("項目", "Metric")}</span>{result.companies.map(c => <strong role="columnheader" key={c.ticker}>{c.ticker}</strong>)}</div>{([
@@ -227,6 +230,7 @@ export default function ComparisonScreen() {
           <p>{c.caution[lang]}</p>{c.operatingIncome && c.operatingIncome.value < 0 && <p className={styles.warning}>{t("営業赤字です。売上成長だけで利益の成長を判断できません。", "Operating loss: revenue growth alone does not establish earnings growth.")}</p>}{c.fcfMargin !== null && c.fcfMargin < 0 && <p className={styles.warning}>{t("営業CFから設備投資を引いた金額はマイナスです。資金調達の必要性を確認します。", "Operating cash flow less capex is negative. Review funding needs.")}</p>}<details><summary>{t("出典と計算条件", "Sources and methodology")}</summary>{c.sourceUrl && <a href={c.sourceUrl} target="_blank" rel="noreferrer">{t("SEC提出書類", "SEC filing")} · {c.revenue?.filed}</a>}{c.balance && <p><a href={c.balance.sourceUrl} target="_blank" rel="noreferrer">{t("貸借対照表のSEC提出書類", "Balance-sheet SEC filing")} · {c.balance.filed}</a><br/>{t("基準日", "As of")}: {c.balance.end}</p>}{c.quarterSourceUrl && <p><a href={c.quarterSourceUrl} target="_blank" rel="noreferrer">{t("四半期のSEC提出書類", "Quarterly SEC filing")} · {c.quarterRevenue?.filed}</a><br/>{c.quarterRevenue?.tag}</p>}{c.stockCompensation && <p>{c.stockCompensation.tag}</p>}{c.dilutedShares && <p>{c.dilutedShares.tag}<br/>{t("当年／前年の平均株式数", "Current / prior average shares")}: {c.dilutedShares.value.toLocaleString()} / {c.previousDilutedShares?.value.toLocaleString() ?? "—"}</p>}<p>{t("データ取得", "Retrieved")}: {new Date(c.retrievedAt).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo" })} JST</p>{c.revenue && <p>{c.revenue.start} — {c.revenue.end}<br/>{c.revenue.tag}</p>}<p>{t("簡易FCF＝営業CF−現金支出の設備投資。リース・買収支出などを網羅する指標ではありません。現金残高だけで財務健全性を判定しません。", "Simple FCF = operating cash flow minus cash capex. It does not capture all leases or acquisitions. Cash alone does not establish financial strength.")}</p></details></article>)}</div></section>
         <p className={styles.note}>{t("将来の成長性、正常収益、負債総額・返済予定、事業構成を踏まえた総合評価は次の実装段階です。参考スコアは総合評価や買い推奨ではありません。", "Forward growth, normalized earnings, total debt, maturities and business-mix analysis are not implemented yet. Reference scores are not an overall rating or buy recommendation.")}</p>
         </div></details>
+        </>}
       </div>}
     </>}
   </ResearchToolShell>;

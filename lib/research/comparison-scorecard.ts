@@ -17,7 +17,7 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
   const financial = recent && balance && balance.end===c.quarterRevenue?.end && finite(balance.currentRatio) && balance.cash && balance.debtCurrent && balance.debtNoncurrent
     ? clamp(5*Math.min(balance.currentRatio,2)/2 + 5*Math.min(balance.cash.value/Math.max(balance.debtCurrent.value+balance.debtNoncurrent.value,1),1)) : null;
   const cash = recent && finite(c.quarterFcfMargin) ? clamp(5+c.quarterFcfMargin/5) : null;
-  return [
+  const scores: ComparisonScore[] = [
     {id:"financial",label:{ja:"財務健全性",en:"Financial strength"},value:financial},
     {id:"profitability",label:{ja:"収益性",en:"Profitability"},value:profitability},
     {id:"valuation",label:{ja:"割安性",en:"Valuation"},value:null},
@@ -26,6 +26,8 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
     {id:"growth",label:{ja:"成長性",en:"Growth"},value:growth},
     {id:"cash",label:{ja:"資金創出",en:"Cash generation"},value:cash},
   ];
+  if(c.referenceEvaluation) return scores.map(s=>({...s,value:c.referenceEvaluation!.factors.find(f=>f.id===s.id)?.value ?? null}));
+  return scores;
 }
 
 /** Missing factors must never improve the composite by being omitted. */

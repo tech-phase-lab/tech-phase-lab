@@ -1,3 +1,4 @@
+import {buildReviewedTrial} from "../lib/research/comparison-trial.ts";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { extractFinancials, buildComparison, emptyFinancials, validateComparisonTickers, comparisonAccess } from '../lib/research/comparison.ts';
@@ -62,8 +63,9 @@ test('relative annual growth conclusion never labels a stock cheap or a buy',()=
 
 test('actual API rejects non-PRO before fetching data, validates selection, and rechecks expiry',async()=>{
  const {readFileSync}=await import('node:fs');const {stripTypeScriptTypes}=await import('node:module');
- globalThis.__comparisonTest={member:{status:'signed-out',plan:'free'},calls:0,catalog:[company('AAA'),company('BBB'),company('CCC')],buildComparison,comparisonAccess,validateComparisonTickers,load:async ticker=>{globalThis.__comparisonTest.calls++;return parse(payload());}};
+ globalThis.__comparisonTest={member:{status:'signed-out',plan:'free'},calls:0,catalog:[company('AAA'),company('BBB'),company('CCC')],buildReviewedTrial,buildComparison,comparisonAccess,validateComparisonTickers,load:async ticker=>{globalThis.__comparisonTest.calls++;return parse(payload());}};
  const source=readFileSync(new URL('../app/api/research/compare/route.ts',import.meta.url),'utf8')
+  .replace('import { buildReviewedTrial } from "@/lib/research/comparison-trial";','const {buildReviewedTrial}=globalThis.__comparisonTest;')
   .replace('import { getMembership } from "@/lib/membership/server";','const getMembership=async()=>globalThis.__comparisonTest.member;')
   .replace('import { comparisonCatalog } from "@/lib/research/comparison-catalog";','const comparisonCatalog=globalThis.__comparisonTest.catalog;')
   .replace('import { buildComparison, comparisonAccess, validateComparisonTickers } from "@/lib/research/comparison";','const {buildComparison,comparisonAccess,validateComparisonTickers}=globalThis.__comparisonTest;')
@@ -72,11 +74,12 @@ test('actual API rejects non-PRO before fetching data, validates selection, and 
   const {GET}=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
   const request=new Request('https://example.com/api/research/compare?tickers=AAA,BBB');
   for(const [member,status] of [[{status:'signed-out',plan:'free'},401],[{status:'signed-in',plan:'free'},403],[{status:'signed-in',plan:'pro',accessExpiresAt:Date.now()-1},403],[{status:'unavailable',plan:'free'},503]]){
-   globalThis.__comparisonTest.member=member; const response=await GET(request);assert.equal(response.status,status);assert.equal((await response.json()).result,undefined);assert.equal(globalThis.__comparisonTest.calls,0);
+   globalThis.__comparisonTest.member=member; const response=await GET(request);assert.equal(response.status,status);assert.equal((await response.json()).result,undefined);assert.equal(globalThis.__comparisonTest.calls,0);assert.equal((await GET(new Request("https://example.com/api/research/compare?tickers=MU,SNDK&trial=mu-sndk-20261004"))).status,status);
   }
   globalThis.__comparisonTest.member={status:'signed-in',plan:'pro',accessExpiresAt:Date.now()+30000};
   assert.equal((await GET(new Request('https://example.com/api/research/compare?tickers=AAA,AAA'))).status,400);
   assert.equal((await GET(new Request('https://example.com/api/research/compare?tickers=AAA,UNKNOWN'))).status,400);
+  const trialResponse=await GET(new Request("https://example.com/api/research/compare?tickers=MU,SNDK&trial=mu-sndk-20261004"));assert.equal(trialResponse.status,200);assert.equal((await trialResponse.json()).result.companies[0].referenceEvaluation.factors.length,7);
   globalThis.__comparisonTest.catalog.push(company('EXTRA'));
   assert.equal((await GET(new Request('https://example.com/api/research/compare?tickers=AAA,EXTRA'))).status,200);
   const response=await GET(request);assert.equal(response.status,200);assert.match(response.headers.get('cache-control'),/private, no-store/);assert.equal(response.headers.get('vary'),'Cookie');assert.equal((await response.json()).result.companies.length,2);

@@ -4,7 +4,7 @@ import { comparisonScores } from "./comparison-scorecard.ts";
 
 type Copy = { ja: string; en: string };
 export type PreparedComparisonAnalysis = {
-  version: 1; method: "deterministic"; sourceRevision: string;
+  version: 1; method: "deterministic" | "reviewed"; sourceRevision: string;
   preparedAt: string; processingMs: number; periodEnd: string; sourceUrl: string;
   items: { id: string; kind: "strength" | "weakness"; short: Copy; detail: Copy }[];
 };

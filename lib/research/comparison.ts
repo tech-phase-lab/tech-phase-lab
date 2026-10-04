@@ -9,6 +9,7 @@ export type BalanceSnapshot = {
   shortBorrowings: Fact | null; leaseCurrent: Fact | null; leaseNoncurrent: Fact | null;
 };
 export type Financials = {
+  referenceEvaluation?: import("./comparison-reference").ReferenceEvaluation;
   ticker: string; status: "ready" | "unavailable" | "unsupported"; retrievedAt: string;
   dataWarnings?: Copy[];
   preparedAnalysis?: PreparedComparisonAnalysis;
@@ -23,7 +24,7 @@ export type Financials = {
   balance: BalanceSnapshot | null;
   sourceUrl: string | null;
 };
-export type ComparisonResult = { companies: (ComparisonCompany & Financials)[]; comparable: boolean; reasons: Copy[]; conclusion: Copy; generatedAt: string };
+export type ComparisonResult = { trial?: {id:string;description:Copy;notes:Copy}; companies: (ComparisonCompany & Financials)[]; comparable: boolean; reasons: Copy[]; conclusion: Copy; generatedAt: string };
 const copy = (ja: string, en: string): Copy => ({ ja, en });
 const obj = (value: unknown): Record<string, unknown> => value !== null && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
 const day = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s) ? Date.parse(s) / 86400000 : NaN;
