@@ -20,6 +20,7 @@ import news_pipeline_diagnostics
 
 
 ISSUES = {'invalid-note', 'invalid-facts', 'invalid-item', 'unsupported-quote',
+          'changed-action-capacity', 'changed-execution-period', 'changed-amount-relation',
           'invalid-copy', 'unsupported-number', 'incomplete', 'lost-forecast-modality', 'lost-negation', 'reversed-supply-demand', 'lost-fiscal-basis', 'lost-comparison', 'unsupported-comparison-baseline', 'source-event-identity-mismatch', 'invented-broker-action', 'source-copy-overlap', 'unsupported-actor', 'lost-action-status'} | research.general_source_news.FAILURE_CODES | {research.rollout_validation.FAILURE,research.material_relations.FAILURE}
 
 

@@ -88,7 +88,7 @@ class ReviewedPrecisionCorrectionTests(unittest.TestCase):
     def test_actual_precision_manifest_is_separate_from_retry_recovery(self):
         manifest=json.loads(Path(recovery.__file__).with_name('reviewed_retained_announcements.json').read_text())
         pins=manifest['announcements'];pin=next(p for p in pins if p.get('eventId')==1238)
-        self.assertEqual({p['eventId'] for p in manifest['retryArticles']},{1089,1184,1239})
+        self.assertEqual({p['eventId'] for p in manifest['retryArticles']},{1089,1139,1184,1239})
         self.assertNotIn(1238,{p['eventId'] for p in manifest['retryArticles']})
         self.assertEqual(pin['replacement']['reason'],'reviewed-evidence-precision')
         self.assertIn('3つのターゲット',pin['copy']['facts'][2]['ja'])

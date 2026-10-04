@@ -856,6 +856,90 @@
           ]
         }
       }
+    },
+    {
+      "eventId": 1139,
+      "sourceId": "skhynix-news",
+      "ticker": "SKHY",
+      "url": "https://news.skhynix.com/en/skhynix-ventures-story/",
+      "title": "From identifying promising technologies to creating new business opportunities: How SK hynix Ventures finds the path forward",
+      "publishedOn": null,
+      "publishedAt": "2026-10-02T00:59:17+00:00",
+      "observedAt": "2026-10-02T01:00:23.204+00:00",
+      "eventSha": "2be59ac892f1bcb89912d6744ef6c3aaf75d122e9c92fdd7e680a24aaa299813",
+      "sourceRevision": "2be59ac892f1bcb89912d6744ef6c3aaf75d122e9c92fdd7e680a24aaa299813",
+      "bodyTextSha": "77a533eee6d9d8e6a10ff4775c4404a42989f1b4f2623ded227d4de8c252f954",
+      "bodyChars": 11036,
+      "provenance": "signal-document",
+      "reviewedFailure": {
+        "reason": "changed-action-capacity",
+        "failedAt": "2026-10-04T17:33:50.008628+00:00",
+        "payloadSha": "d006318238c1a9cfedde0422dc3c22daf991337d6eb06764307db392fba84223"
+      },
+      "copy": {
+        "title": {
+          "ja": "SK hynix Venturesが技術発見から新事業創出までの道を切り拓く方法",
+          "en": "How SK hynix Ventures Advances from Identifying Technologies to Creating New Business",
+          "anchors": [
+            "Over the past decade, SK hynix has gained"
+          ]
+        },
+        "summary": {
+          "ja": "SK hynixのCVC活動は、技術や企業の早期発見から、それらを製品や事業に結び付ける道を探る取り組みへと発展してきた。",
+          "en": "SK hynix’s corporate venture capital activities have evolved from identifying emerging technologies and companies early to seeking ways to connect them to products and businesses.",
+          "anchors": [
+            "Over the past decade, SK hynix has gained"
+          ]
+        },
+        "purpose": {
+          "ja": "SK hynix Venturesは、技術発見にとどまらず社内の研究開発や製造現場の課題解決に資する技術を見出し、長期的な連携を通じて技術を製品化・事業化し、スタートアップとのパートナーシップを強化することを目的とする。",
+          "en": "SK hynix Ventures aims not only to discover technologies but to identify those that address internal R&D and manufacturing challenges, collaborate long-term to translate technologies into products and businesses, and strengthen partnerships with startups.",
+          "anchors": [
+            "The biggest lesson we have learned",
+            "What we aim to do"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "SK hynixのベンチャー投資活動は「技術センシング」から「パスファインディング」へ進化し、技術の早期発見だけでなく、それらを製品や事業に結び付ける道を模索している。",
+            "en": "SK hynix’s venture investment activities have evolved from 'tech sensing,' focused on early identification of emerging technologies and companies, to 'path finding,' which seeks ways to connect those technologies to products and businesses.",
+            "anchors": [
+              "Over the past decade, SK hynix has gained"
+            ]
+          },
+          {
+            "ja": "製造現場の課題に対応するため、SK hynixはFemtoMetrixの第二高調波発生（SHG）技術をDRAM・HBMプロセスで評価し、各工場に複数台の装置を設置することを決定した。また、InfinitesimaのRapid Probe Microscope（RPM）技術をDRAM製造プロセスのパターン監視に適用して有用性を確認し、複数システムの導入計画を確定した。",
+            "en": "To address manufacturing challenges, SK hynix evaluated FemtoMetrix’s Second Harmonic Generation (SHG) technology in DRAM and HBM processes and decided to install multiple tools per fab. It also demonstrated the utility of Infinitesima’s Rapid Probe Microscope (RPM) technology in DRAM pattern monitoring and confirmed plans to deploy multiple systems.",
+            "anchors": [
+              "As semiconductor structures",
+              "Infinitesima drew attention"
+            ]
+          },
+          {
+            "ja": "MemVerge社との連携では、当初のメモリプーリング技術検証から始まり、市場進展に応じてAIの長期記憶管理技術の共同開発へと研究領域を拡大し、共同でAI長期記憶エージェントやメモリ管理フレームワークを開発している。",
+            "en": "SK hynix’s collaboration with MemVerge began with evaluating memory pooling technology and expanded into joint research on AI long-term memory management, including developing an AI long-term memory agent and memory management software framework.",
+            "anchors": [
+              "SK hynix researchers applied",
+              "As the market evolved"
+            ]
+          },
+          {
+            "ja": "SK hynix Venturesは、従来の半導体・メモリ周辺技術に加え、AIインフラや関連産業への投資範囲を拡大し、グローバルのベンチャーキャピタルや専門ファンドとの共同投資も強化している。",
+            "en": "SK hynix Ventures is broadening its investment focus beyond semiconductors and memory-adjacent technologies to AI infrastructure and related industries, while strengthening co-investment with global venture capital firms and specialized funds.",
+            "anchors": [
+              "In response to these changes"
+            ]
+          }
+        ]
+      },
+      "failure": {
+        "reason": "changed-action-capacity",
+        "failedAt": "2026-10-04T17:33:50.008628+00:00",
+        "payloadSha": "d006318238c1a9cfedde0422dc3c22daf991337d6eb06764307db392fba84223",
+        "attempts": 3
+      },
+      "reviewedPayloadSha": "61daadb4f9dc5998d39bb59f886ec0bd783af108c5068fdf15f5b8d69110d02a",
+      "requireFreshCategory": true
     }
   ]
 }

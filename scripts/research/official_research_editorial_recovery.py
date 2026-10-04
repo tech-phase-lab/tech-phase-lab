@@ -213,7 +213,7 @@ def publish(db, rows, reference, validator, current_revision):
 
 
 RETAINED_COPY_PATH = Path(__file__).with_name('reviewed_retained_announcements.json')
-RETAINED_COPY_SHA = 'a8bc4e38d7bd2ec584e2fe6bfd8d663d7ab4df1a8d539867922300dcb0af74e5'
+RETAINED_COPY_SHA = '16c4e6f4f8837222153871e7587c88f03a53862a606b6244af9ec94e118184d0'
 
 
 def retained_candidate(db, pin, reference):
@@ -516,7 +516,8 @@ def retry_candidate(db, pin, reference, rows):
                 ('publishedAt', 'published_at')))
             or repair.instant(row['observed_at']) != repair.instant(pin['observedAt'])
             or row['body_sha'] != pin['bodyTextSha'] or len(row['body']) != pin['bodyChars']
-            or digest(row['body']) != pin['bodyTextSha'] or not research.current_revision(db, row)):
+            or digest(row['body']) != pin['bodyTextSha'] or not research.current_revision(db, row,
+                require_fresh_category=pin.get('requireFreshCategory') is True)):
         return None
     snapshot = retry_source_snapshot(db, pin)
     policy = json.loads(snapshot['policy'])
@@ -647,7 +648,8 @@ def publish_retry_articles(db, pins, reference, validator):
             db.execute('BEGIN IMMEDIATE')
             if (RETAINED_COPY_SHA != reviewed_sha or hashlib.sha256(RETAINED_COPY_PATH.read_bytes()).hexdigest() != reviewed_sha
                     or retry_source_snapshot(db, pin) != source_snapshot
-                    or not research.current_revision(db, row)
+                    or not research.current_revision(db, row,
+                        require_fresh_category=pin.get('requireFreshCategory') is True)
                     or retry_failure(db, pin, reference) != history):
                 continue
             public_at = datetime.now(timezone.utc).isoformat(timespec='milliseconds')
