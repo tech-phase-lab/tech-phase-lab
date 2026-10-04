@@ -26,7 +26,6 @@ import general_source_news
 import reviewed_business_news
 import micron_reviewed_recovery
 import news_delivery_status
-import general_source_briefs
 import issuer_business_news
 import rollout_validation
 
@@ -73,7 +72,6 @@ def schema(db):
     editorial_recovery.schema(db)
     general_source_news.revalidation_schema(db)
     general_source_news.assessment_schema(db)
-    general_source_briefs.schema(db)
 
 
 def connect(path):
@@ -602,8 +600,6 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
             return 'done'
         if micron_reviewed_recovery.publish(db,reference,model,clock=lambda:datetime.now(timezone.utc)):
             return 'done'
-        if general_source_briefs.revalidate_one(db,datetime.now(timezone.utc)):
-            return 'review'
     prepare_story_body(path, reference)
     reference=datetime.fromtimestamp(now,timezone.utc)
     with connect(path) as db:
@@ -705,8 +701,6 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                 db.execute('UPDATE official_research_jobs SET state=?,failure_kind=? WHERE event_id=? AND lease=?',
                            (state,reason,row['id'],lease))
                 db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?",(lease,))
-                if valid:
-                    general_source_briefs.save_current(db,row,datetime.now(timezone.utc))
                 return state
             job=db.execute("SELECT attempts FROM official_research_jobs WHERE event_id=? AND lease=?",(row['id'],lease)).fetchone()
             delay=max(headline_translation.retry_delay(job[0] if job else 1), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
@@ -808,8 +802,7 @@ def delivery_diagnostics(db,reference,rows,published):
              if (review:=general_source_news.semantic_review(db,row,reference))]
     holds=[(row,reason) for row in rows if row['id'] not in published
            and (reason:=publication_hold_reason(db,row,reference))]
-    partial={row['id'] for row,_,_ in general_source_briefs.publications(db,reference,exclude=published)}
-    return news_delivery_status.summarize(db,reference,rows,published,reviews,holds,partial)
+    return news_delivery_status.summarize(db,reference,rows,published,reviews,holds)
 
 
 def diagnostics(db):

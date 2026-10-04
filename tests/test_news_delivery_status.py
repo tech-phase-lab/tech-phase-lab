@@ -33,7 +33,6 @@ class NewsDeliveryStatusTests(unittest.TestCase):
             state=result['delivery']
             self.assertEqual({k:state[k] for k in ('tracked','validated','automaticPending','reviewHeld','unpublished','assessedExcluded')},
                              {'tracked':1,'validated':0,'automaticPending':0,'reviewHeld':1,'unpublished':1,'assessedExcluded':0})
-            self.assertEqual((state['partialPublished'],state['unfinished']),(0,1))
             self.assertEqual(state['reviewOverdue'],1)
             self.assertEqual(state['reviewReasons'],{'unsubstantiated-model-output':1})
             self.assertEqual(state['reviewOldestPublicationAgeMs']-state['reviewOldestCaptureAgeMs'],13668)

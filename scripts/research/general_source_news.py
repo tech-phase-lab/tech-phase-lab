@@ -922,11 +922,7 @@ def publications(db,reference):
 
 
 def public_items(db,reference):
-    import general_source_briefs
-    full=publications(db,reference)
-    briefs=general_source_briefs.publications(db,reference,exclude={row['id'] for row,_,_ in full})
-    return ([public_item(row,note) for row,_,note in full]
-            +[general_source_briefs.public_item(row,note) for row,_,note in briefs])
+    return [public_item(row,note) for row,_,note in publications(db,reference)]
 
 
 def diagnostics(db,reference):

@@ -6,12 +6,11 @@ import monitor
 OVERDUE_MS=300000
 
 
-def summarize(db,reference,rows,published_ids,reviews,publication_holds=(),partial_ids=()):
+def summarize(db,reference,rows,published_ids,reviews,publication_holds=()):
     # Keep each lane's existing selection window; this is not upstream coverage.
     semantic_held=[row for row,review in reviews if review['reason']!='not-material-business-news']
     held=semantic_held+[row for row,_ in publication_holds]
     held_ids={row['id'] for row in held}
-    partial_ids=set(partial_ids)&held_ids
     excluded=[row for row,review in reviews if review['reason']=='not-material-business-news']
     pending=[row for row in rows if row['id'] not in published_ids and row['id'] not in held_ids]
     states=Counter()
@@ -35,8 +34,7 @@ def summarize(db,reference,rows,published_ids,reviews,publication_holds=(),parti
         'automaticPending':len(pending),'retryWaiting':states['retry'],'running':states['running'],
         'notStarted':states['not-started'],'reviewHeld':len(held),'semanticReviewHeld':len(semantic_held),
         'publicationHeld':len(publication_holds),'assessedExcluded':len(excluded),
-        'unpublished':len(pending)+len(held)-len(partial_ids),'unfinished':len(pending)+len(held),
-        'partialPublished':len(partial_ids),
+        'unpublished':len(pending)+len(held),
         'reviewReasons':dict(sorted(Counter(review['reason'] for _,review in reviews).items())),
         'publicationHoldReasons':dict(sorted(Counter(reason for _,reason in publication_holds).items())),
         'automaticOverdue':sum(value>=OVERDUE_MS for value in pending_capture),

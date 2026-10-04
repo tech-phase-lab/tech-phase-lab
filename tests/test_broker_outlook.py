@@ -141,26 +141,7 @@ class BrokerOutlookTests(unittest.TestCase):
         self.assertEqual(self.run_once(case, model), 'review')
         self.assertEqual(len(calls), 1)
         with research.connect(case.path) as db:
-            import general_source_briefs as briefs
-            partial=briefs.publications(db,NOW)
-            if decision!='publish':self.assertEqual(partial,[])
-            invalid=set()
-            for fact,unit in zip(facts,row['units']):
-                try:news.validate_pair(fact,unit)
-                except (ValueError,TypeError,KeyError):invalid.add(unit['id'])
-            if decision=='publish':self.assertTrue(invalid)
-            for _,_,note in partial:
-                selected={fact['evidenceId'] for fact in note['facts']}
-                self.assertTrue(selected.isdisjoint(invalid),'an invalid claim must never enter a brief')
-                for fact in note['facts']:
-                    unit=next(unit for unit in row['units'] if unit['id']==fact['evidenceId'])
-                    news.validate_pair(fact,unit)
-                    if note['scope']=='sector':self.assertEqual(unit['brokerCommentary']['scope'],'sector')
-                for bad_id in invalid:
-                    bad=facts[int(bad_id)]
-                    for item in news.public_items(db,NOW):
-                        self.assertNotIn(bad['ja'],item['bodyJa'])
-                        self.assertNotIn(bad['en'],item['bodyEn'])
+            self.assertEqual(news.public_items(db, NOW), [])
             self.assertEqual(news.candidates(db, NOW), [])
             saved = db.execute('SELECT * FROM general_source_semantic_reviews').fetchall()
             self.assertEqual(len(saved), 1)
