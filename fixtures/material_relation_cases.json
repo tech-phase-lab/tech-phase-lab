@@ -1,0 +1,797 @@
+{
+  "notice": "Synthetic source and claim cases; no captured article body or operational metadata.",
+  "cases": [
+    {
+      "id": "count_accept",
+      "body": "Release date: 2028-11-03. Cedar Trust supports 6 campus initiatives.",
+      "quote": "Release date: 2028-11-03. Cedar Trust supports 6 campus initiatives.",
+      "sourceSpan": [
+        0,
+        68
+      ],
+      "ja": "Cedar Trustは6件の大学事業を支援している。",
+      "en": "Cedar Trust supports 6 campus initiatives.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "count_calendar_borrow",
+      "body": "Release date: 2028-11-03. Cedar Trust supports 6 campus initiatives.",
+      "quote": "Release date: 2028-11-03. Cedar Trust supports 6 campus initiatives.",
+      "sourceSpan": [
+        0,
+        68
+      ],
+      "ja": "Cedar Trustは11件の大学事業を支援している。",
+      "en": "Cedar Trust supports 11 campus initiatives.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "count_conflict_review",
+      "body": "Headline: Cedar Trust supports 6 campus initiatives. Body: Cedar Trust supports 7 campus initiatives.",
+      "quote": "Headline: Cedar Trust supports 6 campus initiatives. Body: Cedar Trust supports 7 campus initiatives.",
+      "sourceSpan": [
+        0,
+        101
+      ],
+      "ja": "Cedar Trustは6件の大学事業を支援している。",
+      "en": "Cedar Trust supports 6 campus initiatives.",
+      "expected": "REVIEW"
+    },
+    {
+      "id": "testing_planned_accept",
+      "body": "Educators at 24 colleges will test Lumen lessons. Separately, Beacon trainers are currently testing Helix lessons.",
+      "quote": "Educators at 24 colleges will test Lumen lessons. Separately, Beacon trainers are currently testing Helix lessons.",
+      "sourceSpan": [
+        0,
+        114
+      ],
+      "ja": "24校の教育者はLumen教材を試す予定だ。",
+      "en": "Educators at 24 colleges will test Lumen lessons.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "testing_ongoing_reject",
+      "body": "Educators at 24 colleges will test Lumen lessons. Separately, Beacon trainers are currently testing Helix lessons.",
+      "quote": "Educators at 24 colleges will test Lumen lessons. Separately, Beacon trainers are currently testing Helix lessons.",
+      "sourceSpan": [
+        0,
+        114
+      ],
+      "ja": "24校の教育者はLumen教材を試している。",
+      "en": "Educators at 24 colleges are testing Lumen lessons.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "testing_pronoun_review",
+      "body": "Cedar teachers met Beacon trainers. They will test Lumen lessons.",
+      "quote": "Cedar teachers met Beacon trainers. They will test Lumen lessons.",
+      "sourceSpan": [
+        0,
+        65
+      ],
+      "ja": "Cedarの教師はLumen教材を試す予定だ。",
+      "en": "Cedar teachers will test Lumen lessons.",
+      "expected": "REVIEW"
+    },
+    {
+      "id": "fixed_measurement_accept",
+      "body": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "quote": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "sourceSpan": [
+        0,
+        190
+      ],
+      "ja": "Spruceエンジンの重みを固定した測定では、ルーティング、サンドボックス配置、グループ組み立ての改善でバッチ収集時間が52%短縮した。この計時は重み公開を含まない。",
+      "en": "For the Spruce engine with weights fixed, improvements to routing, sandbox placement and group assembly cut batch-collection time by 52%. This clock excludes weight publication.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "fixed_publication_cause_reject",
+      "body": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "quote": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "sourceSpan": [
+        0,
+        190
+      ],
+      "ja": "Spruceエンジンの重みを固定した測定では、重み公開の改善でバッチ収集時間が52%短縮した。この計時は重み公開を含まない。",
+      "en": "For the Spruce engine with weights fixed, improved weight publication cut batch-collection time by 52%. This clock excludes weight publication.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "fixed_window_expanded_reject",
+      "body": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "quote": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "sourceSpan": [
+        0,
+        190
+      ],
+      "ja": "Spruceエンジンの重みを固定した測定では、ルーティング、サンドボックス配置、グループ組み立ての改善で、重み公開を含むバッチ収集時間が52%短縮した。",
+      "en": "For the Spruce engine with weights fixed, improvements to routing, sandbox placement and group assembly cut batch-collection time including weight publication by 52%.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "joint_accept",
+      "body": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "quote": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "sourceSpan": [
+        0,
+        210
+      ],
+      "ja": "Spruceエンジンの計測では、段階的な重み公開とK=12の鮮度上限の組み合わせで、全ステップ時間が37.5%短縮した。",
+      "en": "For the Spruce engine, in the measured run, staged publication together with the K=12 freshness limit cut full-step time by 37.5%.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "joint_single_cause_reject",
+      "body": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "quote": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "sourceSpan": [
+        0,
+        210
+      ],
+      "ja": "Spruceエンジンの計測ではK=12の鮮度上限の下で、段階的な重み公開だけにより全ステップ時間が37.5%短縮した。",
+      "en": "For the Spruce engine, in the measured run with a K=12 freshness limit, staged publication alone cut full-step time by 37.5%.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "joint_freshness_condition_missing",
+      "body": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "quote": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "sourceSpan": [
+        0,
+        210
+      ],
+      "ja": "Spruceエンジンの計測では、段階的な重み公開と古い処理をより長く利用可能にする組み合わせで、全ステップ時間が37.5%短縮した。",
+      "en": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility cut full-step time by 37.5%.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "joint_noncausal_qualified_accept",
+      "body": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "quote": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "sourceSpan": [
+        0,
+        210
+      ],
+      "ja": "Spruceエンジンで段階的な重み公開とK=12の鮮度上限を使った計測では、全ステップ時間が37.5%短縮した。",
+      "en": "The Spruce engine run using staged publication and a K=12 freshness limit recorded a 37.5% reduction in full-step time.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "observed_to_target_reject",
+      "body": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "quote": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "sourceSpan": [
+        0,
+        210
+      ],
+      "ja": "Spruceエンジンでの段階的な重み公開とK=12の鮮度上限の組み合わせは、全ステップ時間の37.5%短縮を目標とする。",
+      "en": "For the Spruce engine, staged publication together with a K=12 freshness limit targets a 37.5% reduction in full-step time.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "memory_accept",
+      "body": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        0,
+        82
+      ],
+      "ja": "Micaのメモリ最適化は、全面展開後に180 TiBを超えるメモリを解放する見込みだ。",
+      "en": "Once fully rolled out, Mica memory optimizations are expected to free over 180 TiB of memory.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "memory_bound_weakened",
+      "body": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        0,
+        82
+      ],
+      "ja": "Micaのメモリ最適化は、全面展開後に180 TiB以上のメモリを解放する見込みだ。",
+      "en": "Once fully rolled out, Mica memory optimizations are expected to free at least 180 TiB of memory.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "memory_rollout_dropped",
+      "body": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        0,
+        82
+      ],
+      "ja": "Micaのメモリ最適化は180 TiBを超えるメモリを解放する見込みだ。",
+      "en": "Mica memory optimizations are expected to free over 180 TiB of memory.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "memory_status_achieved",
+      "body": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        0,
+        82
+      ],
+      "ja": "Micaのメモリ最適化は、全面展開後に180 TiBを超えるメモリを解放した。",
+      "en": "After full rollout, Mica memory optimizations freed over 180 TiB of memory.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "memory_strict_paraphrase_accept",
+      "body": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        0,
+        82
+      ],
+      "ja": "Micaのメモリ最適化は、全面展開後に180 TiBより多いメモリを解放する見込みだ。",
+      "en": "Following full rollout, Mica memory optimizations are expected to free more than 180 TiB of memory.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "memory_ja_only_bound_loss",
+      "body": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        0,
+        82
+      ],
+      "ja": "Micaのメモリ最適化は、全面展開後に180 TiB以上のメモリを解放する見込みだ。",
+      "en": "Once fully rolled out, Mica memory optimizations are expected to free over 180 TiB of memory.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "safety_scope_accept",
+      "body": "Mica safeguards address 5 areas: fraud, privacy, reliability, autonomy and access. For fraud prevention, internal and external red teams tested refusal safeguards using manual and automated attacks.",
+      "quote": "Mica safeguards address 5 areas: fraud, privacy, reliability, autonomy and access. For fraud prevention, internal and external red teams tested refusal safeguards using manual and automated attacks.",
+      "sourceSpan": [
+        0,
+        198
+      ],
+      "ja": "Micaの安全策は5分野を対象とし、このうち詐欺防止の拒否機能について、社内外のレッドチームが手動と自動の攻撃でテストした。",
+      "en": "Mica safeguards address 5 areas; internal and external red teams tested fraud-prevention refusal safeguards with manual and automated attacks.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "safety_scope_broadened",
+      "body": "Mica safeguards address 5 areas: fraud, privacy, reliability, autonomy and access. For fraud prevention, internal and external red teams tested refusal safeguards using manual and automated attacks.",
+      "quote": "Mica safeguards address 5 areas: fraud, privacy, reliability, autonomy and access. For fraud prevention, internal and external red teams tested refusal safeguards using manual and automated attacks.",
+      "sourceSpan": [
+        0,
+        198
+      ],
+      "ja": "Micaの安全策は5分野を対象とし、これらすべてについて、社内外のレッドチームが手動と自動の攻撃でテストした。",
+      "en": "Mica safeguards address 5 areas; internal and external red teams tested all of them with manual and automated attacks.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "safety_ambiguous_topic_review",
+      "body": "The report says internal and external red teams tested Mica safeguards for one of these topics: fraud or privacy. It does not identify the topic.",
+      "quote": "The report says internal and external red teams tested Mica safeguards for one of these topics: fraud or privacy. It does not identify the topic.",
+      "sourceSpan": [
+        0,
+        145
+      ],
+      "ja": "Micaの詐欺防止の安全策は社内外のレッドチームがテストした。",
+      "en": "Internal and external red teams tested Mica fraud safeguards.",
+      "expected": "REVIEW"
+    },
+    {
+      "id": "source_anchor_tamper_review",
+      "body": "Release date: 2028-11-03. Cedar Trust supports 6 campus initiatives.",
+      "quote": "Cedar Trust supports 6 campus initiatives.",
+      "sourceSpan": [
+        0,
+        68
+      ],
+      "ja": "Cedar Trustは6件の大学事業を支援している。",
+      "en": "Cedar Trust supports 6 campus initiatives.",
+      "expected": "REVIEW"
+    },
+    {
+      "id": "entity_binding_accept",
+      "body": "Cedar Trust funds 6 campus initiatives. Maple Trust funds 10 campus initiatives.",
+      "quote": "Cedar Trust funds 6 campus initiatives. Maple Trust funds 10 campus initiatives.",
+      "sourceSpan": [
+        0,
+        80
+      ],
+      "ja": "Cedar Trustは6件の大学事業に資金を提供している。",
+      "en": "Cedar Trust funds 6 campus initiatives.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "entity_binding_swapped",
+      "body": "Cedar Trust funds 6 campus initiatives. Maple Trust funds 10 campus initiatives.",
+      "quote": "Cedar Trust funds 6 campus initiatives. Maple Trust funds 10 campus initiatives.",
+      "sourceSpan": [
+        0,
+        80
+      ],
+      "ja": "Maple Trustは6件の大学事業に資金を提供している。",
+      "en": "Maple Trust funds 6 campus initiatives.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "measure_binding_accept",
+      "body": "Orchid engine reduced queue wait by 29%. It reduced GPU memory use by 18%.",
+      "quote": "Orchid engine reduced queue wait by 29%. It reduced GPU memory use by 18%.",
+      "sourceSpan": [
+        0,
+        74
+      ],
+      "ja": "Orchidエンジンは待ち時間を29%短縮した。",
+      "en": "Orchid engine reduced queue wait by 29%.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "measure_binding_swapped",
+      "body": "Orchid engine reduced queue wait by 29%. It reduced GPU memory use by 18%.",
+      "quote": "Orchid engine reduced queue wait by 29%. It reduced GPU memory use by 18%.",
+      "sourceSpan": [
+        0,
+        74
+      ],
+      "ja": "OrchidエンジンはGPUメモリ使用量を29%削減した。",
+      "en": "Orchid engine reduced GPU memory use by 29%.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "testing_target_swap",
+      "body": "Educators at 24 colleges will test Lumen lessons. Separately, Beacon trainers are currently testing Helix lessons.",
+      "quote": "Educators at 24 colleges will test Lumen lessons. Separately, Beacon trainers are currently testing Helix lessons.",
+      "sourceSpan": [
+        0,
+        114
+      ],
+      "ja": "24校の教育者はHelix教材を試す予定だ。",
+      "en": "Educators at 24 colleges will test Helix lessons.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "memory_exact_bound_dropped",
+      "body": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        0,
+        82
+      ],
+      "ja": "Micaのメモリ最適化は、全面展開後に180 TiBのメモリを解放する見込みだ。",
+      "en": "Once fully rolled out, Mica memory optimizations are expected to free 180 TiB of memory.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "memory_weak_later_rollout",
+      "body": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        0,
+        82
+      ],
+      "ja": "Micaのメモリ最適化は180 TiBを超えるメモリを解放する見込みだ。別のサービスは展開後に稼働する。",
+      "en": "Mica memory optimizations are expected to free over 180 TiB of memory. Another service will run after rollout.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "effect_spoof_cause_context",
+      "body": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "quote": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "sourceSpan": [
+        0,
+        210
+      ],
+      "ja": "Spruceエンジンの計測では、全ステップ時間が37.5%短縮した。別の実験で段階的な重み公開とK=12の鮮度上限を検討した。",
+      "en": "For the Spruce engine, full-step time fell by 37.5%. A separate experiment considered staged publication and a K=12 freshness limit.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "count_other_actor_passive",
+      "body": "Release date: 2028-11-03. Cedar Trust supports 6 campus initiatives.",
+      "quote": "Release date: 2028-11-03. Cedar Trust supports 6 campus initiatives.",
+      "sourceSpan": [
+        0,
+        68
+      ],
+      "ja": "Maple Trustにより6件の大学事業が支援される。",
+      "en": "6 campus initiatives are supported by Maple Trust.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "fixed_lost_regime",
+      "body": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "quote": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "sourceSpan": [
+        0,
+        190
+      ],
+      "ja": "Spruceエンジンは、重み公開の改善でバッチ収集時間が52%短縮した。",
+      "en": "The Spruce engine cut batch-collection time by 52% through improved weight publication.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "coverage_unrelated_topic",
+      "body": "Mica safeguards address 5 areas: fraud, privacy, reliability, autonomy and access. For fraud prevention, internal and external red teams tested refusal safeguards using manual and automated attacks.",
+      "quote": "Mica safeguards address 5 areas: fraud, privacy, reliability, autonomy and access. For fraud prevention, internal and external red teams tested refusal safeguards using manual and automated attacks.",
+      "sourceSpan": [
+        0,
+        198
+      ],
+      "ja": "Micaの安全策には詐欺も含まれるが、社内外のレッドチームはプライバシーの安全策をテストした。",
+      "en": "Mica safeguards include fraud, but internal and external red teams tested privacy safeguards.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "testing_second_scope_ignored",
+      "body": "Educators at 24 colleges will test Lumen lessons. Separately, Beacon trainers are currently testing Helix lessons.",
+      "quote": "Educators at 24 colleges will test Lumen lessons. Separately, Beacon trainers are currently testing Helix lessons.",
+      "sourceSpan": [
+        0,
+        114
+      ],
+      "ja": "24校の教育者はLumen教材を試す予定だ。12大学の研究者はHelix教材を試している。",
+      "en": "Educators at 24 colleges will test Lumen lessons. Researchers at 12 universities are testing Helix lessons.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "coverage_planned_to_achieved",
+      "body": "Mica safeguards address fraud. Internal and external red teams will test fraud refusal safeguards.",
+      "quote": "Mica safeguards address fraud. Internal and external red teams will test fraud refusal safeguards.",
+      "sourceSpan": [
+        0,
+        98
+      ],
+      "ja": "Micaの詐欺の安全策は社内外のレッドチームがテストした。",
+      "en": "Internal and external red teams tested Mica fraud safeguards.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "testing_later_claim_ignored",
+      "body": "Educators at 24 colleges will test Lumen lessons. Researchers at 24 universities will test Helix lessons.",
+      "quote": "Educators at 24 colleges will test Lumen lessons. Researchers at 24 universities will test Helix lessons.",
+      "sourceSpan": [
+        0,
+        105
+      ],
+      "ja": "24校の教育者はLumen教材を試す予定だ。24大学の研究者はHelix教材を試している。",
+      "en": "Educators at 24 colleges will test Lumen lessons. Researchers at 24 universities are testing Helix lessons.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "fixed_pct_bound_wrong",
+      "body": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. Queue wait fell by 37.5%.",
+      "quote": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. Queue wait fell by 37.5%.",
+      "sourceSpan": [
+        0,
+        141
+      ],
+      "ja": "Spruceエンジンの重みを固定した測定では、バッチ収集時間が37.5%短縮した。この計時は重み公開を含まない。",
+      "en": "For the Spruce engine with weights fixed, batch-collection time fell by 37.5%. This clock excludes weight publication.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "memory_negated",
+      "body": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        0,
+        82
+      ],
+      "ja": "Micaのメモリ最適化は全面展開後に180 TiBを超えるメモリを解放する見込みではない。",
+      "en": "Once fully rolled out, Mica memory optimizations are not expected to free over 180 TiB of memory.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "coverage_topic_scope_leak",
+      "body": "Mica safeguards address fraud and privacy; internal and external red teams tested fraud refusal safeguards.",
+      "quote": "Mica safeguards address fraud and privacy; internal and external red teams tested fraud refusal safeguards.",
+      "sourceSpan": [
+        0,
+        107
+      ],
+      "ja": "Micaのプライバシーの安全策は社内外のレッドチームがテストした。",
+      "en": "Internal and external red teams tested Mica privacy safeguards.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "count_unresolved_both",
+      "body": "The foundation supports 6 campus initiatives.",
+      "quote": "The foundation supports 6 campus initiatives.",
+      "sourceSpan": [
+        0,
+        45
+      ],
+      "ja": "その評議会は6件の大学事業を支援している。",
+      "en": "The council supports 6 campus initiatives.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "quote_subparagraph_testing_planned_accept",
+      "body": "Educators at 24 colleges will test Lumen lessons. Separately, Beacon trainers are currently testing Helix lessons. Unrelated note: a meeting happened.",
+      "quote": "Educators at 24 colleges will test Lumen lessons. Separately, Beacon trainers are currently testing Helix lessons.",
+      "sourceSpan": [
+        0,
+        114
+      ],
+      "ja": "24校の教育者はLumen教材を試す予定だ。",
+      "en": "Educators at 24 colleges will test Lumen lessons.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "quote_subparagraph_memory_accept",
+      "body": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory. Unrelated note: a meeting happened.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        0,
+        82
+      ],
+      "ja": "Micaのメモリ最適化は、全面展開後に180 TiBを超えるメモリを解放する見込みだ。",
+      "en": "Once fully rolled out, Mica memory optimizations are expected to free over 180 TiB of memory.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "quote_subparagraph_fixed_measurement_accept",
+      "body": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly. Unrelated note: a meeting happened.",
+      "quote": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "sourceSpan": [
+        0,
+        190
+      ],
+      "ja": "Spruceエンジンの重みを固定した測定では、ルーティング、サンドボックス配置、グループ組み立ての改善でバッチ収集時間が52%短縮した。この計時は重み公開を含まない。",
+      "en": "For the Spruce engine with weights fixed, improvements to routing, sandbox placement and group assembly cut batch-collection time by 52%. This clock excludes weight publication.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "quote_subparagraph_joint_accept",
+      "body": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain. Unrelated note: a meeting happened.",
+      "quote": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "sourceSpan": [
+        0,
+        210
+      ],
+      "ja": "Spruceエンジンの計測では、段階的な重み公開とK=12の鮮度上限の組み合わせで、全ステップ時間が37.5%短縮した。",
+      "en": "For the Spruce engine, in the measured run, staged publication together with the K=12 freshness limit cut full-step time by 37.5%.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "quote_subparagraph_safety_scope_accept",
+      "body": "Mica safeguards address 5 areas: fraud, privacy, reliability, autonomy and access. For fraud prevention, internal and external red teams tested refusal safeguards using manual and automated attacks. Unrelated note: a meeting happened.",
+      "quote": "Mica safeguards address 5 areas: fraud, privacy, reliability, autonomy and access. For fraud prevention, internal and external red teams tested refusal safeguards using manual and automated attacks.",
+      "sourceSpan": [
+        0,
+        198
+      ],
+      "ja": "Micaの安全策は5分野を対象とし、このうち詐欺防止の拒否機能について、社内外のレッドチームが手動と自動の攻撃でテストした。",
+      "en": "Mica safeguards address 5 areas; internal and external red teams tested fraud-prevention refusal safeguards with manual and automated attacks.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "testing_unknown_object",
+      "body": "Educators at 24 colleges will test admissions workflows.",
+      "quote": "Educators at 24 colleges will test admissions workflows.",
+      "sourceSpan": [
+        0,
+        56
+      ],
+      "ja": "24校の教育者は兵器製造を試す予定だ。",
+      "en": "Educators at 24 colleges will test weapons manufacturing.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "testing_second_same_sentence",
+      "body": "Educators at 24 colleges will test Lumen lessons, and researchers at 12 universities will test Helix lessons.",
+      "quote": "Educators at 24 colleges will test Lumen lessons, and researchers at 12 universities will test Helix lessons.",
+      "sourceSpan": [
+        0,
+        109
+      ],
+      "ja": "24校の教育者はLumen教材を試す予定で、12大学の教師はHelix教材を試す予定だ。",
+      "en": "Educators at 24 colleges will test Lumen lessons, and teachers at 12 universities will test Helix lessons.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "count_unresolved_claim",
+      "body": "Cedar Trust supports 6 campus initiatives.",
+      "quote": "Cedar Trust supports 6 campus initiatives.",
+      "sourceSpan": [
+        0,
+        42
+      ],
+      "ja": "連合は6件の大学事業を支援している。",
+      "en": "The coalition supports 6 campus initiatives.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "memory_other_rollout_same_sentence",
+      "body": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        0,
+        82
+      ],
+      "ja": "Micaのメモリ最適化は180 TiBを超えるメモリを解放する見込みで、別のサービスは展開後に稼働する。",
+      "en": "Mica memory optimizations are expected to free over 180 TiB of memory; another service will run after rollout.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "memory_range_escape",
+      "body": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        0,
+        82
+      ],
+      "ja": "Micaのメモリ最適化は全面展開後に180 TiB–180 TiBのメモリを解放する見込みだ。",
+      "en": "Once fully rolled out, Mica memory optimizations are expected to free 180 TiB–180 TiB of memory.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "quote_unrelated_prefix_testing_planned_accept",
+      "body": "Unrelated note: a meeting happened. Educators at 24 colleges will test Lumen lessons. Separately, Beacon trainers are currently testing Helix lessons.",
+      "quote": "Educators at 24 colleges will test Lumen lessons. Separately, Beacon trainers are currently testing Helix lessons.",
+      "sourceSpan": [
+        36,
+        150
+      ],
+      "ja": "24校の教育者はLumen教材を試す予定だ。",
+      "en": "Educators at 24 colleges will test Lumen lessons.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "quote_unrelated_prefix_memory_accept",
+      "body": "Unrelated note: a meeting happened. Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        36,
+        118
+      ],
+      "ja": "Micaのメモリ最適化は、全面展開後に180 TiBを超えるメモリを解放する見込みだ。",
+      "en": "Once fully rolled out, Mica memory optimizations are expected to free over 180 TiB of memory.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "quote_unrelated_prefix_fixed_measurement_accept",
+      "body": "Unrelated note: a meeting happened. With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "quote": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "sourceSpan": [
+        36,
+        226
+      ],
+      "ja": "Spruceエンジンの重みを固定した測定では、ルーティング、サンドボックス配置、グループ組み立ての改善でバッチ収集時間が52%短縮した。この計時は重み公開を含まない。",
+      "en": "For the Spruce engine with weights fixed, improvements to routing, sandbox placement and group assembly cut batch-collection time by 52%. This clock excludes weight publication.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "quote_unrelated_prefix_joint_accept",
+      "body": "Unrelated note: a meeting happened. For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "quote": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "sourceSpan": [
+        36,
+        246
+      ],
+      "ja": "Spruceエンジンの計測では、段階的な重み公開とK=12の鮮度上限の組み合わせで、全ステップ時間が37.5%短縮した。",
+      "en": "For the Spruce engine, in the measured run, staged publication together with the K=12 freshness limit cut full-step time by 37.5%.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "quote_unrelated_prefix_safety_scope_accept",
+      "body": "Unrelated note: a meeting happened. Mica safeguards address 5 areas: fraud, privacy, reliability, autonomy and access. For fraud prevention, internal and external red teams tested refusal safeguards using manual and automated attacks.",
+      "quote": "Mica safeguards address 5 areas: fraud, privacy, reliability, autonomy and access. For fraud prevention, internal and external red teams tested refusal safeguards using manual and automated attacks.",
+      "sourceSpan": [
+        36,
+        234
+      ],
+      "ja": "Micaの安全策は5分野を対象とし、このうち詐欺防止の拒否機能について、社内外のレッドチームが手動と自動の攻撃でテストした。",
+      "en": "Mica safeguards address 5 areas; internal and external red teams tested fraud-prevention refusal safeguards with manual and automated attacks.",
+      "expected": "ACCEPT"
+    },
+    {
+      "id": "memory_unknown_actor",
+      "body": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        0,
+        82
+      ],
+      "ja": "Silicaは全面展開後に180 TiBを超えるメモリを解放する見込みだ。",
+      "en": "After full rollout, Silica is expected to free over 180 TiB of memory.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "fixed_unknown_actor",
+      "body": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "quote": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "sourceSpan": [
+        0,
+        190
+      ],
+      "ja": "Cedarでは重みを固定してバッチ収集時間が52%短縮した。",
+      "en": "At Cedar, with weights fixed, batch-collection time fell by 52%.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "memory_named_other_subject_rollout",
+      "body": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "quote": "Once fully rolled out, Mica memory optimizations will free over 180 TiB of memory.",
+      "sourceSpan": [
+        0,
+        82
+      ],
+      "ja": "Micaのメモリ最適化は180 TiBを超えるメモリを解放する見込みで、Cedarは展開後に利用可能になる。",
+      "en": "Mica memory optimizations are expected to free over 180 TiB of memory, and Cedar will be available after rollout.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "count_invalid_kanji",
+      "body": "Release date: 2028-11-03. Cedar Trust supports 6 campus initiatives.",
+      "quote": "Release date: 2028-11-03. Cedar Trust supports 6 campus initiatives.",
+      "sourceSpan": [
+        0,
+        68
+      ],
+      "ja": "Cedar Trustは一二件の大学事業を支援している。",
+      "en": "Cedar Trust supports 12 campus initiatives.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "fixed_publication_following_cause",
+      "body": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "quote": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "sourceSpan": [
+        0,
+        190
+      ],
+      "ja": "Spruceエンジンの重みを固定した計測では、バッチ収集時間が52%短縮した。重み公開の改善が原因だ。",
+      "en": "The Spruce engine with weights fixed cut batch-collection time by 52%. Improved weight publication caused the gain.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "joint_wrong_staged_action",
+      "body": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "quote": "For the Spruce engine, in the measured run, staged publication together with longer work eligibility under a freshness limit of K=12 cut full-step time by 37.5%. Neither change alone explains the measured gain.",
+      "sourceSpan": [
+        0,
+        210
+      ],
+      "ja": "Spruceエンジンの計測では、段階的なルーティングとK=12の鮮度上限の組み合わせで、全ステップ時間が37.5%短縮した。",
+      "en": "For the Spruce engine, staged routing together with a K=12 freshness limit cut full-step time by 37.5%.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "coverage_comma_list_leak",
+      "body": "Mica safeguards address fraud and privacy, and internal and external red teams tested fraud refusal safeguards.",
+      "quote": "Mica safeguards address fraud and privacy, and internal and external red teams tested fraud refusal safeguards.",
+      "sourceSpan": [
+        0,
+        111
+      ],
+      "ja": "Micaのプライバシーの安全策は社内外のレッドチームがテストした。",
+      "en": "Internal and external red teams tested Mica privacy safeguards.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "fixed_negated_result",
+      "body": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "quote": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. This clock excludes weight publication. The measured gain came from routing, sandbox placement and group assembly.",
+      "sourceSpan": [
+        0,
+        190
+      ],
+      "ja": "Spruceエンジンの重みを固定した測定では、バッチ収集時間は52%短縮しなかった。",
+      "en": "With weights fixed, the Spruce engine did not reduce batch-collection time by 52%.",
+      "expected": "REJECT"
+    },
+    {
+      "id": "fixed_cross_source_value_polarity",
+      "body": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. With weights fixed, the Spruce engine did not reduce batch-collection time by 37.5%.",
+      "quote": "With weights fixed, the Spruce engine reduced batch-collection time by 52%. With weights fixed, the Spruce engine did not reduce batch-collection time by 37.5%.",
+      "sourceSpan": [
+        0,
+        160
+      ],
+      "ja": "Spruceエンジンの重みを固定した測定では、バッチ収集時間が37.5%短縮した。",
+      "en": "With weights fixed, the Spruce engine reduced batch-collection time by 37.5%.",
+      "expected": "REJECT"
+    }
+  ]
+}

@@ -190,6 +190,28 @@ class ReviewedPrimaryComparisonTests(unittest.TestCase):
             self.assertEqual(len(research.feed(db,rollout.NOW)),1)
         self.assertFalse(self.publish())
 
+    def test_valid_copy_precision_uses_the_same_exact_span_transaction(self):
+        # Source-reviewed modality precision may be needed even when every
+        # generic validator accepts the old complete copy. Approval still pins
+        # that complete old payload and the new exact source-window payload.
+        previous=deepcopy(self.expected)
+        previous['summary']['ja']='Gemini Sparkではスキルをすでに利用できる。'
+        previous['summary']['en']='Skills are already available in Gemini Spark.'
+        research.validate(previous,self.body,self.pin['title'])
+        raw=json.dumps(previous,ensure_ascii=False)
+        self.pin['replacement'].update(reason='reviewed-evidence-precision',payloadSha=recovery.digest(raw))
+        with research.connect(self.path) as db:
+            db.execute('UPDATE official_research_publications SET payload=?',(raw,))
+            old=dict(db.execute('SELECT * FROM official_research_publications').fetchone())
+        self.case.case.write_manifest()
+        self.assertTrue(self.publish())
+        with research.connect(self.path) as db:
+            audit=db.execute('SELECT * FROM reviewed_retained_announcement_replacements').fetchone()
+            self.assertEqual(audit['reason'],'reviewed-evidence-precision')
+            self.assertEqual(json.loads(audit['previous_publication']),old)
+            self.assertEqual(self.case.case.case.snapshot(db),self.history)
+        self.assertFalse(self.publish())
+
     def test_bad_span_or_reviewed_copy_hash_fails_closed(self):
         with research.connect(self.path) as db:
             row=dict(recovery.retained_candidate(db,self.pin,rollout.NOW))
@@ -223,6 +245,27 @@ class ReviewedPrimaryComparisonTests(unittest.TestCase):
                 return research.validate(*args)
             self.assertFalse(recovery.publish_retained(db,rollout.NOW,validate))
             self.assertEqual(dict(db.execute('SELECT * FROM official_research_publications').fetchone()),self.old)
+
+    def test_actual_nvidia_precision_pins_preserve_modality_and_test_scope(self):
+        data=json.loads(Path(recovery.__file__).with_name('reviewed_retained_announcements.json').read_text())
+        pins={p['eventId']:p for p in data['announcements'] if p.get('eventId') in {1212,1216}}
+        self.assertEqual(set(pins),{1212,1216})
+        for pin in pins.values():
+            self.assertEqual(pin['replacement']['reason'],'reviewed-evidence-precision')
+            self.assertEqual(pin['replacement']['jobAttempts'],1)
+            self.assertEqual(pin['sourceRevision'],pin['bodyRevisionSha'])
+            self.assertNotEqual(pin['bodyTextSha'],pin['bodyRevisionSha'])
+            self.assertNotIn('extractorVersion',pin)
+        astra=pins[1212]['copy'];core=pins[1216]['copy']
+        self.assertIn('can shorten',astra['facts'][1]['en'])
+        self.assertIn('可能性',astra['facts'][1]['ja'])
+        self.assertIn('can improve',astra['facts'][2]['en'])
+        self.assertIn('plans to offer NVIDIA Vera CPU',core['summary']['en'])
+        self.assertIn('In early tests on SWE-2',core['facts'][1]['en'])
+        self.assertIn('GB200 NVL72',core['facts'][1]['en'])
+        self.assertIn('In testing, CoreWeave achieved more than 3x',core['facts'][2]['en'])
+        self.assertIn('各一コア',core['facts'][2]['ja'])
+        self.assertIn('3倍超',core['facts'][2]['ja'])
 
     def test_actual_summary_pin_is_the_newly_reviewed_exact_copy(self):
         data=json.loads(Path(recovery.__file__).with_name('reviewed_retained_announcements.json').read_text())

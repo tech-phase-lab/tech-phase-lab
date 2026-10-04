@@ -399,6 +399,208 @@
           }
         ]
       }
+    },
+    {
+      "eventId": 1212,
+      "sourceId": "primary-ir-NVDA",
+      "ticker": "NVDA",
+      "url": "https://blogs.nvidia.com/blog/gpus-openai-gpt-6-astra-ultrafast/",
+      "title": "How NVIDIA GPUs Help Accelerate OpenAI’s GPT-6 Astra Ultrafast",
+      "publishedOn": "2026-10-01",
+      "observedAt": "2026-10-01T23:46:19.836+00:00",
+      "eventSha": "0661108721ec9965b75451445f59c8bcf970ac3daf6b1676ab23d30d10d7dd87",
+      "sourceRevision": "57e080d6a552dfd14c46e9aaacf7acd64ae7f601b5fb5e3697d4e20140bf2de1",
+      "provenance": "primary-source-revision",
+      "bodyRevisionSha": "57e080d6a552dfd14c46e9aaacf7acd64ae7f601b5fb5e3697d4e20140bf2de1",
+      "bodyTextSha": "9af7a253f3a960c1439be7b9422fd58aaf2545c679ae7dc5ed40f22ac7585869",
+      "bodyChars": 2531,
+      "reviewedPayloadSha": "3bfc75bcb6acf4d56f793969aaeee47c50f20ad71f69aed875f6b1bfd26a3f6d",
+      "replacement": {
+        "reason": "reviewed-evidence-precision",
+        "payloadSha": "88de79415cdbcd7a738ccac99142501a5be2c49272616e7b9b98e66dd78ac3f9",
+        "bodySha": "57e080d6a552dfd14c46e9aaacf7acd64ae7f601b5fb5e3697d4e20140bf2de1",
+        "startedAt": "2026-10-02T18:05:30.303762+00:00",
+        "publicAt": "2026-10-02T18:05:37.045+00:00",
+        "generationMs": 6237,
+        "jobAttempts": 1
+      },
+      "copy": {
+        "title": {
+          "ja": "NVIDIA GPUがOpenAIのGPT-6 Astra Ultrafastを加速",
+          "en": "How NVIDIA GPUs Help Accelerate OpenAI’s GPT-6 Astra Ultrafast",
+          "evidenceSpan": {
+            "start": 0,
+            "end": 1719,
+            "sha256": "76f7ff6409e2d5b7493da029004b4b6bb212a82d14993ae13c625c1df9629451"
+          }
+        },
+        "summary": {
+          "ja": "OpenAIのGPT-6 Astra UltrafastはNVIDIA Blackwell GPU上で動作し、標準モードに比べて最大8倍速いトークン生成を実現している。",
+          "en": "OpenAI's GPT-6 Astra Ultrafast runs on NVIDIA Blackwell GPUs, offering up to 8x faster token generation compared to the standard mode.",
+          "evidenceSpan": {
+            "start": 0,
+            "end": 1719,
+            "sha256": "76f7ff6409e2d5b7493da029004b4b6bb212a82d14993ae13c625c1df9629451"
+          }
+        },
+        "purpose": {
+          "ja": "NVIDIAのプラットフォームの柔軟性とOpenAIの継続的最適化により、AIの応答速度とインフラの生産性を向上させることを目的としている。",
+          "en": "The purpose is to enhance AI response speeds and infrastructure productivity through NVIDIA's flexible platform and OpenAI's ongoing optimizations.",
+          "evidenceSpan": {
+            "start": 1319,
+            "end": 2531,
+            "sha256": "4d9cbb703c125df951500b081bb9b12fef24003b96380d8adb9529c2529c5259"
+          }
+        },
+        "facts": [
+          {
+            "ja": "GPT-6 Astra UltrafastはNVIDIA Blackwell GPUs上で動作し、標準モードに比べ最大8倍速いトークン生成を提供する。",
+            "en": "GPT-6 Astra Ultrafast runs on NVIDIA Blackwell GPUs and offers up to 8x faster token generation than the Astra Standard mode.",
+            "evidenceSpan": {
+              "start": 0,
+              "end": 1719,
+              "sha256": "76f7ff6409e2d5b7493da029004b4b6bb212a82d14993ae13c625c1df9629451"
+            }
+          },
+          {
+            "ja": "この高速化は、コードの編集・テスト・デバッグのサイクルを短縮し、インタラクティブアプリケーションの応答性を高める可能性がある。",
+            "en": "The acceleration can shorten coding agents’ edit-test-debug cycles and make interactive applications feel more responsive.",
+            "evidenceSpan": {
+              "start": 0,
+              "end": 1719,
+              "sha256": "76f7ff6409e2d5b7493da029004b4b6bb212a82d14993ae13c625c1df9629451"
+            }
+          },
+          {
+            "ja": "OpenAIは自身のモデルを用いてNVIDIA GPU上で動作する推論ソフトウェアの最適化を続けており、性能の向上を図っている。",
+            "en": "OpenAI uses its own models to help refine inference software running on NVIDIA GPUs; that ongoing work can improve response speed and infrastructure productivity over time.",
+            "evidenceSpan": {
+              "start": 1319,
+              "end": 2531,
+              "sha256": "4d9cbb703c125df951500b081bb9b12fef24003b96380d8adb9529c2529c5259"
+            }
+          },
+          {
+            "ja": "NVIDIAのプログラマブルなプラットフォームにより、開発者はトレーニング、推論、強化学習で同じインフラを再利用でき、需要に応じて計算資源の活用を最適化できる。",
+            "en": "NVIDIA’s programmable platform allows developers to reuse infrastructure across training, inference, and reinforcement learning, optimizing compute resource utilization as demand changes.",
+            "evidenceSpan": {
+              "start": 1319,
+              "end": 2531,
+              "sha256": "4d9cbb703c125df951500b081bb9b12fef24003b96380d8adb9529c2529c5259"
+            }
+          },
+          {
+            "ja": "GPT-6 Astra Ultrafastは現在、OpenAIのAPIやChatGPT Work、Codexの対象ユーザーに提供されている。",
+            "en": "GPT-6 Astra Ultrafast is now available through OpenAI’s API and to eligible ChatGPT Work and Codex users.",
+            "evidenceSpan": {
+              "start": 0,
+              "end": 1719,
+              "sha256": "76f7ff6409e2d5b7493da029004b4b6bb212a82d14993ae13c625c1df9629451"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "eventId": 1216,
+      "sourceId": "primary-ir-NVDA",
+      "ticker": "NVDA",
+      "url": "https://blogs.nvidia.com/blog/coreweave-agentic-ai-vera-rubin/",
+      "title": "From Training to Production, NVIDIA and CoreWeave Close the Loop on Agentic AI",
+      "publishedOn": "2026-09-30",
+      "observedAt": "2026-09-30T15:11:01.984+00:00",
+      "eventSha": "a0fa91c1d98a37e4b93fcec904bc2aa1c15b5c0206a86439a227d320a6a1ea30",
+      "sourceRevision": "2db2bd6d219ed5aa54c64aeb0ab841bd6178774cfc6f537e2fcffa00a744362e",
+      "provenance": "primary-source-revision",
+      "bodyRevisionSha": "2db2bd6d219ed5aa54c64aeb0ab841bd6178774cfc6f537e2fcffa00a744362e",
+      "bodyTextSha": "66bb3f7b0050006c13a52eb59736a25cb767e8602d61320b686ad9bcb94b9812",
+      "bodyChars": 8409,
+      "reviewedPayloadSha": "d68ab30c4358d8fbc8b0768f8342ce84e0d3476ba4d08e42fe3ef760130c0814",
+      "replacement": {
+        "reason": "reviewed-evidence-precision",
+        "payloadSha": "edbd114105067cd2a11dd67a2f86be1233fe1e84465c357726f891229b1b3eb7",
+        "bodySha": "2db2bd6d219ed5aa54c64aeb0ab841bd6178774cfc6f537e2fcffa00a744362e",
+        "startedAt": "2026-10-02T18:06:21.173328+00:00",
+        "publicAt": "2026-10-02T18:06:30.813+00:00",
+        "generationMs": 8573,
+        "jobAttempts": 1
+      },
+      "copy": {
+        "title": {
+          "ja": "トレーニングから本番運用まで：NVIDIAとCoreWeaveがエージェントAIにおいて連携を完結",
+          "en": "From Training to Production: NVIDIA and CoreWeave Close the Loop on Agentic AI",
+          "evidenceSpan": {
+            "start": 0,
+            "end": 1603,
+            "sha256": "db6102e261916157b3623994e7f6933fe6aca5cf53ab0924b4d26973a7d1cbf6"
+          }
+        },
+        "summary": {
+          "ja": "CoreWeaveはNVIDIA Vera Rubin NVL72システムの提供開始を発表し、応用AI研究所Cognitionが本番ワークロードを実行している。Vera CPUも今後提供する予定で、NVIDIAとの共同開発によりAIの学習・強化学習・推論を支える基盤を提供する。",
+          "en": "CoreWeave announced availability of NVIDIA Vera Rubin NVL72 systems, with Cognition running production workloads on Vera Rubin. CoreWeave also plans to offer NVIDIA Vera CPU; its collaboration with NVIDIA supports AI training, reinforcement learning and inference.",
+          "evidenceSpan": {
+            "start": 0,
+            "end": 1603,
+            "sha256": "db6102e261916157b3623994e7f6933fe6aca5cf53ab0924b4d26973a7d1cbf6"
+          }
+        },
+        "purpose": {
+          "ja": "NVIDIAとCoreWeaveは共同開発した包括的なAIプラットフォームを通じて、トレーニングから評価、推論、本番運用までのAIモデル及びエージェントの継続的改善サイクルを加速し、多様なAI需要に応えることを目的としている。",
+          "en": "NVIDIA and CoreWeave aim to accelerate the continuous improvement cycle of AI models and agents from training to evaluation, inference, and production through a co-engineered comprehensive AI platform, addressing diverse AI workload requirements.",
+          "evidenceSpan": {
+            "start": 4788,
+            "end": 6514,
+            "sha256": "94e37f0e943f6d831364ae6859275e5fa05dc18235c9ac7bdcf363528339436c"
+          }
+        },
+        "facts": [
+          {
+            "ja": "CognitionはCoreWeave上でDevin向けのトレーニング、強化学習、本番推論を実行している。また、Vera Rubin上で本番ワークロードを実行する最初の顧客となった。",
+            "en": "Cognition runs training, reinforcement learning and production inference for Devin on CoreWeave. It is also the first customer running production workloads on Vera Rubin.",
+            "evidenceSpan": {
+              "start": 0,
+              "end": 1603,
+              "sha256": "db6102e261916157b3623994e7f6933fe6aca5cf53ab0924b4d26973a7d1cbf6"
+            }
+          },
+          {
+            "ja": "Cognitionの初期テストでは、SWE-2推論ワークロードでVera Rubin NVL72の総トークンスループットがGB200 NVL72比で最大4.8倍となった。NVIDIAの発表は、Devinでのリアルタイムコード生成の高速化や多段推論の応答性向上につながるとしている。",
+            "en": "In early tests on SWE-2 inference workloads, Cognition recorded up to a 4.8x increase in total token throughput on Vera Rubin NVL72 over GB200 NVL72. The announcement links those gains to faster real-time code generation and more responsive multistep reasoning for Devin.",
+            "evidenceSpan": {
+              "start": 1203,
+              "end": 2788,
+              "sha256": "0de6196aac23618d8b26b9d72a9f0931c9032eb7db0dfa42e806202bf636accb"
+            }
+          },
+          {
+            "ja": "CoreWeaveのVera構成は単一ラックに128 CPU・11,264コアを搭載し、各一コアなら11,000超の独立したエージェント環境を同時実行できる。テストでは、Vera CPU上でエージェント用サンドボックスの起動が3倍超高速化した。",
+            "en": "CoreWeave’s Vera configuration provides 128 CPUs and 11,264 cores per rack, enough for more than 11,000 concurrent isolated agent environments at one core each. In testing, CoreWeave achieved more than 3x faster agent sandbox startup times on Vera CPUs.",
+            "evidenceSpan": {
+              "start": 3421,
+              "end": 5188,
+              "sha256": "cd625a85958c277bae782b2439b765e2041818cb0a11bd1cff2a1668e41d9845"
+            }
+          },
+          {
+            "ja": "CoreWeaveはWeights & BiasesやOpenPipeとの連携によるCoreWeave Forgeを提供し、モデル・エージェントの継続的改善環境を一元化、ユーザーはサーバーレスの強化学習や微調整で自前のトレーニングレシピを試行可能となっている。",
+            "en": "CoreWeave launched CoreWeave Forge, a unified environment integrating Weights & Biases, OpenPipe, enabling continuous model and agent improvement with serverless supervised fine-tuning and reinforcement learning to experiment with user training recipes.",
+            "evidenceSpan": {
+              "start": 4788,
+              "end": 6514,
+              "sha256": "94e37f0e943f6d831364ae6859275e5fa05dc18235c9ac7bdcf363528339436c"
+            }
+          },
+          {
+            "ja": "CoreWeaveは医療や大手企業を含む多数のAIラボへサービス提供し、MLPerfにおける全ラウンドで記録的な結果を達成。NVIDIAと共同で実証済みの堅牢かつ便利なAIインフラ基盤を提供している。",
+            "en": "CoreWeave serves many AI labs including healthcare and major enterprises, achieving record MLPerf results in all rounds, providing a proven robust and user-friendly AI infrastructure jointly developed with NVIDIA.",
+            "evidenceSpan": {
+              "start": 7487,
+              "end": 8409,
+              "sha256": "f59ff1d989289cb82cfad81b1737bed1464dfb9234f0378d0ae03c0cc10ed7d7"
+            }
+          }
+        ]
+      }
     }
   ]
 }

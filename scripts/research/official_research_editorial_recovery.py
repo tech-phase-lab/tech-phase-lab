@@ -205,7 +205,7 @@ def publish(db, rows, reference, validator, current_revision):
 
 
 RETAINED_COPY_PATH = Path(__file__).with_name('reviewed_retained_announcements.json')
-RETAINED_COPY_SHA = '61a5fa88f700ca971d253e9fe54d3f82dc30a1aea0a78ca35fa8045758e0825e'
+RETAINED_COPY_SHA = '3523181bfc611fa2b294b80c5235694eed31237b934e8a462bd2e12d747e67b2'
 
 
 def retained_candidate(db, pin, reference):

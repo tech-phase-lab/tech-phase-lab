@@ -31,14 +31,16 @@ import micron_reviewed_recovery
 import news_delivery_status
 import issuer_business_news
 import rollout_validation
+import token_pricing
+import material_relations
 from validation_success import ValidationSuccess
 
 MAX_EVIDENCE_CHARS = 1800
 # Guard or constant changes require a version bump and process restart. Nothing
 # is persisted; callable identities also invalidate reuse during test/reload.
-VALIDATION_REUSE_VERSION = 3
+VALIDATION_REUSE_VERSION = 4
 _validation_success = ValidationSuccess()
-NO_AUTOMATIC_REGENERATION=frozenset({'unsupported-comparison-baseline', 'source-event-identity-mismatch', rollout_validation.FAILURE})
+NO_AUTOMATIC_REGENERATION=frozenset({'unsupported-comparison-baseline', 'source-event-identity-mismatch', rollout_validation.FAILURE, material_relations.FAILURE})
 
 MATERIAL = re.compile(r'\b(acquir(?:es|ed|e)|acquisition|partner(?:s|ship)?|agreement|quarter.*results|financial results|earnings|launch(?:es|ed)?|expand(?:s|ed)?|investment|capacity)\b', re.I)
 POLICY = """Write factual Japanese and English news from the supplied issuer announcement.
@@ -92,7 +94,8 @@ def connect(path):
 def candidates(db, reference, *, read_only=False, published_updates=None, primary_only=False):
     published = (signals.public_official_updates(db, reference=reference, limit=100, read_only=read_only, include_bodies=False)
                  if published_updates is None else published_updates[:100])
-    visible_ids = {int(item['id']) for item in published}
+    visible_tickers = {int(item['id']): item['tickers'] for item in published}
+    visible_ids = set(visible_tickers)
     primary = []
     if db.execute("SELECT 1 FROM sqlite_master WHERE name='release_events'").fetchone():
         primary = [dict(r) for r in db.execute('''SELECT e.*, s.sha256 AS body_sha,
@@ -111,7 +114,13 @@ def candidates(db, reference, *, read_only=False, published_updates=None, primar
       FROM signal_events e JOIN official_story_bodies b ON e.id=b.event_id AND e.sha=b.sha
       LEFT JOIN signal_documents d ON d.source_id=e.source_id AND d.url=e.url AND d.sha=e.sha
       WHERE length(b.body)>0 AND (d.sha IS NOT NULL OR e.source_id LIKE 'primary-ir-%') ORDER BY e.id DESC LIMIT 100'''):
-        tickers = json.loads(row['tickers_json'])
+        # Discovery matches retain incidental companies in the article (and
+        # related-story text). The public metadata projection has already
+        # bound issuer tickers to this source's configured companies. Reuse
+        # that ordering rather than treating the first sorted mention as owner.
+        matched = json.loads(row['tickers_json'])
+        tickers = [ticker for ticker in visible_tickers.get(row['id'], [])
+                   if ticker in matched]
         if row['id'] in visible_ids and row['id'] not in primary_ids and tickers and bridge.is_current(db,row):
             stories.append({**dict(row), 'ticker': tickers[0], 'body_cached': True})
     if primary_only:
@@ -316,10 +325,20 @@ def validate_source_event(body, source_title, note=None):
 
 def validation_policy():
     return (VALIDATION_REUSE_VERSION, os.getpid(), MAX_EVIDENCE_CHARS,
-            validate_item, normalized,
+            validate_item, normalized, preflight_copy_bounds,
             tuple((module.__name__, name, member)
-                  for module in (factual_validation, amount_relations, buyback_news, rollout_validation)
+                  for module in (factual_validation, amount_relations, buyback_news, rollout_validation, token_pricing, material_relations)
                   for name, member in vars(module).items() if callable(member)))
+
+
+def preflight_copy_bounds(name,item):
+    if not isinstance(item,dict) or set(item)!={'ja','en','evidenceQuote'}:
+        raise ValueError('invalid-item')
+    if not isinstance(item['evidenceQuote'],str) or not 16<=len(item['evidenceQuote'])<=MAX_EVIDENCE_CHARS:
+        raise ValueError('unsupported-quote')
+    for lang in ('ja','en'):
+        if not isinstance(item[lang],str) or len(item[lang])>(180 if name=='title' else 400):
+            raise ValueError('invalid-copy')
 
 
 def validate(value, body, source_title=''):
@@ -332,7 +351,9 @@ def validate(value, body, source_title=''):
     if (_validation_success.contains(_validation_success.key(value, body, source_title), policy)
             and validation_policy() == policy):
         return value
-    source_context=(body,normalized(body),rollout_validation.source_context(body))
+    for name,item in [('title',value['title']),('summary',value['summary']),*[('fact',x) for x in value['facts']],('purpose',value['purpose'])]:
+        preflight_copy_bounds(name,item)
+    source_context=(body,normalized(body),rollout_validation.source_context(body),material_relations.source_context(body))
     for name, item in [('title',value['title']),('summary',value['summary']),
                        *[('fact',x) for x in value['facts']],('purpose',value['purpose'])]:
         try:
@@ -348,13 +369,18 @@ def validate(value, body, source_title=''):
 
 
 def validate_item(name, item, body, source_title, source_context=None):
+    preflight_copy_bounds(name,item)
     if not isinstance(item, dict) or set(item) != {'ja','en','evidenceQuote'}:
         raise ValueError('invalid-item')
     quote = item['evidenceQuote']
-    if source_context is None or source_context[0]!=body:
-        source_context=(body,normalized(body),rollout_validation.source_context(body))
+    if source_context is None or source_context[0]!=body or len(source_context)<4:
+        source_context=(body,normalized(body),rollout_validation.source_context(body),material_relations.source_context(body))
     if not isinstance(quote,str) or not 16 <= len(quote) <= MAX_EVIDENCE_CHARS or normalized(quote) not in source_context[1]:
         raise ValueError('unsupported-quote')
+    for lang in ('ja','en'):
+        if (not isinstance(item.get(lang),str) or len(item[lang])>(180 if name=='title' else 400)):
+            raise ValueError('invalid-copy')
+    material_relations.validate_item(item['ja'],item['en'],quote,body,source_context[3])
     for lang in ('ja','en'):
         text = item[lang]
         if (not isinstance(text,str) or not text.strip() or len(text) > (180 if name=='title' else 400)
@@ -385,12 +411,90 @@ def response_schema():
                           'facts':{'type':'array','minItems':3,'maxItems':5,'items':item}}}
 
 
+
+def material_failure_state(db,row):
+    """Immutable read snapshot for a latest failure; no parsing or writes."""
+    job=db.execute('SELECT * FROM official_research_jobs WHERE event_id=?',(row['id'],)).fetchone()
+    if not job or job['sha']!=row['sha'] or job['state'] not in {'retry','review'}:return None
+    failure=db.execute('SELECT lease,event_id,sha,failed_at,reason,detail,payload FROM official_research_attempt_failures WHERE event_id=? AND sha=? ORDER BY failed_at DESC LIMIT 1',
+                       (row['id'],row['sha'])).fetchone()
+    proof=(db.execute('SELECT * FROM official_research_attempt_body_proofs WHERE lease=?',(failure['lease'],)).fetchone()
+           if failure else None)
+    if (not failure or not proof or failure['lease']!=job['lease'] or proof['source_sha']!=row['sha']
+            or proof['body_sha']!=row['body_sha']):return None
+    return tuple(job),tuple(failure),tuple(proof)
+
+
+def assess_material_failure(state,row):
+    """Bounded pure preflight, always outside a claim's writer transaction."""
+    if state is None:return None
+    payload=state[1][-1]
+    if not isinstance(payload,str):return None
+    if len(payload)>131072:return material_relations.FAILURE
+    try:
+        value=json.loads(payload)
+        # Facts-only semantic/evidence-ID responses have their own admitted
+        # shape and item bounds. This preflight only owns ordinary JA/EN notes.
+        if not isinstance(value,dict) or set(value)!={'title','summary','facts','purpose'}:return None
+        facts=value.get('facts')
+        if not isinstance(facts,list):return None
+        if len(facts)>5:return material_relations.FAILURE
+        items=[value.get('title'),value.get('summary'),*facts,value.get('purpose')]
+        for item in items:
+            if isinstance(item,dict) and all(isinstance(item.get(k),str) for k in ('ja','en','evidenceQuote')):
+                if any(len(item[lang])>400 for lang in ('ja','en')) or len(item['evidenceQuote'])>MAX_EVIDENCE_CHARS:
+                    return material_relations.FAILURE
+        context=material_relations.source_context(row['body'])
+        for item in items:
+            if isinstance(item,dict) and all(isinstance(item.get(k),str) for k in ('ja','en','evidenceQuote')):
+                material_relations.validate_item(item['ja'],item['en'],item['evidenceQuote'],row['body'],context)
+    except ValueError as exc:
+        return material_relations.FAILURE if str(exc)==material_relations.FAILURE else None
+    return None
+
+
+def material_failure_hold(db,row):
+    return assess_material_failure(material_failure_state(db,row),row)
+
+
+def claim_publication_state(db,row):
+    """Read only the saved fields used by the claim eligibility decision."""
+    saved=db.execute('SELECT sha,body_sha,payload,started_at,public_at FROM official_research_publications WHERE event_id=?',
+                     (row['id'],)).fetchone()
+    return tuple(saved) if saved else None
+
+
+def assess_claim_publication(state,row,reference):
+    """Validate saved copy outside the writer lock, pinned to exact fields."""
+    if not state or state[0]!=row['sha']:return None
+    saved=dict(zip(('sha','body_sha','payload','started_at','public_at'),state))
+    try:
+        note=json.loads(saved['payload'])
+        validate_source_event(row['body'],row['title'],note)
+    except (ValueError,TypeError):
+        return 'held'
+    if saved['body_sha']==row['body_sha'] and publication_clock_valid(saved,row,reference):
+        try:
+            validate_row(note,row)
+            return 'valid'
+        except ValueError as exc:
+            if str(exc) in NO_AUTOMATIC_REGENERATION:return 'held'
+        except TypeError:
+            pass
+    return None
+
+
 def claim(db, reference, model, limit):
     rows=candidates(db,reference)
     # Reserve capacity for actual untranslated headlines, not a separate daily
     # quota that strands article retries while the shared budget is still free.
     headline_pending=headline_translation.diagnostics(db,now=reference.timestamp())['pending']
     db.commit()
+    preflight_policy=validation_policy()
+    failure_states={r['id']:material_failure_state(db,r) for r in rows}
+    failure_holds={r['id']:assess_material_failure(failure_states[r['id']],r) for r in rows}
+    publication_states={r['id']:claim_publication_state(db,r) for r in rows}
+    publication_checks={r['id']:assess_claim_publication(publication_states[r['id']],r,reference) for r in rows}
     now=reference.timestamp()
     with db:
         db.execute('BEGIN IMMEDIATE')
@@ -410,26 +514,19 @@ def claim(db, reference, model, limit):
                 # A cached article from another event cannot become a new paid
                 # attempt. Retain it for diagnosis; ordinary fetch backoff applies.
                 continue
-            published=db.execute('SELECT sha,body_sha,payload,started_at,public_at FROM official_research_publications WHERE event_id=?',(r['id'],)).fetchone()
-            if published and published['sha'] == r['sha']:
-                try:
-                    validate_source_event(r['body'], r['title'], json.loads(published['payload']))
-                except (ValueError, TypeError):
-                    # Correct reacquisition does not authorize paying to replace
-                    # a saved cross-event publication. Require audited recovery.
-                    continue
-            if published and published['sha']==r['sha'] and published['body_sha']==r['body_sha'] and publication_clock_valid(published,r,reference):
-                try:
-                    validate_row(json.loads(published['payload']),r)
-                    continue
-                except ValueError as exc:
-                    if str(exc) in NO_AUTOMATIC_REGENERATION:
-                        # Withhold a saved mistranslation without causing a paid
-                        # regeneration. A source-bound correction may replace it.
-                        continue
-                except TypeError:
-                    pass
+            if (claim_publication_state(db,r)!=publication_states[r['id']]
+                    or validation_policy()!=preflight_policy):
+                continue
+            if publication_checks[r['id']] in {'valid','held'}:
+                # The full source/copy check ran without the writer lock. Its
+                # exact snapshot, source revision and policy must still match.
+                continue
             job=db.execute('SELECT * FROM official_research_jobs WHERE event_id=?',(r['id'],)).fetchone()
+            if (material_failure_state(db,r)!=failure_states[r['id']] or validation_policy()!=preflight_policy):
+                continue  # Changed snapshots wait for a new unlocked preflight.
+            if ((job and job['sha']==r['sha'] and job['state']=='review'
+                 and job['failure_kind']==material_relations.FAILURE) or failure_holds[r['id']]):
+                continue
             repair_candidate=content_repair.matches(db,r,reference)
             expedited=False
             if job and job['state']=='done':
@@ -724,7 +821,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     except Exception as exc:
         cause=getattr(exc,'__cause__',None)
         provider_status=getattr(cause,'code',None)
-        reason=str(exc) if type(exc) is ValueError and str(exc) in ({'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete','lost-forecast-modality','lost-negation','reversed-supply-demand','lost-fiscal-basis','lost-comparison','unsupported-comparison-baseline','changed-amount-relation','changed-execution-period','changed-action-capacity','source-event-identity-mismatch','invented-broker-action','source-copy-overlap','unsupported-actor','lost-action-status'} | general_source_news.FAILURE_CODES | {rollout_validation.FAILURE}) else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
+        reason=str(exc) if type(exc) is ValueError and str(exc) in ({'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete','lost-forecast-modality','lost-negation','reversed-supply-demand','lost-fiscal-basis','lost-comparison','unsupported-comparison-baseline','changed-amount-relation','changed-execution-period','changed-action-capacity','source-event-identity-mismatch','invented-broker-action','source-copy-overlap','unsupported-actor','lost-action-status'} | general_source_news.FAILURE_CODES | {rollout_validation.FAILURE, material_relations.FAILURE}) else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
         with connect(path) as db, db:
             db.execute('BEGIN IMMEDIATE')
             # Private audit evidence for a failed attempt; never returned by feed.
@@ -746,6 +843,10 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                            (state,reason,row['id'],lease))
                 db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?",(lease,))
                 return state
+            if reason==material_relations.FAILURE:
+                db.execute("UPDATE official_research_jobs SET state='review',failure_kind=? WHERE event_id=? AND lease=?",(reason,row['id'],lease))
+                db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?",(lease,))
+                return 'review'
             job=db.execute("SELECT attempts FROM official_research_jobs WHERE event_id=? AND lease=?",(row['id'],lease)).fetchone()
             delay=max(headline_translation.retry_delay(job[0] if job else 1), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
             db.execute("UPDATE official_research_jobs SET state='retry',next_at=?,failure_kind=? WHERE event_id=? AND lease=?",(now+delay,reason,row['id'],lease))
@@ -834,7 +935,8 @@ def publication_hold_reason(db,row,reference):
     """Mirror claim's explicit saved-copy hold without changing its job state."""
     saved=db.execute('SELECT * FROM official_research_publications WHERE event_id=? AND sha=?',
                      (row['id'],row['sha'])).fetchone()
-    if not saved or not publication_clock_valid(saved,row,reference):return None
+    if not saved:return material_failure_hold(db,row)
+    if not publication_clock_valid(saved,row,reference):return None
     try:
         note=json.loads(saved['payload'])
         if not isinstance(note,dict):return None

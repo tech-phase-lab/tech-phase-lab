@@ -8,6 +8,7 @@ from collections import Counter
 from datetime import date
 
 from amount_relations import validate_amount_relations
+from token_pricing import token_denominators, validate_token_prices
 
 
 QUANTITY_PATTERN = re.compile(
@@ -159,7 +160,7 @@ def dates(text):
 def numeric_values(text):
     """Canonical exact magnitudes, preserving signs and percent dimensions."""
     text = duration_ranges(text)
-    values = []
+    text, values = token_denominators(text)
     def target_count(match):
         if re.search(r'[$€£¥]\s*$', text[:match.start()]):
             return match[0]  # A monetary value is not an experimental target count.
@@ -252,6 +253,7 @@ def validate_numbers(text, evidence):
     # 1500億ドル; $15B, 1500万ドル and -1500億ドル do not.
     if not set(numeric_values(text)).issubset(set(numeric_values(evidence))):
         raise ValueError('unsupported-number')
+    validate_token_prices(text, evidence)
     if not set(quarter_values(text)).issubset(set(quarter_values(evidence))):
         raise ValueError('unsupported-number')
     source_dates = dates(evidence)
@@ -280,6 +282,10 @@ def number_checks(item):
         if unsupported:
             result.append({'check': language + '-evidence-quantity',
                            'unsupported': quantities(unsupported), 'truncated': len(unsupported) > 20})
+        try:
+            validate_token_prices(text, evidence)
+        except ValueError:
+            result.append({'check': language + '-evidence-token-price'})
         quarters = sorted(set(quarter_values(text)) - set(quarter_values(evidence)))
         if quarters:
             result.append({'check': language + '-evidence-quarter', 'unsupported': quarters})
