@@ -57,7 +57,19 @@
       "news.skhynix.com"
     ],
     "intervalSeconds": 120,
-    "reuse": "review-required"
+    "reuse": "review-required",
+    "officialUpdates": true,
+    "requireCurrentDocument": true,
+    "publisherArticleCategories": {
+      "version": 1,
+      "allowAny": [
+        "STORY"
+      ],
+      "denyAny": [
+        "Media"
+      ],
+      "maxAgeSeconds": 900
+    }
   },
   {
     "id": "microsoft-blog",

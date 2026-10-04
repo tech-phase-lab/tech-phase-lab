@@ -117,6 +117,7 @@ def candidates(db, reference, *, read_only=False, published_updates=None, primar
       WHERE length(b.body)>0 AND (d.sha IS NOT NULL OR e.source_id LIKE 'primary-ir-%') ORDER BY e.id DESC LIMIT 100''').fetchall()
     primary_urls = bridge.primary_owned_urls(db, [row['url'] for row in story_rows
         if row['id'] in visible_ids and not row['source_id'].startswith(bridge.PREFIX)])
+    category_contexts = bridge.category_contexts(db, story_rows)
     for row in story_rows:
         # Discovery matches retain incidental companies in the article (and
         # related-story text). The public metadata projection has already
@@ -126,9 +127,11 @@ def candidates(db, reference, *, read_only=False, published_updates=None, primar
         tickers = [ticker for ticker in visible_tickers.get(row['id'], [])
                    if ticker in matched]
         if (row['id'] in visible_ids and row['id'] not in primary_ids and tickers
-                and bridge.is_current(db,row,primary_urls=primary_urls)
+                and bridge.is_current(db,row,primary_urls=primary_urls,reference=reference,
+                    category_context=category_contexts.get(row['source_id']))
                 and bridge.matches_public_snapshot(row,visible_items[row['id']],reference)):
-            stories.append({**bridge.bind_source_policy(row), 'ticker': tickers[0], 'body_cached': True})
+            stories.append({**bridge.bind_source_policy(row, db=db, reference=reference,
+                category_context=category_contexts.get(row['source_id'])), 'ticker': tickers[0], 'body_cached': True})
     if primary_only:
         # The public research feed renders only issuer releases. Reported news
         # is already projected through officialUpdates; revalidating those rows
@@ -137,7 +140,33 @@ def candidates(db, reference, *, read_only=False, published_updates=None, primar
     return primary + stories + general_source_news.candidates(db,reference) + issuer_business_news.candidates(db,reference)
 
 
-def prepare_story_body(path, reference, request=None):
+def concrete_article_identity_conflict(document, url, title, reason):
+    """Distinguish affirmative conflicting identity from missing/ambiguous markup.
+
+    Title-validation failures also cover missing headings and cosmetic publisher
+    branding. Those failed fetches cannot grant fresh proof, but do not establish
+    a different current article. This predicate is only used by category routes.
+    """
+    from article_document import inspect, identity, normalized_title
+    from urllib.parse import urljoin
+    parsed = inspect(document)
+    if parsed.ambiguous_identity_attributes:
+        return False
+    if reason == 'article-response-date-mismatch':
+        # Raised only after two valid original publication dates were compared.
+        return True
+    if reason == 'article-response-identity-mismatch':
+        expected = identity(url)
+        return bool(expected and any(candidate.strip() and (actual := identity(urljoin(url, candidate)))
+                                     and actual != expected for candidate in parsed.canonicals))
+    if reason == 'article-response-title-mismatch':
+        return bool(parsed.publisher_heading_count == 1 and len(parsed.publisher_headings) == 1
+                    and normalized_title(parsed.publisher_headings[0])
+                    and normalized_title(parsed.publisher_headings[0]) != normalized_title(title))
+    return False
+
+
+def prepare_story_body(path, reference, request=None, *, clock=None):
     """Fetch one already-public publisher story without delaying its headline."""
     from html_signals import NewsHTML
     request = request or signals.fetch
@@ -145,6 +174,10 @@ def prepare_story_body(path, reference, request=None):
         sources = {s['id']: s for s in [*signals.SOURCES,*[{**p,'format':'feed'} for p in bridge.publishers()]] if s.get('officialUpdates')
                    and s.get('enabled') is not False and s.get('format') != 'x-api'}
         items = signals.public_official_updates(db, reference=reference, limit=100, include_bodies=False)
+        import feed_category_admission as category_gate
+        public_ids = {item['id'] for item in items}
+        items.extend(item for item in category_gate.refresh_candidates(db, sources.values(), reference)
+                     if item['id'] not in public_ids)
         # The primary bridge may write even when its INSERT is ignored. Release
         # that writer slot before any article HTTP request; the save below still
         # rechecks the complete current source identity in a fresh transaction.
@@ -165,11 +198,18 @@ def prepare_story_body(path, reference, request=None):
                 if original and original[0]>=1200:
                     continue
             source = sources[row['source_id']]
-            row = bridge.bind_source_policy(row, source)
+            category_required = category_gate.required(source)
+            row = bridge.bind_source_policy(row, source, db=db, reference=reference, article_refresh=category_required)
+            if not bridge.is_current(db, row, reference=max(reference, datetime.now(timezone.utc)),
+                                     article_refresh=category_required):
+                continue
             cached = db.execute('SELECT * FROM official_story_bodies WHERE event_id=?',(row['id'],)).fetchone()
             if cached and cached['sha'] == row['sha'] and cached['next_at'] > reference.timestamp():
                 continue
             proof = None
+            category_proof = None
+            same_category_body = False
+            fetched = None
             body_fetched_at = reference.isoformat()
             try:
                 if source['format'] in {'html-index','document'}:
@@ -178,11 +218,15 @@ def prepare_story_body(path, reference, request=None):
                     body = doc['text'] if doc else ''
                 else:
                     fetched = request({**source,'url':row['url'],'format':'document'}, {})
-                    from article_document import validate as validate_article_document, explicit_body
+                    from article_document import validate as validate_article_document, selected_body, publisher_category
                     if monitor.is_verification_html(fetched['body']):
                         raise ValueError('Source returned an error or verification page')
                     document = monitor.decode_html_document(fetched['body'])
-                    identity = validate_article_document(document, row['url'], row['title'])
+                    identity = validate_article_document(document, row['url'], row['title'],
+                        publisher_template=bool(source.get('publisherArticleCategories')))
+                    if category_required:
+                        category_proof = {'category': publisher_category(document, row['url'], row['title']),
+                                          'raw_sha': hashlib.sha256(fetched['body']).hexdigest()}
                     actual_date = (monitor.article_publication_date(fetched['body'], row['url'])
                                    or identity.original_visible_date())
                     expected_date = monitor.original_publication_date(row['published_on'] or row['published_at'])
@@ -192,8 +236,8 @@ def prepare_story_body(path, reference, request=None):
                     article.feed(document)
                     # Explicit publisher article containers outrank generic
                     # <article> tiles in related-news widgets on the same page.
-                    markup = (''.join(article.selected) if source.get('articleBodyClass') else
-                              explicit_body(document) or ''.join(article.article or article.main))
+                    markup = (selected_body(document, row['url'], source.get('articleBodyClass'))
+                              or ''.join(article.article or article.main))
                     body = monitor.extract_html_text(markup.encode())
                     proof = {'published_on': actual_date,
                              'raw_sha': hashlib.sha256(fetched['body']).hexdigest()}
@@ -201,6 +245,9 @@ def prepare_story_body(path, reference, request=None):
                     raise ValueError('article-body-unavailable')
                 validate_source_event(body, row['title'])
                 digest = hashlib.sha256(body.encode()).hexdigest()
+                if category_required and cached and cached['sha'] == row['sha'] and cached['body_sha'] == digest:
+                    body_fetched_at = cached['fetched_at']
+                    same_category_body = True
                 error, next_at = None, reference.timestamp() + 900
             except Exception as exc:
                 body, digest = '', ''
@@ -209,20 +256,55 @@ def prepare_story_body(path, reference, request=None):
                     if body:
                         body_fetched_at = cached['fetched_at']
                 proof = None
+                if category_required:
+                    if getattr(exc, 'code', None) in {404, 410}:
+                        category_proof = {'category': {'state': 'article-http-' + str(exc.code), 'terms': []}, 'raw_sha': ''}
+                    elif (str(exc) in {'article-response-identity-mismatch', 'article-response-title-mismatch',
+                                      'article-response-date-mismatch'}
+                            and fetched is not None and not fetched.get('not_modified')
+                            and isinstance(fetched.get('body'), bytes)
+                            and concrete_article_identity_conflict(document, row['url'], row['title'], str(exc))):
+                        # A successful current article response with concrete
+                        # conflicting identity is adverse evidence, not a timeout.
+                        # Retain prior copy privately until a valid response clears it.
+                        category_proof = {'category': {'state': str(exc), 'terms': []},
+                                          'raw_sha': hashlib.sha256(fetched['body']).hexdigest()}
+                    elif category_proof and category_gate._entry_reason(
+                            category_proof['category'], source['publisherArticleCategories']) is None:
+                        category_proof = None  # Invalid body/identity cannot freshen a positive category.
                 error = monitor.source_error_code(exc)
                 next_at = reference.timestamp() + (21600 if getattr(exc,'code',None) in {401,403,451} else 300)
+            category_verified_at = (clock() if clock else datetime.now(timezone.utc)).isoformat()
+            if category_required and proof is not None and not same_category_body:
+                body_fetched_at = category_verified_at
             db.commit()
             with db:
                 db.execute('BEGIN IMMEDIATE')
                 current = db.execute('SELECT * FROM signal_events WHERE id=?', (row['id'],)).fetchone()
                 if (not current or any(current[key] != row[key] for key in ('sha', 'title', 'url', 'published_on', 'published_at'))
-                        or not bridge.is_current(db, row)):
+                        or not bridge.is_current(db, row, article_refresh=category_required)):
                     return 'stale'
+                current_cache = db.execute('SELECT * FROM official_story_bodies WHERE event_id=?', (row['id'],)).fetchone()
+                if (dict(current_cache) if current_cache else None) != (dict(cached) if cached else None):
+                    return 'stale'
+                if category_proof is not None:
+                    category_gate.persist_article(db, source, list(signals.ALIASES), row,
+                        category_proof['category'], digest or None, category_proof['raw_sha'], category_verified_at)
+                    outcome = category_gate.decision(db, source, list(signals.ALIASES), row,
+                        datetime.fromisoformat(category_verified_at))
+                    if not outcome['admitted']:
+                        body, digest = (cached['body'], cached['body_sha']) if cached and cached['sha'] == row['sha'] else ('', '')
+                        body_fetched_at = cached['fetched_at'] if cached and body else body_fetched_at
+                        proof = None
+                        error, next_at = 'publisher-category-withheld', reference.timestamp() + 300
                 db.execute('''INSERT INTO official_story_bodies VALUES(?,?,?,?,?,?,?)
                   ON CONFLICT(event_id) DO UPDATE SET sha=excluded.sha,body_sha=excluded.body_sha,
                   body=excluded.body,fetched_at=excluded.fetched_at,next_at=excluded.next_at,error=excluded.error''',
                   (row['id'],row['sha'],digest,body,body_fetched_at,next_at,error))
-                if proof is not None:
+                if proof is not None and not same_category_body:
+                    # Keep the original body proof/clock for an identical body.
+                    # The separate category evidence records this response's
+                    # raw hash and actual verification time.
                     db.execute('''INSERT OR REPLACE INTO official_story_body_proofs
                       VALUES(?,?,?,?,?,?,?,?,?)''',
                       (row['id'],row['sha'],digest,body_fetched_at,row['url'],row['title'],
@@ -235,12 +317,13 @@ def prepare_story_body(path, reference, request=None):
     return 'idle'
 
 
-def current_revision(db, row, *, primary_urls=None):
+def current_revision(db, row, *, primary_urls=None, reference=None, category_context=None, require_fresh_category=False):
     if row.get('issuer_business'):
         return issuer_business_news.current_revision(db,row)
     if row.get('general_source'):
         return general_source_news.current_revision(db,row)
-    if not bridge.is_current(db,row,primary_urls=primary_urls):
+    if not bridge.is_current(db,row,primary_urls=primary_urls,reference=reference,category_context=category_context,
+            require_fresh_category=require_fresh_category):
         return False
     if row['source_id'].startswith('primary-ir-'):
         if not row.get('body_cached'):
@@ -253,11 +336,11 @@ def current_revision(db, row, *, primary_urls=None):
     return bool(current and current['sha']==row['sha'] and current['body_sha']==row['body_sha'])
 
 
-def public_story_body(db, row, *, primary_urls=None):
+def public_story_body(db, row, *, primary_urls=None, reference=None, category_context=None):
     """Only validated bilingual news copy; no raw article or private purpose."""
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='official_story_bodies'").fetchone():
         return {}
-    if not bridge.is_current(db,row,primary_urls=primary_urls):
+    if not bridge.is_current(db,row,primary_urls=primary_urls,reference=reference,category_context=category_context):
         return {}
     saved = db.execute('''SELECT p.payload,b.body FROM official_research_publications p
       JOIN official_story_bodies b ON b.event_id=p.event_id AND b.sha=p.sha AND b.body_sha=p.body_sha
@@ -518,12 +601,14 @@ def claim(db, reference, model, limit):
         primary_urls = bridge.primary_owned_urls(db, [row['url'] for row in rows
             if not row['source_id'].startswith(bridge.PREFIX)
             and not row.get('general_source') and not row.get('issuer_business')])
+        category_contexts = bridge.category_contexts(db, rows)
         for r in rows:
             # A retained source derivation never authorizes a paid replacement.
             # Valid copy is already public; a damaged audit/copy stays held.
             if buyback_structured_publication.recorded(db,r) or general_source_news.related_company_news.recorded(db,r) or general_source_news.related_company_news.closed_attempt(db,r):
                 continue
-            if not current_revision(db,r,primary_urls=primary_urls):
+            if not current_revision(db,r,primary_urls=primary_urls,reference=max(reference, datetime.now(timezone.utc)),
+                    category_context=category_contexts.get(r['source_id']), require_fresh_category=True):
                 continue
             if not source_checks[r['id']]:
                 # A cached article from another event cannot become a new paid
@@ -860,7 +945,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                        (lease,row['sha'],row['body_sha']))
             if semantic and completed:
                 active=db.execute('SELECT lease FROM official_research_jobs WHERE event_id=?',(row['id'],)).fetchone()
-                valid=bool(active and active['lease']==lease and current_revision(db,row))
+                valid=bool(active and active['lease']==lease and current_revision(db,row,require_fresh_category=True))
                 state='review' if valid else 'stale'
                 if valid:
                     general_source_news.save_semantic_review(db,row,lease,reference.isoformat(),
@@ -882,7 +967,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     with connect(path) as db, db:
         db.execute('BEGIN IMMEDIATE')
         active=db.execute('SELECT lease FROM official_research_jobs WHERE event_id=?',(row['id'],)).fetchone()
-        valid=bool(active and active['lease']==lease and current_revision(db,row))
+        valid=bool(active and active['lease']==lease and current_revision(db,row,require_fresh_category=True))
         state=('review' if review_reason else 'done') if valid else 'stale'
         if valid and review_reason:
             general_source_news.save_semantic_review(db,row,lease,reference.isoformat(),public_at,review_reason)

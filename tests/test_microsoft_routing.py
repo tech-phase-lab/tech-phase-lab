@@ -140,11 +140,15 @@ class MicrosoftRoutingTests(unittest.TestCase):
         self.assertIsNone(research.claim(self.db, NOW, 'synthetic', 3))
         self.assertEqual(self.db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0], 0)
 
-    def test_only_microsoft_is_admitted_and_normal_missing_article_uses_own_identity(self):
+    def test_reviewed_routes_remain_scoped_and_microsoft_uses_own_identity(self):
         self.assertTrue(SOURCE['officialUpdates'])
         self.assertTrue(SOURCE['requireCurrentDocument'])
-        for ident in ('skhynix-news', 'arm-blog'):
-            self.assertIsNot(next(s for s in signals.SOURCES if s['id'] == ident).get('officialUpdates'), True)
+        self.assertIsNot(next(s for s in signals.SOURCES if s['id'] == 'arm-blog').get('officialUpdates'), True)
+        skhynix = next(s for s in signals.SOURCES if s['id'] == 'skhynix-news')
+        self.assertIs(skhynix.get('officialUpdates'), True)
+        self.assertIs(skhynix.get('requireCurrentDocument'), True)
+        self.assertEqual(skhynix['publisherArticleCategories'], {'version': 1, 'allowAny': ['STORY'],
+            'denyAny': ['Media'], 'maxAgeSeconds': 900})
         event_id = self.supplemental()
         item = self.feed()[0]
         self.assertEqual((item['id'], item['publisher'], item['publishedAt'], item['observedAt']),

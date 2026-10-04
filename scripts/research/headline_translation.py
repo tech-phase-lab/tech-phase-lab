@@ -111,7 +111,7 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
     reference = datetime.fromtimestamp(now, tz=timezone.utc)
     counts = {
         "eligible": 0, "translated": 0, "pending": 0,
-        "running": 0, "retrying": 0, "exhausted": 0,
+        "running": 0, "retrying": 0, "exhausted": 0, "awaitingSourceRefresh": 0,
     }
     oldest_pending = None
     next_retry = None
@@ -127,6 +127,12 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
         if (translated or item.get('syndication') or item.get('generalSource')) and item.get("translationJa"):
             counts["translated"] += 1
             continue
+        import feed_category_admission
+        if feed_category_admission.required(next((source for source in sources if source['id'] == row['source_id']), None), row['source_id']):
+            import official_release_bridge
+            if not official_release_bridge.is_current(db, row, reference=reference, require_fresh_category=True):
+                counts['awaitingSourceRefresh'] += 1
+                continue
         counts["pending"] += 1
         try:
             observed = datetime.fromisoformat(str(row["observed_at"]).replace("Z", "+00:00"))
@@ -177,7 +183,7 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
     return {
         "status": status,
         "dailyLimit": daily_limit,
-        **counts,
+        **{key: value for key, value in counts.items() if key != 'awaitingSourceRefresh' or value},
         "oldestPendingAt": oldest_pending.isoformat() if oldest_pending else None,
         "nextRetryAt": next_retry.isoformat() if next_retry else None,
         "calls24Hours": calls,
@@ -220,6 +226,7 @@ def claim(db, sources, limit, model, now):
         import official_release_bridge
         primary_urls = official_release_bridge.primary_owned_urls(db, [item['url'] for item in items])
         source_policies = {s['id']: s for s in sources}
+        category_contexts = official_release_bridge.category_contexts(db, list(source_snapshots.values()), sources=sources)
         for item in items:
             if item.get('syndication') or item.get('generalSource'):
                 # These validated bilingual titles need no second paid translation.
@@ -232,7 +239,9 @@ def claim(db, sources, limit, model, now):
                 continue
             row = {**dict(row), **snapshot}
             if not official_release_bridge.is_current(db, row,
-                    source=source_policies.get(row['source_id']), primary_urls=primary_urls):
+                    source=source_policies.get(row['source_id']), primary_urls=primary_urls,
+                    reference=max(reference, datetime.now(timezone.utc)),
+                    category_context=category_contexts.get(row['source_id']), require_fresh_category=True):
                 continue
             from official_headline_corrections import reviewed_headline
             if reviewed_headline(row):
@@ -374,7 +383,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                             (row["source_id"], row["url"], row["sha"])).fetchone()
         import official_release_bridge
         valid = (current and current["title"] == row["title"] and active
-                 and active["lease"] == lease and official_release_bridge.is_current(db, row))
+                 and active["lease"] == lease and official_release_bridge.is_current(db, row, require_fresh_category=True))
         state = "done" if valid else "stale"
         if valid:
             db.execute('''INSERT INTO signal_headline_translations

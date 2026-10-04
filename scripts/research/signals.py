@@ -5,6 +5,7 @@ bodies, not just titles. Documents produce revisions at the same URL. The first
 successful fetch is a baseline, including after errors but not after restarts.
 """
 import argparse
+from copy import deepcopy
 import factual_validation
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
@@ -76,6 +77,10 @@ def fetch(source, validators):
         value = monitor.http_validator(validators.get(key)) if source.get("conditionalRequests", True) else None
         if value:
             headers[header] = value
+    # This private record is derived from the actual outgoing HTTP headers.
+    # A response cannot manufacture conditional category-baseline evidence.
+    request_proof = {'url': url, 'validators': {key: headers[header] for key, header in
+        (('etag', 'If-None-Match'), ('last_modified', 'If-Modified-Since')) if header in headers}}
     try:
         with build_opener(Redirects(source)).open(Request(url, headers=headers), timeout=20) as response:
             content_type = response.headers.get_content_type()
@@ -107,10 +112,12 @@ def fetch(source, validators):
             elif encoding != "identity":
                 raise ValueError("unexpected-signal-content-type")
             return {"body": bytes(body), "etag": monitor.http_validator(response.headers.get("ETag")),
-                    "last_modified": monitor.http_validator(response.headers.get("Last-Modified"))}
+                    "last_modified": monitor.http_validator(response.headers.get("Last-Modified")),
+                    "_effective_url": safe_url(response.geturl() if hasattr(response, "geturl") else url, source)}
     except HTTPError as exc:
         if exc.code == 304:
-            return {"not_modified": True}
+            return {"not_modified": True, "_http_status": 304, "_feed_request": request_proof,
+                    "_effective_url": safe_url(exc.geturl(), source)}
         raise
 
 
@@ -377,6 +384,8 @@ def schema(db):
       CREATE INDEX IF NOT EXISTS signal_route_retry_attempt_time
         ON signal_route_retry_attempts(attempted_at);
     """)
+    import feed_category_admission
+    feed_category_admission.schema(db)
     event_columns = {row[1] for row in db.execute("PRAGMA table_info(signal_events)")}
     if "published_on" not in event_columns:
         db.execute("ALTER TABLE signal_events ADD COLUMN published_on TEXT")
@@ -851,7 +860,14 @@ def save_evidence(db, source, items, response, checked, initial=False):
     return inserted
 
 
-def save(db, source, items, response, checked, config_sha, duration):
+def _category_source_current(source, config_sha, tickers, configured_request):
+    configured = next((item for item in SOURCES if item['id'] == source['id']), None)
+    if (fingerprint(source, tickers) != config_sha or (configured_request and (
+            configured is None or fingerprint(configured, tickers) != config_sha))):
+        raise ValueError('source-identity-changed')
+
+
+def save(db, source, items, response, checked, config_sha, duration, *, category=None, tickers=None):
     route = db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
     initial = not route or not route["initialized"] or (
         route["config_sha"] != config_sha and not (
@@ -864,7 +880,14 @@ def save(db, source, items, response, checked, config_sha, duration):
                      f"article-fetch-failed:{response['article_errors']}"
                      if response.get("article_errors") else None)
     with db:
+        if category is not None:
+            import feed_category_admission
+            db.execute('BEGIN IMMEDIATE')
+            _category_source_current(category['live_source'], config_sha, tickers, category['configured_request'])
+            feed_category_admission.check_request(db, source, tickers, category['request'])
         inserted = save_evidence(db, source, items, response, checked, initial)
+        if category is not None:
+            feed_category_admission.persist_200(db, source, tickers, category['prepared'])
         if source.get('format') == 'x-api' and response.get('cursor_update'):
             cursor = json.loads(response['cursor_update'])
             if not isinstance(cursor, dict) or cursor.get('queryGeneration') != x_api.query_generation(source):
@@ -920,17 +943,34 @@ def check(db, source, tickers, transport=None):
     attempted_at = datetime.now(timezone.utc).isoformat(timespec="milliseconds")
     deferred = False
     config_sha = fingerprint(source, tickers)
+    # Own one immutable request configuration while transport runs unlocked.
+    # Recheck the caller and configured route before any evidence is committed.
+    request_source = deepcopy(source)
+    configured_request = any(configured is source for configured in SOURCES)
+    import feed_category_admission
+    category_required = (source.get('format') == 'feed' and feed_category_admission.required(source))
     started = time.monotonic()
+    category_request = None
     try:
         prepare_x_query_window(db, source)
         require_x_polling_storage(db, source)
-        validators = validators_for(db, source, tickers)
-        response = transport(source, validators) if transport else acquire(source, validators, tickers)
+        validators = validators_for(db, request_source, tickers)
+        category_request = None
+        if category_required:
+            validators = feed_category_admission.conditional_validators(db, request_source, tickers, validators)
+            category_request = feed_category_admission.capture_request(db, request_source, tickers, validators)
+        response = transport(request_source, validators) if transport else acquire(request_source, validators, tickers)
         checked = stamp()
+        if category_required:
+            _category_source_current(source, config_sha, tickers, configured_request)
         if response.get("not_modified"):
             if not validators.get("initialized"):
                 raise ValueError("signal-304-without-baseline")
             with db:
+                if category_required:
+                    db.execute('BEGIN IMMEDIATE')
+                    _category_source_current(source, config_sha, tickers, configured_request)
+                    feed_category_admission.persist_304(db, request_source, tickers, category_request, response, checked)
                 failure_started_at, failure_attempts = route_failure_measurement(
                     db, source["id"], row, None, checked,
                 )
@@ -944,9 +984,18 @@ def check(db, source, tickers, transport=None):
                 ))
                 record_route_transition(db, source["id"], row, None, checked)
             return {"source": source["id"], "status": "unchanged", "events": 0}
-        items = response["_items"] if "_items" in response else parse(source, response["body"], tickers)
-        count = save(db, source, items, response, checked, config_sha,
-                     round((time.monotonic() - started) * 1000))
+        category = None
+        if category_required:
+            prepared = feed_category_admission.prepare(request_source, response['body'], tickers,
+                                                       category_request['head'], checked,
+                                                       effective_url=response.get('_effective_url', request_source['url']))
+            items = prepared['items']
+            category = {'request': category_request, 'prepared': prepared,
+                        'live_source': source, 'configured_request': configured_request}
+        else:
+            items = response["_items"] if "_items" in response else parse(source, response["body"], tickers)
+        count = save(db, request_source, items, response, checked, config_sha,
+                     round((time.monotonic() - started) * 1000), category=category, tickers=tickers)
         return {"source": source["id"], "status": "partial" if response.get("article_errors") or response.get('article_queue_overflow') else "ok",
                 "matchedItems": len(items), "events": count, "pendingArticles": response.get("article_pending", 0),
                 "unadmittedArticles": response.get('article_queue_overflow', 0),
@@ -973,6 +1022,11 @@ def check(db, source, tickers, transport=None):
         return {"source": source["id"], "status": "deferred", "reason": "x-api-paced",
                 "nextCheckAt": retry_at, "events": 0}
     except Exception as exc:
+        if category_required and str(exc) in {'source-identity-changed', 'superseded-feed-response', 'older-feed-response'}:
+            # A slower response cannot replace a newer route's success/error,
+            # validators or category decision. Retry only on its normal schedule.
+            deferred = True
+            return {'source': source['id'], 'status': 'deferred', 'reason': str(exc), 'events': 0}
         checked = stamp()
         failures = min(20, (row["failures"] if row else 0) + 1)
         error = monitor.source_error_code(exc)
@@ -987,6 +1041,14 @@ def check(db, source, tickers, transport=None):
         if isinstance(exc, XApiDailyLimit) and exc.retry_at:
             next_check = exc.retry_at
         with db:
+            if category_required and category_request is not None:
+                db.execute('BEGIN IMMEDIATE')
+                try:
+                    _category_source_current(source, config_sha, tickers, configured_request)
+                    feed_category_admission.check_request(db, request_source, tickers, category_request)
+                except ValueError as stale:
+                    deferred = True
+                    return {'source': source['id'], 'status': 'deferred', 'reason': str(stale), 'events': 0}
             failure_started_at, failure_attempts = route_failure_measurement(
                 db, source["id"], row, error, checked,
             )
@@ -2100,6 +2162,7 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
         if not row['source_id'].startswith(official_release_bridge.PREFIX)])
     rows = [row for row in rows if row['source_id'].startswith(official_release_bridge.PREFIX)
             or row['url'] not in primary_urls]
+    category_contexts = official_release_bridge.category_contexts(db, rows, sources=allowed.values())
     # A baseline can insert newest-first API results in reverse database-ID order.
     rows = sorted(rows, key=release_order, reverse=True)
     items, seen = [], set()
@@ -2107,7 +2170,8 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
     scan_complete=False
     for row in rows:
         source = allowed[row['source_id']]
-        if not official_release_bridge.is_current(db, row, source=source, primary_urls=primary_urls):
+        if not official_release_bridge.is_current(db, row, source=source, primary_urls=primary_urls,
+                reference=current, category_context=category_contexts.get(row['source_id'])):
             continue
         if source['id'] != 'bea-pce' and not news_policy.eligible(row['title']):
             continue
@@ -2190,13 +2254,19 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
                 translation['translationJa'], display_title))
         if include_bodies:
             from official_research import public_story_body
-            translation.update(public_story_body(db, row, primary_urls=primary_urls))
+            translation.update(public_story_body(db, row, primary_urls=primary_urls, reference=current,
+                category_context=category_contexts.get(row['source_id'])))
         item={'id': str(row['id']), 'title': display_title, 'url': url,
               'publisher': source['name'], 'tickers': tickers,
               'observedAt': observed.isoformat(), **publication, **translation}
         if source_snapshots is not None:
             source_snapshots[item['id']] = official_release_bridge.bind_source_policy(
-                {key: row[key] for key in official_release_bridge.EVENT_IDENTITY_FIELDS}, source)
+                {key: row[key] for key in official_release_bridge.EVENT_IDENTITY_FIELDS}, source, db=db,
+                reference=current, category_context=category_contexts.get(row['source_id']))
+        import feed_category_admission
+        if feed_category_admission.required(source):
+            item['categoryEvidence'] = feed_category_admission.decision(db, source, list(ALIASES), row, current,
+                context=category_contexts.get(row['source_id']))['evidence']
         items.append(item)
         if row['source_id'] in issuer_context_ids:issuer_context.append(item)
         if len(items) == limit:

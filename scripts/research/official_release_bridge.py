@@ -17,7 +17,8 @@ VERTIV_DATELINE_LIMIT = 12000
 # These newly admitted routes cannot downgrade to legacy headline-only policy
 # by removing a configuration flag. This is source scope, never article scope.
 CURRENT_DOCUMENT_SOURCES = frozenset({'microsoft-blog'})
-POLICY_FIELDS = ('id', 'enabled', 'kind', 'officialUpdates', 'requireCurrentDocument', 'allowedHosts', 'tickers')
+POLICY_FIELDS = ('id', 'enabled', 'kind', 'officialUpdates', 'requireCurrentDocument', 'allowedHosts', 'tickers', 'publisherArticleCategories',
+                 'articleBodyClass', 'url', 'format')
 EVENT_IDENTITY_FIELDS = ('id', 'source_id', 'url', 'sha', 'title', 'published_at', 'published_on',
                          'observed_at', 'tickers_json', 'event_kind', 'truncated')
 
@@ -119,14 +120,21 @@ def source_policy(source):
     return json.dumps({key: source.get(key) for key in POLICY_FIELDS}, sort_keys=True) if source else None
 
 
-def bind_source_policy(row, source=None):
+def bind_source_policy(row, source=None, *, db=None, reference=None, category_context=None, article_refresh=False):
     """Carry a private admission snapshot through unlocked fetch/model work."""
     if source is None:
         import signals
         source = next((s for s in signals.SOURCES if s['id'] == row['source_id']), None)
     result = dict(row)
-    if row['source_id'] in CURRENT_DOCUMENT_SOURCES or (source and source.get('requireCurrentDocument')):
+    import feed_category_admission as categories
+    if (row['source_id'] in CURRENT_DOCUMENT_SOURCES or categories.required(source, row['source_id'])
+            or (source and source.get('requireCurrentDocument'))):
         result['_publication_source_policy'] = source_policy(source)
+    if categories.required(source, row['source_id']):
+        import signals
+        decision = categories.decision(db, source, list(signals.ALIASES), row,
+            reference or datetime.now(timezone.utc), context=category_context, article_refresh=article_refresh) if db is not None and source else {}
+        result['_publication_category_token'] = decision.get('token')
     return result
 
 
@@ -150,7 +158,9 @@ def matches_public_snapshot(row, item, reference):
                 return False
     except (ValueError, TypeError, KeyError):
         return False
-    if row['source_id'] not in CURRENT_DOCUMENT_SOURCES and '_publication_source_policy' not in row.keys():
+    import feed_category_admission as categories
+    if (row['source_id'] not in CURRENT_DOCUMENT_SOURCES and not categories.required(source, row['source_id'])
+            and '_publication_source_policy' not in row.keys()):
         return True
     if not item or not news_policy.eligible(row['title']):
         return False
@@ -177,7 +187,20 @@ def matches_public_snapshot(row, item, reference):
         return False
 
 
-def is_current(db, row, *, source=None, primary_urls=None):
+def category_contexts(db, rows, *, sources=None):
+    """Read each category snapshot once per bounded projection/transaction."""
+    import signals
+    import feed_category_admission as categories
+    configured = {source['id']: source for source in (signals.SOURCES if sources is None else sources)
+                  if categories.required(source)}
+    return {source_id: categories.read_context(db, source, list(signals.ALIASES),
+                [row for row in rows if row['source_id'] == source_id])
+            for source_id, source in configured.items()
+            if any(row['source_id'] == source_id for row in rows)}
+
+
+def is_current(db, row, *, source=None, primary_urls=None, reference=None, category_context=None,
+               require_fresh_category=False, article_refresh=False):
     if not row['source_id'].startswith(PREFIX):
         if primary_urls is None:
             primary_urls = primary_owned_urls(db, [row['url']])
@@ -186,7 +209,10 @@ def is_current(db, row, *, source=None, primary_urls=None):
         if source is None:
             import signals
             source = next((s for s in signals.SOURCES if s['id'] == row['source_id']), None)
-        requires_document = (row['source_id'] in CURRENT_DOCUMENT_SOURCES
+        import feed_category_admission as categories
+        requires_category = (categories.required(source, row['source_id'])
+                             or '_publication_category_token' in row.keys())
+        requires_document = (requires_category or row['source_id'] in CURRENT_DOCUMENT_SOURCES
                              or '_publication_source_policy' in row.keys()
                              or (source and source.get('requireCurrentDocument')))
         if requires_document:
@@ -201,6 +227,15 @@ def is_current(db, row, *, source=None, primary_urls=None):
                     or ('_publication_source_policy' in row.keys()
                         and row['_publication_source_policy'] != source_policy(source))):
                 return False
+            if requires_category:
+                decision = categories.decision(db, source, list(signals.ALIASES), row,
+                    reference or datetime.now(timezone.utc), primary_owned_urls=primary_urls,
+                    expected_token=(row['_publication_category_token']
+                        if '_publication_category_token' in row.keys() else None), context=category_context,
+                    require_fresh=require_fresh_category, article_refresh=article_refresh)
+                if (not decision['admitted'] or ('_publication_category_token' in row.keys()
+                        and row['_publication_category_token'] is None)):
+                    return False
             # Newly admitted issuer feeds must retain their own current source
             # identity. No body/copy proof is inherited from an exact-URL peer.
             current = db.execute('''SELECT d.sha,d.title FROM signal_documents d
