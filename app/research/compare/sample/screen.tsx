@@ -25,7 +25,7 @@ export default function SampleScreen({sample}:{sample:ComparisonResult}) {
         <h2>{assessment.title}</h2>
         <p>{assessment.description}</p>
       </section>
-      <div className={styles.companyCards}>{companies.map(c=><CompanyScoreCard key={c.ticker} company={c} lang={lang} now={now}/>)}</div>
+      <div className={styles.companyCards}>{companies.map((c,i)=><CompanyScoreCard colorIndex={i} key={c.ticker} company={c} lang={lang} now={now}/>)}</div>
       <ScoreOverview companies={companies} lang={lang} now={now}/>
       <details className={styles.analysisDetails}>
         <summary>{ja?"長所・短所の詳細":"Strengths and weaknesses in detail"}</summary>
