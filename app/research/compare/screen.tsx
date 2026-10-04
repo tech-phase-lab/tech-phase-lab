@@ -9,7 +9,7 @@ import { comparisonCatalog } from "@/lib/research/comparison-catalog";
 import type { ComparisonResult, Fact } from "@/lib/research/comparison";
 import styles from "./styles.module.css";
 import TickerSearch from "./ticker-search";
-import { comparisonScores, radarPoint, quarterlyTakeaway } from "@/lib/research/comparison-scorecard";
+import { comparisonScores, comparisonMetric, hasRecentQuarter, radarPoint, quarterlyTakeaway } from "@/lib/research/comparison-scorecard";
 import { comparisonChoices, enterChoice, moveChoice } from "@/lib/research/comparison-selection";
 const percent = (n: number | null) => n === null ? "—" : `${n.toFixed(1)}%`;
 function money(f: Fact | null, lang: string) { return f ? `${new Intl.NumberFormat(lang === "ja" ? "ja-JP" : "en-US", { notation: "compact", maximumFractionDigits: 2 }).format(f.value)} ${f.unit}` : "—"; }
@@ -20,13 +20,13 @@ function StatusChart({companies,lang,now}: {companies:ComparisonResult["companie
   const available=sets.some(scores=>scores.some(s=>s.value!==null));
   return <div className={styles.statusChart}>
     <div className={styles.statusLegend}>{companies.map((c,i)=><span key={c.ticker} style={{color:companyColors[i]}}>{c.ticker}</span>)}</div>
-    <svg viewBox="0 0 300 300" role="img" aria-label={lang==="ja" ? "企業ステータス比較。未取得の項目は描画しません。" : "Company status comparison. Missing factors are not plotted."}>
+    <svg viewBox="0 0 300 300" role="img" aria-label={lang==="ja" ? "企業ステータス比較。未取得の項目は描画しません。" : "Company status comparison. Unavailable or unscored factors are not plotted."}>
       {[2,4,6,8,10].map(level=><polygon key={level} points={factors.map((_,i)=>radarPoint(level,i,factors.length)).join(" ")} fill="none" stroke="#435b60" strokeOpacity=".55"/>)}
       {factors.map((f,i)=>{const [x,y]=radarPoint(10,i,factors.length)!.split(","),angle=-Math.PI/2+i*2*Math.PI/factors.length;return <g key={f.id}><line x1="150" y1="150" x2={x} y2={y} stroke="#435b60" strokeOpacity=".5"/><text x={150+Math.cos(angle)*119} y={154+Math.sin(angle)*111} textAnchor="middle" fill="#b3c6c4" fontSize="11">{labels[i]}</text></g>;})}
-      {sets.map((scores,cIndex)=>{const points=scores.map((s,i)=>radarPoint(s.value,i,scores.length));return <g key={companies[cIndex].ticker} fill={companyColors[cIndex]} stroke={companyColors[cIndex]}>{points.every(p=>p!==null) && <polygon points={points.join(" ")} fillOpacity=".12" strokeWidth="1.6"/>}{points.map((point,i)=>point===null ? null : <circle key={scores[i].id} cx={point.split(",")[0]} cy={point.split(",")[1]} r={4+cIndex} fillOpacity=".7" strokeWidth="1"><title>{companies[cIndex].ticker} {scores[i].label[lang]}: {scores[i].value}/10</title></circle>)}</g>;})}
+      {sets.map((scores,cIndex)=>{const points=scores.map((s,i)=>radarPoint(s.value,i,scores.length));return <g key={companies[cIndex].ticker} fill={companyColors[cIndex]} stroke={companyColors[cIndex]}>{points.every(p=>p!==null) && <polygon points={points.join(" ")} fillOpacity=".12" strokeWidth="1.6"/>}{points.map((point,i)=>point!==null && points[(i+1)%points.length]!==null ? <line key={`edge-${i}`} x1={point.split(",")[0]} y1={point.split(",")[1]} x2={points[(i+1)%points.length]!.split(",")[0]} y2={points[(i+1)%points.length]!.split(",")[1]} strokeWidth="1.6"/> : null)}{points.map((point,i)=>point===null ? null : <circle key={scores[i].id} cx={point.split(",")[0]} cy={point.split(",")[1]} r={4+cIndex} fillOpacity=".7" strokeWidth="1"><title>{companies[cIndex].ticker} {scores[i].label[lang]}: {scores[i].value}/10</title></circle>)}</g>;})}
       {!available && <text x="150" y="154" textAnchor="middle" fill="#b2c2c7" fontSize="12">{lang==="ja" ? "データ未取得" : "Data unavailable"}</text>}
     </svg>
-    <p className={styles.snapshotNote}>{lang==="ja" ? "未取得の項目は非表示" : "Missing factors are not plotted"}</p>
+    <p className={styles.snapshotNote}>{lang==="ja" ? "未取得・評価保留は描画しません" : "Unavailable or unscored factors are not plotted"}</p>
   </div>;
 }
 function ScoreOverview({companies,lang,now}: {companies:ComparisonResult["companies"];lang:"ja"|"en";now:number}) {
@@ -34,15 +34,16 @@ function ScoreOverview({companies,lang,now}: {companies:ComparisonResult["compan
   return <section className={styles.scoreOverview}><div className={styles.scoreHeading}><h2>{ja ? "比較スナップショット" : "Comparison snapshot"}</h2><small>{ja ? "参考スコア / 10" : "Reference score / 10"}</small></div>
     <table className={styles.snapshotTable} style={{"--companies":companies.length} as React.CSSProperties}><caption className={styles.srOnly}>{ja ? "各項目の企業別スコア" : "Company scores by factor"}</caption>
       <thead><tr><th scope="col">{ja ? "項目" : "Factor"}</th>{companies.map((c,i)=><th key={c.ticker} scope="col" data-company={i}><span className={styles.snapshotTicker}>{c.ticker}</span></th>)}</tr></thead>
-      <tbody>{factors.map((f,index)=><tr key={f.id}><th scope="row">{f.label[lang]}</th>{companies.map((c,i)=>{const score=scoreSets[i][index];const values=scoreSets.map(set=>set[index].value);const winner=values.every(v=>v!==null) && score.value!==null && values.some(v=>v!<score.value!) && score.value===Math.max(...values as number[]);return <td key={c.ticker} data-winner={winner}><div className={styles.snapshotValue}><span className={styles.scoreTrack} aria-hidden="true">{score.value!==null && <i data-company={i} style={{width:`${score.value*10}%`}}/>}</span><strong>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div>{c.referenceEvaluation && <small className={styles.factorMetric}>{c.referenceEvaluation.factors.find(f=>f.id===score.id)?.metric[lang]}</small>}</td>;})}</tr>)}</tbody>
-    </table><p className={styles.snapshotNote}>{ja ? "— 未取得" : "— Unavailable"}</p>
+      <tbody>{factors.map((f,index)=><tr key={f.id}><th scope="row">{f.label[lang]}</th>{companies.map((c,i)=>{const score=scoreSets[i][index];const values=scoreSets.map(set=>set[index].value);const winner=values.every(v=>v!==null) && score.value!==null && values.some(v=>v!<score.value!) && score.value===Math.max(...values as number[]);return <td key={c.ticker} data-winner={winner}><div className={styles.snapshotValue}><span className={styles.scoreTrack} aria-hidden="true">{score.value!==null && <i data-company={i} style={{width:`${score.value*10}%`}}/>}</span><strong>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div><small className={styles.factorMetric}>{comparisonMetric(c,score.id,lang,now)}</small></td>;})}</tr>)}</tbody>
+    </table><p className={styles.snapshotNote}>{ja ? "— 未取得・評価保留（0点ではありません）" : "— Unavailable or unscored, not zero"}</p>
   </section>;
 }
 function CompanyScoreCard({company:c,lang,now}: {company:ComparisonResult["companies"][number];lang:"ja"|"en";now:number}) {
-  const items=c.preparedAnalysis?.items ?? [], ja=lang==="ja";
+  const items=hasRecentQuarter(c,now) ? c.preparedAnalysis?.items ?? [] : [], ja=lang==="ja";
   const highlights={strengths:items.filter(i=>i.kind==="strength").map(i=>i.short[lang]),weaknesses:items.filter(i=>i.kind==="weakness").map(i=>i.short[lang])};
   return <article className={styles.scoreCard}>
     <header className={styles.companyHeading}><h3 title={`${c.name}（${c.ticker}）`}>{c.name}（{c.ticker}）</h3><span>{c.referenceEvaluation ? `${ja ? "決算発表" : "Released"} ${c.referenceEvaluation.announced}${ja ? "（米国）" : " (US)"}` : c.quarterRevenue ? `${ja ? "決算期末" : "Period ended"} ${c.quarterRevenue.end}` : ja ? "四半期未取得" : "Quarter unavailable"}</span></header>
+    {c.quarterRevenue && <p className={styles.periodLine}>{ja ? "対象期間" : "Reporting period"} {c.quarterRevenue.start ?? "—"} – {c.quarterRevenue.end}</p>}
     <div className={styles.companyProfile}>
       <div className={styles.traitBoxes}>
         <section className={styles.traitBox} aria-label={ja ? "長所" : "Strengths"}>
@@ -192,20 +193,20 @@ export default function ComparisonScreen() {
         <div className={styles.submit}><small>{selection.filter(Boolean).length} / 3 {t("社を選択", "selected")}</small><button disabled={busy || !selection[0] || !selection[1]} onClick={() => void compare()}>{busy ? t("精査中…", "Analyzing…") : t("この銘柄を比較する", "Compare these stocks")}</button></div>
         <p className={styles.note}>{t("SEC開示を比較。割安評価は株価データ接続後に対応。", "Compare SEC filings. Valuation awaits price data.")}</p>
       </section>
-      <button type="button" className={styles.trialButton} disabled={busy} onClick={()=>void compare(true)}>{t("MU・SNDK 実データ比較 · 10/4", "MU / SNDK data trial · Oct 4")}</button>
+      <button type="button" className={styles.trialButton} disabled={busy} onClick={()=>void compare(true)}>{t("MU・SNDK 保存データで試す · 10/4", "MU / SNDK saved snapshot · Oct 4")}</button>
       <TickerSearch lang={lang} selection={selection} onSelect={selectCompany} />
       </>}
       {busy && <div className={styles.loading} role="status"><span className={styles.spinner} aria-hidden="true"/><strong>{t("開示資料と比較条件を精査中…", "Checking filings and comparability…")}</strong><p>{t("期間・通貨・会計基準を確認しています。初回は時間がかかる場合があります。", "Checking periods, currencies and accounting bases. The first request may take longer.")}</p></div>}
       {error && <p role="alert">{t("比較結果を取得できませんでした。選択は残っています。もう一度お試しください。", "Could not retrieve the comparison. Your selection is saved; please try again.")}</p>}
       {result && <div ref={conclusion} tabIndex={-1} className={`${styles.results} ${styles.resultView}`}>
         <button type="button" className={styles.backToCompare} onClick={()=>{setResult(null);requestAnimationFrame(()=>{picker.current?.scrollIntoView({block:"start",behavior:"instant"});picker.current?.focus({preventScroll:true});});}}>{t("▶ 銘柄比較PROに戻る", "▶ Back to Compare PRO")}</button>
-        <section className={styles.conclusion} aria-label={t("結果", "Results")}><p className={styles.eyebrow}>{t("結果", "RESULTS")}</p><h2>{result.trial ? result.conclusion[lang] : quarterlyTakeaway(result.companies,lang,Date.parse(result.generatedAt))}</h2><p>{result.trial ? result.trial.description[lang] : t("割安度：最新株価・PER・PEGの接続待ち。", "Valuation awaits current price, P/E and PEG data.")}</p>{result.reasons.length > 0 && <details><summary>{t("比較条件・注意点", "Comparison caveats")}</summary><ul>{result.reasons.map(r => <li key={r.en}>{r[lang]}</li>)}</ul></details>}<small>{t("比較作成", "Compared at")}: {new Date(result.generatedAt).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo" })} JST</small></section>
+        <section className={styles.conclusion} aria-label={t("結果", "Results")}><p className={styles.eyebrow}>{t("結果", "RESULTS")}</p><h2>{result.trial ? result.conclusion[lang] : quarterlyTakeaway(result.companies,lang,Date.parse(result.generatedAt))}</h2><p>{result.trial ? result.trial.description[lang] : t("割安度：最新株価・PER・PEGの接続待ち。", "Valuation awaits current price, P/E and PEG data.")}</p>{result.reasons.length > 0 && <details><summary>{t("比較条件・注意点", "Comparison caveats")}</summary><ul>{result.reasons.map(r => <li key={r.en}>{r[lang]}</li>)}</ul></details>}<small>{result.trial && <>{t("保存データ · 自動更新なし", "Saved snapshot · not auto-updated")} · </>}{t("比較作成", "Compared at")}: {new Date(result.generatedAt).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo" })} JST</small></section>
         <div className={styles.companyCards}>{result.companies.map(c=><CompanyScoreCard key={c.ticker} company={c} lang={lang} now={Date.parse(result.generatedAt)}/>)}</div><ScoreOverview companies={result.companies} lang={lang} now={Date.parse(result.generatedAt)}/>
         {result.companies.some(c=>c.preparedAnalysis?.items.length) && <details className={styles.analysisDetails}>
           <summary>{t("長所・短所の詳しい根拠", "Evidence behind strengths and weaknesses")}</summary>
           {result.companies.filter(c=>c.preparedAnalysis?.items.length).map(c=><section key={c.ticker}>
             <h3>{c.name}（{c.ticker}）</h3>
-            <small>{t("四半期", "Quarter")} {c.preparedAnalysis!.periodEnd}</small>
+            <small>{t("決算期末", "Period ended")} {c.preparedAnalysis!.periodEnd}</small>
             <ul>{c.preparedAnalysis!.items.map(item=><li key={item.id}><strong data-kind={item.kind}>{item.short[lang]}</strong><p>{item.detail[lang]}</p></li>)}</ul>
             <a href={c.preparedAnalysis!.sourceUrl} target="_blank" rel="noreferrer">{t("決算資料", "Financial filing")}</a>
           </section>)}

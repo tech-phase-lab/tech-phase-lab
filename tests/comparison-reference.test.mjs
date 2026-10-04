@@ -4,9 +4,9 @@ import input from '../fixtures/research/mu-sndk-20261004.json' with {type:'json'
 import {evaluateReference} from '../lib/research/comparison-reference.ts';
 import {buildReviewedTrial} from '../lib/research/comparison-trial.ts';
 import {comparisonScores} from '../lib/research/comparison-scorecard.ts';
-test('reviewed actual dataset has seven finite factors and correct company-column ordering',()=>{
+test('reviewed actual dataset has seven factors with unsupported judgments left unscored and correct company-column ordering',()=>{
  const r=buildReviewedTrial(['SNDK','MU']);assert.deepEqual(r.companies.map(c=>c.ticker),['SNDK','MU']);
- for(const c of r.companies){const scores=comparisonScores(c);assert.equal(scores.length,7);assert.ok(scores.every(s=>Number.isFinite(s.value)&&s.value>=0&&s.value<=10));assert.ok(scores.every(s=>s.value<10));}
+ for(const c of r.companies){const scores=comparisonScores(c,Date.parse(input.asOf));assert.equal(scores.length,7);assert.equal(scores.filter(s=>s.value===null).length,2);assert.ok(scores.filter(s=>s.value!==null).every(s=>Number.isFinite(s.value)&&s.value>=0&&s.value<10));assert.equal(scores.find(s=>s.id==="valuation").value,null);assert.equal(scores.find(s=>s.id==="stability").value,null);}
  assert.equal(buildReviewedTrial(['MU','MU']),null);assert.equal(buildReviewedTrial(['MU','TSM']),null);
  const mu=r.companies[1];assert.equal(mu.quarterRevenue.value,54229000000);assert.equal(mu.referenceEvaluation.announced,'2026-09-30');assert.equal(mu.quarterRevenue.end,'2026-09-03');assert.equal(mu.preparedAnalysis.method,'reviewed');
 });

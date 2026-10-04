@@ -3,12 +3,17 @@ export type ScoreId = "valuation" | "growth" | "profitability" | "financial" | "
 export type ComparisonScore = { id: ScoreId; label: {ja:string;en:string}; value: number | null };
 const clamp = (n:number) => Math.round(Math.max(0,Math.min(10,n))*10)/10;
 const finite = (n: unknown): n is number => typeof n === "number" && Number.isFinite(n);
+export function hasRecentQuarter(c: Financials, now = Date.now()): boolean {
+  return c.status === "ready" && !!c.quarterRevenue && now-Date.parse(c.quarterRevenue.end)>=0
+    && now-Date.parse(c.quarterRevenue.end)<=180*86400000
+    && !c.dataWarnings?.some(w=>w.en.includes("quarterly filing") || w.en.includes("earnings release") || w.en.includes("could not be checked"));
+}
 /** Reference scale, not an industry percentile or a buy recommendation.
  * Annual numbers never fill a missing quarterly score. Quote/forecast
  * valuation stays unavailable until a licensed, timestamped feed is connected.
  */
 export function comparisonScores(c: Financials, now = Date.now()): ComparisonScore[] {
-  const recent = c.quarterRevenue && now-Date.parse(c.quarterRevenue.end)>=0 && now-Date.parse(c.quarterRevenue.end)<=180*86400000 && !c.dataWarnings?.some(w=>w.en.includes("quarterly filing") || w.en.includes("earnings release") || w.en.includes("could not be checked"));
+  const recent = hasRecentQuarter(c, now);
   const growth = recent && finite(c.quarterRevenueGrowth) ? clamp(5+c.quarterRevenueGrowth/10) : null;
   const profitability = recent && finite(c.quarterOperatingMargin) ? clamp(c.quarterOperatingMargin/5) : null;
   const balance=c.balance;
@@ -26,8 +31,21 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
     {id:"growth",label:{ja:"成長性",en:"Growth"},value:growth},
     {id:"cash",label:{ja:"資金創出",en:"Cash generation"},value:cash},
   ];
-  if(c.referenceEvaluation) return scores.map(s=>({...s,value:c.referenceEvaluation!.factors.find(f=>f.id===s.id)?.value ?? null}));
+  if(c.referenceEvaluation) return scores.map(s=>({...s,value:recent ? c.referenceEvaluation!.factors.find(f=>f.id===s.id)?.value ?? null : null}));
   return scores;
+}
+
+/** Display actual measurements beside the reference bars, including unscored factors. */
+export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", now=Date.now()): string {
+  if(!hasRecentQuarter(c,now)) return lang==="ja" ? "最新値未確認" : "Latest value unverified";
+  const reference=c.referenceEvaluation?.factors.find(f=>f.id===id);
+  if(reference) return reference.metric[lang];
+  const ja=lang==="ja";
+  if(id==="growth" && finite(c.quarterRevenueGrowth)) return `${ja?"売上前年比":"Revenue YoY"} ${c.quarterRevenueGrowth>0?"+":""}${c.quarterRevenueGrowth.toFixed(1)}%`;
+  if(id==="profitability" && finite(c.quarterOperatingMargin)) return `${ja?"営業利益率":"Operating margin"} ${c.quarterOperatingMargin.toFixed(1)}%`;
+  if(id==="cash" && finite(c.quarterFcfMargin)) return `${ja?"簡易FCF率":"Simple FCF margin"} ${c.quarterFcfMargin.toFixed(1)}%`;
+  if(id==="financial" && c.balance?.end===c.quarterRevenue?.end && finite(c.balance?.currentRatio)) return `${ja?"流動比率":"Current ratio"} ${c.balance.currentRatio.toFixed(2)}${ja?"倍":"×"}`;
+  return ja ? "必要データ未取得" : "Required data unavailable";
 }
 
 /** Missing factors must never improve the composite by being omitted. */
@@ -55,8 +73,12 @@ export function quarterlyHighlights(c: Financials, lang: "ja"|"en", now=Date.now
   return {strengths,weaknesses};
 }
 export function quarterlyTakeaway(companies: (Financials & {ticker:string})[], lang:"ja"|"en", now=Date.now()) {
+  if(companies.length<2) return lang==="ja" ? "比較には2社以上のデータが必要です。" : "At least two companies are needed.";
   const usable=companies.filter(c=>comparisonScores(c,now).find(s=>s.id==="growth")?.value!==null && finite(c.quarterRevenueGrowth) && finite(c.quarterOperatingMargin));
   if(usable.length!==companies.length) return lang==="ja" ? "直近四半期のデータが揃っている会社から比較できます。" : "Compare companies with available recent quarterly results.";
+  const ends=usable.map(c=>Date.parse(c.quarterRevenue!.end));
+  if(Math.max(...ends)-Math.min(...ends)>100*86400000 || new Set(usable.map(c=>c.quarterRevenue!.basis)).size>1)
+    return lang==="ja" ? "決算期間・会計基準が異なるため、数値を個別に確認してください。" : "Review figures individually: reporting periods or accounting bases differ.";
   const growth=[...usable].sort((a,b)=>b.quarterRevenueGrowth!-a.quarterRevenueGrowth!);
   const margins=[...usable].sort((a,b)=>b.quarterOperatingMargin!-a.quarterOperatingMargin!);
   const growthLead=growth.length>1 && growth[0].quarterRevenueGrowth!>growth[1].quarterRevenueGrowth!+.1;

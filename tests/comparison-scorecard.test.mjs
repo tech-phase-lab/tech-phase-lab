@@ -36,3 +36,17 @@ test('concise strengths and weaknesses do not label losses, negative growth or f
  const summary=quarterlyTakeaway([company(),company({ticker:'BBB',quarterRevenueGrowth:40,quarterOperatingMargin:10})],'ja',now);
  assert.match(summary,/売上成長率はBBB/);assert.match(summary,/営業利益率はAAA/);assert.doesNotMatch(summary,/割安|買い/);
 });
+
+test('measurements preserve signs and do not expose stale or failed-source data as current', async()=>{
+ const {comparisonMetric}=await import('../lib/research/comparison-scorecard.ts');
+ assert.equal(comparisonMetric(company({quarterRevenueGrowth:-12.34}),'growth','ja',now),'売上前年比 -12.3%');
+ assert.equal(comparisonMetric(company({quarterOperatingMargin:0}),'profitability','en',now),'Operating margin 0.0%');
+ assert.equal(comparisonMetric(company({status:'unavailable'}),'growth','ja',now),'最新値未確認');
+ assert.ok(comparisonScores(company({status:'unavailable'}),now).every(s=>s.value===null));
+ assert.equal(comparisonMetric(company({balance:{end:'2025-12-31',currentRatio:2}}),'financial','en',now),'Required data unavailable');
+});
+test('empty comparisons and different accounting bases cannot produce a winner',()=>{
+ assert.doesNotMatch(quarterlyTakeaway([],'en',now),/leads|close/);
+ const result=quarterlyTakeaway([company(),company({ticker:'BBB',quarterRevenue:{...fact,basis:'ifrs-full'},quarterRevenueGrowth:80})],'ja',now);
+ assert.match(result,/会計基準/);assert.doesNotMatch(result,/上回/);
+});
