@@ -195,7 +195,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
         {tab === "home" && <>
           <ResearchPulse lang={lang} />
           <HomeTools lang={lang} onChanges={() => openView("changes")} onPro={() => openView("pro")} />
-          <Link className={styles.watchEntry} href="/research#monitored-companies" onClick={() => openView("companies")}><span><small>COMPANY WATCH</small><strong>{t("監視22銘柄", "22-stock watch")}</strong></span><span>{t("企業ごとの動きを見る", "Follow company changes")} <b aria-hidden="true">›</b></span></Link>
+          <Link className={styles.watchEntry} href="/research#monitored-companies" onClick={event => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); openView("companies"); }}><span><small>COMPANY WATCH</small><strong>{t("監視22銘柄", "22-stock watch")}</strong></span><span>{t("企業ごとの動きを見る", "Follow company changes")} <b aria-hidden="true">›</b></span></Link>
           <NewsFeed lang={lang} initialNews={initialNews} />
           <HomeHelp lang={lang} />
         </>}
