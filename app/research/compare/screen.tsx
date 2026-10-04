@@ -9,7 +9,7 @@ import { comparisonCatalog } from "@/lib/research/comparison-catalog";
 import type { ComparisonResult, Fact } from "@/lib/research/comparison";
 import styles from "./styles.module.css";
 import TickerSearch from "./ticker-search";
-import { comparisonScores, comparisonMetric, hasRecentQuarter, radarPoint, quarterlyTakeaway } from "@/lib/research/comparison-scorecard";
+import { comparisonScores, comparisonMetric, comparisonLeaders, comparisonAvailability, hasRecentQuarter, radarPoint, quarterlyTakeaway } from "@/lib/research/comparison-scorecard";
 import { comparisonChoices, enterChoice, moveChoice } from "@/lib/research/comparison-selection";
 const percent = (n: number | null) => n === null ? "—" : `${n.toFixed(1)}%`;
 function money(f: Fact | null, lang: string) { return f ? `${new Intl.NumberFormat(lang === "ja" ? "ja-JP" : "en-US", { notation: "compact", maximumFractionDigits: 2 }).format(f.value)} ${f.unit}` : "—"; }
@@ -34,25 +34,27 @@ function ScoreOverview({companies,lang,now}: {companies:ComparisonResult["compan
   return <section className={styles.scoreOverview}><div className={styles.scoreHeading}><h2>{ja ? "比較スナップショット" : "Comparison snapshot"}</h2><small>{ja ? "参考スコア / 10" : "Reference score / 10"}</small></div>
     <table className={styles.snapshotTable} style={{"--companies":companies.length} as React.CSSProperties}><caption className={styles.srOnly}>{ja ? "各項目の企業別スコア" : "Company scores by factor"}</caption>
       <thead><tr><th scope="col">{ja ? "項目" : "Factor"}</th>{companies.map((c,i)=><th key={c.ticker} scope="col" data-company={i}><span className={styles.snapshotTicker}>{c.ticker}</span></th>)}</tr></thead>
-      <tbody>{factors.map((f,index)=><tr key={f.id}><th scope="row">{f.label[lang]}</th>{companies.map((c,i)=>{const score=scoreSets[i][index];const values=scoreSets.map(set=>set[index].value);const winner=values.every(v=>v!==null) && score.value!==null && values.some(v=>v!<score.value!) && score.value===Math.max(...values as number[]);return <td key={c.ticker} data-winner={winner}><div className={styles.snapshotValue}><span className={styles.scoreTrack} aria-hidden="true">{score.value!==null && <i data-company={i} style={{width:`${score.value*10}%`}}/>}</span><strong>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div><small className={styles.factorMetric}>{comparisonMetric(c,score.id,lang,now)}</small></td>;})}</tr>)}</tbody>
+      <tbody>{factors.map((f,index)=><tr key={f.id}><th scope="row">{f.label[lang]}</th>{companies.map((c,i)=>{const score=scoreSets[i][index];const winner=comparisonLeaders(companies,f.id,now)[i];return <td key={c.ticker} data-winner={winner}><div className={styles.snapshotValue}><span className={styles.scoreTrack} aria-hidden="true">{score.value!==null && <i data-company={i} style={{width:`${score.value*10}%`}}/>}</span><strong>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div><small className={styles.factorMetric}>{comparisonMetric(c,score.id,lang,now)}</small></td>;})}</tr>)}</tbody>
     </table><p className={styles.snapshotNote}>{ja ? "— 未取得・評価保留（0点ではありません）" : "— Unavailable or unscored, not zero"}</p>
   </section>;
 }
 function CompanyScoreCard({company:c,lang,now}: {company:ComparisonResult["companies"][number];lang:"ja"|"en";now:number}) {
   const items=hasRecentQuarter(c,now) ? c.preparedAnalysis?.items ?? [] : [], ja=lang==="ja";
+  const availability=comparisonAvailability(c,lang,now);
   const highlights={strengths:items.filter(i=>i.kind==="strength").map(i=>i.short[lang]),weaknesses:items.filter(i=>i.kind==="weakness").map(i=>i.short[lang])};
   return <article className={styles.scoreCard}>
     <header className={styles.companyHeading}><h3 title={`${c.name}（${c.ticker}）`}>{c.name}（{c.ticker}）</h3><span>{c.referenceEvaluation ? `${ja ? "決算発表" : "Released"} ${c.referenceEvaluation.announced}${ja ? "（米国）" : " (US)"}` : c.quarterRevenue ? `${ja ? "決算期末" : "Period ended"} ${c.quarterRevenue.end}` : ja ? "四半期未取得" : "Quarter unavailable"}</span></header>
     {c.quarterRevenue && <p className={styles.periodLine}>{ja ? "対象期間" : "Reporting period"} {c.quarterRevenue.start ?? "—"} – {c.quarterRevenue.end}</p>}
+    {availability && <p className={styles.periodLine}>{availability}</p>}
     <div className={styles.companyProfile}>
       <div className={styles.traitBoxes}>
         <section className={styles.traitBox} aria-label={ja ? "長所" : "Strengths"}>
           <h4>{ja ? "長所" : "Strengths"}</h4>
-          {highlights.strengths.length ? <ul>{highlights.strengths.map(item=><li key={item} title={item}>{item}</li>)}</ul> : <p>{ja ? "判定に必要なデータが不足" : "Insufficient data"}</p>}
+          {highlights.strengths.length ? <ul>{highlights.strengths.map(item=><li key={item} title={item}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "確認できた項目なし" : "No points identified"}</p>}
         </section>
         <section className={`${styles.traitBox} ${styles.weaknessBox}`} aria-label={ja ? "短所" : "Weaknesses"}>
           <h4>{ja ? "短所" : "Weaknesses"}</h4>
-          {highlights.weaknesses.length ? <ul>{highlights.weaknesses.map(item=><li key={item} title={item}>{item}</li>)}</ul> : <p>{ja ? "この実績だけでは特定できません" : "Not established by these results alone"}</p>}
+          {highlights.weaknesses.length ? <ul>{highlights.weaknesses.map(item=><li key={item} title={item}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "確認できた項目なし" : "No points identified"}</p>}
         </section>
       </div>
       <section className={styles.companyStatus} aria-label={ja ? `${c.name}のステータス` : `${c.name} status`}>

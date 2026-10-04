@@ -50,3 +50,23 @@ test('empty comparisons and different accounting bases cannot produce a winner',
  const result=quarterlyTakeaway([company(),company({ticker:'BBB',quarterRevenue:{...fact,basis:'ifrs-full'},quarterRevenueGrowth:80})],'ja',now);
  assert.match(result,/会計基準/);assert.doesNotMatch(result,/上回/);
 });
+
+test('snapshot leaders require all selected companies, matching basis and comparable quarters',async()=>{
+ const {comparisonLeaders}=await import('../lib/research/comparison-scorecard.ts');
+ const a=company(), b=company({ticker:'BBB',quarterRevenueGrowth:30});
+ assert.deepEqual(comparisonLeaders([a,b],'growth',now),[false,true]);
+ assert.deepEqual(comparisonLeaders([a,company({ticker:'BBB'})],'growth',now),[false,false]);
+ assert.deepEqual(comparisonLeaders([a,b,company({ticker:'CCC',status:'unavailable'})],'growth',now),[false,false,false]);
+ assert.deepEqual(comparisonLeaders([a,{...b,quarterRevenue:{...fact,basis:'ifrs-full'}}],'growth',now),[false,false]);
+ assert.deepEqual(comparisonLeaders([a,{...b,quarterRevenue:{...fact,end:'2026-10-01'}},{...b,ticker:'CCC',quarterRevenue:{...fact,end:'2026-04-15'}}],'growth',now),[false,false,false]);
+ assert.deepEqual(comparisonLeaders([a,b],'valuation',now),[false,false]);
+});
+test('availability separates source failure, missing quarter, stale quarter and an empty prepared analysis',async()=>{
+ const {comparisonAvailability}=await import('../lib/research/comparison-scorecard.ts');
+ assert.match(comparisonAvailability(company({status:'unavailable'}),'ja',now),/取得できませんでした/);
+ assert.match(comparisonAvailability(company({quarterRevenue:null}),'en',now),/unavailable/);
+ assert.match(comparisonAvailability(company({quarterRevenue:{...fact,end:'2025-01-01'}}),'en',now),/not been verified/);
+ assert.equal(comparisonAvailability(company({preparedAnalysis:{items:[]}}),'ja',now),null);
+ const result=quarterlyTakeaway([company(),company({ticker:'BBB',quarterOperatingMargin:null})],'ja',now);
+ assert.match(result,/優劣は判定できません/);assert.doesNotMatch(result,/上回っています/);
+});

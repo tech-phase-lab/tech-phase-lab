@@ -8,6 +8,30 @@ export function hasRecentQuarter(c: Financials, now = Date.now()): boolean {
     && now-Date.parse(c.quarterRevenue.end)<=180*86400000
     && !c.dataWarnings?.some(w=>w.en.includes("quarterly filing") || w.en.includes("earnings release") || w.en.includes("could not be checked"));
 }
+/** Shared comparison conditions for both the conclusion and highlighted scores. */
+export function comparableQuarters(companies: Financials[], now=Date.now()): boolean {
+  if (companies.length < 2 || companies.some(c=>!hasRecentQuarter(c,now))) return false;
+  const ends=companies.map(c=>Date.parse(c.quarterRevenue!.end));
+  const bases=companies.map(c=>c.quarterRevenue!.basis);
+  return bases.every(Boolean) && new Set(bases).size===1 && Math.max(...ends)-Math.min(...ends)<=100*86400000;
+}
+export function comparisonLeaders(companies: Financials[], id: ScoreId, now=Date.now()): boolean[] {
+  const none=companies.map(()=>false);
+  if(!comparableQuarters(companies,now) || new Set(companies.map(c=>!!c.referenceEvaluation)).size>1) return none;
+  const values=companies.map(c=>comparisonScores(c,now).find(s=>s.id===id)?.value);
+  if(!values.every(finite)) return none;
+  const best=Math.max(...values);
+  return values.map(value=>value===best && values.some(other=>other<best));
+}
+/** Data availability is a service state, never a company's strength or weakness. */
+export function comparisonAvailability(c: Financials, lang: "ja"|"en", now=Date.now()): string | null {
+  const ja=lang==="ja";
+  if(c.status==="unavailable") return ja ? "決算データを取得できませんでした。" : "Financial data could not be retrieved.";
+  if(c.status==="unsupported" || !c.quarterRevenue) return ja ? "比較に使える四半期データが未取得です。" : "Comparable quarterly data is unavailable.";
+  if(!hasRecentQuarter(c,now)) return ja ? "最新の四半期データを確認できていません。" : "The latest quarterly figures have not been verified.";
+  if(!c.preparedAnalysis) return ja ? "長所・短所の要点は未作成です。" : "Strengths and weaknesses have not been prepared.";
+  return null;
+}
 /** Reference scale, not an industry percentile or a buy recommendation.
  * Annual numbers never fill a missing quarterly score. Quote/forecast
  * valuation stays unavailable until a licensed, timestamped feed is connected.
@@ -74,10 +98,9 @@ export function quarterlyHighlights(c: Financials, lang: "ja"|"en", now=Date.now
 }
 export function quarterlyTakeaway(companies: (Financials & {ticker:string})[], lang:"ja"|"en", now=Date.now()) {
   if(companies.length<2) return lang==="ja" ? "比較には2社以上のデータが必要です。" : "At least two companies are needed.";
-  const usable=companies.filter(c=>comparisonScores(c,now).find(s=>s.id==="growth")?.value!==null && finite(c.quarterRevenueGrowth) && finite(c.quarterOperatingMargin));
-  if(usable.length!==companies.length) return lang==="ja" ? "直近四半期のデータが揃っている会社から比較できます。" : "Compare companies with available recent quarterly results.";
-  const ends=usable.map(c=>Date.parse(c.quarterRevenue!.end));
-  if(Math.max(...ends)-Math.min(...ends)>100*86400000 || new Set(usable.map(c=>c.quarterRevenue!.basis)).size>1)
+  const usable=companies.filter(c=>comparisonScores(c,now).filter(s=>s.id==="growth" || s.id==="profitability").every(s=>s.value!==null) && finite(c.quarterRevenueGrowth) && finite(c.quarterOperatingMargin));
+  if(usable.length!==companies.length) return lang==="ja" ? "選択した全社の直近四半期データが揃っていないため、優劣は判定できません。" : "Recent quarterly data is incomplete for the selected companies, so no leader can be determined.";
+  if(!comparableQuarters(usable,now))
     return lang==="ja" ? "決算期間・会計基準が異なるため、数値を個別に確認してください。" : "Review figures individually: reporting periods or accounting bases differ.";
   const growth=[...usable].sort((a,b)=>b.quarterRevenueGrowth!-a.quarterRevenueGrowth!);
   const margins=[...usable].sort((a,b)=>b.quarterOperatingMargin!-a.quarterOperatingMargin!);
