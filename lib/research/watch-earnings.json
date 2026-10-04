@@ -1,0 +1,1145 @@
+[
+  {
+    "ticker": "NBIS",
+    "name": "Nebius",
+    "exchange": "NASDAQ",
+    "quoteTicker": "NBIS",
+    "period": "Q2 2026",
+    "releasedOn": "2026-08-12",
+    "periodEnd": "2026-06-30",
+    "reviewedOn": "2026-10-05",
+    "sources": [
+      {
+        "url": "https://nebius.com/newsroom/nebius-reports-second-quarter-2026-financial-results",
+        "title": "Official earnings release",
+        "location": "Financial highlights, financial statements and outlook"
+      }
+    ],
+    "tiles": [
+      {
+        "label": {
+          "ja": "売上高",
+          "en": "Revenue"
+        },
+        "value": {
+          "ja": "$582.3M",
+          "en": "$582.3M"
+        },
+        "note": {
+          "ja": "前年同期比 +454%",
+          "en": "YoY +454%"
+        }
+      },
+      {
+        "label": {
+          "ja": "調整後EBITDA",
+          "en": "Adjusted EBITDA"
+        },
+        "value": {
+          "ja": "$236.2M",
+          "en": "$236.2M"
+        },
+        "note": {
+          "ja": "前年同期 −$21.0M",
+          "en": "Prior-year quarter −$21.0M"
+        }
+      },
+      {
+        "label": {
+          "ja": "継続事業の純損失",
+          "en": "Net loss, continuing operations"
+        },
+        "value": {
+          "ja": "−$190.4M",
+          "en": "−$190.4M"
+        },
+        "note": {
+          "ja": "GAAP・Q2実績",
+          "en": "GAAP · Q2 actual"
+        }
+      }
+    ],
+    "cards": [
+      {
+        "headline": {
+          "ja": "売上は前年同期の約5.5倍",
+          "en": "Revenue reached about 5.5× the prior year"
+        },
+        "points": [
+          {
+            "ja": "売上 $105.1M → $582.3M",
+            "en": "Revenue $105.1M → $582.3M"
+          }
+        ],
+        "detail": {
+          "ja": "同じQ2同士の比較。増収率と利益の改善は分けて確認します。",
+          "en": "This compares the same quarter a year apart; revenue growth and profitability are separate measures."
+        }
+      },
+      {
+        "headline": {
+          "ja": "調整後EBITDAは黒字へ",
+          "en": "Adjusted EBITDA turned positive"
+        },
+        "points": [
+          {
+            "ja": "前年同期 −$21.0M → $236.2M",
+            "en": "Prior-year quarter −$21.0M → $236.2M"
+          }
+        ],
+        "detail": {
+          "ja": "調整後の指標であり、GAAP純利益の黒字化を意味しません。",
+          "en": "This adjusted measure does not establish GAAP net profitability."
+        }
+      },
+      {
+        "headline": {
+          "ja": "継続事業では純損失が残る",
+          "en": "Continuing operations remain loss-making"
+        },
+        "points": [
+          {
+            "ja": "Q2のGAAP純損失 $190.4M",
+            "en": "Q2 GAAP net loss: $190.4M"
+          }
+        ],
+        "detail": {
+          "ja": "前年同期の継続事業純利益は$502.5M。調整後純損失は$91.5Mから$33.2Mへ縮小しており、会計基準による見え方の違いに注意します。",
+          "en": "Prior-year continuing-operations net income was $502.5M. Adjusted net loss narrowed from $91.5M to $33.2M; keep the accounting bases distinct."
+        }
+      },
+      {
+        "headline": {
+          "ja": "増収が最終利益につながるか",
+          "en": "Watch conversion of growth into net profit"
+        },
+        "points": [
+          {
+            "ja": "次の決算で売上・GAAP損益を照合",
+            "en": "Compare revenue and GAAP earnings next quarter"
+          }
+        ],
+        "detail": {
+          "ja": "EBITDAだけで判断せず、設備投資後の資金と最終損益も確認する監視ポイントです。将来の黒字化を保証するものではありません。",
+          "en": "Research checkpoint: assess cash after capital spending and bottom-line earnings alongside EBITDA, without assuming future profitability."
+        }
+      }
+    ]
+  },
+  {
+    "ticker": "VRT",
+    "name": "Vertiv",
+    "exchange": "NYSE",
+    "quoteTicker": "VRT",
+    "period": "Q2 2026",
+    "releasedOn": "2026-07-29",
+    "periodEnd": "2026-06-30",
+    "reviewedOn": "2026-10-05",
+    "sources": [
+      {
+        "url": "https://investors.vertiv.com/news/news-details/2026/Vertiv-Reports-Strong-Second-Quarter-2026-with-Diluted-EPS-Growth-of-53-Adjusted-Diluted-EPS-Growth-of-60-Raises-Full-Year-2026-Guidance-Across-All-Key-Metrics/default.aspx",
+        "title": "Official earnings release",
+        "location": "Financial highlights, financial statements and outlook"
+      }
+    ],
+    "tiles": [
+      {
+        "label": {
+          "ja": "売上高",
+          "en": "Revenue"
+        },
+        "value": {
+          "ja": "$3.2743B",
+          "en": "$3.2743B"
+        },
+        "note": {
+          "ja": "前年同期比 +24.1%",
+          "en": "YoY +24.1%"
+        }
+      },
+      {
+        "label": {
+          "ja": "調整後営業利益率",
+          "en": "Adjusted operating margin"
+        },
+        "value": {
+          "ja": "22.6%",
+          "en": "22.6%"
+        },
+        "note": {
+          "ja": "前年同期比 +4.1ポイント",
+          "en": "YoY +4.1 percentage points"
+        }
+      },
+      {
+        "label": {
+          "ja": "次四半期売上見通し",
+          "en": "Next-quarter sales guidance"
+        },
+        "value": {
+          "ja": "$3.65–3.85B",
+          "en": "$3.65–3.85B"
+        },
+        "note": {
+          "ja": "Q3 2026・会社予想",
+          "en": "Q3 2026 · Company forecast"
+        }
+      }
+    ],
+    "cards": [
+      {
+        "headline": {
+          "ja": "買収・為替を除いても増収",
+          "en": "Growth extends beyond acquisitions and FX"
+        },
+        "points": [
+          {
+            "ja": "オーガニック売上成長 約18%",
+            "en": "Organic sales growth: approximately 18%"
+          }
+        ],
+        "detail": {
+          "ja": "全体の増収率は約24%。買収と為替の寄与を除いた成長率と区別します。",
+          "en": "Total growth was about 24%; organic growth excludes acquisitions and currency effects."
+        }
+      },
+      {
+        "headline": {
+          "ja": "調整後営業利益率が改善",
+          "en": "Adjusted operating margin improved"
+        },
+        "points": [
+          {
+            "ja": "22.6%・前年同期比 +4.1ポイント",
+            "en": "22.6%, up 4.1 percentage points YoY"
+          }
+        ],
+        "detail": {
+          "ja": "調整後営業利益は$738M、GAAP営業利益は$638M。両者を混同しません。",
+          "en": "Adjusted operating profit was $738M versus $638M under GAAP."
+        }
+      },
+      {
+        "headline": {
+          "ja": "供給と工事進行で売上時期にずれ",
+          "en": "Supply and project execution shifted revenue timing"
+        },
+        "points": [
+          {
+            "ja": "会社は一時的な供給混雑を説明",
+            "en": "The company described temporary supply-chain congestion"
+          }
+        ],
+        "detail": {
+          "ja": "複数段階のプロジェクト遂行も売上計上時期に影響。需要があっても同じ四半期に売上になるとは限りません。",
+          "en": "Multi-phase project execution also affected timing; demand need not become revenue in the same quarter."
+        }
+      },
+      {
+        "headline": {
+          "ja": "次期の納入と利益率を確認",
+          "en": "Track next-quarter delivery and margins"
+        },
+        "points": [
+          {
+            "ja": "Q3調整後営業利益率見通し 24–25%",
+            "en": "Q3 adjusted operating margin guidance: 24–25%"
+          }
+        ],
+        "detail": {
+          "ja": "売上見通しと合わせて達成状況を確認。予想値であり実績ではありません。",
+          "en": "Check both sales and margin delivery against company guidance, not as achieved results."
+        }
+      }
+    ]
+  },
+  {
+    "ticker": "GEV",
+    "name": "GE Vernova",
+    "exchange": "NYSE",
+    "quoteTicker": "GEV",
+    "period": "Q2 2026",
+    "releasedOn": "2026-07-22",
+    "periodEnd": "2026-06-30",
+    "reviewedOn": "2026-10-05",
+    "sources": [
+      {
+        "url": "https://www.gevernova.com/news/press-releases/ge-vernova-reports-second-quarter-2026-financial-results-raises-2026-financial",
+        "title": "Official earnings release",
+        "location": "Financial highlights, financial statements and outlook"
+      }
+    ],
+    "tiles": [
+      {
+        "label": {
+          "ja": "売上高",
+          "en": "Revenue"
+        },
+        "value": {
+          "ja": "$11.1B",
+          "en": "$11.1B"
+        },
+        "note": {
+          "ja": "前年同期比 +22%",
+          "en": "YoY +22%"
+        }
+      },
+      {
+        "label": {
+          "ja": "調整後EBITDA率",
+          "en": "Adjusted EBITDA margin"
+        },
+        "value": {
+          "ja": "11.3%",
+          "en": "11.3%"
+        },
+        "note": {
+          "ja": "Q2実績・non-GAAP",
+          "en": "Q2 actual · non-GAAP"
+        }
+      },
+      {
+        "label": {
+          "ja": "受注残",
+          "en": "Backlog"
+        },
+        "value": {
+          "ja": "$176B",
+          "en": "$176B"
+        },
+        "note": {
+          "ja": "前四半期末比 +$13B",
+          "en": "+$13B from prior quarter-end"
+        }
+      }
+    ],
+    "cards": [
+      {
+        "headline": {
+          "ja": "受注が売上を上回る規模に",
+          "en": "Orders exceed quarterly revenue"
+        },
+        "points": [
+          {
+            "ja": "Q2受注 $24.2B・売上 $11.1B",
+            "en": "Q2 orders $24.2B; revenue $11.1B"
+          }
+        ],
+        "detail": {
+          "ja": "受注は将来の納入につながる指標で、今期売上に足しません。",
+          "en": "Orders indicate future delivery activity; they are not added to current-quarter revenue."
+        }
+      },
+      {
+        "headline": {
+          "ja": "為替などを除く増収は12%",
+          "en": "Organic revenue increased 12%"
+        },
+        "points": [
+          {
+            "ja": "報告売上の成長率は22%",
+            "en": "Reported revenue growth was 22%"
+          }
+        ],
+        "detail": {
+          "ja": "調整後EBITDAは$1.2B。報告値とオーガニック成長率を区別します。",
+          "en": "Adjusted EBITDA was $1.2B. Keep reported and organic growth distinct."
+        }
+      },
+      {
+        "headline": {
+          "ja": "受注残と生産枠は売上とは別",
+          "en": "Backlog and reserved slots are not revenue"
+        },
+        "points": [
+          {
+            "ja": "ガス発電の受注残＋生産枠予約 116GW",
+            "en": "Gas Power backlog plus slot reservations: 116GW"
+          }
+        ],
+        "detail": {
+          "ja": "予約を完成・納入済みと扱わず、実際の売上化を追う監視ポイントです。",
+          "en": "Research checkpoint: follow conversion to delivered revenue rather than treating reserved capacity as completed output."
+        }
+      },
+      {
+        "headline": {
+          "ja": "ガスタービンの生産拡大を追う",
+          "en": "Track gas turbine production expansion"
+        },
+        "points": [
+          {
+            "ja": "Q3に年産20GWペースを目指す",
+            "en": "Target: 20GW annualized production rate in Q3"
+          }
+        ],
+        "detail": {
+          "ja": "会社目標の進捗と受注残の納入を確認します。目標達成済みとは表示しません。",
+          "en": "Monitor progress against the company target and delivery of backlog; the target is not an achieved result."
+        }
+      }
+    ]
+  },
+  {
+    "ticker": "BE",
+    "name": "Bloom Energy",
+    "exchange": "NYSE",
+    "quoteTicker": "BE",
+    "period": "Q2 2026",
+    "releasedOn": "2026-07-28",
+    "periodEnd": "2026-06-30",
+    "reviewedOn": "2026-10-05",
+    "sources": [
+      {
+        "url": "https://investor.bloomenergy.com/press-releases/press-release-details/2026/Bloom-Energy-Reports-Record-Second-Quarter-2026-Financial-Results-and-Raises-Full-Year-2026-Guidance/default.aspx",
+        "title": "Official earnings release",
+        "location": "Financial highlights, financial statements and outlook"
+      }
+    ],
+    "tiles": [
+      {
+        "label": {
+          "ja": "売上高",
+          "en": "Revenue"
+        },
+        "value": {
+          "ja": "$1.0654B",
+          "en": "$1.0654B"
+        },
+        "note": {
+          "ja": "前年同期比 +165.5%",
+          "en": "YoY +165.5%"
+        }
+      },
+      {
+        "label": {
+          "ja": "GAAP営業利益率",
+          "en": "GAAP operating margin"
+        },
+        "value": {
+          "ja": "17.1%",
+          "en": "17.1%"
+        },
+        "note": {
+          "ja": "Q2実績",
+          "en": "Q2 actual"
+        }
+      },
+      {
+        "label": {
+          "ja": "通期売上見通し",
+          "en": "Full-year revenue guidance"
+        },
+        "value": {
+          "ja": "$3.9–4.2B",
+          "en": "$3.9–4.2B"
+        },
+        "note": {
+          "ja": "2026年・会社予想",
+          "en": "2026 · Company forecast"
+        }
+      }
+    ],
+    "cards": [
+      {
+        "headline": {
+          "ja": "製品売上の拡大が中心",
+          "en": "Product revenue drives growth"
+        },
+        "points": [
+          {
+            "ja": "製品売上 $935.4M・前年同期比 +215.4%",
+            "en": "Product revenue $935.4M, up 215.4% YoY"
+          }
+        ],
+        "detail": {
+          "ja": "全社売上の増収と製品売上の増収を分け、継続性を追います。",
+          "en": "Track product growth separately from total revenue to assess its durability."
+        }
+      },
+      {
+        "headline": {
+          "ja": "営業損益と営業キャッシュが改善",
+          "en": "Operating profit and cash flow improved"
+        },
+        "points": [
+          {
+            "ja": "GAAP営業利益 $182.2M",
+            "en": "GAAP operating profit: $182.2M"
+          }
+        ],
+        "detail": {
+          "ja": "前年同期は営業損失$3.5M。営業キャッシュフローは−$213.1Mから+$226.4Mへ改善しました。",
+          "en": "The prior-year operating loss was $3.5M. Operating cash flow improved from −$213.1M to +$226.4M."
+        }
+      },
+      {
+        "headline": {
+          "ja": "生産から設置までの実行を確認",
+          "en": "Watch execution from production to installation"
+        },
+        "points": [
+          {
+            "ja": "生産能力・設置・系統接続が確認点",
+            "en": "Monitor capacity, installation and interconnection"
+          }
+        ],
+        "detail": {
+          "ja": "会社が挙げる将来リスクです。今期に遅延が発生したとの断定ではありません。",
+          "en": "These are prospective risks identified by the company, not a claim that delays occurred this quarter."
+        }
+      },
+      {
+        "headline": {
+          "ja": "通期見通しを納入実績と照合",
+          "en": "Check full-year guidance against delivery"
+        },
+        "points": [
+          {
+            "ja": "2026年売上見通し $3.9–4.2B",
+            "en": "2026 revenue guidance: $3.9–4.2B"
+          }
+        ],
+        "detail": {
+          "ja": "売上に加え、利益率と営業キャッシュの継続性を追います。",
+          "en": "Track margins and operating cash generation alongside forecast revenue."
+        }
+      }
+    ]
+  },
+  {
+    "ticker": "DELL",
+    "name": "Dell Technologies",
+    "exchange": "NYSE",
+    "quoteTicker": "DELL",
+    "period": "Q2 FY2027",
+    "releasedOn": "2026-09-01",
+    "periodEnd": "2026-07-31",
+    "reviewedOn": "2026-10-05",
+    "sources": [
+      {
+        "url": "https://investors.delltechnologies.com/node/20956/pdf",
+        "title": "Official earnings release",
+        "location": "Financial highlights, financial statements and outlook"
+      }
+    ],
+    "tiles": [
+      {
+        "label": {
+          "ja": "売上高",
+          "en": "Revenue"
+        },
+        "value": {
+          "ja": "$46.971B",
+          "en": "$46.971B"
+        },
+        "note": {
+          "ja": "前年同期比 +58%",
+          "en": "YoY +58%"
+        }
+      },
+      {
+        "label": {
+          "ja": "GAAP営業利益",
+          "en": "GAAP operating income"
+        },
+        "value": {
+          "ja": "$5.385B",
+          "en": "$5.385B"
+        },
+        "note": {
+          "ja": "前年同期 $1.773B",
+          "en": "Prior-year quarter $1.773B"
+        }
+      },
+      {
+        "label": {
+          "ja": "通期売上見通し",
+          "en": "Full-year revenue guidance"
+        },
+        "value": {
+          "ja": "$192B",
+          "en": "$192B"
+        },
+        "note": {
+          "ja": "FY2027・会社予想",
+          "en": "FY2027 · Company forecast"
+        }
+      }
+    ],
+    "cards": [
+      {
+        "headline": {
+          "ja": "AIサーバー売上が倍増",
+          "en": "AI server revenue doubled"
+        },
+        "points": [
+          {
+            "ja": "売上 $16.4B・前年同期比 +100%",
+            "en": "Revenue $16.4B, up 100% YoY"
+          }
+        ],
+        "detail": {
+          "ja": "AIサーバーの受注残$95Bは未計上の売上と区別します。",
+          "en": "Keep the $95B AI server backlog separate from recognized revenue."
+        }
+      },
+      {
+        "headline": {
+          "ja": "通期売上見通しを引き上げ",
+          "en": "Full-year sales guidance increased"
+        },
+        "points": [
+          {
+            "ja": "FY2027 $167B → $192B",
+            "en": "FY2027: $167B → $192B"
+          }
+        ],
+        "detail": {
+          "ja": "AIサーバー売上見通しも$60Bから$74Bへ引き上げ。いずれも会社予想です。",
+          "en": "AI server revenue guidance also rose from $60B to $74B; both are company forecasts."
+        }
+      },
+      {
+        "headline": {
+          "ja": "増収の一方、営業キャッシュは減少",
+          "en": "Operating cash flow fell despite growth"
+        },
+        "points": [
+          {
+            "ja": "営業CF $2.543B → $2.225B",
+            "en": "Operating cash flow $2.543B → $2.225B"
+          }
+        ],
+        "detail": {
+          "ja": "前年同期比13%減。売上や利益の増加だけで資金創出を判断しません。",
+          "en": "Down 13% year-on-year. Revenue and profit growth alone do not establish stronger cash generation."
+        }
+      },
+      {
+        "headline": {
+          "ja": "受注を納入・入金まで追う",
+          "en": "Track orders through delivery and collection"
+        },
+        "points": [
+          {
+            "ja": "次期売上見通し $49B",
+            "en": "Next-quarter revenue guidance: $49B"
+          }
+        ],
+        "detail": {
+          "ja": "受注残が実際の売上と営業キャッシュへ転換するかを監視します。",
+          "en": "Research checkpoint: monitor conversion of backlog into revenue and operating cash."
+        }
+      }
+    ]
+  },
+  {
+    "ticker": "MSFT",
+    "name": "Microsoft",
+    "exchange": "NASDAQ",
+    "quoteTicker": "MSFT",
+    "period": "Q4 FY2026",
+    "releasedOn": "2026-07-29",
+    "periodEnd": "2026-06-30",
+    "reviewedOn": "2026-10-05",
+    "sources": [
+      {
+        "url": "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast",
+        "title": "Official earnings release",
+        "location": "Financial highlights, financial statements and outlook"
+      }
+    ],
+    "tiles": [
+      {
+        "label": {
+          "ja": "売上高",
+          "en": "Revenue"
+        },
+        "value": {
+          "ja": "$90.0B",
+          "en": "$90.0B"
+        },
+        "note": {
+          "ja": "前年同期比 +18%",
+          "en": "YoY +18%"
+        }
+      },
+      {
+        "label": {
+          "ja": "GAAP営業利益",
+          "en": "GAAP operating income"
+        },
+        "value": {
+          "ja": "$40.6B",
+          "en": "$40.6B"
+        },
+        "note": {
+          "ja": "前年同期比 +18%",
+          "en": "YoY +18%"
+        }
+      },
+      {
+        "label": {
+          "ja": "Microsoft Cloud売上",
+          "en": "Microsoft Cloud revenue"
+        },
+        "value": {
+          "ja": "$59.3B",
+          "en": "$59.3B"
+        },
+        "note": {
+          "ja": "前年同期比 +27%",
+          "en": "YoY +27%"
+        }
+      }
+    ],
+    "cards": [
+      {
+        "headline": {
+          "ja": "クラウドが全社より速く成長",
+          "en": "Cloud outpaced overall revenue growth"
+        },
+        "points": [
+          {
+            "ja": "Cloud +27%・全社 +18%（前年同期比）",
+            "en": "Cloud +27%; total revenue +18% YoY"
+          }
+        ],
+        "detail": {
+          "ja": "Microsoft Cloudは会社定義の指標で、Azure単独の売上と同じではありません。",
+          "en": "Microsoft Cloud is a company-defined measure, not Azure revenue alone."
+        }
+      },
+      {
+        "headline": {
+          "ja": "営業利益も18%増加",
+          "en": "Operating income increased 18%"
+        },
+        "points": [
+          {
+            "ja": "GAAP営業利益 $40.6B",
+            "en": "GAAP operating income: $40.6B"
+          }
+        ],
+        "detail": {
+          "ja": "売上と営業利益はともに前年同期比18%増です。",
+          "en": "Revenue and operating income both increased 18% year-on-year."
+        }
+      },
+      {
+        "headline": {
+          "ja": "EPSには投資益などの押し上げ",
+          "en": "Investment gains and other items lifted EPS"
+        },
+        "points": [
+          {
+            "ja": "一部の個別要因によるEPS押し上げ $0.27",
+            "en": "Certain discrete items added $0.27 to EPS"
+          }
+        ],
+        "detail": {
+          "ja": "Anthropic投資益などを含みます。non-GAAPが除くOpenAI投資影響とは別で、調整後利益をすべて経常的とは扱いません。",
+          "en": "These include an Anthropic investment gain, distinct from the OpenAI effects excluded by non-GAAP. Adjusted earnings are not necessarily wholly recurring."
+        }
+      },
+      {
+        "headline": {
+          "ja": "クラウド成長と利益の質を追う",
+          "en": "Track cloud growth and earnings quality"
+        },
+        "points": [
+          {
+            "ja": "売上成長・営業利益・投資影響を分ける",
+            "en": "Separate revenue growth, operating profit and investment effects"
+          }
+        ],
+        "detail": {
+          "ja": "次回も同じ会計基準で照合し、一時要因を成長力と混同しないための監視ポイントです。",
+          "en": "Research checkpoint: compare consistent accounting bases and distinguish discrete gains from operating growth."
+        }
+      }
+    ]
+  },
+  {
+    "ticker": "GOOGL",
+    "name": "Alphabet",
+    "exchange": "NASDAQ",
+    "quoteTicker": "GOOGL",
+    "period": "Q2 2026",
+    "releasedOn": "2026-07-22",
+    "periodEnd": "2026-06-30",
+    "reviewedOn": "2026-10-05",
+    "sources": [
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm",
+        "title": "Official earnings release",
+        "location": "Financial highlights, financial statements and outlook"
+      }
+    ],
+    "tiles": [
+      {
+        "label": {
+          "ja": "売上高",
+          "en": "Revenue"
+        },
+        "value": {
+          "ja": "$119.796B",
+          "en": "$119.796B"
+        },
+        "note": {
+          "ja": "前年同期比 +24%",
+          "en": "YoY +24%"
+        }
+      },
+      {
+        "label": {
+          "ja": "GAAP営業利益率",
+          "en": "GAAP operating margin"
+        },
+        "value": {
+          "ja": "34%",
+          "en": "34%"
+        },
+        "note": {
+          "ja": "前年同期 32%",
+          "en": "Prior-year quarter 32%"
+        }
+      },
+      {
+        "label": {
+          "ja": "Google Cloud売上",
+          "en": "Google Cloud revenue"
+        },
+        "value": {
+          "ja": "$24.8B",
+          "en": "$24.8B"
+        },
+        "note": {
+          "ja": "前年同期比 +82%",
+          "en": "YoY +82%"
+        }
+      }
+    ],
+    "cards": [
+      {
+        "headline": {
+          "ja": "クラウドと検索が成長",
+          "en": "Cloud and Search grew"
+        },
+        "points": [
+          {
+            "ja": "Cloud +82%・検索など +17%（前年同期比）",
+            "en": "Cloud +82%; Search & other +17% YoY"
+          }
+        ],
+        "detail": {
+          "ja": "Cloudの成長率を全社成長率24%と混同しません。",
+          "en": "Cloud growth differs from the 24% company-wide revenue increase."
+        }
+      },
+      {
+        "headline": {
+          "ja": "営業利益率は2ポイント改善",
+          "en": "Operating margin rose 2 points"
+        },
+        "points": [
+          {
+            "ja": "GAAP営業利益 $40.770B",
+            "en": "GAAP operating income: $40.770B"
+          }
+        ],
+        "detail": {
+          "ja": "営業利益率は32%から34%へ上昇。2%増とは異なります。",
+          "en": "Operating margin moved from 32% to 34%, not a 2% relative increase."
+        }
+      },
+      {
+        "headline": {
+          "ja": "純利益急増には株式評価益が寄与",
+          "en": "Equity gains boosted net income"
+        },
+        "points": [
+          {
+            "ja": "その他損益は+$98.0B",
+            "en": "Other income was +$98.0B"
+          }
+        ],
+        "detail": {
+          "ja": "主に株式の未実現利益によるもの。EPSの伸びをそのまま本業の成長率と扱いません。",
+          "en": "Primarily unrealized equity gains; EPS growth is not equivalent to operating growth."
+        }
+      },
+      {
+        "headline": {
+          "ja": "投資資金と本業の成長を照合",
+          "en": "Track funding alongside operating growth"
+        },
+        "points": [
+          {
+            "ja": "6月の株式・転換優先株調達 純額$49.6B",
+            "en": "June equity and convertible preferred proceeds: $49.6B net"
+          }
+        ],
+        "detail": {
+          "ja": "追加ATM枠$40Bは6月末時点で未使用。発行済みと発行可能枠を区別して希薄化を追います。",
+          "en": "The additional $40B ATM program was unused at June-end. Distinguish issued equity from authorized issuance capacity when tracking dilution."
+        }
+      }
+    ]
+  },
+  {
+    "ticker": "ORCL",
+    "name": "Oracle",
+    "exchange": "NYSE",
+    "quoteTicker": "ORCL",
+    "period": "Q1 FY2027",
+    "releasedOn": "2026-09-10",
+    "periodEnd": "2026-08-31",
+    "reviewedOn": "2026-10-05",
+    "sources": [
+      {
+        "url": "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Q1-Results-Driven-by-Triple-Digit-Growth-in-Cloud-Infrastructure-Revenues/default.aspx",
+        "title": "Official earnings release",
+        "location": "Financial highlights, financial statements and outlook"
+      }
+    ],
+    "tiles": [
+      {
+        "label": {
+          "ja": "売上高",
+          "en": "Revenue"
+        },
+        "value": {
+          "ja": "$19.345B",
+          "en": "$19.345B"
+        },
+        "note": {
+          "ja": "前年同期比 +30%",
+          "en": "YoY +30%"
+        }
+      },
+      {
+        "label": {
+          "ja": "クラウド基盤売上",
+          "en": "Cloud infrastructure revenue"
+        },
+        "value": {
+          "ja": "$7.4B",
+          "en": "$7.4B"
+        },
+        "note": {
+          "ja": "前年同期比 +121%",
+          "en": "YoY +121%"
+        }
+      },
+      {
+        "label": {
+          "ja": "フリーキャッシュフロー",
+          "en": "Free cash flow"
+        },
+        "value": {
+          "ja": "−$5B",
+          "en": "−$5B"
+        },
+        "note": {
+          "ja": "Q1実績",
+          "en": "Q1 actual"
+        }
+      }
+    ],
+    "cards": [
+      {
+        "headline": {
+          "ja": "クラウド基盤の売上が倍増超",
+          "en": "Cloud infrastructure more than doubled"
+        },
+        "points": [
+          {
+            "ja": "IaaS +121%・クラウド全体 +62%",
+            "en": "IaaS +121%; total cloud +62% YoY"
+          }
+        ],
+        "detail": {
+          "ja": "IaaSとSaaSを合計したクラウド売上は$11.6Bです。",
+          "en": "Combined IaaS and SaaS revenue was $11.6B."
+        }
+      },
+      {
+        "headline": {
+          "ja": "営業利益は売上以上の伸び",
+          "en": "Operating profit outpaced revenue"
+        },
+        "points": [
+          {
+            "ja": "GAAP営業利益 $6.728B・前年同期比 +57%",
+            "en": "GAAP operating income $6.728B, up 57% YoY"
+          }
+        ],
+        "detail": {
+          "ja": "売上の30%増と分けて確認します。",
+          "en": "Compare separately with 30% revenue growth."
+        }
+      },
+      {
+        "headline": {
+          "ja": "営業CF黒字でも投資後は資金流出",
+          "en": "Investment spending outweighed operating cash"
+        },
+        "points": [
+          {
+            "ja": "営業CF +$23B・FCF −$5B",
+            "en": "Operating cash flow +$23B; FCF −$5B"
+          }
+        ],
+        "detail": {
+          "ja": "クラウド基盤の投資を継続。Q1には普通株$20Bを売却して資金調達しました。",
+          "en": "Cloud infrastructure investment continued; Q1 included a $20B common-stock capital raise."
+        }
+      },
+      {
+        "headline": {
+          "ja": "契約残が売上になる速度を追う",
+          "en": "Track conversion of contracted obligations"
+        },
+        "points": [
+          {
+            "ja": "RPO $664B・通期売上見通し $90B以上",
+            "en": "RPO $664B; FY revenue guidance at least $90B"
+          }
+        ],
+        "detail": {
+          "ja": "RPOは売上計上前の履行義務。設備稼働と売上化、資金負担を合わせて確認します。",
+          "en": "RPO is not recognized revenue. Monitor capacity delivery, revenue conversion and funding needs together."
+        }
+      }
+    ]
+  },
+  {
+    "ticker": "PLTR",
+    "name": "Palantir",
+    "exchange": "NASDAQ",
+    "quoteTicker": "PLTR",
+    "period": "Q2 2026",
+    "releasedOn": "2026-08-03",
+    "periodEnd": "2026-06-30",
+    "reviewedOn": "2026-10-05",
+    "sources": [
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm",
+        "title": "Official earnings release",
+        "location": "Financial highlights, financial statements and outlook"
+      }
+    ],
+    "tiles": [
+      {
+        "label": {
+          "ja": "売上高",
+          "en": "Revenue"
+        },
+        "value": {
+          "ja": "$1.9355B",
+          "en": "$1.9355B"
+        },
+        "note": {
+          "ja": "前年同期比 +93%",
+          "en": "YoY +93%"
+        }
+      },
+      {
+        "label": {
+          "ja": "GAAP営業利益率",
+          "en": "GAAP operating margin"
+        },
+        "value": {
+          "ja": "47%",
+          "en": "47%"
+        },
+        "note": {
+          "ja": "調整後 62%とは別",
+          "en": "Distinct from adjusted 62%"
+        }
+      },
+      {
+        "label": {
+          "ja": "次四半期売上見通し",
+          "en": "Next-quarter revenue guidance"
+        },
+        "value": {
+          "ja": "$2.160–2.164B",
+          "en": "$2.160–2.164B"
+        },
+        "note": {
+          "ja": "Q3 2026・会社予想",
+          "en": "Q3 2026 · Company forecast"
+        }
+      }
+    ],
+    "cards": [
+      {
+        "headline": {
+          "ja": "米国の商業・政府とも拡大",
+          "en": "US commercial and government revenue grew"
+        },
+        "points": [
+          {
+            "ja": "米国商業 +149%・政府 +90%（前年同期比）",
+            "en": "US commercial +149%; government +90% YoY"
+          }
+        ],
+        "detail": {
+          "ja": "米国売上は$1.573B。全社売上$1.935Bと分けて見ます。",
+          "en": "US revenue was $1.573B versus total revenue of $1.935B."
+        }
+      },
+      {
+        "headline": {
+          "ja": "前四半期からも19%増収",
+          "en": "Revenue also grew 19% sequentially"
+        },
+        "points": [
+          {
+            "ja": "GAAP営業利益 $912M",
+            "en": "GAAP operating income: $912M"
+          }
+        ],
+        "detail": {
+          "ja": "調整後営業利益$1.194Bには株式報酬などの除外があります。",
+          "en": "Adjusted operating income of $1.194B excludes stock-based compensation and related payroll taxes."
+        }
+      },
+      {
+        "headline": {
+          "ja": "契約総額は売上確定額ではない",
+          "en": "Contract value is not guaranteed revenue"
+        },
+        "points": [
+          {
+            "ja": "契約オプション・解約条項に注意",
+            "en": "Watch contract options and termination provisions"
+          }
+        ],
+        "detail": {
+          "ja": "TCVやRDVはオプション行使と解約なしを前提とする指標。実際の売上計上と区別します。",
+          "en": "TCV and RDV assume option exercise and no termination; distinguish them from recognized revenue."
+        }
+      },
+      {
+        "headline": {
+          "ja": "次期成長とGAAP採算を照合",
+          "en": "Track next-quarter growth and GAAP profitability"
+        },
+        "points": [
+          {
+            "ja": "Q3売上見通し $2.160–2.164B",
+            "en": "Q3 revenue guidance: $2.160–2.164B"
+          }
+        ],
+        "detail": {
+          "ja": "調整後指標だけでなく、GAAP利益と営業キャッシュを継続確認する監視ポイントです。",
+          "en": "Research checkpoint: assess GAAP earnings and operating cash as well as adjusted metrics."
+        }
+      }
+    ]
+  }
+]

@@ -60,7 +60,7 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
   return <section className={`${styles.activity} ${styles.monitor}`} aria-label={ja?'銘柄監視':'Company monitor'}>
     <h2 className={styles.monitorTitle}><button type="button" className={styles.monitorToggle} aria-expanded={open} aria-controls={bodyId} onClick={() => { setOpen(value => !value); setFreshCount(0); }}>
       <span className={styles.titleText}><span aria-hidden="true">{open ? "▾" : "▸"}</span>{ja ? 'リアルタイム監視' : 'Live monitor'}</span>
-      <span className={styles.connection} data-live={!!data && !failed && !paused} data-failed={failed}><i aria-hidden="true"/>{freshCount ? (ja ? `新着 ${freshCount}件` : `${freshCount} new`) : failed ? (ja ? '再接続中' : 'Reconnecting') : paused ? (ja ? '一時停止' : 'Paused') : data ? (ja ? '自動更新' : 'Auto-updating') : (ja ? '接続中' : 'Connecting')}</span>
+      <span className={styles.connection} data-live={!!data && !failed && !paused} data-new={freshCount > 0} data-failed={failed}><i aria-hidden="true"/>{freshCount ? (ja ? `新着 ${freshCount}件` : `${freshCount} new`) : failed ? (ja ? '再接続中' : 'Reconnecting') : paused ? (ja ? '一時停止' : 'Paused') : data ? (ja ? '自動更新' : 'Auto-updating') : (ja ? '接続中' : 'Connecting')}</span>
     </button></h2>
     <div id={bodyId} hidden={!open}>
     {checkedAt && <p className={styles.note}>{ja?'配信確認':'Feed checked'} {new Intl.DateTimeFormat(ja?'ja-JP':'en-GB',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).format(new Date(checkedAt))} JST</p>}

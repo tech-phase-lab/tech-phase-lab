@@ -7,12 +7,11 @@ import { publicEvent } from "@/lib/research/access";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { events } from "@/lib/research/content-server";
-import { buildCompanyProfiles, companyProfileIssues } from "@/lib/research/companies";
-import { compareMetrics, evidenceIssues } from "@/lib/research/quality";
+import { buildCompanyProfiles } from "@/lib/research/companies";
+import { companyWatchForMember, watchTitles } from "@/lib/research/company-watch";
+import CompanyWatch from "../company-watch";
 import rawSnapshot from "@/lib/research/intake-snapshot.json";
 import { buildCoverageCompanies, coverageCompanyIssues, providers, snapshotIssues, type IntakeSnapshot } from "@/lib/research/intake";
-import CompanyDashboard from "../company-dashboard";
-import CoverageCompanyDashboard from "../coverage-company-dashboard";
 
 export const dynamicParams = false;
 export function generateStaticParams() { return providers.map((provider) => ({ ticker: provider.ticker })); }
@@ -26,14 +25,13 @@ export async function generateMetadata({ params }: { params: Promise<{ ticker: s
   const coverage = coverageCompanies.find((item) => item.ticker === ticker);
   return {
     title: `${profile?.name ?? coverage?.name ?? "Company"} | Tech Phase Research`,
-    description: ticker === "MU" ? "Micron quarterly results, growth drivers, changes and research checkpoints. Reviewed September 30, 2026 release." : profile ? "Source-linked company history, financial comparisons, and research checkpoints. Historical preview." : "Official-source intake status and preparation for source-linked company research.",
+    description: ticker === "MU" ? "Micron quarterly results, growth drivers, changes and research checkpoints. Reviewed September 30, 2026 release." : "Company earnings, source-linked analysis and automatically refreshed published updates.",
     robots: { index: false, follow: false },
   };
 }
 
 export default async function CompanyPage({ params }: { params: Promise<{ ticker: string }> }) {
   const { ticker } = await params;
-  const profile = profiles.find((item) => item.ticker === ticker);
   const coverage = coverageCompanies.find((item) => item.ticker === ticker);
   if (!coverage) notFound();
   const snapshotProblems = snapshotIssues(snapshot);
@@ -45,13 +43,9 @@ export default async function CompanyPage({ params }: { params: Promise<{ ticker
     const member = await getMembership().catch(() => ({status:"unavailable",plan:"free"}));
     return <MuWatch companies={companyOptions} cards={muWatchForMember(member)} titles={muWatchTitles} facts={muWatchFacts} source={muWatchSource}/>;
   }
-  if (!profile) return <CoverageCompanyDashboard key={ticker} company={coverage} companies={companyOptions} generatedAt={snapshot.generatedAt} />;
-  const issues = companyProfileIssues(profile);
-  for (const event of profile.events) issues.push(...evidenceIssues({ ...event, metrics: [...event.metrics, ...(event.previous ?? [])] }));
-  for (const row of profile.comparisons) {
-    const comparison = compareMetrics(row.current, row.previous);
-    if (!comparison.ok && comparison.reason !== "non-positive-base") issues.push(`incompatible-comparison:${row.id}`);
-  }
-  if (issues.length) throw new Error(`Invalid company profile ${ticker}: ${issues.join(", ")}`);
-  return <CompanyDashboard key={profile.ticker} profile={profile} companies={companyOptions} />;
+  await connection();
+  const member = await getMembership().catch(() => ({status:"unavailable",plan:"free"}));
+  const watch=companyWatchForMember(ticker,member);
+  if(!watch) notFound();
+  return <CompanyWatch key={ticker} companies={companyOptions} watch={watch} titles={watchTitles}/>;
 }
