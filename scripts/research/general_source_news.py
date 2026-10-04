@@ -625,6 +625,9 @@ def semantic_review(db,row,reference):
     start,decided=(reconciliation.instant(saved[key]) for key in ('started_at','decided_at'))
     if not start or not decided or not reconciliation.instant(row['observed_at'])<=start<=decided<=reference:
         return None
+    import macro_source_publication
+    if macro_source_publication.resolves(db,row,dict(saved),reference):
+        return None
     import micron_reviewed_recovery
     if micron_reviewed_recovery.resolves(db,row,saved,reference):
         return None
@@ -669,6 +672,9 @@ def bind_assessment(value,row):
         return None,value['reason']
     if value['disposition']!='publish' or value['reason']!='material-company-development':
         raise ValueError('invalid-note')
+    import macro_source_publication
+    if macro_source_publication.recognized(row):
+        return macro_source_publication.bind(value,row),None
     derived=related_company_news.render(value,row) if related_company_news.structured(row) else value
     note=bind_note({'facts':derived['facts']},row)
     if related_company_news.structured(row):
@@ -852,6 +858,9 @@ def bind_note(value,row):
 
 
 def validate_note(note,row):
+    import macro_source_publication
+    if isinstance(note,dict) and macro_source_publication.MARKER in note:
+        return macro_source_publication.validate_note(note,row)
     expected={'generalSourceVersion','facts'}|({'semanticAssessment'} if row.get('semantic_assessment') else set())
     if related_company_news.structured(row):
         expected.add(related_company_news.MARKER)
@@ -970,6 +979,9 @@ def recover_reviewed_terminology(db,reference,model):
 
 
 def public_item(row,note):
+    import macro_source_publication
+    if isinstance(note,dict) and macro_source_publication.MARKER in note:
+        return macro_source_publication.public_item(row,note)
     title_ja,title_en=CATEGORIES[row['category']]
     recap=row['category']=='share-buyback' and any(unit['buyback'].get('historical') for unit in row['units'])
     if recap:
@@ -1019,10 +1031,14 @@ def public_item(row,note):
 def publications(db,reference,*,authorization_context=None):
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='official_research_publications'").fetchone():
         return []
+    import macro_source_publication
+    macro_context=macro_source_publication.PublicReadContext(db,reference)
+    rows=candidates(db,reference,_defer_publication_review=True,authorization_context=authorization_context)
+    macro_context.bind_rows(rows)
     result=[]
     # Stable representative selection still precedes review filtering. Each
     # publication then takes one complete legacy or structured validation path.
-    for row in candidates(db,reference,_defer_publication_review=True,authorization_context=authorization_context):
+    for row in rows:
         saved=db.execute('SELECT * FROM official_research_publications WHERE event_id=? AND sha=? AND body_sha=?',
                          (row['id'],row['sha'],row['body_sha'])).fetchone()
         if not saved:
@@ -1039,7 +1055,11 @@ def publications(db,reference,*,authorization_context=None):
             import buyback_structured_publication
             structured=(row.get('category')=='share-buyback' and
                         (buyback_structured.MARKER in note or buyback_structured_publication.recorded(db,row)))
-            if structured:
+            import macro_source_publication
+            macro=(macro_source_publication.MARKER in note or macro_context.recorded(row))
+            if macro:
+                if not macro_source_publication.publication_valid(db,row,saved,reference,context=macro_context):continue
+            elif structured:
                 # This verifies the audit, current source, complete fresh typed
                 # note and all shared guards; repeating validate_note is unused.
                 if not buyback_structured_publication.publication_valid(db,row,saved,reference):continue
@@ -1051,6 +1071,8 @@ def publications(db,reference,*,authorization_context=None):
         except (ValueError,TypeError,KeyError):
             continue
         result.append((row,saved,note))
+    if not macro_context.unchanged():
+        result=[entry for entry in result if macro_source_publication.MARKER not in entry[2]]
     return result
 
 
@@ -1059,6 +1081,7 @@ def public_items(db,reference,*,authorization_context=None):
 
 
 def diagnostics(db,reference):
+    import macro_source_publication
     records=list(assessments(db,reference))
     rows=candidates(db,reference)
     public={row['id'] for row,_,_ in publications(db,reference)}
@@ -1075,4 +1098,5 @@ def diagnostics(db,reference):
             'excluded':sum(row is None for _,row,_ in records),
             'rejectionReasons':dict(Counter(reason for _,row,reason in records if row is None)),
             'retryReasons':dict(failures),'policyVersion':VERSION,
+            'macroPublication':macro_source_publication.diagnostic_summary(db,reference),
             'retainedIntake':{'counts':intake['counts'],'retainedOnly':True,'completeUpstreamCoverage':False}}

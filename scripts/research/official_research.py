@@ -25,6 +25,7 @@ import official_research_editorial_recovery as editorial_recovery
 import oracle_reviewed_recovery
 import signals
 import general_source_news
+import macro_source_publication
 import buyback_structured_publication
 import reviewed_business_news
 import micron_reviewed_recovery
@@ -88,6 +89,8 @@ def schema(db):
 def connect(path):
     db = monitor.connect(path)
     schema(db)
+    # Macro audit storage belongs to writer initialization, never public reads.
+    macro_source_publication.schema(db)
     return db
 
 
@@ -605,7 +608,10 @@ def claim(db, reference, model, limit):
         for r in rows:
             # A retained source derivation never authorizes a paid replacement.
             # Valid copy is already public; a damaged audit/copy stays held.
-            if buyback_structured_publication.recorded(db,r) or general_source_news.related_company_news.recorded(db,r) or general_source_news.related_company_news.closed_attempt(db,r):
+            if (macro_source_publication.recorded(db,r) or macro_source_publication.closed_attempt(db,r)
+                    or buyback_structured_publication.recorded(db,r) or general_source_news.related_company_news.recorded(db,r) or general_source_news.related_company_news.closed_attempt(db,r)):
+                continue
+            if macro_source_publication.recognized(r) and not macro_source_publication.fresh_inputs_valid(db,r,reference):
                 continue
             if not current_revision(db,r,primary_urls=primary_urls,reference=max(reference, datetime.now(timezone.utc)),
                     category_context=category_contexts.get(r['source_id']), require_fresh_category=True):
@@ -816,6 +822,9 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     now=time.time() if now is None else now
     reference=datetime.fromtimestamp(now,timezone.utc)
     with connect(path) as db:
+        macro_correction=macro_source_publication.publish_held(db,reference,clock=lambda:datetime.now(timezone.utc))
+        if macro_correction is not None:
+            return macro_correction
         if oracle_reviewed_recovery.publish(db, reference, validate):
             return 'done'
         retained = editorial_recovery.publish_retained(db, reference, validate)
@@ -861,6 +870,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         policy+='\n'+general_source_news.ASSESSMENT_POLICY
         if row.get('source_news'):
             policy+='\n'+general_source_news.source_news_grounding.POLICY
+        if macro_source_publication.recognized(row):
+            policy+='\n'+macro_source_publication.POLICY
         if general_source_news.related_company_news.structured(row):
             policy+='\n'+general_source_news.related_company_news.POLICY
         if any('actorGrounding' in unit for unit in row['units']):
@@ -964,13 +975,25 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
             db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?",(lease,))
         return 'retry'
     public_at=datetime.now(timezone.utc).isoformat(timespec='milliseconds')
+    macro_audit_blocked=False
     with connect(path) as db, db:
         db.execute('BEGIN IMMEDIATE')
         active=db.execute('SELECT lease FROM official_research_jobs WHERE event_id=?',(row['id'],)).fetchone()
         valid=bool(active and active['lease']==lease and current_revision(db,row,require_fresh_category=True))
+        if valid and not review_reason and macro_source_publication.MARKER in note:
+            valid=macro_source_publication.fresh_inputs_valid(db,row,general_source_news.reconciliation.instant(public_at))
+            if valid and not macro_source_publication.fresh_attempt_valid(db,row,raw_response_text,note,lease,
+                    general_source_news.reconciliation.instant(public_at)):
+                review_reason='unsubstantiated-model-output'
+                macro_audit_blocked=True
         state=('review' if review_reason else 'done') if valid else 'stale'
         if valid and review_reason:
-            general_source_news.save_semantic_review(db,row,lease,reference.isoformat(),public_at,review_reason)
+            # An audit conflict cannot rewrite a concurrently stored negative
+            # decision, its lease or its original clocks.
+            if not (macro_audit_blocked and macro_source_publication.review_for(db,row) is not None):
+                general_source_news.save_semantic_review(db,row,lease,reference.isoformat(),public_at,review_reason)
+            if macro_audit_blocked:
+                macro_source_publication.record_fresh_hold(db,row,raw_response_text,lease,public_at)
         elif valid:
             if general_source_news.related_company_news.structured(row):
                 general_source_news.related_company_news.record(db,row,raw_response_text,note,lease,reference.isoformat(),public_at)
@@ -983,7 +1006,10 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                         reference.isoformat(),public_at,round((time.monotonic()-started)*1000)))
         db.execute('UPDATE official_research_jobs SET state=? WHERE event_id=? AND lease=?',(state,row['id'],lease))
         db.execute('UPDATE signal_headline_translation_calls SET state=?,usage=? WHERE lease=?',
-                   ('done' if state=='review' else state,json.dumps(usage),lease))
+                   ('failed' if macro_audit_blocked else 'done' if state=='review' else state,json.dumps(usage),lease))
+        if valid and not review_reason and macro_source_publication.MARKER in note:
+            macro_source_publication.record_fresh(db,row,raw_response_text,note,lease,
+                general_source_news.reconciliation.instant(public_at))
     return state
 
 
@@ -1007,6 +1033,9 @@ def validated_publications(db, rows):
                     and (buyback_structured.MARKER in note or buyback_structured_publication.recorded(db,r))
                     and not buyback_structured_publication.publication_valid(db,r,p,datetime.now(timezone.utc))):
                 continue
+            if (macro_source_publication.MARKER in note or macro_source_publication.recorded(db,r)):
+                if not macro_source_publication.publication_valid(db,r,p,datetime.now(timezone.utc)):
+                    continue
             validate_row(note,r)
             if general_source_news.related_company_news.structured(r) and not general_source_news.related_company_news.publication_valid(db,r,p,note):
                 continue
@@ -1067,6 +1096,9 @@ def publication_hold_reason(db,row,reference):
     """Mirror claim's explicit saved-copy hold without changing its job state."""
     saved=db.execute('SELECT * FROM official_research_publications WHERE event_id=? AND sha=?',
                      (row['id'],row['sha'])).fetchone()
+    if macro_source_publication.recorded(db,row) or macro_source_publication.closed_attempt(db,row):
+        if not saved or not macro_source_publication.publication_valid(db,row,saved,reference):
+            return 'source-event-identity-mismatch'
     if not saved:return material_failure_hold(db,row)
     if not publication_clock_valid(saved,row,reference):return None
     try:
