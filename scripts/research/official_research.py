@@ -306,21 +306,24 @@ def validate(value, body, source_title=''):
     validate_source_event(body, source_title, value)
     if not isinstance(value['facts'], list) or not 3 <= len(value['facts']) <= 5:
         raise ValueError('invalid-facts')
+    source_context=(body,normalized(body),rollout_validation.source_context(body))
     for name, item in [('title',value['title']),('summary',value['summary']),
                        *[('fact',x) for x in value['facts']],('purpose',value['purpose'])]:
         try:
-            validate_item(name, item, body, source_title)
+            validate_item(name, item, body, source_title, source_context)
         except ValueError as exc:
             exc.add_note(name)
             raise
     return value
 
 
-def validate_item(name, item, body, source_title):
+def validate_item(name, item, body, source_title, source_context=None):
     if not isinstance(item, dict) or set(item) != {'ja','en','evidenceQuote'}:
         raise ValueError('invalid-item')
     quote = item['evidenceQuote']
-    if not isinstance(quote,str) or not 16 <= len(quote) <= MAX_EVIDENCE_CHARS or normalized(quote) not in normalized(body):
+    if source_context is None or source_context[0]!=body:
+        source_context=(body,normalized(body),rollout_validation.source_context(body))
+    if not isinstance(quote,str) or not 16 <= len(quote) <= MAX_EVIDENCE_CHARS or normalized(quote) not in source_context[1]:
         raise ValueError('unsupported-quote')
     for lang in ('ja','en'):
         text = item[lang]
@@ -339,7 +342,7 @@ def validate_item(name, item, body, source_title):
         factual_validation.validate_semantics(text, quote)
         factual_validation.validate_acquisition(text, source_title, lang, require_status=name in ('title', 'summary'))
         factual_validation.validate_acquisition(text, quote, lang)
-        rollout_validation.validate(text, body)
+        rollout_validation.validate(text, body, source_context[2])
     factual_validation.validate_pair(item['ja'], item['en'])
     buyback_news.validate(item, quote)
 
