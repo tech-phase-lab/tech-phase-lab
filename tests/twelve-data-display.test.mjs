@@ -78,8 +78,8 @@ test("two/three-company leaders use the displayed score, and cannot win against 
 test("the actual cards render seven-axis status, bars, provider metrics and compact bullets in JA/EN",async()=>{
   const require=createRequire(import.meta.url),{transform,loadBindings}=require("next/dist/build/swc");
   await loadBindings();
-  const source=await readFile(new URL("../app/research/compare/screen.tsx",import.meta.url),"utf8");
-  const functions=source.slice(source.indexOf("function StatusChart("),source.indexOf("export default function ComparisonScreen"));
+  const source=await readFile(new URL("../app/research/compare/comparison-visuals.tsx",import.meta.url),"utf8");
+  const functions=source.slice(source.indexOf("function StatusChart("),source.indexOf("\nexport {"));
   const scoreURL=new URL("../lib/research/comparison-scorecard.ts",import.meta.url).href;
   const reactURL=pathToFileURL(require.resolve("react")).href;
   const input=`import React from ${JSON.stringify(reactURL)};
