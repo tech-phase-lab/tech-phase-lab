@@ -1,8 +1,10 @@
 import providers from "./providers.json" with { type: "json" };
+import reportedNewsTickers from "./reported-news-tickers.json" with { type: "json" };
 import { parseResultBriefs, type ResultBrief } from "./market-results.ts";
 import { parseAnalystUpdates, type AnalystUpdate } from "./analyst-news.ts";
 type Syndication = { policy: "issuer-capacity-contract-v1" | "issuer-business-news-v1"; issuer: string; distributor: "GlobeNewswire" | "PR Newswire" };
 export const OFFICIAL_NEWS_HISTORY_LIMIT = 100;
+export const NEWS_BRIEF_TITLE_SUFFIXES = { ja: "（短報・詳細確認中）", en: " (brief; details awaiting review)" } as const;
 export type OfficialHistory = { limit: number; sourceEligible: number; returned: number; omitted: number; hasMore: boolean; byteLimited: boolean; coreOverTarget: boolean };
 type NewsBody = { bodyJa?: string; bodyEn?: string };
 type CompactTitles = { shortTitleJa?: string; shortTitleEn?: string };
@@ -13,7 +15,8 @@ export type GeneralNewsItem = CompactTitles & {
   confidence: "high" | "medium" | "low";
 };
 export type OfficialNewsSource = { id: string; url: string; publisher: string; publishedAt: string; observedAt: string };
-export type OfficialUpdate = CompactTitles & NewsBody & { syndication?: Syndication; id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[] };
+export type OfficialNewsBrief = { version: 1; scope: "company" | "sector"; validFacts: number; pendingFacts: number };
+export type OfficialUpdate = CompactTitles & NewsBody & { brief?: OfficialNewsBrief; generalSource?: 1; syndication?: Syndication; id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[] };
 export type MarketUpdate = CompactTitles & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
 export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; officialHistory?: OfficialHistory };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
@@ -33,6 +36,45 @@ function newsBody(value: Record<string, unknown>, maxLength = 12000): NewsBody {
     && v.length <= maxLength && !v.includes("\0");
   return valid(value.bodyJa) && valid(value.bodyEn)
     ? { bodyJa: value.bodyJa, bodyEn: value.bodyEn } : {};
+}
+
+// Partial publications retain their explicit source and review boundary on each
+// server/browser parse. Invalid markers cannot silently become full articles.
+function newsBrief(value: Record<string, unknown>): { brief?: OfficialNewsBrief; generalSource?: 1 } {
+  if (value.brief === undefined) return {};
+  const marker = value.brief;
+  if (!marker || typeof marker !== "object" || Array.isArray(marker)) throw Error("Invalid news brief");
+  const brief = marker as Record<string, unknown>;
+  const validCount = (count: unknown): count is number => Number.isInteger(count) && Number(count) >= 1 && Number(count) <= 7;
+  const statusTitle = (title: unknown, suffix: string): title is string => typeof title === "string"
+    && title.endsWith(suffix) && !!title.slice(0, -suffix.length).trim();
+  if (value.generalSource !== 1 || typeof value.url !== "string"
+    || !/^https:\/\/x\.com\/(wallstengine|tipranks)\/status\/\d+$/i.test(value.url)
+    || brief.version !== 1 || !["company", "sector"].includes(brief.scope as string)
+    || !validCount(brief.validFacts) || !validCount(brief.pendingFacts) || brief.validFacts + brief.pendingFacts > 8
+    || !newsBody(value).bodyJa || !Array.isArray(value.tickers)
+    || (brief.scope === "sector" ? value.tickers.length !== 0
+      : value.tickers.length !== 1 || !reportedNewsTickers.includes(value.tickers[0]))) {
+    throw Error("Invalid news brief");
+  }
+  // Older clients discard the new marker, so core and compact headlines must
+  // independently disclose that details remain under review.
+  if (!statusTitle(value.title, NEWS_BRIEF_TITLE_SUFFIXES.en)
+    || !statusTitle(value.translationJa, NEWS_BRIEF_TITLE_SUFFIXES.ja)
+    || (value.shortTitleEn !== undefined && !statusTitle(value.shortTitleEn, NEWS_BRIEF_TITLE_SUFFIXES.en))
+    || (value.shortTitleJa !== undefined && !statusTitle(value.shortTitleJa, NEWS_BRIEF_TITLE_SUFFIXES.ja))) {
+    throw Error("Invalid brief review status");
+  }
+  // A sector brief cannot reuse the private company assessment's headline,
+  // including the compact headline shown by the home rotation.
+  if (brief.scope === "sector" && (value.title !== `Broker industry outlook${NEWS_BRIEF_TITLE_SUFFIXES.en}`
+    || value.translationJa !== `証券会社による業界見通し${NEWS_BRIEF_TITLE_SUFFIXES.ja}` || value.publisher !== "Reported industry news"
+    || (value.shortTitleJa !== undefined && value.shortTitleJa !== value.translationJa)
+    || (value.shortTitleEn !== undefined && value.shortTitleEn !== value.title))) {
+    throw Error("Invalid sector brief");
+  }
+  return { generalSource: 1, brief: { version: 1, scope: brief.scope as OfficialNewsBrief["scope"],
+    validFacts: brief.validFacts, pendingFacts: brief.pendingFacts } };
 }
 
 // Keep the strict validator for every article, but isolate a rejected article
@@ -94,7 +136,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
   if (payload.resultBriefs !== undefined) updates.resultBriefs = parseResultBriefs(payload.resultBriefs);
   if (payload.officialUpdates !== undefined) {
     if (!Array.isArray(payload.officialUpdates) || payload.officialUpdates.length > OFFICIAL_NEWS_HISTORY_LIMIT) throw Error("Invalid updates");
-    const seenOfficialUrls = new Set<string>();
+    const seenOfficialUrls = new Map<string, number>();
     updates.officialUpdates = payload.officialUpdates.map(raw => {
       if (!raw || typeof raw !== "object") throw Error("Invalid update");
       const v = raw as Record<string, unknown>;
@@ -187,12 +229,18 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
         }
       }
       const mergedResult = sources.length > 1 && Array.isArray(v.sources) && sources.length === v.sources.length;
-      return { ...(syndication ? { syndication } : {}), ...compactTitles(v), ...newsBody(v, mergedResult ? 40000 : 12000), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}), ...(sources.length ? { sources } : {}) };
-    }).filter(item => {
-      if (seenOfficialUrls.has(item.url)) return false;
-      seenOfficialUrls.add(item.url);
-      return true;
-    });
+      return { ...(syndication ? { syndication } : {}), ...newsBrief(v), ...compactTitles(v), ...newsBody(v, mergedResult ? 40000 : 12000), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}), ...(sources.length ? { sources } : {}) };
+    }).reduce<OfficialUpdate[]>((items, item) => {
+      const index = seenOfficialUrls.get(item.url);
+      if (index === undefined) {
+        seenOfficialUrls.set(item.url, items.length);
+        items.push(item);
+      } else if (items[index].id === item.id && items[index].brief && !item.brief && item.bodyJa && item.bodyEn) {
+        // A complete publication promotes this same source story in place.
+        items[index] = item;
+      }
+      return items;
+    }, []);
   }
   if (!payload.enabled) return { ok: true, enabled: false, items: [], ...updates };
   const seenIds = new Set<string>();

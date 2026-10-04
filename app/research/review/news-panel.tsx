@@ -16,7 +16,9 @@ type Confidence = "high" | "medium" | "low";
 type Queue = { items: Item[]; generationEnabled: boolean; publicationEnabled: boolean };
 const labels: Record<string, string> = { pending: "下書き待ち", draft: "確認待ち", approved: "承認済み", held: "保留", rejected: "却下" };
 const errors: Record<string, string> = {
-  "unauthorized": "編集用トークンを確認してください。",
+  "unauthorized": "編集者認証を確認してください。",
+  "owner-required": "運営者としてログインし直してください。",
+  "setup-required": "編集サービスの接続設定を確認してください。",
   "stale-news-edit": "別の編集または承認が行われました。最新データを読み直してください。",
   "stale-news-review": "下書きが更新されました。最新データを読み直してください。",
   "stale-news-draft": "原文が更新されました。最新データを読み直してください。",
@@ -38,19 +40,20 @@ const errors: Record<string, string> = {
 };
 const time = (value: string) => new Date(value).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo", hour12: false }) + " JST";
 
-export default function NewsPanel({ token }: { token: string }) {
+export default function NewsPanel({ token }: { token: string | null }) {
   const [data, setData] = useState<Queue | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [version, setVersion] = useState(0);
 
   async function request(query: string, body?: unknown) {
-    const response = await fetch(`/api/research/editor${query}`, {
+    const response = await fetch(`/api/research/${token === null ? "editor-owner" : "editor"}${query}`, {
       method: body ? "POST" : "GET", cache: "no-store",
-      headers: { Authorization: `Bearer ${token}`, ...(body ? { "Content-Type": "application/json" } : {}) },
+      credentials: "same-origin", headers: { ...(token === null ? {} : { Authorization: `Bearer ${token}` }), ...(body ? { "Content-Type": "application/json" } : {}) },
       ...(body ? { body: JSON.stringify(body) } : {}), signal: AbortSignal.timeout(body ? 118_000 : 20_000),
     });
     const result = await response.json();
+    if (token === null && (response.status === 401 || response.status === 403)) window.dispatchEvent(new Event("tech-phase:membership-changed"));
     if (!response.ok || !result.ok) throw new Error(errors[result.error] ?? "処理結果を確認できません。再実行する前に一覧を読み直してください。");
     return result;
   }
@@ -69,7 +72,7 @@ export default function NewsPanel({ token }: { token: string }) {
   }
   return <section className={styles.panel} aria-labelledby="ordinary-news-heading">
     <div className={styles.head}><div><p>通常ニュース</p><h2 id="ordinary-news-heading">日英下書き・公開レビュー</h2></div>
-      <button type="button" disabled={busy || token.length < 24} onClick={() => void run()}>{busy ? "処理中…" : "通常ニュースを読み込む"}</button></div>
+      <button type="button" disabled={busy || (token !== null && token.length < 24)} onClick={() => void run()}>{busy ? "処理中…" : "通常ニュースを読み込む"}</button></div>
     <p className={styles.note}>原文に照らして両言語の意味・数値・単位を確認してください。編集後は再承認が必要です。一覧の再読込で未保存の入力は破棄されます。</p>
     <p role="status" aria-live="polite">{message}</p>
     {data && <><p className={styles.note}>AI生成：{data.generationEnabled ? "設定有効" : "OFF"} · 公開配信：{data.publicationEnabled ? "ON（承認後に表示）" : "OFF（承認しても非公開）"}</p>

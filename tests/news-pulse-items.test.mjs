@@ -20,6 +20,41 @@ test('previously unknown incoming story keeps compact bilingual copy through fee
   assert.equal(fallback[0].shortTitle,incoming.officialUpdates[0].translationJa);
 });
 
+test('validated brief compact headlines show review status once without changing old-client payload titles', () => {
+  const suffixes={ja:'（短報・詳細確認中）',en:' (brief; details awaiting review)'};
+  for(const scope of ['company','sector']) {
+    const core=scope==='sector'?{ja:'証券会社による業界見通し',en:'Broker industry outlook'}:
+      {ja:'NVIDIA、新たな供給能力を発表',en:'NVIDIA announces new capacity'};
+    const compact=scope==='sector'?core:{ja:'NVIDIAの供給能力',en:'NVIDIA capacity'};
+    const item={id:'8044',generalSource:1,brief:{version:1,scope,validFacts:1,pendingFacts:1},
+      title:core.en+suffixes.en,translationJa:core.ja+suffixes.ja,
+      shortTitleEn:compact.en+suffixes.en,shortTitleJa:compact.ja+suffixes.ja,
+      url:'https://x.com/wallstengine/status/8044',publisher:scope==='sector'?'Reported industry news':'Wall St Engine',
+      tickers:scope==='sector'?[]:['NVDA'],publishedAt:'2026-10-02T12:30:37.000Z',observedAt:'2026-10-02T12:49:12.663Z',
+      bodyJa:core.ja,bodyEn:core.en};
+    const feed=availableNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[item]});
+    const original=structuredClone(feed);
+    for(const lang of ['ja','en']) {
+      const [pulse]=newsPulseItems(feed,lang);
+      assert.equal(pulse.title,core[lang]);
+      assert.equal(pulse.shortTitle,compact[lang]);
+      assert.equal(pulse.body,core[lang]);
+      assert.equal((JSON.stringify(pulse).match(/details awaiting review|詳細は確認中/gi)??[]).length,1);
+      const projected={...item};
+      delete projected.brief;
+      delete projected.generalSource;
+      const [older]=newsPulseItems({ok:true,enabled:false,items:[],officialUpdates:[projected]},lang);
+      assert.equal(older.shortTitle,compact[lang]+suffixes[lang]);
+      assert.equal(older.title,core[lang]+suffixes[lang]);
+    }
+    assert.deepEqual(feed,original);
+    assert.equal(feed.officialUpdates[0].title,item.title);
+    assert.equal(feed.officialUpdates[0].translationJa,item.translationJa);
+    assert.equal(feed.officialUpdates[0].shortTitleJa,item.shortTitleJa);
+    assert.equal(feed.officialUpdates[0].shortTitleEn,item.shortTitleEn);
+  }
+});
+
 const market = (id, topic, publishedAt) => ({ id, topic, publishedAt,
   observedAt:'2026-10-02T06:00:00Z', url:`https://x.com/Barchart/status/${id}`,
   titleJa:'利回りは-0.01ポイント、3.45%。加入予定。',

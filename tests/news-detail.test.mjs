@@ -81,6 +81,30 @@ test('only real added facts use native keyboard and touch accessible disclosure'
   }
 });
 
+test('verified partial briefs show review status without a duplicate headline or artificial disclosure',()=>{
+  const item={id:'8044',title:'Broker industry outlook (brief; details awaiting review)',translationJa:'証券会社による業界見通し（短報・詳細確認中）',
+    url:'https://x.com/wallstengine/status/8044',publisher:'Reported industry news',tickers:[],
+    generalSource:1,brief:{version:1,scope:'sector',validFacts:1,pendingFacts:1},
+    observedAt:'2026-10-02T12:49:12.663Z',bodyJa:'証券会社による業界見通し',bodyEn:'Broker industry outlook'};
+  const approved=publicNewsPayload({ok:true,enabled:false,items:[],officialUpdates:[item]}).officialUpdates[0];
+  for(const lang of ['ja','en']) {
+    for(const row of [approved,{...approved,bodyJa:item.translationJa,bodyEn:item.title}]) {
+      const display=officialNewsDisplay(row,lang);
+      const html=renderToStaticMarkup(React.createElement(NewsStory,{...props,...display,lang}));
+      assert.equal(display.body,undefined);
+      assert.equal(html.split(display.title).length-1,1);
+      assert.ok(html.includes(lang==='ja'?'業界短報 · 詳細は確認中':'Industry brief · Details awaiting review'));
+      assert.equal((html.match(/details awaiting review|詳細は確認中/gi)??[]).length,1);
+      assert.doesNotMatch(html,/<details|<summary|＋|\bMU\b|Micron|マイクロン|\(brief;|（短報・詳細確認中）/);
+    }
+    const detail=lang==='ja'?'新規設備の準備には時間がかかる。':'Preparing new facilities takes time.';
+    const withDetail=officialNewsDisplay({...approved,[lang==='ja'?'bodyJa':'bodyEn']:detail},lang);
+    const expanded=renderToStaticMarkup(React.createElement(NewsStory,{...props,...withDetail,lang}));
+    assert.match(expanded,/<details class="story"><summary>/);
+    assert.equal(expanded.split(detail).length-1,1);
+  }
+});
+
 test('optional economic detail keeps actual, forecast, prior and revision roles separate in JA and EN',()=>{
   const fact={...jobs.facts[0],comparisons:{forecast:'+90K',previous:'+54K',previousRevisedFrom:'+60K'}};
   assert.equal(resultFactText(fact,'ja'),'非農業部門雇用者数：+29K（予想 +90K／前回 +54K［+60Kから改定］）');

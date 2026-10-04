@@ -9,6 +9,7 @@ import timelineStyles from "./review-timeline.module.css";
 import SignalsPanel from "./signals-panel";
 import NewsPanel from "./news-panel";
 import OfficialResearchPanel from "./official-research-panel";
+import { useResearchOwner } from "../member-display-provider";
 
 type Evidence = { summary: string[]; impact: string[] };
 type ReviewHistory = {
@@ -142,13 +143,21 @@ function annualRiskDrafts(record: AnnualRecord | null): AnnualRiskDraft[] {
 }
 
 export default function ReviewDashboard() {
+  const owner = useResearchOwner();
+  // Drop private loaded data when the existing owner session changes or expires.
+  return <ReviewSession key={String(owner)} owner={owner} />;
+}
+
+function ReviewSession({ owner }: { owner: boolean }) {
   const [token, setToken] = useState("");
+  // null selects the existing owner session; the server still verifies every request.
+  const newsToken = owner ? null : token;
   const [items, setItems] = useState<ReviewItem[]>([]);
   const [reviewCounts, setReviewCounts] = useState<ReviewCounts>(emptyReviewCounts);
   const [reviewFilter, setReviewFilter] = useState<ReviewFilter>("all");
   const [filteredTotal, setFilteredTotal] = useState(0);
   const [selectedUrl, setSelectedUrl] = useState("");
-  const [message, setMessage] = useState("編集用トークンを入力してください。ブラウザーには保存しません。");
+  const [message, setMessage] = useState(owner ? "運営者ログインで速報レビューを利用できます。" : "運営者としてログインすると、編集用トークンの入力は不要です。");
   const [busy, setBusy] = useState(false);
   const [mode, setMode] = useState<"news" | "annual">("news");
   const [annualTicker, setAnnualTicker] = useState("NVDA");
@@ -175,13 +184,16 @@ export default function ReviewDashboard() {
     const params = new URLSearchParams({ limit: String(kind === "annual" ? 50 : 30) });
     if (kind === "annual") params.set("kind", "annual");
     else params.set("view", filter);
-    const result = await fetch(`/api/research/editor?${params}`, {
+    const credential = kind === "annual" ? token : newsToken;
+    const result = await fetch(`/api/research/${credential === null ? "editor-owner" : "editor"}?${params}`, {
       method,
       cache: "no-store",
-      headers: { Authorization: `Bearer ${token}`, ...(body ? { "Content-Type": "application/json" } : {}) },
+      credentials: "same-origin",
+      headers: { ...(credential === null ? {} : { Authorization: `Bearer ${credential}` }), ...(body ? { "Content-Type": "application/json" } : {}) },
       body: body ? JSON.stringify(body) : undefined,
     });
     const payload = await result.json();
+    if (credential === null && (result.status === 401 || result.status === 403)) window.dispatchEvent(new Event("tech-phase:membership-changed"));
     if (!result.ok || !payload.ok) throw new Error(payload.error || "request-failed");
     return payload;
   }
@@ -191,13 +203,13 @@ export default function ReviewDashboard() {
     try {
       const [newsResult, annualResult] = await Promise.allSettled([
         request("GET", undefined, "news", filter),
-        request("GET", undefined, "annual", annualReviewFilter),
+        token.length >= 24 ? request("GET", undefined, "annual", annualReviewFilter) : Promise.resolve(null),
       ]);
       if (newsResult.status === "rejected") throw newsResult.reason;
       const payload = newsResult.value;
       setItems(payload.items);
       setReviewCounts(payload.counts ?? emptyReviewCounts);
-      if (annualResult.status === "fulfilled") {
+      if (annualResult.status === "fulfilled" && annualResult.value) {
         setAnnualItems(annualResult.value.items ?? []);
         setAnnualCounts(annualResult.value.counts ?? emptyAnnualReviewCounts);
         setAnnualFilteredTotal(annualResult.value.filteredTotal ?? annualResult.value.items?.length ?? 0);
@@ -426,10 +438,20 @@ export default function ReviewDashboard() {
   return <main className={styles.main}>
     <header><div><p>TECH PHASE · PRIVATE EDITOR</p><h1>根拠付きリサーチレビュー</h1></div><div><Link href="/research/questions">質問受信箱</Link> · <Link href="/research/editorial">週刊・Q&A・ノートの編集</Link> · <Link href="/research/intake">取得状況へ戻る</Link></div></header>
     <aside className={styles.warning}><strong>配信前の運営画面</strong><span>原文・数値・解釈を確認してください。通常ニュースは公開配信がONの場合、承認後にニュース欄へ表示されます。</span></aside>
-    <section className={styles.auth} aria-label="編集者認証"><label>編集用トークン<input type="password" autoComplete="off" value={token} onChange={event => setToken(event.target.value)} /></label><div className={styles.authActions}><button disabled={busy || token.length < 24} onClick={() => load()}>レビューキューを読み込む</button><div className={styles.tickerLoad}><input aria-label="年次報告書のティッカー" value={annualTicker} maxLength={15} onChange={event => setAnnualTicker(event.target.value.toUpperCase())} /><button disabled={busy || token.length < 24} onClick={() => loadAnnual()}>年次報告書を開く</button></div></div><p aria-live="polite">{message}</p></section>
-    <SignalsPanel key={token} token={token} />
-    <NewsPanel key={`news:${token}`} token={token} />
-    <OfficialResearchPanel key={`official-research:${token}`} token={token} />
+    <section className={styles.auth} aria-label="編集者認証">
+      {owner ? <p>運営者としてログインしています。速報レビューでは再読込や別タブでも編集用トークンは不要です。<Link href="/research/account">アカウント・ログアウト</Link></p>
+        : <p><Link href="/research/account">運営者アカウントでログイン</Link>すると、ログイン中は速報レビューをそのまま利用できます。</p>}
+      <div className={styles.authActions}><button disabled={busy || (!owner && token.length < 24)} onClick={() => load()}>レビューキューを読み込む</button></div>
+      <details><summary>年次報告書・従来のトークン認証</summary>
+        <label>編集用トークン<input type="password" autoComplete="off" value={token} onChange={event => setToken(event.target.value)} /></label>
+        <p>年次報告書は従来の認証を使用します。ここに入力したトークンは、この画面のメモリだけで保持します。</p>
+        <div className={styles.tickerLoad}><input aria-label="年次報告書のティッカー" value={annualTicker} maxLength={15} onChange={event => setAnnualTicker(event.target.value.toUpperCase())} /><button disabled={busy || token.length < 24} onClick={() => loadAnnual()}>年次報告書を開く</button></div>
+      </details>
+      <p aria-live="polite">{message}</p>
+    </section>
+    <SignalsPanel key={newsToken} token={newsToken} />
+    <NewsPanel key={`news:${newsToken}`} token={newsToken} />
+    <OfficialResearchPanel key={`official-research:${newsToken}`} token={newsToken} />
     {(reviewCounts.total > 0 || items.length > 0 || annualCounts.total > 0 || annualSource) && <div className={styles.modeTabs} role="tablist" aria-label="レビュー対象"><button role="tab" aria-selected={mode === "news"} disabled={!reviewCounts.total && !items.length} onClick={() => setMode("news")}>速報レビュー</button><button role="tab" aria-selected={mode === "annual"} disabled={!annualCounts.total && !annualSource} onClick={() => setMode("annual")}>年次報告書レビュー</button></div>}
     {mode === "news" && (reviewCounts.total > 0 || items.length > 0) && <div className={styles.workspace}>
       <nav aria-label="確認する原文"><h2>速報レビューキュー</h2><div className={styles.annualMeta} aria-label="レビュー状況"><span>機械検証通過 {reviewCounts.machine_ready}</span><span>要修正 {reviewCounts.machine_blocked}</span><span>承認待ち {reviewCounts.awaiting_review}</span><span>原文更新 {reviewCounts.stale}</span><span>保留 {reviewCounts.held}</span><span>下書き未作成 {reviewCounts.needs_draft}</span><span>承認済み {reviewCounts.approved}</span></div><p style={{ margin: "10px 0 12px", color: "#81968f", fontSize: 12, lineHeight: 1.55 }}>機械検証通過は、人間が内容を確認できる状態の件数です。承認済み・下書き未作成は含みません。</p><div className={styles.queueFilters} aria-label="レビューキューの絞り込み">{reviewFilters.map(filter => <button key={filter.value} type="button" aria-pressed={reviewFilter === filter.value} disabled={busy} onClick={() => load(undefined, filter.value)}>{filter.label}</button>)}</div><p className={styles.filterResult}>{filteredTotal}件中 {items.length}件を表示</p>{items.length ? items.map(item => <button key={item.url} aria-current={selected?.url === item.url} onClick={() => setSelectedUrl(item.url)}><b>{item.ticker}</b><span>{item.title || new URL(item.url).pathname.split("/").filter(Boolean).at(-1)}</span><small>{labels[item.brief_status ?? ""] ?? "下書きなし"}{item.brief_status && item.brief_status !== "approved" ? ` · ${item.review_preflight.ready ? "機械検証通過" : "要修正"}` : ""}</small></button>) : <p className={styles.filterResult}>該当する資料はありません。</p>}</nav>

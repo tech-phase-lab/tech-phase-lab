@@ -1,4 +1,4 @@
-import type { GeneralNewsFeed } from "./general-news";
+import { NEWS_BRIEF_TITLE_SUFFIXES, type GeneralNewsFeed } from "./general-news.ts";
 import type { Language } from "./data";
 import { marketNewsBody, marketNewsDisplay } from "./market-news-display.ts";
 import { officialPulseHeadlineJa } from "./official-news-ja.ts";
@@ -12,8 +12,10 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
   return [
     ...(feed?.officialUpdates ?? []).map(item => {
       const display = officialNewsDisplay(item, lang);
+      const compactTitle = ja ? officialPulseHeadlineJa(item.url) ?? item.shortTitleJa : item.shortTitleEn;
+      const suffix = NEWS_BRIEF_TITLE_SUFFIXES[lang];
       return { id: `official-${item.id}`, ticker: display.label, title: display.title, body: display.body ? `${display.title}\n\n${display.body}` : display.title,
-        shortTitle: ja ? officialPulseHeadlineJa(item.url) ?? item.shortTitleJa : item.shortTitleEn,
+        shortTitle: item.brief && compactTitle?.endsWith(suffix) ? compactTitle.slice(0, -suffix.length) : compactTitle,
         url: item.url, ...officialTime(item) };
     }),
     ...(feed?.marketUpdates ?? []).map(item => {

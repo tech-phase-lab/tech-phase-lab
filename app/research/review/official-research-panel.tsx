@@ -73,7 +73,7 @@ const safeUrl = (value: string | null) => {
 };
 const validEvent = (id: number | null | undefined): id is number => typeof id === "number" && Number.isSafeInteger(id) && id > 0;
 
-export function TerminalReviewOverview({ data, token }: { data?: TerminalReviews; token: string }) {
+export function TerminalReviewOverview({ data, token }: { data?: TerminalReviews; token: string | null }) {
   if (!data) return null;
   const records = data.items.slice(0, 50);
   const omitted = Math.max(data.omitted + data.items.length - records.length, data.total - records.length, 0);
@@ -104,7 +104,7 @@ export function TerminalReviewOverview({ data, token }: { data?: TerminalReviews
   </section>;
 }
 
-export function NewsPipelineOverview({ data, token }: { data?: Pipeline; token: string }) {
+export function NewsPipelineOverview({ data, token }: { data?: Pipeline; token: string | null }) {
   if (!data) return <p className={styles.note}>取得・分類の概要は未取得です。未公開0件だけでは網羅性を確認できません。</p>;
   const intake = data.retainedIntake;
   const count = (key: string) => intake.counts[key] ?? 0;
@@ -168,13 +168,13 @@ export function NewsPipelineOverview({ data, token }: { data?: Pipeline; token: 
   </section>;
 }
 
-export default function OfficialResearchPanel({ token }: { token: string }) {
+export default function OfficialResearchPanel({ token }: { token: string | null }) {
   // A new in-memory credential starts a fresh session: no old data, errors,
   // busy state or requests can survive, even when the caller omits its own key.
   return <OfficialResearchSession key={token} token={token} />;
 }
 
-function OfficialResearchSession({ token }: { token: string }) {
+function OfficialResearchSession({ token }: { token: string | null }) {
   const [data, setData] = useState<Queue | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -187,15 +187,16 @@ function OfficialResearchSession({ token }: { token: string }) {
     active.current = controller;
     setBusy(true); setError("");
     try {
-      const response = await fetch("/api/research/editor?kind=official-research&view=pending&limit=50", {
-        cache: "no-store", headers: { Authorization: `Bearer ${token}` },
+      const response = await fetch(`/api/research/${token === null ? "editor-owner" : "editor"}?kind=official-research&view=pending&limit=50`, {
+        cache: "no-store", credentials: "same-origin", headers: { ...(token === null ? {} : { Authorization: `Bearer ${token}` }) },
         signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20_000)]),
       });
       const result = await response.json();
+      if (token === null && (response.status === 401 || response.status === 403)) window.dispatchEvent(new Event("tech-phase:membership-changed"));
       if (!response.ok || !result.ok) throw new Error("unavailable");
       if (active.current === controller && !controller.signal.aborted) setData(result);
     } catch {
-      if (active.current === controller && !controller.signal.aborted) setError("取得できませんでした。編集用トークンと監視サービスの接続を確認してください。");
+      if (active.current === controller && !controller.signal.aborted) setError("取得できませんでした。ログイン状態と監視サービスの接続を確認してください。");
     } finally {
       if (active.current === controller && !controller.signal.aborted) setBusy(false);
     }
@@ -203,7 +204,7 @@ function OfficialResearchSession({ token }: { token: string }) {
 
   return <section className={styles.panel} aria-labelledby="official-research-diagnostics-heading">
     <div className={styles.head}><div><p>公式本文の日英記事 · 編集者用</p><h2 id="official-research-diagnostics-heading">取得状況と未公開記事の検証</h2></div>
-      <button type="button" disabled={busy || token.length < 24} onClick={() => void load()}>{busy ? "読み込み中…" : "取得・記事の診断を読み込む"}</button></div>
+      <button type="button" disabled={busy || (token !== null && token.length < 24)} onClick={() => void load()}>{busy ? "読み込み中…" : "取得・記事の診断を読み込む"}</button></div>
     <p className={styles.note}>保存済み記録の読取専用です。生成・再試行・公開は実行しません。失敗した日英文章を返す場合は、現在の本文に完全一致する選択済み根拠を表示上限付きで示し、生成時の本文版が確認できるかも区別します。</p>
     <p className={styles.note}>機械検証の拒否は誤情報の確定ではありません。数値の表記差や対応箇所を調べる手掛かりです。保存済みの失敗を現在の原文で再検証し、当時の本文版が記録されていない場合は当時の判定の完全再現とは区別します。</p>
     {error && <p role="alert">{error}{data ? " 下記は前回取得時の記録です。" : ""}</p>}
@@ -213,7 +214,7 @@ function OfficialResearchSession({ token }: { token: string }) {
 }
 
 
-export function OfficialResearchResults({ data, token }: { data: Queue; token: string }) {
+export function OfficialResearchResults({ data, token }: { data: Queue; token: string | null }) {
   return <>
       <p className={styles.note}>取得 {time(data.generatedAt)} · 現在の生成対象 {data.counts.candidates}件 · 有効な保存記事 {data.counts.validatedPublications}件 · 未公開 {data.counts.pending}件（{data.items.length}/{data.filteredTotal}件を表示）</p>
       <p className={styles.note}>生成処理と同じ対象範囲の診断です。公開一覧の表示件数上限による省略を、生成待ちには数えません。</p>

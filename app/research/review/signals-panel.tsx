@@ -77,11 +77,11 @@ const detailStatuses: Record<SignalDetail["status"], string> = {
   "body-limit": "原文の取得・表示上限", "integrity-mismatch": "原文の整合性が一致しません",
 };
 
-export function SignalSourceInspection({ token, eventId }: { token: string; eventId: number }) {
+export function SignalSourceInspection({ token, eventId }: { token: string | null; eventId: number }) {
   return <SignalSourceInspectionSession key={`${token}:${eventId}`} token={token} eventId={eventId} />;
 }
 
-function SignalSourceInspectionSession({ token, eventId }: { token: string; eventId: number }) {
+function SignalSourceInspectionSession({ token, eventId }: { token: string | null; eventId: number }) {
   const [detail, setDetail] = useState<SignalDetail | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -94,22 +94,23 @@ function SignalSourceInspectionSession({ token, eventId }: { token: string; even
     setBusy(true); setError(""); setDetail(null);
     try {
       const query = new URLSearchParams({ kind: "signals", eventId: String(eventId) });
-      const response = await fetch(`/api/research/editor?${query}`, {
-        cache: "no-store", headers: { Authorization: `Bearer ${token}` },
+      const response = await fetch(`/api/research/${token === null ? "editor-owner" : "editor"}?${query}`, {
+        cache: "no-store", credentials: "same-origin", headers: { ...(token === null ? {} : { Authorization: `Bearer ${token}` }) },
         signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20_000)]),
       });
       const payload: { ok: boolean; detail?: SignalDetail } = await response.json();
+      if (token === null && (response.status === 401 || response.status === 403)) window.dispatchEvent(new Event("tech-phase:membership-changed"));
       if (!response.ok || !payload.ok || payload.detail?.eventId !== eventId) throw new Error("source-unavailable");
       if (active.current === controller && !controller.signal.aborted) setDetail(payload.detail);
     } catch {
-      if (active.current === controller && !controller.signal.aborted) setError("保存原文を取得できませんでした。トークンと接続を確認してください。");
+      if (active.current === controller && !controller.signal.aborted) setError("保存原文を取得できませんでした。ログイン状態と接続を確認してください。");
     } finally {
       if (active.current === controller && !controller.signal.aborted) setBusy(false);
     }
   }
   const text = detail?.status === "current" && detail.currentRevision && typeof detail.text === "string" ? detail.text.slice(0, 160_000) : null;
   return <div>
-    <button type="button" disabled={busy || token.length < 24 || !Number.isSafeInteger(eventId) || eventId <= 0} onClick={() => void inspect()}>{busy ? "保存原文を取得中…" : "保存原文を確認（編集者用）"}</button>
+    <button type="button" disabled={busy || (token !== null && token.length < 24) || !Number.isSafeInteger(eventId) || eventId <= 0} onClick={() => void inspect()}>{busy ? "保存原文を取得中…" : "保存原文を確認（編集者用）"}</button>
     {error && <p role="alert" className={styles.error}>{error}</p>}
     {detail && <details open>
       <summary>保存原文の照合結果 · {detailStatuses[detail.status] ?? "状態不明"}</summary>
@@ -126,7 +127,7 @@ function SignalSourceInspectionSession({ token, eventId }: { token: string; even
   </div>;
 }
 
-export function PriceTargetReconciliation({ report, token }: { report: TargetReconciliation; token: string }) {
+export function PriceTargetReconciliation({ report, token }: { report: TargetReconciliation; token: string | null }) {
   const { counts, coverage } = report;
   const records = report.records.slice(0, 50);
   return <details className={styles.routes}>
@@ -157,12 +158,12 @@ export function PriceTargetReconciliation({ report, token }: { report: TargetRec
   </details>;
 }
 
-export default function SignalsPanel({ token }: { token: string }) {
+export default function SignalsPanel({ token }: { token: string | null }) {
   // Credential changes discard data, errors and in-flight requests together.
   return <SignalsSession key={token} token={token} />;
 }
 
-function SignalsSession({ token }: { token: string }) {
+function SignalsSession({ token }: { token: string | null }) {
   const [watch, setWatch] = useState(false);
   const [view, setView] = useState("targets");
   const [ticker, setTicker] = useState("");
@@ -172,20 +173,21 @@ function SignalsSession({ token }: { token: string }) {
   const query = new URLSearchParams({ kind: "signals", view, limit: "30", ...(ticker ? { ticker } : {}) }).toString();
 
   useEffect(() => {
-    if (!watch || token.length < 24) return;
+    if (!watch || (token !== null && token.length < 24)) return;
     let stopped = false;
     let timer: ReturnType<typeof setTimeout>;
     const controller = new AbortController();
     async function load() {
       try {
-        const response = await fetch(`/api/research/editor?${query}`, {
-          cache: "no-store", headers: { Authorization: `Bearer ${token}` }, signal: controller.signal,
+        const response = await fetch(`/api/research/${token === null ? "editor-owner" : "editor"}?${query}`, {
+          cache: "no-store", credentials: "same-origin", headers: { ...(token === null ? {} : { Authorization: `Bearer ${token}` }) }, signal: controller.signal,
         });
         const payload: Queue = await response.json();
+        if (token === null && (response.status === 401 || response.status === 403)) window.dispatchEvent(new Event("tech-phase:membership-changed"));
         if (!response.ok || !payload.ok) throw new Error(payload.error || "request-failed");
         if (!stopped) { setState({ key: query, data: payload, displayedAt: new Date().toISOString() }); setFailure(null); }
       } catch {
-        if (!stopped) setFailure({ key: query, message: "取得できませんでした。編集用トークンと監視サービスの接続を確認してください。" });
+        if (!stopped) setFailure({ key: query, message: "取得できませんでした。ログイン状態と監視サービスの接続を確認してください。" });
       } finally {
         if (!stopped) timer = setTimeout(load, 15_000);
       }
@@ -201,7 +203,7 @@ function SignalsSession({ token }: { token: string }) {
   return <section className={styles.panel} aria-labelledby="signals-heading">
     <div className={styles.head}>
       <div><p>製品更新・業界記事</p><h2 id="signals-heading">関連情報の確認待ち</h2></div>
-      <button type="button" disabled={token.length < 24} onClick={() => { setWatch(true); setRefresh(value => value + 1); }}>取得状況を読み込む</button>
+      <button type="button" disabled={(token !== null && token.length < 24)} onClick={() => { setWatch(true); setRefresh(value => value + 1); }}>取得状況を読み込む</button>
     </div>
     <p className={styles.note}>編集用の表示実験です。目標株価の短文はX投稿から機械的に作成し、原発表との照合前です。会員向けには公開していません。</p>
     {error && <p role="alert" className={styles.error}>{error}{data ? " 下記は前回取得時の記録です。" : ""}</p>}

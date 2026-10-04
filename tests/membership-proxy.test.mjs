@@ -9,6 +9,6 @@ test('Clerk proxy supplies identity to research pages and membership APIs',()=>{
  const source=readFileSync(new URL('../proxy.ts',import.meta.url),'utf8');
  const matcher=JSON.parse(source.match(/matcher:\s*(\[[^\]]+\])/)[1]);
  const matches=url=>unstable_doesProxyMatch({config:{matcher},nextConfig:{},url});
- for(const url of ['/research','/research/notes','/research/write','/research/stocks','/research/account','/research/account/sign-up','/api/research/member','/api/research/member/preview','/api/research/articles/example','/api/research/notifications','/api/research/posts','/api/research/author','/api/research/questions','/api/research/questions/moderation']) assert.equal(matches(url),true,url);
+ for(const url of ['/research','/research/notes','/research/write','/research/stocks','/research/account','/research/account/sign-up','/api/research/member','/api/research/member/preview','/api/research/articles/example','/api/research/notifications','/api/research/posts','/api/research/author','/api/research/editor-owner','/api/research/questions','/api/research/questions/moderation']) assert.equal(matches(url),true,url);
  for(const url of ['/api/research/editor','/api/research/news','/api/research/notifications/entitlement']) assert.equal(matches(url),false,url);
 });

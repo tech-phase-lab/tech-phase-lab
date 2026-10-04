@@ -239,6 +239,44 @@ def _inequalities(text):
     return result
 
 
+def validate_periods(text,quote,language):
+    """Keep an explicit year horizon distinct from a completion deadline."""
+    pattern=re.compile(r'\b(through|until|into|up\s+to|by)\s+(?:(?:the )?end of\s+)?'
+                       r'((?:(?:FY|CY|fiscal(?: year)?|calendar(?: year)?)\s*\d{2,4}|(?:19|20|21)\d{2}))'
+                       r'(?!\d|\.\d|[%％])',re.I)
+    def relations(value):
+        result=[]
+        for match in pattern.finditer(value):
+            tail=value[match.end():]
+            word=re.match(r'\s*([A-Za-z]+)',tail)
+            # Do not turn a percentage, monetary amount or item count into a
+            # year just because it follows "by" (for example grow by 20%).
+            if re.match(r'\s*[%％$€£¥]',tail):continue
+            if word and word[1].lower() not in {'and','or','but','under','with','while','as','when','if','because',
+                                                'in','on','at','for','from','to','after','before','could','would',
+                                                'may','might','will','can','should','is','are'}:continue
+            result.append((match[1],re.search(r'\d+',match[2])[0]))
+        return result
+    source=relations(quote)
+    for year in dict.fromkeys(year for _,year in source):
+        expected=[relation.lower()!='by' for relation,value in source if value==year]
+        if language=='en':
+            actual=[kind.lower()!='by' for kind,value in relations(text) if value==year]
+            if actual!=expected:
+                raise ValueError('lost-period-relation')
+        else:
+            actual=[]
+            for match in re.finditer(re.escape(year)+r'(?!\d)',text):
+                tail=re.split(r'[。；;\n]|\d',text[match.end():],maxsplit=1)[0][:20]
+                before=text[max(0,match.start()-16):match.start()]
+                deadline=bool(re.search(r'までに|を期限|をめど|を目処|を目途',tail) or '遅くとも' in before)
+                duration=bool(re.search(r'まで(?!に)|にかけ|に(?:も|及|まで)|を通(?:じ|し)',tail))
+                if deadline:actual.append(False)
+                elif duration:actual.append(True)
+            if actual!=expected:
+                raise ValueError('lost-period-relation')
+
+
 def validate(item, unit):
     """Reject known scope/metric/status mutations; retain the parent validators."""
     binding, quote = unit.get('brokerCommentary'), unit.get('quote')
@@ -312,10 +350,4 @@ def validate(item, unit):
         if calendar_years and (re.findall(r'(?<![A-Za-z0-9_])CY\s*(\d{2,4})(?![A-Za-z0-9_])', text, re.I) != calendar_years
                 or re.search(r'年度|会計|\bFY\s*\d|\bfiscal\b', text, re.I)):
             raise ValueError('lost-calendar-basis')
-        for year in re.findall(r'\b(?:through|until|into)\s+(\d{4})\b', quote, re.I):
-            if language=='ja' and re.search(re.escape(year)+r'\s*年?[^。；;]{0,14}までに',text):
-                raise ValueError('lost-period-relation')
-            period = (re.escape(year) + r'\s*年?[^。；;]{0,14}(?:まで|に(?:も|及|まで)|にかけ)'
-                      if language == 'ja' else r'\b(?:through|until|into|up to)\s+' + re.escape(year) + r'\b')
-            if not re.search(period, text, re.I):
-                raise ValueError('lost-period-relation')
+        validate_periods(text,quote,language)

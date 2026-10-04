@@ -46,7 +46,7 @@ class MicronReviewedRecoveryTests(unittest.TestCase):
 
     def test_exact_current_copy_recovery_is_atomic_zero_call_and_honest_about_clocks(self):
         unchanged=('signal_events','signal_documents','signal_x_acquisition','general_source_semantic_reviews',
-                   'official_research_attempt_failures','official_research_attempt_body_proofs','signal_headline_translation_calls')
+                   'official_research_attempt_failures','official_research_attempt_body_proofs','signal_headline_translation_calls','general_source_briefs')
         with research.connect(self.path) as db:
             before={table:self.snapshot(db,table) for table in unchanged}
             old_job=self.snapshot(db,'official_research_jobs')[0]
