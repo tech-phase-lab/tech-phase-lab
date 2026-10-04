@@ -303,7 +303,12 @@ function signalIntakeStatus(signal: MonitorState["signalIntake"]) {
     ? ` · 公式見出し翻訳：${translationState} · 対象 ${translation.eligible}・翻訳済み ${translation.translated}・未翻訳 ${translation.pending}${translation.oldestPendingAt ? `（最古 ${time(translation.oldestPendingAt)} JST）` : ""} · 実行中 ${translation.running}・再試行 ${translation.retrying}${translation.nextRetryAt ? `（最短 ${time(translation.nextRetryAt)} JST）` : ""}・上限到達 ${translation.exhausted}${translationFailures ? `（失敗区分：${translationFailures}）` : ""} · 24時間 ${translation.calls24Hours.total}${translation.dailyLimit ? `/${translation.dailyLimit}` : ""}回（完了 ${translation.calls24Hours.completed}・失敗 ${translation.calls24Hours.failed}・原文更新 ${translation.calls24Hours.stale}）`
     : "";
   const research = signal.officialResearch;
-  const researchStatus = research ? ` · 公式本文の日英記事：公開 ${research.published}・未公開 ${research.pending}${research.latest.map(r => `／${r.ticker} ${r.id} 生成 ${duration(r.generationMs)}・公開 ${time(r.publicAt)} JST・検知→公開 ${duration(r.detectionToPublicMs)}`).join("")}${research.jobs.filter(j => j.state !== "done").map(j => `／${j.event_id} ${j.state} ${j.attempts}回 ${j.failure_kind ?? ""}`).join("")}` : "";
+  const delivery = research?.delivery;
+  const reviewAge = (ms: number | null) => ms === null ? "未計測" : `${Math.floor(ms / 3_600_000)}時間${Math.floor(ms / 60_000) % 60}分`;
+  const deliveryStatus = delivery
+    ? `現行の処理対象・判定済み ${delivery.tracked}・検証済み ${delivery.validated}・未公開合計 ${delivery.unpublished}（自動待ち ${delivery.automaticPending}／再試行 ${delivery.retryWaiting}／生成中 ${delivery.running}・要確認 ${delivery.reviewHeld}／うち保存記事保留 ${delivery.publicationHeld}）・対象外判定 ${delivery.assessedExcluded}・5分超 ${delivery.automaticOverdue + delivery.reviewOverdue}（要確認 ${delivery.reviewOverdue}）${delivery.reviewHeld ? `・要確認の最長経過：取得から ${reviewAge(delivery.reviewOldestCaptureAgeMs)}／原文公開から ${reviewAge(delivery.reviewOldestPublicationAgeMs)}${delivery.reviewPublicationAgeUnmeasured ? `（原文時刻未計測 ${delivery.reviewPublicationAgeUnmeasured}）` : ""}・要確認は自動再試行しません` : ""}（選択済み原文の現行版が対象・全投稿の取得網羅性とは別）`
+    : `公開 ${research?.published ?? 0}・自動生成待ち ${research?.pending ?? 0}（要確認件数は未取得）`;
+  const researchStatus = research ? ` · 日英記事の配信状況：${deliveryStatus}${research.latest.map(r => `／${r.ticker} ${r.id} 生成 ${duration(r.generationMs)}・公開 ${time(r.publicAt)} JST・検知→公開 ${duration(r.detectionToPublicMs)}`).join("")}${research.jobs.filter(j => j.state !== "done").map(j => `／${j.event_id} ${j.state} ${j.attempts}回 ${j.failure_kind ?? ""}`).join("")}` : "";
   const kinds = routes.errorKinds ?? {
     accessRestricted: 0, rateLimited: 0, timeout: 0, server: 0,
     invalidResponse: 0, articlePartial: 0, fetchFailure: 0, noLinks: 0,

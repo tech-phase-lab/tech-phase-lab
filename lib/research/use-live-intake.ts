@@ -332,7 +332,11 @@ export type MonitorState = {
       count: number; latencyAverageMs: number | null; latencyMaxMs: number | null;
       lastObservedAt: string | null;
     };
-    officialResearch?: { published: number; pending: number; latest: { id: string; ticker: string; observedAt: string; bodyReadyAt: string; generationStartedAt: string; publicAt: string; generationMs: number; detectionToPublicMs: number | null }[]; jobs: { event_id: number; state: string; attempts: number; failure_kind: string | null }[] };
+    officialResearch?: { published: number; pending: number;
+      delivery?: { tracked: number; validated: number; automaticPending: number; retryWaiting: number; running: number;
+        reviewHeld: number; publicationHeld: number; assessedExcluded: number; unpublished: number; reviewOverdue: number; automaticOverdue: number;
+        reviewOldestCaptureAgeMs: number | null; reviewOldestPublicationAgeMs: number | null; reviewPublicationAgeUnmeasured: number };
+      latest: { id: string; ticker: string; observedAt: string; bodyReadyAt: string; generationStartedAt: string; publicAt: string; generationMs: number; detectionToPublicMs: number | null }[]; jobs: { event_id: number; state: string; attempts: number; failure_kind: string | null }[] };
     headlineTranslation?: {
       status: "disabled" | "approval-required" | "misconfigured" | "enabled";
       dailyLimit: number | null;

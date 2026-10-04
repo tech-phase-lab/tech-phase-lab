@@ -8,6 +8,17 @@ const liveRoute = readFileSync(new URL("../app/api/research/live/route.ts", impo
 const intakeDashboard = readFileSync(new URL("../app/research/intake/intake-dashboard.tsx", import.meta.url), "utf8");
 const source = snapshot.sources.find(s => s.sha256);
 
+test("delivery health distinguishes stopped reviews from the automatic queue", () => {
+  assert.match(liveTypes, /reviewHeld: number/);
+  assert.match(liveTypes, /reviewOldestPublicationAgeMs: number \| null/);
+  assert.match(intakeDashboard, /未公開合計 \$\{delivery\.unpublished\}/);
+  assert.match(intakeDashboard, /自動待ち \$\{delivery\.automaticPending\}/);
+  assert.match(intakeDashboard, /要確認 \$\{delivery\.reviewHeld\}/);
+  assert.match(intakeDashboard, /対象外判定/);
+  assert.match(intakeDashboard, /要確認は自動再試行しません/);
+  assert.match(intakeDashboard, /要確認件数は未取得/);
+});
+
 test("snapshot has valid source references and no private review details", () => {
   assert.deepEqual(snapshotIssues(snapshot), []);
   for (const h of snapshot.history) {

@@ -878,7 +878,9 @@ def diagnostics(db,reference):
         if job and job['state']=='retry':
             failures[job['failure_kind'] or 'unclassified']+=1
     intake=retained_intake(db,reference)
-    return {'eligible':len(rows),'published':len(public),'pending':len(rows)-len(public),
+    import official_research
+    delivery=official_research.delivery_diagnostics(db,reference,rows,public)
+    return {'eligible':len(rows),'published':len(public),'pending':len(rows)-len(public),'delivery':delivery,
             'excluded':sum(row is None for _,row,_ in records),
             'rejectionReasons':dict(Counter(reason for _,row,reason in records if row is None)),
             'retryReasons':dict(failures),'policyVersion':VERSION,

@@ -24,9 +24,11 @@ import signals
 import general_source_news
 import reviewed_business_news
 import micron_reviewed_recovery
+import news_delivery_status
 import issuer_business_news
 
 MAX_EVIDENCE_CHARS = 1800
+NO_AUTOMATIC_REGENERATION=frozenset({'unsupported-comparison-baseline'})
 
 MATERIAL = re.compile(r'\b(acquir(?:es|ed|e)|acquisition|partner(?:s|ship)?|agreement|quarter.*results|financial results|earnings|launch(?:es|ed)?|expand(?:s|ed)?|investment|capacity)\b', re.I)
 POLICY = """Write factual Japanese and English news from the supplied issuer announcement.
@@ -286,7 +288,7 @@ def claim(db, reference, model, limit):
                     validate_row(json.loads(published['payload']),r)
                     continue
                 except ValueError as exc:
-                    if str(exc) == 'unsupported-comparison-baseline':
+                    if str(exc) in NO_AUTOMATIC_REGENERATION:
                         # Withhold a saved mistranslation without causing a paid
                         # regeneration. A source-bound correction may replace it.
                         continue
@@ -678,6 +680,29 @@ def feed(db, reference=None, *, published_updates=None):
     return primary_publication_items(publications)[:20]
 
 
+def publication_hold_reason(db,row,reference):
+    """Mirror claim's explicit saved-copy hold without changing its job state."""
+    saved=db.execute('SELECT * FROM official_research_publications WHERE event_id=? AND sha=? AND body_sha=?',
+                     (row['id'],row['sha'],row['body_sha'])).fetchone()
+    if not saved or not publication_clock_valid(saved,row,reference):return None
+    try:
+        note=json.loads(saved['payload'])
+        if not isinstance(note,dict):return None
+        validate_row(note,row)
+    except ValueError as exc:
+        return str(exc) if str(exc) in NO_AUTOMATIC_REGENERATION else None
+    except (TypeError,KeyError):pass
+    return None
+
+
+def delivery_diagnostics(db,reference,rows,published):
+    reviews=[(row,review) for row in general_source_news.candidates(db,reference,include_review=True)
+             if (review:=general_source_news.semantic_review(db,row,reference))]
+    holds=[(row,reason) for row in rows if row['id'] not in published
+           and (reason:=publication_hold_reason(db,row,reference))]
+    return news_delivery_status.summarize(db,reference,rows,published,reviews,holds)
+
+
 def diagnostics(db):
     schema(db)
     reference=datetime.now(timezone.utc)
@@ -686,7 +711,8 @@ def diagnostics(db):
     items=primary_publication_items(publications)
     published=len(publications)
     pending=len(rows)-published
-    return {'published':published,'pending':max(0,pending),
+    delivery=delivery_diagnostics(db,reference,rows,{row['id'] for row,_,_ in publications})
+    return {'published':published,'pending':max(0,pending),'delivery':delivery,
             'latest':[{k:x[k] for k in ('id','ticker','observedAt','bodyReadyAt','generationStartedAt','publicAt','generationMs','detectionToPublicMs')} for x in items[:5]],
             'jobs':[dict(r) for r in db.execute('SELECT event_id,state,attempts,failure_kind FROM official_research_jobs ORDER BY event_id DESC LIMIT 5')]}
 
@@ -696,11 +722,11 @@ def sync_incident(db, env=None, reference=None):
     reference=reference or datetime.now(timezone.utc)
     rows=candidates(db,reference)
     published={r['id'] for r,_,_ in validated_publications(db,rows)}
-    pending=[r for r in rows if r['id'] not in published]
-    overdue=any(monitor.stored_latency_ms(r['observed_at'],reference.isoformat()) is not None
-                and monitor.stored_latency_ms(r['observed_at'],reference.isoformat()) >= 300000 for r in pending)
+    delivery=delivery_diagnostics(db,reference,rows,published)
     config=headline_translation.configuration(os.environ if env is None else env,now=reference.timestamp())
-    code='official-research-overdue' if pending and overdue and config is not None else None
+    # A terminal review needs human attention, not another paid attempt. Keep
+    # its overdue delivery visible even when the automatic queue becomes empty.
+    code='official-research-overdue' if delivery['reviewOverdue'] or (delivery['automaticOverdue'] and config is not None) else None
     if code:
         monitor.record_operational_incident(db,'publication:official-research','publication','official-research','critical',code,seen_at=reference.isoformat())
     else:
