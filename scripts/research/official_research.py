@@ -86,7 +86,7 @@ def connect(path):
     return db
 
 
-def candidates(db, reference, *, read_only=False, published_updates=None):
+def candidates(db, reference, *, read_only=False, published_updates=None, primary_only=False):
     published = (signals.public_official_updates(db, reference=reference, limit=100, read_only=read_only, include_bodies=False)
                  if published_updates is None else published_updates[:100])
     visible_ids = {int(item['id']) for item in published}
@@ -111,6 +111,11 @@ def candidates(db, reference, *, read_only=False, published_updates=None):
         tickers = json.loads(row['tickers_json'])
         if row['id'] in visible_ids and row['id'] not in primary_ids and tickers and bridge.is_current(db,row):
             stories.append({**dict(row), 'ticker': tickers[0], 'body_cached': True})
+    if primary_only:
+        # The public research feed renders only issuer releases. Reported news
+        # is already projected through officialUpdates; revalidating those rows
+        # here repeats their full candidate/context scans without adding output.
+        return primary + [row for row in stories if row['source_id'].startswith('primary-ir-')]
     return primary + stories + general_source_news.candidates(db,reference) + issuer_business_news.candidates(db,reference)
 
 
@@ -807,7 +812,7 @@ def primary_publication_items(publications):
 def feed(db, reference=None, *, published_updates=None):
     schema(db)
     reference=reference or datetime.now(timezone.utc)
-    publications=validated_publications(db,candidates(db,reference,published_updates=published_updates))
+    publications=validated_publications(db,candidates(db,reference,published_updates=published_updates,primary_only=True))
     return primary_publication_items(publications)[:20]
 
 

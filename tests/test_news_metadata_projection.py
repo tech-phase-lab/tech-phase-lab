@@ -75,5 +75,45 @@ class NewsMetadataProjectionTests(unittest.TestCase):
             db.execute("UPDATE sources SET sha256='superseded'")
             self.assertEqual(signals.public_official_updates(db,reference=fixture.NOW,include_bodies=False),[])
 
+    def test_primary_feed_matches_full_projection_without_reported_candidate_scans(self):
+        self.assertEqual(self.case.run_note(),'done')
+        with research.connect(self.case.path) as db:
+            self.cache_body(db)
+            published=signals.public_official_updates(db,reference=fixture.NOW,limit=500)
+            rows=research.candidates(db,fixture.NOW,published_updates=published)
+            expected=research.primary_publication_items(research.validated_publications(db,rows))[:20]
+            self.assertEqual(len(expected),1)
+            before=db.total_changes
+            with patch.object(research.general_source_news,'candidates',side_effect=AssertionError('duplicate reported scan')),patch.object(research.issuer_business_news,'candidates',side_effect=AssertionError('duplicate issuer report scan')):
+                self.assertEqual(research.feed(db,fixture.NOW,published_updates=published),expected)
+                # Reusing the outer headlines still cannot bypass withdrawal.
+                db.execute("UPDATE official_research_publications SET body_sha='withdrawn'")
+                self.assertEqual(research.feed(db,fixture.NOW,published_updates=published),[])
+            self.assertEqual(db.total_changes,before+1)
+
+    def test_primary_feed_retains_cached_body_fallback(self):
+        self.assertEqual(self.case.run_note(),'done')
+        with research.connect(self.case.path) as db:
+            self.cache_body(db)
+            published=signals.public_official_updates(db,reference=fixture.NOW,limit=500)
+            # A short discovery excerpt can still have a verified full article.
+            db.execute("UPDATE source_revisions SET extracted_text='Short source excerpt.',extracted_chars=21")
+            all_rows=research.candidates(db,fixture.NOW,published_updates=published)
+            primary=research.candidates(db,fixture.NOW,published_updates=published,primary_only=True)
+            self.assertEqual(primary,all_rows)
+            self.assertEqual(len(primary),1);self.assertTrue(primary[0]['body_cached'])
+            self.assertEqual(research.feed(db,fixture.NOW,published_updates=published),
+                             research.primary_publication_items(research.validated_publications(db,all_rows))[:20])
+            self.assertEqual(len(research.feed(db,fixture.NOW,published_updates=published)),1)
+
+    def test_default_candidates_keep_both_reported_admission_paths(self):
+        with research.connect(self.case.path) as db:
+            general={'id':987,'general_source':True}
+            issuer={'id':988,'issuer_business':True}
+            with patch.object(research.general_source_news,'candidates',return_value=[general]) as first,patch.object(research.issuer_business_news,'candidates',return_value=[issuer]) as second:
+                rows=research.candidates(db,fixture.NOW,published_updates=[])
+            self.assertEqual(rows[-2:],[general,issuer])
+            first.assert_called_once_with(db,fixture.NOW);second.assert_called_once_with(db,fixture.NOW)
+
 
 if __name__=='__main__':unittest.main()
