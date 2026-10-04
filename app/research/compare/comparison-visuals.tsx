@@ -2,7 +2,7 @@
 import type { ComparisonResult } from "@/lib/research/comparison";
 import { comparisonScores, comparisonMetric, comparisonLeaders, comparisonAvailability, hasRecentQuarter, radarPoint } from "@/lib/research/comparison-scorecard";
 import styles from "./styles.module.css";
-const companyColors = ["#f0949b", "#9ed8c3", "#a5badf"];
+const companyColors = ["#e4e9e7", "#e4e9e7", "#e4e9e7"];
 function StatusChart({companies,lang,now,colorIndex=0}: {companies:ComparisonResult["companies"];lang:"ja"|"en";now:number;colorIndex?:number}) {
   const sets=companies.map(c=>comparisonScores(c,now)), factors=sets[0];
   const labels=lang==="ja" ? ["財務", "収益", "割安", "安定", "株価", "成長", "資金"] : ["Finance", "Profit", "Value", "Stability", "Momentum", "Growth", "Cash"];

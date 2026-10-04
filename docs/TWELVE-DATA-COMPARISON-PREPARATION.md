@@ -89,7 +89,7 @@ No live speed, freshness, licensing or complete-symbol coverage is claimed here.
 
 ## Comparison presentation update (2026-10-04)
 
-- Company identity colors are coral, mint and blue; gold highlights the bars and numeric scores of factor leaders. Company names retain identity colors; standard bars and radar lines use a shared green.
+- Company names use a consistent off-white; gold highlights the bars and numeric scores of factor leaders. Standard bars and radar lines use a shared green.
 - The sample and non-trial production view share the seven-factor overall assessment and score-method disclosure. Overall is an equal-weight average, requires all seven factors for every comparable company, and treats a gap below 0.3 as close. It is not a return forecast.
 - Evidence-based weaknesses now include sequential operating-margin contraction, debt exceeding cash, and negative three-month price return. These do not imply an unverified cause or liquidity crisis. The fictitious sample includes such weaknesses; no insider or geopolitical claims are fabricated.
 - Insider transactions, geographic exposure and litigation still require separate sourced data; this implementation does not claim to collect them.
