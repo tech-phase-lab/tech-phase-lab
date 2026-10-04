@@ -1,0 +1,222 @@
+[
+  {
+    "label": "announced faithful",
+    "expected": "done",
+    "outcome": "review",
+    "reason": "changed-claim-status",
+    "actor": "Orion Labs",
+    "calls": 1,
+    "source": "Orion Labs announced a new AI model for developers.",
+    "en": "Orion Labs announced a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルを発表した。"
+  },
+  {
+    "label": "unveiled faithful",
+    "expected": "done",
+    "outcome": "done",
+    "reason": null,
+    "actor": null,
+    "calls": 1,
+    "source": "Orion Labs unveiled a new AI model for developers.",
+    "en": "Orion Labs unveiled a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルを発表した。"
+  },
+  {
+    "label": "introduced faithful",
+    "expected": "done",
+    "outcome": "review",
+    "reason": "changed-business-topic",
+    "actor": null,
+    "calls": 1,
+    "source": "Orion Labs introduced a new AI model for developers.",
+    "en": "Orion Labs introduced a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルを紹介した。"
+  },
+  {
+    "label": "introduced announcement",
+    "expected": "done",
+    "outcome": "review",
+    "reason": "changed-claim-status",
+    "actor": null,
+    "calls": 1,
+    "source": "Orion Labs introduced a new AI model for developers.",
+    "en": "Orion Labs introduced a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルを発表した。"
+  },
+  {
+    "label": "launched faithful",
+    "expected": "done",
+    "outcome": "done",
+    "reason": null,
+    "actor": "Orion Labs",
+    "calls": 1,
+    "source": "Orion Labs launched a new AI model for developers.",
+    "en": "Orion Labs launched a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルを公開した。"
+  },
+  {
+    "label": "released faithful",
+    "expected": "done",
+    "outcome": "review",
+    "reason": "changed-business-topic",
+    "actor": "Orion Labs",
+    "calls": 1,
+    "source": "Orion Labs released a new AI model for developers.",
+    "en": "Orion Labs released a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルを公開した。"
+  },
+  {
+    "label": "unveiled to launched",
+    "expected": "review",
+    "outcome": "done",
+    "reason": null,
+    "actor": null,
+    "calls": 1,
+    "source": "Orion Labs unveiled a new AI model for developers.",
+    "en": "Orion Labs launched a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルを公開した。"
+  },
+  {
+    "label": "unveiled JA released",
+    "expected": "review",
+    "outcome": "done",
+    "reason": null,
+    "actor": null,
+    "calls": 1,
+    "source": "Orion Labs unveiled a new AI model for developers.",
+    "en": "Orion Labs unveiled a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルを公開した。"
+  },
+  {
+    "label": "unveiled EN released",
+    "expected": "review",
+    "outcome": "review",
+    "reason": "changed-business-topic",
+    "actor": null,
+    "calls": 1,
+    "source": "Orion Labs unveiled a new AI model for developers.",
+    "en": "Orion Labs released a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルを発表した。"
+  },
+  {
+    "label": "announced to released",
+    "expected": "review",
+    "outcome": "review",
+    "reason": "changed-claim-status",
+    "actor": "Orion Labs",
+    "calls": 1,
+    "source": "Orion Labs announced a new AI model for developers.",
+    "en": "Orion Labs released a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルを公開した。"
+  },
+  {
+    "label": "announced to available",
+    "expected": "review",
+    "outcome": "done",
+    "reason": null,
+    "actor": "Orion Labs",
+    "calls": 1,
+    "source": "Orion Labs announced a new AI model for developers.",
+    "en": "Orion Labs made a new AI model available for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルの提供を開始した。"
+  },
+  {
+    "label": "introduced to launched",
+    "expected": "review",
+    "outcome": "review",
+    "reason": "changed-claim-status",
+    "actor": null,
+    "calls": 1,
+    "source": "Orion Labs introduced a new AI model for developers.",
+    "en": "Orion Labs launched a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルを公開した。"
+  },
+  {
+    "label": "planned faithful",
+    "expected": "done",
+    "outcome": "done",
+    "reason": null,
+    "actor": "Orion Labs",
+    "calls": 1,
+    "source": "Orion Labs plans to launch a new AI model for developers.",
+    "en": "Orion Labs plans to launch a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルを公開する予定だ。"
+  },
+  {
+    "label": "planned to completed",
+    "expected": "review",
+    "outcome": "review",
+    "reason": "changed-claim-status",
+    "actor": "Orion Labs",
+    "calls": 1,
+    "source": "Orion Labs plans to launch a new AI model for developers.",
+    "en": "Orion Labs launched a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルを公開した。"
+  },
+  {
+    "label": "preparing faithful",
+    "expected": "done",
+    "outcome": "done",
+    "reason": null,
+    "actor": "Orion Labs",
+    "calls": 1,
+    "source": "Orion Labs is preparing to launch a new AI model for developers.",
+    "en": "Orion Labs is preparing to launch a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルの公開を準備している。"
+  },
+  {
+    "label": "preparing to completed",
+    "expected": "review",
+    "outcome": "review",
+    "reason": "changed-claim-status",
+    "actor": "Orion Labs",
+    "calls": 1,
+    "source": "Orion Labs is preparing to launch a new AI model for developers.",
+    "en": "Orion Labs launched a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルを公開した。"
+  },
+  {
+    "label": "expected faithful",
+    "expected": "done",
+    "outcome": "done",
+    "reason": null,
+    "actor": "Orion Labs",
+    "calls": 1,
+    "source": "Orion Labs expects to launch a new AI model for developers.",
+    "en": "Orion Labs expects to launch a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルの公開を見込んでいる。"
+  },
+  {
+    "label": "expected to guaranteed",
+    "expected": "review",
+    "outcome": "review",
+    "reason": "changed-claim-status",
+    "actor": "Orion Labs",
+    "calls": 1,
+    "source": "Orion Labs expects to launch a new AI model for developers.",
+    "en": "Orion Labs guarantees the launch of a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルの公開を確約した。"
+  },
+  {
+    "label": "expected EN guaranteed",
+    "expected": "review",
+    "outcome": "review",
+    "reason": "changed-claim-status",
+    "actor": "Orion Labs",
+    "calls": 1,
+    "source": "Orion Labs expects to launch a new AI model for developers.",
+    "en": "Orion Labs guarantees the launch of a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルの公開を見込んでいる。"
+  },
+  {
+    "label": "expected JA guaranteed",
+    "expected": "review",
+    "outcome": "review",
+    "reason": "changed-claim-status",
+    "actor": "Orion Labs",
+    "calls": 1,
+    "source": "Orion Labs expects to launch a new AI model for developers.",
+    "en": "Orion Labs expects to launch a new model using AI for developers.",
+    "ja": "Orion Labsは開発者向けの新しいAIモデルの公開を確約した。"
+  }
+]

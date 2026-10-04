@@ -744,6 +744,13 @@ def validate_anchors(text, quote, unit, language):
     concept_text=re.sub(r'\bremaining capacity\b','remaining authorization',text,flags=re.I) if 'buyback' in unit else text
     source_concepts=concepts(concept_quote,'en')
     output_concepts=concepts(concept_text,language)
+    if 'sourceNews' in unit:
+        # This lane separately binds announcement versus actual availability.
+        # Align its bilingual topic cues without changing other news routes.
+        if source_news_grounding.action_topic(concept_quote,'en'):
+            source_concepts.add('launch')
+        if source_news_grounding.action_topic(concept_text,language):
+            output_concepts.add('launch')
     # A Japanese combined supply-demand noun preserves both source concepts.
     if language=='ja' and re.search(r'需給',text):
         output_concepts.add('demand')
