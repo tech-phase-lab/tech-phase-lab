@@ -205,7 +205,7 @@ def publish(db, rows, reference, validator, current_revision):
 
 
 RETAINED_COPY_PATH = Path(__file__).with_name('reviewed_retained_announcements.json')
-RETAINED_COPY_SHA = 'd585efc56b0d40ab82d90326d9d8bd9fbc4fc73f19436c0ce9bcbb2e1672041e'
+RETAINED_COPY_SHA = '64aa86bd3a5ced32f467efa04ef6f5bf2691a6632514f8d6938377dba0f97ba6'
 
 
 def retained_candidate(db, pin, reference):
@@ -213,13 +213,14 @@ def retained_candidate(db, pin, reference):
     import official_release_bridge as bridge
     row = db.execute("""SELECT e.*,s.sha256 AS source_revision,s.content_type,
       s.extractor_version,s.error,s.status,s.source_mode,r.extracted_text AS body,r.observed_at AS body_at,
-      s.title AS source_title,s.published_on AS source_date
+      s.title AS source_title,s.published_on AS source_date,s.ticker AS source_ticker
       FROM signal_events e JOIN sources s ON s.url=e.url
       JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256
       WHERE e.source_id=? AND e.url=? ORDER BY e.id DESC LIMIT 1""",
                      (pin['sourceId'], pin['url'])).fetchone()
     if (not row or not bridge.is_current(db, row) or row['truncated']
             or row['title'] != pin['title'] or row['source_title'] != pin['title']
+            or row['source_ticker'] != pin['ticker']
             or row['published_on'] != pin['publishedOn'] or row['source_date'] != pin['publishedOn']
             or repair.instant(row['observed_at']) != repair.instant(pin['observedAt'])
             or row['error'] or row['status'] in {'held', 'rejected'}):
@@ -229,10 +230,29 @@ def retained_candidate(db, pin, reference):
         return None
     # XML here may be a legitimate inline RSS description. Preserve that
     # source revision; a separately acquired article needs its own proof.
-    direct = (row['content_type'] == 'text/html'
-              and row['extractor_version'] == pin['extractorVersion']
-              and len(row['body']) == pin['bodyChars']
-              and digest(row['body']) == pin['bodyTextSha'])
+    primary_revision = pin.get('provenance') == 'primary-source-revision'
+    if primary_revision:
+        from signals import safe_url
+        publisher = next((source for source in bridge.publishers() if source['id'] == row['source_id']), None)
+        try:
+            if not publisher or pin['ticker'] not in publisher['tickers'] or safe_url(row['url'], publisher) != pin['url']:
+                return None
+        except (ValueError, TypeError):
+            return None
+        # A stored primary revision identifies its acquisition serialization;
+        # it need not equal the hash of its extracted article text. Do not
+        # invent a second HTML-fetch proof or replace that revision identity.
+        direct = (pin.get('bodyRevisionSha') == row['source_revision']
+                  and (row['source_mode'] == 'inline' or row['content_type'] in {None, 'text/html', 'application/pdf'})
+                  and 1200 <= len(row['body']) == pin['bodyChars'] <= 160000
+                  and digest(row['body']) == pin['bodyTextSha'])
+        if not direct:
+            return None
+    else:
+        direct = (row['content_type'] == 'text/html'
+                  and row['extractor_version'] == pin['extractorVersion']
+                  and len(row['body']) == pin['bodyChars']
+                  and digest(row['body']) == pin['bodyTextSha'])
     if not direct:
         cached = db.execute('''SELECT b.*,p.source_url,p.source_title,p.published_on,
           p.extractor_version FROM official_story_bodies b JOIN official_story_body_proofs p
@@ -286,7 +306,7 @@ def replaceable_retained_publication(db, previous, row, pin, validator):
     if replacement:
         reason = replacement['reason']
         if (reason not in {'changed-rollout-status', 'reviewed-evidence-precision'}
-                or previous['body_sha'] != pin['bodyTextSha']
+                or previous['body_sha'] != pin.get('bodyRevisionSha', pin['bodyTextSha'])
                 or digest(previous['payload']) != replacement['payloadSha']
                 or any(previous[column] != replacement[key] for key, column in (
                     ('bodySha', 'body_sha'), ('startedAt', 'started_at'),
@@ -361,8 +381,20 @@ def publish_retained(db, reference, validator):
             archive = replaceable_retained_publication(db, previous, row, pin, validator)
             if archive is None:
                 continue
+        primary_revision = pin.get('provenance') == 'primary-source-revision'
+        publication_body_sha = pin.get('bodyRevisionSha', pin['bodyTextSha'])
+        if primary_revision:
+            import official_research as research
+            # Use the ordinary current issuer candidate before validation. All
+            # of its source/event/text inputs are rechecked under the lock below.
+            matches = [r for r in research.candidates(db, reference, read_only=True, primary_only=True)
+                       if r['id'] == row['id']]
+            if (len(matches) != 1 or matches[0]['ticker'] != pin['ticker']
+                    or matches[0]['body_sha'] != publication_body_sha or matches[0]['body'] != row['body']
+                    or matches[0]['sha'] != row['sha'] or not research.current_revision(db, matches[0])):
+                continue
         cached = record(db.execute('SELECT * FROM official_story_bodies WHERE event_id=?', (row['id'],)).fetchone())
-        if cached and (cached['sha'] != row['sha'] or cached['body_sha'] != pin['bodyTextSha']
+        if cached and (cached['sha'] != row['sha'] or cached['body_sha'] not in {pin['bodyTextSha'], publication_body_sha}
                        or cached['body'] != row['body'] or cached['error']):
             continue
         started = time.monotonic()
@@ -389,7 +421,7 @@ def publish_retained(db, reference, validator):
             public_at = datetime.now(timezone.utc).isoformat(timespec='milliseconds')
             note.update(generationMethod=GENERATION_METHOD, reviewedCopySha256=RETAINED_COPY_SHA)
             payload = json.dumps(note, ensure_ascii=False)
-            if not cached:
+            if not cached and not primary_revision:
                 db.execute('INSERT INTO official_story_bodies VALUES(?,?,?,?,?,?,?)',
                            (row['id'], row['sha'], pin['bodyTextSha'], row['body'], row['body_at'], reference.timestamp()+900, None))
             if archive:
@@ -403,7 +435,7 @@ def publish_retained(db, reference, validator):
               ON CONFLICT(event_id) DO UPDATE SET sha=excluded.sha,body_sha=excluded.body_sha,
               payload=excluded.payload,evidence=excluded.evidence,started_at=excluded.started_at,
               public_at=excluded.public_at,generation_ms=excluded.generation_ms''',
-                       (row['id'], row['sha'], pin['bodyTextSha'], payload,
+                       (row['id'], row['sha'], publication_body_sha, payload,
                         json.dumps([item['evidenceQuote'] for item in [note['title'], note['summary'], *note['facts'], note['purpose']]]),
                         started_at, public_at, round((time.monotonic()-started)*1000)))
             db.execute('INSERT INTO reviewed_retained_announcement_recoveries VALUES(?,?,?,?,?,?,?,?,?,?,?)',

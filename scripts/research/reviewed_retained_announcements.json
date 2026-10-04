@@ -216,6 +216,88 @@
           }
         ]
       }
+    },
+    {
+      "eventId": 1242,
+      "sourceId": "primary-ir-GOOGL",
+      "ticker": "GOOGL",
+      "url": "https://blog.google/products-and-platforms/devices/googlebook/henry-cavill-googlebook-video-game/",
+      "title": "Game on: Henry Cavill is putting Googlebook to the test",
+      "publishedOn": "2026-09-29",
+      "observedAt": "2026-10-03T14:03:59.990+00:00",
+      "eventSha": "9548bf89690dd7f407ed1abf1d30859f4d0b39d6c5361d671b8f41700c85a6cd",
+      "sourceRevision": "d63a9deed4f4710aa59bb9edba296a379a7a96b7f269882d0cac0ee02c297b40",
+      "provenance": "primary-source-revision",
+      "bodyRevisionSha": "d63a9deed4f4710aa59bb9edba296a379a7a96b7f269882d0cac0ee02c297b40",
+      "bodyTextSha": "d1b5ab6e1983b3c770ee4b1ccdea6e445e23307314a66dd40363ff174c1c92f6",
+      "bodyChars": 1756,
+      "replacement": {
+        "reason": "reviewed-evidence-precision",
+        "payloadSha": "28356b69dc7d914ec33e2f6d3ed6d6aee43cc35885b6cb7c1cab39455aee5679",
+        "bodySha": "d63a9deed4f4710aa59bb9edba296a379a7a96b7f269882d0cac0ee02c297b40",
+        "startedAt": "2026-10-03T14:04:38.147746+00:00",
+        "publicAt": "2026-10-03T14:04:48.345+00:00",
+        "generationMs": 5194,
+        "jobAttempts": 1
+      },
+      "copy": {
+        "title": {
+          "ja": "ヘンリー・カヴィル、Googlebookでゲーム開発に挑戦へ",
+          "en": "Henry Cavill Partners with Googlebook to Develop Video Game",
+          "anchors": [
+            "Henry Cavill is partnering with Googlebook"
+          ]
+        },
+        "summary": {
+          "ja": "俳優のヘンリー・カヴィルは2026年11月にGoogleと協力し、次世代ラップトップのGooglebookを使ってビデオゲームを制作する予定だ。",
+          "en": "Actor Henry Cavill will team up with Google in November 2026 to build a video game using the next-generation Googlebook laptop.",
+          "anchors": [
+            "Sep 29, 2026",
+            "This November, Henry is teaming up"
+          ]
+        },
+        "purpose": {
+          "ja": "Googlebookの性能と独自ソフトウェア機能を活用して創作を支援し、ラップトップの新たな可能性を示すこと。",
+          "en": "To showcase Googlebook's powerful hardware and unique software experiences in supporting creative projects and redefining laptop capabilities.",
+          "anchors": [
+            "Laptops need to keep up with our growing",
+            "This November, Henry is teaming up"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "ヘンリー・カヴィルは2026年11月にGoogleと協力し、Googlebookを使ってビデオゲームを制作する予定だ。",
+            "en": "Henry Cavill will team up with Google in November 2026 to build a video game using Googlebook.",
+            "anchors": [
+              "Sep 29, 2026",
+              "This November, Henry is teaming up"
+            ]
+          },
+          {
+            "ja": "GooglebookはGemini Intelligence対応の高性能ラップトップで、電話連携のContinue on phone syncingや音声からテキスト変換のRambler speech-to-text、Antigravityなどの独自ソフトウェア体験を備えている。",
+            "en": "Googlebook is a high-performance laptop crafted for Gemini Intelligence, featuring unique software experiences like Continue on phone syncing, Rambler speech-to-text, and Antigravity.",
+            "anchors": [
+              "Laptops need to keep up with our growing"
+            ]
+          },
+          {
+            "ja": "ヘンリー・カヴィルは俳優、プロデューサー、技術愛好家として複数の事業を管理しつつ、ゲーム、ファンタジー、ハイパフォーマンス技術への情熱を持っている。",
+            "en": "Henry Cavill, an actor, producer, and tech enthusiast, manages multiple ventures and maintains a passion for gaming, fantasy lore, and high-performance technology.",
+            "anchors": [
+              "Laptops need to keep up with our growing",
+              "We recently met with Henry"
+            ]
+          },
+          {
+            "ja": "今回のパートナーシップを通じて、ヘンリー自身のクリエイティブなプロジェクトをGooglebookで実現し、次世代ラップトップの可能性を示す。",
+            "en": "Through this partnership, Henry is realizing his creative projects on Googlebook, demonstrating the potential of next-generation laptops.",
+            "anchors": [
+              "Laptops need to keep up with our growing",
+              "We recently met with Henry"
+            ]
+          }
+        ]
+      }
     }
   ]
 }
