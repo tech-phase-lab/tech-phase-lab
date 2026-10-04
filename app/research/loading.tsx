@@ -1,21 +1,18 @@
 "use client";
-import Link from "next/link";
 import ResearchToolShell from "./research-tool-shell";
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./loading.module.css";
 
-/** Streams before slow page data; navigation stays usable while the page resolves. */
+/** Lightweight route fallback; disappears as soon as the destination is ready. */
 export default function ResearchLoading() {
   const [lang,setLang]=useResearchLanguage();
-  const ja=lang==="ja";
   return <ResearchToolShell lang={lang} setLang={setLang} title="" description="" showHeading={false} showTools={false}>
-    <nav className={styles.links} aria-label={ja?"よく使う機能":"Quick tools"}>
-      <Link href="/research/stocks">{ja?"銘柄検索":"Stock search"}</Link>
-      <Link href="/research/watchlist">{ja?"お気に入り":"Watchlist"}</Link>
-      <Link href="/research/calendar">{ja?"決算・経済指標":"Earnings & economy"}</Link>
-      <Link href="/research/compare">{ja?"銘柄比較PRO":"Compare PRO"}</Link>
-    </nav>
-    <p role="status" className={styles.status}>{ja?"読み込み中…":"Loading…"}</p>
-    <div className={styles.placeholder} aria-hidden="true"><i/><i/><i/></div>
+    <div className={styles.loading} role="status" aria-live="polite">
+      <svg className={styles.mark} viewBox="0 0 104 104" fill="currentColor" aria-hidden="true"><path d="M2 32 72 2v28L2 60Z"/><path d="m27 56 19-8v50l-19-9Z"/><path d="m72 30 30 17v34l-49 21V65l19-9Z"/></svg>
+      <strong className={styles.name}>TECH PHASE</strong>
+      <span className={styles.edition}>RESEARCH</span>
+      <span className={styles.progress} aria-hidden="true" />
+      <span className={styles.caption}>{lang === "ja" ? "読み込み中…" : "Loading…"}</span>
+    </div>
   </ResearchToolShell>;
 }
