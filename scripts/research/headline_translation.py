@@ -211,16 +211,28 @@ def sync_incident(db, env=None, now=None):
 
 def claim(db, sources, limit, model, now):
     reference = datetime.fromtimestamp(now, tz=timezone.utc)
-    items = signals.public_official_updates(db, sources=sources, reference=reference, limit=500, include_bodies=False)
+    source_snapshots = {}
+    items = signals.public_official_updates(db, sources=sources, reference=reference, limit=500,
+                                            include_bodies=False, source_snapshots=source_snapshots)
     db.commit()
     with db:
         db.execute("BEGIN IMMEDIATE")
+        import official_release_bridge
+        primary_urls = official_release_bridge.primary_owned_urls(db, [item['url'] for item in items])
+        source_policies = {s['id']: s for s in sources}
         for item in items:
             if item.get('syndication') or item.get('generalSource'):
                 # These validated bilingual titles need no second paid translation.
                 continue
             row = db.execute("SELECT * FROM signal_events WHERE id=?", (item["id"],)).fetchone()
-            if not row or re.fullmatch(r"https?://\S+", row["title"].strip(), re.I):
+            snapshot = source_snapshots.get(str(item['id']))
+            if (not row or not snapshot
+                    or any(row[key] != snapshot[key] for key in official_release_bridge.EVENT_IDENTITY_FIELDS)
+                    or re.fullmatch(r"https?://\S+", row["title"].strip(), re.I)):
+                continue
+            row = {**dict(row), **snapshot}
+            if not official_release_bridge.is_current(db, row,
+                    source=source_policies.get(row['source_id']), primary_urls=primary_urls):
                 continue
             from official_headline_corrections import reviewed_headline
             if reviewed_headline(row):
@@ -247,7 +259,6 @@ def claim(db, sources, limit, model, now):
               WHERE t.source_id=? AND t.url=? AND j.translation_input=? AND j.state='done'
               ORDER BY t.created_at DESC LIMIT 1''',
               (row['source_id'],row['url'],item['title'])).fetchone()
-            import official_release_bridge
             if cached:
                 try:
                     factual_validation.validate_numbers(cached['headline_ja'], item['title'])
@@ -255,7 +266,7 @@ def claim(db, sources, limit, model, now):
                     factual_validation.validate_acquisition(cached['headline_ja'], item['title'], 'ja', require_status=True)
                 except ValueError:
                     cached=None
-            if cached and official_release_bridge.is_current(db,row):
+            if cached:
                 db.execute('''INSERT OR IGNORE INTO signal_headline_translations
                   (source_id,url,sha,headline_ja,model,created_at) VALUES(?,?,?,?,?,?)''',
                   (row['source_id'],row['url'],row['sha'],cached['headline_ja'],cached['model'],cached['created_at']))

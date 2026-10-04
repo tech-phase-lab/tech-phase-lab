@@ -63,6 +63,8 @@
     "id": "microsoft-blog",
     "name": "Microsoft Blog",
     "kind": "publisher-update",
+    "officialUpdates": true,
+    "requireCurrentDocument": true,
     "url": "https://blogs.microsoft.com/feed/",
     "format": "feed",
     "tickers": [

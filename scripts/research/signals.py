@@ -2045,7 +2045,8 @@ if __name__ == "__main__":
     main()
 
 
-def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, read_only=False, include_bodies=True):
+def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, read_only=False, include_bodies=True,
+                            source_snapshots=None):
     """Links/headlines only; never publish private excerpts or unreviewed AI claims."""
     if not read_only:
         schema(db)
@@ -2093,6 +2094,12 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
         return next((parsed.timestamp() for parsed in
                      (instant(row['published_at']), instant(row['published_on']), instant(row['observed_at']))
                      if parsed), 0)
+    # Resolve ownership before source-clock ordering or eligibility filtering.
+    # Held/stale primaries still own their exact URL, even outside this scan.
+    primary_urls = official_release_bridge.primary_owned_urls(db, [row['url'] for row in rows
+        if not row['source_id'].startswith(official_release_bridge.PREFIX)])
+    rows = [row for row in rows if row['source_id'].startswith(official_release_bridge.PREFIX)
+            or row['url'] not in primary_urls]
     # A baseline can insert newest-first API results in reverse database-ID order.
     rows = sorted(rows, key=release_order, reverse=True)
     items, seen = [], set()
@@ -2100,7 +2107,7 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
     scan_complete=False
     for row in rows:
         source = allowed[row['source_id']]
-        if not official_release_bridge.is_current(db, row):
+        if not official_release_bridge.is_current(db, row, source=source, primary_urls=primary_urls):
             continue
         if source['id'] != 'bea-pce' and not news_policy.eligible(row['title']):
             continue
@@ -2183,10 +2190,13 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
                 translation['translationJa'], display_title))
         if include_bodies:
             from official_research import public_story_body
-            translation.update(public_story_body(db, row))
+            translation.update(public_story_body(db, row, primary_urls=primary_urls))
         item={'id': str(row['id']), 'title': display_title, 'url': url,
               'publisher': source['name'], 'tickers': tickers,
               'observedAt': observed.isoformat(), **publication, **translation}
+        if source_snapshots is not None:
+            source_snapshots[item['id']] = official_release_bridge.bind_source_policy(
+                {key: row[key] for key in official_release_bridge.EVENT_IDENTITY_FIELDS}, source)
         items.append(item)
         if row['source_id'] in issuer_context_ids:issuer_context.append(item)
         if len(items) == limit:

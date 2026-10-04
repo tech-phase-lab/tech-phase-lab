@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { newsPulseItems } from '../lib/research/news-pulse-items.ts';
-import { officialPulseHeadlines, fitPulseHeadline } from '../lib/research/news-pulse-headline.ts';
+import { officialPulseHeadlines, marketPulseHeadlines, fitPulseHeadline } from '../lib/research/news-pulse-headline.ts';
 
 const buyback={id:'1246',tickers:['NVDA'],publisher:'Reported company news',title:'NVDA: Reported buyback recap',translationJa:'NVDA：自社株買い実績の振り返り報道',
   url:'https://x.com/TrendSpider/status/2106523440635363385',publishedAt:'2026-10-03T23:15:00.000Z',observedAt:'2026-10-04T02:09:57.822Z',
@@ -89,4 +89,15 @@ test('unknown long prose never becomes a header paragraph and brief alternatives
     assert.ok(brief.every(x=>/確認中|pending/.test(x)));
     assert.ok(brief.every(x=>!x.includes('3.45')));
   }
+});
+
+
+test('Treasury performance retains its full duration wording rather than suggesting 10-year maturity',()=>{
+  const ja=marketPulseHeadlines(treasury,'ja',treasury.titleJa,'米国債10年成績、最悪');
+  const en=marketPulseHeadlines(treasury,'en',treasury.titleEn,'U.S. 10Y Treasuries: worst');
+  assert.deepEqual(ja,[treasury.titleJa,'国債ニュース']);
+  assert.deepEqual(en,[treasury.titleEn,'Treasury news']);
+  assert.equal(fitPulseHeadline(ja,measure(treasury.titleJa),measure),treasury.titleJa);
+  assert.equal(fitPulseHeadline(ja,measure(treasury.titleJa)-1,measure),'国債ニュース');
+  assert.equal(fitPulseHeadline(en,measure(treasury.titleEn),measure),treasury.titleEn);
 });

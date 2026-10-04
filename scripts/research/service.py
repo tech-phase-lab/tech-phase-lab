@@ -895,11 +895,10 @@ class AutomaticMonitor:
             # to run the same bridge sync and publication scan a second time.
             official = signals.public_official_updates(db, reference=reference, limit=500)
             return news_history.bounded({**drafts,
-                "officialUpdates": official,
+                **official_research.news_projection(db, reference, official),
                 "marketUpdates": x_market_news.public_feed(db),
                 "analystUpdates": analyst_news.public_feed(db),
-                "resultBriefs": market_results.public_feed(db),
-                "officialResearch": official_research.feed(db, reference, published_updates=official)})
+                "resultBriefs": market_results.public_feed(db)})
 
     def posts_queue(self, limit=20, published=False, offset=0):
         with editorial_posts.connect(self.db_path) as db:

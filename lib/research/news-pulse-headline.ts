@@ -65,7 +65,8 @@ export function marketPulseHeadlines(item: MarketUpdate, lang: Language, title: 
   }
   if (item.titleJa === '米国債、10年間の成績が史上最悪に'
     && item.titleEn === 'U.S. Treasuries suffer their worst 10-year period in history') {
-    candidates.push(ja ? '米国債10年成績、史上最悪' : 'U.S. Treasuries: worst 10 years');
+    // Preserve the duration phrase: "10年間" must never look like bond maturity.
+    return choices([ja ? item.titleJa : item.titleEn, ja ? '国債ニュース' : 'Treasury news']);
   }
   const topics = ja ? {'government-bonds':'国債ニュース','crude-oil':'原油ニュース','index-membership':'指数構成銘柄のニュース'}
     : {'government-bonds':'Treasury news','crude-oil':'Oil news','index-membership':'Index membership news'};

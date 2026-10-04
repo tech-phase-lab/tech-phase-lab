@@ -95,6 +95,7 @@ def candidates(db, reference, *, read_only=False, published_updates=None, primar
     published = (signals.public_official_updates(db, reference=reference, limit=100, read_only=read_only, include_bodies=False)
                  if published_updates is None else published_updates[:100])
     visible_tickers = {int(item['id']): item['tickers'] for item in published}
+    visible_items = {int(item['id']): item for item in published}
     visible_ids = set(visible_tickers)
     primary = []
     if db.execute("SELECT 1 FROM sqlite_master WHERE name='release_events'").fetchone():
@@ -110,10 +111,13 @@ def candidates(db, reference, *, read_only=False, published_updates=None, primar
           and 1200 <= len(r['body'] or '') <= 160000]
     primary_ids = {r['id'] for r in primary}
     stories = []
-    for row in db.execute('''SELECT e.*, b.body_sha, b.body, b.fetched_at AS body_at
+    story_rows = db.execute('''SELECT e.*, b.body_sha, b.body, b.fetched_at AS body_at
       FROM signal_events e JOIN official_story_bodies b ON e.id=b.event_id AND e.sha=b.sha
       LEFT JOIN signal_documents d ON d.source_id=e.source_id AND d.url=e.url AND d.sha=e.sha
-      WHERE length(b.body)>0 AND (d.sha IS NOT NULL OR e.source_id LIKE 'primary-ir-%') ORDER BY e.id DESC LIMIT 100'''):
+      WHERE length(b.body)>0 AND (d.sha IS NOT NULL OR e.source_id LIKE 'primary-ir-%') ORDER BY e.id DESC LIMIT 100''').fetchall()
+    primary_urls = bridge.primary_owned_urls(db, [row['url'] for row in story_rows
+        if row['id'] in visible_ids and not row['source_id'].startswith(bridge.PREFIX)])
+    for row in story_rows:
         # Discovery matches retain incidental companies in the article (and
         # related-story text). The public metadata projection has already
         # bound issuer tickers to this source's configured companies. Reuse
@@ -121,8 +125,10 @@ def candidates(db, reference, *, read_only=False, published_updates=None, primar
         matched = json.loads(row['tickers_json'])
         tickers = [ticker for ticker in visible_tickers.get(row['id'], [])
                    if ticker in matched]
-        if row['id'] in visible_ids and row['id'] not in primary_ids and tickers and bridge.is_current(db,row):
-            stories.append({**dict(row), 'ticker': tickers[0], 'body_cached': True})
+        if (row['id'] in visible_ids and row['id'] not in primary_ids and tickers
+                and bridge.is_current(db,row,primary_urls=primary_urls)
+                and bridge.matches_public_snapshot(row,visible_items[row['id']],reference)):
+            stories.append({**bridge.bind_source_policy(row), 'ticker': tickers[0], 'body_cached': True})
     if primary_only:
         # The public research feed renders only issuer releases. Reported news
         # is already projected through officialUpdates; revalidating those rows
@@ -159,6 +165,7 @@ def prepare_story_body(path, reference, request=None):
                 if original and original[0]>=1200:
                     continue
             source = sources[row['source_id']]
+            row = bridge.bind_source_policy(row, source)
             cached = db.execute('SELECT * FROM official_story_bodies WHERE event_id=?',(row['id'],)).fetchone()
             if cached and cached['sha'] == row['sha'] and cached['next_at'] > reference.timestamp():
                 continue
@@ -209,7 +216,7 @@ def prepare_story_body(path, reference, request=None):
                 db.execute('BEGIN IMMEDIATE')
                 current = db.execute('SELECT * FROM signal_events WHERE id=?', (row['id'],)).fetchone()
                 if (not current or any(current[key] != row[key] for key in ('sha', 'title', 'url', 'published_on', 'published_at'))
-                        or not bridge.is_current(db, current)):
+                        or not bridge.is_current(db, row)):
                     return 'stale'
                 db.execute('''INSERT INTO official_story_bodies VALUES(?,?,?,?,?,?,?)
                   ON CONFLICT(event_id) DO UPDATE SET sha=excluded.sha,body_sha=excluded.body_sha,
@@ -228,14 +235,14 @@ def prepare_story_body(path, reference, request=None):
     return 'idle'
 
 
-def current_revision(db, row):
+def current_revision(db, row, *, primary_urls=None):
     if row.get('issuer_business'):
         return issuer_business_news.current_revision(db,row)
     if row.get('general_source'):
         return general_source_news.current_revision(db,row)
+    if not bridge.is_current(db,row,primary_urls=primary_urls):
+        return False
     if row['source_id'].startswith('primary-ir-'):
-        if not bridge.is_current(db,row):
-            return False
         if not row.get('body_cached'):
             return True
         current=db.execute('SELECT sha,body_sha FROM official_story_bodies WHERE event_id=?',(row['id'],)).fetchone()
@@ -246,11 +253,11 @@ def current_revision(db, row):
     return bool(current and current['sha']==row['sha'] and current['body_sha']==row['body_sha'])
 
 
-def public_story_body(db, row):
+def public_story_body(db, row, *, primary_urls=None):
     """Only validated bilingual news copy; no raw article or private purpose."""
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='official_story_bodies'").fetchone():
         return {}
-    if not bridge.is_current(db,row):
+    if not bridge.is_current(db,row,primary_urls=primary_urls):
         return {}
     saved = db.execute('''SELECT p.payload,b.body FROM official_research_publications p
       JOIN official_story_bodies b ON b.event_id=p.event_id AND b.sha=p.sha AND b.body_sha=p.body_sha
@@ -325,7 +332,7 @@ def validate_source_event(body, source_title, note=None):
 
 def validation_policy():
     return (VALIDATION_REUSE_VERSION, os.getpid(), MAX_EVIDENCE_CHARS,
-            validate_item, normalized, preflight_copy_bounds,
+            validate_item, validate_source_event, normalized, preflight_copy_bounds,
             tuple((module.__name__, name, member)
                   for module in (factual_validation, amount_relations, buyback_news, rollout_validation, token_pricing, material_relations)
                   for name, member in vars(module).items() if callable(member)))
@@ -495,22 +502,30 @@ def claim(db, reference, model, limit):
     failure_holds={r['id']:assess_material_failure(failure_states[r['id']],r) for r in rows}
     publication_states={r['id']:claim_publication_state(db,r) for r in rows}
     publication_checks={r['id']:assess_claim_publication(publication_states[r['id']],r,reference) for r in rows}
+    source_checks = {}
+    for row in rows:
+        try:
+            validate_source_event(row['body'], row['title'])
+            source_checks[row['id']] = True
+        except ValueError:
+            source_checks[row['id']] = False
     now=reference.timestamp()
     with db:
         db.execute('BEGIN IMMEDIATE')
         used=db.execute('SELECT count(*) FROM signal_headline_translation_calls WHERE at>=?',(now-86400,)).fetchone()[0]
         if used + headline_pending >= limit:
             return None
+        primary_urls = bridge.primary_owned_urls(db, [row['url'] for row in rows
+            if not row['source_id'].startswith(bridge.PREFIX)
+            and not row.get('general_source') and not row.get('issuer_business')])
         for r in rows:
             # A retained source derivation never authorizes a paid replacement.
             # Valid copy is already public; a damaged audit/copy stays held.
             if buyback_structured_publication.recorded(db,r):
                 continue
-            if not current_revision(db,r):
+            if not current_revision(db,r,primary_urls=primary_urls):
                 continue
-            try:
-                validate_source_event(r['body'], r['title'])
-            except ValueError:
+            if not source_checks[r['id']]:
                 # A cached article from another event cannot become a new paid
                 # attempt. Retain it for diagnosis; ordinary fetch backoff applies.
                 continue
@@ -926,11 +941,28 @@ def primary_publication_items(publications):
     return items
 
 
-def feed(db, reference=None, *, published_updates=None):
+def feed_publications(db, reference=None, *, published_updates=None):
     schema(db)
     reference=reference or datetime.now(timezone.utc)
-    publications=validated_publications(db,candidates(db,reference,published_updates=published_updates,primary_only=True))
-    return primary_publication_items(publications)[:20]
+    return validated_publications(db,candidates(db,reference,published_updates=published_updates,primary_only=True))
+
+
+def feed(db, reference=None, *, published_updates=None):
+    return primary_publication_items(feed_publications(db,reference,published_updates=published_updates))[:20]
+
+
+def news_projection(db, reference, published_updates):
+    """Reuse one current validation set for news copy and capped research cards."""
+    publications=feed_publications(db,reference,published_updates=published_updates)
+    # Inline primary releases have no official_story_bodies row. Their saved
+    # copy must reach matching headlines before the independent research cap.
+    # Keep only approved summary/facts, never evidence, raw body or purpose.
+    bodies={(str(row['id']),row['url']):
+            {key:'\n\n'.join(dict.fromkeys([note['summary'][lang],*[fact[lang] for fact in note['facts']]]))
+             for key,lang in [('bodyJa','ja'),('bodyEn','en')]}
+            for row,_,note in publications if row['source_id'].startswith('primary-ir-')}
+    return {'officialUpdates':[{**item,**bodies.get((item['id'],item['url']),{})} for item in published_updates],
+            'officialResearch':primary_publication_items(publications)[:20]}
 
 
 def publication_hold_reason(db,row,reference):

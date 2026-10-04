@@ -20,6 +20,9 @@ sha = lambda value: hashlib.sha256(value.encode('utf-8')).hexdigest()
 
 class OfficialResearchIssuerBindingTests(unittest.TestCase):
     def setUp(self):
+        # Service discovery replaces this module; lazy bridge imports must see
+        # the same source configuration that this fixture temporarily patches.
+        self.enterContext(patch.dict(sys.modules, {'signals': signals}))
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.path = Path(self.tmp.name) / 'issuer.sqlite'
@@ -103,11 +106,22 @@ class OfficialResearchIssuerBindingTests(unittest.TestCase):
         self.assertEqual(self.read_only(published_updates=[]), [])
 
     def test_multi_issuer_projection_keeps_its_order_and_all_source_matches(self):
-        event_id = self.add()
-        projected = [{'id': str(event_id), 'tickers': ['NVDA', 'NBIS']}]
-        result = self.read_only(published_updates=projected)
+        # Reuse a complete, source-authorized projection. A partial hand-built
+        # ticker override for a single-issuer source is not publication proof.
+        sources = [{**source, 'tickers': ['NVDA', 'NBIS']}
+                   if source['id'] == 'nebius-blog' else source
+                   for source in signals.SOURCES]
+        with patch.object(signals, 'SOURCES', sources):
+            event_id = self.add()
+            with research.connect(self.path) as db:
+                db.execute('UPDATE signal_events SET tickers_json=? WHERE id=?',
+                           (json.dumps(['NVDA', 'GOOGL', 'NBIS']), event_id))
+                projected = signals.public_official_updates(
+                    db, sources=sources, reference=NOW, read_only=True,
+                    include_bodies=False)
+            result = self.read_only(published_updates=projected)
         self.assertEqual(result[0]['ticker'], 'NVDA')
-        self.assertEqual(json.loads(result[0]['tickers_json']), ['GOOGL', 'NBIS', 'NVDA'])
+        self.assertEqual(json.loads(result[0]['tickers_json']), ['NVDA', 'GOOGL', 'NBIS'])
         self.assertEqual(projected[0]['tickers'], ['NVDA', 'NBIS'])
 
     def test_expired_publication_does_not_regain_a_candidate(self):

@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
-import { createRequire } from 'node:module';
+import { execFileSync } from 'node:child_process';
+import { createRequire, stripTypeScriptTypes } from 'node:module';
 import { pathToFileURL } from 'node:url';
 import ts from 'typescript';
 import React from 'react';
@@ -11,7 +12,9 @@ import { marketNewsBody, marketNewsDisplay } from '../lib/research/market-news-d
 import { officialNewsDisplay } from '../lib/research/news-presentation.ts';
 import { resultFactText, resultNewsUpdate, mergeResultNews } from '../lib/research/result-news.ts';
 import { parseResultBriefs } from '../lib/research/market-results.ts';
-import { publicNewsPayload } from '../lib/research/general-news.ts';
+import { availableNewsPayload, publicNewsPayload } from '../lib/research/general-news.ts';
+import { publishNews, newsSnapshot } from '../lib/research/news-snapshot.ts';
+import { buildPublicNews } from '../lib/research/public-news-response.ts';
 
 const require=createRequire(import.meta.url);
 const source=(await readFile(new URL('../app/research/news/news-story.tsx',import.meta.url),'utf8'))
@@ -245,4 +248,110 @@ test('a forecast shown for a different population does not satisfy the matched a
     assert.ok(display.title.startsWith(lang === 'ja' ? '失業率 4.2%（予想 4.1%）／若年' : 'Unemployment rate 4.2% (Forecast 4.1%); Youth'));
     assert.equal(display.body,undefined);
   }
+});
+
+
+test('current inline publications beyond twenty retain exact approved bodies and real disclosure',async()=>{
+  // Use the actual Python service over 25 synthetic saved publications. There
+  // are no model calls, remote requests or private/production database reads.
+  const snapshots=JSON.parse(execFileSync('python3',['-c',`
+import json, sys
+sys.path.insert(0, 'tests')
+from test_official_news_projection import OfficialNewsProjectionTests, research
+case = OfficialNewsProjectionTests()
+case.setUp()
+try:
+    snapshots = {'before': case.public(), 'olderId': str(case.older['id'])}
+    with research.connect(case.path) as db:
+        db.execute('DELETE FROM official_research_publications WHERE event_id=?', (case.older['id'],))
+    snapshots['withdrawn'] = case.public()
+    with research.connect(case.path) as db:
+        db.execute("UPDATE sources SET status='held' WHERE url=?", (case.older['url'],))
+    snapshots['held'] = case.public()
+    print(json.dumps(snapshots))
+finally:
+    case.doCleanups()
+  `],{cwd:new URL('..',import.meta.url),encoding:'utf8'}));
+  const raw=snapshots.before;
+  assert.equal(raw.officialResearch.length,20);
+  assert.equal(raw.officialUpdates.length,25);
+  const legacy=structuredClone(raw);
+  for(const item of legacy.officialUpdates) {delete item.bodyJa;delete item.bodyEn;}
+  const before=buildPublicNews(legacy),after=buildPublicNews(raw);
+  const cappedIds=new Set(raw.officialResearch.map(note=>note.id.replace('ir-result-','')));
+  assert.equal(cappedIds.size,20);
+  let restored=0;
+  for(const expected of raw.officialUpdates) {
+    const item=after.officialUpdates.find(item=>item.id===expected.id);
+    const prior=before.officialUpdates.find(item=>item.id===expected.id);
+    assert.equal(item.bodyJa,expected.bodyJa);
+    assert.equal(item.bodyEn,expected.bodyEn);
+    if(cappedIds.has(item.id)) assert.deepEqual(item,prior);
+    else {
+      restored++;
+      assert.equal(prior.bodyJa,undefined);
+      assert.equal(prior.bodyEn,undefined);
+      const metadata={...item};
+      delete metadata.bodyJa;
+      delete metadata.bodyEn;
+      assert.deepEqual(metadata,prior);
+    }
+    for(const lang of ['ja','en']) {
+      const display=officialNewsDisplay(item,lang);
+      assert.ok(display.body);
+      assert.ok(display.body.includes(lang==='ja'?'技術とチームがToken Factoryに加わった。':'The technology and team joined Token Factory.'));
+      const html=renderToStaticMarkup(React.createElement(NewsStory,{...props,...display,lang,source:{publisher:item.publisher,url:item.url}}));
+      assert.match(html,/<details class="story"><summary>/);
+      assert.match(html,/aria-hidden="true">＋/);
+    }
+  }
+  assert.equal(restored,5);
+  const panel=await readFile(new URL('../app/research/news/general-news-panel.tsx',import.meta.url),'utf8');
+  const pageLogic=panel.slice(panel.indexOf('  const official ='),panel.indexOf('  const format ='));
+  const pagination=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(
+    `import { officialTime } from ${JSON.stringify(new URL('../lib/research/news-time.ts',import.meta.url).href)};
+`
+    +`export function visible(data,page,officialOnly=false) { ${pageLogic}
+return {pages,current,visibleUpdates,visibleNews}; }`)).toString('base64'));
+  const pages=pagination.visible(after,1).pages;
+  assert.equal(pages,pagination.visible(before,1).pages);
+  const visited=[];
+  let restoredPage=0;
+  for(let page=1;page<=pages;page++) {
+    const current=pagination.visible(after,page);
+    assert.ok(current.visibleUpdates.length<=5);
+    assert.deepEqual(current.visibleUpdates.map(row=>row.item.id),pagination.visible(before,page).visibleUpdates.map(row=>row.item.id));
+    visited.push(...current.visibleUpdates.map(row=>row.item.id));
+    if(current.visibleUpdates.some(row=>row.item.id===snapshots.olderId)) restoredPage=page;
+  }
+  assert.ok(restoredPage>4);
+  assert.deepEqual(visited,after.officialUpdates.map(item=>item.id));
+  // Replay subsequent withdrawal/hold through the normal client parser and
+  // the actual remount seed-selection helper: the old body never resurfaces.
+  const helpers=panel.slice(panel.indexOf('let snapshot:'),panel.indexOf('export default function'));
+  const remount=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(helpers+
+    '\nexport { initialSnapshot }; export function seed(cache) { snapshot=cache; lastFailedAt=0; }')).toString('base64'));
+  const now=Date.now(),initial={data:after,checkedAt:now-1000};
+  for(const state of ['withdrawn','held']) {
+    const fresh=availableNewsPayload(buildPublicNews(snapshots[state]));
+    const matching=fresh.officialUpdates.find(item=>item.id===snapshots.olderId);
+    if(state==='withdrawn') {
+      assert.ok(matching);
+      assert.equal(matching.bodyJa,undefined);
+      assert.equal(matching.bodyEn,undefined);
+    } else assert.equal(matching,undefined);
+    publishNews(fresh);
+    remount.seed({data:fresh,time:now,at:new Date(now).toISOString()});
+    assert.deepEqual(newsSnapshot().data,fresh);
+    assert.deepEqual(remount.initialSnapshot(initial).data,fresh);
+    assert.deepEqual(remount.initialSnapshot().data,fresh);
+  }
+  publishNews(null);
+
+  assert.deepEqual(after.officialHistory,before.officialHistory);
+  for(const note of raw.officialResearch) {
+    assert.ok(!JSON.stringify(after).includes(note.purpose.ja));
+    assert.ok(!JSON.stringify(after).includes(note.purpose.en));
+  }
+  assert.doesNotMatch(JSON.stringify(after),/evidenceQuote|Company announcement background/);
 });

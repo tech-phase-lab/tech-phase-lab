@@ -322,6 +322,101 @@ def stored_publication_clock(publication, row, valid, reference):
     return publication['public_at'] if clocks[0] <= clocks[1] <= clocks[2] <= reference else None
 
 
+def current_recovery_audits(db, row, publication, reference, tables):
+    """Bounded clock projection, not another publication/validation decision.
+
+    New audit formats are used only for the exact current source/body/payload
+    and stored publication clocks. Do not load retry archives, reconstruct
+    history, invoke a writer, or substitute a current re-fetch for an old clock.
+    """
+    try:
+        payload, body = publication['payload'], row['body']
+        if (publication['sha'] != row['sha'] or publication['body_sha'] != row['body_sha']
+                or not isinstance(payload, str) or not 0 < len(payload.encode('utf-8')) <= 131072
+                or not isinstance(body, str) or not 0 < len(body) <= 160000
+                or hashlib.sha256(body.encode('utf-8')).hexdigest() != row['body_sha']):
+            return []
+        values = (row['observed_at'], row['body_at'], publication['started_at'], publication['public_at'])
+        if any(not isinstance(value, str) or len(value) > 64 for value in values):
+            return []
+        observed, body_at, started, public = map(parse_stored_clock, values)
+        if (not all((observed, body_at, started, public))
+                or not observed <= started <= public <= reference
+                or not observed <= body_at <= reference):
+            return []
+        current = db.execute('''SELECT sha,body_sha,payload,started_at,public_at
+          FROM official_research_publications WHERE event_id=? AND length(payload)<=131072''',
+          (row['id'],)).fetchone()
+        if not current or any(current[key] != publication[key] for key in current.keys()):
+            return []
+        payload_sha = hashlib.sha256(payload.encode('utf-8')).hexdigest()
+        audits = []
+        if ('reviewed_retry_article_recoveries' in tables and not (row.get('general_source') or row.get('issuer_business'))
+                and len(db.execute('SELECT 1 FROM reviewed_retry_article_recoveries WHERE event_id=? LIMIT 2',
+                                   (row['id'],)).fetchall()) == 1):
+            audit = db.execute("""SELECT manifest_sha,source_revision,source_observed_at,source_body_at,
+              started_at AS started,public_at AS at,payload_sha FROM reviewed_retry_article_recoveries
+              WHERE event_id=? AND source_id=? AND event_sha=? AND body_sha=?
+              AND payload_sha=? AND started_at=? AND public_at=?
+              AND length(manifest_sha)=64 AND length(source_revision)=64
+              AND length(source_observed_at)<=64 AND length(source_body_at)<=64""",
+              (row['id'],row['source_id'],row['sha'],row['body_sha'],payload_sha,
+               publication['started_at'],publication['public_at'])).fetchone()
+            if audit:
+                acquired = parse_stored_clock(audit['source_body_at'])
+                note = json.loads(payload)
+                cached = db.execute("""SELECT sha,body_sha,body,error FROM official_story_bodies
+                  WHERE event_id=? AND length(body)<=160000""", (row['id'],)).fetchone()
+                event = db.execute('SELECT source_id,url,sha,title,observed_at FROM signal_events WHERE id=?',
+                                   (row['id'],)).fetchone()
+                exact_event = bool(event and all(event[key] == row[key] for key in event.keys()))
+                exact_body = bool(cached and not cached['error'] and cached['sha'] == row['sha']
+                                  and cached['body_sha'] == row['body_sha'] and cached['body'] == body)
+                if row['source_id'].startswith('primary-ir-'):
+                    source = db.execute('SELECT sha256 FROM sources WHERE url=?', (row['url'],)).fetchone()
+                    exact_source = bool(source and source['sha256'] == audit['source_revision']
+                                        and research.bridge.is_current(db, row))
+                else:
+                    source = db.execute("""SELECT sha,title,text FROM signal_documents
+                      WHERE source_id=? AND url=? AND length(text)<=160000""",
+                      (row['source_id'],row['url'])).fetchone()
+                    exact_source = bool(source and source['sha'] == audit['source_revision'] == row['sha']
+                                        and source['title'] == row['title'] and source['text'] == body
+                                        and hashlib.sha256((row['title']+'\n'+body).encode('utf-8')).hexdigest() == row['sha'])
+                if (exact_event and exact_body and exact_source and isinstance(note, dict)
+                        and note.get('generationMethod') == research.editorial_recovery.GENERATION_METHOD
+                        and note.get('reviewedCopySha256') == audit['manifest_sha']
+                        and isinstance(audit['manifest_sha'], str) and re.fullmatch(r'[0-9a-f]{64}', audit['manifest_sha'])
+                        and audit['source_observed_at'] == row['observed_at']
+                        and acquired and observed <= acquired <= started and acquired <= body_at):
+                    audits.append(audit)
+        if ('source_structured_buyback_derivations' in tables and row.get('general_source') and row.get('category') == 'share-buyback'
+                and len(db.execute('SELECT 1 FROM source_structured_buyback_derivations WHERE event_id=? LIMIT 2',
+                                   (row['id'],)).fetchall()) == 1):
+            derived = research.buyback_structured_publication
+            # Compare complete canonical snapshots in SQL. Never deserialize
+            # arbitrary archived JSON or read original failed model artifacts.
+            saved = db.execute("""SELECT * FROM official_research_publications WHERE event_id=?
+              AND length(payload)<=131072 AND length(evidence)<=131072""", (row['id'],)).fetchone()
+            if (saved and all(saved[key] == publication[key] for key in publication.keys())
+                    and len(saved['evidence'].encode('utf-8')) <= 131072
+                    and type(saved['generation_ms']) is int and saved['generation_ms'] >= 0
+                    and body_at <= started):
+                audit = db.execute("""SELECT derived_at AS at,validated_payload_sha AS payload_sha,
+                  ? AS started FROM source_structured_buyback_derivations
+                  WHERE event_id=? AND sha=? AND body_sha=? AND policy_version=?
+                  AND source_snapshot=? AND publication_snapshot=? AND validated_payload_sha=? AND derived_at=?""",
+                  (publication['started_at'],row['id'],row['sha'],row['body_sha'],research.buyback_structured.VERSION,
+                   derived.encoded(derived.source_snapshot(row)),derived.encoded(dict(saved)),payload_sha,
+                   publication['public_at'])).fetchone()
+                if audit and derived.current_source(db, row, reference) is not None:
+                    audits.append(audit)
+        return audits
+    except (ValueError, TypeError, KeyError, AttributeError, sqlite3.Error):
+        # Optional absent/malformed audit inputs must not break the owner read.
+        return []
+
+
 def publication_history(db, row, publication, valid, reference):
     """Only authoritative same-revision audit clocks; never infer a first time.
 
@@ -350,6 +445,7 @@ def publication_history(db, row, publication, valid, reference):
         audits.extend(db.execute("""SELECT revalidated_at AS at, validated_payload_sha AS payload_sha,
           NULL AS started FROM business_news_revalidations WHERE event_id=? AND sha=? AND body_sha=?""",
           (row['id'], row['sha'], row['body_sha'])))
+    audits.extend(current_recovery_audits(db, row, publication, reference, tables))
     parse = parse_stored_clock
     current_at = parse(publication['public_at'])
     observed_at = parse(row['observed_at'])
