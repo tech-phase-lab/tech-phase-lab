@@ -601,6 +601,49 @@
           }
         ]
       }
+    },
+    {
+      "eventId": 1113,
+      "sourceId": "microsoft-blog",
+      "ticker": "MSFT",
+      "url": "https://blogs.microsoft.com/blog/2026/10/01/microsoft-365-and-linkedin-leadership-update/",
+      "title": "Microsoft 365 and LinkedIn leadership update",
+      "publishedOn": null,
+      "publishedAt": "2026-10-01T15:03:27+00:00",
+      "observedAt": "2026-10-01T15:05:14.219+00:00",
+      "eventSha": "ee84aa16b08a2d1ac1aad895501aa452eb4b1372c11155b9d272d391e918ab76",
+      "sourceRevision": "ee84aa16b08a2d1ac1aad895501aa452eb4b1372c11155b9d272d391e918ab76",
+      "acquisitionTextSha": "adfa10bb7ea0760f8bd4c78800165c5b1317d077da8796760175c530ca4721c0",
+      "acquisitionChars": 5817,
+      "bodyTextSha": "1c2e8a0f8927cde1ee74da21448a76ba543f9403086c01b0d495dd121f7721e8",
+      "bodyChars": 5716,
+      "provenance": "signal-article",
+      "extractorVersion": "2026-10-04-article-document-v5",
+      "bodyPublishedOn": "2026-10-01",
+      "bodyFetchedAt": "2026-10-04T18:52:44.696874+00:00",
+      "rawContentSha": "2028286961d8d4cd9c6eda4d4be1f5a4935e935772daf4c09c037dc973495abc",
+      "replacement": {
+        "reason": "reviewed-evidence-precision",
+        "payloadSha": "d5ff576fdea89cf8e3ea9c2c082c140cfe4b2d2021963491f3fd8ca2e4a20502",
+        "bodySha": "1c2e8a0f8927cde1ee74da21448a76ba543f9403086c01b0d495dd121f7721e8",
+        "startedAt": "2026-10-04T14:22:30.568500+00:00",
+        "publicAt": "2026-10-04T14:22:41.035+00:00",
+        "generationMs": 8406,
+        "jobAttempts": 3
+      },
+      "reviewedPayloadSha": "769bf76d260aba59ea07792e26530dde733a16170fedafaf6f7387868bb19e63",
+      "amendment": {
+        "field": "facts[4]",
+        "language": "ja",
+        "beforeSha": "f28c3c965ced6fe3e9ee20da0a06162bf83c0460972c8eb48ff1ec54ef33e1f4",
+        "text": "Dan Shapero氏はLinkedInのCEOを、Mohak Shroff氏は現在の役職をそれぞれ継続し、両氏ともSatya Nadella氏に報告する。",
+        "evidenceSpan": {
+          "start": 0,
+          "end": 1731,
+          "sha256": "bb0af47c9e8833f754d79b550af8827ae6ca3e8a0c1458f0bfe5d4d2eb6d06fe"
+        }
+      },
+      "allowSameBodyRefetch": true
     }
   ],
   "retryArticles": [

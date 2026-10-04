@@ -213,11 +213,13 @@ def publish(db, rows, reference, validator, current_revision):
 
 
 RETAINED_COPY_PATH = Path(__file__).with_name('reviewed_retained_announcements.json')
-RETAINED_COPY_SHA = '16c4e6f4f8837222153871e7587c88f03a53862a606b6244af9ec94e118184d0'
+RETAINED_COPY_SHA = 'd3cd8f9545790b1962f429dd90544955364c7cad1170edcdbdd6ad9d6f2cfd2b'
 
 
 def retained_candidate(db, pin, reference):
     """Require current validated article evidence, preserving inline feed provenance."""
+    if pin.get('provenance') == 'signal-article':
+        return retained_signal_article(db, pin, reference)
     import official_release_bridge as bridge
     row = db.execute("""SELECT e.*,s.sha256 AS source_revision,s.content_type,
       s.extractor_version,s.error,s.status,s.source_mode,r.extracted_text AS body,r.observed_at AS body_at,
@@ -285,7 +287,102 @@ def retained_candidate(db, pin, reference):
     return row
 
 
-def retained_note(row, pin):
+def retained_signal_article(db, pin, reference):
+    """Keep a feed document and its separately proven article as distinct inputs."""
+    import official_research as research
+    if ('amendment' not in pin
+            or pin.get('replacement', {}).get('reason') != 'reviewed-evidence-precision'):
+        return None
+    rows = [row for row in research.candidates(db, reference, read_only=True)
+            if row['id'] == pin['eventId']]
+    if len(rows) != 1:
+        return None
+    row = dict(rows[0])
+    if (row.get('general_source') or row.get('issuer_business') or row.get('truncated')
+            or row['source_id'].startswith('primary-ir-')
+            or any(row.get(column) != pin[key] for key, column in (
+                ('sourceId', 'source_id'), ('ticker', 'ticker'), ('url', 'url'),
+                ('title', 'title'), ('eventSha', 'sha'), ('publishedOn', 'published_on'),
+                ('publishedAt', 'published_at')))
+            or repair.instant(row['observed_at']) != repair.instant(pin['observedAt'])
+            or row['body_sha'] != pin['bodyTextSha']
+            or not 120 <= len(row['body']) == pin['bodyChars'] <= 160000
+            or digest(row['body']) != pin['bodyTextSha']
+            or not research.current_revision(db, row)):
+        return None
+    snapshot = retry_source_snapshot(db, pin)
+    policy = json.loads(snapshot['policy'])
+    document, cached, proof = (snapshot[key] for key in ('document', 'cache', 'proof'))
+    if (not policy or policy.get('enabled') is False or policy.get('officialUpdates') is not True
+            or policy.get('requireCurrentDocument') is not True or policy.get('format') != 'feed'
+            or not document or document['sha'] != pin['sourceRevision']
+            or document['sha'] != row['sha'] or document['title'] != row['title']
+            or len(document['text']) != pin['acquisitionChars']
+            or digest(document['text']) != pin['acquisitionTextSha']
+            or digest(document['title'] + '\n' + document['text']) != document['sha']
+            or not cached or cached['error'] or cached['sha'] != row['sha']
+            or cached['body_sha'] != row['body_sha'] or cached['body'] != row['body']
+            or cached['fetched_at'] != row['body_at']
+            or not proof or proof['sha'] != row['sha'] or proof['body_sha'] != row['body_sha']
+            or proof['fetched_at'] != cached['fetched_at'] or proof['source_url'] != row['url']
+            or proof['source_title'] != row['title'] or proof['published_on'] != pin['bodyPublishedOn']
+            or proof['extractor_version'] != pin['extractorVersion']
+            or proof['raw_sha'] != pin['rawContentSha']):
+        return None
+    observed, body_at = repair.instant(row['observed_at']), repair.instant(row['body_at'])
+    reviewed_body_at = repair.instant(pin['bodyFetchedAt'])
+    if (not observed or not body_at or not reviewed_body_at
+            or not observed <= reviewed_body_at <= body_at <= reference
+            or (pin.get('allowSameBodyRefetch') is not True and body_at != reviewed_body_at)
+            or (reference - observed).total_seconds() > 7 * 86400):
+        return None
+    # Explicit opt-in treats the reviewed fetch clock as a lower bound only
+    # after every source/body/provenance pin above matches. Even a same-body
+    # re-fetch during validation changes the snapshot and prevents this commit.
+    # The existing under-lock candidate comparison now covers the complete
+    # policy/document/cache/proof snapshot without fabricating a primary row.
+    return {**row, 'source_revision': document['sha'], '_reviewed_source_snapshot': snapshot}
+
+
+def retained_amendment(row, pin, previous):
+    """Change one reviewed fact-language cell in an exact, already saved payload."""
+    amendment = pin['amendment']
+    if (pin.get('provenance') != 'signal-article' or 'copy' in pin or not previous
+            or not isinstance(amendment, dict)
+            or set(amendment) != {'field', 'language', 'beforeSha', 'text', 'evidenceSpan'}
+            or pin['replacement']['reason'] != 'reviewed-evidence-precision'
+            or digest(previous['payload']) != pin['replacement']['payloadSha']
+            or not pin.get('reviewedPayloadSha')):
+        raise ValueError('changed-reviewed-copy')
+    field = re.fullmatch(r'facts\[([0-4])\]', amendment['field'])
+    note = json.loads(previous['payload'])
+    if (not field or amendment['language'] not in {'ja', 'en'}
+            or not isinstance(note, dict) or set(note) != {'title', 'summary', 'facts', 'purpose'}
+            or not isinstance(note['facts'], list) or not 3 <= len(note['facts']) <= 5
+            or int(field[1]) >= len(note['facts'])):
+        raise ValueError('changed-reviewed-copy')
+    item = note['facts'][int(field[1])]
+    span = amendment['evidenceSpan']
+    if (not isinstance(span, dict) or set(span) != {'start', 'end', 'sha256'}
+            or type(span['start']) is not int or type(span['end']) is not int
+            or not 0 <= span['start'] < span['end'] <= len(row['body'])
+            or not 16 <= span['end'] - span['start'] <= MAX_EVIDENCE_CHARS):
+        raise ValueError('unsafe-editorial-evidence')
+    quote = row['body'][span['start']:span['end']]
+    if (not isinstance(item, dict) or set(item) != {'ja', 'en', 'evidenceQuote'}
+            or item['evidenceQuote'] != quote or digest(quote) != span['sha256']
+            or not isinstance(item[amendment['language']], str)
+            or digest(item[amendment['language']]) != amendment['beforeSha']):
+        raise ValueError('changed-reviewed-evidence')
+    item[amendment['language']] = amendment['text']
+    if digest(json.dumps(note, ensure_ascii=False)) != pin['reviewedPayloadSha']:
+        raise ValueError('changed-reviewed-copy')
+    return note
+
+
+def retained_note(row, pin, previous=None):
+    if 'amendment' in pin:
+        return retained_amendment(row, pin, previous)
     copy = pin['copy']
     if set(copy) != {'title', 'summary', 'facts', 'purpose'} or not 3 <= len(copy['facts']) <= 5:
         raise ValueError('changed-reviewed-copy')
@@ -361,6 +458,9 @@ def replaceable_retained_publication(db, previous, row, pin, validator):
             return None
     started = repair.instant(previous['started_at'])
     job, calls = retained_call_history(db, row)
+    if (pin.get('provenance') == 'signal-article'
+            and any(call['state'] not in {'done', 'failed', 'stale'} for call in calls)):
+        return None
     matching = [call for call in calls if started and call['state'] == 'done'
                 and abs(call['at']-started.timestamp()) < 0.001]
     if (len(matching) != 1 or not job or job['sha'] != row['sha']
@@ -391,7 +491,16 @@ def publish_retained(db, reference, validator):
     def record(value):
         return dict(value) if value is not None else None
 
-    def consumed(pin):
+    def consumed(pin, row):
+        if not pin.get('replacement'):
+            # Adding an unrelated reviewed entry changes the manifest hash,
+            # not this recovery's identity. A withdrawn publication must stay
+            # withdrawn. New source/body revisions remain separately eligible.
+            return db.execute('''SELECT 1 FROM reviewed_retained_announcement_recoveries
+              WHERE event_id=? AND event_sha=? AND source_revision=?
+              AND source_url=? AND body_text_sha=? LIMIT 1''',
+                              (row['id'], row['sha'], row['source_revision'],
+                               pin['url'], pin['bodyTextSha'])).fetchone()
         return db.execute('''SELECT 1 FROM reviewed_retained_announcement_recoveries
           WHERE manifest_sha=? AND source_url=? AND body_text_sha=?''',
                           (RETAINED_COPY_SHA, pin['url'], pin['bodyTextSha'])).fetchone()
@@ -402,7 +511,7 @@ def publish_retained(db, reference, validator):
         return retry_result
     for pin in manifest['announcements']:
         row = record(retained_candidate(db, pin, reference))
-        if row is None or consumed(pin):
+        if row is None or consumed(pin, row):
             continue
         previous = record(db.execute('SELECT * FROM official_research_publications WHERE event_id=?', (row['id'],)).fetchone())
         if pin.get('replacement') and previous is None:
@@ -431,7 +540,7 @@ def publish_retained(db, reference, validator):
         started = time.monotonic()
         started_at = datetime.now(timezone.utc).isoformat(timespec='milliseconds')
         try:
-            note = retained_note(row, pin)
+            note = retained_note(row, pin, previous)
             exact = json.dumps(note, ensure_ascii=False, sort_keys=True)
             validator(note, row['body'], row['title'])
             if json.dumps(note, ensure_ascii=False, sort_keys=True) != exact:
@@ -443,7 +552,7 @@ def publish_retained(db, reference, validator):
         db.commit()
         with db:
             db.execute('BEGIN IMMEDIATE')
-            if (record(retained_candidate(db, pin, reference)) != row or consumed(pin)
+            if (record(retained_candidate(db, pin, reference)) != row or consumed(pin, row)
                     or record(db.execute('SELECT * FROM official_research_publications WHERE event_id=?', (row['id'],)).fetchone()) != previous
                     or record(db.execute('SELECT * FROM official_story_bodies WHERE event_id=?', (row['id'],)).fetchone()) != cached):
                 continue
@@ -496,7 +605,7 @@ def retry_source_snapshot(db, pin):
         result['source'] = record('SELECT * FROM sources WHERE url=?', (url,))
         result['revision'] = record('SELECT * FROM source_revisions WHERE url=? AND sha256=?',
                                     (url, pin['sourceRevision']))
-    elif pin['provenance'] == 'signal-document':
+    elif pin['provenance'] in {'signal-document', 'signal-article'}:
         result['document'] = record('SELECT * FROM signal_documents WHERE source_id=? AND url=?',
                                     (pin['sourceId'], url))
     return result
