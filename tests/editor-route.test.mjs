@@ -253,3 +253,27 @@ test("stored signal evidence is explicit editor-only bounded GET and cannot beco
     else process.env.RESEARCH_MONITOR_URL = saved.url;
   }
 });
+
+test("official ledger cursors are bounded, unambiguous and forwarded on the protected GET only", async () => {
+  const previous = { url: process.env.RESEARCH_MONITOR_URL, fetch: globalThis.fetch };
+  process.env.RESEARCH_MONITOR_URL = "https://monitor.example";
+  const calls = [];
+  globalThis.fetch = async (url, init) => { calls.push({ url: new URL(url), init }); return Response.json({ ok: true }); };
+  const read = query => GET(new Request(`https://example.test/api/research/editor?${query}`, { headers: { Authorization: authorization } }));
+  try {
+    assert.equal((await read("kind=official-research&view=all&beforeEventId=1246&terminalBeforeEventId=9007199254740991")).status, 200);
+    assert.equal(calls[0].url.searchParams.get("beforeEventId"), "1246");
+    assert.equal(calls[0].url.searchParams.get("terminalBeforeEventId"), "9007199254740991");
+    assert.equal(calls[0].init.method ?? "GET", "GET");
+    for (const key of ["beforeEventId", "terminalBeforeEventId"]) {
+      for (const value of ["", "0", "-1", "1.5", "01", "1e2", "9007199254740992", "abc", `2&${key}=3`]) {
+        assert.equal((await read(`kind=official-research&${key}=${value}`)).status, 400, `${key}=${value}`);
+      }
+      assert.equal((await read(`kind=news&${key}=2`)).status, 400);
+    }
+    assert.equal(calls.length, 1);
+  } finally {
+    globalThis.fetch = previous.fetch;
+    if (previous.url === undefined) delete process.env.RESEARCH_MONITOR_URL; else process.env.RESEARCH_MONITOR_URL = previous.url;
+  }
+});

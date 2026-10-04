@@ -6,7 +6,9 @@ literal selected evidence to the existing editor-only queue. Never returns full
 source bodies, arbitrary payload fields or provider arguments.
 Replaying validation explains a gate; it does not establish factual correctness.
 """
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
+import hashlib
+import re
 import json
 from pathlib import Path
 import sqlite3
@@ -252,13 +254,128 @@ def current_failed_context(db,row,job,failure,reference):
     return result if len(json.dumps(result,ensure_ascii=False).encode())<=48000 else None
 
 
-def terminal_review_diagnostics(db,reference,limit,remaining_context_bytes):
+MAX_EVENT_ID = 9007199254740991
+
+
+def valid_cursor(value):
+    return value is None or (type(value) is int and 1 <= value <= MAX_EVENT_ID)
+
+
+def page_metadata(items, total, available, limit, before):
+    remaining = available - len(items)
+    return {'limit': limit, 'beforeEventId': before, 'returned': len(items),
+            'omitted': total - len(items), 'outsideCursor': total - available,
+            'remaining': remaining,
+            'nextBeforeEventId': items[-1]['eventId'] if remaining and items else None,
+            'order': 'event-id-desc', 'consistency': 'fresh-read-per-page'}
+
+
+STORED_CLOCK = re.compile(
+    r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}'
+    r'(?:\.[0-9]+)?(?:Z|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])')
+
+
+def parse_stored_clock(value):
+    try:
+        # fromisoformat accepts basic/hour-only ISO and normalizes invalid
+        # offset minutes. Presentation requires the same precise shape as UI.
+        if not isinstance(value, str) or not STORED_CLOCK.fullmatch(value):
+            return None
+        parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
+        return parsed if parsed.tzinfo is not None else None
+    except ValueError:
+        return None
+
+
+def source_clock(row):
+    # Primary bridge publication timestamps can be synthesized from a date.
+    # Never turn that date into an apparently exact source clock or latency.
+    published_on = row.get('published_on')
+    if published_on:
+        try:
+            if re.fullmatch(r'\d{4}-\d{2}-\d{2}', published_on):
+                date.fromisoformat(published_on)
+                return {'value': published_on, 'precision': 'date', 'basis': 'stored-source-date'}
+        except (ValueError, TypeError):
+            pass
+        return {'value': None, 'precision': 'unknown', 'basis': 'unavailable'}
+    published_at = row.get('published_at')
+    if not row['source_id'].startswith('primary-ir-') and parse_stored_clock(published_at):
+        return {'value': published_at, 'precision': 'timestamp', 'basis': 'stored-source-timestamp'}
+    return {'value': None, 'precision': 'unknown', 'basis': 'unavailable'}
+
+
+def stored_publication_clock(publication, row, valid, reference):
+    """Presentation-only chronology check; never changes existing lane counts.
+
+    Current body acquisition can be a later re-fetch. It is not a first-body
+    clock and is deliberately not used to reconstruct publication history.
+    """
+    if not valid:
+        return None
+    clocks = []
+    for value in (row['observed_at'], publication['started_at'], publication['public_at']):
+        parsed = parse_stored_clock(value)
+        if not parsed:
+            return None
+        clocks.append(parsed)
+    return publication['public_at'] if clocks[0] <= clocks[1] <= clocks[2] <= reference else None
+
+
+def publication_history(db, row, publication, valid, reference):
+    """Only authoritative same-revision audit clocks; never infer a first time.
+
+    Recovery records are not a complete publication history. The earliest audit
+    is labeled accordingly, even if it predates the current payload's clock.
+    """
+    result = {'earliestAuditedPublicationAt': None, 'currentPayloadAuditedAt': None,
+              'firstValidatedAt': None, 'firstRenderedAt': None,
+              'historyComplete': False}
+    if not valid:
+        return result
+    payload_sha = hashlib.sha256(publication['payload'].encode('utf-8')).hexdigest()
+    tables = {r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    audits = []
+    if 'official_research_editorial_recoveries' in tables:
+        audits.extend(db.execute("""SELECT public_at AS at, reviewed_payload_sha AS payload_sha,
+          recovery_started_at AS started FROM official_research_editorial_recoveries
+          WHERE event_id=? AND source_id=? AND sha=? AND body_sha=?""",
+          (row['id'], row['source_id'], row['sha'], row['body_sha'])))
+    if 'reviewed_retained_announcement_recoveries' in tables:
+        audits.extend(db.execute("""SELECT public_at AS at, payload_sha, started_at AS started
+          FROM reviewed_retained_announcement_recoveries
+          WHERE event_id=? AND source_url=? AND event_sha=? AND body_text_sha=?""",
+          (row['id'], row['url'], row['sha'], hashlib.sha256(row['body'].encode('utf-8')).hexdigest())))
+    if 'business_news_revalidations' in tables:
+        audits.extend(db.execute("""SELECT revalidated_at AS at, validated_payload_sha AS payload_sha,
+          NULL AS started FROM business_news_revalidations WHERE event_id=? AND sha=? AND body_sha=?""",
+          (row['id'], row['sha'], row['body_sha'])))
+    parse = parse_stored_clock
+    current_at = parse(publication['public_at'])
+    observed_at = parse(row['observed_at'])
+    if not current_at or not observed_at:
+        return result
+    proven = []
+    for audit in audits:
+        at, started = parse(audit['at']), parse(audit['started']) if audit['started'] else observed_at
+        # The current body clock may be a later re-fetch of the same hash.
+        # It must not erase an authoritative older same-revision audit.
+        if at and started and observed_at <= started <= at <= current_at <= reference:
+            proven.append((at, audit['at']))
+            if audit['payload_sha'] == payload_sha and at == current_at:
+                result['currentPayloadAuditedAt'] = audit['at']
+    if proven:
+        result['earliestAuditedPublicationAt'] = min(proven)[1]
+    return result
+
+
+def terminal_review_diagnostics(db,reference,limit,remaining_context_bytes,before_event_id=None):
     """Read current stopped semantic decisions separately from the work queue."""
     table=db.execute("SELECT 1 FROM sqlite_master WHERE name='general_source_semantic_reviews'").fetchone()
     if not table or not db.execute('SELECT 1 FROM general_source_semantic_reviews LIMIT 1').fetchone():
-        return {'items':[],'total':0,'omitted':0},False
+        return {'items':[],'total':0,'omitted':0,'pagination':page_metadata([],0,0,limit,before_event_id)},False
     rows=research.general_source_news.candidates(db,reference,include_review=True)
-    items,total,raw_copy_included=[],0,False
+    items,total,available,raw_copy_included=[],0,0,False
     for row in sorted(rows,key=lambda item:item['id'],reverse=True):
         review=research.general_source_news.semantic_review(db,row,reference)
         job=db.execute('SELECT sha,state,attempts,next_at,failure_kind,lease FROM official_research_jobs WHERE event_id=?',(row['id'],)).fetchone()
@@ -266,6 +383,9 @@ def terminal_review_diagnostics(db,reference,limit,remaining_context_bytes):
             or job['lease']!=review['lease'] or not research.current_revision(db,row)):
             continue
         total+=1
+        if before_event_id is not None and row['id'] >= before_event_id:
+            continue
+        available+=1
         if len(items)>=limit:
             continue
         publication=db.execute('SELECT sha,body_sha,payload FROM official_research_publications WHERE event_id=?',(row['id'],)).fetchone()
@@ -289,7 +409,7 @@ def terminal_review_diagnostics(db,reference,limit,remaining_context_bytes):
         items.append({
             'eventId':row['id'],'sourceId':row['source_id'],'url':row['url'],'title':row['title'][:500],
             'ticker':row['ticker'],'currentSha':row['sha'],'bodySha':row['body_sha'],
-            'observedAt':row['observed_at'],'bodyReadyAt':row['body_at'],'status':'terminal-review',
+            'observedAt':row['observed_at'],'bodyReadyAt':row['body_at'],'sourceClock':source_clock(row),'status':'terminal-review',
             'review':{'reason':review['reason'],'decidedAt':review['decided_at']},
             'publication':{'present':bool(publication),'currentRevision':current_publication,
                            'validation':validation_report(publication['payload'],row) if current_publication else {'status':'unavailable','issues':[]}},
@@ -298,11 +418,13 @@ def terminal_review_diagnostics(db,reference,limit,remaining_context_bytes):
             'latestFailure':{'failedAt':failure['failed_at'],'reason':failure_kind(failure['reason']),
                              'currentSourceRevision':True,'validation':rejected,'failedCopyContext':context_state} if failure else None,
         })
-    return {'items':items,'total':total,'omitted':total-len(items)},raw_copy_included
+    return {'items':items,'total':total,'omitted':total-len(items),
+            'pagination':page_metadata(items,total,available,limit,before_event_id)},raw_copy_included
 
 
-def queue(path, limit=20, view='pending', reference=None):
-    if type(limit) is not int or not 1 <= limit <= 50 or view not in {'pending', 'all'}:
+def queue(path, limit=20, view='pending', reference=None, *, before_event_id=None, terminal_before_event_id=None):
+    if (type(limit) is not int or not 1 <= limit <= 50 or view not in {'pending', 'all'}
+            or not valid_cursor(before_event_id) or not valid_cursor(terminal_before_event_id)):
         raise ValueError('invalid-request')
     reference = reference or datetime.now(timezone.utc)
     # Do not initialize/migrate schema, synchronize metadata or create a missing DB.
@@ -313,7 +435,7 @@ def queue(path, limit=20, view='pending', reference=None):
         db.execute('PRAGMA busy_timeout=5000')
         db.execute('BEGIN')
         rows = research.candidates(db, reference, read_only=True)
-        result, published, raw_copy_included = [], 0, False
+        result, published, available, raw_copy_included = [], 0, 0, False
         remaining_context_bytes=200000
         for row in sorted(rows, key=lambda item: item['id'], reverse=True):
             publication = db.execute('SELECT sha,body_sha,payload,started_at,public_at FROM official_research_publications WHERE event_id=?', (row['id'],)).fetchone()
@@ -323,6 +445,9 @@ def queue(path, limit=20, view='pending', reference=None):
             published += int(valid)
             if view == 'pending' and valid:
                 continue
+            if before_event_id is not None and row['id'] >= before_event_id:
+                continue
+            available += 1
             if len(result) >= limit:
                 continue
             job = db.execute('SELECT sha,state,attempts,next_at,failure_kind,lease FROM official_research_jobs WHERE event_id=?', (row['id'],)).fetchone()
@@ -345,13 +470,20 @@ def queue(path, limit=20, view='pending', reference=None):
                 else:
                     context_state='response-budget'
 
+            public_at = stored_publication_clock(publication,row,valid,reference)
             result.append({
                 'eventId': row['id'], 'sourceId': row['source_id'], 'url': row['url'], 'title': row['title'][:500],
                 'ticker': row['ticker'], 'currentSha': row['sha'], 'bodySha': row['body_sha'],
                 'observedAt': row['observed_at'], 'bodyReadyAt': row['body_at'],
+                'sourceClock': source_clock(row),
                 'status': 'validated-publication' if valid else 'pending',
                 'publication': {'present': bool(publication), 'currentRevision': current_publication,
-                                'publicAt': publication['public_at'] if valid else None, 'validation': saved},
+                                'publicAt': public_at, 'validation': saved,
+                                'publicId': str(row['id']) if valid else None,
+                                'researchId': 'ir-result-' + str(row['id']) if valid and row['source_id'].startswith('primary-ir-') else None,
+                                'publicFeedPresence': 'not-checked',
+                                'clockBasis': 'current-validated-revision' if public_at else 'unavailable',
+                                **publication_history(db,row,publication,bool(public_at),reference)},
                 'job': {'state': job['state'] if job['state'] in {'done', 'retry', 'running', 'stale'} else 'unknown',
                         'attempts': job['attempts'], 'nextRetryAt': instant(job['next_at']),
                         'currentRevision': job['sha'] == row['sha'], 'failureKind': failure_kind(job['failure_kind'])} if job else None,
@@ -359,7 +491,7 @@ def queue(path, limit=20, view='pending', reference=None):
                                   'currentSourceRevision': True, 'bodyRevisionRecorded': body_revision_recorded,
                                   'validation': rejected,'failedCopyContext':context_state} if failure else None,
             })
-        terminal_reviews,terminal_copy_included=terminal_review_diagnostics(db,reference,limit,remaining_context_bytes)
+        terminal_reviews,terminal_copy_included=terminal_review_diagnostics(db,reference,limit,remaining_context_bytes,terminal_before_event_id)
         raw_copy_included=raw_copy_included or terminal_copy_included
         pipeline=news_pipeline_diagnostics.snapshot(db,reference)
         # Existing editor clients already render checks JSON. Keep this distinct
@@ -369,9 +501,12 @@ def queue(path, limit=20, view='pending', reference=None):
             if not host['issues']:
                 host['issues'].append({'field':'pipeline','issue':'read-only-metadata','checks':[]})
             host['issues'][0]['checks'].append(pipeline)
-        return {'pipelineDiagnostics':pipeline,'terminalReviews':terminal_reviews,'items': result, 'view': view, 'readOnly': True, 'generatedAt': reference.isoformat(),
+        filtered_total = len(rows) if view == 'all' else len(rows) - published
+        return {'pagination':page_metadata(result,filtered_total,available,limit,before_event_id),
+                'coverage':{'completeSourceCoverage':False,'workerSelectionMayBeCapped':True,'omittedOutsideWorkerSelection':None},
+                'pipelineDiagnostics':pipeline,'terminalReviews':terminal_reviews,'items': result, 'view': view, 'readOnly': True, 'generatedAt': reference.isoformat(),
                 'counts': {'candidates': len(rows), 'validatedPublications': published, 'pending': len(rows) - published},
-                'filteredTotal': len(rows) if view == 'all' else len(rows) - published,
+                'filteredTotal': filtered_total,
                 'scope': 'current-worker-candidates', 'rawCopyIncluded': raw_copy_included}
     finally:
         db.close()

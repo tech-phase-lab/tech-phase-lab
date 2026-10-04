@@ -5,10 +5,15 @@ import { SignalSourceInspection } from "./signals-panel";
 import styles from "./news-panel.module.css";
 
 type Validation = { status: "valid" | "invalid" | "unavailable"; issues: { field: string; issue: string; checks: Record<string, unknown>[] }[] };
+type SourceClock = { value: string | null; precision: "date" | "timestamp" | "unknown"; basis: string };
+type Pagination = { limit: number; beforeEventId: number | null; nextBeforeEventId: number | null; omitted: number; outsideCursor: number; remaining: number };
+type PageRequest = { view: "pending" | "all"; beforeEventId?: number; terminalBeforeEventId?: number };
 type Item = {
   eventId: number; sourceId: string; url: string; title: string; ticker: string;
   currentSha: string; bodySha: string; observedAt: string; bodyReadyAt: string;
-  publication: { present: boolean; currentRevision: boolean; validation: Validation };
+  status?: "pending" | "validated-publication" | "terminal-review"; sourceClock?: SourceClock;
+  publication: { present: boolean; currentRevision: boolean; validation: Validation; publicAt?: string | null;
+    publicId?: string | null; researchId?: string | null; earliestAuditedPublicationAt?: string | null; currentPayloadAuditedAt?: string | null };
   job: { state: string; attempts: number; nextRetryAt: string | null; currentRevision: boolean; failureKind: string | null } | null;
   latestFailure: { failedAt: string; reason: string | null; validation: Validation } | null;
 };
@@ -17,7 +22,7 @@ type TerminalReview = Item & {
   review: { reason: string; decidedAt: string };
   job: NonNullable<Item["job"]> & { state: "review"; nextRetryAt: null };
 };
-type TerminalReviews = { items: TerminalReview[]; total: number; omitted: number };
+type TerminalReviews = { items: TerminalReview[]; total: number; omitted: number; pagination?: Pagination };
 type IntakeRecord = {
   sourceId: string; url: string | null; sha: string; bodySha?: string | null;
   eventId: number | null; representativeEventId?: number | null;
@@ -46,10 +51,16 @@ type Pipeline = {
     recordsOmitted?: number; responseOmittedRecords?: number };
   acquisitionCoverage: Record<string, Coverage>;
 };
-type Queue = { items: Item[]; generatedAt: string; filteredTotal: number;
+type Queue = { view?: "pending" | "all"; pagination?: Pagination; items: Item[]; generatedAt: string; filteredTotal: number;
   counts: { candidates: number; validatedPublications: number; pending: number }; pipelineDiagnostics?: Pipeline;
   terminalReviews?: TerminalReviews };
-const time = (value: string | null) => value ? new Date(value).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo", hour12: false }) + " JST" : "未記録";
+const time = (value: string | null) => {
+  const parts = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.exec(value ?? "");
+  if (!parts || !value || Number.isNaN(Date.parse(value))) return "未記録";
+  const [, year, month, day, hour, minute, second] = parts.map(Number);
+  if (month < 1 || month > 12 || day < 1 || day > new Date(Date.UTC(year, month, 0)).getUTCDate() || hour > 23 || minute > 59 || second > 59) return "未記録";
+  return new Date(value).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo", hour12: false }) + " JST";
+};
 const states: Record<string, string> = { retry: "再試行待ち", running: "生成中", done: "処理済み", stale: "旧版", unknown: "状態不明" };
 const verdicts: Record<Validation["status"], string> = { valid: "現在の機械検証を通過", invalid: "現在の機械検証で拒否", unavailable: "再検証用の記録なし" };
 
@@ -73,6 +84,14 @@ const safeUrl = (value: string | null) => {
 };
 const validEvent = (id: number | null | undefined): id is number => typeof id === "number" && Number.isSafeInteger(id) && id > 0;
 
+function SourceAcquisitionClocks({ item }: { item: Item }) {
+  const source = item.sourceClock;
+  return <>
+    <p className={styles.note}>原文の公表 {source?.precision === "date" ? `${source.value}（日付のみ・時刻不明）` : source?.precision === "timestamp" ? time(source.value) : "未記録"}</p>
+    <p className={styles.note}>検知 {time(item.observedAt)} · 現在の本文版の取得 {time(item.bodyReadyAt)}</p>
+  </>;
+}
+
 export function TerminalReviewOverview({ data, token }: { data?: TerminalReviews; token: string | null }) {
   if (!data) return null;
   const records = data.items.slice(0, 50);
@@ -88,7 +107,8 @@ export function TerminalReviewOverview({ data, token }: { data?: TerminalReviews
         <h4>{item.ticker} · {item.title}</h4>
         <p className={styles.note}>イベント {item.eventId} · {item.sourceId}</p>
         <p>要確認の理由: {item.review.reason}</p>
-        <p className={styles.note}>判定 {time(item.review.decidedAt)} · 検知 {time(item.observedAt)} · 本文取得 {time(item.bodyReadyAt)}</p>
+        <p className={styles.note}>判定 {time(item.review.decidedAt)}</p>
+        <SourceAcquisitionClocks item={item} />
         {url && <a href={url.href} target="_blank" rel="noopener noreferrer">発信元のページを確認 ↗</a>}
         {validEvent(item.eventId) && <SignalSourceInspection token={token} eventId={item.eventId} />}
         <details><summary>現在の原文版</summary>
@@ -176,25 +196,32 @@ export default function OfficialResearchPanel({ token }: { token: string | null 
 
 function OfficialResearchSession({ token }: { token: string | null }) {
   const [data, setData] = useState<Queue | null>(null);
+  const [page, setPage] = useState<PageRequest>({ view: "pending" });
+  const [history, setHistory] = useState<PageRequest[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const active = useRef<AbortController | null>(null);
   useEffect(() => () => { active.current?.abort(); }, []);
 
-  async function load() {
+  async function load(requested: PageRequest = { view: page.view }, previous: PageRequest[] = []) {
     active.current?.abort();
     const controller = new AbortController();
     active.current = controller;
     setBusy(true); setError("");
     try {
-      const response = await fetch(`/api/research/${token === null ? "editor-owner" : "editor"}?kind=official-research&view=pending&limit=50`, {
+      const query = new URLSearchParams({ kind: "official-research", view: requested.view, limit: "50" });
+      if (requested.beforeEventId !== undefined) query.set("beforeEventId", String(requested.beforeEventId));
+      if (requested.terminalBeforeEventId !== undefined) query.set("terminalBeforeEventId", String(requested.terminalBeforeEventId));
+      const response = await fetch(`/api/research/${token === null ? "editor-owner" : "editor"}?${query}`, {
         cache: "no-store", credentials: "same-origin", headers: { ...(token === null ? {} : { Authorization: `Bearer ${token}` }) },
         signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20_000)]),
       });
       const result = await response.json();
       if (token === null && (response.status === 401 || response.status === 403)) window.dispatchEvent(new Event("tech-phase:membership-changed"));
       if (!response.ok || !result.ok) throw new Error("unavailable");
-      if (active.current === controller && !controller.signal.aborted) setData(result);
+      if (active.current === controller && !controller.signal.aborted) {
+        setData(result); setPage(requested); setHistory(previous);
+      }
     } catch {
       if (active.current === controller && !controller.signal.aborted) setError("取得できませんでした。ログイン状態と監視サービスの接続を確認してください。");
     } finally {
@@ -209,7 +236,21 @@ function OfficialResearchSession({ token }: { token: string | null }) {
     <p className={styles.note}>機械検証の拒否は誤情報の確定ではありません。数値の表記差や対応箇所を調べる手掛かりです。保存済みの失敗を現在の原文で再検証し、当時の本文版が記録されていない場合は当時の判定の完全再現とは区別します。</p>
     {error && <p role="alert">{error}{data ? " 下記は前回取得時の記録です。" : ""}</p>}
     {busy && <p role="status">保存済みの検証記録を取得中…</p>}
-    {data && <OfficialResearchResults data={data} token={token} />}
+    <label>記事の表示範囲 <select aria-label="記事の表示範囲" value={page.view} disabled={busy || (token !== null && token.length < 24)}
+      onChange={event => void load({ view: event.target.value === "all" ? "all" : "pending" })}>
+      <option value="pending">未公開の生成対象</option><option value="all">すべての現在の生成対象</option>
+    </select></label>
+    {data && <>
+      <nav aria-label="診断のページ切り替え">
+        <button type="button" disabled={busy || history.length === 0} onClick={() => void load(history[history.length - 1], history.slice(0, -1))}>前のページを再取得</button>
+        <button type="button" disabled={busy} onClick={() => void load()}>先頭を再取得</button>
+        <button type="button" disabled={busy || !data.pagination?.nextBeforeEventId}
+          onClick={() => void load({ ...page, beforeEventId: data.pagination!.nextBeforeEventId! }, [...history, page])}>生成対象の続き</button>
+        <button type="button" disabled={busy || !data.terminalReviews?.pagination?.nextBeforeEventId}
+          onClick={() => void load({ ...page, terminalBeforeEventId: data.terminalReviews!.pagination!.nextBeforeEventId! }, [...history, page])}>要確認の続き</button>
+      </nav>
+      <OfficialResearchResults key={data.generatedAt} data={data} token={token} />
+    </>}
   </section>;
 }
 
@@ -220,12 +261,20 @@ export function OfficialResearchResults({ data, token }: { data: Queue; token: s
       <p className={styles.note}>生成処理と同じ対象範囲の診断です。公開一覧の表示件数上限による省略を、生成待ちには数えません。</p>
       <NewsPipelineOverview data={data.pipelineDiagnostics} token={token} />
       <TerminalReviewOverview data={data.terminalReviews} token={token} />
-      <h3>自動生成対象の未公開記事</h3>
+      <p className={styles.note}>対象は現在の生成候補だけです。取得元全体の網羅性は保証しません。候補選択にも既存の上限があり、その範囲外の省略件数は不明です。1ページ・各区分は最大50件です。</p>
+      <p className={styles.note}>生成対象と要確認は独立してページを切り替えます。各ページは取得時点の状態を再確認します。同一の固定スナップショットではありません。途中の変更・取り下げ・新規追加により件数や掲載状態は変わります。全体の再確認は先頭から取得してください。</p>
+      {data.pagination && <p className={styles.note}>このページ外 {data.pagination.omitted}件 · 続き {data.pagination.remaining}件 · カーソルより前 {data.pagination.outsideCursor}件</p>}
+      <h3>{data.view === "all" ? "すべての現在の生成対象（保存記事を含む）" : "自動生成対象の未公開記事"}</h3>
       <div className={styles.items}>{data.items.map(item => <article key={item.eventId} className={styles.article}>
         <h3>{item.ticker} · {item.title}</h3>
         <p className={styles.note}>イベント {item.eventId} · {item.sourceId}</p>
         <a href={item.url} target="_blank" rel="noopener noreferrer">発信元のページを確認 ↗</a>
-        <p className={styles.note}>検知 {time(item.observedAt)} · 本文取得 {time(item.bodyReadyAt)}</p>
+        <SourceAcquisitionClocks item={item} />
+        <p>状態: {item.status === "validated-publication" ? "現在版の保存記事は有効" : "未公開"} · 公開カード用ID {item.publication.publicId ?? "未確認"}{item.publication.researchId ? ` · 詳細記事ID ${item.publication.researchId}` : ""}</p>
+        <p className={styles.note}>IDは保存記事の公開経路との対応です。現在のフィードへの収録・ブラウザー配信の確認ではありません。</p>
+        <p className={styles.note}>現在版の検証済み保存公開時刻 {time(item.publication.publicAt ?? null)}</p>
+        <p className={styles.note}>同じ原文版の最古の保存公開監査 {time(item.publication.earliestAuditedPublicationAt ?? null)} · 現在の文章に一致する公開・修正監査 {time(item.publication.currentPayloadAuditedAt ?? null)}</p>
+        <p className={styles.note}>監査は全履歴を保証しません。初回の検証通過・ブラウザー表示時刻は不明です。本文版の取得時刻や直近の再確認時刻から推定しません。日付のみの原文から所要時間を計算しません。</p>
         <SignalSourceInspection token={token} eventId={item.eventId} />
         <p>{item.job ? `${states[item.job.state] ?? "状態不明"} · ${item.job.attempts}回 · ${item.job.failureKind ?? "失敗区分なし"}${item.job.currentRevision ? "" : " · ジョブは旧版"}` : "現在の生成ジョブなし"}</p>
         {item.job && <p className={styles.note}>{item.job.state === "running" ? "実行期限" : "次の実行可能時刻"} {time(item.job.nextRetryAt)}（実行・公開の確約ではありません）</p>}
@@ -239,6 +288,6 @@ export function OfficialResearchResults({ data, token }: { data: Queue; token: s
           <Report report={item.latestFailure.validation} />
         </details> : <p className={styles.note}>同じ原文版の失敗記録はありません。</p>}
       </article>)}</div>
-      {data.items.length === 0 && <p>現在の生成対象に未公開記事はありません。</p>}
+      {data.items.length === 0 && <p>{data.filteredTotal > 0 ? "このページに表示できる生成対象はありません。先頭から再確認してください。" : data.view === "all" ? "現在の生成対象はありません。" : "現在の生成対象に未公開記事はありません。"}</p>}
   </>;
 }

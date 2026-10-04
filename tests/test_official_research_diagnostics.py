@@ -171,6 +171,17 @@ class OfficialResearchDiagnosticsTests(unittest.TestCase):
                     self.assertTrue(json.loads(response.read())['readOnly'])
                     self.assertEqual(response.headers['Cache-Control'], 'no-store')
                 queue.assert_called_once_with(20, 'pending')
+                headers={'Authorization': 'Bearer synthetic-editor-token'}
+                with urlopen(Request(url+'?view=all&limit=50&beforeEventId=1246&terminalBeforeEventId=1240',headers=headers),timeout=2) as response:
+                    self.assertEqual(response.status,200)
+                queue.assert_called_with(50,'all',before_event_id=1246,terminal_before_event_id=1240)
+                for query in ('beforeEventId=', 'beforeEventId=0', 'beforeEventId=-1',
+                              'beforeEventId=1.5', 'beforeEventId=9007199254740992',
+                              'beforeEventId=2&beforeEventId=3', 'terminalBeforeEventId=abc'):
+                    with self.subTest(query=query), self.assertRaises(HTTPError) as error:
+                        urlopen(Request(url+'?'+query,headers=headers),timeout=2)
+                    self.assertEqual(error.exception.code,400)
+                self.assertEqual(queue.call_count,2)
                 with self.assertRaises(HTTPError) as error:
                     urlopen(Request(url, method='POST', data=b'{}', headers={'Authorization': 'Bearer synthetic-editor-token'}), timeout=2)
                 self.assertEqual(error.exception.code, 404)

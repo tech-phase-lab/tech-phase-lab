@@ -860,8 +860,8 @@ class AutomaticMonitor:
         with stock_news.connect(self.db_path) as db:
             return stock_news.queue(db, limit)
 
-    def official_research_queue(self, limit=20, view="pending"):
-        return official_research_diagnostics.queue(self.db_path, limit, view)
+    def official_research_queue(self, limit=20, view="pending", **cursors):
+        return official_research_diagnostics.queue(self.db_path, limit, view, **cursors)
 
     def generate_news_draft(self, payload):
         with stock_news.connect(self.db_path) as db:
@@ -2588,7 +2588,17 @@ class Handler(BaseHTTPRequestHandler):
                     return
                 limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
                 view = parse_qs(parsed.query).get("view", ["pending" if path == "/admin/official-research" else "all"])[0]
-                queue = (self.app.official_research_queue(limit, view) if path == "/admin/official-research" else
+                cursors = {}
+                for parameter, argument in (("beforeEventId", "before_event_id"), ("terminalBeforeEventId", "terminal_before_event_id")):
+                    if parameter not in query:
+                        continue
+                    values = query[parameter]
+                    if (path != "/admin/official-research" or len(values) != 1
+                            or not re.fullmatch(r"[1-9][0-9]{0,15}", values[0])
+                            or int(values[0]) > official_research_diagnostics.MAX_EVENT_ID):
+                        raise ValueError("invalid-cursor")
+                    cursors[argument] = int(values[0])
+                queue = (self.app.official_research_queue(limit, view, **cursors) if path == "/admin/official-research" else
                          self.app.question_queue(view, limit) if path == "/admin/questions" else
                          self.app.posts_queue(limit, offset=int(parse_qs(parsed.query).get("offset", ["0"])[0])) if path == "/admin/posts" else
                          self.app.stock_news_queue(limit) if path == "/admin/news" else

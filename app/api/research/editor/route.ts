@@ -57,6 +57,14 @@ export async function GET(request: Request) {
     url.searchParams.set("limit", String(limit));
     url.searchParams.set("view", view);
     if (eventIds.length) url.searchParams.set("eventId", eventIds[0]);
+    for (const key of ["beforeEventId", "terminalBeforeEventId"]) {
+      const values = requestUrl.searchParams.getAll(key);
+      if (!values.length) continue;
+      if (kind !== "official-research" || values.length !== 1 || !/^[1-9][0-9]{0,15}$/.test(values[0]) || !Number.isSafeInteger(Number(values[0]))) {
+        return response(400, { ok: false, error: "invalid-cursor" });
+      }
+      url.searchParams.set(key, values[0]);
+    }
     if (kind === "posts") {
       const offset = Number(requestUrl.searchParams.get("offset") ?? 0);
       if (!Number.isInteger(offset) || offset < 0 || offset > 100000) return response(400, { ok: false, error: "invalid-offset" });

@@ -290,3 +290,115 @@ test("terminal review source inspection validates event IDs and rejects unsafe s
   const html = renderTerminal({ items: [{ ...terminalRecord, eventId: -1, url: "https://fixture:secret@example.com/post" }], total: 1, omitted: 0 });
   assert.doesNotMatch(html, /<a |fixture:secret|保存原文を確認（編集者用）/);
 });
+
+test("all-candidate ledger shows stored clock precision and audit distinctions without a false first-time claim", () => {
+  const row = { ...terminalRecord, status: "validated-publication", review: undefined, job: null, latestFailure: null,
+    sourceClock: { value: "2026-10-01", precision: "date", basis: "stored-source-date" },
+    publication: { present: true, currentRevision: true, publicAt: timestamp, publicId: "321", researchId: "ir-result-321",
+      earliestAuditedPublicationAt: "2026-10-02T10:00:00Z", currentPayloadAuditedAt: timestamp,
+      validation: { status: "valid", issues: [] } } };
+  const queue = { ...emptyQueue(undefined), view: "all", items: [row], filteredTotal: 51,
+    pagination: { limit: 50, omitted: 50, outsideCursor: 0, remaining: 50, nextBeforeEventId: 321 } };
+  const html = renderResults(queue);
+  for (const phrase of ["すべての現在の生成対象（保存記事を含む）", "2026-10-01（日付のみ・時刻不明）",
+    "現在の本文版の取得", "現在版の検証済み保存公開時刻", "公開カード用ID 321", "詳細記事ID ir-result-321", "同じ原文版の最古の保存公開監査",
+    "初回の検証通過・ブラウザー表示時刻は不明", "同一の固定スナップショットではありません",
+    "取得元全体の網羅性は保証しません", "その範囲外の省略件数は不明", "このページ外 50件", "日付のみの原文から所要時間を計算しません"]) assert.ok(html.includes(phrase), phrase);
+  assert.doesNotMatch(html, /原文の公表 2026\/10\/1|初回取得 2026|初回公開 2026/);
+  const emptyPage = renderResults({ ...queue, items: [] });
+  assert.match(emptyPage, /このページに表示できる生成対象はありません/);
+  assert.doesNotMatch(emptyPage, /現在の生成対象に未公開記事はありません/);
+});
+
+function sessionHarness(token = null) {
+  const state = []; let index = 0; let cleanup;
+  const react = {
+    useState(initial) { const i = index++; if (!(i in state)) state[i] = initial; return [state[i], value => { state[i] = value; }]; },
+    useRef(initial) { const i = index++; if (!(i in state)) state[i] = { current: initial }; return state[i]; },
+    useEffect(effect) { if (!cleanup) cleanup = effect(); },
+  };
+  const sessionModule = { exports: {} };
+  new Function("require", "module", "exports", compiled)(name => name === "react" ? react : name.endsWith(".module.css") ? { default: {} } : name === "./signals-panel" ? signalsLoaded.exports : require(name), sessionModule, sessionModule.exports);
+  const entry = sessionModule.exports.default({ token });
+  const render = () => { index = 0; return entry.type(entry.props); };
+  function find(element, predicate) {
+    if (Array.isArray(element)) { for (const child of element) { const found = find(child, predicate); if (found) return found; } return null; }
+    if (!element || typeof element !== "object") return null;
+    return predicate(element) ? element : find(element.props?.children, predicate);
+  }
+  return { render, cleanup: () => cleanup?.(), find,
+    button(label) { return find(render(), node => node.type === "button" && node.props.children === label); },
+    selector() { return find(render(), node => node.type === "select"); },
+    results() { return find(render(), node => node.type === sessionModule.exports.OfficialResearchResults)?.props.data; },
+  };
+}
+const settle = () => new Promise(resolve => setImmediate(resolve));
+const ledgerPage = (view = "pending", next = 20, terminalNext = 10) => ({
+  ...emptyQueue(undefined), ok: true, view,
+  pagination: { nextBeforeEventId: next }, terminalReviews: { items: [], total: 0, omitted: 0, pagination: { nextBeforeEventId: terminalNext } },
+});
+
+test("session-only all view pages each lane independently, re-fetches Back and resets on view or head refresh", async () => {
+  const previous = globalThis.fetch; const calls = [];
+  globalThis.fetch = async (url, init) => { calls.push({ url: new URL(url, "https://example.test"), init }); return Response.json(ledgerPage(new URL(url, "https://example.test").searchParams.get("view"))); };
+  const harness = sessionHarness();
+  try {
+    harness.button("取得・記事の診断を読み込む").props.onClick(); await settle();
+    assert.equal(calls[0].url.pathname, "/api/research/editor-owner");
+    assert.deepEqual(calls[0].init.headers, {});
+    assert.equal(calls[0].init.cache, "no-store");
+    assert.equal(calls[0].init.credentials, "same-origin");
+    harness.selector().props.onChange({ target: { value: "all" } }); await settle();
+    assert.equal(harness.results().view, "all");
+    harness.button("生成対象の続き").props.onClick(); await settle();
+    assert.equal(calls.at(-1).url.searchParams.get("beforeEventId"), "20");
+    assert.equal(calls.at(-1).url.searchParams.has("terminalBeforeEventId"), false);
+    harness.button("要確認の続き").props.onClick(); await settle();
+    assert.equal(calls.at(-1).url.searchParams.get("beforeEventId"), "20");
+    assert.equal(calls.at(-1).url.searchParams.get("terminalBeforeEventId"), "10");
+    harness.button("前のページを再取得").props.onClick(); await settle();
+    assert.equal(calls.at(-1).url.searchParams.get("beforeEventId"), "20");
+    assert.equal(calls.at(-1).url.searchParams.has("terminalBeforeEventId"), false);
+    harness.button("先頭を再取得").props.onClick(); await settle();
+    assert.equal(calls.at(-1).url.searchParams.has("beforeEventId"), false);
+    assert.equal(harness.button("前のページを再取得").props.disabled, true);
+    harness.selector().props.onChange({ target: { value: "pending" } }); await settle();
+    assert.equal(calls.at(-1).url.searchParams.get("view"), "pending");
+    assert.equal(calls.at(-1).url.searchParams.has("beforeEventId"), false);
+  } finally { harness.cleanup(); globalThis.fetch = previous; }
+});
+
+test("late aborted page responses cannot overwrite a newer view and unmount aborts the active read", async () => {
+  const previous = globalThis.fetch; const pending = [];
+  globalThis.fetch = (url, init) => new Promise(resolve => pending.push({ url, init, resolve }));
+  const harness = sessionHarness();
+  try {
+    const initial = harness.button("取得・記事の診断を読み込む");
+    initial.props.onClick();
+    assert.equal(harness.selector().props.disabled, true);
+    initial.props.onClick();
+    assert.equal(pending[0].init.signal.aborted, true);
+    pending[1].resolve(Response.json(ledgerPage())); await settle();
+    harness.selector().props.onChange({ target: { value: "all" } });
+    pending[2].resolve(Response.json(ledgerPage("all"))); await settle();
+    pending[0].resolve(Response.json(ledgerPage("pending"))); await settle();
+    assert.equal(harness.results().view, "all");
+    harness.button("生成対象の続き").props.onClick();
+    harness.cleanup();
+    assert.equal(pending[3].init.signal.aborted, true);
+    pending[3].resolve(Response.json(ledgerPage("pending"))); await settle();
+    assert.equal(harness.results().view, "all");
+  } finally { harness.cleanup(); globalThis.fetch = previous; }
+});
+
+
+test("malformed, impossible and date-only acquisition/public clocks never render a fabricated instant", () => {
+  for (const invalid of ["invalid", "2026-02-30T12:00:00Z", "2026-10-01", "2026-10-01T12:00:00", "2026-10-01T24:00:00Z"]) {
+    const row = { ...terminalRecord, job: null, latestFailure: null, observedAt: invalid, bodyReadyAt: invalid,
+      publication: { ...terminalRecord.publication, publicAt: invalid } };
+    const html = renderResults({ ...emptyQueue(undefined), items: [row], filteredTotal: 1 });
+    assert.match(html, /検知 未記録 · 現在の本文版の取得 未記録/);
+    assert.match(html, /現在版の検証済み保存公開時刻 未記録/);
+    assert.doesNotMatch(html, /Invalid Date|2026\/3\/2|2026\/10\/1 9:00:00/);
+  }
+});

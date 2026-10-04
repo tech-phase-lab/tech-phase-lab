@@ -146,6 +146,14 @@ class TerminalReviewDiagnosticsTests(unittest.TestCase):
                 section,_=diagnostics.terminal_review_diagnostics(db,broker.NOW,50,200000)
                 self.assertEqual((len(section['items']),section['total'],section['omitted']),(50,60,10))
                 self.assertTrue(all(item['status']=='terminal-review' for item in section['items']))
+                continuation,_=diagnostics.terminal_review_diagnostics(db,broker.NOW,50,200000,
+                    section['pagination']['nextBeforeEventId'])
+                ids=[item['eventId'] for item in section['items']+continuation['items']]
+                self.assertEqual(ids,sorted([row['id'] for row in rows],reverse=True))
+                self.assertEqual(len(set(ids)),60)
+                self.assertEqual(continuation['pagination']['remaining'],0)
+                self.assertIsNone(continuation['pagination']['nextBeforeEventId'])
+                self.assertEqual(continuation['total'],60)
 
 
 if __name__=='__main__':unittest.main()

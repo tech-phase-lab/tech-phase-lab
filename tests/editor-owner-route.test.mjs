@@ -68,12 +68,12 @@ test("same-origin JSON is required for every mutation and cross-site reads are r
 }));
 
 test("read scope is limited to news, official-IR briefs and diagnostics; annual reports and posts remain denied", async () => withState(async state => {
-  for (const query of ["", "?kind=news", "?kind=official-research&view=pending", "?kind=signals&eventId=123&limit=30"]) {
+  for (const query of ["", "?kind=news", "?kind=official-research&view=pending", "?kind=official-research&view=all&limit=50&beforeEventId=123&terminalBeforeEventId=456", "?kind=signals&eventId=123&limit=30"]) {
     assert.equal((await route.GET(new Request(url + query))).status, 200, query);
     assert.equal(state.calls.at(-1).url.search, query);
   }
   for (const query of ["?kind=posts", "?kind=annual", "?kind=", "?kind=anything", "?kind=news&kind=posts", "?kind=news&kind=news"]) assert.equal((await route.GET(new Request(url + query))).status, 403, query);
-  assert.equal(state.calls.length, 4);
+  assert.equal(state.calls.length, 5);
 }));
 
 test("write scope cannot expand to annual reports, posts, diagnostics or an arbitrary action", async () => withState(async state => {
