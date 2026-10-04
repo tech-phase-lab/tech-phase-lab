@@ -2,6 +2,7 @@ import providers from "./providers.json" with { type: "json" };
 import reportedNewsTickers from "./reported-news-tickers.json" with { type: "json" };
 import { parseResultBriefs, type ResultBrief } from "./market-results.ts";
 import { parseAnalystUpdates, type AnalystUpdate } from "./analyst-news.ts";
+import { marketNewsDetail, type MarketNewsDetail } from "./market-news-detail.ts";
 type Syndication = { policy: "issuer-capacity-contract-v1" | "issuer-business-news-v1"; issuer: string; distributor: "GlobeNewswire" | "PR Newswire" };
 export const OFFICIAL_NEWS_HISTORY_LIMIT = 100;
 export const NEWS_BRIEF_TITLE_SUFFIXES = { ja: "（短報・詳細確認中）", en: " (brief; details awaiting review)" } as const;
@@ -17,7 +18,7 @@ export type GeneralNewsItem = CompactTitles & {
 export type OfficialNewsSource = { id: string; url: string; publisher: string; publishedAt: string; observedAt: string };
 export type OfficialNewsBrief = { version: 1; scope: "company" | "sector"; validFacts: number; pendingFacts: number };
 export type OfficialUpdate = CompactTitles & NewsBody & { brief?: OfficialNewsBrief; generalSource?: 1; syndication?: Syndication; id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[] };
-export type MarketUpdate = CompactTitles & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
+export type MarketUpdate = CompactTitles & MarketNewsDetail & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
 export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; officialHistory?: OfficialHistory };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
   "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com", "www.bea.gov"]);
@@ -130,7 +131,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       for (const key of ["publishedAt", "observedAt"]) {
         if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(v[key] as string) || !Number.isFinite(Date.parse(v[key] as string))) throw Error("Invalid market date");
       }
-      return { ...compactTitles(v), id: v.id as string, titleJa: v.titleJa as string, titleEn: v.titleEn as string, url: url.href, topic: v.topic as MarketUpdate["topic"], publishedAt: v.publishedAt as string, observedAt: v.observedAt as string };
+      return { ...compactTitles(v), ...marketNewsDetail(v), id: v.id as string, titleJa: v.titleJa as string, titleEn: v.titleEn as string, url: url.href, topic: v.topic as MarketUpdate["topic"], publishedAt: v.publishedAt as string, observedAt: v.observedAt as string };
     });
   }
   if (payload.resultBriefs !== undefined) updates.resultBriefs = parseResultBriefs(payload.resultBriefs);
