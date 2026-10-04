@@ -645,7 +645,7 @@
     "kind": "publisher-update",
     "format": "x-api",
     "enabledBy": "X_API_ENABLED",
-    "query": "from:TrendSpider (((\"S&P 500\" OR S&P500 OR SPX OR Nasdaq OR NDX) (rebalance OR rebalancing OR reconstitution OR add OR added OR additions OR removed OR removals OR join OR joins OR joining OR replace OR replaces OR replacing OR inclusion OR exclusion OR deletions)) OR (buyback OR buybacks OR \"share repurchase\" OR \"stock repurchase\" OR 自社株買い OR 自己株式取得)) -is:retweet -is:reply",
+    "query": "from:TrendSpider (((\"S&P 500\" OR S&P500 OR SPX OR Nasdaq OR NDX) (rebalance OR rebalancing OR reconstitution OR add OR added OR additions OR removed OR removals OR join OR joins OR joining OR replace OR replaces OR replacing OR inclusion OR exclusion OR deletions)) OR (buyback OR buybacks OR repurchase OR repurchases OR repurchased OR repurchasing OR \"bought back\" OR \"buy back\" OR \"buying back\" OR 自社株買い OR 自己株式取得)) -is:retweet -is:reply",
     "accounts": [
       "TrendSpider"
     ],

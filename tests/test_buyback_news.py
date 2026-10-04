@@ -3,6 +3,7 @@ from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import json
+import re
 import sys
 import tempfile
 import unittest
@@ -172,13 +173,72 @@ class BuybackTests(unittest.TestCase):
             with self.subTest(changed=changed),self.assertRaises(ValueError):
                 buyback.validate({**copy,'ja':changed},quote,required=True)
 
+    def test_exact_requested_post_matches_explicit_query_literal_but_stays_historical(self):
+        # Conservative literal coverage of this OR clause, not an X search emulator.
+        # No stemming, quoted-post indexing, image text or undocumented behavior.
+        clause=SOURCE['query'].split(' OR (buyback OR ',1)[1].rsplit(')) -is:retweet -is:reply',1)[0]
+        terms=['buyback',*[part.strip('"') for part in clause.split(' OR ')]]
+        def matches(body,term):
+            boundary=r'(?<!\w)'+re.escape(term)+r'(?!\w)' if term.isascii() else re.escape(term)
+            return bool(re.search(boundary,body,re.I))
+        old_terms=('buyback','buybacks','share repurchase','stock repurchase','自社株買い','自己株式取得')
+        self.assertFalse(any(matches(RECAP,term) for term in old_terms))
+        self.assertEqual([term for term in terms if matches(RECAP,term)],['repurchased'])
+        payload={'includes':{'users':[{'id':'1','username':'TrendSpider'}]},'data':[
+            {'id':'2106523440635363385','author_id':'1','text':RECAP,'created_at':'2026-10-03T23:15:00.217Z'}]}
+        parsed=x_api.parse_response(SOURCE,payload,list(signals.ALIASES))
+        self.assertEqual([row['text'] for row in parsed],[RECAP])
+        self.seed(RECAP,number=2106523440635363385,published='2026-10-03T23:15:00.217Z')
+        with research.connect(self.path) as db:
+            self.assertEqual(news.candidates(db,NOW),[])
+            self.assertEqual(news.public_items(db,NOW),[])
+        for variant in ('repurchase','repurchases','repurchased','repurchasing'):
+            with self.subTest(variant=variant):
+                self.assertIn(variant,terms)
+                self.assertTrue(any(matches(f'NVIDIA $NVDA {variant} its shares.',term) for term in terms))
+        for phrase in ('bought back','buy back','buying back','自社株買い','自己株式取得'):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase,terms)
+                self.assertTrue(any(matches(f'NVIDIA $NVDA {phrase}.',term) for term in terms))
+                self.assertTrue(buyback.CUE.search(f'NVIDIA $NVDA {phrase}.'))
+        # The compact replacement keeps both prior quoted phrases through their
+        # explicit shared token; it does not assume inflection or stemming.
+        for phrase in ('share repurchase','stock repurchase'):
+            self.assertTrue(matches(phrase,'repurchase'))
+            self.assertTrue(any(matches(phrase,term) for term in terms))
+        self.assertFalse(any(matches('NVIDIA $NVDA repurchasedish chart.',term) for term in terms))
+
+    def test_back_phrases_still_require_share_action_amount_and_stage(self):
+        cases=[('NVIDIA $NVDA bought back 3 million shares for $4 billion.',True),
+               ('NVIDIA $NVDA plans to buy back $4 billion of shares.',True),
+               ('NVIDIA $NVDA approved buying back $4 billion of shares.',True),
+               ('NVIDIA $NVDA is buying back $4 billion of shares.',False),
+               ('NVIDIA $NVDA plans to buy back $4 billion of bonds.',False),
+               ('NVIDIA $NVDA buy back chart.',False),
+               ('NVIDIA $NVDA plans to buy back shares.',False)]
+        for body,eligible in cases:
+            with self.subTest(body=body):
+                self.assertTrue(buyback.CUE.search(body))
+                units,_=buyback.prepare(body,'NVDA',signals.ALIASES['NVDA'])
+                self.assertEqual(bool(units),eligible)
+
+    def test_index_query_branch_and_filters_remain_exactly_preserved(self):
+        index_branch=('from:TrendSpider ((("S&P 500" OR S&P500 OR SPX OR Nasdaq OR NDX) '
+                      '(rebalance OR rebalancing OR reconstitution OR add OR added OR additions OR '
+                      'removed OR removals OR join OR joins OR joining OR replace OR replaces OR '
+                      'replacing OR inclusion OR exclusion OR deletions))')
+        self.assertEqual(SOURCE['query'].split(' OR (buyback OR ',1)[0],index_branch)
+        self.assertTrue(SOURCE['query'].endswith(')) -is:retweet -is:reply'))
+
     def test_queries_and_limits_preserve_approved_routes(self):
         active=[s for s in signals.SOURCES if s['format']=='x-api' and s.get('enabled') is not False]
         self.assertEqual(len(active),4)
         self.assertTrue(all(len(s['query'])<=512 and s['maxResults']==30 for s in active))
         self.assertEqual(SOURCE['intervalSeconds'],120)
         self.assertIn(' OR 自社株買い',SOURCE['query'])
-        self.assertIn(' OR "share repurchase"',SOURCE['query'])
+        self.assertEqual(len(SOURCE['query']),440)
+        for term in ('repurchase','repurchases','repurchased','repurchasing'):
+            self.assertIn(f' OR {term} OR ',SOURCE['query'])
         grouped=next(s for s in active if s['id']=='x-wallstengine')
         self.assertEqual((len(grouped['query']),grouped['intervalSeconds']),(508,30))
         self.assertIn('from:FABYMETAL4 (',grouped['query'])

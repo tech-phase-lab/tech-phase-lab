@@ -202,10 +202,10 @@ RETAINED_COPY_SHA = '3ce2b505390d880a82cf2249f8b97b47744f620e9d52959635adeffb55b
 
 
 def retained_candidate(db, pin, reference):
-    """Require newly validated article evidence, never legacy XML/feed text."""
+    """Require current validated article evidence, preserving inline feed provenance."""
     import official_release_bridge as bridge
     row = db.execute("""SELECT e.*,s.sha256 AS source_revision,s.content_type,
-      s.extractor_version,s.error,s.status,r.extracted_text AS body,r.observed_at AS body_at,
+      s.extractor_version,s.error,s.status,s.source_mode,r.extracted_text AS body,r.observed_at AS body_at,
       s.title AS source_title,s.published_on AS source_date
       FROM signal_events e JOIN sources s ON s.url=e.url
       JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256
@@ -215,11 +215,26 @@ def retained_candidate(db, pin, reference):
             or row['title'] != pin['title'] or row['source_title'] != pin['title']
             or row['published_on'] != pin['publishedOn'] or row['source_date'] != pin['publishedOn']
             or repair.instant(row['observed_at']) != repair.instant(pin['observedAt'])
-            or row['content_type'] != 'text/html'
-            or row['extractor_version'] != pin['extractorVersion'] or row['error']
-            or row['status'] in {'held', 'rejected'} or len(row['body']) != pin['bodyChars']
-            or digest(row['body']) != pin['bodyTextSha']):
+            or row['error'] or row['status'] in {'held', 'rejected'}):
         return None
+    # XML here may be a legitimate inline RSS description. Preserve that
+    # source revision; a separately acquired article needs its own proof.
+    direct = (row['content_type'] == 'text/html'
+              and row['extractor_version'] == pin['extractorVersion']
+              and len(row['body']) == pin['bodyChars']
+              and digest(row['body']) == pin['bodyTextSha'])
+    if not direct:
+        cached = db.execute('''SELECT b.*,p.source_url,p.source_title,p.published_on,
+          p.extractor_version FROM official_story_bodies b JOIN official_story_body_proofs p
+          ON p.event_id=b.event_id AND p.sha=b.sha AND p.body_sha=b.body_sha AND p.fetched_at=b.fetched_at
+          WHERE b.event_id=? AND b.sha=?''', (row['id'], row['sha'])).fetchone()
+        if (not cached or cached['error'] or cached['source_url'] != pin['url']
+                or cached['source_title'] != pin['title'] or cached['published_on'] != pin['publishedOn']
+                or cached['extractor_version'] != pin['extractorVersion']
+                or cached['body_sha'] != pin['bodyTextSha'] or len(cached['body']) != pin['bodyChars']
+                or digest(cached['body']) != pin['bodyTextSha']):
+            return None
+        row = {**dict(row), 'body': cached['body'], 'body_at': cached['fetched_at']}
     try:
         if json.loads(row['tickers_json']) != [pin['ticker']]:
             return None

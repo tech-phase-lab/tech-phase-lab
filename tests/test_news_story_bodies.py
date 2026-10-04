@@ -58,6 +58,8 @@ class NewsStoryBodyTests(unittest.TestCase):
         later=NOW+timedelta(minutes=16)
         self.assertEqual(research.prepare_story_body(self.path,later,temporarily_unavailable),'retry')
         with research.connect(self.path) as db:
+            self.assertEqual(db.execute('SELECT fetched_at FROM official_story_bodies').fetchone()[0], NOW.isoformat())
+            self.assertEqual(db.execute('SELECT fetched_at FROM official_story_body_proofs').fetchone()[0], NOW.isoformat())
             self.assertIn(NOTE['facts'][1]['ja'],signals.public_official_updates(db,reference=later)[0]['bodyJa'])
             signals.save(db,SOURCE,[{**self.item,'text':'Changed source revision'}],{},NOW.isoformat(),'synthetic',1)
             self.assertNotIn('bodyJa',signals.public_official_updates(db,reference=NOW)[0])

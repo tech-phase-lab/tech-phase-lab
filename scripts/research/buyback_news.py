@@ -8,7 +8,7 @@ import re
 
 import factual_validation
 
-CUE = re.compile(r'\b(?:buy[ -]?backs?|(?:share|stock) repurchases?|repurchased|repurchasing|bought back)\b|自社株買い|自己株式.{0,100}(?:取得|買付|買い戻)', re.I)
+CUE = re.compile(r'\b(?:buy[ -]?backs?|(?:share|stock) repurchases?|repurchased|repurchasing|(?:bought|buying) back)\b|自社株買い|自己株式.{0,100}(?:取得|買付|買い戻)', re.I)
 AUTH = re.compile(r'\b(?:authoriz(?:e[sd]?|ation)|approv(?:e[sd]?|al))\b|承認|決議|取得枠|買い枠', re.I)
 EXECUTED = re.compile(r'\b(?:repurchased|bought back|completed (?:a |the )?(?:share |stock )?(?:repurchase|buyback))\b|(?:自社株|自己株式).{0,100}(?:取得した|取得済|買い戻した|実施した)|取得実績', re.I)
 PLANNED = re.compile(r'\b(?:plans?|propos(?:es|ed)|intend(?:s|ed)?|consider(?:s|ing)|may|might|could|would)\b|計画|予定|検討|意向|可能性', re.I)

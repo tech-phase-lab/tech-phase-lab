@@ -3,6 +3,7 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import builtins
 import hashlib
 import gzip
 import hmac
@@ -11,6 +12,7 @@ import os
 from pathlib import Path
 import re
 import signal
+import sqlite3
 import threading
 import time
 from urllib.parse import parse_qs, urlsplit
@@ -60,6 +62,46 @@ WEB_PUSH_POLL_SECONDS = 5
 WEB_PUSH_STALE_SECONDS = 30
 DISCOVERY_METRICS_FLUSH_SECONDS = 5
 DISCOVERY_METRICS_MAX_CHECKS = 1000
+PUBLICATION_FAILURE_LANES = frozenset({
+    "headline-translation-unavailable", "market-translation-unavailable",
+    "analyst-news-publication-unavailable", "official-research-unavailable",
+    "public-news-unavailable",
+})
+PUBLICATION_EXCEPTION_CLASSES = {
+    value: value.__name__ for module in (builtins, sqlite3) for value in vars(module).values()
+    if isinstance(value, type) and issubclass(value, Exception)
+}
+# Only native SQLite result-code symbols, never an exception's supplied name.
+SQLITE_FAILURE_NAMES = {
+    value: name for name, value in vars(sqlite3).items()
+    if type(value) is int and re.fullmatch(
+        r"SQLITE_(?:ERROR|INTERNAL|PERM|ABORT|BUSY|LOCKED|NOMEM|READONLY|INTERRUPT|"
+        r"IOERR|CORRUPT|NOTFOUND|FULL|CANTOPEN|PROTOCOL|EMPTY|SCHEMA|TOOBIG|"
+        r"CONSTRAINT|MISMATCH|MISUSE|NOLFS|AUTH|FORMAT|RANGE|NOTADB|NOTICE|WARNING)"
+        r"(?:_[A-Z0-9]+)*", name)
+}
+
+
+def log_publication_failure(lane, error):
+    """Log bounded type/code metadata without inspecting messages or content."""
+    if type(lane) is not str or lane not in PUBLICATION_FAILURE_LANES:
+        lane = "publication-unavailable"
+    # Custom class names can contain arbitrary text; use their nearest trusted
+    # built-in/SQLite base rather than echoing any user-defined name.
+    exception_class = next((PUBLICATION_EXCEPTION_CLASSES[base]
+                            for base in type(error).__mro__
+                            if base in PUBLICATION_EXCEPTION_CLASSES), "Exception")
+    code = None
+    if isinstance(error, sqlite3.Error):
+        try:
+            candidate = getattr(error, "sqlite_errorcode", None)
+        except Exception:
+            candidate = None
+        if type(candidate) is int and candidate in SQLITE_FAILURE_NAMES:
+            code = candidate
+    print(json.dumps({"lane": lane, "exceptionClass": exception_class,
+                      "sqliteErrorCode": code, "sqliteErrorName": SQLITE_FAILURE_NAMES.get(code)},
+                     separators=(",", ":")), flush=True)
 
 
 def utc_now():
@@ -648,8 +690,8 @@ class AutomaticMonitor:
             wake.clear()
             try:
                 headline_translation.run_once(self.db_path)
-            except Exception:
-                print("headline-translation-unavailable", flush=True)
+            except Exception as exc:
+                log_publication_failure("headline-translation-unavailable", exc)
             if not self.stop_event.is_set():
                 wake.wait(5)
 
@@ -661,8 +703,8 @@ class AutomaticMonitor:
             wake.clear()
             try:
                 x_market_news.run_once(self.db_path)
-            except Exception:
-                print("market-translation-unavailable", flush=True)
+            except Exception as exc:
+                log_publication_failure("market-translation-unavailable", exc)
             if not self.stop_event.is_set():
                 wake.wait(5)
 
@@ -673,8 +715,8 @@ class AutomaticMonitor:
             wake.clear()
             try:
                 analyst_news.run_once(self.db_path)
-            except Exception:
-                print("analyst-news-publication-unavailable", flush=True)
+            except Exception as exc:
+                log_publication_failure("analyst-news-publication-unavailable", exc)
             try:
                 market_results.run_once(self.db_path, signals.SOURCES)
             except Exception:
@@ -693,8 +735,8 @@ class AutomaticMonitor:
             wake.clear()
             try:
                 official_research.run_once(self.db_path)
-            except Exception:
-                print("official-research-unavailable", flush=True)
+            except Exception as exc:
+                log_publication_failure("official-research-unavailable", exc)
             try:
                 issuer_syndication.run_once(self.db_path, datetime.now(timezone.utc))
             except Exception:
@@ -2613,7 +2655,9 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(200, snapshot)
             else:
                 self.send_json(200, {"ok": True, "mode": "automatic", "monitor": self.app.public_state(), "snapshot": snapshot})
-        except Exception:
+        except Exception as exc:
+            if path == "/news":
+                log_publication_failure("public-news-unavailable", exc)
             self.send_json(503, {"ok": False, "error": "snapshot-unavailable"})
 
     def do_POST(self):

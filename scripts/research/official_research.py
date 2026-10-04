@@ -47,6 +47,10 @@ def schema(db):
         event_id INTEGER PRIMARY KEY, sha TEXT NOT NULL, body_sha TEXT NOT NULL,
         body TEXT NOT NULL, fetched_at TEXT NOT NULL, next_at REAL NOT NULL,
         error TEXT);
+      CREATE TABLE IF NOT EXISTS official_story_body_proofs(
+        event_id INTEGER PRIMARY KEY, sha TEXT NOT NULL, body_sha TEXT NOT NULL,
+        fetched_at TEXT NOT NULL, source_url TEXT NOT NULL, source_title TEXT NOT NULL,
+        published_on TEXT, extractor_version TEXT NOT NULL, raw_sha TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS official_research_jobs(
         event_id INTEGER PRIMARY KEY, sha TEXT NOT NULL, attempts INTEGER NOT NULL,
         next_at REAL NOT NULL, lease TEXT NOT NULL, state TEXT NOT NULL);
@@ -110,7 +114,14 @@ def prepare_story_body(path, reference, request=None):
     with connect(path) as db:
         sources = {s['id']: s for s in [*signals.SOURCES,*[{**p,'format':'feed'} for p in bridge.publishers()]] if s.get('officialUpdates')
                    and s.get('enabled') is not False and s.get('format') != 'x-api'}
-        for item in signals.public_official_updates(db, reference=reference, limit=20):
+        items = signals.public_official_updates(db, reference=reference, limit=100)
+        enriched = {str(row['event_id']) for row in db.execute('''
+          SELECT b.event_id FROM official_story_bodies b JOIN signal_events e
+          ON e.id=b.event_id AND e.sha=b.sha WHERE length(b.body)>0''')}
+        # Fill missing article evidence before refreshing already enriched
+        # headlines. Existing per-item backoff still applies inside the loop.
+        items.sort(key=lambda item: str(item['id']) in enriched)
+        for item in items:
             row = db.execute('SELECT * FROM signal_events WHERE id=?',(item['id'],)).fetchone()
             if not row or row['source_id'] not in sources or row['truncated']:
                 continue
@@ -123,6 +134,8 @@ def prepare_story_body(path, reference, request=None):
             cached = db.execute('SELECT * FROM official_story_bodies WHERE event_id=?',(row['id'],)).fetchone()
             if cached and cached['sha'] == row['sha'] and cached['next_at'] > reference.timestamp():
                 continue
+            proof = None
+            body_fetched_at = reference.isoformat()
             try:
                 if source['format'] in {'html-index','document'}:
                     doc = db.execute('SELECT text FROM signal_documents WHERE source_id=? AND url=? AND sha=?',
@@ -146,6 +159,8 @@ def prepare_story_body(path, reference, request=None):
                     if not markup:
                         markup = explicit_body(document) or ''
                     body = monitor.extract_html_text(markup.encode())
+                    proof = {'published_on': actual_date,
+                             'raw_sha': hashlib.sha256(fetched['body']).hexdigest()}
                 if not 120 <= len(body) <= 160000:
                     raise ValueError('article-body-unavailable')
                 digest = hashlib.sha256(body.encode()).hexdigest()
@@ -154,6 +169,9 @@ def prepare_story_body(path, reference, request=None):
                 body, digest = '', ''
                 if cached and cached['sha'] == row['sha']:
                     body, digest = cached['body'], cached['body_sha']
+                    if body:
+                        body_fetched_at = cached['fetched_at']
+                proof = None
                 error = monitor.source_error_code(exc)
                 next_at = reference.timestamp() + (21600 if getattr(exc,'code',None) in {401,403,451} else 300)
             db.commit()
@@ -166,9 +184,16 @@ def prepare_story_body(path, reference, request=None):
                 db.execute('''INSERT INTO official_story_bodies VALUES(?,?,?,?,?,?,?)
                   ON CONFLICT(event_id) DO UPDATE SET sha=excluded.sha,body_sha=excluded.body_sha,
                   body=excluded.body,fetched_at=excluded.fetched_at,next_at=excluded.next_at,error=excluded.error''',
-                  (row['id'],row['sha'],digest,body,reference.isoformat(),next_at,error))
+                  (row['id'],row['sha'],digest,body,body_fetched_at,next_at,error))
+                if proof is not None:
+                    db.execute('''INSERT OR REPLACE INTO official_story_body_proofs
+                      VALUES(?,?,?,?,?,?,?,?,?)''',
+                      (row['id'],row['sha'],digest,body_fetched_at,row['url'],row['title'],
+                       proof['published_on'],monitor.HTML_EXTRACTOR_VERSION,proof['raw_sha']))
                 db.execute('''DELETE FROM official_story_bodies WHERE event_id NOT IN
                   (SELECT event_id FROM official_story_bodies ORDER BY fetched_at DESC LIMIT 200)''')
+                db.execute('''DELETE FROM official_story_body_proofs WHERE event_id NOT IN
+                  (SELECT event_id FROM official_story_bodies)''')
             return 'retry' if error else 'ready'
     return 'idle'
 
@@ -530,6 +555,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     prepare_story_body(path, reference)
     reference=datetime.fromtimestamp(now,timezone.utc)
     with connect(path) as db:
+        if editorial_recovery.publish_retained(db, reference, validate):
+            return 'done'
         claimed=claim(db,reference,model,limit)
     if not claimed:
         return 'idle'
