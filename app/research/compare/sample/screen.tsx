@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import type { ComparisonResult } from "@/lib/research/comparison";
 import { overallComparison } from "@/lib/research/comparison-scorecard";
-import ScoreMethod from "../score-method";
+import DetailPanels from "../detail-panels";
 import ResearchToolShell from "../../research-tool-shell";
 import { useResearchLanguage } from "../../use-research-language";
 import { CompanyScoreCard, ScoreOverview } from "../comparison-visuals";
@@ -13,8 +13,7 @@ export default function SampleScreen({sample}:{sample:ComparisonResult}) {
   const [lang,setLang]=useResearchLanguage(),[count,setCount]=useState(2),ja=lang==="ja";
   const companies=sample.companies.slice(0,count),now=Date.parse(sample.generatedAt);
   const assessment=overallComparison(companies,lang,now);
-  return <ResearchToolShell lang={lang} setLang={setLang} title={ja?"銘柄比較PRO · サンプル":"Compare stocks PRO · Sample"}
-    description={ja?"架空の企業・数値を使った操作サンプルです。実際の株価・業績ではありません。":"Interactive sample with fictional companies and figures. These are not real stock prices or financial results."} showTools={false}>
+  return <ResearchToolShell lang={lang} setLang={setLang} title={ja?"銘柄比較PRO":"Compare stocks PRO"} description="" showTools={false} showHeading={false}>
     <div className={styles.results}>
       <Link href="/research/compare" className={styles.backToCompare}>{ja?"▶ 銘柄比較PROに戻る":"▶ Back to Compare stocks PRO"}</Link>
       <div className={styles.scoreViewSwitch} role="group" aria-label={ja?"比較する社数":"Number of companies"}>
@@ -27,11 +26,10 @@ export default function SampleScreen({sample}:{sample:ComparisonResult}) {
       </section>
       <div className={styles.companyCards}>{companies.map((c,i)=><CompanyScoreCard colorIndex={i} key={c.ticker} company={c} lang={lang} now={now}/>)}</div>
       <ScoreOverview companies={companies} lang={lang} now={now}/>
-      <details className={styles.analysisDetails}>
-        <summary>{ja?"長所・短所の詳細":"Strengths and weaknesses in detail"}</summary>
+      <DetailPanels lang={lang}>
         {companies.map(c=><section key={c.ticker}><h3>{c.name}（{c.ticker}）</h3><ul>{c.preparedAnalysis?.items.map(item=><li key={item.id}><strong data-kind={item.kind}>{item.short[lang]}</strong><p>{item.detail[lang]}</p></li>)}</ul></section>)}
-      </details>
-      <ScoreMethod lang={lang}/>
+      </DetailPanels>
+      <small className={styles.sampleFootnote}>{ja?"表示確認用の架空データ":"Fictional data for preview"}</small>
     </div>
   </ResearchToolShell>;
 }

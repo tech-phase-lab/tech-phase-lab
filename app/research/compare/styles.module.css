@@ -74,3 +74,15 @@
 .analysisDetails>summary{font-size:16px;font-weight:600;padding:12px 0}.scoreMethod>summary{font-size:14px;padding:10px 0}
 
 .snapshotTable td[data-winner="true"] .scoreTrack i{background:#dfbe6a;box-shadow:0 0 8px #dfbe6a55}
+
+.scoreOverview[data-count="2"]{width:100%;max-width:880px;justify-self:center}
+.detailPanels{border-top:1px solid #78908730;padding-top:14px;min-width:0}
+.detailButtons{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.detailButtons button{display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:10px 8px;border:1px solid #78908745;border-radius:8px;background:#111c24;color:#d4dfd9;font-size:13px;font-weight:500;cursor:pointer;line-height:1.4}
+.detailButtons button[aria-expanded="true"]{background:#203a32;border-color:#8cbdab;color:#e3eee8}
+.detailButtons button:focus-visible{outline:2px solid #dfbe6a;outline-offset:3px}
+.detailButtons button span{color:#a7c9b9;font-size:16px}
+.detailPanels .analysisDetails{border-top:0;padding-top:0}
+.detailPanels>div[role="region"]:not([hidden]){margin-top:14px;padding:0 14px;border:1px solid #78908726;border-radius:8px;background:#0d171e}
+.sampleFootnote{font-size:10px;color:#8b9fa7;text-align:right}
+@media(max-width:600px){.detailButtons{gap:8px}.detailButtons button{font-size:12px}.scoreOverview[data-count="2"] .snapshotTable th:first-child{width:30%}}

@@ -12,7 +12,7 @@ import { CompanyScoreCard, ScoreOverview } from "./comparison-visuals";
 import TickerSearch from "./ticker-search";
 import { comparisonScores, overallComparison } from "@/lib/research/comparison-scorecard";
 import { comparisonChoices, enterChoice, moveChoice } from "@/lib/research/comparison-selection";
-import ScoreMethod from "./score-method";
+import DetailPanels from "./detail-panels";
 const percent = (n: number | null) => n === null ? "—" : `${n.toFixed(1)}%`;
 function money(f: Fact | null, lang: string) { return f ? `${new Intl.NumberFormat(lang === "ja" ? "ja-JP" : "en-US", { notation: "compact", maximumFractionDigits: 2 }).format(f.value)} ${f.unit}` : "—"; }
 export default function ComparisonScreen() {
@@ -156,18 +156,16 @@ export default function ComparisonScreen() {
         <button type="button" className={styles.backToCompare} onClick={()=>{setResult(null);requestAnimationFrame(()=>{picker.current?.scrollIntoView({block:"start",behavior:"instant"});picker.current?.focus({preventScroll:true});});}}>{t("▶ 銘柄比較PROに戻る", "▶ Back to Compare PRO")}</button>
         <section className={styles.conclusion} aria-label={t("結果", "Results")}><p className={styles.eyebrow}>{t("結果", "RESULTS")}</p><h2>{result.trial ? result.conclusion[lang] : overallComparison(result.companies,lang,Date.parse(result.generatedAt)).title}</h2><p>{result.trial ? result.trial.description[lang] : overallComparison(result.companies,lang,Date.parse(result.generatedAt)).description}</p>{result.reasons.length > 0 && <details><summary>{t("比較条件・注意点", "Comparison caveats")}</summary><ul>{result.reasons.map(r => <li key={r.en}>{r[lang]}</li>)}</ul></details>}<small>{result.trial && <>{t("保存データ · 自動更新なし", "Saved snapshot · not auto-updated")} · </>}{t("比較作成", "Compared at")}: {new Date(result.generatedAt).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo" })} JST</small></section>
         <div className={styles.companyCards}>{result.companies.map((c,i)=><CompanyScoreCard colorIndex={i} key={c.ticker} company={c} lang={lang} now={Date.parse(result.generatedAt)}/>)}</div><ScoreOverview companies={result.companies} lang={lang} now={Date.parse(result.generatedAt)}/>
-        {result.companies.some(c=>c.preparedAnalysis?.items.length) && <details className={styles.analysisDetails}>
-          <summary>{t("長所・短所の詳細", "Strengths and weaknesses in detail")}</summary>
+        <DetailPanels lang={lang} method={result.trial ? <div className={styles.scoreMethod}><p>{result.trial.notes[lang]}</p><p>{t("固定した実データを用いる検証です。自動更新・同業順位の採点ではありません。前受金や調整FCFの定義差は長所・短所の根拠に記載しています。", "This trial uses a fixed reviewed dataset, not an auto-updating feed or peer-percentile model. Prepayments and adjusted FCF differences are explained in the evidence.")}</p>{result.companies[0].referenceEvaluation?.factors.map(f=><p key={f.id}><strong>{comparisonScores(result.companies[0]).find(s=>s.id===f.id)?.label[lang]}</strong>：{f.method[lang]}</p>)}<div>{result.companies.map(c=><section key={c.ticker}><h3>{c.name}（{c.ticker}）</h3>{c.referenceEvaluation?.observations?.map(o=><p key={o.en}>{o[lang]}</p>)}</section>)}</div><ul>{result.companies[0].referenceEvaluation?.sources.map(source=><li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label}</a></li>)}</ul></div> : undefined}>
           {result.companies.filter(c=>c.preparedAnalysis?.items.length).map(c=><section key={c.ticker}>
             <h3>{c.name}（{c.ticker}）</h3>
             <small>{t("決算期末", "Period ended")} {c.preparedAnalysis!.periodEnd}</small>
             <ul>{c.preparedAnalysis!.items.map(item=><li key={item.id}><strong data-kind={item.kind}>{item.short[lang]}</strong><p>{item.detail[lang]}</p></li>)}</ul>
             <a href={c.preparedAnalysis!.sourceUrl} target="_blank" rel="noreferrer">{c.twelveData ? "Twelve Data" : t("決算資料", "Financial filing")}</a>
           </section>)}
-        </details>}
-        {result.trial && <details className={styles.scoreMethod}><summary>{t("評価基準・対象期間・出典", "Methodology, periods and sources")}</summary><p>{result.trial.notes[lang]}</p><p>{t("固定した実データを用いる検証です。自動更新・同業順位の採点ではありません。前受金や調整FCFの定義差は長所・短所の根拠に記載しています。", "This trial uses a fixed reviewed dataset, not an auto-updating feed or peer-percentile model. Prepayments and adjusted FCF differences are explained in the evidence.")}</p>{result.companies[0].referenceEvaluation?.factors.map(f=><p key={f.id}><strong>{comparisonScores(result.companies[0]).find(s=>s.id===f.id)?.label[lang]}</strong>：{f.method[lang]}</p>)}<div>{result.companies.map(c=><section key={c.ticker}><h3>{c.name}（{c.ticker}）</h3>{c.referenceEvaluation?.observations?.map(o=><p key={o.en}>{o[lang]}</p>)}</section>)}</div><ul>{result.companies[0].referenceEvaluation?.sources.map(source=><li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label}</a></li>)}</ul></details>}
+        </DetailPanels>
+
         {!result.trial && <>
-        <ScoreMethod lang={lang}/>
         <details className={styles.detailNumbers}><summary>{t("詳しい数値・出典を見る", "View detailed numbers and sources")}</summary><div className={styles.results}>
         <section className={styles.numbers}><h2>{t("直近の四半期を確認", "Recent quarterly performance")}</h2><p className={styles.note}>{t("取得した決算資料にある3か月実績です。各社の期間を明記します。未取得は — 。", "Standalone quarterly results from retrieved filings. Reporting periods are shown; — means unavailable.")}</p><div className={styles.table} style={{ "--companies": result.companies.length } as React.CSSProperties} role="table" aria-label={t("四半期比較", "Quarterly comparison")}><div role="row" className={styles.tableHead}><span role="columnheader">{t("項目", "Metric")}</span>{result.companies.map(c => <strong role="columnheader" key={c.ticker}>{c.ticker}</strong>)}</div>{([
           [t("対象期間", "Period"), c => c.quarterRevenue ? `${c.quarterRevenue.start ? `${c.quarterRevenue.start} — ` : ""}${c.quarterRevenue.end}` : "—"],
