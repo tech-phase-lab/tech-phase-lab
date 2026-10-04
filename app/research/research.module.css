@@ -1659,3 +1659,6 @@
 .directoryInfo{margin-top:14px;font-size:12px;color:#91a0aa;line-height:1.7}.directoryInfo summary{cursor:pointer;padding:7px 0}
 /* Pack unequal sector groups without leaving empty grid rows. */
 .companyGroups{display:block;column-count:3;column-gap:14px}.companyGroups section{display:inline-block;vertical-align:top;width:100%;box-sizing:border-box;margin:0 0 14px;break-inside:avoid}@media(max-width:1000px){.companyGroups{column-count:2}}@media(max-width:600px){.companyGroups{column-count:2;column-gap:9px}.companyGroups section{margin-bottom:9px}}
+
+/* Softer ticker lettering and denser watch tiles. */
+.companyGroups a{min-height:48px;padding:7px 10px;gap:2px}.companyGroups a strong{font-family:ui-rounded,"Arial Rounded MT Bold",var(--font-geist-sans),sans-serif;font-weight:650;font-size:15px;letter-spacing:.015em;line-height:1.25}.companyGroups a span{line-height:1.25}.companyGroups a>i{top:10px}@media(max-width:600px){.companyGroups a{min-height:45px;padding:6px 8px}.companyGroups a strong{font-size:14px}}
