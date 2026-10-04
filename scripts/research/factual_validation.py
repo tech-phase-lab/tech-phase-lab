@@ -7,6 +7,8 @@ from decimal import Decimal
 from collections import Counter
 from datetime import date
 
+from amount_relations import validate_amount_relations
+
 
 QUANTITY_PATTERN = re.compile(
     r'(?<![\d.,])(?P<before>[+＋\-−]?)\s*(?:[$€£¥]\s*)?'
@@ -385,6 +387,7 @@ def validate_comparison_baselines(text, evidence):
 
 
 def validate_semantics(text, evidence):
+    validate_amount_relations(text, evidence)
     validate_comparison_baselines(text, evidence)
     if re.search(r'idle GPU tax', evidence, re.I) and re.search(r'課税|税金|税負担', text):
         raise ValueError('invalid-copy')  # Resource overhead metaphor, not taxation.
@@ -402,6 +405,8 @@ def validate_semantics(text, evidence):
 
 
 def validate_pair(ja, en):
+    validate_amount_relations(ja, en)
+    validate_amount_relations(en, ja)
     validate_comparison_baselines(ja, en)
     validate_comparison_baselines(en, ja)
     validate_numbers(ja, en)

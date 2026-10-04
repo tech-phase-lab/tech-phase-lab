@@ -2151,10 +2151,15 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
             if cleaned:
                 try:
                     factual_validation.validate_numbers(cleaned, display_title)
+                    factual_validation.validate_amount_relations(cleaned, display_title)
                     factual_validation.validate_acquisition(cleaned, display_title, 'ja', require_status=True)
                     translation['translationJa'] = cleaned
                 except ValueError:
                     pass
+        from official_headline_corrections import reviewed_headline
+        corrected = reviewed_headline(row)
+        if corrected:
+            translation['translationJa'] = corrected
         compact = db.execute("""SELECT source_title,title_ja,title_en FROM signal_compact_headlines
           WHERE source_id=? AND url=? AND sha=?""", (row['source_id'], row['url'], row['sha'])).fetchone()
         if compact and compact['source_title'] == display_title and translation.get('translationJa'):
