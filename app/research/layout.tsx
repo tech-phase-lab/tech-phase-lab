@@ -13,5 +13,5 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = { appleWebApp: { capable: true, title: "Tech Phase" }, icons: { apple: "/tech-phase-192.png" } };
 
 export default function ResearchLayout({ children }: { children: ReactNode }) {
-  return <ResearchIdentityProvider enabled={membershipConfigured()}><MemberDisplayProvider><LaunchBrand />{children}<BackToTop /><BottomNav /></MemberDisplayProvider></ResearchIdentityProvider>;
+  return <><LaunchBrand /><ResearchIdentityProvider enabled={membershipConfigured()}><MemberDisplayProvider>{children}<BackToTop /><BottomNav /></MemberDisplayProvider></ResearchIdentityProvider></>;
 }

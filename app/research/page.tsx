@@ -1,7 +1,8 @@
 import { loadLiveHomeNews } from "@/lib/research/live-result-events";
 import type { Metadata } from "next";
 import { publicEvent } from "@/lib/research/access";
-import ResearchDashboard from "./research-dashboard";
+import { Suspense } from "react";
+import HomeDashboard, { LiveHomeUpdate } from "./home-dashboard";
 import { events } from "@/lib/research/content-server";
 import { evidenceIssues } from "@/lib/research/quality";
 import { buildCompanyProfiles } from "@/lib/research/companies";
@@ -15,13 +16,17 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function ResearchPage() {
+async function LiveHomeData() {
   const live = await loadLiveHomeNews();
-  const currentEvents = deduplicateResearchEvents([...live.events, ...events]);
+  const currentEvents = deduplicateResearchEvents(live.events);
   for (const event of currentEvents) {
     const issues = evidenceIssues({ ...event, metrics: [...event.metrics, ...(event.previous ?? [])] });
     if (issues.length) throw new Error(`Invalid research record ${event.id}: ${issues.join(", ")}`);
   }
+  return <LiveHomeUpdate events={currentEvents.map(publicEvent)} />;
+}
+
+export default function ResearchPage() {
   const verifiedTickers = new Set([
     ...buildCompanyProfiles(events).map((profile) => profile.ticker),
     ...verifiedChanges.map((item) => item.ticker),
@@ -32,9 +37,8 @@ export default async function ResearchPage() {
     sector: { ja: sectorNames[provider.sector], en: sectorNamesEn[provider.sector] },
     verified: verifiedTickers.has(provider.ticker),
   }));
-  return <ResearchDashboard
-    events={currentEvents.map(publicEvent).toSorted((a, b) => b.publishedOn.localeCompare(a.publishedOn) || a.id.localeCompare(b.id))}
-    initialNews={live.news}
+  return <HomeDashboard
+    events={events.map(publicEvent).toSorted((a, b) => b.publishedOn.localeCompare(a.publishedOn) || a.id.localeCompare(b.id))}
     monitoredCompanies={monitoredCompanies}
-  />;
+  ><Suspense fallback={null}><LiveHomeData /></Suspense></HomeDashboard>;
 }

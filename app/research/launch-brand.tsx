@@ -1,30 +1,15 @@
-"use client";
-import { useEffect, useRef } from "react";
+import { launchBoot } from "@/lib/research/launch-boot";
 import styles from "./launch-brand.module.css";
 
-/** Decorative only: never waits for APIs, blocks input, or replays on resume. */
+/** Server-rendered decoration: start before hydration, never replay on resume. */
 export default function LaunchBrand() {
-  const overlay = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const element = overlay.current;
-    const standalone = window.matchMedia("(display-mode: standalone)").matches
-      || (navigator as Navigator & { standalone?: boolean }).standalone === true;
-    if (!element || !standalone || document.visibilityState !== "visible") return;
-    const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
-    if (navigation?.type === "reload" || navigation?.type === "back_forward") return;
-    try {
-      if (sessionStorage.getItem("tech-phase:launch-seen")) return;
-      sessionStorage.setItem("tech-phase:launch-seen", "1");
-    } catch { return; }
-    element.hidden = false;
-    const dismiss = () => { element.hidden = true; };
-    const hidden = () => { if (document.visibilityState !== "visible") dismiss(); };
-    const timer = window.setTimeout(dismiss, 1200);
-    document.addEventListener("visibilitychange", hidden);
-    window.addEventListener("pagehide", dismiss);
-    return () => { dismiss(); window.clearTimeout(timer); document.removeEventListener("visibilitychange", hidden); window.removeEventListener("pagehide", dismiss); };
-  }, []);
-  return <div ref={overlay} hidden aria-hidden="true" className={styles.launch}>
-    <div className={styles.wordmark}><strong>Tech Phase</strong><span>Research</span></div>
-  </div>;
+  return <>
+    <div id="tech-phase-launch" aria-hidden="true" suppressHydrationWarning className={styles.launch}>
+      <div className={styles.wordmark}>
+        <svg className={styles.mark} viewBox="0 0 104 104" fill="currentColor"><path d="M2 32 72 2v28L2 60Z"/><path d="m27 56 19-8v50l-19-9Z"/><path d="m72 30 30 17v34l-49 21V65l19-9Z"/></svg>
+        <strong>TECH PHASE</strong><span>RESEARCH</span><i />
+      </div>
+    </div>
+    <script dangerouslySetInnerHTML={{ __html: launchBoot }} />
+  </>;
 }
