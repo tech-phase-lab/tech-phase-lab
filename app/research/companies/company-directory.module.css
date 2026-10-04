@@ -1,0 +1,8 @@
+.tiles{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.tiles a{flex:1 1 145px;min-width:0;display:grid;gap:5px;padding:14px 16px;border:1px solid #95856840;border-radius:11px;background:linear-gradient(135deg,#1b1d1e,#10161d);text-decoration:none}
+.tiles strong{display:flex;justify-content:space-between;align-items:center;font-family:ui-rounded,"Arial Rounded MT Bold",var(--font-geist-sans),sans-serif;font-size:18px;font-weight:650;letter-spacing:.015em;line-height:1.25;color:#e7ebe8}
+.tiles span{font-size:12px;color:#a3adb4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.4}
+.tiles small{font-size:10px;color:#c1af8f;line-height:1.4}
+.tiles i{width:5px;height:5px;flex:none;border-radius:50%;background:#68737d}.tiles i.verified{background:#91dfbe;box-shadow:0 0 7px #91dfbe88}
+.tiles a:hover{border-color:#c3ac786e;background:#202623}.tiles a:focus-visible{outline:2px solid #d9bd7c;outline-offset:3px}
+@media(max-width:600px){.tiles{gap:8px;margin-top:16px}.tiles a{flex-basis:calc(50% - 4px);box-sizing:border-box;padding:11px 13px}.tiles strong{font-size:17px}.tiles span{font-size:11px}}

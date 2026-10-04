@@ -2,6 +2,7 @@
 
 import { useMemberArticle } from "./use-member-article";
 import NavigationIcon from "./navigation-icon";
+import CompanyDirectory from "./companies/company-directory";
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
@@ -106,19 +107,6 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
     }
     return [...companies.values()].toSorted((a, b) => b.count - a.count || a.symbol.localeCompare(b.symbol));
   }, [events]);
-  const companyGroups = useMemo(() => {
-    const groups = new Map<string, MonitoredCompany[]>();
-    const semiconductorGroups: Record<string, { ja: string; en: string }> = {
-        MU: { ja: "メモリ", en: "Memory" }, SKHY: { ja: "メモリ", en: "Memory" }, SNDK: { ja: "メモリ", en: "Memory" },
-        NVDA: { ja: "半導体設計", en: "Chip design" }, AMD: { ja: "半導体設計", en: "Chip design" }, AVGO: { ja: "半導体設計", en: "Chip design" }, ARM: { ja: "半導体設計", en: "Chip design" },
-        TSM: { ja: "製造・装置", en: "Foundry & equipment" }, ASML: { ja: "製造・装置", en: "Foundry & equipment" },
-      };
-    for (const company of monitoredCompanies) {
-      const key = (semiconductorGroups[company.ticker] ?? company.sector)[lang];
-      groups.set(key, [...(groups.get(key) ?? []), company]);
-    }
-    return [...groups.entries()];
-  }, [lang, monitoredCompanies]);
   const kinds = { acquisition: t("買収", "Acquisition"), partnership: t("提携", "Partnership"), earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding"), product: t("製品・料金", "Product & pricing"), "external-research": t("外部調査・評価", "External research") };
   function toggleSaved(id: string) {
     try {
@@ -205,22 +193,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           <HomeHelp lang={lang} />
         </>}
 
-        {tab === "companies" && <section id="monitored-companies" className={styles.companyDirectory} aria-labelledby="monitored-companies-title">
-          <div className={styles.directoryHead}>
-            <div><p className={styles.eyebrow}>OFFICIAL SOURCE WATCH</p><h1 id="monitored-companies-title">{t(`監視${monitoredCompanies.length}銘柄リスト`, `${monitoredCompanies.length} research companies`)}</h1></div>
-            <div className={styles.directoryLegend}><span><i className={styles.verifiedDot} aria-hidden="true" />{t("数値比較を公開済み", "Verified comparison")}</span><span><i aria-hidden="true" />{t("取得状況を公開", "Intake status")}</span></div>
-          </div>
-          <p className={styles.directoryNote}>{t("銘柄を選んで、企業の変化・決算・確認点へ。", "Select a company for developments, earnings and checkpoints.")}</p>
-          <div className={styles.companyGroups}>
-            {companyGroups.map(([sector, companies]) => <section key={sector} aria-label={sector}>
-              <h3>{sector}<span>{companies.length}</span></h3>
-              <div>{companies.map((company) => <Link key={company.ticker} href={`/research/companies/${company.ticker}`} aria-label={t(`${company.ticker} ${company.name}の銘柄ページ — ${company.verified ? "数値比較を公開済み" : "取得状況を公開"}`, `${company.ticker} ${company.name} company page — ${company.verified ? "Verified comparison" : "Intake status"}`)}>
-                <i className={company.verified ? styles.verifiedDot : undefined} aria-hidden="true" /><strong>{company.ticker}</strong><span>{company.name}</span><b aria-hidden="true">→</b>
-              </Link>)}</div>
-            </section>)}
-          </div>
-          <details className={styles.directoryInfo}><summary>{t("掲載状況について", "About coverage")}</summary><p>{t("緑の印は数値を照合したリサーチがある銘柄です。速報配信や全資料の分析完了を示すものではありません。", "Green marks indicate source-checked research, not live delivery or complete analysis of every release.")}</p></details>
-        </section>}
+        {tab === "companies" && <CompanyDirectory companies={monitoredCompanies} lang={lang} />}
 
         {tab === "pro" && <section id="tech-phase-pro" className={`${styles.accessMatrix} ${styles.proPlans}`} aria-labelledby="research-page-title">
           <div className={styles.planStack}>

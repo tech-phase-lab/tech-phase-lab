@@ -254,7 +254,7 @@ test("annual-filing Japanese briefs preserve multiple separately cited risks", (
 });
 
 test("stock search UI separates free identity data from licensed prices and news", async () => {
-  const [page, market, marketStyles, widget, styles, polish, chartStyles, chartPolish, route, editorRoute, dashboard, review, researchStyles, home, lab] = await Promise.all([
+  const [page, market, marketStyles, widget, styles, polish, chartStyles, chartPolish, route, editorRoute, dashboard, review, researchStyles, home, lab, directory] = await Promise.all([
     readFile(new URL("../app/research/stocks/stock-directory.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/market-workspace.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/market-workspace.module.css", import.meta.url), "utf8"),
@@ -270,6 +270,7 @@ test("stock search UI separates free identity data from licensed prices and news
     readFile(new URL("../app/research/research.module.css", import.meta.url), "utf8"),
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/lab/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/research/companies/company-directory.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(home, /redirect\("\/research"\)/);
   assert.doesNotMatch(home, /LIVE INTELLIGENCE/);
@@ -377,10 +378,11 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(dashboard, /この一覧の銘柄/);
   assert.match(dashboard, /この下の検証レポートを絞り込みます/);
   assert.match(dashboard, /coveredCompanies/);
-  assert.match(dashboard, /監視\$\{monitoredCompanies\.length\}銘柄リスト/);
-  assert.match(dashboard, /数値比較を公開済み/);
-  assert.match(dashboard, /速報配信や全資料の分析完了を示すものではありません/);
-  assert.match(dashboard, /\/research\/companies\/\$\{company\.ticker\}/);
+  assert.match(dashboard, /<CompanyDirectory companies=\{monitoredCompanies\}/);
+  assert.match(directory, /監視\$\{companies\.length\}銘柄リスト/);
+  assert.match(directory, /数値比較を公開済み/);
+  assert.match(directory, /速報配信や全資料の分析完了を示すものではありません/);
+  assert.match(directory, /\/research\/companies\/\$\{company\.ticker\}/);
   assert.match(researchStyles, /\.companyGroups \{/);
   assert.match(researchStyles, /@media\(max-width:760px\)[\s\S]*\.companyGroups \{\s*column-count:1/);
   assert.match(researchStyles, /\.primaryNav \{\s*display:none/);
