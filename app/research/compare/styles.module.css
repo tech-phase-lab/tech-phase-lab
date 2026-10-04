@@ -106,7 +106,7 @@
 .results .snapshotTable th,.results .snapshotTable td{border-color:#a8946c24}
 .results .snapshotTable thead [data-company]{color:#e4e9e7}
 .results .scoreTrack{background:#302e2a}
-.results .snapshotValue i[data-company]{background:#b5a58a}
+.results .snapshotValue i[data-company]{background:#948976}
 .results .snapshotTable td[data-winner="true"] .scoreTrack i{background:#edc66f;box-shadow:0 0 9px #edc66f44}
 .results .snapshotTable td[data-winner="true"] strong{color:#f4d58f;text-shadow:0 0 12px #e9bf6266}
 .results .detailPanels{border-color:#a8946c30}
