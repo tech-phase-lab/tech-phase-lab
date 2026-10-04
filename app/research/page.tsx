@@ -8,7 +8,7 @@ import { events } from "@/lib/research/content-server";
 import { evidenceIssues } from "@/lib/research/quality";
 import { buildCompanyProfiles } from "@/lib/research/companies";
 import { providers, sectorNames, sectorNamesEn } from "@/lib/research/intake";
-import { verifiedChanges } from "@/lib/research/verified-changes";
+import { companyWatches } from "@/lib/research/company-watch";
 import { deduplicateResearchEvents } from "@/lib/research/deduplicate-events";
 
 export const metadata: Metadata = {
@@ -30,7 +30,7 @@ async function LiveHomeData() {
 export default function ResearchPage() {
   const verifiedTickers = new Set([
     ...buildCompanyProfiles(events).map((profile) => profile.ticker),
-    ...verifiedChanges.map((item) => item.ticker),
+    ...companyWatches.map((item) => item.ticker),
   ]);
   const monitoredCompanies = providers.map((provider) => ({
     ticker: provider.ticker,

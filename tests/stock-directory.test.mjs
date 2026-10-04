@@ -380,7 +380,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(dashboard, /coveredCompanies/);
   assert.match(dashboard, /<CompanyDirectory companies=\{monitoredCompanies\}/);
   assert.match(directory, /監視\$\{companies\.length\}銘柄リスト/);
-  assert.match(directory, /数値比較を公開済み/);
+  assert.match(directory, /決算リサーチを公開済み/);
   assert.match(directory, /速報配信や全資料の分析完了を示すものではありません/);
   assert.match(directory, /\/research\/companies\/\$\{company\.ticker\}/);
   assert.match(researchStyles, /\.companyGroups \{/);
