@@ -2057,6 +2057,10 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
     if sources is SOURCES:
         if not read_only:
             official_release_bridge.sync(db, current)
+            # Even an ignored bridge INSERT takes the SQLite writer slot.
+            # Finish only this synchronization before the read-only projection;
+            # schema() above has already closed any incoming transaction.
+            db.commit()
         sources = [*sources, *official_release_bridge.publishers()]
     allowed = {s['id']: s for s in sources if s.get('officialUpdates') is True
                and s.get('kind') == 'publisher-update' and s.get('allowedHosts')
