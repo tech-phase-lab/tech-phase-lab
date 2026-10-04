@@ -205,7 +205,7 @@ def publish(db, rows, reference, validator, current_revision):
 
 
 RETAINED_COPY_PATH = Path(__file__).with_name('reviewed_retained_announcements.json')
-RETAINED_COPY_SHA = '505b65e2440789b48bdccbbe64d1809948c05b47ff21aae5a436a203d0e63d82'
+RETAINED_COPY_SHA = 'd585efc56b0d40ab82d90326d9d8bd9fbc4fc73f19436c0ce9bcbb2e1672041e'
 
 
 def retained_candidate(db, pin, reference):
@@ -285,7 +285,8 @@ def replaceable_retained_publication(db, previous, row, pin, validator):
     reason = 'source-event-identity-mismatch'
     if replacement:
         reason = replacement['reason']
-        if (reason != 'changed-rollout-status' or previous['body_sha'] != pin['bodyTextSha']
+        if (reason not in {'changed-rollout-status', 'reviewed-evidence-precision'}
+                or previous['body_sha'] != pin['bodyTextSha']
                 or digest(previous['payload']) != replacement['payloadSha']
                 or any(previous[column] != replacement[key] for key, column in (
                     ('bodySha', 'body_sha'), ('startedAt', 'started_at'),
@@ -300,12 +301,16 @@ def replaceable_retained_publication(db, previous, row, pin, validator):
         validator({key: note[key] for key in ('title', 'summary', 'facts', 'purpose')},
                   row['body'], row['title'])
     except ValueError as exc:
-        if str(exc) != reason:
+        if reason == 'reviewed-evidence-precision' or str(exc) != reason:
             return None
     except (TypeError, KeyError):
         return None
     else:
-        return None
+        # A source-reviewed precision correction can replace a generically
+        # valid copy only when the manifest explicitly pins that exact payload,
+        # body, publication clocks and completed model attempt above and below.
+        if reason != 'reviewed-evidence-precision':
+            return None
     started = repair.instant(previous['started_at'])
     job, calls = retained_call_history(db, row)
     matching = [call for call in calls if started and call['state'] == 'done'

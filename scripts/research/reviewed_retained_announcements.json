@@ -145,6 +145,77 @@
           ]
         }
       }
+    },
+    {
+      "eventId": 1238,
+      "sourceId": "primary-ir-GOOGL",
+      "ticker": "GOOGL",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/synthid-bio/",
+      "title": "We’re introducing SynthID Bio, bringing our watermarking technology to synthetic biology.",
+      "publishedOn": "2026-09-30",
+      "observedAt": "2026-10-03T14:03:59.990+00:00",
+      "eventSha": "de1dae9aecfef671d28c17f028909b563c551a8a36ba19d9fe35474ef3a726af",
+      "sourceRevision": "8cfa17c6d323833cf9944d6bf4fe086e252a0f5a75662bdf3bec03eefd382449",
+      "bodyTextSha": "a5815377202b2e2d2a2703854798e41c02f51c551892f27f18f3e0a47edf307a",
+      "bodyChars": 1182,
+      "extractorVersion": "2026-10-04-article-document-v5",
+      "replacement": {
+        "reason": "reviewed-evidence-precision",
+        "payloadSha": "eab0b09040f65eb5d861dff416bab38086a7b039c3e43fb0829af2b88fcc9069",
+        "bodySha": "a5815377202b2e2d2a2703854798e41c02f51c551892f27f18f3e0a47edf307a",
+        "startedAt": "2026-10-04T02:10:03.279411+00:00",
+        "publicAt": "2026-10-04T02:10:12.145+00:00",
+        "generationMs": 3945,
+        "jobAttempts": 1
+      },
+      "copy": {
+        "title": {
+          "ja": "合成生物学に透かし技術を導入するSynthID Bioを発表",
+          "en": "Introducing SynthID Bio, Bringing Watermarking Technology to Synthetic Biology",
+          "anchors": [
+            "We’re introducing SynthID Bio,"
+          ]
+        },
+        "summary": {
+          "ja": "Googleは、生物機能を保ちながらAI設計のタンパク質に透かしを埋め込み、バイオセキュリティの強化を目指すSynthID Bioを発表した。",
+          "en": "Google introduced SynthID Bio to watermark AI-designed proteins while preserving biological function, with the aim of strengthening biosecurity.",
+          "anchors": [
+            "Today, we’re introducing SynthID Bio,",
+            "In laboratory tests across target proteins,"
+          ]
+        },
+        "purpose": {
+          "ja": "SynthID Bioは、生物設計に透かしを埋め込み、オープンサイエンスデータベースの整合性を保ちつつバイオセキュリティを強化することを目的としている。",
+          "en": "SynthID Bio aims to embed watermarks into biological designs to strengthen biosecurity and preserve the integrity of open scientific databases.",
+          "anchors": [
+            "SynthID Bio embeds an imperceptible,",
+            "In laboratory tests across target proteins,"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "SynthID BioはAI生成のタンパク質配列や予測3D構造に目立たない透かしを直接埋め込む技術である。",
+            "en": "SynthID Bio is a technology that embeds an imperceptible, verifiable watermark directly into AI-generated protein sequences and predicted 3D structures.",
+            "anchors": [
+              "SynthID Bio embeds an imperceptible,"
+            ]
+          },
+          {
+            "ja": "実験室試験で、透かし入りのタンパク質設計は非透かし入りのタンパク質と同等の性能と自然多様性を示した。",
+            "en": "In laboratory tests across target proteins, watermarked designs matched the performance and natural diversity of unwatermarked versions.",
+            "anchors": [
+              "In laboratory tests across target proteins,"
+            ]
+          },
+          {
+            "ja": "透かし入りと透かしなしのタンパク質設計について、3つのターゲットで結合親和性をKDで比較した。",
+            "en": "Binding affinity, measured as KD, was compared between watermarked and unwatermarked protein designs across three targets.",
+            "anchors": [
+              "Binding affinity, measured as KD,"
+            ]
+          }
+        ]
+      }
     }
   ]
 }

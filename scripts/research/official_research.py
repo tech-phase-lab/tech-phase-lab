@@ -36,7 +36,7 @@ from validation_success import ValidationSuccess
 MAX_EVIDENCE_CHARS = 1800
 # Guard or constant changes require a version bump and process restart. Nothing
 # is persisted; callable identities also invalidate reuse during test/reload.
-VALIDATION_REUSE_VERSION = 2
+VALIDATION_REUSE_VERSION = 3
 _validation_success = ValidationSuccess()
 NO_AUTOMATIC_REGENERATION=frozenset({'unsupported-comparison-baseline', 'source-event-identity-mismatch', rollout_validation.FAILURE})
 

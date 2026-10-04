@@ -160,6 +160,18 @@ def numeric_values(text):
     """Canonical exact magnitudes, preserving signs and percent dimensions."""
     text = duration_ranges(text)
     values = []
+    def target_count(match):
+        if re.search(r'[$€£¥]\s*$', text[:match.start()]):
+            return match[0]  # A monetary value is not an experimental target count.
+        token = match['en'] or match['ja']
+        value = Decimal(SMALL_NUMBERS[token.lower()]) if token.lower() in SMALL_NUMBERS else Decimal(token.replace('−', '-').replace(',', ''))
+        values.append((value, 'target-count'))
+        return ' ' * len(match[0])
+    # An explicit experimental target count has its own basis. It cannot
+    # license a date, amount, model number, or a different object count.
+    text = re.sub(r'(?<![\w.,\-\u2010-\u2015\u2212])(?P<en>[+\-−]?\d+(?:,\d{3})*|' + '|'.join(SMALL_NUMBERS) +
+                  r')\s+(?:protein\s+)?targets?\b|(?<![\d.,])(?P<ja>[+\-−]?\d+(?:,\d{3})*)(?:つの|個の|の)(?:タンパク質)?ターゲット',
+                  target_count, text, flags=re.I)
     def per_mw(match):
         denominator = match['en'] or match['ja'] or '1'
         value = Decimal(1) if denominator.lower() == 'one' else Decimal(denominator.replace('−', '-'))
