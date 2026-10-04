@@ -937,7 +937,40 @@ def save(db, source, items, response, checked, config_sha, duration, *, category
     return inserted
 
 
-def check(db, source, tickers, transport=None):
+def category_request_context(db, source, tickers):
+    """Capture a service category attempt before its unlocked HTTP request.
+
+    Ordinary feeds and X keep their existing acquisition/reservation path. The
+    service owns this context, never the HTTP response or publisher metadata.
+    """
+    import feed_category_admission
+    if source.get('format') != 'feed' or not feed_category_admission.required(source):
+        return None
+    schema(db)
+    request_source, request_tickers = deepcopy(source), tuple(tickers)
+    validators = feed_category_admission.conditional_validators(db, request_source, request_tickers,
+        validators_for(db, request_source, request_tickers))
+    request = feed_category_admission.capture_request(db, request_source, request_tickers, validators)
+    return {'source': request_source, 'tickers': request_tickers,
+            'config_sha': fingerprint(request_source, request_tickers),
+            'configured_request': any(configured is source for configured in SOURCES),
+            'validators': validators, 'request': request,
+            'attempted_at': datetime.now(timezone.utc).isoformat(timespec='milliseconds'),
+            'started': time.monotonic()}
+
+
+def prepare_category_response(attempt, response):
+    """Parse the retained raw response outside the service's shared DB lock."""
+    import feed_category_admission
+    checked = stamp()
+    source = attempt['source']
+    prepared = None if response.get('not_modified') else feed_category_admission.prepare(
+        source, response['body'], attempt['tickers'], attempt['request']['head'], checked,
+        effective_url=response.get('_effective_url', source['url']))
+    return {'checked_at': checked, 'prepared': prepared}
+
+
+def check(db, source, tickers, transport=None, *, category_attempt=None, category_completion=None):
     schema(db)
     row = db.execute("SELECT * FROM signal_routes WHERE id=?", (source["id"],)).fetchone()
     attempted_at = datetime.now(timezone.utc).isoformat(timespec="milliseconds")
@@ -951,16 +984,32 @@ def check(db, source, tickers, transport=None):
     category_required = (source.get('format') == 'feed' and feed_category_admission.required(source))
     started = time.monotonic()
     category_request = None
+    if category_attempt is not None:
+        # The automatic service already acquired this exact request outside its
+        # writer lock. Never replace its original route/head with post-fetch state.
+        request_source = category_attempt['source']
+        config_sha = category_attempt['config_sha']
+        configured_request = category_attempt['configured_request']
+        category_request = category_attempt['request']
+        row = category_request['route']
+        attempted_at, started = category_attempt['attempted_at'], category_attempt['started']
+        category_required = True
     try:
-        prepare_x_query_window(db, source)
-        require_x_polling_storage(db, source)
-        validators = validators_for(db, request_source, tickers)
-        category_request = None
-        if category_required:
-            validators = feed_category_admission.conditional_validators(db, request_source, tickers, validators)
-            category_request = feed_category_admission.capture_request(db, request_source, tickers, validators)
+        if category_attempt is not None:
+            if tuple(tickers) != category_attempt['tickers']:
+                raise ValueError('source-identity-changed')
+            tickers = category_attempt['tickers']
+            _category_source_current(source, config_sha, tickers, configured_request)
+            validators = category_attempt['validators']
+        else:
+            prepare_x_query_window(db, source)
+            require_x_polling_storage(db, source)
+            validators = validators_for(db, request_source, tickers)
+            if category_required:
+                validators = feed_category_admission.conditional_validators(db, request_source, tickers, validators)
+                category_request = feed_category_admission.capture_request(db, request_source, tickers, validators)
         response = transport(request_source, validators) if transport else acquire(request_source, validators, tickers)
-        checked = stamp()
+        checked = category_completion['checked_at'] if category_completion is not None else stamp()
         if category_required:
             _category_source_current(source, config_sha, tickers, configured_request)
         if response.get("not_modified"):
@@ -986,9 +1035,10 @@ def check(db, source, tickers, transport=None):
             return {"source": source["id"], "status": "unchanged", "events": 0}
         category = None
         if category_required:
-            prepared = feed_category_admission.prepare(request_source, response['body'], tickers,
-                                                       category_request['head'], checked,
-                                                       effective_url=response.get('_effective_url', request_source['url']))
+            prepared = (category_completion['prepared'] if category_completion is not None else
+                        feed_category_admission.prepare(request_source, response['body'], tickers,
+                            category_request['head'], checked,
+                            effective_url=response.get('_effective_url', request_source['url'])))
             items = prepared['items']
             category = {'request': category_request, 'prepared': prepared,
                         'live_source': source, 'configured_request': configured_request}

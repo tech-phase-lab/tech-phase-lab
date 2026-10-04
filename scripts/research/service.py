@@ -1037,12 +1037,15 @@ class AutomaticMonitor:
             return
         # Network I/O and article parsing must not hold the shared database lock.
         reservation_error = None
+        category_attempt, category_completion = None, None
         with self.db_lock, monitor.connect(self.db_path) as db:
             validators = {}
             try:
                 signals.prepare_x_query_window(db, source)
                 signals.require_x_polling_storage(db, source)
-                validators = signals.validators_for(db, source, self.tickers)
+                category_attempt = signals.category_request_context(db, source, self.tickers)
+                validators = (category_attempt['validators'] if category_attempt is not None else
+                              signals.validators_for(db, source, self.tickers))
                 signals.reserve_x_api_request(db, source, eligible_source_ids=x_due_ids)
             except Exception as exc:
                 reservation_error = exc
@@ -1050,8 +1053,13 @@ class AutomaticMonitor:
         try:
             if reservation_error:
                 raise reservation_error
-            response = signals.acquire(source, validators, self.tickers)
-            if not response.get("not_modified") and "_items" not in response:
+            response = signals.acquire(category_attempt['source'] if category_attempt is not None else source,
+                                       validators, category_attempt['tickers'] if category_attempt is not None else self.tickers)
+            if category_attempt is not None:
+                # Taxonomy proof needs the actual raw representation. Parse it
+                # here, then consume the prefetch guard under the save lock.
+                category_completion = signals.prepare_category_response(category_attempt, response)
+            elif not response.get("not_modified") and "_items" not in response:
                 response["_items"] = signals.parse(source, response.pop("body"), self.tickers)
             failure = None
         except Exception as exc:
@@ -1061,7 +1069,9 @@ class AutomaticMonitor:
                 raise failure
             return response
         with self.db_lock, monitor.connect(self.db_path) as db:
-            result = signals.check(db, source, self.tickers, transport=cached_transport)
+            context = ({'category_attempt': category_attempt, 'category_completion': category_completion}
+                       if category_attempt is not None else {})
+            result = signals.check(db, source, self.tickers, transport=cached_transport, **context)
             if result["status"] != "deferred":
                 db.execute("UPDATE signal_routes SET last_duration_ms=? WHERE id=?",
                            (round((time.monotonic() - started) * 1000), source["id"]))
