@@ -59,6 +59,92 @@
           ]
         }
       }
+    },
+    {
+      "eventId": 1233,
+      "sourceId": "primary-ir-GOOGL",
+      "ticker": "GOOGL",
+      "url": "https://blog.google/products-and-platforms/products/gemini/automate-tasks-with-skills/",
+      "title": "Let skills in Gemini tackle your most repetitive tasks",
+      "publishedOn": "2026-09-30",
+      "observedAt": "2026-10-03T14:03:59.990+00:00",
+      "eventSha": "27ccb1e4791eb39128975a279eeb408b2e55d2a8ccf4792703ee498484bda71e",
+      "sourceRevision": "3fe66e944fa15db475bbf0eb30901a423dbec78d84e03e514cfc953ec746ab56",
+      "bodyTextSha": "b9a948794ff133f12b8cb798afab2e29c036b5139e1afe72915a35fe59e103ae",
+      "bodyChars": 3016,
+      "extractorVersion": "2026-10-04-article-document-v5",
+      "replacement": {
+        "reason": "changed-rollout-status",
+        "payloadSha": "ec3e7220c5c351fb4869f1b99a715d936ffc6a0e98a5954644c75c8d59b5d35b",
+        "bodySha": "b9a948794ff133f12b8cb798afab2e29c036b5139e1afe72915a35fe59e103ae",
+        "startedAt": "2026-10-04T02:10:22.945377+00:00",
+        "publicAt": "2026-10-04T02:10:32.951+00:00",
+        "generationMs": 6203,
+        "jobAttempts": 1
+      },
+      "copy": {
+        "title": {
+          "ja": "Google、Geminiチャットでスキルの世界展開を開始",
+          "en": "Google begins global rollout of skills in Gemini chat",
+          "anchors": [
+            "Today, we’re rolling out skills"
+          ]
+        },
+        "summary": {
+          "ja": "Googleは9月30日、指示を保存して再利用できるスキルのGeminiチャットへの世界展開を開始した。Workspaceのビジネス・エンタープライズ・非営利・教育向けには今後数週間で提供する。Gemini Sparkではすでに利用できる。",
+          "en": "Google began rolling out reusable skills globally in Gemini chat on Sept. 30. Workspace business, enterprise, nonprofit and education customers will receive them in the coming weeks. Skills are already available in Gemini Spark.",
+          "anchors": [
+            "Sep 30, 2026",
+            "customers in the coming weeks."
+          ]
+        },
+        "facts": [
+          {
+            "ja": "提供対象はGoogle AIの全サブスクリプション階層で、現時点では18歳以上。18歳未満への提供は近日中を予定する。",
+            "en": "Skills are available across all Google AI subscription tiers, currently for users aged 18 and over. Access for users younger than 18 is coming soon.",
+            "anchors": [
+              "Available to all Google AI subscription tiers"
+            ]
+          },
+          {
+            "ja": "プロンプトバーに「/」とスキル名を入力して呼び出せる。チャットからの作成、対応するプロンプトでの自動実行、複数スキルの併用が可能で、テキスト文書・PDF・画像も参照ファイルにできる。",
+            "en": "Invoke a skill with / and its name in the prompt bar. Gemini can help create skills from chats, run them for matching prompts and combine multiple skills. Reference files can include text documents, PDFs and images.",
+            "anchors": [
+              "Once you create a skill",
+              "you can create skills that include reference files"
+            ]
+          },
+          {
+            "ja": "今後数週間で、スキルの共有、Google Driveのファイル追加、Gemini Notebookのノートブック追加に対応する。",
+            "en": "Sharing skills and adding Google Drive files and Gemini Notebook notebooks are planned for the coming weeks.",
+            "anchors": [
+              "skills will have the features you loved in Gems"
+            ]
+          },
+          {
+            "ja": "Gemsのサポート終了は、個人アカウントが11月、Workspaceのビジネス・エンタープライズ・非営利向けが2027年3月、教育向けが2027年6月から始まる。",
+            "en": "Google will begin removing Gems support in November for personal accounts, March 2027 for Workspace business, enterprise and nonprofit customers, and June 2027 for Workspace education customers.",
+            "anchors": [
+              "skills will have the features you loved in Gems"
+            ]
+          },
+          {
+            "ja": "Gemsの終了時にはスキルへ自動移行する。ただしGems by Google Labsは終了しても移行されない。ミニアプリ作成の実験サービスOpalも11月に終了する。",
+            "en": "Gems will migrate automatically to skills when retired. Gems by Google Labs will shut down without migrating. Opal, Google’s experiment for building mini apps, will also shut down in November.",
+            "anchors": [
+              "As part of this change, Opal",
+              "these will not migrate into skills."
+            ]
+          }
+        ],
+        "purpose": {
+          "ja": "繰り返し使う指示をスキルとして保存し、同じプロンプトを何度も入力する手間を減らす。",
+          "en": "Skills save frequently used instructions so users can repeat tasks without retyping the same prompts.",
+          "anchors": [
+            "With skills, you can save your most-used instructions"
+          ]
+        }
+      }
     }
   ]
 }

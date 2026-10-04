@@ -205,7 +205,7 @@ def publish(db, rows, reference, validator, current_revision):
 
 
 RETAINED_COPY_PATH = Path(__file__).with_name('reviewed_retained_announcements.json')
-RETAINED_COPY_SHA = '3ce2b505390d880a82cf2249f8b97b47744f620e9d52959635adeffb55b66514'
+RETAINED_COPY_SHA = '505b65e2440789b48bdccbbe64d1809948c05b47ff21aae5a436a203d0e63d82'
 
 
 def retained_candidate(db, pin, reference):
@@ -223,6 +223,9 @@ def retained_candidate(db, pin, reference):
             or row['published_on'] != pin['publishedOn'] or row['source_date'] != pin['publishedOn']
             or repair.instant(row['observed_at']) != repair.instant(pin['observedAt'])
             or row['error'] or row['status'] in {'held', 'rejected'}):
+        return None
+    if any(key in pin and row[column] != pin[key] for key, column in (
+            ('eventId', 'id'), ('eventSha', 'sha'), ('sourceRevision', 'source_revision'))):
         return None
     # XML here may be a legitimate inline RSS description. Preserve that
     # source revision; a separately acquired article needs its own proof.
@@ -275,8 +278,20 @@ def retained_call_history(db, row):
 
 
 def replaceable_retained_publication(db, previous, row, pin, validator):
-    """Correct only cross-event model copy with an unambiguous retained call."""
-    if previous['sha'] != row['sha'] or previous['body_sha'] == pin['bodyTextSha']:
+    """Require the reviewed failure and an unambiguous original model call."""
+    if previous['sha'] != row['sha']:
+        return None
+    replacement = pin.get('replacement')
+    reason = 'source-event-identity-mismatch'
+    if replacement:
+        reason = replacement['reason']
+        if (reason != 'changed-rollout-status' or previous['body_sha'] != pin['bodyTextSha']
+                or digest(previous['payload']) != replacement['payloadSha']
+                or any(previous[column] != replacement[key] for key, column in (
+                    ('bodySha', 'body_sha'), ('startedAt', 'started_at'),
+                    ('publicAt', 'public_at'), ('generationMs', 'generation_ms')))):
+            return None
+    elif previous['body_sha'] == pin['bodyTextSha']:
         return None
     try:
         note = json.loads(previous['payload'])
@@ -285,7 +300,7 @@ def replaceable_retained_publication(db, previous, row, pin, validator):
         validator({key: note[key] for key in ('title', 'summary', 'facts', 'purpose')},
                   row['body'], row['title'])
     except ValueError as exc:
-        if str(exc) != 'source-event-identity-mismatch':
+        if str(exc) != reason:
             return None
     except (TypeError, KeyError):
         return None
@@ -296,10 +311,11 @@ def replaceable_retained_publication(db, previous, row, pin, validator):
     matching = [call for call in calls if started and call['state'] == 'done'
                 and abs(call['at']-started.timestamp()) < 0.001]
     if (len(matching) != 1 or not job or job['sha'] != row['sha']
-            or job['state'] != 'done' or job['lease'] != matching[0]['lease']):
+            or job['state'] != 'done' or job['lease'] != matching[0]['lease']
+            or (replacement and job['attempts'] != replacement['jobAttempts'])):
         return None
     return {'publication': dict(previous), 'job': job, 'calls': calls,
-            'callLease': matching[0]['lease']}
+            'callLease': matching[0]['lease'], 'reason': reason}
 
 
 def publish_retained(db, reference, validator):
@@ -333,6 +349,8 @@ def publish_retained(db, reference, validator):
         if row is None or consumed(pin):
             continue
         previous = record(db.execute('SELECT * FROM official_research_publications WHERE event_id=?', (row['id'],)).fetchone())
+        if pin.get('replacement') and previous is None:
+            continue  # This reviewed correction cannot recreate a withdrawn copy.
         archive = None
         if previous:
             archive = replaceable_retained_publication(db, previous, row, pin, validator)
@@ -373,7 +391,7 @@ def publish_retained(db, reference, validator):
                 db.execute('''INSERT INTO reviewed_retained_announcement_replacements
                   VALUES(?,?,?,?,?,?,?,?,?,?)''',
                            (RETAINED_COPY_SHA, pin['url'], pin['bodyTextSha'], row['id'], public_at,
-                            'source-event-identity-mismatch', json.dumps(archive['publication'], ensure_ascii=False),
+                            archive['reason'], json.dumps(archive['publication'], ensure_ascii=False),
                             json.dumps(archive['job'], ensure_ascii=False), json.dumps(archive['calls'], ensure_ascii=False),
                             archive['callLease']))
             db.execute('''INSERT INTO official_research_publications VALUES(?,?,?,?,?,?,?,?)
