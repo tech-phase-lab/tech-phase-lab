@@ -116,6 +116,10 @@ def prepare_story_body(path, reference, request=None):
         sources = {s['id']: s for s in [*signals.SOURCES,*[{**p,'format':'feed'} for p in bridge.publishers()]] if s.get('officialUpdates')
                    and s.get('enabled') is not False and s.get('format') != 'x-api'}
         items = signals.public_official_updates(db, reference=reference, limit=100)
+        # The primary bridge may write even when its INSERT is ignored. Release
+        # that writer slot before any article HTTP request; the save below still
+        # rechecks the complete current source identity in a fresh transaction.
+        db.commit()
         enriched = {str(row['event_id']) for row in db.execute('''
           SELECT b.event_id FROM official_story_bodies b JOIN signal_events e
           ON e.id=b.event_id AND e.sha=b.sha WHERE length(b.body)>0''')}
