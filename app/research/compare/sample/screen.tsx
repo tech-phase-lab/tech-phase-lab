@@ -14,10 +14,12 @@ export default function SampleScreen({sample}:{sample:ComparisonResult}) {
   const companies=sample.companies.slice(0,count),now=Date.parse(sample.generatedAt);
   const assessment=overallComparison(companies,lang,now);
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja?"銘柄比較PRO":"Compare stocks PRO"} description="" showTools={false} showHeading={false}>
-    <div className={styles.results}>
-      <Link href="/research/compare" className={styles.backToCompare}>{ja?"▶ 銘柄比較PROに戻る":"▶ Back to Compare stocks PRO"}</Link>
+    <div className={`${styles.results} ${styles.resultView}`}>
+      <div className={styles.sampleToolbar}>
+      <Link href="/research/compare" className={styles.backToCompare}>{ja?"▶ 銘柄比較PROへ戻る":"▶ Back to Compare stocks PRO"}</Link>
       <div className={styles.scoreViewSwitch} role="group" aria-label={ja?"比較する社数":"Number of companies"}>
         {[2,3].map(n=><button key={n} type="button" aria-pressed={count===n} onClick={()=>setCount(n)}>{ja?`${n}社で比較`:`Compare ${n}`}</button>)}
+      </div>
       </div>
       <section className={styles.conclusion}>
         <p className={styles.eyebrow}>{ja?"結果":"RESULTS"}</p>

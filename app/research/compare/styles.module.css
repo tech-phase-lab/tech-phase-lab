@@ -86,3 +86,45 @@
 .detailPanels>div[role="region"]:not([hidden]){margin-top:14px;padding:0 14px;border:1px solid #78908726;border-radius:8px;background:#0d171e}
 .sampleFootnote{font-size:10px;color:#8b9fa7;text-align:right}
 @media(max-width:600px){.detailButtons{gap:8px}.detailButtons button{font-size:12px}.scoreOverview[data-count="2"] .snapshotTable th:first-child{width:30%}}
+
+/* PRO result palette: charcoal, ivory and restrained champagne accents. */
+.results .conclusion{background:linear-gradient(120deg,#29251e,#15171b 72%);border-color:#a58d5a66;box-shadow:inset 0 1px #f0d9a81a,0 12px 32px #0002}
+.results .conclusion h2{color:#f0e8d8}
+.results .conclusion p,.results .conclusion li{color:#c9c5ba}
+.results .conclusion .eyebrow{color:#d8c294}
+.results .conclusion small{color:#9e9789}
+.results .companyCards .scoreCard{background:linear-gradient(125deg,#201f1c,#13161b 72%);border-color:#a58d5a42;box-shadow:inset 0 1px #e6d3a80b}
+.results .traitBox{border-color:#a8946c38;background:#d5bd8405}
+.results .traitBox h4{color:#d4c6a7}
+.results .weaknessBox{border-color:#b1837838;background:#b1837805}
+.results .weaknessBox h4{color:#c6aaa0}
+.results .traitBox li{color:#d0cdc6}
+.results .traitBox li:before{color:#b6a27f}
+.results .companyStatus{border-color:#a8946c29}
+.results .companyStatus h4,.results .snapshotTable th{color:#c7bfae}
+.results .companyStatus h4 small,.results .snapshotNote,.results .factorMetric,.results .scoreHeading small,.results .companyHeading>span,.results .periodLine{color:#a29b8e}
+.results .snapshotTable th,.results .snapshotTable td{border-color:#a8946c24}
+.results .snapshotTable thead [data-company]{color:#e4e9e7}
+.results .scoreTrack{background:#302e2a}
+.results .snapshotValue i[data-company]{background:#b5a58a}
+.results .snapshotTable td[data-winner="true"] .scoreTrack i{background:#edc66f;box-shadow:0 0 9px #edc66f44}
+.results .snapshotTable td[data-winner="true"] strong{color:#f4d58f;text-shadow:0 0 12px #e9bf6266}
+.results .detailPanels{border-color:#a8946c30}
+.results .detailButtons button{border-color:#a8946c45;background:linear-gradient(115deg,#24211d,#17191d);color:#d9d1c2}
+.results .detailButtons button[aria-expanded="true"]{background:#332c20;border-color:#b39a66;color:#f0e2c3}
+.results .detailButtons button span{color:#c6b184}
+.results .detailPanels>div[role="region"]:not([hidden]){border-color:#a8946c30;background:#15171b}
+.results .analysisDetails,.results .scoreMethod{color:#bdb8ac}
+.results .analysisDetails h3{color:#e4e9e7}
+.results .analysisDetails strong{color:#d5c5a1}
+.results .analysisDetails strong[data-kind="weakness"]{color:#c6aaa0}
+.results .analysisDetails section{border-color:#a8946c24}
+.results .scoreViewSwitch{border-color:#a8946c40;background:#15171b}
+.results .scoreViewSwitch button{color:#b3ac9e}
+.results .scoreViewSwitch button[aria-pressed="true"]{background:#3a3020;color:#e6d0a0}
+.results .backToCompare{color:#b5c8e3;min-height:32px;padding:3px 0;line-height:1.5;margin-bottom:-6px}
+.results .backToCompare:hover{color:#dae5f4;text-decoration:underline;text-underline-offset:4px}
+.sampleToolbar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.sampleToolbar .scoreViewSwitch{margin:0}
+.sampleToolbar .backToCompare{margin-bottom:0}
+@media(max-width:600px){.sampleToolbar .scoreViewSwitch button{padding:5px 10px;font-size:11px}.sampleToolbar{gap:6px}}
