@@ -12,7 +12,7 @@ import sqlite3
 import time
 from urllib.parse import urlsplit
 
-VERSION = 'mu-watch-v1'
+VERSION = 'mu-watch-v2'
 NUMBER = r'([−-]?\d+(?:,\d{3})*(?:\.\d+)?)'
 
 
@@ -137,6 +137,7 @@ def run_once(path):
             key,body_sha=revision(row)
             if not row['body'] or row['status'] in {'held','rejected'}: continue
             if db.execute('SELECT 1 FROM watch_earnings_versions WHERE revision=?',(key,)).fetchone(): continue
+            published_at=publication_at(db,row)
             started=stamp(); clock=time.perf_counter(); reason=None; payload=None
             try:
                 if not re.fullmatch(r'20\d{2}-\d{2}-\d{2}',row['published_on'] or ''): raise ValueError('publication-date-missing')
@@ -147,7 +148,7 @@ def run_once(path):
                 public=stamp()
                 payload.update(revision=key,sourceUrl=row['url'],releasedOn=row['published_on'],
                     detectedAt=row['detected_at'],bodyReadyAt=row['body_at'],preparedAt=started,publicAt=public,
-                    publishedAt=publication_at(db,row),processingMs=round((time.perf_counter()-clock)*1000,3),method='deterministic-issuer-numbers')
+                    publishedAt=published_at,processingMs=round((time.perf_counter()-clock)*1000,3),method='deterministic-issuer-numbers')
                 payload['sourceToDetectionMs']=latency(payload['publishedAt'],payload['detectedAt'])
                 payload['detectionToPublicMs']=latency(payload['detectedAt'],public)
             except ValueError as exc: reason=str(exc)

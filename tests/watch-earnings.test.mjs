@@ -1,3 +1,4 @@
+import {readFileSync} from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {watchEarningsPayload} from '../lib/research/watch-earnings.ts';
@@ -13,4 +14,9 @@ test('watch API strips paid analysis for free, expired, unavailable and spoofed 
 test('watch boundary rejects wrong company, source, quarter and clocks',()=>{
  for(const patch of [{ticker:'NVDA'},{sourceUrl:'https://evil.test/results'},{sourceUrl:'https://x@investors.micron.com/results'},{periodOrder:8109},{detectedAt:'2026-10-05'},{processingMs:-1},{method:'llm'}])assert.throws(()=>watchEarningsPayload({...raw,snapshot:{...raw.snapshot,...patch}},{status:'signed-out',plan:'free'}));
  assert.equal(watchEarningsPayload({ok:true,status:'waiting',snapshot:null},{status:'signed-out',plan:'free'}).snapshot,null);
+});
+
+test('watch API receives Clerk identity through the shared proxy',()=>{
+ const proxy=readFileSync(new URL('../proxy.ts',import.meta.url),'utf8');
+ assert.match(proxy, /"\/api\/research\/watch-earnings"/);
 });
