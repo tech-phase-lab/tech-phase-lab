@@ -1,16 +1,15 @@
-.pulse{position:relative;display:flex;align-items:center;gap:10px;min-height:56px;padding:10px 12px;margin:0 0 24px;border-top:1px solid #28443e;border-bottom:1px solid #28443e;background:linear-gradient(100deg,#10241f88,transparent);overflow:hidden;touch-action:pan-y pinch-zoom}
-/* The header always shows one complete compact summary. Full article text lives
-   in the news list below; neither tapping nor pausing expands this strip. */
-.item{min-width:0;flex:1;color:#dae7e5;font-size:12px;line-height:18px;animation:enter .5s ease-out;overflow-wrap:anywhere}
-.item strong{color:#91dfc4;font-size:11px;margin-right:8px}
-.item span{white-space:normal}
-.item time{display:block;margin-top:3px;font-size:9px;line-height:14px;color:#93a6ad}
-.pulse button{flex:none;border:0;background:none;color:#a4c5ba;min-width:36px;min-height:36px;cursor:pointer}
+.pulse{position:relative;display:flex;flex-wrap:nowrap;align-items:center;gap:8px;min-height:44px;padding:6px 10px;margin:0 0 24px;border-top:1px solid #28443e;border-bottom:1px solid #28443e;background:linear-gradient(100deg,#10241f88,transparent);touch-action:pan-y pinch-zoom}
+/* One row including the clock. Choose a complete headline that fits the actual
+   font/space; no paragraph fallback, character slicing, ellipsis or expansion. */
+.headline{display:block;min-width:0;flex:1;color:#dae7e5;font-size:12px;line-height:18px;white-space:nowrap;overflow:hidden;animation:enter .5s ease-out}
+.clock{display:inline-flex;flex:none;align-items:center;white-space:nowrap;font-size:9px;line-height:14px;color:#93a6ad}
+.shortTime{display:none}
+.pulse button{flex:none;border:0;padding:0;background:none;color:#a4c5ba;width:28px;min-height:28px;cursor:pointer}
 .pulse button:disabled{opacity:.4;cursor:default}
 .pulse:focus-visible,.pulse button:focus-visible{outline:2px solid #91dfc4;outline-offset:3px}
 .fresh{color:#a9eccb;font-size:9px;margin-left:5px;font-weight:600}
 .progress{position:absolute;bottom:0;left:0;height:1px;width:100%;background:#91dfc4;transform-origin:left;animation:progress 8s linear forwards;opacity:.65}
 @keyframes enter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
 @keyframes progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@media(max-width:600px){.pulse{gap:8px;padding:8px 10px;margin-bottom:18px}.pulse button{min-height:28px}}
-@media(prefers-reduced-motion:reduce){.item,.progress{animation:none}}
+@media(max-width:600px){.pulse{margin-bottom:18px}.fullTime{display:none}.shortTime{display:inline}}
+@media(prefers-reduced-motion:reduce){.headline,.progress{animation:none}}

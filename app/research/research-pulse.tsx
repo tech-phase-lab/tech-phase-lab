@@ -3,9 +3,41 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { Language } from "@/lib/research/data";
 import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";
 import { newsPulseItems } from "@/lib/research/news-pulse-items";
+import { fitPulseHeadline } from "@/lib/research/news-pulse-headline";
 import { recentPublication, shortNewsTime } from "@/lib/research/news-time";
 import styles from "./research-pulse.module.css";
 const subscribe = (callback: () => void) => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
+function FittedHeadline({ headlines, lang, label }: { headlines: string[]; lang: Language; label: string }) {
+  const element = useRef<HTMLSpanElement>(null);
+  const key = headlines.join("\n");
+  const [selected, setSelected] = useState({ key: "", text: "" });
+  // Start with an honest compact topic until real font metrics are available.
+  const text = selected.key === key ? selected.text : headlines.at(-1) ?? "";
+  useEffect(() => {
+    const target = element.current;
+    const context = document.createElement("canvas").getContext("2d");
+    if (!target || !context) return;
+    let active = true;
+    let frame = 0;
+    const update = () => {
+      if (!active) return;
+      const font = getComputedStyle(target);
+      context.font = font.font || `${font.fontWeight} ${font.fontSize} ${font.fontFamily}`;
+      const next = fitPulseHeadline(key.split("\n"), Math.max(0, target.clientWidth - 4), value => context.measureText(value).width);
+      setSelected(previous => previous.key === key && previous.text === next ? previous : { key, text: next });
+    };
+    const request = () => {
+      if (!active || frame) return;
+      frame = requestAnimationFrame(() => { frame = 0; update(); });
+    };
+    const observer = new ResizeObserver(request);
+    observer.observe(target);
+    void document.fonts.ready.then(request);
+    return () => { active = false; observer.disconnect(); if (frame) cancelAnimationFrame(frame); };
+  }, [key]);
+  return <span ref={element} className={styles.headline} lang={lang} aria-label={`${label}: ${text}`}>{text}</span>;
+}
+
 export default function ResearchPulse({ lang }: { lang: Language }) {
   const snapshot = useSyncExternalStore(subscribeNews, newsSnapshot, serverNewsSnapshot);
   const feed = snapshot?.data;
@@ -39,7 +71,10 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     onClickCapture={event => { if (suppressClick.current) { event.preventDefault(); event.stopPropagation(); suppressClick.current = false; } }}
     onKeyDown={event => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); move(event.key === "ArrowRight" ? 1 : -1); } }}
     onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)} onFocusCapture={() => setInteracting(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false); }}>
-    <div key={item.id} className={styles.item}><strong>{item.ticker}</strong><span lang={lang}>{item.summary}</span><time dateTime={item.at}>{item.kind === "observed" ? (ja ? "取得 " : "Found ") : ""}{timestamp} {fresh && <b className={styles.fresh}>NEW</b>}</time></div>
+    <FittedHeadline key={item.id} headlines={item.headlines} lang={lang} label={item.ticker} />
+    <time className={styles.clock} dateTime={item.at} title={timestamp} aria-label={`${item.kind === "observed" ? (ja ? "取得 " : "Found ") : ""}${timestamp}`}>
+      {item.kind === "observed" ? (ja ? "取得 " : "Found ") : ""}<span className={styles.fullTime}>{timestamp}</span><span className={styles.shortTime} aria-hidden="true">{timestamp.replace(/ JST$/, "")}</span>{fresh && <b className={styles.fresh}>NEW</b>}
+    </time>
     <button type="button" onClick={() => setPaused(value => !value)} disabled={reduced} aria-pressed={paused} aria-label={paused ? (ja ? "自動切替を再開" : "Resume rotation") : (ja ? "自動切替を停止" : "Pause rotation")}>{paused || reduced ? "▶" : "Ⅱ"}</button>
     {!stopped && items.length > 1 && <i key={`${item.id}-progress`} className={styles.progress} aria-hidden="true" />}
   </section>;

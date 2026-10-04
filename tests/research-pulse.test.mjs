@@ -11,10 +11,10 @@ const require=createRequire(import.meta.url);
 let source=await readFile(new URL('../app/research/research-pulse.tsx',import.meta.url),'utf8');
 source=source.replace('import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";',
   'const newsSnapshot = () => globalThis.__pulseTestSnapshot; const serverNewsSnapshot = newsSnapshot; const subscribeNews = () => () => {};');
-for (const name of ['news-pulse-items','news-time']) {
+for (const name of ['news-pulse-items','news-time','news-pulse-headline']) {
   source=source.replace(`"@/lib/research/${name}"`,JSON.stringify(new URL(`../lib/research/${name}.ts`,import.meta.url).href));
 }
-source=source.replace('import styles from "./research-pulse.module.css";', 'const styles={pulse:"pulse",item:"item",fresh:"fresh",progress:"progress"};');
+source=source.replace('import styles from "./research-pulse.module.css";', 'const styles={pulse:"pulse",headline:"headline",clock:"clock",fullTime:"fullTime",shortTime:"shortTime",fresh:"fresh",progress:"progress"};');
 let compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext}}).outputText;
 for(const name of ['react','react/jsx-runtime']) compiled=compiled.replaceAll(JSON.stringify(name),JSON.stringify(pathToFileURL(require.resolve(name)).href));
 const {default:ResearchPulse}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
@@ -33,8 +33,10 @@ test('header has readable non-disclosure text and only a separate rotation butto
     assert.match(html,/tabindex="0"/);
     assert.equal((html.match(/<button/g)??[]).length,1);
     assert.doesNotMatch(html,/aria-expanded|data-expanded|<details|長い記事本文|Long article body/);
-    assert.match(html,/JPMorgan/);
-    assert.match(html,/2028/);
+    assert.match(html,/class="headline"/);
+    assert.match(html,/class="clock"/);
+    assert.match(html,/aria-label="10\/3 22:34 JST"/);
+    assert.match(html,/class="shortTime" aria-hidden="true">10\/3 22:34<\/span>/);
     assert.match(html,/2026-10-03T13:34:30.000Z/);
     assert.match(html,/aria-label="(自動切替を停止|Pause rotation)"/);
   }
@@ -48,8 +50,11 @@ test('missing and failed feed snapshots render no stale or fabricated header new
   delete globalThis.__pulseTestSnapshot;
 });
 
-test('header CSS wraps complete compact text without clipping or expansion overrides',async()=>{
+test('headline, clock and pause remain in a single row without ellipsis or expansion',async()=>{
   const css=await readFile(new URL('../app/research/research-pulse.module.css',import.meta.url),'utf8');
-  assert.match(css,/\.item span\{white-space:normal\}/);
-  assert.doesNotMatch(css,/ellipsis|line-clamp|data-expanded|white-space:nowrap/);
+  assert.match(css,/flex-wrap:nowrap/);
+  assert.match(css,/\.headline\{[^}]*white-space:nowrap/);
+  assert.match(css,/\.clock\{display:inline-flex;flex:none/);
+  assert.match(css,/@media\(max-width:600px\).*\.fullTime\{display:none\}.*\.shortTime\{display:inline\}/);
+  assert.doesNotMatch(css,/text-overflow:ellipsis|line-clamp|data-expanded/);
 });

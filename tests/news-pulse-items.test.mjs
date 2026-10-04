@@ -132,11 +132,11 @@ const reported = {
 };
 const oneOfficial = item => ({ok:true,enabled:false,items:[],officialUpdates:[item]});
 
-test('header summary uses one whole approved fact with attribution while the full bilingual body stays untouched', () => {
+test('header uses a concise attributed headline while the full bilingual body stays untouched', () => {
   const feed=availableNewsPayload(oneOfficial(reported)), before=structuredClone(feed);
   for (const lang of ['ja','en']) {
     const [pulse]=newsPulseItems(feed,lang);
-    assert.equal(pulse.summary,brokerFact[lang]);
+    assert.equal(pulse.summary,lang==='ja'?'JPMorgan：2028年までメモリー逼迫予想':'JPMorgan sees tight memory supply through 2028');
     assert.ok(pulse.body.includes('2031'));
     assert.equal((pulse.body.match(/JPMorgan/g)??[]).length,7);
     for(const figure of ['+63%','+37%','CY27','+54%','>35%','2030','50%+']) assert.ok(pulse.body.includes(figure));
@@ -153,14 +153,16 @@ test('a header summary never splits decimal points, broker initials, source peri
   for (const lang of ['ja','en']) {
     const text=lang==='ja'?ja:en;
     const item={...reported,bodyJa:ja,bodyEn:en};
-    assert.equal(newsPulseItems(oneOfficial(item),lang)[0].summary,text);
+    const sourceOnly=newsPulseItems(oneOfficial(item),lang)[0];
+    assert.equal(sourceOnly.summary,lang==='ja'?'証券会社の業界見通し':'Broker industry outlook');
+    assert.ok(sourceOnly.body.includes(text));
     for (const body of ['x'.repeat(181)+'\n\nA short later paragraph.', 'Incomplete header\ncontinued fact.']) {
       const [pulse]=newsPulseItems(oneOfficial({...item,bodyJa:body,bodyEn:body}),lang);
-      assert.equal(pulse.summary,lang==='ja'?item.translationJa:item.title);
+      assert.equal(pulse.summary,lang==='ja'?'証券会社の業界見通し':'Broker industry outlook');
     }
     const compact=lang==='ja'?'供給は2028年まで逼迫の見通し':'Supply seen constrained through 2028';
     const [pulse]=newsPulseItems(oneOfficial({...item,[lang==='ja'?'shortTitleJa':'shortTitleEn']:compact}),lang);
-    assert.equal(pulse.summary,compact);
+    assert.ok(pulse.headlines.includes(compact));
   }
 });
 
@@ -170,7 +172,8 @@ test('ordinary source prose and partial-brief detail are never promoted into the
     assert.equal(newsPulseItems(oneOfficial({...reported,publisher:"Other source"}),lang)[0].summary,title);
     const brief={...reported,brief:{version:1,scope:'company',validFacts:1,pendingFacts:1},
       title:reported.title+' (brief; details awaiting review)',translationJa:reported.translationJa+'（短報・詳細確認中）'};
-    assert.equal(newsPulseItems(oneOfficial(brief),lang)[0].summary,title);
+    assert.match(newsPulseItems(oneOfficial(brief),lang)[0].summary,/詳細確認中|details pending|pending/);
+    assert.ok(!newsPulseItems(oneOfficial(brief),lang)[0].summary.includes('2028'));
   }
 });
 
@@ -180,13 +183,13 @@ test('short Treasury news uses its approved complete compact headline without cr
     titleEn:'U.S. 10-Year Treasury Yield ripping again',shortTitleEn:'U.S. 10-year Treasury yield surges'};
   for(const lang of ['ja','en']) {
     const [pulse]=newsPulseItems({ok:true,enabled:false,items:[],marketUpdates:[item]},lang);
-    assert.equal(pulse.summary,item[lang==='ja'?'shortTitleJa':'shortTitleEn']);
+    assert.equal(pulse.summary,lang==='ja'?'米10年債利回り、再び急上昇':'U.S. 10Y yield surges again');
     assert.doesNotMatch(pulse.summary,/…|\.\.\./);
   }
 });
 
 
-test('retained buyback recap header preserves the complete validated first fact and report clock', () => {
+test('unstructured buyback recap uses its honest headline rather than promoting a paragraph', () => {
   const first={
     ja:'報道によると、NVIDIAは前四半期に$20B弱の自社株を買い戻し、金額はフリーキャッシュフローの約92%に相当した。',
     en:'According to the report, During the previous quarter, NVIDIA bought back nearly $20B of its shares, an amount equivalent to about 92% of free cash flow.',
@@ -202,7 +205,8 @@ test('retained buyback recap header preserves the complete validated first fact 
   const feed=availableNewsPayload(oneOfficial(item)),before=structuredClone(feed);
   for(const lang of ['ja','en']) {
     const [pulse]=newsPulseItems(feed,lang);
-    assert.equal(pulse.summary,first[lang]);
+    assert.equal(pulse.summary,lang==='ja'?'NVDA：自社株買い実績の報道':'NVDA: buyback recap report');
+    assert.ok(pulse.body.includes(first[lang]));
     assert.ok(pulse.body.includes(context[lang]));
     assert.equal(pulse.at,item.publishedAt);assert.equal(pulse.kind,'published');
     assert.ok(!pulse.summary.includes('2026-09-28'));
