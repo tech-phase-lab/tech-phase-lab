@@ -100,3 +100,24 @@ test("the actual cards render seven-axis status, bars, provider metrics and comp
     assert.match(table,/data-winner="true"/);
   }
 });
+
+test("sample and production summaries use complete seven-factor scores and grounded risks",async()=>{
+  const {buildComparisonSample}=await import("../lib/research/comparison-sample.ts");
+  const {overallComparison}=await import("../lib/research/comparison-scorecard.ts");
+  const sample=buildComparisonSample(),companies=sample.companies;
+  for(const c of companies)assert.ok(c.preparedAnalysis.items.some(i=>i.kind==="weakness"),c.ticker);
+  assert.ok(companies[0].preparedAnalysis.items.some(i=>i.id==="margin-decline" && i.short.ja.includes("38.0→32.0")));
+  assert.ok(companies[1].preparedAnalysis.items.some(i=>i.id==="cash-generation" && i.kind==="weakness"));
+  assert.ok(companies[1].preparedAnalysis.items.some(i=>i.id==="debt-cash"));
+  assert.ok(companies[2].preparedAnalysis.items.some(i=>i.id==="momentum" && i.kind==="weakness"));
+  for(const count of [2,3])for(const lang of ["ja","en"]){
+    const result=overallComparison(companies.slice(0,count),lang,now);
+    assert.match(result.title,/DEMO-A/);assert.match(result.description,/38.0→32.0/);
+  }
+  const later=currentComparisonAnalysis(companies[1],now+48*3600000);
+  assert.ok(!later.items.some(i=>i.id==="debt-cash"));
+  const missing=structuredClone(companies);missing[1].twelveData.statistics=null;
+  assert.match(overallComparison(missing,"ja",now).title,/揃っていません/);
+  const tied=[companies[0],{...companies[0],ticker:"TIE"}];
+  assert.match(overallComparison(tied,"ja",now).title,/拮抗/);
+});

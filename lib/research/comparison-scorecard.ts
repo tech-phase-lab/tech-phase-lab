@@ -116,3 +116,18 @@ export function quarterlyTakeaway(companies: (Financials & {ticker:string})[], l
   if(marginLead)parts.push(lang==="ja" ? `営業利益率は${margins[0].ticker}` : `${margins[0].ticker} leads in operating margin`);
   return lang==="ja" ? `${parts.join("、")}が上回っています。` : `${parts.join("; ")}.`;
 }
+
+/** Equal-weight seven-factor summary; incomplete or incompatible evidence cannot produce a winner. */
+export function overallComparison(companies: (Financials & {ticker:string})[],lang:"ja"|"en",now=Date.now()) {
+  const ja=lang==="ja",ranked=companies.map(c=>({c,scores:comparisonScores(c,now),total:compositeScore(comparisonScores(c,now))}));
+  if(!comparableQuarters(companies,now) || new Set(companies.map(c=>!!c.referenceEvaluation)).size>1 || ranked.some(r=>r.total===null))
+    return {title:ja?"総合評価に必要なデータが揃っていません":"Insufficient data for an overall assessment",description:ja?"取得できた項目は下のスナップショットで比較できます。欠損を0点に置き換えず、総合順位は保留します。":"Available factors remain comparable below. Missing values are not zero; an overall ranking is withheld."};
+  ranked.sort((a,b)=>b.total!-a.total!);
+  const best=ranked[0],next=ranked[1],gap=best.total!-next.total!;
+  const totals=ranked.map(r=>`${r.c.ticker} ${r.total!.toFixed(1)}/10`).join(" · ");
+  if(gap<0.3)return {title:ja?"総合評価は拮抗":"Overall assessment is close",description:ja?`${totals}。7項目平均の差は0.3点未満で、明確な優位はありません。`:`${totals}. The seven-factor averages differ by less than 0.3 points, with no clear leader.`};
+  const advantages=best.scores.map(s=>({...s,gap:s.value!-Math.max(...ranked.slice(1).map(r=>r.scores.find(f=>f.id===s.id)!.value!))})).filter(s=>s.gap>0).sort((a,b)=>b.gap-a.gap).slice(0,2).map(s=>s.label[lang]);
+  const weak=best.c.preparedAnalysis?.items.find(i=>i.kind==="weakness")?.short[lang];
+  const reason=advantages.length ? (ja?`${advantages.join("・")}の強さが総合点を押し上げています。`:`Strength in ${advantages.join(" and ")} supports the overall lead.`) : (ja?"7項目全体のバランスで上回ります。":"It leads on the balance of all seven factors.");
+  return {title:ja?`総合評価は${best.c.ticker}が優位`:`${best.c.ticker} leads overall`,description:ja?`${totals}。${reason}${weak?`ただし、${weak}には注意が必要です。`:""}`:`${totals}. ${reason}${weak?` Key caution: ${weak}.`:""}`};
+}

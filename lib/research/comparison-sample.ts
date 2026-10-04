@@ -7,7 +7,7 @@ import type { ComparisonResult } from "./comparison.ts";
 export function buildComparisonSample(): ComparisonResult {
   const now=Date.parse("2026-10-04T10:00:00Z"),retrievedAt=new Date(now).toISOString();
   const specs=[
-    {ticker:"DEMO-A",name:"Atlas Demo",growth:40,margin:32,fcf:18,pe:18,ratio:2.1,cash:100,debt:60,change:24,margins:[32,30,28,29]},
+    {ticker:"DEMO-A",name:"Atlas Demo",growth:40,margin:32,fcf:18,pe:18,ratio:2.1,cash:100,debt:60,change:24,margins:[32,38,40,35]},
     {ticker:"DEMO-B",name:"Beacon Demo",growth:65,margin:16,fcf:-6,pe:34,ratio:1.2,cash:35,debt:90,change:48,margins:[16,8,-3,12]},
     {ticker:"DEMO-C",name:"Cedar Demo",growth:8,margin:24,fcf:22,pe:12,ratio:1.8,cash:80,debt:50,change:-14,margins:[24,25,24,25]},
   ];

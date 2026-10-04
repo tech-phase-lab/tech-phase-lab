@@ -66,7 +66,7 @@ export function currentComparisonAnalysis(c: Financials, now=Date.now()) {
   if(c.twelveData) {
     const scores=comparisonScores(c,now);
     const marketIds=["financial","valuation","stability","momentum"];
-    return {...saved,items:saved.items.filter(item=>!marketIds.includes(item.id) || scores.some(s=>s.id===item.id && s.value!==null))};
+    return {...saved,items:saved.items.filter(item=>!marketIds.includes(item.id) && !["debt-cash","margin-decline"].includes(item.id) || scores.some(s=>s.id===(item.id==="debt-cash"?"financial":item.id==="margin-decline"?"stability":item.id) && s.value!==null))};
   }
   return saved;
 }
