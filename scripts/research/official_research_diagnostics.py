@@ -516,6 +516,15 @@ def terminal_review_diagnostics(db,reference,limit,remaining_context_bytes,befor
                         rejected['issues'].append({'field':'macro-recovery','issue':'read-only-metadata','checks':[]})
                     rejected['issues'][0]['checks'].append(macro_probe)
                     remaining_context_bytes-=encoded
+            import attributed_policy_diagnostics
+            policy_probe=attributed_policy_diagnostics.recovery_probe(db,row,reference)
+            if policy_probe is not None:
+                encoded=len(json.dumps(policy_probe,ensure_ascii=False).encode())
+                if encoded<=remaining_context_bytes:
+                    if not rejected['issues']:
+                        rejected['issues'].append({'field':'policy-recovery','issue':'read-only-metadata','checks':[]})
+                    rejected['issues'][0]['checks'].append(policy_probe)
+                    remaining_context_bytes-=encoded
         items.append({
             'eventId':row['id'],'sourceId':row['source_id'],'url':row['url'],'title':row['title'][:500],
             'ticker':row['ticker'],'currentSha':row['sha'],'bodySha':row['body_sha'],

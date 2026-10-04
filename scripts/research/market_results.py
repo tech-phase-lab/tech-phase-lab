@@ -240,7 +240,9 @@ def run_once(path, sources, reference=None):
     with monitor.connect(path) as db:
         schema(db)
         import macro_source_publication
+        import attributed_policy_publication
         macro_source_publication.route_schema(db)
+        attributed_policy_publication.route_schema(db)
         if not allowed:
             return
         # Read every unpublished, current revision in the bounded source window.
@@ -280,7 +282,8 @@ def run_once(path, sources, reference=None):
             # Complete source-bound reports have one detailed-news owner before
             # either worker runs; a partial flash must not strand that route.
             # This does not alter any already stored result or approve copy.
-            if macro_source_publication.reserve_fresh_result_route(db, dict(row), reference):
+            if any(adapter.reserve_fresh_result_route(db, dict(row), reference)
+                   for adapter in (macro_source_publication, attributed_policy_publication)):
                 continue
             result = projection(row['body'], tickers)
             if not result:
@@ -297,7 +300,8 @@ def run_once(path, sources, reference=None):
                     continue
                 # A prior False route decision is not permission to race a
                 # newly committed detailed owner or newly available raw proof.
-                if macro_source_publication.record_route_owner(db, dict(current), reference):
+                if any(adapter.record_route_owner(db, dict(current), reference)
+                       for adapter in (macro_source_publication, attributed_policy_publication)):
                     continue
                 db.execute('''INSERT OR IGNORE INTO market_result_publications VALUES(?,?,?,?,?,?,?)''',
                            (row['id'],row['source_id'],row['url'],row['sha'],json.dumps(result,ensure_ascii=False),

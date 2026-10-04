@@ -626,7 +626,9 @@ def semantic_review(db,row,reference):
     if not start or not decided or not reconciliation.instant(row['observed_at'])<=start<=decided<=reference:
         return None
     import macro_source_publication
-    if macro_source_publication.resolves(db,row,dict(saved),reference):
+    import attributed_policy_publication
+    if any(adapter.resolves(db,row,dict(saved),reference)
+           for adapter in (macro_source_publication, attributed_policy_publication)):
         return None
     import micron_reviewed_recovery
     if micron_reviewed_recovery.resolves(db,row,saved,reference):
@@ -673,8 +675,10 @@ def bind_assessment(value,row):
     if value['disposition']!='publish' or value['reason']!='material-company-development':
         raise ValueError('invalid-note')
     import macro_source_publication
-    if macro_source_publication.recognized(row):
-        return macro_source_publication.bind(value,row),None
+    import attributed_policy_publication
+    for adapter in (macro_source_publication, attributed_policy_publication):
+        if adapter.recognized(row):
+            return adapter.bind(value,row),None
     derived=related_company_news.render(value,row) if related_company_news.structured(row) else value
     note=bind_note({'facts':derived['facts']},row)
     if related_company_news.structured(row):
@@ -866,8 +870,10 @@ def bind_note(value,row):
 
 def validate_note(note,row):
     import macro_source_publication
-    if isinstance(note,dict) and macro_source_publication.MARKER in note:
-        return macro_source_publication.validate_note(note,row)
+    import attributed_policy_publication
+    for adapter in (macro_source_publication, attributed_policy_publication):
+        if isinstance(note,dict) and adapter.MARKER in note:
+            return adapter.validate_note(note,row)
     expected={'generalSourceVersion','facts'}|({'semanticAssessment'} if row.get('semantic_assessment') else set())
     if related_company_news.structured(row):
         expected.add(related_company_news.MARKER)
@@ -987,8 +993,10 @@ def recover_reviewed_terminology(db,reference,model):
 
 def public_item(row,note):
     import macro_source_publication
-    if isinstance(note,dict) and macro_source_publication.MARKER in note:
-        return macro_source_publication.public_item(row,note)
+    import attributed_policy_publication
+    for adapter in (macro_source_publication, attributed_policy_publication):
+        if isinstance(note,dict) and adapter.MARKER in note:
+            return adapter.public_item(row,note)
     title_ja,title_en=CATEGORIES[row['category']]
     recap=row['category']=='share-buyback' and any(unit['buyback'].get('historical') for unit in row['units'])
     if recap:
@@ -1039,9 +1047,12 @@ def publications(db,reference,*,authorization_context=None):
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='official_research_publications'").fetchone():
         return []
     import macro_source_publication
+    import attributed_policy_publication
     macro_context=macro_source_publication.PublicReadContext(db,reference)
+    policy_context=attributed_policy_publication.PublicReadContext(db,reference)
     rows=candidates(db,reference,_defer_publication_review=True,authorization_context=authorization_context)
     macro_context.bind_rows(rows)
+    policy_context.bind_rows(rows)
     result=[]
     # Stable representative selection still precedes review filtering. Each
     # publication then takes one complete legacy or structured validation path.
@@ -1064,8 +1075,11 @@ def publications(db,reference,*,authorization_context=None):
                         (buyback_structured.MARKER in note or buyback_structured_publication.recorded(db,row)))
             import macro_source_publication
             macro=(macro_source_publication.MARKER in note or macro_context.recorded(row))
+            policy=(attributed_policy_publication.MARKER in note or policy_context.recorded(row))
             if macro:
                 if not macro_source_publication.publication_valid(db,row,saved,reference,context=macro_context):continue
+            elif policy:
+                if not attributed_policy_publication.publication_valid(db,row,saved,reference,context=policy_context):continue
             elif structured:
                 # This verifies the audit, current source, complete fresh typed
                 # note and all shared guards; repeating validate_note is unused.
@@ -1080,6 +1094,8 @@ def publications(db,reference,*,authorization_context=None):
         result.append((row,saved,note))
     if not macro_context.unchanged():
         result=[entry for entry in result if macro_source_publication.MARKER not in entry[2]]
+    if not policy_context.unchanged():
+        result=[entry for entry in result if attributed_policy_publication.MARKER not in entry[2]]
     return result
 
 

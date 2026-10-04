@@ -17,7 +17,7 @@ export type GeneralNewsItem = CompactTitles & {
 };
 export type OfficialNewsSource = { id: string; url: string; publisher: string; publishedAt: string; observedAt: string };
 export type OfficialNewsBrief = { version: 1; scope: "company" | "sector"; validFacts: number; pendingFacts: number };
-export type OfficialUpdate = CompactTitles & NewsBody & { brief?: OfficialNewsBrief; generalSource?: 1; syndication?: Syndication; id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[] };
+export type OfficialUpdate = CompactTitles & NewsBody & { brief?: OfficialNewsBrief; generalSource?: 1; newsCategory?: "policy"; syndication?: Syndication; id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[] };
 export type MarketUpdate = CompactTitles & MarketNewsDetail & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
 export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; officialHistory?: OfficialHistory };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
@@ -37,6 +37,22 @@ function newsBody(value: Record<string, unknown>, maxLength = 12000): NewsBody {
     && v.length <= maxLength && !v.includes("\0");
   return valid(value.bodyJa) && valid(value.bodyEn)
     ? { bodyJa: value.bodyJa, bodyEn: value.bodyEn } : {};
+}
+
+// This presentation classification is emitted only by the source-bound policy
+// adapter. It neither admits a new source nor authorizes an issuer/ticker claim.
+function policyNewsCategory(value: Record<string, unknown>): { newsCategory?: "policy"; generalSource?: 1 } {
+  if (value.newsCategory === undefined) return {};
+  if (value.newsCategory !== "policy" || value.generalSource !== 1
+    || value.publisher !== "Reported economic news" || typeof value.url !== "string"
+    || !/^https:\/\/x\.com\/(wallstengine|tipranks|fabymetal4)\/status\/\d+$/i.test(value.url)
+    || value.brief !== undefined || value.syndication !== undefined || value.researchId !== undefined
+    || value.sources !== undefined || !Array.isArray(value.tickers) || value.tickers.length !== 0
+    || !newsBody(value).bodyJa
+    || typeof value.translationJa !== "string" || !value.translationJa.trim()) {
+    throw Error("Invalid policy news category");
+  }
+  return { generalSource: 1, newsCategory: "policy" };
 }
 
 // Partial publications retain their explicit source and review boundary on each
@@ -239,7 +255,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
         }
       }
       const mergedResult = sources.length > 1 && Array.isArray(v.sources) && sources.length === v.sources.length;
-      return { ...(syndication ? { syndication } : {}), ...newsBrief(v), ...(reportedBuyback ? { generalSource: 1 as const } : {}), ...compactTitles(v), ...newsBody(v, mergedResult ? 40000 : 12000), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}), ...(sources.length ? { sources } : {}) };
+      return { ...(syndication ? { syndication } : {}), ...newsBrief(v), ...policyNewsCategory(v), ...(reportedBuyback ? { generalSource: 1 as const } : {}), ...compactTitles(v), ...newsBody(v, mergedResult ? 40000 : 12000), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}), ...(sources.length ? { sources } : {}) };
     }).reduce<OfficialUpdate[]>((items, item) => {
       const index = seenOfficialUrls.get(item.url);
       if (index === undefined) {

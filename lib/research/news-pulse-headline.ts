@@ -19,6 +19,9 @@ export function fitPulseHeadline(headlines: readonly string[], width: number, me
  * Full approved bodies remain unchanged in the lower news list. */
 export function officialPulseHeadlines(item: OfficialUpdate, lang: Language, title: string, compact?: string | null) {
   const ja = lang === 'ja', name = subject(item.tickers);
+  if (item.newsCategory === 'policy') {
+    return choices([compact, ja ? item.shortTitleJa : item.shortTitleEn, title, ja ? '政策ニュース' : 'Policy news']);
+  }
   if (item.brief) {
     const pending = ja ? '詳細確認中' : 'details pending';
     return choices([`${compact ?? title} · ${pending}`, topic(name, ja ? '短報・確認中' : 'brief; pending', lang), ja ? '短報・確認中' : 'Brief; pending']);

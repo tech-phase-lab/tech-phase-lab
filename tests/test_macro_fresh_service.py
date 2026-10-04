@@ -32,7 +32,7 @@ class Response:
  def read(self,size):return self.body.read(size)
 
 
-def replay(body,order, *, restart=False, negative=False, during_assessment=False, legacy_flash=False, missing_raw=False, withdraw=False, corrupt_body=False, parser_change=False, duplicate_after=False, interrupted=False, stale_during=False, generic_job=False, late_proof=False):
+def replay(body,order, *, restart=False, negative=False, during_assessment=False, legacy_flash=False, missing_raw=False, withdraw=False, corrupt_body=False, parser_change=False, duplicate_after=False, interrupted=False, stale_during=False, generic_job=False, late_proof=False, adapter=macro, grammar_module=parser):
  with tempfile.TemporaryDirectory() as folder,ExitStack() as guards:
   guards.enter_context(patch.dict(os.environ,ENV))
   guards.enter_context(patch('socket.create_connection',side_effect=AssertionError('external forbidden')))
@@ -109,21 +109,21 @@ def replay(body,order, *, restart=False, negative=False, during_assessment=False
       'fullPublicItems':news.public_items(db,datetime.now(timezone.utc)),
       'flashPublicCount':len(service.market_results.public_feed(db)),
       'flashRecords':[dict(x) for x in db.execute('SELECT * FROM market_result_publications')],
-      'auditCount':db.execute('SELECT count(*) FROM '+macro.AUDIT_TABLE).fetchone()[0],
-      'routeOwners':[dict(x) for x in db.execute('SELECT * FROM '+macro.ROUTE_TABLE)],
-      'rows':[{'eventId':x['id'],'recognized':macro.recognized(x),'retained':macro.retained(db,x,datetime.now(timezone.utc)) is not None,
-         'ownership':macro.ownership_reason(macro.ownership_state(db,x,datetime.now(timezone.utc)))} for x in news.candidates(db,datetime.now(timezone.utc),include_review=True)]})
+      'auditCount':db.execute('SELECT count(*) FROM '+adapter.AUDIT_TABLE).fetchone()[0],
+      'routeOwners':[dict(x) for x in db.execute('SELECT * FROM '+adapter.ROUTE_TABLE)],
+      'rows':[{'eventId':x['id'],'recognized':adapter.recognized(x),'retained':adapter.retained(db,x,datetime.now(timezone.utc)) is not None,
+         'ownership':adapter.ownership_reason(adapter.ownership_state(db,x,datetime.now(timezone.utc)))} for x in news.candidates(db,datetime.now(timezone.utc),include_review=True)]})
   if restart:
    app=service.AutomaticMonitor(path,Path(folder)/'restarted-before-workers.json')
   if legacy_flash:
    # Reproduce a pre-release writer with neither of the new routing checks;
    # all original result parsing/storage/clocks still run through the service.
-   with patch.object(macro,'reserve_fresh_result_route',return_value=False), \
-        patch.object(macro,'record_route_owner',return_value=False):
+   with patch.object(adapter,'reserve_fresh_result_route',return_value=False), \
+        patch.object(adapter,'record_route_owner',return_value=False):
     cycle('results')
   if late_proof:
    with research.connect(path) as db:db.execute('DELETE FROM signal_x_acquisition')
-   original_reserve=macro.reserve_fresh_result_route
+   original_reserve=adapter.reserve_fresh_result_route
    delayed_once=[]
    def delayed(*args,**kwargs):
     if not delayed_once:
@@ -134,7 +134,7 @@ def replay(body,order, *, restart=False, negative=False, during_assessment=False
      if late_proof!='proof-only':assert research.run_once(path,positive,ENV)=='done'
      return False
     return original_reserve(*args,**kwargs)
-   guards.enter_context(patch.object(macro,'reserve_fresh_result_route',side_effect=delayed))
+   guards.enter_context(patch.object(adapter,'reserve_fresh_result_route',side_effect=delayed))
   for lane in order:cycle(lane)
   if restart:
    app=service.AutomaticMonitor(path,Path(folder)/'restarted-after-workers.json')
@@ -150,7 +150,7 @@ def replay(body,order, *, restart=False, negative=False, during_assessment=False
   if corrupt_body:
    with research.connect(path) as db:db.execute("UPDATE signal_documents SET text=text || '\nUnsupported extra sentence.'")
   if parser_change:
-   guards.enter_context(patch.object(parser,'parse',side_effect=ValueError('unsupported-format')))
+   guards.enter_context(patch.object(grammar_module,'parse',side_effect=ValueError('unsupported-format')))
   if withdraw:
    with research.connect(path) as db:db.execute("UPDATE signal_x_acquisition SET sha='changed-current-source'")
   if withdraw or corrupt_body or parser_change:
@@ -161,9 +161,9 @@ def replay(body,order, *, restart=False, negative=False, during_assessment=False
    future=datetime.now(timezone.utc)+timedelta(hours=25)
    expiry={'fullPublicItems':news.public_items(db,future),
      'flashPublicItems':service.market_results.public_feed(db,reference=future),
-     'macroRows':[{'eventId':row['id'],'recordedAudit':macro.recorded(db,row),
-                  'closedAttempt':macro.closed_attempt(db,row),
-                  'ownership':macro.ownership_reason(macro.ownership_state(db,row,future))}
+     'macroRows':[{'eventId':row['id'],'recordedAudit':adapter.recorded(db,row),
+                  'closedAttempt':adapter.closed_attempt(db,row),
+                  'ownership':adapter.ownership_reason(adapter.ownership_state(db,row,future))}
                   for row in news.candidates(db,future,include_review=True)]}
 
   with research.connect(path) as db:
