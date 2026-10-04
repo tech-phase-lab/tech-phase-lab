@@ -102,3 +102,39 @@ test('card styles retain the verified metric row paragraph boundaries', async ()
   const css = await readFile(new URL('../app/research/news/general-news.module.css', import.meta.url), 'utf8');
   assert.match(css, /\.body\{[^}]*white-space:pre-wrap/);
 });
+
+const freshScenarios = JSON.parse(execFileSync('python3', ['-c', String.raw`
+import json,sys
+sys.path[:0]=['scripts/research','tests']
+import test_macro_fresh_service as fixture
+print(json.dumps([fixture.replay(body,order,restart=True) for body in (fixture.JOBS,fixture.CPI)
+ for order in (['results','official'],['official','results'])]))
+`], { cwd: new URL('..', import.meta.url), encoding: 'utf8', env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' } }));
+
+for (const lang of ['ja', 'en']) {
+  test(`real collector and both worker orders retain complete ${lang} cards after restart`, () => {
+    for (const scenario of freshScenarios) {
+      const raw = scenario.collectedRaw[0];
+      const built = buildPublicNews({ ok: true, enabled: false, ...scenario.public });
+      const client = availableNewsPayload(built);
+      const matches = client.officialUpdates.filter(item => item.url === raw.url);
+      assert.equal(matches.length, 1);
+      assert.equal(client.resultBriefs.filter(item => item.url === raw.url).length, 0);
+      const item = matches[0];
+      assert.deepEqual(item.tickers, []);
+      assert.equal(Date.parse(item.publishedAt), Date.parse(raw.published_at));
+      assert.equal(Date.parse(item.observedAt), Date.parse(raw.first_seen_at));
+      assert.equal(scenario.final.callCount, 1);
+      assert.equal(scenario.final.apiReservationCount, 1);
+      assert.equal(scenario.final.rawUnchanged, true);
+      const display = officialNewsDisplay(item, lang, client.resultBriefs);
+      const html = renderToStaticMarkup(React.createElement(NewsStory, { ...display, lang, publication: officialTime(item).at }));
+      const paragraphs = display.body.split('\n\n');
+      assert.equal(paragraphs.length, scenario.format === 'jobs' ? 8 : 2);
+      for (const paragraph of paragraphs) assert.ok(html.includes(paragraph), paragraph);
+      assert.equal(officialPulseHeadlines(item, lang, display.title)[0], display.title);
+      assert.ok(!display.body.includes('Never publish model wording'));
+      assert.ok(!display.body.includes('モデルのコピーを公開しない'));
+    }
+  });
+}

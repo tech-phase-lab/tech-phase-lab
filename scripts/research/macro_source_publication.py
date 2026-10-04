@@ -19,6 +19,7 @@ import signals
 VERSION = 1
 MARKER = 'sourceMacroDerivation'
 AUDIT_TABLE = 'source_macro_news_derivations'
+ROUTE_TABLE = 'source_macro_route_owners'
 POLICY = ('For a completely recognized macroeconomic results report, assess its materiality as '
           'general economic news independently of company or ticker mapping. A calendar, preview, '
           'unsupported claim or non-material item must remain review. Use the existing publish/review '
@@ -38,7 +39,16 @@ def exists(db, table):
     return bool(db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (table,)).fetchone())
 
 
+def route_schema(db):
+    db.execute('''CREATE TABLE IF NOT EXISTS source_macro_route_owners(
+      origin TEXT NOT NULL,sha TEXT NOT NULL,body_sha TEXT NOT NULL,
+      source_id TEXT NOT NULL,event_id INTEGER NOT NULL,policy_version INTEGER NOT NULL,
+      source_snapshot TEXT NOT NULL,assigned_at TEXT NOT NULL,
+      PRIMARY KEY(origin,sha))''')
+
+
 def schema(db):
+    route_schema(db)
     db.execute('''CREATE TABLE IF NOT EXISTS source_macro_news_derivations(
       event_id INTEGER NOT NULL,sha TEXT NOT NULL,body_sha TEXT NOT NULL,
       mode TEXT NOT NULL,lease TEXT NOT NULL,policy_version INTEGER NOT NULL,
@@ -422,6 +432,89 @@ def closed_attempt(db, row):
         return False
     job = db.execute('SELECT sha,state FROM official_research_jobs WHERE event_id=?', (row['id'],)).fetchone()
     return bool(job and job['sha'] == row['sha'] and job['state'] in {'done', 'review', 'stale'})
+
+
+def route_owned(db, event):
+    """A denial-only receipt binds the canonical post/revision, not an event ID."""
+    origin = event['url'].casefold()
+    if exists(db, ROUTE_TABLE) and db.execute(
+            'SELECT 1 FROM '+ROUTE_TABLE+' WHERE origin=? AND sha=?',
+            (origin, event['sha'])).fetchone():
+        return True
+    # Existing validated macro audits also remember their route across upgrade.
+    return bool(exists(db, AUDIT_TABLE) and db.execute(
+        'SELECT 1 FROM '+AUDIT_TABLE+' a JOIN signal_events e ON e.id=a.event_id '
+        'WHERE lower(e.url)=? AND a.sha=?', (origin, event['sha'])).fetchone())
+
+
+def fresh_route_candidate(db, event, reference):
+    try:
+        macro.parse(event['body'])
+        source = next((source for source in signals.SOURCES
+                       if source['id'] == event['source_id'] and source['id'] in news.SOURCE_IDS), None)
+        if source is None or not exists(db, 'signal_x_acquisition'):
+            return None
+        current = db.execute('SELECT e.*,d.sha AS current_sha,d.title AS document_title,d.text AS body '
+                             'FROM signal_events e JOIN signal_documents d '
+                             'ON d.source_id=e.source_id AND d.url=e.url WHERE e.id=?', (event['id'],)).fetchone()
+        if not current or any(current[key] != event.get(key) for key in
+                              ('source_id','url','sha','title','body','current_sha','document_title',
+                               'published_at','observed_at','truncated','tickers_json','matches_json','event_kind')):
+            return None
+        candidate, _ = news.assess(dict(current), source, reference, news.origin_heads(db, signals.SOURCES, reference))
+        return candidate if (candidate and recognized(candidate)
+                             and retained(db, candidate, reference) is not None) else None
+    except (ValueError, TypeError, KeyError):
+        return None
+
+
+def owns_fresh_result_route(db, event, reference):
+    """Read-only routing check; never publication or materiality approval."""
+    return route_owned(db, event) or fresh_route_candidate(db, event, reference) is not None
+
+
+def record_route_owner(db, row, reference):
+    """Remember an exact proven assignment in the caller's writer transaction.
+
+    The receipt only denies a competing partial flash. It survives withdrawal,
+    rejection, restart and duplicate event IDs; it never bypasses body, source,
+    materiality, audit or current-publication validation.
+    """
+    if not db.in_transaction:
+        raise ValueError('macro-route-requires-transaction')
+    if route_owned(db, row):
+        return True
+    policy = PublicReadContext.policy_identity()
+    candidate = fresh_route_candidate(db, row, reference)
+    if candidate is None:
+        return False
+    proof = retained(db, candidate, reference)
+    if proof is None or PublicReadContext.policy_identity() != policy:
+        return False
+    snapshot = {'row': {key:candidate.get(key) for key in SOURCE_FIELDS},
+                'retained': {key:proof[key] for key in ('source_id','url','sha','title','text',
+                             'published_at','first_seen_at','truncated')}}
+    db.execute('INSERT OR IGNORE INTO '+ROUTE_TABLE+' VALUES(?,?,?,?,?,?,?,?)',
+               (row['url'].casefold(),row['sha'],candidate['body_sha'],row['source_id'],row['id'],
+                VERSION,encoded(snapshot),reference.isoformat()))
+    return True
+
+
+def reserve_fresh_result_route(db, event, reference):
+    """Result writer's atomic choice before creating any competing flash."""
+    if route_owned(db, event):
+        return True
+    policy = PublicReadContext.policy_identity()
+    if fresh_route_candidate(db, event, reference) is None:
+        return False
+    db.commit()
+    with db:
+        db.execute('BEGIN IMMEDIATE')
+        # Recheck after acquiring the lock; no stale read can assign ownership.
+        if PublicReadContext.policy_identity() != policy:
+            return True
+        record_route_owner(db, event, reference)
+        return True  # A changed preflight is withheld this cycle, never a flash fallback.
 
 
 def fresh_inputs_valid(db, row, reference):

@@ -239,12 +239,14 @@ def run_once(path, sources, reference=None):
     allowed = {s['id']:s for s in sources if s.get('format') == 'x-api'}
     with monitor.connect(path) as db:
         schema(db)
+        import macro_source_publication
+        macro_source_publication.route_schema(db)
         if not allowed:
             return
         # Read every unpublished, current revision in the bounded source window.
         # An arbitrary newest-event page can otherwise permanently hide a valid
         # result behind unrelated posts, even after every newer row is examined.
-        rows = db.execute('''SELECT e.*,d.text AS body,d.sha AS current_sha
+        rows = db.execute('''SELECT e.*,d.text AS body,d.sha AS current_sha,d.title AS document_title
           FROM signal_events e JOIN signal_documents d
             ON d.source_id=e.source_id AND d.url=e.url AND d.sha=e.sha
           LEFT JOIN market_result_publications p ON p.event_id=e.id
@@ -275,6 +277,11 @@ def run_once(path, sources, reference=None):
                 continue
             if not isinstance(tickers, list) or not all(isinstance(ticker, str) for ticker in tickers):
                 continue
+            # Complete source-bound reports have one detailed-news owner before
+            # either worker runs; a partial flash must not strand that route.
+            # This does not alter any already stored result or approve copy.
+            if macro_source_publication.reserve_fresh_result_route(db, dict(row), reference):
+                continue
             result = projection(row['body'], tickers)
             if not result:
                 continue
@@ -282,6 +289,16 @@ def run_once(path, sources, reference=None):
                            'publishedAt':row['published_at'], 'observedAt':row['observed_at'],
                            'researchId':'x-result-'+str(row['id'])})
             with db:
+                db.execute('BEGIN IMMEDIATE')
+                current = db.execute('SELECT e.*,d.text AS body,d.sha AS current_sha,d.title AS document_title '
+                    'FROM signal_events e JOIN signal_documents d ON d.source_id=e.source_id AND d.url=e.url '
+                    'WHERE e.id=?', (row['id'],)).fetchone()
+                if not current or dict(current) != dict(row):
+                    continue
+                # A prior False route decision is not permission to race a
+                # newly committed detailed owner or newly available raw proof.
+                if macro_source_publication.record_route_owner(db, dict(current), reference):
+                    continue
                 db.execute('''INSERT OR IGNORE INTO market_result_publications VALUES(?,?,?,?,?,?,?)''',
                            (row['id'],row['source_id'],row['url'],row['sha'],json.dumps(result,ensure_ascii=False),
                             datetime.now(timezone.utc).isoformat(timespec='milliseconds'),round((time.monotonic()-started)*1000)))

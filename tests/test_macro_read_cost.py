@@ -193,16 +193,19 @@ class MacroReadCostTests(unittest.TestCase):
         with sqlite3.connect(self.fixture.path) as db:
             db.execute('DROP TABLE source_macro_news_derivations')
             db.execute('DROP TABLE source_macro_assessment_proofs')
+            db.execute('DROP TABLE '+macro.ROUTE_TABLE)
         with open_read(self.fixture.path) as db:
             initial = db.total_changes
             self.assertEqual(public_pieces(db), before)
             self.assertEqual(db.total_changes, initial)
             self.assertFalse(macro.exists(db, macro.AUDIT_TABLE))
             self.assertFalse(macro.exists(db, 'source_macro_assessment_proofs'))
+            self.assertFalse(macro.exists(db, macro.ROUTE_TABLE))
         # Normal worker initialization supplies both tables before a write.
         with research.connect(self.fixture.path) as db:
             self.assertTrue(macro.exists(db, macro.AUDIT_TABLE))
             self.assertTrue(macro.exists(db, 'source_macro_assessment_proofs'))
+            self.assertTrue(macro.exists(db, macro.ROUTE_TABLE))
 
     def test_public_macro_diagnostics_expose_only_aggregate_ownership(self):
         with open_read(self.fixture.path) as db:

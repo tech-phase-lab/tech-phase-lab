@@ -641,6 +641,9 @@ def claim(db, reference, model, limit):
                 expedited=repair_candidate and content_repair.can_expedite(db,r,job)
                 if not expedited:
                     continue
+            if (macro_source_publication.recognized(r)
+                    and not macro_source_publication.record_route_owner(db,r,reference)):
+                continue
             lease=uuid.uuid4().hex
             if repair_candidate:
                 content_repair.record_claim(db,r,job,lease,reference,expedited)
