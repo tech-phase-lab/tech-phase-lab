@@ -7,6 +7,9 @@ from urllib.parse import urljoin, urlsplit
 
 ARTICLE_TYPES = frozenset({'text/html', 'application/pdf'})
 BODY_CLASSES = ('article', 'article-body', 'article-content', 'entry-content')
+# Trusted publisher-template policy, independent of page-declared metadata.
+# Unknown requested hosts retain strict source-title equality.
+PUBLISHER_TITLE_BRANDS = {'blogs.microsoft.com': frozenset({'The Official Microsoft Blog'})}
 
 
 def identity(url):
@@ -28,17 +31,24 @@ def normalized_title(value):
 class Identity(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
-        self.canonicals, self.titles, self.headings, self.dates = [], [], [], []
+        self.canonicals, self.titles, self.headings, self.dates, self.site_names = [], [], [], [], []
         self.body_classes = {name: 0 for name in BODY_CLASSES}
         self.capture = None
         self.parts = []
         self.first_tag = None
         self.has_original_date_metadata = False
+        self.ambiguous_identity_attributes = False
+        self.heading_count = 0
 
     def handle_starttag(self, tag, attrs):
         if self.first_tag is None:
             self.first_tag = tag
+        names = [name for name, _ in attrs]
+        if tag in {'meta', 'link', 'h1'} and len(names) != len(set(names)):
+            self.ambiguous_identity_attributes = True
         attrs = dict(attrs)
+        if tag == 'h1':
+            self.heading_count += 1
         classes = (attrs.get('class') or '').split()
         for name in BODY_CLASSES:
             if name in classes:
@@ -46,11 +56,16 @@ class Identity(HTMLParser):
         if tag == 'link' and 'canonical' in (attrs.get('rel') or '').lower().split():
             self.canonicals.append(attrs.get('href') or '')
         if tag == 'meta':
+            if (attrs.get('property') and attrs.get('name')
+                    and attrs['property'].lower() != attrs['name'].lower()):
+                self.ambiguous_identity_attributes = True
             name = (attrs.get('property') or attrs.get('name') or '').lower()
             if name == 'og:url':
                 self.canonicals.append(attrs.get('content') or '')
             if name == 'og:title':
                 self.titles.append(attrs.get('content') or '')
+            if name == 'og:site_name':
+                self.site_names.append(attrs.get('content') or '')
             if name in {'article:published_time', 'sc:publication_date'}:
                 self.has_original_date_metadata = True
         if self.capture is None and ((tag == 'h1' and not self.headings) or 'article-date' in classes):
@@ -108,9 +123,30 @@ def validate(document, url, title=None):
     if not expected or any(identity(urljoin(url, candidate)) != expected for candidate in parsed.canonicals):
         raise ValueError('article-response-identity-mismatch')
     expected_title = normalized_title(title or '')
-    candidates = parsed.titles + parsed.headings
-    if expected_title and candidates and any(normalized_title(candidate) != expected_title for candidate in candidates):
-        raise ValueError('article-response-title-mismatch')
+    if expected_title:
+        if any(normalized_title(heading) != expected_title for heading in parsed.headings):
+            raise ValueError('article-response-title-mismatch')
+        # Publishers can append their site name to Open Graph titles. Accept
+        # only configured, independently declared branding after a separator,
+        # backed by an exact visible heading and the current canonical identity.
+        # A matching prefix alone never licenses a different article title.
+        brand_key = lambda value: ' '.join(value.split()).casefold()
+        allowed_brands = {brand_key(name) for name in PUBLISHER_TITLE_BRANDS.get(expected[1], ())}
+        site_names = {brand_key(name) for name in parsed.site_names}
+        branded = bool(parsed.canonicals and all(value.strip() for value in parsed.canonicals)
+                       and parsed.headings and parsed.heading_count == 1
+                       and not parsed.ambiguous_identity_attributes
+                       and len(site_names) == 1 and '' not in site_names
+                       and site_names <= allowed_brands)
+        for candidate in parsed.titles:
+            if normalized_title(candidate) == expected_title:
+                continue
+            if branded and any(
+                    normalized_title(candidate[:separator.start()]) == expected_title
+                    and brand_key(candidate[separator.end():]) in site_names
+                    for separator in re.finditer(r'\s+[-\u2013\u2014|]\s+', candidate)):
+                continue
+            raise ValueError('article-response-title-mismatch')
     return parsed
 
 
