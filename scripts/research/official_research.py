@@ -818,12 +818,18 @@ def feed(db, reference=None, *, published_updates=None):
 
 def publication_hold_reason(db,row,reference):
     """Mirror claim's explicit saved-copy hold without changing its job state."""
-    saved=db.execute('SELECT * FROM official_research_publications WHERE event_id=? AND sha=? AND body_sha=?',
-                     (row['id'],row['sha'],row['body_sha'])).fetchone()
+    saved=db.execute('SELECT * FROM official_research_publications WHERE event_id=? AND sha=?',
+                     (row['id'],row['sha'])).fetchone()
     if not saved or not publication_clock_valid(saved,row,reference):return None
     try:
         note=json.loads(saved['payload'])
         if not isinstance(note,dict):return None
+        if saved['body_sha'] != row['body_sha']:
+            # Claim holds a same-source cross-event publication after article
+            # reacquisition too. A different body alone is not a review hold.
+            if not current_revision(db,row):return None
+            validate_source_event(row['body'],row['title'],note)
+            return None
         validate_row(note,row)
     except ValueError as exc:
         return str(exc) if str(exc) in NO_AUTOMATIC_REGENERATION else None
