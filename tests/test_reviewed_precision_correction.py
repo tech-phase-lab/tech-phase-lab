@@ -85,11 +85,10 @@ class ReviewedPrecisionCorrectionTests(unittest.TestCase):
             self.assertFalse(recovery.publish_retained(db,fixture.NOW,validate))
             self.assertEqual(db.execute('SELECT count(*) FROM reviewed_retained_announcement_replacements').fetchone()[0],0)
 
-    def test_actual_precision_manifest_is_separate_from_retry_and_cancelled_copy(self):
+    def test_actual_precision_manifest_is_separate_from_retry_recovery(self):
         manifest=json.loads(Path(recovery.__file__).with_name('reviewed_retained_announcements.json').read_text())
         pins=manifest['announcements'];pin=next(p for p in pins if p.get('eventId')==1238)
         self.assertNotIn('retryArticles',manifest)
-        self.assertFalse(any(p.get('eventId')==1240 for p in pins))
         self.assertEqual(pin['replacement']['reason'],'reviewed-evidence-precision')
         self.assertIn('3つのターゲット',pin['copy']['facts'][2]['ja'])
         self.assertIn('across three targets',pin['copy']['facts'][2]['en'])

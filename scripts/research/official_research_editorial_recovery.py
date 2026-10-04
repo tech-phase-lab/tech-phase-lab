@@ -205,7 +205,7 @@ def publish(db, rows, reference, validator, current_revision):
 
 
 RETAINED_COPY_PATH = Path(__file__).with_name('reviewed_retained_announcements.json')
-RETAINED_COPY_SHA = '64aa86bd3a5ced32f467efa04ef6f5bf2691a6632514f8d6938377dba0f97ba6'
+RETAINED_COPY_SHA = '61a5fa88f700ca971d253e9fe54d3f82dc30a1aea0a78ca35fa8045758e0825e'
 
 
 def retained_candidate(db, pin, reference):
@@ -282,12 +282,32 @@ def retained_note(row, pin):
     if set(copy) != {'title', 'summary', 'facts', 'purpose'} or not 3 <= len(copy['facts']) <= 5:
         raise ValueError('changed-reviewed-copy')
     def bind(item):
-        if set(item) != {'ja', 'en', 'anchors'}:
+        if set(item) == {'ja', 'en', 'evidenceSpan'}:
+            # Preserve a reviewed, already selected contiguous source window,
+            # including its exact whitespace, without copying the article into
+            # the manifest. The complete source and reconstructed payload are
+            # separately hash-bound to the reviewed correction.
+            span = item['evidenceSpan']
+            if (pin.get('provenance') != 'primary-source-revision'
+                    or not pin.get('reviewedPayloadSha')
+                    or not isinstance(span, dict) or set(span) != {'start', 'end', 'sha256'}
+                    or type(span['start']) is not int or type(span['end']) is not int
+                    or not 0 <= span['start'] < span['end'] <= len(row['body'])
+                    or not 16 <= span['end'] - span['start'] <= MAX_EVIDENCE_CHARS):
+                raise ValueError('unsafe-editorial-evidence')
+            quote = row['body'][span['start']:span['end']]
+            if digest(quote) != span['sha256'] or '\x00' in quote:
+                raise ValueError('changed-reviewed-evidence')
+        elif set(item) == {'ja', 'en', 'anchors'}:
+            quote = selected_paragraphs(row['body'], item['anchors'])
+        else:
             raise ValueError('changed-reviewed-copy')
-        return {'ja': item['ja'], 'en': item['en'],
-                'evidenceQuote': selected_paragraphs(row['body'], item['anchors'])}
-    return {**{key: bind(copy[key]) for key in ('title', 'summary', 'purpose')},
+        return {'ja': item['ja'], 'en': item['en'], 'evidenceQuote': quote}
+    note = {**{key: bind(copy[key]) for key in ('title', 'summary', 'purpose')},
             'facts': [bind(item) for item in copy['facts']]}
+    if pin.get('reviewedPayloadSha') and digest(json.dumps(note, ensure_ascii=False)) != pin['reviewedPayloadSha']:
+        raise ValueError('changed-reviewed-copy')
+    return note
 
 
 def retained_call_history(db, row):
@@ -305,7 +325,7 @@ def replaceable_retained_publication(db, previous, row, pin, validator):
     reason = 'source-event-identity-mismatch'
     if replacement:
         reason = replacement['reason']
-        if (reason not in {'changed-rollout-status', 'reviewed-evidence-precision'}
+        if (reason not in {'changed-rollout-status', 'unsupported-comparison-baseline', 'reviewed-evidence-precision'}
                 or previous['body_sha'] != pin.get('bodyRevisionSha', pin['bodyTextSha'])
                 or digest(previous['payload']) != replacement['payloadSha']
                 or any(previous[column] != replacement[key] for key, column in (

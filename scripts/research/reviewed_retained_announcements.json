@@ -298,6 +298,107 @@
           }
         ]
       }
+    },
+    {
+      "eventId": 1240,
+      "sourceId": "primary-ir-GOOGL",
+      "ticker": "GOOGL",
+      "url": "https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-september-2026/",
+      "title": "The latest AI news we announced in September 2026",
+      "publishedOn": "2026-10-02",
+      "observedAt": "2026-10-03T14:03:59.990+00:00",
+      "eventSha": "67ba280e645caa3ad3654dfd93aac588394931c08052a9654273a2061a24aa3c",
+      "sourceRevision": "c3d6b5872910be9119b93e8cfb07f83fa46d3e8875a8321d1210f9df8e18fabe",
+      "provenance": "primary-source-revision",
+      "bodyRevisionSha": "c3d6b5872910be9119b93e8cfb07f83fa46d3e8875a8321d1210f9df8e18fabe",
+      "bodyTextSha": "10818d2e2370521373eea55ddfc0300819ac1f8f7bbef1c01ead54b14e213b28",
+      "bodyChars": 10246,
+      "reviewedPayloadSha": "65dbaf91f551d5a401eede1afa38ab596085ebe0bf03696574871d1045bf6d4c",
+      "replacement": {
+        "reason": "unsupported-comparison-baseline",
+        "payloadSha": "9afb945834bbffaa64d37e3022cf40b0db742f6a229482398aecdbd5c46042f8",
+        "bodySha": "c3d6b5872910be9119b93e8cfb07f83fa46d3e8875a8321d1210f9df8e18fabe",
+        "startedAt": "2026-10-03T14:07:22.252439+00:00",
+        "publicAt": "2026-10-03T14:07:31.021+00:00",
+        "generationMs": 6077,
+        "jobAttempts": 3
+      },
+      "copy": {
+        "title": {
+          "ja": "2026年9月に発表されたGoogleの最新AIアップデート概要",
+          "en": "Recap of Google's Latest AI Announcements in September 2026",
+          "evidenceSpan": {
+            "start": 0,
+            "end": 1706,
+            "sha256": "c24bf0dea4d3adfcb41e5301d7570accbe119ea50709af8ebb2f5ff5b4921c72"
+          }
+        },
+        "summary": {
+          "ja": "Googleは2026年9月にGemini 4 Argonなど複数の先端AIモデルや科学的マイルストーンを発表した。",
+          "en": "In September 2026, Google announced multiple advanced AI models including Gemini 4 Argon and significant scientific milestones.",
+          "evidenceSpan": {
+            "start": 0,
+            "end": 1706,
+            "sha256": "c24bf0dea4d3adfcb41e5301d7570accbe119ea50709af8ebb2f5ff5b4921c72"
+          }
+        },
+        "purpose": {
+          "ja": "Googleは20年を超える期間、AIの研究・ツール・インフラに投資し、医療や危機対応、教育など多様な分野でAIの恩恵を解放することを目指している。",
+          "en": "Google aims to unlock AI benefits across diverse fields such as healthcare, crisis response, and education through over 20 years of investment in AI research, tools, and infrastructure.",
+          "evidenceSpan": {
+            "start": 0,
+            "end": 1706,
+            "sha256": "c24bf0dea4d3adfcb41e5301d7570accbe119ea50709af8ebb2f5ff5b4921c72"
+          }
+        },
+        "facts": [
+          {
+            "ja": "新たなフロンティアモデルであるGemini 4 Argonは高度な推論能力と100万トークンの出力制限を備え、特にサイバーセキュリティ防御に強みを持つ。現在はFairwindプログラムを通じて信頼されるサイバー防御者に限定公開されている。",
+            "en": "The new frontier model Gemini 4 Argon offers advanced reasoning and a 1-million-token output limit, excelling in cybersecurity defense; currently rolling out to trusted cyber defenders via the Fairwind Program.",
+            "evidenceSpan": {
+              "start": 1306,
+              "end": 2975,
+              "sha256": "362b52c1260de66157dbc0dc30e5124b54b738d8bd39e0c4a79a7dc4015264ad"
+            }
+          },
+          {
+            "ja": "Gemini 3.8 Flashは3.7 Flashと同じ速度と低コストを保ち、ソフトウェア工学や多段階問題解決に進化し、3.8 Flash Cyberは自動的に脆弱性を発見しコード修正を行う機能を備える。",
+            "en": "Gemini 3.8 Flash delivers improved reasoning and coding performance at the same speed and low cost as 3.7 Flash; 3.8 Flash Cyber offers autonomous vulnerability discovery and automated code patching.",
+            "evidenceSpan": {
+              "start": 1306,
+              "end": 2975,
+              "sha256": "362b52c1260de66157dbc0dc30e5124b54b738d8bd39e0c4a79a7dc4015264ad"
+            }
+          },
+          {
+            "ja": "Gemini 3.8 Liveおよび3.8 Live Extended Thinkingは自然な音声対話が可能な音声モデルで、Google AI Studioや複数のGoogleサービスで利用可能となっている。",
+            "en": "Gemini 3.8 Live and 3.8 Live Extended Thinking are natural language audio models available to developers and users across various Google platforms.",
+            "evidenceSpan": {
+              "start": 2575,
+              "end": 3913,
+              "sha256": "cbfe83d3fc2da5f3f56b8981c92a06bb781d5290d0f1c9e5eca0373f594d4453"
+            }
+          },
+          {
+            "ja": "AlphaGenome Atlasはヒトゲノムの90億の可能な単一ヌクレオチド変異の効果を予測するデータベースで、希少疾患研究や複雑な遺伝学の突破口となっている。NASAとの協力により開発されたMAPL-EMITは宇宙から世界のメタン漏出を追跡し、人間の専門家より50％多い排出を検出、これまで地図化されていなかった23,000を超えるプルームを明らかにした。",
+            "en": "AlphaGenome Atlas predicts effects of all 9 billion possible single nucleotide variants in the human genome, accelerating rare disease research. MAPL-EMIT, developed with NASA, tracks global methane leaks from space detecting 50% more emissions than human experts and over 23,000 previously unmapped plumes.",
+            "evidenceSpan": {
+              "start": 7352,
+              "end": 8695,
+              "sha256": "e00ddb72da9778da4e5ca86f4e5af6e0cfa3040794a7d7f9f51b24ac8c130a26"
+            }
+          },
+          {
+            "ja": "Project SuncatcherはGoogle TPUsの宇宙環境での動作を検証する実験衛星を打ち上げる予定で、宇宙でのAIインフラ構築の可能性を探るプロジェクトである。",
+            "en": "Project Suncatcher will launch a test satellite to evaluate Google TPUs under space conditions and explore long-term AI infrastructure possibilities.",
+            "evidenceSpan": {
+              "start": 5961,
+              "end": 7752,
+              "sha256": "44ca2769182fe9fd75f56e2ca14ad8764217ab706ca89909968913e29d562330"
+            }
+          }
+        ]
+      }
     }
   ]
 }
