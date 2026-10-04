@@ -21,7 +21,7 @@ class PublicNewsTransactionTests(unittest.TestCase):
         app=object.__new__(service.AutomaticMonitor);app.db_path=self.case.path
         original=general_source_news.public_items
         observations=[]
-        def project(db,reference):
+        def project(db,reference,**kwargs):
             transaction=db.in_transaction
             with sqlite3.connect(self.case.path,timeout=0) as other:
                 try:
@@ -29,7 +29,7 @@ class PublicNewsTransactionTests(unittest.TestCase):
                     status='writer-progressed'
                 except sqlite3.OperationalError as exc:status=str(exc)
             observations.append((transaction,status))
-            return original(db,reference)
+            return original(db,reference,**kwargs)
         for _ in range(2):
             with patch.object(general_source_news,'public_items',side_effect=project):
                 result=app.public_news()

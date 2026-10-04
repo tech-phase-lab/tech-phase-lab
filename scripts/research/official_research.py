@@ -15,6 +15,7 @@ import uuid
 import amount_relations
 import brief_generator
 import buyback_news
+import buyback_structured
 import factual_validation
 import headline_translation
 import monitor
@@ -24,6 +25,7 @@ import official_research_editorial_recovery as editorial_recovery
 import oracle_reviewed_recovery
 import signals
 import general_source_news
+import buyback_structured_publication
 import reviewed_business_news
 import micron_reviewed_recovery
 import news_delivery_status
@@ -78,6 +80,7 @@ def schema(db):
     editorial_recovery.schema(db)
     general_source_news.revalidation_schema(db)
     general_source_news.assessment_schema(db)
+    buyback_structured_publication.schema(db)
 
 
 def connect(path):
@@ -395,6 +398,10 @@ def claim(db, reference, model, limit):
         if used + headline_pending >= limit:
             return None
         for r in rows:
+            # A retained source derivation never authorizes a paid replacement.
+            # Valid copy is already public; a damaged audit/copy stays held.
+            if buyback_structured_publication.recorded(db,r):
+                continue
             if not current_revision(db,r):
                 continue
             try:
@@ -628,6 +635,9 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     key,model,limit=config
     with connect(path) as db:
         general_source_news.admit_retained(db,reference)
+        structured=buyback_structured_publication.publish(db,reference,clock=lambda:datetime.now(timezone.utc))
+        if structured is not None:
+            return structured
         if general_source_news.recover_reviewed_terminology(db,reference,model):
             return 'done'
         if reviewed_business_news.publish(db,reference,model,clock=lambda:datetime.now(timezone.utc)):
@@ -778,6 +788,10 @@ def validated_publications(db, rows):
         try:
             note=json.loads(p['payload'])
             if not isinstance(note,dict):
+                continue
+            if (r.get('general_source') and r.get('category')=='share-buyback'
+                    and (buyback_structured.MARKER in note or buyback_structured_publication.recorded(db,r))
+                    and not buyback_structured_publication.publication_valid(db,r,p,datetime.now(timezone.utc))):
                 continue
             validate_row(note,r)
         except (ValueError, TypeError, KeyError):

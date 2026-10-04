@@ -111,14 +111,10 @@ class BuybackTests(unittest.TestCase):
             self.assertEqual(len(news.candidates(db,NOW)),1)
             self.assertEqual(news.candidates(db,NOW)[0]['observed_at'],'2026-10-03T23:15:01Z')
 
-    def test_generic_publisher_uses_existing_single_call_budget_and_rechecks_revision(self):
+    def test_recognized_authorization_uses_no_provider_and_rechecks_revision(self):
         self.seed()
         def response(payload,key):
-            self.assertIn('Buyback evidence',payload['instructions'])
-            self.assertEqual(payload['max_output_tokens'],2400)
-            self.assertIn('buyback',json.loads(payload['input'])['evidenceContext']['0'])
-            value={'disposition':'publish','reason':'material-company-development','facts':[FACT]}
-            return {'status':'completed','output':[{'type':'message','content':[{'type':'output_text','text':json.dumps(value)}]}]}
+            self.fail('recognized source must not consume a provider call')
         with patch.object(research,'prepare_story_body',return_value='idle'),patch.object(research,'datetime') as clock,patch.object(news,'datetime') as newsclock:
             clock.fromtimestamp.side_effect=datetime.fromtimestamp;clock.now.return_value=NOW
             newsclock.now.return_value=NOW;newsclock.max=datetime.max
@@ -127,7 +123,7 @@ class BuybackTests(unittest.TestCase):
         with research.connect(self.path) as db:
             item=news.public_items(db,NOW)[0]
             self.assertIn('自社株買い',item['bodyJa']);self.assertIn('buyback authority',item['bodyEn'])
-            self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0],1)
+            self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0],0)
         self.seed('Correction: NVIDIA $NVDA did not authorize this share repurchase program.',observed=NOW.isoformat())
         with research.connect(self.path) as db:self.assertEqual(news.public_items(db,NOW),[])
 

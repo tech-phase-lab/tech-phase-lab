@@ -196,14 +196,10 @@ class BuybackContextTests(unittest.TestCase):
             records=list(news.assessments(db,NOW))
             self.assertIsNone(records[0][1]);self.assertEqual(records[0][2],'invalid-source-clock')
 
-    def test_recap_enters_existing_single_call_budget_and_preserves_report_clock(self):
+    def test_recognized_recap_needs_no_model_call_and_preserves_report_clock(self):
         self.seed()
         def response(payload,key):
-            context=json.loads(payload['input'])['evidenceContext']['0']['buyback']
-            self.assertTrue(context['historical']);self.assertEqual(context['status'],'executed')
-            self.assertIn('Nvidia $NVDA',context['context'])
-            return {'status':'completed','output':[{'type':'message','content':[{'type':'output_text','text':json.dumps(
-                {'disposition':'publish','reason':'material-company-development','facts':[FACT,AUTH]})}]}]}
+            self.fail('recognized source must not consume a provider call')
         with patch.object(buyback_recap,'published_context',return_value=[OFFICIAL]),patch.object(research,'prepare_story_body',return_value='idle'),patch.object(research,'datetime') as clock,patch.object(news,'datetime') as newsclock:
             clock.fromtimestamp.side_effect=datetime.fromtimestamp;clock.now.return_value=NOW
             newsclock.now.return_value=NOW;newsclock.max=datetime.max
@@ -212,7 +208,7 @@ class BuybackContextTests(unittest.TestCase):
             with research.connect(self.path) as db:
                 item=news.public_items(db,NOW)[0]
                 self.assertEqual(item['publishedAt'],RAW['publishedAt'])
-                self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0],1)
+                self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0],0)
                 self.assertIn('約92%',item['bodyJa'])
             # A source correction revokes the result through the existing head guard.
             self.seed('Correction: NVIDIA $NVDA did not repurchase the stated amount of shares.')

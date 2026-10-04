@@ -44,6 +44,16 @@ def published_context(db,reference):
     return items
 
 
+def from_published(items):
+    """Use this invocation's complete issuer projection, before extensions.
+
+    The caller must preserve the exact first-100 eligible issuer boundary and
+    have already requested body validation. No result survives the request.
+    """
+    return [item for item in items[:100] if buyback_news.CUE.search(item['title'])
+            and item.get('bodyJa') and item.get('bodyEn')]
+
+
 def relate(row,items):
     if row.get('category')!='share-buyback' or not any(u['buyback'].get('historical') for u in row['units']):
         return row,'eligible-buyback'

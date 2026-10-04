@@ -13,6 +13,7 @@ import re
 import analyst_news
 import buyback_news
 import buyback_recap
+import buyback_structured
 import actor_grounding
 import broker_commentary
 import factual_validation
@@ -37,6 +38,7 @@ FAILURE_CODES = frozenset({
     'earnings-call-terminology','earnings-announcement-terminology','unsupported-causality',
     'actor-grounding-required','unsupported-affiliation','changed-claim-actor',
     'changed-claim-status','changed-source-attribution','changed-amount-relation',
+    'unsupported-buyback-structure',
 }) | broker_commentary.FAILURE_CODES | buyback_news.FAILURE_CODES
 SOURCE_IDS = (*analyst_news.SOURCE_IDS, 'x-trendspider')
 ACCOUNTS = analyst_news.ACCOUNTS | {'trendspider', 'fabymetal4'}
@@ -62,7 +64,8 @@ ASSESSMENT_POLICY = """First assess whether these source units substantiate a ma
 ACTOR_POLICY = """For an actorGrounding context, the complete original source remains evidence, but only the company claim at the supplied claimStart:claimEnd Unicode character offsets in that evidenceExcerpts unit may be paraphrased into the fact. The application attaches the literal source speaker attribution separately, so do not repeat or translate that speaker inside the fact or infer any employment, executive, adviser, supplier, customer, or other affiliation. Begin both claim paraphrases with the explicit company name as the actor. Never assign another entity's action to that company. Preserve whether the claim describes talks, a possibility, a plan, a signed agreement, or a completed action; these stages are not interchangeable. A discussion of a possible agreement is not a plan or commitment to sign. If actorGrounding.supported is false, return review with ambiguous-actor-or-action and facts=[]; this is a source-binding limit, not proof that the post is irrelevant. Do not infer unstated person/company relationships from outside knowledge."""
 BROKER_POLICY = """These brokerCommentary units are an attributed business/industry outlook, not a stock-rating or price-target action. The application attaches the named broker to every paragraph: do not repeat the broker name or invent a company announcement. Paraphrase each literal source unit independently. Its scope is mandatory: sector means the industry/market, company means the explicitly named company, and peer means the stated other producers. Never transfer sector growth, prices, order discussions, or peer capacity percentages to the named company's revenue or business. A literal context header can supply forecast/estimate modality to a list item, but never borrow another item's metric, number or period. If a product percentage has no measure label, keep it unlabeled with its literal sign; do not infer demand, growth, bit volume, revenue or a time period. Blended does not establish weighting; use 混合 for blended and 加重 only when weighted is explicit. Continuous coverage through a year is 年まで, never the deadline 年までに. Keep each forecast/estimate explicit in BOTH languages. Preserve supply remaining tight, order discussions rather than confirmed orders, revenue coverage rather than revenue growth, and capacity coverage rather than revenue coverage. Retain HBM versus Non-HBM, bit demand versus DRAM, blended ASP (average selling price), and YoY exactly where supplied. Keep CY labels literally (for example CY27); they mean calendar years, not fiscal years. Do not apply a period from one bullet to another. Preserve inequality markers literally in both languages, including leading > and trailing %+; +growth is different from a percentage threshold. A view that coverage could prove conservative is not a guaranteed increase. Write concise original prose, not verbatim source lines. If the attribution or claim scope is unsupported, return review, not a stock action."""
 REVIEW_REASONS = frozenset({'not-material-business-news','insufficient-source-evidence',
-                          'ambiguous-actor-or-action','unsubstantiated-model-output'})
+                          'ambiguous-actor-or-action','unsubstantiated-model-output',
+                          'unsupported-buyback-structure'})
 FINANCIAL_ASSESSMENT_HOLD = re.compile(
     r'\$\s*\d|\b(?:price|targets?|objectives?|PT|rating|rated|analysts?|brokers?|'
     r'securities|overweight|underweight|outperform|underperform|buy|sell|hold|holdings?|'
@@ -272,11 +275,11 @@ def assess(row, source, reference, heads):
             'general_source':True,'semantic_assessment':True,'category':'company-development','units':units},'eligible-semantic-assessment'
 
 
-def assessments(db,reference,sources=signals.SOURCES,*,skip_held_recap_context=False):
+def assessments(db,reference,sources=signals.SOURCES,*,skip_held_recap_context=False,authorization_context=None):
     approved={s['id']:s for s in sources if s['id'] in SOURCE_IDS}
     heads=origin_heads(db,sources,reference)
     seen=set()
-    recap_context=None
+    recap_context=authorization_context
     for row in evidence_rows(db,reference):
         key=(row['source_id'],row['url'],row['sha'])
         if key in seen:
@@ -288,7 +291,12 @@ def assessments(db,reference,sources=signals.SOURCES,*,skip_held_recap_context=F
             # authorization. Keep its held row in duplicate selection, but omit
             # decoration that the normal candidates filter will never expose.
             # Review/diagnostic readers retain the complete relation context.
+            import buyback_structured_publication
+            # A recorded derivation is fully checked in the publication pass.
+            # Its presence only requests relation work here; it grants no
+            # eligibility and avoids redoing full proof validation twice.
             if (skip_held_recap_context and any(u['buyback'].get('status')=='executed' for u in candidate['units'])
+                    and not buyback_structured_publication.recorded(db,candidate)
                     and semantic_review(db,candidate,reference)):
                 reason='eligible-buyback-recap'
             else:
@@ -297,10 +305,10 @@ def assessments(db,reference,sources=signals.SOURCES,*,skip_held_recap_context=F
         yield dict(row),candidate,reason
 
 
-def candidates(db,reference,*,include_review=False):
+def candidates(db,reference,*,include_review=False,_defer_publication_review=False,authorization_context=None):
     unique={}
     order=lambda row:(reconciliation.instant(row['published_at']),reconciliation.instant(row['observed_at']),row['id'])
-    for _,row,_ in assessments(db,reference,skip_held_recap_context=not include_review):
+    for _,row,_ in assessments(db,reference,skip_held_recap_context=not include_review,authorization_context=authorization_context):
         if row:
             # Same exact body/current origin through migrated acquisition routes
             # or duplicate report has one job, preserving its earliest clocks.
@@ -311,7 +319,7 @@ def candidates(db,reference,*,include_review=False):
     # Choose the stable representative before filtering terminal reviews, or
     # an already selected duplicate could consume another assessment call.
     return [row for row in sorted(unique.values(),key=order)
-            if include_review or not semantic_review(db,row,reference)]
+            if include_review or _defer_publication_review or not semantic_review(db,row,reference)]
 
 
 def retained_assessments(db, reference, sources=signals.SOURCES):
@@ -571,6 +579,10 @@ def semantic_review(db,row,reference):
     import micron_reviewed_recovery
     if micron_reviewed_recovery.resolves(db,row,saved,reference):
         return None
+    if row.get('category')=='share-buyback':
+        import buyback_structured_publication
+        if buyback_structured_publication.resolves(db,row,saved,reference):
+            return None
     return dict(saved)
 
 
@@ -595,7 +607,7 @@ def assessment_response_schema():
     schema['required']=['disposition','reason','facts']
     schema['properties']['facts']['minItems']=0
     schema['properties']['disposition']={'type':'string','enum':['publish','review']}
-    schema['properties']['reason']={'type':'string','enum':['material-company-development',*sorted(REVIEW_REASONS-{'unsubstantiated-model-output'})]}
+    schema['properties']['reason']={'type':'string','enum':['material-company-development',*sorted(REVIEW_REASONS-{'unsubstantiated-model-output',buyback_structured.FAILURE})]}
     return schema
 
 
@@ -603,7 +615,7 @@ def bind_assessment(value,row):
     if not isinstance(value,dict) or set(value)!={'disposition','reason','facts'}:
         raise ValueError('invalid-note')
     if value['disposition']=='review':
-        if value['reason'] not in REVIEW_REASONS-{'unsubstantiated-model-output'} or value['facts']!=[]:
+        if value['reason'] not in REVIEW_REASONS-{'unsubstantiated-model-output',buyback_structured.FAILURE} or value['facts']!=[]:
             raise ValueError('invalid-note')
         return None,value['reason']
     if value['disposition']!='publish' or value['reason']!='material-company-development':
@@ -778,6 +790,8 @@ def bind_note(value,row):
 
 def validate_note(note,row):
     expected={'generalSourceVersion','facts'}|({'semanticAssessment'} if row.get('semantic_assessment') else set())
+    structured=isinstance(note,dict) and buyback_structured.MARKER in note
+    if structured:expected.add(buyback_structured.MARKER)
     if not isinstance(note,dict) or set(note)!=expected or note['generalSourceVersion']!=VERSION or not isinstance(note['facts'],list) or len(note['facts'])!=len(row['units']):
         raise ValueError('invalid-note')
     if row.get('semantic_assessment') and note['semanticAssessment']!={'version':ASSESSMENT_VERSION,'disposition':'publish','reason':'material-company-development'}:
@@ -788,6 +802,7 @@ def validate_note(note,row):
         if row.get('semantic_assessment') and unit['quote'] not in row['body']:
             raise ValueError('unsupported-quote')
         validate_pair(item,unit)
+    if structured:buyback_structured.validate_rendered(note,row)
     return note
 
 
@@ -928,11 +943,13 @@ def public_item(row,note):
             'generalSource':VERSION}
 
 
-def publications(db,reference):
+def publications(db,reference,*,authorization_context=None):
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='official_research_publications'").fetchone():
         return []
     result=[]
-    for row in candidates(db,reference):
+    # Stable representative selection still precedes review filtering. Each
+    # publication then takes one complete legacy or structured validation path.
+    for row in candidates(db,reference,_defer_publication_review=True,authorization_context=authorization_context):
         saved=db.execute('SELECT * FROM official_research_publications WHERE event_id=? AND sha=? AND body_sha=?',
                          (row['id'],row['sha'],row['body_sha'])).fetchone()
         if not saved:
@@ -944,15 +961,26 @@ def publications(db,reference):
         if not started or not public or not reconciliation.instant(row['observed_at'])<=started<=public<=reference:
             continue
         try:
-            note=validate_note(json.loads(saved['payload']),row)
+            note=json.loads(saved['payload'])
+            if not isinstance(note,dict):continue
+            import buyback_structured_publication
+            structured=(row.get('category')=='share-buyback' and
+                        (buyback_structured.MARKER in note or buyback_structured_publication.recorded(db,row)))
+            if structured:
+                # This verifies the audit, current source, complete fresh typed
+                # note and all shared guards; repeating validate_note is unused.
+                if not buyback_structured_publication.publication_valid(db,row,saved,reference):continue
+            else:
+                if semantic_review(db,row,reference):continue
+                note=validate_note(note,row)
         except (ValueError,TypeError,KeyError):
             continue
         result.append((row,saved,note))
     return result
 
 
-def public_items(db,reference):
-    return [public_item(row,note) for row,_,note in publications(db,reference)]
+def public_items(db,reference,*,authorization_context=None):
+    return [public_item(row,note) for row,_,note in publications(db,reference,authorization_context=authorization_context)]
 
 
 def diagnostics(db,reference):

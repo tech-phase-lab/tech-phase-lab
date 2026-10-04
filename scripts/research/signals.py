@@ -2071,10 +2071,16 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
     marks = ','.join('?' for _ in allowed)
     rows = db.execute(f'''SELECT * FROM signal_events WHERE source_id IN ({marks})
       ORDER BY id DESC LIMIT 500''', tuple(allowed)).fetchall()
+    issuer_context_ids=set(allowed)
+    context_collision=False
     if include_reviewed_oracle:
         import oracle_reviewed_recovery
         reviewed = oracle_reviewed_recovery.public_event(db, current)
         if reviewed is not None:
+            # An injected exception must not change the independent normal
+            # issuer source/dedup set used for related authorization evidence.
+            context_collision=(reviewed['source_id'] in issuer_context_ids
+                               or any(row['url']==reviewed['url'] for row in rows))
             allowed[reviewed['source_id']] = oracle_reviewed_recovery.publisher()
             rows.append(reviewed)
     def instant(value):
@@ -2090,6 +2096,8 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
     # A baseline can insert newest-first API results in reverse database-ID order.
     rows = sorted(rows, key=release_order, reverse=True)
     items, seen = [], set()
+    issuer_context=[]
+    scan_complete=False
     for row in rows:
         source = allowed[row['source_id']]
         if not official_release_bridge.is_current(db, row):
@@ -2176,18 +2184,29 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
         if include_bodies:
             from official_research import public_story_body
             translation.update(public_story_body(db, row))
-        items.append({'id': str(row['id']), 'title': display_title, 'url': url,
-                      'publisher': source['name'], 'tickers': tickers,
-                      'observedAt': observed.isoformat(), **publication, **translation})
+        item={'id': str(row['id']), 'title': display_title, 'url': url,
+              'publisher': source['name'], 'tickers': tickers,
+              'observedAt': observed.isoformat(), **publication, **translation}
+        items.append(item)
+        if row['source_id'] in issuer_context_ids:issuer_context.append(item)
         if len(items) == limit:
             break
+    else:
+        scan_complete=True
     if include_reviewed_oracle:
+        import buyback_recap
+        # Reuse only the same request's complete, body-validated ordinary
+        # issuer collection. Smaller/metadata-only/exceptional reads retain
+        # the independent lookup; syndicated/reported items never enter it.
+        authorization_context=(buyback_recap.from_published(issuer_context)
+                               if include_bodies and not context_collision
+                               and (scan_complete or len(issuer_context)>=100) else None)
         import issuer_syndication
         # Only validated, revision-bound copy joins the existing display.
         # The distributor feed itself never becomes globally official/AI-eligible.
         items.extend(issuer_syndication.public_items(db, current))
         import general_source_news
-        items.extend(general_source_news.public_items(db, current))
+        items.extend(general_source_news.public_items(db, current,authorization_context=authorization_context))
         import issuer_business_news
         items.extend(issuer_business_news.public_items(db, current))
         items.sort(key=lambda item: next((stamp.timestamp() for value in

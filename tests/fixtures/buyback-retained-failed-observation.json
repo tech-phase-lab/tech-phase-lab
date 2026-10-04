@@ -1,0 +1,20 @@
+{
+  "sourceSha": "6d6fa55e1cb89c1703763f46f4159fbbb0cd685e3a2830fd9e6dd1e6e6fecc0e",
+  "bodySha": "12a7b83bcb831fb30eb04bf896473f94742230a03f01bcbf1baa0b6839e2b3d7",
+  "failedAt": "2026-10-04T05:31:20.647707+00:00",
+  "failure": "changed-buyback-status",
+  "facts": [
+    {
+      "evidenceId": "0",
+      "ja": "Nvidiaは前四半期に約200億ドル、自社株買いを実行し、これはフリーキャッシュフローの約92%に相当する。",
+      "en": "Nvidia repurchased nearly $20 billion of its own shares last quarter, equivalent to approximately 92% of its free cash flow.",
+      "quote": "Nearly $20B repurchased last quarter, equivalent to ~92% of free cash flow."
+    },
+    {
+      "evidenceId": "1",
+      "ja": "Nvidiaは新たに1,500億ドルの自社株買いを承認し、残りの買い戻し枠は2,350億ドルとなっている。",
+      "en": "Nvidia just authorized an additional $150 billion for share repurchases, with $235 billion remaining in repurchase capacity.",
+      "quote": "Another $150B just authorized. $235B in remaining capacity."
+    }
+  ]
+}
