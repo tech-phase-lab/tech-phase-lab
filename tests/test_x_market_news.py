@@ -135,6 +135,61 @@ class MarketNewsTests(unittest.TestCase):
                 self.assertEqual(news.public_feed(db, now=now)[0]['topic'], 'index-membership')
                 self.assertEqual(db.execute('SELECT COUNT(*) FROM signal_headline_translation_calls').fetchone()[0], 3)
 
+    def test_existing_period_publication_is_corrected_from_retained_source_without_clock_changes(self):
+        now = time.time()
+        original = 'U.S. Treasuries have now suffered their worst 10-year period in history 🚨 https://t.co/original123'
+        malformed = {
+            'titleJa': '米国債10年物は史上最悪の期間を記録',
+            'titleEn': 'U.S. 10-Year Treasuries Experience Worst Period in History',
+            'shortTitleJa': '米国債10年物最悪期間',
+            'shortTitleEn': 'U.S. 10-Year Treasuries Worst Period',
+        }
+        public_at = datetime.fromtimestamp(now - 0.5, timezone.utc).isoformat()
+        def unexpected_provider(*_):
+            self.fail('A retained, exactly supported period correction must not call a provider')
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'signals.sqlite'
+            self.seed(path, original, now)
+            with headline_translation.connect(path) as db:
+                row = news.candidates(db, now=now)[0]
+                payload = news.publication_payload(row, malformed)
+                db.execute('INSERT INTO x_market_publications VALUES(?,?,?,?,?)',
+                    (row['source_id'], row['url'], row['sha'], json.dumps(payload), public_at))
+                db.commit()
+                before = db.total_changes
+                item = news.public_feed(db, now=now)[0]
+                self.assertEqual(item['titleJa'], '米国債、10年間の成績が史上最悪に')
+                self.assertEqual(item['titleEn'], 'U.S. Treasuries suffer their worst 10-year period in history')
+                self.assertNotIn('shortTitleJa', item)
+                self.assertNotIn('shortTitleEn', item)
+                for field in ('id', 'url', 'topic', 'publishedAt', 'observedAt'):
+                    self.assertEqual(item[field], payload[field])
+                diagnostic = news.diagnostics(db, now=now)
+                self.assertEqual(diagnostic['latest'][0]['publicAt'], public_at)
+                self.assertEqual(db.total_changes, before)
+                stored = db.execute('SELECT payload,published_at FROM x_market_publications').fetchone()
+                self.assertEqual(json.loads(stored['payload']), payload)
+                self.assertEqual(stored['published_at'], public_at)
+            self.assertEqual(news.run_once(path, unexpected_provider, ENV, now), 'idle')
+            with headline_translation.connect(path) as db:
+                self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0], 0)
+                db.execute("UPDATE signal_documents SET sha='changed-source'")
+                self.assertEqual(news.public_feed(db, now=now), [])
+
+    def test_direct_period_publication_uses_full_original_without_provider_budget(self):
+        now = time.time()
+        source = 'U.S. Treasuries have now suffered their worst 15-year period in history 🚨'
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'signals.sqlite'
+            self.seed(path, source, now)
+            def unexpected_provider(*_):
+                self.fail('The complete explicit period grammar needs no provider')
+            self.assertEqual(news.run_once(path, unexpected_provider, ENV, now), 'done')
+            with headline_translation.connect(path) as db:
+                item = news.public_feed(db, now=now)[0]
+                self.assertEqual(item['titleJa'], '米国債、15年間の成績が史上最悪に')
+                self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0], 0)
+
     def seed(self, path, original, now):
         source = next(s for s in signals.SOURCES if s['id'] == 'x-barchart')
         at = datetime.fromtimestamp(now-1, timezone.utc).isoformat()

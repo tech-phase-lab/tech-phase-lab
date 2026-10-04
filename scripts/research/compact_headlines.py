@@ -2,8 +2,9 @@
 import re
 from collections import Counter
 import factual_validation
+import bond_facts
 
-POLICY = """Also return shortTitleJa and shortTitleEn for the home strip, or null if shortening loses facts or qualifiers. Aim for 35 Japanese / 80 English characters without imposing a hard limit. Use no final punctuation or duplicated company/parenthesized ticker. Keep the full title fields complete."""
+POLICY = """Also return shortTitleJa and shortTitleEn for the home strip, or null if shortening loses facts or qualifiers. Aim for 35 Japanese / 80 English characters without imposing a hard limit. Use no final punctuation or duplicated company/parenthesized ticker. Keep the full title fields complete. Both short titles must be grammatical, understandable statements. Preserve what every duration modifies (bond maturity versus a return window), the metric, comparison period and forecast status; never shorten these into ambiguous noun fragments."""
 FIELDS = {key: {'type': ['string', 'null']} for key in ('shortTitleJa', 'shortTitleEn')}
 
 
@@ -25,6 +26,7 @@ def validated(result, title_ja, title_en):
             factual_validation.validate_numbers(value, source)
             factual_validation.validate_numbers(source, value)
             factual_validation.validate_semantics(value, source)
+            bond_facts.validate(value, source)
             factual_validation.validate_acquisition(value, title_en, language, require_status=True)
             if Counter(factual_validation.numeric_values(value)) != Counter(factual_validation.numeric_values(source)):
                 return {}
