@@ -56,7 +56,9 @@ class BuybackTests(unittest.TestCase):
         self.assertEqual(signals.x_content_kind(SOURCE,AUTH),'share-buyback')
         self.seed(RECAP)
         with research.connect(self.path) as db:
-            self.assertEqual(news.candidates(db,NOW),[])
+            rows=news.candidates(db,NOW)
+            self.assertEqual(len(rows),1)
+            self.assertTrue(rows[0]['units'][0]['buyback']['historical'])
             self.assertEqual(news.public_items(db,NOW),[])
 
     def test_fresh_action_requires_company_binding_status_and_amount(self):
@@ -190,7 +192,9 @@ class BuybackTests(unittest.TestCase):
         self.assertEqual([row['text'] for row in parsed],[RECAP])
         self.seed(RECAP,number=2106523440635363385,published='2026-10-03T23:15:00.217Z')
         with research.connect(self.path) as db:
-            self.assertEqual(news.candidates(db,NOW),[])
+            rows=news.candidates(db,NOW)
+            self.assertEqual(len(rows),1)
+            self.assertTrue(rows[0]['units'][0]['buyback']['historical'])
             self.assertEqual(news.public_items(db,NOW),[])
         for variant in ('repurchase','repurchases','repurchased','repurchasing'):
             with self.subTest(variant=variant):

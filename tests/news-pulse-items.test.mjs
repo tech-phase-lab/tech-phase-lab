@@ -117,3 +117,97 @@ test('late acquired date-only source stays on its original day in both home lang
     assert.equal(pulse[1].kind,'date');
   }
 });
+
+const brokerFact = {
+  ja: 'JPMorganの見方として報じられた内容：メモリー供給は2028年まで逼迫が続くと見込む。',
+  en: 'Reported view of JPMorgan: Memory supply is expected to stay constrained through 2028.',
+};
+const reported = {
+  id:'1244',generalSource:1,tickers:['MU'],publisher:'Reported company news',
+  url:'https://x.com/wallstengine/status/2106377353018626530',
+  title:'MU: Broker business and industry outlook',translationJa:'MU：証券会社による事業・業界見通し',
+  publishedAt:'2026-10-03T13:34:30.000Z',observedAt:'2026-10-03T13:34:43.668Z',
+  bodyJa:[brokerFact.ja,...['顧客との受注協議はすでに2031年分にまで及んでいる。','HBMのビット需要は+63%の伸びを見込む。','非HBMサーバーDRAMについては+37%と推計している。','CY27のHBM混合平均販売単価（ASP）は前年比+54%と見込む。','Micronの長期供給契約による売上高カバー率>35%（2030年まで）は保守的な可能性があるとみる。','アジアのメモリー同業他社は長期契約で生産能力の50%+をカバーしている。'].map(x=>'JPMorganの見方として報じられた内容：'+x)].join('\n\n'),
+  bodyEn:[brokerFact.en,...['Customer order talks already reach into 2031.','HBM bit demand is forecast to expand by +63%.','Non-HBM server DRAM is estimated at +37%.','The blended HBM ASP for CY27 is forecast at +54% YoY.','Micron’s >35% revenue coverage under long-term supply agreements through 2030 could prove conservative.','Asian memory peers have LTAs covering 50%+ of capacity.'].map(x=>'Reported view of JPMorgan: '+x)].join('\n\n'),
+};
+const oneOfficial = item => ({ok:true,enabled:false,items:[],officialUpdates:[item]});
+
+test('header summary uses one whole approved fact with attribution while the full bilingual body stays untouched', () => {
+  const feed=availableNewsPayload(oneOfficial(reported)), before=structuredClone(feed);
+  for (const lang of ['ja','en']) {
+    const [pulse]=newsPulseItems(feed,lang);
+    assert.equal(pulse.summary,brokerFact[lang]);
+    assert.ok(pulse.body.includes('2031'));
+    assert.equal((pulse.body.match(/JPMorgan/g)??[]).length,7);
+    for(const figure of ['+63%','+37%','CY27','+54%','>35%','2030','50%+']) assert.ok(pulse.body.includes(figure));
+    assert.ok(!pulse.summary.includes('2031'));
+    assert.equal(pulse.at,reported.publishedAt);
+    assert.equal(pulse.kind,'published');
+  }
+  assert.deepEqual(feed,before);
+});
+
+test('a header summary never splits decimal points, broker initials, source periods or a longer evidence paragraph', () => {
+  const en='Reported view of J.P. Morgan: U.S. demand is forecast to grow 3.45% in CY27; coverage >35% through 2030 could be conservative.';
+  const ja='J.P. Morganの見方として報じられた内容：CY27の需要は3.45%増を見込み、2030年までのカバー率>35%は保守的な可能性がある。';
+  for (const lang of ['ja','en']) {
+    const text=lang==='ja'?ja:en;
+    const item={...reported,bodyJa:ja,bodyEn:en};
+    assert.equal(newsPulseItems(oneOfficial(item),lang)[0].summary,text);
+    for (const body of ['x'.repeat(181)+'\n\nA short later paragraph.', 'Incomplete header\ncontinued fact.']) {
+      const [pulse]=newsPulseItems(oneOfficial({...item,bodyJa:body,bodyEn:body}),lang);
+      assert.equal(pulse.summary,lang==='ja'?item.translationJa:item.title);
+    }
+    const compact=lang==='ja'?'供給は2028年まで逼迫の見通し':'Supply seen constrained through 2028';
+    const [pulse]=newsPulseItems(oneOfficial({...item,[lang==='ja'?'shortTitleJa':'shortTitleEn']:compact}),lang);
+    assert.equal(pulse.summary,compact);
+  }
+});
+
+test('ordinary source prose and partial-brief detail are never promoted into the header', () => {
+  for(const lang of ['ja','en']) {
+    const title=lang==='ja'?reported.translationJa:reported.title;
+    assert.equal(newsPulseItems(oneOfficial({...reported,publisher:"Other source"}),lang)[0].summary,title);
+    const brief={...reported,brief:{version:1,scope:'company',validFacts:1,pendingFacts:1},
+      title:reported.title+' (brief; details awaiting review)',translationJa:reported.translationJa+'（短報・詳細確認中）'};
+    assert.equal(newsPulseItems(oneOfficial(brief),lang)[0].summary,title);
+  }
+});
+
+test('short Treasury news uses its approved complete compact headline without creating new details', () => {
+  const item={...market('bond','government-bonds','2026-10-03T04:07:00Z'),
+    titleJa:'米国10年物国債利回りが再び急上昇中',shortTitleJa:'米国10年物国債利回り急上昇',
+    titleEn:'U.S. 10-Year Treasury Yield ripping again',shortTitleEn:'U.S. 10-year Treasury yield surges'};
+  for(const lang of ['ja','en']) {
+    const [pulse]=newsPulseItems({ok:true,enabled:false,items:[],marketUpdates:[item]},lang);
+    assert.equal(pulse.summary,item[lang==='ja'?'shortTitleJa':'shortTitleEn']);
+    assert.doesNotMatch(pulse.summary,/…|\.\.\./);
+  }
+});
+
+
+test('retained buyback recap header preserves the complete validated first fact and report clock', () => {
+  const first={
+    ja:'報道によると、NVIDIAは前四半期に$20B弱の自社株を買い戻し、金額はフリーキャッシュフローの約92%に相当した。',
+    en:'According to the report, During the previous quarter, NVIDIA bought back nearly $20B of its shares, an amount equivalent to about 92% of free cash flow.',
+  };
+  const context={
+    ja:'投稿の承認額と残る承認枠は、2026-09-28の会社発表にも記載されている。',
+    en:'The authorization and remaining-capacity amounts in the post also appear in the company release dated 2026-09-28.',
+  };
+  const item={id:'1246',generalSource:1,tickers:['NVDA'],publisher:'Reported company news',
+    title:'NVDA: Reported buyback recap',translationJa:'NVDA：自社株買い実績の振り返り報道',
+    url:'https://x.com/TrendSpider/status/2106523440635363385',publishedAt:'2026-10-03T23:15:00.000Z',observedAt:'2026-10-04T02:09:57.822Z',
+    bodyJa:first.ja+'\n\n'+context.ja,bodyEn:first.en+'\n\n'+context.en};
+  const feed=availableNewsPayload(oneOfficial(item)),before=structuredClone(feed);
+  for(const lang of ['ja','en']) {
+    const [pulse]=newsPulseItems(feed,lang);
+    assert.equal(pulse.summary,first[lang]);
+    assert.ok(pulse.body.includes(context[lang]));
+    assert.equal(pulse.at,item.publishedAt);assert.equal(pulse.kind,'published');
+    assert.ok(!pulse.summary.includes('2026-09-28'));
+    assert.equal(newsPulseItems(oneOfficial({...item,title:'NVDA: Reported buyback story'}),lang)[0].summary,
+      lang==='ja'?item.translationJa:'NVDA: Reported buyback story');
+  }
+  assert.deepEqual(feed,before);
+});

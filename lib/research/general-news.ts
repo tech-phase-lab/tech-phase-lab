@@ -194,7 +194,16 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
         && provider.articleRules.some(rule => rule.host === url.hostname && new RegExp(rule.pattern).test(url.pathname))
         && url.hostname !== "www.sec.gov" && url.hostname !== "data.sec.gov" && !url.search && !url.hash);
       if (url.protocol !== "https:" || url.username || url.password || url.port || (!officialUpdateHosts.has(url.hostname) && !verifiedMu && !issuerRelease && !reviewedOracle && !syndication)) throw Error("Invalid official source");
-      if (url.hostname === "x.com" && !/^\/(nebiusai|tipranks|theflynews|wallstengine|fabymetal4)\/status\/\d+$/i.test(url.pathname)) throw Error("Invalid official account");
+      // This reporter is admitted only through the source-bound buyback path.
+      // Retain its marker so server and browser validation enforce the same lane.
+      const reportedBuyback = url.hostname === "x.com" && /^\/trendspider\/status\/\d+$/i.test(url.pathname)
+        && !url.search && !url.hash && v.generalSource === 1 && v.brief === undefined
+        && v.publisher === "Reported company news" && Array.isArray(v.tickers) && v.tickers.length === 1
+        && typeof v.tickers[0] === "string" && reportedNewsTickers.includes(v.tickers[0])
+        && [`${v.tickers[0]}: Reported share buyback`, `${v.tickers[0]}: Reported buyback recap`].includes(v.title as string)
+        && typeof v.translationJa === "string" && !!v.translationJa.trim() && !!newsBody(v).bodyJa;
+      if (url.hostname === "x.com" && !/^\/(nebiusai|tipranks|theflynews|wallstengine|fabymetal4)\/status\/\d+$/i.test(url.pathname)
+        && !reportedBuyback) throw Error("Invalid official account");
       if (url.hostname === "www.bea.gov" && (!/^\/news\/20\d{2}\/personal-income-and-outlays-[a-z]+-20\d{2}$/.test(url.pathname) || url.search || url.hash)) throw Error("Invalid BEA release");
       if (Array.from(v.title as string).length > 180 || (v.publisher as string).length > 80 || !/^\d+$/.test(v.id as string) || !Number.isFinite(Date.parse(v.observedAt as string))) throw Error("Invalid update");
       if (!Array.isArray(v.tickers) || v.tickers.length > 5 || !v.tickers.every(t => typeof t === "string" && /^[A-Z][A-Z0-9.-]{0,9}$/.test(t))) throw Error("Invalid update tickers");
@@ -229,7 +238,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
         }
       }
       const mergedResult = sources.length > 1 && Array.isArray(v.sources) && sources.length === v.sources.length;
-      return { ...(syndication ? { syndication } : {}), ...newsBrief(v), ...compactTitles(v), ...newsBody(v, mergedResult ? 40000 : 12000), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}), ...(sources.length ? { sources } : {}) };
+      return { ...(syndication ? { syndication } : {}), ...newsBrief(v), ...(reportedBuyback ? { generalSource: 1 as const } : {}), ...compactTitles(v), ...newsBody(v, mergedResult ? 40000 : 12000), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}), ...(sources.length ? { sources } : {}) };
     }).reduce<OfficialUpdate[]>((items, item) => {
       const index = seenOfficialUrls.get(item.url);
       if (index === undefined) {

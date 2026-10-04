@@ -59,6 +59,7 @@ def monetary_relations(text):
                 or re.search(r'\b(?:increas\w*|rais\w*|expand\w*|boost\w*|bringing)\b[^;。]{0,85}\bto\s*$', before, re.I)
                 or re.search(r'\b(?:total|remaining|balance)\b[^;。]{0,45}(?:to|of|is)\s*$', before, re.I)
                 or re.match(r'\s*(?:に|へ)(?:拡大|増額|引き上げ|増加)', after)
+                or re.match(r'\s+(?:(?:of|in)\s+)?(?:remaining\s+(?:capacity|authorization)|authorization\s+remaining)\b', after, re.I)
                 or re.search(r'(?:総額|合計|残り|残る|残額)[^、。;；]{0,20}?(?:は|を|が)?\s*$', before)):
             role = 'total'
         if role:

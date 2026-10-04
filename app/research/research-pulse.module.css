@@ -1,20 +1,16 @@
-.pulse{position:relative;display:flex;align-items:center;gap:16px;min-height:56px;padding:10px 12px;margin:0 0 24px;border-top:1px solid #28443e;border-bottom:1px solid #28443e;background:linear-gradient(100deg,#10241f88,transparent);overflow:hidden}.label{font-size:10px;letter-spacing:.12em;color:#91dfc4;white-space:nowrap}.item{display:flex;align-items:center;gap:12px;min-width:0;flex:1;color:#dae7e5;font-size:12px;animation:enter .5s ease-out}.item strong{color:#91dfc4;font-size:11px}.item span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.item time{margin-left:auto;font-size:10px;color:#93a6ad;white-space:nowrap}.pulse button{flex:none;border:0;background:none;color:#a4c5ba;min-width:36px;min-height:36px}.pulse button:disabled{opacity:.4}.progress{position:absolute;bottom:0;left:0;height:1px;width:100%;background:#91dfc4;transform-origin:left;animation:progress 8s linear forwards;opacity:.65}@keyframes enter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}@keyframes progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}@media(max-width:600px){.pulse{gap:8px;flex-wrap:wrap;padding:8px 10px;margin-bottom:18px}.label{width:100%;font-size:9px}.item{gap:7px}.item time{display:none}.pulse button{min-height:28px}.item span{font-size:11px}}@media(prefers-reduced-motion:reduce){.item,.progress{animation:none}}
-.fresh{color:#a9eccb;font-size:9px;margin-left:5px;font-weight:600}.item{ text-decoration:none}.item:focus-visible{outline:2px solid #91dfc4;outline-offset:3px}@media(max-width:600px){.item{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 7px}.item time{display:block;grid-column:1/-1;margin-left:0;font-size:9px}.label{width:auto;align-self:flex-start;margin-top:3px}}
-
-.pulse{touch-action:pan-y pinch-zoom}
-
-/* Read the entire news text here, without opening an external page. */
-.item{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:5px 10px}
-.item span{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;line-height:1.65}
-.item time{grid-column:2;margin-left:0}
-.pulse{align-items:flex-start}
-.label{padding-top:3px}
-@media(max-width:600px){.item{gap:4px 7px}.item time{grid-column:1/-1}.item span{font-size:12px}}
-
-/* Two compact rows by default; tap to read the complete headline in place. */
-.pulse{gap:10px;align-items:center}.pulse>.label{display:none}
-.pulse button.item{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 8px;flex:1;min-width:0;text-align:left;padding:0;color:#dae7e5;cursor:pointer;font:inherit}
-.item strong{grid-column:1;grid-row:1;font-size:11px;line-height:18px}
-.pulse .item span{grid-column:2;grid-row:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;line-height:18px}
-.pulse .item time{grid-column:1/-1;grid-row:2;line-height:14px;margin:0;font-size:9px}
-.pulse[data-expanded=true] .item span{white-space:normal;overflow:visible}
+.pulse{position:relative;display:flex;align-items:center;gap:10px;min-height:56px;padding:10px 12px;margin:0 0 24px;border-top:1px solid #28443e;border-bottom:1px solid #28443e;background:linear-gradient(100deg,#10241f88,transparent);overflow:hidden;touch-action:pan-y pinch-zoom}
+/* The header always shows one complete compact summary. Full article text lives
+   in the news list below; neither tapping nor pausing expands this strip. */
+.item{min-width:0;flex:1;color:#dae7e5;font-size:12px;line-height:18px;animation:enter .5s ease-out;overflow-wrap:anywhere}
+.item strong{color:#91dfc4;font-size:11px;margin-right:8px}
+.item span{white-space:normal}
+.item time{display:block;margin-top:3px;font-size:9px;line-height:14px;color:#93a6ad}
+.pulse button{flex:none;border:0;background:none;color:#a4c5ba;min-width:36px;min-height:36px;cursor:pointer}
+.pulse button:disabled{opacity:.4;cursor:default}
+.pulse:focus-visible,.pulse button:focus-visible{outline:2px solid #91dfc4;outline-offset:3px}
+.fresh{color:#a9eccb;font-size:9px;margin-left:5px;font-weight:600}
+.progress{position:absolute;bottom:0;left:0;height:1px;width:100%;background:#91dfc4;transform-origin:left;animation:progress 8s linear forwards;opacity:.65}
+@keyframes enter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media(max-width:600px){.pulse{gap:8px;padding:8px 10px;margin-bottom:18px}.pulse button{min-height:28px}}
+@media(prefers-reduced-motion:reduce){.item,.progress{animation:none}}

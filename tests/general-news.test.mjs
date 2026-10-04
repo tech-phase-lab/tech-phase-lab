@@ -469,3 +469,26 @@ finally:
     }
   }
 });
+
+
+test('TrendSpider buyback stories retain their bounded publication marker through server and browser parsing', () => {
+  const recap={id:'1246',generalSource:1,tickers:['NVDA'],publisher:'Reported company news',
+    title:'NVDA: Reported buyback recap',translationJa:'NVDA：自社株買い実績の振り返り報道',
+    url:'https://x.com/TrendSpider/status/2106523440635363385',publishedAt:'2026-10-03T23:15:00.000Z',observedAt:'2026-10-04T02:09:57.822Z',
+    bodyJa:'報道によると、NVIDIAは前四半期に$20B弱の自社株を買い戻し、金額はフリーキャッシュフローの約92%に相当した。',
+    bodyEn:'According to the report, NVIDIA bought back nearly $20B of its shares during the previous quarter, equivalent to about 92% of free cash flow.'};
+  const wrap=row=>({ok:true,enabled:false,items:[],officialUpdates:[row]});
+  for(const title of ['NVDA: Reported buyback recap','NVDA: Reported share buyback']) {
+    const source={...recap,title};
+    const server=publicNewsPayload(wrap(source));
+    assert.deepEqual(server.officialUpdates,[source]);
+    assert.deepEqual(availableNewsPayload(server),server);
+  }
+  for(const changes of [
+    {generalSource:undefined},{publisher:'TrendSpider'},{title:'NVDA: Reported company development'},
+    {title:'AAPL: Reported buyback recap'},{tickers:['NVDA','AAPL']},{tickers:['UNKNOWN']},
+    {bodyJa:undefined},{bodyEn:undefined},{translationJa:undefined},
+    {url:recap.url+'/photo/1'},{url:recap.url+'?draft=1'},{url:recap.url+'#other'},
+    {url:recap.url.replace('TrendSpider','UnknownReporter')},
+  ]) assert.deepEqual(availableNewsPayload(wrap({...recap,...changes})).officialUpdates,[]);
+});

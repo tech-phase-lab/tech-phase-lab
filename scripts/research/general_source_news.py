@@ -12,6 +12,7 @@ import re
 
 import analyst_news
 import buyback_news
+import buyback_recap
 import actor_grounding
 import broker_commentary
 import factual_validation
@@ -165,8 +166,8 @@ def x_assess(row, source, reference, heads):
         if named_companies(body)-{ticker}:return None,'multi-entity-relation-needs-binding'
         units,reason=buyback_news.prepare(body,ticker,signals.ALIASES.get(ticker,[]))
         if not units:return None,reason
-        event_date=units[0]['buyback']['eventDate']
-        if event_date and event_date>published.date().isoformat():return None,'invalid-source-clock'
+        if any(unit['buyback'].get('eventDate') and unit['buyback']['eventDate']>published.date().isoformat() for unit in units):
+            return None,'invalid-source-clock'
         return {**dict(row),'body_sha':digest(body),'body_at':row['observed_at'],'ticker':ticker,
                 'general_source':True,'semantic_assessment':True,'category':'share-buyback','units':units},'eligible-buyback'
     if url.split('/')[3].lower() not in analyst_news.ACCOUNTS:
@@ -275,12 +276,16 @@ def assessments(db,reference,sources=signals.SOURCES):
     approved={s['id']:s for s in sources if s['id'] in SOURCE_IDS}
     heads=origin_heads(db,sources,reference)
     seen=set()
+    recap_context=None
     for row in evidence_rows(db,reference):
         key=(row['source_id'],row['url'],row['sha'])
         if key in seen:
             continue
         seen.add(key)
         candidate,reason=assess(row,approved.get(row['source_id']),reference,heads)
+        if candidate and candidate['category']=='share-buyback' and any(u['buyback'].get('historical') for u in candidate['units']):
+            if recap_context is None:recap_context=buyback_recap.published_context(db,reference)
+            candidate,reason=buyback_recap.relate(candidate,recap_context)
         yield dict(row),candidate,reason
 
 
@@ -310,6 +315,7 @@ def retained_assessments(db, reference, sources=signals.SOURCES):
     """
     approved={s['id']:s for s in sources if s['id'] in SOURCE_IDS}
     heads=origin_heads(db,sources,reference)
+    recap_context=None
     for raw in db.execute('''SELECT * FROM signal_x_acquisition WHERE source_id IN (?,?,?)
       ORDER BY julianday(published_at),julianday(first_seen_at),source_id,url,sha''', SOURCE_IDS):
         raw=dict(raw)
@@ -328,6 +334,9 @@ def retained_assessments(db, reference, sources=signals.SOURCES):
                     for key in ('first_seen_at','last_seen_at'))
                     or not first or not last or not first<=last<=reference):
                 candidate,reason=None,'invalid-acquisition-clock'
+        if candidate and candidate['category']=='share-buyback' and any(u['buyback'].get('historical') for u in candidate['units']):
+            if recap_context is None:recap_context=buyback_recap.published_context(db,reference)
+            candidate,reason=buyback_recap.relate(candidate,recap_context)
         yield raw,candidate,reason
 
 
@@ -651,8 +660,12 @@ def validate_anchors(text, quote, unit, language):
         for m in re.finditer(r'\b'+analyst_news.FIRM+r'\b',value,re.I)}
     if broker_names(text)-broker_names(quote+' '+unit.get('actor','')):
         raise ValueError('changed-broker-actor')
-    source_concepts=concepts(quote,'en')
-    output_concepts=concepts(text,language)
+    # In buyback evidence, remaining capacity is permission to repurchase,
+    # not manufacturing/production capacity. Its amounts have a separate guard.
+    concept_quote=re.sub(r'\bremaining capacity\b','remaining authorization',quote,flags=re.I) if 'buyback' in unit else quote
+    concept_text=re.sub(r'\bremaining capacity\b','remaining authorization',text,flags=re.I) if 'buyback' in unit else text
+    source_concepts=concepts(concept_quote,'en')
+    output_concepts=concepts(concept_text,language)
     # A Japanese combined supply-demand noun preserves both source concepts.
     if language=='ja' and re.search(r'需給',text):
         output_concepts.add('demand')
@@ -868,10 +881,15 @@ def recover_reviewed_terminology(db,reference,model):
 
 def public_item(row,note):
     title_ja,title_en=CATEGORIES[row['category']]
+    recap=row['category']=='share-buyback' and any(unit['buyback'].get('historical') for unit in row['units'])
+    if recap:
+        title_ja,title_en='自社株買い実績の振り返り報道','Reported buyback recap'
     if any('brokerCommentary' in unit for unit in row['units']):
         title_ja,title_en='証券会社による事業・業界見通し','Broker business and industry outlook'
     paragraphs={'ja':[],'en':[]}
+    covered_units={item['unitId'] for item in row.get('related_authorizations',[])}
     for item,unit in zip(note['facts'],row['units']):
+        if unit['id'] in covered_units:continue
         actor=unit['actor']
         for lang in ('ja','en'):
             if 'target' in unit:
@@ -886,10 +904,14 @@ def public_item(row,note):
                          if lang=='ja' else unit['actorGrounding']['attribution'])
                 prefix=f'{speaker}によると、' if lang=='ja' else f'According to {speaker}, '
             paragraphs[lang].append(prefix+item[lang])
+    for related in row.get('related_authorizations',[]):
+        date=related['publishedOn']
+        paragraphs['ja'].append(f'投稿の承認額と残る承認枠は、{date}の会社発表にも記載されている。')
+        paragraphs['en'].append(f'The authorization and remaining-capacity amounts in the post also appear in the company release dated {date}.')
     clocks={'publishedAt':row['published_at'],'observedAt':row['observed_at']}
     if row['category']=='share-buyback':
         date=row['units'][0]['buyback'].get('eventDate')
-        if date:
+        if date and not recap:
             clocks={'publishedOn':date,'sourcePublishedAt':row['published_at'],'observedAt':row['observed_at']}
     return {'id':str(row['id']),'title':f"{row['ticker']}: {title_en}",'translationJa':f"{row['ticker']}：{title_ja}",
             'url':row['url'],'publisher':'Reported company news','tickers':[row['ticker']],
