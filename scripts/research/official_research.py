@@ -718,8 +718,9 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     with connect(path) as db:
         if oracle_reviewed_recovery.publish(db, reference, validate):
             return 'done'
-        if editorial_recovery.publish_retained(db, reference, validate):
-            return 'done'
+        retained = editorial_recovery.publish_retained(db, reference, validate)
+        if retained:
+            return 'idle' if retained == 'blocked' else 'done'
         recovery=editorial_recovery.publish(db,candidates(db,reference,read_only=True),
                                             reference,validate,current_revision)
     if recovery is not None:
@@ -744,8 +745,9 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     prepare_story_body(path, reference)
     reference=datetime.fromtimestamp(now,timezone.utc)
     with connect(path) as db:
-        if editorial_recovery.publish_retained(db, reference, validate):
-            return 'done'
+        retained = editorial_recovery.publish_retained(db, reference, validate)
+        if retained:
+            return 'idle' if retained == 'blocked' else 'done'
         claimed=claim(db,reference,model,limit)
     if not claimed:
         return 'idle'

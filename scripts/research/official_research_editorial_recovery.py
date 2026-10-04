@@ -8,6 +8,7 @@ from the retained body; the reviewed data contains only bilingual paraphrases.
 from datetime import datetime, timezone
 import hashlib
 import json
+import math
 from pathlib import Path
 import re
 import time
@@ -46,6 +47,13 @@ def digest(value):
 
 
 def schema(db):
+    db.execute('''CREATE TABLE IF NOT EXISTS reviewed_retry_article_recoveries(
+      event_id INTEGER PRIMARY KEY, manifest_sha TEXT NOT NULL,
+      source_id TEXT NOT NULL, event_sha TEXT NOT NULL, body_sha TEXT NOT NULL,
+      source_revision TEXT NOT NULL, source_observed_at TEXT NOT NULL,
+      source_body_at TEXT NOT NULL, failure_lease TEXT NOT NULL UNIQUE,
+      failure_payload_sha TEXT NOT NULL, previous_history TEXT NOT NULL,
+      started_at TEXT NOT NULL, public_at TEXT NOT NULL, payload_sha TEXT NOT NULL)''')
     db.execute('''CREATE TABLE IF NOT EXISTS reviewed_retained_announcement_recoveries(
       manifest_sha TEXT NOT NULL, source_url TEXT NOT NULL, body_text_sha TEXT NOT NULL,
       event_id INTEGER NOT NULL, event_sha TEXT NOT NULL, source_revision TEXT NOT NULL,
@@ -205,7 +213,7 @@ def publish(db, rows, reference, validator, current_revision):
 
 
 RETAINED_COPY_PATH = Path(__file__).with_name('reviewed_retained_announcements.json')
-RETAINED_COPY_SHA = '3523181bfc611fa2b294b80c5235694eed31237b934e8a462bd2e12d747e67b2'
+RETAINED_COPY_SHA = 'a8bc4e38d7bd2ec584e2fe6bfd8d663d7ab4df1a8d539867922300dcb0af74e5'
 
 
 def retained_candidate(db, pin, reference):
@@ -389,6 +397,9 @@ def publish_retained(db, reference, validator):
                           (RETAINED_COPY_SHA, pin['url'], pin['bodyTextSha'])).fetchone()
 
     db.commit()
+    retry_result = publish_retry_articles(db, manifest.get('retryArticles', []), reference, validator)
+    if retry_result:
+        return retry_result
     for pin in manifest['announcements']:
         row = record(retained_candidate(db, pin, reference))
         if row is None or consumed(pin):
@@ -461,5 +472,197 @@ def publish_retained(db, reference, validator):
             db.execute('INSERT INTO reviewed_retained_announcement_recoveries VALUES(?,?,?,?,?,?,?,?,?,?,?)',
                        (RETAINED_COPY_SHA, pin['url'], pin['bodyTextSha'], row['id'], row['sha'], row['source_revision'],
                         row['observed_at'], row['body_at'], started_at, public_at, digest(payload)))
+            return True
+    return False
+
+
+def retry_source_snapshot(db, pin):
+    """Exact current evidence and source policy, with no projection or writes."""
+    import signals
+    import official_release_bridge as bridge
+    def record(sql, args):
+        row = db.execute(sql, args).fetchone()
+        return dict(row) if row is not None else None
+    event_id, url = pin['eventId'], pin['url']
+    source = next((s for s in [*signals.SOURCES, *bridge.publishers()]
+                   if s['id'] == pin['sourceId']), None)
+    result = {
+        'policy': json.dumps(source, ensure_ascii=False, sort_keys=True),
+        'event': record('SELECT * FROM signal_events WHERE id=?', (event_id,)),
+        'cache': record('SELECT * FROM official_story_bodies WHERE event_id=?', (event_id,)),
+        'proof': record('SELECT * FROM official_story_body_proofs WHERE event_id=?', (event_id,)),
+    }
+    if pin['provenance'] == 'primary-article':
+        result['source'] = record('SELECT * FROM sources WHERE url=?', (url,))
+        result['revision'] = record('SELECT * FROM source_revisions WHERE url=? AND sha256=?',
+                                    (url, pin['sourceRevision']))
+    elif pin['provenance'] == 'signal-document':
+        result['document'] = record('SELECT * FROM signal_documents WHERE source_id=? AND url=?',
+                                    (pin['sourceId'], url))
+    return result
+
+
+def retry_candidate(db, pin, reference, rows):
+    """Use the normal configured issuer projection, then bind the reviewed body."""
+    import official_research as research
+    matches = [r for r in rows if r['id'] == pin['eventId']]
+    if len(matches) != 1:
+        return None
+    row = dict(matches[0])
+    if (row.get('general_source') or row.get('issuer_business') or row.get('truncated')
+            or any(row.get(column) != pin[key] for key, column in (
+                ('sourceId', 'source_id'), ('ticker', 'ticker'), ('url', 'url'),
+                ('title', 'title'), ('eventSha', 'sha'), ('publishedOn', 'published_on'),
+                ('publishedAt', 'published_at')))
+            or repair.instant(row['observed_at']) != repair.instant(pin['observedAt'])
+            or row['body_sha'] != pin['bodyTextSha'] or len(row['body']) != pin['bodyChars']
+            or digest(row['body']) != pin['bodyTextSha'] or not research.current_revision(db, row)):
+        return None
+    snapshot = retry_source_snapshot(db, pin)
+    policy = json.loads(snapshot['policy'])
+    if not policy or policy.get('enabled') is False or policy.get('officialUpdates') is not True:
+        return None
+    cached = snapshot['cache']
+    if (not cached or cached['error'] or cached['sha'] != row['sha']
+            or cached['body_sha'] != row['body_sha'] or cached['body'] != row['body']):
+        return None
+    if pin['provenance'] == 'primary-article':
+        proven = retained_candidate(db, pin, reference)
+        if not proven or proven['body'] != row['body'] or proven['body_at'] != row['body_at']:
+            return None
+    elif pin['provenance'] == 'signal-document':
+        document = snapshot['document']
+        if (not document or document['sha'] != pin['sourceRevision']
+                or document['sha'] != row['sha'] or document['title'] != row['title']
+                or document['text'] != row['body']
+                or digest(document['title'] + '\n' + document['text']) != row['sha']):
+            return None
+    else:
+        return None
+    observed, body_at = repair.instant(row['observed_at']), repair.instant(row['body_at'])
+    if (not observed or not body_at or not observed <= body_at <= reference
+            or (reference - observed).total_seconds() > 7 * 86400):
+        return None
+    row['source_revision'] = pin['sourceRevision']
+    return row, snapshot
+
+
+def retry_history(db, pin):
+    """Keep all failed outputs and paid-call states unchanged, including older tries."""
+    event_id = pin['eventId']
+    job = db.execute('SELECT * FROM official_research_jobs WHERE event_id=?', (event_id,)).fetchone()
+    failures = [dict(r) for r in db.execute('''SELECT * FROM official_research_attempt_failures
+      WHERE event_id=? ORDER BY julianday(failed_at),rowid''', (event_id,))]
+    calls = [dict(r) for r in db.execute('''SELECT * FROM signal_headline_translation_calls
+      WHERE source_id=? AND sha=? ORDER BY at,lease''', ('research:' + pin['sourceId'], pin['eventSha']))]
+    proofs = [dict(r) for r in db.execute('''SELECT p.* FROM official_research_attempt_body_proofs p
+      JOIN official_research_attempt_failures f ON f.lease=p.lease
+      WHERE f.event_id=? ORDER BY p.lease''', (event_id,))]
+    return {'job': dict(job) if job else None, 'failures': failures, 'calls': calls, 'bodyProofs': proofs}
+
+
+def retry_failure(db, pin, reference):
+    """A pinned latest rejection must belong to the current closed retry lease."""
+    if (db.execute('SELECT 1 FROM official_research_publications WHERE event_id=?', (pin['eventId'],)).fetchone()
+            or db.execute('SELECT 1 FROM reviewed_retry_article_recoveries WHERE event_id=?', (pin['eventId'],)).fetchone()):
+        return None
+    history = retry_history(db, pin)
+    job, failures = history['job'], history['failures']
+    expected = pin['failure']
+    if not job or not failures or max(len(failures), len(history['calls']), len(history['bodyProofs'])) > 100:
+        return None
+    times = [repair.instant(failure['failed_at']) for failure in failures]
+    if any(at is None or at > reference for at in times) or len(set(times)) != len(times):
+        return None
+    failure = max(failures, key=lambda value: repair.instant(value['failed_at']))
+    payload = failure['payload']
+    if (job['sha'] != pin['eventSha'] or job['state'] != 'retry'
+            or job['attempts'] != expected['attempts'] or job['failure_kind'] != expected['reason']
+            or not job['lease'] or job['lease'] != failure['lease']
+            or failure['sha'] != pin['eventSha'] or failure['reason'] != expected['reason']
+            or failure['failed_at'] != expected['failedAt']
+            or not isinstance(payload, str) or not 1 <= len(payload) <= 131072
+            or digest(payload) != expected['payloadSha']):
+        return None
+    observed_at = repair.instant(pin['observedAt'])
+    if (not observed_at or any(call['state'] == 'running' for call in history['calls'])
+            or any(not isinstance(call['at'], (int, float)) or not math.isfinite(call['at'])
+                   for call in history['calls'])):
+        return None
+    # The copy review may precede an ordinary later retry. Bind both the exact
+    # reviewed original and the separately refreshed latest failed attempt.
+    for required in (pin['reviewedFailure'], expected):
+        selected = [f for f in failures if f['sha'] == pin['eventSha']
+                    and f['failed_at'] == required['failedAt'] and f['reason'] == required['reason']
+                    and isinstance(f['payload'], str) and 1 <= len(f['payload']) <= 131072
+                    and digest(f['payload']) == required['payloadSha']]
+        if len(selected) != 1:
+            return None
+        selected = selected[0]
+        matching = [call for call in history['calls'] if call['lease'] == selected['lease']]
+        proof = [proof for proof in history['bodyProofs'] if proof['lease'] == selected['lease']]
+        failed_at = repair.instant(selected['failed_at'])
+        if (len(matching) != 1 or matching[0]['state'] != 'failed' or len(proof) != 1
+                or proof[0]['source_sha'] != pin['eventSha'] or proof[0]['body_sha'] != pin['bodyTextSha']
+                or not observed_at <= failed_at <= reference
+                or not observed_at.timestamp() <= matching[0]['at'] <= failed_at.timestamp()):
+            return None
+    return history
+
+
+def publish_retry_articles(db, pins, reference, validator):
+    """Publish only reviewed retry copies; validation runs outside the writer lock."""
+    if not pins:
+        return False
+    reviewed_sha = RETAINED_COPY_SHA
+    pending = [(pin, history) for pin in pins if (history := retry_failure(db, pin, reference)) is not None]
+    if not pending:
+        return False  # Completed or mismatched pins must not trigger repeated projection scans.
+    import official_research as research
+    # This is the ordinary source/issuer projection, not a manifest ticker override.
+    rows = research.candidates(db, reference, read_only=True)
+    for pin, history in pending:
+        candidate = retry_candidate(db, pin, reference, rows)
+        if candidate is None:
+            continue
+        row, source_snapshot = candidate
+        started = time.monotonic()
+        started_at = datetime.now(timezone.utc).isoformat(timespec='milliseconds')
+        try:
+            note = retained_note(row, pin)
+            exact = json.dumps(note, ensure_ascii=False, sort_keys=True)
+            validator(note, row['body'], row['title'])
+            if json.dumps(note, ensure_ascii=False, sort_keys=True) != exact:
+                return 'blocked'
+        except (ValueError, TypeError, KeyError):
+            return 'blocked'
+        note.update(generationMethod=GENERATION_METHOD, reviewedCopySha256=RETAINED_COPY_SHA)
+        payload = json.dumps(note, ensure_ascii=False)
+        evidence = json.dumps([item['evidenceQuote'] for item in
+                               [note['title'], note['summary'], *note['facts'], note['purpose']]])
+        archived_history = json.dumps(history, ensure_ascii=False)
+        failure = next(f for f in history['failures'] if f['lease'] == history['job']['lease'])
+        db.commit()
+        with db:
+            db.execute('BEGIN IMMEDIATE')
+            if (RETAINED_COPY_SHA != reviewed_sha or hashlib.sha256(RETAINED_COPY_PATH.read_bytes()).hexdigest() != reviewed_sha
+                    or retry_source_snapshot(db, pin) != source_snapshot
+                    or not research.current_revision(db, row)
+                    or retry_failure(db, pin, reference) != history):
+                continue
+            public_at = datetime.now(timezone.utc).isoformat(timespec='milliseconds')
+            db.execute('INSERT INTO reviewed_retry_article_recoveries VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                       (row['id'], RETAINED_COPY_SHA, row['source_id'], row['sha'], row['body_sha'],
+                        row['source_revision'], row['observed_at'], row['body_at'], failure['lease'],
+                        digest(failure['payload']), archived_history,
+                        started_at, public_at, digest(payload)))
+            db.execute('INSERT INTO official_research_publications VALUES(?,?,?,?,?,?,?,?)',
+                       (row['id'], row['sha'], row['body_sha'], payload, evidence,
+                        started_at, public_at, round((time.monotonic() - started) * 1000)))
+            changed = db.execute("""UPDATE official_research_jobs SET state='done'
+              WHERE event_id=? AND sha=? AND lease=? AND attempts=? AND state='retry'""",
+                                 (row['id'], row['sha'], history['job']['lease'], history['job']['attempts']))
+            if changed.rowcount != 1:
+                raise ValueError('changed-editorial-recovery-job')
             return True
     return False

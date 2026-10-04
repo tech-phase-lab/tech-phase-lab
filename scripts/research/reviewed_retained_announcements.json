@@ -602,5 +602,260 @@
         ]
       }
     }
+  ],
+  "retryArticles": [
+    {
+      "eventId": 1089,
+      "sourceId": "primary-ir-GOOGL",
+      "ticker": "GOOGL",
+      "url": "https://blog.google/company-news/outreach-and-initiatives/google-org/educause-2026/",
+      "title": "Supporting AI readiness in higher education",
+      "publishedOn": "2026-09-30",
+      "publishedAt": null,
+      "observedAt": "2026-09-30T16:44:01.734+00:00",
+      "eventSha": "db913424d88d0587bb75047416cd6b88fdb746aee921b20240674d8e01423462",
+      "sourceRevision": "b8e4e4478f143c5d8092df26cc2c812d472773a3667feb1dd57c8b0cbbd1d816",
+      "bodyTextSha": "a4c561ef8ad0666d36082d9e0e9baa365e916a5108ab0620c7960a4e23c2cfb5",
+      "bodyChars": 4085,
+      "provenance": "primary-article",
+      "extractorVersion": "2026-10-04-article-document-v5",
+      "reviewedFailure": {
+        "reason": "unsupported-number",
+        "failedAt": "2026-10-04T05:19:44.400747+00:00",
+        "payloadSha": "b21e33ebaa9859cb96b0502eb60f73aa57191b1e52345ea4d96d19c99623e06a"
+      },
+      "failure": {
+        "attempts": 6,
+        "reason": "unsupported-number",
+        "failedAt": "2026-10-04T09:19:46.244919+00:00",
+        "payloadSha": "2c9abddf9d706bbc0699cb5ec22da069fa77ac3f493968f6bde7dce25a3253b5"
+      },
+      "copy": {
+        "title": {
+          "ja": "Google.org、高等教育のAI活用準備を支援",
+          "en": "Google.org supports AI readiness in higher education",
+          "anchors": [
+            "At the EDUCAUSE annual conference,"
+          ]
+        },
+        "summary": {
+          "ja": "Google.orgはEDUCAUSE年次会議で、倫理的なAI活用の準備、大学の戦略的計画の刷新、学生の成功を支える高等教育の取り組みへの支援を発表した。",
+          "en": "At the EDUCAUSE annual conference, Google.org announced support for higher education initiatives covering ethical AI readiness, institutional planning and student success.",
+          "anchors": [
+            "At the EDUCAUSE annual conference,"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "USUはGoogle.orgの支援で、Grow with Googleの教材とAIを組み込んだ授業を専門能力開発の認定プログラムに取り入れている。30大学の教育者が今後、成人学習者の支援手法を試す。",
+            "en": "With Google.org support, USU is incorporating Grow with Google resources and AI-integrated lessons into its professional development certification. Educators across 30 universities will test the methods for supporting adult learners.",
+            "anchors": [
+              "Supported by Google.org, USU is integrating"
+            ]
+          },
+          {
+            "ja": "USUはAIを活用したキャリア重視の地域コミュニティ学習を広げるため、今後15カ月で加盟大学の10モデルを収集・質的分析し、事例集の公表と研究・実践の方針を検討する作業部会の設置を予定する。",
+            "en": "USU plans to collect and qualitatively analyze 10 models at member institutions over the next 15 months, publish case studies and convene a working group to develop a research and practice agenda for AI-enhanced, career-focused community-based learning.",
+            "anchors": [
+              "To meet this moment, USU is leading"
+            ]
+          },
+          {
+            "ja": "Education Design LabはGoogle.orgの支援を受け、Reimagining Community Collegesを通じてコミュニティカレッジの戦略的計画を刷新し、学生を将来の仕事に備えさせる取り組みを進めている。",
+            "en": "With support from Google.org, Education Design Lab is using Reimagining Community Colleges to transform strategic planning at community colleges and prepare students for the future of work.",
+            "anchors": [
+              "Strategic planning at community colleges is often treated"
+            ]
+          },
+          {
+            "ja": "2027年初頭には、州単位のコミュニティカレッジ制度を対象に、技術を活用して学生支援を改善する取り組みの全国コンペティションを開始する予定。",
+            "en": "A national competition will launch in early 2027 for a state-level community college system to undertake an initiative using technology-enabled solutions to better serve students.",
+            "anchors": [
+              "Following a successful summit of educators this week"
+            ]
+          }
+        ],
+        "purpose": {
+          "ja": "教育者を中心に据えて高等教育でのAI活用を支援する。",
+          "en": "To support AI use in higher education with educators at the center.",
+          "anchors": [
+            "To help close this gap, Google.org is supporting"
+          ]
+        }
+      }
+    },
+    {
+      "eventId": 1184,
+      "sourceId": "nebius-blog",
+      "ticker": "NBIS",
+      "url": "https://nebius.com/blog/posts/in-agentic-rl-faster-tokens-are-not-enough",
+      "title": "In agentic RL, faster tokens are not enough",
+      "publishedOn": null,
+      "publishedAt": "2026-09-28T00:00:00+00:00",
+      "observedAt": "2026-10-02T13:07:50.294+00:00",
+      "eventSha": "60dec6e3c655c008730bfdee6f97ca7aec3ac0ba91c40ddf2594561268e02cad",
+      "sourceRevision": "60dec6e3c655c008730bfdee6f97ca7aec3ac0ba91c40ddf2594561268e02cad",
+      "bodyTextSha": "990f6b18ed6ac6c4579648c92ce8a6164b630585c48bc7cd839ec77f57ed290b",
+      "bodyChars": 22262,
+      "provenance": "signal-document",
+      "reviewedFailure": {
+        "reason": "invalid-copy",
+        "failedAt": "2026-10-04T05:18:12.402305+00:00",
+        "payloadSha": "3e1712099fd117351a564f5110ad20d7a40e0c65282c4ac65f4cddd6dcf3bcb3"
+      },
+      "failure": {
+        "attempts": 6,
+        "reason": "invalid-copy",
+        "failedAt": "2026-10-04T09:18:14.458034+00:00",
+        "payloadSha": "9ca8a54a37c7a9d6f5a6194476a368dfd2546aa5dfc18f61792a9695ae7ef557"
+      },
+      "copy": {
+        "title": {
+          "ja": "Nebius、エージェント強化学習のバッチ収集時間短縮を報告",
+          "en": "Nebius reports shorter batch collection time for agentic RL",
+          "anchors": [
+            "On a Terminal-Bench-based workload,"
+          ]
+        },
+        "summary": {
+          "ja": "NebiusのTerminal-Benchベースの実験では、重みを固定した条件で256軌跡のバッチ収集時間が591.8秒から196.1秒に短縮し、66.9%削減された。",
+          "en": "In Nebius’s Terminal-Bench-based experiment, fixed-weight collection of a batch of 256 trajectories fell from 591.8 to 196.1 seconds, a 66.9% reduction.",
+          "anchors": [
+            "66.9% less time to collect a training batch",
+            "On a Terminal-Bench-based workload,"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "固定重みの比較では、ルーティング、サンドボックスの配置、候補軌跡の供給量を変え、バッチ収集時間を測定した。重み切り替えは含まれない。",
+            "en": "The fixed-weight comparison measured batch collection while varying routing, sandbox placement and candidate supply. It did not include a serving-weight transition.",
+            "anchors": [
+              "With the serving stack in place,",
+              "Holding weights fixed isolates"
+            ]
+          },
+          {
+            "ja": "段階的な重み更新と、古いポリシーで始めた作業をK=8まで適格とする条件の組み合わせにより、重み切り替えを含む反復ステップは240.1秒となり、全エンジン停止方式より43.7%短縮した。どちらか単独の効果ではない。",
+            "en": "Combining staged weight updates with longer work eligibility under K=8 brought the repeating step, including the weight transition, to 240.1 seconds, a 43.7% reduction in interval time compared with pausing all engines. The gain cannot be attributed to either change alone.",
+            "anchors": [
+              "Updating one of four engines at a time produced",
+              "It should not be attributed to either change alone."
+            ]
+          },
+          {
+            "ja": "SWE-Benchでは、固定重みと段階的な物理更新を同じ負荷条件で比較し、それぞれ六つの区間を測定した。平均ステップ時間は固定重みで383.5秒、段階的な物理更新で427.8秒となり、ライブ更新による時間増加は約11%だった。",
+            "en": "On SWE-Bench, six intervals per run under the same workload contract averaged 383.5 seconds with fixed weights and 427.8 seconds with progressive physical updates, an added step-time cost of about 11%.",
+            "anchors": [
+              "Figure 4. SWE-Bench warm step time",
+              "Five of the six progressive intervals stayed below"
+            ]
+          },
+          {
+            "ja": "段階的な公開経路で更新したのは、全actorパラメータではなくチェックポイント由来のtargetと投機デコーダーのセンチネルテンソル。訓練の逆伝播・最適化処理も計測外で、完全な端から端までの訓練ループは未検証。",
+            "en": "The progressive path updated checkpoint-backed target and speculative-decoder sentinel tensors rather than every actor parameter. Trainer backward and optimizer compute were excluded, so the complete end-to-end training loop remains unvalidated.",
+            "anchors": [
+              "The progressive path exercises the full publication machinery"
+            ]
+          }
+        ],
+        "purpose": {
+          "ja": "長期エージェント強化学習で、次の訓練可能なバッチが届くまでの待ち時間を短縮する。",
+          "en": "To shorten the wait for the next usable training batch in long-horizon agentic RL.",
+          "anchors": [
+            "Your model is generating tokens faster,",
+            "We set out to shorten that wait."
+          ]
+        }
+      }
+    },
+    {
+      "eventId": 1239,
+      "sourceId": "primary-ir-GOOGL",
+      "ticker": "GOOGL",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+      "title": "Gemini 4 Argon: our next era of frontier intelligence",
+      "publishedOn": "2026-09-30",
+      "publishedAt": null,
+      "observedAt": "2026-10-03T14:03:59.990+00:00",
+      "eventSha": "c22181a9871c320d11d719c09c4cbafc7fa59b0c068860cf6a8d9d5209e97a65",
+      "sourceRevision": "fa3545e0a29030764e1c6bc08526915a73da594a28a89a7b8976f32b833ca00d",
+      "bodyTextSha": "b0745badf7f449190978629199e473909c0ee901042b9cc9467d5f3071010816",
+      "bodyChars": 10333,
+      "provenance": "primary-article",
+      "extractorVersion": "2026-10-04-article-document-v5",
+      "reviewedFailure": {
+        "reason": "unsupported-number",
+        "failedAt": "2026-10-04T05:13:15.206638+00:00",
+        "payloadSha": "0c5785054793e6055c930173084609bd631beb9ea117a0a3e0e945cf796a4103"
+      },
+      "failure": {
+        "attempts": 6,
+        "reason": "unsupported-number",
+        "failedAt": "2026-10-04T09:13:24.721870+00:00",
+        "payloadSha": "aa82f4fc0abf7f016e040e0d989daa117cf60b3508ed7b7f0489d305f4f61d9d"
+      },
+      "copy": {
+        "title": {
+          "ja": "Google、Gemini 4 Argonを発表、Fairwindのサイバー防御担当者へ展開",
+          "en": "Google announces Gemini 4 Argon rollout to Fairwind cyber defenders",
+          "anchors": [
+            "Today, we’re announcing our new frontier model,"
+          ]
+        },
+        "summary": {
+          "ja": "GoogleはGemini 4 ArgonをFairwind Programの信頼されたサイバー防御担当者へ展開中。導入価格は入力100万トークンあたり$2、出力100万トークンあたり$10で、キャッシュ済み入力は入力料金から95%割引となる予定。",
+          "en": "Google is rolling out Gemini 4 Argon to trusted cyber defenders through its Fairwind Program. It will launch at an introductory price of $2 per million input tokens and $10 per million output tokens, with cached input priced at 95% off the input token price.",
+          "anchors": [
+            "Today, we’re announcing our new frontier model,",
+            "of $2 per million input tokens"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "導入期間終了後は、入力100万トークンあたり$4、出力100万トークンあたり$20の料金を適用する。",
+            "en": "After the introductory period, pricing will be $4 per 1M input tokens and $20 per 1M output tokens.",
+            "anchors": [
+              "After the introductory period expires,"
+            ]
+          },
+          {
+            "ja": "出力トークン上限を従来の64Kから1Mへ拡大し、長く複雑な処理で深い推論を支える。",
+            "en": "The output token limit is being expanded from 64K to 1M to support deeper reasoning in longer, more complex workflows.",
+            "anchors": [
+              "To support Gemini 4 Argon’s capabilities across longer,"
+            ]
+          },
+          {
+            "ja": "ArgonエージェントがGoogleのデータセンターでメモリ最適化を特定・適用した。展開後に解放されるメモリは300 TiB超、総削減量の見込みは500 TiB〜1 PiBとしている。",
+            "en": "Argon agents identified and applied memory optimizations across Google’s data centers, freeing over 300 TiB once rolled out, with total savings estimated at 500 TiB to 1 PiB.",
+            "anchors": [
+              "Memory efficiency: A team of Argon agents"
+            ]
+          },
+          {
+            "ja": "誤用防止の安全策は内部・外部のレッドチームが手動・自動の攻撃手法で耐性を試験した。プロンプトインジェクション対策では、自動レッドチーミングと敵対的訓練を用いている。",
+            "en": "Misuse safeguards underwent robustness testing by internal and external red teams using manual and automated attacks. Prompt-injection defenses use automated red teaming and adversarial training.",
+            "anchors": [
+              "Defending against misuse:",
+              "Defending against prompt injection attacks:"
+            ]
+          },
+          {
+            "ja": "高リスクの訓練や評価を始める前に環境を隔離・封鎖することで、サンドボックスの堅牢化を進めている。",
+            "en": "Google is hardening sandbox environments by isolating and sealing them before high-risk training or evaluations begin.",
+            "anchors": [
+              "Hardening systems:"
+            ]
+          }
+        ],
+        "purpose": {
+          "ja": "初期利用者の評価とフィードバックでシステムを強化してから、開発者・企業・消費者へ展開する計画だ。最初の対象は有料API顧客とGoogle AI Ultra加入者を予定する。",
+          "en": "Google plans to strengthen its systems with early-user evaluations and feedback before releasing to developers, enterprises and consumers, starting with paid API customers and Google AI Ultra subscribers.",
+          "anchors": [
+            "We built Gemini 4 Argon with frontier-level capabilities"
+          ]
+        }
+      }
+    }
   ]
 }
