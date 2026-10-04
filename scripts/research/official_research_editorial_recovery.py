@@ -213,7 +213,7 @@ def publish(db, rows, reference, validator, current_revision):
 
 
 RETAINED_COPY_PATH = Path(__file__).with_name('reviewed_retained_announcements.json')
-RETAINED_COPY_SHA = 'd3cd8f9545790b1962f429dd90544955364c7cad1170edcdbdd6ad9d6f2cfd2b'
+RETAINED_COPY_SHA = '52d5c3fbb5d290f22d9e636ee320cf98271633f699254ef6fd26ab26972d1d59'
 
 
 def retained_candidate(db, pin, reference):
@@ -605,9 +605,11 @@ def retry_source_snapshot(db, pin):
         result['source'] = record('SELECT * FROM sources WHERE url=?', (url,))
         result['revision'] = record('SELECT * FROM source_revisions WHERE url=? AND sha256=?',
                                     (url, pin['sourceRevision']))
-    elif pin['provenance'] in {'signal-document', 'signal-article'}:
+    elif pin['provenance'] in {'signal-document', 'signal-article', 'issuer-business-document'}:
         result['document'] = record('SELECT * FROM signal_documents WHERE source_id=? AND url=?',
                                     (pin['sourceId'], url))
+    if pin['provenance'] == 'issuer-business-document':
+        result['syndication'] = record('SELECT * FROM issuer_syndication_bodies WHERE event_id=?', (event_id,))
     return result
 
 
@@ -618,7 +620,8 @@ def retry_candidate(db, pin, reference, rows):
     if len(matches) != 1:
         return None
     row = dict(matches[0])
-    if (row.get('general_source') or row.get('issuer_business') or row.get('truncated')
+    issuer_business = pin['provenance'] == 'issuer-business-document'
+    if (row.get('general_source') or bool(row.get('issuer_business')) != issuer_business or row.get('truncated')
             or any(row.get(column) != pin[key] for key, column in (
                 ('sourceId', 'source_id'), ('ticker', 'ticker'), ('url', 'url'),
                 ('title', 'title'), ('eventSha', 'sha'), ('publishedOn', 'published_on'),
@@ -630,6 +633,8 @@ def retry_candidate(db, pin, reference, rows):
         return None
     snapshot = retry_source_snapshot(db, pin)
     policy = json.loads(snapshot['policy'])
+    if issuer_business:
+        return retry_issuer_candidate(row, pin, reference, snapshot)
     if not policy or policy.get('enabled') is False or policy.get('officialUpdates') is not True:
         return None
     cached = snapshot['cache']
@@ -648,6 +653,44 @@ def retry_candidate(db, pin, reference, rows):
                 or digest(document['title'] + '\n' + document['text']) != row['sha']):
             return None
     else:
+        return None
+    observed, body_at = repair.instant(row['observed_at']), repair.instant(row['body_at'])
+    if (not observed or not body_at or not observed <= body_at <= reference
+            or (reference - observed).total_seconds() > 7 * 86400):
+        return None
+    row['source_revision'] = pin['sourceRevision']
+    return row, snapshot
+
+
+
+def retry_issuer_candidate(row, pin, reference, snapshot):
+    """Bind a reviewed distributor document through its normal issuer proof.
+
+    Unlike feed/primary recovery, this route's authoritative body lives in
+    issuer_syndication_bodies. Never manufacture an official body cache or make
+    a distributor a generally approved issuer source.
+    """
+    import issuer_business_news as issuer
+    policy = json.loads(snapshot['policy'])
+    document, source = snapshot.get('document'), snapshot.get('syndication')
+    metadata = row.get('issuer_metadata')
+    if (not policy or policy.get('enabled') is False
+            or pin.get('issuerBusinessPolicy') != issuer.POLICY
+            or row['source_id'] not in issuer.syndication.SOURCES
+            or not metadata or metadata.get('issuer') != pin.get('issuer')
+            or not document or document['sha'] != pin['sourceRevision']
+            or document['sha'] != row['sha'] or document['title'] != row['title']
+            or document['text'] != row['body']
+            or digest(document['title'] + '\n' + document['text']) != row['sha']
+            or not source or source['error'] or source['sha'] != row['sha']
+            or source['body_sha'] != row['body_sha'] or source['body'] != row['body']
+            or source['fetched_at'] != pin['bodyFetchedAt']
+            or source['fetched_at'] != row['body_at']):
+        return None
+    try:
+        if json.loads(source['metadata']) != metadata:
+            return None
+    except (ValueError, TypeError):
         return None
     observed, body_at = repair.instant(row['observed_at']), repair.instant(row['body_at'])
     if (not observed or not body_at or not observed <= body_at <= reference
@@ -742,11 +785,16 @@ def publish_retry_articles(db, pins, reference, validator):
             note = retained_note(row, pin)
             exact = json.dumps(note, ensure_ascii=False, sort_keys=True)
             validator(note, row['body'], row['title'])
+            if row.get('issuer_business'):
+                import issuer_business_news as issuer
+                issuer.validate_paraphrase(note)
             if json.dumps(note, ensure_ascii=False, sort_keys=True) != exact:
                 return 'blocked'
         except (ValueError, TypeError, KeyError):
             return 'blocked'
         note.update(generationMethod=GENERATION_METHOD, reviewedCopySha256=RETAINED_COPY_SHA)
+        if row.get('issuer_business'):
+            note['issuerBusinessPolicy'] = issuer.POLICY
         payload = json.dumps(note, ensure_ascii=False)
         evidence = json.dumps([item['evidenceQuote'] for item in
                                [note['title'], note['summary'], *note['facts'], note['purpose']]])

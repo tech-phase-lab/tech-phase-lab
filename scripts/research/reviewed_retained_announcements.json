@@ -983,6 +983,82 @@
       },
       "reviewedPayloadSha": "61daadb4f9dc5998d39bb59f886ec0bd783af108c5068fdf15f5b8d69110d02a",
       "requireFreshCategory": true
+    },
+    {
+      "eventId": 1250,
+      "sourceId": "prnewswire-public",
+      "ticker": "ORCL",
+      "url": "https://www.prnewswire.com/news-releases/oracle-announces-10-million-partnership-with-the-nashville-symphony-302897808.html",
+      "title": "Oracle Announces $10 Million Partnership with the Nashville Symphony",
+      "publishedOn": null,
+      "publishedAt": "2026-10-04T22:00:00+00:00",
+      "observedAt": "2026-10-04T22:05:55.065+00:00",
+      "eventSha": "c3a1d8f6b0ec9ed0d1a0b527e9ef133395c219e55ee5c10597e2b53fa273fdae",
+      "sourceRevision": "c3a1d8f6b0ec9ed0d1a0b527e9ef133395c219e55ee5c10597e2b53fa273fdae",
+      "bodyTextSha": "b990eb4d5488e1fdac3df756314afb24b7e6111d230fa2bccb7f8116206e0186",
+      "bodyChars": 3398,
+      "bodyFetchedAt": "2026-10-04T22:06:01.662567+00:00",
+      "provenance": "issuer-business-document",
+      "issuer": "Oracle",
+      "reviewedFailure": {
+        "reason": "changed-action-capacity",
+        "failedAt": "2026-10-04T22:09:24.309796+00:00",
+        "payloadSha": "d130d7513bed8285b99807cf748ad5b3c39d8a60e31dbe053f9363afd375f0b8"
+      },
+      "failure": {
+        "reason": "changed-action-capacity",
+        "failedAt": "2026-10-04T22:09:24.309796+00:00",
+        "payloadSha": "d130d7513bed8285b99807cf748ad5b3c39d8a60e31dbe053f9363afd375f0b8",
+        "attempts": 3
+      },
+      "copy": {
+        "title": {
+          "ja": "Oracle、ナッシュビル交響楽団との1,000万ドルの提携を発表",
+          "en": "Oracle announces $10 million partnership with Nashville Symphony",
+          "anchors": [
+            "NASHVILLE, Tenn., Oct. 4, 2026"
+          ]
+        },
+        "summary": {
+          "ja": "Oracleはナッシュビル交響楽団を支えるため、1,000万ドルを投資し、戦略的提携を結ぶと発表した。支援は同楽団の当面の資金需要への対応と、2026-27年シーズンの開催を後押しする。",
+          "en": "Oracle announced a $10 million investment and a strategic partnership to support the Nashville Symphony. The support will help meet its near-term funding needs and proceed with the 2026-27 season.",
+          "anchors": [
+            "NASHVILLE, Tenn., Oct. 4, 2026"
+          ]
+        },
+        "facts": [
+          {
+            "ja": "この支援によって、ナッシュビル交響楽団は2026-27年シーズンを再開できるようになる。",
+            "en": "The support will make it possible for the Nashville Symphony to reinstate the 2026-27 season.",
+            "anchors": [
+              "The investment will allow Music City's orchestra"
+            ]
+          },
+          {
+            "ja": "提携により、財政危機のため10月18日から休業予定だった常勤職員と全楽団員の復帰が可能になる。",
+            "en": "The partnership enables the return of full-time staff and all orchestra members who were scheduled to be furloughed on October 18 because of a financial emergency.",
+            "anchors": [
+              "The partnership enables the Symphony"
+            ]
+          },
+          {
+            "ja": "OracleのCEOクレイ・マゴイアークは、ナッシュビルの文化施設が住民にとって重要だとし、地域の課題解決を支える考えを示した。",
+            "en": "Oracle CEO Clay Magouyrk said cultural institutions matter to Nashville residents and expressed the company's intention to help address local problems.",
+            "anchors": [
+              "Nashville is a city that understands"
+            ]
+          }
+        ],
+        "purpose": {
+          "ja": "再建を進めるナッシュビル交響楽団の当面の資金需要を支え、演奏活動の継続を後押しすることを目指す。",
+          "en": "The support aims to help the Nashville Symphony meet immediate financial needs and sustain performances while it restructures.",
+          "anchors": [
+            "NASHVILLE, Tenn., Oct. 4, 2026"
+          ]
+        }
+      },
+      "issuerBusinessPolicy": "issuer-business-news-v1",
+      "reviewedPayloadSha": "bdec029baf19b2e338e425a647c9ab2b16287b8b9afa80065f96c5dc9625fd25"
     }
   ]
 }
