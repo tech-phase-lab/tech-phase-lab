@@ -1,3 +1,4 @@
+import { initialMemberDisplay } from "@/lib/membership/display-server";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { MemberDisplayProvider } from "./member-display-provider";
@@ -12,6 +13,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = { appleWebApp: { capable: true, title: "Tech Phase" }, icons: { apple: "/tech-phase-192.png" } };
 
-export default function ResearchLayout({ children }: { children: ReactNode }) {
-  return <><LaunchBrand /><ResearchIdentityProvider enabled={membershipConfigured()}><MemberDisplayProvider>{children}<BackToTop /><BottomNav /></MemberDisplayProvider></ResearchIdentityProvider></>;
+export default async function ResearchLayout({ children }: { children: ReactNode }) {
+  const initial = await initialMemberDisplay();
+  return <><LaunchBrand /><ResearchIdentityProvider enabled={membershipConfigured()}><MemberDisplayProvider initial={initial}>{children}<BackToTop /><BottomNav /></MemberDisplayProvider></ResearchIdentityProvider></>;
 }

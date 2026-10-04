@@ -17,7 +17,7 @@ test('failed early request resolves safely for existing retry handling',async()=
  new Function('window','document','fetch',newsStartupScript)(window,{visibilityState:'visible'},async()=>{throw Error('offline');});
  assert.deepEqual(await window.__techPhaseNewsStartup.request,{error:true});
 });
-test('DESK applies its lock only to confirmed free non-owner accounts',()=>{
+test('DESK stays locked unless the effective plan is PRO, including owner FREE preview',()=>{
  const source=readFileSync(new URL('../app/research/home-tools.tsx',import.meta.url),'utf8');
- assert.match(source,/const locked = plan === "free" && !owner/);assert.doesNotMatch(source,/!isPro/);
+ assert.match(source,/const locked = plan !== "pro"/);assert.doesNotMatch(source,/!isPro/);
 });

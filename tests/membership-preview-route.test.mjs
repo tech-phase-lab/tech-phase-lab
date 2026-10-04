@@ -5,6 +5,7 @@ import {stripTypeScriptTypes} from 'node:module';
 
 // Exercise the real route with identity-provider boundaries stubbed; no real users are modified.
 const source=readFileSync(new URL('../app/api/research/member/preview/route.ts',import.meta.url),'utf8')
+ .replace('import { saveMemberDisplay } from "@/lib/membership/display-server";', 'const saveMemberDisplay = async () => {};')
  .replace('import { clerkClient } from "@clerk/nextjs/server";', 'const clerkClient = async () => globalThis.__previewTest.client;')
  .replace('import { getMembership } from "@/lib/membership/server";', 'const getMembership = async () => globalThis.__previewTest.member;');
 const {POST}=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));

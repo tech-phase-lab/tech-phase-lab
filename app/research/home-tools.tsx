@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemberDisplay, useResearchOwner } from "./member-display-provider";
+import { useMemberDisplay } from "./member-display-provider";
 import Link from "next/link";
 import type { Language, ResearchEvent } from "@/lib/research/data";
 import { dateLabel } from "@/lib/research/presentation";
@@ -10,8 +10,7 @@ import styles from "./home-tools.module.css";
 export default function HomeTools({ lang, onChanges, onPro }: { lang: Language; onChanges: () => void; onPro: () => void }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const plan = useMemberDisplay();
-  const owner = useResearchOwner();
-  const locked = plan === "free" && !owner;
+  const locked = plan !== "pro";
   return <>
     <nav className={styles.grid} aria-label={t("よく使う機能", "Quick tools")}>
       <Link href="/research/stocks"><span className={styles.icon} aria-hidden="true">🔍</span><strong>{t("銘柄検索", "Stock search")}</strong><p>{t("株価・チャート・企業情報", "Quotes, charts & company data")}</p></Link>
@@ -27,7 +26,7 @@ export default function HomeTools({ lang, onChanges, onPro }: { lang: Language; 
         <Link href="/research/weekly"><strong>{t("週刊PRO", "PRO Weekly")}</strong><span className={styles.deskSmall}>{t("一週間の変化と展望", "The week’s shifts & outlook")}</span><span aria-hidden="true">→</span></Link>
       </div>
       {locked && <div className={styles.deskOverlay}>
-        <div className={styles.overlayCaption}><span className={styles.overlayLabel}>TECH PHASE PRO</span>{plan === "free" && <strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong>}</div>
+        <div className={styles.overlayCaption}><span className={styles.overlayLabel}>TECH PHASE PRO</span>{locked && <strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong>}</div>
       </div>}
     </nav>
     {locked && <button type="button" className={styles.proHint} onClick={onPro}><strong>{t("PROの限定機能を見る", "Explore PRO-exclusive features")} →</strong></button>}

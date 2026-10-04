@@ -1,3 +1,4 @@
+import { saveMemberDisplay } from "@/lib/membership/display-server";
 import { clerkClient } from "@clerk/nextjs/server";
 import { getMembership } from "@/lib/membership/server";
 export const dynamic = "force-dynamic";
@@ -31,6 +32,8 @@ export async function POST(request: Request) {
       testUntil: new Date(now + 3_600_000).toISOString(),
     };
     await (await clerkClient()).users.updateUserMetadata(member.userId, { privateMetadata: { membershipPreview } });
+    // Clear the previous presentation immediately, including when switching to FREE.
+    await saveMemberDisplay();
     return Response.json({ ok: true }, { headers });
   } catch { return Response.json({ ok: false }, { status: 503, headers }); }
 }

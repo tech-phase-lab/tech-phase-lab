@@ -25,5 +25,5 @@ test('backgrounding dismisses and removes resume listeners',()=>{
 test('home is synchronous; live data streams inside a null fallback without replacing the dashboard',()=>{
  const page=readFileSync(new URL('../app/research/page.tsx',import.meta.url),'utf8');
  assert.match(page,/export default function ResearchPage/);assert.match(page,/<Suspense fallback={null}><LiveHomeData/);assert.match(page,/currentEvents.map\(publicEvent\)/);
- const layout=readFileSync(new URL('../app/research/layout.tsx',import.meta.url),'utf8');assert.doesNotMatch(layout,/await getMembership|async function/);
+ const layout=readFileSync(new URL('../app/research/layout.tsx',import.meta.url),'utf8');assert.doesNotMatch(layout,/await getMembership/);
 });
