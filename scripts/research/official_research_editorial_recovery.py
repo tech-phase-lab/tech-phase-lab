@@ -1,7 +1,8 @@
 """One expiring, reviewed recovery of two exact retained NVIDIA revisions.
 
 This is deterministic editorial copy, never an LLM retry. It spends no provider
-budget and cannot replace a publication. Source evidence is selected literally
+budget. The retained-announcement correction archives an invalid prior
+publication before replacing it. Source evidence is selected literally
 from the retained body; the reviewed data contains only bilingual paraphrases.
 """
 from datetime import datetime, timezone
@@ -50,6 +51,12 @@ def schema(db):
       event_id INTEGER NOT NULL, event_sha TEXT NOT NULL, source_revision TEXT NOT NULL,
       source_observed_at TEXT NOT NULL, source_body_at TEXT NOT NULL,
       started_at TEXT NOT NULL, public_at TEXT NOT NULL, payload_sha TEXT NOT NULL,
+      PRIMARY KEY(manifest_sha,source_url,body_text_sha))''')
+    db.execute('''CREATE TABLE IF NOT EXISTS reviewed_retained_announcement_replacements(
+      manifest_sha TEXT NOT NULL, source_url TEXT NOT NULL, body_text_sha TEXT NOT NULL,
+      event_id INTEGER NOT NULL, replaced_at TEXT NOT NULL, reason TEXT NOT NULL,
+      previous_publication TEXT NOT NULL, previous_job TEXT NOT NULL,
+      previous_calls TEXT NOT NULL, publication_call_lease TEXT NOT NULL,
       PRIMARY KEY(manifest_sha,source_url,body_text_sha))''')
     db.execute('''CREATE TABLE IF NOT EXISTS official_research_editorial_recoveries(
       event_id INTEGER NOT NULL, source_id TEXT NOT NULL, sha TEXT NOT NULL,
@@ -260,6 +267,41 @@ def retained_note(row, pin):
             'facts': [bind(item) for item in copy['facts']]}
 
 
+def retained_call_history(db, row):
+    calls = [dict(call) for call in db.execute('''SELECT * FROM signal_headline_translation_calls
+      WHERE source_id=? AND sha=? ORDER BY at,lease''', ('research:'+row['source_id'], row['sha']))]
+    job = db.execute('SELECT * FROM official_research_jobs WHERE event_id=?', (row['id'],)).fetchone()
+    return (dict(job) if job else None), calls
+
+
+def replaceable_retained_publication(db, previous, row, pin, validator):
+    """Correct only cross-event model copy with an unambiguous retained call."""
+    if previous['sha'] != row['sha'] or previous['body_sha'] == pin['bodyTextSha']:
+        return None
+    try:
+        note = json.loads(previous['payload'])
+        if not isinstance(note, dict):
+            return None
+        validator({key: note[key] for key in ('title', 'summary', 'facts', 'purpose')},
+                  row['body'], row['title'])
+    except ValueError as exc:
+        if str(exc) != 'source-event-identity-mismatch':
+            return None
+    except (TypeError, KeyError):
+        return None
+    else:
+        return None
+    started = repair.instant(previous['started_at'])
+    job, calls = retained_call_history(db, row)
+    matching = [call for call in calls if started and call['state'] == 'done'
+                and abs(call['at']-started.timestamp()) < 0.001]
+    if (len(matching) != 1 or not job or job['sha'] != row['sha']
+            or job['state'] != 'done' or job['lease'] != matching[0]['lease']):
+        return None
+    return {'publication': dict(previous), 'job': job, 'calls': calls,
+            'callLease': matching[0]['lease']}
+
+
 def publish_retained(db, reference, validator):
     """Apply reviewed source-bound copy once through the existing worker.
 
@@ -277,36 +319,67 @@ def publish_retained(db, reference, validator):
             return False
     except (ValueError, TypeError, KeyError, OSError):
         return False
+    def record(value):
+        return dict(value) if value is not None else None
+
+    def consumed(pin):
+        return db.execute('''SELECT 1 FROM reviewed_retained_announcement_recoveries
+          WHERE manifest_sha=? AND source_url=? AND body_text_sha=?''',
+                          (RETAINED_COPY_SHA, pin['url'], pin['bodyTextSha'])).fetchone()
+
     db.commit()
-    with db:
-        db.execute('BEGIN IMMEDIATE')
-        for pin in manifest['announcements']:
-            row = retained_candidate(db, pin, reference)
-            if (row is None or db.execute('SELECT 1 FROM official_research_publications WHERE event_id=?', (row['id'],)).fetchone()
-                    or db.execute('SELECT 1 FROM reviewed_retained_announcement_recoveries WHERE manifest_sha=? AND source_url=? AND body_text_sha=?',
-                                  (RETAINED_COPY_SHA, pin['url'], pin['bodyTextSha'])).fetchone()):
+    for pin in manifest['announcements']:
+        row = record(retained_candidate(db, pin, reference))
+        if row is None or consumed(pin):
+            continue
+        previous = record(db.execute('SELECT * FROM official_research_publications WHERE event_id=?', (row['id'],)).fetchone())
+        archive = None
+        if previous:
+            archive = replaceable_retained_publication(db, previous, row, pin, validator)
+            if archive is None:
                 continue
-            cached = db.execute('SELECT * FROM official_story_bodies WHERE event_id=?', (row['id'],)).fetchone()
-            if cached and (cached['sha'] != row['sha'] or cached['body_sha'] != pin['bodyTextSha']
-                           or cached['body'] != row['body'] or cached['error']):
-                continue
-            started = time.monotonic()
-            started_at = datetime.now(timezone.utc).isoformat(timespec='milliseconds')
-            try:
-                note = retained_note(row, pin)
-                exact = json.dumps(note, ensure_ascii=False, sort_keys=True)
-                validator(note, row['body'], row['title'])
-                if json.dumps(note, ensure_ascii=False, sort_keys=True) != exact:
-                    return False
-            except (ValueError, TypeError, KeyError):
+        cached = record(db.execute('SELECT * FROM official_story_bodies WHERE event_id=?', (row['id'],)).fetchone())
+        if cached and (cached['sha'] != row['sha'] or cached['body_sha'] != pin['bodyTextSha']
+                       or cached['body'] != row['body'] or cached['error']):
+            continue
+        started = time.monotonic()
+        started_at = datetime.now(timezone.utc).isoformat(timespec='milliseconds')
+        try:
+            note = retained_note(row, pin)
+            exact = json.dumps(note, ensure_ascii=False, sort_keys=True)
+            validator(note, row['body'], row['title'])
+            if json.dumps(note, ensure_ascii=False, sort_keys=True) != exact:
                 return False
+        except (ValueError, TypeError, KeyError):
+            return False
+        # Pure validation must not hold SQLite's writer slot. Recheck all input
+        # snapshots after acquiring the short archive/publication transaction.
+        db.commit()
+        with db:
+            db.execute('BEGIN IMMEDIATE')
+            if (record(retained_candidate(db, pin, reference)) != row or consumed(pin)
+                    or record(db.execute('SELECT * FROM official_research_publications WHERE event_id=?', (row['id'],)).fetchone()) != previous
+                    or record(db.execute('SELECT * FROM official_story_bodies WHERE event_id=?', (row['id'],)).fetchone()) != cached):
+                continue
+            if archive and retained_call_history(db, row) != (archive['job'], archive['calls']):
+                continue
             public_at = datetime.now(timezone.utc).isoformat(timespec='milliseconds')
             note.update(generationMethod=GENERATION_METHOD, reviewedCopySha256=RETAINED_COPY_SHA)
             payload = json.dumps(note, ensure_ascii=False)
             if not cached:
                 db.execute('INSERT INTO official_story_bodies VALUES(?,?,?,?,?,?,?)',
                            (row['id'], row['sha'], pin['bodyTextSha'], row['body'], row['body_at'], reference.timestamp()+900, None))
-            db.execute('INSERT INTO official_research_publications VALUES(?,?,?,?,?,?,?,?)',
+            if archive:
+                db.execute('''INSERT INTO reviewed_retained_announcement_replacements
+                  VALUES(?,?,?,?,?,?,?,?,?,?)''',
+                           (RETAINED_COPY_SHA, pin['url'], pin['bodyTextSha'], row['id'], public_at,
+                            'source-event-identity-mismatch', json.dumps(archive['publication'], ensure_ascii=False),
+                            json.dumps(archive['job'], ensure_ascii=False), json.dumps(archive['calls'], ensure_ascii=False),
+                            archive['callLease']))
+            db.execute('''INSERT INTO official_research_publications VALUES(?,?,?,?,?,?,?,?)
+              ON CONFLICT(event_id) DO UPDATE SET sha=excluded.sha,body_sha=excluded.body_sha,
+              payload=excluded.payload,evidence=excluded.evidence,started_at=excluded.started_at,
+              public_at=excluded.public_at,generation_ms=excluded.generation_ms''',
                        (row['id'], row['sha'], pin['bodyTextSha'], payload,
                         json.dumps([item['evidenceQuote'] for item in [note['title'], note['summary'], *note['facts'], note['purpose']]]),
                         started_at, public_at, round((time.monotonic()-started)*1000)))
