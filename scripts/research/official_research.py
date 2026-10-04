@@ -23,6 +23,7 @@ import oracle_reviewed_recovery
 import signals
 import general_source_news
 import reviewed_business_news
+import micron_reviewed_recovery
 import issuer_business_news
 
 MAX_EVIDENCE_CHARS = 1800
@@ -498,6 +499,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         if general_source_news.recover_reviewed_terminology(db,reference,model):
             return 'done'
         if reviewed_business_news.publish(db,reference,model,clock=lambda:datetime.now(timezone.utc)):
+            return 'done'
+        if micron_reviewed_recovery.publish(db,reference,model,clock=lambda:datetime.now(timezone.utc)):
             return 'done'
     prepare_story_body(path, reference)
     reference=datetime.fromtimestamp(now,timezone.utc)

@@ -57,7 +57,8 @@ METRICS = {
     'demand': (r'\bdemand\b', r'需要'),
     'growth': (r'\b(?:growth|grow\w*|expand\w*|increas\w*|rise|rises|rising|rose|higher)\b', r'成長|伸び|増加|増大|増|拡大|上昇|高ま'),
     'asp': (r'\bASP\b|\baverage selling prices?\b', r'ASP|平均販売(?:価格|単価)|平均売価'),
-    'blended': (r'\bblended\b', r'ブレンド|混合|加重平均|総合|全体平均'),
+    'blended': (r'\bblended\b', r'ブレンド|混合|総合|全体平均'),
+    'weighted': (r'\bweighted\b', r'加重|重み付け'),
     'yoy': (r'\bYoY\b|\byear[ -](?:over|on)[ -]year\b', r'YoY|前年比|前年同期比|対前年'),
     'revenue': (r'\brevenues?\b', r'売上|収入'),
     'capacity': (r'\bcapacity\b', r'生産能力|供給能力|製造能力|容量|キャパシティ'),
@@ -296,7 +297,10 @@ def validate(item, unit):
         # unit also keeps the product/metric and explicit temporal relationships.
         output_metrics = _metrics(text, language)
         positive = re.findall(r'[+＋]\s*(\d+(?:\.\d+)?)\s*[%％]', quote)
-        permitted_metrics = source_metrics | ({'growth'} if positive else set())
+        # A leading plus does not identify what an unlabelled product figure
+        # measures. Do not silently supply growth/demand for that list item.
+        explicit_measure = source_metrics & {'bit','demand','growth','asp','revenue','capacity'}
+        permitted_metrics = source_metrics | ({'growth'} if positive and explicit_measure else set())
         if source_metrics - output_metrics or output_metrics - permitted_metrics:
             raise ValueError('changed-broker-metric')
         if positive and 'growth' not in output_metrics and any(
@@ -309,6 +313,8 @@ def validate(item, unit):
                 or re.search(r'年度|会計|\bFY\s*\d|\bfiscal\b', text, re.I)):
             raise ValueError('lost-calendar-basis')
         for year in re.findall(r'\b(?:through|until|into)\s+(\d{4})\b', quote, re.I):
+            if language=='ja' and re.search(re.escape(year)+r'\s*年?[^。；;]{0,14}までに',text):
+                raise ValueError('lost-period-relation')
             period = (re.escape(year) + r'\s*年?[^。；;]{0,14}(?:まで|に(?:も|及|まで)|にかけ)'
                       if language == 'ja' else r'\b(?:through|until|into|up to)\s+' + re.escape(year) + r'\b')
             if not re.search(period, text, re.I):
