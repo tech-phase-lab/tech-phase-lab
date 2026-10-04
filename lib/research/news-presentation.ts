@@ -13,6 +13,7 @@ export function officialNewsDisplay(item: OfficialUpdate, lang: Language, briefs
     : (ja ? '企業短報' : 'Company brief');
   const label = item.newsCategory === 'policy'
     ? `${ja ? '政策ニュース' : 'Policy news'}${item.tickers.length ? ' · ' + item.tickers.join(' · ') : ''}`
+    : item.newsCategory === 'economic' ? (ja ? '経済ニュース' : 'Economic news')
     : item.brief ? `${briefLabel}${item.tickers.length ? ' · ' + item.tickers.join(' · ') : ''} · ${ja ? '詳細は確認中' : 'Details awaiting review'}`
     : economic ? (ja ? '経済指標' : 'Economic indicators')
     : `${ja ? '企業ニュース' : 'Company news'}${item.tickers.length ? ' · ' + item.tickers.join(' · ') : ''}`;

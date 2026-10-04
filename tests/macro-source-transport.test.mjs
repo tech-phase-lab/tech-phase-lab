@@ -75,7 +75,9 @@ for (const lang of ['ja', 'en']) {
       assert.ok(html.includes(text), text);
     }
     assert.match(html, /<details/);
-    assert.equal(officialPulseHeadlines(jobs, lang, display.title)[0], display.title);
+    const headlines = officialPulseHeadlines(jobs, lang, display.title);
+    assert.equal(headlines[0], lang === 'ja' ? '米8月非農業部門雇用+31,000人' : 'U.S. Aug nonfarm payrolls +31K');
+    assert.ok(headlines.includes(display.title));
   });
 
   test(`all three CPI metrics/comparisons survive real ${lang} NewsStory`, () => {
@@ -132,7 +134,9 @@ for (const lang of ['ja', 'en']) {
       const paragraphs = display.body.split('\n\n');
       assert.equal(paragraphs.length, scenario.format === 'jobs' ? 8 : 2);
       for (const paragraph of paragraphs) assert.ok(html.includes(paragraph), paragraph);
-      assert.equal(officialPulseHeadlines(item, lang, display.title)[0], display.title);
+      const headlines = officialPulseHeadlines(item, lang, display.title);
+      assert.equal(headlines[0], lang === 'ja' ? item.shortTitleJa : item.shortTitleEn);
+      assert.ok(headlines.includes(display.title));
       assert.ok(!display.body.includes('Never publish model wording'));
       assert.ok(!display.body.includes('モデルのコピーを公開しない'));
     }

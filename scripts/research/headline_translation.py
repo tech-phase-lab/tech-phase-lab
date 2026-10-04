@@ -62,6 +62,34 @@ def configuration(env, now=None):
         return None
 
 
+def budget_calls(db, since, *, limit=None):
+    """Read every actual call once, extending its window for delayed dispatch.
+
+    An invalid receipt-bound clock is returned as None and conservatively counts
+    against capacity. Original call clocks and legacy schemas are untouched.
+    """
+    dispatches = db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='source_macro_model_attempts'").fetchone()
+    valid_call = "typeof(c.at) IN ('integer','real') AND c.at>=0"
+    if dispatches:
+        valid_dispatch = "typeof(a.dispatched_at) IN ('integer','real') AND a.dispatched_at>=c.at"
+        entries = ("SELECT c.lease,CASE WHEN a.lease IS NULL THEN c.at WHEN NOT ("+valid_call+") THEN NULL "
+                   "WHEN a.lease IS NOT NULL AND a.dispatched_at IS NULL AND c.state IS NOT 'running' THEN NULL "
+                   "WHEN a.dispatched_at IS NULL THEN c.at "
+                   "WHEN "+valid_dispatch+" THEN a.dispatched_at ELSE NULL END AS at,c.state,(a.lease IS NOT NULL) AS dispatch_accounting "
+                   "FROM signal_headline_translation_calls c LEFT JOIN source_macro_model_attempts a USING(lease) "
+                   "UNION ALL SELECT a.lease,CASE WHEN typeof(a.dispatched_at) IN ('integer','real') "
+                   "AND a.dispatched_at>=0 THEN a.dispatched_at ELSE NULL END,'running',1 "
+                   "FROM source_macro_model_attempts a WHERE a.dispatched_at IS NOT NULL AND NOT EXISTS "
+                   "(SELECT 1 FROM signal_headline_translation_calls c WHERE c.lease=a.lease)")
+    else:
+        entries = 'SELECT c.lease,c.at,c.state,0 AS dispatch_accounting FROM signal_headline_translation_calls c'
+    sql = 'SELECT * FROM ('+entries+') WHERE (dispatch_accounting=1 AND at IS NULL) OR at>=?'
+    params = (since,)
+    if limit is not None:
+        sql += ' LIMIT ?'; params += (limit,)
+    return db.execute(sql, params).fetchall()
+
+
 def schema(db):
     signals.schema(db)
     db.executescript("""
@@ -164,14 +192,16 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
         except (TypeError, ValueError, OverflowError, OSError):
             pass
     calls = {"total": 0, "failed": 0, "completed": 0, "stale": 0}
-    for row in db.execute(
-            "SELECT at,state FROM signal_headline_translation_calls WHERE at>=? LIMIT 201",
-            (now - 86400,)):
-        try:
-            called_at = float(row["at"])
-        except (TypeError, ValueError, OverflowError):
-            continue
-        if not now - 86400 <= called_at <= now or calls["total"] >= 200:
+    for row in budget_calls(db, now - 86400, limit=201):
+        if not row['dispatch_accounting']:
+            # Preserve the existing reservation-time report for legacy rows.
+            try:
+                called_at = float(row['at'])
+            except (TypeError, ValueError, OverflowError):
+                continue
+            if not now - 86400 <= called_at <= now:
+                continue
+        if calls["total"] >= 200:
             continue
         calls["total"] += 1
         if row["state"] == "failed":
@@ -280,8 +310,7 @@ def claim(db, sources, limit, model, now):
                   (source_id,url,sha,headline_ja,model,created_at) VALUES(?,?,?,?,?,?)''',
                   (row['source_id'],row['url'],row['sha'],cached['headline_ja'],cached['model'],cached['created_at']))
                 continue
-            if db.execute("SELECT count(*) FROM signal_headline_translation_calls WHERE at>=?",
-                          (now - 86400,)).fetchone()[0] >= limit:
+            if len(budget_calls(db, now - 86400)) >= limit:
                 continue
             job = db.execute('''SELECT * FROM signal_headline_translation_jobs
               WHERE source_id=? AND url=? AND sha=?''',

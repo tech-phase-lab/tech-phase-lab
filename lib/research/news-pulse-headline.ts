@@ -22,6 +22,9 @@ export function officialPulseHeadlines(item: OfficialUpdate, lang: Language, tit
   if (item.newsCategory === 'policy') {
     return choices([compact, ja ? item.shortTitleJa : item.shortTitleEn, title, ja ? '政策ニュース' : 'Policy news']);
   }
+  if (item.newsCategory === 'economic') {
+    return choices([compact, ja ? item.shortTitleJa : item.shortTitleEn, title, ja ? '経済ニュース' : 'Economic news']);
+  }
   if (item.brief) {
     const pending = ja ? '詳細確認中' : 'details pending';
     return choices([`${compact ?? title} · ${pending}`, topic(name, ja ? '短報・確認中' : 'brief; pending', lang), ja ? '短報・確認中' : 'Brief; pending']);

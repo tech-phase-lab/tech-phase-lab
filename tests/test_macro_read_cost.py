@@ -194,6 +194,7 @@ class MacroReadCostTests(unittest.TestCase):
             db.execute('DROP TABLE source_macro_news_derivations')
             db.execute('DROP TABLE source_macro_assessment_proofs')
             db.execute('DROP TABLE '+macro.ROUTE_TABLE)
+            db.execute('DROP TABLE '+macro.ATTEMPT_TABLE)
         with open_read(self.fixture.path) as db:
             initial = db.total_changes
             self.assertEqual(public_pieces(db), before)
@@ -201,11 +202,13 @@ class MacroReadCostTests(unittest.TestCase):
             self.assertFalse(macro.exists(db, macro.AUDIT_TABLE))
             self.assertFalse(macro.exists(db, 'source_macro_assessment_proofs'))
             self.assertFalse(macro.exists(db, macro.ROUTE_TABLE))
+            self.assertFalse(macro.exists(db, macro.ATTEMPT_TABLE))
         # Normal worker initialization supplies both tables before a write.
         with research.connect(self.fixture.path) as db:
             self.assertTrue(macro.exists(db, macro.AUDIT_TABLE))
             self.assertTrue(macro.exists(db, 'source_macro_assessment_proofs'))
             self.assertTrue(macro.exists(db, macro.ROUTE_TABLE))
+            self.assertTrue(macro.exists(db, macro.ATTEMPT_TABLE))
 
     def test_public_macro_diagnostics_expose_only_aggregate_ownership(self):
         with open_read(self.fixture.path) as db:
@@ -240,13 +243,17 @@ class MacroReadCostTests(unittest.TestCase):
                      patch.object(macro, 'closed_proof', wraps=macro.closed_proof) as proofs, \
                      patch.object(macro, 'source_snapshot', wraps=macro.source_snapshot) as snapshots, \
                      patch.object(macro, 'ownership_state', wraps=macro.ownership_state) as ownership, \
+                     patch.object(parser, 'derive_compact', wraps=parser.derive_compact) as compact, \
                      patch.object(parser, 'parse', wraps=parser.parse) as reparses:
                     read(db)
                 self.assertEqual(candidates.call_count, 1)
                 self.assertEqual(proofs.call_count, 2)
                 self.assertEqual(snapshots.call_count, 2)
                 self.assertEqual(ownership.call_count, 2)
-                self.assertLessEqual(reparses.call_count, 10)
+                self.assertEqual(compact.call_count, 2)
+                # Each compact JA/EN pair uses one fresh strict source parse;
+                # two reports add two pure parses, never another DB proof.
+                self.assertLessEqual(reparses.call_count, 12)
 
     def test_next_request_on_same_read_connection_sees_withdrawal_and_restoration(self):
         self.fixture.recover()

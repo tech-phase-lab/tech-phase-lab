@@ -6,6 +6,7 @@ immutable during held recovery; missing/damaged proof never licenses a retry.
 """
 from datetime import datetime, timedelta, timezone
 import json
+import math
 import re
 import time
 from urllib.parse import urlsplit
@@ -20,6 +21,7 @@ VERSION = 1
 MARKER = 'sourceMacroDerivation'
 AUDIT_TABLE = 'source_macro_news_derivations'
 ROUTE_TABLE = 'source_macro_route_owners'
+ATTEMPT_TABLE = 'source_macro_model_attempts'
 POLICY = ('For a completely recognized macroeconomic results report, assess its materiality as '
           'general economic news independently of company or ticker mapping. A calendar, preview, '
           'unsupported claim or non-material item must remain review. Use the existing publish/review '
@@ -49,6 +51,10 @@ def route_schema(db):
 
 def schema(db):
     route_schema(db)
+    db.execute('''CREATE TABLE IF NOT EXISTS source_macro_model_attempts(
+      origin TEXT NOT NULL,sha TEXT NOT NULL,source_id TEXT NOT NULL,event_id INTEGER NOT NULL,
+      body_sha TEXT NOT NULL,lease TEXT NOT NULL UNIQUE,model TEXT NOT NULL,reserved_at TEXT NOT NULL,
+      dispatched_at REAL,PRIMARY KEY(origin,sha))''')
     db.execute('''CREATE TABLE IF NOT EXISTS source_macro_news_derivations(
       event_id INTEGER NOT NULL,sha TEXT NOT NULL,body_sha TEXT NOT NULL,
       mode TEXT NOT NULL,lease TEXT NOT NULL,policy_version INTEGER NOT NULL,
@@ -116,9 +122,12 @@ def validate_note(note, row):
 def public_item(row, note):
     validate_note(note, row)
     copy = note['facts'][0]
-    return {'id': str(row['id']), 'title': note['macroTitles']['en'],
+    # Presentation only: rederive from the complete source without changing the
+    # persisted note, audit identity, source clocks or withdrawal checks.
+    compact = macro.derive_compact(row['body'])
+    return {**compact, 'id': str(row['id']), 'title': note['macroTitles']['en'],
             'translationJa': note['macroTitles']['ja'], 'url': row['url'],
-            'publisher': 'Reported economic news', 'tickers': [],
+            'publisher': 'Reported economic news', 'newsCategory': 'economic', 'tickers': [],
             'publishedAt': row['published_at'], 'observedAt': row['observed_at'],
             'bodyJa': copy['ja'], 'bodyEn': copy['en'], 'generalSource': news.VERSION}
 
@@ -382,7 +391,10 @@ def closed_proof(row, original, raw, mode, reference):
             return False
         calls = [call for call in original['calls'] if call['lease'] == job['lease']]
         proofs = [proof for proof in original['proofs'] if proof['lease'] == job['lease']]
-        if len(calls) != 1 or len(proofs) != 1:
+        current_calls = [call for call in original['calls']
+                         if call['source_id'] == 'research:' + row['source_id'] and call['sha'] == row['sha']]
+        if (len(calls) != 1 or len(proofs) != 1 or len(current_calls) != 1
+                or type(job['attempts']) is not int or job['attempts'] != 1):
             return False
         call, proof = calls[0], proofs[0]
         start = datetime.fromtimestamp(call['at'], timezone.utc)
@@ -426,12 +438,120 @@ def recorded(db, row):
         + ' WHERE event_id=? AND sha=? AND body_sha=?', (row['id'], row['sha'], row['body_sha'])).fetchone())
 
 
-def closed_attempt(db, row):
-    # A missing or damaged proof/audit can only hold a closed current revision.
-    if not recognized(row):
+def attempt_record(db, row):
+    if not exists(db, ATTEMPT_TABLE):
+        return None
+    value = db.execute('SELECT * FROM '+ATTEMPT_TABLE+' WHERE origin=? AND sha=?',
+                       (row['url'].casefold(), row['sha'])).fetchone()
+    return dict(value) if value else None
+
+
+def attempt_owned(db, row):
+    # Durable identity keeps a damaged parser/audit from opening a generic retry.
+    if recognized(row) or route_owned(db, row) or attempt_record(db, row):
+        return True
+    if exists(db, 'source_macro_assessment_proofs') and db.execute(
+            'SELECT 1 FROM source_macro_assessment_proofs WHERE event_id=? AND sha=?',
+            (row['id'], row['sha'])).fetchone():
+        return True
+    saved = db.execute('SELECT payload FROM official_research_publications WHERE event_id=? AND sha=?',
+                       (row['id'], row['sha'])).fetchone()
+    try:
+        value = json.loads(saved['payload']) if saved else None
+        return isinstance(value, dict) and MARKER in value
+    except (TypeError, ValueError):
         return False
+
+
+def current_calls(db, row):
+    return db.execute('SELECT * FROM signal_headline_translation_calls WHERE source_id=? AND sha=?',
+                      ('research:'+row['source_id'], row['sha'])).fetchall()
+
+
+def pending_reservation(db, row):
+    """Only an explicitly undispatched, intact reservation can resume its call."""
+    receipt = attempt_record(db, row)
+    if not receipt or receipt['dispatched_at'] is not None:
+        return None
+    job = db.execute('SELECT * FROM official_research_jobs WHERE event_id=?', (row['id'],)).fetchone()
+    calls = current_calls(db, row)
+    if (receipt['event_id'] != row['id'] or receipt['source_id'] != row['source_id']
+            or receipt['body_sha'] != row['body_sha'] or not job or len(calls) != 1
+            or job['sha'] != row['sha'] or job['state'] != 'running'
+            or type(job['attempts']) is not int or job['attempts'] != 1
+            or job['lease'] != receipt['lease'] or calls[0]['lease'] != receipt['lease']
+            or calls[0]['state'] != 'running' or calls[0]['usage'] != '{}'
+            or calls[0]['model'] != receipt['model']):
+        return None
+    try:
+        if clock_valid(receipt['reserved_at']) != datetime.fromtimestamp(calls[0]['at'], timezone.utc):
+            return None
+    except (TypeError, ValueError, OverflowError, OSError):
+        return None
+    for table in ('official_research_attempt_failures', 'official_research_attempt_body_proofs',
+                  'source_macro_assessment_proofs'):
+        if db.execute('SELECT 1 FROM '+table+' WHERE lease=?', (receipt['lease'],)).fetchone():
+            return None
+    if review_for(db, row) or recorded(db, row) or db.execute(
+            'SELECT 1 FROM official_research_publications WHERE event_id=? AND sha=?',
+            (row['id'], row['sha'])).fetchone():
+        return None
+    return receipt
+
+
+def attempt_spent(db, row):
+    if not attempt_owned(db, row):
+        return False
+    if pending_reservation(db, row):
+        return False
+    if attempt_record(db, row) or current_calls(db, row):
+        return True
     job = db.execute('SELECT sha,state FROM official_research_jobs WHERE event_id=?', (row['id'],)).fetchone()
-    return bool(job and job['sha'] == row['sha'] and job['state'] in {'done', 'review', 'stale'})
+    return bool(job and job['sha'] == row['sha'])
+
+
+def closed_attempt(db, row, reference=None):
+    """A running first request stays pending; consumed abandoned work is held."""
+    if not attempt_spent(db, row):
+        return False
+    job = db.execute('SELECT sha,state,next_at FROM official_research_jobs WHERE event_id=?', (row['id'],)).fetchone()
+    reference = reference or datetime.now(timezone.utc)
+    until = job['next_at'] if job and type(job['next_at']) in (int,float) else 0
+    receipt = attempt_record(db, row)
+    dispatched = receipt['dispatched_at'] if receipt else None
+    if type(dispatched) in (int,float) and math.isfinite(dispatched) and 0 <= dispatched <= reference.timestamp():
+        until = max(until, dispatched+300)
+    return not (job and job['sha'] == row['sha'] and job['state'] == 'running'
+                and until > reference.timestamp())
+
+
+def reserve_assessment(db, row, lease, model, reference):
+    if not db.in_transaction:
+        raise ValueError('macro-attempt-requires-transaction')
+    db.execute('INSERT INTO '+ATTEMPT_TABLE+' VALUES(?,?,?,?,?,?,?,?,NULL)',
+               (row['url'].casefold(), row['sha'], row['source_id'], row['id'], row['body_sha'],
+                lease, model, reference.isoformat()))
+
+
+def dispatch_assessment(db, row, lease, model, reference, limit, *, headline_pending=0):
+    """Commit consumption before transport; a crash never authorizes a replacement."""
+    if not db.in_transaction:
+        raise ValueError('macro-attempt-requires-transaction')
+    receipt = pending_reservation(db, row)
+    if (not receipt or receipt['lease'] != lease or receipt['model'] != model
+            or not fresh_inputs_valid(db, row, reference)
+            or reference < clock_valid(receipt['reserved_at'])):
+        return False
+    # An old unconsumed reservation must re-enter today's shared capacity.
+    # Dispatch time supplements the ledger; original call/start time is intact.
+    import headline_translation
+    if clock_valid(receipt['reserved_at']).timestamp() < reference.timestamp()-86400:
+        used = len(headline_translation.budget_calls(db, reference.timestamp()-86400))
+        if used + headline_pending >= limit:
+            return False
+    return db.execute('UPDATE '+ATTEMPT_TABLE+' SET dispatched_at=? '
+                      'WHERE origin=? AND sha=? AND lease=? AND dispatched_at IS NULL',
+                      (reference.timestamp(), row['url'].casefold(), row['sha'], lease)).rowcount == 1
 
 
 def route_owned(db, event):
@@ -523,7 +643,7 @@ def fresh_inputs_valid(db, row, reference):
                 and unowned(ownership_state(db, row, reference)) and current_row(db, row, reference) is not None)
 
 
-def fresh_attempt_valid(db, row, raw, note, lease, reference):
+def fresh_attempt_valid(db, row, raw, note, lease, reference, *, expected_attempt):
     """Verify before closing/publishing so proof damage cannot cause a retry."""
     try:
         if not positive(json.loads(raw)) or recorded(db, row) or review_for(db, row) is not None:
@@ -532,12 +652,23 @@ def fresh_attempt_valid(db, row, raw, note, lease, reference):
         if db.execute('SELECT 1 FROM official_research_publications WHERE event_id=?', (row['id'],)).fetchone():
             return False
         job = db.execute('SELECT * FROM official_research_jobs WHERE event_id=?', (row['id'],)).fetchone()
-        call = db.execute('SELECT * FROM signal_headline_translation_calls WHERE lease=?', (lease,)).fetchone()
+        calls = current_calls(db, row)
+        call = calls[0] if len(calls) == 1 else None
         if (not job or job['lease'] != lease or job['state'] != 'running' or job['sha'] != row['sha']
-                or not call or call['state'] != 'running' or call['source_id'] != 'research:' + row['source_id']
+                or type(job['attempts']) is not int or job['attempts'] != 1
+                or not call or call['lease'] != lease
+                or call['state'] != 'running' or call['source_id'] != 'research:' + row['source_id']
                 or call['sha'] != row['sha']):
             return False
         start = datetime.fromtimestamp(call['at'], timezone.utc)
+        receipt = attempt_record(db, row)
+        if (not receipt or encoded(receipt) != encoded(expected_attempt)
+                or receipt['lease'] != lease or receipt['event_id'] != row['id']
+                or receipt['source_id'] != row['source_id'] or receipt['body_sha'] != row['body_sha']
+                or receipt['model'] != call['model'] or clock_valid(receipt['reserved_at']) != start
+                or type(receipt['dispatched_at']) not in (int,float)
+                or not start.timestamp() <= receipt['dispatched_at'] <= reference.timestamp()):
+            return False
         if not news.reconciliation.instant(row['body_at']) <= start <= reference:
             return False
         proof = db.execute('SELECT * FROM official_research_attempt_body_proofs WHERE lease=?', (lease,)).fetchone()

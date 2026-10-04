@@ -310,6 +310,34 @@ def render(report):
             'bodyJa': ja, 'bodyEn': en}
 
 
+def compact_titles(report):
+    """Whole editorial alternatives from a complete, source-rederived report.
+
+    Keep persisted full titles and all report rows unchanged. This presentation
+    projection does not decide materiality or promote an unverified report.
+    """
+    if type(report) is not Report or not same_binding(report, parse(report.body)):
+        fail('invalid-macro-binding')
+    return _compact_bound(report)
+
+
+def derive_compact(body):
+    """Derive both alternatives from one fresh, fully consumed source parse."""
+    return _compact_bound(parse(body))
+
+
+def _compact_bound(report):
+    month_en = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
+                'Aug', 'Sep', 'Oct', 'Nov', 'Dec')[report.month - 1]
+    if report.kind == 'us-jobs-report':
+        main = next(metric for metric in report.metrics if metric.key == 'nonfarm-payrolls')
+        return {'shortTitleJa': f'米{report.month}月非農業部門雇用{display(main.actual,"ja")}',
+                'shortTitleEn': f'U.S. {month_en} nonfarm payrolls {display(main.actual,"en")}'}
+    main = next(metric for metric in report.metrics if metric.key == 'cpi')
+    return {'shortTitleJa': f'報道：ユーロ圏{report.month}月CPI 前年比{display(main.actual,"ja")}',
+            'shortTitleEn': f'Reported Eurozone {month_en} CPI: {display(main.actual,"en")} YoY'}
+
+
 def derive(body):
     return render(parse(body))
 

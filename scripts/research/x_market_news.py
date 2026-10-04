@@ -250,7 +250,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         db.commit()
         with db:
             db.execute('BEGIN IMMEDIATE')
-            if db.execute('SELECT COUNT(*) FROM signal_headline_translation_calls WHERE at>=?', (now-86400,)).fetchone()[0] >= limit:
+            if len(headline_translation.budget_calls(db, now-86400)) >= limit:
                 return 'budget'
             for row in rows:
                 identity = (row['source_id'], row['url'], row['sha'])

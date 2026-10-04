@@ -600,9 +600,8 @@ def claim(db, reference, model, limit):
     now=reference.timestamp()
     with db:
         db.execute('BEGIN IMMEDIATE')
-        used=db.execute('SELECT count(*) FROM signal_headline_translation_calls WHERE at>=?',(now-86400,)).fetchone()[0]
-        if used + headline_pending >= limit:
-            return None
+        used=len(headline_translation.budget_calls(db,now-86400))
+        capacity_available = used + headline_pending < limit
         primary_urls = bridge.primary_owned_urls(db, [row['url'] for row in rows
             if not row['source_id'].startswith(bridge.PREFIX)
             and not row.get('general_source') and not row.get('issuer_business')])
@@ -610,7 +609,7 @@ def claim(db, reference, model, limit):
         for r in rows:
             # A retained source derivation never authorizes a paid replacement.
             # Valid copy is already public; a damaged audit/copy stays held.
-            if (macro_source_publication.recorded(db,r) or macro_source_publication.closed_attempt(db,r)
+            if (macro_source_publication.recorded(db,r) or macro_source_publication.attempt_spent(db,r)
                     or attributed_policy_publication.recorded(db,r) or attributed_policy_publication.attempt_spent(db,r)
                     or buyback_structured_publication.recorded(db,r) or general_source_news.related_company_news.recorded(db,r) or general_source_news.related_company_news.closed_attempt(db,r)):
                 continue
@@ -637,6 +636,17 @@ def claim(db, reference, model, limit):
             if ((job and job['sha']==r['sha'] and job['state']=='review'
                  and job['failure_kind']==material_relations.FAILURE) or failure_holds[r['id']]):
                 continue
+            pending_macro=macro_source_publication.pending_reservation(db,r)
+            if pending_macro:
+                if (macro_source_publication.fresh_inputs_valid(db,r,reference)
+                        and macro_source_publication.current_calls(db,r)[0]['model']==model
+                        and (now-86400 <= general_source_news.reconciliation.instant(pending_macro['reserved_at']).timestamp()
+                             or capacity_available)):
+                    r['_macro_started_at']=pending_macro['reserved_at']
+                    return r,pending_macro['lease']
+                continue
+            if not capacity_available:
+                continue
             repair_candidate=content_repair.matches(db,r,reference)
             expedited=False
             if job and job['state']=='done':
@@ -657,6 +667,9 @@ def claim(db, reference, model, limit):
                        (r['id'],r['sha'],now+300,lease))
             db.execute('''INSERT INTO signal_headline_translation_calls(at,source_id,sha,model,state,lease)
               VALUES(?,?,?,?, 'running',?)''',(now,'research:'+r['source_id'],r['sha'],model,lease))
+            if macro_source_publication.recognized(r):
+                macro_source_publication.reserve_assessment(db,r,lease,model,reference)
+                r['_macro_started_at']=reference.isoformat()
             return r,lease
     return None
 
@@ -869,6 +882,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     if not claimed:
         return 'idle'
     row,lease=claimed
+    assessment_started_at=row.get('_macro_started_at',reference.isoformat())
     started=time.monotonic()
     general=bool(row.get('general_source'))
     semantic=bool(row.get('semantic_assessment'))
@@ -920,6 +934,20 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                     context['claimEnd']=context['claimStart']+len(grounding['claimScope'])
                 input_data['evidenceContext'][unit['id']]['actorGrounding']=context
         payload['input']=json.dumps(input_data,ensure_ascii=False)
+    macro_attempt_snapshot=None
+    if '_macro_started_at' in row:
+        with connect(path) as db, db:
+            # Match claim's unlocked headline-capacity preflight. Diagnostics
+            # initializes schemas and must never run inside the dispatch lock.
+            dispatch_pending=headline_translation.diagnostics(db,now=datetime.now(timezone.utc).timestamp())['pending']
+            db.commit()
+            db.execute('BEGIN IMMEDIATE')
+            dispatch_time=datetime.now(timezone.utc)
+            if headline_translation.configuration(env,now=dispatch_time.timestamp()) != (key,model,limit):
+                return 'idle'
+            if not macro_source_publication.dispatch_assessment(db,row,lease,model,dispatch_time,limit,headline_pending=dispatch_pending):
+                return 'idle'
+            macro_attempt_snapshot=macro_source_publication.attempt_record(db,row)
     usage={}
     value=None
     raw_response_text=None
@@ -968,7 +996,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                 valid=bool(active and active['lease']==lease and current_revision(db,row,require_fresh_category=True))
                 state='review' if valid else 'stale'
                 if valid:
-                    general_source_news.save_semantic_review(db,row,lease,reference.isoformat(),
+                    general_source_news.save_semantic_review(db,row,lease,assessment_started_at,
                         datetime.now(timezone.utc).isoformat(timespec='milliseconds'),'unsubstantiated-model-output')
                 db.execute('UPDATE official_research_jobs SET state=?,failure_kind=? WHERE event_id=? AND lease=?',
                            (state,reason,row['id'],lease))
@@ -1003,10 +1031,10 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
             if valid and not policy_preflight['attempt_valid']:
                 review_reason='unsubstantiated-model-output'
                 macro_audit_blocked=True
-        elif valid and not review_reason and source_adapter is not None:
+        elif valid and not review_reason and source_adapter is macro_source_publication:
             valid=source_adapter.fresh_inputs_valid(db,row,general_source_news.reconciliation.instant(public_at))
             if valid and not source_adapter.fresh_attempt_valid(db,row,raw_response_text,note,lease,
-                    general_source_news.reconciliation.instant(public_at)):
+                    general_source_news.reconciliation.instant(public_at),expected_attempt=macro_attempt_snapshot):
                 review_reason='unsubstantiated-model-output'
                 macro_audit_blocked=True
         state=('review' if review_reason else 'done') if valid else 'stale'
@@ -1014,7 +1042,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
             # An audit conflict cannot rewrite a concurrently stored negative
             # decision, its lease or its original clocks.
             if not (macro_audit_blocked and source_adapter.review_for(db,row) is not None):
-                general_source_news.save_semantic_review(db,row,lease,reference.isoformat(),public_at,review_reason)
+                general_source_news.save_semantic_review(db,row,lease,assessment_started_at,public_at,review_reason)
             if macro_audit_blocked:
                 source_adapter.record_fresh_hold(db,row,raw_response_text,lease,public_at)
         elif valid:
@@ -1026,7 +1054,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
               public_at=excluded.public_at,generation_ms=excluded.generation_ms''',
                        (row['id'],row['sha'],row['body_sha'],json.dumps(note,ensure_ascii=False),
                         json.dumps([x['evidenceQuote'] for x in (note['facts'] if general else [note['title'],note['summary'],*note['facts'],note['purpose']])]),
-                        reference.isoformat(),public_at,round((time.monotonic()-started)*1000)))
+                        assessment_started_at,public_at,round((time.monotonic()-started)*1000)))
         db.execute('UPDATE official_research_jobs SET state=? WHERE event_id=? AND lease=?',(state,row['id'],lease))
         db.execute('UPDATE signal_headline_translation_calls SET state=?,usage=? WHERE lease=?',
                    ('failed' if macro_audit_blocked else 'done' if state=='review' else state,json.dumps(usage),lease))
@@ -1122,7 +1150,8 @@ def publication_hold_reason(db,row,reference):
     saved=db.execute('SELECT * FROM official_research_publications WHERE event_id=? AND sha=?',
                      (row['id'],row['sha'])).fetchone()
     for adapter in (macro_source_publication, attributed_policy_publication):
-        if adapter.recorded(db,row) or adapter.closed_attempt(db,row):
+        if adapter.recorded(db,row) or (adapter.closed_attempt(db,row,reference)
+                if adapter is macro_source_publication else adapter.closed_attempt(db,row)):
             if not saved or not adapter.publication_valid(db,row,saved,reference):
                 return 'source-event-identity-mismatch'
     if not saved:return material_failure_hold(db,row)
