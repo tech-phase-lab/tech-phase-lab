@@ -1,8 +1,11 @@
-.tiles{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
-.tiles a{flex:1 1 145px;min-width:0;display:grid;gap:5px;padding:14px 16px;border:1px solid #95856840;border-radius:11px;background:linear-gradient(135deg,#1b1d1e,#10161d);text-decoration:none}
-.tiles strong{display:flex;justify-content:space-between;align-items:center;font-family:ui-rounded,"Arial Rounded MT Bold",var(--font-geist-sans),sans-serif;font-size:18px;font-weight:650;letter-spacing:.015em;line-height:1.25;color:#e7ebe8}
-.tiles span{font-size:12px;color:#a3adb4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.4}
-.tiles small{font-size:10px;color:#c1af8f;line-height:1.4}
+.groups{column-count:3;column-gap:14px;margin-top:20px}
+.groups section{display:inline-block;vertical-align:top;box-sizing:border-box;width:100%;margin:0 0 14px;padding:16px;break-inside:avoid;border:1px solid #95856840;border-radius:12px;background:linear-gradient(135deg,#1b1d1e,#10161d)}
+.groups h2{display:flex;justify-content:space-between;align-items:center;margin:0 0 12px;font-size:14px;font-weight:500;color:#cbbb99}.groups h2 span{font-size:10px;color:#8c969d}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.tiles a{box-sizing:border-box;min-width:0;min-height:48px;display:grid;gap:2px;padding:7px 10px;border:1px solid #81928a26;border-radius:7px;background:#0c131a;text-decoration:none}
+.tiles strong{display:flex;justify-content:space-between;align-items:center;gap:5px;font-family:ui-rounded,"Arial Rounded MT Bold",var(--font-geist-sans),sans-serif;font-size:15px;font-weight:650;letter-spacing:.015em;line-height:1.25;color:#e7ebe8}
+.tiles span{font-size:11px;color:#a3adb4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.25}
 .tiles i{width:5px;height:5px;flex:none;border-radius:50%;background:#68737d}.tiles i.verified{background:#91dfbe;box-shadow:0 0 7px #91dfbe88}
 .tiles a:hover{border-color:#c3ac786e;background:#202623}.tiles a:focus-visible{outline:2px solid #d9bd7c;outline-offset:3px}
-@media(max-width:600px){.tiles{gap:8px;margin-top:16px}.tiles a{flex-basis:calc(50% - 4px);box-sizing:border-box;padding:11px 13px}.tiles strong{font-size:17px}.tiles span{font-size:11px}}
+@media(max-width:1000px){.groups{column-count:2}}
+@media(max-width:600px){.groups{column-gap:9px;margin-top:16px}.groups section{margin-bottom:9px;padding:11px}.groups h2{font-size:12px}.tiles{grid-template-columns:1fr}.tiles a{min-height:45px;padding:6px 8px}.tiles strong{font-size:14px}}
