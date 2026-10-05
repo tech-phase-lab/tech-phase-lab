@@ -1,5 +1,11 @@
 # Overseas subscription readiness — 2026-10-02
 
+> Historical October 2 record. Superseded current status and implementation
+> preparation are in `PAYMENTS-IMPLEMENTATION-2026-10-05.md`. Stripe has since
+> refused per the owner. Alpha Note / Another Lane has provided a positive
+> preliminary response subject to final underwriting. The public review site
+> is now available; the earlier blocked deployment described below is historical.
+
 Owner priority: resolve whether Tech Phase can accept overseas membership
 payments before spending more time on cosmetic improvements. The owner has
 sent inquiries; no provider approval, contract or live payment activation has

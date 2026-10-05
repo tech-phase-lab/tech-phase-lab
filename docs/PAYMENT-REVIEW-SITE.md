@@ -25,6 +25,13 @@ public static project's SSO protection is disabled. The existing
 The public branch deployment should follow `codex/research-preview`; do not
 promote the full research app just to expose this static reviewer website.
 
+Verified public URL: https://tech-phase-research.vercel.app/index.html
+English: https://tech-phase-research.vercel.app/en.html
+Interactive demonstration: https://tech-phase-research.vercel.app/product.html
+The owner shared the overview with Alpha Note / Another Lane and submitted a
+PayPal inquiry on October 5. Current provider status and remaining billing work
+are recorded in `PAYMENTS-IMPLEMENTATION-2026-10-05.md`.
+
 The public bundle must not import Clerk, service/admin APIs, paid articles or
 server credentials. Registration/payments are not simulated as successful.
 Provider inquiry forms and emails are submitted by the owner, not automated.
