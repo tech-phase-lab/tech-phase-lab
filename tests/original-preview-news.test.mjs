@@ -70,7 +70,7 @@ test('original cards are visible inside news with explicit test status, source l
   for (const lang of ['ja', 'en']) {
     const html = render(feed, lang);
     for (const text of ['ORIGINAL', original.excerptOriginal, original.sourceName,
-      lang === 'ja' ? '未翻訳・未確認・テスト掲載' : 'Untranslated · Unreviewed · Test publication',
+      lang === 'ja' ? '翻訳準備中（原文）・未確認・テスト掲載' : 'Summary pending · Unreviewed · Test publication',
       lang === 'ja' ? '原文を開く' : 'Read original', lang === 'ja' ? '自動テスト掲載' : 'Automatic test publication',
       '18:00:00 JST', '18:01:00 JST', '18:02:00 JST']) assert.ok(html.includes(text), text);
     assert.ok(html.includes(`href="${original.sourceUrl}"`));
@@ -406,4 +406,20 @@ test('metadata notices preserve production and header isolation and the unchange
   assert.throws(() => parseOriginalPreviewItems(Array(31).fill(metadataNotice)));
   publishNews(availableNewsPayload(wire([metadataNotice])));
   assert.equal(newsSnapshot().originalPreviewItems, undefined);
+});
+
+test('a checked bilingual summary shows one line with the detail behind ＋ and keeps the source link', () => {
+  const summary = { summaryPolicy: 'preview-summary-v1', titleJa: 'Bluevine、Coverdashと中小企業向け保険で提携',
+    titleEn: 'Bluevine partners with Coverdash on small business insurance',
+    bodyJa: 'BluevineはCoverdashと提携し、中小企業向けに組み込み型の事業保険を提供すると発表した。発表元はPR Newswire。',
+    bodyEn: 'Bluevine announced a partnership with Coverdash to offer embedded business insurance to small businesses. Source: PR Newswire.' };
+  const payload = wire();
+  payload.originalPreviewItems = payload.originalPreviewItems.map(item => item.status === 'original-excerpt-unreviewed' ? { ...item, ...summary } : item);
+  const feed = availableNewsPayload(payload);
+  const ja = render(feed, 'ja'), en = render(feed, 'en');
+  assert.ok(ja.includes(summary.titleJa) && ja.includes(summary.bodyJa) && ja.includes('＋') && ja.includes('AI要約'));
+  assert.ok(en.includes(summary.titleEn) && en.includes(summary.bodyEn));
+  assert.ok(ja.includes('rel="noopener noreferrer"'));
+  const [unsafe] = parseOriginalPreviewItems([{ ...payload.originalPreviewItems.find(i => i.status === 'original-excerpt-unreviewed'), ...summary, bodyEn: 'see https://evil.example now' }]);
+  assert.equal(unsafe.summary, undefined);
 });

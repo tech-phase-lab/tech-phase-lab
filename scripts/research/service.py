@@ -34,6 +34,7 @@ import note_translation
 import question_translation
 import headline_translation
 import pipeline_status
+import preview_summaries
 import x_market_news
 import analyst_news
 import general_source_news
@@ -101,7 +102,7 @@ def release_interrupted_jobs(db_path, now=None):
     now = time.time() if now is None else now
     released = 0
     with monitor.connect(db_path) as db:
-        for table in ("signal_headline_translation_jobs", "x_market_jobs", "official_research_jobs"):
+        for table in ("signal_headline_translation_jobs", "x_market_jobs", "official_research_jobs", "preview_summary_jobs"):
             if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (table,)).fetchone():
                 released += db.execute(f"UPDATE {table} SET next_at=? WHERE state='running' AND next_at>?",
                                        (now, now)).rowcount
@@ -639,7 +640,7 @@ class AutomaticMonitor:
             "companies": {},
         }
         self.publication_wakes = {name: threading.Event() for name in (
-            "market", "results", "official",
+            "market", "results", "official", "preview",
             *(f"headlines-{index}" for index in range(self.translation_workers)),
         )}
         self.thread = threading.Thread(target=self.run_supervised, name="research-monitor", daemon=True)
@@ -669,6 +670,7 @@ class AutomaticMonitor:
             for index in range(self.translation_workers)]
         self.market_translation_thread = threading.Thread(target=self.run_market_translation, name="market-translation", daemon=True)
         self.result_thread = threading.Thread(target=self.run_results, name="result-publication", daemon=True)
+        self.preview_summary_thread = threading.Thread(target=self.run_preview_summaries, name="preview-summary", daemon=True)
         self.official_research_thread = threading.Thread(target=self.run_official_research, name="official-research", daemon=True)
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
@@ -753,6 +755,21 @@ class AutomaticMonitor:
                 result = x_market_news.run_once(self.db_path)
             except Exception as exc:
                 log_publication_failure("market-translation-unavailable", exc)
+            if not self.stop_event.is_set():
+                wake.wait(0.2 if result in PRODUCTIVE_RESULTS else 5)
+
+    def run_preview_summaries(self):
+        # Bilingual one-line summary + detail for original-preview stories.
+        if headline_translation.configuration(os.environ) is None:
+            return
+        wake = self.publication_wakes["preview"]
+        while not self.stop_event.is_set():
+            wake.clear()
+            result = None
+            try:
+                result = preview_summaries.run_once(self.db_path)
+            except Exception as exc:
+                log_publication_failure("preview-summary-unavailable", exc)
             if not self.stop_event.is_set():
                 wake.wait(0.2 if result in PRODUCTIVE_RESULTS else 5)
 
@@ -874,6 +891,7 @@ class AutomaticMonitor:
             thread.start()
         self.market_translation_thread.start()
         self.result_thread.start()
+        self.preview_summary_thread.start()
         self.official_research_thread.start()
         self.mu_measurement_thread.start()
         self.watch_earnings_thread.start()
@@ -900,6 +918,7 @@ class AutomaticMonitor:
             thread.join(timeout=45)
         self.market_translation_thread.join(timeout=45)
         self.result_thread.join(timeout=15)
+        self.preview_summary_thread.join(timeout=45)
         self.official_research_thread.join(timeout=45)
         self.mu_measurement_thread.join(timeout=45)
         self.watch_earnings_thread.join(timeout=10)

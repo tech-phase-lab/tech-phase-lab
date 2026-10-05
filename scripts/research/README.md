@@ -232,6 +232,7 @@ python3 scripts/research/persistence.py restore --backup /data/backups/research-
 - `RESEARCH_SEC_SAFETY_POLL_SECONDS`：フィードが正常なときの各社提出一覧の確認間隔（取りこぼし防止）。標準60秒。フィードが30秒以上取れない場合は `RESEARCH_SEC_POLL_SECONDS`（10秒）に戻ります
 - `RESEARCH_TRANSLATION_WORKERS`：見出し翻訳を同時に処理する数。標準3、1〜6。同じ記事を二重に翻訳することはなく、確認処理と1日の上限は共通です
 - `OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT`：見出し翻訳・X市況・企業ノートで共有する、24時間あたりのモデル呼び出し上限（失敗も数えます）。1〜2000。範囲外の値は翻訳を停止します
+- 原文テスト掲載のニュースは、全文が取得できているものについて、日英の1行要約と詳細（何が起きたか→数字→発表元）を自動作成します（`preview_summaries.py`）。見出し翻訳と同じOpenAIの設定・1日の上限を共有し、数字・上げ下げ・否定・名前・日英一致の確認に通ったものだけ表示します。確認待ちの間は原文に「翻訳準備中（原文）」と表示します
 - `RESEARCH_SEC_MAX_BACKOFF_SECONDS`：SECが403/429を返したときの一時停止の上限。標準900秒、60〜3600秒。1分→2分→4分…と延ばし、SEC全体（一覧・本文）で共有します。成功で即解除。以前の「6時間〜7日」の待ちは起動時に上限まで短縮します
 
 Vercel側には監視サービスのHTTPS URLを `RESEARCH_MONITOR_URL`、同じトークンを `RESEARCH_MONITOR_TOKEN` として設定します。`/research/intake` は3秒ごとにAPIを確認し、接続中か保存済み記録かを明示します。
