@@ -24,10 +24,14 @@ NEWS_PURPOSE = "tech-phase-news-stream-v1"
 NEWS_STREAM_PATH = "/news/events"
 
 
-def news_revision_reader(public_news):
-    """Wrap the shared public-news computation as a bounded revision feed."""
+def news_revision_reader(public_news, max_age=3):
+    """Wrap the shared public-news computation as a bounded revision feed.
+
+    The change detector reuses a result up to ``max_age`` seconds old, so open
+    pages never cause a full feed recomputation every second.
+    """
     def read():
-        payload = public_news()
+        payload = public_news(max_age=max_age)
         body = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
         return {"ok": True, "items": [hashlib.sha256(body.encode()).hexdigest()[:32]]}
     return read
@@ -151,9 +155,10 @@ class SnapshotHub:
             await asyncio.sleep(self.interval)
 
 
-def create_gateway(reader, secret, upstream, *, interval=1, max_clients=3500, heartbeat=30, news_reader=None):
+def create_gateway(reader, secret, upstream, *, interval=1, max_clients=3500, heartbeat=30, news_reader=None,
+                   news_interval=3):
     hub = SnapshotHub(reader, interval)
-    news_hub = SnapshotHub(news_reader, interval) if news_reader else None
+    news_hub = SnapshotHub(news_reader, news_interval) if news_reader else None
     app = web.Application(client_max_size=64 * 1024)
     # String keys keep the hub easy to inspect in standalone load tests.
     hub_key = web.AppKey("hub", SnapshotHub)

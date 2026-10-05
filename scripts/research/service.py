@@ -737,8 +737,10 @@ class AutomaticMonitor:
                 log_publication_failure("headline-translation-unavailable", exc)
             # A completed job means the queue may hold more: continue almost
             # at once instead of idling 5 s per headline. Failures still wait.
+            # Extra workers only help with a backlog; when idle they wait for a
+            # new-article wake instead of rescanning the queue every 5 s.
             if not self.stop_event.is_set():
-                wake.wait(0.2 if result in PRODUCTIVE_RESULTS else 5)
+                wake.wait(0.2 if result in PRODUCTIVE_RESULTS else 5 if index == 0 else 60)
 
     def run_market_translation(self):
         if headline_translation.configuration(os.environ) is None:
@@ -952,27 +954,39 @@ class AutomaticMonitor:
         with stock_news.connect(self.db_path) as db:
             return news_drafts.save_manual(db, payload)
 
-    def public_news(self, *, original_preview=False):
-        """Serve one shared computation per short window to every visitor.
+    def public_news(self, *, original_preview=False, max_age=None):
+        """Serve one shared computation to every visitor.
 
-        Each page polls every 5 s from several panels; recomputing the whole
-        feed (and its bridge write) per request queued visitors behind the
-        SQLite writer and pushed responses past the site's 10 s limit.
-        Concurrent callers wait for the single in-flight computation.
+        - A request that arrives while a computation is running waits and
+          reuses the result finished after it arrived (opening a page sends
+          several requests at once; they must not recompute one after another).
+        - A later request reuses the last result for up to news_cache_seconds
+          only if no write was committed since, so withdrawals and corrections
+          appear on the next request.
+        - ``max_age`` lets the push change-detector accept a slightly older
+          result instead of recomputing every second.
         """
         key = bool(original_preview)
         if not getattr(self, "news_cache_seconds", 0) or not hasattr(self, "news_cache_lock"):
             return self.compute_public_news(original_preview=original_preview)
+        arrived = time.monotonic()
         with self.news_cache_lock:
-            # Any committed write (publication, withdrawal, correction) changes
-            # the database files, so a cached feed is never served after it.
-            version = self.database_version()
             cached = self.news_cache.get(key)
-            if (cached and version is not None and cached[1] == version
-                    and time.monotonic() - cached[0] < self.news_cache_seconds):
-                return cached[2]
+            if cached:
+                started, finished, version, payload = cached
+                age = time.monotonic() - started
+                # Produced while this request waited: at most one computation old.
+                if finished >= arrived:
+                    return payload
+                if max_age is not None and age <= max_age:
+                    return payload
+                if (age < self.news_cache_seconds and version is not None
+                        and version == self.database_version()):
+                    return payload
+            started = time.monotonic()
             payload = self.compute_public_news(original_preview=original_preview)
-            self.news_cache[key] = (time.monotonic(), self.database_version(), payload)
+            # Recorded after the computation, which may itself commit a write.
+            self.news_cache[key] = (started, time.monotonic(), self.database_version(), payload)
             return payload
 
     def database_version(self):
