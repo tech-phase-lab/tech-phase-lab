@@ -5,10 +5,32 @@ export const ORIGINAL_PREVIEW_LIMIT = 30;
 type PreviewIdentity = {
   id: string; sourceName: string; sourceUrl: string; acquiredAt: string; previewPublishedAt: string;
 };
+export type PreviewSummary = { titleJa: string; titleEn: string; bodyJa: string; bodyEn: string };
 export type OriginalExcerptItem = PreviewIdentity & {
   status: "original-excerpt-unreviewed"; excerptOriginal: string;
   sourceTimePrecision: "timestamp" | "date" | "missing"; sourcePublishedAt: string | null; sourcePublishedOn: string | null;
+  /** Bilingual one-line summary + detail, checked by the monitor against the full source. */
+  summary?: PreviewSummary;
 };
+
+/** Public shape only; meaning and numbers are verified by the monitor before publication. */
+function parsePreviewSummary(value: Record<string, unknown>): PreviewSummary | undefined {
+  // Wire rows carry the marker and flat fields; already-parsed cards (the feed
+  // is validated more than once on the way to the page) carry a nested object.
+  const nested = value.summary && typeof value.summary === "object" && !Array.isArray(value.summary);
+  if (value.summaryPolicy !== "preview-summary-v1" && !nested) return undefined;
+  const row = nested ? value.summary as Record<string, unknown> : value;
+  const japanese = /[\u3040-\u30ff\u4e00-\u9fff]/;
+  const copy: Record<string, string> = {};
+  for (const [key, max] of [["titleJa", 180], ["titleEn", 180], ["bodyJa", 1500], ["bodyEn", 1500]] as const) {
+    const value = row[key];
+    if (typeof value !== "string" || value.trim().length < 4 || Array.from(value).length > max
+      || /[\x00-\x08\x0b-\x1f\x7f<>]|https?:\/\/|www\./i.test(value)) return undefined;
+    copy[key] = value.trim();
+  }
+  if (!japanese.test(copy.titleJa) || !japanese.test(copy.bodyJa)) return undefined;
+  return copy as PreviewSummary;
+}
 export type SecFilingNotice = PreviewIdentity & {
   status: "sec-filing-notice-unreviewed"; issuerName: string; issuerTicker: string;
   form: "8-K" | "6-K"; cik: string; accession: string;
@@ -148,7 +170,9 @@ export function parseOriginalPreviewItems(value: unknown): OriginalPreviewItem[]
       if (!/^\d{4}-\d{2}-\d{2}$/.test(sourcePublishedOn) || !Number.isFinite(Date.parse(sourcePublishedOn))
         || new Date(sourcePublishedOn).toISOString().slice(0, 10) !== sourcePublishedOn) throw Error("Invalid original preview date");
     } else if (precision !== "missing" || row.sourcePublishedAt !== null || row.sourcePublishedOn !== null) throw Error("Invalid original date precision");
+    const summary = parsePreviewSummary(row);
     return { id, status: "original-excerpt-unreviewed", sourceName, sourceUrl: url.href, excerptOriginal,
-      sourceTimePrecision: precision, sourcePublishedAt, sourcePublishedOn, acquiredAt, previewPublishedAt };
+      sourceTimePrecision: precision, sourcePublishedAt, sourcePublishedOn, acquiredAt, previewPublishedAt,
+      ...(summary ? { summary } : {}) };
   });
 }

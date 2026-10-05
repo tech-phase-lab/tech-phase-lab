@@ -1,5 +1,6 @@
 import type { Language } from "@/lib/research/data";
 import type { OriginalPreviewItem } from "@/lib/research/original-preview-news";
+import NewsStory from "./news-story";
 import styles from "./general-news.module.css";
 
 /** Only the bounded original excerpt is shown; this card is never a verified story. */
@@ -40,8 +41,19 @@ export default function OriginalPreviewCard({ item, lang }: { item: OriginalPrev
         {ja ? "自動テスト掲載" : "Automatic test publication"}: <time dateTime={item.previewPublishedAt}>{format(item.previewPublishedAt)}</time></p>
     </article>;
   }
+  if (item.summary) {
+    // One-line summary; the detail opens from ＋ on the right.
+    const published = item.sourceTimePrecision === "timestamp" ? format(item.sourcePublishedAt!)
+      : item.sourceTimePrecision === "date" ? item.sourcePublishedOn! : format(item.acquiredAt);
+    return <article>
+      <NewsStory label={`${item.sourceName} · ${ja ? "AI要約・テスト掲載" : "AI summary · Test publication"}`}
+        title={ja ? item.summary.titleJa : item.summary.titleEn}
+        body={ja ? item.summary.bodyJa : item.summary.bodyEn} publication={published} lang={lang} />
+      <p className={styles.note}>{ja ? "出典" : "Source"}: <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">{item.sourceName} · {ja ? "原文を開く" : "Read original"}</a></p>
+    </article>;
+  }
   return <article className={styles.originalPreview}>
-    <p className={styles.previewBadge}>ORIGINAL · {ja ? "未翻訳・未確認・テスト掲載" : "Untranslated · Unreviewed · Test publication"}</p>
+    <p className={styles.previewBadge}>ORIGINAL · {ja ? "翻訳準備中（原文）・未確認・テスト掲載" : "Original · Summary pending · Unreviewed · Test publication"}</p>
     <p className={styles.summary}>{item.excerptOriginal}</p>
     <p className={styles.note}>{ja ? "出典" : "Source"}: <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">{item.sourceName} · {ja ? "原文を開く" : "Read original"}</a></p>
     <p className={styles.note}>{ja ? "原文発表" : "Source published"}: {item.sourceTimePrecision === "timestamp"

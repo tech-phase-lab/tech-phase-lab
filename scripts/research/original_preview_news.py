@@ -329,7 +329,9 @@ def candidates(db, now, sources=None, *, stats=None):
         item = {'id': 'original-preview-' + hashlib.sha256(key.encode()).hexdigest()[:24],
                 'sourceName': name, 'sourceUrl': row['url'], 'excerptOriginal': copy,
                 **clocks, 'acquiredAt': row['acquired_at'], 'status': STATUS}
-        candidate = {'key': key, 'source_id': row['source_id'], 'sha': row['sha'], 'item': item, 'primary': row['lane'] == 'primary'}
+        candidate = {'key': key, 'source_id': row['source_id'], 'sha': row['sha'], 'item': item, 'primary': row['lane'] == 'primary',
+                     # Private: full retained source for the summary worker, never published.
+                     'source_title': row['title'] or '', 'source_text': text}
         # Same URL has exactly one owner and one copied excerpt.
         previous = result.get(key)
         if previous is None or (candidate['primary'], instant(item['acquiredAt']), row['source_id']) > (
@@ -404,7 +406,9 @@ def public_feed(db, reference=None, *, sources=None, verified_urls=(), stats=Non
         acquired, published = instant(receipt['acquired_at']), instant(receipt['first_published_at'])
         if not acquired or not published or not now - timedelta(days=WINDOW_DAYS) <= acquired <= published <= now:
             continue
-        items.append({**row['item'], 'acquiredAt': receipt['acquired_at'], 'previewPublishedAt': receipt['first_published_at']})
+        item = {**row['item'], 'acquiredAt': receipt['acquired_at'], 'previewPublishedAt': receipt['first_published_at']}
+        import preview_summaries
+        items.append(preview_summaries.attach(db, row, item))
     return items
 
 
