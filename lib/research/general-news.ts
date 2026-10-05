@@ -3,7 +3,7 @@ import reportedNewsTickers from "./reported-news-tickers.json" with { type: "jso
 import { parseResultBriefs, type ResultBrief } from "./market-results.ts";
 import { parseAnalystUpdates, type AnalystUpdate } from "./analyst-news.ts";
 import { marketNewsDetail, type MarketNewsDetail } from "./market-news-detail.ts";
-import { ORIGINAL_PREVIEW_LIMIT, originalPreviewUrlKey, parseOriginalPreviewItems, parseOriginalPreviewWindow, type OriginalPreviewWindow, type OriginalPreviewItem } from "./original-preview-news.ts";
+import { ORIGINAL_PREVIEW_LIMIT, originalPreviewUrlKey, secFilingUrlKey, parseOriginalPreviewItems, parseOriginalPreviewWindow, type OriginalPreviewWindow, type OriginalPreviewItem } from "./original-preview-news.ts";
 type Syndication = { policy: "issuer-capacity-contract-v1" | "issuer-business-news-v1"; issuer: string; distributor: "GlobeNewswire" | "PR Newswire" };
 export const OFFICIAL_NEWS_HISTORY_LIMIT = 100;
 export const NEWS_BRIEF_TITLE_SUFFIXES = { ja: "（短報・詳細確認中）", en: " (brief; details awaiting review)" } as const;
@@ -276,10 +276,10 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       ...feed.items.map(item => item.url),
       ...(feed.officialUpdates ?? []).flatMap(item => [item.url, ...(item.sources ?? []).map(source => source.url)]),
       ...(feed.marketUpdates ?? []).map(item => item.url), ...(feed.resultBriefs ?? []).map(item => item.url),
-    ].map(originalPreviewUrlKey));
+    ].flatMap(url => [originalPreviewUrlKey(url), ...(secFilingUrlKey(url) ? [secFilingUrlKey(url)!] : [])]));
     const ids = new Set<string>(), urls = new Set<string>();
     const originalPreviewItems = parseOriginalPreviewItems(payload.originalPreviewItems).filter(item => {
-      const key = originalPreviewUrlKey(item.sourceUrl);
+      const key = secFilingUrlKey(item.sourceUrl) ?? originalPreviewUrlKey(item.sourceUrl);
       if (verifiedUrls.has(key) || ids.has(item.id) || urls.has(key)) return false;
       ids.add(item.id); urls.add(key); return true;
     });

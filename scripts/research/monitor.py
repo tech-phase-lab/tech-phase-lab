@@ -1416,34 +1416,142 @@ def twse_material_links(body, ticker, source):
     return links
 
 
+SEC_DISCOVERY_FIELDS = {
+    "secForm", "secAccession", "secCik", "secFilingDate", "secAcceptanceDateTime",
+}
+
+
+def valid_sec_filing_date(value):
+    """Keep an SEC filing date only when it is an actual, explicit calendar date."""
+    if not isinstance(value, str) or not re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", value):
+        return None
+    try:
+        datetime.strptime(value, "%Y-%m-%d")
+    except ValueError:
+        return None
+    return value
+
+
+def valid_sec_acceptance_datetime(value):
+    """Validate an explicit SEC acceptance instant without supplying a timezone."""
+    if not isinstance(value, str) or not re.fullmatch(
+        r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}"
+        r"(?:\.[0-9]{1,6})?(?:Z|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])",
+        value,
+    ) or value.endswith("-00:00"):
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            return None
+        # Also reject instants that overflow the supported UTC calendar.
+        parsed.astimezone(timezone.utc)
+    except (ValueError, OverflowError):
+        return None
+    return value
+
+
+def normalized_sec_discovery_metadata(ticker, url, detail):
+    """Validate SEC identity against configured issuer rules and the original URL.
+
+    No SEC fields means legacy discovery evidence. Invalid identity rejects the
+    metadata; an absent or malformed optional SEC clock remains absent. Filing
+    dates and acceptance instants never imply original-article publication.
+    """
+    if not isinstance(detail, dict) or not SEC_DISCOVERY_FIELDS.intersection(detail):
+        return {}
+    form, cik, accession = (detail.get(key) for key in ("secForm", "secCik", "secAccession"))
+    if (
+        not isinstance(form, str) or form not in {"8-K", "6-K"}
+        or not isinstance(cik, str) or not re.fullmatch(r"[0-9]{10}", cik)
+        or not int(cik)
+        or not isinstance(accession, str)
+        or not re.fullmatch(r"[0-9]{10}-[0-9]{2}-[0-9]{6}", accession)
+        or not isinstance(url, str) or len(url) > 512
+        or ticker not in PROVIDERS
+    ):
+        return None
+    if not any(
+        source.get("format") == "sec-json" and source.get("cik") == cik
+        and form in source.get("forms", [])
+        for source in monitoring_sources(ticker)
+    ):
+        return None
+    expected = (
+        f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/"
+        f"{accession.replace('-', '')}/"
+    )
+    if not url.startswith(expected):
+        return None
+    document = url[len(expected):]
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,254}", document) or article_url(url, ticker) != url:
+        return None
+    metadata = {"secForm": form, "secCik": cik, "secAccession": accession}
+    filing_date = valid_sec_filing_date(detail.get("secFilingDate"))
+    if filing_date is not None:
+        metadata["secFilingDate"] = filing_date
+    accepted_at = valid_sec_acceptance_datetime(detail.get("secAcceptanceDateTime"))
+    if accepted_at is not None:
+        metadata["secAcceptanceDateTime"] = accepted_at
+    return metadata
+
+
 def sec_submission_links(body, ticker, source):
     """Turn the SEC submissions columnar JSON into official filing-document URLs."""
     data = json.loads(body)
     cik = source.get("cik", "")
-    if not re.fullmatch(r"\d{10}", cik) or str(data.get("cik", "")).zfill(10) != cik:
+    reported_cik = data.get("cik") if isinstance(data, dict) else None
+    if (
+        not isinstance(cik, str) or not re.fullmatch(r"[0-9]{10}", cik) or not int(cik)
+        or isinstance(reported_cik, bool) or not isinstance(reported_cik, (str, int))
+        or not re.fullmatch(r"[0-9]{1,10}", str(reported_cik))
+        or str(reported_cik).zfill(10) != cik
+    ):
         raise ValueError("SEC submissions CIK mismatch")
-    recent = data.get("filings", {}).get("recent", {})
+    filings = data.get("filings", {})
+    recent = filings.get("recent", {}) if isinstance(filings, dict) else None
+    if not isinstance(recent, dict):
+        raise ValueError("Invalid SEC submissions structure")
     forms = recent.get("form", [])
     accessions = recent.get("accessionNumber", [])
     documents = recent.get("primaryDocument", [])
     descriptions = recent.get("primaryDocDescription", [])
     if not all(isinstance(items, list) for items in (forms, accessions, documents, descriptions)):
         raise ValueError("Invalid SEC submissions structure")
-    allowed_forms = set(source.get("forms", []))
+    filing_dates = recent.get("filingDate", [])
+    acceptance_times = recent.get("acceptanceDateTime", [])
+    # Optional damaged clock columns do not discard otherwise valid filings.
+    filing_dates = filing_dates if isinstance(filing_dates, list) else []
+    acceptance_times = acceptance_times if isinstance(acceptance_times, list) else []
+    allowed_forms = set(source.get("forms", [])) & {"8-K", "6-K"}
     limit = max(1, min(int(source.get("limit", 40)), 100))
     links = {}
     for index, form in enumerate(forms):
-        if form not in allowed_forms or index >= len(accessions) or index >= len(documents):
+        if not isinstance(form, str) or form not in allowed_forms or index >= len(accessions) or index >= len(documents):
             continue
         accession, document = accessions[index], documents[index]
-        if not re.fullmatch(r"\d{10}-\d{2}-\d{6}", accession or "") or not re.fullmatch(r"[A-Za-z0-9._-]+", document or ""):
+        if (
+            not isinstance(accession, str) or not re.fullmatch(r"[0-9]{10}-[0-9]{2}-[0-9]{6}", accession)
+            or not isinstance(document, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,254}", document)
+        ):
             continue
         url = f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{accession.replace('-', '')}/{document}"
         canonical = article_url(url, ticker)
         if not canonical:
             continue
         description = descriptions[index] if index < len(descriptions) else ""
-        links[canonical] = " ".join(f"{form} · {description or 'Official filing'}".split())[:300]
+        metadata = normalized_sec_discovery_metadata(ticker, canonical, {
+            "secForm": form, "secCik": cik, "secAccession": accession,
+            "secFilingDate": filing_dates[index] if index < len(filing_dates) else None,
+            "secAcceptanceDateTime": acceptance_times[index] if index < len(acceptance_times) else None,
+        })
+        if metadata is None:
+            continue
+        description = description if isinstance(description, str) else ""
+        links[canonical] = {
+            "title": " ".join(f"{form} · {description or 'Official filing'}".split())[:300],
+            **metadata,
+        }
         if len(links) >= limit:
             break
     return links
@@ -1717,6 +1825,15 @@ def connect(path):
         db.execute("ALTER TABLE sources ADD COLUMN title TEXT")
     source_columns = {row[1] for row in db.execute("PRAGMA table_info(sources)")}
     migrations = {
+        # Current feed/index title evidence is separate from the first title and
+        # body/review history. It can revoke a metadata preview after discovery.
+        "discovery_title": "TEXT",
+        "discovery_title_at": "TEXT",
+        "sec_form": "TEXT",
+        "sec_accession": "TEXT",
+        "sec_cik": "TEXT",
+        "sec_filing_date": "TEXT",
+        "sec_acceptance_datetime": "TEXT",
         "content_type": "TEXT",
         "content_bytes": "INTEGER",
         "extracted_text": "TEXT",
@@ -3214,7 +3331,7 @@ def normalized_discovery_candidates(ticker, candidates):
     normalized = {}
     allowed_detail_keys = {
         "title", "publishedOn", "inlineText", "contentType", "contentBytes",
-    }
+    } | SEC_DISCOVERY_FIELDS
     for url, candidate in candidates.items():
         if not isinstance(url, str) or not valid_discovery_candidate_url(url, ticker):
             return None
@@ -3228,7 +3345,9 @@ def normalized_discovery_candidates(ticker, candidates):
             continue
         if not isinstance(candidate, dict) or set(candidate) - allowed_detail_keys:
             return None
-        detail = {}
+        detail = normalized_sec_discovery_metadata(ticker, url, candidate)
+        if detail is None:
+            return None
         title = candidate.get("title")
         if title is not None:
             if not isinstance(title, str) or len(title) > 300:
@@ -3551,12 +3670,45 @@ def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=N
 
 def save_discovery(db, ticker, result, links):
     """Persist one completed discovery result and return newly inserted URLs."""
+    sec_metadata = {}
+    for url, candidate in links.items():
+        metadata = normalized_sec_discovery_metadata(ticker, url, candidate)
+        if metadata is None:
+            raise ValueError("invalid-sec-discovery-metadata")
+        sec_metadata[url] = metadata
     if "_sourceCache" in result:
         save_discovery_source_cache(db, ticker, result["_sourceCache"])
     before = {row[0] for row in db.execute("SELECT url FROM sources WHERE ticker=?", (ticker,))}
     for url, candidate in links.items():
         detail = candidate if isinstance(candidate, dict) else {"title": candidate}
-        add_source(db, ticker, url, published_on=detail.get("publishedOn"), title=detail.get("title"))
+        retained_url = add_source(db, ticker, url, published_on=detail.get("publishedOn"), title=detail.get("title"))
+        title = detail.get("title")
+        if (isinstance(title, str) and title.strip()
+                and urlsplit(retained_url).hostname not in {"www.sec.gov", "data.sec.gov"}):
+            observed_at, title = now(), title[:301]
+            with db:
+                # Out-of-order observations cannot clear newer revocation.
+                # Equal-time contradictory observations are ambiguous, so keep
+                # an unusable current head rather than selecting either title.
+                db.execute("""UPDATE sources SET discovery_title=CASE
+                    WHEN julianday(discovery_title_at)=julianday(?) AND discovery_title<>?
+                    THEN 'Error: conflicting-discovery-title' ELSE ? END, discovery_title_at=?
+                  WHERE url=? AND ticker=? AND
+                    (discovery_title_at IS NULL OR julianday(?)>=julianday(discovery_title_at))""",
+                  (observed_at, title, title, observed_at, retained_url, ticker, observed_at))
+        metadata = sec_metadata[url]
+        if metadata:
+            with db:
+                db.execute("""
+                  UPDATE sources SET sec_form=?,sec_accession=?,sec_cik=?,
+                    sec_filing_date=COALESCE(?,sec_filing_date),
+                    sec_acceptance_datetime=COALESCE(?,sec_acceptance_datetime)
+                  WHERE url=? AND ticker=?
+                """, (
+                    metadata["secForm"], metadata["secAccession"], metadata["secCik"],
+                    metadata.get("secFilingDate"), metadata.get("secAcceptanceDateTime"),
+                    url, ticker,
+                ))
         if detail.get("inlineText") is not None:
             with db:
                 db.execute("UPDATE sources SET source_mode='inline' WHERE url=?", (url,))

@@ -22,7 +22,7 @@ paint. Receipts contain compact identifiers/clocks, never source text, and are
 not deleted to impose a lifetime publication limit.
 
 Bounds: seven-day acquisition/source window, newest 200 retained rows per lane
-(raw X, signal articles, primary releases), at most 30 cards. The response states
+(raw X, signal articles, primary releases, SEC filing metadata), at most 30 cards. The response states
 eligible and omitted counts within that bounded scan and whether a scan ceiling
 was reached; it does not claim exhaustive upstream coverage. Excerpts are a
 single literal fragment of at most 20 whitespace-delimited words and 100 Unicode
@@ -45,3 +45,38 @@ uses only synthetic repository fixtures. It exercises actual collector saving,
 the default no-model result loop, immutable receipts, read-only projection,
 revision/withdrawal/ownership behavior, precision, limits and verified feed
 preservation. Full integrated release checks are still required before rollout.
+
+
+## SEC filing notices (preview only)
+
+SEC filings use a separate `sec-filing-notice-unreviewed` variant, not an original
+excerpt or a reviewed company story. The public whitelist contains configured
+issuer name/ticker, permitted 8-K/6-K form, SEC CIK/accession, the validated SEC
+filing link, available source filing/acceptance clocks, metadata acquisition,
+first automatic test publication, and body availability. No title description,
+body, exception, token, model input or investment interpretation is copied.
+The UI says “filing metadata only,” clearly reports unavailable or retained-but-
+unreviewed body, and shows missing filing/acceptance times as unknown.
+
+This fourth scan lane reads at most 200 retained discovery rows. The overall
+30-card and byte limits are unchanged; total eligible-in-scan is bounded by 800.
+Its seven-day window is based on first metadata acquisition. Older source clocks,
+when present, remain labeled with their real dates. Filing date and SEC acceptance
+time are distinct; neither is inferred from discovery, caching or accession.
+Normal SEC JSON discovery now retains validated nullable SEC-specific metadata.
+Old string caches and existing rows remain readable without manufactured clocks,
+cache invalidation, a forced refetch, or changes to SEC circuits and backoff.
+
+A configured issuer CIK, exact accession document path and permitted form are
+required. Legacy rows may use only a strict retained 8-K/6-K title prefix for
+form identity. One accession is one notice across primary/exhibit document URLs;
+family holds, rejections and explicit source withdrawals revoke it. Unknown or
+conflicting family forms fail closed. New exhibits cannot refresh an old filing's
+acquisition age. Metadata enrichment and body arrival preserve first publication.
+Actually emitted reviewed SEC content from the same accession suppresses the
+notice. Generic SEC admission to the reviewed-news bridge is unchanged.
+
+SEC-only validation also covers `tests/test_sec_preview_notice.py`,
+`tests/test_sec_discovery_metadata.py`, and the SEC cases in
+`tests/original-preview-news.test.mjs`. Tests use synthetic retained records and
+original-format URLs with network/DNS guards; no SEC or paid API traffic is needed.

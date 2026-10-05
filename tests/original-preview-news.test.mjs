@@ -7,7 +7,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import ts from 'typescript';
 import { availableNewsPayload, publicNewsPayload, boundedOfficialHistory } from '../lib/research/general-news.ts';
 import { buildPublicNews } from '../lib/research/public-news-response.ts';
-import { parseOriginalPreviewItems } from '../lib/research/original-preview-news.ts';
+import { parseOriginalPreviewItems, parseOriginalPreviewWindow } from '../lib/research/original-preview-news.ts';
 import { newsPulseItems } from '../lib/research/news-pulse-items.ts';
 import { publishNews, newsSnapshot } from '../lib/research/news-snapshot.ts';
 
@@ -34,6 +34,13 @@ const original = {
   sourceName: 'Nebius', sourceUrl: 'https://nebius.com/newsroom/original-test', excerptOriginal: 'A short original source excerpt.',
   sourceTimePrecision: 'timestamp', sourcePublishedAt: '2026-10-04T09:00:00Z', sourcePublishedOn: null,
   acquiredAt: '2026-10-04T09:01:00Z', previewPublishedAt: '2026-10-04T09:02:00Z',
+};
+const notice = {
+  id: 'original-preview-' + 'd'.repeat(24), status: 'sec-filing-notice-unreviewed',
+  sourceName: 'SEC EDGAR', sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1513845/000110465926112824/tm2626792d1_6k.htm',
+  issuerName: 'Nebius', issuerTicker: 'NBIS', form: '6-K', cik: '0001513845', accession: '0001104659-26-112824',
+  filingDate: null, acceptedAt: null, bodyAvailability: 'unavailable',
+  acquiredAt: '2026-10-01T20:06:08Z', previewPublishedAt: '2026-10-05T01:00:00Z',
 };
 const official = { id: '77', title: 'Verified company headline', translationJa: '確認済みの企業見出し',
   bodyJa: '確認済みの詳しい本文です。', bodyEn: 'The verified body stays complete.',
@@ -183,12 +190,12 @@ test('API and streamed HTML fail closed outside preview and opt in only on the e
     for (const env of [undefined, 'production', 'development', 'preview']) {
       if (env === undefined) delete process.env.VERCEL_ENV; else process.env.VERCEL_ENV = env;
       const requests = [];
-      globalThis.fetch = async (url, init) => { requests.push(String(url)); assert.equal(init.headers.Authorization, 'Bearer synthetic-server-token'); return Response.json(wire()); };
+      globalThis.fetch = async (url, init) => { requests.push(String(url)); assert.equal(init.headers.Authorization, 'Bearer synthetic-server-token'); return Response.json(wire([original, notice])); };
       const response = await GET(new Request('https://frontend.example.com/api/research/news?originalPreview=1'));
       const api = await response.json(), home = await loadLiveHomeNews();
       assert.equal(response.status, 200); assert.equal(response.headers.get('Cache-Control'), 'no-store');
       assert.deepEqual(requests, Array(2).fill(`https://monitor.example.com/news${env === 'preview' ? '?originalPreview=1' : ''}`));
-      for (const data of [api, home.news.data]) assert.deepEqual(data.originalPreviewItems, env === 'preview' ? [original] : undefined);
+      for (const data of [api, home.news.data]) assert.deepEqual(data.originalPreviewItems, env === 'preview' ? [original, notice] : undefined);
     }
     globalThis.fetch = async () => Response.json({ ...wire(), padding: 'x'.repeat(500_000) });
     assert.equal((await GET()).status, 503);
@@ -250,4 +257,153 @@ test('bounded scan metadata is disclosed honestly and stripped from the header s
   const reduced = availableNewsPayload(wire([original, invalidRow], { originalPreviewWindow: { ...window, returned: 2, omittedInScan: 31 } }));
   assert.deepEqual(reduced.originalPreviewWindow, window);
   assert.equal(buildPublicNews(wire([original], { originalPreviewWindow: window })).originalPreviewWindow, undefined);
+});
+
+
+test('SEC metadata notices disclose unavailable body and unknown filing clocks without inventing excerpts', () => {
+  assert.deepEqual(parseOriginalPreviewItems([notice]), [notice]);
+  const feed = availableNewsPayload(wire([notice], { officialUpdates: [official] }));
+  for (const lang of ['ja', 'en']) {
+    const html = render(feed, lang);
+    for (const text of ['SEC EDGAR', 'Nebius (NBIS) · Form 6-K', notice.sourceUrl,
+      lang === 'ja' ? '提出情報・未確認・テスト掲載' : 'Filing notice · Unreviewed · Test publication',
+      lang === 'ja' ? '本文未取得' : 'Body unavailable', lang === 'ja' ? '日時不明' : 'Date/time unknown',
+      lang === 'ja' ? '提出情報取得' : 'Metadata acquired']) assert.ok(html.includes(text), text);
+    assert.ok(html.includes(`dateTime="${notice.acquiredAt}"`));
+    assert.ok(html.includes(`dateTime="${notice.previewPublishedAt}"`));
+    assert.doesNotMatch(html, /PRIVATE|Source published|原文発表|excerptOriginal/);
+    assert.doesNotMatch(render(feed, lang, true), /Filing notice|提出情報|Form 6-K/);
+    assert.deepEqual(newsPulseItems(feed, lang), newsPulseItems(availableNewsPayload(wire([], { officialUpdates: [official] })), lang));
+  }
+  const enriched = { ...notice, filingDate: '2026-10-01', acceptedAt: '2026-10-01T16:01:00-04:00', bodyAvailability: 'retained-unreviewed' };
+  const html = render(availableNewsPayload(wire([enriched])), 'en');
+  assert.ok(html.includes('Body retained; unreviewed and not shown'));
+  assert.ok(html.includes('dateTime="2026-10-01">2026-10-01</time>'));
+  assert.ok(html.includes('SEC accepted'));
+  assert.ok(html.includes('dateTime="2026-10-01T16:01:00-04:00"'));
+});
+
+test('SEC notice whitelist rejects identity or clock corruption and isolates bad adjacent rows', () => {
+  const poisoned = { ...notice, excerptOriginal: 'PRIVATE EXCERPT', title: 'PRIVATE TITLE', body: 'PRIVATE BODY', error: 'PRIVATE ERROR', credentials: 'PRIVATE TOKEN' };
+  assert.deepEqual(parseOriginalPreviewItems([poisoned]), [notice]);
+  const bad = [
+    { ...notice, sourceName: 'SEC News' }, { ...notice, issuerTicker: 'AAPL' }, { ...notice, issuerName: 'Fabricated issuer' },
+    { ...notice, form: '10-K' }, { ...notice, form: '8-K' }, { ...notice, cik: '1513845' },
+    { ...notice, accession: '0001104659-26-112825' }, { ...notice, sourceUrl: notice.sourceUrl.replace('/1513845/', '/320193/') },
+    { ...notice, sourceUrl: notice.sourceUrl + '?token=private' },
+    { ...notice, sourceUrl: notice.sourceUrl.replace('www.sec.gov', 'www.sec.gov:443') },
+    { ...notice, sourceUrl: notice.sourceUrl.replace('tm2626792d1_6k.htm', '../000110465926112824/tm2626792d1_6k.htm') },
+    { ...notice, acceptedAt: '2026-10-01T20:00:00-00:00' }, { ...notice, bodyAvailability: 'reviewed' },
+    { ...notice, filingDate: '2026-02-30' }, { ...notice, filingDate: '2026-10-06' }, { ...notice, filingDate: undefined },
+    { ...notice, acceptedAt: '2026-10-01T20:07:00Z' }, { ...notice, acceptedAt: '2026-10-01T20:00:00' },
+    { ...original, sourceUrl: notice.sourceUrl },
+  ];
+  for (const row of bad) {
+    assert.throws(() => parseOriginalPreviewItems([row]));
+    const feed = availableNewsPayload(wire([row, poisoned, original], { officialUpdates: [official] }));
+    assert.deepEqual(feed.originalPreviewItems, [notice, original]);
+    assert.deepEqual(feed.officialUpdates, [official]);
+    assert.doesNotMatch(JSON.stringify(feed), /PRIVATE/);
+  }
+});
+
+test('SEC document aliases deduplicate by accession and only a visible reviewed accession wins', () => {
+  const alias = { ...notice, id: 'original-preview-' + 'e'.repeat(24), sourceUrl: notice.sourceUrl.replace('tm2626792d1_6k.htm', 'exhibit991.htm') };
+  assert.deepEqual(availableNewsPayload(wire([notice, alias])).originalPreviewItems, [notice]);
+  const mu = { ...notice, issuerName: 'Micron', issuerTicker: 'MU', form: '8-K', cik: '0000723125',
+    accession: '0000723125-26-000018', sourceUrl: 'https://www.sec.gov/Archives/edgar/data/723125/000072312526000018/form8k.htm' };
+  const reviewed = { ...official, id: '19', publisher: 'Micron', tickers: ['MU'],
+    url: 'https://www.sec.gov/Archives/edgar/data/723125/000072312526000018/a2026q4ex991-pressrelease.htm' };
+  assert.deepEqual(availableNewsPayload(wire([mu], { officialUpdates: [reviewed] })).originalPreviewItems, []);
+  assert.deepEqual(availableNewsPayload(wire([mu], { officialUpdates: [{ ...reviewed, title: 'x'.repeat(181) }] })).originalPreviewItems, [mu]);
+  const otherAccession = { ...mu, id: alias.id, accession: '0000723125-26-000019', sourceUrl: mu.sourceUrl.replace('000018/', '000019/') };
+  assert.deepEqual(availableNewsPayload(wire([otherAccession], { officialUpdates: [reviewed] })).originalPreviewItems, [otherAccession]);
+});
+
+test('SEC notices use the same overall caps, production strip, and header isolation', () => {
+  assert.equal(buildPublicNews(wire([notice])).originalPreviewItems, undefined);
+  assert.deepEqual(buildPublicNews(wire([notice]), { allowOriginalPreview: true }).originalPreviewItems, [notice]);
+  assert.throws(() => parseOriginalPreviewItems(Array(31).fill(notice)));
+  const window = { recentWindowDays: 7, scanLimitPerLane: 200, displayLimit: 30, eligibleInScan: 1200, returned: 1, omittedInScan: 1199, scanLimited: true };
+  assert.deepEqual(parseOriginalPreviewWindow(window, 1), window);
+  assert.equal(parseOriginalPreviewWindow({ ...window, eligibleInScan: 1201, omittedInScan: 1200 }, 1), undefined);
+  publishNews(availableNewsPayload(wire([notice])));
+  assert.equal(newsSnapshot().originalPreviewItems, undefined);
+});
+
+const metadataNotice = {
+  id: 'original-preview-' + 'f'.repeat(24), status: 'source-metadata-notice-unreviewed',
+  sourceName: 'Nebius', sourceUrl: 'https://nebius.com/newsroom/retained-metadata',
+  sourceClass: 'issuer-metadata', titleOriginal: 'Nebius announces a retained source update',
+  sourcePublishedOn: null, bodyAvailability: 'unavailable',
+  acquiredAt: '2026-10-04T20:00:00Z', previewPublishedAt: '2026-10-05T01:00:00Z',
+};
+const twseNotice = { ...metadataNotice, id: 'original-preview-' + '1'.repeat(24),
+  sourceName: 'TWSE · TSMC', sourceClass: 'exchange-disclosure', titleOriginal: '本公司重要訊息測試',
+  sourceUrl: 'https://openapi.twse.com.tw/v1/opendata/t187ap04_L?company=2330&date=1151004&time=180000&id=0123456789abcdef',
+  sourcePublishedOn: '2026-10-04', bodyAvailability: 'retained-unreviewed' };
+const docNotice = { ...metadataNotice, sourceName: 'Nebius · Preemptible VMs', sourceClass: 'official-document',
+  sourceUrl: 'https://docs.nebius.com/compute/virtual-machines/preemptible', titleOriginal: null, bodyAvailability: 'retained-unreviewed' };
+const seedRows = JSON.parse(readFileSync(new URL('../scripts/research/sources.json', import.meta.url), 'utf8'));
+const pdfNotices = seedRows.filter(row => row.url.startsWith('https://assets.nebius.com/')).map((row, index) => ({ ...metadataNotice,
+  id: 'original-preview-' + String(index + 2).repeat(24), sourceName: 'Nebius · PDF', sourceClass: 'seeded-document',
+  sourceUrl: row.url, titleOriginal: null, sourcePublishedOn: row.publishedOn }));
+
+test('configured metadata notices show correct source class, unknown dates and no copied body', () => {
+  for (const item of [metadataNotice, twseNotice, docNotice, ...pdfNotices]) {
+    const injected = { ...item, text: 'PRIVATE_BODY', bodyJa: 'PRIVATE_TRANSLATION', error: 'PRIVATE_ERROR', extra: 'PRIVATE_METADATA' };
+    assert.deepEqual(parseOriginalPreviewItems([injected]), [item]);
+    for (const lang of ['ja', 'en']) {
+      const html = render(availableNewsPayload(wire([injected])), lang);
+      assert.ok(html.includes(lang === 'ja' ? '出典情報のみ。本文の内容は未確認・非表示です。' : 'Source metadata only. Contents are unreviewed and not shown.'));
+      assert.ok(html.includes(item.sourceName));
+      assert.ok(html.includes(lang === 'ja' ? '出典情報取得' : 'Source metadata acquired'));
+      assert.doesNotMatch(html, /PRIVATE_BODY|PRIVATE_TRANSLATION|PRIVATE_ERROR|PRIVATE_METADATA/);
+      assert.equal((html.match(/<time /g) ?? []).length, item.sourcePublishedOn ? 3 : 2);
+      assert.doesNotMatch(render(availableNewsPayload(wire([injected])), lang, true), /SOURCE|出典情報のみ|Source metadata only/);
+    }
+  }
+});
+
+test('query and document exceptions remain exact, source-specific, and metadata-only', () => {
+  const bad = [
+    { ...metadataNotice, sourceUrl: metadataNotice.sourceUrl + '?token=private' },
+    { ...metadataNotice, sourceName: 'Different publisher' },
+    { ...metadataNotice, titleOriginal: null },
+    { ...metadataNotice, titleOriginal: 'Bearer PRIVATE_SYNTHETIC_TOKEN' },
+    { ...metadataNotice, sourcePublishedOn: '2026-10-05' },
+    { ...twseNotice, sourceUrl: twseNotice.sourceUrl + '&secret=1' },
+    { ...twseNotice, sourceUrl: twseNotice.sourceUrl.replace('2330', '2317') },
+    { ...twseNotice, sourceUrl: twseNotice.sourceUrl.replace('180000', '250000') },
+    { ...twseNotice, sourceUrl: twseNotice.sourceUrl.replace('1151004', '1150230') },
+    { ...twseNotice, sourcePublishedOn: null },
+    { ...twseNotice, bodyAvailability: 'unavailable' },
+    { ...twseNotice, sourceClass: 'issuer-metadata' },
+    { ...docNotice, titleOriginal: 'Invented document headline' },
+    { ...docNotice, sourceUrl: docNotice.sourceUrl + '/new-provider' },
+    { ...docNotice, bodyAvailability: 'unavailable' },
+    { ...docNotice, sourcePublishedOn: '2026-10-04' },
+    { ...pdfNotices[0], sourceUrl: pdfNotices[0].sourceUrl + '&extra=1' },
+    { ...pdfNotices[0], sourcePublishedOn: '2026-10-04' },
+    { ...metadataNotice, sourceUrl: 'https://newsletter.semianalysis.com/p/retained-article' },
+    { ...original, sourceUrl: twseNotice.sourceUrl },
+    { ...original, sourceUrl: pdfNotices[0].sourceUrl },
+  ];
+  for (const row of bad) assert.throws(() => parseOriginalPreviewItems([row]), row.sourceUrl);
+});
+
+test('different TWSE disclosures remain distinct and verified cards keep precedence', () => {
+  const second = { ...twseNotice, id: 'original-preview-' + '9'.repeat(24), sourceUrl: twseNotice.sourceUrl.replace('0123456789abcdef', '1123456789abcdef') };
+  assert.deepEqual(availableNewsPayload(wire([twseNotice, second])).originalPreviewItems, [twseNotice, second]);
+  const reviewed = { ...official, url: metadataNotice.sourceUrl };
+  assert.deepEqual(availableNewsPayload(wire([metadataNotice], { officialUpdates: [reviewed] })).originalPreviewItems, []);
+  assert.deepEqual(availableNewsPayload(wire([metadataNotice], { officialUpdates: [{ ...reviewed, title: 'x'.repeat(181) }] })).originalPreviewItems, [metadataNotice]);
+});
+
+test('metadata notices preserve production and header isolation and the unchanged card bound', () => {
+  assert.equal(buildPublicNews(wire([metadataNotice])).originalPreviewItems, undefined);
+  assert.deepEqual(buildPublicNews(wire([metadataNotice]), { allowOriginalPreview: true }).originalPreviewItems, [metadataNotice]);
+  assert.throws(() => parseOriginalPreviewItems(Array(31).fill(metadataNotice)));
+  publishNews(availableNewsPayload(wire([metadataNotice])));
+  assert.equal(newsSnapshot().originalPreviewItems, undefined);
 });

@@ -1330,9 +1330,12 @@ class IntakeTests(unittest.TestCase):
         body = b'''{"cik":"1046179","filings":{"recent":{"form":["6-K","3"],"accessionNumber":["0001046179-26-000658","0000000000-26-000001"],"primaryDocument":["tsm-20260918.htm","ownership.xml"],"primaryDocDescription":["REPORT OF FOREIGN ISSUER",""]}}}'''
         links = m.sec_submission_links(body, "TSM", source)
         self.assertEqual(len(links), 1)
-        url, title = next(iter(links.items()))
+        url, detail = next(iter(links.items()))
         self.assertEqual(url, "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000658/tsm-20260918.htm")
-        self.assertEqual(title, "6-K · REPORT OF FOREIGN ISSUER")
+        self.assertEqual(detail, {
+            "title": "6-K · REPORT OF FOREIGN ISSUER", "secForm": "6-K",
+            "secCik": "0001046179", "secAccession": "0001046179-26-000658",
+        })
 
     def test_twse_material_information_is_filtered_and_saved_as_inline_evidence(self):
         body = json.dumps([

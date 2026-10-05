@@ -2667,6 +2667,23 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertNotEqual(original_signature, service.discovery_signature(result, remote_only))
         self.assertEqual(len(original_signature), 64)
 
+    def test_discovery_signature_detects_sec_metadata_enrichment_at_the_same_url(self):
+        url = "https://www.sec.gov/Archives/edgar/data/1664703/000166470326000001/be-20261002.htm"
+        result = {"status": "ok", "route": "supplemental", "error": None}
+        legacy = {url: "8-K · CURRENT REPORT"}
+        detail = {
+            "title": legacy[url], "secForm": "8-K", "secCik": "0001664703",
+            "secAccession": "0001664703-26-000001", "secFilingDate": "2026-10-02",
+            "secAcceptanceDateTime": "2026-10-02T16:03:04Z",
+        }
+        signature = service.discovery_signature(result, {url: detail})
+        self.assertNotEqual(signature, service.discovery_signature(result, legacy))
+        self.assertEqual(signature, service.discovery_signature(result, {url: dict(detail)}))
+        for field in ("secForm", "secCik", "secAccession", "secFilingDate", "secAcceptanceDateTime"):
+            without = {key: value for key, value in detail.items() if key != field}
+            with self.subTest(field=field):
+                self.assertNotEqual(signature, service.discovery_signature(result, {url: without}))
+
     def test_supplemental_failure_does_not_back_off_verified_company_route(self):
         partial = {"status": "degraded", "route": "primary", "candidates": 1}
         total = {"status": "degraded", "route": "none", "candidates": 0}

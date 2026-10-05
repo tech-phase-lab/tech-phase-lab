@@ -15,6 +15,8 @@ from urllib.parse import urlsplit, urlunsplit
 import monitor
 import news_policy
 import signals
+import sec_preview_notice
+import configured_preview_notice
 import x_api
 
 WINDOW_DAYS = 7
@@ -44,6 +46,9 @@ def instant(value):
 
 
 def canonical_url(value):
+    special = configured_preview_notice.special_identity(value)
+    if special:
+        return special['key']
     try:
         parsed = urlsplit(value)
         if (not isinstance(value, str) or len(value) > 4096 or CONTROL.search(value)
@@ -92,6 +97,7 @@ def schema(db):
     if 'signal_documents' in tables:
         db.execute("CREATE INDEX IF NOT EXISTS original_preview_document_canonical ON signal_documents(lower(rtrim(url,'/')))")
     if 'sources' in tables:
+        db.execute('CREATE INDEX IF NOT EXISTS original_preview_primary_discovery_clock ON sources(julianday(discovered_at))')
         db.execute("CREATE INDEX IF NOT EXISTS original_preview_primary_canonical ON sources(lower(rtrim(url,'/')))")
     if 'signal_events' in tables:
         db.execute('CREATE INDEX IF NOT EXISTS original_preview_event_url ON signal_events(url)')
@@ -127,23 +133,32 @@ def _source_clock(at, on, acquired, now):
     return {'sourcePublishedAt': None, 'sourcePublishedOn': None, 'sourceTimePrecision': 'missing'}
 
 
-def _primary_denied_keys(db, rows, tables):
+def _primary_denied_keys(db, rows, tables, now):
     """An explicit primary source denial binds the complete canonical family.
 
     Mere discovery, a missing body, or unsuccessful translation is not denial.
     """
     if 'sources' not in tables:
         return set()
+    columns = {row[1] for row in db.execute('PRAGMA table_info(sources)')}
+    current_title = 'discovery_title' if 'discovery_title' in columns else 'NULL AS discovery_title'
+    title_clock = 'discovery_title_at' if 'discovery_title_at' in columns else 'NULL AS discovery_title_at'
     keys = {key for row in rows if (key := canonical_url(row['url']))}
     aliases = sorted({key.rstrip('/').lower() for key in keys})
     denied = set()
     for start in range(0, len(aliases), 400):
         batch = aliases[start:start + 400]
         marks = ','.join('?' for _ in batch)
-        for row in db.execute(f"SELECT url,ticker,status,extracted_text FROM sources WHERE lower(rtrim(url,'/')) IN ({marks})", batch):
-            if canonical_url(row['url']) not in keys or monitor.article_url(row['url'], row['ticker']) != row['url']:
+        for row in db.execute(f"SELECT url,ticker,title,{current_title},{title_clock},discovered_at,status,extracted_text FROM sources WHERE lower(rtrim(url,'/')) IN ({marks})", batch):
+            if canonical_url(row['url']) not in keys or not (monitor.article_url(row['url'], row['ticker']) == row['url']
+                    or configured_preview_notice.special_identity(row['url'], row['ticker'])):
                 continue
-            if row['status'] in {'held', 'rejected'} or WITHDRAWAL.search(row['extracted_text'] or ''):
+            current = row['discovery_title']
+            observed, discovered = instant(row['discovery_title_at']), instant(row['discovered_at'])
+            if (row['status'] in {'held', 'rejected'} or WITHDRAWAL.search(row['extracted_text'] or '')
+                    or WITHDRAWAL.search(row['title'] or '') or WITHDRAWAL.search(current or '')
+                    or (current is not None and (not isinstance(current, str) or len(current) > 300 or not excerpt(current)
+                        or not observed or not discovered or not discovered <= observed <= now))):
                 denied.add(canonical_url(row['url']))
     return denied
 
@@ -218,8 +233,6 @@ def candidates(db, now, sources=None, *, stats=None):
     """Bounded retained evidence, not a claim of exhaustive upstream coverage."""
     sources = signals.SOURCES if sources is None else sources
     approved, tables = _sources(sources), table_names(db)
-    if not approved:
-        return []
     cutoff = (now - timedelta(days=WINDOW_DAYS)).isoformat()
     bounds = (cutoff, now.isoformat(), SCAN_LIMIT)
     rows = []
@@ -248,7 +261,7 @@ def candidates(db, now, sources=None, *, stats=None):
           ORDER BY julianday(r.observed_at) DESC,s.url LIMIT ?''', bounds))
     lane_counts.append(len(rows) - sum(lane_counts))
     # Explicit source withdrawals/holds constrain aliases, even outside the scan.
-    primary_denied = _primary_denied_keys(db, rows, tables)
+    primary_denied = _primary_denied_keys(db, rows, tables, now)
     result = {}
     for row in rows:
         source = approved.get(row['source_id'])
@@ -322,6 +335,29 @@ def candidates(db, now, sources=None, *, stats=None):
         if previous is None or (candidate['primary'], instant(item['acquiredAt']), row['source_id']) > (
                 previous['primary'], instant(previous['item']['acquiredAt']), previous['source_id']):
             result[key] = candidate
+    if 'sources' in tables:
+        notices, scanned = sec_preview_notice.candidates(db, now, window_days=WINDOW_DAYS,
+            scan_limit=SCAN_LIMIT, instant=instant, withdrawal=WITHDRAWAL)
+        lane_counts.append(scanned)
+        result.update({row['key']: row for row in notices})
+    notices, counts = configured_preview_notice.candidates(db, now, sources, window_days=WINDOW_DAYS,
+        scan_limit=SCAN_LIMIT, instant=instant, excerpt=excerpt, canonical_url=canonical_url,
+        withdrawal=WITHDRAWAL, promotion=news_policy.PROMOTION)
+    lane_counts.extend(counts)
+    primary_denied.update(_primary_denied_keys(db, [{'url': row['item']['sourceUrl']} for row in notices], tables, now))
+    notices = {row['key']: row for row in notices if row['key'] not in primary_denied}
+    # Once metadata has been made available, later body arrival enriches that
+    # same notice. It must not mint a second publication or refresh its age.
+    # Existing original-body cards (without a metadata receipt) stay unchanged.
+    if 'original_preview_receipts' in tables:
+        for key, row in list(result.items()):
+            if not row['source_id'].startswith('primary-ir-'):
+                continue
+            revision = hashlib.sha256(('metadata:' + key).encode()).hexdigest()
+            if db.execute('SELECT 1 FROM original_preview_receipts WHERE canonical_url=? AND revision=?', (key, revision)).fetchone():
+                result.pop(key)
+    for key, row in notices.items():
+        result.setdefault(key, row)
     if stats is not None:
         stats.update({'recentWindowDays': WINDOW_DAYS, 'scanLimitPerLane': SCAN_LIMIT,
                       'displayLimit': CARD_LIMIT, 'eligibleInScan': len(result),
@@ -357,6 +393,7 @@ def public_feed(db, reference=None, *, sources=None, verified_urls=(), stats=Non
         return []
     now = reference or datetime.now(timezone.utc)
     verified = {canonical_url(url) for url in verified_urls}
+    verified.update(ref['key'] for url in verified_urls if (ref := sec_preview_notice.identity(url)))
     items = []
     for row in candidates(db, now, sources, stats=stats):
         if row['key'] in verified:
