@@ -107,7 +107,7 @@ class PublicationFailureDiagnosticsTests(unittest.TestCase):
 
     def test_workers_recover_and_keep_waits_and_independent_publication_calls(self):
         cases = (
-            ("run_headline_translation", service.headline_translation, "headlines",
+            ("run_headline_translation", service.headline_translation, "headlines-0",
              "headline-translation-unavailable"),
             ("run_market_translation", service.x_market_news, "market",
              "market-translation-unavailable"),

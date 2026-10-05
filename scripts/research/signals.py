@@ -2288,6 +2288,7 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
                     factual_validation.validate_numbers(cleaned, display_title)
                     factual_validation.validate_semantics(cleaned, display_title)
                     factual_validation.validate_acquisition(cleaned, display_title, 'ja', require_status=True)
+                    factual_validation.validate_names(cleaned, display_title)
                     translation['translationJa'] = cleaned
                 except ValueError:
                     pass

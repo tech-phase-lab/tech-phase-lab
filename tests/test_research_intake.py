@@ -503,7 +503,9 @@ class IntakeTests(unittest.TestCase):
         ).fetchone()
 
         self.assertEqual(result["error"], "http-403")
-        self.assertEqual(result["retrySeconds"], 6 * 60 * 60)
+        # SEC rate blocks clear within minutes: cap the shared SEC wait at 15
+        # minutes instead of the 6-hour issuer access-restriction policy.
+        self.assertEqual(result["retrySeconds"], 15 * 60)
         self.assertEqual(stored["error"], "http-403")
         self.assertGreater(stored["next_fetch_at"], stored["checked_at"])
         self.assertEqual(dict(circuit), {
@@ -1693,10 +1695,11 @@ class IntakeTests(unittest.TestCase):
         opener = Opener()
         m.build_opener = lambda *_: opener
         try:
-            result = m.fetch(
-                url, "MRVL", validators={"force_unconditional": True},
-                include_metadata=True,
-            )
+            with patch.dict("os.environ", {"RESEARCH_USER_AGENT": "TechPhaseResearch ops@example.com"}):
+                result = m.fetch(
+                    url, "MRVL", validators={"force_unconditional": True},
+                    include_metadata=True,
+                )
         finally:
             m.build_opener = original
             m._FETCH_CACHE.pop(url, None)

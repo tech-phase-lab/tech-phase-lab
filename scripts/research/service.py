@@ -33,6 +33,7 @@ import questions
 import note_translation
 import question_translation
 import headline_translation
+import pipeline_status
 import x_market_news
 import analyst_news
 import general_source_news
@@ -84,6 +85,28 @@ SQLITE_FAILURE_NAMES = {
         r"CONSTRAINT|MISMATCH|MISUSE|NOLFS|AUTH|FORMAT|RANGE|NOTADB|NOTICE|WARNING)"
         r"(?:_[A-Z0-9]+)*", name)
 }
+
+
+# Worker results after which more queued work may be immediately runnable.
+PRODUCTIVE_RESULTS = frozenset({"done", "stale"})
+
+
+def release_interrupted_jobs(db_path, now=None):
+    """Make jobs leased by a previous process due now instead of in 5 minutes.
+
+    A restart (for example a deployment) abandons in-flight model calls. Their
+    jobs keep state 'running' with next_at = start + 300 s. Only the schedule
+    changes; attempts, call ledger and budgets are untouched.
+    """
+    now = time.time() if now is None else now
+    released = 0
+    with monitor.connect(db_path) as db:
+        for table in ("signal_headline_translation_jobs", "x_market_jobs", "official_research_jobs"):
+            if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (table,)).fetchone():
+                released += db.execute(f"UPDATE {table} SET next_at=? WHERE state='running' AND next_at>?",
+                                       (now, now)).rowcount
+        db.commit()
+    return released
 
 
 def log_publication_failure(lane, error):
@@ -495,6 +518,10 @@ class AutomaticMonitor:
         )
         self.priority_metrics_signature = None
         self.next_priority_metrics_at = 0.0
+        self.news_cache_seconds = positive_int("RESEARCH_NEWS_CACHE_SECONDS", 2, 0)
+        self.translation_workers = min(6, positive_int("RESEARCH_TRANSLATION_WORKERS", 3, 1))
+        self.news_cache_lock = threading.Lock()
+        self.news_cache = {}
         self.body_probe_urls = set()
         self.body_probe_eligible_at = {}
         self.stop_event = threading.Event()
@@ -612,7 +639,8 @@ class AutomaticMonitor:
             "companies": {},
         }
         self.publication_wakes = {name: threading.Event() for name in (
-            "headlines", "market", "results", "official",
+            "market", "results", "official",
+            *(f"headlines-{index}" for index in range(self.translation_workers)),
         )}
         self.thread = threading.Thread(target=self.run_supervised, name="research-monitor", daemon=True)
         self.generation_thread = threading.Thread(target=self.run_generation, name="brief-generator", daemon=True)
@@ -632,7 +660,13 @@ class AutomaticMonitor:
                                       if x_stream_trial_service.requested() else None)
         self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
         self.note_translation_thread = threading.Thread(target=self.run_note_translation, name="note-translation", daemon=True)
-        self.headline_translation_thread = threading.Thread(target=self.run_headline_translation, name="headline-translation", daemon=True)
+        # Several headline workers translate different articles at once. Each
+        # job is leased to one worker in an IMMEDIATE transaction, so no article
+        # is translated twice; validation and the daily budget are unchanged.
+        self.headline_translation_threads = [
+            threading.Thread(target=self.run_headline_translation, args=(index,),
+                             name=f"headline-translation-{index}", daemon=True)
+            for index in range(self.translation_workers)]
         self.market_translation_thread = threading.Thread(target=self.run_market_translation, name="market-translation", daemon=True)
         self.result_thread = threading.Thread(target=self.run_results, name="result-publication", daemon=True)
         self.official_research_thread = threading.Thread(target=self.run_official_research, name="official-research", daemon=True)
@@ -690,18 +724,21 @@ class AutomaticMonitor:
                 print("note-translation-unavailable", flush=True)
             self.stop_event.wait(30)
 
-    def run_headline_translation(self):
+    def run_headline_translation(self, index=0):
         if headline_translation.configuration(os.environ) is None:
             return
-        wake = self.publication_wakes["headlines"]
+        wake = self.publication_wakes[f"headlines-{index}"]
         while not self.stop_event.is_set():
             wake.clear()
+            result = None
             try:
-                headline_translation.run_once(self.db_path)
+                result = headline_translation.run_once(self.db_path)
             except Exception as exc:
                 log_publication_failure("headline-translation-unavailable", exc)
+            # A completed job means the queue may hold more: continue almost
+            # at once instead of idling 5 s per headline. Failures still wait.
             if not self.stop_event.is_set():
-                wake.wait(5)
+                wake.wait(0.2 if result in PRODUCTIVE_RESULTS else 5)
 
     def run_market_translation(self):
         if headline_translation.configuration(os.environ) is None:
@@ -709,12 +746,13 @@ class AutomaticMonitor:
         wake = self.publication_wakes["market"]
         while not self.stop_event.is_set():
             wake.clear()
+            result = None
             try:
-                x_market_news.run_once(self.db_path)
+                result = x_market_news.run_once(self.db_path)
             except Exception as exc:
                 log_publication_failure("market-translation-unavailable", exc)
             if not self.stop_event.is_set():
-                wake.wait(5)
+                wake.wait(0.2 if result in PRODUCTIVE_RESULTS else 5)
 
     def run_results(self):
         # Numerical flashes must not wait for an LLM or require an API key.
@@ -812,6 +850,10 @@ class AutomaticMonitor:
         # on an existing volume and silently kill the discovery worker.
         with self.db_lock, monitor.connect(self.db_path) as db:
             watch_earnings.schema(db)
+        with self.db_lock:
+            released = release_interrupted_jobs(self.db_path)
+        if released:
+            print(json.dumps({"event": "interrupted-jobs-released", "jobs": released}), flush=True)
         self.thread.start()
         self.generation_thread.start()
         self.backup_thread.start()
@@ -826,7 +868,8 @@ class AutomaticMonitor:
             self.x_stream_trial_thread.start()
         self.news_thread.start()
         self.note_translation_thread.start()
-        self.headline_translation_thread.start()
+        for thread in self.headline_translation_threads:
+            thread.start()
         self.market_translation_thread.start()
         self.result_thread.start()
         self.official_research_thread.start()
@@ -851,7 +894,8 @@ class AutomaticMonitor:
             self.x_stream_trial_thread.join(timeout=45)
         self.news_thread.join(timeout=25)
         self.note_translation_thread.join(timeout=45)
-        self.headline_translation_thread.join(timeout=45)
+        for thread in self.headline_translation_threads:
+            thread.join(timeout=45)
         self.market_translation_thread.join(timeout=45)
         self.result_thread.join(timeout=15)
         self.official_research_thread.join(timeout=45)
@@ -909,6 +953,37 @@ class AutomaticMonitor:
             return news_drafts.save_manual(db, payload)
 
     def public_news(self, *, original_preview=False):
+        """Serve one shared computation per short window to every visitor.
+
+        Each page polls every 5 s from several panels; recomputing the whole
+        feed (and its bridge write) per request queued visitors behind the
+        SQLite writer and pushed responses past the site's 10 s limit.
+        Concurrent callers wait for the single in-flight computation.
+        """
+        key = bool(original_preview)
+        if not getattr(self, "news_cache_seconds", 0) or not hasattr(self, "news_cache_lock"):
+            return self.compute_public_news(original_preview=original_preview)
+        with self.news_cache_lock:
+            # Any committed write (publication, withdrawal, correction) changes
+            # the database files, so a cached feed is never served after it.
+            version = self.database_version()
+            cached = self.news_cache.get(key)
+            if (cached and version is not None and cached[1] == version
+                    and time.monotonic() - cached[0] < self.news_cache_seconds):
+                return cached[2]
+            payload = self.compute_public_news(original_preview=original_preview)
+            self.news_cache[key] = (time.monotonic(), self.database_version(), payload)
+            return payload
+
+    def database_version(self):
+        try:
+            return tuple((stat.st_mtime_ns, stat.st_size) for stat in (
+                os.stat(path) for path in (self.db_path, Path(str(self.db_path) + "-wal"))
+                if os.path.exists(path)))
+        except OSError:
+            return None
+
+    def compute_public_news(self, *, original_preview=False):
         with stock_news.connect(self.db_path) as db:
             drafts = news_drafts.public_feed(db)
             reference = datetime.now(timezone.utc)
@@ -1430,6 +1505,7 @@ class AutomaticMonitor:
         with self.state_lock:
             state = json.loads(json.dumps(self.state))
         state["fetchCache"] = monitor.fetch_cache_stats()
+        state["secAccess"] = {**monitor.SEC_ACCESS.state(), "currentFeed": monitor.EDGAR_CURRENT.state()}
         with self.db_lock, monitor.connect(self.db_path) as db:
             state["generation"].update(monitor.generation_queue_stats(
                 db, self.generation_daily_limit, self.generation_token_limit
@@ -2212,6 +2288,13 @@ class AutomaticMonitor:
                          OR (status='degraded' AND route IS NOT NULL AND route!='none')
                        )""" + scope_clause + " LIMIT 1", params,
                 ).fetchone() is not None
+            if not monitor.SEC_ACCESS.state()["userAgentConfigured"]:
+                # Never log the value itself; only that SEC requests are withheld.
+                print(json.dumps({"event": "sec-user-agent-missing",
+                                  "action": "set RESEARCH_USER_AGENT to 'Service name contact@example.com'"}), flush=True)
+            released = monitor.release_long_sec_backoffs(db)
+            if released:
+                print(json.dumps({"event": "sec-backoff-released", "filings": released}), flush=True)
             monitor.write_snapshot(db, self.snapshot_path)
         with self.state_lock:
             self.state["discoveryCache"].update({
@@ -2625,7 +2708,25 @@ class Handler(BaseHTTPRequestHandler):
             return
         if path in {"/health", "/readyz"}:
             state = self.app.public_state()
+            if path == "/health":
+                try:
+                    # Aggregate only: stage counts and acquisition-to-publication timing.
+                    state["newsPipeline"] = pipeline_status.summary(pipeline_status.collect(self.app.db_path))
+                except Exception:
+                    state["newsPipeline"] = {"error": "pipeline-status-unavailable"}
             self.send_json(200 if path == "/health" or state["ready"] else 503, state)
+            return
+        if path == "/admin/pipeline":
+            # Per-article stages (ids, stages, failure codes, clocks; no titles,
+            # URLs or bodies), behind the existing editor token.
+            if not self.editor_authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                articles = pipeline_status.collect(self.app.db_path)
+                self.send_json(200, {"ok": True, "summary": pipeline_status.summary(articles), "articles": articles})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "pipeline-status-unavailable"})
             return
         if path in {"/admin/briefs", "/admin/annual-briefs", "/admin/signals", "/admin/news", "/admin/posts", "/admin/questions", "/admin/official-research"}:
             if not self.editor_authorized():
@@ -2873,8 +2974,10 @@ def main():
         if streaming:
             from aiohttp import web
             from stream_gateway import create_gateway
+            from stream_gateway import news_revision_reader
             gateway, _ = create_gateway(app.public_price_targets, os.environ.get("RESEARCH_API_TOKEN", ""),
-                                       f"http://127.0.0.1:{server.server_port}")
+                                       f"http://127.0.0.1:{server.server_port}",
+                                       news_reader=news_revision_reader(app.public_news))
             threading.Thread(target=server.serve_forever, daemon=True).start()
             web.run_app(gateway, host=host, port=port, access_log=None, shutdown_timeout=5)
         else:

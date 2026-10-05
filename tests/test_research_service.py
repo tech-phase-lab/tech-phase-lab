@@ -232,7 +232,7 @@ class ResearchServiceTests(unittest.TestCase):
             def direct(path):
                 direct_done.set()
                 app.stop_event.set()
-            workers = [app.headline_translation_thread, app.market_translation_thread, app.result_thread]
+            workers = [app.headline_translation_threads[0], app.market_translation_thread, app.result_thread]
             with patch.dict(os.environ, {'OFFICIAL_HEADLINE_TRANSLATION_ENABLED':'true'}), \
                  patch.object(service.headline_translation, 'configuration', return_value=('key','model',3)), \
                  patch.object(service.headline_translation, 'run_once', side_effect=blocked_headline), \
@@ -268,7 +268,8 @@ class ResearchServiceTests(unittest.TestCase):
                     })
             with patch.object(threading.Thread, 'start', start_worker):
                 app.start()
-            self.assertEqual(len(observed), 15)
+            # 14 single workers plus one thread per parallel headline translator.
+            self.assertEqual(len(observed), 14 + app.translation_workers)
             self.assertTrue(all(observed))
 
     def test_monitor_recovers_after_an_unexpected_worker_exception(self):

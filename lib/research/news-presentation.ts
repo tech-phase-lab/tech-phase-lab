@@ -17,9 +17,16 @@ export function officialNewsDisplay(item: OfficialUpdate, lang: Language, briefs
     : item.brief ? `${briefLabel}${item.tickers.length ? ' · ' + item.tickers.join(' · ') : ''} · ${ja ? '詳細は確認中' : 'Details awaiting review'}`
     : economic ? (ja ? '経済指標' : 'Economic indicators')
     : `${ja ? '企業ニュース' : 'Company news'}${item.tickers.length ? ' · ' + item.tickers.join(' · ') : ''}`;
-  const sourceTitle = ja ? officialHeadlineJa(item.url) ?? item.translationJa ?? (item.brief ? briefLabel : '企業ニュース') : item.title;
+  const reviewedJa = ja ? officialHeadlineJa(item.url) ?? item.translationJa : undefined;
+  // Policy B (owner decision): when one language is not ready or was held by
+  // validation, publish the available original now and mark it, rather than
+  // hiding the story or showing a generic placeholder.
+  const pendingTranslation = ja && !reviewedJa && !item.brief;
+  const sourceTitle = ja ? reviewedJa ?? (item.brief ? briefLabel : item.title) : item.title;
   const suffix = NEWS_BRIEF_TITLE_SUFFIXES[lang];
   const title = item.brief && sourceTitle.endsWith(suffix) ? sourceTitle.slice(0, -suffix.length) : sourceTitle;
   const compact = inlineNewsComparisons(title, item, lang, briefs);
-  return { label, title: compact.title, body: additionalNewsDetail([label, compact.title, ...(item.brief ? [sourceTitle] : []), ...compact.visibleFacts], ja ? item.bodyJa : item.bodyEn, item.sources?.map(source => source.publisher)) };
+  const body = ja ? item.bodyJa ?? (pendingTranslation ? item.bodyEn : undefined) : item.bodyEn;
+  return { label: pendingTranslation ? `${label} · 翻訳準備中（原文）` : label, title: compact.title, pendingTranslation,
+    body: additionalNewsDetail([label, compact.title, ...(item.brief ? [sourceTitle] : []), ...compact.visibleFacts], body, item.sources?.map(source => source.publisher)) };
 }

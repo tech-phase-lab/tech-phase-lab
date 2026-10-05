@@ -27,6 +27,7 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
   const bodyId = useId();
   useEffect(() => {
     const poller = createNewsPoller({
+      push: true,
       load: async signal => {
         const response = await fetch("/api/research/news", { cache: "no-store", signal });
         if (!response.ok) throw new Error("unavailable");

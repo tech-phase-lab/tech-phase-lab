@@ -365,7 +365,7 @@ class BoundedRepairContextTests(unittest.TestCase):
 
     def test_validated_pairs_preserve_original_copy_before_brand_case_normalization(self):
         note = json.loads(json.dumps(self.note))
-        note['facts'][1]['en'] = 'GEForce software is available.'
+        note['facts'][1]['en'] = 'NVIDIA GEForce software is available.'
         result = self.queue(self.consumed(note=note))
         pairs = self.context(result['items'][0])[0]['validatedFields']
         self.assertEqual(next(pair for pair in pairs if pair['field'] == 'facts[1]')['en'], note['facts'][1]['en'])

@@ -1,5 +1,5 @@
 import rawSnapshot from "@/lib/research/intake-snapshot.json";
-import { snapshotIssues, type IntakeSnapshot } from "@/lib/research/intake";
+import { quarantineSnapshot, type IntakeSnapshot } from "@/lib/research/intake";
 import {
   createMonitorFallbackLogger,
   monitorDiagnosticHeaders,
@@ -64,12 +64,15 @@ export async function GET() {
     const length = Number(response.headers.get("content-length") ?? 0);
     if (length > 3_000_000) return fallback("monitor-unavailable", "oversized-response");
     const payload = await response.json() as { ok?: boolean; mode?: string; monitor?: unknown; snapshot?: IntakeSnapshot };
-    if (!payload.ok || payload.mode !== "automatic" || !payload.snapshot || snapshotIssues(payload.snapshot).length) {
+    const checked = payload.ok && payload.mode === "automatic" && payload.snapshot ? quarantineSnapshot(payload.snapshot) : null;
+    if (!checked) {
       return fallback("monitor-unavailable", "invalid-payload");
     }
     monitorLog.recovered();
-    return Response.json(payload, {
-      headers: { ...liveHeaders, "X-Tech-Phase-Monitor-Mode": "automatic" },
+    return Response.json({ ...payload, snapshot: checked.snapshot }, {
+      headers: { ...liveHeaders, "X-Tech-Phase-Monitor-Mode": "automatic",
+        // Count only: no URLs or record details leave the server.
+        "X-Tech-Phase-Monitor-Dropped": String(checked.dropped) },
     });
   } catch (error) {
     return fallback("monitor-unavailable", monitorExceptionReason(error));

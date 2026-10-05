@@ -16,6 +16,7 @@ export default function EconomicResultsPanel({ lang, zone, period }: { lang: "ja
   const [failed, setFailed] = useState(false);
   useEffect(() => {
     const poller = createNewsPoller({
+      push: true,
       load: async signal => {
         const response = await fetch("/api/research/news", { cache: "no-store", signal });
         if (!response.ok) throw Error("unavailable");

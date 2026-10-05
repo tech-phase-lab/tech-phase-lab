@@ -1,9 +1,13 @@
+import { isNewsStreamLive, subscribeNewsChanges } from "./news-stream.ts";
+
 export const NEWS_POLL_INTERVAL_MS = 5_000;
+// With a healthy push connection, polling is only a safety net.
+export const NEWS_PUSH_SAFETY_INTERVAL_MS = 30_000;
 export const NEWS_RETRY_BASE_MS = 5_000;
 export const NEWS_REQUEST_TIMEOUT_MS = 15_000;
 
-export function newsPollDelay(consecutiveFailures: number) {
-  if (consecutiveFailures <= 0) return NEWS_POLL_INTERVAL_MS;
+export function newsPollDelay(consecutiveFailures: number, pushLive = false) {
+  if (consecutiveFailures <= 0) return pushLive ? NEWS_PUSH_SAFETY_INTERVAL_MS : NEWS_POLL_INTERVAL_MS;
   return Math.min(
     30_000,
     NEWS_RETRY_BASE_MS * (2 ** Math.min(consecutiveFailures - 1, 3)),
@@ -17,6 +21,8 @@ type NewsPollerOptions<T> = {
   onFailure: () => void;
   schedule?: (callback: () => void, delay: number) => Timer;
   cancel?: (timer: Timer) => void;
+  /** Refresh immediately when the server signals a news change. */
+  push?: boolean;
 };
 
 export function createNewsPoller<T>({
@@ -25,7 +31,9 @@ export function createNewsPoller<T>({
   onFailure,
   schedule = setTimeout,
   cancel = clearTimeout,
+  push = false,
 }: NewsPollerOptions<T>) {
+  let unsubscribe: (() => void) | null = null;
   let timer: Timer | null = null;
   let active: { controller: AbortController; timeout: Timer } | null = null;
   let stopped = true;
@@ -93,18 +101,19 @@ export function createNewsPoller<T>({
       controller.signal.removeEventListener("abort", onAbort);
       if (active === request) active = null;
       if (stopped || revision !== session) return;
-      const delay = queued ? 0 : newsPollDelay(failures);
+      const delay = queued ? 0 : newsPollDelay(failures, push && isNewsStreamLive());
       queued = false;
       schedulePoll(delay);
     }
   };
 
-  return {
+  const poller = {
     start(delay = 0) {
       if (!stopped) return;
       stopped = false;
       session += 1;
       schedulePoll(Math.max(0, delay));
+      if (push && !unsubscribe) unsubscribe = subscribeNewsChanges(() => poller.wake());
     },
     wake() {
       if (stopped) return;
@@ -122,7 +131,10 @@ export function createNewsPoller<T>({
     },
     stop() {
       stopped = true;
+      unsubscribe?.();
+      unsubscribe = null;
       pause();
     },
   };
+  return poller;
 }

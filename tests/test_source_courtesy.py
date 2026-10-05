@@ -69,6 +69,8 @@ class SourceCourtesyTests(unittest.TestCase):
                 events.append('request')
                 raise TimeoutError('synthetic failure')
         with patch.object(monitor, 'wait_for_source_courtesy', side_effect=gated), \
+                patch.dict('os.environ', {'RESEARCH_USER_AGENT': 'TechPhaseResearch ops@example.com'}), \
+                patch.object(monitor, 'SEC_ACCESS', monitor.SecAccess()), \
                 patch.object(monitor, 'build_opener', return_value=Opener()):
             with self.assertRaises(TimeoutError):
                 monitor.fetch('https://data.sec.gov/submissions/CIK0000723125.json', 'MU')

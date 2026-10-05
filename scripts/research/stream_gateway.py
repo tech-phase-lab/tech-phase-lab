@@ -17,9 +17,23 @@ from aiohttp import ClientError, ClientSession, ClientTimeout, web
 
 PURPOSE = "tech-phase-price-target-stream-v1"
 STREAM_PATH = "/price-targets/events"
+# News push sends only a revision signal. Browsers then fetch the news through
+# the site's existing validated /api/research/news path, so no story content is
+# delivered outside that sanitizer.
+NEWS_PURPOSE = "tech-phase-news-stream-v1"
+NEWS_STREAM_PATH = "/news/events"
 
 
-def verify_ticket(ticket, secret, origin, now=None):
+def news_revision_reader(public_news):
+    """Wrap the shared public-news computation as a bounded revision feed."""
+    def read():
+        payload = public_news()
+        body = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
+        return {"ok": True, "items": [hashlib.sha256(body.encode()).hexdigest()[:32]]}
+    return read
+
+
+def verify_ticket(ticket, secret, origin, now=None, purpose=PURPOSE):
     now = time.time() if now is None else now
     try:
         if not secret or not origin or len(ticket) > 2048:
@@ -30,7 +44,7 @@ def verify_ticket(ticket, secret, origin, now=None):
         if not hmac.compare_digest(expected, actual):
             return None
         data = json.loads(base64.urlsafe_b64decode(payload + "=" * (-len(payload) % 4)))
-        if (data.get("purpose") != PURPOSE or data.get("origin") != origin or
+        if (data.get("purpose") != purpose or data.get("origin") != origin or
                 not isinstance(data.get("exp"), (float, int)) or
                 not now < data["exp"] <= now + 840):
             return None
@@ -137,8 +151,9 @@ class SnapshotHub:
             await asyncio.sleep(self.interval)
 
 
-def create_gateway(reader, secret, upstream, *, interval=1, max_clients=3500, heartbeat=30):
+def create_gateway(reader, secret, upstream, *, interval=1, max_clients=3500, heartbeat=30, news_reader=None):
     hub = SnapshotHub(reader, interval)
+    news_hub = SnapshotHub(news_reader, interval) if news_reader else None
     app = web.Application(client_max_size=64 * 1024)
     # String keys keep the hub easy to inspect in standalone load tests.
     hub_key = web.AppKey("hub", SnapshotHub)
@@ -148,27 +163,34 @@ def create_gateway(reader, secret, upstream, *, interval=1, max_clients=3500, he
     async def lifetime(_app):
         async with ClientSession(auto_decompress=False, timeout=ClientTimeout(total=120)) as session:
             _app[session_key] = session
-            task = asyncio.create_task(hub.run())
+            tasks = [asyncio.create_task(item.run()) for item in (hub, news_hub) if item]
             try:
                 yield
             finally:
-                task.cancel()
-                with contextlib.suppress(asyncio.CancelledError):
-                    await task
+                for task in tasks:
+                    task.cancel()
+                for task in tasks:
+                    with contextlib.suppress(asyncio.CancelledError):
+                        await task
     app.cleanup_ctx.append(lifetime)
 
     def cors(request):
         return {"Access-Control-Allow-Origin": request.headers.get("Origin", "null"),
                 "Vary": "Origin", "Cache-Control": "no-store"}
 
-    async def events(request):
+    def stream_handler(stream_hub, purpose):
+        async def handler(request):
+            return await events(request, stream_hub, purpose)
+        return handler
+
+    async def events(request, hub=hub, purpose=PURPOSE):
         headers = cors(request)
         if request.method == "OPTIONS":
             return web.Response(status=204, headers={**headers,
                 "Access-Control-Allow-Methods": "GET", "Access-Control-Allow-Headers": "Authorization",
                 "Access-Control-Max-Age": "600"})
         ticket = verify_ticket(request.headers.get("Authorization", "").removeprefix("Bearer "),
-                               secret, request.headers.get("Origin"))
+                               secret, request.headers.get("Origin"), purpose=purpose)
         if not ticket:
             return web.json_response({"ok": False}, status=401, headers=headers)
         if len(hub.clients) >= max_clients:
@@ -230,12 +252,12 @@ def create_gateway(reader, secret, upstream, *, interval=1, max_clients=3500, he
                                             content_type=upstream_response.content_type)
                     if upstream_response.status == 200 and isinstance(payload, dict):
                         stream_status = hub.public_status(max_clients)
-                        if request.path == "/live":
-                            monitor_state = payload.get("monitor")
-                            if isinstance(monitor_state, dict):
-                                monitor_state["priceTargetStream"] = stream_status
-                        else:
-                            payload["priceTargetStream"] = stream_status
+                        news_status = news_hub.public_status(max_clients) if news_hub else None
+                        target = payload.get("monitor") if request.path == "/live" else payload
+                        if isinstance(target, dict):
+                            target["priceTargetStream"] = stream_status
+                            if news_status:
+                                target["newsStream"] = news_status
                     return web.json_response(payload, status=upstream_response.status,
                                              headers=response_headers)
                 response = web.StreamResponse(status=upstream_response.status, headers={
@@ -249,6 +271,9 @@ def create_gateway(reader, secret, upstream, *, interval=1, max_clients=3500, he
 
     app.router.add_get(STREAM_PATH, events)
     app.router.add_options(STREAM_PATH, events)
+    if news_hub:
+        app.router.add_get(NEWS_STREAM_PATH, stream_handler(news_hub, NEWS_PURPOSE))
+        app.router.add_options(NEWS_STREAM_PATH, stream_handler(news_hub, NEWS_PURPOSE))
     app.router.add_get("/price-targets/stream-status", stats)
     app.router.add_route("*", "/{path:.*}", proxy)
     return app, hub
