@@ -62,7 +62,7 @@ ACCESS_RESTRICTED_ERRORS = {
     "http-401", "http-403", "http-429", "http-451", "verification-page",
 }
 PERSISTED_SOURCE_ERRORS = {
-    "timeout", "fetch-failed", "invalid-source-response", "invalid-feed-xml",
+    "timeout", "fetch-failed", "sec-paused", "sec-user-agent-missing", "invalid-source-response", "invalid-feed-xml",
     "signal-content-type", "signal-unapproved-url", "signal-response-limit",
     "signal-empty-response", "signal-unsafe-xml", "signal-invalid-feed-root",
     "signal-feed-item-limit", "signal-document-body-invalid",
@@ -251,14 +251,105 @@ class SourceRequestWindow:
             self.sleep(delay)
 
 
-# The existing SEC discovery and filing requests share its published 10/s
-# courtesy ceiling, including redirects. This is a process-wide safety cap,
-# not permission to retry a blocked host or change its persisted backoff.
-_SEC_REQUEST_WINDOW = SourceRequestWindow()
+SEC_HOSTS = frozenset({'www.sec.gov', 'data.sec.gov'})
+
+
+def is_sec_url(url):
+    try:
+        return urlsplit(str(url)).hostname in SEC_HOSTS
+    except (TypeError, ValueError):
+        return False
+
+
+# SEC's fair-access policy allows at most 10 requests/second per user. Stay
+# below it (8/s by default) so redirects and bodies never push the process over.
+_SEC_REQUEST_WINDOW = SourceRequestWindow(limit=environment_seconds(
+    "RESEARCH_SEC_MAX_REQUESTS_PER_SECOND", 8, 1, 10))
+SEC_CONTACT = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+
+
+def sec_user_agent():
+    """SEC requires a declared User-Agent with a contact address.
+
+    Requests without one are answered with 403 and can get the whole IP
+    blocked, so they are never sent. The value is configuration, not code.
+    """
+    value = os.environ.get("RESEARCH_USER_AGENT", "").strip()
+    if not value or "\r" in value or "\n" in value or not SEC_CONTACT.search(value):
+        raise ValueError("SEC user agent has no contact address")
+    return value
+
+
+class SecAccess:
+    """Process-wide SEC courtesy state shared by discovery and filing bodies.
+
+    One 403/429 means SEC is throttling this client as a whole, so every SEC
+    request pauses together (no hammering while blocked) but only briefly: SEC
+    lifts rate blocks within minutes. Discovery routes are also polled no more
+    often than ``poll_seconds`` each, keeping steady load near 2 requests/s.
+    """
+
+    def __init__(self, clock=None):
+        self.clock = clock or time.monotonic
+        self.lock = threading.Lock()
+        self.failures = 0
+        self.blocked_until = 0.0
+        self.last_error = None
+        self.last_poll = {}
+        self.poll_seconds = environment_seconds("RESEARCH_SEC_POLL_SECONDS", 10, 3, 300)
+        self.max_backoff = environment_seconds("RESEARCH_SEC_MAX_BACKOFF_SECONDS", 900, 60, 3600)
+
+    def remaining(self):
+        with self.lock:
+            return max(0.0, self.blocked_until - self.clock())
+
+    def check(self):
+        if self.remaining() > 0:
+            raise ValueError("SEC access paused after a rate limit")
+
+    def failed(self, error_code, retry_after=None):
+        with self.lock:
+            self.failures = min(self.failures + 1, 20)
+            delay = min(self.max_backoff, 60 * 2 ** (self.failures - 1))
+            if isinstance(retry_after, (int, float)) and not isinstance(retry_after, bool):
+                delay = max(delay, min(int(retry_after), 3600))
+            self.blocked_until = max(self.blocked_until, self.clock() + delay)
+            self.last_error = error_code
+            return delay
+
+    def succeeded(self):
+        with self.lock:
+            self.failures = 0
+            self.blocked_until = 0.0
+            self.last_error = None
+
+    def poll_due(self, url):
+        with self.lock:
+            return self.clock() - self.last_poll.get(url, float("-inf")) >= self.poll_seconds
+
+    def polled(self, url):
+        with self.lock:
+            self.last_poll[url] = self.clock()
+
+    def state(self):
+        try:
+            sec_user_agent()
+            configured = True
+        except ValueError:
+            configured = False
+        with self.lock:
+            remaining = max(0.0, self.blocked_until - self.clock())
+            return {"userAgentConfigured": configured, "paused": remaining > 0,
+                    "pausedSeconds": round(remaining), "consecutiveFailures": self.failures,
+                    "lastError": self.last_error, "pollSeconds": self.poll_seconds,
+                    "maxRequestsPerSecond": _SEC_REQUEST_WINDOW.limit}
+
+
+SEC_ACCESS = SecAccess()
 
 
 def wait_for_source_courtesy(url):
-    if urlsplit(url).hostname in {'www.sec.gov', 'data.sec.gov'}:
+    if is_sec_url(url):
         return _SEC_REQUEST_WINDOW.wait()
     return None
 
@@ -385,6 +476,8 @@ def source_error_code(exc):
             ("empty or oversized source", "empty-or-oversized-source"),
             ("source has no extractable text", "no-extractable-text"),
             ("sec exhibit evidence unavailable", "sec-exhibit-unavailable"),
+            ("sec user agent has no contact", "sec-user-agent-missing"),
+            ("sec access paused", "sec-paused"),
             ("pdf is encrypted", "pdf-encrypted"),
             ("pdf page limit exceeded", "pdf-page-limit"),
             ("pdf has no extractable text", "pdf-no-text"),
@@ -523,8 +616,12 @@ def fetch(url, ticker, validators=None, include_metadata=False):
         for key in ("etag", "last_modified"):
             if cached.get(key):
                 conditional[key] = cached[key]
+    sec = is_sec_url(url)
+    if sec:
+        SEC_ACCESS.check()
     headers = {
-        "User-Agent": os.environ.get("RESEARCH_USER_AGENT", "TechPhaseResearch-SourceCheck/0.1"),
+        "User-Agent": sec_user_agent() if sec else os.environ.get(
+            "RESEARCH_USER_AGENT", "TechPhaseResearch-SourceCheck/0.1"),
         "Accept": ("text/html,application/pdf;q=0.9" if article_url(url, ticker)
                    else "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf"),
     }
@@ -547,6 +644,10 @@ def fetch(url, ticker, validators=None, include_metadata=False):
         wait_for_source_courtesy(url)
         response = build_opener(Redirects(ticker)).open(req, timeout=timeout)
     except HTTPError as exc:
+        if sec and exc.code in (403, 429):
+            SEC_ACCESS.failed(f"http-{exc.code}", retry_after_seconds(exc))
+        elif sec and exc.code == 304:
+            SEC_ACCESS.succeeded()
         if exc.code == 304 and include_metadata and (etag or last_modified):
             error_headers = exc.headers or {}
             return {
@@ -559,6 +660,8 @@ def fetch(url, ticker, validators=None, include_metadata=False):
         if exc.code == 304 and cached:
             return cached["content"], cached["content_type"]
         raise
+    if sec:
+        SEC_ACCESS.succeeded()
     with response:
         content_type = response.headers.get_content_type()
         if content_type not in SUPPORTED_CONTENT_TYPES | PDF_FALLBACK_CONTENT_TYPES:
@@ -3544,6 +3647,20 @@ def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=N
         chain_failures = []
         for source in chain:
             attempts += 1
+            sec_route = automatic and persistent_transport and is_sec_url(source["url"])
+            if sec_route:
+                cached = source_cache.get(source["url"])
+                # Between SEC polls (or while SEC has paused this client) reuse
+                # the last verified candidates instead of sending a request.
+                if cached and cached.get("candidates") and (
+                        not SEC_ACCESS.poll_due(source["url"]) or SEC_ACCESS.remaining() > 0):
+                    cache_metrics["notModifiedResponses"] += 1
+                    return source, cached["candidates"], chain_failures
+                if SEC_ACCESS.remaining() > 0:
+                    # Do not try the SEC Atom fallback against the same pause.
+                    chain_failures.append("sec-paused")
+                    return None, {}, chain_failures
+                SEC_ACCESS.polled(source["url"])
             try:
                 if persistent_transport:
                     cached = source_cache.get(source["url"])
@@ -3793,6 +3910,8 @@ def public_error(error):
         "empty-or-oversized-source",
         "no-extractable-text",
         "sec-exhibit-unavailable",
+        "sec-paused",
+        "sec-user-agent-missing",
         "pdf-encrypted",
         "pdf-page-limit",
         "pdf-no-text",
@@ -4779,6 +4898,24 @@ def save_source_check(db, row, result):
     }
 
 
+def release_long_sec_backoffs(db, reference=None):
+    """Clamp SEC waits saved under the old 6-hour-to-7-day access policy.
+
+    Only the schedule changes; error codes, failure history and evidence stay.
+    Returns the number of filing bodies whose next attempt moved earlier.
+    """
+    reference = reference or datetime.now(timezone.utc)
+    latest = (reference + timedelta(seconds=SEC_ACCESS.max_backoff)).isoformat(timespec="milliseconds")
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        db.execute("UPDATE body_host_backoff SET retry_at=?,failures=MIN(failures,1) "
+                   "WHERE host IN ('www.sec.gov','data.sec.gov') AND retry_at>?", (latest, latest))
+        moved = db.execute("UPDATE sources SET next_fetch_at=? WHERE next_fetch_at>? AND error IS NOT NULL "
+                           "AND (url LIKE 'https://www.sec.gov/%' OR url LIKE 'https://data.sec.gov/%')",
+                           (latest, latest)).rowcount
+    return moved
+
+
 def save_source_error(db, row, exc):
     checked_at = now()
     error_code = source_error_code(exc)
@@ -4802,6 +4939,17 @@ def save_source_error(db, row, exc):
                 error_code, host_failures, retry_hint
             )
             retry_seconds = max(retry_seconds, host_retry_seconds)
+        if hostname in SEC_HOSTS:
+            # SEC rate blocks clear within minutes. A shared pause is not this
+            # filing's failure, and an SEC 403 must not park every filing body
+            # for 6 hours to 7 days as an issuer access restriction would.
+            if error_code in {"sec-paused", "sec-user-agent-missing"}:
+                failures = current["fetch_failures"] if type(current["fetch_failures"]) is int else 0
+                retry_seconds = max(30, round(SEC_ACCESS.remaining()), 900 * (error_code != "sec-paused"))
+            else:
+                retry_seconds = min(retry_seconds, max(SEC_ACCESS.max_backoff, min(retry_hint or 0, 3600)))
+            if error_code in ACCESS_RESTRICTED_ERRORS:
+                host_failures = min(host_failures, 1)
         next_fetch_at = (datetime.now(timezone.utc) + timedelta(seconds=retry_seconds)).isoformat(timespec="milliseconds")
         db.execute(
             "UPDATE sources SET checked_at=?,error=?,fetch_failures=?,next_fetch_at=? WHERE url=?",

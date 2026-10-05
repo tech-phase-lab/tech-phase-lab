@@ -47,6 +47,10 @@ class SecDiscoveryMetadataTests(unittest.TestCase):
         for attribute in ("connect", "connect_ex", "sendto"):
             self.stack.enter_context(patch.object(
                 socket.socket, attribute, side_effect=AssertionError("Network prohibited in SEC fixtures")))
+        # These fixtures poll the same SEC route back to back on purpose.
+        access = monitor.SecAccess()
+        access.poll_seconds = 0
+        self.stack.enter_context(patch.object(monitor, "SEC_ACCESS", access))
         self.temp = self.stack.enter_context(tempfile.TemporaryDirectory())
         self.path = Path(self.temp) / "monitor.sqlite"
         self.db = monitor.connect(self.path)

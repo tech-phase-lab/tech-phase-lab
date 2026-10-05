@@ -225,7 +225,10 @@ python3 scripts/research/persistence.py restore --backup /data/backups/research-
 - `RESEARCH_INCIDENT_WEBHOOK_TOKEN`：通知専用の長いBearerトークン。監視API・編集APIとは分離する
 - `RESEARCH_INCIDENT_DELIVERY_INTERVAL_SECONDS`：通知キューの確認間隔。標準5秒
 - `RESEARCH_INCIDENT_DELIVERY_MAX_ATTEMPTS`：通知失敗時の最大試行数。標準5。1分から最大6時間の指数バックオフ後、上限で停止
-- `RESEARCH_USER_AGENT`：運営サービス名と連絡可能な汎用メールアドレス。SEC等の自動アクセス方針に合わせて設定
+- `RESEARCH_USER_AGENT`：運営サービス名と連絡可能な汎用メールアドレス（例：`TechPhaseResearch ops@example.com`）。**必須**。メールアドレスを含まない場合、SECへのリクエストは送信せず `sec-user-agent-missing` を記録します（SECは連絡先のない自動アクセスを403で拒否し、IP単位で遮断するため）
+- `RESEARCH_SEC_MAX_REQUESTS_PER_SECOND`：SECへの1秒あたりの最大リクエスト数。標準8、1〜10（SECの上限は10）
+- `RESEARCH_SEC_POLL_SECONDS`：SEC提出書類一覧（経路ごと）の確認間隔。標準10秒、3〜300秒。間隔内は前回の候補を再利用し、SECへは送信しません
+- `RESEARCH_SEC_MAX_BACKOFF_SECONDS`：SECが403/429を返したときの一時停止の上限。標準900秒、60〜3600秒。1分→2分→4分…と延ばし、SEC全体（一覧・本文）で共有します。成功で即解除。以前の「6時間〜7日」の待ちは起動時に上限まで短縮します
 
 Vercel側には監視サービスのHTTPS URLを `RESEARCH_MONITOR_URL`、同じトークンを `RESEARCH_MONITOR_TOKEN` として設定します。`/research/intake` は3秒ごとにAPIを確認し、接続中か保存済み記録かを明示します。
 

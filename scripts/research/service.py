@@ -1430,6 +1430,7 @@ class AutomaticMonitor:
         with self.state_lock:
             state = json.loads(json.dumps(self.state))
         state["fetchCache"] = monitor.fetch_cache_stats()
+        state["secAccess"] = monitor.SEC_ACCESS.state()
         with self.db_lock, monitor.connect(self.db_path) as db:
             state["generation"].update(monitor.generation_queue_stats(
                 db, self.generation_daily_limit, self.generation_token_limit
@@ -2212,6 +2213,13 @@ class AutomaticMonitor:
                          OR (status='degraded' AND route IS NOT NULL AND route!='none')
                        )""" + scope_clause + " LIMIT 1", params,
                 ).fetchone() is not None
+            if not monitor.SEC_ACCESS.state()["userAgentConfigured"]:
+                # Never log the value itself; only that SEC requests are withheld.
+                print(json.dumps({"event": "sec-user-agent-missing",
+                                  "action": "set RESEARCH_USER_AGENT to 'Service name contact@example.com'"}), flush=True)
+            released = monitor.release_long_sec_backoffs(db)
+            if released:
+                print(json.dumps({"event": "sec-backoff-released", "filings": released}), flush=True)
             monitor.write_snapshot(db, self.snapshot_path)
         with self.state_lock:
             self.state["discoveryCache"].update({
