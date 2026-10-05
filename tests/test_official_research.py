@@ -170,10 +170,14 @@ class OfficialResearchTests(unittest.TestCase):
     def test_only_unambiguous_source_name_case_is_normalized(self):
         note=json.loads(json.dumps(NOTE))
         note['title']['ja']='NEbius、Inferizeを買収しNEbius Token Factoryを強化'
+        # Both languages must name the same products (bilingual name check).
+        note['title']['en']='Nebius acquires Inferize to strengthen Nebius Token Factory'
         result=research.validate(note, BODY, TITLE)
         self.assertEqual(result['title']['ja'], 'Nebius、Inferizeを買収しNebius Token Factoryを強化')
         note['title']['ja']='OTHERbrand、Inferizeを買収'
-        self.assertEqual(research.validate(note, BODY, TITLE)['title']['ja'], note['title']['ja'])
+        # A name absent from the English copy is now held, never published or normalized.
+        with self.assertRaisesRegex(ValueError, 'changed-names'):
+            research.validate(note, BODY, TITLE)
 
     def test_corrected_quote_failure_can_recover_once_and_invalid_ids_stay_private(self):
         with research.connect(self.path) as db:

@@ -460,10 +460,179 @@ def validate_execution_and_capacity(text, evidence):
                     raise ValueError('changed-action-capacity')
 
 
+# Failure codes for the meaning checks below. Every publication lane treats
+# them like any other deterministic validation failure: the copy is held and
+# the original source remains the only published evidence.
+MEANING_FAILURES = frozenset({
+    'changed-direction', 'changed-metric-direction', 'changed-negation', 'changed-names',
+})
+
+# Shared prompt text, so every model lane is told the same rules that the
+# validators below enforce after generation.
+MEANING_POLICY = (' Never reverse a direction: rise/increase/raise/beat/upgrade/profit/win/approve must stay '
+                  '上昇・増加・引き上げ・上回る・格上げ・黒字・獲得・承認 (and fall/decrease/cut/miss/downgrade/loss/lose/reject '
+                  'must stay 下落・減少・引き下げ・下回る・格下げ・赤字・失う・却下), and keep each direction attached to its own '
+                  'metric (revenue, margin, EPS, guidance, shares). Keep every negation (not, no, never, fails to, denies) '
+                  'as a negation. Keep company names, tickers and person names exactly as written in the source.')
+
+# Each family is (up English, up Japanese, down English, down Japanese). A
+# family only rejects copy that introduces a direction the source contradicts;
+# copy that omits a direction is left to the other completeness checks.
+DIRECTION_FAMILIES = (
+    ('level',
+     r"\b(?:ris(?:e|es|ing|en)|rose|increas(?:e|ed|es|ing)|gr(?:ow|ows|ew|own|owing|owth)|gain(?:s|ed|ing)?"
+     r"|jump(?:s|ed|ing)?|surg(?:e|es|ed|ing)|soar(?:s|ed|ing)?|climb(?:s|ed|ing)?|rall(?:y|ies|ied|ying)"
+     r"|rebound(?:s|ed|ing)?|spik(?:e|es|ed|ing)|higher|rais(?:e|es|ed|ing)|lift(?:s|ed|ing)?|boost(?:s|ed|ing)?"
+     r"|hik(?:e|es|ed|ing)|expand(?:s|ed|ing)?|expansion|widen(?:s|ed|ing)?|wider|up\s+[$€£¥]?\d)",
+     r'増加|増収|増益|増額|増配|上昇|急騰|高騰|反発|伸び|伸長|引き上げ|上方修正|値上げ|拡大|(?:[%％]|ポイント|倍)\s*増(?![資])',
+     r"\b(?:fall(?:s|ing|en)?|fell|decreas(?:e|ed|es|ing)|declin(?:e|ed|es|ing)|drop(?:s|ped|ping)?|dip(?:s|ped|ping)?"
+     r"|slip(?:s|ped|ping)?|slid(?:e|es|ing)?|plung(?:e|es|ed|ing)|plummet(?:s|ed|ing)?|sink(?:s|ing)?|sank|sunk"
+     r"|tumbl(?:e|es|ed|ing)|slump(?:s|ed|ing)?|lower(?:s|ed|ing)?|cut(?:s|ting)?|reduc(?:e|es|ed|ing|tion)"
+     r"|trim(?:s|med|ming)?|slash(?:es|ed|ing)?|shrink(?:s|ing)?|shrank|narrow(?:s|ed|ing|er)?|slow(?:s|ed|ing|er|down)?"
+     r"|down\s+[$€£¥]?\d)",
+     r'減少|減収|減益|(?<!軽)減額|減配|下落|急落|反落|低下|落ち込|引き下げ|下方修正|値下げ|削減|縮小|減速|(?:[%％]|ポイント)\s*減(?![資損])'),
+    ('quality',
+     r'\b(?:improv(?:e|es|ed|ing|ement)|strengthen(?:s|ed|ing)?|better)\b', r'改善|好転|強化',
+     r'\b(?:worsen(?:s|ed|ing)?|deteriorat\w*|weaken(?:s|ed|ing)?|worse)\b', r'悪化|弱含|弱体化'),
+    ('expectation',
+     r'\b(?:beat(?:s|ing)?|exceed(?:s|ed|ing)?|top(?:s|ped)?\s+(?:estimates|expectations|forecasts|consensus)'
+     r'|above\s+(?:estimates|expectations|forecasts|consensus))\b',
+     r'上回',
+     r'\b(?:miss(?:es|ed|ing)?|below\s+(?:estimates|expectations|forecasts|consensus)|f(?:a|e)ll(?:s|ing)?\s+short|shy\s+of)\b',
+     r'下回|届かず|届かなかった|未達'),
+    ('rating',
+     r'\bupgrad(?:e|es|ed|ing)\b', r'格上げ',
+     r'\bdowngrad(?:e|es|ed|ing)\b', r'格下げ'),
+    ('recommendation',
+     r'\b(?:buy|outperform|overweight)\b', r'買い(?:推奨|評価)?|アウトパフォーム|オーバーウェイト',
+     r'\b(?:sell|underperform|underweight)\b', r'売り(?!上)|アンダーパフォーム|アンダーウェイト'),
+    ('result',
+     r'\b(?:net (?:income|profit)|profitab\w*|(?:swung|swings|turned|turns) to (?:a )?profit)\b', r'純利益|黒字',
+     r'\b(?:net loss|loss(?:es)?|(?:swung|swings|turned|turns) to (?:a )?loss)\b', r'純損失|赤字|損失'),
+    ('award',
+     r'\b(?:win(?:s|ning)?|won|awarded)\b', r'獲得|受注|勝ち取|落札',
+     r'\b(?:los(?:e|es|ing))\b', r'失う|失った|失注|喪失|逃し|逃す'),
+    ('decision',
+     r'\b(?:approv(?:e|es|ed|al))\b', r'承認|可決|認可',
+     r'\b(?:reject(?:s|ed|ion)?|block(?:s|ed)?)\b', r'却下|否決|阻止'),
+)
+
+# Metrics whose direction must not be swapped with another metric's direction
+# in a mixed headline ("revenue rose while margin declined"). Order matters:
+# more specific labels are matched first and claim their characters.
+DIRECTION_METRICS = (
+    ('margin', r'\bmargins?\b', r'利益率|マージン'),
+    ('eps', r'\bEPS\b|\bearnings per share\b', r'EPS|1株(?:当たり)?利益|一株当たり利益'),
+    ('target', r'\bprice targets?\b|\btarget prices?\b', r'目標株価'),
+    ('revenue', r'\brevenues?\b|\bsales\b', r'売上高?|売り上げ|増収|減収'),
+    ('profit', r'\b(?:net income|operating income|profits?|earnings)\b', r'利益|増益|減益'),
+    ('guidance', r'\bguidance\b|\boutlook\b', r'見通し|ガイダンス|業績予想'),
+    ('shares', r'\bshares\b|\bstock\b', r'株価'),
+)
+CLAUSE_BOUNDARY = (r'[.;!?。；！？\n、,]|\b(?:while|whereas|but|and|as|although|though|despite|after)\b'
+                   r'|一方|ものの|にもかかわらず')
+
+NEGATION_EN = (r"\b(?:not(?!\s+only)|never|no\s+longer|cannot|fails?\s+to|failed\s+to|unable\s+to|den(?:y|ies|ied)"
+               r"|no\s+(?:plans?|intention|change|deal|agreement|evidence|decision))\b|n['’]t\b")
+NEGATION_EN_BROAD = NEGATION_EN + (r"|\b(?:no|none|nor|without|delay(?:s|ed)?|postpone(?:s|d)?|halt(?:s|ed)?"
+                                   r"|suspend(?:s|ed)?|cancel(?:s|ed|led)?|withdr[ae]w\w*|scrap(?:s|ped)?|shelve[sd]?"
+                                   r"|reject(?:s|ed)?|block(?:s|ed)?)\b")
+NEGATION_JA = r'しない|しなかった|ではない|でない|せず|否定|見送|ません|なかった|できない'
+NEGATION_JA_BROAD = NEGATION_JA + r'|ない|ず|なし|無し|なく|未|不|非|拒否|撤回|中止|断念|停止|失敗|延期'
+WHETHER_OR_NOT = r'\b(?:whether\s+or\s+not|or\s+not)\b'
+
+
+def _has(pattern, text):
+    return bool(re.search(pattern, text, re.I))
+
+
+def directions(text, family):
+    _name, up_en, up_ja, down_en, down_ja = family
+    return ({'up'} if _has(up_en, text) or _has(up_ja, text) else set()) | (
+        {'down'} if _has(down_en, text) or _has(down_ja, text) else set())
+
+
+def validate_directions(text, evidence):
+    """Reject copy that states a direction the source only states the other way."""
+    for family in DIRECTION_FAMILIES:
+        stated, source = directions(text, family), directions(evidence, family)
+        for direction in stated - source:
+            if ({'up', 'down'} - {direction}) & source:
+                raise ValueError('changed-direction')
+
+
+def metric_directions(text):
+    """Return metric -> direction for clauses with exactly one metric and one direction."""
+    level = DIRECTION_FAMILIES[0]
+    found = {}
+    for clause in re.split(CLAUSE_BOUNDARY, text, flags=re.I):
+        remaining, metrics = clause, set()
+        for metric, english, japanese in DIRECTION_METRICS:
+            pattern = '(?:' + english + ')|(?:' + japanese + ')'
+            if _has(pattern, remaining):
+                metrics.add(metric)
+                remaining = re.sub(pattern, ' ', remaining, flags=re.I)
+        stated = directions(clause, level)
+        if len(metrics) == 1 and len(stated) == 1:
+            found.setdefault(metrics.pop(), set()).update(stated)
+    return {metric: values.pop() for metric, values in found.items() if len(values) == 1}
+
+
+def validate_metric_directions(text, evidence):
+    stated, source = metric_directions(text), metric_directions(evidence)
+    if any(source.get(metric) not in (None, direction) for metric, direction in stated.items()):
+        raise ValueError('changed-metric-direction')
+
+
+def negated(text, broad=False):
+    text = re.sub(WHETHER_OR_NOT, ' ', text, flags=re.I)
+    return _has((NEGATION_EN_BROAD + '|' + NEGATION_JA_BROAD) if broad else (NEGATION_EN + '|' + NEGATION_JA), text)
+
+
+def validate_negation(text, evidence):
+    """A negated source keeps a negation; an affirmative source gains none."""
+    if negated(evidence) and not negated(text, broad=True):
+        raise ValueError('changed-negation')
+    if negated(text) and not negated(evidence, broad=True):
+        raise ValueError('changed-negation')
+
+
+NAME_TOKEN = re.compile(r'[A-Za-z][A-Za-z0-9&.\'’-]*[A-Za-z0-9]|[A-Za-z]')
+# Abbreviations a correct translation may introduce for spelled-out English.
+NAME_ALLOWANCE = frozenset({
+    'q1', 'q2', 'q3', 'q4', 'h1', 'h2', 'fy', 'eps', 'yoy', 'qoq', 'ceo', 'cfo', 'coo', 'cto', 'ai', 'ipo',
+    'etf', 'usd', 'us', 'u.s', 'uk', 'eu', 'vs', 'pt', 'sec', 'ir', 'gpu', 'cpu', 'hbm', 'dram', 'nand',
+    'k', 'm', 'b', 'bn', 'mn', 'tn', 'x', 'q', 'pce', 'cpi', 'gdp', 'fomc', 'fed', 'frb', 'boj', 'ecb',
+    # Units are spelled out in English but abbreviated in Japanese (2MW = 2 megawatts).
+    'w', 'kw', 'mw', 'gw', 'kwh', 'mwh', 'gwh', 'twh', 'kb', 'mb', 'gb', 'tb', 'pb', 'nm', 'mhz', 'ghz',
+    'gbps', 'tbps', 'kg', 'km', 'mm', 'cm',
+})
+
+
+def validate_names(ja, en):
+    """Tickers must match exactly; Latin-script names in Japanese must appear in English."""
+    if set(re.findall(r'\$[A-Z]{1,6}\b', ja)) != set(re.findall(r'\$[A-Z]{1,6}\b', en)):
+        raise ValueError('changed-names')
+    english = en.lower()
+    for token in NAME_TOKEN.findall(ja):
+        word = token.lower().rstrip('.')
+        if word in NAME_ALLOWANCE or re.fullmatch(r'(?:fy|q[1-4]|h[12])\d*', word):
+            continue
+        if not re.search(r'(?<![a-z])' + re.escape(word) + r'(?![a-z0-9])', english):
+            raise ValueError('changed-names')
+
+
+def validate_meaning(text, evidence):
+    validate_directions(text, evidence)
+    validate_metric_directions(text, evidence)
+    validate_negation(text, evidence)
+
+
 def validate_semantics(text, evidence):
     validate_execution_and_capacity(text, evidence)
     validate_amount_relations(text, evidence)
     validate_comparison_baselines(text, evidence)
+    validate_meaning(text, evidence)
     if re.search(r'idle GPU tax', evidence, re.I) and re.search(r'課税|税金|税負担', text):
         raise ValueError('invalid-copy')  # Resource overhead metaphor, not taxation.
     future_integration = r'\bwill (?:integrate|work\b[^.!?]{0,240}\bintegration)\b'
@@ -509,3 +678,6 @@ def validate_pair(ja, en):
         if ((re.search(positive,ja,re.I) and re.search(negative,en,re.I))
                 or (re.search(negative,ja,re.I) and re.search(positive,en,re.I))):
             raise ValueError('invalid-copy')
+    validate_meaning(ja, en)
+    validate_meaning(en, ja)
+    validate_names(ja, en)

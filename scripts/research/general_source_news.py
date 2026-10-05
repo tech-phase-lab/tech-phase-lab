@@ -41,7 +41,7 @@ FAILURE_CODES = frozenset({
     'actor-grounding-required','unsupported-affiliation','changed-claim-actor',
     'changed-claim-status','changed-source-attribution','changed-amount-relation',
     'unsupported-buyback-structure',
-}) | broker_commentary.FAILURE_CODES | buyback_news.FAILURE_CODES | {related_company_news.FAILURE, source_news_grounding.FAILURE, source_news_grounding.CONDITION_FAILURE, source_news_grounding.RELATION_FAILURE}
+}) | factual_validation.MEANING_FAILURES | broker_commentary.FAILURE_CODES | buyback_news.FAILURE_CODES | {related_company_news.FAILURE, source_news_grounding.FAILURE, source_news_grounding.CONDITION_FAILURE, source_news_grounding.RELATION_FAILURE}
 SOURCE_IDS = (*analyst_news.SOURCE_IDS, 'x-trendspider')
 ACCOUNTS = analyst_news.ACCOUNTS | {'trendspider', 'fabymetal4'}
 
