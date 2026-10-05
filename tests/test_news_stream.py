@@ -26,9 +26,10 @@ def ticket(purpose, secret="test-secret"):
 class NewsStreamTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         self.news = {"ok": True, "officialUpdates": [{"id": "1", "title": "First"}]}
-        reader = news_revision_reader(lambda: self.news)
+        reader = news_revision_reader(lambda max_age=None: self.news)
         self.app, _ = create_gateway(lambda: {"ok": True, "items": []}, "test-secret", "http://127.0.0.1:1",
-                                     interval=.02, heartbeat=1, max_clients=20, news_reader=reader)
+                                     interval=.02, heartbeat=1, max_clients=20, news_reader=reader,
+                                     news_interval=.02)
         self.runner = web.AppRunner(self.app, access_log=None, shutdown_timeout=.1)
         await self.runner.setup()
         self.site = web.TCPSite(self.runner, "127.0.0.1", 0)

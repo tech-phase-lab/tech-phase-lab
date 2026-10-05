@@ -715,3 +715,38 @@ def validate_pair(ja, en):
     validate_meaning(ja, en)
     validate_meaning(en, ja)
     validate_names(ja, en)
+
+
+def _cache_checks(*names):
+    """Cache the outcome of pure text checks run on every public read.
+
+    The public feed re-validates every stored translation on each request;
+    the same strings are checked again and again. Only calls whose arguments
+    are plain strings/bools/None are cached; the outcome is either success or
+    the ValueError code, which is re-raised unchanged. Other exceptions are
+    never cached.
+    """
+    import functools
+    simple = (str, bool, type(None))
+    for name in names:
+        original = globals()[name]
+
+        @functools.lru_cache(maxsize=16384)
+        def outcome(args, kwargs, _original=original):
+            try:
+                _original(*args, **dict(kwargs))
+            except ValueError as exc:
+                return str(exc)
+            return None
+
+        @functools.wraps(original)
+        def checked(*args, _original=original, _outcome=outcome, **kwargs):
+            if not all(isinstance(value, simple) for value in (*args, *kwargs.values())):
+                return _original(*args, **kwargs)
+            code = _outcome(args, tuple(sorted(kwargs.items())))
+            if code is not None:
+                raise ValueError(code)
+        globals()[name] = checked
+
+
+_cache_checks('validate_meaning', 'validate_names')

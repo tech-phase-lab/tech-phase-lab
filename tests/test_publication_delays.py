@@ -61,10 +61,18 @@ class NewsCacheTests(unittest.TestCase):
         def compute(original_preview=False):
             calls.append(original_preview)
             time.sleep(0.05)
+            # The feed computation and workers commit writes meanwhile; waiting
+            # requests must still share this result instead of recomputing.
+            app.db_path.write_bytes(b'v' * (len(calls) + 2))
             return {'ok': True, 'n': len(calls)}
         app.compute_public_news = compute
         results = []
-        threads = [threading.Thread(target=lambda: results.append(app.public_news())) for _ in range(8)]
+        barrier = threading.Barrier(8)
+
+        def visitor():
+            barrier.wait()  # All page requests arrive together.
+            results.append(app.public_news())
+        threads = [threading.Thread(target=visitor) for _ in range(8)]
         for thread in threads:
             thread.start()
         for thread in threads:
@@ -72,6 +80,9 @@ class NewsCacheTests(unittest.TestCase):
         self.assertEqual(calls, [False])
         self.assertEqual({result['n'] for result in results}, {1})
         app.public_news(original_preview=True)
+        self.assertEqual(calls, [False, True])
+        # The push detector may reuse a slightly older result.
+        app.public_news(max_age=60)
         self.assertEqual(calls, [False, True])
         # A committed write (for example a withdrawal) is visible on the next request.
         app.db_path.write_bytes(b'v2 withdrawn')
