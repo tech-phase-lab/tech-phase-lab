@@ -23,8 +23,27 @@ VALIDATION_FAILURES = frozenset({
     'changed-amount-relation', 'changed-execution-period', 'changed-action-capacity', 'invalid-copy',
 }) | factual_validation.MEANING_FAILURES
 
-def retry_delay(attempts):
-    """Fast transient recovery, then slow retries; never permanently abandon a job."""
+# Rejected copy is usually fixed by the next attempt, which is told why the
+# previous one failed; waiting an hour does not make it more likely to pass.
+VALIDATION_RETRY_SECONDS = (15, 60, 300, 1800, 3600)
+
+
+def retry_delay(attempts, kind=None):
+    """Retry schedule by failure kind; never permanently abandon a job.
+
+    Rejected copy: 15 s, 1 min, 5 min, 30 min, 1 h, then up to 6 h.
+    Provider outage/timeout: 1, 2, 4... minutes, at most 30 minutes.
+    Authentication, rate limits and unknown kinds keep the original slow
+    schedule (1, 2 minutes, then 1 hour growing to 6 hours).
+    """
+    attempts = max(int(attempts or 1), 1)
+    kind = kind or ''
+    if kind in {'provider-unavailable', 'provider-timeout'} or kind.startswith('provider-http-5'):
+        return min(60 * 2 ** min(attempts - 1, 10), 1800)
+    if kind and not kind.startswith('provider-'):
+        if attempts <= len(VALIDATION_RETRY_SECONDS):
+            return VALIDATION_RETRY_SECONDS[attempts - 1]
+        return min(3600 * 2 ** min(attempts - len(VALIDATION_RETRY_SECONDS), 3), 21600)
     return min(60 * 2 ** min(max(attempts - 1, 0), 10), 300) if attempts < FAST_RETRY_ATTEMPTS else min(3600 * 2 ** min(attempts - FAST_RETRY_ATTEMPTS, 3), 21600)
 
 MAX_HEADLINE_CHARS = 180
@@ -408,7 +427,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                 else 'provider-auth' if status in (401, 403)
                 else 'provider-timeout' if isinstance(exc, TimeoutError) or isinstance(cause, TimeoutError)
                 else 'provider-unavailable')
-        delay = 5 if kind == 'output-token-limit' and row['output_tokens'] < 1200 else retry_delay(attempt[0] if attempt else 1)
+        delay = 5 if kind == 'output-token-limit' and row['output_tokens'] < 1200 else retry_delay(attempt[0] if attempt else 1, kind)
         retry = max(delay, min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
         with connect(path) as db, db:
             db.execute('''UPDATE signal_headline_translation_jobs SET state='retry',next_at=?,failure_kind=?
@@ -444,4 +463,11 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                    (state, row["source_id"], row["url"], row["sha"], lease))
         db.execute("UPDATE signal_headline_translation_calls SET state=?,usage=? WHERE lease=?",
                    (state, json.dumps(usage), lease))
+        attempts = db.execute("SELECT attempts FROM signal_headline_translation_jobs WHERE source_id=? AND url=? AND sha=?",
+                              (row["source_id"], row["url"], row["sha"])).fetchone()
+    if state == "done":
+        import pipeline_status
+        pipeline_status.log_publication("headline", row["id"], row["observed_at"],
+                                        source_published_at=row.get("published_at") or None,
+                                        attempts=attempts[0] if attempts else None)
     return state

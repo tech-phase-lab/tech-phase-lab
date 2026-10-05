@@ -151,6 +151,9 @@ def replay(body,order, *, restart=False, negative=False, during_assessment=False
    with research.connect(path) as db:db.execute("UPDATE signal_documents SET text=text || '\nUnsupported extra sentence.'")
   if parser_change:
    guards.enter_context(patch.object(grammar_module,'parse',side_effect=ValueError('unsupported-format')))
+   # A parser change ships with a deployment, whose restart starts with an empty
+   # public-news cache. Simulate that here; data changes invalidate it themselves.
+   app.news_cache.clear()
   if withdraw:
    with research.connect(path) as db:db.execute("UPDATE signal_x_acquisition SET sha='changed-current-source'")
   if withdraw or corrupt_body or parser_change:

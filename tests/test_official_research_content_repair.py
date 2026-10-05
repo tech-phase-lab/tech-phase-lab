@@ -264,7 +264,7 @@ class ContentRepairTests(unittest.TestCase):
         with research.connect(path) as db:
             job = db.execute('SELECT * FROM official_research_jobs').fetchone()
             self.assertEqual(job['attempts'], 7)
-            self.assertEqual(job['next_at'], NOW.timestamp() + research.headline_translation.retry_delay(7))
+            self.assertEqual(job['next_at'], NOW.timestamp() + research.headline_translation.retry_delay(7, 'unsupported-number'))
             self.assertEqual(job['failure_kind'], 'unsupported-number')
             self.assertEqual(job['state'], 'retry')
             self.assertEqual(db.execute('SELECT previous_next_at FROM official_research_content_repairs').fetchone()[0], RETRY_AT)

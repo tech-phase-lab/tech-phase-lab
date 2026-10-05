@@ -189,6 +189,39 @@ export function snapshotIssues(data: IntakeSnapshot) {
   return issues;
 }
 
+/**
+ * Drop only the records that fail validation, instead of rejecting the whole
+ * live snapshot. One malformed source used to send every visitor back to the
+ * bundled snapshot, which only changes on a deployment. Each record is
+ * checked with the same rules as snapshotIssues; history, events and briefs
+ * that reference a dropped source are dropped with it. Returns null when the
+ * snapshot itself (version/time) is invalid or the result still has issues.
+ */
+export function quarantineSnapshot(data: IntakeSnapshot): { snapshot: IntakeSnapshot; dropped: number } | null {
+  const empty: IntakeSnapshot = { ...data, sources: [], history: [], discoveryRuns: [], events: [], briefs: [] };
+  if (snapshotIssues(empty).length) return null;
+  const sources: IntakeSnapshot["sources"] = [];
+  const kept = new Map<string, IntakeSnapshot["sources"][number]>();
+  for (const source of data.sources ?? []) {
+    if (kept.has(source.url) || snapshotIssues({ ...empty, sources: [source] }).length) continue;
+    kept.set(source.url, source);
+    sources.push(source);
+  }
+  const withSource = (url: string) => kept.has(url) ? [kept.get(url)!] : [];
+  const history = (data.history ?? []).filter(item => !snapshotIssues({ ...empty, sources: withSource(item.url), history: [item] }).length);
+  const discoveryRuns = (data.discoveryRuns ?? []).filter(run => !snapshotIssues({ ...empty, discoveryRuns: [run] }).length);
+  const events = (data.events ?? []).filter(event => !snapshotIssues({ ...empty, sources: withSource(event.url), events: [event] }).length);
+  const briefs = (data.briefs ?? []).filter(brief => !snapshotIssues({ ...empty, sources: withSource(brief.url), briefs: [brief] }).length);
+  const snapshot: IntakeSnapshot = { ...data, sources, history, discoveryRuns, events,
+    ...(data.briefs !== undefined ? { briefs } : {}) };
+  if (data.events === undefined) delete (snapshot as { events?: unknown }).events;
+  if (snapshotIssues(snapshot).length) return null;
+  const dropped = (data.sources?.length ?? 0) - sources.length + (data.history?.length ?? 0) - history.length
+    + (data.discoveryRuns?.length ?? 0) - discoveryRuns.length + (data.events?.length ?? 0) - events.length
+    + (data.briefs?.length ?? 0) - briefs.length;
+  return { snapshot, dropped };
+}
+
 export type CoverageSource = IntakeSource & { displayTitle: string; fetchState: "error" | "fetched" | "unfetched" };
 export type CoverageCompany = {
   ticker: string;

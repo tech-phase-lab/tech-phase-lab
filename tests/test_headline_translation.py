@@ -239,9 +239,10 @@ class HeadlineTranslationTests(unittest.TestCase):
         retry_env = {**ENV, "OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT": "10"}
         for now in (NOW, NOW + 60, NOW + 180):
             self.assertEqual(translation.run_once(self.path, failed, retry_env, now=now, sources=[SOURCE]), "retry")
-        self.assertEqual(translation.run_once(self.path, response, retry_env, now=NOW + 900, sources=[SOURCE]), "idle")
+        # Provider outages back off 1, 2, 4 minutes (capped at 30 minutes), not 1 hour.
+        self.assertEqual(translation.run_once(self.path, response, retry_env, now=NOW + 400, sources=[SOURCE]), "idle")
         with translation.connect(self.path) as db:
-            state = translation.diagnostics(db, env=retry_env, now=NOW+900, sources=[SOURCE])
+            state = translation.diagnostics(db, env=retry_env, now=NOW+400, sources=[SOURCE])
             self.assertEqual(state["retrying"], 1)
             self.assertEqual(state["exhausted"], 0)
         self.assertEqual(translation.run_once(self.path, response, retry_env, now=NOW + 3780, sources=[SOURCE]), "done")

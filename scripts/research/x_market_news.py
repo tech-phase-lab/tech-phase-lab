@@ -299,7 +299,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                 pass
     except Exception as exc:
         kind = str(exc) if type(exc) is ValueError and str(exc) in FAILURES else 'provider-unavailable'
-        delay = max(headline_translation.retry_delay(attempts), min(getattr(exc, 'retry_after_seconds', None) or 0, 604800))
+        delay = max(headline_translation.retry_delay(attempts, kind), min(getattr(exc, 'retry_after_seconds', None) or 0, 604800))
         with headline_translation.connect(path) as db, db:
             db.execute("UPDATE x_market_jobs SET state='retry',next_at=?,failure_kind=? WHERE source_id=? AND url=? AND sha=? AND lease=?", (now+delay, kind, *identity, lease))
             db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?", (lease,))
@@ -314,6 +314,10 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
             db.execute('INSERT OR REPLACE INTO x_market_publications VALUES(?,?,?,?,?)', (*identity, json.dumps(publication, ensure_ascii=False), datetime.now(timezone.utc).isoformat()))
         db.execute('UPDATE x_market_jobs SET state=? WHERE source_id=? AND url=? AND sha=? AND lease=?', (state, *identity, lease))
         db.execute('UPDATE signal_headline_translation_calls SET state=? WHERE lease=?', (state, lease))
+    if state == 'done':
+        import pipeline_status
+        pipeline_status.log_publication('market', selected['id'], selected['observed_at'],
+                                        source_published_at=selected['published_at'], attempts=attempts)
     return state
 
 
