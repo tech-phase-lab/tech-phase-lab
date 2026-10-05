@@ -484,13 +484,13 @@ DIRECTION_FAMILIES = (
      r"|jump(?:s|ed|ing)?|surg(?:e|es|ed|ing)|soar(?:s|ed|ing)?|climb(?:s|ed|ing)?|rall(?:y|ies|ied|ying)"
      r"|rebound(?:s|ed|ing)?|spik(?:e|es|ed|ing)|higher|rais(?:e|es|ed|ing)|lift(?:s|ed|ing)?|boost(?:s|ed|ing)?"
      r"|hik(?:e|es|ed|ing)|expand(?:s|ed|ing)?|expansion|widen(?:s|ed|ing)?|wider|up\s+[$€£¥]?\d)",
-     r'増加|増収|増益|増額|増配|上昇|急騰|高騰|反発|伸び|伸長|引き上げ|上方修正|値上げ|拡大|(?:[%％]|ポイント|倍)\s*増(?![資])',
+     r'増加|増収|増益|増額|増配|上昇|急騰|高騰|反発|伸び|伸長|引き上げ|上方修正|値上げ|利上げ|拡大|(?:[%％]|ポイント|倍)\s*増(?![資])',
      r"\b(?:fall(?:s|ing|en)?|fell|decreas(?:e|ed|es|ing)|declin(?:e|ed|es|ing)|drop(?:s|ped|ping)?|dip(?:s|ped|ping)?"
      r"|slip(?:s|ped|ping)?|slid(?:e|es|ing)?|plung(?:e|es|ed|ing)|plummet(?:s|ed|ing)?|sink(?:s|ing)?|sank|sunk"
      r"|tumbl(?:e|es|ed|ing)|slump(?:s|ed|ing)?|lower(?:s|ed|ing)?|cut(?:s|ting)?|reduc(?:e|es|ed|ing|tion)"
      r"|trim(?:s|med|ming)?|slash(?:es|ed|ing)?|shrink(?:s|ing)?|shrank|narrow(?:s|ed|ing|er)?|slow(?:s|ed|ing|er|down)?"
      r"|down\s+[$€£¥]?\d)",
-     r'減少|減収|減益|(?<!軽)減額|減配|下落|急落|反落|低下|落ち込|引き下げ|下方修正|値下げ|削減|縮小|減速|(?:[%％]|ポイント)\s*減(?![資損])'),
+     r'減少|減収|減益|(?<!軽)減額|減配|下落|急落|反落|低下|落ち込|引き下げ|下方修正|値下げ|利下げ|削減|縮小|減速|(?:[%％]|ポイント)\s*減(?![資損])'),
     ('quality',
      r'\b(?:improv(?:e|es|ed|ing|ement)|strengthen(?:s|ed|ing)?|better)\b', r'改善|好転|強化',
      r'\b(?:worsen(?:s|ed|ing)?|deteriorat\w*|weaken(?:s|ed|ing)?|worse)\b', r'悪化|弱含|弱体化'),
@@ -609,8 +609,39 @@ NAME_ALLOWANCE = frozenset({
 })
 
 
+def _provider_name_groups():
+    """Ticker, registered name and common long forms for each monitored company."""
+    import json
+    from pathlib import Path
+    groups = []
+    try:
+        providers = json.loads((Path(__file__).resolve().parents[2] / 'lib/research/providers.json').read_text())
+    except (OSError, ValueError):
+        providers = []
+    for provider in providers:
+        names = {provider.get('ticker', ''), *str(provider.get('name', '')).split(' / ')}
+        groups.append({name.lower() for name in names if name})
+    groups += [{'tsmc', 'tsm', 'taiwan semiconductor', 'taiwan semiconductor manufacturing'},
+               {'amd', 'advanced micro devices'}, {'googl', 'goog', 'google', 'alphabet'},
+               {'aws', 'amazon web services', 'amazon'}, {'meta', 'facebook', 'meta platforms'},
+               {'openai', 'open ai'}, {'fed', 'frb', 'federal reserve'}, {'boj', 'bank of japan'},
+               {'ecb', 'european central bank'}, {'sk hynix', 'skhy', 'hynix'}]
+    return groups
+
+
+NAME_GROUPS = _provider_name_groups()
+
+
+def _mentioned(word, english):
+    return bool(re.search(r'(?<![a-z])' + re.escape(word) + r'(?![a-z0-9])', english))
+
+
 def validate_names(ja, en):
-    """Tickers must match exactly; Latin-script names in Japanese must appear in English."""
+    """Tickers must match exactly; Latin-script names in Japanese must appear in English.
+
+    A company may be written differently in each language (Taiwan Semiconductor
+    in English, TSMC in Japanese); such known aliases count as the same name.
+    """
     if set(re.findall(r'\$[A-Z]{1,6}\b', ja)) != set(re.findall(r'\$[A-Z]{1,6}\b', en)):
         raise ValueError('changed-names')
     english = en.lower()
@@ -618,8 +649,11 @@ def validate_names(ja, en):
         word = token.lower().rstrip('.')
         if word in NAME_ALLOWANCE or re.fullmatch(r'(?:fy|q[1-4]|h[12])\d*', word):
             continue
-        if not re.search(r'(?<![a-z])' + re.escape(word) + r'(?![a-z0-9])', english):
-            raise ValueError('changed-names')
+        if _mentioned(word, english):
+            continue
+        if any(word in group and any(_mentioned(alias, english) for alias in group) for group in NAME_GROUPS):
+            continue
+        raise ValueError('changed-names')
 
 
 def validate_meaning(text, evidence):

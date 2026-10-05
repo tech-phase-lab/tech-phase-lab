@@ -49,6 +49,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
       publishNews(cached.data);
     }
     const poller = createNewsPoller({
+      push: true,
       load: async signal => {
         const started = takeNewsStartup();
         if (started) {

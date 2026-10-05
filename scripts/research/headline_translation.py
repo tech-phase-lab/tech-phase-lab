@@ -38,7 +38,7 @@ def retry_delay(attempts, kind=None):
     """
     attempts = max(int(attempts or 1), 1)
     kind = kind or ''
-    if kind in {'provider-unavailable', 'provider-timeout'} or kind.startswith('provider-http-5'):
+    if kind in {'provider-unavailable', 'provider-timeout', 'provider-rate-limit'} or kind in {'provider-http-429'} or kind.startswith('provider-http-5'):
         return min(60 * 2 ** min(attempts - 1, 10), 1800)
     if kind and not kind.startswith('provider-'):
         if attempts <= len(VALIDATION_RETRY_SECONDS):
@@ -47,6 +47,9 @@ def retry_delay(attempts, kind=None):
     return min(60 * 2 ** min(max(attempts - 1, 0), 10), 300) if attempts < FAST_RETRY_ATTEMPTS else min(3600 * 2 ** min(attempts - FAST_RETRY_ATTEMPTS, 3), 21600)
 
 MAX_HEADLINE_CHARS = 180
+# Shared 24-hour ceiling for headline, X market and issuer-note model calls.
+# Values outside 1..MAX_DAILY_LIMIT disable the lane (fail closed).
+MAX_DAILY_LIMIT = 2000
 EARLIEST_APPROVAL_DATE = "2026-09-29"
 # Owner explicitly renewed activation on October 1 after reporting stopped news.
 # Keep the enable flag, existing model/key, daily cap and revision checks.
@@ -81,7 +84,7 @@ def configuration(env, now=None):
             "RESEARCH_SUMMARY_MODEL": env.get("OFFICIAL_HEADLINE_TRANSLATION_MODEL", ""),
         })
         limit = int(env.get("OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT", "50"))
-        if not 1 <= limit <= 200:
+        if not 1 <= limit <= MAX_DAILY_LIMIT:
             return None
         return key, model, limit
     except (ValueError, brief_generator.GenerationUnavailable):
@@ -218,7 +221,7 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
         except (TypeError, ValueError, OverflowError, OSError):
             pass
     calls = {"total": 0, "failed": 0, "completed": 0, "stale": 0}
-    for row in budget_calls(db, now - 86400, limit=201):
+    for row in budget_calls(db, now - 86400, limit=MAX_DAILY_LIMIT + 1):
         if not row['dispatch_accounting']:
             # Preserve the existing reservation-time report for legacy rows.
             try:
@@ -227,7 +230,7 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
                 continue
             if not now - 86400 <= called_at <= now:
                 continue
-        if calls["total"] >= 200:
+        if calls["total"] >= MAX_DAILY_LIMIT:
             continue
         calls["total"] += 1
         if row["state"] == "failed":

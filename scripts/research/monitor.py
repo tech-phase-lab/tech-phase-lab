@@ -297,6 +297,8 @@ class SecAccess:
         self.last_error = None
         self.last_poll = {}
         self.poll_seconds = environment_seconds("RESEARCH_SEC_POLL_SECONDS", 10, 3, 300)
+        # Per-company interval while the shared latest-filings feed is healthy.
+        self.safety_poll_seconds = environment_seconds("RESEARCH_SEC_SAFETY_POLL_SECONDS", 60, 10, 900)
         self.max_backoff = environment_seconds("RESEARCH_SEC_MAX_BACKOFF_SECONDS", 900, 60, 3600)
 
     def remaining(self):
@@ -323,9 +325,9 @@ class SecAccess:
             self.blocked_until = 0.0
             self.last_error = None
 
-    def poll_due(self, url):
+    def poll_due(self, url, interval=None):
         with self.lock:
-            return self.clock() - self.last_poll.get(url, float("-inf")) >= self.poll_seconds
+            return self.clock() - self.last_poll.get(url, float("-inf")) >= (self.poll_seconds if interval is None else interval)
 
     def polled(self, url):
         with self.lock:
@@ -346,6 +348,117 @@ class SecAccess:
 
 
 SEC_ACCESS = SecAccess()
+
+
+class NoRedirects(HTTPRedirectHandler):
+    def redirect_request(self, *_args, **_kwargs):
+        raise ValueError("Unexpected SEC feed redirect")
+
+
+class EdgarCurrentFeed:
+    """One shared EDGAR "latest filings" feed for every monitored company.
+
+    EDGAR's getcurrent Atom feed lists the newest 8-K and 6-K filings from all
+    filers. Reading it every few seconds (two requests) reveals within seconds
+    which monitored CIK has filed. The feed is only a trigger: that company's
+    submissions JSON is then fetched at once and parsed by the existing parser,
+    so filing content and validation are unchanged. Per-company submissions
+    polls become a slower safety net (``poll_seconds``) while the feed is
+    healthy, and return to the short interval if the feed fails.
+    """
+
+    FORMS = ("8-K", "6-K")
+    URL = ("https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&type={form}"
+           "&company=&dateb=&owner=include&start=0&count=100&output=atom")
+
+    def __init__(self, clock=None, transport=None):
+        self.clock = clock or time.monotonic
+        self.transport = transport or self.request
+        self.lock = threading.Lock()
+        self.refreshing = False
+        self.interval = environment_seconds("RESEARCH_SEC_CURRENT_FEED_SECONDS", 3, 2, 60)
+        self.healthy_for = environment_seconds("RESEARCH_SEC_CURRENT_FEED_STALE_SECONDS", 30, 10, 600)
+        self.next_refresh = 0.0
+        self.last_success = None
+        self.accessions = {}
+
+    def request(self, url):
+        headers = {"User-Agent": sec_user_agent(), "Accept": "application/atom+xml"}
+        SEC_ACCESS.check()
+        wait_for_source_courtesy(url)
+        try:
+            with build_opener(NoRedirects()).open(Request(url, headers=headers), timeout=10) as response:
+                if response.headers.get_content_type() not in {"application/atom+xml", "application/xml", "text/xml"}:
+                    raise ValueError("Unexpected SEC feed content type")
+                content = response.read(MAX_BYTES + 1)
+        except HTTPError as exc:
+            if exc.code in (403, 429):
+                SEC_ACCESS.failed(f"http-{exc.code}", retry_after_seconds(exc))
+            raise
+        SEC_ACCESS.succeeded()
+        if not content or len(content) > MAX_BYTES:
+            raise ValueError("Empty or oversized source")
+        return content
+
+    @staticmethod
+    def parse(content):
+        """Return {cik: {accession, ...}} from one getcurrent Atom document."""
+        head = content[:4096].lower()
+        if b"<!doctype" in head or b"<!entity" in content.lower():
+            raise ValueError("Unsafe SEC feed XML")
+        root = ET.fromstring(content)
+        found = {}
+        for entry in root.iter("{http://www.w3.org/2005/Atom}entry"):
+            text = " ".join(filter(None, (
+                (entry.findtext("{http://www.w3.org/2005/Atom}id") or ""),
+                *(link.get("href", "") for link in entry.iter("{http://www.w3.org/2005/Atom}link")))))
+            accession = re.search(r"accession-number=(\d{10}-\d{2}-\d{6})", text)
+            cik = re.search(r"/Archives/edgar/data/(\d{1,10})/", text)
+            if accession and cik:
+                found.setdefault(int(cik.group(1)), set()).add(accession.group(1))
+        return found
+
+    def refresh(self):
+        """Refresh at most once per interval; never blocks another caller."""
+        with self.lock:
+            if self.refreshing or self.clock() < self.next_refresh or SEC_ACCESS.remaining() > 0:
+                return
+            self.refreshing = True
+            self.next_refresh = self.clock() + self.interval
+        try:
+            found = {}
+            for form in self.FORMS:
+                for cik, accessions in self.parse(self.transport(self.URL.format(form=form))).items():
+                    found.setdefault(cik, set()).update(accessions)
+            with self.lock:
+                self.accessions = found
+                self.last_success = self.clock()
+        except Exception:
+            pass  # Per-company polling falls back to its short interval.
+        finally:
+            with self.lock:
+                self.refreshing = False
+
+    def healthy(self):
+        with self.lock:
+            return self.last_success is not None and self.clock() - self.last_success <= self.healthy_for
+
+    def has_unseen(self, cik, known_accessions):
+        with self.lock:
+            return bool(self.accessions.get(cik, set()) - set(known_accessions))
+
+    def state(self):
+        with self.lock:
+            age = None if self.last_success is None else round(self.clock() - self.last_success)
+        return {"intervalSeconds": self.interval, "healthy": self.healthy(), "lastSuccessAgeSeconds": age}
+
+
+EDGAR_CURRENT = EdgarCurrentFeed()
+
+
+def submissions_cik(url):
+    match = re.fullmatch(r"https://data\.sec\.gov/submissions/CIK(\d{10})\.json", str(url))
+    return int(match.group(1)) if match else None
 
 
 def wait_for_source_courtesy(url):
@@ -3650,10 +3763,22 @@ def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=N
             sec_route = automatic and persistent_transport and is_sec_url(source["url"])
             if sec_route:
                 cached = source_cache.get(source["url"])
+                cik = submissions_cik(source["url"])
+                interval = None
+                if cik is not None and transport is fetch:
+                    EDGAR_CURRENT.refresh()
+                    if EDGAR_CURRENT.healthy():
+                        # The shared feed announces this company's new filings;
+                        # its own list is then only a slow safety net.
+                        interval = SEC_ACCESS.safety_poll_seconds
+                        known = {str(candidate.get("secAccession")) for candidate in (cached or {}).get("candidates", {}).values()
+                                 if isinstance(candidate, dict)}
+                        if cached and EDGAR_CURRENT.has_unseen(cik, known):
+                            interval = 0
                 # Between SEC polls (or while SEC has paused this client) reuse
                 # the last verified candidates instead of sending a request.
                 if cached and cached.get("candidates") and (
-                        not SEC_ACCESS.poll_due(source["url"]) or SEC_ACCESS.remaining() > 0):
+                        not SEC_ACCESS.poll_due(source["url"], interval) or SEC_ACCESS.remaining() > 0):
                     cache_metrics["notModifiedResponses"] += 1
                     return source, cached["candidates"], chain_failures
                 if SEC_ACCESS.remaining() > 0:

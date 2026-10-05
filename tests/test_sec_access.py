@@ -124,3 +124,86 @@ class SecAccessTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+ATOM = b'''<?xml version="1.0" encoding="ISO-8859-1" ?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Latest Filings</title>
+<entry><title>8-K - ADVANCED MICRO DEVICES INC (0000002488) (Filer)</title>
+<link rel="alternate" type="text/html" href="https://www.sec.gov/Archives/edgar/data/2488/000000248826000002/0000002488-26-000002-index.htm"/>
+<id>urn:tag:sec.gov,2008:accession-number=0000002488-26-000002</id></entry>
+<entry><title>8-K - OTHER CO (0000099999) (Filer)</title>
+<link rel="alternate" type="text/html" href="https://www.sec.gov/Archives/edgar/data/99999/000009999926000001/0000099999-26-000001-index.htm"/>
+<id>urn:tag:sec.gov,2008:accession-number=0000099999-26-000001</id></entry>
+</feed>'''
+SUBMISSIONS = "https://data.sec.gov/submissions/CIK0000002488.json"
+OLD = "https://www.sec.gov/Archives/edgar/data/2488/000000248826000001/amd-8k.htm"
+
+
+class EdgarCurrentFeedTests(unittest.TestCase):
+    def setUp(self):
+        self.clock = Clock()
+        self.access = m.SecAccess(clock=self.clock)
+        self.feed_calls = []
+        self.feed_body = ATOM
+
+        def feed_transport(url):
+            self.feed_calls.append(url)
+            if self.feed_body is None:
+                raise TimeoutError("feed down")
+            return self.feed_body
+        self.feed = m.EdgarCurrentFeed(clock=self.clock, transport=feed_transport)
+        for target, value in (("SEC_ACCESS", self.access), ("EDGAR_CURRENT", self.feed)):
+            patcher = patch.object(m, target, value)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+        self.calls = []
+
+        def send(url, ticker, validators=None, include_metadata=False):
+            self.calls.append(url)
+            if m.is_sec_url(url):
+                raise TimeoutError("not needed for this test")
+            return {"content": RSS, "contentType": "application/rss+xml", "etag": None,
+                    "lastModified": None, "notModified": False}
+        send.supports_persistent_validators = True
+        # The shared feed is consulted only by the real fetcher.
+        patcher = patch.object(m, "fetch", send)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        self.send = send
+
+    def cache(self, accession):
+        return {SUBMISSIONS: {"etag": None, "lastModified": None, "candidates": {
+            OLD: {"title": "8-K", "secAccession": accession, "secCik": "0000002488"}}}}
+
+    def sec_calls(self):
+        return self.calls.count(SUBMISSIONS)
+
+    def test_parse_lists_accessions_by_cik_and_rejects_entities(self):
+        self.assertEqual(m.EdgarCurrentFeed.parse(ATOM), {2488: {"0000002488-26-000002"}, 99999: {"0000099999-26-000001"}})
+        with self.assertRaisesRegex(ValueError, "Unsafe"):
+            m.EdgarCurrentFeed.parse(b'<?xml version="1.0"?><!DOCTYPE x [<!ENTITY a "b">]><feed/>')
+
+    def test_new_filing_in_shared_feed_triggers_immediate_company_fetch(self):
+        self.access.polled(SUBMISSIONS)  # Just polled: normally not due for 60 s.
+        m.collect_discovery("AMD", self.send, True, self.cache("0000002488-26-000001"))
+        self.assertEqual(self.sec_calls(), 1)
+        self.assertEqual(len(self.feed_calls), 2)  # 8-K and 6-K feeds: one request each.
+
+    def test_no_new_filing_means_no_company_request_until_safety_interval(self):
+        self.access.polled(SUBMISSIONS)
+        m.collect_discovery("AMD", self.send, True, self.cache("0000002488-26-000002"))
+        self.clock.now += 30
+        m.collect_discovery("AMD", self.send, True, self.cache("0000002488-26-000002"))
+        self.assertEqual(self.sec_calls(), 0)
+        self.assertEqual(len(self.feed_calls), 4)  # Feed refreshed every 3 s at most.
+        self.clock.now += self.access.safety_poll_seconds
+        m.collect_discovery("AMD", self.send, True, self.cache("0000002488-26-000002"))
+        self.assertEqual(self.sec_calls(), 1)
+
+    def test_feed_outage_falls_back_to_short_company_interval(self):
+        self.feed_body = None
+        self.access.polled(SUBMISSIONS)
+        self.clock.now += self.access.poll_seconds
+        m.collect_discovery("AMD", self.send, True, self.cache("0000002488-26-000002"))
+        self.assertEqual(self.sec_calls(), 1)
+        self.assertFalse(self.feed.healthy())

@@ -45,7 +45,7 @@ function componentHarness(path, timer) {
     new Function('require', 'module', 'exports', output)(name => {
       if (name.endsWith('.module.css')) return { default: {} };
       if (name === 'react') return withHooks ? { ...React, ...hooks } : React;
-      if (name === '@/lib/research/news-poller') return { ...require('../lib/research/news-poller.ts'), createNewsPoller: options => createNewsPoller({ ...options, schedule: timer.schedule, cancel: timer.cancel }) };
+      if (name === '@/lib/research/news-poller') return { ...require('../lib/research/news-poller.ts'), createNewsPoller: options => createNewsPoller({ ...options, push: false, schedule: timer.schedule, cancel: timer.cancel }) }; // Push is a separate channel, tested in news-push.test.mjs.
       if (name.startsWith('@/lib/research/')) return require(`../lib/research/${name.slice('@/lib/research/'.length)}.ts`);
       if (name === './use-calendar-clock') return { useCalendarClock: () => Date.now() };
       if (name === './notification-settings') return { default: () => null };

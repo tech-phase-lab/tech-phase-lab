@@ -26,8 +26,11 @@ class RetryScheduleTests(unittest.TestCase):
         self.assertEqual([translation.retry_delay(n, 'provider-timeout') for n in (1, 2, 3, 9)], [60, 120, 240, 1800])
         self.assertEqual(translation.retry_delay(3, 'provider-http-503'), 240)
 
-    def test_auth_rate_limit_and_legacy_callers_keep_the_slow_schedule(self):
-        for kind in ('provider-auth', 'provider-rate-limit', 'provider-http-401', None):
+    def test_rate_limits_are_short_waits_with_parallel_workers(self):
+        self.assertEqual([translation.retry_delay(n, 'provider-rate-limit') for n in (1, 2, 3, 9)], [60, 120, 240, 1800])
+
+    def test_auth_and_legacy_callers_keep_the_slow_schedule(self):
+        for kind in ('provider-auth', 'provider-http-401', None):
             self.assertEqual([translation.retry_delay(n, kind) for n in (1, 2, 3, 4)], [60, 120, 3600, 7200])
 
 
@@ -124,3 +127,37 @@ class PipelineStageTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class ParallelTranslationTests(unittest.TestCase):
+    setUp = fixtures.HeadlineTranslationTests.setUp
+
+    def test_concurrent_workers_take_different_articles_once_each(self):
+        with translation.connect(self.path) as db:
+            db.execute('''INSERT INTO signal_events(source_id,url,sha,previous_sha,title,tickers_json,matches_json,
+              event_kind,published_at,observed_at,excerpt,diff,truncated) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,0)''', (
+                SOURCE['id'], 'https://nebius.com/blog/second', 'sha-b', '', 'Nebius opens a new data center',
+                '["NBIS"]', '{}', 'new', '2027-01-01T00:15:00+00:00', '2027-01-01T00:15:20+00:00', '', ''))
+        env = {**ENV, 'OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT': '10'}
+        titles, lock, both_running = [], threading.Lock(), threading.Barrier(2, timeout=5)
+        copy = {'Nebius announces a new AI platform': 'ネビウスが新しいAI基盤を発表',
+                'Nebius opens a new data center': 'ネビウスが新しいデータセンターを開設'}
+
+        def transport(payload, key):
+            title = json.loads(payload['input'])['title']
+            with lock:
+                titles.append(title)
+            both_running.wait()  # Both model calls are in flight at the same time.
+            return {'status': 'completed', 'output_text': json.dumps({'titleJa': copy[title]}, ensure_ascii=False)}
+        results = []
+        workers = [threading.Thread(target=lambda: results.append(
+            translation.run_once(self.path, transport, env, now=NOW, sources=[SOURCE]))) for _ in range(2)]
+        with patch('builtins.print'):
+            for worker in workers:
+                worker.start()
+            for worker in workers:
+                worker.join()
+        self.assertEqual(sorted(results), ['done', 'done'])
+        self.assertEqual(sorted(titles), sorted(copy))
+        with translation.connect(self.path) as db:
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM signal_headline_translation_calls').fetchone()[0], 2)

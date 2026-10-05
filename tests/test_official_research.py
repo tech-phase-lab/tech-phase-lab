@@ -354,8 +354,8 @@ class OfficialResearchTests(unittest.TestCase):
         def publish(*args):app.stop_event.set()
         with patch.object(service.market_results,'run_once',side_effect=publish) as worker:
             app.run_results();worker.assert_called_once()
-        self.assertIsNot(app.result_thread,app.headline_translation_thread)
-        self.assertIsNot(app.official_research_thread,app.headline_translation_thread)
+        self.assertIsNot(app.result_thread,app.headline_translation_threads[0])
+        self.assertIsNot(app.official_research_thread,app.headline_translation_threads[0])
 
 
     def test_retry_receives_specific_rejected_fields_with_same_source(self):

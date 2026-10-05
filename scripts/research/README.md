@@ -228,6 +228,10 @@ python3 scripts/research/persistence.py restore --backup /data/backups/research-
 - `RESEARCH_USER_AGENT`：運営サービス名と連絡可能な汎用メールアドレス（例：`TechPhaseResearch ops@example.com`）。**必須**。メールアドレスを含まない場合、SECへのリクエストは送信せず `sec-user-agent-missing` を記録します（SECは連絡先のない自動アクセスを403で拒否し、IP単位で遮断するため）
 - `RESEARCH_SEC_MAX_REQUESTS_PER_SECOND`：SECへの1秒あたりの最大リクエスト数。標準8、1〜10（SECの上限は10）
 - `RESEARCH_SEC_POLL_SECONDS`：SEC提出書類一覧（経路ごと）の確認間隔。標準10秒、3〜300秒。間隔内は前回の候補を再利用し、SECへは送信しません
+- `RESEARCH_SEC_CURRENT_FEED_SECONDS`：EDGARの「最新提出書類」フィード（全社共通の8-K・6-K一覧）の確認間隔。標準3秒（1回に2リクエスト）。監視対象のCIKに新しい提出があれば、その会社の提出一覧をすぐ取得します。フィードは取得のきっかけにだけ使い、内容は従来どおり各社の提出一覧から作ります
+- `RESEARCH_SEC_SAFETY_POLL_SECONDS`：フィードが正常なときの各社提出一覧の確認間隔（取りこぼし防止）。標準60秒。フィードが30秒以上取れない場合は `RESEARCH_SEC_POLL_SECONDS`（10秒）に戻ります
+- `RESEARCH_TRANSLATION_WORKERS`：見出し翻訳を同時に処理する数。標準3、1〜6。同じ記事を二重に翻訳することはなく、確認処理と1日の上限は共通です
+- `OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT`：見出し翻訳・X市況・企業ノートで共有する、24時間あたりのモデル呼び出し上限（失敗も数えます）。1〜2000。範囲外の値は翻訳を停止します
 - `RESEARCH_SEC_MAX_BACKOFF_SECONDS`：SECが403/429を返したときの一時停止の上限。標準900秒、60〜3600秒。1分→2分→4分…と延ばし、SEC全体（一覧・本文）で共有します。成功で即解除。以前の「6時間〜7日」の待ちは起動時に上限まで短縮します
 
 Vercel側には監視サービスのHTTPS URLを `RESEARCH_MONITOR_URL`、同じトークンを `RESEARCH_MONITOR_TOKEN` として設定します。`/research/intake` は3秒ごとにAPIを確認し、接続中か保存済み記録かを明示します。

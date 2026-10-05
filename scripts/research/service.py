@@ -519,6 +519,7 @@ class AutomaticMonitor:
         self.priority_metrics_signature = None
         self.next_priority_metrics_at = 0.0
         self.news_cache_seconds = positive_int("RESEARCH_NEWS_CACHE_SECONDS", 2, 0)
+        self.translation_workers = min(6, positive_int("RESEARCH_TRANSLATION_WORKERS", 3, 1))
         self.news_cache_lock = threading.Lock()
         self.news_cache = {}
         self.body_probe_urls = set()
@@ -638,7 +639,8 @@ class AutomaticMonitor:
             "companies": {},
         }
         self.publication_wakes = {name: threading.Event() for name in (
-            "headlines", "market", "results", "official",
+            "market", "results", "official",
+            *(f"headlines-{index}" for index in range(self.translation_workers)),
         )}
         self.thread = threading.Thread(target=self.run_supervised, name="research-monitor", daemon=True)
         self.generation_thread = threading.Thread(target=self.run_generation, name="brief-generator", daemon=True)
@@ -658,7 +660,13 @@ class AutomaticMonitor:
                                       if x_stream_trial_service.requested() else None)
         self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
         self.note_translation_thread = threading.Thread(target=self.run_note_translation, name="note-translation", daemon=True)
-        self.headline_translation_thread = threading.Thread(target=self.run_headline_translation, name="headline-translation", daemon=True)
+        # Several headline workers translate different articles at once. Each
+        # job is leased to one worker in an IMMEDIATE transaction, so no article
+        # is translated twice; validation and the daily budget are unchanged.
+        self.headline_translation_threads = [
+            threading.Thread(target=self.run_headline_translation, args=(index,),
+                             name=f"headline-translation-{index}", daemon=True)
+            for index in range(self.translation_workers)]
         self.market_translation_thread = threading.Thread(target=self.run_market_translation, name="market-translation", daemon=True)
         self.result_thread = threading.Thread(target=self.run_results, name="result-publication", daemon=True)
         self.official_research_thread = threading.Thread(target=self.run_official_research, name="official-research", daemon=True)
@@ -716,10 +724,10 @@ class AutomaticMonitor:
                 print("note-translation-unavailable", flush=True)
             self.stop_event.wait(30)
 
-    def run_headline_translation(self):
+    def run_headline_translation(self, index=0):
         if headline_translation.configuration(os.environ) is None:
             return
-        wake = self.publication_wakes["headlines"]
+        wake = self.publication_wakes[f"headlines-{index}"]
         while not self.stop_event.is_set():
             wake.clear()
             result = None
@@ -860,7 +868,8 @@ class AutomaticMonitor:
             self.x_stream_trial_thread.start()
         self.news_thread.start()
         self.note_translation_thread.start()
-        self.headline_translation_thread.start()
+        for thread in self.headline_translation_threads:
+            thread.start()
         self.market_translation_thread.start()
         self.result_thread.start()
         self.official_research_thread.start()
@@ -885,7 +894,8 @@ class AutomaticMonitor:
             self.x_stream_trial_thread.join(timeout=45)
         self.news_thread.join(timeout=25)
         self.note_translation_thread.join(timeout=45)
-        self.headline_translation_thread.join(timeout=45)
+        for thread in self.headline_translation_threads:
+            thread.join(timeout=45)
         self.market_translation_thread.join(timeout=45)
         self.result_thread.join(timeout=15)
         self.official_research_thread.join(timeout=45)
@@ -1495,7 +1505,7 @@ class AutomaticMonitor:
         with self.state_lock:
             state = json.loads(json.dumps(self.state))
         state["fetchCache"] = monitor.fetch_cache_stats()
-        state["secAccess"] = monitor.SEC_ACCESS.state()
+        state["secAccess"] = {**monitor.SEC_ACCESS.state(), "currentFeed": monitor.EDGAR_CURRENT.state()}
         with self.db_lock, monitor.connect(self.db_path) as db:
             state["generation"].update(monitor.generation_queue_stats(
                 db, self.generation_daily_limit, self.generation_token_limit
@@ -2964,8 +2974,10 @@ def main():
         if streaming:
             from aiohttp import web
             from stream_gateway import create_gateway
+            from stream_gateway import news_revision_reader
             gateway, _ = create_gateway(app.public_price_targets, os.environ.get("RESEARCH_API_TOKEN", ""),
-                                       f"http://127.0.0.1:{server.server_port}")
+                                       f"http://127.0.0.1:{server.server_port}",
+                                       news_reader=news_revision_reader(app.public_news))
             threading.Thread(target=server.serve_forever, daemon=True).start()
             web.run_app(gateway, host=host, port=port, access_log=None, shutdown_timeout=5)
         else:
