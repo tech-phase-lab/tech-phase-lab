@@ -55,7 +55,10 @@ class ArticleIdentityContainmentTests(unittest.TestCase):
             self.assertIsNone(research.claim(db,NOW,'no-provider',1000))
             self.assertEqual(db.execute('SELECT count(*) FROM signal_headline_translation_calls').fetchone()[0],0)
         import service  # Avoid import during unittest discovery.
-        public=service.AutomaticMonitor(self.path,Path(self.tmp.name)/'snapshot.json').public_news()
+        # The retained fixture has a fixed seven-day publication window.
+        with patch.object(service,'datetime',wraps=inline_fixture.datetime) as service_clock:
+            service_clock.now.return_value=NOW
+            public=service.AutomaticMonitor(self.path,Path(self.tmp.name)/'snapshot.json').public_news()
         item=next(item for item in public['officialUpdates'] if item['url']==source.URL)
         self.assertEqual(item['title'],source.TITLE)
         self.assertEqual(item['publishedOn'],'2026-09-28')

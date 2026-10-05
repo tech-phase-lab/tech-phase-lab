@@ -16,13 +16,14 @@ export async function GET() {
       throw new Error("Invalid monitor");
     }
     url.pathname = `${url.pathname.replace(/\/$/, "")}/news`; url.search = ""; url.hash = "";
+    if (process.env.VERCEL_ENV === "preview") url.searchParams.set("originalPreview", "1");
     const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` }, cache: "no-store", signal: AbortSignal.timeout(10_000) });
     if (!response.ok) throw new Error("News unavailable");
     const text = await response.text();
     if (new TextEncoder().encode(text).length > 500_000) throw new Error("Oversized response");
     const upstreamMs = performance.now() - startedAt;
     const raw = JSON.parse(text);
-    const feed = buildPublicNews(raw);
+    const feed = buildPublicNews(raw, { allowOriginalPreview: process.env.VERCEL_ENV === "preview" });
     return Response.json(feed, { headers: { ...headers,
       "Server-Timing": `upstream;dur=${upstreamMs.toFixed(1)},total;dur=${(performance.now() - startedAt).toFixed(1)}`,
     } });

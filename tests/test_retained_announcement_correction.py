@@ -74,7 +74,10 @@ class RetainedAnnouncementCorrectionTests(unittest.TestCase):
             self.assertEqual(db.execute('SELECT count(*) FROM reviewed_retained_announcement_recoveries').fetchone()[0],1)
         self.assertFalse(self.publish())
         import service  # Tests reload provider modules during discovery.
-        public=service.AutomaticMonitor(self.path,Path(self.tmp.name)/'snapshot.json').public_news()
+        # Keep the historical source inside this replay's declared window.
+        with patch.object(service,'datetime',wraps=datetime) as service_clock:
+            service_clock.now.return_value=NOW
+            public=service.AutomaticMonitor(self.path,Path(self.tmp.name)/'snapshot.json').public_news()
         item=next(item for item in public['officialUpdates'] if item['url']==inline.source.URL)
         self.assertIn('1500億ドル',item['bodyJa']);self.assertIn('2350億ドル',item['bodyJa'])
         self.assertIn('through fiscal year 2028',item['bodyEn'])

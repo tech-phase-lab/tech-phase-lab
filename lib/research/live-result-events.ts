@@ -12,6 +12,7 @@ export async function loadLiveHomeNews() {
     const url=new URL(base);
     if(url.protocol!=='https:'||url.username||url.password) return empty;
     url.pathname=url.pathname.replace(/\/$/,'')+'/news';url.search='';url.hash='';
+    if (process.env.VERCEL_ENV === "preview") url.searchParams.set("originalPreview", "1");
     const response=await fetch(url,{headers:{Authorization:`Bearer ${token}`},cache:'no-store',signal:AbortSignal.timeout(5000)});
     if(!response.ok)return empty;
     const text=await response.text();if(new TextEncoder().encode(text).length>500000)return empty;
@@ -21,7 +22,7 @@ export async function loadLiveHomeNews() {
     try { issuerEvents=officialResultEvents(payload.officialResearch); } catch { /* Hold invalid issuer notes only. */ }
     try { numericalEvents=resultEvents(parseResultBriefs(payload.resultBriefs)); } catch { /* Hold invalid flashes only. */ }
     let news: InitialNewsSnapshot | null = null;
-    try { news = { data: buildPublicNews(payload), checkedAt: Date.now() }; } catch { /* Client refresh reports/retries unavailable news. */ }
+    try { news = { data: buildPublicNews(payload, { allowOriginalPreview: process.env.VERCEL_ENV === "preview" }), checkedAt: Date.now() }; } catch { /* Client refresh reports/retries unavailable news. */ }
     return { events: [...issuerEvents, ...numericalEvents], news };
   }catch{return empty;}
 }

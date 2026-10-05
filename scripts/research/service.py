@@ -49,6 +49,7 @@ import official_research_detail
 import watch_earnings
 import mu_earnings_measurement
 import web_push
+import original_preview_news
 
 
 # The preview deployment previously pinned the complete 22-company roster in
@@ -718,6 +719,10 @@ class AutomaticMonitor:
         while not self.stop_event.is_set():
             wake.clear()
             try:
+                original_preview_news.publish_once(self.db_path)
+            except Exception:
+                print("original-preview-publication-unavailable", flush=True)
+            try:
                 analyst_news.run_once(self.db_path)
             except Exception as exc:
                 log_publication_failure("analyst-news-publication-unavailable", exc)
@@ -900,18 +905,26 @@ class AutomaticMonitor:
         with stock_news.connect(self.db_path) as db:
             return news_drafts.save_manual(db, payload)
 
-    def public_news(self):
+    def public_news(self, *, original_preview=False):
         with stock_news.connect(self.db_path) as db:
             drafts = news_drafts.public_feed(db)
             reference = datetime.now(timezone.utc)
             # Reuse this request's verified headlines. Research enrichment used
             # to run the same bridge sync and publication scan a second time.
             official = signals.public_official_updates(db, reference=reference, limit=500)
-            return news_history.bounded({**drafts,
+            payload = news_history.bounded({**drafts,
                 **official_research.news_projection(db, reference, official),
                 "marketUpdates": x_market_news.public_feed(db),
                 "analystUpdates": analyst_news.public_feed(db),
                 "resultBriefs": market_results.public_feed(db)})
+            if original_preview:
+                try:
+                    return original_preview_news.preview_payload(db, payload, reference)
+                except Exception:
+                    # Optional test intake must never turn verified news into
+                    # an outage, and a read never manufactures a receipt.
+                    print("original-preview-read-unavailable", flush=True)
+            return payload
 
     def posts_queue(self, limit=20, published=False, offset=0):
         with editorial_posts.connect(self.db_path) as db:
@@ -2716,7 +2729,15 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(200, {"ok": True, **self.app.posts_queue(published=True)})
                 return
             if path == "/news":
-                self.send_json(200, self.app.public_news())
+                if parse_qs(parsed.query).get("originalPreview") == ["1"]:
+                    # The additive preview capability is always authenticated,
+                    # even where legacy /news permits a token-free local read.
+                    if not os.environ.get("RESEARCH_API_TOKEN", "").strip():
+                        self.send_json(401, {"ok": False, "error": "unauthorized"})
+                        return
+                    self.send_json(200, self.app.public_news(original_preview=True))
+                else:
+                    self.send_json(200, self.app.public_news())
                 return
             if path == "/price-targets":
                 self.send_json(200, self.app.public_price_targets())

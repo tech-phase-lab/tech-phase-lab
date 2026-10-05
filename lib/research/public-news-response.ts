@@ -4,9 +4,13 @@ import { mergeResultNews, resultNewsUpdate } from "./result-news.ts";
 import { muFlash, muLatest } from './mu-latest.ts';
 
 /** Build the same sanitized public feed for HTML and subsequent API refreshes. */
-export function buildPublicNews(value: unknown) {
+export function buildPublicNews(value: unknown, { allowOriginalPreview = false }: { allowOriginalPreview?: boolean } = {}) {
     const raw = value as Record<string, unknown>;
-    const payload = availableNewsPayload(raw);
+    // This is public preview content, not owner/member diagnostics. Never trust an
+    // upstream marker to enable it in production or unspecified environments.
+    const payload = availableNewsPayload({ ...raw,
+      originalPreviewItems: allowOriginalPreview ? raw?.originalPreviewItems : undefined,
+      originalPreviewWindow: allowOriginalPreview ? raw?.originalPreviewWindow : undefined });
     const issuerEvents: ReturnType<typeof officialResultEvents> = [];
     if (Array.isArray(raw.officialResearch) && raw.officialResearch.length <= 20) {
       for (const note of raw.officialResearch) {

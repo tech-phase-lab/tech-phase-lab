@@ -15,6 +15,7 @@ import { takeNewsStartup } from "@/lib/research/news-startup";
 import { publishNews } from "@/lib/research/news-snapshot";
 import FeedPagination from "./feed-pagination";
 import NewsStory from "./news-story";
+import OriginalPreviewCard from "./original-preview-card";
 let snapshot: { data: GeneralNewsFeed; at: string; time: number } | null = null;
 const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
 let lastFailedAt = 0;
@@ -82,7 +83,9 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
   const news = officialOnly ? [] : data?.items ?? [];
   const market = officialOnly ? [] : data?.marketUpdates ?? [];
   const analyst = officialOnly ? [] : data?.analystUpdates ?? [];
+  const originalPreview = officialOnly ? [] : data?.originalPreviewItems ?? [];
   const updates = [
+    ...originalPreview.map(item => ({ kind: "original-preview" as const, item, at: item.previewPublishedAt })),
     ...official.map(item => ({ kind: "official" as const, item, at: officialTime(item).at })),
     ...market.map(item => ({ kind: "market" as const, item, at: item.publishedAt })),
     ...analyst.map(item => ({ kind: "analyst" as const, item, at: item.publishedAt })),
@@ -97,8 +100,16 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
     : { positive: "Positive", negative: "Negative", mixed: "Mixed", neutral: "Neutral", uncertain: "Uncertain" };
   const confidenceLabels = lang === "ja" ? { high: "高", medium: "中", low: "低" } : { high: "High", medium: "Medium", low: "Low" };
   return <section ref={panel} className={styles.panel} aria-label={lang === "ja" ? "ニュース一覧" : "News list"}>
+    {!officialOnly && data?.originalPreviewWindow && <p className={styles.note}>{lang === "ja"
+      ? "原文テスト掲載: 直近7日・最大30件。"
+      : "Original test publications: recent 7 days, up to 30 items."}{data.originalPreviewWindow.omittedInScan > 0 && (lang === "ja"
+        ? ` 今回の取得範囲でほか${data.originalPreviewWindow.omittedInScan}件は省略。`
+        : ` ${data.originalPreviewWindow.omittedInScan} more items omitted from this scan.`)}{data.originalPreviewWindow.scanLimited && (lang === "ja"
+          ? " 取得範囲に上限があり、全件表示ではありません。"
+          : " Acquisition scan is limited; this is not a complete history.")}</p>}
     {!!visibleUpdates.length && <section aria-label={lang === "ja" ? "ニュース速報" : "News updates"}>
       <div className={styles.items}>{visibleUpdates.map(update => {
+        if (update.kind === "original-preview") return <OriginalPreviewCard key={update.item.id} item={update.item} lang={lang} />;
         if (update.kind === "analyst") {
           const item = update.item, display = analystNewsDisplay(item, lang);
           return <article key={`analyst-${item.id}`}><NewsStory label={display.label} title={display.title} body={display.body} lang={lang}

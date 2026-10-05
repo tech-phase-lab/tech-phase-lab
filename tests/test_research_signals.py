@@ -25,6 +25,11 @@ def feed(title="ClusterMAX review", body="Nebius and CoreWeave receive Platinum 
 
 class SignalTests(unittest.TestCase):
     def setUp(self):
+        # Discovery loads a separate service fixture and may replace signals
+        # in sys.modules. Bind this service to the exact mocked module so no
+        # worker can escape its synthetic fetch/reservation controls.
+        self.enterContext(patch.object(service, "signals", signals))
+        self.enterContext(patch.dict(sys.modules, {"signals": signals}))
         self.temp = tempfile.TemporaryDirectory()
         self.path = Path(self.temp.name) / "test.sqlite"
         self.db = monitor.connect(self.path)

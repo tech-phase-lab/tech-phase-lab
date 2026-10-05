@@ -3,6 +3,7 @@ import reportedNewsTickers from "./reported-news-tickers.json" with { type: "jso
 import { parseResultBriefs, type ResultBrief } from "./market-results.ts";
 import { parseAnalystUpdates, type AnalystUpdate } from "./analyst-news.ts";
 import { marketNewsDetail, type MarketNewsDetail } from "./market-news-detail.ts";
+import { ORIGINAL_PREVIEW_LIMIT, originalPreviewUrlKey, parseOriginalPreviewItems, parseOriginalPreviewWindow, type OriginalPreviewWindow, type OriginalPreviewItem } from "./original-preview-news.ts";
 type Syndication = { policy: "issuer-capacity-contract-v1" | "issuer-business-news-v1"; issuer: string; distributor: "GlobeNewswire" | "PR Newswire" };
 export const OFFICIAL_NEWS_HISTORY_LIMIT = 100;
 export const NEWS_BRIEF_TITLE_SUFFIXES = { ja: "（短報・詳細確認中）", en: " (brief; details awaiting review)" } as const;
@@ -19,7 +20,7 @@ export type OfficialNewsSource = { id: string; url: string; publisher: string; p
 export type OfficialNewsBrief = { version: 1; scope: "company" | "sector"; validFacts: number; pendingFacts: number };
 export type OfficialUpdate = CompactTitles & NewsBody & { brief?: OfficialNewsBrief; generalSource?: 1; newsCategory?: "policy" | "economic"; syndication?: Syndication; id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[] };
 export type MarketUpdate = CompactTitles & MarketNewsDetail & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
-export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; officialHistory?: OfficialHistory };
+export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; officialHistory?: OfficialHistory; originalPreviewItems?: OriginalPreviewItem[]; originalPreviewWindow?: OriginalPreviewWindow };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
   "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com", "www.bea.gov"]);
 
@@ -102,7 +103,7 @@ export function availableNewsPayload(value: unknown): GeneralNewsFeed {
   const raw = value as Record<string, unknown>;
   const base = publicNewsPayload({ ok: raw.ok, enabled: raw.enabled, items: [], officialHistory: raw.officialHistory });
   const accepted: Record<string, unknown[]> = {};
-  for (const [key, limit] of [["resultBriefs", 20], ["officialUpdates", OFFICIAL_NEWS_HISTORY_LIMIT], ["marketUpdates", 20], ["analystUpdates", 30], ["items", 30]] as const) {
+  for (const [key, limit] of [["resultBriefs", 20], ["officialUpdates", OFFICIAL_NEWS_HISTORY_LIMIT], ["marketUpdates", 20], ["analystUpdates", 30], ["items", 30], ["originalPreviewItems", ORIGINAL_PREVIEW_LIMIT]] as const) {
     if (raw[key] === undefined && key !== "items") continue;
     const rows = raw[key];
     accepted[key] = [];
@@ -115,7 +116,7 @@ export function availableNewsPayload(value: unknown): GeneralNewsFeed {
       } catch { /* Only the rejected article is omitted. */ }
     }
   }
-  return publicNewsPayload({ ...base, ...accepted });
+  return publicNewsPayload({ ...base, ...accepted, originalPreviewWindow: raw.originalPreviewWindow });
 }
 
 export function publicNewsPayload(value: unknown): GeneralNewsFeed {
@@ -269,7 +270,23 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       return items;
     }, []);
   }
-  if (!payload.enabled) return { ok: true, enabled: false, items: [], ...updates };
+  const withOriginalPreviews = (feed: GeneralNewsFeed): GeneralNewsFeed => {
+    if (payload.originalPreviewItems === undefined) return feed;
+    const verifiedUrls = new Set([
+      ...feed.items.map(item => item.url),
+      ...(feed.officialUpdates ?? []).flatMap(item => [item.url, ...(item.sources ?? []).map(source => source.url)]),
+      ...(feed.marketUpdates ?? []).map(item => item.url), ...(feed.resultBriefs ?? []).map(item => item.url),
+    ].map(originalPreviewUrlKey));
+    const ids = new Set<string>(), urls = new Set<string>();
+    const originalPreviewItems = parseOriginalPreviewItems(payload.originalPreviewItems).filter(item => {
+      const key = originalPreviewUrlKey(item.sourceUrl);
+      if (verifiedUrls.has(key) || ids.has(item.id) || urls.has(key)) return false;
+      ids.add(item.id); urls.add(key); return true;
+    });
+    const originalPreviewWindow = parseOriginalPreviewWindow(payload.originalPreviewWindow, originalPreviewItems.length);
+    return { ...feed, originalPreviewItems, ...(originalPreviewWindow ? { originalPreviewWindow } : {}) };
+  };
+  if (!payload.enabled) return withOriginalPreviews({ ok: true, enabled: false, items: [], ...updates });
   const seenIds = new Set<string>();
   const seenUrls = new Set<string>();
   const items = payload.items.map((raw): GeneralNewsItem => {
@@ -303,7 +320,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
     seenUrls.add(item.url);
     return true;
   });
-  return { ok: true, enabled: true, items, ...updates };
+  return withOriginalPreviews({ ok: true, enabled: true, items, ...updates });
 }
 
 // Apply the same wire-size target after frontend result merging can add copy.
@@ -321,6 +338,21 @@ export function boundedOfficialHistory(value: GeneralNewsFeed): GeneralNewsFeed 
   });
   const size = () => new TextEncoder().encode(JSON.stringify(result)).length;
   result.officialHistory = metadata(false);
+  if (value.originalPreviewItems) {
+    // The optional test lane gives way before any existing verified history.
+    result.originalPreviewItems = value.originalPreviewItems.slice(0, ORIGINAL_PREVIEW_LIMIT);
+    const refreshWindow = () => {
+      const window = parseOriginalPreviewWindow(value.originalPreviewWindow, result.originalPreviewItems!.length);
+      if (window) result.originalPreviewWindow = window;
+    };
+    refreshWindow();
+    while (size() > 450_000 && result.originalPreviewItems.length) {
+      result.originalPreviewItems.pop(); refreshWindow();
+    }
+    if (size() > 450_000) {
+      delete result.originalPreviewItems; delete result.originalPreviewWindow;
+    }
+  }
   while (size() > 450_000 && officialUpdates.length) {
     officialUpdates.pop(); result.officialHistory = metadata(true);
   }
