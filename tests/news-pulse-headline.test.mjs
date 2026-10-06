@@ -101,3 +101,12 @@ test('Treasury performance retains its full duration wording rather than suggest
   assert.equal(fitPulseHeadline(ja,measure(treasury.titleJa)-1,measure),'国債ニュース');
   assert.equal(fitPulseHeadline(en,measure(treasury.titleEn),measure),treasury.titleEn);
 });
+
+test('a bare category label is replaced by the clipped full headline; informative choices stay whole',async()=>{
+  const { pickPulseLine, isGenericPulseLabel }=await import('../lib/research/news-pulse-headline.ts');
+  const full='Micron to invest $200 billion in new U.S. memory fabs over the next two decades';
+  assert.deepEqual(pickPulseLine([full,'MU：企業ニュース','企業ニュース'],full,120,measure),{text:full,clipped:true});
+  assert.deepEqual(pickPulseLine(['Micron to invest $200B in U.S. fabs','Company news'],full,400,measure),{text:'Micron to invest $200B in U.S. fabs',clipped:false});
+  assert.deepEqual(pickPulseLine([full,'Company news'],full,2000,measure),{text:full,clipped:false});
+  assert.ok(isGenericPulseLabel('MU：企業ニュース')&&isGenericPulseLabel('NVDA: company news')&&!isGenericPulseLabel('企業ニュースを発表'));
+});

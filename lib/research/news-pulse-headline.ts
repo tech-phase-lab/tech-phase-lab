@@ -17,6 +17,23 @@ export function fitPulseHeadline(headlines: readonly string[], width: number, me
   return headlines.find(text => measure(text) <= width) ?? '';
 }
 
+const GENERIC_LABELS = /(?:^|[：:] ?)(?:企業ニュース|政策ニュース|経済ニュース|国債ニュース|原油ニュース|指数構成銘柄のニュース|アナリスト報道|[Cc]ompany news|Policy news|Economic news|Treasury news|Oil news|Index membership news|analyst report)$/;
+
+/** A category label carries no news by itself. */
+export function isGenericPulseLabel(text: string) {
+  return GENERIC_LABELS.test(text);
+}
+
+/** The strip line: a complete fitting headline, or else the full approved title
+ * clipped by the browser with a visible ellipsis (the full text stays in the
+ * title tooltip, the accessible name and the news list) instead of a bare label. */
+export function pickPulseLine(headlines: readonly string[], full: string, width: number, measure: (text: string) => number) {
+  const fitted = fitPulseHeadline(headlines, width, measure);
+  const title = full.trim();
+  if (title && !/[\r\n]/.test(title) && (!fitted || isGenericPulseLabel(fitted)) && title !== fitted) return { text: title, clipped: true };
+  return { text: fitted, clipped: false };
+}
+
 /** Only the exact published structured grammar can supply a shorter main claim.
  * A changed qualifier, period or negation falls back to its reported topic.
  * Full approved bodies remain unchanged in the lower news list. */

@@ -3,16 +3,18 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { Language } from "@/lib/research/data";
 import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";
 import { newsPulseItems } from "@/lib/research/news-pulse-items";
-import { fitPulseHeadline } from "@/lib/research/news-pulse-headline";
+import { isGenericPulseLabel, pickPulseLine } from "@/lib/research/news-pulse-headline";
 import { recentPublication, shortNewsTime } from "@/lib/research/news-time";
 import styles from "./research-pulse.module.css";
 const subscribe = (callback: () => void) => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
-function FittedHeadline({ headlines, lang, label }: { headlines: string[]; lang: Language; label: string }) {
+function FittedHeadline({ headlines, full, lang, label }: { headlines: string[]; full: string; lang: Language; label: string }) {
   const element = useRef<HTMLSpanElement>(null);
-  const key = headlines.join("\n");
-  const [selected, setSelected] = useState({ key: "", text: "" });
-  // Start with an honest compact topic until real font metrics are available.
-  const text = selected.key === key ? selected.text : headlines.at(-1) ?? "";
+  const key = [full, ...headlines].join("\n");
+  const [selected, setSelected] = useState({ key: "", text: "", clipped: false });
+  // Until real font metrics are available, show the shortest informative
+  // headline (clipped by CSS if needed) rather than a bare category label.
+  const initial = headlines.findLast(value => !isGenericPulseLabel(value)) ?? (full || headlines.at(-1) || "");
+  const { text, clipped } = selected.key === key ? selected : { text: initial, clipped: true };
   useEffect(() => {
     const target = element.current;
     const context = document.createElement("canvas").getContext("2d");
@@ -23,8 +25,9 @@ function FittedHeadline({ headlines, lang, label }: { headlines: string[]; lang:
       if (!active) return;
       const font = getComputedStyle(target);
       context.font = font.font || `${font.fontWeight} ${font.fontSize} ${font.fontFamily}`;
-      const next = fitPulseHeadline(key.split("\n"), Math.max(0, target.clientWidth - 4), value => context.measureText(value).width);
-      setSelected(previous => previous.key === key && previous.text === next ? previous : { key, text: next });
+      const [title, ...choices] = key.split("\n");
+      const next = pickPulseLine(choices, title, Math.max(0, target.clientWidth - 4), value => context.measureText(value).width);
+      setSelected(previous => previous.key === key && previous.text === next.text && previous.clipped === next.clipped ? previous : { key, ...next });
     };
     const request = () => {
       if (!active || frame) return;
@@ -35,7 +38,8 @@ function FittedHeadline({ headlines, lang, label }: { headlines: string[]; lang:
     void document.fonts.ready.then(request);
     return () => { active = false; observer.disconnect(); if (frame) cancelAnimationFrame(frame); };
   }, [key]);
-  return <span ref={element} className={styles.headline} lang={lang} aria-label={`${label}: ${text}`}>{text}</span>;
+  return <span ref={element} className={clipped ? `${styles.headline} ${styles.clipped}` : styles.headline} lang={lang}
+    title={clipped ? text : undefined} aria-label={`${label}: ${text}`}>{text}</span>;
 }
 
 export default function ResearchPulse({ lang }: { lang: Language }) {
@@ -71,7 +75,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     onClickCapture={event => { if (suppressClick.current) { event.preventDefault(); event.stopPropagation(); suppressClick.current = false; } }}
     onKeyDown={event => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); move(event.key === "ArrowRight" ? 1 : -1); } }}
     onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)} onFocusCapture={() => setInteracting(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false); }}>
-    <FittedHeadline key={item.id} headlines={item.headlines} lang={lang} label={item.ticker} />
+    <FittedHeadline key={item.id} headlines={item.headlines} full={item.title} lang={lang} label={item.ticker} />
     <time className={styles.clock} dateTime={item.at} title={timestamp} aria-label={`${item.kind === "observed" ? (ja ? "取得 " : "Found ") : ""}${timestamp}`}>
       {item.kind === "observed" ? (ja ? "取得 " : "Found ") : ""}<span className={styles.fullTime}>{timestamp}</span><span className={styles.shortTime} aria-hidden="true">{timestamp.replace(/ JST$/, "")}</span>{fresh && <b className={styles.fresh}>NEW</b>}
     </time>

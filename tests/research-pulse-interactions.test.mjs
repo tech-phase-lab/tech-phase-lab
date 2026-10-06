@@ -29,7 +29,7 @@ source=source.replace('import { useEffect, useRef, useState, useSyncExternalStor
 source=source.replace('import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";',
   'const newsSnapshot=()=>runtime.feed;const serverNewsSnapshot=newsSnapshot;const subscribeNews=()=>()=>{};');
 for(const name of ['news-pulse-items','news-pulse-headline','news-time'])source=source.replace(`"@/lib/research/${name}"`,JSON.stringify(new URL(`../lib/research/${name}.ts`,import.meta.url).href));
-source=source.replace('import styles from "./research-pulse.module.css";','const styles={pulse:"pulse",headline:"headline",clock:"clock",fullTime:"fullTime",shortTime:"shortTime",fresh:"fresh",progress:"progress"};');
+source=source.replace('import styles from "./research-pulse.module.css";','const styles={pulse:"pulse",headline:"headline",clipped:"clipped",clock:"clock",fullTime:"fullTime",shortTime:"shortTime",fresh:"fresh",progress:"progress"};');
 source+='\nexport { FittedHeadline };';
 const compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext}}).outputText.replace('"react/jsx-runtime"',JSON.stringify(pathToFileURL(require.resolve('react/jsx-runtime')).href));
 const {default:ResearchPulse,FittedHeadline}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));

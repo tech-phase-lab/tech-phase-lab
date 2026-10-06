@@ -61,6 +61,28 @@ class MeaningValidationTests(unittest.TestCase):
     def test_whether_or_not_is_not_a_negation(self):
         validation.validate_negation('採用するかどうかを検討', 'Company weighs whether or not to adopt the chip')
 
+    def test_summary_may_leave_out_a_negated_side_clause(self):
+        source = 'Brent crude rises 2% as OPEC+ says it will not raise output'
+        validation.validate_negation('ブレント原油が2%上昇', source)
+        validation.validate_negation('Brent crude rises 2%', source)
+        validation.validate_negation('米10年債利回りが再び急上昇',
+                                     'U.S. 10-Year Treasury Yield rising sharply again. Not seen since 2007.')
+
+    def test_summary_that_restates_a_negated_clause_keeps_the_negation(self):
+        source = 'Brent crude rises 2% as OPEC+ says it will not raise output'
+        with self.assertRaisesRegex(ValueError, '^changed-negation$'):
+            validation.validate_negation('OPEC+ says it will raise output', source)
+        with self.assertRaisesRegex(ValueError, '^changed-negation$'):
+            validation.validate_negation('OPEC+が増産すると表明', 'OPEC+ says it will not raise output')
+        validation.validate_negation('OPEC+ will not raise output', source)
+
+    def test_names_spaced_differently_are_the_same_name(self):
+        validation.validate_names('S&P500に採用', 'Added to the S&P 500 index')
+        with self.assertRaisesRegex(ValueError, '^changed-names$'):
+            validation.validate_names('S&P500に採用', 'Added to the index')
+        with self.assertRaisesRegex(ValueError, '^changed-names$'):
+            validation.validate_names('Armが上昇', 'Pharma stocks rise')
+
     def test_every_lane_recognizes_the_new_failure_codes(self):
         import general_source_news, headline_translation, x_market_news
         for code in validation.MEANING_FAILURES:

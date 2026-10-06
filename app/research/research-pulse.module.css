@@ -1,7 +1,9 @@
 .pulse{position:relative;display:flex;flex-wrap:nowrap;align-items:center;gap:8px;min-height:44px;padding:6px 10px;margin:0 0 24px;border-top:1px solid #28443e;border-bottom:1px solid #28443e;background:linear-gradient(100deg,#10241f88,transparent);touch-action:pan-y pinch-zoom}
 /* One row including the clock. Choose a complete headline that fits the actual
-   font/space; no paragraph fallback, character slicing, ellipsis or expansion. */
+   font/space. When only a category label would fit, the full headline is shown
+   with a visible ellipsis instead (full text in the tooltip and news list). */
 .headline{display:block;min-width:0;flex:1;color:#dae7e5;font-size:12px;line-height:18px;white-space:nowrap;overflow:hidden;animation:enter .5s ease-out}
+.clipped{text-overflow:ellipsis}
 .clock{display:inline-flex;flex:none;align-items:center;white-space:nowrap;font-size:9px;line-height:14px;color:#93a6ad}
 .shortTime{display:none}
 .pulse button{flex:none;border:0;padding:0;background:none;color:#a4c5ba;width:28px;min-height:28px;cursor:pointer}

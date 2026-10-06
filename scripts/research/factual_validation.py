@@ -589,9 +589,54 @@ def negated(text, broad=False):
     return _has((NEGATION_EN_BROAD + '|' + NEGATION_JA_BROAD) if broad else (NEGATION_EN + '|' + NEGATION_JA), text)
 
 
+CONTENT_WORD = re.compile(r"[a-z][a-z0-9+&'’-]*[a-z0-9+]|[0-9][0-9.,%]*")
+FUNCTION_WORDS = frozenset({
+    'the', 'a', 'an', 'it', 'its', 'is', 'are', 'was', 'were', 'be', 'been', 'will', 'would', 'to', 'of', 'in',
+    'on', 'at', 'for', 'by', 'with', 'from', 'that', 'this', 'has', 'have', 'had', 'do', 'does', 'did', 'not',
+    'never', 'no', 'longer', 'cannot', 'can', 'yet', 'so', 'than', 'they', 'we', 'he', 'she', 'his', 'her',
+    'their', 'our', 'us', 'also', 'any', 'into', 'over',
+})
+NEGATED_CLAUSE_COVERAGE = 0.5
+JAPANESE_CHARACTER = re.compile(r'[぀-ヿ一-鿿]')
+# One Japanese character carries roughly as much as two English characters.
+# Japanese copy whose weighted length is well under the source's is a summary.
+TRANSLATION_LENGTH_RATIO = 2.0
+
+
+def _weighted_length(text):
+    return len(text) + len(JAPANESE_CHARACTER.findall(text))
+
+
+def _content_words(text):
+    return {word for word in CONTENT_WORD.findall(text.lower()) if word not in FUNCTION_WORDS}
+
+
+def _covers_negated_source(text, evidence):
+    """Whether the copy restates a negated part of the source (so it must keep the negation).
+
+    A one-line summary may leave out a negated side clause entirely ("Brent rises
+    2% as OPEC+ says it will not raise output" -> "Brent rises 2%"). Leaving it
+    out is not a reversal; restating it without the negation is.
+    """
+    if JAPANESE_CHARACTER.search(text) and not JAPANESE_CHARACTER.search(evidence):
+        # Cross-language: compare only translation-length copy. Summary-length
+        # Japanese is checked against its English counterpart in validate_pair.
+        return _weighted_length(evidence) <= TRANSLATION_LENGTH_RATIO * _weighted_length(text)
+    if JAPANESE_CHARACTER.search(text) or JAPANESE_CHARACTER.search(evidence):
+        return True
+    copy = _content_words(text)
+    for clause in re.split(CLAUSE_BOUNDARY, re.sub(WHETHER_OR_NOT, ' ', evidence, flags=re.I), flags=re.I):
+        if not clause or not negated(clause):
+            continue
+        words = _content_words(clause)
+        if len(words) <= 1 or len(words & copy) >= max(2, NEGATED_CLAUSE_COVERAGE * len(words)):
+            return True
+    return False
+
+
 def validate_negation(text, evidence):
     """A negated source keeps a negation; an affirmative source gains none."""
-    if negated(evidence) and not negated(text, broad=True):
+    if negated(evidence) and not negated(text, broad=True) and _covers_negated_source(text, evidence):
         raise ValueError('changed-negation')
     if negated(text) and not negated(evidence, broad=True):
         raise ValueError('changed-negation')
@@ -632,8 +677,18 @@ def _provider_name_groups():
 NAME_GROUPS = _provider_name_groups()
 
 
+def _compact(text):
+    return re.sub(r'[^a-z0-9&+]', '', text)
+
+
 def _mentioned(word, english):
-    return bool(re.search(r'(?<![a-z])' + re.escape(word) + r'(?![a-z0-9])', english))
+    if re.search(r'(?<![a-z])' + re.escape(word) + r'(?![a-z0-9])', english):
+        return True
+    # The same name spaced or hyphenated differently (S&P500 / S&P 500, Wi-Fi / WiFi).
+    # Only for names with digits or symbols, so a short word never matches
+    # inside an unrelated longer one.
+    compact = _compact(word)
+    return len(compact) >= 3 and not word.isalpha() and compact in _compact(english)
 
 
 def validate_names(ja, en):
