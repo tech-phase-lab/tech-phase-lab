@@ -273,7 +273,7 @@ class ContentRepairTests(unittest.TestCase):
         for name, rows in unchanged.items():
             self.assertEqual(self.rows(path, name), rows, name)
         self.assertIsNone(self.claim(path))
-        ordinary = NOW + timedelta(seconds=research.headline_translation.retry_delay(7))
+        ordinary = NOW + timedelta(seconds=research.headline_translation.retry_delay(7, 'unsupported-number'))
         self.assertIsNotNone(self.claim(path, reference=ordinary))
         self.assertEqual(len(self.rows(path, 'official_research_content_repairs')), 1)
 

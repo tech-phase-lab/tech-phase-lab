@@ -2825,6 +2825,7 @@ class Handler(BaseHTTPRequestHandler):
         except Exception:
             state["modelBudget"] = {"error": "model-budget-unavailable"}
         state["newsTiming"] = self.app.news_timing()
+        state["recentSummaryRejections"] = pipeline_status.recent_rejections()
         try:
             state["pulseTitles"] = pipeline_status.pulse_titles_status(self.app.db_path)
         except Exception:

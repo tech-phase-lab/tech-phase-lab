@@ -28,12 +28,17 @@ VALIDATION_FAILURES = frozenset({
 # Three quick tries cover most fixable rejections; after that, back off so
 # repeatedly rejected articles cannot use up the shared daily model budget.
 VALIDATION_RETRY_SECONDS = (15, 120, 1800, 3600)
+VALIDATION_DAILY_RETRY_SECONDS = 86400
 
 
 def retry_delay(attempts, kind=None):
     """Retry schedule by failure kind; never permanently abandon a job.
 
-    Rejected copy: 15 s, 2 min, 30 min, 1 h, then up to 6 h.
+    Rejected copy: 15 s, 2 min, 30 min, 1 h, then once a day. Copy that the
+    checks rejected four times rarely passes on a fifth try soon after, and
+    retrying every few hours spent most of the shared daily model budget
+    (staging: 276 of 400 calls were rejected retries). A changed source
+    revision starts a new job at once.
     Provider outage/timeout: 1, 2, 4... minutes, at most 30 minutes.
     Authentication, rate limits and unknown kinds keep the original slow
     schedule (1, 2 minutes, then 1 hour growing to 6 hours).
@@ -45,7 +50,7 @@ def retry_delay(attempts, kind=None):
     if kind and not kind.startswith('provider-'):
         if attempts <= len(VALIDATION_RETRY_SECONDS):
             return VALIDATION_RETRY_SECONDS[attempts - 1]
-        return min(3600 * 2 ** min(attempts - len(VALIDATION_RETRY_SECONDS), 3), 21600)
+        return VALIDATION_DAILY_RETRY_SECONDS
     return min(60 * 2 ** min(max(attempts - 1, 0), 10), 300) if attempts < FAST_RETRY_ATTEMPTS else min(3600 * 2 ** min(attempts - FAST_RETRY_ATTEMPTS, 3), 21600)
 
 MAX_HEADLINE_CHARS = 180
