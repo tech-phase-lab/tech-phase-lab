@@ -108,3 +108,45 @@ class ValidatorIdiomTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class StripTitleCaseTests(unittest.TestCase):
+    def test_realistic_short_titles(self):
+        cases = (
+            ('エヌビディア、オラクルがテキサス州の新データセンターにBlackwell GPUを5万基導入すると発表',
+             'NVIDIA announces Oracle will deploy 50,000 Blackwell GPUs in new Texas data centers',
+             'オラクル、GPU5万基を導入へ', 'Oracle will deploy 50,000 Blackwell GPUs', None),
+            ('マイクロン、第4四半期売上高が113.2億ドルとなり過去最高を更新',
+             'Micron reports record fiscal Q4 revenue of $11.32 billion',
+             'マイクロン、売上高113.2億ドルで最高', 'Micron posts record $11.32B revenue', None),
+            ('報道：アップル、AIスタートアップの買収を検討', 'Apple is reportedly considering acquiring an AI startup',
+             'アップルがAI企業買収を検討', 'Apple weighs buying AI startup', 'changed-qualifier'),
+            ('米10年債利回りが4.8%に上昇、2007年以来の高水準', 'U.S. 10-year Treasury yield rises to 4.8%, highest since 2007',
+             '米10年債利回り4.8%、07年来高水準', 'US 10-year yield hits 4.8%, highest since 2007', 'unsupported-number'),
+        )
+        for ja, en, short_ja, short_en, code in cases:
+            with self.subTest(short_ja=short_ja):
+                if code is None:
+                    pulse_titles.validate({'shortJa': short_ja, 'shortEn': short_en}, ja, en)
+                else:
+                    with self.assertRaisesRegex(ValueError, '^' + code + '$'):
+                        pulse_titles.validate({'shortJa': short_ja, 'shortEn': short_en}, ja, en)
+
+    def test_unit_written_against_a_number_is_not_a_new_name(self):
+        factual_validation.validate_names('GPU5万基を導入', 'deploys 50,000 GPUs')
+        with self.assertRaises(ValueError):
+            factual_validation.validate_names('B200を出荷', 'Ships GPUs')
+
+    def test_health_reports_strip_title_jobs(self):
+        import pipeline_status
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'db.sqlite'
+            self.assertEqual(pipeline_status.pulse_titles_status(path), {'jobs': 0})
+            with headline_translation.connect(path) as db, db:
+                pulse_titles.schema(db)
+                db.execute("INSERT INTO pulse_title_jobs VALUES('a','r',1,0,'l','retry','changed-names')")
+                db.execute("INSERT INTO pulse_title_jobs VALUES('b','r',1,0,'l','done',NULL)")
+                db.execute("INSERT INTO pulse_titles VALUES('b','r','{}','now')")
+            self.assertEqual(pipeline_status.pulse_titles_status(path),
+                             {'jobs': 2, 'states': {'retry': 1, 'done': 1}, 'stored': 1,
+                              'failureKinds': {'changed-names': 1}})

@@ -93,7 +93,7 @@ SQLITE_FAILURE_NAMES = {
 # Worker results after which more queued work may be immediately runnable.
 PRODUCTIVE_RESULTS = frozenset({"done", "stale"})
 # A feed nobody requested for this long is no longer refreshed in the background.
-NEWS_REFRESH_IDLE_SECONDS = 600
+NEWS_REFRESH_IDLE_SECONDS = 86400
 
 
 def release_interrupted_jobs(db_path, now=None):
@@ -116,8 +116,8 @@ def release_interrupted_jobs(db_path, now=None):
 
 # Bump when a validator is relaxed: jobs it rejected with these codes are
 # retried once now instead of waiting out their backoff (up to 6 hours).
-RELAXED_CHECKS = ("meaning-2", ("changed-negation", "changed-names"))
-VALIDATION_JOB_TABLES = ("signal_headline_translation_jobs", "x_market_jobs", "preview_summary_jobs")
+RELAXED_CHECKS = ("validators-3", tuple(sorted(pulse_titles.VALIDATION_FAILURES)))
+VALIDATION_JOB_TABLES = ("signal_headline_translation_jobs", "x_market_jobs", "preview_summary_jobs", "pulse_title_jobs")
 
 
 def release_relaxed_rejections(db_path, now=None, revision=RELAXED_CHECKS):
@@ -552,11 +552,11 @@ class AutomaticMonitor:
         self.news_cache_lock = threading.Lock()
         self.news_cache = {}
         # A background refresher recomputes each requested feed within about a
-        # second of a committed write, so most visitors find it ready. Serving
-        # the previous result while it recomputes (STALE_SECONDS > 0) is faster
-        # still, but a withdrawal could stay visible for that long, so it is off
-        # unless the owner chooses it.
+        # second of a committed write. STALE_SECONDS > 0 would also serve the
+        # previous result while it recomputes; it is off because a withdrawn
+        # story could then stay visible that long (owner decision).
         self.news_stale_seconds = positive_int("RESEARCH_NEWS_STALE_SECONDS", 0, 0)
+        self.news_compute_ms = []
         self.news_requested = {}
         self.body_probe_urls = set()
         self.body_probe_eligible_at = {}
@@ -842,7 +842,21 @@ class AutomaticMonitor:
             started = time.monotonic()
             payload = self.compute_public_news(original_preview=key)
             self.news_cache[key] = (started, time.monotonic(), self.database_version(), payload)
+            self.record_news_compute(started)
         return True
+
+    def record_news_compute(self, started):
+        samples = getattr(self, "news_compute_ms", None)
+        if samples is not None:
+            samples.append(round((time.monotonic() - started) * 1000))
+            del samples[:-50]
+
+    def news_timing(self):
+        samples = sorted(getattr(self, "news_compute_ms", []) or [])
+        if not samples:
+            return {"samples": 0}
+        return {"samples": len(samples), "computeP50Ms": samples[len(samples) // 2],
+                "computeMaxMs": samples[-1], "staleSeconds": getattr(self, "news_stale_seconds", 0)}
 
     def run_results(self):
         # Numerical flashes must not wait for an LLM or require an API key.
@@ -1092,6 +1106,7 @@ class AutomaticMonitor:
             payload = self.compute_public_news(original_preview=original_preview)
             # Recorded after the computation, which may itself commit a write.
             self.news_cache[key] = (started, time.monotonic(), self.database_version(), payload)
+            self.record_news_compute(started)
             return payload
 
     def database_version(self):
@@ -2837,6 +2852,11 @@ class Handler(BaseHTTPRequestHandler):
                     state["newsPipeline"]["modelBudget"] = pipeline_status.model_budget(self.app.db_path)
                 except Exception:
                     state["newsPipeline"]["modelBudget"] = {"error": "model-budget-unavailable"}
+                state["newsPipeline"]["newsTiming"] = self.app.news_timing()
+                try:
+                    state["newsPipeline"]["pulseTitles"] = pipeline_status.pulse_titles_status(self.app.db_path)
+                except Exception:
+                    state["newsPipeline"]["pulseTitles"] = {"error": "pulse-titles-unavailable"}
             self.send_json(200 if path == "/health" or state["ready"] else 503, state)
             return
         if path == "/admin/pipeline":

@@ -706,6 +706,9 @@ def validate_names(ja, en):
         word = token.lower().rstrip('.')
         if word in NAME_ALLOWANCE or re.fullmatch(r'(?:fy|q[1-4]|h[12])\d*', word):
             continue
+        # A unit or abbreviation written against its number (GPU5万基, AI2社).
+        if re.fullmatch(r'[a-z]{2,}\d+', word) and re.sub(r'\d+$', '', word) in NAME_ALLOWANCE:
+            continue
         if _mentioned(word, english):
             continue
         if any(word in group and any(_mentioned(alias, english) for alias in group) for group in NAME_GROUPS):
