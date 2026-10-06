@@ -109,7 +109,10 @@ def diagnose(result, source):
             try:
                 check(value.strip(), source)
             except ValueError as exc:
-                return {'field': key, 'check': name, 'code': str(exc)}
+                detail = {'field': key, 'check': name, 'code': str(exc)}
+                if name == 'numbers':
+                    detail['values'] = unsupported_values(value.strip(), source)
+                return detail
     for ja, en in (('titleJa', 'titleEn'), ('bodyJa', 'bodyEn')):
         try:
             factual_validation.validate_pair(result[ja], result[en], exact_counts=ja == 'titleJa')
@@ -121,6 +124,19 @@ def diagnose(result, source):
         except ValueError:
             return {'field': ja, 'check': 'names', 'name': factual_validation.LAST_NAME_REJECTION[0]}
     return {'field': None, 'check': 'other'}
+
+
+def unsupported_values(text, source):
+    """The numbers (and dates) in a copy field that the source does not contain."""
+    have = set(factual_validation.numeric_values(source))
+    extra = [str(value) + ('%' if kind == 'percent' else '') for value, kind in
+             set(factual_validation.numeric_values(text)) - have]
+    extra += ['quarter ' + str(q) for q in set(factual_validation.quarter_values(text))
+              - set(factual_validation.quarter_values(source))]
+    dates = factual_validation.dates(source)
+    extra += ['date %s-%s-%s' % d for d in factual_validation.dates(text)
+              if not any(d[1] == s[1] and d[2] == s[2] and (d[0] is None or d[0] == s[0]) for s in dates)]
+    return sorted(extra)[:6]
 
 
 def record_rejection(entry):
