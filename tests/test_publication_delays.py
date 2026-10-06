@@ -138,6 +138,32 @@ class NewsCacheTests(unittest.TestCase):
         app.db_path.write_bytes(b'v3')
         self.assertEqual(app.public_news(original_preview=True), {'n': 3})
 
+    def test_background_rebuilds_are_throttled_and_push_reads_the_cache(self):
+        app = service.AutomaticMonitor.__new__(service.AutomaticMonitor)
+        app.news_cache_seconds, app.news_cache_lock, app.news_cache = 2, threading.Lock(), {}
+        app.news_stale_seconds, app.news_requested = 20, {}
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        app.db_path = Path(tmp.name) / 'db.sqlite'
+        app.db_path.write_bytes(b'v1')
+        calls = []
+
+        def compute(original_preview=False):
+            calls.append(original_preview)
+            return {'n': len(calls)}
+        app.compute_public_news = compute
+        app.public_news(original_preview=True)
+        app.db_path.write_bytes(b'v2')
+        # A write right after a rebuild waits for the minimum interval...
+        self.assertFalse(app.refresh_news(True, min_interval=10))
+        # ...and is picked up once it has passed.
+        started, finished, version, payload = app.news_cache[True]
+        app.news_cache[True] = (started - 11, finished - 11, version, payload)
+        self.assertTrue(app.refresh_news(True, min_interval=10))
+        # The push detector reuses the latest finished feed without rebuilding.
+        self.assertEqual(app.latest_news(max_age=3), {'n': 2})
+        self.assertEqual(len(calls), 2)
+
 
 class PipelineStageTests(unittest.TestCase):
     setUp = fixtures.HeadlineTranslationTests.setUp
