@@ -94,6 +94,9 @@ class NewsCacheTests(unittest.TestCase):
         self.assertEqual({result['n'] for result in results}, {1})
         app.public_news(original_preview=True)
         self.assertEqual(calls, [False, True])
+        # The background refresher recomputes only after a write.
+        self.assertFalse(app.refresh_news(True))
+        self.assertEqual(calls, [False, True])
         # The push detector may reuse a slightly older result.
         app.public_news(max_age=60)
         self.assertEqual(calls, [False, True])
@@ -104,6 +107,36 @@ class NewsCacheTests(unittest.TestCase):
         app.news_cache_seconds = 0
         app.public_news()
         self.assertEqual(len(calls), 4)
+
+    def test_optional_stale_serving_refreshes_in_background_with_a_hard_limit(self):
+        app = service.AutomaticMonitor.__new__(service.AutomaticMonitor)
+        app.news_cache_seconds, app.news_cache_lock, app.news_cache = 2, threading.Lock(), {}
+        # Off by default (a withdrawal could stay visible this long); tested as configured.
+        app.news_stale_seconds, app.news_requested = 10, {}
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        app.db_path = Path(tmp.name) / 'db.sqlite'
+        app.db_path.write_bytes(b'v1')
+        calls = []
+
+        def compute(original_preview=False):
+            calls.append(original_preview)
+            return {'n': len(calls)}
+        app.compute_public_news = compute
+        self.assertEqual(app.public_news(original_preview=True), {'n': 1})
+        app.db_path.write_bytes(b'v2 withdrawn')
+        # The visitor is not kept waiting for a recomputation...
+        self.assertEqual(app.public_news(original_preview=True), {'n': 1})
+        self.assertIn(True, app.news_requested)
+        # ...the refresher picks up the write, and only once.
+        self.assertTrue(app.refresh_news(True))
+        self.assertFalse(app.refresh_news(True))
+        self.assertEqual(app.public_news(original_preview=True), {'n': 2})
+        # If the refresher stops, an old result is never served past the limit.
+        started, finished, version, payload = app.news_cache[True]
+        app.news_cache[True] = (started - 60, finished - 60, version, payload)
+        app.db_path.write_bytes(b'v3')
+        self.assertEqual(app.public_news(original_preview=True), {'n': 3})
 
 
 class PipelineStageTests(unittest.TestCase):

@@ -110,3 +110,10 @@ test('a bare category label is replaced by the clipped full headline; informativ
   assert.deepEqual(pickPulseLine([full,'Company news'],full,2000,measure),{text:full,clipped:false});
   assert.ok(isGenericPulseLabel('MU：企業ニュース')&&isGenericPulseLabel('NVDA: company news')&&!isGenericPulseLabel('企業ニュースを発表'));
 });
+
+test('the Japanese strip skips items still awaiting their reviewed translation',()=>{
+  const pending={...buyback,id:'2001',title:'Nvidia expands its partnership with a cloud provider',translationJa:undefined,bodyJa:undefined,publishedAt:'2026-10-05T00:00:00.000Z'};
+  const ja=newsPulseItems({...feed,officialUpdates:[pending,...feed.officialUpdates]},'ja');
+  assert.ok(ja.length>0&&ja.every(item=>item.id!=='official-2001'));
+  assert.ok(newsPulseItems({...feed,officialUpdates:[pending]},'en').some(item=>item.id==='official-2001'));
+});
