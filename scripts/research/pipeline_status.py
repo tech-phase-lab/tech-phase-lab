@@ -214,3 +214,19 @@ def model_budget(path, env=None, now=None):
                              (now - 86400, preview_summaries.LEDGER_PREFIX + '%')).fetchone()[0]
     return {'enabled': True, 'dailyLimit': limit, 'usedLast24h': used, 'exhausted': used >= limit,
             'previewUsedLast24h': preview, 'previewLimit': max(1, int(limit * preview_summaries.BUDGET_SHARE))}
+
+
+def pulse_titles_status(path, now=None):
+    """Top-strip one-line titles: job states and failure codes (counts only)."""
+    now = time.time() if now is None else now
+    with headline_translation.connect(path) as db:
+        if not db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='pulse_title_jobs'").fetchone():
+            return {'jobs': 0}
+        states, kinds = {}, {}
+        for row in db.execute('SELECT state,failure_kind,next_at FROM pulse_title_jobs'):
+            state = 'translating' if row['state'] == 'running' and row['next_at'] > now else row['state']
+            states[state] = states.get(state, 0) + 1
+            if row['state'] == 'retry' and row['failure_kind']:
+                kinds[row['failure_kind']] = kinds.get(row['failure_kind'], 0) + 1
+        stored = db.execute('SELECT COUNT(*) FROM pulse_titles').fetchone()[0]
+    return {'jobs': sum(states.values()), 'states': states, 'stored': stored, 'failureKinds': kinds}
