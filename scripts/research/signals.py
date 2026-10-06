@@ -1247,7 +1247,7 @@ PRICE_TARGET_SUBJECT = re.compile(
     r"(?:downgraded|upgraded|initiated|reiterated|price target|PT)\b", re.I,
 )
 PRICE_TARGET_FIRM = re.compile(
-    r"(?:at|by) (BofA|Bank of America|BNP Paribas|Citi(?:group)?|Citizens|KeyBanc|Stifel|UBS|J\.?P\.?\s?Morgan|Seaport Research|Morgan Stanley|Goldman Sachs|Barclays|Wells Fargo|Deutsche Bank|Jefferies|Mizuho|Baird|Piper Sandler|RBC Capital|RBC|Oppenheimer|Needham|Cantor Fitzgerald|Cantor|Wedbush|Truist|TD Cowen|Raymond James|Rosenblatt|Evercore ISI|Evercore|Bernstein|B. Riley|DA Davidson|Loop Capital|Susquehanna|BMO Capital|BMO|BTIG|Monness Crespi)\b", re.I,
+    r"(?:at|by) (BofA|Bank of America|BNP Paribas|Citi(?:group)?|Citizens|KeyBanc|Stifel|UBS|J\.?P\.?\s?Morgan|Seaport Research|Morgan Stanley|Goldman Sachs|Barclays|Wells Fargo|Deutsche Bank|Jefferies|Mizuho|Baird|Piper Sandler|RBC Capital|RBC|Oppenheimer|Needham|Cantor Fitzgerald|Cantor|Wedbush|Truist|TD Cowen|Raymond James|Rosenblatt|Evercore ISI|Evercore|Bernstein|B. Riley|DA Davidson|Loop Capital|Susquehanna|BMO Capital|BMO|BTIG|Monness Crespi|HSBC|Nomura|Macquarie|Guggenheim|Northland|Craig-Hallum|William Blair|Wolfe Research|Wolfe|Canaccord Genuity|Canaccord|Rothschild & Co Redburn|Rothschild Redburn|Redburn|Melius Research|Melius|Arete Research|Arete|New Street Research|New Street|Roth Capital|Roth MKM|Roth|H\.?\s?C\.? Wainwright|Benchmark|Scotiabank|Lake Street|Ladenburg Thalmann|Maxim Group|Daiwa|KGI Securities|Erste Group|Morningstar|Argus|CFRA|Stephens|Telsey Advisory|Telsey|Tigress Financial|Seaport|Goldman|Itau BBA|Westpark Capital)\b", re.I,
 )
 
 
@@ -1275,6 +1275,56 @@ PRICE_TARGET_UPGRADE_PREFIX = re.compile(
     r"\$\d+(?:\.\d+)?\s+from\s*\$\d+(?:\.\d+)?)", re.I,
 )
 
+
+
+# Opening-actor form, e.g. "Morgan Stanley raises $NVDA price target to $210
+# from $200" or "$MSTR: TD Cowen cuts PT to $500 from $600". It is rewritten
+# into the existing "by <firm>: $T PT raised to ... from ..." grammar so every
+# later gate (firm count, subject, direction, values) still applies unchanged.
+_TARGET_NUMBER = r"\$(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)"
+_TARGET_VERBS = {"raises": "raised", "lifts": "raised", "boosts": "raised", "hikes": "raised",
+                 "increases": "raised", "lowers": "lowered", "cuts": "lowered", "trims": "lowered",
+                 "reduces": "lowered"}
+_TARGET_LABEL = r"(?:price target|target price|PT)"
+_TARGET_ACTOR = (r"(?P<firm>" + PRICE_TARGET_FIRM.pattern.removeprefix(r"(?:at|by) ")[1:-3] + r")\b"
+                 r"(?:\s+analyst(?:\s+[A-Z][A-Za-z.'’-]*){1,3})?\s+"
+                 r"(?P<verb>" + "|".join(_TARGET_VERBS) + r")\s+")
+_TARGET_ACTOR_NAMES = r"\b" + PRICE_TARGET_FIRM.pattern.removeprefix(r"(?:at|by) ")
+PRICE_TARGET_ACTOR_FIRST = re.compile(
+    r"^\s*" + _TARGET_ACTOR + r"(?:(?:its|the)\s+)?"
+    r"(?:(?P<pre>" + _TARGET_LABEL + r")\s+on\s+)?(?:[A-Za-z][A-Za-z0-9 .&'’()-]{0,60}?\s+)?"
+    r"\$(?P<ticker>[A-Z]{1,5}(?:[.-][A-Z])?)(?:['’]s)?\s+"
+    r"(?:(?P<post>" + _TARGET_LABEL + r")\s+)?to\s*" + _TARGET_NUMBER + r"\s+from\s*" + _TARGET_NUMBER,
+    re.I,
+)
+PRICE_TARGET_TICKER_ACTOR = re.compile(
+    r"^\s*\$(?P<ticker>[A-Z]{1,5}(?:[.-][A-Z])?)\s*[:|–—-]?\s*" + _TARGET_ACTOR +
+    r"(?:(?:its|the)\s+)?(?P<post>" + _TARGET_LABEL + r")\s+to\s*" + _TARGET_NUMBER +
+    r"\s+from\s*" + _TARGET_NUMBER, re.I,
+)
+
+
+def actor_first_target(text):
+    """Rewrite one opening broker-actor target sentence; otherwise unchanged."""
+    if not isinstance(text, str):
+        return text
+    stripped = re.sub(r"^[^A-Za-z0-9$]+", "", text)
+    for pattern in (PRICE_TARGET_ACTOR_FIRST, PRICE_TARGET_TICKER_ACTOR):
+        match = pattern.match(stripped)
+        if not match:
+            continue
+        groups = match.groupdict()
+        if pattern is PRICE_TARGET_ACTOR_FIRST and bool(groups["pre"]) == bool(groups["post"]):
+            return text
+        # A second named broker anywhere else leaves the actor ambiguous.
+        if re.search(_TARGET_ACTOR_NAMES, stripped[match.end():], re.I):
+            return text
+        new, old = (value.replace(",", "") for value in match.groups()[-2:])
+        verb = _TARGET_VERBS[groups["verb"].casefold()]
+        ticker = groups["ticker"].upper()
+        return (f"By {groups['firm']}: ${ticker} PT {verb} to ${new} from ${old}"
+                + stripped[match.end():])
+    return text
 
 # Target-only identity evidence; this does not expand the research-company
 # roster, acquisition queries or request budgets.
@@ -1379,7 +1429,7 @@ def price_target_observation(row, source, now):
         return None, "superseded-revision"
     if row["event_kind"] == "changed" and not row["document_text"]:
         return None, "revision-evidence-missing"
-    text = row["document_text"] or row["title"]
+    text = actor_first_target(row["document_text"] or row["title"])
     if not isinstance(text, str) or not PRICE_TARGET_LABEL.search(text):
         return None, "not-target"
     if row["truncated"]:
@@ -1536,6 +1586,17 @@ PRICE_TARGET_FIRM_ALIASES = {
     "evercore": "Evercore", "evercoreisi": "Evercore",
     "cantor": "Cantor Fitzgerald", "cantorfitzgerald": "Cantor Fitzgerald",
     "bmo": "BMO", "bmocapital": "BMO",
+    "goldman": "Goldman Sachs", "goldmansachs": "Goldman Sachs",
+    "seaport": "Seaport Research", "seaportresearch": "Seaport Research",
+    "wolfe": "Wolfe Research", "wolferesearch": "Wolfe Research",
+    "canaccord": "Canaccord Genuity", "canaccordgenuity": "Canaccord Genuity",
+    "redburn": "Rothschild & Co Redburn", "rothschildredburn": "Rothschild & Co Redburn",
+    "rothschild&coredburn": "Rothschild & Co Redburn",
+    "melius": "Melius Research", "meliusresearch": "Melius Research",
+    "arete": "Arete Research", "areteresearch": "Arete Research",
+    "newstreet": "New Street Research", "newstreetresearch": "New Street Research",
+    "roth": "Roth Capital", "rothcapital": "Roth Capital", "rothmkm": "Roth Capital",
+    "hcwainwright": "H.C. Wainwright", "telsey": "Telsey Advisory", "telseyadvisory": "Telsey Advisory",
 }
 PRICE_TARGET_PUBLISHERS = {
     "tipranks": "X · TipRanks", "wallstengine": "X · Wall St Engine", "fabymetal4": "X · FabyΔ",

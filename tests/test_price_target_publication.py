@@ -85,6 +85,32 @@ class TargetPublicationTests(unittest.TestCase):
         items = signals.public_price_targets(self.db, now=self.now)['items']
         self.assertEqual([item['id'] for item in items], [2])
 
+    def test_opening_broker_actor_target_forms_publish_with_existing_gates(self):
+        cases = [
+            ('Mizuho raises $MU price target to $120 from $100', 'MU', ('Mizuho', 100.0, 120.0)),
+            ('🚨 Morgan Stanley lowers PT on Micron $MU to $90 from $100, keeps Overweight', 'MU', ('Morgan Stanley', 100.0, 90.0)),
+            ('$MSTR: TD Cowen cuts PT to $500 from $600', 'MSTR', ('TD Cowen', 600.0, 500.0)),
+            ('$MSTR TD Cowen trims price target to $1,500 from $1,600', 'MSTR', ('TD Cowen', 1600.0, 1500.0)),
+            ('$NVDA PT raised to $250 from $200 at Melius', 'NVDA', ('Melius', 200.0, 250.0)),
+        ]
+        for index, (text, ticker, expected) in enumerate(cases, 1):
+            with self.subTest(text=text):
+                self.add(index, text, tickers=json.dumps([ticker]), body=text)
+                item, reason = signals.price_target_observation(self.row(index), self.source, self.now)
+                self.assertEqual(reason, 'eligible')
+                self.assertEqual((item['ticker'], item['firm'], item['previous'], item['latest']),
+                                 (ticker, *expected))
+        for index, (text, reason) in enumerate([
+            ('Mizuho raises $MU price target to $90 from $100', 'inconsistent-direction'),
+            ('Mizuho raises $MU price target to $120 from $100; Citi agrees', 'firm-not-recognized'),
+            ('Unknown Bank raises $MU price target to $120 from $100', 'firm-not-recognized'),
+            ('Mizuho raises PT on Micron $MU price target to $120 from $100', 'firm-not-recognized'),
+        ], 20):
+            with self.subTest(text=text):
+                self.add(index, text, tickers='["MU"]', body=text)
+                self.assertEqual(signals.price_target_observation(self.row(index), self.source, self.now),
+                                 (None, reason))
+
     def test_rejection_reasons_preserve_safety_gates(self):
         cases = [
             ('$MU PT boosted to $110 from $100 at Citi', {}, 'unsupported-target-syntax'),
