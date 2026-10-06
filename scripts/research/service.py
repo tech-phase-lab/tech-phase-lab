@@ -93,7 +93,7 @@ SQLITE_FAILURE_NAMES = {
 # Worker results after which more queued work may be immediately runnable.
 PRODUCTIVE_RESULTS = frozenset({"done", "stale"})
 # A feed nobody requested for this long is no longer refreshed in the background.
-NEWS_REFRESH_IDLE_SECONDS = 86400
+NEWS_REFRESH_IDLE_SECONDS = 6 * 3600
 # At most one background rebuild per feed in this many seconds.
 NEWS_REFRESH_MIN_INTERVAL_SECONDS = 10
 
@@ -558,7 +558,7 @@ class AutomaticMonitor:
         # previous result (at most STALE_SECONDS old) instead of waiting. The
         # owner chose speed: a withdrawn story may stay visible that long, as if
         # the page had been opened a few seconds earlier. 0 turns this off.
-        self.news_stale_seconds = positive_int("RESEARCH_NEWS_STALE_SECONDS", 20, 0)
+        self.news_stale_seconds = positive_int("RESEARCH_NEWS_STALE_SECONDS", 30, 0)
         self.news_compute_ms = []
         self.news_requested = {}
         self.body_probe_urls = set()
@@ -828,6 +828,10 @@ class AutomaticMonitor:
 
     def run_news_refresh(self):
         """Recompute each recently requested feed after a write, off the request path."""
+        # Build both feeds right after start, so the first visitor after a
+        # deployment does not wait for a full rebuild (about 9 s on staging).
+        for key in (False, True):
+            self.news_requested.setdefault(key, time.monotonic())
         while not self.stop_event.wait(1):
             for key, at in list(self.news_requested.items()):
                 if time.monotonic() - at > NEWS_REFRESH_IDLE_SECONDS:
