@@ -6,7 +6,7 @@ import { availableNewsPayload, type GeneralNewsFeed, type InitialNewsSnapshot } 
 import { officialNewsDisplay } from "@/lib/research/news-presentation";
 import { marketNewsBody, marketNewsDisplay } from "@/lib/research/market-news-display";
 import { analystNewsDisplay } from "@/lib/research/analyst-news";
-import { officialTime } from "@/lib/research/news-time";
+import { clockTime, officialTime } from "@/lib/research/news-time";
 import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-poller";
 import { observePageActivity } from "@/lib/research/page-activity";
 import styles from "./general-news.module.css";
@@ -125,9 +125,9 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
             publication={`${lang === "ja" ? "発表" : "Published"} ${format(item.publishedAt)}`} /></article>;
         }
         const item = update.item;
-        const publication = officialTime(item), display = officialNewsDisplay(item, lang, data?.resultBriefs);
+        const official = officialTime(item), publication = { ...clockTime(official.at, official.kind, item.observedAt), dated: official.kind }, display = officialNewsDisplay(item, lang, data?.resultBriefs);
         return <article key={item.id}><NewsStory label={display.label} title={display.title} body={display.body} lang={lang}
-          publication={`${publication.kind === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} ${publication.kind === "date" ? publication.at : format(publication.at)}`} /></article>; })}</div>
+          publication={`${publication.dated === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} ${publication.kind === "date" ? publication.at : format(publication.at)}`} /></article>; })}</div>
     </section>}
     {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}
     {!officialOnly && (visibleNews.length > 0 || (!updates.length && (!data?.enabled || !news.length))) && <><div className={styles.head}><h2 id="general-news-title">{lang === "ja" ? "通常ニュース" : "General news"}</h2><button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>

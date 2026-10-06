@@ -1303,13 +1303,26 @@ PRICE_TARGET_TICKER_ACTOR = re.compile(
     r"\s+from\s*" + _TARGET_NUMBER, re.I,
 )
 
+# Rating line followed by the target, e.g. "$MELI | Susquehanna maintains
+# Positive on MercadoLibre, cuts PT to $2400 from $2500".
+PRICE_TARGET_TICKER_RATING = re.compile(
+    r"^\s*\$(?P<ticker>[A-Z]{1,5}(?:[.-][A-Z])?)\s*[:|–—-]?\s*"
+    r"(?P<firm>" + PRICE_TARGET_FIRM.pattern.removeprefix(r"(?:at|by) ")[1:-3] + r")\b"
+    r"(?:\s+analyst(?:\s+[A-Z][A-Za-z.'’-]*){1,3})?\s+"
+    r"(?:maintains|reiterates|keeps|upgrades|downgrades|initiates|resumes)\s+[^,;$\n]{1,80}?,\s*(?:and\s+)?"
+    r"(?P<verb>" + "|".join(_TARGET_VERBS) + r")\s+(?:(?:its|the)\s+)?(?P<post>" + _TARGET_LABEL + r")\s+to\s*" +
+    _TARGET_NUMBER + r"\s+from\s*" + _TARGET_NUMBER, re.I,
+)
+PRICE_TARGET_UNIVERSES = {"large-cap": frozenset(json.loads(
+    (Path(__file__).with_name("price_target_universe.json")).read_text())["tickers"])}
+
 
 def actor_first_target(text):
     """Rewrite one opening broker-actor target sentence; otherwise unchanged."""
     if not isinstance(text, str):
         return text
     stripped = re.sub(r"^[^A-Za-z0-9$]+", "", text)
-    for pattern in (PRICE_TARGET_ACTOR_FIRST, PRICE_TARGET_TICKER_ACTOR):
+    for pattern in (PRICE_TARGET_ACTOR_FIRST, PRICE_TARGET_TICKER_ACTOR, PRICE_TARGET_TICKER_RATING):
         match = pattern.match(stripped)
         if not match:
             continue
@@ -1573,6 +1586,9 @@ def price_target_observation(row, source, now):
         if (named_subject not in target_company_names(tickers[0], explicit_actor=bool(named_prefix)) or
                 (match.group("cashtag") and match.group("cashtag").upper() != tickers[0])):
             return None, "ambiguous-subject"
+    universe = source.get("targetUniverse")
+    if universe and tickers[0] not in PRICE_TARGET_UNIVERSES.get(universe, ()):
+        return None, "outside-target-universe"
     return {"id": row["id"], "ticker": tickers[0], "firm": firm.group(1),
             "previous": old, "latest": new, "source": source["name"], "url": url,
             "publishedAt": published.isoformat(), "observedAt": observed.isoformat()}, "eligible"

@@ -191,8 +191,8 @@ class NumberDiagnosticsTests(unittest.TestCase):
 class ResearchShareTests(unittest.TestCase):
     def test_research_notes_use_at_most_a_share_of_large_limits(self):
         import official_research
-        self.assertEqual(official_research.research_cap(600), 210)
-        self.assertEqual(official_research.research_cap(400), 140)
+        self.assertEqual(official_research.research_cap(600), 120)
+        self.assertEqual(official_research.research_cap(400), 80)
         self.assertEqual(official_research.research_cap(5), 5)
 
 

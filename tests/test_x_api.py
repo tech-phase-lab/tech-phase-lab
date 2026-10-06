@@ -355,5 +355,6 @@ class HardikShahPriceTargetRouteTests(unittest.TestCase):
         self.assertIn("x-aistocksavvy", signals.PRICE_TARGET_SOURCE_IDS)
         self.assertIn("aistocksavvy", x_api.ALLOWED_ACCOUNT_NAMES)
         self.assertTrue(source.get("streamExcluded"))
+        self.assertEqual(source.get("targetUniverse"), "large-cap")
         # Not an author-intake, analyst-news or market-news route.
         self.assertNotIn("x-aistocksavvy", signals.X_AUTHOR_INTAKE_SOURCE_IDS)
