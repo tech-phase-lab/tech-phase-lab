@@ -15,7 +15,7 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
   return [
     ...(feed?.officialUpdates ?? []).map(item => {
       const display = officialNewsDisplay(item, lang);
-      const compactTitle = ja ? officialPulseHeadlineJa(item.url) ?? item.shortTitleJa : item.shortTitleEn;
+      const compactTitle = ja ? officialPulseHeadlineJa(item.url) ?? item.pulseTitleJa ?? item.shortTitleJa : item.pulseTitleEn ?? item.shortTitleEn;
       const suffix = NEWS_BRIEF_TITLE_SUFFIXES[lang];
       const shortTitle = item.brief && compactTitle?.endsWith(suffix) ? compactTitle.slice(0, -suffix.length) : compactTitle;
       return { id: `official-${item.id}`, ticker: display.label, title: display.title, body: display.body ? `${display.title}\n\n${display.body}` : display.title,
@@ -24,7 +24,7 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
     }),
     ...(feed?.marketUpdates ?? []).map(item => {
       const display = marketNewsDisplay(item, lang);
-      return { headlines: marketPulseHeadlines(item, lang, display.title, ja ? item.shortTitleJa : item.shortTitleEn), id: `market-${item.id}`, ticker: display.label, title: display.title, body: marketNewsBody(item, lang) ?? display.title, shortTitle: display.title !== (ja ? item.titleJa : item.titleEn) ? display.title : ja ? item.shortTitleJa : item.shortTitleEn, url: item.url, at: item.publishedAt, kind: "published" as const };
+      return { headlines: marketPulseHeadlines(item, lang, display.title, ja ? item.pulseTitleJa ?? item.shortTitleJa : item.pulseTitleEn ?? item.shortTitleEn), id: `market-${item.id}`, ticker: display.label, title: display.title, body: marketNewsBody(item, lang) ?? display.title, shortTitle: display.title !== (ja ? item.titleJa : item.titleEn) ? display.title : ja ? item.shortTitleJa : item.shortTitleEn, url: item.url, at: item.publishedAt, kind: "published" as const };
     }),
     ...(feed?.analystUpdates ?? []).map(item => {
       const display = analystNewsDisplay(item, lang);
@@ -32,7 +32,7 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
         body: display.body ? `${display.title}\n\n${display.body}` : display.title,
         shortTitle: display.title, at: item.publishedAt, kind: "published" as const };
     }),
-    ...(feed?.items ?? []).map(item => ({ headlines: generalPulseHeadlines(item.tickers, lang, ja ? item.summaryJa : item.title, ja ? item.shortTitleJa : item.shortTitleEn), id: item.id, ticker: item.tickers.join(" · "), title: ja ? item.summaryJa : item.title, body: ja ? item.summaryJa : item.summaryEn, shortTitle: ja ? item.shortTitleJa : item.shortTitleEn, url: item.url, at: item.publishedAt, kind: "published" as const })),
+    ...(feed?.items ?? []).map(item => ({ headlines: generalPulseHeadlines(item.tickers, lang, ja ? item.summaryJa : item.title, ja ? item.pulseTitleJa ?? item.shortTitleJa : item.pulseTitleEn ?? item.shortTitleEn), id: item.id, ticker: item.tickers.join(" · "), title: ja ? item.summaryJa : item.title, body: ja ? item.summaryJa : item.summaryEn, shortTitle: ja ? item.shortTitleJa : item.shortTitleEn, url: item.url, at: item.publishedAt, kind: "published" as const })),
   ].map(item => ({ ...item, shortTitle: item.shortTitle ?? item.title, summary: item.headlines[0] }))
     // The strip is a one-line Japanese summary; an item still awaiting its
     // reviewed translation stays in the news list below (in its original) only.

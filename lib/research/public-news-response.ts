@@ -24,7 +24,7 @@ export function buildPublicNews(value: unknown, { allowOriginalPreview = false }
       // 180. Preserve a valid headline instead of poisoning the whole feed in
       // the browser when a longer research title is added here.
       const titles = Array.from(event.title.en).length <= 180 && Array.from(event.title.ja).length <= 180
-        ? { shortTitleJa: undefined, shortTitleEn: undefined, title: event.title.en, translationJa: event.title.ja }
+        ? { shortTitleJa: undefined, shortTitleEn: undefined, pulseTitleJa: undefined, pulseTitleEn: undefined, title: event.title.en, translationJa: event.title.ja }
         : {};
       const enriched = { ...item, ...titles, researchId: event.id, bodyJa: [...new Set([event.summary.ja, ...event.facts.map(f => f.text.ja)])].join("\n\n"), bodyEn: [...new Set([event.summary.en, ...event.facts.map(f => f.text.en)])].join("\n\n") };
       try {

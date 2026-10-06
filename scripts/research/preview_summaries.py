@@ -86,7 +86,7 @@ def validate(result, source):
         factual_validation.validate_acquisition(copy[key], source, 'ja' if key.endswith('Ja') else 'en',
                                                 require_status=True)
     for ja, en in (('titleJa', 'titleEn'), ('bodyJa', 'bodyEn')):
-        factual_validation.validate_pair(copy[ja], copy[en])
+        factual_validation.validate_pair(copy[ja], copy[en], exact_counts=ja == 'titleJa')
         factual_validation.validate_names(copy[ja], source + ' ' + copy[en])
     return copy
 
