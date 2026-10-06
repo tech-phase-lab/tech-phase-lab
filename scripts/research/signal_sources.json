@@ -665,7 +665,8 @@
     "intervalSeconds": 180,
     "maxResults": 30,
     "reuse": "review-required",
-    "streamExcluded": true
+    "streamExcluded": true,
+    "targetUniverse": "large-cap"
   },
   {
     "id": "globenewswire-public",

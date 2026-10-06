@@ -15,6 +15,14 @@ class NewsSelectionTests(unittest.TestCase):
         for title in ['Nebius and NVIDIA announce a new cloud platform', 'Micron Q4 financial results. Register now for the earnings webinar', 'Nebius announces data center expansion']:
             self.assertTrue(news_policy.eligible(title))
 
+    def test_event_invitations_are_not_public_news(self):
+        for title in ["Nebius is hosting a private party for our developer community on Oct 16 at Käfer. Don't miss it!",
+                      'Join our AMA with the CEO tomorrow', 'See you at our booth at GTC', 'Save the date: Nebius community night',
+                      '開発者向けパーティーを開催します。お見逃しなく']:
+            self.assertFalse(news_policy.eligible(title), title)
+        for title in ["Why we support America's existing nuclear plants", 'Nebius expands its data center in Finland']:
+            self.assertTrue(news_policy.eligible(title), title)
+
     def test_news_headline_removes_cta_and_urls_in_both_languages(self):
         self.assertEqual(news_policy.headline('New GPUs are available. Learn more: https://t.co/example'),'New GPUs are available')
         self.assertEqual(news_policy.headline('新GPUの提供を開始。詳細はこちら：https://t.co/example'),'新GPUの提供を開始')

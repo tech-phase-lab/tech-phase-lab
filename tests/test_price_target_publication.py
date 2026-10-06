@@ -111,6 +111,29 @@ class TargetPublicationTests(unittest.TestCase):
                 self.assertEqual(signals.price_target_observation(self.row(index), self.source, self.now),
                                  (None, reason))
 
+    def test_ticker_rating_line_target_form_publishes(self):
+        text = ('$MELI | Susquehanna maintains Positive on MercadoLibre, cuts PT to $2400 from $2500\n\n'
+                'Analyst sees consumer-credit changes supporting modest EBIT margin expansion in 2027.')
+        self.add(40, text, tickers='["MELI"]', body=text)
+        item, reason = signals.price_target_observation(self.row(40), self.source, self.now)
+        self.assertEqual(reason, 'eligible')
+        self.assertEqual((item['ticker'], item['firm'], item['previous'], item['latest']),
+                         ('MELI', 'Susquehanna', 2500.0, 2400.0))
+        # A rating reiteration with an unchanged target is not a target change.
+        text = '$NVDA | Citi maintains Buy on NVIDIA, PT $250'
+        self.add(41, text, tickers='["NVDA"]', body=text)
+        self.assertIsNone(signals.price_target_observation(self.row(41), self.source, self.now)[0])
+
+    def test_target_universe_limits_a_route_to_large_caps(self):
+        text = '$LMND | Morgan Stanley maintains Equalweight on Lemonade Inc., cuts PT to $48.00 from $56.00'
+        self.add(42, text, tickers='["LMND"]', body=text)
+        limited = {**self.source, 'targetUniverse': 'large-cap'}
+        self.assertEqual(signals.price_target_observation(self.row(42), limited, self.now),
+                         (None, 'outside-target-universe'))
+        self.assertEqual(signals.price_target_observation(self.row(42), self.source, self.now)[1], 'eligible')
+        self.assertIn('MELI', signals.PRICE_TARGET_UNIVERSES['large-cap'])
+        self.assertIn('MU', signals.PRICE_TARGET_UNIVERSES['large-cap'])
+
     def test_rejection_reasons_preserve_safety_gates(self):
         cases = [
             ('$MU PT boosted to $110 from $100 at Citi', {}, 'unsupported-target-syntax'),
