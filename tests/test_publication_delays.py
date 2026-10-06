@@ -47,6 +47,19 @@ class InterruptedJobTests(unittest.TestCase):
                 rows = dict(db.execute('SELECT url,next_at FROM signal_headline_translation_jobs').fetchall())
             self.assertEqual(rows, {'a': NOW, 'b': NOW + 3600, 'c': NOW + 300})
 
+    def test_relaxed_checks_retry_their_rejections_once(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'db.sqlite'
+            with translation.connect(path) as db:
+                for url, kind in (('a', 'changed-negation'), ('b', 'changed-names'), ('c', 'changed-numbers')):
+                    db.execute("INSERT INTO signal_headline_translation_jobs(source_id,url,sha,attempts,next_at,lease,state,failure_kind) "
+                               "VALUES('s',?,'x',3,?,?,'retry',?)", (url, NOW + 21600, url, kind))
+            self.assertEqual(service.release_relaxed_rejections(path, now=NOW), 2)
+            self.assertEqual(service.release_relaxed_rejections(path, now=NOW), 0)
+            with translation.connect(path) as db:
+                rows = dict(db.execute('SELECT url,next_at FROM signal_headline_translation_jobs').fetchall())
+            self.assertEqual(rows, {'a': NOW, 'b': NOW, 'c': NOW + 21600})
+
 
 class NewsCacheTests(unittest.TestCase):
     def test_concurrent_visitors_share_one_computation(self):

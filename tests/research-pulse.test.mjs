@@ -14,7 +14,7 @@ source=source.replace('import { newsSnapshot, serverNewsSnapshot, subscribeNews 
 for (const name of ['news-pulse-items','news-time','news-pulse-headline']) {
   source=source.replace(`"@/lib/research/${name}"`,JSON.stringify(new URL(`../lib/research/${name}.ts`,import.meta.url).href));
 }
-source=source.replace('import styles from "./research-pulse.module.css";', 'const styles={pulse:"pulse",headline:"headline",clock:"clock",fullTime:"fullTime",shortTime:"shortTime",fresh:"fresh",progress:"progress"};');
+source=source.replace('import styles from "./research-pulse.module.css";', 'const styles={pulse:"pulse",headline:"headline",clipped:"clipped",clock:"clock",fullTime:"fullTime",shortTime:"shortTime",fresh:"fresh",progress:"progress"};');
 let compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext}}).outputText;
 for(const name of ['react','react/jsx-runtime']) compiled=compiled.replaceAll(JSON.stringify(name),JSON.stringify(pathToFileURL(require.resolve(name)).href));
 const {default:ResearchPulse}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
@@ -33,7 +33,8 @@ test('header has readable non-disclosure text and only a separate rotation butto
     assert.match(html,/tabindex="0"/);
     assert.equal((html.match(/<button/g)??[]).length,1);
     assert.doesNotMatch(html,/aria-expanded|data-expanded|<details|長い記事本文|Long article body/);
-    assert.match(html,/class="headline"/);
+    assert.match(html,/class="headline( clipped)?"/);
+    assert.doesNotMatch(html,/>企業ニュース<|>Company news</);
     assert.match(html,/class="clock"/);
     assert.match(html,/aria-label="10\/3 22:34 JST"/);
     assert.match(html,/class="shortTime" aria-hidden="true">10\/3 22:34<\/span>/);
@@ -50,11 +51,12 @@ test('missing and failed feed snapshots render no stale or fabricated header new
   delete globalThis.__pulseTestSnapshot;
 });
 
-test('headline, clock and pause remain in a single row without ellipsis or expansion',async()=>{
+test('headline, clock and pause remain in a single row; only a full headline is clipped, never expanded',async()=>{
   const css=await readFile(new URL('../app/research/research-pulse.module.css',import.meta.url),'utf8');
   assert.match(css,/flex-wrap:nowrap/);
   assert.match(css,/\.headline\{[^}]*white-space:nowrap/);
   assert.match(css,/\.clock\{display:inline-flex;flex:none/);
   assert.match(css,/@media\(max-width:600px\).*\.fullTime\{display:none\}.*\.shortTime\{display:inline\}/);
-  assert.doesNotMatch(css,/text-overflow:ellipsis|line-clamp|data-expanded/);
+  assert.match(css,/\.clipped\{text-overflow:ellipsis\}/);
+  assert.doesNotMatch(css,/\.headline\{[^}]*text-overflow|line-clamp|data-expanded/);
 });

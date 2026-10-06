@@ -110,6 +110,30 @@ def release_interrupted_jobs(db_path, now=None):
     return released
 
 
+# Bump when a validator is relaxed: jobs it rejected with these codes are
+# retried once now instead of waiting out their backoff (up to 6 hours).
+RELAXED_CHECKS = ("meaning-2", ("changed-negation", "changed-names"))
+VALIDATION_JOB_TABLES = ("signal_headline_translation_jobs", "x_market_jobs", "preview_summary_jobs")
+
+
+def release_relaxed_rejections(db_path, now=None, revision=RELAXED_CHECKS):
+    now = time.time() if now is None else now
+    marker, kinds = revision
+    released = 0
+    with monitor.connect(db_path) as db:
+        db.execute("CREATE TABLE IF NOT EXISTS validator_releases(revision TEXT PRIMARY KEY, released_at REAL NOT NULL)")
+        if db.execute("SELECT 1 FROM validator_releases WHERE revision=?", (marker,)).fetchone():
+            return 0
+        placeholders = ",".join("?" * len(kinds))
+        for table in VALIDATION_JOB_TABLES:
+            if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (table,)).fetchone():
+                released += db.execute(f"UPDATE {table} SET next_at=? WHERE state='retry' AND next_at>? "
+                                       f"AND failure_kind IN ({placeholders})", (now, now, *kinds)).rowcount
+        db.execute("INSERT INTO validator_releases VALUES(?,?)", (marker, now))
+        db.commit()
+    return released
+
+
 def log_publication_failure(lane, error):
     """Log bounded type/code metadata without inspecting messages or content."""
     if type(lane) is not str or lane not in PUBLICATION_FAILURE_LANES:
@@ -873,6 +897,10 @@ class AutomaticMonitor:
             released = release_interrupted_jobs(self.db_path)
         if released:
             print(json.dumps({"event": "interrupted-jobs-released", "jobs": released}), flush=True)
+        with self.db_lock:
+            relaxed = release_relaxed_rejections(self.db_path)
+        if relaxed:
+            print(json.dumps({"event": "relaxed-rejections-released", "jobs": relaxed}), flush=True)
         self.thread.start()
         self.generation_thread.start()
         self.backup_thread.start()
