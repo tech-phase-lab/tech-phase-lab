@@ -18,10 +18,10 @@ from test_headline_translation import ENV, NOW, SOURCE
 
 class RetryScheduleTests(unittest.TestCase):
     def test_rejected_copy_retries_fast_then_once_a_day(self):
-        # Four quick tries; after that a rejected revision is retried daily so
+        # Two quick retries; after that a rejected revision is retried daily so
         # it cannot use up the shared daily model budget.
         self.assertEqual([translation.retry_delay(n, 'changed-direction') for n in range(1, 7)],
-                         [15, 120, 1800, 3600, 86400, 86400])
+                         [15, 120, 86400, 86400, 86400, 86400])
         self.assertEqual(translation.retry_delay(20, 'unsupported-number'), 86400)
 
     def test_provider_outage_is_capped_at_thirty_minutes(self):

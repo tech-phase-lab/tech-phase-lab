@@ -27,17 +27,17 @@ VALIDATION_FAILURES = frozenset({
 # previous one failed; waiting an hour does not make it more likely to pass.
 # Three quick tries cover most fixable rejections; after that, back off so
 # repeatedly rejected articles cannot use up the shared daily model budget.
-VALIDATION_RETRY_SECONDS = (15, 120, 1800, 3600)
+VALIDATION_RETRY_SECONDS = (15, 120)
 VALIDATION_DAILY_RETRY_SECONDS = 86400
 
 
 def retry_delay(attempts, kind=None):
     """Retry schedule by failure kind; never permanently abandon a job.
 
-    Rejected copy: 15 s, 2 min, 30 min, 1 h, then once a day. Copy that the
-    checks rejected four times rarely passes on a fifth try soon after, and
-    retrying every few hours spent most of the shared daily model budget
-    (staging: 276 of 400 calls were rejected retries). A changed source
+    Rejected copy: 15 s, 2 min, then once a day. Copy that the checks
+    rejected twice rarely passes soon after, and the 30 min / 1 h retries
+    still left the 600-call daily budget exhausted on October 6 with about
+    two thirds of calls rejected (staging, all lanes). A changed source
     revision starts a new job at once.
     Provider outage/timeout: 1, 2, 4... minutes, at most 30 minutes.
     Authentication, rate limits and unknown kinds keep the original slow

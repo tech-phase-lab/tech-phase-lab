@@ -12,11 +12,11 @@ const MIN_FONT_PX = 10;
 function FittedHeadline({ headlines, full, lang, label }: { headlines: string[]; full: string; lang: Language; label: string }) {
   const element = useRef<HTMLSpanElement>(null);
   const key = [full, ...headlines].join("\n");
-  const [selected, setSelected] = useState({ key: "", text: "", clipped: false, size: BASE_FONT_PX });
+  const [selected, setSelected] = useState({ key: "", text: "", clipped: false, size: BASE_FONT_PX, shift: 0 });
   // Until real font metrics are available, show the shortest informative
   // headline (clipped by CSS if needed) rather than a bare category label.
   const initial = headlines.findLast(value => !isGenericPulseLabel(value)) ?? (full || headlines.at(-1) || "");
-  const { text, clipped, size } = selected.key === key ? selected : { text: initial, clipped: true, size: BASE_FONT_PX };
+  const { text, clipped, size, shift } = selected.key === key ? selected : { text: initial, clipped: true, size: BASE_FONT_PX, shift: 0 };
   useEffect(() => {
     const target = element.current;
     const context = document.createElement("canvas").getContext("2d");
@@ -33,10 +33,11 @@ function FittedHeadline({ headlines, full, lang, label }: { headlines: string[];
       const picked = pickPulseLine(choices, title, width, value => context.measureText(value).width);
       // A line slightly too long is shown smaller instead of cut with "…".
       const scaled = picked.clipped ? BASE_FONT_PX * width / Math.max(1, context.measureText(picked.text).width) : BASE_FONT_PX;
+      // Still too long at the smallest size: scroll it once instead of "…".
       const next = scaled >= MIN_FONT_PX
-        ? { text: picked.text, clipped: false, size: Math.min(BASE_FONT_PX, Math.floor(scaled * 10) / 10) }
-        : { ...picked, size: BASE_FONT_PX };
-      setSelected(previous => previous.key === key && previous.text === next.text && previous.clipped === next.clipped && previous.size === next.size ? previous : { key, ...next });
+        ? { text: picked.text, clipped: false, size: Math.min(BASE_FONT_PX, Math.floor(scaled * 10) / 10), shift: 0 }
+        : { ...picked, size: MIN_FONT_PX, shift: Math.ceil(context.measureText(picked.text).width * MIN_FONT_PX / BASE_FONT_PX - width) };
+      setSelected(previous => previous.key === key && previous.text === next.text && previous.clipped === next.clipped && previous.size === next.size && previous.shift === next.shift ? previous : { key, ...next });
     };
     const request = () => {
       if (!active || frame) return;
@@ -49,7 +50,9 @@ function FittedHeadline({ headlines, full, lang, label }: { headlines: string[];
   }, [key]);
   return <span ref={element} className={clipped ? `${styles.headline} ${styles.clipped}` : styles.headline} lang={lang}
     style={size < BASE_FONT_PX ? { fontSize: `${size}px` } : undefined}
-    title={clipped ? text : undefined} aria-label={`${label}: ${text}`}>{text}</span>;
+    title={clipped ? text : undefined} aria-label={`${label}: ${text}`}>
+    {clipped && shift > 0 ? <span className={styles.scroll} style={{ "--shift": `-${shift}px` } as React.CSSProperties}>{text}</span> : text}
+  </span>;
 }
 
 export default function ResearchPulse({ lang }: { lang: Language }) {

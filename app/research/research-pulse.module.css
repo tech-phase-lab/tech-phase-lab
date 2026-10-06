@@ -4,6 +4,10 @@
    with a visible ellipsis instead (full text in the tooltip and news list). */
 .headline{display:block;min-width:0;flex:1;color:#dae7e5;font-size:12px;line-height:20px;white-space:nowrap;overflow:hidden;animation:enter .5s ease-out}
 .clipped{text-overflow:ellipsis}
+/* A headline too long even at the smallest size scrolls once to its end. */
+.scroll{display:inline-block;animation:scroll 7s linear .2s 1 both}
+.clipped:has(.scroll){text-overflow:clip}
+@keyframes scroll{0%,15%{transform:translateX(0)}85%,100%{transform:translateX(var(--shift))}}
 .clock{display:inline-flex;flex:none;align-items:center;white-space:nowrap;font-size:9px;line-height:14px;color:#93a6ad}
 .pulse button{flex:none;border:0;padding:0;background:none;color:#a4c5ba;width:28px;min-height:28px;cursor:pointer}
 .pulse button:disabled{opacity:.4;cursor:default}
@@ -14,4 +18,4 @@
 @keyframes progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 /* Phones keep the single row; the headline shrinks slightly before "…". */
 @media(max-width:600px){.pulse{margin-bottom:18px;gap:6px}.pulse button{width:24px}}
-@media(prefers-reduced-motion:reduce){.headline,.progress{animation:none}}
+@media(prefers-reduced-motion:reduce){.headline,.progress,.scroll{animation:none}.clipped:has(.scroll){text-overflow:ellipsis}}

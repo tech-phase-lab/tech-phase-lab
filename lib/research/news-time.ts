@@ -17,13 +17,17 @@ export function usEasternTime(at: string, kind: string) {
   if (kind === 'date') return null;
   return new Intl.DateTimeFormat('en-US', {timeZone:'America/New_York',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(at)).replace(',', '') + ' ET';
 }
-/** One clock format for the top strip. A date-only release shows the time it
- * was first seen here (same or next day only), so every line reads "M/D HH:MM JST|ET". */
-export function pulseClock(at: string, kind: string, ja: boolean, observedAt?: string) {
-  let instant = at, instantKind = kind;
+/** A date-only release takes the time it was first seen here (same or next
+ * day only), so it can show a clock like every other item. */
+export function clockTime(at: string, kind: string, observedAt?: string) {
   if (kind === 'date' && observedAt) {
     const gap = Date.parse(observedAt) - Date.parse(`${at}T00:00:00Z`);
-    if (gap >= 0 && gap < 48 * 3_600_000) { instant = observedAt; instantKind = 'observed'; }
+    if (gap >= 0 && gap < 48 * 3_600_000) return { at: observedAt, kind: 'observed' as string };
   }
-  return (ja ? null : usEasternTime(instant, instantKind)) ?? shortNewsTime(instant, instantKind);
+  return { at, kind };
+}
+/** One clock format for the top strip: "M/D HH:MM JST" (ET in English). */
+export function pulseClock(at: string, kind: string, ja: boolean, observedAt?: string) {
+  const time = clockTime(at, kind, observedAt);
+  return (ja ? null : usEasternTime(time.at, time.kind)) ?? shortNewsTime(time.at, time.kind);
 }
