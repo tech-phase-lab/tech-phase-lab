@@ -46,6 +46,15 @@ const official = { id: '77', title: 'Verified company headline', translationJa: 
   bodyJa: '確認済みの詳しい本文です。', bodyEn: 'The verified body stays complete.',
   publisher: 'Nebius', tickers: ['NBIS'], url: 'https://nebius.com/newsroom/verified-test',
   publishedAt: '2026-10-04T08:00:00.000Z', observedAt: '2026-10-04T08:01:00Z' };
+// The news list shows a test publication only once it has a checked summary.
+const summaryFields = { summaryPolicy: 'preview-summary-v1', titleJa: 'ネビウスの原文テスト要約', titleEn: 'Nebius original test summary',
+  bodyJa: 'ネビウスは新しいサービスを発表した。発表元は同社。', bodyEn: 'Nebius announced a new service. Source: the company.' };
+const summarized = { ...original, ...summaryFields };
+function renderCard(item, lang = 'ja') {
+  const Card = loadComponent('original-preview-card');
+  const [parsed] = parseOriginalPreviewItems([item]);
+  return renderToStaticMarkup(React.createElement(Card, { item: parsed, lang }));
+}
 const wire = (rows = [original], other = {}) => ({ ok: true, enabled: false, items: [], originalPreviewItems: rows, ...other });
 function render(feed, lang = 'ja', officialOnly = false, page = 1) {
   let index = 0;
@@ -65,10 +74,11 @@ for (const name of ['public-news-response', 'general-news', 'market-results', 'o
 }
 const { loadLiveHomeNews } = await importSource(homeSource);
 
-test('original cards are visible inside news with explicit test status, source link and all three clocks', () => {
+test('a pending original card shows its test status, source link and all three clocks, and is not listed', () => {
   const feed = availableNewsPayload(wire());
   for (const lang of ['ja', 'en']) {
-    const html = render(feed, lang);
+    assert.doesNotMatch(render(feed, lang), /ORIGINAL|short original/);
+    const html = renderCard(original, lang);
     for (const text of ['ORIGINAL', original.excerptOriginal, original.sourceName,
       lang === 'ja' ? '翻訳準備中（原文）・未確認・テスト掲載' : 'Summary pending · Unreviewed · Test publication',
       lang === 'ja' ? '原文を開く' : 'Read original', lang === 'ja' ? '自動テスト掲載' : 'Automatic test publication',
@@ -77,17 +87,17 @@ test('original cards are visible inside news with explicit test status, source l
     assert.ok(html.includes('rel="noopener noreferrer"'));
     for (const value of [original.sourcePublishedAt, original.acquiredAt, original.previewPublishedAt]) assert.ok(html.includes(`dateTime="${value}"`));
     assert.doesNotMatch(html, /Business impact|Confidence|確信度|事業への影響/);
-    assert.doesNotMatch(render(feed, lang, true), /ORIGINAL|original-test|short original/);
+    assert.doesNotMatch(render(availableNewsPayload(wire([summarized])), lang, true), /ORIGINAL|original-test|short original|原文テスト要約|original test summary/);
   }
 });
 
 test('date-only and unknown original source dates never borrow an acquisition time', () => {
   for (const lang of ['ja', 'en']) {
-    const date = render(availableNewsPayload(wire([{ ...original, sourceTimePrecision: 'date', sourcePublishedAt: null, sourcePublishedOn: '2026-10-03' }])), lang);
+    const date = renderCard({ ...original, sourceTimePrecision: 'date', sourcePublishedAt: null, sourcePublishedOn: '2026-10-03' }, lang);
     assert.ok(date.includes('dateTime="2026-10-03">2026-10-03</time>'));
     assert.ok(date.includes(lang === 'ja' ? '日付のみ・時刻不明' : 'date only; time unknown'));
     assert.doesNotMatch(date, /2026-10-03T|18:00:00/);
-    const missing = render(availableNewsPayload(wire([{ ...original, sourceTimePrecision: 'missing', sourcePublishedAt: null }])), lang);
+    const missing = renderCard({ ...original, sourceTimePrecision: 'missing', sourcePublishedAt: null }, lang);
     assert.ok(missing.includes(lang === 'ja' ? '日時不明' : 'Date/time unknown'));
     assert.equal((missing.match(/<time /g) ?? []).length, 2);
   }
@@ -155,8 +165,9 @@ test('original lane never enters header ticker or changes verified card body and
 });
 
 test('combined news pagination stays at five with 30 bounded original cards and clamped current page', () => {
-  const rows = Array.from({ length: 30 }, (_, i) => ({ ...original, id: 'original-preview-' + i.toString(16).padStart(24, '0'),
-    sourceUrl: `https://nebius.com/newsroom/test-${i}`, excerptOriginal: `Original excerpt ${i}.`, previewPublishedAt: `2026-10-04T09:02:${String(i).padStart(2, '0')}Z` }));
+  const rows = Array.from({ length: 30 }, (_, i) => ({ ...summarized, id: 'original-preview-' + i.toString(16).padStart(24, '0'),
+    sourceUrl: `https://nebius.com/newsroom/test-${i}`, excerptOriginal: `Excerpt ${i}.`, titleEn: `Original excerpt ${i}.`,
+    previewPublishedAt: `2026-10-04T09:02:${String(i).padStart(2, '0')}Z` }));
   const feed = availableNewsPayload(wire(rows, { officialUpdates: [official] }));
   const first = render(feed, 'en'), sixth = render(feed, 'en', false, 6), final = render(feed, 'en', false, 99);
   assert.equal((first.match(/<article/g) ?? []).length, 5);
@@ -220,12 +231,14 @@ test('optional original bytes give way before unchanged verified history and pre
 });
 
 
-test('ordinary default home and dedicated news flow show acquired raw-only cards automatically', () => {
-  const feed = availableNewsPayload(wire());
+test('ordinary default home and dedicated news flow show summarized test cards and hide untranslated ones', () => {
+  const pending = { ...original, id: 'original-preview-' + 'b'.repeat(24), sourceUrl: 'https://nebius.com/newsroom/pending-test',
+    excerptOriginal: 'An untranslated pending excerpt.' };
+  const feed = availableNewsPayload(wire([summarized, pending]));
   const NewsFeed = loadComponent('news-feed');
   const html = renderToStaticMarkup(React.createElement(NewsFeed, { lang: 'ja', initialNews: { data: feed, checkedAt: Date.now() } }));
-  assert.ok(html.includes(original.excerptOriginal));
-  assert.ok(html.includes('ORIGINAL'));
+  assert.ok(html.includes(summaryFields.titleJa));
+  assert.ok(!html.includes(pending.excerptOriginal));
   assert.doesNotMatch(html, /hidden=""/);
   const page = readFileSync(new URL('../app/research/news/page.tsx', import.meta.url), 'utf8');
   assert.ok(page.includes('<NewsFeed lang={lang} />'));
@@ -236,7 +249,7 @@ test('ordinary default home and dedicated news flow show acquired raw-only cards
 test('bounded scan metadata is disclosed honestly and stripped from the header snapshot with original cards', () => {
   const window = { recentWindowDays: 7, scanLimitPerLane: 200, displayLimit: 30,
     eligibleInScan: 33, returned: 1, omittedInScan: 32, scanLimited: true };
-  const feed = availableNewsPayload(wire([original], { originalPreviewWindow: { ...window, privateArgs: 'PRIVATE_METADATA' }, officialUpdates: [official] }));
+  const feed = availableNewsPayload(wire([summarized], { originalPreviewWindow: { ...window, privateArgs: 'PRIVATE_METADATA' }, officialUpdates: [official] }));
   assert.deepEqual(feed.originalPreviewWindow, window);
   for (const lang of ['ja', 'en']) {
     const html = render(feed, lang);
@@ -264,7 +277,9 @@ test('SEC metadata notices disclose unavailable body and unknown filing clocks w
   assert.deepEqual(parseOriginalPreviewItems([notice]), [notice]);
   const feed = availableNewsPayload(wire([notice], { officialUpdates: [official] }));
   for (const lang of ['ja', 'en']) {
-    const html = render(feed, lang);
+    // Metadata-only notices are not listed in the news; the card itself stays correct.
+    assert.doesNotMatch(render(feed, lang), /Filing notice|提出情報|Form 6-K/);
+    const html = renderCard(notice, lang);
     for (const text of ['SEC EDGAR', 'Nebius (NBIS) · Form 6-K', notice.sourceUrl,
       lang === 'ja' ? '提出情報・未確認・テスト掲載' : 'Filing notice · Unreviewed · Test publication',
       lang === 'ja' ? '本文未取得' : 'Body unavailable', lang === 'ja' ? '日時不明' : 'Date/time unknown',
@@ -276,7 +291,7 @@ test('SEC metadata notices disclose unavailable body and unknown filing clocks w
     assert.deepEqual(newsPulseItems(feed, lang), newsPulseItems(availableNewsPayload(wire([], { officialUpdates: [official] })), lang));
   }
   const enriched = { ...notice, filingDate: '2026-10-01', acceptedAt: '2026-10-01T16:01:00-04:00', bodyAvailability: 'retained-unreviewed' };
-  const html = render(availableNewsPayload(wire([enriched])), 'en');
+  const html = renderCard(enriched, 'en');
   assert.ok(html.includes('Body retained; unreviewed and not shown'));
   assert.ok(html.includes('dateTime="2026-10-01">2026-10-01</time>'));
   assert.ok(html.includes('SEC accepted'));
@@ -354,7 +369,8 @@ test('configured metadata notices show correct source class, unknown dates and n
     const injected = { ...item, text: 'PRIVATE_BODY', bodyJa: 'PRIVATE_TRANSLATION', error: 'PRIVATE_ERROR', extra: 'PRIVATE_METADATA' };
     assert.deepEqual(parseOriginalPreviewItems([injected]), [item]);
     for (const lang of ['ja', 'en']) {
-      const html = render(availableNewsPayload(wire([injected])), lang);
+      assert.doesNotMatch(render(availableNewsPayload(wire([injected])), lang), /SOURCE|出典情報のみ|Source metadata only/);
+      const html = renderCard(injected, lang);
       assert.ok(html.includes(lang === 'ja' ? '出典情報のみ。本文の内容は未確認・非表示です。' : 'Source metadata only. Contents are unreviewed and not shown.'));
       assert.ok(html.includes(item.sourceName));
       assert.ok(html.includes(lang === 'ja' ? '出典情報取得' : 'Source metadata acquired'));
