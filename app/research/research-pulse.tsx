@@ -4,17 +4,19 @@ import type { Language } from "@/lib/research/data";
 import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";
 import { newsPulseItems } from "@/lib/research/news-pulse-items";
 import { isGenericPulseLabel, pickPulseLine } from "@/lib/research/news-pulse-headline";
-import { recentPublication, shortNewsTime } from "@/lib/research/news-time";
+import { recentPublication, shortNewsTime, usEasternTime } from "@/lib/research/news-time";
 import styles from "./research-pulse.module.css";
 const subscribe = (callback: () => void) => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
+const BASE_FONT_PX = 12;
+const MIN_FONT_PX = 10;
 function FittedHeadline({ headlines, full, lang, label }: { headlines: string[]; full: string; lang: Language; label: string }) {
   const element = useRef<HTMLSpanElement>(null);
   const key = [full, ...headlines].join("\n");
-  const [selected, setSelected] = useState({ key: "", text: "", clipped: false });
+  const [selected, setSelected] = useState({ key: "", text: "", clipped: false, size: BASE_FONT_PX });
   // Until real font metrics are available, show the shortest informative
   // headline (clipped by CSS if needed) rather than a bare category label.
   const initial = headlines.findLast(value => !isGenericPulseLabel(value)) ?? (full || headlines.at(-1) || "");
-  const { text, clipped } = selected.key === key ? selected : { text: initial, clipped: true };
+  const { text, clipped, size } = selected.key === key ? selected : { text: initial, clipped: true, size: BASE_FONT_PX };
   useEffect(() => {
     const target = element.current;
     const context = document.createElement("canvas").getContext("2d");
@@ -24,10 +26,17 @@ function FittedHeadline({ headlines, full, lang, label }: { headlines: string[];
     const update = () => {
       if (!active) return;
       const font = getComputedStyle(target);
-      context.font = font.font || `${font.fontWeight} ${font.fontSize} ${font.fontFamily}`;
+      // Always measure at the base size so a shrunk line never changes the choice.
+      context.font = `${font.fontWeight} ${BASE_FONT_PX}px ${font.fontFamily}`;
       const [title, ...choices] = key.split("\n");
-      const next = pickPulseLine(choices, title, Math.max(0, target.clientWidth - 4), value => context.measureText(value).width);
-      setSelected(previous => previous.key === key && previous.text === next.text && previous.clipped === next.clipped ? previous : { key, ...next });
+      const width = Math.max(0, target.clientWidth - 4);
+      const picked = pickPulseLine(choices, title, width, value => context.measureText(value).width);
+      // A line slightly too long is shown smaller instead of cut with "…".
+      const scaled = picked.clipped ? BASE_FONT_PX * width / Math.max(1, context.measureText(picked.text).width) : BASE_FONT_PX;
+      const next = scaled >= MIN_FONT_PX
+        ? { text: picked.text, clipped: false, size: Math.min(BASE_FONT_PX, Math.floor(scaled * 10) / 10) }
+        : { ...picked, size: BASE_FONT_PX };
+      setSelected(previous => previous.key === key && previous.text === next.text && previous.clipped === next.clipped && previous.size === next.size ? previous : { key, ...next });
     };
     const request = () => {
       if (!active || frame) return;
@@ -39,6 +48,7 @@ function FittedHeadline({ headlines, full, lang, label }: { headlines: string[];
     return () => { active = false; observer.disconnect(); if (frame) cancelAnimationFrame(frame); };
   }, [key]);
   return <span ref={element} className={clipped ? `${styles.headline} ${styles.clipped}` : styles.headline} lang={lang}
+    style={size < BASE_FONT_PX ? { fontSize: `${size}px` } : undefined}
     title={clipped ? text : undefined} aria-label={`${label}: ${text}`}>{text}</span>;
 }
 
@@ -67,6 +77,8 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   const item = items[(position.first === first ? position.index : 0) % items.length];
   if (!item) return null;
   const timestamp = shortNewsTime(item.at, item.kind);
+  const eastern = usEasternTime(item.at, item.kind);
+  const clockLabel = eastern ? `${timestamp} / ${eastern}` : timestamp;
   const fresh = recentPublication(item.at, item.kind, snapshot?.checkedAt ?? 0);
   return <section className={styles.pulse} aria-label={ja ? "新着ニュース" : "Latest news"} data-paused={stopped} tabIndex={0}
     onTouchStart={event => { suppressClick.current = false; const point = event.touches[0]; touch.current = event.touches.length === 1 ? {x: point.clientX, y: point.clientY} : null; setInteracting(true); }}
@@ -76,8 +88,8 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     onKeyDown={event => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); move(event.key === "ArrowRight" ? 1 : -1); } }}
     onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)} onFocusCapture={() => setInteracting(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false); }}>
     <FittedHeadline key={item.id} headlines={item.headlines} full={item.title} lang={lang} label={item.ticker} />
-    <time className={styles.clock} dateTime={item.at} title={timestamp} aria-label={`${item.kind === "observed" ? (ja ? "取得 " : "Found ") : ""}${timestamp}`}>
-      {item.kind === "observed" ? (ja ? "取得 " : "Found ") : ""}<span className={styles.fullTime}>{timestamp}</span><span className={styles.shortTime} aria-hidden="true">{timestamp.replace(/ JST$/, "")}</span>{fresh && <b className={styles.fresh}>NEW</b>}
+    <time className={styles.clock} dateTime={item.at} title={clockLabel} aria-label={clockLabel}>
+      <span>{timestamp}</span>{eastern && <span className={styles.eastern}>{eastern}</span>}{fresh && <b className={styles.fresh}>NEW</b>}
     </time>
     <button type="button" onClick={() => setPaused(value => !value)} disabled={reduced} aria-pressed={paused} aria-label={paused ? (ja ? "自動切替を再開" : "Resume rotation") : (ja ? "自動切替を停止" : "Pause rotation")}>{paused || reduced ? "▶" : "Ⅱ"}</button>
     {!stopped && items.length > 1 && <i key={`${item.id}-progress`} className={styles.progress} aria-hidden="true" />}

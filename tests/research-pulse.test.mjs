@@ -14,7 +14,7 @@ source=source.replace('import { newsSnapshot, serverNewsSnapshot, subscribeNews 
 for (const name of ['news-pulse-items','news-time','news-pulse-headline']) {
   source=source.replace(`"@/lib/research/${name}"`,JSON.stringify(new URL(`../lib/research/${name}.ts`,import.meta.url).href));
 }
-source=source.replace('import styles from "./research-pulse.module.css";', 'const styles={pulse:"pulse",headline:"headline",clipped:"clipped",clock:"clock",fullTime:"fullTime",shortTime:"shortTime",fresh:"fresh",progress:"progress"};');
+source=source.replace('import styles from "./research-pulse.module.css";', 'const styles={pulse:"pulse",headline:"headline",clipped:"clipped",clock:"clock",eastern:"eastern",fresh:"fresh",progress:"progress"};');
 let compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext}}).outputText;
 for(const name of ['react','react/jsx-runtime']) compiled=compiled.replaceAll(JSON.stringify(name),JSON.stringify(pathToFileURL(require.resolve(name)).href));
 const {default:ResearchPulse}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
@@ -36,8 +36,10 @@ test('header has readable non-disclosure text and only a separate rotation butto
     assert.match(html,/class="headline( clipped)?"/);
     assert.doesNotMatch(html,/>企業ニュース<|>Company news</);
     assert.match(html,/class="clock"/);
-    assert.match(html,/aria-label="10\/3 22:34 JST"/);
-    assert.match(html,/class="shortTime" aria-hidden="true">10\/3 22:34<\/span>/);
+    // Japan time and the same instant in U.S. Eastern time; no "取得" prefix.
+    assert.match(html,/aria-label="10\/3 22:34 JST \/ 10\/3 09:34 ET"/);
+    assert.match(html,/<span>10\/3 22:34 JST<\/span><span class="eastern">10\/3 09:34 ET<\/span>/);
+    assert.doesNotMatch(html,/取得|Found/);
     assert.match(html,/2026-10-03T13:34:30.000Z/);
     assert.match(html,/aria-label="(自動切替を停止|Pause rotation)"/);
   }
@@ -56,7 +58,6 @@ test('headline, clock and pause remain in a single row; only a full headline is 
   assert.match(css,/flex-wrap:nowrap/);
   assert.match(css,/\.headline\{[^}]*white-space:nowrap/);
   assert.match(css,/\.clock\{display:inline-flex;flex:none/);
-  assert.match(css,/@media\(max-width:600px\).*\.fullTime\{display:none\}.*\.shortTime\{display:inline\}/);
   // Phones put the clock under the headline so the headline gets the full width.
   assert.match(css,/@media\(max-width:600px\)\{\.pulse\{[^}]*flex-wrap:wrap[^}]*\}\.headline\{flex:1 0 100%\}/);
   assert.match(css,/\.clipped\{text-overflow:ellipsis\}/);

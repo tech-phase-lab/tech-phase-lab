@@ -12,3 +12,8 @@ export function shortNewsTime(at: string, kind: string) {
   if (kind === 'date') { const [, month, day] = at.split('-'); return `${Number(month)}/${Number(day)}`; }
   return new Intl.DateTimeFormat('en-US', {timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(at)).replace(',', '') + ' JST';
 }
+/** The same instant in U.S. Eastern time (EDT/EST handled by the time zone). */
+export function usEasternTime(at: string, kind: string) {
+  if (kind === 'date') return null;
+  return new Intl.DateTimeFormat('en-US', {timeZone:'America/New_York',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(at)).replace(',', '') + ' ET';
+}
