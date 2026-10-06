@@ -212,8 +212,20 @@ def model_budget(path, env=None, now=None):
         used = len(headline_translation.budget_calls(db, now - 86400))
         preview = db.execute('SELECT COUNT(*) FROM signal_headline_translation_calls WHERE at>=? AND source_id LIKE ?',
                              (now - 86400, preview_summaries.LEDGER_PREFIX + '%')).fetchone()[0]
+        lanes = {}
+        for row in db.execute("""SELECT CASE WHEN source_id LIKE 'preview:%' THEN 'preview'
+              WHEN source_id LIKE 'pulse:%' THEN 'pulse' WHEN source_id LIKE 'research:%' THEN 'research'
+              WHEN source_id LIKE 'x-%' THEN 'x' ELSE 'headline' END AS lane, state, COUNT(*) AS n
+              FROM signal_headline_translation_calls WHERE at>=? GROUP BY lane, state""", (now - 86400,)):
+            lanes.setdefault(row['lane'], {})[row['state'] or 'unknown'] = row['n']
+        macro = 0
+        if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='source_macro_model_attempts'").fetchone():
+            macro = db.execute('SELECT COUNT(*) FROM source_macro_model_attempts WHERE dispatched_at>=?',
+                               (now - 86400,)).fetchone()[0]
     return {'enabled': True, 'dailyLimit': limit, 'usedLast24h': used, 'exhausted': used >= limit,
-            'previewUsedLast24h': preview, 'previewLimit': max(1, int(limit * preview_summaries.BUDGET_SHARE))}
+            'previewUsedLast24h': preview, 'previewLimit': max(1, int(limit * preview_summaries.BUDGET_SHARE)),
+            # Calls in the last 24 h by lane and outcome (done / failed / stale / running).
+            'byLane': lanes, 'macroDispatches': macro}
 
 
 def pulse_titles_status(path, now=None):

@@ -94,6 +94,8 @@ SQLITE_FAILURE_NAMES = {
 PRODUCTIVE_RESULTS = frozenset({"done", "stale"})
 # A feed nobody requested for this long is no longer refreshed in the background.
 NEWS_REFRESH_IDLE_SECONDS = 86400
+# At most one background rebuild per feed in this many seconds.
+NEWS_REFRESH_MIN_INTERVAL_SECONDS = 10
 
 
 def release_interrupted_jobs(db_path, now=None):
@@ -556,7 +558,7 @@ class AutomaticMonitor:
         # previous result (at most STALE_SECONDS old) instead of waiting. The
         # owner chose speed: a withdrawn story may stay visible that long, as if
         # the page had been opened a few seconds earlier. 0 turns this off.
-        self.news_stale_seconds = positive_int("RESEARCH_NEWS_STALE_SECONDS", 5, 0)
+        self.news_stale_seconds = positive_int("RESEARCH_NEWS_STALE_SECONDS", 20, 0)
         self.news_compute_ms = []
         self.news_requested = {}
         self.body_probe_urls = set()
@@ -818,7 +820,7 @@ class AutomaticMonitor:
         while not self.stop_event.is_set():
             result = None
             try:
-                result = pulse_titles.run_once(self.db_path, self.public_news(max_age=60))
+                result = pulse_titles.run_once(self.db_path, self.latest_news(max_age=60))
             except Exception as exc:
                 log_publication_failure("pulse-title-unavailable", exc)
             if not self.stop_event.is_set():
@@ -831,13 +833,28 @@ class AutomaticMonitor:
                 if time.monotonic() - at > NEWS_REFRESH_IDLE_SECONDS:
                     continue
                 try:
-                    self.refresh_news(key)
+                    self.refresh_news(key, min_interval=NEWS_REFRESH_MIN_INTERVAL_SECONDS)
                 except Exception as exc:
                     log_publication_failure("news-refresh-unavailable", exc)
 
-    def refresh_news(self, key):
+    def latest_news(self, max_age=None):
+        """The most recently finished feed, for the push change detector.
+
+        It must not start rebuilds of its own: the refresher already rebuilds
+        each requested feed, and a second rebuilder doubled the CPU load.
+        """
+        finished = [entry for entry in self.news_cache.values() if entry]
+        if finished:
+            return max(finished, key=lambda entry: entry[1])[3]
+        return self.public_news(max_age=max_age)
+
+    def refresh_news(self, key, min_interval=0):
         cached = self.news_cache.get(key)
         if cached and cached[2] is not None and cached[2] == self.database_version():
+            return False
+        # One rebuild takes seconds of CPU; rebuilding after every write kept a
+        # core busy and slowed every request. Visitors get the last result.
+        if cached and time.monotonic() - cached[1] < min_interval:
             return False
         with self.news_cache_lock:
             started = time.monotonic()
@@ -3129,7 +3146,7 @@ def main():
             from stream_gateway import news_revision_reader
             gateway, _ = create_gateway(app.public_price_targets, os.environ.get("RESEARCH_API_TOKEN", ""),
                                        f"http://127.0.0.1:{server.server_port}",
-                                       news_reader=news_revision_reader(app.public_news))
+                                       news_reader=news_revision_reader(app.latest_news))
             threading.Thread(target=server.serve_forever, daemon=True).start()
             web.run_app(gateway, host=host, port=port, access_log=None, shutdown_timeout=5)
         else:
