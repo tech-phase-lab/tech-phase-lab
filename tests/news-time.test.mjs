@@ -19,3 +19,10 @@ test('NEW excludes rediscovered, date-only, future and expired stories',()=>{
   assert.equal(recentPublication('2026-09-29T07:30:00Z','published',now),true);
   for(const [at,kind] of [['2026-09-29T07:30:00Z','observed'],['2026-09-29','date'],['2026-09-29T07:00:00Z','published'],['2026-09-29T09:00:00Z','published'],['invalid','published']]) assert.equal(recentPublication(at,kind,now),false);
 });
+
+test('U.S. Eastern time follows daylight saving and is omitted for date-only items',async()=>{
+  const { usEasternTime }=await import('../lib/research/news-time.ts');
+  assert.equal(usEasternTime('2026-10-05T17:14:00Z','published'),'10/5 13:14 ET');
+  assert.equal(usEasternTime('2026-12-05T17:14:00Z','published'),'12/5 12:14 ET');
+  assert.equal(usEasternTime('2026-10-05','date'),null);
+});
