@@ -125,3 +125,11 @@ test('the checked one-line strip title is preferred over the long headline',()=>
   assert.equal(en.headlines[0],'Nebius signs multi-year AI deal with Microsoft');
   assert.equal(fitPulseHeadline(ja.headlines,240,measure),'ネビウス、MSとAI基盤の複数年契約');
 });
+
+test('on a narrow screen the short summary is clipped instead of the long headline',async()=>{
+  const { pickPulseLine }=await import('../lib/research/news-pulse-headline.ts');
+  const full='ネビウス、ニュージャージー州でマイクロソフトにAIインフラ容量を供給する複数年契約を締結';
+  const short='ネビウス、MSとAI基盤の複数年契約';
+  assert.deepEqual(pickPulseLine([short,full,'NBIS：企業ニュース'],full,150,measure),{text:short,clipped:true});
+  assert.deepEqual(pickPulseLine([short,full,'NBIS：企業ニュース'],full,400,measure),{text:short,clipped:false});
+});

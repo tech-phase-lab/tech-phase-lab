@@ -229,6 +229,29 @@ def _category_current(db, source, row, now):
                         and instant(proof['verified_at']) <= now for proof in active))
 
 
+ENGLISH_FUNCTION_WORDS = frozenset({
+    'the', 'and', 'of', 'to', 'in', 'for', 'with', 'on', 'is', 'an', 'its', 'by', 'that', 'as', 'at',
+    'from', 'will', 'has', 'are', 'was', 'be', 'this', 'which', 'it', 'or', 'have', 'our', 'we',
+})
+# German, Spanish, French, Portuguese and Italian function words (wire services
+# repeat one release in several languages).
+FOREIGN_FUNCTION_WORDS = frozenset({
+    'der', 'die', 'das', 'und', 'mit', 'für', 'eine', 'ein', 'einer', 'nicht', 'ist', 'von', 'zu', 'den',
+    'dem', 'des', 'sich', 'auf', 'el', 'los', 'las', 'y', 'del', 'con', 'para', 'una', 'por', 'que', 'su',
+    'sus', 'le', 'les', 'et', 'du', 'pour', 'avec', 'une', 'est', 'dans', 'sur', 'au', 'aux', 'com', 'uma',
+    'não', 'il', 'della', 'per', 'che', 'nel',
+})
+
+
+def english_or_japanese(text):
+    """Only English or Japanese sources can get a checked bilingual summary."""
+    if len(re.findall(r'[぀-ヿ一-鿿]', text)) >= 5:
+        return True
+    words = re.findall(r"[a-zà-öø-ÿ]+", text[:2000].lower())
+    foreign = sum(word in FOREIGN_FUNCTION_WORDS for word in words)
+    return foreign < 3 or foreign <= sum(word in ENGLISH_FUNCTION_WORDS for word in words)
+
+
 def candidates(db, now, sources=None, *, stats=None):
     """Bounded retained evidence, not a claim of exhaustive upstream coverage."""
     sources = signals.SOURCES if sources is None else sources
@@ -293,6 +316,8 @@ def candidates(db, now, sources=None, *, stats=None):
         text = row['text']
         if not isinstance(text, str) or not text.strip() or '\x00' in text:
             continue
+        if not english_or_japanese((row['title'] or '') + '\n' + text):
+            continue  # e.g. German/Spanish wire copies: no bilingual summary can be checked.
         if row['lane'] != 'primary':
             if (row['truncated'] or hashlib.sha256((row['title'] + '\n' + text).encode()).hexdigest() != row['sha']):
                 continue
