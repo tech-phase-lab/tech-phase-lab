@@ -186,3 +186,11 @@ class NumberDiagnosticsTests(unittest.TestCase):
         self.assertEqual(preview_summaries.diagnose(result, source),
                          {'field': 'titleJa', 'check': 'numbers', 'code': 'unsupported-number',
                           'values': ['1300000000']})
+
+
+class ResearchShareTests(unittest.TestCase):
+    def test_research_notes_use_at_most_a_share_of_large_limits(self):
+        import official_research
+        self.assertEqual(official_research.research_cap(600), 210)
+        self.assertEqual(official_research.research_cap(400), 140)
+        self.assertEqual(official_research.research_cap(5), 5)
