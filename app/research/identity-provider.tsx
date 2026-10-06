@@ -7,15 +7,16 @@ import { createContext, useCallback, useContext, useRef, type ReactNode } from "
 const IdentityRefresh = createContext<(force?: boolean) => Promise<void>>(async () => {});
 export function useIdentityRefresh() { return useContext(IdentityRefresh); }
 function IdentitySession({ children }: { children: ReactNode }) {
-  const { isLoaded, getToken } = useAuth();
-  const pending = useRef<Promise<void> | null>(null);
+  const { isLoaded, getToken, sessionId } = useAuth();
+  const pending = useRef<{ sessionId: string | null | undefined; task: Promise<void> } | null>(null);
   const refresh = useCallback(async (force = false) => {
     if (!isLoaded) throw Error("identity-loading");
-    if (pending.current) return pending.current;
+    // Never reuse a token refresh belonging to a previous signed-in session.
+    if (pending.current?.sessionId === sessionId) return pending.current.task;
     const task = waitForIdentity(getToken({ skipCache: force }), AbortSignal.timeout(10_000)).then(() => {});
-    pending.current = task;
-    try { await task; } finally { if (pending.current === task) pending.current = null; }
-  }, [isLoaded, getToken]);
+    pending.current = { sessionId, task };
+    try { await task; } finally { if (pending.current?.task === task) pending.current = null; }
+  }, [isLoaded, getToken, sessionId]);
   return <IdentityRefresh.Provider value={refresh}>{children}</IdentityRefresh.Provider>;
 }
 import { useResearchLanguage } from "./use-research-language";

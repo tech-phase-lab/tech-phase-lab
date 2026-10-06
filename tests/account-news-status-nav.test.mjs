@@ -29,6 +29,8 @@ new Function("require", "module", "exports", compiled)(id => {
   } };
   if (id === "../research-tool-shell") return { default: ({ children }) => children };
   if (id === "../use-research-language") return { useResearchLanguage: () => [language, () => {}] };
+  if (id === "@/lib/research/member-recovery") return { recoverMember: () => { throw Error("Unexpected effect during server render"); } };
+  if (id === "../identity-provider") return { useIdentityRefresh: () => async () => {} };
   if (id === "./preview-controls") return { default: () => null };
   return require(id);
 }, compiledModule, compiledModule.exports);

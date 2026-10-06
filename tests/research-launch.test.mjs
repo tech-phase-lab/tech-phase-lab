@@ -4,9 +4,9 @@ import {readFileSync} from 'node:fs';
 import {stripTypeScriptTypes} from 'node:module';
 const source=readFileSync(new URL('../lib/research/launch-boot.ts',import.meta.url),'utf8');
 const {launchBoot}=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
-function launch({standalone=true,type='navigate',seen=false,storageFails=false,elapsed=100}={}) {
+function launch({standalone=true,type='navigate',seen=false,storageFails=false,elapsed=100,visibility='visible'}={}) {
  const element={dataset:{}}, listeners=new Map(), callbacks=[];
- const document={visibilityState:'visible',getElementById:()=>element,addEventListener:(k,v)=>listeners.set(k,v),removeEventListener:k=>listeners.delete(k)};
+ const document={visibilityState:visibility,getElementById:()=>element,addEventListener:(k,v)=>listeners.set(k,v),removeEventListener:k=>listeners.delete(k)};
  const window={matchMedia:()=>({matches:standalone}),setTimeout:(fn,ms)=>{callbacks.push({fn,ms});return 1;},addEventListener:document.addEventListener,removeEventListener:document.removeEventListener};
  const storage={getItem:()=>{if(storageFails)throw Error('denied');return seen?'1':null;},setItem:()=>{seen=true;}};
  new Function('window','document','navigator','performance','sessionStorage',launchBoot)(window,document,{}, {getEntriesByType:()=>[{type}],now:()=>elapsed},storage);
@@ -16,11 +16,18 @@ test('initial standalone HTML starts the logo without hydration and dismisses wi
  const r=launch();assert.equal(r.element.dataset.active,'true');assert.equal(r.callbacks[0].ms,1200);r.callbacks[0].fn();assert.equal(r.element.dataset.active,undefined);assert.equal(r.listeners.size,0);
  assert.doesNotMatch(source,/fetch\(|location\.reload|router\.refresh/);
 });
-test('late startup, browser, reload, history, repeat session and denied storage never flash a splash',()=>{
- for(const options of [{elapsed:5000},{standalone:false},{type:'reload'},{type:'back_forward'},{seen:true},{storageFails:true}]){const r=launch(options);assert.equal(r.element.dataset.active,undefined);assert.equal(r.callbacks.length,0);}
+test('fresh loads and reloads show the logo regardless of storage, mode or server latency',()=>{
+ for(const options of [{elapsed:5000},{standalone:false},{type:'reload'},{seen:true},{storageFails:true}]){const r=launch(options);assert.equal(r.element.dataset.active,'true');assert.equal(r.callbacks.length,1);}
+ const r=launch({type:'back_forward'});assert.equal(r.element.dataset.active,undefined);
 });
 test('backgrounding dismisses and removes resume listeners',()=>{
  const r=launch();r.document.visibilityState='hidden';r.listeners.get('visibilitychange')();assert.equal(r.element.dataset.active,undefined);assert.equal(r.listeners.size,0);
+});
+test('a document opened in the background shows once when first made visible',()=>{
+ const r=launch({visibility:'hidden'});assert.equal(r.element.dataset.active,undefined);
+ r.document.visibilityState='visible';r.listeners.get('visibilitychange')();
+ assert.equal(r.element.dataset.active,'true');r.callbacks[0].fn();
+ assert.equal(r.listeners.has('visibilitychange'),false);
 });
 test('home is synchronous; live data streams inside a null fallback without replacing the dashboard',()=>{
  const page=readFileSync(new URL('../app/research/page.tsx',import.meta.url),'utf8');
