@@ -35,6 +35,7 @@ import question_translation
 import headline_translation
 import pipeline_status
 import preview_summaries
+import pulse_titles
 import x_market_news
 import analyst_news
 import general_source_news
@@ -72,6 +73,7 @@ PUBLICATION_FAILURE_LANES = frozenset({
     "headline-translation-unavailable", "market-translation-unavailable",
     "analyst-news-publication-unavailable", "official-research-unavailable",
     "public-news-unavailable", "preview-summary-unavailable", "news-refresh-unavailable",
+    "pulse-title-unavailable",
 })
 PUBLICATION_EXCEPTION_CLASSES = {
     value: value.__name__ for module in (builtins, sqlite3) for value in vars(module).values()
@@ -705,6 +707,7 @@ class AutomaticMonitor:
         self.result_thread = threading.Thread(target=self.run_results, name="result-publication", daemon=True)
         self.preview_summary_thread = threading.Thread(target=self.run_preview_summaries, name="preview-summary", daemon=True)
         self.news_refresh_thread = threading.Thread(target=self.run_news_refresh, name="news-refresh", daemon=True)
+        self.pulse_title_thread = threading.Thread(target=self.run_pulse_titles, name="pulse-titles", daemon=True)
         self.official_research_thread = threading.Thread(target=self.run_official_research, name="official-research", daemon=True)
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
@@ -806,6 +809,19 @@ class AutomaticMonitor:
                 log_publication_failure("preview-summary-unavailable", exc)
             if not self.stop_event.is_set():
                 wake.wait(0.2 if result in PRODUCTIVE_RESULTS else 5)
+
+    def run_pulse_titles(self):
+        # One-line strip titles for published stories whose headline is too long.
+        if headline_translation.configuration(os.environ) is None:
+            return
+        while not self.stop_event.is_set():
+            result = None
+            try:
+                result = pulse_titles.run_once(self.db_path, self.public_news(max_age=60))
+            except Exception as exc:
+                log_publication_failure("pulse-title-unavailable", exc)
+            if not self.stop_event.is_set():
+                self.stop_event.wait(0.5 if result in PRODUCTIVE_RESULTS else 10)
 
     def run_news_refresh(self):
         """Recompute each recently requested feed after a write, off the request path."""
@@ -952,6 +968,7 @@ class AutomaticMonitor:
         self.result_thread.start()
         self.preview_summary_thread.start()
         self.news_refresh_thread.start()
+        self.pulse_title_thread.start()
         self.official_research_thread.start()
         self.mu_measurement_thread.start()
         self.watch_earnings_thread.start()
@@ -1092,11 +1109,11 @@ class AutomaticMonitor:
             # Reuse this request's verified headlines. Research enrichment used
             # to run the same bridge sync and publication scan a second time.
             official = signals.public_official_updates(db, reference=reference, limit=500)
-            payload = news_history.bounded({**drafts,
+            payload = news_history.bounded(pulse_titles.attach(db, {**drafts,
                 **official_research.news_projection(db, reference, official),
                 "marketUpdates": x_market_news.public_feed(db),
                 "analystUpdates": analyst_news.public_feed(db),
-                "resultBriefs": market_results.public_feed(db)})
+                "resultBriefs": market_results.public_feed(db)}))
             if original_preview:
                 try:
                     return original_preview_news.preview_payload(db, payload, reference)
@@ -2816,6 +2833,10 @@ class Handler(BaseHTTPRequestHandler):
                     state["newsPipeline"] = pipeline_status.summary(pipeline_status.collect(self.app.db_path))
                 except Exception:
                     state["newsPipeline"] = {"error": "pipeline-status-unavailable"}
+                try:
+                    state["newsPipeline"]["modelBudget"] = pipeline_status.model_budget(self.app.db_path)
+                except Exception:
+                    state["newsPipeline"]["modelBudget"] = {"error": "model-budget-unavailable"}
             self.send_json(200 if path == "/health" or state["ready"] else 503, state)
             return
         if path == "/admin/pipeline":

@@ -160,6 +160,8 @@ def dates(text):
 def numeric_values(text):
     """Canonical exact magnitudes, preserving signs and percent dimensions."""
     text = duration_ranges(text)
+    # "Per share" is written 1株当たり in Japanese; the 1 is not a quantity.
+    text = re.sub(r'(?:1|１|一)株(?=当たり|あたり)', '株', text)
     text, values = token_denominators(text)
     def target_count(match):
         if re.search(r'[$€£¥]\s*$', text[:match.start()]):
@@ -248,7 +250,7 @@ def signed_numbers(text):
     return values
 
 
-def validate_numbers(text, evidence):
+def validate_numbers(text, evidence, check_dates=True):
     # Compare exact quantities rather than numeric spelling: $150B equals
     # 1500億ドル; $15B, 1500万ドル and -1500億ドル do not.
     if not set(numeric_values(text)).issubset(set(numeric_values(evidence))):
@@ -257,7 +259,7 @@ def validate_numbers(text, evidence):
     if not set(quarter_values(text)).issubset(set(quarter_values(evidence))):
         raise ValueError('unsupported-number')
     source_dates = dates(evidence)
-    for year, month, day in dates(text):
+    for year, month, day in (dates(text) if check_dates else ()):
         if not any(month == sm and day == sd and (year is None or year == sy) for sy, sm, sd in source_dates):
             raise ValueError('unsupported-number')
     if not model_year_facts(text).issubset(model_year_facts(evidence)):
@@ -737,16 +739,21 @@ def validate_semantics(text, evidence):
             raise ValueError('invalid-copy')
 
 
-def validate_pair(ja, en):
+def validate_pair(ja, en, exact_counts=True):
+    """Bilingual agreement. exact_counts=False is for multi-sentence detail,
+    where one language may repeat a year or figure the other states once;
+    every number must still appear on both sides."""
     validate_execution_and_capacity(ja, en)
     validate_execution_and_capacity(en, ja)
     validate_amount_relations(ja, en)
     validate_amount_relations(en, ja)
     validate_comparison_baselines(ja, en)
     validate_comparison_baselines(en, ja)
-    validate_numbers(ja, en)
-    validate_numbers(en, ja)
-    if Counter(numeric_values(ja))!=Counter(numeric_values(en)):
+    # Multi-sentence detail is checked against its source date by date on each
+    # side; between languages a year may be stated on one side only.
+    validate_numbers(ja, en, check_dates=exact_counts)
+    validate_numbers(en, ja, check_dates=exact_counts)
+    if exact_counts and Counter(numeric_values(ja))!=Counter(numeric_values(en)):
         raise ValueError('unsupported-number')
     # Match the outcome being qualified, not a blanket "aim" anywhere in the
     # sentence: a completed acquisition may legitimately have a future purpose.

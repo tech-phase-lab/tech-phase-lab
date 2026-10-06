@@ -268,9 +268,9 @@ class ResearchServiceTests(unittest.TestCase):
                     })
             with patch.object(threading.Thread, 'start', start_worker):
                 app.start()
-            # 16 single workers (including the news refresher) plus one thread
-            # per parallel headline translator.
-            self.assertEqual(len(observed), 16 + app.translation_workers)
+            # 17 single workers (including the news refresher and strip titles)
+            # plus one thread per parallel headline translator.
+            self.assertEqual(len(observed), 17 + app.translation_workers)
             self.assertTrue(all(observed))
 
     def test_monitor_recovers_after_an_unexpected_worker_exception(self):

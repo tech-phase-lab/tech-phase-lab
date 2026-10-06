@@ -73,7 +73,7 @@ export function mergeResultNews(updates: OfficialUpdate[], briefs: ResultBrief[]
       const attribution = [...publishers].join(" / ");
       return resultFactText(fact, lang) + (lang === "ja" ? `（${attribution}）` : ` (${attribution})`);
     }).join("\n");
-    merged.push({ ...primary.update, ...titles, ...(conflict ? { shortTitleJa: undefined, shortTitleEn: undefined } : {}),
+    merged.push({ ...primary.update, ...titles, ...(conflict ? { shortTitleJa: undefined, shortTitleEn: undefined, pulseTitleJa: undefined, pulseTitleEn: undefined } : {}),
       bodyJa: body("ja"), bodyEn: body("en"), sources });
   }
   return [...merged, ...unrelated];

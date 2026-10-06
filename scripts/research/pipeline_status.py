@@ -193,3 +193,24 @@ def log_publication(lane, event_id, acquired_at, published_at=None, source_publi
         'acquiredToPublishedMs': elapsed_ms(acquired_at, published_at),
         'attempts': attempts,
     }), flush=True)
+
+
+def model_budget(path, env=None, now=None):
+    """Model calls in the rolling 24 hours against the configured daily limit.
+
+    Counts only; never keys, prompts or output.
+    """
+    import os
+    import preview_summaries
+    env = os.environ if env is None else env
+    now = time.time() if now is None else now
+    config = headline_translation.configuration(env, now=now)
+    if config is None:
+        return {'enabled': False}
+    limit = config[2]
+    with headline_translation.connect(path) as db:
+        used = len(headline_translation.budget_calls(db, now - 86400))
+        preview = db.execute('SELECT COUNT(*) FROM signal_headline_translation_calls WHERE at>=? AND source_id LIKE ?',
+                             (now - 86400, preview_summaries.LEDGER_PREFIX + '%')).fetchone()[0]
+    return {'enabled': True, 'dailyLimit': limit, 'usedLast24h': used, 'exhausted': used >= limit,
+            'previewUsedLast24h': preview, 'previewLimit': max(1, int(limit * preview_summaries.BUDGET_SHARE))}

@@ -9,7 +9,7 @@ export const OFFICIAL_NEWS_HISTORY_LIMIT = 100;
 export const NEWS_BRIEF_TITLE_SUFFIXES = { ja: "（短報・詳細確認中）", en: " (brief; details awaiting review)" } as const;
 export type OfficialHistory = { limit: number; sourceEligible: number; returned: number; omitted: number; hasMore: boolean; byteLimited: boolean; coreOverTarget: boolean };
 type NewsBody = { bodyJa?: string; bodyEn?: string };
-type CompactTitles = { shortTitleJa?: string; shortTitleEn?: string };
+type CompactTitles = { shortTitleJa?: string; shortTitleEn?: string; pulseTitleJa?: string; pulseTitleEn?: string };
 export type GeneralNewsItem = CompactTitles & {
   id: string; title: string; url: string; publisher: string; tickers: string[];
   publishedAt: string; observedAt: string; approvedAt: string; summaryJa: string; summaryEn: string;
@@ -29,7 +29,11 @@ function compactTitles(value: Record<string, unknown>): CompactTitles {
   const ja = value.shortTitleJa, en = value.shortTitleEn;
   const valid = (text: unknown): text is string => typeof text === "string"
     && !!text.trim() && Array.from(text).length <= 180 && !/[\0\r\n]/.test(text);
-  return valid(ja) && valid(en) ? { shortTitleJa: ja.trim(), shortTitleEn: en.trim() } : {};
+  // One-line top-strip summary of the same headline (checked on the server).
+  const pulseJa = value.pulseTitleJa, pulseEn = value.pulseTitleEn;
+  const pulse = (text: unknown): text is string => valid(text) && Array.from(text).length <= 80;
+  return { ...(valid(ja) && valid(en) ? { shortTitleJa: ja.trim(), shortTitleEn: en.trim() } : {}),
+    ...(pulse(pulseJa) && pulse(pulseEn) ? { pulseTitleJa: pulseJa.trim(), pulseTitleEn: pulseEn.trim() } : {}) };
 }
 
 // Optional approved story text never admits private source bodies or analysis.

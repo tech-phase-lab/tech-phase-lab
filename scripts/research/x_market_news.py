@@ -56,7 +56,7 @@ def summary_detail(raw, original, title_ja, title_en):
                 return {}
         if not re.search(r'[\u3040-\u30ff\u4e00-\u9fff]', ja):
             return {}
-        factual_validation.validate_pair(ja, en)
+        factual_validation.validate_pair(ja, en, exact_counts=False)
         factual_validation.validate_names(ja, original + ' ' + en)
     except (ValueError, TypeError):
         return {}
