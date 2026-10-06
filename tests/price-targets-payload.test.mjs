@@ -19,6 +19,13 @@ test('target payload retains syndicated sources, primary identity, and only stru
   assert.equal(priceTargetSourceName(secondary), 'TipRanks');
 });
 
+test('Hardik Shah (@AIStockSavvy) price target actions are an approved source', () => {
+  const hardik = { ...target, id: 9, source: 'X · Hardik Shah', url: 'https://x.com/AIStockSavvy/status/109' };
+  const feed = publicPriceTargets(payload(hardik));
+  assert.deepEqual(feed.items, [hardik]);
+  assert.equal(priceTargetSourceName(hardik), 'AIStockSavvy');
+});
+
 test('invalid secondary sources cannot admit unapproved URLs or erase a valid target', () => {
   for (const url of ['javascript:alert(1)', 'https://evil.example/post', 'https://x.com/theflynews/status/103', 'https://x.com/impostor/status/103', 'https://x.com/TipRanks/status/103?secret=1']) {
     const feed = publicPriceTargets(payload({ ...target, sources: [{ ...secondary, url }] }));

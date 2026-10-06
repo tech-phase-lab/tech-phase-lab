@@ -68,9 +68,11 @@ def stamp(value):
 
 def manifest(sources=None):
     registry = json.loads(Path(__file__).with_name('signal_sources.json').read_text())
-    expected = {s['id']: s for s in registry if s.get('format') == 'x-api' and s.get('enabled') is not False}
+    # Polling-only routes (streamExcluded) never become Filtered Stream rules.
+    expected = {s['id']: s for s in registry if s.get('format') == 'x-api' and s.get('enabled') is not False
+                and not s.get('streamExcluded')}
     approved = {s['id']: s for s in (registry if sources is None else sources)
-                if s.get('format') == 'x-api' and s.get('enabled') is not False}
+                if s.get('format') == 'x-api' and s.get('enabled') is not False and not s.get('streamExcluded')}
     if set(expected) != set(SOURCE_IDS) or set(approved) != set(SOURCE_IDS):
         raise StreamBlocked('x-stream-source-scope-invalid')
     rules = []

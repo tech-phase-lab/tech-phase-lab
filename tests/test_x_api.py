@@ -201,7 +201,7 @@ class XApiTests(unittest.TestCase):
         added = {"LITE", "COHR", "VST", "IREN", "ALAB", "APH", "INTC",
                  "AMAT", "SIMO", "AAOI", "META"}
         self.assertEqual({source["accounts"][0].lower() for source in x_sources},
-                         {"tipranks", "wallstengine", "nebiusai"})
+                         {"tipranks", "wallstengine", "nebiusai", "aistocksavvy"})
         self.assertEqual({ticker for source in x_sources for ticker in source["tickers"]},
                          set(monitor.PROVIDERS) | added)
         for source in x_sources:
@@ -209,6 +209,8 @@ class XApiTests(unittest.TestCase):
                 self.assertEqual(source["accounts"], ["nebiusai"])
                 self.assertEqual(source["tickers"], ["NBIS"])
                 continue
+            if source["id"] == "x-aistocksavvy":
+                continue  # Price-target-only route; checked in HardikShahPriceTargetRouteTests.
             self.assertLessEqual(len(source["query"]), 512)
             self.assertEqual(set(source["extraTickers"]), added)
             self.assertEqual(len(source["tickers"]), 33)
@@ -341,3 +343,17 @@ class XApiTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class HardikShahPriceTargetRouteTests(unittest.TestCase):
+    def test_route_is_price_target_raises_and_cuts_only(self):
+        source = next(s for s in signals.SOURCES if s["id"] == "x-aistocksavvy")
+        self.assertEqual(source["accounts"], ["AIStockSavvy"])
+        self.assertTrue(source["query"].startswith("from:AIStockSavvy "))
+        self.assertIn('"price target"', source["query"])
+        self.assertLessEqual(len(source["query"]), 512)
+        self.assertIn("x-aistocksavvy", signals.PRICE_TARGET_SOURCE_IDS)
+        self.assertIn("aistocksavvy", x_api.ALLOWED_ACCOUNT_NAMES)
+        self.assertTrue(source.get("streamExcluded"))
+        # Not an author-intake, analyst-news or market-news route.
+        self.assertNotIn("x-aistocksavvy", signals.X_AUTHOR_INTAKE_SOURCE_IDS)

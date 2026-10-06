@@ -232,7 +232,8 @@ class BuybackTests(unittest.TestCase):
 
     def test_queries_and_limits_preserve_approved_routes(self):
         active=[s for s in signals.SOURCES if s['format']=='x-api' and s.get('enabled') is not False]
-        self.assertEqual(len(active),4)
+        # 4 approved routes plus the polling-only Hardik Shah price-target route.
+        self.assertEqual(len(active),5)
         self.assertTrue(all(len(s['query'])<=512 and s['maxResults']==30 for s in active))
         self.assertEqual(SOURCE['intervalSeconds'],120)
         self.assertIn(' OR 自社株買い',SOURCE['query'])
