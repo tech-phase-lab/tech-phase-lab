@@ -166,3 +166,13 @@ class PreviewLanguageTests(unittest.TestCase):
             'August 28, 2026. Revenue was $11.32 billion.'))
         self.assertTrue(original_preview_news.english_or_japanese('マイクロンは2026年度第4四半期の決算を発表した。'))
         self.assertTrue(original_preview_news.english_or_japanese('$NVDA Blackwell ships'))
+
+
+class RejectionDiagnosticsTests(unittest.TestCase):
+    def test_rejection_names_the_field_and_check_without_copy(self):
+        source = 'Acme Corp announced a new plant in Ohio.'
+        result = {'titleJa': 'Zeta社がオハイオ州に新工場', 'titleEn': 'Acme Corp announces new Ohio plant',
+                  'bodyJa': 'Zeta社はオハイオ州に新工場を発表した。', 'bodyEn': 'Acme Corp announced a new plant in Ohio.'}
+        detail = preview_summaries.diagnose(result, source)
+        self.assertEqual(detail, {'field': 'titleJa/titleEn', 'check': 'pair', 'code': 'changed-names', 'name': 'zeta'})
+        self.assertNotIn('オハイオ', json.dumps(detail, ensure_ascii=False))

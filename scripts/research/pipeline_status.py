@@ -242,3 +242,9 @@ def pulse_titles_status(path, now=None):
                 kinds[row['failure_kind']] = kinds.get(row['failure_kind'], 0) + 1
         stored = db.execute('SELECT COUNT(*) FROM pulse_titles').fetchone()[0]
     return {'jobs': sum(states.values()), 'states': states, 'stored': stored, 'failureKinds': kinds}
+
+
+def recent_rejections():
+    """Field/check/name of recent summary rejections (no copy or article text)."""
+    import preview_summaries
+    return list(preview_summaries.RECENT_REJECTIONS)

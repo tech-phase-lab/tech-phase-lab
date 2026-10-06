@@ -91,6 +91,43 @@ def validate(result, source):
     return copy
 
 
+# Recent rejections: lane code, which field and which check failed, and for a
+# name check the single unmatched name. No copy or article text is kept.
+RECENT_REJECTIONS = []
+
+
+def diagnose(result, source):
+    """Which field and check rejected a summary (for /health/news)."""
+    if not isinstance(result, dict):
+        return {'field': None, 'check': 'shape'}
+    checks = (('numbers', factual_validation.validate_numbers), ('semantics', factual_validation.validate_semantics))
+    for key in FIELDS:
+        value = result.get(key)
+        if not isinstance(value, str):
+            return {'field': key, 'check': 'shape'}
+        for name, check in checks:
+            try:
+                check(value.strip(), source)
+            except ValueError as exc:
+                return {'field': key, 'check': name, 'code': str(exc)}
+    for ja, en in (('titleJa', 'titleEn'), ('bodyJa', 'bodyEn')):
+        try:
+            factual_validation.validate_pair(result[ja], result[en], exact_counts=ja == 'titleJa')
+        except ValueError as exc:
+            return {'field': ja + '/' + en, 'check': 'pair', 'code': str(exc),
+                    **({'name': factual_validation.LAST_NAME_REJECTION[0]} if str(exc) == 'changed-names' else {})}
+        try:
+            factual_validation.validate_names(result[ja], source + ' ' + result[en])
+        except ValueError:
+            return {'field': ja, 'check': 'names', 'name': factual_validation.LAST_NAME_REJECTION[0]}
+    return {'field': None, 'check': 'other'}
+
+
+def record_rejection(entry):
+    RECENT_REJECTIONS.append({**entry, 'at': datetime.now(timezone.utc).isoformat(timespec='seconds')})
+    del RECENT_REJECTIONS[:-10]
+
+
 def summarizable(db, now):
     """Current preview stories that carry full source text (not metadata-only notices)."""
     return [row for row in original_preview_news.candidates(db, now) if source_text(row)]
@@ -160,7 +197,15 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         if response.get('status') != 'completed':
             reason = (response.get('incomplete_details') or {}).get('reason')
             raise ValueError('output-token-limit' if reason == 'max_output_tokens' else 'incomplete')
-        copy = validate(json.loads(brief_generator.output_text(response)), source)
+        result = json.loads(brief_generator.output_text(response))
+        try:
+            copy = validate(result, source)
+        except ValueError as exc:
+            try:
+                record_rejection({'lane': 'preview', 'code': str(exc), **diagnose(result, source)})
+            except Exception:
+                pass
+            raise
         usage = {k: v for k, v in (response.get('usage') or {}).items()
                  if k in ('input_tokens', 'output_tokens', 'total_tokens') and type(v) is int}
     except Exception as exc:

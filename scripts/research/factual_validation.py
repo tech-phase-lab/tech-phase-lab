@@ -693,6 +693,10 @@ def _mentioned(word, english):
     return len(compact) >= 3 and not word.isalpha() and compact in _compact(english)
 
 
+# The last unmatched name (one token, for diagnostics; never article text).
+LAST_NAME_REJECTION = ['']
+
+
 def validate_names(ja, en):
     """Tickers must match exactly; Latin-script names in Japanese must appear in English.
 
@@ -713,6 +717,7 @@ def validate_names(ja, en):
             continue
         if any(word in group and any(_mentioned(alias, english) for alias in group) for group in NAME_GROUPS):
             continue
+        LAST_NAME_REJECTION[0] = word[:40]
         raise ValueError('changed-names')
 
 
