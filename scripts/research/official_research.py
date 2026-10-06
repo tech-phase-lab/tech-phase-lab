@@ -53,6 +53,14 @@ On retries, correctionsRequired identifies exact rejected fields and numeric/dat
 Use third-person news wording. Omit promotion, calls to action and registration links. Add no market predictions, advice, consensus, calculations or unsupported context. Keep both languages equivalent and check each pair against its evidence. No ticker prefix is needed."""
 
 
+# Share of the shared daily model-call limit issuer research notes may use.
+RESEARCH_BUDGET_SHARE = 0.35
+
+
+def research_cap(limit):
+    """Research calls allowed in 24 h. Small limits (tests, trial setups) are not split."""
+    return limit if limit < 20 else int(limit * RESEARCH_BUDGET_SHARE)
+
 def schema(db):
     headline_translation.schema(db)
     db.executescript('''
@@ -601,7 +609,13 @@ def claim(db, reference, model, limit):
     with db:
         db.execute('BEGIN IMMEDIATE')
         used=len(headline_translation.budget_calls(db,now-86400))
-        capacity_available = used + headline_pending < limit
+        # Issuer research may use at most this share of the shared daily
+        # limit: rejected notes once spent 241 of 600 calls on staging and
+        # left none for headlines, summaries and strip titles.
+        research_used=db.execute("SELECT COUNT(*) FROM signal_headline_translation_calls WHERE at>=? AND source_id LIKE 'research:%'",
+                                 (now-86400,)).fetchone()[0]
+        capacity_available = (used + headline_pending < limit
+                              and research_used < research_cap(limit))
         primary_urls = bridge.primary_owned_urls(db, [row['url'] for row in rows
             if not row['source_id'].startswith(bridge.PREFIX)
             and not row.get('general_source') and not row.get('issuer_business')])
