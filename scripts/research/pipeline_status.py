@@ -133,20 +133,55 @@ def summary(articles):
     """Aggregate counts and timing for /health (no per-article identifiers)."""
     lanes = {}
     for article in articles:
-        lane = lanes.setdefault(article['lane'], {'stages': {stage: 0 for stage in STAGES}, 'latencies': []})
+        lane = lanes.setdefault(article['lane'], {'stages': {stage: 0 for stage in STAGES}, 'latencies': [],
+                                                  'failureKinds': {}})
         lane['stages'][article['stage']] += 1
+        if article.get('failureKind'):
+            kinds = lane['failureKinds']
+            kinds[article['failureKind']] = kinds.get(article['failureKind'], 0) + 1
         if article['acquiredToPublishedMs'] is not None:
             lane['latencies'].append(article['acquiredToPublishedMs'])
-    return {lane: {'stages': value['stages'], 'publishedSamples': len(value['latencies']),
+    return {lane: {'stages': value['stages'], 'failureKinds': value['failureKinds'],
+                   'publishedSamples': len(value['latencies']),
                    'acquiredToPublishedP50Ms': percentile(value['latencies'], 0.5),
                    'acquiredToPublishedP95Ms': percentile(value['latencies'], 0.95),
                    'acquiredToPublishedMaxMs': max(value['latencies'], default=None)}
             for lane, value in lanes.items()}
 
 
+def preview_articles(db, now=None, limit=100):
+    """Bilingual summary stage of original-preview stories (shown as the card status)."""
+    import original_preview_news
+    import preview_summaries
+    now = time.time() if now is None else now
+    preview_summaries.schema(db)
+    articles = []
+    for row in preview_summaries.summarizable(db, datetime.fromtimestamp(now, timezone.utc)):
+        identity = (row['key'], row['sha'])
+        stored = db.execute('SELECT created_at FROM preview_summaries WHERE canonical_url=? AND revision=?', identity).fetchone()
+        job = db.execute('SELECT attempts,next_at,state,failure_kind FROM preview_summary_jobs WHERE canonical_url=? AND revision=?',
+                         identity).fetchone()
+        stage, retry_at = ('published', None) if stored else job_stage(job, now)
+        published_at = stored['created_at'] if stored else None
+        acquired = row['item']['acquiredAt']
+        articles.append({
+            'lane': 'preview', 'id': row['item']['id'], 'sourceId': row['source_id'], 'stage': stage,
+            'sourcePublishedAt': row['item'].get('sourcePublishedAt') or row['item'].get('sourcePublishedOn'),
+            'acquiredAt': acquired, 'publishedAt': published_at,
+            'acquiredToPublishedMs': elapsed_ms(acquired, published_at),
+            'attempts': job['attempts'] if job else 0,
+            'failureKind': job['failure_kind'] if job and stage == 'failed' else None,
+            'nextRetryAt': retry_at,
+        })
+        if len(articles) >= limit:
+            break
+    return articles
+
+
 def collect(path, now=None, limit=100):
     with headline_translation.connect(path) as db:
-        return headline_articles(db, now=now, limit=limit) + market_articles(db, now=now, limit=limit)
+        return (headline_articles(db, now=now, limit=limit) + market_articles(db, now=now, limit=limit)
+                + preview_articles(db, now=now, limit=limit))
 
 
 def log_publication(lane, event_id, acquired_at, published_at=None, source_published_at=None, attempts=None):

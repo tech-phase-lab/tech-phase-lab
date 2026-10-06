@@ -99,7 +99,7 @@ test('whole macro alternatives fit representative 320/375/390/768/932/1440 budge
       assert.ok(headline.startsWith(lang==='ja'?'報道：':'Reported '));
       assert.ok(headline.includes(lang==='ja'?'前年比':'YoY'));
     }
-    assert.ok(headlines.every(text=>Array.from(text).reduce((n,c)=>n+(c.codePointAt(0)>255?2:1),0)<=64));
+    assert.ok(headlines.every(text=>Array.from(text).reduce((n,c)=>n+(c.codePointAt(0)>255?2:1),0)<=96));
     for(const viewport of [320,375,390,768,932,1440]) {
       const selected=fitPulseHeadline(headlines,viewportBudget(viewport),measure);
       assert.ok(selected,`${lang} ${viewport}`);

@@ -75,3 +75,41 @@ class PreviewSummaryTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class PreviewSummaryBudgetTests(unittest.TestCase):
+    setUp = fixtures.OriginalPreviewTests.setUp
+    article = fixtures.OriginalPreviewTests.article
+    publish = fixtures.OriginalPreviewTests.publish
+    feed = fixtures.OriginalPreviewTests.feed
+    run_summary = PreviewSummaryTests.run_summary
+
+    def test_summaries_use_at_most_their_share_of_the_daily_limit(self):
+        self.article()
+        self.publish()
+        with headline_translation.connect(self.path) as db:
+            preview_summaries.schema(db)
+            for index in range(2):  # 40% of the limit of 5.
+                db.execute("INSERT INTO signal_headline_translation_calls(at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)",
+                           (fixtures.NOW.timestamp() - 60, preview_summaries.LEDGER_PREFIX + 's', 'x', 'm', 'failed', f'p-{index}'))
+        self.assertEqual(self.run_summary(lambda *_: self.fail('over lane share')), 'idle')
+
+    def test_truncated_output_is_classified_and_retried_with_reason(self):
+        self.article()
+        self.publish()
+        truncated = lambda *_: {'status': 'incomplete', 'incomplete_details': {'reason': 'max_output_tokens'}}
+        self.assertEqual(self.run_summary(truncated), 'retry')
+        with headline_translation.connect(self.path) as db:
+            job = db.execute('SELECT failure_kind FROM preview_summary_jobs').fetchone()
+        self.assertEqual(job['failure_kind'], 'output-token-limit')
+
+    def test_stored_summary_is_validated_once_per_revision(self):
+        self.article()
+        self.publish()
+        self.assertEqual(self.run_summary(reply(GOOD)), 'done')
+        preview_summaries._ATTACH_RESULTS.clear()
+        with patch.object(preview_summaries, 'validate', wraps=preview_summaries.validate) as checked:
+            for _ in range(3):
+                [item] = self.feed()
+                self.assertEqual(item['summaryPolicy'], preview_summaries.POLICY_ID)
+        self.assertEqual(checked.call_count, 1)

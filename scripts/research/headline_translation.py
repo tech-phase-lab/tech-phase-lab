@@ -25,13 +25,15 @@ VALIDATION_FAILURES = frozenset({
 
 # Rejected copy is usually fixed by the next attempt, which is told why the
 # previous one failed; waiting an hour does not make it more likely to pass.
-VALIDATION_RETRY_SECONDS = (15, 60, 300, 1800, 3600)
+# Three quick tries cover most fixable rejections; after that, back off so
+# repeatedly rejected articles cannot use up the shared daily model budget.
+VALIDATION_RETRY_SECONDS = (15, 120, 1800, 3600)
 
 
 def retry_delay(attempts, kind=None):
     """Retry schedule by failure kind; never permanently abandon a job.
 
-    Rejected copy: 15 s, 1 min, 5 min, 30 min, 1 h, then up to 6 h.
+    Rejected copy: 15 s, 2 min, 30 min, 1 h, then up to 6 h.
     Provider outage/timeout: 1, 2, 4... minutes, at most 30 minutes.
     Authentication, rate limits and unknown kinds keep the original slow
     schedule (1, 2 minutes, then 1 hour growing to 6 hours).

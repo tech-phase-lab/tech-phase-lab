@@ -19,7 +19,7 @@ from test_headline_translation import ENV, NOW, SOURCE
 class RetryScheduleTests(unittest.TestCase):
     def test_rejected_copy_retries_in_minutes_not_hours(self):
         self.assertEqual([translation.retry_delay(n, 'changed-direction') for n in range(1, 7)],
-                         [15, 60, 300, 1800, 3600, 7200])
+                         [15, 120, 1800, 3600, 7200, 14400])
         self.assertEqual(translation.retry_delay(20, 'unsupported-number'), 21600)
 
     def test_provider_outage_is_capped_at_thirty_minutes(self):

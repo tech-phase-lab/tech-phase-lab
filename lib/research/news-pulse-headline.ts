@@ -2,10 +2,13 @@ import type { Language } from './data';
 import type { OfficialUpdate, MarketUpdate } from './general-news';
 import type { AnalystUpdate } from './analyst-news';
 
-// The header is an editorial headline, even when a wide screen has room for prose.
+// The header is one editorial line. Short headlines are preferred; a full
+// headline (up to 48 Japanese / 96 Latin characters) is used when the strip has
+// room, so readers see what happened instead of a generic category label.
 // This bounds candidate selection only; it never truncates or alters the text.
+const PULSE_MAX_UNITS = 96;
 const headlineUnits = (text: string) => Array.from(text).reduce((n, char) => n + (char.codePointAt(0)! > 255 ? 2 : 1), 0);
-const choices = (values: (string | undefined | null)[]) => [...new Set(values.filter((value): value is string => !!value?.trim() && !/[\r\n]/.test(value) && headlineUnits(value.trim()) <= 64).map(value => value.trim()))];
+const choices = (values: (string | undefined | null)[]) => [...new Set(values.filter((value): value is string => !!value?.trim() && !/[\r\n]/.test(value) && headlineUnits(value.trim()) <= PULSE_MAX_UNITS).map(value => value.trim()))];
 const subject = (tickers: string[]) => tickers.length === 1 ? tickers[0] : '';
 const topic = (name: string, text: string, lang: Language) => name ? `${name}${lang === 'ja' ? '：' : ': '}${text}` : text;
 

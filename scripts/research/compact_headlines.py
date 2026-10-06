@@ -4,7 +4,7 @@ from collections import Counter
 import factual_validation
 import bond_facts
 
-POLICY = """Also return shortTitleJa and shortTitleEn for the home strip, or null if shortening loses facts or qualifiers. Aim for 35 Japanese / 80 English characters without imposing a hard limit. Use no final punctuation or duplicated company/parenthesized ticker. Keep the full title fields complete. Both short titles must be grammatical, understandable statements. Preserve what every duration modifies (bond maturity versus a return window), the metric, comparison period and forecast status; never shorten these into ambiguous noun fragments."""
+POLICY = """Also return shortTitleJa and shortTitleEn for the home strip, or null if shortening loses facts or qualifiers. Keep shortTitleJa within 30 Japanese characters and shortTitleEn within 60 characters so it fits the one-line top strip; state what happened and the key figure. Use no final punctuation or duplicated company/parenthesized ticker. Keep the full title fields complete. Both short titles must be grammatical, understandable statements. Preserve what every duration modifies (bond maturity versus a return window), the metric, comparison period and forecast status; never shorten these into ambiguous noun fragments."""
 FIELDS = {key: {'type': ['string', 'null']} for key in ('shortTitleJa', 'shortTitleEn')}
 
 

@@ -36,6 +36,12 @@ INSTRUCTIONS = (
 ) + factual_validation.MEANING_POLICY
 FIELDS = ('titleJa', 'titleEn', 'bodyJa', 'bodyEn')
 INPUT_CHARS = 6000
+# Reasoning models spend part of the output allowance before writing JSON.
+OUTPUT_TOKENS = 4000
+# Summaries may use at most this share of the shared daily model-call limit,
+# so headline translation is never starved.
+BUDGET_SHARE = 0.4
+LEDGER_PREFIX = 'preview:'
 MAX_TITLE_CHARS = 180
 MAX_BODY_CHARS = 1500
 JAPANESE = re.compile(r'[぀-ヿ一-鿿]')
@@ -95,6 +101,10 @@ def claim(db, rows, model, limit, now):
         db.execute('BEGIN IMMEDIATE')
         if len(headline_translation.budget_calls(db, now - 86400)) >= limit:
             return None
+        used = db.execute('SELECT COUNT(*) FROM signal_headline_translation_calls WHERE at>=? AND source_id LIKE ?',
+                          (now - 86400, LEDGER_PREFIX + '%')).fetchone()[0]
+        if used >= max(1, int(limit * BUDGET_SHARE)):
+            return None
         for row in rows:
             identity = (row['key'], row['sha'])
             if db.execute('SELECT 1 FROM preview_summaries WHERE canonical_url=? AND revision=?', identity).fetchone():
@@ -109,7 +119,7 @@ def claim(db, rows, model, limit, now):
               next_at=excluded.next_at,lease=excluded.lease,state='running' ''',
                        (*identity, attempts, now + 300, lease))
             db.execute('INSERT INTO signal_headline_translation_calls(at,source_id,sha,model,state,lease) VALUES(?,?,?,?,?,?)',
-                       (now, row['source_id'], row['sha'], model, 'running', lease))
+                       (now, LEDGER_PREFIX + row['source_id'], row['sha'], model, 'running', lease))
             previous = job['failure_kind'] if job and job['failure_kind'] in headline_translation.VALIDATION_FAILURES else None
             return row, lease, attempts, previous
     return None
@@ -135,7 +145,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     source = source_text(row)
     fields = {name: {'type': 'string'} for name in FIELDS}
     payload = {
-        'model': model, 'store': False, 'max_output_tokens': 1500, 'instructions': INSTRUCTIONS,
+        'model': model, 'store': False, 'max_output_tokens': OUTPUT_TOKENS, 'instructions': INSTRUCTIONS,
         'input': json.dumps({'source': row['item']['sourceName'], 'title': row.get('source_title') or '',
                              'text': (row.get('source_text') or '')[:INPUT_CHARS],
                              **({'previousRejection': previous} if previous else {})}, ensure_ascii=False),
@@ -148,7 +158,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     try:
         response = transport(payload, key)
         if response.get('status') != 'completed':
-            raise ValueError('incomplete')
+            reason = (response.get('incomplete_details') or {}).get('reason')
+            raise ValueError('output-token-limit' if reason == 'max_output_tokens' else 'incomplete')
         copy = validate(json.loads(brief_generator.output_text(response)), source)
         usage = {k: v for k, v in (response.get('usage') or {}).items()
                  if k in ('input_tokens', 'output_tokens', 'total_tokens') and type(v) is int}
@@ -185,6 +196,13 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     return state
 
 
+# Validation against a long article costs ~0.1 s; the outcome is fixed for a
+# given source revision and stored copy, so each pair is checked once per
+# process instead of on every /news request.
+_ATTACH_RESULTS = {}
+_ATTACH_LIMIT = 2048
+
+
 def attach(db, row, item):
     """Add a stored summary to a public card only if it still validates."""
     if 'preview_summaries' not in original_preview_news.table_names(db):
@@ -193,8 +211,15 @@ def attach(db, row, item):
                         (row['key'], row['sha'])).fetchone()
     if not stored:
         return item
-    try:
-        copy = validate(json.loads(stored['payload']), source_text(row))
-    except (ValueError, TypeError):
+    cache_key = (row['key'], row['sha'], hashlib.sha256(stored['payload'].encode()).hexdigest())
+    if cache_key not in _ATTACH_RESULTS:
+        try:
+            _ATTACH_RESULTS[cache_key] = validate(json.loads(stored['payload']), source_text(row))
+        except (ValueError, TypeError):
+            _ATTACH_RESULTS[cache_key] = None
+        if len(_ATTACH_RESULTS) > _ATTACH_LIMIT:
+            _ATTACH_RESULTS.pop(next(iter(_ATTACH_RESULTS)))
+    copy = _ATTACH_RESULTS[cache_key]
+    if copy is None:
         return item  # Held: the original stays visible, marked as pending.
     return {**item, 'summaryPolicy': POLICY_ID, **copy}

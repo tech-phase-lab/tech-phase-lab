@@ -65,9 +65,11 @@ for(const lang of ['ja','en']) {
     assert.match(html,/<details/);
     const headlines=officialPulseHeadlines(item,lang,display.title);
     assert.equal(headlines[0],lang==='ja'?'ハセット氏、雇用報告はおおむね予想通りと発言':'Hassett: Jobs report was broadly as expected');
-    assert.ok(headlines.every(text=>Array.from(text).reduce((size,char)=>size+(char.codePointAt(0)>255?2:1),0)<=64));
+    assert.ok(headlines.every(text=>Array.from(text).reduce((size,char)=>size+(char.codePointAt(0)>255?2:1),0)<=96));
     assert.ok(headlines.every(text=>!/企業ニュース|company news/i.test(text)));
-    assert.equal(officialPulseHeadlines({...item,shortTitleJa:undefined,shortTitleEn:undefined},lang,display.title)[0],lang==='ja'?'政策ニュース':'Policy news');
+    // Without a short title the full headline is shown when it fits; the label stays as the narrow-screen fallback.
+    const fallback=officialPulseHeadlines({...item,shortTitleJa:undefined,shortTitleEn:undefined},lang,display.title);
+    assert.deepEqual(fallback,[display.title,lang==='ja'?'政策ニュース':'Policy news']);
     for(const privateValue of ['evidenceQuote','sourcePolicyDerivation','Private model copy','非公開のモデル'])assert.ok(!html.includes(privateValue));
   });
 
