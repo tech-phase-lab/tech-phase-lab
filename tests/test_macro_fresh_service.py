@@ -19,7 +19,9 @@ spec=importlib.util.spec_from_file_location('macro_fresh_service',ROOT/'scripts/
 service=importlib.util.module_from_spec(spec);spec.loader.exec_module(service)
 assert service.signals is signals
 
-ENV={'X_API_ENABLED':'true','X_BEARER_TOKEN':'synthetic-offline-token',
+# These tests check that a withdrawal is gone on the very next read, so the
+# owner-chosen stale serving (RESEARCH_NEWS_STALE_SECONDS) is off here.
+ENV={'RESEARCH_NEWS_STALE_SECONDS':'0','X_API_ENABLED':'true','X_BEARER_TOKEN':'synthetic-offline-token',
      'X_FILTERED_STREAM_ENABLED':'0','RESEARCH_SIGNALS_ENABLED':'1',
      'OFFICIAL_HEADLINE_TRANSLATION_ENABLED':'true','OPENAI_API_KEY':'synthetic-offline-key',
      'OFFICIAL_HEADLINE_TRANSLATION_MODEL':'gpt-4.1-mini','OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT':'1','OFFICIAL_HEADLINE_TRANSLATION_APPROVED_ON':'2026-09-30',

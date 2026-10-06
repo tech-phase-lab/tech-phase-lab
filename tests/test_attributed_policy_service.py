@@ -52,7 +52,7 @@ class PolicyServiceTests(unittest.TestCase):
         case=fixture.PolicyPublicationTests();case.setUp();self.addCleanup(case.doCleanups)
         row=case.hold()
         with research.connect(case.path) as db:before=policy.artifacts(db,row)
-        app=harness.service.AutomaticMonitor(case.path,Path(case.temp.name)/'snapshot.json')
+        app=harness.service.AutomaticMonitor(case.path,Path(case.temp.name)/'snapshot.json');app.news_stale_seconds=0  # next-read withdrawal check
         app.stop_event.clear();wake=app.publication_wakes['official']
         original=research.run_once
         def worker(path,*args,**kwargs):

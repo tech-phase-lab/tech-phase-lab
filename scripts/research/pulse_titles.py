@@ -21,10 +21,11 @@ import brief_generator
 import factual_validation
 import headline_translation
 
-POLICY_ID = 'pulse-title-v1'
+# v2: shorter, so the line fits a phone screen next to the clock.
+POLICY_ID = 'pulse-title-v2'
 INSTRUCTIONS = (
     'Write a one-line headline for a narrow news ticker from the supplied published headline (titleJa and '
-    'titleEn of the same story). Return shortJa (at most 20 Japanese characters) and shortEn (at most 50 '
+    'titleEn of the same story). Return shortJa (at most 16 Japanese characters) and shortEn (at most 45 '
     'characters) that tell a reader what happened: the subject, the action and, if it fits, the single most '
     'important figure. You may drop secondary details, but never change a fact, number, direction, date or '
     'name, and keep any negation, plan, forecast, possibility or "reported" status. Write every number exactly '
@@ -37,7 +38,9 @@ FIELDS = ('shortJa', 'shortEn')
 OUTPUT_TOKENS = 2000
 BUDGET_SHARE = 0.2
 LEDGER_PREFIX = 'pulse:'
-MAX_JA = 24
+MAX_JA = 20
+# A headline this short already fits a phone and needs no call.
+FITS_JA = 16
 MAX_EN = 64
 CANDIDATES = 30
 JAPANESE = re.compile(r'[぀-ヿ一-鿿]')
@@ -90,7 +93,7 @@ def revision(ja, en):
 
 def fits(ja, en):
     """A headline that already fits the strip needs no model call."""
-    return len(ja) <= MAX_JA and len(en) <= MAX_EN
+    return len(ja) <= FITS_JA and len(en) <= MAX_EN
 
 
 def validate(result, ja, en):

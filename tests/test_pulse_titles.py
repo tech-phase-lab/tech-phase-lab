@@ -150,3 +150,19 @@ class StripTitleCaseTests(unittest.TestCase):
             self.assertEqual(pipeline_status.pulse_titles_status(path),
                              {'jobs': 2, 'states': {'retry': 1, 'done': 1}, 'stored': 1,
                               'failureKinds': {'changed-names': 1}})
+
+
+class PreviewLanguageTests(unittest.TestCase):
+    def test_only_english_or_japanese_sources_reach_the_preview_list(self):
+        import original_preview_news
+        self.assertFalse(original_preview_news.english_or_japanese(
+            'MIMARU eröffnet eine Immobilie in Osaka-Namba mit Apartments für sechs Personen und einer Küche. '
+            'Die Wohnungen bieten Platz für Familien und Gruppen, die gemeinsam reisen möchten.'))
+        self.assertFalse(original_preview_news.english_or_japanese(
+            'MIMARU inaugura su establecimiento en Osaka Namba con apartamentos para seis personas y una cocina. '
+            'Los apartamentos ofrecen espacio para familias y grupos que viajan juntos.'))
+        self.assertTrue(original_preview_news.english_or_japanese(
+            'Micron Technology today announced results for its fourth quarter of fiscal 2026, which ended '
+            'August 28, 2026. Revenue was $11.32 billion.'))
+        self.assertTrue(original_preview_news.english_or_japanese('マイクロンは2026年度第4四半期の決算を発表した。'))
+        self.assertTrue(original_preview_news.english_or_japanese('$NVDA Blackwell ships'))

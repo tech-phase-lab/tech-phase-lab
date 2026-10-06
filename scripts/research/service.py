@@ -552,10 +552,11 @@ class AutomaticMonitor:
         self.news_cache_lock = threading.Lock()
         self.news_cache = {}
         # A background refresher recomputes each requested feed within about a
-        # second of a committed write. STALE_SECONDS > 0 would also serve the
-        # previous result while it recomputes; it is off because a withdrawn
-        # story could then stay visible that long (owner decision).
-        self.news_stale_seconds = positive_int("RESEARCH_NEWS_STALE_SECONDS", 0, 0)
+        # second of a committed write. While it recomputes, visitors get the
+        # previous result (at most STALE_SECONDS old) instead of waiting. The
+        # owner chose speed: a withdrawn story may stay visible that long, as if
+        # the page had been opened a few seconds earlier. 0 turns this off.
+        self.news_stale_seconds = positive_int("RESEARCH_NEWS_STALE_SECONDS", 5, 0)
         self.news_compute_ms = []
         self.news_requested = {}
         self.body_probe_urls = set()
@@ -2796,6 +2797,23 @@ class Handler(BaseHTTPRequestHandler):
         supplied = self.headers.get("Authorization", "")
         return hmac.compare_digest(supplied, "Bearer " + token)
 
+    def news_pipeline_state(self):
+        try:
+            # Aggregate only: stage counts and acquisition-to-publication timing.
+            state = pipeline_status.summary(pipeline_status.collect(self.app.db_path))
+        except Exception:
+            state = {"error": "pipeline-status-unavailable"}
+        try:
+            state["modelBudget"] = pipeline_status.model_budget(self.app.db_path)
+        except Exception:
+            state["modelBudget"] = {"error": "model-budget-unavailable"}
+        state["newsTiming"] = self.app.news_timing()
+        try:
+            state["pulseTitles"] = pipeline_status.pulse_titles_status(self.app.db_path)
+        except Exception:
+            state["pulseTitles"] = {"error": "pulse-titles-unavailable"}
+        return state
+
     def editor_authorized(self):
         token = os.environ.get("RESEARCH_EDITOR_TOKEN")
         if not token:
@@ -2840,23 +2858,14 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/livez":
             self.send_json(200, {"ok": True, "status": "alive"})
             return
+        if path == "/health/news":
+            # The news part of /health on its own: counts, codes and timings only.
+            self.send_json(200, self.news_pipeline_state())
+            return
         if path in {"/health", "/readyz"}:
             state = self.app.public_state()
             if path == "/health":
-                try:
-                    # Aggregate only: stage counts and acquisition-to-publication timing.
-                    state["newsPipeline"] = pipeline_status.summary(pipeline_status.collect(self.app.db_path))
-                except Exception:
-                    state["newsPipeline"] = {"error": "pipeline-status-unavailable"}
-                try:
-                    state["newsPipeline"]["modelBudget"] = pipeline_status.model_budget(self.app.db_path)
-                except Exception:
-                    state["newsPipeline"]["modelBudget"] = {"error": "model-budget-unavailable"}
-                state["newsPipeline"]["newsTiming"] = self.app.news_timing()
-                try:
-                    state["newsPipeline"]["pulseTitles"] = pipeline_status.pulse_titles_status(self.app.db_path)
-                except Exception:
-                    state["newsPipeline"]["pulseTitles"] = {"error": "pulse-titles-unavailable"}
+                state["newsPipeline"] = self.news_pipeline_state()
             self.send_json(200 if path == "/health" or state["ready"] else 503, state)
             return
         if path == "/admin/pipeline":

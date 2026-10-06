@@ -29,9 +29,12 @@ export function isGenericPulseLabel(text: string) {
  * title tooltip, the accessible name and the news list) instead of a bare label. */
 export function pickPulseLine(headlines: readonly string[], full: string, width: number, measure: (text: string) => number) {
   const fitted = fitPulseHeadline(headlines, width, measure);
-  const title = full.trim();
-  if (title && !/[\r\n]/.test(title) && (!fitted || isGenericPulseLabel(fitted)) && title !== fitted) return { text: title, clipped: true };
-  return { text: fitted, clipped: false };
+  if (fitted && !isGenericPulseLabel(fitted)) return { text: fitted, clipped: false };
+  // Nothing informative fits (a narrow phone): clip the shortest informative
+  // line, usually the one-line summary, rather than the long headline.
+  const informative = [...headlines, full.trim()].filter(text => text && !/[\r\n]/.test(text) && !isGenericPulseLabel(text));
+  const shortest = informative.sort((a, b) => measure(a) - measure(b))[0];
+  return shortest ? { text: shortest, clipped: true } : { text: fitted, clipped: false };
 }
 
 /** Only the exact published structured grammar can supply a shorter main claim.
