@@ -874,7 +874,9 @@ class AutomaticMonitor:
         if not samples:
             return {"samples": 0}
         return {"samples": len(samples), "computeP50Ms": samples[len(samples) // 2],
-                "computeMaxMs": samples[-1], "staleSeconds": getattr(self, "news_stale_seconds", 0)}
+                "computeMaxMs": samples[-1], "staleSeconds": getattr(self, "news_stale_seconds", 0),
+                # Milliseconds per step of the most recent rebuild.
+                "lastSteps": dict(getattr(self, "news_compute_steps", {}) or {})}
 
     def run_results(self):
         # Numerical flashes must not wait for an LLM or require an API key.
@@ -1136,24 +1138,36 @@ class AutomaticMonitor:
             return None
 
     def compute_public_news(self, *, original_preview=False):
+        steps = {}
+        clock = [time.monotonic()]
+
+        def step(name, value):
+            now = time.monotonic()
+            steps[name] = round((now - clock[0]) * 1000)
+            clock[0] = now
+            return value
         with stock_news.connect(self.db_path) as db:
-            drafts = news_drafts.public_feed(db)
+            drafts = step("drafts", news_drafts.public_feed(db))
             reference = datetime.now(timezone.utc)
             # Reuse this request's verified headlines. Research enrichment used
             # to run the same bridge sync and publication scan a second time.
-            official = signals.public_official_updates(db, reference=reference, limit=500)
-            payload = news_history.bounded(pulse_titles.attach(db, {**drafts,
-                **official_research.news_projection(db, reference, official),
-                "marketUpdates": x_market_news.public_feed(db),
-                "analystUpdates": analyst_news.public_feed(db),
-                "resultBriefs": market_results.public_feed(db)}))
+            official = step("official", signals.public_official_updates(db, reference=reference, limit=500))
+            research = step("research", official_research.news_projection(db, reference, official))
+            market = step("market", x_market_news.public_feed(db))
+            analyst = step("analyst", analyst_news.public_feed(db))
+            results = step("results", market_results.public_feed(db))
+            payload = step("bounded", news_history.bounded(pulse_titles.attach(db, {**drafts, **research,
+                "marketUpdates": market, "analystUpdates": analyst, "resultBriefs": results})))
             if original_preview:
                 try:
-                    return original_preview_news.preview_payload(db, payload, reference)
+                    return step("preview", original_preview_news.preview_payload(db, payload, reference))
                 except Exception:
                     # Optional test intake must never turn verified news into
                     # an outage, and a read never manufactures a receipt.
                     print("original-preview-read-unavailable", flush=True)
+                finally:
+                    self.news_compute_steps = steps
+            self.news_compute_steps = steps
             return payload
 
     def posts_queue(self, limit=20, published=False, offset=0):
