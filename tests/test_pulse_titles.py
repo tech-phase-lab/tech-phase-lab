@@ -176,3 +176,13 @@ class RejectionDiagnosticsTests(unittest.TestCase):
         detail = preview_summaries.diagnose(result, source)
         self.assertEqual(detail, {'field': 'titleJa/titleEn', 'check': 'pair', 'code': 'changed-names', 'name': 'zeta'})
         self.assertNotIn('オハイオ', json.dumps(detail, ensure_ascii=False))
+
+
+class NumberDiagnosticsTests(unittest.TestCase):
+    def test_number_rejection_lists_only_the_unsupported_values(self):
+        source = 'Acme Corp revenue rose to $1.2 billion in the third quarter.'
+        result = {'titleJa': 'アクメ、売上高13億ドルに増加', 'titleEn': 'Acme revenue rises to $1.2 billion',
+                  'bodyJa': 'x', 'bodyEn': 'y'}
+        self.assertEqual(preview_summaries.diagnose(result, source),
+                         {'field': 'titleJa', 'check': 'numbers', 'code': 'unsupported-number',
+                          'values': ['1300000000']})
