@@ -194,3 +194,12 @@ class ResearchShareTests(unittest.TestCase):
         self.assertEqual(official_research.research_cap(600), 210)
         self.assertEqual(official_research.research_cap(400), 140)
         self.assertEqual(official_research.research_cap(5), 5)
+
+
+class PreviewStripTitleTests(unittest.TestCase):
+    def test_summarized_test_publications_get_strip_titles(self):
+        payload = {'officialUpdates': [], 'marketUpdates': [], 'items': [], 'originalPreviewItems': [
+            {'id': 'p1', 'summaryPolicy': 'preview-summary-v1', 'titleJa': JA, 'titleEn': EN,
+             'sourcePublishedAt': '2026-10-06T09:00:00Z'},
+            {'id': 'p2', 'excerptOriginal': 'untranslated', 'previewPublishedAt': '2026-10-06T10:00:00Z'}]}
+        self.assertEqual([key for _, key, _, _ in pulse_titles.sources(payload)], ['preview:p1'])

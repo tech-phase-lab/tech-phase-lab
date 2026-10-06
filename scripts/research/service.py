@@ -1164,7 +1164,8 @@ class AutomaticMonitor:
                 "marketUpdates": market, "analystUpdates": analyst, "resultBriefs": results})))
             if original_preview:
                 try:
-                    return step("preview", original_preview_news.preview_payload(db, payload, reference))
+                    return step("preview", pulse_titles.attach(
+                        db, original_preview_news.preview_payload(db, payload, reference)))
                 except Exception:
                     # Optional test intake must never turn verified news into
                     # an outage, and a read never manufactures a receipt.

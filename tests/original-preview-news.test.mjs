@@ -246,7 +246,7 @@ test('ordinary default home and dedicated news flow show summarized test cards a
   assert.ok(home.includes('<NewsFeed lang={lang} initialNews={initialNews} />'));
 });
 
-test('bounded scan metadata is disclosed honestly and stripped from the header snapshot with original cards', () => {
+test('bounded scan metadata is disclosed honestly; only summarized cards reach the header snapshot', () => {
   const window = { recentWindowDays: 7, scanLimitPerLane: 200, displayLimit: 30,
     eligibleInScan: 33, returned: 1, omittedInScan: 32, scanLimited: true };
   const feed = availableNewsPayload(wire([summarized], { originalPreviewWindow: { ...window, privateArgs: 'PRIVATE_METADATA' }, officialUpdates: [official] }));
@@ -258,8 +258,11 @@ test('bounded scan metadata is disclosed honestly and stripped from the header s
     assert.ok(html.includes(lang === 'ja' ? '全件表示ではありません' : 'not a complete history'));
   }
   publishNews(feed);
-  assert.equal(newsSnapshot().data.originalPreviewItems, undefined);
+  // Only summarized test cards reach the header; the scan window never does.
+  assert.deepEqual(newsSnapshot().data.originalPreviewItems.map(item => item.id), [summarized.id]);
   assert.equal(newsSnapshot().data.originalPreviewWindow, undefined);
+  publishNews(availableNewsPayload(wire([original], { officialUpdates: [official] })));
+  assert.equal(newsSnapshot().data.originalPreviewItems, undefined);
   assert.deepEqual(newsSnapshot().data.officialUpdates, feed.officialUpdates);
   assert.equal(feed.originalPreviewItems.length, 1);
   publishNews(null);
@@ -438,4 +441,12 @@ test('a checked bilingual summary shows one line with the detail behind ＋ and 
   assert.ok(ja.includes('rel="noopener noreferrer"'));
   const [unsafe] = parseOriginalPreviewItems([{ ...payload.originalPreviewItems.find(i => i.status === 'original-excerpt-unreviewed'), ...summary, bodyEn: 'see https://evil.example now' }]);
   assert.equal(unsafe.summary, undefined);
+});
+
+test('a summarized test publication appears in the top strip with its one-line title', () => {
+  const feed = availableNewsPayload(wire([{ ...summarized, pulseTitleJa: 'ネビウス新サービス発表', pulseTitleEn: 'Nebius launches a new service' }]));
+  const ja = newsPulseItems(feed, 'ja'), en = newsPulseItems(feed, 'en');
+  assert.equal(ja[0].headlines[0], 'ネビウス新サービス発表');
+  assert.equal(en[0].headlines[0], 'Nebius launches a new service');
+  assert.equal(newsPulseItems(availableNewsPayload(wire([original])), 'ja').length, 0);
 });

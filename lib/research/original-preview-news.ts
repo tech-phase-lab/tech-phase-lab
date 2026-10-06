@@ -11,6 +11,8 @@ export type OriginalExcerptItem = PreviewIdentity & {
   sourceTimePrecision: "timestamp" | "date" | "missing"; sourcePublishedAt: string | null; sourcePublishedOn: string | null;
   /** Bilingual one-line summary + detail, checked by the monitor against the full source. */
   summary?: PreviewSummary;
+  /** Short one-line strip title of the summary (checked by the monitor). */
+  pulseTitleJa?: string; pulseTitleEn?: string;
 };
 
 /** Public shape only; meaning and numbers are verified by the monitor before publication. */
@@ -171,8 +173,12 @@ export function parseOriginalPreviewItems(value: unknown): OriginalPreviewItem[]
         || new Date(sourcePublishedOn).toISOString().slice(0, 10) !== sourcePublishedOn) throw Error("Invalid original preview date");
     } else if (precision !== "missing" || row.sourcePublishedAt !== null || row.sourcePublishedOn !== null) throw Error("Invalid original date precision");
     const summary = parsePreviewSummary(row);
+    const pulse = (text: unknown): text is string => typeof text === "string" && !!text.trim()
+      && Array.from(text).length <= 80 && !/[\x00-\x1f\x7f<>]|https?:\/\//i.test(text);
+    const pulseTitles = summary && pulse(row.pulseTitleJa) && pulse(row.pulseTitleEn)
+      ? { pulseTitleJa: (row.pulseTitleJa as string).trim(), pulseTitleEn: (row.pulseTitleEn as string).trim() } : {};
     return { id, status: "original-excerpt-unreviewed", sourceName, sourceUrl: url.href, excerptOriginal,
       sourceTimePrecision: precision, sourcePublishedAt, sourcePublishedOn, acquiredAt, previewPublishedAt,
-      ...(summary ? { summary } : {}) };
+      ...(summary ? { summary, ...pulseTitles } : {}) };
   });
 }

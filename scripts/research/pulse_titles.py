@@ -82,6 +82,11 @@ def sources(payload):
         if isinstance(item, dict) and item.get('summaryJa') and item.get('title'):
             found.append((item, 'general:' + str(item.get('id')), item['summaryJa'], item['title'],
                           item.get('publishedAt') or ''))
+    # Original test publications once they carry a checked bilingual summary.
+    for item in payload.get('originalPreviewItems') or []:
+        if isinstance(item, dict) and item.get('summaryPolicy') and item.get('titleJa') and item.get('titleEn'):
+            found.append((item, 'preview:' + str(item.get('id')), item['titleJa'], item['titleEn'],
+                          item.get('sourcePublishedAt') or item.get('previewPublishedAt') or ''))
     found = [entry for entry in found if all(isinstance(value, str) for value in entry[1:])]
     found.sort(key=lambda entry: entry[4], reverse=True)
     return [(item, key, ja, en) for item, key, ja, en, _ in found[:CANDIDATES]]
@@ -253,4 +258,5 @@ def attach(db, payload):
         titles = titles_by_item.get(id(item))
         return {**item, 'pulseTitleJa': titles[0], 'pulseTitleEn': titles[1]} if titles else item
     return {**payload, **{lane: [copy(item) for item in payload[lane]]
-                          for lane in ('officialUpdates', 'marketUpdates', 'items') if isinstance(payload.get(lane), list)}}
+                          for lane in ('officialUpdates', 'marketUpdates', 'items', 'originalPreviewItems')
+                          if isinstance(payload.get(lane), list)}}
