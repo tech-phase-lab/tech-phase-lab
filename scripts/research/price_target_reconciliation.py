@@ -63,10 +63,11 @@ def report(db, sources=signals.SOURCES, now=None):
     now = now.astimezone(timezone.utc)
     since = now - timedelta(days=7)
     approved = {source['id']: source for source in sources if source.get('format') == 'x-api'}
-    acquired = list(db.execute('''SELECT rowid AS acquisition_id,* FROM signal_x_acquisition
-        WHERE source_id IN (?,?,?)''', signals.PRICE_TARGET_SOURCE_IDS))
+    marks = signals.PRICE_TARGET_SOURCE_MARKS
+    acquired = list(db.execute(f'''SELECT rowid AS acquisition_id,* FROM signal_x_acquisition
+        WHERE source_id IN ({marks})''', signals.PRICE_TARGET_SOURCE_IDS))
     documents = {(row['source_id'], row['url']): row for row in db.execute(
-        'SELECT source_id,url,sha,last_seen_at FROM signal_documents WHERE source_id IN (?,?,?)', signals.PRICE_TARGET_SOURCE_IDS)}
+        f'SELECT source_id,url,sha,last_seen_at FROM signal_documents WHERE source_id IN ({marks})', signals.PRICE_TARGET_SOURCE_IDS)}
     retained_counts = Counter(row['source_id'] for row in acquired)
     newest = {}
     revisions = {}

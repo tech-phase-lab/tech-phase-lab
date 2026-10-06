@@ -19,7 +19,8 @@ API_URL = "https://api.x.com/2/tweets/search/recent"
 MAX_RESPONSE_BYTES = 2 * 1024 * 1024
 MAX_RESULTS = 30
 OFFICIAL_ACCOUNTS = {"nebiusai": "NBIS"}
-ALLOWED_ACCOUNT_NAMES = {"tipranks", "wallstengine", "fabymetal4", "trendspider", "barchart", *OFFICIAL_ACCOUNTS}
+# aistocksavvy (Hardik Shah): price target raises and cuts only (x-aistocksavvy).
+ALLOWED_ACCOUNT_NAMES = {"tipranks", "wallstengine", "fabymetal4", "aistocksavvy", "trendspider", "barchart", *OFFICIAL_ACCOUNTS}
 INDEX = re.compile(r'\b(?:S\s*&\s*P\s*500|SPX|Nasdaq[ -]?(?:100)?|NDX)\b',re.I)
 MEMBERSHIP = re.compile(r'\b(?:rebalanc(?:e|ing)|reconstitution|add(?:s|ed|ition|itions|ing)?|remov(?:e|es|ed|al|als|ing)|join(?:s|ed|ing)?|replac(?:e|es|ed|ing)|inclusion|exclusion|delet(?:e|es|ed|ion|ions))\b|組み入れ|採用|除外|リバランス',re.I)
 BONDS = re.compile(r'\b(?:Treasuries|Treasury (?:yields?|bonds?|notes?|bills?|auctions?)|government bonds?|sovereign bonds?|JGBs?|bunds?|gilts?)\b|\b(?:U\.?S\.?|United States|Japan(?:ese)?|German(?:y)?|Brit(?:ain|ish)|U\.?K\.?)\b.{0,60}\b(?:bonds? (?:yields?|market)|[0-9]+[ -]year bonds?)\b|国債',re.I)

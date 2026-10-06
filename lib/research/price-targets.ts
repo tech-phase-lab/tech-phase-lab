@@ -9,6 +9,7 @@ export type PriceTarget = PriceTargetSource & {
 
 const accounts = new Map([
   ["tipranks", "TipRanks"], ["wallstengine", "wallstengine"], ["fabymetal4", "FABYMETAL4"],
+  ["aistocksavvy", "AIStockSavvy"],
 ]);
 
 function sourceRecord(value: unknown): PriceTargetSource {

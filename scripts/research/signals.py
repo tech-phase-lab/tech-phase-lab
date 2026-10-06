@@ -1328,7 +1328,8 @@ def price_target_echo_subject(matches, text, tickers, firm):
     return ticker, None
 
 
-PRICE_TARGET_SOURCE_IDS = ("x-tipranks", "x-thefly", "x-wallstengine")
+PRICE_TARGET_SOURCE_IDS = ("x-tipranks", "x-thefly", "x-wallstengine", "x-aistocksavvy")
+PRICE_TARGET_SOURCE_MARKS = ",".join("?" for _ in PRICE_TARGET_SOURCE_IDS)
 PRICE_TARGET_LABEL = re.compile(r"\b(?:price[ -]?target|target price|PT)\b", re.I)
 PRICE_TARGET_EXTRA_ACTION = re.compile(
     r"\btargets?\b[^.!?\n]{0,100}\$\s*\d"
@@ -1358,7 +1359,7 @@ def price_target_rows(db, since, now, time_column="published_at"):
                          CASE WHEN d.sha=e.sha THEN d.text END AS document_text
                          FROM signal_events e LEFT JOIN signal_documents d
                          ON d.source_id=e.source_id AND d.url=e.url
-                         WHERE e.source_id IN (?,?,?)
+                         WHERE e.source_id IN ({PRICE_TARGET_SOURCE_MARKS})
                          AND julianday(e.{time_column}) BETWEEN julianday(?) AND julianday(?)
                          ORDER BY julianday(e.observed_at) DESC,e.id DESC""",
                       (*PRICE_TARGET_SOURCE_IDS, since.isoformat(), now.isoformat()))
@@ -1538,6 +1539,7 @@ PRICE_TARGET_FIRM_ALIASES = {
 }
 PRICE_TARGET_PUBLISHERS = {
     "tipranks": "X · TipRanks", "wallstengine": "X · Wall St Engine", "fabymetal4": "X · FabyΔ",
+    "aistocksavvy": "X · Hardik Shah",
 }
 
 
@@ -1615,8 +1617,8 @@ def price_target_publication_summary(db, sources=SOURCES, now=None, hours=24):
                "acquiredTargetPosts": 0, "unselectedAcquiredTargetPosts": 0}
     # Acquisition precedes interpretation and cursor advancement. Count target
     # mentions that never reached signal_events too, without exposing post text.
-    for row in db.execute("""SELECT text,selected_for_processing FROM signal_x_acquisition
-            WHERE source_id IN (?,?,?)
+    for row in db.execute(f"""SELECT text,selected_for_processing FROM signal_x_acquisition
+            WHERE source_id IN ({PRICE_TARGET_SOURCE_MARKS})
             AND julianday(first_seen_at) BETWEEN julianday(?) AND julianday(?)""",
             (*PRICE_TARGET_SOURCE_IDS, (now - timedelta(hours=hours)).isoformat(), now.isoformat())):
         if PRICE_TARGET_LABEL.search(row["text"]):
