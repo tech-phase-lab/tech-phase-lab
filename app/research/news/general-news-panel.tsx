@@ -84,7 +84,9 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
   const news = officialOnly ? [] : data?.items ?? [];
   const market = officialOnly ? [] : data?.marketUpdates ?? [];
   const analyst = officialOnly ? [] : data?.analystUpdates ?? [];
-  const originalPreview = officialOnly ? [] : data?.originalPreviewItems ?? [];
+  // Test publications appear only once they have a checked bilingual summary;
+  // untranslated originals and metadata-only notices are not listed.
+  const originalPreview = officialOnly ? [] : (data?.originalPreviewItems ?? []).filter(item => "summary" in item && !!item.summary);
   const updates = [
     ...originalPreview.map(item => ({ kind: "original-preview" as const, item, at: item.previewPublishedAt })),
     ...official.map(item => ({ kind: "official" as const, item, at: officialTime(item).at })),
@@ -101,7 +103,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
     : { positive: "Positive", negative: "Negative", mixed: "Mixed", neutral: "Neutral", uncertain: "Uncertain" };
   const confidenceLabels = lang === "ja" ? { high: "高", medium: "中", low: "低" } : { high: "High", medium: "Medium", low: "Low" };
   return <section ref={panel} className={styles.panel} aria-label={lang === "ja" ? "ニュース一覧" : "News list"}>
-    {!officialOnly && data?.originalPreviewWindow && <p className={styles.note}>{lang === "ja"
+    {!officialOnly && !!originalPreview.length && data?.originalPreviewWindow && <p className={styles.note}>{lang === "ja"
       ? "原文テスト掲載: 直近7日・最大30件。"
       : "Original test publications: recent 7 days, up to 30 items."}{data.originalPreviewWindow.omittedInScan > 0 && (lang === "ja"
         ? ` 今回の取得範囲でほか${data.originalPreviewWindow.omittedInScan}件は省略。`

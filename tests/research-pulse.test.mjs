@@ -36,9 +36,9 @@ test('header has readable non-disclosure text and only a separate rotation butto
     assert.match(html,/class="headline( clipped)?"/);
     assert.doesNotMatch(html,/>企業ニュース<|>Company news</);
     assert.match(html,/class="clock"/);
-    // Japan time and the same instant in U.S. Eastern time; no "取得" prefix.
-    assert.match(html,/aria-label="10\/3 22:34 JST \/ 10\/3 09:34 ET"/);
-    assert.match(html,/<span>10\/3 22:34 JST<\/span><span class="eastern">10\/3 09:34 ET<\/span>/);
+    // One clock per language: Japan time in Japanese, U.S. Eastern time in English; no "取得" prefix.
+    if(lang==='ja') { assert.match(html,/aria-label="10\/3 22:34 JST"/); assert.doesNotMatch(html,/ ET/); }
+    else { assert.match(html,/aria-label="10\/3 09:34 ET"/); assert.doesNotMatch(html,/JST/); }
     assert.doesNotMatch(html,/取得|Found/);
     assert.match(html,/2026-10-03T13:34:30.000Z/);
     assert.match(html,/aria-label="(自動切替を停止|Pause rotation)"/);
@@ -58,8 +58,8 @@ test('headline, clock and pause remain in a single row; only a full headline is 
   assert.match(css,/flex-wrap:nowrap/);
   assert.match(css,/\.headline\{[^}]*white-space:nowrap/);
   assert.match(css,/\.clock\{display:inline-flex;flex:none/);
-  // Phones put the clock under the headline so the headline gets the full width.
-  assert.match(css,/@media\(max-width:600px\)\{\.pulse\{[^}]*flex-wrap:wrap[^}]*\}\.headline\{flex:1 0 100%\}/);
+  // Phones keep the single row too.
+  assert.doesNotMatch(css,/flex-wrap:wrap/);
   assert.match(css,/\.clipped\{text-overflow:ellipsis\}/);
   assert.doesNotMatch(css,/\.headline\{[^}]*text-overflow|line-clamp|data-expanded/);
 });

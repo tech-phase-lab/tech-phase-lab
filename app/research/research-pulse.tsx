@@ -76,9 +76,8 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   }
   const item = items[(position.first === first ? position.index : 0) % items.length];
   if (!item) return null;
-  const timestamp = shortNewsTime(item.at, item.kind);
-  const eastern = usEasternTime(item.at, item.kind);
-  const clockLabel = eastern ? `${timestamp} / ${eastern}` : timestamp;
+  // Japanese readers see Japan time; English readers see U.S. Eastern time.
+  const timestamp = (ja ? null : usEasternTime(item.at, item.kind)) ?? shortNewsTime(item.at, item.kind);
   const fresh = recentPublication(item.at, item.kind, snapshot?.checkedAt ?? 0);
   return <section className={styles.pulse} aria-label={ja ? "新着ニュース" : "Latest news"} data-paused={stopped} tabIndex={0}
     onTouchStart={event => { suppressClick.current = false; const point = event.touches[0]; touch.current = event.touches.length === 1 ? {x: point.clientX, y: point.clientY} : null; setInteracting(true); }}
@@ -88,8 +87,8 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     onKeyDown={event => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); move(event.key === "ArrowRight" ? 1 : -1); } }}
     onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)} onFocusCapture={() => setInteracting(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false); }}>
     <FittedHeadline key={item.id} headlines={item.headlines} full={item.title} lang={lang} label={item.ticker} />
-    <time className={styles.clock} dateTime={item.at} title={clockLabel} aria-label={clockLabel}>
-      <span>{timestamp}</span>{eastern && <span className={styles.eastern}>{eastern}</span>}{fresh && <b className={styles.fresh}>NEW</b>}
+    <time className={styles.clock} dateTime={item.at} title={timestamp} aria-label={timestamp}>
+      {timestamp}{fresh && <b className={styles.fresh}>NEW</b>}
     </time>
     <button type="button" onClick={() => setPaused(value => !value)} disabled={reduced} aria-pressed={paused} aria-label={paused ? (ja ? "自動切替を再開" : "Resume rotation") : (ja ? "自動切替を停止" : "Pause rotation")}>{paused || reduced ? "▶" : "Ⅱ"}</button>
     {!stopped && items.length > 1 && <i key={`${item.id}-progress`} className={styles.progress} aria-hidden="true" />}
