@@ -57,6 +57,8 @@ test('headline, clock and pause remain in a single row; only a full headline is 
   assert.match(css,/\.headline\{[^}]*white-space:nowrap/);
   assert.match(css,/\.clock\{display:inline-flex;flex:none/);
   assert.match(css,/@media\(max-width:600px\).*\.fullTime\{display:none\}.*\.shortTime\{display:inline\}/);
+  // Phones put the clock under the headline so the headline gets the full width.
+  assert.match(css,/@media\(max-width:600px\)\{\.pulse\{[^}]*flex-wrap:wrap[^}]*\}\.headline\{flex:1 0 100%\}/);
   assert.match(css,/\.clipped\{text-overflow:ellipsis\}/);
   assert.doesNotMatch(css,/\.headline\{[^}]*text-overflow|line-clamp|data-expanded/);
 });

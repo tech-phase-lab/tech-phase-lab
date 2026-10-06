@@ -1,5 +1,5 @@
 .pulse{position:relative;display:flex;flex-wrap:nowrap;align-items:center;gap:8px;min-height:44px;padding:6px 10px;margin:0 0 24px;border-top:1px solid #28443e;border-bottom:1px solid #28443e;background:linear-gradient(100deg,#10241f88,transparent);touch-action:pan-y pinch-zoom}
-/* One row including the clock. Choose a complete headline that fits the actual
+/* One row including the clock on wide screens. Choose a complete headline that fits the actual
    font/space. When only a category label would fit, the full headline is shown
    with a visible ellipsis instead (full text in the tooltip and news list). */
 .headline{display:block;min-width:0;flex:1;color:#dae7e5;font-size:12px;line-height:18px;white-space:nowrap;overflow:hidden;animation:enter .5s ease-out}
@@ -13,5 +13,7 @@
 .progress{position:absolute;bottom:0;left:0;height:1px;width:100%;background:#91dfc4;transform-origin:left;animation:progress 8s linear forwards;opacity:.65}
 @keyframes enter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
 @keyframes progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@media(max-width:600px){.pulse{margin-bottom:18px}.fullTime{display:none}.shortTime{display:inline}}
+/* Phones: the headline gets the whole first row; the clock and pause button
+   move to a second row beneath it, so the one-line summary is not cut off. */
+@media(max-width:600px){.pulse{margin-bottom:18px;flex-wrap:wrap;row-gap:2px}.headline{flex:1 0 100%}.pulse button{margin-left:auto}.fullTime{display:none}.shortTime{display:inline}}
 @media(prefers-reduced-motion:reduce){.headline,.progress{animation:none}}
