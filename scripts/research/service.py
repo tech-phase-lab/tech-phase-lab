@@ -71,7 +71,7 @@ DISCOVERY_METRICS_MAX_CHECKS = 1000
 PUBLICATION_FAILURE_LANES = frozenset({
     "headline-translation-unavailable", "market-translation-unavailable",
     "analyst-news-publication-unavailable", "official-research-unavailable",
-    "public-news-unavailable",
+    "public-news-unavailable", "preview-summary-unavailable", "news-refresh-unavailable",
 })
 PUBLICATION_EXCEPTION_CLASSES = {
     value: value.__name__ for module in (builtins, sqlite3) for value in vars(module).values()
@@ -90,6 +90,8 @@ SQLITE_FAILURE_NAMES = {
 
 # Worker results after which more queued work may be immediately runnable.
 PRODUCTIVE_RESULTS = frozenset({"done", "stale"})
+# A feed nobody requested for this long is no longer refreshed in the background.
+NEWS_REFRESH_IDLE_SECONDS = 600
 
 
 def release_interrupted_jobs(db_path, now=None):
@@ -547,6 +549,13 @@ class AutomaticMonitor:
         self.translation_workers = min(6, positive_int("RESEARCH_TRANSLATION_WORKERS", 3, 1))
         self.news_cache_lock = threading.Lock()
         self.news_cache = {}
+        # A background refresher recomputes each requested feed within about a
+        # second of a committed write, so most visitors find it ready. Serving
+        # the previous result while it recomputes (STALE_SECONDS > 0) is faster
+        # still, but a withdrawal could stay visible for that long, so it is off
+        # unless the owner chooses it.
+        self.news_stale_seconds = positive_int("RESEARCH_NEWS_STALE_SECONDS", 0, 0)
+        self.news_requested = {}
         self.body_probe_urls = set()
         self.body_probe_eligible_at = {}
         self.stop_event = threading.Event()
@@ -695,6 +704,7 @@ class AutomaticMonitor:
         self.market_translation_thread = threading.Thread(target=self.run_market_translation, name="market-translation", daemon=True)
         self.result_thread = threading.Thread(target=self.run_results, name="result-publication", daemon=True)
         self.preview_summary_thread = threading.Thread(target=self.run_preview_summaries, name="preview-summary", daemon=True)
+        self.news_refresh_thread = threading.Thread(target=self.run_news_refresh, name="news-refresh", daemon=True)
         self.official_research_thread = threading.Thread(target=self.run_official_research, name="official-research", daemon=True)
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
@@ -796,6 +806,27 @@ class AutomaticMonitor:
                 log_publication_failure("preview-summary-unavailable", exc)
             if not self.stop_event.is_set():
                 wake.wait(0.2 if result in PRODUCTIVE_RESULTS else 5)
+
+    def run_news_refresh(self):
+        """Recompute each recently requested feed after a write, off the request path."""
+        while not self.stop_event.wait(1):
+            for key, at in list(self.news_requested.items()):
+                if time.monotonic() - at > NEWS_REFRESH_IDLE_SECONDS:
+                    continue
+                try:
+                    self.refresh_news(key)
+                except Exception as exc:
+                    log_publication_failure("news-refresh-unavailable", exc)
+
+    def refresh_news(self, key):
+        cached = self.news_cache.get(key)
+        if cached and cached[2] is not None and cached[2] == self.database_version():
+            return False
+        with self.news_cache_lock:
+            started = time.monotonic()
+            payload = self.compute_public_news(original_preview=key)
+            self.news_cache[key] = (started, time.monotonic(), self.database_version(), payload)
+        return True
 
     def run_results(self):
         # Numerical flashes must not wait for an LLM or require an API key.
@@ -920,6 +951,7 @@ class AutomaticMonitor:
         self.market_translation_thread.start()
         self.result_thread.start()
         self.preview_summary_thread.start()
+        self.news_refresh_thread.start()
         self.official_research_thread.start()
         self.mu_measurement_thread.start()
         self.watch_earnings_thread.start()
@@ -1017,6 +1049,15 @@ class AutomaticMonitor:
         if not getattr(self, "news_cache_seconds", 0) or not hasattr(self, "news_cache_lock"):
             return self.compute_public_news(original_preview=original_preview)
         arrived = time.monotonic()
+        if max_age is None and hasattr(self, "news_requested"):
+            self.news_requested[key] = arrived
+        stale = getattr(self, "news_stale_seconds", 0)
+        if stale and max_age is None:
+            cached = self.news_cache.get(key)
+            # The refresher replaces this within about a second of a write; if
+            # it stops, requests fall back to computing synchronously.
+            if cached and arrived - cached[1] <= stale:
+                return cached[3]
         with self.news_cache_lock:
             cached = self.news_cache.get(key)
             if cached:

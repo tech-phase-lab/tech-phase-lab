@@ -7,6 +7,8 @@ import { officialTime } from "./news-time.ts";
 import { analystNewsDisplay } from "./analyst-news.ts";
 import { officialPulseHeadlines, marketPulseHeadlines, analystPulseHeadlines, generalPulseHeadlines } from "./news-pulse-headline.ts";
 
+const JAPANESE = /[\u3040-\u30ff\u3400-\u9fff]/;
+
 /** Use the published feed shared with the home news list, including market updates. */
 export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language) {
   const ja = lang === "ja";
@@ -31,5 +33,9 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
         shortTitle: display.title, at: item.publishedAt, kind: "published" as const };
     }),
     ...(feed?.items ?? []).map(item => ({ headlines: generalPulseHeadlines(item.tickers, lang, ja ? item.summaryJa : item.title, ja ? item.shortTitleJa : item.shortTitleEn), id: item.id, ticker: item.tickers.join(" · "), title: ja ? item.summaryJa : item.title, body: ja ? item.summaryJa : item.summaryEn, shortTitle: ja ? item.shortTitleJa : item.shortTitleEn, url: item.url, at: item.publishedAt, kind: "published" as const })),
-  ].map(item => ({ ...item, shortTitle: item.shortTitle ?? item.title, summary: item.headlines[0] })).sort((a, b) => Date.parse(b.at) - Date.parse(a.at)).slice(0, 5);
+  ].map(item => ({ ...item, shortTitle: item.shortTitle ?? item.title, summary: item.headlines[0] }))
+    // The strip is a one-line Japanese summary; an item still awaiting its
+    // reviewed translation stays in the news list below (in its original) only.
+    .filter(item => !ja || JAPANESE.test(item.title))
+    .sort((a, b) => Date.parse(b.at) - Date.parse(a.at)).slice(0, 5);
 }
