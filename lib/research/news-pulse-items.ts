@@ -20,7 +20,7 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
       const shortTitle = item.brief && compactTitle?.endsWith(suffix) ? compactTitle.slice(0, -suffix.length) : compactTitle;
       return { id: `official-${item.id}`, ticker: display.label, title: display.title, body: display.body ? `${display.title}\n\n${display.body}` : display.title,
         shortTitle, headlines: officialPulseHeadlines(item, lang, display.title, shortTitle),
-        url: item.url, ...officialTime(item) };
+        url: item.url, ...officialTime(item), observedAt: item.observedAt as string | undefined };
     }),
     ...(feed?.marketUpdates ?? []).map(item => {
       const display = marketNewsDisplay(item, lang);

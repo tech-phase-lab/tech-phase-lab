@@ -17,3 +17,13 @@ export function usEasternTime(at: string, kind: string) {
   if (kind === 'date') return null;
   return new Intl.DateTimeFormat('en-US', {timeZone:'America/New_York',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(at)).replace(',', '') + ' ET';
 }
+/** One clock format for the top strip. A date-only release shows the time it
+ * was first seen here (same or next day only), so every line reads "M/D HH:MM JST|ET". */
+export function pulseClock(at: string, kind: string, ja: boolean, observedAt?: string) {
+  let instant = at, instantKind = kind;
+  if (kind === 'date' && observedAt) {
+    const gap = Date.parse(observedAt) - Date.parse(`${at}T00:00:00Z`);
+    if (gap >= 0 && gap < 48 * 3_600_000) { instant = observedAt; instantKind = 'observed'; }
+  }
+  return (ja ? null : usEasternTime(instant, instantKind)) ?? shortNewsTime(instant, instantKind);
+}
