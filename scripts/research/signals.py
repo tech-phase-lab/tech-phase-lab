@@ -14,6 +14,7 @@ import hashlib
 import gzip
 import io
 import json
+import unicodedata
 import os
 from pathlib import Path
 import re
@@ -1442,7 +1443,10 @@ def price_target_observation(row, source, now):
         return None, "superseded-revision"
     if row["event_kind"] == "changed" and not row["document_text"]:
         return None, "revision-evidence-missing"
-    text = actor_first_target(row["document_text"] or row["title"])
+    text = row["document_text"] or row["title"]
+    # Some publishers style words and figures with Unicode bold letters
+    # ("𝗺𝗮𝗶𝗻𝘁𝗮𝗶𝗻𝘀", "$𝟮𝟰𝟬𝟬"); compare their plain forms.
+    text = actor_first_target(unicodedata.normalize("NFKC", text) if isinstance(text, str) else text)
     if not isinstance(text, str) or not PRICE_TARGET_LABEL.search(text):
         return None, "not-target"
     if row["truncated"]:

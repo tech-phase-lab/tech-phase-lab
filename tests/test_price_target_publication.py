@@ -124,6 +124,17 @@ class TargetPublicationTests(unittest.TestCase):
         self.add(41, text, tickers='["NVDA"]', body=text)
         self.assertIsNone(signals.price_target_observation(self.row(41), self.source, self.now)[0])
 
+    def test_unicode_bold_styling_is_read_as_plain_text(self):
+        def bold(value):
+            return ''.join(chr(0x1D5EE + ord(c) - 97) if c.islower() else chr(0x1D5D4 + ord(c) - 65) if c.isupper()
+                           else chr(0x1D7EC + ord(c) - 48) if c.isdigit() else c for c in value)
+        text = (f"$MELI | Susquehanna {bold('maintains Positive')} on {bold('MercadoLibre')}, "
+                f"cuts PT to ${bold('2400')} from ${bold('2500')}")
+        self.add(43, text, tickers='["MELI"]', body=text)
+        item, reason = signals.price_target_observation(self.row(43), self.source, self.now)
+        self.assertEqual(reason, 'eligible')
+        self.assertEqual((item['previous'], item['latest']), (2500.0, 2400.0))
+
     def test_target_universe_limits_a_route_to_large_caps(self):
         text = '$LMND | Morgan Stanley maintains Equalweight on Lemonade Inc., cuts PT to $48.00 from $56.00'
         self.add(42, text, tickers='["LMND"]', body=text)
