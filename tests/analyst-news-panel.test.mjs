@@ -42,42 +42,11 @@ function render(rows, lang, officialOnly = false, page = 1) {
   return renderToStaticMarkup(React.createElement(Panel, { lang, officialOnly }));
 }
 
-test('news list renders JA and EN analyst reporting with general news disabled and no source links or assessment', () => {
+test('analyst reporting is not listed in the news list (price targets have their own page)', () => {
   for (const lang of ['ja', 'en']) {
-    const ja = lang === 'ja', html = render([item], lang);
-    for (const text of [ja ? 'アナリスト動向 · NVDA' : 'Analyst news · NVDA', ja ? item.titleJa : item.titleEn,
-      ja ? item.bodyJa : item.bodyEn, '8:09:10 JST']) assert.ok(html.includes(text), text);
-    assert.doesNotMatch(html, /href=|x\.com|WallStEngine|確信度|Confidence|事業への影響|Business impact|Official|公式発表|2026\/10\/3/);
+    for (const officialOnly of [false, true]) {
+      const html = render([item, { ...item, id: '2' }], lang, officialOnly);
+      assert.doesNotMatch(html, /NVDA|Example Research|Analyst news|アナリスト動向|<article>/);
+    }
   }
-});
-
-test('analyst headline-only story stays readable without fake details and never enters official-only view', () => {
-  const headlineOnly = { ...item };
-  delete headlineOnly.bodyJa; delete headlineOnly.bodyEn;
-  for (const lang of ['ja', 'en']) {
-    const html = render([headlineOnly], lang);
-    assert.ok(html.includes(lang === 'ja' ? item.titleJa : item.titleEn));
-    assert.doesNotMatch(html, /<details|<summary|＋/);
-    const official = render([item], lang, true);
-    assert.doesNotMatch(official, /NVDA|Example Research|Analyst news|アナリスト動向/);
-    assert.ok(official.includes(lang === 'ja' ? '現在、掲載中の公式発表はありません。' : 'No official updates currently listed.'));
-  }
-});
-
-test('valid analyst story survives a malformed adjacent row in the news list', () => {
-  const html = render([{ ...item, action: 'not-supported' }, item], 'ja');
-  assert.equal(html.split(item.titleJa).length - 1, 1);
-  assert.doesNotMatch(html, /not-supported/);
-});
-
-test('analyst stories participate in pagination and source-time order without the general feed', () => {
-  const rows = Array.from({ length: 6 }, (_, i) => ({ ...item, id: String(i), titleEn: `Reported analyst action ${i}`,
-    publishedAt: `2026-10-01T0${i}:00:00Z` }));
-  const first = render(rows, 'en'), second = render(rows, 'en', false, 2);
-  assert.equal((first.match(/<article>/g) ?? []).length, 5);
-  assert.ok(first.indexOf('Reported analyst action 5') < first.indexOf('Reported analyst action 1'));
-  assert.ok(!first.includes('Reported analyst action 0'));
-  assert.equal((second.match(/<article>/g) ?? []).length, 1);
-  assert.ok(second.includes('Reported analyst action 0'));
-  assert.ok(!second.includes('Reported analyst action 5'));
 });

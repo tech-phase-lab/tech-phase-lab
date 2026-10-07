@@ -14,7 +14,11 @@ export function additionalNewsDetail(visibleText: string | readonly string[], bo
     // Only strip a generated suffix made entirely of known source names.
     const factualText = text.replace(/[（(]([^()（）]+)[）)]\s*$/, (suffix, names: string) =>
       names.split(" / ").every(name => sourceNames.includes(name.trim())) ? "" : suffix);
-    return factualText.trim();
+    // A detail paragraph that opens by repeating the headline continues from
+    // it instead: drop leading sentences the reader has already seen.
+    const sentences = factualText.trim().split(/(?<=[。！？])|(?<=[a-z0-9]{2}[.!?])\s+(?=[A-Z])/);
+    while (sentences.length > 1 && comparable(sentences[0]) && visible.some(value => value.includes(comparable(sentences[0])))) sentences.shift();
+    return sentences.join(/[\u3040-\u30ff\u3400-\u9fff]/.test(factualText) ? "" : " ").trim();
   }).filter(text => {
     const key = comparable(text);
     const numericFact = /^.{1,80}[：:]\s*\$?[-+]?\d/.test(text);
