@@ -81,7 +81,7 @@ export default function BottomNav() {
     ["/research/weekly", ja ? "週刊PRO" : "PRO Weekly", "saved"],
     ["/research#monitored-companies", ja ? "監視22銘柄リスト" : "22-stock watch list", "companies"],
     ["/research#what-changed", ja ? "何が変わった？" : "What changed?", "changes"],
-    ["/research/watchlist", ja ? "お気に入り" : "Favorites", "favorite"],
+    ["/research/watchlist", ja ? "ウォッチリスト" : "Watchlist", "favorite"],
     ["/research/calendar", ja ? "決算・経済指標" : "Earnings & economy", "calendar"],
     ["/research/notifications", ja ? "スマホ通知設定" : "Notifications", "bell"],
     ["/research#saved", ja ? "保存したリサーチ" : "Saved research", "saved"],

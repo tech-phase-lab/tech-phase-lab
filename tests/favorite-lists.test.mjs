@@ -39,3 +39,14 @@ test('rejects fabricated or unordered sparkline inputs and handles flat prices',
   assert.equal(sparklinePoints([{at:'invalid',price:5},values[1]]), '');
   assert.deepEqual(parsePriceAlerts([{ticker:'MU',price:-2,direction:'above',currency:'USD'}]), []);
 });
+
+test('seven list slots preserve saved lists and avoid identity collisions', async () => {
+ const { watchlistSlots } = await import('../lib/research/favorite-lists.ts');
+ const existing=[{id:'default',name:'保有株',tickers:['MU']},{id:'my-list-3',name:'半導体',tickers:['NVDA']}];
+ const slots=watchlistSlots(existing);
+ assert.equal(slots.length,7);assert.deepEqual(slots.slice(0,2),existing);
+ assert.equal(new Set(slots.map(x=>x.id)).size,7);
+ assert.deepEqual(watchlistSlots(slots),slots);
+ assert.equal(existing.length,2);
+ assert.deepEqual(watchlistSlots([...slots,{id:'extra',name:'追加',tickers:['TSM']}]).at(-1).tickers,['TSM']);
+});

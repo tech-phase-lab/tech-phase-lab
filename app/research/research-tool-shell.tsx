@@ -23,7 +23,7 @@ export default function ResearchToolShell({ lang, setLang, title, description, c
     <main id="tool-main" className={`${styles.main} ${desk ? styles.desk : ""}`}>
       {!desk && showTools && <nav className={styles.links} aria-label={lang === "ja" ? "便利な機能" : "Research tools"}>
         <Link href="/research/stocks" aria-current={pathname === "/research/stocks" ? "page" : undefined}><NavigationIcon name="search" />{lang === "ja" ? "銘柄検索" : "Stock search"}</Link>
-        <Link href="/research/watchlist" aria-current={pathname === "/research/watchlist" ? "page" : undefined}><NavigationIcon name="favorite" />{lang === "ja" ? "お気に入り銘柄" : "Favorite stocks"}</Link>
+        <Link href="/research/watchlist" aria-current={pathname === "/research/watchlist" ? "page" : undefined}><NavigationIcon name="favorite" />{lang === "ja" ? "ウォッチリスト" : "Watchlist"}</Link>
         <Link href="/research/calendar" aria-current={pathname === "/research/calendar" ? "page" : undefined}><NavigationIcon name="calendar" />{lang === "ja" ? "カレンダー" : "Calendar"}</Link>
         <Link href="/research/market" aria-current={pathname === "/research/market" ? "page" : undefined}><NavigationIcon name="metrics" />{lang === "ja" ? "マーケット" : "Markets"}</Link>
         <Link href="/research/learn" aria-current={pathname === "/research/learn" ? "page" : undefined}><NavigationIcon name="saved" />{lang === "ja" ? "米国株の基礎" : "Stock basics"}</Link>

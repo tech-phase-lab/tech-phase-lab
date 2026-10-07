@@ -135,3 +135,33 @@
 
 .mobileSpark { display:none; }
 @media(max-width:760px) { .mobileSpark { display:block;width:60px;height:18px;color:#9bceb9; } }
+
+/* One compact header, with the list control beside the title. */
+.heading { justify-content:space-between;gap:12px;padding:8px 0 24px; }
+.heading h1 { font-size:28px;letter-spacing:0;white-space:nowrap; }
+.listPicker { display:flex;align-items:center;min-width:0;max-width:52%;gap:2px; }
+.pickerArrow { color:#a0cbbb;font-size:10px;flex-shrink:0; }
+.listPicker select { appearance:none;min-width:0;max-width:240px;min-height:44px;padding:8px 5px;border:0;background:transparent;color:#d6e8e3;font:inherit;font-size:16px;color-scheme:dark;text-overflow:ellipsis;cursor:pointer; }
+.renameButton { display:grid;place-items:center;flex:0 0 40px;width:40px;height:44px;padding:10px;background:transparent;border:0;color:#8eaca2;cursor:pointer; }
+.renameButton svg { width:18px;height:18px; }.renameButton:disabled { opacity:.35;cursor:default; }
+.identity strong { font-family:ui-rounded,"SF Pro Rounded","Hiragino Maru Gothic ProN","Arial Rounded MT Bold",var(--font-geist-sans),sans-serif;font-size:21px;font-weight:600;letter-spacing:.005em;line-height:1.3; }
+.tableHead,.rowMain { grid-template-columns:minmax(0,1fr) 110px 140px 125px 20px;gap:16px; }
+.sparkHead { text-align:center!important; }
+.sessionChange { display:block;margin-top:7px;font-size:12px;font-weight:500; }
+.sessionChange small { font-size:9px;margin-top:2px;color:#9fafad; }
+.sessionChange[data-direction=up] { color:#8bdfbd; }.sessionChange[data-direction=down] { color:#ed959d; }
+@media(max-width:760px) {
+ .heading { gap:6px;padding-bottom:18px; }.heading h1 { font-size:clamp(20px,5.4vw,26px); }
+ .listPicker { max-width:49%; }.listPicker select { font-size:13px;width:100%;padding-inline:3px; }.renameButton { flex-basis:32px;width:32px;padding:7px; }
+ .tableHead,.rowMain { grid-template-columns:minmax(0,1fr) 46px 68px 72px 12px;gap:6px; }
+ .sparkHead,.spark { display:block; }.spark { height:28px; }.spark svg { height:28px; }.spark>span { line-height:28px; }
+ .tableHead { font-size:10px;padding-block:12px; }.rowMain { padding-block:17px; }
+ .identity { gap:7px; }.identity strong { font-size:17px; }.identity small { font-size:10px;margin-top:3px; }
+ .price { font-size:16px; }.change { font-size:12px; }.price small,.price time,.change small { font-size:9px; }
+ .logo { width:25px;height:25px;flex-basis:25px; }.logo img { width:22px;height:22px; }
+}
+@media(max-width:380px) {
+ .tableHead,.rowMain { grid-template-columns:minmax(0,1fr) 34px 60px 62px 10px;gap:4px; }
+ .identity strong { font-size:16px; }.identity { gap:5px; }.logo { width:22px;height:22px;flex-basis:22px; }
+ .heading h1 { font-size:19px; }.listPicker select { font-size:12px; }
+}

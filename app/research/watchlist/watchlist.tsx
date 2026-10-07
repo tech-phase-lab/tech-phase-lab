@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useFavoriteLists } from "./use-favorite-lists";
-import { moveFavorite, sortFavorites, sparklinePoints, usableFavoriteQuote, type FavoriteQuote } from "@/lib/research/favorite-lists";
+import { watchlistSlots, moveFavorite, sortFavorites, sparklinePoints, usableFavoriteQuote, type FavoriteQuote } from "@/lib/research/favorite-lists";
 import { useResearchLanguage } from "../use-research-language";
 import ResearchToolShell from "../research-tool-shell";
 import { TradingViewChart } from "../stocks/tradingview-chart";
@@ -22,13 +22,14 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const [alertDirection, setAlertDirection] = useState<"above" | "below">("above");
   const [alertCurrency, setAlertCurrency] = useState("USD");
   const [listId, setListId] = useState("default");
-  const list = lists.find(item => item.id === listId) ?? lists[0];
+  const slots = watchlistSlots(lists);
+  const list = slots.find(item => item.id === listId) ?? slots[0];
   const favorites = list.tickers;
-  const [listAction, setListAction] = useState<"create" | "rename" | "delete" | null>(null);
+  const [listAction, setListAction] = useState<"rename" | null>(null);
   const [listName, setListName] = useState("");
   function toggle(ticker: string, name?: string) {
     return update(current => ({ ...current, names: name ? { ...current.names, [ticker]: name } : current.names,
-      lists: current.lists.map(item => item.id !== list.id ? item : { ...item, tickers: item.tickers.includes(ticker) ? item.tickers.filter(value => value !== ticker) : [...item.tickers, ticker].slice(0, 100) }) }));
+      lists: watchlistSlots(current.lists).map(item => item.id !== list.id ? item : { ...item, tickers: item.tickers.includes(ticker) ? item.tickers.filter(value => value !== ticker) : [...item.tickers, ticker].slice(0, 100) }) }));
   }
   function move(ticker: string, delta: number) {
     update(current => ({ ...current, lists: current.lists.map(item => item.id === list.id ? { ...item, tickers: moveFavorite(item.tickers, ticker, delta) } : item) }));
@@ -80,27 +81,27 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const ordered = sortFavorites(favorites, quotes, sort);
   const monitored = companies.some(item => item.ticker === active);
-  return <ResearchToolShell lang={lang} setLang={setLang} title={t("お気に入り", "Favorites")} description="" showHeading={false} showTools={false}>
+  return <ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false} showTools={false}>
     <div className={styles.page}>
-      <header className={styles.heading}><h1>{t("お気に入り", "Favorites")}<small aria-live="polite">{favorites.length}</small></h1></header>
-      <div className={styles.listBar}>
-        <div className={styles.listTabs} role="group" aria-label={t("お気に入りリスト", "Favorite lists")}>{lists.map(item => <button key={item.id} aria-pressed={list.id === item.id} onClick={() => { setListId(item.id); setSelected(""); setQuery(""); setListAction(null); }}>{item.name || t("マイリスト", "My list")}<small>{item.tickers.length}</small></button>)}</div>
-        <button disabled={!editable} onClick={() => { setListAction("rename"); setListName(list.name || t("マイリスト", "My list")); }} aria-label={t("リスト名を変更", "Rename list")}>✎</button>
-        <button disabled={!editable || lists.length >= 20} onClick={() => { setListAction("create"); setListName(""); }}>{t("＋ 新しいリスト", "+ New list")}</button>
-        {list.id !== "default" && <button disabled={!editable} onClick={() => setListAction("delete")} aria-label={t("リストを削除", "Delete list")}>×</button>}
-      </div>
+      <header className={styles.heading}>
+        <h1>{t("ウォッチリスト", "Watchlist")}</h1>
+        <div className={styles.listPicker}>
+          <span className={styles.pickerArrow} aria-hidden="true">▼</span>
+          <select aria-label={t("マイリストを選択", "Choose list")} value={list.id} onChange={event => { setListId(event.target.value); setSelected(""); setQuery(""); setListAction(null); setEditing(false); }}>
+            {slots.map((item, index) => <option key={item.id} value={item.id}>{item.name || t(`マイリスト${index + 1}`, `My list ${index + 1}`)}</option>)}
+          </select>
+          <button disabled={!editable} className={styles.renameButton} onClick={() => { setListAction(listAction ? null : "rename"); setListName(list.name || t(`マイリスト${slots.indexOf(list) + 1}`, `My list ${slots.indexOf(list) + 1}`)); }} aria-label={t("リスト名を編集", "Edit list name")} aria-expanded={!!listAction}>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="m15 5 4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15z" /></svg>
+          </button>
+        </div>
+      </header>
       {listAction && <form className={styles.listForm} onSubmit={event => {
         event.preventDefault();
-        if (listAction === "delete") {
-          if (update(current => ({ ...current, lists: current.lists.filter(item => item.id !== list.id) }))) { setListId("default"); setListAction(null); setSelected(""); }
-          return;
-        }
         const name = listName.trim(); if (!name) return;
-        const id = listAction === "create" ? crypto.randomUUID() : list.id;
-        if (update(current => ({ ...current, lists: listAction === "create" ? [...current.lists, { id, name, tickers: [] }] : current.lists.map(item => item.id === id ? { ...item, name } : item) }))) { setListId(id); setSelected(""); setListAction(null); }
+        if (update(current => ({ ...current, lists: watchlistSlots(current.lists).map(item => item.id === list.id ? { ...item, name } : item) }))) setListAction(null);
       }}>
-        {listAction === "delete" ? <span>{t(`「${list.name}」を削除しますか？`, `Delete “${list.name}”?`)}</span> : <input aria-label={t("リスト名", "List name")} placeholder={t("保有株、半導体など", "Holdings, Semiconductors…")} value={listName} onChange={event => setListName(event.target.value)} maxLength={40} required />}
-        <button type="submit">{listAction === "delete" ? t("削除", "Delete") : t("保存", "Save")}</button><button type="button" onClick={() => setListAction(null)}>{t("取消", "Cancel")}</button>
+        <input aria-label={t("リスト名", "List name")} value={listName} onChange={event => setListName(event.target.value)} maxLength={40} required />
+        <button type="submit">{t("保存", "Save")}</button><button type="button" onClick={() => setListAction(null)}>{t("取消", "Cancel")}</button>
       </form>}
       <section className={styles.searchPanel} aria-label={t("銘柄を追加", "Add stock")}>
         <div className={styles.searchRow}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg><input ref={searchInput} type="search" autoComplete="off" autoCapitalize="none" spellCheck={false} aria-label={t("銘柄を追加：会社名・ティッカーで検索", "Add stock: search company or ticker")} value={query} onChange={event => setQuery(event.target.value)} placeholder={t("銘柄を追加・検索", "Find a stock to add")} onKeyDown={event => { if (event.key === "Escape") setQuery(""); }} />{query && <button className={styles.iconButton} onClick={() => { setQuery(""); searchInput.current?.focus(); }} aria-label={t("検索をクリア", "Clear search")}>×</button>}</div>
@@ -112,7 +113,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
       {favorites.length > 0 ? <>
         <div className={styles.toolbar}><label><span className={styles.srOnly}>{t("並び順", "Sort order")}</span><select value={sort} onChange={event => setSort(event.target.value)}><option value="saved">{t("追加した順", "Date added")}</option><option value="ticker">{t("ティッカー順", "Ticker A–Z")}</option><option value="gainers">{t("上昇率が高い順", "Top gainers")}</option><option value="losers">{t("下落率が大きい順", "Top losers")}</option></select></label><button disabled={!editable} onClick={() => setEditing(!editing)} aria-pressed={editing}>{editing ? t("完了", "Done") : t("編集", "Edit")}</button></div>
         <div className={styles.quoteTable}>
-          <div className={styles.tableHead}><span>{t("銘柄", "Stock")}</span><span className={styles.sparkHead}>{t("値動き", "Trend")}</span><span>{t("株価", "Price")}</span><span>{t("前日比", "Change")}</span><span /></div>
+          <div className={styles.tableHead}><span>{t("銘柄", "Stock")}</span><span className={styles.sparkHead}>{t("値動き", "Trend")}</span><span>{t("株価", "Price")}</span><span>{t("前日比・プレ", "Change / Pre")}</span><span /></div>
           <ul className={styles.quoteRows}>{ordered.map((ticker, index) => {
             const item = companies.find(entry => entry.ticker === ticker) ?? known[ticker];
             const quote = usableFavoriteQuote(quotes[ticker], ticker) ? quotes[ticker] : null;
@@ -124,13 +125,13 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
             const extended = ext && Number.isFinite(ext.price) && ext.price > 0 && Number.isFinite(ext.percentChange) && Number.isFinite(Date.parse(ext.asOf)) && ["pre", "post"].includes(ext.session) ? ext : null;
             return <li key={ticker} className={styles.quoteRow} data-selected={ticker === active}>
               <button className={styles.rowMain} aria-expanded={ticker === active} onClick={() => setSelected(active === ticker ? "" : ticker)}>
-                <span className={styles.identity}><StockLogo ticker={ticker} /><span><strong>{item?.name ?? names[ticker] ?? ticker}</strong><small>{ticker}</small>{points && <svg className={styles.mobileSpark} viewBox="0 0 100 40" role="img" aria-label={t(`${ticker}の値動き`, `${ticker} price trend`)}><polyline points={points} fill="none" stroke="currentColor" strokeWidth="1.7" /></svg>}</span></span>
+                <span className={styles.identity}><StockLogo ticker={ticker} /><span><strong>{item?.name ?? names[ticker] ?? ticker}</strong><small>{ticker}</small></span></span>
                 <span className={styles.spark} title={t("取得済みの価格推移", "Available price history")}>{points ? <svg viewBox="0 0 100 40" role="img" aria-label={t(`${ticker}の値動き`, `${ticker} price trend`)}><polyline points={points} fill="none" stroke="currentColor" strokeWidth="1.7" /></svg> : <span>—</span>}</span>
                 <span className={styles.price}>{quote ? number(quote.price) : "—"}<small>{quote ? `${quote.currency} · ${session}${quote.delayed ? t("・遅延", " · delayed") : ""}` : ""}</small>{quote && <time dateTime={quote.asOf}>{new Date(quote.asOf).toLocaleString(lang === "ja" ? "ja-JP" : "en-US", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })}</time>}</span>
-                <span className={styles.change} data-direction={quote?.percentChange == null ? "flat" : quote.percentChange > 0 ? "up" : quote.percentChange < 0 ? "down" : "flat"}>{quote?.percentChange == null ? "—" : `${signed(quote.percentChange)}%`}<small>{quote?.change == null ? "" : signed(quote.change)}</small></span>
+                <span className={styles.change} data-direction={quote?.percentChange == null ? "flat" : quote.percentChange > 0 ? "up" : quote.percentChange < 0 ? "down" : "flat"}>{quote?.percentChange == null ? "—" : `${signed(quote.percentChange)}%`}<small>{quote?.change == null ? "" : signed(quote.change)}</small>{extended && <span className={styles.sessionChange} data-direction={extended.percentChange >= 0 ? "up" : "down"}><small>{extended.session === "pre" ? t("プレ", "Pre") : t("時間外", "After-hours")}</small>{signed(extended.percentChange)}%<small>{number(extended.price)} {quote?.currency}</small></span>}</span>
                 <span className={styles.chevron} aria-hidden="true">{ticker === active ? "−" : "+"}</span>
               </button>
-              {extended && <p className={styles.extended}>{extended.session === "pre" ? t("プレ", "Pre") : t("時間外", "After-hours")} <strong>{number(extended.price)} {quote?.currency}</strong> <span data-direction={extended.percentChange >= 0 ? "up" : "down"}>{signed(extended.percentChange)}%</span> <time dateTime={extended.asOf}>{new Date(extended.asOf).toLocaleTimeString(lang === "ja" ? "ja-JP" : "en-US", {hour:"2-digit",minute:"2-digit"})}</time></p>}
+
               {editing && <div className={styles.rowEdit}><button disabled={sort !== "saved" || index === 0} onClick={() => move(ticker, -1)} aria-label={t(`${ticker}を上へ`, `Move ${ticker} up`)}>↑</button><button disabled={sort !== "saved" || index === ordered.length - 1} onClick={() => move(ticker, 1)} aria-label={t(`${ticker}を下へ`, `Move ${ticker} down`)}>↓</button><button onClick={() => toggle(ticker)} aria-label={t(`${ticker}をこのリストから解除`, `Remove ${ticker} from this list`)}>{t("削除", "Remove")}</button></div>}
               {ticker === active && <section className={styles.detail} aria-label={t(`${ticker}の詳細`, `${ticker} details`)}>
                 <div className={styles.detailHeading}><h2>{item?.name ?? names[ticker] ?? ticker}</h2><Link href={monitored ? `/research/companies/${ticker}` : `/research/stocks?q=${encodeURIComponent(ticker)}`}>{t("銘柄情報", "Company")} →</Link></div>

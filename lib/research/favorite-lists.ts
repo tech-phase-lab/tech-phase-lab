@@ -25,6 +25,16 @@ export function parseFavoriteLists(raw: string | null, legacy: string | null): F
     return { lists, names, alerts: parsePriceAlerts(value.alerts) };
   } catch { return { lists: [fallback], names: {} }; }
 }
+// Empty slots are presented without saving or replacing existing lists.
+export function watchlistSlots(lists: FavoriteList[]): FavoriteList[] {
+  const result = [...lists];
+  for (let slot = result.length + 1; result.length < 7; slot++) {
+    let id = `my-list-${slot}`;
+    while (result.some(item => item.id === id)) id += "-empty";
+    result.push({ id, name: "", tickers: [] });
+  }
+  return result;
+}
 export function moveFavorite(tickers: string[], ticker: string, delta: number) {
   const index = tickers.indexOf(ticker), next = index + delta;
   if (index < 0 || next < 0 || next >= tickers.length) return tickers;
