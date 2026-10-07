@@ -27,7 +27,7 @@ export function officialNewsDisplay(item: OfficialUpdate, lang: Language, briefs
   const title = item.brief && sourceTitle.endsWith(suffix) ? sourceTitle.slice(0, -suffix.length) : sourceTitle;
   const compact = inlineNewsComparisons(title, item, lang, briefs);
   const body = ja ? item.bodyJa ?? (pendingTranslation ? item.bodyEn : undefined) : item.bodyEn;
-  return { label: pendingTranslation ? `${label} · 翻訳準備中（原文）` : label, title: compact.title, pendingTranslation,
+  return { label: pendingTranslation ? `${label} · 翻訳準備中（原文）` : label, title: compact.title, pendingTranslation, fullBody: body,
     body: additionalNewsDetail([label, compact.title, ...(item.brief ? [sourceTitle] : []), ...compact.visibleFacts], body, item.sources?.map(source => source.publisher)) };
 }
 
@@ -39,5 +39,7 @@ export function informativeOfficial(item: OfficialUpdate) {
   const text = `${item.title} ${item.translationJa ?? ''}`.toLowerCase();
   const names = [...item.tickers, item.publisher.split(/\s+/)[0]].filter(name => name && name.length > 1);
   if (names.some(name => text.includes(name.toLowerCase()))) return true;
-  return /\b(?:results?|earnings|acquir\w*|merger|dividend|guidance|revenue|buyback|repurchase|offering|appoint\w*|ceo|cfo)\b|決算|買収|配当|売上|自社株/i.test(text);
+  if (/\b(?:results?|earnings|acquir\w*|merger|dividend|guidance|revenue|buyback|repurchase|offering|appoint\w*|ceo|cfo)\b|決算|買収|配当|売上|自社株/i.test(text)) return true;
+  // An action word makes a statement ("Making it easier to identify AI content").
+  return /\b(?:introduc|launch|announc|unveil|releas|mak|expand|partner|bring|help|open|build|add|start|join|complet|sign|achiev|reach|surpass|deliver|ship|enabl|accelerat|support|invest|award|select|win)\w*\b/i.test(item.title);
 }

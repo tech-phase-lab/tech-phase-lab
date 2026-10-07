@@ -63,7 +63,7 @@ const market = (id, topic, publishedAt) => ({ id, topic, publishedAt,
 test('home rotation includes published index, bond and oil news with exact bilingual copy', () => {
   const feed = {ok:true,enabled:false,items:[],officialUpdates:[{
     id:'4',tickers:['NBIS'],publisher:'NBIS',url:'https://nebius.com/newsroom/test',
-    title:'Official update',translationJa:'公式発表',publishedAt:'2026-10-01T00:00:00Z',observedAt:'2026-10-02T07:00:00Z'
+    title:'NBIS official update',translationJa:'公式発表',publishedAt:'2026-10-01T00:00:00Z',observedAt:'2026-10-02T07:00:00Z'
   }],marketUpdates:[market('1','index-membership','2026-10-02T00:24:57Z'),market('2','government-bonds','2026-10-02T00:00:00Z'),market('3','crude-oil','2026-10-01T23:00:00Z')]};
   const ja=newsPulseItems(feed,'ja'), en=newsPulseItems(feed,'en');
   assert.deepEqual(ja.map(x=>x.id),['market-1','market-2','market-3','official-4']);
@@ -79,7 +79,7 @@ test('home rotation includes published index, bond and oil news with exact bilin
 test('home rotation keeps latest five across feeds and preserves unknown publication clocks', () => {
   assert.deepEqual(newsPulseItems(undefined,'ja'),[]);
   const feed={ok:true,enabled:true,items:[{id:'news',tickers:['MU'],title:'News',summaryJa:'ニュース',url:'https://example.com/news',publishedAt:'2026-10-02T01:00:00Z'}],
-    officialUpdates:[{id:'4',tickers:['NBIS'],publisher:'NBIS',url:'https://nebius.com/newsroom/test',title:'Official',observedAt:'2026-10-02T02:00:00Z'}],
+    officialUpdates:[{id:'4',tickers:['NBIS'],publisher:'NBIS',url:'https://nebius.com/newsroom/test',title:'NBIS official',observedAt:'2026-10-02T02:00:00Z'}],
     marketUpdates:Array.from({length:6},(_,i)=>market(String(i),'crude-oil',`2026-10-01T0${i}:00:00Z`))};
   const items=newsPulseItems(feed,'en');
   assert.equal(items.length,5);
@@ -107,7 +107,7 @@ test('late acquired date-only source stays on its original day in both home lang
     publishedOn:'2026-10-01',observedAt:'2026-10-02T17:45:51.992Z',
   },{
     id:'1211',tickers:['NBIS'],publisher:'Nebius',url:'https://nebius.com/blog/newer',
-    title:'Newer official update',translationJa:'新しい公式発表',
+    title:'Newer NBIS official update',translationJa:'新しい公式発表',
     publishedOn:'2026-10-02',observedAt:'2026-10-02T12:00:00Z',
   }]});
   for(const lang of ['ja','en']) {

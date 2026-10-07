@@ -16,3 +16,4 @@
 
 /* Opened: the story text takes the headline's place; the date follows it. */
 .story[open] .closedOnly{display:none}.story[open] summary{padding-bottom:0}.story[open] .body{border-top:0;padding-top:4px}.body .note{display:block;margin-top:10px}
+.replaces .body{font-size:14px}

@@ -70,7 +70,7 @@ test('headline/language changes and unmount cancel stale font/resize work',()=>{
 
 test('rotation, pause/resume, arrows, language changes and swipe preserve one clock/control without header expansion',()=>{
   reset();const owner=context();
-  const news=(id,at)=>({id,publisher:'Issuer',tickers:['NVDA'],url:`https://developer.nvidia.com/blog/test-${id}`,title:`Short headline ${id}`,translationJa:`短い見出し${id}`,publishedAt:at,observedAt:at});
+  const news=(id,at)=>({id,publisher:'Issuer',tickers:['NVDA'],url:`https://developer.nvidia.com/blog/test-${id}`,title:`NVDA short headline ${id}`,translationJa:`短い見出し${id}`,publishedAt:at,observedAt:at});
   runtime.feed={checkedAt:Date.parse('2026-10-04T10:00:00Z'),data:{ok:true,enabled:false,items:[],officialUpdates:[news('a','2026-10-03T23:15:00Z'),news('b','2026-10-02T23:15:00Z')]}};
   const draw=(lang='ja')=>render(owner,ResearchPulse,{lang});
   const controls=tree=>tree.props.children.filter(child=>child?.type==='button');
