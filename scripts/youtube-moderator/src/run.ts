@@ -1,8 +1,8 @@
 import { classifyComments, type Verdict } from "./classify.ts";
-import { loadConfig } from "./config.ts";
+import { isDryRun, loadConfig, loadNotifyConfig, stateFilePath, type Config } from "./config.ts";
 import { notify } from "./notify.ts";
 import { findNgWord } from "./rules.ts";
-import { loadState, saveState } from "./state.ts";
+import { loadState, saveState, type State } from "./state.ts";
 import {
   fillVideoTitles,
   getAccessToken,
@@ -38,10 +38,7 @@ function section(title: string, items: [HeldComment, Verdict][]): string {
   return [`【${title}】${items.length}件`, ...items.map(([c, v]) => formatItem(c, v))].join("\n\n");
 }
 
-async function main() {
-  const config = loadConfig();
-  const state = await loadState(config.stateFile);
-
+async function moderate(config: Config, state: State) {
   const accessToken = await getAccessToken(config.youtube);
   const held = await listHeldComments(accessToken, config.youtube.channelId);
 
@@ -123,7 +120,61 @@ async function main() {
   }
 }
 
-main().catch((error: unknown) => {
-  console.error(error instanceof Error ? error.message : error);
-  process.exit(1);
-});
+// 一時的な不調で毎回お知らせが飛ばないよう、3回連続で失敗したら知らせる（5〜10分おきの実行で15〜30分）
+const ALERT_AFTER_FAILURES = 3;
+// 同じ原因のお知らせは6時間に1回まで
+const ALERT_INTERVAL_MS = 6 * 60 * 60 * 1000;
+
+function runUrl(): string {
+  const { GITHUB_SERVER_URL, GITHUB_REPOSITORY, GITHUB_RUN_ID } = process.env;
+  return GITHUB_SERVER_URL && GITHUB_REPOSITORY && GITHUB_RUN_ID
+    ? `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}`
+    : "";
+}
+
+async function alertIfStuck(state: State, message: string) {
+  state.failures = (state.failures ?? 0) + 1;
+  if (state.failures < ALERT_AFTER_FAILURES) return;
+
+  const last = state.alert;
+  if (last && last.message === message && Date.now() - Date.parse(last.at) < ALERT_INTERVAL_MS) return;
+
+  const text = [
+    "⚠️ コメント審査が止まっています",
+    `原因: ${message}`,
+    "止まっている間に来たコメントは承認待ちのまま残り、直ったあとに審査されます。",
+    runUrl() ? `詳細: ${runUrl()}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n\n");
+
+  try {
+    await notify({ dryRun: isDryRun(), notify: loadNotifyConfig() }, text);
+    state.alert = { message, at: new Date().toISOString() };
+  } catch (notifyError) {
+    // Gmail の設定自体が原因のときは知らせようがない。GitHub の「Run failed」メールが頼り
+    console.error(`停止のお知らせも送れませんでした: ${notifyError instanceof Error ? notifyError.message : notifyError}`);
+  }
+}
+
+async function main() {
+  const stateFile = stateFilePath();
+  const state = await loadState(stateFile);
+
+  try {
+    await moderate(loadConfig(), state);
+    if (state.failures || state.alert) {
+      state.failures = 0;
+      delete state.alert;
+      if (!isDryRun()) await saveState(stateFile, state);
+    }
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(message);
+    await alertIfStuck(state, message);
+    if (!isDryRun()) await saveState(stateFile, state);
+    process.exitCode = 1;
+  }
+}
+
+await main();

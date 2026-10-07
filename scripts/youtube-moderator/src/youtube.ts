@@ -30,7 +30,7 @@ export async function getAccessToken(credentials: Credentials): Promise<string> 
 
   if (!response.ok) {
     throw new Error(
-      `Google のアクセストークン取得に失敗しました (${response.status})。リフレッシュトークンが失効していないか確認してください。`,
+      `YouTube との連携が切れています（${response.status}）。OAuth Playground でリフレッシュトークンを取り直し、GitHub の Secrets の YT_REFRESH_TOKEN を更新してください。`,
     );
   }
 
@@ -53,7 +53,10 @@ async function youtubeFetch(accessToken: string, path: string, init?: RequestIni
     } catch {
       // ignore
     }
-    throw new Error(`YouTube API ${path.split("?")[0]} が ${response.status} を返しました ${reason}`);
+    if (reason.includes("quotaExceeded")) {
+      throw new Error("YouTube API の1日の利用上限に達しました。日本時間の16〜17時ごろにリセットされ、自然に再開します。");
+    }
+    throw new Error(`YouTube API ${path.split("?")[0]} が ${response.status} を返しました ${reason}`.trim());
   }
 
   return response;
