@@ -56,3 +56,12 @@ test("small-cap Japanese names and partial searches include the intended issuer"
   assert.deepEqual(new Set(searchDirectory(companies, "アプライド").map(entry => entry.ticker)), new Set(["AAOI", "AMAT"]));
   assert.deepEqual(searchDirectory(companies, "アプライドオプト").map(entry => entry.ticker), ["AAOI"]);
 });
+
+ test("Arista spelling variants resolve to ANET in both search paths", () => {
+ const entries = [{ ticker: "ANET", name: "Arista Networks", cik: 1596532, exchange: "NYSE", tracked: true }];
+ for (const query of ["アリスター", "アリスタ", "ｱﾘｽﾀｰ", "ありすたー", "アリスターネットワークス"]) {
+   assert.equal(searchStocks(entries, query)[0]?.ticker, "ANET");
+   assert.equal(searchDirectory(entries, query)[0]?.ticker, "ANET");
+ }
+ assert.deepEqual(searchStocks(entries, "アリステラ"), []);
+});
