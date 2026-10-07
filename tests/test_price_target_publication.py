@@ -135,6 +135,26 @@ class TargetPublicationTests(unittest.TestCase):
         self.assertEqual(reason, 'eligible')
         self.assertEqual((item['previous'], item['latest']), (2500.0, 2400.0))
 
+    def test_cashtag_led_company_name_target_forms_publish(self):
+        for index, text in enumerate([
+            '$BE | UBS raises Bloom Energy Corporation price target, raised to $350 from $325',
+            '$BE | UBS raises Bloom Energy Corporation price target to $350 from $325',
+            '$BE | UBS raises PT on Bloom Energy Corporation to $350 from $325',
+            '$BE | UBS raises price target on Bloom Energy Corporation from $325 to $350',
+        ], 50):
+            with self.subTest(text=text):
+                self.add(index, text, tickers='["BE"]', body=text)
+                item, reason = signals.price_target_observation(self.row(index), self.source, self.now)
+                self.assertEqual(reason, 'eligible')
+                self.assertEqual((item['ticker'], item['firm'], item['previous'], item['latest']), ('BE', 'UBS', 325.0, 350.0))
+        for index, text in enumerate([
+            '$BE | UBS raises Bloom Energy price target, cuts to $300 from $325',
+            '$BE | UBS raises Bloom Energy price target to $300 from $325',
+        ], 60):
+            with self.subTest(text=text):
+                self.add(index, text, tickers='["BE"]', body=text)
+                self.assertIsNone(signals.price_target_observation(self.row(index), self.source, self.now)[0])
+
     def test_target_universe_limits_a_route_to_large_caps(self):
         text = '$LMND | Morgan Stanley maintains Equalweight on Lemonade Inc., cuts PT to $48.00 from $56.00'
         self.add(42, text, tickers='["LMND"]', body=text)
