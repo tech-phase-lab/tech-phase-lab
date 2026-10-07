@@ -27,15 +27,16 @@ function openedNewsText(body: string, limit = /[぀-ヿ㐀-鿿]/.test(body) ? 16
 
 /** A disclosure promises additional information, never a repeated headline.
  * Opened, the detail continues right after the headline and the date moves to
- * the end. ``concise`` trims long company prose at a sentence boundary. */
-export default function NewsStory({ label, title, body, publication, lang, concise = false }: {
-  label: string; title: string; body?: string; publication: string; lang: Language; concise?: boolean;
+ * the end. A ``concise`` company story instead replaces its headline with the
+ * full story text (cut at a sentence boundary) when opened (owner, Oct 7). */
+export default function NewsStory({ label, title, body, fullBody, publication, lang, concise = false }: {
+  label: string; title: string; body?: string; fullBody?: string; publication: string; lang: Language; concise?: boolean;
 }) {
-  const heading = <><span className={styles.tickers}>{label}</span><span className={styles.headline} lang={lang}>{title}</span></>;
   const detail = additionalNewsDetail([label, title, publication], body);
-  if (!detail) return <div className={styles.shortStory}>{heading}<span className={styles.note}>{publication}</span></div>;
-  return <details className={styles.story}>
-    <summary>{heading}<span className={`${styles.note} ${styles.closedOnly}`}>{publication}</span><span className={styles.expand} aria-hidden="true">＋</span><span className={styles.srOnly}>{lang === "ja" ? "詳細を開閉" : "Toggle details"}</span></summary>
-    <div className={styles.body} lang={lang}>{concise ? openedNewsText(detail) : detail}<span className={styles.note}>{publication}</span></div>
+  if (!detail) return <div className={styles.shortStory}><span className={styles.tickers}>{label}</span><span className={styles.headline} lang={lang}>{title}</span><span className={styles.note}>{publication}</span></div>;
+  const opened = concise ? openedNewsText(fullBody?.trim() ? fullBody : `${title}\n\n${detail}`) : detail;
+  return <details className={concise ? `${styles.story} ${styles.replaces}` : styles.story}>
+    <summary><span className={styles.tickers}>{label}</span><span className={concise ? `${styles.headline} ${styles.closedOnly}` : styles.headline} lang={lang}>{title}</span><span className={`${styles.note} ${styles.closedOnly}`}>{publication}</span><span className={styles.expand} aria-hidden="true">＋</span><span className={styles.srOnly}>{lang === "ja" ? "詳細を開閉" : "Toggle details"}</span></summary>
+    <div className={styles.body} lang={lang}>{opened}<span className={styles.note}>{publication}</span></div>
   </details>;
 }

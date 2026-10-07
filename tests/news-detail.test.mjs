@@ -19,7 +19,7 @@ import { buildPublicNews } from '../lib/research/public-news-response.ts';
 const require=createRequire(import.meta.url);
 const source=(await readFile(new URL('../app/research/news/news-story.tsx',import.meta.url),'utf8'))
   .replace('import { additionalNewsDetail } from "@/lib/research/news-detail";', `import { additionalNewsDetail } from ${JSON.stringify(new URL('../lib/research/news-detail.ts', import.meta.url).href)};`)
-  .replace('import styles from "./general-news.module.css";', 'const styles={story:"story",shortStory:"shortStory",tickers:"tickers",headline:"headline",note:"note",expand:"expand",body:"body",source:"source",srOnly:"srOnly"};');
+  .replace('import styles from "./general-news.module.css";', 'const styles={story:"story",shortStory:"shortStory",tickers:"tickers",headline:"headline",note:"note",expand:"expand",body:"body",source:"source",srOnly:"srOnly",closedOnly:"closedOnly",replaces:"replaces"};');
 const compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext}}).outputText
   .replace('"react/jsx-runtime"',JSON.stringify(pathToFileURL(require.resolve('react/jsx-runtime')).href));
 const {default:NewsStory}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
@@ -93,6 +93,10 @@ test('an opened story continues after the headline and moves the date to its end
   const body=html.slice(html.indexOf('</summary>'));
   assert.ok(summary.includes(props.title));
   assert.ok(body.indexOf('Additional verified fact')<body.indexOf(props.publication));
+  // A company story replaces its headline with the full text when opened.
+  const replaced=renderToStaticMarkup(React.createElement(NewsStory,{...props,body:'見出しの説明。追加の事実。',fullBody:'見出しの説明。追加の事実。',concise:true}));
+  assert.match(replaced,/class="headline closedOnly"/);
+  assert.ok(replaced.slice(replaced.indexOf('</summary>')).includes('見出しの説明。追加の事実。'));
   const long='一文目の説明です。'.repeat(30);
   const concise=renderToStaticMarkup(React.createElement(NewsStory,{...props,body:long,concise:true}));
   assert.ok(concise.split('一文目の説明です。').length-1<30);

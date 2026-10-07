@@ -119,7 +119,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
         }
         const item = update.item;
         const official = officialTime(item), publication = { ...clockTime(official.at, official.kind, item.observedAt), dated: official.kind }, display = officialNewsDisplay(item, lang, data?.resultBriefs);
-        return <article key={item.id}><NewsStory label={display.label} title={display.title} body={display.body} concise={!item.brief && !item.newsCategory && !item.generalSource && !item.researchId} lang={lang}
+        return <article key={item.id}><NewsStory label={display.label} title={display.title} body={display.body} fullBody={display.fullBody} concise={!item.brief && !item.newsCategory && !item.generalSource && !item.researchId} lang={lang}
           publication={`${publication.dated === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} ${publication.kind === "date" ? publication.at : format(publication.at)}`} /></article>; })}</div>
     </section>}
     {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}

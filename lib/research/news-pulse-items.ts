@@ -2,7 +2,7 @@ import { NEWS_BRIEF_TITLE_SUFFIXES, type GeneralNewsFeed } from "./general-news.
 import type { Language } from "./data";
 import { marketNewsBody, marketNewsDisplay } from "./market-news-display.ts";
 import { officialPulseHeadlineJa } from "./official-news-ja.ts";
-import { officialNewsDisplay } from "./news-presentation.ts";
+import { informativeOfficial, officialNewsDisplay } from "./news-presentation.ts";
 import { officialTime } from "./news-time.ts";
 import { officialPulseHeadlines, marketPulseHeadlines, generalPulseHeadlines } from "./news-pulse-headline.ts";
 
@@ -12,7 +12,7 @@ const JAPANESE = /[\u3040-\u30ff\u3400-\u9fff]/;
 export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language) {
   const ja = lang === "ja";
   return [
-    ...(feed?.officialUpdates ?? []).map(item => {
+    ...(feed?.officialUpdates ?? []).filter(informativeOfficial).map(item => {
       const display = officialNewsDisplay(item, lang);
       const compactTitle = ja ? officialPulseHeadlineJa(item.url) ?? item.pulseTitleJa ?? item.shortTitleJa : item.pulseTitleEn ?? item.shortTitleEn;
       const suffix = NEWS_BRIEF_TITLE_SUFFIXES[lang];
