@@ -69,8 +69,9 @@ jobs:
           LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
           LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
 
+      # 失敗した回でも連続失敗の回数を残すため always()
       - uses: actions/cache/save@v4
-        if: ${{ hashFiles('scripts/youtube-moderator/.state/state.json') != '' }}
+        if: ${{ always() && hashFiles('scripts/youtube-moderator/.state/state.json') != '' }}
         with:
           path: scripts/youtube-moderator/.state
           key: yt-moderator-state-${{ hashFiles('scripts/youtube-moderator/.state/state.json') }}

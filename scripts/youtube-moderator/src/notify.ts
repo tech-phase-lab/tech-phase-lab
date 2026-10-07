@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer";
-import type { Config } from "./config.ts";
+import type { loadNotifyConfig } from "./config.ts";
+
+type NotifyTarget = { dryRun: boolean; notify: ReturnType<typeof loadNotifyConfig> };
 
 const DISCORD_LIMIT = 1900;
 const LINE_LIMIT = 4900;
@@ -65,7 +67,7 @@ async function sendGmail(user: string, appPassword: string, to: string, text: st
   await transporter.sendMail({ from: user, to, subject, text: body.join("\n").trim() });
 }
 
-export async function notify(config: Config, text: string): Promise<void> {
+export async function notify(config: NotifyTarget, text: string): Promise<void> {
   if (config.dryRun) {
     // Actions のログは公開されるため、DRY_RUN でも本文は出さず件名だけ出す
     console.log(`通知（DRY_RUN のため送信しません）: ${text.split("\n")[0]}`);

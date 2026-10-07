@@ -66,6 +66,22 @@ function fallbackVerdicts(comments: HeldComment[], reason: string): Verdict[] {
   return comments.map((c) => ({ id: c.id, decision: "ask", category: "その他", reason }));
 }
 
+function describeOpenAIError(error: InstanceType<typeof OpenAI.APIError>): string {
+  if (error.status === 401) {
+    return "OpenAI の API キーが無効です。GitHub の Secrets の OPENAI_API_KEY を確認してください。";
+  }
+  if (error.status === 403) {
+    return "OpenAI の API キーに必要な権限がありません。キーの Permissions で Model capabilities を Request にしてください。";
+  }
+  if (error.status === 429 && error.code === "insufficient_quota") {
+    return "OpenAI の残高が不足しています。https://platform.openai.com/settings/organization/billing でクレジットを追加してください。";
+  }
+  if (error.status === 429) {
+    return "OpenAI の利用が混み合っています。一時的なものであれば自然に直ります。";
+  }
+  return `OpenAI でエラーが発生しました（${error.status ?? "接続エラー"}）。一時的なものであれば自然に直ります。`;
+}
+
 async function classifyBatch(client: OpenAI, model: string, comments: HeldComment[]): Promise<Verdict[]> {
   const input = comments.map((c) => ({
     id: c.id,
@@ -87,9 +103,10 @@ async function classifyBatch(client: OpenAI, model: string, comments: HeldCommen
       store: false,
     });
   } catch (error) {
+    // キーの無効や残高不足は全コメントに影響するため、要確認に回さずに処理を止めて知らせる。
+    // コメントは承認待ちのまま残るので、次の実行で判定し直される。
     if (error instanceof OpenAI.APIError) {
-      console.error(`OpenAI API エラー ${error.status}`);
-      return fallbackVerdicts(comments, "AI判定でエラーが発生したため要確認");
+      throw new Error(describeOpenAIError(error));
     }
     throw error;
   }

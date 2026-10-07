@@ -3,7 +3,7 @@ export type Mode = "suggest" | "auto";
 function required(name: string): string {
   const value = process.env[name]?.trim();
   if (!value) {
-    throw new Error(`環境変数 ${name} が設定されていません。`);
+    throw new Error(`GitHub の Secrets に ${name} が登録されていません。`);
   }
   return value;
 }
@@ -25,7 +25,7 @@ export function loadConfig() {
     // suggest: YouTube 側は何も変更せず、判定案だけ通知する
     // auto:    公開・非公開を自動で反映し、迷うものだけ通知する
     mode: rawMode as Mode,
-    dryRun: optional("DRY_RUN") === "1",
+    dryRun: isDryRun(),
     youtube: {
       clientId: required("YT_CLIENT_ID"),
       clientSecret: required("YT_CLIENT_SECRET"),
@@ -38,16 +38,29 @@ export function loadConfig() {
     model: optional("OPENAI_MODEL") ?? "gpt-5.6-terra",
     // この日時より前に投稿されたコメントは審査も通知もせず、承認待ちのまま放置する
     ignoreBefore: optional("IGNORE_BEFORE"),
-    notify: {
-      gmailUser: optional("GMAIL_USER"),
-      gmailAppPassword: optional("GMAIL_APP_PASSWORD")?.replace(/\s/g, ""),
-      mailTo: optional("MAIL_TO") ?? optional("GMAIL_USER"),
-      discordWebhookUrl: optional("DISCORD_WEBHOOK_URL"),
-      lineChannelAccessToken: optional("LINE_CHANNEL_ACCESS_TOKEN"),
-      lineUserId: optional("LINE_USER_ID"),
-    },
-    stateFile: optional("STATE_FILE") ?? ".state/state.json",
+    notify: loadNotifyConfig(),
+    stateFile: stateFilePath(),
   };
+}
+
+/** 通知先の設定。必須の項目がなくても例外を投げない（停止のお知らせを送るときにも使うため）。 */
+export function loadNotifyConfig() {
+  return {
+    gmailUser: optional("GMAIL_USER"),
+    gmailAppPassword: optional("GMAIL_APP_PASSWORD")?.replace(/\s/g, ""),
+    mailTo: optional("MAIL_TO") ?? optional("GMAIL_USER"),
+    discordWebhookUrl: optional("DISCORD_WEBHOOK_URL"),
+    lineChannelAccessToken: optional("LINE_CHANNEL_ACCESS_TOKEN"),
+    lineUserId: optional("LINE_USER_ID"),
+  };
+}
+
+export function isDryRun(): boolean {
+  return optional("DRY_RUN") === "1";
+}
+
+export function stateFilePath(): string {
+  return optional("STATE_FILE") ?? ".state/state.json";
 }
 
 export type Config = ReturnType<typeof loadConfig>;
