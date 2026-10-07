@@ -38,7 +38,9 @@ FIELDS = ('shortJa', 'shortEn')
 OUTPUT_TOKENS = 2000
 BUDGET_SHARE = 0.2
 LEDGER_PREFIX = 'pulse:'
-MAX_JA = 20
+# The strip shrinks to 10 px before scrolling, so a few characters over the
+# 16-character target still fit; rejecting them wasted most strip-title calls.
+MAX_JA = 22
 # A headline this short already fits a phone and needs no call.
 FITS_JA = 16
 MAX_EN = 64
@@ -106,6 +108,9 @@ def validate(result, ja, en):
     if not isinstance(result, dict) or set(result) != set(FIELDS):
         raise ValueError('invalid-translation')
     short_ja, short_en = (result[key].strip().rstrip('。.') if isinstance(result[key], str) else '' for key in FIELDS)
+    # A specific code tells the retry exactly what to fix.
+    if len(short_ja) > MAX_JA or len(short_en) > MAX_EN:
+        raise ValueError('too-long')
     if (not 4 <= len(short_ja) <= MAX_JA or not 8 <= len(short_en) <= MAX_EN or not JAPANESE.search(short_ja)
             or UNSAFE.search(short_ja) or UNSAFE.search(short_en) or len(short_ja) >= len(ja)):
         raise ValueError('invalid-translation')
@@ -162,7 +167,7 @@ def claim(db, entries, model, limit, now):
     return None
 
 
-VALIDATION_FAILURES = headline_translation.VALIDATION_FAILURES | {'changed-qualifier'}
+VALIDATION_FAILURES = headline_translation.VALIDATION_FAILURES | {'changed-qualifier', 'too-long'}
 
 
 def run_once(path, payload, transport=brief_generator.request_response, env=None, now=None):

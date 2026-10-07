@@ -64,6 +64,20 @@ class InterruptedJobTests(unittest.TestCase):
 
 
 class NewsCacheTests(unittest.TestCase):
+    def setUp(self):
+        # These tests cover both cached feeds, including the optional preview one.
+        self.enterContext(patch.dict('os.environ', {'RESEARCH_ORIGINAL_PREVIEW': '1'}))
+
+    def test_preview_feed_is_off_unless_enabled(self):
+        with patch.dict('os.environ', {'RESEARCH_ORIGINAL_PREVIEW': ''}):
+            self.assertFalse(service.original_preview_enabled())
+            app = service.AutomaticMonitor.__new__(service.AutomaticMonitor)
+            calls = []
+            app.compute_public_news = lambda original_preview=False: calls.append(original_preview) or {}
+            app.public_news(original_preview=True)
+            self.assertEqual(calls, [False])
+        self.assertTrue(service.original_preview_enabled())
+
     def test_concurrent_visitors_share_one_computation(self):
         app = service.AutomaticMonitor.__new__(service.AutomaticMonitor)
         app.news_cache_seconds, app.news_cache_lock, app.news_cache = 2, threading.Lock(), {}
