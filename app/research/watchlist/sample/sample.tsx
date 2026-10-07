@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../../research-tool-shell";
 import { useResearchLanguage } from "../../use-research-language";
@@ -10,10 +10,10 @@ import styles from "./sample.module.css";
 
 // Synthetic fixtures only. This page never reads or writes personal watchlists.
 const samples = [
-  { ticker: "MRVL", name: "Marvell", previous: 100, price: 103.25, pre: 104.08, path: [100, 100.8, 100.3, 101.4, 100.7, 101.9, 102.6, 102.1, 103.25] },
-  { ticker: "CRDO", name: "Credo", previous: 80, price: 78.4, pre: 78.91, path: [80, 80.3, 79.8, 80.1, 79.2, 79.5, 78.8, 79, 78.4] },
-  { ticker: "ANET", name: "Arista Networks", previous: 150, price: 153.6, pre: 152.99, path: [150, 150.4, 150.1, 151.2, 151.9, 151.3, 152.2, 153.1, 153.6] },
-  { ticker: "MU", name: "Micron", previous: 200, price: 204.2, pre: 205.63, path: [200, 199.7, 201.1, 200.6, 201.9, 202.7, 202.1, 203.2, 204.2] },
+  { ticker: "MRVL", name: "Marvell", sector: { ja: "半導体", en: "Chips" }, previous: 100, price: 103.25, pre: 104.08, path: [100, 99.7, 99.95, 100.4, 100.15, 100.8, 100.5, 100.3, 100.65, 101.4, 101.05, 100.7, 101.15, 101.65, 101.4, 101.9, 102.2, 101.8, 102.6, 102.35, 102.1, 102.7, 102.5, 103.1, 102.85, 103.25] },
+  { ticker: "CRDO", name: "Credo", sector: { ja: "半導体", en: "Chips" }, previous: 80, price: 78.4, pre: 78.91, path: [80, 80.15, 80.05, 80.3, 80.1, 79.95, 79.8, 80.05, 79.9, 80.1, 79.85, 79.45, 79.2, 79.4, 79.25, 79.5, 79.15, 79.3, 78.8, 78.95, 78.75, 79, 78.7, 78.55, 78.7, 78.4] },
+  { ticker: "ANET", name: "Arista Networks", sector: { ja: "ネットワーク", en: "Networking" }, previous: 150, price: 153.6, pre: 152.99, path: [150, 149.8, 150.2, 150.4, 150.1, 150.5, 150.3, 150.7, 151.2, 150.95, 151.5, 151.9, 151.6, 151.3, 151.7, 151.5, 152.2, 152.6, 152.25, 152.8, 152.5, 153.1, 153.4, 153.15, 153.85, 153.6] },
+  { ticker: "MU", name: "Micron", sector: { ja: "メモリ", en: "Memory" }, previous: 200, price: 204.2, pre: 205.63, path: [200, 200.3, 199.7, 200.1, 200.65, 201.1, 200.85, 200.6, 201.25, 200.95, 201.9, 201.6, 202.1, 202.7, 202.3, 202.1, 202.55, 202.85, 202.6, 203.2, 203.6, 203.25, 203.85, 204.4, 204.05, 204.2] },
 ];
 type Session = "regular" | "pre" | "closed";
 const number = (n: number) => n.toFixed(2);
@@ -23,20 +23,32 @@ function quoteFor(row: typeof samples[number], session: Session) {
   const reference = session === "pre" ? row.price : row.previous;
   const change = price - reference;
   // A separate fictional pre-market series, anchored to the regular-session close.
-  const path = session === "pre" ? [0, .2, .12, .38, .3, .65, .56, .85, 1].map(n => reference + change * n) : row.path;
+  const path = session === "pre" ? [0, -.12, .08, .22, .15, .3, .2, .12, .24, .38, .31, .45, .3, .5, .42, .65, .56, .72, .63, .85, .76, .92, .84, 1.08, .96, 1].map(n => reference + change * n) : row.path;
   return { ...row, price, reference, change, percent: change / reference * 100, path };
 }
 function AreaChart({ values, reference, label }: { values: number[]; reference: number; label: string }) {
-  const low = Math.min(reference, ...values), high = Math.max(reference, ...values);
-  const y = (value: number) => high === low ? 24 : 43 - (value - low) / (high - low) * 36;
-  const points = values.map((value, i) => `${3 + i * 154 / (values.length - 1)},${y(value)}`).join(" ");
-  return <svg viewBox="0 0 160 48" preserveAspectRatio="none" role="img" aria-label={label}>
-    {[12, 28, 44].map(line => <line key={line} x1="0" x2="160" y1={line} y2={line} className={styles.grid} />)}
-    <polygon points={`3,47 ${points} 157,47`} fill="currentColor" opacity=".17" />
-    <line x1="0" x2="160" y1={y(reference)} y2={y(reference)} className={styles.baseline} />
-    <polyline points={points} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
-    <circle cx="157" cy={y(values.at(-1)!)} r="2" fill="currentColor" />
-  </svg>;
+  const gradientId = useId();
+  const changes = values.map(value => (value / reference - 1) * 100);
+  const rawLow = Math.min(0, ...changes), rawHigh = Math.max(0, ...changes);
+  const step = rawHigh - rawLow <= 1 ? .25 : rawHigh - rawLow <= 3 ? .5 : 1;
+  const low = Math.floor(rawLow / step) * step;
+  const high = Math.max(low + step, Math.ceil(rawHigh / step) * step);
+  const y = (value: number) => 53 - (value - low) / (high - low) * 46;
+  const coordinates = changes.map((value, i) => `${(4 + i * 192 / (changes.length - 1)).toFixed(2)},${y(value).toFixed(2)}`);
+  const scale = (value: number) => `${value > 0 ? "+" : ""}${Number(value.toFixed(2))}%`;
+  return <span className={styles.chartFrame}>
+    <span className={styles.scale} aria-hidden="true"><span>{scale(high)}</span><span>{scale(low)}</span></span>
+    <svg viewBox="0 0 200 60" preserveAspectRatio="none" role="img" aria-label={`${label} (${scale(low)} ～ ${scale(high)})`}>
+      <defs><linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="currentColor" stopOpacity=".32" /><stop offset="100%" stopColor="currentColor" stopOpacity=".015" /></linearGradient></defs>
+      {[7, 30, 53].map(line => <line key={line} x1="0" x2="200" y1={line} y2={line} className={styles.grid} />)}
+      <polygon points={`4,58 ${coordinates.join(" ")} 196,58`} fill={`url(#${gradientId})`} />
+      <line x1="0" x2="200" y1={y(0)} y2={y(0)} className={styles.baseline} />
+      <polyline points={coordinates.join(" ")} fill="none" stroke="currentColor" strokeOpacity=".6" strokeWidth="1.8" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+      <polyline points={coordinates.slice(-7).join(" ")} fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+      <circle cx="196" cy={y(changes.at(-1)!)} r="5.5" fill="currentColor" opacity=".15" />
+      <circle cx="196" cy={y(changes.at(-1)!)} r="2.7" fill="currentColor" />
+    </svg>
+  </span>;
 }
 export default function WatchlistSample() {
   const [lang, setLang] = useResearchLanguage();
@@ -77,11 +89,11 @@ export default function WatchlistSample() {
         const open = expanded === row.ticker;
         return <li key={row.ticker}>
           <button className={styles.row} aria-expanded={open} onClick={() => setExpanded(open ? "" : row.ticker)}>
-            <span className={styles.identity}><StockLogo ticker={row.ticker} /><span><strong>{row.name}</strong><small>{row.ticker}</small></span></span>
+            <span className={styles.identity}><StockLogo ticker={row.ticker} /><span className={styles.company}><strong>{row.name}</strong><small>{row.ticker}</small><span className={styles.sector}>{row.sector[lang]}</span></span></span>
             <span className={styles.trend} data-up={row.percent >= 0}><strong>{signed(row.percent)}%</strong><AreaChart values={row.path} reference={row.reference} label={t(`${row.ticker}の架空の値動き`, `${row.ticker} simulated trend`)} /></span>
             <span className={styles.price} data-direction={row.change > 0 ? "up" : row.change < 0 ? "down" : "flat"}>{number(row.price)}<small>{signed(row.change)} USD</small></span>
           </button>
-          {open && <div className={styles.detail} data-up={row.percent >= 0}><div className={styles.detailHeading}><strong>{row.ticker} · {sessionLabel}</strong><span>{signed(row.percent)}%</span></div><AreaChart values={row.path} reference={row.reference} label={t("拡大した架空チャート", "Expanded simulated chart")} /><div className={styles.detailCaption}><span>{session === "pre" ? t("通常取引終値", "Regular close") : t("前営業日終値", "Previous close")} {number(row.reference)} USD</span><span>{t("架空データ", "Simulated data")}</span></div></div>}
+          {open && <div className={styles.detail} data-up={row.percent >= 0}><div className={styles.detailHeading}><strong>{row.ticker} · {sessionLabel}</strong><span>{signed(row.percent)}%</span></div><AreaChart values={row.path} reference={row.reference} label={t("拡大した架空チャート", "Expanded simulated chart")} /><div className={styles.chartTimes}><span>{session === "pre" ? "04:00" : "09:30"}</span><span>{sampleTime.slice(0, 5)} ET</span></div><div className={styles.detailCaption}><span>{session === "pre" ? t("通常取引終値", "Regular close") : t("前営業日終値", "Previous close")} {number(row.reference)} USD</span><span>{t("架空データ", "Simulated data")}</span></div></div>}
         </li>;
       })}</ul>
       {!rows.length && <p>{t("一致するサンプル銘柄がありません", "No matching sample stocks")}</p>}
