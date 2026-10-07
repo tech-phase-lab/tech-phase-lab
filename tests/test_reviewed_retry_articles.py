@@ -83,7 +83,10 @@ class ReviewedRetryArticlesTests(unittest.TestCase):
             self.assertEqual(len(research.validated_publications(db,research.candidates(db,fixture.NOW))),1)
         self.assertFalse(self.publish())
         import service  # Defer this import; other tests reload signals during discovery.
-        public=service.AutomaticMonitor(self.path,Path(self.fixture.tmp.name)/'snapshot.json').public_news()
+        # Replay the historical fixture at its own observation time.
+        with patch.object(service,'datetime',wraps=fixture.datetime) as service_clock:
+            service_clock.now.return_value=fixture.NOW
+            public=service.AutomaticMonitor(self.path,Path(self.fixture.tmp.name)/'snapshot.json').public_news()
         item=next(x for x in public['officialUpdates'] if x['id']=='1233')
         self.assertIn('世界展開を開始',item['bodyJa'])
         self.assertEqual(item['publishedOn'],self.pin['publishedOn'])

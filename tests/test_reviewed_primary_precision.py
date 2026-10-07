@@ -66,7 +66,10 @@ class ReviewedPrimaryPrecisionTests(unittest.TestCase):
             self.assertEqual(items[0]['bodyReadyAt'],'2026-10-03T14:04:32.651+00:00')
         self.assertFalse(self.publish())
         import service  # Other discovery tests reload signals; keep this lazy.
-        public=service.AutomaticMonitor(self.path,Path(self.case.case.tmp.name)/'snapshot.json').public_news()
+        # Replay the historical fixture at its own observation time.
+        with patch.object(service,'datetime',wraps=rollout.datetime) as service_clock:
+            service_clock.now.return_value=rollout.NOW
+            public=service.AutomaticMonitor(self.path,Path(self.case.case.tmp.name)/'snapshot.json').public_news()
         self.assertTrue(any(x['id']=='ir-result-1242' for x in public['officialResearch']))
 
     def test_changed_text_storage_identity_or_normal_candidate_is_rejected(self):

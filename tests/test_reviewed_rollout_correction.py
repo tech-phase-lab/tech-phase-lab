@@ -120,7 +120,10 @@ class ReviewedRolloutCorrectionTests(unittest.TestCase):
             self.assertEqual(len(research.validated_publications(db,research.candidates(db,NOW))),1)
         self.assertFalse(self.publish())
         import service  # Other tests reload signals during discovery.
-        public=service.AutomaticMonitor(self.path,Path(self.tmp.name)/'snapshot.json').public_news()
+        # Replay the historical fixture at its own observation time.
+        with patch.object(service,'datetime',wraps=datetime) as service_clock:
+            service_clock.now.return_value=NOW
+            public=service.AutomaticMonitor(self.path,Path(self.tmp.name)/'snapshot.json').public_news()
         item=next(item for item in public['officialUpdates'] if item['id']=='1233')
         self.assertIn('世界展開を開始',item['bodyJa'])
         self.assertNotIn('will soon replace Gems globally',item['bodyEn'])
