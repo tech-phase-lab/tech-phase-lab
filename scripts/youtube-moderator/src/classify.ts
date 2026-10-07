@@ -1,4 +1,4 @@
-import Anthropic from "@anthropic-ai/sdk";
+import OpenAI from "openai";
 import type { HeldComment } from "./youtube.ts";
 
 export type Decision = "publish" | "reject" | "ask";
@@ -66,7 +66,7 @@ function fallbackVerdicts(comments: HeldComment[], reason: string): Verdict[] {
   return comments.map((c) => ({ id: c.id, decision: "ask", category: "その他", reason }));
 }
 
-async function classifyBatch(client: Anthropic, model: string, comments: HeldComment[]): Promise<Verdict[]> {
+async function classifyBatch(client: OpenAI, model: string, comments: HeldComment[]): Promise<Verdict[]> {
   const input = comments.map((c) => ({
     id: c.id,
     video_title: c.videoTitle,
@@ -77,43 +77,30 @@ async function classifyBatch(client: Anthropic, model: string, comments: HeldCom
 
   let response;
   try {
-    response = await client.beta.messages.create({
+    response = await client.responses.create({
       model,
-      max_tokens: 16000,
-      betas: ["server-side-fallback-2026-07-01"],
-      fallbacks: "default",
-      output_config: {
-        effort: "medium",
-        format: { type: "json_schema", schema: OUTPUT_SCHEMA },
+      instructions: SYSTEM_PROMPT,
+      input: `以下のコメントを審査してください。\n\n<comments>\n${JSON.stringify(input, null, 2)}\n</comments>`,
+      text: {
+        format: { type: "json_schema", name: "moderation_results", schema: OUTPUT_SCHEMA, strict: true },
       },
-      system: SYSTEM_PROMPT,
-      messages: [
-        {
-          role: "user",
-          content: `以下のコメントを審査してください。\n\n<comments>\n${JSON.stringify(input, null, 2)}\n</comments>`,
-        },
-      ],
+      store: false,
     });
   } catch (error) {
-    if (error instanceof Anthropic.APIError) {
-      console.error(`Claude API エラー ${error.status}`);
+    if (error instanceof OpenAI.APIError) {
+      console.error(`OpenAI API エラー ${error.status}`);
       return fallbackVerdicts(comments, "AI判定でエラーが発生したため要確認");
     }
     throw error;
   }
 
-  if (response.stop_reason === "refusal") {
-    return fallbackVerdicts(comments, "AIが判定を拒否したため要確認");
-  }
-
-  const text = response.content.find((block) => block.type === "text");
-  if (!text || text.type !== "text") {
-    return fallbackVerdicts(comments, "AI判定の結果が空だったため要確認");
+  if (response.status !== "completed" || !response.output_text) {
+    return fallbackVerdicts(comments, "AI判定の結果が得られなかったため要確認");
   }
 
   let parsed: { results: Verdict[] };
   try {
-    parsed = JSON.parse(text.text);
+    parsed = JSON.parse(response.output_text);
   } catch {
     return fallbackVerdicts(comments, "AI判定の結果を読めなかったため要確認");
   }
@@ -128,7 +115,7 @@ async function classifyBatch(client: Anthropic, model: string, comments: HeldCom
 export async function classifyComments(model: string, comments: HeldComment[]): Promise<Verdict[]> {
   if (comments.length === 0) return [];
 
-  const client = new Anthropic();
+  const client = new OpenAI();
   const verdicts: Verdict[] = [];
   for (let i = 0; i < comments.length; i += BATCH_SIZE) {
     verdicts.push(...(await classifyBatch(client, model, comments.slice(i, i + BATCH_SIZE))));

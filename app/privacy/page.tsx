@@ -28,7 +28,7 @@ export default function PrivacyPage() {
 
       <h2 className="mb-2 mt-8 text-lg font-bold">第三者への提供</h2>
       <p>
-        判定のため、コメントの内容を Anthropic 社の Claude API に送信します。
+        判定のため、コメントの内容を OpenAI 社の API に送信します。
         また、運営者への通知のため、コメントの内容を運営者の Discord または LINE に送信します。
         これ以外の第三者に提供することはありません。
       </p>

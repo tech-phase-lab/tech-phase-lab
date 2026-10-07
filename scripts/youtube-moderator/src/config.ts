@@ -35,7 +35,7 @@ export function loadConfig() {
     ngWords: (optional("NG_WORDS")?.split(",") ?? DEFAULT_NG_WORDS)
       .map((word) => word.trim())
       .filter(Boolean),
-    model: optional("CLAUDE_MODEL") ?? "claude-opus-5-5",
+    model: optional("OPENAI_MODEL") ?? "gpt-5.6-terra",
     notify: {
       discordWebhookUrl: optional("DISCORD_WEBHOOK_URL"),
       lineChannelAccessToken: optional("LINE_CHANNEL_ACCESS_TOKEN"),

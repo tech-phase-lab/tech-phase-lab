@@ -5,7 +5,7 @@
 - 日本時間 19:00〜23:59 は **5分おき**、それ以外は **10分おき** に GitHub Actions で実行されます
 - **NGワード**（初期値:「詐欺」「ドル箱」「ゼウス」）は AI を通さず文字一致で非公開にします。
   全角・半角、カタカナ・ひらがな、空白や記号の挟み込み（「ゼ ウ ス」「ド・ル箱」）も検出します
-- **容姿への否定、誹謗中傷、スパム、勧誘、なりすまし、個人情報、NGワードの言い換え**は Claude が文脈を見て判定します
+- **容姿への否定、誹謗中傷、スパム、勧誘、なりすまし、個人情報、NGワードの言い換え**は AI（OpenAI）が文脈を見て判定します
 - **判断に迷うもの**は承認待ちのまま残し、Discord または LINE に通知します。YouTube Studio であなたが判断してください
 - 投稿者のブロック（チャンネルから非表示）は自動では行いません
 
@@ -48,9 +48,10 @@
 
 https://www.youtube.com/account_advanced に表示される `UC` で始まる ID です。
 
-### 4. Claude の API キーを作る
+### 4. OpenAI の API キーを作る
 
-https://console.anthropic.com/ で API キーを作成します。
+https://platform.openai.com/api-keys で「Create new secret key」を押して作成します（`sk-` で始まるキー）。
+キーは作成時にしか表示されないので、その場で控えてください。API の利用には、Billing にクレジットが入っている必要があります。
 
 ### 5. 通知先を用意する（どちらか、または両方）
 
@@ -70,7 +71,7 @@ https://console.anthropic.com/ で API キーを作成します。
 | `YT_CLIENT_SECRET` | 1 のクライアント シークレット |
 | `YT_REFRESH_TOKEN` | 2 のリフレッシュトークン |
 | `YT_CHANNEL_ID` | 3 のチャンネル ID |
-| `ANTHROPIC_API_KEY` | 4 の API キー |
+| `OPENAI_API_KEY` | 4 の API キー |
 | `DISCORD_WEBHOOK_URL` | Discord を使う場合 |
 | `LINE_CHANNEL_ACCESS_TOKEN` / `LINE_USER_ID` | LINE を使う場合 |
 
@@ -81,7 +82,7 @@ https://console.anthropic.com/ で API キーを作成します。
 | `MODERATOR_ENABLED` | `true` にすると定期実行が始まる |
 | `MODERATION_MODE` | `suggest`（初期値）または `auto` |
 | `NG_WORDS` | （任意）NGワードをカンマ区切りで上書き。例: `詐欺,ドル箱,ゼウス,〇〇` |
-| `CLAUDE_MODEL` | （任意）判定に使うモデル。初期値は `claude-opus-5-5`。費用を抑えたい場合は `claude-sonnet-5-5` |
+| `OPENAI_MODEL` | （任意）判定に使うモデル。初期値は `gpt-5.6-terra`。費用をさらに抑えたい場合は `gpt-5.6-luna` |
 
 ### 7. 動作確認して開始
 
@@ -105,7 +106,7 @@ https://console.anthropic.com/ で API キーを作成します。
 - 返信コメントが承認待ちになっている場合、YouTube API の仕様上すべてを取得できない可能性があります。Studio でもときどき確認してください
 - Actions のログは公開されるため、ログにはコメント本文や投稿者名を出さず、件数だけを出しています
 - 「サギ」のようなカタカナ表記は「ウサギ」などに誤反応するため NGワードにはせず、AI の判定（言い換え検出）に任せています
-- 費用の目安: Claude の利用料はコメント100件あたり数十円程度（モデルとコメントの長さで変わります）。GitHub Actions は公開リポジトリのため無料です
+- 費用の目安: OpenAI の利用料はコメント100件あたり数円〜数十円程度（モデルとコメントの長さで変わります）。GitHub Actions は公開リポジトリのため無料です
 
 ## ローカルで試す
 
