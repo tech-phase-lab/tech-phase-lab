@@ -1248,7 +1248,7 @@ PRICE_TARGET_SUBJECT = re.compile(
     r"(?:downgraded|upgraded|initiated|reiterated|price target|PT)\b", re.I,
 )
 PRICE_TARGET_FIRM = re.compile(
-    r"(?:at|by) (BofA|Bank of America|BNP Paribas|Citi(?:group)?|Citizens|KeyBanc|Stifel|UBS|J\.?P\.?\s?Morgan|Seaport Research|Morgan Stanley|Goldman Sachs|Barclays|Wells Fargo|Deutsche Bank|Jefferies|Mizuho|Baird|Piper Sandler|RBC Capital|RBC|Oppenheimer|Needham|Cantor Fitzgerald|Cantor|Wedbush|Truist|TD Cowen|Raymond James|Rosenblatt|Evercore ISI|Evercore|Bernstein|B. Riley|DA Davidson|Loop Capital|Susquehanna|BMO Capital|BMO|BTIG|Monness Crespi|HSBC|Nomura|Macquarie|Guggenheim|Northland|Craig-Hallum|William Blair|Wolfe Research|Wolfe|Canaccord Genuity|Canaccord|Rothschild & Co Redburn|Rothschild Redburn|Redburn|Melius Research|Melius|Arete Research|Arete|New Street Research|New Street|Roth Capital|Roth MKM|Roth|H\.?\s?C\.? Wainwright|Benchmark|Scotiabank|Lake Street|Ladenburg Thalmann|Maxim Group|Daiwa|KGI Securities|Erste Group|Morningstar|Argus|CFRA|Stephens|Telsey Advisory|Telsey|Tigress Financial|Seaport|Goldman|Itau BBA|Westpark Capital)\b", re.I,
+    r"(?:at|by) (BofA|Bank of America|BNP Paribas|Citi(?:group)?|Citizens|KeyBanc|Stifel|UBS|J\.?P\.?\s?Morgan|Seaport Research|Morgan Stanley|Goldman Sachs|Barclays|Wells Fargo|Deutsche Bank|Jefferies|Mizuho|Baird|Piper Sandler|RBC Capital|RBC|Oppenheimer|Needham|Cantor Fitzgerald|Cantor|Wedbush|Truist|TD Cowen|Raymond James|Rosenblatt|Evercore ISI|Evercore|Bernstein|B. Riley|DA Davidson|Loop Capital|Susquehanna|BMO Capital|BMO|BTIG|Monness Crespi|HSBC|Nomura|Macquarie|Guggenheim|Northland|Craig-Hallum|William Blair|Wolfe Research|Wolfe|Canaccord Genuity|Canaccord|Rothschild & Co Redburn|Rothschild Redburn|Redburn|Melius Research|Melius|Arete Research|Arete|New Street Research|New Street|Roth Capital|Roth MKM|Roth|H\.?\s?C\.? Wainwright|Benchmark|Scotiabank|Lake Street|Ladenburg Thalmann|Maxim Group|Daiwa|KGI Securities|Erste Group|Morningstar|Argus Research|Argus|CFRA|Stephens|Telsey Advisory|Telsey|Tigress Financial|Seaport|Goldman|Itau BBA|Westpark Capital)\b", re.I,
 )
 
 
@@ -1321,7 +1321,7 @@ PRICE_TARGET_TICKER_RATING = re.compile(
 PRICE_TARGET_TICKER_GENERIC = re.compile(
     r"^\s*\$(?P<ticker>[A-Z]{1,5}(?:[.-][A-Z])?)\s*[:|–—-]?\s*" + _TARGET_ACTOR +
     r"(?P<mid>[^$\n;]{0,120}?)\s*,?\s*"
-    r"(?:(?:and\s+)?(?P<verb2>raised|lifted|boosted|hiked|increased|lowered|cut|trimmed|reduced|raises|lifts|boosts|hikes|increases|lowers|cuts|trims|reduces)\s+(?:it\s+)?)?"
+    r"(?:(?:and\s+)?(?P<verb2>raised|lifted|boosted|hiked|increased|lowered|cut|trimmed|reduced|raises|lifts|boosts|hikes|increases|lowers|cuts|trims|reduces)\s+(?:it\s+|(?:its|the)\s+)?(?P<label2>" + _TARGET_LABEL + r"\s+)?)?"
     r"(?:to\s*" + _TARGET_NUMBER.replace("(", "(?P<new>", 1) + r"\s+from\s*" + _TARGET_NUMBER.replace("(", "(?P<old>", 1) +
     r"|from\s*" + _TARGET_NUMBER.replace("(", "(?P<old2>", 1) + r"\s+to\s*" + _TARGET_NUMBER.replace("(", "(?P<new2>", 1) + r")",
     re.I,
@@ -1348,7 +1348,7 @@ def actor_first_target(text):
             return text
         if pattern is PRICE_TARGET_TICKER_GENERIC:
             mid = groups["mid"] or ""
-            if (not re.search(_TARGET_LABEL, mid, re.I) or re.search(r"\d", mid)
+            if (not (re.search(_TARGET_LABEL, mid, re.I) or groups["label2"]) or re.search(r"\d", mid)
                     or re.search(_TARGET_ACTOR_NAMES, mid, re.I)):
                 return text
             verb = _TARGET_VERBS[groups["verb"].casefold()]

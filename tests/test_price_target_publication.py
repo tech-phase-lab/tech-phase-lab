@@ -141,6 +141,7 @@ class TargetPublicationTests(unittest.TestCase):
             '$BE | UBS raises Bloom Energy Corporation price target to $350 from $325',
             '$BE | UBS raises PT on Bloom Energy Corporation to $350 from $325',
             '$BE | UBS raises price target on Bloom Energy Corporation from $325 to $350',
+            '$BE | UBS raises on Bloom Energy Corporation, raises PT to $350 from $325',
         ], 50):
             with self.subTest(text=text):
                 self.add(index, text, tickers='["BE"]', body=text)
@@ -150,6 +151,7 @@ class TargetPublicationTests(unittest.TestCase):
         for index, text in enumerate([
             '$BE | UBS raises Bloom Energy price target, cuts to $300 from $325',
             '$BE | UBS raises Bloom Energy price target to $300 from $325',
+            '$BE | UBS raises on Bloom Energy Corporation, cuts PT to $350 from $325',
         ], 60):
             with self.subTest(text=text):
                 self.add(index, text, tickers='["BE"]', body=text)
