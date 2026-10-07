@@ -33,6 +33,8 @@ class OriginalPreviewTests(unittest.TestCase):
         # to this fixture's exact collector so no fake source can escape a mock.
         self.enterContext(patch.dict(sys.modules, {'signals': signals, 'monitor': monitor}))
         self.enterContext(patch.object(preview, 'signals', signals))
+        # The lane is off by default; these tests exercise it when enabled.
+        self.enterContext(patch.dict('os.environ', {'RESEARCH_ORIGINAL_PREVIEW': '1'}))
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.path = Path(self.tmp.name) / 'monitor.sqlite'

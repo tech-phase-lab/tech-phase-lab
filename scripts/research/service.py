@@ -99,6 +99,13 @@ NEWS_REFRESH_IDLE_SECONDS = 6 * 3600
 NEWS_REFRESH_MIN_INTERVAL_SECONDS = 10
 
 
+
+def original_preview_enabled():
+    """Test-publication ("original preview") lane. Off unless explicitly enabled:
+    the owner asked for verified news only (October 7). No intake, model call
+    or public card is produced while it is off."""
+    return os.environ.get("RESEARCH_ORIGINAL_PREVIEW", "").strip() == "1"
+
 def release_interrupted_jobs(db_path, now=None):
     """Make jobs leased by a previous process due now instead of in 5 minutes.
 
@@ -801,7 +808,7 @@ class AutomaticMonitor:
 
     def run_preview_summaries(self):
         # Bilingual one-line summary + detail for original-preview stories.
-        if headline_translation.configuration(os.environ) is None:
+        if not original_preview_enabled() or headline_translation.configuration(os.environ) is None:
             return
         wake = self.publication_wakes["preview"]
         while not self.stop_event.is_set():
@@ -831,7 +838,7 @@ class AutomaticMonitor:
         """Recompute each recently requested feed after a write, off the request path."""
         # Build both feeds right after start, so the first visitor after a
         # deployment does not wait for a full rebuild (about 9 s on staging).
-        for key in (False, True):
+        for key in ((False, True) if original_preview_enabled() else (False,)):
             self.news_requested.setdefault(key, time.monotonic())
         while not self.stop_event.wait(1):
             for key, at in list(self.news_requested.items()):
@@ -889,7 +896,8 @@ class AutomaticMonitor:
         while not self.stop_event.is_set():
             wake.clear()
             try:
-                original_preview_news.publish_once(self.db_path)
+                if original_preview_enabled():
+                    original_preview_news.publish_once(self.db_path)
             except Exception:
                 print("original-preview-publication-unavailable", flush=True)
             try:
@@ -1101,7 +1109,8 @@ class AutomaticMonitor:
         - ``max_age`` lets the push change-detector accept a slightly older
           result instead of recomputing every second.
         """
-        key = bool(original_preview)
+        original_preview = bool(original_preview) and original_preview_enabled()
+        key = original_preview
         if not getattr(self, "news_cache_seconds", 0) or not hasattr(self, "news_cache_lock"):
             return self.compute_public_news(original_preview=original_preview)
         arrived = time.monotonic()
@@ -1163,7 +1172,7 @@ class AutomaticMonitor:
             results = step("results", market_results.public_feed(db))
             payload = step("bounded", news_history.bounded(pulse_titles.attach(db, {**drafts, **research,
                 "marketUpdates": market, "analystUpdates": analyst, "resultBriefs": results})))
-            if original_preview:
+            if original_preview and original_preview_enabled():
                 try:
                     return step("preview", pulse_titles.attach(
                         db, original_preview_news.preview_payload(db, payload, reference)))
