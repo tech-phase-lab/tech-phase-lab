@@ -1,0 +1,117 @@
+# YouTube コメント自動審査（投資家わたがしチャンネル用）
+
+承認待ちのコメントを定期的にチェックし、公開・非公開を判定します。
+
+- 日本時間 19:00〜23:59 は **5分おき**、それ以外は **10分おき** に GitHub Actions で実行されます
+- **NGワード**（初期値:「詐欺」「ドル箱」「ゼウス」）は AI を通さず文字一致で非公開にします。
+  全角・半角、カタカナ・ひらがな、空白や記号の挟み込み（「ゼ ウ ス」「ド・ル箱」）も検出します
+- **容姿への否定、誹謗中傷、スパム、勧誘、なりすまし、個人情報、NGワードの言い換え**は Claude が文脈を見て判定します
+- **判断に迷うもの**は承認待ちのまま残し、Discord または LINE に通知します。YouTube Studio であなたが判断してください
+- 投稿者のブロック（チャンネルから非表示）は自動では行いません
+
+## 2つのモード
+
+| モード | YouTube 側 | 通知 |
+| --- | --- | --- |
+| `suggest`（初期値） | 何も変更しない | 新着コメントすべての判定案（公開案・非公開案・要確認） |
+| `auto` | 公開・非公開を自動で反映 | 要確認のコメントと、非公開にしたコメント（誤判定チェック用） |
+
+最初の1〜2週間は `suggest` で判定のズレを確認し、問題なければ `auto` に切り替えるのがおすすめです。
+
+---
+
+## セットアップ手順
+
+### 1. Google Cloud で YouTube API を使えるようにする
+
+1. https://console.cloud.google.com/ でプロジェクトを新規作成
+2. 「API とサービス」→「ライブラリ」で **YouTube Data API v3** を有効にする
+3. 「OAuth 同意画面」を設定
+   - ユーザーの種類: **外部**
+   - スコープに `https://www.googleapis.com/auth/youtube.force-ssl` を追加
+   - **公開ステータスを「本番環境」にする**（「テスト」のままだと7日ごとに連携が切れます。
+     自分だけが使うので Google の審査は不要です。ログイン時に「確認されていないアプリ」と出たら「詳細」→「移動」で進めます）
+4. 「認証情報」→「認証情報を作成」→「OAuth クライアント ID」
+   - 種類: **ウェブ アプリケーション**
+   - 承認済みのリダイレクト URI: `https://developers.google.com/oauthplayground`
+   - 作成後に表示される **クライアント ID** と **クライアント シークレット** を控える
+
+### 2. リフレッシュトークンを取得する
+
+1. https://developers.google.com/oauthplayground を開く
+2. 右上の歯車 →「Use your own OAuth credentials」にチェック → 1 で控えた ID とシークレットを入力
+3. 左の入力欄に `https://www.googleapis.com/auth/youtube.force-ssl` と入力して「Authorize APIs」
+4. **チャンネルを運営している Google アカウント（ブランドアカウントの場合はそのチャンネル）** でログインして許可
+5. 「Exchange authorization code for tokens」を押し、表示された **Refresh token** を控える
+
+### 3. チャンネル ID を確認する
+
+https://www.youtube.com/account_advanced に表示される `UC` で始まる ID です。
+
+### 4. Claude の API キーを作る
+
+https://console.anthropic.com/ で API キーを作成します。
+
+### 5. 通知先を用意する（どちらか、または両方）
+
+- **Discord**: 通知用のチャンネルの「チャンネルの編集」→「連携サービス」→「ウェブフック」→「新しいウェブフック」→「ウェブフック URL をコピー」
+- **LINE**: LINE Developers で Messaging API チャネルを作成し、「チャネルアクセストークン（長期）」と「あなたのユーザー ID」（チャネル基本設定の下部）を控え、作った公式アカウントを友だち追加しておく
+
+### 6. GitHub に登録する
+
+リポジトリの **Settings → Secrets and variables → Actions** で登録します。
+このリポジトリは公開されているため、キー類は必ず **Secrets** に入れてください（Secrets の中身は外部から見えません）。
+
+**Secrets**
+
+| 名前 | 内容 |
+| --- | --- |
+| `YT_CLIENT_ID` | 1 のクライアント ID |
+| `YT_CLIENT_SECRET` | 1 のクライアント シークレット |
+| `YT_REFRESH_TOKEN` | 2 のリフレッシュトークン |
+| `YT_CHANNEL_ID` | 3 のチャンネル ID |
+| `ANTHROPIC_API_KEY` | 4 の API キー |
+| `DISCORD_WEBHOOK_URL` | Discord を使う場合 |
+| `LINE_CHANNEL_ACCESS_TOKEN` / `LINE_USER_ID` | LINE を使う場合 |
+
+**Variables**
+
+| 名前 | 内容 |
+| --- | --- |
+| `MODERATOR_ENABLED` | `true` にすると定期実行が始まる |
+| `MODERATION_MODE` | `suggest`（初期値）または `auto` |
+| `NG_WORDS` | （任意）NGワードをカンマ区切りで上書き。例: `詐欺,ドル箱,ゼウス,〇〇` |
+| `CLAUDE_MODEL` | （任意）判定に使うモデル。初期値は `claude-opus-5-5`。費用を抑えたい場合は `claude-sonnet-5-5` |
+
+### 7. 動作確認して開始
+
+1. **Actions** タブ →「YouTube comment moderator」→「Run workflow」で `dry_run` にチェックを入れて実行
+   （YouTube の変更も通知もせず、承認待ちの件数と判定件数だけログに出ます）
+2. `dry_run` なしで手動実行し、通知が届くことを確認
+3. Variables の `MODERATOR_ENABLED` を `true` にすると、以降は自動で動きます
+
+※ 定期実行（schedule）は GitHub の仕様で **main ブランチにマージされてから** 動き始めます。
+
+---
+
+## 調整したいとき
+
+- **判定基準**: `src/classify.ts` の `SYSTEM_PROMPT` に書かれています。「こういうコメントは公開してほしい」などがあれば追記します
+- **NGワード**: Variables の `NG_WORDS` を編集（コードの変更は不要）
+
+## 注意点
+
+- GitHub の混雑で、実行が数分〜十数分遅れることがあります
+- 返信コメントが承認待ちになっている場合、YouTube API の仕様上すべてを取得できない可能性があります。Studio でもときどき確認してください
+- Actions のログは公開されるため、ログにはコメント本文や投稿者名を出さず、件数だけを出しています
+- 「サギ」のようなカタカナ表記は「ウサギ」などに誤反応するため NGワードにはせず、AI の判定（言い換え検出）に任せています
+- 費用の目安: Claude の利用料はコメント100件あたり数十円程度（モデルとコメントの長さで変わります）。GitHub Actions は公開リポジトリのため無料です
+
+## ローカルで試す
+
+```bash
+cd scripts/youtube-moderator
+npm install
+# 上の Secrets と同じ名前の環境変数を設定してから
+DRY_RUN=1 npm start
+```
