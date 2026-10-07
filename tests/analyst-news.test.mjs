@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
 import { stripTypeScriptTypes } from 'node:module';
-import { parseAnalystUpdates, analystNewsDisplay } from '../lib/research/analyst-news.ts';
+import { parseAnalystUpdates } from '../lib/research/analyst-news.ts';
 import { availableNewsPayload, publicNewsPayload } from '../lib/research/general-news.ts';
 import { newsPulseItems } from '../lib/research/news-pulse-items.ts';
 
@@ -79,30 +79,13 @@ test('malformed analyst article is isolated from valid analyst and other feed se
   assert.throws(() => publicNewsPayload(payload(Array.from({ length: 31 }, () => item))));
 });
 
-test('JA and EN pulse use analyst labels and unchanged source publication time even after late acquisition', () => {
-  const feed = publicNewsPayload(payload([item]));
-  for (const lang of ['ja', 'en']) {
-    const ja = lang === 'ja', display = analystNewsDisplay(item, lang), [pulse] = newsPulseItems(feed, lang);
-    assert.equal(display.label, ja ? 'アナリスト動向 · NVDA' : 'Analyst news · NVDA');
-    assert.equal(pulse.id, `analyst-${item.id}`);
-    assert.equal(pulse.ticker, display.label);
-    assert.equal(pulse.title, ja ? item.titleJa : item.titleEn);
-    assert.equal(pulse.shortTitle, pulse.title);
-    assert.equal(pulse.body, `${pulse.title}\n\n${ja ? item.bodyJa : item.bodyEn}`);
-    assert.equal(pulse.at, item.publishedAt);
-    assert.equal(pulse.kind, 'published');
-    assert.equal(pulse.url, undefined);
-    assert.doesNotMatch(JSON.stringify(pulse), /official|confidence|impact|x\.com/);
-  }
-});
-
-test('analyst pulse is merged into latest-five ordering by publication, never observation', () => {
+test('analyst reporting stays in the news list but never enters the top strip', () => {
   const market = { id: '99', topic: 'crude-oil', titleJa: '原油', titleEn: 'Crude oil',
     url: 'https://x.com/Barchart/status/99', publishedAt: '2026-10-02T12:00:00Z', observedAt: '2026-10-02T12:01:00Z' };
-  const feed = publicNewsPayload({ ...payload(Array.from({ length: 6 }, (_, i) => ({ ...item,
-    id: String(i), publishedAt: `2026-10-01T0${i}:00:00Z` }))), marketUpdates: [market] });
+  const feed = publicNewsPayload({ ...payload([item]), marketUpdates: [market] });
+  assert.equal(feed.analystUpdates.length, 1);
   for (const lang of ['ja', 'en']) {
-    assert.deepEqual(newsPulseItems(feed, lang).map(row => row.id), ['market-99', 'analyst-5', 'analyst-4', 'analyst-3', 'analyst-2']);
+    assert.deepEqual(newsPulseItems(feed, lang).map(row => row.id), ['market-99']);
   }
 });
 
