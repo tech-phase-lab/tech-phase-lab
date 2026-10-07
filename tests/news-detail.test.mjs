@@ -43,6 +43,9 @@ test('headline duplicates and reformatted metric lists cannot claim additional d
   assert.equal(additionalNewsDetail('NFP +29K; Unemployment 4.2%','NFP: +29K\nUnemployment: 4.2%'),undefined);
   assert.equal(additionalNewsDetail('非農業部門雇用者数 ＋29K／失業率 4.2%','非農業部門雇用者数：+29K\n失業率：4.2%'),undefined);
   assert.equal(additionalNewsDetail('News'),undefined);
+  // A paragraph that repeats the headline continues from it.
+  assert.equal(additionalNewsDetail('TD Cowen、MRVLの投資判断を引き上げと報道','TD Cowen、MRVLの投資判断を引き上げと報道。投資判断：HoldからBuyに変更。'),'投資判断：HoldからBuyに変更。');
+  assert.equal(additionalNewsDetail('Nebius expands in Finland','Nebius expands in Finland. The site adds 70 MW.'),'The site adds 70 MW.');
   assert.equal(additionalNewsDetail('News',' \n '),undefined);
   assert.equal(additionalNewsDetail('News','News\nNew verified detail.\nNew verified detail.'),'New verified detail.');
   assert.equal(additionalNewsDetail('Yield 1.25%','Yield 125%'),'Yield 125%');

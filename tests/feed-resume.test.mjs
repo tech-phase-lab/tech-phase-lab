@@ -61,8 +61,10 @@ function componentHarness(path, timer) {
     unmount() { for (const stop of cleanup) stop?.(); mounted = false; cleanup = []; effects = []; states = []; },
   };
 }
-const analyst = { id: '12345', ticker: 'NVDA', firm: 'Example Research', action: 'top-pick', titleJa: '報道によると、Example ResearchがNVDAをトップピックに選定', titleEn: 'Reportedly, Example Research names NVDA a top pick', bodyJa: '報道によると、評価は据え置き。', bodyEn: 'Reportedly, the rating is unchanged.', publishedAt: '2026-10-02T08:09:10+09:00', observedAt: '2026-10-03T00:00:00.000Z' };
-const feed = rows => ({ ok: true, enabled: false, items: [], analystUpdates: rows });
+// Analyst reporting is not listed (owner, Oct 7); a market update stands in.
+const analyst = { id: '99', topic: 'crude-oil', titleJa: '原油は横ばい', titleEn: 'Crude oil holds steady',
+  url: 'https://x.com/Barchart/status/99', publishedAt: '2026-10-02T12:00:00Z', observedAt: '2026-10-02T12:01:00Z' };
+const feed = rows => ({ ok: true, enabled: false, items: [], marketUpdates: rows });
 const target = { id: 1, source: 'X · Market reporters', url: 'https://x.com/wallstengine/status/101', publishedAt: '2026-10-02T10:00:00Z', observedAt: '2026-10-02T10:00:01Z', ticker: 'ASTS', firm: 'B. Riley', previous: 85, latest: 65 };
 
 test('news resume immediately replaces a suspended request, preserves visible data, coalesces wake events and applies withdrawal', async () => {
@@ -72,16 +74,16 @@ test('news resume immediately replaces a suspended request, preserves visible da
   const panel = componentHarness('../app/research/news/general-news-panel.tsx', timer);
   try {
     assert.match(panel.render(), /Fetching news/); panel.mount(); await timer.run();
-    assert.match(panel.render(), /Reportedly, the rating is unchanged/);
+    assert.match(panel.render(), /Crude oil holds steady/);
     await timer.run(); assert.equal(requests.length, 2);
     env.hide(); assert.equal(requests[1].signal.aborted, true); assert.deepEqual(timer.delays(), []);
-    assert.match(panel.render(), /Reportedly, the rating is unchanged/); // Background cancellation is not a data failure.
+    assert.match(panel.render(), /Crude oil holds steady/); // Background cancellation is not a data failure.
     env.show(); assert.deepEqual(timer.delays(), [0]);
-    assert.match(panel.render(), /Reportedly, the rating is unchanged/); assert.doesNotMatch(panel.render(), /Fetching news/);
+    assert.match(panel.render(), /Crude oil holds steady/); assert.doesNotMatch(panel.render(), /Fetching news/);
     await timer.run(); assert.equal(requests.length, 3);
-    assert.doesNotMatch(panel.render(), /Reportedly, the rating is unchanged|NVDA|Fetching news/);
+    assert.doesNotMatch(panel.render(), /Crude oil holds steady|Fetching news/);
     delayed.resolve(Response.json(feed([analyst]))); await flush();
-    assert.doesNotMatch(panel.render(), /Reportedly, the rating is unchanged/); // An old response cannot resurrect withdrawn copy.
+    assert.doesNotMatch(panel.render(), /Crude oil holds steady/); // An old response cannot resurrect withdrawn copy.
     assert.deepEqual(timer.delays(), [5000]);
   } finally { panel.unmount(); env.restore(); }
 });
@@ -91,11 +93,11 @@ test('news current refresh failure clears invalidated display and old initial se
   globalThis.fetch = async () => ++calls === 2 ? new Response('', { status: 503 }) : Response.json(feed([analyst]));
   const panel = componentHarness('../app/research/news/general-news-panel.tsx', timer);
   try {
-    panel.render(); panel.mount(); await timer.run(); assert.match(panel.render(), /Reportedly, the rating is unchanged/);
+    panel.render(); panel.mount(); await timer.run(); assert.match(panel.render(), /Crude oil holds steady/);
     env.hide(); env.show(); await timer.run();
-    assert.match(panel.render(), /News is unavailable/); assert.doesNotMatch(panel.render(), /Reportedly, the rating is unchanged/);
+    assert.match(panel.render(), /News is unavailable/); assert.doesNotMatch(panel.render(), /Crude oil holds steady/);
     panel.unmount(); assert.match(panel.render({ initialNews: { data: feed([analyst]), checkedAt: Date.now() - 1000 } }), /Fetching news/);
-    panel.mount(); await timer.run(); assert.match(panel.render(), /Reportedly, the rating is unchanged/);
+    panel.mount(); await timer.run(); assert.match(panel.render(), /Crude oil holds steady/);
   } finally { panel.unmount(); env.restore(); }
 });
 
@@ -146,11 +148,11 @@ test('both feeds reuse recent validated memory on remount without skeletons and 
   try {
     news.render(); news.mount(); await timer.run(); targets.render(); targets.mount(); await flush();
     news.unmount(); targets.unmount();
-    assert.match(news.render(), /NVDA/); assert.doesNotMatch(news.render(), /Fetching news/);
+    assert.match(news.render(), /Crude oil holds steady/); assert.doesNotMatch(news.render(), /Fetching news/);
     assert.match(targets.render(), /ASTS/); assert.doesNotMatch(targets.render(), /Fetching price targets/);
     news.unmount(); targets.unmount();
     Date.now = () => now() + 120_001;
-    assert.match(news.render(), /Fetching news/); assert.doesNotMatch(news.render(), /NVDA/);
+    assert.match(news.render(), /Fetching news/); assert.doesNotMatch(news.render(), /Crude oil holds steady/);
     assert.match(targets.render(), /Fetching price targets/); assert.doesNotMatch(targets.render(), /ASTS/);
   } finally { Date.now = now; news.unmount(); targets.unmount(); env.restore(); }
 });
