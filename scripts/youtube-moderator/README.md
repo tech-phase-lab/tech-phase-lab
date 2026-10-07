@@ -88,6 +88,7 @@ https://platform.openai.com/api-keys で「Create new secret key」を押して�
 | `MODERATOR_ENABLED` | `true` にすると定期実行が始まる |
 | `MODERATION_MODE` | `suggest`（初期値）または `auto` |
 | `NG_WORDS` | （任意）NGワードをカンマ区切りで上書き。例: `詐欺,ドル箱,ゼウス,〇〇` |
+| `IGNORE_BEFORE` | （任意）この日時より前のコメントは審査しない。初期値は導入日時 `2026-10-08T02:20:00+09:00` |
 | `OPENAI_MODEL` | （任意）判定に使うモデル。初期値は `gpt-5.6-terra`。費用をさらに抑えたい場合は `gpt-5.6-luna` |
 
 ### 7. 動作確認して開始

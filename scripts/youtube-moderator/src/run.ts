@@ -45,9 +45,15 @@ async function main() {
   const accessToken = await getAccessToken(config.youtube);
   const held = await listHeldComments(accessToken, config.youtube.channelId);
 
+  // 導入前から溜まっていたコメントは対象外にする
+  const cutoff = config.ignoreBefore ? Date.parse(config.ignoreBefore) : Number.NaN;
+  const target = Number.isNaN(cutoff) ? held : held.filter((c) => Date.parse(c.publishedAt) >= cutoff);
+
   // すでに通知済み（＝あなたの判断待ち）のコメントは判定し直さない
-  const fresh = held.filter((c) => !state.notified[c.id]);
-  console.log(`承認待ち ${held.length}件 / 新規 ${fresh.length}件 / モード ${config.mode}${config.dryRun ? " (DRY_RUN)" : ""}`);
+  const fresh = target.filter((c) => !state.notified[c.id]);
+  console.log(
+    `承認待ち ${held.length}件（うち対象外の過去分 ${held.length - target.length}件） / 新規 ${fresh.length}件 / モード ${config.mode}${config.dryRun ? " (DRY_RUN)" : ""}`,
+  );
   if (fresh.length === 0) return;
 
   await fillVideoTitles(accessToken, fresh);
