@@ -1,0 +1,74 @@
+name: YouTube comment moderator
+
+on:
+  schedule:
+    # cron は UTC。19:00〜23:59（日本時間）は5分おき、それ以外は10分おき。
+    # GitHub 側の混雑で数分〜十数分遅れることがある。
+    - cron: "*/5 10-14 * * *"
+    - cron: "*/10 0-9,15-23 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "YouTube を変更せず、通知も送らずにログで確認する"
+        type: boolean
+        default: false
+
+concurrency:
+  group: youtube-comment-moderator
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  moderate:
+    # 準備が終わるまでは動かさない。Settings → Secrets and variables → Actions → Variables で
+    # MODERATOR_ENABLED を true にすると定期実行が始まる（手動実行はいつでも可）。
+    if: ${{ github.event_name == 'workflow_dispatch' || vars.MODERATOR_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    defaults:
+      run:
+        working-directory: scripts/youtube-moderator
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: scripts/youtube-moderator/package-lock.json
+
+      - run: npm ci --omit=dev
+
+      # 通知済みコメントIDの記録（本文は含まない）を実行間で引き継ぐ
+      - uses: actions/cache/restore@v4
+        with:
+          path: scripts/youtube-moderator/.state
+          key: yt-moderator-state-${{ github.run_id }}
+          restore-keys: yt-moderator-state-
+
+      - name: Moderate held comments
+        run: npm start
+        env:
+          MODERATION_MODE: ${{ vars.MODERATION_MODE || 'suggest' }}
+          NG_WORDS: ${{ vars.NG_WORDS }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+
+      - uses: actions/cache/save@v4
+        if: ${{ hashFiles('scripts/youtube-moderator/.state/state.json') != '' }}
+        with:
+          path: scripts/youtube-moderator/.state
+          key: yt-moderator-state-${{ hashFiles('scripts/youtube-moderator/.state/state.json') }}
