@@ -93,7 +93,7 @@ https://platform.openai.com/api-keys で「Create new secret key」を押して�
 ### 7. 動作確認して開始
 
 1. **Actions** タブ →「YouTube comment moderator」→「Run workflow」で `dry_run` にチェックを入れて実行
-   （YouTube の変更も通知もせず、承認待ちの件数と判定件数だけログに出ます）
+   （YouTube の変更も通知もせず、承認待ちの件数と判定件数だけログに出ます。コメント本文はログに出しません）
 2. `dry_run` なしで手動実行し、通知が届くことを確認
 3. Variables の `MODERATOR_ENABLED` を `true` にすると、以降は自動で動きます
 

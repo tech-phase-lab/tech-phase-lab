@@ -67,8 +67,8 @@ async function sendGmail(user: string, appPassword: string, to: string, text: st
 
 export async function notify(config: Config, text: string): Promise<void> {
   if (config.dryRun) {
-    console.log("---- 通知（DRY_RUN のため送信しません）----");
-    console.log(text);
+    // Actions のログは公開されるため、DRY_RUN でも本文は出さず件名だけ出す
+    console.log(`通知（DRY_RUN のため送信しません）: ${text.split("\n")[0]}`);
     return;
   }
 
