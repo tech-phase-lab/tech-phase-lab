@@ -29,9 +29,13 @@ class IssuerBusinessNewsTests(unittest.TestCase):
     def prepare(self):
         return issuer.run_once(self.path,NOW,request=lambda *_:{'body':markup(BODY,TITLE,URL,'Nebius'), 'etag':'fixture'})
     def run_note(self,transport=response):
-        with patch.object(research,'prepare_story_body',return_value='idle'), patch.object(research,'datetime') as clock:
+        # Both modules read the clock; pin them to the fixture date so the
+        # 7-day window does not expire as the calendar moves on.
+        with patch.object(research,'prepare_story_body',return_value='idle'), patch.object(research,'datetime') as clock, \
+                patch.object(news,'datetime') as news_clock:
             clock.fromtimestamp.side_effect=datetime.fromtimestamp
             clock.now.return_value=NOW
+            news_clock.now.return_value=NOW
             return research.run_once(self.path,transport,ENV,NOW.timestamp())
     def feed(self):
         with research.connect(self.path) as db:return signals.public_official_updates(db,reference=NOW)
