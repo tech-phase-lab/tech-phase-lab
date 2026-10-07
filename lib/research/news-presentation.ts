@@ -30,3 +30,14 @@ export function officialNewsDisplay(item: OfficialUpdate, lang: Language, briefs
   return { label: pendingTranslation ? `${label} · 翻訳準備中（原文）` : label, title: compact.title, pendingTranslation,
     body: additionalNewsDetail([label, compact.title, ...(item.brief ? [sourceTitle] : []), ...compact.visibleFacts], body, item.sources?.map(source => source.publisher)) };
 }
+
+/** A headline-only company item must say who did what: a bare product or
+ * blog heading ("Next-Generation Scale-Up Networking for AI Fabrics") with no
+ * body and no company name tells a reader nothing (owner, Oct 7). */
+export function informativeOfficial(item: OfficialUpdate) {
+  if (item.bodyJa || item.bodyEn || item.brief || item.newsCategory || item.generalSource || item.researchId) return true;
+  const text = `${item.title} ${item.translationJa ?? ''}`.toLowerCase();
+  const names = [...item.tickers, item.publisher.split(/\s+/)[0]].filter(name => name && name.length > 1);
+  if (names.some(name => text.includes(name.toLowerCase()))) return true;
+  return /\b(?:results?|earnings|acquir\w*|merger|dividend|guidance|revenue|buyback|repurchase|offering|appoint\w*|ceo|cfo)\b|決算|買収|配当|売上|自社株/i.test(text);
+}

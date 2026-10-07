@@ -79,7 +79,8 @@ test('Python current source detail survives server/client transport and the actu
       assert.equal(html.split(title).length - 1, 1);
       assert.equal(html.split(body).length - 1, 1);
       assert.ok(html.includes('Barchart'));
-      assert.equal(html.split(item.publishedAt).length - 1, 1);
+      // Closed it sits under the headline; opened it moves to the end of the detail (owner, Oct 7).
+      assert.equal(html.split(item.publishedAt).length - 1, 2);
       assert.doesNotMatch(body, /−2%|-2%|Sep|15yr\+|BofA|annualized|total return|rolling|yield|利回り|ローリング|年率|利息|チャート/);
       assert.deepEqual(item, before);
       const [pulse] = newsPulseItems(raw, lang);

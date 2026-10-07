@@ -9,7 +9,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { additionalNewsDetail } from '../lib/research/news-detail.ts';
 import { marketNewsBody, marketNewsDisplay } from '../lib/research/market-news-display.ts';
-import { officialNewsDisplay } from '../lib/research/news-presentation.ts';
+import { informativeOfficial, officialNewsDisplay } from '../lib/research/news-presentation.ts';
 import { resultFactText, resultNewsUpdate, mergeResultNews } from '../lib/research/result-news.ts';
 import { parseResultBriefs } from '../lib/research/market-results.ts';
 import { availableNewsPayload, publicNewsPayload } from '../lib/research/general-news.ts';
@@ -85,6 +85,25 @@ test('only real added facts use native keyboard and touch accessible disclosure'
     assert.equal(html.split('Additional verified fact').length-1,1);
     assert.doesNotMatch(html, /Barchart|原文|Source|href=/);
   }
+});
+
+test('an opened story continues after the headline and moves the date to its end',()=>{
+  const html=renderToStaticMarkup(React.createElement(NewsStory,{...props,body:'Additional verified fact'}));
+  const summary=html.slice(html.indexOf('<summary>'),html.indexOf('</summary>'));
+  const body=html.slice(html.indexOf('</summary>'));
+  assert.ok(summary.includes(props.title));
+  assert.ok(body.indexOf('Additional verified fact')<body.indexOf(props.publication));
+  const long='一文目の説明です。'.repeat(30);
+  const concise=renderToStaticMarkup(React.createElement(NewsStory,{...props,body:long,concise:true}));
+  assert.ok(concise.split('一文目の説明です。').length-1<30);
+});
+
+test('a headline-only company item that names no one and says nothing is not listed',()=>{
+  const base={id:'1',tickers:['ANET'],publisher:'Arista Networks',url:'https://www.arista.com/en/company/news/blog/1',observedAt:'2026-10-07T13:00:00Z',publishedAt:'2026-10-07T13:00:00Z'};
+  assert.equal(informativeOfficial({...base,title:'Next-Generation Scale-Up Networking for AI Fabrics',translationJa:'AIファブリック向け次世代大規模ネットワーキング'}),false);
+  assert.equal(informativeOfficial({...base,title:'Arista launches scale-up networking for AI fabrics'}),true);
+  assert.equal(informativeOfficial({...base,title:'Q3 2026 Financial Results'}),true);
+  assert.equal(informativeOfficial({...base,title:'Next-Generation Networking',bodyEn:'Details.'}),true);
 });
 
 test('verified partial briefs show review status without a duplicate headline or artificial disclosure',()=>{
@@ -313,6 +332,7 @@ finally:
   const pageLogic=panel.slice(panel.indexOf('  const official ='),panel.indexOf('  const format ='));
   const pagination=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(
     `import { officialTime } from ${JSON.stringify(new URL('../lib/research/news-time.ts',import.meta.url).href)};
+import { informativeOfficial } from ${JSON.stringify(new URL('../lib/research/news-presentation.ts',import.meta.url).href)};
 `
     +`export function visible(data,page,officialOnly=false) { ${pageLogic}
 return {pages,current,visibleUpdates,visibleNews}; }`)).toString('base64'));

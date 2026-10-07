@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Language } from "@/lib/research/data";
 import { availableNewsPayload, type GeneralNewsFeed, type InitialNewsSnapshot } from "@/lib/research/general-news";
-import { officialNewsDisplay } from "@/lib/research/news-presentation";
+import { informativeOfficial, officialNewsDisplay } from "@/lib/research/news-presentation";
 import { marketNewsBody, marketNewsDisplay } from "@/lib/research/market-news-display";
 import { clockTime, officialTime } from "@/lib/research/news-time";
 import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-poller";
@@ -79,7 +79,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
       poller.stop();
     };
   }, [refresh, initialNews]);
-  const official = data?.officialUpdates ?? [];
+  const official = (data?.officialUpdates ?? []).filter(informativeOfficial);
   const news = officialOnly ? [] : data?.items ?? [];
   const market = officialOnly ? [] : data?.marketUpdates ?? [];
   // Analyst ratings and target changes live on the price target page only (owner, Oct 7).
@@ -119,7 +119,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
         }
         const item = update.item;
         const official = officialTime(item), publication = { ...clockTime(official.at, official.kind, item.observedAt), dated: official.kind }, display = officialNewsDisplay(item, lang, data?.resultBriefs);
-        return <article key={item.id}><NewsStory label={display.label} title={display.title} body={display.body} lang={lang}
+        return <article key={item.id}><NewsStory label={display.label} title={display.title} body={display.body} concise={!item.brief && !item.newsCategory && !item.generalSource && !item.researchId} lang={lang}
           publication={`${publication.dated === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} ${publication.kind === "date" ? publication.at : format(publication.at)}`} /></article>; })}</div>
     </section>}
     {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}
