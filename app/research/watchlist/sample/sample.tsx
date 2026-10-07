@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../../research-tool-shell";
 import { useResearchLanguage } from "../../use-research-language";
+import AreaChart from "../area-chart";
 import StockLogo from "../stock-logo";
 import { searchStocks } from "@/lib/research/stock-search";
 import styles from "./sample.module.css";
@@ -25,30 +26,6 @@ function quoteFor(row: typeof samples[number], session: Session) {
   // A separate fictional pre-market series, anchored to the regular-session close.
   const path = session === "pre" ? [0, -.12, .08, .22, .15, .3, .2, .12, .24, .38, .31, .45, .3, .5, .42, .65, .56, .72, .63, .85, .76, .92, .84, 1.08, .96, 1].map(n => reference + change * n) : row.path;
   return { ...row, price, reference, change, percent: change / reference * 100, path };
-}
-function AreaChart({ values, reference, label }: { values: number[]; reference: number; label: string }) {
-  const gradientId = useId();
-  const changes = values.map(value => (value / reference - 1) * 100);
-  const rawLow = Math.min(0, ...changes), rawHigh = Math.max(0, ...changes);
-  const step = rawHigh - rawLow <= 1 ? .25 : rawHigh - rawLow <= 3 ? .5 : 1;
-  const low = Math.floor(rawLow / step) * step;
-  const high = Math.max(low + step, Math.ceil(rawHigh / step) * step);
-  const y = (value: number) => 53 - (value - low) / (high - low) * 46;
-  const coordinates = changes.map((value, i) => `${(4 + i * 192 / (changes.length - 1)).toFixed(2)},${y(value).toFixed(2)}`);
-  const scale = (value: number) => `${value > 0 ? "+" : ""}${Number(value.toFixed(2))}%`;
-  return <span className={styles.chartFrame}>
-    <span className={styles.scale} aria-hidden="true"><span>{scale(high)}</span><span>{scale(low)}</span></span>
-    <svg viewBox="0 0 200 60" preserveAspectRatio="none" role="img" aria-label={`${label} (${scale(low)} ～ ${scale(high)})`}>
-      <defs><linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="currentColor" stopOpacity=".32" /><stop offset="100%" stopColor="currentColor" stopOpacity=".015" /></linearGradient></defs>
-      {[7, 30, 53].map(line => <line key={line} x1="0" x2="200" y1={line} y2={line} className={styles.grid} />)}
-      <polygon points={`4,58 ${coordinates.join(" ")} 196,58`} fill={`url(#${gradientId})`} />
-      <line x1="0" x2="200" y1={y(0)} y2={y(0)} className={styles.baseline} />
-      <polyline points={coordinates.join(" ")} fill="none" stroke="currentColor" strokeOpacity=".6" strokeWidth="1.8" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
-      <polyline points={coordinates.slice(-7).join(" ")} fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
-      <circle cx="196" cy={y(changes.at(-1)!)} r="5.5" fill="currentColor" opacity=".15" />
-      <circle cx="196" cy={y(changes.at(-1)!)} r="2.7" fill="currentColor" />
-    </svg>
-  </span>;
 }
 export default function WatchlistSample() {
   const [lang, setLang] = useResearchLanguage();
@@ -90,10 +67,10 @@ export default function WatchlistSample() {
         return <li key={row.ticker}>
           <button className={styles.row} aria-expanded={open} onClick={() => setExpanded(open ? "" : row.ticker)}>
             <span className={styles.identity}><StockLogo ticker={row.ticker} /><span className={styles.company}><strong>{row.name}</strong><small>{row.ticker}</small><span className={styles.sector}>{row.sector[lang]}</span></span></span>
-            <span className={styles.trend} data-up={row.percent >= 0}><strong>{signed(row.percent)}%</strong><AreaChart values={row.path} reference={row.reference} label={t(`${row.ticker}の架空の値動き`, `${row.ticker} simulated trend`)} /></span>
+            <span className={styles.trend} data-up={row.percent >= 0}><strong>{signed(row.percent)}%</strong><AreaChart className={styles.chartFrame} values={row.path} reference={row.reference} label={t(`${row.ticker}の架空の値動き`, `${row.ticker} simulated trend`)} /></span>
             <span className={styles.price} data-direction={row.change > 0 ? "up" : row.change < 0 ? "down" : "flat"}>{number(row.price)}<small>{signed(row.change)} USD</small></span>
           </button>
-          {open && <div className={styles.detail} data-up={row.percent >= 0}><div className={styles.detailHeading}><strong>{row.ticker} · {sessionLabel}</strong><span>{signed(row.percent)}%</span></div><AreaChart values={row.path} reference={row.reference} label={t("拡大した架空チャート", "Expanded simulated chart")} /><div className={styles.chartTimes}><span>{session === "pre" ? "04:00" : "09:30"}</span><span>{sampleTime.slice(0, 5)} ET</span></div><div className={styles.detailCaption}><span>{session === "pre" ? t("通常取引終値", "Regular close") : t("前営業日終値", "Previous close")} {number(row.reference)} USD</span><span>{t("架空データ", "Simulated data")}</span></div></div>}
+          {open && <div className={styles.detail} data-up={row.percent >= 0}><div className={styles.detailHeading}><strong>{row.ticker} · {sessionLabel}</strong><span>{signed(row.percent)}%</span></div><AreaChart className={styles.chartFrame} values={row.path} reference={row.reference} label={t("拡大した架空チャート", "Expanded simulated chart")} /><div className={styles.chartTimes}><span>{session === "pre" ? "04:00" : "09:30"}</span><span>{sampleTime.slice(0, 5)} ET</span></div><div className={styles.detailCaption}><span>{session === "pre" ? t("通常取引終値", "Regular close") : t("前営業日終値", "Previous close")} {number(row.reference)} USD</span><span>{t("架空データ", "Simulated data")}</span></div></div>}
         </li>;
       })}</ul>
       {!rows.length && <p>{t("一致するサンプル銘柄がありません", "No matching sample stocks")}</p>}
