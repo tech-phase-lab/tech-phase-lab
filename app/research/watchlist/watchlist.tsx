@@ -92,6 +92,9 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
     return () => { clearTimeout(timer); controller.abort(); };
   }, [query]);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
+  const sessionLabels = { regular: t("取引中", "Market open"), pre: t("プレマーケット", "Pre-market"), post: t("時間外", "After-hours"), closed: t("前日比", "Daily change") };
+  const quoteSessions = [...new Set(favorites.flatMap(ticker => usableFavoriteQuote(quotes[ticker], ticker) ? [quotes[ticker].session] : []))];
+  const sharedSession = quoteSessions.length === 1 ? quoteSessions[0] : null;
   const ordered = sortFavorites(favorites, quotes, sort);
   const monitored = companies.some(item => item.ticker === active);
   return <ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false} showTools={false}>
@@ -128,22 +131,22 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
       {error && <p role="alert" className={styles.error}>{t("保存できませんでした。ブラウザーの保存設定をご確認ください。", "Could not save. Check your browser storage settings.")}</p>}
       {favorites.length > 0 ? <>
 
-        <div className={styles.marketBar}><span>{t("当日の値動き", "Intraday")}</span><span>{t("現在", "Now")} <CurrentTime /> JST</span></div>
+        <div className={styles.marketBar}><span>{t("現在", "Now")} <CurrentTime /> JST</span></div>
         <div className={styles.quoteTable}>
-          <div className={styles.tableHead}><span>{t("銘柄", "Stock")}</span><span>{t("値動き", "Change")}</span><span>{t("株価", "Price")}</span></div>
+          <div className={styles.tableHead}><span>{t("銘柄", "Stock")}</span><span>{sharedSession ? sessionLabels[sharedSession] : t("値動き", "Change")}</span><span>{t("株価", "Price")}</span></div>
           <ul className={styles.quoteRows}>{ordered.map((ticker, index) => {
             const item = companies.find(entry => entry.ticker === ticker) ?? known[ticker];
             const quote = usableFavoriteQuote(quotes[ticker], ticker) ? quotes[ticker] : null;
             const number = (value: number) => value.toLocaleString(lang === "ja" ? "ja-JP" : "en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const signed = (value: number) => `${value > 0 ? "+" : ""}${number(value)}`;
-            const session = quote ? { regular: t("取引中", "Market open"), pre: t("プレ", "Pre-market"), post: t("時間外", "After-hours"), closed: t("前日比", "Daily change") }[quote.session] : "";
+            const session = quote ? sessionLabels[quote.session] : "";
             const chart = quote ? favoriteIntradayChart(quote) : null;
             const direction = quote?.percentChange == null ? "flat" : quote.percentChange > 0 ? "up" : quote.percentChange < 0 ? "down" : "flat";
             return <li key={ticker} className={styles.quoteRow} data-selected={ticker === active}>
               <button className={styles.rowMain} aria-expanded={ticker === active} onClick={() => setSelected(active === ticker ? "" : ticker)}>
                 <span className={styles.identity}><StockLogo ticker={ticker} /><span className={styles.company}><strong>{item?.name ?? names[ticker] ?? ticker}</strong><small>{ticker}</small>{item?.sector[lang] && <span className={styles.sector}>{item.sector[lang]}</span>}</span></span>
                 <span className={styles.trend} data-direction={direction}>
-                  <span className={styles.trendHeading}><small>{session}</small><strong>{quote?.percentChange == null ? "—" : `${signed(quote.percentChange)}%`}</strong></span>
+                  <span className={styles.trendHeading}><small>{sharedSession ? "" : session}</small><strong>{quote?.percentChange == null ? "—" : `${signed(quote.percentChange)}%`}</strong></span>
                   {chart ? <AreaChart className={styles.chartFrame} values={chart.values} reference={chart.reference} label={t(`${ticker}の当日の値動き`, `${ticker} intraday trend`)} /> : <span className={styles.noChart} aria-label={t("当日チャート未取得", "Intraday chart unavailable")}>—</span>}
                 </span>
                 <span className={styles.price} data-direction={direction}>{quote ? number(quote.price) : "—"}<small>{quote ? `${quote.change == null ? "" : signed(quote.change) + " "}${quote.currency}` : ""}</small>{quote && <time className={styles.quoteTime} dateTime={quote.asOf} title={new Date(quote.asOf).toLocaleString(lang === "ja" ? "ja-JP" : "en-GB", { timeZone: "Asia/Tokyo" }) + " JST"}>{new Date(quote.asOf).toLocaleTimeString("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false })} JST{quote.delayed ? t(" · 遅延", " · Delayed") : ""}</time>}</span>
