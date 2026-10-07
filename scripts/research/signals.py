@@ -1314,6 +1314,18 @@ PRICE_TARGET_TICKER_RATING = re.compile(
     r"(?P<verb>" + "|".join(_TARGET_VERBS) + r")\s+(?:(?:its|the)\s+)?(?P<post>" + _TARGET_LABEL + r")\s+to\s*" +
     _TARGET_NUMBER + r"\s+from\s*" + _TARGET_NUMBER, re.I,
 )
+# General cashtag-led form, e.g. "$BE | UBS raises Bloom Energy Corporation
+# price target, raised to $350 from $325" or "... raises PT on <company> from
+# $325 to $350". The span between verb and figures must name the target and
+# may not hold another figure or cashtag; a second verb must agree.
+PRICE_TARGET_TICKER_GENERIC = re.compile(
+    r"^\s*\$(?P<ticker>[A-Z]{1,5}(?:[.-][A-Z])?)\s*[:|–—-]?\s*" + _TARGET_ACTOR +
+    r"(?P<mid>[^$\n;]{0,120}?)\s*,?\s*"
+    r"(?:(?:and\s+)?(?P<verb2>raised|lifted|boosted|hiked|increased|lowered|cut|trimmed|reduced|raises|lifts|boosts|hikes|increases|lowers|cuts|trims|reduces)\s+(?:it\s+)?)?"
+    r"(?:to\s*" + _TARGET_NUMBER.replace("(", "(?P<new>", 1) + r"\s+from\s*" + _TARGET_NUMBER.replace("(", "(?P<old>", 1) +
+    r"|from\s*" + _TARGET_NUMBER.replace("(", "(?P<old2>", 1) + r"\s+to\s*" + _TARGET_NUMBER.replace("(", "(?P<new2>", 1) + r")",
+    re.I,
+)
 PRICE_TARGET_UNIVERSES = {"large-cap": frozenset(json.loads(
     (Path(__file__).with_name("price_target_universe.json")).read_text())["tickers"])}
 
@@ -1323,7 +1335,8 @@ def actor_first_target(text):
     if not isinstance(text, str):
         return text
     stripped = re.sub(r"^[^A-Za-z0-9$]+", "", text)
-    for pattern in (PRICE_TARGET_ACTOR_FIRST, PRICE_TARGET_TICKER_ACTOR, PRICE_TARGET_TICKER_RATING):
+    for pattern in (PRICE_TARGET_ACTOR_FIRST, PRICE_TARGET_TICKER_ACTOR, PRICE_TARGET_TICKER_RATING,
+                    PRICE_TARGET_TICKER_GENERIC):
         match = pattern.match(stripped)
         if not match:
             continue
@@ -1333,6 +1346,19 @@ def actor_first_target(text):
         # A second named broker anywhere else leaves the actor ambiguous.
         if re.search(_TARGET_ACTOR_NAMES, stripped[match.end():], re.I):
             return text
+        if pattern is PRICE_TARGET_TICKER_GENERIC:
+            mid = groups["mid"] or ""
+            if (not re.search(_TARGET_LABEL, mid, re.I) or re.search(r"\d", mid)
+                    or re.search(_TARGET_ACTOR_NAMES, mid, re.I)):
+                return text
+            verb = _TARGET_VERBS[groups["verb"].casefold()]
+            second = (groups["verb2"] or "").casefold()
+            if second and (verb == "raised") != bool(re.match(r"rais|lift|boost|hik|increas", second)):
+                return text
+            new, old = ((groups["new"] or groups["new2"]).replace(",", ""),
+                        (groups["old"] or groups["old2"]).replace(",", ""))
+            return (f"By {groups['firm']}: ${groups['ticker'].upper()} PT {verb} to ${new} from ${old}"
+                    + stripped[match.end():])
         new, old = (value.replace(",", "") for value in match.groups()[-2:])
         verb = _TARGET_VERBS[groups["verb"].casefold()]
         ticker = groups["ticker"].upper()
