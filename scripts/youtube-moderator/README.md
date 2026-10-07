@@ -6,7 +6,7 @@
 - **NGワード**（初期値:「詐欺」「ドル箱」「ゼウス」）は AI を通さず文字一致で非公開にします。
   全角・半角、カタカナ・ひらがな、空白や記号の挟み込み（「ゼ ウ ス」「ド・ル箱」）も検出します
 - **容姿への否定、誹謗中傷、スパム、勧誘、なりすまし、個人情報、NGワードの言い換え**は AI（OpenAI）が文脈を見て判定します
-- **判断に迷うもの**は承認待ちのまま残し、Discord または LINE に通知します。YouTube Studio であなたが判断してください
+- **判断に迷うもの**は承認待ちのまま残し、メールなどで通知します（メール・Discord・LINE のいずれか）。YouTube Studio であなたが判断してください
 - 投稿者のブロック（チャンネルから非表示）は自動では行いません
 
 ## 2つのモード
@@ -53,10 +53,13 @@ https://www.youtube.com/account_advanced に表示される `UC` で始まる ID
 https://platform.openai.com/api-keys で「Create new secret key」を押して作成します（`sk-` で始まるキー）。
 キーは作成時にしか表示されないので、その場で控えてください。API の利用には、Billing にクレジットが入っている必要があります。
 
-### 5. 通知先を用意する（どちらか、または両方）
+### 5. 通知先を用意する（どれか1つ以上）
 
+- **メール（Gmail）**: 送信に使う Google アカウントで2段階認証をオンにし、
+  https://myaccount.google.com/apppasswords で「アプリ パスワード」（16文字）を作成する。
+  普段のパスワードとは別の、このプログラム専用のパスワードです
 - **Discord**: 通知用のチャンネルの「チャンネルの編集」→「連携サービス」→「ウェブフック」→「新しいウェブフック」→「ウェブフック URL をコピー」
-- **LINE**: LINE Developers で Messaging API チャネルを作成し、「チャネルアクセストークン（長期）」と「あなたのユーザー ID」（チャネル基本設定の下部）を控え、作った公式アカウントを友だち追加しておく
+- **LINE**: LINE Developers で Messaging API チャネルを作成し、「チャネルアクセストークン（長期）」と「あなたのユーザー ID」（チャネル基本設定の下部）を控え、作った公式アカウントを友だち追加しておく（無料プランは月200通まで）
 
 ### 6. GitHub に登録する
 
@@ -72,6 +75,9 @@ https://platform.openai.com/api-keys で「Create new secret key」を押して�
 | `YT_REFRESH_TOKEN` | 2 のリフレッシュトークン |
 | `YT_CHANNEL_ID` | 3 のチャンネル ID |
 | `OPENAI_API_KEY` | 4 の API キー |
+| `GMAIL_USER` | メールの場合: 送信に使う Gmail アドレス |
+| `GMAIL_APP_PASSWORD` | メールの場合: アプリ パスワード（16文字） |
+| `MAIL_TO` | （任意）通知を受け取るアドレス。省略すると `GMAIL_USER` に届く |
 | `DISCORD_WEBHOOK_URL` | Discord を使う場合 |
 | `LINE_CHANNEL_ACCESS_TOKEN` / `LINE_USER_ID` | LINE を使う場合 |
 

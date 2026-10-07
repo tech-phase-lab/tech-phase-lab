@@ -37,6 +37,9 @@ export function loadConfig() {
       .filter(Boolean),
     model: optional("OPENAI_MODEL") ?? "gpt-5.6-terra",
     notify: {
+      gmailUser: optional("GMAIL_USER"),
+      gmailAppPassword: optional("GMAIL_APP_PASSWORD")?.replace(/\s/g, ""),
+      mailTo: optional("MAIL_TO") ?? optional("GMAIL_USER"),
       discordWebhookUrl: optional("DISCORD_WEBHOOK_URL"),
       lineChannelAccessToken: optional("LINE_CHANNEL_ACCESS_TOKEN"),
       lineUserId: optional("LINE_USER_ID"),

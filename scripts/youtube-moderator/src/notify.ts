@@ -1,3 +1,4 @@
+import nodemailer from "nodemailer";
 import type { Config } from "./config.ts";
 
 const DISCORD_LIMIT = 1900;
@@ -50,6 +51,20 @@ async function sendLine(token: string, userId: string, text: string) {
   }
 }
 
+async function sendGmail(user: string, appPassword: string, to: string, text: string) {
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: { user, pass: appPassword },
+    connectionTimeout: 30_000,
+    socketTimeout: 30_000,
+  });
+  // 1行目を件名にする（例:「🍭 コメント自動審査（公開 3 / 非公開 1 / 要確認 1）」）
+  const [subject, ...body] = text.split("\n");
+  await transporter.sendMail({ from: user, to, subject, text: body.join("\n").trim() });
+}
+
 export async function notify(config: Config, text: string): Promise<void> {
   if (config.dryRun) {
     console.log("---- 通知（DRY_RUN のため送信しません）----");
@@ -57,13 +72,16 @@ export async function notify(config: Config, text: string): Promise<void> {
     return;
   }
 
-  const { discordWebhookUrl, lineChannelAccessToken, lineUserId } = config.notify;
+  const { gmailUser, gmailAppPassword, mailTo, discordWebhookUrl, lineChannelAccessToken, lineUserId } = config.notify;
   const tasks: Promise<void>[] = [];
+  if (gmailUser && gmailAppPassword && mailTo) tasks.push(sendGmail(gmailUser, gmailAppPassword, mailTo, text));
   if (discordWebhookUrl) tasks.push(sendDiscord(discordWebhookUrl, text));
   if (lineChannelAccessToken && lineUserId) tasks.push(sendLine(lineChannelAccessToken, lineUserId, text));
 
   if (tasks.length === 0) {
-    throw new Error("通知先が設定されていません（DISCORD_WEBHOOK_URL または LINE_CHANNEL_ACCESS_TOKEN と LINE_USER_ID）。");
+    throw new Error(
+      "通知先が設定されていません（GMAIL_USER と GMAIL_APP_PASSWORD、DISCORD_WEBHOOK_URL、または LINE_CHANNEL_ACCESS_TOKEN と LINE_USER_ID）。",
+    );
   }
   await Promise.all(tasks);
 }
