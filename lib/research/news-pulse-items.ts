@@ -4,8 +4,7 @@ import { marketNewsBody, marketNewsDisplay } from "./market-news-display.ts";
 import { officialPulseHeadlineJa } from "./official-news-ja.ts";
 import { officialNewsDisplay } from "./news-presentation.ts";
 import { officialTime } from "./news-time.ts";
-import { analystNewsDisplay } from "./analyst-news.ts";
-import { officialPulseHeadlines, marketPulseHeadlines, analystPulseHeadlines, generalPulseHeadlines } from "./news-pulse-headline.ts";
+import { officialPulseHeadlines, marketPulseHeadlines, generalPulseHeadlines } from "./news-pulse-headline.ts";
 
 const JAPANESE = /[\u3040-\u30ff\u3400-\u9fff]/;
 
@@ -26,12 +25,8 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
       const display = marketNewsDisplay(item, lang);
       return { headlines: marketPulseHeadlines(item, lang, display.title, ja ? item.pulseTitleJa ?? item.shortTitleJa : item.pulseTitleEn ?? item.shortTitleEn), id: `market-${item.id}`, ticker: display.label, title: display.title, body: marketNewsBody(item, lang) ?? display.title, shortTitle: display.title !== (ja ? item.titleJa : item.titleEn) ? display.title : ja ? item.shortTitleJa : item.shortTitleEn, url: item.url, at: item.publishedAt, kind: "published" as const };
     }),
-    ...(feed?.analystUpdates ?? []).map(item => {
-      const display = analystNewsDisplay(item, lang);
-      return { headlines: analystPulseHeadlines(item, lang, display.title), id: `analyst-${item.id}`, ticker: display.label, title: display.title,
-        body: display.body ? `${display.title}\n\n${display.body}` : display.title,
-        shortTitle: display.title, at: item.publishedAt, kind: "published" as const };
-    }),
+    // Analyst ratings and price targets stay out of the strip: a one-line
+    // "upgrade" without the old and new target says nothing (owner, Oct 7).
     // Test publications that carry a checked bilingual summary.
     ...(feed?.originalPreviewItems ?? []).flatMap(item => "summary" in item && item.summary ? [{
       id: `preview-${item.id}`, ticker: item.sourceName, title: ja ? item.summary.titleJa : item.summary.titleEn,
