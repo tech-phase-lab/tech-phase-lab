@@ -30,6 +30,7 @@ import news_drafts
 import news_history
 import editorial_posts
 import questions
+import favorite_lists
 import note_translation
 import question_translation
 import headline_translation
@@ -2998,6 +2999,19 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "annual-brief-unavailable"})
             return
+        if path == "/favorite-lists":
+            if not self.authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                with favorite_lists.connect(self.app.db_path) as db:
+                    result = favorite_lists.read(db, self.headers.get("X-Favorites-Owner", ""))
+                self.send_json(200, {"ok": True, **result})
+            except ValueError as exc:
+                self.send_json(400, {"ok": False, "error": str(exc)})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "favorites-unavailable"})
+            return
         if path == "/questions":
             if not self.authorized():
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
@@ -3047,6 +3061,20 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlsplit(self.path).path
+        if path == "/favorite-lists":
+            if not self.authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                payload = self.read_json()
+                with favorite_lists.connect(self.app.db_path) as db:
+                    result = favorite_lists.save(db, self.headers.get("X-Favorites-Owner", ""), payload.get("revision"), payload.get("document"))
+                self.send_json(409 if result.get("conflict") else 200, {"ok": not result.get("conflict", False), **result})
+            except ValueError as exc:
+                self.send_json(400, {"ok": False, "error": str(exc)})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "favorites-unavailable"})
+            return
         if path == "/questions":
             if not self.authorized():
                 self.send_json(401, {"ok": False, "error": "unauthorized"})

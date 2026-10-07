@@ -23,3 +23,19 @@ test('quotes require matching ticker, valid clock and finite signed values',()=>
  assert.equal(usableFavoriteQuote({...q,price:NaN},'MU'),false);assert.equal(usableFavoriteQuote({...q,asOf:'invalid'},'MU'),false);
  assert.equal(usableFavoriteQuote({...q,change:null,percentChange:null},'MU'),true);
 });
+
+test('sorts both directions while keeping missing quotes last', async () => {
+  const { sortFavorites } = await import('../lib/research/favorite-lists.ts');
+  const quote = (ticker, percentChange) => ({ ticker, price: 10, percentChange, change: 1, currency:'USD', asOf:'2026-10-07T14:00:00Z',session:'regular',source:'twelve-data',delayed:false });
+  const quotes = { MU:quote('MU',2), SNDK:quote('SNDK',-3) };
+  assert.deepEqual(sortFavorites(['NONE','MU','SNDK'], quotes,'gainers'),['MU','SNDK','NONE']);
+  assert.deepEqual(sortFavorites(['NONE','MU','SNDK'], quotes,'losers'),['SNDK','MU','NONE']);
+});
+test('rejects fabricated or unordered sparkline inputs and handles flat prices', async () => {
+  const { sparklinePoints, parsePriceAlerts } = await import('../lib/research/favorite-lists.ts');
+  const values = [{at:'2026-10-07T14:00:00Z',price:10},{at:'2026-10-07T14:01:00Z',price:10}];
+  assert.equal(sparklinePoints(values), '2.00,20.00 98.00,20.00');
+  assert.equal(sparklinePoints([...values].reverse()), '');
+  assert.equal(sparklinePoints([{at:'invalid',price:5},values[1]]), '');
+  assert.deepEqual(parsePriceAlerts([{ticker:'MU',price:-2,direction:'above',currency:'USD'}]), []);
+});
