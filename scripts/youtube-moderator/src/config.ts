@@ -36,6 +36,8 @@ export function loadConfig() {
       .map((word) => word.trim())
       .filter(Boolean),
     model: optional("OPENAI_MODEL") ?? "gpt-5.6-terra",
+    // この日時より前に投稿されたコメントは審査も通知もせず、承認待ちのまま放置する
+    ignoreBefore: optional("IGNORE_BEFORE"),
     notify: {
       gmailUser: optional("GMAIL_USER"),
       gmailAppPassword: optional("GMAIL_APP_PASSWORD")?.replace(/\s/g, ""),

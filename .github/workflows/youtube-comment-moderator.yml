@@ -54,6 +54,8 @@ jobs:
           MODERATION_MODE: ${{ vars.MODERATION_MODE || 'suggest' }}
           NG_WORDS: ${{ vars.NG_WORDS }}
           OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+          # 導入前（2026-10-08 02:20 JST より前）のコメントは審査しない
+          IGNORE_BEFORE: ${{ vars.IGNORE_BEFORE || '2026-10-08T02:20:00+09:00' }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
