@@ -46,7 +46,13 @@ export function useFavoriteLists() {
     const controller = createFavoriteSync(init => fetch("/api/research/favorites", {
       method: init ? "POST" : "GET", cache: "no-store", signal: AbortSignal.timeout(12000),
       ...(init ? { headers: { "Content-Type": "application/json" }, body: init.body } : {}),
-    }), (next, state) => { setCloud(next); setStatus(state); });
+    }), (next, state) => { setCloud(next); setStatus(state); }, {
+      // Account-scoped and tab-local: never mix with signed-out favorites or
+      // another tab's pending changes. Survives navigation and reload in this tab.
+      load: account => sessionStorage.getItem(`tech-phase:favorite-pending:${account}`),
+      save: (account, value) => sessionStorage.setItem(`tech-phase:favorite-pending:${account}`, value),
+      clear: account => sessionStorage.removeItem(`tech-phase:favorite-pending:${account}`),
+    });
     sync.current = controller;
     void controller.refresh();
     const visible = () => { if (document.visibilityState === "visible") void controller.refresh(); };
@@ -69,6 +75,7 @@ export function useFavoriteLists() {
   const displayed = favoriteDisplayDocument(cloud, status, local);
   return { ...(displayed ?? { lists: [{ id: "default", name: "", tickers: [] }], names: {}, alerts: [] }), ready: displayed !== null, update, error: status === "guest" && local.error, status,
     retry: () => { void sync.current?.retry(); },
+    discardPending: () => { void sync.current?.discardPending(); },
     canImport: !!cloud && cloud.revision === 0 && local.lists.some(item => item.tickers.length),
     importLocal: () => update(() => ({ lists: local.lists, names: local.names, alerts: local.alerts })),
     editable: status === "guest" || !!cloud && status !== "conflict" };
