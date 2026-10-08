@@ -98,3 +98,33 @@ SIC fallback:
 - COIN provides crypto trading/custody infrastructure; HUT includes Bitcoin mining and related infrastructure alongside other compute/energy businesses; CRCL issues stablecoins through regulated affiliates. These are investment themes, not claims that crypto is each issuer's only business.
 - A fictional COIN fixture was added to the isolated sample page.
 - Sources: https://help.coinbase.com/en/coinbase/getting-started/getting-started-with-coinbase/what-is-coinbase ; https://www.hut8.com/compute ; https://investor.circle.com/overview/
+
+### Crypto coverage review (second pass)
+
+The first pass covered only five tickers and was not a complete crypto universe.
+Expanded the watchlist-only theme to 18 reviewed issuers. Display label remains
+クリプト関連 / Crypto-related. User-requested BTBT, BTGO, HOOD, RIOT and CLSK
+also have explicitly fictional fixtures in the isolated sample.
+
+| Added ticker | Basis | Official source reviewed on 2026-10-08 |
+| --- | --- | --- |
+| BTBT | ETH treasury and staking, alongside AI infrastructure investments | https://bit-digital.com/ |
+| BTGO | Digital asset custody, wallets and trading infrastructure | https://www.bitgo.com/ ; https://www.sec.gov/Archives/edgar/data/1740604/000174060426000050/btgo-20260630.htm |
+| HOOD | Crypto brokerage alongside other financial services | https://robinhood.com/us/en/support/robinhood-crypto/ ; https://robinhood.gcs-web.com/ |
+| RIOT | Operating Bitcoin mining business alongside data centers | https://www.riotplatforms.com/ |
+| CLSK | Bitcoin mining operations alongside AI infrastructure development | https://investors.cleanspark.com/news/news-details/2026/CleanSpark-Releases-August-2026-Operational-Update/ |
+| MARA | Bitcoin mining and digital asset infrastructure | https://www.mara.com/about-us |
+| HIVE | Bitcoin mining alongside AI/HPC | https://www.hivedigitaltechnologies.com/ |
+| BTDR | Bitcoin mining services and mining hardware | https://www.bitdeer.com/ |
+| GLXY | Digital asset financial services and onchain infrastructure | https://www.galaxy.com/ |
+| GEMI | Crypto exchange and related services | https://investors.gemini.com/ |
+| BLSH | Institutional crypto exchange | https://www.bullish.com/ |
+| CNCK | Crypto exchange and digital asset infrastructure | https://www.coincheckgroup.com/company-information |
+| BMNR | ETH treasury and staking | https://www.sec.gov/Archives/edgar/data/1829311/000149315226030428/ex99-1.htm |
+
+The existing five are MSTR, CAN, COIN, HUT and CRCL. A theme does not imply an
+exclusive business. HOOD is not a pure-play crypto company. No blanket matching
+on exchange, SIC, company-name keywords or a third-party list: GS/IBM remain
+on their existing classifications, and IREN retains its reviewed AI-cloud theme.
+This is a reviewed expansion, not a claim that every crypto-related listed
+company worldwide is covered. News/price-target registry and pipelines unchanged.

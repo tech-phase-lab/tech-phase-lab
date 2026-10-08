@@ -19,6 +19,11 @@ const samples = [
   { ticker: "APH", name: "Amphenol", sector: { ja: "ネットワーク", en: "Networking" }, previous: 100, price: 101.5, pre: 101.1, path: [100, 100.3, 100.1, 99.8, 100.1, 100.5, 100.2, 100.8, 101.1, 100.7, 100.9, 101.4, 101.2, 101.6, 101.3, 101.5] },
   { ticker: "AAOI", name: "Applied Optoelectronics", sector: { ja: "光・フォトニクス", en: "Optics & Photonics" }, previous: 80, price: 79.2, pre: 79.7, path: [80, 80.4, 80.1, 79.7, 80.2, 79.8, 79.3, 79.6, 79.1, 79.4, 78.9, 79.3, 79.6, 79.2] },
   { ticker: "COIN", name: "Coinbase", sector: { ja: "クリプト関連", en: "Crypto-related" }, previous: 100, price: 101.2, pre: 100.6, path: [100, 99.7, 100.2, 100.5, 100.1, 99.9, 100.4, 100.8, 100.3, 100.7, 101.3, 100.9, 101.5, 101.2] },
+  { ticker: "BTBT", name: "Bit Digital", sector: { ja: "クリプト関連", en: "Crypto-related" }, previous: 100, price: 102.4, pre: 101.8, path: [100, 100.2, 99.8, 100.6, 100.1, 99.5, 100.8, 100.3, 101.1, 100.4, 99.9, 100.7, 102.4] },
+  { ticker: "BTGO", name: "BitGo", sector: { ja: "クリプト関連", en: "Crypto-related" }, previous: 100, price: 98.7, pre: 99.1, path: [100, 100.2, 99.8, 100.6, 100.1, 99.5, 100.8, 100.3, 101.1, 100.4, 99.9, 100.7, 98.7] },
+  { ticker: "HOOD", name: "Robinhood Markets", sector: { ja: "クリプト関連", en: "Crypto-related" }, previous: 100, price: 101.6, pre: 102.0, path: [100, 100.2, 99.8, 100.6, 100.1, 99.5, 100.8, 100.3, 101.1, 100.4, 99.9, 100.7, 101.6] },
+  { ticker: "RIOT", name: "Riot Platforms", sector: { ja: "クリプト関連", en: "Crypto-related" }, previous: 100, price: 97.8, pre: 98.4, path: [100, 100.2, 99.8, 100.6, 100.1, 99.5, 100.8, 100.3, 101.1, 100.4, 99.9, 100.7, 97.8] },
+  { ticker: "CLSK", name: "CleanSpark", sector: { ja: "クリプト関連", en: "Crypto-related" }, previous: 100, price: 103.1, pre: 102.6, path: [100, 100.2, 99.8, 100.6, 100.1, 99.5, 100.8, 100.3, 101.1, 100.4, 99.9, 100.7, 103.1] },
 ];
 type Session = "regular" | "pre" | "closed";
 const number = (n: number) => n.toFixed(2);
