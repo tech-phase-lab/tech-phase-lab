@@ -264,7 +264,7 @@ class ContentRepairTests(unittest.TestCase):
         with research.connect(path) as db:
             job = db.execute('SELECT * FROM official_research_jobs').fetchone()
             self.assertEqual(job['attempts'], 7)
-            self.assertEqual(job['next_at'], NOW.timestamp() + research.headline_translation.retry_delay(7, 'unsupported-number'))
+            self.assertEqual(job['next_at'], NOW.timestamp() + research.headline_translation.retry_delay(7, 'unsupported-number', frequent=research.OFFICIAL_FREQUENT_RETRIES))
             self.assertEqual(job['failure_kind'], 'unsupported-number')
             self.assertEqual(job['state'], 'retry')
             self.assertEqual(db.execute('SELECT previous_next_at FROM official_research_content_repairs').fetchone()[0], RETRY_AT)
@@ -273,7 +273,7 @@ class ContentRepairTests(unittest.TestCase):
         for name, rows in unchanged.items():
             self.assertEqual(self.rows(path, name), rows, name)
         self.assertIsNone(self.claim(path))
-        ordinary = NOW + timedelta(seconds=research.headline_translation.retry_delay(7, 'unsupported-number'))
+        ordinary = NOW + timedelta(seconds=research.headline_translation.retry_delay(7, 'unsupported-number', frequent=research.OFFICIAL_FREQUENT_RETRIES))
         self.assertIsNotNone(self.claim(path, reference=ordinary))
         self.assertEqual(len(self.rows(path, 'official_research_content_repairs')), 1)
 

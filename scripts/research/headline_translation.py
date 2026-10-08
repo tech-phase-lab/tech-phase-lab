@@ -29,9 +29,10 @@ VALIDATION_FAILURES = frozenset({
 # repeatedly rejected articles cannot use up the shared daily model budget.
 VALIDATION_RETRY_SECONDS = (15, 120)
 VALIDATION_DAILY_RETRY_SECONDS = 86400
+VALIDATION_FREQUENT_RETRY_SECONDS = 6 * 3600
 
 
-def retry_delay(attempts, kind=None):
+def retry_delay(attempts, kind=None, frequent=0):
     """Retry schedule by failure kind; never permanently abandon a job.
 
     Rejected copy: 15 s, 2 min, then once a day. Copy that the checks
@@ -39,6 +40,9 @@ def retry_delay(attempts, kind=None):
     still left the 600-call daily budget exhausted on October 6 with about
     two thirds of calls rejected (staging, all lanes). A changed source
     revision starts a new job at once.
+    ``frequent`` (official company news only, owner Oct 8) retries rejected
+    copy every 6 hours for that many attempts before falling back to daily;
+    the checks themselves are unchanged.
     Provider outage/timeout: 1, 2, 4... minutes, at most 30 minutes.
     Authentication, rate limits and unknown kinds keep the original slow
     schedule (1, 2 minutes, then 1 hour growing to 6 hours).
@@ -50,6 +54,8 @@ def retry_delay(attempts, kind=None):
     if kind and not kind.startswith('provider-'):
         if attempts <= len(VALIDATION_RETRY_SECONDS):
             return VALIDATION_RETRY_SECONDS[attempts - 1]
+        if attempts <= len(VALIDATION_RETRY_SECONDS) + frequent:
+            return VALIDATION_FREQUENT_RETRY_SECONDS
         return VALIDATION_DAILY_RETRY_SECONDS
     return min(60 * 2 ** min(max(attempts - 1, 0), 10), 300) if attempts < FAST_RETRY_ATTEMPTS else min(3600 * 2 ** min(attempts - FAST_RETRY_ATTEMPTS, 3), 21600)
 
