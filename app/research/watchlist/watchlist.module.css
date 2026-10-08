@@ -66,7 +66,7 @@
 .company { display:grid;grid-template-columns:minmax(0,auto) auto;gap:0 12px;align-items:center; }
 .company strong { grid-column:1;grid-row:1;display:block;font-family:ui-rounded,"SF Pro Rounded","Hiragino Maru Gothic ProN",sans-serif;font-size:21px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
 .company small { grid-column:1 / -1;grid-row:2;display:block;color:#8aa7a2;font-size:11px;margin-top:3px;letter-spacing:.04em;line-height:1.4; }
-.sector { grid-column:2;grid-row:1;display:block;max-width:130px;padding:3px 7px;border:1px solid #49635766;border-radius:5px;background:#18312755;color:#9ab8aa;font-size:10px;font-weight:400;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.sector { grid-column:2;grid-row:1;display:block;justify-self:start;width:fit-content;max-width:min(130px,100%);box-sizing:border-box;padding:3px 7px;border:1px solid #49635766;border-radius:5px;background:#18312755;color:#9ab8aa;font-size:10px;font-weight:400;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
 .trend { display:block;position:relative;height:62px;color:#8baba1; }
 .trendHeading { position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:4px;height:16px; }
 .trendHeading small { color:#829f97;font-size:9px; }.trendHeading strong { font-size:15px;font-weight:600;line-height:16px;letter-spacing:-.02em; }
@@ -102,7 +102,7 @@
 }
 
 .controls { display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:6px; }
-.controls .searchPanel { flex:1;min-width:0;margin:0; }
+.controls .searchPanel { flex:0 1 360px;min-width:0;max-width:62%;margin:0; }
 .controls .toolbar { gap:8px;padding:0;flex-shrink:0; }
 .quoteTime { display:block;margin-top:3px;color:#8eaaa0;font-size:9px;font-weight:400;letter-spacing:0; }
 @media(max-width:760px) { .controls { gap:6px; }.controls .toolbar { gap:4px; }.toolbar button { padding-inline:4px; }.quoteTime { font-size:8px; } }
