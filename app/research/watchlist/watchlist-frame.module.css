@@ -1,0 +1,12 @@
+.frame { --watchlist-nav-space:0px; }
+/* Only these two watchlist pages use the compact shell. */
+.frame > div:first-child { padding-bottom:var(--watchlist-nav-space); }
+.frame main { padding-bottom:6px; }
+.cue { position:fixed;left:50%;bottom:calc(var(--watchlist-nav-space) + 8px);transform:translateX(-50%);width:44px;height:44px;z-index:30;pointer-events:none; }
+.cue button { display:grid;place-items:center;width:44px;height:44px;padding:10px;border:1px solid #6caa9677;border-radius:50%;background:#102720ed;color:#a5e3cb;box-shadow:0 4px 16px #0005;backdrop-filter:blur(8px);cursor:pointer;pointer-events:auto; }
+.cue button[hidden] { display:none; }
+.cue button:hover { background:#214637;border-color:#a5e3cb; }
+.cue button:focus-visible { outline:2px solid #9bd9c2;outline-offset:3px; }
+.cue svg { width:22px;height:22px; }
+.frame:has(input:focus,textarea:focus) .cue { visibility:hidden; }
+@media(max-width:760px) { .frame { --watchlist-nav-space:calc(80px + env(safe-area-inset-bottom)); } }

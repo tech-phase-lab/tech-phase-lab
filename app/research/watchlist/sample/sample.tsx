@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import WatchlistFrame from "../watchlist-frame";
 import ResearchToolShell from "../../research-tool-shell";
 import { useResearchLanguage } from "../../use-research-language";
 import AreaChart from "../area-chart";
@@ -61,7 +62,7 @@ export default function WatchlistSample() {
   const visibleSamples = samples.filter(row => !(removed[listIndex] ?? []).includes(row.ticker));
   const remove = (ticker: string) => { setRemoved(current => ({ ...current, [listIndex]: [...(current[listIndex] ?? []), ticker] })); setExpanded(""); };
   const rows = (query.trim() ? searchStocks(visibleSamples, query) : visibleSamples).map(row => quoteFor(row, session)).toSorted((a, b) => order === "gainers" ? b.percent - a.percent : order === "losers" ? a.percent - b.percent : samples.findIndex(s => s.ticker === a.ticker) - samples.findIndex(s => s.ticker === b.ticker));
-  return <ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false} showTools={false}>
+  return <WatchlistFrame lang={lang}><ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false} showTools={false}>
     <div className={styles.page}>
       <header className={styles.heading}>
         <h1>{t("ウォッチリスト", "Watchlist")}</h1>
@@ -74,7 +75,7 @@ export default function WatchlistSample() {
       <div className={styles.controls}><input type="search" value={query} onChange={e => setQuery(e.target.value)} aria-label={t("サンプル銘柄を絞り込み", "Filter sample stocks")} placeholder={t("銘柄を検索", "Find a stock")} /><select aria-label={t("並び順", "Sort order")} value={order} onChange={e => setOrder(e.target.value)}><option value="saved">{t("追加した順", "Date added")}</option><option value="gainers">{t("上昇率順", "Top gainers")}</option><option value="losers">{t("下落率順", "Top losers")}</option></select></div>
       <div className={styles.marketBar}><label><span>{t("表示例", "Preview")}</span><select aria-label={t("取引時間帯の表示例", "Preview market session")} value={session} onChange={e => setSession(e.target.value as Session)}><option value="regular">{t("取引中", "Market open")}</option><option value="pre">{t("プレ", "Pre-market")}</option><option value="closed">{t("前日比", "Daily change")}</option></select></label><span>{t("現在", "Now")} <time dateTime={now?.toISOString()}>{now ? now.toLocaleTimeString("en-GB", { timeZone: "Asia/Tokyo", hour12: false }) : "—"}</time> JST</span></div>
       <div className={styles.columns}><span>{t("銘柄", "Stock")}</span><span>{sessionLabel}</span><span>{t("株価 USD", "Price USD")}</span></div>
-      <ul className={styles.rows}>{rows.map(row => {
+      <ul className={styles.rows} data-watchlist-rows>{rows.map(row => {
         const open = expanded === row.ticker;
         return <li key={row.ticker}>
           <SwipeRow key={`${listIndex}:${row.ticker}`} open={revealed === row.ticker} onOpenChange={open => setRevealed(open ? row.ticker : "")} onRemove={() => remove(row.ticker)} removeLabel={t(`${row.ticker}をこのリストから削除`, `Remove ${row.ticker} from this list`)}>
@@ -91,5 +92,5 @@ export default function WatchlistSample() {
       <p className={styles.dataTime}>{t("データ時刻（架空）", "Data time (simulated)")} {sampleTime} ET · {t("株価のライブ更新なし", "Prices are not live")}</p>
       <div className={styles.attribution}>{t("提供予定：", "Planned data provider: ")}<a href="https://twelvedata.com" target="_blank" rel="noopener noreferrer">Twelve Data</a></div>
     </div>
-  </ResearchToolShell>;
+  </ResearchToolShell></WatchlistFrame>;
 }

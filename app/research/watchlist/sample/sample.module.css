@@ -23,7 +23,7 @@
 .grid { stroke:#7caaa0;stroke-opacity:.17;stroke-width:.5; }.baseline { stroke:currentColor;stroke-opacity:.38;stroke-dasharray:2 4;stroke-width:.7; }
 .price { text-align:right;font-size:27px;letter-spacing:-.03em;font-weight:600; }.price small { display:block;font-size:11px;font-weight:400;letter-spacing:0;margin-top:2px; }.price[data-direction=up] { color:#8bdfb8; }.price[data-direction=down] { color:#ec959e; }
 .detail { padding:14px;background:#101d24;border-radius:10px;margin:0 8px 12px;color:#8bdfb8; }.detail[data-up=false] { color:#ec959e; }.detailHeading,.detailCaption { display:flex;justify-content:space-between;gap:8px;font-size:11px; }.detailHeading strong { font-weight:500;color:#b6c9c0; }.detail .chartFrame { height:160px;margin:12px 0 2px; }.chartTimes { display:flex;justify-content:space-between;padding-left:30px;color:#819c92;font-size:10px;margin:0 0 12px; }.detailCaption { color:#99ada7;font-size:10px; }
-.dataTime { color:#8eaaa0;font-size:10px;text-align:right;margin:10px 0; }
+.dataTime { color:#8eaaa0;font-size:10px;text-align:right;margin:5px 0 0; }
 .page button:focus-visible,.page input:focus-visible,.page select:focus-visible,.page a:focus-visible { outline:2px solid #9bd9c2;outline-offset:3px; }
 .page .controls input:focus { outline:none;outline-offset:0;border-color:#9bd9c2;box-shadow:0 0 0 2px #9bd9c218; }
 @media(max-width:760px) {
@@ -53,5 +53,4 @@
 
 .deleteButton { display:grid;place-items:center;min-width:40px;min-height:40px;padding:8px;background:transparent;border:0;color:#ec959e;cursor:pointer; }.deleteButton svg { width:20px;height:20px; }
 
-.attribution { padding:12px 0;text-align:right;font-size:10px;color:#8fa5aa; }.attribution a { color:#a5c8bb;text-decoration:underline; }
-.rows>li:last-child { border-bottom:0; }
+.attribution { padding:5px 0 0;text-align:right;font-size:10px;color:#8fa5aa; }.attribution a { color:#a5c8bb;text-decoration:underline; }

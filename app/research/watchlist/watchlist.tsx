@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useFavoriteLists } from "./use-favorite-lists";
 import { watchlistSlots, moveFavorite, sortFavorites, type FavoriteQuote } from "@/lib/research/favorite-lists";
 import { useResearchLanguage } from "../use-research-language";
+import WatchlistFrame from "./watchlist-frame";
 import ResearchToolShell from "../research-tool-shell";
 import { TradingViewChart } from "../stocks/tradingview-chart";
 import { favoriteIntradayChart } from "@/lib/research/watchlist-chart";
@@ -111,7 +112,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const sharedSession = sessionView !== "auto" ? sessionView : quoteSessions.length === 1 ? quoteSessions[0] : null;
   const ordered = sortFavorites(favorites, displayedQuotes, sort);
   const monitored = companies.some(item => item.ticker === active);
-  return <ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false} showTools={false}>
+  return <WatchlistFrame lang={lang}><ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false} showTools={false}>
     <div className={styles.page}>
       <header className={styles.heading}>
         <h1>{t("ウォッチリスト", "Watchlist")}</h1>
@@ -154,7 +155,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
         <div className={styles.marketBar}><label><span>{t("表示", "View")}</span><select aria-label={t("取引時間帯の表示", "Market session view")} value={sessionView} onChange={event => { setSessionView(event.target.value as WatchlistSession); setRevealed(""); }}><option value="auto">{t("自動", "Auto")}</option><option value="regular">{t("取引中", "Market open")}</option><option value="pre">{t("プレ", "Pre-market")}</option><option value="closed">{t("前日比", "Daily change")}</option></select></label><span>{t("現在", "Now")} <CurrentTime /> JST</span></div>
         <div className={styles.quoteTable}>
           <div className={styles.tableHead}><span>{t("銘柄", "Stock")}</span><span>{sharedSession ? sessionLabels[sharedSession] : t("値動き", "Change")}</span><span>{t("株価", "Price")}</span></div>
-          <ul className={styles.quoteRows}>{ordered.map((ticker, index) => {
+          <ul className={styles.quoteRows} data-watchlist-rows>{ordered.map((ticker, index) => {
             const item = companies.find(entry => entry.ticker === ticker) ?? known[ticker];
             const sector = (watchlistSector(ticker, item?.sector) ?? fetchedSectors[ticker])?.[lang];
             const sectorSource = !watchlistSector(ticker, item?.sector) && fetchedSectors[ticker] ? `SEC SIC ${fetchedSectors[ticker].sic}: ${fetchedSectors[ticker].description}` : undefined;
@@ -201,5 +202,5 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
       </> : <div className={styles.empty}><span aria-hidden="true" className={styles.emptyStar}>☆</span><h2>{t("いつもの銘柄を、ひとつの画面に。", "Your stocks, together.")}</h2><p>{t("上の検索欄から追加できます", "Add a stock using the search above")}</p></div>}
 
     </div>
-  </ResearchToolShell>;
+  </ResearchToolShell></WatchlistFrame>;
 }
