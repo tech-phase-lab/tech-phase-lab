@@ -232,6 +232,17 @@ class ResearchPersistenceTests(unittest.TestCase):
         with patch.object(persistence.os, "scandir", side_effect=OSError("unavailable")):
             self.assertIsNone(persistence.recover_latest_backup(self.backup_dir, 3600, now=now))
 
+    def test_full_volume_prunes_to_retain_minus_one_before_copying(self):
+        for _ in range(3):
+            persistence.create_backup(self.db_path, self.backup_dir, retain=3)
+        (self.backup_dir / "research-20260101T000000.000000Z.sqlite.tmp").write_bytes(b"partial")
+        full = persistence.shutil.disk_usage(self.backup_dir)._replace(free=0)
+        with patch.object(persistence.shutil, "disk_usage", return_value=full):
+            result = persistence.create_backup(self.db_path, self.backup_dir, retain=3)
+        self.assertEqual(result["backupCount"], 3)
+        self.assertEqual(len(list(self.backup_dir.glob("research-*.sqlite"))), 3)
+        self.assertEqual(list(self.backup_dir.glob("*.tmp")), [])
+
     def test_copy_failure_closes_owned_connections_and_does_not_prune(self):
         handles = []
         connect = sqlite3.connect

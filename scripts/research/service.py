@@ -520,13 +520,28 @@ def backup_failure_kind(exc):
     return "other"
 
 
-def backup_disk(path):
-    """Free and total bytes of the volume holding backups (aggregate only)."""
+def backup_disk(path, database=None):
+    """Volume usage, database and retained-backup sizes (aggregate only)."""
+    result = {"diskFreeBytes": None, "diskTotalBytes": None, "databaseBytes": None,
+              "backupBytes": None, "backupFiles": None}
     try:
         usage = shutil.disk_usage(path if Path(path).exists() else Path(path).parent)
-        return {"diskFreeBytes": usage.free, "diskTotalBytes": usage.total}
+        result.update(diskFreeBytes=usage.free, diskTotalBytes=usage.total)
     except OSError:
-        return {"diskFreeBytes": None, "diskTotalBytes": None}
+        pass
+    if database is not None:
+        try:
+            result["databaseBytes"] = sum(Path(str(database) + suffix).stat().st_size
+                                          for suffix in ("", "-wal", "-shm")
+                                          if Path(str(database) + suffix).is_file())
+        except OSError:
+            pass
+    try:
+        files = [entry for entry in Path(path).iterdir() if entry.is_file() and not entry.is_symlink()]
+        result.update(backupBytes=sum(entry.stat().st_size for entry in files), backupFiles=len(files))
+    except OSError:
+        pass
+    return result
 
 
 class AutomaticMonitor:
@@ -2390,7 +2405,7 @@ class AutomaticMonitor:
             with self.state_lock:
                 self.state["backup"].update({
                     "healthy": False, "lastError": "backup-failed",
-                    "failureKind": backup_failure_kind(exc), **backup_disk(self.backup_dir),
+                    "failureKind": backup_failure_kind(exc), **backup_disk(self.backup_dir, self.db_path),
                 })
             with self.db_lock, monitor.connect(self.db_path) as db:
                 monitor.record_operational_incident(
@@ -2401,7 +2416,7 @@ class AutomaticMonitor:
             self.state["backup"].update({
                 "healthy": True, "lastSuccessAt": result["createdAt"],
                 "backupCount": result["backupCount"], "lastError": None,
-                "failureKind": None, **backup_disk(self.backup_dir),
+                "failureKind": None, **backup_disk(self.backup_dir, self.db_path),
             })
         with self.db_lock, monitor.connect(self.db_path) as db:
             monitor.resolve_operational_incident(db, "backup:database")
