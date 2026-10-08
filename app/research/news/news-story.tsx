@@ -48,6 +48,28 @@ function bodyRestatesTitle(title: string, body: string): boolean {
   return pairs.filter(pair => lead.includes(pair)).length / pairs.length >= 0.7;
 }
 
+/** Opened text that only rewords the headline promises nothing more, so the
+ * story stays a plain headline without a ＋ (owner, Oct 8). */
+function addsInformation(title: string, text: string): boolean {
+  const norm = (value: string) => value.normalize("NFKC").toLocaleLowerCase("en");
+  const head = norm(title), body = norm(text);
+  if ((body.match(/\d+(?:[.,]\d+)*/g) ?? []).some(number => !head.includes(number))) return true;
+  let units: string[], known: (unit: string) => boolean;
+  if (/[぀-ヿ㐀-鿿]/.test(body)) {
+    const content = (value: string) => value.replace(/[぀-ゟ]|[^\p{L}\p{N}.%$]/gu, "");
+    const core = content(body), seen = content(head);
+    units = Array.from({ length: Math.max(core.length - 1, 0) }, (_, index) => core.slice(index, index + 2));
+    known = unit => seen.includes(unit);
+  } else {
+    const STOP = /^(?:that|this|with|from|have|has|been|were|was|will|which|their|they|said|says|also|into|than|about|after|over|more)$/;
+    const words = (value: string) => (value.match(/\p{L}{4,}/gu) ?? []).filter(word => !STOP.test(word)).map(word => word.slice(0, 5));
+    const seen = new Set(words(head));
+    units = words(body);
+    known = unit => seen.has(unit);
+  }
+  return units.length > 0 && units.filter(known).length / units.length < 0.85;
+}
+
 /** A disclosure promises additional information, never a repeated headline.
  * Opened, the detail continues right after the headline and the date moves to
  * the end. A ``concise`` company story instead replaces its headline with the
@@ -61,6 +83,7 @@ export default function NewsStory({ label, title, body, fullBody, publication, l
   // headline replaces it rather than repeating it (owner, Oct 8).
   const replaces = concise || (!!body && bodyRestatesTitle(title, body));
   const opened = withoutFiller(concise ? openedNewsText(fullBody?.trim() ? fullBody : `${title}\n\n${detail}`) : replaces ? openedNewsText(body!, Infinity) : detail);
+  if (!addsInformation(title, opened)) return <div className={styles.shortStory}><span className={styles.tickers}>{label}</span><span className={styles.headline} lang={lang}>{title}</span><span className={styles.note}>{publication}</span></div>;
   return <details className={replaces ? `${styles.story} ${styles.replaces}` : styles.story}>
     <summary><span className={styles.tickers}>{label}</span><span className={replaces ? `${styles.headline} ${styles.closedOnly}` : styles.headline} lang={lang}>{title}</span><span className={`${styles.note} ${styles.closedOnly}`}>{publication}</span><span className={styles.expand} aria-hidden="true">＋</span><span className={styles.srOnly}>{lang === "ja" ? "詳細を開閉" : "Toggle details"}</span></summary>
     <div className={styles.body} lang={lang}>{opened}<span className={styles.note}>{publication}</span></div>
