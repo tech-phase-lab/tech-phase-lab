@@ -268,10 +268,25 @@ class ResearchServiceTests(unittest.TestCase):
                     })
             with patch.object(threading.Thread, 'start', start_worker):
                 app.start()
-            # 17 single workers (including the news refresher and strip titles)
-            # plus one thread per parallel headline translator.
-            self.assertEqual(len(observed), 17 + app.translation_workers)
+            # 18 single workers (including the news refresher, strip titles and
+            # the release watch) plus one thread per parallel headline translator.
+            self.assertEqual(len(observed), 18 + app.translation_workers)
             self.assertTrue(all(observed))
+
+    def test_release_watch_alerts_from_the_public_payload_and_reports_in_health(self):
+        import release_watch
+        at = datetime(2026, 10, 14, 12, 30, tzinfo=timezone.utc)
+        event = {'id': 'cpi-2026-10-14', 'kind': 'economic', 'indicator': 'cpi', 'phase': 'release',
+                 'at': at, 'titleJa': '米国CPI'}
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        with patch.object(release_watch, 'load_schedule', return_value=[event]), \
+                patch.object(app, 'public_news', return_value={'resultBriefs': []}) as news:
+            self.assertEqual(app.release_watch_once(at - timedelta(hours=1)), [])
+            news.assert_not_called()  # Outside a watch window the feed is not rebuilt.
+            alerts = app.release_watch_once(at + timedelta(minutes=3), transport=lambda *_: 201)
+            self.assertEqual([alert['kind'] for alert in alerts], ['missing'])
+            state = app.public_state()
+        self.assertEqual(state['releaseWatch']['recentAlerts'][0]['event'], 'cpi-2026-10-14')
 
     def test_monitor_recovers_after_an_unexpected_worker_exception(self):
         with tempfile.TemporaryDirectory() as folder:
