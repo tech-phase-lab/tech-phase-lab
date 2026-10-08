@@ -30,8 +30,16 @@ class PublicNewsTransactionTests(unittest.TestCase):
                 except sqlite3.OperationalError as exc:status=str(exc)
             observations.append((transaction,status))
             return original(db,reference,**kwargs)
+        from datetime import datetime
+        class FixtureClock(datetime):
+            # Pin the projection clock to the fixture so its 7-day window does
+            # not expire as the calendar moves on.
+            @classmethod
+            def now(cls, tz=None):
+                return fixture.NOW
         for _ in range(2):
-            with patch.object(general_source_news,'public_items',side_effect=project):
+            with patch.object(general_source_news,'public_items',side_effect=project), \
+                    patch.object(service,'datetime',FixtureClock):
                 result=app.public_news()
             self.assertEqual(len(result['officialUpdates']),1)
             self.assertEqual(result['officialUpdates'][0]['url'],fixture.URL)

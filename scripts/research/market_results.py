@@ -183,6 +183,12 @@ def projection(text, tickers):
         return economic_projection(text)
     if len(tickers) != 1 or not re.search(r'earnings|results|highlights|決算', text, re.I):
         return None
+    # The post must be about this company: its first cashtag is the ticker.
+    # A partner's or customer's results that only name NVIDIA must never become
+    # an NVDA earnings flash ("NVDA Q1 2027: revenue $116.29M", Oct 8).
+    cashtags = re.findall(r'(?<![\w$])\$([A-Z]{1,5}(?:\.[A-Z])?)(?![\w.])', text)
+    if not cashtags or cashtags[0] != tickers[0]:
+        return None
     period = re.search(r'(?:(?:FY)?\s*(20\d{2})\s*)?Q([1-4])(?:\s*(?:FY)?\s*(20\d{2}))?', text, re.I)
     if not period:
         return None
