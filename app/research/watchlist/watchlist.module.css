@@ -82,6 +82,7 @@
 .dataTime { color:#8eaaa0;font-size:10px;margin:8px 0; }
 .attribution { padding:5px 0 0;text-align:right;font-size:10px;color:#8fa5aa; }.attribution a { color:#a5c8bb;text-decoration:underline; }
 .page select:focus-visible,.page input:focus-visible { outline:2px solid #9bd9c2;outline-offset:3px; }
+.page .listPicker select:focus { outline:none;outline-offset:0;box-shadow:none;background-image:linear-gradient(#9bd9c2,#9bd9c2);background-size:100% 1px;background-position:center calc(50% + .8em);background-repeat:no-repeat; }
 .page button:disabled { cursor:default;opacity:.4; }
 @media(max-width:760px) {
  .heading { gap:6px; }.heading h1 { font-size:clamp(19px,5.4vw,23px); }
