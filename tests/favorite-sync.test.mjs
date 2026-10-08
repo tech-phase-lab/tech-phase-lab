@@ -9,7 +9,8 @@ const deferred=()=>{let resolve;const promise=new Promise(r=>{resolve=r;});retur
 const tick=()=>new Promise(r=>setImmediate(r));
 const add=ticker=>doc=>({...doc,lists:doc.lists.map(l=>({...l,tickers:[...l.tickers,ticker]}))});
 const deviceOnly={lists:[{id:'default',name:'',tickers:['ALAB']}],names:{},alerts:[]};
-function harness(transport){let latest;const sync=createFavoriteSync(transport,(cloud,status)=>{latest={cloud,status};});return {sync,get latest(){return latest;}};}
+function harness(transport,journal){let latest;const sync=createFavoriteSync(transport,(cloud,status)=>{latest={cloud,status};},journal);return {sync,get latest(){return latest;}};}
+function memoryJournal(){const entries=new Map();return {load:key=>entries.get(key)??null,save:(key,value)=>entries.set(key,value),clear:key=>entries.delete(key)};}
 
 test('slow initial account lookup never flashes device-only favorites',async()=>{
  const read=deferred();const h=harness(()=>read.promise);
@@ -86,4 +87,54 @@ test('disposed mounts ignore late responses and do not flush queued edits',async
 test('unauthenticated storage is guest-only and malformed successful replies stay unverified',async()=>{
  const guest=harness(async()=>reply(401,{ok:false}));await guest.sync.refresh();assert.equal(guest.latest.status,'guest');assert.equal(guest.sync.update(add('ANET')),false);
  const bad=harness(async()=>reply(200,{ok:true,account,revision:'1',document}));await bad.sync.refresh();assert.equal(bad.latest.status,'error');assert.equal(bad.latest.cloud,null);
+});
+
+test('navigation restores all queued edits after the old mount commits only its first save',async()=>{
+ const journal=memoryJournal(), first=deferred();let remote=state(1);const writes=[];
+ const transport=async init=>{if(!init)return reply(200,remote);const sent=JSON.parse(init.body);writes.push(sent);if(writes.length===1)return first.promise;assert.equal(sent.revision,remote.revision);remote=state(sent.revision+1,sent.document);return reply(200,remote);};
+ const old=harness(transport,journal);await old.sync.refresh();old.sync.update(add('AAPL'));old.sync.update(add('ANET'));old.sync.dispose();
+ remote=state(2,writes[0].document);first.resolve(reply(200,remote));await tick();
+ const next=harness(transport,journal);await next.sync.refresh();await tick();
+ assert.deepEqual(remote.document.lists[0].tickers,['MU','AAPL','ANET']);
+ assert.equal(next.latest.status,'synced');assert.equal(writes.length,2);assert.equal(journal.load(account),null);
+});
+
+test('failed saves survive navigation and resume only after account verification',async()=>{
+ const journal=memoryJournal();const old=harness(async init=>init?reply(503,{ok:false}):reply(200,state(1)),journal);
+ await old.sync.refresh();old.sync.update(add('AAPL'));await tick();old.sync.dispose();
+ const read=deferred();let writes=0;
+ const next=harness(async init=>{if(!init)return read.promise;writes++;const sent=JSON.parse(init.body);return reply(200,state(2,sent.document));},journal);
+ const loading=next.sync.refresh();assert.equal(writes,0);assert.equal(next.latest,undefined);
+ read.resolve(reply(200,state(1)));await loading;await tick();
+ assert.equal(writes,1);assert.deepEqual(next.latest.cloud.document.lists[0].tickers,['MU','AAPL']);assert.equal(journal.load(account),null);
+});
+
+test('saved response lost during navigation does not send the same edit again',async()=>{
+ const journal=memoryJournal();let remote=state(1),writes=0;
+ const transport=async init=>{if(!init)return reply(200,remote);writes++;const sent=JSON.parse(init.body);remote=state(2,sent.document);throw Error('response lost');};
+ const old=harness(transport,journal);await old.sync.refresh();old.sync.update(add('AAPL'));await tick();old.sync.dispose();
+ const next=harness(transport,journal);await next.sync.refresh();
+ assert.equal(next.latest.status,'synced');assert.equal(writes,1);assert.equal(journal.load(account),null);
+});
+
+test('restored edits never overwrite a different device or another account',async()=>{
+ const journal=memoryJournal();const queued=state(1,add('AAPL')(document));journal.save(account,JSON.stringify({cloud:queued,sent:null}));let writes=0;
+ const conflict=harness(async init=>{if(init)writes++;return reply(200,state(2,add('TSM')(document)));},journal);
+ await conflict.sync.refresh();assert.equal(conflict.latest.status,'conflict');assert.equal(writes,0);assert.deepEqual(conflict.latest.cloud.document,queued.document);assert.ok(journal.load(account));
+ const other='b'.repeat(64);const switched=harness(async init=>{if(init)writes++;return reply(200,{...state(1),account:other});},journal);
+ await switched.sync.refresh();assert.equal(switched.latest.cloud.account,other);assert.deepEqual(switched.latest.cloud.document,document);assert.equal(writes,0);assert.ok(journal.load(account));
+});
+
+test('unavailable tab storage rejects an edit instead of showing an unsaved success',async()=>{
+ let writes=0;const journal={load:()=>null,save:()=>{throw Error('quota');},clear:()=>{}};
+ const h=harness(async init=>{if(init)writes++;return reply(200,state(1));},journal);await h.sync.refresh();
+ assert.equal(h.sync.update(add('AAPL')),false);assert.equal(h.latest.status,'error');assert.deepEqual(h.latest.cloud.document,document);assert.equal(writes,0);
+});
+
+test('only explicit conflict recovery discards the pending draft and loads the saved list',async()=>{
+ const journal=memoryJournal(),remote=state(3,add('TSM')(document));
+ journal.save(account,JSON.stringify({cloud:state(1,add('AAPL')(document)),sent:null}));let writes=0;
+ const h=harness(async init=>{if(init)writes++;return reply(200,remote);},journal);
+ await h.sync.refresh();assert.equal(h.latest.status,'conflict');await h.sync.retry();assert.ok(journal.load(account));
+ await h.sync.discardPending();assert.equal(h.latest.status,'synced');assert.deepEqual(h.latest.cloud.document,remote.document);assert.equal(journal.load(account),null);assert.equal(writes,0);
 });

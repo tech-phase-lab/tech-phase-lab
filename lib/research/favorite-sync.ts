@@ -4,6 +4,11 @@ export type CloudFavorites = { account: string; revision: number; document: Favo
 export type FavoriteSyncStatus = 'loading' | 'guest' | 'synced' | 'saving' | 'error' | 'conflict';
 type Reply = { ok: boolean; status: number; json: () => Promise<Record<string, unknown>> };
 type Transport = (init?: { body: string }) => Promise<Reply>;
+export type FavoriteSyncJournal = {
+  load: (account: string) => string | null;
+  save: (account: string, value: string) => void;
+  clear: (account: string) => void;
+};
 const empty: FavoriteLists = { lists: [{ id: 'default', name: '', tickers: [] }], names: {}, alerts: [] };
 
 /** Never substitute device-only favorites while the account is still unknown. */
@@ -28,12 +33,14 @@ function sameDocument(a: FavoriteLists, b: FavoriteLists) {
 }
 
 /** Serializes edits and rejects stale reads. Each mount owns one disposable instance. */
-export function createFavoriteSync(transport: Transport, notify: (cloud: CloudFavorites | null, status: FavoriteSyncStatus) => void) {
+export function createFavoriteSync(transport: Transport, notify: (cloud: CloudFavorites | null, status: FavoriteSyncStatus) => void, journal?: FavoriteSyncJournal) {
   let cloud: CloudFavorites | null = null;
+  let sentSnapshot: CloudFavorites | null = null;
   let status: FavoriteSyncStatus = 'loading';
   let pending = false, writing = false, reading = false, disposed = false;
   let generation = 0;
   const publish = (next: FavoriteSyncStatus) => { status = next; if (!disposed) notify(cloud, status); };
+  const remember = (next: CloudFavorites, sent = sentSnapshot) => journal?.save(next.account, JSON.stringify({ cloud: next, sent }));
   async function refresh() {
     if (disposed || reading || pending || writing) return;
     reading = true;
@@ -46,7 +53,25 @@ export function createFavoriteSync(transport: Transport, notify: (cloud: CloudFa
       if (!response.ok || !data.ok) throw new Error('read-failed');
       const next = snapshot(data);
       if (cloud?.account === next.account && cloud.revision > next.revision) return;
-      cloud = next; publish('synced');
+      const raw = journal?.load(next.account);
+      if (raw) {
+        const saved = JSON.parse(raw);
+        const queued = snapshot(saved.cloud);
+        const sent = saved.sent ? snapshot(saved.sent) : null;
+        if (queued.account !== next.account || (sent && sent.account !== next.account)) throw new Error('invalid-journal-account');
+        if (sameDocument(next.document, queued.document) && next.revision >= queued.revision) {
+          journal?.clear(next.account);
+        } else {
+          cloud = queued; pending = true; sentSnapshot = sent;
+          // A previous mount may have committed its in-flight save but lost the
+          // response. Continue queued edits only when that exact save is visible.
+          const recovered = sent && sent.revision === queued.revision && next.revision > sent.revision && sameDocument(next.document, sent.document);
+          if (next.revision !== queued.revision && !recovered) { publish('conflict'); return; }
+          cloud = { ...queued, revision: next.revision };
+          remember(cloud); publish('saving'); void flush(); return;
+        }
+      }
+      cloud = next; sentSnapshot = null; publish('synced');
     } catch { if (!disposed && started === generation) publish('error'); }
     finally { reading = false; }
   }
@@ -56,6 +81,7 @@ export function createFavoriteSync(transport: Transport, notify: (cloud: CloudFa
     try {
       while (!disposed && pending && cloud) {
         const sent: CloudFavorites = cloud;
+        remember(cloud, sent); sentSnapshot = sent;
         const response = await transport({ body: JSON.stringify(sent) });
         const data = await response.json();
         if (disposed) return;
@@ -75,6 +101,8 @@ export function createFavoriteSync(transport: Transport, notify: (cloud: CloudFa
           pending = cloud.document !== sent.document;
           cloud = { ...cloud, revision: saved.revision };
         }
+        sentSnapshot = null;
+        if (pending) remember(cloud); else journal?.clear(cloud.account);
         publish(pending ? 'saving' : 'synced');
       }
     } catch { if (!disposed) publish('error'); }
@@ -82,12 +110,20 @@ export function createFavoriteSync(transport: Transport, notify: (cloud: CloudFa
   }
   function update(change: (current: FavoriteLists) => FavoriteLists) {
     if (disposed || !cloud || status === 'conflict') return false;
-    cloud = { ...cloud, document: change(cloud.document) };
+    const next = { ...cloud, document: change(cloud.document) };
+    try { remember(next); } catch { publish('error'); return false; }
+    cloud = next;
     generation++; pending = true;
     publish('saving'); void flush(); return true;
   }
+  async function discardPending() {
+    if (disposed || writing || status !== 'conflict' || !cloud) return;
+    try { journal?.clear(cloud.account); } catch { return; }
+    pending = false; sentSnapshot = null; cloud = null; generation++;
+    publish('loading'); await refresh();
+  }
   return {
-    refresh, update,
+    refresh, update, discardPending,
     retry: () => pending ? flush() : refresh(),
     hasPending: () => pending,
     dispose: () => { disposed = true; generation++; },

@@ -34,7 +34,7 @@ function CurrentTime() {
 
 export default function Watchlist({ companies, quotes = {} }: { companies: Company[]; quotes?: Record<string, FavoriteQuote> }) {
   const [lang, setLang] = useResearchLanguage();
-  const { lists, names, alerts = [], update, error, status, retry, canImport, importLocal, editable, ready } = useFavoriteLists();
+  const { lists, names, alerts = [], update, error, status, retry, discardPending, canImport, importLocal, editable, ready } = useFavoriteLists();
   const [alertTicker, setAlertTicker] = useState("");
   const [alertPrice, setAlertPrice] = useState("");
   const [alertDirection, setAlertDirection] = useState<"above" | "below">("above");
@@ -145,8 +145,9 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
       </div>
       <span className={styles.srOnly} role="status">{status === "saving" ? t("保存中…", "Saving…") : status === "loading" ? t("保存先を確認中…", "Checking sync…") : status === "synced" ? t("保存しました", "Saved") : ""}</span>
       {(status === "error" || status === "conflict") && <div className={styles.syncNotice} role="alert">
-        <span>{status === "conflict" ? t("別の端末で更新されています。変更内容を控えてから再読み込みしてください。", "Updated on another device. Keep a copy of your edits before reloading.") : t("同期できていません", "Not synced")}</span>
+        <span>{status === "conflict" ? t("保存先の内容が変わったため、未保存の変更を保留しています。", "Your saved list changed. Unsaved edits are on hold.") : t("同期できていません", "Not synced")}</span>
         {status === "error" && <button onClick={retry}>{t("再試行", "Retry")}</button>}
+        {status === "conflict" && <button onClick={() => { if (window.confirm(t("この端末の未保存の変更を取り消し、保存済みの内容に戻しますか？", "Discard this tab’s unsaved edits and load the saved list?"))) discardPending(); }}>{t("保存済みの内容に戻す", "Use saved list")}</button>}
       </div>}
       {canImport && <div className={styles.syncNotice}><button onClick={importLocal}>{t("この端末のお気に入りを取り込む", "Import this device’s favorites")}</button></div>}
       {error && <p role="alert" className={styles.error}>{t("保存できませんでした。ブラウザーの保存設定をご確認ください。", "Could not save. Check your browser storage settings.")}</p>}
