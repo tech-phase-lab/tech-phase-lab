@@ -148,6 +148,9 @@ class ResultTests(unittest.TestCase):
         # Another company's results that only name the monitored company are not its flash.
         self.assertIsNone(results.projection('NVIDIA partner $ACME Q1 2027 earnings Revenue: $116.29M; EPS $0.12',['NVDA']))
         self.assertIsNone(results.projection('NVIDIA Q1 2027 earnings Revenue: $116.29M',['NVDA']))
+        self.assertIsNone(results.projection('$NVDA supplier $ACME Q1 2027 earnings Revenue: $116.29M; EPS $0.12',['NVDA']))
+        self.assertIsNone(results.projection('Q1 2027 earnings from a partner: Revenue $116.29M. Thanks $NVDA',['NVDA']))
+        self.assertIsNone(results.projection('Revenue $116.29M. $NVDA Q1 2027 earnings',['NVDA']))
         self.assertIsNone(results.projection('$MU Q4 earnings Revenue: $54',['MU']))
 
     def test_estimates_do_not_replace_actuals_and_other_fields_still_publish(self):
