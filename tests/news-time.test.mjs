@@ -26,3 +26,19 @@ test('U.S. Eastern time follows daylight saving and is omitted for date-only ite
   assert.equal(usEasternTime('2026-12-05T17:14:00Z','published'),'12/5 12:14 ET');
   assert.equal(usEasternTime('2026-10-05','date'),null);
 });
+
+test('an old X post fetched again keeps its real posting time and leaves the top strip',async()=>{
+  const { xPostedAt }=await import('../lib/research/news-time.ts');
+  const { freshPulseItems }=await import('../lib/research/news-pulse-items.ts');
+  // NBIS Platinum: posted Sep 23, resurfaced on Oct 8 with a fetch-time stamp.
+  const url='https://x.com/nebiusai/status/2102879043238396244';
+  assert.equal(new Date(xPostedAt(url)).toISOString(),'2026-09-23T21:53:28.168Z');
+  const refetched={...update,url,publishedAt:'2026-10-08T16:20:00.000Z',observedAt:'2026-10-08T16:20:00.000Z'};
+  assert.deepEqual(officialTime(refetched),{at:'2026-09-23T21:53:28.168Z',kind:'published'});
+  assert.equal(officialTime({...update,url,publishedAt:'2026-09-23T21:53:30.000Z'}).at,'2026-09-23T21:53:30.000Z');
+  assert.equal(xPostedAt('https://x.com/nebiusai/status/1'),null);
+  const now=Date.parse('2026-10-08T16:30:00Z');
+  const rows=[{id:'old',...officialTime(refetched)},{id:'seen',at:'2026-10-08T16:00:00Z',kind:'observed'},
+    {id:'new',at:'2026-10-08T12:00:00Z',kind:'published'},{id:'day',at:'2026-10-06',kind:'date'},{id:'stale',at:'2026-10-05T10:00:00Z',kind:'published'}];
+  assert.deepEqual(freshPulseItems(rows,now).map(row=>row.id),['new','day']);
+});

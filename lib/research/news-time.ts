@@ -1,5 +1,16 @@
 import type { OfficialUpdate } from './general-news';
+/** An X post ID carries the moment it was posted. Re-fetching an old post
+ * must never make it look new (NBIS Platinum, posted Sep 23, resurfaced Oct 8). */
+export function xPostedAt(url: string) {
+  const id = /^https:\/\/(?:x|twitter)\.com\/[^/]+\/status\/(\d{15,20})/.exec(url)?.[1];
+  if (!id) return null;
+  const at = Number(BigInt(id) >> BigInt(22)) + 1288834974657;
+  return at > Date.UTC(2020, 0, 1) ? at : null;
+}
 export function officialTime(item: OfficialUpdate) {
+  const posted = xPostedAt(item.url);
+  const stated = Date.parse(item.publishedAt ?? item.publishedOn ?? item.observedAt);
+  if (posted !== null && !(stated <= posted + 6 * 3_600_000)) return { at: new Date(posted).toISOString(), kind: 'published' as const };
   if (item.publishedAt) return { at: item.publishedAt, kind: 'published' as const };
   if (item.publishedOn) return { at: item.publishedOn, kind: 'date' as const };
   return { at: item.observedAt, kind: 'observed' as const };

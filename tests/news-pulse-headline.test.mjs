@@ -119,7 +119,7 @@ test('the Japanese strip skips items still awaiting their reviewed translation',
 });
 
 test('the checked one-line strip title is preferred over the long headline',()=>{
-  const item={...oracle,id:'3001',publisher:'Nebius',tickers:['NBIS'],title:'Nebius signs a multi-year agreement to supply AI infrastructure capacity to Microsoft in New Jersey',translationJa:'ネビウス、ニュージャージー州でマイクロソフトにAIインフラ容量を供給する複数年契約を締結',publishedAt:'2026-10-06T00:00:00.000Z',pulseTitleJa:'ネビウス、MSとAI基盤の複数年契約',pulseTitleEn:'Nebius signs multi-year AI deal with Microsoft'};
+  const item={...oracle,id:'3001',url:'https://nebius.com/newsroom/microsoft-agreement',publisher:'Nebius',tickers:['NBIS'],title:'Nebius signs a multi-year agreement to supply AI infrastructure capacity to Microsoft in New Jersey',translationJa:'ネビウス、ニュージャージー州でマイクロソフトにAIインフラ容量を供給する複数年契約を締結',publishedAt:'2026-10-06T00:00:00.000Z',pulseTitleJa:'ネビウス、MSとAI基盤の複数年契約',pulseTitleEn:'Nebius signs multi-year AI deal with Microsoft'};
   const [ja]=newsPulseItems({...feed,officialUpdates:[item]},'ja'),[en]=newsPulseItems({...feed,officialUpdates:[item]},'en');
   assert.equal(ja.headlines[0],'ネビウス、MSとAI基盤の複数年契約');
   assert.equal(en.headlines[0],'Nebius signs multi-year AI deal with Microsoft');

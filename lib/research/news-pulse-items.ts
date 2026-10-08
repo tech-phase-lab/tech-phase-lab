@@ -8,6 +8,16 @@ import { officialPulseHeadlines, marketPulseHeadlines, generalPulseHeadlines } f
 
 const JAPANESE = /[\u3040-\u30ff\u3400-\u9fff]/;
 
+/** The strip shows news only: an item without a confirmed publication time,
+ * or one published more than three days ago, stays out (owner, Oct 8). */
+export const PULSE_MAX_AGE_MS = 72 * 3_600_000;
+export function freshPulseItems<T extends { at: string; kind: string }>(items: T[], now: number) {
+  return items.filter(item => {
+    const age = now - Date.parse(item.kind === "date" ? `${item.at}T23:59:59Z` : item.at);
+    return item.kind !== "observed" && Number.isFinite(age) && age < PULSE_MAX_AGE_MS;
+  });
+}
+
 /** Use the published feed shared with the home news list, including market updates. */
 export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language) {
   const ja = lang === "ja";
