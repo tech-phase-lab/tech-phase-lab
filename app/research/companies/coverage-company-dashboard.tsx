@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import MembershipLabel from "../membership-label";
-import HeaderPro from "../header-pro";
-import HomeLink from "../home-link";
+import SiteHeader from "../site-header";
 import { sectorNamesEn, type CoverageCompany } from "@/lib/research/intake";
 import { verifiedChangeByTicker, type VerifiedChangeMetric } from "@/lib/research/verified-changes";
 import { useResearchLanguage } from "../use-research-language";
@@ -39,11 +37,7 @@ export default function CoverageCompanyDashboard({ company, companies, generated
 
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#coverage-main">{t("本文へ移動", "Skip to content")}</a>
-    <header className={base.header}>
-      <Link href="/research" className={base.brand} aria-label="Tech Phase Research"><span className={base.logoMark} aria-hidden="true" /><span>TECH PHASE<MembershipLabel /></span></Link>
-      <nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research#what-changed" aria-current="page">{t("何が変わった？", "What changed?")}</Link><Link href="/research/stocks">{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics">{t("決算・指標", "Financials")}</Link></nav>
-      <div className={base.headerRight}><span className={base.edition}>COMPANY WATCH <span>{companies.length}</span></span><HomeLink lang={lang} /><div className={base.languages} aria-label={t("言語", "Language")}><button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button><button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button></div><HeaderPro /></div>
-    </header>
+    <SiteHeader lang={lang} setLang={setLang} nav={<nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research#what-changed" aria-current="page">{t("何が変わった？", "What changed?")}</Link><Link href="/research/stocks">{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics">{t("決算・指標", "Financials")}</Link></nav>} />
     <main id="coverage-main" className={styles.main}>
       <CompanySwitcher ticker={company.ticker} companies={companies} lang={lang} />
       <aside className={styles.snapshot}><strong>{t("保存した取得記録", "SAVED INTAKE SNAPSHOT")}</strong><span>{t("出力日時", "Generated")}: {time(generatedAt, lang)} JST</span><p>{t("このページは保存時点の記録で、自動更新されません。現在の監視状況は取得状況画面で確認できます。", "This page is a saved snapshot and does not update automatically. Check the intake page for current monitoring status.")} <Link href="/research/intake">{t("取得状況を見る →", "View intake status →")}</Link></p></aside>

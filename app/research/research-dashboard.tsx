@@ -6,10 +6,7 @@ import CompanyDirectory from "./companies/company-directory";
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
-import MembershipLabel from "./membership-label";
-import HeaderPro from "./header-pro";
-import HomeLink from "./home-link";
-import PageRefresh from "./page-refresh";
+import SiteHeader from "./site-header";
 import type { Language, ResearchEvent } from "@/lib/research/data";
 import { metricNames } from "@/lib/research/data";
 import { compareMetrics } from "@/lib/research/quality";
@@ -137,25 +134,14 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
 
   return <div className={styles.app} lang={lang}>
     <a className={styles.skip} href="#research-main">{t("本文へ移動", "Skip to content")}</a>
-    <header className={styles.header}>
-      <div className={styles.brandGroup}><Link href="/research" className={styles.brand} aria-label="Tech Phase Research">
-        <span className={styles.logoMark} aria-hidden="true" /><span><span className={styles.brandText}>TECH PHASE</span><MembershipLabel /></span>
-      </Link></div>
-      <nav className={`${styles.primaryNav} ${tab === "companies" ? styles.companyNav : ""}`} aria-label={t("メインメニュー", "Main navigation")}>
+    <SiteHeader lang={lang} setLang={setLang} nav={<nav className={`${styles.primaryNav} ${tab === "companies" ? styles.companyNav : ""}`} aria-label={t("メインメニュー", "Main navigation")}>
         <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}><NavigationIcon name="changes" /><span>{t("何が変わった？", "What changed?")}</span></button>
         <Link href="/research/stocks"><NavigationIcon name="search" /><span>{t("米国株を探す", "Find stocks")}</span></Link>
         <button aria-current={tab === "companies" ? "page" : undefined} onClick={() => openView("companies")}><NavigationIcon name="companies" /><span>{t("監視22銘柄リスト", "22-stock watch list")}</span></button>
         <button aria-current={tab === "metrics" ? "page" : undefined} onClick={() => openView("metrics")}><NavigationIcon name="metrics" /><span>{t("決算・指標", "Financials")}</span></button>
         <button aria-current={tab === "saved" ? "page" : undefined} onClick={() => openView("saved")}><NavigationIcon name="saved" /><span>{t("保存", "Saved")}</span><small>{saved.filter((id) => events.some((event) => event.id === id)).length}</small></button>
 
-      </nav>
-      <div className={styles.headerRight}>
-        <HomeLink lang={lang} /><PageRefresh lang={lang} /><div className={styles.languages} aria-label={t("言語", "Language")}>
-          <button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button>
-          <button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button>
-        </div>
-      <HeaderPro /></div>
-    </header>
+      </nav>} />
 
     <div className={styles.shell}>
       <aside className={styles.sidebar}>
