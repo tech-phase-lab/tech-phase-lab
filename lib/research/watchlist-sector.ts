@@ -5,8 +5,11 @@ const label = (ja: string, en: string): SectorLabel => ({ ja, en });
 // docs/WATCHLIST-SECTORS-2026-10-08.md. Never mutate the news registry here.
 const themes: Record<string, SectorLabel> = {
   AEHR: label("半導体検査装置", "Semiconductor test equipment"),
-  MSTR: label("クリプト", "Crypto"),
-  CAN: label("クリプト", "Crypto"),
+  MSTR: label("クリプト関連", "Crypto-related"),
+  CAN: label("クリプト関連", "Crypto-related"),
+  COIN: label("クリプト関連", "Crypto-related"),
+  HUT: label("クリプト関連", "Crypto-related"),
+  CRCL: label("クリプト関連", "Crypto-related"),
   ALAB: label("ネットワーク", "Networking"),
   APH: label("ネットワーク", "Networking"),
   AAOI: label("光・フォトニクス", "Optics & Photonics"),

@@ -18,6 +18,7 @@ const samples = [
   { ticker: "MU", name: "Micron", sector: { ja: "メモリ", en: "Memory" }, previous: 200, price: 204.2, pre: 205.63, path: [200, 200.3, 199.7, 200.1, 200.65, 201.1, 200.85, 200.6, 201.25, 200.95, 201.9, 201.6, 202.1, 202.7, 202.3, 202.1, 202.55, 202.85, 202.6, 203.2, 203.6, 203.25, 203.85, 204.4, 204.05, 204.2] },
   { ticker: "APH", name: "Amphenol", sector: { ja: "ネットワーク", en: "Networking" }, previous: 100, price: 101.5, pre: 101.1, path: [100, 100.3, 100.1, 99.8, 100.1, 100.5, 100.2, 100.8, 101.1, 100.7, 100.9, 101.4, 101.2, 101.6, 101.3, 101.5] },
   { ticker: "AAOI", name: "Applied Optoelectronics", sector: { ja: "光・フォトニクス", en: "Optics & Photonics" }, previous: 80, price: 79.2, pre: 79.7, path: [80, 80.4, 80.1, 79.7, 80.2, 79.8, 79.3, 79.6, 79.1, 79.4, 78.9, 79.3, 79.6, 79.2] },
+  { ticker: "COIN", name: "Coinbase", sector: { ja: "クリプト関連", en: "Crypto-related" }, previous: 100, price: 101.2, pre: 100.6, path: [100, 99.7, 100.2, 100.5, 100.1, 99.9, 100.4, 100.8, 100.3, 100.7, 101.3, 100.9, 101.5, 101.2] },
 ];
 type Session = "regular" | "pre" | "closed";
 const number = (n: number) => n.toFixed(2);

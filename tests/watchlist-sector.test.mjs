@@ -29,7 +29,7 @@ test("reviewed investment themes override coarse registry sectors after reload",
   const broad = { ja: "半導体", en: "Semiconductors" };
   assert.equal(watchlistSector("APH")?.ja, "ネットワーク");
   assert.deepEqual(watchlistSector("AEHR"), { ja: "半導体検査装置", en: "Semiconductor test equipment" });
-  for (const ticker of ["MSTR", "CAN"]) assert.deepEqual(watchlistSector(ticker), { ja: "クリプト", en: "Crypto" });
+  for (const ticker of ["MSTR", "CAN", "COIN", "HUT", "CRCL"]) assert.deepEqual(watchlistSector(ticker), { ja: "クリプト関連", en: "Crypto-related" });
   for (const ticker of ["AAOI", "LITE", "COHR", "POET"]) assert.equal(watchlistSector(ticker)?.ja, "光・フォトニクス");
   for (const ticker of ["MU", "SKHY", "SNDK"]) assert.equal(watchlistSector(ticker, broad)?.ja, "メモリ");
   for (const ticker of ["ASML", "AMAT"]) assert.equal(watchlistSector(ticker, broad)?.ja, "半導体製造装置");

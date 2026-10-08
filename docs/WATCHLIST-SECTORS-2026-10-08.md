@@ -91,3 +91,10 @@ SIC fallback:
 - MSTR and CAN: クリプト / Crypto. Strategy is a Bitcoin treasury company; Canaan supplies Bitcoin mining systems and operates mining activities.
 - These labels are watchlist investment themes, not a change to the official SIC or news/monitoring registry.
 - Sources: https://www.aehr.com/2026/07/aehr-receives-follow-on-production-order-from-lead-silicon-photonics-customer-for-fully-automated-fox-xp-wafer-level-burn-in-system/ ; https://www.strategy.com/investor-relations ; https://canaan.gcs-web.com/
+
+### Crypto-related label expansion
+
+- User-approved label: クリプト関連 / Crypto-related, covering MSTR, CAN, COIN, HUT and CRCL.
+- COIN provides crypto trading/custody infrastructure; HUT includes Bitcoin mining and related infrastructure alongside other compute/energy businesses; CRCL issues stablecoins through regulated affiliates. These are investment themes, not claims that crypto is each issuer's only business.
+- A fictional COIN fixture was added to the isolated sample page.
+- Sources: https://help.coinbase.com/en/coinbase/getting-started/getting-started-with-coinbase/what-is-coinbase ; https://www.hut8.com/compute ; https://investor.circle.com/overview/
