@@ -2935,6 +2935,14 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertCountEqual(state["health"]["issues"], ["monitor-stale", "backup-failed"])
         self.assertEqual(state["incidents"]["open"], 2)
         self.assertNotIn("private path", json.dumps(state))
+        self.assertEqual(state["backup"]["failureKind"], "os-error")
+        self.assertIsInstance(state["backup"]["diskFreeBytes"], int)
+        import errno
+        with patch.object(persistence, "create_backup", side_effect=OSError(errno.ENOSPC, "No space left on /secret-volume/db")):
+            self.assertFalse(app.perform_backup())
+        state = app.public_state()
+        self.assertEqual(state["backup"]["failureKind"], "no-space")
+        self.assertNotIn("secret-volume", json.dumps(state))
 
     def test_public_health_reads_do_not_create_or_repeat_incidents(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
