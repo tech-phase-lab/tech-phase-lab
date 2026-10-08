@@ -40,7 +40,7 @@ test("header label follows the plan in both languages; signed-out reads FREE", a
   assert.match(header, /className=\{`\$\{styles\.ring\}/);
   assert.match(header, /aria-label=\{ja \? "PROを見る" : "See PRO"\}/);
   // Order on the right: JA/EN, plan button, menu.
-  assert.ok(header.indexOf(">JA</button>") < header.indexOf("styles.ring") && header.indexOf("styles.pro}") < header.indexOf("styles.ico}"));
+  assert.ok(header.indexOf(">JA</button>") < header.indexOf("styles.ring") && header.indexOf("styles.pro}") < header.indexOf("aria-controls=\"site-menu\""));
   const css = read("app/research/site-header.module.css");
   // The ring only glows softly; the arrow turns once when pressed (no orbit or countdown).
   assert.match(css, /\.spinOnce > svg:last-child \{ animation:spin \.7s cubic-bezier\(\.4,0,\.2,1\) 1; \}/);
@@ -115,6 +115,13 @@ test("menu follows the plan sample: cards, two short buttons, Research/Guides, E
   assert.match(css, /border-radius:22px 22px 0 0/);
   // ".app button { font:inherit }" must not enlarge the free PRO button past the sample's 12px.
   assert.match(css, /\.tools \.pro \{\n[^}]*font-size:11px/);
+  // The sheet sits above the bottom bar (z-index 60) so a swipe anywhere scrolls it.
+  assert.match(css, /\.backdrop \{ position:fixed; inset:0; z-index:61;/);
+  assert.match(css, /position:fixed; z-index:62; left:0; right:0; bottom:0;/);
+  // Desktop: a home button left of JA/EN.
+  assert.ok(menu.indexOf('aria-label={ja ? "ホームへ" : "Home"}') < menu.indexOf('aria-label={ja ? "言語" : "Language"}'));
+  assert.match(css, /\.home \{ display:none; \}/);
+  assert.match(css, /\.home \{ display:grid; \}/);
   // Paid buttons: Mobile alerts on the left, Account on the right (owner, Oct 8).
   const tiles = menu.slice(menu.indexOf("{member\n          ? <>"));
   assert.ok(tiles.indexOf('href="/research/notifications"') < tiles.indexOf('href="/research/account"'));
