@@ -38,3 +38,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
 # Prevent partial-file publication
 
 A September 27 connector update truncated existing research files. Before any Git Data ref update, stage the final checked local files and compare `git write-tree` with the SHA returned by `create_tree` using the current remote base. They must match exactly. Never publish clipped tool output as file content. Read large files in bounded chunks and reassemble without omissions. A mismatched tree must be corrected before moving the branch ref. Preserve the existing integrity tests; passing deployment status is not a substitute for a successful GitHub Actions run.
+
+# Python test clock
+
+- `npm run test:python` runs `scripts/run_python_tests.py`, which pins the clock to
+  `RESEARCH_TEST_NOW` (default in that file) so dated fixtures do not expire as the
+  calendar moves on. Run the suite through it, not bare `unittest discover`.

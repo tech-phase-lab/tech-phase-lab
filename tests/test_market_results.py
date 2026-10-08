@@ -145,6 +145,9 @@ class ResultTests(unittest.TestCase):
         self.assertEqual(values['guidance-eps'],'$38.15 ± $1.00')
         self.assertNotIn('31.61',json.dumps(r))
         self.assertIsNone(results.projection('$MU earnings preview Q4 Revenue: $54B',['MU']))
+        # Another company's results that only name the monitored company are not its flash.
+        self.assertIsNone(results.projection('NVIDIA partner $ACME Q1 2027 earnings Revenue: $116.29M; EPS $0.12',['NVDA']))
+        self.assertIsNone(results.projection('NVIDIA Q1 2027 earnings Revenue: $116.29M',['NVDA']))
         self.assertIsNone(results.projection('$MU Q4 earnings Revenue: $54',['MU']))
 
     def test_estimates_do_not_replace_actuals_and_other_fields_still_publish(self):

@@ -78,6 +78,8 @@ class MeaningValidationTests(unittest.TestCase):
 
     def test_names_spaced_differently_are_the_same_name(self):
         validation.validate_names('S&P500に採用', 'Added to the S&P 500 index')
+        # Japanese drops English plurals.
+        validation.validate_names('Windows PCの新時代', 'A New Beginning for Windows PCs')
         with self.assertRaisesRegex(ValueError, '^changed-names$'):
             validation.validate_names('S&P500に採用', 'Added to the index')
         with self.assertRaisesRegex(ValueError, '^changed-names$'):
