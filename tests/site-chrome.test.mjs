@@ -34,13 +34,17 @@ test("header label follows the plan in both languages; signed-out reads FREE", a
   assert.equal(planLabel("en", "pro", false), "PRO");
   assert.equal(planLabel("ja", "free", false), "FREE");
   assert.equal(planLabel("en", null, false), "FREE");
-  assert.match(header, /RESEARCH · \{planLabel\(lang, plan, ownerAccount\)\}/);
-  // PRO members and the owner see 更新 where FREE readers see the gold PRO button.
+  assert.match(header, /<span>RESEARCH ·<\/span><span className=\{styles.planName\}>\{planLabel\(lang, plan, ownerAccount\)\}<\/span>/);
+  // PRO members and the owner see the gold reload ring where FREE readers see the gold PRO button.
   assert.match(header, /const member = ownerAccount \|\| plan === "pro";/);
-  assert.match(header, /ja \? "更新" : "Refresh"/);
+  assert.match(header, /className=\{`\$\{styles\.ring\}/);
   assert.match(header, /aria-label=\{ja \? "PROを見る" : "See PRO"\}/);
   // Order on the right: JA/EN, plan button, menu.
-  assert.ok(header.indexOf(">JA</button>") < header.indexOf("styles.refresh") && header.indexOf("styles.pro}") < header.indexOf("styles.ico}"));
+  assert.ok(header.indexOf(">JA</button>") < header.indexOf("styles.ring") && header.indexOf("styles.pro}") < header.indexOf("styles.ico}"));
+  const css = read("app/research/site-header.module.css");
+  // The ring only glows softly; the arrow turns once when pressed (no orbit or countdown).
+  assert.match(css, /\.spinOnce > svg:last-child \{ animation:spin \.7s cubic-bezier\(\.4,0,\.2,1\) 1; \}/);
+  assert.doesNotMatch(css, /stroke-dashoffset|orbit/);
   // Reload is also in the menu for every reader.
   assert.match(header, /ja \? "再読み込み" : "Refresh"\}<\/button>/);
 });
@@ -55,14 +59,24 @@ test("first visit follows the browser language; a saved choice wins", async () =
   assert.ok(source.indexOf("localStorage.getItem(key)") < source.indexOf("browserLanguage(navigator.languages"));
 });
 
-test("unread alerts compare the newest article with the last visit", async () => {
-  const { latestAlertTime } = await load("app/research/use-alerts-unread.ts", [[/^"use client";/, ""], [/import \{ useEffect, useState \} from "react";/, "const useEffect=()=>{},useState=()=>[];"]]);
-  const payload = { officialUpdates: [{ publishedAt: "2026-10-08T01:00:00Z" }, { observedAt: "2026-10-08T03:00:00Z" }],
-    resultBriefs: [{ publishedAt: "2026-10-08T02:00:00Z" }], marketUpdates: "bad", items: [null, { publishedAt: "nonsense" }] };
-  assert.equal(latestAlertTime(payload), Date.parse("2026-10-08T03:00:00Z"));
-  assert.equal(latestAlertTime(null), 0);
-  const source = read("app/research/use-alerts-unread.ts");
-  assert.match(source, /setUnread\(latest > seen\)/);
+test("unread alerts count only listed, translated, published stories", async () => {
+  const { alertItems } = await import("../lib/research/alert-items.ts");
+  const now = Date.parse("2026-10-08T12:00:00Z");
+  const base = { url: "https://www.example.com/a", publisher: "Micron", tickers: ["MU"], observedAt: "2026-10-08T11:59:00Z" };
+  const feed = { officialUpdates: [
+    { ...base, id: "1", title: "Micron reports Q4 results", translationJa: "マイクロン、決算を発表", publishedAt: "2026-10-08T11:00:00Z" },
+    { ...base, id: "2", title: "Micron reports Q4 results", publishedAt: "2026-10-08T11:30:00Z" },
+    { ...base, id: "3", title: "Micron reports Q4 results", translationJa: "マイクロン決算" },
+    { ...base, id: "4", title: "Next-Generation Networking", translationJa: "次世代ネットワーク", publishedAt: "2026-10-08T11:40:00Z", tickers: ["ANET"], publisher: "Arista Networks" },
+    { ...base, id: "5", title: "Micron reports Q4 results", translationJa: "未来", publishedAt: "2026-10-09T00:00:00Z" },
+  ], marketUpdates: [{ id: "m1", titleJa: "米国債", publishedAt: "2026-10-08T10:00:00Z" }] };
+  const items = alertItems(feed, now);
+  assert.deepEqual(items.map(item => item.id), ["official:1", "market:m1"]);
+  assert.deepEqual(alertItems(null, now), []);
+  const hook = read("app/research/use-alerts-unread.ts");
+  assert.match(hook, /if \(seen === null \|\| onAlertsPage\) \{ writeSeen\(Date\.now\(\)\); setUnread\(false\); return; \}/);
+  assert.match(hook, /filter\(item => item\.at > seen\)/);
+  assert.match(hook, /localStorage\.setItem\(REASON_KEY/);
 });
 
 test("bottom bar: five items in order, bilingual labels, raised search, unread dot, reduced motion", () => {
@@ -78,4 +92,30 @@ test("bottom bar: five items in order, bilingual labels, raised search, unread d
   assert.match(css, /bottom:calc\(10px \+ env\(safe-area-inset-bottom\)\)/);
   assert.match(css, /prefers-reduced-motion:reduce\) \{\n  \.glow, \.bar a, \.orb \{ transition:none !important; \}\n  \.live::after \{ animation:none !important; \}/);
   assert.match(css, /\.bar a\[aria-current="page"\] \.star \{ fill:rgba\(143,227,192,\.22\)/);
+});
+
+test("menu follows the plan sample: cards, two short buttons, Research/Guides, English labels", () => {
+  const menu = read("app/research/site-header.tsx");
+  for (const [ja, en] of [["PROで、もっと深く", "Go deeper with PRO"], ["案内を見る", "Learn more"], ["プランの管理", "Manage plan"],
+    ["すべての機能が使えます", "All features unlocked"], ["運営者　全機能", "Owner · Full access"], ["アカウント", "Account"],
+    ["スマホ通知", "Mobile alerts"], ["再読み込み", "Refresh"], ["監視22銘柄リスト", "22 Tracked Stocks"],
+    ["決算・経済指標", "Earnings & Indicators"], ["銘柄比較 PRO", "Compare · PRO"]]) {
+    assert.ok(menu.includes(`"${ja}" : "${en}"`), ja);
+  }
+  // Manage plan opens the account page; paid buttons are Account + Mobile alerts, free ones Refresh + Account.
+  assert.match(menu, /className=\{styles\.manage\} href="\/research\/account"/);
+  assert.match(menu, /href="\/research\/notifications"/);
+  // The three research items carry no PRO tag or lock.
+  const research = menu.slice(menu.indexOf('{ja ? "リサーチ" : "Research"}'), menu.indexOf('{ja ? "ガイド" : "Guides"}'));
+  assert.doesNotMatch(research, /lock|PRO|tag/);
+  // The sample has no PRO group under the two buttons (owner, Oct 8).
+  assert.doesNotMatch(menu, /proHead|item\("\/research\/(compare|notes|qa|weekly)"/);
+  assert.doesNotMatch(menu, /: `銘柄比較 PRO, /);
+  const css = read("app/research/site-header.module.css");
+  assert.match(css, /border-radius:22px 22px 0 0/);
+  // ".app button { font:inherit }" must not enlarge the free PRO button past the sample's 12px.
+  assert.match(css, /\.tools \.pro \{\n[^}]*font-size:11px/);
+  // Paid buttons: Mobile alerts on the left, Account on the right (owner, Oct 8).
+  const tiles = menu.slice(menu.indexOf("{member\n          ? <>"));
+  assert.ok(tiles.indexOf('href="/research/notifications"') < tiles.indexOf('href="/research/account"'));
 });
