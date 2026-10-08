@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import builtins
+import errno
 import hashlib
 import gzip
 import hmac
@@ -11,6 +12,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import signal
 import sqlite3
 import threading
@@ -503,6 +505,28 @@ def combined_discovery_state(primary, supplemental):
         "pendingPhases": [name for name, state in phases.items() if state is None],
         "phases": {name: dict(state) for name, state in phases.items() if state is not None},
     }
+
+
+def backup_failure_kind(exc):
+    """A fixed code for the failed backup, never its message or a path."""
+    if isinstance(exc, OSError):
+        return {errno.ENOSPC: "no-space", errno.EDQUOT: "quota-exceeded", errno.EACCES: "permission-denied",
+                errno.EPERM: "permission-denied", errno.EROFS: "read-only-filesystem",
+                errno.EIO: "io-error"}.get(exc.errno, "os-error")
+    if isinstance(exc, ValueError) and re.fullmatch(r"(?:backup|database)-[a-z-]{1,40}", str(exc)):
+        return str(exc)
+    if isinstance(exc, sqlite3.Error):
+        return "disk-full" if "full" in str(exc).lower() else "sqlite-error"
+    return "other"
+
+
+def backup_disk(path):
+    """Free and total bytes of the volume holding backups (aggregate only)."""
+    try:
+        usage = shutil.disk_usage(path if Path(path).exists() else Path(path).parent)
+        return {"diskFreeBytes": usage.free, "diskTotalBytes": usage.total}
+    except OSError:
+        return {"diskFreeBytes": None, "diskTotalBytes": None}
 
 
 class AutomaticMonitor:
@@ -2362,10 +2386,11 @@ class AutomaticMonitor:
                 result = persistence.create_backup(
                     self.db_path, self.backup_dir, self.backup_retention
                 )
-        except Exception:
+        except Exception as exc:
             with self.state_lock:
                 self.state["backup"].update({
                     "healthy": False, "lastError": "backup-failed",
+                    "failureKind": backup_failure_kind(exc), **backup_disk(self.backup_dir),
                 })
             with self.db_lock, monitor.connect(self.db_path) as db:
                 monitor.record_operational_incident(
@@ -2376,6 +2401,7 @@ class AutomaticMonitor:
             self.state["backup"].update({
                 "healthy": True, "lastSuccessAt": result["createdAt"],
                 "backupCount": result["backupCount"], "lastError": None,
+                "failureKind": None, **backup_disk(self.backup_dir),
             })
         with self.db_lock, monitor.connect(self.db_path) as db:
             monitor.resolve_operational_incident(db, "backup:database")
