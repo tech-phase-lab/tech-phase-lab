@@ -12,11 +12,12 @@ import AreaChart from "./area-chart";
 import SwipeRow, { TrashIcon } from "./swipe-row";
 import { quoteForSession, type WatchlistSession } from "@/lib/research/watchlist-session";
 import StockLogo from "./stock-logo";
+import { watchlistSector } from "@/lib/research/watchlist-sector";
 import styles from "./watchlist.module.css";
 
-type Company = { ticker: string; name: string; sector: { ja: string; en: string }; exchange?: string };
+type Company = { ticker: string; name: string; sector?: { ja: string; en: string }; exchange?: string };
 type SearchEntry = { ticker: string; name: string; exchange: string };
-const fromEntry = (entry: SearchEntry): Company => ({ ...entry, sector: { ja: entry.exchange, en: entry.exchange } });
+const fromEntry = (entry: SearchEntry): Company => ({ ticker: entry.ticker, name: entry.name, exchange: entry.exchange });
 
 function CurrentTime() {
   const [now, setNow] = useState<Date | null>(null);
@@ -147,6 +148,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
           <div className={styles.tableHead}><span>{t("銘柄", "Stock")}</span><span>{sharedSession ? sessionLabels[sharedSession] : t("値動き", "Change")}</span><span>{t("株価", "Price")}</span></div>
           <ul className={styles.quoteRows}>{ordered.map((ticker, index) => {
             const item = companies.find(entry => entry.ticker === ticker) ?? known[ticker];
+            const sector = watchlistSector(ticker, item?.sector)?.[lang];
             const quote = displayedQuotes[ticker] ?? null;
             const number = (value: number) => value.toLocaleString(lang === "ja" ? "ja-JP" : "en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const signed = (value: number) => `${value > 0 ? "+" : ""}${number(value)}`;
@@ -156,7 +158,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
             return <li key={ticker} className={styles.quoteRow} data-selected={ticker === active}>
               <SwipeRow key={`${list.id}:${ticker}`} open={revealed === ticker} onOpenChange={open => setRevealed(open ? ticker : "")} onRemove={() => remove(ticker)} disabled={!editable} removeLabel={t(`${ticker}をこのリストから削除`, `Remove ${ticker} from this list`)}>
               <button className={styles.rowMain} aria-expanded={ticker === active} onClick={() => setSelected(active === ticker ? "" : ticker)}>
-                <span className={styles.identity}><StockLogo ticker={ticker} /><span className={styles.company}><strong>{item?.name ?? names[ticker] ?? ticker}</strong><small>{ticker}</small>{item?.sector[lang] && <span className={styles.sector}>{item.sector[lang]}</span>}</span></span>
+                <span className={styles.identity}><StockLogo ticker={ticker} /><span className={styles.company}><strong>{item?.name ?? names[ticker] ?? ticker}</strong><small>{ticker}</small>{sector && <span className={styles.sector}>{sector}</span>}</span></span>
                 <span className={styles.trend} data-direction={direction}>
                   <span className={styles.trendHeading}><small>{sharedSession ? "" : session}</small><strong>{quote?.percentChange == null ? "—" : `${signed(quote.percentChange)}%`}</strong></span>
                   {chart ? <AreaChart className={styles.chartFrame} values={chart.values} reference={chart.reference} label={t(`${ticker}の当日の値動き`, `${ticker} intraday trend`)} /> : <span className={styles.noChart} aria-label={t("当日チャート未取得", "Intraday chart unavailable")}>—</span>}
