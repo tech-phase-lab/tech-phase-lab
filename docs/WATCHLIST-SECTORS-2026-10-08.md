@@ -30,7 +30,7 @@ Evidence reviewed:
 
 This inventory verifies configured labels, not a fresh fundamental review of every issuer.
 
-## Remaining classification decisions — not implemented
+## Earlier classification findings (resolved/extended below)
 
 - MU: normal 半導体 vs sample メモリ. The sample's finer label is supported by Micron's business; decide a common display taxonomy before changing the wider group.
 - SKHY/SNDK also remain under the broad semiconductor label.
@@ -47,3 +47,32 @@ Sources for proposed finer distinctions:
 - TSMC foundry: https://www.tsmc.com/english/dedicatedFoundry
 
 Do not describe this as all searchable stocks classified or all issuer business classifications verified. Full taxonomy expansion requires agreement on labels and issuer-by-issuer evidence.
+
+## Coverage extension requested by user
+
+User assigned APH to Networking and AAOI to 光フォトニクス. The watchlist now prioritizes its reviewed ticker themes, then existing registered labels, then the issuer's SEC SIC classification from the existing stock-profile API.
+
+New/finer themes:
+- APH: Networking — https://www.amphenol.com/products/connectors
+- AAOI: Photonics — https://ao-inc.com/products/optical-transceivers/
+- LITE: Photonics — https://www.lumentum.com/en/products
+- COHR: Photonics — https://www.coherent.com/company/about-us
+- POET: Photonics — https://www.poet-technologies.com/about-us
+- MU/SKHY/SNDK: Memory (resolves the normal/sample MU discrepancy).
+- SKHY source: https://news.skhynix.com/en/q2-2026-business-results/
+- ASML/AMAT: Chip equipment. AMAT source: https://www.appliedmaterials.com/us/en/semiconductor/products.html
+- TSM: Chip foundry.
+- IREN: AI cloud — https://iren.gcs-web.com/news-releases/news-release-details/iren-reports-fy26-results
+
+The semiconductor foundry/equipment/memory distinctions proposed earlier are now applied only to watchlist display. Earlier broad-label inventory is historical. No news registry or API changes.
+
+SIC fallback:
+- Existing /api/research/stocks?ticker= endpoint returns the issuer's SIC.
+- Active-list missing labels resolve sequentially; abort on list change/unmount, 12-second request timeout, in-memory caching, retries on focus/online/visibility after a failure cooldown.
+- Require matching ticker, ok:true, a string SIC code and a recognized SIC major group.
+- Translate official SIC major groups into short bilingual labels; selected specific codes get more precise labels. This is an industry fallback, not a claim that every issuer's investment theme has been editorially reviewed.
+- The badge title includes the SIC code and original description for fallback labels.
+- 0000, unclassified/999x, unavailable or invalid responses stay without a fabricated label.
+- Source: https://www.sec.gov/search-filings/standard-industrial-classification-sic-code-list
+- Major groups: https://www.osha.gov/data/sic-manual
+- No claim of 100% coverage: ETFs, issuers without useful SIC, SEC outages and unsupported listings can still lack a label.

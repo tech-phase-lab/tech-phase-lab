@@ -12,6 +12,7 @@ import AreaChart from "./area-chart";
 import SwipeRow, { TrashIcon } from "./swipe-row";
 import { quoteForSession, type WatchlistSession } from "@/lib/research/watchlist-session";
 import StockLogo from "./stock-logo";
+import { useWatchlistSectors } from "./use-watchlist-sectors";
 import { watchlistSector } from "@/lib/research/watchlist-sector";
 import styles from "./watchlist.module.css";
 
@@ -41,6 +42,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const slots = watchlistSlots(lists);
   const list = slots.find(item => item.id === listId) ?? slots[0];
   const favorites = list.tickers;
+  const fetchedSectors = useWatchlistSectors(favorites.filter(ticker => !watchlistSector(ticker, companies.find(item => item.ticker === ticker)?.sector)));
   const [listAction, setListAction] = useState<"rename" | null>(null);
   const [listName, setListName] = useState("");
   function toggle(ticker: string, name?: string) {
@@ -148,7 +150,8 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
           <div className={styles.tableHead}><span>{t("銘柄", "Stock")}</span><span>{sharedSession ? sessionLabels[sharedSession] : t("値動き", "Change")}</span><span>{t("株価", "Price")}</span></div>
           <ul className={styles.quoteRows}>{ordered.map((ticker, index) => {
             const item = companies.find(entry => entry.ticker === ticker) ?? known[ticker];
-            const sector = watchlistSector(ticker, item?.sector)?.[lang];
+            const sector = (watchlistSector(ticker, item?.sector) ?? fetchedSectors[ticker])?.[lang];
+            const sectorSource = !watchlistSector(ticker, item?.sector) && fetchedSectors[ticker] ? `SEC SIC ${fetchedSectors[ticker].sic}: ${fetchedSectors[ticker].description}` : undefined;
             const quote = displayedQuotes[ticker] ?? null;
             const number = (value: number) => value.toLocaleString(lang === "ja" ? "ja-JP" : "en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const signed = (value: number) => `${value > 0 ? "+" : ""}${number(value)}`;
@@ -158,7 +161,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
             return <li key={ticker} className={styles.quoteRow} data-selected={ticker === active}>
               <SwipeRow key={`${list.id}:${ticker}`} open={revealed === ticker} onOpenChange={open => setRevealed(open ? ticker : "")} onRemove={() => remove(ticker)} disabled={!editable} removeLabel={t(`${ticker}をこのリストから削除`, `Remove ${ticker} from this list`)}>
               <button className={styles.rowMain} aria-expanded={ticker === active} onClick={() => setSelected(active === ticker ? "" : ticker)}>
-                <span className={styles.identity}><StockLogo ticker={ticker} /><span className={styles.company}><strong>{item?.name ?? names[ticker] ?? ticker}</strong><small>{ticker}</small>{sector && <span className={styles.sector}>{sector}</span>}</span></span>
+                <span className={styles.identity}><StockLogo ticker={ticker} /><span className={styles.company}><strong>{item?.name ?? names[ticker] ?? ticker}</strong><small>{ticker}</small>{sector && <span className={styles.sector} title={sectorSource}>{sector}</span>}</span></span>
                 <span className={styles.trend} data-direction={direction}>
                   <span className={styles.trendHeading}><small>{sharedSession ? "" : session}</small><strong>{quote?.percentChange == null ? "—" : `${signed(quote.percentChange)}%`}</strong></span>
                   {chart ? <AreaChart className={styles.chartFrame} values={chart.values} reference={chart.reference} label={t(`${ticker}の当日の値動き`, `${ticker} intraday trend`)} /> : <span className={styles.noChart} aria-label={t("当日チャート未取得", "Intraday chart unavailable")}>—</span>}
