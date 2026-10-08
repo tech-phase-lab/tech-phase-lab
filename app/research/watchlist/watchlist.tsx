@@ -34,7 +34,7 @@ function CurrentTime() {
 
 export default function Watchlist({ companies, quotes = {} }: { companies: Company[]; quotes?: Record<string, FavoriteQuote> }) {
   const [lang, setLang] = useResearchLanguage();
-  const { lists, names, alerts = [], update, error, status, retry, canImport, importLocal, editable } = useFavoriteLists();
+  const { lists, names, alerts = [], update, error, status, retry, canImport, importLocal, editable, ready } = useFavoriteLists();
   const [alertTicker, setAlertTicker] = useState("");
   const [alertPrice, setAlertPrice] = useState("");
   const [alertDirection, setAlertDirection] = useState<"above" | "below">("above");
@@ -150,7 +150,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
       </div>}
       {canImport && <div className={styles.syncNotice}><button onClick={importLocal}>{t("この端末のお気に入りを取り込む", "Import this device’s favorites")}</button></div>}
       {error && <p role="alert" className={styles.error}>{t("保存できませんでした。ブラウザーの保存設定をご確認ください。", "Could not save. Check your browser storage settings.")}</p>}
-      {favorites.length > 0 ? <>
+      {!ready ? <div className={styles.loading} role="status" aria-busy={status === "loading"}>{status === "loading" ? t("ウォッチリストを読み込み中…", "Loading your watchlist…") : t("保存済みのリストを確認できません", "Your saved watchlist is unavailable")}</div> : favorites.length > 0 ? <>
 
         <div className={styles.marketBar}><label><span>{t("表示", "View")}</span><select aria-label={t("取引時間帯の表示", "Market session view")} value={sessionView} onChange={event => { setSessionView(event.target.value as WatchlistSession); setRevealed(""); }}><option value="auto">{t("自動", "Auto")}</option><option value="regular">{t("取引中", "Market open")}</option><option value="pre">{t("プレ", "Pre-market")}</option><option value="closed">{t("前日比", "Daily change")}</option></select></label><span>{t("現在", "Now")} <CurrentTime /> JST</span></div>
         <div className={styles.quoteTable}>

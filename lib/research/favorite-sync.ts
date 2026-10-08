@@ -6,6 +6,11 @@ type Reply = { ok: boolean; status: number; json: () => Promise<Record<string, u
 type Transport = (init?: { body: string }) => Promise<Reply>;
 const empty: FavoriteLists = { lists: [{ id: 'default', name: '', tickers: [] }], names: {}, alerts: [] };
 
+/** Never substitute device-only favorites while the account is still unknown. */
+export function favoriteDisplayDocument(cloud: CloudFavorites | null, status: FavoriteSyncStatus, local: FavoriteLists): FavoriteLists | null {
+  return cloud?.document ?? (status === 'guest' ? local : null);
+}
+
 function snapshot(data: Record<string, unknown>): CloudFavorites {
   if (typeof data.account !== 'string' || !/^[a-f0-9]{64}$/.test(data.account) || !Number.isSafeInteger(data.revision) || Number(data.revision) < 0) throw new Error('invalid-snapshot');
   const document = data.document ?? empty;

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createFavoriteSync } from '../lib/research/favorite-sync.ts';
+import { createFavoriteSync, favoriteDisplayDocument } from '../lib/research/favorite-sync.ts';
 const account='a'.repeat(64);
 const document={lists:[{id:'default',name:'保有株',tickers:['MU']}],names:{MU:'Micron'},alerts:[]};
 const reply=(status,data)=>({status,ok:status===200,json:async()=>data});
@@ -8,7 +8,34 @@ const state=(revision,doc=document)=>({ok:true,account,revision,document:doc});
 const deferred=()=>{let resolve;const promise=new Promise(r=>{resolve=r;});return {promise,resolve};};
 const tick=()=>new Promise(r=>setImmediate(r));
 const add=ticker=>doc=>({...doc,lists:doc.lists.map(l=>({...l,tickers:[...l.tickers,ticker]}))});
+const deviceOnly={lists:[{id:'default',name:'',tickers:['ALAB']}],names:{},alerts:[]};
 function harness(transport){let latest;const sync=createFavoriteSync(transport,(cloud,status)=>{latest={cloud,status};});return {sync,get latest(){return latest;}};}
+
+test('slow initial account lookup never flashes device-only favorites',async()=>{
+ const read=deferred();const h=harness(()=>read.promise);
+ const loading=h.sync.refresh();
+ assert.equal(favoriteDisplayDocument(null,'loading',deviceOnly),null);
+ assert.equal(favoriteDisplayDocument(null,'error',deviceOnly),null);
+ read.resolve(reply(200,state(1)));await loading;
+ assert.deepEqual(favoriteDisplayDocument(h.latest.cloud,h.latest.status,deviceOnly).lists[0].tickers,['MU']);
+});
+
+test('focus refresh retains the verified account list during slow and failed reads',async()=>{
+ const read=deferred();let calls=0;
+ const h=harness(()=>++calls===1?Promise.resolve(reply(200,state(1))):read.promise);
+ await h.sync.refresh();const refreshing=h.sync.refresh();
+ assert.deepEqual(favoriteDisplayDocument(h.latest.cloud,h.latest.status,deviceOnly).lists[0].tickers,['MU']);
+ read.resolve(reply(503,{ok:false}));await refreshing;
+ assert.equal(h.latest.status,'error');
+ assert.deepEqual(favoriteDisplayDocument(h.latest.cloud,h.latest.status,deviceOnly).lists[0].tickers,['MU']);
+});
+
+test('device-only favorites appear only after a confirmed signed-out response',async()=>{
+ const read=deferred();const h=harness(()=>read.promise);const loading=h.sync.refresh();
+ assert.equal(favoriteDisplayDocument(null,'loading',deviceOnly),null);
+ read.resolve(reply(401,{ok:false}));await loading;
+ assert.equal(favoriteDisplayDocument(h.latest.cloud,h.latest.status,deviceOnly),deviceOnly);
+});
 
 test('rapid edits are serialized using each acknowledged revision',async()=>{
  const first=deferred();const writes=[];

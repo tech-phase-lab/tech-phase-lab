@@ -6,7 +6,7 @@ import styles from "./watchlist-frame.module.css";
 export default function WatchlistFrame({ children, lang }: { children: ReactNode; lang: "ja" | "en" }) {
   const frame = useRef<HTMLDivElement>(null);
   const cue = useRef<HTMLDivElement>(null);
-  const [hasMore, setHasMore] = useState(false);
+  const [direction, setDirection] = useState<"down" | "up" | null>(null);
 
   useEffect(() => {
     const main = frame.current?.querySelector("main");
@@ -16,7 +16,8 @@ export default function WatchlistFrame({ children, lang }: { children: ReactNode
       pending = 0;
       const rows = main.querySelector("[data-watchlist-rows]");
       const edge = cue.current?.getBoundingClientRect().bottom ?? window.innerHeight;
-      setHasMore(Boolean(rows?.childElementCount && rows.getBoundingClientRect().bottom > edge + 2));
+      const hasRows = Boolean(rows?.childElementCount);
+      setDirection(hasRows && rows!.getBoundingClientRect().bottom > edge + 2 ? "down" : hasRows && window.scrollY > 80 ? "up" : null);
     };
     const schedule = () => {
       if (!pending) pending = requestAnimationFrame(update);
@@ -39,8 +40,12 @@ export default function WatchlistFrame({ children, lang }: { children: ReactNode
   return <div className={styles.frame} ref={frame}>
     {children}
     <div className={styles.cue} ref={cue}>
-      <button type="button" hidden={!hasMore} aria-label={lang === "ja" ? "下の銘柄を見る" : "See more stocks below"} onClick={() => window.scrollBy({ top: window.innerHeight * .65, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" })}>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6" /></svg>
+      <button type="button" hidden={!direction} aria-label={direction === "up" ? (lang === "ja" ? "ウォッチリストの上部へ戻る" : "Back to watchlist top") : (lang === "ja" ? "下の銘柄を見る" : "See more stocks below")} onClick={() => {
+        const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth";
+        if (direction === "up") window.scrollTo({ top: 0, behavior });
+        else window.scrollBy({ top: window.innerHeight * .65, behavior });
+      }}>
+        <span aria-hidden="true">{direction === "up" ? "▲" : "▼"}</span>
       </button>
     </div>
   </div>;

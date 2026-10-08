@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { favoriteStocksKey } from "@/lib/research/favorites";
 import { favoriteListsKey, parseFavoriteLists, type FavoriteLists } from "@/lib/research/favorite-lists";
-import { createFavoriteSync, type CloudFavorites, type FavoriteSyncStatus } from "@/lib/research/favorite-sync";
+import { createFavoriteSync, favoriteDisplayDocument, type CloudFavorites, type FavoriteSyncStatus } from "@/lib/research/favorite-sync";
 const eventName = "tech-phase:favorite-lists";
 function snapshot() {
   try { return JSON.stringify([localStorage.getItem(favoriteListsKey), localStorage.getItem(favoriteStocksKey)]); }
@@ -66,7 +66,8 @@ export function useFavoriteLists() {
   function update(change: (state: FavoriteLists) => FavoriteLists) {
     return status === "guest" ? local.update(change) : sync.current?.update(change) ?? false;
   }
-  return { ...(cloud?.document ?? local), update, error: local.error, status,
+  const displayed = favoriteDisplayDocument(cloud, status, local);
+  return { ...(displayed ?? { lists: [{ id: "default", name: "", tickers: [] }], names: {}, alerts: [] }), ready: displayed !== null, update, error: status === "guest" && local.error, status,
     retry: () => { void sync.current?.retry(); },
     canImport: !!cloud && cloud.revision === 0 && local.lists.some(item => item.tickers.length),
     importLocal: () => update(() => ({ lists: local.lists, names: local.names, alerts: local.alerts })),
