@@ -26,6 +26,7 @@ const RefreshIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M
 export default function SiteHeader({ lang, setLang, nav }: { lang: Language; setLang: (lang: Language) => void; nav?: ReactNode }) {
   const plan = useMemberDisplay();
   const ownerAccount = useOwnerAccount();
+  const pathname = usePathname();
   const member = ownerAccount || plan === "pro";
   const pro = useProIntroduction();
   const [menu, setMenu] = useState(false);
@@ -39,6 +40,15 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
     reloadPage();
   }
   const tier = ownerAccount ? "owner" : plan === "pro" ? "pro" : "free";
+  // Desktop home button (owner, Oct 9): on the home page itself, return to the
+  // main view the same way the phone bar does.
+  function goHome(event: MouseEvent<HTMLAnchorElement>) {
+    if (pathname !== "/research" || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    window.history.pushState(null, "", "/research#research-main");
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
   return <>
     <header className={styles.header} data-plan={tier}>
       <Link href="/research" className={styles.brand} aria-label="Tech Phase Research">
@@ -50,6 +60,9 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
       </Link>
       {nav && <div className={styles.center}>{nav}</div>}
       <div className={styles.tools}>
+        <Link href="/research#research-main" className={`${styles.ico} ${styles.home}`} aria-label={ja ? "ホームへ" : "Home"} onClick={goHome}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" /></svg>
+        </Link>
         <div className={styles.lang} role="group" aria-label={ja ? "言語" : "Language"}>
           <button type="button" aria-pressed={ja} onClick={() => setLang("ja")}>JA</button>
           <button type="button" aria-pressed={!ja} onClick={() => setLang("en")}>EN</button>
