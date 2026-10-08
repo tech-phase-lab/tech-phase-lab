@@ -50,3 +50,5 @@
  .sector { grid-column:2;grid-row:2;margin-top:2px;padding:1px 3px;font-size:8px;line-height:1.3; }
  .chartFrame { padding-left:23px; }.scale { width:22px;font-size:8px; }
 }
+
+.deleteButton { display:grid;place-items:center;min-width:40px;min-height:40px;padding:8px;background:transparent;border:0;color:#ec959e;cursor:pointer; }.deleteButton svg { width:20px;height:20px; }

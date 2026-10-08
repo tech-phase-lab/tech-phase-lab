@@ -3,12 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useFavoriteLists } from "./use-favorite-lists";
-import { watchlistSlots, moveFavorite, sortFavorites, usableFavoriteQuote, type FavoriteQuote } from "@/lib/research/favorite-lists";
+import { watchlistSlots, moveFavorite, sortFavorites, type FavoriteQuote } from "@/lib/research/favorite-lists";
 import { useResearchLanguage } from "../use-research-language";
 import ResearchToolShell from "../research-tool-shell";
 import { TradingViewChart } from "../stocks/tradingview-chart";
 import { favoriteIntradayChart } from "@/lib/research/watchlist-chart";
 import AreaChart from "./area-chart";
+import SwipeRow, { TrashIcon } from "./swipe-row";
+import { quoteForSession, type WatchlistSession } from "@/lib/research/watchlist-session";
 import StockLogo from "./stock-logo";
 import styles from "./watchlist.module.css";
 
@@ -47,7 +49,11 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   function move(ticker: string, delta: number) {
     update(current => ({ ...current, lists: current.lists.map(item => item.id === list.id ? { ...item, tickers: moveFavorite(item.tickers, ticker, delta) } : item) }));
   }
-  const [editing, setEditing] = useState(false);
+  const [sessionView, setSessionView] = useState<WatchlistSession>("auto");
+  const [revealed, setRevealed] = useState("");
+  function remove(ticker: string) {
+    return update(current => ({ ...current, lists: current.lists.map(item => item.id === list.id ? { ...item, tickers: item.tickers.filter(value => value !== ticker) } : item) }));
+  }
   const [sort, setSort] = useState("saved");
   const [query, setQuery] = useState("");
   const [matches, setMatches] = useState<Company[]>([]);
@@ -93,9 +99,14 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   }, [query]);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const sessionLabels = { regular: t("取引中", "Market open"), pre: t("プレマーケット", "Pre-market"), post: t("時間外", "After-hours"), closed: t("前日比", "Daily change") };
-  const quoteSessions = [...new Set(favorites.flatMap(ticker => usableFavoriteQuote(quotes[ticker], ticker) ? [quotes[ticker].session] : []))];
-  const sharedSession = quoteSessions.length === 1 ? quoteSessions[0] : null;
-  const ordered = sortFavorites(favorites, quotes, sort);
+  const displayedQuotes: Record<string, FavoriteQuote> = {};
+  for (const ticker of favorites) {
+    const quote = quoteForSession(quotes[ticker], ticker, sessionView);
+    if (quote) displayedQuotes[ticker] = quote;
+  }
+  const quoteSessions = [...new Set(Object.values(displayedQuotes).map(quote => quote.session))];
+  const sharedSession = sessionView !== "auto" ? sessionView : quoteSessions.length === 1 ? quoteSessions[0] : null;
+  const ordered = sortFavorites(favorites, displayedQuotes, sort);
   const monitored = companies.some(item => item.ticker === active);
   return <ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false} showTools={false}>
     <div className={styles.page}>
@@ -103,7 +114,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
         <h1>{t("ウォッチリスト", "Watchlist")}</h1>
         <div className={styles.listPicker}>
           <span className={styles.pickerArrow} aria-hidden="true">▼</span>
-          <select aria-label={t("マイリストを選択", "Choose list")} value={list.id} onChange={event => { setListId(event.target.value); setSelected(""); setQuery(""); setListAction(null); setEditing(false); }}>
+          <select aria-label={t("マイリストを選択", "Choose list")} value={list.id} onChange={event => { setListId(event.target.value); setSelected(""); setQuery(""); setListAction(null); setRevealed(""); }}>
             {slots.map((item, index) => <option key={item.id} value={item.id}>{item.name || t(`マイリスト${index + 1}`, `My list ${index + 1}`)}</option>)}
           </select>
           <button disabled={!editable} className={styles.renameButton} onClick={() => { setListAction(listAction ? null : "rename"); setListName(list.name || t(`マイリスト${slots.indexOf(list) + 1}`, `My list ${slots.indexOf(list) + 1}`)); }} aria-label={t("リスト名を編集", "Edit list name")} aria-expanded={!!listAction}>
@@ -126,23 +137,24 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
           <ul className={styles.choices}>{matches.map(item => <li key={item.ticker}><button disabled={!editable || favorites.includes(item.ticker)} onClick={() => { setKnown(previous => ({ ...previous, [item.ticker]: item })); if (toggle(item.ticker, item.name)) { setQuery(""); searchInput.current?.blur(); } }}><span><strong>{item.ticker}</strong><small>{item.name}</small></span><span className={styles.choiceAction}>{favorites.includes(item.ticker) ? t("追加済み", "Added") : t("＋追加", "+ Add")}</span></button></li>)}</ul>
         </div>}
       </section>
-      {favorites.length > 0 && <div className={styles.toolbar}><label><span className={styles.srOnly}>{t("並び順", "Sort order")}</span><select value={sort} onChange={event => setSort(event.target.value)}><option value="saved">{t("追加した順", "Date added")}</option><option value="ticker">{t("ティッカー順", "Ticker A–Z")}</option><option value="gainers">{t("上昇率順", "Top gainers")}</option><option value="losers">{t("下落率順", "Top losers")}</option></select></label><button disabled={!editable} onClick={() => setEditing(!editing)} aria-pressed={editing}>{editing ? t("完了", "Done") : t("編集", "Edit")}</button></div>}
+      {favorites.length > 0 && <div className={styles.toolbar}><label><span className={styles.srOnly}>{t("並び順", "Sort order")}</span><select value={sort} onChange={event => setSort(event.target.value)}><option value="saved">{t("追加した順", "Date added")}</option><option value="ticker">{t("ティッカー順", "Ticker A–Z")}</option><option value="gainers">{t("上昇率順", "Top gainers")}</option><option value="losers">{t("下落率順", "Top losers")}</option></select></label></div>}
       </div>
       {error && <p role="alert" className={styles.error}>{t("保存できませんでした。ブラウザーの保存設定をご確認ください。", "Could not save. Check your browser storage settings.")}</p>}
       {favorites.length > 0 ? <>
 
-        <div className={styles.marketBar}><span>{t("現在", "Now")} <CurrentTime /> JST</span></div>
+        <div className={styles.marketBar}><label><span>{t("表示", "View")}</span><select aria-label={t("取引時間帯の表示", "Market session view")} value={sessionView} onChange={event => { setSessionView(event.target.value as WatchlistSession); setRevealed(""); }}><option value="auto">{t("自動", "Auto")}</option><option value="regular">{t("取引中", "Market open")}</option><option value="pre">{t("プレ", "Pre-market")}</option><option value="closed">{t("前日比", "Daily change")}</option></select></label><span>{t("現在", "Now")} <CurrentTime /> JST</span></div>
         <div className={styles.quoteTable}>
           <div className={styles.tableHead}><span>{t("銘柄", "Stock")}</span><span>{sharedSession ? sessionLabels[sharedSession] : t("値動き", "Change")}</span><span>{t("株価", "Price")}</span></div>
           <ul className={styles.quoteRows}>{ordered.map((ticker, index) => {
             const item = companies.find(entry => entry.ticker === ticker) ?? known[ticker];
-            const quote = usableFavoriteQuote(quotes[ticker], ticker) ? quotes[ticker] : null;
+            const quote = displayedQuotes[ticker] ?? null;
             const number = (value: number) => value.toLocaleString(lang === "ja" ? "ja-JP" : "en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             const signed = (value: number) => `${value > 0 ? "+" : ""}${number(value)}`;
             const session = quote ? sessionLabels[quote.session] : "";
             const chart = quote ? favoriteIntradayChart(quote) : null;
             const direction = quote?.percentChange == null ? "flat" : quote.percentChange > 0 ? "up" : quote.percentChange < 0 ? "down" : "flat";
             return <li key={ticker} className={styles.quoteRow} data-selected={ticker === active}>
+              <SwipeRow key={`${list.id}:${ticker}`} open={revealed === ticker} onOpenChange={open => setRevealed(open ? ticker : "")} onRemove={() => remove(ticker)} disabled={!editable} removeLabel={t(`${ticker}をこのリストから削除`, `Remove ${ticker} from this list`)}>
               <button className={styles.rowMain} aria-expanded={ticker === active} onClick={() => setSelected(active === ticker ? "" : ticker)}>
                 <span className={styles.identity}><StockLogo ticker={ticker} /><span className={styles.company}><strong>{item?.name ?? names[ticker] ?? ticker}</strong><small>{ticker}</small>{item?.sector[lang] && <span className={styles.sector}>{item.sector[lang]}</span>}</span></span>
                 <span className={styles.trend} data-direction={direction}>
@@ -151,10 +163,12 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
                 </span>
                 <span className={styles.price} data-direction={direction}>{quote ? number(quote.price) : "—"}<small>{quote ? `${quote.change == null ? "" : signed(quote.change) + " "}${quote.currency}` : ""}</small>{quote && <time className={styles.quoteTime} dateTime={quote.asOf} title={new Date(quote.asOf).toLocaleString(lang === "ja" ? "ja-JP" : "en-GB", { timeZone: "Asia/Tokyo" }) + " JST"}>{new Date(quote.asOf).toLocaleTimeString("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false })} JST{quote.delayed ? t(" · 遅延", " · Delayed") : ""}</time>}</span>
               </button>
+              </SwipeRow>
 
-              {editing && <div className={styles.rowEdit}><button disabled={sort !== "saved" || index === 0} onClick={() => move(ticker, -1)} aria-label={t(`${ticker}を上へ`, `Move ${ticker} up`)}>↑</button><button disabled={sort !== "saved" || index === ordered.length - 1} onClick={() => move(ticker, 1)} aria-label={t(`${ticker}を下へ`, `Move ${ticker} down`)}>↓</button><button onClick={() => toggle(ticker)} aria-label={t(`${ticker}をこのリストから解除`, `Remove ${ticker} from this list`)}>{t("削除", "Remove")}</button></div>}
+
               {ticker === active && <section className={styles.detail} aria-label={t(`${ticker}の詳細`, `${ticker} details`)}>
                 <div className={styles.detailHeading}><h2>{item?.name ?? names[ticker] ?? ticker}</h2><Link href={monitored ? `/research/companies/${ticker}` : `/research/stocks?q=${encodeURIComponent(ticker)}`}>{t("銘柄情報", "Company")} →</Link></div>
+                <div className={styles.rowEdit}><button disabled={!editable || sort !== "saved" || index === 0} onClick={() => move(ticker, -1)} aria-label={t(`${ticker}を上へ`, `Move ${ticker} up`)}>↑</button><button disabled={!editable || sort !== "saved" || index === ordered.length - 1} onClick={() => move(ticker, 1)} aria-label={t(`${ticker}を下へ`, `Move ${ticker} down`)}>↓</button><button disabled={!editable} className={styles.deleteButton} onClick={() => remove(ticker)} aria-label={t(`${ticker}をこのリストから削除`, `Remove ${ticker} from this list`)}><TrashIcon /></button></div>
                 {quote && <p className={styles.dataTime}>{t("データ時刻", "Data time")} <time dateTime={quote.asOf}>{new Date(quote.asOf).toLocaleString(lang === "ja" ? "ja-JP" : "en-GB", { timeZone: "Asia/Tokyo", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false })}</time> JST · {session}{quote.delayed ? t(" · 遅延", " · Delayed") : ""}</p>}
                 {chart && <div className={styles.expandedChart} data-direction={direction}><AreaChart className={styles.largeChart} values={chart.values} reference={chart.reference} label={t("拡大した当日チャート", "Expanded intraday chart")} /><div className={styles.chartTimes}><span>{new Date(chart.start).toLocaleTimeString("en-GB", { timeZone: "America/New_York", hour: "2-digit", minute: "2-digit", hour12: false })}</span><span>{new Date(chart.end).toLocaleTimeString("en-GB", { timeZone: "America/New_York", hour: "2-digit", minute: "2-digit", hour12: false })} ET</span></div></div>}
                 <button className={styles.alertButton} disabled={!editable} onClick={() => { const saved = alerts.find(a => a.ticker === ticker); setAlertTicker(ticker); setAlertPrice(saved ? String(saved.price) : ""); setAlertDirection(saved?.direction ?? "above"); setAlertCurrency(saved?.currency ?? quote?.currency ?? (ticker === "SKHY" ? "KRW" : "USD")); }}>{t("価格通知を設定", "Set price alert")}{alerts.some(a => a.ticker === ticker) ? t(" · 保存済み", " · Saved") : ""}</button>
@@ -170,7 +184,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
               </section>}
             </li>;
           })}</ul>
-          <div className={styles.attribution}>{favorites.some(ticker => usableFavoriteQuote(quotes[ticker], ticker)) ? <>Source: <a href="https://twelvedata.com" target="_blank" rel="noopener">Twelve Data</a></> : <span>{t("株価・当日チャートはTwelve Data接続後に表示します", "Prices and intraday charts will appear once Twelve Data is connected")}</span>}</div>
+          <div className={styles.attribution}>{Object.keys(displayedQuotes).length > 0 ? <>Source: <a href="https://twelvedata.com" target="_blank" rel="noopener">Twelve Data</a></> : <span>{t("株価・当日チャートはTwelve Data接続後に表示します", "Prices and intraday charts will appear once Twelve Data is connected")}</span>}</div>
         </div>
 
       </> : <div className={styles.empty}><span aria-hidden="true" className={styles.emptyStar}>☆</span><h2>{t("いつもの銘柄を、ひとつの画面に。", "Your stocks, together.")}</h2><p>{t("上の検索欄から追加できます", "Add a stock using the search above")}</p></div>}
