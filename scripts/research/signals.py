@@ -25,6 +25,7 @@ from urllib.request import Request, HTTPRedirectHandler, build_opener
 import xml.etree.ElementTree as ET
 
 import monitor
+import release_watch
 import x_api
 
 SOURCES = json.loads(Path(__file__).with_name("signal_sources.json").read_text())
@@ -449,6 +450,10 @@ def x_api_request_plan(sources=SOURCES):
 
 
 def source_interval_seconds(source, checked_at):
+    # Around a scheduled release the carrying X routes are polled every few
+    # seconds (release_watch); the shared daily cap still applies.
+    if source.get("format") == "x-api" and source["id"] in release_watch.burst_routes(checked_at.astimezone(timezone.utc)):
+        return release_watch.BURST_INTERVAL_SECONDS
     normal = max(30, int(source["intervalSeconds"]))
     window = source.get("fastWindow")
     if window:
@@ -522,7 +527,8 @@ def reserve_x_api_request(db, source, now=None, eligible_source_ids=None, includ
         usage = x_api_usage(db, current, ensure_schema=False, include_configuration=include_configuration)
         if usage["limitReached"]:
             raise XApiDailyLimit(usage["nextAvailableAt"])
-        if usage["pacingEnabled"]:
+        # A release-burst route skips fair-share pacing for its short window.
+        if usage["pacingEnabled"] and source["id"] not in release_watch.burst_routes(current.astimezone(timezone.utc)):
             eligible = list(dict.fromkeys(eligible_source_ids or [source["id"]]))
             cutoff_24h = (current - timedelta(hours=24)).isoformat()
             rows = {row["source_id"]: row for row in db.execute(
@@ -2224,6 +2230,14 @@ def due(db, sources=None):
     current = current.astimezone(timezone.utc)
     rows = {row["id"]: row for row in db.execute("SELECT * FROM signal_routes")}
     candidates = enabled_sources(SOURCES if sources is None else sources)
+    burst = release_watch.burst_routes(current)
+
+    def instant_or_none(value):
+        try:
+            parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        except (TypeError, ValueError):
+            return None
+        return parsed.astimezone(timezone.utc) if parsed.tzinfo else None
 
     def ready(source):
         row = rows.get(source["id"])
@@ -2238,6 +2252,10 @@ def due(db, sources=None):
             next_check = next_check.astimezone(timezone.utc)
         except (TypeError, ValueError, OverflowError):
             return True
+        if source["id"] in burst and row["checked_at"]:
+            checked = instant_or_none(row["checked_at"])
+            if checked is None or checked <= current - timedelta(seconds=release_watch.BURST_INTERVAL_SECONDS):
+                return True
         # Invalid persisted schedules must not strand a route forever. A
         # valid bounded future schedule is still respected, including the
         # seven-day access-control ceiling.

@@ -55,6 +55,7 @@ import official_research_detail
 import watch_earnings
 import mu_earnings_measurement
 import web_push
+import release_watch
 import original_preview_news
 
 
@@ -731,6 +732,7 @@ class AutomaticMonitor:
         self.thread = threading.Thread(target=self.run_supervised, name="research-monitor", daemon=True)
         self.generation_thread = threading.Thread(target=self.run_generation, name="brief-generator", daemon=True)
         self.backup_thread = threading.Thread(target=self.run_backup, name="database-backup", daemon=True)
+        self.release_watch_thread = threading.Thread(target=self.run_release_watch, name="release-watch", daemon=True)
         self.incident_thread = threading.Thread(
             target=self.run_incident_watch, name="incident-watch", daemon=True
         )
@@ -1037,6 +1039,7 @@ class AutomaticMonitor:
         self.thread.start()
         self.generation_thread.start()
         self.backup_thread.start()
+        self.release_watch_thread.start()
         self.incident_thread.start()
         self.notification_thread.start()
         self.signals_thread.start()
@@ -1066,6 +1069,7 @@ class AutomaticMonitor:
         self.thread.join(timeout=15)
         self.generation_thread.join(timeout=45)
         self.backup_thread.join(timeout=15)
+        self.release_watch_thread.join(timeout=15)
         self.incident_thread.join(timeout=15)
         self.notification_thread.join(timeout=15)
         self.signals_thread.join(timeout=45)
@@ -1746,6 +1750,7 @@ class AutomaticMonitor:
                 with self.state_lock:
                     state["signalIntake"]["xStream"] = dict(self.x_stream_status)
             state["signalIntake"]["xMarketNews"] = x_market_news.diagnostics(db)
+            state["releaseWatch"] = release_watch.diagnostics(db, datetime.now(timezone.utc))
             state["signalIntake"]["analystNews"] = analyst_news.diagnostics(db)
             state["signalIntake"]["businessNews"] = general_source_news.diagnostics(db,datetime.now(timezone.utc))
             state["signalIntake"]["headlineTranslation"] = (
@@ -2421,6 +2426,26 @@ class AutomaticMonitor:
         with self.db_lock, monitor.connect(self.db_path) as db:
             monitor.resolve_operational_incident(db, "backup:database")
         return True
+
+    def release_watch_once(self, now=None, transport=None):
+        """Alert the owner about a late or published scheduled result."""
+        now = now or datetime.now(timezone.utc)
+        if not release_watch.active(now):
+            return []
+        payload = self.public_news()
+        if transport is None and web_push.configuration()["enabled"]:
+            transport = web_push.send
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            return release_watch.check(db, payload, now, transport)
+
+    def run_release_watch(self):
+        while not self.stop_event.is_set():
+            try:
+                for alert in self.release_watch_once():
+                    print(json.dumps({"event": "release-watch", **alert}), flush=True)
+            except Exception as exc:
+                print("release-watch-failed " + type(exc).__name__, flush=True)
+            self.stop_event.wait(10)
 
     def run_backup(self):
         # The monitor initializes the schema under this same lock. Waiting for the
