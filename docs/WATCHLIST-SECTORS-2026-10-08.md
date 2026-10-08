@@ -76,3 +76,10 @@ SIC fallback:
 - Source: https://www.sec.gov/search-filings/standard-industrial-classification-sic-code-list
 - Major groups: https://www.osha.gov/data/sic-manual
 - No claim of 100% coverage: ETFs, issuers without useful SIC, SEC outages and unsupported listings can still lack a label.
+
+### Runtime verification follow-up
+
+- APH and AAOI labels were verified in the deployed normal watchlist and the sample.
+- JPM exposed an existing profile-fetch limit: its SEC submission JSON was 4,633,146 bytes and the API rejected it at 2 MB.
+- Submission profiles now have a separate 10 MB bound; the directory remains limited to 2 MB. The parsed response remains bounded by the existing profile parser.
+- A route test exercises a 4.6 MB profile, an oversized 10 MB profile, and an oversized 2 MB directory.

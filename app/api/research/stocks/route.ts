@@ -4,6 +4,9 @@ import { extractBusinessSection, extractRiskSection, normalizeTicker, parseSecDi
 
 const directoryUrl = "https://www.sec.gov/files/company_tickers_exchange.json";
 const maxResponseBytes = 2_000_000;
+// Large issuers can have thousands of recent filings (JPM is about 4.6 MB).
+// Keep directory reads at 2 MB, while bounding submission profiles separately.
+const maxProfileBytes = 10_000_000;
 const maxFilingBytes = 30_000_000;
 
 function headers(accept = "application/json") {
@@ -13,7 +16,7 @@ function headers(accept = "application/json") {
   };
 }
 
-async function secJson(url: string, revalidate: number) {
+async function secJson(url: string, revalidate: number, maxBytes = maxResponseBytes) {
   let response: Response;
   try {
     response = await fetch(url, { headers: headers(), next: { revalidate, tags: ["sec-stock-directory"] }, signal: AbortSignal.timeout(8_000) });
@@ -22,9 +25,9 @@ async function secJson(url: string, revalidate: number) {
   }
   if (!response.ok) throw new Error(`sec-http-${response.status}`);
   const length = Number(response.headers.get("content-length") ?? 0);
-  if (length > maxResponseBytes) throw new Error("sec-response-too-large");
+  if (length > maxBytes) throw new Error("sec-response-too-large");
   const text = await response.text();
-  if (text.length > maxResponseBytes) throw new Error("sec-response-too-large");
+  if (new TextEncoder().encode(text).length > maxBytes) throw new Error("sec-response-too-large");
   try {
     return JSON.parse(text) as unknown;
   } catch {
@@ -108,7 +111,7 @@ export async function GET(request: Request) {
       if (!entry) return Response.json({ ok: false, error: "ticker-not-found", source: directoryUrl }, { status: 404 });
       const cik = String(entry.cik).padStart(10, "0");
       const profileUrl = `https://data.sec.gov/submissions/CIK${cik}.json`;
-      const profile = parseSecProfile(entry, await secJson(profileUrl, 3_600));
+      const profile = parseSecProfile(entry, await secJson(profileUrl, 3_600, maxProfileBytes));
       if (url.searchParams.get("view") === "business") {
         const filing = profile.latestAnnualFiling;
         if (!filing || (filing.form !== "10-K" && filing.form !== "20-F")) return Response.json({ ok: false, error: "annual-filing-not-found" }, { status: 404 });
