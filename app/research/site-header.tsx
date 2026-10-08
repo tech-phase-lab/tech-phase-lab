@@ -85,9 +85,6 @@ const menuIcons = {
   saved: <path d="M7 4h10v16l-5-4-5 4z" />,
   book: <path d="M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zM20 5h-6" />,
   help: <><circle cx="12" cy="12" r="9" /><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01" /></>,
-  compare: <path d="M4 21V5h10v16M14 10h6v11M8 9h2M8 13h2M8 17h2M2 21h20" />,
-  notes: <path d="m12 3 3 6 6 3-6 3-3 6-3-6-6-3 6-3 3-6Z" />,
-  qa: <path d="M4 5h16v11H8l-4 4zM9 9h6M9 12h4" />,
 } as const;
 const Icon = ({ name, className }: { name: MenuIcon; className?: string }) => <svg className={className} viewBox="0 0 24 24" aria-hidden="true">{menuIcons[name]}</svg>;
 
@@ -131,11 +128,11 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
               <Link className={styles.manage} href="/research/account" onClick={event => navigate(event, "/research/account")}>{ja ? "プランの管理" : "Manage plan"}</Link>
             </div>
             <h3>{ja ? "すべての機能が使えます" : "All features unlocked"}</h3>
-            <p className={styles.featline}>{ja ? `銘柄比較 PRO、RIZEL'S DESK、${realtime}、${alerts}` : `銘柄比較 PRO, RIZEL'S DESK, ${realtime}, ${alerts}`}</p>
+            <p className={styles.featline}>{ja ? `銘柄比較 PRO、RIZEL'S DESK、${realtime}、${alerts}` : `Compare · PRO, RIZEL'S DESK, ${realtime}, ${alerts}`}</p>
           </div>
         : <button type="button" className={styles.cardFree} aria-label={ja ? "PROの案内を見る" : "Learn more about PRO"} onClick={act(onPro)}>
             <span className={styles.frTop}><span className={styles.frTitle}><Icon name="gem" />{ja ? "PROで、もっと深く" : "Go deeper with PRO"}</span><span className={styles.frGo}>{ja ? "案内を見る" : "Learn more"}<Icon name="next" /></span></span>
-            <span className={styles.frPerks}><span>RIZEL&apos;S DESK</span><span>銘柄比較 PRO</span><span>{realtime}</span><span>{alerts}</span></span>
+            <span className={styles.frPerks}><span>RIZEL&apos;S DESK</span><span>{ja ? "銘柄比較 PRO" : "Compare · PRO"}</span><span>{realtime}</span><span>{alerts}</span></span>
           </button>}
       <div className={styles.tiles}>
         {member
@@ -144,13 +141,6 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
           : <><button type="button" className={styles.tile} onClick={act(onRefresh)}><Icon name="refresh" />{ja ? "再読み込み" : "Refresh"}</button>
               <Link className={styles.tile} href="/research/account" onClick={event => navigate(event, "/research/account")}><Icon name="account" />{ja ? "アカウント" : "Account"}</Link></>}
       </div>
-      {member && <div className={styles.grp}>
-        <h4 className={styles.proHead}>PRO</h4>
-        {item("/research/compare", "compare", ja ? "銘柄比較 · PRO" : "Compare · PRO")}
-        {item("/research/notes", "notes", ja ? "リゼルのひとりごと" : "Rizel's Notes")}
-        {item("/research/qa", "qa", ja ? "リサーチQ&A" : "Research Q&A")}
-        {item("/research/weekly", "saved", ja ? "週刊PRO" : "Weekly PRO")}
-      </div>}
       <div className={styles.grp}>
         <h4>{ja ? "リサーチ" : "Research"}</h4>
         {item("/research#monitored-companies", "tracked", ja ? "監視22銘柄リスト" : "22 Tracked Stocks")}

@@ -94,13 +94,12 @@ test("bottom bar: five items in order, bilingual labels, raised search, unread d
   assert.match(css, /\.bar a\[aria-current="page"\] \.star \{ fill:rgba\(143,227,192,\.22\)/);
 });
 
-test("menu follows the plan sample: cards, two short buttons, PRO/Research/Guides, English labels", () => {
+test("menu follows the plan sample: cards, two short buttons, Research/Guides, English labels", () => {
   const menu = read("app/research/site-header.tsx");
   for (const [ja, en] of [["PROで、もっと深く", "Go deeper with PRO"], ["案内を見る", "Learn more"], ["プランの管理", "Manage plan"],
     ["すべての機能が使えます", "All features unlocked"], ["運営者　全機能", "Owner · Full access"], ["アカウント", "Account"],
     ["スマホ通知", "Mobile alerts"], ["再読み込み", "Refresh"], ["監視22銘柄リスト", "22 Tracked Stocks"],
-    ["決算・経済指標", "Earnings & Indicators"], ["リゼルのひとりごと", "Rizel's Notes"], ["週刊PRO", "Weekly PRO"],
-    ["銘柄比較 · PRO", "Compare · PRO"], ["リサーチQ&A", "Research Q&A"]]) {
+    ["決算・経済指標", "Earnings & Indicators"], ["銘柄比較 PRO", "Compare · PRO"]]) {
     assert.ok(menu.includes(`"${ja}" : "${en}"`), ja);
   }
   // Manage plan opens the account page; paid buttons are Account + Mobile alerts, free ones Refresh + Account.
@@ -109,7 +108,11 @@ test("menu follows the plan sample: cards, two short buttons, PRO/Research/Guide
   // The three research items carry no PRO tag or lock.
   const research = menu.slice(menu.indexOf('{ja ? "リサーチ" : "Research"}'), menu.indexOf('{ja ? "ガイド" : "Guides"}'));
   assert.doesNotMatch(research, /lock|PRO|tag/);
+  // The sample has no PRO group under the two buttons (owner, Oct 8).
+  assert.doesNotMatch(menu, /proHead|item\("\/research\/(compare|notes|qa|weekly)"/);
+  assert.doesNotMatch(menu, /: `銘柄比較 PRO, /);
   const css = read("app/research/site-header.module.css");
-  assert.match(css, /\.grp h4\.proHead \{ color:var\(--gold\); \}/);
   assert.match(css, /border-radius:22px 22px 0 0/);
+  // ".app button { font:inherit }" must not enlarge the free PRO button past the sample's 12px.
+  assert.match(css, /\.tools \.pro \{\n[^}]*font-size:12px/);
 });

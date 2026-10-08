@@ -44,9 +44,6 @@ test("beginner guide explains orders and risk without fabricated affiliate links
   const nav = read("app/research/site-header.tsx");
   assert.ok(nav.indexOf('item("/research/learn"') > nav.indexOf('item("/research/calendar"'));
   assert.match(nav, /const member = ownerAccount \|\| plan === "pro"/);
-  // PRO destinations are listed for PRO members and the owner only.
-  const pro = nav.slice(nav.indexOf("{member && <div className={styles.grp}>"), nav.indexOf("</div>}", nav.indexOf("{member && <div className={styles.grp}>")));
-  for (const href of ["/research/compare", "/research/notes", "/research/qa", "/research/weekly"]) assert.ok(pro.includes(`item("${href}"`), href);
 });
 
 test("FAQ owns its styles and every referenced class is defined", () => {
