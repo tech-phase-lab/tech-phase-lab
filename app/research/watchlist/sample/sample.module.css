@@ -11,7 +11,7 @@
 .controls { display:flex;gap:14px;justify-content:space-between;align-items:center;margin-bottom:6px; }
 .controls input,.renameForm input { width:55%;min-width:0;border:1px solid #344d50;border-radius:9px;background:#101d24;color:#e6eeed;font:inherit;font-size:16px;padding:10px 12px; }
 .controls input { width:min(62%,360px);height:40px;padding:6px 12px;line-height:24px;border-radius:3px;background:#0e1a21; }
-.renameForm { display:flex;gap:8px;margin-bottom:14px; }.renameForm input { flex:1; }.renameForm button { min-height:44px;padding:8px;border:0;background:transparent;color:#b3d4c8;cursor:pointer; }
+.renameForm { display:flex;align-items:center;gap:4px;width:min(100%,360px);margin:0 0 10px auto; }.renameForm input { flex:1;min-width:0;width:0;height:40px;box-sizing:border-box;border-radius:3px;padding:6px 8px; }.renameForm button { flex-shrink:0;min-height:44px;padding:8px;border:0;background:transparent;color:#b3d4c8;cursor:pointer; }
 .marketBar { display:flex;justify-content:space-between;align-items:center;gap:8px;color:#829f97;font-size:11px; }
 .marketBar label { display:flex;align-items:center;gap:8px; }.marketBar select { font-size:11px; }.marketBar time { color:#b5c9c2; }
 .columns,.row { display:grid;grid-template-columns:minmax(0,1fr) 210px 140px;gap:28px;align-items:center; }

@@ -40,8 +40,9 @@
 .srOnly { position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap; }
 .listForm button,.rowEdit button { min-height:44px;padding:8px 12px;border:0;border-radius:7px;background:transparent;color:#a8cdbf;font:inherit;font-size:13px;cursor:pointer; }
 .rowEdit button:disabled { opacity:.35;cursor:default; }
-.listForm { display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:10px;margin-bottom:14px;border:1px solid #35514a;border-radius:9px; }
-.listForm input { flex:1;min-width:140px;background:#11222a;border:1px solid #436057;border-radius:7px;padding:10px;font-size:16px;color:#e4eeeb; }
+.listForm { display:flex;gap:4px;align-items:center;width:min(100%,360px);margin:0 0 10px auto; }
+.listForm input { flex:1;min-width:0;width:0;height:40px;box-sizing:border-box;background:#11222a;border:1px solid #436057;border-radius:3px;padding:6px 8px;font-size:16px;color:#e4eeeb; }
+.listForm button { flex-shrink:0;padding-inline:8px; }
 .listForm span { flex:1;font-size:13px; }
 .alertButton,.alertForm button,.savedAlert button,.syncNotice button { min-height:40px;border:1px solid #38554a;border-radius:8px;background:#102821;color:#b7daca;padding:8px 12px;font:inherit;font-size:12px;cursor:pointer; }
 .alertButton { margin-top:14px; }.alertForm { display:flex;flex-wrap:wrap;align-items:end;gap:8px;padding:16px 0; }.alertForm p { width:100%;color:#c1b696;font-size:12px;margin:0 0 4px; }.alertForm label { font-size:11px;color:#a6b9b2; }.alertForm input { display:block;width:140px;margin-top:5px; }.alertForm input,.alertForm select { min-height:42px;background:#10221f;border:1px solid #406254;border-radius:7px;color:#e1ede7;font-size:16px;padding:8px; }.savedAlert { display:flex;gap:12px;align-items:center;font-size:12px;color:#aebdb5; }.savedAlert button { border:0;background:transparent; }

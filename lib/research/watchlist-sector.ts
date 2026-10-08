@@ -4,6 +4,7 @@ const label = (ja: string, en: string): SectorLabel => ({ ja, en });
 // Watchlist investment themes, reviewed 2026-10-08. Sources and scope:
 // docs/WATCHLIST-SECTORS-2026-10-08.md. Never mutate the news registry here.
 const themes: Record<string, SectorLabel> = {
+  AAPL: label("スマホ・デバイス", "Smartphones & devices"),
   AEHR: label("半導体検査装置", "Semiconductor test equipment"),
   MSTR: label("クリプト関連", "Crypto-related"),
   CAN: label("クリプト関連", "Crypto-related"),

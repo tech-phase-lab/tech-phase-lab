@@ -8,7 +8,7 @@ test("saved ALAB has a bilingual networking label without a search response", ()
 test("registered labels remain intact and unknown tickers have no invented classification", () => {
   const networking = { ja: "ネットワーク", en: "Networking" };
   assert.equal(watchlistSector("ANET", networking), networking);
-  for (const ticker of ["AAPL", "GS", "IBM", "NASDAQ", "NYSE", "toString"]) {
+  for (const ticker of ["GS", "IBM", "NASDAQ", "NYSE", "toString"]) {
     assert.equal(watchlistSector(ticker), undefined);
   }
 });
