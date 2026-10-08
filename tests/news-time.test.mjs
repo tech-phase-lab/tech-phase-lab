@@ -42,3 +42,18 @@ test('an old X post fetched again keeps its real posting time and leaves the top
     {id:'new',at:'2026-10-08T12:00:00Z',kind:'published'},{id:'day',at:'2026-10-06',kind:'date'},{id:'stale',at:'2026-10-05T10:00:00Z',kind:'published'}];
   assert.deepEqual(freshPulseItems(rows,now).map(row=>row.id),['new','day']);
 });
+
+test('dates stay the real release date and late finds are never NEW',async()=>{
+  const { clockTime, lateDetection, NEWS_MAX_AGE_MS }=await import('../lib/research/news-time.ts');
+  // A date-only release seen the next U.S. day keeps its own date, not the fetch time.
+  assert.deepEqual(clockTime('2026-10-06','date','2026-10-07T13:00:00Z'),{at:'2026-10-06',kind:'date'});
+  assert.deepEqual(clockTime('2026-10-06','date','2026-10-06T13:00:00Z'),{at:'2026-10-06T13:00:00Z',kind:'observed'});
+  assert.equal(lateDetection('2026-10-08T12:00:00Z','2026-10-08T12:20:00Z'),false);
+  assert.equal(lateDetection('2026-10-08T12:00:00Z','2026-10-08T12:45:00Z'),true);
+  assert.equal(lateDetection('2026-10-08T12:00:00Z'),false);
+  assert.equal(NEWS_MAX_AGE_MS,72*3_600_000);
+  const { alertItems }=await import('../lib/research/alert-items.ts');
+  const now=Date.parse('2026-10-08T12:00:00Z');
+  const feed={marketUpdates:[{id:'new',titleJa:'新',publishedAt:'2026-10-07T12:00:00Z'},{id:'old',titleJa:'古',publishedAt:'2026-10-05T11:00:00Z'}]};
+  assert.deepEqual(alertItems(feed,now).map(item=>item.id),['market:new']);
+});

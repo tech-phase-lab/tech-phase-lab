@@ -114,5 +114,8 @@ test("menu follows the plan sample: cards, two short buttons, Research/Guides, E
   const css = read("app/research/site-header.module.css");
   assert.match(css, /border-radius:22px 22px 0 0/);
   // ".app button { font:inherit }" must not enlarge the free PRO button past the sample's 12px.
-  assert.match(css, /\.tools \.pro \{\n[^}]*font-size:12px/);
+  assert.match(css, /\.tools \.pro \{\n[^}]*font-size:11px/);
+  // Paid buttons: Mobile alerts on the left, Account on the right (owner, Oct 8).
+  const tiles = menu.slice(menu.indexOf("{member\n          ? <>"));
+  assert.ok(tiles.indexOf('href="/research/notifications"') < tiles.indexOf('href="/research/account"'));
 });

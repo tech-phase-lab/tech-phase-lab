@@ -4,7 +4,7 @@ import type { Language } from "@/lib/research/data";
 import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";
 import { freshPulseItems, newsPulseItems } from "@/lib/research/news-pulse-items";
 import { isGenericPulseLabel, pickPulseLine } from "@/lib/research/news-pulse-headline";
-import { pulseClock, recentPublication } from "@/lib/research/news-time";
+import { lateDetection, pulseClock, recentPublication } from "@/lib/research/news-time";
 import styles from "./research-pulse.module.css";
 const subscribe = (callback: () => void) => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
 const BASE_FONT_PX = 12;
@@ -81,7 +81,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   if (!item) return null;
   // Japanese readers see Japan time; English readers see U.S. Eastern time.
   const timestamp = pulseClock(item.at, item.kind, ja, "observedAt" in item ? item.observedAt : undefined);
-  const fresh = recentPublication(item.at, item.kind, snapshot?.checkedAt ?? 0);
+  const fresh = recentPublication(item.at, item.kind, snapshot?.checkedAt ?? 0) && !lateDetection(item.at, "observedAt" in item ? item.observedAt : undefined);
   return <section className={styles.pulse} aria-label={ja ? "新着ニュース" : "Latest news"} data-paused={stopped} tabIndex={0}
     onTouchStart={event => { suppressClick.current = false; const point = event.touches[0]; touch.current = event.touches.length === 1 ? {x: point.clientX, y: point.clientY} : null; setInteracting(true); }}
     onTouchEnd={event => { const start = touch.current; const end = event.changedTouches[0]; touch.current = null; setInteracting(false); if (!start || !end) return; const dx = end.clientX - start.x; const dy = end.clientY - start.y; if (Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy) * 1.5) { suppressClick.current = true; move(dx < 0 ? 1 : -1); } }}

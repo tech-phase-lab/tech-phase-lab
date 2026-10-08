@@ -136,8 +136,8 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
           </button>}
       <div className={styles.tiles}>
         {member
-          ? <><Link className={styles.tile} href="/research/account" onClick={event => navigate(event, "/research/account")}><Icon name="account" />{ja ? "アカウント" : "Account"}</Link>
-              <Link className={`${styles.tile} ${styles.bell}`} href="/research/notifications" onClick={event => navigate(event, "/research/notifications")}><Icon name="bell" />{alerts}</Link></>
+          ? <><Link className={`${styles.tile} ${styles.bell}`} href="/research/notifications" onClick={event => navigate(event, "/research/notifications")}><Icon name="bell" />{alerts}</Link>
+              <Link className={styles.tile} href="/research/account" onClick={event => navigate(event, "/research/account")}><Icon name="account" />{ja ? "アカウント" : "Account"}</Link></>
           : <><button type="button" className={styles.tile} onClick={act(onRefresh)}><Icon name="refresh" />{ja ? "再読み込み" : "Refresh"}</button>
               <Link className={styles.tile} href="/research/account" onClick={event => navigate(event, "/research/account")}><Icon name="account" />{ja ? "アカウント" : "Account"}</Link></>}
       </div>

@@ -1,20 +1,21 @@
 import type { GeneralNewsFeed } from "./general-news.ts";
 import { informativeOfficial } from "./news-presentation.ts";
 import { officialHeadlineJa } from "./official-news-ja.ts";
-import { officialTime } from "./news-time.ts";
+import { NEWS_MAX_AGE_MS, officialTime } from "./news-time.ts";
 
 export type AlertItem = { id: string; title: string; at: number };
 
 /** Articles the 速報 page lists, with the publication instant used for "new".
  * Only listed stories count: not uninformative headlines, not stories still
  * waiting for a Japanese translation, and not items that only have a fetch
- * time (a re-acquired old article is not news). */
+ * time (a re-acquired old article is not news), and nothing published more
+ * than three days ago (owner, Oct 8). */
 export function alertItems(feed: Partial<GeneralNewsFeed> | null | undefined, now = Date.now()): AlertItem[] {
   if (!feed || typeof feed !== "object") return [];
   const result: AlertItem[] = [];
   const add = (id: unknown, title: unknown, at: string | undefined) => {
     const time = Date.parse(String(at ?? ""));
-    if (typeof id === "string" && Number.isFinite(time) && time <= now + 60_000) result.push({ id, title: String(title ?? ""), at: time });
+    if (typeof id === "string" && Number.isFinite(time) && time <= now + 60_000 && now - time < NEWS_MAX_AGE_MS) result.push({ id, title: String(title ?? ""), at: time });
   };
   for (const item of Array.isArray(feed.officialUpdates) ? feed.officialUpdates : []) {
     try {
