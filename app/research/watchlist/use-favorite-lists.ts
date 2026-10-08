@@ -1,7 +1,8 @@
 "use client";
-import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { favoriteStocksKey } from "@/lib/research/favorites";
 import { favoriteListsKey, parseFavoriteLists, type FavoriteLists } from "@/lib/research/favorite-lists";
+import { createFavoriteSync, type CloudFavorites, type FavoriteSyncStatus } from "@/lib/research/favorite-sync";
 const eventName = "tech-phase:favorite-lists";
 function snapshot() {
   try { return JSON.stringify([localStorage.getItem(favoriteListsKey), localStorage.getItem(favoriteStocksKey)]); }
@@ -36,66 +37,37 @@ function useLocalFavoriteLists() {
   return { ...state, update, error };
 }
 
-const empty: FavoriteLists = { lists: [{ id: "default", name: "", tickers: [] }], names: {}, alerts: [] };
-type Cloud = { account: string; revision: number; document: FavoriteLists };
 export function useFavoriteLists() {
   const local = useLocalFavoriteLists();
-  const [cloud, setCloud] = useState<Cloud | null>(null);
-  const current = useRef<Cloud | null>(null);
-  const pending = useRef(false), writing = useRef(false), alive = useRef(true);
-  const [status, setStatus] = useState<"loading" | "guest" | "synced" | "saving" | "error" | "conflict">("loading");
-  const refresh = useCallback(async () => {
-    if (pending.current || writing.current) return;
-    try {
-      const response = await fetch("/api/research/favorites", { cache: "no-store" });
-      const data = await response.json();
-      if (!alive.current || pending.current) return;
-      if (response.status === 401) { current.current = null; setCloud(null); setStatus("guest"); return; }
-      if (!response.ok || !data.ok) throw new Error();
-      if (current.current && current.current.account === data.account && current.current.revision > data.revision) return;
-      const next = { account: data.account, revision: data.revision, document: data.document ?? empty };
-      current.current = next; setCloud(next); setStatus("synced");
-    } catch { if (alive.current) setStatus("error"); }
-  }, []);
+  const [cloud, setCloud] = useState<CloudFavorites | null>(null);
+  const [status, setStatus] = useState<FavoriteSyncStatus>("loading");
+  const sync = useRef<ReturnType<typeof createFavoriteSync> | null>(null);
   useEffect(() => {
-    alive.current = true;
-    void refresh();
-    const visible = () => { if (document.visibilityState === "visible") void refresh(); };
+    const controller = createFavoriteSync(init => fetch("/api/research/favorites", {
+      method: init ? "POST" : "GET", cache: "no-store", signal: AbortSignal.timeout(12000),
+      ...(init ? { headers: { "Content-Type": "application/json" }, body: init.body } : {}),
+    }), (next, state) => { setCloud(next); setStatus(state); });
+    sync.current = controller;
+    void controller.refresh();
+    const visible = () => { if (document.visibilityState === "visible") void controller.refresh(); };
+    const online = () => { void controller.retry(); };
     const timer = setInterval(visible, 30000);
-    const protect = (event: BeforeUnloadEvent) => { if (pending.current) { event.preventDefault(); event.returnValue = ""; } };
+    const protect = (event: BeforeUnloadEvent) => { if (controller.hasPending()) { event.preventDefault(); event.returnValue = ""; } };
     window.addEventListener("beforeunload", protect);
     window.addEventListener("focus", visible);
-    return () => { alive.current = false; clearInterval(timer); window.removeEventListener("beforeunload", protect); window.removeEventListener("focus", visible); };
-  }, [refresh]);
-  async function flush() {
-    if (writing.current || !current.current || !pending.current) return;
-    writing.current = true;
-    setStatus("saving");
-    try {
-      while (pending.current && current.current) {
-        const sent: Cloud = current.current;
-        const response = await fetch("/api/research/favorites", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(sent) });
-        const data = await response.json();
-        if (!alive.current) return;
-        if (response.status === 409) { setStatus("conflict"); return; }
-        if (!response.ok || !data.ok || data.account !== sent.account) throw new Error();
-        pending.current = current.current.document !== sent.document;
-        current.current = { ...current.current, revision: data.revision };
-        setCloud(current.current);
-      }
-      setStatus("synced");
-    } catch { if (alive.current) setStatus("error"); }
-    finally { writing.current = false; }
-  }
+    window.addEventListener("online", online);
+    document.addEventListener("visibilitychange", visible);
+    return () => {
+      controller.dispose(); sync.current = null; clearInterval(timer);
+      window.removeEventListener("beforeunload", protect); window.removeEventListener("focus", visible);
+      window.removeEventListener("online", online); document.removeEventListener("visibilitychange", visible);
+    };
+  }, []);
   function update(change: (state: FavoriteLists) => FavoriteLists) {
-    if (status === "guest") return local.update(change);
-    if (!current.current || status === "conflict") return false;
-    const next = { ...current.current, document: change(current.current.document) };
-    current.current = next; setCloud(next); pending.current = true;
-    void flush(); return true;
+    return status === "guest" ? local.update(change) : sync.current?.update(change) ?? false;
   }
   return { ...(cloud?.document ?? local), update, error: local.error, status,
-    retry: () => pending.current ? void flush() : void refresh(),
+    retry: () => { void sync.current?.retry(); },
     canImport: !!cloud && cloud.revision === 0 && local.lists.some(item => item.tickers.length),
     importLocal: () => update(() => ({ lists: local.lists, names: local.names, alerts: local.alerts })),
     editable: status === "guest" || !!cloud && status !== "conflict" };
