@@ -44,3 +44,7 @@ A September 27 connector update truncated existing research files. Before any Gi
 - `npm run test:python` runs `scripts/run_python_tests.py`, which pins the clock to
   `RESEARCH_TEST_NOW` (default in that file) so dated fixtures do not expire as the
   calendar moves on. Run the suite through it, not bare `unittest discover`.
+- The pinned clock lives in `scripts/test_clock/research_test_clock.py`. `npm test` puts
+  `scripts/test_clock` on `PYTHONPATH`, so Python fixtures spawned from `.mjs` tests load the
+  same clock through `sitecustomize.py`. Run the Node suite through `npm test`, not bare
+  `node --test`.
