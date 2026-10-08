@@ -83,3 +83,11 @@ SIC fallback:
 - JPM exposed an existing profile-fetch limit: its SEC submission JSON was 4,633,146 bytes and the API rejected it at 2 MB.
 - Submission profiles now have a separate 10 MB bound; the directory remains limited to 2 MB. The parsed response remains bounded by the existing profile parser.
 - A route test exercises a 4.6 MB profile, an oversized 10 MB profile, and an oversized 2 MB directory.
+
+### Theme refinements after user review
+
+- AAOI, LITE, COHR and POET: 光・フォトニクス / Optics & Photonics. Sample AAOI uses the same wording.
+- AEHR: 半導体検査装置 / Semiconductor test equipment. Silicon photonics is an application of its semiconductor test/burn-in systems; the coarse SIC major-group fallback was misleading here.
+- MSTR and CAN: クリプト / Crypto. Strategy is a Bitcoin treasury company; Canaan supplies Bitcoin mining systems and operates mining activities.
+- These labels are watchlist investment themes, not a change to the official SIC or news/monitoring registry.
+- Sources: https://www.aehr.com/2026/07/aehr-receives-follow-on-production-order-from-lead-silicon-photonics-customer-for-fully-automated-fox-xp-wafer-level-burn-in-system/ ; https://www.strategy.com/investor-relations ; https://canaan.gcs-web.com/

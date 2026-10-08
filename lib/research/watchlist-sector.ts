@@ -4,12 +4,15 @@ const label = (ja: string, en: string): SectorLabel => ({ ja, en });
 // Watchlist investment themes, reviewed 2026-10-08. Sources and scope:
 // docs/WATCHLIST-SECTORS-2026-10-08.md. Never mutate the news registry here.
 const themes: Record<string, SectorLabel> = {
+  AEHR: label("半導体検査装置", "Semiconductor test equipment"),
+  MSTR: label("クリプト", "Crypto"),
+  CAN: label("クリプト", "Crypto"),
   ALAB: label("ネットワーク", "Networking"),
   APH: label("ネットワーク", "Networking"),
-  AAOI: label("光フォトニクス", "Photonics"),
-  LITE: label("光フォトニクス", "Photonics"),
-  COHR: label("光フォトニクス", "Photonics"),
-  POET: label("光フォトニクス", "Photonics"),
+  AAOI: label("光・フォトニクス", "Optics & Photonics"),
+  LITE: label("光・フォトニクス", "Optics & Photonics"),
+  COHR: label("光・フォトニクス", "Optics & Photonics"),
+  POET: label("光・フォトニクス", "Optics & Photonics"),
   MU: label("メモリ", "Memory"),
   SKHY: label("メモリ", "Memory"),
   SNDK: label("メモリ", "Memory"),
