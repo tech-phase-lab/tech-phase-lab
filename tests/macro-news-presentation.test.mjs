@@ -70,7 +70,7 @@ for (const lang of ['ja','en']) {
       assert.deepEqual(officialTime(item),{at:new Date(source.published_at).toISOString(),kind:'published'});
       const html=renderToStaticMarkup(React.createElement(NewsStory,{...display,lang,publication:officialTime(item).at}));
       for (const paragraph of display.body.split('\n\n')) assert.ok(html.includes(paragraph),paragraph);
-      assert.equal((html.match(/class="headline"/g)||[]).length,1);
+      assert.equal((html.match(/class="headline(?: [^"]*)?"/g)||[]).length,1);
       assert.equal((html.match(/<summary>/g)||[]).length,1);
       assert.match(html,/<details/);
       for (const privateValue of ['evidenceQuote','sourceMacroDerivation','Never publish model wording','モデルのコピー']) assert.ok(!html.includes(privateValue));

@@ -97,6 +97,20 @@ test('an opened story continues after the headline and moves the date to its end
   const replaced=renderToStaticMarkup(React.createElement(NewsStory,{...props,body:'見出しの説明。追加の事実。',fullBody:'見出しの説明。追加の事実。',concise:true}));
   assert.match(replaced,/class="headline closedOnly"/);
   assert.ok(replaced.slice(replaced.indexOf('</summary>')).includes('見出しの説明。追加の事実。'));
+  // Any story whose body restates the headline reads as one text (Oct 8).
+  const bond=renderToStaticMarkup(React.createElement(NewsStory,{...props,label:'国債',title:'米国財務省が10年物国債を利回り5.3%で競売 今世紀最高水準',
+    body:'米国財務省が10年物国債を利回り5.3%で競売しました。これは今世紀で最高の利回り水準です。投稿はTwitterアカウントからの報告です。'}));
+  // It only rewords the headline, so it is a plain headline without a ＋.
+  assert.doesNotMatch(bond,/<details|＋|Twitterアカウント|しました/);
+  assert.ok(bond.includes('今世紀最高水準'));
+  const more=renderToStaticMarkup(React.createElement(NewsStory,{...props,label:'国債',title:'米国財務省が10年物国債を利回り5.3%で競売 今世紀最高水準',
+    body:'米国財務省が10年物国債を利回り5.3%で競売しました。応札倍率は2.1倍と需要は弱めでした。'}));
+  assert.match(more,/class="headline closedOnly"/);
+  assert.ok(more.slice(more.indexOf('</summary>')).includes('応札倍率は2.1倍と需要は弱めでした。'));
+  assert.equal(renderToStaticMarkup(React.createElement(NewsStory,{...props,title:'Nebius expands in Finland',body:'Nebius is expanding in Finland.'})).includes('<details'),false);
+  // A headline number missing from the body keeps the headline visible.
+  const kept=renderToStaticMarkup(React.createElement(NewsStory,{...props,title:'米国財務省が10年物国債を利回り5.3%で競売',body:'米国財務省が10年物国債を競売しました。今世紀で最高の水準です。'}));
+  assert.match(kept,/class="headline" lang/);
   const long='一文目の説明です。'.repeat(30);
   const concise=renderToStaticMarkup(React.createElement(NewsStory,{...props,body:long,concise:true}));
   assert.ok(concise.split('一文目の説明です。').length-1<30);
@@ -327,7 +341,7 @@ finally:
       assert.ok(display.body);
       assert.ok(display.body.includes(lang==='ja'?'技術とチームがToken Factoryに加わった。':'The technology and team joined Token Factory.'));
       const html=renderToStaticMarkup(React.createElement(NewsStory,{...props,...display,lang,source:{publisher:item.publisher,url:item.url}}));
-      assert.match(html,/<details class="story"><summary>/);
+      assert.match(html,/<details class="story(?: replaces)?"><summary>/);
       assert.match(html,/aria-hidden="true">＋/);
     }
   }
