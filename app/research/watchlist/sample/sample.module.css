@@ -26,6 +26,7 @@
 .dataTime { color:#8eaaa0;font-size:10px;text-align:right;margin:10px 0; }
 .footer { display:flex;justify-content:space-between;gap:12px;font-size:11px;color:#849b94; }.footer a { color:#a5cdbf;padding-block:12px;display:inline-block; }.footer>span a { text-decoration:underline; }
 .page button:focus-visible,.page input:focus-visible,.page select:focus-visible,.page a:focus-visible { outline:2px solid #9bd9c2;outline-offset:3px; }
+.page .controls input:focus { outline:none;outline-offset:0;border-color:#9bd9c2;box-shadow:0 0 0 2px #9bd9c218; }
 @media(max-width:760px) {
  .heading { gap:6px; }.heading h1 { font-size:clamp(19px,5.4vw,23px); }.listPicker { gap:1px;max-width:48%; }.listPicker select { width:100%;font-size:12px; }.listPicker button { flex-basis:30px;width:30px;padding:6px; }
  .notice { font-size:10px;margin-bottom:12px; }.controls { gap:8px; }.controls input { width:min(62%,360px); }.controls select { font-size:11px; }

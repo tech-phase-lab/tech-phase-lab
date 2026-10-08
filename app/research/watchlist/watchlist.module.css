@@ -6,7 +6,7 @@
 .searchRow:focus-within { border-color:#9bd9c2;box-shadow:0 0 0 2px #9bd9c218; }
 .searchRow svg { width:19px;height:19px;flex-shrink:0;color:#9bd9c2; }
 .searchRow input { width:100%;min-width:0;height:38px;min-height:38px;background:transparent;border:0;color:#e6eff0;font:inherit;font-size:16px;outline:none;padding:6px 0;line-height:24px;box-shadow:none; }
-.searchRow input:focus-visible { outline:none; }
+.page .searchRow input:focus-visible { outline:none;outline-offset:0; }
 .searchRow input::-webkit-search-cancel-button { display:none; }
 .searchRow input::placeholder { color:#8ca0ac; }
 .iconButton { width:36px;min-height:38px;flex-shrink:0;border:0;background:transparent;color:#9db1bc;font-size:23px;cursor:pointer; }
