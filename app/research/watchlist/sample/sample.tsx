@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import ResearchToolShell from "../../research-tool-shell";
 import { useResearchLanguage } from "../../use-research-language";
 import AreaChart from "../area-chart";
@@ -90,7 +89,7 @@ export default function WatchlistSample() {
       })}</ul>
       {!rows.length && <p>{t("一致するサンプル銘柄がありません", "No matching sample stocks")}</p>}
       <p className={styles.dataTime}>{t("データ時刻（架空）", "Data time (simulated)")} {sampleTime} ET · {t("株価のライブ更新なし", "Prices are not live")}</p>
-      <footer className={styles.footer}><Link href="/research/watchlist">← {t("ウォッチリストへ", "Back to watchlist")}</Link><span>{t("本番のデータ提供予定：", "Planned live data provider: ")}<a href="https://twelvedata.com" target="_blank" rel="noopener noreferrer">Twelve Data</a></span></footer>
+      <div className={styles.attribution}>{t("提供予定：", "Planned data provider: ")}<a href="https://twelvedata.com" target="_blank" rel="noopener noreferrer">Twelve Data</a></div>
     </div>
   </ResearchToolShell>;
 }

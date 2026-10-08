@@ -142,6 +142,12 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
       </section>
       {favorites.length > 0 && <div className={styles.toolbar}><label><span className={styles.srOnly}>{t("並び順", "Sort order")}</span><select value={sort} onChange={event => setSort(event.target.value)}><option value="saved">{t("追加した順", "Date added")}</option><option value="ticker">{t("ティッカー順", "Ticker A–Z")}</option><option value="gainers">{t("上昇率順", "Top gainers")}</option><option value="losers">{t("下落率順", "Top losers")}</option></select></label></div>}
       </div>
+      <span className={styles.srOnly} role="status">{status === "saving" ? t("保存中…", "Saving…") : status === "loading" ? t("保存先を確認中…", "Checking sync…") : status === "synced" ? t("保存しました", "Saved") : ""}</span>
+      {(status === "error" || status === "conflict") && <div className={styles.syncNotice} role="alert">
+        <span>{status === "conflict" ? t("別の端末で更新されています。変更内容を控えてから再読み込みしてください。", "Updated on another device. Keep a copy of your edits before reloading.") : t("同期できていません", "Not synced")}</span>
+        {status === "error" && <button onClick={retry}>{t("再試行", "Retry")}</button>}
+      </div>}
+      {canImport && <div className={styles.syncNotice}><button onClick={importLocal}>{t("この端末のお気に入りを取り込む", "Import this device’s favorites")}</button></div>}
       {error && <p role="alert" className={styles.error}>{t("保存できませんでした。ブラウザーの保存設定をご確認ください。", "Could not save. Check your browser storage settings.")}</p>}
       {favorites.length > 0 ? <>
 
@@ -189,11 +195,11 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
               </section>}
             </li>;
           })}</ul>
-          <div className={styles.attribution}>{Object.keys(displayedQuotes).length > 0 ? <>Source: <a href="https://twelvedata.com" target="_blank" rel="noopener">Twelve Data</a></> : <span>{t("株価・当日チャートはTwelve Data接続後に表示します", "Prices and intraday charts will appear once Twelve Data is connected")}</span>}</div>
+          <div className={styles.attribution}>{Object.keys(displayedQuotes).length > 0 ? <>{t("提供：", "Data: ")}<a href="https://twelvedata.com" target="_blank" rel="noopener">Twelve Data</a></> : <span>{t("提供予定：Twelve Data", "Planned data provider: Twelve Data")}</span>}</div>
         </div>
 
       </> : <div className={styles.empty}><span aria-hidden="true" className={styles.emptyStar}>☆</span><h2>{t("いつもの銘柄を、ひとつの画面に。", "Your stocks, together.")}</h2><p>{t("上の検索欄から追加できます", "Add a stock using the search above")}</p></div>}
-      <footer className={styles.footer}><span className={styles.syncStatus} role="status">{status === "synced" ? t("✓ 同期済み", "✓ Synced") : status === "saving" ? t("保存中…", "Saving…") : status === "loading" ? t("保存先を確認中…", "Checking sync…") : status === "guest" ? <Link href="/research/account">{t("ログインして端末間で同期", "Sign in to sync devices")}</Link> : status === "conflict" ? t("別の端末で更新されています。変更内容を控えてから再読み込みしてください。", "Updated on another device. Keep a copy of your edits before reloading.") : <>{t("同期できていません", "Not synced")} <button onClick={retry}>{t("再試行", "Retry")}</button></>}{canImport && <button onClick={importLocal}>{t("この端末のお気に入りを取り込む", "Import this device’s favorites")}</button>}</span><Link href="/research/stocks">{t("銘柄検索", "Stock search")} →</Link></footer>
+
     </div>
   </ResearchToolShell>;
 }
