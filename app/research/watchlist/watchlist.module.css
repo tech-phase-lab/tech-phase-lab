@@ -1,5 +1,6 @@
-/* Keep sync status and retry actions clear of the fixed bottom navigation. */
-.page { max-width:1000px;margin:auto;padding:8px 0 calc(96px + env(safe-area-inset-bottom, 0px));color:#e6eeed;--accent:#9bd9c2;font-variant-numeric:tabular-nums; }
+.page { max-width:1000px;margin:auto;padding:8px 0 0;color:#e6eeed;--accent:#9bd9c2;font-variant-numeric:tabular-nums; }
+/* Mobile already reserves bottom navigation space in the research shell. */
+@media(min-width:761px) { .page { padding-bottom:96px; } }
 .heading { display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0 20px; }
 .heading h1 { margin:0;font-size:28px;font-weight:600;white-space:nowrap; }
 .searchPanel { position:relative;max-width:520px;margin-bottom:8px; }
