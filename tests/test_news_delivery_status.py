@@ -35,6 +35,8 @@ class NewsDeliveryStatusTests(unittest.TestCase):
                              {'tracked':1,'validated':0,'automaticPending':0,'reviewHeld':1,'unpublished':1,'assessedExcluded':0})
             self.assertEqual(state['reviewOverdue'],1)
             self.assertEqual(state['reviewReasons'],{'unsubstantiated-model-output':1})
+            # Health names only the failed check's code, never copy or origin.
+            self.assertEqual(state['attemptFailureKinds'],{'changed-broker-metric':1})
             self.assertEqual(state['reviewOldestPublicationAgeMs']-state['reviewOldestCaptureAgeMs'],13668)
             self.assertEqual(news.diagnostics(db,fixture.PUBLIC)['delivery'],state)
             self.assertEqual(list(db.iterdump()),before)

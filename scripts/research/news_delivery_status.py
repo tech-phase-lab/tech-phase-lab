@@ -25,6 +25,15 @@ def summarize(db,reference,rows,published_ids,reviews,publication_holds=()):
         return monitor.stored_latency_ms(value,reference.isoformat()) if isinstance(value,str) and 'T' in value else None
     def ages(selected,key):
         return [value for row in selected if (value:=age(row,key)) is not None]
+    # Latest private attempt failure code per unpublished item (codes only,
+    # never copy or origin), so a stuck backlog can be diagnosed from public health.
+    failures=Counter()
+    if db.execute("SELECT 1 FROM sqlite_master WHERE name='official_research_attempt_failures'").fetchone():
+        for row in pending+held:
+            last=db.execute('SELECT reason FROM official_research_attempt_failures WHERE event_id=? AND sha=? '
+                            'ORDER BY failed_at DESC LIMIT 1',(row['id'],row['sha'])).fetchone()
+            if last:
+                failures[last['reason']]+=1
     held_capture=ages(held,'observed_at')
     held_source=ages(held,'published_at')
     pending_capture=ages(pending,'observed_at')
@@ -44,4 +53,5 @@ def summarize(db,reference,rows,published_ids,reviews,publication_holds=()):
         'reviewCaptureAgeUnmeasured':len(held)-len(held_capture),
         'reviewPublicationAgeUnmeasured':len(held)-len(held_source),
         'overdueAfterMs':OVERDUE_MS,
+        'attemptFailureKinds':dict(sorted(failures.items())),
     }
