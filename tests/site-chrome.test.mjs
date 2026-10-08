@@ -126,3 +126,18 @@ test("menu follows the plan sample: cards, two short buttons, Research/Guides, E
   const tiles = menu.slice(menu.indexOf("{member\n          ? <>"));
   assert.ok(tiles.indexOf('href="/research/notifications"') < tiles.indexOf('href="/research/account"'));
 });
+
+test("phone menu follows the finger and closes when pulled down", () => {
+  const menu = read("app/research/site-header.tsx");
+  assert.match(menu, /if \(dy > 0 && atTop\) place\(dy, false\);/);
+  assert.match(menu, /else if \(dy < 0 && atEnd\) place\(Math\.max\(dy \* 0\.25, -28\), false\);/);
+  assert.match(menu, /if \(offset > 90\) \{ place\(window\.innerHeight, true\); window\.setTimeout\(onClose, 180\); \}/);
+});
+
+test("news list sorts by the time each card shows, newest first", () => {
+  const panel = read("app/research/news/general-news-panel.tsx");
+  assert.match(panel, /shown = clockTime\(time\.at, time\.kind, item\.observedAt\);/);
+  assert.match(panel, /at: shown\.kind === "date" \? `\$\{shown\.at\}T00:00:00Z` : shown\.at/);
+  assert.match(panel, /const publication = update\.publication,/);
+  assert.match(panel, /\.sort\(\(a, b\) => Date\.parse\(b\.publishedAt\) - Date\.parse\(a\.publishedAt\)\)/);
+});
