@@ -7,9 +7,19 @@ const key = "tech-phase:research-language:v1";
 const eventName = "tech-phase:research-language";
 let sessionLanguage: Language | undefined;
 
+/** First visit: follow the browser's language until the reader picks one. */
+export function browserLanguage(languages: readonly string[] | undefined): Language {
+  const first = (languages ?? []).find(value => typeof value === "string" && value.trim());
+  return !first || /^ja\b/i.test(first) ? "ja" : "en";
+}
+
 function snapshot(): Language {
   if (sessionLanguage) return sessionLanguage;
-  try { return localStorage.getItem(key) === "en" ? "en" : "ja"; }
+  try {
+    const saved = localStorage.getItem(key);
+    if (saved === "en" || saved === "ja") return saved;
+  } catch { /* Storage can be unavailable; fall back to the browser setting. */ }
+  try { return browserLanguage(navigator.languages?.length ? navigator.languages : [navigator.language]); }
   catch { return "ja"; }
 }
 function subscribe(notify: () => void) {

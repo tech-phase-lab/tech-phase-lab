@@ -8,7 +8,8 @@ test("free learning and service help stay separate and linked from navigation", 
   const guide = read("app/research/learn/guide.tsx");
   const faq = read("app/research/faq/faq.tsx");
   const home = read("app/research/home-tools.tsx");
-  const nav = read("app/research/bottom-nav.tsx");
+  // The full menu moved from the bottom bar to the header menu (Oct 8).
+  const nav = read("app/research/site-header.tsx");
   assert.match(guide, /口座を開く/);
   assert.match(guide, /注文する/);
   assert.match(guide, /購入までの4ステップ/);
@@ -40,10 +41,11 @@ test("beginner guide explains orders and risk without fabricated affiliate links
   assert.doesNotMatch(quick, /research\/(learn|faq)|↗/);
   const dashboard = read("app/research/research-dashboard.tsx");
   assert.ok(dashboard.indexOf("<HomeHelp") > dashboard.indexOf("<PriceTargetsPanel"));
-  const nav = read("app/research/bottom-nav.tsx");
+  const nav = read("app/research/site-header.tsx");
   assert.ok(nav.indexOf('["/research/learn"') > nav.indexOf('["/research/calendar"'));
-  assert.match(nav, /useMemberDisplay\(\) === "pro"/);
-  assert.match(nav, /proMenu \|\| !\["\/research\/compare", "\/research\/notes", "\/research\/qa", "\/research\/weekly"\]\.includes\(href\)/);
+  assert.match(nav, /const member = ownerAccount \|\| plan === "pro"/);
+  assert.match(nav, /new Set\(\["\/research\/compare", "\/research\/notes", "\/research\/qa", "\/research\/weekly"\]\)/);
+  assert.match(nav, /member \|\| !PRO_ONLY\.has\(href\)/);
 });
 
 test("FAQ owns its styles and every referenced class is defined", () => {

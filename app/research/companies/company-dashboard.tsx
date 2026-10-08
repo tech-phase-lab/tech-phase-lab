@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import MembershipLabel from "../membership-label";
-import HeaderPro from "../header-pro";
-import HomeLink from "../home-link";
+import SiteHeader from "../site-header";
 import type { CompanyComparison, CompanyProfile } from "@/lib/research/companies";
 import type { Language, ResearchEvent } from "@/lib/research/data";
 import { compareMetrics, type Source } from "@/lib/research/quality";
@@ -45,13 +43,7 @@ export default function CompanyDashboard({ profile, companies }: { profile: Comp
 
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#company-main">{t("本文へ移動", "Skip to content")}</a>
-    <header className={base.header}>
-      <Link href="/research" className={base.brand} aria-label="Tech Phase Research"><span className={base.logoMark} aria-hidden="true" /><span>TECH PHASE<MembershipLabel /></span></Link>
-      <nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research#what-changed" aria-current="page">{t("何が変わった？", "What changed?")}</Link><Link href="/research/stocks">{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics">{t("決算・指標", "Financials")}</Link></nav>
-      <div className={base.headerRight}><span className={base.edition}>COMPANY RESEARCH <span>02</span></span><HomeLink lang={lang} /><div className={base.languages} aria-label={t("言語", "Language")}>
-        <button onClick={() => setLang("ja")} aria-pressed={lang === "ja"}>日本語</button><button onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button>
-      </div><HeaderPro /></div>
-    </header>
+    <SiteHeader lang={lang} setLang={setLang} nav={<nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research#what-changed" aria-current="page">{t("何が変わった？", "What changed?")}</Link><Link href="/research/stocks">{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics">{t("決算・指標", "Financials")}</Link></nav>} />
     <main className={styles.main} id="company-main">
       <CompanySwitcher ticker={profile.ticker} companies={companies} lang={lang} />
       <div className={styles.preview}><strong>{t("過去資料の比較版", "HISTORICAL REVIEW")}</strong><span>{t("収録資料の最終発表日", "Latest included release")}: {latestDate} · {t("自動更新なし", "No automatic updates")}</span></div>

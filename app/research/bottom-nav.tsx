@@ -1,10 +1,9 @@
 "use client";
-import { useMemberDisplay } from "./member-display-provider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type MouseEvent } from "react";
-import NavigationIcon, { type NavigationIconName } from "./navigation-icon";
+import { useLayoutEffect, useRef, useState, useSyncExternalStore, type MouseEvent } from "react";
 import { useResearchLanguage } from "./use-research-language";
+import { useAlertsUnread } from "./use-alerts-unread";
 import styles from "./bottom-nav.module.css";
 
 function subscribe(notify: () => void) {
@@ -14,87 +13,61 @@ function subscribe(notify: () => void) {
 const getHash = () => window.location.hash;
 const serverHash = () => "";
 
+const icons = {
+  home: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" /></svg>,
+  alerts: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4" /></svg>,
+  search: <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4" /></svg>,
+  watchlist: <svg className={styles.star} viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9l-5.2 2.8 1-5.9L3.5 9.7l5.9-.8z" /></svg>,
+  markets: <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3" /><path d="M12 4v2M12 18v2M4 12h2M18 12h2" /></svg>,
+};
+
+/** Floating five-item bar (owner's final design): glow slides to the current
+ * item, search is a raised orb, 速報 shows a blinking dot for unread news. */
 export default function BottomNav() {
   const pathname = usePathname();
-  const [lang] = useResearchLanguage();
-  const [open, setOpen] = useState(false);
-  const proMenu = useMemberDisplay() === "pro";
-  const trigger = useRef<HTMLButtonElement>(null);
-  const panel = useRef<HTMLElement>(null);
-  const unlockScroll = useRef<(() => void) | null>(null);
   const hash = useSyncExternalStore(subscribe, getHash, serverHash);
+  const [lang] = useResearchLanguage();
   const ja = lang === "ja";
+  const bar = useRef<HTMLElement>(null);
+  const [glow, setGlow] = useState<{ x: number; w: number } | null>(null);
+  const alertsPage = pathname === "/research/news" || pathname === "/research/price-targets";
+  const unread = useAlertsUnread(alertsPage);
+  const tabs = [
+    { key: "home", href: "/research#research-main", label: ja ? "ホーム" : "Home", active: pathname === "/research" && (!hash || hash === "#research-main") },
+    { key: "alerts", href: "/research/news", label: ja ? "速報" : "Alerts", active: alertsPage },
+    { key: "search", href: "/research/stocks", label: ja ? "銘柄検索" : "Search", active: pathname.startsWith("/research/stocks") },
+    { key: "watchlist", href: "/research/watchlist", label: ja ? "お気に入り" : "Watchlist", active: pathname.startsWith("/research/watchlist") },
+    { key: "markets", href: "/research/market", label: ja ? "マーケット" : "Markets", active: pathname === "/research/market" },
+  ] as const;
+  const current = tabs.findIndex(tab => tab.active);
   useLayoutEffect(() => {
-    if (!open) return;
-    const body = document.body;
-    const root = document.documentElement;
-    const x = window.scrollX;
-    const y = window.scrollY;
-    const previous = { position: body.style.position, top: body.style.top, left: body.style.left, width: body.style.width, overflow: body.style.overflow, rootOverflow: root.style.overflow, scrollBehavior: root.style.scrollBehavior };
-    body.style.position = "fixed";
-    body.style.top = `-${y}px`;
-    body.style.left = `-${x}px`;
-    body.style.width = "100%";
-    body.style.overflow = "hidden";
-    root.style.overflow = "hidden";
-    let locked = true;
-    const unlock = () => {
-      if (!locked) return;
-      locked = false;
-      Object.assign(body.style, { position: previous.position, top: previous.top, left: previous.left, width: previous.width, overflow: previous.overflow });
-      root.style.overflow = previous.rootOverflow;
-      root.style.scrollBehavior = "auto";
-      window.scrollTo({ left: x, top: y, behavior: "instant" });
-      root.style.scrollBehavior = previous.scrollBehavior;
-      unlockScroll.current = null;
+    const place = () => {
+      const item = current >= 0 ? bar.current?.querySelectorAll<HTMLElement>("[data-tab]")[current] : null;
+      setGlow(item && tabs[current].key !== "search" ? { x: item.offsetLeft, w: item.offsetWidth } : null);
     };
-    unlockScroll.current = unlock;
-    return unlock;
-  }, [open]);
-  useEffect(() => {
-    if (!open) return;
-    panel.current?.querySelector<HTMLAnchorElement>("a")?.focus({ preventScroll: true });
-    const close = (event: KeyboardEvent) => { if (event.key === "Escape") { setOpen(false); trigger.current?.focus({ preventScroll: true }); } };
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
-  }, [open]);
+    place();
+    window.addEventListener("resize", place);
+    void document.fonts?.ready.then(place);
+    return () => window.removeEventListener("resize", place);
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- `tabs` is derived from `current` inputs.
+  }, [current, lang]);
   if (pathname.endsWith("/widget") || pathname === "/research/write") return null;
   function navigate(event: MouseEvent<HTMLAnchorElement>, href: string) {
-    unlockScroll.current?.();
-    setOpen(false);
     if (pathname !== "/research" || !href.startsWith("/research#")) return;
     event.preventDefault();
     window.history.pushState(null, "", href);
     window.dispatchEvent(new HashChangeEvent("hashchange"));
     window.scrollTo({ top: 0, behavior: "instant" });
   }
-  const tabs: { href: string; label: string; icon: NavigationIconName; active: boolean }[] = [
-    { href: "/research#research-main", label: ja ? "ホーム" : "Home", icon: "home", active: pathname === "/research" && (!hash || hash === "#research-main") },
-    { href: "/research/news", label: ja ? "速報" : "News", icon: "changes", active: pathname === "/research/news" || pathname === "/research/price-targets" },
-    { href: "/research/stocks", label: ja ? "銘柄検索" : "Search", icon: "search", active: pathname.startsWith("/research/stocks") },
-    { href: "/research/market", label: ja ? "マーケット" : "Markets", icon: "metrics", active: pathname === "/research/market" },
-  ];
-  const links: [string, string, NavigationIconName][] = [
-    ["/research/compare", ja ? "銘柄比較 · PRO" : "Compare · PRO", "companies"],
-    ["/research/notes", ja ? "リゼルのひとりごと" : "RIZEL’s Notes", "pro"],
-    ["/research/qa", ja ? "リサーチQ&A" : "Research Q&A", "changes"],
-    ["/research/weekly", ja ? "週刊PRO" : "PRO Weekly", "saved"],
-    ["/research#monitored-companies", ja ? "監視22銘柄リスト" : "22-stock watch list", "companies"],
-    ["/research#what-changed", ja ? "何が変わった？" : "What changed?", "changes"],
-    ["/research/watchlist", ja ? "ウォッチリスト" : "Watchlist", "favorite"],
-    ["/research/calendar", ja ? "決算・経済指標" : "Earnings & economy", "calendar"],
-    ["/research/notifications", ja ? "スマホ通知設定" : "Notifications", "bell"],
-    ["/research#saved", ja ? "保存したリサーチ" : "Saved research", "saved"],
-    ["/research/account", ja ? "マイアカウント" : "My account", "home"],
-    ["/research/learn", ja ? "米国株のはじめ方" : "US stock basics", "saved"],
-    ["/research/faq", ja ? "よくある質問・使い方" : "FAQ & help", "changes"],
-  ];
-  return <div className={styles.mobile}>
-    {open && <><button className={styles.backdrop} aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus({ preventScroll: true }); }} />
-      <nav ref={panel} id="mobile-more-menu" className={styles.sheet} aria-label={ja ? "その他のメニュー" : "More navigation"}><div className={styles.sheetHeading}><strong>{ja ? "メニュー" : "Explore"}</strong><button aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={() => { setOpen(false); trigger.current?.focus({ preventScroll: true }); }}>×</button></div><div className={styles.menuGrid}>{tabs.map(({ href, label, icon }) => <Link className={styles.desktopLink} key={href} href={href} onClick={(event) => navigate(event, href)}><span className={styles.menuIcon}><NavigationIcon name={icon} /></span><span>{label}</span></Link>)}{links.filter(([href]) => proMenu || !["/research/compare", "/research/notes", "/research/qa", "/research/weekly"].includes(href)).map(([href, label, icon]) => <Link key={href} href={href} onClick={(event) => navigate(event, href)}><span className={styles.menuIcon}><NavigationIcon name={icon} /></span><span>{label}</span></Link>)}</div></nav></>}
-    <nav className={styles.bar} aria-label={ja ? "メインメニュー" : "Main navigation"}>
-      {tabs.map(({ href, label, icon, active }) => <Link key={href} href={href} aria-current={!open && active ? "page" : undefined} onClick={(event) => navigate(event, href)}><NavigationIcon name={icon} /><span>{label}</span></Link>)}
-      <button ref={trigger} aria-expanded={open} aria-controls="mobile-more-menu" onClick={() => { setOpen(!open); }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg><span>{ja ? "メニュー" : "Menu"}</span></button>
+  return <div className={styles.dock}>
+    <nav ref={bar} className={styles.bar} aria-label={ja ? "メインメニュー" : "Main navigation"}>
+      <span className={styles.glow} aria-hidden="true" style={glow ? { transform: `translateX(${glow.x}px)`, width: glow.w } : { opacity: 0 }} />
+      {tabs.map(tab => <Link key={tab.key} data-tab="" href={tab.href} className={tab.key === "search" ? styles.mid : undefined}
+        aria-current={tab.active ? "page" : undefined} onClick={event => navigate(event, tab.href)}>
+        {tab.key === "search" ? <span className={styles.orb}>{icons.search}</span> : icons[tab.key]}
+        <span className={styles.label}>{tab.label}</span>
+        {tab.key === "alerts" && unread && <span className={styles.live} role="status" aria-label={ja ? "新着あり" : "New alerts"} />}
+      </Link>)}
     </nav>
   </div>;
 }

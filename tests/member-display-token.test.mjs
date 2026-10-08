@@ -5,7 +5,8 @@ const now=1000000, secret='test-only-key';
 const pro={plan:'pro',owner:true,ownerMode:true,accessExpiresAt:now+600000};
 test('verified display is bound to identity, signature and expiry',()=>{
  const token=signDisplay(pro,'owner',secret,now);
- assert.deepEqual(verifyDisplay(token,'owner',secret,now),pro);
+ assert.deepEqual(verifyDisplay(token,'owner',secret,now),{...pro,ownerAccount:false});
+ assert.equal(verifyDisplay(signDisplay({...pro,ownerAccount:true},'owner',secret,now),'owner',secret,now).ownerAccount,true);
  assert.equal(verifyDisplay(token,'other',secret,now),undefined);
  assert.equal(verifyDisplay(token,'owner','wrong',now),undefined);
  assert.equal(verifyDisplay(token,'owner',secret,now+300000),undefined);

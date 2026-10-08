@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const membership = await getMembership();
     await saveMemberDisplay(membership.status === "signed-in" ? { ...membership, owner: membership.isAdmin } : undefined);
-    return Response.json({ status: membership.status, plan: membership.plan, accessExpiresAt: "accessExpiresAt" in membership ? membership.accessExpiresAt : 0, isAdmin: "isAdmin" in membership && membership.isAdmin, ownerMode: "ownerMode" in membership && membership.ownerMode, canTest: "canTest" in membership && membership.canTest, testing: "testing" in membership && membership.testing }, { headers });
+    return Response.json({ status: membership.status, plan: membership.plan, accessExpiresAt: "accessExpiresAt" in membership ? membership.accessExpiresAt : 0, isAdmin: "isAdmin" in membership && membership.isAdmin, ownerMode: "ownerMode" in membership && membership.ownerMode, ownerAccount: "ownerAccount" in membership && membership.ownerAccount === true, canTest: "canTest" in membership && membership.canTest, testing: "testing" in membership && membership.testing }, { headers });
   } catch {
     return Response.json({ status: "unavailable", plan: "free" }, { status: 503, headers });
   }

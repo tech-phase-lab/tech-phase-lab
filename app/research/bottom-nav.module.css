@@ -1,64 +1,56 @@
-.mobile { display:none; }
+/* Floating bottom bar (owner's final design: sample "A＋B 合体版").
+   Mobile only; desktop keeps the header navigation and menu. */
+.dock { display:none; }
 @media (max-width:760px) {
-  .mobile { display:block; }
-  .bar { position:fixed; bottom:0; left:0; right:0; z-index:60; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); padding:8px 8px calc(24px + env(safe-area-inset-bottom)); background:#0d171ff5; backdrop-filter:blur(16px); border-top:1px solid #2b3d47; }
-  .bar a,.bar button { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; min-height:47px; padding:3px 0; border:0; border-radius:9px; color:#93a3ae; background:transparent; text-decoration:none; font:500 10px/1.25 Arial,sans-serif; cursor:pointer; }
-  .bar svg { width:22px; height:22px; }
-  .bar [aria-current=page],.bar [aria-expanded=true] { color:#95e4c6; background:#19332e; }
-  .bar :focus-visible,.sheet a:focus-visible { outline:2px solid #95e4c6; outline-offset:2px; }
-  .backdrop { position:fixed; inset:0; z-index:58; border:0; background:#0007; touch-action:none; }
-  .sheet { position:fixed; left:12px; right:12px; bottom:calc(98px + env(safe-area-inset-bottom)); z-index:59; padding:10px; border:1px solid #354b55; border-radius:18px; background:#14212b; box-shadow:0 -12px 48px #0005; max-height:60vh; overflow:auto; }
-  .sheet a { display:flex; justify-content:space-between; gap:10px; padding:15px 12px; border-radius:8px; color:#deebe6; text-decoration:none; font:500 14px/1.3 Arial,sans-serif; }
-  .sheet a:hover { background:#20372f; }
-  .sheet a span { color:#8db7a9; }
+  .dock {
+    --bg:#070b10; --muted:#8b9aa6; --mint:#8fe3c0; --rise:#ff7a8a;
+    display:block; position:fixed; z-index:60;
+    left:max(12px, env(safe-area-inset-left)); right:max(12px, env(safe-area-inset-right));
+    bottom:calc(10px + env(safe-area-inset-bottom));
+  }
+  .bar {
+    position:relative; display:grid; grid-template-columns:1fr 1fr 84px 1fr 1fr; align-items:end;
+    padding:8px 6px 10px; border-radius:22px;
+    background:linear-gradient(180deg,rgba(24,36,48,.92),rgba(13,20,28,.96));
+    -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+    box-shadow:0 0 0 1px #223241,0 18px 40px -12px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.06);
+  }
+  .bar a {
+    position:relative; z-index:1; display:grid; justify-items:center; gap:4px; padding:8px 0 6px;
+    color:var(--muted); text-decoration:none; transition:color .25s;
+    font:500 11px/1.2 "Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; letter-spacing:.02em;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .bar a:focus-visible { outline:2px solid var(--mint); outline-offset:2px; border-radius:12px; }
+  .bar svg { display:block; width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+  .bar a[aria-current="page"] { color:var(--mint); }
+  .bar a[aria-current="page"] svg { filter:drop-shadow(0 0 7px rgba(143,227,192,.65)); }
+  .label { white-space:nowrap; }
+  .glow {
+    position:absolute; top:0; left:0; height:100%; width:60px; pointer-events:none;
+    transition:transform .35s cubic-bezier(.3,.9,.3,1),width .35s cubic-bezier(.3,.9,.3,1),opacity .2s;
+  }
+  .glow::before { content:""; position:absolute; left:22%; right:22%; top:-1px; height:3px; border-radius:0 0 4px 4px; background:var(--mint); box-shadow:0 0 14px 2px rgba(143,227,192,.7); }
+  .glow::after { content:""; position:absolute; inset:0; background:radial-gradient(60% 90% at 50% 0,rgba(143,227,192,.16),transparent 70%); border-radius:18px; }
+  .bar .mid, .bar .mid[aria-current="page"] { padding:0; margin-top:-34px; color:#06231a; }
+  .orb {
+    display:grid; place-items:center; width:64px; height:64px; margin:0 auto; border-radius:50%;
+    background:radial-gradient(circle at 30% 25%,#c9f7e3,#6fd6ac 60%,#3fae86);
+    box-shadow:0 0 0 6px var(--bg),0 0 0 7px #223241,0 10px 24px -4px rgba(63,174,134,.55);
+    transition:transform .2s,box-shadow .3s;
+  }
+  .mid[aria-current="page"] .orb { box-shadow:0 0 0 6px var(--bg),0 0 0 7px var(--mint),0 0 26px 2px rgba(143,227,192,.75); }
+  .mid:active .orb { transform:scale(.95); }
+  .bar .mid svg { width:29px; height:29px; stroke-width:2; filter:none !important; }
+  .mid .label { display:block; margin-top:6px; color:var(--mint); }
+  .star { fill:none !important; }
+  .bar a[aria-current="page"] .star { fill:rgba(143,227,192,.22) !important; }
+  .live { position:absolute; top:4px; right:calc(50% - 22px); width:8px; height:8px; border-radius:50%; background:var(--rise); box-shadow:0 0 0 2px #121b25; }
+  .live::after { content:""; position:absolute; inset:-3px; border-radius:50%; border:1px solid var(--rise); animation:ping 1.8s ease-out infinite; }
+  @keyframes ping { from { transform:scale(.6); opacity:.9; } to { transform:scale(1.9); opacity:0; } }
 }
-
-@media(max-width:760px) {
-  .sheet { padding:18px; border-radius:22px; background:linear-gradient(150deg,#192c35,#101b24); }
-  .sheetHeading { display:flex; align-items:center; justify-content:space-between; padding:0 4px 14px; color:#ecf3f1; font-size:15px; }
-  .sheetHeading button { width:32px; height:32px; border:1px solid #36505d; border-radius:50%; background:#20343e; color:#c6d6dc; font-size:23px; cursor:pointer; }
-  .menuGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
-  .menuGrid a { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:12px; min-height:98px; padding:14px; border:1px solid #2b424e; border-radius:14px; background:#1b2c36; font-size:12px; }
-  .menuGrid a span { color:#dce9e7; }
-  .menuGrid .menuIcon { display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:10px; color:#a3e8ce; background:#28473f; }
-  .menuIcon svg { width:20px; height:20px; }
+@media (max-width:760px) and (prefers-reduced-motion:reduce) {
+  .glow, .bar a, .orb { transition:none !important; }
+  .live::after { animation:none !important; }
 }
-
-/* Compact reading destinations, with a comfortable touch target. */
-@media(max-width:760px){
- .menuGrid{grid-template-columns:1fr;gap:0}
- .menuGrid a{flex-direction:row;align-items:center;justify-content:flex-start;min-height:48px;padding:8px 10px;gap:12px;border:0;border-bottom:1px solid #2b424e;border-radius:0;background:transparent;font-size:14px}
- .menuGrid .menuIcon{width:28px;height:28px;flex-shrink:0;border-radius:7px}
- .sheet{padding:12px;max-height:65vh}
- .sheetHeading{padding-bottom:8px}
-}
-
-@media(max-width:760px){
- .sheet{display:flex;flex-direction:column;overflow:hidden;max-height:min(65dvh,calc(100dvh - 130px - env(safe-area-inset-top) - env(safe-area-inset-bottom)))}
- .sheetHeading{flex-shrink:0;min-height:48px;padding:0 4px 8px;border-bottom:1px solid #2b424e}
- .sheetHeading button{width:44px;height:44px}
- .menuGrid{min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:4px}
- .menuGrid a{flex-shrink:0}
-}
-
-@media(max-width:760px){:global(body:has(input:focus,textarea:focus,[contenteditable="true"]:focus)) .mobile{display:none}}
-
-/* Keep the same destinations available on desktop without a second menu. */
-@media(min-width:761px) {
- .mobile { display:block; }
- .bar { position:fixed;left:26px;bottom:26px;z-index:60; }
- .bar>a { display:none; }
- .bar>button { display:flex;align-items:center;gap:10px;min-height:48px;padding:12px 18px;border:1px solid #537368;border-radius:12px;background:#142923;color:#d9eee5;font:500 13px/1.2 Arial,sans-serif;box-shadow:0 6px 24px #0005;cursor:pointer; }
- .backdrop { position:fixed;inset:0;z-index:58;background:#0007;border:0; }
- .sheet { position:fixed;left:26px;bottom:86px;z-index:59;width:330px;max-height:calc(100dvh - 120px);padding:16px;background:#13212a;border:1px solid #354b55;border-radius:16px;display:flex;flex-direction:column;box-shadow:0 16px 48px #0008; }
- .sheetHeading { display:flex;align-items:center;justify-content:space-between;color:#e3efeb;padding-bottom:10px; }
- .sheetHeading button { width:44px;height:44px;background:transparent;border:0;color:#b7cec7;font-size:24px;cursor:pointer; }
- .menuGrid { overflow-y:auto;min-height:0; }
- .menuGrid a { display:flex;align-items:center;gap:12px;min-height:46px;padding:8px 12px;border-radius:8px;color:#d4e4df;text-decoration:none;font-size:13px; }
- .menuGrid a:hover { background:#233d37; }
- .menuIcon { display:flex;color:#9bd9c2; }.menuIcon svg { width:20px;height:20px; }
- .mobile :focus-visible { outline:2px solid #9bd9c2;outline-offset:2px; }
-}
-
-.menuGrid .desktopLink { display:none; }
-@media(min-width:761px) { .menuGrid .desktopLink { display:flex; } }
+@media (max-width:760px) { :global(body:has(input:focus,textarea:focus,[contenteditable="true"]:focus)) .dock { display:none; } }
