@@ -2937,6 +2937,7 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertNotIn("private path", json.dumps(state))
         self.assertEqual(state["backup"]["failureKind"], "os-error")
         self.assertIsInstance(state["backup"]["diskFreeBytes"], int)
+        self.assertIsInstance(state["backup"]["databaseBytes"], int)
         import errno
         with patch.object(persistence, "create_backup", side_effect=OSError(errno.ENOSPC, "No space left on /secret-volume/db")):
             self.assertFalse(app.perform_backup())

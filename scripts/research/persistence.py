@@ -9,6 +9,7 @@ import math
 import os
 from pathlib import Path
 import re
+import shutil
 import sqlite3
 
 
@@ -181,6 +182,15 @@ def create_backup(database_path, backup_dir, retain=24):
         raise ValueError("database-file-unavailable")
     backup_dir.mkdir(parents=True, exist_ok=True)
     backup_dir.chmod(0o700)
+    # Leftover temporaries from interrupted attempts only waste space.
+    for leftover in backup_dir.glob("research-*.sqlite.tmp"):
+        if leftover.is_file() and not leftover.is_symlink():
+            leftover.unlink(missing_ok=True)
+    # Pruning only after success deadlocked on a full volume (staging, Oct 8):
+    # every attempt failed with "disk full" and old snapshots were never
+    # removed. When the new copy cannot fit, keep retain-1 old snapshots first.
+    if shutil.disk_usage(backup_dir).free < database_path.stat().st_size * 1.1 + 16 * 1024 * 1024:
+        _prune(backup_dir, retain - 1)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
     final = backup_dir / f"research-{stamp}.sqlite"
     temporary = final.with_name(final.name + ".tmp")
