@@ -72,7 +72,7 @@ test('Python current source detail survives server/client transport and the actu
       const body = marketNewsBody(item, lang);
       const title = lang === 'ja' ? item.titleJa : item.titleEn;
       const html = render(item, lang);
-      assert.match(html, /<details class="story"><summary>/);
+      assert.match(html, /<details class="story(?: [^"]*)?"><summary>/);
       assert.doesNotMatch(html, /<details[^>]+open=/);
       assert.match(html, /aria-hidden="true">＋/);
       assert.ok(html.includes(lang === 'ja' ? '詳細を開閉' : 'Toggle details'));

@@ -25,6 +25,29 @@ function openedNewsText(body: string, limit = /[぀-ヿ㐀-鿿]/.test(body) ? 16
   return kept.join("\n\n");
 }
 
+/** Source-attribution filler a summary sometimes appends; never a fact. */
+const FILLER = /^(?:この)?(?:投稿|情報|内容|報道)は.{0,20}(?:Twitter|X|ツイッター)の?アカウントから(?:の|による)?(?:報告|投稿|情報)です。?$|^(?:This|The) (?:post|information|report) (?:is|was|comes) (?:from|reported by|shared by|posted by) (?:a|an|the) (?:Twitter|X) account\.?$/i;
+
+function withoutFiller(text: string): string {
+  return text.split(/\n+/).map(paragraph => {
+    const sentences = paragraph.trim().split(SENTENCE);
+    const kept = sentences.filter(sentence => !FILLER.test(sentence.trim()));
+    return (kept.length ? kept : sentences).join(/[぀-ヿ㐀-鿿]/.test(paragraph) ? "" : " ").trim();
+  }).filter(Boolean).join("\n\n");
+}
+
+/** The body already tells the headline when it opens with the same words and
+ * every headline number; the opened story then replaces the headline. */
+function bodyRestatesTitle(title: string, body: string): boolean {
+  const comparable = (text: string) => text.normalize("NFKC").toLocaleLowerCase("en").replace(/[^\p{L}\p{N}.%$]+/gu, "");
+  const head = comparable(title), lead = comparable(body.trim().split(/\n+/)[0] ?? "");
+  if (head.length < 6 || !lead) return false;
+  const numbers = title.normalize("NFKC").match(/\d+(?:[.,]\d+)*/g) ?? [];
+  if (numbers.some(number => !body.normalize("NFKC").includes(number))) return false;
+  const pairs = Array.from({ length: head.length - 1 }, (_, index) => head.slice(index, index + 2));
+  return pairs.filter(pair => lead.includes(pair)).length / pairs.length >= 0.7;
+}
+
 /** A disclosure promises additional information, never a repeated headline.
  * Opened, the detail continues right after the headline and the date moves to
  * the end. A ``concise`` company story instead replaces its headline with the
@@ -34,9 +57,12 @@ export default function NewsStory({ label, title, body, fullBody, publication, l
 }) {
   const detail = additionalNewsDetail([label, title, publication], body);
   if (!detail) return <div className={styles.shortStory}><span className={styles.tickers}>{label}</span><span className={styles.headline} lang={lang}>{title}</span><span className={styles.note}>{publication}</span></div>;
-  const opened = concise ? openedNewsText(fullBody?.trim() ? fullBody : `${title}\n\n${detail}`) : detail;
-  return <details className={concise ? `${styles.story} ${styles.replaces}` : styles.story}>
-    <summary><span className={styles.tickers}>{label}</span><span className={concise ? `${styles.headline} ${styles.closedOnly}` : styles.headline} lang={lang}>{title}</span><span className={`${styles.note} ${styles.closedOnly}`}>{publication}</span><span className={styles.expand} aria-hidden="true">＋</span><span className={styles.srOnly}>{lang === "ja" ? "詳細を開閉" : "Toggle details"}</span></summary>
+  // Opened, every story reads as one text: a body that already restates the
+  // headline replaces it rather than repeating it (owner, Oct 8).
+  const replaces = concise || (!!body && bodyRestatesTitle(title, body));
+  const opened = withoutFiller(concise ? openedNewsText(fullBody?.trim() ? fullBody : `${title}\n\n${detail}`) : replaces ? openedNewsText(body!, Infinity) : detail);
+  return <details className={replaces ? `${styles.story} ${styles.replaces}` : styles.story}>
+    <summary><span className={styles.tickers}>{label}</span><span className={replaces ? `${styles.headline} ${styles.closedOnly}` : styles.headline} lang={lang}>{title}</span><span className={`${styles.note} ${styles.closedOnly}`}>{publication}</span><span className={styles.expand} aria-hidden="true">＋</span><span className={styles.srOnly}>{lang === "ja" ? "詳細を開閉" : "Toggle details"}</span></summary>
     <div className={styles.body} lang={lang}>{opened}<span className={styles.note}>{publication}</span></div>
   </details>;
 }

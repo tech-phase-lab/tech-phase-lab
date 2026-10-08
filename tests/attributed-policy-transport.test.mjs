@@ -60,7 +60,7 @@ for(const lang of ['ja','en']) {
     assert.equal(item.observedAt,'2026-10-02T13:54:31.272+00:00');
     const html=renderToStaticMarkup(React.createElement(NewsStory,{...display,lang,publication:officialTime(item).at}));
     for(const fact of expected)assert.ok(html.includes(fact),fact);
-    assert.equal((html.match(/class="headline"/g)||[]).length,1);
+    assert.equal((html.match(/class="headline(?: [^"]*)?"/g)||[]).length,1);
     assert.equal((html.match(/<summary>/g)||[]).length,1);
     assert.match(html,/<details/);
     const headlines=officialPulseHeadlines(item,lang,display.title);
