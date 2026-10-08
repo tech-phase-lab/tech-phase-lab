@@ -138,3 +138,21 @@ test('only explicit conflict recovery discards the pending draft and loads the s
  await h.sync.refresh();assert.equal(h.latest.status,'conflict');await h.sync.retry();assert.ok(journal.load(account));
  await h.sync.discardPending();assert.equal(h.latest.status,'synced');assert.deepEqual(h.latest.cloud.document,remote.document);assert.equal(journal.load(account),null);assert.equal(writes,0);
 });
+
+test('returning to the page retries failed edits without a read replacing the unsaved list',async()=>{
+ const journal=memoryJournal(), resumed=deferred();let reads=0,writes=0;
+ const changed={...document,lists:[{id:'default',name:'同期確認',tickers:['AAPL']}],alerts:[{ticker:'AAPL',price:200,direction:'above',currency:'USD'}]};
+ const h=harness(async init=>{if(!init){reads++;return reply(200,state(1));}writes++;return writes===1?reply(503,{ok:false}):resumed.promise;},journal);
+ await h.sync.refresh();h.sync.update(()=>changed);await tick();assert.equal(h.latest.status,'error');assert.ok(journal.load(account));
+ const wakeups=[h.sync.refresh(),h.sync.refresh(),h.sync.refresh()];
+ assert.equal(reads,1);assert.equal(writes,2);assert.deepEqual(h.latest.cloud.document,changed);
+ resumed.resolve(reply(200,state(2,changed)));await Promise.all(wakeups);
+ assert.equal(h.latest.status,'synced');assert.equal(h.sync.hasPending(),false);assert.equal(journal.load(account),null);
+});
+
+test('repeated page wake-ups preserve a conflicting draft without automatic writes',async()=>{
+ const journal=memoryJournal();let writes=0;
+ const h=harness(async init=>{if(!init)return reply(200,state(1));writes++;return reply(409,{...state(2,add('TSM')(document)),ok:false});},journal);
+ await h.sync.refresh();h.sync.update(add('AAPL'));await tick();
+ await h.sync.refresh();await h.sync.refresh();assert.equal(writes,1);assert.equal(h.latest.status,'conflict');assert.deepEqual(h.latest.cloud.document.lists[0].tickers,['MU','AAPL']);assert.ok(journal.load(account));
+});

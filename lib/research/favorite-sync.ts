@@ -42,7 +42,11 @@ export function createFavoriteSync(transport: Transport, notify: (cloud: CloudFa
   const publish = (next: FavoriteSyncStatus) => { status = next; if (!disposed) notify(cloud, status); };
   const remember = (next: CloudFavorites, sent = sentSnapshot) => journal?.save(next.account, JSON.stringify({ cloud: next, sent }));
   async function refresh() {
-    if (disposed || reading || pending || writing) return;
+    if (disposed || writing) return;
+    // Focus/visibility and the visible-page timer also resume failed saves.
+    // flush serializes overlapping wake-ups and leaves conflicts untouched.
+    if (pending) { await flush(); return; }
+    if (reading) return;
     reading = true;
     const started = generation;
     try {
