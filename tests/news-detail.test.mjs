@@ -349,7 +349,7 @@ finally:
   const panel=await readFile(new URL('../app/research/news/general-news-panel.tsx',import.meta.url),'utf8');
   const pageLogic=panel.slice(panel.indexOf('  const official ='),panel.indexOf('  const format ='));
   const pagination=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(
-    `import { officialTime } from ${JSON.stringify(new URL('../lib/research/news-time.ts',import.meta.url).href)};
+    `import { clockTime, officialTime } from ${JSON.stringify(new URL('../lib/research/news-time.ts',import.meta.url).href)};
 import { informativeOfficial } from ${JSON.stringify(new URL('../lib/research/news-presentation.ts',import.meta.url).href)};
 `
     +`export function visible(data,page,officialOnly=false) { ${pageLogic}

@@ -115,6 +115,41 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
   }, [onClose]);
+  useEffect(() => {
+    // Phone sheet follows the finger (owner, Oct 9): past the top it slides
+    // down and closes when pulled far enough; past the end it gives a little.
+    const sheet = panel.current;
+    if (!sheet || !window.matchMedia("(max-width:760px)").matches) return;
+    let start: number | null = null, offset = 0;
+    const place = (value: number, animate: boolean) => {
+      offset = value;
+      sheet.style.transition = animate ? "transform .22s cubic-bezier(.3,.9,.3,1)" : "none";
+      sheet.style.transform = value ? `translateY(${value}px)` : "";
+    };
+    const down = (event: TouchEvent) => { start = event.touches.length === 1 ? event.touches[0].clientY : null; };
+    const move = (event: TouchEvent) => {
+      if (start === null) return;
+      const dy = event.touches[0].clientY - start;
+      const atTop = sheet.scrollTop <= 0, atEnd = sheet.scrollTop + sheet.clientHeight >= sheet.scrollHeight - 1;
+      if (dy > 0 && atTop) place(dy, false);
+      else if (dy < 0 && atEnd) place(Math.max(dy * 0.25, -28), false);
+      else if (offset) place(0, false);
+    };
+    const up = () => {
+      if (start === null) return;
+      start = null;
+      if (offset > 90) { place(window.innerHeight, true); window.setTimeout(onClose, 180); }
+      else if (offset) place(0, true);
+    };
+    sheet.addEventListener("touchstart", down, { passive: true });
+    sheet.addEventListener("touchmove", move, { passive: true });
+    sheet.addEventListener("touchend", up);
+    sheet.addEventListener("touchcancel", up);
+    return () => {
+      sheet.removeEventListener("touchstart", down); sheet.removeEventListener("touchmove", move);
+      sheet.removeEventListener("touchend", up); sheet.removeEventListener("touchcancel", up);
+    };
+  }, [onClose]);
   function navigate(event: MouseEvent<HTMLAnchorElement>, href: string) {
     unlock();
     onClose();
