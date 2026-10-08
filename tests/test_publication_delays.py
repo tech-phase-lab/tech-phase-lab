@@ -23,6 +23,10 @@ class RetryScheduleTests(unittest.TestCase):
         self.assertEqual([translation.retry_delay(n, 'changed-direction') for n in range(1, 7)],
                          [15, 120, 86400, 86400, 86400, 86400])
         self.assertEqual(translation.retry_delay(20, 'unsupported-number'), 86400)
+        # Official news only: 15 s, 2 min, six 6-hour retries, then daily.
+        self.assertEqual([translation.retry_delay(n, 'unsupported-number', frequent=6) for n in range(1, 10)],
+                         [15, 120, *[21600]*6, 86400])
+        self.assertEqual(translation.retry_delay(3, 'provider-timeout', frequent=6), 240)
 
     def test_provider_outage_is_capped_at_thirty_minutes(self):
         self.assertEqual([translation.retry_delay(n, 'provider-timeout') for n in (1, 2, 3, 9)], [60, 120, 240, 1800])

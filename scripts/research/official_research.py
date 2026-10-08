@@ -814,6 +814,10 @@ def evidence_constraints(quote):
             'invalidCalendarDate': invalid_date}
 
 
+# Rejected official-news copy is retried every 6 hours this many times
+# (about 1.5 days) before the daily schedule; owner approved Oct 8.
+OFFICIAL_FREQUENT_RETRIES=6
+
 def retry_feedback(db, row, excerpts=None):
     """Return only currently rejected fields, so retries do not repeat blindly."""
     failure=db.execute('SELECT payload FROM official_research_attempt_failures WHERE event_id=? AND sha=? ORDER BY failed_at DESC LIMIT 1',
@@ -1022,7 +1026,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                 db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?",(lease,))
                 return 'review'
             job=db.execute("SELECT attempts FROM official_research_jobs WHERE event_id=? AND lease=?",(row['id'],lease)).fetchone()
-            delay=max(headline_translation.retry_delay(job[0] if job else 1, reason), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
+            delay=max(headline_translation.retry_delay(job[0] if job else 1, reason, frequent=OFFICIAL_FREQUENT_RETRIES), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
             db.execute("UPDATE official_research_jobs SET state='retry',next_at=?,failure_kind=? WHERE event_id=? AND lease=?",(now+delay,reason,row['id'],lease))
             db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?",(lease,))
         return 'retry'
