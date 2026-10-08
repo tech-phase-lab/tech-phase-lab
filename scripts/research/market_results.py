@@ -189,6 +189,15 @@ def projection(text, tickers):
     cashtags = re.findall(r'(?<![\w$])\$([A-Z]{1,5}(?:\.[A-Z])?)(?![\w.])', text)
     if not cashtags or cashtags[0] != tickers[0]:
         return None
+    # Any other company's cashtag makes the subject ambiguous ("$NVDA supplier
+    # $ACME Q1 revenue $116M"); missing a flash is safer than misattributing one.
+    if any(tag != tickers[0] for tag in cashtags):
+        return None
+    # The ticker must be named before the results wording and the first figure.
+    first_tag = re.search(r'(?<![\w$])\$' + re.escape(tickers[0]) + r'(?![\w.])', text).start()
+    topic = re.search(r'earnings|results|highlights|決算', text, re.I)
+    if topic.start() < first_tag or re.search(r'\$\s*\d', text[:first_tag]):
+        return None
     period = re.search(r'(?:(?:FY)?\s*(20\d{2})\s*)?Q([1-4])(?:\s*(?:FY)?\s*(20\d{2}))?', text, re.I)
     if not period:
         return None
