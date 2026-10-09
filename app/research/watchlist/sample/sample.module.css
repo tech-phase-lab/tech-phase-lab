@@ -17,7 +17,7 @@
 .columns,.row { display:grid;grid-template-columns:minmax(0,1fr) 210px 140px;gap:28px;align-items:center; }
 .columns { color:#879f9b;font-size:11px;padding:8px;border-bottom:1px solid #365047; }.columns>span:nth-child(2) { text-align:center; }.columns>span:last-child { text-align:right; }
 .rows { list-style:none;padding:0;margin:0; }.rows>li { border-bottom:1px solid #2b3f43; }
-.row { width:100%;min-height:70px;padding:9px 8px;text-align:left;background:transparent;border:0;color:inherit;cursor:pointer;font:inherit; }.row:hover { background:#11201f; }
+.row { width:100%;min-height:74px;padding:6px 8px;text-align:left;background:transparent;border:0;color:inherit;cursor:pointer;font:inherit; }.row:hover { background:#11201f; }
 .identity { display:flex;align-items:center;gap:12px;min-width:0; }.identity>span:last-child { min-width:0; }.identity strong { display:block;font-family:ui-rounded,"SF Pro Rounded","Hiragino Maru Gothic ProN",sans-serif;font-size:21px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }.identity small { display:block;color:#8aa7a2;font-size:11px;margin-top:3px;letter-spacing:.04em; }
 .trend { display:block;color:#8bdfb8;position:relative;height:62px; }.trend[data-up=false] { color:#ec959e; }.trend strong { position:absolute;top:0;right:0;font-size:15px;font-weight:600;line-height:16px;letter-spacing:-.02em; }.trend .chartFrame { margin-top:16px;height:46px; }
 .grid { stroke:#7caaa0;stroke-opacity:.17;stroke-width:.5; }.baseline { stroke:currentColor;stroke-opacity:.38;stroke-dasharray:2 4;stroke-width:.7; }
@@ -30,7 +30,7 @@
 @media(max-width:760px) {
  .heading { gap:6px; }.heading h1 { font-size:clamp(19px,5.4vw,23px); }.listPicker { gap:1px;max-width:48%; }.listPicker select { width:100%;font-size:12px; }.listPicker button { flex-basis:30px;width:30px;padding:6px; }
  .notice { font-size:10px;margin-bottom:12px; }.controls { gap:8px; }.controls input { width:min(62%,360px); }.controls select { font-size:11px; }
- .columns,.row { grid-template-columns:minmax(0,1fr) 104px 78px;gap:9px; }.columns { padding-inline:0;font-size:10px; }.row { min-height:72px;padding:5px 0; }
+ .columns,.row { grid-template-columns:minmax(0,1fr) 104px 78px;gap:9px; }.columns { padding-inline:0;font-size:10px; }.row { min-height:66px;padding:2px 0; }
  .identity { gap:7px; }.identity>span:first-child { width:26px;height:26px;flex-basis:26px; }.identity strong { font-size:16px; }.identity small { font-size:10px;margin-top:2px; }.trend strong { font-size:13px; }.price { font-size:23px; }.price small { font-size:10px; }
  .marketBar { font-size:10px; }.marketBar label { gap:5px; }.detail { margin-inline:0; }.detailCaption { flex-wrap:wrap; }
 }

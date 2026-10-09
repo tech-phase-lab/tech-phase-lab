@@ -89,7 +89,7 @@
 .tableHead>span:nth-child(2) { text-align:center; }.tableHead>span:last-child { text-align:right; }
 .quoteRows { list-style:none;margin:0;padding:0; }.quoteRow { border-bottom:1px solid #2b3f43; }
 .quoteRow[data-selected=true] { background:#10201f; }
-.rowMain { width:100%;min-height:80px;padding:9px 8px;text-align:left;background:transparent;border:0;color:inherit;cursor:pointer;font:inherit; }
+.rowMain { width:100%;min-height:74px;padding:6px 8px;text-align:left;background:transparent;border:0;color:inherit;cursor:pointer;font:inherit; }
 .rowMain:hover { background:#11201f; }
 .identity { display:flex;align-items:center;gap:12px;min-width:0; }.identity>span:last-child { min-width:0; }
 .logo { width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;background:#e6eeeb;border-radius:10px;color:#304a42;font-size:12px;overflow:hidden; }.logo img { object-fit:contain; }
@@ -120,7 +120,7 @@
  .listPicker { max-width:48%;gap:1px; }.listPicker select { font-size:12px;width:100%;padding-inline:2px; }.renameButton { flex-basis:30px;width:30px;padding:6px; }
  .searchPanel { max-width:none; }.searchRow { padding-inline:12px;gap:8px; }.searchRow input { min-height:38px;padding-block:6px; }
  .toolbar { padding:0; }.toolbar select,.toolbar button { font-size:11px; }
- .tableHead,.rowMain { grid-template-columns:minmax(0,1fr) 104px 78px;gap:9px; }.tableHead { padding-inline:0;font-size:10px; }.rowMain { min-height:72px;padding:5px 0; }
+ .tableHead,.rowMain { grid-template-columns:minmax(0,1fr) 104px 78px;gap:9px; }.tableHead { padding-inline:0;font-size:10px; }.rowMain { min-height:66px;padding:2px 0; }
  .identity { gap:7px; }.logo { width:26px;height:26px;flex-basis:26px;border-radius:7px; }.logo img { width:23px;height:23px; }
  .company { gap:0 5px;grid-template-columns:auto minmax(0,1fr); }.company strong { grid-column:1 / -1;font-size:16px; }.company small { grid-column:1;font-size:10px;margin-top:2px; }
  .sector { grid-column:2;grid-row:2;margin-top:2px;padding:1px 3px;font-size:8px;line-height:1.3; }
