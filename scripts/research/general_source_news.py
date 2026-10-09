@@ -668,10 +668,12 @@ def assessment_response_schema():
 def bind_assessment(value,row):
     if not isinstance(value,dict) or set(value)!={'disposition','reason','facts'}:
         raise ValueError('invalid-note')
-    if value['disposition']=='review':
-        if value['reason'] not in REVIEW_REASONS-{'unsubstantiated-model-output',buyback_structured.FAILURE} or value['facts']!=[]:
-            raise ValueError('invalid-note')
-        return None,value['reason']
+    allowed=REVIEW_REASONS-{'unsubstantiated-model-output',buyback_structured.FAILURE}
+    if value['disposition']=='review' or (value['disposition']=='publish' and value['reason'] in allowed):
+        # A review decision is a decision even when the model also wrote facts
+        # or paired publish with a review reason (Oct 9: 9 such responses were
+        # retried as invalid-note). Nothing is published; the facts are dropped.
+        return None,(value['reason'] if value['reason'] in allowed else 'insufficient-source-evidence')
     if value['disposition']!='publish' or value['reason']!='material-company-development':
         raise ValueError('invalid-note')
     import macro_source_publication

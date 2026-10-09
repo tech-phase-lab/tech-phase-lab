@@ -203,7 +203,8 @@ def relation_boundary(quote):
     # This generic lane has no per-predicate relation graph. Do not attempt
     # clause equivalence from global status/negation flags or adjacent names.
     # Coordinated object lists also remain private until explicitly supported.
-    if re.search(r'\b(?:and|or|but|while|whereas)\b|,',scope.rstrip(' ,'),re.I):
+    # A thousands separator (1,200 units) is not a clause or list boundary.
+    if re.search(r'\b(?:and|or|but|while|whereas)\b|,',re.sub(r'(?<=\d),(?=\d{3}\b)','',scope).rstrip(' ,'),re.I):
         raise ValueError(RELATION_FAILURE)
     if re.search(r"\b(?:not|never|no|without|neither|nor)\b|n['’]t\b",quote,re.I):
         raise ValueError(RELATION_FAILURE)

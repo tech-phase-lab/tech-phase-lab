@@ -922,6 +922,9 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
             policy+='\n'+general_source_news.ACTOR_POLICY
         if any('brokerCommentary' in unit for unit in row['units']):
             policy+='\n'+general_source_news.BROKER_POLICY
+        # Oct 9: 10 publish responses merged or skipped units (invalid-note).
+        policy+=('\nWhen publishing, return exactly one fact per evidence excerpt, in the order given, '
+                 "each with that excerpt's evidenceId; never merge, split or skip excerpts.")
     if buyback_news.CUE.search(row['body']):
         policy+='\n'+buyback_news.POLICY
     if row.get('issuer_business'):
