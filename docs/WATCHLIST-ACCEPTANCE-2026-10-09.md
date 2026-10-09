@@ -51,7 +51,7 @@ cookie clearing, new account, payment, or notification delivery was performed.
 - Found that the account card could keep its old PRO label after the shared
   header expired. Manual Refresh membership corrected it. The account screen
   now re-reads the server at expiry and on resume/membership changes, and
-  cancels stale responses. Post-deployment verification is pending.
+  cancels stale responses. Post-deployment verification passed below.
 - Returned the test account to owner mode and the language to Japanese.
 
 Limits: these are same-session cloud-browser checks, not new phone/device,
@@ -66,3 +66,21 @@ conflict notice and disabled editing. Using the saved-list recovery action
 returned the latter tab to the B version without overwriting it. Renamed the
 list back to `同期確認`; AAPL and 220 USD above stayed present. This verifies this
 actual same-browser race, not simultaneous edits across separate devices.
+
+### Post-deployment account expiry — 00:25–00:28 JST
+
+- Application commit: `577210673377d0c6a03f99507dba7cca15e1faf5`. Vercel
+  deployment `dpl_7sA4rpK5u5D5DzgjB1VuqSVHB7wP` reached READY.
+- Reloaded the account page to load this release and started the one-minute
+  expiry test. Without clicking Refresh membership or reloading, the account
+  card and header changed to FREE; the card said the free plan was active.
+- Restored owner mode, verified `TECH PHASE Owner` in English, and returned to
+  Japanese. Reloaded the watchlist and confirmed 同期確認 / AAPL / 220 USD above.
+  The signed-in watchlist tab remains open.
+- Local release gates: lint 0 errors / 2 existing warnings; 613 JS tests; 2355
+  Python tests; production build; compileall; diff check. The initial hook-based
+  attempt failed two existing isolated account test loaders; the released
+  implementation uses account-local expiry/resume listeners and passed the
+  complete suite without changing those tests.
+- No changes to news, target prices, or Home/menu decoration. Real billing,
+  offline recovery, phone layout, and alternate-account login were not tested.
