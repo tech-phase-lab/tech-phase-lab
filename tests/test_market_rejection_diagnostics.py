@@ -73,7 +73,28 @@ class ResearchFailureTests(unittest.TestCase):
             state = pipeline_status.research_failures(path, now=now)
         self.assertEqual(state['failureReasons24h'], {'unsupported-number': 2, 'invalid-copy': 1})
         self.assertEqual(state['waitingJobs'], {'retry:unsupported-number': 1, 'review': 1})
+        self.assertEqual([entry['reason'] for entry in state['recent']].count('unsupported-number'), 2)
         self.assertNotIn('secret', str(state))
+
+
+class SpelledNumberTests(unittest.TestCase):
+    def test_translation_may_write_digits_for_spelled_source_numbers(self):
+        import factual_validation as fv
+        fv.validate_numbers('100万ドルを寄付', 'donates one million dollars')
+        fv.validate_numbers('20億ドル', 'two billion dollars')
+        for text, source in (('3人', 'appoints two'), ('2人', 'appoints two'), ('1人', 'a person'),
+                             ('200万ドル', 'one million dollars'), ('3日間', 'across three targets')):
+            with self.assertRaisesRegex(ValueError, 'unsupported-number'):
+                fv.validate_numbers(text, source)
+
+
+class BondLookbackTests(unittest.TestCase):
+    def test_year_high_and_qualified_lookback_match_japanese_buri(self):
+        original = 'Japan 30-year government bond yield hits 24-year high'
+        news.validate({'titleJa': '日本30年国債利回り、24年ぶりの高水準', 'titleEn': original}, original)
+        self.assertEqual(bond_facts.temporal_roles('highest in nearly 24 years'), bond_facts.temporal_roles('24年ぶりの高水準'))
+        with self.assertRaisesRegex(ValueError, 'unsupported-number|invalid-copy'):
+            news.validate({'titleJa': '日本30年国債利回り、20年ぶりの高水準', 'titleEn': original}, original)
 
 
 if __name__ == '__main__':

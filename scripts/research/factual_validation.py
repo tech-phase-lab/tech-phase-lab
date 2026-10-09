@@ -250,10 +250,31 @@ def signed_numbers(text):
     return values
 
 
+WORD_NUMBERS = {word: index for index, word in enumerate(
+    'zero one two three four five six seven eight nine ten eleven twelve'.split())}
+WORD_NUMBERS.update({'twenty': 20, 'thirty': 30, 'forty': 40, 'fifty': 50, 'a': 1, 'an': 1})
+SCALES = {'thousand': 1000, 'million': 10**6, 'billion': 10**9, 'trillion': 10**12}
+
+
+def spelled_values(evidence):
+    """Spelled magnitudes in the evidence: "one million", "two billion", "a million".
+
+    Evidence only, so a translation may write 100万 or 20億 (Oct 9: a headline
+    with "one million" was rejected). Bare number words are deliberately not
+    values here; counts like "three targets" keep their scoped handling.
+    """
+    found = set()
+    for match in re.finditer(r'\b([a-z]+)\s+(thousand|million|billion|trillion)\b', evidence.lower()):
+        value = WORD_NUMBERS.get(match[1])
+        if value is not None:
+            found.add((Decimal(value * SCALES[match[2]]), 'number'))
+    return found
+
+
 def validate_numbers(text, evidence, check_dates=True):
     # Compare exact quantities rather than numeric spelling: $150B equals
     # 1500億ドル; $15B, 1500万ドル and -1500億ドル do not.
-    if not set(numeric_values(text)).issubset(set(numeric_values(evidence))):
+    if not set(numeric_values(text)).issubset(set(numeric_values(evidence)) | spelled_values(evidence)):
         raise ValueError('unsupported-number')
     validate_token_prices(text, evidence)
     if not set(quarter_values(text)).issubset(set(quarter_values(evidence))):

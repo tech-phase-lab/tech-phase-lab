@@ -28,7 +28,9 @@ def temporal_roles(text):
             NUMBER + r'年(?:の)?(?:ローリング)?(?:リターン|収益率|騰落率|期間)',
         ),
         'lookback': (
-            r'\b(?:in|past|last|over)\s+(?:(?:the|over|past|last)\s+)*' + NUMBER + r'\s+years?\b',
+            r'\b(?:in|past|last|over)\s+(?:(?:the|over|past|last|nearly|almost|about|around|roughly|more than|at least|close to)\s+)*' + NUMBER + r'\s+years?\b',
+            # "24-year high" = highest in 24 years = 「24年ぶりの高水準」.
+            NUMBER + r'\s*[-‐‑– ]\s*years?\s+(?:highs?|lows?|peaks?|bottoms?)\b',
             r'(?:過去|直近)' + NUMBER + r'年(?!間)',
             NUMBER + r'年(?:以上)?ぶり',
         ),
