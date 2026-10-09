@@ -6,6 +6,7 @@ import { loadState, saveState, type State } from "./state.ts";
 import {
   fillVideoTitles,
   getAccessToken,
+  getComments,
   listHeldComments,
   setModerationStatus,
   type HeldComment,
@@ -90,6 +91,13 @@ async function moderate(config: Config, state: State) {
     if (!config.dryRun) {
       await setModerationStatus(accessToken, grouped.publish.map(([c]) => c.id), "published");
       await setModerationStatus(accessToken, ngRejects.map(([c]) => c.id), "rejected");
+      if (grouped.publish.length > 0) {
+        // 夜のまとめメールのために、自動で公開したコメントのIDだけ記録する
+        const now = new Date().toISOString();
+        state.published ??= {};
+        for (const [c] of grouped.publish) state.published[c.id] = now;
+        await saveState(config.stateFile, state);
+      }
     }
 
     // 承認待ちに残したもの（AIの非公開判定・要確認）は、次のチェックで判定し直さないよう記録する
@@ -169,10 +177,65 @@ async function alertIfStuck(state: State, message: string) {
   }
 }
 
+// 毎日この時刻（日本時間）に、直前24時間に自動で公開したコメントをまとめて送る
+const DIGEST_HOUR_JST = 22;
+const DIGEST_MINUTE_JST = 30;
+
+/** 直近の「22:30（日本時間）」の日時。 */
+function latestDigestCutoff(now: Date): Date {
+  const jst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+  const cutoff = new Date(
+    Date.UTC(jst.getUTCFullYear(), jst.getUTCMonth(), jst.getUTCDate(), DIGEST_HOUR_JST, DIGEST_MINUTE_JST) -
+      9 * 60 * 60 * 1000,
+  );
+  if (cutoff.getTime() > now.getTime()) cutoff.setUTCDate(cutoff.getUTCDate() - 1);
+  return cutoff;
+}
+
+async function sendDigestIfDue(config: Config, state: State) {
+  if (config.mode !== "auto" || config.dryRun) return;
+
+  const cutoff = latestDigestCutoff(new Date());
+  if (!state.lastDigestAt) {
+    // 初回はここを起点にして、次の22:30から送る
+    state.lastDigestAt = cutoff.toISOString();
+    await saveState(config.stateFile, state);
+    return;
+  }
+  const since = Date.parse(state.lastDigestAt);
+  if (since >= cutoff.getTime()) return;
+
+  const ids = Object.entries(state.published ?? {})
+    .filter(([, at]) => Date.parse(at) > since && Date.parse(at) <= cutoff.getTime())
+    .map(([id]) => id);
+
+  if (ids.length > 0) {
+    const accessToken = await getAccessToken(config.youtube);
+    const comments = await getComments(accessToken, ids);
+    await fillVideoTitles(accessToken, comments);
+    if (comments.length > 0) {
+      const text = [
+        `🍭 今日自動で公開したコメント ${comments.length}件`,
+        "気になるものがあれば YouTube Studio から削除してください。",
+        ...comments.map((c) =>
+          [`■ ${c.author}${c.isReply ? "（返信）" : ""}`, `「${truncate(c.text, 500)}」`, `動画: ${c.videoTitle || c.videoId}`].join("\n"),
+        ),
+        `YouTube Studio: https://studio.youtube.com/channel/${config.youtube.channelId}/comments`,
+      ].join("\n\n");
+      await notify(config, text);
+    }
+  }
+  console.log(`まとめメール: 対象 ${ids.length}件`);
+  state.lastDigestAt = cutoff.toISOString();
+  await saveState(config.stateFile, state);
+}
+
 /** 1回分のチェック。成功したら true を返す。 */
 async function checkOnce(stateFile: string, state: State): Promise<boolean> {
   try {
-    await moderate(loadConfig(), state);
+    const config = loadConfig();
+    await moderate(config, state);
+    await sendDigestIfDue(config, state);
     if (state.failures || state.alert) {
       state.failures = 0;
       delete state.alert;

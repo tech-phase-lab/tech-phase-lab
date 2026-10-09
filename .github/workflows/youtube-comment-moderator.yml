@@ -40,7 +40,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
+      # 予約された回でも最新のプログラムで動くよう、予約時点ではなく今のブランチの先頭を取得する
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
 
       - uses: actions/setup-node@v4
         with:

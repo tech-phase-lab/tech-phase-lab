@@ -139,6 +139,20 @@ export async function listHeldComments(accessToken: string, channelId: string): 
   return comments;
 }
 
+/** コメントIDから本文などを取り直す（まとめメール用）。削除済みのコメントは返ってこない。 */
+export async function getComments(accessToken: string, ids: string[]): Promise<HeldComment[]> {
+  const comments: HeldComment[] = [];
+  for (let i = 0; i < ids.length; i += 50) {
+    const params = new URLSearchParams({ part: "snippet", id: ids.slice(i, i + 50).join(","), textFormat: "plainText" });
+    const response = await youtubeFetch(accessToken, `/comments?${params}`);
+    const payload = (await response.json()) as { items?: (CommentResource & { snippet: { parentId?: string } })[] };
+    for (const item of payload.items ?? []) {
+      comments.push(toHeldComment(item, item.snippet.videoId ?? "", Boolean(item.snippet.parentId)));
+    }
+  }
+  return comments;
+}
+
 /** 動画IDからタイトルを引く（判定の文脈と通知の表示用）。 */
 export async function fillVideoTitles(accessToken: string, comments: HeldComment[]): Promise<void> {
   const ids = [...new Set(comments.map((c) => c.videoId).filter(Boolean))];
