@@ -191,3 +191,21 @@ class SummaryDetailFillerTests(unittest.TestCase):
     def test_prompt_no_longer_asks_for_the_posting_account(self):
         self.assertNotIn('posting account)', news.DETAIL_POLICY)
         self.assertIn('Never mention the post', news.DETAIL_POLICY)
+
+
+class ResearchRejectionDetailTests(unittest.TestCase):
+    def test_spelled_count_words_come_with_the_next_word(self):
+        import factual_validation as f
+        with self.assertRaisesRegex(ValueError, 'unsupported-number'):
+            f.validate_numbers('9社が参加', 'Nine companies joined, up three percent')
+        self.assertEqual(f.LAST_NUMBER_REJECTION[0]['sourceWords'], ['nine companies', 'three percent'])
+
+    def test_direction_and_name_rejections_record_what_differed(self):
+        import factual_validation as f
+        with self.assertRaisesRegex(ValueError, 'changed-direction'):
+            f.validate_directions('Revenue fell 5%', 'Revenue rose 5%')
+        detail = f.LAST_DIRECTION_REJECTION[0]
+        self.assertEqual((detail['copy'], detail['source']), ('down', ['up']))
+        with self.assertRaisesRegex(ValueError, 'changed-names'):
+            f.validate_names('Zorvexは新製品を発表', 'Acme announced a product')
+        self.assertEqual(f.LAST_NAME_REJECTION[0], 'zorvex')
