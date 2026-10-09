@@ -1,10 +1,11 @@
 name: YouTube comment moderator
 
 on:
+  # 1回の起動で約55分間、1分おきにチェックを続ける。各回は開始時に次の回を予約しておき、
+  # 終わった瞬間に次の回が始まる（リレー方式）。
+  # GitHub の定期実行は30分以上遅れたり止まったりするため、cron はリレーが途切れたときの予備。
   schedule:
-    # GitHub の定期実行は15〜30分遅れることがあるため、1回の起動で約55分間、2分おきにチェックを続ける。
-    # 起動は20分おきに予約し、実行中の回が終わると待機中の次の回がすぐ始まるので、切れ目なく見張れる。
-    - cron: "*/20 * * * *"
+    - cron: "*/30 * * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -18,18 +19,27 @@ concurrency:
 
 permissions:
   contents: read
+  actions: write # 次の回を起動するため
 
 jobs:
   moderate:
-    # 準備が終わるまでは動かさない。Settings → Secrets and variables → Actions → Variables で
-    # MODERATOR_ENABLED を true にすると定期実行が始まる（手動実行はいつでも可）。
-    if: ${{ github.event_name == 'workflow_dispatch' || vars.MODERATOR_ENABLED == 'true' }}
+    # MODERATOR_ENABLED が true のときだけ動く（試運転の dry_run はいつでも可）
+    if: ${{ vars.MODERATOR_ENABLED == 'true' || inputs.dry_run }}
     runs-on: ubuntu-latest
     timeout-minutes: 65
     defaults:
       run:
         working-directory: scripts/youtube-moderator
     steps:
+      # 最初に次の回を予約しておく。同時に動くのは1回分だけなので、次の回はこの回が終わるまで待機し、
+      # 終わった瞬間に始まる（定期実行のような遅れがない）。止めたいときは MODERATOR_ENABLED を true 以外にする
+      - name: Queue next run
+        if: ${{ !inputs.dry_run && vars.MODERATOR_ENABLED == 'true' }}
+        working-directory: .
+        run: gh workflow run youtube-comment-moderator.yml --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
@@ -56,9 +66,9 @@ jobs:
           # 導入前（2026-10-08 02:20 JST より前）のコメントは審査しない
           IGNORE_BEFORE: ${{ vars.IGNORE_BEFORE || '2026-10-08T02:20:00+09:00' }}
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
-          # 定期実行のときだけ繰り返す（手動実行は1回で終わる）
-          LOOP_MINUTES: ${{ github.event_name == 'schedule' && '55' || '0' }}
-          INTERVAL_MINUTES: "2"
+          # 繰り返しチェックする（試運転の dry_run は1回で終わる）
+          LOOP_MINUTES: ${{ !inputs.dry_run && '55' || '0' }}
+          INTERVAL_MINUTES: "1"
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
