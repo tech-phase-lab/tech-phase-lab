@@ -16,6 +16,7 @@ const samples = [
   { ticker: "CRDO", name: "Credo", sector: { ja: "ネットワーク", en: "Networking" }, previous: 80, price: 78.4, pre: 78.91, path: [80, 80.15, 80.05, 80.3, 80.1, 79.95, 79.8, 80.05, 79.9, 80.1, 79.85, 79.45, 79.2, 79.4, 79.25, 79.5, 79.15, 79.3, 78.8, 78.95, 78.75, 79, 78.7, 78.55, 78.7, 78.4] },
   { ticker: "ANET", name: "Arista Networks", sector: { ja: "ネットワーク", en: "Networking" }, previous: 150, price: 153.6, pre: 152.99, path: [150, 149.8, 150.2, 150.4, 150.1, 150.5, 150.3, 150.7, 151.2, 150.95, 151.5, 151.9, 151.6, 151.3, 151.7, 151.5, 152.2, 152.6, 152.25, 152.8, 152.5, 153.1, 153.4, 153.15, 153.85, 153.6] },
   { ticker: "MU", name: "Micron", sector: { ja: "メモリ", en: "Memory" }, previous: 200, price: 204.2, pre: 205.63, path: [200, 200.3, 199.7, 200.1, 200.65, 201.1, 200.85, 200.6, 201.25, 200.95, 201.9, 201.6, 202.1, 202.7, 202.3, 202.1, 202.55, 202.85, 202.6, 203.2, 203.6, 203.25, 203.85, 204.4, 204.05, 204.2] },
+  { ticker: "ASML", name: "ASML Holding N.V.", sector: { ja: "半導体製造装置", en: "Semiconductor equipment" }, previous: 1200, price: 1234.56, pre: 1245.67, path: [1200, 1195, 1202, 1208, 1204, 1216, 1210, 1221, 1217, 1228, 1222, 1231, 1227, 1234.56] },
   { ticker: "APH", name: "Amphenol", sector: { ja: "ネットワーク", en: "Networking" }, previous: 100, price: 101.5, pre: 101.1, path: [100, 100.3, 100.1, 99.8, 100.1, 100.5, 100.2, 100.8, 101.1, 100.7, 100.9, 101.4, 101.2, 101.6, 101.3, 101.5] },
   { ticker: "AAOI", name: "Applied Optoelectronics", sector: { ja: "光・フォトニクス", en: "Optics & Photonics" }, previous: 80, price: 79.2, pre: 79.7, path: [80, 80.4, 80.1, 79.7, 80.2, 79.8, 79.3, 79.6, 79.1, 79.4, 78.9, 79.3, 79.6, 79.2] },
   { ticker: "COIN", name: "Coinbase", sector: { ja: "クリプト関連", en: "Crypto-related" }, previous: 100, price: 101.2, pre: 100.6, path: [100, 99.7, 100.2, 100.5, 100.1, 99.9, 100.4, 100.8, 100.3, 100.7, 101.3, 100.9, 101.5, 101.2] },
@@ -26,7 +27,7 @@ const samples = [
   { ticker: "CLSK", name: "CleanSpark", sector: { ja: "クリプト関連", en: "Crypto-related" }, previous: 100, price: 103.1, pre: 102.6, path: [100, 100.2, 99.8, 100.6, 100.1, 99.5, 100.8, 100.3, 101.1, 100.4, 99.9, 100.7, 103.1] },
 ];
 type Session = "regular" | "pre" | "closed";
-const number = (n: number) => n.toFixed(2);
+const number = (n: number) => n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const signed = (n: number) => `${n > 0 ? "+" : ""}${number(n)}`;
 function quoteFor(row: typeof samples[number], session: Session) {
   const price = session === "pre" ? row.pre : row.price;
@@ -82,7 +83,7 @@ export default function WatchlistSample() {
           <button className={styles.row} aria-expanded={open} onClick={() => setExpanded(open ? "" : row.ticker)}>
             <span className={styles.identity}><StockLogo ticker={row.ticker} /><span className={styles.company}><strong>{row.name}</strong><small>{row.ticker}</small><span className={styles.sector}>{row.sector[lang]}</span></span></span>
             <span className={styles.trend} data-up={row.percent >= 0}><strong>{signed(row.percent)}%</strong><AreaChart className={styles.chartFrame} values={row.path} reference={row.reference} label={t(`${row.ticker}の架空の値動き`, `${row.ticker} simulated trend`)} /></span>
-            <span className={styles.price} data-direction={row.change > 0 ? "up" : row.change < 0 ? "down" : "flat"}>{number(row.price)}<small>{signed(row.change)} USD</small></span>
+            <span className={styles.price} data-wide={number(row.price).length >= 8} data-direction={row.change > 0 ? "up" : row.change < 0 ? "down" : "flat"}>{number(row.price)}<small>{signed(row.change)} USD</small></span>
           </button>
           </SwipeRow>
           {open && <div className={styles.detail} data-up={row.percent >= 0}><div className={styles.detailHeading}><strong>{row.ticker} · {sessionLabel}</strong><button className={styles.deleteButton} aria-label={t(`${row.ticker}をこのリストから削除`, `Remove ${row.ticker} from this list`)} onClick={() => remove(row.ticker)}><TrashIcon /></button><span>{signed(row.percent)}%</span></div><AreaChart className={styles.chartFrame} values={row.path} reference={row.reference} label={t("拡大した架空チャート", "Expanded simulated chart")} /><div className={styles.chartTimes}><span>{session === "pre" ? "04:00" : "09:30"}</span><span>{sampleTime.slice(0, 5)} ET</span></div><div className={styles.detailCaption}><span>{session === "pre" ? t("通常取引終値", "Regular close") : t("前営業日終値", "Previous close")} {number(row.reference)} USD</span><span>{t("架空データ", "Simulated data")}</span></div></div>}

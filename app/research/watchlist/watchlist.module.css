@@ -101,7 +101,7 @@
 .trendHeading { position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:4px;height:16px; }
 .trendHeading small { color:#829f97;font-size:9px; }.trendHeading strong { font-size:15px;font-weight:600;line-height:16px;letter-spacing:-.02em; }
 .trend .chartFrame { margin-top:16px;height:46px; }.noChart { display:block;padding-top:16px;line-height:46px;text-align:center;color:#536b67; }
-.price { text-align:right;font-size:27px;letter-spacing:-.03em;font-weight:600; }.price small { display:block;font-size:11px;font-weight:400;letter-spacing:0;margin-top:2px; }
+.price { min-width:0;white-space:nowrap;text-align:right;font-size:27px;letter-spacing:-.03em;font-weight:600; }.price small { display:block;font-size:11px;font-weight:400;letter-spacing:0;margin-top:2px; }
 .trend[data-direction=up],.price[data-direction=up],.expandedChart[data-direction=up] { color:#8bdfb8; }
 .trend[data-direction=down],.price[data-direction=down],.expandedChart[data-direction=down] { color:#ec959e; }
 .marketBar { display:flex;justify-content:space-between;align-items:center;gap:8px;color:#829f97;font-size:11px;padding:4px 0 10px; }.marketBar time { color:#b5c9c2; }
@@ -120,7 +120,7 @@
  .listPicker { max-width:48%;gap:1px; }.listPicker select { font-size:12px;width:100%;padding-inline:2px; }.renameButton { flex-basis:30px;width:30px;padding:6px; }
  .searchPanel { max-width:none; }.searchRow { padding-inline:12px;gap:8px; }.searchRow input { min-height:38px;padding-block:6px; }
  .toolbar { padding:0; }.toolbar select,.toolbar button { font-size:11px; }
- .tableHead,.rowMain { grid-template-columns:minmax(0,1fr) 104px 78px;gap:9px; }.tableHead { padding-inline:0;font-size:10px; }.rowMain { min-height:66px;padding:2px 0; }
+ .tableHead,.rowMain { grid-template-columns:minmax(0,1fr) 94px minmax(92px,max-content);gap:14px; }.tableHead { padding-inline:0;font-size:10px; }.rowMain { min-height:66px;padding:2px 0; }
  .identity { gap:7px; }.logo { width:26px;height:26px;flex-basis:26px;border-radius:7px; }.logo img { width:23px;height:23px; }
  .company { gap:0 5px;grid-template-columns:auto minmax(0,1fr); }.company strong { grid-column:1 / -1;font-size:16px; }.company small { grid-column:1;font-size:10px;margin-top:2px; }
  .sector { grid-column:2;grid-row:2;margin-top:2px;padding:1px 3px;font-size:8px;line-height:1.3; }
@@ -128,7 +128,7 @@
  .marketBar { font-size:10px; }.quoteRow .detail { margin-inline:0; }.detailHeading { flex-wrap:wrap;gap:4px; }.detailHeading h2 { font-size:18px; }
 }
 @media(max-width:380px) {
- .tableHead,.rowMain { grid-template-columns:minmax(0,1fr) 87px 70px;gap:8px; }.identity { gap:5px; }.company strong { font-size:14px; }.price { font-size:21px; }
+ .tableHead,.rowMain { grid-template-columns:minmax(0,1fr) 80px minmax(86px,max-content);gap:12px; }.identity { gap:5px; }.company strong { font-size:14px; }.price { font-size:21px; }
  .logo { width:23px;height:23px;flex-basis:23px; }.logo img { width:22px;height:22px; }.listPicker select { font-size:11px; }.heading h1 { font-size:19px; }
 }
 
@@ -142,3 +142,6 @@
 .deleteButton svg { width:20px;height:20px; }
 
 @media(max-width:760px) { .detailActions .deleteButton { display:none; } .detailHeading { flex-wrap:nowrap;gap:12px; } }
+
+/* Keep four-digit prices readable without squeezing the chart against them. */
+@media(max-width:760px) { .price[data-wide=true] { font-size:20px; } }

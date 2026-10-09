@@ -136,3 +136,18 @@ Next physical-device acceptance (still pending):
 3. In the fictional sample, inspect AAOI at phone width, swipe to reveal trash,
    test vertical scrolling and detail open/close. Reload to reset sample edits.
 Do not count these phone steps as passed until the user confirms the outcome.
+
+### User phone checks and price spacing — 2026-10-10 01:30–01:41 JST
+
+The user confirmed that saving with airplane mode and Wi-Fi off showed failure,
+then the changed list name persisted after reconnecting and reloading. This
+verifies that phone round trip; other offline/account cases remain unverified.
+The user also confirmed the long company name did not overlap the graph on
+phone, but the graph and price felt too close and four-digit prices were a risk.
+
+Adjusted only the watchlist/sample mobile columns: more space between chart and
+price, an intrinsic-width price column and slightly smaller type for formatted
+prices of eight or more characters. Kept the recent vertical spacing. Added
+ASML with explicitly fictional 1,234.56 USD / pre-market 1,245.67 USD prices to
+the isolated sample, using the same thousands separator as the normal page.
+Post-change phone layout and phone swipe/vertical-scroll checks are still pending.
