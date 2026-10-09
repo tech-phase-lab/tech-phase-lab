@@ -667,6 +667,7 @@ def assessment_response_schema():
 
 def bind_assessment(value,row):
     if not isinstance(value,dict) or set(value)!={'disposition','reason','facts'}:
+        LAST_NOTE_REJECTION[0]={'rule':'assessment-shape','keys':sorted(value)[:5] if isinstance(value,dict) else None}
         raise ValueError('invalid-note')
     allowed=REVIEW_REASONS-{'unsubstantiated-model-output',buyback_structured.FAILURE}
     if value['disposition']=='review' or (value['disposition']=='publish' and value['reason'] in allowed):
@@ -675,6 +676,7 @@ def bind_assessment(value,row):
         # retried as invalid-note). Nothing is published; the facts are dropped.
         return None,(value['reason'] if value['reason'] in allowed else 'insufficient-source-evidence')
     if value['disposition']!='publish' or value['reason']!='material-company-development':
+        LAST_NOTE_REJECTION[0]={'rule':'assessment-decision','disposition':str(value['disposition'])[:20],'reason':str(value['reason'])[:40]}
         raise ValueError('invalid-note')
     import macro_source_publication
     import attributed_policy_publication
@@ -854,12 +856,19 @@ def validate_pair(item,unit):
         raise ValueError('source-copy-overlap')
 
 
+# Diagnostics only: why the last bind_note shape check failed (counts, ids).
+LAST_NOTE_REJECTION=[{}]
+
+
 def bind_note(value,row):
     if not isinstance(value,dict) or set(value)!={'facts'} or not isinstance(value['facts'],list) or len(value['facts'])!=len(row['units']):
+        facts=value.get('facts') if isinstance(value,dict) else None
+        LAST_NOTE_REJECTION[0]={'rule':'fact-count','facts':len(facts) if isinstance(facts,list) else None,'units':len(row['units'])}
         raise ValueError('invalid-note')
     facts=[]
     for raw,unit in zip(value['facts'],row['units']):
         if not isinstance(raw,dict) or set(raw)!={'ja','en','evidenceId'} or raw['evidenceId']!=unit['id']:
+            LAST_NOTE_REJECTION[0]={'rule':'evidence-order','got':str(raw.get('evidenceId'))[:12] if isinstance(raw,dict) else None,'want':str(unit['id'])[:12]}
             raise ValueError('unsupported-quote')
         try:
             validate_pair(raw,unit)
