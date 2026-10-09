@@ -203,8 +203,31 @@ def _note_rejection(rule,text,found):
     LAST_RELATION_REJECTION[0]={'rule':rule,'cue':found[0].strip()[:12],'around':(before+' ['+found[0].strip()+'] '+after)[:90]}
 
 
+# A closing source attribution (", according to Bloomberg." / ", WSJ reports.")
+# names who reported the sentence; it is not a second actor/action clause.
+# Words only: no digits, commas or further clauses can ride along with it.
+ATTRIBUTION_TAIL=re.compile(
+    r",\s*(?:according\s+to\s+[A-Za-z][A-Za-z&.'’ -]{0,60}"
+    r"|(?:the\s+)?[A-Z][A-Za-z&.'’-]*(?:\s+[A-Z][A-Za-z&.'’-]*){0,4}\s+(?:reports?|reported|said|says))"
+    r"\s*[.!]?\s*$")
+# The report framing must survive translation, or a report reads as a fact.
+ATTRIBUTION_KEPT={'en':re.compile(r'\b(?:according\s+to|reports?|reported|said|says)\b',re.I),
+                  'ja':re.compile(r'によると|によれば|報じ|伝え|述べ')}
+
+
+def attribution_tail(quote):
+    found=ATTRIBUTION_TAIL.search(quote)
+    if not found or re.search(r"\b(?:not|never|no|without|neither|nor|and|or|but|while|whereas)\b|n['’]t\b",found[0],re.I):
+        return None
+    return found
+
+
 def relation_boundary(quote):
     """Known unsupported relation forms cannot use global bag-of-word guards."""
+    tail=attribution_tail(quote)
+    if tail:
+        quote=quote[:tail.start()].rstrip()+'.'
+
     if unsupported_auxiliary_role(quote) or UNPROVEN_AVAILABILITY.search(quote):
         raise ValueError(RELATION_FAILURE)
     if re.search(r';|(?<=[.!?])\s+(?=[A-Z])',quote):
@@ -253,19 +276,28 @@ def validate(item, quote, grounding):
     names = grounding['literalNames']
     source_condition=condition(quote,'en')
     relation_boundary(quote)
+    tail=attribution_tail(quote)
+    attributed=tail is not None
+    # The reporter's name may lead in Japanese (Bloombergによると、…); it is held
+    # out of the ordered comparison but must still appear.
+    reporters=literal_names(tail[0]) if tail else []
     source_counts=counted_objects(quote,'en')
     source_stages = actor_grounding._signals(quote, STAGES, 'en')
     for lang in ('en', 'ja'):
         text = item.get(lang)
         if not isinstance(text, str):
             raise ValueError(FAILURE)
+        if attributed and not ATTRIBUTION_KEPT[lang].search(text):
+            raise ValueError(RELATION_FAILURE)
+        lead_text = re.sub(r'^[^、。]{1,40}(?:によると|によれば)、', '', text) if attributed and lang == 'ja' else text
         if actor:
             prefix = re.escape(actor) + (r'(?:は|が|、)' if lang == 'ja' else r'(?:\s|,)')
-            if not re.match(prefix, text):
+            if not re.match(prefix, lead_text):
                 raise ValueError(FAILURE)
         # Literal source labels avoid guessing the identity of untracked names.
         output = literal_names(text)
-        if output != names:
+        if ([n for n in output if n not in reporters] != [n for n in names if n not in reporters]
+                or not set(reporters) <= set(output) or set(output) != set(names)):
             raise ValueError(FAILURE)
         if actor_grounding._signals(text, STAGES, lang) != source_stages:
             raise ValueError('changed-claim-status')

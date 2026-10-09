@@ -142,3 +142,33 @@ class JapaneseCompoundUnitTests(unittest.TestCase):
                              ('Acmeは3千万人を採用', 'Acme hired 3,000 people.')):
             with self.assertRaisesRegex(ValueError, 'unsupported-number'):
                 f.validate_numbers(text, source)
+
+
+class AttributionTailTests(unittest.TestCase):
+    SOURCE = 'Microsoft plans to cut jobs at its data-center unit, according to Bloomberg.'
+    EN = 'Microsoft plans to cut jobs at its data-center unit, according to Bloomberg.'
+
+    def check(self, en, ja, source=None):
+        import source_news_grounding as grounding
+        source = source or self.SOURCE
+        grounding.validate({'en': en, 'ja': ja}, source, grounding.context(source))
+
+    def test_closing_attribution_is_not_a_second_clause(self):
+        import source_news_grounding as grounding
+        for quote in (self.SOURCE, 'Oil tankers resume runs through Hormuz, WSJ reports.',
+                      'Acme plans to cut jobs, according to people familiar with the matter.'):
+            grounding.relation_boundary(quote)
+        self.check(self.EN, 'Bloombergによると、Microsoftはデータセンター部門で人員削減を計画している。')
+
+    def test_attribution_must_survive_and_cannot_carry_more(self):
+        import source_news_grounding as grounding
+        for en, ja in ((self.EN, 'Microsoftはデータセンター部門で人員削減を計画している。'),
+                       ('Microsoft plans to cut jobs at its data-center unit.', 'Bloombergによると、Microsoftはデータセンター部門で人員削減を計画している。'),
+                       (self.EN, 'Bloombergによると、Googleはデータセンター部門で人員削減を計画している。')):
+            with self.assertRaises(ValueError):
+                self.check(en, ja)
+        for quote in ('Acme will not buy Beta, according to Bloomberg.', 'Acme buys Beta, according to Bloomberg and Reuters.',
+                      'Acme buys Beta, according to 3 people.', 'Acme buys Beta, its rival, Reuters reports.',
+                      'Acme buys Beta, expanding its reach.'):
+            with self.assertRaisesRegex(ValueError, grounding.RELATION_FAILURE):
+                grounding.relation_boundary(quote)
