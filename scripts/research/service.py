@@ -964,6 +964,13 @@ class AutomaticMonitor:
         wake = self.publication_wakes["official"]
         while not self.stop_event.is_set():
             wake.clear()
+            if time.monotonic() - getattr(self, "_semantic_release_at", -60) >= 60:
+                self._semantic_release_at = time.monotonic()
+                try:
+                    with official_research.connect(self.db_path) as db:
+                        official_research.release_early_semantic_holds(db)
+                except Exception as exc:
+                    log_publication_failure("official-research-unavailable", exc)
             try:
                 official_research.run_once(self.db_path)
             except Exception as exc:

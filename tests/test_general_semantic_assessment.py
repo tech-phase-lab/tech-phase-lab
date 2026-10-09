@@ -1,6 +1,7 @@
 """One-call source-bound materiality assessment within the existing ledger."""
-from datetime import timedelta
+from datetime import datetime, timedelta
 import json
+import time
 import unittest
 from unittest.mock import patch
 
@@ -92,6 +93,39 @@ class GeneralSemanticAssessmentTests(unittest.TestCase):
             self.assertEqual(db.execute('SELECT count(*) FROM official_research_attempt_body_proofs').fetchone()[0],1)
             self.assertEqual(db.execute('SELECT state FROM signal_headline_translation_calls').fetchone()[0],'failed')
         self.assertEqual(self.run_once(lambda *_:self.fail('invalid copy retried')),'idle')
+
+    def test_check_failure_is_retried_before_staying_in_review(self):
+        # Owner, Oct 9: 49 of 53 held stories had failed one attempt. A check
+        # failure gets SEMANTIC_REVIEW_AFTER_ATTEMPTS attempts, after a delay.
+        self.raw(BODY)
+        bad={**COPY,'en':COPY['en']+' Revenue was $99 billion.'}
+        self.assertEqual(self.run_once(lambda *_:result(facts=[bad])),'review')
+        with research.connect(self.path) as db:
+            decided=datetime.fromisoformat(db.execute('SELECT decided_at FROM general_source_semantic_reviews').fetchone()[0]).timestamp()
+            later=decided+research.SEMANTIC_RETRY_DELAY_SECONDS+1
+            self.assertEqual(research.release_early_semantic_holds(db,now=decided+1),0)  # waits out the delay
+            self.assertEqual(research.release_early_semantic_holds(db,now=later),1)
+            self.assertEqual(db.execute('SELECT count(*) FROM general_source_semantic_reviews').fetchone()[0],0)
+            self.assertEqual(db.execute('SELECT state FROM official_research_jobs').fetchone()[0],'retry')
+            db.execute('UPDATE official_research_jobs SET next_at=0'); db.commit()
+        self.assertEqual(self.run_once(lambda *_:result()),'done')
+
+    def test_review_stays_after_the_last_attempt_or_a_model_decision(self):
+        self.raw(BODY)
+        bad={**COPY,'en':COPY['en']+' Revenue was $99 billion.'}
+        self.assertEqual(self.run_once(lambda *_:result(facts=[bad])),'review')
+        with research.connect(self.path) as db:
+            decided=datetime.fromisoformat(db.execute('SELECT decided_at FROM general_source_semantic_reviews').fetchone()[0]).timestamp()
+            later=decided+research.SEMANTIC_RETRY_DELAY_SECONDS+3600
+            db.execute('UPDATE official_research_jobs SET attempts=?',(research.SEMANTIC_REVIEW_AFTER_ATTEMPTS,)); db.commit()
+            self.assertEqual(research.release_early_semantic_holds(db,now=later),0)
+            self.assertEqual(db.execute('SELECT state FROM official_research_jobs').fetchone()[0],'review')
+        self.raw(BODY+' A second source unit is retained for consideration.',number=2000)
+        self.assertEqual(self.run_once(lambda *_:result('review','insufficient-source-evidence',[])),'review')
+        with research.connect(self.path) as db:
+            db.execute('UPDATE official_research_jobs SET attempts=1'); db.commit()
+            self.assertEqual(research.release_early_semantic_holds(db,now=later),1)  # only the check failure
+            self.assertEqual(db.execute("SELECT count(*) FROM general_source_semantic_reviews WHERE reason='insufficient-source-evidence'").fetchone()[0],1)
 
     def test_provider_failure_uses_existing_retry_and_budget_without_false_review(self):
         self.raw(BODY)
