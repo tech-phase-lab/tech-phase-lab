@@ -2464,7 +2464,19 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
         # The distributor feed itself never becomes globally official/AI-eligible.
         items.extend(issuer_syndication.public_items(db, current))
         import general_source_news
-        items.extend(general_source_news.public_items(db, current,authorization_context=authorization_context))
+        # Checked items, plus a source-only placeholder per story whose checked
+        # Japanese copy does not exist yet (owner, Oct 9).
+        general_rows = general_source_news.candidates(db, current, _defer_publication_review=True,
+                                                     authorization_context=authorization_context)
+        checked_general = general_source_news.public_items(db, current, authorization_context=authorization_context,
+                                                           rows=general_rows)
+        items.extend(checked_general)
+        try:
+            items.extend(general_source_news.pending_items(
+                db, current, {int(item['id']) for item in checked_general if str(item.get('id', '')).isdigit()},
+                {item['url'] for item in items}, rows=general_rows))
+        except (ValueError, TypeError, KeyError, LookupError):
+            pass  # A placeholder failure never removes a checked publication.
         import issuer_business_news
         items.extend(issuer_business_news.public_items(db, current))
         items.sort(key=lambda item: next((stamp.timestamp() for value in

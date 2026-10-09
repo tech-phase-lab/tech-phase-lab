@@ -197,6 +197,8 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
         if (translated or item.get('syndication') or item.get('generalSource')) and item.get("translationJa"):
             counts["translated"] += 1
             continue
+        if item.get('pendingResearch'):
+            continue  # Shown as the English original until research copy passes.
         import feed_category_admission
         if feed_category_admission.required(next((source for source in sources if source['id'] == row['source_id']), None), row['source_id']):
             import official_release_bridge
@@ -300,7 +302,7 @@ def claim(db, sources, limit, model, now):
         source_policies = {s['id']: s for s in sources}
         category_contexts = official_release_bridge.category_contexts(db, list(source_snapshots.values()), sources=sources)
         for item in items:
-            if item.get('syndication') or item.get('generalSource'):
+            if item.get('syndication') or item.get('generalSource') or item.get('pendingResearch'):
                 # These validated bilingual titles need no second paid translation.
                 continue
             row = db.execute("SELECT * FROM signal_events WHERE id=?", (item["id"],)).fetchone()

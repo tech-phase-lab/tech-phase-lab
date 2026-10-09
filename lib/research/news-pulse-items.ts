@@ -21,7 +21,8 @@ export function freshPulseItems<T extends { at: string; kind: string }>(items: T
 export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language) {
   const ja = lang === "ja";
   return [
-    ...(feed?.officialUpdates ?? []).filter(informativeOfficial).map(item => {
+    // Placeholders awaiting checked copy stay in the news list only.
+    ...(feed?.officialUpdates ?? []).filter(item => informativeOfficial(item) && !item.pendingResearch).map(item => {
       const display = officialNewsDisplay(item, lang);
       const compactTitle = ja ? officialPulseHeadlineJa(item.url) ?? item.pulseTitleJa ?? item.shortTitleJa : item.pulseTitleEn ?? item.shortTitleEn;
       const suffix = NEWS_BRIEF_TITLE_SUFFIXES[lang];
