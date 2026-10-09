@@ -129,7 +129,8 @@ def release_interrupted_jobs(db_path, now=None):
 
 # Bump when a validator is relaxed: jobs it rejected with these codes are
 # retried once now instead of waiting out their backoff (up to 6 hours).
-RELAXED_CHECKS = ("validators-3", tuple(sorted(pulse_titles.VALIDATION_FAILURES)))
+# validators-4 (Oct 9): 「10年国債」 counts as a maturity; cashtags may drop "$".
+RELAXED_CHECKS = ("validators-4", tuple(sorted(pulse_titles.VALIDATION_FAILURES)))
 VALIDATION_JOB_TABLES = ("signal_headline_translation_jobs", "x_market_jobs", "preview_summary_jobs", "pulse_title_jobs")
 
 
@@ -2921,6 +2922,10 @@ class Handler(BaseHTTPRequestHandler):
             state["modelBudget"] = {"error": "model-budget-unavailable"}
         state["newsTiming"] = self.app.news_timing()
         state["recentSummaryRejections"] = pipeline_status.recent_rejections()
+        try:
+            state["officialResearch"] = pipeline_status.research_failures(self.app.db_path)
+        except Exception:
+            state["officialResearch"] = {"error": "official-research-status-unavailable"}
         try:
             state["pulseTitles"] = pipeline_status.pulse_titles_status(self.app.db_path)
         except Exception:

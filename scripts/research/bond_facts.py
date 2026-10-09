@@ -18,6 +18,8 @@ def temporal_roles(text):
         'maturity': (
             YEAR + r'\s+' + MATURITY_NOUN,
             NUMBER + r'年(?:物|債)',
+            # 「10年国債」「10年米国債」: the same maturity, common in Japanese copy.
+            NUMBER + r'年(?:米|日本|独|英)?国債',
         ),
         'window': (
             YEAR + r'\s+(?:rolling\s+)?(?:periods?|returns?|performance|stretches?|windows?)\b',

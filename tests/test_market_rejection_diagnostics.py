@@ -1,0 +1,80 @@
+"""Market copy checks that rejected faithful translations, and rejection diagnostics (Oct 9)."""
+from pathlib import Path
+import sqlite3
+import sys
+import tempfile
+import time
+import unittest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/research'))
+import bond_facts
+import pipeline_status
+import x_market_news as news
+
+
+class JapaneseMaturityTests(unittest.TestCase):
+    def test_ten_year_government_bond_in_japanese_is_a_maturity(self):
+        original = 'US 10-year Treasury yield rises to 4.5%'
+        for ja in ('米10年国債利回りが4.5%に上昇', '10年米国債の利回りが4.5%に上昇', '米10年債利回りが4.5%に上昇'):
+            self.assertEqual(bond_facts.temporal_roles(ja), bond_facts.temporal_roles(original), ja)
+            news.validate({'titleJa': ja, 'titleEn': original}, original)
+
+    def test_period_is_still_not_a_maturity(self):
+        original = 'U.S. Treasuries have suffered their worst 10-year period in history'
+        with self.assertRaisesRegex(ValueError, 'invalid-copy'):
+            news.validate({'titleJa': '米10年国債、史上最悪の成績', 'titleEn': original}, original)
+
+
+class CashtagTests(unittest.TestCase):
+    def test_cashtag_may_drop_the_dollar_sign_but_not_disappear_or_grow(self):
+        self.assertTrue(news.cashtags_kept('WTI原油が上昇', '$WTI rises'))
+        self.assertTrue(news.cashtags_kept('$WTI rises', '$WTI rises'))
+        self.assertFalse(news.cashtags_kept('原油が上昇', '$WTI rises'))
+        self.assertFalse(news.cashtags_kept('$WTI and $XLE rise', '$WTI rises'))
+        self.assertFalse(news.cashtags_kept('WTIX rises', '$WTI rises'))
+
+
+class DiagnoseTests(unittest.TestCase):
+    def test_names_the_failing_check_without_copy_text(self):
+        original = 'US 10-year Treasury yield rises to 4.5%'
+        detail = news.diagnose({'titleJa': '米10年国債利回りが4.6%に上昇', 'titleEn': original}, original)
+        self.assertEqual(detail['check'], 'numbers')
+        self.assertEqual(detail['values'], ['4.6%', 'missing 4.5%'])
+        detail = news.diagnose({'titleJa': '米国債、10年物が史上最悪', 'titleEn': 'x'},
+                               'U.S. Treasuries have suffered their worst 10-year period in history')
+        self.assertEqual(detail['check'], 'bond-roles')
+        self.assertIn('maturity:10', detail['roles'])
+        self.assertNotIn('史上最悪', str(detail))
+        self.assertEqual(news.diagnose(None, original), {'check': 'shape'})
+
+
+class ResearchFailureTests(unittest.TestCase):
+    def test_counts_reasons_and_waiting_jobs_only(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'signals.sqlite'
+            db = sqlite3.connect(path)
+            db.executescript('''
+              CREATE TABLE official_research_attempt_failures(lease TEXT PRIMARY KEY, event_id INTEGER, sha TEXT,
+                failed_at TEXT, reason TEXT, detail TEXT, payload TEXT);
+              CREATE TABLE official_research_jobs(event_id INTEGER PRIMARY KEY, sha TEXT, attempts INTEGER,
+                next_at REAL, lease TEXT, state TEXT, failure_kind TEXT);''')
+            now = time.time()
+            recent = pipeline_status.timestamp(now - 60)
+            old = pipeline_status.timestamp(now - 3 * 86400)
+            db.executemany('INSERT INTO official_research_attempt_failures VALUES(?,?,?,?,?,?,?)', [
+                ('a', 1, 's', recent, 'unsupported-number', '', '{"secret":"copy"}'),
+                ('b', 2, 's', recent, 'unsupported-number', '', None),
+                ('c', 3, 's', recent, 'invalid-copy', '', None),
+                ('d', 4, 's', old, 'lost-negation', '', None)])
+            db.executemany('INSERT INTO official_research_jobs VALUES(?,?,?,?,?,?,?)', [
+                (1, 's', 2, now, '', 'retry', 'unsupported-number'), (2, 's', 1, now, '', 'review', None),
+                (3, 's', 1, now, '', 'done', None)])
+            db.commit(); db.close()
+            state = pipeline_status.research_failures(path, now=now)
+        self.assertEqual(state['failureReasons24h'], {'unsupported-number': 2, 'invalid-copy': 1})
+        self.assertEqual(state['waitingJobs'], {'retry:unsupported-number': 1, 'review': 1})
+        self.assertNotIn('secret', str(state))
+
+
+if __name__ == '__main__':
+    unittest.main()

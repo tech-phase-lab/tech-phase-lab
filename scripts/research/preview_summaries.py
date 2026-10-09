@@ -143,7 +143,7 @@ def unsupported_values(text, source):
 
 def record_rejection(entry):
     RECENT_REJECTIONS.append({**entry, 'at': datetime.now(timezone.utc).isoformat(timespec='seconds')})
-    del RECENT_REJECTIONS[:-10]
+    del RECENT_REJECTIONS[:-20]
 
 
 def summarizable(db, now):

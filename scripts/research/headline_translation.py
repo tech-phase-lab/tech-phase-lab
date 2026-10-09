@@ -413,6 +413,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                             "strict": True, "schema": schema}},
     }
     usage = {}
+    title_ja = None
     try:
         response = transport(payload, key)
         if response.get("status") != "completed":
@@ -443,6 +444,15 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                 else 'provider-auth' if status in (401, 403)
                 else 'provider-timeout' if isinstance(exc, TimeoutError) or isinstance(cause, TimeoutError)
                 else 'provider-unavailable')
+        if kind in ('unsupported-number', 'changed-names'):
+            try:
+                import preview_summaries
+                text = title_ja if isinstance(title_ja, str) else ''
+                detail = ({'values': preview_summaries.unsupported_values(text, row['translation_title'])}
+                          if kind == 'unsupported-number' else {'name': factual_validation.LAST_NAME_REJECTION[0]})
+                preview_summaries.record_rejection({'lane': 'headline', 'id': str(row['id']), 'code': kind, **detail})
+            except Exception:
+                pass  # Diagnostics never block the retry schedule.
         delay = 5 if kind == 'output-token-limit' and row['output_tokens'] < 1200 else retry_delay(attempt[0] if attempt else 1, kind)
         retry = max(delay, min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
         with connect(path) as db, db:
