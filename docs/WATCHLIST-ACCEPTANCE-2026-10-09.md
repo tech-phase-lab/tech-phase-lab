@@ -6,6 +6,12 @@
 - After the pending-save recovery release `b2d51ae`, the user followed the deletion check: remove AAPL on PC, immediately visit Home, return to the watchlist, and check the phone. They reported that AAPL was absent and there was no problem (02:24 JST).
 - These reports cover those operations only; they do not establish all account, browser, or connection scenarios.
 
+## Price-alert settings — 19:30 JST
+
+- In the signed-in cloud browser, AAPL in list 2 (同期確認) retained 200.1234 USD above after reload; editing to 210 USD above, adding 180 USD below, and removing only the below condition succeeded. A fresh tab read back only 210 USD above.
+- The user changed this setting on their phone to 220 USD above. The existing cloud-browser page displayed 220 USD above without signing out. This confirms this round trip between those devices, not every failure/offline scenario.
+- AAPL and the 220 USD above test setting remain in 同期確認. Delivery remains inactive.
+
 ## Automated coverage
 
 `tests/favorite-sync.test.mjs` exercises delayed reads, serialized edits, lost responses, account isolation, conflicts, and tab-local pending-save recovery after controller disposal/remount. Additional resume coverage checks retrying a failed save on page return, overlapping wake-ups, and preserving conflicting edits without automatic writes.
