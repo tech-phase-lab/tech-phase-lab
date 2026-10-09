@@ -109,3 +109,30 @@ actual same-browser race, not simultaneous edits across separate devices.
 - Returned the retained signed-in tab to the watchlist. These are same-browser
   account-storage checks; no new phone/device, offline or alternate-account test.
   Price delivery remains inactive and normal watchlist quotes remain unconnected.
+
+### Recovery and gesture checks — 2026-10-10 01:22–01:25 JST
+
+- Re-ran `npm test`: 617 passed. Existing production-controller tests cover
+  failed saves, lost save acknowledgements, resume/remount with queued edits,
+  account isolation and conflicting revisions. These are simulated transport
+  tests, not physical offline-device acceptance. No application changes needed.
+- The cloud-browser interface did not expose working offline/viewport controls.
+  DevTools and zoom shortcuts did not change the page. Login remained active.
+- On the published sample, a real pointer drag left on MRVL revealed the trash
+  action without expanding the row or deleting it. Clicking trash removed only
+  that fictional sample row; reloading restored the sample.
+- Filtered AAOI and expanded its chart in Japanese and English. Long company
+  name, sector, chart and explicit fictional-data labels remained visible at
+  desktop width. Restored Japanese and the original unfiltered sample.
+- On the signed-in normal page, ArrowLeft revealed the MRVL removal action and
+  Escape hid it. No account stocks or price-alert settings were edited.
+
+Next physical-device acceptance (still pending):
+1. Load the normal signed-in watchlist while online. In list 2 (同期確認), keep
+   the page open, turn off cellular/Wi-Fi, rename it to 同期確認・テスト and save.
+   Verify that failure is shown rather than a saved success and the draft stays.
+2. Restore connectivity, retry if necessary, then reload. Verify the temporary
+   name remains and AAPL / 220 USD above are intact; rename back to 同期確認.
+3. In the fictional sample, inspect AAOI at phone width, swipe to reveal trash,
+   test vertical scrolling and detail open/close. Reload to reset sample edits.
+Do not count these phone steps as passed until the user confirms the outcome.
