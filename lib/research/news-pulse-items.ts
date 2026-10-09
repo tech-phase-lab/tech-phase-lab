@@ -3,7 +3,7 @@ import type { Language } from "./data";
 import { marketNewsBody, marketNewsDisplay } from "./market-news-display.ts";
 import { officialPulseHeadlineJa } from "./official-news-ja.ts";
 import { informativeOfficial, officialNewsDisplay } from "./news-presentation.ts";
-import { NEWS_MAX_AGE_MS, officialTime } from "./news-time.ts";
+import { NEWS_MAX_AGE_MS, clockTime, officialTime } from "./news-time.ts";
 import { officialPulseHeadlines, marketPulseHeadlines, generalPulseHeadlines } from "./news-pulse-headline.ts";
 
 const JAPANESE = /[\u3040-\u30ff\u3400-\u9fff]/;
@@ -48,5 +48,12 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
     // The strip is a one-line Japanese summary; an item still awaiting its
     // reviewed translation stays in the news list below (in its original) only.
     .filter(item => !ja || JAPANESE.test(item.title))
-    .sort((a, b) => Date.parse(b.at) - Date.parse(a.at)).slice(0, 5);
+    .sort((a, b) => shownAt(b) - shownAt(a)).slice(0, 5);
+}
+
+/** The instant the strip shows for an item (a date-only release seen the same
+ * day shows that clock), so the strip runs newest first as displayed (owner, Oct 9). */
+function shownAt(item: { at: string; kind: string; observedAt?: string }) {
+  const time = clockTime(item.at, item.kind, item.observedAt);
+  return Date.parse(time.kind === "date" ? `${time.at}T00:00:00Z` : time.at);
 }

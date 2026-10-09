@@ -127,6 +127,18 @@ class GeneralSemanticAssessmentTests(unittest.TestCase):
             self.assertEqual(research.release_early_semantic_holds(db,now=later),1)  # only the check failure
             self.assertEqual(db.execute("SELECT count(*) FROM general_source_semantic_reviews WHERE reason='insufficient-source-evidence'").fetchone()[0],1)
 
+    def test_backlog_release_retries_held_check_failures_once_and_records_the_site(self):
+        self.raw(BODY)
+        bad={**COPY,'en':COPY['en']+' Revenue was $99 billion.'}
+        self.assertEqual(self.run_once(lambda *_:result(facts=[bad])),'review')
+        self.assertTrue(any(code=='unsupported-number' and '.py:' in site
+                            for code,site in research.FAILURE_SITES))
+        with research.connect(self.path) as db:
+            self.assertEqual(research.release_research_backlog_once(db),1)
+            self.assertEqual(research.release_research_backlog_once(db),0)
+            db.execute('UPDATE official_research_jobs SET next_at=0'); db.commit()
+        self.assertEqual(self.run_once(lambda *_:result()),'done')
+
     def test_provider_failure_uses_existing_retry_and_budget_without_false_review(self):
         self.raw(BODY)
         def failed(*_):raise RuntimeError('offline provider unavailable')

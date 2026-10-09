@@ -999,6 +999,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
     except Exception as exc:
         cause=getattr(exc,'__cause__',None)
         provider_status=getattr(cause,'code',None)
+        record_failure_site(exc,row)
         reason=str(exc) if type(exc) is ValueError and str(exc) in ({'invalid-note','invalid-facts','invalid-item','unsupported-quote','invalid-copy','unsupported-number','incomplete','lost-forecast-modality','lost-negation','reversed-supply-demand','lost-fiscal-basis','lost-comparison','unsupported-comparison-baseline','changed-amount-relation','changed-execution-period','changed-action-capacity','source-event-identity-mismatch','invented-broker-action','source-copy-overlap','unsupported-actor','lost-action-status'} | factual_validation.MEANING_FAILURES | general_source_news.FAILURE_CODES | {rollout_validation.FAILURE, material_relations.FAILURE}) else ('provider-http-'+str(provider_status) if type(provider_status) is int and 400 <= provider_status <= 599 else 'provider-unavailable')
         with connect(path) as db, db:
             db.execute('BEGIN IMMEDIATE')
@@ -1267,3 +1268,61 @@ def release_early_semantic_holds(db, now=None):
             db.execute("UPDATE official_research_jobs SET state='retry',next_at=? WHERE event_id=? AND lease=? AND state='review'",
                        (now,event_id,lease))
     return len(rows)
+
+
+# Which check raised each research failure since start: one code (for example
+# invalid-note) is raised from many places, so the code alone cannot say what
+# to fix. File, line and function only; no copy or source text.
+FAILURE_SITES={}
+
+
+def record_failure_site(exc,row):
+    try:
+        import traceback
+        frames=[f for f in traceback.extract_tb(exc.__traceback__) if '/scripts/research/' in f.filename.replace(chr(92),'/')]
+        if not frames or type(exc) is not ValueError:
+            return
+        site='%s:%d:%s'%(os.path.basename(frames[-1].filename),frames[-1].lineno,frames[-1].name)
+        key=(str(exc),site)
+        FAILURE_SITES[key]=FAILURE_SITES.get(key,0)+1
+        import preview_summaries
+        preview_summaries.record_rejection({'lane':'research','id':str(row['id']),'code':str(exc),'site':site,
+                                            'notes':','.join(getattr(exc,'__notes__',[]))[:80]})
+    except Exception:
+        pass  # Diagnostics never change the retry or review decision.
+
+
+def release_research_backlog_once(db, now=None, marker='research-backlog-1'):
+    """Once per marker: retry every waiting research job now, including check
+    failures held for review, so their failure sites are recorded at once
+    (owner, Oct 9: stories were not being delivered). Same exclusions as
+    release_early_semantic_holds; checks are unchanged."""
+    now=time.time() if now is None else now
+    db.execute("CREATE TABLE IF NOT EXISTS validator_releases(revision TEXT PRIMARY KEY, released_at REAL NOT NULL)")
+    db.commit()
+    if db.execute("SELECT 1 FROM validator_releases WHERE revision=?",(marker,)).fetchone():
+        return 0
+    tables={row[0] for row in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    released=0
+    with db:
+        db.execute('BEGIN IMMEDIATE')
+        if 'official_research_jobs' in tables:
+            released+=db.execute("UPDATE official_research_jobs SET next_at=? WHERE state='retry' AND next_at>?",(now,now)).rowcount
+        if {'official_research_jobs','general_source_semantic_reviews'}<=tables:
+            rows=db.execute("""SELECT j.event_id,j.lease FROM official_research_jobs j
+              JOIN general_source_semantic_reviews r ON r.event_id=j.event_id AND r.sha=j.sha AND r.lease=j.lease
+              WHERE j.state='review' AND j.failure_kind IS NOT NULL
+                AND j.failure_kind NOT IN ('classified-attempt',?) AND r.reason='unsubstantiated-model-output'""",
+                            (material_relations.FAILURE,)).fetchall()
+            if rows:
+                current={row['id']:row for row in general_source_news.candidates(
+                    db,datetime.fromtimestamp(now,timezone.utc),include_review=True)}
+                for event_id,lease in rows:
+                    if event_id not in current or any(adapter.recognized(current[event_id])
+                            for adapter in (macro_source_publication,attributed_policy_publication)):
+                        continue
+                    db.execute("DELETE FROM general_source_semantic_reviews WHERE event_id=? AND lease=?",(event_id,lease))
+                    released+=db.execute("UPDATE official_research_jobs SET state='retry',next_at=?,attempts=? WHERE event_id=? AND lease=? AND state='review'",
+                                         (now,SEMANTIC_REVIEW_AFTER_ATTEMPTS-1,event_id,lease)).rowcount
+        db.execute("INSERT INTO validator_releases VALUES(?,?)",(marker,now))
+    return released
