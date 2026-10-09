@@ -130,7 +130,8 @@ def release_interrupted_jobs(db_path, now=None):
 # Bump when a validator is relaxed: jobs it rejected with these codes are
 # retried once now instead of waiting out their backoff (up to 6 hours).
 # validators-4 (Oct 9): 「10年国債」 counts as a maturity; cashtags may drop "$".
-RELAXED_CHECKS = ("validators-4", tuple(sorted(pulse_titles.VALIDATION_FAILURES)))
+# validators-5 (Oct 9): "24-year high" is a lookback; "one million" supports 100万.
+RELAXED_CHECKS = ("validators-5", tuple(sorted(pulse_titles.VALIDATION_FAILURES)))
 VALIDATION_JOB_TABLES = ("signal_headline_translation_jobs", "x_market_jobs", "preview_summary_jobs", "pulse_title_jobs")
 
 
