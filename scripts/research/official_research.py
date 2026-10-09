@@ -54,7 +54,10 @@ Use third-person news wording. Omit promotion, calls to action and registration 
 
 
 # Share of the shared daily model-call limit issuer research notes may use.
-RESEARCH_BUDGET_SHARE = 0.20
+# 0.20 (120 of 600) ran out on Oct 9 with 110 stories waiting while the whole
+# limit was only a third used, so no official story could be written at all.
+# The shared limit, and the headline reserve checked with it, are unchanged.
+RESEARCH_BUDGET_SHARE = 0.50
 
 
 def research_cap(limit):
