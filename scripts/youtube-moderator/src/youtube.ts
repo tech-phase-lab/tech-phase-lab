@@ -118,13 +118,18 @@ export async function listHeldComments(accessToken: string, channelId: string): 
     for (const thread of payload.items ?? []) {
       const videoId = thread.snippet.videoId ?? thread.snippet.topLevelComment.snippet.videoId ?? "";
       const top = thread.snippet.topLevelComment;
-      if (!top.snippet.moderationStatus || top.snippet.moderationStatus === "heldForReview") {
+      const heldReplies = (thread.replies?.comments ?? []).filter(
+        (reply) => reply.snippet.moderationStatus === "heldForReview",
+      );
+      // 承認待ちの返信があるスレッドは、公開済みの元コメントも一緒に返ってくる。
+      // 元コメントには承認状態が付いてこないことがあるため、承認待ちの返信がある場合は
+      // 元コメントが明示的に承認待ちのときだけ対象にする（公開済みの元コメントを審査・非公開にしないため）。
+      const topStatus = top.snippet.moderationStatus;
+      if (topStatus === "heldForReview" || (!topStatus && heldReplies.length === 0)) {
         comments.push(toHeldComment(top, videoId, false));
       }
-      for (const reply of thread.replies?.comments ?? []) {
-        if (reply.snippet.moderationStatus === "heldForReview") {
-          comments.push(toHeldComment(reply, videoId, true));
-        }
+      for (const reply of heldReplies) {
+        comments.push(toHeldComment(reply, videoId, true));
       }
     }
 
