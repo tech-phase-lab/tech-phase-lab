@@ -18,7 +18,7 @@ export type GeneralNewsItem = CompactTitles & {
 };
 export type OfficialNewsSource = { id: string; url: string; publisher: string; publishedAt: string; observedAt: string };
 export type OfficialNewsBrief = { version: 1; scope: "company" | "sector"; validFacts: number; pendingFacts: number };
-export type OfficialUpdate = CompactTitles & NewsBody & { brief?: OfficialNewsBrief; generalSource?: 1; newsCategory?: "policy" | "economic"; syndication?: Syndication; id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[] };
+export type OfficialUpdate = CompactTitles & NewsBody & { brief?: OfficialNewsBrief; generalSource?: 1; newsCategory?: "policy" | "economic"; syndication?: Syndication; id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[]; pendingResearch?: 1 };
 export type MarketUpdate = CompactTitles & MarketNewsDetail & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
 export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; officialHistory?: OfficialHistory; originalPreviewItems?: OriginalPreviewItem[]; originalPreviewWindow?: OriginalPreviewWindow };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
@@ -260,8 +260,14 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
             publishedAt: brief.publishedAt, observedAt: brief.observedAt });
         }
       }
+      // Source-only placeholder (ticker + story type in Japanese, the source post
+      // in English) shown until the checked copy exists. Never carries a body.
+      const pendingResearch = v.pendingResearch === 1 && url.hostname === "x.com"
+        && /^\/(tipranks|wallstengine|fabymetal4)\/status\/\d+$/i.test(url.pathname)
+        && v.bodyJa === undefined && v.bodyEn === undefined && v.generalSource === undefined && v.brief === undefined;
+      if (v.pendingResearch !== undefined && !pendingResearch) throw Error("Invalid pending research item");
       const mergedResult = sources.length > 1 && Array.isArray(v.sources) && sources.length === v.sources.length;
-      return { ...(syndication ? { syndication } : {}), ...newsBrief(v), ...sourceNewsCategory(v), ...(reportedBuyback ? { generalSource: 1 as const } : {}), ...compactTitles(v), ...newsBody(v, mergedResult ? 40000 : 12000), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}), ...(sources.length ? { sources } : {}) };
+      return { ...(syndication ? { syndication } : {}), ...newsBrief(v), ...sourceNewsCategory(v), ...(reportedBuyback ? { generalSource: 1 as const } : {}), ...compactTitles(v), ...newsBody(v, mergedResult ? 40000 : 12000), id: v.id as string, title: v.title as string, publisher: v.publisher as string, url: url.href, observedAt: v.observedAt as string, tickers: v.tickers as string[], ...publication, ...translation, ...(v.researchId ? {researchId:v.researchId as string} : {}), ...(sources.length ? { sources } : {}), ...(pendingResearch ? { pendingResearch: 1 as const } : {}) };
     }).reduce<OfficialUpdate[]>((items, item) => {
       const index = seenOfficialUrls.get(item.url);
       if (index === undefined) {

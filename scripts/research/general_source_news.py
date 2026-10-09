@@ -1054,14 +1054,15 @@ def public_item(row,note):
             'generalSource':VERSION}
 
 
-def publications(db,reference,*,authorization_context=None):
+def publications(db,reference,*,authorization_context=None,rows=None):
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='official_research_publications'").fetchone():
         return []
     import macro_source_publication
     import attributed_policy_publication
     macro_context=macro_source_publication.PublicReadContext(db,reference)
     policy_context=attributed_policy_publication.PublicReadContext(db,reference)
-    rows=candidates(db,reference,_defer_publication_review=True,authorization_context=authorization_context)
+    if rows is None:
+        rows=candidates(db,reference,_defer_publication_review=True,authorization_context=authorization_context)
     macro_context.bind_rows(rows)
     policy_context.bind_rows(rows)
     result=[]
@@ -1110,8 +1111,90 @@ def publications(db,reference,*,authorization_context=None):
     return result
 
 
-def public_items(db,reference,*,authorization_context=None):
-    return [public_item(row,note) for row,_,note in publications(db,reference,authorization_context=authorization_context)]
+def public_items(db,reference,*,authorization_context=None,rows=None):
+    return [public_item(row,note) for row,_,note in publications(db,reference,authorization_context=authorization_context,rows=rows)]
+
+
+# Owner, Oct 9: a story whose Japanese copy has not passed the checks must
+# still reach readers. Until it does, English shows the source's own post and
+# Japanese shows only a fixed label (ticker and story type, e.g.
+# 「NVDA：買収に関する報道」), with publisher, time and link. Nothing is
+# translated or summarized, so no checked copy is loosened. A vague label
+# (company development, no type) is not shown: it only takes space.
+PENDING_CATEGORIES = {'share-buyback','management-outlook','broker-commentary','contract','acquisition','product','capacity'}
+PENDING_ACCOUNTS = re.compile(r'^https://x\.com/(?:tipranks|wallstengine|fabymetal4)/status/\d+$', re.I)
+PENDING_TITLE_MAX = 180
+# A shortened post must not drop a qualifier that changes what it says.
+PENDING_QUALIFIER = re.compile(r"\b(?:not|no|never|without|den(?:y|ies|ied)|unless|if|but|however|although|"
+                               r"may|might|could|rumou?r\w*|unconfirmed|reportedly)\b|n['’]t\b", re.I)
+ISO_INSTANT = re.compile(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$')
+TICKER = re.compile(r'^[A-Z][A-Z0-9.-]{0,9}$')
+
+
+def pending_title(text):
+    """The source post itself, whole or cut at a sentence end with nothing material dropped."""
+    if not isinstance(text,str):
+        return None
+    text=' '.join(re.sub(r'https?://\S+','',text).split())
+    if not text:
+        return None
+    if len(text)<=PENDING_TITLE_MAX:
+        return text
+    kept=''
+    for sentence in re.split(r'(?<=[.!?])\s+',text):
+        candidate=(kept+' '+sentence).strip()
+        if len(candidate)>PENDING_TITLE_MAX-2:
+            break
+        kept=candidate
+    rest=text[len(kept):]
+    if not kept or PENDING_QUALIFIER.search(rest):
+        return None
+    return kept+' …'
+
+
+def pending_items(db,reference,published_ids,published_urls,*,authorization_context=None,rows=None):
+    has_jobs=db.execute("SELECT 1 FROM sqlite_master WHERE name='official_research_jobs'").fetchone()
+    has_reviews=db.execute("SELECT 1 FROM sqlite_master WHERE name='general_source_semantic_reviews'").fetchone()
+    names={source['id']:source.get('name') for source in signals.SOURCES}
+    items,seen=[],set()
+    if rows is None:
+        rows=candidates(db,reference,_defer_publication_review=True,authorization_context=authorization_context)
+    for row in rows:
+        if row['id'] in published_ids or row['id'] in seen or row['url'] in published_urls:
+            continue
+        if not PENDING_ACCOUNTS.match(row['url'] or ''):
+            continue
+        job=(db.execute('SELECT state,failure_kind FROM official_research_jobs WHERE event_id=? AND sha=?',
+                        (row['id'],row['sha'])).fetchone() if has_jobs else None)
+        # The model's own decision to hold (not company news, not enough
+        # evidence) stands; only copy that failed a check falls back here.
+        if job and (job['state'] in ('stale','done') or job['failure_kind']=='classified-attempt'):
+            continue
+        review=(db.execute('SELECT reason FROM general_source_semantic_reviews WHERE event_id=? AND sha=? AND body_sha=?',
+                           (row['id'],row['sha'],row['body_sha'])).fetchone() if has_reviews else None)
+        if review and review['reason']!='unsubstantiated-model-output':
+            continue
+        category=row.get('category')
+        label=row.get('related_subject') if row.get('source_news') else row.get('ticker')
+        if category not in PENDING_CATEGORIES or not isinstance(label,str) or not TICKER.match(label):
+            continue
+        if category=='share-buyback' and any(unit.get('buyback',{}).get('historical') for unit in row.get('units',[])):
+            continue
+        body=row.get('body')
+        title=pending_title(body if isinstance(body,str) and body.strip() else row['title'])
+        publisher=names.get(row['source_id'])
+        if not title or not isinstance(publisher,str) or not publisher.strip() or len(publisher)>80:
+            continue
+        tickers=[t for t in (row.get('related_tickers',[]) if row.get('source_news') else [row.get('ticker')])
+                 if isinstance(t,str) and TICKER.match(t)][:5]
+        item={'id':str(row['id']),'title':title,'translationJa':label+'：'+CATEGORIES[category][0],
+              'url':row['url'],'publisher':publisher,'tickers':tickers,
+              'observedAt':row['observed_at'],'pendingResearch':1}
+        if isinstance(row.get('published_at'),str) and ISO_INSTANT.match(row['published_at']):
+            item['publishedAt']=row['published_at']
+        seen.add(row['id'])
+        items.append(item)
+    return items
 
 
 def diagnostics(db,reference):
