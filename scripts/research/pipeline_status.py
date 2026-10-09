@@ -302,3 +302,29 @@ def recent_rejections():
     """Field/check/name of recent summary rejections (no copy or article text)."""
     import preview_summaries
     return list(preview_summaries.RECENT_REJECTIONS)
+
+
+def feed_summary(payload, limit=12):
+    """What the public feed holds right now, without any story text: counts,
+    and for the newest items only the source name, clock kind, time and flags.
+    Added Oct 9 because the owner saw a story in the list that never reached
+    the top strip and the monitor could not say which clock or flag held it."""
+    def clock(item):
+        for key, kind in (('publishedAt', 'published'), ('publishedOn', 'date'), ('observedAt', 'observed')):
+            if isinstance(item.get(key), str):
+                return kind, item[key]
+        return 'none', None
+    official = [item for item in payload.get('officialUpdates', []) if isinstance(item, dict)]
+    market = [item for item in payload.get('marketUpdates', []) if isinstance(item, dict)]
+    rows = []
+    for item in official:
+        kind, at = clock(item)
+        rows.append({'id': str(item.get('id'))[:12], 'publisher': str(item.get('publisher'))[:40], 'clock': kind, 'at': at,
+                     'observedAt': item.get('observedAt'), 'ja': bool(item.get('translationJa')),
+                     'body': bool(item.get('bodyJa') or item.get('bodyEn')), 'pending': bool(item.get('pendingResearch'))})
+    rows.sort(key=lambda row: row['at'] or '', reverse=True)
+    return {'official': len(official), 'officialJa': sum(1 for row in rows if row['ja']),
+            'officialPending': sum(1 for row in rows if row['pending']),
+            'officialByClock': {kind: sum(1 for row in rows if row['clock'] == kind) for kind in ('published', 'date', 'observed', 'none')},
+            'market': len(market), 'marketNewestAt': max((str(item.get('publishedAt') or '') for item in market), default=None) or None,
+            'items': len(payload.get('items', [])), 'newestOfficial': rows[:limit]}

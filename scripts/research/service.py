@@ -2926,7 +2926,7 @@ class Handler(BaseHTTPRequestHandler):
         supplied = self.headers.get("Authorization", "")
         return hmac.compare_digest(supplied, "Bearer " + token)
 
-    def news_pipeline_state(self):
+    def news_pipeline_state(self, feed=False):
         try:
             # Aggregate only: stage counts and acquisition-to-publication timing.
             state = pipeline_status.summary(pipeline_status.collect(self.app.db_path))
@@ -2946,6 +2946,11 @@ class Handler(BaseHTTPRequestHandler):
             state["pulseTitles"] = pipeline_status.pulse_titles_status(self.app.db_path)
         except Exception:
             state["pulseTitles"] = {"error": "pulse-titles-unavailable"}
+        if feed:  # Only the dedicated news health read; /health is probed often.
+            try:
+                state["publicFeed"] = pipeline_status.feed_summary(self.app.public_news(max_age=120))
+            except Exception:
+                state["publicFeed"] = {"error": "public-feed-unavailable"}
         return state
 
     def editor_authorized(self):
@@ -2994,7 +2999,7 @@ class Handler(BaseHTTPRequestHandler):
             return
         if path == "/health/news":
             # The news part of /health on its own: counts, codes and timings only.
-            self.send_json(200, self.news_pipeline_state())
+            self.send_json(200, self.news_pipeline_state(feed=True))
             return
         if path in {"/health", "/readyz"}:
             state = self.app.public_state()
