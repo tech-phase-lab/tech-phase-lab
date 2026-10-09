@@ -1,6 +1,6 @@
 "use client";
-import { SignIn, SignUp, SignOutButton, useAuth } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
+import { AuthenticateWithRedirectCallback, SignIn, SignUp, SignOutButton, useAuth } from "@clerk/nextjs";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
@@ -32,7 +32,36 @@ function AccountContent({ status, plan, signingUp = false, initialMember }: { st
   return content;
 }
 
+function subscribeCallbackRoute(notify: () => void) {
+  window.addEventListener("hashchange", notify);
+  window.addEventListener("popstate", notify);
+  return () => {
+    window.removeEventListener("hashchange", notify);
+    window.removeEventListener("popstate", notify);
+  };
+}
+function isCallbackRoute() {
+  // Match only the route, never parse, log, or rewrite OAuth credentials.
+  return /^#\/sso-callback(?:[?#]|$)/.test(window.location.hash);
+}
+function AccountCallback() {
+  const [lang] = useResearchLanguage();
+  return <>
+    <p role="status">{lang === "ja" ? "ログインを完了しています…" : "Completing sign-in…"}</p>
+    <AuthenticateWithRedirectCallback
+      signInUrl="/research/account"
+      signUpUrl="/research/account/sign-up"
+      signInForceRedirectUrl="/research/account"
+      signUpForceRedirectUrl="/research/account"
+    />
+  </>;
+}
+
 export default function AccountScreen(props: {status:string; plan:string; signingUp?:boolean; initialMember?:Member}) {
+  const callback = useSyncExternalStore(subscribeCallbackRoute, isCallbackRoute, () => false);
+  // Handle the OAuth return independently of the SignIn widget's hash router.
+  // In particular, a nested return fragment must not leave an empty Clerk card.
+  if (callback) return <AccountCallback />;
   if (props.status === "unavailable") return <p>会員機能に接続できません。時間をおいて再度お試しください。</p>;
   return <AccountContent {...props} />;
 }
