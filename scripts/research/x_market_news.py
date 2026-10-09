@@ -157,6 +157,11 @@ def diagnose(result, original):
                 if name == 'bond-roles':
                     detail['roles'] = sorted('%s:%s' % k for k in set(bond_facts.temporal_roles(text)) ^ set(bond_facts.temporal_roles(original)))[:6]
                     detail['metrics'] = sorted(bond_facts.metrics(text) ^ bond_facts.metrics(original))
+                    # The source is a public X post: show how it words each
+                    # unmatched number (a few words around it) so the gap can be fixed.
+                    numbers = {key.split(':', 1)[1] for key in detail['roles']}
+                    detail['sourceContext'] = [match[0] for number in sorted(numbers)
+                                               for match in re.finditer(r'(?:\S+\s+){0,3}\S*' + re.escape(number) + r'\S*(?:\s+\S+){0,3}', original)][:3]
                 return detail
     try:
         factual_validation.validate_names(result['titleJa'], original + ' ' + result['titleEn'])
