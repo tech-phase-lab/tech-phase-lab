@@ -157,10 +157,8 @@ async function alertIfStuck(state: State, message: string) {
   }
 }
 
-async function main() {
-  const stateFile = stateFilePath();
-  const state = await loadState(stateFile);
-
+/** 1回分のチェック。成功したら true を返す。 */
+async function checkOnce(stateFile: string, state: State): Promise<boolean> {
   try {
     await moderate(loadConfig(), state);
     if (state.failures || state.alert) {
@@ -168,13 +166,38 @@ async function main() {
       delete state.alert;
       if (!isDryRun()) await saveState(stateFile, state);
     }
+    return true;
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.error(message);
     await alertIfStuck(state, message);
     if (!isDryRun()) await saveState(stateFile, state);
-    process.exitCode = 1;
+    return false;
   }
+}
+
+function minutesFromEnv(name: string, fallback: number): number {
+  const value = Number(process.env[name]);
+  return Number.isFinite(value) && value >= 0 ? value : fallback;
+}
+
+async function main() {
+  const stateFile = stateFilePath();
+  const state = await loadState(stateFile);
+
+  // GitHub の定期実行は15〜30分遅れることがあるため、1回の起動の中で LOOP_MINUTES の間、
+  // INTERVAL_MINUTES おきにチェックを繰り返す。0 なら1回だけ（手動実行用）。
+  const loopMs = minutesFromEnv("LOOP_MINUTES", 0) * 60_000;
+  const intervalMs = Math.max(minutesFromEnv("INTERVAL_MINUTES", 2), 0.5) * 60_000;
+  const deadline = Date.now() + loopMs;
+
+  let ok = await checkOnce(stateFile, state);
+  while (Date.now() + intervalMs < deadline) {
+    await new Promise((resolve) => setTimeout(resolve, intervalMs));
+    ok = await checkOnce(stateFile, state);
+  }
+
+  if (!ok) process.exitCode = 1;
 }
 
 await main();
