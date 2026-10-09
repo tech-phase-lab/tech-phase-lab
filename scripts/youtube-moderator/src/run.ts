@@ -83,21 +83,33 @@ async function moderate(config: Config, state: State) {
   let notifiedIds: string[];
 
   if (config.mode === "auto") {
+    // NGワードは文字一致で確実なので YouTube 上で非公開にする。
+    // AI の「非公開」判定は承認待ちのまま残す（視聴者には見えず、間違っていても Studio から公開し直せる）。
+    const ngRejects = grouped.reject.filter(([, v]) => v.category === "NGワード");
+    const aiRejects = grouped.reject.filter(([, v]) => v.category !== "NGワード");
     if (!config.dryRun) {
       await setModerationStatus(accessToken, grouped.publish.map(([c]) => c.id), "published");
-      await setModerationStatus(accessToken, grouped.reject.map(([c]) => c.id), "rejected");
+      await setModerationStatus(accessToken, ngRejects.map(([c]) => c.id), "rejected");
     }
-    if (grouped.ask.length === 0 && grouped.reject.length === 0) return;
+
+    // 承認待ちに残したもの（AIの非公開判定・要確認）は、次のチェックで判定し直さないよう記録する
+    notifiedIds = [...aiRejects, ...grouped.ask].map(([c]) => c.id);
+
+    // メールは迷ったもの（要確認）があるときだけ
+    if (grouped.ask.length === 0) {
+      if (!config.dryRun && notifiedIds.length > 0) {
+        const now = new Date().toISOString();
+        for (const id of notifiedIds) state.notified[id] = now;
+        await saveState(config.stateFile, state);
+      }
+      return;
+    }
 
     message = [
-      `🍭 コメント自動審査（公開 ${grouped.publish.length} / 非公開 ${grouped.reject.length} / 要確認 ${grouped.ask.length}）`,
+      `🍭 コメント要確認 ${grouped.ask.length}件（自動で公開 ${grouped.publish.length} / 非公開 ${grouped.reject.length}）`,
       section("要確認・YouTube Studio で判断してください", grouped.ask),
-      section("非公開にしました（誤判定がないか確認用）", grouped.reject),
-      grouped.ask.length > 0 ? `YouTube Studio: ${studioUrl}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n\n");
-    notifiedIds = grouped.ask.map(([c]) => c.id);
+      `YouTube Studio: ${studioUrl}`,
+    ].join("\n\n");
   } else {
     message = [
       `🍭 コメント審査の判定案（提案モード：YouTube 側はまだ何も変更していません）`,
