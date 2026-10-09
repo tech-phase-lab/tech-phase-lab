@@ -131,6 +131,10 @@ class GeneralSemanticAssessmentTests(unittest.TestCase):
         self.raw(BODY)
         bad={**COPY,'en':COPY['en']+' Revenue was $99 billion.'}
         self.assertEqual(self.run_once(lambda *_:result(facts=[bad])),'review')
+        import preview_summaries
+        entry=[x for x in preview_summaries.RECENT_REJECTIONS if x.get('lane')=='research'][-1]
+        self.assertEqual(entry['code'],'unsupported-number')
+        self.assertIn('99000000000',entry['values'])  # the invented $99 billion, values only
         self.assertTrue(any(code=='unsupported-number' and '.py:' in site
                             for code,site in research.FAILURE_SITES))
         with research.connect(self.path) as db:
