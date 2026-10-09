@@ -14,13 +14,16 @@ from token_pricing import token_denominators, validate_token_prices
 QUANTITY_PATTERN = re.compile(
     r'(?<![\d.,])(?P<before>[+＋\-−]?)\s*(?:[$€£¥]\s*)?'
     r'(?P<after>[+＋\-−]?)\s*(?P<number>\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:[-‑]\s*)?'
-    r'(?P<unit>thousand\b|million\b|billion\b|trillion\b|percent\b|パーセント|[KMBT](?![A-Za-z])|[%％]|千|万|億|兆)',
+    r'(?P<unit>thousand\b|million\b|billion\b|trillion\b|percent\b|パーセント|[KMBT](?![A-Za-z])|[%％]|百万|千万|十億|百億|千億|千|万|億|兆)',
     re.I,
 )
 UNIT_SCALE = { 'k': 1000, 'thousand': 1000, '千': 1000,
     'm': 1000000, 'million': 1000000, '万': 10000,
     'b': 1000000000, 'billion': 1000000000, '億': 100000000,
-    't': 1000000000000, 'trillion': 1000000000000, '兆': 1000000000000 }
+    't': 1000000000000, 'trillion': 1000000000000, '兆': 1000000000000,
+    # Japanese financial writing: 40百万ドル, 4千万ドル (Oct 9: both were read
+    # as a bare 40 or 4000 and rejected against a $40 million source).
+    '百万': 1000000, '千万': 10000000, '十億': 1000000000, '百億': 10000000000, '千億': 100000000000 }
 MONTHS = {name: i for i, name in enumerate(('January','February','March','April','May','June','July','August','September','October','November','December'), 1)}
 MONTH_ABBREVIATIONS = {'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'Jun': 6,
     'Jul': 7, 'Aug': 8, 'Sep': 9, 'Sept': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12}
@@ -281,7 +284,10 @@ def validate_numbers(text, evidence, check_dates=True):
     extra = set(numeric_values(text)) - set(numeric_values(evidence)) - spelled_values(evidence)
     if extra:
         LAST_NUMBER_REJECTION[0] = {'kind': 'value', 'values': sorted(str(v) + ('%' if k == 'percent' else '') for v, k in extra)[:4],
-                                    'sourceValues': sorted({str(v) for v, _ in numeric_values(evidence)})[:8]}
+                                    'sourceValues': sorted({str(v) for v, _ in numeric_values(evidence)})[:8],
+                                    # Spelled counts ("two companies") are not values; show
+                                    # them so a faithful 2社 can be told from an invented 2.
+                                    'sourceWords': sorted({w for w in re.findall(r'[a-z]+', evidence.lower()) if w in WORD_NUMBERS and w not in ('a', 'an')})[:6]}
         raise ValueError('unsupported-number')
     validate_token_prices(text, evidence)
     if not set(quarter_values(text)).issubset(set(quarter_values(evidence))):

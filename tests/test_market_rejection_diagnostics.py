@@ -126,3 +126,19 @@ class RelationDiagnosticsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'invalid-note'):
             general.bind_note({'facts': [{}]}, {'units': [{'id': 'a'}, {'id': 'b'}]})
         self.assertEqual(general.LAST_NOTE_REJECTION[0], {'rule': 'fact-count', 'facts': 1, 'units': 2})
+
+
+class JapaneseCompoundUnitTests(unittest.TestCase):
+    def test_hyakuman_and_senman_amounts_match_their_source(self):
+        import factual_validation as f
+        for text in ('Acmeは40百万ドルを調達した', 'Acmeは4千万ドルを調達した', 'Acmeは4000万ドルを調達した'):
+            f.validate_numbers(text, 'Acme raised $40 million in new funding.')
+        f.validate_numbers('売上高は150十億ドル', 'Revenue was $150 billion.')
+
+    def test_compound_units_still_reject_a_wrong_scale(self):
+        import factual_validation as f
+        for text, source in (('Acmeは40百万ドルを調達した', 'Acme raised $4 million.'),
+                             ('Acmeは4千万ドルを調達した', 'Acme raised $4 million.'),
+                             ('Acmeは3千万人を採用', 'Acme hired 3,000 people.')):
+            with self.assertRaisesRegex(ValueError, 'unsupported-number'):
+                f.validate_numbers(text, source)
