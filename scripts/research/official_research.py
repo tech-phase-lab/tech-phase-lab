@@ -1228,3 +1228,42 @@ def sync_incident(db, env=None, reference=None):
     else:
         monitor.resolve_operational_incident(db,'publication:official-research',resolved_at=reference.isoformat())
     return code
+
+
+# A source-news copy that fails a check goes to review after one attempt.
+# Give it SEMANTIC_REVIEW_AFTER_ATTEMPTS attempts first (owner, Oct 9: 49 of 53
+# held stories had failed a single attempt). A model's own review decision,
+# a material-relation hold, an audit block and macro/policy reports (which
+# recover from their held response without a call) are never released here.
+SEMANTIC_REVIEW_AFTER_ATTEMPTS=3
+SEMANTIC_RETRY_DELAY_SECONDS=600
+
+
+def release_early_semantic_holds(db, now=None):
+    now=time.time() if now is None else now
+    tables={row[0] for row in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    if not {'official_research_jobs','general_source_semantic_reviews'}<=tables:
+        return 0
+    cutoff=datetime.fromtimestamp(now-SEMANTIC_RETRY_DELAY_SECONDS,timezone.utc).isoformat(timespec='milliseconds')
+    db.commit()
+    with db:
+        db.execute('BEGIN IMMEDIATE')
+        rows=db.execute("""SELECT j.event_id,j.lease FROM official_research_jobs j
+          JOIN general_source_semantic_reviews r ON r.event_id=j.event_id AND r.sha=j.sha AND r.lease=j.lease
+          WHERE j.state='review' AND j.attempts<? AND j.failure_kind IS NOT NULL
+            AND j.failure_kind NOT IN ('classified-attempt',?) AND r.reason='unsubstantiated-model-output'
+            AND r.decided_at<=?""",(SEMANTIC_REVIEW_AFTER_ATTEMPTS,material_relations.FAILURE,cutoff)).fetchall()
+        if not rows:
+            return 0
+        # Macro and policy reports have their own zero-call recovery from a
+        # held response; a paid retry must not replace it.
+        current={row['id']:row for row in general_source_news.candidates(
+            db,datetime.fromtimestamp(now,timezone.utc),include_review=True)}
+        rows=[(event_id,lease) for event_id,lease in rows if event_id in current
+              and not any(adapter.recognized(current[event_id])
+                          for adapter in (macro_source_publication,attributed_policy_publication))]
+        for event_id,lease in rows:
+            db.execute("DELETE FROM general_source_semantic_reviews WHERE event_id=? AND lease=?",(event_id,lease))
+            db.execute("UPDATE official_research_jobs SET state='retry',next_at=? WHERE event_id=? AND lease=? AND state='review'",
+                       (now,event_id,lease))
+    return len(rows)
