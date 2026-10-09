@@ -244,6 +244,26 @@ def pulse_titles_status(path, now=None):
     return {'jobs': sum(states.values()), 'states': states, 'stored': stored, 'failureKinds': kinds}
 
 
+def research_failures(path, now=None):
+    """Official research: why attempts failed in 24 h and where jobs wait (codes and counts only)."""
+    now = time.time() if now is None else now
+    since = datetime.fromtimestamp(now - 86400, timezone.utc).isoformat()
+    with headline_translation.connect(path) as db:
+        tables = {row[0] for row in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+        reasons, jobs = {}, {}
+        if 'official_research_attempt_failures' in tables:
+            for row in db.execute('SELECT reason, COUNT(*) AS n FROM official_research_attempt_failures '
+                                  'WHERE failed_at>=? GROUP BY reason ORDER BY n DESC', (since,)):
+                reasons[row['reason']] = row['n']
+        if 'official_research_jobs' in tables:
+            columns = {row[1] for row in db.execute('PRAGMA table_info(official_research_jobs)')}
+            kind = 'failure_kind' if 'failure_kind' in columns else 'NULL'
+            for row in db.execute(f'SELECT state, {kind} AS kind, COUNT(*) AS n FROM official_research_jobs '
+                                  f"WHERE state!='done' GROUP BY state, kind"):
+                jobs[row['state'] + (':' + row['kind'] if row['kind'] else '')] = row['n']
+    return {'failureReasons24h': reasons, 'waitingJobs': jobs}
+
+
 def recent_rejections():
     """Field/check/name of recent summary rejections (no copy or article text)."""
     import preview_summaries

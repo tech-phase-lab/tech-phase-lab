@@ -117,6 +117,54 @@ def membership_roles(text):
     return roles
 
 
+def cashtags_kept(text, original):
+    """Every source cashtag stays (written as $WTI or WTI) and none is added."""
+    source = set(re.findall(r'\$([A-Z]{1,6})\b', original))
+    added = set(re.findall(r'\$([A-Z]{1,6})\b', text)) - source
+    return not added and all(re.search(r'(?<![A-Za-z])\$?' + tag + r'(?![A-Za-z])', text) for tag in source)
+
+
+def reject():
+    raise ValueError('invalid-copy')
+
+
+def diagnose(result, original):
+    """Which check rejected a market copy (for /health/news; no copy text kept)."""
+    import preview_summaries
+    original = re.sub(r'https?://\S+', '', original).strip()
+    if not isinstance(result, dict):
+        return {'check': 'shape'}
+    roles = membership_roles(original)
+    for key in ('titleJa', 'titleEn'):
+        text = result.get(key)
+        if not isinstance(text, str) or not text.strip():
+            return {'field': key, 'check': 'shape'}
+        steps = (('numbers', lambda: (factual_validation.validate_numbers(text, original),
+                                      factual_validation.validate_numbers(original, text))),
+                 ('semantics', lambda: factual_validation.validate_semantics(text, original)),
+                 ('status', lambda: factual_validation.validate_acquisition(text, original, 'ja' if key == 'titleJa' else 'en', require_status=True)),
+                 ('cashtags', lambda: cashtags_kept(text, original) or reject()),
+                 ('bond-roles', lambda: bond_facts.validate(text, original)),
+                 ('membership', lambda: not roles or membership_roles(text) == roles or reject()))
+        for name, step in steps:
+            try:
+                step()
+            except ValueError as exc:
+                detail = {'field': key, 'check': name, 'code': str(exc)}
+                if name == 'numbers':
+                    detail['values'] = sorted(set(preview_summaries.unsupported_values(text, original))
+                                              | {'missing ' + v for v in preview_summaries.unsupported_values(original, text)})[:6]
+                if name == 'bond-roles':
+                    detail['roles'] = sorted('%s:%s' % k for k in set(bond_facts.temporal_roles(text)) ^ set(bond_facts.temporal_roles(original)))[:6]
+                    detail['metrics'] = sorted(bond_facts.metrics(text) ^ bond_facts.metrics(original))
+                return detail
+    try:
+        factual_validation.validate_names(result['titleJa'], original + ' ' + result['titleEn'])
+    except ValueError:
+        return {'field': 'titleJa', 'check': 'names', 'name': factual_validation.LAST_NAME_REJECTION[0]}
+    return {'check': 'pair'}
+
+
 def validate(result, original):
     # Link identifiers are not reported financial quantities. Keep the stored
     # original intact, but compare factual text rather than t.co token digits.
@@ -132,7 +180,7 @@ def validate(result, original):
         factual_validation.validate_numbers(original, text)
         factual_validation.validate_semantics(text, original)
         factual_validation.validate_acquisition(text, original, language, require_status=True)
-        if set(re.findall(r'\$([A-Z]{1,6})\b', text)) != set(re.findall(r'\$([A-Z]{1,6})\b', original)):
+        if not cashtags_kept(text, original):
             raise ValueError('invalid-copy')
         bond_facts.validate(text, original)
         if roles and membership_roles(text) != roles:
@@ -325,6 +373,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                'text': {'format': {'type': 'json_schema', 'name': 'market_news_translation', 'strict': True,
                                   'schema': {'type': 'object', 'properties': fields, 'required': list(fields), 'additionalProperties': False}}}}
     identity = (selected['source_id'], selected['url'], selected['sha'])
+    raw = None
     try:
         response = transport(payload, key)
         if response.get('status') != 'completed':
@@ -344,6 +393,13 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         result.update(detail)
     except Exception as exc:
         kind = str(exc) if type(exc) is ValueError and str(exc) in FAILURES else 'provider-unavailable'
+        if kind != 'provider-unavailable':
+            try:
+                import preview_summaries
+                preview_summaries.record_rejection({'lane': 'market', 'id': str(selected['id']), 'topic': selected['topic'],
+                                                    'code': kind, **diagnose(raw, selected['body'])})
+            except Exception:
+                pass  # Diagnostics never block the retry schedule.
         delay = max(headline_translation.retry_delay(attempts, kind), min(getattr(exc, 'retry_after_seconds', None) or 0, 604800))
         with headline_translation.connect(path) as db, db:
             db.execute("UPDATE x_market_jobs SET state='retry',next_at=?,failure_kind=? WHERE source_id=? AND url=? AND sha=? AND lease=?", (now+delay, kind, *identity, lease))
