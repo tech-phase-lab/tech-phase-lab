@@ -98,4 +98,14 @@ actual same-browser race, not simultaneous edits across separate devices.
   updates against the latest document, and blocking unverified/conflicting edits.
 - Local release gates passed: lint 0 errors / 2 existing warnings, 617 JS
   tests, 2355 Python tests, production build, compileall and diff check.
-- Post-deployment checks will be recorded after actual browser verification.
+- Application commit `8dce481b4f7e105f160eb8139f83e3f4a558e530`, Vercel
+  `dpl_GqT2hURh44hq6aNJK9NXz578VgVB` READY. After reloading stock search,
+  MRVL correctly showed registered / aria-pressed=true.
+- Added test-only TSM using the search star. A fresh watchlist tab loaded TSM
+  from account storage, and reloading retained it. Removed only this test
+  addition using the same search star and verified TSM disappeared.
+- List 2 still had the name 同期確認, AAPL, and 220 USD above. The MRVL
+  company-page star also read registered / aria-pressed=true.
+- Returned the retained signed-in tab to the watchlist. These are same-browser
+  account-storage checks; no new phone/device, offline or alternate-account test.
+  Price delivery remains inactive and normal watchlist quotes remain unconnected.
