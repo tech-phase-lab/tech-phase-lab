@@ -261,7 +261,37 @@ def research_failures(path, now=None):
             for row in db.execute(f'SELECT state, {kind} AS kind, COUNT(*) AS n FROM official_research_jobs '
                                   f"WHERE state!='done' GROUP BY state, kind"):
                 jobs[row['state'] + (':' + row['kind'] if row['kind'] else '')] = row['n']
-    return {'failureReasons24h': reasons, 'waitingJobs': jobs}
+        recent = []
+        if 'official_research_attempt_failures' in tables:
+            bodies = 'official_story_bodies' in tables
+            for row in db.execute('SELECT event_id, reason, detail, payload, failed_at FROM official_research_attempt_failures '
+                                  'WHERE failed_at>=? ORDER BY failed_at DESC LIMIT 15', (since,)):
+                entry = {'id': str(row['event_id']), 'reason': row['reason'], 'at': row['failed_at'][:19]}
+                if row['detail']:
+                    entry['field'] = row['detail'][:80]
+                if row['reason'] == 'unsupported-number' and row['payload'] and bodies:
+                    entry['values'] = research_number_gap(db, row['event_id'], row['payload'])
+                recent.append(entry)
+    return {'failureReasons24h': reasons, 'waitingJobs': jobs, 'recent': recent}
+
+
+def research_number_gap(db, event_id, payload):
+    """Numbers in a rejected research copy that its source body lacks (values only, no text)."""
+    import factual_validation
+    import preview_summaries
+    try:
+        body = db.execute('SELECT body FROM official_story_bodies WHERE event_id=?', (event_id,)).fetchone()
+        copy = json.loads(payload)
+        texts = []
+        for value in (copy.get('title'), copy.get('summary'), *(copy.get('facts') or [])):
+            if isinstance(value, dict):
+                texts += [value.get(lang) for lang in ('ja', 'en') if isinstance(value.get(lang), str)]
+        source = body['body'] if body else ''
+        spelled = {str(value) for value, _ in factual_validation.spelled_values(source)}
+        return sorted({value for text in texts for value in preview_summaries.unsupported_values(text, source)
+                       if value not in spelled})[:6]
+    except Exception:
+        return []
 
 
 def recent_rejections():
