@@ -1278,7 +1278,8 @@ def release_early_semantic_holds(db, now=None):
 
 # Which check raised each research failure since start: one code (for example
 # invalid-note) is raised from many places, so the code alone cannot say what
-# to fix. File, line and function only; no copy or source text.
+# to fix. File, line and function, plus the deciding values or a few public
+# source words around a relation cue; never model copy or credentials.
 FAILURE_SITES={}
 
 
@@ -1292,12 +1293,19 @@ def record_failure_site(exc,row):
         key=(str(exc),site)
         FAILURE_SITES[key]=FAILURE_SITES.get(key,0)+1
         import preview_summaries
+        import general_source_news
+        import source_news_grounding
         detail={'unsupported-number':factual_validation.LAST_NUMBER_REJECTION[0],
-                'changed-negation':factual_validation.LAST_NEGATION_REJECTION[0]}.get(str(exc),{})
+                'changed-negation':factual_validation.LAST_NEGATION_REJECTION[0],
+                'unproven-source-relation':source_news_grounding.LAST_RELATION_REJECTION[0],
+                'invalid-note':general_source_news.LAST_NOTE_REJECTION[0],
+                'unsupported-quote':general_source_news.LAST_NOTE_REJECTION[0]}.get(str(exc),{})
         preview_summaries.record_rejection({'lane':'research','id':str(row['id']),'code':str(exc),'site':site,
                                             'notes':','.join(getattr(exc,'__notes__',[]))[:80],**detail})
         factual_validation.LAST_NUMBER_REJECTION[0]={}
         factual_validation.LAST_NEGATION_REJECTION[0]={}
+        source_news_grounding.LAST_RELATION_REJECTION[0]={}
+        general_source_news.LAST_NOTE_REJECTION[0]={}
     except Exception:
         pass  # Diagnostics never change the retry or review decision.
 

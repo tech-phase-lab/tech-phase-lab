@@ -1048,7 +1048,7 @@ class AutomaticMonitor:
             print(json.dumps({"event": "relaxed-rejections-released", "jobs": relaxed}), flush=True)
         try:
             with self.db_lock, official_research.connect(self.db_path) as db:
-                backlog = official_research.release_research_backlog_once(db)
+                backlog = official_research.release_research_backlog_once(db, marker='research-backlog-2')
             if backlog:
                 print(json.dumps({"event": "research-backlog-released", "jobs": backlog}), flush=True)
         except Exception as exc:

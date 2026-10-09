@@ -192,6 +192,17 @@ def unsupported_auxiliary_role(text):
     return bool(re.search(r'\bby\b',scope,re.I))
 
 
+# Diagnostics only: which relation rule held the last source quote, with the
+# matched cue and a few public source words around it (never copy text).
+LAST_RELATION_REJECTION=[{}]
+
+
+def _note_rejection(rule,text,found):
+    before=' '.join(text[:found.start()].split()[-3:])
+    after=' '.join(text[found.end():].split()[:3])
+    LAST_RELATION_REJECTION[0]={'rule':rule,'cue':found[0].strip()[:12],'around':(before+' ['+found[0].strip()+'] '+after)[:90]}
+
+
 def relation_boundary(quote):
     """Known unsupported relation forms cannot use global bag-of-word guards."""
     if unsupported_auxiliary_role(quote) or UNPROVEN_AVAILABILITY.search(quote):
@@ -204,9 +215,14 @@ def relation_boundary(quote):
     # clause equivalence from global status/negation flags or adjacent names.
     # Coordinated object lists also remain private until explicitly supported.
     # A thousands separator (1,200 units) is not a clause or list boundary.
-    if re.search(r'\b(?:and|or|but|while|whereas)\b|,',re.sub(r'(?<=\d),(?=\d{3}\b)','',scope).rstrip(' ,'),re.I):
+    joined=re.sub(r'(?<=\d),(?=\d{3}\b)','',scope).rstrip(' ,')
+    found=re.search(r'\b(?:and|or|but|while|whereas)\b|,',joined,re.I)
+    if found:
+        _note_rejection('coordination',joined,found)
         raise ValueError(RELATION_FAILURE)
-    if re.search(r"\b(?:not|never|no|without|neither|nor)\b|n['’]t\b",quote,re.I):
+    found=re.search(r"\b(?:not|never|no|without|neither|nor)\b|n['’]t\b",quote,re.I)
+    if found:
+        _note_rejection('negation',quote,found)
         raise ValueError(RELATION_FAILURE)
     measures=[]
     for match in QUANTITY_NOUN.finditer(quote):
@@ -214,7 +230,9 @@ def relation_boundary(quote):
         if re.match(r'(?:19|20|21)\d{2}\s+',match[0]) and match[1].lower() in {'if','unless','and','or','subject','conditional','pending','with','at','in','on','for','when','following','before','after'}:
             continue
         measures.append(match[0])
-    if len(measures)>1:raise ValueError(RELATION_FAILURE)
+    if len(measures)>1:
+        LAST_RELATION_REJECTION[0]={'rule':'measures','measures':[m[:24] for m in measures[:3]]}
+        raise ValueError(RELATION_FAILURE)
 
 
 def literal_names(text):

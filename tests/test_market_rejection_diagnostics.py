@@ -102,3 +102,27 @@ class BondLookbackTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class RelationDiagnosticsTests(unittest.TestCase):
+    def test_relation_rule_records_cue_and_nearby_source_words(self):
+        import source_news_grounding as grounding
+        for quote, rule, cue in (('Acme opens a plant in Ohio and hires 300 workers', 'coordination', 'and'),
+                                 ('Acme will not open the plant', 'negation', 'not')):
+            grounding.LAST_RELATION_REJECTION[0] = {}
+            with self.assertRaisesRegex(ValueError, grounding.RELATION_FAILURE):
+                grounding.relation_boundary(quote)
+            detail = grounding.LAST_RELATION_REJECTION[0]
+            self.assertEqual((detail['rule'], detail['cue']), (rule, cue))
+            self.assertIn('[' + cue + ']', detail['around'])
+            self.assertLessEqual(len(detail['around']), 90)
+
+    def test_thousands_separator_still_passes(self):
+        import source_news_grounding as grounding
+        grounding.relation_boundary('Acme hires 1,200 workers')
+
+    def test_fact_count_mismatch_records_counts(self):
+        import general_source_news as general
+        with self.assertRaisesRegex(ValueError, 'invalid-note'):
+            general.bind_note({'facts': [{}]}, {'units': [{'id': 'a'}, {'id': 'b'}]})
+        self.assertEqual(general.LAST_NOTE_REJECTION[0], {'rule': 'fact-count', 'facts': 1, 'units': 2})
