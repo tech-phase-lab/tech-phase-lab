@@ -41,6 +41,12 @@ export function createFavoriteSync(transport: Transport, notify: (cloud: CloudFa
   let generation = 0;
   const publish = (next: FavoriteSyncStatus) => { status = next; if (!disposed) notify(cloud, status); };
   const remember = (next: CloudFavorites, sent = sentSnapshot) => journal?.save(next.account, JSON.stringify({ cloud: next, sent }));
+  // Keep the account-scoped journal, but stop displaying or writing a draft
+  // once the server confirms its account is no longer active.
+  function releaseAccount(next: 'guest' | 'error') {
+    cloud = null; sentSnapshot = null; pending = false; generation++;
+    publish(next);
+  }
   async function refresh() {
     if (disposed || writing) return;
     // Focus/visibility and the visible-page timer also resume failed saves.
@@ -53,7 +59,7 @@ export function createFavoriteSync(transport: Transport, notify: (cloud: CloudFa
       const response = await transport();
       const data = await response.json();
       if (disposed || started !== generation) return;
-      if (response.status === 401) { cloud = null; publish('guest'); return; }
+      if (response.status === 401) { releaseAccount('guest'); return; }
       if (!response.ok || !data.ok) throw new Error('read-failed');
       const next = snapshot(data);
       if (cloud?.account === next.account && cloud.revision > next.revision) return;
@@ -89,11 +95,11 @@ export function createFavoriteSync(transport: Transport, notify: (cloud: CloudFa
         const response = await transport({ body: JSON.stringify(sent) });
         const data = await response.json();
         if (disposed) return;
-        if (response.status === 401) { publish('error'); return; }
+        if (response.status === 401) { releaseAccount('guest'); return; }
         if (response.status === 409) {
           // A successful save can lose its response. Accept only the exact saved
           // document for this account; never overwrite a different device's edits.
-          if (data.error === 'account-changed') { publish('conflict'); return; }
+          if (data.error === 'account-changed') { releaseAccount('error'); return; }
           const remote = snapshot(data);
           if (remote.account !== sent.account || remote.revision <= sent.revision || !sameDocument(remote.document, sent.document)) { publish('conflict'); return; }
           pending = cloud.document !== sent.document;

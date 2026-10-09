@@ -72,10 +72,35 @@ test('stale failed read cannot turn an acknowledged save into an error',async()=
  assert.equal(h.latest.status,'synced');assert.deepEqual(h.latest.cloud.document.lists[0].tickers,['MU','ANET']);
 });
 
-test('account change on save preserves unsaved edits and never retries into the other account',async()=>{
- let writes=0;const h=harness(async init=>{if(!init)return reply(200,state(1));writes++;return reply(409,{ok:false,error:'account-changed'});});
- await h.sync.refresh();h.sync.update(add('ANET'));await tick();await h.sync.retry();
- assert.equal(h.latest.status,'conflict');assert.equal(h.latest.cloud.account,account);assert.equal(writes,1);assert.equal(h.sync.hasPending(),true);
+test('account change on save hides the old draft and verifies the new account before any retry',async()=>{
+ const journal=memoryJournal();let writes=0, switched=false;
+ const other='b'.repeat(64), otherDocument=add('TSM')(document);
+ const h=harness(async init=>{if(!init)return reply(200,switched?{...state(1,otherDocument),account:other}:state(1));writes++;switched=true;return reply(409,{ok:false,error:'account-changed'});},journal);
+ await h.sync.refresh();h.sync.update(add('ANET'));await tick();
+ assert.equal(h.latest.status,'error');assert.equal(h.latest.cloud,null);assert.equal(h.sync.hasPending(),false);
+ assert.equal(favoriteDisplayDocument(h.latest.cloud,h.latest.status,deviceOnly),null);
+ assert.equal(h.sync.update(add('LITE')),false);assert.ok(journal.load(account));
+ await h.sync.retry();assert.equal(h.latest.status,'synced');assert.equal(h.latest.cloud.account,other);
+ assert.deepEqual(h.latest.cloud.document,otherDocument);assert.equal(writes,1);assert.ok(journal.load(account));
+});
+
+test('logout during a save hides account data while retaining the draft for the same account',async()=>{
+ const journal=memoryJournal();let signedIn=true, writes=0;
+ const h=harness(async init=>{if(!init)return signedIn?reply(200,state(1)):reply(401,{ok:false});writes++;if(writes===1){signedIn=false;return reply(401,{ok:false});}const sent=JSON.parse(init.body);return reply(200,state(2,sent.document));},journal);
+ await h.sync.refresh();h.sync.update(add('AAPL'));await tick();
+ assert.equal(h.latest.status,'guest');assert.equal(h.latest.cloud,null);assert.equal(h.sync.hasPending(),false);
+ assert.equal(favoriteDisplayDocument(h.latest.cloud,h.latest.status,deviceOnly),deviceOnly);assert.ok(journal.load(account));
+ await h.sync.retry();assert.equal(writes,1);assert.equal(h.latest.status,'guest');
+ signedIn=true;await h.sync.refresh();await tick();
+ assert.equal(writes,2);assert.equal(h.latest.status,'synced');assert.deepEqual(h.latest.cloud.document.lists[0].tickers,['MU','AAPL']);assert.equal(journal.load(account),null);
+});
+
+test('a slow old-account read cannot restore account data after a save confirms logout',async()=>{
+ const read=deferred();let reads=0;
+ const h=harness(async init=>init?reply(401,{ok:false}):++reads===1?reply(200,state(1)):read.promise);
+ await h.sync.refresh();const refreshing=h.sync.refresh();h.sync.update(add('AAPL'));await tick();
+ assert.equal(h.latest.status,'guest');read.resolve(reply(200,state(1)));await refreshing;
+ assert.equal(h.latest.cloud,null);assert.equal(h.latest.status,'guest');
 });
 
 test('disposed mounts ignore late responses and do not flush queued edits',async()=>{
