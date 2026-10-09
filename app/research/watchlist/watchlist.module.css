@@ -47,28 +47,31 @@
 /* One quiet panel; only the editable price and primary action need a surface. */
 .syncNotice button { min-height:40px;border:1px solid #38554a;border-radius:8px;background:#102821;color:#b7daca;padding:8px 12px;font:inherit;font-size:12px;cursor:pointer; }
 .alertPanel { max-width:480px;margin:8px 0 16px; }
-.alertHeading { display:flex;align-items:center;justify-content:flex-start;gap:14px;min-height:40px;font-size:14px;font-weight:600; }
+.alertHeading { display:flex;align-items:center;justify-content:flex-start;gap:16px;min-height:46px;font-size:18px;font-weight:650; }
 .alertPanel button { min-height:40px;padding:8px 10px;border:0;border-radius:4px;background:transparent;color:#a7c8bd;font:inherit;font-size:12px;cursor:pointer; }
 .alertPanel button:hover { color:#def1e9;background:#a7d6c30a; }
-.alertPanel .alertButton { padding-right:0;font-weight:500; }
+.alertPanel .alertButton { display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px;padding:8px 15px;background:#23483d;color:#c9f3e2;font-size:14px;font-weight:650; }
+.alertPanel .alertButton::before { content:"";width:12px;height:12px;background:currentColor;clip-path:polygon(0 72%,72% 0,100% 28%,28% 100%,0 100%); }
+.alertPanel .alertButton:hover { background:#315e50;color:#effff8; }
 .alertNote { margin:0 0 12px;color:#8fa6a1;font-size:11px;line-height:1.6; }
-.alertForm { display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 12px;align-items:center;margin:0 0 12px; }
+.alertForm { display:grid;grid-template-columns:minmax(0,190px) auto;gap:10px 14px;align-items:center;width:fit-content;max-width:100%;margin:4px 0 16px; }
 .alertPriceGroup { display:flex;align-items:center;min-width:0;border:1px solid #3d5853;border-radius:4px;background:#0a151c; }
 .alertPriceGroup:focus-within { border-color:#9bd9c2;box-shadow:0 0 0 2px #9bd9c212; }
 .alertPriceGroup input { width:100%;min-width:0;min-height:48px;padding:8px 12px;border:0;background:transparent;color:#e5f0ec;font:inherit;font-size:23px;font-weight:500;appearance:textfield; }
 .alertPriceGroup input::-webkit-inner-spin-button,.alertPriceGroup input::-webkit-outer-spin-button { appearance:none;margin:0; }
 .alertPriceGroup select { width:76px;flex-shrink:0;min-height:44px;padding:6px 8px;border:0;background:transparent;color:#9bb7ac;font:inherit;font-size:12px;color-scheme:dark;cursor:pointer; }
-.page .alertPriceGroup input:focus-visible { outline:0; }
+.page .alertPriceGroup input:focus-visible,.page .alertPriceGroup select:focus-visible { outline:none;outline-offset:0;box-shadow:none; }
+.alertPriceGroup select:focus-visible { color:#e5fff4;background:#1b332c; }
 .alertCondition { min-width:0;max-width:100%;min-height:44px;padding:8px 0;border:0;border-bottom:1px solid #344a45;border-radius:0;background:transparent;color:#c7d9d2;font:inherit;font-size:13px;color-scheme:dark;cursor:pointer; }
-.alertActions { grid-column:1 / -1;display:flex;justify-content:flex-end;align-items:center;gap:10px; }
-.alertPanel .alertSave { min-width:84px;background:#a6d6c4;color:#10251e;font-weight:600; }
+.alertActions { grid-column:1 / -1;display:flex;justify-content:flex-start;align-items:center;gap:18px;padding-top:14px; }
+.alertPanel .alertSave { min-width:96px;min-height:44px;font-size:14px;background:#a6d6c4;color:#10251e;font-weight:600; }
 .alertPanel .alertSave:hover { background:#bce5d5;color:#10251e; }
 .alertForm p { grid-column:1 / -1;margin:0;color:#e0b99c;font-size:12px; }
 .savedAlert { display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:40px;border-bottom:1px solid #253c37;font-size:13px;color:#c4d8cf; }
 .savedAlert span { min-width:0;overflow-wrap:anywhere; }
 .savedAlert button { flex-shrink:0;color:#8fa6a1; }
 @media(max-width:420px) {
- .alertForm { gap:8px; }
+ .alertForm { grid-template-columns:minmax(0,172px) auto;column-gap:10px;row-gap:10px; }
  .alertPriceGroup input { padding-inline:9px;font-size:21px; }
  .alertPriceGroup select { width:66px;padding-inline:3px; }
  .alertCondition { font-size:12px; }
