@@ -1297,6 +1297,8 @@ def record_failure_site(exc,row):
         import source_news_grounding
         detail={'unsupported-number':factual_validation.LAST_NUMBER_REJECTION[0],
                 'changed-negation':factual_validation.LAST_NEGATION_REJECTION[0],
+                'changed-names':({'name':factual_validation.LAST_NAME_REJECTION[0]} if factual_validation.LAST_NAME_REJECTION[0] else {'name':'(ticker)'}),
+                'changed-direction':factual_validation.LAST_DIRECTION_REJECTION[0],
                 'unproven-source-relation':source_news_grounding.LAST_RELATION_REJECTION[0],
                 'invalid-note':general_source_news.LAST_NOTE_REJECTION[0],
                 'unsupported-quote':general_source_news.LAST_NOTE_REJECTION[0]}.get(str(exc),{})
@@ -1304,6 +1306,8 @@ def record_failure_site(exc,row):
                                             'notes':','.join(getattr(exc,'__notes__',[]))[:80],**detail})
         factual_validation.LAST_NUMBER_REJECTION[0]={}
         factual_validation.LAST_NEGATION_REJECTION[0]={}
+        factual_validation.LAST_NAME_REJECTION[0]=''
+        factual_validation.LAST_DIRECTION_REJECTION[0]={}
         source_news_grounding.LAST_RELATION_REJECTION[0]={}
         general_source_news.LAST_NOTE_REJECTION[0]={}
     except Exception:

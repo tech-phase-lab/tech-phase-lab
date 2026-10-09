@@ -287,7 +287,7 @@ def validate_numbers(text, evidence, check_dates=True):
                                     'sourceValues': sorted({str(v) for v, _ in numeric_values(evidence)})[:8],
                                     # Spelled counts ("two companies") are not values; show
                                     # them so a faithful 2社 can be told from an invented 2.
-                                    'sourceWords': sorted({w for w in re.findall(r'[a-z]+', evidence.lower()) if w in WORD_NUMBERS and w not in ('a', 'an')})[:6]}
+                                    'sourceWords': sorted({m[0] for m in re.finditer(r'\b(?:' + '|'.join(w for w in WORD_NUMBERS if w not in ('a', 'an')) + r')\b(?:\s+[a-z-]+)?', evidence.lower())})[:6]}
         raise ValueError('unsupported-number')
     validate_token_prices(text, evidence)
     if not set(quarter_values(text)).issubset(set(quarter_values(evidence))):
@@ -592,12 +592,16 @@ def directions(text, family):
         {'down'} if _has(down_en, text) or _has(down_ja, text) else set())
 
 
+LAST_DIRECTION_REJECTION = [{}]
+
+
 def validate_directions(text, evidence):
     """Reject copy that states a direction the source only states the other way."""
     for family in DIRECTION_FAMILIES:
         stated, source = directions(text, family), directions(evidence, family)
         for direction in stated - source:
             if ({'up', 'down'} - {direction}) & source:
+                LAST_DIRECTION_REJECTION[0] = {'family': family[0], 'copy': direction, 'source': sorted(source)}
                 raise ValueError('changed-direction')
 
 
