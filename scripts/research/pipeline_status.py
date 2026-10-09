@@ -272,7 +272,11 @@ def research_failures(path, now=None):
                 if row['reason'] == 'unsupported-number' and row['payload'] and bodies:
                     entry['values'] = research_number_gap(db, row['event_id'], row['payload'])
                 recent.append(entry)
-    return {'failureReasons24h': reasons, 'waitingJobs': jobs, 'recent': recent}
+    import official_research
+    sites = sorted(({'code': code, 'site': site, 'count': count}
+                    for (code, site), count in official_research.FAILURE_SITES.items()),
+                   key=lambda entry: -entry['count'])[:20]
+    return {'failureReasons24h': reasons, 'waitingJobs': jobs, 'recent': recent, 'sitesSinceStart': sites}
 
 
 def research_number_gap(db, event_id, payload):

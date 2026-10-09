@@ -1046,6 +1046,13 @@ class AutomaticMonitor:
             relaxed = release_relaxed_rejections(self.db_path)
         if relaxed:
             print(json.dumps({"event": "relaxed-rejections-released", "jobs": relaxed}), flush=True)
+        try:
+            with self.db_lock, official_research.connect(self.db_path) as db:
+                backlog = official_research.release_research_backlog_once(db)
+            if backlog:
+                print(json.dumps({"event": "research-backlog-released", "jobs": backlog}), flush=True)
+        except Exception as exc:
+            log_publication_failure("official-research-unavailable", exc)
         self.thread.start()
         self.generation_thread.start()
         self.backup_thread.start()
