@@ -54,7 +54,7 @@ export default function StockDirectory() {
   const [lang, setLang] = useResearchLanguage();
   const searchParams = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") ?? "");
-  const { favorites, toggle: toggleFavorite, error: favoriteError } = useStockFavorites();
+  const { favorites, toggle: toggleFavorite, error: favoriteError, editable: favoriteEditable } = useStockFavorites();
   const { history, remember, clear: clearHistory, error: historyError } = useStockHistory();
   const [results, setResults] = useState<StockDirectoryEntry[]>([]);
   const [selectedResultKey, setSelectedResultKey] = useState<string | null>(null);
@@ -223,8 +223,8 @@ export default function StockDirectory() {
 
       {(profileLoading || profile || directQuote) && <div ref={marketTarget} className={polish.marketTarget}>
         {profileLoading && <div className={polish.profileLoading} role="status"><span className={styles.loader} /><strong>{t("銘柄情報を読み込み中…", "Loading company…")}</strong></div>}
-        {directQuote && !profile && <MarketWorkspace key={`${directQuote.ticker}:${lang}`} {...directQuote} lang={lang} favorite={favorites.includes(directQuote.ticker)} onToggleFavorite={() => toggleFavorite(directQuote.ticker)} />}
-        {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} favorite={favorites.includes(profile.ticker)} onToggleFavorite={() => toggleFavorite(profile.ticker)} />}
+        {directQuote && !profile && <MarketWorkspace key={`${directQuote.ticker}:${lang}`} {...directQuote} lang={lang} favorite={favorites.includes(directQuote.ticker)} favoriteEditable={favoriteEditable} onToggleFavorite={() => toggleFavorite(directQuote.ticker)} />}
+        {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} favorite={favorites.includes(profile.ticker)} favoriteEditable={favoriteEditable} onToggleFavorite={() => toggleFavorite(profile.ticker)} />}
       </div>}
 
       {favoriteError && <p role="alert">{t("お気に入りを保存できませんでした。", "Could not save favorites.")}</p>}

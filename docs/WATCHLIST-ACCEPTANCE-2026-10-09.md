@@ -84,3 +84,18 @@ actual same-browser race, not simultaneous edits across separate devices.
   complete suite without changing those tests.
 - No changes to news, target prices, or Home/menu decoration. Real billing,
   offline recovery, phone layout, and alternate-account login were not tested.
+
+### Stock-page stars and account watchlist — 2026-10-10 JST
+
+- Reproduced on the signed-in preview: MRVL was in list 1, but stock search
+  displayed its star as unregistered. The stock-page hook used browser-local
+  storage, whereas the watchlist used the account favorites API.
+- Stock search and company stars now reuse the watchlist sync controller. Stars
+  read and edit only the default / first list, retaining other lists, names and
+  price-alert settings. They are disabled until the saved account is verified
+  and while there is an unresolved conflict. Guest edits retain the local path.
+- Added tests for default-list-only edits, preserving names/alerts/other lists,
+  updates against the latest document, and blocking unverified/conflicting edits.
+- Local release gates passed: lint 0 errors / 2 existing warnings, 617 JS
+  tests, 2355 Python tests, production build, compileall and diff check.
+- Post-deployment checks will be recorded after actual browser verification.

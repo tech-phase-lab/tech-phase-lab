@@ -1,28 +1,20 @@
 "use client";
 
-import { useMemo, useState, useSyncExternalStore } from "react";
-import { favoriteStocksKey, parseFavoriteStocks, toggleFavoriteStock } from "@/lib/research/favorites";
+import { toggleFavoriteStock } from "@/lib/research/favorites";
+import { useFavoriteLists } from "./watchlist/use-favorite-lists";
 
-const eventName = "tech-phase:favorite-stocks";
-function snapshot() { try { return localStorage.getItem(favoriteStocksKey) ?? "[]"; } catch { return "[]"; } }
-function subscribe(notify: () => void) {
-  const onStorage = (event: StorageEvent) => { if (event.key === favoriteStocksKey || event.key === null) notify(); };
-  window.addEventListener("storage", onStorage);
-  window.addEventListener(eventName, notify);
-  return () => { window.removeEventListener("storage", onStorage); window.removeEventListener(eventName, notify); };
-}
-
+// Stock-page stars use the first list, including its account-scoped sync/journal.
+// Other lists and price-alert settings must remain untouched.
 export function useStockFavorites() {
-  const raw = useSyncExternalStore(subscribe, snapshot, () => "[]");
-  const favorites = useMemo(() => parseFavoriteStocks(raw), [raw]);
-  const [error, setError] = useState(false);
+  const { lists, update, error, status, ready, editable } = useFavoriteLists();
+  const primary = lists.find(list => list.id === "default") ?? lists[0];
   function toggle(ticker: string) {
-    try {
-      const latest = parseFavoriteStocks(localStorage.getItem(favoriteStocksKey));
-      localStorage.setItem(favoriteStocksKey, JSON.stringify(toggleFavoriteStock(latest, ticker)));
-      window.dispatchEvent(new Event(eventName));
-      setError(false);
-    } catch { setError(true); }
+    if (!ready || !editable || !/^[A-Z][A-Z0-9.-]{0,14}$/.test(ticker)) return false;
+    return update(current => ({ ...current,
+      lists: current.lists.map(list => list.id === "default"
+        ? { ...list, tickers: toggleFavoriteStock(list.tickers, ticker) } : list),
+    }));
   }
-  return { favorites, toggle, error };
+  return { favorites: ready ? primary.tickers : [], toggle,
+    error: error || status === "error" || status === "conflict", editable: ready && editable };
 }
