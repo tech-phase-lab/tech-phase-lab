@@ -29,3 +29,40 @@ Pending changes use account-scoped `sessionStorage`, separate from guest favorit
 ## Scope boundary
 
 Claude owns news, target prices, and the current Home/menu decoration work. Do not modify those as part of watchlist reliability work. Work on `codex/research-preview`, preserving collaborator changes and following `AGENTS.md` publication checks.
+
+## Signed-in follow-up — 2026-10-10 00:12–00:18 JST
+
+Verified through the existing authenticated cloud-browser session; no logout,
+cookie clearing, new account, payment, or notification delivery was performed.
+
+- A new browser tab initially showed the loading placeholder, then loaded the
+  account's saved lists. It did not display guest tickers in that initial view.
+- Renamed list 2 to `同期確認・保存テスト`, clicked Home immediately after Save,
+  returned, and read the saved name and AAPL / 220 USD above setting. The existing
+  tab also received the changed name. Restored the name to `同期確認`.
+- Switched to English: the same list, AAPL, sector, and 220 USD above setting
+  remained; the alert explicitly said delivery was not live.
+- Used the preview's own no-billing membership controls: FREE could save an
+  above-price setting of 221.1234 USD. Reloading after switching to PRO retained
+  the exact value. Restored 220 USD above.
+- Used the one-minute expiry test. After expiry, the header became FREE and a
+  newly opened PRO columns page showed the membership gate instead of full
+  bodies. Reloading the watchlist retained list 2, AAPL, and 220 USD above.
+- Found that the account card could keep its old PRO label after the shared
+  header expired. Manual Refresh membership corrected it. The account screen
+  now re-reads the server at expiry and on resume/membership changes, and
+  cancels stale responses. Post-deployment verification is pending.
+- Returned the test account to owner mode and the language to Japanese.
+
+Limits: these are same-session cloud-browser checks, not new phone/device,
+real billing, offline reconnection, or account-switching acceptance. The prior
+user-confirmed phone round trip above remains the separate cross-device evidence.
+
+### Concurrent-tab conflict — 00:19–00:21 JST
+
+Two tabs submitted different temporary names for list 2 concurrently. One saved
+`同期確認・競合B`; the other retained its draft `同期確認・競合A` with the explicit
+conflict notice and disabled editing. Using the saved-list recovery action
+returned the latter tab to the B version without overwriting it. Renamed the
+list back to `同期確認`; AAPL and 220 USD above stayed present. This verifies this
+actual same-browser race, not simultaneous edits across separate devices.
