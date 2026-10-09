@@ -1,7 +1,7 @@
 name: YouTube comment moderator
 
 on:
-  # 1回の起動で約55分間、2分おきにチェックを続け、終わる直前に次の回を自分で起動する（リレー方式）。
+  # 1回の起動で約55分間、1分おきにチェックを続け、終わる直前に次の回を自分で起動する（リレー方式）。
   # GitHub の定期実行は30分以上遅れたり止まったりするため、cron はリレーが途切れたときの予備。
   schedule:
     - cron: "*/30 * * * *"
@@ -59,7 +59,7 @@ jobs:
           DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
           # 繰り返しチェックする（試運転の dry_run は1回で終わる）
           LOOP_MINUTES: ${{ !inputs.dry_run && '55' || '0' }}
-          INTERVAL_MINUTES: "2"
+          INTERVAL_MINUTES: "1"
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
