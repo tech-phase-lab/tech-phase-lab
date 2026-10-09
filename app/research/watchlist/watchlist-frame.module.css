@@ -1,7 +1,7 @@
 .frame { --watchlist-nav-space:0px;position:relative; }
 /* Only these two watchlist pages use the compact shell. */
 .frame > div:first-child { padding-bottom:var(--watchlist-nav-space); }
-.frame main { padding-bottom:14px; }
+.frame main { padding-bottom:30px; }
 .cue { position:fixed;left:50%;bottom:calc(var(--watchlist-nav-space) + 8px);transform:translateX(-50%);width:44px;height:32px;z-index:30;pointer-events:none; }
 /* At the end, anchor below the last row instead of floating over it. */
 .cue[data-direction=up] { position:absolute;bottom:calc(var(--watchlist-nav-space) + 2px); }
@@ -13,4 +13,5 @@
 .cue svg path:first-child { opacity:.42; }
 .cue[data-direction=up] svg { transform:rotate(180deg); }
 .frame:has(input:focus,textarea:focus) .cue { visibility:hidden; }
-@media(max-width:760px) { .frame { --watchlist-nav-space:calc(80px + env(safe-area-inset-bottom)); } }
+/* Clear the raised search orb, including its outer ring and safe area. */
+@media(max-width:760px) { .frame { --watchlist-nav-space:calc(128px + env(safe-area-inset-bottom)); } }
