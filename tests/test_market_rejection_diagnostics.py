@@ -46,6 +46,9 @@ class DiagnoseTests(unittest.TestCase):
         self.assertIn('maturity:10', detail['roles'])
         self.assertNotIn('史上最悪', str(detail))
         self.assertEqual(news.diagnose(None, original), {'check': 'shape'})
+        source = 'Japan 30-year government bond yield rises to highest since 24 yrs ago'
+        detail = news.diagnose({'titleJa': '日本30年国債利回り、24年ぶり高水準', 'titleEn': source}, source)
+        self.assertEqual(detail['sourceContext'], ['to highest since 24 yrs ago'])
 
 
 class ResearchFailureTests(unittest.TestCase):
