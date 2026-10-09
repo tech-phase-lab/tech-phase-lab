@@ -1713,6 +1713,9 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertTrue(durable.pop("completedSinceStart"))
         self.assertFalse(persisted.pop("polledSinceStart"))
         self.assertFalse(persisted.pop("completedSinceStart"))
+        # Wall-clock age can tick between the two reads; every other field must match.
+        for state in (durable, persisted):
+            self.assertIn(state.pop("lastPollAgeSeconds"), (0, 1, 2))
         self.assertEqual(persisted, durable)
 
     def test_body_fetch_persists_failure_for_selected_partition(self):
