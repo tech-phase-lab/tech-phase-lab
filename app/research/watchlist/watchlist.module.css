@@ -27,7 +27,7 @@
 .detail { min-width:0;border:1px solid #2c414a;border-radius:14px;padding:20px;background:#0d1921; }
 .detailHeading { display:flex;align-items:center;justify-content:space-between;gap:12px; }
 .detailHeading span { font-size:12px;color:#9bd9c2;letter-spacing:.07em; }
-.detailHeading h2 { margin:4px 0 0;font-size:21px;font-weight:500;overflow-wrap:anywhere; }
+.detailHeading h2 { min-width:0;margin:0;font-size:21px;font-weight:500;overflow-wrap:anywhere; }
 .detailHeading a { flex-shrink:0;color:#a5d3c2;font-size:12px;padding:12px 0; }
 .detail>section { margin-top:14px;box-shadow:none; }
 .empty { min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center; }
@@ -38,16 +38,16 @@
 .loading { display:grid;place-items:center;min-height:180px;color:#8fa5b0;font-size:12px; }
 .page button:focus-visible,.page a:focus-visible { outline:2px solid #9bd9c2;outline-offset:3px; }
 .srOnly { position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap; }
-.listForm button,.rowEdit button { min-height:44px;padding:8px 12px;border:0;border-radius:7px;background:transparent;color:#a8cdbf;font:inherit;font-size:13px;cursor:pointer; }
-.rowEdit button:disabled { opacity:.35;cursor:default; }
+.listForm button { min-height:44px;padding:8px 12px;border:0;border-radius:7px;background:transparent;color:#a8cdbf;font:inherit;font-size:13px;cursor:pointer; }
+
 .listForm { display:flex;gap:4px;align-items:center;width:min(100%,360px);margin:0 0 10px auto; }
 .listForm input { flex:1;min-width:0;width:0;height:40px;box-sizing:border-box;background:#11222a;border:1px solid #436057;border-radius:3px;padding:6px 8px;font-size:16px;color:#e4eeeb; }
 .listForm button { flex-shrink:0;padding-inline:8px; }
 .listForm span { flex:1;font-size:13px; }
 /* One quiet panel; only the editable price and primary action need a surface. */
 .syncNotice button { min-height:40px;border:1px solid #38554a;border-radius:8px;background:#102821;color:#b7daca;padding:8px 12px;font:inherit;font-size:12px;cursor:pointer; }
-.alertPanel { max-width:480px;margin:12px 0 20px; }
-.alertHeading { display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px;font-size:14px;font-weight:600; }
+.alertPanel { max-width:480px;margin:8px 0 16px; }
+.alertHeading { display:flex;align-items:center;justify-content:flex-start;gap:14px;min-height:40px;font-size:14px;font-weight:600; }
 .alertPanel button { min-height:40px;padding:8px 10px;border:0;border-radius:4px;background:transparent;color:#a7c8bd;font:inherit;font-size:12px;cursor:pointer; }
 .alertPanel button:hover { color:#def1e9;background:#a7d6c30a; }
 .alertPanel .alertButton { padding-right:0;font-weight:500; }
@@ -102,7 +102,8 @@
 .trend[data-direction=up],.price[data-direction=up],.expandedChart[data-direction=up] { color:#8bdfb8; }
 .trend[data-direction=down],.price[data-direction=down],.expandedChart[data-direction=down] { color:#ec959e; }
 .marketBar { display:flex;justify-content:space-between;align-items:center;gap:8px;color:#829f97;font-size:11px;padding:4px 0 10px; }.marketBar time { color:#b5c9c2; }
-.rowEdit { display:flex;justify-content:flex-end;gap:5px;padding:0 12px 6px; }
+.detailActions { display:flex;align-items:center;gap:12px;margin-left:auto;flex-shrink:0; }
+.detailActions .deleteButton { display:grid;place-items:center;width:36px;min-height:40px;padding:8px;border:0;background:transparent;color:#b78287;cursor:pointer; }
 .quoteRow .detail { margin:0 8px 12px;padding:14px;border-color:#2a4540; }
 .expandedChart { color:#8baba1; }.largeChart { height:160px;margin:12px 0 2px; }
 .chartTimes { display:flex;justify-content:space-between;padding-left:30px;color:#819c92;font-size:10px;margin:0 0 12px; }
@@ -135,4 +136,6 @@
 @media(max-width:760px) { .controls { gap:6px; }.controls .toolbar { gap:4px; }.toolbar button { padding-inline:4px; }.quoteTime { font-size:8px; } }
 
 .marketBar label { display:flex;align-items:center;gap:6px; }.marketBar select { min-height:36px;padding:4px 2px;border:0;background:transparent;color:#b3c7c4;color-scheme:dark;font:inherit;cursor:pointer; }
-.deleteButton svg { width:20px;height:20px; }.rowEdit .deleteButton { color:#ec959e; }
+.deleteButton svg { width:20px;height:20px; }
+
+@media(max-width:760px) { .detailActions .deleteButton { display:none; } .detailHeading { flex-wrap:nowrap;gap:12px; } }

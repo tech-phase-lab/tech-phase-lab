@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useFavoriteLists } from "./use-favorite-lists";
-import { watchlistSlots, moveFavorite, sortFavorites, type FavoriteQuote } from "@/lib/research/favorite-lists";
+import { watchlistSlots, sortFavorites, type FavoriteQuote } from "@/lib/research/favorite-lists";
 import { useResearchLanguage } from "../use-research-language";
 import WatchlistFrame from "./watchlist-frame";
 import ResearchToolShell from "../research-tool-shell";
@@ -51,9 +51,6 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   function toggle(ticker: string, name?: string) {
     return update(current => ({ ...current, names: name ? { ...current.names, [ticker]: name } : current.names,
       lists: watchlistSlots(current.lists).map(item => item.id !== list.id ? item : { ...item, tickers: item.tickers.includes(ticker) ? item.tickers.filter(value => value !== ticker) : [...item.tickers, ticker].slice(0, 100) }) }));
-  }
-  function move(ticker: string, delta: number) {
-    update(current => ({ ...current, lists: current.lists.map(item => item.id === list.id ? { ...item, tickers: moveFavorite(item.tickers, ticker, delta) } : item) }));
   }
   const [sessionView, setSessionView] = useState<WatchlistSession>("auto");
   const [revealed, setRevealed] = useState("");
@@ -158,7 +155,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
         <div className={styles.marketBar}><label><span>{t("表示", "View")}</span><select aria-label={t("取引時間帯の表示", "Market session view")} value={sessionView} onChange={event => { setSessionView(event.target.value as WatchlistSession); setRevealed(""); }}><option value="auto">{t("自動", "Auto")}</option><option value="regular">{t("取引中", "Market open")}</option><option value="pre">{t("プレ", "Pre-market")}</option><option value="closed">{t("前日比", "Daily change")}</option></select></label><span>{t("現在", "Now")} <CurrentTime /> JST</span></div>
         <div className={styles.quoteTable}>
           <div className={styles.tableHead}><span>{t("銘柄", "Stock")}</span><span>{sharedSession ? sessionLabels[sharedSession] : t("値動き", "Change")}</span><span>{t("株価", "Price")}</span></div>
-          <ul className={styles.quoteRows} data-watchlist-rows>{ordered.map((ticker, index) => {
+          <ul className={styles.quoteRows} data-watchlist-rows>{ordered.map(ticker => {
             const item = companies.find(entry => entry.ticker === ticker) ?? known[ticker];
             const sector = (watchlistSector(ticker, item?.sector) ?? fetchedSectors[ticker])?.[lang];
             const sectorSource = !watchlistSector(ticker, item?.sector) && fetchedSectors[ticker] ? `SEC SIC ${fetchedSectors[ticker].sic}: ${fetchedSectors[ticker].description}` : undefined;
@@ -182,8 +179,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
 
 
               {ticker === active && <section className={styles.detail} aria-label={t(`${ticker}の詳細`, `${ticker} details`)}>
-                <div className={styles.detailHeading}><h2>{item?.name ?? names[ticker] ?? ticker}</h2><Link href={monitored ? `/research/companies/${ticker}` : `/research/stocks?q=${encodeURIComponent(ticker)}`}>{t("銘柄情報", "Company")} →</Link></div>
-                <div className={styles.rowEdit}><button disabled={!editable || sort !== "saved" || index === 0} onClick={() => move(ticker, -1)} aria-label={t(`${ticker}を上へ`, `Move ${ticker} up`)}>↑</button><button disabled={!editable || sort !== "saved" || index === ordered.length - 1} onClick={() => move(ticker, 1)} aria-label={t(`${ticker}を下へ`, `Move ${ticker} down`)}>↓</button><button disabled={!editable} className={styles.deleteButton} onClick={() => remove(ticker)} aria-label={t(`${ticker}をこのリストから削除`, `Remove ${ticker} from this list`)}><TrashIcon /></button></div>
+                <div className={styles.detailHeading}><h2>{item?.name ?? names[ticker] ?? ticker}</h2><div className={styles.detailActions}><Link href={monitored ? `/research/companies/${ticker}` : `/research/stocks?q=${encodeURIComponent(ticker)}`}>{t("銘柄情報", "Company")} →</Link><button disabled={!editable} className={styles.deleteButton} onClick={() => remove(ticker)} aria-label={t(`${ticker}をこのリストから削除`, `Remove ${ticker} from this list`)}><TrashIcon /></button></div></div>
                 {quote && <p className={styles.dataTime}>{t("データ時刻", "Data time")} <time dateTime={quote.asOf}>{new Date(quote.asOf).toLocaleString(lang === "ja" ? "ja-JP" : "en-GB", { timeZone: "Asia/Tokyo", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false })}</time> JST · {session}{quote.delayed ? t(" · 遅延", " · Delayed") : ""}</p>}
                 {chart && <div className={styles.expandedChart} data-direction={direction}><AreaChart className={styles.largeChart} values={chart.values} reference={chart.reference} label={t("拡大した当日チャート", "Expanded intraday chart")} /><div className={styles.chartTimes}><span>{new Date(chart.start).toLocaleTimeString("en-GB", { timeZone: "America/New_York", hour: "2-digit", minute: "2-digit", hour12: false })}</span><span>{new Date(chart.end).toLocaleTimeString("en-GB", { timeZone: "America/New_York", hour: "2-digit", minute: "2-digit", hour12: false })} ET</span></div></div>}
                 <div className={styles.alertPanel}>
