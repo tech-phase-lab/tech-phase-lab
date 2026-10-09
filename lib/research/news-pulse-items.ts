@@ -18,7 +18,7 @@ export function freshPulseItems<T extends { at: string; kind: string }>(items: T
 }
 
 /** Use the published feed shared with the home news list, including market updates. */
-export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language) {
+export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language, now?: number) {
   const ja = lang === "ja";
   return [
     // Placeholders awaiting checked copy stay in the news list only.
@@ -49,6 +49,11 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
     // The strip is a one-line Japanese summary; an item still awaiting its
     // reviewed translation stays in the news list below (in its original) only.
     .filter(item => !ja || JAPANESE.test(item.title))
+    // Drop what the strip will not show (no confirmed publication time, older
+    // than three days) BEFORE taking the newest five. Otherwise such items sat in
+    // the top five by time seen, were removed afterwards, and left the strip
+    // with old items or none (owner, Oct 9: the 21:44 story never reached it).
+    .filter(item => now === undefined || freshPulseItems([item], now).length > 0)
     .sort((a, b) => shownAt(b) - shownAt(a)).slice(0, 5);
 }
 

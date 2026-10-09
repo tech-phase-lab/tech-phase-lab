@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { Language } from "@/lib/research/data";
 import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";
-import { freshPulseItems, newsPulseItems } from "@/lib/research/news-pulse-items";
+import { newsPulseItems } from "@/lib/research/news-pulse-items";
 import { isGenericPulseLabel, pickPulseLine } from "@/lib/research/news-pulse-headline";
 import { lateDetection, pulseClock, recentPublication } from "@/lib/research/news-time";
 import styles from "./research-pulse.module.css";
@@ -65,7 +65,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   const touch = useRef<{x: number; y: number} | null>(null);
   const suppressClick = useRef(false);
   const ja = lang === "ja";
-  const items = snapshot?.checkedAt ? freshPulseItems(newsPulseItems(feed, lang), snapshot.checkedAt) : [];
+  const items = snapshot?.checkedAt ? newsPulseItems(feed, lang, snapshot.checkedAt) : [];
   const first = items[0]?.id ?? "";
   const stopped = paused || interacting || reduced;
   useEffect(() => {
