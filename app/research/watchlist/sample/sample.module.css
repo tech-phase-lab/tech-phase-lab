@@ -59,6 +59,6 @@
 /* Keep four-digit prices readable without squeezing the chart against them. */
 @media(max-width:760px) { .price[data-wide=true] { font-size:20px; } }
 
-/* A quiet right edge gives the plot a clear boundary without another box. */
+/* Nudge the plot right while keeping the quote column in place. */
 .columns>span:nth-child(2) { transform:translateX(6px); }
-.chartFrame::after { content:"";position:absolute;right:0;top:11.667%;bottom:11.667%;border-right:1px solid #789e925c;pointer-events:none; }
+.trend .chartFrame { transform:translateX(4px); }
