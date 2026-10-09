@@ -172,3 +172,22 @@ class AttributionTailTests(unittest.TestCase):
                       'Acme buys Beta, expanding its reach.'):
             with self.assertRaisesRegex(ValueError, grounding.RELATION_FAILURE):
                 grounding.relation_boundary(quote)
+
+
+class SummaryDetailFillerTests(unittest.TestCase):
+    JA = '米国債のリスクが16年ぶりに最高水準に達しました。詳細は投稿されたリンクで確認できます。投稿者はこの情報を伝えています。'
+    EN = 'US Treasury risk hit its highest level in 16 years. Details are available in the posted link. The poster shared this information.'
+
+    def test_post_and_link_sentences_are_dropped_and_a_restated_headline_gives_no_detail(self):
+        self.assertIsNone(news.without_filler(self.JA, self.EN, '米国債のリスク、16年ぶりの高水準に'))
+
+    def test_detail_that_adds_a_figure_or_fact_is_kept_without_filler(self):
+        self.assertEqual(news.without_filler(self.JA, self.EN, '米国債のリスク指標、過去最高'),
+                         ('米国債のリスクが16年ぶりに最高水準に達しました。', 'US Treasury risk hit its highest level in 16 years.'))
+        ja = '米国債のリスク指標が16年ぶりの高水準に達した。前回の高水準は2010年で、指標は1.2から1.8に上昇した。'
+        en = 'The gauge hit a 16-year high. The last such high was in 2010, and the gauge rose from 1.2 to 1.8.'
+        self.assertEqual(news.without_filler(ja, en, '米国債のリスク、16年ぶりの高水準に'), (ja, en))
+
+    def test_prompt_no_longer_asks_for_the_posting_account(self):
+        self.assertNotIn('posting account)', news.DETAIL_POLICY)
+        self.assertIn('Never mention the post', news.DETAIL_POLICY)

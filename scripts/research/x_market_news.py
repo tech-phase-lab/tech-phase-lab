@@ -25,10 +25,45 @@ PERIOD_DETAIL_FIELDS = ('detailPolicy', 'bodyJa', 'bodyEn')
 # only drops the detail and never delays the headline.
 SUMMARY_DETAIL_POLICY = 'source-summary-v1'
 DETAIL_POLICY = (' Also return bodyJa and bodyEn: a short factual summary of the post in 1 to 3 sentences, '
-                 'in this order: what happened, the figures exactly as written, and who reported it (the posting account). '
+                 'in this order: what happened, then the figures exactly as written. Name a source only when the post itself '
+                 'names one. Never mention the post, the posting account, links, or where more details can be found. '
                  'Use only facts stated in the post; no outlook, opinion or market impact. Return null for both if the '
                  'headline already says everything in the post.')
 DETAIL_MAX_CHARS = 1200
+# Sentences about the post itself rather than the news (owner, Oct 9:
+# 「詳細は投稿されたリンクで確認できます。投稿者はこの情報を伝えています。」 is noise).
+FILLER_JA = re.compile(r'投稿者|投稿(?:された|内の?|の)|この(?:投稿|ポスト)|リンク|詳細は|アカウント|情報を伝えて')
+FILLER_EN = re.compile(r"\b(?:the (?:post|poster|posting account|account|link)|this post|(?:a |the )?link(?:ed)?\b|"
+                       r"details? (?:are|is|can be)|for (?:more )?details|shared (?:this|the) (?:information|news))", re.I)
+
+
+def _sentences(text, lang):
+    parts = re.findall(r'[^。！？]+[。！？]?', text) if lang == 'ja' else re.split(r'(?<=[.!?])\s+', text)
+    return [part.strip() for part in parts if part.strip()]
+
+
+def _bigrams(text):
+    text = re.sub(r'[\s、。，,.!?！？「」『』()（）:：]', '', text)
+    return {text[i:i + 2] for i in range(len(text) - 1)}
+
+
+def without_filler(ja, en, title_ja):
+    """Drop sentences about the post; None when nothing beyond the headline remains."""
+    ja_parts = [part for part in _sentences(ja, 'ja') if not FILLER_JA.search(part)]
+    en_parts = [part for part in _sentences(en, 'en') if not FILLER_EN.search(part)]
+    if not ja_parts or not en_parts:
+        return None
+    title = _bigrams(title_ja)
+    title_values = set(factual_validation.numeric_values(title_ja))
+
+    def restates(part):
+        # No figure beyond the headline's, and mostly the headline's wording.
+        return (set(factual_validation.numeric_values(part)) <= title_values
+                and len(_bigrams(part) & title) >= 0.45 * max(1, len(_bigrams(part))))
+    # Every remaining sentence only restates the headline: the ＋ adds nothing.
+    if title and all(restates(part) for part in ja_parts):
+        return None
+    return ''.join(ja_parts), ' '.join(en_parts)
 
 
 def summary_detail(raw, original, title_ja, title_en):
@@ -38,7 +73,10 @@ def summary_detail(raw, original, title_ja, title_en):
     ja, en = raw.get('bodyJa'), raw.get('bodyEn')
     if not isinstance(ja, str) or not isinstance(en, str):
         return {}
-    ja, en = ja.strip(), en.strip()
+    cleaned = without_filler(ja.strip(), en.strip(), title_ja or '')
+    if cleaned is None:
+        return {}
+    ja, en = cleaned
     original = re.sub(r'https?://\S+', '', original).strip()
     try:
         for text in (ja, en):
