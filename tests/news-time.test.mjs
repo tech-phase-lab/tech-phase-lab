@@ -57,3 +57,16 @@ test('dates stay the real release date and late finds are never NEW',async()=>{
   const feed={marketUpdates:[{id:'new',titleJa:'新',publishedAt:'2026-10-07T12:00:00Z'},{id:'old',titleJa:'古',publishedAt:'2026-10-05T11:00:00Z'}]};
   assert.deepEqual(alertItems(feed,now).map(item=>item.id),['market:new']);
 });
+
+test('items the strip cannot show do not use up its five places (owner, Oct 9: a 21:44 story never reached the strip)',async()=>{
+  const { newsPulseItems }=await import('../lib/research/news-pulse-items.ts');
+  const story=(id,extra)=>({id,title:`Vertiv announces item ${id}`,translationJa:`Vertivがニュース${id}を発表`,url:`https://www.vertiv.com/en-us/about/news-and-insights/news-releases/item-${id}/`,
+    publisher:'Vertiv',tickers:['VRT'],observedAt:'2026-10-09T13:00:00Z',bodyJa:'本文',bodyEn:'body',...extra});
+  // Six newer items with no confirmed publication time, one real story from 12:44 UTC.
+  const seen=[1,2,3,4,5,6].map(n=>story(String(n),{observedAt:`2026-10-09T14:0${n}:00Z`}));
+  const real=story('7',{publishedAt:'2026-10-09T12:44:00Z',observedAt:'2026-10-09T12:45:00Z'});
+  const feed={ok:true,enabled:false,items:[],officialUpdates:[...seen,real]};
+  const now=Date.parse('2026-10-09T15:00:00Z');
+  assert.deepEqual(newsPulseItems(feed,'ja',now).map(row=>row.id),['official-7']);
+  assert.equal(newsPulseItems(feed,'ja').length,5); // without a clock the old behaviour is kept
+});
