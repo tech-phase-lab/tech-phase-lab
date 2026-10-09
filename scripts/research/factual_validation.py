@@ -271,19 +271,30 @@ def spelled_values(evidence):
     return found
 
 
+# What decided the last number rejection (values and dates only; diagnostics).
+LAST_NUMBER_REJECTION = [{}]
+
+
 def validate_numbers(text, evidence, check_dates=True):
     # Compare exact quantities rather than numeric spelling: $150B equals
     # 1500億ドル; $15B, 1500万ドル and -1500億ドル do not.
-    if not set(numeric_values(text)).issubset(set(numeric_values(evidence)) | spelled_values(evidence)):
+    extra = set(numeric_values(text)) - set(numeric_values(evidence)) - spelled_values(evidence)
+    if extra:
+        LAST_NUMBER_REJECTION[0] = {'kind': 'value', 'values': sorted(str(v) + ('%' if k == 'percent' else '') for v, k in extra)[:4],
+                                    'sourceValues': sorted({str(v) for v, _ in numeric_values(evidence)})[:8]}
         raise ValueError('unsupported-number')
     validate_token_prices(text, evidence)
     if not set(quarter_values(text)).issubset(set(quarter_values(evidence))):
+        LAST_NUMBER_REJECTION[0] = {'kind': 'quarter', 'values': sorted(str(q) for q in set(quarter_values(text)) - set(quarter_values(evidence)))[:4]}
         raise ValueError('unsupported-number')
     source_dates = dates(evidence)
     for year, month, day in (dates(text) if check_dates else ()):
         if not any(month == sm and day == sd and (year is None or year == sy) for sy, sm, sd in source_dates):
+            LAST_NUMBER_REJECTION[0] = {'kind': 'date', 'values': ['%s-%s-%s' % (year, month, day)],
+                                        'sourceDates': ['%s-%s-%s' % d for d in source_dates][:4]}
             raise ValueError('unsupported-number')
     if not model_year_facts(text).issubset(model_year_facts(evidence)):
+        LAST_NUMBER_REJECTION[0] = {'kind': 'model-year'}
         raise ValueError('unsupported-number')
 
 
@@ -657,11 +668,21 @@ def _covers_negated_source(text, evidence):
     return False
 
 
+# The cue that decided the last negation rejection (diagnostics only).
+LAST_NEGATION_REJECTION = [{}]
+
+
+def _cues(pattern, text):
+    return sorted({match.group(0)[:16] for match in re.finditer(pattern, re.sub(WHETHER_OR_NOT, ' ', text, flags=re.I), re.I)})[:4]
+
+
 def validate_negation(text, evidence):
     """A negated source keeps a negation; an affirmative source gains none."""
     if negated(evidence) and not negated(text, broad=True) and _covers_negated_source(text, evidence):
+        LAST_NEGATION_REJECTION[0] = {'rule': 'source-negated', 'sourceCues': _cues(NEGATION_EN + '|' + NEGATION_JA, evidence)}
         raise ValueError('changed-negation')
     if negated(text) and not negated(evidence, broad=True):
+        LAST_NEGATION_REJECTION[0] = {'rule': 'copy-negated', 'copyCues': _cues(NEGATION_EN + '|' + NEGATION_JA, text)}
         raise ValueError('changed-negation')
 
 

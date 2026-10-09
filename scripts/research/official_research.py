@@ -922,6 +922,9 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
             policy+='\n'+general_source_news.ACTOR_POLICY
         if any('brokerCommentary' in unit for unit in row['units']):
             policy+='\n'+general_source_news.BROKER_POLICY
+        # Oct 9: 10 publish responses merged or skipped units (invalid-note).
+        policy+=('\nWhen publishing, return exactly one fact per evidence excerpt, in the order given, '
+                 "each with that excerpt's evidenceId; never merge, split or skip excerpts.")
     if buyback_news.CUE.search(row['body']):
         policy+='\n'+buyback_news.POLICY
     if row.get('issuer_business'):
@@ -1289,8 +1292,12 @@ def record_failure_site(exc,row):
         key=(str(exc),site)
         FAILURE_SITES[key]=FAILURE_SITES.get(key,0)+1
         import preview_summaries
+        detail={'unsupported-number':factual_validation.LAST_NUMBER_REJECTION[0],
+                'changed-negation':factual_validation.LAST_NEGATION_REJECTION[0]}.get(str(exc),{})
         preview_summaries.record_rejection({'lane':'research','id':str(row['id']),'code':str(exc),'site':site,
-                                            'notes':','.join(getattr(exc,'__notes__',[]))[:80]})
+                                            'notes':','.join(getattr(exc,'__notes__',[]))[:80],**detail})
+        factual_validation.LAST_NUMBER_REJECTION[0]={}
+        factual_validation.LAST_NEGATION_REJECTION[0]={}
     except Exception:
         pass  # Diagnostics never change the retry or review decision.
 

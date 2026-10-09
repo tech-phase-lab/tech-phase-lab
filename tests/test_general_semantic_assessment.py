@@ -131,6 +131,10 @@ class GeneralSemanticAssessmentTests(unittest.TestCase):
         self.raw(BODY)
         bad={**COPY,'en':COPY['en']+' Revenue was $99 billion.'}
         self.assertEqual(self.run_once(lambda *_:result(facts=[bad])),'review')
+        import preview_summaries
+        entry=[x for x in preview_summaries.RECENT_REJECTIONS if x.get('lane')=='research'][-1]
+        self.assertEqual(entry['code'],'unsupported-number')
+        self.assertIn('99000000000',entry['values'])  # the invented $99 billion, values only
         self.assertTrue(any(code=='unsupported-number' and '.py:' in site
                             for code,site in research.FAILURE_SITES))
         with research.connect(self.path) as db:
@@ -138,6 +142,23 @@ class GeneralSemanticAssessmentTests(unittest.TestCase):
             self.assertEqual(research.release_research_backlog_once(db),0)
             db.execute('UPDATE official_research_jobs SET next_at=0'); db.commit()
         self.assertEqual(self.run_once(lambda *_:result()),'done')
+
+    def test_review_decision_with_facts_or_publish_with_review_reason_is_a_review(self):
+        # Oct 9: these were retried as invalid-note; they are decisions not to publish.
+        for value in ({'disposition':'review','reason':'not-material-business-news','facts':[COPY]},
+                      {'disposition':'publish','reason':'insufficient-source-evidence','facts':[COPY]}):
+            with self.subTest(value=value):
+                self.raw(BODY)
+                self.assertEqual(self.run_once(lambda *_,v=value:result(v['disposition'],v['reason'],v['facts'])),'review')
+                with research.connect(self.path) as db:
+                    self.assertEqual(news.public_items(db,NOW),[])
+                    self.assertEqual(db.execute('SELECT count(*) FROM official_research_attempt_failures').fetchone()[0],0)
+                    db.execute('DELETE FROM official_research_jobs'); db.execute('DELETE FROM general_source_semantic_reviews'); db.commit()
+
+    def test_thousands_separator_is_not_a_relation_boundary(self):
+        news.source_news_grounding.relation_boundary('Orion Labs will build 1,200 units in 2027.')
+        with self.assertRaisesRegex(ValueError,'unproven-source-relation'):
+            news.source_news_grounding.relation_boundary('Orion Labs will build factories, labs and models.')
 
     def test_provider_failure_uses_existing_retry_and_budget_without_false_review(self):
         self.raw(BODY)
