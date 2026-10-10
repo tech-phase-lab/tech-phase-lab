@@ -1178,11 +1178,13 @@ def pending_items(db,reference,published_ids,published_urls,*,authorization_cont
         # evidence) stands; only copy that failed a check falls back here.
         if job and (job['state'] in ('stale','done') or job['failure_kind']=='classified-attempt'):
             skips['job-'+str(job['state'])+'-'+str(job['failure_kind'])]=skips.get('job-'+str(job['state'])+'-'+str(job['failure_kind']),0)+1
+            skips['heldcat-'+str(row.get('category'))]=skips.get('heldcat-'+str(row.get('category')),0)+1
             continue
         review=(db.execute('SELECT reason FROM general_source_semantic_reviews WHERE event_id=? AND sha=? AND body_sha=?',
                            (row['id'],row['sha'],row['body_sha'])).fetchone() if has_reviews else None)
         if review and review['reason']!='unsubstantiated-model-output':
             skips['review-'+str(review['reason'])]=skips.get('review-'+str(review['reason']),0)+1
+            skips['heldcat-'+str(row.get('category'))]=skips.get('heldcat-'+str(row.get('category')),0)+1
             continue
         category=row.get('category')
         label=row.get('related_subject') if row.get('source_news') else row.get('ticker')

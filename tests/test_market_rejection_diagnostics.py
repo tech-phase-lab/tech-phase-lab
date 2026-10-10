@@ -224,3 +224,26 @@ class FeedSummaryTests(unittest.TestCase):
         self.assertEqual(summary['newestOfficial'][1]['clock'], 'date')
         self.assertNotIn('Secret', str(summary))
         self.assertNotIn('ヴァーティブ', str(summary))
+
+
+class ResearchBySourceTests(unittest.TestCase):
+    def test_failures_and_waiting_jobs_are_split_by_source(self):
+        import official_research
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'signals.sqlite'
+            now = time.time()
+            stamp = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(now))
+            with official_research.connect(path) as db:
+                for event_id, source in ((1, 'x-tipranks'), (2, 'nvidia-ir'), (3, 'nvidia-ir')):
+                    db.execute("INSERT INTO signal_events(id,source_id,url,sha,previous_sha,title,tickers_json,matches_json,event_kind,"
+                               "observed_at,excerpt,diff,truncated) VALUES(?,?,?,?,NULL,'t','[]','{}','new',?,'','',0)",
+                               (event_id, source, 'https://example.com/%d' % event_id, 's', stamp))
+                db.executemany('INSERT INTO official_research_attempt_failures(lease,event_id,sha,failed_at,reason,detail,payload) VALUES(?,?,?,?,?,?,?)',
+                               [('a', 1, 's', stamp, 'invalid-note', '', '{}'), ('b', 2, 's', stamp, 'changed-negation', '', '{}'),
+                                ('c', 3, 's', stamp, 'changed-negation', '', '{}')])
+                db.executemany('INSERT INTO official_research_jobs(event_id,sha,attempts,next_at,lease,state,failure_kind) VALUES(?,?,?,?,?,?,?)',
+                               [(1, 's', 1, 0, 'a', 'review', 'invalid-note'), (2, 's', 1, 0, 'b', 'retry', 'changed-negation')])
+                db.commit()
+            result = pipeline_status.research_failures(path, now)
+        self.assertEqual(result['failuresBySource24h'], {'nvidia-ir': 2, 'x-tipranks': 1})
+        self.assertEqual(result['waitingBySource'], {'x-tipranks:review': 1, 'nvidia-ir:retry': 1})
