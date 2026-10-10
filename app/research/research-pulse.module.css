@@ -1,0 +1,21 @@
+.pulse{position:relative;display:flex;flex-wrap:nowrap;align-items:center;align-content:center;gap:8px;min-height:44px;padding:8px 10px;margin:0 0 24px;border-top:1px solid #28443e;border-bottom:1px solid #28443e;background:linear-gradient(100deg,#10241f88,transparent);touch-action:pan-y pinch-zoom}
+/* One row including the clock on wide screens. Choose a complete headline that fits the actual
+   font/space. When only a category label would fit, the full headline is shown
+   with a visible ellipsis instead (full text in the tooltip and news list). */
+.headline{display:block;min-width:0;flex:1;color:#dae7e5;font-size:12px;line-height:20px;white-space:nowrap;overflow:hidden;animation:enter .5s ease-out}
+.clipped{text-overflow:ellipsis}
+/* A headline too long even at the smallest size scrolls once to its end. */
+.scroll{display:inline-block;animation:scroll 7s linear .2s 1 both}
+.clipped:has(.scroll){text-overflow:clip}
+@keyframes scroll{0%,15%{transform:translateX(0)}85%,100%{transform:translateX(var(--shift))}}
+.clock{display:inline-flex;flex:none;align-items:center;white-space:nowrap;font-size:9px;line-height:14px;color:#93a6ad}
+.pulse button{flex:none;border:0;padding:0;background:none;color:#a4c5ba;width:28px;min-height:28px;cursor:pointer}
+.pulse button:disabled{opacity:.4;cursor:default}
+.pulse:focus-visible,.pulse button:focus-visible{outline:2px solid #91dfc4;outline-offset:3px}
+.fresh{color:#a9eccb;font-size:9px;margin-left:5px;font-weight:600}
+.progress{position:absolute;bottom:0;left:0;height:1px;width:100%;background:#91dfc4;transform-origin:left;animation:progress 8s linear forwards;opacity:.65}
+@keyframes enter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+/* Phones keep the single row; the headline shrinks slightly before "…". */
+@media(max-width:600px){.pulse{margin-bottom:18px;gap:6px}.pulse button{width:24px}}
+@media(prefers-reduced-motion:reduce){.headline,.progress,.scroll{animation:none}.clipped:has(.scroll){text-overflow:ellipsis}}

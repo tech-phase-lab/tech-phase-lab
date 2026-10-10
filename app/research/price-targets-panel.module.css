@@ -1,0 +1,59 @@
+.panel{margin:0 0 23px;padding:20px;border:1px solid #2e5249;border-radius:9px;background:linear-gradient(145deg,#10221f,#111b26);color:#e6f2ec}
+.head{margin-bottom:15px}
+.head h3{margin:5px 0 0;font-size:19px}.kicker{color:#85d6b4;font-size:11px;letter-spacing:.08em;font-weight:700}
+.refresh,.updated{color:#a9bcb8;font-size:12px}
+.state{padding:15px;color:#b8cec5;border-top:1px solid #36504c;font-size:13px}
+.list{display:grid;gap:9px}.card{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid #334c48;border-radius:6px;background:#14252b}
+.ticker{font-weight:700;color:#e5eaf0;background:#303d49;border-radius:4px;padding:6px 9px;min-width:58px;text-align:center}
+.body{flex:1;min-width:0}.body strong{display:block;font-size:14px;line-height:1.5}.body small{display:block;margin-top:7px;color:#b2c5c4;line-height:1.5}
+.newBadge{display:inline-block;margin-right:8px;padding:1px 6px;border-radius:3px;background:#d0f4df;color:#123c2f;font-size:10px;line-height:1.5;vertical-align:2px;letter-spacing:.04em}
+.card a{font-size:12px;color:#a8ecd0;white-space:nowrap}
+@media(max-width:700px){.card{align-items:flex-start;flex-direction:column}.refresh,.updated{font-size:11px}}
+
+.footer{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:10px 12px;margin-top:14px}
+.panel .notificationToggle{grid-column:1;grid-row:1;justify-self:start;min-height:44px;cursor:pointer;padding:0 4px;border:0;border-radius:4px;background:transparent;color:#a8d8ff;font-size:11px;font-weight:600;line-height:1.4;white-space:nowrap}
+.panel .notificationToggle:hover{background:#213e5b;border-color:#76baff}
+.notificationToggle:focus-visible,.notificationActions button:focus-visible,.codeInput:focus-visible{outline:2px solid #a8d8ff;outline-offset:3px}
+.syncMeta{grid-column:2;grid-row:1;justify-self:end;min-width:0;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.updated{margin:0;white-space:nowrap;font-variant-numeric:tabular-nums}
+.notificationBody{grid-column:1/-1;grid-row:2;padding:14px;border:1px solid #34526c;border-radius:7px;background:#111e2c;font-size:13px;line-height:1.6}
+.notificationBody p{margin:0 0 10px}.notificationBody p:last-child{margin-bottom:0}
+.notificationTitle{display:block;margin-bottom:8px;font-size:14px}
+.pilotNote{color:#adc5d7;font-size:12px}
+.codeLabel{display:block;margin:12px 0 5px;font-weight:600}
+.codeInput{box-sizing:border-box;display:block;width:100%;max-width:380px;padding:9px 10px;border:1px solid #64748b;border-radius:6px;background:#0b1723;color:#e6f2ec;font:inherit}
+.notificationActions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.notificationActions button{cursor:pointer;padding:8px 12px;border:1px solid #64748b;border-radius:6px;background:#172e45;color:#e6f2ec;font:inherit}
+.notificationActions button:first-child{border-color:#69b89e;background:#1a443b}
+.notificationActions button:disabled{cursor:not-allowed;opacity:.5}
+
+.firm{font-size:13px;color:#b2c5c4;line-height:1.5;overflow-wrap:anywhere}
+.targetChange{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-top:3px}
+.targetChange strong{font-size:18px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.raised,.lowered{font-size:11px;white-space:nowrap;border-radius:4px;padding:2px 6px}
+.raised{color:#a7efcc;background:#214138}.lowered{color:#ffb6b0;background:#482e32}
+.firm .newBadge{margin:0 0 0 8px}
+.body small{font-size:11px}
+.published{display:block;margin-top:4px;color:#b2c5c4;font-size:11px;line-height:1.5;font-variant-numeric:tabular-nums}
+.panel .notificationActions button{font-size:13px;min-height:44px}
+@media(max-width:700px){
+  .panel{padding:16px}.head h3{font-size:17px;line-height:1.5}
+  .card{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding:12px}
+  .ticker{justify-self:start;min-width:0;padding:3px 8px;font-size:14px}
+  .targetChange strong{font-size:18px}.card a{font-size:11px}
+  .footer{gap:6px 8px;margin-top:8px}.refresh,.updated{font-size:10px}
+  .notificationBody{padding:12px}.notificationTitle{font-size:13px}
+  .codeLabel{font-size:12px}.codeInput{font-size:16px}
+}
+.notificationPreference{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:12px}
+.notificationPreference .notificationTitle{margin-bottom:3px}
+.notificationPreference p{margin:0;color:#b2c5c4;font-size:12px}
+.panel .notificationSwitch{display:flex;align-items:center;gap:8px;flex-shrink:0;border:0;padding:0;min-height:44px;background:transparent;color:#c3cece;font-size:12px}
+.switchTrack{display:block;position:relative;width:40px;height:24px;background:#50616d;border-radius:16px}
+.switchTrack>span{position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .15s}
+.notificationSwitch[aria-checked=true]{color:#a7efcc}.notificationSwitch[aria-checked=true] .switchTrack{background:#36795f}.notificationSwitch[aria-checked=true] .switchTrack>span{transform:translateX(16px)}
+.notificationSwitch:focus-visible{outline:2px solid #a8d8ff;outline-offset:3px}
+
+.pending{min-height:48px;border-radius:8px;background:#122430}.panel{scroll-margin-top:100px}
+
+.card .ticker{font-size:14px;min-height:36px;display:inline-flex;align-items:center;justify-content:center;align-self:start}@media(max-width:700px){.card{grid-template-columns:auto minmax(0,1fr);gap:10px}.targetChange strong{font-size:16px;white-space:normal}.body small{margin-top:4px}.ticker{grid-column:1}.body{grid-column:2}}

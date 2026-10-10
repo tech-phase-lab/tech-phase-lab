@@ -1,0 +1,37 @@
+.dock {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.home {
+  display: flex; align-items: center; gap: 7px;
+  min-height: 44px; padding: 0 14px; border-radius: 24px;
+  color: #c4e9df; background: #13232ef2; border: 1px solid #405965;
+  box-shadow: 0 4px 18px #0005; text-decoration: none;
+  font: 600 12px/1.2 Arial, sans-serif;
+}
+.home:hover { background: #203844; }
+.home:focus-visible { outline: 2px solid #8be6bf; outline-offset: 4px; }
+.button {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #598570;
+  border-radius: 50%;
+  background: #14271f;
+  color: #a7f0d1;
+  font: 26px/1 Arial, sans-serif;
+  box-shadow: 0 4px 16px #0006;
+  cursor: pointer;
+}
+.button:hover { background: #203e31; }
+.button:focus-visible { outline: 2px solid #8be6bf; outline-offset: 4px; }
+
+@media (max-width:760px) { .dock { bottom:calc(104px + env(safe-area-inset-bottom)); } }
+
+@media(max-width:760px){:global(body:has(input:focus,textarea:focus,[contenteditable="true"]:focus)) .dock{display:none}}

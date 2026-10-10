@@ -1,0 +1,19 @@
+{
+  "observedAt": "2026-10-04T02:22:44Z",
+  "commit": "352d058faf9e370ace0f68098af5adcf8350c6bc",
+  "row": {
+    "bodyJa": "NVIDIAは2026年にAIエージェントの安全性プラットフォーム、耐障害量子コンピューティング拡張、ソブリン・インテリジェンスの強化など、複数の技術革新を発表した。\n\n2026年9月28日、NVIDIAはエージェントのテストから展開までの安全性を確保するOpen Agent Safety Platformを開始した。\n\n2026年9月14日、NVIDIAは耐障害性を持つ量子コンピューティングのためのオープンソースCUDA-Qプラットフォームを拡張した。\n\n2026年9月10日、NVIDIAとPalantirは重要なサプライチェーン向けにソブリン・インテリジェンスを提供する共同プロジェクトを発表した。\n\n2026年9月9日、NVIDIAはオーストラリアのデータセンターエコシステムと提携し、AIインフラ容量の拡大を進めている。\n\n2026年8月31日、NVIDIAとMediaTekはエッジからクラウドまでのAIコンピューティングプラットフォーム構築に向けて長期的なパートナーシップを深めた。",
+    "bodyEn": "In 2026, NVIDIA announced several technological innovations including an AI agent safety platform, expansion of fault-tolerant quantum computing, and enhanced sovereign intelligence.\n\nOn September 28, 2026, NVIDIA launched the Open Agent Safety Platform to ensure agent security from testing to deployment.\n\nOn September 14, 2026, NVIDIA expanded the open source CUDA-Q platform for fault-tolerant quantum computing.\n\nOn September 10, 2026, NVIDIA and Palantir announced a joint project to bring sovereign intelligence to critical supply chains.\n\nOn September 9, 2026, NVIDIA partnered with Australia's data center ecosystem to expand AI infrastructure capacity.\n\nOn August 31, 2026, NVIDIA and MediaTek deepened their longstanding partnership to build AI edge to cloud computing platforms.",
+    "id": "1101",
+    "title": "NVIDIA Announces Multiple New Open Source AI and Quantum Computing Platforms in 2026",
+    "publisher": "NVIDIA IR",
+    "url": "https://nvidianews.nvidia.com/news/nvidia-announces-a-150-billion-share-repurchase-authorization-increase",
+    "observedAt": "2026-09-28T11:05:29.215000+00:00",
+    "tickers": [
+      "NVDA"
+    ],
+    "publishedOn": "2026-09-28",
+    "translationJa": "NVIDIA、2026年にオープンソースAIと量子コンピューティングに関する複数の新プラットフォームを発表",
+    "researchId": "ir-result-1101"
+  }
+}

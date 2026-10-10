@@ -1,0 +1,7 @@
+.frame { position:relative;overflow:hidden; }
+.surface { position:relative;z-index:1;background:#080f14;touch-action:pan-y pinch-zoom;transition:transform .18s ease; }
+.surface[data-dragging=true] { transition:none;user-select:none; }
+.remove { position:absolute;inset:0 0 0 auto;width:72px;display:grid;place-items:center;border:0;background:#5c242d;color:#ffc3c9;cursor:pointer; }
+.remove svg { width:23px;height:23px; }.remove:disabled { opacity:.4;cursor:default; }
+.remove:focus-visible { outline:2px solid #ffc3c9;outline-offset:-4px; }
+@media(prefers-reduced-motion:reduce) { .surface { transition:none; } }

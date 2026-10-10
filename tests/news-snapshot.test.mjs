@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { newsSnapshot, serverNewsSnapshot, subscribeNews, publishNews } from '../lib/research/news-snapshot.ts';
+test('news snapshot shares verified feed, clears failures and unsubscribes listeners', () => {
+  publishNews(null);
+  let notifications = 0;
+  const off = subscribeNews(() => notifications++);
+  const data = {ok:true, enabled:false, items:[], officialUpdates:[]};
+  publishNews(data);
+  assert.equal(newsSnapshot().data, data);
+  assert.equal(newsSnapshot(), newsSnapshot());
+  assert.ok(newsSnapshot().checkedAt > 0);
+  assert.equal(serverNewsSnapshot(), null);
+  publishNews(null);
+  assert.equal(newsSnapshot(), null);
+  assert.equal(notifications, 2);
+  off();
+  publishNews(null);
+  assert.equal(notifications, 2);
+});

@@ -1,0 +1,144 @@
+{
+  "id": "mu-sndk-20261004",
+  "asOf": "2026-10-04T00:00:00.000Z",
+  "priceDate": "2026-10-02",
+  "historyStartDate": "2026-07-02",
+  "benchmark": {
+    "ticker": "^NDX",
+    "start": 29329.21,
+    "end": 30807.93
+  },
+  "companies": [
+    {
+      "ticker": "MU",
+      "name": "Micron",
+      "end": "2026-09-03",
+      "rev": 54229,
+      "prior": 11315,
+      "op": 43751,
+      "annualEps": 74.33,
+      "close": 1074.89,
+      "guide": [
+        60000,
+        63000
+      ],
+      "source": "https://finance.yahoo.com/news/micron-technology-inc-reports-record-200100307.html",
+      "announced": "2026-09-30",
+      "start": "2026-05-29",
+      "cash": 38364,
+      "debt": 5179,
+      "currentAssets": 91070,
+      "currentLiabilities": 27482,
+      "assets": 195888,
+      "liabilities": 57510,
+      "operatingCash": 43973,
+      "capex": 11110,
+      "adjustedFcf": 33199,
+      "revenues": [
+        13643,
+        23860,
+        41456,
+        54229
+      ],
+      "operatingIncomes": [
+        6136,
+        16135,
+        33318,
+        43751
+      ],
+      "historyStart": 975.56,
+      "periods": [
+        "2025-11-27",
+        "2026-02-26",
+        "2026-05-28",
+        "2026-09-03"
+      ]
+    },
+    {
+      "ticker": "SNDK",
+      "name": "Sandisk",
+      "end": "2026-07-03",
+      "rev": 8965,
+      "prior": 1901,
+      "op": 7037,
+      "annualEps": 73.76,
+      "close": 1719.99,
+      "guide": [
+        10300,
+        10800
+      ],
+      "source": "https://finance.yahoo.com/markets/stocks/articles/sandisk-reports-fiscal-fourth-quarter-200500222.html",
+      "announced": "2026-08-05",
+      "start": "2026-04-04",
+      "cash": 4762,
+      "debt": 0,
+      "currentAssets": 12780,
+      "currentLiabilities": 5581,
+      "assets": 22507,
+      "liabilities": 6771,
+      "operatingCash": 7126,
+      "capex": 43,
+      "adjustedFcf": 5035,
+      "revenues": [
+        2308,
+        3025,
+        5950,
+        8965
+      ],
+      "operatingIncomes": [
+        176,
+        1065,
+        4111,
+        7037
+      ],
+      "historyStart": 1745,
+      "periods": [
+        "2025-10-03",
+        "2026-01-02",
+        "2026-04-03",
+        "2026-07-03"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "label": "MU Q4 / Yahoo Finance US",
+      "url": "https://finance.yahoo.com/news/micron-technology-inc-reports-record-200100307.html"
+    },
+    {
+      "label": "SNDK Q4 / Yahoo Finance US",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/sandisk-reports-fiscal-fourth-quarter-200500222.html"
+    },
+    {
+      "label": "SNDK Q4 cash-flow supplement / company release",
+      "url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-fourth-quarter-2026-financial-results"
+    },
+    {
+      "label": "MU Q3 and Q2 / company release filed with SEC",
+      "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000013/a2026q3ex991-pressrelease.htm"
+    },
+    {
+      "label": "SNDK Q2 and Q1 / Yahoo Finance US",
+      "url": "https://finance.yahoo.com/news/sandisk-reports-fiscal-second-quarter-210700132.html"
+    },
+    {
+      "label": "MU prices / Yahoo Finance US",
+      "url": "https://finance.yahoo.com/quote/MU/history/"
+    },
+    {
+      "label": "SNDK prices / Yahoo Finance US",
+      "url": "https://finance.yahoo.com/quote/SNDK/history/"
+    },
+    {
+      "label": "%5ENDX prices / Yahoo Finance US",
+      "url": "https://finance.yahoo.com/quote/%5ENDX/history/"
+    }
+  ],
+  "notes": [
+    "One-off reviewed snapshot; not an automatic Yahoo feed. Prices are regular-session closes, not after hours.",
+    "MU Q1 operating income derived as nine-month 55,589 minus Q2 16,135 minus Q3 33,318.",
+    "MU Q4 has 14 weeks; SNDK periods differ. Forward P/E and PEG not verified, not inferred from one quarterly guidance.",
+    "Simple FCF = operating cash flow less cash capex. SNDK includes NBM prepayments; company-adjusted FCF is separately shown and definitions differ.",
+    "Stock momentum uses price-only closes for both companies and NDX; dividends excluded."
+  ]
+}

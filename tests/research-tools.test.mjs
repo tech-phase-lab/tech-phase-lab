@@ -1,0 +1,262 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { parseFavoriteStocks, toggleFavoriteStock } from "../lib/research/favorites.ts";
+import { calendarEvents, economicResults, dateOnlyEvents, selectDateOnlyEarnings, selectDateOnlyEvents, calendarDateKey, selectCalendarEvents } from "../lib/research/calendar.ts";
+
+const coverage = JSON.parse(readFileSync(new URL("../lib/research/calendar-coverage.json", import.meta.url), "utf8"));
+const eventCalendarSource = readFileSync(new URL("../app/research/calendar/event-calendar.tsx", import.meta.url), "utf8");
+const calendarHandoffBytes = readFileSync(new URL("../docs/CALENDAR-HANDOFF.md", import.meta.url));
+
+test("favorite storage tolerates invalid JSON and rejects non-ticker values", () => {
+  for (const raw of [null, "{", "null", "{}", '"MU"']) assert.deepEqual(parseFavoriteStocks(raw), []);
+  assert.deepEqual(parseFavoriteStocks(JSON.stringify(["MU", "MU", "NVDA", 1, null, "<script>", "mu", "BRK.B"])), ["MU", "NVDA", "BRK.B"]);
+  assert.deepEqual(parseFavoriteStocks(" ".repeat(10001)), []);
+});
+
+test("favorite toggles preserve other choices and survive serialization", () => {
+  const initial = ["MU", "NBIS"];
+  const added = toggleFavoriteStock(initial, "BE");
+  assert.deepEqual(initial, ["MU", "NBIS"]);
+  assert.deepEqual(parseFavoriteStocks(JSON.stringify(added)), ["MU", "NBIS", "BE"]);
+  assert.deepEqual(toggleFavoriteStock(added, "NBIS"), ["MU", "BE"]);
+  assert.deepEqual(toggleFavoriteStock(added, "../invalid"), added);
+});
+
+test("Japan calendar dates account for midnight and US daylight saving", () => {
+  const call = calendarEvents.find((event) => event.id === "mu-fq4-2026-call");
+  assert.equal(calendarDateKey(call.startsAt), "2026-10-01");
+  const time = (date) => new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit" }).format(new Date(date));
+  assert.equal(time(call.startsAt), "05:30");
+  assert.equal(time("2026-10-02T08:30:00-04:00"), "21:30");
+  assert.equal(time("2026-11-06T08:30:00-05:00"), "22:30");
+  assert.equal(calendarDateKey("2026-12-09T14:00:00-05:00"), "2026-12-10");
+});
+
+test("calendar filters use Japan months and exclude past events from upcoming", () => {
+  const now = Date.parse("2026-10-01T00:00:00Z");
+  const muEvents = calendarEvents.filter((event) => event.ticker === "MU");
+  assert.equal(selectCalendarEvents(muEvents, "earnings", "2026-10", now).length, 1);
+  assert.equal(selectCalendarEvents(muEvents, "earnings", "2026-09", now).length, 0);
+  assert.equal(selectCalendarEvents(muEvents, "earnings", "upcoming", now).length, 0);
+  assert.ok(selectCalendarEvents(calendarEvents, "economic", "upcoming", now).every((event) => Date.parse(event.startsAt) >= now && event.kind === "economic"));
+});
+
+test("today and upcoming keeps the employment release after its scheduled time", () => {
+  const now = Date.parse("2026-10-02T12:39:00Z");
+  const events = selectCalendarEvents(calendarEvents, "economic", "today-upcoming", now);
+  assert.ok(events.some(event => event.id === "jobs-2026-10-02"));
+  assert.ok(!selectCalendarEvents(calendarEvents, "economic", "today-upcoming", Date.parse("2026-10-02T15:00:00Z")).some(event => event.id === "jobs-2026-10-02"));
+  assert.ok(selectCalendarEvents(calendarEvents, "economic", "today-upcoming", Date.parse("2026-10-02T15:00:00Z"), "America/New_York").some(event => event.id === "jobs-2026-10-02"));
+});
+
+test("registered schedules are ordered, unique and linked to official sources", () => {
+  assert.equal(new Set(calendarEvents.map((event) => event.id)).size, calendarEvents.length);
+  let previous = 0;
+  for (const event of calendarEvents) {
+    const timestamp = Date.parse(event.startsAt);
+    assert.ok(Number.isFinite(timestamp) && timestamp >= previous);
+    previous = timestamp;
+    assert.ok(event.title.ja && event.title.en);
+    assert.ok(["www.bls.gov", "www.bea.gov", "investors.micron.com", "ir.netflix.net", "investor.asml.com", "investor.sandisk.com", "investor.tsmc.com", "investor.lamresearch.com", "ir.kla.com", "www.gevernova.com", "www.adobe.com"].includes(new URL(event.sourceUrl).hostname));
+    if (event.sourceName === "BLS") {
+      assert.equal(new Intl.DateTimeFormat("en-GB", { timeZone: event.sourceTimezone, hour: "2-digit", minute: "2-digit" }).format(new Date(event.startsAt)), "08:30");
+    }
+  }
+});
+
+test("PCE schedules and actuals preserve official periods, Eastern DST and price measures", () => {
+  const pce = calendarEvents.filter(event => event.id.startsWith("pce-"));
+  assert.deepEqual(pce.map(event => event.id), ["pce-2026-08", "pce-2026-09", "pce-2026-10", "pce-2026-11"]);
+  const time = date => new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit" }).format(new Date(date));
+  assert.deepEqual(pce.map(event => time(event.startsAt)), ["21:30", "21:30", "22:30", "22:30"]);
+  assert.equal(selectCalendarEvents(pce, "economic", "upcoming", Date.parse("2026-09-30T14:00Z")).length, 3);
+  const result = economicResults.find(event => event.id === "pce-2026-08");
+  assert.equal(result.sourceName, "BEA");
+  assert.equal(result.releasedAt, pce[0].startsAt);
+  assert.match(result.result.ja, /前月比\+0\.3%・前年比\+3\.4%/);
+  assert.match(result.detail.ja, /前月比\+0\.2%・前年比\+3\.0%/);
+  assert.equal(new Set(economicResults.map(event => event.id)).size, economicResults.length);
+});
+
+test("Eastern month filters follow the displayed date across the Japan midnight boundary", () => {
+  const events = calendarEvents.filter((event) => event.ticker === "MU");
+  assert.equal(calendarDateKey(events[0].startsAt, "America/New_York"), "2026-09-30");
+  assert.equal(selectCalendarEvents(events, "earnings", "2026-09", 0, "America/New_York").length, 1);
+  assert.equal(selectCalendarEvents(events, "earnings", "2026-10", 0, "America/New_York").length, 0);
+});
+test("Taiwan and Pacific timestamps convert to the right Eastern and Japan dates", () => {
+  const tsm = calendarEvents.find((event) => event.id === "tsm-q3-2026-call");
+  const netflix = calendarEvents.find((event) => event.ticker === "NFLX");
+  const time = (date, zone) => new Intl.DateTimeFormat("en-GB", { timeZone: zone, hour: "2-digit", minute: "2-digit" }).format(new Date(date));
+  assert.equal(time(tsm.startsAt, "America/New_York"), "02:00");
+  assert.equal(time(tsm.startsAt, "Asia/Tokyo"), "15:00");
+  assert.equal(calendarDateKey(tsm.startsAt, "Asia/Taipei"), "2026-10-15");
+  assert.match(tsm.note.en, /conference start.*not the publication time/i);
+  assert.equal(time(netflix.startsAt, "America/New_York"), "16:01");
+  assert.equal(calendarDateKey(netflix.startsAt), "2026-10-21");
+});
+
+test("Sandisk call keeps the official Eastern time and release/call distinction", () => {
+  const sandisk = calendarEvents.find((event) => event.id === "sndk-fq1-2027-call");
+  const time = (date, zone) => new Intl.DateTimeFormat("en-GB", { timeZone: zone, hour: "2-digit", minute: "2-digit" }).format(new Date(date));
+  assert.equal(sandisk.sourceTimezone, "America/New_York");
+  assert.equal(time(sandisk.startsAt, "America/New_York"), "16:30");
+  assert.equal(time(sandisk.startsAt, "Asia/Tokyo"), "05:30");
+  assert.equal(calendarDateKey(sandisk.startsAt), "2026-10-30");
+  assert.match(sandisk.note.en, /call start, not the publication time/i);
+});
+
+test("date-only earnings keep the official date without fabricating a time", () => {
+  const now = Date.parse("2026-09-22T12:00:00Z");
+  assert.equal(selectDateOnlyEarnings("2026-09", now).length, 0);
+  assert.deepEqual(selectDateOnlyEarnings("2026-10", now).map((event) => event.date), ["2026-10-28"]);
+  assert.equal(selectDateOnlyEarnings("upcoming", Date.parse("2026-10-14T21:59:00Z")).length, 1);
+  assert.equal(selectDateOnlyEarnings("upcoming", Date.parse("2026-10-28T07:00:00Z")).length, 1);
+});
+
+test("ASML keeps exact Amsterdam release and call times as separate events", () => {
+  const release = calendarEvents.find((event) => event.id === "asml-q3-2026-release");
+  const call = calendarEvents.find((event) => event.id === "asml-q3-2026-call");
+  const time = (date, zone) => new Intl.DateTimeFormat("en-GB", { timeZone: zone, hour: "2-digit", minute: "2-digit" }).format(new Date(date));
+  assert.equal(release.startsAt, "2026-10-14T07:00:00+02:00");
+  assert.equal(call.startsAt, "2026-10-14T15:00:00+02:00");
+  assert.equal(release.sourceTimezone, "Europe/Amsterdam");
+  assert.equal(call.sourceTimezone, "Europe/Amsterdam");
+  assert.equal(time(release.startsAt, "Europe/Amsterdam"), "07:00");
+  assert.equal(time(call.startsAt, "Europe/Amsterdam"), "15:00");
+  assert.equal(time(release.startsAt, "America/New_York"), "01:00");
+  assert.equal(time(call.startsAt, "America/New_York"), "09:00");
+  assert.equal(time(release.startsAt, "Asia/Tokyo"), "14:00");
+  assert.equal(time(call.startsAt, "Asia/Tokyo"), "22:00");
+  assert.match(release.note.en, /results release time/i);
+  assert.match(call.note.en, /separate from the results release time/i);
+  assert.equal(dateOnlyEvents.some((event) => event.ticker === "ASML"), false);
+});
+
+test("Adobe call keeps the official Pacific time and release/call distinction", () => {
+  const adobe = calendarEvents.find((event) => event.id === "adbe-fq4-2026-call");
+  assert.equal(adobe.startsAt, "2026-12-09T14:00:00-08:00");
+  assert.equal(adobe.sourceTimezone, "America/Los_Angeles");
+  assert.match(adobe.note.en, /call start, not the publication time/i);
+  assert.equal(calendarDateKey(adobe.startsAt, "America/New_York"), "2026-12-09");
+  assert.equal(calendarDateKey(adobe.startsAt, "Asia/Tokyo"), "2026-12-10");
+});
+
+test("GE Vernova webcast keeps the official Eastern time and release/call distinction", () => {
+  const gev = calendarEvents.find((event) => event.id === "gev-q3-2026-webcast");
+  assert.equal(gev.startsAt, "2026-10-28T07:30:00-04:00");
+  assert.equal(gev.sourceTimezone, "America/New_York");
+  assert.match(gev.note.en, /webcast start, not the publication time/i);
+  assert.equal(calendarDateKey(gev.startsAt, "America/New_York"), "2026-10-28");
+  assert.equal(calendarDateKey(gev.startsAt, "Asia/Tokyo"), "2026-10-28");
+});
+
+test("Lam Research call keeps the official Pacific time and release/call distinction", () => {
+  const lam = calendarEvents.find((event) => event.id === "lrcx-september-2026-call");
+  const time = (date, zone) => new Intl.DateTimeFormat("en-GB", { timeZone: zone, hour: "2-digit", minute: "2-digit" }).format(new Date(date));
+  assert.equal(lam.startsAt, "2026-10-21T14:00:00-07:00");
+  assert.equal(lam.sourceTimezone, "America/Los_Angeles");
+  assert.equal(time(lam.startsAt, "America/New_York"), "17:00");
+  assert.equal(time(lam.startsAt, "Asia/Tokyo"), "06:00");
+  assert.equal(calendarDateKey(lam.startsAt, "Asia/Tokyo"), "2026-10-22");
+  assert.match(lam.note.en, /call start, not the publication time/i);
+});
+
+test("KLA keeps its date-only results release separate from the exact Pacific webcast time", () => {
+  const call = calendarEvents.find((event) => event.id === "klac-fq1-2027-call");
+  const release = dateOnlyEvents.find((event) => event.id === "klac-fq1-2027-results");
+  const time = (date, zone) => new Intl.DateTimeFormat("en-GB", { timeZone: zone, hour: "2-digit", minute: "2-digit" }).format(new Date(date));
+  assert.equal(call.startsAt, "2026-10-28T14:00:00-07:00");
+  assert.equal(call.sourceTimezone, "America/Los_Angeles");
+  assert.equal(time(call.startsAt, "America/New_York"), "17:00");
+  assert.equal(time(call.startsAt, "Asia/Tokyo"), "06:00");
+  assert.equal(calendarDateKey(call.startsAt, "Asia/Tokyo"), "2026-10-29");
+  assert.match(call.note.en, /no exact publication time/i);
+  assert.equal(release.date, "2026-10-28");
+  assert.equal(release.sourceTimezone, "America/Los_Angeles");
+  assert.equal(release.startsAt, undefined);
+  assert.match(release.note.en, /only the date is shown/i);
+});
+
+test("FOMC meetings stay date-only until the Federal Reserve publishes clock times", () => {
+  const fomc = dateOnlyEvents.filter((event) => event.id.startsWith("fomc-"));
+  assert.deepEqual(fomc.map((event) => event.date), ["2026-10-28", "2026-12-09"]);
+  assert.ok(fomc.every((event) => event.kind === "economic" && !("startsAt" in event)));
+  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "economic", "upcoming", Date.parse("2026-09-23T00:00:00Z")).length, 2);
+  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "earnings", "2026-10", 0).length, 1);
+});
+
+test("calendar coverage tracks 40 unique companies and only conclusive checks advance", () => {
+  assert.equal(coverage.length, 40);
+  assert.equal(new Set(coverage.map((company) => company.ticker)).size, 40);
+  const byTicker = Object.fromEntries(coverage.map((company) => [company.ticker, company]));
+  const checked = Object.fromEntries(coverage.map((company) => [company.ticker, company.lastCheckedOn]));
+  assert.ok(coverage.every((company) => /^2026-(?:09-(?:2[3-9]|30)|10-0[12])$/.test(company.lastAttemptedOn)));
+  for (const ticker of ["ADBE", "AMD", "ASML", "COHR", "CRM", "CRWD", "DELL", "GEV", "INTC", "KLAC", "LRCX", "META", "MSFT", "MU", "NBIS", "NFLX", "ORCL", "PANW", "PLTR", "QCOM", "SKHY", "SNDK", "SNOW", "TSLA", "TSM", "VRT"]) assert.equal(checked[ticker], "2026-10-02");
+  assert.equal(checked.AMAT, "2026-09-25");
+  for (const ticker of ["AAPL", "AMZN", "ANET", "ARM", "AVGO", "BE", "CRDO", "CRWV", "GOOGL", "LITE", "MRVL", "NOW", "NVDA"]) assert.equal(checked[ticker], null);
+  assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-30").length, 0);
+  const attemptedOnOctober1 = coverage
+    .filter((company) => company.lastAttemptedOn === "2026-10-01")
+    .map((company) => company.ticker)
+    .sort();
+  assert.deepEqual(attemptedOnOctober1, []);
+  const attemptedOnOctober2 = coverage
+    .filter((company) => company.lastAttemptedOn === "2026-10-02")
+    .map((company) => company.ticker)
+    .sort();
+  assert.deepEqual(attemptedOnOctober2, [
+    "AAPL", "ADBE", "AMAT", "AMD", "AMZN", "ANET", "ARM", "ASML", "AVGO", "BE",
+    "COHR", "CRDO", "CRM", "CRWD", "CRWV", "DELL", "GEV", "GOOGL", "INTC", "KLAC",
+    "LITE", "LRCX", "META", "MRVL", "MSFT", "MU", "NBIS", "NFLX", "NOW", "NVDA",
+    "ORCL", "PANW", "PLTR", "QCOM", "SKHY", "SNDK", "SNOW", "TSLA", "TSM", "VRT",
+  ]);
+  assert.equal(coverage.filter((company) => company.lastAttemptedOn === "2026-09-29").length, 0);
+  assert.equal(coverage.filter((company) => company.lastCheckedOn !== null).length, 27);
+  assert.equal(coverage.filter((company) => company.lastCheckedOn === null).length, 13);
+  for (const ticker of ["MRVL", "NBIS", "NOW", "NVDA", "ORCL", "PANW", "PLTR", "SKHY", "SNOW", "VRT"]) {
+    assert.match(byTicker[ticker].sourceUrl, /(?:events|investor-hub|category\/ir)/i);
+  }
+  assert.equal(byTicker.AMZN.sourceUrl, "https://ir.aboutamazon.com/events/default.aspx");
+  assert.equal(byTicker.ANET.sourceUrl, "https://investors.arista.com/events-and-presentations/default.aspx");
+  assert.equal(byTicker.ARM.sourceUrl, "https://investors.arm.com/");
+  assert.equal(byTicker.COHR.sourceUrl, "https://ir.coherent.com/news-events/events");
+  assert.equal(byTicker.MSFT.sourceUrl, "https://www.microsoft.com/en-us/investor/default");
+  assert.equal(byTicker.TSM.lastCheckedOn, "2026-10-02");
+  assert.equal(calendarEvents.some((event) => event.ticker === "TSM"), true);
+  assert.equal(calendarEvents.some((event) => event.ticker === "SNDK"), true);
+});
+
+test("calendar handoff remains reviewable UTF-8 markdown", () => {
+  const handoff = new TextDecoder("utf-8", { fatal: true }).decode(calendarHandoffBytes);
+  assert.match(handoff, /^# /);
+  assert.match(handoff, /company batch reviewed on 2026-09-27/);
+  assert.doesNotMatch(handoff, /[\u0000-\u0008\u000B\u000C\u000E-\u001F]/);
+});
+
+test("calendar UI distinguishes a completed source check from an inconclusive review", () => {
+  assert.match(eventCalendarSource, /公式確認済み・確定日なし/);
+  assert.match(eventCalendarSource, /公式確認試行済み・確認継続/);
+  assert.match(eventCalendarSource, /company\.lastCheckedOn !== null/);
+  assert.match(eventCalendarSource, /company\.lastAttemptedOn/);
+});
+
+test("favorite calendar includes only followed earnings while retaining economic releases", async () => {
+  const { filterFavoriteEvents } = await import("../lib/research/favorites.ts");
+  const sample = [{ kind: "earnings", ticker: "MU" }, { kind: "earnings", ticker: "NVDA" }, { kind: "economic" }, { kind: "earnings" }];
+  assert.deepEqual(filterFavoriteEvents(sample, ["MU"]), [sample[0], sample[2]]);
+  assert.deepEqual(filterFavoriteEvents(sample, []), [sample[2]]);
+  assert.deepEqual(filterFavoriteEvents(sample, ["MU"], false), [sample[0]]);
+  assert.deepEqual(filterFavoriteEvents(sample, [], false), []);
+});
+
+test("favorite schedules drop expired calls and preserve exact ASML times", async () => {
+  const { filterFavoriteEvents } = await import("../lib/research/favorites.ts");
+  const now = Date.parse("2026-10-01T00:00:00Z");
+  assert.equal(selectCalendarEvents(filterFavoriteEvents(calendarEvents, ["MU"], false), "earnings", "upcoming", now).length, 0);
+  const asml = filterFavoriteEvents(calendarEvents, ["ASML"], false);
+  assert.equal(selectCalendarEvents(asml, "earnings", "upcoming", now).length, 2);
+  assert.equal(selectCalendarEvents(asml, "earnings", "upcoming", Date.parse("2026-10-14T13:00:01Z")).length, 0);
+  assert.equal(selectDateOnlyEvents(filterFavoriteEvents(dateOnlyEvents, ["ASML"], false), "earnings", "upcoming", now).length, 0);
+});

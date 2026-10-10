@@ -1,0 +1,56 @@
+/* Floating bottom bar (owner's final design: sample "A＋B 合体版").
+   Mobile only; desktop keeps the header navigation and menu. */
+.dock { display:none; }
+@media (max-width:760px) {
+  .dock {
+    --bg:#070b10; --muted:#8b9aa6; --mint:#8fe3c0; --rise:#ff7a8a;
+    display:block; position:fixed; z-index:60;
+    left:max(12px, env(safe-area-inset-left)); right:max(12px, env(safe-area-inset-right));
+    bottom:calc(10px + env(safe-area-inset-bottom));
+  }
+  .bar {
+    position:relative; display:grid; grid-template-columns:1fr 1fr 84px 1fr 1fr; align-items:end;
+    padding:8px 6px 10px; border-radius:22px;
+    background:linear-gradient(180deg,rgba(24,36,48,.92),rgba(13,20,28,.96));
+    -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+    box-shadow:0 0 0 1px #223241,0 18px 40px -12px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.06);
+  }
+  .bar a {
+    position:relative; z-index:1; display:grid; justify-items:center; gap:4px; padding:8px 0 6px;
+    color:var(--muted); text-decoration:none; transition:color .25s;
+    font:500 11px/1.2 "Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; letter-spacing:.02em;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .bar a:focus-visible { outline:2px solid var(--mint); outline-offset:2px; border-radius:12px; }
+  .bar svg { display:block; width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+  .bar a[aria-current="page"] { color:var(--mint); }
+  .bar a[aria-current="page"] svg { filter:drop-shadow(0 0 7px rgba(143,227,192,.65)); }
+  .label { white-space:nowrap; }
+  .glow {
+    position:absolute; top:0; left:0; height:100%; width:60px; pointer-events:none;
+    transition:transform .35s cubic-bezier(.3,.9,.3,1),width .35s cubic-bezier(.3,.9,.3,1),opacity .2s;
+  }
+  .glow::before { content:""; position:absolute; left:22%; right:22%; top:-1px; height:3px; border-radius:0 0 4px 4px; background:var(--mint); box-shadow:0 0 14px 2px rgba(143,227,192,.7); }
+  .glow::after { content:""; position:absolute; inset:0; background:radial-gradient(60% 90% at 50% 0,rgba(143,227,192,.16),transparent 70%); border-radius:18px; }
+  .bar .mid, .bar .mid[aria-current="page"] { padding:0; margin-top:-34px; color:#06231a; }
+  .orb {
+    display:grid; place-items:center; width:64px; height:64px; margin:0 auto; border-radius:50%;
+    background:radial-gradient(circle at 30% 25%,#c9f7e3,#6fd6ac 60%,#3fae86);
+    box-shadow:0 0 0 6px var(--bg),0 0 0 7px #223241,0 10px 24px -4px rgba(63,174,134,.55);
+    transition:transform .2s,box-shadow .3s;
+  }
+  .mid[aria-current="page"] .orb { box-shadow:0 0 0 6px var(--bg),0 0 0 7px var(--mint),0 0 26px 2px rgba(143,227,192,.75); }
+  .mid:active .orb { transform:scale(.95); }
+  .bar .mid svg { width:29px; height:29px; stroke-width:2; filter:none !important; }
+  .mid .label { display:block; margin-top:6px; color:var(--mint); }
+  .star { fill:none !important; }
+  .bar a[aria-current="page"] .star { fill:rgba(143,227,192,.22) !important; }
+  .live { position:absolute; top:4px; right:calc(50% - 22px); width:8px; height:8px; border-radius:50%; background:var(--rise); box-shadow:0 0 0 2px #121b25; }
+  .live::after { content:""; position:absolute; inset:-3px; border-radius:50%; border:1px solid var(--rise); animation:ping 1.8s ease-out infinite; }
+  @keyframes ping { from { transform:scale(.6); opacity:.9; } to { transform:scale(1.9); opacity:0; } }
+}
+@media (max-width:760px) and (prefers-reduced-motion:reduce) {
+  .glow, .bar a, .orb { transition:none !important; }
+  .live::after { animation:none !important; }
+}
+@media (max-width:760px) { :global(body:has(input:focus,textarea:focus,[contenteditable="true"]:focus)) .dock { display:none; } }

@@ -1,0 +1,360 @@
+"""Synthetic tests for the disabled-by-default X adapter; no live X requests."""
+import os
+import sqlite3
+import sys
+import unittest
+from pathlib import Path
+from unittest.mock import patch
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/research"))
+import monitor
+import signals
+import x_api
+
+
+class XApiTests(unittest.TestCase):
+    def test_unrecognized_results_and_targets_survive_cursor_advancement_privately(self):
+        import io, json
+        from email.message import Message
+        payload = {'data': [
+            {'id': '9101', 'author_id': '1', 'created_at': '2026-10-02T12:30:37Z',
+             'text': 'SEPTEMBER JOBS REPORT: payroll employment increased by twenty-nine thousand'},
+            {'id': '9102', 'author_id': '1', 'created_at': '2026-10-02T12:31:00Z',
+             'text': 'Micron objective revised to sixty-five dollars from eighty-five'},
+            {'id': '9103', 'author_id': '2', 'text': 'unapproved source'},
+        ], 'includes': {'users': [{'id': '1', 'username': 'TipRanks'},
+                                  {'id': '2', 'username': 'unapproved_account'}]},
+           'meta': {'newest_id': '9103'}}
+        class Response(io.BytesIO):
+            headers = Message()
+        Response.headers['Content-Type'] = 'application/json'
+        class Opener:
+            def open(self, request, timeout):
+                return Response(json.dumps(payload).encode())
+        with patch.dict(os.environ, {'X_API_ENABLED': 'true', 'X_BEARER_TOKEN': 'synthetic'}):
+            response = x_api.fetch_posts(self.source, list(monitor.PROVIDERS), lambda: Opener())
+        self.assertEqual(response['_items'], [])
+        with sqlite3.connect(':memory:') as db:
+            db.row_factory = sqlite3.Row
+            result = signals.check(db, self.source, list(monitor.PROVIDERS),
+                                   transport=lambda source, validators: response)
+            self.assertEqual((result['acquiredPosts'], result['unselectedPosts']), (2, 2))
+            rows = db.execute('SELECT * FROM signal_x_acquisition ORDER BY url').fetchall()
+            self.assertEqual([row['text'] for row in rows], [p['text'] for p in payload['data'][:2]])
+            self.assertEqual(rows[0]['published_at'], '2026-10-02T12:30:37Z')
+            self.assertTrue(all(row['selected_for_processing'] == 0 for row in rows))
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM signal_events').fetchone()[0], 0)
+            cursor = json.loads(db.execute('SELECT body FROM signal_index_state').fetchone()[0])
+            self.assertEqual(cursor['sinceId'], '9103')
+            self.assertEqual(cursor['postsSaved'], 2)
+            self.assertEqual(cursor['excludedAuthorRows'], 1)
+            self.assertEqual(cursor['queryGeneration'], x_api.query_generation(self.source))
+            signals.check(db, self.source, list(monitor.PROVIDERS),
+                          transport=lambda source, validators: response)
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM signal_x_acquisition').fetchone()[0], 2)
+            self.assertEqual(db.execute('SELECT first_seen_at FROM signal_x_acquisition ORDER BY url').fetchone()[0],
+                             rows[0]['first_seen_at'])
+
+    def test_acquisition_storage_failure_does_not_advance_cursor(self):
+        import json
+        post = {'url': 'https://x.com/TipRanks/status/9101', 'title': 'Jobs report',
+                'text': 'Jobs report: unfamiliar result format',
+                'publishedAt': '2026-10-02T12:30:37Z', 'truncated': False}
+        response = {'_items': [], '_acquired_posts': [post],
+                    'cursor_update': json.dumps({'sinceId': '9101'})}
+        with sqlite3.connect(':memory:') as db:
+            db.row_factory = sqlite3.Row
+            signals.schema(db)
+            db.execute('INSERT INTO signal_index_state VALUES(?,?)',
+                       (self.source['id'], json.dumps({'sinceId': '9000', 'queryGeneration': x_api.query_generation(self.source)})))
+            db.execute("""CREATE TRIGGER reject_acquisition BEFORE INSERT ON signal_x_acquisition
+                          BEGIN SELECT RAISE(ABORT, 'synthetic-storage-failure'); END""")
+            db.commit()
+            result = signals.check(db, self.source, list(monitor.PROVIDERS),
+                                   transport=lambda source, validators: response)
+            self.assertEqual(result['status'], 'error')
+            self.assertEqual(json.loads(db.execute('SELECT body FROM signal_index_state').fetchone()[0]),
+                             {'sinceId': '9000', 'queryGeneration': x_api.query_generation(self.source)})
+
+    def test_requested_financing_scope_preserves_full_source_and_requires_company(self):
+        source = next(s for s in signals.SOURCES if s['id'] == 'x-wallstengine')
+        samples = [
+            ('$AVGO is assembling roughly $60B of financing; $18B junior debt; $BX is expected to commit $9B', True),
+            ('$NBIS announces a proposed offering of $1.5 billion convertible notes', True),
+            ('$MU announces $500M convertible senior unsecured notes', True),
+            ('$NBIS announces a convertible bond offering', True),
+            ('$MU plans a capital raise; funding has not been secured', True),
+            ('$IREN announces convertible bonds refinancing', True),
+            ('$NBIS $500M convertible debt offering was cancelled', True),
+            ('マイクロン $MU が資金調達を検討、転換社債の発行は未確定', True),
+            ('$NBIS completes a fundraising round', True),
+            ('$UNMONITORED raises $3B of funding', False),
+            ('$MU convertible laptop promotion', False),
+        ]
+        payload = {'includes': {'users': [{'id': '1', 'username': 'wallstengine'}]},
+                   'data': [{'id': str(8000+i), 'author_id': '1', 'text': text,
+                             'created_at': '2026-10-02T10:17:22Z'}
+                            for i, (text, _) in enumerate(samples)]}
+        items = x_api.parse_response(source, payload, list(monitor.PROVIDERS))
+        self.assertEqual([v['text'] for v in items], [t for t, accepted in samples if accepted])
+        self.assertTrue(all(v['publishedAt']=='2026-10-02T10:17:22Z' for v in items))
+        self.assertEqual(signals.x_content_kind(source, samples[0][0]), 'corporate-financing')
+        without_scope = dict(source, financingUpdates=False)
+        self.assertEqual(x_api.parse_response(without_scope, payload, list(monitor.PROVIDERS)), [])
+        self.assertLessEqual(len(source['query']), 512)
+        for word in ('funding', 'financing', 'fundraising', 'capital raise',
+                     'capital raising', 'convertible', '資金調達', '転換社債'):
+            self.assertIn(word, source['query'])
+
+    def test_requested_market_accounts_only_accept_the_requested_topics(self):
+        samples = {
+            'TrendSpider': [('S&P 500 rebalance: additions $VYLR $TWLO; removals $CTVA $WDB', 'index-membership'), ('$MRNA will join Nasdaq 100, replacing $WBD', 'index-membership'), ('Nasdaq trading tools: add a chart indicator for $MRNA', None), ('$MU reports Q4 earnings', None)],
+            'Barchart': [('US 30-year Treasury yield rises to its highest since 2002', 'government-bonds'), ('Japanese 10-year bond yields reach a 30-year high', 'government-bonds'), ('Brent crude oil rises 3%', 'crude-oil'), ('Treasury Secretary announces tariffs', None), ('$MU reports earnings', None)],
+        }
+        for account, posts in samples.items():
+            source = next(s for s in signals.SOURCES if s['id'] == 'x-' + account.lower())
+            self.assertLessEqual(len(source['query']), 512)
+            self.assertIn('-is:reply', source['query'])
+            payload = {'includes': {'users': [{'id': '1', 'username': account}]}, 'data': [
+                {'id': str(9000 + n), 'author_id': '1', 'text': text} for n, (text, _) in enumerate(posts)]}
+            accepted = x_api.parse_response(source, payload, list(monitor.PROVIDERS))
+            self.assertEqual([p['text'] for p in accepted], [text for text, topic in posts if topic])
+            for text, topic in posts:
+                self.assertEqual(x_api.market_topic(account, text), topic)
+
+    def test_blocked_supplemental_routes_do_not_remove_company_ir(self):
+        for source_id in ('marvell-blog', 'tsmc-press-center'):
+            self.assertIs(next(s for s in signals.SOURCES if s['id'] == source_id)['enabled'], False)
+        self.assertIn('MRVL', monitor.PROVIDERS)
+        self.assertIn('TSM', monitor.PROVIDERS)
+        self.assertIsNot(next(s for s in signals.SOURCES if s['id'] == 'marvell-investor-news').get('enabled'), False)
+
+    def test_suspended_routes_are_not_counted_as_retrying_or_recovered(self):
+        source = next(s for s in signals.SOURCES if s['id'] == 'marvell-blog')
+        with sqlite3.connect(':memory:') as db:
+            db.row_factory = sqlite3.Row
+            signals.schema(db)
+            db.execute("INSERT INTO signal_routes(id,error) VALUES(?,?)", (source['id'], 'http-403'))
+            summary = signals.operational_summary(db, sources=[source])['routes']
+            self.assertEqual(summary['configured'], 0)
+            self.assertEqual(summary['suspended'], 1)
+            self.assertEqual(summary['error'], 0)
+            self.assertEqual(summary['fresh'], 0)
+            self.assertEqual(summary['retry']['unscheduled'], 0)
+            self.assertEqual(db.execute('SELECT error FROM signal_routes').fetchone()[0], 'http-403')
+
+    def setUp(self):
+        self.source = {**next(s for s in signals.SOURCES if s["id"] == "x-tipranks"), "enabled": True}
+
+    def test_supported_target_shorthand_reaches_strict_publication_gate(self):
+        from datetime import datetime, timezone
+        now = datetime(2026, 10, 2, 12, tzinfo=timezone.utc)
+        samples = [
+            '$ZZZZ PT increased to $110 from $100 by Citi',
+            '$ZZZZ PT reduced from $110 to $100 by Citi',
+            '$ZZZZ PT from $100 to $110 by Citi',
+            '$ZZZZ PT of $110, up from $100 at Citi',
+            '$ZZZZ PT at $100, down from $110 at Citi',
+            '$ZZZZ PT increased to $90 from $100 by Citi',
+        ]
+        for index, text in enumerate(samples, 1):
+            with self.subTest(text=text):
+                payload = {'data': [{'id': str(index), 'author_id': '1', 'text': text,
+                                      'created_at': '2026-10-02T11:59:00Z'}],
+                           'includes': {'users': [{'id': '1', 'username': 'TipRanks'}]}}
+                items = x_api.parse_response(self.source, payload, list(monitor.PROVIDERS))
+                self.assertEqual(len(items), 1)
+                self.assertEqual(items[0]['matches'], {'ZZZZ': ['$ZZZZ']})
+                with sqlite3.connect(':memory:') as db:
+                    db.row_factory = sqlite3.Row
+                    signals.schema(db)
+                    signals.save(db, self.source, items, {}, now.isoformat(), 'synthetic', 1)
+                    public = signals.public_price_targets(db, now=now)['items']
+                    if index == len(samples):
+                        self.assertEqual(public, [])  # Admission never overrides direction.
+                    else:
+                        self.assertEqual(len(public), 1)
+                        self.assertEqual(public[0]['ticker'], 'ZZZZ')
+        payload = {'data': [{'id': '99', 'author_id': '1', 'text': '$ZZZZ PT session on Tuesday'}],
+                   'includes': {'users': [{'id': '1', 'username': 'TipRanks'}]}}
+        self.assertEqual(x_api.parse_response(self.source, payload, list(monitor.PROVIDERS)), [])
+
+    def test_rating_start_and_changes_without_numeric_targets(self):
+        payload = {"data": [{"id": "6001", "author_id": "1", "text": "Nebius $NBIS initiated with an Outperform at William Blair"}, {"id": "6002", "author_id": "1", "text": "$MU downgraded to Neutral"}, {"id": "6003", "author_id": "1", "text": "$NBIS interesting stock today"}], "includes": {"users": [{"id": "1", "username": "TipRanks"}]}}
+        items = x_api.parse_response(self.source, payload, list(monitor.PROVIDERS))
+        self.assertEqual(len(items), 2)
+        self.assertTrue(all(word in self.source["query"] for word in ("initiated", "upgraded", "downgraded", "reiterated")))
+
+    def test_the_fly_is_not_requested_or_accepted_even_from_stale_route_config(self):
+        for source in signals.SOURCES:
+            if source.get('format') == 'x-api':
+                self.assertNotIn('theflynews',source['query'].lower())
+                self.assertNotIn('theflynews',{a.lower() for a in source['accounts']})
+        self.assertFalse(any(source['id']=='x-thefly' for source in signals.SOURCES))
+        stale={**self.source,'accounts':['theflynews']}
+        payload={'data':[{'id':'999','author_id':'1','text':'$MU Q4 earnings Revenue $54.23B'}],
+                 'includes':{'users':[{'id':'1','username':'theflynews'}]}}
+        self.assertEqual(x_api.parse_response(stale,payload,list(monitor.PROVIDERS)),[])
+
+    def test_x_source_scope_adds_requested_x_only_companies(self):
+        x_sources = [source for source in signals.SOURCES if source.get("format") == "x-api" and not source.get("marketTopics")]
+        added = {"LITE", "COHR", "VST", "IREN", "ALAB", "APH", "INTC",
+                 "AMAT", "SIMO", "AAOI", "META"}
+        self.assertEqual({source["accounts"][0].lower() for source in x_sources},
+                         {"tipranks", "wallstengine", "nebiusai", "aistocksavvy"})
+        self.assertEqual({ticker for source in x_sources for ticker in source["tickers"]},
+                         set(monitor.PROVIDERS) | added)
+        for source in x_sources:
+            if source.get("officialUpdates"):
+                self.assertEqual(source["accounts"], ["nebiusai"])
+                self.assertEqual(source["tickers"], ["NBIS"])
+                continue
+            if source["id"] == "x-aistocksavvy":
+                continue  # Price-target-only route; checked in HardikShahPriceTargetRouteTests.
+            self.assertLessEqual(len(source["query"]), 512)
+            self.assertEqual(set(source["extraTickers"]), added)
+            self.assertEqual(len(source["tickers"]), 33)
+            if source["id"] != "x-wallstengine":
+                self.assertTrue(all(f"${ticker}" in source["query"] for ticker in added))
+            self.assertEqual(source["intervalSeconds"], 30 if source["id"] == "x-wallstengine" else 60)
+            self.assertEqual(source["maxResults"], 30)
+            self.assertIn('"price target"', source["query"])
+            self.assertIn('"target price"', source["query"])
+            self.assertIn('"PT to"', source["query"])
+            self.assertTrue(' OR results OR ' in source['query'] or '"quarterly results"' in source['query'])
+
+    def test_x_sources_are_disabled_without_both_explicit_flag_and_token(self):
+        with patch.dict(os.environ, {"X_API_ENABLED": "true", "X_BEARER_TOKEN": ""}, clear=False):
+            self.assertNotIn(self.source, signals.enabled_sources())
+        with patch.dict(os.environ, {"X_API_ENABLED": "false", "X_BEARER_TOKEN": "secret"}, clear=False):
+            self.assertNotIn(self.source, signals.enabled_sources())
+
+    def test_only_configured_publishers_and_ticker_matches_are_retained(self):
+        payload = {
+            "data": [
+                {"id": "1001", "author_id": "1", "created_at": "2026-09-25T00:00:00Z",
+                 "text": "Micron price target raised to $500"},
+                {"id": "1002", "author_id": "2", "created_at": "2026-09-25T00:01:00Z",
+                 "text": "Unrelated market note"},
+                {"id": "1003", "author_id": "3", "created_at": "2026-09-25T00:02:00Z",
+                 "text": "$NBIS price target raised to $250"},
+                {"id": "1004", "author_id": "1", "created_at": "2026-09-25T00:03:00Z",
+                 "text": "$MU releases new product lineup"},
+                {"id": "1005", "author_id": "1", "created_at": "2026-09-25T00:04:00Z",
+                 "text": "$NBIS analyst lifts PT to $399"},
+            ],
+            "includes": {"users": [
+                {"id": "1", "username": "TipRanks"},
+                {"id": "2", "username": "TipRanks"},
+                {"id": "3", "username": "unapproved_account"},
+            ]},
+        }
+        items = x_api.parse_response(self.source, payload, list(monitor.PROVIDERS))
+        self.assertEqual(len(items), 2)
+        self.assertEqual(items[0]["url"], "https://x.com/TipRanks/status/1001")
+        self.assertIn("MU", items[0]["matches"])
+        self.assertEqual(items[1]["url"], "https://x.com/TipRanks/status/1005")
+
+    def test_fetched_x_post_reaches_private_editorial_queue(self):
+        payload = {
+            "data": [{"id": "1001", "author_id": "1", "created_at": "2026-09-25T00:00:00Z",
+                      "text": "Micron price target raised to $500"}],
+            "includes": {"users": [{"id": "1", "username": "TipRanks"}]},
+        }
+        items = x_api.parse_response(self.source, payload, list(monitor.PROVIDERS))
+        with patch.dict(os.environ, {"X_API_ENABLED": "true", "X_BEARER_TOKEN": "test-token"}):
+            with patch.object(x_api, "fetch_posts", return_value={"_items": items}):
+                with sqlite3.connect(":memory:") as db:
+                    db.row_factory = sqlite3.Row
+                    result = signals.check(db, self.source, list(monitor.PROVIDERS))
+                    self.assertEqual(result["status"], "ok")
+                    self.assertEqual(result["matchedItems"], 1)
+                    queue = signals.queue(db, ticker="MU")
+                    self.assertEqual(queue["counts"]["baseline"], 1)
+                    self.assertEqual(queue["items"][0]["url"], "https://x.com/TipRanks/status/1001")
+
+    def test_wall_st_engine_post_is_kept_only_for_a_monitored_company(self):
+        source = next(s for s in signals.SOURCES if s["id"] == "x-wallstengine")
+        payload = {"data": [
+            {"id": "2001", "author_id": "2", "text": "$NBIS price target raised to $399"},
+            {"id": "2002", "author_id": "2", "text": "$XYZ price target raised to $20"},
+        ], "includes": {"users": [{"id": "2", "username": "wallstengine"}]}}
+        items = x_api.parse_response(source, payload, list(monitor.PROVIDERS))
+        self.assertEqual([item["url"] for item in items], ["https://x.com/wallstengine/status/2001", "https://x.com/wallstengine/status/2002"])
+
+    def test_earnings_posts_are_kept_separate_from_target_changes_and_previews(self):
+        source = self.source
+        payload = {"data": [
+            {"id": "3001", "author_id": "1", "text": "$MU reports Q2 earnings, revenue rose 25%"},
+            {"id": "3002", "author_id": "1", "text": "$MU earnings preview: revenue is expected to rise"},
+            {"id": "3003", "author_id": "1", "text": "$MU price target raised to $500"},
+            {"id": "3004", "author_id": "1", "text": "$NBIS quarterly results: revenue beat forecasts"},
+        ], "includes": {"users": [{"id": "1", "username": "TipRanks"}]}}
+        self.assertEqual([item["url"] for item in x_api.parse_response(source, payload, list(monitor.PROVIDERS))],
+                         ["https://x.com/TipRanks/status/3001", "https://x.com/TipRanks/status/3003",
+                          "https://x.com/TipRanks/status/3004"])
+
+    def test_x_only_tickers_accept_targets_and_earnings_but_not_other_posts(self):
+        payload = {"data": [
+            {"id": "4101", "author_id": "1", "text": "$LITE price target raised to $400"},
+            {"id": "4102", "author_id": "1", "text": "$COHR reports quarterly results"},
+            {"id": "4103", "author_id": "1", "text": "$VST opens a new power plant"},
+            {"id": "4104", "author_id": "1", "text": "$XYZ price target raised to $20"},
+            {"id": "4105", "author_id": "1", "text": "$IREN price target raised to $70"},
+            {"id": "4106", "author_id": "1", "text": "$META earnings beat expectations"},
+            {"id": "4107", "author_id": "1", "text": "$INTC launches new chips"},
+        ], "includes": {"users": [{"id": "1", "username": "TipRanks"}]}}
+        items = x_api.parse_response(self.source, payload, list(monitor.PROVIDERS))
+        self.assertEqual([list(item["matches"]) for item in items],
+                         [["LITE"], ["COHR"], ["XYZ"], ["IREN"], ["META"]])
+        self.assertIn("VST", signals.X_EXTRA_TICKERS)
+
+    def test_pagination_keeps_high_watermark_until_every_page_is_consumed(self):
+        import io, json
+        from email.message import Message
+        from urllib.parse import urlsplit, parse_qs
+        requests = []
+        pages = [{"meta":{"newest_id":"9000","next_token":"page2"}}, {"meta":{"newest_id":"8000"}}]
+        class Response(io.BytesIO):
+            headers = Message()
+        Response.headers['Content-Type']='application/json'
+        class Opener:
+            def open(self, request, timeout):
+                requests.append(parse_qs(urlsplit(request.full_url).query))
+                return Response(json.dumps(pages.pop(0)).encode())
+        with patch.dict(os.environ, {"X_API_ENABLED":"true","X_BEARER_TOKEN":"synthetic"}):
+            first=x_api.fetch_posts(self.source, [], lambda:Opener(), {'index_state':json.dumps({'sinceId':'7000', 'queryGeneration': x_api.query_generation(self.source)})})
+            cursor=json.loads(first['cursor_update'])
+            self.assertEqual(cursor['sinceId'],'7000')
+            self.assertEqual(cursor['newestId'],'9000')
+            second=x_api.fetch_posts(self.source, [], lambda:Opener(), {'index_state':first['cursor_update']})
+            self.assertEqual(json.loads(second['cursor_update'])['sinceId'], '9000')
+            self.assertNotIn('nextToken', json.loads(second['cursor_update']))
+        self.assertEqual(requests[1]['next_token'],['page2'])
+        self.assertEqual(requests[1]['since_id'],['7000'])
+        self.assertNotIn('start_time', requests[1])
+        self.assertEqual(requests[0]['post.fields'],['created_at,author_id,lang,note_post'])
+
+    def test_direct_adapter_call_fails_closed(self):
+        with patch.dict(os.environ, {"X_API_ENABLED": "false", "X_BEARER_TOKEN": "secret"}, clear=False):
+            with self.assertRaisesRegex(ValueError, "x-api-disabled"):
+                x_api.fetch_posts(self.source, list(monitor.PROVIDERS), opener_factory=lambda: self.fail("network called"))
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+
+class HardikShahPriceTargetRouteTests(unittest.TestCase):
+    def test_route_is_price_target_raises_and_cuts_only(self):
+        source = next(s for s in signals.SOURCES if s["id"] == "x-aistocksavvy")
+        self.assertEqual(source["accounts"], ["AIStockSavvy"])
+        self.assertTrue(source["query"].startswith("from:AIStockSavvy "))
+        self.assertIn('"price target"', source["query"])
+        self.assertLessEqual(len(source["query"]), 512)
+        self.assertIn("x-aistocksavvy", signals.PRICE_TARGET_SOURCE_IDS)
+        self.assertIn("aistocksavvy", x_api.ALLOWED_ACCOUNT_NAMES)
+        self.assertTrue(source.get("streamExcluded"))
+        self.assertEqual(source.get("targetUniverse"), "large-cap")
+        # Not an author-intake, analyst-news or market-news route.
+        self.assertNotIn("x-aistocksavvy", signals.X_AUTHOR_INTAKE_SOURCE_IDS)

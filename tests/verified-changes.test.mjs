@@ -1,0 +1,106 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { verifiedChanges, verifiedChangeIssues } from "../lib/research/verified-changes.ts";
+
+test("verified WHAT CHANGED records retain valid primary evidence", () => {
+  assert.equal(verifiedChanges.length, 12);
+  assert.deepEqual(verifiedChanges.map((item) => item.ticker), ["NVDA", "AMD", "AVGO", "CRWV", "ARM", "TSM", "ASML", "MRVL", "ANET", "CRDO", "SKHY", "SNDK"]);
+  for (const item of verifiedChanges) assert.deepEqual(verifiedChangeIssues(item), []);
+});
+
+test("NVIDIA quarter-on-quarter changes match the filed values", () => {
+  const nvda = verifiedChanges.find((item) => item.ticker === "NVDA");
+  const revenue = nvda.metrics.find((metric) => metric.id === "revenue");
+  const margin = nvda.metrics.find((metric) => metric.id === "gross-margin");
+  assert.equal((((revenue.current / revenue.previous) - 1) * 100).toFixed(1), "17.9");
+  assert.equal((margin.current - margin.previous).toFixed(1), "0.1");
+  assert.equal(nvda.source.publishedOn, "2026-08-26");
+});
+
+test("AMD and Broadcom quarter-on-quarter changes match official values", () => {
+  const amd = verifiedChanges.find((item) => item.ticker === "AMD");
+  const avgo = verifiedChanges.find((item) => item.ticker === "AVGO");
+  const amdRevenue = amd.metrics.find((metric) => metric.id === "revenue");
+  const avgoOperatingIncome = avgo.metrics.find((metric) => metric.id === "operating-income");
+  assert.equal((((amdRevenue.current / amdRevenue.previous) - 1) * 100).toFixed(1), "12.5");
+  assert.equal((((avgoOperatingIncome.current / avgoOperatingIncome.previous) - 1) * 100).toFixed(1), "47.9");
+});
+
+test("CoreWeave keeps growth and margin contraction separate", () => {
+  const crwv = verifiedChanges.find((item) => item.ticker === "CRWV");
+  const revenue = crwv.metrics.find((metric) => metric.id === "revenue");
+  const margin = crwv.metrics.find((metric) => metric.id === "operating-margin");
+  assert.equal((((revenue.current / revenue.previous) - 1) * 100).toFixed(1), "112.5");
+  assert.equal((margin.current - margin.previous).toFixed(1), "-4.0");
+  assert.match(crwv.unknown.ja, /バックログ/);
+});
+
+test("Arm retains company-reported year-on-year changes without reverse-derived priors", () => {
+  const arm = verifiedChanges.find((item) => item.ticker === "ARM");
+  assert.equal(arm.metrics.every((metric) => metric.previous === null && metric.change.companyReported), true);
+  assert.equal(arm.metrics.find((metric) => metric.id === "revenue").current, 1.29);
+});
+
+test("TSMC quarter-on-quarter revenue and margins match official releases", () => {
+  const tsm = verifiedChanges.find((item) => item.ticker === "TSM");
+  const revenue = tsm.metrics.find((metric) => metric.id === "revenue");
+  const grossMargin = tsm.metrics.find((metric) => metric.id === "gross-margin");
+  assert.equal((((revenue.current / revenue.previous) - 1) * 100).toFixed(1), "12.0");
+  assert.equal((grossMargin.current - grossMargin.previous).toFixed(1), "1.5");
+  assert.equal(tsm.additionalSources.length, 1);
+});
+
+test("ASML euro-denominated comparisons remain distinct from USD", () => {
+  const asml = verifiedChanges.find((item) => item.ticker === "ASML");
+  const sales = asml.metrics.find((metric) => metric.id === "sales");
+  const margin = asml.metrics.find((metric) => metric.id === "gross-margin");
+  assert.equal(sales.unit, "eur-billion");
+  assert.equal((((sales.current / sales.previous) - 1) * 100).toFixed(1), "6.4");
+  assert.equal((margin.current - margin.previous).toFixed(1), "1.0");
+});
+
+test("Marvell separates total and Data Center sequential growth", () => {
+  const mrvl = verifiedChanges.find((item) => item.ticker === "MRVL");
+  const revenue = mrvl.metrics.find((metric) => metric.id === "revenue");
+  const dataCenter = mrvl.metrics.find((metric) => metric.id === "data-center");
+  assert.equal((((revenue.current / revenue.previous) - 1) * 100).toFixed(1), "13.3");
+  assert.equal((((dataCenter.current / dataCenter.previous) - 1) * 100).toFixed(1), "18.5");
+});
+
+test("Arista year-on-year values match the filed income statement", () => {
+  const anet = verifiedChanges.find((item) => item.ticker === "ANET");
+  const revenue = anet.metrics.find((metric) => metric.id === "revenue");
+  const margin = anet.metrics.find((metric) => metric.id === "operating-margin");
+  assert.equal((((revenue.current / revenue.previous) - 1) * 100).toFixed(1), "37.7");
+  assert.equal((margin.current - margin.previous).toFixed(1), "0.7");
+});
+
+test("Credo keeps sequential growth and profitability contraction together", () => {
+  const crdo = verifiedChanges.find((item) => item.ticker === "CRDO");
+  const revenue = crdo.metrics.find((metric) => metric.id === "revenue");
+  const margin = crdo.metrics.find((metric) => metric.id === "gross-margin");
+  const netIncome = crdo.metrics.find((metric) => metric.id === "net-income");
+  assert.equal((((revenue.current / revenue.previous) - 1) * 100).toFixed(1), "9.6");
+  assert.equal((margin.current - margin.previous).toFixed(1), "-3.7");
+  assert.equal((((netIncome.current / netIncome.previous) - 1) * 100).toFixed(1), "-23.5");
+});
+
+test("SK hynix keeps won-denominated growth and margins distinct", () => {
+  const skhy = verifiedChanges.find((item) => item.ticker === "SKHY");
+  const revenue = skhy.metrics.find((metric) => metric.id === "revenue");
+  const operatingMargin = skhy.metrics.find((metric) => metric.id === "operating-margin");
+  assert.equal(revenue.unit, "krw-trillion");
+  assert.equal((((revenue.current / revenue.previous) - 1) * 100).toFixed(1), "50.9");
+  assert.equal((operatingMargin.current - operatingMargin.previous).toFixed(1), "4.0");
+  assert.equal(skhy.source.url, "https://news.skhynix.com/en/q2-2026-business-results/");
+});
+
+test("Sandisk shows Data Center acceleration and Consumer contraction together", () => {
+  const sndk = verifiedChanges.find((item) => item.ticker === "SNDK");
+  const dataCenter = sndk.metrics.find((metric) => metric.id === "data-center");
+  const consumer = sndk.metrics.find((metric) => metric.id === "consumer");
+  const grossMargin = sndk.metrics.find((metric) => metric.id === "gross-margin");
+  assert.equal((((dataCenter.current / dataCenter.previous) - 1) * 100).toFixed(1), "102.9");
+  assert.equal((((consumer.current / consumer.previous) - 1) * 100).toFixed(1), "-32.2");
+  assert.equal((grossMargin.current - grossMargin.previous).toFixed(1), "6.2");
+});

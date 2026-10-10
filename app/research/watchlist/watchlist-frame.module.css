@@ -1,0 +1,21 @@
+.frame { --watchlist-nav-space:0px;position:relative; }
+/* Only these two watchlist pages use the compact shell. */
+.frame > div:first-child { padding-bottom:var(--watchlist-nav-space); }
+.frame main { padding-bottom:30px; }
+.cue { position:fixed;left:50%;bottom:calc(var(--watchlist-nav-space) + 8px);transform:translateX(-50%);width:44px;height:32px;z-index:30;pointer-events:none; }
+/* At the end, anchor below the last row instead of floating over it. */
+.cue[data-direction=up] { position:absolute;bottom:calc(var(--watchlist-nav-space) + 2px); }
+.cue button { display:grid;place-items:center;width:44px;height:32px;padding:0;border:0;border-radius:0;background:transparent;color:#a5e3cb;cursor:pointer;pointer-events:auto; }
+.cue button[hidden] { display:none; }
+.cue button:hover { color:#d0f8e8; }
+.cue button:focus-visible { outline:2px solid #9bd9c2;outline-offset:3px; }
+.cue svg { width:24px;height:22px;fill:currentColor;filter:drop-shadow(0 1px 3px #061510); }
+.cue svg path:first-child { opacity:.42; }
+.cue[data-direction=up] svg { transform:rotate(180deg); }
+.frame:has(input:focus,textarea:focus) .cue { visibility:hidden; }
+/* Clear the raised search orb, including its outer ring and safe area. */
+@media(max-width:760px) { .frame { --watchlist-nav-space:calc(128px + env(safe-area-inset-bottom)); } }
+/* Mobile browser chrome leaves less room. Keep the cue in installed app mode. */
+@media (max-width:760px) and (display-mode:browser) {
+  .cue { display:none; }
+}

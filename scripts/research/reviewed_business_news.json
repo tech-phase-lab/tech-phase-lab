@@ -1,0 +1,35 @@
+{
+  "policy": "reviewed-source-commentary-v1",
+  "sourceId": "x-wallstengine",
+  "url": "https://x.com/TipRanks/status/2105631088013926761",
+  "sourceSha": "571cf84d5c8d6ced7fb4a89527f5e4056bf59e83267c388f3920cac01b6177c0",
+  "bodySha": "09735ba717f6fb2618669bb0ea659278c910b72fbf2d30d4837104b6a71bff6f",
+  "category": "broker-commentary",
+  "facts": [
+    {
+      "evidenceId": "0",
+      "ja": "MicronのQ4では、AI向けメモリー需要の強さと供給の逼迫が示された。利益の持続性は依然として過小評価されている可能性がある。",
+      "en": "Micron's Q4 pointed to robust AI-memory demand and tighter supply, with the durability of its earnings possibly underappreciated."
+    },
+    {
+      "evidenceId": "1",
+      "ja": "需要の持続性は改善している。売上高見通しは予想を大幅に上回り、AIメモリーには締結済みの長期契約を超える伸びしろがあると指摘した。",
+      "en": "TD Cowen highlighted improving demand durability, revenue guidance substantially exceeding expectations, and additional AI-memory potential beyond already signed long-term agreements."
+    },
+    {
+      "evidenceId": "2",
+      "ja": "Q4を、予想を明確に上回る実績と見通し引き上げを伴う決算と評価。需給の一段の逼迫と、複数年にわたる収益力の強さを指摘した。",
+      "en": "JPMorgan characterized Q4 as a clear beat of expectations with a higher outlook, also pointing to tighter supply-demand and stronger earnings power over multiple years."
+    },
+    {
+      "evidenceId": "3",
+      "ja": "需給は2027-28年にかけてさらに逼迫すると予想し、下限価格を定めた契約の価値は株価に十分織り込まれていないとみる。",
+      "en": "RBC forecasts further supply-demand tightening in 2027-28 and believes the shares still give too little credit to agreements establishing minimum prices."
+    },
+    {
+      "evidenceId": "4",
+      "ja": "事業の強さは続いている。決算の上振れ幅が平常化する中でも、Micronの利益の持続性はなお過小評価されていると指摘した。",
+      "en": "Morgan Stanley sees ongoing business strength and says Micron's ability to sustain earnings remains undervalued, even as results beat expectations by more typical margins."
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+/* Only the watchlist shell header scrolls away on mobile, including its sample. */
+@media (max-width: 760px) {
+  .watchlist > div > header {
+    position: static;
+    top: auto;
+  }
+}

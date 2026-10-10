@@ -1,0 +1,15 @@
+.root{margin:4px 0 6px;color:var(--muted);font-size:.72rem}
+.heading{display:flex;align-items:center;justify-content:space-between;min-height:32px}
+.heading strong{font-weight:500}
+.heading button{border:0;background:none;color:var(--muted);font:inherit;min-width:44px;min-height:32px;padding:4px 0;text-align:right;cursor:pointer}
+.row{position:relative;display:flex;align-items:flex-start;gap:6px;min-width:0}
+.list{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:0;min-width:0;flex:1}
+.list li[hidden]{display:none}
+.chip{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;border:0;border-radius:18px;background:#14212b;color:#a5dfc7;font:inherit!important;line-height:1.2!important;padding:0 10px;height:36px;cursor:pointer}
+.chip:hover,.toggle:hover{background:#203b31}
+.toggle{flex:none;width:36px;height:36px;border:0;border-radius:50%;background:#14212b;color:#a5dfc7;font-size:11px;cursor:pointer}
+.measure{position:absolute;visibility:hidden;pointer-events:none;display:flex;gap:6px;height:0;overflow:hidden;max-width:100%;top:0;left:0}
+.measure .chip{flex:none}
+.empty{padding:6px 0}
+.root+div{padding-top:4px}
+.root+section{margin-top:12px}

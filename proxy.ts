@@ -1,0 +1,8 @@
+import { clerkMiddleware } from "@clerk/nextjs/server";
+import { NextResponse, type NextRequest, type NextFetchEvent } from "next/server";
+const identity = clerkMiddleware();
+export default function proxy(request: NextRequest, event: NextFetchEvent) {
+  if (!process.env.CLERK_SECRET_KEY || !process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) return NextResponse.next();
+  return identity(request, event);
+}
+export const config = { matcher: ["/resolute/:path*", "/api/resolute/:path*", "/research/:path*", "/api/research/member/:path*", "/api/research/favorites", "/api/research/articles/:path*", "/api/research/notifications", "/api/research/posts", "/api/research/compare", "/api/research/watch-earnings", "/api/research/author", "/api/research/weekly-author", "/api/research/editor-owner", "/api/research/questions/:path*"] };
