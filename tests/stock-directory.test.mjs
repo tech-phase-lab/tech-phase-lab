@@ -338,7 +338,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /米国株リサーチ/);
   assert.doesNotMatch(page, /銘柄を選ぶと株価と公式情報を表示します|SEARCH RESULTS/);
   assert.match(page, /useStockHistory/);
-  assert.match(page, /ほかの検索結果を見る/);
+  assert.match(page, /検索結果に戻る/);
   assert.match(page, /visibleResults/);
   assert.match(page, /marketTarget\.current\?\.scrollIntoView\(\{ behavior: "smooth", block: "start" \}\)/);
   assert.match(page, /銘柄情報を読み込み中/);

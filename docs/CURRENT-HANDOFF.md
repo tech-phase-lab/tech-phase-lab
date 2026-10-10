@@ -1137,3 +1137,9 @@ Claude向け: 設定画面は `/resolute/settings` を利用できる。計画�
 最終ローカル検証: Node 643/643、Python 2,368/2,368（191.788秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --cached --check成功。前回の保存APIコミット `f9967daa6323852dcd34d7371c3f4ffaab32ebd2` はGitHub Actions run 38055516418のsuccessとVercel deployment dpl_EjJMWxbxuYKdeyhz2uF6JgPMKMR3のREADYを確認済み。今回の画面の実ログイン/保存/再読込は未確認。
 
 統合後の再検証: 別担当のウォッチリストCSSコミット `66e0620967ca43e9086c5a8f2aafeae8ad6f8720` をそのまま含めた状態で、Node 643/643、Python 2,368/2,368（223.006秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、diff checkが成功。ChatGPT側からウォッチリストCSSの追加編集は行っていない。
+
+## 2026-10-11 ChatGPT — 銘柄検索から詳細・検索結果へ戻る操作
+
+公開画面で、検索語をAPHからVSに変えてVSTを開いてもURLがAPHのまま残り、ブラウザの戻るが検索結果を飛ばしてウォッチリストへ戻る問題を再現した。`stocks/stock-directory.tsx` の検索語をURLのqへ反映し、詳細選択をstockパラメータと履歴へ保存する。検索の入力は履歴を増やさず、詳細を開く操作で1段追加する。ブラウザの戻る/進むと「検索結果に戻る」に対応し、結果一覧へ戻る際は元のスクロール位置を復元する。戻った後の遅い詳細応答は破棄する。URLからの詳細再表示にも対応する。
+
+ニュース・目標株価、共通ヘッダー/メニュー、RESOLUTEは変更しない。株価接続や通知配信を開始する変更ではない。回帰テストは検索語のURL反映、詳細→戻る→進む、遅延応答、詳細URLからの復元を対象とする。スマートフォン実機の戻るジェスチャー・キーボード表示を含む確認は未実施であり、ブラウザ検証と区別する。

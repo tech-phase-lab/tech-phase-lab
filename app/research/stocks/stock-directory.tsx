@@ -17,6 +17,7 @@ import { MarketWorkspace } from "./market-workspace";
 import StockThemeDiscovery from "./stock-theme-discovery";
 import StockSearchHistory from "./stock-search-history";
 import { useStockHistory } from "./use-stock-history";
+import { stockSearchReturnPosition, stockSearchUrl } from "@/lib/research/stock-search-navigation";
 
 type SearchResponse = { ok: boolean; results?: StockDirectoryEntry[]; error?: string; source?: string; asOf?: string };
 type ProfileResponse = { ok: boolean; profile?: StockProfile; error?: string; profileSource?: string; asOf?: string };
@@ -53,6 +54,8 @@ function filingLabel(form: string, lang: "ja" | "en") {
 export default function StockDirectory() {
   const [lang, setLang] = useResearchLanguage();
   const searchParams = useSearchParams();
+  const routeQuery = searchParams.get("q") ?? "";
+  const routeSelection = searchParams.get("stock");
   const [query, setQuery] = useState(searchParams.get("q") ?? "");
   const { favorites, toggle: toggleFavorite, error: favoriteError, editable: favoriteEditable } = useStockFavorites();
   const { history, remember, clear: clearHistory, error: historyError } = useStockHistory();
@@ -71,6 +74,7 @@ export default function StockDirectory() {
   const profileRequest = useRef(0);
   const businessRequest = useRef(0);
   const marketTarget = useRef<HTMLDivElement>(null);
+  const resultsTarget = useRef<HTMLElement>(null);
   const marketTicker = profile?.ticker ?? directQuote?.ticker ?? null;
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
 
@@ -83,6 +87,42 @@ export default function StockDirectory() {
   }, [marketTicker, profileLoading, selectedResultKey]);
 
   const openThemeResult = useEffectEvent((entry: StockDirectoryEntry) => { void selectStock(entry); });
+
+  function changeQuery(value: string) {
+    setQuery(value);
+    window.history.replaceState(null, "", stockSearchUrl(value));
+  }
+
+  const restoreRoute = useEffectEvent(() => {
+    if (routeQuery !== query) { setQuery(routeQuery); return; }
+    if (routeSelection) {
+      const entry = results.find(item => `${item.ticker}:${item.cik}:${item.exchange}` === routeSelection);
+      if (entry && routeSelection !== selectedResultKey) void selectStock(entry, false);
+      return;
+    }
+    if (!selectedResultKey) return;
+    profileRequest.current += 1;
+    businessRequest.current += 1;
+    setSelectedResultKey(null);
+    setProfile(null);
+    setDirectQuote(null);
+    setProfileLoading(false);
+    setBrief(null);
+    setBriefStatus("idle");
+    setError(null);
+    requestAnimationFrame(() => {
+      const y = stockSearchReturnPosition(window.history.state, routeQuery);
+      if (y !== null) window.scrollTo({ top: y, behavior: "instant" });
+      else resultsTarget.current?.scrollIntoView({ block: "start" });
+    });
+  });
+
+  useEffect(() => { restoreRoute(); }, [routeQuery, routeSelection, results]);
+
+  function showSearchResults() {
+    if (stockSearchReturnPosition(window.history.state, query) !== null && routeSelection) window.history.back();
+    else window.history.replaceState(null, "", stockSearchUrl(query));
+  }
 
   useEffect(() => {
     const q = query.trim();
@@ -134,8 +174,14 @@ export default function StockDirectory() {
     return () => { window.clearTimeout(timer); controller.abort(); };
   }, [query]);
 
-  async function selectStock(entry: StockDirectoryEntry) {
-    setSelectedResultKey(`${entry.ticker}:${entry.cik}:${entry.exchange}`);
+  async function selectStock(entry: StockDirectoryEntry, navigate = true) {
+    const key = `${entry.ticker}:${entry.cik}:${entry.exchange}`;
+    if (navigate && key !== selectedResultKey) {
+      const state = { stockSearch: { query, y: window.scrollY } };
+      window.history.replaceState(state, "", stockSearchUrl(query));
+      window.history.pushState(state, "", stockSearchUrl(query, key));
+    }
+    setSelectedResultKey(key);
     const requestId = ++profileRequest.current;
     businessRequest.current += 1;
     setProfileLoading(true);
@@ -199,29 +245,29 @@ export default function StockDirectory() {
         <p>STOCK DISCOVERY</p>
         <h1><span className={polish.desktopTitle}>{t("米国株を、すぐ調べる。", "Find a U.S. stock in seconds.")}</span><span className={polish.mobileTitle}>{t("米国株リサーチ", "U.S. stock research")}</span></h1>
 
-        <label className={`${styles.search} ${polish.searchBox}`}><span aria-hidden="true">⌕</span><input autoComplete="off" inputMode="search" value={query} onChange={(event) => { themeSelection.current = null; setQuery(event.target.value); }} placeholder={t("例：NVDA、Micron、Palantir", "Try NVDA, Micron, or Palantir")} aria-label={t("米国株を検索", "Search U.S. stocks")} /></label>
+        <label className={`${styles.search} ${polish.searchBox}`}><span aria-hidden="true">⌕</span><input autoComplete="off" inputMode="search" value={query} onChange={(event) => { themeSelection.current = null; changeQuery(event.target.value); }} placeholder={t("例：NVDA、Micron、Palantir", "Try NVDA, Micron, or Palantir")} aria-label={t("米国株を検索", "Search U.S. stocks")} /></label>
 
       </section>
 
-      <StockSearchHistory lang={lang} history={history} onSelect={setQuery} onClear={clearHistory} />
+      <StockSearchHistory lang={lang} history={history} onSelect={changeQuery} onClear={clearHistory} />
 
-      {!query.trim() && !profile && <StockThemeDiscovery lang={lang} onSelect={ticker => { themeSelection.current = ticker; setQuery(ticker); }} />}
+      {!query.trim() && !profile && <StockThemeDiscovery lang={lang} onSelect={ticker => { themeSelection.current = ticker; changeQuery(ticker); }} />}
 
       {historyError && <p className={polish.resultHint} role="status">{t("このブラウザーで履歴を保存・消去できませんでした。", "Could not update history in this browser.")}</p>}
 
       {(query.trim() || errorMessage) && !directQuote && <div className={`${styles.layout} ${polish.resultLayout}`}>
-        <section className={`${styles.results} ${polish.searchResults}`} aria-labelledby="results-title" aria-busy={loading}>
+        <section ref={resultsTarget} className={`${styles.results} ${polish.searchResults}`} aria-labelledby="results-title" aria-busy={loading}>
           <div className={styles.sectionHeading}><h2 id="results-title">{t("検索結果", "Matches")}</h2><span aria-live="polite">{loading ? t("検索中…", "Searching…") : `${results.length}${t("件", " results")}`}</span></div>
           {errorMessage && <div className={styles.error} role="alert"><strong>{t("取得経路を確認中", "Source unavailable")}</strong><p>{errorMessage}</p></div>}
           {!error && query.trim() && !loading && results.length === 0 && <div className={styles.empty}><strong>{t("該当銘柄が見つかりません", "No matching ticker")}</strong><p>{t("英語の企業名またはティッカーで検索してください。SEC名簿は全銘柄を保証するものではありません。", "Try an English company name or ticker. The SEC does not guarantee complete coverage.")}</p></div>}
-          {selectedResultKey && results.length > 1 && <div className={polish.resultGuide}><button type="button" onClick={() => setSelectedResultKey(null)}>{t("ほかの検索結果を見る", "Show other matches")}</button></div>}
           <ol className={polish.compactResults}>{visibleResults.map((entry) => <li key={`${entry.ticker}:${entry.cik}:${entry.exchange}`}><button className={polish.resultButton} onClick={() => selectStock(entry)} aria-current={selectedResultKey === `${entry.ticker}:${entry.cik}:${entry.exchange}` ? "true" : undefined}><span className={styles.ticker}>{entry.ticker}</span><span className={styles.identity}><strong>{entry.name}</strong></span><span className={styles.exchange}>{exchangeLabel(entry.exchange)}{entry.tracked && <em>{t("監視中", "WATCHED")}</em>}</span><span className={polish.resultCta} aria-hidden="true">→</span></button></li>)}</ol>
           {asOf && <p className={styles.asOf}>{t("表示取得時刻", "Retrieved")}: <time dateTime={asOf}>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", dateStyle: "medium", timeStyle: "short" }).format(new Date(asOf))} JST</time></p>}
         </section>
 
       </div>}
 
-      {(profileLoading || profile || directQuote) && <div ref={marketTarget} className={polish.marketTarget}>
+      {(selectedResultKey || profileLoading || profile || directQuote) && <div ref={marketTarget} className={polish.marketTarget}>
+        {selectedResultKey && !directQuote && <div className={polish.resultGuide}><button type="button" onClick={showSearchResults}>{t("← 検索結果に戻る", "← Back to results")}</button></div>}
         {profileLoading && <div className={polish.profileLoading} role="status"><span className={styles.loader} /><strong>{t("銘柄情報を読み込み中…", "Loading company…")}</strong></div>}
         {directQuote && !profile && <MarketWorkspace key={`${directQuote.ticker}:${lang}`} {...directQuote} lang={lang} favorite={favorites.includes(directQuote.ticker)} favoriteEditable={favoriteEditable} onToggleFavorite={() => toggleFavorite(directQuote.ticker)} />}
         {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} favorite={favorites.includes(profile.ticker)} favoriteEditable={favoriteEditable} onToggleFavorite={() => toggleFavorite(profile.ticker)} />}
