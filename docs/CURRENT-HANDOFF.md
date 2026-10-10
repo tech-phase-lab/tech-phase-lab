@@ -899,3 +899,14 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - 権限DBスキーマ、決済Webhook、商品メール配信、RESOLUTE通知ジョブは引き続き未実装。税金計算20本通過もChatGPT未検証。バックアップ作成・復元は実確認済みだが、失敗通知を含む運用全体を完了扱いしない。
 
 - リポジトリ検証: lintはエラー0（既存警告2）、Node619/619、Python2368/2368、Next.js build、compileall、git diff --checkが成功。保持期間のテストは同日再実行と年をまたぐISO週を含む。秘密値をコミットしていない。
+
+
+## 2026-10-10 ChatGPT — RESOLUTEバックアップ失敗通知の接続確認
+
+- 運営者によるHealthchecks.ioログイン後、Railway登録の運営者メールと一致する宛先を確認。20:17 JSTの許可に基づき、メール連携のテスト送信を1回だけ実施し、管理画面の「Test notification sent!」「Delivered」を確認。受信箱への到着は運営者による確認待ち。追加の失敗メール・復旧メールは送っていない。
+- 新設監視は `RESOLUTE daily backup`（UTC `0 0 * * *`）と `RESOLUTE weekly restore`（UTC `0 0 * * 1`）、猶予30分。メールはこの2監視だけに割り当て、down only（失敗時だけ）で設定。実行漏れは猶予後、実行中の停止はstartから猶予後に検知する構成。実際の時間超過・失敗イベントでのメール発報は今回未実測。
+- 新設Railwayジョブ2つだけに `BACKUP_MONITOR_PING_URL` を設定。値・鍵・接続文字列は文書・チャットに記載しない。既存サービス・DB・変数・請求/プラン設定は変更していない。
+- 接続後の手動再実行: backup deployment `0a221376-c453-49e6-9c4b-65a8b8a56496` はSUCCESS、暗号化後2,286バイト（dump 2,086）、処理1.083秒・起動準備込み約25.1秒。restore deployment `35a2cd33-f9d9-43d8-a90d-82461baeae7e` はSUCCESS、処理1.919秒・起動準備込み約25.7秒。架空データ2件、チェックサム、復号、pg_restore、内容・主キーを確認。両ログの `monitor_ping_sent: true` とHealthchecks画面の受信・処理時間を確認。
+- 監視の追加費用は無料枠を使用し0ドル。現在の小容量でのバックアップ構成の追加月0.1〜0.5ドル見込みを維持。請求実績・本番データ量は未確認で、月3ドルを超える見込みの場合は相談する。
+- 未確認: 日次Cronの初回（10月11日09:00 JST）、週次Cronの初回（10月12日09:00 JST）、継続稼働、実障害・実行漏れでの発報、運営者の受信箱到着、復旧ファイルのパスワード管理/オフライン移行。Railwayアカウント喪失対策の暗号化バックアップ別保管も継続課題。これらまで完了したとは扱わない。
+- 今回のリポジトリ変更は既存文書2本の末尾追記のみ。既存本文のバイト列保持と `git diff --check` を確認。
