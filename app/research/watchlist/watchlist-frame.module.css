@@ -15,3 +15,7 @@
 .frame:has(input:focus,textarea:focus) .cue { visibility:hidden; }
 /* Clear the raised search orb, including its outer ring and safe area. */
 @media(max-width:760px) { .frame { --watchlist-nav-space:calc(128px + env(safe-area-inset-bottom)); } }
+/* Mobile browser chrome leaves less room. Keep the cue in installed app mode. */
+@media (max-width:760px) and (display-mode:browser) {
+  .cue { display:none; }
+}
