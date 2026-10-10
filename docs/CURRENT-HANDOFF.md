@@ -1071,3 +1071,26 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - 保護されたVercelプレビューの取得ツールは `deployment_authentication_required` / 401を返した。これはVercel保護段階での失敗であり、アプリの未ログイン401やDB読み取り結果とは扱わない。ローカルVercel CLI認証もない。保護設定は変更していない。
 - 残り: ステージ済み新規 `resolute-db-provision` の適用、実DBのスキーマ・reader role・ロールバック検証、Vercelのログイン済みセッションからの200確認。必要なブラウザ操作の範囲は新規ジョブ適用と対象プレビュー確認に限定する。既存サービス・DB・変数・請求・プランは対象外。
 - Claudeは前項の画面側契約で作業を進められる。接続完成の報告は上記3点の実測確認後に行う。秘密情報を受け渡す必要はない。
+
+
+## 2026-10-10 ChatGPT — DB適用完了と一回用ジョブの復旧
+
+- 新規 `resolute-db-provision` の専用ステージ変更だけをブラウザで適用した。初回は12:54:10 UTCに `RESOLUTE_PROVISION_OK`。専用DB `resolute` にschema/tableと `resolute_api_reader` を作成し、購入済み・通知期限切れ・利用権失効・別人・書込拒否・readerログインを実DBで確認した。架空ユーザーの検証行は同一トランザクションで全件ロールバックし、残存なしを確認した。実ユーザーへの購入権付与は行っていない。
+- 初回成功後、ChatGPT側のリソース上限/配置設定変更で同じ一回用ジョブを再実行させてしまった。12:54:48 UTCに既存tableを検出する重複適用ガードで停止し、CRASHEDとなった。DBの再作成・再適用は実行されず、API/DBのdeploymentはSUCCESSのまま。この停止が今回のクラッシュ通知の対象として確認できた。
+- 同ジョブを `scripts/resolute/verify-reader.mjs` から生成した読み取り専用確認コードへ置換した。再実行時もDDL・GRANT・パスワード変更・権限行の書込を行わず、readerとして接続しSELECTだけで状態を検証する。元の一回用適用スクリプトは明示的な初回適用専用のまま残す。
+- 修正deployment `bddc6fbc-1d40-4a4d-9550-72a78b610349` はSUCCESS、画面はCOMPLETED。13:01:20 UTCの `RESOLUTE_READER_VERIFIED` でreaderログイン・schema読取・書込権限なし・管理者権限なし・検証行残存なし、writes=0を実確認した。restartPolicyはNEVER、定期実行なし、HTTP公開なし。正常終了後の常駐処理はない。
+- 専用API `resolute-api` とPostgresは稼働中。DBは引き続き非公開。既存ニュース監視、他DB、既存変数、請求/プラン設定は変更していない。新規ジョブの専用変数名は `RESOLUTE_SETUP_DB_URL` と `RESOLUTE_READER_PASSWORD`（値は記録しない）。
+- Vercel経由のログイン済み200応答は未確認。ブラウザの対象previewアクセスは `ERR_BLOCKED_BY_CLIENT`、続く操作はブラウザURLポリシーで拒否された。迂回や保護設定の変更は行わない。これはAPI/DBの故障を示す結果ではないが、画面→Vercel→Railway→DBの通し検証の代わりにもならない。
+- 費用は承認済みのAPI追加月1〜3ドル（バックアップ込み1.1〜3.5ドル）の試算を据え置く。24〜48時間の正常認証/読込を含む使用量は未取得なので実測確定額とは扱わない。バックアップのschema適用後の取得/復元結果もまだ確認していない。
+
+### Claudeへ渡す接続説明（今回の確認結果）
+
+画面は同一originの `GET /api/resolute/entitlements` だけを呼んでください。Railway URL、DB情報、サービス間キーを画面へ渡す必要はありません。`use` と `alerts` を別々に読み、`canUseTools` と `canReceiveNotifications` で判定します。PROは購入権限を代替しません。401はログイン、429は待機、503は一時的な確認不能として表示し、未購入と混同しないでください。
+
+専用DBの適用と実DB検証は完了しました。Vercelログイン済みセッションでの200、計画保存API、決済Webhookによる付与/更新、商品メール送信は未確認または未実装です。画面契約に沿った制作は進められますが、これらを接続完成扱いにはしないでください。
+
+補足: 修正後の読み取り確認で専用APIはServerlessの `SLEEPING`、Postgresは `SUCCESS`。APIの睡眠は待機時の状態として設定したもので、今回のCRASHEDとは別。HTTP起動後の正常認証200と初回起動時間は未確認。ローカル検証はNode 634本成功、lint 0 errors（既存warnings 2件）、Next.js build/compileall/diff check成功。Python全テストの結果は完了確認後に記録する。
+
+追加実測: Serverlessの睡眠確認後、公開 `/healthz` へのGETは200、JSON `{"status":"ok"}`。クライアントからの所要時間10.407864秒（通信/起動を含む。API処理時間だけとは扱わない）。正常認証した権限APIの200の代わりにはならない。
+
+最終ローカル検証: Python 2,368本成功（206.217秒）、Node 634本成功、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。
