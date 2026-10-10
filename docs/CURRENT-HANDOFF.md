@@ -955,3 +955,86 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - ローカルのビルド済みNext.jsへHTTPリクエストを送って、設定不足時503＋private,no-store＋公開用エラーだけの応答を確認。Clerk実ユーザー・RailwayとのTCP/TLS接続・Vercelプレビューでの成功応答は未検証。PGliteの検証を実Railway DBの確認とは扱わない。テストで変化した既存SQLite fixtureと補助ファイルはコミットに含めない。
 - 実環境ではVercel本体からRailwayの非公開DNSへ直接接続できない。DBを公開する変更や既存サービス/変数の変更は今回していない。スキーマはRailwayへ未適用で、購入権限DBが稼働したとは扱わない。今後は専用APIをRailway内部に置く構成などを、認証方法・費用・既存設定に触れる範囲とともに具体化し、必要な承認後に接続する。
 - 次はClaudeの計画データ仕様との照合と保存API、実環境の接続方式。決済Webhook・実商品の通知配信・税金計算テスト20本の検証は引き続き未実施。
+
+
+## 2026-10-10 ChatGPT — 非公開DBへの専用API接続仕様（推奨案・費用承認前）
+
+### 構成と今回の状態
+
+ユーザーから、DBを非公開のままRailwayにRESOLUTE専用APIを置き、Vercelのサーバーから認証付きで呼ぶ案の検討と、実装前の費用・仕様提示を依頼された。本節はその実装前レビュー用の推奨仕様で、専用APIは未作成・未実装。画面側の既存契約は維持する。費用が発生する設定は承認後に行う。
+
+`画面/Claudeツール → Vercel /api/resolute/entitlements → HTTPS認証付きRailway resolute-api → 非公開Postgres resolute`
+
+- 新設 `resolute-api` を既存のradiant-magic/production内、RESOLUTE DBと同じリージョンに置く。既存Hobbyを維持し、新規契約・プラン変更はしない。軽量Node.js APIを1レプリカ、永続ボリュームなしで稼働させ、Next.js画面全体は移さない。
+- 外部へ公開するのは専用APIのHTTPS入口だけ。DBのTCP proxy・公開ドメインは追加しない。2026-10-10の読み取り確認でも専用Postgresの公開ドメイン/公開TCPは0件、既存deploymentはa81b42b9-8da3-4397-b3f1-8f5098531204で変更なし。
+- API→DBは同じRailway環境の内部DNS接続。VercelへDB接続文字列を置かない。先の直接DB読込APIは、承認後にVercel側の転送処理とRailway側のDB読込へ分離し、権限判定を共有する。
+
+### 追加費用の試算（実測ではない）
+
+- Railway公式料金はRAM10ドル/GB月、CPU20ドル/vCPU月、外向き通信0.05ドル/GB。Hobbyは既存契約を使用するので、新しいHobby基本料をもう1件追加しない。税込・為替換算はここでは含めない。
+- 小さいAPIの平均RAMを0.1〜0.2GB、平均CPUを0.005〜0.02vCPU、月の外向き通信を1GB以内と仮定すると、常時稼働でも約1.15〜2.45ドル/月。余裕を含めAPI追加分を月1〜3ドルと提示する。まだプロセスの実RAM/CPU・負荷を測っていないため保証額ではない。
+- バックアップの現行小容量見込み月0.1〜0.5ドルと合算すると約1.1〜3.5ドル/月。従来の月3ドルの目安を超える可能性があるため、API追加費用の承認前にサービスを作成しない。これは既存DBの仮予算月5〜15ドルや既存Tech Phase費用とは別の追加分。RESOLUTE商品通知のメール/データ料金も含めない。
+- Vercel側にもAPI呼出の実行時間・通信が増える。既存契約の使用量が未確認なので0円とは断定せず、実測時に別途確認する。今回この設定を追加していない。
+- 初期リソース制限案はRAM0.25GB/CPU0.25/1台。両方を常時上限まで使うとRAM+CPUだけで月約7.5ドルとなり、通信は別。制限は月3ドルの請求上限ではない。起動時にRAM不足の場合も勝手に増枠せず相談する。
+- 新設APIだけServerless候補。DBプールのアイドル接続を10秒程度で閉じ、定期DBポーリング/ウォームアップを入れない。睡眠は外向き通信やDB接続に左右されるため、節約を前提に予算を下げない。実負荷・起動遅延を確認してから設定する。既存DBとニュース監視のServerless設定は変更しない。
+- 運用開始後24〜48時間とテスト終了後に平均RAM/CPU/通信から月額を再計算し、バックアップ込み月3ドル超の見込みで相談する。既存workspaceの請求/停止上限設定は変更しない。
+
+### 認証と内部API
+
+- 第一段階は読み取りだけ。Railwayの固定ルート `GET /internal/v1/entitlements` をVercelから呼ぶ。userId/productIdをqueryやbodyで指定させない。APIは本人のClerkトークンsubjectと固定商品resolute_v1でDBを検索する。
+- Vercelは既存Clerk auth()でログインを確認し、サーバーで取得した短命セッショントークンを `Authorization: Bearer <session token>` として送る。同時にサーバー間専用の `X-Resolute-Service-Token` を付ける。ブラウザの任意ヘッダーをそのまま転送しない。秘密値はコード/チャット/ログへ出さない。
+- Railwayは専用トークンを定数時間比較し、次にClerk Backend SDKでJWTの署名、有効期限/開始時刻、固定issuer、許可した正確なorigin（azp）、セッション種別とsubのuser_ID形式を検証する。本人トークンだけ、専用トークンだけ、改ざん・期限切れ・別Clerk環境のトークンでは通さない。PRO/管理者/画面のフラグから購入権限を推測しない。
+- Clerk検証用には同じClerk環境の公開JWT鍵を専用APIへ設定し、Clerk管理用秘密キーをRailwayへ複製しない。鍵ローテーションは更新と検証を必要とし、更新前は許可しない。SDK検証に加えてissuer/azp/セッションclaimの欠落・不一致も明示的に拒否する。署名検証できないJWKS URLをリクエストから指定させない。
+- previewとproductionは固定の許可origin/issuerで分離し、*.vercel.appのような全体ワイルドカードを使わない。初期接続確認はcodex/research-previewの固定プレビューだけ。本番ドメインや鍵は確認・承認後に追加する。
+- 初期DB接続は専用の読み取りユーザー（例resolute_api_reader）とし、resolute.entitlementsへのSELECT以外を許可しない。既存postgres管理者のパスワードは変更しない。新設RESOLUTE DBへのスキーマ適用・専用ユーザー作成は明示的な移行作業で行い、通常のAPI起動やHTTPからDDLを実行しない。
+- 計画保存、決済付与、通知ジョブは別の操作契約/権限。今回の読み取りエンドポイントを管理APIや商品メール送信APIとして転用しない。CORSでブラウザ向けの許可は追加しないが、CORSを認証の代用にはしない。
+
+### 画面側の固定契約とエラー
+
+| 項目 | Claudeの画面/ツールが使う契約 |
+| --- | --- |
+| 入口 | 同一オリジン GET /api/resolute/entitlements。Railway URLは呼ばない |
+| 入力 | なし。既存Clerkログインだけを使用。userId/PRO/購入フラグは送らない |
+| 200 | 先のproductId/asOf/use/alerts/canUseTools/canReceiveNotificationsと同じJSON。形は変更しない |
+| 利用 | canUseToolsがtrueのとき。FREE/PROとは独立 |
+| 通知権限 | canReceiveNotificationsがtrueのとき。実配信は別途同意・停止・宛先確認等も必要 |
+| 401 | AUTH_REQUIRED。ログイン案内 |
+| 429 | RATE_LIMITED。Retry-Afterに従って再試行 |
+| 503 | ENTITLEMENT_UNAVAILABLE。確認できない旨と再読込を表示。未購入として購入へ誘導しない |
+| キャッシュ | 全応答Cache-Control: private, no-store。権限の共有キャッシュ/固定購入済みフラグを使わない |
+
+- Vercelの転送先は設定したHTTPS originと固定pathだけに限定。リクエストからURLを受け取らず、リダイレクトに認証ヘッダーを引き継がない。応答サイズとJSON形/固定商品IDを検証してから返す。DB情報や内部認証エラーの詳細をブラウザへ返さない。
+- 依存APIの401/403（サービス鍵/JWT拒否）、5xx、異常JSON、タイムアウトはVercelで503へ変換し、権限を許可しない。ブラウザ入口の未ログインだけは401。GETの一時的な502/503・通信失敗は1回だけ再試行、合計20秒以内を案とする。将来の書き込みAPIを同じ規則で自動再送しない。
+- APIは検証前の安価な認証拒否、同時実行制限、ユーザー単位のレート制限を用意する。外部から無制限の購入判定やDB接続を起こさせない。上限の具体値は負荷テストで確定し、Redis等の有料追加サービスは使わない。
+- 将来の計画保存APIでも、Railwayで本人・利用権・データ所有者・versionを毎回検証する。画面でボタンを隠すだけでは許可しない。計画の項目/通貨/精度はClaudeのデータ仕様を受けて決める。
+
+### 追加する環境変数名と変更範囲（値は記載しない）
+
+| 設定先 | 新規変数 |
+| --- | --- |
+| Vercelの対象previewだけ | RESOLUTE_API_URL、RESOLUTE_API_SERVICE_TOKEN |
+| 新設Railway resolute-api | ENTITLEMENT_DB_URL（読み取りユーザー）、RESOLUTE_API_SERVICE_TOKEN、RESOLUTE_CLERK_JWT_PUBLIC_KEY、RESOLUTE_CLERK_ISSUER、RESOLUTE_CLERK_AUTHORIZED_PARTIES、PORT |
+
+- 全変数はサーバー専用でNEXT_PUBLIC_を付けない。DB接続文字列はRailwayだけ。サービス間秘密鍵の2つの保管先はVercelと新設Railway APIの環境変数に限定する。
+- この構成にはVercelへの新規サーバー変数2つの追加が必要。既存変数の上書き/削除はしないが、「既存設定を一切変更しない」ままでは接続できないため、追加範囲を費用と一緒に事前確認する。既存Railwayサービス/変数・他DB・請求/プラン設定は変更しない。専用RESOLUTE DBだけにスキーマと読み取りユーザーを追加する範囲も確認する。
+
+### 承認後の実装・検証順
+
+1. 既存コードのDB読込をRailway専用APIに分離し、Vercel側は固定契約の転送処理に変更。ローカルで両段の認証、JSON、エラー、権限境界を検証し、AGENTS.mdの全チェックを通す。
+2. 費用と追加範囲の承認後に新設APIを作成し、RESOLUTE専用DBにスキーマ/読み取りユーザーを適用。移行前に暗号化バックアップを取得する。接続文字列や鍵はチャットへ出さない。
+3. 固定previewだけに新規変数を追加し、未ログイン・非購入・PROだけ・購入済み・通知期限切れ・失効・別人・障害・認証改ざんを実確認。架空ユーザーの権限行と実購入は区別する。
+4. RAM/CPU/通信/初回起動時間を測り、月額予測を報告。秘密非表示とDBの非公開を再確認し、Claudeへ到達できた入口と未確認項目を渡す。
+
+### Claudeへ渡す説明
+
+画面・ツールは同一オリジンのGET /api/resolute/entitlementsだけを呼んでください。応答JSONは前の仕様から変えません。use/alertsを別々に読み、canUseToolsでツール利用、canReceiveNotificationsで通知権限を表示してください。PROによる迂回はありません。401はログイン、503は一時的に権限を確認できない表示にし、未購入と区別してください。RailwayのURL・DB情報・サービス間秘密鍵を画面コードへ埋め込む必要はありません。計画保存のエンドポイントはデータ項目を照合してから別途共有します。現時点では専用APIは未作成、実DB接続は未確認で、実環境で200が返る完成状態とは扱わないでください。
+
+### 確認資料
+
+- Railway料金: https://docs.railway.com/pricing/plans
+- 算定式: https://docs.railway.com/guides/right-size-cpu-memory
+- 非公開通信: https://docs.railway.com/networking/private-networking
+- Serverlessの睡眠条件/初回502: https://docs.railway.com/deployments/serverless
+- Clerk JWT検証: https://clerk.com/docs/reference/backend/verify-token と https://clerk.com/docs/guides/sessions/session-tokens
+
+今回の変更は文書末尾への追記だけ。既存本文のバイト保持、git diff --check、Git Dataとlocal treeの一致を確認して公開する。
