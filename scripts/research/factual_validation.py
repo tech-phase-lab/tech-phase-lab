@@ -572,7 +572,8 @@ DIRECTION_METRICS = (
 CLAUSE_BOUNDARY = (r'[.;!?。；！？\n、,]|\b(?:while|whereas|but|and|as|although|though|despite|after)\b'
                    r'|一方|ものの|にもかかわらず')
 
-NEGATION_EN = (r"\b(?:not(?!\s+only)|never|no\s+longer|cannot|fails?\s+to|failed\s+to|unable\s+to|den(?:y|ies|ied)"
+# "not only/just/merely/simply X" adds to X; it does not deny it.
+NEGATION_EN = (r"\b(?:not(?!\s+(?:only|just|merely|simply)\b)|never|no\s+longer|cannot|fails?\s+to|failed\s+to|unable\s+to|den(?:y|ies|ied)"
                r"|no\s+(?:plans?|intention|change|deal|agreement|evidence|decision))\b|n['’]t\b")
 NEGATION_EN_BROAD = NEGATION_EN + (r"|\b(?:no|none|nor|without|delay(?:s|ed)?|postpone(?:s|d)?|halt(?:s|ed)?"
                                    r"|suspend(?:s|ed)?|cancel(?:s|ed|led)?|withdr[ae]w\w*|scrap(?:s|ped)?|shelve[sd]?"
