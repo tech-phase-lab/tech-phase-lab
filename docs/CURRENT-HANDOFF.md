@@ -1120,3 +1120,20 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 補足: 専用設定画面は今回未作成。既存ホーム/メニュー/言語切替の変更はしていない。保存APIの実装と、画面への組み込み完了は区別する。前回コミットのVercelプレビューは deployment dpl_AnmBinP71zvQqJDgya5tzJa4H7Vu / READY を確認したが、正常認証した権限API応答の検証ではない。
 
 検証結果: Node 639/639、Python 2,368/2,368（210.544秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。実ユーザーのClerk読書きと設定画面の通し検証は未実施。
+
+
+## 2026-10-10 ChatGPT — RESOLUTEの言語・タイムゾーン設定画面
+
+言語・タイムゾーンを本人が保存する専用画面 `/resolute/settings` を追加した。日英共通パスで、表示言語の切替と保存するlocaleの選択を分ける。未設定のlocale/timezoneは空欄にし、自動保存しない。「端末のタイムゾーンを使う」は入力候補の設定だけで、保存ボタンを押すまで永続化しない。
+
+通信は既存の同一origin `GET/PUT /api/resolute/preferences` の契約をそのまま使用する。読込・保存中と認証確認中は保存を止める。アカウントのセッションが変わった場合は入力をリセットして再読込する。ClerkProviderを専用ページ内に置き、既存のresearchレイアウトやホーム・メニューは変更しない。未ログインは既存の `/research/account` へ案内する。取得失敗と未設定を分け、保存失敗時は入力を残す。応答の設定値が送信値と一致しない場合は保存成功と表示せず、書込の自動再試行もしない。
+
+ブラウザにはRailway URL・DB接続情報・サービス間キーを渡さない。ブラウザ用の純粋な入力検証を `preferences-data.ts` に分け、サーバー側のHTTP処理を読み込まない。購入・PRO・通知利用権の契約は変更せず、設定保存だけではメール配信や通知利用権を開始しない。新しいサービス、環境変数、契約は追加していない。
+
+Claude向け: 設定画面は `/resolute/settings` を利用できる。計画ツール側に設定保存処理を重複実装する必要はない。設定APIと権限APIは引き続き別であり、計画ツールは `use`、通知は `use` と有効な `alerts` の両方を確認する。計画データの型・JSON例を受け取るまで本番DBの計画テーブルや書込roleは作成しない。
+
+確認の範囲: ローカルの通信テストでは同一originのGET/PUT、応答不整合、認証/入力/通信障害、失敗時の自動再試行なしを確認する。実際の画面表示・スマートフォン操作・ログインした実ユーザーでの保存/再読込は未検証。前回のブラウザアクセスがポリシーでブロックされたため、別URL等で回避していない。VercelのREADYとGitHub Actionsの成功だけで、この通し検証を完了扱いにしない。今回、実ユーザーのmetadata変更とテストメール送信は行っていない。
+
+最終ローカル検証: Node 643/643、Python 2,368/2,368（191.788秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --cached --check成功。前回の保存APIコミット `f9967daa6323852dcd34d7371c3f4ffaab32ebd2` はGitHub Actions run 38055516418のsuccessとVercel deployment dpl_EjJMWxbxuYKdeyhz2uF6JgPMKMR3のREADYを確認済み。今回の画面の実ログイン/保存/再読込は未確認。
+
+統合後の再検証: 別担当のウォッチリストCSSコミット `66e0620967ca43e9086c5a8f2aafeae8ad6f8720` をそのまま含めた状態で、Node 643/643、Python 2,368/2,368（223.006秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、diff checkが成功。ChatGPT側からウォッチリストCSSの追加編集は行っていない。
