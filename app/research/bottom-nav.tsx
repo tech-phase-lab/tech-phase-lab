@@ -13,6 +13,18 @@ function subscribe(notify: () => void) {
 const getHash = () => window.location.hash;
 const serverHash = () => "";
 
+// Browser tab vs. home-screen app. Both checks: the display-mode media query
+// and iOS Safari's navigator.standalone. Only a plain browser gets the dock;
+// the installed app keeps the floating bar exactly as it is (owner, Oct 10).
+const STANDALONE = "(display-mode: standalone)";
+function subscribeMode(notify: () => void) {
+  const query = window.matchMedia(STANDALONE);
+  query.addEventListener("change", notify);
+  return () => query.removeEventListener("change", notify);
+}
+const isBrowser = () => !(window.matchMedia(STANDALONE).matches || (navigator as Navigator & { standalone?: boolean }).standalone === true);
+const serverBrowser = () => false;
+
 const icons = {
   home: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" /></svg>,
   alerts: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4" /></svg>,
@@ -22,10 +34,12 @@ const icons = {
 };
 
 /** Floating five-item bar (owner's final design): glow slides to the current
- * item, search is a raised orb, 速報 shows a blinking dot for unread news. */
+ * item, search is a raised orb, 速報 shows a blinking dot for unread news.
+ * In a plain browser tab it docks to the bottom edge instead (see .browser). */
 export default function BottomNav() {
   const pathname = usePathname();
   const hash = useSyncExternalStore(subscribe, getHash, serverHash);
+  const browser = useSyncExternalStore(subscribeMode, isBrowser, serverBrowser);
   const [lang] = useResearchLanguage();
   const ja = lang === "ja";
   const bar = useRef<HTMLElement>(null);
@@ -59,7 +73,7 @@ export default function BottomNav() {
     window.dispatchEvent(new HashChangeEvent("hashchange"));
     window.scrollTo({ top: 0, behavior: "instant" });
   }
-  return <div className={styles.dock}>
+  return <>{browser && <div className={styles.spacer} aria-hidden="true" />}<div className={browser ? `${styles.dock} ${styles.browser}` : styles.dock}>
     <nav ref={bar} className={styles.bar} aria-label={ja ? "メインメニュー" : "Main navigation"}>
       <span className={styles.glow} aria-hidden="true" style={glow ? { transform: `translateX(${glow.x}px)`, width: glow.w } : { opacity: 0 }} />
       {tabs.map(tab => <Link key={tab.key} data-tab="" href={tab.href} className={tab.key === "search" ? styles.mid : undefined}
@@ -69,5 +83,5 @@ export default function BottomNav() {
         {tab.key === "alerts" && unread && <span className={styles.live} role="status" aria-label={ja ? "新着あり" : "New alerts"} />}
       </Link>)}
     </nav>
-  </div>;
+  </div></>;
 }
