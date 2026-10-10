@@ -881,3 +881,21 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - Railwayは既存契約内へ追加する方針。作成前に実際の追加費用の見込みを確認し、本チャットへ報告・承認後に作成する。今回DB・サービス・契約・設定は変更していない。
 - 権限DB、決済Webhook、メール配信、新商品用ジョブは未実装。税金計算20本通過はClaude報告で、ChatGPTでは未検証。今回アプリコード・ニュース・目標株価・ホーム・メニューは変更していない。
 - 検証: 既存本文のバイト列保持と文書2本のみの追加差分を確認。`git diff --check`を実施。実装テストは今回の文書追記の検証ではない。
+
+
+## 2026-10-10 ChatGPT — RESOLUTE Hobbyバックアップと復元確認
+
+- Railway Proへの変更は保留。既存Hobby内の追加費用は月3ドルを目安にし、超える見込みで相談する。検証用ニュース監視を除く月約7ドル＋通信料は仮見込みで、RESOLUTE通知処理は未算入。本番が20ドル超になるとは未判断。
+- RESOLUTE専用Postgres（サービス表示名 `Postgres`、DB名 `resolute`）のみを対象に、新規 `resolute-backup` と `resolute-restore-check`、非公開Bucket `resolute-backups` を追加。既存サービス・他DB・既存変数・請求/プラン設定は変更していない。
+- 日次 `0 0 * * *`（日本時間09:00）、週次 `0 0 * * 1`（月曜09:00）を設定。週次は保存完了済みの最新バックアップを復元するため、同時刻の日次完了前には前回分を対象にする場合がある。Cron時刻による初回実行と継続稼働は今後の確認事項。
+- PostgreSQL 18の `pg_dump -Fc --no-owner --no-acl` で論理バックアップ。ageで保存前に公開鍵暗号化し、Bucketへ保存後に読み戻してSHA-256を照合。日次7日分＋ISO週ごとの最新4回分を保持。同日の再実行で日数を減らさない。
+- 復元ジョブは本番接続変数を持たず、独立した一時Postgresクラスタ（Unixソケットのみ、永続ボリュームなし）へ復元。新設したテスト専用スキーマ `resolute_backup_probe` の架空データ2件を含むバックアップを取得・復号し、チェックサム、pg_restore成功、内容・件数・主キーの復元を確認。本番DBは上書きしていない。
+- 初回手動バックアップ: 暗号化後2,286バイト（dump 2,086バイト）、処理2.240秒、起動・準備を含む約25.4秒。初回復元: 処理2.597秒、起動・準備を含む約24.4秒。スケジュール設定後の手動再実行もバックアップ1.120秒・復元1.832秒で成功。将来の実データ・アプリ全体復旧を検証した結果ではない。
+- 新規ジョブは上限RAM0.5GB/CPU0.5、再起動NEVER、15分の実行上限。現在の小容量なら追加月0.1〜0.5ドルの保守的な見込み。暗号化後1GB級では月約2〜3ドルが目安。1GiB超はアップロード前に失敗扱いとして費用見直しを要求する。容量しきい値は請求上限ではない。請求額と継続運用の実測は未確認。
+- 新規ジョブの主な変数: `RESOLUTE_JOB_B64`（本書と同じコミットのscripts/resolute/backup.pyをbase64化）、`RESOLUTE_BACKUP_MODE`、`BACKUP_BUCKET`、`BACKUP_ENDPOINT`、`BACKUP_REGION`、`BACKUP_ACCESS_KEY_ID`、`BACKUP_SECRET_ACCESS_KEY`。バックアップ側だけに `PGHOST/PGPORT/PGUSER/PGPASSWORD/PGDATABASE` と `BACKUP_AGE_RECIPIENT`、復元側だけに `BACKUP_AGE_IDENTITY` を設定。値・接続文字列・鍵は記載しない。
+- 復号鍵は復元用Railway変数と、Railway外の本人用非共有復旧ファイルへ保存。復旧ファイルを運営者のパスワード管理・オフライン保管へ移すことは別途確認する。
+- 失敗通知: Healthchecks.ioの無料枠を候補とし、任意の `BACKUP_MONITOR_PING_URL` をコード側で準備。送信先とテスト送信の承認前なので変数は未設定・外部通知未送信。起動漏れの検知と通知到達は未確認。現在はRailwayの成功/失敗ログだけを記録する。
+- 今後の課題: DBとBucketが同じRailwayアカウント内なので、アカウントにアクセスできない場合に備える暗号化バックアップの別保管を設計する。今回その別保管先は未作成。
+- 権限DBスキーマ、決済Webhook、商品メール配信、RESOLUTE通知ジョブは引き続き未実装。税金計算20本通過もChatGPT未検証。バックアップ作成・復元は実確認済みだが、失敗通知を含む運用全体を完了扱いしない。
+
+- リポジトリ検証: lintはエラー0（既存警告2）、Node619/619、Python2368/2368、Next.js build、compileall、git diff --checkが成功。保持期間のテストは同日再実行と年をまたぐISO週を含む。秘密値をコミットしていない。
