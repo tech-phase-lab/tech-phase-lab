@@ -1094,3 +1094,29 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 追加実測: Serverlessの睡眠確認後、公開 `/healthz` へのGETは200、JSON `{"status":"ok"}`。クライアントからの所要時間10.407864秒（通信/起動を含む。API処理時間だけとは扱わない）。正常認証した権限APIの200の代わりにはならない。
 
 最終ローカル検証: Python 2,368本成功（206.217秒）、Node 634本成功、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。
+
+
+## 2026-10-10 ChatGPT — 言語・タイムゾーン保存API
+
+前回のDB復旧コミット `82a35b2330c3a23a66a7172cac8437596eb782da` のGitHub Actions（run 38054385093）はcompleted/successを確認した。以下は会員設定のAPI実装であり、商品メール送信や画面からの実環境検証の完了ではない。
+
+### Claudeが画面に接続する契約
+
+- 入口は同一originの `GET /api/resolute/preferences` と `PUT /api/resolute/preferences`。既存Clerkセッションで本人を識別する。userId・PROフラグ・購入権限をリクエストで渡さない。
+- 保存先は既存合意どおりClerkのpublicMetadataの `locale` と `timezone` だけ。Clerk BackendのupdateUserMetadataで部分更新し、他のpublicMetadata、privateMetadata、unsafeMetadataを上書きしない。設定変更で購入権限やメール配信同意を付与しない。
+- GETの200例: `{"locale":"ja","timezone":"Asia/Tokyo","configured":true}`。両方未設定/不正の例: `{"locale":null,"timezone":null,"configured":false}`。片方だけ有効なら有効な項目は返し、不正/未設定の項目はnull。メール、他metadata、userIdは返さない。
+- PUTは `Content-Type: application/json`、同一originで `{"locale":"en","timezone":"America/New_York"}` の2項目を必ず送る。正常保存後はGETと同じ形を返す。ja/en以外、UTC/IANAタイムゾーン以外、余分なキー、null、配列、不正JSONは拒否する。IANAの別名は実行環境のIntlによる正規名へ統一する。UTCも受け付ける。UTCオフセットだけの文字列は受け付けない。
+- GET/PUTの401はログイン案内。PUTの400は入力確認、403はorigin不一致、413は本文1,024 bytes超、415はJSON以外。Clerk/認証障害・保存結果確認不能は503 `PREFERENCES_UNAVAILABLE`。全GET/PUT応答はprivate/no-store。他人の設定や秘密情報を含むエラーは返さない。
+- 未設定時に日本語/日本時間を通知用の保存値として勝手に選ばない。画面で候補を提示し、本人が保存してconfigured=trueを確認してから通知ジョブとの接続を進める。現時点で通知ジョブはこのAPIへ接続していない。
+- 設定は無料/PRO/RESOLUTE未購入でも本人なら読み書きできる一般的な会員設定。商品利用や通知利用の判定は別の `/api/resolute/entitlements` を使い続ける。
+- 設定画面本体への組み込み、Clerk実ユーザーへの保存/再読込、日英画面とメールへの反映は未検証。今回、実ユーザーのmetadata変更やテストメール送信はしていない。新たなサービス・変数・有料契約は不要。既存契約のAPI使用量は増えるため、追加費用ゼロの保証ではない。
+
+### 計画保存APIの着手に必要なClaude素材
+
+計画保存は同じ非公開RESOLUTE Postgres内の別テーブルを予定する。次にClaudeから計画データのTypeScript型またはJSON例（ルール、各ラインの意味、保有理由、銘柄識別子、通貨、数量/金額/価格の精度、入力の上限）を受け取り、保存APIの検証項目と照合する。一人の計画数、編集/削除、保存期間の条件も記載してほしい。まだ項目を推測したテーブルや書込roleを本番DBに作らない。本人認証・有効なuse・所有者確認・versionによる更新競合検知は必須とし、通知利用権の期限切れだけで計画の閲覧/編集を止めない。
+
+公式確認資料: https://clerk.com/docs/reference/backend/user/update-user-metadata （publicMetadataの部分更新/深いマージ）。
+
+補足: 専用設定画面は今回未作成。既存ホーム/メニュー/言語切替の変更はしていない。保存APIの実装と、画面への組み込み完了は区別する。前回コミットのVercelプレビューは deployment dpl_AnmBinP71zvQqJDgya5tzJa4H7Vu / READY を確認したが、正常認証した権限API応答の検証ではない。
+
+検証結果: Node 639/639、Python 2,368/2,368（210.544秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。実ユーザーのClerk読書きと設定画面の通し検証は未実施。
