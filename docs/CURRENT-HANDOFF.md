@@ -941,3 +941,17 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - 計画データは専用Postgres内の権限とは別テーブルに保存する案。ルール・ライン・保有理由をClerk userIdに紐付け、更新競合を検知するversionを持たせる。通貨・数値精度・入力制限・削除/保存期間はClaudeの計画ツール仕様を受けて確定する。
 - 初回通知期間の購入日起算、翌年同日までの年単位計算（うるう日を含む）、期限前更新時の延長開始日は詳細合意前。API例でこの商用ルールを確定したとは扱わない。返金なし方針の販売条件と例外時の失効処理も別途確認する。
 - 実装順は権限スキーマ/読み取りAPI、計画保存APIとClaudeツール接続、決済・専用通知ジョブの接続、日英の一連の動作検証。次の実装で会員データ構造や共通認証を変更する場合は最新ブランチを確認し、この案と照合する。
+
+
+## 2026-10-10 ChatGPT — 権限スキーマと本人用読み取りAPIの実装
+
+- 実装追加: `db/resolute/001_entitlements.sql`、`lib/resolute/{entitlements,database-config,server}.ts`、`app/api/resolute/entitlements/route.ts`。`GET /api/resolute/entitlements` は先のJSON案どおり利用権/通知利用権と能力フラグを返す。ユーザーIDはClerkの検証済みセッションだけから取得し、ブラウザのuserId/PRO/管理者主張は使わない。
+- `proxy.ts` は既存matcherを保持して `/resolute/:path*` と `/api/resolute/:path*` を追加。既存FREE/PRO判定は変更しない。今回RESOLUTE画面本体・Claudeツール・ニュース・目標株価・ホーム・メニューは変更していない。
+- スキーマは専用DB名 `resolute` 以外でトランザクションを中止する。新規 `resolute.entitlements` の主キーはClerk userId＋商品ID＋kind。商品IDは `resolute_v1`、kindはuse/alerts、UTCのtimestamptz、明示的なrevoked_atを使用。useは期限なし、alertsは有限で開始より後の期限を必須とする。HTTPからスキーマ作成・購入権限付与はしない。
+- このテーブルは現在の権限状態で、決済台帳ではない。1決済からuse/alertsの両方を付与するため、同じpayment_event_idに対する単独UNIQUEをこの表には置かない。注文/支払い/イベント台帳と二重処理防止はWebhook実装時に別途追加し、同一トランザクションで権限を更新する。初回1年/更新起算点の詳細計算と権限書き込みは未実装。
+- DB読込はパラメータ化SQLで本人・固定商品だけを取得し、同一SQLのstatement_timestampを判定時刻にする。PRO・プレビューは受け付けない。未購入は200かつmissing/false、未ログイン401 AUTH_REQUIRED、認証/DB障害は503 ENTITLEMENT_UNAVAILABLE。全応答private,no-storeで、例外や接続文字列を返さない。不正な権限レコードも503になり許可しない。
+- 新規依存はpg（本番DBクライアント）、@types/pg（型）、@electric-sql/pglite（開発テスト専用）。ENTITLEMENT_DB_URLだけを読む。他のDATABASE_URLやニュースDBへフォールバックしない。接続プールは上限2、接続3秒・SQL3秒・問い合わせ4秒。外部ホストは証明書検証を必須とし、sslmode=require/disable等の弱いURL設定は拒否。非公開postgres.railway.internalのみRailway内部接続として扱う。
+- 検証: Node628/628（RESOLUTE追加9テストを含む）、Python2368/2368、lintエラー0/既存警告2、Next.js build/型チェック、compileall、git diff --checkが成功。隔離PGliteのPostgreSQLエンジンでスキーマ実行、他DBでの中止、制約、購入者/非購入者/別ユーザー、失効を確認。期限の開始直前・開始時刻・終了直前・終了同時刻、重複/不正レコード、PROだけでは不可、認証/DBエラーと秘密非開示も検証。
+- ローカルのビルド済みNext.jsへHTTPリクエストを送って、設定不足時503＋private,no-store＋公開用エラーだけの応答を確認。Clerk実ユーザー・RailwayとのTCP/TLS接続・Vercelプレビューでの成功応答は未検証。PGliteの検証を実Railway DBの確認とは扱わない。テストで変化した既存SQLite fixtureと補助ファイルはコミットに含めない。
+- 実環境ではVercel本体からRailwayの非公開DNSへ直接接続できない。DBを公開する変更や既存サービス/変数の変更は今回していない。スキーマはRailwayへ未適用で、購入権限DBが稼働したとは扱わない。今後は専用APIをRailway内部に置く構成などを、認証方法・費用・既存設定に触れる範囲とともに具体化し、必要な承認後に接続する。
+- 次はClaudeの計画データ仕様との照合と保存API、実環境の接続方式。決済Webhook・実商品の通知配信・税金計算テスト20本の検証は引き続き未実施。
