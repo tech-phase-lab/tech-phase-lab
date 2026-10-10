@@ -47,7 +47,8 @@ test('dates stay the real release date and late finds are never NEW',async()=>{
   const { clockTime, lateDetection, NEWS_MAX_AGE_MS }=await import('../lib/research/news-time.ts');
   // A date-only release seen the next U.S. day keeps its own date, not the fetch time.
   assert.deepEqual(clockTime('2026-10-06','date','2026-10-07T13:00:00Z'),{at:'2026-10-06',kind:'date'});
-  assert.deepEqual(clockTime('2026-10-06','date','2026-10-06T13:00:00Z'),{at:'2026-10-06T13:00:00Z',kind:'observed'});
+  // Same U.S. day too: the time it was found is never shown as its time.
+  assert.deepEqual(clockTime('2026-10-06','date','2026-10-06T13:00:00Z'),{at:'2026-10-06',kind:'date'});
   assert.equal(lateDetection('2026-10-08T12:00:00Z','2026-10-08T12:20:00Z'),false);
   assert.equal(lateDetection('2026-10-08T12:00:00Z','2026-10-08T12:45:00Z'),true);
   assert.equal(lateDetection('2026-10-08T12:00:00Z'),false);

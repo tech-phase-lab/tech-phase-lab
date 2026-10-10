@@ -8,6 +8,7 @@ import ts from 'typescript';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { additionalNewsDetail } from '../lib/research/news-detail.ts';
+import { officialTime } from '../lib/research/news-time.ts';
 import { marketNewsBody, marketNewsDisplay } from '../lib/research/market-news-display.ts';
 import { informativeOfficial, officialNewsDisplay } from '../lib/research/news-presentation.ts';
 import { resultFactText, resultNewsUpdate, mergeResultNews } from '../lib/research/result-news.ts';
@@ -365,8 +366,10 @@ return {pages,current,visibleUpdates,visibleNews}; }`)).toString('base64'));
     visited.push(...current.visibleUpdates.map(row=>row.item.id));
     if(current.visibleUpdates.some(row=>row.item.id===snapshots.olderId)) restoredPage=page;
   }
-  assert.ok(restoredPage>4);
-  assert.deepEqual(visited,after.officialUpdates.map(item=>item.id));
+  // Items with no source time are not listed (owner, Oct 10); the rest page as before.
+  const listed=after.officialUpdates.filter(item=>officialTime(item).kind!=='observed').map(item=>item.id);
+  if(listed.includes(snapshots.olderId)) assert.ok(restoredPage>4);
+  assert.deepEqual(visited,listed);
   // Replay subsequent withdrawal/hold through the normal client parser and
   // the actual remount seed-selection helper: the old body never resurfaces.
   const helpers=panel.slice(panel.indexOf('let snapshot:'),panel.indexOf('export default function'));

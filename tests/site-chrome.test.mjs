@@ -134,6 +134,11 @@ test("phone menu follows the finger and closes when pulled down", () => {
   assert.match(menu, /if \(offset > 90\) \{ place\(window\.innerHeight, true\); window\.setTimeout\(onClose, 180\); \}/);
 });
 
+test("news list leaves out items with no source time", () => {
+  const panel = read("app/research/news/general-news-panel.tsx");
+  assert.match(panel, /informativeOfficial\(item\) && officialTime\(item\)\.kind !== "observed"/);
+});
+
 test("news list sorts by the time each card shows, newest first", () => {
   const panel = read("app/research/news/general-news-panel.tsx");
   assert.match(panel, /shown = clockTime\(time\.at, time\.kind, item\.observedAt\);/);
