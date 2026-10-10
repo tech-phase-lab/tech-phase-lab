@@ -338,3 +338,14 @@ CREATE TABLE entitlements (
 現在は実装済みですが、DB適用とVercel経由のログイン済み200応答は未確認です。実環境の接続完成扱いは、その確認結果が追記されるまで保留してください。計画データの保存API・決済付与・商品通知は本変更の対象に含まず、これから別途実装します。
 
 検証: Node 631本 / Python 2,368本成功、lint 0 errors（既存warnings 2件）、Next.js build成功、compileall成功。今回の変更範囲はRESOLUTE専用コードとdocsのみ。
+
+
+## 2026-10-10 ChatGPT — API配置後の確認結果
+
+- 実装コミット: `01bfd4708c39f8ddf7edb1c33d4da9f39e3d5d11`。Railwayの `resolute-api` はこのコミットに固定し、以降のdocs追記だけでは再デプロイしない。
+- Railway deployment `1aadf9a4-a979-43c5-8adc-10f38b43b35d` はSUCCESS。`/healthz` の200、認証なし401、不正JWT（正しいサービスキーあり）401、userIdクエリ指定404、POST 405を公開HTTPSで実測確認した。すべて `Cache-Control: private, no-store`。この検証はDB接続の証明ではない。
+- 起動直後のメモリ使用量: 0.042770432 GB（約43MB）。1時間平均には起動前のゼロが含まれるので、その平均値で月額を過小計算しない。実DB・Clerkの正常認証・本番負荷はまだ含まない。承認済み月1〜3ドル（バックアップ込み1.1〜3.5ドル）の試算は据え置き、接続完了後24〜48時間の使用量から見直す。
+- Vercel preview deployment `dpl_9fJBPF5X889oViCwMHPwAd2JYTRg` は同じ実装コミットでREADY。接続変数はこのpreviewへ反映対象として作成済み。
+- 保護されたVercelプレビューの取得ツールは `deployment_authentication_required` / 401を返した。これはVercel保護段階での失敗であり、アプリの未ログイン401やDB読み取り結果とは扱わない。ローカルVercel CLI認証もない。保護設定は変更していない。
+- 残り: ステージ済み新規 `resolute-db-provision` の適用、実DBのスキーマ・reader role・ロールバック検証、Vercelのログイン済みセッションからの200確認。必要なブラウザ操作の範囲は新規ジョブ適用と対象プレビュー確認に限定する。既存サービス・DB・変数・請求・プランは対象外。
+- Claudeは前項の画面側契約で作業を進められる。接続完成の報告は上記3点の実測確認後に行う。秘密情報を受け渡す必要はない。
