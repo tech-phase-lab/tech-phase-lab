@@ -61,3 +61,11 @@
 
 /* Move the whole trend column through the grid, preserving the quote gap. */
 .columns>span:nth-child(2) { transform:translateX(6px); }
+
+.marketBar { flex-wrap:wrap; }
+.quoteStatus { position:absolute;top:0;left:0;max-width:calc(100% - 58px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:9px;line-height:14px;color:#829f97; }
+.quoteStatus[data-stale=true] { color:#c7b180; }
+.price { line-height:1.15; }
+.quoteTime { display:block;margin-top:3px;color:#8eaaa0;font-size:9px;font-weight:400;letter-spacing:0; }
+.staleNote { margin:0 0 10px;color:#c7b180;font-size:11px; }
+@media(max-width:760px) { .quoteStatus { font-size:8px;max-width:calc(100% - 48px); }.quoteTime { font-size:8px; } }

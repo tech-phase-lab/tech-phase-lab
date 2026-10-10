@@ -145,3 +145,9 @@
 
 /* Keep four-digit prices readable without squeezing the chart against them. */
 @media(max-width:760px) { .price[data-wide=true] { font-size:20px; } }
+
+.trendHeading small[data-stale=true] { color:#c7b180; }
+
+.trendHeading small { min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.trendHeading strong { flex-shrink:0; }
+.price { line-height:1.15; }
