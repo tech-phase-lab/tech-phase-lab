@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useFavoriteLists } from "./use-favorite-lists";
-import { watchlistSlots, sortFavorites, type FavoriteQuote } from "@/lib/research/favorite-lists";
+import { watchlistSlots, sortFavorites, addFavoriteToList, favoriteListLimit, type FavoriteQuote } from "@/lib/research/favorite-lists";
 import { useResearchLanguage } from "../use-research-language";
 import WatchlistFrame from "./watchlist-frame";
 import ResearchToolShell from "../research-tool-shell";
@@ -51,9 +51,16 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const fetchedSectors = useWatchlistSectors(favorites.filter(ticker => !watchlistSector(ticker, companies.find(item => item.ticker === ticker)?.sector)));
   const [listAction, setListAction] = useState<"rename" | null>(null);
   const [listName, setListName] = useState("");
-  function toggle(ticker: string, name?: string) {
-    return update(current => ({ ...current, names: name ? { ...current.names, [ticker]: name } : current.names,
-      lists: watchlistSlots(current.lists).map(item => item.id !== list.id ? item : { ...item, tickers: item.tickers.includes(ticker) ? item.tickers.filter(value => value !== ticker) : [...item.tickers, ticker].slice(0, 100) }) }));
+  const listFull = favorites.length >= favoriteListLimit;
+  function add(ticker: string, name?: string) {
+    if (listFull || favorites.includes(ticker)) return false;
+    let added = false;
+    const saved = update(current => {
+      const next = addFavoriteToList(current, list.id, ticker, name);
+      added = next !== current;
+      return next;
+    });
+    return saved && added;
   }
   const [sessionView, setSessionView] = useState<WatchlistSession>("auto");
   const [revealed, setRevealed] = useState("");
@@ -141,8 +148,9 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
       <section className={styles.searchPanel} aria-label={t("銘柄を追加", "Add stock")}>
         <div className={styles.searchRow}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg><input ref={searchInput} type="search" autoComplete="off" autoCapitalize="none" spellCheck={false} aria-label={t("銘柄を追加：会社名・ティッカーで検索", "Add stock: search company or ticker")} value={query} onChange={event => setQuery(event.target.value)} placeholder={t("銘柄を追加・検索", "Find a stock to add")} onKeyDown={event => { if (event.key === "Escape") setQuery(""); }} />{query && <button className={styles.iconButton} onClick={() => { setQuery(""); searchInput.current?.focus(); }} aria-label={t("検索をクリア", "Clear search")}>×</button>}</div>
         {query.trim() && <div className={styles.results}><div role="status" className={styles.searchStatus}>{searching ? t("検索中…", "Searching…") : searchError ? t("検索できませんでした。もう一度お試しください。", "Search unavailable. Please try again.") : !matches.length ? t("一致する銘柄がありません", "No matching stocks") : null}</div>
-          <ul className={styles.choices}>{matches.map(item => <li key={item.ticker}><button disabled={!editable || favorites.includes(item.ticker)} onClick={() => { setKnown(previous => ({ ...previous, [item.ticker]: item })); if (toggle(item.ticker, item.name)) { setQuery(""); searchInput.current?.blur(); } }}><span><strong>{item.ticker}</strong><small>{item.name}</small></span><span className={styles.choiceAction}>{favorites.includes(item.ticker) ? t("追加済み", "Added") : t("＋追加", "+ Add")}</span></button></li>)}</ul>
+          <ul className={styles.choices}>{matches.map(item => <li key={item.ticker}><button disabled={!editable || listFull || favorites.includes(item.ticker)} onClick={() => { setKnown(previous => ({ ...previous, [item.ticker]: item })); if (add(item.ticker, item.name)) { setQuery(""); searchInput.current?.blur(); } }}><span><strong>{item.ticker}</strong><small>{item.name}</small></span><span className={styles.choiceAction}>{favorites.includes(item.ticker) ? t("追加済み", "Added") : listFull ? t("上限", "List full") : t("＋追加", "+ Add")}</span></button></li>)}</ul>
         </div>}
+      {listFull && <p className={styles.searchStatus} role="status">{t("このリストは100銘柄までです。削除するか、別のリストに追加してください。", "This list is full (100 stocks). Remove a stock or add it to another list.")}</p>}
       </section>
       {favorites.length > 0 && <div className={styles.toolbar}><label><span className={styles.srOnly}>{t("並び順", "Sort order")}</span><select value={sort} onChange={event => setSort(event.target.value)}><option value="saved">{t("追加した順", "Date added")}</option><option value="ticker">{t("ティッカー順", "Ticker A–Z")}</option><option value="gainers">{t("上昇率順", "Top gainers")}</option><option value="losers">{t("下落率順", "Top losers")}</option></select></label></div>}
       </div>

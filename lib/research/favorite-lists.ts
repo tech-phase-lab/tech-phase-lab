@@ -3,6 +3,19 @@ import { parseFavoriteStocks } from "./favorites.ts";
 export const favoriteListsKey = "tech-phase:favorite-lists:v1";
 export type FavoriteList = { id: string; name: string; tickers: string[] };
 export type FavoriteLists = { lists: FavoriteList[]; names: Record<string, string>; alerts?: PriceAlert[] };
+export const favoriteListLimit = 100;
+
+// Adding is idempotent: a repeated click must never remove an existing stock.
+export function addFavoriteToList(current: FavoriteLists, listId: string, ticker: string, name?: string): FavoriteLists {
+  const lists = watchlistSlots(current.lists);
+  const list = lists.find(item => item.id === listId);
+  if (!list || !/^[A-Z][A-Z0-9.-]{0,14}$/.test(ticker) || list.tickers.includes(ticker) || list.tickers.length >= favoriteListLimit) return current;
+  return {
+    ...current,
+    names: name ? { ...current.names, [ticker]: name } : current.names,
+    lists: lists.map(item => item.id === listId ? { ...item, tickers: [...item.tickers, ticker] } : item),
+  };
+}
 export function parseFavoriteLists(raw: string | null, legacy: string | null): FavoriteLists {
   const fallback: FavoriteList = { id: "default", name: "", tickers: parseFavoriteStocks(legacy) };
   try {
