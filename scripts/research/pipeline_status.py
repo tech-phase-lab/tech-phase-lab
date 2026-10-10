@@ -304,7 +304,7 @@ def recent_rejections():
     return list(preview_summaries.RECENT_REJECTIONS)
 
 
-def feed_summary(payload, limit=12):
+def feed_summary(payload, limit=12, pending_skips=None):
     """What the public feed holds right now, without any story text: counts,
     and for the newest items only the source name, clock kind, time and flags.
     Added Oct 9 because the owner saw a story in the list that never reached
@@ -327,4 +327,4 @@ def feed_summary(payload, limit=12):
             'officialPending': sum(1 for row in rows if row['pending']),
             'officialByClock': {kind: sum(1 for row in rows if row['clock'] == kind) for kind in ('published', 'date', 'observed', 'none')},
             'market': len(market), 'marketNewestAt': max((str(item.get('publishedAt') or '') for item in market), default=None) or None,
-            'items': len(payload.get('items', [])), 'newestOfficial': rows[:limit]}
+            'items': len(payload.get('items', [])), 'pendingSkips': dict(pending_skips or {}), 'newestOfficial': rows[:limit]}

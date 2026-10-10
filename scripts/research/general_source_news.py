@@ -1152,38 +1152,53 @@ def pending_title(text):
     return kept+' …'
 
 
+# Why placeholders were not shown, by reason, for the last pass (diagnostics only).
+PENDING_SKIPS={}
+
+
 def pending_items(db,reference,published_ids,published_urls,*,authorization_context=None,rows=None):
     has_jobs=db.execute("SELECT 1 FROM sqlite_master WHERE name='official_research_jobs'").fetchone()
     has_reviews=db.execute("SELECT 1 FROM sqlite_master WHERE name='general_source_semantic_reviews'").fetchone()
     names={source['id']:source.get('name') for source in signals.SOURCES}
     items,seen=[],set()
+    skips={}
     if rows is None:
         rows=candidates(db,reference,_defer_publication_review=True,authorization_context=authorization_context)
+    skips['candidates']=len(rows)
     for row in rows:
         if row['id'] in published_ids or row['id'] in seen or row['url'] in published_urls:
+            skips['published']=skips.get('published',0)+1
             continue
         if not PENDING_ACCOUNTS.match(row['url'] or ''):
+            skips['account']=skips.get('account',0)+1
             continue
         job=(db.execute('SELECT state,failure_kind FROM official_research_jobs WHERE event_id=? AND sha=?',
                         (row['id'],row['sha'])).fetchone() if has_jobs else None)
         # The model's own decision to hold (not company news, not enough
         # evidence) stands; only copy that failed a check falls back here.
         if job and (job['state'] in ('stale','done') or job['failure_kind']=='classified-attempt'):
+            skips['job-'+str(job['state'])+'-'+str(job['failure_kind'])]=skips.get('job-'+str(job['state'])+'-'+str(job['failure_kind']),0)+1
             continue
         review=(db.execute('SELECT reason FROM general_source_semantic_reviews WHERE event_id=? AND sha=? AND body_sha=?',
                            (row['id'],row['sha'],row['body_sha'])).fetchone() if has_reviews else None)
         if review and review['reason']!='unsubstantiated-model-output':
+            skips['review-'+str(review['reason'])]=skips.get('review-'+str(review['reason']),0)+1
             continue
         category=row.get('category')
         label=row.get('related_subject') if row.get('source_news') else row.get('ticker')
         if category not in PENDING_CATEGORIES or not isinstance(label,str) or not TICKER.match(label):
+            key='category-'+str(category) if category not in PENDING_CATEGORIES else 'label'
+            skips[key]=skips.get(key,0)+1
             continue
         if category=='share-buyback' and any(unit.get('buyback',{}).get('historical') for unit in row.get('units',[])):
+            skips['recap']=skips.get('recap',0)+1
             continue
         body=row.get('body')
         title=pending_title(body if isinstance(body,str) and body.strip() else row['title'])
         publisher=names.get(row['source_id'])
         if not title or not isinstance(publisher,str) or not publisher.strip() or len(publisher)>80:
+            key='title' if not title else 'publisher'
+            skips[key]=skips.get(key,0)+1
             continue
         tickers=[t for t in (row.get('related_tickers',[]) if row.get('source_news') else [row.get('ticker')])
                  if isinstance(t,str) and TICKER.match(t)][:5]
@@ -1194,6 +1209,9 @@ def pending_items(db,reference,published_ids,published_urls,*,authorization_cont
             item['publishedAt']=row['published_at']
         seen.add(row['id'])
         items.append(item)
+        skips['shown']=skips.get('shown',0)+1
+    PENDING_SKIPS.clear()
+    PENDING_SKIPS.update(skips)
     return items
 
 

@@ -59,3 +59,12 @@ class PendingItemTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class PendingSkipTallyTests(PendingItemTests):
+    def test_skip_reasons_are_tallied_for_diagnostics(self):
+        self.items([row(), row(id=8, url='https://x.com/tipranks/status/124', category='company-development'),
+                    row(id=9, url='https://x.com/trendspider/status/9')],
+                   jobs=[(7, 's', 'retry', 'unsupported-number')], published_ids=[])
+        tally = general.PENDING_SKIPS
+        self.assertEqual((tally['candidates'], tally['shown'], tally['category-company-development'], tally['account']), (3, 1, 1, 1))
