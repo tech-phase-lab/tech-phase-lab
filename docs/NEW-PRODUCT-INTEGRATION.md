@@ -53,3 +53,77 @@
 
 プレビュー: https://tech-phase-lab-git-codex-research-preview-chehon7144-5412.vercel.app/research/watchlist
 見た目確認用サンプル: https://tech-phase-lab-git-codex-research-preview-chehon7144-5412.vercel.app/research/watchlist/sample
+
+
+## 追記 2026-10-10(Claude): 合意した内容と、Claude側の案
+
+商品名は「RESOLUTE｜レゾリュート」に決定(2026-10-10)。サブタイトルは「暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。」このファイルや他の文書にある「新商品」は、同じものを指す。以下のうち、「案」と書いたものは未合意で、既存実装として扱わない。
+
+### 合意した内容(ChatGPTの回答 2026-10-10)
+
+- 権限DB: Railwayの専用Postgresを新設する案(推奨)。未作成。バックアップと復元確認は本体側が担当する。
+- Pro判定: `plan === "pro"` かつ有効な `proExpiresAt` が現在より未来のときだけPro。期限切れ・欠落・不正値はFree。日時はUTCのISO 8601形式(末尾`Z`)に統一する案。
+- 言語・タイムゾーン: Clerkの公開メタデータに `locale`(`ja` / `en`)と `timezone`(IANA形式)を追加する。設定画面と保存APIはChatGPTが、新商品の通知処理に接続する前に作る。購入権限は公開メタデータに置かない。
+- Webhook: 本体のNext.js APIルートに置く。同じ決済会社ならProと新商品を商品IDで振り分け、会社が違えば受け口を分ける。検証・重複処理防止・権限更新の共通部分は本体側。
+- 日次ジョブ: 新商品専用のRailwayサービス。ニュース監視には入れない。終値判定とメール処理はClaude、サービス構成と本体の権限連携はChatGPT。
+- メール: Resendを第一候補。所有ドメインの送信用サブドメインでSPF/DKIMを設定する。アカウントとドメインは未用意。
+- 商品ID: 名前と切り離した固定ID。商品名が決まってもIDは変えず、表示名だけ差し替える。
+- 環境変数: `TWELVE_DATA_API_KEY` / `PAYMENT_WEBHOOK_SECRET` / `ENTITLEMENT_DB_URL` / `MAIL_API_KEY` / `MAIL_FROM_ADDRESS` / `NOTIFY_INTERNAL_TOKEN` を案として使う。すべてサーバー専用で `NEXT_PUBLIC_` は付けない。決済会社が複数なら `PAYMENT_WEBHOOK_SECRET` は会社別の名前にする。
+
+### Claude側の案(未合意)
+
+権限は2種類に分けて管理する。
+
+| 権限(`kind`) | 使えるもの | 期限 |
+| --- | --- | --- |
+| `use`(買い切りの利用権) | コンテンツ、計画ツール、作ったルール、税金計算 | なし |
+| `alerts`(1年間の通知利用権) | 終値アラート、翌朝メール、温度計のセクター別・兆し | 購入から1年。継続で延長 |
+
+温度計の全体の針は、権限がなくても誰でも見られる。
+
+権限DBの形(案):
+
+```sql
+CREATE TABLE entitlements (
+  id               TEXT PRIMARY KEY,
+  clerk_user_id    TEXT NOT NULL,
+  product_id       TEXT NOT NULL,       -- 名前と切り離した固定ID
+  kind             TEXT NOT NULL,       -- 'use' | 'alerts'
+  starts_at        TIMESTAMP NOT NULL,  -- UTC
+  expires_at       TIMESTAMP NULL,      -- NULL = 期限なし
+  source           TEXT NOT NULL,       -- 'purchase' | 'renewal' | 'admin'
+  payment_event_id TEXT UNIQUE NULL,    -- Webhookの二重処理を防ぐ
+  created_at       TIMESTAMP NOT NULL
+);
+```
+
+判定の考え方(案):
+
+- コンテンツ・計画ツール・税金計算: `use` が有効。FreeでもProでも関係ない。
+- 終値アラート・翌朝メール・温度計のセクター別: `use` が有効で、かつ `alerts` が期限内。
+- 権限とProは別々に判定し、片方からもう片方を推測しない。例: `canUse(feature, { entitlements, now })`。RESOLUTEの権限判定にはProを渡さない。
+- 日時はUTCで保存し、画面にはユーザーのタイムゾーンで出す。
+
+日次ジョブ(案):
+
+1. 米国の営業日の終値が確定してから1日1回動く。データ提供元の確定フラグで判断し、夏時間・休場・短縮取引に対応する。
+2. 権限DBから通知を使える人と、その人の計画を読む。
+3. 計画のラインと終値を比べ、1人につき1通にまとめる。
+4. 冪等キー(ユーザー+日付+種類)つきで送信モジュールに渡す。同じキーは二重に送らない。
+5. メールには配信停止リンクを付ける。停止した人には送らない。
+
+### 次に合意すること(未合意)
+
+- 配置パス(例: `/new-product`)
+- 通知の1年の起算点
+- 返金時の権限
+- 決済会社が決まるまで、Webhookの受け口が1つか複数か
+- 商品IDの名前(商品名が決まったので、例の `rizel_kit_v1` のままか、`resolute_kit_v1` などにするか。IDは後から変えない)
+- Twelve Dataの契約は2026年11月中旬の予定。契約までは実データでの検証ができない。
+
+### 2026-10-10 ユーザーによる確定条件（上記の案より優先）
+
+- RESOLUTEの購入は必須。PROだけでは利用できない。
+- 購入に1年間の通知利用権が含まれる。購入後のコンテンツ・計画ツールの利用と、期限つきの通知利用権を分ける。
+- PRO会員の2年目の継続料金を無料にするかは未決。無料にする場合もPRO判定で通さず、RESOLUTEの通知利用権を延長・付与する。
+- 本追記は接続仕様の共有であり、DB・Webhook・メール配信・新商品用ジョブの実装完了を意味しない。専用Postgresやメールサービスの新設・契約は別途相談する。

@@ -848,3 +848,26 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - Full integrated verification passed after rebasing the concurrent classification fix: ESLint zero errors with one pre-existing warning, Node 185/185, Python 506/506, Next.js production build, `compileall` and `git diff --check`.
 - Live operations at 22:46 JST still showed supplemental coverage at 22/26: two access restrictions, one timeout and one transient `other` failure due for retry at 22:47:28 JST. Priority coverage remained 5/5 and article-body child failures remained zero. The frontend was deployed at `6efbe44`, but the expected aggregate `公式本文の日英記事` line was absent, which means the staging signal did not expose `officialResearch` at that observation; do not claim the new publication-stage diagnostics are live-verified until that payload appears. No access control, provider setting or polling cadence was changed.
 - Commit `0fa4bc8` reached successful Vercel preview and Railway staging checks. The live calendar then showed the separate KLA records correctly: October 29 06:00 JST for the webcast and October 28 `時刻未定` for the results, with the exact KLA IR link and no fabricated publication clock. However, repeated post-deployment intake reloads fell back to the September 19 saved snapshot with `自動監視サービスの接続待ち` even though Railway's commit status was successful. Treat current monitor data, the 22:47 route retry outcome and the new `officialResearch` diagnostics as unverified until the preview reconnects; the calendar rendering itself is live-verified.
+
+
+## 2026-10-10 Claude
+
+- 変更ファイル: なし。Claudeはこの時点で本体リポジトリを変更していない。
+- 追加した成果物(リポジトリの外):
+  - 税金計算のロジックとテスト(日本の税制、2026年分のみ対応)。依存なしの純粋関数。本体への組み込み時にTypeScript化する予定。
+  - コンテンツ①(日本語版・英語版)。
+  - 接続仕様書(Claude Docs)。この追記の元になっている。
+- Claude報告の検証結果: 税金計算のテスト20本がすべて通過。ChatGPT側ではコードとテストを受領・実行しておらず、未検証。
+- 未確認:
+  - 税率20.315%、復興特別所得税2.1%、繰越控除3年は、民間の解説と証券会社の説明で確認した。国税庁の令和8年度改正のあらまし本文は読めていない。確認できた範囲ではNISAの改正が中心で、税率の変更は見当たらなかった。
+  - 特定口座の年末精算は簡略化している。
+  - 通知や税金計算の文面は、法務確認が済んでいない。
+  - Twelve Dataは未契約(11月中旬の予定)。温度計の基準は、契約後に過去データで検証する。
+
+### 2026-10-10 ChatGPT — RESOLUTE専用チャットへの引き継ぎ
+
+- 添付 `repo-append(2).md` のパートA/Bを既存ファイル末尾へ追記。既存本文は維持。
+- 「またはPro」を削除し、「通知利用権」に呼び方を統一。ユーザーが確定した購入必須・初年度通知利用権込み・2年目PRO無料化未決の条件を接続メモに明記。
+- 権限DB、決済Webhook、メール配信、新商品用ジョブは未実装。税金計算の20本通過はClaude報告で、ChatGPTでは未検証。
+- ニュース・目標株価・ホーム・メニュー、main、サービス設定は変更していない。メール送信や有料サービスの新設は行っていない。
+- 検証: 既存ファイルのバイト列が先頭にそのまま残ること、追加対象が2資料のみであること、git diff --checkを確認。
