@@ -2475,8 +2475,10 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
             items.extend(general_source_news.pending_items(
                 db, current, {int(item['id']) for item in checked_general if str(item.get('id', '')).isdigit()},
                 {item['url'] for item in items}, rows=general_rows))
-        except (ValueError, TypeError, KeyError, LookupError):
-            pass  # A placeholder failure never removes a checked publication.
+        except (ValueError, TypeError, KeyError, LookupError) as exc:
+            # A placeholder failure never removes a checked publication.
+            general_source_news.PENDING_SKIPS.clear()
+            general_source_news.PENDING_SKIPS['error-' + type(exc).__name__] = 1
         import issuer_business_news
         items.extend(issuer_business_news.public_items(db, current))
         items.sort(key=lambda item: next((stamp.timestamp() for value in
