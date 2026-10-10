@@ -17,5 +17,8 @@
 @media(max-width:760px) { .frame { --watchlist-nav-space:calc(128px + env(safe-area-inset-bottom)); } }
 /* Mobile browser chrome leaves less room. Keep the cue in installed app mode. */
 @media (max-width:760px) and (display-mode:browser) {
+  /* The browser dock already adds its own 84px + safe-area spacer. */
+  .frame { --watchlist-nav-space:16px; }
+  .frame main { padding-bottom:12px; }
   .cue { display:none; }
 }
