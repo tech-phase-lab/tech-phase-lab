@@ -6,11 +6,11 @@ import {PGlite} from '@electric-sql/pglite';
 
 // PGlite runs a real PostgreSQL engine in memory. The Pool transport is replaced
 // so tests cannot connect to Railway or use production credentials.
-const source=readFileSync(new URL('../lib/resolute/server.ts',import.meta.url),'utf8')
+const source=readFileSync(new URL('../lib/resolute/database.ts',import.meta.url),'utf8')
   .replace('import "server-only";','')
   .replace('import { Pool } from "pg";', 'class Pool { on() {} query(...args) { return globalThis.__resoluteQuery(...args); } }')
-  .replace('from "./database-config"', `from ${JSON.stringify(new URL('../lib/resolute/database-config.ts',import.meta.url).href)}`)
-  .replace('from "./entitlements"', `from ${JSON.stringify(new URL('../lib/resolute/entitlements.ts',import.meta.url).href)}`);
+  .replace('from "./database-config.ts"', `from ${JSON.stringify(new URL('../lib/resolute/database-config.ts',import.meta.url).href)}`)
+  .replace('from "./entitlements.ts"', `from ${JSON.stringify(new URL('../lib/resolute/entitlements.ts',import.meta.url).href)}`);
 const {getResoluteEntitlementsForUser}=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
 const migration=readFileSync(new URL('../db/resolute/001_entitlements.sql',import.meta.url),'utf8');
 

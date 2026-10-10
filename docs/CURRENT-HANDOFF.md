@@ -1038,3 +1038,25 @@ DRAM is absent from the SEC operating-company directory. Theme selection falls b
 - Clerk JWT検証: https://clerk.com/docs/reference/backend/verify-token と https://clerk.com/docs/guides/sessions/session-tokens
 
 今回の変更は文書末尾への追記だけ。既存本文のバイト保持、git diff --check、Git Dataとlocal treeの一致を確認して公開する。
+
+
+## 2026-10-10 ChatGPT — 専用API実装・配置の進行状況
+
+ユーザーは専用API追加分月1〜3ドル、バックアップ込み月1.1〜3.5ドルの見込みで、専用API作成、RESOLUTE用DBのスキーマ適用、Vercel対象プレビューへの新規変数追加を承認した。Hobbyのまま進める。
+
+- Vercel側の `/api/resolute/entitlements` はClerk認証後に `getToken()` で取得したセッションJWTを専用APIへ渡す。ブラウザのuserId・PRO・管理者指定は使わない。専用認証キーはサーバー内だけで使う。
+- Railway用Node 24 APIは `services/resolute-api/`。署名・期限・発行元・許可origin・session IDを検証し、JWTの本人IDでだけ権限を読む。DB読取は `lib/resolute/database.ts`。API起動・HTTP経由ではDDLを実行しない。
+- APIは1台、メモリ上限0.25GB、CPU上限0.25、Serverless有効、ボリュームなし。上限は請求上限ではない。実測値と費用見込みは配置後に確認する。
+- Railwayの新規サービス `resolute-api`（7108edd6-952c-474a-8ed6-97482be50c2b）に `ENTITLEMENT_DB_URL`、`RESOLUTE_API_SERVICE_TOKEN`、`RESOLUTE_CLERK_JWT_PUBLIC_KEY`、`RESOLUTE_CLERK_ISSUER`、`RESOLUTE_CLERK_AUTHORIZED_PARTIES`、`PORT` を設定済み。値は本書に記載しない。
+- Vercel `tech-phase-lab` のpreview / `codex/research-preview` だけに `RESOLUTE_API_URL` と `RESOLUTE_API_SERVICE_TOKEN` を新規追加済み。productionや既存変数の値は変更していない。
+- 新規一回実行ジョブ `resolute-db-provision`（ab53b28a-62ef-4e0e-9626-0dabb5206cf9）はスキーマと読取専用roleを作り、購入状態・通知期限切れ・失効・他人・書込拒否・reader接続を実DBで検証する。テスト権限は同一トランザクション内でロールバックする。ソースは `scripts/resolute/provision-reader.mjs` と既存migrationから生成する。
+- このDB適用ジョブのステージ済み変更は、新規ジョブと専用変数だけで、既存サービス変更を含まないことを読み取りで確認した。ただし適用ツールは「承認されずキャンセル」と返したため、DB適用は未実行。確認前にschema適用済み・実接続完了とは扱わない。
+- 既存バックアップの手動再実行も自動レビューにより拒否され、実行していない。2026-10-10 11:35 UTCの既存バックアップ成功ログを読み取りで再確認した（暗号化2,286 bytes / dump 2,086 bytes / 1.083秒）。今回のDDLやテスト権限書込はまだない。
+
+### Claudeに渡す説明
+
+画面は `GET /api/resolute/entitlements` のままで接続できます。RailwayのURL、DB接続文字列、専用キーを画面コードに入れる必要はありません。`use` と `alerts` は独立して表示し、利用可否には `canUseTools` と `canReceiveNotifications` を使ってください。PROだけでは許可しません。401はログイン案内、429は再試行を待つ案内、503は一時的に確認できない案内にし、503を未購入表示へ変換しないでください。
+
+現在は実装済みですが、DB適用とVercel経由のログイン済み200応答は未確認です。実環境の接続完成扱いは、その確認結果が追記されるまで保留してください。計画データの保存API・決済付与・商品通知は本変更の対象に含まず、これから別途実装します。
+
+検証: Node 631本 / Python 2,368本成功、lint 0 errors（既存warnings 2件）、Next.js build成功、compileall成功。今回の変更範囲はRESOLUTE専用コードとdocsのみ。

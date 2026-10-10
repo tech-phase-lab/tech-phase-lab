@@ -6,7 +6,8 @@ import {stripTypeScriptTypes} from 'node:module';
 const source = readFileSync(new URL('../app/api/resolute/entitlements/route.ts',import.meta.url),'utf8')
   .replace('import { auth } from "@clerk/nextjs/server";', 'const auth = () => globalThis.__resoluteAuth();')
   .replace('import { membershipConfigured } from "@/lib/membership/server";', 'const membershipConfigured = () => globalThis.__resoluteConfigured;')
-  .replace('import { getResoluteEntitlementsForUser } from "@/lib/resolute/server";', 'const getResoluteEntitlementsForUser = id => globalThis.__resoluteRead(id);');
+  .replace('import { ResoluteRateLimited } from "@/lib/resolute/transport";', 'class ResoluteRateLimited extends Error {}')
+  .replace('import { getResoluteEntitlementsForSession } from "@/lib/resolute/server";', 'const getResoluteEntitlementsForSession = id => globalThis.__resoluteRead(id);');
 const {GET}=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
 test('entitlement route uses authenticated identity, returns private errors and never trusts request claims', async () => {
   const calls=[];
@@ -16,9 +17,9 @@ test('entitlement route uses authenticated identity, returns private errors and 
     globalThis.__resoluteAuth=async()=>({userId:null});
     let res=await GET(); assert.equal(res.status,401);
     assert.deepEqual(await res.json(),{error:'AUTH_REQUIRED'});assert.equal(calls.length,0);
-    globalThis.__resoluteAuth=async()=>({userId:'user_buyer',plan:'pro',isAdmin:true});
+    globalThis.__resoluteAuth=async()=>({userId:'user_buyer',getToken:async()=> 'verified-session-token',plan:'pro',isAdmin:true});
     res=await GET(new Request('https://example.test/api/resolute/entitlements?userId=user_victim&pro=true'));
-    assert.equal(res.status,200);assert.deepEqual(calls,['user_buyer']);
+    assert.equal(res.status,200);assert.deepEqual(calls,['verified-session-token']);
     assert.equal((await res.json()).canUseTools,false);
     assert.equal(res.headers.get('cache-control'),'private, no-store');
     globalThis.__resoluteRead=async()=>{throw Error('postgres://private:secret@private/resolute');};
