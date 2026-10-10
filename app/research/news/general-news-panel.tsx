@@ -79,7 +79,9 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
       poller.stop();
     };
   }, [refresh, initialNews]);
-  const official = (data?.officialUpdates ?? []).filter(informativeOfficial);
+  // An item with no time stated by its source is not listed: showing the time
+  // it was found would pass a guess off as the publication time (owner, Oct 10).
+  const official = (data?.officialUpdates ?? []).filter(item => informativeOfficial(item) && officialTime(item).kind !== "observed");
   const news = officialOnly ? [] : [...data?.items ?? []].sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
   const market = officialOnly ? [] : data?.marketUpdates ?? [];
   // Analyst ratings and target changes live on the price target page only (owner, Oct 7).

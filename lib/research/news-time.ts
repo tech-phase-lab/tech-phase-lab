@@ -35,13 +35,14 @@ export function usEasternTime(at: string, kind: string) {
   if (kind === 'date') return null;
   return new Intl.DateTimeFormat('en-US', {timeZone:'America/New_York',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(at)).replace(',', '') + ' ET';
 }
-/** A date-only release takes the time it was first seen here only when that
- * was the same U.S. day, so the date shown is always the release date. */
-export function clockTime(at: string, kind: string, observedAt?: string) {
-  if (kind === 'date' && observedAt && Number.isFinite(Date.parse(observedAt))) {
-    const seenOn = new Intl.DateTimeFormat('en-CA', {timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(observedAt));
-    if (seenOn === at) return { at: observedAt, kind: 'observed' as string };
-  }
+/** The time a card shows is only ever the source's own: a publication time, or
+ * for a date-only release just that date. The time this system first saw an
+ * item is never shown as if it were the publication time (owner, Oct 10: a
+ * story with no stated time was listed as 21:44, which was only when it was
+ * found). Items with no source time at all are not listed (see officialTime). */
+// The third argument is kept so existing callers need no change; it is ignored.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function clockTime(at: string, kind: string, _observedAt?: string) {
   return { at, kind };
 }
 /** One clock format for the top strip: "M/D HH:MM JST" (ET in English). */
