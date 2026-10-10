@@ -209,3 +209,18 @@ class ResearchRejectionDetailTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'changed-names'):
             f.validate_names('Zorvexは新製品を発表', 'Acme announced a product')
         self.assertEqual(f.LAST_NAME_REJECTION[0], 'zorvex')
+
+
+class FeedSummaryTests(unittest.TestCase):
+    def test_summary_lists_clock_and_flags_without_story_text(self):
+        payload = {'officialUpdates': [
+            {'id': '1', 'title': 'Secret headline', 'publisher': 'Vertiv', 'publishedOn': '2026-10-09', 'observedAt': '2026-10-09T12:44:00Z',
+             'translationJa': 'ヴァーティブ', 'bodyJa': '本文'},
+            {'id': '2', 'title': 'Other', 'publisher': 'X · TipRanks', 'observedAt': '2026-10-09T13:00:00Z', 'pendingResearch': 1}],
+            'marketUpdates': [{'publishedAt': '2026-10-09T10:00:00Z'}], 'items': []}
+        summary = pipeline_status.feed_summary(payload)
+        self.assertEqual((summary['official'], summary['officialJa'], summary['officialPending'], summary['market']), (2, 1, 1, 1))
+        self.assertEqual(summary['officialByClock'], {'published': 0, 'date': 1, 'observed': 1, 'none': 0})
+        self.assertEqual(summary['newestOfficial'][1]['clock'], 'date')
+        self.assertNotIn('Secret', str(summary))
+        self.assertNotIn('ヴァーティブ', str(summary))
