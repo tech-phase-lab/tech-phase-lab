@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
 import type { Language } from "@/lib/research/data";
-import { useMemberDisplay, useOwnerAccount } from "./member-display-provider";
+import { useMemberDisplay, useMemberSettled, useOwnerAccount } from "./member-display-provider";
 import { useProIntroduction } from "./header-pro";
 import { useScrollLock } from "./use-scroll-lock";
 import base from "./research.module.css";
@@ -26,6 +26,7 @@ const RefreshIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M
 export default function SiteHeader({ lang, setLang, nav }: { lang: Language; setLang: (lang: Language) => void; nav?: ReactNode }) {
   const plan = useMemberDisplay();
   const ownerAccount = useOwnerAccount();
+  const settled = useMemberSettled() || ownerAccount || plan !== null;
   const pathname = usePathname();
   const member = ownerAccount || plan === "pro";
   const pro = useProIntroduction();
@@ -56,7 +57,9 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
         <span className={styles.words}><span className={`${base.brandText} ${styles.name}`}>TECH PHASE</span><small className={styles.sub}>
           {tier === "pro" && <svg className={styles.planIcon} viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 9-7 9-7-9z" /></svg>}
           {tier === "owner" && <svg className={styles.planIcon} viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z" /></svg>}
-          <span>RESEARCH ·</span><span className={styles.planName}>{planLabel(lang, plan, ownerAccount)}</span></small></span>
+          {settled
+            ? <><span>RESEARCH ·</span><span className={styles.planName}>{planLabel(lang, plan, ownerAccount)}</span></>
+            : <span>RESEARCH</span>}</small></span>
       </Link>
       {nav && <div className={styles.center}>{nav}</div>}
       <div className={styles.tools}>
@@ -72,6 +75,8 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
               <svg className={styles.ringTrack} viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16" /></svg>
               <RefreshIcon />
             </button>
+          : !settled
+          ? <span className={styles.pro} style={{ visibility: "hidden" }} aria-hidden="true">PRO</span>
           : <button type="button" className={styles.pro} aria-label={ja ? "PROを見る" : "See PRO"} aria-expanded={pro.open} onClick={() => pro.toggle()}>PRO</button>}
         <button type="button" className={styles.ico} aria-label={ja ? "メニュー" : "Menu"} aria-expanded={menu} aria-controls="site-menu" onClick={() => setMenu(value => !value)}>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
