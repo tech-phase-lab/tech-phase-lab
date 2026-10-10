@@ -3275,6 +3275,9 @@ def main():
     snapshot_path = os.environ.get("RESEARCH_SNAPSHOT_PATH", data_dir / "automatic-snapshot.json")
     host = os.environ.get("HOST", "0.0.0.0")
     port = positive_int("PORT", 8080, 1)
+    # Posts that fit none of the stated topics are no longer sent to the model
+    # (owner, Oct 10). RESEARCH_SEMANTIC_NEWS=1 restores the old behavior.
+    general_source_news.SEMANTIC_ASSESSMENT_ENABLED = os.environ.get("RESEARCH_SEMANTIC_NEWS", "") == "1"
     app = AutomaticMonitor(db_path, snapshot_path)
     streaming = os.environ.get("RESEARCH_STREAM_ENABLED", "true").lower() == "true"
     server = ThreadingHTTPServer(("127.0.0.1", 0) if streaming else (host, port), Handler)

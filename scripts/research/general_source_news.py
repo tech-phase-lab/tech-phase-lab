@@ -233,6 +233,16 @@ def x_assess(row, source, reference, heads):
             'general_source':True,'category':category,'units':units},'eligible'
 
 
+# Owner, Oct 10: take only the stated topics from these accounts (target prices,
+# earnings, acquisitions, contracts, products, capacity, buybacks, management
+# outlook, broker views). Posts that fit none of them were sent to the model to
+# judge "materiality"; none of 45 such posts passed and they used most research
+# calls. The service turns this off at startup (RESEARCH_SEMANTIC_NEWS=1 turns it
+# back on); the library default stays on so the assessment itself is unchanged.
+SEMANTIC_ASSESSMENT_ENABLED=True
+SEMANTIC_OFF='semantic-lane-off'
+
+
 def assess(row, source, reference, heads):
     candidate,reason=x_assess(row,source,reference,heads)
     if candidate or reason not in {'no-supported-material-category','ambiguous-or-unapproved-subject','unbound-material-subject','multi-entity-relation-needs-binding'}:
@@ -240,6 +250,8 @@ def assess(row, source, reference, heads):
     # These reasons occur only AFTER exact source/head/body/clock/retraction and
     # promotion gates. Unknown financial actions stay in the explicit review
     # queue instead of borrowing the business assessment's authority.
+    if not SEMANTIC_ASSESSMENT_ENABLED:
+        return None,SEMANTIC_OFF
     body=row['body']
     names=named_companies(body)
     tags=set(re.findall(r'\$('+analyst_news.TICKER+r')(?![\w.])',body))
