@@ -272,11 +272,25 @@ def research_failures(path, now=None):
                 if row['reason'] == 'unsupported-number' and row['payload'] and bodies:
                     entry['values'] = research_number_gap(db, row['event_id'], row['payload'])
                 recent.append(entry)
+    by_source, waiting_by_source = {}, {}
+    try:
+        with headline_translation.connect(path) as db:
+            if {'official_research_attempt_failures', 'signal_events'} <= tables:
+                for row in db.execute('SELECT e.source_id AS source, COUNT(*) AS n FROM official_research_attempt_failures f '
+                                      'JOIN signal_events e ON e.id=f.event_id WHERE f.failed_at>=? GROUP BY e.source_id ORDER BY n DESC', (since,)):
+                    by_source[row['source']] = row['n']
+            if {'official_research_jobs', 'signal_events'} <= tables:
+                for row in db.execute("SELECT e.source_id AS source, j.state AS state, COUNT(*) AS n FROM official_research_jobs j "
+                                      "JOIN signal_events e ON e.id=j.event_id WHERE j.state!='done' GROUP BY e.source_id, j.state"):
+                    waiting_by_source[row['source'] + ':' + row['state']] = row['n']
+    except Exception:
+        pass  # Diagnostics only.
     import official_research
     sites = sorted(({'code': code, 'site': site, 'count': count}
                     for (code, site), count in official_research.FAILURE_SITES.items()),
                    key=lambda entry: -entry['count'])[:20]
-    return {'failureReasons24h': reasons, 'waitingJobs': jobs, 'recent': recent, 'sitesSinceStart': sites}
+    return {'failureReasons24h': reasons, 'failuresBySource24h': by_source, 'waitingJobs': jobs, 'waitingBySource': waiting_by_source,
+            'recent': recent, 'sitesSinceStart': sites}
 
 
 def research_number_gap(db, event_id, payload):
