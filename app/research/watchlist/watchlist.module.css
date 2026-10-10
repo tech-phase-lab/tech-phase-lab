@@ -84,12 +84,12 @@
 .renameButton svg { width:18px;height:18px; }.renameButton:disabled { opacity:.35;cursor:default; }
 
 .quoteTable { border-top:0; }
-.tableHead,.rowMain { display:grid;grid-template-columns:minmax(0,1fr) 210px 140px;gap:28px;align-items:center; }
+.tableHead,.rowMain { display:grid;grid-template-columns:minmax(0,1fr) 210px minmax(120px,max-content);gap:28px;align-items:center; }
 .tableHead { padding:8px;color:#879f9b;font-size:11px;border-bottom:1px solid #365047; }
-.tableHead>span:nth-child(2) { text-align:center; }.tableHead>span:last-child { text-align:right; }
+.tableHead>span:nth-child(2) { text-align:center;transform:translateX(6px); }.tableHead>span:last-child { text-align:right; }
 .quoteRows { list-style:none;margin:0;padding:0; }.quoteRow { border-bottom:1px solid #2b3f43; }
 .quoteRow[data-selected=true] { background:#10201f; }
-.rowMain { width:100%;min-height:74px;padding:6px 8px;text-align:left;background:transparent;border:0;color:inherit;cursor:pointer;font:inherit; }
+.rowMain { width:100%;min-height:72px;padding:6px 8px;text-align:left;background:transparent;border:0;color:inherit;cursor:pointer;font:inherit; }
 .rowMain:hover { background:#11201f; }
 .identity { display:flex;align-items:center;gap:12px;min-width:0; }.identity>span:last-child { min-width:0; }
 .logo { width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;background:#e6eeeb;border-radius:10px;color:#304a42;font-size:12px;overflow:hidden; }.logo img { object-fit:contain; }
@@ -97,10 +97,10 @@
 .company strong { grid-column:1;grid-row:1;display:block;font-family:ui-rounded,"SF Pro Rounded","Hiragino Maru Gothic ProN",sans-serif;font-size:21px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
 .company small { grid-column:1 / -1;grid-row:2;display:block;color:#8aa7a2;font-size:11px;margin-top:3px;letter-spacing:.04em;line-height:1.4; }
 .sector { grid-column:2;grid-row:1;display:block;justify-self:start;width:fit-content;max-width:min(130px,100%);box-sizing:border-box;padding:3px 7px;border:1px solid #49635766;border-radius:5px;background:#18312755;color:#9ab8aa;font-size:10px;font-weight:400;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-.trend { display:block;position:relative;height:62px;color:#8baba1; }
-.trendHeading { position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:4px;height:16px; }
-.trendHeading small { color:#829f97;font-size:9px; }.trendHeading strong { font-size:15px;font-weight:600;line-height:16px;letter-spacing:-.02em; }
-.trend .chartFrame { margin-top:16px;height:46px; }.noChart { display:block;padding-top:16px;line-height:46px;text-align:center;color:#536b67; }
+.trend { display:block;position:relative;height:60px;color:#8baba1; }
+.trendHeading { position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:4px;height:14px; }
+.trendHeading small { color:#829f97;font-size:9px; }.trendHeading strong { font-size:14px;font-weight:600;line-height:14px;letter-spacing:-.02em; }
+.trend .chartFrame { margin-top:14px;height:46px; }.noChart { display:block;padding-top:14px;line-height:46px;text-align:center;color:#536b67; }
 .price { min-width:0;white-space:nowrap;text-align:right;font-size:27px;letter-spacing:-.03em;font-weight:600; }.price small { display:block;font-size:11px;font-weight:400;letter-spacing:0;margin-top:2px; }
 .trend[data-direction=up],.price[data-direction=up],.expandedChart[data-direction=up] { color:#8bdfb8; }
 .trend[data-direction=down],.price[data-direction=down],.expandedChart[data-direction=down] { color:#ec959e; }
@@ -120,15 +120,15 @@
  .listPicker { max-width:48%;gap:1px; }.listPicker select { font-size:12px;width:100%;padding-inline:2px; }.renameButton { flex-basis:30px;width:30px;padding:6px; }
  .searchPanel { max-width:none; }.searchRow { padding-inline:12px;gap:8px; }.searchRow input { min-height:38px;padding-block:6px; }
  .toolbar { padding:0; }.toolbar select,.toolbar button { font-size:11px; }
- .tableHead,.rowMain { grid-template-columns:minmax(0,1fr) 94px minmax(92px,max-content);gap:14px; }.tableHead { padding-inline:0;font-size:10px; }.rowMain { min-height:66px;padding:2px 0; }
+ .tableHead,.rowMain { grid-template-columns:minmax(0,1fr) 94px minmax(78px,max-content);gap:14px; }.tableHead { padding-inline:0;font-size:10px; }.rowMain { min-height:64px;padding:2px 0; }
  .identity { gap:7px; }.logo { width:26px;height:26px;flex-basis:26px;border-radius:7px; }.logo img { width:23px;height:23px; }
  .company { gap:0 5px;grid-template-columns:auto minmax(0,1fr); }.company strong { grid-column:1 / -1;font-size:16px; }.company small { grid-column:1;font-size:10px;margin-top:2px; }
  .sector { grid-column:2;grid-row:2;margin-top:2px;padding:1px 3px;font-size:8px;line-height:1.3; }
- .trendHeading strong { font-size:13px; }.trendHeading small { font-size:8px; }.price { font-size:23px; }.price small { font-size:10px; }
+ .trendHeading strong { font-size:12px; }.trendHeading small { font-size:8px; }.price { font-size:23px; }.price small { font-size:10px; }
  .marketBar { font-size:10px; }.quoteRow .detail { margin-inline:0; }.detailHeading { flex-wrap:wrap;gap:4px; }.detailHeading h2 { font-size:18px; }
 }
 @media(max-width:380px) {
- .tableHead,.rowMain { grid-template-columns:minmax(0,1fr) 80px minmax(86px,max-content);gap:12px; }.identity { gap:5px; }.company strong { font-size:14px; }.price { font-size:21px; }
+ .tableHead,.rowMain { grid-template-columns:minmax(0,1fr) 80px minmax(74px,max-content);gap:12px; }.identity { gap:5px; }.company strong { font-size:14px; }.price { font-size:21px; }
  .logo { width:23px;height:23px;flex-basis:23px; }.logo img { width:22px;height:22px; }.listPicker select { font-size:11px; }.heading h1 { font-size:19px; }
 }
 
