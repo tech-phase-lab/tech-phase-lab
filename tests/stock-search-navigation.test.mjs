@@ -17,7 +17,7 @@ function harness(t, initial='/research/stocks?q=VS') {
     useEffect(fn,deps){const id=index++;const prior=slots[id];if(!prior||deps.some((d,i)=>!Object.is(d,prior.deps[i]))){effects.push(()=>{prior?.cleanup?.();slots[id]={deps,cleanup:fn()};});}},
     useEffectEvent(fn){const id=index++;if(!slots[id])slots[id]={fn,call:(...args)=>slots[id].fn(...args)};slots[id].fn=fn;return slots[id].call;}
   };
-  const history={get state(){return stack[cursor].state;},replaceState(state,_,url){stack[cursor]={state,url};dirty=true;},pushState(state,_,url){stack.splice(cursor+1);stack.push({state,url});cursor++;dirty=true;},back(){cursor=Math.max(0,cursor-1);dirty=true;},forward(){cursor=Math.min(stack.length-1,cursor+1);dirty=true;}};
+  const history={get state(){return stack[cursor].state;},replaceState(state,_,url){if(state)state.__NA=true;stack[cursor]={state,url};dirty=true;},pushState(state,_,url){assert.equal(state?.__NA,undefined,'do not reuse a Next.js-decorated replaceState argument');stack.splice(cursor+1);stack.push({state,url});cursor++;dirty=true;},back(){cursor=Math.max(0,cursor-1);dirty=true;},forward(){cursor=Math.min(stack.length-1,cursor+1);dirty=true;}};
   globalThis.window={history,scrollY:620,scrollTo:({top})=>{window.scrollY=top;},setTimeout:fn=>{const id=++timerId;timers.set(id,fn);return id;},clearTimeout:id=>timers.delete(id),requestAnimationFrame:fn=>{const id=++timerId;frames.set(id,fn);return id;},cancelAnimationFrame:id=>frames.delete(id)};
   globalThis.requestAnimationFrame=window.requestAnimationFrame;
   globalThis.fetch=url=>new Promise(resolve=>requests.push({url,resolve}));

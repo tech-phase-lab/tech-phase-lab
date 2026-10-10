@@ -179,7 +179,8 @@ export default function StockDirectory() {
     if (navigate && key !== selectedResultKey) {
       const state = { stockSearch: { query, y: window.scrollY } };
       window.history.replaceState(state, "", stockSearchUrl(query));
-      window.history.pushState(state, "", stockSearchUrl(query, key));
+      // Next.js decorates replaceState's argument; do not reuse it for pushState.
+      window.history.pushState({ stockSearch: state.stockSearch }, "", stockSearchUrl(query, key));
     }
     setSelectedResultKey(key);
     const requestId = ++profileRequest.current;
