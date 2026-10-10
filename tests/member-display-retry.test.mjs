@@ -40,3 +40,9 @@ test('persistent outage stops rapid retries after three attempts',async t=>{
  for(let i=0;i<3;i++){const timer=h.timers.find(x=>!x.cancelled&&!x.ran&&x.ms===2000);assert.ok(timer);timer.ran=true;timer.fn();await h.flush();}
  assert.equal(h.calls(),4);assert.equal(h.timers.filter(x=>!x.cancelled&&!x.ran&&x.ms===2000).length,0);assert.equal(h.states[0],null);
 });
+test('without a server snapshot the plan stays unsettled while the check runs, so the app never opens on FREE',async t=>{
+ const h=await harness(t,[new Error('identity-loading')]);assert.equal(h.states[4],false);assert.equal(h.states[0],null);
+});
+test('the plan settles once the check answers',async t=>{
+ const h=await harness(t,[member('free')]);assert.equal(h.states[4],true);assert.equal(h.states[0],'free');
+});
