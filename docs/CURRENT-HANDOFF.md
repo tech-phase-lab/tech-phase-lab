@@ -1152,3 +1152,39 @@ Claude向け: 設定画面は `/resolute/settings` を利用できる。計画�
 ログイン済みの公開ブラウザで、LITEをマイリスト3へ追加して直ちにウォッチリストへ移動すると登録が反映されること、詳細へ戻ってもチェックが残ること、解除して直ちに移動すると対象リストから消えることを確認した。確認用のLITEは解除済み。元のマイリスト1の9銘柄は保持している。
 
 戻った際に選択中のリストがマイリスト1へ戻る問題が見つかったため、通常ウォッチリストの選択IDをタブ単位のsessionStorageへ保持する。銘柄・アカウント情報はこの保存領域に含めない。保存領域が使えない場合も、そのページセッション内で選択を維持する。存在しないIDは従来どおり先頭リストへフォールバックする。表示サンプルは専用実装のままで、この選択保存の対象外。スマホ実機の表示・戻るジェスチャーは未検証。ニュース・目標株価、共通メニュー、RESOLUTEは変更していない。
+
+
+## 2026-10-12 ChatGPT — Claude回答の計画計算と保存契約
+
+Claudeから計算式・制約の回答を受領した。以下は計画保存APIに向けた接続契約であり、DBへの保存・削除や商品画面の接続が完成したという報告ではない。未決のanswersと閲覧条件を確定扱いにしない。
+
+### 金額計算
+
+- 金額はJPY=円、USD=セントの整数で、入力は0〜10^12最小単位。USDも小数を入力しない。月数は小数1桁、reserveMonthsは0〜120、savingsMonthsは0〜600。割合は小数1桁で0〜100、買付ラインのdropPctだけは0より大きく99.9以下。fx.usdJpyは小数2桁で50〜500。
+- reserve = floor(monthlyLivingCost × reserveMonths)。investable = max(0, financialAssets − reserve − nearTermExpense)。financialAssetsは現金と投資済み資産の合計で、nullならinvestableもnull。前の暫定Plan型のinvestable:numberをnumber|nullへ修正する。
+- investBaseはinvestedAmountがnullでなく正数ならinvestedAmount、それ以外はinvestable。保存せず毎回計算する。toleranceDrop = floor(investBase × tolerancePct / 100)、buyBudget = floor(investBase × buyBudgetPct / 100)。基準額または各割合がnullなら結果もnull。
+- toleranceMonthsはtoleranceDrop / monthlyLivingCostを小数1桁で切り捨て、生活費が0なら非表示。toleranceDropがnullなら非表示。buyBudgetとtoleranceMonthsは表示用で保存しない。investableとtoleranceDropは保存時にサーバー再計算して一致を確認し、不一致は400にする契約。
+- 共通の純粋な計算をlib/resolute/plan-calculation.tsに実装した。金額の乗算/切り捨てはBigInt、月数/割合は10倍した整数で扱う。calculatePlanAmountsにはcurrency、monthlyLivingCost、reserveMonths、nearTermExpense、financialAssets、investedAmount、tolerancePct、buyBudgetPctの8項目だけを渡す。assertPlanCalculatedAmountsで送信されたinvestable/toleranceDropの一致を確認できる。
+- このモジュールは計算入力だけを検証する。savingsMonths・fx・buyMode・文字配列などを含むPlan全体の検証器やHTTP APIではない。通常/未回答/全未回答/投資可能額0のJPY例、USDセント、精度境界、入力不正、計算値改ざんをローカルテストする。税金計算テスト20本の検証とは別。
+
+### 買い増しと更新/削除の接続契約
+
+noneはbuyLines空、buyBudgetPct/allocationはnull。singleはライン1件、allocationはnull。stepsは2〜10件、allocationはequal/heavier。質問画面は最大4段階、計画ツールで最大10に編集可能。dropPctは昇順・重複なし、amountは共通の金額単位。amount合計がbuyBudgetを超えても保存は拒否せず画面で警告する。none以外のbuyBudgetPctがnullの場合の警告表示と、予算未算出時の表示は画面仕様として確認する。条件配列は各最大10件・1件100文字、fx.noteは200文字まで。
+
+1ユーザー1計画、本人認証、購入のuse確認、所有者確認を前提とする。未作成GETは{plan:null,revision:0}、初回PUTはbaseRevision:0、競合409は最新のplan/revisionを返す。createdAt/updatedAt/revisionはサーバー管理。DELETEの対象は本人の計画データとanswersで、購入履歴・利用権は削除しない。削除後は有効なuseがあれば再作成可能。削除を許可する権限状態、削除直後のrevisionと再作成時の競合/古いリクエスト対策、バックアップ復元時の削除情報の再適用はまだ実装していない。
+
+### 未決・現行APIとの違い
+
+- answersは質問ID・型・選択肢・保存理由の一覧をClaudeから受領するまで保存する実装を作らない。計画テーブル/書込role/PUT/DELETEを本番DBに追加していない。
+- 通知期間終了後も、有効な買い切りuseがあれば閲覧・編集・シミュレーションは継続できる。PROは商品権限判定に使わない。
+- Claude案のuse.expiredで閲覧だけ許可、revoked/not_ownedで閲覧不可はオーナー未確認。現行のuseにはexpiresAt:nullという制約があり、use.expiredは通常データでは作れない。未購入のAPI上の状態名はmissingで、not_ownedではない。この変更にはDB/API契約との整合が必要で、今回の計算実装では権限を変更していない。
+
+### 削除とバックアップ保持の事実・表示案
+
+現行scripts/resolute/backup.pyの保持ロジックは、成功したバックアップの直近7つの異なる日付について各最新1件と、直近4つのISO週について各最新1件の和集合。重複を除くため最大11件。同日再実行で日数を減らさない。経過日数による強制消去ではなく、新しいバックアップの成功時に古い保存分を整理する。停止/失敗が続くと古いバックアップが残るため「削除から最大28日以内に必ず消去」とは表示できない。通常の毎日成功を前提にすると日次7日分＋週ごとの最新4回分という目安になる。
+
+10月10日に記録した手動バックアップ/隔離DB復元の成功は確認済みの記録として保持する。10月11日の日次Cron結果、10月12日の週次Cron、今回時点のBucket内容・実際の最古データの日付は再確認していない。計画テーブル適用後の取得/復元も未確認。本番DBやバックアップの設定・保存物を今回変更/削除していない。
+
+購入者への表示案: 「計画を削除すると、保存した計画と回答が通常の利用画面から削除されます。購入履歴と利用権は残ります。復旧用の暗号化バックアップには削除前のデータが残ることがあります。バックアップは直近7日分と週ごとの最新4回分を目安に保管し、新しいバックアップの成功時に古いものを整理します。」この文はDELETE実装前の案であり、削除完了の表示にはまだ使用しない。復旧時に削除済み計画を通常データへ戻さない仕組みはDELETEと合わせて設計・確認する。
+
+検証結果: Node 680/680（計画計算の追加6テストを含む）、Python 2,400/2,400（164.933秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --cached --check成功。これは計画の保存/削除・実画面・実DBやバックアップ最新実行の検証ではない。
