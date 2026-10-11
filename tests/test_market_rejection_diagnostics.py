@@ -197,7 +197,7 @@ class ResearchRejectionDetailTests(unittest.TestCase):
     def test_spelled_count_words_come_with_the_next_word(self):
         import factual_validation as f
         with self.assertRaisesRegex(ValueError, 'unsupported-number'):
-            f.validate_numbers('9社が参加', 'Nine companies joined, up three percent')
+            f.validate_numbers('8社が参加', 'Nine companies joined, up three percent')
         self.assertEqual(f.LAST_NUMBER_REJECTION[0]['sourceWords'], ['nine companies', 'three percent'])
 
     def test_direction_and_name_rejections_record_what_differed(self):

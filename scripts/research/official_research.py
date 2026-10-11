@@ -458,11 +458,15 @@ def validate(value, body, source_title=''):
     if (_validation_success.contains(_validation_success.key(value, body, source_title), policy)
             and validation_policy() == policy):
         return value
-    for name,item in [('title',value['title']),('summary',value['summary']),*[('fact',x) for x in value['facts']],('purpose',value['purpose'])]:
+    checked=[('title',value['title']),('summary',value['summary']),*[('fact',x) for x in value['facts']]]
+    if not fallback_purpose(value['purpose']):
+        checked.append(('purpose',value['purpose']))
+    elif set(value['purpose'])!={'ja','en','evidenceQuote'} or not isinstance(value['purpose']['evidenceQuote'],str):
+        raise ValueError('invalid-item')
+    for name,item in checked:
         preflight_copy_bounds(name,item)
     source_context=(body,normalized(body),rollout_validation.source_context(body),material_relations.source_context(body))
-    for name, item in [('title',value['title']),('summary',value['summary']),
-                       *[('fact',x) for x in value['facts']],('purpose',value['purpose'])]:
+    for name, item in checked:
         try:
             validate_item(name, item, body, source_title, source_context)
         except ValueError as exc:
@@ -475,23 +479,68 @@ def validate(value, body, source_title=''):
     return value
 
 
-def salvage_facts(value, row):
-    """Owner, Oct 11: one wrong fact must not hold back the whole story.
+# Owner, Oct 11: when the company's purpose cannot be written so that it
+# passes the checks, point to the release instead of holding the story.
+PURPOSE_FALLBACK = {'ja': '会社が示した狙いは、元の発表文でご確認ください。',
+                    'en': "See the original release for the company's stated purpose."}
 
-    Leave out the facts that fail their own check when at least three checked
-    facts remain. Nothing is rewritten: the kept facts, title, summary and
-    purpose still pass the full validate() afterwards.
+
+def fallback_purpose(item):
+    return isinstance(item, dict) and item.get('ja') == PURPOSE_FALLBACK['ja'] and item.get('en') == PURPOSE_FALLBACK['en']
+
+
+def item_passes(name, item, row):
+    try:
+        validate_item(name, copy.deepcopy(item), row['body'], row['title'])
+        return True
+    except (ValueError, TypeError, KeyError, AttributeError):
+        return False
+
+
+def salvage(value, row, previous=()):
+    """Owner, Oct 11: one wrong part must not hold back the whole story.
+
+    Keep every part that passes its own check, from this answer or an earlier
+    attempt on the same source revision, and redo only what failed. A failing
+    fact is left out when at least three checked facts remain; a failing
+    purpose falls back to pointing at the release. Nothing is rewritten: the
+    result still goes through the full validate().
     """
-    if not isinstance(value, dict) or not isinstance(value.get('facts'), list) or len(value['facts']) <= 3:
+    if not isinstance(value, dict) or not isinstance(value.get('facts'), list):
         return value
-    kept = []
-    for item in value['facts']:
-        try:
-            validate_item('fact', copy.deepcopy(item), row['body'], row['title'])
-        except (ValueError, TypeError, KeyError):
+    earlier = [note for note in previous if isinstance(note, dict)]
+    result = dict(value)
+    for name in ('title', 'summary', 'purpose'):
+        if item_passes(name, value.get(name), row):
             continue
-        kept.append(item)
-    return {**value, 'facts': kept} if 3 <= len(kept) < len(value['facts']) else value
+        kept = next((note[name] for note in earlier if item_passes(name, note.get(name), row)), None)
+        if kept is not None:
+            result[name] = kept
+        elif name == 'purpose' and isinstance(result.get('summary'), dict):
+            result[name] = {**PURPOSE_FALLBACK, 'evidenceQuote': result['summary'].get('evidenceQuote')}
+    facts = [item for item in value['facts'] if item_passes('fact', item, row)]
+    if len(facts) < len(value['facts']):
+        seen = {normalized(item['ja']) for item in facts}
+        for note in earlier:
+            for item in note.get('facts') or []:
+                if len(facts) < 5 and item_passes('fact', item, row) and normalized(item['ja']) not in seen:
+                    seen.add(normalized(item['ja']))
+                    facts.append(item)
+        if 3 <= len(facts):
+            result['facts'] = facts[:5]
+    return result
+
+
+def earlier_attempts(db, row):
+    """Rejected answers for this same source revision, newest first (private audit rows)."""
+    notes = []
+    for failure in db.execute('SELECT payload FROM official_research_attempt_failures WHERE event_id=? AND sha=? '
+                              'ORDER BY failed_at DESC LIMIT 6', (row['id'], row['sha'])):
+        try:
+            notes.append(json.loads(failure['payload']))
+        except (TypeError, ValueError):
+            continue
+    return notes
 
 
 def validate_item(name, item, body, source_title, source_context=None):
@@ -951,6 +1000,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         policy+='\n'+issuer_business_news.FINANCIAL_POLICY
     with connect(path) as db:
         corrections=retry_feedback(db,row,excerpts)
+        previous=[] if general else earlier_attempts(db,row)
         if general:
             failure=db.execute('SELECT reason,detail,payload FROM official_research_attempt_failures WHERE event_id=? AND sha=? ORDER BY failed_at DESC LIMIT 1',(row['id'],row['sha'])).fetchone()
             corrections=(general_source_news.retry_feedback(failure['payload'],row) or [{'issue':failure['reason'],'field':failure['detail']}]) if failure else []
@@ -1016,7 +1066,7 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                     if not isinstance(evidence_id,str) or evidence_id not in excerpts:
                         raise ValueError('unsupported-quote')
                     bind_evidence(item,evidence_id,excerpts,row)
-            note=validate(salvage_facts(value,row),row['body'],row['title'])
+            note=validate(salvage(value,row,previous),row['body'],row['title'])
             if row.get('issuer_business'):
                 note['issuerBusinessPolicy']=issuer_business_news.POLICY
                 issuer_business_news.validate_paraphrase(note)
