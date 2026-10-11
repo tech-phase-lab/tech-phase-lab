@@ -11,6 +11,7 @@ import { observePageActivity } from "@/lib/research/page-activity";
 import { createWatchTracker } from "@/lib/research/watch-new-items";
 import NewsStory from "../news/news-story";
 import styles from "./company-activity.module.css";
+import DeepAnalysisPanel from "../deep-analysis-panel";
 
 // Reads the existing public feed only; collection, translation and publication
 // rules remain owned by the news pipeline. This is a recent window, not history.
@@ -58,7 +59,8 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
     const first = `${row.kind === "observed" ? (ja ? "取得" : "Found") : (ja ? "発表" : "Published")} ${shortNewsTime(row.at, row.kind)}`;
     return row.kind === "observed" ? first : `${first} · ${ja ? "取得" : "Detected"} ${shortNewsTime(row.observedAt, "observed")}`;
   };
-  return <section className={`${styles.activity} ${styles.monitor}`} aria-label={ja?'銘柄監視':'Company monitor'}>
+  return <><DeepAnalysisPanel lang={lang} ticker={ticker} kind="earnings" />
+  <section className={`${styles.activity} ${styles.monitor}`} aria-label={ja?'銘柄監視':'Company monitor'}>
     <h2 className={styles.monitorTitle}><button type="button" className={styles.monitorToggle} aria-expanded={open} aria-controls={bodyId} onClick={() => { setOpen(value => !value); setFreshCount(0); }}>
       <span className={styles.titleText}><span aria-hidden="true">{open ? "▾" : "▸"}</span>{ja ? 'リアルタイム監視' : 'Live monitor'}</span>
       <span className={styles.connection} data-live={!!data && !failed && !paused} data-new={freshCount > 0} data-failed={failed}><i aria-hidden="true"/>{freshCount ? (ja ? `新着 ${freshCount}件` : `${freshCount} new`) : failed ? (ja ? '再接続中' : 'Reconnecting') : paused ? (ja ? '一時停止' : 'Paused') : data ? (ja ? '自動更新' : 'Auto-updating') : (ja ? '接続中' : 'Connecting')}</span>
@@ -72,5 +74,5 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
     {rows.length > 3 && <details className={styles.more}><summary>{ja ? `ほか${rows.length - 3}件を見る` : `Show ${rows.length - 3} more`}</summary>{rows.slice(3).map(row => <article key={row.id}><NewsStory lang={lang} label={row.label} title={row.title} body={row.body} publication={publication(row)}/></article>)}</details>}
     {data && <p className={styles.note}>{ja ? "配信済み情報を自動確認。未取得の情報・全期間の履歴は含みません。" : "Auto-checking published updates; excludes uncollected information and older history."}</p>}
     </div>
-  </section>;
+  </section></>;
 }

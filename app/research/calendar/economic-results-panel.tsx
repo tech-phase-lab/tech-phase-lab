@@ -9,6 +9,7 @@ import { createNewsPoller } from "@/lib/research/news-poller";
 import { observePageActivity } from "@/lib/research/page-activity";
 import styles from "../research-tools.module.css";
 import calendarStyles from "./event-calendar.module.css";
+import DeepAnalysisPanel from "../deep-analysis-panel";
 
 export default function EconomicResultsPanel({ lang, zone, period }: { lang: "ja" | "en"; zone: string; period: string }) {
   const [updates, setUpdates] = useState<OfficialUpdate[]>([]);
@@ -35,12 +36,13 @@ export default function EconomicResultsPanel({ lang, zone, period }: { lang: "ja
   const ja = lang === "ja";
   const results = mergeEconomicResults(updates, briefs).filter(event => (period === "upcoming" || period === "today-upcoming") || calendarDateKey(event.releasedAt, zone).startsWith(period));
   const zoneLabel = zone === "Asia/Tokyo" ? "JST" : "ET";
-  return <section className={styles.section} aria-label={ja ? "発表済みの結果" : "Released results"}>
+  return <><DeepAnalysisPanel lang={lang} kind="indicator" />
+  <section className={styles.section} aria-label={ja ? "発表済みの結果" : "Released results"}>
     <h2>{ja ? "発表済みの結果" : "Released results"}</h2>
     {failed && <p role="status" className={styles.description}>{ja ? "最新の結果を取得できません。保存済みの公式確認結果を表示しています。" : "Latest results are unavailable. Showing saved, verified results."}</p>}
     <ol className={calendarStyles.agenda}>{results.map(event => <li key={event.id}><details>
       <summary><time dateTime={event.releasedAt}>{calendarDateKey(event.releasedAt, zone).slice(5).replace("-", "/")}<small>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(event.releasedAt))} {zoneLabel}</small></time><span className={calendarStyles.eventName}>{event.title[lang]}<small>{event.result[lang]}</small></span><span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
       <div className={calendarStyles.eventDetails}><p>{event.detail[lang]}</p>{!event.sourceUrl.startsWith("https://x.com/") && <a href={event.sourceUrl} target="_blank" rel="noreferrer">{event.sourceName} ↗</a>}</div>
     </details></li>)}</ol>
-  </section>;
+  </section></>;
 }
