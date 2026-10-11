@@ -65,7 +65,7 @@ export default function StockDirectory() {
   const [profile, setProfile] = useState<StockProfile | null>(null);
   const [brief, setBrief] = useState<AnnualFilingBrief | null>(null);
   const [briefStatus, setBriefStatus] = useState<BriefStatus>("idle");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(Boolean(query.trim()));
   const [profileLoading, setProfileLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [asOf, setAsOf] = useState<string | null>(null);
