@@ -23,6 +23,21 @@ CREATE TABLE resolute.plan_deletions (
  PRIMARY KEY (clerk_user_id, revision)
 );
 REVOKE ALL ON resolute.plans, resolute.plan_deletions FROM PUBLIC;
+-- All entitlement writers share the plan lock without giving the plan API UPDATE rights.
+CREATE FUNCTION resolute.lock_entitlement_subject() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+ IF TG_OP = 'UPDATE' AND NEW.clerk_user_id <> OLD.clerk_user_id THEN
+  RAISE EXCEPTION 'Entitlement subject is immutable';
+ END IF;
+ IF TG_OP = 'DELETE' THEN
+  PERFORM pg_advisory_xact_lock(hashtextextended(OLD.clerk_user_id, 0));
+  RETURN OLD;
+ END IF;
+ PERFORM pg_advisory_xact_lock(hashtextextended(NEW.clerk_user_id, 0));
+ RETURN NEW;
+END $$;
+CREATE TRIGGER resolute_entitlement_subject_lock BEFORE INSERT OR UPDATE OR DELETE
+ ON resolute.entitlements FOR EACH ROW EXECUTE FUNCTION resolute.lock_entitlement_subject();
 -- Provision resolute_plan_writer separately with SELECT on entitlements,
 -- SELECT/INSERT/UPDATE on plans, SELECT/INSERT on plan_deletions. No DDL/admin rights.
 COMMIT;

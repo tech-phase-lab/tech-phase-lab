@@ -36,10 +36,17 @@ test('PostgreSQL create/update/delete/recreate preserve revision, ownership and 
  // Separate leases serialize this single embedded connection. Production uses DB transaction locks.
  let tail=Promise.resolve();
  const pool={async connect(){let unlock;const previous=tail;tail=new Promise(r=>unlock=r);await previous;
-  return {async query(sql,args){const r=await db.query(sql,args);return {...r,rowCount:sql.trimStart().startsWith('SELECT') ? r.rows.length : r.affectedRows};},release(){unlock();}};}};
+  return {async query(sql,args){const r=await db.query(sql,args);if(sql==='BEGIN')await db.exec('SET LOCAL ROLE resolute_plan_writer');return {...r,rowCount:sql.trimStart().startsWith('SELECT') ? r.rows.length : r.affectedRows};},release(){unlock();}};}};
  const store=createPlanStore(pool);
  try {
   for(const file of ['001_entitlements.sql','002_plans.sql'])await db.exec(readFileSync(new URL('../db/resolute/'+file,import.meta.url),'utf8'));
+  await db.exec(`CREATE ROLE resolute_plan_writer; GRANT USAGE ON SCHEMA resolute TO resolute_plan_writer;
+   GRANT SELECT ON resolute.entitlements TO resolute_plan_writer;
+   GRANT SELECT,INSERT,UPDATE ON resolute.plans TO resolute_plan_writer;
+   GRANT SELECT,INSERT ON resolute.plan_deletions TO resolute_plan_writer`);
+  await db.exec('SET ROLE resolute_plan_writer');
+  await assert.rejects(()=>db.query('UPDATE resolute.entitlements SET revoked_at=CURRENT_TIMESTAMP'),e=>e.code==='42501');
+  await db.exec('RESET ROLE');
   await db.query(`INSERT INTO resolute.entitlements(clerk_user_id,product_id,kind,starts_at,source)
    VALUES('user_buyer','resolute_v1','use','2020-01-01','purchase')`);
   assert.deepEqual(await store('user_buyer','GET'),{plan:null,revision:0});
@@ -115,7 +122,7 @@ test('isolated restore reapplies latest deletion markers and preserves newer rec
  const db=new PGlite({database:'resolute_restore_test',loadDataDir:data});
  const pool={async connect(){return {query:(sql,args)=>db.query(sql,args),release(){}};}};
  try {
-  await db.exec('CREATE SCHEMA resolute');
+  await db.exec('CREATE SCHEMA resolute; CREATE TABLE resolute.entitlements(clerk_user_id text)');
   const migration=readFileSync(new URL('../db/resolute/002_plans.sql',import.meta.url),'utf8');
   // Apply the identical table definitions without the production-database migration guard.
   await db.exec(migration.slice(migration.indexOf('CREATE TABLE'),migration.indexOf('-- Provision')));

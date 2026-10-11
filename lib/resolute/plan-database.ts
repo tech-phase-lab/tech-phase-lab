@@ -23,7 +23,7 @@ export function createPlanStore(pool: Pick<Pool, "connect">) {
       await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", [userId]);
       const rights = await client.query(`SELECT 1 FROM resolute.entitlements WHERE clerk_user_id=$1
         AND product_id='resolute_v1' AND kind='use' AND revoked_at IS NULL
-        AND starts_at<=statement_timestamp() AND expires_at IS NULL FOR SHARE`, [userId]);
+        AND starts_at<=statement_timestamp() AND expires_at IS NULL`, [userId]);
       const active = rights.rowCount === 1;
       if (method !== "DELETE" && !active) throw new PlanAccessDenied();
       const result = await client.query<Row>("SELECT plan,revision,created_at,updated_at FROM resolute.plans WHERE clerk_user_id=$1 FOR UPDATE", [userId]);

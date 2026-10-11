@@ -514,3 +514,14 @@ plan_deletionsが復元スナップショット内にあるだけでは削除保
 ローカルPostgreSQLエンジンでSQL適用、未作成、保存、競合、削除、再作成、取り消し後の閲覧/編集拒否と本人削除、未購入本人の削除、削除記録失敗時のロールバックを確認した。隔離DBで古い計画の削除履歴再適用、新しい再作成計画の保持、欠けた削除済みの印の復元、再適用の冪等性、不正履歴と別DBの拒否を確認した。HTTPテストで本人識別・origin・入力上限・競合応答・秘密を含まないエラー・書込再試行なしを確認した。これはRailwayの実DBでの保存や、実Bucketの独立履歴を使ったpg_restoreの実測結果ではない。
 
 検証結果: Node 685/685、Python 2,400/2,400（156.300秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。実際のNode HTTP起動・署名JWT認証・DELETE本文転送・本番無効時の503もローカル確認済みで、DBへは接続していない。最初のPython実行は既存test_deep_analysisの全文文字列検査がpublishedAtの45秒を45%と誤検出して1件失敗した。対象外のニュース実装/テストを変更せず、全体再実行の成功を確認した。
+
+
+## 2026-10-12 ChatGPT — 計画APIの最小DB権限を再確認
+
+計画writerにはentitlementsのSELECTだけを付与し、INSERT/UPDATE/DELETEは付与しない。PostgreSQLのSELECT FOR SHAREはUPDATE権限も必要になるため、権限確認クエリから行ロックを除いた。専用DBの明示適用用002_plans.sqlには、entitlementsのINSERT/UPDATE/DELETEも計画処理と同じユーザー単位のadvisory transaction lockを取得するtriggerを追加した。これにより購入権限を書き換える権限を計画APIへ与えずに、購入権限の変更と計画処理を直列化する。entitlementsのユーザーIDの変更は拒否し、別ユーザーへの権限移動をこの更新処理で行わない。
+
+ローカルPostgreSQLの計画テストはresolute_plan_writerの限定roleへ切り替えて実行し、保存・更新・削除の成功と、entitlementsのUPDATEが42501で拒否されることを確認した。既存のAPI読取role、実DB、Railwayの環境変数・サービス設定は変更していない。本番有効化前に独立した削除履歴と復元ジョブを接続する条件は維持する。triggerも本番へ未適用であり、適用後の実DBでの同時実行確認は未実施。
+
+公式参照: https://www.postgresql.org/docs/current/sql-select.html （locking clauseにはSELECTに加えてUPDATE権限が必要）。
+
+最小権限修正後の最終検証: Node 685/685、Python 2,400/2,400（159.378秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。限定roleによる実SQLテストは成功したが、実DBへのmigration/role適用・独立削除履歴の出力/読戻し・pg_restoreジョブ接続・画面からの実環境検証は未実施。
