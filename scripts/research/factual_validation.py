@@ -274,6 +274,45 @@ def spelled_values(evidence):
     return found
 
 
+SPELLED_COUNT_WORDS = ('two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve')
+SPELLED_COUNT = re.compile(r'\b(' + '|'.join(SPELLED_COUNT_WORDS) + r')(?:\s+|-)(?!(?:of|or|to|and|percent|per|times|in|at|by|for)\b)([a-z][a-z-]*)', re.I)
+# Japanese counters that carry no object of their own ("3つの…", "3件の…").
+GENERIC_COUNTERS = r'つ|個|件|種類|か所|カ所|ヶ所|箇所|拠点|基|台|棟|機種|モデル'
+# Counters that name their object must match the English noun.
+NAMED_COUNTERS = (
+    (r'社', {'companies', 'company', 'firms', 'partners', 'customers', 'vendors', 'suppliers', 'businesses'}),
+    (r'人|名', {'people', 'employees', 'executives', 'members', 'directors', 'researchers', 'engineers', 'leaders'}),
+    (r'カ国|か国|ヶ国', {'countries', 'nations', 'markets'}),
+)
+
+
+def spelled_count_supported(value, text, evidence):
+    """Oct 11: a source's "three Google data centers" may be written 3つの….
+
+    Only a count the source spells before a noun, and only where the copy
+    writes the digit with that same English noun or a Japanese counter for
+    it. A date, month, amount or duration ("3日間", "3月", "$3") never
+    borrows it, nor does a digit placed before a different noun.
+    """
+    if value != value.to_integral_value() or not 2 <= value <= 12:
+        return False
+    nouns = {m[2].lower() for m in SPELLED_COUNT.finditer(evidence) if SMALL_NUMBERS[m[1].lower()] == value}
+    if not nouns:
+        return False
+    digit = str(int(value))
+    for match in re.finditer(r'(?<![\d.,$€£¥\w])' + digit + r'(?![\d.,])', text):
+        after = text[match.end():]
+        word = re.match(r'\s+([A-Za-z][A-Za-z-]*)', after)
+        if word and word[1].lower() in nouns:
+            return True
+        if re.match(r'(?:' + GENERIC_COUNTERS + r')', after):
+            return True
+        for counter, allowed in NAMED_COUNTERS:
+            if re.match(r'(?:' + counter + r')', after) and nouns & allowed:
+                return True
+    return False
+
+
 # What decided the last number rejection (values and dates only; diagnostics).
 LAST_NUMBER_REJECTION = [{}]
 
@@ -282,6 +321,7 @@ def validate_numbers(text, evidence, check_dates=True):
     # Compare exact quantities rather than numeric spelling: $150B equals
     # 1500億ドル; $15B, 1500万ドル and -1500億ドル do not.
     extra = set(numeric_values(text)) - set(numeric_values(evidence)) - spelled_values(evidence)
+    extra = {(v, k) for v, k in extra if not (k == 'number' and spelled_count_supported(v, text, evidence))}
     if extra:
         LAST_NUMBER_REJECTION[0] = {'kind': 'value', 'values': sorted(str(v) + ('%' if k == 'percent' else '') for v, k in extra)[:4],
                                     'sourceValues': sorted({str(v) for v, _ in numeric_values(evidence)})[:8],

@@ -47,10 +47,56 @@ class FactSalvageTests(unittest.TestCase):
         invented = copy('Inferizeを5億ドルで買収した。', 'Nebius acquired Inferize for $500 million.', QUOTES[0])
         value = self.note_with(invented)
         row = {'body': ' '.join(QUOTES) + ' ' + 'Company announcement background. ' * 50, 'title': 'Nebius acquires Inferize'}
-        kept = research.salvage_facts(value, row)
+        kept = research.salvage(value, row)
         self.assertEqual(kept['facts'], NOTE['facts'])
         self.assertEqual(kept['title'], NOTE['title'])
         self.assertEqual(len(value['facts']), 4)
+
+
+    def test_a_failing_purpose_points_to_the_release(self):
+        note = json.loads(json.dumps(NOTE))
+        note['purpose'] = copy('5億ドルの売上を目指す。', 'Nebius targets $500 million in revenue.', QUOTES[2])
+        self.assertEqual(self.run_note(reply(note)), 'done')
+        item = self.feed()[0]
+        text = json.dumps(item, ensure_ascii=False)
+        self.assertNotIn('5億', text)
+        self.assertIn(research.PURPOSE_FALLBACK['ja'], text)
+
+    def test_a_retry_keeps_what_passed_before_and_redoes_only_what_failed(self):
+        first = json.loads(json.dumps(NOTE))
+        first['summary'] = copy('Inferizeを5億ドルで買収した。', 'Nebius acquired Inferize for $500 million.', QUOTES[0])
+        self.assertEqual(self.run_note(reply(first)), 'retry')
+        second = json.loads(json.dumps(NOTE))
+        second['title'] = copy('Nebius、Inferizeを2社買収', 'Nebius buys two Inferize units', QUOTES[0])
+        with base.research.connect(self.path) as db:
+            db.execute('UPDATE official_research_jobs SET next_at=0')
+        self.assertEqual(self.run_note(reply(second)), 'done')
+        item = self.feed()[0]
+        self.assertEqual(item['title']['en'], NOTE['title']['en'])
+        self.assertEqual(item['summary']['en'], NOTE['summary']['en'])
+
+    def test_a_retry_never_reuses_an_answer_for_another_source_revision(self):
+        row = {'body': 'Totally different body text about something else entirely. ' * 30, 'title': 'Other'}
+        value = json.loads(json.dumps(NOTE))
+        value['title'] = copy('別の見出し', 'Another headline', 'not in the body at all, so it fails')
+        kept = research.salvage(value, row, [json.loads(json.dumps(NOTE))])
+        self.assertEqual(kept['title'], value['title'])
+
+
+class SpelledCountTests(unittest.TestCase):
+    def test_a_spelled_count_supports_its_digit_only_for_the_same_object(self):
+        fv = research.factual_validation
+        source = 'Google will build three Google data centers in Texas.'
+        fv.validate_numbers('3つのGoogleデータセンターを建設する。', source)
+        fv.validate_numbers('Google will build 3 Google data centers.', source)
+        fv.validate_numbers('3社が参加した。', 'Three companies joined.')
+        for text, evidence in (('4つのデータセンター', source), ('2社が参加', 'Two of the partners joined.'),
+                               ('1社を買収', 'It bought one company.'), ('3日間', 'across three targets'),
+                               ('3月', 'three targets'), ('3 proteins', 'three targets'), ('$3', 'three targets'),
+                               ('3人が参加', 'Three companies joined.'), ('3社', 'three data centers'),
+                               ('3 sites', source)):
+            with self.subTest(text=text), self.assertRaisesRegex(ValueError, 'unsupported-number'):
+                fv.validate_numbers(text, evidence)
 
 
 class AdditiveNotTests(unittest.TestCase):
