@@ -2,13 +2,15 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { PGlite } from '@electric-sql/pglite';
+import { emptyPlanAnswers } from '../lib/resolute/plan-answers.ts';
 import { parsePlan, parsePlanMutation } from '../lib/resolute/plan-data.ts';
 import { createPlanStore, PlanAccessDenied, PlanConflict } from '../lib/resolute/plan-database.ts';
 import { createPlanRoutes } from '../lib/resolute/plan-route.ts';
 import { fetchResolutePlan } from '../lib/resolute/plan-transport.ts';
 import { createHandler } from '../services/resolute-api/handler.mjs';
 
-const plan = {schemaVersion:1,currency:'JPY',monthlyLivingCost:250000,savingsMonths:12,reserveMonths:6,
+const plan = {schemaVersion:1,answersVersion:1,answers:{...emptyPlanAnswers(),q01:'first',q28:['cash_low']},
+ fx:{thresholdYen:null,usdJpy:150.25,note:'復元対象のメモ'},currency:'JPY',monthlyLivingCost:250000,savingsMonths:12,reserveMonths:6,
  nearTermExpense:2000000,financialAssets:10000000,investedAmount:3000000,investable:6500000,
  tolerancePct:20,toleranceDrop:600000,perStockCapPct:10,buyMode:'steps',
  buyLines:[{dropPct:10,amount:200000},{dropPct:20,amount:200000}],buyBudgetPct:10,
@@ -16,7 +18,7 @@ const plan = {schemaVersion:1,currency:'JPY',monthlyLivingCost:250000,savingsMon
 const request=(method,body,origin='https://app.test')=>new Request('https://app.test/api/resolute/plan',{
  method,headers:{Origin:origin,'Content-Type':'application/json'},body:method==='GET'?undefined:JSON.stringify(body)});
 
-test('plan schema excludes answers/fx, timestamps and identity and verifies precise derived money',()=>{
+test('plan schema accepts finalized answers/fx and excludes timestamps and identity and verifies precise derived money',()=>{
  assert.deepEqual(parsePlan(plan),plan); // Buy total exceeds budget: allowed, UI warning only.
  for(const patch of [{answers:{}},{fx:{}},{createdAt:'2020-01-01'},{userId:'user_other'},
   {investable:6500001},{toleranceDrop:600001},{savingsMonths:600.1},{savingsMonths:0.01},
@@ -39,7 +41,7 @@ test('PostgreSQL create/update/delete/recreate preserve revision, ownership and 
   return {async query(sql,args){const r=await db.query(sql,args);if(sql==='BEGIN')await db.exec('SET LOCAL ROLE resolute_plan_writer');return {...r,rowCount:sql.trimStart().startsWith('SELECT') ? r.rows.length : r.affectedRows};},release(){unlock();}};}};
  const store=createPlanStore(pool);
  try {
-  for(const file of ['001_entitlements.sql','002_plans.sql'])await db.exec(readFileSync(new URL('../db/resolute/'+file,import.meta.url),'utf8'));
+  for(const file of ['001_entitlements.sql','002_plans.sql','003_plan_answers_fx.sql'])await db.exec(readFileSync(new URL('../db/resolute/'+file,import.meta.url),'utf8'));
   await db.exec(`CREATE ROLE resolute_plan_writer; GRANT USAGE ON SCHEMA resolute TO resolute_plan_writer;
    GRANT SELECT ON resolute.entitlements TO resolute_plan_writer;
    GRANT SELECT,INSERT,UPDATE ON resolute.plans TO resolute_plan_writer;
@@ -53,6 +55,8 @@ test('PostgreSQL create/update/delete/recreate preserve revision, ownership and 
   await assert.rejects(()=>store('user_other','GET'),PlanAccessDenied);
   const saved=await store('user_buyer','PUT',{baseRevision:0,plan});assert.equal(saved.revision,1);
   assert.equal(saved.plan.createdAt,saved.plan.updatedAt);
+  assert.deepEqual(saved.plan.answers,plan.answers);assert.deepEqual(saved.plan.fx,plan.fx);
+  assert.equal((await store('user_buyer','GET')).plan.answers.q01,'first');
   const outcomes=await Promise.allSettled([store('user_buyer','PUT',{baseRevision:1,plan}),store('user_buyer','DELETE',{baseRevision:1,plan:null})]);
   assert.equal(outcomes.filter(r=>r.status==='fulfilled').length,1);
   assert.equal(outcomes.find(r=>r.status==='rejected').reason.snapshot.revision,2);
@@ -68,7 +72,9 @@ test('PostgreSQL create/update/delete/recreate preserve revision, ownership and 
   assert.deepEqual(await store('user_buyer','DELETE',{baseRevision:5,plan:null}),{plan:null,revision:6});
   assert.deepEqual(await store('user_missing','DELETE',{baseRevision:0,plan:null}),{plan:null,revision:1});
   const tombstone=(await db.query("SELECT * FROM resolute.plans WHERE clerk_user_id='user_buyer'")).rows[0];
-  assert.equal(tombstone.plan,null);assert.equal(tombstone.created_at,null);assert.equal(tombstone.updated_at,null);assert.ok(tombstone.deleted_at);
+  assert.equal(tombstone.plan,null);
+  const erased=await db.query("SELECT plan->'answers' AS answers,plan->'fx' AS fx FROM resolute.plans WHERE clerk_user_id='user_buyer'");
+  assert.equal(erased.rows[0].answers,null);assert.equal(erased.rows[0].fx,null);assert.equal(tombstone.created_at,null);assert.equal(tombstone.updated_at,null);assert.ok(tombstone.deleted_at);
   const journal=await db.query('SELECT revision FROM resolute.plan_deletions ORDER BY clerk_user_id,revision');
   assert.equal(journal.rows.length,4);
   await db.exec('ALTER TABLE resolute.plan_deletions RENAME TO unavailable_ledger');
@@ -126,6 +132,8 @@ test('isolated restore reapplies latest deletion markers and preserves newer rec
   const migration=readFileSync(new URL('../db/resolute/002_plans.sql',import.meta.url),'utf8');
   // Apply the identical table definitions without the production-database migration guard.
   await db.exec(migration.slice(migration.indexOf('CREATE TABLE'),migration.indexOf('-- Provision')));
+  const finalized=readFileSync(new URL('../db/resolute/003_plan_answers_fx.sql',import.meta.url),'utf8');
+  await db.exec(finalized.slice(finalized.indexOf('ALTER TABLE'),finalized.indexOf('COMMIT;')));
   for(const [id,revision] of [['user_old',2],['user_recreated',7]])await db.query(`INSERT INTO resolute.plans
    (clerk_user_id,revision,plan,created_at,updated_at) VALUES($1,$2,$3,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)`,[id,revision,JSON.stringify(plan)]);
   const marker=(userId,revision)=>({userId,revision,deletedAt:'2026-10-12T00:00:00.000Z'});

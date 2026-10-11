@@ -1262,3 +1262,75 @@ plan_deletionsが復元スナップショット内にあるだけでは削除保
 公式参照: https://www.postgresql.org/docs/current/sql-select.html （locking clauseにはSELECTに加えてUPDATE権限が必要）。
 
 最小権限修正後の最終検証: Node 685/685、Python 2,400/2,400（159.378秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。限定roleによる実SQLテストは成功したが、実DBへのmigration/role適用・独立削除履歴の出力/読戻し・pg_restoreジョブ接続・画面からの実環境検証は未実施。
+
+
+## 2026-10-12 ChatGPT — 30問のanswersとfx最終仕様を受領・実装
+
+Claudeから質問30問と保存仕様の確定回答を受領した。この追記は前節の「answers/fxは受付しない・実装保留」に優先する。既存本文はそのまま残す。PlanInputへanswersVersion:1、answers、fxを追加し、APIの保存・読込・入力検証のコードを更新した。タイプとアドバイスの判定はClaude側の純粋関数が担当し、サーバーはruleTypeの既存enumを検証して参考値として保存するだけ。再計算や分類ロジックは追加していない。金額の既存再計算・権限判定・競合revisionの契約は維持する。
+
+### answersVersion=1の契約
+
+answersはq01〜q30の全30キーを必須とする。出さなかった質問と未回答はnull。省略・余分なキー・undefined・数値・自由記述は受付しない。単一選択は選択肢IDの文字列、q21/q28/q29だけは選択肢IDの配列。配列は重複なしで1件以上、それぞれ選択肢数を上限とする。何も選んでいなければ空配列ではなくnullにする。
+
+選択肢の正本はlib/resolute/plan-answers.tsのPLAN_ANSWER_OPTIONS。PlanAnswers型も公開し、emptyPlanAnswers()で全30キーがnullの初期値を作れる。parsePlanAnswersは保存形式の検証だけを行い、タイプ判定は行わない。
+
+| 質問ID | 選択肢ID |
+| --- | --- |
+| q01 | first / 1to3 / 3plus |
+| q02 | l15 / l25 / l40 / l40plus / custom |
+| q03 | stable / uneven / none |
+| q04 | m0 / m1 / m3 / m6 / m12 / custom |
+| q05 | m3 / m6 / m12 / custom |
+| q06 | none / has |
+| q07 | input / unknown |
+| q08 | not_yet / input |
+| q09 | y3to5 / y5to10 / y10plus / undecided |
+| q10 | often / sometimes / rarely / no_drop_yet |
+| q11 | p10 / p20 / p30 / p40plus / unknown |
+| q12 | no / yes / no_drop_yet |
+| q13 | wait / buy_more / reduce / unknown |
+| q14 | never / once / often / no_rally_yet |
+| q15 | hold / sell_some / buy_more / undecided |
+| q16 | steady / fast / defensive / undecided |
+| q17 | monthly / on_drop / on_rise / news / undecided |
+| q18 | many_daily / daily / weekly / rarely |
+| q19 | never / sometimes / often |
+| q20 | fund_etf / stock / bond / gold / mixed |
+| q21（複数） | tech_semis / dividend / healthcare / finance / energy_materials / other |
+| q22 | p10 / p20 / p30 / p50 / custom |
+| q23 | lt10 / p10to30 / p30to50 / gt50 / none |
+| q24 | none / single / steps2 / steps3 / steps4 |
+| q25 | d5 / d10 / d15 / d20 / custom |
+| q26 | b10 / b20 / b30 / custom |
+| q27 | equal / heavier |
+| q28（複数） | cash_low / income_unstable / over_cap / no_reason |
+| q29（複数） | over_tolerance / cant_sleep / thesis_broken |
+| q30 | ignore / yen3 / yen7 / custom |
+
+q21はq20がstock/mixedのときだけ回答可能、それ以外はnull。q25/q26はq24がsingle/steps2/steps3/steps4のときだけ回答可能。q27はq24がsteps2/steps3/steps4のときだけ回答可能。親質問がnullまたは対象外なら子質問もnullを要求する。条件に該当していても未回答ならnullを保存できる。
+
+### 数値とfx
+
+数値の回答はanswersへ入れず、Planの既存数値項目へ入れる。質問から計画を作成するとき、生活費の代表値はl15=150000、l25=250000、l40/l40plus=400000（提示されたJPYの例）。貯金月数はm0=0、m1=1、m3=3、m6=6、m12=12、q11のp40plusは40。customは本人が入力した値を使う。金額の通貨単位は引き続きJPY=円/USD=セントで、サーバーは為替による自動換算や質問の代表値への書換えをしない。その他の代表値とPlan項目への取込みはClaudeの質問画面が担当する。
+
+計画ツールでの数値編集を妨げないため、代表値と現在のPlan数値を一律に同値必須とはしない。サーバーは各項目の型・範囲・精度と金額計算の整合を検証する。ただし明示されたunknown/not_yetの条件は検証し、q07=unknownならfinancialAssets=null、q08=not_yetならinvestedAmount=nullを要求する。これらの金額を後から入力する場合は該当回答IDもinputへ更新する。ruleTypeは選択肢や数値と照合して判定し直さない。
+
+fxは{thresholdYen:number|null,usdJpy:number|null,note:string}の3キーだけ。thresholdYenは0.1〜50で小数1桁、usdJpyは50〜500で小数2桁、noteはUnicodeコードポイントで200文字まで。usdJpyはq30とは独立した入力で、未入力ならnull。q30=ignoreならthresholdYen=null、yen3なら3、yen7なら7、customなら範囲内の入力値を要求する。q30が未回答のnullなら、fx自身の型・範囲を検証し、回答を勝手に生成しない。旧fxの形や余分なキーは400にする。USDの計算入力でもthresholdYenの単位は円で変更しない。
+
+### 自由記述と削除
+
+q28/q29の自由記述はanswersへ入れず、noBuyConditions/haltConditionsへ保存する。各配列は最大10件、各文字列はUnicodeコードポイントで100文字まで。入力欄の表示はClaude指定の「個人が特定できる情報は書かないでください」を使う。ChatGPT側は今回画面の文言を変更していない。
+
+条件本文、回答、fx.noteをログへ出さない。想定外の例外に本文が含まれてもAPI応答へ出さず、一般的なエラーコードだけを返す。商品メールへの接続は今回実装しない。今後の通知ジョブでも自由記述とfx.noteをメール本文へ載せない。保存目的は回答のやり直しとClaude側のタイプ/文章再計算で、メールアドレスをPlanへ追加しない。
+
+保存できるUnicode文字列だけを受け付け、DBのjsonbで保存できないNUL/孤立サロゲートを400にする。不正UTF-8のJSON本文も勝手に置換せず400にする。本文上限16,384 bytes、createdAt/updatedAtはサーバー管理、PUTは{plan,baseRevision}、DELETEは{baseRevision}のまま。DELETEでplan本文をNULLにするためanswersVersion/answers/fxも同時に消える。削除済みの印と独立履歴への引渡しには計画・回答・自由記述を含めない。
+
+### DB適用・確認の範囲
+
+明示適用用db/resolute/003_plan_answers_fx.sqlを追加した。001→002→003の順に専用resolute DBへ適用する。002の暫定的なanswers/fx禁止制約を003で置換し、保存計画にanswersVersion=1とanswers/fxのobject型を要求する。既存のmigration本文は書き換えない。不完全な古い計画が残っていれば制約適用は失敗してロールバックする。回答を推測して補完したり、古い計画を削除して適用を通したりしない。今回の本番DBに計画テーブルを適用していないという前回記録は維持する。
+
+ローカルPostgreSQLの限定roleで回答とfxの保存/読込、DELETEでの消去、同時更新/削除の競合、再作成、削除記録失敗のロールバック、隔離DBへの削除履歴再適用を確認する。回答全30問の選択肢、非表示分岐、バージョン、null、複数選択の型/重複、fxの境界/精度、秘密を含まないエラーも検証する。これらは実Bucketの独立削除履歴や実環境のpg_restoreを確認した結果ではない。
+
+実DBへの002/003適用、writer作成、本番有効化、独立暗号化削除履歴の出力/読戻しと復元ジョブへの接続は引き続き未実施。Railwayの契約・プラン・変数・サービス設定、既存ニュース監視、他DBとメール送信は変更しない。前回コミット4ab29300adaf9dba6cffefe6f5aeea45d1bebb78のGitHub Actions run 38157631781はcompleted/successを確認した。今回の計画APIの本番有効化完了とは区別する。
+
+最終ローカル検証: Node 690/690（回答/fxの追加5テストを含む）、Python 2,400/2,400（159.386秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。Pythonは既存test_deep_analysisの全文検査がpublishedAtの45秒を45%と誤検出する問題を避けるため、RESEARCH_TEST_NOW=2026-10-08T06:00:15+00:00で公式runnerを実行した。初回のデフォルト固定時刻ではこの既存テストだけが失敗した。ニュース関連の実装/テスト/CIは変更していない。本番の保存・削除、商品メール送信、独立削除履歴と実Bucketを使った復元は未検証。

@@ -18,6 +18,6 @@ export async function readPlanMutation(request: Request, method: "PUT" | "DELETE
       parts.push(value);
     }
   } finally { reader.releaseLock(); }
-  try { return parsePlanMutation(method, JSON.parse(Buffer.concat(parts).toString("utf8"))); }
+  try { return parsePlanMutation(method, JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(Buffer.concat(parts)))); }
   catch (error) { if (error instanceof PlanInputError) throw error; throw new PlanBodyError(400); }
 }
