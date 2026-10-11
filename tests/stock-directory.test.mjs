@@ -282,8 +282,9 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /briefStatus === "approved" && brief/);
   assert.match(page, /<details className=\{polish.sourceDrawer\}/);
   assert.doesNotMatch(page, /stockFavorite|ニュース権利と分離/);
-  assert.match(market, /aria-pressed=\{favorite\}/);
-  assert.match(market, /お気に入りに追加/);
+  assert.match(market, /\{favoriteControl\}/);
+  assert.match(page, /favoriteControl=\{<FavoriteListPicker/);
+  assert.match(page, /useStockFavorites\(\)/);
   assert.match(market, /<TradingViewChart ticker=\{ticker\}/);
   assert.doesNotMatch(market, /referenceOpen|<details/);
   assert.doesNotMatch(market, /api_key|secret_key|alpaca\.markets|twelvedata\.com/i);

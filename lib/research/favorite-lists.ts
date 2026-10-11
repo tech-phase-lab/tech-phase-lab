@@ -5,6 +5,13 @@ export type FavoriteList = { id: string; name: string; tickers: string[] };
 export type FavoriteLists = { lists: FavoriteList[]; names: Record<string, string>; alerts?: PriceAlert[] };
 export const favoriteListLimit = 100;
 
+export function setFavoriteListMembership(current: FavoriteLists, listId: string, ticker: string, included: boolean, name?: string): FavoriteLists {
+  if (included) return addFavoriteToList(current, listId, ticker, name?.trim().slice(0, 160));
+  if (!current.lists.some(list => list.id === listId && list.tickers.includes(ticker))) return current;
+  return { ...current, lists: current.lists.map(list => list.id === listId
+    ? { ...list, tickers: list.tickers.filter(item => item !== ticker) } : list) };
+}
+
 // Adding is idempotent: a repeated click must never remove an existing stock.
 export function addFavoriteToList(current: FavoriteLists, listId: string, ticker: string, name?: string): FavoriteLists {
   const lists = watchlistSlots(current.lists);

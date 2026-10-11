@@ -13,6 +13,7 @@ import base from "../research.module.css";
 import styles from "./stocks.module.css";
 import polish from "./stock-polish.module.css";
 import filingStyles from "./filings.module.css";
+import { FavoriteListPicker } from "./favorite-list-picker";
 import { MarketWorkspace } from "./market-workspace";
 import StockThemeDiscovery from "./stock-theme-discovery";
 import StockSearchHistory from "./stock-search-history";
@@ -57,7 +58,7 @@ export default function StockDirectory() {
   const routeQuery = searchParams.get("q") ?? "";
   const routeSelection = searchParams.get("stock");
   const [query, setQuery] = useState(searchParams.get("q") ?? "");
-  const { favorites, toggle: toggleFavorite, error: favoriteError, editable: favoriteEditable } = useStockFavorites();
+  const favorites = useStockFavorites();
   const { history, remember, clear: clearHistory, error: historyError } = useStockHistory();
   const [results, setResults] = useState<StockDirectoryEntry[]>([]);
   const [selectedResultKey, setSelectedResultKey] = useState<string | null>(null);
@@ -270,11 +271,10 @@ export default function StockDirectory() {
       {(selectedResultKey || profileLoading || profile || directQuote) && <div ref={marketTarget} className={polish.marketTarget}>
         {selectedResultKey && !directQuote && <div className={polish.resultGuide}><button type="button" onClick={showSearchResults}>{t("← 検索結果に戻る", "← Back to results")}</button></div>}
         {profileLoading && <div className={polish.profileLoading} role="status"><span className={styles.loader} /><strong>{t("銘柄情報を読み込み中…", "Loading company…")}</strong></div>}
-        {directQuote && !profile && <MarketWorkspace key={`${directQuote.ticker}:${lang}`} {...directQuote} lang={lang} favorite={favorites.includes(directQuote.ticker)} favoriteEditable={favoriteEditable} onToggleFavorite={() => toggleFavorite(directQuote.ticker, directQuote.name)} />}
-        {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} favorite={favorites.includes(profile.ticker)} favoriteEditable={favoriteEditable} onToggleFavorite={() => toggleFavorite(profile.ticker, profile.name)} />}
+        {directQuote && !profile && <MarketWorkspace key={`${directQuote.ticker}:${lang}`} {...directQuote} lang={lang} favoriteControl={<FavoriteListPicker ticker={directQuote.ticker} name={directQuote.name} lang={lang} favorites={favorites} />} />}
+        {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} favoriteControl={<FavoriteListPicker ticker={profile.ticker} name={profile.name} lang={lang} favorites={favorites} />} />}
       </div>}
 
-      {favoriteError && <p role="alert">{t("お気に入りを保存できませんでした。", "Could not save favorites.")}</p>}
       {profile && briefStatus === "approved" && brief && <section className={filingStyles.brief} aria-labelledby="annual-brief-title">
         <h2 id="annual-brief-title">{t("どんな会社？", "Company overview (Japanese)")}</h2>
         <p lang="ja">{brief.summaryJa}</p><small>{profile.latestAnnualFiling?.filingDate} · {t("年次報告書に基づく概要", "Based on the annual report")}</small>

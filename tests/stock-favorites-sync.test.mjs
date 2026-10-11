@@ -4,6 +4,7 @@ import { createRequire } from 'node:module';
 import test from 'node:test';
 import ts from 'typescript';
 import { toggleFavoriteStock } from '../lib/research/favorites.ts';
+import * as favoriteLists from '../lib/research/favorite-lists.ts';
 
 const require = createRequire(import.meta.url);
 const source = readFileSync(new URL('../app/research/use-stock-favorites.ts', import.meta.url), 'utf8');
@@ -11,6 +12,7 @@ const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.Modu
 let state, writes;
 const target = { exports: {} };
 new Function('require', 'module', 'exports', compiled)(id => {
+  if (id === '@/lib/research/favorite-lists') return favoriteLists;
   if (id === '@/lib/research/favorites') return { toggleFavoriteStock };
   if (id === './watchlist/use-favorite-lists') return { useFavoriteLists: () => ({ ...state, update: change => {
     writes++;
@@ -80,4 +82,29 @@ test('a rejected addition to a full list does not save an orphan company name', 
   assert.equal(state.lists[0].tickers.length, 100);
   assert.equal(state.lists[0].tickers.includes('LITE'), false);
   assert.equal(state.names, names);
+});
+test('list picker adds to an empty slot, preserves other lists, and removes only the chosen membership', () => {
+  reset(); const primary = state.lists[0], alerts = state.alerts;
+  const hook = readFavorites();
+  assert.equal(hook.lists.length, 7);
+  assert.equal(hook.setMembership('my-list-3', 'LITE', true, 'Lumentum'), true);
+  assert.deepEqual(state.lists.find(list => list.id === 'my-list-3').tickers, ['LITE']);
+  assert.equal(state.lists[0], primary);
+  assert.equal(state.alerts, alerts);
+  assert.equal(state.names.LITE, 'Lumentum');
+  readFavorites().setMembership('my-list-2', 'LITE', true, 'Lumentum');
+  // Repeated events express intent; they must not toggle the stock back off.
+  readFavorites().setMembership('my-list-2', 'LITE', true, 'Lumentum');
+  assert.deepEqual(state.lists[1].tickers, ['AAPL', 'LITE']);
+  readFavorites().setMembership('my-list-3', 'LITE', false);
+  assert.deepEqual(state.lists[2].tickers, []);
+  assert.deepEqual(state.lists[1].tickers, ['AAPL', 'LITE']);
+  assert.equal(state.names.LITE, 'Lumentum');
+});
+test('picker writes are blocked until the account is ready and while conflicts are unresolved', () => {
+  for (const override of [{ ready: false }, { editable: false, status: 'conflict' }]) {
+    reset(override);
+    assert.equal(readFavorites().setMembership('my-list-2', 'LITE', true, 'Lumentum'), false);
+    assert.equal(writes, 0);
+  }
 });

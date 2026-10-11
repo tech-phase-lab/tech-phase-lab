@@ -1,12 +1,13 @@
 "use client";
 
 import { toggleFavoriteStock } from "@/lib/research/favorites";
+import { setFavoriteListMembership, watchlistSlots } from "@/lib/research/favorite-lists";
 import { useFavoriteLists } from "./watchlist/use-favorite-lists";
 
 // Stock-page stars use the first list, including its account-scoped sync/journal.
 // Other lists and price-alert settings must remain untouched.
 export function useStockFavorites() {
-  const { lists, update, error, status, ready, editable } = useFavoriteLists();
+  const { lists, update, error, status, ready, editable, retry } = useFavoriteLists();
   const primary = lists.find(list => list.id === "default") ?? lists[0];
   function toggle(ticker: string, name?: string) {
     if (!ready || !editable || !/^[A-Z][A-Z0-9.-]{0,14}$/.test(ticker)) return false;
@@ -21,6 +22,11 @@ export function useStockFavorites() {
       };
     });
   }
+  function setMembership(listId: string, ticker: string, included: boolean, name?: string) {
+    if (!ready || !editable) return false;
+    return update(current => setFavoriteListMembership(current, listId, ticker, included, name));
+  }
   return { favorites: ready ? primary.tickers : [], toggle,
+    lists: ready ? watchlistSlots(lists) : [], setMembership, status, retry,
     error: error || status === "error" || status === "conflict", editable: ready && editable };
 }
