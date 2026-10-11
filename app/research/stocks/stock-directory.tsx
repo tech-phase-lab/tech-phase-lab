@@ -270,8 +270,8 @@ export default function StockDirectory() {
       {(selectedResultKey || profileLoading || profile || directQuote) && <div ref={marketTarget} className={polish.marketTarget}>
         {selectedResultKey && !directQuote && <div className={polish.resultGuide}><button type="button" onClick={showSearchResults}>{t("← 検索結果に戻る", "← Back to results")}</button></div>}
         {profileLoading && <div className={polish.profileLoading} role="status"><span className={styles.loader} /><strong>{t("銘柄情報を読み込み中…", "Loading company…")}</strong></div>}
-        {directQuote && !profile && <MarketWorkspace key={`${directQuote.ticker}:${lang}`} {...directQuote} lang={lang} favorite={favorites.includes(directQuote.ticker)} favoriteEditable={favoriteEditable} onToggleFavorite={() => toggleFavorite(directQuote.ticker)} />}
-        {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} favorite={favorites.includes(profile.ticker)} favoriteEditable={favoriteEditable} onToggleFavorite={() => toggleFavorite(profile.ticker)} />}
+        {directQuote && !profile && <MarketWorkspace key={`${directQuote.ticker}:${lang}`} {...directQuote} lang={lang} favorite={favorites.includes(directQuote.ticker)} favoriteEditable={favoriteEditable} onToggleFavorite={() => toggleFavorite(directQuote.ticker, directQuote.name)} />}
+        {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} favorite={favorites.includes(profile.ticker)} favoriteEditable={favoriteEditable} onToggleFavorite={() => toggleFavorite(profile.ticker, profile.name)} />}
       </div>}
 
       {favoriteError && <p role="alert">{t("お気に入りを保存できませんでした。", "Could not save favorites.")}</p>}

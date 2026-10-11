@@ -62,3 +62,22 @@ test('guest stars use the same update path without changing other lists', () => 
   assert.equal(readFavorites().toggle('bad ticker'), false);
   assert.equal(writes, 1);
 });
+test('adding from a stock detail stores its company name without changing other lists or alerts', () => {
+  reset(); const other = state.lists[1], alerts = state.alerts;
+  readFavorites().toggle('LITE', ' Lumentum Holdings Inc. ');
+  assert.equal(state.names.LITE, 'Lumentum Holdings Inc.');
+  assert.equal(state.names.AAPL, 'Apple Inc.');
+  assert.equal(state.lists[1], other);
+  assert.equal(state.alerts, alerts);
+  readFavorites().toggle('LITE', 'Different name');
+  assert.equal(state.lists[0].tickers.includes('LITE'), false);
+  assert.equal(state.names.LITE, 'Lumentum Holdings Inc.');
+});
+test('a rejected addition to a full list does not save an orphan company name', () => {
+  reset(); state.lists[0].tickers = Array.from({ length: 100 }, (_, i) => `T${i}`);
+  const names = state.names;
+  readFavorites().toggle('LITE', 'Lumentum Holdings Inc.');
+  assert.equal(state.lists[0].tickers.length, 100);
+  assert.equal(state.lists[0].tickers.includes('LITE'), false);
+  assert.equal(state.names, names);
+});
