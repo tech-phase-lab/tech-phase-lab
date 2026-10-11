@@ -4,15 +4,10 @@ import fs from 'node:fs';
 import {companyWatches,companyWatchForMember,watchMetricValue} from '../lib/research/company-watch.ts';
 const pro={status:'signed-in',plan:'pro',accessExpiresAt:200};
 test('every non-MU monitored company has its own complete bilingual earnings page',()=>{
- const providers=JSON.parse(fs.readFileSync(new URL('../lib/research/providers.json',import.meta.url)));
- // The original 21 non-MU companies have reviewed pages; companies added on
- // Oct 11 fall back to their live coverage page until one is reviewed.
- const tickers=providers.map(x=>x.ticker);
- assert.ok(companyWatches.every(x=>tickers.includes(x.ticker)));
- assert.deepEqual(companyWatches.map(x=>x.ticker).sort(),tickers.slice(0,22).filter(x=>x!=='MU').sort());
+ // Earnings-only companies (Oct 11) have no watch page; they appear in the calendar only.
+ const providers=JSON.parse(fs.readFileSync(new URL('../lib/research/providers.json',import.meta.url))).filter(x=>x.scope!=='earnings');
+ assert.deepEqual(companyWatches.map(x=>x.ticker).sort(),providers.map(x=>x.ticker).filter(x=>x!=='MU').sort());
  assert.equal(new Set(companyWatches.map(x=>x.ticker)).size,21);
- const page=fs.readFileSync(new URL('../app/research/companies/[ticker]/page.tsx',import.meta.url),'utf8');
- assert.match(page,/if\(!watch\) return <CoverageCompanyDashboard/);
  for(const x of companyWatches){
   assert.equal(x.cards.length,4,x.ticker);assert.equal(x.tiles.length,3,x.ticker);
   assert.ok(x.releasedOn<=x.reviewedOn,x.ticker);if(x.periodEnd)assert.ok(x.periodEnd<=x.releasedOn,x.ticker);

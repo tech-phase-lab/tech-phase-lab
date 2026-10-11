@@ -8,7 +8,6 @@ import { useResearchLanguage } from "../use-research-language";
 import base from "../research.module.css";
 import styles from "./coverage-company.module.css";
 import CompanySwitcher from "./company-switcher";
-import CompanyActivity from "./company-activity";
 
 const errorNames: Record<string, { ja: string; en: string }> = {
   "http-403": { ja: "公式サイトが自動取得を拒否", en: "Official site rejected the automated request" },
@@ -43,8 +42,6 @@ export default function CoverageCompanyDashboard({ company, companies, generated
       <CompanySwitcher ticker={company.ticker} companies={companies} lang={lang} />
       <aside className={styles.snapshot}><strong>{t("保存した取得記録", "SAVED INTAKE SNAPSHOT")}</strong><span>{t("出力日時", "Generated")}: {time(generatedAt, lang)} JST</span><p>{t("このページは保存時点の記録で、自動更新されません。現在の監視状況は取得状況画面で確認できます。", "This page is a saved snapshot and does not update automatically. Check the intake page for current monitoring status.")} <Link href="/research/intake">{t("取得状況を見る →", "View intake status →")}</Link></p></aside>
       <header className={styles.companyHeading}><div><p className={styles.eyebrow}>{lang === "ja" ? company.sector : sectorNamesEn[company.sectorKey]}</p><h1>{company.ticker} <span>{company.name}</span></h1><p>{t("公式発表から、前回との変化を照合するための銘柄ページ。", "A company page for comparing changes across official releases.")}</p></div><span className={`${styles.status} ${discoveryAvailable ? styles.good : styles.warning}`}>{discoveryLabel}</span></header>
-
-      <CompanyActivity ticker={company.ticker} lang={lang} />
 
       <nav className={styles.sectionNav} aria-label={t("ページ内の項目", "On this page")}>
         <a href="#changed-title">{verified ? t("何が変わった？", "What changed?") : t("確認状況", "Review progress")}</a>

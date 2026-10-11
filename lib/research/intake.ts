@@ -1,15 +1,18 @@
 import registry from "./providers.json" with { type: "json" };
 
-export const providers = registry;
+/** The research roster (監視22銘柄). Companies marked scope "earnings" are
+ * monitored only for earnings results (owner, Oct 11) and stay off these lists. */
+export const providers = registry.filter(p => (p as { scope?: string }).scope !== "earnings");
+export const earningsOnlyProviders = registry.filter(p => (p as { scope?: string }).scope === "earnings");
 export const providerByTicker = Object.fromEntries(providers.map(p => [p.ticker, p]));
 export const sectorNames: Record<string, string> = {
   semiconductors: "半導体", networking: "ネットワーク", "ai-cloud": "AIクラウド",
-  "power-cooling": "電力・冷却", servers: "サーバー", software: "AIソフトウェア", platforms: "大手テック",
+  "power-cooling": "電力・冷却", servers: "サーバー", software: "AIソフトウェア", platforms: "大手クラウド",
   storage: "ストレージ", "autos-robotics": "EV・ロボティクス", fintech: "フィンテック", quantum: "量子コンピューター",
 };
 export const sectorNamesEn: Record<string, string> = {
   semiconductors: "Semiconductors", networking: "Networking", "ai-cloud": "AI cloud",
-  "power-cooling": "Power & cooling", servers: "Servers", software: "AI software", platforms: "Big Tech",
+  "power-cooling": "Power & cooling", servers: "Servers", software: "AI software", platforms: "Large cloud platforms",
   storage: "Storage", "autos-robotics": "EVs & robotics", fintech: "Fintech", quantum: "Quantum computing",
 };
 

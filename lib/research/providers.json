@@ -965,6 +965,7 @@
     "ticker": "AAPL",
     "name": "Apple",
     "sector": "platforms",
+    "scope": "earnings",
     "indexUrl": "https://www.apple.com/newsroom/rss-feed.rss",
     "format": "rss",
     "fallbackSources": [
@@ -1011,6 +1012,7 @@
     "ticker": "AMZN",
     "name": "Amazon",
     "sector": "platforms",
+    "scope": "earnings",
     "indexUrl": "https://www.aboutamazon.com/rss/feed.rss",
     "format": "rss",
     "supplementalSources": [
@@ -1050,6 +1052,7 @@
     "ticker": "META",
     "name": "Meta Platforms",
     "sector": "platforms",
+    "scope": "earnings",
     "indexUrl": "https://about.fb.com/news/feed/",
     "format": "rss",
     "supplementalSources": [
@@ -1089,6 +1092,7 @@
     "ticker": "TSLA",
     "name": "Tesla",
     "sector": "autos-robotics",
+    "scope": "earnings",
     "indexUrl": "https://ir.tesla.com/",
     "format": "html",
     "requestTimeoutSeconds": 6,
@@ -1126,6 +1130,7 @@
     "ticker": "LITE",
     "name": "Lumentum",
     "sector": "networking",
+    "scope": "earnings",
     "indexUrl": "https://investor.lumentum.com/rss/pressrelease.aspx",
     "format": "rss",
     "supplementalSources": [
@@ -1165,6 +1170,7 @@
     "ticker": "COHR",
     "name": "Coherent",
     "sector": "networking",
+    "scope": "earnings",
     "indexUrl": "https://www.coherent.com/sitemap-coherentweb-en.xml",
     "format": "sitemap",
     "requestTimeoutSeconds": 15,
@@ -1205,6 +1211,7 @@
     "ticker": "AAOI",
     "name": "Applied Optoelectronics",
     "sector": "networking",
+    "scope": "earnings",
     "indexUrl": "https://newsroom.ao-inc.com/news-releases/",
     "format": "html",
     "supplementalSources": [
@@ -1249,6 +1256,7 @@
     "ticker": "IREN",
     "name": "IREN",
     "sector": "ai-cloud",
+    "scope": "earnings",
     "indexUrl": "https://iren.com/investors/news",
     "format": "html",
     "supplementalSources": [
@@ -1293,6 +1301,7 @@
     "ticker": "APH",
     "name": "Amphenol",
     "sector": "networking",
+    "scope": "earnings",
     "indexUrl": "https://investors.amphenol.com/",
     "format": "html",
     "requestTimeoutSeconds": 6,
@@ -1330,6 +1339,7 @@
     "ticker": "ALAB",
     "name": "Astera Labs",
     "sector": "networking",
+    "scope": "earnings",
     "indexUrl": "https://www.asteralabs.com/newsroom/",
     "format": "html",
     "supplementalSources": [
@@ -1369,6 +1379,7 @@
     "ticker": "VST",
     "name": "Vistra",
     "sector": "power-cooling",
+    "scope": "earnings",
     "indexUrl": "https://investor.vistracorp.com/news?pagetemplate=rss",
     "format": "rss",
     "fallbackSources": [
@@ -1415,6 +1426,7 @@
     "ticker": "SOFI",
     "name": "SoFi Technologies",
     "sector": "fintech",
+    "scope": "earnings",
     "indexUrl": "https://www.sofi.com/newsroom/feed.xml",
     "format": "rss",
     "supplementalSources": [
@@ -1454,6 +1466,7 @@
     "ticker": "IONQ",
     "name": "IonQ",
     "sector": "quantum",
+    "scope": "earnings",
     "indexUrl": "https://www.ionq.com/news",
     "format": "html",
     "supplementalSources": [
@@ -1493,6 +1506,7 @@
     "ticker": "STX",
     "name": "Seagate",
     "sector": "storage",
+    "scope": "earnings",
     "indexUrl": "https://www.seagate.com/sitemap.xml",
     "format": "sitemap",
     "requestTimeoutSeconds": 15,
@@ -1533,6 +1547,7 @@
     "ticker": "CEG",
     "name": "Constellation Energy",
     "sector": "power-cooling",
+    "scope": "earnings",
     "indexUrl": "https://www.constellationenergy.com/sitemap.xml",
     "format": "sitemap",
     "requestTimeoutSeconds": 15,

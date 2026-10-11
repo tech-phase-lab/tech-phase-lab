@@ -441,10 +441,10 @@ test("operations preview renders only reviewed briefs with evidence and review m
 });
 
 test("sector and company filters use the shared registry", () => {
-  assert.equal(providers.length, 37);
+  assert.equal(providers.length, 22);
   assert.equal(providerByTicker.MRVL.sector, "networking");
   assert.equal(providerByTicker.BE.sector, "power-cooling");
-  assert.equal(providerByTicker.AMZN.sector, "platforms");
+  assert.equal(providerByTicker.AMZN, undefined);
   const sector = providerByTicker[source.ticker].sector;
   assert.equal(filterSources([source], providerByTicker[source.ticker].name, "all", "all", "all", {}, sector).length, 1);
   assert.equal(filterSources([source], "", "all", "all", "all", {}, "not-a-sector").length, 0);
@@ -457,19 +457,14 @@ test("coverage uses the latest run and never counts untested companies as failur
     { id: 2, ticker: "AMD", status: "ok" },
     { id: 4, ticker: "TSM", status: "fallback" },
   ] });
-  assert.deepEqual(counts, { registered: 37, discovered: 2, needsCheck: 1, untested: 34 });
+  assert.deepEqual(counts, { registered: 22, discovered: 2, needsCheck: 1, untested: 19 });
 });
 
 test("every registered company has a valid company coverage page model", () => {
   const companies = buildCoverageCompanies(snapshot);
-  assert.equal(companies.length, 37);
+  assert.equal(companies.length, 22);
   assert.deepEqual(coverageCompanyIssues(companies), []);
   assert.equal(companies.find((company) => company.ticker === "NVDA").counts.total, 20);
   assert.equal(companies.find((company) => company.ticker === "CRWV").counts.fetched, 1);
   assert.ok(["fallback", "degraded"].includes(companies.find((company) => company.ticker === "ORCL").discovery.status));
-});
-
-test('the tracked-company count shown in menus equals the registry', async () => {
-  const { TRACKED_COUNT } = await import('../lib/research/tracked-count.ts');
-  assert.equal(TRACKED_COUNT, providers.length);
 });

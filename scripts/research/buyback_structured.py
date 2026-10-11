@@ -128,7 +128,7 @@ def source_units(row):
 
 
 def parse_claim(unit,ticker,context):
-    quote=unit['quote'];actor=signals.ALIASES[ticker][0]
+    quote=unit['quote'];actor=signals.ALIASES.get(ticker,[ticker])[0]
     subject=issuer_pattern(ticker)+(r'|it|the company' if context else '')
     subject=r'(?:'+subject+r')'
     executed=(rf'(?:{subject}\s+(?:has\s+)?(?:repurchased|bought back)\s+{money_pattern("a")}'

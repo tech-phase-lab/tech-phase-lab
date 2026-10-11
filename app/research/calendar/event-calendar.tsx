@@ -68,7 +68,7 @@ export default function EventCalendar() {
     </div>
     {favoritesOnly && favorites.length === 0 && <p role="status" className={styles.description}>{t("お気に入りがまだありません。銘柄を追加すると、その決算予定も表示します。", "No favorites yet. Add companies to include their earnings schedules.")}</p>}
     <p aria-live="polite" className={styles.description}>{now === null ? t("予定を読み込み中…", "Loading schedule…") : t(`${visible.length + visibleDateOnly.length}件の予定`, `${visible.length + visibleDateOnly.length} events`)}</p>
-    {kind !== "earnings" && <EconomicResultsPanel lang={lang} zone={zone} period={period} />}
+    <EconomicResultsPanel lang={lang} zone={zone} period={period} kind={kind} />
     <ol className={calendarStyles.agenda}>{visible.map((event) => <li key={event.id}>
       <details>
         <summary>

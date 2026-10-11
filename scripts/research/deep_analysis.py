@@ -17,6 +17,7 @@ import time
 
 import brief_generator
 import factual_validation
+import monitor
 
 MAX_ATTEMPTS = 3
 RETRY_SECONDS = 120
@@ -79,6 +80,9 @@ def earnings_sources(db, reference):
     rows = []
     for row in official_research.candidates(db, reference, primary_only=True):
         if not official_research.earnings_release(row):
+            continue
+        # Deep analysis is for the research roster; earnings-only companies get results only.
+        if monitor.PROVIDERS.get(row['ticker'], {}).get('scope') == 'earnings':
             continue
         rows.append({'ref': 'event:%s:%s' % (row['id'], row['sha']), 'kind': 'earnings', 'subject': row['ticker'],
                      'sha': row['sha'], 'title': row['title'], 'url': row['url'],
