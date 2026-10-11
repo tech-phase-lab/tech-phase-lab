@@ -79,7 +79,7 @@ class SkhynixServiceRoutingTests(unittest.TestCase):
                                                   'RESEARCH_TICKERS': ''}))
         self.app = service.AutomaticMonitor(self.path, Path(self.tmp.name) / 'snapshot.json')
         self.assertEqual(self.app.tickers, service.configured_tickers(''))
-        self.assertEqual(len(self.app.tickers), 22)
+        self.assertEqual(len(self.app.tickers), 37)
         self.now = datetime.now(timezone.utc) - timedelta(seconds=5)
         self.original_check = signals.check
         self.enterContext(patch.object(signals, 'build_opener', side_effect=AssertionError('network forbidden')))

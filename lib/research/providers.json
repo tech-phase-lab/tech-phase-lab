@@ -960,5 +960,613 @@
         "pattern": "^/Archives/edgar/data/1341439/.+"
       }
     ]
+  },
+  {
+    "ticker": "AAPL",
+    "name": "Apple",
+    "sector": "platforms",
+    "indexUrl": "https://www.apple.com/newsroom/rss-feed.rss",
+    "format": "rss",
+    "fallbackSources": [
+      {
+        "url": "https://www.apple.com/newsroom/archive/",
+        "format": "html",
+        "label": "Apple Newsroom archive"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0000320193.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0000320193",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.apple.com",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.apple.com",
+        "pattern": "^/newsroom/\\d{4}/\\d{2}/[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/320193/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "AMZN",
+    "name": "Amazon",
+    "sector": "platforms",
+    "indexUrl": "https://www.aboutamazon.com/rss/feed.rss",
+    "format": "rss",
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001018724.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001018724",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.aboutamazon.com",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.aboutamazon.com",
+        "pattern": "^/(?:news/[^/]+/[^/]+|stories/[^/]+)/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1018724/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "META",
+    "name": "Meta Platforms",
+    "sector": "platforms",
+    "indexUrl": "https://about.fb.com/news/feed/",
+    "format": "rss",
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001326801.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001326801",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "about.fb.com",
+      "data.sec.gov",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "about.fb.com",
+        "pattern": "^/news/\\d{4}/\\d{2}/[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1326801/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "TSLA",
+    "name": "Tesla",
+    "sector": "autos-robotics",
+    "indexUrl": "https://ir.tesla.com/",
+    "format": "html",
+    "requestTimeoutSeconds": 6,
+    "automaticSource": "fallback",
+    "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001318605.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001318605",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "ir.tesla.com",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1318605/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "LITE",
+    "name": "Lumentum",
+    "sector": "networking",
+    "indexUrl": "https://investor.lumentum.com/rss/pressrelease.aspx",
+    "format": "rss",
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001633978.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001633978",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001633978&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "investor.lumentum.com",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "investor.lumentum.com",
+        "pattern": "^/financial-news-releases/news-details/\\d{4}/[^/]+/default\\.aspx$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1633978/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "COHR",
+    "name": "Coherent",
+    "sector": "networking",
+    "indexUrl": "https://www.coherent.com/sitemap-coherentweb-en.xml",
+    "format": "sitemap",
+    "requestTimeoutSeconds": 15,
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0000820318.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0000820318",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000820318&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.coherent.com",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.coherent.com",
+        "pattern": "^/news/press-releases/[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/820318/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "AAOI",
+    "name": "Applied Optoelectronics",
+    "sector": "networking",
+    "indexUrl": "https://newsroom.ao-inc.com/news-releases/",
+    "format": "html",
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001158114.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001158114",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001158114&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "investors.ao-inc.com",
+      "newsroom.ao-inc.com",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "newsroom.ao-inc.com",
+        "pattern": "^/news-releases/[^/]+/?$"
+      },
+      {
+        "host": "investors.ao-inc.com",
+        "pattern": "^/news-releases/news-release-details/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1158114/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "IREN",
+    "name": "IREN",
+    "sector": "ai-cloud",
+    "indexUrl": "https://iren.com/investors/news",
+    "format": "html",
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001878848.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001878848",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001878848&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "iren.com",
+      "iren.gcs-web.com",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "iren.gcs-web.com",
+        "pattern": "^/static-files/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+      },
+      {
+        "host": "iren.gcs-web.com",
+        "pattern": "^/news-releases/news-release-details/.+"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1878848/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "APH",
+    "name": "Amphenol",
+    "sector": "networking",
+    "indexUrl": "https://investors.amphenol.com/",
+    "format": "html",
+    "requestTimeoutSeconds": 6,
+    "automaticSource": "fallback",
+    "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0000820313.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0000820313",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000820313&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "investors.amphenol.com",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/820313/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "ALAB",
+    "name": "Astera Labs",
+    "sector": "networking",
+    "indexUrl": "https://www.asteralabs.com/newsroom/",
+    "format": "html",
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001736297.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001736297",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001736297&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.asteralabs.com",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.asteralabs.com",
+        "pattern": "^/news/[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1736297/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "VST",
+    "name": "Vistra",
+    "sector": "power-cooling",
+    "indexUrl": "https://investor.vistracorp.com/news?pagetemplate=rss",
+    "format": "rss",
+    "fallbackSources": [
+      {
+        "url": "https://investor.vistracorp.com/news",
+        "format": "html",
+        "label": "Vistra investor news"
+      }
+    ],
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001692819.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001692819",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001692819&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "investor.vistracorp.com",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "investor.vistracorp.com",
+        "pattern": "^/\\d{4}-\\d{2}-\\d{2}-[^/]+$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1692819/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "SOFI",
+    "name": "SoFi Technologies",
+    "sector": "fintech",
+    "indexUrl": "https://www.sofi.com/newsroom/feed.xml",
+    "format": "rss",
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001818874.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001818874",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001818874&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.sec.gov",
+      "www.sofi.com"
+    ],
+    "articleRules": [
+      {
+        "host": "www.sofi.com",
+        "pattern": "^/newsroom/(?!category/|feed\\.xml$)[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1818874/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "IONQ",
+    "name": "IonQ",
+    "sector": "quantum",
+    "indexUrl": "https://www.ionq.com/news",
+    "format": "html",
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001824920.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001824920",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001824920&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.ionq.com",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.ionq.com",
+        "pattern": "^/news/[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1824920/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "STX",
+    "name": "Seagate",
+    "sector": "storage",
+    "indexUrl": "https://www.seagate.com/sitemap.xml",
+    "format": "sitemap",
+    "requestTimeoutSeconds": 15,
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001137789.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001137789",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001137789&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.seagate.com",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.seagate.com",
+        "pattern": "^/stories/articles/[^/]+-pr/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1137789/.+"
+      }
+    ]
+  },
+  {
+    "ticker": "CEG",
+    "name": "Constellation Energy",
+    "sector": "power-cooling",
+    "indexUrl": "https://www.constellationenergy.com/sitemap.xml",
+    "format": "sitemap",
+    "requestTimeoutSeconds": 15,
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0001868275.json",
+        "format": "sec-json",
+        "label": "SEC submissions 8-K",
+        "cik": "0001868275",
+        "forms": [
+          "8-K"
+        ],
+        "limit": 40
+      },
+      {
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001868275&type=8-K&owner=exclude&count=40&output=atom",
+        "format": "rss",
+        "label": "SEC 8-K"
+      }
+    ],
+    "allowedHosts": [
+      "data.sec.gov",
+      "www.constellationenergy.com",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "www.constellationenergy.com",
+        "pattern": "^/news/\\d{4}/\\d{2}/[^/]+\\.html$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/1868275/.+"
+      }
+    ]
   }
 ]

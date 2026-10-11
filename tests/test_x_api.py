@@ -198,8 +198,9 @@ class XApiTests(unittest.TestCase):
 
     def test_x_source_scope_adds_requested_x_only_companies(self):
         x_sources = [source for source in signals.SOURCES if source.get("format") == "x-api" and not source.get("marketTopics")]
-        added = {"LITE", "COHR", "VST", "IREN", "ALAB", "APH", "INTC",
-                 "AMAT", "SIMO", "AAOI", "META"}
+        # LITE, COHR, VST, IREN, ALAB, APH, AAOI and META joined the research
+        # roster on Oct 11; these remain X-only.
+        added = {"INTC", "AMAT", "SIMO"}
         self.assertEqual({source["accounts"][0].lower() for source in x_sources},
                          {"tipranks", "wallstengine", "nebiusai", "aistocksavvy"})
         self.assertEqual({ticker for source in x_sources for ticker in source["tickers"]},
@@ -213,7 +214,7 @@ class XApiTests(unittest.TestCase):
                 continue  # Price-target-only route; checked in HardikShahPriceTargetRouteTests.
             self.assertLessEqual(len(source["query"]), 512)
             self.assertEqual(set(source["extraTickers"]), added)
-            self.assertEqual(len(source["tickers"]), 33)
+            self.assertEqual(len(source["tickers"]), 40)
             if source["id"] != "x-wallstengine":
                 self.assertTrue(all(f"${ticker}" in source["query"] for ticker in added))
             self.assertEqual(source["intervalSeconds"], 30 if source["id"] == "x-wallstengine" else 60)
@@ -307,7 +308,7 @@ class XApiTests(unittest.TestCase):
         items = x_api.parse_response(self.source, payload, list(monitor.PROVIDERS))
         self.assertEqual([list(item["matches"]) for item in items],
                          [["LITE"], ["COHR"], ["XYZ"], ["IREN"], ["META"]])
-        self.assertIn("VST", signals.X_EXTRA_TICKERS)
+        self.assertIn("INTC", signals.X_EXTRA_TICKERS)
 
     def test_pagination_keeps_high_watermark_until_every_page_is_consumed(self):
         import io, json

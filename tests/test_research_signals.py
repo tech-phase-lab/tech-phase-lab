@@ -271,7 +271,7 @@ class SignalTests(unittest.TestCase):
         )
 
     def test_body_only_multicompany_association_and_no_false_ticker(self):
-        self.assertEqual(len(signals.ALIASES), 22)
+        self.assertEqual(len(signals.ALIASES), 37)
         items = signals.parse(self.feed, feed(), self.tickers)
         self.assertEqual(set(items[0]["matches"]), {"NBIS", "CRWV"})
         self.assertNotIn("NBIS", items[0]["title"])

@@ -199,6 +199,33 @@ def category_contexts(db, rows, *, sources=None):
             if any(row['source_id'] == source_id for row in rows)}
 
 
+SEC_HOSTS = {'www.sec.gov', 'data.sec.gov'}
+
+
+def sec_results_title(evidence_kind, text):
+    """Owner, Oct 11: several issuer IR sites refuse our server, so a company's
+    earnings press release may reach us only as the exhibit 99.1 of its SEC
+    8-K/6-K. Use the release's own heading, verbatim, and only when it is an
+    earnings release; other SEC filings stay evidence, never headlines."""
+    if evidence_kind != 'sec-exhibit-99.1' or not isinstance(text, str):
+        return None
+    import release_watch
+    for line in text[:4000].splitlines()[:40]:
+        line = ' '.join(line.split())
+        if (12 <= len(line) <= 220 and release_watch.EARNINGS_TITLE.search(line)
+                and not release_watch.NOT_RELEASE.search(line) and re.search(r'[A-Za-z]{3}', line)):
+            return line
+    return None
+
+
+def event_title(url, title, evidence_kind, text):
+    """The headline an issuer event carries: the source title, or for an SEC
+    filing the earnings heading of its exhibit (None when it has none)."""
+    if urlsplit(url).hostname in SEC_HOSTS:
+        return sec_results_title(evidence_kind, text)
+    return title
+
+
 def is_current(db, row, *, source=None, primary_urls=None, reference=None, category_context=None,
                require_fresh_category=False, article_refresh=False):
     if not row['source_id'].startswith(PREFIX):
@@ -257,8 +284,32 @@ def is_current(db, row, *, source=None, primary_urls=None, reference=None, categ
             except (ValueError, TypeError):
                 return False
         return True
-    current = db.execute('SELECT title,sha256,published_on,status FROM sources WHERE url=?', (row['url'],)).fetchone()
-    return bool(current and current['status'] not in {'rejected', 'held'} and revision(current['title'], current['sha256'], current['published_on']) == row['sha'])
+    current = db.execute('''SELECT s.title,s.sha256,s.published_on,s.status,s.evidence_kind,
+      substr(r.extracted_text,1,4000) AS head FROM sources s
+      LEFT JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256 WHERE s.url=?''', (row['url'],)).fetchone()
+    if not current or current['status'] in {'rejected', 'held'}:
+        return False
+    title = event_title(row['url'], current['title'], current['evidence_kind'], current['head'])
+    return bool(title and revision(title, current['sha256'], current['published_on']) == row['sha'])
+
+
+def sec_release_already_listed(db, row, title):
+    """The company's own IR page already carries this earnings release."""
+    import release_watch
+    try:
+        detected = datetime.fromisoformat(row['detected_at'].replace('Z', '+00:00'))
+    except (AttributeError, ValueError):
+        return True
+    for other_title, other_url, observed in db.execute(
+            'SELECT title,url,observed_at FROM signal_events WHERE source_id=?', (PREFIX + row['ticker'],)):
+        try:
+            other_at = datetime.fromisoformat(str(observed).replace('Z', '+00:00'))
+        except ValueError:
+            continue
+        if (urlsplit(other_url).hostname not in SEC_HOSTS and abs(other_at - detected) <= timedelta(days=3)
+                and isinstance(other_title, str) and release_watch.EARNINGS_TITLE.search(other_title)):
+            return True
+    return False
 
 
 def sync(db, reference):
@@ -266,12 +317,17 @@ def sync(db, reference):
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='release_events'").fetchone():
         return
     cutoff = (reference - timedelta(days=7)).isoformat()
-    rows = db.execute('''SELECT e.detected_at,s.url,s.ticker,s.title,s.sha256,s.published_on,r.extracted_text
+    rows = db.execute('''SELECT e.detected_at,s.url,s.ticker,s.title,s.sha256,s.published_on,s.evidence_kind,r.extracted_text
       FROM release_events e JOIN sources s ON s.url=e.url
       JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256
       WHERE e.detected_at>=? AND r.extracted_chars>0 AND s.status NOT IN ('rejected','held') ORDER BY e.id DESC LIMIT 500''', (cutoff,)).fetchall()
     for row in rows:
         title = row['title']
+        sec = urlsplit(row['url']).hostname in SEC_HOSTS
+        if sec:
+            title = sec_results_title(row['evidence_kind'], row['extracted_text'])
+            if not title or sec_release_already_listed(db, row, title):
+                continue
         # Some issuer index links carry no title. Recover only an explicit
         # release heading present in the fetched evidence, never from a URL slug.
         if not title and row['ticker'] == 'MU':
@@ -283,9 +339,6 @@ def sync(db, reference):
                            (title,row['url'],row['sha256']))
         if (not title or not news_policy.eligible(title)
                 or re.fullmatch(r'(?:read (?:story|more)|learn more|press release|news)', title.strip(), re.I)):
-            continue
-        # Generic SEC filings are evidence, not issuer news headlines.
-        if urlsplit(row['url']).hostname in {'www.sec.gov', 'data.sec.gov'}:
             continue
         try:
             if monitor.article_url(row['url'], row['ticker']) != row['url']:
