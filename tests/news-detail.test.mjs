@@ -351,9 +351,9 @@ finally:
   const pageLogic=panel.slice(panel.indexOf('  const official ='),panel.indexOf('  const format ='));
   const pagination=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(
     `import { clockTime, officialTime } from ${JSON.stringify(new URL('../lib/research/news-time.ts',import.meta.url).href)};
-import { informativeOfficial } from ${JSON.stringify(new URL('../lib/research/news-presentation.ts',import.meta.url).href)};
+import { informativeOfficial, shownInLanguage } from ${JSON.stringify(new URL('../lib/research/news-presentation.ts',import.meta.url).href)};
 `
-    +`export function visible(data,page,officialOnly=false) { ${pageLogic}
+    +`export function visible(data,page,officialOnly=false,lang='en') { ${pageLogic}
 return {pages,current,visibleUpdates,visibleNews}; }`)).toString('base64'));
   const pages=pagination.visible(after,1).pages;
   assert.equal(pages,pagination.visible(before,1).pages);

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useId } from "react";
 import type { Language } from "@/lib/research/data";
 import { availableNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
-import { officialNewsDisplay } from "@/lib/research/news-presentation";
+import { officialNewsDisplay, shownInLanguage } from "@/lib/research/news-presentation";
 import { analystNewsDisplay } from "@/lib/research/analyst-news";
 import { officialTime, shortNewsTime } from "@/lib/research/news-time";
 import { createNewsPoller } from "@/lib/research/news-poller";
@@ -50,7 +50,7 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
     return () => { stop(); poller.stop(); };
   }, [attempt, ticker]);
   const rows = [
-    ...(data?.officialUpdates ?? []).filter(item => item.tickers.includes(ticker)).map(item => ({ id: `official-${item.id}`, observedAt: item.observedAt, ...officialNewsDisplay(item, lang, data?.resultBriefs), ...officialTime(item) })),
+    ...(data?.officialUpdates ?? []).filter(item => item.tickers.includes(ticker) && shownInLanguage(item, lang)).map(item => ({ id: `official-${item.id}`, observedAt: item.observedAt, ...officialNewsDisplay(item, lang, data?.resultBriefs), ...officialTime(item) })),
     ...(data?.analystUpdates ?? []).filter(item => item.ticker === ticker).map(item => ({ id: `analyst-${item.id}`, observedAt: item.observedAt, ...analystNewsDisplay(item, lang), at: item.publishedAt, kind: "published" })),
     ...(data?.items ?? []).filter(item => item.tickers.includes(ticker)).map(item => ({ id: `news-${item.id}`, observedAt: item.observedAt, label: ja ? "企業ニュース" : "Company news", title: ja ? item.summaryJa : item.summaryEn, body: ja ? item.impactJa : item.impactEn, at: item.publishedAt, kind: "published" })),
   ].sort((a,b) => Date.parse(b.at)-Date.parse(a.at));

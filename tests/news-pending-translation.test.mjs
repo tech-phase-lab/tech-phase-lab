@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { officialNewsDisplay } from '../lib/research/news-presentation.ts';
+import { officialNewsDisplay, shownInLanguage } from '../lib/research/news-presentation.ts';
 
 const item = { id: '1', title: 'Nvidia raises full-year guidance', url: 'https://nvidianews.nvidia.com/news/example',
   publisher: 'NVIDIA', tickers: ['NVDA'], observedAt: '2026-10-05T12:00:00Z', bodyEn: 'NVIDIA raised its outlook.' };
@@ -11,6 +11,12 @@ test('Japanese view shows the original, marked, while the translation is pending
   assert.equal(display.pendingTranslation, true);
   assert.match(display.label, /翻訳準備中（原文）$/);
   assert.match(display.body ?? '', /NVIDIA raised its outlook/);
+});
+
+test('owner, Oct 9: a story without checked Japanese is left out of the Japanese view only', () => {
+  assert.equal(shownInLanguage(item, 'ja'), false);
+  assert.equal(shownInLanguage(item, 'en'), true);
+  assert.equal(shownInLanguage({ ...item, translationJa: 'エヌビディア、通期見通しを引き上げ' }, 'ja'), true);
 });
 
 test('a validated translation replaces the original and the mark disappears', () => {

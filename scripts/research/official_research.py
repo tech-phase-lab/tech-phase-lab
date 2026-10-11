@@ -33,6 +33,7 @@ import reviewed_business_news
 import micron_reviewed_recovery
 import news_delivery_status
 import issuer_business_news
+import release_watch
 import rollout_validation
 import token_pricing
 import material_relations
@@ -659,8 +660,22 @@ def assess_claim_publication(state,row,reference):
     return None
 
 
+# Owner, Oct 11: earnings must never wait behind other news. A company's own
+# earnings release is claimed first, may use any free shared capacity (not
+# only the research share), and a rejected note is retried every 10 minutes
+# for its first EARNINGS_FAST_RETRIES attempts. Checks are unchanged.
+EARNINGS_FAST_RETRIES=12
+EARNINGS_RETRY_SECONDS=600
+
+
+def earnings_release(row):
+    title=row.get('title')
+    return (str(row.get('source_id','')).startswith('primary-ir-') and isinstance(title,str)
+            and bool(release_watch.EARNINGS_TITLE.search(title)) and not release_watch.NOT_RELEASE.search(title))
+
+
 def claim(db, reference, model, limit):
-    rows=candidates(db,reference)
+    rows=sorted(candidates(db,reference),key=lambda row: not earnings_release(row))
     # Reserve capacity for actual untranslated headlines, not a separate daily
     # quota that strands article retries while the shared budget is still free.
     headline_pending=headline_translation.diagnostics(db,now=reference.timestamp())['pending']
@@ -731,7 +746,7 @@ def claim(db, reference, model, limit):
                     r['_macro_started_at']=pending_macro['reserved_at']
                     return r,pending_macro['lease']
                 continue
-            if not capacity_available:
+            if not (capacity_available or (earnings_release(r) and used < limit)):
                 continue
             repair_candidate=content_repair.matches(db,r,reference)
             expedited=False
@@ -1104,6 +1119,8 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                 return 'review'
             job=db.execute("SELECT attempts FROM official_research_jobs WHERE event_id=? AND lease=?",(row['id'],lease)).fetchone()
             delay=max(headline_translation.retry_delay(job[0] if job else 1, reason, frequent=OFFICIAL_FREQUENT_RETRIES), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
+            if earnings_release(row) and (job[0] if job else 1) <= EARNINGS_FAST_RETRIES:
+                delay=max(min(delay,EARNINGS_RETRY_SECONDS), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
             db.execute("UPDATE official_research_jobs SET state='retry',next_at=?,failure_kind=? WHERE event_id=? AND lease=?",(now+delay,reason,row['id'],lease))
             db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?",(lease,))
         return 'retry'

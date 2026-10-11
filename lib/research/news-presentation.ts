@@ -31,6 +31,12 @@ export function officialNewsDisplay(item: OfficialUpdate, lang: Language, briefs
     body: additionalNewsDetail([label, compact.title, ...(item.brief ? [sourceTitle] : []), ...compact.visibleFacts], body, item.sources?.map(source => source.publisher)) };
 }
 
+/** Owner, Oct 9: the Japanese view never shows English. A story without a
+ * checked Japanese headline is listed in the English view only. */
+export function shownInLanguage(item: OfficialUpdate, lang: Language) {
+  return lang !== 'ja' || !officialNewsDisplay(item, 'ja').pendingTranslation;
+}
+
 /** A headline-only company item must say who did what: a bare product or
  * blog heading ("Next-Generation Scale-Up Networking for AI Fabrics") with no
  * body and no company name tells a reader nothing (owner, Oct 7). */
