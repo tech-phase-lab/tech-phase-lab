@@ -5,7 +5,7 @@
   background:linear-gradient(145deg,#101a24,#090f16 70%);
   box-shadow:0 22px 70px #0006;
   color:var(--text);
-  overflow:hidden
+  overflow:visible
 }
 .header {
   display:flex;
