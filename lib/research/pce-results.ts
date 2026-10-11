@@ -43,6 +43,17 @@ export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: Res
         ? { ja: "米国雇用統計", en: "U.S. employment report" }
         : { ja: `米国雇用統計（${month + 1}月）`, en: `U.S. employment report (${months[month][0].toUpperCase() + months[month].slice(1)} ${year})` };
     }
+    const inflation = /^(?:[A-Z]+ )?U\.S\. (CPI|PPI|PCE)(?:\/|$)/.exec(r.period);
+    if (inflation && !employment) {
+      // Oct 11: one calendar row per U.S. inflation release, named in Japanese.
+      const name = inflation[1];
+      const release = new Date(r.publishedAt);
+      const year = release.getUTCFullYear() - (month > release.getUTCMonth() ? 1 : 0);
+      id = month < 0 ? `${name.toLowerCase()}-release-${date}` : `${name.toLowerCase()}-${year}-${String(month + 1).padStart(2, "0")}`;
+      title = month < 0
+        ? { ja: `米国${name}`, en: `U.S. ${name}` }
+        : { ja: `米国${name}（${month + 1}月）`, en: `U.S. ${name} (${months[month][0].toUpperCase() + months[month].slice(1)} ${year})` };
+    }
     if (officialIds.has(id)) continue;
     results.set(id, {id,title,sourceName:r.publisher,releasedAt:r.publishedAt,
       result:{ja:r.titleJa,en:r.titleEn},

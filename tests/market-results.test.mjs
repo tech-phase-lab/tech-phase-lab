@@ -80,3 +80,12 @@ test('earnings period/day boundaries preserve genuine later and different-quarte
  const sameInstant={...brief,id:'781',researchId:'x-result-781',url:'https://x.com/tipranks/status/12348',publishedAt:'2026-09-30T20:00:00-04:00'};
  assert.equal(resultEvents(parseResultBriefs([brief,sameInstant])).length,1);
 });
+test('U.S. inflation keeps index, core and basis; foreign currencies keep their symbol',()=>{
+ const cpi={...brief,kind:'economic',ticker:'ECON',period:'SEPTEMBER U.S. CPI',titleJa:'米国CPI（9月）：前年比 2.9%',titleEn:'U.S. September CPI: YoY 2.9%',
+  facts:[{key:'cpi-yoy',ja:'CPI（前年比）',en:'CPI (YoY)',value:'2.9%',comparisons:{forecast:'2.9%'}},{key:'core-cpi-mom',ja:'コアCPI（前月比）',en:'Core CPI (MoM)',value:'0.3%'}]};
+ assert.equal(parseResultBriefs([cpi])[0].facts[0].comparisons.forecast,'2.9%');
+ for(const value of ['€7.52B','NT$989.9B','₩24.4T','€9.2B ± €0.3B','NT$17.40'])
+  assert.equal(parseResultBriefs([{...brief,facts:[{...brief.facts[0],value}]}])[0].facts[0].value,value);
+ for(const value of ['£5B','€7.52X','7.52 EUR'])assert.throws(()=>parseResultBriefs([{...brief,facts:[{...brief.facts[0],value}]}]));
+ assert.throws(()=>parseResultBriefs([{...cpi,facts:[{...cpi.facts[0],key:'cpi'}]}]));
+});

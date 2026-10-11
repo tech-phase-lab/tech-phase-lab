@@ -211,7 +211,10 @@ class ResultTests(unittest.TestCase):
 
     def test_currency_is_not_invented_for_foreign_or_unspecified_amounts(self):
         self.assertIsNone(results.projection('$ASML Q4 earnings Revenue 10B; EPS 1.20',['ASML']))
-        self.assertIsNone(results.projection('$ASML Q4 earnings Revenue €10B; EPS €1.20',['ASML']))
+        # Oct 11: a stated euro amount is kept in euros, never shown as dollars.
+        item=results.projection('$ASML Q4 earnings Revenue €10B; EPS €1.20',['ASML'])
+        self.assertEqual([f['value'] for f in item['facts']],['€10B','€1.20'])
+        self.assertNotIn('$',item['titleJa']+item['titleEn'])
 
     def test_source_number_formatting_and_signs_are_preserved(self):
         items=[]
