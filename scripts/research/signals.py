@@ -45,7 +45,13 @@ ALIASES.update({
     "AMD": ["AMD", "Advanced Micro Devices"], "NVDA": ["NVIDIA"],
     "SKHY": ["SK hynix", "SKハイニックス"], "GEV": ["GE Vernova"],
     "CRDO": ["Credo Technology"],
+    # Oct 11 additions. Names that are also ordinary words match only as
+    # written (CASE_SENSITIVE_ALIASES), so "an apple" or "coherent" is not news.
+    "AAPL": ["Apple"], "AMZN": ["Amazon", "Amazon Web Services"], "META": ["Meta Platforms", "Meta"],
+    "TSLA": ["Tesla"], "COHR": ["Coherent Corp"], "IREN": ["IREN"], "IONQ": ["IonQ"],
+    "STX": ["Seagate"], "CEG": ["Constellation Energy"], "SOFI": ["SoFi"],
 })
+CASE_SENSITIVE_ALIASES = frozenset({"Apple", "Amazon", "Meta", "IREN", "SoFi", "IonQ"})
 X_EXTRA_TICKERS = {ticker for source in SOURCES if source.get("format") == "x-api"
                    for ticker in source.get("extraTickers", [])}
 
@@ -230,7 +236,7 @@ def match_companies(text, tickers):
     for ticker in tickers:
         aliases = ALIASES[ticker]
         terms = [alias for alias in aliases if re.search(
-            r"(?<!\w)" + re.escape(alias) + r"(?!\w)", text, re.I
+            r"(?<!\w)" + re.escape(alias) + r"(?!\w)", text, 0 if alias in CASE_SENSITIVE_ALIASES else re.I
         )]
         if re.search(r"(?:\$|NASDAQ:|NYSE:)" + re.escape(ticker) + r"(?!\w)", text, re.I):
             terms.append("$" + ticker)
@@ -1384,12 +1390,21 @@ PRICE_TARGET_ECHO_FIRM = re.compile(
 )
 
 
+# Companies added to the roster on Oct 11. Their names are new company aliases
+# too: identity evidence only where the broker actor is explicitly verified.
+OCT11_ROSTER = frozenset({"AAPL", "AMZN", "META", "TSLA", "LITE", "COHR", "AAOI", "IREN", "APH",
+                          "ALAB", "VST", "SOFI", "IONQ", "STX", "CEG"})
+
+
 def target_company_names(ticker, *, explicit_actor=False):
-    names = [ticker, *ALIASES.get(ticker, []), *PRICE_TARGET_COMPANY_ALIASES.get(ticker, ())]
+    roster_names = ALIASES.get(ticker, [])
+    names = [ticker, *([] if ticker in OCT11_ROSTER else roster_names), *PRICE_TARGET_COMPANY_ALIASES.get(ticker, ())]
     # New company aliases are identity evidence only where the grammatical
     # broker actor is explicitly verified, never in legacy at/by fallback.
     if explicit_actor:
         names.extend(PRICE_TARGET_EXPLICIT_COMPANY_ALIASES.get(ticker, ()))
+        if ticker in OCT11_ROSTER:
+            names.extend(roster_names)
     return {" ".join(name.split()).casefold() for name in names}
 
 

@@ -3420,7 +3420,7 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(self.db.execute("SELECT count(*) FROM sources").fetchone()[0], count)
 
     def test_all_registered_sources_are_scoped_to_their_official_hosts(self):
-        self.assertEqual(len(m.PROVIDERS), 22)
+        self.assertEqual(len(m.PROVIDERS), 37)
         for ticker, p in m.PROVIDERS.items():
             self.assertEqual(m.safe_url(p["indexUrl"], ticker), p["indexUrl"])
             if p.get("monitorUrl"):
@@ -3466,7 +3466,7 @@ class IntakeTests(unittest.TestCase):
         # EDGAR is an independent, no-cost first-party disclosure route. SKHY
         # is excluded because this U.S.-listed roster entry has no matching
         # SEC ticker record; it remains monitored through its issuer newsroom.
-        self.assertEqual(len(m.PROVIDERS), 22)
+        self.assertEqual(len(m.PROVIDERS), 37)
         self.assertEqual(
             {ticker for ticker in m.PROVIDERS if not any(
                 source.get("format") == "sec-json"

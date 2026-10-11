@@ -191,14 +191,16 @@ def configured_tickers(value):
     configured = [item.strip().upper() for item in value.split(",") if item.strip()]
     if not configured:
         return list(monitor.PROVIDERS)
+    # A full roster written before a company was added (the 22 of Oct 10, or
+    # the older list with AMZN) means "every company", not a frozen subset.
+    full_before = {frozenset(LEGACY_FULL_TICKERS),
+                   frozenset("BE" if ticker == "AMZN" else ticker for ticker in LEGACY_FULL_TICKERS)}
+    if len(set(configured)) == len(configured) == len(LEGACY_FULL_TICKERS) and frozenset(configured) in full_before:
+        return list(monitor.PROVIDERS)
     unknown = sorted(set(configured) - set(monitor.PROVIDERS))
-    if not unknown:
-        return configured
-    if len(configured) == len(LEGACY_FULL_TICKERS) and set(configured) == set(LEGACY_FULL_TICKERS):
-        migrated = ["BE" if ticker == "AMZN" else ticker for ticker in configured]
-        if len(set(migrated)) == len(migrated) and set(migrated) == set(monitor.PROVIDERS):
-            return migrated
-    raise ValueError("Unknown RESEARCH_TICKERS: " + ", ".join(unknown))
+    if unknown:
+        raise ValueError("Unknown RESEARCH_TICKERS: " + ", ".join(unknown))
+    return configured
 
 
 def timestamp_age_seconds(value):

@@ -98,10 +98,11 @@ test("menu follows the plan sample: cards, two short buttons, Research/Guides, E
   const menu = read("app/research/site-header.tsx");
   for (const [ja, en] of [["PROで、もっと深く", "Go deeper with PRO"], ["案内を見る", "Learn more"], ["プランの管理", "Manage plan"],
     ["すべての機能が使えます", "All features unlocked"], ["運営者　全機能", "Owner · Full access"], ["アカウント", "Account"],
-    ["スマホ通知", "Mobile alerts"], ["再読み込み", "Refresh"], ["監視22銘柄リスト", "22 Tracked Stocks"],
+    ["スマホ通知", "Mobile alerts"], ["再読み込み", "Refresh"],
     ["決算・経済指標", "Earnings & Indicators"], ["銘柄比較 PRO", "Compare · PRO"]]) {
     assert.ok(menu.includes(`"${ja}" : "${en}"`), ja);
   }
+  assert.ok(menu.includes('ja ? `監視${TRACKED_COUNT}銘柄リスト` : `${TRACKED_COUNT} Tracked Stocks`'));
   // Manage plan opens the account page; paid buttons are Account + Mobile alerts, free ones Refresh + Account.
   assert.match(menu, /className=\{styles\.manage\} href="\/research\/account"/);
   assert.match(menu, /href="\/research\/notifications"/);

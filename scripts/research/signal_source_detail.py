@@ -71,7 +71,7 @@ def detail(path, requested_id):
             ticker = event['source_id'][len(bridge.PREFIX):]
             if ticker not in monitor.PROVIDERS or monitor.article_url(url, ticker) != url:
                 return None
-            row = db.execute('''SELECT s.ticker,s.title,s.published_on,s.sha256,s.body_sha256,
+            row = db.execute('''SELECT s.ticker,s.title,s.published_on,s.sha256,s.body_sha256,s.evidence_kind,
               s.discovered_at,s.checked_at,r.observed_at,length(r.extracted_text) AS chars,
               substr(r.extracted_text,1,?) AS body
               FROM sources s LEFT JOIN source_revisions r
@@ -82,8 +82,9 @@ def detail(path, requested_id):
             result.update(documentSha256=row['sha256'], bodyChars=row['chars'],
                           bodyAt=row['observed_at'], firstSeenAt=row['discovered_at'],
                           lastSeenAt=row['checked_at'])
-            current = (row['ticker'] == ticker and row['title'] == event['title']
-                       and bridge.revision(row['title'], row['sha256'], row['published_on']) == event['sha'])
+            title = bridge.event_title(url, row['title'], row['evidence_kind'], row['body'])
+            current = (row['ticker'] == ticker and title == event['title']
+                       and bridge.revision(title, row['sha256'], row['published_on']) == event['sha'])
         else:
             row = db.execute('''SELECT sha,title,first_seen_at,last_seen_at,
               length(text) AS chars,substr(text,1,?) AS body FROM signal_documents

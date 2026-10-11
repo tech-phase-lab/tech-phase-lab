@@ -10,6 +10,7 @@ import { events } from "@/lib/research/content-server";
 import { buildCompanyProfiles } from "@/lib/research/companies";
 import { companyWatchForMember, watchTitles } from "@/lib/research/company-watch";
 import CompanyWatch from "../company-watch";
+import CoverageCompanyDashboard from "../coverage-company-dashboard";
 import rawSnapshot from "@/lib/research/intake-snapshot.json";
 import { buildCoverageCompanies, coverageCompanyIssues, providers, snapshotIssues, type IntakeSnapshot } from "@/lib/research/intake";
 
@@ -46,6 +47,8 @@ export default async function CompanyPage({ params }: { params: Promise<{ ticker
   await connection();
   const member = await getMembership().catch(() => ({status:"unavailable",plan:"free"}));
   const watch=companyWatchForMember(ticker,member);
-  if(!watch) notFound();
+  // Oct 11 additions have no reviewed watch page yet: show live intake,
+  // news and earnings flashes for the company instead of a missing page.
+  if(!watch) return <CoverageCompanyDashboard company={coverage} companies={companyOptions} generatedAt={snapshot.generatedAt}/>;
   return <CompanyWatch key={ticker} companies={companyOptions} watch={watch} titles={watchTitles}/>;
 }

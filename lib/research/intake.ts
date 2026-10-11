@@ -4,11 +4,13 @@ export const providers = registry;
 export const providerByTicker = Object.fromEntries(providers.map(p => [p.ticker, p]));
 export const sectorNames: Record<string, string> = {
   semiconductors: "半導体", networking: "ネットワーク", "ai-cloud": "AIクラウド",
-  "power-cooling": "電力・冷却", servers: "サーバー", software: "AIソフトウェア", platforms: "大手クラウド",
+  "power-cooling": "電力・冷却", servers: "サーバー", software: "AIソフトウェア", platforms: "大手テック",
+  storage: "ストレージ", "autos-robotics": "EV・ロボティクス", fintech: "フィンテック", quantum: "量子コンピューター",
 };
 export const sectorNamesEn: Record<string, string> = {
   semiconductors: "Semiconductors", networking: "Networking", "ai-cloud": "AI cloud",
-  "power-cooling": "Power & cooling", servers: "Servers", software: "AI software", platforms: "Large cloud platforms",
+  "power-cooling": "Power & cooling", servers: "Servers", software: "AI software", platforms: "Big Tech",
+  storage: "Storage", "autos-robotics": "EVs & robotics", fintech: "Fintech", quantum: "Quantum computing",
 };
 
 export type IntakeSource = {
