@@ -1218,3 +1218,36 @@ DBの削除済みの印だけでは、削除前のバックアップから復元
 バックアップ保持は「直近7日分＋週ごとの最新4回分を目安」とし、「28日以内に必ず消える」とは記載しない。前節の購入者向け削除表示案は了承済みで、法務確認時に最終文面を修正する。DELETE実装前に削除成功の表示として使用しない。
 
 今回の作業は仕様資料への追記のみ。実DB、Railwayサービス/変数/費用、既存ニュース監視、メール送信は変更していない。検証はgit diff --checkと既存本文がそのまま残ることの照合。計画保存・削除API、独立削除履歴、削除後の復元保護は未実装であり、完成扱いにしない。
+
+
+## 2026-10-12 ChatGPT — 計画保存・削除APIの先行実装（answers/fxを除外）
+
+最新回答により、本人のDELETEはuse.revokedでも許可する。missingでも本人認証後は成功応答を選択し、閲覧・編集・シミュレーションは引き続きuse.activeのみ。技術的な細部はChatGPT側で決めて進め、確認は費用・個人情報・利用者に見える文言に関わる事項に限る。この追記は前節のDELETE受付条件の未決記述に優先する。
+
+### Claudeが画面を接続する契約
+
+入口は同一originのGET/PUT/DELETE /api/resolute/plan。内部ではVercelサーバーがClerkセッションJWTと既存サービス間トークンを使ってRailwayの/internal/v1/planを呼ぶ。ブラウザからuserId・購入権限・PRO状態・Railway URL・秘密情報を渡さない。GET/PUTには有効な買い切りuseが必要。DELETEは本人認証だけで受付し、useの取り消し・未購入でも自分のデータ削除を止めない。
+
+PUTは{plan,baseRevision}、DELETEは{baseRevision}。初回は0。200と409は共に{plan,revision}で、DELETEの200はplan:null。GETの未作成はplan:null/revision:0、削除後は保持したrevision。PUT/DELETEの成功でrevisionを+1する。既にplan:nullや未購入でデータがない場合も、正しいbaseRevisionのDELETEを成功として受理し、削除済みの印と次のrevisionを保持する。権限取り消し後はGETできないため、DELETEで競合したら409のrevisionを使って本人が再実行できる。非active本人のDELETEの409はplan:nullにしてrevisionだけ返し、不可視の計画本文を漏らさない。書込の自動再試行はしない。応答を受け取れなかった場合は保存失敗と断定せず、GETまたは本人による競合確認で結果を確認する。
+
+Planの入力型はlib/resolute/plan-data.tsのPlanInputが正本。schemaVersionは1。現時点の保存項目はcurrency、monthlyLivingCost、savingsMonths、reserveMonths、nearTermExpense、financialAssets、investedAmount、investable、tolerancePct、toleranceDrop、perStockCapPct、buyMode、buyLines、buyBudgetPct、allocation、noBuyConditions、haltConditions、ruleType。全項目を送る。nullable項目はnullを明示する。金額計算・上限・精度・買い増し制約は前節の確定事項を検証し、investable/toleranceDropの不一致は400。買い増し額の合計がbuyBudgetを超える入力は拒否しない。条件の文字数はUnicodeコードポイントで数える。
+
+answersとfxはキー自体を受付せず、送信されたら400。createdAt/updatedAtも入力では送らない。GET/PUTのplanにはサーバー管理のcreatedAt/updatedAt（ISO UTC）が含まれるため、編集してPUTする際はこれらを除く。revisionはplanの外側で扱う。表示用のreserve/investBase/toleranceMonths/buyBudgetは保存項目に追加せず、既存共通計算を使う。計画内容やメールアドレスをエラー・ログへ出力しない。
+
+GET/PUT/DELETEの401はAUTH_REQUIRED、GET/PUTの403はPLAN_ACCESS_DENIED、PUT/DELETEのorigin不一致はORIGIN_REJECTED、400はINVALID_PLAN、413はBODY_TOO_LARGE、415はJSON_REQUIRED、429はRATE_LIMITED（Retry-After:60）、503はPLAN_UNAVAILABLE。本文はapplication/jsonで最大16,384 bytes、URLのクエリによるユーザー選択等は受付しない。全応答はprivate/no-store。503を未購入や保存成功と表示しない。今回、画面の文言変更は行っていない。
+
+### DB・削除・復元の実装と有効化条件
+
+明示適用用db/resolute/002_plans.sqlを追加した。専用resolute DB以外では適用を拒否する。1ユーザー1行で、更新・削除はトランザクションとユーザー単位のDBロックで直列化し、baseRevisionを照合する。useの確認はDBで行い、PROや通知期間を代用しない。DELETEは計画本文をNULLにし、作成/更新日時も消去してユーザーID・revision・削除日時を保持する。購入履歴・利用権には書き込まない。同じトランザクションでplan_deletionsへユーザーID・revision・削除日時だけを記録し、記録失敗なら削除全体をロールバックする。
+
+lib/resolute/plan-restore.tsに削除履歴の再適用処理を追加した。resolute_restore_testという隔離DB以外には実行できない。独立保存先から取得・復号・完全性を確認した最新履歴を渡す前提で、削除revision以下の復元計画を削除済みの印へ置換し、欠けた印を再作成する。削除後に再作成され、削除revisionより新しい計画は保持する。不正履歴を受付せず、再適用によってrevisionを後退させない。
+
+plan_deletionsが復元スナップショット内にあるだけでは削除保護を保証できない。独立した暗号化履歴への出力・読戻し・障害時の再送・完全性確認と、既存pg_restoreジョブへの接続は未実装。このため本番の計画APIは既定で無効（503）。RailwayのRESOLUTE_PLAN_API_ENABLEDをtrueにする前に、独立削除履歴と復元確認を完了する。DB接続は将来の専用変数RESOLUTE_PLAN_DB_URLだけを使い、resolute_plan_writerという限定roleを要求する。既存ENTITLEMENT_DB_URL/resolute_api_readerはそのまま読取専用で維持し、他DBやDATABASE_URLへフォールバックしない。
+
+今回、本番のSQL適用・writer作成・環境変数設定・有効化はしていない。新しいサービス・契約・費用設定・メール送信は追加していない。費用を伴う独立保存先の設定は見込みを確認してから行う。独立履歴と復元保護、実画面からVercel/Railway/実DBへの通し確認を終えるまで「計画保存・削除が本番で完成」とは扱わない。answers/fxの最終仕様を受領後、保存範囲を再確認して追加する。
+
+### 確認済みと未確認
+
+ローカルPostgreSQLエンジンでSQL適用、未作成、保存、競合、削除、再作成、取り消し後の閲覧/編集拒否と本人削除、未購入本人の削除、削除記録失敗時のロールバックを確認した。隔離DBで古い計画の削除履歴再適用、新しい再作成計画の保持、欠けた削除済みの印の復元、再適用の冪等性、不正履歴と別DBの拒否を確認した。HTTPテストで本人識別・origin・入力上限・競合応答・秘密を含まないエラー・書込再試行なしを確認した。これはRailwayの実DBでの保存や、実Bucketの独立履歴を使ったpg_restoreの実測結果ではない。
+
+検証結果: Node 685/685、Python 2,400/2,400（156.300秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。実際のNode HTTP起動・署名JWT認証・DELETE本文転送・本番無効時の503もローカル確認済みで、DBへは接続していない。最初のPython実行は既存test_deep_analysisの全文文字列検査がpublishedAtの45秒を45%と誤検出して1件失敗した。対象外のニュース実装/テストを変更せず、全体再実行の成功を確認した。
