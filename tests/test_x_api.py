@@ -214,7 +214,9 @@ class XApiTests(unittest.TestCase):
             if source["id"] == "x-aistocksavvy":
                 continue  # Price-target-only route; checked in HardikShahPriceTargetRouteTests.
             self.assertLessEqual(len(source["query"]), 512)
-            self.assertEqual(set(source["extraTickers"]), added | earnings_only)
+            # Oct 11: LITE and ALAB joined the roster; DELL and ORCL became earnings-only.
+            self.assertEqual(set(source["extraTickers"]),
+                             (added - {"LITE", "ALAB"}) | earnings_only | {"DELL", "ORCL"})
             self.assertEqual(len(source["tickers"]), 40)
             if source["id"] != "x-wallstengine":
                 self.assertTrue(all(f"${ticker}" in source["query"] for ticker in added))

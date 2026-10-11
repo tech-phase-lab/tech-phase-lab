@@ -12,8 +12,8 @@ import './viewer.css';
 // This standalone public viewer imports presentation and fictional comparison
 // inputs only. No authenticated layout, paid articles, monitor APIs or keys.
 const sample=sampleData as unknown as ComparisonResult;
-const sectorNames:Record<string,string>={semiconductors:'半導体',networking:'ネットワーク','ai-cloud':'AIクラウド','power-cooling':'電力・冷却',servers:'サーバー',software:'AIソフトウェア',platforms:'大手クラウド'};
-const sectorNamesEn:Record<string,string>={semiconductors:'Semiconductors',networking:'Networking','ai-cloud':'AI cloud','power-cooling':'Power & cooling',servers:'Servers',software:'AI software',platforms:'Large cloud platforms'};
+const sectorNames:Record<string,string>={semiconductors:'半導体',networking:'ネットワーク','ai-cloud':'AIクラウド','power-cooling':'電力・冷却',servers:'サーバー',photonics:'光・フォトニクス',software:'AIソフトウェア',platforms:'大手クラウド'};
+const sectorNamesEn:Record<string,string>={semiconductors:'Semiconductors',networking:'Networking','ai-cloud':'AI cloud','power-cooling':'Power & cooling',servers:'Servers',photonics:'Optics & photonics',software:'AI software',platforms:'Large cloud platforms'};
 function Viewer(){
   const [lang,setLang]=useState<'ja'|'en'>(new URLSearchParams(location.search).get('lang')==='en'?'en':'ja');
   const [tab,setTab]=useState<'watch'|'compare'>('compare');

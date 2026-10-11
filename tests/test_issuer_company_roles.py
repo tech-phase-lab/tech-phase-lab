@@ -18,7 +18,7 @@ class CompanyRoleTests(unittest.TestCase):
         self.assertEqual(self.role('AIB Data Centers Inc.','NBIS','AIB Data Centers Signs Contract with Nebius for AI Data Center Capacity',
           'AIB entered into a binding agreement with Nebius for AI data center capacity.'),'explicit-contract-counterparty')
     def test_monitored_issuer_and_company_acquisition_remain_material(self):
-        self.assertEqual(self.role('Oracle Corporation','ORCL','Oracle Announces Commitment for Energy Costs','Oracle announced its commitment.'),'monitored-issuer')
+        self.assertEqual(self.role('Astera Labs, Inc.','ALAB','Astera Labs Announces Commitment for Energy Costs','Astera Labs announced its commitment.'),'monitored-issuer')
         self.assertEqual(self.role('Example Holdings Inc.','MU','Example Acquires Micron for Cash','Example acquired Micron for cash.'),'explicit-acquisition-subject')
     def test_no_counterparty_from_headline_alone_or_substring_issuer(self):
         self.assertIsNone(self.role('Third Party Inc.','GOOGL','Third Party Announces Partnership with Google','The new tool operates using Google Ads data.'))

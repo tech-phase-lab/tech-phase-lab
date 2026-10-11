@@ -32,8 +32,10 @@ test('currency, signs, accounting basis and non-US quote identifiers stay distin
  const by=Object.fromEntries(companyWatches.map(x=>[x.ticker,x]));
  assert.equal(by.SKHY.exchange,'KRX');assert.equal(by.SKHY.quoteTicker,'000660');
  assert.equal(by.PLTR.exchange,'NASDAQ');
- assert.equal(by.ORCL.tiles[2].value.en,'−$5B');assert.equal(by.ORCL.period,'Q1 FY2027');assert.equal(by.ORCL.periodEnd,'2026-08-31');
- assert.equal(by.DELL.periodEnd,'2026-07-31');assert.equal(by.DELL.releasedOn,'2026-09-01');
+ assert.equal(by.LITE.tiles[0].value.en,'$1.0063B');assert.equal(by.LITE.period,'Q4 FY2026');assert.equal(by.LITE.periodEnd,'2026-06-27');
+ assert.equal(by.LITE.tiles[1].note.ja,'前年同期 −1.7%');assert.match(by.LITE.cards[2].points[0].ja,/\$7\.8B/);
+ assert.equal(by.ALAB.periodEnd,'2026-06-30');assert.equal(by.ALAB.releasedOn,'2026-08-04');assert.equal(by.ALAB.tiles[2].value.en,'$540–560M');
+ assert.equal(by.DELL,undefined);assert.equal(by.ORCL,undefined);
  assert.match(by.NBIS.tiles[2].label.en,/continuing operations/);
  assert.match(by.CRDO.cards[2].points.map(x=>x.en).join(' '),/-3.7 pp/);
  assert.match(by.SNDK.cards[2].points[0].en,/-32.2%/);
