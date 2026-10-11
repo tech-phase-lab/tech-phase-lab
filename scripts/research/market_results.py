@@ -13,7 +13,16 @@ import monitor
 ACCOUNTS = {'tipranks', 'wallstengine', 'fabymetal4'}
 NAMES = {'tipranks': 'TipRanks',
          'wallstengine': 'Wall St Engine', 'fabymetal4': 'FabyΔ'}
-VALUE = r'([-+−]?\d[\d,]*(?:\.\d+)?)\s*(B|M|K|billion|million|thousand|%)?'
+VALUE = r'([-+−]?\d[\d,]*(?:\.\d+)?)\s*(B|M|K|T(?![a-z])|billion|million|thousand|trillion|%)?'
+# Oct 11: ASML reports in euros, TSMC in NT dollars, SK hynix in won. The
+# currency is kept exactly as written; nothing is converted or assumed.
+CURRENCY = r'(NT\$|US\$|\$|€|₩|EUR\b|TWD\b|KRW\b|USD\b)'
+CURRENCY_SYMBOLS = {'nt$': 'NT$', 'twd': 'NT$', '€': '€', 'eur': '€', '₩': '₩', 'krw': '₩',
+                    '$': '$', 'us$': '$', 'usd': '$'}
+
+
+def currency_symbol(text):
+    return CURRENCY_SYMBOLS.get((text or '').strip().lower(), '')
 METRICS = [
     ('revenue', '売上高', 'Revenue', r'(?:revenue|sales|売上高?)', True),
     ('eps', 'EPS', 'EPS', r'(?:(?:adjusted|adj\.?|non[- ]?GAAP|GAAP|調整後)\s*)?EPS', False),
@@ -138,10 +147,74 @@ def economic_metric(text):
             'titleEn': en + ': actual ' + number}
 
 
+INFLATION_LABEL = re.compile(r'\b(?:CPI|PPI|PCE)\b', re.I)
+MONTH_NAMES = ('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+               'September', 'October', 'November', 'December')
+INFLATION_LINE = re.compile(
+    r'^\s*(?:(?:the\s+)?U\.?S\.?\s+)?(?:(?:' + '|'.join(MONTH_NAMES) + r')\s+)?(?P<core>core\s+)?(?P<ind>CPI|PPI|PCE)'
+    r'(?:\s+(?:price\s+)?index)?\s*(?P<b1>\((?:MoM|YoY|M/M|Y/Y)\)|MoM|YoY|M/M|Y/Y)?\s*'
+    r'(?:(?:actual|[:=])\s*[:=]?\s*)?(?P<val>[-+−]?\d+(?:\.\d+)?)\s*%'
+    r'(?:\s*(?P<b2>\((?:MoM|YoY|M/M|Y/Y)\)|MoM|YoY|M/M|Y/Y))?(?P<rest>.*)$', re.I)
+
+
+def inflation_projection(text):
+    """Oct 11: U.S. CPI, PPI and PCE flashes keep headline/core and MoM/YoY.
+
+    One line per figure, as Wall St Engine posts them ("CORE CPI YoY 3.1%,
+    (Est. 3.0%)"). Every figure needs its monthly or annual basis; a line that
+    names an index with a number but cannot be read this way withholds the
+    whole post, since a wrong basis would misstate inflation.
+    """
+    facts, seen = [], {}
+    for line in re.split(r'[\n|]', text):
+        if not INFLATION_LABEL.search(line) or not re.search(r'\d', line):
+            continue
+        match = INFLATION_LINE.match(line)
+        if not match:
+            if re.search(r'\d+(?:\.\d+)?\s*%', line):
+                return None
+            continue  # A heading such as "U.S. SEPTEMBER CPI 👇".
+        bases = [b for b in (match['b1'], match['b2']) if b]
+        if len(bases) != 1 or re.match(r'\s*(?:est\b|expected|forecast|estimate|consensus|previous|prior|予想|前回)',
+                                       match['rest'], re.I):
+            return None
+        monthly = bool(re.fullmatch(r'\(?(?:MoM|M/M)\)?', bases[0], re.I))
+        index = match['ind'].upper()
+        core = bool(match['core'])
+        key = ('core-' if core else '') + index.lower() + ('-mom' if monthly else '-yoy')
+        value = match['val'].replace('−', '-') + '%'
+        if seen.get(key, value) != value:
+            return None  # Two different figures for one measure.
+        if key in seen:
+            continue
+        seen[key] = value
+        basis_ja, basis_en = ('前月比', 'MoM') if monthly else ('前年比', 'YoY')
+        comparisons = economic_comparisons(line, match.start('rest'), '%')
+        facts.append({'key': key, 'ja': ('コア' if core else '') + index + '（' + basis_ja + '）',
+                      'en': ('Core ' if core else '') + index + ' (' + basis_en + ')', 'value': value,
+                      **({'comparisons': comparisons} if comparisons else {})})
+    if not facts or len(facts) > 8:
+        return None
+    indices = list(dict.fromkeys(f['key'].replace('core-', '').split('-')[0].upper() for f in facts))
+    # Only a month written as the report's own period ("SEPTEMBER U.S. CPI").
+    month = re.search(r'\b(' + '|'.join(MONTH_NAMES) + r')\s+(?:U\.?S\.?\s+)?(?:core\s+)?(?:CPI|PPI|PCE)\b', text, re.I)
+    period = ((month[1].upper() + ' ') if month else '') + 'U.S. ' + '/'.join(indices)
+    month_ja = ('（' + str(MONTH_NAMES.index(month[1].capitalize()) + 1) + '月）') if month else ''
+    single = len(indices) == 1
+    short_ja = lambda f: f['ja'].replace(indices[0], '').replace('（', '').replace('）', '') if single else f['ja']
+    short_en = lambda f: f['en'].replace(indices[0] + ' ', '').replace('(', '').replace(')', '') if single else f['en']
+    return {'kind': 'economic', 'ticker': 'ECON', 'period': period, 'facts': facts,
+            'titleJa': '米国' + '・'.join(indices) + month_ja + '：' + '、'.join(short_ja(f) + ' ' + f['value'] for f in facts),
+            'titleEn': 'U.S. ' + ((month[1].capitalize() + ' ') if month else '') + '/'.join(indices) + ': '
+                       + '; '.join(short_en(f) + ' ' + f['value'] for f in facts)}
+
+
 def economic_projection(text):
     # This flash channel covers U.S. indicators, not a generic international CPI.
     if re.search(r'\b(?:Eurozone|Euro area|United Kingdom|UK|Japan|Germany|France|China|Canada)\b', text, re.I):
         return None
+    if INFLATION_LABEL.search(text):
+        return inflation_projection(text)
     labels = list(MACRO.finditer(text))
     parts = []
     for index, label in enumerate(labels):
@@ -208,7 +281,7 @@ def projection(text, tickers):
             if section and key not in {'revenue', 'eps'}:
                 continue
             m = None
-            for candidate in re.finditer(r'(?<!\w)(' + pattern + r')\s*[:=]?\s*\$?\s*' + VALUE, part, re.I):
+            for candidate in re.finditer(r'(?<!\w)(' + pattern + r')\s*[:=]?\s*' + CURRENCY + r'?\s*' + VALUE, part, re.I):
                 prefix = re.split(r'[\n;|]', part[:candidate.start()])[-1]
                 if re.search(r'(?:est(?:imate[ds]?)?|expected|consensus|forecast|prior(?: quarter| year)?|previous(?: quarter| year)?)\s*[:=]?\s*$', prefix, re.I):
                     continue
@@ -216,17 +289,18 @@ def projection(text, tickers):
                 break
             if not m:
                 continue
-            number, unit = m[2].replace(',', '').replace('−', '-'), m[3] or ''
-            if key!='gross-margin' and '$' not in m[0]:
-                continue  # Never silently assume USD for a currency-free or foreign-currency value.
-            if money and unit.lower() not in {'b','m','k','billion','million','thousand'}:
+            number, unit = m[3].replace(',', '').replace('−', '-'), m[4] or ''
+            symbol = currency_symbol(m[2])
+            if key!='gross-margin' and not symbol:
+                continue  # Never assume a currency for a currency-free value.
+            if money and unit.lower() not in {'b','m','k','t','billion','million','thousand','trillion'}:
                 continue
             if key == 'gross-margin' and unit != '%':
                 continue
             if key == 'eps' and unit:
                 continue
-            unit = {'billion':'B','million':'M','thousand':'K'}.get(unit.lower(),unit.upper() if unit != '%' else '%')
-            value = ('$' if key != 'gross-margin' else '') + number + unit
+            unit = {'billion':'B','million':'M','thousand':'K','trillion':'T'}.get(unit.lower(),unit.upper() if unit != '%' else '%')
+            value = (symbol if key != 'gross-margin' else '') + number + unit
             if re.search(r'adjusted|adj\.?|non[- ]?GAAP|調整後', m[1], re.I):
                 ja, en = '調整後' + ja, 'Adjusted ' + en
             elif re.search(r'\bGAAP\b', m[1], re.I):
@@ -236,9 +310,10 @@ def projection(text, tickers):
                 ja, en = ('通期 ' + ja, 'Full-year ' + en) if annual else ('会社見通し ' + ja, 'Guidance ' + en)
             # Ranges are preserved only when explicitly present next to the value.
             tail = part[m.end():m.end()+35]
-            spread = re.match(r'\s*(?:±|\+/-)\s*\$?\s*' + VALUE, tail, re.I)
-            if spread:
-                value += ' ± ' + ('$' if key != 'gross-margin' else '') + spread[1] + (spread[2] or unit)
+            spread = re.match(r'\s*(?:±|\+/-)\s*' + CURRENCY + r'?\s*' + VALUE, tail, re.I)
+            if spread and currency_symbol(spread[1]) in ('', symbol):
+                spread_unit = {'billion':'B','million':'M','thousand':'K','trillion':'T'}.get((spread[3] or '').lower(), (spread[3] or '').upper()) or unit
+                value += ' ± ' + (symbol if key != 'gross-margin' else '') + spread[2] + spread_unit
             facts.append({'key':('guidance-' if section else '')+key, 'ja':ja, 'en':en, 'value':value})
     if not any(f['key'] in {'revenue','eps'} for f in facts):
         return None

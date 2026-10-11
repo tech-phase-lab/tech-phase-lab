@@ -72,13 +72,54 @@ def load_schedule(path=SCHEDULE_PATH):
     return result
 
 
+# Oct 11: most tracked companies have no timed calendar entry. When a tracked
+# company's own earnings release is detected, poll the earnings X routes as if
+# it had been scheduled at that moment. Only the IR title decides; no date is
+# guessed and nothing is published from this signal.
+RESULT_WORDS = r'(?:results|earnings|EPS|revenue|net sales|net income)'
+PERIOD_WORDS = r'(?:Q[1-4]|first|second|third|fourth|quarter(?:ly)?|fiscal)'
+EARNINGS_TITLE = re.compile(r'\b' + PERIOD_WORDS + r'\b.{0,80}\b' + RESULT_WORDS + r'\b|\b' + RESULT_WORDS
+                            + r'\b.{0,80}\b' + PERIOD_WORDS + r'\b|決算', re.I)
+# A date announcement or call invitation is not the release itself.
+NOT_RELEASE = re.compile(r'\b(?:will|to)\s+(?:report|announce|release|host|hold|publish)\b|conference call|webcast|'
+                         r'\bdate\b|\bschedule[ds]?\b|\binvit', re.I)
+DETECTED = {}
+
+
+def note_detection(ticker, title, detected_at):
+    """Remember a detected earnings release (ticker -> detection instant)."""
+    at = instant(detected_at)
+    if (at and isinstance(ticker, str) and isinstance(title, str) and EARNINGS_TITLE.search(title)
+            and not NOT_RELEASE.search(title)):
+        if ticker not in DETECTED or DETECTED[ticker] < at:
+            DETECTED[ticker] = at
+        return True
+    return False
+
+
+def detected_events(now):
+    return [{'id': 'detected-' + ticker, 'kind': 'earnings', 'phase': 'release', 'at': at, 'ticker': ticker}
+            for ticker, at in list(DETECTED.items()) if at <= now <= at + BURST_AFTER]
+
+
 def burst_routes(now, events=None):
     """X route ids to poll every BURST_INTERVAL_SECONDS at `now`."""
     routes = set()
-    for event in load_schedule() if events is None else events:
+    for event in [*(load_schedule() if events is None else events), *detected_events(now)]:
         if event['phase'] == 'release' and event['at'] - BURST_BEFORE <= now <= event['at'] + BURST_AFTER:
             routes.update(BURST_ROUTES[event['kind']])
     return routes
+
+
+def refresh_detections(db, now):
+    """Read earnings releases detected in the last burst window."""
+    since = (now - BURST_AFTER).isoformat()
+    try:
+        rows = db.execute("""SELECT r.ticker,s.title,r.detected_at FROM release_events r JOIN sources s ON s.url=r.url
+          WHERE julianday(r.detected_at)>=julianday(?) AND s.title IS NOT NULL""", (since,)).fetchall()
+    except Exception:
+        return 0
+    return sum(1 for ticker, title, detected_at in rows if note_detection(ticker, title, detected_at))
 
 
 def window(event):

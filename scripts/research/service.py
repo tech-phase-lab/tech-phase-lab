@@ -2447,6 +2447,8 @@ class AutomaticMonitor:
     def release_watch_once(self, now=None, transport=None):
         """Alert the owner about a late or published scheduled result."""
         now = now or datetime.now(timezone.utc)
+        with self.db_lock, monitor.connect(self.db_path) as db:
+            release_watch.refresh_detections(db, now)
         if not release_watch.active(now):
             return []
         payload = self.public_news()

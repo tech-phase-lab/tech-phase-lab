@@ -60,3 +60,16 @@ test('employment sources collapse into one localized release and retain the veri
   assert.equal(next[0].title.ja,'米国雇用統計（10月）');
   assert.equal(next[0].title.en,'U.S. employment report (October 2026)');
 });
+
+test("U.S. CPI flashes become one Japanese-named calendar row per release", () => {
+  const brief = { id: "1", researchId: "x-result-1", kind: "economic", ticker: "ECON", period: "SEPTEMBER U.S. CPI",
+    titleJa: "米国CPI（9月）：前年比 2.9%", titleEn: "U.S. September CPI: YoY 2.9%",
+    facts: [{ key: "cpi-yoy", ja: "CPI（前年比）", en: "CPI (YoY)", value: "2.9%" }],
+    url: "https://x.com/wallstengine/status/1", publisher: "Wall St Engine",
+    publishedAt: "2026-10-14T12:30:05Z", observedAt: "2026-10-14T12:30:20Z", publicAt: "2026-10-14T12:30:21Z" };
+  const merged = mergeEconomicResults([], [brief, { ...brief, id: "2", researchId: "x-result-2", publishedAt: "2026-10-14T12:31:00Z" }]);
+  const rows = merged.filter(item => item.id === "cpi-2026-09");
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].title.ja, "米国CPI（9月）");
+  assert.equal(rows[0].result.ja, brief.titleJa);
+});
