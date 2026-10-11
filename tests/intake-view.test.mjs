@@ -466,5 +466,5 @@ test("every registered company has a valid company coverage page model", () => {
   assert.deepEqual(coverageCompanyIssues(companies), []);
   assert.equal(companies.find((company) => company.ticker === "NVDA").counts.total, 20);
   assert.equal(companies.find((company) => company.ticker === "CRWV").counts.fetched, 1);
-  assert.ok(["fallback", "degraded"].includes(companies.find((company) => company.ticker === "ORCL").discovery.status));
+  assert.ok(["fallback", "degraded"].includes(companies.find((company) => company.ticker === "TSM").discovery.status));
 });

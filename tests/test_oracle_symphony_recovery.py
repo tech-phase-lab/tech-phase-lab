@@ -96,6 +96,9 @@ class OracleSymphonyRecoveryTests(unittest.TestCase):
                                        'To support a regional arts group during restructuring.','Oracle announced a partnership')}}
         self.pin['failure'] = {**self.pin['reviewedFailure'],'attempts':3}
         self.pin['reviewedPayloadSha'] = recovery.digest(json.dumps(recovery.retained_note({'body':BODY},self.pin),ensure_ascii=False))
+        # The fixture exercises the recovery path with Oracle as a roster issuer;
+        # Oracle itself moved to earnings-only on Oct 11.
+        self.enterContext(patch.dict(signals.ALIASES,{'ORCL':['Oracle']}))
         self.enterContext(patch.object(recovery,'RETAINED_COPY_PATH',self.manifest_path))
         self.enterContext(patch.object(recovery,'RETAINED_COPY_SHA','temporary'))
         self.enterContext(patch.object(recovery,'datetime',Clock))

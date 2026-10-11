@@ -508,19 +508,19 @@
     ]
   },
   {
-    "ticker": "DELL",
-    "name": "Dell Technologies",
-    "exchange": "NYSE",
-    "quoteTicker": "DELL",
-    "period": "Q2 FY2027",
-    "releasedOn": "2026-09-01",
-    "periodEnd": "2026-07-31",
-    "reviewedOn": "2026-10-05",
+    "ticker": "LITE",
+    "name": "Lumentum",
+    "exchange": "NASDAQ",
+    "quoteTicker": "LITE",
+    "period": "Q4 FY2026",
+    "releasedOn": "2026-08-11",
+    "periodEnd": "2026-06-27",
+    "reviewedOn": "2026-10-11",
     "sources": [
       {
-        "url": "https://investors.delltechnologies.com/node/20956/pdf",
+        "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026055726/lite_ex991xq4fy26.htm",
         "title": "Official earnings release",
-        "location": "Financial highlights, financial statements and outlook"
+        "location": "Financial overview, statements of operations, balance sheet and business outlook"
       }
     ],
     "tiles": [
@@ -530,106 +530,130 @@
           "en": "Revenue"
         },
         "value": {
-          "ja": "$46.971B",
-          "en": "$46.971B"
+          "ja": "$1.0063B",
+          "en": "$1.0063B"
         },
         "note": {
-          "ja": "前年同期比 +58%",
-          "en": "YoY +58%"
+          "ja": "前年同期比 +109.3%",
+          "en": "YoY +109.3%"
         }
       },
       {
         "label": {
-          "ja": "GAAP営業利益",
-          "en": "GAAP operating income"
+          "ja": "GAAP営業利益率",
+          "en": "GAAP operating margin"
         },
         "value": {
-          "ja": "$5.385B",
-          "en": "$5.385B"
+          "ja": "27.8%",
+          "en": "27.8%"
         },
         "note": {
-          "ja": "前年同期 $1.773B",
-          "en": "Prior-year quarter $1.773B"
+          "ja": "前年同期 −1.7%",
+          "en": "Prior-year quarter −1.7%"
         }
       },
       {
         "label": {
-          "ja": "通期売上見通し",
-          "en": "Full-year revenue guidance"
+          "ja": "次四半期売上見通し",
+          "en": "Next-quarter revenue guidance"
         },
         "value": {
-          "ja": "$192B",
-          "en": "$192B"
+          "ja": "$1.225–1.275B",
+          "en": "$1.225–1.275B"
         },
         "note": {
-          "ja": "FY2027・会社予想",
-          "en": "FY2027 · Company forecast"
+          "ja": "Q1 FY2027・会社予想",
+          "en": "Q1 FY2027 · Company forecast"
         }
       }
     ],
     "cards": [
       {
         "headline": {
-          "ja": "AIサーバー売上が倍増",
-          "en": "AI server revenue doubled"
+          "ja": "部品・システムとも前年同期の2倍超",
+          "en": "Components and Systems both more than doubled"
         },
         "points": [
           {
-            "ja": "売上 $16.4B・前年同期比 +100%",
-            "en": "Revenue $16.4B, up 100% YoY"
+            "ja": "部品 $649.4M・前年同期比 +102.7%",
+            "en": "Components $649.4M, up 102.7% YoY"
+          },
+          {
+            "ja": "システム $356.9M・前年同期比 +122.6%",
+            "en": "Systems $356.9M, up 122.6% YoY"
           }
         ],
         "detail": {
-          "ja": "AIサーバーの受注残$95Bは未計上の売上と区別します。",
-          "en": "Keep the $95B AI server backlog separate from recognized revenue."
+          "ja": "会社はAIデータセンターで光接続の採用が進んでいることを要因に挙げています。OCSやクラウド向けモジュールは「これから寄与し始める」段階との説明です。",
+          "en": "The company attributes growth to AI data centers adopting optical links; it describes OCS and cloud modules as drivers that are beginning to layer in."
         }
       },
       {
         "headline": {
-          "ja": "通期売上見通しを引き上げ",
-          "en": "Full-year sales guidance increased"
+          "ja": "前四半期から売上24.5%増、利益率も改善",
+          "en": "Revenue up 24.5% sequentially with higher margins"
         },
         "points": [
           {
-            "ja": "FY2027 $167B → $192B",
-            "en": "FY2027: $167B → $192B"
+            "ja": "売上 $808.4M → $1,006.3M",
+            "en": "Revenue $808.4M → $1,006.3M"
+          },
+          {
+            "ja": "GAAP粗利益率 44.2% → 47.4%（+3.2ポイント）",
+            "en": "GAAP gross margin 44.2% → 47.4% (+3.2 pp)"
+          },
+          {
+            "ja": "GAAP営業利益率 21.6% → 27.8%（+6.2ポイント）",
+            "en": "GAAP operating margin 21.6% → 27.8% (+6.2 pp)"
           }
         ],
         "detail": {
-          "ja": "AIサーバー売上見通しも$60Bから$74Bへ引き上げ。いずれも会社予想です。",
-          "en": "AI server revenue guidance also rose from $60B to $74B; both are company forecasts."
+          "ja": "比較対象：Q3 FY2026 → Q4 FY2026。利益率の差はパーセントポイントで表示しています。",
+          "en": "Comparison: Q3 FY2026 → Q4 FY2026. Margin differences use percentage points."
         }
       },
       {
         "headline": {
-          "ja": "増収の一方、営業キャッシュは減少",
-          "en": "Operating cash flow fell despite growth"
+          "ja": "GAAPでは$7.2Bの純損失",
+          "en": "GAAP net loss of $7.2B"
         },
         "points": [
           {
-            "ja": "営業CF $2.543B → $2.225B",
-            "en": "Operating cash flow $2.543B → $2.225B"
+            "ja": "転換社債の株式化に伴う一時的・非現金の社債消却損 $7.8B",
+            "en": "One-time, non-cash loss on debt extinguishment of $7.8B from equitizing convertible notes"
+          },
+          {
+            "ja": "1年以内返済予定の長期債務 $1,596.9M（前期末 $10.6M）",
+            "en": "Current portion of long-term debt $1,596.9M (prior fiscal year-end $10.6M)"
+          },
+          {
+            "ja": "現金・短期投資は前四半期末から$433.9M減の$2.7B",
+            "en": "Cash and short-term investments $2.7B, down $433.9M from the prior quarter-end"
           }
         ],
         "detail": {
-          "ja": "前年同期比13%減。売上や利益の増加だけで資金創出を判断しません。",
-          "en": "Down 13% year-on-year. Revenue and profit growth alone do not establish stronger cash generation."
+          "ja": "会社は損失を一時的な非現金項目と説明しています。本業の利益とは分けて見ますが、1株利益の算定株式数（基本）が前年同期の69.6Mから84.6Mへ増えた点も確認します。",
+          "en": "The company describes the loss as one-time and non-cash. Keep it separate from operating profit, but also note basic shares used for per-share results rose from 69.6M to 84.6M year-on-year."
         }
       },
       {
         "headline": {
-          "ja": "受注を納入・入金まで追う",
-          "en": "Track orders through delivery and collection"
+          "ja": "次期売上見通しは中央値$1.25B",
+          "en": "Next-quarter revenue guidance midpoint $1.25B"
         },
         "points": [
           {
-            "ja": "次期売上見通し $49B",
-            "en": "Next-quarter revenue guidance: $49B"
+            "ja": "Q1 FY2027売上 $1.225–1.275B（会社予想）",
+            "en": "Q1 FY2027 revenue $1.225–1.275B (company forecast)"
+          },
+          {
+            "ja": "non-GAAP営業利益率 39.5–40.5%（会社予想）",
+            "en": "Non-GAAP operating margin 39.5–40.5% (company forecast)"
           }
         ],
         "detail": {
-          "ja": "受注残が実際の売上と営業キャッシュへ転換するかを監視します。",
-          "en": "Research checkpoint: monitor conversion of backlog into revenue and operating cash."
+          "ja": "いずれも会社予想で、実績ではありません。1.6T対応モジュールやCPO向けレーザーの需要が売上に結びつくかを次回決算で確認します。",
+          "en": "Both are company forecasts, not results. Check in the next report whether demand for 1.6T modules and CPO lasers turns into revenue."
         }
       }
     ]
@@ -889,19 +913,19 @@
     ]
   },
   {
-    "ticker": "ORCL",
-    "name": "Oracle",
-    "exchange": "NYSE",
-    "quoteTicker": "ORCL",
-    "period": "Q1 FY2027",
-    "releasedOn": "2026-09-10",
-    "periodEnd": "2026-08-31",
-    "reviewedOn": "2026-10-05",
+    "ticker": "ALAB",
+    "name": "Astera Labs",
+    "exchange": "NASDAQ",
+    "quoteTicker": "ALAB",
+    "period": "Q2 2026",
+    "releasedOn": "2026-08-04",
+    "periodEnd": "2026-06-30",
+    "reviewedOn": "2026-10-11",
     "sources": [
       {
-        "url": "https://investor.oracle.com/investor-news/news-details/2026/Oracle-Announces-Q1-Results-Driven-by-Triple-Digit-Growth-in-Cloud-Infrastructure-Revenues/default.aspx",
+        "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000033/q226exhibit991.htm",
         "title": "Official earnings release",
-        "location": "Financial highlights, financial statements and outlook"
+        "location": "Financial highlights, statements of operations, cash flows and Q3 outlook"
       }
     ],
     "tiles": [
@@ -911,106 +935,122 @@
           "en": "Revenue"
         },
         "value": {
-          "ja": "$19.345B",
-          "en": "$19.345B"
+          "ja": "$392.4M",
+          "en": "$392.4M"
         },
         "note": {
-          "ja": "前年同期比 +30%",
-          "en": "YoY +30%"
+          "ja": "前年同期比 +104%",
+          "en": "YoY +104%"
         }
       },
       {
         "label": {
-          "ja": "クラウド基盤売上",
-          "en": "Cloud infrastructure revenue"
+          "ja": "GAAP営業利益率",
+          "en": "GAAP operating margin"
         },
         "value": {
-          "ja": "$7.4B",
-          "en": "$7.4B"
+          "ja": "22.7%",
+          "en": "22.7%"
         },
         "note": {
-          "ja": "前年同期比 +121%",
-          "en": "YoY +121%"
+          "ja": "調整後 39.1%とは別",
+          "en": "Separate from adjusted 39.1%"
         }
       },
       {
         "label": {
-          "ja": "フリーキャッシュフロー",
-          "en": "Free cash flow"
+          "ja": "次四半期売上見通し",
+          "en": "Next-quarter revenue guidance"
         },
         "value": {
-          "ja": "−$5B",
-          "en": "−$5B"
+          "ja": "$540–560M",
+          "en": "$540–560M"
         },
         "note": {
-          "ja": "Q1実績",
-          "en": "Q1 actual"
+          "ja": "Q3 2026・会社予想",
+          "en": "Q3 2026 · Company forecast"
         }
       }
     ],
     "cards": [
       {
         "headline": {
-          "ja": "クラウド基盤の売上が倍増超",
-          "en": "Cloud infrastructure more than doubled"
+          "ja": "売上は前年同期の約2倍で過去最高",
+          "en": "Record revenue, roughly double the prior year"
         },
         "points": [
           {
-            "ja": "IaaS +121%・クラウド全体 +62%",
-            "en": "IaaS +121%; total cloud +62% YoY"
+            "ja": "売上 $392.4M・前年同期比 +104%",
+            "en": "Revenue $392.4M, up 104% YoY"
           }
         ],
         "detail": {
-          "ja": "IaaSとSaaSを合計したクラウド売上は$11.6Bです。",
-          "en": "Combined IaaS and SaaS revenue was $11.6B."
+          "ja": "会社はAIファブリックと信号調整製品の幅広い伸びを要因に挙げ、Aries製品群は四半期売上で過去最高だったと説明しています。",
+          "en": "The company cites broad growth across AI fabrics and signal conditioning, with record quarterly revenue for the Aries product line."
         }
       },
       {
         "headline": {
-          "ja": "営業利益は売上以上の伸び",
-          "en": "Operating profit outpaced revenue"
+          "ja": "前四半期比27%増、営業利益も拡大",
+          "en": "Up 27% sequentially; operating income rose"
         },
         "points": [
           {
-            "ja": "GAAP営業利益 $6.728B・前年同期比 +57%",
-            "en": "GAAP operating income $6.728B, up 57% YoY"
+            "ja": "売上 $308.4M → $392.4M",
+            "en": "Revenue $308.4M → $392.4M"
+          },
+          {
+            "ja": "GAAP営業利益 $61.8M → $89.2M",
+            "en": "GAAP operating income $61.8M → $89.2M"
           }
         ],
         "detail": {
-          "ja": "売上の30%増と分けて確認します。",
-          "en": "Compare separately with 30% revenue growth."
+          "ja": "比較対象：Q1 2026 → Q2 2026。金額は公式決算資料の損益計算書によります。",
+          "en": "Comparison: Q1 2026 → Q2 2026. Amounts come from the statements of operations in the official release."
         }
       },
       {
         "headline": {
-          "ja": "営業CF黒字でも投資後は資金流出",
-          "en": "Investment spending outweighed operating cash"
+          "ja": "粗利益率は低下、純利益は税効果が押し上げ",
+          "en": "Gross margin fell; a tax benefit lifted net income"
         },
         "points": [
           {
-            "ja": "営業CF +$23B・FCF −$5B",
-            "en": "Operating cash flow +$23B; FCF −$5B"
+            "ja": "GAAP粗利益率 76.3% → 73.3%（約−3ポイント）",
+            "en": "GAAP gross margin 76.3% → 73.3% (about −3 pp)"
+          },
+          {
+            "ja": "法人税ベネフィット $50.3M",
+            "en": "Income tax benefit $50.3M"
+          },
+          {
+            "ja": "GAAP純利益 $153.1M は営業利益 $89.2M を上回る",
+            "en": "GAAP net income $153.1M exceeds operating income $89.2M"
           }
         ],
         "detail": {
-          "ja": "クラウド基盤の投資を継続。Q1には普通株$20Bを売却して資金調達しました。",
-          "en": "Cloud infrastructure investment continued; Q1 included a $20B common-stock capital raise."
+          "ja": "純利益の伸びには税金要因が含まれるため、本業の採算は営業利益と粗利益率で確認します。粗利益率はQ3も約72%の会社予想です。",
+          "en": "Net income includes a tax effect, so judge core profitability by operating income and gross margin. The company also forecasts about 72% gross margin for Q3."
         }
       },
       {
         "headline": {
-          "ja": "契約残が売上になる速度を追う",
-          "en": "Track conversion of contracted obligations"
+          "ja": "Scorpioの量産立ち上がりで増収を見込む",
+          "en": "Scorpio production ramp expected to lift revenue"
         },
         "points": [
           {
-            "ja": "RPO $664B・通期売上見通し $90B以上",
-            "en": "RPO $664B; FY revenue guidance at least $90B"
+            "ja": "Q3 2026売上 $540–560M（会社予想）",
+            "en": "Q3 2026 revenue $540–560M (company forecast)"
+          },
+          {
+            "ja": "GAAP粗利益率 約72%（会社予想）",
+            "en": "GAAP gross margin about 72% (company forecast)"
           }
         ],
         "detail": {
-          "ja": "RPOは売上計上前の履行義務。設備稼働と売上化、資金負担を合わせて確認します。",
-          "en": "RPO is not recognized revenue. Monitor capacity delivery, revenue conversion and funding needs together."
+          "ja": "会社はScorpio X-Series 320レーンスイッチの量産で、Scorpioが最大の製品群になる見通しと説明しています。見通しは実績ではないため、次回決算で確認します。",
+          "en": "The company expects the Scorpio X-Series 320-lane switch ramp to make Scorpio its largest product family. This is a forecast, not a result; check it in the next report."
         }
       }
     ]

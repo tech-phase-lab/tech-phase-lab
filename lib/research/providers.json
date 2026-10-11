@@ -695,6 +695,7 @@
     "ticker": "DELL",
     "name": "Dell Technologies",
     "sector": "servers",
+    "scope": "earnings",
     "indexUrl": "https://investors.delltechnologies.com/rss/news-releases.xml",
     "format": "rss",
     "requestTimeoutSeconds": 8,
@@ -924,6 +925,7 @@
     "ticker": "ORCL",
     "name": "Oracle",
     "sector": "platforms",
+    "scope": "earnings",
     "indexUrl": "https://www.oracle.com/news/",
     "format": "html",
     "requestTimeoutSeconds": 6,
@@ -1129,8 +1131,7 @@
   {
     "ticker": "LITE",
     "name": "Lumentum",
-    "sector": "networking",
-    "scope": "earnings",
+    "sector": "photonics",
     "indexUrl": "https://investor.lumentum.com/rss/pressrelease.aspx",
     "format": "rss",
     "supplementalSources": [
@@ -1339,7 +1340,6 @@
     "ticker": "ALAB",
     "name": "Astera Labs",
     "sector": "networking",
-    "scope": "earnings",
     "indexUrl": "https://www.asteralabs.com/newsroom/",
     "format": "html",
     "supplementalSources": [

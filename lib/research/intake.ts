@@ -7,12 +7,12 @@ export const earningsOnlyProviders = registry.filter(p => (p as { scope?: string
 export const providerByTicker = Object.fromEntries(providers.map(p => [p.ticker, p]));
 export const sectorNames: Record<string, string> = {
   semiconductors: "半導体", networking: "ネットワーク", "ai-cloud": "AIクラウド",
-  "power-cooling": "電力・冷却", servers: "サーバー", software: "AIソフトウェア", platforms: "大手クラウド",
+  "power-cooling": "電力・冷却", servers: "サーバー", photonics: "光・フォトニクス", software: "AIソフトウェア", platforms: "大手クラウド",
   storage: "ストレージ", "autos-robotics": "EV・ロボティクス", fintech: "フィンテック", quantum: "量子コンピューター",
 };
 export const sectorNamesEn: Record<string, string> = {
   semiconductors: "Semiconductors", networking: "Networking", "ai-cloud": "AI cloud",
-  "power-cooling": "Power & cooling", servers: "Servers", software: "AI software", platforms: "Large cloud platforms",
+  "power-cooling": "Power & cooling", servers: "Servers", photonics: "Optics & photonics", software: "AI software", platforms: "Large cloud platforms",
   storage: "Storage", "autos-robotics": "EVs & robotics", fintech: "Fintech", quantum: "Quantum computing",
 };
 

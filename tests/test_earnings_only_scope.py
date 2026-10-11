@@ -10,7 +10,8 @@ import monitor
 import signals
 from test_official_release_bridge import NOW
 
-ADDED = {'AAPL', 'AMZN', 'META', 'TSLA', 'LITE', 'COHR', 'AAOI', 'IREN', 'APH', 'ALAB', 'VST', 'SOFI', 'IONQ', 'STX', 'CEG'}
+# LITE and ALAB replaced DELL and ORCL on the roster later the same day.
+ADDED = {'AAPL', 'AMZN', 'META', 'TSLA', 'DELL', 'COHR', 'AAOI', 'IREN', 'APH', 'ORCL', 'VST', 'SOFI', 'IONQ', 'STX', 'CEG'}
 
 
 class EarningsOnlyScopeTests(unittest.TestCase):
