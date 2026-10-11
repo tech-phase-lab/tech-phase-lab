@@ -49,6 +49,7 @@ import x_preflight_service
 import x_stream_trial_service
 import market_results
 import official_research
+import deep_analysis
 import issuer_syndication
 import official_research_diagnostics
 import official_research_detail
@@ -77,7 +78,7 @@ PUBLICATION_FAILURE_LANES = frozenset({
     "headline-translation-unavailable", "market-translation-unavailable",
     "analyst-news-publication-unavailable", "official-research-unavailable",
     "public-news-unavailable", "preview-summary-unavailable", "news-refresh-unavailable",
-    "pulse-title-unavailable",
+    "pulse-title-unavailable", "deep-analysis-unavailable",
 })
 PUBLICATION_EXCEPTION_CLASSES = {
     value: value.__name__ for module in (builtins, sqlite3) for value in vars(module).values()
@@ -766,6 +767,7 @@ class AutomaticMonitor:
         self.news_refresh_thread = threading.Thread(target=self.run_news_refresh, name="news-refresh", daemon=True)
         self.pulse_title_thread = threading.Thread(target=self.run_pulse_titles, name="pulse-titles", daemon=True)
         self.official_research_thread = threading.Thread(target=self.run_official_research, name="official-research", daemon=True)
+        self.deep_analysis_thread = threading.Thread(target=self.run_deep_analysis, name="deep-analysis", daemon=True)
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
@@ -984,6 +986,19 @@ class AutomaticMonitor:
             if not self.stop_event.is_set():
                 wake.wait(5)
 
+    def run_deep_analysis(self):
+        # PRO analysis by RESEARCH_DEEP_MODEL; idle unless configured.
+        while not self.stop_event.is_set():
+            try:
+                deep_analysis.run_once(self.db_path)
+            except Exception as exc:
+                log_publication_failure("deep-analysis-unavailable", exc)
+            self.stop_event.wait(10)
+
+    def deep_analyses(self):
+        with deep_analysis.connect(self.db_path) as db:
+            return {"ok": True, "items": deep_analysis.member_view(db)}
+
     def wake_publication_workers(self):
         # Notifications are local hints, not publication approval. Every worker
         # still enforces its own source, revision, retry and spending gates.
@@ -1078,6 +1093,7 @@ class AutomaticMonitor:
         self.news_refresh_thread.start()
         self.pulse_title_thread.start()
         self.official_research_thread.start()
+        self.deep_analysis_thread.start()
         self.mu_measurement_thread.start()
         self.watch_earnings_thread.start()
         self.push_thread.start()
@@ -1106,6 +1122,7 @@ class AutomaticMonitor:
         self.result_thread.join(timeout=15)
         self.preview_summary_thread.join(timeout=45)
         self.official_research_thread.join(timeout=45)
+        self.deep_analysis_thread.join(timeout=45)
         self.mu_measurement_thread.join(timeout=45)
         self.watch_earnings_thread.join(timeout=10)
         self.push_thread.join(timeout=15)
@@ -2947,6 +2964,11 @@ class Handler(BaseHTTPRequestHandler):
         except Exception:
             state["officialResearch"] = {"error": "official-research-status-unavailable"}
         try:
+            with deep_analysis.connect(self.app.db_path) as db:
+                state["deepAnalysis"] = deep_analysis.diagnostics(db)
+        except Exception:
+            state["deepAnalysis"] = {"error": "deep-analysis-unavailable"}
+        try:
             state["pulseTitles"] = pipeline_status.pulse_titles_status(self.app.db_path)
         except Exception:
             state["pulseTitles"] = {"error": "pulse-titles-unavailable"}
@@ -3153,6 +3175,13 @@ class Handler(BaseHTTPRequestHandler):
                 return
             if path == "/price-targets":
                 self.send_json(200, self.app.public_price_targets())
+                return
+            if path == "/deep-analyses":
+                # Served only to the site's server, which checks PRO membership.
+                if not os.environ.get("RESEARCH_API_TOKEN", "").strip():
+                    self.send_json(401, {"ok": False, "error": "unauthorized"})
+                    return
+                self.send_json(200, self.app.deep_analyses())
                 return
             snapshot = self.app.public_snapshot()
             if path == "/snapshot":
