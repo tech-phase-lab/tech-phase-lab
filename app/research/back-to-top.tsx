@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useSyncExternalStore, type MouseEvent } from "react";
 import { usePathname } from "next/navigation";
 import styles from "./back-to-top.module.css";
 
@@ -15,9 +15,10 @@ export default function BackToTop() {
   const pathname = usePathname();
   const visible = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
   if (!visible || pathname === "/research/stocks/widget") return null;
-  function goToTop() {
+  function goToTop(event: MouseEvent<HTMLButtonElement>) {
     window.scrollTo({ top: 0, behavior: "instant" });
-    document.querySelector<HTMLElement>("header a")?.focus({ preventScroll: true });
+    // Keep keyboard navigation at the top without focusing the logo after a tap.
+    if (event.detail === 0) document.querySelector<HTMLElement>("header a")?.focus({ preventScroll: true });
   }
   return <div className={styles.dock}>
 
