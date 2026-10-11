@@ -337,6 +337,11 @@ def sync(db, reference):
                 title = heading[0].strip()
                 db.execute('UPDATE sources SET title=? WHERE url=? AND sha256=? AND title IS NULL',
                            (title,row['url'],row['sha256']))
+        # Earnings-only companies (scope "earnings") publish their results releases only.
+        if monitor.PROVIDERS.get(row['ticker'], {}).get('scope') == 'earnings' and not sec:
+            import release_watch
+            if not title or not release_watch.EARNINGS_TITLE.search(title) or release_watch.NOT_RELEASE.search(title):
+                continue
         if (not title or not news_policy.eligible(title)
                 or re.fullmatch(r'(?:read (?:story|more)|learn more|press release|news)', title.strip(), re.I)):
             continue

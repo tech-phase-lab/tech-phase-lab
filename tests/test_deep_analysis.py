@@ -73,6 +73,13 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertEqual(self.run_deep(lambda *_: self.fail('held'), now=base.NOW.timestamp() + 5000), 'idle')
         self.assertEqual(self.items(), [])
 
+    def test_earnings_only_companies_get_no_deep_analysis(self):
+        self.earnings()
+        from unittest.mock import patch
+        providers = deep_analysis.monitor.PROVIDERS
+        with patch.dict(providers, {'NBIS': {**providers['NBIS'], 'scope': 'earnings'}}):
+            self.assertEqual(self.run_deep(lambda *_: self.fail('earnings-only')), 'idle')
+
     def test_other_news_and_missing_configuration_never_call_the_model(self):
         self.assertEqual(self.run_deep(lambda *_: self.fail('not earnings')), 'idle')
         self.earnings()

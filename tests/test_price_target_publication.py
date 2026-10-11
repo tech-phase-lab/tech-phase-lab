@@ -256,7 +256,7 @@ class TargetPublicationTests(unittest.TestCase):
         items = signals.public_price_targets(self.db, now=self.now)['items']
         self.assertEqual({(item['ticker'], item['firm'], item['previous'], item['latest']) for item in items},
                          {('MSFT', 'Piper Sandler', 550, 610), ('AMZN', 'Rosenblatt', 335, 360)})
-        self.assertIn('AMZN', signals.OCT11_ROSTER)
+        self.assertNotIn('AMZN', signals.ALIASES)
         self.assertNotIn('Alex Example', json.dumps(items))
 
     def test_equal_numbers_do_not_coalesce_conflicting_echo_attribution(self):

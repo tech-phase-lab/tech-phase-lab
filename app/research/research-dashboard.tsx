@@ -18,7 +18,6 @@ import HomeTools, { HomeHelp } from "./home-tools";
 import type { InitialNewsSnapshot } from "@/lib/research/general-news";
 import NewsFeed from "./news/news-feed";
 import ResearchPulse from "./research-pulse";
-import { TRACKED_COUNT } from "@/lib/research/tracked-count";
 
 const storageKey = "tech-phase:research-saved:v1";
 const notifyName = "tech-phase:research-saved";
@@ -138,7 +137,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
     <SiteHeader lang={lang} setLang={setLang} nav={<nav className={`${styles.primaryNav} ${tab === "companies" ? styles.companyNav : ""}`} aria-label={t("メインメニュー", "Main navigation")}>
         <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}><NavigationIcon name="changes" /><span>{t("何が変わった？", "What changed?")}</span></button>
         <Link href="/research/stocks"><NavigationIcon name="search" /><span>{t("米国株を探す", "Find stocks")}</span></Link>
-        <button aria-current={tab === "companies" ? "page" : undefined} onClick={() => openView("companies")}><NavigationIcon name="companies" /><span>{t(`監視${TRACKED_COUNT}銘柄リスト`, `${TRACKED_COUNT}-stock watch list`)}</span></button>
+        <button aria-current={tab === "companies" ? "page" : undefined} onClick={() => openView("companies")}><NavigationIcon name="companies" /><span>{t("監視22銘柄リスト", "22-stock watch list")}</span></button>
         <button aria-current={tab === "metrics" ? "page" : undefined} onClick={() => openView("metrics")}><NavigationIcon name="metrics" /><span>{t("決算・指標", "Financials")}</span></button>
         <button aria-current={tab === "saved" ? "page" : undefined} onClick={() => openView("saved")}><NavigationIcon name="saved" /><span>{t("保存", "Saved")}</span><small>{saved.filter((id) => events.some((event) => event.id === id)).length}</small></button>
 
@@ -150,7 +149,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           <p className={styles.navLabel}>{t("メインメニュー", "MAIN MENU")}</p>
           <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}><NavigationIcon name="changes" /><span>{t("何が変わった？", "What changed?")}</span></button>
           <Link href="/research/stocks"><NavigationIcon name="search" /><span>{t("米国株を探す", "Find stocks")}</span><span aria-hidden="true">↗</span></Link>
-          <button aria-current={tab === "companies" ? "page" : undefined} onClick={() => openView("companies")}><NavigationIcon name="companies" /><span>{t(`監視${TRACKED_COUNT}銘柄リスト`, `${TRACKED_COUNT}-stock watch list`)}</span><small>{monitoredCompanies.length}</small></button>
+          <button aria-current={tab === "companies" ? "page" : undefined} onClick={() => openView("companies")}><NavigationIcon name="companies" /><span>{t("監視22銘柄リスト", "22-stock watch list")}</span><small>{monitoredCompanies.length}</small></button>
           <button aria-current={tab === "metrics" ? "page" : undefined} onClick={() => openView("metrics")}><NavigationIcon name="metrics" /><span>{t("決算・指標", "Financials")}</span></button>
           <button aria-current={tab === "saved" ? "page" : undefined} onClick={() => openView("saved")}><NavigationIcon name="saved" /><span>{t("保存", "Saved")}</span><small>{saved.filter((id) => events.some((event) => event.id === id)).length}</small></button>
           <Link href="/research/compare"><NavigationIcon name="companies" /><span>{t("銘柄比較", "Compare stocks")}</span><small>PRO</small></Link>
@@ -158,7 +157,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
         </nav>
         <div className={styles.coverage}>
           <div className={styles.filterHeading}><p className={styles.navLabel}>{t("この一覧の銘柄", "FILTER THESE NOTES")}</p><span>{coveredCompanies.length}</span></div>
-          <p className={styles.filterHelp}>{t(`この下の検証レポートを絞り込みます。監視対象の全銘柄は「監視${TRACKED_COUNT}銘柄リスト」から確認できます。`, "Filter the research notes below. Open Research coverage for all monitored companies.")}</p>
+          <p className={styles.filterHelp}>{t("この下の検証レポートを絞り込みます。監視対象の全銘柄は「監視22銘柄リスト」から確認できます。", "Filter the research notes below. Open Research coverage for all monitored companies.")}</p>
           {coveredCompanies.map((item) => <button key={item.symbol} aria-pressed={ticker === item.symbol} onClick={() => { setTicker(ticker === item.symbol ? "all" : item.symbol); setCategory("all"); setQuery(""); openView("changes"); }}>
             <span className={styles.miniLogo}>{item.symbol.slice(0, 1)}</span><span><strong>{item.symbol}</strong><small>{item.name}</small></span><span className={styles.coverageCount}>{item.count}</span>
           </button>)}
@@ -175,7 +174,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
         {tab === "home" && <>
           <ResearchPulse lang={lang} />
           <HomeTools lang={lang} onChanges={() => openView("changes")} onPro={() => openView("pro")} />
-          <Link className={styles.watchEntry} href="/research#monitored-companies" onClick={event => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); openView("companies"); }}><span><small>COMPANY WATCH</small><strong>{t(`監視${TRACKED_COUNT}銘柄`, `${TRACKED_COUNT}-stock watch`)}</strong></span><span>{t("企業ごとの動きを見る", "Follow company changes")} <b aria-hidden="true">›</b></span></Link>
+          <Link className={styles.watchEntry} href="/research#monitored-companies" onClick={event => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); openView("companies"); }}><span><small>COMPANY WATCH</small><strong>{t("監視22銘柄", "22-stock watch")}</strong></span><span>{t("企業ごとの動きを見る", "Follow company changes")} <b aria-hidden="true">›</b></span></Link>
           <NewsFeed lang={lang} initialNews={initialNews} />
           <HomeHelp lang={lang} />
         </>}

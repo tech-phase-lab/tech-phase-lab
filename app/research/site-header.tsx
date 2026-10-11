@@ -8,7 +8,6 @@ import { useProIntroduction } from "./header-pro";
 import { useScrollLock } from "./use-scroll-lock";
 import base from "./research.module.css";
 import styles from "./site-header.module.css";
-import { TRACKED_COUNT } from "@/lib/research/tracked-count";
 
 /** "RESEARCH · 運営者/Owner | PRO | FREE"; signed-out and unknown visitors read FREE. */
 export function planLabel(lang: Language, plan: "free" | "pro" | null, ownerAccount: boolean) {
@@ -197,7 +196,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       </div>
       <div className={styles.grp}>
         <h4>{ja ? "リサーチ" : "Research"}</h4>
-        {item("/research#monitored-companies", "tracked", ja ? `監視${TRACKED_COUNT}銘柄リスト` : `${TRACKED_COUNT} Tracked Stocks`)}
+        {item("/research#monitored-companies", "tracked", ja ? "監視22銘柄リスト" : "22 Tracked Stocks")}
         {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & Indicators")}
         {item("/research#what-changed", "changes", ja ? "何が変わった？" : "What changed?")}
         {item("/research/watchlist", "star", ja ? "お気に入り" : "Watchlist")}

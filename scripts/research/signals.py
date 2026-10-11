@@ -36,7 +36,9 @@ X_API_DAILY_REQUEST_LIMIT_DEFAULT = 100
 X_API_DAILY_REQUEST_LIMIT_MAX = 10_000
 X_AUTHOR_INTAKE_SOURCE_IDS = frozenset({"x-tipranks", "x-wallstengine"})
 X_RETENTION_TARGET = 1000
-ALIASES = {ticker: [p["name"]] for ticker, p in monitor.PROVIDERS.items()}
+# Research roster only. Companies with scope "earnings" (Oct 11 additions) are
+# matched by cashtag on X for earnings and price targets, never by name.
+ALIASES = {ticker: [p["name"]] for ticker, p in monitor.PROVIDERS.items() if p.get("scope") != "earnings"}
 ALIASES.update({
     "ARM": ["Arm Holdings"], "BE": ["Bloom Energy"],
     "MU": ["Micron", "マイクロン"], "NBIS": ["Nebius", "ネビウス"],
@@ -45,13 +47,7 @@ ALIASES.update({
     "AMD": ["AMD", "Advanced Micro Devices"], "NVDA": ["NVIDIA"],
     "SKHY": ["SK hynix", "SKハイニックス"], "GEV": ["GE Vernova"],
     "CRDO": ["Credo Technology"],
-    # Oct 11 additions. Names that are also ordinary words match only as
-    # written (CASE_SENSITIVE_ALIASES), so "an apple" or "coherent" is not news.
-    "AAPL": ["Apple"], "AMZN": ["Amazon", "Amazon Web Services"], "META": ["Meta Platforms", "Meta"],
-    "TSLA": ["Tesla"], "COHR": ["Coherent Corp"], "IREN": ["IREN"], "IONQ": ["IonQ"],
-    "STX": ["Seagate"], "CEG": ["Constellation Energy"], "SOFI": ["SoFi"],
 })
-CASE_SENSITIVE_ALIASES = frozenset({"Apple", "Amazon", "Meta", "IREN", "SoFi", "IonQ"})
 X_EXTRA_TICKERS = {ticker for source in SOURCES if source.get("format") == "x-api"
                    for ticker in source.get("extraTickers", [])}
 
@@ -234,9 +230,11 @@ def validators_for(db, source, tickers):
 def match_companies(text, tickers):
     matches = {}
     for ticker in tickers:
+        if ticker not in ALIASES:
+            continue  # Earnings-only companies are not tagged in general news.
         aliases = ALIASES[ticker]
         terms = [alias for alias in aliases if re.search(
-            r"(?<!\w)" + re.escape(alias) + r"(?!\w)", text, 0 if alias in CASE_SENSITIVE_ALIASES else re.I
+            r"(?<!\w)" + re.escape(alias) + r"(?!\w)", text, re.I
         )]
         if re.search(r"(?:\$|NASDAQ:|NYSE:)" + re.escape(ticker) + r"(?!\w)", text, re.I):
             terms.append("$" + ticker)
@@ -571,12 +569,12 @@ def reserve_x_api_request(db, source, now=None, eligible_source_ids=None, includ
 def fingerprint(source, tickers):
     identity = {key: value for key, value in source.items() if source.get("format") != "x-api"
                 or key not in {"intervalSeconds", "maxResults", "fastWindow"}}
-    return hashlib.sha256(json.dumps([identity, {t: ALIASES[t] for t in tickers}, 1], sort_keys=True).encode()).hexdigest()
+    return hashlib.sha256(json.dumps([identity, {t: ALIASES[t] for t in tickers if t in ALIASES}, 1], sort_keys=True).encode()).hexdigest()
 
 
 def legacy_x_fingerprint(source, tickers):
     old = {**source, "intervalSeconds": 120, "maxResults": 10}
-    return hashlib.sha256(json.dumps([old, {t: ALIASES[t] for t in tickers}, 1], sort_keys=True).encode()).hexdigest()
+    return hashlib.sha256(json.dumps([old, {t: ALIASES[t] for t in tickers if t in ALIASES}, 1], sort_keys=True).encode()).hexdigest()
 
 
 def evidence_excerpt(item):
@@ -1390,21 +1388,12 @@ PRICE_TARGET_ECHO_FIRM = re.compile(
 )
 
 
-# Companies added to the roster on Oct 11. Their names are new company aliases
-# too: identity evidence only where the broker actor is explicitly verified.
-OCT11_ROSTER = frozenset({"AAPL", "AMZN", "META", "TSLA", "LITE", "COHR", "AAOI", "IREN", "APH",
-                          "ALAB", "VST", "SOFI", "IONQ", "STX", "CEG"})
-
-
 def target_company_names(ticker, *, explicit_actor=False):
-    roster_names = ALIASES.get(ticker, [])
-    names = [ticker, *([] if ticker in OCT11_ROSTER else roster_names), *PRICE_TARGET_COMPANY_ALIASES.get(ticker, ())]
+    names = [ticker, *ALIASES.get(ticker, []), *PRICE_TARGET_COMPANY_ALIASES.get(ticker, ())]
     # New company aliases are identity evidence only where the grammatical
     # broker actor is explicitly verified, never in legacy at/by fallback.
     if explicit_actor:
         names.extend(PRICE_TARGET_EXPLICIT_COMPANY_ALIASES.get(ticker, ()))
-        if ticker in OCT11_ROSTER:
-            names.extend(roster_names)
     return {" ".join(name.split()).casefold() for name in names}
 
 

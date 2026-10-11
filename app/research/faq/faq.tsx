@@ -4,7 +4,6 @@ import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import styles from "./styles.module.css";
-import { TRACKED_COUNT } from "@/lib/research/tracked-count";
 
 const questions = [
   [
@@ -34,8 +33,8 @@ const questions = [
   [
     "どの銘柄を取り扱っていますか？",
     "Which stocks do you cover?",
-    `米国ハイテク株全般を取り扱っています。特に重点的に追っている銘柄は「監視${TRACKED_COUNT}銘柄リスト」で確認できます。`,
-    `We cover US high-tech stocks broadly. For the companies we follow most closely, see our ${TRACKED_COUNT}-stock watch list.`
+    "米国ハイテク株全般を取り扱っています。特に重点的に追っている銘柄は「監視22銘柄リスト」で確認できます。",
+    "We cover US high-tech stocks broadly. For the companies we follow most closely, see our 22-stock watch list."
   ],
   [
     "質問をすると必ず回答されますか？",
@@ -80,6 +79,6 @@ export default function Faq() {
   const ja = lang === "ja";
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "よくある質問・使い方" : "FAQ & help"} description={ja ? "利用方法、PRO会員、質問についてのご案内です。" : "Quick answers about getting started, PRO membership and questions."}>
     <nav className={styles.localNav} aria-label={ja ? "案内メニュー" : "Help menu"}><Link href="/research/learn">{ja ? "米国株のはじめ方" : "US stock basics"}</Link><span aria-current="page">{ja ? "よくある質問" : "FAQ"}</span></nav>
-    <div className={styles.steps}>{questions.map(([questionJa, questionEn, answerJa, answerEn], index) => <details className={styles.card} key={questionJa}><summary><span className={styles.number}>{String(index + 1).padStart(2, "0")}</span><strong>{ja ? questionJa : questionEn}</strong></summary><p>{index === 4 ? (ja ? <>米国ハイテク株全般を取り扱っています。特に重点的に追っている銘柄は「<Link href="/research#monitored-companies">監視{TRACKED_COUNT}銘柄リスト</Link>」で確認できます。</> : <>We cover US high-tech stocks broadly. For the companies we follow most closely, see our <Link href="/research#monitored-companies">{TRACKED_COUNT}-stock watch list</Link>.</>) : ja ? answerJa : answerEn}</p></details>)}</div>
+    <div className={styles.steps}>{questions.map(([questionJa, questionEn, answerJa, answerEn], index) => <details className={styles.card} key={questionJa}><summary><span className={styles.number}>{String(index + 1).padStart(2, "0")}</span><strong>{ja ? questionJa : questionEn}</strong></summary><p>{index === 4 ? (ja ? <>米国ハイテク株全般を取り扱っています。特に重点的に追っている銘柄は「<Link href="/research#monitored-companies">監視22銘柄リスト</Link>」で確認できます。</> : <>We cover US high-tech stocks broadly. For the companies we follow most closely, see our <Link href="/research#monitored-companies">22-stock watch list</Link>.</>) : ja ? answerJa : answerEn}</p></details>)}</div>
   </ResearchToolShell>;
 }
