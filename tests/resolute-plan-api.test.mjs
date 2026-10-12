@@ -12,7 +12,7 @@ import { createHandler } from '../services/resolute-api/handler.mjs';
 const plan = {schemaVersion:1,answersVersion:1,answers:{...emptyPlanAnswers(),q01:'first',q28:['cash_low']},
  fx:{thresholdYen:null,usdJpy:150.25,note:'復元対象のメモ'},currency:'JPY',monthlyLivingCost:250000,savingsMonths:12,reserveMonths:6,
  nearTermExpense:2000000,financialAssets:10000000,investedAmount:3000000,investable:6500000,
- tolerancePct:20,toleranceDrop:600000,perStockCapPct:10,buyMode:'steps',
+ tolerancePct:20,toleranceDrop:600000,perStockCapPct:10,buyMode:'steps',firstDropPct:10,
  buyLines:[{dropPct:10,amount:200000},{dropPct:20,amount:200000}],buyBudgetPct:10,
  allocation:'equal',noBuyConditions:['生活費を使わない'],haltConditions:[],ruleType:'scale_in'};
 const request=(method,body,origin='https://app.test')=>new Request('https://app.test/api/resolute/plan',{
@@ -55,7 +55,7 @@ test('PostgreSQL create/update/delete/recreate preserve revision, ownership and 
   await assert.rejects(()=>store('user_other','GET'),PlanAccessDenied);
   const saved=await store('user_buyer','PUT',{baseRevision:0,plan});assert.equal(saved.revision,1);
   assert.equal(saved.plan.createdAt,saved.plan.updatedAt);
-  assert.deepEqual(saved.plan.answers,plan.answers);assert.deepEqual(saved.plan.fx,plan.fx);
+  assert.equal(saved.plan.firstDropPct,10);assert.deepEqual(saved.plan.answers,plan.answers);assert.deepEqual(saved.plan.fx,plan.fx);
   assert.equal((await store('user_buyer','GET')).plan.answers.q01,'first');
   const outcomes=await Promise.allSettled([store('user_buyer','PUT',{baseRevision:1,plan}),store('user_buyer','DELETE',{baseRevision:1,plan:null})]);
   assert.equal(outcomes.filter(r=>r.status==='fulfilled').length,1);
