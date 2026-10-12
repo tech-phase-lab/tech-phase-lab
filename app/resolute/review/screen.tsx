@@ -41,15 +41,17 @@ export default function ReviewScreen({getSessionToken}:{getSessionToken?:ReviewS
 function Workspace() {
  const [store] = useState(createReviewStore);
  const [path,setPath] = useState<ReviewPath>("/resolute");
+ const [notificationsVisited,setNotificationsVisited]=useState(false);
  const [locale,setLocale] = useState<DiagnosisLocale>("ja");
  function navigate(next: ReviewPath) {
+  if(next==="/resolute/alerts"||next==="/resolute/morning")setNotificationsVisited(true);
   setPath(next);
   window.scrollTo({top:0});
  }
  return <ReviewContext.Provider value={{...store,path,navigate,locale,setLocale}}>
   <div hidden={path !== "/resolute"}><DiagnosisScreen/></div>
-  {path === "/resolute/simulation" ? <SimulationScreen/> : path === "/resolute/alerts" ? <NotificationScreen key="alerts" mode="alerts"/> :
-   path === "/resolute/morning" ? <NotificationScreen key="morning" mode="morning"/> : path === "/resolute/tax" ? <TaxScreen/> :
+  {path === "/resolute/simulation" ? <SimulationScreen/> : path === "/resolute/tax" ? <TaxScreen/> :
    path === "/resolute/thermometer" ? <ThermometerScreen/> : null}
+  {notificationsVisited?<div hidden={path!=="/resolute/alerts"&&path!=="/resolute/morning"}><NotificationScreen mode={path==="/resolute/morning"?"morning":"alerts"}/></div>:null}
  </ReviewContext.Provider>;
 }

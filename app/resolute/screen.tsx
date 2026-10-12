@@ -2,6 +2,8 @@
 import { ReviewLink as Link, usePlanClient } from "./review-context";
 import { useEffect, useRef, useState } from "react";
 import ToolShell from "./tool-shell";
+import NumberInput from "./number-input";
+import QuestionTitle from "./question-title";
 import styles from "./diagnosis.module.css";
 import { questions, emptyDiagnosisDraft, isQuestionVisible, selectAnswer, numericLimits, questionCopy,
  validateQuestion, draftToInput, draftToPlan, draftFromPlan, type DiagnosisDraft } from "@/lib/resolute/diagnosis-form";
@@ -95,7 +97,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const reloadButton=<button type="button" className={styles.secondary} disabled={loading||busy} onClick={()=>void reload()}>{c.reload}</button>;
  if(mode==="intro") return <section className={`${styles.card} ${styles.introCard}`}>
   <span className={styles.eyebrow}>RULE DIAGNOSIS</span>
-  <h1 className={styles.introTitle}>{en ? <><span>Build your own investing rules</span><span>in 30 questions.</span></> : <><span>あなただけの投資ルールを、</span><span>30の質問でつくる。</span></>}</h1>
+  <h1 className={styles.introTitle}>{en ? <><span>Build your own investing</span><span>rules in 30 questions.</span></> : <><span>あなただけの投資ルールを、</span><span>30の質問でつくる。</span></>}</h1>
   <p className={styles.introDescription}>{en ? <>Build clearer rules with each answer.<br/>Takes about five minutes.</> : <>答えるほど、ルールは鮮明になります。<br/>所要時間は5分ほどです。</>}</p>
   {bodyMessage}
   <button type="button" className={styles.primary} disabled={loading||locked} onClick={()=>{setMode("questions");setSaved(false);}}>{snapshot?.plan?c.redo:c.start}</button>
@@ -108,7 +110,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
    <div className={styles.progress}><div className={styles.meta}><span>{sections[q.s][en?1:0]}</span><span>{index+1} / {visible.length}</span></div><progress value={index+1} max={visible.length} aria-label={en?"Progress":"進み具合"}/></div>
    {index===0 ? <p className={styles.muted}>{c.currency}</p> : null}
    <section className={styles.card} aria-labelledby="question-heading">
-    <span className={styles.eyebrow}>{q.id.toUpperCase()}</span><h1 id="question-heading" ref={heading} tabIndex={-1}>{text.text}</h1>
+    <span className={styles.eyebrow}>{q.id.toUpperCase()}</span><h1 id="question-heading" aria-label={text.text} ref={heading} tabIndex={-1} className={styles.questionTitle}><QuestionTitle id={q.id} text={text.text} locale={locale}/></h1>
     {text.note?<p className={styles.muted}>{text.note}</p>:null}
     <div className={styles.options}>{text.options.map(o=><button key={o.id} type="button" className={styles.option}
      aria-pressed={Array.isArray(answer)?(answer as string[]).includes(o.id):answer===o.id}
@@ -119,8 +121,8 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
       return selectAnswer(d,q.id,q.multi ? next.length ? next : null : o.id);
      });}}>{o.label}</button>)}</div>
     {option?.input?<label className={styles.field} htmlFor={`number-${q.id}`}>{en?"Enter a number":"数字を入力"} ({limits.money?en?"JPY":"円":q.id==="q30"?en?"yen":"円":q.id==="q04"||q.id==="q05"?en?"months":"か月":"%"})
-     <input id={`number-${q.id}`} type="number" inputMode={limits.money?"numeric":"decimal"} min={limits.min} max={limits.max} step={limits.step} value={draft.numbers[q.id]??""}
-      aria-describedby={`range-${q.id}`} onChange={e=>{setFormError(null);setDraft(d=>({...d,numbers:{...d.numbers,[q.id]:e.target.value}}));}}/>
+     <NumberInput id={`number-${q.id}`} decimal={!limits.money} min={limits.min} max={limits.max} step={limits.step} value={draft.numbers[q.id]??""}
+      aria-describedby={`range-${q.id}`} onValueChange={value=>{setFormError(null);setDraft(d=>({...d,numbers:{...d.numbers,[q.id]:value}}));}}/>
      <span id={`range-${q.id}`} className={styles.muted}>{limits.min.toLocaleString()}–{limits.max.toLocaleString()}{q.id==="q25"?(en?" (keeps every step below 100%)":"（すべての段階が100%未満になる範囲）"):""}</span>
     </label>:null}
     {q.free?<label className={styles.field}>{c.free}<textarea value={draft[q.free].join("\n")} onChange={e=>{const field=q.free!;setDraft(d=>({...d,[field]:e.target.value.split("\n")}));}} aria-describedby="privacy-note"/><span id="privacy-note" className={styles.muted}>{c.private}</span></label>:null}
