@@ -3,7 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { capitalProfiles } from "@/lib/research/capital-map-profiles";
-import { useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import HoldingDetail from "./holding-detail";
 import { capitalRows, etfOverlap, type CapitalPortfolio } from "@/lib/research/capital-map";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
@@ -30,7 +32,26 @@ const percent = (value: number) => value > 0 && value < .01 ? "<0.01%" : `${valu
 const signed = (value: number) => `${value > 0 ? "+" : ""}${value.toFixed(2)}%`;
 type View = CapitalPortfolio["kind"] | "lookup" | "overlap";
 
-export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sample" }: { portfolios?: CapitalPortfolio[]; mode?: "sample" | "reports" }) {
+function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { portfolios?: CapitalPortfolio[]; mode?: "sample" | "reports" }) {
+  const searchParams = useSearchParams();
+  const detailId = searchParams.get("holding");
+  const detailPortfolio = portfolios.find(p => p.id === searchParams.get("portfolio"));
+  const listPosition = useRef<{ y: number; element: HTMLElement; container: HTMLElement | null; top: number } | null>(null);
+  const wasDetail = useRef(false);
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      if (detailId) {
+        window.scrollTo(0, 0);
+        document.querySelector<HTMLElement>("[data-detail-title]")?.focus({ preventScroll: true });
+      } else if (wasDetail.current && listPosition.current) {
+        if (listPosition.current.container) listPosition.current.container.scrollTop = listPosition.current.top;
+        window.scrollTo(0, listPosition.current.y);
+        listPosition.current.element.focus({ preventScroll: true });
+      }
+      wasDetail.current = Boolean(detailId);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [detailId]);
   const [lang, setLang] = useResearchLanguage();
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const { lists, editable } = useStockFavorites();
@@ -43,6 +64,8 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
   const [portraitError, setPortraitError] = useState("");
   const [watchOnly, setWatchOnly] = useState(false);
   const [holdingQuery, setHoldingQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [positionGroup, setPositionGroup] = useState<"current" | "exited">("current");
   const [rowLimit, setRowLimit] = useState(50);
   const [comparison, setComparison] = useState<"period" | "visit">("period");
   const [changedOnly, setChangedOnly] = useState(false);
@@ -67,7 +90,8 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
     : seen[selected.id] === selected.current.id ? selected.current
     : seen[selected.id] === selected.previous?.id ? selected.previous : undefined : undefined;
   const rows = selected ? capitalRows(selected.current, baseline) : [];
-  const visibleRows = rows.filter(row => (!holdingQuery.trim() || `${row.name} ${row.ticker} ${row.securityId}`.toLowerCase().includes(holdingQuery.trim().toLowerCase())) && (!selected?.previous || !changedOnly || !["unchanged", "unknown"].includes(row.change)));
+  const exitedCount = rows.filter(row => row.change === "exited").length;
+  const visibleRows = rows.filter(row => (positionGroup === "exited" ? row.change === "exited" : row.change !== "exited") && (!holdingQuery.trim() || `${row.name} ${row.ticker} ${row.securityId}`.toLowerCase().includes(holdingQuery.trim().toLowerCase())) && (!selected?.previous || !changedOnly || !["unchanged", "unknown"].includes(row.change)));
   const chartLimit = selected?.kind === "etf" ? 30 : 10;
   const top = rows.filter(row => row.weight > 0).slice(0, chartLimit);
   const topWeight = top.reduce((sum, row) => sum + row.weight, 0);
@@ -86,11 +110,20 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
   function persist(nextSaved: string[], nextSeen: Record<string, string>) {
     setMessage(write(nextSaved, nextSeen) ? t("保存しました", "Saved") : t("保存できませんでした。この画面内でのみ保持します。", "Could not save. Kept only in this session."));
   }
-  function choosePortfolio(id: string) { setActiveSlice(null); setSelectedId(id); setHoldingQuery(""); setRowLimit(50); setChangedOnly(false); }
+  function choosePortfolio(id: string) { setActiveSlice(null); setSelectedId(id); setHoldingQuery(""); setRowLimit(50); setChangedOnly(false); setPositionGroup("current"); setSearchOpen(false); }
   function chooseView(value: View) { setView(value); choosePortfolio(portfolios.find(item => item.kind === value)?.id ?? ""); setMessage(""); }
 
+  function backToList() {
+    if (listPosition.current) { window.history.back(); return; }
+    if (detailPortfolio) { setView(detailPortfolio.kind); choosePortfolio(detailPortfolio.id); }
+    window.history.replaceState(null, "", window.location.pathname);
+  }
+  const detailBaseline = searchParams.get("baseline") === detailPortfolio?.current.id ? detailPortfolio?.current
+    : searchParams.get("baseline") === "unknown" ? undefined : detailPortfolio?.previous;
   return <ResearchToolShell lang={lang} setLang={setLang} title="CAPITAL MAP" description="" showHeading={false} showTools={false}>
     <div className={styles.page}>
+      {detailId && hasData && <HoldingDetail portfolio={detailPortfolio} securityId={detailId} instrument={searchParams.get("instrument") ?? "stock"} baseline={detailBaseline} lang={lang} onBack={backToList} />}
+      <div hidden={Boolean(detailId) && hasData}>
       <header className={styles.heading}><p className={styles.eyebrow}>TECH PHASE PRO{!reported && hasData && <span className={styles.edition}>SAMPLE</span>}</p><div className={styles.titleRow}><h1>CAPITAL MAP</h1></div><p>{t("投資先から、資金の流れを知る。", "Follow the holdings. Understand the capital.")}</p></header>
       {!hasData ? <section className={styles.preparing}>
         <h2>{t("世界の運用会社とETFの投資先をひと目で。", "Explore the portfolios behind managers and ETFs.")}</h2>
@@ -150,18 +183,29 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
               {otherWeight > 0 && <p className={styles.otherKey}><i />{t("その他", "Other")} <strong>{percent(otherWeight)}</strong><span>{t(`上位${chartLimit}銘柄以外`, `Outside the top ${chartLimit}`)}</span></p>}
             </div>
             <div className={styles.tablePanel}>
-          <div className={styles.listHead}><h3>{t("全保有銘柄", "All holdings")} <span>{selected.current.holdings.length}</span></h3><div className={styles.listFilters}><input aria-label={t("保有銘柄を絞り込む", "Filter holdings")} placeholder={t("この保有一覧を検索", "Search these holdings")} value={holdingQuery} onChange={event => { setHoldingQuery(event.target.value); setRowLimit(50); }} /></div></div>
-          {selected.previous && <div className={styles.changeHead}><h3><select aria-label={t("変化の比較基準", "Change comparison basis")} value={comparison} onChange={event => setComparison(event.target.value as "period" | "visit")}><option value="period">{selected.kind !== "etf" ? t("前期からの変化", "Since prior quarter") : t("前日からの変化", "Since prior day")}</option><option value="visit">{t("前回確認からの変化", "Since my last check")}</option></select><small>{baseline?.asOf}</small></h3><label><input type="checkbox" checked={changedOnly} onChange={event => { setChangedOnly(event.target.checked); setRowLimit(50); }} />{t("変化のみ", "Changes only")}</label></div>}
+          <div className={styles.listHead}><div className={styles.positionTabs} aria-label={t("保有状況", "Holding status")}>
+            <button aria-pressed={positionGroup === "current"} onClick={() => { setPositionGroup("current"); setRowLimit(50); }}>{t("保有中", "Current")} <span>{selected.current.holdings.length}</span></button>
+            {selected.previous && <button aria-pressed={positionGroup === "exited"} onClick={() => { setPositionGroup("exited"); setRowLimit(50); }}>{t("保有解消", "Exited")} <span>{exitedCount}</span></button>}
+          </div><button className={styles.searchToggle} aria-label={t("保有一覧を検索", "Search holdings")} aria-expanded={searchOpen} aria-controls="holdings-search" onClick={() => { setSearchOpen(!searchOpen); setHoldingQuery(""); setRowLimit(50); }}><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button></div>
+          {searchOpen && <div className={styles.listFilters} id="holdings-search"><input autoFocus type="search" aria-label={t("保有銘柄を絞り込む", "Filter holdings")} placeholder={t("銘柄名・ティッカー", "Company or ticker")} value={holdingQuery} onChange={event => { setHoldingQuery(event.target.value); setRowLimit(50); }} /></div>}
+          {selected.previous && <div className={styles.changeHead}><h3><select aria-label={t("変化の比較基準", "Change comparison basis")} value={comparison} onChange={event => { setComparison(event.target.value as "period" | "visit"); setPositionGroup("current"); setRowLimit(50); }}><option value="period">{selected.kind !== "etf" ? t("前期からの変化", "Since prior quarter") : t("前日からの変化", "Since prior day")}</option><option value="visit">{t("前回確認からの変化", "Since my last check")}</option></select><small>{baseline ? `${baseline.asOf} → ${selected.current.asOf}` : ""}</small></h3><label><input type="checkbox" checked={changedOnly} onChange={event => { setChangedOnly(event.target.checked); setRowLimit(50); }} />{t("変化のみ", "Changes only")}</label></div>}
           {selected.previous && comparison === "visit" && !baseline && <p className={styles.footnote}>{t("確認済みにすると、次回の比較基準として保存されます。", "Mark as viewed to save a baseline for your next visit.")}</p>}
-          <div className={styles.positionHead}><span>{t("企業名 / ティッカー", "Company / ticker")}</span><span>{t("構成比", "Weight")}</span><span>{t("保有評価額", "Value")}</span><span>{t("株数の前回比", "Share change")}</span></div>
-          <div className={styles.holdings}>{visibleRows.slice(0, rowLimit).map(row => {
+          <div className={styles.positionHead}><span>{t("企業名 / ティッカー", "Company / ticker")}</span><span>{t("構成比", "Weight")}</span><span>{t("保有評価額", "Value")}</span><span>{comparison === "period" ? selected.kind === "etf" ? t("前回比", "Share change") : t("前期比", "Quarter change") : t("前回確認比", "Since viewed")}</span></div>
+          <div className={styles.holdings} data-holdings>{visibleRows.slice(0, rowLimit).map(row => {
             const colorIndex = top.findIndex(item => item.securityId === row.securityId && item.instrument === row.instrument);
-            return <div className={styles.position} key={`${row.securityId}-${row.instrument}`}>
+            const detailParams = new URLSearchParams({ portfolio: selected.id, holding: row.securityId, instrument: row.instrument, baseline: baseline?.id ?? "unknown" });
+            return <a className={styles.position} key={`${row.securityId}-${row.instrument}`} href={`?${detailParams}`} onClick={event => {
+              if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+              event.preventDefault();
+              const container = event.currentTarget.closest<HTMLElement>("[data-holdings]");
+              listPosition.current = { y: window.scrollY, element: event.currentTarget, container, top: container?.scrollTop ?? 0 };
+              window.history.pushState(null, "", `?${detailParams}`);
+            }}>
               <div className={styles.positionStock}><span className={styles.positionColor} style={{ background: colorIndex >= 0 ? sliceColor(colorIndex) : "#536072" }} /><StockLogo ticker={row.ticker} /><div className={styles.stock}><strong title={row.name}>{row.name}</strong><small>{row.ticker || `CUSIP ${row.securityId}`}{row.instrument !== "stock" && <b className={styles.option}>{row.instrument.toUpperCase()}</b>}</small></div></div>
               <span className={styles.positionWeight}><strong>{percent(row.weight)}</strong><i style={{ width: `${Math.min(100, row.weight)}%`, background: colorIndex >= 0 ? sliceColor(colorIndex) : "#536072" }} /></span>
               <span className={styles.positionValue} title={hasValues ? `$${row.value.toLocaleString("en-US")}` : t("評価額は未収録", "Value not included")}>{hasValues ? money(row.value) : "—"}</span>
               <span className={styles.positionChange} data-change={row.change} title={row.change === "unknown" ? t("比較できる前回データがありません", "No comparable prior data") : `${row.shares.toLocaleString("en-US")} ${t("株", "shares")}`}><strong>{row.shareChangePercent === null ? labels[row.change] : signed(row.shareChangePercent)}</strong>{row.shareChangePercent !== null && <small>{labels[row.change]}</small>}</span>
-            </div>;
+            </a>;
           })}{!visibleRows.length && <p className={styles.empty}>{t("該当する銘柄がありません。", "No matching holdings.")}</p>}</div>
           {!baseline && <p className={styles.missingHistory}>{t("前回比の「—」は比較データ未収録です。", "A dash in Share change means prior data is not yet included.")}</p>}
           {visibleRows.length > rowLimit && <button className={styles.more} onClick={() => setRowLimit(value => value + 50)}>{t("さらに表示", "Show more")} · {Math.min(rowLimit, visibleRows.length)} / {visibleRows.length}</button>}
@@ -196,6 +240,11 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
         <details className={styles.usage}><summary>{t("使い方", "How to use")}</summary><p>{t("確認済みの記録は、このブラウザーに保存します。検索は収録対象の公開保有情報を参照します。", "Viewed records are saved in this browser. Search covers the public holdings included in Capital Map.")}</p></details>
         <p className={styles.message} role="status">{message}</p>
       </>}
+      </div>
     </div>
   </ResearchToolShell>;
+}
+
+export default function CapitalMap(props: { portfolios?: CapitalPortfolio[]; mode?: "sample" | "reports" }) {
+  return <Suspense fallback={<p>CAPITAL MAP</p>}><CapitalMapContent {...props} /></Suspense>;
 }
