@@ -4288,8 +4288,21 @@ def snapshot(db, recent_per_item=None):
             briefs.append(row)
     for row in sources + runs:
         row["error"] = public_error(row["error"])
+    # A stored row whose host is no longer approved (a provider's host list was
+    # narrowed) is left out of the snapshot. It must never be exposed, and it
+    # must never stop the monitor from starting (Oct 12: removing two Microsoft
+    # hosts made every start raise here and restart in a loop).
+    approved = set()
     for row in sources:
-        safe_url(row["url"], row["ticker"])
+        try:
+            safe_url(row["url"], row["ticker"])
+            approved.add(row["url"])
+        except (ValueError, KeyError):
+            continue
+    sources = [row for row in sources if row["url"] in approved]
+    history = [row for row in history if row.get("url") in approved]
+    events = [row for row in events if row.get("url") in approved]
+    briefs = [row for row in briefs if row.get("url") in approved]
     for row in events:
         row["detection_to_body_ms"] = stored_latency_ms(
             row["detected_at"], row["body_fetched_at"]

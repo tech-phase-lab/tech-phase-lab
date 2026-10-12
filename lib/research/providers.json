@@ -843,7 +843,9 @@
     "allowedHosts": [
       "blogs.microsoft.com",
       "data.sec.gov",
+      "developer.microsoft.com",
       "news.microsoft.com",
+      "news.xbox.com",
       "www.microsoft.com",
       "www.sec.gov"
     ],
@@ -859,6 +861,14 @@
       {
         "host": "www.microsoft.com",
         "pattern": "^/en-us/(?:security/blog|microsoft-cloud/blog)/.+"
+      },
+      {
+        "host": "developer.microsoft.com",
+        "pattern": "^/blog/[a-z0-9]+(?:-[a-z0-9]+)*/?$"
+      },
+      {
+        "host": "news.xbox.com",
+        "pattern": "^/en-us/\\d{4}/\\d{2}/\\d{2}/[a-z0-9]+(?:-[a-z0-9]+)*/?$"
       },
       {
         "host": "www.sec.gov",
