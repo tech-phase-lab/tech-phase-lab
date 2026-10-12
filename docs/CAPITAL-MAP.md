@@ -150,3 +150,9 @@ Live retrieval, automatic updates, commercial ETF display permission, institutio
 
 ### 2026-10-12 comparison panel readability
 - Framed the prior-period comparison in a subtle violet panel, with heading above dates and the current date emphasized. Each date stays intact when wrapping. Increased checkbox size and kept the whole label clickable.
+
+### 2026-10-12: Corporate CEO profiles
+
+- Added bilingual CEO names, roles and face photographs for all five corporate portfolios: NVIDIA, Google, Amazon, Intel and Cisco. Current roles were checked against each company's official biography or leadership page; those links and the photo credits/licenses appear in the existing source details.
+- Corporate selector/display name is now `Google`. The portfolio identifier remains `alphabet-13f`; its short description identifies Alphabet as the filing parent. Securities and disclosure holdings are unchanged.
+- Reuses the existing compact portrait/profile layout and image-error fallback. Original portrait compositions were visually checked; no generated likenesses are used.
