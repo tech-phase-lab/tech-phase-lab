@@ -12,6 +12,12 @@ import StockLogo from "../watchlist/stock-logo";
 import { useCapitalPreferences } from "./use-capital-preferences";
 import styles from "./capital-map.module.css";
 
+const managerMarks: Record<string, { initials: string; tone: string }> = {
+  coatue: { initials: "C", tone: "cyan" },
+  tiger: { initials: "TG", tone: "amber" },
+  viking: { initials: "V", tone: "violet" },
+  fundsmith: { initials: "FS", tone: "mint" },
+};
 const emptyPortfolios: CapitalPortfolio[] = [];
 const colors = ["#9875ff", "#ffb52e", "#46b4ff", "#ef69b6", "#28c7bc", "#ff8548", "#8596ff", "#9bce50", "#e6cf70", "#63c6de"];
 const sliceColor = (index: number) => colors[index] ?? `hsl(${(index * 137.508) % 360} 65% 65%)`;
@@ -50,6 +56,7 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
   const visiblePortfolios = portfolios.filter(item => item.kind === view);
   const selected = visiblePortfolios.find(item => item.id === selectedId) ?? visiblePortfolios[0];
   const profile = selected ? capitalProfiles[selected.id.split("-")[0]] : undefined;
+  const managerMark = selected ? managerMarks[selected.id.split("-")[0]] : undefined;
   const totalValue = selected?.current.holdings.reduce((sum, row) => sum + row.value, 0) ?? 0;
   const money = (value: number) => new Intl.NumberFormat(lang === "ja" ? "ja-JP" : "en-US", { style: "currency", currency: "USD", notation: "compact", maximumFractionDigits: 2 }).format(value);
   const hasValues = totalValue > 0;
@@ -102,7 +109,7 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
           </label>
         </div>}
         {view === "lookup" && <section className={styles.find} aria-labelledby="find-holders">
-          <h2 id="find-holders">{t("検索した株を持つ運用会社・ETFを探す", "Find managers and ETFs holding your stock")}</h2>
+          <h2 id="find-holders">{t("この銘柄を保有する運用会社・ETFを探す", "Find managers and ETFs holding your stock")}</h2>
           <div className={styles.searchBar}><label><span>{t("調べたい銘柄", "Find a stock")}</span><input type="search" autoCapitalize="off" autoCorrect="off" spellCheck={false} value={query} maxLength={200} placeholder={t("例：エヌビディア、NVDA", "e.g. NVIDIA or NVDA")} onChange={event => { setQuery(event.target.value); setRowLimit(50); }} /></label></div>
           <div className={styles.lookupOptions}><label><input type="checkbox" checked={watchOnly} disabled={!editable} onChange={event => { setWatchOnly(event.target.checked); setRowLimit(50); }} />{t("ウォッチリストの銘柄に絞る", "Only stocks in my watchlists")}</label></div>
           {watchOnly && !watched.size && <p className={styles.empty}>{t("ウォッチリストに登録銘柄がありません。", "Your watchlists are empty.")}</p>}
@@ -113,7 +120,7 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
         </section>}
         {selected && isPortfolio && <section className={styles.portfolio} aria-label={selected.name}>
           <div className={styles.identity}>
-            {profile ? <><div className={styles.person}>{profile.portrait && portraitError !== selected.id && <span className={styles.portrait}><Image unoptimized src={profile.portrait.url} alt={t(...profile.person)} width={64} height={64} className={selected.id.startsWith("bridgewater") ? styles.rayPortrait : undefined} onError={() => setPortraitError(selected.id)} /></span>}<div><strong>{t(...profile.person)}</strong><small>{t(...profile.role)}{profile.leadership && ` · ${t(...profile.leadership)}`}</small></div></div><p>{t(...profile.description)}</p></> : <p>{selected.kind === "etf" ? selected.subtitle : t("企業が公開している株式の保有ポートフォリオ。", "Equity investments disclosed by the company.")}</p>}
+            {profile ? <><div className={styles.person}>{profile.portrait && portraitError !== selected.id ? <span className={styles.portrait}><Image unoptimized src={profile.portrait.url} alt={t(...profile.person)} width={64} height={64} className={selected.id.startsWith("bridgewater") ? styles.rayPortrait : undefined} onError={() => setPortraitError(selected.id)} /></span> : <span className={styles.managerMark} data-tone={managerMark?.tone ?? "violet"} aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="27" /><path d="M7 32a25 25 0 0 1 25-25M57 32a25 25 0 0 1-25 25" /><path d="M16 49h32M20 53h24" /></svg><span>{managerMark?.initials ?? selected.name.split(" ").slice(0, 2).map(word => word[0]).join("")}</span></span>}<div><strong>{t(...profile.person)}</strong><small>{t(...profile.role)}{profile.leadership && ` · ${t(...profile.leadership)}`}</small></div></div><p>{t(...profile.description)}</p></> : <p>{selected.kind === "etf" ? selected.subtitle : t("企業が公開している株式の保有ポートフォリオ。", "Equity investments disclosed by the company.")}</p>}
           </div>
           <div className={styles.metrics}>
             <div><small>{t("基準日", "AS OF")}</small><strong>{selected.current.asOf}<span>{t("時点", "")}</span></strong></div>
