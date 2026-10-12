@@ -1566,15 +1566,16 @@ def sitemap_links(body, ticker):
 def news_json_links(body, ticker, source):
     """Parse a first-party page's public JSON result shape."""
     data = json.loads(body)
-    items = data.get(source.get("itemsKey", "items"), [])
-    if not isinstance(items, list):
-        raise ValueError("Invalid news JSON structure")
+
     def pick(item, key):
         # A dotted key reads one nested field, e.g. "content.title" in a JSON Feed.
         for part in key.split("."):
             item = item.get(part) if isinstance(item, dict) else None
         return item
 
+    items = pick(data, source.get("itemsKey", "items")) or []
+    if not isinstance(items, list):
+        raise ValueError("Invalid news JSON structure")
     links = {}
     for item in items:
         if not isinstance(item, dict):
@@ -1587,7 +1588,18 @@ def news_json_links(body, ticker, source):
         title = " ".join(unescape(title).split())[:300] if isinstance(title, str) and title.strip() else None
         published = pick(item, source["dateKey"]) if source.get("dateKey") else None
         published_on = published[:10] if isinstance(published, str) and re.match(r"\d{4}-\d{2}-\d{2}(?:T|$)", published) else None
-        links[canonical] = {"title": title, "publishedOn": published_on} if published_on else title
+        detail = {"title": title, "publishedOn": published_on} if published_on else {"title": title}
+        # A page that is drawn by script (Broadcom's newsroom) carries the
+        # release text in the listing record itself; use it as the body.
+        raw_body = pick(item, source["bodyKey"]) if source.get("bodyKey") else None
+        if isinstance(raw_body, str) and raw_body.strip():
+            text = extract_html_text(raw_body.encode("utf-8"), "utf-8")
+            text = text[0] if isinstance(text, tuple) else text
+            text = text.strip()
+            if len(text) >= 200:
+                detail.update({"inlineText": text[:MAX_EXTRACTED_CHARS], "contentType": "text/html",
+                               "contentBytes": len(raw_body.encode("utf-8"))})
+        links[canonical] = detail if len(detail) > 1 else title
     return links
 
 
@@ -4809,6 +4821,22 @@ def write_snapshot(db, output):
     return data
 
 
+def body_mirror_url(url, ticker):
+    """The fetch address for an article whose own page refuses our server but
+    whose identical release is published as a file on the company's approved
+    document host (provider "bodyMirrors", e.g. Credo's release PDFs). The
+    article keeps its own address and identity; only the body comes from here."""
+    try:
+        p = urlsplit(safe_url(url, ticker))
+        for rule in PROVIDERS[ticker].get("bodyMirrors", []):
+            match = p.hostname == rule["host"] and re.fullmatch(rule["pattern"], p.path)
+            if match:
+                return safe_url(rule["url"].format(*match.groups()), ticker)
+    except (ValueError, KeyError, IndexError):
+        pass
+    return None
+
+
 def collect_source(row, transport=fetch):
     """Fetch and extract one source without mutating SQLite, safe for worker threads."""
     from article_document import ARTICLE_TYPES, validate as validate_article_document
@@ -4839,7 +4867,7 @@ def collect_source(row, transport=fetch):
             }
         )
         response = transport(
-            row["url"], row["ticker"], validators=validators,
+            body_mirror_url(row["url"], row["ticker"]) or row["url"], row["ticker"], validators=validators,
             include_metadata=True,
         )
         if response["notModified"]:
@@ -4853,7 +4881,7 @@ def collect_source(row, transport=fetch):
         declared_encoding = response.get("charset")
         response_etag, response_last_modified = response["etag"], response["lastModified"]
     else:
-        content, content_type = transport(row["url"], row["ticker"])
+        content, content_type = transport(body_mirror_url(row["url"], row["ticker"]) or row["url"], row["ticker"])
         response_etag = response_last_modified = None
     if article and content_type not in ARTICLE_TYPES:
         raise ValueError("article-response-not-document")

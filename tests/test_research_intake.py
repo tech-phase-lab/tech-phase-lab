@@ -2425,6 +2425,36 @@ class IntakeTests(unittest.TestCase):
             "https://mfn.se/one/a/asml-holding/asml-reports-q3-2026-results-ab12cd34":
                 {"title": "ASML reports Q3 2026 results", "publishedOn": "2026-10-14"}})
 
+    def test_credo_release_body_is_read_from_its_release_file_not_the_blocked_page(self):
+        # Owner, Oct 12: investors.credosemi.com refuses the server; the same release is a PDF on Credo's document host.
+        page = "https://investors.credosemi.com/news-events/news/news-details/2026/Credo-Completes-Acquisition-of-DustPhotonics/default.aspx"
+        self.assertEqual(m.article_url(page, "CRDO"), page)
+        self.assertEqual(m.body_mirror_url(page, "CRDO"),
+                         "https://s205.q4cdn.com/511065572/files/doc_news/Credo-Completes-Acquisition-of-DustPhotonics-2026.pdf")
+        for other in ("https://credosemi.com/news/", "https://investors.credosemi.com/news-events/news/news-details/2026/a/b/default.aspx"):
+            self.assertIsNone(m.body_mirror_url(other, "CRDO"))
+        self.assertIsNone(m.body_mirror_url(page, "NVDA"))
+
+    def test_broadcom_newsroom_listing_supplies_english_releases_with_their_text(self):
+        # Owner, Oct 12: investors.broadcom.com refuses the server and broadcom.com draws its list with script.
+        source = m.monitoring_sources("AVGO", automatic=True)[0]
+        self.assertEqual(source["route"], "fallback")
+        self.assertTrue(source["url"].startswith("https://www.broadcom.com/get-st?"))
+        text = "<div class='rte'><p>" + "Broadcom announced a new product for AI networking. " * 8 + "</p></div>"
+        body = json.dumps({"records": {"pages": [
+            {"title": "Broadcom Introduces Example", "url": "/company/news/product-releases/broadcom-introduces-example",
+             "publish_date": "2026-10-14T00:00:00Z", "body": text},
+            {"title": "Broadcom stellt Beispiel vor", "url": "/company/news/de/releases/broadcom-stellt-beispiel-vor",
+             "publish_date": "2026-10-14T00:00:00Z", "body": text},
+            {"title": "Old", "url": "/news/press-release/old-item", "publish_date": "2016-01-01T00:00:00Z", "body": text},
+        ]}}).encode()
+        links = m.news_json_links(body, "AVGO", source)
+        self.assertEqual(list(links), ["https://www.broadcom.com/company/news/product-releases/broadcom-introduces-example"])
+        detail = links["https://www.broadcom.com/company/news/product-releases/broadcom-introduces-example"]
+        self.assertEqual((detail["title"], detail["publishedOn"]), ("Broadcom Introduces Example", "2026-10-14"))
+        self.assertIn("new product for AI networking", detail["inlineText"])
+        self.assertNotIn("<p>", detail["inlineText"])
+
     def test_microsoft_developer_and_xbox_news_are_accepted_but_social_posts_are_not(self):
         self.assertTrue(m.article_url("https://news.xbox.com/en-us/2026/10/08/introducing-xp/", "MSFT"))
         self.assertTrue(m.article_url("https://developer.microsoft.com/blog/introducing-the-agent-experience/", "MSFT"))
