@@ -597,3 +597,38 @@ q28/q29の自由記述はanswersへ入れず、noBuyConditions/haltConditionsへ
 実DBへの002/003適用、writer作成、本番有効化、独立暗号化削除履歴の出力/読戻しと復元ジョブへの接続は引き続き未実施。Railwayの契約・プラン・変数・サービス設定、既存ニュース監視、他DBとメール送信は変更しない。前回コミット4ab29300adaf9dba6cffefe6f5aeea45d1bebb78のGitHub Actions run 38157631781はcompleted/successを確認した。今回の計画APIの本番有効化完了とは区別する。
 
 最終ローカル検証: Node 690/690（回答/fxの追加5テストを含む）、Python 2,400/2,400（159.386秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。Pythonは既存test_deep_analysisの全文検査がpublishedAtの45秒を45%と誤検出する問題を避けるため、RESEARCH_TEST_NOW=2026-10-08T06:00:15+00:00で公式runnerを実行した。初回のデフォルト固定時刻ではこの既存テストだけが失敗した。ニュース関連の実装/テスト/CIは変更していない。本番の保存・削除、商品メール送信、独立削除履歴と実Bucketを使った復元は未検証。
+
+
+## 2026-10-12 ChatGPT — 最新ZIPの30問・日英画面・保存導線
+
+Claudeの最新版resolute-logic.zip（SHA-256: 6beaa30589839dc0a88bf93e7a51f5c21d21ecf0b1f6282534c704bba46eb50e）を取り込んだ。`/resolute` に30問と結果カード、`/resolute/simulation` に保存済み計画を読む下落・急騰試算を追加。ニュース・目標株価・ホーム・メニューには変更を加えない。詳細と変更履歴は `lib/resolute/README.md`。
+
+この節は旧q01/q25/q26の選択肢表に優先する。answersVersionは発売前の確定版1のまま、q01はfirst/1to3/3to5/5to7/7to10/10plus、q25はd5/d10/d15/d20/unknown/custom、q26はb5/b10/b20/b30/custom。旧q01=3plusを推測で年数帯に変換しない。日本語は添付を基準とし、全30問・選択肢・10タイプ・アドバイス23種・結果と操作案内を英語化。質問の生活費帯が円建てのため、この診断は日英ともJPY。表示言語の切替で金額を換算しない。既存USD計画をこの診断で上書きしない。シミュレーションは保存計画の通貨に従う。
+
+### 未確定ラインと追加数値
+
+q25=unknownや未回答、買い増し予算率未定、基準額がnullの場合は、single/stepsでもbuyLines=[]を許可する。buyModeの意図とbuyBudgetPct/allocationを維持し、値が分からないラインを作らない。noneでは従来どおり空配列・予算率null・allocation null。具体的なラインの金額・順序・個数・精度の制約は維持する。
+
+PlanInputへfirstDropPct?:number|nullを追加。診断画面は常に付ける。予算不明でラインを作れないときも、q25のcustom数値を保存して再編集できる。0より大きく99.9以下、小数1桁、nullは未確定。buyLinesが具体的にある場合は先頭dropPctとの一致を要求する。旧形式で項目がない場合は先頭ラインから読み取り可能。複数段階の入力では最終段階が99.9を超える幅を拒否し、段階数を変えたり100%未満へ切り詰めたりしない。
+
+診断の金額計算はplan-calculation.tsを使う。Claudeの10タイプの採点と同点優先順は維持する。既存ruleTypeの4分類に独自の対応付けを加えず、診断保存時はundecidedを送る。10タイプは保存済みanswersと数値から画面側で再計算できる。サーバー側に分類・文章生成を追加しない。アドバイス条件のみ、選択式の停止条件を見落とさない補正と、最大保有「50%超」だけでは50%超の上限違反を断定しない補正を加えた。
+
+### 画面とAPIの接続
+
+Clerkセッションごとに画面状態を分離し、GET /api/resolute/entitlementsのcanUseToolsを確認して診断・シミュレーションを表示する。PROや通知期間は診断の利用条件に使わない。表示設定はGET /api/resolute/preferencesから取得する。診断画面での日英切替は表示だけで、Clerkの保存設定を変更しない。
+
+GET /api/resolute/planでrevisionを取得し、「このルールを保存する」でPUT {plan,baseRevision}を送る。200のPlanSnapshotとrevision=baseRevision+1を検証して初めて保存成功とし、②への導線を表示する。409は入力を勝手に上書きせず競合を表示。通信失敗・503を成功にせず、自動再送しない。結果が不明な保存後は再送前に保存済みの計画を読み込ませる。シミュレーションページは改めて利用権と保存計画を取得する。GET503の間は、利用権を確認できた人も計画保存・保存済み計画でのシミュレーションはできない。
+
+数値欄は入力を選んだときだけ表示する。q06の金額入力選択は「ある（金額を入力する）」と明記。q28/q29の自由記述には合意済みの個人情報を避ける案内を表示する。未保存回答は画面内メモリのみで、localStorage/URL/ログ/メールには保存・出力しない。自由記述はテキストとして描画し、HTMLとして実行しない。
+
+### 完成扱いしない範囲
+
+計画APIの本番ゲートは維持する。実DBの002/003適用、限定writer設定、独立削除履歴の暗号化出力・読戻し・pg_restoreとの接続、本番の保存・削除・復元通し確認は未実施。APIをtrueに変更していない。Railwayのサービス・変数・プラン・費用設定を変更していない。メールを送っていない。添付の税金/アラート/メールロジックは今回の診断実装に取り込んでいない。
+
+
+検証結果（今回の最終コード）: Node 749/749、Python 2,400/2,400（125.078秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。Pythonは公式runnerをRESEARCH_TEST_NOW=2026-10-08T06:00:30+00:00で実行した。15秒開始の再確認では既存test_deep_analysisがpublishedAtの45秒を記事の45という数値と誤認して1件失敗したため、対象外のニュース実装・テストを変更せず時刻条件を変えて通し直した。
+
+ローカルのproduction buildをChromiumで操作し、1280px/390px幅、日英30問、入力選択時だけ数字欄が出ること、7結果カード、1回のPUTと保存成功後の②への遷移、q25未確定の保存、409/503で成功や②導線を出さないこと、未購入の遮断を確認した。利用権・設定・計画APIの応答をテスト用に差し替えた画面検証で、実Clerk/Railway/Postgresへの通し確認ではない。通知期間終了・use activeの条件でも画面を使えることを確認した。実環境の保存・削除・復元は引き続き未検証。
+
+
+公開直前に別担当の8fa05e58ffd4531520b6e6d5af7fd3b5d3afc388が追加されたため、同コミットをfast-forwardで取り込んで再検証した。別担当のニュース修正6ファイルはそのまま保持し、今回の差分には含めない。統合後の最終結果はNode 749/749、Python 2,404/2,404（125.556秒、RESEARCH_TEST_NOW=2026-10-08T06:00:30+00:00）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、差分チェック成功。

@@ -1344,3 +1344,23 @@ q28/q29の自由記述はanswersへ入れず、noBuyConditions/haltConditionsへ
 - 保存はこのブラウザーのみ。企業の株式に対する保有率は未確認で「—」。実データ取得・自動更新・商用掲載条件・機関投資家合計・企業出資先・実機スマホは未完了。稼働済み扱いしない。
 - 詳細と実データ接続前の条件は `docs/CAPITAL-MAP.md`。企業紹介6項目を銘柄検索の株価下へ置く案は別の今後作業。
 - 深夜の公開処理が中断し、その後の環境整理で未公開作業が失われたため、朝に最新 `2ffa239` 上で復元。別担当のRESOLUTE更新を維持。
+
+
+## 2026-10-12 ChatGPT — RESOLUTE診断最新版の画面実装
+
+- Claudeの最新版resolute-logic.zipを使用。`lib/resolute/diagnosis.ts`、日英質問辞書・10タイプ・23アドバイス、`/resolute` の30問と結果カードを追加。参考HTMLの濃紺と金、1画面1問、入力選択時だけ数字欄を表示する構成。
+- q01を6区分へ、q25へunknown、q26へb5を反映。未知の買い増しラインは空のまま保存できる。Planへoptional firstDropPctを追加し、基準額不明でもcustom幅を失わない。APIの具体的なライン検証とrevision競合は維持。
+- 保存は既存PUT {plan,baseRevision}。成功確認後だけ②への導線を出し、`/resolute/simulation` は保存計画をGETして添付simulate.tsで試算する。API失敗・競合で保存成功を表示しない。
+- 日英とも診断金額はJPY。既存USD計画の上書きを拒否。シミュレーションは通貨を維持する。タイプ10種は回答から画面で計算し、既存4分類への対応を創作せずruleType=undecidedを参考値として送る。
+- Claudeの分類採点は維持。アドバイス条件だけ、選択式停止条件の見落としと「50%超」からの過剰な上限超過断定を補正。日本語本文は保持。
+- 自由記述・回答をログ/メール/URL/localStorageへ出さず、画面メモリに保持。Clerkセッションが変わったら破棄する。PROだけでは使えない。通知期限終了でもuse activeなら診断可能。
+- 本番計画API503は維持。削除履歴の独立保存/復元等の有効化条件が未完了なので、実運用で保存が完成したとは扱わない。実DB/変数/費用設定/メール送信の変更なし。税金・通知ロジックは今回未検証。
+- 接続契約は `docs/NEW-PRODUCT-INTEGRATION.md` 末尾、実装内訳は `lib/resolute/README.md`。この作業中に入った資本マップの80b1e2eは取り込んで保持した。
+
+
+検証結果（今回の最終コード）: Node 749/749、Python 2,400/2,400（125.078秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。Pythonは公式runnerをRESEARCH_TEST_NOW=2026-10-08T06:00:30+00:00で実行した。15秒開始の再確認では既存test_deep_analysisがpublishedAtの45秒を記事の45という数値と誤認して1件失敗したため、対象外のニュース実装・テストを変更せず時刻条件を変えて通し直した。
+
+ローカルのproduction buildをChromiumで操作し、1280px/390px幅、日英30問、入力選択時だけ数字欄が出ること、7結果カード、1回のPUTと保存成功後の②への遷移、q25未確定の保存、409/503で成功や②導線を出さないこと、未購入の遮断を確認した。利用権・設定・計画APIの応答をテスト用に差し替えた画面検証で、実Clerk/Railway/Postgresへの通し確認ではない。通知期間終了・use activeの条件でも画面を使えることを確認した。実環境の保存・削除・復元は引き続き未検証。
+
+
+公開直前に別担当の8fa05e58ffd4531520b6e6d5af7fd3b5d3afc388が追加されたため、同コミットをfast-forwardで取り込んで再検証した。別担当のニュース修正6ファイルはそのまま保持し、今回の差分には含めない。統合後の最終結果はNode 749/749、Python 2,404/2,404（125.556秒、RESEARCH_TEST_NOW=2026-10-08T06:00:30+00:00）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、差分チェック成功。

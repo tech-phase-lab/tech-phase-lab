@@ -1,6 +1,6 @@
 /** Questionnaire storage contract only. No investor type or advice classification. */
 export const PLAN_ANSWER_OPTIONS = {
-  q01: ["first", "1to3", "3plus"],
+  q01: ["first", "1to3", "3to5", "5to7", "7to10", "10plus"],
   q02: ["l15", "l25", "l40", "l40plus", "custom"],
   q03: ["stable", "uneven", "none"],
   q04: ["m0", "m1", "m3", "m6", "m12", "custom"],
@@ -18,7 +18,7 @@ export const PLAN_ANSWER_OPTIONS = {
   q21: ["tech_semis", "dividend", "healthcare", "finance", "energy_materials", "other"],
   q22: ["p10", "p20", "p30", "p50", "custom"], q23: ["lt10", "p10to30", "p30to50", "gt50", "none"],
   q24: ["none", "single", "steps2", "steps3", "steps4"],
-  q25: ["d5", "d10", "d15", "d20", "custom"], q26: ["b10", "b20", "b30", "custom"],
+  q25: ["d5", "d10", "d15", "d20", "unknown", "custom"], q26: ["b5", "b10", "b20", "b30", "custom"],
   q27: ["equal", "heavier"], q28: ["cash_low", "income_unstable", "over_cap", "no_reason"],
   q29: ["over_tolerance", "cant_sleep", "thesis_broken"], q30: ["ignore", "yen3", "yen7", "custom"],
 } as const;
