@@ -12,7 +12,7 @@
 .edition { font-size:.7rem; color:#baaaff; border:1px solid #574775; border-radius:4px; padding:3px 7px; margin-left:12px; }
 .notice { color:#c9c4a5; border-left:2px solid #9b9a73; padding:8px 14px; font-size:.78rem; line-height:1.6; }
 .notice a { text-decoration:underline; }
-.page button { cursor:pointer; font:inherit; }
+.page button { cursor:pointer; font-family:inherit; }
 .page button:disabled { opacity:.5; cursor:default; }
 .page :is(button,a,input,select):focus-visible { outline:2px solid #b5a0ff; outline-offset:3px; }
 .tabs { display:flex; gap:28px; overflow-x:auto; scrollbar-width:thin; }
@@ -270,3 +270,20 @@
   .positionTabs { gap:14px; }
   .positionTabs button { font-size:.8rem; }
 }
+
+/* Keep the five navigation controls together at phone widths. */
+@media(max-width:600px) {
+  .navigationRow { flex-wrap:nowrap; gap:8px; }
+  .tabs { flex-shrink:0; gap:10px; overflow:visible; }
+  .page .tabs button { font-size:.72rem; padding:12px 0; white-space:nowrap; }
+  .tools { flex-shrink:0; gap:5px; padding:5px 0; }
+  .page .tools button { font-size:.68rem; padding:7px 6px; min-height:36px; }
+}
+@media(max-width:380px) {
+  .navigationRow { gap:5px; }
+  .tabs { gap:7px; }
+  .page .tabs button { font-size:.66rem; }
+  .tools { gap:4px; }
+  .page .tools button { font-size:.63rem; padding:7px 5px; }
+}
+.comparisonLabel { color:var(--muted); font-size:.72rem; margin-right:3px; }
