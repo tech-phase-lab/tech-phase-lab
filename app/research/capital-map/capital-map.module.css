@@ -134,3 +134,51 @@
 .source a { color:#9adeca; text-decoration:underline; margin-right:16px; }
 .listHeading { margin:26px 0 10px; font-size:1rem; }
 .stock strong { white-space:normal; overflow-wrap:anywhere; }
+
+/* Keep the main view focused on the selected portfolio. */
+.tabs { flex-wrap:nowrap; overflow-x:auto; gap:28px; scrollbar-width:thin; }
+.tabs button { flex-shrink:0; }
+.portfolioToolbar { display:flex; align-items:end; gap:16px; margin:22px 0 28px; }
+.portfolioSelect { display:grid; gap:8px; flex:1; min-width:0; max-width:600px; }
+.portfolioSelect>span { color:#8fa7aa; font-size:.7rem; }
+.portfolioSelect select { width:100%; min-height:48px; color:#e1efea; background:#101c24; border:1px solid #3a5157; border-radius:5px; padding:10px 12px; font:inherit; color-scheme:dark; text-overflow:ellipsis; }
+.savedFilter,.listFilters button { min-height:44px; padding:8px 12px; border:1px solid #344b44; color:#a3c6b8; background:transparent; border-radius:4px; white-space:nowrap; font-size:.73rem !important; }
+.savedFilter[aria-pressed=true],.listFilters button[aria-pressed=true] { background:#193b2c; border-color:#85baa1; }
+.save { font-size:1.4rem !important; min-width:44px; padding:3px 10px; }
+.find { margin:30px 0 0; padding:0; border:0; }
+.overlap { margin-top:30px; padding:0; border:0; }
+.listHead { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin:24px 0 12px; }
+.listHead h3 { font-size:1rem; margin:0; }
+.listHead h3 span { color:#8eaaa8; font-size:.8rem; margin-left:6px; font-weight:400; }
+.listFilters { display:flex; gap:8px; min-width:0; }
+.listFilters input { min-width:0; width:200px; padding:9px 10px; font:inherit; font-size:.75rem; border:1px solid #334950; background:#101c24; color:#e1efea; border-radius:4px; }
+.etfHolding { grid-template-columns:34px minmax(0,1fr) 150px; }
+.holders>div { grid-template-columns:34px minmax(0,1fr) 110px; align-items:center; }
+.holders>div>div { text-align:left !important; }
+.holders>div>div:last-child { text-align:right !important; }
+.holders>div>div strong { justify-content:flex-start !important; }
+.holders>div>div:last-child strong { justify-content:flex-end !important; }
+.holderLink { display:block; text-align:left; background:none; border:0; color:#a3dcc6; padding:6px 0; font-size:.82rem !important; min-height:34px; }
+.resultCount { color:#91a3a9; font-size:.75rem; margin-top:24px; }
+.more { display:block; width:100%; min-height:44px; margin-top:12px; background:#11241d; border:1px solid #385649; border-radius:4px; color:#b0d9c7; font-size:.78rem !important; }
+.visit { justify-content:flex-end; }
+.visit button { background:transparent; border:0; color:#92b9a9; }
+.source,.usage { border-top:1px solid #25383d; color:#8fa7ac; font-size:.72rem; line-height:1.8; padding:0; margin-top:22px; }
+.source summary,.usage summary { cursor:pointer; width:fit-content; padding:12px 0; min-height:44px; color:#a3bcb7; }
+.source p,.usage p { margin:0 0 12px; }
+.notice a { color:#a2d9c4; margin-left:8px; }
+@media(max-width:600px) {
+  .tabs { gap:21px; margin-top:18px; }
+  .tabs button { font-size:.78rem; }
+  .portfolioToolbar { gap:8px; margin:18px 0 24px; }
+  .portfolioSelect select { font-size:.84rem; padding:10px 8px; }
+  .savedFilter { font-size:.66rem !important; padding:8px; }
+  .listFilters { width:100%; }
+  .listFilters input { flex:1; width:0; }
+  .etfHolding { grid-template-columns:29px minmax(0,1fr) 90px; }
+  .etfHolding>span { grid-row:auto; }
+  .holders>div { grid-template-columns:29px minmax(0,1fr) 70px; }
+  .holders>div>span { width:29px; height:29px; }
+  .holderLink { font-size:.75rem !important; }
+  .summary { padding-top:16px; }
+}

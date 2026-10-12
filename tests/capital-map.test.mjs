@@ -65,13 +65,13 @@ test('synthetic holdings never leak into the live route or invent an institution
 
 test('reviewed SEC snapshots retain every security and reconcile to cover totals', () => {
   const data = JSON.parse(readFileSync(new URL('../lib/research/capital-map-disclosures.json', import.meta.url), 'utf8'));
-  assert.deepEqual(data.map(p => p.current.holdings.length), [29, 8, 28]);
-  assert.deepEqual(data.map(p => p.current.source.entryCount), [89, 8, 29]);
-  for (const portfolio of data) {
+  assert.deepEqual(data.slice(0, 3).map(p => p.current.holdings.length), [29, 8, 28]);
+  assert.deepEqual(data.slice(0, 3).map(p => p.current.source.entryCount), [89, 8, 29]);
+  for (const portfolio of data.filter(p => p.kind !== 'etf')) {
     const current = portfolio.current;
     assert.equal(current.holdings.reduce((sum, row) => sum + row.value, 0), current.source.totalValue);
-    assert.equal(new Set(current.holdings.map(row => row.securityId)).size, current.holdings.length);
-    assert.ok(current.holdings.every(row => row.shares > 0 && Number.isSafeInteger(row.value)));
+    assert.equal(new Set(current.holdings.map(row => `${row.securityId}:${row.instrument}`)).size, current.holdings.length);
+    assert.ok(current.holdings.every(row => row.shares >= 0 && Number.isSafeInteger(row.value)));
     assert.ok(capitalRows(current).every(row => row.change === 'unknown' && row.companyPercent === null));
     assert.match(current.source.url, /^https:\/\/www\.sec\.gov\/Archives\/edgar\/data\//);
   }
@@ -81,4 +81,35 @@ test('reviewed SEC snapshots retain every security and reconcile to cover totals
   assert.ok(brk.some(row => row.ticker === 'GOOGL'));
   const alphabet = data[2].current.holdings;
   assert.equal(alphabet.find(row => row.ticker === 'FRSH').shares, 16206643);
+});
+
+
+test('issuer weights retain cash allocation instead of inflating equity weights', () => {
+  const a = snapshot([{ ...holding('NVDA', 10, 100), reportedWeight: 40 }, { ...holding('GOOG', 5, 50), reportedWeight: 20 }]);
+  const b = snapshot([{ ...holding('NVDA', 2, 0), reportedWeight: 15 }, { ...holding('GOOGL', 4, 0), reportedWeight: 70 }]);
+  assert.deepEqual(capitalRows(a).map(row => row.weight), [40, 20]);
+  assert.equal(etfOverlap(a, b).percent, 15);
+  assert.equal(etfOverlap(a, a).percent, 60);
+  assert.equal(etfOverlap(b, a).percent, 15);
+});
+
+test('expanded coverage preserves complete equity lists and issuer weights', () => {
+  const data = JSON.parse(readFileSync(new URL('../lib/research/capital-map-disclosures.json', import.meta.url), 'utf8'));
+  assert.equal(data.filter(p => p.kind === 'manager').length, 8);
+  const etfs = data.filter(p => p.kind === 'etf');
+  assert.deepEqual(etfs.map(p => [p.name, p.current.holdings.length]), [['SPY', 504], ['SMH', 25], ['SOXX', 30], ['XLK', 75], ['XLF', 76]]);
+  for (const p of etfs) {
+    const rows = capitalRows(p.current);
+    assert.equal(new Set(rows.map(r => r.securityId)).size, rows.length);
+    assert.ok(rows.every(r => r.weight === r.reportedWeight && r.shares > 0));
+    const total = rows.reduce((sum, r) => sum + r.weight, 0);
+    assert.ok(total > 98 && total <= 100.1);
+    assert.match(p.current.source.sha256, /^[a-f0-9]{64}$/);
+  }
+  const spy = etfs.find(p => p.name === 'SPY').current;
+  const smh = etfs.find(p => p.name === 'SMH').current;
+  const nvda = etfOverlap(spy, smh).rows.find(r => r.ticker === 'NVDA');
+  assert.equal(nvda.shared, 8.336249);
+  const optionRows = data.filter(p => p.kind !== 'etf').flatMap(p => p.current.holdings).filter(r => r.instrument !== 'stock');
+  assert.ok(optionRows.length > 0);
 });

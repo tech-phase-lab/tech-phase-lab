@@ -6,6 +6,8 @@ export type CapitalHolding = {
   instrument: "stock" | "put" | "call";
   shares: number;
   value: number;
+  // Issuer-published ETF weight; never renormalize after excluding cash.
+  reportedWeight?: number;
   // Set only after verifying denominator date, share class and ADR ratio.
   outstandingShares?: number | null;
 };
@@ -14,7 +16,7 @@ export type CapitalSnapshot = {
   asOf: string;
   publishedOn: string;
   complete: boolean;
-  source?: { url: string; coverUrl: string; accession: string; checkedOn: string; entryCount: number; totalValue: number; sha256: string };
+  source?: { type?: "13f" | "issuer"; url: string; coverUrl: string; accession: string; checkedOn: string; entryCount: number; totalValue: number; sha256: string };
   holdings: CapitalHolding[];
 };
 export type CapitalPortfolio = {
@@ -42,7 +44,7 @@ export function capitalRows(current: CapitalSnapshot, previous?: CapitalSnapshot
     const old = earlier.get(key(row));
     const change: CapitalChange = !previous ? "unknown" : !old ? previous.complete ? "new" : "unknown"
       : row.shares > old.shares ? "increased" : row.shares < old.shares ? "reduced" : "unchanged";
-    return { ...row, weight: total > 0 ? row.value / total * 100 : 0, change,
+    return { ...row, weight: row.reportedWeight ?? (total > 0 ? row.value / total * 100 : 0), change,
       shareChangePercent: old && old.shares > 0 ? (row.shares - old.shares) / old.shares * 100 : null,
       companyPercent: row.instrument === "stock" && row.outstandingShares && row.outstandingShares > 0
         ? row.shares / row.outstandingShares * 100 : null };
@@ -52,7 +54,7 @@ export function capitalRows(current: CapitalSnapshot, previous?: CapitalSnapshot
     rows.push({ ...old, shares: 0, value: 0, weight: 0, change: "exited",
       shareChangePercent: old.shares > 0 ? -100 : null, companyPercent: null });
   }
-  return rows.toSorted((a, b) => b.value - a.value);
+  return rows.toSorted((a, b) => b.weight - a.weight);
 }
 
 export function etfOverlap(a: CapitalSnapshot, b: CapitalSnapshot) {
