@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import { ReviewLink as Link, useReview } from "./review-context";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { validateSnapshot } from "@/lib/resolute/transport";
@@ -10,11 +10,13 @@ type Access = "loading"|"allowed"|"denied"|"signed-out"|"unavailable";
 export default function ToolShell({ identityReady=true, children }: { identityReady?: boolean;
  children: (locale: DiagnosisLocale, deny: () => void) => ReactNode }) {
  const pathname=usePathname();
- const [locale,setLocale]=useState<DiagnosisLocale>("ja"), [access,setAccess]=useState<Access>("loading"), [attempt,setAttempt]=useState(0);
+ const review=useReview(), reviewing=review !== null;
+ const [normalLocale,setNormalLocale]=useState<DiagnosisLocale>("ja"), [access,setAccess]=useState<Access>("loading"), [attempt,setAttempt]=useState(0);
+ const locale=review?.locale ?? normalLocale, setLocale=review?.setLocale ?? setNormalLocale;
  useEffect(()=>{
-  if(!identityReady) return;
+  if(!identityReady || reviewing) return;
   const controller=new AbortController();
-  void requestPreferences(undefined,controller.signal).then(p=>{ if(!controller.signal.aborted && p.locale) setLocale(p.locale); },()=>{});
+  void requestPreferences(undefined,controller.signal).then(p=>{ if(!controller.signal.aborted && p.locale) setNormalLocale(p.locale); },()=>{});
   let inFlight=false;
   async function check() {
    if(inFlight) return; inFlight=true;
@@ -31,7 +33,7 @@ export default function ToolShell({ identityReady=true, children }: { identityRe
   void check(); const timer=setInterval(()=>void check(),60000);
   const focus=()=>void check(); window.addEventListener("focus",focus);
   return()=>{controller.abort();clearInterval(timer);window.removeEventListener("focus",focus);};
- },[identityReady,attempt]);
+ },[identityReady,attempt,reviewing]);
  const en=locale==="en";
  const message=access==="loading" ? (en?"Checking access…":"利用権を確認しています…") : access==="signed-out" ?
   (en?"Sign in to use RESOLUTE.":"RESOLUTEを使うにはログインしてください。") : access==="denied" ?
@@ -45,14 +47,15 @@ export default function ToolShell({ identityReady=true, children }: { identityRe
    </div></header>
   <nav className={styles.toolMenu} aria-label={en?"RESOLUTE tools":"RESOLUTEのツール"}>
    {[["/resolute","① 診断","① Quiz"],["/resolute/simulation","② シミュレーション","② Simulator"],["/resolute/alerts","③ アラート","③ Alerts"],["/resolute/morning","④ 翌朝","④ Morning note"],["/resolute/thermometer","⑤ 温度計","⑤ Gauge"],["/resolute/tax","⑥ 税金","⑥ Tax"]].map(([href,ja,eng])=>
-    <Link key={href} href={href} prefetch={false} aria-current={pathname===href?"page":undefined}>{en?eng:ja}</Link>)}
+    <Link key={href} href={href} prefetch={false} aria-current={(review?.path ?? pathname)===href?"page":undefined}>{en?eng:ja}</Link>)}
   </nav>
-  {identityReady && access==="allowed" ? children(locale,()=>setAccess("denied")) : <section className={styles.card}>
+  {review ? <p className={styles.status}>{en ? "Owner workspace · Sample values. Saves stay in this tab and reset on reload. No emails are sent." : "運営者専用 · 初期値はサンプルです。保存はこの画面内だけで、再読み込みすると消えます。メールは送信しません。"}</p> : null}
+  {identityReady && (reviewing || access==="allowed") ? children(locale,()=>setAccess("denied")) : <section className={styles.card}>
    <h1>{en?"Your investing rules":"自分の投資ルール"}</h1><p role="status">{message}</p>
    {access==="signed-out" ? <Link href="/research/account" prefetch={false}>{en?"Sign in":"ログイン"}</Link> : null}
    <button type="button" className={styles.secondary} disabled={access==="loading"} onClick={()=>setAttempt(n=>n+1)}>{en?"Check again":"再確認"}</button>
   </section>}
-  <footer className={styles.footer}><Link href="/resolute/settings" prefetch={false}>{en?"Language and time zone":"言語とタイムゾーン"}</Link>
+  <footer className={styles.footer}>{!reviewing ? <Link href="/resolute/settings" prefetch={false}>{en?"Language and time zone":"言語とタイムゾーン"}</Link> : null}
    <Link href="/research" prefetch={false}>Tech Phase</Link></footer>
  </div></main>;
 }

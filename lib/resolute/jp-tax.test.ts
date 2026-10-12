@@ -190,7 +190,7 @@ test('入力:不明な口座・数値以外はエラー', () => {
 });
 
 test('文面:すべての注記コードに日英の文章がある。断定表現がない', () => {
-  const codes = new Set();
+  const codes = new Set<keyof typeof NOTE_TEXT>();
   const inputs = [
     sale({ taxYear: 2026, account: 'nisa', proceedsJpy: 1, costJpy: 2 }),
     sale({ taxYear: 2026, account: 'general', proceedsJpy: 1, costJpy: 2, carryforwards: [{ lossYear: 2024, amount: 5 }, { lossYear: 2020, amount: 5 }] }),

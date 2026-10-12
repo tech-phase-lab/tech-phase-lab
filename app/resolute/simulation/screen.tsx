@@ -1,9 +1,9 @@
 "use client";
-import Link from "next/link";
+import { ReviewLink as Link, usePlanClient } from "../review-context";
 import { useEffect,useRef,useState } from "react";
 import ToolShell from "../tool-shell";
 import styles from "../diagnosis.module.css";
-import { requestPlan,PlanClientError } from "@/lib/resolute/plan-client";
+import { PlanClientError } from "@/lib/resolute/plan-client";
 import type { PlanInput } from "@/lib/resolute/plan-data";
 import { simulateDrop,simulateSurge } from "@/lib/resolute/simulate";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
@@ -11,6 +11,7 @@ export default function SimulationScreen({identityReady=true}:{identityReady?:bo
  return <ToolShell identityReady={identityReady}>{(locale,deny)=><Simulation locale={locale} deny={deny}/>}</ToolShell>;
 }
 function Simulation({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
+ const requestPlan = usePlanClient();
  const [plan,setPlan]=useState<PlanInput|null>(null),[state,setState]=useState("loading"),[attempt,setAttempt]=useState(0);
  const [holding,setHolding]=useState("0"),[drop,setDrop]=useState("30"),[rise,setRise]=useState("30");
  const [holdings,setHoldings]=useState(()=>Array.from({length:3},()=>({name:"",value:"0"})));
@@ -21,7 +22,7 @@ function Simulation({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
    setPlan(p.plan);setState(p.plan?"ready":"empty");
    if(p.plan){setHolding("0");setHoldings(Array.from({length:3},()=>({name:"",value:"0"})));}
   },e=>{if(controller.signal.aborted)return;if(e instanceof PlanClientError&&["signed-out","denied"].includes(e.kind))denyRef.current();else setState("error");});
-  return()=>controller.abort();},[attempt]);
+  return()=>controller.abort();},[attempt,requestPlan]);
  const en=locale==="en",t=(ja:string,eng:string)=>en?eng:ja;
  const currency=plan?.currency??"JPY",scale=currency==="USD"?100:1;
  const cash=(v:number)=>new Intl.NumberFormat(en?"en-US":"ja-JP",{style:"currency",currency,maximumFractionDigits:currency==="JPY"?0:2}).format(v);
