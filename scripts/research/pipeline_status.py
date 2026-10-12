@@ -228,6 +228,58 @@ def model_budget(path, env=None, now=None):
             'byLane': lanes, 'macroDispatches': macro}
 
 
+COMPANY_DELIVERY_DAYS = 14
+
+
+def company_delivery(path, payload, now=None, days=COMPANY_DELIVERY_DAYS):
+    """Per company, over the last `days`: what was found, whether its body was
+    read, and what reached the public feed. Names, counts, times and short
+    error codes only; never titles, links or article text. Added Oct 12 so
+    "does each company really reach the site" is a measurement, not a guess:
+    found but never read means the source refuses us; read but not published
+    means the summary checks held it."""
+    import monitor
+    now = time.time() if now is None else now
+    cutoff = datetime.fromtimestamp(now - days * 86400, timezone.utc).isoformat()
+    result = {ticker: {'scope': provider.get('scope', 'roster'), 'found': 0, 'bodyRead': 0, 'viaSec': 0,
+                       'newestFoundAt': None, 'newestBodyReadAt': None, 'unreadReasons': {},
+                       'published': 0, 'newestPublishedAt': None}
+              for ticker, provider in monitor.PROVIDERS.items()}
+    with headline_translation.connect(path) as db:
+        if not db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='release_events'").fetchone():
+            return {'days': days, 'companies': result}
+        for row in db.execute("""SELECT r.ticker AS ticker, COUNT(*) AS found,
+              SUM(CASE WHEN s.extracted_chars>0 THEN 1 ELSE 0 END) AS body_read,
+              SUM(CASE WHEN s.url LIKE 'https://www.sec.gov/%' THEN 1 ELSE 0 END) AS via_sec,
+              MAX(r.detected_at) AS newest_found,
+              MAX(CASE WHEN s.extracted_chars>0 THEN s.fetched_at END) AS newest_body
+              FROM release_events r JOIN sources s ON s.url=r.url
+              WHERE r.detected_at>=? GROUP BY r.ticker""", (cutoff,)):
+            entry = result.get(row['ticker'])
+            if entry is not None:
+                entry.update(found=row['found'], bodyRead=row['body_read'] or 0, viaSec=row['via_sec'] or 0,
+                             newestFoundAt=row['newest_found'], newestBodyReadAt=row['newest_body'])
+        for row in db.execute("""SELECT r.ticker AS ticker, COALESCE(NULLIF(substr(s.error,1,40),''),'no-error-recorded') AS reason,
+              COUNT(*) AS n FROM release_events r JOIN sources s ON s.url=r.url
+              WHERE r.detected_at>=? AND COALESCE(s.extracted_chars,0)=0 AND s.status NOT IN ('rejected')
+              GROUP BY r.ticker, reason""", (cutoff,)):
+            entry = result.get(row['ticker'])
+            if entry is not None:
+                entry['unreadReasons'][row['reason']] = row['n']
+    for item in payload.get('officialUpdates', []) if isinstance(payload, dict) else []:
+        if not isinstance(item, dict):
+            continue
+        at = next((item[key] for key in ('publishedAt', 'publishedOn', 'observedAt') if isinstance(item.get(key), str)), None)
+        for ticker in item.get('tickers') or []:
+            entry = result.get(ticker)
+            if entry is None:
+                continue
+            entry['published'] += 1
+            if at and (entry['newestPublishedAt'] is None or at > entry['newestPublishedAt']):
+                entry['newestPublishedAt'] = at
+    return {'days': days, 'companies': result}
+
+
 def pulse_titles_status(path, now=None):
     """Top-strip one-line titles: job states and failure codes (counts only)."""
     now = time.time() if now is None else now

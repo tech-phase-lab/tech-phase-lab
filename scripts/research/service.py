@@ -2974,9 +2974,15 @@ class Handler(BaseHTTPRequestHandler):
             state["pulseTitles"] = {"error": "pulse-titles-unavailable"}
         if feed:  # Only the dedicated news health read; /health is probed often.
             try:
-                state["publicFeed"] = pipeline_status.feed_summary(self.app.public_news(max_age=120), pending_skips=general_source_news.PENDING_SKIPS)
+                payload = self.app.public_news(max_age=120)
+                state["publicFeed"] = pipeline_status.feed_summary(payload, pending_skips=general_source_news.PENDING_SKIPS)
             except Exception:
+                payload = {}
                 state["publicFeed"] = {"error": "public-feed-unavailable"}
+            try:
+                state["companyDelivery"] = pipeline_status.company_delivery(self.app.db_path, payload)
+            except Exception:
+                state["companyDelivery"] = {"error": "company-delivery-unavailable"}
         return state
 
     def editor_authorized(self):
