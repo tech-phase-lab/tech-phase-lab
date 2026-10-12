@@ -68,6 +68,17 @@ class MeaningValidationTests(unittest.TestCase):
         validation.validate_negation('米10年債利回りが再び急上昇',
                                      'U.S. 10-Year Treasury Yield rising sharply again. Not seen since 2007.')
 
+    def test_short_negated_aside_in_the_quote_does_not_reject_a_title_that_never_repeats_it(self):
+        # Oct 12: an NVIDIA release was held for days because the quoted paragraph held
+        # "not today, not tomorrow" and the English title was read as restating it.
+        quote = ('\u201cThe thing that I really give Jensen all the credit for, quite frankly, is that consistency '
+                 'of vision of what this can be\u2014not today, not tomorrow, but as a secular trend,\u201d Nadella said.')
+        validation.validate_negation('NVIDIA, Microsoft Kick Off a New Beginning for Windows PCs with RTX Spark and AI Agents', quote)
+        validation.validate_negation('NVIDIAとMicrosoft、Windows PCの新たな幕開けを開始', quote)
+        # The same one-word clause is still enforced when the copy repeats its word.
+        with self.assertRaisesRegex(ValueError, '^changed-negation$'):
+            validation.validate_negation('Rain expected today', 'Not today.')
+
     def test_summary_that_restates_a_negated_clause_keeps_the_negation(self):
         source = 'Brent crude rises 2% as OPEC+ says it will not raise output'
         with self.assertRaisesRegex(ValueError, '^changed-negation$'):
