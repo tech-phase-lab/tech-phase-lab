@@ -1,13 +1,13 @@
 "use client";
-import Link from "next/link";
+import { ReviewLink as Link, usePlanClient, useNotificationClient } from "./review-context";
 import { useEffect,useRef,useState } from "react";
 import ToolShell from "./tool-shell";
 import styles from "./diagnosis.module.css";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 import type { PlanInput } from "@/lib/resolute/plan-data";
-import { requestPlan,PlanClientError } from "@/lib/resolute/plan-client";
+import { PlanClientError } from "@/lib/resolute/plan-client";
 import { DELIVERY_HOURS,defaultNotificationSettings,parseNotificationSettings,type NotificationSettings,type NotificationSnapshot } from "@/lib/resolute/notification-settings";
-import { requestNotificationSettings,NotificationClientError } from "@/lib/resolute/notification-client";
+import { NotificationClientError } from "@/lib/resolute/notification-client";
 import { judge } from "@/lib/resolute/alert-judge";
 import { renderAlertMail,renderNextMorningMail } from "@/lib/resolute/mail-templates";
 
@@ -19,6 +19,8 @@ export default function NotificationScreen({identityReady=true,mode}:{identityRe
  return <ToolShell identityReady={identityReady}>{(locale,deny)=><Notifications locale={locale} deny={deny} mode={mode}/>}</ToolShell>;
 }
 function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;mode:"alerts"|"morning"}) {
+ const requestPlan = usePlanClient();
+ const requestNotificationSettings = useNotificationClient();
  const [snapshot,setSnapshot]=useState<NotificationSnapshot|null>(null),[draft,setDraft]=useState<NotificationSettings>(defaultNotificationSettings);
  const [plan,setPlan]=useState<PlanInput|null>(null),[planState,setPlanState]=useState("loading"),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[locked,setLocked]=useState(false),[attempt,setAttempt]=useState(0);
  const [message,setMessage]=useState(""),[change,setChange]=useState(-25),[pick,setPick]=useState<"done"|"skipped"|"unsure"|null>(null);
@@ -33,7 +35,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
    else {if(planResult.reason instanceof PlanClientError&&["signed-out","denied"].includes(planResult.reason.kind)){denyRef.current();return;}setPlanState("error");}
    setLoading(false);
   });return()=>c.abort();
- },[attempt]);
+ },[attempt,requestPlan,requestNotificationSettings]);
  const en=locale==="en",t=(ja:string,eng:string)=>en?eng:ja,isMorning=mode==="morning";
  function update(patch:Partial<NotificationSettings>){setDraft(s=>({...s,...patch}));setMessage("");}
  async function save(){

@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import { ReviewLink as Link, usePlanClient } from "./review-context";
 import { useEffect, useRef, useState } from "react";
 import ToolShell from "./tool-shell";
 import styles from "./diagnosis.module.css";
@@ -7,7 +7,7 @@ import { questions, emptyDiagnosisDraft, isQuestionVisible, selectAnswer, numeri
  validateQuestion, draftToInput, draftToPlan, draftFromPlan, type DiagnosisDraft } from "@/lib/resolute/diagnosis-form";
 import { diagnose } from "@/lib/resolute/diagnosis";
 import { localizeDiagnosis, type DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
-import { requestPlan, PlanClientError } from "@/lib/resolute/plan-client";
+import { PlanClientError } from "@/lib/resolute/plan-client";
 import type { PlanSnapshot } from "@/lib/resolute/plan-data";
 const messages = {
  ja: { title:"あなただけの投資ルールを、30の質問でつくる。", intro:"暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。",
@@ -42,6 +42,7 @@ export default function DiagnosisScreen({identityReady=true}:{identityReady?:boo
  return <ToolShell identityReady={identityReady}>{(locale,deny)=><DiagnosisForm locale={locale} deny={deny}/>}</ToolShell>;
 }
 function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
+ const requestPlan = usePlanClient();
  const [draft,setDraft]=useState<DiagnosisDraft>(emptyDiagnosisDraft), [mode,setMode]=useState<"intro"|"questions"|"result">("intro"),[index,setIndex]=useState(0);
  const [snapshot,setSnapshot]=useState<PlanSnapshot|null>(null),[busy,setBusy]=useState(false),[loading,setLoading]=useState(true),[saved,setSaved]=useState(false);
  const [message,setMessage]=useState<keyof typeof messages.ja|null>(null),[formError,setFormError]=useState<"answer"|"text"|null>(null),[locked,setLocked]=useState(false);
@@ -60,7 +61,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
    setMessage("unavailable");
   }).finally(()=>{if(!controller.signal.aborted)setLoading(false);});
   return()=>{pending.current?.abort();};
- },[]);
+ },[requestPlan]);
  useEffect(()=>{if(mode!=="intro") heading.current?.focus();},[index,mode]);
  async function reload() {
   if(mutex.current)return;mutex.current=true;setLoading(true);
