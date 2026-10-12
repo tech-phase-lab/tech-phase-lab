@@ -142,3 +142,8 @@ Live retrieval, automatic updates, commercial ETF display permission, institutio
 - button共通のfont:inheritが個別の文字サイズを上書きする指定を除去。
 - 比較先を「前期の開示」「確認済みの開示」と明示し、チェック欄を「株数が変わった銘柄のみ」へ変更。比較元がないときは絞り込みを無効化し、空の一覧になるのを防止。
 - 確認ボタンも「この開示を確認済みにする」へ変更。日付は選択中のsnapshot.asOfに連動。自動取得ジョブは未実装で、データ更新自体は別工程。
+
+### 2026-10-12 comparison simplification
+- Comparison is always the prior disclosure, headed 前期からの変化. Removed the saved-disclosure selector and manual acknowledgement buttons.
+- NEW beside the as-of label appears when a previously opened portfolio has a different snapshot ID in this browser. First visits are not marked new. Opening automatically records the snapshot; the badge stays during this page session and clears on reload. No blinking. Storage failures do not block holdings.
+- Phone category tabs have wider gaps and touch areas while keeping the tools on the same row.

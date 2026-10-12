@@ -274,16 +274,16 @@
 /* Keep the five navigation controls together at phone widths. */
 @media(max-width:600px) {
   .navigationRow { flex-wrap:nowrap; gap:8px; }
-  .tabs { flex-shrink:0; gap:10px; overflow:visible; }
-  .page .tabs button { font-size:.72rem; padding:12px 0; white-space:nowrap; }
+  .tabs { flex-shrink:0; gap:14px; overflow:visible; }
+  .page .tabs button { font-size:.72rem; padding:12px 3px; min-width:34px; white-space:nowrap; }
   .tools { flex-shrink:0; gap:5px; padding:5px 0; }
   .page .tools button { font-size:.68rem; padding:7px 6px; min-height:36px; }
 }
 @media(max-width:380px) {
   .navigationRow { gap:5px; }
-  .tabs { gap:7px; }
+  .tabs { gap:12px; }
   .page .tabs button { font-size:.66rem; }
   .tools { gap:4px; }
   .page .tools button { font-size:.63rem; padding:7px 5px; }
 }
-.comparisonLabel { color:var(--muted); font-size:.72rem; margin-right:3px; }
+.updateBadge { display:inline-block; margin-left:8px; padding:2px 5px; border-radius:3px; color:#171120; background:#c6adff; font-size:.6rem; font-weight:800; letter-spacing:.04em; vertical-align:middle; }
