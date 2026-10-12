@@ -160,3 +160,9 @@ Live retrieval, automatic updates, commercial ETF display permission, institutio
 ### 2026-10-13: Compact profile descriptions
 
 - Shortened all 13 manager/corporate descriptions in Japanese and English to single-line copy at ordinary mobile widths. Uses 「テック企業」 where applicable; no font reduction or ellipsis. Disclosure sources still identify the filing entity.
+
+### 2026-10-13: Distinct corporate copy
+
+- Reworded each of the five corporate descriptions around its business, avoiding repeated 「テック企業」 endings while keeping short Japanese/English copy.
+- Display name is now `Google (Alphabet)` at the user's request. The `alphabet-13f` identifier and holdings are unchanged.
+- Next priority: scheduled disclosure/ETF data refresh. Current import scripts consume reviewed local source files; no capital-map scheduled refresh workflow is present.

@@ -7,31 +7,31 @@ export type CapitalProfile = {
 export const capitalProfiles: Record<string, CapitalProfile> = {
   nvidia: {
     person: ["ジェンスン・フアン", "Jensen Huang"], role: ["共同創業者・CEO", "Co-Founder & CEO"],
-    description: ["GPUやAI向け半導体を開発するテック企業。", "A GPU and AI chip company."],
+    description: ["GPUを軸にAIの計算基盤を支える。", "GPUs powering AI computing."],
     source: "https://nvidianews.nvidia.com/bios/jensen-huang",
     portrait: { url: "https://upload.wikimedia.org/wikipedia/commons/e/e4/P20250430JB-0891_%28cropped%29.jpg", source: "https://commons.wikimedia.org/wiki/File:P20250430JB-0891_(cropped).jpg", credit: "Joyce N. Boghosian / The White House", license: "Public domain", licenseUrl: "https://creativecommons.org/publicdomain/mark/1.0/" },
   },
   alphabet: {
     person: ["スンダー・ピチャイ", "Sundar Pichai"], role: ["CEO", "CEO"],
-    description: ["検索やYouTubeを展開するテック企業。", "The company behind Search and YouTube."],
+    description: ["検索やYouTube、クラウドを展開。", "Search, YouTube and cloud services."],
     source: "https://blog.google/authors/sundar-pichai/",
     portrait: { url: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Mateusz_Morawiecki_spotka%C5%82_si%C4%99_z_CEO_Google_Sundar_Pichai_w_KPRM_%282022.03.29%29_01_%28cropped%29.jpg", source: "https://commons.wikimedia.org/wiki/File:Mateusz_Morawiecki_spotka%C5%82_si%C4%99_z_CEO_Google_Sundar_Pichai_w_KPRM_(2022.03.29)_01_(cropped).jpg", credit: "Krystian Maj", license: "CC BY 3.0 PL", licenseUrl: "https://creativecommons.org/licenses/by/3.0/pl/" },
   },
   amazon: {
     person: ["アンディ・ジャシー", "Andy Jassy"], role: ["社長・CEO", "President & CEO"],
-    description: ["通販やAWSを展開するテック企業。", "An e-commerce and cloud company."],
+    description: ["通販とクラウドのAWSが主力。", "Online retail and AWS cloud computing."],
     source: "https://ir.aboutamazon.com/officers-and-directors/default.aspx",
     portrait: { url: "https://upload.wikimedia.org/wikipedia/commons/0/07/Andy_Jassy.jpg", source: "https://commons.wikimedia.org/wiki/File:Andy_Jassy.jpg", credit: "Lisi Mezistrano Wolf", license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/" },
   },
   intel: {
     person: ["リップブー・タン", "Lip-Bu Tan"], role: ["CEO", "CEO"],
-    description: ["CPUなどの半導体を設計・製造する企業。", "A chip designer and manufacturer."],
+    description: ["CPUなどの半導体を設計・製造。", "Designing and manufacturing chips."],
     source: "https://newsroom.intel.com/corporate/my-commitment-to-you-and-our-company",
     portrait: { url: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Intel_CEO_Lip-Bu_Tan_%282025%29_%28cropped%29.jpg", source: "https://commons.wikimedia.org/wiki/File:Intel_CEO_Lip-Bu_Tan_(2025)_(cropped).jpg", credit: "United States Department of Commerce", license: "Public domain", licenseUrl: "https://creativecommons.org/publicdomain/mark/1.0/" },
   },
   cisco: {
     person: ["チャック・ロビンス", "Chuck Robbins"], role: ["会長・CEO", "Chair & CEO"],
-    description: ["通信やセキュリティを手がけるテック企業。", "A networking and security company."],
+    description: ["ネットワーク機器とセキュリティを提供。", "Networking equipment and security."],
     source: "https://newsroom.cisco.com/c/r/newsroom/en/us/executives/robbins-chuck.html",
     portrait: { url: "https://upload.wikimedia.org/wikipedia/commons/5/59/Charles_H._Robbins.jpg", source: "https://commons.wikimedia.org/wiki/File:Charles_H._Robbins.jpg", credit: "U.S. Army Sgt. James K. McCann / Chairman of the Joint Chiefs of Staff", license: "CC BY 2.0", licenseUrl: "https://creativecommons.org/licenses/by/2.0/" },
   },
