@@ -44,7 +44,7 @@ export default function ToolShell({ identityReady=true, children }: { identityRe
     <button type="button" aria-pressed={en} onClick={()=>setLocale("en")}>English</button>
    </div></header>
   <nav className={styles.toolMenu} aria-label={en?"RESOLUTE tools":"RESOLUTEのツール"}>
-   {[["/resolute","① 診断","① Rules"],["/resolute/simulation","② シミュレーション","② Simulation"],["/resolute/alerts","③ アラート","③ Alerts"],["/resolute/morning","④ 翌朝","④ Next morning"]].map(([href,ja,eng])=>
+   {[["/resolute","① 診断","① Quiz"],["/resolute/simulation","② シミュレーション","② Simulator"],["/resolute/alerts","③ アラート","③ Alerts"],["/resolute/morning","④ 翌朝","④ Morning note"],["/resolute/thermometer","⑤ 温度計","⑤ Gauge"],["/resolute/tax","⑥ 税金","⑥ Tax"]].map(([href,ja,eng])=>
     <Link key={href} href={href} prefetch={false} aria-current={pathname===href?"page":undefined}>{en?eng:ja}</Link>)}
   </nav>
   {identityReady && access==="allowed" ? children(locale,()=>setAccess("denied")) : <section className={styles.card}>
