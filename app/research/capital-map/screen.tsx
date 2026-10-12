@@ -71,7 +71,9 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
   const chartLimit = selected?.kind === "etf" ? 30 : 10;
   const top = rows.filter(row => row.weight > 0).slice(0, chartLimit);
   const topWeight = top.reduce((sum, row) => sum + row.weight, 0);
-  const slices = [...top.map((row, index) => ({ weight: row.weight, color: sliceColor(index), label: row.ticker || row.name })), ...(topWeight < 100 ? [{ weight: 100 - topWeight, color: "#536072", label: t("その他", "Other") }] : [])];
+  // Suppress floating-point residue when every holding is already represented.
+  const otherWeight = 100 - topWeight > 1e-9 ? 100 - topWeight : 0;
+  const slices = [...top.map((row, index) => ({ weight: row.weight, color: sliceColor(index), label: row.ticker || row.name })), ...(otherWeight > 0 ? [{ weight: otherWeight, color: "#536072", label: t("その他", "Other") }] : [])];
   const highlighted = activeSlice === null ? undefined : slices[activeSlice];
   const left = etfs.find(item => item.id === leftId);
   const right = etfs.find(item => item.id === rightId);
@@ -145,7 +147,7 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
                 </svg>
                 <div aria-live="polite">{highlighted ? <><small>{highlighted.label}</small><strong style={{ color: highlighted.color }}>{percent(highlighted.weight)}</strong><small>{activeSlice !== null && top[activeSlice]?.value > 0 ? money(top[activeSlice].value) : t("構成比", "Portfolio weight")}</small></> : <><small>{hasValues ? t("保有評価額の合計", "TOTAL HOLDINGS VALUE") : t("保有構成比", "PORTFOLIO WEIGHT")}</small><strong title={hasValues ? `$${totalValue.toLocaleString("en-US")}` : undefined}>{hasValues ? money(totalValue) : selected.name}</strong><small>{hasValues ? "USD" : t("保有構成比", "PORTFOLIO WEIGHT")}</small></>}</div>
               </div>
-              {slices.length > top.length && <p className={styles.otherKey}><i />{t("その他", "Other")} <strong>{percent(100 - topWeight)}</strong><span>{t(`上位${chartLimit}銘柄以外`, `Outside the top ${chartLimit}`)}</span></p>}
+              {otherWeight > 0 && <p className={styles.otherKey}><i />{t("その他", "Other")} <strong>{percent(otherWeight)}</strong><span>{t(`上位${chartLimit}銘柄以外`, `Outside the top ${chartLimit}`)}</span></p>}
             </div>
             <div className={styles.tablePanel}>
           <div className={styles.listHead}><h3>{t("全保有銘柄", "All holdings")} <span>{selected.current.holdings.length}</span></h3><div className={styles.listFilters}><input aria-label={t("保有銘柄を絞り込む", "Filter holdings")} placeholder={t("この保有一覧を検索", "Search these holdings")} value={holdingQuery} onChange={event => { setHoldingQuery(event.target.value); setRowLimit(50); }} /></div></div>
@@ -171,6 +173,8 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
             {profile && <p><a href={profile.source} target="_blank" rel="noreferrer">{t("人物・会社紹介の出典", "Profile source")}</a> · {t("役職確認：2026-10-12", "Roles checked: 2026-10-12")}</p>}
             {profile?.portrait && <p>{t("写真", "Photo")}: {profile.portrait.credit} · <a href={profile.portrait.source} target="_blank" rel="noreferrer">Wikimedia Commons</a><a href={profile.portrait.licenseUrl} target="_blank" rel="noreferrer">{profile.portrait.license}</a>{t("（表示枠に合わせてトリミング）", " (cropped to fit)")}</p>}
             {selected.current.source && <><p><a href={selected.current.source.url} target="_blank" rel="noreferrer">{selected.kind === "etf" ? t("運用元の保有明細", "Issuer holdings") : t("SEC保有明細", "SEC holdings")}</a>{selected.kind !== "etf" && <a href={selected.current.source.coverUrl} target="_blank" rel="noreferrer">{t("SEC集計表", "SEC summary")}</a>}</p><p>{t("基準日", "As of")} {selected.current.asOf} · {t("公表日", "Published")} {selected.current.publishedOn}</p></>}
+            {selected.previous?.source && <p><a href={selected.previous.source.url} target="_blank" rel="noreferrer">{t("前期のSEC保有明細", "Prior-quarter SEC holdings")}</a> · {selected.previous.asOf}</p>}
+            {selected.previous?.source && <p>{t("株数の前回比は開示間の保有株数の変化です。株式分割や合併などによる変化も含まれ、売買量そのものではありません。", "Share change compares reported share counts. It can include splits and mergers and does not represent trading volume.")}</p>}
             <p>{selected.kind === "etf" ? t("構成比は運用元の公表値です。現金・先物等を除いた株式の一覧で、比率の再計算はしていません。", "Weights are published by the issuer. The list contains equities, excluding cash and futures; weights are not renormalized.") : t("構成比は公開13Fの報告評価額に対する割合です。同じ銘柄・株式クラスを集計し、オプションは分けて表示します。現金や開示対象外の資産は含みません。", "Weights use the public 13F reported values. Identical securities and share classes are aggregated; options are separate. Cash and assets outside the filing are excluded.")}</p>
           </details>
         </section>}

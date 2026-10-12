@@ -122,3 +122,10 @@ Live retrieval, automatic updates, commercial ETF display permission, institutio
 - Intelの同一CUSIP・同一商品に対する2運用主体のJoby明細は合算して2銘柄表示。CiscoのITOT・IVVも除外せずETF名で収録。13F対象資産であり、非公開株を含む全投資資産ではない。
 - 原本URLとSHA-256をcapital-map-corporate.jsonに記録。ローカル原本からscripts/capital-map/import-corporate.pyで再生成可能。ティッカーはSEC company_tickers.json、ITOT/IVVはiShares公式商品ページ239724/239726で確認。
 - 過去四半期は未収録のため前回差分は未確認表示を維持。
+
+### 2026-10-12 前期比較の追加
+- 8運用会社・5企業の2026-03-31 SEC 13F-HRを追加。2026-06-30との差を株数で比較し、新規・増加・減少・変化なし・保有解消を既存一覧に表示。ETFの過去データは今回の対象外。
+- 13社すべて表紙のCIK・四半期・明細件数・評価額合計と照合。同一CUSIP/商品区分の明細を合算し、stock/put/callは別扱い。株式分割等の調整は行わず、売買量と同一視しない旨を「データについて」に記載。
+- 原本URL・表紙URL・SHA-256をcapital-map-history.jsonに保存。scripts/capital-map/import-history.pyでローカル原本から再生成。履歴は通常ページのPRO認証後のみ読み込み、公開サンプルは変更なし。
+- Intelは前期もJOBY 15,316,315株、MBLY 50,000,000株。評価額の増加だけで買い増し表示にならないことを検証。
+- 全保有銘柄を描画済みでも浮動小数点誤差で出ていた「その他 <0.01%」を抑制。
