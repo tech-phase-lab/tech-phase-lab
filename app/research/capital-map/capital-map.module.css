@@ -109,11 +109,12 @@
 .holders strong { font-size:.95rem; }
 .holders small { display:block; color:var(--muted); font-size:.67rem; margin-top:5px; }
 .holderLink { display:block; border:0; background:none; color:#c5b3ff; font-size:.78rem !important; padding:5px 0; text-align:left; }
-.compare { display:flex; align-items:end; gap:16px; }
+.compare { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:end; gap:16px; }
 .compare label { flex:1; min-width:0; display:grid; gap:7px; font-size:.75rem; color:var(--muted); }
-.compare select { width:100%; max-width:440px; font-size:1rem; }
+.compare select { width:100%; max-width:100%; box-sizing:border-box; text-overflow:ellipsis; font-size:1rem; }
 .compare>span { padding-bottom:12px; color:#bda7ef; }
-.overlapResult { display:grid; grid-template-columns:1fr 2fr; gap:24px; margin:24px 0 0; padding:20px; background:#131d2b; border:1px solid var(--line); border-radius:8px; }
+.overlapResult { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:24px; margin:24px 0 0; padding:20px; background:#131d2b; border:1px solid var(--line); border-radius:8px; }
+.overlapResult>div { min-width:0; overflow-wrap:anywhere; }
 .overlapResult>div>small { color:var(--muted); font-size:.75rem; }
 .overlapResult strong { display:block; color:#b89cff; font-size:2rem; margin-top:8px; font-variant-numeric:tabular-nums; }
 .overlapResult strong small { font-size:.75rem; margin-left:6px; font-weight:400; }
@@ -125,7 +126,7 @@
 .sharedHead>span:not(:first-child),.sharedRows span { text-align:right; }
 .sharedRows>div { padding:12px 0; border-top:1px solid var(--line); align-items:center; }
 .sharedRows strong { font-size:.87rem; }
-.sharedRows small { display:block; font-size:.7rem; color:var(--muted); margin-top:4px; }
+.sharedRows small { display:block; overflow-wrap:anywhere; font-size:.7rem; color:var(--muted); margin-top:4px; }
 .sharedRows span { font-size:.9rem; font-variant-numeric:tabular-nums; }
 .sharedRows i { display:block; height:4px; background:#9875ff; min-width:1px; max-width:100%; margin:6px 0 0 auto; }
 .sharedRows span:last-child i { background:#46b4ff; }
@@ -159,12 +160,11 @@
   .person strong { font-size:.9rem; }
   .person small { font-size:.64rem; }
   .portrait { width:48px; height:48px; }
-  .metrics { padding:6px 0; margin-bottom:14px; grid-template-columns:1.3fr .8fr 1fr; }
+  .metrics { padding:6px 0; margin-bottom:14px; grid-template-columns:1.5fr .7fr 1fr; }
   .metrics>div { padding:0 8px; }
   .metrics small { font-size:.6rem; }
   .metrics strong { font-size:1rem; }
   .metrics strong span { font-size:.57rem; margin-left:3px; }
-  .metrics>div:first-child strong { font-size:clamp(.68rem,2.4vw,.85rem); }
   .metrics>div:first-child strong span { display:inline; margin-left:3px; }
   .ring { width:min(100%,360px); }
   .ring strong { font-size:1.65rem; }
