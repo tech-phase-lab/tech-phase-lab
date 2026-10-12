@@ -2463,12 +2463,22 @@ class IntakeTests(unittest.TestCase):
         self.assertIn("new product for AI networking", detail["inlineText"])
         self.assertNotIn("<p>", detail["inlineText"])
 
-    def test_microsoft_pages_whose_title_differs_from_the_feed_title_are_not_admitted(self):
-        # Oct 12: developer.microsoft.com and news.xbox.com pages carry a different page title than the
-        # official feed's headline, so the exact-identity check rejects them; they stay out of the rules.
-        self.assertIsNone(m.article_url("https://news.xbox.com/en-us/2026/10/08/introducing-xp/", "MSFT"))
-        self.assertIsNone(m.article_url("https://developer.microsoft.com/blog/introducing-the-agent-experience/", "MSFT"))
+    def test_microsoft_developer_and_xbox_news_are_accepted_but_social_posts_are_not(self):
+        # Oct 12: these hosts stay approved because stored rows use them; removing them broke start-up.
+        self.assertTrue(m.article_url("https://news.xbox.com/en-us/2026/10/08/introducing-xp/", "MSFT"))
+        self.assertTrue(m.article_url("https://developer.microsoft.com/blog/introducing-the-agent-experience/", "MSFT"))
         self.assertIsNone(m.article_url("https://www.linkedin.com/feed/update/urn:li:activity:1/", "MSFT"))
+
+    def test_snapshot_leaves_out_rows_whose_host_is_no_longer_approved_instead_of_raising(self):
+        stale = "https://old-host.example.com/news/1"
+        self.db.execute("INSERT INTO sources(url,ticker,discovered_at,title) VALUES(?,?,?,?)",
+                        (stale, "MSFT", "2026-10-12T05:00:00+00:00", "Old"))
+        self.db.execute("INSERT INTO sources(url,ticker,discovered_at,title) VALUES(?,?,?,?)",
+                        ("https://news.microsoft.com/source/2026/10/08/example/", "MSFT", "2026-10-12T05:00:00+00:00", "Current"))
+        self.db.commit()
+        urls = [row["url"] for row in m.snapshot(self.db)["sources"]]
+        self.assertNotIn(stale, urls)
+        self.assertIn("https://news.microsoft.com/source/2026/10/08/example/", urls)
 
     def test_vertiv_investor_news_fallback_is_scoped_to_release_details(self):
         sources = m.monitoring_sources("VRT")
