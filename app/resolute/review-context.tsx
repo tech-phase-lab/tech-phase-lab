@@ -15,13 +15,11 @@ export const ReviewContext = createContext<ReviewWorkspace | null>(null);
 export const useReview = () => useContext(ReviewContext);
 export function usePlanClient() { return useReview()?.requestPlan ?? requestPlan; }
 export function useNotificationClient() { return useReview()?.requestNotificationSettings ?? requestNotificationSettings; }
-export function ReviewLink({ href, onClick, ...props }: ComponentProps<typeof Link>) {
+// Review navigation is an in-page action. It must never invoke Next routing or Clerk's hash router.
+export function ReviewLink({ href, onClick, ...props }: Omit<ComponentProps<typeof Link>,"onClick"> & {onClick?:()=>void}) {
  const review = useReview();
  const internal = typeof href === "string" && reviewPaths.includes(href as ReviewPath);
  if (!review || !internal) return <Link {...props} href={href} onClick={onClick}/>;
- return <Link {...props} href={`/resolute/review#${href === "/resolute" ? "diagnosis" : String(href).split("/").pop()}`} onClick={event => {
-  onClick?.(event);
-  if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
-  event.preventDefault(); review.navigate(href as ReviewPath);
- }}/>;
+ return <button type="button" className={props.className} aria-current={props["aria-current"]}
+  aria-label={props["aria-label"]} onClick={()=>{onClick?.();review.navigate(href as ReviewPath);}}>{props.children}</button>;
 }

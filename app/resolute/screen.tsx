@@ -12,7 +12,7 @@ import type { PlanSnapshot } from "@/lib/resolute/plan-data";
 const messages = {
  ja: { title:"あなただけの投資ルールを、30の質問でつくる。", intro:"暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。",
  closingFirst:"マイルールを定めれば", closingLast:"暴落も上昇も怖くない",
- start:"① ルール診断を始める", redo:"回答を見直す", next:"次へ", back:"戻る", result:"結果を見る", rules:"あなたの投資ルール", advice:"このルールを使うために",
+ start:"はじめる", redo:"回答を見直す", next:"次へ", back:"戻る", result:"結果を見る", rules:"あなたの投資ルール", advice:"このルールを使うために",
  save:"このルールを保存する", saving:"保存しています…", saved:"ルールを保存しました。", simulation:"② シミュレーションへ進む", edit:"回答に戻る",
  loading:"保存済みの計画を確認しています…", unavailable:"保存サービスを利用できません。診断は続けられますが、保存はまだできません。",
  uncertain:"保存を確認できませんでした。再送する前に、保存済みの内容を読み込んで確認してください。",
@@ -25,7 +25,7 @@ const messages = {
  unsupported:"保存済みの計画はUSDです。この診断は日本円用のため、上書きできません。", check:"確認できた保存済みの計画だけをシミュレーションに使います。" },
  en: { title:"Build your own investing rules in 30 questions.", intro:"A kit to help you return to your own rules, through sell-offs and rallies.",
  closingFirst:"With rules of your own,", closingLast:"crashes and rallies lose their grip.",
- start:"① Build my rules", redo:"Review my answers", next:"Next", back:"Back", result:"See my results", rules:"Your investing rules", advice:"Put your rules to work",
+ start:"Start", redo:"Review my answers", next:"Next", back:"Back", result:"See my results", rules:"Your investing rules", advice:"Put your rules to work",
  save:"Save these rules", saving:"Saving…", saved:"Your rules are saved.", simulation:"② Continue to simulation", edit:"Back to my answers",
  loading:"Checking your saved plan…", unavailable:"Saving is unavailable right now. You can finish the questions, but your rules can’t be saved yet.",
  uncertain:"We couldn’t confirm the save. Load your saved plan to check before trying again.",
@@ -93,9 +93,11 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const bodyMessage=<>{loading?<p role="status" className={styles.status}>{c.loading}</p>:null}
   {message?<p role="status" className={message==="saved" || message==="existing"?styles.status:styles.error}>{c[message]}</p>:null}</>;
  const reloadButton=<button type="button" className={styles.secondary} disabled={loading||busy} onClick={()=>void reload()}>{c.reload}</button>;
- if(mode==="intro") return <section className={styles.card}>
-  <span className={styles.eyebrow}>01 / YOUR RULES</span><h1>{c.title}</h1><p className={styles.muted}>{c.intro}</p>
-  <p className={styles.muted}>{c.currency}</p>{bodyMessage}
+ if(mode==="intro") return <section className={`${styles.card} ${styles.introCard}`}>
+  <span className={styles.eyebrow}>RULE DIAGNOSIS</span>
+  <h1 className={styles.introTitle}>{en ? <><span>Build your own investing rules</span><span>in 30 questions.</span></> : <><span>あなただけの投資ルールを、</span><span>30の質問でつくる。</span></>}</h1>
+  <p className={styles.introDescription}>{en ? <>Build clearer rules with each answer.<br/>Takes about five minutes.</> : <>答えるほど、ルールは鮮明になります。<br/>所要時間は5分ほどです。</>}</p>
+  {bodyMessage}
   <button type="button" className={styles.primary} disabled={loading||locked} onClick={()=>{setMode("questions");setSaved(false);}}>{snapshot?.plan?c.redo:c.start}</button>
   {snapshot?.plan?<Link className={styles.secondary} href="/resolute/simulation" prefetch={false}>{c.simulation}</Link>:null}
   {message?reloadButton:null}
@@ -104,6 +106,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   const text=questionCopy(q,locale), answer=draft.answers[q.id], option=q.o.find(o=>o.id===answer),limits=numericLimits(q,draft.answers);
   return <div className={styles.section}>
    <div className={styles.progress}><div className={styles.meta}><span>{sections[q.s][en?1:0]}</span><span>{index+1} / {visible.length}</span></div><progress value={index+1} max={visible.length} aria-label={en?"Progress":"進み具合"}/></div>
+   {index===0 ? <p className={styles.muted}>{c.currency}</p> : null}
    <section className={styles.card} aria-labelledby="question-heading">
     <span className={styles.eyebrow}>{q.id.toUpperCase()}</span><h1 id="question-heading" ref={heading} tabIndex={-1}>{text.text}</h1>
     {text.note?<p className={styles.muted}>{text.note}</p>:null}
@@ -130,7 +133,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const input=draftToInput(draft),result=localizeDiagnosis(diagnose(input),input,locale);
  return <div className={styles.section}>
   <section className={`${styles.card} ${styles.hero}`}><span className={styles.eyebrow}>{en?"YOUR APPROACH":"あなたのタイプ"}</span>
-   <h1 className={styles.type} ref={heading} tabIndex={-1}>{result.typeName}</h1><hr className={styles.divider}/><p>{result.typeDetail}</p></section>
+   <h1 className={styles.type} ref={heading} tabIndex={-1}>{result.typeName}</h1><hr className={`${styles.divider} ${styles.typeDivider}`}/><p className={styles.typeDetail}>{result.typeDetail}</p></section>
   <section className={styles.card}><h2>{c.rules}</h2><dl className={styles.ruleCards}>{result.rows.map(row=><div className={styles.ruleCard} key={row.item}><dt>{row.item}</dt><dd>{row.rule}</dd><dd className={styles.muted}>{row.meaning}</dd></div>)}</dl></section>
   <section className={styles.card}><h2>{c.advice}</h2><ol className={styles.advice}>{result.advice.map(a=><li key={a.id}>{a.text}</li>)}</ol></section>
   <p className={styles.closing}><span>{c.closingFirst}</span><span>{c.closingLast}</span></p>
