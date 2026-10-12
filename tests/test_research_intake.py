@@ -2409,6 +2409,27 @@ class IntakeTests(unittest.TestCase):
         links = m.news_json_links(body, "VRT", source)
         self.assertEqual(links, {"https://www.vertiv.com/en-us/about/news-and-events/corporate-news/2026/official-release/": "Vertiv AI release"})
 
+    def test_asml_polls_mfn_first_and_reads_nested_json_feed_fields(self):
+        # Owner, Oct 12: asml.com refuses the server; MFN carries ASML's own releases.
+        source = m.monitoring_sources("ASML", automatic=True)[0]
+        self.assertEqual(source["route"], "fallback")
+        self.assertTrue(source["url"].startswith("https://mfn.se/all/a/asml-holding.json"))
+        body = json.dumps({"items": [
+            {"url": "https://mfn.se/one/a/asml-holding/asml-reports-q3-2026-results-ab12cd34",
+             "content": {"title": "ASML reports Q3 2026 results", "publish_date": "2026-10-14T05:00:00Z"}},
+            {"url": "https://mfn.se/one/a/other-company/unrelated-release",
+             "content": {"title": "Other company", "publish_date": "2026-10-14T05:00:00Z"}},
+            {"url": "https://evil.test/one/a/asml-holding/x", "content": {"title": "Outside"}},
+        ]}).encode()
+        self.assertEqual(m.news_json_links(body, "ASML", source), {
+            "https://mfn.se/one/a/asml-holding/asml-reports-q3-2026-results-ab12cd34":
+                {"title": "ASML reports Q3 2026 results", "publishedOn": "2026-10-14"}})
+
+    def test_microsoft_developer_and_xbox_news_are_accepted_but_social_posts_are_not(self):
+        self.assertTrue(m.article_url("https://news.xbox.com/en-us/2026/10/08/introducing-xp/", "MSFT"))
+        self.assertTrue(m.article_url("https://developer.microsoft.com/blog/introducing-the-agent-experience/", "MSFT"))
+        self.assertIsNone(m.article_url("https://www.linkedin.com/feed/update/urn:li:activity:1/", "MSFT"))
+
     def test_vertiv_investor_news_fallback_is_scoped_to_release_details(self):
         sources = m.monitoring_sources("VRT")
         self.assertEqual(sources[1]["route"], "fallback")

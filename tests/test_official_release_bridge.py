@@ -236,5 +236,19 @@ class VertivRetainedPublicationTests(unittest.TestCase):
         self.assertIsNone(bridge.vertiv_retained_publication_date('NBIS', VRT_URL, VRT_BODY))
 
 
+
+class SecMonthlyRevenueTitleTests(unittest.TestCase):
+    """Owner, Oct 12: TSMC's monthly revenue 6-K is the filing document itself."""
+
+    def test_monthly_revenue_heading_of_a_6k_document_is_its_headline(self):
+        text = ('FORM 6-K\nTaiwan Semiconductor Manufacturing Company Limited\nDate: October 8, 2026\n'
+                'TSMC September 2026 Revenue Report\nHSINCHU, Taiwan - TSMC today announced its net revenue.')
+        self.assertEqual(bridge.sec_results_title('direct', text), 'TSMC September 2026 Revenue Report')
+
+    def test_other_sec_documents_never_become_headlines(self):
+        self.assertIsNone(bridge.sec_results_title('direct', 'Item 2.02 Results of Operations\nThird quarter results'))
+        self.assertIsNone(bridge.sec_results_title('direct', 'Discussion of the September 2026 Revenue Report figures'))
+        self.assertIsNone(bridge.sec_results_title('direct', None))
+
 if __name__ == '__main__':
     unittest.main()
