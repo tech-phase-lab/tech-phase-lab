@@ -28,3 +28,8 @@ Claude提供の `resolute-logic.zip` 最新版（README: 2026-10-10、SHA-256 `6
 `npm test` に添付の診断テスト23件・シミュレーション12件と統合テストを組み込んだ。金額計算の境界・null・小数、日英選択肢とAPI契約、分岐、未確定ライン、保存失敗・競合を検証する。
 
 本番の計画APIは削除履歴の独立保存・復元接続等の条件を満たすまで503のまま。画面実装は本番の保存完了を意味しない。今回、実DBのmigration・writer・本番有効化・Railway設定・メール送信は行わない。添付の税金・アラート・メールモジュールは今回の組込対象外で、未検証を維持する。
+
+
+## 2026-10-12 — 診断の英語説明と締めのコピー修正
+
+ユーザー承認のClaude案を反映。許容できる下落が未設定の説明を「Choose how much of a drop would feel painful, and the amount will appear here.」へ差し替えた。結果画面のアドバイスの下、免責と保存操作の前に、日英それぞれ2行の締めを追加。日本語は「マイルールを定めれば / 暴落も上昇も怖くない」、英語は「With rules of your own, / crashes and rallies lose their grip.」。計算・権限・保存APIの動作変更はない。

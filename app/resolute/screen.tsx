@@ -11,6 +11,7 @@ import { requestPlan, PlanClientError } from "@/lib/resolute/plan-client";
 import type { PlanSnapshot } from "@/lib/resolute/plan-data";
 const messages = {
  ja: { title:"あなただけの投資ルールを、30の質問でつくる。", intro:"暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。",
+ closingFirst:"マイルールを定めれば", closingLast:"暴落も上昇も怖くない",
  start:"① ルール診断を始める", redo:"回答を見直す", next:"次へ", back:"戻る", result:"結果を見る", rules:"あなたの投資ルール", advice:"このルールを使うために",
  save:"このルールを保存する", saving:"保存しています…", saved:"ルールを保存しました。", simulation:"② シミュレーションへ進む", edit:"回答に戻る",
  loading:"保存済みの計画を確認しています…", unavailable:"保存サービスを利用できません。診断は続けられますが、保存はまだできません。",
@@ -23,6 +24,7 @@ const messages = {
  later:"まだ決めていない買い増しラインは空のまま保存します。", rate:"アクセスが集中しています。1分ほどおいてから保存内容を確認してください。",
  unsupported:"保存済みの計画はUSDです。この診断は日本円用のため、上書きできません。", check:"確認できた保存済みの計画だけをシミュレーションに使います。" },
  en: { title:"Build your own investing rules in 30 questions.", intro:"A kit to help you return to your own rules, through sell-offs and rallies.",
+ closingFirst:"With rules of your own,", closingLast:"crashes and rallies lose their grip.",
  start:"① Build my rules", redo:"Review my answers", next:"Next", back:"Back", result:"See my results", rules:"Your investing rules", advice:"Put your rules to work",
  save:"Save these rules", saving:"Saving…", saved:"Your rules are saved.", simulation:"② Continue to simulation", edit:"Back to my answers",
  loading:"Checking your saved plan…", unavailable:"Saving is unavailable right now. You can finish the questions, but your rules can’t be saved yet.",
@@ -130,6 +132,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
    <h1 className={styles.type} ref={heading} tabIndex={-1}>{result.typeName}</h1><hr className={styles.divider}/><p>{result.typeDetail}</p></section>
   <section className={styles.card}><h2>{c.rules}</h2><dl className={styles.ruleCards}>{result.rows.map(row=><div className={styles.ruleCard} key={row.item}><dt>{row.item}</dt><dd>{row.rule}</dd><dd className={styles.muted}>{row.meaning}</dd></div>)}</dl></section>
   <section className={styles.card}><h2>{c.advice}</h2><ol className={styles.advice}>{result.advice.map(a=><li key={a.id}>{a.text}</li>)}</ol></section>
+  <p className={styles.closing}><span>{c.closingFirst}</span><span>{c.closingLast}</span></p>
   <section className={styles.card}><p className={styles.muted}>{result.disclaimer}</p>
    {!result.buyLines.length&&draft.answers.q24!=="none"?<p className={styles.muted}>{c.later}</p>:null}
    {bodyMessage}<button type="button" className={styles.primary} disabled={busy||loading||locked||!snapshot||saved} onClick={()=>void save()}>{busy?c.saving:c.save}</button>

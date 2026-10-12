@@ -1364,3 +1364,8 @@ q28/q29の自由記述はanswersへ入れず、noBuyConditions/haltConditionsへ
 
 
 公開直前に別担当の8fa05e58ffd4531520b6e6d5af7fd3b5d3afc388が追加されたため、同コミットをfast-forwardで取り込んで再検証した。別担当のニュース修正6ファイルはそのまま保持し、今回の差分には含めない。統合後の最終結果はNode 749/749、Python 2,404/2,404（125.556秒、RESEARCH_TEST_NOW=2026-10-08T06:00:30+00:00）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、差分チェック成功。
+
+
+## 2026-10-12 — 診断の英語説明と締めのコピー修正
+
+ユーザー承認のClaude案を反映。許容できる下落が未設定の説明を「Choose how much of a drop would feel painful, and the amount will appear here.」へ差し替えた。結果画面のアドバイスの下、免責と保存操作の前に、日英それぞれ2行の締めを追加。日本語は「マイルールを定めれば / 暴落も上昇も怖くない」、英語は「With rules of your own, / crashes and rallies lose their grip.」。計算・権限・保存APIの動作変更はない。

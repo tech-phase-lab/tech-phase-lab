@@ -8,3 +8,5 @@
 @media(max-width:420px){.page{padding:20px 12px 40px}.card{padding:24px 18px}.nav{gap:12px}.primary,.secondary{padding:12px 18px}.top{gap:8px}.brand{font-size:13px}.languages{gap:3px}}
 
 .ruleCard dd.muted{font-size:14px;font-weight:400;line-height:1.8;color:var(--sub);margin-top:8px}
+
+.closing{margin:8px 0;padding:20px 0;text-align:center;color:var(--gold2);font-family:"Yu Mincho",Georgia,serif;font-size:clamp(18px,4vw,25px);line-height:1.8;text-wrap:balance}.closing span{display:block}
