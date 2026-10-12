@@ -156,3 +156,7 @@ Live retrieval, automatic updates, commercial ETF display permission, institutio
 - Added bilingual CEO names, roles and face photographs for all five corporate portfolios: NVIDIA, Google, Amazon, Intel and Cisco. Current roles were checked against each company's official biography or leadership page; those links and the photo credits/licenses appear in the existing source details.
 - Corporate selector/display name is now `Google`. The portfolio identifier remains `alphabet-13f`; its short description identifies Alphabet as the filing parent. Securities and disclosure holdings are unchanged.
 - Reuses the existing compact portrait/profile layout and image-error fallback. Original portrait compositions were visually checked; no generated likenesses are used.
+
+### 2026-10-13: Compact profile descriptions
+
+- Shortened all 13 manager/corporate descriptions in Japanese and English to single-line copy at ordinary mobile widths. Uses 「テック企業」 where applicable; no font reduction or ellipsis. Disclosure sources still identify the filing entity.
