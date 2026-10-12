@@ -164,5 +164,5 @@ Live retrieval, automatic updates, commercial ETF display permission, institutio
 ### 2026-10-13: Distinct corporate copy
 
 - Reworded each of the five corporate descriptions around its business, avoiding repeated 「テック企業」 endings while keeping short Japanese/English copy.
-- Display name is now `Google (Alphabet)` at the user's request. The `alphabet-13f` identifier and holdings are unchanged.
+- Display name remains `Google`. Alphabet is mentioned in the description: `Alphabet傘下で検索やYouTube、クラウドを展開。` The `alphabet-13f` identifier and holdings are unchanged.
 - Next priority: scheduled disclosure/ETF data refresh. Current import scripts consume reviewed local source files; no capital-map scheduled refresh workflow is present.

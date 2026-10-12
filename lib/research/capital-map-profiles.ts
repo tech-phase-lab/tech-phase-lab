@@ -13,7 +13,7 @@ export const capitalProfiles: Record<string, CapitalProfile> = {
   },
   alphabet: {
     person: ["スンダー・ピチャイ", "Sundar Pichai"], role: ["CEO", "CEO"],
-    description: ["検索やYouTube、クラウドを展開。", "Search, YouTube and cloud services."],
+    description: ["Alphabet傘下で検索やYouTube、クラウドを展開。", "Part of Alphabet, offering search, YouTube and cloud services."],
     source: "https://blog.google/authors/sundar-pichai/",
     portrait: { url: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Mateusz_Morawiecki_spotka%C5%82_si%C4%99_z_CEO_Google_Sundar_Pichai_w_KPRM_%282022.03.29%29_01_%28cropped%29.jpg", source: "https://commons.wikimedia.org/wiki/File:Mateusz_Morawiecki_spotka%C5%82_si%C4%99_z_CEO_Google_Sundar_Pichai_w_KPRM_(2022.03.29)_01_(cropped).jpg", credit: "Krystian Maj", license: "CC BY 3.0 PL", licenseUrl: "https://creativecommons.org/licenses/by/3.0/pl/" },
   },
