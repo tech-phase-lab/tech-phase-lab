@@ -15,10 +15,9 @@ import styles from "./capital-map.module.css";
 const emptyPortfolios: CapitalPortfolio[] = [];
 const colors = ["#9875ff", "#ffb52e", "#46b4ff", "#ef69b6", "#28c7bc", "#ff8548", "#8596ff", "#9bce50", "#e6cf70", "#63c6de"];
 const sliceColor = (index: number) => colors[index] ?? `hsl(${(index * 137.508) % 360} 65% 65%)`;
-const fundNames: Record<string, [string, string]> = {
-  SPY: ["S&P500（米国株）", "S&P 500"], ACWI: ["全世界株式", "All-country world stocks"],
-  SMH: ["半導体株", "Semiconductor stocks"], SOXX: ["半導体株", "Semiconductor stocks"],
-  XLK: ["米国テクノロジー株", "US technology stocks"], XLF: ["米国金融株", "US financial stocks"],
+const fundNames: Record<string, string> = {
+  SPY: "S&P500", ACWI: "全世界株式", SMH: "SMH（半導体）", SOXX: "SOXX（半導体）",
+  XLK: "XLK（テクノロジー）", XLF: "XLF（金融）",
 };
 const stockAliases: Record<string, string> = { "エヌビディア": "NVDA", "アップル": "AAPL", "マイクロソフト": "MSFT", "アマゾン": "AMZN", "グーグル": "GOOGL", "アルファベット": "GOOGL", "マイクロン": "MU", "ネビウス": "NBIS", "テスラ": "TSLA", "ブロードコム": "AVGO" };
 const percent = (value: number) => value > 0 && value < .01 ? "<0.01%" : `${value.toFixed(2)}%`;
@@ -46,7 +45,7 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
   const etfs = portfolios.filter(item => item.kind === "etf");
   const [leftId, setLeftId] = useState(etfs[0]?.id ?? "");
   const [rightId, setRightId] = useState(etfs.find(item => item.name === "ACWI")?.id ?? etfs[1]?.id ?? "");
-  const fundLabel = (item: CapitalPortfolio) => fundNames[item.name] ? `${t(...fundNames[item.name])} · ${item.name}` : item.name;
+  const fundLabel = (item: CapitalPortfolio) => lang === "ja" ? fundNames[item.name] ?? item.name : item.name;
   const isPortfolio = view !== "lookup" && view !== "overlap";
   const visiblePortfolios = portfolios.filter(item => item.kind === view);
   const selected = visiblePortfolios.find(item => item.id === selectedId) ?? visiblePortfolios[0];
