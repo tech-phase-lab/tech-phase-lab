@@ -2425,6 +2425,16 @@ class IntakeTests(unittest.TestCase):
             "https://mfn.se/one/a/asml-holding/asml-reports-q3-2026-results-ab12cd34":
                 {"title": "ASML reports Q3 2026 results", "publishedOn": "2026-10-14"}})
 
+    def test_credo_release_body_is_read_from_its_release_file_not_the_blocked_page(self):
+        # Owner, Oct 12: investors.credosemi.com refuses the server; the same release is a PDF on Credo's document host.
+        page = "https://investors.credosemi.com/news-events/news/news-details/2026/Credo-Completes-Acquisition-of-DustPhotonics/default.aspx"
+        self.assertEqual(m.article_url(page, "CRDO"), page)
+        self.assertEqual(m.body_mirror_url(page, "CRDO"),
+                         "https://s205.q4cdn.com/511065572/files/doc_news/Credo-Completes-Acquisition-of-DustPhotonics-2026.pdf")
+        for other in ("https://credosemi.com/news/", "https://investors.credosemi.com/news-events/news/news-details/2026/a/b/default.aspx"):
+            self.assertIsNone(m.body_mirror_url(other, "CRDO"))
+        self.assertIsNone(m.body_mirror_url(page, "NVDA"))
+
     def test_microsoft_developer_and_xbox_news_are_accepted_but_social_posts_are_not(self):
         self.assertTrue(m.article_url("https://news.xbox.com/en-us/2026/10/08/introducing-xp/", "MSFT"))
         self.assertTrue(m.article_url("https://developer.microsoft.com/blog/introducing-the-agent-experience/", "MSFT"))

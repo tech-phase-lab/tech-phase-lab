@@ -537,6 +537,7 @@
       "credosemi.com",
       "data.sec.gov",
       "investors.credosemi.com",
+      "s205.q4cdn.com",
       "www.sec.gov"
     ],
     "articleRules": [
@@ -564,6 +565,13 @@
         "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001807794&type=8-K&owner=exclude&count=40&output=atom",
         "format": "rss",
         "label": "SEC 8-K"
+      }
+    ],
+    "bodyMirrors": [
+      {
+        "host": "investors.credosemi.com",
+        "pattern": "/news-events/news/news-details/(\\d{4})/([^/]+)/default\\.aspx",
+        "url": "https://s205.q4cdn.com/511065572/files/doc_news/{1}-{0}.pdf"
       }
     ]
   },
