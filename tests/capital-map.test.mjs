@@ -129,3 +129,52 @@ test('ACWI preserves full global holdings and never matches foreign listings to 
   assert.ok(!etfOverlap(data.find(p => p.name === 'SMH').current, acwi.current).rows.some(r => r.ticker === 'TSM'));
   assert.match(acwi.current.source.sha256, /^[a-f0-9]{64}$/);
 });
+
+test('additional corporate reports reconcile full SEC totals and aggregate duplicate managers', () => {
+  const data = JSON.parse(readFileSync(new URL('../lib/research/capital-map-corporate.json', import.meta.url), 'utf8'));
+  assert.deepEqual(data.map(p => p.name), ['Amazon', 'Intel', 'Cisco']);
+  for (const p of data) {
+    assert.equal(p.kind, 'corporate');
+    assert.equal(p.current.asOf, '2026-06-30');
+    assert.equal(p.current.complete, true);
+    assert.equal(p.current.holdings.reduce((sum, h) => sum + h.value, 0), p.current.source.totalValue);
+    assert.equal(new Set(p.current.holdings.map(h => `${h.securityId}:${h.instrument}`)).size, p.current.holdings.length);
+    assert.ok(capitalRows(p.current).every(h => h.change === 'unknown'));
+  }
+  const intel = data.find(p => p.name === 'Intel');
+  assert.equal(intel.current.source.entryCount, 3);
+  assert.equal(intel.current.holdings.length, 2);
+  assert.equal(intel.current.holdings.find(h => h.ticker === 'JOBY').value, 136621529);
+  const cisco = data.find(p => p.name === 'Cisco');
+  assert.equal(cisco.current.holdings.find(h => h.ticker === 'ITOT').securityId, '464287150');
+  assert.equal(cisco.current.holdings.find(h => h.ticker === 'IVV').securityId, '464287200');
+  assert.equal(data.find(p => p.name === 'Amazon').current.holdings.find(h => h.ticker === 'RIVN').value, 2747612520);
+});
+
+test('prior-quarter reports reconcile and cover all managers and corporate portfolios', () => {
+  const load = name => JSON.parse(readFileSync(new URL(`../lib/research/${name}.json`, import.meta.url), 'utf8'));
+  const portfolios = [...load('capital-map-disclosures'), ...load('capital-map-corporate')].filter(p => p.kind !== 'etf');
+  const history = load('capital-map-history');
+  assert.deepEqual(Object.keys(history).sort(), portfolios.map(p => p.id).sort());
+  for (const p of portfolios) {
+    const prior = history[p.id];
+    assert.equal(prior.asOf, '2026-03-31');
+    assert.equal(prior.complete, true);
+    assert.ok(prior.publishedOn < p.current.publishedOn);
+    assert.notEqual(prior.id, p.current.id);
+    assert.equal(prior.holdings.reduce((sum, h) => sum + h.value, 0), prior.source.totalValue);
+    assert.equal(new Set(prior.holdings.map(h => `${h.securityId}:${h.instrument}`)).size, prior.holdings.length);
+    assert.ok(prior.source.entryCount >= prior.holdings.length);
+    assert.match(prior.source.sha256, /^[a-f0-9]{64}$/);
+    assert.equal(Number(prior.source.url.split('/')[6]), Number(p.current.source.url.split('/')[6]));
+  }
+  const intel = portfolios.find(p => p.id === 'intel-13f');
+  assert.equal(history[intel.id].source.entryCount, 3);
+  assert.equal(history[intel.id].holdings.find(h => h.ticker === 'JOBY').shares, 15316315);
+  assert.ok(capitalRows(intel.current, history[intel.id]).every(h => h.change === 'unchanged' && h.shareChangePercent === 0));
+  const amazon = portfolios.find(p => p.id === 'amazon-13f');
+  const rows = capitalRows(amazon.current, history[amazon.id]);
+  assert.equal(rows.find(h => h.ticker === 'RIVN').change, 'unchanged');
+  assert.equal(rows.find(h => h.ticker === 'ALGT').change, 'new');
+  assert.equal(rows.find(h => h.securityId === '63909J108').change, 'exited');
+});
