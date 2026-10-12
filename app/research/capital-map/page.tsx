@@ -7,7 +7,10 @@ export const metadata = { title: "資本マップ | CAPITAL MAP | Tech Phase Res
 export default async function Page() {
   const member = await getMembership().catch(() => null);
   if (!member || comparisonAccess(member) !== 200) return <CapitalMap />;
-  const { default: disclosures } = await import("@/lib/research/capital-map-disclosures.json");
-  const { default: acwi } = await import("@/lib/research/capital-map-acwi.json");
-  return <CapitalMap portfolios={[...disclosures, acwi] as CapitalPortfolio[]} mode="reports" />;
+  const [{ default: disclosures }, { default: acwi }, { default: corporate }] = await Promise.all([
+    import("@/lib/research/capital-map-disclosures.json"),
+    import("@/lib/research/capital-map-acwi.json"),
+    import("@/lib/research/capital-map-corporate.json"),
+  ]);
+  return <CapitalMap portfolios={[...disclosures, ...corporate, acwi] as CapitalPortfolio[]} mode="reports" />;
 }

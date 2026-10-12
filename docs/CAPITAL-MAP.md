@@ -115,3 +115,10 @@ Live retrieval, automatic updates, commercial ETF display permission, institutio
 - 検索見出しを「この銘柄を保有する運用会社・ETFを探す」に変更。
 - 写真がないCoatue、Tiger Global、Viking、Fundsmithに色分けした会社イニシャルの装飾マークを追加。公式ロゴや人物の似顔絵ではない独自のUI装飾。
 - 写真読込失敗時もイニシャルを表示して、人物紹介の配置を維持。
+
+### 2026-10-12 企業の追加
+- Amazon、Intel、Ciscoを追加し、企業カテゴリを2社から5社に拡充。通常ページの既存PRO認証後に読み込み、サンプルの架空データは維持。
+- 3社とも2026-06-30のSEC 13F-HR全文を表紙の件数・評価額合計と照合。Amazonは6明細/$4,423,057,466、Intelは3明細/$620,621,529、Ciscoは6明細/$405,215,728。
+- Intelの同一CUSIP・同一商品に対する2運用主体のJoby明細は合算して2銘柄表示。CiscoのITOT・IVVも除外せずETF名で収録。13F対象資産であり、非公開株を含む全投資資産ではない。
+- 原本URLとSHA-256をcapital-map-corporate.jsonに記録。ローカル原本からscripts/capital-map/import-corporate.pyで再生成可能。ティッカーはSEC company_tickers.json、ITOT/IVVはiShares公式商品ページ239724/239726で確認。
+- 過去四半期は未収録のため前回差分は未確認表示を維持。

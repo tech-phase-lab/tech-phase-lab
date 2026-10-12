@@ -1,0 +1,200 @@
+[
+  {
+    "id": "amazon-13f",
+    "kind": "corporate",
+    "name": "Amazon",
+    "subtitle": "SEC 13F · 2026 Q2",
+    "current": {
+      "id": "amazon-000110465926092052",
+      "asOf": "2026-06-30",
+      "publishedOn": "2026-08-06",
+      "complete": true,
+      "holdings": [
+        {
+          "securityId": "76954A103",
+          "ticker": "RIVN",
+          "name": "RIVIAN AUTOMOTIVE INC",
+          "shareClass": "COM CL A",
+          "instrument": "stock",
+          "shares": 158363834,
+          "value": 2747612520
+        },
+        {
+          "securityId": "98386P102",
+          "ticker": "XE",
+          "name": "X-ENERGY INC",
+          "shareClass": "COM CL A",
+          "instrument": "stock",
+          "shares": 65836948,
+          "value": 1208766365
+        },
+        {
+          "securityId": "086921103",
+          "ticker": "BETA",
+          "name": "BETA TECHNOLOGIES INC",
+          "shareClass": "COM SHS CL A",
+          "instrument": "stock",
+          "shares": 11753896,
+          "value": 196877758
+        },
+        {
+          "securityId": "04626A103",
+          "ticker": "ALAB",
+          "name": "ASTERA LABS INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 277777,
+          "value": 134171847
+        },
+        {
+          "securityId": "573874104",
+          "ticker": "MRVL",
+          "name": "MARVELL TECHNOLOGY INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 396352,
+          "value": 118069297
+        },
+        {
+          "securityId": "01748X102",
+          "ticker": "ALGT",
+          "name": "ALLEGIANT TRAVEL CO",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 149317,
+          "value": 17559679
+        }
+      ],
+      "source": {
+        "type": "13f",
+        "url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926092052/infotable.xml",
+        "coverUrl": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926092052/primary_doc.xml",
+        "accession": "000110465926092052",
+        "checkedOn": "2026-10-12",
+        "entryCount": 6,
+        "totalValue": 4423057466,
+        "sha256": "a5a59e9b60c389535dc1250a2cc808cc578c6f798f84ab9dbc65b46a014935da"
+      }
+    }
+  },
+  {
+    "id": "intel-13f",
+    "kind": "corporate",
+    "name": "Intel",
+    "subtitle": "SEC 13F · 2026 Q2",
+    "current": {
+      "id": "intel-000005086326000176",
+      "asOf": "2026-06-30",
+      "publishedOn": "2026-08-14",
+      "complete": true,
+      "holdings": [
+        {
+          "securityId": "60741F104",
+          "ticker": "MBLY",
+          "name": "Mobileye Global Inc.",
+          "shareClass": "Common - Class A",
+          "instrument": "stock",
+          "shares": 50000000,
+          "value": 484000000
+        },
+        {
+          "securityId": "G65163100",
+          "ticker": "JOBY",
+          "name": "Joby Aviation Inc.",
+          "shareClass": "Common",
+          "instrument": "stock",
+          "shares": 15316315,
+          "value": 136621529
+        }
+      ],
+      "source": {
+        "type": "13f",
+        "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000176/information_table.xml",
+        "coverUrl": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000176/primary_doc.xml",
+        "accession": "000005086326000176",
+        "checkedOn": "2026-10-12",
+        "entryCount": 3,
+        "totalValue": 620621529,
+        "sha256": "d2daf83b0ff6eeca3ad927b8b553844ad434236a0490ca1d5cd01327e9785190"
+      }
+    }
+  },
+  {
+    "id": "cisco-13f",
+    "kind": "corporate",
+    "name": "Cisco",
+    "subtitle": "SEC 13F · 2026 Q2",
+    "current": {
+      "id": "cisco-000119312526302050",
+      "asOf": "2026-06-30",
+      "publishedOn": "2026-07-13",
+      "complete": true,
+      "holdings": [
+        {
+          "securityId": "464287150",
+          "ticker": "ITOT",
+          "name": "iShares Core S&P Total U.S. Stock Market ETF",
+          "shareClass": "CORE S&P TTL STK",
+          "instrument": "stock",
+          "shares": 1297500,
+          "value": 213140325
+        },
+        {
+          "securityId": "21873S108",
+          "ticker": "CRWV",
+          "name": "COREWEAVE INC.",
+          "shareClass": "COM CL A",
+          "instrument": "stock",
+          "shares": 1063980,
+          "value": 105908569
+        },
+        {
+          "securityId": "464287200",
+          "ticker": "IVV",
+          "name": "iShares Core S&P 500 ETF",
+          "shareClass": "S&P 500 ETF",
+          "instrument": "stock",
+          "shares": 60000,
+          "value": 44933400
+        },
+        {
+          "securityId": "84615Q103",
+          "ticker": "SPCX",
+          "name": "SPACE EXPLORATION TECHN CORP",
+          "shareClass": "CLASS A COM STK",
+          "instrument": "stock",
+          "shares": 237375,
+          "value": 40557893
+        },
+        {
+          "securityId": "639193101",
+          "ticker": "NAVN",
+          "name": "NAVAN INC",
+          "shareClass": "CL A",
+          "instrument": "stock",
+          "shares": 21398,
+          "value": 489372
+        },
+        {
+          "securityId": "781154109",
+          "ticker": "RBRK",
+          "name": "RUBRIK INC",
+          "shareClass": "CL A",
+          "instrument": "stock",
+          "shares": 2319,
+          "value": 186169
+        }
+      ],
+      "source": {
+        "type": "13f",
+        "url": "https://www.sec.gov/Archives/edgar/data/858877/000119312526302050/55437.xml",
+        "coverUrl": "https://www.sec.gov/Archives/edgar/data/858877/000119312526302050/primary_doc.xml",
+        "accession": "000119312526302050",
+        "checkedOn": "2026-10-12",
+        "entryCount": 6,
+        "totalValue": 405215728,
+        "sha256": "53ad23f3170e8488c7a22c85f8164d69afb7f097dbea67f85f521b16690863b8"
+      }
+    }
+  }
+]
