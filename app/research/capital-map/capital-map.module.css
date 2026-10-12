@@ -5,7 +5,7 @@
 .heading p:not(.eyebrow) { margin:0; color:#a5b7bc; font-size:.85rem; }
 .edition { white-space:nowrap; font-size:.65rem; letter-spacing:.08em; color:#b6cbbf; border-bottom:1px solid #456357; padding:8px 0; }
 .notice { background:#15221d; color:#c9c4a5; border-left:2px solid #9b9a73; padding:10px 14px; font-size:.78rem; line-height:1.6; }
-.tabs { display:flex; gap:22px; align-items:center; border-bottom:1px solid #2b3c42; margin-top:24px; }
+.tabs { display:flex; flex-wrap:wrap; gap:22px; align-items:center; border-bottom:1px solid #2b3c42; margin-top:24px; }
 .page button { cursor:pointer; font:inherit; }
 .tabs button { color:#9fb0b7; border:0; border-bottom:2px solid transparent; background:none; padding:12px 0; font-size:.9rem; min-height:44px; }
 .tabs button[aria-pressed=true] { color:#a0e0c9; border-bottom-color:#88d9bc; }
@@ -23,8 +23,9 @@
 .save[aria-pressed=true] { background:#153024; }
 .page button:disabled { opacity:.5; cursor:default; }
 .summary { display:grid; grid-template-columns:230px minmax(0,1fr); align-items:center; gap:48px; padding:28px 20px; }
-.ring { width:218px; aspect-ratio:1; border-radius:50%; padding:20px; box-shadow:0 0 30px #84d6b709; }
-.ring>div { background:#0a121a; width:100%; height:100%; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; }
+.ring { position:relative; width:218px; height:218px; min-width:218px; min-height:218px; align-self:center; justify-self:center; }
+.ring svg { display:block; width:100%; height:100%; }
+.ring>div { position:absolute; inset:22%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; text-align:center; }
 .ring strong { font-size:1.8rem; letter-spacing:.08em; }
 .ring small { color:#a4beb6; font-size:.65rem; letter-spacing:.06em; }
 .legend { list-style:none; padding:0; margin:0; display:grid; gap:12px; }
@@ -97,8 +98,8 @@
   .portfolios button { padding:10px 12px; flex:1; }
   .page h2 { font-size:1.06rem; }
   .sectionHead p span { display:block; }
-  .summary { grid-template-columns:125px minmax(0,1fr); gap:18px; padding:24px 0 16px; }
-  .ring { width:125px; padding:12px; }
+  .summary { grid-template-columns:minmax(0,1fr); gap:24px; padding:24px 0 16px; }
+  .ring { width:160px; height:160px; min-width:160px; min-height:160px; }
   .ring strong { font-size:1.2rem; }
   .ring small { font-size:.5rem; }
   .legend { gap:10px; }
@@ -128,3 +129,8 @@
   .overlapRows>div { font-size:.72rem; }
   .preparing { margin-top:30px; }
 }
+
+.source { padding:14px 0; color:#a8bcb9; font-size:.75rem; line-height:1.8; }
+.source a { color:#9adeca; text-decoration:underline; margin-right:16px; }
+.listHeading { margin:26px 0 10px; font-size:1rem; }
+.stock strong { white-space:normal; overflow-wrap:anywhere; }

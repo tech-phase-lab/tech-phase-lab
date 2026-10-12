@@ -1,0 +1,721 @@
+[
+  {
+    "id": "berkshire-13f",
+    "kind": "manager",
+    "name": "Berkshire Hathaway",
+    "subtitle": "SEC 13F · 2026 Q2",
+    "current": {
+      "id": "berkshire-000119312526352200",
+      "asOf": "2026-06-30",
+      "publishedOn": "2026-08-14",
+      "complete": true,
+      "holdings": [
+        {
+          "securityId": "037833100",
+          "ticker": "AAPL",
+          "name": "APPLE INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 227917808,
+          "value": 65950296923,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "025816109",
+          "ticker": "AXP",
+          "name": "AMERICAN EXPRESS CO",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 151610700,
+          "value": 51282319275,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "191216100",
+          "ticker": "KO",
+          "name": "COCA COLA CO",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 400000000,
+          "value": 32508000000,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "02079K305",
+          "ticker": "GOOGL",
+          "name": "ALPHABET INC",
+          "shareClass": "CAP STK CL A",
+          "instrument": "stock",
+          "shares": 78791167,
+          "value": 28157599351,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "060505104",
+          "ticker": "BAC",
+          "name": "BANK OF AMER CORP",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 483394015,
+          "value": 27543790975,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "166764100",
+          "ticker": "CVX",
+          "name": "CHEVRON CORPORATION",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 84375856,
+          "value": 13986141890,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "674599105",
+          "ticker": "OXY",
+          "name": "OCCIDENTAL PETE CORP",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 264941431,
+          "value": 12868205304,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "H1467J104",
+          "ticker": "CB",
+          "name": "CHUBB LIMITED",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 34249183,
+          "value": 11670066615,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "615369105",
+          "ticker": "MCO",
+          "name": "MOODYS CORP",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 24669778,
+          "value": 11173435852,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "02079K107",
+          "ticker": "GOOG",
+          "name": "ALPHABET INC",
+          "shareClass": "CAP STK CL C",
+          "instrument": "stock",
+          "shares": 27188433,
+          "value": 9606489032,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "500754106",
+          "ticker": "KHC",
+          "name": "KRAFT HEINZ CO",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 325634818,
+          "value": 7691494401,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "23918K108",
+          "ticker": "DVA",
+          "name": "DAVITA INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 28880209,
+          "value": 6425268898,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "247361702",
+          "ticker": "DAL",
+          "name": "DELTA AIR LINES INC",
+          "shareClass": "COM NEW",
+          "instrument": "stock",
+          "shares": 57320000,
+          "value": 5368591200,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "829933100",
+          "ticker": "SIRI",
+          "name": "SIRIUSXM HOLDINGS INC",
+          "shareClass": "COMMON STOCK",
+          "instrument": "stock",
+          "shares": 124807117,
+          "value": 3686802237,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "92343E102",
+          "ticker": "VRSN",
+          "name": "VERISIGN INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 8989880,
+          "value": 2261494212,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "501044101",
+          "ticker": "KR",
+          "name": "KROGER CO",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 39000000,
+          "value": 2165670000,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "02005N100",
+          "ticker": "ALLY",
+          "name": "ALLY FINL INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 27000000,
+          "value": 1240650000,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "526057104",
+          "ticker": "LEN",
+          "name": "LENNAR CORP",
+          "shareClass": "CL A",
+          "instrument": "stock",
+          "shares": 13111741,
+          "value": 1186481443,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "530909308",
+          "ticker": "",
+          "name": "LIBERTY LIVE HOLDINGS INC",
+          "shareClass": "COM SHS SER C",
+          "instrument": "stock",
+          "shares": 10587143,
+          "value": 1118425787,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "650111107",
+          "ticker": "NYT",
+          "name": "NEW YORK TIMES CO MTN BE",
+          "shareClass": "CL A",
+          "instrument": "stock",
+          "shares": 15700000,
+          "value": 1098686000,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "14040H105",
+          "ticker": "COF",
+          "name": "CAPITAL ONE FINL CORP",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 3000000,
+          "value": 601860000,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "530909100",
+          "ticker": "",
+          "name": "LIBERTY LIVE HOLDINGS INC",
+          "shareClass": "COM SER A",
+          "instrument": "stock",
+          "shares": 4986588,
+          "value": 504941901,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "546347105",
+          "ticker": "LPX",
+          "name": "LOUISIANA PAC CORP",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 5664793,
+          "value": 445592617,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "670346105",
+          "ticker": "NUE",
+          "name": "NUCOR CORP",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 1857752,
+          "value": 413814258,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "55616P104",
+          "ticker": "M",
+          "name": "MACYS INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 7347426,
+          "value": 173031882,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "62944T105",
+          "ticker": "NVR",
+          "name": "NVR INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 11112,
+          "value": 75710501,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "526057302",
+          "ticker": "LEN.B",
+          "name": "LENNAR CORP",
+          "shareClass": "CL B",
+          "instrument": "stock",
+          "shares": 298117,
+          "value": 26445959,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "47233W109",
+          "ticker": "JEF",
+          "name": "JEFFERIES FINANCIAL GROUP IN",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 433558,
+          "value": 21669229,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "23331A109",
+          "ticker": "DHI",
+          "name": "D R HORTON INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 3564,
+          "value": 580504,
+          "outstandingShares": null
+        }
+      ],
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526352200/56757.xml",
+        "coverUrl": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526352200/primary_doc.xml",
+        "accession": "000119312526352200",
+        "checkedOn": "2026-10-12",
+        "entryCount": 89,
+        "totalValue": 299253556246,
+        "sha256": "6a2798aa0fa9731c33b0f0b748229eaf7cdf118f9c46fd5a4a9a3de6979d4d95"
+      }
+    }
+  },
+  {
+    "id": "nvidia-13f",
+    "kind": "corporate",
+    "name": "NVIDIA",
+    "subtitle": "SEC 13F · 2026 Q2",
+    "current": {
+      "id": "nvidia-000104581026000065",
+      "asOf": "2026-06-30",
+      "publishedOn": "2026-08-14",
+      "complete": true,
+      "holdings": [
+        {
+          "securityId": "458140100",
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 214776632,
+          "value": 29989261126,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "84615Q103",
+          "ticker": "",
+          "name": "SPACE EXPLORATION TECHN CORP",
+          "shareClass": "CLASS A COM STK",
+          "instrument": "stock",
+          "shares": 122764805,
+          "value": 20975594582,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "21873S108",
+          "ticker": "CRWV",
+          "name": "COREWEAVE INC",
+          "shareClass": "COM CL A",
+          "instrument": "stock",
+          "shares": 47213353,
+          "value": 4699617158,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "19247G107",
+          "ticker": "COHR",
+          "name": "COHERENT CORP",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 7788161,
+          "value": 3072195870,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "654902204",
+          "ticker": "NOK",
+          "name": "NOKIA CORP",
+          "shareClass": "SPONSORED ADR",
+          "instrument": "stock",
+          "shares": 166389351,
+          "value": 2209650581,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "871607107",
+          "ticker": "SNPS",
+          "name": "SYNOPSYS INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 4821717,
+          "value": 2150823302,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "N97284108",
+          "ticker": "NBIS",
+          "name": "NEBIUS GROUP N.V.",
+          "shareClass": "SHS CLASS A",
+          "instrument": "stock",
+          "shares": 1190476,
+          "value": 328773757,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "370920100",
+          "ticker": "",
+          "name": "GENERATE BIOMEDICINES INC",
+          "shareClass": "COM SHS",
+          "instrument": "stock",
+          "shares": 833325,
+          "value": 14058193,
+          "outstandingShares": null
+        }
+      ],
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000065/information_table.xml",
+        "coverUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000065/primary_doc.xml",
+        "accession": "000104581026000065",
+        "checkedOn": "2026-10-12",
+        "entryCount": 8,
+        "totalValue": 63439974569,
+        "sha256": "82b6070ef760ccf7944af329e4dd1c79cf36bed29e3d345ba2dcf769e0e0c1c3"
+      }
+    }
+  },
+  {
+    "id": "alphabet-13f",
+    "kind": "corporate",
+    "name": "Alphabet / Google",
+    "subtitle": "SEC 13F · 2026 Q2",
+    "current": {
+      "id": "alphabet-000165204426000073",
+      "asOf": "2026-06-30",
+      "publishedOn": "2026-08-07",
+      "complete": true,
+      "holdings": [
+        {
+          "securityId": "84615Q103",
+          "ticker": "",
+          "name": "SPACE EXPLORATION TECHN CORP",
+          "shareClass": "CLASS A COM STK",
+          "instrument": "stock",
+          "shares": 551189500,
+          "value": 94176237970,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "72703X106",
+          "ticker": "PL",
+          "name": "PLANET LABS PBC",
+          "shareClass": "COM CL A",
+          "instrument": "stock",
+          "shares": 35248893,
+          "value": 1167795849,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "00217D100",
+          "ticker": "ASTS",
+          "name": "AST SPACEMOBILE INC",
+          "shareClass": "COM CL A",
+          "instrument": "stock",
+          "shares": 8943486,
+          "value": 794718166,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "12572Q105",
+          "ticker": "CME",
+          "name": "CME GROUP INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 3484020,
+          "value": 769376137,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "042068205",
+          "ticker": "ARM",
+          "name": "ARM HOLDINGS PLC",
+          "shareClass": "SPONSORED ADS",
+          "instrument": "stock",
+          "shares": 1960784,
+          "value": 695235183,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "76155X100",
+          "ticker": "RVMD",
+          "name": "REVOLUTION MEDICINES INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 2946619,
+          "value": 551842806,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "358054104",
+          "ticker": "FRSH",
+          "name": "FRESHWORKS INC",
+          "shareClass": "CLASS A COM",
+          "instrument": "stock",
+          "shares": 16206643,
+          "value": 164011227,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "698955101",
+          "ticker": "",
+          "name": "PARABILIS MEDICINES INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 4919498,
+          "value": 134646660,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "88023B103",
+          "ticker": "TEM",
+          "name": "TEMPUS AI INC",
+          "shareClass": "CL A",
+          "instrument": "stock",
+          "shares": 1551102,
+          "value": 89855339,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "37637K108",
+          "ticker": "GTLB",
+          "name": "GITLAB INC",
+          "shareClass": "CLASS A COM",
+          "instrument": "stock",
+          "shares": 2724712,
+          "value": 83185457,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "90364P105",
+          "ticker": "PATH",
+          "name": "UIPATH INC",
+          "shareClass": "CL A",
+          "instrument": "stock",
+          "shares": 7034337,
+          "value": 76463243,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "29765A101",
+          "ticker": "",
+          "name": "ETHOS TECHNOLOGIES INC",
+          "shareClass": "CL A",
+          "instrument": "stock",
+          "shares": 3622604,
+          "value": 65714037,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "74168J101",
+          "ticker": "PRME",
+          "name": "PRIME MEDICINE INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 16562498,
+          "value": 61115618,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "31556C106",
+          "ticker": "",
+          "name": "FERVO ENERGY CO",
+          "shareClass": "CL A COM",
+          "instrument": "stock",
+          "shares": 1760732,
+          "value": 51466202,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "70450C101",
+          "ticker": "",
+          "name": "PAYPAY CORP",
+          "shareClass": "SPONSORED ADS",
+          "instrument": "stock",
+          "shares": 3125000,
+          "value": 44781250,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "578784100",
+          "ticker": "MAZE",
+          "name": "MAZE THERAPEUTICS INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 1388583,
+          "value": 41435317,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "75943R102",
+          "ticker": "RLAY",
+          "name": "RELAY THERAPEUTICS INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 1410029,
+          "value": 26381643,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "107924102",
+          "ticker": "",
+          "name": "BRIDGEBIO ONCOLOGY THERAPEUT",
+          "shareClass": "COM NEW",
+          "instrument": "stock",
+          "shares": 2823126,
+          "value": 21512220,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "687793109",
+          "ticker": "OSCR",
+          "name": "OSCAR HEALTH INC",
+          "shareClass": "CL A",
+          "instrument": "stock",
+          "shares": 481988,
+          "value": 13746298,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "07373V105",
+          "ticker": "BEAM",
+          "name": "BEAM THERAPEUTICS INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 321604,
+          "value": 11037449,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "92337R101",
+          "ticker": "VERA",
+          "name": "VERA THERAPEUTICS INC",
+          "shareClass": "CL A",
+          "instrument": "stock",
+          "shares": 241264,
+          "value": 10352638,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "799566104",
+          "ticker": "SANA",
+          "name": "SANA BIOTECHNOLOGY INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 2812500,
+          "value": 9815625,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "61225M102",
+          "ticker": "GLUE",
+          "name": "MONTE ROSA THERAPEUTICS INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 372474,
+          "value": 9013871,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "55083R203",
+          "ticker": "LYEL",
+          "name": "LYELL IMMUNOPHARMA INC",
+          "shareClass": "COM NEW",
+          "instrument": "stock",
+          "shares": 293256,
+          "value": 4120247,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "316841105",
+          "ticker": "FIG",
+          "name": "FIGMA INC",
+          "shareClass": "CLASS A COM STK",
+          "instrument": "stock",
+          "shares": 215582,
+          "value": 3899878,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "84833T103",
+          "ticker": "SPRO",
+          "name": "SPERO THERAPEUTICS INC",
+          "shareClass": "COM",
+          "instrument": "stock",
+          "shares": 889979,
+          "value": 1966854,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "44916K106",
+          "ticker": "HYPR",
+          "name": "HYPERFINE INC",
+          "shareClass": "COM CL A",
+          "instrument": "stock",
+          "shares": 898720,
+          "value": 1213272,
+          "outstandingShares": null
+        },
+        {
+          "securityId": "05280R100",
+          "ticker": "AUTL",
+          "name": "AUTOLUS THERAPEUTICS PLC",
+          "shareClass": "SPON ADS",
+          "instrument": "stock",
+          "shares": 698262,
+          "value": 1117219,
+          "outstandingShares": null
+        }
+      ],
+      "source": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000073/information_table.xml",
+        "coverUrl": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000073/primary_doc.xml",
+        "accession": "000165204426000073",
+        "checkedOn": "2026-10-12",
+        "entryCount": 29,
+        "totalValue": 99082057675,
+        "sha256": "03b0a86c4771ac98b12b94d78703b3a0f964b3bfc79ef16e97109e6fba9bc757"
+      }
+    }
+  }
+]

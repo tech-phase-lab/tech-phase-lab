@@ -35,3 +35,12 @@ Sources checked during design:
 - https://www.invesco.com/qqq-etf/en/about.html
 
 Live retrieval, automatic updates, commercial ETF display permission, institutional totals, corporate investments and smartphone testing are unverified/unimplemented.
+
+## 2026-10-12 disclosure expansion and circle correction
+
+- Normal route now serves the reviewed June 30, 2026 13F snapshots to server-authorized, unexpired PRO members (including the existing owner mode). The public sample stays fictional and links to the normal route. No real holdings are imported into the public static client bundle or sample route. Authorized page responses serialize only the reviewed report data to the signed-in viewer.
+- Berkshire: 89 source rows -> 29 security/share-class positions, $299,253,556,246. NVIDIA: 8 -> 8, $63,439,974,569. Alphabet: 29 -> 28, $99,082,057,675. Full XML tables and cover totals were downloaded and reconciled; same-CUSIP rows within each report are summed, never combined across filers.
+- Source URLs, accession, source row count, original XML SHA-256, review date, filing date, and as-of date accompany each snapshot. All 65 reported positions are retained. Unmatched symbols remain blank and display CUSIP; no guessed ticker is inserted. These are specific reviewed filings, not a claim that later amendments have been excluded.
+- These public 13F tables do not cover all corporate assets, confidential holdings, private investments, or all foreign-listed shares. Quarterly comparisons remain unavailable until previous filings and corporate actions are reconciled. No false new/exit labels are produced from absent history. Company ownership percentages remain unavailable.
+- Replace content-sized CSS donut with SVG viewBox and explicit equal width/height. Mobile shows the 160px circle above the legend; all positions appear below, while the circle summarizes top five plus Other.
+- Sample and disclosure follow/viewed preferences use separate versioned browser storage. Existing sample ETF comparison remains available. No collection jobs or infrastructure configuration changed.

@@ -62,3 +62,23 @@ test('synthetic holdings never leak into the live route or invent an institution
   assert.match(header, /item\("\/research\/capital-map", "changes", ja \? "資本マップ" : "CAPITAL MAP"\)/);
   assert.doesNotMatch(header, /何が変わった？/);
 });
+
+test('reviewed SEC snapshots retain every security and reconcile to cover totals', () => {
+  const data = JSON.parse(readFileSync(new URL('../lib/research/capital-map-disclosures.json', import.meta.url), 'utf8'));
+  assert.deepEqual(data.map(p => p.current.holdings.length), [29, 8, 28]);
+  assert.deepEqual(data.map(p => p.current.source.entryCount), [89, 8, 29]);
+  for (const portfolio of data) {
+    const current = portfolio.current;
+    assert.equal(current.holdings.reduce((sum, row) => sum + row.value, 0), current.source.totalValue);
+    assert.equal(new Set(current.holdings.map(row => row.securityId)).size, current.holdings.length);
+    assert.ok(current.holdings.every(row => row.shares > 0 && Number.isSafeInteger(row.value)));
+    assert.ok(capitalRows(current).every(row => row.change === 'unknown' && row.companyPercent === null));
+    assert.match(current.source.url, /^https:\/\/www\.sec\.gov\/Archives\/edgar\/data\//);
+  }
+  const brk = data[0].current.holdings;
+  assert.equal(brk.find(row => row.ticker === 'AAPL').shares, 227917808);
+  assert.ok(brk.some(row => row.ticker === 'GOOG'));
+  assert.ok(brk.some(row => row.ticker === 'GOOGL'));
+  const alphabet = data[2].current.holdings;
+  assert.equal(alphabet.find(row => row.ticker === 'FRSH').shares, 16206643);
+});

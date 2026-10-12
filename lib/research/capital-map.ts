@@ -2,6 +2,7 @@ export type CapitalHolding = {
   securityId: string;
   ticker: string;
   name: string;
+  shareClass?: string;
   instrument: "stock" | "put" | "call";
   shares: number;
   value: number;
@@ -13,15 +14,16 @@ export type CapitalSnapshot = {
   asOf: string;
   publishedOn: string;
   complete: boolean;
+  source?: { url: string; coverUrl: string; accession: string; checkedOn: string; entryCount: number; totalValue: number; sha256: string };
   holdings: CapitalHolding[];
 };
 export type CapitalPortfolio = {
   id: string;
-  kind: "manager" | "etf";
+  kind: "manager" | "etf" | "corporate";
   name: string;
   subtitle: string;
   current: CapitalSnapshot;
-  previous: CapitalSnapshot;
+  previous?: CapitalSnapshot;
 };
 export type CapitalChange = "new" | "increased" | "reduced" | "unchanged" | "exited" | "unknown";
 export type CapitalRow = CapitalHolding & {
