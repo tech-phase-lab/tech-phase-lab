@@ -1566,15 +1566,16 @@ def sitemap_links(body, ticker):
 def news_json_links(body, ticker, source):
     """Parse a first-party page's public JSON result shape."""
     data = json.loads(body)
-    items = data.get(source.get("itemsKey", "items"), [])
-    if not isinstance(items, list):
-        raise ValueError("Invalid news JSON structure")
+
     def pick(item, key):
         # A dotted key reads one nested field, e.g. "content.title" in a JSON Feed.
         for part in key.split("."):
             item = item.get(part) if isinstance(item, dict) else None
         return item
 
+    items = pick(data, source.get("itemsKey", "items")) or []
+    if not isinstance(items, list):
+        raise ValueError("Invalid news JSON structure")
     links = {}
     for item in items:
         if not isinstance(item, dict):
@@ -1587,7 +1588,18 @@ def news_json_links(body, ticker, source):
         title = " ".join(unescape(title).split())[:300] if isinstance(title, str) and title.strip() else None
         published = pick(item, source["dateKey"]) if source.get("dateKey") else None
         published_on = published[:10] if isinstance(published, str) and re.match(r"\d{4}-\d{2}-\d{2}(?:T|$)", published) else None
-        links[canonical] = {"title": title, "publishedOn": published_on} if published_on else title
+        detail = {"title": title, "publishedOn": published_on} if published_on else {"title": title}
+        # A page that is drawn by script (Broadcom's newsroom) carries the
+        # release text in the listing record itself; use it as the body.
+        raw_body = pick(item, source["bodyKey"]) if source.get("bodyKey") else None
+        if isinstance(raw_body, str) and raw_body.strip():
+            text = extract_html_text(raw_body.encode("utf-8"), "utf-8")
+            text = text[0] if isinstance(text, tuple) else text
+            text = text.strip()
+            if len(text) >= 200:
+                detail.update({"inlineText": text[:MAX_EXTRACTED_CHARS], "contentType": "text/html",
+                               "contentBytes": len(raw_body.encode("utf-8"))})
+        links[canonical] = detail if len(detail) > 1 else title
     return links
 
 

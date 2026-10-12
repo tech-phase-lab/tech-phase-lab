@@ -2435,6 +2435,26 @@ class IntakeTests(unittest.TestCase):
             self.assertIsNone(m.body_mirror_url(other, "CRDO"))
         self.assertIsNone(m.body_mirror_url(page, "NVDA"))
 
+    def test_broadcom_newsroom_listing_supplies_english_releases_with_their_text(self):
+        # Owner, Oct 12: investors.broadcom.com refuses the server and broadcom.com draws its list with script.
+        source = m.monitoring_sources("AVGO", automatic=True)[0]
+        self.assertEqual(source["route"], "fallback")
+        self.assertTrue(source["url"].startswith("https://www.broadcom.com/get-st?"))
+        text = "<div class='rte'><p>" + "Broadcom announced a new product for AI networking. " * 8 + "</p></div>"
+        body = json.dumps({"records": {"pages": [
+            {"title": "Broadcom Introduces Example", "url": "/company/news/product-releases/broadcom-introduces-example",
+             "publish_date": "2026-10-14T00:00:00Z", "body": text},
+            {"title": "Broadcom stellt Beispiel vor", "url": "/company/news/de/releases/broadcom-stellt-beispiel-vor",
+             "publish_date": "2026-10-14T00:00:00Z", "body": text},
+            {"title": "Old", "url": "/news/press-release/old-item", "publish_date": "2016-01-01T00:00:00Z", "body": text},
+        ]}}).encode()
+        links = m.news_json_links(body, "AVGO", source)
+        self.assertEqual(list(links), ["https://www.broadcom.com/company/news/product-releases/broadcom-introduces-example"])
+        detail = links["https://www.broadcom.com/company/news/product-releases/broadcom-introduces-example"]
+        self.assertEqual((detail["title"], detail["publishedOn"]), ("Broadcom Introduces Example", "2026-10-14"))
+        self.assertIn("new product for AI networking", detail["inlineText"])
+        self.assertNotIn("<p>", detail["inlineText"])
+
     def test_microsoft_developer_and_xbox_news_are_accepted_but_social_posts_are_not(self):
         self.assertTrue(m.article_url("https://news.xbox.com/en-us/2026/10/08/introducing-xp/", "MSFT"))
         self.assertTrue(m.article_url("https://developer.microsoft.com/blog/introducing-the-agent-experience/", "MSFT"))
