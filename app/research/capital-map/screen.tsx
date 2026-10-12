@@ -14,6 +14,7 @@ import styles from "./capital-map.module.css";
 
 const emptyPortfolios: CapitalPortfolio[] = [];
 const colors = ["#9875ff", "#ffb52e", "#46b4ff", "#ef69b6", "#28c7bc", "#ff8548", "#8596ff", "#9bce50", "#e6cf70", "#63c6de"];
+const sliceColor = (index: number) => colors[index] ?? `hsl(${(index * 137.508) % 360} 65% 65%)`;
 const percent = (value: number) => value > 0 && value < .01 ? "<0.01%" : `${value.toFixed(2)}%`;
 const signed = (value: number) => `${value > 0 ? "+" : ""}${value.toFixed(2)}%`;
 type View = CapitalPortfolio["kind"] | "lookup" | "overlap";
@@ -27,6 +28,7 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
   const [view, setView] = useState<View>("manager");
   const [selectedId, setSelectedId] = useState(portfolios[0]?.id ?? "");
   const [query, setQuery] = useState("");
+  const [activeSlice, setActiveSlice] = useState<number | null>(null);
   const [portraitError, setPortraitError] = useState("");
   const [watchOnly, setWatchOnly] = useState(false);
   const [holdingQuery, setHoldingQuery] = useState("");
@@ -53,9 +55,11 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
     : seen[selected.id] === selected.previous?.id ? selected.previous : undefined : undefined;
   const rows = selected ? capitalRows(selected.current, baseline) : [];
   const visibleRows = rows.filter(row => (!holdingQuery.trim() || `${row.name} ${row.ticker} ${row.securityId}`.toLowerCase().includes(holdingQuery.trim().toLowerCase())) && (!selected?.previous || !changedOnly || !["unchanged", "unknown"].includes(row.change)));
-  const top = rows.filter(row => row.weight > 0).slice(0, 10);
+  const chartLimit = selected?.kind === "etf" ? 30 : 10;
+  const top = rows.filter(row => row.weight > 0).slice(0, chartLimit);
   const topWeight = top.reduce((sum, row) => sum + row.weight, 0);
-  const slices = [...top.map((row, index) => ({ weight: row.weight, color: colors[index], label: row.ticker || row.name })), ...(topWeight < 100 ? [{ weight: 100 - topWeight, color: "#536072", label: t("その他", "Other") }] : [])];
+  const slices = [...top.map((row, index) => ({ weight: row.weight, color: sliceColor(index), label: row.ticker || row.name })), ...(topWeight < 100 ? [{ weight: 100 - topWeight, color: "#536072", label: t("その他", "Other") }] : [])];
+  const highlighted = activeSlice === null ? undefined : slices[activeSlice];
   const left = etfs.find(item => item.id === leftId);
   const right = etfs.find(item => item.id === rightId);
   const overlap = left && right && left.id !== right.id ? etfOverlap(left.current, right.current) : null;
@@ -67,12 +71,12 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
   function persist(nextSaved: string[], nextSeen: Record<string, string>) {
     setMessage(write(nextSaved, nextSeen) ? t("保存しました", "Saved") : t("保存できませんでした。この画面内でのみ保持します。", "Could not save. Kept only in this session."));
   }
-  function choosePortfolio(id: string) { setSelectedId(id); setHoldingQuery(""); setRowLimit(50); setChangedOnly(false); }
+  function choosePortfolio(id: string) { setActiveSlice(null); setSelectedId(id); setHoldingQuery(""); setRowLimit(50); setChangedOnly(false); }
   function chooseView(value: View) { setView(value); choosePortfolio(portfolios.find(item => item.kind === value)?.id ?? ""); setMessage(""); }
 
   return <ResearchToolShell lang={lang} setLang={setLang} title="CAPITAL MAP" description="" showHeading={false} showTools={false}>
     <div className={styles.page}>
-      <header className={styles.heading}><div><p className={styles.eyebrow}>TECH PHASE PRO</p><h1>CAPITAL MAP</h1><p>{t("投資先から、資金の流れを知る。", "Follow the holdings. Understand the capital.")}</p></div>{!reported && hasData && <span className={styles.edition}>SAMPLE</span>}</header>
+      <header className={styles.heading}><p className={styles.eyebrow}>TECH PHASE PRO{!reported && hasData && <span className={styles.edition}>SAMPLE</span>}</p><div className={styles.titleRow}><h1>CAPITAL MAP</h1>{hasData && <nav className={styles.tools} aria-label={t("資本マップのツール", "Capital map tools")}><button aria-pressed={view === "lookup"} onClick={() => chooseView("lookup")}>{t("銘柄から探す", "Search by stock")}</button>{etfs.length >= 2 && <button aria-pressed={view === "overlap"} onClick={() => chooseView("overlap")}>{t("ETF比較", "Compare ETFs")}</button>}</nav>}</div><p>{t("投資先から、資金の流れを知る。", "Follow the holdings. Understand the capital.")}</p></header>
       {!hasData ? <section className={styles.preparing}>
         <h2>{t("世界の運用会社とETFの投資先をひと目で。", "Explore the portfolios behind managers and ETFs.")}</h2>
         <p>{t("保有銘柄と構成比、銘柄ごとの保有先、ETFの重複を確認できます。", "Explore holdings, portfolio weights, stock holders and ETF overlap.")}</p>
@@ -83,8 +87,6 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
           <button aria-pressed={view === "manager"} onClick={() => chooseView("manager")}>{t("運用会社", "Managers")}</button>
           {portfolios.some(item => item.kind === "corporate") && <button aria-pressed={view === "corporate"} onClick={() => chooseView("corporate")}>{t("企業", "Companies")}</button>}
           {etfs.length > 0 && <button aria-pressed={view === "etf"} onClick={() => chooseView("etf")}>ETF</button>}
-          <button aria-pressed={view === "lookup"} onClick={() => chooseView("lookup")}>{t("銘柄から探す", "Search by stock")}</button>
-          {etfs.length >= 2 && <button aria-pressed={view === "overlap"} onClick={() => chooseView("overlap")}>{t("ETF比較", "Compare ETFs")}</button>}
         </nav>
         {isPortfolio && <div className={styles.portfolioToolbar}>
           <label className={styles.portfolioSelect}>
@@ -112,19 +114,23 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
           </div>
           <div className={styles.portfolioBody}>
             <div className={styles.chartPanel}>
-              <div className={styles.ring} role="img" aria-label={t("保有構成比。上位10銘柄とその他。", "Portfolio weights: top ten and other.")}>
-                <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <div className={styles.ring} role="group" aria-label={t(`保有構成比。上位${chartLimit}銘柄とその他。`, `Portfolio weights: top ${chartLimit} and other.`)}>
+                <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
                   <circle cx="200" cy="200" r="148" fill="none" stroke="#536072" strokeWidth="76" />
                   {slices.map((slice, index) => {
                     const start = slices.slice(0, index).reduce((sum, item) => sum + item.weight, 0);
                     const angle = (start + slice.weight / 2) * Math.PI / 50 - Math.PI / 2;
-                    return <g key={index}><circle cx="200" cy="200" r="148" fill="none" stroke={slice.color} strokeWidth="76" pathLength="100" strokeDasharray={`${Math.max(0, slice.weight - .18)} ${100 - Math.max(0, slice.weight - .18)}`} strokeDashoffset={-start} transform="rotate(-90 200 200)" /><title>{slice.label}: {percent(slice.weight)}</title>{slice.weight >= 5 && <text x={200 + 148 * Math.cos(angle)} y={200 + 148 * Math.sin(angle) - 5} textAnchor="middle" className={styles.sliceLabel}><tspan>{slice.label.length > 8 ? slice.label.slice(0, 7) + "…" : slice.label}</tspan><tspan x={200 + 148 * Math.cos(angle)} dy="18">{slice.weight.toFixed(1)}%</tspan></text>}</g>;
+                    const activate = () => setActiveSlice(index);
+                    return <g key={index} role="button" tabIndex={0} aria-label={`${slice.label} ${percent(slice.weight)}`} aria-pressed={activeSlice === index} onClick={activate} onMouseEnter={activate} onMouseLeave={() => setActiveSlice(null)} onFocus={activate} onBlur={() => setActiveSlice(null)} onKeyDown={event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); activate(); } }} className={styles.slice}>
+                      <circle cx="200" cy="200" r="148" fill="none" stroke={slice.color} strokeWidth="76" pathLength="100" strokeDasharray={`${Math.max(0, slice.weight - Math.min(.18, slice.weight * .15))} ${100 - Math.max(0, slice.weight - Math.min(.18, slice.weight * .15))}`} strokeDashoffset={-start} transform="rotate(-90 200 200)" />
+                      <title>{slice.label}: {percent(slice.weight)}</title>
+                      {slice.weight >= 5 ? <text x={200 + 148 * Math.cos(angle)} y={200 + 148 * Math.sin(angle) - 5} textAnchor="middle" className={styles.sliceLabel}><tspan>{slice.label.length > 8 ? slice.label.slice(0, 7) + "…" : slice.label}</tspan><tspan x={200 + 148 * Math.cos(angle)} dy="18">{slice.weight.toFixed(1)}%</tspan></text> : slice.weight >= 1.2 && <text x={200 + 148 * Math.cos(angle)} y={200 + 148 * Math.sin(angle)} textAnchor="middle" dominantBaseline="central" transform={`rotate(${angle * 180 / Math.PI + (Math.cos(angle) < 0 ? 180 : 0)} ${200 + 148 * Math.cos(angle)} ${200 + 148 * Math.sin(angle)})`} className={styles.smallSliceLabel}>{slice.label.length > 6 ? slice.label.slice(0, 5) + "…" : slice.label}</text>}
+                    </g>;
                   })}
                 </svg>
-                <div><small>{t("保有評価額の合計", "TOTAL HOLDINGS VALUE")}</small><strong title={hasValues ? `$${totalValue.toLocaleString("en-US")}` : undefined}>{hasValues ? money(totalValue) : selected.name}</strong><small>{hasValues ? "USD" : t("保有構成比", "PORTFOLIO WEIGHT")}</small></div>
+                <div aria-live="polite">{highlighted ? <><small>{highlighted.label}</small><strong style={{ color: highlighted.color }}>{percent(highlighted.weight)}</strong><small>{activeSlice !== null && top[activeSlice]?.value > 0 ? money(top[activeSlice].value) : t("構成比", "Portfolio weight")}</small></> : <><small>{t("保有評価額の合計", "TOTAL HOLDINGS VALUE")}</small><strong title={hasValues ? `$${totalValue.toLocaleString("en-US")}` : undefined}>{hasValues ? money(totalValue) : selected.name}</strong><small>{hasValues ? "USD" : t("保有構成比", "PORTFOLIO WEIGHT")}</small></>}</div>
               </div>
-              <p className={styles.chartCaption}>{t("色は銘柄一覧と対応", "Colors match the holdings list")}<br />{t("構成比＝保有評価額に占める割合", "Weight = share of holdings value")}</p>
-              {slices.length > top.length && <p className={styles.otherKey}><i />{t("その他", "Other")} <strong>{percent(100 - topWeight)}</strong><span>{t("上位10銘柄以外の配分", "Allocation outside the top 10")}</span></p>}
+              {slices.length > top.length && <p className={styles.otherKey}><i />{t("その他", "Other")} <strong>{percent(100 - topWeight)}</strong><span>{t(`上位${chartLimit}銘柄以外`, `Outside the top ${chartLimit}`)}</span></p>}
             </div>
             <div className={styles.tablePanel}>
           <div className={styles.listHead}><h3>{t("全保有銘柄", "All holdings")} <span>{selected.current.holdings.length}</span></h3><div className={styles.listFilters}><input aria-label={t("保有銘柄を絞り込む", "Filter holdings")} placeholder={t("この保有一覧を検索", "Search these holdings")} value={holdingQuery} onChange={event => { setHoldingQuery(event.target.value); setRowLimit(50); }} /></div></div>
@@ -134,8 +140,8 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
           <div className={styles.holdings}>{visibleRows.slice(0, rowLimit).map(row => {
             const colorIndex = top.findIndex(item => item.securityId === row.securityId && item.instrument === row.instrument);
             return <div className={styles.position} key={`${row.securityId}-${row.instrument}`}>
-              <div className={styles.positionStock}><span className={styles.positionColor} style={{ background: colors[colorIndex] ?? "#536072" }} /><StockLogo ticker={row.ticker} /><div className={styles.stock}><strong title={row.name}>{row.name}</strong><small>{row.ticker || `CUSIP ${row.securityId}`}{row.instrument !== "stock" && <b className={styles.option}>{row.instrument.toUpperCase()}</b>}</small></div></div>
-              <span className={styles.positionWeight}><strong>{percent(row.weight)}</strong><i style={{ width: `${Math.min(100, row.weight)}%`, background: colors[colorIndex] ?? "#536072" }} /></span>
+              <div className={styles.positionStock}><span className={styles.positionColor} style={{ background: colorIndex >= 0 ? sliceColor(colorIndex) : "#536072" }} /><StockLogo ticker={row.ticker} /><div className={styles.stock}><strong title={row.name}>{row.name}</strong><small>{row.ticker || `CUSIP ${row.securityId}`}{row.instrument !== "stock" && <b className={styles.option}>{row.instrument.toUpperCase()}</b>}</small></div></div>
+              <span className={styles.positionWeight}><strong>{percent(row.weight)}</strong><i style={{ width: `${Math.min(100, row.weight)}%`, background: colorIndex >= 0 ? sliceColor(colorIndex) : "#536072" }} /></span>
               <span className={styles.positionValue} title={hasValues ? `$${row.value.toLocaleString("en-US")}` : t("評価額は未収録", "Value not included")}>{hasValues ? money(row.value) : "—"}</span>
               <span className={styles.positionChange} data-change={row.change} title={row.change === "unknown" ? t("比較できる前回データがありません", "No comparable prior data") : `${row.shares.toLocaleString("en-US")} ${t("株", "shares")}`}><strong>{row.shareChangePercent === null ? labels[row.change] : signed(row.shareChangePercent)}</strong>{row.shareChangePercent !== null && <small>{labels[row.change]}</small>}</span>
             </div>;

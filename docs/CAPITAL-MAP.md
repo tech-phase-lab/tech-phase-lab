@@ -82,3 +82,10 @@ Live retrieval, automatic updates, commercial ETF display permission, institutio
 - Consolidated accumulated CSS overrides into a single responsive stylesheet.
 - Replaced the Ray Dalio image with the visually reviewed Grameen America September 2017 speech photograph (CC BY 3.0); portrait uses a face-focused CSS crop and retains attribution.
 - No holdings values or prior-period data changed. Public sample remains fictional.
+
+## 2026-10-12 compact metrics and ETF chart follow-up
+
+- Keep date and 時点 inline on phones; reduce metric strip padding.
+- Move stock lookup / ETF comparison to independent header buttons alongside CAPITAL MAP. Category tabs retain managers / companies / ETF.
+- Remove chart explanatory captions; keep a gray Other key below the ring.
+- ETF charts show the top 30 positions without renormalization (SPY: 55.99%, remainder 44.01%). Smaller wedges from 1.2% get radial ticker labels; every wedge supports pointer, touch and keyboard inspection in the center. Manager charts retain the top ten.
