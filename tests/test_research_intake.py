@@ -2424,6 +2424,14 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(m.news_json_links(body, "ASML", source), {
             "https://mfn.se/one/a/asml-holding/asml-reports-q3-2026-results-ab12cd34":
                 {"title": "ASML reports Q3 2026 results", "publishedOn": "2026-10-14"}})
+        # The article page itself is not readable by our server; the release text comes inline.
+        self.assertEqual(source["bodyKey"], "content.html")
+        text = "<p>" + "ASML reports its third quarter results with total net sales and net income. " * 4 + "</p>"
+        with_body = json.dumps({"items": [{"url": "https://mfn.se/one/a/asml-holding/asml-q3-results-ab12cd34",
+            "content": {"title": "ASML Q3", "publish_date": "2026-10-14T05:00:00Z", "html": text}}]}).encode()
+        detail = m.news_json_links(with_body, "ASML", source)["https://mfn.se/one/a/asml-holding/asml-q3-results-ab12cd34"]
+        self.assertIn("third quarter results", detail["inlineText"])
+        self.assertEqual(m.PROVIDERS["ASML"]["pollSeconds"], 30)
 
     def test_credo_release_body_is_read_from_its_release_file_not_the_blocked_page(self):
         # Owner, Oct 12: investors.credosemi.com refuses the server; the same release is a PDF on Credo's document host.
@@ -2455,9 +2463,11 @@ class IntakeTests(unittest.TestCase):
         self.assertIn("new product for AI networking", detail["inlineText"])
         self.assertNotIn("<p>", detail["inlineText"])
 
-    def test_microsoft_developer_and_xbox_news_are_accepted_but_social_posts_are_not(self):
-        self.assertTrue(m.article_url("https://news.xbox.com/en-us/2026/10/08/introducing-xp/", "MSFT"))
-        self.assertTrue(m.article_url("https://developer.microsoft.com/blog/introducing-the-agent-experience/", "MSFT"))
+    def test_microsoft_pages_whose_title_differs_from_the_feed_title_are_not_admitted(self):
+        # Oct 12: developer.microsoft.com and news.xbox.com pages carry a different page title than the
+        # official feed's headline, so the exact-identity check rejects them; they stay out of the rules.
+        self.assertIsNone(m.article_url("https://news.xbox.com/en-us/2026/10/08/introducing-xp/", "MSFT"))
+        self.assertIsNone(m.article_url("https://developer.microsoft.com/blog/introducing-the-agent-experience/", "MSFT"))
         self.assertIsNone(m.article_url("https://www.linkedin.com/feed/update/urn:li:activity:1/", "MSFT"))
 
     def test_vertiv_investor_news_fallback_is_scoped_to_release_details(self):
