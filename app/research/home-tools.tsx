@@ -7,7 +7,7 @@ import { dateLabel } from "@/lib/research/presentation";
 import { useStockFavorites } from "./use-stock-favorites";
 import styles from "./home-tools.module.css";
 
-export default function HomeTools({ lang, onChanges, onPro }: { lang: Language; onChanges: () => void; onPro: () => void }) {
+export default function HomeTools({ lang, onPro }: { lang: Language; onPro: () => void }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const plan = useMemberDisplay();
   const locked = plan !== "pro";
@@ -16,7 +16,7 @@ export default function HomeTools({ lang, onChanges, onPro }: { lang: Language; 
       <Link href="/research/stocks"><span className={styles.icon} aria-hidden="true">🔍</span><strong>{t("銘柄検索", "Stock search")}</strong><p>{t("株価・チャート・企業情報", "Quotes, charts & company data")}</p></Link>
       <Link href="/research/market"><span className={styles.icon} aria-hidden="true">📊</span><strong>{t("マーケット", "Markets")}</strong><p>{t("主要指数・金利・為替", "Indices, yields & currencies")}</p></Link>
       <Link href="/research/calendar"><span className={styles.icon} aria-hidden="true">🗓️</span><strong>{t("決算・経済指標", "Earnings & economy")}</strong><p>{t("カレンダーで予定を確認", "Upcoming events")}</p></Link>
-      <button onClick={onChanges}><span className={styles.icon} aria-hidden="true">♻️</span><strong>{t("何が変わった？", "What changed?")}</strong><p>{t("企業の変化と、その根拠", "Company shifts & evidence")}</p></button>
+      <Link href="/research/capital-map"><span className={styles.icon} aria-hidden="true">◉</span><strong>{t("資本マップ", "CAPITAL MAP")}</strong><p>{t("運用会社とETFの投資先", "Manager portfolios & ETF holdings")}</p></Link>
     </nav>
     <nav className={`${styles.reading} ${locked ? styles.readingLocked : ""}`} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
       <div className={styles.deskHeading}><span>RIZEL’S DESK</span><span className={styles.deskEdition}>TECH PHASE PRO</span></div>

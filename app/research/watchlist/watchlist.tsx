@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useFavoriteLists } from "./use-favorite-lists";
+import { useWatchlistSelection } from "./use-watchlist-selection";
 import { watchlistSlots, sortFavorites, addFavoriteToList, favoriteListLimit, type FavoriteQuote } from "@/lib/research/favorite-lists";
 import { useResearchLanguage } from "../use-research-language";
 import WatchlistFrame from "./watchlist-frame";
@@ -44,7 +45,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const [alertDirection, setAlertDirection] = useState<"above" | "below">("above");
   const [alertCurrency, setAlertCurrency] = useState("USD");
   const [alertError, setAlertError] = useState<"invalid" | "limit" | null>(null);
-  const [listId, setListId] = useState("default");
+  const [listId, setListId] = useWatchlistSelection();
   const slots = watchlistSlots(lists);
   const list = slots.find(item => item.id === listId) ?? slots[0];
   const favorites = list.tickers;

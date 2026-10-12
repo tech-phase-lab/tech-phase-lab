@@ -37,7 +37,7 @@ export default function CoverageCompanyDashboard({ company, companies, generated
 
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#coverage-main">{t("本文へ移動", "Skip to content")}</a>
-    <SiteHeader lang={lang} setLang={setLang} nav={<nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research#what-changed" aria-current="page">{t("何が変わった？", "What changed?")}</Link><Link href="/research/stocks">{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics">{t("決算・指標", "Financials")}</Link></nav>} />
+    <SiteHeader lang={lang} setLang={setLang} nav={<nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research/capital-map">{t("資本マップ", "CAPITAL MAP")}</Link><Link href="/research/stocks">{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics">{t("決算・指標", "Financials")}</Link></nav>} />
     <main id="coverage-main" className={styles.main}>
       <CompanySwitcher ticker={company.ticker} companies={companies} lang={lang} />
       <aside className={styles.snapshot}><strong>{t("保存した取得記録", "SAVED INTAKE SNAPSHOT")}</strong><span>{t("出力日時", "Generated")}: {time(generatedAt, lang)} JST</span><p>{t("このページは保存時点の記録で、自動更新されません。現在の監視状況は取得状況画面で確認できます。", "This page is a saved snapshot and does not update automatically. Check the intake page for current monitoring status.")} <Link href="/research/intake">{t("取得状況を見る →", "View intake status →")}</Link></p></aside>

@@ -1143,3 +1143,204 @@ Claude向け: 設定画面は `/resolute/settings` を利用できる。計画�
 公開画面で、検索語をAPHからVSに変えてVSTを開いてもURLがAPHのまま残り、ブラウザの戻るが検索結果を飛ばしてウォッチリストへ戻る問題を再現した。`stocks/stock-directory.tsx` の検索語をURLのqへ反映し、詳細選択をstockパラメータと履歴へ保存する。検索の入力は履歴を増やさず、詳細を開く操作で1段追加する。ブラウザの戻る/進むと「検索結果に戻る」に対応し、結果一覧へ戻る際は元のスクロール位置を復元する。戻った後の遅い詳細応答は破棄する。URLからの詳細再表示にも対応する。
 
 ニュース・目標株価、共通ヘッダー/メニュー、RESOLUTEは変更しない。株価接続や通知配信を開始する変更ではない。回帰テストは検索語のURL反映、詳細→戻る→進む、遅延応答、詳細URLからの復元を対象とする。スマートフォン実機の戻るジェスチャー・キーボード表示を含む確認は未実施であり、ブラウザ検証と区別する。
+
+
+## 2026-10-12 ChatGPT — ウォッチリストの登録先選択と戻る操作
+
+銘柄検索の詳細に、7つのマイリストへ個別登録・解除できる選択欄を追加済み（c4914c6、f0c8941）。変更済みのリスト名を表示し、複数リストへの登録と選択したリストだけからの解除に対応する。既存のアカウント同期・競合処理を使用する。選択欄はボタンの下へ重ねて開き、詳細ヘッダーを縦に伸ばさない。
+
+ログイン済みの公開ブラウザで、LITEをマイリスト3へ追加して直ちにウォッチリストへ移動すると登録が反映されること、詳細へ戻ってもチェックが残ること、解除して直ちに移動すると対象リストから消えることを確認した。確認用のLITEは解除済み。元のマイリスト1の9銘柄は保持している。
+
+戻った際に選択中のリストがマイリスト1へ戻る問題が見つかったため、通常ウォッチリストの選択IDをタブ単位のsessionStorageへ保持する。銘柄・アカウント情報はこの保存領域に含めない。保存領域が使えない場合も、そのページセッション内で選択を維持する。存在しないIDは従来どおり先頭リストへフォールバックする。表示サンプルは専用実装のままで、この選択保存の対象外。スマホ実機の表示・戻るジェスチャーは未検証。ニュース・目標株価、共通メニュー、RESOLUTEは変更していない。
+
+
+## 2026-10-12 ChatGPT — Claude回答の計画計算と保存契約
+
+Claudeから計算式・制約の回答を受領した。以下は計画保存APIに向けた接続契約であり、DBへの保存・削除や商品画面の接続が完成したという報告ではない。未決のanswersと閲覧条件を確定扱いにしない。
+
+### 金額計算
+
+- 金額はJPY=円、USD=セントの整数で、入力は0〜10^12最小単位。USDも小数を入力しない。月数は小数1桁、reserveMonthsは0〜120、savingsMonthsは0〜600。割合は小数1桁で0〜100、買付ラインのdropPctだけは0より大きく99.9以下。fx.usdJpyは小数2桁で50〜500。
+- reserve = floor(monthlyLivingCost × reserveMonths)。investable = max(0, financialAssets − reserve − nearTermExpense)。financialAssetsは現金と投資済み資産の合計で、nullならinvestableもnull。前の暫定Plan型のinvestable:numberをnumber|nullへ修正する。
+- investBaseはinvestedAmountがnullでなく正数ならinvestedAmount、それ以外はinvestable。保存せず毎回計算する。toleranceDrop = floor(investBase × tolerancePct / 100)、buyBudget = floor(investBase × buyBudgetPct / 100)。基準額または各割合がnullなら結果もnull。
+- toleranceMonthsはtoleranceDrop / monthlyLivingCostを小数1桁で切り捨て、生活費が0なら非表示。toleranceDropがnullなら非表示。buyBudgetとtoleranceMonthsは表示用で保存しない。investableとtoleranceDropは保存時にサーバー再計算して一致を確認し、不一致は400にする契約。
+- 共通の純粋な計算をlib/resolute/plan-calculation.tsに実装した。金額の乗算/切り捨てはBigInt、月数/割合は10倍した整数で扱う。calculatePlanAmountsにはcurrency、monthlyLivingCost、reserveMonths、nearTermExpense、financialAssets、investedAmount、tolerancePct、buyBudgetPctの8項目だけを渡す。assertPlanCalculatedAmountsで送信されたinvestable/toleranceDropの一致を確認できる。
+- このモジュールは計算入力だけを検証する。savingsMonths・fx・buyMode・文字配列などを含むPlan全体の検証器やHTTP APIではない。通常/未回答/全未回答/投資可能額0のJPY例、USDセント、精度境界、入力不正、計算値改ざんをローカルテストする。税金計算テスト20本の検証とは別。
+
+### 買い増しと更新/削除の接続契約
+
+noneはbuyLines空、buyBudgetPct/allocationはnull。singleはライン1件、allocationはnull。stepsは2〜10件、allocationはequal/heavier。質問画面は最大4段階、計画ツールで最大10に編集可能。dropPctは昇順・重複なし、amountは共通の金額単位。amount合計がbuyBudgetを超えても保存は拒否せず画面で警告する。none以外のbuyBudgetPctがnullの場合の警告表示と、予算未算出時の表示は画面仕様として確認する。条件配列は各最大10件・1件100文字、fx.noteは200文字まで。
+
+1ユーザー1計画、本人認証、購入のuse確認、所有者確認を前提とする。未作成GETは{plan:null,revision:0}、初回PUTはbaseRevision:0、競合409は最新のplan/revisionを返す。createdAt/updatedAt/revisionはサーバー管理。DELETEの対象は本人の計画データとanswersで、購入履歴・利用権は削除しない。削除後は有効なuseがあれば再作成可能。削除を許可する権限状態、削除直後のrevisionと再作成時の競合/古いリクエスト対策、バックアップ復元時の削除情報の再適用はまだ実装していない。
+
+### 未決・現行APIとの違い
+
+- answersは質問ID・型・選択肢・保存理由の一覧をClaudeから受領するまで保存する実装を作らない。計画テーブル/書込role/PUT/DELETEを本番DBに追加していない。
+- 通知期間終了後も、有効な買い切りuseがあれば閲覧・編集・シミュレーションは継続できる。PROは商品権限判定に使わない。
+- Claude案のuse.expiredで閲覧だけ許可、revoked/not_ownedで閲覧不可はオーナー未確認。現行のuseにはexpiresAt:nullという制約があり、use.expiredは通常データでは作れない。未購入のAPI上の状態名はmissingで、not_ownedではない。この変更にはDB/API契約との整合が必要で、今回の計算実装では権限を変更していない。
+
+### 削除とバックアップ保持の事実・表示案
+
+現行scripts/resolute/backup.pyの保持ロジックは、成功したバックアップの直近7つの異なる日付について各最新1件と、直近4つのISO週について各最新1件の和集合。重複を除くため最大11件。同日再実行で日数を減らさない。経過日数による強制消去ではなく、新しいバックアップの成功時に古い保存分を整理する。停止/失敗が続くと古いバックアップが残るため「削除から最大28日以内に必ず消去」とは表示できない。通常の毎日成功を前提にすると日次7日分＋週ごとの最新4回分という目安になる。
+
+10月10日に記録した手動バックアップ/隔離DB復元の成功は確認済みの記録として保持する。10月11日の日次Cron結果、10月12日の週次Cron、今回時点のBucket内容・実際の最古データの日付は再確認していない。計画テーブル適用後の取得/復元も未確認。本番DBやバックアップの設定・保存物を今回変更/削除していない。
+
+購入者への表示案: 「計画を削除すると、保存した計画と回答が通常の利用画面から削除されます。購入履歴と利用権は残ります。復旧用の暗号化バックアップには削除前のデータが残ることがあります。バックアップは直近7日分と週ごとの最新4回分を目安に保管し、新しいバックアップの成功時に古いものを整理します。」この文はDELETE実装前の案であり、削除完了の表示にはまだ使用しない。復旧時に削除済み計画を通常データへ戻さない仕組みはDELETEと合わせて設計・確認する。
+
+検証結果: Node 680/680（計画計算の追加6テストを含む）、Python 2,400/2,400（164.933秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --cached --check成功。これは計画の保存/削除・実画面・実DBやバックアップ最新実行の検証ではない。
+
+
+## 2026-10-12 ChatGPT — 計画権限・削除revisionの確定とfx保留
+
+Claude経由の最新回答を受領した。この追記は直前の暫定記述に優先する。既存本文は変更しない。
+
+### 確定した接続契約
+
+- Planのinvestableはnumber | null。financialAssetsがnullならinvestableもnull。既存の共通計算モジュールはこの契約に対応済み。
+- 買い切りのuseは期限なしでexpiresAt:null。計画の閲覧・編集・シミュレーションはuse.statusがactiveのときだけ許可する。revokedとmissingは閲覧も不可。未購入の状態名はmissing。use.expiredは通常発生しないため例外時の扱いは保留し、閲覧許可へ流用しない。通知利用権alertsの期限終了だけでは、有効なuseによる計画利用を止めない。PROは商品権限を代替しない。
+- PUTは{plan, baseRevision}、DELETEは{baseRevision}。本人をサーバー側の認証から識別する。baseRevisionは0以上の安全な整数。createdAt、updatedAt、revisionはサーバー管理。未作成GETは{plan:null,revision:0}、初回PUTはbaseRevision:0。権限・本人確認を競合応答より先に行い、閲覧不可の利用者に409の最新計画を漏らさない。
+- DELETEでは計画データとanswersを削除し、削除済みの印にはユーザーID・revision・削除日時だけを残す。購入履歴と利用権は別で保持する。更新と削除は同じrevisionを使って原子的に競合判定し、削除のたびにrevisionを+1する。既にplan:nullの場合も、正しいbaseRevisionで受理したDELETEは+1し、0に戻さない。古いbaseRevisionは409と最新のplan/revisionを返す。権限確認に失敗した場合は最新計画を返さない。
+- 削除後のGETは{plan:null,revision:現在の値}。再作成PUTにはその値をbaseRevisionとして使い、作成時もrevisionを増やす。削除前の古いPUT/DELETEは409とし、削除済み計画を復活させない。
+- DELETEの非active利用者への受付条件はまだ確定していない。今回の回答は閲覧・編集・シミュレーションの条件を確定するもので、取り消し後の本人によるデータ削除請求の導線を閉じる決定とは扱わない。DELETE実装前に受付条件を確認し、不可視の計画をエラー応答へ含めない。
+
+### answersとfxは実装保留
+
+answersは30問確定後の質問ID・型・選択肢・保存理由の一覧を受領するまで永続化を実装しない。fxは質問内容の変更に伴い持ち方を再提示するため、検証・計算・保存・画面接続の実装を止める。前節のfx.usdJpyの範囲/精度とfx.noteの文字数は現時点の確定仕様ではなく、新しい回答で再確定する。現行の共通計算はfx/answersを入力に含めず、計画保存APIやDBテーブルもまだ作成していない。
+
+### バックアップ復元時の削除優先（未実装の設計案）
+
+DBの削除済みの印だけでは、削除前のバックアップから復元した際にその印自体が失われる。削除履歴を復元対象DBのスナップショットとは別の永続保存先にも残し、復元時に最新の履歴を再適用する構成が必要。保存項目はユーザーID・削除revision・削除日時だけで、計画本文やanswersを含めず、アクセス制限と暗号化を行う。
+
+復元は隔離DBで行い、削除revision以下の復元計画は消去する。削除後に再作成され、そのrevisionが最新削除revisionを上回る計画は一律に削除しない。行がなければ削除済みの印を再作成し、revisionを後退させない。履歴の取得・照合・再適用が確認できるまで復元DBを利用者へ開放しない。DELETEと外部履歴への記録の間の障害も考慮し、耐久性のある再送・未反映検知と、削除を完了扱いにする条件を実装前に確定する。
+
+これは設計案であり、独立した削除履歴保存先、再送処理、復元時の再適用は未実装。既存のpg_dump/隔離DBへのpg_restore成功は、この削除保護の検証を意味しない。追加保存先の容量・費用を確認してから設定する。DBとBucketが同じRailwayアカウント内にあるため、アカウントアクセス喪失に備える別保管は引き続き課題。
+
+バックアップ保持は「直近7日分＋週ごとの最新4回分を目安」とし、「28日以内に必ず消える」とは記載しない。前節の購入者向け削除表示案は了承済みで、法務確認時に最終文面を修正する。DELETE実装前に削除成功の表示として使用しない。
+
+今回の作業は仕様資料への追記のみ。実DB、Railwayサービス/変数/費用、既存ニュース監視、メール送信は変更していない。検証はgit diff --checkと既存本文がそのまま残ることの照合。計画保存・削除API、独立削除履歴、削除後の復元保護は未実装であり、完成扱いにしない。
+
+
+## 2026-10-12 ChatGPT — 計画保存・削除APIの先行実装（answers/fxを除外）
+
+最新回答により、本人のDELETEはuse.revokedでも許可する。missingでも本人認証後は成功応答を選択し、閲覧・編集・シミュレーションは引き続きuse.activeのみ。技術的な細部はChatGPT側で決めて進め、確認は費用・個人情報・利用者に見える文言に関わる事項に限る。この追記は前節のDELETE受付条件の未決記述に優先する。
+
+### Claudeが画面を接続する契約
+
+入口は同一originのGET/PUT/DELETE /api/resolute/plan。内部ではVercelサーバーがClerkセッションJWTと既存サービス間トークンを使ってRailwayの/internal/v1/planを呼ぶ。ブラウザからuserId・購入権限・PRO状態・Railway URL・秘密情報を渡さない。GET/PUTには有効な買い切りuseが必要。DELETEは本人認証だけで受付し、useの取り消し・未購入でも自分のデータ削除を止めない。
+
+PUTは{plan,baseRevision}、DELETEは{baseRevision}。初回は0。200と409は共に{plan,revision}で、DELETEの200はplan:null。GETの未作成はplan:null/revision:0、削除後は保持したrevision。PUT/DELETEの成功でrevisionを+1する。既にplan:nullや未購入でデータがない場合も、正しいbaseRevisionのDELETEを成功として受理し、削除済みの印と次のrevisionを保持する。権限取り消し後はGETできないため、DELETEで競合したら409のrevisionを使って本人が再実行できる。非active本人のDELETEの409はplan:nullにしてrevisionだけ返し、不可視の計画本文を漏らさない。書込の自動再試行はしない。応答を受け取れなかった場合は保存失敗と断定せず、GETまたは本人による競合確認で結果を確認する。
+
+Planの入力型はlib/resolute/plan-data.tsのPlanInputが正本。schemaVersionは1。現時点の保存項目はcurrency、monthlyLivingCost、savingsMonths、reserveMonths、nearTermExpense、financialAssets、investedAmount、investable、tolerancePct、toleranceDrop、perStockCapPct、buyMode、buyLines、buyBudgetPct、allocation、noBuyConditions、haltConditions、ruleType。全項目を送る。nullable項目はnullを明示する。金額計算・上限・精度・買い増し制約は前節の確定事項を検証し、investable/toleranceDropの不一致は400。買い増し額の合計がbuyBudgetを超える入力は拒否しない。条件の文字数はUnicodeコードポイントで数える。
+
+answersとfxはキー自体を受付せず、送信されたら400。createdAt/updatedAtも入力では送らない。GET/PUTのplanにはサーバー管理のcreatedAt/updatedAt（ISO UTC）が含まれるため、編集してPUTする際はこれらを除く。revisionはplanの外側で扱う。表示用のreserve/investBase/toleranceMonths/buyBudgetは保存項目に追加せず、既存共通計算を使う。計画内容やメールアドレスをエラー・ログへ出力しない。
+
+GET/PUT/DELETEの401はAUTH_REQUIRED、GET/PUTの403はPLAN_ACCESS_DENIED、PUT/DELETEのorigin不一致はORIGIN_REJECTED、400はINVALID_PLAN、413はBODY_TOO_LARGE、415はJSON_REQUIRED、429はRATE_LIMITED（Retry-After:60）、503はPLAN_UNAVAILABLE。本文はapplication/jsonで最大16,384 bytes、URLのクエリによるユーザー選択等は受付しない。全応答はprivate/no-store。503を未購入や保存成功と表示しない。今回、画面の文言変更は行っていない。
+
+### DB・削除・復元の実装と有効化条件
+
+明示適用用db/resolute/002_plans.sqlを追加した。専用resolute DB以外では適用を拒否する。1ユーザー1行で、更新・削除はトランザクションとユーザー単位のDBロックで直列化し、baseRevisionを照合する。useの確認はDBで行い、PROや通知期間を代用しない。DELETEは計画本文をNULLにし、作成/更新日時も消去してユーザーID・revision・削除日時を保持する。購入履歴・利用権には書き込まない。同じトランザクションでplan_deletionsへユーザーID・revision・削除日時だけを記録し、記録失敗なら削除全体をロールバックする。
+
+lib/resolute/plan-restore.tsに削除履歴の再適用処理を追加した。resolute_restore_testという隔離DB以外には実行できない。独立保存先から取得・復号・完全性を確認した最新履歴を渡す前提で、削除revision以下の復元計画を削除済みの印へ置換し、欠けた印を再作成する。削除後に再作成され、削除revisionより新しい計画は保持する。不正履歴を受付せず、再適用によってrevisionを後退させない。
+
+plan_deletionsが復元スナップショット内にあるだけでは削除保護を保証できない。独立した暗号化履歴への出力・読戻し・障害時の再送・完全性確認と、既存pg_restoreジョブへの接続は未実装。このため本番の計画APIは既定で無効（503）。RailwayのRESOLUTE_PLAN_API_ENABLEDをtrueにする前に、独立削除履歴と復元確認を完了する。DB接続は将来の専用変数RESOLUTE_PLAN_DB_URLだけを使い、resolute_plan_writerという限定roleを要求する。既存ENTITLEMENT_DB_URL/resolute_api_readerはそのまま読取専用で維持し、他DBやDATABASE_URLへフォールバックしない。
+
+今回、本番のSQL適用・writer作成・環境変数設定・有効化はしていない。新しいサービス・契約・費用設定・メール送信は追加していない。費用を伴う独立保存先の設定は見込みを確認してから行う。独立履歴と復元保護、実画面からVercel/Railway/実DBへの通し確認を終えるまで「計画保存・削除が本番で完成」とは扱わない。answers/fxの最終仕様を受領後、保存範囲を再確認して追加する。
+
+### 確認済みと未確認
+
+ローカルPostgreSQLエンジンでSQL適用、未作成、保存、競合、削除、再作成、取り消し後の閲覧/編集拒否と本人削除、未購入本人の削除、削除記録失敗時のロールバックを確認した。隔離DBで古い計画の削除履歴再適用、新しい再作成計画の保持、欠けた削除済みの印の復元、再適用の冪等性、不正履歴と別DBの拒否を確認した。HTTPテストで本人識別・origin・入力上限・競合応答・秘密を含まないエラー・書込再試行なしを確認した。これはRailwayの実DBでの保存や、実Bucketの独立履歴を使ったpg_restoreの実測結果ではない。
+
+検証結果: Node 685/685、Python 2,400/2,400（156.300秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。実際のNode HTTP起動・署名JWT認証・DELETE本文転送・本番無効時の503もローカル確認済みで、DBへは接続していない。最初のPython実行は既存test_deep_analysisの全文文字列検査がpublishedAtの45秒を45%と誤検出して1件失敗した。対象外のニュース実装/テストを変更せず、全体再実行の成功を確認した。
+
+
+## 2026-10-12 ChatGPT — 計画APIの最小DB権限を再確認
+
+計画writerにはentitlementsのSELECTだけを付与し、INSERT/UPDATE/DELETEは付与しない。PostgreSQLのSELECT FOR SHAREはUPDATE権限も必要になるため、権限確認クエリから行ロックを除いた。専用DBの明示適用用002_plans.sqlには、entitlementsのINSERT/UPDATE/DELETEも計画処理と同じユーザー単位のadvisory transaction lockを取得するtriggerを追加した。これにより購入権限を書き換える権限を計画APIへ与えずに、購入権限の変更と計画処理を直列化する。entitlementsのユーザーIDの変更は拒否し、別ユーザーへの権限移動をこの更新処理で行わない。
+
+ローカルPostgreSQLの計画テストはresolute_plan_writerの限定roleへ切り替えて実行し、保存・更新・削除の成功と、entitlementsのUPDATEが42501で拒否されることを確認した。既存のAPI読取role、実DB、Railwayの環境変数・サービス設定は変更していない。本番有効化前に独立した削除履歴と復元ジョブを接続する条件は維持する。triggerも本番へ未適用であり、適用後の実DBでの同時実行確認は未実施。
+
+公式参照: https://www.postgresql.org/docs/current/sql-select.html （locking clauseにはSELECTに加えてUPDATE権限が必要）。
+
+最小権限修正後の最終検証: Node 685/685、Python 2,400/2,400（159.378秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。限定roleによる実SQLテストは成功したが、実DBへのmigration/role適用・独立削除履歴の出力/読戻し・pg_restoreジョブ接続・画面からの実環境検証は未実施。
+
+
+## 2026-10-12 ChatGPT — 30問のanswersとfx最終仕様を受領・実装
+
+Claudeから質問30問と保存仕様の確定回答を受領した。この追記は前節の「answers/fxは受付しない・実装保留」に優先する。既存本文はそのまま残す。PlanInputへanswersVersion:1、answers、fxを追加し、APIの保存・読込・入力検証のコードを更新した。タイプとアドバイスの判定はClaude側の純粋関数が担当し、サーバーはruleTypeの既存enumを検証して参考値として保存するだけ。再計算や分類ロジックは追加していない。金額の既存再計算・権限判定・競合revisionの契約は維持する。
+
+### answersVersion=1の契約
+
+answersはq01〜q30の全30キーを必須とする。出さなかった質問と未回答はnull。省略・余分なキー・undefined・数値・自由記述は受付しない。単一選択は選択肢IDの文字列、q21/q28/q29だけは選択肢IDの配列。配列は重複なしで1件以上、それぞれ選択肢数を上限とする。何も選んでいなければ空配列ではなくnullにする。
+
+選択肢の正本はlib/resolute/plan-answers.tsのPLAN_ANSWER_OPTIONS。PlanAnswers型も公開し、emptyPlanAnswers()で全30キーがnullの初期値を作れる。parsePlanAnswersは保存形式の検証だけを行い、タイプ判定は行わない。
+
+| 質問ID | 選択肢ID |
+| --- | --- |
+| q01 | first / 1to3 / 3plus |
+| q02 | l15 / l25 / l40 / l40plus / custom |
+| q03 | stable / uneven / none |
+| q04 | m0 / m1 / m3 / m6 / m12 / custom |
+| q05 | m3 / m6 / m12 / custom |
+| q06 | none / has |
+| q07 | input / unknown |
+| q08 | not_yet / input |
+| q09 | y3to5 / y5to10 / y10plus / undecided |
+| q10 | often / sometimes / rarely / no_drop_yet |
+| q11 | p10 / p20 / p30 / p40plus / unknown |
+| q12 | no / yes / no_drop_yet |
+| q13 | wait / buy_more / reduce / unknown |
+| q14 | never / once / often / no_rally_yet |
+| q15 | hold / sell_some / buy_more / undecided |
+| q16 | steady / fast / defensive / undecided |
+| q17 | monthly / on_drop / on_rise / news / undecided |
+| q18 | many_daily / daily / weekly / rarely |
+| q19 | never / sometimes / often |
+| q20 | fund_etf / stock / bond / gold / mixed |
+| q21（複数） | tech_semis / dividend / healthcare / finance / energy_materials / other |
+| q22 | p10 / p20 / p30 / p50 / custom |
+| q23 | lt10 / p10to30 / p30to50 / gt50 / none |
+| q24 | none / single / steps2 / steps3 / steps4 |
+| q25 | d5 / d10 / d15 / d20 / custom |
+| q26 | b10 / b20 / b30 / custom |
+| q27 | equal / heavier |
+| q28（複数） | cash_low / income_unstable / over_cap / no_reason |
+| q29（複数） | over_tolerance / cant_sleep / thesis_broken |
+| q30 | ignore / yen3 / yen7 / custom |
+
+q21はq20がstock/mixedのときだけ回答可能、それ以外はnull。q25/q26はq24がsingle/steps2/steps3/steps4のときだけ回答可能。q27はq24がsteps2/steps3/steps4のときだけ回答可能。親質問がnullまたは対象外なら子質問もnullを要求する。条件に該当していても未回答ならnullを保存できる。
+
+### 数値とfx
+
+数値の回答はanswersへ入れず、Planの既存数値項目へ入れる。質問から計画を作成するとき、生活費の代表値はl15=150000、l25=250000、l40/l40plus=400000（提示されたJPYの例）。貯金月数はm0=0、m1=1、m3=3、m6=6、m12=12、q11のp40plusは40。customは本人が入力した値を使う。金額の通貨単位は引き続きJPY=円/USD=セントで、サーバーは為替による自動換算や質問の代表値への書換えをしない。その他の代表値とPlan項目への取込みはClaudeの質問画面が担当する。
+
+計画ツールでの数値編集を妨げないため、代表値と現在のPlan数値を一律に同値必須とはしない。サーバーは各項目の型・範囲・精度と金額計算の整合を検証する。ただし明示されたunknown/not_yetの条件は検証し、q07=unknownならfinancialAssets=null、q08=not_yetならinvestedAmount=nullを要求する。これらの金額を後から入力する場合は該当回答IDもinputへ更新する。ruleTypeは選択肢や数値と照合して判定し直さない。
+
+fxは{thresholdYen:number|null,usdJpy:number|null,note:string}の3キーだけ。thresholdYenは0.1〜50で小数1桁、usdJpyは50〜500で小数2桁、noteはUnicodeコードポイントで200文字まで。usdJpyはq30とは独立した入力で、未入力ならnull。q30=ignoreならthresholdYen=null、yen3なら3、yen7なら7、customなら範囲内の入力値を要求する。q30が未回答のnullなら、fx自身の型・範囲を検証し、回答を勝手に生成しない。旧fxの形や余分なキーは400にする。USDの計算入力でもthresholdYenの単位は円で変更しない。
+
+### 自由記述と削除
+
+q28/q29の自由記述はanswersへ入れず、noBuyConditions/haltConditionsへ保存する。各配列は最大10件、各文字列はUnicodeコードポイントで100文字まで。入力欄の表示はClaude指定の「個人が特定できる情報は書かないでください」を使う。ChatGPT側は今回画面の文言を変更していない。
+
+条件本文、回答、fx.noteをログへ出さない。想定外の例外に本文が含まれてもAPI応答へ出さず、一般的なエラーコードだけを返す。商品メールへの接続は今回実装しない。今後の通知ジョブでも自由記述とfx.noteをメール本文へ載せない。保存目的は回答のやり直しとClaude側のタイプ/文章再計算で、メールアドレスをPlanへ追加しない。
+
+保存できるUnicode文字列だけを受け付け、DBのjsonbで保存できないNUL/孤立サロゲートを400にする。不正UTF-8のJSON本文も勝手に置換せず400にする。本文上限16,384 bytes、createdAt/updatedAtはサーバー管理、PUTは{plan,baseRevision}、DELETEは{baseRevision}のまま。DELETEでplan本文をNULLにするためanswersVersion/answers/fxも同時に消える。削除済みの印と独立履歴への引渡しには計画・回答・自由記述を含めない。
+
+### DB適用・確認の範囲
+
+明示適用用db/resolute/003_plan_answers_fx.sqlを追加した。001→002→003の順に専用resolute DBへ適用する。002の暫定的なanswers/fx禁止制約を003で置換し、保存計画にanswersVersion=1とanswers/fxのobject型を要求する。既存のmigration本文は書き換えない。不完全な古い計画が残っていれば制約適用は失敗してロールバックする。回答を推測して補完したり、古い計画を削除して適用を通したりしない。今回の本番DBに計画テーブルを適用していないという前回記録は維持する。
+
+ローカルPostgreSQLの限定roleで回答とfxの保存/読込、DELETEでの消去、同時更新/削除の競合、再作成、削除記録失敗のロールバック、隔離DBへの削除履歴再適用を確認する。回答全30問の選択肢、非表示分岐、バージョン、null、複数選択の型/重複、fxの境界/精度、秘密を含まないエラーも検証する。これらは実Bucketの独立削除履歴や実環境のpg_restoreを確認した結果ではない。
+
+実DBへの002/003適用、writer作成、本番有効化、独立暗号化削除履歴の出力/読戻しと復元ジョブへの接続は引き続き未実施。Railwayの契約・プラン・変数・サービス設定、既存ニュース監視、他DBとメール送信は変更しない。前回コミット4ab29300adaf9dba6cffefe6f5aeea45d1bebb78のGitHub Actions run 38157631781はcompleted/successを確認した。今回の計画APIの本番有効化完了とは区別する。
+
+最終ローカル検証: Node 690/690（回答/fxの追加5テストを含む）、Python 2,400/2,400（159.386秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。Pythonは既存test_deep_analysisの全文検査がpublishedAtの45秒を45%と誤検出する問題を避けるため、RESEARCH_TEST_NOW=2026-10-08T06:00:15+00:00で公式runnerを実行した。初回のデフォルト固定時刻ではこの既存テストだけが失敗した。ニュース関連の実装/テスト/CIは変更していない。本番の保存・削除、商品メール送信、独立削除履歴と実Bucketを使った復元は未検証。
+
+
+## 2026-10-12 JST — CAPITAL MAP / 資本マップ初版
+
+- 日本語メニュー「資本マップ」、英語メニューとページ見出し「CAPITAL MAP」でユーザー合意。運用会社の保有銘柄とETF構成が二本柱。
+- 既存「何が変わった？」のメニュー・ホーム導線を `/research/capital-map` に置換し、PRO月額案内に提供準備中として追記。装飾・過去記事・保存・旧ハッシュ・ニュース/目標株価・RESOLUTEを維持。
+- 本ページは準備画面。`/research/capital-map/sample` は全数値・日付が架空の専用サンプル。構成比、株数増減、銘柄入力・全ウォッチリストでの絞り込み、対象保存、前回確認との差分、ETF加重重複率を表示。
+- 保存はこのブラウザーのみ。企業の株式に対する保有率は未確認で「—」。実データ取得・自動更新・商用掲載条件・機関投資家合計・企業出資先・実機スマホは未完了。稼働済み扱いしない。
+- 詳細と実データ接続前の条件は `docs/CAPITAL-MAP.md`。企業紹介6項目を銘柄検索の株価下へ置く案は別の今後作業。
+- 深夜の公開処理が中断し、その後の環境整理で未公開作業が失われたため、朝に最新 `2ffa239` 上で復元。別担当のRESOLUTE更新を維持。

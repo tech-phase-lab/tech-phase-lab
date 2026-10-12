@@ -3,15 +3,17 @@ import { Readable } from 'node:stream';
 import { authConfig } from './auth.mjs';
 import { createHandler } from './handler.mjs';
 import { getResoluteEntitlementsForUser } from '../../lib/resolute/database.ts';
+import { operateResolutePlan } from '../../lib/resolute/plan-database.ts';
 import { resoluteDatabaseConfig } from '../../lib/resolute/database-config.ts';
 
 const config=authConfig(process.env);
 const db=resoluteDatabaseConfig(process.env.ENTITLEMENT_DB_URL);
 if(new URL(db.connectionString).username!=='resolute_api_reader')throw Error('Read-only DB role required');
-const handler=createHandler(config,getResoluteEntitlementsForUser);
+const handler=createHandler(config,getResoluteEntitlementsForUser,undefined,operateResolutePlan);
 const server=createServer({maxHeaderSize:24576},async(req,res)=>{
   try {
-    const request=new Request('http://service.invalid'+req.url,{method:req.method,headers:req.headers});
+    const request=new Request('http://service.invalid'+req.url,{method:req.method,headers:req.headers,
+      ...(['GET','HEAD'].includes(req.method)?{}:{body:Readable.toWeb(req),duplex:'half'})});
     const response=await handler(request);
     res.writeHead(response.status,Object.fromEntries(response.headers));
     if(response.body)Readable.fromWeb(response.body).pipe(res);else res.end();
