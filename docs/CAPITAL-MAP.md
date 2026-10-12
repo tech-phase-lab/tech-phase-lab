@@ -147,3 +147,6 @@ Live retrieval, automatic updates, commercial ETF display permission, institutio
 - Comparison is always the prior disclosure, headed 前期からの変化. Removed the saved-disclosure selector and manual acknowledgement buttons.
 - NEW beside the as-of label appears when a previously opened portfolio has a different snapshot ID in this browser. First visits are not marked new. Opening automatically records the snapshot; the badge stays during this page session and clears on reload. No blinking. Storage failures do not block holdings.
 - Phone category tabs have wider gaps and touch areas while keeping the tools on the same row.
+
+### 2026-10-12 comparison panel readability
+- Framed the prior-period comparison in a subtle violet panel, with heading above dates and the current date emphasized. Each date stays intact when wrapping. Increased checkbox size and kept the whole label clickable.
