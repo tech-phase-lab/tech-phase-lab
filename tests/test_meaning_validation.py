@@ -68,6 +68,28 @@ class MeaningValidationTests(unittest.TestCase):
         validation.validate_negation('米10年債利回りが再び急上昇',
                                      'U.S. 10-Year Treasury Yield rising sharply again. Not seen since 2007.')
 
+    def test_issuer_table_dates_written_day_month_year_support_the_matching_japanese_dates(self):
+        # Oct 12: ASML's buyback tables write "5-Oct-26"; a correct title naming 10月5日〜10月9日 was rejected.
+        source = ('ASML reports the following transactions, conducted under its current share buyback program.\n'
+                  'Date Total repurchased shares Weighted average price\n'
+                  '5-Oct-26 60,000 \u20ac1,653.55\n9-Oct-26 50,000 \u20ac1,616.48')
+        validation.validate_numbers('ASML、10月5日〜10月9日の自社株買い取引を報告', source)
+        for wrong in ('ASML、11月5日〜11月9日の自社株買い取引を報告',
+                      'ASML、10月6日〜10月12日の自社株買い取引を報告',
+                      'ASML、10月5日〜10月9日に1億ユーロの買い戻し'):
+            with self.assertRaisesRegex(ValueError, '^unsupported-number$'):
+                validation.validate_numbers(wrong, source)
+
+    def test_spelled_channel_counts_and_generation_ordinals_support_the_japanese_digits(self):
+        # Oct 12: Marvell's "Second-generation ... Six-channel" title was rejected for 第2世代 and 6チャネル.
+        title = 'Marvell Unveils Second-generation Structera X, Industry-first Six-channel CXL 3.2 Memory Expanders for AI Inference'
+        validation.validate_numbers('Marvell、第2世代Structera Xと業界初の6チャネルCXL 3.2メモリ拡張を発表', title)
+        for wrong in ('Marvell、第3世代Structera Xと業界初の6チャネルCXL 3.2メモリ拡張を発表',
+                      'Marvell、第2世代Structera Xと業界初の8チャネルCXL 3.2メモリ拡張を発表',
+                      'Marvell、第2世代Structera Xと業界初の6チャネルCXL 3.3メモリ拡張を発表'):
+            with self.assertRaisesRegex(ValueError, '^unsupported-number$'):
+                validation.validate_numbers(wrong, title)
+
     def test_short_negated_aside_in_the_quote_does_not_reject_a_title_that_never_repeats_it(self):
         # Oct 12: an NVIDIA release was held for days because the quoted paragraph held
         # "not today, not tomorrow" and the English title was read as restating it.

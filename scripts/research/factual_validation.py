@@ -32,6 +32,7 @@ MONTH_VALUES = {**MONTHS, **MONTH_ABBREVIATIONS}
 # issuer dates such as "Oct. 1" without treating a bare name like "Mar" as 3.
 MONTH_PATTERN = (r'\b(' + '|'.join(MONTHS) + r'|(?:'
                  + '|'.join(MONTH_ABBREVIATIONS) + r')(?=\.?\s+\d))\b\.?')
+GENERATION_ORDINALS = {'first': 1, 'second': 2, 'third': 3, 'fourth': 4, 'fifth': 5, 'sixth': 6}
 ORDINALS = {'first': 1, 'second': 2, 'third': 3, 'fourth': 4, '一': 1, '二': 2, '三': 3, '四': 4}
 SMALL_NUMBERS = {word: i for i, word in enumerate(
     ('zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'))}
@@ -152,6 +153,8 @@ def dates(text):
         result.append((int(year) if year else None, int(month), int(day)))
     for year, month, day in re.findall(r'(?<!\d)(\d{4})-(\d{2})-(\d{2})(?!\d)', text):
         result.append((int(year), int(month), int(day)))
+    for day, month, year in re.findall(r'(?<!\d)(\d{1,2})-(' + '|'.join(MONTH_ABBREVIATIONS) + r')-(\d{2,4})(?!\d)', text, re.I):
+        result.append((int(year) + (2000 if len(year) == 2 else 0), MONTH_VALUES[month.capitalize()], int(day)))
     for year, month, day in result:
         try:
             date(year or 2000, month, day)
@@ -215,8 +218,15 @@ def numeric_values(text):
     # Spelled calendar terms have numeric Japanese equivalents; no arbitrary
     # number is admitted, and date/quarter relationships are checked separately.
     values.extend((Decimal(MONTH_VALUES[m[1].capitalize()]), 'number') for m in re.finditer(MONTH_PATTERN, text, re.I))
+    # Issuer tables write dates as "5-Oct-26" (ASML's buyback reports): the month
+    # name between two numbers is the same calendar month, never an arbitrary number.
+    values.extend((Decimal(MONTH_VALUES[m[1].capitalize()]), 'number')
+                  for m in re.finditer(r'(?<!\d)\d{1,2}-(' + '|'.join(MONTH_ABBREVIATIONS) + r')-\d{2,4}(?!\d)', text, re.I))
     values.extend((Decimal(ORDINALS[x.lower()]), 'number') for x in re.findall(r'\b(first|second|third|fourth)[ -]+quarter\b', text, re.I))
     values.extend((Decimal(ORDINALS[x]), 'number') for x in re.findall(r'第([一二三四])四半期', text))
+    # "Second-generation" is 第2世代 in Japanese; only the generation ordinal, never a free number.
+    values.extend((Decimal(GENERATION_ORDINALS[x.lower()]), 'number')
+                  for x in re.findall(r'\b(first|second|third|fourth|fifth|sixth)[ -]+generation\b', text, re.I))
     # A spelled duration is still a factual number, not optional English prose.
     # Restrict this to explicit time units so articles/idioms such as "one of"
     # do not cause blanket rejections of otherwise equivalent translations.
@@ -277,7 +287,7 @@ def spelled_values(evidence):
 SPELLED_COUNT_WORDS = ('two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve')
 SPELLED_COUNT = re.compile(r'\b(' + '|'.join(SPELLED_COUNT_WORDS) + r')(?:\s+|-)(?!(?:of|or|to|and|percent|per|times|in|at|by|for)\b)([a-z][a-z-]*)', re.I)
 # Japanese counters that carry no object of their own ("3つの…", "3件の…").
-GENERIC_COUNTERS = r'つ|個|件|種類|か所|カ所|ヶ所|箇所|拠点|基|台|棟|機種|モデル'
+GENERIC_COUNTERS = r'つ|個|件|種類|か所|カ所|ヶ所|箇所|拠点|基|台|棟|機種|モデル|チャネル|チャンネル|レーン|コア|層'
 # Counters that name their object must match the English noun.
 NAMED_COUNTERS = (
     (r'社', {'companies', 'company', 'firms', 'partners', 'customers', 'vendors', 'suppliers', 'businesses'}),
@@ -300,7 +310,7 @@ def spelled_count_supported(value, text, evidence):
     if not nouns:
         return False
     digit = str(int(value))
-    for match in re.finditer(r'(?<![\d.,$€£¥\w])' + digit + r'(?![\d.,])', text):
+    for match in re.finditer(r'(?<![\d.,$€£¥A-Za-z_])' + digit + r'(?![\d.,])', text):
         after = text[match.end():]
         word = re.match(r'\s+([A-Za-z][A-Za-z-]*)', after)
         if word and word[1].lower() in nouns:
