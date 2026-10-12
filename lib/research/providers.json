@@ -364,6 +364,7 @@
     "allowedHosts": [
       "data.sec.gov",
       "investor.asml.com",
+      "mfn.se",
       "www.asml.com",
       "www.sec.gov"
     ],
@@ -379,6 +380,10 @@
       {
         "host": "www.sec.gov",
         "pattern": "^/Archives/edgar/data/937966/.+"
+      },
+      {
+        "host": "mfn.se",
+        "pattern": "^/one/a/asml-holding/[a-z0-9]+(?:-[a-z0-9]+)*$"
       }
     ],
     "supplementalSources": [
@@ -397,7 +402,19 @@
         "format": "rss",
         "label": "SEC 6-K"
       }
-    ]
+    ],
+    "fallbackSources": [
+      {
+        "url": "https://mfn.se/all/a/asml-holding.json?limit=10&compact=true",
+        "format": "news-json",
+        "label": "ASML releases via MFN",
+        "itemsKey": "items",
+        "urlKey": "url",
+        "titleKey": "content.title",
+        "dateKey": "content.publish_date"
+      }
+    ],
+    "automaticSource": "fallback"
   },
   {
     "ticker": "MRVL",
@@ -797,7 +814,9 @@
     "allowedHosts": [
       "blogs.microsoft.com",
       "data.sec.gov",
+      "developer.microsoft.com",
       "news.microsoft.com",
+      "news.xbox.com",
       "www.microsoft.com",
       "www.sec.gov"
     ],
@@ -813,6 +832,14 @@
       {
         "host": "www.microsoft.com",
         "pattern": "^/en-us/(?:security/blog|microsoft-cloud/blog)/.+"
+      },
+      {
+        "host": "developer.microsoft.com",
+        "pattern": "^/blog/[a-z0-9]+(?:-[a-z0-9]+)*/?$"
+      },
+      {
+        "host": "news.xbox.com",
+        "pattern": "^/en-us/\\d{4}/\\d{2}/\\d{2}/[a-z0-9]+(?:-[a-z0-9]+)*/?$"
       },
       {
         "host": "www.sec.gov",

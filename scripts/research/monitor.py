@@ -1569,16 +1569,25 @@ def news_json_links(body, ticker, source):
     items = data.get(source.get("itemsKey", "items"), [])
     if not isinstance(items, list):
         raise ValueError("Invalid news JSON structure")
+    def pick(item, key):
+        # A dotted key reads one nested field, e.g. "content.title" in a JSON Feed.
+        for part in key.split("."):
+            item = item.get(part) if isinstance(item, dict) else None
+        return item
+
     links = {}
     for item in items:
         if not isinstance(item, dict):
             continue
-        value = item.get(source.get("urlKey", "pageUrl"))
-        canonical = article_url(urljoin(source["url"], value or ""), ticker)
+        value = pick(item, source.get("urlKey", "pageUrl"))
+        canonical = article_url(urljoin(source["url"], value if isinstance(value, str) else ""), ticker)
         if not canonical:
             continue
-        title = item.get(source.get("titleKey", "displayName"))
-        links[canonical] = " ".join(unescape(title).split())[:300] if isinstance(title, str) and title.strip() else None
+        title = pick(item, source.get("titleKey", "displayName"))
+        title = " ".join(unescape(title).split())[:300] if isinstance(title, str) and title.strip() else None
+        published = pick(item, source["dateKey"]) if source.get("dateKey") else None
+        published_on = published[:10] if isinstance(published, str) and re.match(r"\d{4}-\d{2}-\d{2}(?:T|$)", published) else None
+        links[canonical] = {"title": title, "publishedOn": published_on} if published_on else title
     return links
 
 
@@ -3495,7 +3504,7 @@ def monitoring_sources(ticker, automatic=False, scope=None):
     """Return the primary chain followed by independently collected official sources."""
     provider = PROVIDERS[ticker]
     primary = {"url": INDEXES[ticker], "format": provider["format"], "route": "primary"}
-    for key in ("requestJson", "itemsKey", "urlKey", "titleKey", "twseCompanyCode", "allowEmpty"):
+    for key in ("requestJson", "itemsKey", "urlKey", "titleKey", "dateKey", "twseCompanyCode", "allowEmpty"):
         if key in provider:
             primary[key] = provider[key]
     primary_chain = [primary] + [

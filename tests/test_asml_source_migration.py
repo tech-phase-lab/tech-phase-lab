@@ -40,6 +40,7 @@ class AsmlSourceMigrationTests(unittest.TestCase):
         self.assertEqual(monitor.INDEXES['ASML'], INDEX)
         self.assertEqual(set(provider['allowedHosts']), {
             'data.sec.gov', 'www.sec.gov', 'www.asml.com', 'investor.asml.com',
+            'mfn.se',  # Oct 12: ASML's own releases via MFN while asml.com refuses the server.
         })
         self.assertEqual(monitor.article_url(OLD_URL, 'ASML'), OLD_URL)
         self.assertEqual(monitor.article_url(URL, 'ASML'), URL)

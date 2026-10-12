@@ -200,6 +200,7 @@ def category_contexts(db, rows, *, sources=None):
 
 
 SEC_HOSTS = {'www.sec.gov', 'data.sec.gov'}
+MONTHLY_REVENUE_TITLE = re.compile(r'[A-Z][A-Za-z0-9&.\- ]{1,40} (?:January|February|March|April|May|June|July|August|September|October|November|December) 20\d{2} (?:Net )?Revenue Report')
 
 
 def sec_results_title(evidence_kind, text):
@@ -207,7 +208,15 @@ def sec_results_title(evidence_kind, text):
     earnings press release may reach us only as the exhibit 99.1 of its SEC
     8-K/6-K. Use the release's own heading, verbatim, and only when it is an
     earnings release; other SEC filings stay evidence, never headlines."""
-    if evidence_kind != 'sec-exhibit-99.1' or not isinstance(text, str):
+    if not isinstance(text, str):
+        return None
+    if evidence_kind != 'sec-exhibit-99.1':
+        # Owner, Oct 12: TSMC files its monthly revenue report as the 6-K
+        # document itself (no exhibit). Use only that exact report heading.
+        for line in text[:8000].splitlines()[:80]:
+            line = ' '.join(line.split())
+            if MONTHLY_REVENUE_TITLE.fullmatch(line):
+                return line
         return None
     import release_watch
     for line in text[:4000].splitlines()[:40]:
