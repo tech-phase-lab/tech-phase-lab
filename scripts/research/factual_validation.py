@@ -714,7 +714,11 @@ def _covers_negated_source(text, evidence):
         if not clause or not negated(clause):
             continue
         words = _content_words(clause)
-        if len(words) <= 1 or len(words & copy) >= max(2, NEGATED_CLAUSE_COVERAGE * len(words)):
+        # A one-word negated clause ("not today, not tomorrow") is restated only
+        # when the copy contains that word; otherwise the copy never repeats it.
+        if len(words) == 0 or (len(words) == 1 and words <= copy):
+            return True
+        if len(words) > 1 and len(words & copy) >= max(2, NEGATED_CLAUSE_COVERAGE * len(words)):
             return True
     return False
 
