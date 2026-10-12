@@ -277,7 +277,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(lab, /LIVE INTELLIGENCE/);
   assert.match(lab, /Internal delivery and market-feed laboratory/);
   assert.match(page, /メインメニュー/);
-  assert.match(page, /何が変わった？/);
+  assert.match(page, /資本マップ/);
   assert.match(page, /MarketWorkspace/);
   assert.match(page, /briefStatus === "approved" && brief/);
   assert.match(page, /<details className=\{polish.sourceDrawer\}/);

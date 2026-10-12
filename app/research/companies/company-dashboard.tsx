@@ -43,7 +43,7 @@ export default function CompanyDashboard({ profile, companies }: { profile: Comp
 
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#company-main">{t("本文へ移動", "Skip to content")}</a>
-    <SiteHeader lang={lang} setLang={setLang} nav={<nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research#what-changed" aria-current="page">{t("何が変わった？", "What changed?")}</Link><Link href="/research/stocks">{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics">{t("決算・指標", "Financials")}</Link></nav>} />
+    <SiteHeader lang={lang} setLang={setLang} nav={<nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research/capital-map">{t("資本マップ", "CAPITAL MAP")}</Link><Link href="/research/stocks">{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics">{t("決算・指標", "Financials")}</Link></nav>} />
     <main className={styles.main} id="company-main">
       <CompanySwitcher ticker={profile.ticker} companies={companies} lang={lang} />
       <div className={styles.preview}><strong>{t("過去資料の比較版", "HISTORICAL REVIEW")}</strong><span>{t("収録資料の最終発表日", "Latest included release")}: {latestDate} · {t("自動更新なし", "No automatic updates")}</span></div>

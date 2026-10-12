@@ -27,7 +27,7 @@ test("home navigation wires history, empty records, and honest feature labels", 
   assert.match(dashboard, /id="saved"/);
   assert.match(dashboard, /events\[0\]\?\.id \?\? ""/);
   assert.match(dashboard, /株価とチャートの確認/);
-  assert.match(dashboard, /<HomeTools lang=\{lang\} onChanges=\{\(\) => openView\("changes"\)\}/);
+  assert.match(dashboard, /<HomeTools lang=\{lang\} onPro=\{\(\) => openView\("pro"\)\}/);
   assert.doesNotMatch(dashboard, /参考株価・チャート", "REFERENCE PRICES/);
   assert.doesNotMatch(dashboard, /配信準備中|独自株価画面|契約確認後に価格/);
 });

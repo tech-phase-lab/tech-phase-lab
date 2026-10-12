@@ -135,7 +135,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   return <div className={styles.app} lang={lang}>
     <a className={styles.skip} href="#research-main">{t("本文へ移動", "Skip to content")}</a>
     <SiteHeader lang={lang} setLang={setLang} nav={<nav className={`${styles.primaryNav} ${tab === "companies" ? styles.companyNav : ""}`} aria-label={t("メインメニュー", "Main navigation")}>
-        <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}><NavigationIcon name="changes" /><span>{t("何が変わった？", "What changed?")}</span></button>
+        <Link href="/research/capital-map"><NavigationIcon name="changes" /><span>{t("資本マップ", "CAPITAL MAP")}</span></Link>
         <Link href="/research/stocks"><NavigationIcon name="search" /><span>{t("米国株を探す", "Find stocks")}</span></Link>
         <button aria-current={tab === "companies" ? "page" : undefined} onClick={() => openView("companies")}><NavigationIcon name="companies" /><span>{t("監視22銘柄リスト", "22-stock watch list")}</span></button>
         <button aria-current={tab === "metrics" ? "page" : undefined} onClick={() => openView("metrics")}><NavigationIcon name="metrics" /><span>{t("決算・指標", "Financials")}</span></button>
@@ -147,7 +147,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
       <aside className={styles.sidebar}>
         <nav className={styles.sideMenu} aria-label={t("サイドメニュー", "Sidebar navigation")}>
           <p className={styles.navLabel}>{t("メインメニュー", "MAIN MENU")}</p>
-          <button aria-current={tab === "changes" ? "page" : undefined} onClick={() => openView("changes")}><NavigationIcon name="changes" /><span>{t("何が変わった？", "What changed?")}</span></button>
+          <Link href="/research/capital-map"><NavigationIcon name="changes" /><span>{t("資本マップ", "CAPITAL MAP")}</span></Link>
           <Link href="/research/stocks"><NavigationIcon name="search" /><span>{t("米国株を探す", "Find stocks")}</span><span aria-hidden="true">↗</span></Link>
           <button aria-current={tab === "companies" ? "page" : undefined} onClick={() => openView("companies")}><NavigationIcon name="companies" /><span>{t("監視22銘柄リスト", "22-stock watch list")}</span><small>{monitoredCompanies.length}</small></button>
           <button aria-current={tab === "metrics" ? "page" : undefined} onClick={() => openView("metrics")}><NavigationIcon name="metrics" /><span>{t("決算・指標", "Financials")}</span></button>
@@ -173,7 +173,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
 
         {tab === "home" && <>
           <ResearchPulse lang={lang} />
-          <HomeTools lang={lang} onChanges={() => openView("changes")} onPro={() => openView("pro")} />
+          <HomeTools lang={lang} onPro={() => openView("pro")} />
           <Link className={styles.watchEntry} href="/research#monitored-companies" onClick={event => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); openView("companies"); }}><span><small>COMPANY WATCH</small><strong>{t("監視22銘柄", "22-stock watch")}</strong></span><span>{t("企業ごとの動きを見る", "Follow company changes")} <b aria-hidden="true">›</b></span></Link>
           <NewsFeed lang={lang} initialNews={initialNews} />
           <HomeHelp lang={lang} />
@@ -217,6 +217,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
                 <li><strong>{t("リサーチQ&A", "Research Q&A")}</strong>{t("｜会員の疑問を深掘り", " · Member questions explored")}</li>
                 <li><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong>{t("｜相場の着眼点", " · Market perspectives")}</li>
                 <li><strong>{t("銘柄比較 PRO", "Stock comparison PRO")}</strong>{t("｜気になる2〜3銘柄を瞬時に判断", " · Assess 2–3 stocks at a glance")}</li>
+                <li><strong>{t("資本マップ", "CAPITAL MAP")}</strong>{t("｜運用会社・ETFの投資先と変化（提供準備中）", " · Manager portfolios, ETF holdings and changes (in development)")}</li>
               </ul>
             </article>
           </div>

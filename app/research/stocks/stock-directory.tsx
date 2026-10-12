@@ -240,7 +240,7 @@ export default function StockDirectory() {
 
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#stock-search-main">{t("本文へ移動", "Skip to content")}</a>
-    <SiteHeader lang={lang} setLang={setLang} nav={<nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research#what-changed"><NavigationIcon name="changes" />{t("何が変わった？", "What changed?")}</Link><Link href="/research/stocks" aria-current="page"><NavigationIcon name="search" />{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics"><NavigationIcon name="metrics" />{t("決算・指標", "Financials")}</Link></nav>} />
+    <SiteHeader lang={lang} setLang={setLang} nav={<nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research/capital-map"><NavigationIcon name="changes" />{t("資本マップ", "CAPITAL MAP")}</Link><Link href="/research/stocks" aria-current="page"><NavigationIcon name="search" />{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics"><NavigationIcon name="metrics" />{t("決算・指標", "Financials")}</Link></nav>} />
     <main id="stock-search-main" className={styles.main}>
       <div className={styles.topline}><Link href="/research/watchlist">☆ {t("お気に入り", "Favorites")}</Link></div>
       <section className={styles.hero}>
