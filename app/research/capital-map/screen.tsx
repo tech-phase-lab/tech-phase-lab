@@ -122,7 +122,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
     : searchParams.get("baseline") === "unknown" ? undefined : detailPortfolio?.previous;
   return <ResearchToolShell lang={lang} setLang={setLang} title="CAPITAL MAP" description="" showHeading={false} showTools={false}>
     <div className={styles.page}>
-      {detailId && hasData && <HoldingDetail portfolio={detailPortfolio} securityId={detailId} instrument={searchParams.get("instrument") ?? "stock"} baseline={detailBaseline} lang={lang} onBack={backToList} />}
+      {detailId && hasData && <HoldingDetail portfolio={detailPortfolio} securityId={detailId} instrument={searchParams.get("instrument") ?? "stock"} baseline={detailBaseline} lang={lang} sample={!reported} onBack={backToList} />}
       <div hidden={Boolean(detailId) && hasData}>
       <header className={styles.heading}><p className={styles.eyebrow}>TECH PHASE PRO{!reported && hasData && <span className={styles.edition}>SAMPLE</span>}</p><div className={styles.titleRow}><h1>CAPITAL MAP</h1></div><p>{t("投資先から、資金の流れを知る。", "Follow the holdings. Understand the capital.")}</p></header>
       {!hasData ? <section className={styles.preparing}>

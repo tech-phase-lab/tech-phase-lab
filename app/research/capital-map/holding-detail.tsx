@@ -3,9 +3,9 @@
 import { capitalRows, type CapitalPortfolio, type CapitalSnapshot } from "@/lib/research/capital-map";
 import styles from "./capital-map.module.css";
 
-export default function HoldingDetail({ portfolio, securityId, instrument, baseline, lang, onBack }: {
+export default function HoldingDetail({ portfolio, securityId, instrument, baseline, lang, sample, onBack }: {
   portfolio?: CapitalPortfolio; securityId: string; instrument: string; baseline?: CapitalSnapshot;
-  lang: string; onBack: () => void;
+  lang: string; sample: boolean; onBack: () => void;
 }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const row = portfolio && capitalRows(portfolio.current, baseline).find(h => h.securityId === securityId && h.instrument === instrument);
@@ -16,6 +16,7 @@ export default function HoldingDetail({ portfolio, securityId, instrument, basel
   const money = (value: number) => `$${value.toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
   return <section className={styles.detailPage} aria-label={t("保有の詳細", "Holding details")}>
     <div className={styles.detailBack}><button onClick={onBack}>← {t("保有一覧に戻る", "Back to holdings")}</button></div>
+    {sample && <p className={styles.notice}>{t("架空データの表示サンプルです。", "Display sample using fictional data.")}</p>}
     {!row || !portfolio ? <p>{t("この保有情報は見つかりませんでした。", "This holding was not found.")}</p> : <>
       <p className={styles.detailOwner}>{portfolio.name}</p>
       <h1 tabIndex={-1} data-detail-title>{row.name}</h1>
