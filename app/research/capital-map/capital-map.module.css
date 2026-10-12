@@ -182,3 +182,48 @@
   .holderLink { font-size:.75rem !important; }
   .summary { padding-top:16px; }
 }
+
+/* Compact allocation view: keep the chart square beside its legend. */
+.portfolioToolbar { margin-bottom:18px; }
+.portfolioSelect { max-width:none; }
+.sectionHead { align-items:baseline; flex-wrap:wrap; gap:6px 16px; }
+.sectionHead .allocationNote { font-size:.68rem; margin:0; }
+.summary { grid-template-columns:200px minmax(0,1fr); gap:32px; padding:20px 0; }
+.ring { width:190px; height:190px; min-width:190px; min-height:190px; }
+.legend { gap:9px; }
+.columnHead { display:grid; grid-template-columns:minmax(0,1fr) 90px; gap:12px; padding:6px 0; color:#8fa7ac; font-size:.67rem; }
+.columnHead span:not(:first-child) { text-align:right; }
+.withChangeHead { grid-template-columns:minmax(0,1fr) 90px 120px; }
+.holding { grid-template-columns:26px minmax(0,1fr) 90px; gap:10px; padding:7px 0; min-height:44px; }
+.holding>span { width:26px; height:26px; grid-row:auto; }
+.stock { display:flex; align-items:baseline; flex-wrap:wrap; gap:2px 9px; }
+.stock strong { font-size:.78rem; line-height:1.3; }
+.stock small { font-size:.66rem; margin:0; line-height:1.3; }
+.weight strong { font-size:.85rem; }
+.withChange { grid-template-columns:26px minmax(0,1fr) 90px 120px; }
+.listHead { margin-top:18px; }
+@media(max-width:600px) {
+  .summary { grid-template-columns:112px minmax(0,1fr); gap:12px; padding:18px 0; }
+  .ring { width:112px; height:112px; min-width:112px; min-height:112px; }
+  .ring>div { gap:4px; }
+  .ring strong { font-size:1rem; }
+  .ring small { font-size:.46rem; letter-spacing:0; }
+  .legend { gap:8px; }
+  .legend li { gap:5px; }
+  .legend strong { font-size:.65rem; line-height:1.3; }
+  .legend small { font-size:.55rem; }
+  .legend b { font-size:.7rem; }
+  .legend li:last-child { font-size:.65rem; }
+  .swatch { height:22px; }
+  .holding { grid-template-columns:24px minmax(0,1fr) 62px; gap:7px; padding:6px 0; }
+  .holding>span { width:24px; height:24px; }
+  .stock { gap:1px 6px; }
+  .stock strong { font-size:.74rem; }
+  .stock small { font-size:.61rem; }
+  .weight strong { font-size:.8rem; }
+  .columnHead { grid-template-columns:minmax(0,1fr) 62px; }
+  .withChangeHead span:last-child { display:none; }
+  .withChange .change { grid-column:2/4; }
+  .withChange { row-gap:3px; }
+  .listFilters input { min-height:40px; }
+}

@@ -55,3 +55,11 @@ Live retrieval, automatic updates, commercial ETF display permission, institutio
 - Duquesne was reviewed but excluded: the table sum 5,210,856 differs from cover 5,210,860 and its units require verification. No estimated conversion was published. A third-party search mislabeled CIK 1600064 as Fundstrat; the official cover identifies Tidal. That filing was excluded. Fundsmith uses verified CIK 1569205.
 - Lists show 50 rows initially with Show more and a local holdings filter. Full data remains available, including all 997 Bridgewater entries. Favorites and viewed records retain their existing mode-separated local storage.
 - Quarterly comparisons and automatic refresh remain future work; do not describe these dated imports as live. Existing sample comparisons remain functional.
+
+## 2026-10-12: compact allocation layout
+
+- Show each snapshot date explicitly as `YYYY-MM-DD時点` / `As of YYYY-MM-DD`.
+- Portfolio name appears only in the selector; remove duplicate category labels, favorite filter and star action. Existing stored preferences are preserved for compatibility; viewed records still work.
+- Keep the square SVG chart left of its legend on desktop and narrow screens. Label the metric as portfolio allocation / share of holdings value.
+- Rename the list 全保有銘柄, label its weight column, and use a search scoped to this list. Remove the watchlist filter from this view; it remains available in holder search.
+- Compact the default rows to company/ticker and weight. Source data, all positions and sample change comparisons are retained; share counts and dollar values no longer occupy extra row space.
