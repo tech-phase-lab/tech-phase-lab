@@ -127,9 +127,9 @@ export interface NextMorningInput {
 export function renderNextMorningMail(i: NextMorningInput): RenderedMail {
   if (i.locale === 'ja') {
     return {
-      subject: '【RESOLUTE】昨夜のお知らせのあと、どうでしたか?',
+      subject: '【RESOLUTE】昨日のお知らせのあと、どうでしたか?',
       text: [
-        '昨夜のお知らせから、一晩たちました。',
+        '昨日のお知らせから、一晩たちました。',
         'いまの気持ちに近いものを、1つだけ選んでください(1回で終わります)。',
         '',
         `・計画どおり動いた:${i.doneUrl}`,
@@ -140,15 +140,15 @@ export function renderNextMorningMail(i: NextMorningInput): RenderedMail {
         `計画を開く:${i.planUrl}`,
         '',
         '---',
-        'このメールは、昨夜のお知らせについて1回だけお送りしています。投資助言ではありません。',
+        'このメールは、昨日のお知らせについて1回だけお送りしています。投資助言ではありません。',
         `配信停止:${i.unsubscribeUrl}`,
       ].join('\n'),
     };
   }
   return {
-    subject: "[RESOLUTE] How are you feeling after last night's alert?",
+    subject: "[RESOLUTE] How are you feeling after yesterday's alert?",
     text: [
-      "Quick check-in on last night's alert.",
+      "Quick check-in on yesterday's alert.",
       "Pick whichever feels closest right now. It's one tap, and you won't hear from us again about this one.",
       '',
       `- I followed my plan: ${i.doneUrl}`,
