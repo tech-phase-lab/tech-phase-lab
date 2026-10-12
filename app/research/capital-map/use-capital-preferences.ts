@@ -1,31 +1,28 @@
 "use client";
-import { useCallback, useSyncExternalStore } from "react";
-import { parseCapitalPreferences } from "@/lib/research/capital-map";
+import { useCallback, useEffect, useSyncExternalStore } from "react";
 
-const sessionPreferences = new Map<string, string>();
-export function useCapitalPreferences(ids: readonly string[], scope: "sample" | "reports" = "sample") {
-  const storageKey = `tech-phase:capital-map:${scope}-preferences:v1`;
-  const eventName = `tech-phase:capital-map:${scope}-preferences`;
+// Keep NEW visible while navigating this page; a reload starts a fresh visit.
+const visitUpdates = new Map<string, boolean>();
+const subscribe = () => () => {};
+const serverSnapshot = () => false;
+
+export function useCapitalUpdate(id: string | undefined, version: string | undefined, scope: "sample" | "reports") {
+  const storageKey = `tech-phase:capital-map:${scope}:last-opened:${id ?? ""}`;
+  const visitKey = `${storageKey}:${version ?? ""}`;
   const snapshot = useCallback(() => {
-    if (sessionPreferences.has(storageKey)) return sessionPreferences.get(storageKey)!;
-    try { return localStorage.getItem(storageKey) || "{}"; }
-    catch { return "{}"; }
-  }, [storageKey]);
-  const subscribe = useCallback((notify: () => void) => {
-    const onStorage = (event: StorageEvent) => {
-      if (event.key === storageKey || event.key === null) { sessionPreferences.delete(storageKey); notify(); }
-    };
-    window.addEventListener("storage", onStorage);
-    window.addEventListener(eventName, notify);
-    return () => { window.removeEventListener("storage", onStorage); window.removeEventListener(eventName, notify); };
-  }, [storageKey, eventName]);
-  const raw = useSyncExternalStore(subscribe, snapshot, () => "");
-  function write(saved: string[], seen: Record<string, string>) {
-    const value = JSON.stringify({ saved, seen });
-    sessionPreferences.set(storageKey, value);
-    window.dispatchEvent(new Event(eventName));
-    try { localStorage.setItem(storageKey, value); return true; }
-    catch { return false; }
-  }
-  return { ...parseCapitalPreferences(raw, ids), ready: raw !== "", write };
+    if (!id || !version) return false;
+    if (!visitUpdates.has(visitKey)) {
+      let previous: string | null = null;
+      try { previous = localStorage.getItem(storageKey); } catch { /* Storage unavailable. */ }
+      visitUpdates.set(visitKey, previous !== null && previous !== version);
+    }
+    return visitUpdates.get(visitKey)!;
+  }, [id, version, storageKey, visitKey]);
+  const updated = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
+  useEffect(() => {
+    if (!id || !version) return;
+    snapshot();
+    try { localStorage.setItem(storageKey, version); } catch { /* NEW is optional. */ }
+  }, [id, version, storageKey, snapshot]);
+  return updated;
 }
