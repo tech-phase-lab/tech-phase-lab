@@ -100,3 +100,8 @@ Live retrieval, automatic updates, commercial ETF display permission, institutio
 - Compare defaults to S&P500 (SPY) + global equities (ACWI). Japanese labels prioritize investment scope. ACWI is explicitly identified as a US ETF, not the Japanese オルカン mutual fund.
 - ACWI remains behind the existing server membership gate; the public sample remains fictional.
 - Official product: https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf ; Japanese オルカン benchmark reference: https://faq1.am.mufg.jp/answer/66a3524c5c9109532c1f941e/
+
+### 2026-10-12 ナビゲーションと文言の微調整
+- 基準日のラベルと値の間を2px広げ、帯の薄さは維持。
+- 「銘柄から検索」「ETF比較」をカテゴリ切り替えと同じ段に移動。狭い画面は折り返す。
+- 検索見出しを「検索した株を持つ運用会社・ETFを探す」に変更し、例示ボタンを削除。

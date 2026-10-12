@@ -83,18 +83,18 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
 
   return <ResearchToolShell lang={lang} setLang={setLang} title="CAPITAL MAP" description="" showHeading={false} showTools={false}>
     <div className={styles.page}>
-      <header className={styles.heading}><p className={styles.eyebrow}>TECH PHASE PRO{!reported && hasData && <span className={styles.edition}>SAMPLE</span>}</p><div className={styles.titleRow}><h1>CAPITAL MAP</h1>{hasData && <nav className={styles.tools} aria-label={t("資本マップのツール", "Capital map tools")}><button aria-pressed={view === "lookup"} onClick={() => chooseView("lookup")}>{t("この株を持つのは？", "Who holds this stock?")}</button>{etfs.length >= 2 && <button aria-pressed={view === "overlap"} onClick={() => chooseView("overlap")}>{t("ETF比較", "Compare ETFs")}</button>}</nav>}</div><p>{t("投資先から、資金の流れを知る。", "Follow the holdings. Understand the capital.")}</p></header>
+      <header className={styles.heading}><p className={styles.eyebrow}>TECH PHASE PRO{!reported && hasData && <span className={styles.edition}>SAMPLE</span>}</p><div className={styles.titleRow}><h1>CAPITAL MAP</h1></div><p>{t("投資先から、資金の流れを知る。", "Follow the holdings. Understand the capital.")}</p></header>
       {!hasData ? <section className={styles.preparing}>
         <h2>{t("世界の運用会社とETFの投資先をひと目で。", "Explore the portfolios behind managers and ETFs.")}</h2>
         <p>{t("保有銘柄と構成比、銘柄ごとの保有先、ETFの重複を確認できます。", "Explore holdings, portfolio weights, stock holders and ETF overlap.")}</p>
         <Link className={styles.primary} href="/research/account">{t("ログイン・プランを確認", "Sign in / View plan")} →</Link> <Link className={styles.primary} href="/research/capital-map/sample">{t("サンプルを見る", "Explore sample")} →</Link>
       </section> : <>
         {!reported && <p className={styles.notice}>{t("架空データの表示サンプルです。", "Display sample using fictional data.")} <Link href="/research/capital-map">{t("実際の保有データを見る", "View reported holdings")} →</Link></p>}
-        <nav className={styles.tabs} aria-label={t("資本マップ", "Capital map")}>
+        <div className={styles.navigationRow}><nav className={styles.tabs} aria-label={t("資本マップ", "Capital map")}>
           <button aria-pressed={view === "manager"} onClick={() => chooseView("manager")}>{t("運用会社", "Managers")}</button>
           {portfolios.some(item => item.kind === "corporate") && <button aria-pressed={view === "corporate"} onClick={() => chooseView("corporate")}>{t("企業", "Companies")}</button>}
           {etfs.length > 0 && <button aria-pressed={view === "etf"} onClick={() => chooseView("etf")}>ETF</button>}
-        </nav>
+        </nav><nav className={styles.tools} aria-label={t("資本マップのツール", "Capital map tools")}><button aria-pressed={view === "lookup"} onClick={() => chooseView("lookup")}>{t("銘柄から検索", "Search by stock")}</button>{etfs.length >= 2 && <button aria-pressed={view === "overlap"} onClick={() => chooseView("overlap")}>{t("ETF比較", "Compare ETFs")}</button>}</nav></div>
         {isPortfolio && <div className={styles.portfolioToolbar}>
           <label className={styles.portfolioSelect}>
             <select aria-label={t("表示する投資先", "Select portfolio")} value={selected?.id ?? ""} onChange={event => choosePortfolio(event.target.value)}>
@@ -103,10 +103,9 @@ export default function CapitalMap({ portfolios = emptyPortfolios, mode = "sampl
           </label>
         </div>}
         {view === "lookup" && <section className={styles.find} aria-labelledby="find-holders">
-          <h2 id="find-holders">{t("どこが、どれくらい持っている？", "Who owns it, and how much?")}</h2>
+          <h2 id="find-holders">{t("検索した株を持つ運用会社・ETFを探す", "Find managers and ETFs holding your stock")}</h2>
           <div className={styles.searchBar}><label><span>{t("調べたい銘柄", "Find a stock")}</span><input type="search" autoCapitalize="off" autoCorrect="off" spellCheck={false} value={query} maxLength={200} placeholder={t("例：エヌビディア、NVDA", "e.g. NVIDIA or NVDA")} onChange={event => { setQuery(event.target.value); setRowLimit(50); }} /></label></div>
           <div className={styles.lookupOptions}><label><input type="checkbox" checked={watchOnly} disabled={!editable} onChange={event => { setWatchOnly(event.target.checked); setRowLimit(50); }} />{t("ウォッチリストの銘柄に絞る", "Only stocks in my watchlists")}</label></div>
-          {!searching && <div className={styles.examples}>{[["NVDA", "NVIDIA"], ["AAPL", "Apple"], ["NBIS", "Nebius"]].map(([ticker, name]) => <button key={ticker} onClick={() => { setQuery(ticker); setRowLimit(50); }}>{name}<small>{ticker}</small></button>)}</div>}
           {watchOnly && !watched.size && <p className={styles.empty}>{t("ウォッチリストに登録銘柄がありません。", "Your watchlists are empty.")}</p>}
           {searching && <><h3 className={styles.resultCount}>{t("検索結果", "Results")} <span>{holders.length}{t("件", " holders")}</span></h3>
             {holders.length > 0 && <div className={styles.holderHead}><span>{t("保有者", "Holder")}</span><span>{t("保有内の割合", "Portfolio weight")}</span><span>{t("保有評価額", "Holding value")}</span></div>}
