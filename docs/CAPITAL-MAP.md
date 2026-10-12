@@ -82,3 +82,26 @@ Live retrieval, automatic updates, commercial ETF display permission, institutio
 - Consolidated accumulated CSS overrides into a single responsive stylesheet.
 - Replaced the Ray Dalio image with the visually reviewed Grameen America September 2017 speech photograph (CC BY 3.0); portrait uses a face-focused CSS crop and retains attribution.
 - No holdings values or prior-period data changed. Public sample remains fictional.
+
+## 2026-10-12 compact metrics and ETF chart follow-up
+
+- Keep date and 時点 inline on phones; reduce metric strip padding.
+- Move stock lookup / ETF comparison to independent header buttons alongside CAPITAL MAP. Category tabs retain managers / companies / ETF.
+- Remove chart explanatory captions; keep a gray Other key below the ring.
+- ETF charts show the top 30 positions without renormalization (SPY: 55.99%, remainder 44.01%). Smaller wedges from 1.2% get radial ticker labels; every wedge supports pointer, touch and keyboard inspection in the center. Manager charts retain the top ten.
+
+## 2026-10-12 mobile search and global-equity comparison
+
+- Reduced metric strip padding and line heights; date and 時点 stay on one line.
+- Stock lookup renamed この株を持つのは？. Holder-first results show manager/company/ETF, portfolio weight, value and as-of date. Common Japanese stock aliases supported. Watchlist filter is a compact checkbox.
+- Mobile text inputs and selects use at least 16 px to prevent iOS input-focus zoom; no viewport zoom restrictions were added.
+- Added a separately reviewed full ACWI equity snapshot (2,197 positions, 2026-10-09; official iShares CSV; issuer-rounded weights total 98.95%, not renormalized). Import with scripts/capital-map/import-acwi.py. Original source URL and SHA-256 retained. Existing snapshots unchanged.
+- ACWI equities on NYSE/NASDAQ match known US ETF security IDs; other exchanges are namespaced to avoid ticker collisions / ADR conflation. BRK B is normalized to BRK.B only for a US listing. Regression check ensures Taiwan 2330 does not match the TSM ADR.
+- Compare defaults to S&P500 (SPY) + global equities (ACWI). Japanese labels prioritize investment scope. ACWI is explicitly identified as a US ETF, not the Japanese オルカン mutual fund.
+- ACWI remains behind the existing server membership gate; the public sample remains fictional.
+- Official product: https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf ; Japanese オルカン benchmark reference: https://faq1.am.mufg.jp/answer/66a3524c5c9109532c1f941e/
+
+### 2026-10-12 ナビゲーションと文言の微調整
+- 基準日のラベルと値の間を2px広げ、帯の薄さは維持。
+- 「銘柄から検索」「ETF比較」をカテゴリ切り替えと同じ段に移動。狭い画面は折り返す。
+- 検索見出しを「検索した株を持つ運用会社・ETFを探す」に変更し、例示ボタンを削除。

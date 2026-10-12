@@ -8,5 +8,6 @@ export default async function Page() {
   const member = await getMembership().catch(() => null);
   if (!member || comparisonAccess(member) !== 200) return <CapitalMap />;
   const { default: disclosures } = await import("@/lib/research/capital-map-disclosures.json");
-  return <CapitalMap portfolios={disclosures as CapitalPortfolio[]} mode="reports" />;
+  const { default: acwi } = await import("@/lib/research/capital-map-acwi.json");
+  return <CapitalMap portfolios={[...disclosures, acwi] as CapitalPortfolio[]} mode="reports" />;
 }

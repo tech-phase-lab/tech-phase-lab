@@ -113,3 +113,19 @@ test('expanded coverage preserves complete equity lists and issuer weights', () 
   const optionRows = data.filter(p => p.kind !== 'etf').flatMap(p => p.current.holdings).filter(r => r.instrument !== 'stock');
   assert.ok(optionRows.length > 0);
 });
+
+test('ACWI preserves full global holdings and never matches foreign listings to US ADRs', () => {
+  const acwi = JSON.parse(readFileSync(new URL('../lib/research/capital-map-acwi.json', import.meta.url), 'utf8'));
+  const data = JSON.parse(readFileSync(new URL('../lib/research/capital-map-disclosures.json', import.meta.url), 'utf8'));
+  const spy = data.find(p => p.name === 'SPY');
+  assert.equal(acwi.current.asOf, '2026-10-09');
+  assert.equal(acwi.current.holdings.length, 2197);
+  assert.equal(new Set(acwi.current.holdings.map(h => h.securityId)).size, 2197);
+  assert.ok(Math.abs(capitalRows(acwi.current).reduce((sum, r) => sum + r.weight, 0) - 98.95) < 1e-8);
+  assert.equal(etfOverlap(spy.current, acwi.current).rows.find(r => r.ticker === 'NVDA').shared, 5.06);
+  assert.ok(etfOverlap(spy.current, acwi.current).rows.some(r => r.ticker === 'BRK.B'));
+  const localTsm = acwi.current.holdings.find(h => h.ticker === '2330');
+  assert.match(localTsm.securityId, /^acwi:Taiwan Stock Exchange:/);
+  assert.ok(!etfOverlap(data.find(p => p.name === 'SMH').current, acwi.current).rows.some(r => r.ticker === 'TSM'));
+  assert.match(acwi.current.source.sha256, /^[a-f0-9]{64}$/);
+});
