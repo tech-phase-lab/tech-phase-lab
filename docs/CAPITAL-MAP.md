@@ -73,3 +73,12 @@ Live retrieval, automatic updates, commercial ETF display permission, institutio
 - Rename holder lookup to Search by stock / 銘柄から探す. Explain what the results mean, accept English company names or exact tickers, and offer NVDA/AAPL/MU example buttons. Watchlists are explicitly a search input source. Multiple terms are comma-separated.
 - ETF comparison leads with the question of overlapping investments, a shared-stock count and overlapping allocation. A worked example uses the actual selected pair. The table names both ETFs once in its column headings and includes company names. The calculation remains the sum of minimum weights for shared securities, keeping share classes separate; it is not correlation, a return forecast or a diversification recommendation.
 - No news, price-target, ingestion or RESOLUTE code was changed.
+
+## 2026-10-12 visual redesign
+
+- Reference: user supplied portfolio infographics. Larger square SVG donut (up to 440 px desktop / 360 px phone); top ten distinct colors, direct labels for weights >= 5%, neutral remainder.
+- One holdings list alongside the chart on wide screens, below it on narrow screens. Color markers and absolute 0–100% weight bars use the same palette. Values and share changes remain available; missing comparisons remain unknown.
+- Compact profile strip and date / holding count / top-five concentration metrics replace the small chart / large biography arrangement.
+- Consolidated accumulated CSS overrides into a single responsive stylesheet.
+- Replaced the Ray Dalio image with the visually reviewed Grameen America September 2017 speech photograph (CC BY 3.0); portrait uses a face-focused CSS crop and retains attribution.
+- No holdings values or prior-period data changed. Public sample remains fictional.
