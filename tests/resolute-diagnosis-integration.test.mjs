@@ -133,3 +133,31 @@ test('portable notebook escapes private text and has no scripts or external requ
  const html=notebookDocument(p,'en');assert.ok(html.includes('&lt;script&gt;'));assert.ok(!html.includes('<script>'));assert.ok(html.includes("default-src 'none'"));assert.ok(!html.includes('https://'));
  for(const changes of [{reserveMonths:'120.1'},{perStockCapPct:'100.1'},{reserveMonths:''},{noBuyConditions:'x'.repeat(101)}])assert.throws(()=>adjustNotebook(p,{...notebookEdits(p),...changes}));
 });
+
+import {rulebookChapters,stopLossAmounts} from '../lib/resolute/rulebook.ts';
+test('book uses stated behaviour, saved purchase lines and no FX chapter or invented exit threshold',()=>{
+ const p=draftToPlan(answered({q10:'rarely',q19:'often',q15:'sell_some'}));
+ p.buyLines[0].amount=12345;
+ const chapters=rulebookChapters(p,'en'),text=JSON.stringify(chapters);
+ assert.match(text,/impulse purchases/);assert.doesNotMatch(text,/Investing has kept you awake/);
+ assert.match(text,/has not set when or how much/);assert.match(text,/exit level is not set yet/);
+ assert.doesNotMatch(text,/USD\/JPY|Exchange rates/);assert.equal(stopLossAmounts(p),null);
+ assert.deepEqual(chapters.flatMap(c=>c.lines??[]),p.buyLines);
+ const sleep=rulebookChapters(draftToPlan(answered({q10:'often',q19:'never'})),'en');assert.match(JSON.stringify(sleep),/Investing has kept you awake/);
+});
+test('explicit exit percentage is independent of tolerance and survives quiz round trip',()=>{
+ const p=draftToPlan(answered());const adjusted=adjustNotebook(p,{...notebookEdits(p),stopLossPct:'25.5'});
+ assert.equal(adjusted.tolerancePct,20);assert.equal(adjusted.stopLossPct,25.5);
+ assert.deepEqual(stopLossAmounts(adjusted),{base:3000000,loss:765000,value:2235000});
+ assert.equal(draftToPlan(draftFromPlan(adjusted)).stopLossPct,25.5);
+ assert.equal(adjustNotebook(adjusted,{...notebookEdits(adjusted),stopLossPct:''}).stopLossPct,null);
+ for(const value of [0,-1,100,25.55,Infinity,'20'])assert.throws(()=>parsePlan({...p,stopLossPct:value}));
+ assert.equal(stopLossAmounts({...p,stopLossPct:20,investedAmount:null,investable:null}),null);
+ assert.equal(stopLossAmounts({...p,stopLossPct:20,investedAmount:0,investable:0}),null);
+});
+test('all custom rules appear across readable chapters and the offline book has local page navigation',()=>{
+ const p=stamped(draftToPlan(answered()));p.noBuyConditions=Array.from({length:10},(_,i)=>`Personal condition ${i}`);
+ const chapters=rulebookChapters(p,'en'),hold=chapters.filter(c=>c.id.startsWith('hold-off'));
+ assert.ok(hold.every(c=>c.paragraphs.length<=3));for(const condition of p.noBuyConditions)assert.ok(hold.some(c=>c.paragraphs.includes(condition)));
+ const html=notebookDocument(p,'en');assert.match(html,/href="#page-1"/);assert.doesNotMatch(html,/USD\/JPY|<script|https:\/\//);
+});

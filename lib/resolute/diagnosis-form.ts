@@ -9,7 +9,7 @@ export type Question = { id: PlanQuestionId; s: string; text: string; note?: str
  o: { id: string; label: string; val?: number|null; input?: { unit: string; mult: number; step?: number; label?: string } }[] };
 export const questions: Question[] = JSON.parse(JSON.stringify(QUESTIONS_JA));
 export type DiagnosisDraft = { currency: "JPY"|"USD"; answers: PlanAnswers; numbers: Partial<Record<PlanQuestionId,string>>;
- noBuyConditions: string[]; haltConditions: string[]; fx: PlanInput["fx"] };
+ stopLossPct?: number|null; noBuyConditions: string[]; haltConditions: string[]; fx: PlanInput["fx"] };
 export function emptyDiagnosisDraft(): DiagnosisDraft {
  return { currency: "JPY", answers: emptyPlanAnswers(), numbers: {}, noBuyConditions: [], haltConditions: [],
   fx: { thresholdYen: null, usdJpy: null, note: "" } };
@@ -69,7 +69,7 @@ export function draftToInput(d: DiagnosisDraft): DiagnosisInput {
 }
 export function draftToPlan(d: DiagnosisDraft): PlanInput {
  const i = draftToInput(d), r = diagnose(i), a = d.answers;
- return parsePlan({ schemaVersion: 1, answersVersion: 1, answers: a, currency: d.currency,
+ return parsePlan({ ...(d.stopLossPct === undefined ? {} : {stopLossPct:d.stopLossPct}), schemaVersion: 1, answersVersion: 1, answers: a, currency: d.currency,
  monthlyLivingCost: i.monthlyLivingCost, savingsMonths: i.savingsMonths, reserveMonths: i.reserveMonths,
  nearTermExpense: i.nearTermExpense, financialAssets: i.financialAssets, investedAmount: i.investedAmount,
  investable: r.amounts.investable, tolerancePct: i.tolerancePct, toleranceDrop: r.amounts.toleranceDrop,
@@ -80,7 +80,7 @@ export function draftToPlan(d: DiagnosisDraft): PlanInput {
 }
 export function draftFromPlan(p: PlanInput): DiagnosisDraft {
 
- const d: DiagnosisDraft = { currency: p.currency, answers: structuredClone(p.answers), numbers: {},
+ const d: DiagnosisDraft = { ...(p.stopLossPct === undefined ? {} : {stopLossPct:p.stopLossPct}), currency: p.currency, answers: structuredClone(p.answers), numbers: {},
  noBuyConditions: [...p.noBuyConditions], haltConditions: [...p.haltConditions], fx: { ...p.fx } };
  const values: Record<string,unknown> = { ...p, thresholdYen: p.fx.thresholdYen,
  firstDropPct: p.firstDropPct ?? p.buyLines[0]?.dropPct ?? null };

@@ -7,6 +7,7 @@ export type PlanInput = PlanCalculationInput & {
   toleranceDrop: number | null; perStockCapPct: number;
   buyMode: "none" | "single" | "steps";
   firstDropPct?: number | null;
+  stopLossPct?: number | null; // Explicit owner-entered portfolio exit threshold; never inferred from tolerance.
   buyLines: { dropPct: number; amount: number }[];
   allocation: "equal" | "heavier" | null;
   noBuyConditions: string[]; haltConditions: string[];
@@ -29,7 +30,8 @@ const decimal = (v: unknown, max: number) => typeof v === "number" && Number.isF
 const conditions = (v: unknown) => Array.isArray(v) && v.length <= 10 &&
   v.every(s => typeof s === "string" && s.isWellFormed() && !s.includes("\u0000") && [...s].length <= 100);
 export function parsePlan(v: unknown): PlanInput {
-  if (!exactKeys(v, v && typeof v === "object" && Object.hasOwn(v, "firstDropPct") ? [...keys, "firstDropPct"] : keys) || v.schemaVersion !== 1 || v.answersVersion !== 1) throw new PlanInputError();
+  const optionalKeys = ["firstDropPct", "stopLossPct"].filter(key=>v && typeof v === "object" && Object.hasOwn(v,key));
+  if (!exactKeys(v, [...keys,...optionalKeys]) || v.schemaVersion !== 1 || v.answersVersion !== 1) throw new PlanInputError();
   try {
     const answers = parsePlanAnswers(v.answers);
     const fx = parsePlanFx(v.fx);
@@ -49,6 +51,7 @@ export function parsePlan(v: unknown): PlanInput {
     !conditions(v.noBuyConditions) || !conditions(v.haltConditions) ||
     !["wait", "scale_in", "defend", "undecided"].includes(v.ruleType as string) || !Array.isArray(v.buyLines))
     throw new PlanInputError();
+  if (Object.hasOwn(v,"stopLossPct") && !(v.stopLossPct === null || decimal(v.stopLossPct,99.9) && (v.stopLossPct as number)>0)) throw new PlanInputError();
   const lines = v.buyLines;
   if (Object.hasOwn(v, "firstDropPct") && !(v.firstDropPct === null ||
     decimal(v.firstDropPct, 99.9) && (v.firstDropPct as number) > 0)) throw new PlanInputError();
