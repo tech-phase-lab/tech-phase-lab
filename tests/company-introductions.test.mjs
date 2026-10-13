@@ -41,11 +41,26 @@ test('renders all six localized answers with expandable source links', () => {
   const introduction = companyIntroductionFor({cik:1045810,ticker:'NVDA'});
   for (const lang of ['ja','en']) {
     const html = renderToStaticMarkup(createElement(mod.exports.CompanyIntroductionPanel,{introduction,lang}));
-    assert.equal((html.match(/<dt>/g)??[]).length,6);
-    assert.equal((html.match(/<dd>/g)??[]).length,6);
+    assert.equal((html.match(/<dt>/g)??[]).length,4);
+    assert.equal((html.match(/<dd>/g)??[]).length,4);
     assert.match(html, /<details/);
     assert.match(html, /2026-10-13/);
-    assert.ok(html.includes(lang==='ja'?'どことつながる？':'Who does it work with?'));
-    assert.ok(!html.includes(lang==='ja'?'Who does it work with?':'どことつながる？'));
+    assert.ok(html.includes(lang==='ja'?'どこと繋がる？':'Who does it work with?'));
+    assert.ok(!html.includes(lang==='ja'?'Who does it work with?':'どこと繋がる？'));
+    assert.ok(html.indexOf('data-topic="risks"') < html.indexOf('data-topic="competition"'));
+    assert.match(html, /href="\/research\/stocks\?q=AMD"/);
+    assert.ok(html.includes(lang==='ja'?'半導体の製造委託先':'Chip manufacturing supplier'));
+    assert.ok(!html.includes('q=undefined'));
+  }
+});
+
+test('all issuers render both maps in both languages without invented links for industry nodes', () => {
+  for (const introduction of companyIntroductions) {
+    for (const lang of ['ja','en']) {
+      const html = renderToStaticMarkup(createElement(mod.exports.CompanyIntroductionPanel,{introduction,lang}));
+      const entries = Object.values(introduction.maps).flat();
+      assert.equal((html.match(/data-role=/g)??[]).length, entries.length);
+      assert.equal((html.match(/href="\/research\/stocks\?q=/g)??[]).length, entries.filter(entry=>entry.ticker).length);
+    }
   }
 });

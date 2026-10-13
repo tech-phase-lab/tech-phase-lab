@@ -2,26 +2,61 @@
 .introduction > header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px; margin-bottom: 16px; }
 .introduction h2 { margin: 0; font-size: 19px; letter-spacing: .02em; }
 .introduction > header > span { color: #a2b5c1; font-size: 14px; }
-.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0; }
-.card { --accent: #8ed7c0; min-width: 0; padding: 15px; border: 1px solid #263a46; border-top: 2px solid var(--accent); border-radius: 9px; background: #101d27; }
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0; }
+.card, .mapCard { --accent: #8ed7c0; min-width: 0; padding: 15px; border: 1px solid #263a46; border-top: 2px solid var(--accent); border-radius: 10px; background: #101d27; }
 .card[data-topic="revenue"] { --accent: #8abdec; }
 .card[data-topic="strength"] { --accent: #c3a8ed; }
-.card[data-topic="competition"] { --accent: #edc18a; }
-.card[data-topic="relationships"] { --accent: #82ccda; }
 .card[data-topic="risks"] { --accent: #e5a0ac; }
-.card dt { display: flex; align-items: baseline; gap: 9px; font-size: 15px; font-weight: 700; line-height: 1.5; }
-.card dt span { color: var(--accent); font-size: 12px; font-variant-numeric: tabular-nums; }
+.card dt, .mapCard h3 { display: flex; align-items: baseline; gap: 9px; margin: 0; font-size: 15px; font-weight: 700; line-height: 1.5; }
+.card dt > span, .mapCard h3 > span { color: var(--accent); font-size: 12px; font-variant-numeric: tabular-nums; }
 .card dd { margin: 9px 0 0; color: #c7d4dd; font-size: 14px; line-height: 1.8; overflow-wrap: anywhere; }
-.sources { margin-top: 16px; color: #a2b5c1; font-size: 12px; line-height: 1.7; }
-.sources summary { cursor: pointer; width: fit-content; min-height: 32px; padding: 5px 0; }
-.sources summary:focus-visible, .sources a:focus-visible { outline: 2px solid #8ed7c0; outline-offset: 4px; }
+.maps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; align-items: start; }
+.mapCard { --accent: #edc18a; padding: 18px 16px 12px; background: linear-gradient(135deg, #201f20, #101923 60%); }
+.mapCard[data-topic="relationships"] { --accent: #82ccda; background: linear-gradient(135deg, #122830, #101923 60%); }
+.network { display: grid; grid-template-columns: minmax(76px, .32fr) minmax(0, 1fr); align-items: center; margin-top: 20px; }
+.hub { position: relative; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 16px 6px; border: 1px solid var(--accent); border-radius: 12px; background: #16252e; text-align: center; min-width: 0; z-index: 1; }
+.hub::after { content: ""; position: absolute; left: 100%; top: 50%; width: 16px; border-top: 1px solid var(--accent); opacity: .65; }
+.hub strong { font-size: clamp(19px, 2.1vw, 25px); font-weight: 800; letter-spacing: .025em; line-height: 1.2; overflow-wrap: anywhere; }
+.hub > span { font-size: 11px; line-height: 1.4; color: #bdcbd3; overflow-wrap: anywhere; }
+.branches { display: grid; gap: 0; min-width: 0; padding: 0 0 0 16px; margin: 0; list-style: none; }
+.branch { position: relative; padding: 5px 0 5px 16px; min-width: 0; }
+.branch::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; border-left: 1px solid var(--accent); opacity: .65; }
+.branch:first-child::before { top: 50%; }
+.branch:last-child::before { bottom: 50%; }
+.branch::after { content: ""; position: absolute; left: 0; width: 16px; top: 50%; border-top: 1px solid var(--accent); opacity: .65; }
+.node { --node-accent: var(--accent); position: relative; display: flex; flex-direction: column; justify-content: center; gap: 5px; min-width: 0; min-height: 68px; padding: 10px 19px 10px 12px; border: 1px solid #37404a; border-left: 3px solid var(--node-accent); border-radius: 8px; background: #121f29; color: #eaf1f5; text-decoration: none; }
+.branch[data-role="supplier"] .node { --node-accent: #83baf3; }
+.branch[data-role="customer"] .node { --node-accent: #87d7b1; }
+.branch[data-role="investor"] .node { --node-accent: #c1a4ed; }
+.branch[data-role="ecosystem"] .node { --node-accent: #a3b7c4; }
+.nodeIdentity { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 10px; min-width: 0; }
+.ticker { color: var(--node-accent); font-size: 21px; font-weight: 800; line-height: 1.15; letter-spacing: .035em; }
+.nodeName { font-size: 12px; font-weight: 600; line-height: 1.45; overflow-wrap: anywhere; }
+.branch[data-kind="industry"] .nodeName { color: #c8d4dc; }
+.relation { color: #b6c7d1; font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; }
+.nodeArrow { position: absolute; right: 7px; top: 50%; transform: translateY(-50%); color: #a9bdcb; font-size: 19px; }
+.node:focus-visible, .introduction summary:focus-visible, .introduction a:focus-visible { outline: 2px solid #8ed7c0; outline-offset: 3px; }
+@media (hover: hover) { a.node:hover { background: #1b303e; border-color: var(--node-accent); } }
+.mapExplanation, .sources { color: #a2b5c1; font-size: 12px; line-height: 1.7; }
+.mapExplanation { margin-top: 10px; }
+.mapExplanation summary, .sources summary { cursor: pointer; width: fit-content; min-height: 36px; padding: 7px 0; }
+.mapExplanation p { color: #c7d4dd; margin: 8px 0; }
+.mapExplanation ul { list-style: none; padding: 0; margin: 8px 0 0; }
+.mapExplanation li { display: flex; flex-wrap: wrap; gap: 4px 10px; margin: 5px 0; }
+.sources { margin-top: 14px; }
 .sources p { margin: 5px 0; }
 .sources ul { margin: 5px 0 0; padding-left: 18px; }
-.sources a { color: #a8cbe5; overflow-wrap: anywhere; }
-@media (max-width: 1050px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.sources a, .mapExplanation a { color: #a8cbe5; overflow-wrap: anywhere; }
+@media (max-width: 1050px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .maps { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 600px) {
-  .introduction { padding: 18px 14px 12px; }
-  .grid { grid-template-columns: minmax(0, 1fr); gap: 9px; }
-  .card { padding: 12px 14px; }
-  .card dd { margin-top: 6px; }
+  .introduction { padding: 18px 12px 12px; }
+  .grid { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .card { padding: 11px 13px; }
+  .card dd { margin-top: 5px; line-height: 1.7; }
+  .mapCard { padding: 14px 10px 8px; }
+  .network { grid-template-columns: 76px minmax(0, 1fr); margin-top: 13px; }
+  .node { min-height: 70px; padding-left: 9px; }
+  .ticker { font-size: 20px; }
+  .hub > span { font-size: 10px; }
+  .nodeIdentity { gap: 3px 7px; }
 }
