@@ -4,13 +4,16 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is eighty-three issuers / eighty-four tickers: NVDA, MU, GOOG,
-GOOGL, AAPL, AMZN, META, COST, MSFT, NBIS, TSM, ASML, AVGO, AMD, ARM, CRDO,
-ANET, MRVL, VRT, ALAB, LITE, COHR, AMAT, APH, INTC, SIMO, AAOI, BE, VST, GEV,
-IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL, ETN, PANW, CRWD, PLTR,
-SNOW, QCOM, CRM, NOW, IBM, TXN, ADI, NXPI, MCHP, MPWR, ON, WDC, STX, HPQ,
-JBL, CDNS, SNPS, CIEN, KEYS, FLEX, FTNT, ZS, NET, DDOG, MDB, ADBE, INTU,
-UBER, NFLX, AKAM, OKTA, S, CHKP, TEAM, TWLO, DOCU, HUBS, SHOP, APP, ABNB and SPOT.
+Researched coverage is one hundred seven issuers / one hundred eight tickers:
+LITE, COHR, AMAT, APH, ANET, MRVL, VRT, ALAB, MSFT, NBIS, TSM, ASML, AVGO,
+AMD, ARM, CRDO, NVDA, MU, GOOG, GOOGL, AAPL, AMZN, META, COST, INTC, SIMO,
+AAOI, BE, VST, GEV, IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL,
+ETN, PANW, CRWD, PLTR, SNOW, QCOM, CRM, NOW, IBM, TXN, ADI, NXPI, MCHP,
+MPWR, ON, WDC, STX, HPQ, JBL, CDNS, SNPS, CIEN, KEYS, FLEX, FTNT, ZS, NET,
+DDOG, MDB, ADBE, INTU, UBER, NFLX, AKAM, OKTA, S, CHKP, TEAM, TWLO, DOCU,
+HUBS, SHOP, APP, ABNB, SPOT, RDDT, PINS, SNAP, RBLX, ROKU, TTD, DASH, MELI,
+PYPL, XYZ, SOFI, DUOL, ONTO, TER, ENTG, ACMR, ICHR, UCTT, MKSI, SWKS, QRVO,
+MTSI, POWI and SITM.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -205,3 +208,13 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - Duolingoは契約、広告、英語試験を分け、AI競争とアプリ配信基盤への依存を企業固有のリスクとして収録した。
 - 公式資料: [RDDT](https://www.sec.gov/Archives/edgar/data/1713445/000171344526000022/rddt-20251231.htm), [PINS](https://www.sec.gov/Archives/edgar/data/1506293/000150629326000021/pins-20251231.htm), [SNAP](https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm), [RBLX](https://www.sec.gov/Archives/edgar/data/1315098/000131509826000024/rblx-20251231.htm), [ROKU](https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm), [TTD](https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm), [DASH](https://www.sec.gov/Archives/edgar/data/1792789/000179278926000013/dash-20251231.htm), [MELI](https://www.sec.gov/Archives/edgar/data/1099590/000109959026000006/meli-20251231.htm), [PYPL](https://www.sec.gov/Archives/edgar/data/1633917/000163391726000024/pypl-20251231.htm), [XYZ](https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm), [SOFI](https://www.sec.gov/Archives/edgar/data/1818874/000181887426000013/sofi-20251231.htm), [DUOL](https://www.sec.gov/Archives/edgar/data/1562088/000162828026012494/duol-20251231.htm).
 - 既存UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は継続する。
+
+### 2026-10-14 半導体装置・材料・RF・電源12社追加
+
+- ONTO / TER / ENTG / ACMR / ICHR / UCTT / MKSI / SWKS / QRVO / MTSI / POWI / SITMを追加。合計107社・108銘柄コード。
+- 欠陥検査、テスト、材料・汚染管理、洗浄装置、装置サブシステム、RF、光・高周波、電源、MEMSタイミングまで、各社の最新Form 10-Kを一次資料として日英6項目と関係マップを確認した。確認日は2026-10-14。
+- 装置・材料会社は半導体メーカーや装置OEMとの供給関係を、RF・電源・タイミング会社は端末・通信・産業機器メーカーとの関係を区別した。実名顧客が開示されていない箇所は会社名を推測せず、業種単位で表示する。
+- MTSIのADI / Broadcom / Marvellとの競争、POWIのTI / NXP / onsemiとの競争は各社の年次報告に基づく。競争線を供給関係へ置き換えていない。
+- SkyworksとQorvoは年次報告の対象期間と発表済み取引の状態を混同せず、今回のマップでは統合完了を前提にしていない。
+- 公式資料: [ONTO](https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/onto-20260103.htm), [TER](https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm), [ENTG](https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm), [ACMR](https://www.sec.gov/Archives/edgar/data/1680062/000162828026013231/acmr-20251231.htm), [ICHR](https://www.sec.gov/Archives/edgar/data/1652535/000165253526000012/ichr-20251226.htm), [UCTT](https://www.sec.gov/Archives/edgar/data/1275014/000162828026010744/uctt-20251226.htm), [MKSI](https://www.sec.gov/Archives/edgar/data/1049502/000119312526066820/mksi-20251231.htm), [SWKS](https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm), [QRVO](https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm), [MTSI](https://www.sec.gov/Archives/edgar/data/1493594/000149359425000054/mtsi-20251003.htm), [POWI](https://www.sec.gov/Archives/edgar/data/833640/000083364026000037/powi-20251231x10k.htm), [SITM](https://www.sec.gov/Archives/edgar/data/1451809/000145180926000012/sitm-20251231.htm).
+- 共通UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は継続する。

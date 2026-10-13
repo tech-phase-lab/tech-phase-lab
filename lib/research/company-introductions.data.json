@@ -11246,5 +11246,1085 @@
         }
       ]
     }
+  },
+  {
+    "cik": 704532,
+    "tickers": [
+      "ONTO"
+    ],
+    "name": "Onto Innovation",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Business / Products / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/onto-20260103.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体の欠陥を見つけ、寸法や位置ずれを測る検査・計測装置と解析ソフトを作る会社。先端パッケージや特殊半導体にも対応する。",
+      "revenue": "半導体メーカーや組立・検査会社への装置販売に加え、ソフト、保守、交換部品で稼ぐ。",
+      "strength": "光学検査、計測、工程データ解析を一体で提供できる。微細化だけでなく、複数チップを組み合わせる先端パッケージにも強い。",
+      "risks": "半導体設備投資の波、大口顧客の発注、輸出規制の影響を受ける。新装置の認定遅れや部品不足も売上時期を動かす。",
+      "competition": "欠陥検査・寸法計測、リソグラフィー制御、先端パッケージ検査の各分野で、大手装置会社や専門メーカーと競う。",
+      "relationships": "半導体工場と組立・検査会社へ装置とソフトを供給し、稼働後は保守や部品交換で量産を支える。"
+    },
+    "en": {
+      "business": "Makes inspection and metrology tools and analytics software that find defects and measure dimensions and overlay in semiconductor production, including advanced packaging and specialty devices.",
+      "revenue": "Earns from system sales to chipmakers and assembly-and-test providers, plus software, service and replacement parts.",
+      "strength": "Combines optical inspection, metrology and process-data analytics, serving both device scaling and multi-chip advanced packaging.",
+      "risks": "Semiconductor spending cycles, large-customer orders and export controls affect demand; qualification delays and component shortages can shift revenue timing.",
+      "competition": "Competes with large equipment vendors and specialists across defect inspection, dimensional metrology, lithography control and advanced-packaging inspection.",
+      "relationships": "Supplies tools and software to wafer fabs and assembly-and-test providers, then supports production through service and replacement parts."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Process-control equipment vendors",
+          "nameJa": "工程管理装置メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "検査・計測装置で競合",
+            "en": "Inspection and metrology"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Advanced-packaging inspection vendors",
+          "nameJa": "先端パッケージ検査メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "パッケージ検査で競合",
+            "en": "Advanced-packaging inspection"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor manufacturers",
+          "nameJa": "半導体メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "検査・計測装置とソフトを供給",
+            "en": "Inspection, metrology and software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Assembly and test providers",
+          "nameJa": "半導体組立・検査会社",
+          "role": "customer",
+          "label": {
+            "ja": "先端パッケージ工程を支援",
+            "en": "Advanced-packaging process support"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 97210,
+    "tickers": [
+      "TER"
+    ],
+    "name": "Teradyne",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Semiconductor Test / Robotics / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "出荷前の半導体や電子部品を自動で検査する装置を作る会社。協働ロボットと自律搬送ロボットも手がける。",
+      "revenue": "半導体・製品テスト装置と保守、Universal Robotsの協働ロボット、MiRの搬送ロボットの販売で稼ぐ。",
+      "strength": "複雑なSoCやメモリーを高速に大量検査する装置、長年の導入実績、世界各地の技術支援が強み。ロボットは扱いやすさを重視する。",
+      "risks": "半導体の新製品投入と設備投資に売上が左右され、大口顧客への集中もある。ロボット需要の弱さや部品供給、輸出規制も負担になる。",
+      "competition": "半導体テスト装置では専業メーカー、ロボットでは産業用・協働ロボット各社と、性能、処理量、価格、サポートで競う。",
+      "relationships": "半導体メーカーや受託組立・検査会社へテスト装置を供給し、工場や物流現場へ協働・搬送ロボットを販売する。"
+    },
+    "en": {
+      "business": "Builds automated equipment that tests semiconductors and electronic products before shipment, and also sells collaborative and autonomous mobile robots.",
+      "revenue": "Earns from semiconductor and product-test systems and service, Universal Robots cobots and MiR mobile robots.",
+      "strength": "Combines high-throughput testing for complex SoCs and memory with a large installed base and global support; its robots emphasize ease of deployment.",
+      "risks": "Revenue depends on semiconductor launches and capital spending and is concentrated among major customers; weak robotics demand, component supply and export controls add risk.",
+      "competition": "Competes with test-equipment specialists and industrial and collaborative robot vendors on performance, throughput, price and support.",
+      "relationships": "Supplies testers to chipmakers and outsourced assembly-and-test providers, and sells collaborative and mobile robots into factories and logistics sites."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor test vendors",
+          "nameJa": "半導体テスト装置メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "SoC・メモリーテストで競合",
+            "en": "SoC and memory test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Collaborative robot vendors",
+          "nameJa": "協働ロボットメーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "工場自動化で競合",
+            "en": "Factory automation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Chipmakers and OSATs",
+          "nameJa": "半導体メーカー・受託組立検査会社",
+          "role": "customer",
+          "label": {
+            "ja": "量産用テスト装置を供給",
+            "en": "Production test systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Factories and logistics operators",
+          "nameJa": "工場・物流事業者",
+          "role": "customer",
+          "label": {
+            "ja": "協働・搬送ロボットを供給",
+            "en": "Collaborative and mobile robots"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1101302,
+    "tickers": [
+      "ENTG"
+    ],
+    "name": "Entegris",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体工場で使う超高純度の材料、フィルター、薬液・ガス搬送部品を作り、微小な汚染から製造工程を守る会社。",
+      "revenue": "工場で繰り返し交換される材料・フィルター・容器と、流体管理システムを半導体メーカーや装置会社へ販売して稼ぐ。",
+      "strength": "材料科学、ろ過、流体管理を幅広く持ち、顧客の工程開発段階から品質と純度を作り込める。消耗品が継続収益につながる。",
+      "risks": "半導体生産量と設備投資の波、顧客集中、原材料不足、輸出規制の影響を受ける。買収で増えた負債と事業統合も負担。",
+      "competition": "純度管理・フィルターと電子材料では、世界大手から地域の専門メーカーまで、製品ごとに異なる相手と競う。",
+      "relationships": "半導体工場と製造装置メーカーへ材料、フィルター、搬送部品を供給し、量産工程の汚染管理を支える。"
+    },
+    "en": {
+      "business": "Makes ultra-pure materials, filters and chemical-and-gas delivery components that protect semiconductor processes from microscopic contamination.",
+      "revenue": "Sells recurring materials, filters and containers plus fluid-management systems to chipmakers and equipment manufacturers.",
+      "strength": "Its breadth across materials science, filtration and fluid management lets it work with customers during process development; consumables create recurring demand.",
+      "risks": "Semiconductor output and capital cycles, customer concentration, raw-material constraints and export controls affect results; acquisition debt and integration add pressure.",
+      "competition": "Competes product by product with global groups and regional specialists in purity control, filtration and electronic materials.",
+      "relationships": "Supplies materials, filters and delivery components to wafer fabs and equipment makers, supporting contamination control in volume production."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Pall",
+          "role": "competitor",
+          "label": {
+            "ja": "純度管理・フィルターで競合",
+            "en": "Purity control and filtration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Merck Electronics",
+          "role": "competitor",
+          "label": {
+            "ja": "電子材料で競合",
+            "en": "Electronic materials"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor manufacturers",
+          "nameJa": "半導体メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "材料・フィルター・搬送部品を供給",
+            "en": "Materials, filters and delivery components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Wafer-fab equipment makers",
+          "nameJa": "半導体製造装置メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "装置内の流体管理部品を供給",
+            "en": "Fluid-management components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1680062,
+    "tickers": [
+      "ACMR"
+    ],
+    "name": "ACM Research",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Customers / Competition / China risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1680062/000162828026013231/acmr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体ウエハーを薬液で洗う装置を中心に、めっき、炉、パッケージ工程用装置まで作る会社。事業の中心は中国子会社。",
+      "revenue": "半導体メーカーへの製造装置販売と、設置後の部品・保守サービスで稼ぐ。洗浄装置が主力で、工程範囲を広げている。",
+      "strength": "複数枚のウエハーを効率よく洗う独自技術と、中国の顧客に近い開発・サービス体制。洗浄以外の工程へ製品を広げられる。",
+      "risks": "売上と資産が中国に大きく集中し、米中規制、監査・上場制度、輸出管理の影響を受ける。顧客集中と新装置の認定も課題。",
+      "competition": "ウエハー洗浄では海外と中国の装置メーカー、めっき・炉・パッケージ工程では各工程の専門会社と競う。",
+      "relationships": "主に中国の半導体工場へ洗浄・めっき・熱処理装置を供給し、部品会社から精密機器や材料を調達する。"
+    },
+    "en": {
+      "business": "Builds semiconductor wafer-cleaning equipment and is expanding into electroplating, furnace and packaging-process tools, with operations centered on its China subsidiary.",
+      "revenue": "Earns from equipment sales to chipmakers and post-installation parts and service; cleaning remains the core while the process portfolio expands.",
+      "strength": "Combines proprietary multi-wafer cleaning technology with engineering and support close to Chinese customers, and can extend into adjacent process steps.",
+      "risks": "Revenue and assets are heavily concentrated in China, exposing the company to U.S.-China rules, audit and listing issues and export controls; customer concentration and tool qualification also matter.",
+      "competition": "Competes with international and Chinese cleaning-tool vendors and with specialists in plating, furnace and packaging processes.",
+      "relationships": "Primarily supplies cleaning, plating and thermal-process tools to Chinese fabs and purchases precision components and materials from suppliers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Wafer-cleaning equipment vendors",
+          "nameJa": "ウエハー洗浄装置メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "洗浄工程で競合",
+            "en": "Wafer cleaning"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Chinese process-tool vendors",
+          "nameJa": "中国の半導体装置メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "各製造工程で競合",
+            "en": "Semiconductor process tools"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Chinese semiconductor fabs",
+          "nameJa": "中国の半導体工場",
+          "role": "customer",
+          "label": {
+            "ja": "洗浄・めっき・炉装置を供給",
+            "en": "Cleaning, plating and furnace tools"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Precision component suppliers",
+          "nameJa": "精密部品メーカー",
+          "role": "supplier",
+          "label": {
+            "ja": "装置用部品と材料を供給",
+            "en": "Tool components and materials"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1652535,
+    "tickers": [
+      "ICHR"
+    ],
+    "name": "Ichor Holdings",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1652535/000165253526000012/ichr-20251226.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体製造装置の中でガスや薬液を正確に送る流体システムと、超高純度の溶接・精密部品を作る会社。",
+      "revenue": "大手半導体装置メーカー向けに、設計済みの流体供給サブシステム、部品、精密加工品を販売して稼ぐ。",
+      "strength": "顧客装置に合わせた設計、厳しい清浄度管理、精密溶接と量産対応を一体で提供する。認定に時間がかかるため継続採用されやすい。",
+      "risks": "売上が少数の装置メーカーに大きく集中し、その生産計画と半導体設備投資に左右される。品質問題や部品不足も影響が大きい。",
+      "competition": "流体供給サブシステム、精密溶接、機械加工を行う専門会社や、装置メーカーの内製部門と競う。",
+      "relationships": "半導体装置メーカーへ組み込まれる流体システムと部品を供給し、精密加工・材料の仕入先から部材を調達する。"
+    },
+    "en": {
+      "business": "Makes gas-and-chemical delivery subsystems, ultra-high-purity weldments and precision components built into semiconductor manufacturing equipment.",
+      "revenue": "Sells engineered fluid-delivery subsystems, components and precision-machined products to major semiconductor equipment makers.",
+      "strength": "Combines customer-specific design, stringent purity control, precision welding and volume manufacturing; lengthy qualification can support recurring programs.",
+      "risks": "Revenue is highly concentrated among a few equipment customers and follows their production plans and semiconductor capital spending; quality issues and component shortages can have outsized effects.",
+      "competition": "Competes with specialist fluid-system, precision-welding and machining suppliers and with equipment makers' internal production.",
+      "relationships": "Supplies fluid systems and components integrated into wafer-fab equipment and sources materials and precision parts from its supplier base."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Fluid-delivery subsystem suppliers",
+          "nameJa": "流体供給システム会社",
+          "role": "competitor",
+          "label": {
+            "ja": "装置内サブシステムで競合",
+            "en": "Equipment subsystems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Equipment makers' internal production",
+          "nameJa": "装置メーカーの内製部門",
+          "role": "competitor",
+          "label": {
+            "ja": "内製との比較で競合",
+            "en": "Competes with insourcing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor equipment OEMs",
+          "nameJa": "半導体装置メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "流体システムと精密部品を供給",
+            "en": "Fluid systems and precision parts"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Materials and machining suppliers",
+          "nameJa": "材料・加工部品メーカー",
+          "role": "supplier",
+          "label": {
+            "ja": "材料と精密部品を供給",
+            "en": "Materials and machined parts"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1275014,
+    "tickers": [
+      "UCTT"
+    ],
+    "name": "Ultra Clean Holdings",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Services / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1275014/000162828026010744/uctt-20251226.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体製造装置向けの複雑なサブシステムや部品を組み立て、使用済み部品の超高純度洗浄と分析も行う会社。",
+      "revenue": "装置メーカー向けの製品部門と、部品洗浄・コーティング・分析などのサービス部門で稼ぐ。",
+      "strength": "複雑な装置モジュールを世界各地で量産し、洗浄・再生・分析まで一社で扱える。顧客の生産拠点近くで支援できる。",
+      "risks": "少数の大手装置顧客への依存、半導体設備投資の変動、急な増減産、品質管理、世界各地の供給網がリスク。",
+      "competition": "装置サブシステムの受託製造会社、精密部品会社、超高純度洗浄・コーティング会社と競う。",
+      "relationships": "半導体装置メーカーへ組立済みサブシステムを供給し、装置会社や半導体工場から部品を預かって洗浄・分析する。"
+    },
+    "en": {
+      "business": "Builds complex subsystems and components for semiconductor equipment and provides ultra-high-purity cleaning and analysis for used parts.",
+      "revenue": "Earns through a Products segment serving equipment makers and a Services segment covering cleaning, coating and analytical work.",
+      "strength": "Combines global manufacturing of complex modules with cleaning, refurbishment and analysis close to customers' production locations.",
+      "risks": "Dependence on a few large equipment customers, semiconductor capital cycles, rapid production changes, quality execution and a global supply chain create risk.",
+      "competition": "Competes with subsystem contract manufacturers, precision-component suppliers and ultra-high-purity cleaning and coating providers.",
+      "relationships": "Supplies assembled subsystems to equipment manufacturers and receives parts from equipment companies and fabs for cleaning and analysis."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Equipment subsystem manufacturers",
+          "nameJa": "装置サブシステムメーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "複雑な装置モジュールで競合",
+            "en": "Complex equipment modules"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Precision cleaning providers",
+          "nameJa": "精密洗浄サービス会社",
+          "role": "competitor",
+          "label": {
+            "ja": "洗浄・コーティングで競合",
+            "en": "Cleaning and coating"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor equipment OEMs",
+          "nameJa": "半導体装置メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "サブシステムを供給",
+            "en": "Assembled subsystems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Wafer fabs",
+          "nameJa": "半導体工場",
+          "role": "customer",
+          "label": {
+            "ja": "使用部品を洗浄・分析",
+            "en": "Used-part cleaning and analysis"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1049502,
+    "tickers": [
+      "MKSI"
+    ],
+    "name": "MKS Instruments",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Vacuum / Photonics / Materials / Markets / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1049502/000119312526066820/mksi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体装置の真空・ガス・計測部品、産業用レーザー、電子基板向け材料と薬品を幅広く供給する会社。",
+      "revenue": "半導体・産業機器向けの装置部品、レーザー、光学製品、電子材料・薬品の販売と保守・消耗品で稼ぐ。",
+      "strength": "真空制御、光、レーザー、材料加工を横断する技術と大きな導入基盤がある。装置の重要部品から製造材料まで扱える。",
+      "risks": "半導体と産業設備の投資循環、買収事業の統合と負債、顧客集中、部品・原材料不足、輸出規制の影響を受ける。",
+      "competition": "真空・工程制御、レーザー・光学、電子材料の各市場で、専門メーカーや大手総合会社と製品ごとに競う。",
+      "relationships": "半導体装置メーカー、半導体工場、電子基板メーカー、産業機器会社へ重要部品、光源、材料を供給する。"
+    },
+    "en": {
+      "business": "Supplies vacuum, gas-control and measurement components for semiconductor tools, industrial lasers and materials and chemicals for electronics manufacturing.",
+      "revenue": "Earns from equipment components, lasers, optical products, electronic materials and chemicals plus service and consumables across semiconductor and industrial markets.",
+      "strength": "Spans vacuum control, photonics, lasers and materials processing with a large installed base, covering both critical tool components and manufacturing materials.",
+      "risks": "Semiconductor and industrial investment cycles, acquisition integration and debt, customer concentration, supply constraints and export controls affect results.",
+      "competition": "Competes product by product with specialists and diversified suppliers in vacuum and process control, lasers and optics, and electronic materials.",
+      "relationships": "Supplies critical components, light sources and materials to equipment makers, wafer fabs, circuit-board manufacturers and industrial companies."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Vacuum and process-control suppliers",
+          "nameJa": "真空・工程制御メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "装置部品で競合",
+            "en": "Tool components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Photonics and laser suppliers",
+          "nameJa": "光学・レーザーメーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "光源・レーザーで競合",
+            "en": "Photonics and lasers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor equipment makers",
+          "nameJa": "半導体装置メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "真空・計測部品を供給",
+            "en": "Vacuum and measurement components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Electronics manufacturers",
+          "nameJa": "電子機器・基板メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "材料・薬品・加工技術を供給",
+            "en": "Materials, chemicals and processing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 4127,
+    "tickers": [
+      "SWKS"
+    ],
+    "name": "Skyworks Solutions",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Customers / Competition / Manufacturing / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm"
+      }
+    ],
+    "ja": {
+      "business": "スマートフォンなどが電波を送受信するためのRF半導体と、車載・産業・通信機器向けのアナログ半導体を作る会社。",
+      "revenue": "端末メーカーや通信・車載・産業機器会社へ、RFフロントエンド、増幅器、フィルター、接続用チップを販売して稼ぐ。",
+      "strength": "複数の無線部品を小型モジュールへまとめる設計力と製造技術、端末メーカーでの長い認定実績が強み。",
+      "risks": "スマートフォンと大口顧客への依存が大きく、機種変更や販売不振が直撃する。価格競争、在庫調整、中国需要、製造歩留まりも影響する。",
+      "competition": "スマートフォンのRFフロントエンドと無線接続部品で、総合半導体会社やRF専業会社、顧客の内製部門と競う。",
+      "relationships": "スマートフォン、通信機器、自動車、産業機器メーカーへ無線・アナログ部品を供給し、外部の製造・組立会社も利用する。"
+    },
+    "en": {
+      "business": "Makes radio-frequency chips used to transmit and receive wireless signals in smartphones, plus analog products for automotive, industrial and communications equipment.",
+      "revenue": "Sells RF front-end modules, amplifiers, filters and connectivity chips to device, communications, automotive and industrial manufacturers.",
+      "strength": "Combines multiple radio functions in compact modules, backed by manufacturing know-how and long qualification histories with device makers.",
+      "risks": "Heavy smartphone and major-customer exposure makes model changes and weak sell-through important; pricing, inventory corrections, China demand and manufacturing yields also matter.",
+      "competition": "Competes in smartphone RF front ends and wireless connectivity with diversified chipmakers, RF specialists and customers' internal designs.",
+      "relationships": "Supplies wireless and analog components to smartphone, network, automotive and industrial manufacturers and also uses external manufacturing and assembly providers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "RF front-end chipmakers",
+          "nameJa": "RFフロントエンド半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "無線モジュールで競合",
+            "en": "Wireless front-end modules"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Connectivity chip vendors",
+          "nameJa": "接続用半導体メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "Wi-Fi・接続製品で競合",
+            "en": "Wi-Fi and connectivity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Smartphone manufacturers",
+          "nameJa": "スマートフォンメーカー",
+          "role": "customer",
+          "label": {
+            "ja": "RFモジュールを供給",
+            "en": "RF front-end modules"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Automotive and industrial manufacturers",
+          "nameJa": "自動車・産業機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "アナログ・接続部品を供給",
+            "en": "Analog and connectivity products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1604778,
+    "tickers": [
+      "QRVO"
+    ],
+    "name": "Qorvo",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Products / Markets / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm"
+      }
+    ],
+    "ja": {
+      "business": "スマートフォンの電波を扱うRF部品に加え、防衛・航空宇宙、通信設備、電源管理向けの高性能半導体を作る会社。",
+      "revenue": "端末メーカーへのRFモジュール・フィルターと、防衛・基地局・産業機器向けのGaN、増幅器、電源製品の販売で稼ぐ。",
+      "strength": "BAWフィルター、GaN、高周波設計と自社製造を組み合わせ、民生端末から防衛まで厳しい無線性能に対応できる。",
+      "risks": "スマートフォンと大口顧客への集中、機種サイクル、在庫調整、中国規制、自社工場の稼働率が業績を動かす。",
+      "competition": "スマートフォンRF、接続、電源管理、防衛向け高周波半導体で、RF専業会社と大手総合半導体会社に競う。",
+      "relationships": "スマートフォンメーカー、通信設備会社、防衛・航空宇宙企業へRF・電源半導体を供給し、外部の製造・組立先も利用する。"
+    },
+    "en": {
+      "business": "Makes RF components for smartphones and high-performance semiconductors for defense and aerospace, communications infrastructure and power management.",
+      "revenue": "Earns from handset RF modules and filters and from GaN, amplifier and power products sold into defense, base-station and industrial markets.",
+      "strength": "Combines BAW filters, GaN, high-frequency design and internal manufacturing to meet demanding radio requirements from consumer devices through defense systems.",
+      "risks": "Smartphone and major-customer concentration, model cycles, inventory corrections, China restrictions and internal-fab utilization can move results.",
+      "competition": "Competes with RF specialists and diversified chipmakers across smartphone RF, connectivity, power management and defense-oriented high-frequency products.",
+      "relationships": "Supplies RF and power semiconductors to smartphone, communications-equipment and defense and aerospace customers and also uses external manufacturing and assembly providers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Mobile RF suppliers",
+          "nameJa": "モバイルRF半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "端末向けRFで競合",
+            "en": "Mobile RF products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Defense RF chipmakers",
+          "nameJa": "防衛向けRF半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "高周波・GaN製品で競合",
+            "en": "High-frequency and GaN"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Smartphone manufacturers",
+          "nameJa": "スマートフォンメーカー",
+          "role": "customer",
+          "label": {
+            "ja": "RFモジュール・フィルターを供給",
+            "en": "RF modules and filters"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Defense and aerospace contractors",
+          "nameJa": "防衛・航空宇宙企業",
+          "role": "customer",
+          "label": {
+            "ja": "GaN・高周波部品を供給",
+            "en": "GaN and high-frequency products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1493594,
+    "tickers": [
+      "MTSI"
+    ],
+    "name": "MACOM Technology Solutions",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Markets / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1493594/000149359425000054/mtsi-20251003.htm"
+      }
+    ],
+    "ja": {
+      "business": "光通信、データセンター、通信、防衛で使う高周波・アナログ半導体を作る会社。RF、マイクロ波、光部品を扱う。",
+      "revenue": "通信・クラウド機器、防衛、産業機器メーカーへ、増幅器、レーザー・光検出器、ダイオード、GaN製品を販売して稼ぐ。",
+      "strength": "高速光通信と高周波RFを横断し、化合物半導体、シリコン、フォトニクスを用途に合わせて使い分けられる。",
+      "risks": "通信・データセンター投資の波、輸出規制、顧客と製品の集中、外部工場の供給、買収統合、防衛案件の時期が業績を動かす。",
+      "competition": "高速光・RF・マイクロ波の分野でAnalog Devices、Broadcom、Marvell、Qorvoなどと競い、一部では顧客の内製とも競う。",
+      "relationships": "データセンター・通信機器会社と防衛・産業顧客へ半導体を供給し、外部工場や組立会社へ製造を委託する。"
+    },
+    "en": {
+      "business": "Makes high-frequency and analog semiconductors for optical networking, data centers, telecom, defense and industrial systems across RF, microwave and photonics.",
+      "revenue": "Sells amplifiers, lasers and photodetectors, diodes and GaN products to communications, cloud-equipment, defense and industrial manufacturers.",
+      "strength": "Spans high-speed optical and RF technologies and can apply compound semiconductors, silicon and photonics to different performance needs.",
+      "risks": "Communications and data-center spending cycles, export controls, customer and product concentration, foundry supply, acquisition integration and defense-program timing affect results.",
+      "competition": "Competes in high-speed optical, RF and microwave markets with Analog Devices, Broadcom, Marvell, Qorvo and others, as well as some customer insourcing.",
+      "relationships": "Supplies chips to data-center and communications-equipment makers and defense and industrial customers, while outsourcing portions of fabrication and assembly."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Analog Devices",
+          "ticker": "ADI",
+          "role": "competitor",
+          "label": {
+            "ja": "高性能アナログ・RFで競合",
+            "en": "High-performance analog and RF"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Broadcom",
+          "ticker": "AVGO",
+          "role": "competitor",
+          "label": {
+            "ja": "光通信・RFで競合",
+            "en": "Optical and RF products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Marvell Technology",
+          "ticker": "MRVL",
+          "role": "competitor",
+          "label": {
+            "ja": "データセンター向け光・接続で競合",
+            "en": "Data-center optics and connectivity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Data-center and network equipment makers",
+          "nameJa": "データセンター・通信機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "光・高速アナログ半導体を供給",
+            "en": "Optical and high-speed analog chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Defense and industrial customers",
+          "nameJa": "防衛・産業機器企業",
+          "role": "customer",
+          "label": {
+            "ja": "RF・マイクロ波製品を供給",
+            "en": "RF and microwave products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 833640,
+    "tickers": [
+      "POWI"
+    ],
+    "name": "Power Integrations",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Customers / Competition / Manufacturing / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/833640/000083364026000037/powi-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "コンセントの交流電力を機器で使える直流へ効率よく変える高耐圧半導体を作る会社。モーターとGaN向けドライバーも扱う。",
+      "revenue": "家電、充電器、産業機器、再生可能エネルギー、車載向けに、電源変換ICとドライバー製品を販売して稼ぐ。",
+      "strength": "高耐圧スイッチと制御回路を一つにまとめ、部品点数、電力損失、設計時間を減らせる。設計支援と省エネ性能も強み。",
+      "risks": "家電・消費者機器の需要、流通在庫、中国市場と競争、外部工場の供給に左右される。代替部品の値下がりも価格圧力になる。",
+      "competition": "電源ICではInfineon、STMicroelectronics、Texas Instruments、NXPなど、モータードライバーではON Semiconductorなどと競う。",
+      "relationships": "家電・産業・自動車の電源メーカーへ製品を直接または販売会社経由で供給し、外部工場と組立・検査会社へ製造を委託する。"
+    },
+    "en": {
+      "business": "Makes high-voltage chips that efficiently convert wall power into the direct current used by electronics, along with motor and GaN gate drivers.",
+      "revenue": "Sells power-conversion ICs and driver products into appliances, chargers, industrial systems, renewable energy and automotive applications.",
+      "strength": "Integrates high-voltage switches and control circuitry to reduce component count, energy loss and design time, supported by design tools and efficiency features.",
+      "risks": "Appliance and consumer demand, channel inventory, China exposure, competition and outsourced manufacturing affect results; falling discrete-component prices can add pricing pressure.",
+      "competition": "Competes in power ICs with Infineon, STMicroelectronics, Texas Instruments and NXP, and in motor drivers with ON Semiconductor and others.",
+      "relationships": "Supplies appliance, industrial and automotive power designers directly and through distributors while outsourcing wafer fabrication, assembly and test."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Texas Instruments",
+          "ticker": "TXN",
+          "role": "competitor",
+          "label": {
+            "ja": "電源制御ICで競合",
+            "en": "Power-control ICs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "NXP Semiconductors",
+          "ticker": "NXPI",
+          "role": "competitor",
+          "label": {
+            "ja": "高耐圧電源ICで競合",
+            "en": "High-voltage power ICs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "onsemi",
+          "ticker": "ON",
+          "role": "competitor",
+          "label": {
+            "ja": "モータードライバーで競合",
+            "en": "Motor-driver products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Appliance and industrial power designers",
+          "nameJa": "家電・産業用電源メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "電源変換ICを供給",
+            "en": "Power-conversion ICs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Foundry and assembly partners",
+          "nameJa": "半導体工場・組立会社",
+          "role": "supplier",
+          "label": {
+            "ja": "ウエハー製造・組立・検査を委託",
+            "en": "Wafer fabrication, assembly and test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1451809,
+    "tickers": [
+      "SITM"
+    ],
+    "name": "SiTime",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Precision timing / Markets / Customers / Competition / Manufacturing",
+        "url": "https://www.sec.gov/Archives/edgar/data/1451809/000145180926000012/sitm-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "電子機器の動作タイミングを正確に合わせるMEMS振動子、発振器、クロックICを作る会社。水晶部品を半導体技術で置き換える。",
+      "revenue": "データセンター、通信、車載、産業、航空宇宙、消費者機器向けに、精密タイミング半導体を販売して稼ぐ。",
+      "strength": "MEMS振動子、アナログ回路、パッケージ、ソフトを一体設計し、振動や温度変化に強く、設定変更できるタイミング製品を作れる。",
+      "risks": "大口顧客と製品認定の時期、外部工場・組立会社への依存、長い設計サイクル、水晶部品との競争、輸出規制が成長を左右する。",
+      "competition": "従来の水晶発振器・振動子メーカーと、クロックICやMEMSタイミングを作る半導体会社に競う。",
+      "relationships": "データセンター・通信・自動車・産業機器メーカーへタイミング製品を供給し、外部の半導体工場と組立会社へ製造を委託する。"
+    },
+    "en": {
+      "business": "Makes MEMS resonators, oscillators and clock ICs that keep electronic systems synchronized, replacing quartz components with semiconductor technology.",
+      "revenue": "Sells precision-timing devices into data-center, communications, automotive, industrial, aerospace and consumer equipment.",
+      "strength": "Integrates MEMS resonators, analog circuitry, packaging and software to deliver programmable timing resilient to vibration and temperature change.",
+      "risks": "Major-customer and qualification timing, reliance on foundry and assembly partners, long design cycles, quartz competition and export controls affect growth.",
+      "competition": "Competes with traditional quartz resonator and oscillator makers and semiconductor suppliers of clock ICs and MEMS timing products.",
+      "relationships": "Supplies timing products to data-center, network, automotive and industrial equipment makers and outsources fabrication and assembly."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Quartz timing suppliers",
+          "nameJa": "水晶タイミング部品メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "発振器・振動子で競合",
+            "en": "Oscillators and resonators"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Semiconductor clock vendors",
+          "nameJa": "クロック半導体メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "クロックICで競合",
+            "en": "Clock ICs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Data-center and network equipment makers",
+          "nameJa": "データセンター・通信機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "精密タイミング製品を供給",
+            "en": "Precision timing devices"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Foundry and assembly partners",
+          "nameJa": "半導体工場・組立会社",
+          "role": "supplier",
+          "label": {
+            "ja": "製造と組立を委託",
+            "en": "Fabrication and assembly"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
   }
 ]
