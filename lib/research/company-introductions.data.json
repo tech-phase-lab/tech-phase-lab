@@ -8484,5 +8484,1386 @@
         }
       ]
     }
+  },
+  {
+    "cik": 1086222,
+    "tickers": [
+      "AKAM"
+    ],
+    "name": "Akamai Technologies",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Business / Revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000022/akam-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "世界各地のエッジ網を使い、Web配信の高速化、サイバー防御、クラウド計算基盤を企業へ提供する会社。",
+      "revenue": "セキュリティ、配信、クラウド計算の利用料や契約料金が中心で、大企業やメディア、SaaS事業者から継続収入を得る。",
+      "strength": "利用者に近い多数の拠点と大量通信を処理する運用技術を持ち、配信と防御を同じ基盤で提供できる。",
+      "risks": "大手クラウドやCDNとの競争、通信量単価の低下、障害や攻撃、設備投資、通信・データセンター費の上昇が重荷になる。",
+      "competition": "CDN・エッジ配信、Webセキュリティ、クラウド計算の各市場で、大手クラウドや専門事業者と競う。",
+      "relationships": "通信・データセンター事業者の設備を使い、企業やメディアのコンテンツとアプリを利用者の近くで配信・防御する。"
+    },
+    "en": {
+      "business": "Uses a global edge network to accelerate web delivery, protect applications and provide cloud computing services to enterprises.",
+      "revenue": "Earns recurring and usage-based fees from security, delivery and compute services sold to enterprises, media companies and software providers.",
+      "strength": "Combines a widely distributed edge footprint with operating expertise that can deliver and secure high volumes of traffic on one platform.",
+      "risks": "Cloud and CDN competition, falling delivery prices, outages, attacks, capital needs and higher network or colocation costs can pressure results.",
+      "competition": "Competes with hyperscalers and specialists across CDN and edge delivery, web security and cloud compute.",
+      "relationships": "Uses carrier and data-center infrastructure to deliver and protect enterprise, media and software traffic close to end users."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "CDN and edge providers",
+          "nameJa": "CDN・エッジ配信事業者",
+          "role": "competitor",
+          "label": {
+            "ja": "エッジ配信・Web防御で競合",
+            "en": "Edge delivery and web security"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Hyperscale cloud platforms",
+          "nameJa": "大手クラウド基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド計算・配信で競合",
+            "en": "Cloud compute and delivery"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cybersecurity vendors",
+          "nameJa": "サイバーセキュリティ企業",
+          "role": "competitor",
+          "label": {
+            "ja": "アプリ防御で競合",
+            "en": "Application protection"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Carriers and colocation providers",
+          "nameJa": "通信・データセンター事業者",
+          "role": "supplier",
+          "label": {
+            "ja": "回線・設置拠点を利用",
+            "en": "Network and colocation capacity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprises and software providers",
+          "nameJa": "企業・SaaS事業者",
+          "role": "customer",
+          "label": {
+            "ja": "アプリを高速化・防御",
+            "en": "Application delivery and protection"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Media and streaming companies",
+          "nameJa": "メディア・配信会社",
+          "role": "customer",
+          "label": {
+            "ja": "大容量コンテンツを配信",
+            "en": "High-volume content delivery"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1660134,
+    "tickers": [
+      "OKTA"
+    ],
+    "name": "Okta",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Platform / Subscription revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "従業員や顧客が本人かを確認し、許可されたクラウドや社内システムへ安全に入れるようにするID管理会社。",
+      "revenue": "Workforce IdentityとCustomer Identityのクラウド契約が中心で、利用者数や機能、契約期間に応じたサブスク収入を得る。",
+      "strength": "特定クラウドに偏らず、多数の業務アプリや端末と接続できる統合網とID専業の運用知識が強み。",
+      "risks": "自社や顧客への侵害は信用を直接損ない、大手ソフト企業との競争、長い販売期間、クラウド障害も成長を左右する。",
+      "competition": "従業員IDでは大手ソフト企業やID専業、顧客IDでは内製システムや開発者向け認証サービスと競う。",
+      "relationships": "企業の人事・業務アプリや顧客向けサービスをつなぎ、販売・導入パートナーを通じて認証とアクセス制御を提供する。"
+    },
+    "en": {
+      "business": "Provides identity software that verifies employees and customers and controls secure access to cloud and on-premise systems.",
+      "revenue": "Earns mainly subscription revenue from Workforce Identity and Customer Identity, priced by users, capabilities and contract terms.",
+      "strength": "Its vendor-neutral integration network connects many business applications and devices, backed by focused identity expertise.",
+      "risks": "A breach can directly damage trust, while large software rivals, long sales cycles and cloud outages can slow growth.",
+      "competition": "Competes with large software suites and identity specialists for workforce identity, and with in-house or developer authentication tools for customer identity.",
+      "relationships": "Connects enterprise HR and business apps and customer services, delivering authentication and access controls through implementation and channel partners."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Project and developer tools",
+          "nameJa": "案件・開発管理ツール",
+          "role": "competitor",
+          "label": {
+            "ja": "従業員ID管理で競合",
+            "en": "Workforce identity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Identity security specialists",
+          "nameJa": "IDセキュリティ専業",
+          "role": "competitor",
+          "label": {
+            "ja": "認証・アクセス管理で競合",
+            "en": "Authentication and access"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "In-house identity systems",
+          "nameJa": "企業の内製ID基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客IDの内製と競合",
+            "en": "Customer identity build-outs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Business application providers",
+          "nameJa": "業務アプリ事業者",
+          "role": "ecosystem",
+          "label": {
+            "ja": "ログイン・権限を連携",
+            "en": "Login and permissions integrations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprises and public organizations",
+          "nameJa": "企業・公共機関",
+          "role": "customer",
+          "label": {
+            "ja": "従業員・顧客IDを管理",
+            "en": "Workforce and customer identity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Systems integrators and resellers",
+          "nameJa": "導入支援・販売会社",
+          "role": "partner",
+          "label": {
+            "ja": "販売・導入を支援",
+            "en": "Sales and implementation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1583708,
+    "tickers": [
+      "S"
+    ],
+    "name": "SentinelOne",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Singularity platform / Revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "PC、サーバー、クラウド、IDを監視し、AIで攻撃を検知・封じ込めるSingularityセキュリティ基盤の会社。",
+      "revenue": "保護する端末や利用機能に応じた期間契約のサブスクが中心で、企業や公的機関から継続収入を得る。",
+      "strength": "端末からクラウドまでの情報を一つのデータ基盤に集め、検知後の調査と復旧を自動化できる。",
+      "risks": "競争が激しく赤字が続く可能性があり、検知漏れ、侵害、AI判断の誤り、クラウド費、販売パートナー依存が負担になる。",
+      "competition": "端末防御、クラウド防御、ログ分析、ID防御を一体化する市場で、大手セキュリティ企業やソフト企業と競う。",
+      "relationships": "企業や政府へ直接または販売会社・運用代行会社経由で提供し、クラウドや業務ツールと連携して脅威データを集める。"
+    },
+    "en": {
+      "business": "Provides the Singularity security platform, using AI to detect and contain attacks across endpoints, servers, cloud workloads and identities.",
+      "revenue": "Earns recurring term-subscription revenue based mainly on protected endpoints and purchased capabilities from enterprises and public organizations.",
+      "strength": "Brings endpoint, cloud and identity telemetry into one data platform and automates investigation, response and recovery.",
+      "risks": "Intense competition, continued losses, missed detections, breaches, AI errors, cloud costs and reliance on channel partners can hurt results.",
+      "competition": "Competes with major security and software vendors across endpoint, cloud, analytics and identity protection.",
+      "relationships": "Sells directly and through resellers and managed-security providers, integrating with cloud and business tools to collect threat telemetry."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "CrowdStrike",
+          "ticker": "CRWD",
+          "role": "competitor",
+          "label": {
+            "ja": "端末・クラウド防御で競合",
+            "en": "Endpoint and cloud security"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "統合セキュリティで競合",
+            "en": "Integrated security"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Security analytics platforms",
+          "nameJa": "セキュリティ分析基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "ログ分析・対応で競合",
+            "en": "Security analytics and response"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Cloud infrastructure providers",
+          "nameJa": "クラウド基盤事業者",
+          "role": "supplier",
+          "label": {
+            "ja": "サービス運用基盤を利用",
+            "en": "Service infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprises and public organizations",
+          "nameJa": "企業・公共機関",
+          "role": "customer",
+          "label": {
+            "ja": "端末・クラウドを防御",
+            "en": "Endpoint and cloud protection"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Resellers and managed-security providers",
+          "nameJa": "販売・セキュリティ運用会社",
+          "role": "partner",
+          "label": {
+            "ja": "販売・運用を支援",
+            "en": "Sales and managed operations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1015922,
+    "tickers": [
+      "CHKP"
+    ],
+    "name": "Check Point Software Technologies",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 20-F · Products / Revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1015922/000117891326001932/zk2634942.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業のネットワーク、クラウド、メール、端末を守るファイアウォールと統合セキュリティ製品を開発する会社。",
+      "revenue": "機器・ソフトの販売に加え、脅威防御のサブスク、更新、保守・サポートから継続収入を得る。",
+      "strength": "長年蓄積した脅威情報と一元管理技術を使い、ネットワークからクラウド・端末まで共通方針で守れる。",
+      "risks": "クラウド移行への対応遅れ、激しい価格競争、検知漏れや脆弱性、販売会社依存、為替やイスラエル情勢が業績に影響する。",
+      "competition": "ネットワーク防御、クラウド防御、端末・メール防御で、それぞれ大手セキュリティ会社やクラウド事業者と競う。",
+      "relationships": "販売会社やシステム構築会社を通じて企業・政府へ提供し、クラウドや端末環境を一つの管理基盤で保護する。"
+    },
+    "en": {
+      "business": "Develops firewalls and integrated security products that protect enterprise networks, cloud environments, email and endpoints.",
+      "revenue": "Earns from appliances and software plus recurring threat-prevention subscriptions, updates, maintenance and support.",
+      "strength": "Combines long-developed threat intelligence and centralized management to enforce common policies from networks to cloud and endpoints.",
+      "risks": "Slow cloud adaptation, price competition, missed threats or vulnerabilities, channel dependence, currencies and conditions in Israel can affect results.",
+      "competition": "Competes with major security companies and cloud providers across network, cloud, endpoint and email security.",
+      "relationships": "Reaches enterprises and governments through resellers and integrators, protecting cloud, network and endpoint environments through one management layer."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Palo Alto Networks",
+          "ticker": "PANW",
+          "role": "competitor",
+          "label": {
+            "ja": "ネットワーク・クラウド防御で競合",
+            "en": "Network and cloud security"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Fortinet",
+          "ticker": "FTNT",
+          "role": "competitor",
+          "label": {
+            "ja": "ファイアウォールで競合",
+            "en": "Firewall security"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cloud-native security vendors",
+          "nameJa": "クラウド防御専業",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド保護で競合",
+            "en": "Cloud protection"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Resellers and systems integrators",
+          "nameJa": "販売会社・システム構築会社",
+          "role": "partner",
+          "label": {
+            "ja": "販売・導入を支援",
+            "en": "Sales and deployment"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprises and governments",
+          "nameJa": "企業・政府機関",
+          "role": "customer",
+          "label": {
+            "ja": "ネットワーク・クラウドを防御",
+            "en": "Network and cloud protection"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cloud platforms",
+          "nameJa": "クラウド基盤",
+          "role": "ecosystem",
+          "label": {
+            "ja": "クラウド環境と連携",
+            "en": "Cloud environment integrations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1650372,
+    "tickers": [
+      "TEAM"
+    ],
+    "name": "Atlassian",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Products / Subscription revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/team-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "Jira、Confluence、Loomなどで、ソフト開発、案件管理、社内文書、動画共有をまとめる業務ソフト会社。",
+      "revenue": "クラウド版を中心とするサブスクが主力で、Data Center契約、Marketplaceアプリ、保守・サービスも収益になる。",
+      "strength": "開発部門から全社へ広がりやすい製品群と、製品同士の連携、開発者・販売パートナーの大きな生態系を持つ。",
+      "risks": "クラウド移行のつまずき、障害や情報漏えい、生成AIによる競争変化、大企業向け販売の長期化が成長を鈍らせる。",
+      "competition": "案件管理、共同作業、開発管理、IT運用、動画・文書共有の各分野で大手ソフト企業や専門製品と競う。",
+      "relationships": "企業の開発・IT・営業などのチームが利用し、Marketplace開発者と導入パートナーが機能追加や運用を支える。"
+    },
+    "en": {
+      "business": "Provides Jira, Confluence, Loom and related software for development, project work, knowledge sharing and video collaboration.",
+      "revenue": "Earns mainly cloud subscriptions, with Data Center subscriptions, Marketplace activity and services also contributing.",
+      "strength": "Products can spread from software teams across an enterprise and are reinforced by integrated workflows and a large developer and partner ecosystem.",
+      "risks": "Cloud migration problems, outages or breaches, generative-AI disruption and longer enterprise sales cycles can slow growth.",
+      "competition": "Competes with large suites and specialized products in project, collaboration, development, IT service, video and knowledge management.",
+      "relationships": "Development, IT and business teams use its products, while Marketplace developers and implementation partners extend and deploy them."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "共同作業・案件管理で競合",
+            "en": "Collaboration and work management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprise service-management platforms",
+          "nameJa": "企業向けサービス管理基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "IT業務管理で競合",
+            "en": "IT service management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "AI-native collaboration tools",
+          "nameJa": "AI型共同作業ツール",
+          "role": "competitor",
+          "label": {
+            "ja": "開発工程で競合",
+            "en": "Software development workflows"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Enterprise teams",
+          "nameJa": "企業の開発・業務チーム",
+          "role": "customer",
+          "label": {
+            "ja": "案件・文書・開発を管理",
+            "en": "Projects, knowledge and development"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Marketplace app developers",
+          "nameJa": "Marketplace開発者",
+          "role": "ecosystem",
+          "label": {
+            "ja": "追加機能を提供",
+            "en": "Extend product capabilities"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Solution partners",
+          "nameJa": "導入支援パートナー",
+          "role": "partner",
+          "label": {
+            "ja": "販売・移行・導入を支援",
+            "en": "Sales, migration and implementation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1447669,
+    "tickers": [
+      "TWLO"
+    ],
+    "name": "Twilio",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Communications / Segment / Revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1447669/000144766926000021/twlo-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業のアプリにSMS、通話、メール、本人確認を組み込み、顧客データをまとめるAPI・クラウド会社。",
+      "revenue": "通信APIの利用量課金が中心で、電話番号、メール、認証、Segmentの顧客データ基盤の契約料金も得る。",
+      "strength": "多国間の通信網をAPIで扱え、メッセージ送信から顧客データ活用まで開発者が一つの基盤で組み込める。",
+      "risks": "通信会社への接続費、迷惑通信規制、顧客の利用減、障害・不正利用、大手クラウドや通信APIとの価格競争が利益を圧迫する。",
+      "competition": "通信API、メール配信、本人確認、顧客データ基盤で、通信事業者、大手クラウド、専門ソフトと競う。",
+      "relationships": "通信会社やメール網から接続を仕入れ、企業のアプリやコンタクトセンターへメッセージ、通話、認証を届ける。"
+    },
+    "en": {
+      "business": "Provides APIs and cloud software that embed messaging, voice, email and verification in apps and unify customer data.",
+      "revenue": "Earns mainly usage-based communications fees, plus phone numbers, email, verification and Segment customer-data subscriptions.",
+      "strength": "Developers can use one platform to reach communications networks across countries and connect customer interactions with data.",
+      "risks": "Carrier fees, messaging regulation, lower customer usage, outages, abuse and price competition from clouds and API rivals can pressure margins.",
+      "competition": "Competes with carriers, hyperscalers and specialists across communications APIs, email, verification and customer-data platforms.",
+      "relationships": "Buys connectivity from carriers and email networks, then delivers messaging, calls and verification into enterprise apps and contact centers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Communications API providers",
+          "nameJa": "通信API事業者",
+          "role": "competitor",
+          "label": {
+            "ja": "SMS・通話APIで競合",
+            "en": "Messaging and voice APIs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Hyperscale cloud platforms",
+          "nameJa": "大手クラウド基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "開発者向け通信機能で競合",
+            "en": "Developer communications services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Customer data platforms",
+          "nameJa": "顧客データ基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客データ統合で競合",
+            "en": "Customer data unification"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Telecom carriers and email networks",
+          "nameJa": "通信会社・メール網",
+          "role": "supplier",
+          "label": {
+            "ja": "通信接続を仕入れ",
+            "en": "Connectivity and message delivery"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Application developers",
+          "nameJa": "アプリ開発者",
+          "role": "customer",
+          "label": {
+            "ja": "通信APIを組み込み",
+            "en": "Embed communications APIs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprises and contact centers",
+          "nameJa": "企業・コンタクトセンター",
+          "role": "customer",
+          "label": {
+            "ja": "顧客連絡・認証に利用",
+            "en": "Customer engagement and verification"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1261333,
+    "tickers": [
+      "DOCU"
+    ],
+    "name": "Docusign",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · IAM / Subscription revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1261333/000126133326000021/docu-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "契約書の作成、電子署名、保管、分析までをオンライン化するIntelligent Agreement Managementの会社。",
+      "revenue": "eSignatureや契約管理クラウドのサブスクが中心で、プロフェッショナルサービスなども一部収益になる。",
+      "strength": "電子署名の知名度と大きな利用基盤を入口に、契約の作成前から締結後まで同じ基盤へ広げられる。",
+      "risks": "電子署名の成熟、無料・同梱製品との競争、情報漏えい、各国の電子契約法やデータ保管規制が成長を左右する。",
+      "competition": "電子署名、契約ライフサイクル管理、文書作成・共有で、大手ソフト企業や契約管理専業と競う。",
+      "relationships": "企業の営業・法務・人事・購買部門が利用し、業務アプリや導入支援会社との連携で契約工程へ組み込む。"
+    },
+    "en": {
+      "business": "Digitizes agreement creation, electronic signature, storage and analysis through its Intelligent Agreement Management platform.",
+      "revenue": "Earns mainly subscriptions for eSignature and agreement-management cloud products, with services contributing a smaller share.",
+      "strength": "Uses its well-known eSignature product and large user base to expand across the agreement process before and after signing.",
+      "risks": "A maturing eSignature market, free or bundled rivals, data breaches and electronic-contract or residency rules can affect growth.",
+      "competition": "Competes with large software suites and specialists in eSignature, contract lifecycle management and document workflows.",
+      "relationships": "Sales, legal, HR and procurement teams use the platform, integrated into workflows through business apps and implementation partners."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Adobe",
+          "ticker": "ADBE",
+          "role": "competitor",
+          "label": {
+            "ja": "電子署名・文書業務で競合",
+            "en": "E-signature and document workflows"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Contract lifecycle management vendors",
+          "nameJa": "契約管理ソフト会社",
+          "role": "competitor",
+          "label": {
+            "ja": "契約管理で競合",
+            "en": "Contract lifecycle management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Bundled productivity suites",
+          "nameJa": "統合業務ソフト",
+          "role": "competitor",
+          "label": {
+            "ja": "同梱機能と競合",
+            "en": "Bundled agreement features"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Sales, legal and procurement teams",
+          "nameJa": "営業・法務・購買部門",
+          "role": "customer",
+          "label": {
+            "ja": "契約作成・署名・管理に利用",
+            "en": "Create, sign and manage agreements"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Business application providers",
+          "nameJa": "業務アプリ事業者",
+          "role": "ecosystem",
+          "label": {
+            "ja": "契約工程を連携",
+            "en": "Agreement workflow integrations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Systems integrators",
+          "nameJa": "導入支援会社",
+          "role": "partner",
+          "label": {
+            "ja": "導入・業務設計を支援",
+            "en": "Implementation and workflow design"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1404655,
+    "tickers": [
+      "HUBS"
+    ],
+    "name": "HubSpot",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Customer platform / Subscriptions / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1404655/000119312526046646/hubs-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "主に中小・中堅企業向けに、集客、営業、顧客対応、Web制作、決済を一つにまとめる顧客管理ソフト会社。",
+      "revenue": "Marketing、Sales、Serviceなど各Hubと統合版のサブスクが中心で、席数・機能・顧客データ量に応じて課金する。",
+      "strength": "無料版から導入しやすく、顧客データを共通基盤に置いたまま必要なHubを追加でき、パートナー網も大きい。",
+      "risks": "中小企業の景気感、顧客獲得費、解約、大手CRMとの競争、AIで既存機能が一般化するリスクが成長に影響する。",
+      "competition": "CRM、マーケティング自動化、営業支援、顧客対応、Web制作の各分野で、大手統合製品や専門ツールと競う。",
+      "relationships": "企業の営業・マーケティング・サポート部門が利用し、アプリ開発者や代理店が連携機能、導入、運用を支える。"
+    },
+    "en": {
+      "business": "Provides a customer platform, mainly for small and mid-sized businesses, spanning marketing, sales, service, content and commerce.",
+      "revenue": "Earns mainly subscriptions for individual Hubs and bundled suites, priced by seats, features and customer-data usage.",
+      "strength": "A low-friction free entry point, shared customer data and expandable Hubs are reinforced by a broad partner ecosystem.",
+      "risks": "SMB spending, customer acquisition costs, churn, large CRM rivals and AI commoditizing existing features can affect growth.",
+      "competition": "Competes with large suites and point tools across CRM, marketing automation, sales, service and content management.",
+      "relationships": "Sales, marketing and support teams use the platform, while app developers and agencies provide integrations, implementation and operations."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "CRM software suites",
+          "nameJa": "CRM統合ソフト",
+          "role": "competitor",
+          "label": {
+            "ja": "CRM・営業支援で競合",
+            "en": "CRM and sales software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Marketing automation platforms",
+          "nameJa": "マーケティング自動化基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "マーケティング基盤で競合",
+            "en": "Marketing platforms"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "SMB business software",
+          "nameJa": "中小企業向け業務ソフト",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客管理・集客で競合",
+            "en": "Customer management and marketing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Small and mid-sized businesses",
+          "nameJa": "中小・中堅企業",
+          "role": "customer",
+          "label": {
+            "ja": "集客・営業・顧客対応に利用",
+            "en": "Marketing, sales and service"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "App developers",
+          "nameJa": "連携アプリ開発者",
+          "role": "ecosystem",
+          "label": {
+            "ja": "連携機能を追加",
+            "en": "Extend platform integrations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Solution partners and agencies",
+          "nameJa": "導入会社・代理店",
+          "role": "partner",
+          "label": {
+            "ja": "導入・運用を支援",
+            "en": "Implementation and operations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1594805,
+    "tickers": [
+      "SHOP"
+    ],
+    "name": "Shopify",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Commerce platform / Revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1594805/000159480526000007/shop-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ネット通販、実店舗、SNSなどの販売、在庫、決済、販促を一つにまとめる事業者向けコマース基盤。",
+      "revenue": "月額プランなどのSubscription Solutionsと、決済・取引・金融など売上高に連動しやすいMerchant Solutionsで稼ぐ。",
+      "strength": "小規模店から大企業まで同じ基盤で成長でき、決済と2万超のアプリを含む豊富なパートナー網を持つ。",
+      "risks": "加盟店や消費の減速、決済損失、競争、障害、クラウド費、アプリ・決済・AIなど外部事業者への依存が利益を左右する。",
+      "competition": "通販サイト作成、実店舗POS、決済、マーケットプレイス、加盟店の内製システムと幅広く競う。",
+      "relationships": "加盟店へ販売・決済基盤を提供し、アプリ開発者や制作会社が機能を拡張し、決済・クラウド会社が処理基盤を支える。"
+    },
+    "en": {
+      "business": "Provides a commerce platform that combines online, retail and social selling with inventory, payments and marketing.",
+      "revenue": "Earns from Subscription Solutions and from Merchant Solutions such as payments, transaction-linked services and financial products.",
+      "strength": "One platform can scale from small sellers to large brands, reinforced by payments and an ecosystem of more than 20,000 apps.",
+      "risks": "Merchant or consumer weakness, payment losses, competition, outages, cloud costs and dependence on app, payments and AI providers can affect profits.",
+      "competition": "Competes across storefront software, retail POS, payments, marketplaces and merchants' internally built systems.",
+      "relationships": "Provides selling and payment tools to merchants; developers and agencies extend the platform while payment and cloud providers support processing."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Commerce software platforms",
+          "nameJa": "コマースソフト基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "店舗・通販運営で競合",
+            "en": "Store and commerce operations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Online marketplaces",
+          "nameJa": "オンライン市場",
+          "role": "competitor",
+          "label": {
+            "ja": "加盟店・購入者で競合",
+            "en": "Merchants and buyers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Payments and POS providers",
+          "nameJa": "決済・POS事業者",
+          "role": "competitor",
+          "label": {
+            "ja": "決済・実店舗機能で競合",
+            "en": "Payments and retail POS"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Merchants and brands",
+          "nameJa": "加盟店・ブランド",
+          "role": "customer",
+          "label": {
+            "ja": "販売・決済基盤を提供",
+            "en": "Commerce and payments platform"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "App developers and agencies",
+          "nameJa": "アプリ開発者・制作会社",
+          "role": "ecosystem",
+          "label": {
+            "ja": "機能・導入を拡張",
+            "en": "Extensions and implementation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Payments and cloud providers",
+          "nameJa": "決済・クラウド事業者",
+          "role": "supplier",
+          "label": {
+            "ja": "処理・運用基盤を提供",
+            "en": "Processing and infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1751008,
+    "tickers": [
+      "APP"
+    ],
+    "name": "AppLovin",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Axon advertising platform / Revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1751008/000175100826000010/app-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "AI広告基盤Axonで、広告主の集客とアプリ会社の広告収益化を結びつける広告テクノロジー会社。",
+      "revenue": "Axon Ads Managerによる広告収益がほぼ全てで、広告主の需要とアプリ・Web・CTVの広告枠を自動で組み合わせる。",
+      "strength": "大規模な広告入札データがAxon AIの推薦精度を高め、成果が上がるほど広告主と広告枠が増える循環を作る。",
+      "risks": "AppleやGoogleなどの規約・識別子変更、個人情報規制、広告需要、推定精度、少数の配信基盤への依存が業績を大きく動かす。",
+      "competition": "広告主の予算と広告枠をめぐり、Google、Meta、Amazon、Unityなど大手広告・アプリ基盤と競う。",
+      "relationships": "広告主の入札をアプリ・Web・CTVの広告枠へつなぎ、AppleやGoogleなどの配信基盤の規約下でサービスを動かす。"
+    },
+    "en": {
+      "business": "Uses its Axon AI advertising platform to connect advertiser acquisition goals with publisher monetization.",
+      "revenue": "Almost all revenue comes from Axon Ads Manager, which matches advertiser demand with app, web and connected-TV inventory.",
+      "strength": "Large-scale auction data improves Axon AI recommendations, creating a cycle in which better results attract more advertisers and inventory.",
+      "risks": "Apple or Google policy and identifier changes, privacy rules, ad demand, model performance and dependence on a few distribution platforms can move results sharply.",
+      "competition": "Competes for advertiser budgets and inventory with major advertising and app platforms including Google, Meta, Amazon and Unity.",
+      "relationships": "Matches advertiser bids to app, web and CTV inventory while operating under the policies of distribution platforms such as Apple and Google."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "ticker": "GOOG",
+          "role": "competitor",
+          "label": {
+            "ja": "デジタル広告で競合",
+            "en": "Digital advertising"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Meta",
+          "ticker": "META",
+          "role": "competitor",
+          "label": {
+            "ja": "広告主の予算で競合",
+            "en": "Advertiser budgets"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "competitor",
+          "label": {
+            "ja": "広告配信で競合",
+            "en": "Advertising platforms"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Advertisers and agencies",
+          "nameJa": "広告主・広告代理店",
+          "role": "customer",
+          "label": {
+            "ja": "成果目標に沿って広告を配信",
+            "en": "Performance-based ad delivery"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "App, web and CTV publishers",
+          "nameJa": "アプリ・Web・CTV媒体",
+          "role": "partner",
+          "label": {
+            "ja": "広告枠を収益化",
+            "en": "Monetize advertising inventory"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Mobile distribution platforms",
+          "nameJa": "モバイル配信基盤",
+          "role": "ecosystem",
+          "label": {
+            "ja": "規約・識別子に依存",
+            "en": "Policies and identifiers shape delivery"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1559720,
+    "tickers": [
+      "ABNB"
+    ],
+    "name": "Airbnb",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Marketplace / Service fees / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1559720/000155972026000004/abnb-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "住宅などの宿泊先、体験、旅行中のサービスを提供するホストと利用者を結ぶ世界的な旅行市場。",
+      "revenue": "予約金額に対するサービス料が中心で、宿泊開始時に売上を認識する。2025年からホスト側の単一料金へ移行を始めた。",
+      "strength": "世界中の多様な宿泊在庫と強いブランド、ホストとゲストが互いを呼ぶネットワーク、決済・安全支援を一体で持つ。",
+      "risks": "短期賃貸規制、安全事故、不正、旅行需要の変動、ホスト不足、保険・決済費、地域ごとの法令が成長を左右する。",
+      "competition": "ホストとゲストをめぐり、オンライン旅行会社、ホテル、検索サービス、体験予約サイトと競う。",
+      "relationships": "ホストの宿泊・体験・サービスをゲストへ仲介し、カード網、銀行、決済会社を通じて代金を回収・送金する。"
+    },
+    "en": {
+      "business": "Runs a global travel marketplace connecting guests with hosts offering homes, experiences and trip services.",
+      "revenue": "Earns mainly service fees tied to bookings and recognizes revenue at check-in; it began shifting toward a host-only single-fee structure in 2025.",
+      "strength": "Combines diverse global inventory, a strong brand, host-guest network effects, payments and trust support.",
+      "risks": "Short-term rental rules, safety incidents, fraud, travel demand, host supply, insurance, payments and local laws can constrain growth.",
+      "competition": "Competes for hosts and guests with online travel agencies, hotels, search services and experiences marketplaces.",
+      "relationships": "Matches host stays, experiences and services with guests and uses card networks, banks and processors to collect and remit payments."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Online travel agencies",
+          "nameJa": "オンライン旅行会社",
+          "role": "competitor",
+          "label": {
+            "ja": "宿泊予約で競合",
+            "en": "Accommodation bookings"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Hotels and property managers",
+          "nameJa": "ホテル・物件管理会社",
+          "role": "competitor",
+          "label": {
+            "ja": "宿泊在庫で競合",
+            "en": "Lodging supply"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "ticker": "GOOG",
+          "role": "competitor",
+          "label": {
+            "ja": "旅行検索で競合",
+            "en": "Travel search"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Hosts and service providers",
+          "nameJa": "ホスト・サービス提供者",
+          "role": "supplier",
+          "label": {
+            "ja": "宿泊・体験・サービスを掲載",
+            "en": "List stays, experiences and services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Travelers and guests",
+          "nameJa": "旅行者・ゲスト",
+          "role": "customer",
+          "label": {
+            "ja": "予約・決済に利用",
+            "en": "Book and pay through the marketplace"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Card networks, banks and processors",
+          "nameJa": "カード網・銀行・決済会社",
+          "role": "supplier",
+          "label": {
+            "ja": "代金回収・送金を処理",
+            "en": "Collect and remit payments"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1639920,
+    "tickers": [
+      "SPOT"
+    ],
+    "name": "Spotify Technology",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 20-F · Premium / Advertising / Content / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "音楽、ポッドキャスト、オーディオブックを個人ごとに推薦して配信する世界的な音声サービス。",
+      "revenue": "Premiumなどの月額契約が中心で、無料版では音声・動画・表示広告を広告主や代理店へ販売する。",
+      "strength": "大きな利用者基盤と再生データを使った推薦、無料版から有料版へ移す導線、複数音声形式を一つに集める点が強い。",
+      "risks": "レーベル・出版社への権利料、契約更新、Appleなど端末基盤との競争、値上げ・解約、広告市況が利益を左右する。",
+      "competition": "音声利用時間と広告費をめぐり、Apple、Alphabet、Amazon、Meta、ByteDanceなどのサービスと競う。",
+      "relationships": "レーベル、出版社、制作者から音源・番組の権利を得て利用者へ配信し、通信会社経由でも有料契約を販売する。"
+    },
+    "en": {
+      "business": "Streams personalized music, podcasts and audiobooks to users worldwide.",
+      "revenue": "Earns mainly monthly Premium and related subscriptions, while the free service sells audio, video and display ads to brands and agencies.",
+      "strength": "A large user base, personalization data, free-to-paid conversion and multiple audio formats reinforce engagement.",
+      "risks": "Label and publisher royalties, contract renewals, competition from device platforms, price-related churn and ad markets can affect profits.",
+      "competition": "Competes for listening time and advertising with services from Apple, Alphabet, Amazon, Meta, ByteDance and others.",
+      "relationships": "Licenses music and programs from labels, publishers and creators, distributes them to listeners and also sells subscriptions through telecom partners."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "ticker": "GOOG",
+          "role": "competitor",
+          "label": {
+            "ja": "音声・動画・広告で競合",
+            "en": "Audio, video and advertising"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "competitor",
+          "label": {
+            "ja": "音楽・音声契約で競合",
+            "en": "Music and audio subscriptions"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Device-linked audio services",
+          "nameJa": "端末連携型の音声サービス",
+          "role": "competitor",
+          "label": {
+            "ja": "端末標準・音声配信で競合",
+            "en": "Default placement and audio"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Labels, publishers and creators",
+          "nameJa": "レーベル・出版社・制作者",
+          "role": "supplier",
+          "label": {
+            "ja": "音楽・番組の権利を提供",
+            "en": "License music and programs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Listeners and subscribers",
+          "nameJa": "利用者・有料会員",
+          "role": "customer",
+          "label": {
+            "ja": "音楽・番組を配信",
+            "en": "Stream audio content"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Advertisers and agencies",
+          "nameJa": "広告主・広告代理店",
+          "role": "customer",
+          "label": {
+            "ja": "無料版の広告枠を販売",
+            "en": "Buy ad-supported inventory"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Telecom partners",
+          "nameJa": "通信会社",
+          "role": "partner",
+          "label": {
+            "ja": "有料契約を同梱・回収",
+            "en": "Bundle and bill subscriptions"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
   }
 ]

@@ -4,13 +4,13 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is seventy-one issuers / seventy-two tickers: NVDA, MU, GOOG,
+Researched coverage is eighty-three issuers / eighty-four tickers: NVDA, MU, GOOG,
 GOOGL, AAPL, AMZN, META, COST, MSFT, NBIS, TSM, ASML, AVGO, AMD, ARM, CRDO,
 ANET, MRVL, VRT, ALAB, LITE, COHR, AMAT, APH, INTC, SIMO, AAOI, BE, VST, GEV,
 IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL, ETN, PANW, CRWD, PLTR,
 SNOW, QCOM, CRM, NOW, IBM, TXN, ADI, NXPI, MCHP, MPWR, ON, WDC, STX, HPQ,
 JBL, CDNS, SNPS, CIEN, KEYS, FLEX, FTNT, ZS, NET, DDOG, MDB, ADBE, INTU,
-UBER and NFLX.
+UBER, NFLX, AKAM, OKTA, S, CHKP, TEAM, TWLO, DOCU, HUBS, SHOP, APP, ABNB and SPOT.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -182,3 +182,14 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - Adobe / Intuit / Uber / Netflixは、収益源と企業固有のリスクをサービス別に記述。匿名顧客は社名を推測せず業種単位で収録した。
 - 公式資料: [CIEN](https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm), [KEYS](https://www.sec.gov/Archives/edgar/data/1601046/000160104625000127/keys-20251031.htm), [FLEX](https://www.sec.gov/Archives/edgar/data/866374/000086637426000012/flex-20260331.htm), [FTNT](https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm), [ZS](https://www.sec.gov/Archives/edgar/data/1713683/000171368326000157/zs-20260731.htm), [NET](https://www.sec.gov/Archives/edgar/data/1477333/000147733326000016/cloud-20251231.htm), [DDOG](https://www.sec.gov/Archives/edgar/data/1561550/000162828026008819/ddog-20251231.htm), [MDB](https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm), [ADBE](https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm), [INTU](https://www.sec.gov/Archives/edgar/data/896878/000089687826000037/intu-20260731.htm), [UBER](https://www.sec.gov/Archives/edgar/data/1543151/000154315126000015/uber-20251231.htm), [NFLX](https://www.sec.gov/Archives/edgar/data/1065280/000106528026000034/nflx-20251231.htm).
 - 既存UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は引き続き未完了。
+
+### 2026-10-14 ID・セキュリティ・業務・消費者サービス12社追加
+
+- AKAM / OKTA / S / CHKP / TEAM / TWLO / DOCU / HUBS / SHOP / APP / ABNB / SPOTを追加。合計83社・84銘柄コード。
+- 各社の最新Form 10-KまたはForm 20-Fを一次資料として、日英6項目と競合・取引関係を確認。確認日は2026-10-14。
+- Akamaiは配信・セキュリティ・クラウド、Oktaは従業員・顧客ID、SentinelOneは端末・クラウド防御、Check Pointは統合セキュリティの違いを明示した。
+- Atlassian / Twilio / Docusign / HubSpotは収益源と利用部門を分け、実名顧客が開示されない箇所は企業名を推測せず業種単位で収録した。
+- ShopifyはSubscription SolutionsとMerchant Solutions、AppLovinはAxon広告基盤、Airbnbは予約サービス料、Spotifyは有料契約と広告の二本柱を区別した。
+- AppLovinのApple / Google依存、Airbnbの決済網、Spotifyの権利者と通信会社は、競争・供給・販売の役割を混同しないよう別の関係として表示する。
+- 公式資料: [AKAM](https://www.sec.gov/Archives/edgar/data/1086222/000108622226000022/akam-20251231.htm), [OKTA](https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm), [S](https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm), [CHKP](https://www.sec.gov/Archives/edgar/data/1015922/000117891326001932/zk2634942.htm), [TEAM](https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/team-20260630.htm), [TWLO](https://www.sec.gov/Archives/edgar/data/1447669/000144766926000021/twlo-20251231.htm), [DOCU](https://www.sec.gov/Archives/edgar/data/1261333/000126133326000021/docu-20260131.htm), [HUBS](https://www.sec.gov/Archives/edgar/data/1404655/000119312526046646/hubs-20251231.htm), [SHOP](https://www.sec.gov/Archives/edgar/data/1594805/000159480526000007/shop-20251231.htm), [APP](https://www.sec.gov/Archives/edgar/data/1751008/000175100826000010/app-20251231.htm), [ABNB](https://www.sec.gov/Archives/edgar/data/1559720/000155972026000004/abnb-20251231.htm), [SPOT](https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm).
+- 既存の共通UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は引き続き未完了。
