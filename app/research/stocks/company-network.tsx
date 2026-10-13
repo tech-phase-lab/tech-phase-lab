@@ -6,12 +6,31 @@ import type { CompanyNetwork, NetworkEdge, NetworkMode, NetworkNode } from "@/li
 import styles from "./company-network.module.css";
 
 type Props = { graph: CompanyNetwork; lang: "ja" | "en" };
+const businessLabels = [
+  { ja: "製造装置・材料", en: "Equipment & materials" },
+  { ja: "半導体製造", en: "Chip manufacturing" },
+  { ja: "メモリー", en: "Memory" },
+  { ja: "半導体設計", en: "Chip design" },
+  { ja: "光通信・部品", en: "Optics & components" },
+  { ja: "電源・通信設備", en: "Power & networking" },
+  { ja: "クラウド・AI", en: "Cloud & AI" },
+  { ja: "関連企業", en: "Related company" },
+  { ja: "関連業種", en: "Related industry" },
+];
 const label = (node: NetworkNode, lang: "ja" | "en") => lang === "ja" ? node.nameJa ?? node.name : node.name;
 
 export function CompanyNetworkMap({ graph, lang }: Props) {
   const [mode, setMode] = useState<NetworkMode>("two");
   const [width, setWidth] = useState(640);
   const board = useRef<HTMLDivElement>(null);
+  const [flashed, setFlashed] = useState<string | null>(null);
+  const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (flashTimer.current) clearTimeout(flashTimer.current); }, []);
+  function flash(id: string) {
+    if (flashTimer.current) clearTimeout(flashTimer.current);
+    setFlashed(id);
+    flashTimer.current = setTimeout(() => setFlashed(null), 420);
+  }
   const byId = useMemo(() => new Map(graph.nodes.map(node => [node.id, node])), [graph.nodes]);
   const selected = byId.get(graph.root)!;
   const focus = useMemo(() => networkFocus(graph, selected.id, mode), [graph, selected.id, mode]);
@@ -78,9 +97,9 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
         const distance = focus.distances.get(node.id);
         const relevant = mode === "all" || distance !== undefined || focus.competitors.has(node.id);
         const tone = active ? "selected" : focus.upstream.has(node.id) ? "upstream" : focus.downstream.has(node.id) ? "downstream" : focus.competitors.has(node.id) ? "competition" : distance === 1 ? "partner" : "indirect";
-        return <div key={node.id} className={styles.node} style={{ left: position.x, top: position.y, width: position.width, height: position.height }} data-symbol={Boolean(node.ticker)} data-tone={tone} data-relevant={relevant} data-competitor={focus.competitors.has(node.id)} aria-current={active ? "true" : undefined} aria-label={label(node, lang)}>
-          <strong>{node.ticker ?? label(node, lang)}</strong>{node.ticker && <span>{label(node, lang)}</span>}
-        </div>;
+        return <button type="button" key={node.id} className={styles.node} onClick={() => flash(node.id)} data-flashed={flashed === node.id} style={{ left: position.x, top: position.y, width: position.width, height: position.height }} data-symbol={Boolean(node.ticker)} data-tone={tone} data-relevant={relevant} data-competitor={focus.competitors.has(node.id)} aria-current={active ? "true" : undefined} aria-label={label(node, lang)}>
+          <strong>{node.ticker ?? label(node, lang)}</strong><span>{node.ticker ? label(node, lang) : businessLabels[node.layer][lang]}</span>
+        </button>;
       })}
     </div>
     <div className={styles.inspector}>

@@ -57,14 +57,17 @@ export function layoutCompanyNetwork(nodes: NetworkNode[], availableWidth: numbe
   for (let index = 0; index < networkLayers.length; index++) {
     const members = nodes.filter(node => node.layer === index);
     if (!members.length) continue;
+    if (index === 7 && members.length === 1 && layers.length) y -= 22;
     layers.push({ index, y });
-    y += 32;
+    y += index === 7 && members.length === 1 ? 26 : 32;
     members.forEach((node, i) => {
       positions[node.id] = { x: padding + (i % columns) * (nodeWidth + gap), y: y + Math.floor(i / columns) * 92, width: nodeWidth, height: 68 };
     });
-    y += Math.ceil(members.length / columns) * 92 + 26;
+    // Keep room for curved edges between layers; trim the final margin below.
+    const rows = Math.ceil(members.length / columns);
+    y += (rows - 1) * 92 + 68 + 50;
   }
-  return { width, height: y, positions, layers };
+  return { width, height: layers.length ? y - 26 : y, positions, layers };
 }
 
 export function networkEdgePath(from: NetworkPosition, to: NetworkPosition, offset = 0) {

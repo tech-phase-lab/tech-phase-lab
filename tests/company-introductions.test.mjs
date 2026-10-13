@@ -71,7 +71,8 @@ test('all issuers render same-page selection maps in both languages', () => {
       const html = renderToStaticMarkup(createElement(panel.CompanyIntroductionPanel,{introduction,lang,network:companyNetworkFor({cik:introduction.cik,ticker:introduction.tickers[0]})}));
       assert.ok(!html.includes('href="/research/stocks'));
       assert.ok(!html.includes(lang==='ja'?'最初に戻る':'Reset'));
-      assert.equal((html.match(/<button/g)??[]).length,3);
+      const network = companyNetworkFor({cik:introduction.cik,ticker:introduction.tickers[0]});
+      assert.equal((html.match(/<button/g)??[]).length,3 + network.nodes.length);
       assert.ok(html.includes(`aria-current="true" aria-label="${introduction.name}"`));
       assert.ok(html.includes(lang==='ja'?'どこと繋がる？':'Who does it work with?'));
     }
