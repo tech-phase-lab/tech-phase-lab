@@ -4,10 +4,14 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 競合は？ / どことつながる？ / 弱点は？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is fifteen issuers / sixteen tickers: NVDA, MU, GOOG,
-GOOGL, AAPL, AMZN, META, COST, MSFT, NBIS, TSM, ASML, AVGO, AMD, ARM and CRDO.
+Researched coverage is nineteen issuers / twenty tickers: NVDA, MU, GOOG,
+GOOGL, AAPL, AMZN, META, COST, MSFT, NBIS, TSM, ASML, AVGO, AMD, ARM, CRDO,
+ANET, MRVL, VRT and ALAB.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
+The third batch adds networking and data-center infrastructure companies, reviewed
+on 2026-10-13. Each record links its annual filing; suppliers and competitors are
+identified by role, without treating an unnamed customer as a confirmed company.
 This is not full-directory coverage. Uncovered
 issuers retain their existing approved annual-brief behavior; no generic or
 automatically generated introduction is substituted. No automatic research or

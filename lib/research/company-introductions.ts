@@ -14,6 +14,86 @@ export type CompanyIntroduction = {
 // on the server: the profile response includes only the selected issuer.
 export const companyIntroductions: CompanyIntroduction[] = [
   {
+    cik: 1596532, tickers: ["ANET"], name: "Arista Networks", reviewedOn: "2026-10-13",
+    sources: [{ label: "FY2025 Form 10-K · Business / Risk factors", url: "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm" }],
+    ja: {
+      business: "データセンターや企業内の機器を高速につなぐ通信機器と、そのネットワークを動かすソフトを作る会社。",
+      revenue: "データの行き先を振り分けるスイッチなどの機器販売と、ソフトや保守サービスの契約料。",
+      strength: "共通の基本ソフトEOSを軸に、大規模なネットワークの監視や設定をまとめて自動化できる。",
+      competition: "Cisco、HPE、NVIDIAなど。汎用機器に公開ソフトを組み合わせる低価格の構成とも競う。",
+      relationships: "クラウド事業者や企業に供給。主要な通信半導体をBroadcomから調達し、製品開発でも連携する。",
+      risks: "少数の大口顧客の発注に左右されやすい。Broadcomへの部品依存やAI向け通信方式の競争も課題。",
+    },
+    en: {
+      business: "Builds high-speed networking equipment and software for data centers and enterprise networks.",
+      revenue: "Sales of switches and other equipment, plus software and support contracts.",
+      strength: "Its common EOS operating system helps automate configuration and monitoring across large networks.",
+      competition: "Cisco, HPE, NVIDIA and lower-cost systems combining commodity hardware with open-source software.",
+      relationships: "Supplies cloud providers and enterprises; sources key switching chips from Broadcom and collaborates on product development.",
+      risks: "Large-customer order swings, reliance on Broadcom components and competition between AI networking technologies.",
+    },
+  },
+  {
+    cik: 1835632, tickers: ["MRVL"], name: "Marvell", reviewedOn: "2026-10-13",
+    sources: [{ label: "FY2026 Form 10-K · Business / Risk factors", url: "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm" }],
+    ja: {
+      business: "データを高速に送り、処理し、保存するための半導体を設計する会社。顧客専用のAI半導体も手がける。",
+      revenue: "データセンターや通信設備向けの半導体販売。共通仕様の製品と、顧客の用途に合わせた専用製品がある。",
+      strength: "高速な電気・光通信と専用チップの設計技術を持ち、顧客のシステムに合わせて組み合わせられる。",
+      competition: "Broadcom、Credo、Astera Labsなど。顧客自身による半導体の内製化も競争相手になる。",
+      relationships: "クラウド事業者や機器メーカーと製品を設計。半導体の製造や組み立ては外部の専門企業に委託する。",
+      risks: "顧客の開発計画変更や内製化、製造委託先の供給不足、新しい製品の開発・量産の遅れ。",
+    },
+    en: {
+      business: "Designs chips that move, process and store data, including custom AI silicon.",
+      revenue: "Chip sales for data centers and communications infrastructure, spanning standard and customer-specific products.",
+      strength: "Combines high-speed electrical and optical connectivity with custom-chip design for customer systems.",
+      competition: "Broadcom, Credo, Astera Labs and customers developing their own chips.",
+      relationships: "Designs products with cloud and equipment customers; outsources chip fabrication and assembly to specialist manufacturers.",
+      risks: "Customer project changes or insourcing, manufacturing constraints and delays in development or volume production.",
+    },
+  },
+  {
+    cik: 1674101, tickers: ["VRT"], name: "Vertiv", reviewedOn: "2026-10-13",
+    sources: [{ label: "FY2025 Form 10-K · Business / Risk factors / Partnerships", url: "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm" }],
+    ja: {
+      business: "データセンターなどに電気を安定して届け、機器の熱を逃がす電源・冷却設備を提供する会社。",
+      revenue: "電源装置や空冷・液冷設備などの販売と、導入支援、保守、部品交換などのサービス。",
+      strength: "電源と冷却をまとめて設計でき、設置後も世界各地の保守網で設備の安定稼働を支える。",
+      competition: "Schneider Electric、Eaton、Legrandなど。冷却や電源の特定分野に強いメーカーとも競う。",
+      relationships: "データセンター運営者に設備を供給。NVIDIAとは次世代AI基盤に向けた電源・冷却技術で協力する。",
+      risks: "顧客の設備投資や発注延期に左右される。部材・工事費の上昇や冷却技術の変化への対応も重要。",
+    },
+    en: {
+      business: "Provides power and cooling equipment that keeps data centers and other critical facilities operating.",
+      revenue: "Power and cooling equipment sales, installation support, maintenance and replacement parts.",
+      strength: "Integrates power and cooling design with a global service network that supports equipment throughout its life.",
+      competition: "Schneider Electric, Eaton, Legrand and specialists in particular power or cooling technologies.",
+      relationships: "Supplies data-center operators and collaborates with NVIDIA on power and cooling for next-generation AI infrastructure.",
+      risks: "Customer investment cycles, delayed orders, rising project costs and changes in cooling requirements.",
+    },
+  },
+  {
+    cik: 1736297, tickers: ["ALAB"], name: "Astera Labs", reviewedOn: "2026-10-13",
+    sources: [{ label: "FY2025 Form 10-K · Business / Risk factors", url: "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/alab-20251231.htm" }],
+    ja: {
+      business: "AIサーバーのGPUやメモリーを高速につなぐ半導体を作る会社。信号の乱れやデータ転送の詰まりを減らす。",
+      revenue: "接続用の半導体や基板、ケーブル用モジュールの販売。機器を制御・監視するソフトも製品に組み込む。",
+      strength: "半導体と管理ソフトCOSMOSを組み合わせ、接続状態の監視や不具合の診断まで支援できる。",
+      competition: "Broadcom、Marvell、Credoなど。接続方式や製品の種類によって競う相手が異なる。",
+      relationships: "大手クラウド事業者やAI半導体・サーバー各社と連携し、製品同士が正しく動くかも共同で検証する。",
+      risks: "少数の大口顧客と製造委託先への依存。顧客の採用試験が長引いたり、接続規格が変わったりするリスク。",
+    },
+    en: {
+      business: "Develops chips that connect GPUs, memory and other AI-server components while reducing signal degradation and data bottlenecks.",
+      revenue: "Sales of connectivity chips, boards and cable modules with embedded control and monitoring software.",
+      strength: "Combines connectivity silicon with COSMOS software for link monitoring, management and diagnostics.",
+      competition: "Broadcom, Marvell, Credo and others, with competitors varying by product and connection standard.",
+      relationships: "Collaborates with major cloud, AI-chip and server companies, including joint interoperability testing.",
+      risks: "Customer and manufacturer concentration, lengthy product qualification and evolving connectivity standards.",
+    },
+  },
+  {
     cik: 789019, tickers: ["MSFT"], name: "Microsoft", reviewedOn: "2026-10-13",
     sources: [{ label: "FY2026 Form 10-K · Business / Risk factors", url: "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm" }],
     ja: {
