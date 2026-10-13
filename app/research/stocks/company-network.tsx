@@ -29,7 +29,7 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
   function flash(id: string) {
     if (flashTimer.current) clearTimeout(flashTimer.current);
     setFlashed(id);
-    flashTimer.current = setTimeout(() => setFlashed(null), 420);
+    flashTimer.current = setTimeout(() => setFlashed(null), 620);
   }
   const byId = useMemo(() => new Map(graph.nodes.map(node => [node.id, node])), [graph.nodes]);
   const selected = byId.get(graph.root)!;

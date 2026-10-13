@@ -16,7 +16,7 @@ const mapHeadings = [
 
 export function CompanyIntroductionPanel({ introduction, network, lang }: { introduction: CompanyIntroduction; network?: CompanyNetwork | null; lang: "ja" | "en" }) {
   return <section className={styles.introduction} aria-label={lang === "ja" ? `${introduction.name}の企業紹介` : `About ${introduction.name}`}>
-    <header><h2>{lang === "ja" ? "企業を知る" : "Know the company"}</h2><span>{introduction.name}</span></header>
+    <header><h2>{lang === "ja" ? "企業を知る" : "Know the company"}</h2></header>
     <dl className={styles.grid}>
       {headings.map(([field, ja, en], index) => <div key={field} className={styles.card} data-topic={field}>
         <dt><span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>{lang === "ja" ? ja : en}</dt>

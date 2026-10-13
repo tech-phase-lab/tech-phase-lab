@@ -1,7 +1,6 @@
 .introduction { padding: 22px; border-top: 1px solid #263a46; color: #e8f0f4; }
 .introduction > header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px; margin-bottom: 16px; }
 .introduction h2 { margin: 0; font-size: 19px; letter-spacing: .02em; }
-.introduction > header > span { color: #a2b5c1; font-size: 14px; }
 .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0; }
 .card, .mapCard { --accent: #8ed7c0; min-width: 0; padding: 15px; border: 1px solid #263a46; border-top: 2px solid var(--accent); border-radius: 10px; background: #101d27; }
 .card[data-topic="revenue"] { --accent: #8abdec; }
