@@ -3320,5 +3320,2044 @@
         }
       ]
     }
+  },
+  {
+    "cik": 1375365,
+    "tickers": [
+      "SMCI"
+    ],
+    "name": "Supermicro",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Products / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000022/smci-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "AIサーバーやストレージ、ネットワーク、液冷設備を組み合わせ、データセンター向けにラック単位で納める会社。",
+      "revenue": "サーバーや部品の販売が中心。ラック全体の設計・組み立て、管理ソフト、導入後の保守サービスでも稼ぐ。",
+      "strength": "新しいCPUやGPUを素早く製品化し、電源・冷却まで組み込んだ構成を顧客ごとに短期間で組み立てられる。",
+      "risks": "大口AI案件への依存が高まり、注文の延期や価格競争で業績が振れやすい。GPUなど重要部品の供給不足も納期を左右する。",
+      "competition": "Dell、HPE、Cisco、Lenovoなどの大手と、FoxconnやQuantaなど低コストの受託設計・製造会社が競合。",
+      "relationships": "NVIDIAの最新GPUを搭載したラックを展開し、クラウド、企業、AI事業者へサーバー・冷却・保守をまとめて供給する。"
+    },
+    "en": {
+      "business": "Builds AI servers, storage, networking and liquid-cooling systems delivered to data centers at rack scale.",
+      "revenue": "Primarily sells servers and components, with revenue also from rack design, integration, management software and support.",
+      "strength": "Quickly adopts new CPUs and GPUs and configures complete power-and-cooling systems for individual customer workloads.",
+      "risks": "Large AI orders increase customer and timing concentration, while pricing pressure and constrained GPU supply can disrupt results.",
+      "competition": "Competes with Dell, HPE, Cisco and Lenovo, plus lower-cost design manufacturers such as Foxconn and Quanta.",
+      "relationships": "Builds racks around current NVIDIA GPUs and supplies cloud, enterprise and AI operators with servers, cooling and support."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Dell",
+          "ticker": "DELL",
+          "role": "competitor",
+          "label": {
+            "ja": "サーバー・ラックで競合",
+            "en": "Servers and rack systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Hewlett Packard Enterprise",
+          "ticker": "HPE",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向けサーバーで競合",
+            "en": "Enterprise servers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Cisco",
+          "ticker": "CSCO",
+          "role": "competitor",
+          "label": {
+            "ja": "データセンター機器で競合",
+            "en": "Data-center systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Lenovo",
+          "role": "competitor",
+          "label": {
+            "ja": "サーバーで競合",
+            "en": "Servers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "ticker": "NVDA",
+          "role": "supplier",
+          "label": {
+            "ja": "最新GPU基盤をサーバーへ採用",
+            "en": "GPU platforms used in servers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cloud and AI operators",
+          "nameJa": "クラウド・AI事業者",
+          "role": "customer",
+          "label": {
+            "ja": "ラック規模のAI設備を供給",
+            "en": "Rack-scale AI infrastructure customers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprises and OEMs",
+          "nameJa": "企業・機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "サーバーと保守を提供",
+            "en": "Server and support customers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 858877,
+    "tickers": [
+      "CSCO"
+    ],
+    "name": "Cisco",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Business / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業や通信会社のネットワークをつなぐスイッチ・ルーターと、セキュリティ、監視、Web会議の製品を提供する会社。",
+      "revenue": "ネットワーク機器の販売に加え、セキュリティやSplunkなどのソフト利用料、保守・技術支援で継続収入を得る。",
+      "strength": "ネットワーク機器からセキュリティ、障害監視までを一体で管理でき、世界中の販売・保守網と既存顧客基盤を持つ。",
+      "risks": "クラウド化やAI向け通信の変化を読み違えると製品更新が遅れる。価格競争、部品供給、ソフト契約の更新率にも左右される。",
+      "competition": "ネットワークではAristaやHPE、セキュリティではPalo Alto NetworksやCrowdStrikeなど、製品分野ごとに競合が異なる。",
+      "relationships": "企業、公共機関、通信会社、クラウド事業者にネットワークと保守を提供し、販売代理店や技術パートナーを通じても届ける。"
+    },
+    "en": {
+      "business": "Provides switches and routers that connect networks, plus security, observability and collaboration products.",
+      "revenue": "Earns from networking hardware, software subscriptions including security and Splunk, and support and professional services.",
+      "strength": "Integrates networking, security and observability, backed by a large installed base and global sales and service channels.",
+      "risks": "Cloud and AI networking shifts can outpace product cycles; pricing, component supply and software renewal rates also affect results.",
+      "competition": "Rivals vary by product, including Arista and HPE in networking and Palo Alto Networks and CrowdStrike in security.",
+      "relationships": "Supplies enterprises, public agencies, carriers and cloud providers directly and through channel and technology partners."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Arista Networks",
+          "ticker": "ANET",
+          "role": "competitor",
+          "label": {
+            "ja": "高速ネットワークで競合",
+            "en": "High-speed networking"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Hewlett Packard Enterprise",
+          "ticker": "HPE",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向けネットワークで競合",
+            "en": "Enterprise networking"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Palo Alto Networks",
+          "ticker": "PANW",
+          "role": "competitor",
+          "label": {
+            "ja": "セキュリティで競合",
+            "en": "Cybersecurity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "CrowdStrike",
+          "ticker": "CRWD",
+          "role": "competitor",
+          "label": {
+            "ja": "セキュリティで競合",
+            "en": "Cybersecurity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Enterprises",
+          "nameJa": "企業",
+          "role": "customer",
+          "label": {
+            "ja": "ネットワーク・セキュリティを提供",
+            "en": "Networking and security customers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Public sector",
+          "nameJa": "公共機関",
+          "role": "customer",
+          "label": {
+            "ja": "ネットワークと保守を提供",
+            "en": "Network and support customers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Carriers and cloud providers",
+          "nameJa": "通信・クラウド事業者",
+          "role": "customer",
+          "label": {
+            "ja": "大規模ネットワーク機器を供給",
+            "en": "Large-scale networking customers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1645590,
+    "tickers": [
+      "HPE"
+    ],
+    "name": "Hewlett Packard Enterprise",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Business / Competition / Supply chain / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業向けのサーバー、ストレージ、ネットワークと、それらをクラウドのように使うGreenLakeを提供する会社。",
+      "revenue": "機器とソフトの販売、GreenLakeなどの利用契約、保守・技術サービス、顧客向けのリースや金融サービスで稼ぐ。",
+      "strength": "計算・保存・通信をまとめて提供でき、スーパーコンピューターや企業内AI、利用量課金の運用まで支援できる。",
+      "risks": "企業の設備投資、サーバーの価格競争、GPUなど単一供給部品に左右される。買収した事業の統合にも実行リスクがある。",
+      "competition": "DellやLenovoのサーバー、Ciscoのネットワーク、大手クラウドの従量課金サービスなどと分野別に競う。",
+      "relationships": "NVIDIAなどからGPUを調達し、企業や公共機関へAIサーバー、ネットワーク、GreenLakeと保守を提供する。"
+    },
+    "en": {
+      "business": "Provides enterprise servers, storage and networking, plus GreenLake consumption-based infrastructure services.",
+      "revenue": "Hardware and software sales, GreenLake subscriptions, support and technical services, and customer financing.",
+      "strength": "Combines compute, storage and networking with supercomputing, private AI and consumption-based operations.",
+      "risks": "Enterprise spending, server price pressure and single-source components such as GPUs matter, while acquisitions create integration risk.",
+      "competition": "Competes by category with Dell and Lenovo in servers, Cisco in networking and large public-cloud consumption services.",
+      "relationships": "Sources GPUs from vendors including NVIDIA and supplies enterprises and public agencies with AI systems, networking and support."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Dell",
+          "ticker": "DELL",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向けサーバーで競合",
+            "en": "Enterprise servers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Cisco",
+          "ticker": "CSCO",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向けネットワークで競合",
+            "en": "Enterprise networking"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Lenovo",
+          "role": "competitor",
+          "label": {
+            "ja": "サーバーで競合",
+            "en": "Servers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Public cloud providers",
+          "nameJa": "大手クラウド事業者",
+          "role": "competitor",
+          "label": {
+            "ja": "従量課金のIT基盤で競合",
+            "en": "Consumption-based infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "ticker": "NVDA",
+          "role": "supplier",
+          "label": {
+            "ja": "AIサーバー向けGPUを調達",
+            "en": "GPU source for AI systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprises",
+          "nameJa": "企業",
+          "role": "customer",
+          "label": {
+            "ja": "サーバー・通信・保守を提供",
+            "en": "Systems, networking and support"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Public sector",
+          "nameJa": "公共機関",
+          "role": "customer",
+          "label": {
+            "ja": "IT基盤とサービスを提供",
+            "en": "Infrastructure and services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1769628,
+    "tickers": [
+      "CRWV"
+    ],
+    "name": "CoreWeave",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Platform / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "生成AIの学習や実行に必要なGPU計算設備を、専用クラウドとして企業やAI開発会社へ提供する会社。",
+      "revenue": "GPU計算能力、保存容量、ネットワーク、関連ソフトを主に複数年契約で提供し、利用料を受け取る。",
+      "strength": "NVIDIAの新しいGPUを大規模に早く導入し、AI処理向けに設備と運用ソフトをまとめて最適化する。",
+      "risks": "設備建設に巨額の資金と電力が必要で、2025年はMicrosoftへの売上集中も大きい。GPU調達やデータセンター完成の遅れも契約履行を脅かす。",
+      "competition": "AWS、Google Cloud、Microsoft Azure、Oracleなどの大手クラウドと、AI計算に特化したクラウド各社が競合。",
+      "relationships": "NVIDIAのGPUを採用。Microsoft、Meta、OpenAIとは開示済みの契約に基づきAI計算設備を提供する。"
+    },
+    "en": {
+      "business": "Operates a specialized GPU cloud for training and running generative-AI models.",
+      "revenue": "Provides GPU compute, storage, networking and software mainly through multi-year capacity contracts.",
+      "strength": "Deploys new NVIDIA architectures quickly and optimizes both infrastructure and software for large AI workloads.",
+      "risks": "The model requires heavy capital and power, 2025 revenue was highly concentrated in Microsoft, and GPU or construction delays can hinder contracts.",
+      "competition": "Competes with AWS, Google Cloud, Microsoft Azure, Oracle and other specialized AI clouds.",
+      "relationships": "Uses NVIDIA GPUs and provides contracted AI capacity to Microsoft, Meta and OpenAI."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Amazon / AWS",
+          "ticker": "AMZN",
+          "role": "competitor",
+          "label": {
+            "ja": "AIクラウドで競合",
+            "en": "AI cloud"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google Cloud",
+          "ticker": "GOOG",
+          "role": "competitor",
+          "label": {
+            "ja": "AIクラウドで競合",
+            "en": "AI cloud"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft Azure",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド基盤で競合",
+            "en": "Cloud infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Oracle Cloud",
+          "ticker": "ORCL",
+          "role": "competitor",
+          "label": {
+            "ja": "GPUクラウドで競合",
+            "en": "GPU cloud"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "ticker": "NVDA",
+          "role": "supplier",
+          "label": {
+            "ja": "GPUと高速ネットワークを採用",
+            "en": "GPU and high-speed networking platforms"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "customer",
+          "label": {
+            "ja": "AI計算設備の大口顧客",
+            "en": "Major AI-capacity customer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Meta",
+          "ticker": "META",
+          "role": "customer",
+          "label": {
+            "ja": "契約済みAI計算設備を提供",
+            "en": "Contracted AI capacity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "OpenAI",
+          "role": "customer",
+          "label": {
+            "ja": "複数年契約でAI計算設備を提供",
+            "en": "Multi-year AI-capacity contract"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1341439,
+    "tickers": [
+      "ORCL"
+    ],
+    "name": "Oracle",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Cloud and software / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業の基幹データを扱うデータベースと業務ソフトを作り、OCIというクラウド計算基盤も運営する会社。",
+      "revenue": "クラウド利用料とソフトのサポート契約が中心。新規ライセンス、専用機器、導入・保守サービスでも稼ぐ。",
+      "strength": "長年使われるデータベースと業務ソフトを持ち、同じ製品を顧客の社内設備とOracle Cloudの両方で動かせる。",
+      "risks": "AIデータセンターへの先行投資が大きく、需要や建設が計画を下回ると採算が悪化する。クラウド移行と強い価格競争にも左右される。",
+      "competition": "クラウド基盤ではAWS、Microsoft、Google、業務ソフトではSalesforceやSAPなどと競う。",
+      "relationships": "企業や公共機関にデータベース、業務アプリ、OCIの計算能力を提供し、導入企業や販売・技術パートナーが周辺を支える。"
+    },
+    "en": {
+      "business": "Provides databases and enterprise applications and operates Oracle Cloud Infrastructure for computing workloads.",
+      "revenue": "Cloud services and software support lead revenue, supplemented by licenses, engineered systems and implementation services.",
+      "strength": "A large database and application installed base can run across customer premises and Oracle Cloud.",
+      "risks": "Heavy AI data-center commitments can hurt returns if demand or construction lags, while cloud migration and price competition remain intense.",
+      "competition": "Competes with AWS, Microsoft and Google in infrastructure and Salesforce and SAP in enterprise applications.",
+      "relationships": "Supplies databases, applications and OCI capacity to enterprises and public agencies through direct and partner channels."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Amazon / AWS",
+          "ticker": "AMZN",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド基盤で競合",
+            "en": "Cloud infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド・業務ソフトで競合",
+            "en": "Cloud and applications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google Cloud",
+          "ticker": "GOOG",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド基盤で競合",
+            "en": "Cloud infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向け業務ソフトで競合",
+            "en": "Enterprise applications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Enterprises",
+          "nameJa": "企業",
+          "role": "customer",
+          "label": {
+            "ja": "データベース・業務ソフトを提供",
+            "en": "Database and application customers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Public sector",
+          "nameJa": "公共機関",
+          "role": "customer",
+          "label": {
+            "ja": "クラウドと基幹システムを提供",
+            "en": "Cloud and core systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Implementation partners",
+          "nameJa": "導入支援会社",
+          "role": "ecosystem",
+          "label": {
+            "ja": "導入・運用を支援",
+            "en": "Implementation and operations ecosystem"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1571996,
+    "tickers": [
+      "DELL"
+    ],
+    "name": "Dell Technologies",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Products / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000008/dell-20260130.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業向けのサーバー・ストレージと、個人・法人向けPCを作り、導入から保守まで提供する会社。",
+      "revenue": "PC、サーバー、ストレージなどの機器販売が中心。保守契約、ソフト、導入サービス、金融サービスも収入源。",
+      "strength": "部品調達と量産、世界規模の直販・販売店網、PCからデータセンターまで揃う製品群を組み合わせられる。",
+      "risks": "PC需要と企業の設備投資が周期的に変動し、価格競争で利益率が下がりやすい。CPU・GPUなど限られた供給元への依存もある。",
+      "competition": "PC、サーバー、ストレージ、クラウド関連サービスの各分野で、大手総合メーカーと特定製品に強い会社の双方と競う。",
+      "relationships": "企業、公共機関、クラウド事業者へPCやデータセンター機器を直接または販売パートナー経由で納め、保守まで担当する。"
+    },
+    "en": {
+      "business": "Builds enterprise servers and storage and consumer and business PCs, with deployment and support services.",
+      "revenue": "Hardware sales lead revenue, supplemented by support contracts, software, deployment and financing services.",
+      "strength": "Combines global procurement and manufacturing, direct and channel sales, and a portfolio spanning PCs through data centers.",
+      "risks": "PC and enterprise spending cycles, price pressure and reliance on limited CPU and GPU sources can affect revenue and margins.",
+      "competition": "Competes with broad technology manufacturers and product specialists across PCs, servers, storage and cloud-related services.",
+      "relationships": "Supplies PCs and data-center systems to enterprises, public agencies and cloud operators directly and through partners, then provides support."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "PC manufacturers",
+          "nameJa": "PCメーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "PCで競合",
+            "en": "Personal computers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Server and storage vendors",
+          "nameJa": "サーバー・ストレージ会社",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向け機器で競合",
+            "en": "Enterprise systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cloud and infrastructure providers",
+          "nameJa": "クラウド・IT基盤会社",
+          "role": "competitor",
+          "label": {
+            "ja": "IT基盤サービスで競合",
+            "en": "Infrastructure services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Enterprises",
+          "nameJa": "企業",
+          "role": "customer",
+          "label": {
+            "ja": "PC・サーバー・保守を提供",
+            "en": "PCs, servers and support"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Public sector",
+          "nameJa": "公共機関",
+          "role": "customer",
+          "label": {
+            "ja": "IT機器と保守を提供",
+            "en": "IT systems and support"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cloud operators",
+          "nameJa": "クラウド事業者",
+          "role": "customer",
+          "label": {
+            "ja": "データセンター機器を供給",
+            "en": "Data-center systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1551182,
+    "tickers": [
+      "ETN"
+    ],
+    "name": "Eaton",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Business / End markets / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000007/etn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "発電所から建物や機械まで電気を安全に届ける配電・制御機器と、航空機・車両向けの電力部品を作る会社。",
+      "revenue": "遮断器、配電盤、UPSなどの電気機器が中心。航空機部品、車両部品、保守・交換品の販売でも稼ぐ。",
+      "strength": "高圧から施設内の配電まで製品が広く、データセンター、工場、電力会社など多様な設備投資を一社で支えられる。",
+      "risks": "大型設備の建設時期、景気、原材料・部品コストに左右される。受注残を抱えるため、供給遅延や工事計画の変更も影響が大きい。",
+      "competition": "電力管理では世界の総合電機メーカーや専門メーカーと、性能、納期、保守、価格で競う。航空・車両では別の部品メーカーも競合。",
+      "relationships": "データセンター、電力会社、工場、商業施設に配電・保護機器を供給し、航空機メーカーや車両メーカーにも部品を納める。"
+    },
+    "en": {
+      "business": "Makes electrical distribution and control equipment plus power components for aerospace and vehicles.",
+      "revenue": "Electrical products such as breakers, switchgear and UPS systems lead sales, joined by aerospace, vehicle and aftermarket products.",
+      "strength": "A broad power-management portfolio spans utility feeds through facility distribution across data centers, factories and other end markets.",
+      "risks": "Project timing, economic cycles and material costs matter; a large backlog also exposes deliveries to supply and construction delays.",
+      "competition": "Competes with global electrical groups and specialists on performance, delivery, service and price, with separate aerospace and vehicle rivals.",
+      "relationships": "Supplies power equipment to data centers, utilities, factories and buildings, and components to aerospace and vehicle manufacturers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Electrical equipment manufacturers",
+          "nameJa": "電力設備メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "配電・制御機器で競合",
+            "en": "Power distribution and control"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Aerospace component makers",
+          "nameJa": "航空部品メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "航空機部品で競合",
+            "en": "Aerospace components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Data-center operators",
+          "nameJa": "データセンター運営者",
+          "role": "customer",
+          "label": {
+            "ja": "配電・保護機器を供給",
+            "en": "Power distribution and protection"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Utilities and factories",
+          "nameJa": "電力会社・工場",
+          "role": "customer",
+          "label": {
+            "ja": "電力制御機器を供給",
+            "en": "Power-control equipment"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Aerospace and vehicle makers",
+          "nameJa": "航空機・車両メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "電力関連部品を供給",
+            "en": "Power-system components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1327567,
+    "tickers": [
+      "PANW"
+    ],
+    "name": "Palo Alto Networks",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Platforms / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000023/panw-20260731.htm"
+      }
+    ],
+    "ja": {
+      "business": "会社のネットワーク、クラウド、端末を攻撃から守り、監視と対応を一つの基盤で行うセキュリティ会社。",
+      "revenue": "防御機器の販売に加え、クラウド型セキュリティ機能と保守の複数年契約で継続的に稼ぐ。",
+      "strength": "ネットワーク、クラウド、監視センターの情報を共通基盤へ集め、攻撃の発見から自動対応までまとめられる。",
+      "risks": "攻撃手法が急速に変わり、製品の欠陥や障害が信用に直結する。複数製品を一体化する販売戦略は契約時期と利益率を一時的に揺らす。",
+      "competition": "ネットワーク防御、クラウド保護、端末監視ごとにCisco、Microsoft、CrowdStrike、Fortinetなどと競う。",
+      "relationships": "AWSやMicrosoft Azure上の利用環境も保護し、企業・公共機関へ製品を直販と販売パートナーの両方で提供する。"
+    },
+    "en": {
+      "business": "Protects enterprise networks, clouds and endpoints and unifies security monitoring and response on shared platforms.",
+      "revenue": "Sells security appliances and earns recurring subscriptions and support under multi-year contracts.",
+      "strength": "Combines network, cloud and security-operations data to detect attacks and automate response across one platform.",
+      "risks": "Fast-changing threats and product failures can damage trust, while platform-bundling transitions can shift contract timing and margins.",
+      "competition": "Competes by security category with Cisco, Microsoft, CrowdStrike, Fortinet and many specialists.",
+      "relationships": "Protects workloads on AWS and Microsoft Azure and sells to enterprises and public agencies directly and through channel partners."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Cisco",
+          "ticker": "CSCO",
+          "role": "competitor",
+          "label": {
+            "ja": "ネットワーク防御で競合",
+            "en": "Network security"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド・端末防御で競合",
+            "en": "Cloud and endpoint security"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "CrowdStrike",
+          "ticker": "CRWD",
+          "role": "competitor",
+          "label": {
+            "ja": "端末・監視で競合",
+            "en": "Endpoint and security operations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Fortinet",
+          "role": "competitor",
+          "label": {
+            "ja": "ネットワーク防御で競合",
+            "en": "Network security"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon / AWS",
+          "ticker": "AMZN",
+          "role": "ecosystem",
+          "label": {
+            "ja": "AWS上のアプリを保護",
+            "en": "Secures workloads on AWS"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft Azure",
+          "ticker": "MSFT",
+          "role": "ecosystem",
+          "label": {
+            "ja": "Azure上のアプリを保護",
+            "en": "Secures workloads on Azure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprises and public agencies",
+          "nameJa": "企業・公共機関",
+          "role": "customer",
+          "label": {
+            "ja": "セキュリティ製品を提供",
+            "en": "Security customers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1535527,
+    "tickers": [
+      "CRWD"
+    ],
+    "name": "CrowdStrike",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Falcon platform / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000010/crwd-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業のパソコン、サーバー、クラウドを監視し、サイバー攻撃を見つけて止めるFalcon基盤を提供する会社。",
+      "revenue": "端末保護、クラウド保護、脅威分析などの機能を組み合わせた定額契約が中心。調査・対応などの専門サービスも提供する。",
+      "strength": "一つの軽量ソフトから大量の攻撃データを集め、クラウド上の分析と専門家の知見を各顧客の防御へすばやく反映する。",
+      "risks": "防御基盤そのものの障害や更新不具合は多数の顧客へ同時に影響し、賠償や信用低下につながる。攻撃者と競合の進化も速い。",
+      "competition": "従来型ウイルス対策、端末防御、ネットワーク・クラウド防御、ID管理、攻撃対応の各専門会社と競う。",
+      "relationships": "企業と公共機関がFalconを利用し、販売代理店、クラウド市場、技術提携先が導入と機能連携を支える。"
+    },
+    "en": {
+      "business": "Provides the Falcon platform to monitor and protect enterprise endpoints, servers and cloud workloads from cyberattacks.",
+      "revenue": "Subscription modules for endpoint, cloud and threat protection drive revenue, supplemented by incident-response and other services.",
+      "strength": "A lightweight agent feeds cloud-scale threat data and expert intelligence back into customer defenses quickly.",
+      "risks": "Platform outages or flawed updates can affect many customers at once and trigger claims and reputational damage; threats and rivals also evolve quickly.",
+      "competition": "Competes with legacy antivirus, endpoint, network, cloud, identity and incident-response security providers.",
+      "relationships": "Enterprises and public agencies use Falcon, while resellers, cloud marketplaces and technology partners support adoption and integrations."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Endpoint security vendors",
+          "nameJa": "端末防御会社",
+          "role": "competitor",
+          "label": {
+            "ja": "端末防御で競合",
+            "en": "Endpoint security"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Network and cloud security vendors",
+          "nameJa": "ネットワーク・クラウド防御会社",
+          "role": "competitor",
+          "label": {
+            "ja": "ネットワーク・クラウド防御で競合",
+            "en": "Network and cloud security"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Identity and incident-response providers",
+          "nameJa": "ID管理・攻撃対応会社",
+          "role": "competitor",
+          "label": {
+            "ja": "ID管理・攻撃対応で競合",
+            "en": "Identity and incident response"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon / AWS",
+          "ticker": "AMZN",
+          "role": "ecosystem",
+          "label": {
+            "ja": "AWS MarketplaceでFalconを提供",
+            "en": "Falcon offered through AWS Marketplace"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google Cloud",
+          "ticker": "GOOG",
+          "role": "ecosystem",
+          "label": {
+            "ja": "Google Marketplaceで提供",
+            "en": "Offered through Google Marketplace"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "ecosystem",
+          "label": {
+            "ja": "Microsoft Marketplaceで提供予定",
+            "en": "Marketplace distribution beginning in fiscal 2027"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprises",
+          "nameJa": "企業",
+          "role": "customer",
+          "label": {
+            "ja": "Falconの定額契約を提供",
+            "en": "Falcon subscription customers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Public sector",
+          "nameJa": "公共機関",
+          "role": "customer",
+          "label": {
+            "ja": "端末・クラウド防御を提供",
+            "en": "Endpoint and cloud protection"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Channel and technology partners",
+          "nameJa": "販売・技術パートナー",
+          "role": "ecosystem",
+          "label": {
+            "ja": "販売と機能連携を支援",
+            "en": "Sales and product integrations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1321655,
+    "tickers": [
+      "PLTR"
+    ],
+    "name": "Palantir",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Platforms / Government and commercial customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000011/pltr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "組織内に散らばるデータをつなぎ、現場の判断や業務を動かすFoundry、Gotham、AIPなどのソフトを提供する会社。",
+      "revenue": "政府機関と民間企業から、ソフト利用契約と導入・運用支援の料金を受け取る。大規模な複数年契約が多い。",
+      "strength": "機密性の高い複数システムを統合し、分析結果を製造、補給、防衛など実際の業務手順へ結び付けられる。",
+      "risks": "政府予算や大型契約の時期に左右され、販売と導入に時間がかかる。高度な人材への依存と、機密データを扱う責任も大きい。",
+      "competition": "企業向けソフト、データ分析、AI基盤、コンサル会社のほか、顧客が自社開発する仕組みとも競う。",
+      "relationships": "米国と同盟国の政府機関、製造・医療・金融などの企業に基盤を提供し、クラウドや導入支援のパートナーとも連携する。"
+    },
+    "en": {
+      "business": "Provides Foundry, Gotham and AIP software that connects organizational data to operational decisions and workflows.",
+      "revenue": "Government agencies and commercial organizations pay for software subscriptions and deployment and operating support, often under large multi-year contracts.",
+      "strength": "Integrates sensitive, fragmented systems and connects analysis to real workflows in areas such as manufacturing, logistics and defense.",
+      "risks": "Government budgets and large-contract timing create volatility, deployments and sales can be lengthy, and handling sensitive data carries substantial responsibility.",
+      "competition": "Competes with enterprise software, data and AI platforms, consultancies and systems customers build internally.",
+      "relationships": "Serves U.S. and allied governments and companies across manufacturing, healthcare and finance, alongside cloud and implementation partners."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Enterprise software and data platforms",
+          "nameJa": "企業向けソフト・データ基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "データ統合・分析で競合",
+            "en": "Data integration and analytics"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Consulting and systems integrators",
+          "nameJa": "コンサル・システム会社",
+          "role": "competitor",
+          "label": {
+            "ja": "業務システム構築で競合",
+            "en": "Operational system delivery"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "In-house development",
+          "nameJa": "顧客の自社開発",
+          "role": "competitor",
+          "label": {
+            "ja": "内製システムと競合",
+            "en": "Customer-built systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Government agencies",
+          "nameJa": "政府機関",
+          "role": "customer",
+          "label": {
+            "ja": "防衛・行政向け基盤を提供",
+            "en": "Defense and government platforms"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Commercial organizations",
+          "nameJa": "民間企業",
+          "role": "customer",
+          "label": {
+            "ja": "データ・AI基盤を提供",
+            "en": "Data and AI platforms"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cloud and implementation partners",
+          "nameJa": "クラウド・導入支援会社",
+          "role": "ecosystem",
+          "label": {
+            "ja": "稼働環境と導入を支援",
+            "en": "Hosting and implementation ecosystem"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1640147,
+    "tickers": [
+      "SNOW"
+    ],
+    "name": "Snowflake",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Platform / Cloud providers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1640147/000164014726000008/snow-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "複数のクラウドにある企業データを一か所で保存・分析し、共有やAI開発にも使えるデータ基盤を提供する会社。",
+      "revenue": "保存量や計算処理など、顧客が実際に使った分に応じて課金する。契約額ではなく利用量が売上の時期を左右する。",
+      "strength": "AWS、Azure、Google Cloudをまたいで同じ仕組みを使え、データの管理・共有・分析を分断せずに行える。",
+      "risks": "顧客が処理を節約すると売上がすぐ鈍る。基盤を借りる大手クラウド自身が競合でもあり、価格や障害の影響を受ける。",
+      "competition": "AWS、Microsoft Azure、Google Cloudなどの大手クラウドと、データ基盤・分析ソフトの専門会社が競合。",
+      "relationships": "AWS、Microsoft Azure、Google Cloudの設備上でサービスを動かし、企業のデータ担当者や開発者へ従量課金で提供する。"
+    },
+    "en": {
+      "business": "Provides a data platform for storing, analyzing, sharing and building AI applications across multiple public clouds.",
+      "revenue": "Charges mainly for actual compute, storage and other consumption, so usage rather than contract value determines revenue timing.",
+      "strength": "Runs a consistent governed data layer across AWS, Azure and Google Cloud without separating storage, sharing and analytics.",
+      "risks": "Customer optimization can slow revenue quickly; the cloud providers hosting the platform also compete and influence cost and availability.",
+      "competition": "Competes with AWS, Microsoft Azure, Google Cloud and specialist data-platform and analytics vendors.",
+      "relationships": "Runs on AWS, Microsoft Azure and Google Cloud infrastructure and serves enterprise data teams and developers on a consumption basis."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Amazon / AWS",
+          "ticker": "AMZN",
+          "role": "competitor",
+          "label": {
+            "ja": "データ基盤で競合",
+            "en": "Data platform"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft Azure",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "データ基盤で競合",
+            "en": "Data platform"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google Cloud",
+          "ticker": "GOOG",
+          "role": "competitor",
+          "label": {
+            "ja": "データ基盤で競合",
+            "en": "Data platform"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Data and analytics vendors",
+          "nameJa": "データ・分析ソフト会社",
+          "role": "competitor",
+          "label": {
+            "ja": "分析・管理機能で競合",
+            "en": "Analytics and governance"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon / AWS",
+          "ticker": "AMZN",
+          "role": "supplier",
+          "label": {
+            "ja": "サービスの稼働基盤を調達",
+            "en": "Underlying cloud infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft Azure",
+          "ticker": "MSFT",
+          "role": "supplier",
+          "label": {
+            "ja": "サービスの稼働基盤を調達",
+            "en": "Underlying cloud infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google Cloud",
+          "ticker": "GOOG",
+          "role": "supplier",
+          "label": {
+            "ja": "サービスの稼働基盤を調達",
+            "en": "Underlying cloud infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprise data teams",
+          "nameJa": "企業のデータ担当者",
+          "role": "customer",
+          "label": {
+            "ja": "データ基盤を従量課金で提供",
+            "en": "Consumption-based data platform"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 804328,
+    "tickers": [
+      "QCOM"
+    ],
+    "name": "Qualcomm",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · QCT and QTL / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm"
+      }
+    ],
+    "ja": {
+      "business": "スマートフォン、車、IoT機器向けの通信・演算チップを設計し、携帯通信の基本特許も保有する会社。",
+      "revenue": "Snapdragonなどのチップ販売と、端末メーカーから受け取る携帯通信特許のライセンス料・ロイヤルティが二本柱。",
+      "strength": "高速通信、低消費電力CPU、画像・AI処理を一つのチップへまとめ、特許収入と製品開発を相互に支えられる。",
+      "risks": "スマホ需要と中国市場への依存が大きい。Appleなど顧客の内製化、特許料を巡る規制・訴訟、先端製造委託先の供給も影響する。",
+      "competition": "スマホ向けではMediaTekや端末メーカーの自社チップ、PC・AI処理では複数の半導体設計会社と競う。",
+      "relationships": "Apple、Samsung、Xiaomiが2025年度に各10％以上を占めた顧客。端末メーカーへチップを売り、特許をライセンスする。"
+    },
+    "en": {
+      "business": "Designs wireless and computing chips for phones, vehicles and IoT devices and owns foundational cellular patents.",
+      "revenue": "Two pillars are Snapdragon and related chip sales and license and royalty income from cellular intellectual property.",
+      "strength": "Integrates connectivity, low-power computing, imaging and AI while patent income supports continued product research.",
+      "risks": "Phone and China exposure, customer insourcing such as Apple, licensing disputes and reliance on advanced foundries can affect results.",
+      "competition": "Competes with MediaTek and device makers' internal phone chips and with multiple chip designers in PCs and AI processing.",
+      "relationships": "Apple, Samsung and Xiaomi each represented at least 10% of fiscal 2025 revenue; Qualcomm sells chips and licenses patents to device makers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "MediaTek",
+          "role": "competitor",
+          "label": {
+            "ja": "スマホ向けチップで競合",
+            "en": "Mobile chipsets"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Device makers' in-house chips",
+          "nameJa": "端末メーカーの自社チップ",
+          "role": "competitor",
+          "label": {
+            "ja": "内製チップと競合",
+            "en": "Customer-designed chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "PC and AI chip designers",
+          "nameJa": "PC・AI向け半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "演算・接続チップで競合",
+            "en": "Computing and connectivity chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Apple",
+          "ticker": "AAPL",
+          "role": "customer",
+          "label": {
+            "ja": "チップ・特許ライセンスの大口顧客",
+            "en": "Major chip and licensing customer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Samsung",
+          "role": "customer",
+          "label": {
+            "ja": "チップ・特許ライセンスの大口顧客",
+            "en": "Major chip and licensing customer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Xiaomi",
+          "role": "customer",
+          "label": {
+            "ja": "スマホ向けの大口顧客",
+            "en": "Major mobile customer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1108524,
+    "tickers": [
+      "CRM"
+    ],
+    "name": "Salesforce",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Agentforce 360 / Revenue model / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "営業、顧客対応、販売促進、データ分析をクラウドで管理し、AIエージェントも業務へ組み込む会社。",
+      "revenue": "Sales、Service、Data Cloud、Slackなどの利用契約とサポートが中心。導入支援や研修からも収入を得る。",
+      "strength": "顧客情報を共通基盤へ集め、営業や問い合わせ対応の流れとAIを同じ権限・データ管理の下で動かせる。",
+      "risks": "企業のIT予算と契約更新に左右され、生成AIの品質・費用・個人情報管理が導入速度を決める。製品統合が複雑になるリスクもある。",
+      "competition": "企業向け業務ソフト、クラウド型業務アプリ、特定業務に強い会社、AI専業の新興企業、顧客の自社開発と競う。",
+      "relationships": "幅広い企業へ顧客管理基盤を定額提供し、コンサル会社、導入支援会社、アプリ開発会社が周辺機能と導入を支える。"
+    },
+    "en": {
+      "business": "Provides cloud software for sales, service, marketing and analytics and embeds AI agents into business workflows.",
+      "revenue": "Subscriptions and support for Sales, Service, Data Cloud, Slack and other products lead revenue, with services and training also contributing.",
+      "strength": "Unifies customer data, workflows and AI under shared permissions and governance across front-office teams.",
+      "risks": "Enterprise budgets and renewals matter, while generative-AI quality, cost and privacy can slow adoption and product integration can add complexity.",
+      "competition": "Competes with enterprise and cloud application vendors, specialists, AI-native entrants and customer-built systems.",
+      "relationships": "Provides subscriptions to organizations and relies on consultants, implementation firms and app developers to extend and deploy the platform."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Enterprise application vendors",
+          "nameJa": "企業向け業務ソフト会社",
+          "role": "competitor",
+          "label": {
+            "ja": "営業・業務ソフトで競合",
+            "en": "Enterprise applications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cloud application providers",
+          "nameJa": "クラウド型業務アプリ会社",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド業務アプリで競合",
+            "en": "Cloud applications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Customer-built systems",
+          "nameJa": "顧客の自社開発",
+          "role": "competitor",
+          "label": {
+            "ja": "内製システムと競合",
+            "en": "Customer-built systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "AI-native software companies",
+          "nameJa": "AI専業ソフト会社",
+          "role": "competitor",
+          "label": {
+            "ja": "AI業務支援で競合",
+            "en": "AI workflow software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Businesses and organizations",
+          "nameJa": "企業・団体",
+          "role": "customer",
+          "label": {
+            "ja": "顧客管理・AI基盤を提供",
+            "en": "CRM and AI platform customers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Consulting and implementation partners",
+          "nameJa": "コンサル・導入支援会社",
+          "role": "ecosystem",
+          "label": {
+            "ja": "導入と業務設計を支援",
+            "en": "Implementation and process design"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Application developers",
+          "nameJa": "アプリ開発会社",
+          "role": "ecosystem",
+          "label": {
+            "ja": "周辺アプリを開発",
+            "en": "Extend the application ecosystem"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1373715,
+    "tickers": [
+      "NOW"
+    ],
+    "name": "ServiceNow",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · AI platform / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000007/now-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "社内のIT対応、人事、顧客対応などの申請・承認・作業を一つのクラウド基盤で自動化する会社。",
+      "revenue": "Now Platformと業務別機能の定額契約が中心。高度なサポートと、導入・設計を支える専門サービスも提供する。",
+      "strength": "部署や既存システムをまたぐ作業手順を共通データへつなぎ、AIを使った受付、判断、実行まで一体化できる。",
+      "risks": "大企業向けは契約まで長く、更新や追加購入に成長が左右される。AIの誤動作、機密データ、基盤障害への責任も重い。",
+      "competition": "Microsoft、Oracle、Salesforce、SAP、Workdayなどの企業向けソフトと、特定業務の専門ツールが競合。",
+      "relationships": "企業・公共機関に定額契約で基盤を提供し、コンサル会社や導入パートナーが顧客ごとの業務設計と接続を支える。"
+    },
+    "en": {
+      "business": "Automates requests, approvals and work across IT, HR, customer service and other functions on one cloud platform.",
+      "revenue": "Now Platform subscriptions lead revenue, supplemented by premium support and professional implementation services.",
+      "strength": "Connects workflows and data across departments and existing systems, then applies AI from intake through decision and action.",
+      "risks": "Large-enterprise sales cycles are long and growth depends on renewals and expansion; AI errors, sensitive data and outages also carry risk.",
+      "competition": "Competes with Microsoft, Oracle, Salesforce, SAP, Workday and specialist workflow tools.",
+      "relationships": "Sells subscriptions to enterprises and public agencies, with consultants and implementation partners tailoring workflows and integrations."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "業務自動化で競合",
+            "en": "Workflow automation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向け業務ソフトで競合",
+            "en": "Enterprise applications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客対応・業務基盤で競合",
+            "en": "Service and workflow platforms"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "SAP",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向け業務ソフトで競合",
+            "en": "Enterprise applications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Workday",
+          "role": "competitor",
+          "label": {
+            "ja": "人事業務などで競合",
+            "en": "HR workflows"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon / AWS",
+          "ticker": "AMZN",
+          "role": "partner",
+          "label": {
+            "ja": "クラウド連携とAI機能で協力",
+            "en": "Cloud interoperability and AI collaboration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "ticker": "GOOG",
+          "role": "partner",
+          "label": {
+            "ja": "クラウド連携とAI機能で協力",
+            "en": "Cloud interoperability and AI collaboration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "partner",
+          "label": {
+            "ja": "クラウド連携とAI機能で協力",
+            "en": "Cloud interoperability and AI collaboration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "ticker": "NVDA",
+          "role": "partner",
+          "label": {
+            "ja": "AI機能の強化で協力",
+            "en": "AI technology collaboration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprises",
+          "nameJa": "企業",
+          "role": "customer",
+          "label": {
+            "ja": "業務自動化基盤を提供",
+            "en": "Workflow platform customers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Public sector",
+          "nameJa": "公共機関",
+          "role": "customer",
+          "label": {
+            "ja": "申請・IT業務を自動化",
+            "en": "Government workflow automation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Consulting and implementation partners",
+          "nameJa": "コンサル・導入支援会社",
+          "role": "ecosystem",
+          "label": {
+            "ja": "業務設計と接続を支援",
+            "en": "Workflow design and integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 51143,
+    "tickers": [
+      "IBM"
+    ],
+    "name": "IBM",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K and Annual Report · Segments / Clients / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業や政府の基幹システム向けに、AI・ハイブリッドクラウドのソフト、コンサル、メインフレームなどを提供する会社。",
+      "revenue": "ソフトの定額契約と保守、コンサル・システム構築、メインフレームやサーバー、関連金融サービスで稼ぐ。",
+      "strength": "長年運用される基幹システムと顧客関係を持ち、Red Hatの技術を使って社内設備と複数クラウドをまたぐ運用を支援できる。",
+      "risks": "クラウド・AIで競争が激しく、古い事業から成長分野への移行には実行力が必要。大型案件、人材確保、為替、サイバー障害も影響する。",
+      "competition": "クラウド・AIソフト、ITコンサル、企業向けインフラの各分野で、大手総合会社と専門会社を含む多数の企業と競う。",
+      "relationships": "企業と公共機関へソフト、コンサル、基幹機器を組み合わせて提供し、クラウド会社や業務ソフト会社とも提携と競争を同時に行う。"
+    },
+    "en": {
+      "business": "Provides AI and hybrid-cloud software, consulting and mainframe infrastructure for mission-critical enterprise and government systems.",
+      "revenue": "Software subscriptions and support, consulting and systems work, mainframes and servers, and related financing generate revenue.",
+      "strength": "Deep mission-critical customer relationships and Red Hat technology support operations spanning on-premises systems and multiple clouds.",
+      "risks": "Cloud and AI competition makes portfolio execution critical; large projects, skilled labor, currency and cyber incidents also affect results.",
+      "competition": "Competes with broad and specialist vendors across cloud and AI software, IT consulting and enterprise infrastructure.",
+      "relationships": "Combines software, consulting and core systems for enterprises and governments while partnering and competing with cloud and application vendors."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Google",
+          "ticker": "GOOG",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド・AIソフトで競合",
+            "en": "Cloud and AI software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon / AWS",
+          "ticker": "AMZN",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド基盤で競合",
+            "en": "Cloud platforms"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド・業務ソフトで競合",
+            "en": "Cloud and enterprise software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向けソフトで競合",
+            "en": "Enterprise software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Dell Technologies",
+          "ticker": "DELL",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向け機器で競合",
+            "en": "Enterprise infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "IT consulting firms",
+          "nameJa": "ITコンサル会社",
+          "role": "competitor",
+          "label": {
+            "ja": "システム構築で競合",
+            "en": "Systems and consulting"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon / AWS",
+          "ticker": "AMZN",
+          "role": "partner",
+          "label": {
+            "ja": "戦略パートナーとして顧客支援",
+            "en": "Strategic customer-solution partnership"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "partner",
+          "label": {
+            "ja": "戦略パートナーとして顧客支援",
+            "en": "Strategic customer-solution partnership"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "partner",
+          "label": {
+            "ja": "戦略パートナーとして顧客支援",
+            "en": "Strategic customer-solution partnership"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Palo Alto Networks",
+          "ticker": "PANW",
+          "role": "partner",
+          "label": {
+            "ja": "戦略パートナーとして顧客支援",
+            "en": "Strategic customer-solution partnership"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "partner",
+          "label": {
+            "ja": "戦略パートナーとして顧客支援",
+            "en": "Strategic customer-solution partnership"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprises",
+          "nameJa": "企業",
+          "role": "customer",
+          "label": {
+            "ja": "ソフト・コンサル・基幹機器を提供",
+            "en": "Software, consulting and core systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Government and public agencies",
+          "nameJa": "政府・公共機関",
+          "role": "customer",
+          "label": {
+            "ja": "基幹システムと支援を提供",
+            "en": "Mission-critical systems and services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cloud and application partners",
+          "nameJa": "クラウド・業務ソフト会社",
+          "role": "partner",
+          "label": {
+            "ja": "顧客システムの接続で協力",
+            "en": "Customer integration partnerships"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
   }
 ]

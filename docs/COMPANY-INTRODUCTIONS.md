@@ -4,9 +4,11 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is thirty-two issuers / thirty-three tickers: NVDA, MU, GOOG,
+Researched coverage is forty-seven issuers / forty-eight tickers: NVDA, MU, GOOG,
 GOOGL, AAPL, AMZN, META, COST, MSFT, NBIS, TSM, ASML, AVGO, AMD, ARM, CRDO,
-ANET, MRVL, VRT, ALAB, LITE, COHR, AMAT, APH, INTC, SIMO, AAOI, BE, VST, GEV, IREN, LRCX and KLAC.
+ANET, MRVL, VRT, ALAB, LITE, COHR, AMAT, APH, INTC, SIMO, AAOI, BE, VST, GEV,
+IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL, ETN, PANW, CRWD, PLTR,
+SNOW, QCOM, CRM, NOW and IBM.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -147,3 +149,12 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - 公式年次資料のBusiness / Products / Customers / Competition / Risk factorsを照合。主な顧客と競合の例であり全取引先の網羅ではない。
 - 既存UI、ニュース、RESOLUTEは変更なし。次回は未収録のCRWV / SMCI / CSCOなど既存マップの企業を一次資料から追加候補として確認する。
 - チャット側で継続作業の予約を設定済み。アプリ内に無人の情報収集・更新パイプラインを実装した意味ではない。
+
+### 2026-10-14 サーバー・クラウド・セキュリティ・業務ソフト15社追加
+
+- SMCI / CSCO / HPE / CRWV / ORCL / DELL / ETN / PANW / CRWD / PLTR / SNOW / QCOM / CRM / NOW / IBMを追加。合計47社・48銘柄コード。
+- 各社の最新Form 10-Kを一次資料として、日英6項目、競合、供給元・顧客・提携先を一括確認。実名が年次報告で確認できない関係は企業名を推測せず、業種単位で収録した。
+- CoreWeaveはMicrosoftへの2025年売上集中、Meta・OpenAIの契約、NVIDIA基盤を区別。SnowflakeはAWS / Azure / Google Cloudが供給元である一方、競合でもあることを別の関係として表示する。
+- Palo Alto Networksのクラウド市場、CrowdStrikeのAWS / Google / Microsoft市場、ServiceNowとIBMの戦略提携を、競争関係と混同しない独立した線で収録した。
+- QualcommのApple / Samsung / XiaomiはFY2025に各10%以上を占める開示済み顧客として扱う。匿名顧客を実名へ置き換えていない。
+- QCOMを半導体設計、PLTR / SNOW / CRM / NOW / IBMをクラウド・AIサービスの配置へ追加。既存の共通UI、ニュース、目標株価、翻訳、RESOLUTEは変更していない。
