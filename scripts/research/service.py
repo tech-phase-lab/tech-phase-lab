@@ -28,6 +28,7 @@ import price_target_reconciliation
 import signal_source_detail
 import retained_source_detail
 import stock_news
+import company_wire
 import news_drafts
 import news_history
 import editorial_posts
@@ -771,6 +772,8 @@ class AutomaticMonitor:
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
+        self.company_wire_thread = threading.Thread(target=self.run_company_wire, name="company-wire", daemon=True)
+        self.company_wire_errors = {}
 
     def run_x_preflight(self):
         # Startup backup may temporarily require one full extra DB-sized copy.
@@ -1084,6 +1087,7 @@ class AutomaticMonitor:
         if self.x_stream_trial_thread:
             self.x_stream_trial_thread.start()
         self.news_thread.start()
+        self.company_wire_thread.start()
         self.note_translation_thread.start()
         for thread in self.headline_translation_threads:
             thread.start()
@@ -1115,6 +1119,7 @@ class AutomaticMonitor:
         if self.x_stream_trial_thread:
             self.x_stream_trial_thread.join(timeout=45)
         self.news_thread.join(timeout=25)
+        self.company_wire_thread.join(timeout=25)
         self.note_translation_thread.join(timeout=45)
         for thread in self.headline_translation_threads:
             thread.join(timeout=45)
@@ -1145,6 +1150,23 @@ class AutomaticMonitor:
                 with self.state_lock:
                     self.state["stockNewsIntake"] = {"status": "error", "error": "stock-news-worker-failed"}
             self.stop_event.wait(60)
+
+    def run_company_wire(self):
+        # Read-only headline collection; set COMPANY_WIRE_ENABLED=false to stop it.
+        if os.environ.get("COMPANY_WIRE_ENABLED", "true").lower() == "false":
+            return
+        tickers = company_wire.roster()
+        index = 0
+        while not self.stop_event.is_set():
+            try:
+                with company_wire.connect(self.db_path) as db:
+                    company_wire.poll_company(db, tickers[index % len(tickers)], self.company_wire_errors)
+                    if index % len(tickers) == 0:
+                        company_wire.prune(db)
+            except Exception:
+                print("company-wire-failed", flush=True)
+            index += 1
+            self.stop_event.wait(6)
 
     def stock_news_queue(self, limit=20):
         with stock_news.connect(self.db_path) as db:
@@ -2979,6 +3001,11 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 payload = {}
                 state["publicFeed"] = {"error": "public-feed-unavailable"}
+            try:
+                with company_wire.connect(self.app.db_path) as wire_db:
+                    state["companyWire"] = company_wire.status(wire_db, dict(self.app.company_wire_errors))
+            except Exception:
+                state["companyWire"] = {"error": "company-wire-unavailable"}
             try:
                 state["companyDelivery"] = pipeline_status.company_delivery(self.app.db_path, payload)
             except Exception:

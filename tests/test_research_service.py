@@ -270,7 +270,7 @@ class ResearchServiceTests(unittest.TestCase):
                 app.start()
             # 19 single workers (including the news refresher, strip titles, deep analysis and
             # the release watch) plus one thread per parallel headline translator.
-            self.assertEqual(len(observed), 19 + app.translation_workers)
+            self.assertEqual(len(observed), 20 + app.translation_workers)
             self.assertTrue(all(observed))
 
     def test_release_watch_alerts_from_the_public_payload_and_reports_in_health(self):
