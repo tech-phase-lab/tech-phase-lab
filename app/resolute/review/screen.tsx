@@ -7,6 +7,7 @@ import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 import DiagnosisScreen from "../screen";
 import SimulationScreen from "../simulation/screen";
 import NotificationScreen from "../notifications-screen";
+import NotebookScreen from "../notebook/screen";
 import TaxScreen from "../tax/screen";
 import ThermometerScreen from "../thermometer/screen";
 import styles from "../diagnosis.module.css";
@@ -51,7 +52,7 @@ function Workspace() {
  return <ReviewContext.Provider value={{...store,path,navigate,locale,setLocale}}>
   <div hidden={path !== "/resolute"}><DiagnosisScreen/></div>
   {path === "/resolute/simulation" ? <SimulationScreen/> : path === "/resolute/tax" ? <TaxScreen/> :
-   path === "/resolute/thermometer" ? <ThermometerScreen/> : null}
+   path === "/resolute/notebook" ? <NotebookScreen/> : path === "/resolute/thermometer" ? <ThermometerScreen/> : null}
   {notificationsVisited?<div hidden={path!=="/resolute/alerts"&&path!=="/resolute/morning"}><NotificationScreen mode={path==="/resolute/morning"?"morning":"alerts"}/></div>:null}
  </ReviewContext.Provider>;
 }

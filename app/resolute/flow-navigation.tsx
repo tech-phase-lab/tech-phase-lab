@@ -10,7 +10,7 @@ const steps=[
 export default function FlowNavigation({step,locale}:{step:number;locale:DiagnosisLocale}) {
  const en=locale==="en",previous=steps[step-2],next=steps[step];
  return <nav className={styles.flowNavigation} aria-label={en?"Continue through RESOLUTE":"次のツールへ"}>
- {next ? <Link href={next[0]} className={styles.primary} prefetch={false}>{next[en?2:1]}{en?" →":"へ進む →"}</Link> : <Link href="/resolute" className={styles.primary} prefetch={false}>{en?"Return to my rules":"① 自分のルールに戻る"}</Link>}
+ {next ? <Link href={next[0]} className={styles.primary} prefetch={false}>{next[en?2:1]}{en?" →":"へ進む →"}</Link> : <Link href="/resolute/notebook" className={styles.primary} prefetch={false}>{en?"Finish my rulebook":"マイルールを仕上げる"}</Link>}
  {previous ? <Link href={previous[0]} className={styles.ghost} prefetch={false}>{en?"← "+previous[2]:"← "+previous[1]+"へ戻る"}</Link>:null}
  </nav>;
 }

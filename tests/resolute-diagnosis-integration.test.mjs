@@ -88,8 +88,14 @@ test('all 10 types, 23 advice messages and seven result cards have English witho
  for(const type of Object.keys(EN_TYPES))assert.ok(localizeDiagnosis({...r,type},i,'en').typeDetail.length>50);
  for(const text of Object.values(EN_ADVICE).map(fn=>fn(i,r.amounts)))assert.ok(!/[\u3040-\u30ff\u4e00-\u9fff]/u.test(text));
 });
-test('USD plans cannot be reinterpreted by the JPY questionnaire',()=>{
- assert.throws(()=>draftFromPlan({...draftToPlan(answered()),currency:'USD'}),/UNSUPPORTED_CURRENCY/);
+test('USD plans retain cents through editing and display dollars in both languages',()=>{
+ const d=answered({q02:'custom'});d.currency='USD';d.numbers={q02:'2500.15',q07:'100000.99',q08:'30000.01'};
+ const p=draftToPlan(d);assert.equal(p.monthlyLivingCost,250015);assert.equal(p.financialAssets,10000099);assert.equal(p.investedAmount,3000001);
+ assert.deepEqual(draftToPlan(draftFromPlan(p)),p);
+ const input=draftToInput(d),r=diagnose(input);
+ for(const locale of ['ja','en']){const text=localizeDiagnosis(r,input,locale);assert.match(text.rows[0].rule,/US\$/);assert.doesNotMatch(text.rows[0].rule,/円|¥/);}
+ for(const value of ['1.001','10000000000.01','NaN']){d.numbers.q07=value;assert.throws(()=>draftToPlan(d));}
+ assert.deepEqual(questionCopy(questions.find(q=>q.id==='q02'),'en','USD').options.map(x=>x.id),['custom']);
 });
 test('plan client sends one same-origin PUT with revision and validates confirmed save',async()=>{
  const p=draftToPlan(answered());let calls=0;
@@ -107,4 +113,23 @@ test('client distinguishes conflict, outage, auth, rate limit and never retries 
   await assert.rejects(()=>requestPlan({plan:p,baseRevision:1},undefined,async()=>response(200,body)),/unavailable/);
  await assert.rejects(()=>requestPlan(undefined,undefined,async()=>new Response('x'.repeat(20000),{headers:{'content-type':'application/json'}})),/unavailable/);
  assert.equal(parsePlanSnapshot({plan:null,revision:9}).revision,9);
+});
+
+// Final adjustments must preserve independent notifications and custom purchase levels.
+import {notebookResult,notebookEdits,adjustNotebook,notebookDocument} from '../lib/resolute/notebook.ts';
+import {createReviewStore} from '../lib/resolute/review-store.ts';
+test('notebook edits preserve custom lines, round trip answers and never mutate notification settings',async()=>{
+ const store=createReviewStore(),p=draftToPlan(answered());p.buyLines[0].amount=12345;
+ const saved=await store.requestPlan({plan:p,baseRevision:0});const before=await store.requestNotificationSettings();
+ const edits={...notebookEdits(saved.plan),reserveMonths:'8.5',perStockCapPct:'12.5',noBuyConditions:'My own condition'};
+ const updated=adjustNotebook(saved.plan,edits);assert.deepEqual(updated.buyLines,p.buyLines);assert.equal(updated.answers.q05,'custom');assert.equal(updated.answers.q22,'custom');
+ assert.equal(draftFromPlan(updated).numbers.q05,'8.5');assert.equal(updated.investable,7875000);
+ assert.match(notebookResult(updated,'en').rows[3].rule,/12,345/);
+ await store.requestPlan({plan:updated,baseRevision:saved.revision});assert.deepEqual(await store.requestNotificationSettings(),before);
+ await assert.rejects(store.requestPlan({plan:updated,baseRevision:saved.revision}),e=>e.kind==='conflict');
+});
+test('portable notebook escapes private text and has no scripts or external requests',()=>{
+ const p=stamped(draftToPlan(answered()));p.noBuyConditions=['<script>alert("private")</script>'];
+ const html=notebookDocument(p,'en');assert.ok(html.includes('&lt;script&gt;'));assert.ok(!html.includes('<script>'));assert.ok(html.includes("default-src 'none'"));assert.ok(!html.includes('https://'));
+ for(const changes of [{reserveMonths:'120.1'},{perStockCapPct:'100.1'},{reserveMonths:''},{noBuyConditions:'x'.repeat(101)}])assert.throws(()=>adjustNotebook(p,{...notebookEdits(p),...changes}));
 });

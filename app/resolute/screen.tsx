@@ -52,7 +52,6 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const denyRef=useRef(deny); useEffect(()=>{denyRef.current=deny;},[deny]);
  function accept(p:PlanSnapshot) {
   setSnapshot(p);setLocked(false);setSaved(false);
-  if(p.plan?.currency==="USD") {setLocked(true);setMessage("unsupported");return;}
   setDraft(p.plan ? draftFromPlan(p.plan) : emptyDiagnosisDraft());setMessage(p.plan?"existing":null);setMode("intro");setIndex(0);
  }
  useEffect(()=>{
@@ -99,14 +98,16 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   <span className={styles.eyebrow}>RULE DIAGNOSIS</span>
   <h1 className={styles.introTitle}>{en ? <><span>Build your own investing</span><span>rules in 30 questions.</span></> : <><span>あなただけの投資ルールを</span><span>30問の質問でつくる</span></>}</h1>
   <p className={styles.introDescription}>{en ? <>Build clearer rules with each answer.<br/>Takes about five minutes.</> : <>答えるほどルールは鮮明になります。<br/>※所要時間 約5分</>}</p>
-  <p className={styles.disclaimer}>{c.currency}</p>
+  <fieldset className={styles.currencyChoice}><legend>{en?"Plan currency":"計画に使う通貨"}</legend>{(["JPY","USD"] as const).map(currency=><button type="button" key={currency} aria-pressed={draft.currency===currency} disabled={!!snapshot?.plan||loading} onClick={()=>{if(currency===draft.currency)return;if(Object.values(draft.answers).some(v=>v!==null)&&!window.confirm(en?"Changing currency clears your answers. Start again?":"通貨を変えると回答を消して最初から入力します。変更しますか？"))return;setDraft({...emptyDiagnosisDraft(),currency});}}>{currency==="JPY"?en?"Japanese yen · JPY":"日本円 · JPY":en?"US dollars · USD":"米ドル · USD"}</button>)}</fieldset>
+  <p className={styles.disclaimer}>{en?"Language and currency are separate. Amounts are never converted automatically. Japan’s tax estimate always uses yen.":"表示言語と通貨は別に選べます。金額の自動換算はしません。⑥の税金計算は日本円です。"}{snapshot?.plan?(en?" Your saved plan keeps its original currency.":"保存済みの計画は元の通貨を維持します。"):""}</p>
   {bodyMessage}
   <button type="button" className={styles.primary} disabled={loading||locked} onClick={()=>{setMode("questions");setSaved(false);}}>{snapshot?.plan?c.redo:c.start}</button>
+  {snapshot?.plan?<Link className={styles.primary} href="/resolute/notebook" prefetch={false}>{en?"Open my rulebook":"マイルールを開く"}</Link>:null}
   {snapshot?.plan?<Link className={styles.secondary} href="/resolute/simulation" prefetch={false}>{c.simulation}</Link>:null}
   {message?reloadButton:null}
  </section>;
  if(mode==="questions") {
-  const text=questionCopy(q,locale), answer=draft.answers[q.id], option=q.o.find(o=>o.id===answer),limits=numericLimits(q,draft.answers);
+  const text=questionCopy(q,locale,draft.currency), answer=draft.answers[q.id], option=q.o.find(o=>o.id===answer),limits=numericLimits(q,draft.answers,draft.currency);
   return <div className={styles.section}>
    <div className={styles.progress}><div className={styles.meta}><span>{sections[q.s][en?1:0]}</span><span>{index+1} / {visible.length}</span></div><progress value={index+1} max={visible.length} aria-label={en?"Progress":"進み具合"}/></div>
 
@@ -121,8 +122,8 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
       const next = current.includes(o.id) ? current.filter(x=>x!==o.id) : [...current,o.id];
       return selectAnswer(d,q.id,q.multi ? next.length ? next : null : o.id);
      });}}>{o.label}</button>)}</div>
-    {option?.input?<label className={styles.field} htmlFor={`number-${q.id}`}>{en?"Enter a number":"数字を入力"} ({limits.money?en?"JPY":"円":q.id==="q30"?en?"yen":"円":q.id==="q04"||q.id==="q05"?en?"months":"か月":"%"})
-     <NumberInput id={`number-${q.id}`} decimal={!limits.money} min={limits.min} max={limits.max} step={limits.step} value={draft.numbers[q.id]??""}
+    {option?.input?<label className={styles.field} htmlFor={`number-${q.id}`}>{en?"Enter a number":"数字を入力"} ({limits.money?draft.currency==="USD"?"USD":en?"JPY":"円":q.id==="q30"?en?"yen":"円":q.id==="q04"||q.id==="q05"?en?"months":"か月":"%"})
+     <NumberInput id={`number-${q.id}`} decimal={!limits.money||draft.currency==="USD"} min={limits.min} max={limits.max} step={limits.step} value={draft.numbers[q.id]??""}
       aria-describedby={`range-${q.id}`} onValueChange={value=>{setFormError(null);setDraft(d=>({...d,numbers:{...d.numbers,[q.id]:value}}));}}/>
      <span id={`range-${q.id}`} className={styles.muted}>{limits.min.toLocaleString()}–{limits.max.toLocaleString()}{q.id==="q25"?(en?" (keeps every step below 100%)":"（すべての段階が100%未満になる範囲）"):""}</span>
     </label>:null}

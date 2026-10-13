@@ -6,6 +6,7 @@ export type AnswerValue = string | string[] | null;
 export type Answers = Record<string, AnswerValue>; // q01〜q30。出さなかった質問・未回答は null
 
 export type DiagnosisInput = {
+  currency?: "JPY" | "USD";
   answers: Answers;
   monthlyLivingCost: number;
   savingsMonths: number | null;
@@ -46,7 +47,7 @@ const is = (i: DiagnosisInput, q: string, ...v: string[]): boolean => {
 const pctOf = (base: number, pct: number): number => Math.floor((base * Math.round(pct * 10)) / 1000);
 
 export function calcAmounts(i: DiagnosisInput): Amounts {
-  const amounts = calculatePlanAmounts({ currency: "JPY", monthlyLivingCost: i.monthlyLivingCost,
+  const amounts = calculatePlanAmounts({ currency: i.currency ?? "JPY", monthlyLivingCost: i.monthlyLivingCost,
     reserveMonths: i.reserveMonths, nearTermExpense: i.nearTermExpense, financialAssets: i.financialAssets,
     investedAmount: i.investedAmount, tolerancePct: i.tolerancePct, buyBudgetPct: i.buyBudgetPct });
   return { ...amounts, perStockCapAmount: amounts.investBase === null ? null : pctOf(amounts.investBase, i.perStockCapPct) };
@@ -191,6 +192,8 @@ export function formatYen(n: number): string {
   return rest === 0 ? `${man.toLocaleString("en-US")}万円` : `${man.toLocaleString("en-US")}万${rest.toLocaleString("en-US")}円`;
 }
 
+const money = (i: DiagnosisInput, n: number) => i.currency === "USD" ? `US$${(n/100).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}` : formatYen(n);
+
 // ---- 回答に合わせたアドバイス(上から順に当てはまるものを最大5つ) ----
 
 type AdviceRule = { id: string; when: (i: DiagnosisInput, m: Amounts) => boolean; text: (i: DiagnosisInput, m: Amounts) => string };
@@ -203,7 +206,7 @@ const ADVICE: AdviceRule[] = [
     id: "income_uneven_reserve3",
     when: (i) => is(i, "q03", "uneven", "none") && i.reserveMonths === 3 && i.monthlyLivingCost > 0,
     text: (i) =>
-      `収入に波があるなら、手をつけない貯金は多めにしておくと安心です。たとえば生活費が${formatYen(i.monthlyLivingCost)}なら、3か月分は${formatYen(i.monthlyLivingCost * 3)}、6か月分は${formatYen(i.monthlyLivingCost * 6)}です。下落と収入の減る時期が重なっても、投資に手をつけずに生活できます。`,
+      `収入に波があるなら、手をつけない貯金は多めにしておくと安心です。たとえば生活費が${money(i, i.monthlyLivingCost)}なら、3か月分は${money(i, i.monthlyLivingCost * 3)}、6か月分は${money(i, i.monthlyLivingCost * 6)}です。下落と収入の減る時期が重なっても、投資に手をつけずに生活できます。`,
   },
   {
     id: "savings_short",
@@ -219,7 +222,7 @@ const ADVICE: AdviceRule[] = [
   },
   {
     id: "investable_zero",
-    when: (_i, m) => m.investable === 0,
+    when: (i, m) => m.investable === 0,
     text: () =>
       "いまの金融資産から、手をつけない貯金と、3年以内に使うお金を引くと、投資に回せる額が残りません。まず貯金を整えることも、選べる道です。答えを変えれば、いつでもやり直せます。",
   },
@@ -227,7 +230,7 @@ const ADVICE: AdviceRule[] = [
     id: "invested_over",
     when: (i, m) => nz(i.investedAmount) && nz(m.investable) && i.investedAmount > m.investable,
     text: (i, m) =>
-      `いま投資している額(${formatYen(i.investedAmount as number)})が、貯金と近い支出を引いて計算した「回せる額」(${formatYen(m.investable as number)})より多くなっています。投資額を回せる額に近づけるか、置いておく貯金の月数を見直すか、どちらにするか決めておきましょう。`,
+      `いま投資している額(${money(i, i.investedAmount as number)})が、貯金と近い支出を引いて計算した「回せる額」(${money(i, m.investable as number)})より多くなっています。投資額を回せる額に近づけるか、置いておく貯金の月数を見直すか、どちらにするか決めておきましょう。`,
   },
   {
     id: "horizon_short",
@@ -238,20 +241,20 @@ const ADVICE: AdviceRule[] = [
   {
     id: "sleep_often",
     when: (i, m) => is(i, "q10", "often") && nz(m.investBase),
-    text: (_i, m) =>
-      `夜眠れないことがよくあるなら、いまの投資額が気持ちに対して大きいサインかもしれません。投資額を小さくすると、同じ割合の下落でも、減る金額が小さくなります。たとえば投資額が${formatYen(m.investBase as number)}で20%下がると${formatYen(Math.floor((m.investBase as number) * 0.2))}減ります。投資額を半分にすれば、減る額も半分です。`,
+    text: (i, m) =>
+      `夜眠れないことがよくあるなら、いまの投資額が気持ちに対して大きいサインかもしれません。投資額を小さくすると、同じ割合の下落でも、減る金額が小さくなります。たとえば投資額が${money(i, m.investBase as number)}で20%下がると${money(i, Math.floor((m.investBase as number) * 0.2))}減ります。投資額を半分にすれば、減る額も半分です。`,
   },
   {
     id: "tolerance_p10",
     when: (i, m) => i.tolerancePct === 10 && nz(m.toleranceDrop),
-    text: (_i, m) =>
-      `少し減るだけでつらいと感じるタイプです。投資額を小さめにすると、同じ割合の下落でも減る金額が小さくなります。いまの許容できる下落は${formatYen(m.toleranceDrop as number)}です。`,
+    text: (i, m) =>
+      `少し減るだけでつらいと感じるタイプです。投資額を小さめにすると、同じ割合の下落でも減る金額が小さくなります。いまの許容できる下落は${money(i, m.toleranceDrop as number)}です。`,
   },
   {
     id: "drop30_over_tolerance",
-    when: (_i, m) => nz(m.investBase) && nz(m.toleranceDrop) && Math.floor((m.investBase * 3) / 10) > m.toleranceDrop,
-    text: (_i, m) =>
-      `投資額が30%下がると、${formatYen(Math.floor(((m.investBase as number) * 3) / 10))}減ります。あなたが決めた許容できる下落(${formatYen(m.toleranceDrop as number)})を超えます。過去の相場には、30%以上下がった時期もありました。このルールでは、許容額を超えたら新しく買わず、ルールを読み直します。`,
+    when: (i, m) => nz(m.investBase) && nz(m.toleranceDrop) && Math.floor((m.investBase * 3) / 10) > m.toleranceDrop,
+    text: (i, m) =>
+      `投資額が30%下がると、${money(i, Math.floor(((m.investBase as number) * 3) / 10))}減ります。あなたが決めた許容できる下落(${money(i, m.toleranceDrop as number)})を超えます。過去の相場には、30%以上下がった時期もありました。このルールでは、許容額を超えたら新しく買わず、ルールを読み直します。`,
   },
   {
     id: "sold_in_panic",
@@ -268,8 +271,8 @@ const ADVICE: AdviceRule[] = [
   {
     id: "chased_high",
     when: (i, m) => is(i, "q14", "once", "often") && nz(m.perStockCapAmount),
-    text: (_i, m) =>
-      `上がっているときは、気分が高まって買いやすくなります。買う前に一晩置くと、冷静になれます。また、買ったあとに1銘柄の上限(${formatYen(m.perStockCapAmount as number)})を超えないかも、確かめておきましょう。`,
+    text: (i, m) =>
+      `上がっているときは、気分が高まって買いやすくなります。買う前に一晩置くと、冷静になれます。また、買ったあとに1銘柄の上限(${money(i, m.perStockCapAmount as number)})を超えないかも、確かめておきましょう。`,
   },
   {
     id: "rally_buy_more",
@@ -313,12 +316,12 @@ const ADVICE: AdviceRule[] = [
   {
     id: "cap50_stock",
     when: (i, m) => i.perStockCapPct >= 50 && is(i, "q20", "stock", "mixed") && nz(m.investBase) && nz(m.toleranceDrop),
-    text: (_i, m) =>
-      `1銘柄に半分まで入れるルールだと、その銘柄が30%下がっただけで、投資額全体の15%が減ります。投資額が${formatYen(m.investBase as number)}なら${formatYen(Math.floor(((m.investBase as number) * 15) / 100))}です。許容できる下落(${formatYen(m.toleranceDrop as number)})と比べて、収まるかを確かめましょう。`,
+    text: (i, m) =>
+      `1銘柄に半分まで入れるルールだと、その銘柄が30%下がっただけで、投資額全体の15%が減ります。投資額が${money(i, m.investBase as number)}なら${money(i, Math.floor(((m.investBase as number) * 15) / 100))}です。許容できる下落(${money(i, m.toleranceDrop as number)})と比べて、収まるかを確かめましょう。`,
   },
   {
     id: "buy_budget_over_investable",
-    when: (_i, m) => nz(m.buyBudget) && nz(m.investable) && m.buyBudget > m.investable,
+    when: (i, m) => nz(m.buyBudget) && nz(m.investable) && m.buyBudget > m.investable,
     text: () =>
       "買い増しを全部実行すると、投資に回せる額を超えます。段階の数か、1回の金額を減らすと収まります。",
   },
@@ -379,13 +382,13 @@ export function buildResultRows(i: DiagnosisInput, m: Amounts, lines: BuyLine[] 
   const buyRule =
     lines.length === 0
       ? (a(i, "q24") === "none" ? "買い増しはしない" : "まだ決めていません")
-      : lines.map((l) => `${l.dropPct}%下がったら${formatYen(l.amount)}`).join(" / ");
+      : lines.map((l) => `${l.dropPct}%下がったら${money(i, l.amount)}`).join(" / ");
   const fxRule =
     i.fx?.thresholdYen != null ? `ドル円が${i.fx.thresholdYen}円動いたら、ルールを読み直す` : "特に動かない";
   return [
     {
       item: "投資に回す額",
-      rule: m.investable == null ? "計算できません" : formatYen(m.investable),
+      rule: m.investable == null ? "計算できません" : money(i, m.investable),
       meaning:
         m.investable == null
           ? "金融資産が分かったら、やり直せます"
@@ -393,15 +396,15 @@ export function buildResultRows(i: DiagnosisInput, m: Amounts, lines: BuyLine[] 
     },
     {
       item: "許容できる下落",
-      rule: m.toleranceDrop == null ? "決めていません" : formatYen(m.toleranceDrop),
+      rule: m.toleranceDrop == null ? "決めていません" : money(i, m.toleranceDrop),
       meaning:
         m.toleranceDrop == null
           ? "つらいと感じる下落の割合が決まったら、金額が出ます"
-          : `投資額が${formatYen(m.toleranceDrop)}減ったら、ルールを読み直す目安です${m.toleranceMonths != null ? `。生活費${m.toleranceMonths}か月分にあたります` : ""}`,
+          : `投資額が${money(i, m.toleranceDrop)}減ったら、ルールを読み直す目安です${m.toleranceMonths != null ? `。生活費${m.toleranceMonths}か月分にあたります` : ""}`,
     },
     {
       item: "1銘柄の上限",
-      rule: m.perStockCapAmount == null ? `投資額の${i.perStockCapPct}%` : formatYen(m.perStockCapAmount),
+      rule: m.perStockCapAmount == null ? `投資額の${i.perStockCapPct}%` : money(i, m.perStockCapAmount),
       meaning: `1つの銘柄に入れる上限です。投資額の${i.perStockCapPct}%にあたります`,
     },
     { item: "買い増し", rule: buyRule, meaning: "株価が下がったときに買い足す、段階と金額です" },

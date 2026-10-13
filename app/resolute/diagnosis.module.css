@@ -206,3 +206,38 @@
 .dollarInput{width:100%;height:55px}.dollarInput input{height:55px}
 .stockRow .removeButton{width:28px;height:55px}
 .stockEntry input{height:55px}
+
+/* A bound notebook: restrained gold tooling, generous reading space. */
+.currencyChoice{border:0;padding:0;margin:26px 0 12px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.currencyChoice legend{width:100%;margin-bottom:12px;color:var(--sub);font-size:12px;text-align:center}
+.currencyChoice button{padding:12px 18px;border:1px solid #394554;border-radius:7px;background:#101925;color:#e6e3dd;cursor:pointer}
+.currencyChoice button[aria-pressed=true]{border-color:#d8b36a;color:#f3dfae;background:#25251f}
+.currencyChoice button:disabled{cursor:default}
+.notebookIntro{text-align:center;padding:24px 0 12px}
+.notebookIntro h1{font-family:var(--font-resolute-serif),serif;font-size:clamp(24px,5vw,34px);font-weight:500;line-height:1.7}
+.notebookIntro p{font-size:13px;color:#b9b6ae;line-height:1.9;text-wrap:balance}
+.notebook{position:relative;border:1px solid #927346;border-left:8px solid #685035;border-radius:5px 15px 15px 5px;background:linear-gradient(100deg,#080e17,#142132 7%,#101a29 70%,#152337);box-shadow:inset 3px 0 8px #0009,0 20px 50px #0006,3px 3px 0 #777062,6px 6px 0 #252c35;overflow:hidden}
+.bookCover{margin:20px 20px 0;padding:42px 20px;border:1px solid #98733e;text-align:center;background:radial-gradient(ellipse at center,#d8b36a0a,transparent 75%)}
+.bookCover>span{letter-spacing:.32em;font-size:12px;color:#d8b36a}
+.bookOrnament{color:#d8b36a;font-size:28px;margin:24px 0}
+.bookCover h2{font-family:var(--font-resolute-serif),serif;color:#f3dfae;font-size:clamp(30px,7vw,44px);font-weight:500;letter-spacing:.13em;line-height:1.65;margin:0}
+.bookCover p{color:#d8b36a;font-size:13px;margin:28px 0 20px}
+.bookCover small{color:#aaa99f;font-size:11px;letter-spacing:.1em}
+.bookPages{padding:36px 32px 20px;background:linear-gradient(90deg,#0002,transparent 5%)}
+.bookSectionHead{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bookSectionHead>span{font-size:10px;letter-spacing:.16em;color:#d8b36a}
+.bookSectionHead h3{font-size:16px;font-weight:500;color:#f3dfae}
+.bookEdit{background:transparent;border:1px solid #8d744c;border-radius:4px;color:#d8b36a;padding:5px 12px;font:inherit;font-size:12px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .15s,transform .15s}
+.bookEdit:active{transform:translateY(1px);background:#d8b36a16}
+.bookRules{margin:10px 0 32px}
+.bookRules>div{border-bottom:1px solid #d8b36a30;padding:25px 0;break-inside:avoid}
+.bookRules dt{font-size:12px;color:#c6bdac;display:flex;gap:12px;align-items:baseline}
+.bookRules dt span{font-family:Georgia,serif;color:#d8b36a;font-size:16px}
+.bookRules dd{font-family:var(--font-resolute-serif),serif;font-size:18px;line-height:1.9;margin:12px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;color:#f0e9dc}
+.bookNotifications{border-top:1px solid #a7864e;border-bottom:1px solid #a7864e;padding:16px 0 22px;font-size:13px;line-height:1.9;color:#c5c4be}
+.bookNotifications small{display:block;color:#989d9f;font-size:11px;margin-top:16px}
+.bookClosing{font-family:var(--font-resolute-serif),serif;text-align:center;color:#d8b36a;line-height:2;font-size:15px;padding:32px 0 16px;text-wrap:balance}
+.bookActions{text-align:center;padding:16px 0}
+.bookActions p{font-size:12px;color:#999fa7;line-height:1.9;max-width:430px;margin:16px auto;text-wrap:pretty}
+.bookEditor{scroll-margin-top:20px}
+@media(max-width:420px){.bookCover{margin:14px 12px 0;padding:34px 10px}.bookPages{padding:28px 20px 12px}.bookRules dd{font-size:16px}.bookSectionHead{gap:8px}}
