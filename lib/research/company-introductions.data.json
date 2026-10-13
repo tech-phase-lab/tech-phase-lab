@@ -8631,9 +8631,9 @@
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Project and developer tools",
-          "nameJa": "案件・開発管理ツール",
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
           "role": "competitor",
           "label": {
             "ja": "従業員ID管理で競合",
@@ -8973,9 +8973,9 @@
     "maps": {
       "competition": [
         {
-          "kind": "company",
-          "name": "Microsoft",
-          "ticker": "MSFT",
+          "kind": "industry",
+          "name": "Project and developer tools",
+          "nameJa": "案件・開発管理ツール",
           "role": "competitor",
           "label": {
             "ja": "共同作業・案件管理で競合",
