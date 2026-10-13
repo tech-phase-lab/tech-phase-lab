@@ -103,21 +103,21 @@ async function moderate(config: Config, state: State) {
     // 承認待ちに残したもの（AIの非公開判定・要確認）は、次のチェックで判定し直さないよう記録する
     notifiedIds = [...aiRejects, ...grouped.ask].map(([c]) => c.id);
 
-    // メールは迷ったもの（要確認）があるときだけ
-    if (grouped.ask.length === 0) {
-      if (!config.dryRun && notifiedIds.length > 0) {
-        const now = new Date().toISOString();
-        for (const id of notifiedIds) state.notified[id] = now;
-        await saveState(config.stateFile, state);
-      }
-      return;
-    }
+    // 承認待ちに残したもの（迷ったもの・AIが非公開と判断したもの）があるときはすぐメールする
+    if (notifiedIds.length === 0) return;
 
+    const subject =
+      grouped.ask.length > 0
+        ? `🍭 コメント要確認 ${grouped.ask.length}件・保留 ${aiRejects.length}件`
+        : `🍭 コメントを保留にしました ${aiRejects.length}件`;
     message = [
-      `🍭 コメント要確認 ${grouped.ask.length}件（自動で公開 ${grouped.publish.length} / 非公開 ${grouped.reject.length}）`,
+      `${subject}（自動で公開 ${grouped.publish.length}）`,
       section("要確認・YouTube Studio で判断してください", grouped.ask),
+      section("AIが非公開と判断・承認待ちに残しました（公開してよければ Studio で承認）", aiRejects),
       `YouTube Studio: ${studioUrl}`,
-    ].join("\n\n");
+    ]
+      .filter(Boolean)
+      .join("\n\n");
   } else {
     message = [
       `🍭 コメント審査の判定案（提案モード：YouTube 側はまだ何も変更していません）`,
