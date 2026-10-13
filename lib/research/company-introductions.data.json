@@ -5359,5 +5359,1559 @@
         }
       ]
     }
+  },
+  {
+    "cik": 97476,
+    "tickers": [
+      "TXN"
+    ],
+    "name": "Texas Instruments",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Analog and Embedded Processing / Markets / Customers / Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/97476/000009747626000059/txn-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "電圧や温度など現実世界の信号を扱うアナログ半導体と、機器を制御する組み込みプロセッサを設計・製造する会社。",
+      "revenue": "2025年売上の約79％がアナログ、約15％が組み込み処理。産業・自動車向けがそれぞれ約33％を占める。",
+      "strength": "8万点超の幅広い製品、自社製造、10万社超の顧客網、長寿命製品を組み合わせ、少量多品種の需要にも対応できる。",
+      "risks": "半導体の在庫循環で需要が振れやすい。大規模な工場投資は需要不足時に稼働率と利益率を圧迫し、アジア勢との価格競争も強まる。",
+      "competition": "アナログ・組み込み半導体で、総合半導体メーカー、特定分野に強い専業会社、新興メーカーと競う。",
+      "relationships": "産業機器、自動車、データセンター、個人向け電子機器のメーカーへ半導体を供給。2025年売上の80％超を直接販売した。"
+    },
+    "en": {
+      "business": "Designs and manufactures analog chips that handle real-world signals and embedded processors that control electronic equipment.",
+      "revenue": "Analog generated about 79% and Embedded Processing about 15% of 2025 revenue; industrial and automotive each contributed about 33%.",
+      "strength": "Combines more than 80,000 products, internal manufacturing, over 100,000 customers and long product lives to serve diverse designs.",
+      "risks": "Inventory cycles can swing demand; large fab investments pressure utilization and margins in downturns, while Asian price competition is increasing.",
+      "competition": "Competes in analog and embedded chips with broad-line semiconductor companies, focused specialists and emerging suppliers.",
+      "relationships": "Supplies industrial, automotive, data-center and personal-electronics manufacturers; more than 80% of 2025 revenue was sold directly."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Broad-line analog suppliers",
+          "nameJa": "総合アナログ半導体メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "アナログ製品群で競合",
+            "en": "Broad analog portfolios"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Embedded processing suppliers",
+          "nameJa": "組み込み処理メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "制御用プロセッサで競合",
+            "en": "Embedded processors"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Asian niche chipmakers",
+          "nameJa": "アジアの専業半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "特定用途・価格で競合",
+            "en": "Focused products and price"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Industrial equipment makers",
+          "nameJa": "産業機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "信号処理・電源・制御チップを供給",
+            "en": "Signal, power and control chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Automotive manufacturers",
+          "nameJa": "自動車関連メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "車載アナログ・制御チップを供給",
+            "en": "Automotive analog and control chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Data-center equipment makers",
+          "nameJa": "データセンター機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "演算・ネットワーク・電源向けを供給",
+            "en": "Compute, networking and power products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 6281,
+    "tickers": [
+      "ADI"
+    ],
+    "name": "Analog Devices",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / End markets / Competition / Production resources",
+        "url": "https://www.sec.gov/Archives/edgar/data/6281/000000628125000153/adi-20251101.htm"
+      }
+    ],
+    "ja": {
+      "business": "センサーの信号を測る高性能アナログ・混載半導体、電源管理、無線、組み込み処理製品を開発する会社。",
+      "revenue": "産業、自動車、通信、民生の顧客へ半導体を販売。直販に加え、2025年度は売上の約56％を販売代理店経由で得た。",
+      "strength": "高精度・高速・低雑音の信号処理、7万5千点超の製品、長い製品寿命、約1万3千人の技術者による用途知識が強み。",
+      "risks": "半導体市況と代理店在庫の影響を受ける。年間ウエハー需要の半分超をTSMCなど外部工場へ頼り、供給停止や地域リスクも抱える。",
+      "competition": "高性能アナログ、電源管理、無線・センサーで、総合半導体メーカーや用途特化型の新興企業と競う。",
+      "relationships": "産業・自動車・通信機器メーカーへ信号処理と電源半導体を供給し、ウエハーの半分超をTSMCなど外部工場から調達する。"
+    },
+    "en": {
+      "business": "Develops high-performance analog and mixed-signal chips, power management, RF, sensors and embedded processing products.",
+      "revenue": "Sells chips into industrial, automotive, communications and consumer markets; distributors generated about 56% of fiscal 2025 revenue.",
+      "strength": "Differentiates through precision, speed and low noise, more than 75,000 products, long product lives and about 13,000 engineers with application expertise.",
+      "risks": "Semiconductor cycles and distributor inventory affect demand; more than half of annual wafer needs come from outside foundries including TSMC.",
+      "competition": "Competes in high-performance analog, power, RF and sensing with broad-line semiconductor vendors and focused emerging suppliers.",
+      "relationships": "Supplies signal and power chips to industrial, automotive and communications makers and sources over half of its wafers from foundries such as TSMC."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "High-performance analog suppliers",
+          "nameJa": "高性能アナログ半導体メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "精度・速度・消費電力で競合",
+            "en": "Precision, speed and power"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Power and RF chip specialists",
+          "nameJa": "電源・無線半導体の専業会社",
+          "role": "competitor",
+          "label": {
+            "ja": "電源管理・無線製品で競合",
+            "en": "Power management and RF"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "ticker": "TSM",
+          "role": "supplier",
+          "label": {
+            "ja": "外部ウエハー製造を担う主要ファウンドリー",
+            "en": "Major external wafer foundry"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Industrial equipment makers",
+          "nameJa": "産業機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "精密計測・制御向け半導体を供給",
+            "en": "Precision sensing and control chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Automotive manufacturers",
+          "nameJa": "自動車関連メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "車載信号処理・電源製品を供給",
+            "en": "Automotive signal and power products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Communications equipment makers",
+          "nameJa": "通信機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "無線・高速信号製品を供給",
+            "en": "RF and high-speed signal products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1413447,
+    "tickers": [
+      "NXPI"
+    ],
+    "name": "NXP Semiconductors",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Customers / Manufacturing / Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "自動車と産業IoTを中心に、マイコン、通信、レーダー、セキュリティ、電源管理半導体を提供する会社。",
+      "revenue": "自動車、産業・IoT、通信インフラ、モバイル向けに販売。2025年は販売代理店Avnetが売上の23％を占めた。",
+      "strength": "車載の長期認証、セキュリティ、無線・レーダー、組み込みソフトを組み合わせ、単品ではなくシステム全体を提案できる。",
+      "risks": "自動車・産業需要の減速、Avnetへの販売集中、外部工場と自社工場の稼働、貿易規制が売上と供給へ影響する。",
+      "competition": "車載・産業半導体でAnalog Devices、Broadcom、Microchip、Qualcomm、Texas Instrumentsなどと競う。",
+      "relationships": "Apple、Samsung、Boschなどが主要最終顧客。TSMCとの共同工場や持分投資を通じて、将来の300mm製造能力も確保する。"
+    },
+    "en": {
+      "business": "Provides microcontrollers, connectivity, radar, security and power chips primarily for automotive and industrial IoT systems.",
+      "revenue": "Sells into automotive, industrial and IoT, communications infrastructure and mobile; Avnet represented 23% of 2025 revenue.",
+      "strength": "Combines long automotive qualifications, security, wireless, radar and embedded software to offer system-level solutions.",
+      "risks": "Automotive and industrial slowdowns, Avnet concentration, internal and external fab execution and trade restrictions can affect revenue and supply.",
+      "competition": "Competes in automotive and industrial chips with Analog Devices, Broadcom, Microchip, Qualcomm and Texas Instruments, among others.",
+      "relationships": "Apple, Samsung and Bosch are among its largest end customers; TSMC joint manufacturing supports future 300mm capacity."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Analog Devices",
+          "ticker": "ADI",
+          "role": "competitor",
+          "label": {
+            "ja": "車載・産業向け半導体で競合",
+            "en": "Automotive and industrial chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Broadcom",
+          "ticker": "AVGO",
+          "role": "competitor",
+          "label": {
+            "ja": "通信・接続半導体で競合",
+            "en": "Connectivity semiconductors"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microchip Technology",
+          "ticker": "MCHP",
+          "role": "competitor",
+          "label": {
+            "ja": "マイコン・組み込み製品で競合",
+            "en": "Microcontrollers and embedded products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Qualcomm",
+          "ticker": "QCOM",
+          "role": "competitor",
+          "label": {
+            "ja": "車載・接続製品で競合",
+            "en": "Automotive and connectivity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Texas Instruments",
+          "ticker": "TXN",
+          "role": "competitor",
+          "label": {
+            "ja": "アナログ・組み込み半導体で競合",
+            "en": "Analog and embedded chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "ticker": "TSM",
+          "role": "partner",
+          "label": {
+            "ja": "共同工場と製造能力の確保で協力",
+            "en": "Joint fabs and capacity partnership"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "ticker": "AAPL",
+          "role": "customer",
+          "label": {
+            "ja": "主要最終顧客の一社",
+            "en": "One of the largest end customers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Samsung",
+          "role": "customer",
+          "label": {
+            "ja": "主要最終顧客の一社",
+            "en": "One of the largest end customers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Bosch",
+          "role": "customer",
+          "label": {
+            "ja": "主要車載顧客の一社",
+            "en": "Major automotive end customer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Avnet",
+          "role": "customer",
+          "label": {
+            "ja": "2025年売上の23％を占めた販売代理店",
+            "en": "Distributor representing 23% of 2025 revenue"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 827054,
+    "tickers": [
+      "MCHP"
+    ],
+    "name": "Microchip Technology",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Products / Customers and distributors / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/827054/000082705426000016/mchp-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "マイコンを中心に、アナログ、接続、FPGA、メモリーと開発ツールを組み合わせた組み込み制御製品を提供する会社。",
+      "revenue": "自動車、産業、航空宇宙、通信、民生など約10万1千社へ製品を販売。2026年度は売上の約47％が代理店経由。",
+      "strength": "幅広いマイコンと周辺半導体、互換性のあるソフト・開発ツール、長期供給をまとめ、顧客の設計変更を減らせる。",
+      "risks": "半導体在庫の調整と価格下落に弱い。代理店への依存、工場稼働率、買収で増えた製品群と負債の管理も負担になる。",
+      "competition": "マイコン、アナログ、FPGA、接続半導体で大手総合メーカーや各分野の専業会社と競う。",
+      "relationships": "多様な機器メーカーへ組み込み制御製品を供給し、Arrow Electronicsが2026年度売上の12％を占めた。"
+    },
+    "en": {
+      "business": "Provides microcontrollers plus analog, connectivity, FPGA, memory and development tools for embedded control systems.",
+      "revenue": "Sells across automotive, industrial, aerospace, communications and consumer markets to about 101,000 customers; distributors generated about 47% of fiscal 2026 sales.",
+      "strength": "Combines a broad MCU and companion-chip portfolio with compatible software, tools and long-term supply to reduce customer redesigns.",
+      "risks": "Inventory corrections and price erosion affect demand; distributor reliance, fab utilization and managing an acquisition-built portfolio and debt add risk.",
+      "competition": "Competes in microcontrollers, analog, FPGA and connectivity with broad semiconductor companies and focused specialists.",
+      "relationships": "Supplies embedded-control products to diverse equipment makers; Arrow Electronics represented 12% of fiscal 2026 sales."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Microcontroller suppliers",
+          "nameJa": "マイコンメーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "組み込み制御で競合",
+            "en": "Embedded control"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Analog and mixed-signal suppliers",
+          "nameJa": "アナログ・混載半導体メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "周辺アナログ製品で競合",
+            "en": "Companion analog products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "FPGA and connectivity vendors",
+          "nameJa": "FPGA・接続半導体メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "FPGA・通信製品で競合",
+            "en": "FPGA and connectivity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Arrow Electronics",
+          "role": "customer",
+          "label": {
+            "ja": "2026年度売上の12％を占めた販売代理店",
+            "en": "Distributor representing 12% of fiscal 2026 sales"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Automotive and industrial OEMs",
+          "nameJa": "自動車・産業機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "制御・接続・アナログ製品を供給",
+            "en": "Control, connectivity and analog products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Aerospace and communications makers",
+          "nameJa": "航空宇宙・通信機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "高信頼性の組み込み製品を供給",
+            "en": "High-reliability embedded products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1280452,
+    "tickers": [
+      "MPWR"
+    ],
+    "name": "Monolithic Power Systems",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products and end markets / Sales / Competition / Concentration",
+        "url": "https://www.sec.gov/Archives/edgar/data/1280452/000143774926006113/mpwr20251231_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "電力を効率よく変換・制御する高集積の電源管理半導体を設計し、データセンターや車、産業機器へ提供する会社。",
+      "revenue": "ストレージ・コンピューティング、企業データ、車載、産業、通信、民生向けに半導体を販売する。",
+      "strength": "小型・高集積・低消費電力の設計と、顧客の回路設計を支援する技術者を組み合わせ、電源回路全体を提案できる。",
+      "risks": "外部のウエハー製造・組立会社へ依存する。2025年は上位3代理店だけで売上の54％を占め、需要予測や在庫のずれが大きくなりやすい。",
+      "competition": "Analog Devices、Infineon、NXP、onsemi、Texas Instrumentsなどと電源・混載半導体で競う。",
+      "relationships": "データセンター、車載、産業機器メーカーへ電源管理製品を供給し、販売代理店を通じて幅広い顧客へ届ける。"
+    },
+    "en": {
+      "business": "Designs highly integrated power-management chips that efficiently convert and control power in data centers, vehicles and industrial equipment.",
+      "revenue": "Sells semiconductors into storage and computing, enterprise data, automotive, industrial, communications and consumer markets.",
+      "strength": "Combines compact, highly integrated and efficient designs with application engineers who help customers optimize complete power systems.",
+      "risks": "Relies on outside wafer fabs and assembly; its top three distributors represented 54% of 2025 revenue, increasing forecast and inventory exposure.",
+      "competition": "Competes in power and mixed-signal chips with Analog Devices, Infineon, NXP, onsemi and Texas Instruments, among others.",
+      "relationships": "Supplies power-management products to data-center, automotive and industrial equipment makers through a distributor-heavy channel."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Analog Devices",
+          "ticker": "ADI",
+          "role": "competitor",
+          "label": {
+            "ja": "電源・混載半導体で競合",
+            "en": "Power and mixed-signal chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "NXP Semiconductors",
+          "ticker": "NXPI",
+          "role": "competitor",
+          "label": {
+            "ja": "車載・産業向け電源で競合",
+            "en": "Automotive and industrial power"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "onsemi",
+          "ticker": "ON",
+          "role": "competitor",
+          "label": {
+            "ja": "電源変換製品で競合",
+            "en": "Power conversion products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Texas Instruments",
+          "ticker": "TXN",
+          "role": "competitor",
+          "label": {
+            "ja": "電源管理半導体で競合",
+            "en": "Power-management chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Data-center equipment makers",
+          "nameJa": "データセンター機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "サーバー・企業データ向け電源を供給",
+            "en": "Server and enterprise-data power products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Automotive manufacturers",
+          "nameJa": "自動車関連メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "車載電源管理製品を供給",
+            "en": "Automotive power management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Industrial equipment makers",
+          "nameJa": "産業機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "高効率電源半導体を供給",
+            "en": "High-efficiency power chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1097864,
+    "tickers": [
+      "ON"
+    ],
+    "name": "onsemi",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Segments / Customers / End markets / Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1097864/000109786426000006/on-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "電気自動車、再生可能エネルギー、AIデータセンター向けの電力半導体と、車・工場向け画像センサーを作る会社。",
+      "revenue": "2025年売上は電力製品47％、アナログ・混載38％、センサー15％。代理店経由が約54％を占めた。",
+      "strength": "シリコン、SiC、GaNの電力変換と車載画像センサーを持ち、設計から製造・パッケージまで一体で最適化できる。",
+      "risks": "自動車・産業需要の減速、SiC工場の稼働率、代理店在庫に左右される。2025年には工場再編と在庫処分で大きな費用も計上した。",
+      "competition": "電力製品ではInfineonやSTMicroelectronics、アナログではTexas InstrumentsやAnalog Devices、画像ではSonyやSamsungと競う。",
+      "relationships": "自動車、産業、AIデータセンター、再生可能エネルギー関連のメーカーへ電力・センシング製品を供給する。"
+    },
+    "en": {
+      "business": "Makes power semiconductors for EVs, renewable energy and AI data centers and image sensors for vehicles and factories.",
+      "revenue": "In 2025, Power Solutions generated 47%, Analog and Mixed-Signal 38% and Intelligent Sensing 15%; distributors handled about 54% of revenue.",
+      "strength": "Combines silicon, SiC and GaN power conversion with automotive imaging and integrates design, manufacturing and packaging.",
+      "risks": "Automotive and industrial demand, SiC fab utilization and distributor inventory matter; 2025 also included sizable manufacturing realignment and inventory charges.",
+      "competition": "Competes with Infineon and STMicroelectronics in power, Texas Instruments and Analog Devices in analog, and Sony and Samsung in imaging.",
+      "relationships": "Supplies power and sensing products to automotive, industrial, AI data-center and renewable-energy manufacturers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Texas Instruments",
+          "ticker": "TXN",
+          "role": "competitor",
+          "label": {
+            "ja": "アナログ・電源製品で競合",
+            "en": "Analog and power products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Analog Devices",
+          "ticker": "ADI",
+          "role": "competitor",
+          "label": {
+            "ja": "アナログ・混載製品で競合",
+            "en": "Analog and mixed-signal products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Monolithic Power Systems",
+          "ticker": "MPWR",
+          "role": "competitor",
+          "label": {
+            "ja": "電源管理製品で競合",
+            "en": "Power-management products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "NXP Semiconductors",
+          "ticker": "NXPI",
+          "role": "competitor",
+          "label": {
+            "ja": "車載・産業半導体で競合",
+            "en": "Automotive and industrial chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Samsung",
+          "role": "competitor",
+          "label": {
+            "ja": "画像センサーで競合",
+            "en": "Image sensors"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Automotive manufacturers",
+          "nameJa": "自動車関連メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "EV電力・ADAS画像製品を供給",
+            "en": "EV power and ADAS imaging products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Industrial automation makers",
+          "nameJa": "産業自動化メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "電力・センシング製品を供給",
+            "en": "Power and sensing products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "AI data-center builders",
+          "nameJa": "AIデータセンター事業者",
+          "role": "customer",
+          "label": {
+            "ja": "高効率の電力変換製品を供給",
+            "en": "High-efficiency power conversion"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Renewable-energy equipment makers",
+          "nameJa": "再生可能エネルギー機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "SiCなど電力半導体を供給",
+            "en": "SiC and other power semiconductors"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 106040,
+    "tickers": [
+      "WDC"
+    ],
+    "name": "Western Digital",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · HDD products / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/wdc-20260703.htm"
+      }
+    ],
+    "ja": {
+      "business": "クラウド、企業、PC、監視機器向けに、大容量データを磁気で保存するハードディスクドライブを開発・製造する会社。",
+      "revenue": "ハイパースケールクラウド、ネオクラウド、PCメーカー、OEM、代理店へHDDを販売する。",
+      "strength": "記録ヘッドと磁気媒体をほぼ自社で設計・製造し、1台当たりの容量とコストを継続的に改善できる。",
+      "risks": "SanDisk分離後はHDDへの集中が高い。2026年度は上位3顧客が売上の44％を占め、クラウド投資、価格、技術移行の影響が大きい。",
+      "competition": "HDDではSeagateとToshiba、代替技術ではNANDフラッシュやストレージシステム企業と競う。",
+      "relationships": "クラウド事業者と機器メーカーへ大容量HDDを供給し、長期保存や大規模データ基盤を支える。"
+    },
+    "en": {
+      "business": "Develops and manufactures hard disk drives that store large data volumes for cloud, enterprise, PC and surveillance systems.",
+      "revenue": "Sells HDDs to hyperscale cloud providers, neoclouds, computer makers, OEMs, distributors and retailers.",
+      "strength": "Designs and manufactures substantially all recording heads and magnetic media, supporting continued gains in capacity and cost per drive.",
+      "risks": "After the SanDisk separation it is concentrated in HDDs; its top three customers were 44% of fiscal 2026 revenue, increasing cloud-spending, pricing and transition risk.",
+      "competition": "Competes with Seagate and Toshiba in HDDs and with NAND flash and storage-system providers as alternative technologies.",
+      "relationships": "Supplies high-capacity HDDs to cloud operators and equipment makers for mass data infrastructure and long-term storage."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Seagate Technology",
+          "ticker": "STX",
+          "role": "competitor",
+          "label": {
+            "ja": "大容量HDDで競合",
+            "en": "High-capacity HDDs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Toshiba Electronic Devices & Storage",
+          "role": "competitor",
+          "label": {
+            "ja": "HDDで競合",
+            "en": "Hard disk drives"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "NAND flash suppliers",
+          "nameJa": "NANDフラッシュメーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "代替ストレージ技術で競合",
+            "en": "Alternative storage technology"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Hyperscale cloud providers",
+          "nameJa": "ハイパースケールクラウド",
+          "role": "customer",
+          "label": {
+            "ja": "大容量HDDを供給",
+            "en": "High-capacity HDD supply"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Neocloud operators",
+          "nameJa": "ネオクラウド事業者",
+          "role": "customer",
+          "label": {
+            "ja": "AI時代のデータ保存を支える",
+            "en": "Storage for AI-era data"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Computer makers and OEMs",
+          "nameJa": "PCメーカー・OEM",
+          "role": "customer",
+          "label": {
+            "ja": "クライアント向けHDDを供給",
+            "en": "Client HDD supply"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1137789,
+    "tickers": [
+      "STX"
+    ],
+    "name": "Seagate Technology",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Products and markets / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778926000159/stx-20260703.htm"
+      }
+    ],
+    "ja": {
+      "business": "クラウドデータセンターと周辺機器向けにHDD、ストレージシステム、関連ソリューションを設計・製造する会社。",
+      "revenue": "売上の大部分をデータセンター向けが占め、クラウド事業者、企業OEM、代理店へ大容量HDDを販売する。",
+      "strength": "記録ヘッドや磁気媒体を自社で作る垂直統合と、高密度記録技術により、容量・消費電力・総保有コストを改善できる。",
+      "risks": "大口クラウド企業の投資時期に売上が左右される。HDD価格、量産歩留まり、次世代記録技術への移行、NANDへの置き換えもリスク。",
+      "competition": "HDDではWestern DigitalとToshiba、代替技術ではNANDフラッシュやストレージシステム企業と競う。",
+      "relationships": "クラウドサービス会社、OEM、企業顧客へ大容量HDDを供給し、AI・クラウドで増えるデータ保存を支える。"
+    },
+    "en": {
+      "business": "Designs and manufactures HDDs, storage systems and related solutions for cloud data centers and edge devices.",
+      "revenue": "The vast majority comes from data-center markets, selling high-capacity drives to cloud providers, enterprise OEMs and distributors.",
+      "strength": "Vertical integration in heads and media plus areal-density technology improves capacity, energy use and total cost of ownership.",
+      "risks": "Large cloud customers' investment timing matters; HDD pricing, manufacturing yields, recording-technology transitions and NAND substitution add risk.",
+      "competition": "Competes with Western Digital and Toshiba in HDDs and with NAND flash and storage-system providers as alternatives.",
+      "relationships": "Supplies high-capacity HDDs to cloud service providers, OEMs and enterprises that store growing AI and cloud data."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Western Digital",
+          "ticker": "WDC",
+          "role": "competitor",
+          "label": {
+            "ja": "大容量HDDで競合",
+            "en": "High-capacity HDDs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Toshiba Electronic Devices & Storage",
+          "role": "competitor",
+          "label": {
+            "ja": "HDDで競合",
+            "en": "Hard disk drives"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "NAND flash suppliers",
+          "nameJa": "NANDフラッシュメーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "代替ストレージ技術で競合",
+            "en": "Alternative storage technology"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Cloud service providers",
+          "nameJa": "クラウドサービス会社",
+          "role": "customer",
+          "label": {
+            "ja": "大容量データセンターHDDを供給",
+            "en": "Mass-capacity data-center HDDs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprise OEMs",
+          "nameJa": "企業向けOEM",
+          "role": "customer",
+          "label": {
+            "ja": "ストレージ製品を供給",
+            "en": "Enterprise storage products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Edge and consumer channels",
+          "nameJa": "周辺機器・消費者向け流通",
+          "role": "customer",
+          "label": {
+            "ja": "外付け・周辺機器向けを供給",
+            "en": "Edge and consumer storage"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 47217,
+    "tickers": [
+      "HPQ"
+    ],
+    "name": "HP",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Personal Systems / Printing / Competition / Suppliers",
+        "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業・個人向けのPC、ワークステーション、周辺機器と、家庭・オフィス・産業向けプリンターを提供する会社。",
+      "revenue": "PC本体・サービスに加え、プリンター本体と継続購入されるインク・トナー・保守から稼ぐ。",
+      "strength": "世界的な販売網とブランド、法人PCの保守・セキュリティ、プリンター本体から消耗品へつなぐ継続収益を持つ。",
+      "risks": "PC更新需要と価格競争、印刷量の減少、互換インクの拡大に左右される。Windowsや主要CPU・GPUメーカーへの依存もある。",
+      "competition": "PCではDell、Apple、Lenovo、Microsoftなど、印刷ではCanon、Epson、Brother、Xeroxなどと競う。",
+      "relationships": "PCにMicrosoft WindowsやGoogle ChromeOS、Intel・AMDのCPU、NVIDIAのGPUを採用し、法人・個人へ完成品として販売する。"
+    },
+    "en": {
+      "business": "Provides PCs, workstations and peripherals for businesses and consumers and printers for home, office and industrial use.",
+      "revenue": "Earns from PCs and services plus printer hardware and recurring ink, toner, supplies and support.",
+      "strength": "Combines global distribution and brand, commercial-PC support and security, and recurring supplies revenue attached to installed printers.",
+      "risks": "PC refresh cycles, price competition, falling print volumes and third-party supplies affect results; it also depends on major OS and processor vendors.",
+      "competition": "Competes with Dell, Apple, Lenovo and Microsoft in PCs and with Canon, Epson, Brother and Xerox in printing.",
+      "relationships": "Uses Microsoft Windows or Google ChromeOS and processors from Intel, AMD and NVIDIA in systems sold to business and consumer customers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Dell",
+          "ticker": "DELL",
+          "role": "competitor",
+          "label": {
+            "ja": "法人・個人向けPCで競合",
+            "en": "Commercial and consumer PCs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "ticker": "AAPL",
+          "role": "competitor",
+          "label": {
+            "ja": "PC・ワークステーションで競合",
+            "en": "PCs and workstations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "端末・サービスで競合",
+            "en": "Devices and services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Printer manufacturers",
+          "nameJa": "プリンターメーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "本体・消耗品で競合",
+            "en": "Printer hardware and supplies"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "supplier",
+          "label": {
+            "ja": "PC向けWindowsを採用",
+            "en": "Windows platform for PCs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "ticker": "GOOG",
+          "role": "supplier",
+          "label": {
+            "ja": "ChromebookにChromeOSを採用",
+            "en": "ChromeOS for Chromebooks"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Intel",
+          "ticker": "INTC",
+          "role": "supplier",
+          "label": {
+            "ja": "PC向けプロセッサを採用",
+            "en": "Processors for PCs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "AMD",
+          "ticker": "AMD",
+          "role": "supplier",
+          "label": {
+            "ja": "PC向けプロセッサを採用",
+            "en": "Processors for PCs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "ticker": "NVDA",
+          "role": "supplier",
+          "label": {
+            "ja": "高度な画像・演算向けGPUを採用",
+            "en": "GPUs for advanced graphics and compute"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 898293,
+    "tickers": [
+      "JBL"
+    ],
+    "name": "Jabil",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Segments / Design and manufacturing / Customers / Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm"
+      }
+    ],
+    "ja": {
+      "business": "他社製品の設計支援、部品調達、量産、組立、物流を請け負い、製品化までの供給網を一括で支える会社。",
+      "revenue": "規制産業、AI・クラウドを含むインテリジェント基盤、生活・デジタル商取引の3分野で製造サービス料を得る。",
+      "strength": "世界各地の工場、専用生産ライン、自動化、設計から調達・量産までの一貫運営により、顧客が短期間で生産量を増減できる。",
+      "risks": "2025年度は上位5顧客が売上の約36％。部品不足、特定顧客の発注減、顧客による製造内製化、専用設備の遊休が利益を圧迫する。",
+      "competition": "電子機器の受託製造会社、総合製造サービス会社、設計会社に加え、顧客自身の工場とも競う。",
+      "relationships": "クラウド・データセンター、通信、半導体装置、車、医療、エネルギーなどの企業から設計・調達・製造を受託する。"
+    },
+    "en": {
+      "business": "Provides product design, component sourcing, manufacturing, assembly and logistics across customers' full product lifecycles.",
+      "revenue": "Earns manufacturing-service revenue across Regulated Industries, Intelligent Infrastructure including AI and cloud, and Connected Living and Digital Commerce.",
+      "strength": "Global factories, dedicated lines, automation and integrated design-to-production operations let customers scale output quickly.",
+      "risks": "Its top five customers were about 36% of fiscal 2025 revenue; component shortages, order reductions, customer insourcing and idle dedicated capacity can hurt margins.",
+      "competition": "Competes with electronics manufacturing providers, diversified manufacturers, design firms and customers' own factories.",
+      "relationships": "Performs design, sourcing and manufacturing for cloud, data-center, communications, semiconductor-equipment, automotive, healthcare and energy companies."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Electronics manufacturing services",
+          "nameJa": "電子機器の受託製造会社",
+          "role": "competitor",
+          "label": {
+            "ja": "設計・量産受託で競合",
+            "en": "Design and contract manufacturing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Diversified manufacturers",
+          "nameJa": "総合製造サービス会社",
+          "role": "competitor",
+          "label": {
+            "ja": "世界規模の製造網で競合",
+            "en": "Global manufacturing networks"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Customers' internal factories",
+          "nameJa": "顧客の自社工場",
+          "role": "competitor",
+          "label": {
+            "ja": "製造の内製化と競合",
+            "en": "Customer insourcing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "AI and cloud infrastructure companies",
+          "nameJa": "AI・クラウド基盤企業",
+          "role": "customer",
+          "label": {
+            "ja": "サーバー・基盤製品の設計と製造を受託",
+            "en": "Design and manufacturing for infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Semiconductor equipment makers",
+          "nameJa": "半導体装置メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "装置・部品の製造を受託",
+            "en": "Equipment and component manufacturing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Automotive and healthcare companies",
+          "nameJa": "自動車・医療関連企業",
+          "role": "customer",
+          "label": {
+            "ja": "規制産業向け製品を製造",
+            "en": "Products for regulated industries"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Component suppliers",
+          "nameJa": "電子部品メーカー",
+          "role": "supplier",
+          "label": {
+            "ja": "生産に必要な部品を調達",
+            "en": "Components for customer production"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 813672,
+    "tickers": [
+      "CDNS"
+    ],
+    "name": "Cadence Design Systems",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Design software and IP / Licensing / Customers / Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体や電子機器を設計・検証するEDAソフト、試作ハード、設計IP、物理シミュレーションを提供する会社。",
+      "revenue": "主に2〜3年の期間ライセンス、保守、設計IP、検証用ハード、技術サービスから継続的に収益を得る。",
+      "strength": "チップ単体から基板・パッケージ・システムまで同じ設計環境で扱い、AIで設計探索と検証を自動化できる。",
+      "risks": "半導体企業の研究開発費、輸出規制、少数大口案件の更新時期に左右される。顧客が自社ツールを開発する場合もある。",
+      "competition": "EDAではSynopsysやSiemens EDA、解析ではSynopsys傘下AnsysやKeysight、設計IPや顧客の内製ツールとも競う。",
+      "relationships": "半導体・電子機器会社へ設計ソフト、検証装置、IPを提供し、顧客の新しいチップやシステム開発を支える。"
+    },
+    "en": {
+      "business": "Provides EDA software, prototyping hardware, design IP and physics simulation for semiconductor and electronic-system design and verification.",
+      "revenue": "Primarily earns recurring revenue from two-to-three-year licenses, maintenance, design IP, verification hardware and technical services.",
+      "strength": "Covers chips, packages, boards and systems in connected workflows and uses AI to automate design exploration and verification.",
+      "risks": "Semiconductor R&D budgets, export controls and large renewal timing affect results; customers can also develop competing internal tools.",
+      "competition": "Competes with Synopsys and Siemens EDA, Synopsys-owned Ansys and Keysight in analysis, plus IP vendors and in-house tools.",
+      "relationships": "Supplies design software, verification hardware and IP to semiconductor and electronics companies developing new chips and systems."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Synopsys",
+          "ticker": "SNPS",
+          "role": "competitor",
+          "label": {
+            "ja": "EDA・解析・設計IPで競合",
+            "en": "EDA, simulation and design IP"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Siemens EDA",
+          "role": "competitor",
+          "label": {
+            "ja": "EDAソフトで競合",
+            "en": "EDA software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Keysight Technologies",
+          "role": "competitor",
+          "label": {
+            "ja": "電子設計・解析で競合",
+            "en": "Electronic design and analysis"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Customers' internal design tools",
+          "nameJa": "顧客の自社設計ツール",
+          "role": "competitor",
+          "label": {
+            "ja": "設計ツールの内製化と競合",
+            "en": "Customer-built design tools"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor designers",
+          "nameJa": "半導体設計会社",
+          "role": "customer",
+          "label": {
+            "ja": "EDA・検証装置・IPを提供",
+            "en": "EDA, verification hardware and IP"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Electronic system companies",
+          "nameJa": "電子システム企業",
+          "role": "customer",
+          "label": {
+            "ja": "基板・パッケージ・システム設計を支援",
+            "en": "Board, package and system design"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cloud computing platforms",
+          "nameJa": "クラウド計算基盤",
+          "role": "supplier",
+          "label": {
+            "ja": "クラウド版設計環境の計算基盤",
+            "en": "Compute for cloud design workflows"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 883241,
+    "tickers": [
+      "SNPS"
+    ],
+    "name": "Synopsys",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · EDA and Ansys simulation / Design IP / Licensing / Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/snps-20251031.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体設計用EDA、再利用できる回路IP、Ansysの物理シミュレーション、設計支援サービスを提供する会社。",
+      "revenue": "期間ライセンスと保守、設計IPの利用料・一部ロイヤルティ、検証ハード、Ansysのサブスク・永久ライセンスから稼ぐ。",
+      "strength": "チップ設計から熱・流体・構造解析までをつなぎ、AI設計、自社IP、試作・検証装置を一体で提供できる。",
+      "risks": "Ansys統合の負担、中国向け輸出規制、大口顧客の設計開始や更新時期、主要ファウンドリー需要の弱さが業績に影響する。",
+      "competition": "EDA・物理解析・設計IPで他社製品や顧客の自社ツールと競い、技術力、相互運用性、価格、支援体制が選定を左右する。",
+      "relationships": "半導体・電子機器会社へ設計ツールとIPを提供し、航空宇宙、自動車、エネルギーなどへAnsysの解析環境も販売する。"
+    },
+    "en": {
+      "business": "Provides semiconductor EDA, reusable design IP, Ansys physics simulation and engineering design services.",
+      "revenue": "Earns from time-based licenses and support, design-IP fees and some royalties, verification hardware, and Ansys subscriptions and perpetual licenses.",
+      "strength": "Connects chip design with thermal, fluid and structural simulation and combines AI design, proprietary IP and prototyping and verification hardware.",
+      "risks": "Ansys integration, China export controls, large customer design and renewal timing and weaker demand from a major foundry can affect results.",
+      "competition": "Competes in EDA, physics simulation and design IP with other vendors and customers' internal tools on technology, interoperability, price and support.",
+      "relationships": "Supplies design tools and IP to semiconductor and electronics companies and Ansys simulation to aerospace, automotive, energy and other industries."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "EDA software vendors",
+          "nameJa": "EDAソフト会社",
+          "role": "competitor",
+          "label": {
+            "ja": "半導体設計・検証で競合",
+            "en": "Chip design and verification"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Engineering simulation vendors",
+          "nameJa": "技術シミュレーション会社",
+          "role": "competitor",
+          "label": {
+            "ja": "物理解析ソフトで競合",
+            "en": "Physics simulation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Semiconductor IP providers",
+          "nameJa": "半導体IP会社",
+          "role": "competitor",
+          "label": {
+            "ja": "回路IPで競合",
+            "en": "Reusable circuit IP"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Customers' internal design tools",
+          "nameJa": "顧客の自社設計ツール",
+          "role": "competitor",
+          "label": {
+            "ja": "設計ツールの内製化と競合",
+            "en": "Customer-built design tools"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "partner",
+          "label": {
+            "ja": "Azure上のEDAサービスを共同提供",
+            "en": "EDA software as a service on Azure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Semiconductor and electronics companies",
+          "nameJa": "半導体・電子機器会社",
+          "role": "customer",
+          "label": {
+            "ja": "EDA・検証装置・設計IPを提供",
+            "en": "EDA, verification hardware and design IP"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Automotive and aerospace engineers",
+          "nameJa": "自動車・航空宇宙の技術者",
+          "role": "customer",
+          "label": {
+            "ja": "Ansysの物理解析を提供",
+            "en": "Ansys physics simulation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Foundries and process developers",
+          "nameJa": "ファウンドリー・製造工程開発企業",
+          "role": "customer",
+          "label": {
+            "ja": "工程・マスク・歩留まり解析を提供",
+            "en": "Process, mask and yield analysis"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
   }
 ]

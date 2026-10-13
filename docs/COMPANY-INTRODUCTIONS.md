@@ -4,11 +4,12 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is forty-seven issuers / forty-eight tickers: NVDA, MU, GOOG,
+Researched coverage is fifty-nine issuers / sixty tickers: NVDA, MU, GOOG,
 GOOGL, AAPL, AMZN, META, COST, MSFT, NBIS, TSM, ASML, AVGO, AMD, ARM, CRDO,
 ANET, MRVL, VRT, ALAB, LITE, COHR, AMAT, APH, INTC, SIMO, AAOI, BE, VST, GEV,
 IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL, ETN, PANW, CRWD, PLTR,
-SNOW, QCOM, CRM, NOW and IBM.
+SNOW, QCOM, CRM, NOW, IBM, TXN, ADI, NXPI, MCHP, MPWR, ON, WDC, STX, HPQ,
+JBL, CDNS and SNPS.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -158,3 +159,14 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - Palo Alto Networksのクラウド市場、CrowdStrikeのAWS / Google / Microsoft市場、ServiceNowとIBMの戦略提携を、競争関係と混同しない独立した線で収録した。
 - QualcommのApple / Samsung / XiaomiはFY2025に各10%以上を占める開示済み顧客として扱う。匿名顧客を実名へ置き換えていない。
 - QCOMを半導体設計、PLTR / SNOW / CRM / NOW / IBMをクラウド・AIサービスの配置へ追加。既存の共通UI、ニュース、目標株価、翻訳、RESOLUTEは変更していない。
+
+### 2026-10-14 半導体・設計ソフト・ストレージ・製造12社追加
+
+- TXN / ADI / NXPI / MCHP / MPWR / ON / WDC / STX / HPQ / JBL / CDNS / SNPSを追加。合計59社・60銘柄コード。
+- 各社の最新Form 10-Kを確認し、日英6項目と競合・取引関係を追加。一次資料は各データレコードの`source`に収録し、内容確認日は2026-10-14。
+- TXN / ADI / NXPI / MCHP / MPWR / ONはアナログ、組み込み、電源、車載の違いが分かるように整理。顧客名が開示されない会社では業種単位の関係を使い、実名を推測していない。
+- NXPIの主要最終顧客とAvnet、ADIのTSMC製造委託、MCHPのArrow依存、HPQが採用するOS・CPU・GPUは各社の年次資料で確認。競合関係と供給・採用関係を別の線として扱う。
+- WDC / STXはHDD事業とクラウド顧客への供給を追加し、NANDを代替技術として区別。CDNS / SNPSはEDA、設計IP、物理解析、顧客内製ツールを分けた。
+- JBLは実名非開示の大口顧客を推測せず、AI・クラウド基盤、半導体装置、自動車・医療などの開示済み市場で表示する。
+- 公式資料: [TXN](https://www.sec.gov/Archives/edgar/data/97476/000009747626000059/txn-20251231.htm), [ADI](https://www.sec.gov/Archives/edgar/data/6281/000000628125000153/adi-20251101.htm), [NXPI](https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm), [MCHP](https://www.sec.gov/Archives/edgar/data/827054/000082705426000016/mchp-20260331.htm), [MPWR](https://www.sec.gov/Archives/edgar/data/1280452/000143774926006113/mpwr20251231_10k.htm), [ON](https://www.sec.gov/Archives/edgar/data/1097864/000109786426000006/on-20251231.htm), [WDC](https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/wdc-20260703.htm), [STX](https://www.sec.gov/Archives/edgar/data/1137789/000113778926000159/stx-20260703.htm), [HPQ](https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm), [JBL](https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm), [CDNS](https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm), [SNPS](https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/snps-20251031.htm).
+- 全検索企業の収録は未完了。次回は既存マップとつながる通信・光学・クラウド関連の未収録企業を優先する。
