@@ -77,13 +77,21 @@ function addsInformation(title: string, text: string): boolean {
 export default function NewsStory({ label, title, body, fullBody, publication, lang, concise = false }: {
   label: string; title: string; body?: string; fullBody?: string; publication: string; lang: Language; concise?: boolean;
 }) {
+  // A headline with nothing more to add stays a plain line, unless it is long:
+  // then it shows two lines and the ＋ opens the whole text (owner, Oct 13).
+  const headlineOnly = () => title.length <= (/[぀-ヿ㐀-鿿]/.test(title) ? 60 : 120)
+    ? <div className={styles.shortStory}><span className={styles.tickers}>{label}</span><span className={styles.headline} lang={lang}>{title}</span><span className={styles.note}>{publication}</span></div>
+    : <details className={`${styles.story} ${styles.replaces}`}>
+      <summary><span className={styles.tickers}>{label}</span><span className={`${styles.headline} ${styles.clamped} ${styles.closedOnly}`} lang={lang}>{title}</span><span className={`${styles.note} ${styles.closedOnly}`}>{publication}</span><span className={styles.expand} aria-hidden="true">＋</span><span className={styles.srOnly}>{lang === "ja" ? "詳細を開閉" : "Toggle details"}</span></summary>
+      <div className={styles.body} lang={lang}>{title}<span className={styles.note}>{publication}</span></div>
+    </details>;
   const detail = additionalNewsDetail([label, title, publication], body);
-  if (!detail) return <div className={styles.shortStory}><span className={styles.tickers}>{label}</span><span className={styles.headline} lang={lang}>{title}</span><span className={styles.note}>{publication}</span></div>;
+  if (!detail) return headlineOnly();
   // Opened, every story reads as one text: a body that already restates the
   // headline replaces it rather than repeating it (owner, Oct 8).
   const replaces = concise || (!!body && bodyRestatesTitle(title, body));
   const opened = withoutFiller(concise ? openedNewsText(fullBody?.trim() ? fullBody : `${title}\n\n${detail}`) : replaces ? openedNewsText(body!, Infinity) : detail);
-  if (!addsInformation(title, opened)) return <div className={styles.shortStory}><span className={styles.tickers}>{label}</span><span className={styles.headline} lang={lang}>{title}</span><span className={styles.note}>{publication}</span></div>;
+  if (!addsInformation(title, opened)) return headlineOnly();
   return <details className={replaces ? `${styles.story} ${styles.replaces}` : styles.story}>
     <summary><span className={styles.tickers}>{label}</span><span className={replaces ? `${styles.headline} ${styles.closedOnly}` : styles.headline} lang={lang}>{title}</span><span className={`${styles.note} ${styles.closedOnly}`}>{publication}</span><span className={styles.expand} aria-hidden="true">＋</span><span className={styles.srOnly}>{lang === "ja" ? "詳細を開閉" : "Toggle details"}</span></summary>
     <div className={styles.body} lang={lang}>{opened}<span className={styles.note}>{publication}</span></div>
