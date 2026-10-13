@@ -48,9 +48,9 @@ function lineJa(e: AlertEvent): string {
 function lineEn(e: AlertEvent): string {
   if (e.kind === 'line_reached') {
     const lines = (e.newLines ?? []).map((l) => `-${l}%`).join(', ');
-    return `- ${e.symbol}: closed at ${usd(e.close)}, down ${pct(e.dropPct)}% from your reference. New line hit: ${lines}`;
+    return `- ${e.symbol}: closed at ${usd(e.close)}, down ${pct(e.dropPct)}% from your reference price. Newly reached levels: ${lines}`;
   }
-  return `- ${e.symbol}: closed at ${usd(e.close)}, up ${pct(e.risePct)}% from your reference. That's the upside marker you set.`;
+  return `- ${e.symbol}: closed at ${usd(e.close)}, up ${pct(e.risePct)}% from your reference price. That reaches the upside threshold you set.`;
 }
 
 export function renderAlertMail(i: AlertMailInput): RenderedMail {
@@ -90,13 +90,13 @@ export function renderAlertMail(i: AlertMailInput): RenderedMail {
 
   const subject =
     hasLine && hasSurge
-      ? '[RESOLUTE] A line and an upside marker in your plan were hit'
+      ? '[RESOLUTE] Your downside and upside thresholds were reached'
       : hasLine
-        ? '[RESOLUTE] A line in your plan was hit'
-        : '[RESOLUTE] An upside marker in your plan was hit';
+        ? '[RESOLUTE] A price level in your plan was reached'
+        : '[RESOLUTE] An upside threshold in your plan was reached';
   const notes: string[] = [];
-  if (hasLine) notes.push('In your plan, a line like this is your cue to pause and reread the rules you wrote for yourself.');
-  if (hasSurge) notes.push('In your plan, an upside marker is your cue to check whether one holding has grown too big.');
+  if (hasLine) notes.push('In your plan, a downside level like this is your cue to pause and reread the rules you wrote for yourself.');
+  if (hasSurge) notes.push('In your plan, an upside threshold is your cue to check whether one holding has grown too big.');
   return {
     subject,
     text: [
@@ -151,11 +151,11 @@ export function renderNextMorningMail(i: NextMorningInput): RenderedMail {
     subject: "[RESOLUTE] How are you feeling after yesterday's alert?",
     text: [
       "Quick check-in on yesterday's alert.",
-      "Pick whichever feels closest right now. It's one tap, and you won't hear from us again about this one.",
+      "Choose the response that best describes how you feel right now.",
       '',
       `- I followed my plan: ${i.doneUrl}`,
-      `- I skipped it: ${i.skippedUrl}`,
-      `- I'm still not sure: ${i.unsureUrl}`,
+      `- I held off: ${i.skippedUrl}`,
+      `- I'm still unsure: ${i.unsureUrl}`,
       '',
       'Your answer opens a short tip to help you review your rules.',
       `Open your plan: ${i.planUrl}`,

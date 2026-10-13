@@ -355,7 +355,7 @@ export function pickAdvice(i: DiagnosisInput, m: Amounts): { id: string; text: s
 }
 
 export const DISCLAIMER =
-  "この結果はあなたの回答をもとにしたもので、特定の銘柄の売買をすすめるものではありません。";
+  "特定の銘柄の売買を勧めるものではありません。";
 
 // ---- 結果の画面(表) ----
 

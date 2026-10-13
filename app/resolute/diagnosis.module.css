@@ -305,3 +305,7 @@
 @media(prefers-reduced-motion:reduce){.turningLeaf{animation:none}}
 @media(max-width:360px){.paperPage{padding:19px 19px 58px 25px}.paperRunning{margin-bottom:21px}.paperFolio{left:25px;right:19px}.coverFrame{padding-left:10px;padding-right:10px}.chapterMetrics{gap:15px 9px}.chapterMetrics dd{font-size:17px}.purchaseLadder li{gap:9px}.purchaseLadder b{font-size:14px}.boundCover{padding:16px 14px 16px 22px}.coverFrame h2{font-size:24px}}
 .readerControls{position:sticky;bottom:10px;z-index:5;background:#0a1018ed;border:1px solid #a8894c22;border-radius:7px;padding:5px;backdrop-filter:blur(8px)}
+
+/* Keep saving in gold; continuing is a separate, cool-toned action. */
+.primary.continueButton{background:linear-gradient(135deg,#243e58,#182b40);color:#e4edf7!important;border:1px solid #708ca8;box-shadow:0 4px 14px #0004}
+@media(hover:hover) and (pointer:fine){.primary.continueButton:hover{background:linear-gradient(135deg,#2c4b68,#203850);box-shadow:0 5px 20px #8db8ee20}}

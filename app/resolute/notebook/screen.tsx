@@ -64,7 +64,7 @@ function Notebook({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   <details className={styles.bookSettings}><summary>{en?"My notifications":"いつものお知らせ"}</summary><div className={styles.bookNotifications}>
    {settings?<><div className={styles.bookSectionHead}><p>{settings.alertsEnabled?(en?"Closing-price alerts on":"終値アラート オン"):(en?"Closing-price alerts off":"終値アラート オフ")} · {settings.deliveryHourJst}:00 {en?"JST":"日本時間"}</p><Link href="/resolute/alerts" className={styles.bookEdit}>{en?"Change":"変更"}</Link></div><div className={styles.bookSectionHead}><p>{settings.morningEnabled?(en?"Morning note on":"翌朝のひとこと オン"):(en?"Morning note off":"翌朝のひとこと オフ")}</p><Link href="/resolute/morning" className={styles.bookEdit}>{en?"Change":"変更"}</Link></div></>:<p>{en?"Notification settings could not be loaded.":"通知設定を確認できませんでした"}</p>}
   </div></details>
-  <section className={styles.bookActions}><button className={styles.primary} disabled={!!edits||busy} onClick={download}>{en?"Keep this book":"この一冊を保存する"}</button><p>{en?"Keep an offline copy somewhere only you can access.":"通信なしで読み返せます。自分だけが開ける場所に保管してください。"}</p><Link href="/resolute/simulation" className={styles.secondary}>{en?"Test my rules in the simulator":"② シミュレーションで確かめる"}</Link></section>
+  <section className={styles.bookActions}><button className={styles.primary} disabled={!!edits||busy} onClick={download}>{en?"Keep this book":"この一冊を保存する"}</button><p>{en?"Read it anytime, even offline.":"通信なしで読み返せます。"}<br/>{en?"Keep it somewhere only you can access.":"自分だけが開ける場所に保管してください。"}</p></section>
   <p className={styles.disclaimer}>{result.disclaimer}</p>
  </div>;
 }

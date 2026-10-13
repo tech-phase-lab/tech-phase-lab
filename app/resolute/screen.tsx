@@ -22,22 +22,22 @@ const messages = {
  invalid:"入力を確認してください。数字の範囲・精度、買い増しライン、文字数のいずれかが保存条件に合っていません。",
  answer:"回答を選び、入力欄がある場合は範囲内の数字を入れてください。", text:"自由記述は1行100文字まで、10行以内にしてください。",
  reload:"保存済みの内容を読み込む（現在の入力を置き換えます）", existing:"保存済みのルールがあります。回答を見直すか、シミュレーションへ進めます。",
- private:"個人が特定できる情報は書かないでください", free:"自由記述（任意・1行に1件）", currency:"金額はすべて日本円です。範囲を選ぶと代表値で計算します。保存するまでは、この画面内だけで回答を保持します。",
+ private:"個人が特定できる情報は書かないでください", free:"自由記述（任意・1行に1件）",
  later:"まだ決めていない買い増しラインは空のまま保存します。", rate:"アクセスが集中しています。1分ほどおいてから保存内容を確認してください。",
- unsupported:"保存済みの計画はUSDです。この診断は日本円用のため、上書きできません。", check:"確認できた保存済みの計画だけをシミュレーションに使います。" },
+ check:"確認できた保存済みの計画だけをシミュレーションに使います。" },
  en: { title:"Build your own investing rules in 30 questions.", intro:"A kit to help you return to your own rules, through sell-offs and rallies.",
  closingFirst:"With rules of your own,", closingLast:"crashes and rallies lose their grip.",
  start:"Start", redo:"Review my answers", next:"Next", back:"Back", result:"See my results", rules:"Your investing rules", advice:"Put your rules to work",
- save:"Save these rules", saving:"Saving…", saved:"Your rules are saved.", simulation:"② Continue to simulation", edit:"Back to my answers",
+ save:"Save these rules", saving:"Saving…", saved:"Your rules are saved.", simulation:"② Open the simulator", edit:"Back to my answers",
  loading:"Checking your saved plan…", unavailable:"Saving is unavailable right now. You can finish the questions, but your rules can’t be saved yet.",
  uncertain:"We couldn’t confirm the save. Load your saved plan to check before trying again.",
  conflict:"Your plan changed in another window. Your answers haven’t overwritten it. Load the latest saved plan and review your answers.",
  invalid:"Check your numbers, purchase levels and text lengths. One or more entries do not meet the save requirements.",
  answer:"Choose an answer. If a number field appears, enter a value within its range.", text:"Use up to 10 lines, with no more than 100 characters on each line.",
- reload:"Load saved plan (replaces your current answers)", existing:"You have saved rules. Review your answers or continue to simulation.",
- private:"Do not include information that could identify you or anyone else.", free:"Your own conditions (optional, one per line)", currency:"All amounts are in Japanese yen. Ranges use a representative value. Until you save, answers stay only on this screen.",
+ reload:"Load saved plan (replaces your current answers)", existing:"You have saved rules. Review your answers or open the simulator.",
+ private:"Do not include information that could identify you or anyone else.", free:"Your own conditions (optional, one per line)",
  later:"Purchase levels you haven’t decided on will be saved as unset.", rate:"Too many requests. Wait about a minute, then check your saved plan.",
- unsupported:"Your saved plan uses USD. This questionnaire uses yen, so it cannot overwrite that plan.", check:"The simulation uses only your confirmed saved plan." },
+ check:"The simulation uses only your confirmed saved plan." },
 };
 const sections: Record<string,[string,string]> = { A:["生活とお金","Life and money"],B:["下落への耐え方","Handling a drop"],C:["上昇のとき","During a rally"],D:["投資のスタイル","Your approach"],E:["銘柄と集中","Holdings and concentration"],F:["買い増しのルール","Extra purchases"],G:["止まるルール","When to pause"],H:["為替","Exchange rates"] };
 export default function DiagnosisScreen({identityReady=true}:{identityReady?:boolean}) {
@@ -144,7 +144,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   <section className={styles.card}><p className={styles.muted}>{result.disclaimer}</p>
    {!result.buyLines.length&&draft.answers.q24!=="none"?<p className={styles.muted}>{c.later}</p>:null}
    {bodyMessage}<button type="button" className={styles.primary} disabled={busy||loading||locked||!snapshot||saved} onClick={()=>void save()}>{busy?c.saving:c.save}</button>
-   {saved?<Link className={styles.primary} href="/resolute/simulation" prefetch={false}>{c.simulation}</Link>:null}
+   {saved?<Link className={`${styles.primary} ${styles.continueButton}`} href="/resolute/simulation" prefetch={false}>{c.simulation}</Link>:null}
    <button type="button" className={styles.secondary} disabled={busy||loading} onClick={()=>{setMode("questions");setSaved(false);setMessage(null);}}>{c.edit}</button>
    {!snapshot||locked?reloadButton:null}<p className={styles.muted}>{c.check}</p>
   </section>
