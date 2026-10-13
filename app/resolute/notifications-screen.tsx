@@ -95,7 +95,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
     <div className={styles.deliveryRow}><span>{draft.deliveryHourJst}:00 <small>{t("日本時間","JST")}</small></span><button type="button" className={styles.timeEdit} aria-expanded={timeOpen} aria-controls="morning-delivery-time" onClick={()=>setTimeOpen(v=>!v)}>{t("届く時間を変更する","Change delivery time")}</button></div>
     {timeOpen?<div id="morning-delivery-time">{timeButtons}</div>:null}
    </section>:<>
-    <section className={styles.card}><h2>{t("見る銘柄（例：NVDA）","Stocks to watch (e.g. NVDA)")}</h2><p className={styles.muted}>{t("会社名でも検索できます", "You can search by company name too")}</p>
+    <section className={styles.card}><h2>{t("見る銘柄（例：NVDA）","Stocks to watch (e.g. NVDA)")}</h2><p className={styles.muted}>{t("カタカナでも会社名を検索できます", "You can search by company name too")}</p>
      {displayItems.map((item,i)=><div className={styles.stockRow} key={i}>
       <StockInput value={item.symbol} index={i} en={en} onChange={symbol=>changeItem(i,{symbol})}/>
       <label className={styles.referencePrice}><span>{t("基準","Reference")}</span><span className={styles.dollarInput}><i>$</i><NumberInput aria-label={t("基準価格","Reference price")+` ${i+1}`} decimal value={item.referencePrice||""} onValueChange={value=>changeItem(i,{referencePrice:value===""?0:Number(value)})}/></span></label>

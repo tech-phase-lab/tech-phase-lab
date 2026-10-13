@@ -12,7 +12,7 @@ import { localizeDiagnosis, type DiagnosisLocale } from "@/lib/resolute/diagnosi
 import { PlanClientError } from "@/lib/resolute/plan-client";
 import type { PlanSnapshot } from "@/lib/resolute/plan-data";
 const messages = {
- ja: { title:"あなただけの投資ルールを30問の質問でつくる。", intro:"暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。",
+ ja: { title:"あなただけの投資ルールを30問の質問でつくる", intro:"暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。",
  closingFirst:"マイルールを定めれば", closingLast:"暴落も上昇も怖くない",
  start:"はじめる", redo:"回答を見直す", next:"次へ", back:"戻る", result:"結果を見る", rules:"あなたの投資ルール", advice:"このルールを使うために",
  save:"このルールを保存する", saving:"保存しています…", saved:"ルールを保存しました。", simulation:"② シミュレーションへ進む", edit:"回答に戻る",
@@ -97,7 +97,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const reloadButton=<button type="button" className={styles.secondary} disabled={loading||busy} onClick={()=>void reload()}>{c.reload}</button>;
  if(mode==="intro") return <section className={`${styles.card} ${styles.introCard}`}>
   <span className={styles.eyebrow}>RULE DIAGNOSIS</span>
-  <h1 className={styles.introTitle}>{en ? <><span>Build your own investing</span><span>rules in 30 questions.</span></> : <><span>あなただけの投資ルールを</span><span>30問の質問でつくる。</span></>}</h1>
+  <h1 className={styles.introTitle}>{en ? <><span>Build your own investing</span><span>rules in 30 questions.</span></> : <><span>あなただけの投資ルールを</span><span>30問の質問でつくる</span></>}</h1>
   <p className={styles.introDescription}>{en ? <>Build clearer rules with each answer.<br/>Takes about five minutes.</> : <>答えるほどルールは鮮明になります。<br/>※所要時間 約5分</>}</p>
   <p className={styles.disclaimer}>{c.currency}</p>
   {bodyMessage}
