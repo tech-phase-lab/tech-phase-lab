@@ -16,10 +16,6 @@ export const networkLayers: NetworkText[] = [
   { ja: "関連する業種", en: "Industry relationships" },
 ];
 
-export function selectNetworkNode(history: string[], id: string): string[] {
-  return history.at(-1) === id ? history : [...history, id];
-}
-
 // Competitors are a side relationship, never a bridge in a supply chain.
 export function networkFocus(graph: CompanyNetwork, selected: string, mode: NetworkMode) {
   const distances = new Map<string, number>([[selected, 0]]);

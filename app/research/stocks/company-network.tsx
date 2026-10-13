@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { layoutCompanyNetwork, networkEdgePath, networkFocus, networkLayers, selectNetworkNode } from "@/lib/research/company-network";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { layoutCompanyNetwork, networkEdgePath, networkFocus, networkLayers } from "@/lib/research/company-network";
 import type { CompanyNetwork, NetworkEdge, NetworkMode, NetworkNode } from "@/lib/research/company-network";
 import styles from "./company-network.module.css";
 
@@ -9,21 +9,16 @@ type Props = { graph: CompanyNetwork; lang: "ja" | "en" };
 const label = (node: NetworkNode, lang: "ja" | "en") => lang === "ja" ? node.nameJa ?? node.name : node.name;
 
 export function CompanyNetworkMap({ graph, lang }: Props) {
-  const [history, setHistory] = useState([graph.root]);
   const [mode, setMode] = useState<NetworkMode>("two");
-  const [detailsOpen, setDetailsOpen] = useState(false);
   const [width, setWidth] = useState(640);
   const board = useRef<HTMLDivElement>(null);
-  const panelId = useId();
   const byId = useMemo(() => new Map(graph.nodes.map(node => [node.id, node])), [graph.nodes]);
-  const selectedId = history.at(-1) ?? graph.root;
-  const selected = byId.get(selectedId) ?? byId.get(graph.root)!;
+  const selected = byId.get(graph.root)!;
   const focus = useMemo(() => networkFocus(graph, selected.id, mode), [graph, selected.id, mode]);
   const layout = useMemo(() => layoutCompanyNetwork(graph.nodes, width), [graph.nodes, width]);
   const direct = graph.edges.filter(edge => edge.from === selected.id || edge.to === selected.id);
   const relationships = direct;
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
-  const select = (id: string) => { if (byId.has(id)) setHistory(previous => selectNetworkNode(previous, id)); };
 
   useEffect(() => {
     const element = board.current;
@@ -47,14 +42,10 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
     <div className={styles.toolbar}>
       <div className={styles.titleRow}>
         <h3>{t("企業の連鎖マップ", "Company connection map")}</h3>
-        <div className={styles.history}>
-          <button type="button" disabled={history.length < 2} onClick={() => setHistory(previous => previous.slice(0, -1))}>{t("← ひとつ戻る", "← Back")}</button>
-          <button type="button" disabled={history.length < 2} onClick={() => setHistory([graph.root])}>{t("最初に戻る", "Reset")}</button>
-        </div>
       </div>
       <div className={styles.selection}>
         <div className={styles.selectedName} role="status"><strong>{selected.ticker ?? label(selected, lang)}</strong>{selected.ticker && selected.name !== selected.ticker && <span>{label(selected, lang)}</span>}</div>
-        <button type="button" className={styles.detailToggle} aria-expanded={detailsOpen} aria-controls={panelId} onClick={() => setDetailsOpen(open => !open)}>{t("関係の詳細", "Connection details")} {detailsOpen ? "−" : "+"}</button>
+
       </div>
       <div className={styles.controls}>
         <div className={styles.modes} role="group" aria-label={t("線の表示範囲", "Connection depth")}>
@@ -62,23 +53,9 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
         </div>
         <span className={styles.count}>{graph.nodes.filter(node => node.kind === "company").length}{t("社", " companies")} · {graph.edges.length}{t("の関係", " connections")}</span>
       </div>
-      <div id={panelId} className={styles.inspector} hidden={!detailsOpen}>
-        {selected.summary && <p className={styles.summary}>{selected.summary[lang]}</p>}
-        <p className={styles.detailHeading}>{t("供給・採用元", "Suppliers")} {focus.upstream.size} / {t("納入・採用先", "Recipients")} {focus.downstream.size}</p>
-        <ul>{relationships.map(edge => {
-          const other = byId.get(edge.from === selected.id ? edge.to : edge.from)!;
-          const tone = edgeTone(edge);
-          return <li key={edge.id} data-tone={tone}>
-            <div className={styles.connectionTitle}><button type="button" onClick={() => select(other.id)}>{other.ticker ?? label(other, lang)}{other.ticker && other.name !== other.ticker ? ` · ${label(other, lang)}` : ""}</button><small>{edge.kind === "supply" ? (edge.to === selected.id ? t("供給・採用元", "Supplier") : t("納入・採用先", "Recipient")) : edge.kind === "competition" ? t("競合", "Competitor") : edge.kind === "investment" ? t("出資", "Investment") : t("提携・連携", "Collaboration")}</small></div>
-            {edge.evidence.map((evidence, index) => <div key={index} className={styles.evidence}>
-              <p>{evidence.about !== selected.id && <span>{byId.get(evidence.about)?.name ?? evidence.about}: </span>}{evidence.label[lang]}</p>
-              <details><summary>{t("出典", "Source")} · {evidence.reviewedOn}</summary>{evidence.sources.map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a>)}</details>
-            </div>)}
-          </li>;
-        })}</ul>
-      </div>
+
     </div>
-    <p className={styles.hint}>{t("銘柄をタップして、供給元から顧客までたどる。", "Tap a company to trace its suppliers and customers.")}</p>
+
     <div className={styles.legend}>
       <span data-tone="upstream">{t("供給・採用元", "Suppliers")}</span><span data-tone="downstream">{t("納入・採用先", "Recipients")}</span><span data-tone="partner">{t("提携・出資", "Partners & investment")}</span><span data-tone="indirect">{t("さらに先の関係", "Further connections")}</span><span data-tone="competition">{t("競合", "Competitors")}</span>
     </div>
@@ -86,7 +63,7 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
       <h3><span>05</span>{t("競合は？", "Who competes with it?")}</h3>
       <div>{[...focus.competitors].map(id => {
         const node = byId.get(id)!;
-        return <button key={id} type="button" onClick={() => select(id)}>{node.ticker ?? label(node, lang)}</button>;
+        return <span key={id} className={styles.competitor}>{node.ticker ?? label(node, lang)}</span>;
       })}{focus.competitors.size === 0 && <span>{t("具体的な競合は未収録", "No named competitors recorded")}</span>}</div>
     </div>
     <h3 className={styles.mapHeading}><span>06</span>{t("どこと繋がる？", "Who does it work with?")}</h3>
@@ -105,10 +82,27 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
         const distance = focus.distances.get(node.id);
         const relevant = mode === "all" || distance !== undefined || focus.competitors.has(node.id);
         const tone = active ? "selected" : focus.upstream.has(node.id) ? "upstream" : focus.downstream.has(node.id) ? "downstream" : focus.competitors.has(node.id) ? "competition" : distance === 1 ? "partner" : "indirect";
-        return <button key={node.id} type="button" className={styles.node} style={{ left: position.x, top: position.y, width: position.width, height: position.height }} data-symbol={Boolean(node.ticker)} data-tone={tone} data-relevant={relevant} data-competitor={focus.competitors.has(node.id)} aria-pressed={active} aria-label={t(`${label(node, lang)}の繋がりを表示`, `Show connections for ${label(node, lang)}`)} onClick={() => select(node.id)}>
+        return <div key={node.id} className={styles.node} style={{ left: position.x, top: position.y, width: position.width, height: position.height }} data-symbol={Boolean(node.ticker)} data-tone={tone} data-relevant={relevant} data-competitor={focus.competitors.has(node.id)} aria-current={active ? "true" : undefined} aria-label={label(node, lang)}>
           <strong>{node.ticker ?? label(node, lang)}</strong>{node.ticker && node.name !== node.ticker && <span>{label(node, lang)}</span>}
-        </button>;
+        </div>;
       })}
+    </div>
+    <div className={styles.inspector}>
+      <h3>{t(`${selected.ticker ?? selected.name}との関係`, `Connections with ${selected.ticker ?? selected.name}`)}</h3>
+      <ul>{relationships.map(edge => {
+        const other = byId.get(edge.from === selected.id ? edge.to : edge.from)!;
+        const evidence = edge.evidence.find(item => item.about === selected.id) ?? edge.evidence[0];
+        return <li key={edge.id} data-tone={edgeTone(edge)}>
+          <div className={styles.connectionTitle}><strong>{other.ticker ?? label(other, lang)}</strong><small>{edge.kind === "supply" ? (edge.to === selected.id ? t("供給・採用元", "Supplier") : t("納入・採用先", "Recipient")) : edge.kind === "competition" ? t("競合", "Competitor") : edge.kind === "investment" ? t("出資", "Investment") : t("提携・連携", "Collaboration")}</small></div>
+          <p className={styles.relationshipText}>{evidence.about !== selected.id && <span>{byId.get(evidence.about)?.name ?? evidence.about}: </span>}{evidence.label[lang]}</p>
+        </li>;
+      })}</ul>
+      <details className={styles.evidence}><summary>{t("関係の出典", "Relationship sources")}</summary>
+        {relationships.map(edge => <div key={edge.id}>{edge.evidence.map((evidence, index) => <div key={index}>
+          <span>{byId.get(edge.from)?.name} / {byId.get(edge.to)?.name} · {evidence.reviewedOn}</span>
+          {evidence.sources.map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a>)}
+        </div>)}</div>)}
+      </details>
     </div>
     <p className={styles.footnote}>{t("線は公表された関係を示します。2段先の企業同士に直接取引があるとは限りません。", "Lines show disclosed relationships. A two-step path does not imply a direct transaction.")}</p>
   </section>;

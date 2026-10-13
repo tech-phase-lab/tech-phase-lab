@@ -56,7 +56,10 @@ test('renders all six localized answers with expandable source links', () => {
     assert.ok(!html.includes(lang==='ja'?'Who does it work with?':'どこと繋がる？'));
     assert.ok(html.indexOf('data-topic="risks"') < html.indexOf('data-topic="competition"'));
     assert.ok(!html.includes('href="/research/stocks'));
-    assert.match(html, /<button[^>]+aria-pressed="true"[^>]*>/);
+    assert.match(html, /aria-current="true" aria-label="NVIDIA"/);
+    assert.ok(!html.includes("Show connections for"));
+    assert.ok(!html.includes("最初に戻る"));
+    assert.ok(!html.includes("Connection details"));
 
     assert.ok(!html.includes('q=undefined'));
   }
@@ -67,7 +70,9 @@ test('all issuers render same-page selection maps in both languages', () => {
     for (const lang of ['ja','en']) {
       const html = renderToStaticMarkup(createElement(panel.CompanyIntroductionPanel,{introduction,lang,network:companyNetworkFor({cik:introduction.cik,ticker:introduction.tickers[0]})}));
       assert.ok(!html.includes('href="/research/stocks'));
-      assert.ok(html.includes(lang==='ja'?'最初に戻る':'Reset'));
+      assert.ok(!html.includes(lang==='ja'?'最初に戻る':'Reset'));
+      assert.equal((html.match(/<button/g)??[]).length,3);
+      assert.ok(html.includes(`aria-current="true" aria-label="${introduction.name}"`));
       assert.ok(html.includes(lang==='ja'?'どこと繋がる？':'Who does it work with?'));
     }
   }

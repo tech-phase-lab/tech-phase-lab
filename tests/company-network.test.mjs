@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { companyNetworkFor } from '../lib/research/company-network.server.ts';
-import { networkFocus, layoutCompanyNetwork, selectNetworkNode } from '../lib/research/company-network.ts';
+import { networkFocus, layoutCompanyNetwork } from '../lib/research/company-network.ts';
 const graph = companyNetworkFor({cik:1045810,ticker:'NVDA'});
 test('normalizes shared companies and directed relationships with sources', () => {
   assert.equal(new Set(graph.nodes.map(n=>n.id)).size,graph.nodes.length);
@@ -29,15 +29,6 @@ test('competition cannot become a bridge to an unrelated supply chain', () => {
   assert.ok(focus.competitors.has('B'));
   assert.equal(focus.distances.has('C'),false);
   assert.deepEqual(focus.visibleEdges.map(e=>e.id),['ab']);
-});
-test('selection keeps a local reversible history', () => {
-  let history=['NVDA'];
-  history=selectNetworkNode(history,'TSM');
-  assert.equal(selectNetworkNode(history,'TSM'),history);
-  history=selectNetworkNode(history,'AMAT');
-  assert.deepEqual(history,['NVDA','TSM','AMAT']);
-  assert.equal(history.slice(0,-1).at(-1),'TSM');
-  assert.deepEqual([graph.root],['NVDA']);
 });
 test('stable layered layout fits narrow screens without overlapping nodes', () => {
   for(const width of [220,280,320,375,640,1100]) {

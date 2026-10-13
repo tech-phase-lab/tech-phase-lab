@@ -1,14 +1,14 @@
 # Company chain map — October 13, 2026
 
-Replaced stock-link branch diagrams with an in-place layered company network.
-Node selection, Back/Reset, direct/two-step/all modes and a cited relation inspector
-share one component. Language changes preserve selection. Normalized structured
-records plus primary-source supplements connect equipment, manufacturing,
-memory, chip design, optics, infrastructure and cloud companies. Rivalry does not
-serve as a supply-chain bridge. Full-directory research remains incomplete.
-See `docs/COMPANY-INTRODUCTIONS.md`. Publication/CI/browser status must be checked
-against the resulting commit. News, price targets, translation and RESOLUTE are
-outside this change.
+The layered map now stays centered on the stock page's own company. After user
+feedback, removed company/competitor selection, Back/Reset, sticky header and the
+connection-details button. Direct/two-step/all display modes remain. Short direct
+relationship descriptions are visible below the graph; sources are collapsed.
+Colors have stronger contrast and the root node is white. Do not reintroduce
+ANET-centered content on an NVDA page. Shared structured data still builds the
+maps; no per-company hand drawing is needed. Full-directory research is incomplete.
+See `docs/COMPANY-INTRODUCTIONS.md`. Verify publication/CI/browser status against
+the resulting commit. News, price targets, translation and RESOLUTE are untouched.
 
 # Stock introductions — October 13, 2026
 

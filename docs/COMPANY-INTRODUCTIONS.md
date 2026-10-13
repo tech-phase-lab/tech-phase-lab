@@ -51,17 +51,19 @@ The news/translation/price-target pipelines and RESOLUTE are outside this change
 ## Relationship maps and bulk additions (2026-10-13)
 
 The first four answers are compact cards. Weaknesses are #4; competition is #5
-and relationships are #6. The layered network now replaces outbound stock links.
-Tapping a company changes selection in place; Back and Reset operate on local
-selection history. Switching JA/EN preserves selection. The stock URL and scroll
-position are not changed by selection. Business-layer positions remain stable.
+and relationships are #6. Each stock page keeps its own company as the fixed
+center. Company nodes and competitor chips are labels, not navigation or selection
+controls. Removed local history, Back/Reset, sticky toolbar and the detail toggle
+after user feedback. Short direct-relationship descriptions are visible below the
+map, with sources in one collapsed section. Colors have stronger contrast and the
+page company's node is white to distinguish it from orange recipients.
 
 Direct / 2 steps / All change the visible connections. Direct suppliers and
 platform adopters, recipients, collaboration/investment, indirect connections and
 competitors have distinct colors; competitors also have dashed outlines. Rivalry
 is never traversed as a supply-chain bridge. Further paths do not imply a direct
 transaction between their endpoints. Evidence is available in the expandable
-selected-company inspector, including the original source-company perspective.
+fixed-company relationship list, including the original source-company perspective.
 
 `company-network.server.ts` merges cited map records by company identity and
 relationship direction, normalizes Google share classes and merges reverse
