@@ -6913,5 +6913,1576 @@
         }
       ]
     }
+  },
+  {
+    "cik": 936395,
+    "tickers": [
+      "CIEN"
+    ],
+    "name": "Ciena",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Customers / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm"
+      }
+    ],
+    "ja": {
+      "business": "通信事業者やクラウド会社向けに、光通信装置、ルーター、ネットワーク制御ソフトと保守サービスを提供する会社。",
+      "revenue": "高速光通信装置とネットワーク機器の販売に加え、ソフトウェア、保守、導入支援から稼ぐ。",
+      "strength": "光伝送とネットワーク制御を一体で提供し、既存回線の容量を増やしながら大規模ネットワークを自動化できる。",
+      "risks": "大口顧客の設備投資時期で売上が振れやすく、部品供給、輸出規制、通信会社の統合、価格競争も業績を左右する。",
+      "competition": "Nokia、Huawei、Cisco、HPE、ZTEなどと、光伝送性能、制御ソフト、価格、導入実績で競う。",
+      "relationships": "クラウド会社、通信事業者、海底ケーブル事業者、企業・政府へ光通信設備とネットワークソフトを納入する。"
+    },
+    "en": {
+      "business": "Provides optical networking systems, routers, network-control software and services to telecom operators and cloud providers.",
+      "revenue": "Earns from optical transport and routing hardware, software, maintenance and deployment services.",
+      "strength": "Combines high-capacity optical transport with software control to expand existing fiber capacity and automate large networks.",
+      "risks": "Results depend on large customers' capital-spending cycles and face component supply, export-control, carrier-consolidation and pricing risks.",
+      "competition": "Competes with Nokia, Huawei, Cisco, HPE and ZTE on optical performance, software control, price and deployment history.",
+      "relationships": "Supplies optical systems and network software to cloud providers, telecom carriers, submarine-network operators, enterprises and governments."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Nokia",
+          "role": "competitor",
+          "label": {
+            "ja": "光通信・ネットワーク機器で競合",
+            "en": "Optical and network equipment"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Cisco",
+          "ticker": "CSCO",
+          "role": "competitor",
+          "label": {
+            "ja": "ルーター・光通信で競合",
+            "en": "Routing and optical networking"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Hewlett Packard Enterprise",
+          "ticker": "HPE",
+          "role": "competitor",
+          "label": {
+            "ja": "ネットワーク基盤で競合",
+            "en": "Network infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Huawei",
+          "role": "competitor",
+          "label": {
+            "ja": "通信設備で競合",
+            "en": "Telecom equipment"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Cloud and AI infrastructure providers",
+          "nameJa": "クラウド・AI基盤会社",
+          "role": "customer",
+          "label": {
+            "ja": "データセンター間の光通信を提供",
+            "en": "Optical links between data centers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Telecom service providers",
+          "nameJa": "通信事業者",
+          "role": "customer",
+          "label": {
+            "ja": "長距離・都市圏ネットワークを提供",
+            "en": "Long-haul and metro networks"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Submarine network operators",
+          "nameJa": "海底ケーブル事業者",
+          "role": "customer",
+          "label": {
+            "ja": "海底回線の大容量化を支援",
+            "en": "Submarine network capacity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1601046,
+    "tickers": [
+      "KEYS"
+    ],
+    "name": "Keysight Technologies",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Solutions / Markets / Customers / Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1601046/000160104625000127/keys-20251031.htm"
+      }
+    ],
+    "ja": {
+      "business": "通信、半導体、自動車、航空宇宙の製品を設計・検証する測定器、試験システム、設計ソフトを提供する会社。",
+      "revenue": "電子計測器と試験システムの販売、設計・解析ソフト、校正・修理・技術支援から稼ぐ。",
+      "strength": "80年以上の計測技術と広い導入基盤を持ち、設計、シミュレーション、試作、量産検査まで同じ会社で支援できる。",
+      "risks": "顧客の研究開発費と設備投資、中国向け規制、部品供給、買収事業の統合、技術世代の切り替えに左右される。",
+      "competition": "通信・半導体の計測器、EDA・物理解析、ネットワーク試験の各市場で専門会社や総合機器会社と競う。",
+      "relationships": "通信機器、半導体、自動車・電池、航空宇宙・防衛の開発会社へ測定器と設計・試験ソフトを提供する。"
+    },
+    "en": {
+      "business": "Provides instruments, test systems and design software used to develop and validate communications, semiconductor, automotive and aerospace products.",
+      "revenue": "Earns from electronic instruments and test systems, design and simulation software, calibration, repair and engineering services.",
+      "strength": "Combines more than 80 years of measurement expertise and a large installed base with tools spanning design, simulation, prototype and production test.",
+      "risks": "Results depend on customer R&D and capital spending and face China restrictions, component supply, acquisition integration and technology-transition risks.",
+      "competition": "Competes with specialist and diversified vendors in communications and semiconductor test, EDA and physics simulation, and network assurance.",
+      "relationships": "Supplies measurement and design and test software to communications, semiconductor, automotive, battery, aerospace and defense developers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Electronic test-equipment vendors",
+          "nameJa": "電子計測器メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "通信・電子計測で競合",
+            "en": "Communications and electronic test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "EDA and simulation vendors",
+          "nameJa": "EDA・解析ソフト会社",
+          "role": "competitor",
+          "label": {
+            "ja": "設計・物理解析で競合",
+            "en": "Design and physics simulation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Network assurance vendors",
+          "nameJa": "ネットワーク試験会社",
+          "role": "competitor",
+          "label": {
+            "ja": "通信網の試験・監視で競合",
+            "en": "Network test and assurance"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Communications equipment and network operators",
+          "nameJa": "通信機器・通信事業者",
+          "role": "customer",
+          "label": {
+            "ja": "5G・6G・光通信の設計試験を提供",
+            "en": "5G, 6G and optical-network testing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Semiconductor companies",
+          "nameJa": "半導体会社",
+          "role": "customer",
+          "label": {
+            "ja": "チップ設計・量産検査を支援",
+            "en": "Chip design and production test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Automotive and energy companies",
+          "nameJa": "自動車・エネルギー会社",
+          "role": "customer",
+          "label": {
+            "ja": "EV・電池・電力制御を試験",
+            "en": "EV, battery and power-control test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Aerospace and defense organizations",
+          "nameJa": "航空宇宙・防衛機関",
+          "role": "customer",
+          "label": {
+            "ja": "衛星・防衛電子機器を検証",
+            "en": "Satellite and defense electronics validation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 866374,
+    "tickers": [
+      "FLEX"
+    ],
+    "name": "Flex",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Segments / Markets / Customers / Spin-off risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/866374/000086637426000012/flex-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "顧客企業に代わって電子機器やデータセンター向け電源・冷却設備を設計、調達、製造する会社。",
+      "revenue": "通信機器、産業機器、自動車、医療機器の受託製造と、データセンター向け電源・冷却システムから稼ぐ。",
+      "strength": "世界各地の工場、調達網、設計力を組み合わせ、部品調達から量産、修理まで一括で請け負える。",
+      "risks": "低採算になりやすい受託製造、顧客の生産計画変更、部品価格、工場稼働率に加え、電源事業の分離計画にも実行リスクがある。",
+      "competition": "EMS・受託製造会社、電源・冷却設備会社、顧客の内製工場と、価格、品質、量産速度、供給網で競う。",
+      "relationships": "通信、クラウド・データセンター、自動車、医療、産業機器会社の製品と電源設備を設計・製造する。"
+    },
+    "en": {
+      "business": "Designs, sources and manufactures electronics and data-center power and cooling systems for other companies.",
+      "revenue": "Earns from outsourced manufacturing for communications, industrial, automotive and medical products and from data-center power and cooling systems.",
+      "strength": "Combines a global factory and sourcing network with engineering to handle component procurement, production and lifecycle services.",
+      "risks": "Contract manufacturing carries margin, customer-schedule, component-cost and utilization risks, while the planned power-business separation adds execution risk.",
+      "competition": "Competes with electronics manufacturing services, power and cooling vendors and customers' internal factories on cost, quality, speed and supply resilience.",
+      "relationships": "Designs and manufactures products and power infrastructure for communications, cloud and data-center, automotive, medical and industrial customers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Electronics manufacturing services",
+          "nameJa": "電子機器受託製造会社",
+          "role": "competitor",
+          "label": {
+            "ja": "設計・調達・量産で競合",
+            "en": "Design, sourcing and manufacturing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Data-center power and cooling vendors",
+          "nameJa": "データセンター電源・冷却会社",
+          "role": "competitor",
+          "label": {
+            "ja": "電源・冷却設備で競合",
+            "en": "Power and cooling systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Customers' internal manufacturing",
+          "nameJa": "顧客の自社工場",
+          "role": "competitor",
+          "label": {
+            "ja": "製造の内製化と競合",
+            "en": "Customer in-house manufacturing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Cloud and data-center operators",
+          "nameJa": "クラウド・データセンター事業者",
+          "role": "customer",
+          "label": {
+            "ja": "電源・冷却・統合設備を提供",
+            "en": "Power, cooling and integrated infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Networking and communications companies",
+          "nameJa": "通信・ネットワーク会社",
+          "role": "customer",
+          "label": {
+            "ja": "通信機器を設計・製造",
+            "en": "Networking equipment design and manufacturing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Automotive and industrial companies",
+          "nameJa": "自動車・産業機器会社",
+          "role": "customer",
+          "label": {
+            "ja": "電子機器・制御装置を製造",
+            "en": "Electronics and control-system manufacturing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Medical-device companies",
+          "nameJa": "医療機器会社",
+          "role": "customer",
+          "label": {
+            "ja": "規制対応の医療機器を製造",
+            "en": "Regulated medical-device manufacturing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1262039,
+    "tickers": [
+      "FTNT"
+    ],
+    "name": "Fortinet",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業ネットワークを守るファイアウォール、SASE、クラウド・端末・運用監視のセキュリティ製品を提供する会社。",
+      "revenue": "FortiGateなどの機器・ソフト販売と、FortiGuardのセキュリティ購読、FortiCare保守、クラウドサービスから稼ぐ。",
+      "strength": "独自ASICを使う機器と多数のセキュリティ機能を同じOSで統合し、拠点・クラウド・端末を一括管理できる。",
+      "risks": "機器更新の波、競合の値下げ・無料バンドル、製品の脆弱性、契約更新、クラウド運用費の増加が業績に影響する。",
+      "competition": "Cisco、Palo Alto Networks、CrowdStrike、Microsoft、Zscalerなどと、ネットワーク・クラウド・端末防御で競う。",
+      "relationships": "企業、通信事業者、公共機関へ、販売代理店やサービス事業者を通じて機器と継続課金の防御サービスを提供する。"
+    },
+    "en": {
+      "business": "Provides firewalls, SASE and cloud, endpoint and security-operations products that protect enterprise networks.",
+      "revenue": "Earns from FortiGate and other hardware and software, FortiGuard security subscriptions, FortiCare support and cloud services.",
+      "strength": "Combines proprietary-ASIC appliances and many security functions under one operating system to manage branches, cloud and endpoints together.",
+      "risks": "Hardware refresh cycles, competitor discounting and bundling, vulnerabilities, renewals and rising cloud-delivery costs can affect results.",
+      "competition": "Competes with Cisco, Palo Alto Networks, CrowdStrike, Microsoft and Zscaler across network, cloud and endpoint security.",
+      "relationships": "Sells appliances and recurring protection services to enterprises, carriers and public organizations through distributors and service providers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Cisco",
+          "ticker": "CSCO",
+          "role": "competitor",
+          "label": {
+            "ja": "ネットワーク防御で競合",
+            "en": "Network security"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Palo Alto Networks",
+          "ticker": "PANW",
+          "role": "competitor",
+          "label": {
+            "ja": "ファイアウォール・クラウド防御で競合",
+            "en": "Firewall and cloud security"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "CrowdStrike",
+          "ticker": "CRWD",
+          "role": "competitor",
+          "label": {
+            "ja": "端末・運用監視で競合",
+            "en": "Endpoint and security operations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Zscaler",
+          "ticker": "ZS",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド型SASEで競合",
+            "en": "Cloud-delivered SASE"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Enterprises and public organizations",
+          "nameJa": "企業・公共機関",
+          "role": "customer",
+          "label": {
+            "ja": "ネットワーク・端末防御を提供",
+            "en": "Network and endpoint protection"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Distributors and security resellers",
+          "nameJa": "販売代理店・セキュリティ販売会社",
+          "role": "partner",
+          "label": {
+            "ja": "機器・契約を再販売",
+            "en": "Resell appliances and subscriptions"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Telecom and managed-service providers",
+          "nameJa": "通信・運用サービス会社",
+          "role": "partner",
+          "label": {
+            "ja": "管理型セキュリティを提供",
+            "en": "Deliver managed security services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1713683,
+    "tickers": [
+      "ZS"
+    ],
+    "name": "Zscaler",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Platform / Revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000157/zs-20260731.htm"
+      }
+    ],
+    "ja": {
+      "business": "社内ネットワークへ直接つながず、利用者・端末・クラウドアプリごとに通信を検証するゼロトラスト型セキュリティ会社。",
+      "revenue": "クラウド防御基盤へのアクセスを、利用者数や通信量に応じた1〜5年のサブスクリプションで販売する。",
+      "strength": "世界中のクラウド拠点で通信を検査し、Web、SaaS、社内アプリ、データ、AI利用を一つの基盤で守れる。",
+      "risks": "大口契約の営業期間が長く、競合の無料バンドル、クラウド障害、脅威の見逃し、更新率低下が成長に響く。",
+      "competition": "総合セキュリティ会社、ネットワーク・クラウド大手、VPN・DLPなどの専業会社とクラウド型防御で競う。",
+      "relationships": "企業の利用者と拠点、SaaS・社内アプリ、クラウド上の処理を仲介し、販売代理店や運用会社と導入する。"
+    },
+    "en": {
+      "business": "Provides zero-trust security that verifies each user, device and application connection instead of placing users directly on corporate networks.",
+      "revenue": "Sells one-to-five-year subscriptions to its cloud security platform, generally priced by users and metered usage.",
+      "strength": "Inspects traffic across a global cloud and protects web, SaaS, private applications, data and AI use on one platform.",
+      "risks": "Long enterprise sales cycles, competitor bundling, cloud outages, missed threats and lower renewal rates can weaken growth.",
+      "competition": "Competes with diversified security vendors, networking and cloud companies, and point vendors in VPN, DLP and related controls.",
+      "relationships": "Connects enterprise users and branches to SaaS, private applications and cloud workloads, working with resellers and managed-service providers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Diversified cybersecurity vendors",
+          "nameJa": "総合セキュリティ会社",
+          "role": "competitor",
+          "label": {
+            "ja": "複数の防御機能で競合",
+            "en": "Broad security platforms"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Networking and cloud platforms",
+          "nameJa": "ネットワーク・クラウド大手",
+          "role": "competitor",
+          "label": {
+            "ja": "既存製品への防御機能の組み込み",
+            "en": "Bundled security capabilities"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "SASE and VPN vendors",
+          "nameJa": "SASE・VPN会社",
+          "role": "competitor",
+          "label": {
+            "ja": "安全な接続で競合",
+            "en": "Secure access"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Data-security point vendors",
+          "nameJa": "データ防御の専業会社",
+          "role": "competitor",
+          "label": {
+            "ja": "DLP・データ保護で競合",
+            "en": "DLP and data protection"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Large enterprises and public organizations",
+          "nameJa": "大企業・公共機関",
+          "role": "customer",
+          "label": {
+            "ja": "ゼロトラスト防御を提供",
+            "en": "Zero-trust protection"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "SaaS and private applications",
+          "nameJa": "SaaS・社内アプリ",
+          "role": "customer",
+          "label": {
+            "ja": "利用者の安全な接続を仲介",
+            "en": "Secure user access"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Resellers and managed-service providers",
+          "nameJa": "販売代理店・運用サービス会社",
+          "role": "partner",
+          "label": {
+            "ja": "導入・再販売を担当",
+            "en": "Deployment and resale"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1477333,
+    "tickers": [
+      "NET"
+    ],
+    "name": "Cloudflare",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Network / Products / Customers / Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000016/cloud-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "世界各地のネットワークを使い、Webサイトやアプリを高速化し、攻撃から守り、企業の通信や開発処理も動かす会社。",
+      "revenue": "CDN、DDoS防御、ゼロトラスト、開発者向け計算基盤などを、無料枠から大企業向け契約までサブスク中心で販売する。",
+      "strength": "同じ世界ネットワーク上で配信、セキュリティ、接続、サーバーレス計算をまとめて提供し、通信データを製品改善へ活かせる。",
+      "risks": "ネットワーク障害や攻撃、設備投資負担、通信・データ規制、価格競争があり、2025年も最終赤字だった。",
+      "competition": "通信機器、CDN、DNS、クラウドセキュリティ、SD-WAN、パブリッククラウドの各社と幅広く競う。",
+      "relationships": "Web・アプリ運営企業と社内ITへサービスを提供し、通信回線、データセンター、機器会社を使って世界ネットワークを運営する。"
+    },
+    "en": {
+      "business": "Runs a global network that accelerates and protects websites and applications and also carries enterprise traffic and developer workloads.",
+      "revenue": "Sells CDN, DDoS protection, zero-trust and developer-compute products mainly through subscriptions from free plans to enterprise contracts.",
+      "strength": "Delivers content, security, connectivity and serverless compute on one global network and uses traffic insight to improve products.",
+      "risks": "Network outages, attacks, infrastructure spending, communications and data regulation and pricing pressure remain risks; it was still loss-making in 2025.",
+      "competition": "Competes with network hardware, CDN, DNS, cloud-security, SD-WAN and public-cloud providers.",
+      "relationships": "Serves website and application operators and enterprise IT while relying on carriers, data centers and hardware vendors to run its global network."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "CDN and DNS providers",
+          "nameJa": "CDN・DNS会社",
+          "role": "competitor",
+          "label": {
+            "ja": "配信・名前解決で競合",
+            "en": "Content delivery and DNS"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cloud security vendors",
+          "nameJa": "クラウドセキュリティ会社",
+          "role": "competitor",
+          "label": {
+            "ja": "Web・ゼロトラスト防御で競合",
+            "en": "Web and zero-trust security"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Public cloud platforms",
+          "nameJa": "パブリッククラウド会社",
+          "role": "competitor",
+          "label": {
+            "ja": "開発者向け計算基盤で競合",
+            "en": "Developer compute platforms"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Network hardware and SD-WAN vendors",
+          "nameJa": "ネットワーク機器・SD-WAN会社",
+          "role": "competitor",
+          "label": {
+            "ja": "企業通信で競合",
+            "en": "Enterprise connectivity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Websites and application operators",
+          "nameJa": "Web・アプリ運営企業",
+          "role": "customer",
+          "label": {
+            "ja": "配信高速化・攻撃防御を提供",
+            "en": "Acceleration and attack protection"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprise IT teams",
+          "nameJa": "企業のIT部門",
+          "role": "customer",
+          "label": {
+            "ja": "ゼロトラスト接続を提供",
+            "en": "Zero-trust connectivity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Telecom and colocation providers",
+          "nameJa": "通信・データセンター会社",
+          "role": "supplier",
+          "label": {
+            "ja": "回線・設置拠点を提供",
+            "en": "Network transit and facilities"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Software developers",
+          "nameJa": "ソフトウェア開発者",
+          "role": "customer",
+          "label": {
+            "ja": "Workersの計算・配信基盤を提供",
+            "en": "Workers compute and delivery platform"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1561550,
+    "tickers": [
+      "DDOG"
+    ],
+    "name": "Datadog",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Platform / Revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1561550/000162828026008819/ddog-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "クラウド上のアプリ、サーバー、ネットワーク、ログ、利用者体験、セキュリティを一画面で監視する会社。",
+      "revenue": "監視・ログ・セキュリティなどの機能をサブスクリプションで販売し、契約量または実際の利用量に応じて課金する。",
+      "strength": "インフラからアプリ、利用者体験、セキュリティまで同じデータ基盤で結び、障害原因を横断して追跡できる。",
+      "risks": "顧客のクラウド利用減少、利用量課金の変動、価格競争、大手クラウドの純正監視、障害・情報漏えいが成長に影響する。",
+      "competition": "クラウド会社の純正監視、ログ・APM・セキュリティ専業、オープンソースや顧客の自作監視と競う。",
+      "relationships": "クラウド・SaaS・ECなどの運営会社へ監視基盤を提供し、開発、運用、セキュリティの各チームが同じデータを使う。"
+    },
+    "en": {
+      "business": "Monitors cloud applications, servers, networks, logs, user experience and security in one platform.",
+      "revenue": "Sells monitoring, logging and security modules as subscriptions billed by committed capacity or actual usage.",
+      "strength": "Connects infrastructure, applications, user experience and security on one data platform so teams can trace incidents across layers.",
+      "risks": "Lower customer cloud usage, variable consumption billing, price competition, native cloud monitoring, outages and data breaches can affect growth.",
+      "competition": "Competes with native public-cloud monitoring, logging, APM and security specialists, open source and customer-built tools.",
+      "relationships": "Supplies monitoring to cloud, SaaS and commerce operators, letting development, operations and security teams use the same telemetry."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Public-cloud monitoring tools",
+          "nameJa": "クラウド純正の監視機能",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド監視で競合",
+            "en": "Cloud-native monitoring"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Logging and APM vendors",
+          "nameJa": "ログ・APM会社",
+          "role": "competitor",
+          "label": {
+            "ja": "ログ・性能監視で競合",
+            "en": "Logging and application performance"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cloud security vendors",
+          "nameJa": "クラウドセキュリティ会社",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド防御で競合",
+            "en": "Cloud security"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Open-source and internal monitoring",
+          "nameJa": "オープンソース・自社監視",
+          "role": "competitor",
+          "label": {
+            "ja": "低価格・内製手段と競合",
+            "en": "Open-source and in-house tools"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Cloud and SaaS operators",
+          "nameJa": "クラウド・SaaS運営会社",
+          "role": "customer",
+          "label": {
+            "ja": "インフラ・アプリ監視を提供",
+            "en": "Infrastructure and application monitoring"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Development and operations teams",
+          "nameJa": "開発・運用チーム",
+          "role": "customer",
+          "label": {
+            "ja": "ログ・障害解析を共有",
+            "en": "Shared logs and incident analysis"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Public cloud infrastructure",
+          "nameJa": "パブリッククラウド基盤",
+          "role": "supplier",
+          "label": {
+            "ja": "監視対象・サービス運用基盤",
+            "en": "Monitored and hosting infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1441816,
+    "tickers": [
+      "MDB"
+    ],
+    "name": "MongoDB",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Atlas / Revenue / Competition / Cloud infrastructure",
+        "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "文書形式でデータを保存するデータベースMongoDBと、クラウド版Atlasを開発・運営する会社。",
+      "revenue": "Atlasの利用量課金、企業向けライセンスと保守、技術支援・研修から稼ぎ、中心はサブスクリプション。",
+      "strength": "アプリのデータ構造を柔軟に変えやすく、同じ開発方式を自社環境から複数クラウドへ展開できる。",
+      "risks": "Atlasのクラウド利用料、最終赤字、無料版との共存、大手クラウドの競合製品、障害・情報漏えいが利益と成長を圧迫する。",
+      "competition": "従来型データベース、クラウド会社の管理型DB、他のNoSQL、オープンソース、顧客の自作基盤と競う。",
+      "relationships": "AWS、Microsoft Azure、Google Cloud上でAtlasを運営し、開発会社や企業ITへデータ基盤を提供する。"
+    },
+    "en": {
+      "business": "Develops the MongoDB document database and operates its managed cloud version, Atlas.",
+      "revenue": "Earns mainly from subscriptions including Atlas usage, enterprise licenses and support, plus consulting and training.",
+      "strength": "Lets applications change data structures flexibly and use a similar development model across on-premises and multiple clouds.",
+      "risks": "Atlas cloud costs, continued losses, the free edition, competing cloud databases, outages and data breaches pressure growth and margins.",
+      "competition": "Competes with traditional databases, managed cloud databases, other NoSQL systems, open source and customer-built platforms.",
+      "relationships": "Runs Atlas on AWS, Microsoft Azure and Google Cloud and supplies data infrastructure to developers and enterprise IT teams."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Relational database vendors",
+          "nameJa": "リレーショナルDB会社",
+          "role": "competitor",
+          "label": {
+            "ja": "企業データベースで競合",
+            "en": "Enterprise databases"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Managed cloud databases",
+          "nameJa": "クラウド会社の管理型DB",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウドDBで競合",
+            "en": "Managed cloud databases"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "NoSQL and open-source databases",
+          "nameJa": "NoSQL・オープンソースDB",
+          "role": "competitor",
+          "label": {
+            "ja": "開発者向けDBで競合",
+            "en": "Developer databases"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "supplier",
+          "label": {
+            "ja": "AWS上でAtlasを運営",
+            "en": "Hosts Atlas on AWS"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "supplier",
+          "label": {
+            "ja": "Azure上でAtlasを運営",
+            "en": "Hosts Atlas on Azure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "ticker": "GOOG",
+          "role": "supplier",
+          "label": {
+            "ja": "Google Cloud上でAtlasを運営",
+            "en": "Hosts Atlas on Google Cloud"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Application developers and enterprise IT",
+          "nameJa": "アプリ開発者・企業IT",
+          "role": "customer",
+          "label": {
+            "ja": "データベース基盤を提供",
+            "en": "Database platform"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 796343,
+    "tickers": [
+      "ADBE"
+    ],
+    "name": "Adobe",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Subscription revenue / Competition / AI risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+      }
+    ],
+    "ja": {
+      "business": "画像・動画・文書制作のCreative Cloud、PDFのDocument Cloud、企業向けマーケティング基盤を提供するソフト会社。",
+      "revenue": "Photoshop、Illustrator、Acrobatなどの個人・法人サブスクと、企業向けデータ・マーケティングサービスから稼ぐ。",
+      "strength": "制作ソフトの定番製品群、PDF規格、企業の制作・承認・配信までつなぐ環境と、権利に配慮した生成AIを持つ。",
+      "risks": "生成AIや無料ツールによる代替、契約更新、価格への反発、著作権・学習データ規制、競合への人材流出がリスク。",
+      "competition": "制作ソフト、生成AI、OS・機器会社、文書・電子署名、企業マーケティング、SNSの各社と競う。",
+      "relationships": "個人クリエイター、企業の制作部門、文書利用者、マーケティング・営業部門へ制作・文書・顧客体験ツールを提供する。"
+    },
+    "en": {
+      "business": "Provides Creative Cloud for images and video, Document Cloud for PDF and enterprise customer-experience and marketing software.",
+      "revenue": "Earns from individual and enterprise subscriptions to products such as Photoshop, Illustrator and Acrobat and from enterprise data and marketing services.",
+      "strength": "Combines standard creative tools, the PDF ecosystem, end-to-end enterprise content workflows and commercially safer generative AI.",
+      "risks": "Generative AI and free tools, renewals, pricing resistance, copyright and training-data rules and talent competition can weaken results.",
+      "competition": "Competes with creative software, generative AI, operating-system and hardware vendors, document and e-signature tools, marketing platforms and social media.",
+      "relationships": "Supplies creative, document and customer-experience tools to creators, enterprise content teams, document users and marketing and sales organizations."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Creative and generative-AI tools",
+          "nameJa": "制作・生成AIツール",
+          "role": "competitor",
+          "label": {
+            "ja": "画像・動画制作で競合",
+            "en": "Image and video creation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Document and e-signature platforms",
+          "nameJa": "文書・電子署名サービス",
+          "role": "competitor",
+          "label": {
+            "ja": "PDF・契約業務で競合",
+            "en": "PDF and agreement workflows"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprise marketing platforms",
+          "nameJa": "企業向けマーケティング基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客データ・配信で競合",
+            "en": "Customer data and marketing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Social and mobile creation apps",
+          "nameJa": "SNS・モバイル制作アプリ",
+          "role": "competitor",
+          "label": {
+            "ja": "簡易制作・配信で競合",
+            "en": "Lightweight creation and distribution"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Creators and media teams",
+          "nameJa": "クリエイター・メディア制作チーム",
+          "role": "customer",
+          "label": {
+            "ja": "画像・動画・デザイン制作を提供",
+            "en": "Image, video and design creation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Document and legal teams",
+          "nameJa": "文書・法務部門",
+          "role": "customer",
+          "label": {
+            "ja": "PDF・署名・承認を提供",
+            "en": "PDF, signatures and approvals"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Marketing and commerce teams",
+          "nameJa": "マーケティング・EC部門",
+          "role": "customer",
+          "label": {
+            "ja": "顧客データ・体験管理を提供",
+            "en": "Customer data and experience management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 896878,
+    "tickers": [
+      "INTU"
+    ],
+    "name": "Intuit",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Products / Revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/896878/000089687826000037/intu-20260731.htm"
+      }
+    ],
+    "ja": {
+      "business": "中小企業向けQuickBooks、個人の確定申告TurboTax、金融比較Credit Karma、営業支援Mailchimpを提供する会社。",
+      "revenue": "会計・給与・税務ソフトのサブスク、決済手数料、融資、確定申告支援、金融商品の送客、マーケティングサービスから稼ぐ。",
+      "strength": "会計、給与、決済、税務、融資を同じ顧客データでつなぎ、専門家支援とAIを組み合わせられる。",
+      "risks": "無料の税務・会計サービス、政府の直接申告、税制変更、信用・決済損失、重要な税務シーズンの障害が業績に影響する。",
+      "competition": "会計・給与、税務申告、決済・融資、個人金融比較、マーケティングソフトの各市場で大手と新興企業に競う。",
+      "relationships": "中小企業、会計士、納税者へソフトと専門家支援を提供し、銀行・カード・保険会社へCredit Karma利用者を送客する。"
+    },
+    "en": {
+      "business": "Provides QuickBooks for small businesses, TurboTax for tax filing, Credit Karma for consumer finance and Mailchimp for marketing.",
+      "revenue": "Earns from accounting, payroll and tax subscriptions, payments, lending, assisted tax, financial-product referrals and marketing services.",
+      "strength": "Connects accounting, payroll, payments, tax and lending on shared customer data and combines software with experts and AI.",
+      "risks": "Free tax and accounting tools, government direct filing, tax-law changes, credit and payment losses and peak-season outages can affect results.",
+      "competition": "Competes across accounting and payroll, tax filing, payments and lending, consumer finance comparison and marketing software.",
+      "relationships": "Serves small businesses, accountants and taxpayers and refers Credit Karma users to banks, card issuers and insurers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Accounting and payroll software",
+          "nameJa": "会計・給与ソフト会社",
+          "role": "competitor",
+          "label": {
+            "ja": "中小企業の経理で競合",
+            "en": "Small-business finance"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Tax preparation services",
+          "nameJa": "確定申告サービス",
+          "role": "competitor",
+          "label": {
+            "ja": "個人・専門家向け税務で競合",
+            "en": "Consumer and professional tax"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Government tax-filing systems",
+          "nameJa": "政府の税務申告システム",
+          "role": "competitor",
+          "label": {
+            "ja": "無料の直接申告と競合",
+            "en": "Free direct filing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Payments and fintech platforms",
+          "nameJa": "決済・フィンテック会社",
+          "role": "competitor",
+          "label": {
+            "ja": "決済・融資・金融比較で競合",
+            "en": "Payments, lending and comparison"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Small and mid-market businesses",
+          "nameJa": "中小・中堅企業",
+          "role": "customer",
+          "label": {
+            "ja": "会計・給与・決済を提供",
+            "en": "Accounting, payroll and payments"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Consumers and tax filers",
+          "nameJa": "個人・納税者",
+          "role": "customer",
+          "label": {
+            "ja": "税務申告・金融管理を提供",
+            "en": "Tax filing and personal finance"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Accountants and tax professionals",
+          "nameJa": "会計士・税務専門家",
+          "role": "customer",
+          "label": {
+            "ja": "専門家向け税務ソフトを提供",
+            "en": "Professional tax software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Banks, card issuers and insurers",
+          "nameJa": "銀行・カード・保険会社",
+          "role": "partner",
+          "label": {
+            "ja": "Credit Karmaから利用者を送客",
+            "en": "Credit Karma referrals"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1543151,
+    "tickers": [
+      "UBER"
+    ],
+    "name": "Uber Technologies",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Mobility / Delivery / Freight / Revenue / Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1543151/000154315126000015/uber-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "配車、料理・食料品配送、企業向け移動、北米の貨物輸送をアプリで仲介する会社。",
+      "revenue": "乗客・注文者の支払額から運転手や店舗への支払いを除いた手数料、広告、会員サービス、貨物輸送から稼ぐ。",
+      "strength": "乗客、運転手、配達員、店舗を同じ需要予測と決済基盤で結び、移動と配送の稼働を相互に高められる。",
+      "risks": "運転手の雇用区分、各国規制、保険・事故、値下げ競争、自動運転への移行、地域ごとの競合が利益を左右する。",
+      "competition": "配車ではLyft、Didi、Bolt、Olaなどと競い、配送では専門アプリ、貨物では仲介会社や運送会社と競う。",
+      "relationships": "運転手・配達員と乗客・注文者、店舗を仲介し、荷主と運送会社をUber Freightでつなぐ。"
+    },
+    "en": {
+      "business": "Operates apps that connect ride-hailing, food and grocery delivery, business travel and North American freight.",
+      "revenue": "Earns platform fees after driver and merchant payouts, plus advertising, memberships and freight services.",
+      "strength": "Uses one demand, dispatch and payments platform to connect riders, drivers, couriers and merchants and improve utilization across mobility and delivery.",
+      "risks": "Worker classification, regulation, insurance and accidents, discounting, autonomous vehicles and local competitors can affect profitability.",
+      "competition": "Competes with Lyft, Didi, Bolt and Ola in rides, specialist delivery apps, and freight brokers and carriers.",
+      "relationships": "Connects drivers and couriers with riders and orderers, merchants with delivery demand, and shippers with carriers through Uber Freight."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Lyft",
+          "ticker": "LYFT",
+          "role": "competitor",
+          "label": {
+            "ja": "北米の配車で競合",
+            "en": "North American ride-hailing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Didi",
+          "role": "competitor",
+          "label": {
+            "ja": "海外の配車で競合",
+            "en": "International ride-hailing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Bolt",
+          "role": "competitor",
+          "label": {
+            "ja": "配車・配送で競合",
+            "en": "Ride-hailing and delivery"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Ola",
+          "role": "competitor",
+          "label": {
+            "ja": "インドの配車で競合",
+            "en": "Indian ride-hailing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Drivers and couriers",
+          "nameJa": "運転手・配達員",
+          "role": "supplier",
+          "label": {
+            "ja": "移動・配送サービスを提供",
+            "en": "Provide mobility and delivery capacity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Riders and delivery customers",
+          "nameJa": "乗客・配送利用者",
+          "role": "customer",
+          "label": {
+            "ja": "移動・注文を仲介",
+            "en": "Mobility and order matching"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Restaurants and retailers",
+          "nameJa": "飲食店・小売店",
+          "role": "partner",
+          "label": {
+            "ja": "商品をアプリに掲載・配送",
+            "en": "List and deliver products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Shippers and freight carriers",
+          "nameJa": "荷主・貨物運送会社",
+          "role": "customer",
+          "label": {
+            "ja": "貨物案件を仲介",
+            "en": "Freight matching"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1065280,
+    "tickers": [
+      "NFLX"
+    ],
+    "name": "Netflix",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Membership revenue / Content / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000034/nflx-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "映画、ドラマ、アニメ、ライブ番組、ゲームをインターネット配信する世界的な動画サービス会社。",
+      "revenue": "中心は月額会員料金で、広告付きプランの広告、消費者向け商品、ライブ体験なども一部収益になる。",
+      "strength": "世界規模の会員基盤と視聴データを使い、各地域の作品を制作・調達して世界へ配信できる。",
+      "risks": "作品費の上昇、会員の解約、値上げへの反発、ヒット作不足、為替、規制、制作遅延が利益に影響する。",
+      "competition": "他の動画配信、テレビ・ケーブル、映画・ゲーム・SNSなど、消費者の余暇時間と娯楽費を幅広く争う。",
+      "relationships": "制作会社や権利者から作品を調達・共同制作し、通信・端末事業者と配信・料金回収を行い、広告主へ視聴枠を販売する。"
+    },
+    "en": {
+      "business": "Streams films, series, animation, live programming and games to members worldwide.",
+      "revenue": "Earns mainly from monthly memberships, with smaller contributions from advertising, consumer products and live experiences.",
+      "strength": "Uses a global member base and viewing data to produce and license local content and distribute it worldwide.",
+      "risks": "Rising content costs, churn, pricing resistance, weak titles, currencies, regulation and production delays can affect profits.",
+      "competition": "Competes broadly with streaming services, broadcasters and cable, film, games and social media for consumer time and entertainment spending.",
+      "relationships": "Licenses and co-produces content with studios and rights holders, distributes and bills through telecom and device partners, and sells viewing inventory to advertisers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Streaming video platforms",
+          "nameJa": "動画配信サービス",
+          "role": "competitor",
+          "label": {
+            "ja": "会員・作品で競合",
+            "en": "Subscribers and content"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Broadcasters and cable networks",
+          "nameJa": "テレビ局・ケーブル会社",
+          "role": "competitor",
+          "label": {
+            "ja": "映像視聴時間で競合",
+            "en": "Video viewing time"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Games and social media",
+          "nameJa": "ゲーム・SNS",
+          "role": "competitor",
+          "label": {
+            "ja": "余暇時間で競合",
+            "en": "Consumer leisure time"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Film and live entertainment",
+          "nameJa": "映画・ライブ娯楽",
+          "role": "competitor",
+          "label": {
+            "ja": "娯楽費で競合",
+            "en": "Entertainment spending"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Studios and content rights holders",
+          "nameJa": "制作会社・作品権利者",
+          "role": "supplier",
+          "label": {
+            "ja": "作品を調達・共同制作",
+            "en": "License and co-produce content"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Telecom and device partners",
+          "nameJa": "通信・端末事業者",
+          "role": "partner",
+          "label": {
+            "ja": "アプリ配信・料金回収で連携",
+            "en": "Distribution and billing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Members worldwide",
+          "nameJa": "世界の会員",
+          "role": "customer",
+          "label": {
+            "ja": "動画・ライブ・ゲームを配信",
+            "en": "Streaming, live and games"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Advertisers and agencies",
+          "nameJa": "広告主・広告代理店",
+          "role": "customer",
+          "label": {
+            "ja": "広告付きプランの枠を販売",
+            "en": "Ad-supported viewing inventory"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
   }
 ]

@@ -4,12 +4,13 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is fifty-nine issuers / sixty tickers: NVDA, MU, GOOG,
+Researched coverage is seventy-one issuers / seventy-two tickers: NVDA, MU, GOOG,
 GOOGL, AAPL, AMZN, META, COST, MSFT, NBIS, TSM, ASML, AVGO, AMD, ARM, CRDO,
 ANET, MRVL, VRT, ALAB, LITE, COHR, AMAT, APH, INTC, SIMO, AAOI, BE, VST, GEV,
 IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL, ETN, PANW, CRWD, PLTR,
 SNOW, QCOM, CRM, NOW, IBM, TXN, ADI, NXPI, MCHP, MPWR, ON, WDC, STX, HPQ,
-JBL, CDNS and SNPS.
+JBL, CDNS, SNPS, CIEN, KEYS, FLEX, FTNT, ZS, NET, DDOG, MDB, ADBE, INTU,
+UBER and NFLX.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -170,3 +171,14 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - JBLは実名非開示の大口顧客を推測せず、AI・クラウド基盤、半導体装置、自動車・医療などの開示済み市場で表示する。
 - 公式資料: [TXN](https://www.sec.gov/Archives/edgar/data/97476/000009747626000059/txn-20251231.htm), [ADI](https://www.sec.gov/Archives/edgar/data/6281/000000628125000153/adi-20251101.htm), [NXPI](https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm), [MCHP](https://www.sec.gov/Archives/edgar/data/827054/000082705426000016/mchp-20260331.htm), [MPWR](https://www.sec.gov/Archives/edgar/data/1280452/000143774926006113/mpwr20251231_10k.htm), [ON](https://www.sec.gov/Archives/edgar/data/1097864/000109786426000006/on-20251231.htm), [WDC](https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/wdc-20260703.htm), [STX](https://www.sec.gov/Archives/edgar/data/1137789/000113778926000159/stx-20260703.htm), [HPQ](https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm), [JBL](https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm), [CDNS](https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm), [SNPS](https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/snps-20251031.htm).
 - 全検索企業の収録は未完了。次回は既存マップとつながる通信・光学・クラウド関連の未収録企業を優先する。
+
+### 2026-10-14 通信・クラウド・セキュリティ・アプリ12社追加
+
+- CIEN / KEYS / FLEX / FTNT / ZS / NET / DDOG / MDB / ADBE / INTU / UBER / NFLXを追加。合計71社・72銘柄コード。
+- 各社の最新Form 10-Kを一次資料として、日英6項目、競合、供給元・顧客・提携先を確認。確認日は2026-10-14。
+- Cienaはクラウド・通信事業者・海底回線、Keysightは通信・半導体・自動車・航空宇宙、Flexは受託製造とデータセンター電源を区別した。
+- Fortinet / Zscaler / Cloudflareは、ファイアウォール、ゼロトラスト、Web配信・防御の違いが初見でも分かるよう整理。競合関係と販売・運用パートナーを混同していない。
+- Datadog / MongoDBは利用量課金とクラウド基盤費を明示。MongoDB AtlasのAWS / Azure / Google Cloud利用は供給・採用元として表示した。
+- Adobe / Intuit / Uber / Netflixは、収益源と企業固有のリスクをサービス別に記述。匿名顧客は社名を推測せず業種単位で収録した。
+- 公式資料: [CIEN](https://www.sec.gov/Archives/edgar/data/936395/000162828025056698/cien-20251101.htm), [KEYS](https://www.sec.gov/Archives/edgar/data/1601046/000160104625000127/keys-20251031.htm), [FLEX](https://www.sec.gov/Archives/edgar/data/866374/000086637426000012/flex-20260331.htm), [FTNT](https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm), [ZS](https://www.sec.gov/Archives/edgar/data/1713683/000171368326000157/zs-20260731.htm), [NET](https://www.sec.gov/Archives/edgar/data/1477333/000147733326000016/cloud-20251231.htm), [DDOG](https://www.sec.gov/Archives/edgar/data/1561550/000162828026008819/ddog-20251231.htm), [MDB](https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm), [ADBE](https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm), [INTU](https://www.sec.gov/Archives/edgar/data/896878/000089687826000037/intu-20260731.htm), [UBER](https://www.sec.gov/Archives/edgar/data/1543151/000154315126000015/uber-20251231.htm), [NFLX](https://www.sec.gov/Archives/edgar/data/1065280/000106528026000034/nflx-20251231.htm).
+- 既存UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は引き続き未完了。
