@@ -2350,5 +2350,740 @@
         }
       ]
     }
+  },
+  {
+    "cik": 50863,
+    "tickers": [
+      "INTC"
+    ],
+    "name": "Intel",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Business / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+      },
+      {
+        "label": "Intel · NVIDIA product collaboration, September 2025",
+        "url": "https://newsroom.intel.com/artificial-intelligence/intel-and-nvidia-to-jointly-develop-ai-infrastructure-and-personal-computing-products"
+      }
+    ],
+    "ja": {
+      "business": "パソコンやサーバーのCPUを設計・製造する半導体会社。外部企業向けの受託製造も育てる。",
+      "revenue": "CoreやXeonなどの半導体販売が中心。製造・先端パッケージングも提供する。",
+      "strength": "x86対応ソフトの広い基盤と、自社の設計・製造技術を持つ。",
+      "risks": "製造技術の遅れや工場の稼働率低下が重荷。AMDや独自チップとの競争も厳しい。",
+      "competition": "CPUでAMD、AI計算でNVIDIA、受託製造でTSMCなどと競う。",
+      "relationships": "一部チップの製造をTSMCに委託。NVIDIAとはPC・データセンター製品を共同開発する。"
+    },
+    "en": {
+      "business": "Designs and manufactures PC and server processors, while building an external foundry business.",
+      "revenue": "Primarily chip sales, including Core and Xeon, plus manufacturing and advanced packaging.",
+      "strength": "A broad x86 software ecosystem and in-house chip design and manufacturing capabilities.",
+      "risks": "Process delays, underused factories and competition from AMD and custom chips can weigh on returns.",
+      "competition": "Competes with AMD in CPUs, NVIDIA in AI computing and TSMC in foundry services.",
+      "relationships": "Uses TSMC for some chips and collaborates with NVIDIA on PC and data-center products."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "AMD",
+          "role": "competitor",
+          "label": {
+            "ja": "PC・サーバーCPU",
+            "en": "PC and server CPUs"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMD"
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "competitor",
+          "label": {
+            "ja": "AI計算基盤",
+            "en": "AI computing"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "role": "competitor",
+          "label": {
+            "ja": "半導体の受託製造",
+            "en": "Foundry services"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "TSM"
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "role": "supplier",
+          "label": {
+            "ja": "一部製品のチップ製造を委託",
+            "en": "Manufactures tiles for selected products"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "TSM"
+        },
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "partner",
+          "label": {
+            "ja": "PC・データセンター製品の共同開発",
+            "en": "Joint PC and data-center product development"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "NVDA"
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1329394,
+    "tickers": [
+      "SIMO"
+    ],
+    "name": "Silicon Motion",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 20-F · Business / Customers / Manufacturing",
+        "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm"
+      }
+    ],
+    "ja": {
+      "business": "SSDなどの読み書きを制御する、NANDフラッシュ用コントローラーの設計会社。",
+      "revenue": "SSD・スマートフォン向けコントローラーやストレージ製品の販売。",
+      "strength": "多様なNANDに対応する制御技術とファームウェアを組み合わせる。",
+      "risks": "主要顧客への依存と価格競争。NANDメーカーの内製化や製造委託先の供給制約も響く。",
+      "competition": "PhisonやMicrochip、顧客の内製コントローラーと競う。",
+      "relationships": "TSMCなどに製造を委託し、MicronやKioxiaなどにコントローラーを供給する。"
+    },
+    "en": {
+      "business": "Designs controllers that manage data in NAND-based storage such as SSDs.",
+      "revenue": "Sales of SSD and mobile-storage controllers, alongside storage products.",
+      "strength": "Controller technology and firmware supporting a wide range of NAND devices.",
+      "risks": "Customer concentration, pricing pressure, in-house customer designs and foundry constraints.",
+      "competition": "Competes with Phison, Microchip and customers’ internally developed controllers.",
+      "relationships": "Outsources manufacturing to foundries including TSMC and sells to Micron and Kioxia."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Phison",
+          "role": "competitor",
+          "label": {
+            "ja": "NANDコントローラー",
+            "en": "NAND controllers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microchip",
+          "role": "competitor",
+          "label": {
+            "ja": "ストレージ制御半導体",
+            "en": "Storage controllers"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MCHP"
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "TSMC",
+          "role": "supplier",
+          "label": {
+            "ja": "コントローラー半導体の製造",
+            "en": "Controller chip fabrication"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "TSM"
+        },
+        {
+          "kind": "company",
+          "name": "Micron",
+          "role": "customer",
+          "label": {
+            "ja": "2025年開示の主要顧客",
+            "en": "Major customer disclosed for 2025"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MU"
+        },
+        {
+          "kind": "company",
+          "name": "Kioxia",
+          "role": "customer",
+          "label": {
+            "ja": "2025年開示の主要顧客",
+            "en": "Major customer disclosed for 2025"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1158114,
+    "tickers": [
+      "AAOI"
+    ],
+    "name": "Applied Optoelectronics",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Business / Customers / Competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1158114/000143774926005875/aaoi20251231_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "データセンターやケーブル通信で使う、光通信部品・モジュールのメーカー。",
+      "revenue": "光トランシーバーやレーザー、ケーブル通信向け機器の販売。",
+      "strength": "レーザーから完成品まで自社で手がけ、設計と量産を連動させる。",
+      "risks": "少数顧客への依存と大きな固定費。受注変動や新製品の量産遅れが利益を圧迫する。",
+      "competition": "Coherent、Lumentum、InnoLightなどと光通信製品で競う。",
+      "relationships": "Microsoftにデータセンター向け製品を供給。Digicommはケーブル通信分野の主要顧客。"
+    },
+    "en": {
+      "business": "Makes optical components and modules for data centers and cable networks.",
+      "revenue": "Sales of transceivers, lasers and cable-network equipment.",
+      "strength": "In-house production from lasers to finished systems links design with manufacturing.",
+      "risks": "Concentrated customers, high fixed costs, volatile orders and production ramp risks.",
+      "competition": "Competes with Coherent, Lumentum and InnoLight in optical networking.",
+      "relationships": "Supplies Microsoft’s data-center business; Digicomm is a major cable-network customer."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Coherent",
+          "role": "competitor",
+          "label": {
+            "ja": "光通信部品・モジュール",
+            "en": "Optical components and modules"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "COHR"
+        },
+        {
+          "kind": "company",
+          "name": "Lumentum",
+          "role": "competitor",
+          "label": {
+            "ja": "光通信部品・モジュール",
+            "en": "Optical components and modules"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "LITE"
+        },
+        {
+          "kind": "company",
+          "name": "InnoLight",
+          "role": "competitor",
+          "label": {
+            "ja": "光トランシーバー",
+            "en": "Optical transceivers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "customer",
+          "label": {
+            "ja": "データセンター向け光通信製品",
+            "en": "Data-center optical products"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "Digicomm",
+          "role": "customer",
+          "label": {
+            "ja": "ケーブル通信向け製品",
+            "en": "Cable-network products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "customer",
+          "label": {
+            "ja": "製品購入に連動するワラント付き取引契約",
+            "en": "Product-purchase agreement with purchase-linked warrants"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1664703,
+    "tickers": [
+      "BE"
+    ],
+    "name": "Bloom Energy",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Business / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026006516/be-20251231.htm"
+      },
+      {
+        "label": "Bloom Energy · Oracle partnership expansion, April 2026",
+        "url": "https://www.bloomenergy.com/news/bloom-energy-and-oracle-expand-strategic-partnership-to-deploy-up-to-2.8-gw-to-accelerate-ai-infrastructure-build-out/"
+      },
+      {
+        "label": "Bloom Energy · Brookfield infrastructure partnership",
+        "url": "https://www.bloomenergy.com/news/brookfield-and-bloom-energy-announce-5-billion-strategic-ai-infrastructure-partnership/"
+      }
+    ],
+    "ja": {
+      "business": "燃料電池を使い、データセンターや工場の敷地内で発電する設備を作る会社。",
+      "revenue": "発電設備の販売・設置・保守と、一部契約での電力販売。",
+      "strength": "必要な場所に段階的に増設できるモジュール型の発電設備。",
+      "risks": "導入資金や工事の遅れ、大口案件への依存、燃料価格や制度変更が採算に響く。",
+      "competition": "電力系統からの調達や、ガスエンジン・タービンなどの発電方式と競う。",
+      "relationships": "Oracle向けの発電設備を展開し、Brookfieldとは案件の資金面で協力する。"
+    },
+    "en": {
+      "business": "Builds fuel-cell systems that generate power on site at data centers and factories.",
+      "revenue": "Equipment sales, installation, maintenance and electricity sales under some contracts.",
+      "strength": "Modular systems allow customers to add on-site power in stages.",
+      "risks": "Financing, installation delays, large-project concentration, fuel costs and policy changes affect returns.",
+      "competition": "Competes with grid power and alternatives such as gas engines and turbines.",
+      "relationships": "Deploys systems for Oracle and works with Brookfield on project financing."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Grid power",
+          "role": "competitor",
+          "label": {
+            "ja": "系統電力との選択",
+            "en": "Alternative to on-site generation"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "nameJa": "系統電力"
+        },
+        {
+          "kind": "industry",
+          "name": "Gas engines & turbines",
+          "role": "competitor",
+          "label": {
+            "ja": "常時稼働する発電方式",
+            "en": "Firm power generation"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "nameJa": "ガス発電設備"
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "role": "customer",
+          "label": {
+            "ja": "OCI向け燃料電池設備の導入・拡張",
+            "en": "Fuel-cell deployments and expansion for OCI"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "ORCL"
+        },
+        {
+          "kind": "company",
+          "name": "Brookfield",
+          "role": "partner",
+          "label": {
+            "ja": "発電設備案件の資金調達・開発で協力",
+            "en": "Project financing and development partnership"
+          },
+          "sourceIndexes": [
+            2
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1692819,
+    "tickers": [
+      "VST"
+    ],
+    "name": "Vistra",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Business / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000006/vistra-20251231.htm"
+      },
+      {
+        "label": "Vistra · Meta nuclear power agreements, January 2026",
+        "url": "https://investor.vistracorp.com/2026-01-09-Vistra-and-Meta-Announce-Agreements-to-Support-Nuclear-Plants-in-PJM-and-Add-New-Nuclear-Generation-to-the-Grid"
+      },
+      {
+        "label": "Vistra · Q2 2026 results",
+        "url": "https://investor.vistracorp.com/2026-08-07-Vistra-Reports-Second-Quarter-2026-Results"
+      }
+    ],
+    "ja": {
+      "business": "原子力や天然ガスなどの発電所を持ち、家庭・企業にも電気を販売する米国の電力会社。",
+      "revenue": "卸売市場での電力・供給能力の販売と、小売契約からの収入。",
+      "strength": "発電と小売を組み合わせ、多様な電源を運用できる。",
+      "risks": "電力・燃料価格、異常気象、発電所の停止や規制変更で損益が変わる。",
+      "competition": "他の発電事業者や電力小売会社と、価格や供給力で競う。",
+      "relationships": "Metaと長期の原子力電力購入契約を締結。電力は送電網を通じて供給される。"
+    },
+    "en": {
+      "business": "A US power producer and retailer with nuclear, gas and other generation assets.",
+      "revenue": "Wholesale energy and capacity sales, plus retail customer contracts.",
+      "strength": "Combines a diverse generation fleet with retail operations.",
+      "risks": "Power and fuel prices, extreme weather, plant outages and regulation affect earnings.",
+      "competition": "Competes with other generators and electricity retailers.",
+      "relationships": "Has long-term nuclear power agreements with Meta; generation remains connected to the grid."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Power producers",
+          "role": "competitor",
+          "label": {
+            "ja": "卸売電力・供給能力",
+            "en": "Wholesale energy and capacity"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "nameJa": "発電事業者"
+        },
+        {
+          "kind": "industry",
+          "name": "Electricity retailers",
+          "role": "competitor",
+          "label": {
+            "ja": "家庭・企業向け電力販売",
+            "en": "Retail electricity contracts"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "nameJa": "電力小売会社"
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Meta",
+          "role": "customer",
+          "label": {
+            "ja": "原子力電力の20年契約。購入開始は2026年末予定",
+            "en": "20-year nuclear PPAs; purchases scheduled to begin in late 2026"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "META"
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1996810,
+    "tickers": [
+      "GEV"
+    ],
+    "name": "GE Vernova",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Annual Report · Business / Competition / Risk factors",
+        "url": "https://www.gevernova.com/sites/default/files/gevernova_2025_annual_report.pdf"
+      },
+      {
+        "label": "GE Vernova · AWS strategic framework agreement",
+        "url": "https://www.gevernova.com/news/press-releases/ge-vernova-aws-accelerate-global-energy-demand"
+      }
+    ],
+    "ja": {
+      "business": "ガスタービンや風力発電機、送配電設備を作る電力インフラ企業。",
+      "revenue": "設備の販売と、納入後の長期保守・部品交換サービス。",
+      "strength": "世界各地の納入設備と保守網を持ち、発電から送電まで対応する。",
+      "risks": "長期案件の原価上昇や納期遅延、設備の品質問題、風力事業の採算が課題。",
+      "competition": "発電でSiemens EnergyやMitsubishi Power、風力でVestasなどと競う。",
+      "relationships": "AWSとデータセンター向け電力・クラウド活用で協力。日立とは原子力技術の合弁を持つ。"
+    },
+    "en": {
+      "business": "Builds gas turbines, wind turbines and grid equipment for the power industry.",
+      "revenue": "Equipment sales and long-term maintenance, upgrades and replacement parts.",
+      "strength": "A global installed base and service network spanning generation and the grid.",
+      "risks": "Long-project cost inflation, delivery delays, equipment quality and wind profitability are risks.",
+      "competition": "Competes with Siemens Energy and Mitsubishi Power in generation, and Vestas in wind.",
+      "relationships": "Works with AWS on power and cloud initiatives and with Hitachi through nuclear joint ventures."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Siemens Energy",
+          "role": "competitor",
+          "label": {
+            "ja": "発電・送電設備",
+            "en": "Generation and grid equipment"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Mitsubishi Power",
+          "role": "competitor",
+          "label": {
+            "ja": "発電設備",
+            "en": "Power generation equipment"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Vestas",
+          "role": "competitor",
+          "label": {
+            "ja": "風力発電機",
+            "en": "Wind turbines"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "partner",
+          "label": {
+            "ja": "AWSの電力需要とGEVのクラウド活用で協力",
+            "en": "Power initiatives for AWS and cloud services for GE Vernova"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Hitachi",
+          "role": "partner",
+          "label": {
+            "ja": "原子炉技術・燃料・保守の合弁事業",
+            "en": "Nuclear technology, fuel and services joint ventures"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1878848,
+    "tickers": [
+      "IREN"
+    ],
+    "name": "IREN",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Business / Competition / Infrastructure",
+        "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "自社データセンターでAI向けGPU計算サービスとビットコイン採掘を行う会社。",
+      "revenue": "GPU計算能力の提供と採掘収入。既存設備のAI向け転換も進める。",
+      "strength": "電力・土地・データセンターを押さえ、計算設備の導入まで一体で進める。",
+      "risks": "巨額投資と資金調達、納期・顧客集中、GPUの陳腐化や採掘採算に左右される。",
+      "competition": "AIクラウドではCoreWeave、Nebiusや大手クラウドと競う。",
+      "relationships": "NVIDIA・AMDの計算基盤やDellの設備を使い、Microsoft向けGPUサービスを提供する。"
+    },
+    "en": {
+      "business": "Operates data centers for AI GPU services and Bitcoin mining.",
+      "revenue": "GPU computing services and mining revenue, while converting capacity toward AI.",
+      "strength": "Controls power, sites and data centers alongside compute deployment.",
+      "risks": "Heavy funding needs, delivery deadlines, customer concentration, GPU obsolescence and mining economics.",
+      "competition": "Competes with CoreWeave, Nebius and hyperscalers in AI cloud services.",
+      "relationships": "Uses NVIDIA and AMD platforms and Dell equipment; provides dedicated GPU services to Microsoft."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "CoreWeave",
+          "role": "competitor",
+          "label": {
+            "ja": "AI向けGPUクラウド",
+            "en": "AI GPU cloud"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "CRWV"
+        },
+        {
+          "kind": "company",
+          "name": "Nebius",
+          "role": "competitor",
+          "label": {
+            "ja": "AI向けGPUクラウド",
+            "en": "AI GPU cloud"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "NBIS"
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "role": "competitor",
+          "label": {
+            "ja": "AWSのクラウドサービス",
+            "en": "AWS cloud services"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "role": "competitor",
+          "label": {
+            "ja": "Google Cloud",
+            "en": "Google Cloud"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GOOG"
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "NVIDIA",
+          "role": "supplier",
+          "label": {
+            "ja": "GPU・ネットワーク基盤を採用",
+            "en": "GPU and networking platforms"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "NVDA"
+        },
+        {
+          "kind": "company",
+          "name": "AMD",
+          "role": "supplier",
+          "label": {
+            "ja": "AI向けGPU基盤を採用",
+            "en": "AI GPU platforms"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMD"
+        },
+        {
+          "kind": "company",
+          "name": "Dell",
+          "role": "supplier",
+          "label": {
+            "ja": "GPUシステムの調達契約",
+            "en": "GPU systems purchase agreements"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "DELL"
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "customer",
+          "label": {
+            "ja": "専用GPUサービス。Horizon 1は2026年8月に受入済み",
+            "en": "Dedicated GPU services; Horizon 1 accepted in August 2026"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MSFT"
+        }
+      ]
+    }
   }
 ]

@@ -4,9 +4,9 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is twenty-three issuers / twenty-four tickers: NVDA, MU, GOOG,
+Researched coverage is thirty issuers / thirty-one tickers: NVDA, MU, GOOG,
 GOOGL, AAPL, AMZN, META, COST, MSFT, NBIS, TSM, ASML, AVGO, AMD, ARM, CRDO,
-ANET, MRVL, VRT, ALAB, LITE, COHR, AMAT and APH.
+ANET, MRVL, VRT, ALAB, LITE, COHR, AMAT, APH, INTC, SIMO, AAOI, BE, VST, GEV and IREN.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -75,8 +75,8 @@ dates are attached to each edge. Some companies can have both competition and
 collaboration relationships; these remain separate.
 
 Named-company connected components are returned to the client. Unnamed industry
-buckets never connect unrelated issuers. A company without a researched named
-connection falls back to its own industry relationships. A layer is a layout
+buckets never connect unrelated issuers. Each company also retains its own scoped industry relationships, including when
+named connections are present. A layer is a layout
 category, not a claim that a company only operates in that business.
 
 Each source map entry stores kind (company/industry), name, optional nameJa/ticker,
@@ -126,3 +126,14 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - 「企業を知る」右側の会社名を削除し、閲覧中の企業名の重複を減らす。
 - 「06」上の水色ラインは撤去。番号の水色は維持し、競合の紫の区切りだけを残す。
 - タップの発光を枠線中心からカード面全体の柔らかな光に変更。180msで明るくなり、タップから620ms後に480msかけて消える。動きを減らす設定では遷移を止める。
+
+
+### 2026-10-14 未対応の監視銘柄を7社追加
+
+- INTC / SIMO / AAOI / BE / VST / GEV / IRENを追加。合計30社・31銘柄コード。
+- 6項目を日英で収録し、競合と取引関係は年次開示・企業公式発表に紐付けた。画面の共通形式、固定する企業、タップ発光を維持。
+- VST→Metaは契約済み・2026年末開始予定として区別。IREN→MicrosoftはHorizon 1の受入済み分を区別。採用・共同開発を無条件の購入契約と扱わない。
+- 実名リンクと業種単位の競合が併存しても、対象企業自身の業種情報を落とさない。他社の匿名顧客・業種から繋がりを作らない。
+- 新規企業の配置を半導体・光通信・電源・クラウドの既存区分に対応付けた。
+- 05/06の左位置を共通化し、06上の薄いグレー線を復元済み（104a939）。
+- ニュースの監視設定や取得・翻訳・配信、RESOLUTEは変更していない。全社収録や自動更新は未実装。

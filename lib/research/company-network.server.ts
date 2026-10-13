@@ -4,10 +4,10 @@ import type { CompanyNetwork, NetworkNode, NetworkEdge, NetworkEvidence, Network
 const layers: Record<string, number> = {
   ASML: 0, AMAT: 0, LRCX: 0, Nikon: 0, Canon: 0, "Carl Zeiss SMT": 0,
   TSM: 1, MU: 2, "SK hynix": 2, Samsung: 2, Kioxia: 2, SNDK: 2,
-  NVDA: 3, AMD: 3, AVGO: 3, INTC: 3, ARM: 3, ALAB: 3, MRVL: 3, CRDO: 3,
-  LITE: 4, COHR: 4, APH: 4, TEL: 4, GLW: 4, Molex: 4,
-  ANET: 5, VRT: 5, ETN: 5, CSCO: 5, HPE: 5, DELL: 5, SMCI: 5, "Schneider Electric": 5, Legrand: 5,
-  MSFT: 6, AMZN: 6, GOOG: 6, META: 6, NBIS: 6, ORCL: 6, CRWV: 6, Crusoe: 6, Lambda: 6,
+  NVDA: 3, AMD: 3, AVGO: 3, INTC: 3, ARM: 3, SIMO: 3, MCHP: 3, Phison: 3, ALAB: 3, MRVL: 3, CRDO: 3,
+  LITE: 4, COHR: 4, AAOI: 4, InnoLight: 4, APH: 4, TEL: 4, GLW: 4, Molex: 4,
+  BE: 5, VST: 5, GEV: 5, "Siemens Energy": 5, "Mitsubishi Power": 5, Vestas: 5, Hitachi: 5, ANET: 5, VRT: 5, ETN: 5, CSCO: 5, HPE: 5, DELL: 5, SMCI: 5, "Schneider Electric": 5, Legrand: 5,
+  IREN: 6, MSFT: 6, AMZN: 6, GOOG: 6, META: 6, NBIS: 6, ORCL: 6, CRWV: 6, Crusoe: 6, Lambda: 6,
 };
 
 function buildNetwork() {
@@ -82,9 +82,9 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
       if (included.has(edge.to) && !included.has(edge.from)) { included.add(edge.from); changed = true; }
     }
   }
-  // If no named connection is researched yet, show only this issuer's own
-  // industry-level facts. Do not manufacture named links to fill the canvas.
-  if (included.size === 1) for (const edge of catalog.edges) {
+  // Keep the root issuer’s own industry-level facts even when named links exist.
+  // Scoped buckets never pull in another issuer’s unnamed relationships.
+  for (const edge of catalog.edges) {
     if (edge.from === root) included.add(edge.to);
     if (edge.to === root) included.add(edge.from);
   }

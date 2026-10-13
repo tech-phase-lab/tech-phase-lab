@@ -15,7 +15,7 @@ test('every published company has six bilingual answers and dated primary source
     assert.match(company.reviewedOn, /^\d{4}-\d{2}-\d{2}$/);
     assert.ok(company.sources.length > 0);
     for (const source of company.sources) {
-      assert.equal(new URL(source.url).hostname, 'www.sec.gov');
+      assert.ok(new Set(['www.sec.gov', 'newsroom.intel.com', 'www.bloomenergy.com', 'investor.vistracorp.com', 'www.gevernova.com']).has(new URL(source.url).hostname), `Unreviewed source host: ${source.url}`);
       assert.ok(source.label.trim());
     }
     for (const lang of ['ja', 'en']) {

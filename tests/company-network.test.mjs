@@ -45,3 +45,19 @@ test('stable layered layout fits narrow screens without overlapping nodes', () =
     assert.deepEqual(layoutCompanyNetwork(graph.nodes,width),layout);
   }
 });
+
+
+test('new issuer maps retain scoped competition and verified relationship direction', () => {
+  for (const [cik,ticker,from,to] of [[1329394,'SIMO','SIMO','MU'],[1158114,'AAOI','AAOI','MSFT'],[1664703,'BE','BE','ORCL'],[1692819,'VST','VST','META'],[1878848,'IREN','DELL','IREN']]) {
+    const network=companyNetworkFor({cik,ticker});
+    assert.equal(network.root,ticker);
+    assert.ok(network.edges.some(e=>e.kind==='supply'&&e.from===from&&e.to===to));
+    assert.ok(networkFocus(network,ticker,'direct').competitors.size>0);
+    assert.ok(network.nodes.filter(n=>n.kind==='industry').every(n=>n.id.startsWith(`${ticker}:industry:`)));
+  }
+  const intel=companyNetworkFor({cik:50863,ticker:'INTC'});
+  assert.ok(intel.edges.some(e=>e.kind==='partner'&&e.from==='INTC'&&e.to==='NVDA'));
+  assert.ok(intel.edges.some(e=>e.kind==='competition'&&e.from==='INTC'&&e.to==='NVDA'));
+  const vistra=companyNetworkFor({cik:1692819,ticker:'VST'});
+  assert.ok(vistra.edges.find(e=>e.from==='VST'&&e.to==='META').evidence.some(e=>e.label.en.includes('scheduled')));
+});
