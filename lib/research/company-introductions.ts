@@ -14,6 +14,86 @@ export type CompanyIntroduction = {
 // on the server: the profile response includes only the selected issuer.
 export const companyIntroductions: CompanyIntroduction[] = [
   {
+    cik: 1633978, tickers: ["LITE"], name: "Lumentum", reviewedOn: "2026-10-13",
+    sources: [{ label: "FY2026 Form 10-K · Business / Risk factors / NVIDIA investment", url: "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm" }],
+    ja: {
+      business: "光でデータを送る部品や装置を作る会社。AIデータセンター向けの光通信に加え、加工用レーザーも扱う。",
+      revenue: "通信向けレーザーや光信号を送受信するモジュール、工場で使うレーザーなどの販売。",
+      strength: "光を生み出す半導体から通信モジュールまで手がけ、顧客が求める速度や省電力性能に合わせて設計できる。",
+      competition: "光通信部品・モジュールやレーザーのメーカー。顧客が同種の部品を内製する場合も競争になる。",
+      relationships: "クラウド事業者や通信機器メーカーへ供給。NVIDIAからは2026年3月に出資を受けた。",
+      risks: "大口顧客の発注変更、価格競争、新製品の量産や供給能力拡大の遅れ。需要予測が外れると在庫も負担になる。",
+    },
+    en: {
+      business: "Makes optical components and systems for data transmission, including AI data centers, alongside industrial lasers.",
+      revenue: "Sales of communications lasers, optical transceivers and lasers used in manufacturing.",
+      strength: "Spans laser chips through optical modules, tailoring designs to customers' bandwidth and power needs.",
+      competition: "Optical-component, module and laser manufacturers, plus customers that develop competing products in-house.",
+      relationships: "Supplies cloud providers and network-equipment makers; received an investment from NVIDIA in March 2026.",
+      risks: "Major-customer order changes, pricing pressure, production-ramp delays and excess inventory if demand falls short.",
+    },
+  },
+  {
+    cik: 820318, tickers: ["COHR"], name: "Coherent", reviewedOn: "2026-10-13",
+    sources: [{ label: "FY2026 Form 10-K · Business / Risk factors / NVIDIA agreements", url: "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm" }],
+    ja: {
+      business: "光通信やレーザー加工を支える会社。光信号の送受信モジュールから、レーザーや特殊な材料まで作る。",
+      revenue: "データセンター・通信向けの光製品と、工場や半導体製造、医療・研究で使うレーザーや部品の販売。",
+      strength: "材料から重要部品、完成モジュールまで自社で手がける範囲が広く、性能と量産の両面を調整できる。",
+      competition: "光通信モジュールやレーザー、光学材料のメーカー。別の技術で同じ用途を実現する製品とも競う。",
+      relationships: "通信機器メーカーなどの設計・試験を支援。NVIDIAとは光技術の開発と供給に関する複数年契約を結ぶ。",
+      risks: "生産能力の拡大に必要な資金と時間、顧客による量産認定の遅れ、大口顧客の需要変動。",
+    },
+    en: {
+      business: "Makes optical transceivers, lasers and engineered materials for communications and industrial applications.",
+      revenue: "Optical-product sales for data centers and telecom, plus lasers and components for manufacturing, medical and research uses.",
+      strength: "In-house capabilities span materials, critical components and finished modules, supporting performance and production scaling.",
+      competition: "Optical-transceiver, laser and materials suppliers, as well as alternative technologies serving the same applications.",
+      relationships: "Supports equipment customers' design and qualification work; has a multi-year optics development and supply agreement with NVIDIA.",
+      risks: "The cost and timing of capacity expansion, customer qualification delays and major-customer demand shifts.",
+    },
+  },
+  {
+    cik: 6951, tickers: ["AMAT"], name: "Applied Materials", reviewedOn: "2026-10-13",
+    sources: [{ label: "FY2025 Form 10-K · Business / Risk factors", url: "https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/amat-20251026.htm" }, { label: "Lam Research FY2026 Form 10-K · Competition", url: "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm" }],
+    ja: {
+      business: "半導体工場で使う製造装置の会社。材料の膜を作る工程や削る工程、検査、チップの接続などを支える。",
+      revenue: "半導体メーカーへの装置販売と、設置済み装置の保守、交換部品、工場の運用ソフトなど。",
+      strength: "幅広い製造工程の技術を持ち、複数の工程を組み合わせて半導体の性能や良品率を改善できる。",
+      competition: "膜を作る工程や削る工程ではLam Researchなど。工程ごとに専門の装置メーカーと競う。",
+      relationships: "半導体の受託生産会社やメモリーメーカーと連携し、次世代製品に必要な製造工程や装置を開発する。",
+      risks: "半導体メーカーの設備投資の波、中国向け輸出規制、装置開発の遅れや部品供給の制約。",
+    },
+    en: {
+      business: "Builds semiconductor manufacturing tools for deposition, etching, inspection and advanced packaging.",
+      revenue: "Equipment sales, maintenance, spare parts and factory software for chipmakers.",
+      strength: "Combines technologies across manufacturing steps to improve chip performance and production yields.",
+      competition: "Lam Research in deposition and etching, alongside specialist equipment suppliers across other process steps.",
+      relationships: "Works with foundries and memory makers to develop manufacturing processes and equipment for future chips.",
+      risks: "Chipmaker investment cycles, China export restrictions, development delays and component-supply constraints.",
+    },
+  },
+  {
+    cik: 820313, tickers: ["APH"], name: "Amphenol", reviewedOn: "2026-10-13",
+    sources: [{ label: "FY2025 Form 10-K · Business / Risk factors", url: "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/aph-20251231x10k.htm" }],
+    ja: {
+      business: "機器同士や内部の部品をつなぐコネクターとケーブルの会社。電気や信号を運ぶ部品に加え、センサーも作る。",
+      revenue: "データセンターや自動車、産業機器、航空・防衛などの顧客への接続部品やセンサーの販売。",
+      strength: "高速通信から振動・高温に耐える接続まで製品の幅が広く、顧客の設計段階から用途に合わせて開発できる。",
+      competition: "TE Connectivity、Molex、Corningなど。製品や用途によって競合するメーカーが異なる。",
+      relationships: "機器メーカーと共同で次世代製品の接続部分を設計し、世界各地の生産拠点から供給する。",
+      risks: "顧客の生産・設備投資の減速、金属などの原材料高や関税、部品調達の遅れが収益に響く。",
+    },
+    en: {
+      business: "Makes connectors and cables that carry power and signals, alongside sensors and related products.",
+      revenue: "Component sales to data-center, automotive, industrial, aerospace and defense customers, among others.",
+      strength: "Broad expertise spans high-speed links and harsh environments, with products developed around customer designs.",
+      competition: "TE Connectivity, Molex, Corning and other suppliers, depending on the product and application.",
+      relationships: "Works with equipment makers during product design and supplies them through a global manufacturing network.",
+      risks: "Customer production or investment slowdowns, raw-material inflation, tariffs and component shortages.",
+    },
+  },
+  {
     cik: 1596532, tickers: ["ANET"], name: "Arista Networks", reviewedOn: "2026-10-13",
     sources: [{ label: "FY2025 Form 10-K · Business / Risk factors", url: "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm" }],
     ja: {

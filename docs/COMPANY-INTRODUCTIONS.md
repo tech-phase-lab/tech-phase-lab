@@ -4,14 +4,21 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 競合は？ / どことつながる？ / 弱点は？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is nineteen issuers / twenty tickers: NVDA, MU, GOOG,
+Researched coverage is twenty-three issuers / twenty-four tickers: NVDA, MU, GOOG,
 GOOGL, AAPL, AMZN, META, COST, MSFT, NBIS, TSM, ASML, AVGO, AMD, ARM, CRDO,
-ANET, MRVL, VRT and ALAB.
+ANET, MRVL, VRT, ALAB, LITE, COHR, AMAT and APH.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
 on 2026-10-13. Each record links its annual filing; suppliers and competitors are
 identified by role, without treating an unnamed customer as a confirmed company.
+The fourth batch adds LITE, COHR, AMAT and APH on 2026-10-13 using their linked
+annual filings; AMAT's named competitor is also supported by Lam Research's filing.
+
+User handoff, 2026-10-13: the user's 22-stock monitoring list replaces ORCL and
+DELL with ALAB and LITE. Treat that as the user's current editorial priority.
+This change records the instruction and adds company introductions only; it does
+not alter Claude-owned news acquisition, translation or delivery configuration.
 This is not full-directory coverage. Uncovered
 issuers retain their existing approved annual-brief behavior; no generic or
 automatically generated introduction is substituted. No automatic research or
