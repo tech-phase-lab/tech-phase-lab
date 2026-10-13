@@ -107,3 +107,9 @@ This release implements the shared renderer and batch import, not an unattended
 AI research job or full-directory coverage. Never present automatic collection,
 AI generation, update scheduling or all-company completion as already enabled.
 The monitored-news list and Claude-owned pipelines are unchanged.
+
+### 2026-10-13 マップ表示調整
+
+- 表示範囲の切り替えを見出し右側に移動し、高さを縮小。凡例の上下余白を均等化。
+- 競合の区切り線を紫に統一。スマートフォンの競合ラベルは折り返さず、NVDAの5社を1列に表示する。件数が多い場合は行内スクロール。
+- 銘柄コードと会社名が同じ場合も、マップの会社名を下段に表示する。閲覧中の企業を固定する仕様と直接関係の説明は維持。

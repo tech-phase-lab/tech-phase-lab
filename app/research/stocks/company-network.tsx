@@ -42,18 +42,14 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
     <div className={styles.toolbar}>
       <div className={styles.titleRow}>
         <h3>{t("企業の連鎖マップ", "Company connection map")}</h3>
-      </div>
-      <div className={styles.selection}>
-        <div className={styles.selectedName} role="status"><strong>{selected.ticker ?? label(selected, lang)}</strong>{selected.ticker && selected.name !== selected.ticker && <span>{label(selected, lang)}</span>}</div>
-
-      </div>
-      <div className={styles.controls}>
         <div className={styles.modes} role="group" aria-label={t("線の表示範囲", "Connection depth")}>
           {([["direct", "直接の関係", "Direct"], ["two", "2段先まで", "2 steps"], ["all", "全体", "All"]] as const).map(([value, ja, en]) => <button type="button" key={value} aria-pressed={mode === value} onClick={() => setMode(value)}>{t(ja, en)}</button>)}
         </div>
+      </div>
+      <div className={styles.selection}>
+        <div className={styles.selectedName} role="status"><strong>{selected.ticker ?? label(selected, lang)}</strong>{selected.ticker && <span>{label(selected, lang)}</span>}</div>
         <span className={styles.count}>{graph.nodes.filter(node => node.kind === "company").length}{t("社", " companies")} · {graph.edges.length}{t("の関係", " connections")}</span>
       </div>
-
     </div>
 
     <div className={styles.legend}>
@@ -83,7 +79,7 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
         const relevant = mode === "all" || distance !== undefined || focus.competitors.has(node.id);
         const tone = active ? "selected" : focus.upstream.has(node.id) ? "upstream" : focus.downstream.has(node.id) ? "downstream" : focus.competitors.has(node.id) ? "competition" : distance === 1 ? "partner" : "indirect";
         return <div key={node.id} className={styles.node} style={{ left: position.x, top: position.y, width: position.width, height: position.height }} data-symbol={Boolean(node.ticker)} data-tone={tone} data-relevant={relevant} data-competitor={focus.competitors.has(node.id)} aria-current={active ? "true" : undefined} aria-label={label(node, lang)}>
-          <strong>{node.ticker ?? label(node, lang)}</strong>{node.ticker && node.name !== node.ticker && <span>{label(node, lang)}</span>}
+          <strong>{node.ticker ?? label(node, lang)}</strong>{node.ticker && <span>{label(node, lang)}</span>}
         </div>;
       })}
     </div>

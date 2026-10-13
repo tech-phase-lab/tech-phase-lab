@@ -1,6 +1,6 @@
 .network { margin-top: 16px; border: 1px solid #2c3a4d; border-radius: 14px; background: #0e1824; color: #e9eef5; }
 .toolbar { padding: 14px 16px 12px; border-radius: 14px 14px 0 0; border-bottom: 1px solid #2b3b4d; background: #101c29; box-shadow: 0 8px 16px #06101b66; }
-.titleRow, .selection, .controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 12px; }
+.titleRow, .selection { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 12px; }
 .network h3 { display: flex; align-items: baseline; gap: 8px; margin: 0; font-size: 16px; line-height: 1.5; }
 .network h3 > span { color: #89bfdc; font-size: 11px; }
 .network button { font: inherit; cursor: pointer; touch-action: manipulation; }
@@ -8,13 +8,13 @@
 .selectedName { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 10px; min-width: 0; }
 .selectedName strong { color: #e7c889; font-size: 24px; letter-spacing: .025em; line-height: 1.2; }
 .selectedName span { color: #bfccd9; font-size: 13px; }
-.controls { margin-top: 12px; }
-.modes { display: flex; padding: 3px; gap: 3px; background: #09131e; border: 1px solid #26394c; border-radius: 8px; }
-.modes button { min-height: 34px; padding: 5px 12px; border: 0; border-radius: 5px; background: transparent; color: #aebed0; font-size: 12px; white-space: nowrap; }
+.titleRow { flex-wrap: nowrap; }
+.modes { display: flex; flex-shrink: 0; margin-left: auto; padding: 2px; gap: 2px; background: #09131e; border: 1px solid #26394c; border-radius: 8px; }
+.modes button { min-height: 28px; padding: 3px 9px; border: 0; border-radius: 5px; background: transparent; color: #aebed0; font-size: 12px; white-space: nowrap; }
 .modes button[aria-pressed="true"] { background: #2c4055; color: #f4f7fb; }
 .count { color: #93a7ba; font-size: 11px; }
 .hint { margin: 14px 16px 10px; color: #adbdce; font-size: 12px; line-height: 1.6; }
-.legend { display: flex; flex-wrap: wrap; gap: 9px 16px; padding: 0 16px 12px; font-size: 11px; color: #b8c5d4; }
+.legend { display: flex; flex-wrap: wrap; align-items: center; align-content: center; gap: 9px 16px; padding: 12px 16px; font-size: 11px; color: #b8c5d4; }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
 .legend span::before { content: ""; width: 17px; border-top: 2px solid var(--tone); }
 .network [data-tone="upstream"] { --tone: #58caff; }
@@ -24,11 +24,11 @@
 .network [data-tone="indirect"] { --tone: #a4b8d1; }
 .network [data-tone="selected"] { --tone: #ffffff; }
 .legend [data-tone="competition"]::before { border-top-style: dashed; }
-.competitors { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; padding: 12px 16px; border-block: 1px solid #29364a; }
+.competitors { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; padding: 12px 16px; border-top: 2px solid #b18bd7; border-bottom: 1px solid #29364a; }
 .competitors h3 { font-size: 13px; }
 .competitors h3 > span { color: #d1a3ff; }
-.competitors > div { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
-.competitor { min-height: 36px; padding: 5px 12px; border: 1px dashed #9f8bb9; border-radius: 7px; background: #211f33; color: #ded1f3; font-weight: 700; font-size: 13px; }
+.competitors > div { display: flex; flex-wrap: nowrap; align-items: center; gap: 7px; min-width: 0; max-width: 100%; overflow-x: auto; }
+.competitor { flex-shrink: 0; justify-content: center; white-space: nowrap; min-height: 36px; padding: 5px 12px; border: 1px dashed #9f8bb9; border-radius: 7px; background: #211f33; color: #ded1f3; font-weight: 700; font-size: 13px; }
 .competitors > div > span:not(.competitor) { color: #8da0b3; font-size: 12px; }
 .board { position: relative; margin: 10px; isolation: isolate; overflow: hidden; }
 .layer { position: absolute; left: 12px; right: 12px; display: flex; align-items: center; gap: 12px; color: #9aaec2; font-size: 11px; line-height: 1.5; letter-spacing: .02em; }
@@ -64,11 +64,11 @@
 @media (max-width: 600px) {
   .toolbar { padding: 11px 10px 10px; }
   .network h3 { font-size: 14px; }
-  .history button { padding: 6px 8px; min-height: 38px; font-size: 11px; }
   .selectedName strong { font-size: 22px; }
   .selection { margin-top: 9px; }
-  .controls { gap: 6px; margin-top: 9px; }
-  .modes button { padding: 5px 9px; }
+  .titleRow { gap: 6px; }
+  .titleRow h3 { font-size: 12px; }
+  .modes button { min-height: 28px; padding: 3px 5px; font-size: 10px; }
   .count { font-size: 10px; }
   .board { margin: 6px 2px; }
   .hint, .legend { margin-left: 10px; margin-right: 10px; padding-left: 0; padding-right: 0; }
@@ -79,6 +79,8 @@
   .inspector > ul { grid-template-columns: minmax(0, 1fr); }
   .inspector { padding: 9px; }
   .competitors { padding: 10px; }
+  .competitors > div { width: 100%; gap: 5px; }
+  .competitor { flex: 1 0 auto; min-height: 32px; padding: 4px 6px; font-size: 12px; }
 }
 
 .node[data-symbol="false"] strong { font-size: 12px; line-height: 1.2; }
