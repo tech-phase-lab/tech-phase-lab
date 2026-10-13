@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import { stripTypeScriptTypes } from "node:module";
 
 const source = (await readFile(new URL("../app/api/research/stocks/route.ts", import.meta.url), "utf8"))
+  .replaceAll("@/lib/research/company-network.server", new URL("../lib/research/company-network.server.ts", import.meta.url).href)
   .replaceAll("@/lib/research/company-introductions", new URL("../lib/research/company-introductions.ts", import.meta.url).href)
   .replaceAll("@/lib/research/annual-filing-briefs", new URL("../lib/research/annual-filing-briefs.ts", import.meta.url).href)
   .replaceAll("@/lib/research/stock-directory", new URL("../lib/research/stock-directory.ts", import.meta.url).href);
@@ -47,10 +48,12 @@ test("profile API returns only the selected issuer's introduction and never matc
     const request = () => GET(new Request("https://example.test/api/research/stocks?ticker=NVDA"));
     const covered = await (await request()).json();
     assert.equal(covered.profile.introduction.name,"NVIDIA");
+    assert.equal(covered.profile.network.root,"NVDA");
     assert.equal(covered.profile.introduction.ja.revenue.includes("データセンター"),true);
     assert.equal(JSON.stringify(covered).includes('"name":"Costco"'),false);
     cik = 9999999;
     const reused = await (await request()).json();
     assert.equal(reused.profile.introduction,null);
+    assert.equal(reused.profile.network,null);
   } finally { globalThis.fetch = originalFetch; }
 });

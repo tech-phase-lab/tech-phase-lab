@@ -1,3 +1,4 @@
+import { companyNetworkFor } from "@/lib/research/company-network.server";
 import { createHash } from "node:crypto";
 import { companyIntroductionFor } from "@/lib/research/company-introductions";
 import { approvedAnnualFilingBrief, validateAnnualFilingBrief } from "@/lib/research/annual-filing-briefs";
@@ -156,7 +157,7 @@ export async function GET(request: Request) {
         const brief = remoteBrief ?? approvedAnnualFilingBrief(source);
         return Response.json({ ok: true, business, risks, brief, briefStatus: brief ? "approved" : "pending" }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" } });
       }
-      return Response.json({ ok: true, profile: { ...profile, introduction: companyIntroductionFor(profile) }, source: directoryUrl, profileSource: profileUrl, asOf: new Date().toISOString() }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" } });
+      return Response.json({ ok: true, profile: { ...profile, introduction: companyIntroductionFor(profile), network: companyNetworkFor(profile) }, source: directoryUrl, profileSource: profileUrl, asOf: new Date().toISOString() }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" } });
     }
     if (!query.trim()) return Response.json({ ok: true, results: [], source: directoryUrl, notice: "query-required" });
     const results = searchDirectory(entries, query, Number(url.searchParams.get("limit") ?? 24));

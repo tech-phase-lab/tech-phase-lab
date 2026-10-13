@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { useStockFavorites } from "../use-stock-favorites";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 import type { AnnualFilingBrief } from "@/lib/research/annual-filing-briefs";
+import type { CompanyNetwork } from "@/lib/research/company-network";
 import type { CompanyIntroduction } from "@/lib/research/company-introductions";
 import type { StockDirectoryEntry, StockProfile } from "@/lib/research/stock-directory";
 import { useResearchLanguage } from "../use-research-language";
@@ -22,7 +23,7 @@ import { useStockHistory } from "./use-stock-history";
 import { stockSearchReturnPosition, stockSearchUrl } from "@/lib/research/stock-search-navigation";
 
 type SearchResponse = { ok: boolean; results?: StockDirectoryEntry[]; error?: string; source?: string; asOf?: string };
-type IntroducedStockProfile = StockProfile & { introduction?: CompanyIntroduction | null };
+type IntroducedStockProfile = StockProfile & { introduction?: CompanyIntroduction | null; network?: CompanyNetwork | null };
 type ProfileResponse = { ok: boolean; profile?: IntroducedStockProfile; error?: string; profileSource?: string; asOf?: string };
 type BusinessResponse = { ok: boolean; brief?: AnnualFilingBrief | null; briefStatus?: "approved" | "pending"; error?: string };
 type BriefStatus = "idle" | "loading" | "approved" | "pending" | "source-unavailable";
@@ -276,7 +277,7 @@ export default function StockDirectory() {
         {selectedResultKey && !directQuote && <div className={polish.resultGuide}><button type="button" onClick={showSearchResults}>{t("← 検索結果に戻る", "← Back to results")}</button></div>}
         {profileLoading && <div className={polish.profileLoading} role="status"><span className={styles.loader} /><strong>{t("銘柄情報を読み込み中…", "Loading company…")}</strong></div>}
         {directQuote && !profile && <MarketWorkspace key={`${directQuote.ticker}:${lang}`} {...directQuote} lang={lang} favoriteControl={<FavoriteListPicker ticker={directQuote.ticker} name={directQuote.name} lang={lang} favorites={favorites} />} />}
-        {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}:${lang}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} introduction={profile.introduction} favoriteControl={<FavoriteListPicker ticker={profile.ticker} name={profile.name} lang={lang} favorites={favorites} />} />}
+        {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} introduction={profile.introduction} network={profile.network} favoriteControl={<FavoriteListPicker ticker={profile.ticker} name={profile.name} lang={lang} favorites={favorites} />} />}
       </div>}
 
       {profile && !profile.introduction && briefStatus === "approved" && brief && <section className={filingStyles.brief} aria-labelledby="annual-brief-title">

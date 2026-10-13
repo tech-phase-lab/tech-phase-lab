@@ -26,7 +26,8 @@ update job has been enabled.
 
 Records live in `lib/research/company-introductions.data.json`; the typed server
 registry and CIK index live in `lib/research/company-introductions.ts`. The profile API selects
-by both SEC CIK and ticker and returns only that issuer's record. The client
+by both SEC CIK and ticker and returns that issuer's introduction plus its connected
+company graph (node summaries and cited edges). Unrelated components are excluded. The client
 imports types only, so adding companies does not ship the whole registry to
 every visitor. Both Google share classes share one Alphabet issuer record.
 Leveraged ETFs and an unrelated issuer with the same ticker must not match.
@@ -49,22 +50,39 @@ The news/translation/price-target pipelines and RESOLUTE are outside this change
 
 ## Relationship maps and bulk additions (2026-10-13)
 
-The first four answers are compact cards. Weaknesses are now #4; competition is
-#5 and relationships are #6. Both maps use one responsive component across all
-23 issuers, with a central company, branches, prominent ticker links and a
-localized relationship label. Links run a stock search rather than assuming an
-exchange/CIK for an external ticker. Non-US companies, private companies and
-industry groups without a verified US ticker are shown without a stock link.
-Supplier/customer labels describe the relationship from the central company's
-perspective. The line itself does not imply money flow or ownership.
+The first four answers are compact cards. Weaknesses are #4; competition is #5
+and relationships are #6. The layered network now replaces outbound stock links.
+Tapping a company changes selection in place; Back and Reset operate on local
+selection history. Switching JA/EN preserves selection. The stock URL and scroll
+position are not changed by selection. Business-layer positions remain stable.
 
-Each map entry stores kind (company/industry), name, optional nameJa/ticker,
+Direct / 2 steps / All change the visible connections. Direct suppliers and
+platform adopters, recipients, collaboration/investment, indirect connections and
+competitors have distinct colors; competitors also have dashed outlines. Rivalry
+is never traversed as a supply-chain bridge. Further paths do not imply a direct
+transaction between their endpoints. Evidence is available in the expandable
+selected-company inspector, including the original source-company perspective.
+
+`company-network.server.ts` merges cited map records by company identity and
+relationship direction, normalizes Google share classes and merges reverse
+references. It adds primary-source-checked equipment -> TSMC -> chip -> server /
+cloud paths. These include TSMC supplier awards, Applied Materials EPIC, and
+NVIDIA/platform providers' deployment announcements. Product adoption is not
+presented as proof of a direct purchasing contract. Additional sources and review
+dates are attached to each edge. Some companies can have both competition and
+collaboration relationships; these remain separate.
+
+Named-company connected components are returned to the client. Unnamed industry
+buckets never connect unrelated issuers. A company without a researched named
+connection falls back to its own industry relationships. A layer is a layout
+category, not a claim that a company only operates in that business.
+
+Each source map entry stores kind (company/industry), name, optional nameJa/ticker,
 role, bilingual label and sourceIndexes into that issuer's primary-source list.
-The existing researched prose remains available under Context & sources. These
-maps reorganize the existing cited facts; unnamed customers remain industry
-groups, not guessed named-company connections. Competitor coverage is illustrative,
-not exhaustive. Do not infer that all products compete or that a supplier is a
-subsidiary. Annual-report relationships must be reviewed as sources change.
+The shared responsive renderer in `company-network.tsx` uses this structured graph;
+new issuers do not need a hand-drawn diagram. Relationships still require factual
+review; competition is illustrative and not exhaustive. No price-impact or buy
+prediction is generated from the graph.
 
 Adding an issuer no longer requires touching UI or TypeScript records. Prepare a
 JSON array of complete records using existing data records as the format, then:

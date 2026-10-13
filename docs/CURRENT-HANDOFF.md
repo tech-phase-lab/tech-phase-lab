@@ -1,3 +1,15 @@
+# Company chain map — October 13, 2026
+
+Replaced stock-link branch diagrams with an in-place layered company network.
+Node selection, Back/Reset, direct/two-step/all modes and a cited relation inspector
+share one component. Language changes preserve selection. Normalized structured
+records plus primary-source supplements connect equipment, manufacturing,
+memory, chip design, optics, infrastructure and cloud companies. Rivalry does not
+serve as a supply-chain bridge. Full-directory research remains incomplete.
+See `docs/COMPANY-INTRODUCTIONS.md`. Publication/CI/browser status must be checked
+against the resulting commit. News, price targets, translation and RESOLUTE are
+outside this change.
+
 # Stock introductions — October 13, 2026
 
 Added the agreed six-part JA/EN company introductions below the stock price.

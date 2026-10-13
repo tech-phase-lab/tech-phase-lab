@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import ts from 'typescript';
+import * as networkHelpers from '../lib/research/company-network.ts';
+import { companyNetworkFor } from '../lib/research/company-network.server.ts';
 import { companyIntroductions, companyIntroductionFields, companyIntroductionFor } from '../lib/research/company-introductions.ts';
 
 test('every published company has six bilingual answers and dated primary sources', () => {
@@ -32,15 +34,20 @@ test('requires both issuer identity and ticker; supports share classes and non-m
 });
 
 const require = createRequire(import.meta.url);
-const compiled = ts.transpileModule(readFileSync(new URL('../app/research/stocks/company-introduction.tsx', import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
-const mod = {exports:{}};
-new Function('require','module','exports',compiled)(name => name.endsWith('.css') ? {default:{}} : require(name), mod, mod.exports);
+function compileComponent(file, extra = {}) {
+  const compiled = ts.transpileModule(readFileSync(new URL(`../app/research/stocks/${file}.tsx`, import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
+  const mod = {exports:{}};
+  new Function('require','module','exports',compiled)(name => name.endsWith('.css') ? {default:{}} : extra[name] ?? require(name), mod, mod.exports);
+  return mod.exports;
+}
+const networkComponent = compileComponent('company-network', {'@/lib/research/company-network':networkHelpers});
+const panel = compileComponent('company-introduction', {'./company-network':networkComponent});
 const {renderToStaticMarkup} = require('react-dom/server');
 const {createElement} = require('react');
 test('renders all six localized answers with expandable source links', () => {
   const introduction = companyIntroductionFor({cik:1045810,ticker:'NVDA'});
   for (const lang of ['ja','en']) {
-    const html = renderToStaticMarkup(createElement(mod.exports.CompanyIntroductionPanel,{introduction,lang}));
+    const html = renderToStaticMarkup(createElement(panel.CompanyIntroductionPanel,{introduction,lang,network:companyNetworkFor({cik:introduction.cik,ticker:introduction.tickers[0]})}));
     assert.equal((html.match(/<dt>/g)??[]).length,4);
     assert.equal((html.match(/<dd>/g)??[]).length,4);
     assert.match(html, /<details/);
@@ -48,19 +55,20 @@ test('renders all six localized answers with expandable source links', () => {
     assert.ok(html.includes(lang==='ja'?'どこと繋がる？':'Who does it work with?'));
     assert.ok(!html.includes(lang==='ja'?'Who does it work with?':'どこと繋がる？'));
     assert.ok(html.indexOf('data-topic="risks"') < html.indexOf('data-topic="competition"'));
-    assert.match(html, /href="\/research\/stocks\?q=AMD"/);
-    assert.ok(html.includes(lang==='ja'?'半導体の製造委託先':'Chip manufacturing supplier'));
+    assert.ok(!html.includes('href="/research/stocks'));
+    assert.match(html, /<button[^>]+aria-pressed="true"[^>]*>/);
+
     assert.ok(!html.includes('q=undefined'));
   }
 });
 
-test('all issuers render both maps in both languages without invented links for industry nodes', () => {
+test('all issuers render same-page selection maps in both languages', () => {
   for (const introduction of companyIntroductions) {
     for (const lang of ['ja','en']) {
-      const html = renderToStaticMarkup(createElement(mod.exports.CompanyIntroductionPanel,{introduction,lang}));
-      const entries = Object.values(introduction.maps).flat();
-      assert.equal((html.match(/data-role=/g)??[]).length, entries.length);
-      assert.equal((html.match(/href="\/research\/stocks\?q=/g)??[]).length, entries.filter(entry=>entry.ticker).length);
+      const html = renderToStaticMarkup(createElement(panel.CompanyIntroductionPanel,{introduction,lang,network:companyNetworkFor({cik:introduction.cik,ticker:introduction.tickers[0]})}));
+      assert.ok(!html.includes('href="/research/stocks'));
+      assert.ok(html.includes(lang==='ja'?'最初に戻る':'Reset'));
+      assert.ok(html.includes(lang==='ja'?'どこと繋がる？':'Who does it work with?'));
     }
   }
 });
