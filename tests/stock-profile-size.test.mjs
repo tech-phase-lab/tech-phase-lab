@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import { stripTypeScriptTypes } from "node:module";
 
 const source = (await readFile(new URL("../app/api/research/stocks/route.ts", import.meta.url), "utf8"))
+  .replaceAll("@/lib/research/company-introductions", new URL("../lib/research/company-introductions.ts", import.meta.url).href)
   .replaceAll("@/lib/research/annual-filing-briefs", new URL("../lib/research/annual-filing-briefs.ts", import.meta.url).href)
   .replaceAll("@/lib/research/stock-directory", new URL("../lib/research/stock-directory.ts", import.meta.url).href);
 const { GET } = await import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(source)).toString("base64"));
@@ -34,4 +35,22 @@ test("large SEC profiles retain their industry while directory and profile limit
   } finally {
     globalThis.fetch = originalFetch;
   }
+});
+
+test("profile API returns only the selected issuer's introduction and never matches a reused ticker", async () => {
+  const originalFetch = globalThis.fetch;
+  let cik = 1045810;
+  globalThis.fetch = async url => Response.json(String(url).includes("company_tickers")
+    ? {fields:["cik","name","ticker","exchange"],data:[[cik,"NVIDIA","NVDA","Nasdaq"],...Array.from({length:120},(_,i)=>[2000000+i,`Example ${i}`,`X${i}`,"NYSE"])]}
+    : {cik:String(cik),sic:"3674"});
+  try {
+    const request = () => GET(new Request("https://example.test/api/research/stocks?ticker=NVDA"));
+    const covered = await (await request()).json();
+    assert.equal(covered.profile.introduction.name,"NVIDIA");
+    assert.equal(covered.profile.introduction.ja.revenue.includes("データセンター"),true);
+    assert.equal(JSON.stringify(covered).includes('"name":"Costco"'),false);
+    cik = 9999999;
+    const reused = await (await request()).json();
+    assert.equal(reused.profile.introduction,null);
+  } finally { globalThis.fetch = originalFetch; }
 });

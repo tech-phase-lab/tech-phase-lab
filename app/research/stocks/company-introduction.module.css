@@ -1,0 +1,27 @@
+.introduction { padding: 22px; border-top: 1px solid #263a46; color: #e8f0f4; }
+.introduction > header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px; margin-bottom: 16px; }
+.introduction h2 { margin: 0; font-size: 19px; letter-spacing: .02em; }
+.introduction > header > span { color: #a2b5c1; font-size: 14px; }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0; }
+.card { --accent: #8ed7c0; min-width: 0; padding: 15px; border: 1px solid #263a46; border-top: 2px solid var(--accent); border-radius: 9px; background: #101d27; }
+.card[data-topic="revenue"] { --accent: #8abdec; }
+.card[data-topic="strength"] { --accent: #c3a8ed; }
+.card[data-topic="competition"] { --accent: #edc18a; }
+.card[data-topic="relationships"] { --accent: #82ccda; }
+.card[data-topic="risks"] { --accent: #e5a0ac; }
+.card dt { display: flex; align-items: baseline; gap: 9px; font-size: 15px; font-weight: 700; line-height: 1.5; }
+.card dt span { color: var(--accent); font-size: 12px; font-variant-numeric: tabular-nums; }
+.card dd { margin: 9px 0 0; color: #c7d4dd; font-size: 14px; line-height: 1.8; overflow-wrap: anywhere; }
+.sources { margin-top: 16px; color: #a2b5c1; font-size: 12px; line-height: 1.7; }
+.sources summary { cursor: pointer; width: fit-content; min-height: 32px; padding: 5px 0; }
+.sources summary:focus-visible, .sources a:focus-visible { outline: 2px solid #8ed7c0; outline-offset: 4px; }
+.sources p { margin: 5px 0; }
+.sources ul { margin: 5px 0 0; padding-left: 18px; }
+.sources a { color: #a8cbe5; overflow-wrap: anywhere; }
+@media (max-width: 1050px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) {
+  .introduction { padding: 18px 14px 12px; }
+  .grid { grid-template-columns: minmax(0, 1fr); gap: 9px; }
+  .card { padding: 12px 14px; }
+  .card dd { margin-top: 6px; }
+}

@@ -1,3 +1,16 @@
+# Stock introductions — October 13, 2026
+
+Added the agreed six-part JA/EN company introductions below the stock price.
+Initial coverage: seven issuers / eight tickers (NVDA, MU, GOOG, GOOGL, AAPL,
+AMZN, META, COST). Full searchable-directory coverage remains the goal, not a
+completed claim. See `docs/COMPANY-INTRODUCTIONS.md` for sources, extension rules
+and the server-only issuer registry. No automatic research/update job is active.
+Local gates: 817 JS tests, 2,411 Python tests, production build, compileall and
+diff check passed; lint has zero errors and two existing warnings. Publication
+and browser verification must be checked against the resulting commit.
+PayPal registration is complete according to the user; identity verification
+is pending. No payment integration changed. News and RESOLUTE were untouched.
+
 # Scoped market feeds and suspended-route verification — October 2, 2026 11:46–11:51 JST
 
 Four concurrent branch commits through `422e95d60948f7ff6d465ac67cc76e8fb2fdd3e3`

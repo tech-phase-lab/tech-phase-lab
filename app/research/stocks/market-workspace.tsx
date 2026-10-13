@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import type { CompanyIntroduction } from "@/lib/research/company-introductions";
+import { CompanyIntroductionPanel } from "./company-introduction";
 import { TradingViewChart } from "./tradingview-chart";
 import styles from "./market-workspace.module.css";
 
@@ -8,9 +10,10 @@ type MarketWorkspaceProps = {
   name: string;
   lang: "ja" | "en";
   favoriteControl?: ReactNode;
+  introduction?: CompanyIntroduction | null;
 };
 
-export function MarketWorkspace({ ticker, exchange, name, lang, favoriteControl }: MarketWorkspaceProps) {
+export function MarketWorkspace({ ticker, exchange, name, lang, favoriteControl, introduction }: MarketWorkspaceProps) {
   const exchangeLabel = exchange === "Nasdaq" ? "NASDAQ" : exchange.toUpperCase();
 
   return <section className={styles.workspace} aria-labelledby="tech-phase-market-title">
@@ -27,5 +30,6 @@ export function MarketWorkspace({ ticker, exchange, name, lang, favoriteControl 
       <TradingViewChart ticker={ticker} exchange={exchange} lang={lang} />
     </div>
 
+    {introduction && <CompanyIntroductionPanel introduction={introduction} lang={lang} />}
   </section>;
 }
