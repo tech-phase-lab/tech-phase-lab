@@ -2,7 +2,7 @@ import { companyIntroductions, companyIntroductionFor } from "./company-introduc
 import type { CompanyNetwork, NetworkNode, NetworkEdge, NetworkEvidence, NetworkText } from "./company-network.ts";
 
 const layers: Record<string, number> = {
-  ASML: 0, AMAT: 0, LRCX: 0, Nikon: 0, Canon: 0, "Carl Zeiss SMT": 0,
+  ASML: 0, AMAT: 0, LRCX: 0, KLAC: 0, ONTO: 0, "ASM International": 0, "Tokyo Electron": 0, "Hitachi High-Tech": 0, Lasertec: 0, Nikon: 0, Canon: 0, "Carl Zeiss SMT": 0,
   TSM: 1, MU: 2, "SK hynix": 2, Samsung: 2, Kioxia: 2, SNDK: 2,
   NVDA: 3, AMD: 3, AVGO: 3, INTC: 3, ARM: 3, SIMO: 3, MCHP: 3, Phison: 3, ALAB: 3, MRVL: 3, CRDO: 3,
   LITE: 4, COHR: 4, AAOI: 4, InnoLight: 4, APH: 4, TEL: 4, GLW: 4, Molex: 4,

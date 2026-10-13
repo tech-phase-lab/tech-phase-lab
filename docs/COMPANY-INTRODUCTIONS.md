@@ -4,9 +4,9 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is thirty issuers / thirty-one tickers: NVDA, MU, GOOG,
+Researched coverage is thirty-two issuers / thirty-three tickers: NVDA, MU, GOOG,
 GOOGL, AAPL, AMZN, META, COST, MSFT, NBIS, TSM, ASML, AVGO, AMD, ARM, CRDO,
-ANET, MRVL, VRT, ALAB, LITE, COHR, AMAT, APH, INTC, SIMO, AAOI, BE, VST, GEV and IREN.
+ANET, MRVL, VRT, ALAB, LITE, COHR, AMAT, APH, INTC, SIMO, AAOI, BE, VST, GEV, IREN, LRCX and KLAC.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -137,3 +137,13 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - 新規企業の配置を半導体・光通信・電源・クラウドの既存区分に対応付けた。
 - 05/06の左位置を共通化し、06上の薄いグレー線を復元済み（104a939）。
 - ニュースの監視設定や取得・翻訳・配信、RESOLUTEは変更していない。全社収録や自動更新は未実装。
+
+### 2026-10-14 製造装置・検査の2社追加
+
+- LRCX / KLACを追加。合計32社・33銘柄コード。日英6項目と競合・顧客マップを各社のFY2026 Form 10-Kで確認。
+- Lam Researchは成膜・エッチング・洗浄、KLAは欠陥検査・測定を初見でも区別できる説明にした。
+- LamのTSMC / Micron / Samsung / SK hynixへの供給、KLAのTSMCへの供給を明示。競合は競合線として維持し、取引先へ変換しない。
+- 新しい検査・装置企業は製造装置の段に配置。東京エレクトロンに米国株TEL（TE Connectivity）を割り当てない。
+- 公式年次資料のBusiness / Products / Customers / Competition / Risk factorsを照合。主な顧客と競合の例であり全取引先の網羅ではない。
+- 既存UI、ニュース、RESOLUTEは変更なし。次回は未収録のCRWV / SMCI / CSCOなど既存マップの企業を一次資料から追加候補として確認する。
+- チャット側で継続作業の予約を設定済み。アプリ内に無人の情報収集・更新パイプラインを実装した意味ではない。
