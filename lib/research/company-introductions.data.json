@@ -9865,5 +9865,1386 @@
         }
       ]
     }
+  },
+  {
+    "cik": 1713445,
+    "tickers": [
+      "RDDT"
+    ],
+    "name": "Reddit",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Business / Revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1713445/000171344526000022/rddt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "興味ごとのコミュニティで利用者が投稿・議論し、知識や体験を蓄積するソーシャルプラットフォーム。",
+      "revenue": "主に企業や代理店へ広告枠を販売し、公開投稿データのライセンス供与などからも収益を得る。",
+      "strength": "利用者とモデレーターが継続的に作る会話データ、細かな関心別コミュニティ、投稿が投稿を呼ぶネットワーク効果が強い。",
+      "risks": "不適切投稿の管理、検索や生成AIへの利用流出、広告市況、個人情報規制、アプリ配信基盤への依存が利用と収益を左右する。",
+      "competition": "情報探索では検索・生成AI、交流と娯楽ではMeta、Snap、Pinterest、TikTokなどのサービスと利用時間・広告費を競う。",
+      "relationships": "利用者とモデレーターが投稿を供給し、広告主へ関心別広告を販売し、企業向けには公開データの利用権を提供する。"
+    },
+    "en": {
+      "business": "A social platform where people post and discuss interests inside communities, building a store of knowledge and experience.",
+      "revenue": "Earns mainly by selling advertising to brands and agencies, with additional revenue from licensing public content data.",
+      "strength": "Continuously refreshed conversations, highly specific interest communities and user-moderator network effects support engagement.",
+      "risks": "Content safety, traffic shifting to search or generative AI, advertising cycles, privacy rules and distribution-platform dependence can affect growth.",
+      "competition": "Competes with search and AI tools for information and with Meta, Snap, Pinterest, TikTok and others for attention and ad budgets.",
+      "relationships": "Users and moderators supply posts, advertisers buy interest-based inventory, and enterprise licensees receive rights to use public data."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Pinterest",
+          "ticker": "PINS",
+          "role": "competitor",
+          "label": {
+            "ja": "関心探索と広告で競合",
+            "en": "Interest discovery and ads"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Snap",
+          "ticker": "SNAP",
+          "role": "competitor",
+          "label": {
+            "ja": "交流・娯楽・広告で競合",
+            "en": "Social, entertainment and ads"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "ticker": "GOOG",
+          "role": "competitor",
+          "label": {
+            "ja": "情報検索と広告で競合",
+            "en": "Information search and ads"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Users and moderators",
+          "nameJa": "利用者・モデレーター",
+          "role": "supplier",
+          "label": {
+            "ja": "投稿・議論を作成・管理",
+            "en": "Create and moderate discussions"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Advertisers and agencies",
+          "nameJa": "広告主・広告代理店",
+          "role": "customer",
+          "label": {
+            "ja": "関心別の広告枠を購入",
+            "en": "Buy interest-based ad inventory"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprise data licensees",
+          "nameJa": "企業向けデータ利用者",
+          "role": "customer",
+          "label": {
+            "ja": "公開データの利用権を購入",
+            "en": "License public content data"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1506293,
+    "tickers": [
+      "PINS"
+    ],
+    "name": "Pinterest",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Product / Advertising / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1506293/000150629326000021/pins-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "画像や動画を保存・整理し、暮らし、服、旅行、買い物などのアイデアを探せるビジュアル探索サービス。",
+      "revenue": "利用者の検索意図や興味に合わせ、ブランドや販売事業者へ画像・動画広告を販売して稼ぐ。",
+      "strength": "購入前の計画段階で使われる画像データ、検索意図、AIによる推薦と商品発見の組み合わせが強い。",
+      "risks": "広告収入への依存、利用者の成長と継続、プライバシー規制、検索・生成AIとの競争、外部コンテンツへの依存が弱点。",
+      "competition": "発見・検索・広告ではGoogle、Meta、Snap、Reddit、TikTok、生成AIやECサイトと競う。",
+      "relationships": "利用者と制作者・出版社が画像を供給し、広告主と販売事業者は商品発見から購入につながる広告を出す。"
+    },
+    "en": {
+      "business": "A visual discovery service for saving and organizing images and videos around home, style, travel, shopping and other ideas.",
+      "revenue": "Makes money by selling image and video ads to brands and merchants based on users' interests and discovery intent.",
+      "strength": "Planning-stage intent, a rich image corpus and AI recommendations that connect inspiration with product discovery are key strengths.",
+      "risks": "Advertising dependence, user retention, privacy rules, search and generative-AI competition, and reliance on third-party content are risks.",
+      "competition": "Competes with Google, Meta, Snap, Reddit, TikTok, generative AI and commerce sites in discovery, search and advertising.",
+      "relationships": "Users, creators and publishers supply visual content, while advertisers and merchants promote products from discovery toward purchase."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Reddit",
+          "ticker": "RDDT",
+          "role": "competitor",
+          "label": {
+            "ja": "興味探索と広告で競合",
+            "en": "Interest discovery and ads"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Snap",
+          "ticker": "SNAP",
+          "role": "competitor",
+          "label": {
+            "ja": "画像体験と広告で競合",
+            "en": "Visual experiences and ads"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "ticker": "GOOG",
+          "role": "competitor",
+          "label": {
+            "ja": "検索・商品発見で競合",
+            "en": "Search and product discovery"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Users, creators and publishers",
+          "nameJa": "利用者・制作者・出版社",
+          "role": "supplier",
+          "label": {
+            "ja": "画像・動画・記事を供給",
+            "en": "Supply images, video and articles"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Advertisers and agencies",
+          "nameJa": "広告主・広告代理店",
+          "role": "customer",
+          "label": {
+            "ja": "画像・動画広告を購入",
+            "en": "Buy visual ad inventory"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Merchants and retailers",
+          "nameJa": "販売事業者・小売企業",
+          "role": "partner",
+          "label": {
+            "ja": "商品情報と購入先を連携",
+            "en": "Connect products and shopping destinations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1564408,
+    "tickers": [
+      "SNAP"
+    ],
+    "name": "Snap",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Snapchat / Advertising / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "写真・動画メッセージ、短編コンテンツ、地図、ARレンズを一つにしたスマートフォン向け交流サービス。",
+      "revenue": "主に企業や代理店へ広告枠を販売し、Snapchat+などの有料契約からも収益を得る。",
+      "strength": "カメラ中心の操作、若い利用者層、友人同士の私的な交流、AR技術と制作者向け機能が差別化になる。",
+      "risks": "広告依存、利用者成長、未成年者の安全、個人情報規制、AppleやGoogleによる端末・配信ルール変更が弱点。",
+      "competition": "交流、短編動画、広告、ARでMeta、TikTok、YouTube、Pinterest、Redditなどと競う。",
+      "relationships": "利用者と制作者が投稿を供給し、広告主が広告枠を購入し、AR開発者やアプリ配信基盤が体験を支える。"
+    },
+    "en": {
+      "business": "A mobile social service combining photo and video messages, short-form content, maps and augmented-reality lenses.",
+      "revenue": "Earns mainly from advertising sold to brands and agencies, with additional subscription revenue such as Snapchat+.",
+      "strength": "A camera-first interface, younger audience, private friend communication, AR technology and creator tools differentiate the service.",
+      "risks": "Advertising dependence, user growth, youth safety, privacy rules, and Apple or Google platform-policy changes are major risks.",
+      "competition": "Competes with Meta, TikTok, YouTube, Pinterest, Reddit and others in social use, short video, ads and AR.",
+      "relationships": "Users and creators supply content, advertisers buy inventory, and AR developers and mobile distribution platforms support the experience."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Pinterest",
+          "ticker": "PINS",
+          "role": "competitor",
+          "label": {
+            "ja": "画像・広告で競合",
+            "en": "Visual discovery and ads"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Reddit",
+          "ticker": "RDDT",
+          "role": "competitor",
+          "label": {
+            "ja": "利用時間と広告で競合",
+            "en": "Attention and advertising"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "ticker": "GOOG",
+          "role": "competitor",
+          "label": {
+            "ja": "動画・広告で競合",
+            "en": "Video and advertising"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Users and creators",
+          "nameJa": "利用者・制作者",
+          "role": "supplier",
+          "label": {
+            "ja": "投稿・番組・AR作品を供給",
+            "en": "Create posts, shows and AR content"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Advertisers and agencies",
+          "nameJa": "広告主・広告代理店",
+          "role": "customer",
+          "label": {
+            "ja": "動画・AR広告を購入",
+            "en": "Buy video and AR ads"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Mobile platforms and AR developers",
+          "nameJa": "モバイル基盤・AR開発者",
+          "role": "partner",
+          "label": {
+            "ja": "配信とAR体験を支援",
+            "en": "Support distribution and AR experiences"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1315098,
+    "tickers": [
+      "RBLX"
+    ],
+    "name": "Roblox",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Platform / Robux / Distribution / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1315098/000131509826000024/rblx-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "利用者が3Dゲームや交流空間を作り、遊び、仮想アイテムを売買できるオンライン創作プラットフォーム。",
+      "revenue": "利用者が購入した仮想通貨Robuxを体験内アイテムや機能に使うことで稼ぎ、制作者へ一部を分配する。",
+      "strength": "無料の制作ツール、膨大な利用者制作コンテンツ、利用者と制作者が互いを増やすネットワーク効果が強い。",
+      "risks": "未成年者の安全と投稿管理、制作者の定着、Apple・Googleへの高い配信依存、規制、障害が利用と利益を左右する。",
+      "competition": "ゲーム、仮想空間、利用時間、制作ツールで大手ゲーム会社、Epic、Unity、Meta、Microsoftなどと競う。",
+      "relationships": "制作者が体験とアイテムを供給し、利用者がRobuxで購入する。AppleやGoogleなどが配信と決済を担う。"
+    },
+    "en": {
+      "business": "An online creation platform where users build and play 3D experiences, socialize and trade virtual items.",
+      "revenue": "Earns when users buy and spend the virtual currency Robux on in-experience items and features, sharing part with creators.",
+      "strength": "Free creation tools, a large catalog of user-generated content and reinforcing user-creator network effects are key advantages.",
+      "risks": "Youth safety and moderation, creator retention, heavy Apple and Google distribution dependence, regulation and outages can affect results.",
+      "competition": "Competes with game publishers, Epic, Unity, Meta, Microsoft and others for gaming, virtual worlds, attention and creators.",
+      "relationships": "Creators supply experiences and items, users purchase them with Robux, and platforms such as Apple and Google distribute and process payments."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "ゲーム・利用時間で競合",
+            "en": "Gaming and user attention"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Meta Platforms",
+          "ticker": "META",
+          "role": "competitor",
+          "label": {
+            "ja": "仮想空間・制作者で競合",
+            "en": "Virtual worlds and creators"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Game engines and publishers",
+          "nameJa": "ゲーム制作基盤・大手ゲーム会社",
+          "role": "competitor",
+          "label": {
+            "ja": "制作ツールと娯楽で競合",
+            "en": "Creation tools and entertainment"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Creators and developers",
+          "nameJa": "制作者・開発者",
+          "role": "supplier",
+          "label": {
+            "ja": "体験・アイテムを制作",
+            "en": "Build experiences and items"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Players and brands",
+          "nameJa": "利用者・ブランド",
+          "role": "customer",
+          "label": {
+            "ja": "Robux購入・体験へ参加",
+            "en": "Buy Robux and join experiences"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Apple",
+          "ticker": "AAPL",
+          "role": "partner",
+          "label": {
+            "ja": "アプリ配信・決済を提供",
+            "en": "App distribution and payments"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "ticker": "GOOG",
+          "role": "partner",
+          "label": {
+            "ja": "Google Playで配信・決済",
+            "en": "Google Play distribution and payments"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1428439,
+    "tickers": [
+      "ROKU"
+    ],
+    "name": "Roku",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Platform / Devices / Advertising / Distribution / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "テレビ向けOS、動画検索・視聴画面、広告配信、自社チャンネル、再生機器をまとめて提供するストリーミング基盤。",
+      "revenue": "広告枠、動画サービスの契約・課金分配、リモコンのブランドボタンなどのPlatform収益と機器販売で稼ぐ。",
+      "strength": "テレビのホーム画面と視聴データ、多数の動画サービスへの入口、OSから広告まで一体で運営する点が強い。",
+      "risks": "広告市況、動画会社との契約更新、個人情報規制、機器の低採算、テレビメーカーや大手端末基盤との競争が弱点。",
+      "competition": "テレビOS、配信端末、スマートテレビ、広告付き動画、視聴時間をめぐり大手端末・動画・広告基盤と競う。",
+      "relationships": "テレビメーカーや小売を通じて端末を広げ、動画会社を利用者へ配信し、広告主へテレビ広告枠を販売する。"
+    },
+    "en": {
+      "business": "A TV streaming platform combining an operating system, discovery interface, advertising, its own channel and player devices.",
+      "revenue": "Earns platform revenue from advertising, streaming-service distribution and billing shares, and branded remote buttons, plus device sales.",
+      "strength": "Control of the TV home screen, viewing data, broad service discovery and integrated OS-to-ad operations are key advantages.",
+      "risks": "Ad cycles, content-contract renewals, privacy limits, low-margin devices and competition from TV makers and larger device ecosystems are risks.",
+      "competition": "Competes across TV operating systems, streaming devices, smart TVs, ad-supported video and viewing time.",
+      "relationships": "TV makers and retailers distribute devices, streaming services reach viewers through Roku, and advertisers buy connected-TV inventory."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Smart-TV operating systems",
+          "nameJa": "スマートテレビOS",
+          "role": "competitor",
+          "label": {
+            "ja": "テレビの入口で競合",
+            "en": "Compete for the TV home screen"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Streaming devices and services",
+          "nameJa": "配信端末・動画サービス",
+          "role": "competitor",
+          "label": {
+            "ja": "端末・視聴時間で競合",
+            "en": "Devices and viewing time"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Connected-TV ad platforms",
+          "nameJa": "テレビ広告基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "広告費と配信技術で競合",
+            "en": "Ad budgets and delivery"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "TV manufacturers and retailers",
+          "nameJa": "テレビメーカー・小売",
+          "role": "partner",
+          "label": {
+            "ja": "OS搭載テレビ・端末を販売",
+            "en": "Sell Roku TVs and devices"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Streaming services and studios",
+          "nameJa": "動画サービス・制作会社",
+          "role": "supplier",
+          "label": {
+            "ja": "番組と配信サービスを供給",
+            "en": "Supply programming and services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Viewers and advertisers",
+          "nameJa": "視聴者・広告主",
+          "role": "customer",
+          "label": {
+            "ja": "視聴とテレビ広告を取引",
+            "en": "Consume video and buy TV ads"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1671933,
+    "tickers": [
+      "TTD"
+    ],
+    "name": "The Trade Desk",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Platform / Pricing / Open Internet / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "広告主と代理店がネット上のテレビ、動画、音声、表示広告を自動で買い付け・測定する需要側広告基盤。",
+      "revenue": "基盤を通じて購入された広告費に応じた利用料を広告主や代理店から受け取り、データなどの追加機能でも稼ぐ。",
+      "strength": "媒体を保有しない独立性、多数の広告在庫を横断する買い付け、データ・測定・最適化技術が強い。",
+      "risks": "広告市況、Cookieや端末IDの制限、広告在庫・データ会社への依存、大口代理店の集中、巨大広告基盤との競争が弱点。",
+      "competition": "広告購入基盤、媒体社の自社広告システム、検索・SNSの閉じた広告基盤と、予算・測定・自動化で競う。",
+      "relationships": "広告主と代理店が買い手となり、媒体社・広告取引所から広告枠を調達し、データ・測定会社と連携する。"
+    },
+    "en": {
+      "business": "A demand-side platform used by advertisers and agencies to buy and measure connected-TV, video, audio and display ads programmatically.",
+      "revenue": "Charges platform fees tied to advertising spend placed through the system, with additional fees for data and related features.",
+      "strength": "Independence from owned media, access across many inventory sources, and data, measurement and optimization technology are advantages.",
+      "risks": "Ad cycles, cookie and device-ID restrictions, inventory and data dependencies, agency concentration and competition from large platforms are risks.",
+      "competition": "Competes with other buying platforms, publisher-owned ad systems and closed search and social ecosystems in automation and measurement.",
+      "relationships": "Advertisers and agencies are buyers, publishers and exchanges provide inventory, and data and measurement vendors support targeting and results."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Demand-side ad platforms",
+          "nameJa": "広告買付基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "自動買付・最適化で競合",
+            "en": "Automated buying and optimization"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Publisher ad systems",
+          "nameJa": "媒体社の自社広告基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "媒体内広告予算で競合",
+            "en": "Publisher-controlled ad budgets"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Closed search and social platforms",
+          "nameJa": "検索・SNS広告基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "広告費と測定で競合",
+            "en": "Ad budgets and measurement"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Advertisers and agencies",
+          "nameJa": "広告主・広告代理店",
+          "role": "customer",
+          "label": {
+            "ja": "広告を自動買付・測定",
+            "en": "Buy and measure campaigns"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Publishers and ad exchanges",
+          "nameJa": "媒体社・広告取引所",
+          "role": "supplier",
+          "label": {
+            "ja": "テレビ・動画などの広告枠を供給",
+            "en": "Supply TV, video and other inventory"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Data and measurement providers",
+          "nameJa": "データ・効果測定会社",
+          "role": "partner",
+          "label": {
+            "ja": "対象設定と効果測定を連携",
+            "en": "Support targeting and measurement"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1792789,
+    "tickers": [
+      "DASH"
+    ],
+    "name": "DoorDash",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Marketplace / Revenue / Competition / Dashers / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1792789/000179278926000013/dash-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "飲食店、小売店、買い物客、配達員を結び、料理や日用品を注文・配送する地域商取引プラットフォーム。",
+      "revenue": "加盟店手数料、利用者の配達・サービス料、DashPass会費、加盟店やブランド向け広告から稼ぐ。",
+      "strength": "加盟店、注文者、配達員が互いを増やす地域密度、配達技術、飲食以外へ広がる品ぞろえが強い。",
+      "risks": "配達員の雇用区分規制、保険と事故、配送品質、販促費、加盟店・利用者・配達員の離脱が利益を左右する。",
+      "competition": "他の配達アプリ、加盟店の自社注文、食料品店や小売の配送、店頭購入と価格・品ぞろえ・速度で競う。",
+      "relationships": "加盟店が商品を供給し、配達員が注文を運び、利用者が購入する。加盟店やブランドには広告枠も販売する。"
+    },
+    "en": {
+      "business": "A local-commerce platform connecting restaurants, retailers, consumers and couriers to order and deliver meals and everyday goods.",
+      "revenue": "Earns merchant commissions, consumer delivery and service fees, DashPass subscriptions, and advertising from merchants and brands.",
+      "strength": "Local density across merchants, consumers and Dashers, logistics technology, and expansion beyond restaurants reinforce the network.",
+      "risks": "Courier-classification rules, insurance and safety, delivery quality, promotions, and retention of merchants, consumers and Dashers affect profits.",
+      "competition": "Competes with delivery apps, merchant-owned ordering, grocery and retail delivery, and in-store shopping on price, selection and speed.",
+      "relationships": "Merchants supply goods, Dashers deliver orders, consumers purchase them, and merchants and brands also buy advertising inventory."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Uber",
+          "ticker": "UBER",
+          "role": "competitor",
+          "label": {
+            "ja": "配達・地域商取引で競合",
+            "en": "Delivery and local commerce"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Merchant-owned ordering",
+          "nameJa": "加盟店の自社注文・配送",
+          "role": "competitor",
+          "label": {
+            "ja": "直接注文で競合",
+            "en": "Direct ordering and delivery"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Grocery and retail delivery",
+          "nameJa": "食料品・小売配送",
+          "role": "competitor",
+          "label": {
+            "ja": "日用品の品ぞろえと速度で競合",
+            "en": "Selection and delivery speed"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Restaurants and retailers",
+          "nameJa": "飲食店・小売店",
+          "role": "supplier",
+          "label": {
+            "ja": "商品と注文情報を供給",
+            "en": "Supply goods and order data"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Dashers",
+          "nameJa": "配達員",
+          "role": "partner",
+          "label": {
+            "ja": "注文を集荷・配達",
+            "en": "Pick up and deliver orders"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Consumers and advertisers",
+          "nameJa": "利用者・広告主",
+          "role": "customer",
+          "label": {
+            "ja": "商品購入・広告枠を利用",
+            "en": "Buy goods and ad inventory"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1099590,
+    "tickers": [
+      "MELI"
+    ],
+    "name": "MercadoLibre",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Commerce / Mercado Pago / Logistics / Credit / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000006/meli-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "中南米でEC市場、決済・デジタル口座、配送、広告、融資を一体運営する商取引・金融サービス企業。",
+      "revenue": "販売手数料、配送・広告、決済処理、融資利息など、ECとMercado Pagoを横断して稼ぐ。",
+      "strength": "買い手・売り手・決済・配送・信用を一つに結ぶ地域ネットワークと、中南米向けに築いた現地インフラが強い。",
+      "risks": "為替・インフレ、各国規制、貸倒れ、物流費、不正取引、ECと金融の両市場での競争が利益を左右する。",
+      "competition": "EC市場、小売、デジタル決済、銀行・融資、物流、広告で地域企業と世界的な事業者に競う。",
+      "relationships": "販売事業者が商品を出品し、買い手が購入する。加盟店・利用者には決済、口座、融資を提供し、配送網と連携する。"
+    },
+    "en": {
+      "business": "A Latin American commerce and financial-services company combining a marketplace, payments, digital accounts, logistics, ads and credit.",
+      "revenue": "Earns marketplace fees, shipping and advertising revenue, payment-processing fees and credit interest across commerce and Mercado Pago.",
+      "strength": "A regional network linking buyers, sellers, payments, logistics and credit, supported by locally built infrastructure, is the core advantage.",
+      "risks": "Currency and inflation, country regulation, credit losses, logistics costs, fraud and competition across both commerce and finance are risks.",
+      "competition": "Competes with marketplaces, retailers, digital wallets, banks and lenders, logistics providers and advertising platforms.",
+      "relationships": "Sellers list goods and buyers purchase them; merchants and consumers also use payments, accounts and credit connected to logistics networks."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "E-commerce marketplaces and retailers",
+          "nameJa": "EC市場・小売企業",
+          "role": "competitor",
+          "label": {
+            "ja": "品ぞろえ・価格・配送で競合",
+            "en": "Selection, price and delivery"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Digital wallets and banks",
+          "nameJa": "デジタル決済・銀行",
+          "role": "competitor",
+          "label": {
+            "ja": "決済・口座で競合",
+            "en": "Payments and accounts"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Lenders and logistics providers",
+          "nameJa": "融資会社・物流会社",
+          "role": "competitor",
+          "label": {
+            "ja": "信用と配送で競合",
+            "en": "Credit and logistics"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Marketplace sellers and brands",
+          "nameJa": "出店者・ブランド",
+          "role": "supplier",
+          "label": {
+            "ja": "商品・広告情報を供給",
+            "en": "Supply products and listings"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Buyers and payment users",
+          "nameJa": "買い手・決済利用者",
+          "role": "customer",
+          "label": {
+            "ja": "商品・決済・口座を利用",
+            "en": "Use commerce, payments and accounts"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Carriers and financial networks",
+          "nameJa": "配送会社・金融ネットワーク",
+          "role": "partner",
+          "label": {
+            "ja": "配送・入出金を支援",
+            "en": "Support delivery and money movement"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1633917,
+    "tickers": [
+      "PYPL"
+    ],
+    "name": "PayPal",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Payments / Transaction Revenue / Competition / Risk Management",
+        "url": "https://www.sec.gov/Archives/edgar/data/1633917/000163391726000024/pypl-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "PayPalとVenmoを中心に、個人と事業者のオンライン・店頭決済、送金、請求、信用をつなぐ決済基盤。",
+      "revenue": "決済額と取引件数に応じた手数料が中心で、融資、即時出金、為替などの付加サービスでも稼ぐ。",
+      "strength": "買い手と売り手の二面ネットワーク、決済データ、不正検知、複数の資金源を一つにつなぐチェックアウトが強い。",
+      "risks": "不正・取引損失、規制、加盟店価格、ブランド決済の競争、カード網・銀行・処理会社への依存が利益を左右する。",
+      "competition": "カード網、銀行、デジタル財布、加盟店決済、ECの自社チェックアウトと、利便性・承認率・手数料で競う。",
+      "relationships": "個人が支払い・送金し、加盟店が代金を受け取る。銀行、カード網、処理会社が入出金と決済を支える。"
+    },
+    "en": {
+      "business": "A payments platform centered on PayPal and Venmo that connects consumers and merchants across checkout, transfers, invoicing and credit.",
+      "revenue": "Earns mainly transaction fees tied to payment volume and activity, plus credit, instant transfer, foreign-exchange and other services.",
+      "strength": "A two-sided buyer-seller network, payment data, fraud controls and checkout across multiple funding sources are key advantages.",
+      "risks": "Fraud and transaction losses, regulation, merchant pricing, branded-checkout competition and dependence on banks and card networks are risks.",
+      "competition": "Competes with card networks, banks, digital wallets, merchant acquirers and commerce platforms on convenience, approval and fees.",
+      "relationships": "Consumers pay and transfer funds, merchants receive payments, and banks, card networks and processors support money movement and settlement."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Digital wallets and bank apps",
+          "nameJa": "デジタル財布・銀行アプリ",
+          "role": "competitor",
+          "label": {
+            "ja": "支払い・送金で競合",
+            "en": "Checkout and transfers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Merchant acquirers and processors",
+          "nameJa": "加盟店決済・処理会社",
+          "role": "competitor",
+          "label": {
+            "ja": "加盟店決済で競合",
+            "en": "Merchant payment processing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Commerce checkout platforms",
+          "nameJa": "ECチェックアウト基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "購入画面と決済で競合",
+            "en": "Checkout and payment conversion"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Consumers and merchants",
+          "nameJa": "個人・加盟店",
+          "role": "customer",
+          "label": {
+            "ja": "支払い・送金・代金受取",
+            "en": "Pay, transfer and receive funds"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Banks and card networks",
+          "nameJa": "銀行・カード網",
+          "role": "supplier",
+          "label": {
+            "ja": "資金源・決済網を提供",
+            "en": "Provide funding and payment rails"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Commerce platforms and marketplaces",
+          "nameJa": "EC基盤・市場運営者",
+          "role": "partner",
+          "label": {
+            "ja": "決済を購入画面へ組み込み",
+            "en": "Embed payment at checkout"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1512673,
+    "tickers": [
+      "XYZ"
+    ],
+    "name": "Block",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Square / Cash App / Revenue / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "Squareで事業者の決済・業務を、Cash Appで個人の送金・カード・貯蓄・投資を支える金融技術企業。",
+      "revenue": "加盟店決済と業務ソフト、Cash Appの即時送金・カード・金融商品、BNPL、ビットコイン取引などから稼ぐ。",
+      "strength": "決済端末からソフト・融資まで揃うSquareと、日常金融を集約するCash Appの二つの生態系と取引データが強い。",
+      "risks": "不正・貸倒れ、金融規制、銀行・カード網への依存、激しい決済競争、ビットコイン価格と取引量の変動が弱点。",
+      "competition": "事業者向けPOS・決済・銀行サービスと、個人向け財布・銀行・送金・BNPLで多様な金融サービスと競う。",
+      "relationships": "事業者がSquareで販売・決済し、個人がCash Appを使う。銀行、カード網、処理会社が決済と口座機能を支える。"
+    },
+    "en": {
+      "business": "A financial-technology company serving sellers through Square and consumers through Cash App transfers, cards, savings and investing.",
+      "revenue": "Earns from merchant payments and software, Cash App transfers, cards and financial products, BNPL and bitcoin transactions.",
+      "strength": "Square's integrated hardware, software and finance plus Cash App's consumer ecosystem and first-party transaction data are advantages.",
+      "risks": "Fraud and credit losses, financial regulation, bank and card-network dependence, intense payments competition and bitcoin volatility are risks.",
+      "competition": "Competes across seller POS, payments and banking, and consumer wallets, banks, transfers and buy-now-pay-later services.",
+      "relationships": "Sellers use Square and consumers use Cash App, while banks, card networks and processors support payments and account functions."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Seller POS and payment platforms",
+          "nameJa": "事業者向けPOS・決済基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "店舗決済・業務ソフトで競合",
+            "en": "Seller payments and software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Consumer wallets and banks",
+          "nameJa": "個人向け財布・銀行",
+          "role": "competitor",
+          "label": {
+            "ja": "送金・カード・口座で競合",
+            "en": "Transfers, cards and accounts"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Buy-now-pay-later providers",
+          "nameJa": "後払いサービス",
+          "role": "competitor",
+          "label": {
+            "ja": "分割・後払いで競合",
+            "en": "Installment and deferred payments"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Sellers and developers",
+          "nameJa": "事業者・開発者",
+          "role": "customer",
+          "label": {
+            "ja": "Square決済・業務機能を利用",
+            "en": "Use Square payments and software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cash App customers",
+          "nameJa": "Cash App利用者",
+          "role": "customer",
+          "label": {
+            "ja": "送金・カード・金融機能を利用",
+            "en": "Use transfers, cards and finance"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Banks and card networks",
+          "nameJa": "銀行・カード網",
+          "role": "supplier",
+          "label": {
+            "ja": "口座・決済網を提供",
+            "en": "Provide accounts and payment rails"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1818874,
+    "tickers": [
+      "SOFI"
+    ],
+    "name": "SoFi Technologies",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Lending / Financial Services / Technology Platform / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1818874/000181887426000013/sofi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "融資、預金、投資、カードを個人へ提供し、GalileoとTechnisysで金融機関向け決済・銀行技術も提供する。",
+      "revenue": "貸出利息と組成・売却・管理、カードや金融サービスの手数料、企業向け技術基盤の利用料で稼ぐ。",
+      "strength": "銀行免許と預金資金、会員への複数商品販売、個人向け金融と企業向け銀行技術を垂直統合する点が強い。",
+      "risks": "貸倒れ、金利と資金調達、融資売却市場、銀行規制と自己資本、技術顧客の集中・離脱が利益を左右する。",
+      "competition": "銀行、オンライン融資、証券・デジタル財布と、金融機関向け決済・勘定系技術の両市場で競う。",
+      "relationships": "会員へ融資・預金・投資を提供し、金融機関やFintechには決済APIと銀行基盤を提供する。"
+    },
+    "en": {
+      "business": "Provides loans, deposits, investing and cards to consumers, plus payment and banking technology to institutions through Galileo and Technisys.",
+      "revenue": "Earns loan interest and origination, sale and servicing income, financial-service fees, and technology-platform usage fees.",
+      "strength": "A bank charter and deposit funding, member cross-selling, and vertical integration of consumer finance with banking technology are advantages.",
+      "risks": "Credit losses, rates and funding, loan-sale markets, bank capital rules, and concentration or loss of technology clients can affect results.",
+      "competition": "Competes with banks, online lenders, brokers and wallets, as well as payment and core-banking technology platforms.",
+      "relationships": "Members use loans, deposits and investing, while banks and fintech clients use payment APIs and core-banking technology."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Banks and online lenders",
+          "nameJa": "銀行・オンライン融資",
+          "role": "competitor",
+          "label": {
+            "ja": "預金・融資で競合",
+            "en": "Deposits and lending"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Brokers and digital wallets",
+          "nameJa": "証券・デジタル財布",
+          "role": "competitor",
+          "label": {
+            "ja": "投資・決済で競合",
+            "en": "Investing and payments"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Banking technology platforms",
+          "nameJa": "銀行技術基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "決済API・勘定系で競合",
+            "en": "Payment APIs and core banking"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Members and borrowers",
+          "nameJa": "会員・借り手",
+          "role": "customer",
+          "label": {
+            "ja": "融資・預金・投資を利用",
+            "en": "Use lending, deposits and investing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Banks and fintech clients",
+          "nameJa": "銀行・Fintech企業",
+          "role": "customer",
+          "label": {
+            "ja": "Galileo・Technisysを利用",
+            "en": "Use Galileo and Technisys"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Card and financial networks",
+          "nameJa": "カード・金融ネットワーク",
+          "role": "partner",
+          "label": {
+            "ja": "決済・清算を支援",
+            "en": "Support payments and settlement"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1562088,
+    "tickers": [
+      "DUOL"
+    ],
+    "name": "Duolingo",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Learning Products / Subscriptions / AI / Competition / Risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1562088/000162828026012494/duol-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "語学を中心に数学、音楽、チェスもゲーム感覚で学べるモバイル・Web学習サービスと英語試験を提供する。",
+      "revenue": "Super DuolingoとDuolingo Maxの月額・年額契約が中心で、広告、アプリ内購入、英語試験でも稼ぐ。",
+      "strength": "無料で始められる導線、習慣化を促すゲーム設計、学習データを使う個別最適化、強いブランドが成長を支える。",
+      "risks": "学習継続と有料化、AIによる競争と内容品質、Apple・Googleへの配信依存、個人情報・未成年者対応が弱点。",
+      "competition": "語学アプリ、AI家庭教師、オンライン・対面教育、資格試験と、学習時間・価格・成果で競う。",
+      "relationships": "学習者と有料会員へ教材を提供し、学校・大学は英語試験を受け入れ、アプリ配信基盤が契約決済を担う。"
+    },
+    "en": {
+      "business": "A mobile and web learning service offering game-like language, math, music and chess courses plus an English proficiency test.",
+      "revenue": "Earns mainly Super Duolingo and Duolingo Max subscriptions, with additional ads, in-app purchases and English Test revenue.",
+      "strength": "A free entry point, habit-forming game design, data-driven personalization and a strong brand support growth and conversion.",
+      "risks": "Learner retention and paid conversion, AI competition and content quality, Apple and Google dependence, privacy and youth safety are risks.",
+      "competition": "Competes with language apps, AI tutors, online and classroom education, and testing providers on time, price and outcomes.",
+      "relationships": "Learners and subscribers use courses, schools and universities recognize the English Test, and app platforms handle distribution and billing."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Language-learning applications",
+          "nameJa": "語学学習アプリ",
+          "role": "competitor",
+          "label": {
+            "ja": "教材・習慣化で競合",
+            "en": "Lessons and habit formation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "AI tutors and education platforms",
+          "nameJa": "AI家庭教師・教育基盤",
+          "role": "competitor",
+          "label": {
+            "ja": "個別学習で競合",
+            "en": "Personalized learning"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Language testing providers",
+          "nameJa": "語学試験運営者",
+          "role": "competitor",
+          "label": {
+            "ja": "英語能力試験で競合",
+            "en": "English proficiency testing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Learners and subscribers",
+          "nameJa": "学習者・有料会員",
+          "role": "customer",
+          "label": {
+            "ja": "教材・AI機能を利用",
+            "en": "Use courses and AI features"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Schools and universities",
+          "nameJa": "学校・大学",
+          "role": "partner",
+          "label": {
+            "ja": "英語試験の結果を受理",
+            "en": "Recognize English Test results"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Mobile app platforms",
+          "nameJa": "モバイルアプリ基盤",
+          "role": "supplier",
+          "label": {
+            "ja": "配信・契約決済を提供",
+            "en": "Provide distribution and billing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
   }
 ]

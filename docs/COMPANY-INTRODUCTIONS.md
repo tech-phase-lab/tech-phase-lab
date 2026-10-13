@@ -193,3 +193,15 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - AppLovinのApple / Google依存、Airbnbの決済網、Spotifyの権利者と通信会社は、競争・供給・販売の役割を混同しないよう別の関係として表示する。
 - 公式資料: [AKAM](https://www.sec.gov/Archives/edgar/data/1086222/000108622226000022/akam-20251231.htm), [OKTA](https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm), [S](https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm), [CHKP](https://www.sec.gov/Archives/edgar/data/1015922/000117891326001932/zk2634942.htm), [TEAM](https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/team-20260630.htm), [TWLO](https://www.sec.gov/Archives/edgar/data/1447669/000144766926000021/twlo-20251231.htm), [DOCU](https://www.sec.gov/Archives/edgar/data/1261333/000126133326000021/docu-20260131.htm), [HUBS](https://www.sec.gov/Archives/edgar/data/1404655/000119312526046646/hubs-20251231.htm), [SHOP](https://www.sec.gov/Archives/edgar/data/1594805/000159480526000007/shop-20251231.htm), [APP](https://www.sec.gov/Archives/edgar/data/1751008/000175100826000010/app-20251231.htm), [ABNB](https://www.sec.gov/Archives/edgar/data/1559720/000155972026000004/abnb-20251231.htm), [SPOT](https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm).
 - 既存の共通UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は引き続き未完了。
+
+### 2026-10-14 消費者プラットフォーム・広告・決済12社追加
+
+- RDDT / PINS / SNAP / RBLX / ROKU / TTD / DASH / MELI / PYPL / XYZ / SOFI / DUOLを追加。合計95社・96銘柄コード。
+- 各社の最新Form 10-Kを一次資料として、日英6項目と競合・取引関係を確認。確認日は2026-10-14。
+- Reddit / Pinterest / Snapは、コミュニティ、画像探索、カメラ中心の交流という違いを明示。利用時間の競争と広告主・制作者との取引を分けた。
+- RobloxはRobuxと制作者分配、Rokuは広告・動画サービス分配・機器、The Trade Deskは広告費連動の基盤利用料を収益源として区別した。
+- DoorDashは加盟店・配達員・利用者、MercadoLibreはEC・決済・物流・融資の循環を表示。実名が開示されない加盟店や金融機関は推測していない。
+- PayPal / Block / SoFiは、消費者・加盟店・銀行・カード網の役割を整理し、競争関係と決済・清算の供給関係を混同していない。
+- Duolingoは契約、広告、英語試験を分け、AI競争とアプリ配信基盤への依存を企業固有のリスクとして収録した。
+- 公式資料: [RDDT](https://www.sec.gov/Archives/edgar/data/1713445/000171344526000022/rddt-20251231.htm), [PINS](https://www.sec.gov/Archives/edgar/data/1506293/000150629326000021/pins-20251231.htm), [SNAP](https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm), [RBLX](https://www.sec.gov/Archives/edgar/data/1315098/000131509826000024/rblx-20251231.htm), [ROKU](https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm), [TTD](https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm), [DASH](https://www.sec.gov/Archives/edgar/data/1792789/000179278926000013/dash-20251231.htm), [MELI](https://www.sec.gov/Archives/edgar/data/1099590/000109959026000006/meli-20251231.htm), [PYPL](https://www.sec.gov/Archives/edgar/data/1633917/000163391726000024/pypl-20251231.htm), [XYZ](https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm), [SOFI](https://www.sec.gov/Archives/edgar/data/1818874/000181887426000013/sofi-20251231.htm), [DUOL](https://www.sec.gov/Archives/edgar/data/1562088/000162828026012494/duol-20251231.htm).
+- 既存UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は継続する。
