@@ -12326,5 +12326,918 @@
         }
       ]
     }
+  },
+  {
+    "cik": 1109138,
+    "tickers": [
+      "CAMT"
+    ],
+    "name": "Camtek",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 20-F · Products / Markets / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1109138/000117891326001561/zk2634678.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体の表面を撮影して欠陥を見つけ、微細な高さや寸法を測る検査・計測装置を作る会社。先端パッケージ、HBM、化合物半導体に強い。",
+      "revenue": "半導体メーカーと組立・検査会社へ検査・計測装置を販売し、保守、部品、ソフトの継続収入も得る。",
+      "strength": "一台で2D検査と3D計測を組み合わせ、量産速度を保ちながら複雑なパッケージの欠陥と高さを確認できる。",
+      "risks": "設備投資の波、大口顧客、輸出規制、イスラエルの地政学、少数の製造委託先に左右される。装置認定の遅れも売上時期を動かす。",
+      "competition": "ウエハー検査、3D計測、先端パッケージ工程で、大手工程管理装置メーカーや専門検査会社と競う。",
+      "relationships": "半導体工場と組立・検査会社へ装置を供給し、外部メーカーから光学・機械・電子部品を調達して組み立てる。"
+    },
+    "en": {
+      "business": "Makes inspection and metrology systems that image semiconductor surfaces to find defects and measure fine dimensions and height, with emphasis on advanced packaging, HBM and compound semiconductors.",
+      "revenue": "Sells inspection and metrology systems to chipmakers and assembly-and-test providers, with recurring service, parts and software revenue.",
+      "strength": "Combines high-throughput 2D inspection and 3D metrology to check defects and height across increasingly complex packages.",
+      "risks": "Results depend on fab spending, large customers, export controls, Israeli geopolitical conditions and a limited supplier base; qualification delays can shift revenue timing.",
+      "competition": "Competes with large process-control vendors and inspection specialists in wafer inspection, 3D metrology and advanced packaging.",
+      "relationships": "Supplies systems to wafer fabs and assembly-and-test providers and sources optical, mechanical and electronic components from external manufacturers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor inspection vendors",
+          "nameJa": "半導体検査装置メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "検査・3D計測で競合",
+            "en": "Inspection and 3D metrology"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Wafer fabs and OSATs",
+          "nameJa": "半導体工場・組立検査会社",
+          "role": "customer",
+          "label": {
+            "ja": "検査・計測装置を供給",
+            "en": "Inspection and metrology systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Optical and equipment component suppliers",
+          "nameJa": "光学・装置部品メーカー",
+          "role": "supplier",
+          "label": {
+            "ja": "装置部品を調達",
+            "en": "Optical and equipment components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1109345,
+    "tickers": [
+      "NVMI"
+    ],
+    "name": "Nova",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 20-F · Solutions / Customers / Competition / Manufacturing / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体の膜厚、寸法、材料組成を光やX線で測り、製造工程のずれを見つける計測装置と解析ソフトを作る会社。",
+      "revenue": "半導体メーカーへの計測装置販売と、ソフト、保守、交換部品、既存装置の更新で稼ぐ。",
+      "strength": "光学、X線、材料計測と機械学習解析を組み合わせ、微細化した工程や先端パッケージを非破壊で管理できる。",
+      "risks": "少数の大口顧客、半導体設備投資、輸出規制、イスラエルの地政学、外部製造・部品供給に業績が左右される。",
+      "competition": "膜厚・寸法・材料計測と工程解析で、大手工程管理装置会社や専門計測メーカーと競う。",
+      "relationships": "半導体工場へ装置と解析ソフトを供給し、外部メーカーから光学、X線、電子、機械部品を調達する。"
+    },
+    "en": {
+      "business": "Makes metrology systems and analytics software that use optical and X-ray techniques to measure film thickness, dimensions and material composition in chip production.",
+      "revenue": "Earns from metrology-system sales to semiconductor manufacturers plus software, service, spare parts and installed-base upgrades.",
+      "strength": "Combines optical, X-ray and materials metrology with machine-learning analytics to control scaled processes and advanced packaging without damaging wafers.",
+      "risks": "A few large customers, semiconductor capital spending, export controls, Israeli geopolitical conditions and outsourced components and manufacturing affect results.",
+      "competition": "Competes with large process-control suppliers and metrology specialists in film, dimensional and materials measurement and process analytics.",
+      "relationships": "Supplies tools and analytics software to wafer fabs and sources optical, X-ray, electronic and mechanical components externally."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor metrology vendors",
+          "nameJa": "半導体計測装置メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "膜厚・寸法・材料計測で競合",
+            "en": "Film, dimensional and materials metrology"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor manufacturers",
+          "nameJa": "半導体メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "計測装置と解析ソフトを供給",
+            "en": "Metrology systems and analytics"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Optical and X-ray component suppliers",
+          "nameJa": "光学・X線部品メーカー",
+          "role": "supplier",
+          "label": {
+            "ja": "主要部品を調達",
+            "en": "Optical and X-ray components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1113232,
+    "tickers": [
+      "ACLS"
+    ],
+    "name": "Axcelis Technologies",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Ion implantation / Customers / Competition / Supply chain / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1113232/000110465926020461/acls-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体ウエハーへイオンを打ち込み、電気特性を作り込むイオン注入装置を開発・製造する会社。",
+      "revenue": "半導体工場へのPurion装置販売に加え、保守、部品、装置改造、訓練で稼ぐ。",
+      "strength": "高電流から高エネルギーまで共通設計のPurionシリーズでカバーし、パワー半導体や成熟工程の量産にも対応する。",
+      "risks": "設備投資と中国需要、大口顧客、輸出規制、長い認定期間、少数の重要部品供給元に左右される。",
+      "competition": "高電流、中電流、高エネルギーのイオン注入装置で、他の装置メーカーや顧客の既存設備と競う。",
+      "relationships": "半導体メーカーへイオン注入装置を供給し、磁石、電源、真空、制御部品を外部供給元から調達する。"
+    },
+    "en": {
+      "business": "Develops and manufactures ion-implantation systems that inject ions into wafers to set semiconductor electrical characteristics.",
+      "revenue": "Earns from Purion system sales to wafer fabs plus service, spare parts, upgrades and training.",
+      "strength": "Its common-platform Purion family spans high-current through high-energy implantation and serves high-volume power and mature-node production.",
+      "risks": "Fab spending and China demand, large customers, export controls, long qualifications and limited sources for critical components affect results.",
+      "competition": "Competes in high-current, medium-current and high-energy ion implantation with other equipment vendors and customers' installed tools.",
+      "relationships": "Supplies implantation systems to semiconductor manufacturers and buys magnets, power, vacuum and control components from external suppliers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Ion implantation equipment vendors",
+          "nameJa": "イオン注入装置メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "イオン注入装置で競合",
+            "en": "Ion implantation systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor manufacturers",
+          "nameJa": "半導体メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "イオン注入装置を供給",
+            "en": "Ion implantation systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Vacuum and power component suppliers",
+          "nameJa": "真空・電源部品メーカー",
+          "role": "supplier",
+          "label": {
+            "ja": "装置部品を調達",
+            "en": "Vacuum and power components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 21535,
+    "tickers": [
+      "COHU"
+    ],
+    "name": "Cohu",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Test and inspection / Products / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "完成した半導体を高速に検査するテスト装置、搬送装置、画像検査装置と、チップへ接触するソケットを作る会社。",
+      "revenue": "半導体メーカーと組立・検査会社への装置販売、交換頻度の高いソケット・接触部品、保守と部品で稼ぐ。",
+      "strength": "テスター、ハンドラー、画像検査、接触部品をまとめて提供し、車載・産業・通信向けチップの量産工程を一式で支えられる。",
+      "risks": "半導体の生産量と設備投資、大口顧客、買収統合、部品供給、価格競争、地政学と輸出規制に左右される。",
+      "competition": "半導体テスター、ハンドラー、画像検査、テストソケットの各市場で大手装置会社と専門メーカーに競う。",
+      "relationships": "半導体メーカーと組立・検査会社へテスト工程の装置と消耗部品を供給し、電子・機械部品を外部から調達する。"
+    },
+    "en": {
+      "business": "Makes semiconductor test systems, handlers, vision-inspection equipment and sockets that contact finished chips during high-volume testing.",
+      "revenue": "Earns from equipment sales to chipmakers and OSATs, recurring sockets and contactors, service and spare parts.",
+      "strength": "Combines testers, handlers, vision inspection and interface products to support complete production-test cells for automotive, industrial and communications chips.",
+      "risks": "Semiconductor unit volume and capital spending, large customers, acquisition integration, component supply, pricing, geopolitics and export controls affect results.",
+      "competition": "Competes with major equipment companies and specialists across testers, handlers, inspection and test sockets.",
+      "relationships": "Supplies production-test equipment and consumables to chipmakers and OSATs and sources electronic and mechanical components externally."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor test equipment vendors",
+          "nameJa": "半導体テスト装置メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "テスター・搬送・接触部品で競合",
+            "en": "Testers, handlers and contactors"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Chipmakers and OSATs",
+          "nameJa": "半導体メーカー・組立検査会社",
+          "role": "customer",
+          "label": {
+            "ja": "テスト装置と消耗部品を供給",
+            "en": "Test systems and consumables"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Electronic and mechanical suppliers",
+          "nameJa": "電子・機械部品メーカー",
+          "role": "supplier",
+          "label": {
+            "ja": "装置部品を調達",
+            "en": "Equipment components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1047127,
+    "tickers": [
+      "AMKR"
+    ],
+    "name": "Amkor Technology",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Packaging and test / Customers / Competition / Manufacturing / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "ウエハーから切り出した半導体を保護・接続するパッケージへ組み立て、動作を検査する受託会社。",
+      "revenue": "ファブレス企業、IDM、電子機器メーカーから、先端・従来型パッケージングとテストを請け負って稼ぐ。",
+      "strength": "フリップチップ、SiP、ファンアウト、2.5Dなど幅広い工程と世界各地の量産拠点を持ち、設計からテストまで対応できる。",
+      "risks": "大口顧客とスマホ・車載需要、工場稼働率、巨額設備投資、地政学、素材・装置供給、顧客の内製化に左右される。",
+      "competition": "半導体の組立・テスト受託で他のOSATと競い、IDMや大口顧客の自社工場とも競合する。",
+      "relationships": "半導体設計会社やIDMからチップを受け取り、外部の材料・装置会社を使って組立・検査し、完成品を顧客へ返す。"
+    },
+    "en": {
+      "business": "Provides outsourced semiconductor packaging that protects and connects diced chips, then tests them for proper operation.",
+      "revenue": "Earns by performing advanced and conventional packaging and test for fabless companies, IDMs and electronics manufacturers.",
+      "strength": "Offers flip-chip, SiP, fan-out, 2.5D and other processes across a global manufacturing footprint, spanning package design through test.",
+      "risks": "Large customers, handset and automotive demand, factory utilization, heavy capital spending, geopolitics, material and equipment supply and customer insourcing affect results.",
+      "competition": "Competes with other OSATs and with packaging and test performed inside IDMs and large customers.",
+      "relationships": "Receives chips from fabless companies and IDMs, uses materials and equipment suppliers to assemble and test them, and returns completed devices to customers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Outsourced assembly and test providers",
+          "nameJa": "半導体組立・検査受託会社",
+          "role": "competitor",
+          "label": {
+            "ja": "パッケージ・テストで競合",
+            "en": "Packaging and test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Fabless companies and IDMs",
+          "nameJa": "ファブレス企業・IDM",
+          "role": "customer",
+          "label": {
+            "ja": "組立・検査を受託",
+            "en": "Packaging and test services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Packaging material and equipment suppliers",
+          "nameJa": "パッケージ材料・装置会社",
+          "role": "supplier",
+          "label": {
+            "ja": "材料と製造装置を調達",
+            "en": "Materials and manufacturing equipment"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1122411,
+    "tickers": [
+      "ASX"
+    ],
+    "name": "ASE Technology Holding",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 20-F · ATM and EMS businesses / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体の組立・パッケージ・テストに加え、電子機器の基板組立や完成品製造も受託する会社。",
+      "revenue": "半導体の組立・テスト事業と、通信・コンピューター・車載機器などの電子機器製造サービスで稼ぐ。",
+      "strength": "世界最大級の生産規模と、先端パッケージ、テスト、基板・完成品組立を一社でつなげられる工程範囲が強み。",
+      "risks": "半導体・電子機器需要、大口顧客、工場稼働率、設備投資、台湾海峡の地政学、為替、電力・水供給に左右される。",
+      "competition": "半導体組立・テストではOSATや顧客内製、電子機器製造では世界のEMS会社と競う。",
+      "relationships": "半導体会社から組立・テストを、電子機器ブランドから基板・完成品製造を受託し、材料・装置会社から生産資材を調達する。"
+    },
+    "en": {
+      "business": "Provides semiconductor assembly, packaging and test plus electronics manufacturing services for circuit boards and finished devices.",
+      "revenue": "Earns from semiconductor assembly-and-test operations and EMS for communications, computing, automotive and other electronics.",
+      "strength": "Combines very large manufacturing scale with advanced packaging, test, board assembly and finished-product manufacturing under one group.",
+      "risks": "Semiconductor and electronics demand, large customers, factory utilization, capital spending, Taiwan Strait geopolitics, currencies and power and water availability affect results.",
+      "competition": "Competes with OSATs and customers' internal operations in assembly and test and with global EMS providers in electronics manufacturing.",
+      "relationships": "Performs packaging and test for chip companies and board and finished-product manufacturing for electronics brands, sourcing materials and equipment externally."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Outsourced assembly and test providers",
+          "nameJa": "半導体組立・検査受託会社",
+          "role": "competitor",
+          "label": {
+            "ja": "組立・テストで競合",
+            "en": "Assembly and test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Electronics manufacturing services providers",
+          "nameJa": "電子機器製造受託会社",
+          "role": "competitor",
+          "label": {
+            "ja": "電子機器製造で競合",
+            "en": "Electronics manufacturing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Chip companies and electronics brands",
+          "nameJa": "半導体会社・電子機器ブランド",
+          "role": "customer",
+          "label": {
+            "ja": "組立・テスト・機器製造を受託",
+            "en": "Packaging, test and device manufacturing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Semiconductor materials and equipment suppliers",
+          "nameJa": "半導体材料・装置会社",
+          "role": "supplier",
+          "label": {
+            "ja": "生産資材と装置を調達",
+            "en": "Production materials and equipment"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1709048,
+    "tickers": [
+      "GFS"
+    ],
+    "name": "GlobalFoundries",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 20-F · Technology platforms / Customers / Competition / Manufacturing / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "他社が設計した半導体を受託生産するファウンドリー。最先端微細化より、RF、電源、車載、IoT向けの特殊工程に集中する。",
+      "revenue": "米国、ドイツ、シンガポールの工場でウエハーを製造し、長期供給契約や共同開発費を含む形で顧客から収入を得る。",
+      "strength": "RF、シリコンフォトニクス、FDX、車載など差別化工程と、米欧を含む製造拠点を持ち、長期供給を求める顧客に対応する。",
+      "risks": "巨額設備投資と高い固定費、工場稼働率、大口顧客、補助金条件、輸出規制、材料・装置供給、需要予測のずれに左右される。",
+      "competition": "特殊・成熟工程の受託生産で他のファウンドリーやIDMの外販部門と競う。",
+      "relationships": "ファブレス企業とIDMの設計をウエハーに製造し、半導体装置・材料会社から生産設備と材料を調達する。"
+    },
+    "en": {
+      "business": "Manufactures chips designed by other companies, focusing on differentiated RF, power, automotive and IoT processes rather than leading-edge scaling.",
+      "revenue": "Earns by fabricating wafers in the United States, Germany and Singapore under customer programs that include long-term supply and development arrangements.",
+      "strength": "Offers differentiated RF, silicon photonics, FDX and automotive platforms and a manufacturing footprint that includes the United States and Europe.",
+      "risks": "Heavy capital needs and fixed costs, utilization, large customers, subsidy conditions, export controls, equipment and material supply and forecast errors affect results.",
+      "competition": "Competes with other foundries and external foundry operations of IDMs in differentiated and mature process technologies.",
+      "relationships": "Fabricates customer designs for fabless companies and IDMs and buys production tools and materials from semiconductor equipment and material suppliers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Specialty semiconductor foundries",
+          "nameJa": "特殊半導体ファウンドリー",
+          "role": "competitor",
+          "label": {
+            "ja": "特殊・成熟工程で競合",
+            "en": "Specialty and mature processes"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Fabless companies and IDMs",
+          "nameJa": "ファブレス企業・IDM",
+          "role": "customer",
+          "label": {
+            "ja": "半導体を受託生産",
+            "en": "Contract wafer manufacturing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Semiconductor equipment and material suppliers",
+          "nameJa": "半導体装置・材料会社",
+          "role": "supplier",
+          "label": {
+            "ja": "工場設備と材料を調達",
+            "en": "Fab equipment and materials"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 928876,
+    "tickers": [
+      "TSEM"
+    ],
+    "name": "Tower Semiconductor",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 20-F · Specialty analog foundry / Customers / Competition / Fabs / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm"
+      }
+    ],
+    "ja": {
+      "business": "RF、電源、センサー、SiGe、シリコンフォトニクスなど、アナログ系の特殊半導体を受託生産するファウンドリー。",
+      "revenue": "顧客設計のウエハー製造、工程開発、試作と関連サービスで稼ぐ。イスラエル、米国、日本などの工場を使う。",
+      "strength": "用途別に調整した特殊工程と設計支援を持ち、製品寿命が長いアナログ・RF部品を複数拠点で量産できる。",
+      "risks": "工場稼働率、大口顧客、設備投資、イスラエルの地政学、電力・水・材料供給、外貨、工場再編に左右される。",
+      "competition": "特殊アナログ工程のファウンドリーや、顧客が保有する自社工場と競う。",
+      "relationships": "ファブレス企業とIDMのアナログ・RF製品を受託生産し、装置・材料会社から工場設備と生産材料を調達する。"
+    },
+    "en": {
+      "business": "Operates a specialty analog foundry for RF, power, sensors, SiGe, silicon photonics and other differentiated semiconductors.",
+      "revenue": "Earns from customer wafer fabrication, process development, prototypes and related services using fabs in Israel, the United States, Japan and elsewhere.",
+      "strength": "Pairs application-specific specialty processes with design support and can manufacture long-lived analog and RF products across multiple sites.",
+      "risks": "Fab utilization, large customers, capital spending, Israeli geopolitics, power, water and material supply, currencies and fab restructuring affect results.",
+      "competition": "Competes with specialty analog foundries and with customers' internal fabrication capacity.",
+      "relationships": "Fabricates analog and RF designs for fabless companies and IDMs and sources fab tools and production materials from equipment and material suppliers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Specialty analog foundries",
+          "nameJa": "特殊アナログファウンドリー",
+          "role": "competitor",
+          "label": {
+            "ja": "RF・アナログ工程で競合",
+            "en": "RF and analog processes"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Fabless companies and IDMs",
+          "nameJa": "ファブレス企業・IDM",
+          "role": "customer",
+          "label": {
+            "ja": "特殊半導体を受託生産",
+            "en": "Specialty wafer fabrication"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Fab equipment and material suppliers",
+          "nameJa": "工場装置・材料会社",
+          "role": "supplier",
+          "label": {
+            "ja": "設備と材料を調達",
+            "en": "Fab equipment and materials"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 917273,
+    "tickers": [
+      "RMBS"
+    ],
+    "name": "Rambus",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Memory interface chips and IP / Customers / Competition / Manufacturing / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "CPUとメモリーの間で大量データを高速・安全に動かすメモリーインターフェース半導体と設計IPを作る会社。",
+      "revenue": "サーバー向けインターフェースチップの販売、半導体設計IPのライセンス料、顧客製品の出荷に連動するロイヤルティで稼ぐ。",
+      "strength": "DDRなどメモリー規格に沿った高速回路、信号品質、セキュリティIPをまとめ、顧客の開発期間を短縮できる。",
+      "risks": "メモリー需要と規格移行、少数顧客、外部製造、IP保護と訴訟、顧客の内製、製品認定の長期化に左右される。",
+      "competition": "メモリーインターフェースチップと半導体設計IPで、専門半導体会社、IPベンダー、顧客の自社設計と競う。",
+      "relationships": "メモリー・サーバー向け半導体会社へチップと設計IPを供給し、製造は外部ファウンドリーと組立・検査会社へ委託する。"
+    },
+    "en": {
+      "business": "Makes memory-interface chips and silicon IP that move large amounts of data quickly and securely between processors and memory.",
+      "revenue": "Earns from sales of server memory-interface chips, upfront and recurring IP license fees and royalties tied to customer product shipments.",
+      "strength": "Combines high-speed DDR-standard circuitry, signal integrity and security IP to shorten customer development cycles.",
+      "risks": "Memory demand and standards transitions, a limited customer base, outsourced manufacturing, IP protection and litigation, customer insourcing and long qualifications affect results.",
+      "competition": "Competes in memory-interface chips and silicon IP with specialist chip and IP vendors and customers' internal designs.",
+      "relationships": "Supplies chips and design IP to memory and server semiconductor companies and outsources fabrication, assembly and test."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Memory-interface chip and IP vendors",
+          "nameJa": "メモリー接続半導体・IP会社",
+          "role": "competitor",
+          "label": {
+            "ja": "接続チップ・設計IPで競合",
+            "en": "Interface chips and silicon IP"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Memory and server chip companies",
+          "nameJa": "メモリー・サーバー半導体会社",
+          "role": "customer",
+          "label": {
+            "ja": "接続チップと設計IPを供給",
+            "en": "Interface chips and design IP"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Foundry and assembly partners",
+          "nameJa": "半導体工場・組立会社",
+          "role": "supplier",
+          "label": {
+            "ja": "製造・組立・検査を委託",
+            "en": "Fabrication, assembly and test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 29002,
+    "tickers": [
+      "DIOD"
+    ],
+    "name": "Diodes Incorporated",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Markets / Customers / Manufacturing / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/29002/000119312526044918/diod-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "電流を整えるダイオード、トランジスタ、電源・信号用アナログIC、ロジック、タイミング製品を幅広く作る半導体会社。",
+      "revenue": "車載、産業、コンピューター、通信、消費者機器向けに製品を直販または販売会社経由で販売して稼ぐ。",
+      "strength": "ディスクリートからアナログ、ロジックまで品ぞろえが広く、自社工場と組立拠点を使って顧客へ複数部品をまとめて提案できる。",
+      "risks": "半導体市況、販売会社の在庫、中国・アジアの生産集中、工場稼働率、価格競争、原材料と輸出規制に左右される。",
+      "competition": "ディスクリート、電源・信号用アナログ、ロジック、タイミングの各市場で大手・専門半導体会社と競う。",
+      "relationships": "自動車、産業、通信、コンピューター、消費者機器メーカーへ直販または販売会社経由で部品を供給する。"
+    },
+    "en": {
+      "business": "Makes a broad range of diodes, transistors, power and signal analog ICs, logic and timing devices used to control current and signals.",
+      "revenue": "Sells products directly and through distributors into automotive, industrial, computing, communications and consumer electronics.",
+      "strength": "A broad portfolio spanning discrete, analog and logic devices plus internal wafer and assembly capacity supports cross-selling multiple parts to customers.",
+      "risks": "Semiconductor cycles, distributor inventory, Asian manufacturing concentration, fab utilization, pricing, raw materials and export controls affect results.",
+      "competition": "Competes with large and specialist semiconductor suppliers across discrete, power and signal analog, logic and timing markets.",
+      "relationships": "Supplies automotive, industrial, communications, computing and consumer equipment makers directly and through distributors."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Analog and discrete semiconductor vendors",
+          "nameJa": "アナログ・ディスクリート半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "電源・信号・個別半導体で競合",
+            "en": "Power, signal and discrete devices"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Automotive and industrial equipment makers",
+          "nameJa": "自動車・産業機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "アナログ・ディスクリート製品を供給",
+            "en": "Analog and discrete products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Electronics distributors",
+          "nameJa": "電子部品販売会社",
+          "role": "partner",
+          "label": {
+            "ja": "幅広い顧客へ製品を販売",
+            "en": "Product distribution"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1038074,
+    "tickers": [
+      "SLAB"
+    ],
+    "name": "Silicon Laboratories",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Wireless products / Markets / Manufacturing / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1038074/000103807426000005/slab-20260103.htm"
+      }
+    ],
+    "ja": {
+      "business": "IoT機器を無線でつなぐBluetooth、Wi-Fi、Zigbee、Threadなど対応のSoCとマイコン、ソフトを作るファブレス半導体会社。",
+      "revenue": "スマートホーム、産業、医療、商業機器メーカーへ無線SoC、モジュール、開発ソフトを販売して稼ぐ。",
+      "strength": "無線、マイコン、セキュリティ、開発ツールを一式で提供し、複数の通信規格やMatterに対応する製品開発を簡単にする。",
+      "risks": "IoT需要と流通在庫、外部ファウンドリー・組立会社、通信規格の変化、価格競争、中国市場、製品認定に左右される。",
+      "competition": "低消費電力無線SoC、マイコン、Wi-Fi・Bluetooth接続製品で大手半導体会社や専門ベンダーと競う。",
+      "relationships": "IoT機器メーカーへ半導体とソフトを供給し、外部ファウンドリーと組立・検査会社へ製造を委託する。"
+    },
+    "en": {
+      "business": "A fabless chip company making wireless SoCs, MCUs and software for IoT devices using Bluetooth, Wi-Fi, Zigbee, Thread and related protocols.",
+      "revenue": "Sells wireless SoCs, modules and development software to smart-home, industrial, medical and commercial-device makers.",
+      "strength": "Combines radios, MCUs, security and development tools to simplify products supporting multiple protocols and Matter.",
+      "risks": "IoT demand and channel inventory, outsourced foundry and assembly partners, changing protocols, pricing, China exposure and customer qualifications affect results.",
+      "competition": "Competes with large semiconductor companies and specialists in low-power wireless SoCs, MCUs and Wi-Fi and Bluetooth connectivity.",
+      "relationships": "Supplies chips and software to IoT device makers and outsources wafer fabrication, assembly and test."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Wireless MCU and connectivity vendors",
+          "nameJa": "無線マイコン・接続半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "IoT無線SoCで競合",
+            "en": "Wireless IoT SoCs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "IoT device makers",
+          "nameJa": "IoT機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "無線SoCと開発ソフトを供給",
+            "en": "Wireless SoCs and development software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Foundry and assembly partners",
+          "nameJa": "半導体工場・組立会社",
+          "role": "supplier",
+          "label": {
+            "ja": "製造・組立・検査を委託",
+            "en": "Fabrication, assembly and test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1173489,
+    "tickers": [
+      "CEVA"
+    ],
+    "name": "CEVA",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Silicon IP / Licensing and royalties / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "Bluetooth、Wi-Fi、5G、音声・画像・AI処理などを半導体へ組み込むための設計IPとソフトをライセンスする会社。自社工場は持たない。",
+      "revenue": "設計IPを採用するときのライセンス料、開発支援料、顧客チップの出荷数に応じたロイヤルティで稼ぐ。",
+      "strength": "無線通信、DSP、センサー、エッジAIの再利用可能なIPとソフトを持ち、顧客が一から回路を作る時間とリスクを減らす。",
+      "risks": "少数の大口ライセンシー、採用から量産までの長い期間、通信規格の変化、顧客内製、IP保護、中国需要に左右される。",
+      "competition": "無線・DSP・AI向けの半導体設計IPで、他のIPベンダーや顧客が社内開発する回路と競う。",
+      "relationships": "半導体会社へ設計IPとソフトを提供し、採用企業がそのIPを組み込んだチップを出荷するとロイヤルティを受け取る。"
+    },
+    "en": {
+      "business": "Licenses silicon IP and software for Bluetooth, Wi-Fi, 5G, voice, vision, sensing and AI processing; it operates without its own fabs.",
+      "revenue": "Earns upfront license and development-support fees plus royalties based on shipments of customers' chips using its IP.",
+      "strength": "Reusable wireless, DSP, sensing and edge-AI IP and software reduce the time and risk for customers building functions from scratch.",
+      "risks": "A limited set of large licensees, long design-to-production cycles, changing standards, customer insourcing, IP protection and China demand affect results.",
+      "competition": "Competes in wireless, DSP and AI silicon IP with other IP vendors and customers' internally developed designs.",
+      "relationships": "Licenses design IP and software to semiconductor companies and receives royalties when licensees ship chips incorporating that IP."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Wireless and processor IP vendors",
+          "nameJa": "無線・プロセッサーIP会社",
+          "role": "competitor",
+          "label": {
+            "ja": "無線・DSP・AI設計IPで競合",
+            "en": "Wireless, DSP and AI IP"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Fabless companies and IDMs",
+          "nameJa": "ファブレス企業・IDM",
+          "role": "customer",
+          "label": {
+            "ja": "設計IPとソフトをライセンス",
+            "en": "Design IP and software licenses"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Chip licensees' products",
+          "nameJa": "採用企業の半導体製品",
+          "role": "partner",
+          "label": {
+            "ja": "出荷数に応じてロイヤルティ",
+            "en": "Royalties on licensee shipments"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
   }
 ]

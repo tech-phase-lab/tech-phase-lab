@@ -4,7 +4,7 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is one hundred seven issuers / one hundred eight tickers:
+Researched coverage is one hundred nineteen issuers / one hundred twenty tickers:
 LITE, COHR, AMAT, APH, ANET, MRVL, VRT, ALAB, MSFT, NBIS, TSM, ASML, AVGO,
 AMD, ARM, CRDO, NVDA, MU, GOOG, GOOGL, AAPL, AMZN, META, COST, INTC, SIMO,
 AAOI, BE, VST, GEV, IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL,
@@ -13,7 +13,8 @@ MPWR, ON, WDC, STX, HPQ, JBL, CDNS, SNPS, CIEN, KEYS, FLEX, FTNT, ZS, NET,
 DDOG, MDB, ADBE, INTU, UBER, NFLX, AKAM, OKTA, S, CHKP, TEAM, TWLO, DOCU,
 HUBS, SHOP, APP, ABNB, SPOT, RDDT, PINS, SNAP, RBLX, ROKU, TTD, DASH, MELI,
 PYPL, XYZ, SOFI, DUOL, ONTO, TER, ENTG, ACMR, ICHR, UCTT, MKSI, SWKS, QRVO,
-MTSI, POWI and SITM.
+MTSI, POWI, SITM, CAMT, NVMI, ACLS, COHU, AMKR, ASX, GFS, TSEM, RMBS, DIOD,
+SLAB and CEVA.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -217,4 +218,14 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - MTSIのADI / Broadcom / Marvellとの競争、POWIのTI / NXP / onsemiとの競争は各社の年次報告に基づく。競争線を供給関係へ置き換えていない。
 - SkyworksとQorvoは年次報告の対象期間と発表済み取引の状態を混同せず、今回のマップでは統合完了を前提にしていない。
 - 公式資料: [ONTO](https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/onto-20260103.htm), [TER](https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm), [ENTG](https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm), [ACMR](https://www.sec.gov/Archives/edgar/data/1680062/000162828026013231/acmr-20251231.htm), [ICHR](https://www.sec.gov/Archives/edgar/data/1652535/000165253526000012/ichr-20251226.htm), [UCTT](https://www.sec.gov/Archives/edgar/data/1275014/000162828026010744/uctt-20251226.htm), [MKSI](https://www.sec.gov/Archives/edgar/data/1049502/000119312526066820/mksi-20251231.htm), [SWKS](https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm), [QRVO](https://www.sec.gov/Archives/edgar/data/1604778/000162828026032873/rfmd-20260328.htm), [MTSI](https://www.sec.gov/Archives/edgar/data/1493594/000149359425000054/mtsi-20251003.htm), [POWI](https://www.sec.gov/Archives/edgar/data/833640/000083364026000037/powi-20251231x10k.htm), [SITM](https://www.sec.gov/Archives/edgar/data/1451809/000145180926000012/sitm-20251231.htm).
+- 共通UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は継続する。
+
+### 2026-10-14 半導体検査・ファウンドリー・後工程・設計IP12社追加
+
+- CAMT / NVMI / ACLS / COHU / AMKR / ASX / GFS / TSEM / RMBS / DIOD / SLAB / CEVAを追加。合計119社・120銘柄コード。
+- 検査・計測、イオン注入、半導体テスト、組立・検査受託、特殊ファウンドリー、メモリー接続、アナログ・ディスクリート、IoT無線、設計IPについて、各社の最新Form 10-KまたはForm 20-Fを一次資料として日英6項目と関係マップを確認した。確認日は2026-10-14。
+- CamtekとNovaは検査と計測の違い、Axcelisはイオン注入、Cohuは完成品テストと搬送・接触部品を区別した。AmkorとASEはOSATを共通点としつつ、ASEの電子機器製造事業を別に記載した。
+- GlobalFoundriesとTower Semiconductorは最先端微細化ではなく、RF・電源・車載・アナログなどの特殊工程を中心に整理。顧客名が開示されない取引は社名を推測せず業種単位で表示する。
+- Rambusは製品販売・ライセンス・ロイヤルティ、Silicon LabsはIoT向け無線SoC、CEVAは工場を持たない設計IPライセンスという収益構造を区別した。競争、顧客、外部製造を別の線として扱う。
+- 公式資料: [CAMT](https://www.sec.gov/Archives/edgar/data/1109138/000117891326001561/zk2634678.htm), [NVMI](https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm), [ACLS](https://www.sec.gov/Archives/edgar/data/1113232/000110465926020461/acls-20251231x10k.htm), [COHU](https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm), [AMKR](https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm), [ASX](https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm), [GFS](https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm), [TSEM](https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm), [RMBS](https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm), [DIOD](https://www.sec.gov/Archives/edgar/data/29002/000119312526044918/diod-20251231.htm), [SLAB](https://www.sec.gov/Archives/edgar/data/1038074/000103807426000005/slab-20260103.htm), [CEVA](https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm).
 - 共通UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は継続する。
