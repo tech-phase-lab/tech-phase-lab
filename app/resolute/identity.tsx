@@ -6,8 +6,14 @@ import NotificationScreen from "./notifications-screen";
 import TaxScreen from "./tax/screen";
 import ThermometerScreen from "./thermometer/screen";
 import NotebookScreen from "./notebook/screen";
-export default function ResoluteIdentity({ simulation=false, notification, extra }: {simulation?:boolean;notification?:"alerts"|"morning";extra?:"tax"|"thermometer"|"notebook"}) {
+import WallScreen from "./wall/screen";
+import TonightScreen from "./tonight/screen";
+import NewsScreen from "./news/screen";
+export default function ResoluteIdentity({ simulation=false, notification, extra }: {simulation?:boolean;notification?:"alerts"|"morning";extra?:"tax"|"thermometer"|"notebook"|"wall"|"tonight"|"news"}) {
  const {isLoaded,sessionId}=useAuth();
+ if(extra==="wall")return <WallScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
+ if(extra==="tonight")return <TonightScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
+ if(extra==="news")return <NewsScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
  // Session replacement discards all private answers and in-flight writes.
  if(extra==="notebook")return <NotebookScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
  if(extra==="tax")return <TaxScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;

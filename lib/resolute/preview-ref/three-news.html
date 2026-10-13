@@ -1,0 +1,112 @@
+<title>RESOLUTE 危険度チェッカー</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap">
+<style>
+/* 濃紺と金。ニュースを1枚の型に整理し「今日やること」を最後に大きく出す。 */
+:root {
+  --bg:#0a1018; --bg2:#101a27; --panel:#131d2b; --ink:#f1ece1; --sub:#9aa8b8; --line:#263447;
+  --gold:#d8b36a; --gold2:#f3dfae; --gold-ink:#1a1306; --soft:rgba(216,179,106,.10);
+  --ok:#7fd1a0; --okb:rgba(127,209,160,.10); --okl:rgba(127,209,160,.45);
+  --font:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  --serif:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { overflow-x: hidden; }
+body { margin:0; background: radial-gradient(1200px 600px at 50% -200px,#1b2c44 0%,var(--bg) 60%) fixed var(--bg); color:var(--ink); font-family:var(--font); font-size:16px; line-height:1.8; padding-inline:16px; padding-block:20px 40px; }
+.wrap { max-width:600px; margin:0 auto; display:flex; flex-direction:column; gap:18px; }
+.brand { text-align:center; font-family:var(--serif); letter-spacing:.32em; font-size:12px; color:var(--gold); }
+h1 { font-family:var(--serif); font-size:30px; line-height:1.4; margin:0; text-align:center; font-weight:700; color:var(--gold2); }
+.lead { margin:0; text-align:center; color:var(--sub); font-size:15px; text-wrap:balance; }
+.date { text-align:center; font-size:13px; color:var(--sub); letter-spacing:.06em; }
+.tabs { display:flex; gap:6px; padding:5px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.02); }
+.tab { flex:1; border:0; background:none; color:var(--sub); font-family:inherit; font-size:15px; padding:11px 8px; border-radius:999px; cursor:pointer; min-width:0; -webkit-tap-highlight-color:transparent; }
+.tab[aria-selected="true"] { background:linear-gradient(135deg,var(--gold2),var(--gold)); color:var(--gold-ink); font-weight:700; }
+.card { background:linear-gradient(180deg,var(--panel),var(--bg2)); border:1px solid var(--line); border-radius:16px; padding:24px 20px; display:flex; flex-direction:column; gap:18px; box-shadow:0 12px 40px rgba(0,0,0,.3); }
+.eyebrow { font-size:12px; color:var(--gold); letter-spacing:.24em; }
+.head { font-family:var(--serif); font-size:20px; line-height:1.7; margin:0; font-weight:700; text-wrap:balance; }
+.risk { display:flex; align-items:baseline; gap:12px; margin:-6px 0 0; }
+.risk .k { font-size:13px; color:var(--gold); letter-spacing:.14em; }
+.risk .s { font-size:24px; letter-spacing:.12em; color:var(--gold2); }
+.risk .s span { color:var(--line); }
+.rfoot { font-size:12px; color:var(--sub); margin:0; text-align:center; line-height:1.8; }
+.rnote { font-size:12px; color:var(--sub); margin:-10px 0 0; }
+.kv { display:flex; flex-direction:column; gap:0; margin:0; }
+.kv div { display:grid; grid-template-columns:5.2em 1fr; gap:12px; padding:12px 0; border-top:1px solid var(--line); }
+.kv dt { color:var(--gold); font-size:13px; letter-spacing:.08em; padding-top:2px; }
+.kv dd { margin:0; line-height:1.9; min-width:0; }
+.today { border:1px solid var(--okl); background:var(--okb); border-radius:14px; padding:20px; text-align:center; display:flex; flex-direction:column; gap:6px; }
+.today .k { font-size:13px; color:var(--ok); letter-spacing:.2em; }
+.today .v { font-family:var(--serif); font-size:40px; font-weight:700; color:var(--ok); line-height:1.3; }
+.today .m { font-size:15px; margin:0; text-align:left; }
+.meter { display:flex; flex-direction:column; gap:8px; }
+.meter .t { display:flex; justify-content:space-between; font-size:14px; color:var(--sub); gap:12px; }
+.meter .t b { color:var(--gold2); font-size:18px; font-variant-numeric:tabular-nums; }
+.track { position:relative; height:8px; border-radius:6px; background:var(--line); }
+.track i { position:absolute; left:0; top:0; bottom:0; border-radius:6px; background:linear-gradient(90deg,var(--gold),var(--gold2)); }
+.track u { position:absolute; top:-5px; width:2px; height:18px; background:var(--gold2); text-decoration:none; }
+.scale { display:flex; justify-content:space-between; font-size:12px; color:var(--sub); font-variant-numeric:tabular-nums; }
+.say { border:1px solid rgba(216,179,106,.5); border-radius:14px; padding:22px 20px; background:radial-gradient(500px 220px at 50% 0,rgba(216,179,106,.14),transparent 70%),linear-gradient(180deg,var(--panel),var(--bg2)); display:flex; flex-direction:column; gap:12px; }
+.say .who { font-size:12px; color:var(--gold); letter-spacing:.24em; }
+.say .q { font-family:var(--serif); font-size:24px; line-height:1.6; margin:0; color:var(--gold2); font-weight:700; }
+.say ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+.say li { position:relative; padding-left:20px; line-height:1.9; }
+.say li::before { content:""; position:absolute; left:2px; top:.85em; width:8px; height:1px; background:var(--gold); }
+.disc { font-size:12px; color:var(--sub); margin:0; line-height:1.8; }
+.notice { font-size:12px; color:var(--sub); text-align:center; }
+:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+</style>
+<div class="wrap">
+  <div class="brand">RESOLUTE</div>
+  <h1>危険度チェッカー</h1>
+  <p class="lead">気になるニュースを、事実とあなたのルールで整理します。</p>
+  <div class="date">2027年1月15日(見本)</div>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div id="out" style="display:flex;flex-direction:column;gap:18px"></div>
+  <p class="rfoot">※危険度は、出どころ・範囲・時間の長さなどの基準で決めています。</p>
+  <div class="notice">確認用の見本です。文章と数字は例です。公開前に事実を確認します。</div>
+</div>
+<script>
+const N = [
+  { tab:"ブラックロック", head:"「ブラックロックが、米国株の比率を下げるよう勧告した」と報じられました",
+    src:"SNSの投稿", what:"大手運用会社が、AIの値動きの大きさを理由に、米国株の比率を下げる考えを示したという内容です。",
+    time:"運用会社の比率の見直しは、数か月から数年かけて行うものです。", gap:12.0, star:2,
+    say:"私はこのニュースでは動きません。", why:["多くの証券会社が、AI関連の目標株価を引き上げ続けています。","大きな資金は、下げた場面で買いに回ることもよくあります。","私のルールが動くのは、価格がラインに届いたときだけです。"] },
+  { tab:"Jefferies", head:"「AIブームは、長期的に米国の資本を壊す可能性が高い」と報じられました",
+    src:"SNSの投稿(調査会社の見方の紹介)", what:"安い中国製のオープンソースモデルが広がることで、AI投資の収益が下がるという見方です。",
+    time:"数年先の見通しです。今日や今週の話ではありません。", gap:12.0, star:1,
+    say:"私は慌てません。", why:["安いモデルが増えるほど、AIを使う企業と人が増えます。","AIが広がるほど、計算の需要も広がります。","「AIの終わり」という見出しは、過去にも何度も出ました。"] }
+];
+let cur = 0;
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[c]));
+function draw() {
+  $("#tabs").innerHTML = N.map((n, i) => `<button class="tab" role="tab" data-i="${i}" aria-selected="${i === cur}">${esc(n.tab)}</button>`).join("");
+  const n = N[cur], pos = Math.max(2, 100 - n.gap * 2.5);
+  $("#out").innerHTML = `
+  <div class="card">
+    <div class="eyebrow">NEWS</div>
+    <h2 class="head">${esc(n.head)}</h2>
+    <div class="risk"><span class="k">危険度</span><span class="s" aria-label="5段階中${n.star}">${"★".repeat(n.star)}<span>${"☆".repeat(5 - n.star)}</span></span></div>
+    <dl class="kv">
+      <div><dt>出どころ</dt><dd>${esc(n.src)}</dd></div>
+      <div><dt>内容</dt><dd>${esc(n.what)}</dd></div>
+      <div><dt>時間の長さ</dt><dd>${esc(n.time)}</dd></div>
+    </dl>
+    <div class="meter">
+      <div class="t"><span>最初のラインまで</span><b>あと ${n.gap.toFixed(1)}%</b></div>
+      <div class="track"><i style="width:${pos}%"></i><u style="left:calc(100% - 2px)"></u></div>
+      <div class="scale"><span>いまの価格</span><span>最初のライン</span></div>
+    </div>
+    <div class="today"><div class="k">今日やること</div><div class="v">なし</div>
+      <p class="m">あなたのルールが動くのは、価格がラインに届いたときだけです。ニュースでは動きません。</p></div>
+  </div>
+  <div class="say">
+    <div class="who">RIZELの一言</div>
+    <p class="q">${esc(n.say)}</p>
+    <ul>${n.why.map((w) => `<li>${esc(w)}</li>`).join("")}</ul>
+    <p class="disc">これは私の個人的な見方です。特定の売買をすすめるものではありません。</p>
+  </div>`;
+  document.querySelectorAll("[data-i]").forEach((b) => (b.onclick = () => { cur = +b.dataset.i; draw(); }));
+}
+draw();
+</script>

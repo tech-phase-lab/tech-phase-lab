@@ -78,7 +78,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
  const validItems=draft.watchItems.filter(i=>/^[A-Z][A-Z0-9.-]{0,14}$/.test(i.symbol)&&Number.isFinite(i.referencePrice)&&i.referencePrice>0&&i.referencePrice<=1000000);
  const watch=validItems.map(i=>({...i,lines,renotifyAfterRecovery:false,...(draft.surgeCapPct===null?{}:{surgeCapPct:draft.surgeCapPct})}));
  const events=judge(watch,watch.map(i=>({symbol:i.symbol,date:"2027-02-03",close:Math.max(0.01,Math.round(i.referencePrice*(100+change))/100),isFinal:true})),{}).events;
- const mail=events.length?renderAlertMail({locale,date:"2027-02-03",items:events,planUrl:"/resolute",unsubscribeUrl:"/resolute/alerts"}):null;
+ const mail=events.length?renderAlertMail({locale,date:"2027-02-03",items:events,tonightUrl:"/resolute/tonight",planUrl:"/resolute",unsubscribeUrl:"/resolute/alerts"}):null;
  const morningMail=renderNextMorningMail({locale,doneUrl:"/resolute/morning",skippedUrl:"/resolute/morning",unsureUrl:"/resolute/morning",planUrl:"/resolute",unsubscribeUrl:"/resolute/morning"});
  const usd=(v:number)=>new Intl.NumberFormat(en?"en-US":"ja-JP",{style:"currency",currency:"USD"}).format(v);
  const timeButtons=<div className={styles.timeGrid}>{DELIVERY_HOURS.map(h=><button type="button" key={h} aria-pressed={draft.deliveryHourJst===h} onClick={()=>update({deliveryHourJst:h})}>{h}:00</button>)}</div>;

@@ -10,6 +10,9 @@ import NotificationScreen from "../notifications-screen";
 import NotebookScreen from "../notebook/screen";
 import TaxScreen from "../tax/screen";
 import ThermometerScreen from "../thermometer/screen";
+import WallScreen from "../wall/screen";
+import TonightScreen from "../tonight/screen";
+import NewsScreen from "../news/screen";
 import styles from "../diagnosis.module.css";
 export default function ReviewScreen({getSessionToken}:{getSessionToken?:ReviewSessionToken}) {
  const [access, setAccess] = useState<{status:ReviewAccess|"loading"; authorized:boolean}>({status:"loading",authorized:false});
@@ -52,7 +55,7 @@ function Workspace() {
  return <ReviewContext.Provider value={{...store,path,navigate,locale,setLocale}}>
   <div hidden={path !== "/resolute"}><DiagnosisScreen/></div>
   {path === "/resolute/simulation" ? <SimulationScreen/> : path === "/resolute/tax" ? <TaxScreen/> :
-   path === "/resolute/notebook" ? <NotebookScreen/> : path === "/resolute/thermometer" ? <ThermometerScreen/> : null}
+   path === "/resolute/wall" ? <WallScreen/> : path === "/resolute/tonight" ? <TonightScreen/> : path === "/resolute/news" ? <NewsScreen/> : path === "/resolute/notebook" ? <NotebookScreen/> : path === "/resolute/thermometer" ? <ThermometerScreen/> : null}
   {notificationsVisited?<div hidden={path!=="/resolute/alerts"&&path!=="/resolute/morning"}><NotificationScreen mode={path==="/resolute/morning"?"morning":"alerts"}/></div>:null}
  </ReviewContext.Provider>;
 }

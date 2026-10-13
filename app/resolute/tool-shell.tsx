@@ -48,7 +48,7 @@ export default function ToolShell({ identityReady=true, children }: { identityRe
     <button type="button" aria-pressed={en} onClick={()=>setLocale("en")}>English</button>
    </div></header>
   {menuOpen ? <nav id="resolute-tools" className={styles.toolMenu} aria-label={en?"RESOLUTE tools":"RESOLUTEのツール"}>
-   {[["/resolute","① 診断","① Quiz"],["/resolute/simulation","② シミュレーション","② Simulator"],["/resolute/alerts","③ アラート","③ Alerts"],["/resolute/morning","④ 翌朝","④ Morning note"],["/resolute/thermometer","⑤ 温度計","⑤ Gauge"],["/resolute/tax","⑥ 税金","⑥ Tax"],["/resolute/notebook","マイルール","My rulebook"]].map(([href,ja,eng])=>
+   {[["/resolute","① 診断","① Quiz"],["/resolute/simulation","② シミュレーション","② Simulator"],["/resolute/alerts","③ アラート","③ Alerts"],["/resolute/morning","④ 翌朝","④ Morning note"],["/resolute/thermometer","⑤ 温度計","⑤ Gauge"],["/resolute/tax","⑥ 税金","⑥ Tax"],["/resolute/notebook","マイルール","My rulebook"],["/resolute/wall","ルールのお守り","Rule wallpaper"],["/resolute/tonight","今夜のひと息","A moment to breathe"],["/resolute/news","危険度チェッカー","News risk checker"]].map(([href,ja,eng])=>
     <Link key={href} href={href} onClick={()=>setMenuOpen(false)} prefetch={false} aria-current={(review?.path ?? pathname)===href?"page":undefined}>{en?eng:ja}</Link>)}
   </nav> : null}
   {identityReady && (reviewing || access==="allowed") ? children(locale,()=>setAccess("denied")) : <section className={styles.card}>

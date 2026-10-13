@@ -16,6 +16,7 @@ export interface AlertMailInput {
   date: string; // 米国市場の営業日 YYYY-MM-DD
   items: AlertEvent[];
   planUrl: string;
+  tonightUrl?: string;
   unsubscribeUrl: string;
 }
 
@@ -80,6 +81,7 @@ export function renderAlertMail(i: AlertMailInput): RenderedMail {
         '計画に書いた買い増し額と買わない条件を確認してください。上昇時は1銘柄の上限も確認できます',
         '',
         `計画を開く:${i.planUrl}`,
+        ...(i.tonightUrl ? [`今夜のひと息:${i.tonightUrl}`] : []),
         '',
         '---',
         'RESOLUTEの終値通知をご利用中のため、このメールをお送りしています。情報の提供であり、投資助言ではありません。',
@@ -109,6 +111,7 @@ export function renderAlertMail(i: AlertMailInput): RenderedMail {
       'Check your planned purchase amounts and conditions for not buying. After a rise, check your single-stock cap too.',
       '',
       `Open your plan: ${i.planUrl}`,
+      ...(i.tonightUrl ? [`A moment to breathe: ${i.tonightUrl}`] : []),
       '',
       '---',
       "You're getting this because your RESOLUTE alerts are on. It's information only, not investment advice.",
