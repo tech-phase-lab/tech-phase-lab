@@ -12,7 +12,7 @@ import { localizeDiagnosis, type DiagnosisLocale } from "@/lib/resolute/diagnosi
 import { PlanClientError } from "@/lib/resolute/plan-client";
 import type { PlanSnapshot } from "@/lib/resolute/plan-data";
 const messages = {
- ja: { title:"あなただけの投資ルールを、30の質問でつくる。", intro:"暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。",
+ ja: { title:"あなただけの投資ルールを30問の質問でつくる。", intro:"暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。",
  closingFirst:"マイルールを定めれば", closingLast:"暴落も上昇も怖くない",
  start:"はじめる", redo:"回答を見直す", next:"次へ", back:"戻る", result:"結果を見る", rules:"あなたの投資ルール", advice:"このルールを使うために",
  save:"このルールを保存する", saving:"保存しています…", saved:"ルールを保存しました。", simulation:"② シミュレーションへ進む", edit:"回答に戻る",
@@ -64,7 +64,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   }).finally(()=>{if(!controller.signal.aborted)setLoading(false);});
   return()=>{pending.current?.abort();};
  },[requestPlan]);
- useEffect(()=>{if(mode!=="intro") heading.current?.focus();},[index,mode]);
+ useEffect(()=>{if(mode!=="intro") { heading.current?.focus({preventScroll:true}); heading.current?.scrollIntoView({block:"start",behavior:"instant"}); }},[index,mode]);
  async function reload() {
   if(mutex.current)return;mutex.current=true;setLoading(true);
   const controller=new AbortController();pending.current=controller;
@@ -97,8 +97,9 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const reloadButton=<button type="button" className={styles.secondary} disabled={loading||busy} onClick={()=>void reload()}>{c.reload}</button>;
  if(mode==="intro") return <section className={`${styles.card} ${styles.introCard}`}>
   <span className={styles.eyebrow}>RULE DIAGNOSIS</span>
-  <h1 className={styles.introTitle}>{en ? <><span>Build your own investing</span><span>rules in 30 questions.</span></> : <><span>あなただけの投資ルールを、</span><span>30の質問でつくる。</span></>}</h1>
-  <p className={styles.introDescription}>{en ? <>Build clearer rules with each answer.<br/>Takes about five minutes.</> : <>答えるほど、ルールは鮮明になります。<br/>所要時間は5分ほどです。</>}</p>
+  <h1 className={styles.introTitle}>{en ? <><span>Build your own investing</span><span>rules in 30 questions.</span></> : <><span>あなただけの投資ルールを</span><span>30問の質問でつくる。</span></>}</h1>
+  <p className={styles.introDescription}>{en ? <>Build clearer rules with each answer.<br/>Takes about five minutes.</> : <>答えるほどルールは鮮明になります。<br/>※所要時間 約5分</>}</p>
+  <p className={styles.disclaimer}>{c.currency}</p>
   {bodyMessage}
   <button type="button" className={styles.primary} disabled={loading||locked} onClick={()=>{setMode("questions");setSaved(false);}}>{snapshot?.plan?c.redo:c.start}</button>
   {snapshot?.plan?<Link className={styles.secondary} href="/resolute/simulation" prefetch={false}>{c.simulation}</Link>:null}
@@ -108,7 +109,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   const text=questionCopy(q,locale), answer=draft.answers[q.id], option=q.o.find(o=>o.id===answer),limits=numericLimits(q,draft.answers);
   return <div className={styles.section}>
    <div className={styles.progress}><div className={styles.meta}><span>{sections[q.s][en?1:0]}</span><span>{index+1} / {visible.length}</span></div><progress value={index+1} max={visible.length} aria-label={en?"Progress":"進み具合"}/></div>
-   {index===0 ? <p className={styles.muted}>{c.currency}</p> : null}
+
    <section className={styles.card} aria-labelledby="question-heading">
     <span className={styles.eyebrow}>{q.id.toUpperCase()}</span><h1 id="question-heading" aria-label={text.text} ref={heading} tabIndex={-1} className={styles.questionTitle}><QuestionTitle id={q.id} text={text.text} locale={locale}/></h1>
     {text.note?<p className={styles.muted}>{text.note}</p>:null}
@@ -127,7 +128,7 @@ function DiagnosisForm({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
     </label>:null}
     {q.free?<label className={styles.field}>{c.free}<textarea value={draft[q.free].join("\n")} onChange={e=>{const field=q.free!;setDraft(d=>({...d,[field]:e.target.value.split("\n")}));}} aria-describedby="privacy-note"/><span id="privacy-note" className={styles.muted}>{c.private}</span></label>:null}
     {formError?<p className={styles.error} role="alert">{c[formError]}</p>:null}
-    <div className={styles.nav}><button type="button" className={styles.secondary} onClick={()=>{setFormError(null);if(index===0)setMode("intro");else setIndex(i=>i-1);}}>{c.back}</button>
+    <div className={`${styles.nav} ${styles.questionNav}`}><button type="button" className={styles.secondary} onClick={()=>{setFormError(null);if(index===0)setMode("intro");else setIndex(i=>i-1);}}>{c.back}</button>
      <button type="button" className={styles.primary} onClick={next}>{index===visible.length-1?c.result:c.next}</button></div>
    </section>
   </div>;

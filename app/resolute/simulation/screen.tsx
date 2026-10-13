@@ -23,7 +23,7 @@ function Simulation({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  useEffect(()=>{const controller=new AbortController();
   void requestPlan(undefined,controller.signal).then(p=>{if(controller.signal.aborted)return;
    setPlan(p.plan);setState(p.plan?"ready":"empty");
-   if(p.plan){setHolding("0");setHoldings(Array.from({length:3},()=>({name:"",value:"0"})));}
+   if(p.plan){setHolding(String((p.plan.investedAmount??0)/(p.plan.currency==="JPY"?10000:100)));setHoldings(Array.from({length:3},()=>({name:"",value:"0"})));}
   },e=>{if(controller.signal.aborted)return;if(e instanceof PlanClientError&&["signed-out","denied"].includes(e.kind))denyRef.current();else setState("error");});
   return()=>controller.abort();},[attempt,requestPlan]);
  const en=locale==="en",t=(ja:string,eng:string)=>en?eng:ja;
@@ -57,7 +57,7 @@ function Simulation({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
     <div className={styles.scenario}><p className={styles.muted}>{t("もしも、持っている株が",tab==="drop"?"What if your stocks fell":"What if your stocks rose")}</p><p className={styles.percentNumber}>{tab==="drop"?"−"+drop:"+"+rise}%</p><p className={styles.muted}>{t(tab==="drop"?"下がったら？":"上がったら？","from their current value?")}</p></div>
     <input type="range" min="0" max={tab==="drop"?100:200} step="1" value={tab==="drop"?drop:Math.min(200,Number(rise))} aria-label={t(tab==="drop"?"下落率のスライダー":"上昇率のスライダー",tab==="drop"?"Drop slider":"Rise slider")} onChange={e=>tab==="drop"?setDrop(e.target.value):setRise(e.target.value)}/>
     <div className={styles.chips}>{(tab==="drop"?[10,20,30,50]:[10,30,50,100]).map(v=><button key={v} aria-pressed={Number(tab==="drop"?drop:rise)===v} onClick={()=>tab==="drop"?setDrop(String(v)):setRise(String(v))}>{tab==="drop"?"−":"+"}{v}%</button>)}</div>
-    {tab==="drop"?holdingField(t("いまの保有額","Current holdings"),holding,setHolding):<div className={styles.section}>
+    {tab==="drop"?<>{holdingField(t("いまの保有額","Current holdings"),holding,setHolding)}<p className={styles.disclaimer}>{t("①で入力した投資済みの金額を表示しています。現金や預金は含めずに試算できます", "Starts with the invested amount from your answers. Keep cash and savings out of this scenario.")}</p></>:<div className={styles.section}>
      <p className={styles.muted}>{t("いまの保有","Current holdings")}</p>
      {holdings.map((h,i)=><div className={styles.holdingRow} key={i}><input aria-label={t("銘柄名","Stock name")+` ${i+1}`} type="text" maxLength={40} placeholder={stockName(i)} value={h.name} onChange={e=>setHoldings(hs=>hs.map((x,k)=>k===i?{...x,name:e.target.value}:x))}/><label className={styles.amountWithUnit}><NumberInput aria-label={t("保有額","Holding value")+` ${i+1}`} decimal value={h.value} onValueChange={value=>setHoldings(hs=>hs.map((x,k)=>k===i?{...x,value}:x))}/><small>{unitLabel}</small></label></div>)}
     </div>}

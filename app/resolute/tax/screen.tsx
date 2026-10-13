@@ -50,7 +50,6 @@ function TaxEstimate({ locale }: { locale: DiagnosisLocale }) {
       ].map(([ja, eng]) => <li key={eng}>{t(ja, eng)}</li>)}</ul></div>
       <p className={styles.muted}>{t("税額は各税目の1円未満を切り捨てる概算です。確定申告の端数処理とは異なります。", "Each tax component is rounded down to the nearest yen. Tax-return rounding rules differ.")}</p>
       <p className={styles.muted}>{t("現在は2026年分のみ対応しています。", "Only tax year 2026 is currently supported.")}</p>
-      <div className={styles.sourceLinks}><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1463.htm" target="_blank" rel="noreferrer">{t("国税庁：株式等の譲渡益", "NTA: Tax on share-sale gains (Japanese)")}</a><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1474.htm" target="_blank" rel="noreferrer">{t("国税庁：譲渡損失の損益通算・繰越控除", "NTA: Loss offsets and carryforwards (Japanese)")}</a></div>
     </div></details>
     <p className={styles.disclaimer}>{en ? DISCLAIMER_EN : DISCLAIMER_JA}</p>
     <FlowNavigation step={6} locale={locale}/>

@@ -66,17 +66,18 @@ export function renderAlertMail(i: AlertMailInput): RenderedMail {
           ? '【RESOLUTE】あなたの計画のラインに届いた銘柄があります'
           : '【RESOLUTE】あなたの計画の上昇の目安に届いた銘柄があります';
     const notes: string[] = [];
-    if (hasLine) notes.push('あなたの計画では、下落のラインは「いったん立ち止まって、決めておいたルールを見直す合図」です。');
-    if (hasSurge) notes.push('あなたの計画では、上昇の目安は「持ち分の偏りを確認する合図」です。');
+    if (hasLine) notes.push('あなたの計画では 下落のラインは決めておいたルールを見直す合図です');
+    if (hasSurge) notes.push('あなたの計画では 上昇の目安は持ち分の偏りを確認する合図です');
     return {
       subject,
       text: [
-        `${formatDate(i.date, 'ja')}(米国市場)の終値を、あなたの計画と照らしました。`,
+        ...notes,
+        '',
+        `${formatDate(i.date, 'ja')}(米国市場)の終値をあなたの計画と照らしました`,
         '',
         ...i.items.map(lineJa),
         '',
-        ...notes,
-        '買うか、見送るか、待つか。決めるのは、ルールを読み返したあとのあなたです。',
+        '計画に書いた買い増し額と買わない条件を確認してください。上昇時は1銘柄の上限も確認できます',
         '',
         `計画を開く:${i.planUrl}`,
         '',
@@ -99,12 +100,13 @@ export function renderAlertMail(i: AlertMailInput): RenderedMail {
   return {
     subject,
     text: [
+      ...notes,
+      '',
       `Quick note after the US close on ${formatDate(i.date, 'en')}. We checked the closing prices against your plan:`,
       '',
       ...i.items.map(lineEn),
       '',
-      ...notes,
-      'Buy, skip or wait: that call is yours, once you have read your rules again.',
+      'Check your planned purchase amounts and conditions for not buying. After a rise, check your single-stock cap too.',
       '',
       `Open your plan: ${i.planUrl}`,
       '',
@@ -129,14 +131,14 @@ export function renderNextMorningMail(i: NextMorningInput): RenderedMail {
     return {
       subject: '【RESOLUTE】昨日のお知らせのあと、どうでしたか?',
       text: [
-        '昨日のお知らせから、一晩たちました。',
-        'いまの気持ちに近いものを、1つだけ選んでください(1回で終わります)。',
+        '昨日のお知らせから\n一晩が経ちました',
+        '今の気持ちに近いものを\n1つだけ選んでください',
         '',
         `・計画どおり動いた:${i.doneUrl}`,
         `・見送った:${i.skippedUrl}`,
         `・まだ迷っている:${i.unsureUrl}`,
         '',
-        'どれを選んでも、正解・不正解はありません。選ぶと、その気持ちに合わせた短い見直しのヒントが開きます。',
+        '選ぶと今の気持ちに合わせたルールの見直し方を確認できます',
         `計画を開く:${i.planUrl}`,
         '',
         '---',
@@ -155,7 +157,7 @@ export function renderNextMorningMail(i: NextMorningInput): RenderedMail {
       `- I skipped it: ${i.skippedUrl}`,
       `- I'm still not sure: ${i.unsureUrl}`,
       '',
-      'There are no right or wrong answers. Whatever you pick opens a short tip for taking another look at your plan.',
+      'Your answer opens a short tip to help you review your rules.',
       `Open your plan: ${i.planUrl}`,
       '',
       '---',

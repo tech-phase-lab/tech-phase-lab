@@ -168,3 +168,41 @@
 @media(max-width:360px){.verdict strong{font-size:18px}}
 .verdict strong .phrase{display:inline-block}
 .resultRows>div{flex-wrap:nowrap}.resultRows dt{min-width:0}.resultRows dd{flex-shrink:0;white-space:nowrap}
+
+/* Owner review: warm gold hierarchy, compact question flow and in-place tools. */
+.card{border-color:#d8b36a38;box-shadow:0 16px 38px #0005,inset 0 1px 0 #f3dfae0b}
+.card h2{color:var(--gold2);letter-spacing:.035em}
+.hero{border-color:#d8b36a88;box-shadow:0 18px 45px #0006,inset 0 1px 0 #f3dfae24}
+.card .questionTitle{scroll-margin-top:14px}
+.card[aria-labelledby=question-heading]{padding-bottom:0}
+.questionNav{position:sticky;bottom:0;z-index:5;background:linear-gradient(180deg,#101a27ed,#101a27);border-top:1px solid #d8b36a55;padding:12px 0 calc(12px + env(safe-area-inset-bottom));flex-wrap:nowrap;width:100%;backdrop-filter:blur(12px);margin-top:8px}
+.questionNav .primary{min-width:45%}
+.questionNav .secondary{color:var(--gold2);border-color:#d8b36a66}
+.stockLookup{min-width:0;position:relative;font-size:13px;color:var(--gold)}
+.stockLookup>label{display:block;margin-bottom:6px}
+.stockEntry{position:relative;display:flex;align-items:center}
+.stockEntry input{width:100%;padding-right:32px!important}
+.stockEntry input::placeholder{font-size:11px;color:var(--sub)}
+.clearInput{position:absolute;right:2px;width:30px;height:40px;background:transparent;border:0;color:var(--gold2);font-size:20px;padding:0}
+.stockSuggestions{position:absolute;top:100%;left:0;width:min(280px,75vw);z-index:10;padding:8px;border:1px solid var(--gold);border-radius:12px;background:#101a27;box-shadow:0 12px 28px #0009}
+.stockSuggestions button{width:100%;display:grid;gap:3px;text-align:left;font:inherit;background:transparent;border:0;border-bottom:1px solid #d8b36a33;padding:10px;color:var(--ink)}
+.stockSuggestions button strong{color:var(--gold2)}
+.stockSuggestions button span{font-size:12px;overflow-wrap:anywhere}
+.stockSuggestions p{padding:8px;font-size:12px}
+.referencePrice>span:first-child{color:var(--gold)}
+.mailText .planEmphasis{font-size:15px;color:var(--gold2);border-left:2px solid var(--gold);padding:12px;background:#d8b36a0f;line-height:1.8;margin-bottom:8px}
+.morningQuestion .phrase{display:block}
+.morningQuestion+.muted .phrase{display:block}
+.resultRows>div{border-color:#d8b36a44}
+.resultRows dd{color:var(--gold2)}
+.accountChoices{border-color:#d8b36a55;background:#d8b36a05}
+.planDialog{position:fixed;margin:auto;width:min(560px,calc(100vw - 32px));max-height:85dvh;overflow:auto;background:linear-gradient(160deg,#1b2636,#0b131f);border:1px solid var(--gold);border-radius:18px;color:var(--ink);padding:24px;font:inherit;box-shadow:0 24px 70px #0009}
+.planDialog::backdrop{background:#03080edb;backdrop-filter:blur(4px)}
+.planDialog h2{color:var(--gold2);font-family:var(--font-resolute-serif),serif;font-size:24px}
+.planDialog .primary{width:100%;position:sticky;bottom:0}
+@media(max-width:420px){.card[aria-labelledby=question-heading]{gap:14px;padding:18px 16px 0}.card[aria-labelledby=question-heading] .option{padding:12px 14px;min-height:48px}.card[aria-labelledby=question-heading] .options{gap:8px}.stockRow{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) 28px;gap:8px}.stockRow .removeButton{width:28px}.planDialog{padding:18px}}
+.stockRow{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) 28px;align-items:end}
+.referencePrice{display:flex;flex-direction:column;align-items:stretch;gap:6px;justify-content:flex-start;font-size:13px}
+.dollarInput{width:100%;height:55px}.dollarInput input{height:55px}
+.stockRow .removeButton{width:28px;height:55px}
+.stockEntry input{height:55px}
