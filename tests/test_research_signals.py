@@ -56,6 +56,9 @@ class SignalTests(unittest.TestCase):
         self.assertNotIn("query", encoded)
         self.assertNotIn(source["id"], encoded)
         self.assertNotIn("matchedItems", encoded)
+        # Per-route detail is numbered in configuration order and carries no route name.
+        self.assertEqual([d["route"] for d in result["routes"]["details"]], list(range(1, 7)))
+        self.assertEqual(result["routes"]["details"][0]["error"], "fetch-failed")
 
     def check_feed(self, content, **response):
         return signals.check(self.db, self.feed, self.tickers, lambda *_: {"body": content, **response})

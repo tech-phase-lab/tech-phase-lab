@@ -48,8 +48,8 @@ class ReleaseWatchTests(unittest.TestCase):
 
     def test_burst_covers_one_minute_before_to_fifteen_after_a_release_only(self):
         self.assertEqual(watch.burst_routes(AT - timedelta(seconds=61), [CPI]), set())
-        self.assertEqual(watch.burst_routes(AT - timedelta(seconds=60), [CPI]), {'x-wallstengine'})
-        self.assertEqual(watch.burst_routes(AT + timedelta(minutes=15), [CPI]), {'x-wallstengine'})
+        self.assertEqual(watch.burst_routes(AT - timedelta(seconds=60), [CPI]), {'x-wallstengine', 'bls-cpi'})
+        self.assertEqual(watch.burst_routes(AT + timedelta(minutes=15), [CPI]), {'x-wallstengine', 'bls-cpi'})
         self.assertEqual(watch.burst_routes(AT + timedelta(minutes=16), [CPI]), set())
         self.assertEqual(watch.burst_routes(AT, [CALL]), set())
         self.assertEqual(watch.burst_routes(ASML['at'], [ASML]), {'x-wallstengine', 'x-tipranks'})

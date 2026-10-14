@@ -22,7 +22,7 @@ export type OfficialUpdate = CompactTitles & NewsBody & { brief?: OfficialNewsBr
 export type MarketUpdate = CompactTitles & MarketNewsDetail & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
 export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; officialHistory?: OfficialHistory; originalPreviewItems?: OriginalPreviewItem[]; originalPreviewWindow?: OriginalPreviewWindow };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
-  "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com", "www.bea.gov"]);
+  "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com", "www.bea.gov", "www.bls.gov"]);
 
 // Optional display copy must never make a valid full article disappear.
 function compactTitles(value: Record<string, unknown>): CompactTitles {
@@ -228,6 +228,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
       if (url.hostname === "x.com" && !/^\/(nebiusai|tipranks|theflynews|wallstengine|fabymetal4)\/status\/\d+$/i.test(url.pathname)
         && !reportedBuyback) throw Error("Invalid official account");
       if (url.hostname === "www.bea.gov" && (!/^\/news\/20\d{2}\/personal-income-and-outlays-[a-z]+-20\d{2}$/.test(url.pathname) || url.search || url.hash)) throw Error("Invalid BEA release");
+      if (url.hostname === "www.bls.gov" && (!/^\/news\.release\/archives\/cpi_\d{8}\.htm$/.test(url.pathname) || url.search || url.hash)) throw Error("Invalid BLS release");
       if (Array.from(v.title as string).length > 180 || (v.publisher as string).length > 80 || !/^\d+$/.test(v.id as string) || !Number.isFinite(Date.parse(v.observedAt as string))) throw Error("Invalid update");
       if (!Array.isArray(v.tickers) || v.tickers.length > 5 || !v.tickers.every(t => typeof t === "string" && /^[A-Z][A-Z0-9.-]{0,9}$/.test(t))) throw Error("Invalid update tickers");
       const publication: { publishedAt?: string; publishedOn?: string } = {};
