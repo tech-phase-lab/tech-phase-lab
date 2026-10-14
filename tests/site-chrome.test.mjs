@@ -59,20 +59,24 @@ test("first visit follows the browser language; a saved choice wins", async () =
   assert.ok(source.indexOf("localStorage.getItem(key)") < source.indexOf("browserLanguage(navigator.languages"));
 });
 
-test("unread alerts count only listed, translated, published stories", async () => {
+test("unread alerts count only the rows the 速報 page lists, with a stated time and a Japanese title", async () => {
   const { alertItems } = await import("../lib/research/alert-items.ts");
   const now = Date.parse("2026-10-08T12:00:00Z");
   const base = { url: "https://www.example.com/a", publisher: "Micron", tickers: ["MU"], observedAt: "2026-10-08T11:59:00Z" };
   const feed = { officialUpdates: [
     { ...base, id: "1", title: "Micron reports Q4 results", translationJa: "マイクロン、決算を発表", publishedAt: "2026-10-08T11:00:00Z" },
-    { ...base, id: "2", title: "Micron reports Q4 results", publishedAt: "2026-10-08T11:30:00Z" },
-    { ...base, id: "3", title: "Micron reports Q4 results", translationJa: "マイクロン決算" },
-    { ...base, id: "4", title: "Next-Generation Networking", translationJa: "次世代ネットワーク", publishedAt: "2026-10-08T11:40:00Z", tickers: ["ANET"], publisher: "Arista Networks" },
-    { ...base, id: "5", title: "Micron reports Q4 results", translationJa: "未来", publishedAt: "2026-10-09T00:00:00Z" },
-  ], marketUpdates: [{ id: "m1", titleJa: "米国債", publishedAt: "2026-10-08T10:00:00Z" }] };
-  const items = alertItems(feed, now);
-  assert.deepEqual(items.map(item => item.id), ["official:1", "market:m1"]);
-  assert.deepEqual(alertItems(null, now), []);
+    { ...base, id: "2", title: "Micron expands the Boise campus", publishedAt: "2026-10-08T11:30:00Z" },
+    { ...base, id: "3", title: "Micron opens a new plant", translationJa: "マイクロン新工場" },
+    { ...base, id: "4", title: "Micron opens a lab", translationJa: "マイクロン研究所", publishedAt: "2026-10-08T11:40:00Z" },
+    { ...base, id: "5", title: "Micron opens a plant", translationJa: "未来", publishedAt: "2026-10-09T00:00:00Z" },
+    { ...base, id: "6", title: "Intel opens a plant", translationJa: "対象外", publishedAt: "2026-10-08T11:40:00Z", tickers: ["INTC"] },
+  ] };
+  const ids = alertItems(feed, {}, now).map(item => item.id);
+  // Earnings release of a watched stock is an earnings row; a row without a stated time, one in the
+  // future, one without Japanese, and a stock outside the roster are not listed.
+  assert.ok(!ids.includes("official:2") && !ids.includes("official:3") && !ids.includes("official:5") && !ids.includes("official:6"));
+  assert.ok(ids.includes("official:4"));
+  assert.deepEqual(alertItems(null, {}, now), []);
   const hook = read("app/research/use-alerts-unread.ts");
   assert.match(hook, /if \(seen === null \|\| onAlertsPage\) \{ writeSeen\(Date\.now\(\)\); setUnread\(false\); return; \}/);
   assert.match(hook, /filter\(item => item\.at > seen\)/);

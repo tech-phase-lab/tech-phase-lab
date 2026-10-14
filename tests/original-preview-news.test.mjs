@@ -241,7 +241,7 @@ test('ordinary default home and dedicated news flow show summarized test cards a
   assert.ok(!html.includes(pending.excerptOriginal));
   assert.doesNotMatch(html, /hidden=""/);
   const page = readFileSync(new URL('../app/research/news/page.tsx', import.meta.url), 'utf8');
-  assert.ok(page.includes('<NewsFeed lang={lang} />'));
+  assert.ok(page.includes('<FlashPage lang={lang} />'));
   const home = readFileSync(new URL('../app/research/research-dashboard.tsx', import.meta.url), 'utf8');
   assert.ok(home.includes('<NewsFeed lang={lang} initialNews={initialNews} />'));
 });
