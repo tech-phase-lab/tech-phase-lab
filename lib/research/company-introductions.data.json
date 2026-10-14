@@ -15039,5 +15039,905 @@
         }
       ]
     }
+  },
+  {
+    "cik": 1318605,
+    "tickers": [
+      "TSLA"
+    ],
+    "name": "Tesla",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Business / Segments / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "電気自動車と蓄電池を設計・製造し、充電、整備、保険、太陽光発電も組み合わせる会社。",
+      "revenue": "自動車の販売・リースと規制クレジット、蓄電池・太陽光、充電や整備などのサービスで稼ぐ。",
+      "strength": "車両、電池、電力制御、ソフト、工場、直販、急速充電網まで広く自社で組み合わせられる。",
+      "risks": "値下げ競争と需要変動、新型車・自動運転の開発、工場増産、電池材料、規制やブランドへの影響に左右される。",
+      "competition": "電気自動車と従来車、家庭・産業用蓄電池、充電サービスの各市場で世界のメーカーと競う。",
+      "relationships": "消費者や法人へ車両とエネルギー製品を販売し、電池セル、電子部品、材料、製造装置を外部から調達する。"
+    },
+    "en": {
+      "business": "Designs and manufactures electric vehicles and battery storage, supported by charging, service, insurance and solar offerings.",
+      "revenue": "Vehicle sales and leases, regulatory credits, battery and solar products, plus charging, service and other activities.",
+      "strength": "Integrates vehicles, batteries, power electronics, software, factories, direct sales and a fast-charging network.",
+      "risks": "Pricing and demand, new-product and autonomy execution, factory ramps, battery materials, regulation and brand effects drive risk.",
+      "competition": "Competes with global makers across electric and conventional vehicles, energy storage and charging services.",
+      "relationships": "Sells vehicles and energy products to consumers and businesses and sources cells, electronics, materials and factory equipment."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Vehicle and energy-storage makers",
+          "nameJa": "自動車・蓄電池メーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "車両・蓄電池で競合",
+            "en": "Vehicles and storage"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Consumers and energy customers",
+          "nameJa": "個人・法人・エネルギー顧客",
+          "role": "customer",
+          "label": {
+            "ja": "車両・蓄電池・サービスを販売",
+            "en": "Vehicles, storage and services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Battery, electronics and equipment suppliers",
+          "nameJa": "電池・電子部品・製造装置会社",
+          "role": "supplier",
+          "label": {
+            "ja": "部品・材料・設備を調達",
+            "en": "Cells, components and equipment"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1824920,
+    "tickers": [
+      "IONQ"
+    ],
+    "name": "IonQ",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Business / Revenue / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526071562/ionq-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "電磁場でイオンを閉じ込めて計算する量子コンピューターを開発し、量子ネットワークやセンシングにも広げる会社。",
+      "revenue": "量子計算機へのクラウドアクセス、専用システム、研究開発契約、保守・専門サービスで稼ぐ。",
+      "strength": "同じ種類の原子を量子ビットに使うためばらつきが小さく、計算機から制御ソフトまで一体で開発できる。",
+      "risks": "市場が初期段階で赤字が続き、性能向上、量産、部品調達、人材、政府・大口案件の時期に左右される。",
+      "competition": "超伝導、光、中性原子など別方式の量子計算機と、クラウドや古典計算を含む代替手段と競う。",
+      "relationships": "企業、大学、研究機関、政府へ量子計算環境と開発支援を提供し、レーザー・光学・真空など専門部品を調達する。"
+    },
+    "en": {
+      "business": "Develops trapped-ion quantum computers and is expanding into quantum networking and sensing.",
+      "revenue": "Cloud access, dedicated systems, research contracts, maintenance and professional services.",
+      "strength": "Uses identical atomic ions for consistent qubits and develops the system, controls and software as an integrated stack.",
+      "risks": "An early market, continuing losses, performance and scale-up goals, specialized supply, talent and contract timing create risk.",
+      "competition": "Competes with superconducting, photonic, neutral-atom and other quantum systems, plus cloud and classical alternatives.",
+      "relationships": "Provides quantum access and development support to enterprises, researchers and governments while sourcing lasers, optics and vacuum components."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Quantum-computing platforms",
+          "nameJa": "量子コンピューター開発会社",
+          "role": "competitor",
+          "label": {
+            "ja": "方式・性能・利用環境で競合",
+            "en": "Architecture, performance and access"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Enterprise, research and government users",
+          "nameJa": "企業・研究機関・政府",
+          "role": "customer",
+          "label": {
+            "ja": "量子計算環境と開発支援を提供",
+            "en": "Quantum access and development support"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Laser, optics and vacuum suppliers",
+          "nameJa": "レーザー・光学・真空機器会社",
+          "role": "supplier",
+          "label": {
+            "ja": "量子システム用部品を調達",
+            "en": "Specialized system components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1838359,
+    "tickers": [
+      "RGTI"
+    ],
+    "name": "Rigetti Computing",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Revenue / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "超伝導回路を使うゲート型量子コンピューターを設計し、量子チップ、制御系、クラウド利用環境まで作る会社。",
+      "revenue": "クラウド経由の計算利用、量子チップとシステムの販売、政府・研究機関との開発契約で稼ぐ。",
+      "strength": "量子チップを自社施設で製造し、高速ゲート、複数チップ接続、制御ソフトを一体で改善できる。",
+      "risks": "実用上の優位性はまだ確立せず、誤り率と拡張性、赤字と資金、政府案件、極低温部品に左右される。",
+      "competition": "超伝導や別方式の量子計算機、クラウド各社、従来型の高性能計算と競う。",
+      "relationships": "政府研究所、大学、企業へ量子計算機と研究支援を提供し、極低温・電子制御・製造材料を調達する。"
+    },
+    "en": {
+      "business": "Builds gate-model quantum computers using superconducting circuits, spanning chips, controls and cloud access.",
+      "revenue": "Cloud computing access, QPU and system sales, and development contracts with governments and research institutions.",
+      "strength": "Fabricates chips in-house and can co-develop fast gates, multi-chip scaling, controls and software.",
+      "risks": "Practical advantage is unproven; error rates, scaling, losses, funding, government work and cryogenic supply create risk.",
+      "competition": "Competes with superconducting and other quantum architectures, cloud providers and conventional high-performance computing.",
+      "relationships": "Provides systems and research support to government labs, universities and enterprises and sources cryogenic and control components."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Quantum-computing platforms",
+          "nameJa": "量子コンピューター開発会社",
+          "role": "competitor",
+          "label": {
+            "ja": "量子方式・性能で競合",
+            "en": "Quantum architectures and performance"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Government, university and enterprise researchers",
+          "nameJa": "政府・大学・企業研究者",
+          "role": "customer",
+          "label": {
+            "ja": "量子システムと研究支援を提供",
+            "en": "Systems and research support"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cryogenic and control-system suppliers",
+          "nameJa": "極低温・制御機器会社",
+          "role": "supplier",
+          "label": {
+            "ja": "冷却・電子制御部品を調達",
+            "en": "Cryogenic and control components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1907982,
+    "tickers": [
+      "QBTS"
+    ],
+    "name": "D-Wave Quantum",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Revenue / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1907982/000190798226000026/qbts-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "組み合わせ最適化に特化した量子アニーリング機とクラウド基盤を提供し、ゲート型も開発する会社。",
+      "revenue": "Leapクラウドの契約、専門サービス・研修、量子システム販売と保守で稼ぐ。システム販売は時期で振れやすい。",
+      "strength": "アニーリング機を実際の最適化問題へ使うためのハード、ハイブリッドソルバー、開発環境を一体で持つ。",
+      "risks": "市場が初期段階で赤字が続き、採用速度、システム販売時期、技術ロードマップ、資金と部品に左右される。",
+      "competition": "他方式の量子計算機、量子クラウド、従来の最適化ソフトや高性能計算と競う。",
+      "relationships": "企業、政府、研究機関へクラウド利用と導入支援を提供し、極低温・電子制御部品を調達する。"
+    },
+    "en": {
+      "business": "Provides quantum-annealing systems and cloud tools for combinatorial optimization while developing gate-model technology.",
+      "revenue": "Leap cloud subscriptions, professional services and training, system sales and maintenance; system revenue can be lumpy.",
+      "strength": "Combines annealing hardware, hybrid solvers and developer tools aimed at applied optimization workloads.",
+      "risks": "An early market, continuing losses, adoption, irregular system sales, roadmap execution, funding and components create risk.",
+      "competition": "Competes with other quantum systems and clouds, classical optimization software and high-performance computing.",
+      "relationships": "Provides cloud access and implementation support to enterprises, governments and researchers and sources cryogenic and control equipment."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Quantum and optimization platforms",
+          "nameJa": "量子・最適化基盤会社",
+          "role": "competitor",
+          "label": {
+            "ja": "量子計算・最適化で競合",
+            "en": "Quantum and optimization workloads"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Enterprise, government and research users",
+          "nameJa": "企業・政府・研究機関",
+          "role": "customer",
+          "label": {
+            "ja": "クラウド利用と導入支援を提供",
+            "en": "Cloud access and implementation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cryogenic and electronics suppliers",
+          "nameJa": "極低温・電子機器会社",
+          "role": "supplier",
+          "label": {
+            "ja": "量子システム用部品を調達",
+            "en": "Quantum-system components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1758009,
+    "tickers": [
+      "QUBT"
+    ],
+    "name": "Quantum Computing Inc.",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Revenue / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1758009/000121390026022417/ea0278445-10k_quantum.htm"
+      }
+    ],
+    "ja": {
+      "business": "光を使う量子・光学システムと薄膜ニオブ酸リチウムの光集積回路を開発し、製造設備も持つ会社。",
+      "revenue": "研究・専門サービス、光学製品、量子最適化機Diracのクラウド利用、光集積回路の製品・製造サービスで稼ぐ段階。",
+      "strength": "室温で動く光学方式、光集積回路の設計、チップ製造設備を組み合わせて試作から製品まで進められる。",
+      "risks": "2025年売上は小さく、赤字と資金需要、製品化と顧客獲得、工場立ち上げ、競合の豊富な資金に左右される。",
+      "competition": "量子計算機、光集積回路、量子センシング、従来型の最適化技術を持つ企業や研究機関と競う。",
+      "relationships": "企業・政府・研究機関へ製品と開発支援を提供し、光学・半導体材料や製造装置を調達する。"
+    },
+    "en": {
+      "business": "Develops photonic quantum and sensing systems plus thin-film lithium-niobate photonic integrated circuits with in-house fabrication.",
+      "revenue": "Early revenue comes from research services, optical products, cloud access to Dirac optimization systems and photonic products and foundry work.",
+      "strength": "Combines room-temperature photonics, integrated-circuit design and chip fabrication from prototype through product development.",
+      "risks": "Revenue remains small; losses, funding, commercialization, customer adoption, foundry ramp and better-funded rivals create risk.",
+      "competition": "Competes in quantum computing, photonic chips, quantum sensing and classical optimization with companies and research institutions.",
+      "relationships": "Provides products and development work to enterprise, government and research users and sources optical materials and fabrication equipment."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Quantum and photonic-technology developers",
+          "nameJa": "量子・光技術開発会社",
+          "role": "competitor",
+          "label": {
+            "ja": "量子・光集積技術で競合",
+            "en": "Quantum and photonic technology"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Enterprise, government and research customers",
+          "nameJa": "企業・政府・研究機関",
+          "role": "customer",
+          "label": {
+            "ja": "製品・クラウド・開発支援を提供",
+            "en": "Products, cloud and development work"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Optical-material and fabrication-equipment suppliers",
+          "nameJa": "光学材料・製造装置会社",
+          "role": "supplier",
+          "label": {
+            "ja": "材料と製造設備を調達",
+            "en": "Materials and fabrication equipment"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1819994,
+    "tickers": [
+      "RKLB"
+    ],
+    "name": "Rocket Lab",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Launch / Space systems / Customers / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000013/rklb-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "小型ロケットElectronの打ち上げと、衛星・部品・運用ソフトを提供する宇宙会社。大型のNeutronは開発中。",
+      "revenue": "打ち上げサービスと、衛星本体、太陽電池、姿勢制御・通信部品、宇宙機の製造・運用で稼ぐ。",
+      "strength": "ロケット、発射場、衛星、主要部品、軌道上運用を一社でつなぎ、任務全体をまとめて提供できる。",
+      "risks": "打ち上げ失敗や延期、Neutron開発費、政府案件への依存、工場増産、部品・規制に左右される。",
+      "competition": "小型・中型ロケットの打ち上げと、衛星製造・宇宙部品・運用サービスで宇宙企業と競う。",
+      "relationships": "政府・商業衛星事業者へ打ち上げと宇宙システムを提供し、航空宇宙材料や電子・推進部品を調達する。"
+    },
+    "en": {
+      "business": "Provides Electron small-rocket launches and spacecraft, components and operations software; the larger Neutron remains in development.",
+      "revenue": "Launch services and sales of spacecraft, solar power, attitude-control and communications components, manufacturing and operations.",
+      "strength": "Connects rockets, launch sites, spacecraft, key components and on-orbit operations into an end-to-end mission offering.",
+      "risks": "Launch failures or delays, Neutron development cost, government exposure, production ramps, components and regulation create risk.",
+      "competition": "Competes in small and medium launch, spacecraft manufacturing, space components and mission operations.",
+      "relationships": "Provides launch and space systems to government and commercial satellite operators and sources aerospace materials, electronics and propulsion parts."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Launch and spacecraft providers",
+          "nameJa": "ロケット・衛星システム会社",
+          "role": "competitor",
+          "label": {
+            "ja": "打ち上げ・宇宙機で競合",
+            "en": "Launch and spacecraft systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Government and commercial space customers",
+          "nameJa": "政府・商業宇宙事業者",
+          "role": "customer",
+          "label": {
+            "ja": "打ち上げ・衛星・部品を提供",
+            "en": "Launch, spacecraft and components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Aerospace-material and component suppliers",
+          "nameJa": "航空宇宙材料・部品会社",
+          "role": "supplier",
+          "label": {
+            "ja": "材料・電子・推進部品を調達",
+            "en": "Materials, electronics and propulsion parts"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1780312,
+    "tickers": [
+      "ASTS"
+    ],
+    "name": "AST SpaceMobile",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · SpaceMobile service / Revenue / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "普通のスマートフォンを衛星へ直接つなぐ携帯通信網を構築する会社。大型衛星BlueBirdを順次展開する段階。",
+      "revenue": "通信事業者を通じた衛星通信サービス、政府案件、設備・開発サービスから収益化を始めた段階。",
+      "strength": "端末に専用機器を追加せず、携帯会社の周波数と顧客基盤を使って圏外地域を補完する設計。",
+      "risks": "衛星配備に多額の資金が必要で、打ち上げ、技術性能、周波数・各国認可、通信会社との契約に左右される。",
+      "competition": "衛星通信、地上の携帯網、スマートフォン直接接続を開発する他の宇宙・通信企業と競う。",
+      "relationships": "携帯通信会社とサービスを組み、利用者へ提供する。衛星部品、製造設備、打ち上げサービスを外部調達する。"
+    },
+    "en": {
+      "business": "Is building a satellite cellular network designed to connect ordinary smartphones directly, deploying its large BlueBird satellites in stages.",
+      "revenue": "Is beginning to monetize satellite service through mobile operators, government work, equipment and development services.",
+      "strength": "Uses mobile operators' spectrum and customer reach without requiring a special device, extending coverage beyond terrestrial networks.",
+      "risks": "Capital needs, launches, technical performance, spectrum and country approvals, and definitive operator agreements drive risk.",
+      "competition": "Competes with satellite communications, terrestrial mobile networks and other direct-to-device developers.",
+      "relationships": "Works with mobile-network operators to reach subscribers and sources satellite components, production equipment and launch services."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Satellite and mobile-connectivity providers",
+          "nameJa": "衛星・携帯通信事業者",
+          "role": "competitor",
+          "label": {
+            "ja": "圏外通信・直接接続で競合",
+            "en": "Coverage and direct-to-device service"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Mobile-network operators and subscribers",
+          "nameJa": "携帯通信会社・利用者",
+          "role": "customer",
+          "label": {
+            "ja": "通信会社経由で衛星通信を提供",
+            "en": "Satellite service through operators"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Satellite-component and launch providers",
+          "nameJa": "衛星部品・打ち上げ会社",
+          "role": "supplier",
+          "label": {
+            "ja": "衛星部品と打ち上げを調達",
+            "en": "Satellite components and launches"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1836833,
+    "tickers": [
+      "PL"
+    ],
+    "name": "Planet Labs",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Platform / Customers / Revenue / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "多数の小型衛星で地球を継続撮影し、画像、変化データ、分析ソフトを提供する会社。",
+      "revenue": "政府・企業向けの衛星画像とデータ基盤の契約、分析サービス、専用衛星・関連サービスで稼ぐ。",
+      "strength": "高い撮影頻度と長年の画像履歴を組み合わせ、地域の変化を時系列で比較しやすい。",
+      "risks": "契約更新、政府予算、衛星・打ち上げ失敗、画像性能、競争、赤字と継続投資に左右される。",
+      "competition": "地球観測衛星、航空画像、地理空間データ・分析、政府の自前システムと競う。",
+      "relationships": "政府、防衛、農業、地図、保険などへ画像・分析を提供し、打ち上げと衛星部品を外部から調達する。"
+    },
+    "en": {
+      "business": "Operates fleets of small satellites to repeatedly image Earth and provide imagery, change data and analytics software.",
+      "revenue": "Contracts for imagery and data platforms, analytics, dedicated satellites and related services for governments and businesses.",
+      "strength": "Combines frequent collection with a long image archive, making geographic change easier to compare over time.",
+      "risks": "Renewals, government budgets, satellite or launch failures, image performance, competition, losses and continued investment create risk.",
+      "competition": "Competes with satellite and aerial imagery, geospatial data and analytics, and government-owned systems.",
+      "relationships": "Provides imagery and analytics to government, defense, agriculture, mapping and insurance users and sources launches and satellite components."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Earth-imagery and geospatial-data providers",
+          "nameJa": "地球観測・地理空間データ会社",
+          "role": "competitor",
+          "label": {
+            "ja": "画像・分析データで競合",
+            "en": "Imagery and geospatial analytics"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Government and commercial geospatial users",
+          "nameJa": "政府・企業の地理空間利用者",
+          "role": "customer",
+          "label": {
+            "ja": "衛星画像・変化分析を提供",
+            "en": "Imagery and change analytics"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Launch and satellite-component providers",
+          "nameJa": "打ち上げ・衛星部品会社",
+          "role": "supplier",
+          "label": {
+            "ja": "打ち上げと衛星部品を調達",
+            "en": "Launches and satellite components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1753539,
+    "tickers": [
+      "BKSY"
+    ],
+    "name": "BlackSky Technology",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Spectra platform / Revenue / Customers / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1753539/000175353926000032/bksy-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "小型衛星を高頻度で撮影指示し、画像とAI分析を短時間で届ける宇宙インテリジェンス会社。",
+      "revenue": "BlackSky Spectraの画像・AIサービス、各国向けの専用宇宙システム、技術開発プログラムで稼ぐ。",
+      "strength": "衛星の撮影指示から画像配信・変化検知までをソフトで自動化し、短い時間で判断材料を届けられる。",
+      "risks": "政府顧客への集中、契約・予算、衛星と打ち上げ、製造、資金需要、AI分析の品質に左右される。",
+      "competition": "高解像度の地球観測、政府向け宇宙インテリジェンス、地理空間AIの事業者と競う。",
+      "relationships": "米国・海外政府を中心に画像・分析と専用システムを提供し、衛星部品、打ち上げ、クラウド基盤を利用する。"
+    },
+    "en": {
+      "business": "Provides space-based intelligence by rapidly tasking small satellites and delivering imagery and AI analysis.",
+      "revenue": "BlackSky Spectra imagery and AI services, sovereign mission solutions and advanced technology programs.",
+      "strength": "Automates tasking, delivery and change detection in one software platform to shorten the time from request to insight.",
+      "risks": "Government concentration, awards and budgets, satellite and launch performance, manufacturing, capital needs and AI quality create risk.",
+      "competition": "Competes in high-resolution Earth observation, government space intelligence and geospatial AI.",
+      "relationships": "Provides imagery, analytics and mission systems mainly to U.S. and foreign governments and uses satellite, launch and cloud suppliers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Earth-intelligence and geospatial-AI providers",
+          "nameJa": "宇宙情報・地理空間AI会社",
+          "role": "competitor",
+          "label": {
+            "ja": "高頻度画像・AI分析で競合",
+            "en": "Rapid imagery and AI analysis"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "U.S. and international government customers",
+          "nameJa": "米国・海外政府機関",
+          "role": "customer",
+          "label": {
+            "ja": "画像・分析・専用システムを提供",
+            "en": "Imagery, analytics and mission systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Satellite, launch and cloud providers",
+          "nameJa": "衛星・打ち上げ・クラウド会社",
+          "role": "supplier",
+          "label": {
+            "ja": "衛星運用に必要な基盤を利用",
+            "en": "Satellite, launch and cloud infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1368622,
+    "tickers": [
+      "AVAV"
+    ],
+    "name": "AeroVironment",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Autonomous systems / Space, cyber and directed energy / Revenue / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "無人航空機、徘徊型ミサイル、対ドローンに加え、宇宙・サイバー・指向性エネルギー技術を持つ防衛会社。",
+      "revenue": "米国・同盟国向けの無人機や精密攻撃製品、宇宙・電波・サイバー装置、研究開発・保守契約で稼ぐ。",
+      "strength": "小型無人機から攻撃・迎撃、指揮ソフト、宇宙・電波技術までを統合し、実任務向けに提供できる。",
+      "risks": "政府予算と契約時期、製品性能、機密・輸出規制、増産、部品調達、買収事業の統合に左右される。",
+      "competition": "無人機、精密攻撃、対ドローン、宇宙・サイバー・電子戦で防衛大手と専門企業に競う。",
+      "relationships": "米国政府と同盟国へ製品・開発・保守を提供し、航空電子、推進、通信、複合材料を調達する。"
+    },
+    "en": {
+      "business": "Provides uncrewed aircraft, loitering munitions and counter-drone systems plus space, cyber and directed-energy technologies.",
+      "revenue": "Products and development and support contracts for U.S. and allied customers across autonomy, precision strike, space, RF and cyber.",
+      "strength": "Integrates small drones, strike and counter-drone systems, command software, space and RF capabilities for operational missions.",
+      "risks": "Budgets and award timing, product performance, security and export rules, production, supply and acquisition integration create risk.",
+      "competition": "Competes with defense primes and specialists in autonomy, precision strike, counter-UAS, space, cyber and electronic warfare.",
+      "relationships": "Provides products, development and support to U.S. and allied governments and sources avionics, propulsion, communications and composites."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Defense autonomy and mission-system providers",
+          "nameJa": "防衛無人機・任務システム会社",
+          "role": "competitor",
+          "label": {
+            "ja": "無人機・迎撃・宇宙技術で競合",
+            "en": "Autonomy, counter-UAS and space"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "U.S. and allied defense customers",
+          "nameJa": "米国・同盟国の防衛機関",
+          "role": "customer",
+          "label": {
+            "ja": "製品・開発・保守を提供",
+            "en": "Products, development and support"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Aerospace-electronics and material suppliers",
+          "nameJa": "航空電子・材料会社",
+          "role": "supplier",
+          "label": {
+            "ja": "推進・通信・材料を調達",
+            "en": "Propulsion, communications and materials"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1069258,
+    "tickers": [
+      "KTOS"
+    ],
+    "name": "Kratos Defense",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Government Solutions / Unmanned Systems / Customers / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1069258/000106925826000013/ktos-20251228.htm"
+      }
+    ],
+    "ja": {
+      "business": "無人標的機・戦闘機、衛星通信、ミサイル防衛、ロケット・ジェット推進、電波機器を作る防衛技術会社。",
+      "revenue": "Government SolutionsとUnmanned Systemsで、主に米国政府向けの製品販売と固定価格・原価加算契約から稼ぐ。",
+      "strength": "比較的低コストで量産できる無人機、標的機、推進・電波技術を持ち、新しい防衛構想を短期間で試せる。",
+      "risks": "米国政府予算と調達、契約採算、試験・量産、機密資格、専門人材、部品、買収統合に左右される。",
+      "competition": "無人航空機、標的機、宇宙通信、推進、ミサイル防衛で防衛大手と専門企業に競う。",
+      "relationships": "米国政府、同盟国、防衛元請けへ製品と技術を提供し、航空宇宙・電子部品を外部調達する。"
+    },
+    "en": {
+      "business": "Builds unmanned target and tactical aircraft, satellite communications, missile-defense, rocket and jet propulsion and RF systems.",
+      "revenue": "Government Solutions and Unmanned Systems earn mainly from U.S. government product sales and fixed-price and cost-plus contracts.",
+      "strength": "Combines relatively affordable, producible drones and targets with propulsion and RF technologies for rapid defense experimentation.",
+      "risks": "U.S. budgets and procurement, contract margins, testing and production, clearances, talent, parts and acquisition integration create risk.",
+      "competition": "Competes with defense primes and specialists in unmanned aircraft, targets, space communications, propulsion and missile defense.",
+      "relationships": "Provides products and technology to U.S. government, allied and prime-contractor customers and sources aerospace and electronic components."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Defense and unmanned-system providers",
+          "nameJa": "防衛・無人システム会社",
+          "role": "competitor",
+          "label": {
+            "ja": "無人機・宇宙・推進で競合",
+            "en": "Unmanned, space and propulsion systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Government, allied and defense-prime customers",
+          "nameJa": "政府・同盟国・防衛元請け",
+          "role": "customer",
+          "label": {
+            "ja": "防衛製品・技術を提供",
+            "en": "Defense products and technology"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Aerospace and electronics suppliers",
+          "nameJa": "航空宇宙・電子部品会社",
+          "role": "supplier",
+          "label": {
+            "ja": "機体・推進・電子部品を調達",
+            "en": "Airframe, propulsion and electronics parts"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1819810,
+    "tickers": [
+      "RDW"
+    ],
+    "name": "Redwire",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Space / Defense Tech / Customers / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1819810/000181981026000029/rdw-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "太陽電池、構造物、センサー、宇宙機などの宇宙インフラと、無人機・電波・光学を持つ防衛技術会社。",
+      "revenue": "SpaceとDefense Techの2部門で、政府・商業顧客向けの機器販売、開発・製造・長期プロジェクトから稼ぐ。",
+      "strength": "宇宙での運用実績を持つ部品・大型構造・微小重力技術と、防衛向け無人・センサー技術を組み合わせる。",
+      "risks": "政府案件、固定価格契約、衛星・任務失敗、部品、買収統合と負債、内部統制の重要な不備に左右される。",
+      "competition": "宇宙機・電力・構造・微小重力サービスと、防衛無人機・光学・電波システムで競う。",
+      "relationships": "民間宇宙、国家安全保障、政府・同盟国へ機器と開発を提供し、航空宇宙材料・電子部品を調達する。"
+    },
+    "en": {
+      "business": "Provides space infrastructure such as solar power, structures, sensors and spacecraft plus defense autonomy, RF and optical systems.",
+      "revenue": "Its Space and Defense Tech segments earn from hardware and development, manufacturing and long-duration projects for government and commercial customers.",
+      "strength": "Combines flight-proven components, large structures and microgravity capabilities with autonomous and sensing technologies for defense.",
+      "risks": "Government work, fixed-price contracts, mission failures, supply, acquisition integration and debt, and material control weaknesses create risk.",
+      "competition": "Competes across spacecraft, power, structures, microgravity services, defense autonomy, optics and RF systems.",
+      "relationships": "Provides hardware and development to civil, national-security, commercial and allied customers and sources aerospace materials and electronics."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Space-infrastructure and defense-technology providers",
+          "nameJa": "宇宙インフラ・防衛技術会社",
+          "role": "competitor",
+          "label": {
+            "ja": "宇宙機・部品・無人技術で競合",
+            "en": "Spacecraft, components and autonomy"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Civil, defense and commercial space customers",
+          "nameJa": "民間・防衛・商業宇宙顧客",
+          "role": "customer",
+          "label": {
+            "ja": "機器・開発・製造を提供",
+            "en": "Hardware, development and manufacturing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Aerospace-material and electronics suppliers",
+          "nameJa": "航空宇宙材料・電子部品会社",
+          "role": "supplier",
+          "label": {
+            "ja": "材料・電子・光学部品を調達",
+            "en": "Materials, electronics and optics"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
   }
 ]

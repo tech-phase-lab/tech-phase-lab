@@ -4,7 +4,7 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is one hundred forty-three issuers / one hundred forty-four tickers:
+Researched coverage is one hundred fifty-five issuers / one hundred fifty-six tickers:
 LITE, COHR, AMAT, APH, ANET, MRVL, VRT, ALAB, MSFT, NBIS, TSM, ASML, AVGO,
 AMD, ARM, CRDO, NVDA, MU, GOOG, GOOGL, AAPL, AMZN, META, COST, INTC, SIMO,
 AAOI, BE, VST, GEV, IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL,
@@ -15,7 +15,8 @@ HUBS, SHOP, APP, ABNB, SPOT, RDDT, PINS, SNAP, RBLX, ROKU, TTD, DASH, MELI,
 PYPL, XYZ, SOFI, DUOL, ONTO, TER, ENTG, ACMR, ICHR, UCTT, MKSI, SWKS, QRVO,
 MTSI, POWI, SITM, CAMT, NVMI, ACLS, COHU, AMKR, ASX, GFS, TSEM, RMBS, DIOD,
 SLAB, CEVA, UMC, STM, HIMX, IMOS, CRUS, SYNA, AMBA, INDI, PI, LSCC, MXL, FORM,
-PLAB, AEHR, AOSL, NVTS, IPGP, VIAV, GLW, TEL, ARW, AVT, SANM and BHE.
+PLAB, AEHR, AOSL, NVTS, IPGP, VIAV, GLW, TEL, ARW, AVT, SANM, BHE, TSLA,
+IONQ, RGTI, QBTS, QUBT, RKLB, ASTS, PL, BKSY, AVAV, KTOS and RDW.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -249,4 +250,12 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - ArrowとAvnetはメーカーと顧客を結ぶ流通・設計支援、SanminaとBenchmarkは顧客製品の設計・製造を請け負う会社として区別した。匿名の仕入先・顧客は社名を推測せず業種単位で表示する。
 - TE ConnectivityのティッカーTELを東京エレクトロンと混同せず、コネクター・センサー会社として収録。競争、顧客、外部製造・材料調達を別の線として扱う。
 - 公式資料: [PLAB](https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm), [AEHR](https://www.sec.gov/Archives/edgar/data/1040470/000165495426006919/aehr_10k.htm), [AOSL](https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm), [NVTS](https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm), [IPGP](https://www.sec.gov/Archives/edgar/data/1111928/000111192826000040/ipgp-20251231.htm), [VIAV](https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm), [GLW](https://www.sec.gov/Archives/edgar/data/24741/000002474126000124/glw-20251231.htm), [TEL](https://www.sec.gov/Archives/edgar/data/1385157/000110465925109150/tel-20250926x10k.htm), [ARW](https://www.sec.gov/Archives/edgar/data/7536/000110465926012765/arw-20251231x10k.htm), [AVT](https://www.sec.gov/Archives/edgar/data/8858/000110465926096346/avt-20260627x10k.htm), [SANM](https://www.sec.gov/Archives/edgar/data/897723/000089772326000015/sanm-20251227.htm), [BHE](https://www.sec.gov/Archives/edgar/data/863436/000119312526064849/bhe-20251231.htm).
+- 共通UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は継続する。
+
+### 2026-10-14 自動車・量子・宇宙・防衛12社追加
+
+- TSLA / IONQ / RGTI / QBTS / QUBT / RKLB / ASTS / PL / BKSY / AVAV / KTOS / RDWを追加。合計155社・156銘柄コード。
+- Teslaは自動車とエネルギー、量子4社はトラップイオン・超伝導・アニーリング・光方式の違い、宇宙・防衛7社は打ち上げ、衛星通信、地球観測、宇宙情報、防衛無人機、宇宙インフラの違いが分かる日英6項目にした。確認日は2026-10-14。
+- 実用化前の技術、開発中のロケット・衛星、契約済みのサービス、現在の売上を区別した。未開示の顧客・供給会社は推測せず業種単位で表示し、競争と取引関係も別の線として扱う。
+- 公式資料: [TSLA](https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm), [IONQ](https://www.sec.gov/Archives/edgar/data/1824920/000119312526071562/ionq-20251231.htm), [RGTI](https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm), [QBTS](https://www.sec.gov/Archives/edgar/data/1907982/000190798226000026/qbts-20251231.htm), [QUBT](https://www.sec.gov/Archives/edgar/data/1758009/000121390026022417/ea0278445-10k_quantum.htm), [RKLB](https://www.sec.gov/Archives/edgar/data/1819994/000181999426000013/rklb-20251231.htm), [ASTS](https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm), [PL](https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm), [BKSY](https://www.sec.gov/Archives/edgar/data/1753539/000175353926000032/bksy-20251231.htm), [AVAV](https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm), [KTOS](https://www.sec.gov/Archives/edgar/data/1069258/000106925826000013/ktos-20251228.htm), [RDW](https://www.sec.gov/Archives/edgar/data/1819810/000181981026000029/rdw-20251231.htm).
 - 共通UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は継続する。
