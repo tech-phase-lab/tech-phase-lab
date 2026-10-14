@@ -61,7 +61,10 @@ class DeepAnalysisTests(unittest.TestCase):
         note['points'][0] = point('売上は前年比45%増えた。', 'Revenue rose 45% year over year.')
         self.assertEqual(self.run_deep(reply(note)), 'done')
         [item] = self.items()
-        self.assertNotIn('45', json.dumps(item, ensure_ascii=False))
+        # Only the analysis text is checked: the item also carries a wall-clock timestamp
+        # whose seconds can read "45" (CI, Oct 14), which is not an invented number.
+        analysis = {key: item[key] for key in ('headline', 'points', 'watch')}
+        self.assertNotIn('45', json.dumps(analysis, ensure_ascii=False))
         self.assertEqual(len(item['points']), 2)
 
     def test_retries_stop_after_three_failed_attempts(self):

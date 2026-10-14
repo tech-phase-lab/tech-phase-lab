@@ -1163,6 +1163,35 @@ def x_content_kind(source, title):
     return "publisher-update"
 
 
+def x_recent_posts(db, sources=SOURCES, limit=40):
+    """Owner view (Oct 14): what the X routes actually returned, newest first, including
+    posts that were saved but not read into an event or a published result. Without this a
+    post dropped as unreadable (the CPI flash) left no trace anywhere. Owner-only queue;
+    never part of the public feed."""
+    approved = {source["id"]: index for index, source in
+                enumerate([s for s in sources if s.get("format") == "x-api"], 1)}
+    if not approved or not db.execute("SELECT 1 FROM sqlite_master WHERE name='signal_x_acquisition'").fetchone():
+        return []
+    has_results = bool(db.execute("SELECT 1 FROM sqlite_master WHERE name='market_result_publications'").fetchone())
+    rows = db.execute("""SELECT a.source_id,a.url,a.title,a.text,a.published_at,a.first_seen_at,
+        (SELECT e.id FROM signal_events e WHERE e.source_id=a.source_id AND e.url=a.url ORDER BY e.id DESC LIMIT 1) AS event_id
+      FROM signal_x_acquisition a WHERE a.source_id IN (%s)
+      GROUP BY a.source_id,a.url HAVING a.first_seen_at=MAX(a.first_seen_at)
+      ORDER BY a.first_seen_at DESC LIMIT ?""" % ",".join("?" for _ in approved), (*approved, limit)).fetchall()
+    result = []
+    for row in rows:
+        published = bool(row["event_id"] and has_results and db.execute(
+            "SELECT 1 FROM market_result_publications WHERE event_id=?", (row["event_id"],)).fetchone())
+        try:
+            url = safe_url(row["url"], next(s for s in sources if s["id"] == row["source_id"]))
+        except ValueError:
+            continue
+        result.append({"route": approved[row["source_id"]], "url": url, "publishedAt": row["published_at"],
+                       "seenAt": row["first_seen_at"], "text": str(row["text"] or row["title"])[:400],
+                       "saved": row["event_id"] is not None, "published": published})
+    return result
+
+
 def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
     schema(db)
     if view not in {"all", "new", "changed", "baseline", "targets", "ratings"} or (
@@ -1247,7 +1276,8 @@ def queue(db, sources=SOURCES, limit=30, ticker=None, view="all"):
                        **({'acquisitionCoverage': x_intake_coverage(db, source)}
                           if source.get('format') == 'x-api' else {})})
     return {"items": items, "counts": counts, "routes": routes, "xApiUsage": x_api_usage(db, sources=sources), "view": view,
-            "ticker": ticker, "generatedAt": stamp(), "publicationEnabled": False}
+            "ticker": ticker, "generatedAt": stamp(), "publicationEnabled": False,
+            "xRecent": x_recent_posts(db, sources)}
 
 
 PRICE_TARGET_TEXT = re.compile(

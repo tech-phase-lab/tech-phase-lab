@@ -60,6 +60,20 @@ class SignalTests(unittest.TestCase):
         self.assertEqual([d["route"] for d in result["routes"]["details"]], list(range(1, 7)))
         self.assertEqual(result["routes"]["details"][0]["error"], "fetch-failed")
 
+    def test_owner_queue_lists_what_the_x_routes_returned_including_posts_never_read(self):
+        # Oct 14: the CPI flash was returned by X but dropped as unreadable and left no trace.
+        signals.schema(self.db)
+        rows = [("x-wallstengine", "https://x.com/wallstengine/status/1", "US CPI (Sept): +3.7% y/y", "2026-10-14T12:30:20Z", "2026-10-14T12:30:31Z"),
+                ("x-wallstengine", "https://x.com/wallstengine/status/2", "Nvidia up 2%", "2026-10-14T12:31:20Z", "2026-10-14T12:31:31Z")]
+        for source, url, text, published, seen in rows:
+            self.db.execute("INSERT INTO signal_x_acquisition VALUES(?,?,?,?,?,?,?,?,0,0)", (source, url, "sha" + url[-1], text, text, published, seen, seen))
+        self.db.commit()
+        recent = signals.queue(self.db)["xRecent"]
+        self.assertEqual([post["text"] for post in recent], ["Nvidia up 2%", "US CPI (Sept): +3.7% y/y"])
+        self.assertEqual({post["route"] for post in recent}, {2})
+        self.assertTrue(all(not post["saved"] and not post["published"] for post in recent))
+        self.assertNotIn("x-wallstengine", json.dumps(recent))
+
     def check_feed(self, content, **response):
         return signals.check(self.db, self.feed, self.tickers, lambda *_: {"body": content, **response})
 
