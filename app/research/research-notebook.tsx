@@ -156,8 +156,10 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
         else if (root.current.contains(document.activeElement) || window.getSelection()?.anchorNode && root.current.contains(window.getSelection()!.anchorNode)) { savedRange.current = null; setSelection([]); }
       }, 120);
     };
+    const closeForMenu = () => { clearTimeout(timer); savedRange.current = null; window.getSelection()?.removeAllRanges(); setSelection([]); setEditing(false); setActiveMark(null); };
+    window.addEventListener("tech-phase:menu-open", closeForMenu);
     document.addEventListener("selectionchange", capture);
-    return () => { clearTimeout(timer); document.removeEventListener("selectionchange", capture); };
+    return () => { clearTimeout(timer); window.removeEventListener("tech-phase:menu-open", closeForMenu); document.removeEventListener("selectionchange", capture); };
   }, [enabled]);
 
   function restoreSelection() {
@@ -224,15 +226,21 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
       for (const glyph of new Intl.Segmenter(lang, { granularity: "grapheme" }).segment(node.data)) {
         const range = document.createRange();
         range.setStart(node, glyph.index); range.setEnd(node, glyph.index + glyph.segment.length);
-        const rect = range.getBoundingClientRect();
-        if (rect.width && rect.height) glyphs.push({ node, start: glyph.index, end: glyph.index + glyph.segment.length, offset: offset + glyph.index, rect });
+        // A wrapped glyph may expose a zero-width caret on the preceding line.
+        const rect = Array.from(range.getClientRects()).filter(rect => rect.width > 0.1 && rect.height > 0).at(-1);
+        if (rect && rect.width && rect.height) glyphs.push({ node, start: glyph.index, end: glyph.index + glyph.segment.length, offset: offset + glyph.index, rect });
       }
       offset += node.length;
     }
     const anchor = glyphs.find(glyph => glyph.offset >= selection[0].start);
     if (!anchor) return;
     const center = anchor.rect.top + anchor.rect.height / 2;
-    const line = glyphs.filter(glyph => glyph.rect.top < center && glyph.rect.bottom > center);
+    const sameLine = (glyph: typeof anchor) => Math.abs(glyph.rect.top + glyph.rect.height / 2 - center) < Math.min(anchor.rect.height, glyph.rect.height) * 0.4;
+    const anchorIndex = glyphs.indexOf(anchor);
+    let first = anchorIndex, last = anchorIndex;
+    while (first > 0 && sameLine(glyphs[first - 1])) first--;
+    while (last + 1 < glyphs.length && sameLine(glyphs[last + 1])) last++;
+    const line = glyphs.slice(first, last + 1);
     if (!line.length) return;
     const range = document.createRange();
     range.setStart(line[0].node, line[0].start); range.setEnd(line.at(-1)!.node, line.at(-1)!.end);
@@ -259,11 +267,10 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
         // Touch as well as mouse: do not transfer focus away from the article selection.
         event.preventDefault();
       }} onPointerUp={() => { toolPointer.current = false; }} onPointerCancel={() => { toolPointer.current = false; }}>
-        <div className={styles.editorHeader}><p>{selection.length ? t("選択した文章に書き込む", "Annotate selected text") : activeMark ? t("選んだ書き込みを消せます", "Erase the selected annotation") : t("長押しで選択 · 書き込みをタップで削除", "Select text · Tap a mark to erase")}</p>
-        <button className={styles.done} onClick={() => { setEditing(false); setSelection([]); setDraft(null); setActiveMark(null); clearSelection(); }}>{t("完了", "Done")}</button></div>
         <div className={styles.palette}>
           <div className={styles.colors} aria-label={t("書き込みの色", "Ink color")}>{(["red", "yellow", "blue"] as const).map(value => <button key={value} aria-label={{ red: t("赤", "Red"), yellow: t("黄", "Yellow"), blue: t("青", "Blue") }[value]} aria-pressed={color === value} style={{ "--ink": inkColors[value] } as CSSProperties} onClick={() => { setColor(value); restoreSelection(); }}><span />{color === value && <b aria-hidden="true">✓</b>}</button>)}</div>
           <button disabled={!selection.length} onClick={selectLine}>{t("この1行を選択", "Select this line")}</button>
+          <button className={styles.done} onClick={() => { setEditing(false); setSelection([]); setDraft(null); setActiveMark(null); clearSelection(); }}>{t("完了", "Done")}</button>
         </div>
         <div className={styles.tools}>
           {(Object.keys(labels) as InkKind[]).map(kind => <button key={kind} disabled={!selection.length} onClick={() => add(kind)}><span className={styles.toolIcon} aria-hidden="true">{kind === "underline" ? <svg viewBox="0 0 24 24"><path d="M6 3v7a6 6 0 0 0 12 0V3M4 21h16" /></svg> : kind === "highlight" ? <svg viewBox="0 0 24 24"><path d="m8 16 8-12 5 4-9 11-4-3ZM8 16l-4 5h8M3 22h18" /></svg> : kind === "box" ? <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /></svg> : <svg viewBox="0 0 24 24"><path d="M5 3h14v18H5zM8 8h8M8 12h8M8 16h5" /></svg>}</span><span>{labels[kind]}</span></button>)}

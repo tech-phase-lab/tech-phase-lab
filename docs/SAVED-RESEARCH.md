@@ -55,3 +55,9 @@
 - Replaced Whole paragraph with Select this line, measured from rendered grapheme positions at the start of the selection. It does not select the rest of a wrapped paragraph.
 - Rebuilt the tray as four equal icon-and-label tool buttons, round color choices, a separate line-selection pill, and two equal erase/undo buttons. Touch targets remain at least 44px on phones. No gold brand styling.
 - Re-run final integrated gates and live regression checks before reporting completion; physical mobile selection remains a separate unverified check.
+
+## 2026-10-14: compact tools and visual line boundary
+- Tool top row is red/yellow/blue, Select this line, Done; removed the instruction header.
+- Read individual glyph client rectangles rather than a bounding union at wrapped boundaries; ignore zero-width caret rectangles and stop at the first adjacent line. This prevents a following-line currency symbol from entering the selected range.
+- Opening the site menu clears the native selection and closes the pen tray without deleting marks or a pending memo draft.
+- Physical iPhone selection still requires device verification.

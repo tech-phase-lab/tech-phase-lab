@@ -6,16 +6,14 @@
 .actions button[aria-pressed=true]{border-color:#8be6bf;color:#8be6bf;background:#17332f}
 .actions button:last-child{margin-left:auto}
 .editor{position:fixed;z-index:100;bottom:max(10px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(480px,calc(100vw - 20px));max-height:65vh;overflow:auto;box-sizing:border-box;padding:12px;border:1px solid #46616e;border-radius:16px;background:#10212c;box-shadow:0 8px 40px #000b;user-select:none;-webkit-user-select:none}
-.editorHeader{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;min-height:32px}
-.editorHeader p{font-size:11px;line-height:1.5;color:#b9cfd8;margin:0}
 .done{flex-shrink:0;min-height:32px;padding:5px 12px;border:0;border-radius:16px;background:#24433f;color:#b1f1d7;font-size:12px;cursor:pointer}
-.palette{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
-.colors{display:flex;gap:8px}
+.palette{display:flex;align-items:center;justify-content:flex-start;gap:6px;margin-bottom:10px}
+.colors{display:flex;flex-shrink:0;gap:2px}
 .colors button{position:relative;display:grid;place-items:center;width:40px;height:40px;padding:0;border:2px solid transparent;background:transparent;border-radius:50%;cursor:pointer;touch-action:manipulation}
 .colors button[aria-pressed=true]{border-color:var(--ink)}
 .colors span{display:block;width:26px;height:26px;border-radius:50%;background:var(--ink)}
 .colors b{position:absolute;color:#10202a;font-size:16px}
-.palette>button{min-height:36px;padding:6px 10px;border:1px solid #38515e;border-radius:18px;color:#dce9ef;background:#192f3b;font-size:12px;cursor:pointer}
+.palette>button{white-space:nowrap;min-height:36px;padding:6px 10px;border:1px solid #38515e;border-radius:18px;color:#dce9ef;background:#192f3b;font-size:12px;cursor:pointer}
 .tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
 .tools>button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-width:0;min-height:64px;padding:8px 2px;border:1px solid #456170;border-radius:10px;background:#203845;color:#e2eef3;font-size:12px;font-weight:600;cursor:pointer;touch-action:manipulation}
 .toolIcon{display:block;width:22px;height:22px;color:#9de3d4}
@@ -43,3 +41,5 @@
 .notebook button:focus-visible,.notebook textarea:focus-visible,.notebook summary:focus-visible{outline:2px solid #8be6bf;outline-offset:3px}
 @media(max-width:600px){.actions{gap:6px}.actions button{padding:7px 9px;font-size:11px}.colors button{width:44px;height:44px}.palette>button{min-height:44px}.utilities>button{min-height:44px}}
 @media(max-width:360px){.editor{padding:10px}.colors{gap:3px}.tools>button{font-size:11px}.palette>button{font-size:11px;padding:6px 8px}.utilities>button{font-size:11px}}
+.palette>.done{margin-left:auto;padding-inline:10px;background:#24433f;color:#b1f1d7;border-color:#385f54}
+@media(max-width:380px){.colors button{width:36px}.palette{gap:4px}.palette>button{padding-inline:6px;font-size:11px}.palette>.done{padding-inline:8px}}

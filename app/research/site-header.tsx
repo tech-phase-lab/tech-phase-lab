@@ -78,7 +78,7 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
           : !settled
           ? <span className={styles.pro} style={{ visibility: "hidden" }} aria-hidden="true">PRO</span>
           : <button type="button" className={styles.pro} aria-label={ja ? "PROを見る" : "See PRO"} aria-expanded={pro.open} onClick={() => pro.toggle()}>PRO</button>}
-        <button type="button" className={styles.ico} aria-label={ja ? "メニュー" : "Menu"} aria-expanded={menu} aria-controls="site-menu" onClick={() => setMenu(value => !value)}>
+        <button type="button" className={styles.ico} aria-label={ja ? "メニュー" : "Menu"} aria-expanded={menu} aria-controls="site-menu" onClick={() => { if (!menu) window.dispatchEvent(new Event("tech-phase:menu-open")); setMenu(value => !value); }}>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
         </button>
       </div>
