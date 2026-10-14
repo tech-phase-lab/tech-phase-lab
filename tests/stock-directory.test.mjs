@@ -374,7 +374,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(route, /s-maxage=300, stale-while-revalidate=3600/);
   assert.match(dashboard, /\/research\/stocks/);
   assert.match(dashboard, /\/lab/);
-  assert.match(dashboard, /ホーム \/ リサーチデスク/);
+  assert.match(dashboard, /THE RESEARCH DESK/);
   assert.match(dashboard, /サイドメニュー/);
   assert.match(dashboard, /この一覧の銘柄/);
   assert.match(dashboard, /この下の検証レポートを絞り込みます/);

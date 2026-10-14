@@ -165,7 +165,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const time = (date: string) => formatTargetTime(date, lang);
   return <section ref={panelRef} className={styles.panel} aria-label={t("目標株価の速報", "Price target updates")}>
-    <div className={styles.head}><h3>{t("目標株価の変更（過去1週間）", "Price target changes (past week)")}</h3></div>
+    <div className={styles.head}><p className={styles.eyebrow}>ANALYST</p><h2>{t("目標株価の変更", "Price target changes")}</h2><p className={styles.period}>{t("過去1週間", "Past week")}</p></div>
     {status === "error" && <p role="status" className={styles.state}>{t("現在、目標株価の更新を取得できません。表示内容は最新とは限りません。", "Price target updates are temporarily unavailable. Displayed items may be stale.")}</p>}
     {status === "loading" && <div aria-busy="true" aria-label={t("目標株価を取得中", "Fetching price targets")} className={styles.pending} />}
     {status === "ready" && items.length === 0 && <p className={styles.state}>{t("条件に合う目標株価の投稿はまだありません。", "No matching price target posts yet.")}</p>}

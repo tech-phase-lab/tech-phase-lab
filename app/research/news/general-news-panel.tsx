@@ -6,7 +6,7 @@ import { availableNewsPayload, type GeneralNewsFeed, type InitialNewsSnapshot } 
 import { isEarningsRelated } from "@/lib/research/earnings-results";
 import { informativeOfficial, officialNewsDisplay, shownInLanguage } from "@/lib/research/news-presentation";
 import { marketNewsBody, marketNewsDisplay } from "@/lib/research/market-news-display";
-import { clockTime, officialTime } from "@/lib/research/news-time";
+import { clockTime, lateDetection, officialTime, recentPublication } from "@/lib/research/news-time";
 import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-poller";
 import { observePageActivity } from "@/lib/research/page-activity";
 import styles from "./general-news.module.css";
@@ -14,6 +14,7 @@ import styles from "./general-news.module.css";
 import { takeNewsStartup } from "@/lib/research/news-startup";
 import { publishNews } from "@/lib/research/news-snapshot";
 import FeedPagination from "./feed-pagination";
+import TimelineRow from "./timeline-row";
 import NewsStory from "./news-story";
 import OriginalPreviewCard from "./original-preview-card";
 let snapshot: { data: GeneralNewsFeed; at: string; time: number } | null = null;
@@ -101,6 +102,9 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
   const visibleUpdates = updates.slice(start, start + 5);
   const visibleNews = news.slice(Math.max(0, start - updates.length), Math.max(0, start + 5 - updates.length));
   const format = (value: string) => new Date(value).toLocaleString(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", hour12: false }) + " JST";
+  // A glowing dot only for what was published within the hour and found promptly (same rule as the top band).
+  const receivedMs = receivedAt ? Date.parse(receivedAt) : 0;
+  const isFresh = (at: string, kind: string, observedAt?: string) => !!receivedAt && recentPublication(at, kind, Date.parse(receivedAt)) && !lateDetection(at, observedAt);
   const impactLabels = lang === "ja"
     ? { positive: "プラス", negative: "マイナス", mixed: "両面", neutral: "中立", uncertain: "不明" }
     : { positive: "Positive", negative: "Negative", mixed: "Mixed", neutral: "Neutral", uncertain: "Uncertain" };
@@ -119,13 +123,13 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
         if (update.kind === "market") {
           const item = update.item;
           const display = marketNewsDisplay(item, lang);
-          return <article key={`market-${item.id}`}><NewsStory label={display.label} title={display.title} body={marketNewsBody(item, lang)} lang={lang}
-            publication={`${lang === "ja" ? "発表" : "Published"} ${format(item.publishedAt)}`} /></article>;
+          return <article key={`market-${item.id}`}><TimelineRow now={receivedMs} at={item.publishedAt} kind="time" fresh={isFresh(item.publishedAt, "published", item.observedAt)}><NewsStory label={display.label} title={display.title} body={marketNewsBody(item, lang)} lang={lang}
+            publication={`${lang === "ja" ? "発表" : "Published"} ${format(item.publishedAt)}`} /></TimelineRow></article>;
         }
         const item = update.item;
         const publication = update.publication, display = officialNewsDisplay(item, lang, data?.resultBriefs);
-        return <article key={item.id}><NewsStory label={display.label} title={display.title} body={display.body} fullBody={display.fullBody} concise={!item.brief && !item.newsCategory && !item.generalSource && !item.researchId} lang={lang}
-          publication={`${publication.dated === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} ${publication.kind === "date" ? publication.at : format(publication.at)}`} /></article>; })}</div>
+        return <article key={item.id}><TimelineRow now={receivedMs} at={publication.at} kind={publication.kind === "date" ? "date" : "time"} fresh={isFresh(publication.at, publication.kind, item.observedAt)}><NewsStory label={display.label} title={display.title} body={display.body} fullBody={display.fullBody} concise={!item.brief && !item.newsCategory && !item.generalSource && !item.researchId} lang={lang}
+          publication={`${publication.dated === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} ${publication.kind === "date" ? publication.at : format(publication.at)}`} /></TimelineRow></article>; })}</div>
     </section>}
     {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}
     {!officialOnly && (visibleNews.length > 0 || (!updates.length && (!data?.enabled || !news.length))) && <><div className={styles.head}><h2 id="general-news-title">{lang === "ja" ? "通常ニュース" : "General news"}</h2><button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>

@@ -57,3 +57,24 @@
 .pending{min-height:48px;border-radius:8px;background:#122430}.panel{scroll-margin-top:100px}
 
 .card .ticker{font-size:14px;min-height:36px;display:inline-flex;align-items:center;justify-content:center;align-self:start}@media(max-width:700px){.card{grid-template-columns:auto minmax(0,1fr);gap:10px}.targetChange strong{font-size:16px;white-space:normal}.body small{margin-top:4px}.ticker{grid-column:1}.body{grid-column:2}}
+
+/* Design (owner, Oct 14): flat rows, direction and change rate on the right. */
+.panel{margin:26px 0 24px;padding:0;border:0;border-radius:0;background:none;color:#eef2f8}
+.head{margin-bottom:14px}
+.eyebrow{margin:0;font:10.5px var(--font-geist-mono),monospace;letter-spacing:.2em;color:#566174}
+.head h2{margin:4px 0 0;font-size:24px;font-weight:800;letter-spacing:.02em}
+.period{margin:4px 0 0;font-size:12.5px;color:#566174}
+.list{gap:10px}
+.card{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;padding:14px;border:1px solid #1a2332;border-radius:16px;background:linear-gradient(180deg,#111826,#0d121b);box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+.card .ticker{min-width:58px;min-height:0;padding:9px 6px;border-radius:10px;background:#18202e;border:1px solid #1a2332;font:600 14px var(--font-geist-mono),monospace;color:#eef2f8;justify-self:auto;align-self:center}
+.firm{font-size:12.5px;color:#8c98ab}
+.targetChange{margin-top:2px}
+.targetChange strong{font:600 18px var(--font-geist-mono),monospace;white-space:nowrap}
+.published{margin-top:1px;color:#566174;font-size:11px}
+.chip{display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-family:var(--font-geist-mono),monospace}
+.chip .raised,.chip .lowered{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px}
+.chip em{font-style:normal;font-size:14px;font-weight:600}
+.up .raised{color:#46d19a;background:rgba(70,209,154,.12)}.up .chip em{color:#46d19a}
+.down .lowered{color:#ff7b7b;background:rgba(255,107,107,.12)}.down .chip em{color:#ff7b7b}
+.card .newBadge{margin:0 0 0 8px;background:#5dffb4;color:#06201a;border-radius:5px;font-weight:600}
+@media(max-width:700px){.panel{padding:0}.head h2{font-size:22px}.card{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;padding:12px}.card .ticker{min-width:50px;font-size:13px;padding:8px 4px}.targetChange strong{font-size:16px;white-space:nowrap}}

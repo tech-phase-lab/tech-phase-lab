@@ -177,7 +177,7 @@ test('combined news pagination stays at five with 30 bounded original cards and 
   assert.ok(sixth.includes('Original excerpt 0.'));
   assert.equal((final.match(/<article/g) ?? []).length, 1);
   assert.ok(final.includes(official.title));
-  assert.ok(final.includes('aria-current="page" aria-label="Page 7"'));
+  assert.ok(final.includes('aria-current="page" aria-label="Page 7 of 7"'));
 });
 
 test('server default drops optional original lane and old protocol remains unchanged', () => {

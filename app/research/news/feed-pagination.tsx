@@ -11,11 +11,10 @@ export function newsPageNumbers(page: number, pages: number): (number | "gap")[]
 
 export default function FeedPagination({ page, pages, onChange, ja }: { page: number; pages: number; onChange: (page: number) => void; ja: boolean }) {
   if (pages <= 1) return null;
+  // "‹ 1 / N ›": every page stays reachable one step at a time (owner, Oct 14).
   return <nav className={styles.pagination} aria-label={ja ? "ニュースのページ" : "News pages"}>
     <button type="button" disabled={page === 1} onClick={() => onChange(page - 1)} aria-label={ja ? "前へ" : "Previous"}><span aria-hidden="true">‹</span></button>
-    {newsPageNumbers(page, pages).map((n, index) => n === "gap"
-      ? <span key={`gap-${index}`} className={styles.pageGap} aria-hidden="true">…</span>
-      : <button type="button" key={n} aria-current={n === page ? "page" : undefined} aria-label={ja ? `${n}ページ目` : `Page ${n}`} onClick={() => onChange(n)}>{n}</button>)}
+    <span className={styles.pageCount} aria-current="page" aria-label={ja ? `${page}ページ目 / 全${pages}ページ` : `Page ${page} of ${pages}`}>{page} / {pages}</span>
     <button type="button" disabled={page === pages} onClick={() => onChange(page + 1)} aria-label={ja ? "次へ" : "Next"}><span aria-hidden="true">›</span></button>
   </nav>;
 }

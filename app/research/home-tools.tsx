@@ -7,16 +7,16 @@ import { dateLabel } from "@/lib/research/presentation";
 import { useStockFavorites } from "./use-stock-favorites";
 import styles from "./home-tools.module.css";
 
-export default function HomeTools({ lang, onPro }: { lang: Language; onPro: () => void }) {
+export default function HomeTools({ lang, onPro, onWatch }: { lang: Language; onPro: () => void; onWatch: () => void }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const plan = useMemberDisplay();
   const locked = plan !== "pro";
   return <>
     <nav className={styles.grid} aria-label={t("よく使う機能", "Quick tools")}>
-      <Link href="/research/stocks"><span className={styles.icon} aria-hidden="true">🔍</span><strong>{t("銘柄検索", "Stock search")}</strong><p>{t("株価・チャート・企業情報", "Quotes, charts & company data")}</p></Link>
-      <Link href="/research/market"><span className={styles.icon} aria-hidden="true">📊</span><strong>{t("マーケット", "Markets")}</strong><p>{t("主要指数・金利・為替", "Indices, yields & currencies")}</p></Link>
-      <Link href="/research/calendar"><span className={styles.icon} aria-hidden="true">🗓️</span><strong>{t("決算・経済指標", "Earnings & economy")}</strong><p>{t("カレンダーで予定を確認", "Upcoming events")}</p></Link>
-      <Link href="/research/capital-map"><span className={styles.icon} aria-hidden="true">◉</span><strong>{t("資本マップ", "CAPITAL MAP")}</strong><p>{t("運用会社とETFの投資先", "Manager portfolios & ETF holdings")}</p></Link>
+      <Link href="/research/calendar"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">📅</span><strong>{t("決算・経済指標", "Earnings")}</strong></span><small>{t("今週の予定を確認", "This week")}</small></Link>
+      <Link href="/resolute"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">⚓</span><strong>RESOLUTE</strong></span><small>{t("独自ルール開発キット", "Build your own rules")}</small></Link>
+      <Link href="/research/capital-map"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">🗺️</span><strong>{t("資本マップ", "Capital Map")}</strong></span><small>{t("運用会社・ETFの投資先", "Funds and ETFs")}</small></Link>
+      <Link href="/research#monitored-companies" onClick={event => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); onWatch(); }}><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">🔭</span><strong>{t("監視22銘柄", "Watch 22")}</strong></span><small>{t("厳選株をリアルタイムで", "Live, curated")}</small></Link>
     </nav>
     <nav className={`${styles.reading} ${locked ? styles.readingLocked : ""}`} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
       <div className={styles.deskHeading}><span>RIZEL’S DESK</span><span className={styles.deskEdition}>TECH PHASE PRO</span></div>
@@ -34,11 +34,15 @@ export default function HomeTools({ lang, onPro }: { lang: Language; onPro: () =
 }
 
 export function HomeHelp({ lang }: { lang: Language }) {
-  return <nav className={styles.help} aria-label={lang === "ja" ? "学びとご利用案内" : "Learning and help"}>
-    <span>{lang === "ja" ? "学びとご利用案内" : "Learning and help"}</span>
-    <Link href="/research/learn"><span className={styles.helpIcon} aria-hidden="true">🔰</span><span><strong>{lang === "ja" ? "米国株のはじめ方" : "US stock basics"}</strong></span></Link>
-    <Link href="/research/faq"><span className={`${styles.helpIcon} ${styles.helpQuestion}`} aria-hidden="true">?</span><span><strong>{lang === "ja" ? "よくある質問・使い方" : "FAQ & help"}</strong></span></Link>
-  </nav>;
+  const ja = lang === "ja";
+  return <section className={styles.help} aria-label={ja ? "学びとご利用案内" : "Learning and help"}>
+    <p className={styles.helpEyebrow}>GUIDE</p>
+    <h2>{ja ? "学びとご利用案内" : "Learning and help"}</h2>
+    <nav className={styles.helpLinks} aria-label={ja ? "学びとご利用案内" : "Learning and help"}>
+      <Link href="/research/learn"><span className={styles.helpIcon} aria-hidden="true">🔰</span>{ja ? "米国株のはじめ方" : "US stock basics"}</Link>
+      <Link href="/research/faq"><span className={styles.helpIcon} aria-hidden="true">💡</span>{ja ? "よくある質問・使い方" : "FAQ & help"}</Link>
+    </nav>
+  </section>;
 }
 
 export function FavoriteResearch({ lang, events, onOpenResearch }: { lang: Language; events: ResearchEvent[]; onOpenResearch: (event: ResearchEvent) => void }) {
