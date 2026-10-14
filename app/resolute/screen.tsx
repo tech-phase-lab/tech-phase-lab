@@ -32,14 +32,14 @@ const messages = {
  loading:"Checking your saved plan…", unavailable:"Saving is unavailable right now. You can finish the questions, but your rules can’t be saved yet.",
  uncertain:"We couldn’t confirm the save. Load your saved plan to check before trying again.",
  conflict:"Your plan changed in another window. Your answers haven’t overwritten it. Load the latest saved plan and review your answers.",
- invalid:"Check your numbers, purchase levels and text lengths. One or more entries do not meet the save requirements.",
- answer:"Choose an answer. If a number field appears, enter a value within its range.", text:"Use up to 10 lines, with no more than 100 characters on each line.",
+ invalid:"Check your numbers, purchase levels and text lengths before saving.",
+ answer:"Choose an answer. If a number box appears, enter a number within the range shown.", text:"Use up to 10 lines, with no more than 100 characters on each line.",
  reload:"Load saved plan (replaces your current answers)", existing:"You have saved rules. Review your answers or open the simulator.",
- private:"Do not include information that could identify you or anyone else.", free:"Your own conditions (optional, one per line)",
- later:"Purchase levels you haven’t decided on will be saved as unset.", rate:"Too many requests. Wait about a minute, then check your saved plan.",
- check:"The simulation uses only your confirmed saved plan." },
+ private:"Don’t include personal details about yourself or anyone else.", free:"Your own conditions (optional, one per line)",
+ later:"Any purchase levels you haven’t chosen will stay blank when you save.", rate:"Too many requests. Wait about a minute, then check your saved plan.",
+ check:"The simulator uses your saved plan once we’ve confirmed it was saved." },
 };
-const sections: Record<string,[string,string]> = { A:["生活とお金","Life and money"],B:["下落への耐え方","Handling a drop"],C:["上昇のとき","During a rally"],D:["投資のスタイル","Your approach"],E:["銘柄と集中","Holdings and concentration"],F:["買い増しのルール","Extra purchases"],G:["止まるルール","When to pause"],H:["為替","Exchange rates"] };
+const sections: Record<string,[string,string]> = { A:["生活とお金","Life and money"],B:["下落への耐え方","Handling a drop"],C:["上昇のとき","During a rally"],D:["投資のスタイル","Your approach"],E:["銘柄と集中","How your investments are spread"],F:["買い増しのルール","Extra purchases"],G:["止まるルール","When to pause"],H:["為替","Exchange rates"] };
 export default function DiagnosisScreen({identityReady=true}:{identityReady?:boolean}) {
  return <ToolShell identityReady={identityReady}>{(locale,deny)=><DiagnosisForm locale={locale} deny={deny}/>}</ToolShell>;
 }

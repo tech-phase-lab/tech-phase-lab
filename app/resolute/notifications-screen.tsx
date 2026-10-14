@@ -17,7 +17,7 @@ import { renderAlertMail,renderNextMorningMail } from "@/lib/resolute/mail-templ
 
 const tips={
  ja:{done:"計画どおりに動けた夜は、そのまま記録しておく価値があります。ルールに書いたことと実際にやったことが同じだったか、1行だけ見直してみてください。次の下落でも、迷いにくくなります。",skipped:"見送ることも、ルールの中の選択肢のひとつです。見送った理由が「買わない条件」に入っているか確かめてみてください。入っていなければ、足しておくと次に迷いません。",unsure:"迷っているのは、ルールとその夜の気持ちがずれているサインかもしれません。急いで決めなくて大丈夫です。計画を開いて、ラインと買い増しの額をもう一度読んでみてください。"},
- en:{done:"Sticking to your plan is worth noting. Write one line about whether your actions matched your rules. It can make the next drop easier to face.",skipped:"Holding off is a choice too. Check whether your reason is already in your conditions for not buying. If not, add it so you have a clearer rule next time.",unsure:"Feeling unsure may mean your rules and how you felt didn't quite match. There's no rush. Open your plan and reread your purchase levels and amounts."}
+ en:{done:"You stuck to your plan. Take a moment to record it. Write one line about whether your actions matched your rules. It can make the next drop easier to face.",skipped:"Holding off is a choice too. Check whether your reason is already in your conditions for not buying. If not, add it so you have a clearer rule next time.",unsure:"Feeling unsure may mean your rules and how you felt didn't quite match. There's no rush. Open your plan and reread your purchase levels and amounts."}
 };
 export default function NotificationScreen({identityReady=true,mode}:{identityReady?:boolean;mode:"alerts"|"morning"}) {
  return <ToolShell identityReady={identityReady}>{(locale,deny)=><Notifications locale={locale} deny={deny} mode={mode}/>}</ToolShell>;
@@ -66,7 +66,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
   finally{mutex.current=false;if(!c.signal.aborted)setBusy(false);}
  }
  useEffect(()=>()=>controllerRef.current?.abort(),[]);
- const messages:Record<string,string>={unavailable:t("通知設定を読み込めませんでした。まだ保存できません。","Couldn’t load your notification settings. Saving is unavailable."),invalid:t("銘柄と基準価格、上昇率を確認してください。","Check your symbols, reference prices and upside threshold."),saved:t("通知設定を保存しました。","Your notification settings are saved."),conflict:t("別の画面で設定が変わりました。保存済みの設定を読み込み、確認してください。","Your settings changed in another window. Load the saved settings and review them."),uncertain:t("保存を確認できませんでした。再送する前に、保存済みの設定を読み込んでください。","We couldn’t confirm the save. Load your saved settings before trying again.")};
+ const messages:Record<string,string>={unavailable:t("通知設定を読み込めませんでした。まだ保存できません。","We couldn’t load your notification settings, so you can’t save changes yet."),invalid:t("銘柄と基準価格、上昇率を確認してください。","Check your stock symbols, reference prices and rise alert level."),saved:t("通知設定を保存しました。","Your notification settings are saved."),conflict:t("別の画面で設定が変わりました。保存済みの設定を読み込み、確認してください。","Your settings changed in another window. Load the saved settings and review them."),uncertain:t("保存を確認できませんでした。再送する前に、保存済みの設定を読み込んでください。","We couldn’t confirm the save. Load your saved settings before trying again.")};
  const displayItems=draft.watchItems.length?draft.watchItems:[{symbol:"",referencePrice:0}];
  function changeItem(i:number,patch:Partial<NotificationSettings["watchItems"][number]>){update({watchItems:displayItems.map((x,k)=>k===i?{...x,...patch}:x)});}
  function conditionText(id:"q28"|"q29",extra:string[]){
@@ -106,7 +106,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
     <section className={styles.card}><h2>{t("知らせるライン","Alert levels")}</h2><p className={styles.muted}>{t("あなたのルールの買い増しラインです","These are the purchase levels from your rules")}</p>
      {lines.length?<div className={styles.lineChips}>{lines.map(l=><span key={l}>−{l}%</span>)}</div>:<p className={styles.muted}>{planState==="error"?t("保存済みのラインを読み込めませんでした。","Couldn’t load your saved levels."):t("買い増しラインはまだ設定されていません。","No purchase levels are set yet.")}</p>}
      <label className={styles.switchRow}><span>{t("上昇の目安も知らせる","Also alert me on a rise")}</span><input type="checkbox" role="switch" checked={draft.surgeCapPct!==null} onChange={e=>update({surgeCapPct:e.target.checked?50:null})}/></label>
-     {draft.surgeCapPct!==null?<label className={styles.compactField}><span>{t("基準からの上昇率","Rise from reference")}</span><span><NumberInput decimal value={draft.surgeCapPct} onValueChange={value=>update({surgeCapPct:Number(value)})}/> %</span></label>:null}
+     {draft.surgeCapPct!==null?<label className={styles.compactField}><span>{t("基準からの上昇率","Rise from reference price")}</span><span><NumberInput decimal value={draft.surgeCapPct} onValueChange={value=>update({surgeCapPct:Number(value)})}/> %</span></label>:null}
     </section>
     <section className={styles.card}><h2>{t("届く時間","Delivery time")}</h2><p className={styles.muted}>{t("前の夜の終値をもとに、この時間にお知らせします(日本時間)","We check the previous night’s closing prices and send alerts at this time in Japan (JST)")}</p>{timeButtons}
      <label className={styles.switchRow}><span>{t("終値アラートを受け取る","Receive closing-price alerts")}</span><input type="checkbox" role="switch" checked={draft.alertsEnabled} onChange={e=>update({alertsEnabled:e.target.checked})}/></label>
@@ -118,7 +118,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
   {message?<p role="status" className={message==="saved"?styles.status:styles.error}>{messages[message]}</p>:null}
   {locked?<button className={styles.secondary} disabled={busy||loading} onClick={()=>{setLoading(true);setAttempt(v=>v+1);}}>{t("保存済みの設定を読み込む（現在の入力を置き換えます）","Load saved settings (replaces your current changes)")}</button>:null}
   {isMorning?<>
-   {!draft.morningEnabled?<section className={`${styles.card} ${styles.hero}`}><p className={styles.muted}>{snapshot?t("通知を受け取らない設定です。","Notifications are turned off."):t("保存済みの設定はまだ確認できていません。","Your saved settings have not been confirmed.")}</p></section>:<section className={`${styles.card} ${styles.hero}`}>
+   {!draft.morningEnabled?<section className={`${styles.card} ${styles.hero}`}><p className={styles.muted}>{snapshot?t("通知を受け取らない設定です。","Notifications are turned off."):t("保存済みの設定はまだ確認できていません。","We haven’t been able to check your saved settings yet.")}</p></section>:<section className={`${styles.card} ${styles.hero}`}>
     <span className={styles.eyebrow}>GOOD MORNING</span>
     <p className={styles.morningQuestion}>{en?"Quick check-in on yesterday's alert.":<><span className={styles.phrase}>昨日のお知らせから</span><span className={styles.phrase}>一晩が経ちました</span></>}</p>
     <p className={styles.muted}>{en?"Pick whichever feels closest right now.":<><span className={styles.phrase}>今の気持ちに近いものを</span><span className={styles.phrase}>1つだけ選んでください</span></>}</p>
@@ -130,9 +130,9 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
     <div className={styles.alertLines}>{validItems.map(item=><div className={styles.stockLines} key={item.symbol}><strong>{item.symbol}</strong>{lines.map((l,i)=><div className={styles.priceLine} key={l} style={{"--line-color":lineColors[Math.min(i,lineColors.length-1)]} as CSSProperties}><span>−{l}%</span><b>{usd(item.referencePrice*(100-l)/100)}</b></div>)}{draft.surgeCapPct!==null?<div className={styles.priceLine} style={{"--line-color":"#8fd6a8"} as CSSProperties}><span>+{draft.surgeCapPct}%</span><b>{usd(item.referencePrice*(100+draft.surgeCapPct)/100)}</b></div>:null}</div>)}</div>
     {!validItems.length?<p className={styles.muted}>{t("銘柄と基準価格を入れてください","Enter a symbol and reference price")}</p>:null}
     <hr className={styles.divider}/><span className={styles.eyebrow}>TRY IT</span><p className={styles.muted}>{t("もしも、ある日の終値が基準から","What if a closing price moved")}</p><p className={styles.percentNumber}>{change>=0?"+":"−"}{Math.abs(change)}%</p><p className={styles.muted}>{t("だったら？","from your reference price?")}</p><input type="range" min="-50" max="100" value={change} aria-label={t("終値の変化","Closing-price change")} onChange={e=>setChange(Number(e.target.value))}/>
-    <details className={styles.mailDetails}><summary>{t("届くメールの例を見る","See an example email")}</summary>{mail?mailExample(mail):<p className={styles.muted}>{t("この条件では通知に該当しません。","This scenario would not trigger an alert.")}</p>}</details>
+    <details className={styles.mailDetails}><summary>{t("届くメールの例を見る","See an example email")}</summary>{mail?mailExample(mail):<p className={styles.muted}>{t("この条件では通知に該当しません。","No alert would be sent in this example.")}</p>}</details>
    </section>}
-  {!isMorning?<p className={styles.disclaimer}>{t("通知は、米国市場の終値が確定したあとに送ります。","Alerts are sent after US closing prices are final.")}<br/>{t("情報の提供であり、投資助言ではありません。","This is information, not investment advice.")}</p>:null}
+  {!isMorning?<p className={styles.disclaimer}>{t("通知は、米国市場の終値が確定したあとに送ります。","Alerts are sent after US closing prices are final.")}<br/>{t("情報の提供であり、投資助言ではありません。","For information only. Not investment advice.")}</p>:null}
   <p className={styles.disclaimer}>{t("メール配信は準備中です。この画面の試算でメールは送信されません。","Email delivery is not available yet. Using this screen will not send an email.")}</p>
   <dialog ref={planDialog} className={styles.planDialog} onClose={()=>setPlanOpen(false)} onCancel={()=>setPlanOpen(false)} aria-labelledby="morning-plan-title">
    <h2 id="morning-plan-title">{t("あなたの計画", "Your plan")}</h2>

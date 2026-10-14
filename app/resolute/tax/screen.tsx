@@ -24,23 +24,23 @@ function TaxEstimate({ locale }: { locale: DiagnosisLocale }) {
   const notes = sale?.supported ? sale.notes : loss?.supported ? loss.notes : [];
   const field = (key: keyof typeof inputs, label: string) => <label className={styles.compactField}><span>{label}</span><span><NumberInput decimal={key!=="fees"} value={inputs[key]} onValueChange={value=>setInputs(s=>({...s,[key]:value}))}/><small>{key==="fees"?t("円","yen"):t("万円","× ¥10,000")}</small></span></label>;
   return <div className={styles.section}>
-    <header className={styles.toolHeading}><h1>{t("税金の目安", "Tax estimate")}</h1><p className={styles.muted}>{t("日本在住の方向け・2026年分の売却", "For Japan residents · 2026 sales")}</p></header>
-    <div className={styles.tabs} role="group" aria-label={t("計算の種類", "Calculation")}><button aria-pressed={tab === "sale"} onClick={() => setTab("sale")}>{t("売却したとき", "When you sell")}</button><button aria-pressed={tab === "loss"} onClick={() => setTab("loss")}>{t("損切りしたとき", "When you realize a loss")}</button></div>
+    <header className={styles.toolHeading}><h1>{t("税金の目安", "Tax estimate")}</h1><p className={styles.muted}>{t("日本在住の方向け・2026年分の売却", "For residents of Japan · Share sales in 2026")}</p></header>
+    <div className={styles.tabs} role="group" aria-label={t("計算の種類", "Calculation")}><button aria-pressed={tab === "sale"} onClick={() => setTab("sale")}>{t("売却したとき", "When you sell")}</button><button aria-pressed={tab === "loss"} onClick={() => setTab("loss")}>{t("損切りしたとき", "When you sell at a loss")}</button></div>
     <section className={styles.card}><h2>{t("口座の種類", "Account type")}</h2>
       <div className={styles.accountChoices}>{([
-        ["specific_withholding", "特定口座", "Withholding account"], ["general", "一般口座", "Non-withholding account"], ["nisa", "NISA口座", "NISA account"]] as const).map(([id, ja, eng]) => <button className={styles.option} key={id} aria-pressed={account === id} onClick={() => setAccount(id)}>{t(ja, eng)}</button>)}</div>
+        ["specific_withholding", "特定口座", "Tax withheld"], ["general", "一般口座", "No tax withheld"], ["nisa", "NISA口座", "NISA account"]] as const).map(([id, ja, eng]) => <button className={styles.option} key={id} aria-pressed={account === id} onClick={() => setAccount(id)}>{t(ja, eng)}</button>)}</div>
       <p className={styles.muted}>{account === "specific_withholding" ? t("源泉徴収ありの特定口座", "A tokutei account with tax withholding.") : account === "general" ? t("特定口座の源泉徴収なしを含みます。", "A general account or a tokutei account without withholding.") : t("利益は非課税として計算します。", "Gains are treated as tax-free.")}</p>
 
-      {tab === "sale" ? <>{field("proceeds", t("今年の売却代金の合計", "Total sale proceeds this year"))}{field("cost", t("その購入額の合計", "Total purchase cost of those shares"))}<details className={styles.mailDetails}><summary>{t("くわしく設定する", "More settings")}</summary>{field("fees", t("手数料", "Fees"))}</details></> : <>{field("loss", t("確定する損", "Loss to realize"))}{field("other", t("今年のほかの利益", "Other gains this year"))}</>}
+      {tab === "sale" ? <>{field("proceeds", t("今年の売却代金の合計", "Total sale proceeds this year"))}{field("cost", t("その購入額の合計", "Total purchase cost of those shares"))}<details className={styles.mailDetails}><summary>{t("くわしく設定する", "More settings")}</summary>{field("fees", t("手数料", "Fees"))}</details></> : <>{field("loss", t("確定する損", "Loss from selling"))}{field("other", t("今年のほかの利益", "Other gains this year"))}</>}
     </section>
     {!valid ? <p role="alert" className={styles.error}>{t("0〜1兆円の整数を入力してください。", "Enter whole-yen amounts from 0 to 1 trillion.")}</p> : <section className={`${styles.card} ${styles.hero}`} aria-live="polite">
       <span className={styles.eyebrow}>RESULT</span>
-      {sale?.supported ? <><p className={styles.muted}>{t("あなたの手取りの目安は", "Your estimated net proceeds")}</p><p className={styles.bigNumber}>{money(sale.netProceeds)}</p><dl className={styles.resultRows}>
+      {sale?.supported ? <><p className={styles.muted}>{t("あなたの手取りの目安は", "What you’d receive after tax")}</p><p className={styles.bigNumber}>{money(sale.netProceeds)}</p><dl className={styles.resultRows}>
         <div><dt>{t("この売却の損益", "Profit or loss on these sales")}</dt><dd>{money(sale.gain)}</dd></div><div><dt>{t("税金の目安", "Estimated tax")}</dt><dd>{money(sale.tax.total)}</dd></div><div><dt>{t("税金を引いたあとの損益", "Profit or loss after tax")}</dt><dd>{money(sale.netGainAfterTax)}</dd></div>
       </dl></> : null}
-      {loss?.supported ? <><h2>{loss.taxChange < 0 ? t("税金は次の金額だけ少なくなる計算です", "Estimated reduction in tax") : t("税金は変わらない計算です", "Estimated tax stays the same")}</h2><p className={styles.bigNumber}>{money(-loss.taxChange)}</p><dl className={styles.resultRows}>
-        <div><dt>{t("確定する前の税金", "Tax before realizing the loss")}</dt><dd>{money(loss.taxBefore.total)}</dd></div><div><dt>{t("確定したあとの税金", "Tax after realizing the loss")}</dt><dd>{money(loss.taxAfter.total)}</dd></div><div><dt>{t("繰り越せる損失", "Loss eligible for carryforward")}</dt><dd>{money(loss.carryforward.newLossToCarry)}</dd></div>
-      </dl><p className={styles.muted}>{t("入力した条件で、相殺できた場合の計算です。損を確定するかどうかは、ご自身で決めてください。", "This assumes the loss can offset the gains you entered. Whether to realize a loss is your decision.")}</p></> : null}
+      {loss?.supported ? <><h2>{loss.taxChange < 0 ? t("税金は次の金額だけ少なくなる計算です", "Estimated tax saving") : t("税金は変わらない計算です", "Estimated tax stays the same")}</h2><p className={styles.bigNumber}>{money(-loss.taxChange)}</p><dl className={styles.resultRows}>
+        <div><dt>{t("確定する前の税金", "Tax before selling at a loss")}</dt><dd>{money(loss.taxBefore.total)}</dd></div><div><dt>{t("確定したあとの税金", "Tax after selling at a loss")}</dt><dd>{money(loss.taxAfter.total)}</dd></div><div><dt>{t("繰り越せる損失", "Loss you can carry forward")}</dt><dd>{money(loss.carryforward.newLossToCarry)}</dd></div>
+      </dl><p className={styles.muted}>{t("入力した条件で、相殺できた場合の計算です。損を確定するかどうかは、ご自身で決めてください。", "This assumes the loss can offset the gains you entered. Whether to sell at a loss is up to you.")}</p></> : null}
       {notes.length ? <ul className={styles.taxNotes}>{notes.map(code => <li key={code}>{NOTE_TEXT[code]?.[locale]}</li>)}</ul> : null}
     </section>}
     <details className={`${styles.card} ${styles.disclosure}`}><summary>{t("この計算の前提", "What this assumes")}</summary><div className={styles.section}>

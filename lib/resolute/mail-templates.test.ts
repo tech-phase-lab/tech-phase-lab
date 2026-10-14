@@ -27,7 +27,7 @@ test('急騰のみ: 件名と本文が下落と別になる', () => {
   const ja = renderAlertMail({ locale: 'ja', date: 'd', items: [s], ...urls });
   const en = renderAlertMail({ locale: 'en', date: 'd', items: [s], ...urls });
   assert.match(ja.subject, /上昇の目安/); assert.match(ja.text, /\+52\.3%/);
-  assert.match(en.subject, /upside threshold/); assert.match(en.text, /up 52\.3%/);
+  assert.match(en.subject, /rise alert level/); assert.match(en.text, /up 52\.3%/);
 });
 
 test('文面: 禁止表現がない。主語は「あなたの計画では」', () => {
@@ -57,7 +57,7 @@ test('混在: 下落と急騰が同じメールにあれば、両方の説明と
   const ja = renderAlertMail({ locale: 'ja', date: '2027-01-20', items, ...urls });
   const en = renderAlertMail({ locale: 'en', date: '2027-01-20', items, ...urls });
   assert.match(ja.subject, /ラインと上昇の目安/); assert.match(ja.text, /下落のライン/); assert.match(ja.text, /上昇の目安は/);
-  assert.match(en.subject, /downside and upside thresholds/); assert.match(en.text, /a downside level like this/); assert.match(en.text, /upside threshold is your cue/);
+  assert.match(en.subject, /drop and rise alert levels/); assert.match(en.text, /a drop to this level/); assert.match(en.text, /reaching a rise alert level is your cue/);
 });
 
 test('入力: 空の通知はエラー。割合が欠けた通知もエラー(undefinedを文面に出さない)', () => {

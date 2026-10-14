@@ -20,7 +20,7 @@ export default function StockInput({value,onChange,index,en}:{value:string;onCha
  },[query,needsSearch,composing]);
  const current=result?.query===query?result:null;
  return <div className={styles.stockLookup}><label htmlFor={id}>{en?"Symbol":"銘柄"}</label><div className={styles.stockEntry}>
-  <input id={id} aria-label={`${en?"銘柄 / Symbol":"銘柄"} ${index+1}`} placeholder="NVDA" type="text" autoComplete="off" spellCheck={false} maxLength={80} value={value}
+  <input id={id} aria-label={`${en?"Stock symbol":"銘柄"} ${index+1}`} placeholder="NVDA" type="text" autoComplete="off" spellCheck={false} maxLength={80} value={value}
    onFocus={e=>e.currentTarget.select()} onClick={e=>e.currentTarget.select()}
    onCompositionStart={()=>setComposing(true)} onCompositionEnd={e=>{setComposing(false);onChange(e.currentTarget.value.normalize("NFKC").toUpperCase());}}
    onChange={e=>onChange(composing?e.target.value:e.target.value.normalize("NFKC").toUpperCase())}/>
