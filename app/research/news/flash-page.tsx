@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Language } from "@/lib/research/data";
 import { availableNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
 import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
-import { FLASH_TICKERS, flashRows, type FlashRow } from "@/lib/research/flash-rows";
+import { flashRows, type FlashRow } from "@/lib/research/flash-rows";
 import { isFreshItem } from "@/lib/research/company-freshness";
 import { createNewsPoller } from "@/lib/research/news-poller";
 import { createWatchTracker } from "@/lib/research/watch-new-items";
@@ -20,12 +20,11 @@ const PAGE = 20;
 const jst = (options: Intl.DateTimeFormatOptions, value: string | number | Date) =>
   new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hourCycle: "h23", ...options }).format(new Date(value));
 const clock = (at: string) => jst({ hour: "2-digit", minute: "2-digit" }, at);
-const dayKey = (at: string | number) => jst({ year: "numeric", month: "numeric", day: "numeric" }, at);
 
 function timeCell(row: FlashRow) {
   if (row.timeKind === "date") { const [, month, day] = row.at.split("-"); return <time dateTime={row.at}>{Number(month)}/{Number(day)}</time>; }
-  const today = dayKey(row.at) === dayKey(Date.now());
-  return <time dateTime={row.at}>{!today && <span>{jst({ month: "numeric", day: "numeric" }, row.at)}</span>}{clock(row.at)}</time>;
+  // The day is always shown above the time, so a time alone never leaves "which day?" open (owner, Oct 14).
+  return <time dateTime={row.at}><span>{jst({ month: "numeric", day: "numeric" }, row.at)}</span>{clock(row.at)}</time>;
 }
 
 /** 速報: the watched companies' live monitor and earnings results as one
@@ -39,7 +38,6 @@ export default function FlashPage({ lang }: { lang: Language }) {
   const [checkedAt, setCheckedAt] = useState(0);
   const [unread, setUnread] = useState<ReadonlySet<string>>(new Set());
   const [view, setView] = useState<"all" | "earnings">("all");
-  const [ticker, setTicker] = useState("all");
   const [page, setPage] = useState(1);
   const [seenAtLoad] = useState(() => readVisitStart());
   const tracker = useRef(createWatchTracker());
@@ -83,7 +81,7 @@ export default function FlashPage({ lang }: { lang: Language }) {
     return () => { alive = false; clearInterval(timer); stop(); };
   }, []);
 
-  const rows = flashRows(feed, wire, lang).filter(row => (view === "all" || row.kind === "earnings") && (ticker === "all" || row.tickers.includes(ticker)));
+  const rows = flashRows(feed, wire, lang).filter(row => (view === "all" || row.kind === "earnings"));
   const pages = Math.max(1, Math.ceil(rows.length / PAGE));
   const current = Math.min(page, pages);
   const shown = rows.slice((current - 1) * PAGE, current * PAGE);
@@ -96,7 +94,7 @@ export default function FlashPage({ lang }: { lang: Language }) {
     <div className={timeline.entry}>
       <div className={timeline.meta}><span className={styles.ticker}>{row.tickers.join(" · ")}</span><span className={`${timeline.tag} ${row.kind === "earnings" ? styles.earnings : timeline.news}`}>{kindLabel[row.kind]}</span>{marked(row) && <span className={timeline.newMark}>NEW</span>}</div>
       {row.url
-        ? <><p className={timeline.headline} lang={lang}><a href={row.url} target="_blank" rel="noopener noreferrer nofollow">{row.title}</a></p>{row.source && <p className={timeline.src}>{row.source}</p>}</>
+        ? <p className={timeline.headline} lang={lang}><a href={row.url} target="_blank" rel="noopener noreferrer nofollow">{row.title}</a></p>
         : <NewsStory lang={lang} label="" title={row.title} body={row.body} publication={publication(row)} />}
     </div>
   </article>;
@@ -105,11 +103,6 @@ export default function FlashPage({ lang }: { lang: Language }) {
       <div className={tabStyles.tabs} role="group" aria-label={ja ? "表示する速報" : "Alert filter"}>
         {(["all", "earnings"] as const).map(key => <button key={key} type="button" aria-pressed={key === view} onClick={() => { setView(key); setPage(1); }}>{key === "all" ? (ja ? "すべて" : "All") : (ja ? "決算" : "Earnings")}</button>)}
       </div>
-      <label className={styles.filter}><span>{ja ? "銘柄で絞る" : "Stock"}</span>
-        <select value={ticker} onChange={event => { setTicker(event.target.value); setPage(1); }}>
-          <option value="all">{ja ? "すべての銘柄" : "All stocks"}</option>
-          {FLASH_TICKERS.map(code => <option key={code} value={code}>{code}</option>)}
-        </select></label>
     </div>
     <div ref={list} className={styles.panel}>
       {failed && <p className={timeline.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{feed && (ja ? " 前回取得した内容を表示しています。" : " Showing previously loaded items.")}</p>}
@@ -118,6 +111,6 @@ export default function FlashPage({ lang }: { lang: Language }) {
       {!!shown.length && <div className={timeline.timeline}>{shown.map(item)}</div>}
     </div>
     <FeedPagination page={current} pages={pages} ja={ja} onChange={next => { setPage(next); list.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
-    <p className={timeline.fine}>{ja ? "監視22銘柄のリアルタイム監視の情報と、対象37銘柄の決算の結果を、新しい順に並べています。" : "The live monitor of the 22 watched stocks and earnings results for all 37 covered stocks, newest first."}</p>
+    <p className={timeline.fine}>{ja ? "監視22銘柄のリアルタイム監視の情報と、対象37銘柄の決算の結果を、新しい順に並べています。銘柄ごとの情報は、監視22銘柄リストで確認できます。" : "The live monitor of the 22 watched stocks and earnings results for all 37 covered stocks, newest first."}</p>
   </section>;
 }
