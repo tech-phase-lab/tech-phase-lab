@@ -55,8 +55,8 @@ test('dates stay the real release date and late finds are never NEW',async()=>{
   assert.equal(NEWS_MAX_AGE_MS,72*3_600_000);
   const { alertItems }=await import('../lib/research/alert-items.ts');
   const now=Date.parse('2026-10-08T12:00:00Z');
-  const feed={marketUpdates:[{id:'new',titleJa:'新',publishedAt:'2026-10-07T12:00:00Z'},{id:'old',titleJa:'古',publishedAt:'2026-10-05T11:00:00Z'}]};
-  assert.deepEqual(alertItems(feed,now).map(item=>item.id),['market:new']);
+  const wire={MU:[{id:'new',titleEn:'new',titleJa:'新',publisher:'Wire',origin:'wire',url:'https://example.com/a',publishedAt:'2026-10-07T12:00:00Z'},{id:'old',titleEn:'old',titleJa:'古',publisher:'Wire',origin:'wire',url:'https://example.com/b',publishedAt:'2026-10-05T11:00:00Z'}]};
+  assert.deepEqual(alertItems({},wire,now).map(item=>item.id),['wire:new']);
 });
 
 test('items the strip cannot show do not use up its five places (owner, Oct 9: a 21:44 story never reached the strip)',async()=>{
