@@ -76,7 +76,7 @@ function Workspace() {
   <aside className={controls.panel} aria-label={en?"Owner preview shortcuts":"運営者用の確認ショートカット"}>
    <p>{en?"Skip the quiz and preview any tool. Your saved rules are used when available. Otherwise, a fictional sample plan is loaded.":"30問に答えずに各画面を確認できます。保存済みのルールがあれば使い、なければ架空のサンプル計画で開きます"}</p>
    <div className={controls.links}>
-    {([["/resolute/wall",en?"Rule wallpaper":"お守りを見る"],["/resolute/notebook",en?"My rulebook":"一冊を見る"],["/resolute/tonight",en?"A moment tonight":"今夜のひと息を見る"]] as [ReviewPath,string][]).map(([target,label])=>
+    {([["/resolute/news",en?"News risk sample":"危険度チェッカーを見る"],["/resolute/wall",en?"Rule wallpaper":"お守りを見る"],["/resolute/notebook",en?"My rulebook":"一冊を見る"],["/resolute/tonight",en?"A moment tonight":"今夜のひと息を見る"]] as [ReviewPath,string][]).map(([target,label])=>
      <button key={target} disabled={opening} onClick={()=>void openFeature(target)}>{label}</button>)}
    </div>
    <label><input type="checkbox" checked={persistence.remembered} onChange={event=>store.setRemembered(event.target.checked)}/>
