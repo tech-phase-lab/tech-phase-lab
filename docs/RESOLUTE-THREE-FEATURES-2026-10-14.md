@@ -71,3 +71,8 @@ Owner review includes an explicitly selected, clearly labeled visual sample for 
 ## Owner news preview revision — October 14
 
 The owner sample now has three dated reports: Jefferies' AI valuation view (Barron’s), Barclays' Dell/HPE/NetApp downgrades (Barron’s), and ASML CFO comments on the proposed Match Act (Reuters). Short topic tabs replace repeated full headlines; full titles appear only inside the news card. Source copy separates the speaker/rating firm from the reporting outlet. Narrow screens stack field labels above text. Article-specific unapproved RIZEL drafts are shown only in owner sample mode, explicitly marked as draft previews; they are not approved or written to the live quote bank. The selected article determines its action, rather than another article's stars. Ratings/duration categories remain provisional layout fixtures, not verified live assessments. No automatic publication, mail, billing or infrastructure changes.
+
+
+## Owner correction — concise source and commentary
+
+The source label stays 「出どころ」. Its value names only the organization/person, e.g. 「米証券会社 Jefferies」; reporting-outlet explanations are omitted. Source URLs stay in data for verification but no source link is rendered on the checker. The footer is exactly 「※危険度の基準は、情報源・範囲・時間の長さです」. RIZEL commentary uses one or two reasons per article in production as well as the sample; rendering is capped at two for older quote entries. The three owner samples now have two reasons each. This supersedes the earlier expanded source presentation.
