@@ -8,3 +8,23 @@
 .editor .selected{height:18px;line-height:18px}
 .done{position:absolute;right:12px;top:6px;min-height:36px;padding:5px 10px;border:0;background:transparent;color:#a9e6d3;font-size:12px;cursor:pointer}
 .content{user-select:text;-webkit-user-select:text}
+
+/* Keep article geometry unchanged when long-press opens the tool tray. */
+.notebook[data-enabled=true]{padding-bottom:250px}
+.content{position:relative}
+.content [data-ink-id]{cursor:pointer}
+.editor{width:min(560px,calc(100vw - 20px));padding:12px 14px;border-radius:14px;background:#10212c;box-shadow:0 8px 40px #000b}
+.editor>p:first-child{font-size:12px;line-height:20px;margin-bottom:8px}
+.palette{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.colors{gap:8px}
+.colors button{width:44px;height:44px;background:#1a2d39;border-radius:9px}
+.colors button[aria-pressed=true]{border:2px solid var(--ink);background:#253d4a}
+.palette>button,.utilities>button{min-height:40px;padding:7px 12px;background:#172d39;border:1px solid #38515e;border-radius:8px;color:#dbe8ef;font-size:12px;cursor:pointer}
+.tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.tools>button{min-height:46px;padding:7px 3px;background:#203945;border-color:#42606d;font-size:13px;font-weight:600}
+.utilities{display:flex;justify-content:space-between;gap:8px;margin-top:8px}
+.utilities>button:first-child:not(:disabled){border-color:#ef777f;color:#ffc1c6}
+.palette>button:disabled,.utilities>button:disabled{opacity:.4;cursor:default}
+.editor .selected{margin:6px 0 0}
+.markList{scroll-margin-top:90px}
+@media(max-width:380px){.editor{padding:10px}.editor>p:first-child{font-size:10px}.tools>button{font-size:12px}}

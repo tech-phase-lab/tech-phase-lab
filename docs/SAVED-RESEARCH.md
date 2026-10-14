@@ -38,3 +38,11 @@
 - Saving from article detail immediately enables annotation and PDF tools in that same view; returning through the menu is unnecessary.
 - Editing toolbar stays at the bottom from opening to completion, with a Done action and safe-area spacing. Selection preview reserves its height.
 - Memoized article text stays stable while selecting/changing colors; selection scanning is debounced until native selection pauses, and mouse tool clicks preserve the text range. Physical mobile handle behavior still needs device verification.
+
+## 2026-10-14: direct selection, erasing and rectangular boxes
+
+- Saved article text selection now opens the bottom pen tray automatically, without first pressing Annotate. Stable article padding and memoized text keep opening the tray from shifting the selected text.
+- Color, four pen tools, and erase/undo are separate rows with touch-sized targets. Whole paragraph expands a selection within its paragraph/heading/metadata cell.
+- Tapping an existing text mark makes Erase marks available; selecting marked text can erase overlapping annotations. Manage marks also opens and scrolls to the individual deletion list. Session undo can restore deletion.
+- Box marks use a noninteractive measured overlay: one rectangle for each wrapped text block, with no per-line outline protrusions or added text height. Resize/font changes recalculate geometry. A new box on the same text block replaces its prior box parts; marks on other blocks and other pen types are preserved. Print view recomputes boxes in its own layout.
+- Native mobile selection handles remain controlled by the browser. Physical iPhone handle smoothness is not claimed as verified.

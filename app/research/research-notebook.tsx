@@ -14,7 +14,7 @@ function subscribe(callback: () => void) {
 function inkStyle(mark: Annotation): CSSProperties {
   const color = inkColors[mark.color];
   if (mark.kind === "highlight") return { backgroundColor: `${color}55`, boxDecorationBreak: "clone", WebkitBoxDecorationBreak: "clone" };
-  if (mark.kind === "box") return { outline: `1.5px solid ${color}`, borderRadius: 2, boxDecorationBreak: "clone", WebkitBoxDecorationBreak: "clone" };
+  if (mark.kind === "box") return {};
   return { textDecoration: "underline", textDecorationColor: color, textDecorationThickness: "2px", textUnderlineOffset: "4px", textDecorationStyle: mark.kind === "note" ? "dotted" : "solid" };
 }
 
@@ -28,7 +28,7 @@ function annotate(nodes: ReactNode, annotations: Annotation[], path = "r", block
       const block = textBlockId(key, text);
       blocks.set(block, text);
       return <span data-ink-block={block}>{markedSegments(text, block, annotations).map(segment =>
-        <span key={segment.start}>{segment.marks.reduce<ReactNode>((child, mark) => <span style={inkStyle(mark)}>{child}</span>, segment.text)}</span>
+        <span key={segment.start}>{segment.marks.reduce<ReactNode>((child, mark) => <span data-ink-id={mark.id} data-ink-kind={mark.kind} data-ink-color={mark.color} style={inkStyle(mark)}>{child}</span>, segment.text)}</span>
       )}</span>;
     }
     if (!isValidElement<{ children?: ReactNode }>(node)) return node;
@@ -60,6 +60,30 @@ function selectedParts(root: HTMLElement): InkPart[] {
   return parts.length <= 100 && parts.every(p => p.quote.length <= 10000) ? parts : [];
 }
 
+// Measure a whole wrapped passage once, rather than outlining every line fragment.
+// The overlay never participates in text layout or native selection.
+function drawBoxes(content: HTMLElement) {
+  content.querySelectorAll("[data-ink-outline]").forEach(node => node.remove());
+  const origin = content.getBoundingClientRect();
+  const groups = new Map<string, { left: number; top: number; right: number; bottom: number; color: string }>();
+  for (const span of content.querySelectorAll<HTMLElement>('[data-ink-kind="box"]')) {
+    const block = span.closest<HTMLElement>("[data-ink-block]");
+    const key = `${span.dataset.inkId}:${block?.dataset.inkBlock}`;
+    for (const rect of span.getClientRects()) {
+      if (!rect.width || !rect.height) continue;
+      const old = groups.get(key);
+      groups.set(key, { left: Math.min(old?.left ?? rect.left, rect.left), top: Math.min(old?.top ?? rect.top, rect.top), right: Math.max(old?.right ?? rect.right, rect.right), bottom: Math.max(old?.bottom ?? rect.bottom, rect.bottom), color: inkColors[span.dataset.inkColor as InkColor] });
+    }
+  }
+  for (const rect of groups.values()) {
+    const box = content.ownerDocument.createElement("span");
+    box.dataset.inkOutline = "true";
+    box.setAttribute("aria-hidden", "true");
+    Object.assign(box.style, { position: "absolute", pointerEvents: "none", userSelect: "none", boxSizing: "border-box", border: `1.5px solid ${rect.color}`, borderRadius: "3px", left: `${rect.left - origin.left}px`, top: `${rect.top - origin.top}px`, width: `${rect.right - rect.left}px`, height: `${rect.bottom - rect.top}px` });
+    content.append(box);
+  }
+}
+
 function exportPrint(content: HTMLElement, marks: Annotation[], title: string, lang: string) {
   const popup = window.open("", "_blank");
   if (!popup) return false;
@@ -71,11 +95,12 @@ function exportPrint(content: HTMLElement, marks: Annotation[], title: string, l
   doc.head.append(style);
   const controls = doc.createElement("aside"); controls.className = "print-tools";
   const hint = doc.createElement("p"); hint.textContent = lang === "ja" ? "印刷画面で「PDFに保存」を選んでください。iPhoneは印刷プレビューを開き、共有から「ファイルに保存」を選べます。" : "Choose Save as PDF in the print dialog. On iPhone, open the print preview, then Share → Save to Files.";
-  const button = doc.createElement("button"); button.textContent = lang === "ja" ? "PDF保存・印刷" : "Save PDF / Print"; button.onclick = () => popup.print();
+  const button = doc.createElement("button"); button.textContent = lang === "ja" ? "PDF保存・印刷" : "Save PDF / Print"; button.onclick = () => { drawBoxes(article); popup.print(); };
   controls.append(hint, button); doc.body.append(controls);
   const header = doc.createElement("header"); header.textContent = "TECH PHASE RESEARCH"; doc.body.append(header);
-  const article = doc.createElement("article");
+  const article = doc.createElement("article"); article.style.position = "relative";
   const clone = content.cloneNode(true) as HTMLElement;
+  clone.querySelectorAll("[data-ink-outline]").forEach(element => element.remove());
   clone.querySelectorAll("[class]").forEach(element => element.removeAttribute("class"));
   article.append(...Array.from(clone.childNodes)); doc.body.append(article);
   if (marks.some(mark => mark.note)) {
@@ -87,6 +112,9 @@ function exportPrint(content: HTMLElement, marks: Annotation[], title: string, l
       note.append(quote, body); doc.body.append(note);
     }
   }
+  drawBoxes(article);
+  popup.addEventListener("resize", () => drawBoxes(article));
+  popup.addEventListener("beforeprint", () => drawBoxes(article));
   return true;
 }
 
@@ -102,11 +130,13 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
   const [history, setHistory] = useState<Annotation[][]>([]);
   const [error, setError] = useState("");
   const root = useRef<HTMLDivElement>(null);
+  const list = useRef<HTMLDetailsElement>(null);
+  const [activeMark, setActiveMark] = useState<string | null>(null);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const labels: Record<InkKind, string> = { underline: t("下線", "Underline"), highlight: t("蛍光ペン", "Highlight"), box: t("囲み", "Box"), note: t("メモ", "Note") };
 
   useEffect(() => {
-    if (!enabled || !editing) return;
+    if (!enabled) return;
     // Let native selection handles finish moving before reading the whole article.
     let timer: ReturnType<typeof setTimeout>;
     const capture = () => {
@@ -114,13 +144,17 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
       timer = setTimeout(() => {
         if (!root.current) return;
         const parts = selectedParts(root.current);
-        if (parts.length) setSelection(previous => JSON.stringify(previous) === JSON.stringify(parts) ? previous : parts);
+        if (parts.length) {
+          setSelection(previous => JSON.stringify(previous) === JSON.stringify(parts) ? previous : parts);
+          setEditing(true);
+          setActiveMark(null);
+        }
         else if (root.current.contains(document.activeElement) || window.getSelection()?.anchorNode && root.current.contains(window.getSelection()!.anchorNode)) setSelection([]);
       }, 120);
     };
     document.addEventListener("selectionchange", capture);
     return () => { clearTimeout(timer); document.removeEventListener("selectionchange", capture); };
-  }, [enabled, editing]);
+  }, [enabled]);
 
   function commit(next: Annotation[], undo = false) {
     try {
@@ -135,7 +169,13 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
     if (!selection.length) return;
     if (kind === "note") { setDraft({ parts: selection, text: "" }); return; }
     if (marks.length >= maxAnnotations) { setError(t("1記事の書き込みは200件までです。", "Up to 200 annotations per article.")); return; }
-    if (commit([...marks, { id: crypto.randomUUID(), kind, color, parts: selection, note: "" }])) { setSelection([]); window.getSelection()?.removeAllRanges(); }
+    // One rectangular box per text block keeps adjacent/nested outlines from colliding.
+    const retained = kind === "box" ? marks.flatMap(mark => {
+      if (mark.kind !== "box") return [mark];
+      const parts = mark.parts.filter(part => !selection.some(selected => selected.block === part.block));
+      return parts.length ? [{ ...mark, parts }] : [];
+    }) : marks;
+    if (commit([...retained, { id: crypto.randomUUID(), kind, color, parts: selection, note: "" }])) { setSelection([]); window.getSelection()?.removeAllRanges(); }
   }
   // Tool/color/selection state must not rebuild the text DOM under native selection.
   const { rendered, presentMarks } = useMemo(() => {
@@ -143,23 +183,50 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
     const rendered = enabled ? annotate(children, visible ? marks : [], "r", blocks) : children;
     return { rendered, presentMarks: marks.filter(mark => mark.parts.every(part => blocks.get(part.block)?.slice(part.start, part.end) === part.quote)) };
   }, [children, enabled, visible, marks]);
+  useEffect(() => {
+    const content = root.current;
+    if (!content || !enabled) return;
+    const redraw = () => drawBoxes(content);
+    redraw();
+    const observer = new ResizeObserver(redraw);
+    observer.observe(content);
+    let cancelled = false;
+    document.fonts.ready.then(() => { if (!cancelled) redraw(); });
+    return () => { cancelled = true; observer.disconnect(); content.querySelectorAll("[data-ink-outline]").forEach(node => node.remove()); };
+  }, [rendered, enabled]);
+  const removable = marks.filter(mark => mark.id === activeMark || mark.parts.some(part => selection.some(selected => selected.block === part.block && selected.start < part.end && selected.end > part.start)));
+  function selectParagraph() {
+    const block = root.current && Array.from(root.current.querySelectorAll<HTMLElement>("[data-ink-block]")).find(el => el.dataset.inkBlock === selection[0]?.block);
+    if (!block) return;
+    const paragraph = block.closest("p, li, h2, h3, h4, dd, dt, blockquote") ?? block;
+    const range = document.createRange(); range.selectNodeContents(paragraph);
+    const native = window.getSelection(); native?.removeAllRanges(); native?.addRange(range);
+    setSelection(selectedParts(root.current!));
+  }
   function currentMarks() {
     const blocks = new Map(Array.from(root.current?.querySelectorAll<HTMLElement>("[data-ink-block]") ?? []).map(el => [el.dataset.inkBlock!, el.textContent ?? ""]));
     return marks.filter(mark => mark.parts.every(part => blocks.get(part.block)?.slice(part.start, part.end) === part.quote));
   }
-  return <div className={styles.notebook} data-editing={enabled && editing}>
+  return <div className={styles.notebook} data-enabled={enabled}>
     {enabled && <div className={styles.controls}>
       <div className={styles.actions}>
-        <button aria-pressed={editing} onClick={() => { setEditing(!editing); setSelection([]); setDraft(null); }}>{t("書き込む", "Annotate")}</button>
+        <button aria-pressed={editing} onClick={() => { setEditing(!editing); setSelection([]); setDraft(null); }}>{t("ペンツール", "Pen tools")}</button>
+        {marks.length > 0 && <button onClick={() => { if (list.current) { list.current.open = true; list.current.scrollIntoView({ behavior: "smooth", block: "start" }); } }}>{t("書き込みを管理", "Manage marks")} ({marks.length})</button>}
         {marks.length > 0 && <button aria-pressed={visible} onClick={() => setVisible(!visible)}>{visible ? t("書き込みを隠す", "Hide marks") : t("書き込みを表示", "Show marks")}</button>}
         <button onClick={() => { if (root.current && !exportPrint(root.current, visible ? currentMarks() : [], title, lang)) setError(t("印刷用画面を開けません。ポップアップの設定を確認してください。", "Allow pop-ups to open the print view.")); }}>{t("PDF保存", "Save PDF")}</button>
       </div>
       {editing && <div className={styles.editor} onPointerDown={event => { if (event.pointerType === "mouse" && (event.target as HTMLElement).closest("button")) event.preventDefault(); }}>
-        <p>{selection.length ? t("選択した文章に書き込む", "Annotate selected text") : t("文章を長押し、またはドラッグで選択", "Long-press or drag to select text")}</p>
-        <button className={styles.done} onClick={() => { setEditing(false); setSelection([]); setDraft(null); }}>{t("完了", "Done")}</button>
-        <div className={styles.tools}>
+        <p>{selection.length ? t("選択した文章に書き込む", "Annotate selected text") : activeMark ? t("選んだ書き込みを消せます", "Erase the selected annotation") : t("長押しで選択 · 書き込みをタップで削除", "Select text · Tap a mark to erase")}</p>
+        <button className={styles.done} onClick={() => { setEditing(false); setSelection([]); setDraft(null); setActiveMark(null); window.getSelection()?.removeAllRanges(); }}>{t("完了", "Done")}</button>
+        <div className={styles.palette}>
           <div className={styles.colors} aria-label={t("書き込みの色", "Ink color")}>{(["red", "yellow", "blue"] as const).map(value => <button key={value} aria-label={{ red: t("赤", "Red"), yellow: t("黄", "Yellow"), blue: t("青", "Blue") }[value]} aria-pressed={color === value} style={{ "--ink": inkColors[value] } as CSSProperties} onClick={() => setColor(value)}><span />{color === value && <b aria-hidden="true">✓</b>}</button>)}</div>
+          <button disabled={!selection.length} onClick={selectParagraph}>{t("段落全体", "Whole paragraph")}</button>
+        </div>
+        <div className={styles.tools}>
           {(Object.keys(labels) as InkKind[]).map(kind => <button key={kind} disabled={!selection.length} onClick={() => add(kind)}>{labels[kind]}</button>)}
+        </div>
+        <div className={styles.utilities}>
+          <button disabled={!removable.length} onClick={() => { if (commit(marks.filter(mark => !removable.some(item => item.id === mark.id)))) { setActiveMark(null); setSelection([]); window.getSelection()?.removeAllRanges(); } }}>{t("書き込みを消す", "Erase marks")}{removable.length ? ` (${removable.length})` : ""}</button>
           <button disabled={!history.length} onClick={() => { const previous = history.at(-1); if (previous && commit(previous, true)) setHistory(history.slice(0, -1)); }}>{t("元に戻す", "Undo")}</button>
         </div>
         <p className={styles.selected}>{selection.length ? selection.map(p => p.quote).join(" ").slice(0, 100) : "\u00a0"}</p>
@@ -170,8 +237,12 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
       </div>}
       {error && <p role="alert" className={styles.error}>{error}</p>}
     </div>}
-    <div ref={root} className={styles.content}>{rendered}</div>
-    {enabled && marks.length > 0 && <details className={styles.markList}>
+    <div ref={root} className={styles.content} onClick={event => {
+      if (!enabled || !window.getSelection()?.isCollapsed) return;
+      const id = (event.target as HTMLElement).closest<HTMLElement>("[data-ink-id]")?.dataset.inkId;
+      if (id) { setActiveMark(id); setSelection([]); setDraft(null); setEditing(true); }
+    }}>{rendered}</div>
+    {enabled && marks.length > 0 && <details ref={list} className={styles.markList}>
       <summary>{t("書き込み", "Annotations")} <span>{marks.length}</span></summary>
       <p>{t("このブラウザーに保存。記事が更新された箇所の書き込みは非表示になります。", "Saved in this browser. Marks on changed passages are hidden.")}</p>
       {presentMarks.length < marks.length && <p>{t(`${marks.length - presentMarks.length}件は現在の本文と一致しないため表示していません。`, `${marks.length - presentMarks.length} annotations no longer match the visible article.`)}</p>}
