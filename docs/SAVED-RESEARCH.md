@@ -61,3 +61,7 @@
 - Read individual glyph client rectangles rather than a bounding union at wrapped boundaries; ignore zero-width caret rectangles and stop at the first adjacent line. This prevents a following-line currency symbol from entering the selected range.
 - Opening the site menu clears the native selection and closes the pen tray without deleting marks or a pending memo draft.
 - Physical iPhone selection still requires device verification.
+
+## 2026-10-14: separate personal notes
+- Personal notes have a dedicated always-visible section and shortcut, separate from the collapsed underline/highlight/box manager. Note text comes first; its referenced passage is expandable. Edit/delete remain available per note.
+- Existing storage, export, undo and changed-passage access checks are preserved; no data migration.

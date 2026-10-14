@@ -43,3 +43,6 @@
 @media(max-width:360px){.editor{padding:10px}.colors{gap:3px}.tools>button{font-size:11px}.palette>button{font-size:11px;padding:6px 8px}.utilities>button{font-size:11px}}
 .palette>.done{margin-left:auto;padding-inline:10px;background:#24433f;color:#b1f1d7;border-color:#385f54}
 @media(max-width:380px){.colors button{width:36px}.palette{gap:4px}.palette>button{padding-inline:6px;font-size:11px}.palette>.done{padding-inline:8px}}
+
+.notesList{margin-top:28px;padding:18px;border:1px solid #304a57;border-radius:12px;background:#101e29;scroll-margin-top:90px}
+.notesList h3{margin:0 0 14px;font-size:16px;color:#b8e7dd}.notesList h3 span{margin-left:6px;font-size:12px;color:#9cb5bf}.notesList>p{font-size:11px;color:#9caebc}.noteItem{padding:14px;background:#172936;border-radius:6px}.noteItem>p{margin:0 0 12px;font-size:15px;line-height:1.85;overflow-wrap:anywhere;color:#e5eef3}.noteItem summary{font-size:12px;color:#a6bac5;cursor:pointer}.noteItem>div{margin-top:12px}

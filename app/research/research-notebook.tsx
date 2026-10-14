@@ -132,6 +132,9 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
   const [error, setError] = useState("");
   const root = useRef<HTMLDivElement>(null);
   const list = useRef<HTMLDetailsElement>(null);
+  const notesList = useRef<HTMLElement>(null);
+  const notes = marks.filter(mark => mark.kind === "note");
+  const inkMarks = marks.filter(mark => mark.kind !== "note");
   const savedRange = useRef<Range | null>(null);
   const toolPointer = useRef(false);
   const [activeMark, setActiveMark] = useState<string | null>(null);
@@ -255,7 +258,8 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
     {enabled && <div className={styles.controls}>
       <div className={styles.actions}>
         <button aria-pressed={editing} onClick={() => { setEditing(!editing); clearSelection(); setDraft(null); }}>{t("ペンツール", "Pen tools")}</button>
-        {marks.length > 0 && <button onClick={() => { if (list.current) { list.current.open = true; list.current.scrollIntoView({ behavior: "smooth", block: "start" }); } }}>{t("書き込みを管理", "Manage marks")} ({marks.length})</button>}
+        {notes.length > 0 && <button onClick={() => notesList.current?.scrollIntoView({ behavior: "smooth", block: "start" })}>{t("自分のメモ", "My notes")} ({notes.length})</button>}
+        {inkMarks.length > 0 && <button onClick={() => { if (list.current) { list.current.open = true; list.current.scrollIntoView({ behavior: "smooth", block: "start" }); } }}>{t("書き込みを管理", "Manage marks")} ({inkMarks.length})</button>}
         {marks.length > 0 && <button aria-pressed={visible} onClick={() => setVisible(!visible)}>{visible ? t("書き込みを隠す", "Hide marks") : t("書き込みを表示", "Show marks")}</button>}
         <button onClick={() => { if (root.current && !exportPrint(root.current, visible ? currentMarks() : [], title, lang)) setError(t("印刷用画面を開けません。ポップアップの設定を確認してください。", "Allow pop-ups to open the print view.")); }}>{t("PDF保存", "Save PDF")}</button>
       </div>
@@ -292,14 +296,22 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
       const id = (event.target as HTMLElement).closest<HTMLElement>("[data-ink-id]")?.dataset.inkId;
       if (id) { savedRange.current = null; setActiveMark(id); setSelection([]); setDraft(null); setEditing(true); }
     }}>{rendered}</div>
-    {enabled && marks.length > 0 && <details ref={list} className={styles.markList}>
-      <summary>{t("書き込み", "Annotations")} <span>{marks.length}</span></summary>
+    {enabled && notes.length > 0 && <section ref={notesList} className={styles.notesList} aria-label={t("自分のメモ", "My notes")}>
+      <h3>{t("自分のメモ", "My notes")} <span>{notes.length}</span></h3>
+      {presentMarks.filter(mark => mark.kind === "note").map(mark => <div key={mark.id} className={`${styles.markItem} ${styles.noteItem}`} style={{ borderLeftColor: inkColors[mark.color] }}>
+        <p>{mark.note}</p>
+        <details><summary>{t("メモした箇所", "Referenced passage")}</summary><blockquote>{mark.parts.map(p => p.quote).join(" ")}</blockquote></details>
+        <div><button onClick={() => { clearSelection(); setEditing(true); setColor(mark.color); setDraft({ id: mark.id, parts: mark.parts, text: mark.note }); }}>{t("編集", "Edit")}</button><button onClick={() => commit(marks.filter(a => a.id !== mark.id))}>{t("削除", "Delete")}</button></div>
+      </div>)}
+      {notes.length > presentMarks.filter(mark => mark.kind === "note").length && <p>{t("本文が更新された箇所のメモは非表示になっています。", "Notes on changed passages are hidden.")}</p>}
+      <p>{t("このブラウザーに保存されます。", "Saved in this browser.")}</p>
+    </section>}
+    {enabled && inkMarks.length > 0 && <details ref={list} className={styles.markList}>
+      <summary>{t("下線・蛍光ペン・囲み", "Underlines, highlights & boxes")} <span>{inkMarks.length}</span></summary>
       <p>{t("このブラウザーに保存。記事が更新された箇所の書き込みは非表示になります。", "Saved in this browser. Marks on changed passages are hidden.")}</p>
-      {presentMarks.length < marks.length && <p>{t(`${marks.length - presentMarks.length}件は現在の本文と一致しないため表示していません。`, `${marks.length - presentMarks.length} annotations no longer match the visible article.`)}</p>}
-      {presentMarks.map(mark => <div key={mark.id} className={styles.markItem} style={{ borderLeftColor: inkColors[mark.color] }}>
+      {presentMarks.filter(mark => mark.kind !== "note").map(mark => <div key={mark.id} className={styles.markItem} style={{ borderLeftColor: inkColors[mark.color] }}>
         <span>{labels[mark.kind]}</span><blockquote>{mark.parts.map(p => p.quote).join(" ")}</blockquote>
-        {mark.note && <p>{mark.note}</p>}
-        <div>{mark.kind === "note" && <button onClick={() => { setEditing(true); setColor(mark.color); setDraft({ id: mark.id, parts: mark.parts, text: mark.note }); }}>{t("編集", "Edit")}</button>}<button onClick={() => commit(marks.filter(a => a.id !== mark.id))}>{t("削除", "Delete")}</button></div>
+        <div><button onClick={() => commit(marks.filter(a => a.id !== mark.id))}>{t("削除", "Delete")}</button></div>
       </div>)}
     </details>}
   </div>;
