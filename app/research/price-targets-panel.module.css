@@ -78,3 +78,9 @@
 .down .lowered{color:#ff7b7b;background:rgba(255,107,107,.12)}.down .chip em{color:#ff7b7b}
 .card .newBadge{margin:0 0 0 8px;background:#5dffb4;color:#06201a;border-radius:5px;font-weight:600}
 @media(max-width:700px){.panel{padding:0}.head h2{font-size:22px}.card{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;padding:12px}.card .ticker{min-width:50px;font-size:13px;padding:8px 4px}.targetChange strong{font-size:16px;white-space:nowrap}}
+
+/* Phone notification setting is a PRO feature: gold bell on the left (owner, Oct 14). */
+.panel .notificationToggle{display:inline-flex;align-items:center;gap:7px;color:#d9b46a;font-size:12px}
+.panel .notificationToggle:hover{background:rgba(217,180,106,.1);border-color:transparent}
+.bellIcon{width:15px;height:15px;flex:none}
+.notificationToggle:focus-visible{outline:2px solid #d9b46a}
