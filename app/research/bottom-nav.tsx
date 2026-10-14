@@ -74,7 +74,7 @@ export default function BottomNav() {
     window.scrollTo({ top: 0, behavior: "instant" });
   }
   return <>{browser && <div className={styles.spacer} aria-hidden="true" />}<div className={browser ? `${styles.dock} ${styles.browser}` : styles.dock}>
-    <nav ref={bar} className={styles.bar} aria-label={ja ? "メインメニュー" : "Main navigation"}>
+    <nav ref={bar} data-bottom-nav className={styles.bar} aria-label={ja ? "メインメニュー" : "Main navigation"}>
       <span className={styles.glow} aria-hidden="true" style={glow ? { transform: `translateX(${glow.x}px)`, width: glow.w } : { opacity: 0 }} />
       {tabs.map(tab => <Link key={tab.key} data-tab="" href={tab.href} className={tab.key === "search" ? styles.mid : undefined}
         aria-current={tab.active ? "page" : undefined} onClick={event => navigate(event, tab.href)}>
