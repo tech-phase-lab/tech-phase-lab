@@ -107,9 +107,19 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
 
   useEffect(() => {
     if (!enabled || !editing) return;
-    const capture = () => { if (root.current) { const parts = selectedParts(root.current); if (parts.length) setSelection(parts); } };
+    // Let native selection handles finish moving before reading the whole article.
+    let timer: ReturnType<typeof setTimeout>;
+    const capture = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        if (!root.current) return;
+        const parts = selectedParts(root.current);
+        if (parts.length) setSelection(previous => JSON.stringify(previous) === JSON.stringify(parts) ? previous : parts);
+        else if (root.current.contains(document.activeElement) || window.getSelection()?.anchorNode && root.current.contains(window.getSelection()!.anchorNode)) setSelection([]);
+      }, 120);
+    };
     document.addEventListener("selectionchange", capture);
-    return () => document.removeEventListener("selectionchange", capture);
+    return () => { clearTimeout(timer); document.removeEventListener("selectionchange", capture); };
   }, [enabled, editing]);
 
   function commit(next: Annotation[], undo = false) {
@@ -127,28 +137,32 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
     if (marks.length >= maxAnnotations) { setError(t("1記事の書き込みは200件までです。", "Up to 200 annotations per article.")); return; }
     if (commit([...marks, { id: crypto.randomUUID(), kind, color, parts: selection, note: "" }])) { setSelection([]); window.getSelection()?.removeAllRanges(); }
   }
-  const blocks = new Map<string, string>();
-  const rendered = enabled ? annotate(children, visible ? marks : [], "r", blocks) : children;
-  const presentMarks = marks.filter(mark => mark.parts.every(part => blocks.get(part.block)?.slice(part.start, part.end) === part.quote));
+  // Tool/color/selection state must not rebuild the text DOM under native selection.
+  const { rendered, presentMarks } = useMemo(() => {
+    const blocks = new Map<string, string>();
+    const rendered = enabled ? annotate(children, visible ? marks : [], "r", blocks) : children;
+    return { rendered, presentMarks: marks.filter(mark => mark.parts.every(part => blocks.get(part.block)?.slice(part.start, part.end) === part.quote)) };
+  }, [children, enabled, visible, marks]);
   function currentMarks() {
     const blocks = new Map(Array.from(root.current?.querySelectorAll<HTMLElement>("[data-ink-block]") ?? []).map(el => [el.dataset.inkBlock!, el.textContent ?? ""]));
     return marks.filter(mark => mark.parts.every(part => blocks.get(part.block)?.slice(part.start, part.end) === part.quote));
   }
-  return <div className={styles.notebook}>
+  return <div className={styles.notebook} data-editing={enabled && editing}>
     {enabled && <div className={styles.controls}>
       <div className={styles.actions}>
         <button aria-pressed={editing} onClick={() => { setEditing(!editing); setSelection([]); setDraft(null); }}>{t("書き込む", "Annotate")}</button>
         {marks.length > 0 && <button aria-pressed={visible} onClick={() => setVisible(!visible)}>{visible ? t("書き込みを隠す", "Hide marks") : t("書き込みを表示", "Show marks")}</button>}
         <button onClick={() => { if (root.current && !exportPrint(root.current, visible ? currentMarks() : [], title, lang)) setError(t("印刷用画面を開けません。ポップアップの設定を確認してください。", "Allow pop-ups to open the print view.")); }}>{t("PDF保存", "Save PDF")}</button>
       </div>
-      {editing && <div className={styles.editor} data-floating={Boolean(selection.length || draft)}>
+      {editing && <div className={styles.editor} onPointerDown={event => { if (event.pointerType === "mouse" && (event.target as HTMLElement).closest("button")) event.preventDefault(); }}>
         <p>{selection.length ? t("選択した文章に書き込む", "Annotate selected text") : t("文章を長押し、またはドラッグで選択", "Long-press or drag to select text")}</p>
+        <button className={styles.done} onClick={() => { setEditing(false); setSelection([]); setDraft(null); }}>{t("完了", "Done")}</button>
         <div className={styles.tools}>
           <div className={styles.colors} aria-label={t("書き込みの色", "Ink color")}>{(["red", "yellow", "blue"] as const).map(value => <button key={value} aria-label={{ red: t("赤", "Red"), yellow: t("黄", "Yellow"), blue: t("青", "Blue") }[value]} aria-pressed={color === value} style={{ "--ink": inkColors[value] } as CSSProperties} onClick={() => setColor(value)}><span />{color === value && <b aria-hidden="true">✓</b>}</button>)}</div>
           {(Object.keys(labels) as InkKind[]).map(kind => <button key={kind} disabled={!selection.length} onClick={() => add(kind)}>{labels[kind]}</button>)}
           <button disabled={!history.length} onClick={() => { const previous = history.at(-1); if (previous && commit(previous, true)) setHistory(history.slice(0, -1)); }}>{t("元に戻す", "Undo")}</button>
         </div>
-        {selection.length > 0 && <p className={styles.selected}>{selection.map(p => p.quote).join(" ").slice(0, 100)}</p>}
+        <p className={styles.selected}>{selection.length ? selection.map(p => p.quote).join(" ").slice(0, 100) : "\u00a0"}</p>
         {draft && <form onSubmit={event => { event.preventDefault(); if (!draft.text.trim()) return; const next = draft.id ? marks.map(mark => mark.id === draft.id ? { ...mark, note: draft.text.trim(), color } : mark) : [...marks, { id: crypto.randomUUID(), kind: "note" as const, color, parts: draft.parts, note: draft.text.trim() }]; if (next.length > maxAnnotations) { setError(t("1記事の書き込みは200件までです。", "Up to 200 annotations per article.")); return; } if (commit(next)) { setDraft(null); setSelection([]); window.getSelection()?.removeAllRanges(); } }}>
           <textarea aria-label={t("自分のメモ", "My note")} placeholder={t("気づいたことを書き残す", "Write down your thoughts")} maxLength={1000} value={draft.text} onChange={event => setDraft({ ...draft, text: event.target.value })} />
           <button type="submit" disabled={!draft.text.trim()}>{t("メモを保存", "Save note")}</button><button type="button" onClick={() => setDraft(null)}>{t("キャンセル", "Cancel")}</button>

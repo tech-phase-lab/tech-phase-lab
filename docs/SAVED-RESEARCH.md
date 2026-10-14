@@ -32,3 +32,9 @@
 - Article detail begins with a labelled Save article button, saved confirmation and a link to the saved collection. This stays outside the annotated body so existing text anchors do not shift.
 - Empty collection instructions describe the actual open-article → save → collection flow. Storage failures are also shown beside the detail action.
 - Opening an article remains a read action; storage is changed only through an explicit save action.
+
+## 2026-10-14: continuous annotation flow
+
+- Saving from article detail immediately enables annotation and PDF tools in that same view; returning through the menu is unnecessary.
+- Editing toolbar stays at the bottom from opening to completion, with a Done action and safe-area spacing. Selection preview reserves its height.
+- Memoized article text stays stable while selecting/changing colors; selection scanning is debounced until native selection pauses, and mouse tool clicks preserve the text range. Physical mobile handle behavior still needs device verification.
