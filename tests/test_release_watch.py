@@ -103,6 +103,17 @@ class ReleaseWatchTests(unittest.TestCase):
         self.assertEqual(watch.check(self.db, {}, AT - timedelta(seconds=1), None, [{**CALL, 'id': 'other'}]), [])
         self.assertEqual([a['kind'] for a in watch.check(self.db, {}, AT, None, [{**CALL, 'id': 'other'}])], ['missing'])
 
+    def test_result_published_eight_hours_before_the_call_is_not_reported_missing(self):
+        # Oct 14: ASML's release was 8 hours before its call; a 6-hour window sent a false alert.
+        payload = {'resultBriefs': [{'kind': 'earnings', 'ticker': 'LRCX', 'titleEn': 'x', 'titleJa': 'x',
+                                     'publishedAt': iso(AT - timedelta(hours=8)), 'publicAt': iso(AT - timedelta(hours=8) + timedelta(seconds=56))}]}
+        self.assertEqual(watch.match(CALL, payload), AT - timedelta(hours=8) + timedelta(seconds=56))
+        self.assertEqual([a['kind'] for a in watch.check(self.db, payload, AT, self.transport, [CALL])], ['published'])
+        self.assertEqual(self.sent[-1][1]['title'][:1], '✅')
+        # A result from the previous day is still not this call's result.
+        old = {'resultBriefs': [{**payload['resultBriefs'][0], 'publishedAt': iso(AT - timedelta(hours=13))}]}
+        self.assertIsNone(watch.match(CALL, old))
+
     def test_diagnostics_are_read_only_and_name_no_endpoints(self):
         before = list(self.db.iterdump())
         state = watch.diagnostics(self.db, AT - timedelta(minutes=30), [CPI])
