@@ -88,3 +88,28 @@
 .deskLead:hover,.deskPair a:hover{background:#d6bb8708}
 .readingLocked{border-color:#695c424d}
 .deskOverlay{background:rgba(0,0,0,.89)}
+
+/* Four wide menu cards: emoji + title on top, one description line below (owner, Oct 14). */
+.grid{gap:8px;margin:0 0 22px}
+.grid>a,.grid>button{display:flex;flex-direction:column;justify-content:flex-start;align-content:normal;gap:7px;min-height:92px;height:92px;padding:16px 12px 14px;border-radius:16px;background:#0f1520;border:1px solid #1a2332;transition:border-color .15s}
+.grid>a:hover,.grid>button:hover{background:#0f1520;border-color:#34475f}
+.cardTop{display:flex;align-items:center;gap:8px;min-width:0}
+.grid .icon{grid-column:auto;grid-row:auto;font-size:20px;line-height:1;flex:none}
+.grid strong{grid-column:auto;font-size:13px;line-height:1.4;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grid small{display:block;font-size:10px;line-height:1.5;color:#566174;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:650px){.grid>a,.grid>button{padding:16px 12px 14px;min-height:92px;grid-template-columns:none;column-gap:0}.grid strong{font-size:13px}.grid small{font-size:10px}.grid .icon{font-size:20px}}
+
+/* Learning and help: two text links with a vertical line between them (owner, Oct 14). */
+.help{display:block;margin:30px 0 16px;padding:0}
+.helpEyebrow{margin:0;font:10.5px var(--font-geist-mono),monospace;letter-spacing:.2em;color:#566174}
+.help h2{margin:4px 0 14px;font-size:24px;font-weight:800;letter-spacing:.02em;color:#eef2f8}
+.helpLinks{display:grid;grid-template-columns:1fr 1.2fr;border-top:1px solid #1a2332;border-bottom:1px solid #1a2332}
+.helpLinks a{display:flex;align-items:center;gap:8px;min-width:0;min-height:48px;padding:14px 4px;font-size:13px;font-weight:700;color:#eef2f8;text-decoration:none;white-space:nowrap}
+.helpLinks a+a{border-left:1px solid #1a2332;padding-left:16px}
+.helpLinks .helpIcon{width:auto;height:auto;font-size:16px;line-height:1;color:inherit}
+.helpLinks a:hover{color:#7fd6b0}
+.helpLinks a:focus-visible{outline:2px solid #7fd6b0;outline-offset:2px}
+@media(max-width:650px){.helpLinks a{gap:6px;font-size:12.5px}.helpLinks a+a{padding-left:12px}.help h2{font-size:22px}}
+
+/* RESOLUTE is a paid feature: its title is gold (owner, Oct 14). */
+.grid .paidTitle{color:#d9b46a}

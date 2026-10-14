@@ -19,3 +19,26 @@
 .replaces .body{font-size:14px}
 
 .clamped{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+
+/* "‹ 1 / N ›" (owner, Oct 14) */
+.pagination{justify-content:space-between;gap:12px;margin-top:14px}
+.pagination button{min-width:42px;width:42px;min-height:38px;height:38px;padding:0;border:1px solid #1a2332;border-radius:12px;background:transparent;color:#8c98ab}
+.pagination button:disabled{opacity:.4;cursor:default}
+.pageCount{font:13px var(--font-geist-mono),monospace;letter-spacing:.1em;color:#8c98ab}
+
+/* News timeline (owner, Oct 14): time on the left, a rail with a dot, the story on the right. */
+.items>article{position:relative}
+.tlRow{display:grid;grid-template-columns:48px 12px minmax(0,1fr);gap:0 12px;padding:0}
+.tlTime time{display:flex;flex-direction:column;align-items:flex-end;font:12px/1.35 var(--font-geist-mono),monospace;color:#8c98ab;padding-top:3px;text-align:right}
+.tlRail{position:relative}
+.tlRail::before{content:"";position:absolute;left:5px;top:0;bottom:-18px;width:1px;background:#1a2332}
+.items>article:last-child .tlRail::before{bottom:50%}
+.tlRail i{position:absolute;left:1px;top:8px;width:9px;height:9px;border-radius:50%;background:#070a10;border:1px solid #566174}
+.tlFresh .tlRail i{background:#5dffb4;border-color:#5dffb4;box-shadow:0 0 0 4px rgba(93,255,180,.12),0 0 10px rgba(93,255,180,.8)}
+.tlBody{min-width:0;padding-bottom:6px}
+@media(max-width:380px){.tlRow{grid-template-columns:42px 12px minmax(0,1fr);gap:0 8px}}
+
+/* Flat timeline (owner, Oct 14): no card box around the news list. */
+.panel{margin-top:0;padding:0;border:0;border-radius:0;background:none}
+.items{gap:0}
+.items>article{border-top:0;padding-top:0}
