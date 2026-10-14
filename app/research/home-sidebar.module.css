@@ -1,0 +1,43 @@
+.menu{display:flex;flex-direction:column;gap:22px;min-height:100%}
+.group{display:flex;flex-direction:column;gap:2px}
+.eyebrow{margin:0;padding:0 12px 8px;font:10px var(--font-geist-mono),monospace;letter-spacing:.22em;color:#566174}
+.item{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border:0;border-radius:12px;background:none;color:#8c98ab;font-size:14px;font-weight:500;line-height:1.6;font-family:inherit;text-align:left;text-decoration:none;position:relative;cursor:pointer;transition:background .15s,color .15s}
+.item svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.item>span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .count,.item .tag{flex:none}
+.item:hover{background:rgba(255,255,255,.04);color:#eef2f8}
+.item.on{background:rgba(127,214,176,.10);color:#7fd6b0}
+.item.on::before{content:"";position:absolute;left:-14px;top:9px;bottom:9px;width:3px;border-radius:0 3px 3px 0;background:#7fd6b0;box-shadow:0 0 12px #7fd6b0}
+.item:focus-visible,.pro:focus-visible,.rz:focus-visible{outline:2px solid #7fd6b0;outline-offset:2px}
+.count{font:11px var(--font-geist-mono),monospace;font-style:normal;color:#566174;background:#141c29;border:1px solid #1a2332;border-radius:999px;padding:0 8px;line-height:18px}
+.count.fresh{color:#5dffb4;border-color:rgba(93,255,180,.4);font-size:9.5px;letter-spacing:.1em}
+.tag{font:9px var(--font-geist-mono),monospace;letter-spacing:.14em;color:#d9b46a;border:1px solid rgba(217,180,106,.45);border-radius:5px;padding:0 6px;line-height:16px;font-weight:400}
+
+/* PRO: gold gradient card; a band of light crosses it from time to time. No crown (owner-only mark). */
+.cards{display:flex;flex-direction:column;gap:22px}
+.pro{position:relative;display:block;width:100%;padding:16px 16px 14px;border-radius:16px;overflow:hidden;border:1px solid rgba(240,215,154,.55);background:linear-gradient(145deg,#2a2112 0%,#17130b 55%,#201807 100%);box-shadow:0 14px 30px -18px rgba(217,180,106,.55),inset 0 1px 0 rgba(255,235,190,.25);color:inherit;font-family:inherit;text-align:left;cursor:pointer}
+.pro::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,232,170,.14) 50%,transparent 65%);transform:translateX(-120%);animation:sheen 5s ease-in-out infinite;pointer-events:none}
+@keyframes sheen{0%,55%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.premium{display:block;font:10px var(--font-geist-mono),monospace;letter-spacing:.22em;color:#f0d79a}
+.pro b{display:block;margin:8px 0 2px;font-size:17px;font-weight:700;background:linear-gradient(100deg,#f0d79a,#d9b46a 60%,#f6e6bd);-webkit-background-clip:text;background-clip:text;color:transparent}
+.proText{display:block;font-size:11.5px;line-height:1.55;color:#b9a77c}
+.go{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:11px;border-top:1px solid rgba(217,180,106,.25);font-size:12.5px;font-weight:700;color:#f0d79a}
+.pro.on{box-shadow:0 14px 30px -18px rgba(217,180,106,.8),inset 0 0 0 1px rgba(240,215,154,.6)}
+
+/* RESOLUTE: copper card whose border light keeps circling. No gold. */
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+.rz{position:relative;display:flex;gap:12px;align-items:center;padding:16px 14px;border-radius:14px;border:1.5px solid transparent;text-decoration:none;color:inherit;background:linear-gradient(135deg,#1e130c,#120c08) padding-box,conic-gradient(from var(--ang),rgba(238,143,79,.25),#ffb27a 12%,rgba(238,143,79,.25) 28%,rgba(238,143,79,.25) 62%,#ff9a5a 78%,rgba(238,143,79,.25)) border-box;animation:spin 6s linear infinite;box-shadow:0 0 22px -8px rgba(238,143,79,.55),0 12px 26px -18px rgba(238,143,79,.6)}
+@keyframes spin{to{--ang:360deg}}
+.rzIcon{font-size:26px;line-height:1}
+.rzBody{display:block;min-width:0}
+.rz b{display:block;font:600 12.5px var(--font-geist-mono),monospace;letter-spacing:.24em;color:#ee8f4f}
+.rz em{display:block;margin-top:6px;font-style:normal;font-size:12px;line-height:1.5;color:#e3cdbb}
+.rz small{display:block;margin-top:2px;font-size:12.5px;font-weight:700;color:#ffb27a}
+.arrow{margin-left:auto;color:#ee8f4f;font-size:14px}
+
+.foot{margin-top:auto;display:flex;flex-direction:column;gap:14px}
+.foot .item{padding:8px 12px;font-size:13px}
+.source{padding:14px 12px 0;border-top:1px solid #1a2332}
+.source b{display:block;font:500 10px var(--font-geist-mono),monospace;letter-spacing:.22em;color:#7fd6b0}
+.source p{margin:6px 0 0;font-size:11.5px;line-height:1.6;color:#566174}
+@media(prefers-reduced-motion:reduce){.pro::before{animation:none;display:none}.rz{animation:none}}
