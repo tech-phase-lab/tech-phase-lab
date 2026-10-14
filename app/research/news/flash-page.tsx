@@ -18,6 +18,8 @@ import FeedPagination from "./feed-pagination";
 import NewsStory from "./news-story";
 
 const PAGE = 20;
+/** Short company names keep each stock on one line in the coverage list. */
+const shortName = (name: string) => name.split(" / ")[0].replace(/ (?:Technologies|Platforms|Networks)$/, "").replace("Applied Optoelectronics", "Applied Opto").replace("Constellation Energy", "Constellation");
 const jst = (options: Intl.DateTimeFormatOptions, value: string | number | Date) =>
   new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hourCycle: "h23", ...options }).format(new Date(value));
 const clock = (at: string) => jst({ hour: "2-digit", minute: "2-digit" }, at);
@@ -123,9 +125,9 @@ export default function FlashPage({ lang }: { lang: Language }) {
         <summary>{ja ? "ニュース取得リスト" : "Stocks covered"}<span aria-hidden="true">▾</span></summary>
         <div className={styles.sourcesPanel}>
           <h4>{ja ? `監視${providers.length}銘柄（ニュース・決算）` : `${providers.length} watched stocks (news & earnings)`}</h4>
-          <ul>{providers.map(p => <li key={p.ticker}><b>{p.ticker}</b><span>{p.name}</span></li>)}</ul>
+          <ul>{providers.map(p => <li key={p.ticker}><b>{p.ticker}</b><span>{shortName(p.name)}</span></li>)}</ul>
           <h4>{ja ? `決算のみ${earningsOnlyProviders.length}銘柄` : `${earningsOnlyProviders.length} earnings-only stocks`}</h4>
-          <ul>{earningsOnlyProviders.map(p => <li key={p.ticker}><b>{p.ticker}</b><span>{p.name}</span></li>)}</ul>
+          <ul>{earningsOnlyProviders.map(p => <li key={p.ticker}><b>{p.ticker}</b><span>{shortName(p.name)}</span></li>)}</ul>
         </div>
       </details>
     </div>
