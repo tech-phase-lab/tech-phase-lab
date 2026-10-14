@@ -46,3 +46,12 @@
 - Tapping an existing text mark makes Erase marks available; selecting marked text can erase overlapping annotations. Manage marks also opens and scrolls to the individual deletion list. Session undo can restore deletion.
 - Box marks use a noninteractive measured overlay: one rectangle for each wrapped text block, with no per-line outline protrusions or added text height. Resize/font changes recalculate geometry. A new box on the same text block replaces its prior box parts; marks on other blocks and other pen types are preserved. Print view recomputes boxes in its own layout.
 - Native mobile selection handles remain controlled by the browser. Physical iPhone handle smoothness is not claimed as verified.
+
+## 2026-10-14: precise erasing and usable selection tools
+
+- Erase selection subtracts only the selected character intervals, splitting stored annotation parts and keeping unselected text, other blocks and attached notes. Tapping a mark without a text selection instead offers the distinctly named Delete this mark action. Undo restores the original record. Added exact-range, overlapping-selection, persistence and Unicode regression checks.
+- Box fragments keep distinct geometry after partial deletion; split passages use line fragments so an erased gap is not enclosed again by a merged bounding rectangle.
+- Pen-tray pointer handling preserves native selection for touch as well as mouse. Color changes explicitly restore a cloned native Range while the memoized text DOM stays unchanged; real deselection clears that snapshot.
+- Replaced Whole paragraph with Select this line, measured from rendered grapheme positions at the start of the selection. It does not select the rest of a wrapped paragraph.
+- Rebuilt the tray as four equal icon-and-label tool buttons, round color choices, a separate line-selection pill, and two equal erase/undo buttons. Touch targets remain at least 44px on phones. No gold brand styling.
+- Re-run final integrated gates and live regression checks before reporting completion; physical mobile selection remains a separate unverified check.

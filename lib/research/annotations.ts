@@ -37,3 +37,24 @@ export function markedSegments(text: string, block: string, annotations: Annotat
   return cuts.slice(0, -1).map((start, i) => ({ text: text.slice(start, cuts[i + 1]), start,
     marks: marks.filter(({ p }) => p.start <= start && p.end >= cuts[i + 1]).map(({ a }) => a) }));
 }
+
+// Subtract selected character ranges; never drop unselected parts of a mark.
+export function eraseAnnotationRanges(annotations: Annotation[], selection: InkPart[]): Annotation[] {
+  return annotations.flatMap(mark => {
+    const parts = mark.parts.flatMap(part => {
+      let fragments = [part];
+      for (const cut of selection.filter(item => item.block === part.block)) {
+        fragments = fragments.flatMap(fragment => {
+          const start = Math.max(fragment.start, cut.start), end = Math.min(fragment.end, cut.end);
+          if (start >= end) return [fragment];
+          return [
+            ...(fragment.start < start ? [{ ...fragment, end: start, quote: fragment.quote.slice(0, start - fragment.start) }] : []),
+            ...(end < fragment.end ? [{ ...fragment, start: end, quote: fragment.quote.slice(end - fragment.start) }] : []),
+          ];
+        });
+      }
+      return fragments;
+    });
+    return parts.length ? [{ ...mark, parts }] : [];
+  });
+}

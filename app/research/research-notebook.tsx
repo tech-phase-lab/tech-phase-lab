@@ -1,7 +1,7 @@
 "use client";
 
 import { Children, cloneElement, isValidElement, useEffect, useMemo, useRef, useState, useSyncExternalStore, type CSSProperties, type ReactNode } from "react";
-import { inkColors, markedSegments, maxAnnotations, parseAnnotations, textBlockId, type Annotation, type InkColor, type InkKind, type InkPart } from "@/lib/research/annotations";
+import { eraseAnnotationRanges, inkColors, markedSegments, maxAnnotations, parseAnnotations, textBlockId, type Annotation, type InkColor, type InkKind, type InkPart } from "@/lib/research/annotations";
 import styles from "./research-notebook.module.css";
 
 const changed = "tech-phase:annotations-changed";
@@ -28,7 +28,7 @@ function annotate(nodes: ReactNode, annotations: Annotation[], path = "r", block
       const block = textBlockId(key, text);
       blocks.set(block, text);
       return <span data-ink-block={block}>{markedSegments(text, block, annotations).map(segment =>
-        <span key={segment.start}>{segment.marks.reduce<ReactNode>((child, mark) => <span data-ink-id={mark.id} data-ink-kind={mark.kind} data-ink-color={mark.color} style={inkStyle(mark)}>{child}</span>, segment.text)}</span>
+        <span key={segment.start}>{segment.marks.reduce<ReactNode>((child, mark) => <span data-ink-id={mark.id} data-ink-part={mark.parts.find(part => part.block === block && part.start <= segment.start && part.end > segment.start)?.start} data-ink-split={mark.parts.filter(part => part.block === block).length > 1 ? "true" : undefined} data-ink-kind={mark.kind} data-ink-color={mark.color} style={inkStyle(mark)}>{child}</span>, segment.text)}</span>
       )}</span>;
     }
     if (!isValidElement<{ children?: ReactNode }>(node)) return node;
@@ -68,11 +68,12 @@ function drawBoxes(content: HTMLElement) {
   const groups = new Map<string, { left: number; top: number; right: number; bottom: number; color: string }>();
   for (const span of content.querySelectorAll<HTMLElement>('[data-ink-kind="box"]')) {
     const block = span.closest<HTMLElement>("[data-ink-block]");
-    const key = `${span.dataset.inkId}:${block?.dataset.inkBlock}`;
+    const key = `${span.dataset.inkId}:${block?.dataset.inkBlock}:${span.dataset.inkPart}`;
     for (const rect of span.getClientRects()) {
       if (!rect.width || !rect.height) continue;
-      const old = groups.get(key);
-      groups.set(key, { left: Math.min(old?.left ?? rect.left, rect.left), top: Math.min(old?.top ?? rect.top, rect.top), right: Math.max(old?.right ?? rect.right, rect.right), bottom: Math.max(old?.bottom ?? rect.bottom, rect.bottom), color: inkColors[span.dataset.inkColor as InkColor] });
+      const fragmentKey = span.dataset.inkSplit ? `${key}:${Math.round(rect.top)}` : key;
+      const old = groups.get(fragmentKey);
+      groups.set(fragmentKey, { left: Math.min(old?.left ?? rect.left, rect.left), top: Math.min(old?.top ?? rect.top, rect.top), right: Math.max(old?.right ?? rect.right, rect.right), bottom: Math.max(old?.bottom ?? rect.bottom, rect.bottom), color: inkColors[span.dataset.inkColor as InkColor] });
     }
   }
   for (const rect of groups.values()) {
@@ -131,6 +132,8 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
   const [error, setError] = useState("");
   const root = useRef<HTMLDivElement>(null);
   const list = useRef<HTMLDetailsElement>(null);
+  const savedRange = useRef<Range | null>(null);
+  const toolPointer = useRef(false);
   const [activeMark, setActiveMark] = useState<string | null>(null);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const labels: Record<InkKind, string> = { underline: t("下線", "Underline"), highlight: t("蛍光ペン", "Highlight"), box: t("囲み", "Box"), note: t("メモ", "Note") };
@@ -142,21 +145,34 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
     const capture = () => {
       clearTimeout(timer);
       timer = setTimeout(() => {
-        if (!root.current) return;
+        if (!root.current || toolPointer.current) return;
         const parts = selectedParts(root.current);
         if (parts.length) {
+          savedRange.current = window.getSelection()!.getRangeAt(0).cloneRange();
           setSelection(previous => JSON.stringify(previous) === JSON.stringify(parts) ? previous : parts);
           setEditing(true);
           setActiveMark(null);
         }
-        else if (root.current.contains(document.activeElement) || window.getSelection()?.anchorNode && root.current.contains(window.getSelection()!.anchorNode)) setSelection([]);
+        else if (root.current.contains(document.activeElement) || window.getSelection()?.anchorNode && root.current.contains(window.getSelection()!.anchorNode)) { savedRange.current = null; setSelection([]); }
       }, 120);
     };
     document.addEventListener("selectionchange", capture);
     return () => { clearTimeout(timer); document.removeEventListener("selectionchange", capture); };
   }, [enabled]);
 
+  function restoreSelection() {
+    const range = savedRange.current;
+    if (!range || !root.current?.contains(range.startContainer) || !root.current.contains(range.endContainer)) return;
+    const native = window.getSelection(); native?.removeAllRanges(); native?.addRange(range.cloneRange());
+    setSelection(selectedParts(root.current));
+  }
+  function clearSelection() {
+    savedRange.current = null;
+    setSelection([]);
+    window.getSelection()?.removeAllRanges();
+  }
   function commit(next: Annotation[], undo = false) {
+    if (next.some(mark => mark.parts.length > 100)) { setError(t("細かな書き込みが多すぎます。書き込みを管理から整理してください。", "Too many fragments. Remove an annotation from Manage marks first.")); return false; }
     try {
       // Never overwrite a change made in another tab while this view was stale.
       if ((localStorage.getItem(storageKey) ?? "[]") !== raw) { window.dispatchEvent(new Event(changed)); setError(t("別の画面で更新されました。もう一度操作してください。", "Updated in another tab. Please try again.")); return false; }
@@ -175,7 +191,7 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
       const parts = mark.parts.filter(part => !selection.some(selected => selected.block === part.block));
       return parts.length ? [{ ...mark, parts }] : [];
     }) : marks;
-    if (commit([...retained, { id: crypto.randomUUID(), kind, color, parts: selection, note: "" }])) { setSelection([]); window.getSelection()?.removeAllRanges(); }
+    if (commit([...retained, { id: crypto.randomUUID(), kind, color, parts: selection, note: "" }])) { clearSelection(); }
   }
   // Tool/color/selection state must not rebuild the text DOM under native selection.
   const { rendered, presentMarks } = useMemo(() => {
@@ -195,13 +211,33 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
     return () => { cancelled = true; observer.disconnect(); content.querySelectorAll("[data-ink-outline]").forEach(node => node.remove()); };
   }, [rendered, enabled]);
   const removable = marks.filter(mark => mark.id === activeMark || mark.parts.some(part => selection.some(selected => selected.block === part.block && selected.start < part.end && selected.end > part.start)));
-  function selectParagraph() {
-    const block = root.current && Array.from(root.current.querySelectorAll<HTMLElement>("[data-ink-block]")).find(el => el.dataset.inkBlock === selection[0]?.block);
-    if (!block) return;
-    const paragraph = block.closest("p, li, h2, h3, h4, dd, dt, blockquote") ?? block;
-    const range = document.createRange(); range.selectNodeContents(paragraph);
-    const native = window.getSelection(); native?.removeAllRanges(); native?.addRange(range);
-    setSelection(selectedParts(root.current!));
+  function selectLine() {
+    const content = root.current;
+    const block = content && Array.from(content.querySelectorAll<HTMLElement>("[data-ink-block]")).find(el => el.dataset.inkBlock === selection[0]?.block);
+    if (!block || !content) return;
+    // Use rendered glyph positions, not paragraph boundaries or guessed character counts.
+    const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+    const glyphs: { node: Text; start: number; end: number; offset: number; rect: DOMRect }[] = [];
+    let offset = 0;
+    while (walker.nextNode()) {
+      const node = walker.currentNode as Text;
+      for (const glyph of new Intl.Segmenter(lang, { granularity: "grapheme" }).segment(node.data)) {
+        const range = document.createRange();
+        range.setStart(node, glyph.index); range.setEnd(node, glyph.index + glyph.segment.length);
+        const rect = range.getBoundingClientRect();
+        if (rect.width && rect.height) glyphs.push({ node, start: glyph.index, end: glyph.index + glyph.segment.length, offset: offset + glyph.index, rect });
+      }
+      offset += node.length;
+    }
+    const anchor = glyphs.find(glyph => glyph.offset >= selection[0].start);
+    if (!anchor) return;
+    const center = anchor.rect.top + anchor.rect.height / 2;
+    const line = glyphs.filter(glyph => glyph.rect.top < center && glyph.rect.bottom > center);
+    if (!line.length) return;
+    const range = document.createRange();
+    range.setStart(line[0].node, line[0].start); range.setEnd(line.at(-1)!.node, line.at(-1)!.end);
+    savedRange.current = range;
+    restoreSelection();
   }
   function currentMarks() {
     const blocks = new Map(Array.from(root.current?.querySelectorAll<HTMLElement>("[data-ink-block]") ?? []).map(el => [el.dataset.inkBlock!, el.textContent ?? ""]));
@@ -210,27 +246,34 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
   return <div className={styles.notebook} data-enabled={enabled}>
     {enabled && <div className={styles.controls}>
       <div className={styles.actions}>
-        <button aria-pressed={editing} onClick={() => { setEditing(!editing); setSelection([]); setDraft(null); }}>{t("ペンツール", "Pen tools")}</button>
+        <button aria-pressed={editing} onClick={() => { setEditing(!editing); clearSelection(); setDraft(null); }}>{t("ペンツール", "Pen tools")}</button>
         {marks.length > 0 && <button onClick={() => { if (list.current) { list.current.open = true; list.current.scrollIntoView({ behavior: "smooth", block: "start" }); } }}>{t("書き込みを管理", "Manage marks")} ({marks.length})</button>}
         {marks.length > 0 && <button aria-pressed={visible} onClick={() => setVisible(!visible)}>{visible ? t("書き込みを隠す", "Hide marks") : t("書き込みを表示", "Show marks")}</button>}
         <button onClick={() => { if (root.current && !exportPrint(root.current, visible ? currentMarks() : [], title, lang)) setError(t("印刷用画面を開けません。ポップアップの設定を確認してください。", "Allow pop-ups to open the print view.")); }}>{t("PDF保存", "Save PDF")}</button>
       </div>
-      {editing && <div className={styles.editor} onPointerDown={event => { if (event.pointerType === "mouse" && (event.target as HTMLElement).closest("button")) event.preventDefault(); }}>
-        <p>{selection.length ? t("選択した文章に書き込む", "Annotate selected text") : activeMark ? t("選んだ書き込みを消せます", "Erase the selected annotation") : t("長押しで選択 · 書き込みをタップで削除", "Select text · Tap a mark to erase")}</p>
-        <button className={styles.done} onClick={() => { setEditing(false); setSelection([]); setDraft(null); setActiveMark(null); window.getSelection()?.removeAllRanges(); }}>{t("完了", "Done")}</button>
+      {editing && <div className={styles.editor} onPointerDown={event => {
+        if (!(event.target as HTMLElement).closest("button")) return;
+        toolPointer.current = true;
+        const parts = root.current && selectedParts(root.current);
+        if (parts?.length) { savedRange.current = window.getSelection()!.getRangeAt(0).cloneRange(); setSelection(parts); }
+        // Touch as well as mouse: do not transfer focus away from the article selection.
+        event.preventDefault();
+      }} onPointerUp={() => { toolPointer.current = false; }} onPointerCancel={() => { toolPointer.current = false; }}>
+        <div className={styles.editorHeader}><p>{selection.length ? t("選択した文章に書き込む", "Annotate selected text") : activeMark ? t("選んだ書き込みを消せます", "Erase the selected annotation") : t("長押しで選択 · 書き込みをタップで削除", "Select text · Tap a mark to erase")}</p>
+        <button className={styles.done} onClick={() => { setEditing(false); setSelection([]); setDraft(null); setActiveMark(null); clearSelection(); }}>{t("完了", "Done")}</button></div>
         <div className={styles.palette}>
-          <div className={styles.colors} aria-label={t("書き込みの色", "Ink color")}>{(["red", "yellow", "blue"] as const).map(value => <button key={value} aria-label={{ red: t("赤", "Red"), yellow: t("黄", "Yellow"), blue: t("青", "Blue") }[value]} aria-pressed={color === value} style={{ "--ink": inkColors[value] } as CSSProperties} onClick={() => setColor(value)}><span />{color === value && <b aria-hidden="true">✓</b>}</button>)}</div>
-          <button disabled={!selection.length} onClick={selectParagraph}>{t("段落全体", "Whole paragraph")}</button>
+          <div className={styles.colors} aria-label={t("書き込みの色", "Ink color")}>{(["red", "yellow", "blue"] as const).map(value => <button key={value} aria-label={{ red: t("赤", "Red"), yellow: t("黄", "Yellow"), blue: t("青", "Blue") }[value]} aria-pressed={color === value} style={{ "--ink": inkColors[value] } as CSSProperties} onClick={() => { setColor(value); restoreSelection(); }}><span />{color === value && <b aria-hidden="true">✓</b>}</button>)}</div>
+          <button disabled={!selection.length} onClick={selectLine}>{t("この1行を選択", "Select this line")}</button>
         </div>
         <div className={styles.tools}>
-          {(Object.keys(labels) as InkKind[]).map(kind => <button key={kind} disabled={!selection.length} onClick={() => add(kind)}>{labels[kind]}</button>)}
+          {(Object.keys(labels) as InkKind[]).map(kind => <button key={kind} disabled={!selection.length} onClick={() => add(kind)}><span className={styles.toolIcon} aria-hidden="true">{kind === "underline" ? <svg viewBox="0 0 24 24"><path d="M6 3v7a6 6 0 0 0 12 0V3M4 21h16" /></svg> : kind === "highlight" ? <svg viewBox="0 0 24 24"><path d="m8 16 8-12 5 4-9 11-4-3ZM8 16l-4 5h8M3 22h18" /></svg> : kind === "box" ? <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /></svg> : <svg viewBox="0 0 24 24"><path d="M5 3h14v18H5zM8 8h8M8 12h8M8 16h5" /></svg>}</span><span>{labels[kind]}</span></button>)}
         </div>
         <div className={styles.utilities}>
-          <button disabled={!removable.length} onClick={() => { if (commit(marks.filter(mark => !removable.some(item => item.id === mark.id)))) { setActiveMark(null); setSelection([]); window.getSelection()?.removeAllRanges(); } }}>{t("書き込みを消す", "Erase marks")}{removable.length ? ` (${removable.length})` : ""}</button>
+          <button disabled={!removable.length} onClick={() => { if (commit(selection.length ? eraseAnnotationRanges(marks, selection) : marks.filter(mark => mark.id !== activeMark))) { setActiveMark(null); clearSelection(); } }}>{selection.length ? t("選択部分を消す", "Erase selection") : t("この書き込みを削除", "Delete this mark")}</button>
           <button disabled={!history.length} onClick={() => { const previous = history.at(-1); if (previous && commit(previous, true)) setHistory(history.slice(0, -1)); }}>{t("元に戻す", "Undo")}</button>
         </div>
         <p className={styles.selected}>{selection.length ? selection.map(p => p.quote).join(" ").slice(0, 100) : "\u00a0"}</p>
-        {draft && <form onSubmit={event => { event.preventDefault(); if (!draft.text.trim()) return; const next = draft.id ? marks.map(mark => mark.id === draft.id ? { ...mark, note: draft.text.trim(), color } : mark) : [...marks, { id: crypto.randomUUID(), kind: "note" as const, color, parts: draft.parts, note: draft.text.trim() }]; if (next.length > maxAnnotations) { setError(t("1記事の書き込みは200件までです。", "Up to 200 annotations per article.")); return; } if (commit(next)) { setDraft(null); setSelection([]); window.getSelection()?.removeAllRanges(); } }}>
+        {draft && <form onSubmit={event => { event.preventDefault(); if (!draft.text.trim()) return; const next = draft.id ? marks.map(mark => mark.id === draft.id ? { ...mark, note: draft.text.trim(), color } : mark) : [...marks, { id: crypto.randomUUID(), kind: "note" as const, color, parts: draft.parts, note: draft.text.trim() }]; if (next.length > maxAnnotations) { setError(t("1記事の書き込みは200件までです。", "Up to 200 annotations per article.")); return; } if (commit(next)) { setDraft(null); clearSelection(); } }}>
           <textarea aria-label={t("自分のメモ", "My note")} placeholder={t("気づいたことを書き残す", "Write down your thoughts")} maxLength={1000} value={draft.text} onChange={event => setDraft({ ...draft, text: event.target.value })} />
           <button type="submit" disabled={!draft.text.trim()}>{t("メモを保存", "Save note")}</button><button type="button" onClick={() => setDraft(null)}>{t("キャンセル", "Cancel")}</button>
         </form>}
@@ -240,7 +283,7 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
     <div ref={root} className={styles.content} onClick={event => {
       if (!enabled || !window.getSelection()?.isCollapsed) return;
       const id = (event.target as HTMLElement).closest<HTMLElement>("[data-ink-id]")?.dataset.inkId;
-      if (id) { setActiveMark(id); setSelection([]); setDraft(null); setEditing(true); }
+      if (id) { savedRange.current = null; setActiveMark(id); setSelection([]); setDraft(null); setEditing(true); }
     }}>{rendered}</div>
     {enabled && marks.length > 0 && <details ref={list} className={styles.markList}>
       <summary>{t("書き込み", "Annotations")} <span>{marks.length}</span></summary>
