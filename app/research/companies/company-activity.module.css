@@ -42,3 +42,5 @@
 .bell small{font-family:ui-monospace,monospace;font-size:9px;letter-spacing:.14em;border:1px solid rgba(217,180,106,.5);border-radius:4px;padding:0 5px;line-height:15px}
 @media(max-width:380px){.timeline::before{left:76px}.item{grid-template-columns:44px 14px 1fr;gap:0 10px}.head{padding:18px 16px}.timeline,.foot{padding-left:16px;padding-right:16px}.rule{margin:0 16px}}
 @media(prefers-reduced-motion:reduce){.dot,.fresh .dot{animation:none}.chev{transition:none}}
+
+.found{display:block;font-size:9.5px;letter-spacing:0;color:#6f7b8c}
