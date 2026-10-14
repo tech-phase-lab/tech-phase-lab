@@ -986,7 +986,7 @@
   color:var(--muted)
 }
 .detailTicker {
-  font-family:var(--font-geist-mono),monospace;
+  font-family:inherit;
   color:var(--mint);
   font-size:14px
 }

@@ -101,3 +101,8 @@
 - Removed topic/ticker filters and With annotations from the saved view; hidden filters from other views cannot restrict saved results. Search remains, with a shorter placeholder, and sort sits beside the collection heading without a large framed control.
 - Removed routine synced/guest status from the collection. Failures and conflicts remain actionable. Browser import is collapsed below the articles and only runs on an explicit click.
 - Do not add, import or remove the user's saved articles or annotations for testing without a specific request. Verify this layout without changing saved data.
+
+## 2026-10-14: article opening position and action labels
+- Explicit saved-card selection waits for committed layout and places the article top below the measured sticky header with a 12px gap, on desktop and mobile. This keeps Back to collection fully visible. Initial visits still do not open an article; collection return positioning is retained.
+- Annotate and Save PDF have small pen/notebook outline icons to the right of their labels. Accessible names and annotation behavior are unchanged.
+- Article company links use the existing monitored-company name followed by the ticker, e.g. Micron（MU） and NVIDIA（NVDA）, without the duplicate ticker/arrow label. When the company name and ticker are identical (ASML), show the name only. Article body/annotation anchor structure is preserved.

@@ -248,8 +248,8 @@ export default function ResearchNotebook({ lang, title, enabled, children, raw, 
   return <div className={styles.notebook} data-enabled={enabled}>
     {enabled && <div className={styles.controls}>
       <div className={styles.actions}>
-        <button className={styles.writeAction} aria-pressed={editing} onClick={() => { setEditing(!editing); clearSelection(); setDraft(null); }}>{t("書き込む", "Annotate")}</button>
-        <button onClick={() => { if (root.current && !exportPrint(root.current, visible ? currentMarks() : [], title, lang)) setError(t("印刷用画面を開けません。ポップアップの設定を確認してください。", "Allow pop-ups to open the print view.")); }}>{t("PDF保存", "Save PDF")}</button>
+        <button className={styles.writeAction} aria-pressed={editing} onClick={() => { setEditing(!editing); clearSelection(); setDraft(null); }}>{t("書き込む", "Annotate")}<svg className={styles.actionIcon} aria-hidden="true" viewBox="0 0 24 24"><path d="m16 3 5 5-12 12-6 1 1-6L16 3ZM13 6l5 5M4 15l5 5" /></svg></button>
+        <button onClick={() => { if (root.current && !exportPrint(root.current, visible ? currentMarks() : [], title, lang)) setError(t("印刷用画面を開けません。ポップアップの設定を確認してください。", "Allow pop-ups to open the print view.")); }}>{t("PDF保存", "Save PDF")}<svg className={styles.actionIcon} aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="3" width="15" height="18" rx="2" /><path d="M9 3v18M3 7h4M3 12h4M3 17h4M12 8h5M12 12h5" /></svg></button>
         {marks.length > 0 && <details className={styles.moreActions}>
           <summary>{t("その他", "More")} <span aria-hidden="true">⋯</span></summary>
           <div>
