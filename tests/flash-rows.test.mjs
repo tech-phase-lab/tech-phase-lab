@@ -39,13 +39,17 @@ test('earnings rows cover all 37 stocks; the Japanese view leaves out an uncheck
   assert.deepEqual(en.map(row => row.tickers[0]).sort(), [earningsOnly, 'MU'].sort());
 });
 
-test('the page has All / Earnings tabs only, shows the date above every time, and no source line or stock filter', async () => {
+test('the page has All / Earnings tabs only, shows one date heading per day (month/day), and no source line or stock filter', async () => {
   const source = await readFile(new URL('../app/research/news/flash-page.tsx', import.meta.url), 'utf8');
   assert.match(source, /\["all", "earnings"\] as const/);
   assert.doesNotMatch(source, /銘柄で絞る|<select/);
+  assert.match(source, /ニュース取得リスト/);
+  assert.match(source, /className=\{styles\.day\}/);
   assert.doesNotMatch(source, /timeline\.src|row\.source/);
-  assert.match(source, /<time dateTime=\{row\.at\}><span>\{jst\(\{ month: "numeric", day: "numeric" \}, row\.at\)\}<\/span>/);
+  assert.match(source, /const dayKey = /);
+  assert.match(source, /\$\{Number\(month\)\}\/\$\{Number\(day\)\}/);
+  assert.doesNotMatch(source, /<time dateTime=\{row\.at\}><span>/);
   assert.doesNotMatch(source, /公式発表/);
   const page = await readFile(new URL('../app/research/news/page.tsx', import.meta.url), 'utf8');
-  assert.match(page, /"速報" : "Alerts"/);
+  assert.match(page, /"ハイテク速報" : "Tech Alerts"/);
 });
