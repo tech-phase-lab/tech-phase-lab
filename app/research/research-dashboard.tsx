@@ -22,6 +22,8 @@ import ResearchPulse from "./research-pulse";
 import HomeHero from "./home-hero";
 import HomeSidebar from "./home-sidebar";
 import ResearchNotebook from "./research-notebook";
+import SavedInkBadge from "./saved-ink-badge";
+import { parseSavedIds, orderSavedEvents } from "@/lib/research/saved-collection";
 
 const storageKey = "tech-phase:research-saved:v1";
 const notifyName = "tech-phase:research-saved";
@@ -39,10 +41,7 @@ function subscribeSaved(callback: () => void) {
 function savedSnapshot() { try { return localStorage.getItem(storageKey) ?? "[]"; } catch { return "[]"; } }
 function useSaved() {
   const snapshot = useSyncExternalStore(subscribeSaved, savedSnapshot, () => "[]");
-  return useMemo<string[]>(() => {
-    try { const value: unknown = JSON.parse(snapshot); return Array.isArray(value) ? value.filter((id): id is string => typeof id === "string") : []; }
-    catch { return []; }
-  }, [snapshot]);
+  return useMemo(() => parseSavedIds(snapshot), [snapshot]);
 }
 
 function Arrow() { return <span aria-hidden="true">↗</span>; }
@@ -61,6 +60,10 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   const restoredView = useSyncExternalStore(subscribeView, viewSnapshot, () => null);
   const tab = restoredView ?? "home";
   const [savedActiveId, setSavedActiveId] = useState("");
+  const [savedSort, setSavedSort] = useState<"saved" | "published">("saved");
+  const savedReturn = useRef<{ id: string; top: number; scroll: number } | null>(null);
+  const cardButtons = useRef(new Map<string, HTMLButtonElement>());
+  const returnFrame = useRef(0);
   const [ticker, setTicker] = useState("all");
   const [category, setCategory] = useState("all");
   const [query, setQuery] = useState("");
@@ -75,27 +78,49 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
     const syncHash = () => {
       const next = researchViewFromHash(window.location.hash);
       if (next) {
-        if (next === "saved") setSavedActiveId("");
+        if (next === "saved") {
+          const id = window.history.state?.techPhaseSavedArticle;
+          setSavedActiveId(typeof id === "string" ? id : "");
+          if (!id && savedReturn.current) {
+            cancelAnimationFrame(returnFrame.current);
+            returnFrame.current = requestAnimationFrame(() => {
+              returnFrame.current = requestAnimationFrame(() => {
+                const position = savedReturn.current;
+                if (!position) return;
+                const button = cardButtons.current.get(position.id);
+                window.scrollTo({ top: button ? window.scrollY + button.getBoundingClientRect().top - position.top : position.scroll, behavior: "instant" });
+                button?.focus({ preventScroll: true });
+              });
+            });
+          }
+        }
         const noteId = window.location.hash.startsWith("#what-changed/") ? window.location.hash.slice("#what-changed/".length) : "";
         if (noteId) { setActiveId(noteId); setQuery(""); setTicker("all"); setCategory("all"); }
         if (next === "home") { setQuery(""); setTicker("all"); setCategory("all"); }
       }
     };
+    // A fresh visit/reload starts with the collection; history traversal within
+    // this mounted view can still reopen an explicitly selected article.
+    if (window.history.state?.techPhaseSavedArticle) {
+      window.history.replaceState({ ...window.history.state, techPhaseSavedArticle: null }, "", window.location.href);
+    }
     syncHash();
     window.addEventListener("hashchange", syncHash);
     window.addEventListener("popstate", syncHash);
     return () => {
+      cancelAnimationFrame(returnFrame.current);
       window.removeEventListener("hashchange", syncHash);
       window.removeEventListener("popstate", syncHash);
     };
   }, []);
 
   const latestReview = events.map(event => event.reviewedOn).sort().at(-1);
-  const filtered = events.filter((event) => {
+  const matches = events.filter((event) => {
     const search = [event.ticker, event.company, event.title.ja, event.title.en, event.summary.ja, event.summary.en].join(" ").toLowerCase();
     return (ticker === "all" || event.ticker === ticker) && (category === "all" || event.category === category) &&
       (!query.trim() || search.includes(query.trim().toLowerCase())) && (tab !== "saved" || saved.includes(event.id));
   });
+  const filtered = tab === "saved" ? orderSavedEvents(matches, saved, savedSort) : matches;
   const selected = tab === "saved" ? filtered.find(event => event.id === savedActiveId) : filtered.find((event) => event.id === activeId) ?? filtered[0];
   const article = useMemberArticle(selected?.id, Boolean(selected?.locked && (tab === "changes" || tab === "saved")));
   const active = article.event ?? selected;
@@ -107,7 +132,8 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   const kinds = { acquisition: t("買収", "Acquisition"), partnership: t("提携", "Partnership"), earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding"), product: t("製品・料金", "Product & pricing"), "external-research": t("外部調査・評価", "External research") };
   function toggleSaved(id: string) {
     try {
-      const next = saved.includes(id) ? saved.filter((value) => value !== id) : [...saved, id];
+      const current = parseSavedIds(savedSnapshot());
+      const next = current.includes(id) ? current.filter((value) => value !== id) : [...current, id];
       localStorage.setItem(storageKey, JSON.stringify(next));
       window.dispatchEvent(new Event(notifyName));
       setStorageError(false);
@@ -115,16 +141,32 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   }
   function selectEvent(id: string) {
     setActiveId(id);
-    if (tab === "saved") setSavedActiveId(id);
+    if (tab === "saved") {
+      if (!savedActiveId) {
+        savedReturn.current = { id, top: cardButtons.current.get(id)?.getBoundingClientRect().top ?? 0, scroll: window.scrollY };
+        window.history.pushState({ ...window.history.state, techPhaseSavedArticle: id }, "", "#saved");
+      } else window.history.replaceState({ ...window.history.state, techPhaseSavedArticle: id }, "", "#saved");
+      setSavedActiveId(id);
+    }
     if (tab === "changes") window.history.replaceState(null, "", `#what-changed/${id}`);
     if (window.matchMedia("(max-width: 1150px)").matches) {
       requestAnimationFrame(() => { detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }); detailRef.current?.focus({ preventScroll: true }); });
     }
   }
+  function returnToSaved() {
+    if (window.history.state?.techPhaseSavedArticle && savedReturn.current) window.history.back();
+    else {
+      window.history.replaceState({ ...window.history.state, techPhaseSavedArticle: null }, "", "#saved");
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    }
+  }
   function clearFilters() { setQuery(""); setTicker("all"); setCategory("all"); }
   function openView(next: ResearchView) {
     const hash = researchViewHashes[next];
+    if (next !== "saved") savedReturn.current = null;
+    if (next === "saved" && tab === "saved" && savedActiveId) { returnToSaved(); return; }
     if (window.location.hash !== hash) window.history.pushState(null, "", hash);
+    else window.history.replaceState({ ...window.history.state, techPhaseSavedArticle: null }, "", hash);
     window.dispatchEvent(new HashChangeEvent("hashchange"));
     if (next === "home") clearFilters();
     requestAnimationFrame(() => {
@@ -222,7 +264,10 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           <div className={styles.filters}>
             {[{ id: "all", label: t("すべて", "All topics") }, { id: "cloud", label: t("AIクラウド", "AI cloud") }, { id: "memory", label: t("半導体", "Semiconductors") }].map((item) => <button key={item.id} aria-pressed={category === item.id} onClick={() => { setCategory(item.id); setTicker("all"); }}>{item.label}</button>)}
             {ticker !== "all" && <button className={styles.activeTicker} onClick={() => setTicker("all")} aria-label={t(`${ticker}の絞り込みを解除`, `Clear ${ticker} filter`)}>{ticker} ×</button>}
-            <span className={styles.sortLabel}>{t("発表日の新しい順", "Newest announcement first")}</span>
+            {tab === "saved" ? <select className={styles.savedSort} aria-label={t("並べ替え", "Sort research")} value={savedSort} onChange={event => setSavedSort(event.target.value as "saved" | "published")}>
+              <option value="saved">{t("保存した順", "Recently saved")}</option>
+              <option value="published">{t("発表日の新しい順", "Newest announcement")}</option>
+            </select> : <span className={styles.sortLabel}>{t("発表日の新しい順", "Newest announcement first")}</span>}
           </div>
           {storageError && <p role="alert" className={styles.notice}>{t("このブラウザーでは保存できません。ストレージの設定をご確認ください。", "Saving is unavailable in this browser. Check your storage settings.")}</p>}
           {tab === "saved" && <p className={styles.savedNote}>{t("このブラウザーに保存 · 端末間の同期は未対応", "Saved in this browser · No cross-device sync")}</p>}
@@ -233,7 +278,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
             <div className={styles.eventList}>
               {filtered.map((event) => <article key={event.id} className={`${styles.eventCard} ${active?.id === event.id ? styles.selected : ""}`}>
                 <div className={styles.eventMeta}><span className={styles.ticker}>{event.ticker}</span><span>{kinds[event.kind]}</span><time dateTime={event.publishedOn}>{dateLabel(event.publishedOn, lang)}</time><button className={styles.saveButton} aria-label={saved.includes(event.id) ? t("保存を解除", "Unsave research") : t("リサーチを保存", "Save research")} aria-pressed={saved.includes(event.id)} onClick={() => toggleSaved(event.id)}><Bookmark filled={saved.includes(event.id)} />{tab !== "saved" && <span>{saved.includes(event.id) ? t("保存済み", "Saved") : t("保存", "Save")}</span>}</button></div>
-                <button className={styles.eventOpen} aria-pressed={active?.id === event.id} onClick={() => selectEvent(event.id)}><h3>{event.title[lang]}</h3>{event.id === "mu-q3-2026" && <small>{t("PRO分析の無料サンプル", "Free sample of PRO research")}</small>}<p>{event.summary[lang]}</p><span className={styles.eventFoot}><span>{event.kind === "external-research" ? t("外部調査", "External research") : t("根拠資料", "Sources")} {event.sources.length}<span className={styles.dot}>·</span>{t("原文付き", "Evidence linked")}</span><span>{t("詳しく見る", "Read research")} <span aria-hidden="true">→</span></span></span></button>
+                <button ref={node => { if (node) cardButtons.current.set(event.id, node); else cardButtons.current.delete(event.id); }} className={styles.eventOpen} aria-pressed={active?.id === event.id} onClick={() => selectEvent(event.id)}><h3>{event.title[lang]}</h3>{event.id === "mu-q3-2026" && <small>{t("PRO分析の無料サンプル", "Free sample of PRO research")}</small>}<p>{event.summary[lang]}</p><span className={styles.eventFoot}><span>{event.kind === "external-research" ? t("外部調査", "External research") : t("根拠資料", "Sources")} {event.sources.length}<span className={styles.dot}>·</span>{t("原文付き", "Evidence linked")}</span><span>{tab === "saved" && <SavedInkBadge articleId={event.id} lang={lang} />}{t("詳しく見る", "Read research")} <span aria-hidden="true">→</span></span></span></button>
               </article>)}
               {!filtered.length && (tab === "saved" && !saved.some((id) => events.some((event) => event.id === id)) ? <div className={styles.savedEmpty}>
                 <span className={styles.savedEmptyIcon}><Bookmark /></span>
@@ -244,6 +289,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
             </div>
 
             {active && <article ref={detailRef} tabIndex={-1} className={styles.detail} aria-label={t("リサーチ詳細", "Research detail")}>
+              {tab === "saved" && <button className={styles.backToSaved} onClick={returnToSaved}><span aria-hidden="true">←</span> {t("保存一覧に戻る", "Back to collection")}</button>}
               {tab !== "saved" && <div className={styles.articleSaveBar}>
                 <button className={styles.articleSaveButton} aria-pressed={saved.includes(active.id)} aria-label={saved.includes(active.id) ? t("この記事の保存を解除", "Unsave this article") : t("この記事を保存する", "Save this article")} onClick={() => toggleSaved(active.id)}><Bookmark filled={saved.includes(active.id)} /><span>{saved.includes(active.id) ? t("保存済み", "Saved") : t("保存する", "Save article")}</span></button>
                 {saved.includes(active.id) && <button className={styles.openSavedButton} onClick={() => { clearFilters(); openView("saved"); }}>{t("保存した記事を開く", "Open saved articles")} <span aria-hidden="true">→</span></button>}

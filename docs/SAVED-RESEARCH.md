@@ -75,3 +75,9 @@
 - Reduced note panel/card spacing and Edit/Delete buttons to 30px height. Referenced passages remain fully visible.
 - Removed the permanent 300px bottom spacer; it is reserved only while the fixed annotation editor is open. Collapsed mark management now takes only its summary height and expands with its contents.
 - Selection logic, annotation storage, undo and PDF export are unchanged.
+
+## 2026-10-14: return to collection, annotation hints and save order
+- Saved detail has Back to collection; browser Back also closes the selected detail. Filters and sort remain in state. Return scroll uses the originating card's viewport offset so changing from two columns to a full-width list does not lose the reading position. Focus returns to that card. Selecting another detail replaces the same history entry.
+- Saved cards show a small accessible mint pen icon when the current language has stored annotations. Same-tab and cross-tab storage changes refresh it; no note text is exposed in the list.
+- Added Recently saved / Newest announcement selector. Existing saved-ID append order is reused, without migrating storage or inventing timestamps. Re-saving puts an article last in the stored order and first in Recently saved.
+- Account sync remains separate; no server storage or membership changes in this pass.
