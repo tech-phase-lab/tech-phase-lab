@@ -11,3 +11,10 @@ export function orderSavedEvents<T extends { id: string; publishedOn: string }>(
     ? (positions.get(b.id) ?? -1) - (positions.get(a.id) ?? -1)
     : b.publishedOn.localeCompare(a.publishedOn) || (positions.get(b.id) ?? -1) - (positions.get(a.id) ?? -1));
 }
+
+// Only authored notes join search; stored source quotes and anchors stay private.
+export function matchesResearchSearch(fields: string[], query: string, marks: { note: string }[] = []): boolean {
+  const normalize = (value: string) => value.normalize("NFKC").toLowerCase();
+  const needle = normalize(query).trim();
+  return !needle || [...fields, ...marks.map(mark => mark.note)].some(value => normalize(value).includes(needle));
+}

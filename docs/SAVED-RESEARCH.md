@@ -91,3 +91,8 @@
 - Existing article membership/anchor checks still control display and print. Pen selection, line selection, partial erasing, undo, compact notes and explicit collection opening remain unchanged. Physical phone verification is separate from automated and desktop-browser checks.
 - Undo applies the inverse local change through the same merge rules, retaining unrelated remote marks. If the note being edited changes remotely, the editor offers Save as a separate note rather than replacing the updated original.
 - Live verification for `262cd12`: Vercel READY and Railway staging SUCCESS; imported the existing three visible saved articles and annotations, confirmed persistence after reload, created a temporary note and observed it in a second tab, then used Undo to remove only that test addition. Original two visible MU marks remained. Removed the obsolete browser-only note footer found during this check. This is desktop/two-tab verification, not a physical cross-device test.
+
+## 2026-10-14: find saved research by personal notes
+- Saved search includes authored notes in the current language, alongside the existing title, company, ticker and summary. Stored source quotes/anchors are never indexed or exposed as snippets. Full-width input and case are normalized.
+- A compact With annotations toggle filters the current-language notebooks, consistent with the card pen badge. Category, ticker and sort compose with it; Reset clears the toggle too. Other research views do not search personal notes or apply this filter.
+- This is read-only collection filtering; account persistence and article annotation interactions are unchanged.

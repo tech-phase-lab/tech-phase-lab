@@ -23,7 +23,7 @@ import HomeHero from "./home-hero";
 import HomeSidebar from "./home-sidebar";
 import ResearchNotebook from "./research-notebook";
 import SavedInkBadge from "./saved-ink-badge";
-import { orderSavedEvents } from "@/lib/research/saved-collection";
+import { matchesResearchSearch, orderSavedEvents } from "@/lib/research/saved-collection";
 
 import { useSavedResearch } from "./use-saved-research";
 import { notebookKey } from "@/lib/research/saved-document";
@@ -51,6 +51,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   const restoredView = useSyncExternalStore(subscribeView, viewSnapshot, () => null);
   const tab = restoredView ?? "home";
   const [savedActiveId, setSavedActiveId] = useState("");
+  const [inkOnly, setInkOnly] = useState(false);
   const [savedSort, setSavedSort] = useState<"saved" | "published">("saved");
   const savedReturn = useRef<{ id: string; top: number; scroll: number } | null>(null);
   const cardButtons = useRef(new Map<string, HTMLButtonElement>());
@@ -108,9 +109,11 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
 
   const latestReview = events.map(event => event.reviewedOn).sort().at(-1);
   const matches = events.filter((event) => {
-    const search = [event.ticker, event.company, event.title.ja, event.title.en, event.summary.ja, event.summary.en].join(" ").toLowerCase();
+    const fields = [event.ticker, event.company, event.title.ja, event.title.en, event.summary.ja, event.summary.en];
+    const marks = tab === "saved" ? collection.document.notebooks[notebookKey(event.id, lang)] ?? [] : [];
     return (ticker === "all" || event.ticker === ticker) && (category === "all" || event.category === category) &&
-      (!query.trim() || search.includes(query.trim().toLowerCase())) && (tab !== "saved" || saved.includes(event.id));
+      matchesResearchSearch(fields, query, marks) &&
+      (tab !== "saved" || (saved.includes(event.id) && (!inkOnly || marks.length > 0)));
   });
   const filtered = tab === "saved" ? orderSavedEvents(matches, saved, savedSort) : matches;
   const selected = tab === "saved" ? filtered.find(event => event.id === savedActiveId) : filtered.find((event) => event.id === activeId) ?? filtered[0];
@@ -146,7 +149,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
       window.dispatchEvent(new PopStateEvent("popstate"));
     }
   }
-  function clearFilters() { setQuery(""); setTicker("all"); setCategory("all"); }
+  function clearFilters() { setQuery(""); setTicker("all"); setCategory("all"); setInkOnly(false); }
   function openView(next: ResearchView) {
     const hash = researchViewHashes[next];
     if (next !== "saved") savedReturn.current = null;
@@ -245,11 +248,12 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           </header>}
           <div className={styles.toolbar}>
             {tab !== "changes" && <div className={styles.sectionTitle}><h2>{tab === "metrics" ? t("指標一覧", "Metrics") : t("保存一覧", "Your collection")}</h2><span>{tab === "metrics" ? allMetrics.length : filtered.length}</span></div>}
-            <label className={styles.search}><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input aria-label={t("銘柄・キーワードで検索", "Search ticker or keyword")} placeholder={t("銘柄・キーワードを検索", "Search ticker or keyword")} value={query} onChange={(e) => setQuery(e.target.value)} /></label>
+            <label className={styles.search}><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input aria-label={tab === "saved" ? t("銘柄・キーワード・メモで検索", "Search ticker, keyword or notes") : t("銘柄・キーワードで検索", "Search ticker or keyword")} placeholder={tab === "saved" ? t("銘柄・キーワード・メモを検索", "Search ticker, keyword or notes") : t("銘柄・キーワードを検索", "Search ticker or keyword")} value={query} onChange={(e) => setQuery(e.target.value)} /></label>
           </div>
           <div className={styles.filters}>
             {[{ id: "all", label: t("すべて", "All topics") }, { id: "cloud", label: t("AIクラウド", "AI cloud") }, { id: "memory", label: t("半導体", "Semiconductors") }].map((item) => <button key={item.id} aria-pressed={category === item.id} onClick={() => { setCategory(item.id); setTicker("all"); }}>{item.label}</button>)}
             {ticker !== "all" && <button className={styles.activeTicker} onClick={() => setTicker("all")} aria-label={t(`${ticker}の絞り込みを解除`, `Clear ${ticker} filter`)}>{ticker} ×</button>}
+            {tab === "saved" && <button aria-pressed={inkOnly} onClick={() => setInkOnly(value => !value)}>{t("書き込みあり", "With annotations")}</button>}
             {tab === "saved" ? <select className={styles.savedSort} aria-label={t("並べ替え", "Sort research")} value={savedSort} onChange={event => setSavedSort(event.target.value as "saved" | "published")}>
               <option value="saved">{t("保存した順", "Recently saved")}</option>
               <option value="published">{t("発表日の新しい順", "Newest announcement")}</option>
