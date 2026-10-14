@@ -56,3 +56,6 @@
 .root{padding:0;width:100%;background:none}.root button:active{transform:translateY(1px);filter:brightness(.92)}.root button:disabled{opacity:.5;cursor:default}.root a{color:var(--gold)}.root button{touch-action:manipulation}.root p{overflow-wrap:anywhere}.status{text-align:center;color:var(--sub)}
 
 .tab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.kv dd{white-space:pre-line}.tabs .tab{font-size:13px;padding:11px 4px}.draft{display:block;font-family:var(--font);font-size:11px;letter-spacing:0;color:var(--sub);margin-top:4px}
+@media(max-width:380px){.kv div{grid-template-columns:1fr;gap:4px}.card{padding:20px 16px}}
