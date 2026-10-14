@@ -39,10 +39,12 @@ test('earnings rows cover all 37 stocks; the Japanese view leaves out an uncheck
   assert.deepEqual(en.map(row => row.tickers[0]).sort(), [earningsOnly, 'MU'].sort());
 });
 
-test('the page has All / Earnings tabs and a stock filter, and no official-announcement tab', async () => {
+test('the page has All / Earnings tabs only, shows the date above every time, and no source line or stock filter', async () => {
   const source = await readFile(new URL('../app/research/news/flash-page.tsx', import.meta.url), 'utf8');
   assert.match(source, /\["all", "earnings"\] as const/);
-  assert.match(source, /銘柄で絞る/);
+  assert.doesNotMatch(source, /銘柄で絞る|<select/);
+  assert.doesNotMatch(source, /timeline\.src|row\.source/);
+  assert.match(source, /<time dateTime=\{row\.at\}><span>\{jst\(\{ month: "numeric", day: "numeric" \}, row\.at\)\}<\/span>/);
   assert.doesNotMatch(source, /公式発表/);
   const page = await readFile(new URL('../app/research/news/page.tsx', import.meta.url), 'utf8');
   assert.match(page, /"速報" : "Alerts"/);
