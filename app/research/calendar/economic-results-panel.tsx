@@ -43,10 +43,23 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all" 
   const time = (at: string) => <time dateTime={at}>{calendarDateKey(at, zone).slice(5).replace("-", "/")}<small>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(at))} {zoneLabel}</small></time>;
   const earningsSection = !!earnings.length && <section className={styles.section} aria-label={ja ? "発表済みの決算" : "Released earnings"}>
     <h2>{ja ? "発表済みの決算" : "Released earnings"}</h2>
-    <ol className={calendarStyles.agenda}>{earnings.map(row => <li key={row.id}><details>
-      <summary>{time(row.releasedAt)}<span className={calendarStyles.eventName}>{row.title[lang]}<small>{ja ? row.result.ja : row.result.en}</small></span><span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
-      <div className={calendarStyles.eventDetails}><p>{row.kind === "flash" ? (ja ? "決算速報の投稿から数値を読み取りました。会社の決算資料で確認してください。" : "Figures read from a results flash post; confirm against the company release.") : (ja ? "会社の公式発表です。" : "The company's official release.")}</p>{!row.sourceUrl.startsWith("https://x.com/") && <a href={row.sourceUrl} target="_blank" rel="noreferrer">{row.sourceName} ↗</a>}</div>
-    </details></li>)}</ol>
+    <ol className={calendarStyles.agenda}>{earnings.map(row => {
+      const label = <>{time(row.releasedAt)}<span className={calendarStyles.eventName}>{row.title[lang]}<small>{ja ? row.result.ja : row.result.en}</small></span></>;
+      const links = row.sources.filter(source => !source.url.startsWith("https://x.com/")).map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.name} ↗</a>);
+      const text = ja ? row.body.ja : row.body.en;
+      // A row opens only when there is something more to read; "the company's
+      // own release" alone is not a reason to expand (owner, Oct 14).
+      if (!row.facts.length && !text) return <li key={row.id}><div className={calendarStyles.plainRow}>{label}<span className={calendarStyles.rowLinks}>{links}</span></div></li>;
+      return <li key={row.id}><details>
+        <summary>{label}<span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
+        <div className={calendarStyles.eventDetails}>
+          {!!row.facts.length && <ul className={calendarStyles.facts}>{row.facts.map(fact => <li key={fact.en}>{ja ? fact.ja : fact.en}</li>)}</ul>}
+          {row.kind === "flash" && <p>{ja ? "決算速報の投稿から数値を読み取りました。会社の決算資料で確認してください。" : "Figures read from a results flash post; confirm against the company release."}</p>}
+          {!!text && <p>{text.length > 500 ? `${text.slice(0, 500).replace(/[^。.!?！？]*$/, "").trim() || text.slice(0, 500)}…` : text}</p>}
+          {links}
+        </div>
+      </details></li>;
+    })}</ol>
   </section>;
   if (kind === "earnings") return <>{earningsSection || null}</>;
   return <>{earningsSection || null}<DeepAnalysisPanel lang={lang} kind="indicator" />

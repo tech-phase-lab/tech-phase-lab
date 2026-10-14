@@ -8,3 +8,5 @@
 
 .insights{margin:0 0 12px;display:grid;grid-template-columns:90px minmax(0,1fr);gap:8px 12px}.insights dt{color:var(--mint);font-size:11px}.insights dd{margin:0;color:var(--text)}.agenda .sourceDetails>summary{display:list-item;min-height:32px;padding:5px 0;font-size:11px;color:var(--muted);list-style:disclosure-closed}.agenda .sourceDetails[open]>summary{list-style:disclosure-open}.agenda .sourceDetails>summary::-webkit-details-marker{display:revert}.sourceDetails a{margin:0}.sourceDetails{margin-top:8px}
 @media(max-width:600px){.eventDetails{padding-left:12px}.insights{grid-template-columns:1fr;gap:3px}.insights dd{margin-bottom:7px}}
+
+.plainRow{display:grid;grid-template-columns:104px minmax(0,1fr) auto;align-items:center;gap:12px;min-height:64px;padding:10px 4px}.rowLinks{display:flex;flex-direction:column;gap:4px;font-size:12px}.rowLinks a{color:var(--muted)}.facts{list-style:none;margin:0 0 8px;padding:0}.facts li{margin:0 0 3px}@media(max-width:600px){.plainRow{grid-template-columns:83px minmax(0,1fr) auto;gap:8px;min-height:62px}}
