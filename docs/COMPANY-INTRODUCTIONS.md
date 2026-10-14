@@ -4,7 +4,7 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is one hundred sixty-five issuers / one hundred sixty-six tickers:
+Researched coverage is one hundred seventy-five issuers / one hundred seventy-six tickers:
 LITE, COHR, AMAT, APH, ANET, MRVL, VRT, ALAB, MSFT, NBIS, TSM, ASML, AVGO,
 AMD, ARM, CRDO, NVDA, MU, GOOG, GOOGL, AAPL, AMZN, META, COST, INTC, SIMO,
 AAOI, BE, VST, GEV, IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL,
@@ -17,7 +17,8 @@ MTSI, POWI, SITM, CAMT, NVMI, ACLS, COHU, AMKR, ASX, GFS, TSEM, RMBS, DIOD,
 SLAB, CEVA, UMC, STM, HIMX, IMOS, CRUS, SYNA, AMBA, INDI, PI, LSCC, MXL, FORM,
 PLAB, AEHR, AOSL, NVTS, IPGP, VIAV, GLW, TEL, ARW, AVT, SANM, BHE, TSLA,
 IONQ, RGTI, QBTS, QUBT, RKLB, ASTS, PL, BKSY, AVAV, KTOS, RDW, ZM, DOCN,
-ESTC, GTLB, FROG, NTNX, NTAP, BOX, WDAY and PATH.
+ESTC, GTLB, FROG, NTNX, NTAP, BOX, WDAY, PATH, ADSK, PTC, BSY, VEEV, MANH,
+PEGA, PAYC, PAYX, ADP and NICE.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -271,3 +272,12 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - 年次資料: [ZM](https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm), [DOCN](https://www.sec.gov/Archives/edgar/data/1582961/000158296126000019/docn-20251231.htm), [ESTC](https://www.sec.gov/Archives/edgar/data/1707753/000170775326000018/estc-20260430.htm), [GTLB](https://www.sec.gov/Archives/edgar/data/1653482/000162828026018731/gtlb-20260131.htm), [FROG](https://www.sec.gov/Archives/edgar/data/1800667/000119312526051382/frog-20251231.htm), [NTNX](https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm), [NTAP](https://www.sec.gov/Archives/edgar/data/1002047/000119312526259683/ntap-20260424.htm), [BOX](https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm), [WDAY](https://www.sec.gov/Archives/edgar/data/1327811/000132781126000014/wday-20260131.htm), [PATH](https://www.sec.gov/Archives/edgar/data/1734722/000173472226000012/path-20260131.htm)。
 - 補足資料は各レコードのsourcesに収録。UI・ニュース設定・目標株価・翻訳・RESOLUTEは変更なし。
 - 次候補: DBX / OTEX / FIVN / RNG / NICE / DT / CFLTなど。CFLTなどの上場・買収状況と未収録を実行時に確認してから選ぶ。今回の10社を重複して追加しない。全検索企業の収録は未完了。
+
+### 2026-10-14 設計・業務・人事給与ソフト10社追加
+
+- ADSK / PTC / BSY / VEEV / MANH / PEGA / PAYC / PAYX / ADP / NICEを追加。165社・166ティッカーから175社・176ティッカーへ。確認日は2026-10-14。
+- Windowsで完成した原稿をGitHub blob `f643810b86357cd312476a5d5b79255c5a7b3905`から取得し、git hash-objectで完全一致を確認。既存インポーターでCIK重複なしを確認して取り込んだ。日英6項目、競合・関係マップ、SEC一次資料を保持。
+- PTCのKepware / ThingWorx売却完了、PaychexのPaycor買収済み、NiCEのCognigy買収済みを保持。VeevaとSalesforceは供給と競争の両関係。給与会社が預かる顧客資金の元本を売上と扱わない。
+- 公開数への計上はCI成功・Vercel READY・日英公開画面の確認後。共通UI、ニュース、目標株価、翻訳配信、RESOLUTE、保存したリサーチは変更なし。
+- 公式資料: [ADSK](https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm), [PTC](https://www.sec.gov/Archives/edgar/data/857005/000119312525291326/ptc-20250930.htm), [BSY](https://www.sec.gov/Archives/edgar/data/1031308/000103130826000007/bsy-20251231.htm), [VEEV](https://www.sec.gov/Archives/edgar/data/1393052/000139305226000014/veev-20260131.htm), [MANH](https://www.sec.gov/Archives/edgar/data/1056696/000119312526037138/manh-20251231.htm), [PEGA](https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm), [PAYC](https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm), [PAYX](https://www.sec.gov/Archives/edgar/data/723531/000119312526307785/payx-20260531.htm), [ADP](https://www.sec.gov/Archives/edgar/data/8670/000000867026000030/adp-20260630.htm), [NICE](https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm)。買収等の補足資料は各レコードのsourcesに保存。
+- 次候補: DBX / OTEX / FIVN / RNG / DT / CFLT。未収録と上場・買収状況を確認してから着手。NICEは今回収録したため次候補から除外。全検索企業の収録は未完了。

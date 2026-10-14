@@ -17359,5 +17359,1158 @@
         }
       ]
     }
+  },
+  {
+    "cik": 769397,
+    "tickers": [
+      "ADSK"
+    ],
+    "name": "Autodesk",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, competition, risks and revenue",
+        "url": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm"
+      },
+      {
+        "label": "FY2027 Q2 official results · August 27, 2026",
+        "url": "https://www.sec.gov/Archives/edgar/data/769397/000076939726000059/q227pressrelease.htm"
+      }
+    ],
+    "ja": {
+      "business": "建築家や製造業、映像制作会社に設計・制作ソフトを提供する会社。AutoCADで図面を描き、Revitで建物を立体的に設計し、Fusionで製品の設計から加工までを支える。",
+      "revenue": "ソフトの期間契約とクラウド利用料が中心。企業向けの包括契約や、使う日に応じてトークンを消費するFlexもある。販売店経由に加え、販売店が見積もりを出しAutodeskが顧客と直接取引する方式を広げている。",
+      "strength": "図面・建物・製品のデータを同じ作業の流れで扱える製品群と、利用者・開発者の蓄積。顧客が使い慣れた設計データや周辺アプリを引き継げることが、継続利用を支える。",
+      "risks": "建設・製造への投資が減ると新規契約や利用拡大が鈍る。販売方式の変更で販売店との関係や収益の見え方が変わり、AIや安価な設計ツールへの対応が遅れるリスクもある。",
+      "competition": "Bentleyとは建築・インフラ設計、PTCやDassault Systèmesとは製品設計、Procoreとは建設現場の管理で競合する。設計だけでなく、製造・施工につながる作業を誰がまとめるかも競争になる。",
+      "relationships": "建築・製造・映像制作の顧客へソフトを提供する。TD SYNNEXは流通を担い、外部開発者はAutodeskのAPIで拡張アプリを作る。流通契約を設計ソフトの顧客契約と混同しない。"
+    },
+    "en": {
+      "business": "Sells design and production software to architects, manufacturers and media studios. AutoCAD handles drawings, Revit building models and Fusion product design through machining.",
+      "revenue": "Earns subscriptions and cloud fees, including enterprise agreements and Flex usage tokens. Its newer model lets resellers quote while Autodesk contracts directly with customers.",
+      "strength": "Connected design tools, accumulated project data and a large developer community support repeat use and integration with customers’ existing workflows.",
+      "risks": "Construction and manufacturing slowdowns weaken demand. Channel changes complicate relationships and revenue comparisons; cheaper tools and AI may disrupt established products.",
+      "competition": "Competes with Bentley in infrastructure design, PTC and Dassault Systèmes in product design, and Procore in construction management.",
+      "relationships": "Supplies design software to industry customers. TD SYNNEX distributes products; independent developers build API extensions. Distribution is distinct from end-customer use."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Bentley Systems",
+          "ticker": "BSY",
+          "role": "competitor",
+          "label": {
+            "ja": "建築・インフラ設計で競合",
+            "en": "Building and infrastructure design"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "PTC",
+          "ticker": "PTC",
+          "role": "competitor",
+          "label": {
+            "ja": "製品の設計・開発で競合",
+            "en": "Product design and development"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Procore",
+          "ticker": "PCOR",
+          "role": "competitor",
+          "label": {
+            "ja": "建設プロジェクト管理で競合",
+            "en": "Construction project management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "TD SYNNEX",
+          "ticker": "SNX",
+          "role": "partner",
+          "label": {
+            "ja": "流通・販売を担う",
+            "en": "Distribution and sales"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Design and production businesses",
+          "nameJa": "建築・製造・映像制作企業",
+          "role": "customer",
+          "label": {
+            "ja": "設計・制作ソフトを提供",
+            "en": "Design and production software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Application developers",
+          "nameJa": "拡張アプリ開発者",
+          "role": "ecosystem",
+          "label": {
+            "ja": "APIで用途別アプリを開発",
+            "en": "Build applications using Autodesk APIs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 857005,
+    "tickers": [
+      "PTC"
+    ],
+    "name": "PTC",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, competition, risks and revenue",
+        "url": "https://www.sec.gov/Archives/edgar/data/857005/000119312525291326/ptc-20250930.htm"
+      },
+      {
+        "label": "Completed Kepware / ThingWorx divestiture · March 16, 2026",
+        "url": "https://www.sec.gov/Archives/edgar/data/857005/000119312526107315/ptc-ex99_1.htm"
+      },
+      {
+        "label": "FY2026 Q3 Form 10-Q · post-divestiture revenue",
+        "url": "https://www.sec.gov/Archives/edgar/data/857005/000119312526328444/ptc-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "メーカーに製品開発ソフトを提供する会社。CreoやOnshapeで形状を設計し、Windchillで図面・部品・変更を管理する。Codebeamerは製品に組み込むソフトの要求やテストを管理する。",
+      "revenue": "ソフトの期間契約、保守、クラウドサービスの利用料が中心で、導入支援も行う。契約の長さや更新時期で会計上の売上が動くため、毎期の売上と継続契約の規模は同じものではない。",
+      "strength": "設計から部品・変更管理、組み込みソフトの開発までをつなげられる。複雑な製品の履歴や承認手続きを残す仕組みが、長い開発期間を持つメーカーの業務に組み込まれている。",
+      "risks": "大型契約の更新や期間変更で売上が振れやすい。顧客の開発投資削減、クラウド移行や既存システムとの統合の難しさも負担。売却した事業の売上を現在の成長と混ぜて比較できない。",
+      "competition": "Autodesk、Dassault Systèmes、Siemensと製品設計・製品情報管理で競合する。開発ソフトの要求・テスト管理ではIBMやSiemensなどと競う。",
+      "relationships": "メーカーへ設計・管理ソフトを提供し、販売・導入パートナーが現場への適用を支える。KepwareとThingWorxは2026年3月にTPG系の買い手へ売却済みで、現在の主力製品として扱わない。"
+    },
+    "en": {
+      "business": "Provides product-development software: Creo and Onshape for design, Windchill for product data and changes, and Codebeamer for software requirements and testing.",
+      "revenue": "Earns software subscriptions, support, cloud fees and implementation revenue. Contract duration and renewals affect reported sales differently from recurring contract measures.",
+      "strength": "Connects mechanical design, product records and software development, embedding change histories and approvals in complex manufacturing workflows.",
+      "risks": "Large renewals can swing revenue. Customer investment cuts, cloud migration and integration are risks; divested revenue complicates growth comparisons.",
+      "competition": "Competes with Autodesk, Dassault Systèmes and Siemens in CAD and product lifecycle management; IBM and Siemens compete in software lifecycle tools.",
+      "relationships": "Supplies manufacturers through direct and partner channels. Kepware and ThingWorx were sold to a TPG-affiliated buyer in March 2026 and are no longer core offerings."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Autodesk",
+          "ticker": "ADSK",
+          "role": "competitor",
+          "label": {
+            "ja": "製品設計ソフトで競合",
+            "en": "Product design software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Dassault Systèmes",
+          "role": "competitor",
+          "label": {
+            "ja": "製品設計・製品情報管理で競合",
+            "en": "CAD and product lifecycle management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Siemens",
+          "role": "competitor",
+          "label": {
+            "ja": "設計・製品情報・ソフト開発管理で競合",
+            "en": "CAD, PLM and software lifecycle tools"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Manufacturers",
+          "nameJa": "製造業の顧客",
+          "role": "customer",
+          "label": {
+            "ja": "設計・製品情報管理ソフトを提供",
+            "en": "Design and product lifecycle software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Implementation and channel partners",
+          "nameJa": "販売・導入パートナー",
+          "role": "partner",
+          "label": {
+            "ja": "販売・現場への導入を支援",
+            "en": "Sales and implementation services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1031308,
+    "tickers": [
+      "BSY"
+    ],
+    "name": "Bentley Systems",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, competition, risks and revenue",
+        "url": "https://www.sec.gov/Archives/edgar/data/1031308/000103130826000007/bsy-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "道路・鉄道・水道・発電設備などのインフラを設計し、建設・運用するためのソフト会社。MicroStationなどの設計ツールと、ProjectWiseの共同作業、iTwinの設備を再現するデジタル模型を提供する。",
+      "revenue": "期間契約や保守契約、使用量に応じた企業向け契約が中心。永久ライセンスや専門サービスもある。地盤・地下の状態を扱うSeequentも製品群の一部。",
+      "strength": "土木・構造・地盤など複数分野の設計データをまとめ、建設後の点検・維持管理まで使える。長く稼働する設備の記録を引き継ぐため、単発の図面作成にとどまらない。",
+      "risks": "公共工事や資源開発の予算・計画が遅れると利用拡大も遅れる。買収した製品の統合、クラウドの停止、大手設計ソフトとの価格・機能競争も負担になる。",
+      "competition": "Autodesk、Trimble、Hexagonとインフラ設計で競合する。プロジェクト情報管理ではAutodeskやOracle、設備運用ではAVEVAなどと競う。",
+      "relationships": "設計会社、建設会社、設備所有者へソフトを提供する。Microsoft Azureが主なクラウド供給元で、Google Cloudも利用する。クラウド会社がBentleyの設計ソフトを買うという関係ではない。"
+    },
+    "en": {
+      "business": "Provides infrastructure software for roads, rail, water and energy: MicroStation design, ProjectWise collaboration and iTwin digital representations of physical assets.",
+      "revenue": "Earns term subscriptions, maintenance and usage-based enterprise fees, plus perpetual licenses and services. Seequent supplies subsurface and geology tools.",
+      "strength": "Connects civil, structural and geotechnical information through construction and long-term asset maintenance, preserving more than standalone drawings.",
+      "risks": "Project-budget delays slow expansion. Acquisition integration, cloud outages and competition from larger design vendors can raise costs or weaken demand.",
+      "competition": "Competes with Autodesk, Trimble and Hexagon in infrastructure design, Autodesk and Oracle in project delivery, and AVEVA in asset operations.",
+      "relationships": "Supplies engineers, contractors and asset owners. Microsoft Azure is its main cloud supplier; Google Cloud also supports delivery. These are infrastructure supply relationships."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Autodesk",
+          "ticker": "ADSK",
+          "role": "competitor",
+          "label": {
+            "ja": "インフラ設計・共同作業で競合",
+            "en": "Infrastructure design and collaboration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Trimble",
+          "ticker": "TRMB",
+          "role": "competitor",
+          "label": {
+            "ja": "公共インフラ・建物設計で競合",
+            "en": "Public infrastructure and building applications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "competitor",
+          "label": {
+            "ja": "プロジェクト情報管理で競合",
+            "en": "Project delivery systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "supplier",
+          "label": {
+            "ja": "Azureのクラウド基盤を調達",
+            "en": "Azure cloud infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "ticker": "GOOG",
+          "role": "supplier",
+          "label": {
+            "ja": "Google Cloudの基盤を利用",
+            "en": "Google Cloud infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Infrastructure project participants",
+          "nameJa": "設計・建設会社・設備所有者",
+          "role": "customer",
+          "label": {
+            "ja": "設計から運用までのソフトを提供",
+            "en": "Design, delivery and asset-operation software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1393052,
+    "tickers": [
+      "VEEV"
+    ],
+    "name": "Veeva Systems",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, competition, risks and revenue",
+        "url": "https://www.sec.gov/Archives/edgar/data/1393052/000139305226000014/veev-20260131.htm"
+      },
+      {
+        "label": "FY2027 Q2 official results",
+        "url": "https://www.sec.gov/Archives/edgar/data/1393052/000139305226000032/veev-20260731xex991.htm"
+      }
+    ],
+    "ja": {
+      "business": "製薬・バイオ企業向けのクラウドソフトとデータを提供する会社。治験、薬の安全性、承認申請、品質管理、医師への営業を支える。薬を製造・販売する会社ではない。",
+      "revenue": "ソフトとデータの継続利用料が中心で、導入支援やコンサルティングも収益になる。製品群を追加してもらうことで、同じ顧客から得る利用料を広げる。",
+      "strength": "医薬品の規制や現場の手順に合わせた機能があり、研究・品質・営業の記録を共有できる。業界特有の文書管理や検証が必要なため、汎用ソフトだけでは置き換えにくい。",
+      "risks": "製薬業界の予算や規制変更に影響され、機密の治験・患者関連データの保護も不可欠。従来CRMからVault CRMへの移行が遅れると、競合への切り替えや支援費用の増加につながる。",
+      "competition": "製薬企業の営業管理ではSalesforce、業界データ・分析ではIQVIAと競う。研究・品質管理ではOracleなどの既存製品や顧客の内製システムが代替になる。",
+      "relationships": "製薬企業、開発受託会社、治験施設へ業務ソフトを提供する。VaultはAWSで稼働し、従来のVeeva CRMはSalesforce基盤を使う。Salesforceは供給元でも競合でもあり、従来CRMは2029年末まで支援予定。"
+    },
+    "en": {
+      "business": "Supplies cloud software and data to life-sciences organizations for trials, safety, regulatory submissions, quality and medical sales. It does not manufacture drugs.",
+      "revenue": "Earns recurring software and data subscriptions plus implementation and consulting fees. Additional applications expand spending within existing customers.",
+      "strength": "Industry-specific processes and regulated document management connect research, quality and commercial records, making generic software a less straightforward substitute.",
+      "risks": "Pharmaceutical budgets, regulation and sensitive-data protection matter. Delays migrating legacy CRM users to Vault CRM create switching and support risks.",
+      "competition": "Competes with Salesforce in life-sciences CRM and IQVIA in data and analytics; Oracle and internal systems provide alternatives in regulated operations.",
+      "relationships": "Serves drugmakers, CROs and trial sites. AWS hosts Vault; Salesforce powers legacy CRM and also competes. Legacy CRM support is planned through December 2029."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "competitor",
+          "label": {
+            "ja": "製薬業界向け営業管理で競合",
+            "en": "Life-sciences CRM"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "IQVIA",
+          "ticker": "IQV",
+          "role": "competitor",
+          "label": {
+            "ja": "医療・製薬データ分析で競合",
+            "en": "Life-sciences data and analytics"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "competitor",
+          "label": {
+            "ja": "研究・規制対応の既存システムと競合",
+            "en": "Legacy regulated-workflow applications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "supplier",
+          "label": {
+            "ja": "AWSがVaultのクラウド基盤を提供",
+            "en": "AWS infrastructure for Vault"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "supplier",
+          "label": {
+            "ja": "従来Veeva CRMの基盤を提供",
+            "en": "Platform for legacy Veeva CRM"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Life sciences organizations",
+          "nameJa": "製薬企業・開発受託会社・治験施設",
+          "role": "customer",
+          "label": {
+            "ja": "研究・品質・営業ソフトを提供",
+            "en": "Clinical, quality and commercial applications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1056696,
+    "tickers": [
+      "MANH"
+    ],
+    "name": "Manhattan Associates",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, competition, risks and revenue",
+        "url": "https://www.sec.gov/Archives/edgar/data/1056696/000119312526037138/manh-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "小売・卸・製造・物流企業に、倉庫、配送、在庫、注文を動かすソフトを提供する会社。どの倉庫や店から商品を出し、どう届けるかを管理する。運送会社そのものではない。",
+      "revenue": "Manhattan Activeの複数年のクラウド利用料に加え、導入・設定支援、保守、従来ソフトのライセンスや関連機器で稼ぐ。ソフトの契約が増えると導入支援の仕事も生まれる。",
+      "strength": "倉庫の作業・輸送・店舗在庫・注文を連携させ、販売経路をまたいで商品を届けられる。Activeは共通のコードを継続更新する方式で、顧客ごとの大規模な版更新を減らす。",
+      "risks": "物流システムは顧客の実業務に深く関わるため、導入遅延や不具合の影響が大きい。小売・物流の投資減少、長い商談、Google Cloudへの依存もリスクになる。",
+      "competition": "SAPやOracleの業務基盤、Blue YonderやInfiosの倉庫・輸送ソフトと競合する。店舗の販売時点管理ではOracleやSalesforceなどとも競う。",
+      "relationships": "小売・製造・物流企業へソフトと導入支援を提供し、Activeのサーバー基盤にはGoogle Cloudを使う。Accentureなどのパートナーは顧客への導入や業務設計を支援する。"
+    },
+    "en": {
+      "business": "Provides warehouse, transport, inventory and order software to retailers, wholesalers, manufacturers and logistics firms. It coordinates fulfillment rather than operating a carrier.",
+      "revenue": "Earns multiyear Active cloud subscriptions, implementation services, maintenance, legacy licenses and related hardware revenue.",
+      "strength": "Connects warehouse operations with transport, stores and orders. A continually updated common codebase reduces disruptive customer version upgrades.",
+      "risks": "Operationally critical installations create delay and failure risks. Retail investment cuts, long sales cycles and Google Cloud dependence also matter.",
+      "competition": "Competes with SAP and Oracle business suites, Blue Yonder and Infios logistics tools, and Oracle or Salesforce in point-of-sale systems.",
+      "relationships": "Supplies commerce and logistics customers. Google Cloud hosts Active; partners including Accenture help implement systems and redesign customer processes."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "competitor",
+          "label": {
+            "ja": "業務・物流・店舗管理で競合",
+            "en": "Enterprise, logistics and store software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "SAP",
+          "ticker": "SAP",
+          "role": "competitor",
+          "label": {
+            "ja": "業務基盤・物流管理で競合",
+            "en": "Enterprise and supply-chain software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Blue Yonder",
+          "role": "competitor",
+          "label": {
+            "ja": "倉庫・輸送・在庫計画で競合",
+            "en": "Warehouse, transport and inventory planning"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "ticker": "GOOG",
+          "role": "supplier",
+          "label": {
+            "ja": "Google CloudがActiveの基盤を提供",
+            "en": "Google Cloud infrastructure for Active"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Accenture",
+          "ticker": "ACN",
+          "role": "partner",
+          "label": {
+            "ja": "顧客への導入・業務設計を支援",
+            "en": "Customer implementation and consulting"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Commerce and logistics organizations",
+          "nameJa": "小売・卸・製造・物流企業",
+          "role": "customer",
+          "label": {
+            "ja": "倉庫・配送・注文管理を提供",
+            "en": "Warehouse, transport and order software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1013857,
+    "tickers": [
+      "PEGA"
+    ],
+    "name": "Pegasystems",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, competition, risks and revenue",
+        "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "銀行、保険、通信、政府などに複雑な業務を自動化するソフトを提供する会社。問い合わせや申請を案件として管理し、承認・判断・次の処理をPega Platformでつなぐ。",
+      "revenue": "Pega Cloudの継続利用料、ソフトの期間ライセンス、保守、コンサルティングで稼ぐ。顧客がクラウドを使う契約と、自社側でソフトを動かす契約では売上の計上時期が異なる。",
+      "strength": "規則や判断を組み込んだ業務の流れを、部署をまたいで管理できる。Blueprintによるアプリ設計と既存の業務エンジンを組み合わせ、複雑な規制対応や案件処理に使える。",
+      "risks": "大企業の商談・導入は長く、導入パートナーが不足すると効果を出しにくい。クラウドへの移行費用、大手の競争、訴訟や情報セキュリティの問題も業績に影響する。",
+      "competition": "ServiceNowやMicrosoft、IBMと業務自動化・アプリ基盤で競合し、Salesforceとは顧客対応や次の行動を決める機能で競う。顧客が複数の個別ツールを組み合わせる方法も代替になる。",
+      "relationships": "大企業や政府へソフトを提供し、Accenture、Cognizant、Infosysなどが業務設計・導入を支援する。クラウド事業者も提供基盤を支えるが、未開示の顧客名や個別契約は推測しない。"
+    },
+    "en": {
+      "business": "Automates complex work for banks, insurers, telecoms and governments. Pega Platform connects cases, approvals, decisions and subsequent actions across departments.",
+      "revenue": "Earns Pega Cloud subscriptions, term licenses, maintenance and consulting fees. Cloud and customer-managed contracts have different revenue-recognition patterns.",
+      "strength": "Combines rules and decisioning with workflow execution. Blueprint application design supports complex, regulated case-management processes.",
+      "risks": "Long sales and implementation cycles depend on skilled partners. Cloud-transition costs, larger competitors, litigation and security issues can affect performance.",
+      "competition": "Competes with ServiceNow, Microsoft and IBM in workflow platforms and Salesforce in customer engagement and decisioning; assembled point tools are alternatives.",
+      "relationships": "Supplies enterprises and governments. Accenture, Cognizant and Infosys help design and implement workflows, while cloud providers support delivery infrastructure."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "ServiceNow",
+          "ticker": "NOW",
+          "role": "competitor",
+          "label": {
+            "ja": "業務フロー・案件管理で競合",
+            "en": "Workflow and case management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客対応・行動判断で競合",
+            "en": "Customer engagement and decisioning"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "業務アプリ・自動化基盤で競合",
+            "en": "Business application and automation platforms"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Accenture",
+          "ticker": "ACN",
+          "role": "partner",
+          "label": {
+            "ja": "業務設計・導入・研修を支援",
+            "en": "Consulting, implementation and training"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Cognizant",
+          "ticker": "CTSH",
+          "role": "partner",
+          "label": {
+            "ja": "顧客の業務システム導入を支援",
+            "en": "Customer implementation services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Infosys",
+          "ticker": "INFY",
+          "role": "partner",
+          "label": {
+            "ja": "業務設計・システム導入を支援",
+            "en": "Process consulting and implementation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprises and government agencies",
+          "nameJa": "大企業・政府機関",
+          "role": "customer",
+          "label": {
+            "ja": "案件管理・業務自動化を提供",
+            "en": "Case-management and workflow software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1590955,
+    "tickers": [
+      "PAYC"
+    ],
+    "name": "Paycom Software",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, competition, risks and revenue",
+        "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業に給与計算と人事管理のクラウドソフトを提供する会社。採用、勤怠、福利厚生、給与、退職までを扱い、従業員自身が情報を確認・修正する仕組みを重視する。",
+      "revenue": "利用する機能や従業員数などに基づく継続料金が中心。導入料や勤怠端末の販売もあり、給与・税金の支払い前に預かる顧客資金から利息収入も得る。預かった元本自体は売上ではない。",
+      "strength": "一つのデータベースで人事情報と給与を連動させる。Betiでは従業員が支払い前に給与を確認・修正でき、担当者の入力や差し戻しを減らすことを狙う。",
+      "risks": "顧客の雇用縮小で利用料金が減り、金利低下で預かり資金の利息も減る。給与・納税の誤りや情報漏えいは信頼に直結し、自動化を顧客に定着させる負担もある。",
+      "competition": "ADP、Paychex、Paylocityなどと給与・人事管理で競合し、大企業向けではWorkdayやOracleも代替になる。価格だけでなく導入のしやすさ、機能、顧客支援も競争になる。",
+      "relationships": "雇用主へソフトを提供し、従業員への給与と税務当局への納税を支援する。銀行などが資金移動・預かりを支える。特定の銀行を未確認の契約相手として名指ししない。"
+    },
+    "en": {
+      "business": "Provides payroll and HR cloud software covering hiring, time, benefits and separation, emphasizing employee review and correction of their own information.",
+      "revenue": "Earns recurring fees tied to features and workforce size, implementation and time-clock revenue, and interest on client funds. Held principal is not revenue.",
+      "strength": "A single database connects HR and payroll. Beti lets employees check and resolve pay issues before processing, aiming to reduce administrative rework.",
+      "risks": "Employment cuts reduce fees; lower rates reduce client-fund interest. Payroll errors, data breaches and adoption challenges can undermine customer trust.",
+      "competition": "Competes with ADP, Paychex and Paylocity in payroll and HR, with Workday and Oracle also serving larger organizations.",
+      "relationships": "Serves employers and supports employee payments and tax remittances. Banks support money movement; undisclosed banking counterparties are not named."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Automatic Data Processing",
+          "ticker": "ADP",
+          "role": "competitor",
+          "label": {
+            "ja": "給与計算・人事管理で競合",
+            "en": "Payroll and HR management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Paychex",
+          "ticker": "PAYX",
+          "role": "competitor",
+          "label": {
+            "ja": "給与・人事支援で競合",
+            "en": "Payroll and HR services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Paylocity",
+          "ticker": "PCTY",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウド給与・人事管理で競合",
+            "en": "Cloud payroll and HR"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Employers",
+          "nameJa": "雇用主の顧客",
+          "role": "customer",
+          "label": {
+            "ja": "給与・人事ソフトと納税支援を提供",
+            "en": "Payroll, HR and tax-filing services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Banking service providers",
+          "nameJa": "銀行・資金決済事業者",
+          "role": "supplier",
+          "label": {
+            "ja": "給与・税金の資金移動を支援",
+            "en": "Client money movement and banking services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 723531,
+    "tickers": [
+      "PAYX"
+    ],
+    "name": "Paychex",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, competition, risks and revenue",
+        "url": "https://www.sec.gov/Archives/edgar/data/723531/000119312526307785/payx-20260531.htm"
+      },
+      {
+        "label": "Paycom FY2025 Form 10-K · named payroll / HR competitors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm"
+      },
+      {
+        "label": "Paychex FY2027 Q1 Form 10-Q",
+        "url": "https://www.sec.gov/Archives/edgar/data/723531/000072353126000006/payx-20260831.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業の給与計算、人事、福利厚生をソフトと担当者の支援で提供する会社。中小企業に加え、買収したPaycorを通じてより大きな企業にも人事・給与ソフトを届ける。",
+      "revenue": "給与・人事の利用料、管理代行料、福利厚生や保険関連の収入、預かり資金の利息で稼ぐ。PEOでは雇用主と一部の雇用上の責任を分担する共同雇用の形で人事業務を支援する。",
+      "strength": "ソフトだけでなく給与・労務の相談や実務を支える担当者も提供できる。給与から福利厚生、採用・人材管理へ取引を広げる製品と顧客基盤がある。",
+      "risks": "顧客企業の倒産や雇用減少で利用が縮み、金利低下で利息収入が減る。給与の資金移動や個人情報の保護、保険費用、Paycorの統合と買収に伴う借入もリスク。",
+      "competition": "給与・人事ではADP、Paycom、Paylocityなどと競合する。共同雇用型の管理代行では他のPEO事業者とも競い、ソフトと人の支援をまとめた価格・品質が比較される。",
+      "relationships": "雇用主の給与・人事を支援し、銀行が給与・税金の送金、保険会社が福利厚生を支える。Paycorの買収は2025年4月に完了済みで、独立した競合として数えない。"
+    },
+    "en": {
+      "business": "Provides payroll, HR and benefits software with human support. Its acquired Paycor business extends its reach beyond smaller employers.",
+      "revenue": "Earns service and administration fees, benefits and insurance revenue, and client-fund interest. PEO services share certain employer responsibilities through co-employment.",
+      "strength": "Combines software with practical payroll and HR advice, expanding customer relationships into benefits, recruiting and talent management.",
+      "risks": "Customer failures and employment cuts reduce demand; lower rates reduce interest. Payment security, insurance costs, Paycor integration and acquisition debt add risk.",
+      "competition": "Competes with ADP, Paycom and Paylocity in payroll and HR, and other PEO providers in co-employment administration.",
+      "relationships": "Serves employers; banks support remittances and insurers support benefits. Paycor was acquired in April 2025 and is not counted as an independent competitor."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Automatic Data Processing",
+          "ticker": "ADP",
+          "role": "competitor",
+          "label": {
+            "ja": "給与・人事・共同雇用型代行で競合",
+            "en": "Payroll, HR and PEO administration"
+          },
+          "sourceIndexes": [
+            0,
+            1
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Paycom Software",
+          "ticker": "PAYC",
+          "role": "competitor",
+          "label": {
+            "ja": "給与・人事クラウドで競合",
+            "en": "Cloud payroll and HR"
+          },
+          "sourceIndexes": [
+            1
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Other PEO providers",
+          "nameJa": "共同雇用型の人事代行会社",
+          "role": "competitor",
+          "label": {
+            "ja": "給与・福利厚生の管理代行で競合",
+            "en": "Co-employment payroll and benefits administration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Employer clients",
+          "nameJa": "雇用主の顧客",
+          "role": "customer",
+          "label": {
+            "ja": "給与・人事・福利厚生支援を提供",
+            "en": "Payroll, HR and benefits services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Banks",
+          "nameJa": "銀行",
+          "role": "supplier",
+          "label": {
+            "ja": "従業員への給与送金を支援",
+            "en": "Employee payment services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Insurance carriers",
+          "nameJa": "保険会社",
+          "role": "supplier",
+          "label": {
+            "ja": "福利厚生・保険サービスを支える",
+            "en": "Employee benefits and insurance services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 8670,
+    "tickers": [
+      "ADP"
+    ],
+    "name": "Automatic Data Processing",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, competition, risks and revenue",
+        "url": "https://www.sec.gov/Archives/edgar/data/8670/000000867026000030/adp-20260630.htm"
+      },
+      {
+        "label": "Paycom FY2025 Form 10-K · named payroll / HR competitors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業の給与計算と人事業務を、ソフトと業務代行で支える会社。小規模企業から多国籍企業までに、勤怠、採用、福利厚生、各国の給与・税務対応を提供する。",
+      "revenue": "給与処理・人事ソフト・業務代行の料金、PEOの管理サービスと福利厚生関連の収入、顧客から一時的に預かる資金の利息で稼ぐ。顧客の給与や税金の元本をADPの売上と数えない。",
+      "strength": "国や地域で異なる給与・税務ルールへの対応、蓄積した実務知識、幅広い顧客規模を支える体制。ソフトだけで完結しない給与の計算・送金・届出まで支援できる。",
+      "risks": "顧客の雇用減少や金利変化が収益に響く。巨額の給与・納税資金を正確に送る必要があり、障害・不正・情報漏えいは大きな責任につながる。PEOには雇用・保険制度の変更リスクもある。",
+      "competition": "PaychexやPaycomなどの給与・人事サービスと競合し、大企業向けではクラウド人事・業務基盤の会社とも競う。PEOでは他の共同雇用型の人事代行会社が競合する。",
+      "relationships": "雇用主の依頼で従業員や税務当局へ給与・税金を送る。ADP TotalSourceは共同雇用の形で福利厚生と人事管理を支援する。顧客資金を受け取る相手とソフトの購入者を区別する。"
+    },
+    "en": {
+      "business": "Provides payroll and HR software and outsourcing to employers from small businesses to multinationals, including time, recruiting, benefits and local compliance.",
+      "revenue": "Earns processing, software, outsourcing and PEO-related revenue plus client-fund interest. Customer payroll and tax principal is not ADP revenue.",
+      "strength": "Combines regulatory expertise and operating scale with calculation, payments and filings, supporting payroll work that extends beyond software alone.",
+      "risks": "Employment and rates affect earnings. Payment failures, fraud and breaches create substantial liability; PEO operations also face employment and insurance regulation risks.",
+      "competition": "Competes with Paychex and Paycom in payroll and HR, broader cloud business platforms for large employers, and other PEO administrators.",
+      "relationships": "Serves employers and remits their payroll and taxes. TotalSource supports benefits and HR through co-employment; payment recipients are distinct from purchasing clients."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Paychex",
+          "ticker": "PAYX",
+          "role": "competitor",
+          "label": {
+            "ja": "給与・人事管理で競合",
+            "en": "Payroll and HR management"
+          },
+          "sourceIndexes": [
+            1
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Paycom Software",
+          "ticker": "PAYC",
+          "role": "competitor",
+          "label": {
+            "ja": "給与・人事クラウドで競合",
+            "en": "Cloud payroll and HR"
+          },
+          "sourceIndexes": [
+            1
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Other PEO providers",
+          "nameJa": "共同雇用型の人事代行会社",
+          "role": "competitor",
+          "label": {
+            "ja": "共同雇用型の管理代行で競合",
+            "en": "PEO administration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Employers",
+          "nameJa": "雇用主の顧客",
+          "role": "customer",
+          "label": {
+            "ja": "給与・人事・税務業務を支援",
+            "en": "Payroll, HR and tax services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Benefit service providers",
+          "nameJa": "福利厚生サービス事業者",
+          "role": "supplier",
+          "label": {
+            "ja": "共同雇用型サービスの福利厚生を支える",
+            "en": "Benefits for co-employment services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1003935,
+    "tickers": [
+      "NICE"
+    ],
+    "name": "NiCE",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, competition, risks and revenue",
+        "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "顧客対応と金融犯罪対策のソフトを提供する会社。CXoneは電話・チャット・AIによる問い合わせ対応、Actimizeは不正送金・マネーロンダリングや取引の監視を支える。",
+      "revenue": "クラウドの継続利用料と使用量に応じた料金が中心で、通話の接続料、ソフトライセンス、保守・導入支援でも稼ぐ。顧客対応と金融機関の監視は異なる用途の事業。",
+      "strength": "問い合わせの受付から担当者の管理、会話の分析、自動応答までをまとめられる。金融犯罪対策では規制対応の知識と取引分析を組み合わせ、機密性の高い業務を支える。",
+      "risks": "AIの誤回答や金融犯罪の見逃し、通信障害、機密データの漏えいは信頼を損なう。クラウド移行の遅れ、大手の競争、買収したCognigyの技術・人材の統合もリスクになる。",
+      "competition": "顧客対応ではGenesys、Five9、Amazon Connectなどと競合し、会話AIではSalesforceなども競う。金融犯罪対策ではSAS、FICO、Oracleなどと、不正検知や資金洗浄対策の案件を争う。",
+      "relationships": "企業の顧客対応部門と金融機関へソフトを提供し、販売・導入パートナーが展開を支える。Cognigyは2025年9月に買収済みで、外部の独立した取引先として扱わない。"
+    },
+    "en": {
+      "business": "Provides customer-service and financial-crime software. CXone handles calls, chat and AI interactions; Actimize supports fraud, money-laundering and trading surveillance.",
+      "revenue": "Earns cloud subscriptions and usage fees, call-connectivity charges, licenses, maintenance and implementation revenue across its two different markets.",
+      "strength": "Connects contact handling, workforce management, analytics and automation. Financial-crime tools combine regulatory expertise with transaction analysis.",
+      "risks": "AI errors, missed crime, outages and breaches damage trust. Slow cloud migration, large competitors and Cognigy acquisition integration add risk.",
+      "competition": "Competes with Genesys, Five9 and Amazon Connect in contact centers, Salesforce in conversational AI, and SAS, FICO or Oracle in financial-crime tools.",
+      "relationships": "Supplies enterprise service teams and financial institutions through direct and partner channels. Cognigy was acquired in September 2025 and is no longer an independent counterparty."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "competitor",
+          "label": {
+            "ja": "Amazon Connectと顧客対応基盤で競合",
+            "en": "Amazon Connect contact-center platform"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Five9",
+          "ticker": "FIVN",
+          "role": "competitor",
+          "label": {
+            "ja": "クラウドの顧客対応基盤で競合",
+            "en": "Cloud contact-center infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "competitor",
+          "label": {
+            "ja": "会話・業務実行AIで競合",
+            "en": "Conversational and agentic AI"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "competitor",
+          "label": {
+            "ja": "資金洗浄対策・金融取引監視で競合",
+            "en": "AML and financial-market compliance"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Enterprise service teams",
+          "nameJa": "企業の顧客対応部門",
+          "role": "customer",
+          "label": {
+            "ja": "顧客対応・担当者管理・分析を提供",
+            "en": "Contact handling, workforce and analytics software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Financial institutions",
+          "nameJa": "金融機関",
+          "role": "customer",
+          "label": {
+            "ja": "不正検知・資金洗浄対策を提供",
+            "en": "Fraud and AML software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Channel and implementation partners",
+          "nameJa": "販売・導入パートナー",
+          "role": "partner",
+          "label": {
+            "ja": "販売・導入・顧客支援を担う",
+            "en": "Sales, implementation and customer support"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
   }
 ]
