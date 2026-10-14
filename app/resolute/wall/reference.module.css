@@ -92,3 +92,15 @@
 @media(max-width:360px){.ctl{padding:12px 10px}.grp{gap:7px}.grp>b{width:3.2em}.rail button{font-size:10.5px;gap:3px}.backgrounds button:last-child{flex:1.55}}
 
 .r span[style] span,.r span[style] i{font-size:inherit}
+
+/* Preserve the reference geometry; reserve space for the footer before fitting extra saved levels. */
+.emb,.nm,.ed,.ft{flex-shrink:0}
+.rl{min-height:0}
+.r span i{white-space:nowrap}
+.ft{line-height:1.8;flex:none}
+.frame[data-lines="3"] .r,.frame[data-lines="4"] .r{padding-block:6px}
+.frame[data-lines="3"] .r span,.frame[data-lines="4"] .r span{font-size:13px}
+.frame[data-lines="3"] .r span i,.frame[data-lines="4"] .r span i{font-size:16px}
+.frame:not([data-lines="0"]):not([data-lines="1"]):not([data-lines="2"]):not([data-lines="3"]):not([data-lines="4"]) .r{padding-block:3px}
+.frame:not([data-lines="0"]):not([data-lines="1"]):not([data-lines="2"]):not([data-lines="3"]):not([data-lines="4"]) .r span{font-size:11px;line-height:1.5}
+.frame:not([data-lines="0"]):not([data-lines="1"]):not([data-lines="2"]):not([data-lines="3"]):not([data-lines="4"]) .r span i{font-size:12px}

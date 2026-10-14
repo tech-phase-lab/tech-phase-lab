@@ -21,10 +21,10 @@ export default function Rulebook({plan,locale}:{plan:NonNullable<PlanSnapshot["p
   if(number===0)return <div className={styles.boundCover}><div className={styles.coverFrame}><span className={styles.coverBrand}>RESOLUTE</span><span className={styles.coverEdition}>THE PERSONAL EDITION</span><div className={styles.coverSeal} aria-hidden="true"><span>R</span></div><h2>{en?<>My rules<br/>My resolve</>:<>相場に揺れない<br/>私のルール</>}</h2><div className={styles.coverRule}/><p>{en?<>Written from my answers<br/>Kept for the days that test them</>:<>自分の答えからつくる<br/>迷った日に立ち戻る一冊</>}</p><small>{plan.currency} · {new Date(plan.updatedAt).toLocaleDateString(en?"en-US":"ja-JP",{timeZone:"Asia/Tokyo"})}</small></div></div>;
   const chapter=chapters[number-1];
   return <div className={styles.paperPage}><div className={styles.paperRunning}><span>RESOLUTE</span><span>MY RULES</span></div><span className={styles.chapterKicker}>{chapter.kicker}</span><h2>{chapter.title}</h2><p className={styles.chapterLead}>{chapter.lead}</p>
-   {chapter.metrics.length?<dl className={styles.chapterMetrics}>{chapter.metrics.map(metric=><div key={metric.label}><dt>{metric.label}</dt><dd>{metric.value}</dd>{metric.detail?<dd className={styles.metricDetail}>{metric.detail}</dd>:null}</div>)}</dl>:null}
+   {chapter.metrics.length?<dl className={styles.chapterMetrics}>{chapter.metrics.map(metric=><div key={metric.label} data-text={metric.text||undefined}><dt>{metric.label}</dt><dd>{metric.value}</dd>{metric.detail?<dd className={styles.metricDetail}>{metric.detail}</dd>:null}</div>)}</dl>:null}
    {chapter.lines?.length?<ol className={styles.purchaseLadder}>{chapter.lines.map((line,i)=><li key={line.dropPct}><span className={styles.ladderDot}>{i+1+(Number(chapter.id.split('-').at(-1))||0)*3}</span><div><strong>−{line.dropPct}%</strong><span>{en?"from reference price":"基準株価から"}</span></div><b>{bookMoney(line.amount,plan.currency,locale)}</b></li>)}</ol>:null}
    <div className={styles.chapterProse}>{chapter.paragraphs.map((text,i)=><p key={i}>{text}</p>)}</div>
-   {chapter.closing?<p className={styles.chapterClosing}>{chapter.closing}</p>:null}
+   {chapter.practice?<section className={styles.chapterPractice}><h3>{chapter.practice.title}</h3><ol>{chapter.practice.steps.map(step=><li key={step}>{step}</li>)}</ol></section>:null}{chapter.closing?<p className={styles.chapterClosing}>{chapter.closing}</p>:null}
    <footer className={styles.paperFolio}><span>{en?"A promise to myself":"自分との約束"}</span><span>{String(number).padStart(2,"0")}</span></footer>
   </div>;
  }

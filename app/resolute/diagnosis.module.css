@@ -309,3 +309,12 @@
 /* Keep saving in gold; continuing is a separate, cool-toned action. */
 .primary.continueButton{background:linear-gradient(135deg,#243e58,#182b40);color:#e4edf7!important;border:1px solid #708ca8;box-shadow:0 4px 14px #0004}
 @media(hover:hover) and (pointer:fine){.primary.continueButton:hover{background:linear-gradient(135deg,#2c4b68,#203850);box-shadow:0 5px 20px #8db8ee20}}
+
+/* Text answers need their own measure; do not squeeze them into amount-sized cells. */
+.chapterMetrics>div[data-text=true]{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);align-items:baseline;gap:8px 12px}
+.chapterMetrics>div[data-text=true] dd{font-size:17px;line-height:1.65;margin:0;text-wrap:balance;overflow-wrap:normal;word-break:normal;line-break:strict}
+.chapterPractice{margin-top:24px;padding-top:18px;border-top:1px solid #ad96635c}
+.chapterPractice h3{font-family:var(--font-resolute-serif),serif;font-size:14px;font-weight:600;color:#85662d;margin:0 0 12px}
+.chapterPractice ol{margin:0;padding-left:1.4em;font-family:var(--font-resolute-serif),serif;font-size:13px;line-height:2;text-wrap:pretty}
+.chapterPractice li+li{margin-top:12px}
+@media(max-width:360px){.chapterMetrics>div[data-text=true]{grid-template-columns:1fr;gap:2px}.chapterMetrics>div[data-text=true] dd{font-size:17px}}

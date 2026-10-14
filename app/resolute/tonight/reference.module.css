@@ -45,3 +45,9 @@
 .root :focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
 
 .root{padding:0;width:100%;background:none}.root button:active{transform:translateY(1px);filter:brightness(.92)}.root button:disabled{opacity:.5;cursor:default}.root a{color:var(--gold)}.root button{touch-action:manipulation}.root p{overflow-wrap:anywhere}.status{text-align:center;color:var(--sub)}
+
+/* Balance the complete question instead of leaving just its final syllables on line two. */
+.qs li>span{display:block;text-wrap:balance;word-break:normal;overflow-wrap:normal;line-break:strict}
+@media(max-width:420px){.qs li{padding:12px 12px 12px 46px;font-size:14px}.qs li::before{left:10px;top:12px;width:25px;height:25px;font-size:13px}}
+
+.phrase{display:inline-block;white-space:nowrap}

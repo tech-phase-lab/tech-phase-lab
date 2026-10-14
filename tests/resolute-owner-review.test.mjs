@@ -68,7 +68,8 @@ test('owner preview sample is valid and can open tools without completing the qu
  const store=createReviewStore();
  const saved=await store.requestPlan({plan:createReviewSamplePlan(),baseRevision:0});
  assert.equal(parsePlanSnapshot(saved).plan.tolerancePct,30);
- assert.equal(saved.plan.buyLines.length,3);
+ assert.deepEqual(saved.plan.buyLines.map(line=>line.dropPct),[10,20]);
+ assert.equal(saved.plan.perStockCapPct,10);
 });
 test('device persistence requires opt-in, restores validated plans and settings, and can be removed',async()=>{
  const { REVIEW_STORAGE_KEY } = await import('../lib/resolute/review-store.ts');
