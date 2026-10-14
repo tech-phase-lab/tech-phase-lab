@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { parseAnnotations, type Annotation } from '@/lib/research/annotations';
 import { parseSavedIds } from '@/lib/research/saved-collection';
-import { emptySavedDocument, notebookKey, validateSavedDocument, type SavedDocument } from '@/lib/research/saved-document';
+import { emptySavedDocument, hasBrowserResearch, importBrowserResearch, notebookKey, validateSavedDocument, type SavedDocument } from '@/lib/research/saved-document';
 import { createSavedSync, type SavedCloud, type SavedStatus } from '@/lib/research/saved-sync';
 const savedKey = 'tech-phase:research-saved:v1';
 const inkPrefix = 'tech-phase:annotations:v1:';
@@ -27,6 +27,8 @@ export function useSavedResearch() {
   const [cloud, setCloud] = useState<SavedCloud | null>(null);
   const [status, setStatus] = useState<SavedStatus>('loading');
   const sync = useRef<ReturnType<typeof createSavedSync> | null>(null);
+  const importKey = cloud ? `tech-phase:saved-import:v1:${cloud.account}` : '';
+  const imported = useSyncExternalStore(subscribe, () => { try { return importKey ? localStorage.getItem(importKey) ?? '' : ''; } catch { return ''; } }, () => '');
   useEffect(() => {
     const expected = new Map<string, string | null>();
     const key = (account: string) => `tech-phase:saved-pending:v1:${account}`;
@@ -84,11 +86,19 @@ export function useSavedResearch() {
     });
   }
   return { document: displayed, status, scope: cloud?.account ?? status, ready: !!cloud || status === 'guest', editable: status === 'guest' || !!cloud && status !== 'conflict', update, commitMarks,
-    retry: () => { void sync.current?.retry(); }, discardPending: () => { void sync.current?.discardPending(); },
-    canImport: !!cloud && cloud.revision === 0 && status === 'synced' && (local.saved.length > 0 || Object.values(local.notebooks).some(m => m.length)),
-    importLocal: () => update(current => {
-      if (current.saved.length || Object.values(current.notebooks).some(marks => marks.length)) throw new Error("account-no-longer-empty");
-      return local;
-    }),
+    retry: () => { void sync.current?.retry(); }, discardPending: () => {
+      try { if (importKey) localStorage.removeItem(importKey); } catch { /* Original browser data is retained. */ }
+      void sync.current?.discardPending();
+    },
+    canImport: !!cloud && status === 'synced' && imported !== raw && hasBrowserResearch(cloud.document, local),
+    importLocal: () => {
+      const accepted = update(current => importBrowserResearch(current, local, () => crypto.randomUUID()));
+      if (accepted && importKey) {
+        // Only suppress repeat prompts after the account draft is durably queued.
+        // Discarding a conflicting migration clears this marker and offers it again.
+        try { localStorage.setItem(importKey, raw); window.dispatchEvent(new Event(changed)); } catch { /* A repeat import remains idempotent. */ }
+      }
+      return accepted;
+    },
   };
 }

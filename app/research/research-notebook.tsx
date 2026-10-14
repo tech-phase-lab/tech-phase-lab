@@ -301,7 +301,6 @@ export default function ResearchNotebook({ lang, title, enabled, children, raw, 
         <div><button onClick={() => { clearSelection(); setEditing(true); setColor(mark.color); setDraft({ id: mark.id, original: JSON.stringify(mark), parts: mark.parts, text: mark.note }); }}>{t("編集", "Edit")}</button><button onClick={() => commit(marks.filter(a => a.id !== mark.id))}>{t("削除", "Delete")}</button></div>
       </div>)}
       {notes.length > presentMarks.filter(mark => mark.kind === "note").length && <p>{t("本文が更新された箇所のメモは非表示になっています。", "Notes on changed passages are hidden.")}</p>}
-      <p>{t("このブラウザーに保存されます。", "Saved in this browser.")}</p>
     </section>}
     {enabled && inkMarks.length > 0 && <details ref={list} className={styles.markList}>
       <summary>{t("下線・蛍光ペン・囲み", "Underlines, highlights & boxes")} <span>{inkMarks.length}</span></summary>

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createSavedSync } from '../lib/research/saved-sync.ts';
-import { emptySavedDocument, mergeSavedDocuments, validateSavedDocument } from '../lib/research/saved-document.ts';
+import { emptySavedDocument, hasBrowserResearch, importBrowserResearch, mergeSavedDocuments, validateSavedDocument } from '../lib/research/saved-document.ts';
 const account = 'a'.repeat(64);
 const doc = (saved = [], marks = []) => ({ saved, notebooks: marks.length ? { 'a:ja': marks } : {} });
 const mark = (id = 'one', note = '自分のメモ') => ({ id, kind: 'note', color: 'blue', note, parts: [{ block: 'p:2:xx', start: 0, end: 2, quote: '😀' }] });
@@ -84,4 +84,15 @@ test('undo reverses only the local operation and preserves remote notes', () => 
   const current=doc([], [mark('existing'),mark('local'),mark('remote')]);
   assert.deepEqual(mergeSavedDocuments(after,before,current).notebooks['a:ja'].map(m=>m.id),['existing','remote']);
   assert.equal(mergeSavedDocuments(after,before,doc([], [mark('existing'),mark('local','remote edit')])),null);
+});
+
+test('browser migration adds to a populated account, keeps both conflicting notes and is idempotent', () => {
+  const cloud = doc(['cloud'], [mark('shared','PCのメモ')]);
+  const browser = doc(['phone'], [mark('shared','スマホのメモ')]);
+  assert.equal(hasBrowserResearch(cloud,browser),true);
+  const merged=importBrowserResearch(cloud,browser,()=> 'imported-phone');
+  assert.deepEqual(merged.saved,['cloud','phone']);
+  assert.deepEqual(merged.notebooks['a:ja'].map(m=>m.note),['PCのメモ','スマホのメモ']);
+  assert.equal(hasBrowserResearch(merged,browser),false);
+  assert.deepEqual(importBrowserResearch(merged,browser,()=> 'unused'),merged);
 });

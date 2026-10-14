@@ -42,3 +42,21 @@ export function mergeSavedDocuments(base: SavedDocument, local: SavedDocument, r
   }
   try { return validateSavedDocument({ saved, notebooks }); } catch { return null; }
 }
+
+// Migration is additive even when another device already populated the account.
+const sameImportedMark = (a: Annotation, b: Annotation) => JSON.stringify(markValue(a)?.slice(1)) === JSON.stringify(markValue(b)?.slice(1));
+export function hasBrowserResearch(account: SavedDocument, browser: SavedDocument) {
+  return browser.saved.some(id => !account.saved.includes(id)) || Object.entries(browser.notebooks).some(([key, marks]) => marks.some(mark => !(account.notebooks[key] ?? []).some(other => sameImportedMark(mark, other))));
+}
+export function importBrowserResearch(account: SavedDocument, browser: SavedDocument, makeId: () => string): SavedDocument {
+  const notebooks = { ...account.notebooks };
+  for (const [key, source] of Object.entries(browser.notebooks)) {
+    const marks = [...(notebooks[key] ?? [])];
+    for (const mark of source) {
+      if (marks.some(other => sameImportedMark(mark, other))) continue;
+      marks.push(marks.some(other => other.id === mark.id) ? { ...mark, id: makeId() } : mark);
+    }
+    notebooks[key] = marks;
+  }
+  return validateSavedDocument({ saved: [...account.saved, ...browser.saved.filter(id => !account.saved.includes(id))], notebooks });
+}
