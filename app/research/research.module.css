@@ -990,7 +990,7 @@
   color:var(--mint);
   font-size:14px
 }
-.detail>h2 {
+.detail h2 {
   font-size:22px;
   line-height:1.55;
   font-weight:500;
@@ -1564,7 +1564,7 @@
   .detail {
     padding:22px 18px
   }
-  .detail>h2 {
+  .detail h2 {
     font-size:22px
   }
   .metricStrip strong {

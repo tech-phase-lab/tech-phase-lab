@@ -15,3 +15,13 @@
 - Saved research uses navy, mint and cyan. Gold is reserved for PRO and RESOLUTE.
 - Header copy explains collecting useful articles for later reading; existing storage and access rules remain intact.
 - Removed the preparation label from the capital-map benefit in both Japanese and English PRO plan copy.
+
+## 2026-10-14: personal annotations and PDF print view
+
+- Saved article detail: underline, highlighter, box and notes; red/yellow/blue; hide/show, individual deletion and 30-step session undo. No gold styling.
+- Enable Annotate, select text (long-press on touch), then choose a tool. Selection tools appear at the bottom of the viewport. Notes can be edited. Text wraps naturally at different widths.
+- Versioned per-article/per-language browser storage; storage errors are reported. No account sync or server storage. Existing saved IDs are unchanged. Concurrent-tab writes are rejected rather than silently replacing newer annotations.
+- Anchors include text path, length, fingerprint and exact quote. Changed passages are not assigned old offsets. Unmatched records are retained; their quoted content is not displayed in the annotation list or export. Access to PRO text continues to use the existing membership gate; only current rendered content is exported.
+- PDF save opens a clean white print view with the visible text marks, selected language, article dates, source links and personal notes. User chooses PDF in the system print dialog; on iPhone, share the print preview to Files. This is a browser print flow, not a generated PDF download or automatic write to the phone. Hidden marks are excluded. Exported personal text uses DOM textContent, not HTML interpolation.
+- Deferred: selected-region image export and cross-device sync. iPhone/Android physical-device print and selection validation remain required.
+- Added anchor/overlap/Unicode/corrupt-storage regression checks. Run all AGENTS gates on the integrated tree before publication; live selection/reload/export verification follows deployment.
