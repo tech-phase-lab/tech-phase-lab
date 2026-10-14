@@ -136,7 +136,7 @@ test("phone menu follows the finger and closes when pulled down", () => {
 
 test("news list leaves out items with no source time", () => {
   const panel = read("app/research/news/general-news-panel.tsx");
-  assert.match(panel, /informativeOfficial\(item\) && officialTime\(item\)\.kind !== "observed"/);
+  assert.match(panel, /informativeOfficial\(item\) && !isEarningsRelated\(item\) && officialTime\(item\)\.kind !== "observed"/);
 });
 
 test("news list sorts by the time each card shows, newest first", () => {
