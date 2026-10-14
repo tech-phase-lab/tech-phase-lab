@@ -4,7 +4,7 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is one hundred nineteen issuers / one hundred twenty tickers:
+Researched coverage is one hundred thirty-one issuers / one hundred thirty-two tickers:
 LITE, COHR, AMAT, APH, ANET, MRVL, VRT, ALAB, MSFT, NBIS, TSM, ASML, AVGO,
 AMD, ARM, CRDO, NVDA, MU, GOOG, GOOGL, AAPL, AMZN, META, COST, INTC, SIMO,
 AAOI, BE, VST, GEV, IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL,
@@ -14,7 +14,7 @@ DDOG, MDB, ADBE, INTU, UBER, NFLX, AKAM, OKTA, S, CHKP, TEAM, TWLO, DOCU,
 HUBS, SHOP, APP, ABNB, SPOT, RDDT, PINS, SNAP, RBLX, ROKU, TTD, DASH, MELI,
 PYPL, XYZ, SOFI, DUOL, ONTO, TER, ENTG, ACMR, ICHR, UCTT, MKSI, SWKS, QRVO,
 MTSI, POWI, SITM, CAMT, NVMI, ACLS, COHU, AMKR, ASX, GFS, TSEM, RMBS, DIOD,
-SLAB and CEVA.
+SLAB, CEVA, UMC, STM, HIMX, IMOS, CRUS, SYNA, AMBA, INDI, PI, LSCC, MXL and FORM.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -228,4 +228,14 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - GlobalFoundriesとTower Semiconductorは最先端微細化ではなく、RF・電源・車載・アナログなどの特殊工程を中心に整理。顧客名が開示されない取引は社名を推測せず業種単位で表示する。
 - Rambusは製品販売・ライセンス・ロイヤルティ、Silicon LabsはIoT向け無線SoC、CEVAは工場を持たない設計IPライセンスという収益構造を区別した。競争、顧客、外部製造を別の線として扱う。
 - 公式資料: [CAMT](https://www.sec.gov/Archives/edgar/data/1109138/000117891326001561/zk2634678.htm), [NVMI](https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm), [ACLS](https://www.sec.gov/Archives/edgar/data/1113232/000110465926020461/acls-20251231x10k.htm), [COHU](https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm), [AMKR](https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm), [ASX](https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm), [GFS](https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm), [TSEM](https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/zk2635149.htm), [RMBS](https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm), [DIOD](https://www.sec.gov/Archives/edgar/data/29002/000119312526044918/diod-20251231.htm), [SLAB](https://www.sec.gov/Archives/edgar/data/1038074/000103807426000005/slab-20260103.htm), [CEVA](https://www.sec.gov/Archives/edgar/data/1173489/000143774926006091/ceva20251231_10k.htm).
+- 共通UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は継続する。
+
+### 2026-10-14 ファウンドリー・車載・IoT・接続半導体12社追加
+
+- UMC / STM / HIMX / IMOS / CRUS / SYNA / AMBA / INDI / PI / LSCC / MXL / FORMを追加。合計131社・132銘柄コード。
+- 汎用・特殊工程の受託製造、車載・産業半導体、表示・音声、IoT接続、エッジAI、RFID、低消費電力FPGA、通信向け混合信号、ウエハーテストについて、各社の最新Form 10-KまたはForm 20-Fを一次資料として日英6項目と関係マップを確認した。確認日は2026-10-14。
+- UMCは成熟・特殊工程のファウンドリー、STMicroelectronicsは設計から製造まで担う総合半導体、ChipMOSはメモリー・表示ドライバーの組立検査受託として役割を分けた。
+- Himax / Cirrus Logic / Synaptics / Ambarella / indie Semiconductor / Impinj / Lattice Semiconductor / MaxLinearは、表示、音声、IoT、映像AI、車載、RFID、FPGA、通信という製品用途を具体化した。顧客名が開示されない取引は社名を推測せず業種単位で表示する。
+- FormFactorは半導体製造装置の段へ、UMCはファウンドリー、ChipMOSは後工程、そのほかは半導体設計・製造の段へ配置。競争、顧客、外部製造・供給を別の線として扱う。
+- 公式資料: [UMC](https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm), [STM](https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm), [HIMX](https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm), [IMOS](https://www.sec.gov/Archives/edgar/data/1123134/000119312526153743/imos-20251231.htm), [CRUS](https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm), [SYNA](https://www.sec.gov/Archives/edgar/data/817720/000081772026000055/syna-20260627.htm), [AMBA](https://www.sec.gov/Archives/edgar/data/1280263/000119312526119321/amba-20260131.htm), [INDI](https://www.sec.gov/Archives/edgar/data/1841925/000119312526082535/indi-20251231.htm), [PI](https://www.sec.gov/Archives/edgar/data/1114995/000119312526042813/pi-20251231.htm), [LSCC](https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm), [MXL](https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm), [FORM](https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm).
 - 共通UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は継続する。

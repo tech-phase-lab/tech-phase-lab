@@ -13239,5 +13239,905 @@
         }
       ]
     }
+  },
+  {
+    "cik": 1033767,
+    "tickers": [
+      "UMC"
+    ],
+    "name": "United Microelectronics",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 20-F · Foundry services / Technologies / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm"
+      }
+    ],
+    "ja": {
+      "business": "他社が設計した半導体をウエハー上に量産する台湾のファウンドリー。22/28nmなど成熟・特殊工程を中心に扱う。",
+      "revenue": "通信、消費者機器、コンピューター、車載・産業向けの顧客からウエハー製造を受託して稼ぐ。",
+      "strength": "量産実績の長い成熟工程に加え、組み込み不揮発メモリー、RF、電源管理など用途別の特殊工程を持つ。",
+      "risks": "工場稼働率、半導体需要、大口顧客、巨額設備投資、台湾海峡の地政学、輸出規制、電力・水・材料供給に左右される。",
+      "competition": "成熟・特殊工程の受託生産で、世界と中国・台湾のファウンドリー、IDMの外販部門と競う。",
+      "relationships": "ファブレス企業とIDMの設計を製造し、半導体装置・材料会社から工場設備とウエハー材料を調達する。"
+    },
+    "en": {
+      "business": "A Taiwan-based foundry that manufactures chips designed by other companies, centered on mature and specialty processes such as 22/28 nanometers.",
+      "revenue": "Earns from wafer fabrication for communications, consumer, computing, automotive and industrial customers.",
+      "strength": "Pairs long-proven mature-node production with specialty processes for embedded nonvolatile memory, RF, power management and other applications.",
+      "risks": "Fab utilization, semiconductor demand, large customers, heavy capital spending, Taiwan Strait geopolitics, export controls and power, water and material supply affect results.",
+      "competition": "Competes in mature and specialty foundry services with global, Chinese and Taiwanese foundries and external operations of IDMs.",
+      "relationships": "Manufactures designs for fabless companies and IDMs and buys fab equipment and wafer materials from semiconductor suppliers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Mature-node semiconductor foundries",
+          "nameJa": "成熟工程ファウンドリー",
+          "role": "competitor",
+          "label": {
+            "ja": "成熟・特殊工程で競合",
+            "en": "Mature and specialty processes"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Fabless companies and IDMs",
+          "nameJa": "ファブレス企業・IDM",
+          "role": "customer",
+          "label": {
+            "ja": "半導体を受託生産",
+            "en": "Contract wafer manufacturing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Semiconductor equipment and material suppliers",
+          "nameJa": "半導体装置・材料会社",
+          "role": "supplier",
+          "label": {
+            "ja": "工場設備と材料を調達",
+            "en": "Fab equipment and materials"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 932787,
+    "tickers": [
+      "STM"
+    ],
+    "name": "STMicroelectronics",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 20-F · Product groups / Markets / Manufacturing / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "車載・産業機器向けを中心に、マイコン、アナログ、電源半導体、センサーを設計・製造する欧州系の総合半導体会社。",
+      "revenue": "自動車、工場設備、電源、通信、個人向け電子機器メーカーへ半導体を販売して稼ぐ。",
+      "strength": "マイコンからSiC電源半導体、MEMSセンサーまで幅広く持ち、設計と自社工場を組み合わせて長期の車載・産業案件に対応する。",
+      "risks": "車載・産業需要と顧客在庫、工場稼働率、巨額設備投資、SiC需要、欧州・アジアの生産、輸出規制に左右される。",
+      "competition": "車載マイコン、アナログ、電源半導体、MEMSセンサーで世界の総合・専門半導体会社と競う。",
+      "relationships": "自動車・産業・電子機器メーカーへ半導体を供給し、外部の装置・材料会社と一部ファウンドリーを生産に利用する。"
+    },
+    "en": {
+      "business": "A European integrated semiconductor manufacturer designing and producing MCUs, analog, power chips and sensors, with emphasis on automotive and industrial markets.",
+      "revenue": "Sells semiconductors to automotive, factory-equipment, power, communications and personal-electronics manufacturers.",
+      "strength": "Spans MCUs, SiC power devices and MEMS sensors and combines design with internal fabs to support long automotive and industrial programs.",
+      "risks": "Automotive and industrial demand and inventory, fab utilization, heavy capital spending, SiC demand, European and Asian manufacturing and export controls affect results.",
+      "competition": "Competes with global broad-line and specialist chip companies in automotive MCUs, analog, power semiconductors and MEMS sensors.",
+      "relationships": "Supplies chips to automotive, industrial and electronics manufacturers and uses equipment, material and selected external-foundry partners in production."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Automotive and industrial semiconductor vendors",
+          "nameJa": "車載・産業半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "マイコン・電源・センサーで競合",
+            "en": "MCUs, power and sensors"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Automotive and industrial manufacturers",
+          "nameJa": "自動車・産業機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "半導体を供給",
+            "en": "Semiconductor supply"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Fab equipment and material suppliers",
+          "nameJa": "工場装置・材料会社",
+          "role": "supplier",
+          "label": {
+            "ja": "製造設備と材料を調達",
+            "en": "Manufacturing equipment and materials"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1342338,
+    "tickers": [
+      "HIMX"
+    ],
+    "name": "Himax Technologies",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 20-F · Display drivers / Non-driver products / Customers / Manufacturing / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm"
+      }
+    ],
+    "ja": {
+      "business": "画面の各画素を動かすディスプレイドライバーICと、タッチ制御、画像センサー、光学・AI関連半導体を作るファブレス企業。",
+      "revenue": "テレビ、スマートフォン、車載ディスプレイ、モニター、AR機器などのメーカーへ半導体を販売して稼ぐ。",
+      "strength": "表示駆動とタッチ制御を一体化した製品、車載向けの長期供給、小型カメラ・光学技術を組み合わせられる。",
+      "risks": "ディスプレイ需要と価格、大口顧客、中国市場、外部ファウンドリーと組立会社、在庫調整、製品移行に左右される。",
+      "competition": "大型・小型・車載のディスプレイドライバー、タッチ制御、画像・光学半導体でアジアの専門メーカーと競う。",
+      "relationships": "パネル・電子機器メーカーへ表示・画像用半導体を供給し、ウエハー製造と組立・検査を外部会社へ委託する。"
+    },
+    "en": {
+      "business": "A fabless company making display-driver ICs that control screen pixels plus touch controllers, image sensors and optical and AI-related chips.",
+      "revenue": "Sells chips for televisions, smartphones, automotive displays, monitors, AR devices and other electronics.",
+      "strength": "Combines display driving and touch control, supports long automotive programs and extends into miniature cameras and optics.",
+      "risks": "Display demand and pricing, large customers, China exposure, external foundries and assembly providers, inventory corrections and product transitions affect results.",
+      "competition": "Competes with Asian specialists in large, small and automotive display drivers, touch control and imaging and optical semiconductors.",
+      "relationships": "Supplies display and imaging chips to panel and device makers and outsources wafer fabrication, assembly and test."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Display driver semiconductor vendors",
+          "nameJa": "ディスプレイドライバー半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "表示駆動・タッチ制御で競合",
+            "en": "Display driving and touch control"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Display panel and device makers",
+          "nameJa": "パネル・電子機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "表示・画像用半導体を供給",
+            "en": "Display and imaging chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Foundry and assembly partners",
+          "nameJa": "半導体工場・組立会社",
+          "role": "supplier",
+          "label": {
+            "ja": "製造・組立・検査を委託",
+            "en": "Fabrication, assembly and test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1123134,
+    "tickers": [
+      "IMOS"
+    ],
+    "name": "ChipMOS Technologies",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 20-F · Assembly and test / Products / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1123134/000119312526153743/imos-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "メモリー、ディスプレイドライバー、ミックスドシグナル半導体の組立・パッケージ・テストを受託する台湾のOSAT。",
+      "revenue": "半導体会社からウエハーテスト、最終テスト、バンピング、組立を請け負い、処理量に応じて稼ぐ。",
+      "strength": "メモリーとディスプレイドライバー向けに専門化し、ウエハー段階から完成品までのテストとパッケージ工程をまとめて提供できる。",
+      "risks": "メモリー・画面需要、大口顧客、工場稼働率、設備投資、台湾の地政学、電力・水、装置調達、価格競争に左右される。",
+      "competition": "メモリーとディスプレイドライバーの組立・テストで他のOSAT、IDMや顧客の自社工程と競う。",
+      "relationships": "半導体会社からウエハーとチップを受け取り、装置・材料会社の製品を使って組立・検査し、完成品を顧客へ返す。"
+    },
+    "en": {
+      "business": "A Taiwan-based OSAT providing assembly, packaging and test for memory, display-driver and mixed-signal semiconductors.",
+      "revenue": "Earns by performing wafer sort, final test, bumping and assembly for semiconductor companies, generally based on processing volume.",
+      "strength": "Specializes in memory and display drivers and can combine wafer-level and finished-device testing with packaging.",
+      "risks": "Memory and display demand, large customers, factory utilization, capital spending, Taiwan geopolitics, power and water, equipment procurement and pricing affect results.",
+      "competition": "Competes in memory and display-driver assembly and test with other OSATs and customers' or IDMs' internal operations.",
+      "relationships": "Receives wafers and chips from semiconductor companies, uses supplier equipment and materials for assembly and test, and returns completed devices."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Memory and display OSAT providers",
+          "nameJa": "メモリー・表示半導体OSAT",
+          "role": "competitor",
+          "label": {
+            "ja": "組立・テストで競合",
+            "en": "Assembly and test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Memory and display chip companies",
+          "nameJa": "メモリー・表示半導体会社",
+          "role": "customer",
+          "label": {
+            "ja": "組立・テストを受託",
+            "en": "Packaging and test services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Packaging equipment and material suppliers",
+          "nameJa": "パッケージ装置・材料会社",
+          "role": "supplier",
+          "label": {
+            "ja": "装置と材料を調達",
+            "en": "Packaging equipment and materials"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 772406,
+    "tickers": [
+      "CRUS"
+    ],
+    "name": "Cirrus Logic",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Audio and mixed-signal products / Customers / Manufacturing / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm"
+      }
+    ],
+    "ja": {
+      "business": "スマートフォンなどの音を高品質に処理・増幅するオーディオICと、電源・触覚制御などの高性能ミックスドシグナル半導体を作る会社。",
+      "revenue": "主にスマートフォン、タブレット、ノートPC、ウェアラブル機器メーカーへ半導体を販売して稼ぐ。",
+      "strength": "低消費電力の音声処理、アンプ、電源・触覚制御を一つの機器向けに統合し、大量生産製品へ深く組み込まれる。",
+      "risks": "一社の大口顧客への依存、スマートフォン販売、設計採用の入れ替え、外部製造、在庫、輸出規制に業績が左右される。",
+      "competition": "オーディオコーデック、アンプ、電源・触覚制御などの高性能アナログ・ミックスドシグナル半導体で競う。",
+      "relationships": "電子機器メーカーへ音声・制御用半導体を供給し、ウエハー製造、組立、検査は外部パートナーへ委託する。"
+    },
+    "en": {
+      "business": "Makes audio chips that process and amplify sound in smartphones and other devices plus high-performance mixed-signal chips for power and haptic control.",
+      "revenue": "Sells semiconductors primarily to makers of smartphones, tablets, laptops, wearables and related devices.",
+      "strength": "Integrates low-power audio processing, amplification, power and haptic control and becomes deeply designed into high-volume devices.",
+      "risks": "Dependence on one major customer, smartphone sales, design-win changes, outsourced manufacturing, inventory and export controls affect results.",
+      "competition": "Competes in audio codecs, amplifiers, power and haptic control and other high-performance analog and mixed-signal chips.",
+      "relationships": "Supplies audio and control chips to device makers and outsources wafer fabrication, assembly and test."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Audio and mixed-signal semiconductor vendors",
+          "nameJa": "音声・ミックスドシグナル半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "音声・電源・触覚制御で競合",
+            "en": "Audio, power and haptic control"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Mobile and consumer-device makers",
+          "nameJa": "モバイル・電子機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "音声・制御用半導体を供給",
+            "en": "Audio and control chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Foundry and assembly partners",
+          "nameJa": "半導体工場・組立会社",
+          "role": "supplier",
+          "label": {
+            "ja": "製造・組立・検査を委託",
+            "en": "Fabrication, assembly and test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 817720,
+    "tickers": [
+      "SYNA"
+    ],
+    "name": "Synaptics",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Core IoT / Enterprise and automotive / Customers / Manufacturing / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/817720/000081772026000055/syna-20260627.htm"
+      }
+    ],
+    "ja": {
+      "business": "IoT機器向けの低消費電力プロセッサー、Wi-Fi・Bluetooth接続、音声処理、タッチ・表示制御の半導体とソフトを作る会社。",
+      "revenue": "家庭・産業IoT、企業向け機器、自動車、PC周辺機器メーカーへ半導体と関連ソフトを販売して稼ぐ。",
+      "strength": "演算、無線接続、音声・映像、タッチを一つのIoT基盤へまとめ、機器メーカーの設計を簡単にできる。",
+      "risks": "IoT・PC需要、大口顧客、販売会社の在庫、外部ファウンドリー、製品移行、価格競争、買収統合に左右される。",
+      "competition": "IoTプロセッサー、無線接続、タッチ・表示、音声半導体で大手総合半導体会社や専門メーカーと競う。",
+      "relationships": "IoT・企業・車載機器メーカーへ半導体とソフトを供給し、製造は外部ファウンドリーと組立会社へ委託する。"
+    },
+    "en": {
+      "business": "Makes low-power processors, Wi-Fi and Bluetooth connectivity, audio, touch and display chips and software for IoT devices.",
+      "revenue": "Sells chips and related software to home and industrial IoT, enterprise-device, automotive and PC-peripheral manufacturers.",
+      "strength": "Combines compute, wireless connectivity, audio and video and touch into IoT platforms that simplify device design.",
+      "risks": "IoT and PC demand, large customers, distributor inventory, external foundries, product transitions, pricing and acquisition integration affect results.",
+      "competition": "Competes with broad-line and specialist chip suppliers in IoT processors, wireless connectivity, touch and display and audio semiconductors.",
+      "relationships": "Supplies chips and software to IoT, enterprise and automotive device makers and outsources fabrication and assembly."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "IoT processor and connectivity vendors",
+          "nameJa": "IoTプロセッサー・接続半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "演算・無線・タッチで競合",
+            "en": "Compute, wireless and touch"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "IoT and enterprise device makers",
+          "nameJa": "IoT・企業向け機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "半導体とソフトを供給",
+            "en": "Chips and software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Foundry and assembly partners",
+          "nameJa": "半導体工場・組立会社",
+          "role": "supplier",
+          "label": {
+            "ja": "製造・組立を委託",
+            "en": "Fabrication and assembly"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1280263,
+    "tickers": [
+      "AMBA"
+    ],
+    "name": "Ambarella",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Edge AI and video SoCs / Markets / Customers / Manufacturing / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1280263/000119312526119321/amba-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "カメラ映像を端末内で解析するエッジAI向けSoCを作るファブレス半導体会社。車載、監視カメラ、ロボットに使われる。",
+      "revenue": "車載カメラ、監視・業務用カメラ、ドローン、ロボット、消費者向け映像機器メーカーへSoCを販売して稼ぐ。",
+      "strength": "低消費電力の映像圧縮と独自のCVflow AI演算を組み合わせ、高画質映像と物体認識を一つのチップで処理できる。",
+      "risks": "設計採用から量産までの長さ、大口顧客、車載案件の遅延、中国需要、外部ファウンドリー、AI競争に左右される。",
+      "competition": "車載・監視・ロボット向けのエッジAI、画像処理、映像SoCで大手半導体会社や専門メーカーと競う。",
+      "relationships": "カメラ・自動車・ロボットメーカーへAI映像SoCとソフトを供給し、製造は外部ファウンドリーと組立会社へ委託する。"
+    },
+    "en": {
+      "business": "A fabless chip company making edge-AI SoCs that analyze camera video inside vehicles, security cameras, robots and other devices.",
+      "revenue": "Sells SoCs to automotive-camera, security and professional-camera, drone, robotics and consumer-video equipment makers.",
+      "strength": "Combines low-power video compression with proprietary CVflow AI compute to process high-quality video and object recognition on one chip.",
+      "risks": "Long design-to-production cycles, large customers, automotive delays, China demand, external foundries and AI competition affect results.",
+      "competition": "Competes with large and specialist chip vendors in edge AI, image processing and video SoCs for automotive, security and robotics.",
+      "relationships": "Supplies AI vision SoCs and software to camera, automotive and robotics manufacturers and outsources fabrication and assembly."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Edge AI and vision semiconductor vendors",
+          "nameJa": "エッジAI・画像半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "画像AI・映像SoCで競合",
+            "en": "Vision AI and video SoCs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Camera, automotive and robotics makers",
+          "nameJa": "カメラ・自動車・ロボットメーカー",
+          "role": "customer",
+          "label": {
+            "ja": "AI映像SoCを供給",
+            "en": "AI vision SoCs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Foundry and assembly partners",
+          "nameJa": "半導体工場・組立会社",
+          "role": "supplier",
+          "label": {
+            "ja": "製造・組立を委託",
+            "en": "Fabrication and assembly"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1841925,
+    "tickers": [
+      "INDI"
+    ],
+    "name": "indie Semiconductor",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Automotive semiconductors / Products / Customers / Manufacturing / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1841925/000119312526082535/indi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "先進運転支援、車内表示・照明、レーダー、LiDAR、接続機能向けの車載半導体とソフトを作るファブレス企業。",
+      "revenue": "自動車部品会社と車載システムメーカーへ半導体を販売し、開発・設計サービスからも収入を得る。",
+      "strength": "センサー、通信、表示・照明、電源を車載品質でまとめ、複数年にわたる車種別の設計採用へ入り込む。",
+      "risks": "量産前の設計採用が多く、売上化の遅延や中止、赤字と資金需要、買収統合、大口顧客、外部製造に左右される。",
+      "competition": "ADAS、レーダー・LiDAR、車内表示・照明、車載接続の半導体で大手と専門メーカーに競う。",
+      "relationships": "自動車部品会社と車載システムメーカーへ半導体・ソフトを供給し、製造は外部ファウンドリーと組立会社へ委託する。"
+    },
+    "en": {
+      "business": "A fabless company making automotive chips and software for driver assistance, cabin display and lighting, radar, lidar and connectivity.",
+      "revenue": "Sells semiconductors to automotive suppliers and system makers and also earns development and engineering revenue.",
+      "strength": "Combines sensing, communications, display and lighting and power functions at automotive quality and wins multi-year vehicle-platform designs.",
+      "risks": "Many wins precede production, so delays or cancellations, ongoing losses and funding needs, acquisition integration, large customers and outsourced manufacturing affect results.",
+      "competition": "Competes with large and specialist vendors in ADAS, radar and lidar, in-cabin display and lighting and automotive connectivity chips.",
+      "relationships": "Supplies chips and software to automotive suppliers and system manufacturers and outsources fabrication, assembly and test."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Automotive semiconductor vendors",
+          "nameJa": "車載半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "ADAS・車内機能で競合",
+            "en": "ADAS and in-cabin functions"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Automotive suppliers and system makers",
+          "nameJa": "自動車部品・システム会社",
+          "role": "customer",
+          "label": {
+            "ja": "車載半導体とソフトを供給",
+            "en": "Automotive chips and software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Foundry and assembly partners",
+          "nameJa": "半導体工場・組立会社",
+          "role": "supplier",
+          "label": {
+            "ja": "製造・組立・検査を委託",
+            "en": "Fabrication, assembly and test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1114995,
+    "tickers": [
+      "PI"
+    ],
+    "name": "Impinj",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · RAIN RFID platform / Products / Partners / Competition / Manufacturing / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1114995/000119312526042813/pi-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "衣料品、荷物、部品など一つひとつを無線で識別するRAIN RFIDのタグ用IC、読み取りIC、リーダーとソフトを作る会社。",
+      "revenue": "タグ・ラベルメーカーへエンドポイントICを、機器メーカーや導入企業へ読み取り製品とクラウド関連サービスを販売して稼ぐ。",
+      "strength": "タグ側とリーダー側の半導体、機器、ソフトを一つの基盤で提供し、大量の物品データを継続的に読み取れる。",
+      "risks": "小売・物流の導入速度、大口顧客、タグ価格、在庫変動、外部製造、無線規格、知的財産訴訟に左右される。",
+      "competition": "RAIN RFIDのタグIC、リーダーIC・機器、物品識別ソフトで半導体会社や識別技術メーカーと競う。",
+      "relationships": "タグ・ラベル会社へICを供給し、リーダー・ソフトのパートナーを通じて小売、物流、製造現場の物品を接続する。"
+    },
+    "en": {
+      "business": "Makes RAIN RFID endpoint ICs, reader ICs, readers and software that wirelessly identify individual apparel items, parcels, parts and other objects.",
+      "revenue": "Sells endpoint ICs to tag and label makers and reader products and cloud-related services to equipment makers and adopters.",
+      "strength": "Provides tag-side and reader-side chips, devices and software as one platform that continuously reads data from very large populations of items.",
+      "risks": "Retail and logistics adoption, large customers, tag pricing, inventory swings, outsourced manufacturing, radio standards and IP litigation affect results.",
+      "competition": "Competes in RAIN RFID endpoint chips, reader chips and devices and item-identification software with chip and identification-technology vendors.",
+      "relationships": "Supplies ICs to tag and label companies and uses reader and software partners to connect items across retail, logistics and manufacturing."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "RFID semiconductor and systems vendors",
+          "nameJa": "RFID半導体・システム会社",
+          "role": "competitor",
+          "label": {
+            "ja": "タグIC・読み取り機器で競合",
+            "en": "Tag chips and readers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "RFID tag and label makers",
+          "nameJa": "RFIDタグ・ラベル会社",
+          "role": "customer",
+          "label": {
+            "ja": "エンドポイントICを供給",
+            "en": "Endpoint IC supply"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Retail, logistics and manufacturing operators",
+          "nameJa": "小売・物流・製造事業者",
+          "role": "customer",
+          "label": {
+            "ja": "物品識別基盤を提供",
+            "en": "Item-identification platform"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 855658,
+    "tickers": [
+      "LSCC"
+    ],
+    "name": "Lattice Semiconductor",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · FPGAs / Markets / Customers / Manufacturing / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "購入後に回路を書き換えられる低消費電力FPGAと、その設計ソフト・IPを作るファブレス半導体会社。",
+      "revenue": "通信、産業、自動車、コンピューター、消費者機器メーカーへFPGAを販売し、ソフトとIPも提供して稼ぐ。",
+      "strength": "小型・低消費電力のFPGAに集中し、機器の制御、接続、セキュリティ、エッジAI機能を短期間で変更できる。",
+      "risks": "産業・通信需要、大口販売会社、在庫、外部ファウンドリー、製品世代交代、輸出規制、より大規模な競合に左右される。",
+      "competition": "低・中密度FPGA、組み込み制御、エッジAIで大手FPGA会社、マイコン、ASICと競う。",
+      "relationships": "機器メーカーへFPGA、設計ソフト、IPを供給し、ウエハー製造と組立・検査は外部会社へ委託する。"
+    },
+    "en": {
+      "business": "A fabless company making low-power FPGAs whose logic can be reprogrammed after purchase, together with design software and IP.",
+      "revenue": "Sells FPGAs and provides software and IP to communications, industrial, automotive, computing and consumer-device makers.",
+      "strength": "Focuses on small, low-power FPGAs that let customers quickly change control, connectivity, security and edge-AI functions.",
+      "risks": "Industrial and communications demand, major distributors, inventory, external foundries, product transitions, export controls and larger rivals affect results.",
+      "competition": "Competes in low- and mid-density FPGAs, embedded control and edge AI with large FPGA suppliers, MCUs and ASICs.",
+      "relationships": "Supplies FPGAs, design software and IP to equipment makers and outsources wafer fabrication, assembly and test."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "FPGA and embedded-control vendors",
+          "nameJa": "FPGA・組み込み制御半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "低消費電力FPGAで競合",
+            "en": "Low-power FPGAs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Industrial, communications and computing makers",
+          "nameJa": "産業・通信・コンピューターメーカー",
+          "role": "customer",
+          "label": {
+            "ja": "FPGAと設計ソフトを供給",
+            "en": "FPGAs and design software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Foundry and assembly partners",
+          "nameJa": "半導体工場・組立会社",
+          "role": "supplier",
+          "label": {
+            "ja": "製造・組立・検査を委託",
+            "en": "Fabrication, assembly and test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1288469,
+    "tickers": [
+      "MXL"
+    ],
+    "name": "MaxLinear",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Communications ICs / Markets / Customers / Manufacturing / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "通信機器の無線・有線信号を受信、変換、送信するRF、アナログ、DSP、ネットワーク、電源半導体を作るファブレス企業。",
+      "revenue": "ブロードバンド機器、データセンター接続、無線基地局、家庭用ネットワーク、産業機器メーカーへ半導体を販売して稼ぐ。",
+      "strength": "RFからデジタル信号処理、ネットワーク、電源までを一つのチップへ統合し、通信機器の部品数と消費電力を減らせる。",
+      "risks": "通信設備投資、顧客在庫、大口顧客、中国需要、外部ファウンドリー、価格競争、製品認定の長期化に左右される。",
+      "competition": "ブロードバンド、無線・有線通信、データセンター接続、電源管理の半導体で大手と専門メーカーに競う。",
+      "relationships": "通信・ネットワーク機器メーカーへ半導体を供給し、製造は外部ファウンドリーと組立・検査会社へ委託する。"
+    },
+    "en": {
+      "business": "A fabless company making RF, analog, DSP, networking and power chips that receive, convert and transmit wired and wireless communications signals.",
+      "revenue": "Sells chips to broadband equipment, data-center connectivity, wireless infrastructure, home-networking and industrial-equipment makers.",
+      "strength": "Integrates RF, digital signal processing, networking and power functions to reduce component count and power consumption in communications equipment.",
+      "risks": "Communications spending, customer inventory, large customers, China demand, external foundries, pricing and long qualifications affect results.",
+      "competition": "Competes with large and specialist chip vendors in broadband, wired and wireless communications, data-center connectivity and power management.",
+      "relationships": "Supplies chips to communications and networking equipment makers and outsources fabrication, assembly and test."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Communications semiconductor vendors",
+          "nameJa": "通信半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "RF・ブロードバンド・接続で競合",
+            "en": "RF, broadband and connectivity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Communications and network equipment makers",
+          "nameJa": "通信・ネットワーク機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "通信半導体を供給",
+            "en": "Communications chips"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Foundry and assembly partners",
+          "nameJa": "半導体工場・組立会社",
+          "role": "supplier",
+          "label": {
+            "ja": "製造・組立・検査を委託",
+            "en": "Fabrication, assembly and test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1039399,
+    "tickers": [
+      "FORM"
+    ],
+    "name": "FormFactor",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Probe cards and systems / Markets / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体ウエハーの各チップへ微細な針で触れて電気検査するプローブカードと、精密計測・低温試験装置を作る会社。",
+      "revenue": "半導体メーカーとテスト会社へプローブカード、計測システム、関連部品と保守を販売して稼ぐ。",
+      "strength": "先端ロジック、DRAM・HBM、先端パッケージの微細な接点へ同時に触れ、量産前後の電気特性を高精度で測れる。",
+      "risks": "半導体設備投資、大口顧客、メモリー市況、製品認定、複雑な製造歩留まり、買収統合、部品供給に左右される。",
+      "competition": "プローブカード、ウエハーテスト、計測・低温試験システムで装置会社や専門部品メーカーと競う。",
+      "relationships": "半導体工場とテスト会社へ検査用プローブカードと計測装置を供給し、精密部品・材料を外部から調達する。"
+    },
+    "en": {
+      "business": "Makes probe cards whose fine contacts electrically test each die on a wafer plus precision measurement and cryogenic test systems.",
+      "revenue": "Sells probe cards, measurement systems, related parts and service to semiconductor manufacturers and test providers.",
+      "strength": "Contacts fine-pitch advanced logic, DRAM and HBM and advanced-packaging devices in parallel to measure electrical performance before and during production.",
+      "risks": "Semiconductor capital spending, large customers, memory cycles, qualifications, complex manufacturing yield, acquisition integration and component supply affect results.",
+      "competition": "Competes in probe cards, wafer test and measurement and cryogenic systems with equipment companies and specialist component makers.",
+      "relationships": "Supplies test probe cards and measurement tools to wafer fabs and test providers and sources precision components and materials externally."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Wafer probe and test equipment vendors",
+          "nameJa": "ウエハー検査・テスト装置会社",
+          "role": "competitor",
+          "label": {
+            "ja": "プローブカード・計測で競合",
+            "en": "Probe cards and measurement"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor manufacturers and test providers",
+          "nameJa": "半導体メーカー・テスト会社",
+          "role": "customer",
+          "label": {
+            "ja": "プローブカードと計測装置を供給",
+            "en": "Probe cards and measurement systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Precision component and material suppliers",
+          "nameJa": "精密部品・材料会社",
+          "role": "supplier",
+          "label": {
+            "ja": "検査部品と材料を調達",
+            "en": "Test components and materials"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
   }
 ]
