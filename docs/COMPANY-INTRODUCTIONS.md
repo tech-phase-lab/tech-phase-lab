@@ -4,7 +4,7 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is one hundred eighty-five issuers / one hundred eighty-six tickers:
+Researched coverage is one hundred ninety-five issuers / one hundred ninety-six tickers:
 LITE, COHR, AMAT, APH, ANET, MRVL, VRT, ALAB, MSFT, NBIS, TSM, ASML, AVGO,
 AMD, ARM, CRDO, NVDA, MU, GOOG, GOOGL, AAPL, AMZN, META, COST, INTC, SIMO,
 AAOI, BE, VST, GEV, IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL,
@@ -18,7 +18,7 @@ SLAB, CEVA, UMC, STM, HIMX, IMOS, CRUS, SYNA, AMBA, INDI, PI, LSCC, MXL, FORM,
 PLAB, AEHR, AOSL, NVTS, IPGP, VIAV, GLW, TEL, ARW, AVT, SANM, BHE, TSLA,
 IONQ, RGTI, QBTS, QUBT, RKLB, ASTS, PL, BKSY, AVAV, KTOS, RDW, ZM, DOCN,
 ESTC, GTLB, FROG, NTNX, NTAP, BOX, WDAY, PATH, ADSK, PTC, BSY, VEEV, MANH,
-PEGA, PAYC, PAYX, ADP, NICE, DBX, FIVN, RNG, DT, BILL, ASAN, MNDY, APPF, BL and FRSH.
+PEGA, PAYC, PAYX, ADP, NICE, DBX, FIVN, RNG, DT, BILL, ASAN, MNDY, APPF, BL, FRSH, OTEX, BAND, EGHT, IOT, KVYO, BRZE, CXM, SPT, WK and PCOR.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -291,3 +291,45 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - 年次資料: [DBX](https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm), [FIVN](https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm), [RNG](https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm), [DT](https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm), [BILL](https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm), [ASAN](https://www.sec.gov/Archives/edgar/data/1477720/000147772026000021/asan-20260131.htm), [MNDY](https://www.sec.gov/Archives/edgar/data/1845338/000117891326000870/zk2634436.htm), [APPF](https://www.sec.gov/Archives/edgar/data/1433195/000143319526000011/appf-20251231.htm), [BL](https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm), [FRSH](https://www.sec.gov/Archives/edgar/data/1544522/000154452226000036/frsh-20251231.htm)。補足公式資料と確認日は各レコードに保存。
 - 共通UI、保存したリサーチ、ニュース・目標株価・翻訳、RESOLUTEは変更なし。公開数の確定は対象コミットのCI成功・Vercel READY・公開画面確認後。
 - 次候補: OTEX / BAND / EGHT / TWKS / IOT / KVYO / BRZE / CXM / SPT / WK。未収録と上場・買収状況を実行時に再確認。CFLTなどは買収後の上場状況を確認せず追加しない。全検索企業の収録は未完了。
+
+
+## 2026-10-14 · enterprise communications, marketing and operations batch
+
+Added OTEX / BAND / EGHT / IOT / KVYO / BRZE / CXM / SPT / WK / PCOR.
+Coverage moves from 185 issuers / 186 tickers to 195 issuers / 196 tickers.
+All six Japanese and English answers and both maps were reviewed on 2026-10-14.
+The shared UI, monitored-news configuration, Saved Research and RESOLUTE are unchanged.
+
+Primary evidence:
+- OTEX: https://www.sec.gov/Archives/edgar/data/1002638/000100263826000068/otex-20260630.htm
+- BAND: https://www.sec.gov/Archives/edgar/data/1514416/000151441626000017/band-20251231.htm
+- EGHT: https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm
+- IOT: https://www.sec.gov/Archives/edgar/data/1642896/000162828026018167/iot-20260131.htm
+- KVYO: https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm
+- BRZE: https://www.sec.gov/Archives/edgar/data/1676238/000167623826000013/brze-20260131.htm
+- CXM: https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm
+- SPT: https://www.sec.gov/Archives/edgar/data/1517375/000151737526000015/spt-20251231.htm
+- WK: https://www.sec.gov/Archives/edgar/data/1445305/000144530526000016/wk-20251231.htm
+- PCOR: https://www.sec.gov/Archives/edgar/data/1611052/000162828026011055/pcor-20251231.htm
+- BAND September 2026 presentation: https://www.sec.gov/Archives/edgar/data/1514416/000151441626000069/a2026bandwidthinvestorpr.htm
+
+Review notes: Bandwidth customer relationships are explicitly named in its annual
+filing; Salesforce global deployment is described as phased, not fully completed.
+Klaviyo pays Shopify a contractual revenue share; Shopify is not represented as
+a reseller or Klaviyo customer. Braze data exports and Sprout network connections
+are integrations, not purchasing contracts. Annual filings name Sprout competitors;
+Sprinklr, Workiva and Procore use documented competitor categories where a specific
+peer is not identified. Unnamed end customers and component suppliers remain
+industry nodes. No forecast, share-price target or purchase assurance is added.
+
+Current release check: the previous batch 0ef155f9cac4cad5eebbfd37908ffda94189a49b
+has successful CI. This batch integrates through 8dfbc8c3dda26bbe3d4abf804f190e3cc2e7f0b5,
+including other contributors’ changes. Full integrated gates and preview
+publication are required before reporting this batch as published.
+
+Next uncovered candidates: ADBE peers and enterprise security / software including
+CFLT, AI, INFA (verify acquisition/listing status before selection), APPN, AVPT,
+NCNO, QTWO, ALKT, TENB, RPD, VRNS, CYBR (verify acquisition status), ZETA and SEMR.
+Recount and recheck the latest remote data before choosing the next batch; do not
+repeat any issuer already present. This list is a research queue, not confirmed
+publication-ready coverage.
