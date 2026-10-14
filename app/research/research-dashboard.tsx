@@ -24,6 +24,12 @@ import ResearchNotebook from "./research-notebook";
 
 const storageKey = "tech-phase:research-saved:v1";
 const notifyName = "tech-phase:research-saved";
+function subscribeView(callback: () => void) {
+  window.addEventListener("hashchange", callback);
+  window.addEventListener("popstate", callback);
+  return () => { window.removeEventListener("hashchange", callback); window.removeEventListener("popstate", callback); };
+}
+function viewSnapshot() { return researchViewFromHash(window.location.hash) ?? "home"; }
 function subscribeSaved(callback: () => void) {
   window.addEventListener("storage", callback);
   window.addEventListener(notifyName, callback);
@@ -51,7 +57,9 @@ type MonitoredCompany = {
 
 export default function ResearchDashboard({ events, monitoredCompanies, initialNews }: { events: ResearchEvent[]; monitoredCompanies: MonitoredCompany[]; initialNews?: InitialNewsSnapshot | null }) {
   const [lang, setLang] = useResearchLanguage();
-  const [tab, setTab] = useState<ResearchView>("home");
+  const restoredView = useSyncExternalStore(subscribeView, viewSnapshot, () => null);
+  const tab = restoredView ?? "home";
+  const [savedActiveId, setSavedActiveId] = useState("");
   const [ticker, setTicker] = useState("all");
   const [category, setCategory] = useState("all");
   const [query, setQuery] = useState("");
@@ -66,7 +74,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
     const syncHash = () => {
       const next = researchViewFromHash(window.location.hash);
       if (next) {
-        setTab(next);
+        if (next === "saved") setSavedActiveId("");
         const noteId = window.location.hash.startsWith("#what-changed/") ? window.location.hash.slice("#what-changed/".length) : "";
         if (noteId) { setActiveId(noteId); setQuery(""); setTicker("all"); setCategory("all"); }
         if (next === "home") { setQuery(""); setTicker("all"); setCategory("all"); }
@@ -87,7 +95,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
     return (ticker === "all" || event.ticker === ticker) && (category === "all" || event.category === category) &&
       (!query.trim() || search.includes(query.trim().toLowerCase())) && (tab !== "saved" || saved.includes(event.id));
   });
-  const selected = filtered.find((event) => event.id === activeId) ?? filtered[0];
+  const selected = tab === "saved" ? filtered.find(event => event.id === savedActiveId) : filtered.find((event) => event.id === activeId) ?? filtered[0];
   const article = useMemberArticle(selected?.id, Boolean(selected?.locked && (tab === "changes" || tab === "saved")));
   const active = article.event ?? selected;
   const comparisonPeriods = [...new Set(active?.metrics.flatMap((metric) => {
@@ -106,6 +114,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   }
   function selectEvent(id: string) {
     setActiveId(id);
+    if (tab === "saved") setSavedActiveId(id);
     if (tab === "changes") window.history.replaceState(null, "", `#what-changed/${id}`);
     if (window.matchMedia("(max-width: 1150px)").matches) {
       requestAnimationFrame(() => { detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }); detailRef.current?.focus({ preventScroll: true }); });
@@ -116,12 +125,13 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
     const hash = researchViewHashes[next];
     if (window.location.hash !== hash) window.history.pushState(null, "", hash);
     window.dispatchEvent(new HashChangeEvent("hashchange"));
-    setTab(next);
     if (next === "home") clearFilters();
     requestAnimationFrame(() => {
       (next === "home" || next === "companies" || next === "pro" || next === "changes" ? document.getElementById("research-main") : workspaceRef.current)?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   }
+
+  if (restoredView === null) return <div className={styles.viewLoading} aria-busy="true" aria-label={t("読み込み中", "Loading")} />;
 
   return <div className={styles.app} lang={lang}>
     <a className={styles.skip} href="#research-main">{t("本文へ移動", "Skip to content")}</a>
@@ -220,7 +230,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           </div> : <div className={styles.researchGrid}>
             <div className={styles.eventList}>
               {filtered.map((event) => <article key={event.id} className={`${styles.eventCard} ${active?.id === event.id ? styles.selected : ""}`}>
-                <div className={styles.eventMeta}><span className={styles.ticker}>{event.ticker}</span><span>{kinds[event.kind]}</span><time dateTime={event.publishedOn}>{dateLabel(event.publishedOn, lang)}</time><button className={styles.saveButton} aria-label={saved.includes(event.id) ? t("保存を解除", "Unsave research") : t("リサーチを保存", "Save research")} aria-pressed={saved.includes(event.id)} onClick={() => toggleSaved(event.id)}><Bookmark filled={saved.includes(event.id)} /><span>{saved.includes(event.id) ? t("保存済み", "Saved") : t("保存", "Save")}</span></button></div>
+                <div className={styles.eventMeta}><span className={styles.ticker}>{event.ticker}</span><span>{kinds[event.kind]}</span><time dateTime={event.publishedOn}>{dateLabel(event.publishedOn, lang)}</time><button className={styles.saveButton} aria-label={saved.includes(event.id) ? t("保存を解除", "Unsave research") : t("リサーチを保存", "Save research")} aria-pressed={saved.includes(event.id)} onClick={() => toggleSaved(event.id)}><Bookmark filled={saved.includes(event.id)} />{tab !== "saved" && <span>{saved.includes(event.id) ? t("保存済み", "Saved") : t("保存", "Save")}</span>}</button></div>
                 <button className={styles.eventOpen} aria-pressed={active?.id === event.id} onClick={() => selectEvent(event.id)}><h3>{event.title[lang]}</h3>{event.id === "mu-q3-2026" && <small>{t("PRO分析の無料サンプル", "Free sample of PRO research")}</small>}<p>{event.summary[lang]}</p><span className={styles.eventFoot}><span>{event.kind === "external-research" ? t("外部調査", "External research") : t("根拠資料", "Sources")} {event.sources.length}<span className={styles.dot}>·</span>{t("原文付き", "Evidence linked")}</span><span>{t("詳しく見る", "Read research")} <span aria-hidden="true">→</span></span></span></button>
               </article>)}
               {!filtered.length && (tab === "saved" && !saved.some((id) => events.some((event) => event.id === id)) ? <div className={styles.savedEmpty}>
@@ -232,11 +242,11 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
             </div>
 
             {active && <article ref={detailRef} tabIndex={-1} className={styles.detail} aria-label={t("リサーチ詳細", "Research detail")}>
-              <div className={styles.articleSaveBar}>
+              {tab !== "saved" && <div className={styles.articleSaveBar}>
                 <button className={styles.articleSaveButton} aria-pressed={saved.includes(active.id)} aria-label={saved.includes(active.id) ? t("この記事の保存を解除", "Unsave this article") : t("この記事を保存する", "Save this article")} onClick={() => toggleSaved(active.id)}><Bookmark filled={saved.includes(active.id)} /><span>{saved.includes(active.id) ? t("保存済み", "Saved") : t("保存する", "Save article")}</span></button>
-                {saved.includes(active.id) && tab !== "saved" && <button className={styles.openSavedButton} onClick={() => { clearFilters(); openView("saved"); }}>{t("保存した記事を開く", "Open saved articles")} <span aria-hidden="true">→</span></button>}
-                <span className={styles.articleSaveStatus} role="status">{storageError ? t("保存できませんでした。ブラウザーの設定をご確認ください。", "Could not save. Check your browser settings.") : saved.includes(active.id) ? t("保存したリサーチに追加済み", "Added to saved research") : ""}</span>
-              </div>
+                {saved.includes(active.id) && <button className={styles.openSavedButton} onClick={() => { clearFilters(); openView("saved"); }}>{t("保存した記事を開く", "Open saved articles")} <span aria-hidden="true">→</span></button>}
+                <span className={styles.articleSaveStatus} role="status">{storageError ? t("保存できませんでした。ブラウザーの設定をご確認ください。", "Could not save. Check your browser settings.") : ""}</span>
+              </div>}
               <ResearchNotebook key={`${active.id}:${lang}:${Boolean(active.locked)}`} articleId={active.id} lang={lang} title={active.title[lang]} enabled={tab === "saved" || saved.includes(active.id)}>
               <div className={styles.detailTop}><span className={styles.eyebrow}>RESEARCH NOTE</span><span className={styles.version}>{active.analysisAsOf ? "v3" : active.analysis ? "v2" : "v1"} · {(active.id === "mu-q4-2026" || active.id.startsWith("x-result-")) ? t("決算速報", "Earnings update") : active.id.startsWith("ir-result-") ? t("公式発表", "Company update") : active.analysisAsOf ? t("分析更新", "Updated analysis") : t("過去事例", "Historical")}</span></div>
               <div className={styles.detailCompany}><Link className={styles.detailTicker} href={`/research/companies/${active.ticker}`} aria-label={t(`${active.ticker}の銘柄ページ`, `${active.ticker} company research`)}>{active.ticker} ↗</Link><span>{active.company}</span></div>

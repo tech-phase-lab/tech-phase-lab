@@ -257,11 +257,16 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
   return <div className={styles.notebook} data-enabled={enabled}>
     {enabled && <div className={styles.controls}>
       <div className={styles.actions}>
-        <button aria-pressed={editing} onClick={() => { setEditing(!editing); clearSelection(); setDraft(null); }}>{t("ペンツール", "Pen tools")}</button>
-        {notes.length > 0 && <button onClick={() => notesList.current?.scrollIntoView({ behavior: "smooth", block: "start" })}>{t("自分のメモ", "My notes")} ({notes.length})</button>}
-        {inkMarks.length > 0 && <button onClick={() => { if (list.current) { list.current.open = true; list.current.scrollIntoView({ behavior: "smooth", block: "start" }); } }}>{t("書き込みを管理", "Manage marks")} ({inkMarks.length})</button>}
-        {marks.length > 0 && <button aria-pressed={visible} onClick={() => setVisible(!visible)}>{visible ? t("書き込みを隠す", "Hide marks") : t("書き込みを表示", "Show marks")}</button>}
+        <button className={styles.writeAction} aria-pressed={editing} onClick={() => { setEditing(!editing); clearSelection(); setDraft(null); }}>{t("書き込む", "Annotate")}</button>
         <button onClick={() => { if (root.current && !exportPrint(root.current, visible ? currentMarks() : [], title, lang)) setError(t("印刷用画面を開けません。ポップアップの設定を確認してください。", "Allow pop-ups to open the print view.")); }}>{t("PDF保存", "Save PDF")}</button>
+        {marks.length > 0 && <details className={styles.moreActions}>
+          <summary>{t("その他", "More")} <span aria-hidden="true">⋯</span></summary>
+          <div>
+            {notes.length > 0 && <button onClick={event => { event.currentTarget.closest("details")?.removeAttribute("open"); notesList.current?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>{t("メモへ移動", "Go to notes")}</button>}
+            {inkMarks.length > 0 && <button onClick={event => { event.currentTarget.closest("details")?.removeAttribute("open"); if (list.current) { list.current.open = true; list.current.scrollIntoView({ behavior: "smooth", block: "start" }); } }}>{t("書き込みを管理", "Manage marks")}</button>}
+            <button aria-pressed={visible} onClick={() => setVisible(!visible)}>{visible ? t("書き込みを隠す", "Hide marks") : t("書き込みを表示", "Show marks")}</button>
+          </div>
+        </details>}
       </div>
       {editing && <div className={styles.editor} onPointerDown={event => {
         if (!(event.target as HTMLElement).closest("button")) return;
@@ -300,7 +305,7 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
       <h3>{t("自分のメモ", "My notes")} <span>{notes.length}</span></h3>
       {presentMarks.filter(mark => mark.kind === "note").map(mark => <div key={mark.id} className={`${styles.markItem} ${styles.noteItem}`} style={{ borderLeftColor: inkColors[mark.color] }}>
         <p>{mark.note}</p>
-        <details><summary>{t("メモした箇所", "Referenced passage")}</summary><blockquote>{mark.parts.map(p => p.quote).join(" ")}</blockquote></details>
+        <blockquote className={styles.noteQuote}><span>{t("メモした箇所", "Referenced passage")}</span>{mark.parts.map(p => p.quote).join(" ")}</blockquote>
         <div><button onClick={() => { clearSelection(); setEditing(true); setColor(mark.color); setDraft({ id: mark.id, parts: mark.parts, text: mark.note }); }}>{t("編集", "Edit")}</button><button onClick={() => commit(marks.filter(a => a.id !== mark.id))}>{t("削除", "Delete")}</button></div>
       </div>)}
       {notes.length > presentMarks.filter(mark => mark.kind === "note").length && <p>{t("本文が更新された箇所のメモは非表示になっています。", "Notes on changed passages are hidden.")}</p>}

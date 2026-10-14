@@ -65,3 +65,8 @@
 ## 2026-10-14: separate personal notes
 - Personal notes have a dedicated always-visible section and shortcut, separate from the collapsed underline/highlight/box manager. Note text comes first; its referenced passage is expandable. Edit/delete remain available per note.
 - Existing storage, export, undo and changed-passage access checks are preserved; no data migration.
+
+## 2026-10-14: explicit collection selection and compact article actions
+- Saved view starts with its collection only. Entering/re-entering clears its independent selected article; filters never fall back to opening another saved article. Initial URL restoration uses a neutral loading surface rather than briefly rendering Home.
+- Removed the saved-detail save bar and redundant saved confirmation text. Saved collection bookmark remains an icon-only removal control with an accessible label.
+- Article actions are Annotate, Save PDF and a More menu for occasional ink-management/visibility actions. Notes show their complete referenced passage without an expansion step.

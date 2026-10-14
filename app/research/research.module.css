@@ -1747,3 +1747,6 @@
 /* Desktop left menu (owner, Oct 14): a little wider so every label fits on one line. */
 @media(min-width:761px){.shell{grid-template-columns:256px minmax(0,1fr)}.sidebar{padding-left:14px;padding-right:14px}}
 @media(min-width:761px) and (max-width:1350px){.shell{grid-template-columns:252px minmax(0,1fr)}}
+
+.viewLoading{min-height:70vh;background:var(--background,#0b1119)}
+.savedWorkspace .researchGrid:not(:has(.detail)){grid-template-columns:1fr}
