@@ -223,11 +223,15 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           </div>
         </section>}
 
-        {(tab === "changes" || tab === "metrics" || tab === "saved") && <section id="what-changed" ref={workspaceRef} className={styles.workspace}>
+        {(tab === "changes" || tab === "metrics" || tab === "saved") && <section id="what-changed" ref={workspaceRef} className={`${styles.workspace} ${tab === "saved" ? styles.savedWorkspace : ""}`}>
           <span id="metrics" className={styles.anchorTarget} aria-hidden="true" />
           <span id="saved" className={styles.anchorTarget} aria-hidden="true" />
+          {tab === "saved" && <header className={styles.savedHeader}>
+            <div><span className={styles.savedEyebrow}>MY RESEARCH</span><h1>{t("保存したリサーチ", "Saved research")}</h1><p>{t("気になった記事を、いつでも手元に。", "Your reading, ready to revisit.")}</p></div>
+            <div className={styles.savedCount}><Bookmark filled /><strong>{saved.filter((id) => events.some((event) => event.id === id)).length}</strong><span>{t("保存済み", "Saved")}</span></div>
+          </header>}
           <div className={styles.toolbar}>
-            {tab !== "changes" && <div className={styles.sectionTitle}><h2>{tab === "metrics" ? t("指標一覧", "Metrics") : tab === "saved" ? t("保存した記事", "Saved research") : t("何が変わった？", "What changed?")}</h2><span>{tab === "metrics" ? allMetrics.length : filtered.length}</span></div>}
+            {tab !== "changes" && <div className={styles.sectionTitle}><h2>{tab === "metrics" ? t("指標一覧", "Metrics") : t("保存一覧", "Your collection")}</h2><span>{tab === "metrics" ? allMetrics.length : filtered.length}</span></div>}
             <label className={styles.search}><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input aria-label={t("銘柄・キーワードで検索", "Search ticker or keyword")} placeholder={t("銘柄・キーワードを検索", "Search ticker or keyword")} value={query} onChange={(e) => setQuery(e.target.value)} /></label>
           </div>
           <div className={styles.filters}>
@@ -236,7 +240,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
             <span className={styles.sortLabel}>{t("発表日の新しい順", "Newest announcement first")}</span>
           </div>
           {storageError && <p role="alert" className={styles.notice}>{t("このブラウザーでは保存できません。ストレージの設定をご確認ください。", "Saving is unavailable in this browser. Check your storage settings.")}</p>}
-          {tab === "saved" && <p className={styles.savedNote}>{t("保存先はこのブラウザーです。アカウント間・端末間の同期は未対応です。", "Saved in this browser only. Account and cross-device sync are not connected.")}</p>}
+          {tab === "saved" && <p className={styles.savedNote}>{t("このブラウザーに保存 · 端末間の同期は未対応", "Saved in this browser · No cross-device sync")}</p>}
 
           {tab === "metrics" ? <div className={styles.tableWrap}>
             {allMetrics.length ? <table><caption>{t("実績・見通し・ARRを区別。金額のMは百万米ドル。", "Actuals, guidance, and run-rate are distinct. M denotes USD millions.")}</caption><thead><tr>{[t("銘柄 / 指標", "Ticker / metric"), t("値", "Value"), t("対象・基準", "Scope / basis"), t("期間", "Period"), t("根拠", "Source")].map((label) => <th key={label} scope="col">{label}</th>)}</tr></thead><tbody>{allMetrics.map(({ metric, event }) => <tr key={`${event.id}:${metric.name}`}><th scope="row"><span className={styles.tableTicker}>{event.ticker}</span>{metricNames[metric.name]?.[lang] ?? metric.name}</th><td className={styles.tableValue}>{valueLabel(metric)}</td><td>{metric.scope}<small>{metric.basis} · {metric.kind === "guidance" ? t("会社見通し", "Guidance") : metric.kind === "run-rate" ? t("年換算指標", "Run-rate") : t("実績", "Actual")}</small></td><td>{metric.period}</td><td><a href={event.sources.find((source) => source.id === metric.sourceId)?.url} target="_blank" rel="noreferrer">{t("原文", "Source")} <Arrow /></a></td></tr>)}</tbody></table> : <Empty lang={lang} onReset={clearFilters} />}
@@ -246,7 +250,12 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
                 <div className={styles.eventMeta}><span className={styles.ticker}>{event.ticker}</span><span>{kinds[event.kind]}</span><time dateTime={event.publishedOn}>{dateLabel(event.publishedOn, lang)}</time><button className={styles.saveButton} aria-label={saved.includes(event.id) ? t("保存を解除", "Unsave research") : t("リサーチを保存", "Save research")} aria-pressed={saved.includes(event.id)} onClick={() => toggleSaved(event.id)}><Bookmark filled={saved.includes(event.id)} /></button></div>
                 <button className={styles.eventOpen} aria-pressed={active?.id === event.id} onClick={() => selectEvent(event.id)}><h3>{event.title[lang]}</h3>{event.id === "mu-q3-2026" && <small>{t("PRO分析の無料サンプル", "Free sample of PRO research")}</small>}<p>{event.summary[lang]}</p><span className={styles.eventFoot}><span>{event.kind === "external-research" ? t("外部調査", "External research") : t("根拠資料", "Sources")} {event.sources.length}<span className={styles.dot}>·</span>{t("原文付き", "Evidence linked")}</span><span>{t("詳しく見る", "Read research")} <span aria-hidden="true">→</span></span></span></button>
               </article>)}
-              {!filtered.length && <Empty lang={lang} onReset={clearFilters} saved={tab === "saved"} />}
+              {!filtered.length && (tab === "saved" && !saved.some((id) => events.some((event) => event.id === id)) ? <div className={styles.savedEmpty}>
+                <span className={styles.savedEmptyIcon}><Bookmark /></span>
+                <h2>{t("読み返したい記事を、ここに。", "Keep a good read close.")}</h2>
+                <p>{t("記事のしおりマークを押すと、この一覧に保存できます。", "Tap the bookmark on a research article to add it to your collection.")}</p>
+                <button onClick={() => { clearFilters(); openView("changes"); }}>{t("リサーチを見る", "Explore research")} <span aria-hidden="true">→</span></button>
+              </div> : <Empty lang={lang} onReset={clearFilters} />)}
             </div>
 
             {active && <article ref={detailRef} tabIndex={-1} className={styles.detail} aria-label={t("リサーチ詳細", "Research detail")}>
