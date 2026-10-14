@@ -5,7 +5,8 @@ import type { Language } from "@/lib/research/data";
 import { availableNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
 import { officialNewsDisplay, shownInLanguage } from "@/lib/research/news-presentation";
 import { analystNewsDisplay } from "@/lib/research/analyst-news";
-import { lateDetection, officialTime, recentPublication } from "@/lib/research/news-time";
+import { officialTime } from "@/lib/research/news-time";
+import { isFreshItem, markSeen, readSeen } from "@/lib/research/company-freshness";
 import { createNewsPoller } from "@/lib/research/news-poller";
 import { observePageActivity } from "@/lib/research/page-activity";
 import { createWatchTracker } from "@/lib/research/watch-new-items";
@@ -108,14 +109,15 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
   ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
   const tagText: Record<Tag, string> = ja ? { flash: "速報", analyst: "アナリスト", news: "ニュース" } : { flash: "Flash", analyst: "Analyst", news: "News" };
   const newest = rows[0];
+  const [seenAtLoad] = useState(() => readSeen()[ticker] ?? 0);
   const clockMs = checkedAt ? Date.parse(checkedAt) : 0;
-  const timeFresh = rows.filter(row => clockMs > 0 && recentPublication(row.at, row.kind, clockMs) && !lateDetection(row.at, row.observedAt)).map(row => row.id);
+  const timeFresh = rows.filter(row => clockMs > 0 && isFreshItem(row.at, row.kind, row.observedAt, seenAtLoad, clockMs)).map(row => row.id);
   const marked = new Set([...unread, ...timeFresh].filter(id => !dismissed.has(id)));
   const freshCount = [...marked].filter(id => !acknowledged.has(id)).length;
   const hasFresh = freshCount > 0 && !open;
   const status = hasFresh ? (ja ? "新着あり" : "New") : failed ? (ja ? "再接続中" : "Reconnecting") : paused ? (ja ? "一時停止" : "Paused") : data ? (ja ? "自動更新" : "Auto-updating") : (ja ? "接続中" : "Connecting");
   const toggle = () => {
-    if (!open) setAcknowledged(new Set(marked));                          // opening: blink and badge go
+    if (!open) { setAcknowledged(new Set(marked)); markSeen(ticker); }                          // opening: blink and badge go
     else { setDismissed(previous => new Set([...previous, ...marked])); setUnread(new Set()); } // closing: NEW marks go
     setOpen(!open);
   };
