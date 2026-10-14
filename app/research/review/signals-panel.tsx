@@ -43,6 +43,8 @@ type Queue = {
     scope: string; configuredMaxRequestsPerDay: number; localMaxRequestsPerDay: number; budgetCapped: boolean; pacingEnabled?: boolean;
     minimumSpacingSeconds?: number; minimumSourceSpacingSeconds?: number; pacedUntil?: string | null };
   priceTargetReconciliation?: TargetReconciliation;
+  /** What the X routes returned, newest first (owner only). */
+  xRecent?: { route: number; url: string; publishedAt: string | null; seenAt: string; text: string; saved: boolean; published: boolean }[];
 };
 const kindNames: Record<string, string> = {
   baseline: "初回取得・過去資料", new: "新規検出・発表時刻は要確認", changed: "内容変更",
@@ -237,6 +239,14 @@ function SignalsSession({ token }: { token: string | null }) {
           </details>}
         </li>)}</ul>
       </details>
+      {!!data.xRecent?.length && <details className={styles.routes}><summary>Xで取得した直近の投稿（{data.xRecent.length}件・新しい順）</summary>
+        <p className={styles.note}>取得経路は設定順の番号です。「読み取れず」は、保存はされたが記事・結果として読み取れなかった投稿です。時刻は日本時間です。</p>
+        <ul>{data.xRecent.map(post => <li key={post.url}>
+          <strong>{post.published ? "掲載済み" : post.saved ? "保存のみ（未掲載）" : "読み取れず"}</strong>
+          <span>経路{post.route} · 投稿 {timeLabel(post.publishedAt)} · 取得 {timeLabel(post.seenAt)}</span>
+          <small><a href={post.url} target="_blank" rel="noopener noreferrer">{post.text.replace(/\s+/g, " ")} ↗</a></small>
+        </li>)}</ul>
+      </details>}
       <div className={styles.filters}>
         <label>銘柄<select value={ticker} onChange={event => setTicker(event.target.value)}><option value="">すべて</option>{tickers.map(item => <option key={item}>{item}</option>)}</select></label>
         <label>種別<select value={view} onChange={event => setView(event.target.value)}><option value="targets">目標株価・表示実験</option><option value="ratings">アナリスト評価変更</option><option value="all">すべて</option><option value="new">新規検出</option><option value="changed">内容変更</option><option value="baseline">初回取得</option></select></label>
