@@ -145,14 +145,17 @@ def status(db, errors):
     current = now()
     day = (current - timedelta(hours=24)).isoformat()
     out = {}
+    schema_translation(db)
     for ticker in roster():
         rows = db.execute('SELECT origin, published_at, first_seen_at FROM company_wire WHERE ticker=? AND published_at>=?',
                           (ticker, day)).fetchall()
+        translated = db.execute('''SELECT COUNT(*) FROM company_wire w JOIN company_wire_ja j USING(key)
+          WHERE w.ticker=? AND w.published_at>=?''', (ticker, day)).fetchone()[0]
         wire = [r for r in rows if r['origin'] == 'wire']
         newest = max((r['published_at'] for r in rows), default=None)
         lags = sorted((datetime.fromisoformat(r['first_seen_at']) - datetime.fromisoformat(r['published_at'])).total_seconds()
                       for r in rows)
-        out[ticker] = {'headlines24h': len(rows), 'wire24h': len(wire), 'newestPublishedAt': newest,
+        out[ticker] = {'headlines24h': len(rows), 'translated24h': translated, 'wire24h': len(wire), 'newestPublishedAt': newest,
                        'newestWireAt': max((r['published_at'] for r in wire), default=None),
                        'medianSeenLagMinutes': round(lags[len(lags) // 2] / 60) if lags else None,
                        'feedErrors': sorted(f'{s}:{e}' for (t, s), e in errors.items() if t == ticker)}
