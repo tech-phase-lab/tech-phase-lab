@@ -25,3 +25,10 @@
 - PDF save opens a clean white print view with the visible text marks, selected language, article dates, source links and personal notes. User chooses PDF in the system print dialog; on iPhone, share the print preview to Files. This is a browser print flow, not a generated PDF download or automatic write to the phone. Hidden marks are excluded. Exported personal text uses DOM textContent, not HTML interpolation.
 - Deferred: selected-region image export and cross-device sync. iPhone/Android physical-device print and selection validation remain required.
 - Added anchor/overlap/Unicode/corrupt-storage regression checks. Run all AGENTS gates on the integrated tree before publication; live selection/reload/export verification follows deployment.
+
+## 2026-10-14: explicit save entry point
+
+- Article cards now show Save / Saved beside the bookmark icon.
+- Article detail begins with a labelled Save article button, saved confirmation and a link to the saved collection. This stays outside the annotated body so existing text anchors do not shift.
+- Empty collection instructions describe the actual open-article → save → collection flow. Storage failures are also shown beside the detail action.
+- Opening an article remains a read action; storage is changed only through an explicit save action.

@@ -1732,3 +1732,14 @@
 .companyGroups h3{min-height:21px}
 @media(max-width:600px){.companyGroups{grid-template-columns:1fr;grid-auto-rows:auto}.companyGroups section{padding:12px}.companyGroups h3{margin-bottom:8px}.companyGroups section>div{grid-template-columns:repeat(4,minmax(0,1fr))}.companyGroups a{min-width:0}.companyGroups a span{white-space:nowrap}.companyGroups a strong{font-size:13px}.companyGroups a>i{right:5px;width:4px;height:4px}}
 @media(max-width:380px){.companyGroups section>div{grid-template-columns:repeat(2,minmax(0,1fr))}.companyGroups{grid-auto-rows:1fr}}
+
+/* Explicit article-saving entry point, also visible after mobile detail scroll. */
+.articleSaveBar { display:flex; align-items:center; flex-wrap:wrap; gap:10px 14px; padding-bottom:16px; margin-bottom:20px; border-bottom:1px solid #8fc9bd26; }
+.articleSaveButton { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:9px 16px; border:1px solid #8bd9c1; border-radius:8px; background:#8bd9c11a; color:#b8efdc; font-size:14px; font-weight:600; cursor:pointer; }
+.articleSaveButton[aria-pressed=true] { background:#8bd9c12a; }
+.openSavedButton { display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:8px 0; border:0; background:transparent; color:#b8efdc; font-size:13px; cursor:pointer; }
+.articleSaveStatus { flex-basis:100%; color:var(--muted); font-size:12px; }
+.articleSaveStatus:empty { display:none; }
+.articleSaveButton:focus-visible,.openSavedButton:focus-visible,.saveButton:focus-visible { outline:2px solid #8bd9c1; outline-offset:3px; }
+.saveButton { gap:5px; min-height:44px; white-space:nowrap; font-size:12px; cursor:pointer; }
+.eventMeta { flex-wrap:wrap; }
