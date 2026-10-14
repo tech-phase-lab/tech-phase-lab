@@ -4,7 +4,7 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is one hundred seventy-five issuers / one hundred seventy-six tickers:
+Researched coverage is one hundred eighty-five issuers / one hundred eighty-six tickers:
 LITE, COHR, AMAT, APH, ANET, MRVL, VRT, ALAB, MSFT, NBIS, TSM, ASML, AVGO,
 AMD, ARM, CRDO, NVDA, MU, GOOG, GOOGL, AAPL, AMZN, META, COST, INTC, SIMO,
 AAOI, BE, VST, GEV, IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL,
@@ -18,7 +18,7 @@ SLAB, CEVA, UMC, STM, HIMX, IMOS, CRUS, SYNA, AMBA, INDI, PI, LSCC, MXL, FORM,
 PLAB, AEHR, AOSL, NVTS, IPGP, VIAV, GLW, TEL, ARW, AVT, SANM, BHE, TSLA,
 IONQ, RGTI, QBTS, QUBT, RKLB, ASTS, PL, BKSY, AVAV, KTOS, RDW, ZM, DOCN,
 ESTC, GTLB, FROG, NTNX, NTAP, BOX, WDAY, PATH, ADSK, PTC, BSY, VEEV, MANH,
-PEGA, PAYC, PAYX, ADP and NICE.
+PEGA, PAYC, PAYX, ADP, NICE, DBX, FIVN, RNG, DT, BILL, ASAN, MNDY, APPF, BL and FRSH.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -281,3 +281,13 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - 公開数への計上はCI成功・Vercel READY・日英公開画面の確認後。共通UI、ニュース、目標株価、翻訳配信、RESOLUTE、保存したリサーチは変更なし。
 - 公式資料: [ADSK](https://www.sec.gov/Archives/edgar/data/769397/000076939726000015/adsk-20260131.htm), [PTC](https://www.sec.gov/Archives/edgar/data/857005/000119312525291326/ptc-20250930.htm), [BSY](https://www.sec.gov/Archives/edgar/data/1031308/000103130826000007/bsy-20251231.htm), [VEEV](https://www.sec.gov/Archives/edgar/data/1393052/000139305226000014/veev-20260131.htm), [MANH](https://www.sec.gov/Archives/edgar/data/1056696/000119312526037138/manh-20251231.htm), [PEGA](https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm), [PAYC](https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm), [PAYX](https://www.sec.gov/Archives/edgar/data/723531/000119312526307785/payx-20260531.htm), [ADP](https://www.sec.gov/Archives/edgar/data/8670/000000867026000030/adp-20260630.htm), [NICE](https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm)。買収等の補足資料は各レコードのsourcesに保存。
 - 次候補: DBX / OTEX / FIVN / RNG / DT / CFLT。未収録と上場・買収状況を確認してから着手。NICEは今回収録したため次候補から除外。全検索企業の収録は未完了。
+
+### 2026-10-14 通信・IT監視・業務管理ソフト10社追加
+
+- DBX / FIVN / RNG / DT / BILL / ASAN / MNDY / APPF / BL / FRSHを追加。175社・176ティッカーから185社・186ティッカーへ。確認日は2026-10-14。
+- 各社の年次開示と直近公式決算を確認し、日英6項目と根拠付き競合・関係マップを共通インポーターで追加。社員用通信と顧客窓口、IT監視、資金移動、仕事管理、不動産管理、経理決算という用途を区別した。
+- Five9のAIによる担当者ライセンス減少リスク、BILLの決済手数料と顧客資金利息、AppFolioの付加サービス収益、BlackLineのSAP再販売を具体化。会計データ連携は購入・再販売契約と混同せず、RingCentralとNiCEの供給・競争関係も別に保持する。
+- Dropboxの自社設計保存設備とAWS補完、monday.comのAWS / Google Cloud、Asana / FreshworksのAWS依存を各社の開示に沿って区別。monday.comの9月組織再編計画、Freshworksの買収製品を現在の説明へ反映。未開示の顧客・供給社は推測しない。
+- 年次資料: [DBX](https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm), [FIVN](https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm), [RNG](https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm), [DT](https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm), [BILL](https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm), [ASAN](https://www.sec.gov/Archives/edgar/data/1477720/000147772026000021/asan-20260131.htm), [MNDY](https://www.sec.gov/Archives/edgar/data/1845338/000117891326000870/zk2634436.htm), [APPF](https://www.sec.gov/Archives/edgar/data/1433195/000143319526000011/appf-20251231.htm), [BL](https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm), [FRSH](https://www.sec.gov/Archives/edgar/data/1544522/000154452226000036/frsh-20251231.htm)。補足公式資料と確認日は各レコードに保存。
+- 共通UI、保存したリサーチ、ニュース・目標株価・翻訳、RESOLUTEは変更なし。公開数の確定は対象コミットのCI成功・Vercel READY・公開画面確認後。
+- 次候補: OTEX / BAND / EGHT / TWKS / IOT / KVYO / BRZE / CXM / SPT / WK。未収録と上場・買収状況を実行時に再確認。CFLTなどは買収後の上場状況を確認せず追加しない。全検索企業の収録は未完了。

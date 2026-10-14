@@ -18512,5 +18512,1362 @@
         }
       ]
     }
+  },
+  {
+    "cik": 1467623,
+    "tickers": [
+      "DBX"
+    ],
+    "name": "Dropbox",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm"
+      },
+      {
+        "label": "Latest reviewed quarterly results · 2026 disclosure",
+        "url": "https://investors.dropbox.com/news-releases/news-release-details/dropbox-announces-second-quarter-2026-results"
+      }
+    ],
+    "ja": {
+      "business": "ファイルを保存・共有し、複数の端末やチームで同じ資料を使えるようにする会社。電子署名のDropbox Signや、複数アプリの情報をまとめて探すAI検索のDashも提供する。",
+      "revenue": "個人・チーム・企業向けの有料プランの継続利用料で稼ぐ。無料利用からの有料化に加え、保存容量や管理機能の上位プラン、署名・資料共有などの追加製品が収益につながる。",
+      "strength": "端末やアプリをまたいでファイルを同期・共有でき、相手が使う道具を変えずに共同作業へ組み込める。蓄積した資料と利用者の共有ネットワークが、別サービスへの移行の手間になる。",
+      "risks": "MicrosoftやGoogleが業務ソフトとストレージをまとめて提供するため、単独サービスの価値を示す必要がある。無料利用者の有料化、Dashの普及、重要な資料の漏えいや消失も課題になる。",
+      "competition": "保存・共同作業ではMicrosoft、Google、Boxなど、電子署名ではAdobeとDocuSign、AI検索ではGleanなどと競う。保存容量だけでなく、探しやすさや組織の管理機能が争点になる。",
+      "relationships": "個人や企業のチームへファイル共有を提供する。保存基盤は自社設計の設備を中心に運用し、一部でAmazonのAWSを使う。AWSの利用は、AmazonがDropbox製品を買う関係ではない。"
+    },
+    "en": {
+      "business": "Provides file storage, synchronization and collaboration, plus Dropbox Sign e-signatures and Dash search across connected applications.",
+      "revenue": "Earns recurring individual, team and enterprise subscription fees, with upgrades and additional signature or sharing products.",
+      "strength": "Cross-device sharing fits existing tools. Stored content and collaboration networks make migration demanding.",
+      "risks": "Bundled Microsoft and Google storage pressures differentiation. Paid conversion, Dash adoption and data loss or breaches remain risks.",
+      "competition": "Competes with Microsoft, Google and Box in storage and collaboration, Adobe and DocuSign in signatures, and Glean in search.",
+      "relationships": "Serves individuals and business teams. Its own infrastructure stores most user data; AWS supports part of storage and delivery. AWS is a supplier relationship."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "保存・共同作業で競合",
+            "en": "Storage and collaboration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "ticker": "GOOG",
+          "role": "competitor",
+          "label": {
+            "ja": "保存・共同作業で競合",
+            "en": "Storage and collaboration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Box",
+          "ticker": "BOX",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向け保存・共有で競合",
+            "en": "Enterprise storage and sharing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Adobe",
+          "ticker": "ADBE",
+          "role": "competitor",
+          "label": {
+            "ja": "電子署名で競合",
+            "en": "E-signatures"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "DocuSign",
+          "ticker": "DOCU",
+          "role": "competitor",
+          "label": {
+            "ja": "電子署名で競合",
+            "en": "E-signatures"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "supplier",
+          "label": {
+            "ja": "一部の保存・サービス配信にAWSを利用",
+            "en": "AWS supports part of storage and delivery"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Individuals and business teams",
+          "nameJa": "個人・企業のチーム",
+          "role": "customer",
+          "label": {
+            "ja": "資料の保存・同期・共有を提供",
+            "en": "File storage, synchronization and sharing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1288847,
+    "tickers": [
+      "FIVN"
+    ],
+    "name": "Five9",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000023/fivn-20251231.htm"
+      },
+      {
+        "label": "Latest reviewed quarterly results · 2026 disclosure",
+        "url": "https://www.sec.gov/Archives/edgar/data/1288847/000128884726000121/a063026ex991earningsrelease.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業の問い合わせ窓口をクラウドで動かす会社。電話・チャットの受付、担当者への振り分け、会話分析、AIによる自動応答をまとめ、担当者のパソコンから顧客対応を行えるようにする。",
+      "revenue": "担当者の利用ライセンスに応じた継続料金と通話の従量料金が中心。AI機能は使用量や処理能力に応じて課金し、導入・運用改善の支援でも収益を得る。",
+      "strength": "電話網と顧客管理ソフトを結び、受付から対応・分析まで同じ基盤で扱える。既存の顧客情報や業務に接続したまま、有人対応とAIを組み合わせられる点が強み。",
+      "risks": "AIが問い合わせを処理すると担当者数に応じた料金が減る可能性があり、AIの売上で補えるかが課題。通話障害、誤回答、顧客管理ソフトとの連携停止は顧客の業務に直接影響する。",
+      "competition": "NiCEとGenesysは顧客対応基盤、RingCentralとZoomは電話と問い合わせ窓口、Amazon Connectなどは開発者が作る窓口で競う。競合する範囲は提供する機能によって異なる。",
+      "relationships": "企業の顧客対応部門へサービスを提供する。Salesforce、Microsoft、Oracle、ServiceNowの顧客管理・業務ソフトと連携し、販売・導入パートナーが展開を支える。製品連携を購入契約とは扱わない。"
+    },
+    "en": {
+      "business": "Runs cloud contact centers, combining calls, chat, routing, analytics and AI responses for enterprise service teams.",
+      "revenue": "Earns agent-license subscriptions, telephony usage fees, consumption or capacity fees for AI, and implementation services.",
+      "strength": "Connects telephony with customer records and operational workflows while combining human and automated service.",
+      "risks": "AI may reduce paid agent seats. Monetizing automation, maintaining calls and avoiding AI errors or integration failures are key challenges.",
+      "competition": "Competes with NiCE and Genesys in contact centers, RingCentral and Zoom in combined communications, and Amazon Connect in developer-built solutions.",
+      "relationships": "Serves enterprise contact centers and integrates with Salesforce, Microsoft, Oracle and ServiceNow. Integrations do not establish purchasing contracts."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "NiCE",
+          "ticker": "NICE",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客対応基盤で競合",
+            "en": "Contact-center platforms"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "RingCentral",
+          "ticker": "RNG",
+          "role": "competitor",
+          "label": {
+            "ja": "電話と問い合わせ窓口で競合",
+            "en": "Communications and contact centers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Zoom",
+          "ticker": "ZM",
+          "role": "competitor",
+          "label": {
+            "ja": "電話と問い合わせ窓口で競合",
+            "en": "Communications and contact centers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "competitor",
+          "label": {
+            "ja": "Amazon Connectと競合",
+            "en": "Amazon Connect"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "partner",
+          "label": {
+            "ja": "顧客管理ソフトと製品連携",
+            "en": "CRM integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "partner",
+          "label": {
+            "ja": "顧客管理・Teamsと製品連携",
+            "en": "CRM and Teams integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "ServiceNow",
+          "ticker": "NOW",
+          "role": "partner",
+          "label": {
+            "ja": "業務ソフトと製品連携",
+            "en": "Workflow software integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprise contact centers",
+          "nameJa": "企業の顧客対応部門",
+          "role": "customer",
+          "label": {
+            "ja": "電話・チャット・AI対応基盤を提供",
+            "en": "Cloud calling, chat and AI service platform"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1384905,
+    "tickers": [
+      "RNG"
+    ],
+    "name": "RingCentral",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1384905/000138490526000021/rng-20251231.htm"
+      },
+      {
+        "label": "Q2 2026 official results",
+        "url": "https://www.ringcentral.com/whyringcentral/company/pressreleases/ringcentral-announces-second-quarter-2026-financial-results.html"
+      }
+    ],
+    "ja": {
+      "business": "企業の電話・メッセージ・ビデオ会議をクラウドでまとめる会社。RingEXは社員同士の連絡、RingCXは顧客からの問い合わせ対応を支え、会話の要約や音声AIの機能も提供する。",
+      "revenue": "利用者や機能に応じた継続利用料が中心。電話・顧客対応サービスに加え、通信機器、導入支援なども提供する。社員用の通信と顧客窓口を追加販売できる構成になっている。",
+      "strength": "オフィスの電話設備をクラウドへ移し、複数拠点や在宅勤務でも同じ番号・通信基盤を使える。通信事業者や販売代理店を通じて、企業の既存の電話環境へ展開できる。",
+      "risks": "MicrosoftやZoomとの価格競争に加え、電話の接続品質と通信規制への対応が必要。第三者の通信・顧客対応技術に依存する部分があり、提供条件の変更や負債の返済も制約になる。",
+      "competition": "社員用通信ではMicrosoft Teams、Zoom、Cisco、顧客窓口ではFive9、NiCE、Genesysなどと競う。両分野をまとめて提供する会社と、特定機能に強い会社の両方が競合になる。",
+      "relationships": "企業へ通信サービスを提供し、通信事業者・販売代理店が販売を支える。一部の機能にはNiCE、Bandwidth、Microsoftなど第三者の技術・連携を使う。競争関係と提供関係を分けて表示する。"
+    },
+    "en": {
+      "business": "Provides cloud business phone, messaging and video through RingEX, plus customer-service contact centers through RingCX and voice-AI features.",
+      "revenue": "Earns recurring user and feature subscriptions, alongside equipment and implementation revenue.",
+      "strength": "Extends enterprise phone systems across offices and remote workers, supported by telecom and reseller distribution.",
+      "risks": "Faces bundled competitors, call-quality and telecom regulation risks, third-party dependencies and debt obligations.",
+      "competition": "Competes with Teams, Zoom and Cisco in employee communications and Five9, NiCE and Genesys in contact centers.",
+      "relationships": "Serves businesses through direct and partner channels. Uses technology or integrations from NiCE, Bandwidth and Microsoft for some services, separately from rivalry."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "Teamsと社員用通信で競合",
+            "en": "Teams employee communications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Zoom",
+          "ticker": "ZM",
+          "role": "competitor",
+          "label": {
+            "ja": "社員用通信・顧客対応で競合",
+            "en": "Employee and customer communications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Cisco",
+          "ticker": "CSCO",
+          "role": "competitor",
+          "label": {
+            "ja": "企業用電話・通信で競合",
+            "en": "Enterprise communications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Five9",
+          "ticker": "FIVN",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客対応基盤で競合",
+            "en": "Contact-center platforms"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "NiCE",
+          "ticker": "NICE",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客対応基盤で競合",
+            "en": "Contact-center platforms"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "NiCE",
+          "ticker": "NICE",
+          "role": "supplier",
+          "label": {
+            "ja": "一部サービスに第三者技術を利用",
+            "en": "Third-party technology for some services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Bandwidth",
+          "ticker": "BAND",
+          "role": "supplier",
+          "label": {
+            "ja": "通信・SMSなどの第三者基盤を利用",
+            "en": "Third-party communications and SMS services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "partner",
+          "label": {
+            "ja": "一部サービスで技術・製品連携を利用",
+            "en": "Technology and integrations for some services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Business communications users",
+          "nameJa": "企業の通信利用者",
+          "role": "customer",
+          "label": {
+            "ja": "クラウド電話・会議・顧客窓口を提供",
+            "en": "Cloud phones, meetings and contact centers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1773383,
+    "tickers": [
+      "DT"
+    ],
+    "name": "Dynatrace",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm"
+      },
+      {
+        "label": "Latest reviewed quarterly results · 2026 disclosure",
+        "url": "https://ir.dynatrace.com/news-events/press-releases/detail/434/dynatrace-reports-first-quarter-fiscal-year-2027-financial-results"
+      }
+    ],
+    "ja": {
+      "business": "企業のアプリやIT設備が正常に動いているかを監視する会社。処理の記録や動作データを集め、遅さ・障害の原因や利用者への影響を調べる。セキュリティや運用の自動化も同じ基盤で扱う。",
+      "revenue": "クラウド基盤の継続契約と使用量に応じた料金が中心。DPSでは年間の最低利用額を約束し、使った機能・量に応じて消化する。個別機能の契約や導入支援でも稼ぐ。",
+      "strength": "複数のアプリや設備の依存関係を自動で整理し、記録・性能・利用者のデータを一緒に分析できる。個々の警報を並べるだけでなく、障害の原因を絞る文脈を作れる。",
+      "risks": "監視データが増えるほど保管・処理の費用がかかり、顧客が利用量を抑えると売上にも影響する。企業への導入は長期化しやすく、AIの判断ミスや機密データの扱いにも注意が必要。",
+      "competition": "Datadog、Cisco傘下のSplunk・AppDynamics、Elastic、Grafana、New Relicなどと監視・ログ分析で競う。クラウド会社が自社の設備向けに提供する監視機能も競合になる。",
+      "relationships": "企業のIT運用部門へ監視・分析を提供し、AWS、Microsoft Azure、Google Cloudの環境と接続する。販売・導入パートナーも利用する。接続対応だけでクラウド会社を顧客と断定しない。"
+    },
+    "en": {
+      "business": "Monitors enterprise applications and infrastructure, correlating operational data to diagnose failures, performance issues and user impact.",
+      "revenue": "Earns recurring and usage-based platform fees. DPS combines annual minimum spend with actual consumption; services add revenue.",
+      "strength": "Automatically maps dependencies and correlates logs, performance and user data to narrow down root causes.",
+      "risks": "Data-processing costs, customer usage controls, lengthy deployments, AI errors and sensitive telemetry create risks.",
+      "competition": "Competes with Datadog, Cisco’s Splunk and AppDynamics, Elastic, Grafana, New Relic and cloud-native monitoring.",
+      "relationships": "Serves enterprise IT teams and integrates with AWS, Azure and Google Cloud. Supported environments are not automatically customers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Datadog",
+          "ticker": "DDOG",
+          "role": "competitor",
+          "label": {
+            "ja": "IT監視・分析で競合",
+            "en": "IT monitoring and analytics"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Cisco",
+          "ticker": "CSCO",
+          "role": "competitor",
+          "label": {
+            "ja": "Splunk・AppDynamicsと競合",
+            "en": "Splunk and AppDynamics"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Elastic",
+          "ticker": "ESTC",
+          "role": "competitor",
+          "label": {
+            "ja": "ログ分析・監視で競合",
+            "en": "Log analytics and monitoring"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "partner",
+          "label": {
+            "ja": "AWS環境の監視・分析に対応",
+            "en": "Integrates with AWS environments"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "partner",
+          "label": {
+            "ja": "Azure環境の監視・分析に対応",
+            "en": "Integrates with Azure environments"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "ticker": "GOOG",
+          "role": "partner",
+          "label": {
+            "ja": "Google Cloud環境の監視・分析に対応",
+            "en": "Integrates with Google Cloud environments"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprise IT teams",
+          "nameJa": "企業のIT運用部門",
+          "role": "customer",
+          "label": {
+            "ja": "障害・性能・利用者体験を監視",
+            "en": "Monitors failures, performance and user experience"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1786352,
+    "tickers": [
+      "BILL"
+    ],
+    "name": "BILL",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm"
+      },
+      {
+        "label": "Latest reviewed quarterly results · 2026 disclosure",
+        "url": "https://www.bill.com/press-release/bill-reports-fourth-quarter-and-fiscal-year-2026-financial-results"
+      }
+    ],
+    "ja": {
+      "business": "中小企業の請求・支払い・経費管理をまとめる会社。請求書の読み取りから社内承認、取引先への送金、会計ソフトへの記録までをつなぎ、会社のお金の出入りを管理する。",
+      "revenue": "月額・年額の利用料と、送金・カード決済などの処理手数料で稼ぐ。顧客資金を預かる間の利息収入もあるが、送金する元本そのものを売上とは扱わない。",
+      "strength": "請求書・承認・決済・会計記録がつながり、二重入力や支払い状況の確認を減らせる。会計事務所や銀行との販売関係、取引先も参加するネットワークが普及を支える。",
+      "risks": "中小企業の支出が減ると決済手数料にも影響する。不正送金、カードの信用損失、金融規制、金利低下による利息収入の減少が課題。会計ソフトとの連携条件にも依存する。",
+      "competition": "紙・表計算による手作業に加え、経費・支払いの専用サービスや銀行の機能と競う。IntuitのQuickBooks内蔵の請求書決済は、連携先が競合にもなる例。",
+      "relationships": "中小企業・会計事務所へサービスを提供し、銀行・カード発行会社・決済会社が資金移動を支える。QuickBooks、Oracle NetSuite、Microsoft Dynamicsなどとは会計データを同期する。"
+    },
+    "en": {
+      "business": "Automates small-business invoices, approvals, payments and expenses, connecting cash movements with accounting records.",
+      "revenue": "Earns subscriptions, transaction and card-related fees, plus interest on customer funds. Payment principal is not revenue.",
+      "strength": "Integrated approvals, payments and accounting reduce duplicate entry. Accountant, bank and supplier networks support adoption.",
+      "risks": "SMB spending, fraud, credit losses, regulation, lower interest rates and accounting-integration dependence affect results.",
+      "competition": "Competes with manual processes, specialist spending tools and banks. Intuit’s native QuickBooks bill payment also competes.",
+      "relationships": "Serves SMBs and accountants; financial partners support payments. Syncs accounting data with QuickBooks, NetSuite and Dynamics."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Intuit",
+          "ticker": "INTU",
+          "role": "competitor",
+          "label": {
+            "ja": "QuickBooks内蔵の請求書決済と競合",
+            "en": "Native QuickBooks bill payment"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Spend and payment software",
+          "nameJa": "経費・支払いソフト",
+          "role": "competitor",
+          "label": {
+            "ja": "経費管理・請求書決済で競合",
+            "en": "Expense management and bill payments"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Manual financial workflows",
+          "nameJa": "手作業の経理",
+          "role": "competitor",
+          "label": {
+            "ja": "紙・表計算による処理を置き換える",
+            "en": "Replaces paper and spreadsheet workflows"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Intuit",
+          "ticker": "INTU",
+          "role": "partner",
+          "label": {
+            "ja": "QuickBooksと会計データを同期",
+            "en": "QuickBooks accounting sync"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "partner",
+          "label": {
+            "ja": "NetSuiteと会計データを同期",
+            "en": "NetSuite accounting sync"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "partner",
+          "label": {
+            "ja": "Dynamicsと会計データを同期",
+            "en": "Dynamics accounting sync"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "SMBs and accounting firms",
+          "nameJa": "中小企業・会計事務所",
+          "role": "customer",
+          "label": {
+            "ja": "請求・承認・支払いを提供",
+            "en": "Invoice, approval and payment services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Banks and payment providers",
+          "nameJa": "銀行・決済事業者",
+          "role": "partner",
+          "label": {
+            "ja": "資金移動・カード決済を支える",
+            "en": "Support money movement and card payments"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1477720,
+    "tickers": [
+      "ASAN"
+    ],
+    "name": "Asana",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1477720/000147772026000021/asan-20260131.htm"
+      },
+      {
+        "label": "monday.com FY2025 · named work-management competitors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1845338/000117891326000870/zk2634436.htm"
+      },
+      {
+        "label": "Latest reviewed quarterly results · 2026 disclosure",
+        "url": "https://investors.asana.com/news-releases/news-release-details/asana-announces-second-quarter-fiscal-2027-results"
+      }
+    ],
+    "ja": {
+      "business": "チームの仕事を、担当者・期限・目標と結び付けて管理する会社。個々の作業から部門をまたぐ計画まで見渡せるようにし、AI Studioなどで受付・振り分けといった反復作業も自動化する。",
+      "revenue": "基本の仕事管理は利用者数とプランに応じた継続料金。AI StudioとAI Teammatesは使用量に応じた方式も採り、無料利用からの有料化や組織内の利用拡大が収益につながる。",
+      "strength": "誰が何を担当し、どの目標や作業につながるかをWork Graphで結び付ける。部門ごとの別々の道具をつなぎ、進捗や遅れの影響を組織全体で把握できる。",
+      "risks": "有料化や社内での利用拡大が止まると成長が鈍る。無料・付属ツールとの競争、販売費用、AI処理費用と誤動作も課題。AIによる自動化を顧客が継続して使う価値へ変えられるかが重要。",
+      "competition": "仕事管理の専用ソフト、業務ソフトに付属する管理機能、部門別の専用ツールと競う。monday.comとは仕事管理で競合し、比較する範囲は単純なタスクから組織全体の計画まで広い。",
+      "relationships": "AWSがサービスの稼働基盤を提供する。Microsoft Teams、SalesforceのSlack、AtlassianのJiraなどと製品連携し、OpenAIとAnthropicのモデルをAI機能に使う。"
+    },
+    "en": {
+      "business": "Connects team tasks with owners, deadlines and goals, while AI Studio automates repeatable work and AI Teammates assist execution.",
+      "revenue": "Earns seat-based work-management subscriptions and consumption-based AI fees, supported by paid conversion and expansion.",
+      "strength": "Work Graph links people, tasks and goals to show progress and dependencies across departments.",
+      "risks": "Paid conversion, expansion, bundled alternatives, sales costs and reliable, cost-effective AI adoption are challenges.",
+      "competition": "Competes with dedicated work-management, productivity-suite and departmental tools, including monday.com in work management.",
+      "relationships": "AWS hosts its platform. Integrates with Teams, Slack and Jira, and uses OpenAI and Anthropic models for AI features."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "monday.com",
+          "ticker": "MNDY",
+          "role": "competitor",
+          "label": {
+            "ja": "仕事・プロジェクト管理で競合",
+            "en": "Work and project management"
+          },
+          "sourceIndexes": [
+            1
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Productivity suites",
+          "nameJa": "業務ソフトの管理機能",
+          "role": "competitor",
+          "label": {
+            "ja": "付属の計画・共同作業機能と競合",
+            "en": "Bundled planning and collaboration tools"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "supplier",
+          "label": {
+            "ja": "AWSが稼働基盤を提供",
+            "en": "AWS hosts the platform"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "partner",
+          "label": {
+            "ja": "Teamsと製品連携",
+            "en": "Teams integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "partner",
+          "label": {
+            "ja": "Slackなどと製品連携",
+            "en": "Slack and other integrations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Atlassian",
+          "ticker": "TEAM",
+          "role": "partner",
+          "label": {
+            "ja": "Jiraと製品連携",
+            "en": "Jira integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprise work teams",
+          "nameJa": "企業の業務チーム",
+          "role": "customer",
+          "label": {
+            "ja": "仕事・目標・部門横断の計画を管理",
+            "en": "Task, goal and cross-team planning"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1845338,
+    "tickers": [
+      "MNDY"
+    ],
+    "name": "monday.com",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1845338/000117891326000870/zk2634436.htm"
+      },
+      {
+        "label": "Q2 2026 official results",
+        "url": "https://ir.monday.com/news-and-events/news-releases/news-details/2026/monday-com-Announces-Second-Quarter-2026-Results/default.aspx"
+      },
+      {
+        "label": "September 2026 Form 6-K · restructuring plan and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1845338/000117891326003553/zk2635715.htm"
+      }
+    ],
+    "ja": {
+      "business": "仕事の進捗を一覧にし、担当者・期限・業務の流れを組み立てる会社。仕事管理に加えて、顧客管理、ソフト開発、社内サービス管理を提供し、AIに作業を実行させる機能へ広げている。",
+      "revenue": "利用人数・プランに応じた継続利用料を中心に、AIの使用量も収益化する。仕事管理が主要な収益源で、顧客管理など別製品の追加販売と大企業への展開が拡大の手段になる。",
+      "strength": "画面の部品や自動処理を組み合わせ、利用部門に合わせた仕事の仕組みを作れる。同じ基盤の上で複数用途へ広げられ、担当者が日々使う業務の流れに入り込める。",
+      "risks": "仕事管理への収益集中があり、別製品やAIの普及が期待通り進まない可能性がある。顧客の利用人数削減、組織再編に伴う実行の遅れ、イスラエルの地域情勢もリスクになる。",
+      "competition": "仕事管理ではAsanaやAtlassianのTrello、顧客管理ではHubSpotなど、開発・社内サービスではAtlassianとFreshworksが競合。製品ごとに争う市場が違う。",
+      "relationships": "AWSとGoogle Cloudを稼働基盤に使い、販売・導入パートナーやアプリ開発者が業務への展開を支える。利用企業へ管理ソフトを提供する関係と、クラウドを調達する関係を分ける。"
+    },
+    "en": {
+      "business": "Provides configurable work management, CRM, development and service tools, expanding into AI that executes work.",
+      "revenue": "Earns recurring seat and plan fees plus AI consumption revenue. Work management remains its main revenue source.",
+      "strength": "Modular workflows and automation adapt to departments, with multiple products sharing a common platform.",
+      "risks": "Revenue concentration, slower cross-selling or AI adoption, seat reductions, restructuring execution and regional conflict create risks.",
+      "competition": "Competes with Asana and Trello in work management, HubSpot in CRM, and Atlassian or Freshworks in development and service management.",
+      "relationships": "AWS and Google Cloud host its platform; implementation partners and developers support customer deployments."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Asana",
+          "ticker": "ASAN",
+          "role": "competitor",
+          "label": {
+            "ja": "仕事・プロジェクト管理で競合",
+            "en": "Work and project management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Atlassian",
+          "ticker": "TEAM",
+          "role": "competitor",
+          "label": {
+            "ja": "Trello・Jiraなどと用途別に競合",
+            "en": "Trello and Jira across relevant uses"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "HubSpot",
+          "ticker": "HUBS",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客管理で競合",
+            "en": "CRM"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Freshworks",
+          "ticker": "FRSH",
+          "role": "competitor",
+          "label": {
+            "ja": "社内サービス管理で競合",
+            "en": "Enterprise service management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "supplier",
+          "label": {
+            "ja": "AWSを稼働基盤に利用",
+            "en": "AWS hosting infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "ticker": "GOOG",
+          "role": "supplier",
+          "label": {
+            "ja": "Google Cloudを稼働基盤に利用",
+            "en": "Google Cloud hosting infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Business teams",
+          "nameJa": "企業の業務チーム",
+          "role": "customer",
+          "label": {
+            "ja": "仕事・顧客・サービスの管理を提供",
+            "en": "Work, CRM and service management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1433195,
+    "tickers": [
+      "APPF"
+    ],
+    "name": "AppFolio",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1433195/000143319526000011/appf-20251231.htm"
+      },
+      {
+        "label": "Latest reviewed quarterly results · 2026 disclosure",
+        "url": "https://ir.appfolioinc.com/news-releases/news-release-details/appfolio-inc-announces-second-quarter-2026-financial-results"
+      }
+    ],
+    "ja": {
+      "business": "不動産管理会社向けの業務ソフトを提供する会社。入居募集、賃貸契約、家賃の受け取り、会計、修繕の依頼をまとめ、管理会社・入居者・物件オーナーがやり取りできるようにする。",
+      "revenue": "管理する物件などに応じた継続利用料に加え、決済・入居審査・保険関連のリスク対策などの利用料金で稼ぐ。単なるソフトの月額料金より、これら付加サービスの売上が大きい。",
+      "strength": "不動産管理に必要な記録と取引を一つの基盤で扱える。家賃決済や審査まで日々の業務へ組み込むことで、管理会社だけでなく入居者や取引先にも利用が広がる。",
+      "risks": "管理物件数や入居者の取引が減ると収益にも影響する。決済の不正、審査・保険の規制、外部の決済・信用情報会社への依存があり、生活に関わる情報の扱いを誤ると信頼を失う。",
+      "competition": "不動産管理に特化したソフト会社、複数業種向けの業務ソフト、決済・募集・修繕など一機能に絞ったサービスが競合。管理会社が複数の道具を組み合わせる方法とも競う。",
+      "relationships": "不動産管理会社へ業務基盤を提供し、入居者や物件オーナーが決済・情報共有に参加する。決済処理、信用情報、保険関連の外部事業者が付加サービスを支える。"
+    },
+    "en": {
+      "business": "Provides property-management software for leasing, rent collection, accounting and maintenance, linking managers, residents and owners.",
+      "revenue": "Earns subscriptions and usage-based payment, screening and risk-mitigation fees. Value-added services exceed core subscription revenue.",
+      "strength": "Unifies property records and recurring transactions, extending daily use to residents and counterparties.",
+      "risks": "Property activity, payment fraud, screening and insurance regulation, external providers and sensitive resident data create risks.",
+      "competition": "Competes with real-estate-specific systems, general business software and specialized payment, leasing or maintenance tools.",
+      "relationships": "Serves property managers and connects residents and owners. Payment processors, credit-information and risk-mitigation providers support additional services."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Property-management software vendors",
+          "nameJa": "不動産管理ソフト会社",
+          "role": "competitor",
+          "label": {
+            "ja": "募集・会計・物件管理で競合",
+            "en": "Leasing, accounting and property management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Specialist real-estate tools",
+          "nameJa": "不動産の専用ツール",
+          "role": "competitor",
+          "label": {
+            "ja": "決済・募集・修繕などで競合",
+            "en": "Payments, leasing and maintenance tools"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Property-management companies",
+          "nameJa": "不動産管理会社",
+          "role": "customer",
+          "label": {
+            "ja": "募集・会計・物件管理基盤を提供",
+            "en": "Property-management operating platform"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Payment and credit-information providers",
+          "nameJa": "決済・信用情報事業者",
+          "role": "supplier",
+          "label": {
+            "ja": "決済処理・入居審査を支える",
+            "en": "Support payments and tenant screening"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Risk-mitigation providers",
+          "nameJa": "保険関連のリスク対策事業者",
+          "role": "supplier",
+          "label": {
+            "ja": "リスク対策サービスを支える",
+            "en": "Support risk-mitigation services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1666134,
+    "tickers": [
+      "BL"
+    ],
+    "name": "BlackLine",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1666134/000162828026011915/bl-20251231.htm"
+      },
+      {
+        "label": "Latest reviewed quarterly results · 2026 disclosure",
+        "url": "https://investors.blackline.com/news-releases/news-release-details/blackline-announces-second-quarter-financial-results-8"
+      }
+    ],
+    "ja": {
+      "business": "企業の経理と決算の作業を自動化する会社。帳簿と取引の照合、仕訳、企業グループ内の取引、請求と入金の照合などを支え、財務責任者が数字を早く正確にまとめられるようにする。",
+      "revenue": "ソフトとサポートの継続利用料が中心で、導入・コンサルティングでも稼ぐ。契約は製品構成などに応じ、組織の大きさや取引・法人の数も料金の要素になる。",
+      "strength": "異なる会計システムの数字をつなぎ、誰が確認・承認したかの記録を残せる。会計業務の専門性と監査対応を組み合わせ、企業グループの複雑な締め作業を標準化できる。",
+      "risks": "会計システムとの接続が崩れると決算業務に影響し、誤処理や情報漏えいの損害も大きい。SAP経由の販売が重要なため、契約条件や関係の変化、企業の導入予算にも左右される。",
+      "competition": "決算・入金処理を自動化する専用ソフト、基幹業務ソフトに付属する機能、AIによる新しい自動化サービスが競合。表計算や社内で作った処理を使い続ける企業への置き換えも必要。",
+      "relationships": "SAPはBlackLineの製品を再販売し、売上の一部をBlackLineへ渡す。Workday、Oracle、Microsoftなどの会計・基幹ソフトとも接続する。連携会社すべてが再販売契約を持つわけではない。"
+    },
+    "en": {
+      "business": "Automates accounting and financial close, including reconciliations, journals, intercompany processes and invoice-to-cash work.",
+      "revenue": "Earns software and support subscriptions plus implementation fees. Product mix, organization size and transaction or entity volumes affect pricing.",
+      "strength": "Links multiple financial systems with approvals and audit trails, standardizing complex group accounting.",
+      "risks": "Integration failures, incorrect processing, breaches, deployment budgets and dependence on the SAP reseller relationship are risks.",
+      "competition": "Competes with financial-automation specialists, ERP features, AI-native tools and internal spreadsheet processes.",
+      "relationships": "SAP resells its solutions for a revenue share. Connects to Workday, Oracle and Microsoft systems; integration alone is not a reseller agreement."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Financial-automation vendors",
+          "nameJa": "経理自動化ソフト会社",
+          "role": "competitor",
+          "label": {
+            "ja": "決算・入金処理の自動化で競合",
+            "en": "Close and invoice-to-cash automation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "ERP financial modules",
+          "nameJa": "基幹ソフトの会計機能",
+          "role": "competitor",
+          "label": {
+            "ja": "基幹業務ソフトの付属機能と競合",
+            "en": "Built-in ERP financial capabilities"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "SAP",
+          "ticker": "SAP",
+          "role": "partner",
+          "label": {
+            "ja": "製品を再販売し売上を分配",
+            "en": "Resells solutions with revenue sharing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Workday",
+          "ticker": "WDAY",
+          "role": "partner",
+          "label": {
+            "ja": "会計・基幹ソフトと接続",
+            "en": "Financial and ERP integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "partner",
+          "label": {
+            "ja": "会計・基幹ソフトと接続",
+            "en": "Financial and ERP integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "partner",
+          "label": {
+            "ja": "Dynamicsなどと接続",
+            "en": "Dynamics integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Finance and accounting teams",
+          "nameJa": "企業の財務・経理部門",
+          "role": "customer",
+          "label": {
+            "ja": "決算・照合・入金処理を支援",
+            "en": "Supports close, reconciliation and cash application"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1544522,
+    "tickers": [
+      "FRSH"
+    ],
+    "name": "Freshworks",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · Business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1544522/000154452226000036/frsh-20251231.htm"
+      },
+      {
+        "label": "Q2 2026 official results",
+        "url": "https://ir.freshworks.com/news/news-details/2026/Freshworks-Reports-Record-Second-Quarter-2026-Results/default.aspx"
+      }
+    ],
+    "ja": {
+      "business": "企業の顧客対応と社内サービスを支えるソフト会社。Freshdeskは顧客の問い合わせ、Freshserviceは社員のIT相談や障害対応を管理し、AIで返答・振り分け・分析を助ける。",
+      "revenue": "利用者数やプランに応じた継続利用料と、一部の使用量に応じた料金で稼ぐ。顧客対応と社員向けサービスを別用途で販売し、追加機能や他部門への展開で契約を広げる。",
+      "strength": "導入しやすい共通基盤で、問い合わせ受付から解決・分析までをつなぐ。IT機器の把握や障害対応の製品も組み合わせ、IT部門以外の人事・財務などへ使い方を広げられる。",
+      "risks": "大手の包括的な製品との競争があり、導入しやすさを有料契約の継続へつなげる必要がある。AWSへの依存、顧客情報の漏えい、AIの誤回答、買収製品の統合がリスクになる。",
+      "competition": "社内ITサービスではServiceNowとAtlassian、顧客対応ではSalesforceやZendesk、顧客管理ではHubSpotやMicrosoftなどと競う。問い合わせの相手が社員か顧客かで競合も変わる。",
+      "relationships": "AWSが大部分の稼働基盤を提供し、販売・導入パートナーが企業への展開を支える。Device42とFireHydrantは買収した自社側の製品で、独立した外部の供給会社として扱わない。"
+    },
+    "en": {
+      "business": "Provides customer-service software through Freshdesk and employee IT service tools through Freshservice, with AI response and analysis capabilities.",
+      "revenue": "Earns recurring seat and plan subscriptions and some usage fees, expanding through additional features and departments.",
+      "strength": "Connects request intake, resolution and analytics with approachable deployment, asset discovery and incident tools.",
+      "risks": "Bundled competitors, renewal execution, AWS dependence, sensitive data, AI errors and acquisition integration are risks.",
+      "competition": "Competes with ServiceNow and Atlassian in IT services, Salesforce or Zendesk in customer support, and HubSpot or Microsoft in CRM.",
+      "relationships": "AWS supplies most hosting; partners support deployment. Device42 and FireHydrant are acquired products, not independent external suppliers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "ServiceNow",
+          "ticker": "NOW",
+          "role": "competitor",
+          "label": {
+            "ja": "社内ITサービス管理で競合",
+            "en": "IT service management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Atlassian",
+          "ticker": "TEAM",
+          "role": "competitor",
+          "label": {
+            "ja": "社内ITサービス管理で競合",
+            "en": "IT service management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客対応・顧客管理で競合",
+            "en": "Customer service and CRM"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "HubSpot",
+          "ticker": "HUBS",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客管理で競合",
+            "en": "CRM"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "Dynamicsの顧客管理と競合",
+            "en": "Dynamics CRM"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "supplier",
+          "label": {
+            "ja": "AWSが大部分の稼働基盤を提供",
+            "en": "AWS supplies most hosting infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Customer and employee service teams",
+          "nameJa": "顧客対応・社内サービス部門",
+          "role": "customer",
+          "label": {
+            "ja": "問い合わせ・障害対応を管理",
+            "en": "Request and incident management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Resellers and implementation partners",
+          "nameJa": "販売・導入パートナー",
+          "role": "partner",
+          "label": {
+            "ja": "販売・導入・運用支援を担う",
+            "en": "Sales, deployment and operational support"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
   }
 ]
