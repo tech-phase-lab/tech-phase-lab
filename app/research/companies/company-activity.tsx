@@ -8,6 +8,7 @@ import { analystNewsDisplay } from "@/lib/research/analyst-news";
 import { officialTime, shortNewsTime } from "@/lib/research/news-time";
 import { createNewsPoller } from "@/lib/research/news-poller";
 import { observePageActivity } from "@/lib/research/page-activity";
+import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
 import { createWatchTracker } from "@/lib/research/watch-new-items";
 import NewsStory from "../news/news-story";
 import styles from "./company-activity.module.css";
@@ -50,6 +51,26 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
     const stop = observePageActivity(() => { setPaused(false); poller.resume(); }, () => { setPaused(true); poller.pause(); });
     return () => { stop(); poller.stop(); };
   }, [attempt, ticker]);
+  const [wire, setWire] = useState<CompanyWireItem[]>([]);
+  useEffect(() => {
+    // Wire headlines are a separate, lower-trust lane: a failure here never
+    // affects the verified list above.
+    let alive = true, timer: ReturnType<typeof setInterval> | undefined;
+    const load = async () => {
+      try {
+        const response = await fetch("/api/research/company-wire", { cache: "no-store" });
+        if (!response.ok) return;
+        const feed = parseCompanyWire(await response.json());
+        if (alive) setWire(feed.items[ticker] ?? []);
+      } catch { /* keep the previous list */ }
+    };
+    const stop = observePageActivity(() => { void load(); timer ??= setInterval(load, 60_000); }, () => { clearInterval(timer); timer = undefined; });
+    void load(); timer = setInterval(load, 60_000);
+    return () => { alive = false; clearInterval(timer); stop(); };
+  }, [ticker]);
+  const wireRows = wire.filter(item => !ja || item.titleJa);
+  const wireLabel = (item: CompanyWireItem) => `${item.origin === "wire" ? (ja ? "企業・配信会社" : "Company / wire") : item.origin === "third-party" ? (ja ? "第三者" : "Third party") : (ja ? "発信元不明" : "Source unknown")}${item.publisher ? ` · ${item.publisher}` : ""}`;
+  const wireRow = (item: CompanyWireItem) => <li key={item.id}><span className={styles.wireLabel}>{wireLabel(item)}</span> <a href={item.url} target="_blank" rel="noopener noreferrer nofollow" lang={lang}>{ja ? item.titleJa : item.titleEn}</a> <span className={styles.note}>{ja ? "発表" : "Published"} {shortNewsTime(item.publishedAt, "published")}</span></li>;
   const rows = [
     ...(data?.officialUpdates ?? []).filter(item => item.tickers.includes(ticker) && shownInLanguage(item, lang)).map(item => ({ id: `official-${item.id}`, observedAt: item.observedAt, ...officialNewsDisplay(item, lang, data?.resultBriefs), ...officialTime(item) })),
     ...(data?.analystUpdates ?? []).filter(item => item.ticker === ticker).map(item => ({ id: `analyst-${item.id}`, observedAt: item.observedAt, ...analystNewsDisplay(item, lang), at: item.publishedAt, kind: "published" })),
@@ -72,6 +93,12 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
     {data && !rows.length && <p className={styles.state}>{ja ? "現在の配信データ内に該当銘柄の記事はありません。" : "No matching articles in the current feed window."}</p>}
     {!!rows.length && <div className={styles.list}>{rows.slice(0, 3).map(row => <article key={row.id}><NewsStory lang={lang} label={row.label} title={row.title} body={row.body} publication={publication(row)}/></article>)}</div>}
     {rows.length > 3 && <details className={styles.more}><summary>{ja ? `ほか${rows.length - 3}件を見る` : `Show ${rows.length - 3} more`}</summary>{rows.slice(3).map(row => <article key={row.id}><NewsStory lang={lang} label={row.label} title={row.title} body={row.body} publication={publication(row)}/></article>)}</details>}
+    {!!wireRows.length && <section className={styles.wire} aria-label={ja ? "関連ニュース速報" : "Related headlines"}>
+      <h3>{ja ? "関連ニュース速報（第三者の記事を含む）" : "Related headlines (including third-party)"}</h3>
+      <p className={styles.note}>{ja ? "上の確認済み記事とは別枠です。見出しのみで、本文は確認していません。タイトルを押すと元の記事へ移動します。" : "Separate from the verified articles above. Headlines only; article text is not checked. Titles open the original."}</p>
+      <ul>{wireRows.slice(0, 5).map(wireRow)}</ul>
+      {wireRows.length > 5 && <details className={styles.more}><summary>{ja ? `ほか${wireRows.length - 5}件を見る` : `Show ${wireRows.length - 5} more`}</summary><ul>{wireRows.slice(5).map(wireRow)}</ul></details>}
+    </section>}
     {data && <p className={styles.note}>{ja ? "配信済み情報を自動確認。未取得の情報・全期間の履歴は含みません。" : "Auto-checking published updates; excludes uncollected information and older history."}</p>}
     </div>
   </section></>;

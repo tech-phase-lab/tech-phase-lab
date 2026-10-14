@@ -59,3 +59,62 @@ class CompanyWireTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class TranslationTests(unittest.TestCase):
+    def setUp(self):
+        import tempfile, os, json
+        self.json = json
+        self.dir = tempfile.TemporaryDirectory()
+        self.path = os.path.join(self.dir.name, 'db.sqlite')
+        self.now = datetime(2026, 10, 14, 4, 0, tzinfo=timezone.utc)
+        rows = company_wire.parse(RSS, 'gnews', 'CRDO') + [{
+            'ticker': 'CRDO', 'source': 'yahoo', 'title': 'Credo shares rise 5% on cut...', 'publisher': '',
+            'url': 'https://news.example/e', 'published': datetime(2026, 10, 14, 3, 0, tzinfo=timezone.utc)}]
+        with company_wire.connect(self.path) as db:
+            company_wire.store(db, rows, 'Credo', seen_at=self.now)
+        self.env = {'OFFICIAL_HEADLINE_TRANSLATION_ENABLED': 'true', 'OPENAI_API_KEY': 'k' * 30,
+                    'OFFICIAL_HEADLINE_TRANSLATION_MODEL': 'test-model'}
+
+    def tearDown(self):
+        self.dir.cleanup()
+
+    def transport(self, answers):
+        def send(payload, key):
+            items = self.json.loads(payload['input'])
+            out = [{'id': i['id'], 'titleJa': answers.get(i['title'], 'x')} for i in items]
+            return {'status': 'completed', 'output': [{'type': 'message', 'content': [
+                {'type': 'output_text', 'text': self.json.dumps({'items': out}, ensure_ascii=False)}]}]}
+        return send
+
+    def test_truncated_headline_is_never_translated_or_shown(self):
+        with company_wire.connect(self.path) as db:
+            company_wire.schema_translation(db)
+            titles = [r['title'] for r in company_wire.pending_rows(db, self.now.timestamp())]
+        self.assertNotIn('Credo shares rise 5% on cut...', titles)
+
+    def test_valid_translation_is_stored_and_wrong_numbers_are_rejected(self):
+        answers = {'Credo Expands Portfolio': 'Credoがポートフォリオを拡大',
+                   'Why Credo stock slid': 'Credo株が7%下落した理由'}
+        send = self.transport(answers)
+        result = company_wire.translate_once(self.path, transport=send, env=self.env, now_ts=self.now.timestamp())
+        self.assertEqual(result, 'done')
+        with company_wire.connect(self.path) as db:
+            feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
+        by_title = {i['titleEn']: i['titleJa'] for i in feed['items']['CRDO']}
+        self.assertEqual(by_title['Credo Expands Portfolio'], 'Credoがポートフォリオを拡大')
+        self.assertIsNone(by_title['Why Credo stock slid'])
+
+    def test_rejected_headline_is_retried_later_and_given_up_after_three(self):
+        send = self.transport({})
+        for n in range(4):
+            company_wire.translate_once(self.path, transport=send, env=self.env, now_ts=self.now.timestamp() + n * 700)
+        with company_wire.connect(self.path) as db:
+            attempts = {r['key']: r['attempts'] for r in db.execute('SELECT * FROM company_wire_attempts')}
+        self.assertTrue(attempts and max(attempts.values()) == 3)
+
+    def test_disabled_without_configuration_and_budget_is_respected(self):
+        self.assertEqual(company_wire.translate_once(self.path, transport=self.transport({}), env={}, now_ts=self.now.timestamp()), 'disabled')
+        env = {**self.env, 'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': '1'}
+        company_wire.translate_once(self.path, transport=self.transport({}), env=env, now_ts=self.now.timestamp())
+        self.assertEqual(company_wire.translate_once(self.path, transport=self.transport({}), env=env, now_ts=self.now.timestamp() + 1), 'budget')
