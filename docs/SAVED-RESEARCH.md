@@ -96,3 +96,8 @@
 - Saved search includes authored notes in the current language, alongside the existing title, company, ticker and summary. Stored source quotes/anchors are never indexed or exposed as snippets. Full-width input and case are normalized.
 - A compact With annotations toggle filters the current-language notebooks, consistent with the card pen badge. Category, ticker and sort compose with it; Reset clears the toggle too. Other research views do not search personal notes or apply this filter.
 - This is read-only collection filtering; account persistence and article annotation interactions are unchanged.
+
+## 2026-10-14: simplify saved collection controls at user request
+- Removed topic/ticker filters and With annotations from the saved view; hidden filters from other views cannot restrict saved results. Search remains, with a shorter placeholder, and sort sits beside the collection heading without a large framed control.
+- Removed routine synced/guest status from the collection. Failures and conflicts remain actionable. Browser import is collapsed below the articles and only runs on an explicit click.
+- Do not add, import or remove the user's saved articles or annotations for testing without a specific request. Verify this layout without changing saved data.

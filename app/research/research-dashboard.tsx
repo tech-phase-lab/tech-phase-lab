@@ -51,7 +51,6 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   const restoredView = useSyncExternalStore(subscribeView, viewSnapshot, () => null);
   const tab = restoredView ?? "home";
   const [savedActiveId, setSavedActiveId] = useState("");
-  const [inkOnly, setInkOnly] = useState(false);
   const [savedSort, setSavedSort] = useState<"saved" | "published">("saved");
   const savedReturn = useRef<{ id: string; top: number; scroll: number } | null>(null);
   const cardButtons = useRef(new Map<string, HTMLButtonElement>());
@@ -111,9 +110,9 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   const matches = events.filter((event) => {
     const fields = [event.ticker, event.company, event.title.ja, event.title.en, event.summary.ja, event.summary.en];
     const marks = tab === "saved" ? collection.document.notebooks[notebookKey(event.id, lang)] ?? [] : [];
-    return (ticker === "all" || event.ticker === ticker) && (category === "all" || event.category === category) &&
+    return (tab === "saved" || ((ticker === "all" || event.ticker === ticker) && (category === "all" || event.category === category))) &&
       matchesResearchSearch(fields, query, marks) &&
-      (tab !== "saved" || (saved.includes(event.id) && (!inkOnly || marks.length > 0)));
+      (tab !== "saved" || saved.includes(event.id));
   });
   const filtered = tab === "saved" ? orderSavedEvents(matches, saved, savedSort) : matches;
   const selected = tab === "saved" ? filtered.find(event => event.id === savedActiveId) : filtered.find((event) => event.id === activeId) ?? filtered[0];
@@ -149,7 +148,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
       window.dispatchEvent(new PopStateEvent("popstate"));
     }
   }
-  function clearFilters() { setQuery(""); setTicker("all"); setCategory("all"); setInkOnly(false); }
+  function clearFilters() { setQuery(""); setTicker("all"); setCategory("all"); }
   function openView(next: ResearchView) {
     const hash = researchViewHashes[next];
     if (next !== "saved") savedReturn.current = null;
@@ -246,21 +245,21 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
             <div><span className={styles.savedEyebrow}>MY RESEARCH</span><h1>{t("保存したリサーチ", "Saved research")}</h1><p>{t("気になる記事を残して、あとからまとめて読み返す。", "Keep useful research together and revisit it anytime.")}</p></div>
             <div className={styles.savedCount}><Bookmark filled /><strong>{saved.filter((id) => events.some((event) => event.id === id)).length}</strong><span>{t("保存済み", "Saved")}</span></div>
           </header>}
-          <div className={styles.toolbar}>
+          <div className={`${styles.toolbar} ${tab === "saved" ? styles.savedToolbar : ""}`}>
             {tab !== "changes" && <div className={styles.sectionTitle}><h2>{tab === "metrics" ? t("指標一覧", "Metrics") : t("保存一覧", "Your collection")}</h2><span>{tab === "metrics" ? allMetrics.length : filtered.length}</span></div>}
-            <label className={styles.search}><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input aria-label={tab === "saved" ? t("銘柄・キーワード・メモで検索", "Search ticker, keyword or notes") : t("銘柄・キーワードで検索", "Search ticker or keyword")} placeholder={tab === "saved" ? t("銘柄・キーワード・メモを検索", "Search ticker, keyword or notes") : t("銘柄・キーワードを検索", "Search ticker or keyword")} value={query} onChange={(e) => setQuery(e.target.value)} /></label>
-          </div>
-          <div className={styles.filters}>
-            {[{ id: "all", label: t("すべて", "All topics") }, { id: "cloud", label: t("AIクラウド", "AI cloud") }, { id: "memory", label: t("半導体", "Semiconductors") }].map((item) => <button key={item.id} aria-pressed={category === item.id} onClick={() => { setCategory(item.id); setTicker("all"); }}>{item.label}</button>)}
-            {ticker !== "all" && <button className={styles.activeTicker} onClick={() => setTicker("all")} aria-label={t(`${ticker}の絞り込みを解除`, `Clear ${ticker} filter`)}>{ticker} ×</button>}
-            {tab === "saved" && <button aria-pressed={inkOnly} onClick={() => setInkOnly(value => !value)}>{t("書き込みあり", "With annotations")}</button>}
-            {tab === "saved" ? <select className={styles.savedSort} aria-label={t("並べ替え", "Sort research")} value={savedSort} onChange={event => setSavedSort(event.target.value as "saved" | "published")}>
+            {tab === "saved" && <select className={styles.savedSort} aria-label={t("並べ替え", "Sort research")} value={savedSort} onChange={event => setSavedSort(event.target.value as "saved" | "published")}>
               <option value="saved">{t("保存した順", "Recently saved")}</option>
               <option value="published">{t("発表日の新しい順", "Newest announcement")}</option>
-            </select> : <span className={styles.sortLabel}>{t("発表日の新しい順", "Newest announcement first")}</span>}
+            </select>}
+            <label className={styles.search}><svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input aria-label={tab === "saved" ? t("銘柄・キーワード・メモで検索", "Search ticker, keyword or notes") : t("銘柄・キーワードで検索", "Search ticker or keyword")} placeholder={tab === "saved" ? t("保存した記事を検索", "Search saved research") : t("銘柄・キーワードを検索", "Search ticker or keyword")} value={query} onChange={(e) => setQuery(e.target.value)} /></label>
           </div>
+          {tab !== "saved" && <div className={styles.filters}>
+            {[{ id: "all", label: t("すべて", "All topics") }, { id: "cloud", label: t("AIクラウド", "AI cloud") }, { id: "memory", label: t("半導体", "Semiconductors") }].map((item) => <button key={item.id} aria-pressed={category === item.id} onClick={() => { setCategory(item.id); setTicker("all"); }}>{item.label}</button>)}
+            {ticker !== "all" && <button className={styles.activeTicker} onClick={() => setTicker("all")} aria-label={t(`${ticker}の絞り込みを解除`, `Clear ${ticker} filter`)}>{ticker} ×</button>}
+            <span className={styles.sortLabel}>{t("発表日の新しい順", "Newest announcement first")}</span>
+          </div>}
           {storageError && <p role="alert" className={styles.notice}>{t("このブラウザーでは保存できません。ストレージの設定をご確認ください。", "Saving is unavailable in this browser. Check your storage settings.")}</p>}
-          {(tab === "saved" || collection.status === "error" || collection.status === "conflict") && <SavedSyncStatus collection={collection} lang={lang} />}
+          {((tab === "saved" && collection.status !== "synced" && collection.status !== "guest") || collection.status === "error" || collection.status === "conflict") && <SavedSyncStatus collection={collection} lang={lang} />}
 
           {tab === "metrics" ? <div className={styles.tableWrap}>
             {allMetrics.length ? <table><caption>{t("実績・見通し・ARRを区別。金額のMは百万米ドル。", "Actuals, guidance, and run-rate are distinct. M denotes USD millions.")}</caption><thead><tr>{[t("銘柄 / 指標", "Ticker / metric"), t("値", "Value"), t("対象・基準", "Scope / basis"), t("期間", "Period"), t("根拠", "Source")].map((label) => <th key={label} scope="col">{label}</th>)}</tr></thead><tbody>{allMetrics.map(({ metric, event }) => <tr key={`${event.id}:${metric.name}`}><th scope="row"><span className={styles.tableTicker}>{event.ticker}</span>{metricNames[metric.name]?.[lang] ?? metric.name}</th><td className={styles.tableValue}>{valueLabel(metric)}</td><td>{metric.scope}<small>{metric.basis} · {metric.kind === "guidance" ? t("会社見通し", "Guidance") : metric.kind === "run-rate" ? t("年換算指標", "Run-rate") : t("実績", "Actual")}</small></td><td>{metric.period}</td><td><a href={event.sources.find((source) => source.id === metric.sourceId)?.url} target="_blank" rel="noreferrer">{t("原文", "Source")} <Arrow /></a></td></tr>)}</tbody></table> : <Empty lang={lang} onReset={clearFilters} />}
@@ -318,6 +317,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
               </ResearchNotebook>
             </article>}
           </div>}
+          {tab === "saved" && collection.status === "synced" && <SavedSyncStatus collection={collection} lang={lang} />}
         </section>}
         <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.")}</p></footer>
       </main>
