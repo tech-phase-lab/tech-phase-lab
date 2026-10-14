@@ -47,3 +47,5 @@
 .tlFresh .tlRail i{animation:newBlink .9s ease-out infinite}
 @keyframes newBlink{0%{box-shadow:0 0 0 0 rgba(93,255,180,.85),0 0 10px rgba(93,255,180,.8)}70%{box-shadow:0 0 0 10px rgba(93,255,180,0),0 0 10px rgba(93,255,180,.8)}100%{box-shadow:0 0 0 0 rgba(93,255,180,0),0 0 10px rgba(93,255,180,.8)}}
 @media(prefers-reduced-motion:reduce){.tlFresh .tlRail i{animation:none}}
+
+.tlFound{font-size:9.5px;color:#6f7b8c;letter-spacing:0}

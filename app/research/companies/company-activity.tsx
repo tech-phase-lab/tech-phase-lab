@@ -5,7 +5,7 @@ import type { Language } from "@/lib/research/data";
 import { availableNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
 import { officialNewsDisplay, shownInLanguage } from "@/lib/research/news-presentation";
 import { analystNewsDisplay } from "@/lib/research/analyst-news";
-import { officialTime } from "@/lib/research/news-time";
+import { lateDetection, officialTime, recentPublication } from "@/lib/research/news-time";
 import { createNewsPoller } from "@/lib/research/news-poller";
 import { observePageActivity } from "@/lib/research/page-activity";
 import { createWatchTracker } from "@/lib/research/watch-new-items";
@@ -26,7 +26,8 @@ const clock = (at: string) => jst({ hour: "2-digit", minute: "2-digit" }, at);
 const dayKey = (at: string | number) => jst({ year: "numeric", month: "numeric", day: "numeric" }, at);
 /** Time column: today shows HH:mm, an earlier day shows its date over the time. A date-only source shows just the date. */
 function timeCell(row: Row) {
-  if (row.kind === "date") { const [, month, day] = row.at.split("-"); return <time dateTime={row.at}>{Number(month)}/{Number(day)}</time>; }
+  // A date-only source has no publication time; the time it was found is shown separately and labelled (owner, Oct 14).
+  if (row.kind === "date") { const [, month, day] = row.at.split("-"); return <time dateTime={row.at}>{Number(month)}/{Number(day)}{row.observedAt && <span className={styles.found}>取得 {clock(row.observedAt)}</span>}</time>; }
   const today = dayKey(row.at) === dayKey(Date.now());
   return <time dateTime={row.at}>{!today && <span>{jst({ month: "numeric", day: "numeric" }, row.at)}</span>}{clock(row.at)}</time>;
 }
@@ -40,20 +41,18 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
   const [checkedAt, setCheckedAt] = useState<string | null>(null);
   const ja = lang === "ja";
   const [open, setOpen] = useState(false);
-  const openRef = useRef(false);
-  // `freshCount` drives the blinking dot and badge (cleared on opening);
-  // `unread` keeps the NEW marks until the panel is closed again.
-  const [freshCount, setFreshCount] = useState(0);
+  // NEW marks and the blinking dot/badge follow two rules: an item that appeared
+  // after the page opened, or one published within the hour and found promptly
+  // (owner, Oct 14: MU showed many fresh items but nothing blinked). Opening
+  // clears the blink and badge; closing clears the NEW marks.
   const [unread, setUnread] = useState<ReadonlySet<string>>(new Set());
+  const [dismissed, setDismissed] = useState<ReadonlySet<string>>(new Set());
+  const [acknowledged, setAcknowledged] = useState<ReadonlySet<string>>(new Set());
   const [paused, setPaused] = useState(false);
   const tracker = useRef(createWatchTracker());
   const wireTracker = useRef(createWatchTracker());
   const bodyId = useId();
-  const markFresh = (ids: string[]) => {
-    if (!ids.length) return;
-    setUnread(previous => new Set([...previous, ...ids]));
-    if (!openRef.current) setFreshCount(count => count + ids.length);
-  };
+  const markFresh = (ids: string[]) => { if (ids.length) setUnread(previous => new Set([...previous, ...ids])); };
   useEffect(() => {
     const poller = createNewsPoller({
       push: true,
@@ -109,22 +108,24 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
   ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
   const tagText: Record<Tag, string> = ja ? { flash: "速報", analyst: "アナリスト", news: "ニュース" } : { flash: "Flash", analyst: "Analyst", news: "News" };
   const newest = rows[0];
+  const clockMs = checkedAt ? Date.parse(checkedAt) : 0;
+  const timeFresh = rows.filter(row => clockMs > 0 && recentPublication(row.at, row.kind, clockMs) && !lateDetection(row.at, row.observedAt)).map(row => row.id);
+  const marked = new Set([...unread, ...timeFresh].filter(id => !dismissed.has(id)));
+  const freshCount = [...marked].filter(id => !acknowledged.has(id)).length;
   const hasFresh = freshCount > 0 && !open;
   const status = hasFresh ? (ja ? "新着あり" : "New") : failed ? (ja ? "再接続中" : "Reconnecting") : paused ? (ja ? "一時停止" : "Paused") : data ? (ja ? "自動更新" : "Auto-updating") : (ja ? "接続中" : "Connecting");
   const toggle = () => {
-    const next = !open;
-    openRef.current = next;
-    setOpen(next);
-    setFreshCount(0);              // opening or closing: blink and badge go
-    if (!next) setUnread(new Set()); // closing clears the NEW marks
+    if (!open) setAcknowledged(new Set(marked));                          // opening: blink and badge go
+    else { setDismissed(previous => new Set([...previous, ...marked])); setUnread(new Set()); } // closing: NEW marks go
+    setOpen(!open);
   };
   // A time the source never stated is never shown as a publication time.
   const detected = (row: Row, locale: boolean) => row.kind === "observed" ? (locale ? "発表時刻は不明（取得時刻を表示）" : "Publication time unknown (showing when found)")
     : row.observedAt ? `${locale ? "取得" : "Detected"} ${clock(row.observedAt)}` : "";
-  const item = (row: Row) => <article key={row.id} className={`${styles.item} ${unread.has(row.id) ? styles.unread : ""}`}>
+  const item = (row: Row) => <article key={row.id} className={`${styles.item} ${marked.has(row.id) ? styles.unread : ""}`}>
     <span className={styles.when}>{timeCell(row)}</span><span className={styles.node} aria-hidden="true"/>
     <div className={styles.entry}>
-      <div className={styles.meta}><span className={`${styles.tag} ${styles[row.tag]}`}>{tagText[row.tag]}</span>{unread.has(row.id) && <span className={styles.newMark}>NEW</span>}</div>
+      <div className={styles.meta}><span className={`${styles.tag} ${styles[row.tag]}`}>{tagText[row.tag]}</span>{marked.has(row.id) && <span className={styles.newMark}>NEW</span>}</div>
       {row.wire
         ? <><p className={styles.headline} lang={lang}><a href={row.wire.url} target="_blank" rel="noopener noreferrer nofollow">{row.title}</a></p><p className={styles.src}>{wireLabel(row.wire)}</p></>
         : <NewsStory lang={lang} label={row.label ?? ""} title={row.title} body={row.body} publication={detected(row, ja)}/>}
