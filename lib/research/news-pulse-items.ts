@@ -2,6 +2,7 @@ import { NEWS_BRIEF_TITLE_SUFFIXES, type GeneralNewsFeed } from "./general-news.
 import type { Language } from "./data";
 import { marketNewsBody, marketNewsDisplay } from "./market-news-display.ts";
 import { officialPulseHeadlineJa } from "./official-news-ja.ts";
+import { isEarningsRelated } from "./earnings-results.ts";
 import { informativeOfficial, officialNewsDisplay, shownInLanguage } from "./news-presentation.ts";
 import { NEWS_MAX_AGE_MS, clockTime, officialTime } from "./news-time.ts";
 import { officialPulseHeadlines, marketPulseHeadlines, generalPulseHeadlines } from "./news-pulse-headline.ts";
@@ -22,7 +23,7 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
   const ja = lang === "ja";
   return [
     // Placeholders awaiting checked copy stay in the news list only.
-    ...(feed?.officialUpdates ?? []).filter(item => informativeOfficial(item) && !item.pendingResearch && shownInLanguage(item, lang)).map(item => {
+    ...(feed?.officialUpdates ?? []).filter(item => informativeOfficial(item) && !isEarningsRelated(item) && !item.pendingResearch && shownInLanguage(item, lang)).map(item => {
       const display = officialNewsDisplay(item, lang);
       const compactTitle = ja ? officialPulseHeadlineJa(item.url) ?? item.pulseTitleJa ?? item.shortTitleJa : item.pulseTitleEn ?? item.shortTitleEn;
       const suffix = NEWS_BRIEF_TITLE_SUFFIXES[lang];
