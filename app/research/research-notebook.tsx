@@ -1,15 +1,9 @@
 "use client";
 
-import { Children, cloneElement, isValidElement, useEffect, useMemo, useRef, useState, useSyncExternalStore, type CSSProperties, type ReactNode } from "react";
+import { Children, cloneElement, isValidElement, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { eraseAnnotationRanges, inkColors, markedSegments, maxAnnotations, parseAnnotations, textBlockId, type Annotation, type InkColor, type InkKind, type InkPart } from "@/lib/research/annotations";
 import styles from "./research-notebook.module.css";
-
-const changed = "tech-phase:annotations-changed";
-function subscribe(callback: () => void) {
-  window.addEventListener("storage", callback);
-  window.addEventListener(changed, callback);
-  return () => { window.removeEventListener("storage", callback); window.removeEventListener(changed, callback); };
-}
+import { mergeSavedDocuments } from "@/lib/research/saved-document";
 
 function inkStyle(mark: Annotation): CSSProperties {
   const color = inkColors[mark.color];
@@ -119,17 +113,16 @@ function exportPrint(content: HTMLElement, marks: Annotation[], title: string, l
   return true;
 }
 
-export default function ResearchNotebook({ articleId, lang, title, enabled, children }: { articleId: string; lang: "ja" | "en"; title: string; enabled: boolean; children: ReactNode }) {
-  const storageKey = `tech-phase:annotations:v1:${encodeURIComponent(articleId)}:${lang}`;
-  const raw = useSyncExternalStore(subscribe, () => { try { return localStorage.getItem(storageKey) ?? "[]"; } catch { return "[]"; } }, () => "[]");
+export default function ResearchNotebook({ lang, title, enabled, children, raw, onCommit, editable }: { raw: string; onCommit: (raw: string, marks: Annotation[]) => boolean; editable: boolean; lang: "ja" | "en"; title: string; enabled: boolean; children: ReactNode }) {
   const marks = useMemo(() => parseAnnotations(raw), [raw]);
   const [editing, setEditing] = useState(false);
   const [visible, setVisible] = useState(true);
   const [color, setColor] = useState<InkColor>("yellow");
   const [selection, setSelection] = useState<InkPart[]>([]);
-  const [draft, setDraft] = useState<{ id?: string; parts: InkPart[]; text: string } | null>(null);
-  const [history, setHistory] = useState<Annotation[][]>([]);
+  const [draft, setDraft] = useState<{ id?: string; original?: string; parts: InkPart[]; text: string } | null>(null);
+  const [history, setHistory] = useState<{ before: Annotation[]; after: Annotation[] }[]>([]);
   const [error, setError] = useState("");
+  const draftConflict = Boolean(draft?.id && JSON.stringify(marks.find(mark => mark.id === draft.id)) !== draft.original);
   const root = useRef<HTMLDivElement>(null);
   const list = useRef<HTMLDetailsElement>(null);
   const notesList = useRef<HTMLElement>(null);
@@ -179,11 +172,9 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
   function commit(next: Annotation[], undo = false) {
     if (next.some(mark => mark.parts.length > 100)) { setError(t("細かな書き込みが多すぎます。書き込みを管理から整理してください。", "Too many fragments. Remove an annotation from Manage marks first.")); return false; }
     try {
-      // Never overwrite a change made in another tab while this view was stale.
-      if ((localStorage.getItem(storageKey) ?? "[]") !== raw) { window.dispatchEvent(new Event(changed)); setError(t("別の画面で更新されました。もう一度操作してください。", "Updated in another tab. Please try again.")); return false; }
-      localStorage.setItem(storageKey, JSON.stringify(next));
-      if (!undo) setHistory(previous => [...previous.slice(-29), marks]);
-      window.dispatchEvent(new Event(changed)); setError(""); return true;
+      if (!editable || !onCommit(raw, next)) { setError(t("保存できませんでした。同期状態を確認して、もう一度お試しください。", "Could not save. Check sync status and try again.")); return false; }
+      if (!undo) setHistory(previous => [...previous.slice(-29), { before: marks, after: next }]);
+      setError(""); return true;
     } catch { setError(t("書き込みを保存できませんでした。ブラウザーの保存設定や空き容量を確認してください。", "Could not save. Check browser storage permissions and available space.")); return false; }
   }
   function add(kind: InkKind) {
@@ -286,12 +277,13 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
         </div>
         <div className={styles.utilities}>
           <button disabled={!removable.length} onClick={() => { if (commit(selection.length ? eraseAnnotationRanges(marks, selection) : marks.filter(mark => mark.id !== activeMark))) { setActiveMark(null); clearSelection(); } }}>{selection.length ? t("選択部分を消す", "Erase selection") : t("この書き込みを削除", "Delete this mark")}</button>
-          <button disabled={!history.length} onClick={() => { const previous = history.at(-1); if (previous && commit(previous, true)) setHistory(history.slice(0, -1)); }}>{t("元に戻す", "Undo")}</button>
+          <button disabled={!history.length} onClick={() => { const previous = history.at(-1); if (!previous) return; const wrap = (items: Annotation[]) => ({ saved: [], notebooks: { "undo:ja": items } }); const merged = mergeSavedDocuments(wrap(previous.after), wrap(previous.before), wrap(marks)); if (!merged) { setError(t("別の端末で変更された書き込みは元に戻せません。", "Cannot undo an annotation changed on another device.")); return; } if (commit(merged.notebooks["undo:ja"] ?? [], true)) setHistory(history.slice(0, -1)); }}>{t("元に戻す", "Undo")}</button>
         </div>
         <p className={styles.selected}>{selection.length ? selection.map(p => p.quote).join(" ").slice(0, 100) : "\u00a0"}</p>
-        {draft && <form onSubmit={event => { event.preventDefault(); if (!draft.text.trim()) return; const next = draft.id ? marks.map(mark => mark.id === draft.id ? { ...mark, note: draft.text.trim(), color } : mark) : [...marks, { id: crypto.randomUUID(), kind: "note" as const, color, parts: draft.parts, note: draft.text.trim() }]; if (next.length > maxAnnotations) { setError(t("1記事の書き込みは200件までです。", "Up to 200 annotations per article.")); return; } if (commit(next)) { setDraft(null); clearSelection(); } }}>
+        {draft && <form onSubmit={event => { event.preventDefault(); if (!draft.text.trim()) return; const next = draft.id && !draftConflict ? marks.map(mark => mark.id === draft.id ? { ...mark, note: draft.text.trim(), color } : mark) : [...marks, { id: crypto.randomUUID(), kind: "note" as const, color, parts: draft.parts, note: draft.text.trim() }]; if (next.length > maxAnnotations) { setError(t("1記事の書き込みは200件までです。", "Up to 200 annotations per article.")); return; } if (commit(next)) { setDraft(null); clearSelection(); } }}>
+          {draftConflict && <p>{t("元のメモが更新されました。別のメモとして残せます。", "The original note changed. You can save this as a separate note.")}</p>}
           <textarea aria-label={t("自分のメモ", "My note")} placeholder={t("気づいたことを書き残す", "Write down your thoughts")} maxLength={1000} value={draft.text} onChange={event => setDraft({ ...draft, text: event.target.value })} />
-          <button type="submit" disabled={!draft.text.trim()}>{t("メモを保存", "Save note")}</button><button type="button" onClick={() => setDraft(null)}>{t("キャンセル", "Cancel")}</button>
+          <button type="submit" disabled={!draft.text.trim()}>{draftConflict ? t("別のメモとして保存", "Save as a separate note") : t("メモを保存", "Save note")}</button><button type="button" onClick={() => setDraft(null)}>{t("キャンセル", "Cancel")}</button>
         </form>}
       </div>}
       {error && <p role="alert" className={styles.error}>{error}</p>}
@@ -306,14 +298,14 @@ export default function ResearchNotebook({ articleId, lang, title, enabled, chil
       {presentMarks.filter(mark => mark.kind === "note").map(mark => <div key={mark.id} className={`${styles.markItem} ${styles.noteItem}`} style={{ borderLeftColor: inkColors[mark.color] }}>
         <p>{mark.note}</p>
         <blockquote className={styles.noteQuote}><span>{t("メモした箇所", "Referenced passage")}</span>{mark.parts.map(p => p.quote).join(" ")}</blockquote>
-        <div><button onClick={() => { clearSelection(); setEditing(true); setColor(mark.color); setDraft({ id: mark.id, parts: mark.parts, text: mark.note }); }}>{t("編集", "Edit")}</button><button onClick={() => commit(marks.filter(a => a.id !== mark.id))}>{t("削除", "Delete")}</button></div>
+        <div><button onClick={() => { clearSelection(); setEditing(true); setColor(mark.color); setDraft({ id: mark.id, original: JSON.stringify(mark), parts: mark.parts, text: mark.note }); }}>{t("編集", "Edit")}</button><button onClick={() => commit(marks.filter(a => a.id !== mark.id))}>{t("削除", "Delete")}</button></div>
       </div>)}
       {notes.length > presentMarks.filter(mark => mark.kind === "note").length && <p>{t("本文が更新された箇所のメモは非表示になっています。", "Notes on changed passages are hidden.")}</p>}
       <p>{t("このブラウザーに保存されます。", "Saved in this browser.")}</p>
     </section>}
     {enabled && inkMarks.length > 0 && <details ref={list} className={styles.markList}>
       <summary>{t("下線・蛍光ペン・囲み", "Underlines, highlights & boxes")} <span>{inkMarks.length}</span></summary>
-      <p>{t("このブラウザーに保存。記事が更新された箇所の書き込みは非表示になります。", "Saved in this browser. Marks on changed passages are hidden.")}</p>
+      <p>{t("記事が更新された箇所の書き込みは非表示になります。", "Marks on changed passages are hidden.")}</p>
       {presentMarks.filter(mark => mark.kind !== "note").map(mark => <div key={mark.id} className={styles.markItem} style={{ borderLeftColor: inkColors[mark.color] }}>
         <span>{labels[mark.kind]}</span><blockquote>{mark.parts.map(p => p.quote).join(" ")}</blockquote>
         <div><button onClick={() => commit(marks.filter(a => a.id !== mark.id))}>{t("削除", "Delete")}</button></div>

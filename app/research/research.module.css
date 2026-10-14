@@ -1757,3 +1757,8 @@
 .backToSaved{display:inline-flex;align-items:center;gap:6px;min-height:40px;margin:0 0 12px;padding:6px 10px;border:1px solid #35524f;border-radius:7px;background:#142a29;color:#b9eadb;font-size:13px;cursor:pointer}
 .savedSort:focus-visible,.backToSaved:focus-visible{outline:2px solid #8be6bf;outline-offset:3px}
 @media(max-width:600px){.savedSort{font-size:16px;max-width:100%;margin-top:4px}.backToSaved{min-height:44px}}
+
+.savedSync { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin:0 0 14px; color:var(--muted); font-size:12px; }
+.savedSync button { border:1px solid #70d9bc55; background:#70d9bc0b; color:#a2e7d3; border-radius:8px; padding:8px 12px; min-height:40px; cursor:pointer; }
+.savedSync button:focus-visible { outline:2px solid #70d9bc; outline-offset:3px; }
+@media (max-width:640px) { .savedSync button { min-height:44px; } }

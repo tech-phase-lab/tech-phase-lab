@@ -34,6 +34,7 @@ import news_history
 import editorial_posts
 import questions
 import favorite_lists
+import saved_research
 import note_translation
 import question_translation
 import headline_translation
@@ -3037,12 +3038,12 @@ class Handler(BaseHTTPRequestHandler):
         supplied = self.headers.get("Authorization", "")
         return hmac.compare_digest(supplied, "Bearer " + token)
 
-    def read_json(self):
+    def read_json(self, max_bytes=64 * 1024):
         try:
             length = int(self.headers.get("Content-Length", "0"))
         except ValueError as exc:
             raise ValueError("invalid-content-length") from exc
-        if not 1 <= length <= 64 * 1024:
+        if not 1 <= length <= max_bytes:
             raise ValueError("invalid-request-size")
         try:
             value = json.loads(self.rfile.read(length))
@@ -3177,6 +3178,19 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "annual-brief-unavailable"})
             return
+        if path == "/saved-research":
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                with saved_research.connect(self.app.db_path) as db:
+                    result = saved_research.read(db, self.headers.get("X-Saved-Research-Owner", ""))
+                self.send_json(200, {"ok": True, **result})
+            except ValueError:
+                self.send_json(400, {"ok": False})
+            except Exception:
+                self.send_json(503, {"ok": False})
+            return
         if path == "/favorite-lists":
             if not self.authorized():
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
@@ -3249,6 +3263,20 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlsplit(self.path).path
+        if path == "/saved-research":
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                payload = self.read_json(saved_research.LIMIT + 1000)
+                with saved_research.connect(self.app.db_path) as db:
+                    result = saved_research.save(db, self.headers.get("X-Saved-Research-Owner", ""), payload.get("revision"), payload.get("document"))
+                self.send_json(409 if result.get("conflict") else 200, {"ok": not result.get("conflict", False), **result})
+            except ValueError:
+                self.send_json(400, {"ok": False})
+            except Exception:
+                self.send_json(503, {"ok": False})
+            return
         if path == "/favorite-lists":
             if not self.authorized():
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
