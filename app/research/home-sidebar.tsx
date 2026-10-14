@@ -21,6 +21,8 @@ const icons = {
   compare: icon(<path d="M4 20V9h6v11M14 20V4h6v16M2 20h20" />),
   saved: icon(<path d="M6 3.5h12v17l-6-4-6 4z" />),
   learn: icon(<path d="M12 3l9 5-9 5-9-5zM7 11v5c0 1.5 2.2 3 5 3s5-1.5 5-3v-5" />),
+  gem: icon(<path d="M12 3l7 9-7 9-7-9z" />),
+  anchor: icon(<><circle cx="12" cy="5" r="2" /><path d="M12 7v14M8 11h8M5 14a7 7 0 0 0 14 0" /></>),
   faq: icon(<><circle cx="12" cy="12" r="9" /><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01" /></>),
 };
 
@@ -56,18 +58,9 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
   return <nav className={styles.menu} aria-label={t("メインメニュー", "Main menu")}>
     <div className={styles.group}><p className={styles.eyebrow}>QUICK</p>{quick.map(row)}</div>
     <div className={styles.group}><p className={styles.eyebrow}>RESEARCH</p>{research.map(row)}</div>
-    <div className={styles.cards}>
-      <button type="button" className={`${styles.pro} ${tab === "pro" ? styles.on : ""}`} aria-current={tab === "pro" ? "page" : undefined} onClick={() => openView("pro")}>
-        <span className={styles.premium}>PREMIUM</span>
-        <b>Tech Phase PRO</b>
-        <span className={styles.proText}>{t("リゼルのひとりごと・週刊PRO", "RIZEL’s Notes · PRO Weekly")}<br />{t("銘柄比較ほか、すべて開く", "Comparison and more, all unlocked")}</span>
-        <span className={styles.go}><span>{t("PROを見る", "See PRO")}</span><span aria-hidden="true">→</span></span>
-      </button>
-      <Link href="/resolute" className={styles.rz}>
-        <span className={styles.rzIcon} aria-hidden="true">⚓</span>
-        <span className={styles.rzBody}><b>RESOLUTE</b><em>{t("暴落でも急騰でも", "In a crash or a surge,")}<br />{t("冷静に動くための", "to keep acting calmly")}</em><small>{t("独自ルール開発キット", "Build your own rules")}</small></span>
-        <span className={styles.arrow} aria-hidden="true">→</span>
-      </Link>
+    <div className={styles.group}>
+      <button type="button" className={`${styles.item} ${styles.proLine} ${tab === "pro" ? styles.on : ""}`} aria-current={tab === "pro" ? "page" : undefined} onClick={() => openView("pro")}>{icons.gem}<span>Tech Phase PRO</span></button>
+      <Link href="/resolute" className={`${styles.item} ${styles.rzLine}`}>{icons.anchor}<span>RESOLUTE</span></Link>
     </div>
     <div className={styles.foot}>
       <div className={styles.group}>
