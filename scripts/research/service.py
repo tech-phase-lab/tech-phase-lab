@@ -774,6 +774,7 @@ class AutomaticMonitor:
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
         self.company_wire_thread = threading.Thread(target=self.run_company_wire, name="company-wire", daemon=True)
         self.company_wire_errors = {}
+        self.company_wire_translation_thread = threading.Thread(target=self.run_company_wire_translation, name="company-wire-translation", daemon=True)
 
     def run_x_preflight(self):
         # Startup backup may temporarily require one full extra DB-sized copy.
@@ -1088,6 +1089,7 @@ class AutomaticMonitor:
             self.x_stream_trial_thread.start()
         self.news_thread.start()
         self.company_wire_thread.start()
+        self.company_wire_translation_thread.start()
         self.note_translation_thread.start()
         for thread in self.headline_translation_threads:
             thread.start()
@@ -1120,6 +1122,7 @@ class AutomaticMonitor:
             self.x_stream_trial_thread.join(timeout=45)
         self.news_thread.join(timeout=25)
         self.company_wire_thread.join(timeout=25)
+        self.company_wire_translation_thread.join(timeout=25)
         self.note_translation_thread.join(timeout=45)
         for thread in self.headline_translation_threads:
             thread.join(timeout=45)
@@ -1167,6 +1170,21 @@ class AutomaticMonitor:
                 print("company-wire-failed", flush=True)
             index += 1
             self.stop_event.wait(6)
+
+    def run_company_wire_translation(self):
+        if os.environ.get("COMPANY_WIRE_ENABLED", "true").lower() == "false":
+            return
+        while not self.stop_event.is_set():
+            result = None
+            try:
+                result = company_wire.translate_once(self.db_path)
+            except Exception:
+                print("company-wire-translation-failed", flush=True)
+            self.stop_event.wait(5 if result == "done" else 60)
+
+    def company_wire_feed(self):
+        with company_wire.connect(self.db_path) as db:
+            return company_wire.public_feed(db)
 
     def stock_news_queue(self, limit=20):
         with stock_news.connect(self.db_path) as db:
@@ -3185,7 +3203,7 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "question-list-unavailable"})
             return
-        if path not in {"/snapshot", "/live", "/price-targets", "/news", "/posts"}:
+        if path not in {"/snapshot", "/live", "/price-targets", "/news", "/posts", "/company-wire"}:
             self.send_json(404, {"ok": False, "error": "not-found"})
             return
         if not self.authorized():
@@ -3205,6 +3223,9 @@ class Handler(BaseHTTPRequestHandler):
                     self.send_json(200, self.app.public_news(original_preview=True))
                 else:
                     self.send_json(200, self.app.public_news())
+                return
+            if path == "/company-wire":
+                self.send_json(200, self.app.company_wire_feed())
                 return
             if path == "/price-targets":
                 self.send_json(200, self.app.public_price_targets())
