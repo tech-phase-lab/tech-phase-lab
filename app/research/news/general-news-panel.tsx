@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Language } from "@/lib/research/data";
 import { availableNewsPayload, type GeneralNewsFeed, type InitialNewsSnapshot } from "@/lib/research/general-news";
+import { isEarningsRelated } from "@/lib/research/earnings-results";
 import { informativeOfficial, officialNewsDisplay, shownInLanguage } from "@/lib/research/news-presentation";
 import { marketNewsBody, marketNewsDisplay } from "@/lib/research/market-news-display";
 import { clockTime, officialTime } from "@/lib/research/news-time";
@@ -81,7 +82,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, initialNe
   }, [refresh, initialNews]);
   // An item with no time stated by its source is not listed: showing the time
   // it was found would pass a guess off as the publication time (owner, Oct 10).
-  const official = (data?.officialUpdates ?? []).filter(item => informativeOfficial(item) && officialTime(item).kind !== "observed" && shownInLanguage(item, lang));
+  const official = (data?.officialUpdates ?? []).filter(item => informativeOfficial(item) && !isEarningsRelated(item) && officialTime(item).kind !== "observed" && shownInLanguage(item, lang));
   const news = officialOnly ? [] : [...data?.items ?? []].sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
   const market = officialOnly ? [] : data?.marketUpdates ?? [];
   // Analyst ratings and target changes live on the price target page only (owner, Oct 7).

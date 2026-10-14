@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { earningsResults } from '../lib/research/earnings-results.ts';
+import { earningsResults, isEarningsRelated } from '../lib/research/earnings-results.ts';
 
 const brief = { id: '5', researchId: 'x-result-5', kind: 'earnings', ticker: 'TSM', period: 'Q3 2026',
   titleJa: 'TSM Q3 2026決算：売上高NT$989.9B', titleEn: 'TSM Q3 2026 earnings: Revenue NT$989.9B',
@@ -40,4 +40,11 @@ test('another quarter days later stays a separate row, and bodies come only from
   assert.equal(rows.length, 2);
   assert.equal(rows[1].body.ja, '売上高は増加しました。');
   assert.equal(rows[0].body.ja, null);
+});
+
+test('results releases and earnings notices are kept off the home news list; other news is not', () => {
+  for (const title of ['Apple reports fourth quarter results', 'Apple to report fourth quarter results on Oct 30', 'ASML reports Q3 2026 results'])
+    assert.equal(isEarningsRelated(update(title)), true);
+  assert.equal(isEarningsRelated(update('Apple unveils new iPad')), false);
+  assert.equal(isEarningsRelated(update('Apple reports fourth quarter results', { tickers: ['AAPL', 'MSFT'] })), false);
 });

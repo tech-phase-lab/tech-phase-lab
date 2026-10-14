@@ -20,6 +20,12 @@ const SAME_EVENT_MS = 36 * 3_600_000;
 const RESULTS = /\b(?:Q[1-4]|first|second|third|fourth|quarter(?:ly)?|fiscal)\b.{0,80}\b(?:results|earnings|EPS|revenue|net sales|net income)\b|\b(?:results|earnings|EPS|revenue|net sales|net income)\b.{0,80}\b(?:Q[1-4]|quarter|fiscal)\b/i;
 const NOT_RESULTS = /\b(?:will|to)\s+(?:report|announce|release|host|hold|publish)\b|conference call|webcast|\bdate\b|\bschedule[ds]?\b|\binvit/i;
 
+/** Earnings results releases and the notices around them belong to the calendar
+ * and the company pages, not the home news list (owner, Oct 14). */
+export function isEarningsRelated(item: OfficialUpdate): boolean {
+  return item.tickers.length === 1 && RESULTS.test(item.title);
+}
+
 /** Released earnings for the calendar (owner, Oct 11): numeric flashes from
  * source posts and the companies' own results releases, newest first.
  * Oct 14: several postings of one result are merged into a single row. */
