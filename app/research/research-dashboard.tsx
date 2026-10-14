@@ -19,6 +19,7 @@ import type { InitialNewsSnapshot } from "@/lib/research/general-news";
 import NewsFeed from "./news/news-feed";
 import ResearchPulse from "./research-pulse";
 import HomeHero from "./home-hero";
+import HomeSidebar from "./home-sidebar";
 import ResearchNotebook from "./research-notebook";
 
 const storageKey = "tech-phase:research-saved:v1";
@@ -94,18 +95,6 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
     return previous && compareMetrics(metric, previous).ok ? [`${previous.period} → ${metric.period}`] : [];
   }) ?? [])];
   const allMetrics = filtered.flatMap((event) => event.metrics.map((metric) => ({ metric, event })));
-  const coveredCompanies = useMemo(() => {
-    const companies = new Map<string, { symbol: string; name: string; count: number }>();
-    for (const event of events) {
-      const current = companies.get(event.ticker);
-      companies.set(event.ticker, {
-        symbol: event.ticker,
-        name: event.company,
-        count: (current?.count ?? 0) + 1,
-      });
-    }
-    return [...companies.values()].toSorted((a, b) => b.count - a.count || a.symbol.localeCompare(b.symbol));
-  }, [events]);
   const kinds = { acquisition: t("買収", "Acquisition"), partnership: t("提携", "Partnership"), earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding"), product: t("製品・料金", "Product & pricing"), "external-research": t("外部調査・評価", "External research") };
   function toggleSaved(id: string) {
     try {
@@ -147,26 +136,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
 
     <div className={styles.shell}>
       <aside className={styles.sidebar}>
-        <nav className={styles.sideMenu} aria-label={t("サイドメニュー", "Sidebar navigation")}>
-          <p className={styles.navLabel}>{t("メインメニュー", "MAIN MENU")}</p>
-          <Link href="/research/capital-map"><NavigationIcon name="changes" /><span>{t("資本マップ", "CAPITAL MAP")}</span></Link>
-          <Link href="/research/stocks"><NavigationIcon name="search" /><span>{t("米国株を探す", "Find stocks")}</span><span aria-hidden="true">↗</span></Link>
-          <button aria-current={tab === "companies" ? "page" : undefined} onClick={() => openView("companies")}><NavigationIcon name="companies" /><span>{t("監視22銘柄リスト", "22-stock watch list")}</span><small>{monitoredCompanies.length}</small></button>
-          <button aria-current={tab === "metrics" ? "page" : undefined} onClick={() => openView("metrics")}><NavigationIcon name="metrics" /><span>{t("決算・指標", "Financials")}</span></button>
-          <button aria-current={tab === "saved" ? "page" : undefined} onClick={() => openView("saved")}><NavigationIcon name="saved" /><span>{t("保存", "Saved")}</span><small>{saved.filter((id) => events.some((event) => event.id === id)).length}</small></button>
-          <Link href="/research/compare"><NavigationIcon name="companies" /><span>{t("銘柄比較", "Compare stocks")}</span><small>PRO</small></Link>
-          <button className={styles.sideProNav} aria-current={tab === "pro" ? "page" : undefined} onClick={() => openView("pro")}><NavigationIcon name="pro" /><span>Tech Phase PRO</span></button>
-        </nav>
-        <div className={styles.coverage}>
-          <div className={styles.filterHeading}><p className={styles.navLabel}>{t("この一覧の銘柄", "FILTER THESE NOTES")}</p><span>{coveredCompanies.length}</span></div>
-          <p className={styles.filterHelp}>{t("この下の検証レポートを絞り込みます。監視対象の全銘柄は「監視22銘柄リスト」から確認できます。", "Filter the research notes below. Open Research coverage for all monitored companies.")}</p>
-          {coveredCompanies.map((item) => <button key={item.symbol} aria-pressed={ticker === item.symbol} onClick={() => { setTicker(ticker === item.symbol ? "all" : item.symbol); setCategory("all"); setQuery(""); openView("changes"); }}>
-            <span className={styles.miniLogo}>{item.symbol.slice(0, 1)}</span><span><strong>{item.symbol}</strong><small>{item.name}</small></span><span className={styles.coverageCount}>{item.count}</span>
-          </button>)}
-        </div>
-        <Link className={styles.labLink} href="/research/stocks">{t("米国株を検索", "U.S. stock search")} <Arrow /></Link>
-        <div className={styles.sideNote}><span className={styles.mono}>SOURCE FIRST</span><p>{t("数字の根拠まで、ひと続きに。", "Follow the evidence behind every number.")}</p></div>
-        <Link className={styles.labLink} href="/lab" prefetch={false}>{t("速度測定ラボ", "Delivery lab")} <Arrow /></Link>
+        <HomeSidebar lang={lang} tab={tab} companyCount={monitoredCompanies.length} savedCount={saved.filter((id) => events.some((event) => event.id === id)).length} openView={openView} />
       </aside>
 
       <main id="research-main" className={styles.main}>

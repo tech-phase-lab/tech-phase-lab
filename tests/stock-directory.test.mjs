@@ -373,12 +373,13 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(route, /cache: "no-store"/);
   assert.match(route, /s-maxage=300, stale-while-revalidate=3600/);
   assert.match(dashboard, /\/research\/stocks/);
-  assert.match(dashboard, /\/lab/);
   assert.match(dashboard, /THE RESEARCH DESK/);
-  assert.match(dashboard, /サイドメニュー/);
-  assert.match(dashboard, /この一覧の銘柄/);
-  assert.match(dashboard, /この下の検証レポートを絞り込みます/);
-  assert.match(dashboard, /coveredCompanies/);
+  // Desktop left menu (owner, Oct 14): QUICK / RESEARCH; no company filter list, no delivery lab link.
+  assert.match(dashboard, /<HomeSidebar /);
+  assert.doesNotMatch(dashboard, /この一覧の銘柄|coveredCompanies|速度測定ラボ|href="\/lab"/);
+  const sidebar = await readFile(new URL("../app/research/home-sidebar.tsx", import.meta.url), "utf8");
+  for (const text of [/QUICK/, /RESEARCH/, /\/research\/stocks/, /\/research\/price-targets/, /\/resolute/, /SOURCE FIRST/, /数字には、必ず根拠を。/]) assert.match(sidebar, text);
+  assert.doesNotMatch(sidebar, /👑|♛|crown/i);
   assert.match(dashboard, /<CompanyDirectory companies=\{monitoredCompanies\}/);
   assert.match(directory, /監視\$\{companies\.length\}銘柄リスト/);
   assert.match(directory, /決算リサーチを公開済み/);

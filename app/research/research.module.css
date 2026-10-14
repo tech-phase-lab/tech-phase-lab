@@ -1743,3 +1743,7 @@
 .articleSaveButton:focus-visible,.openSavedButton:focus-visible,.saveButton:focus-visible { outline:2px solid #8bd9c1; outline-offset:3px; }
 .saveButton { gap:5px; min-height:44px; white-space:nowrap; font-size:12px; cursor:pointer; }
 .eventMeta { flex-wrap:wrap; }
+
+/* Desktop left menu (owner, Oct 14): a little wider so every label fits on one line. */
+@media(min-width:761px){.shell{grid-template-columns:256px minmax(0,1fr)}.sidebar{padding-left:14px;padding-right:14px}}
+@media(min-width:761px) and (max-width:1350px){.shell{grid-template-columns:252px minmax(0,1fr)}}
