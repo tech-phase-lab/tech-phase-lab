@@ -178,3 +178,28 @@
 .spinOnce > svg:last-child { animation:spin .7s cubic-bezier(.4,0,.2,1) 1; }
 @keyframes ringGlow { 0%,100% { box-shadow:0 0 4px -2px rgba(236,208,142,.18); } 50% { box-shadow:0 0 9px -2px rgba(236,208,142,.38); } }
 @media (prefers-reduced-motion:reduce) { .ring, .spinOnce > svg:last-child { animation:none !important; } }
+
+/* Home header buttons (owner, Oct 14): desktop only; phones keep the existing header. */
+.promo{display:none}
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+@media (min-width:761px){
+  .promo{display:flex;align-items:center;gap:10px;margin-right:8px}
+  .proBtn{position:relative;display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 10px 0 14px;border:1px solid rgba(240,215,154,.55);border-radius:10px;overflow:hidden;cursor:pointer;font:inherit;background:linear-gradient(145deg,#2a2112,#17130b 60%,#201807);box-shadow:inset 0 1px 0 rgba(255,235,190,.22)}
+  .proBtn::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,232,170,.2) 50%,transparent 65%);transform:translateX(-120%);animation:promoSheen 5s ease-in-out infinite;pointer-events:none}
+  .proBtn span{position:relative;font-size:13px;font-weight:700;letter-spacing:.02em;background:linear-gradient(100deg,#f0d79a,#d9b46a 60%,#f6e6bd);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .proTag{position:relative;font:600 9px var(--font-geist-mono),monospace;letter-spacing:.14em;color:#d9b46a;border:1px solid rgba(217,180,106,.5);border-radius:5px;padding:0 5px;line-height:15px}
+  .rzBtn{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 14px;border:1.5px solid transparent;border-radius:10px;text-decoration:none;color:#ee8f4f;font:600 12px var(--font-geist-mono),monospace;letter-spacing:.2em;background:linear-gradient(135deg,#1e130c,#120c08) padding-box,conic-gradient(from var(--ang),rgba(238,143,79,.25),#ffb27a 12%,rgba(238,143,79,.25) 28%,rgba(238,143,79,.25) 62%,#ff9a5a 78%,rgba(238,143,79,.25)) border-box;animation:promoSpin 6s linear infinite;box-shadow:0 0 18px -8px rgba(238,143,79,.6)}
+  .rzBtn span{font-size:15px;letter-spacing:0;line-height:1}
+  .proBtn:focus-visible,.rzBtn:focus-visible{outline:2px solid #ee8f4f;outline-offset:2px}
+}
+@keyframes promoSheen{0%,55%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+@keyframes promoSpin{to{--ang:360deg}}
+@media (min-width:761px) and (max-width:1100px){
+  .proTag{display:none}
+  .proBtn{height:30px;padding:0 10px}.proBtn span{font-size:12px}
+  .rzBtn{height:30px;padding:0 10px;font-size:11px;letter-spacing:.14em}
+}
+@media (min-width:761px) and (max-width:900px){
+  .header[data-promo] .lang,.header[data-promo] .menuBtn{display:none}
+}
+@media (prefers-reduced-motion:reduce){.proBtn::before{animation:none;display:none}.rzBtn{animation:none}}

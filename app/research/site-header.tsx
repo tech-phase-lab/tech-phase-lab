@@ -40,6 +40,8 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
     // The arrow turns once (0.7 s) as the page reloads immediately after.
     reloadPage();
   }
+  // Desktop home only (owner, Oct 14): two buttons left of the home icon.
+  const promo = pathname === "/research";
   const tier = ownerAccount ? "owner" : plan === "pro" ? "pro" : "free";
   // Desktop home button (owner, Oct 9): on the home page itself, return to the
   // main view the same way the phone bar does.
@@ -51,7 +53,7 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
     window.scrollTo({ top: 0, behavior: "instant" });
   }
   return <>
-    <header className={styles.header} data-plan={tier}>
+    <header className={styles.header} data-plan={tier} data-promo={promo ? "on" : undefined}>
       <Link href="/research" className={styles.brand} aria-label="Tech Phase Research">
         <span className={styles.markWrap}><span className={`${base.logoMark} ${styles.mark}`} aria-hidden="true" /></span>
         <span className={styles.words}><span className={`${base.brandText} ${styles.name}`}>TECH PHASE</span><small className={styles.sub}>
@@ -63,6 +65,10 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
       </Link>
       {nav && <div className={styles.center}>{nav}</div>}
       <div className={styles.tools}>
+        {promo && <div className={styles.promo}>
+          <button type="button" className={styles.proBtn} aria-label={ja ? "Tech Phase PROを見る" : "See Tech Phase PRO"} onClick={() => pro.toggle(true)}><span>Tech Phase PRO</span><b className={styles.proTag}>PRO</b></button>
+          <Link href="/resolute" className={styles.rzBtn} aria-label="RESOLUTE"><span aria-hidden="true">⚓</span>RESOLUTE</Link>
+        </div>}
         <Link href="/research#research-main" className={`${styles.ico} ${styles.home}`} aria-label={ja ? "ホームへ" : "Home"} onClick={goHome}>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" /></svg>
         </Link>
@@ -78,7 +84,7 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
           : !settled
           ? <span className={styles.pro} style={{ visibility: "hidden" }} aria-hidden="true">PRO</span>
           : <button type="button" className={styles.pro} aria-label={ja ? "PROを見る" : "See PRO"} aria-expanded={pro.open} onClick={() => pro.toggle()}>PRO</button>}
-        <button type="button" className={styles.ico} aria-label={ja ? "メニュー" : "Menu"} aria-expanded={menu} aria-controls="site-menu" onClick={() => { if (!menu) window.dispatchEvent(new Event("tech-phase:menu-open")); setMenu(value => !value); }}>
+        <button type="button" className={`${styles.ico} ${styles.menuBtn}`} aria-label={ja ? "メニュー" : "Menu"} aria-expanded={menu} aria-controls="site-menu" onClick={() => { if (!menu) window.dispatchEvent(new Event("tech-phase:menu-open")); setMenu(value => !value); }}>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
         </button>
       </div>
