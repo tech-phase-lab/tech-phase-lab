@@ -31,6 +31,8 @@ RELEASE_LOOKBACK = timedelta(minutes=5)
 CALL_LOOKBACK = timedelta(hours=6)
 WATCH_FOR = timedelta(hours=6)
 # X routes that post U.S. indicator results and earnings flashes.
+# Official release page polled in the same window as the social routes.
+OFFICIAL_CPI_ROUTE = 'bls-cpi'
 BURST_ROUTES = {'economic': ('x-wallstengine',), 'earnings': ('x-wallstengine', 'x-tipranks')}
 INDICATORS = {
     'jobs': r'payroll|非農業|雇用統計|unemployment rate|失業率',
@@ -108,6 +110,9 @@ def burst_routes(now, events=None):
     for event in [*(load_schedule() if events is None else events), *detected_events(now)]:
         if event['phase'] == 'release' and event['at'] - BURST_BEFORE <= now <= event['at'] + BURST_AFTER:
             routes.update(BURST_ROUTES[event['kind']])
+            # Oct 14: the CPI result is also read straight from the BLS release page.
+            if event['kind'] == 'economic' and event.get('indicator') == 'cpi':
+                routes.add(OFFICIAL_CPI_ROUTE)
     return routes
 
 
@@ -156,8 +161,10 @@ def match(event, payload):
         if (event['kind'] == 'earnings' and event['ticker'] in (item.get('tickers') or [])
                 and str(item.get('researchId', '')).startswith('ir-result-')):
             found.append(max(public, published))
-        elif (event['kind'] == 'economic' and item.get('newsCategory') == 'economic'
-              and re.search(INDICATORS[event['indicator']], text, re.I)):
+        elif (event['kind'] == 'economic' and re.search(INDICATORS[event['indicator']], text, re.I)
+              and (item.get('newsCategory') == 'economic'
+                   # The exact BLS release, read straight from bls.gov (Oct 14).
+                   or (item.get('publisher') == 'BLS' and str(item.get('url', '')).startswith('https://www.bls.gov/news.release/archives/')))):
             found.append(max(public, published))
     return min(found) if found else None
 
@@ -227,6 +234,11 @@ def check(db, payload, now, transport=None, events=None):
     return sent
 
 
+def persisted_error_code(value):
+    """Only a short error code is public; never a message that could carry a link."""
+    return value if isinstance(value, str) and re.fullmatch(r'[a-z0-9-]{1,60}', value) else ('error' if value else None)
+
+
 def diagnostics(db, now, events=None):
     """Read-only summary for public health (never creates tables)."""
     events = load_schedule() if events is None else events
@@ -234,7 +246,14 @@ def diagnostics(db, now, events=None):
     recent = [dict(zip(('event', 'kind', 'at', 'delaySeconds', 'delivered'), row)) for row in db.execute(
         'SELECT event_id,kind,at,delay_seconds,delivered FROM release_watch_alerts ORDER BY at DESC LIMIT 5')
     ] if db.execute("SELECT 1 FROM sqlite_master WHERE name='release_watch_alerts'").fetchone() else []
-    return {'scheduled': len(events), 'ownerDevices': len(owner_devices(db)),
+    official = []
+    if db.execute("SELECT 1 FROM sqlite_master WHERE name='signal_routes'").fetchone():
+        for row in db.execute('SELECT id,checked_at,succeeded_at,next_check_at,failures,error FROM signal_routes WHERE id=?',
+                              (OFFICIAL_CPI_ROUTE,)):
+            official.append({'id': row['id'], 'checkedAt': row['checked_at'], 'succeededAt': row['succeeded_at'],
+                             'nextCheckAt': row['next_check_at'], 'failures': row['failures'],
+                             'error': persisted_error_code(row['error'])})
+    return {'scheduled': len(events), 'ownerDevices': len(owner_devices(db)), 'officialRoutes': official,
             'burstRoutes': sorted(burst_routes(now, events)),
             'next': [{'event': e['id'], 'at': e['at'].isoformat(), 'phase': e['phase']} for e in upcoming],
             'recentAlerts': recent}

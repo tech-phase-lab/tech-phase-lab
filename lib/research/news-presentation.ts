@@ -8,7 +8,7 @@ import { additionalNewsDetail } from './news-detail.ts';
 /** Categories describe the story. Publisher identity remains source metadata. */
 export function officialNewsDisplay(item: OfficialUpdate, lang: Language, briefs: ResultBrief[] = []) {
   const ja = lang === 'ja';
-  const economic = item.tickers.includes('ECON') || new URL(item.url).hostname === 'www.bea.gov';
+  const economic = item.tickers.includes('ECON') || ['www.bea.gov', 'www.bls.gov'].includes(new URL(item.url).hostname);
   const briefLabel = item.brief?.scope === 'sector' ? (ja ? '業界短報' : 'Industry brief')
     : (ja ? '企業短報' : 'Company brief');
   const label = item.newsCategory === 'policy'

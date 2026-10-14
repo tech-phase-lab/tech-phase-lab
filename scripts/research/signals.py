@@ -31,6 +31,8 @@ import x_api
 SOURCES = json.loads(Path(__file__).with_name("signal_sources.json").read_text())
 MAX_BYTES = 12 * 1024 * 1024
 MAX_TEXT = 160_000
+# Official macro releases kept as exact, source-bound results (no tickers, no model copy).
+MACRO_RELEASE_SOURCES = frozenset({"bea-pce", "bls-cpi"})
 MAX_ITEMS = 500
 X_API_DAILY_REQUEST_LIMIT_DEFAULT = 100
 X_API_DAILY_REQUEST_LIMIT_MAX = 10_000
@@ -267,6 +269,13 @@ def parse(source, body, tickers):
         text = monitor.extract_html_text(body)
         if len(text) < 120 or len(text) >= MAX_TEXT:
             raise ValueError("signal-document-body-limit")
+        if source["id"] == "bls-cpi":
+            # The release page is read directly at the scheduled second (Oct 14).
+            # A page that is not a complete, consistent CPI release is an error, never a guess.
+            import bls_cpi
+            release = bls_cpi.parse_release(text)
+            return [{"url": safe_url(release["url"], source), "title": release["title"], "text": text,
+                     "publishedAt": release["publishedAt"], "matches": {}, "truncated": False}]
         return [{"url": safe_url(source["url"], source), "title": source["name"],
                  "text": text, "publishedAt": None,
                  "matches": {t: ["configured-document"] for t in source["tickers"] if t in tickers},
@@ -456,7 +465,7 @@ def x_api_request_plan(sources=SOURCES):
 def source_interval_seconds(source, checked_at):
     # Around a scheduled release the carrying X routes are polled every few
     # seconds (release_watch); the shared daily cap still applies.
-    if source.get("format") == "x-api" and source["id"] in release_watch.burst_routes(checked_at.astimezone(timezone.utc)):
+    if source["id"] in release_watch.burst_routes(checked_at.astimezone(timezone.utc)):
         return release_watch.BURST_INTERVAL_SECONDS
     normal = max(30, int(source["intervalSeconds"]))
     window = source.get("fastWindow")
@@ -1801,6 +1810,9 @@ def x_operational_summary(db, sources=SOURCES, reference=None):
             "nextCheckAt": row["next_check_at"] if row else None,
             "error": monitor.persisted_route_error_code(row["error"]) if row else None,
             "matchedItems": row["matched_items"] if row else 0,
+            "failures": row["failures"] if row else 0,
+            "latestObservedAt": (db.execute("SELECT max(observed_at) FROM signal_events WHERE source_id=?",
+                                            (source["id"],)).fetchone()[0]),
             "acquisitionCoverage": x_intake_coverage(db, source, current),
         })
     usage = x_api_usage(db, sources=sources)
@@ -1873,6 +1885,13 @@ def x_operational_summary(db, sources=SOURCES, reference=None):
         "oldestSucceededAt": min((r["succeededAt"] for r in routes if r["succeededAt"]), default=None),
         "latestSucceededAt": max((r["succeededAt"] for r in routes if r["succeededAt"]), default=None),
         "nextCheckAt": min((r["nextCheckAt"] for r in routes if r["nextCheckAt"]), default=None),
+        # Oct 14: the summary above could not say WHICH route was failing.
+        # Route ids and error codes only; never a query, link or credential.
+        # Routes are numbered in configuration order (public health never names a route).
+        "details": [{"route": index, "checkedAt": r["checkedAt"], "succeededAt": r["succeededAt"],
+                     "nextCheckAt": r["nextCheckAt"], "error": r["error"], "failures": r["failures"],
+                     "matched": r["matchedItems"], "latestObservedAt": r["latestObservedAt"]}
+                    for index, r in enumerate(routes, 1)],
     }, "items24Hours": item_counts,
         "priceTargetPublication": price_target_publication_summary(db, sources=sources, now=current)}
 
@@ -2308,7 +2327,7 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
         sources = [*sources, *official_release_bridge.publishers()]
     allowed = {s['id']: s for s in sources if s.get('officialUpdates') is True
                and s.get('kind') == 'publisher-update' and s.get('allowedHosts')
-               and (s.get('tickers') or s['id'] == 'bea-pce')}
+               and (s.get('tickers') or s['id'] in MACRO_RELEASE_SOURCES)}
     if not allowed:
         return []
     cutoff = current - timedelta(days=7)
@@ -2354,7 +2373,7 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
         if not official_release_bridge.is_current(db, row, source=source, primary_urls=primary_urls,
                 reference=current, category_context=category_contexts.get(row['source_id'])):
             continue
-        if source['id'] != 'bea-pce' and not news_policy.eligible(row['title']):
+        if source['id'] not in MACRO_RELEASE_SOURCES and not news_policy.eligible(row['title']):
             continue
         try:
             published = row['published_at'] or row['published_on']
@@ -2372,7 +2391,7 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
             configured_tickers = set(source.get('tickers', []))
             tickers = [t for t in json.loads(row['tickers_json'])
                        if t in configured_tickers and re.fullmatch(r'[A-Z][A-Z0-9.-]{0,9}', t)][:5]
-            if not tickers and source['id'] != 'bea-pce':
+            if not tickers and source['id'] not in MACRO_RELEASE_SOURCES:
                 continue
         except (ValueError, TypeError):
             continue
@@ -2409,7 +2428,25 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
             display_title = projection['title']
             translation['translationJa'] = projection['translationJa']
             publication = {'publishedAt': projection['publishedAt']}
-        if (source['id'] != 'bea-pce' and translated and isinstance(translated['headline_ja'], str)
+        if source['id'] == 'bls-cpi':
+            # Same rule as BEA: re-project only the current exact revision from
+            # the stored page; the release time and values come from the page itself.
+            import bls_cpi
+            document = db.execute('''SELECT title,text,sha FROM signal_documents
+              WHERE source_id=? AND url=?''', (row['source_id'], row['url'])).fetchone()
+            if not document or document['sha'] != row['sha'] or row['truncated']:
+                continue
+            try:
+                projection = bls_cpi.parse_release(document['text'])
+                release_time = instant(projection['publishedAt'])
+                if projection['url'] != url or not release_time or not cutoff <= release_time <= current:
+                    continue
+            except (ValueError, TypeError):
+                continue
+            display_title = projection['title']
+            translation['translationJa'] = projection['translationJa']
+            publication = {'publishedAt': projection['publishedAt']}
+        if (source['id'] not in MACRO_RELEASE_SOURCES and translated and isinstance(translated['headline_ja'], str)
                 and translated['headline_ja'].strip()
                 and len(translated['headline_ja']) <= 180
                 and '\x00' not in translated['headline_ja']):

@@ -29,6 +29,20 @@
     "reuse": "factual-results-only"
   },
   {
+    "id": "bls-cpi",
+    "name": "BLS",
+    "kind": "publisher-update",
+    "url": "https://www.bls.gov/news.release/cpi.nr0.htm",
+    "format": "document",
+    "allowedHosts": [
+      "www.bls.gov"
+    ],
+    "intervalSeconds": 60,
+    "retainUnmatched": true,
+    "officialUpdates": true,
+    "reuse": "factual-results-only"
+  },
+  {
     "id": "nvidia-developer",
     "name": "NVIDIA Developer Blog",
     "kind": "publisher-update",

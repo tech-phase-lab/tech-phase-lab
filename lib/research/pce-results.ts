@@ -22,6 +22,26 @@ export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: Res
       sourceUrl: item.url, verifiedOn: item.observedAt.slice(0, 10),
     });
   }
+  // The CPI release read straight from bls.gov (Oct 14): the official result takes the same place as BEA's PCE.
+  for (const item of updates) {
+    const url = new URL(item.url);
+    const match = /^\/news\.release\/archives\/cpi_(\d{2})(\d{2})(20\d{2})\.htm$/.exec(url.pathname);
+    const named = /^U\.S\. ([A-Z][a-z]+) CPI:/.exec(item.title);
+    if (url.origin !== "https://www.bls.gov" || url.search || url.hash || !match || !named || item.publisher !== "BLS" || !item.publishedAt || !item.translationJa) continue;
+    const month = months.indexOf(named[1].toLowerCase()) + 1;
+    if (!month) continue;
+    const releaseMonth = Number(match[1]), releaseYear = Number(match[3]);
+    const year = releaseYear - (month > releaseMonth ? 1 : 0);
+    const period = `${year}-${String(month).padStart(2, "0")}`;
+    const id = `cpi-${period}`;
+    results.set(id, {
+      id, title: { ja: `米国CPI（消費者物価指数）（${month}月）`, en: `U.S. Consumer Price Index (${period})` },
+      sourceName: "BLS", releasedAt: item.publishedAt,
+      result: { ja: item.translationJa, en: item.title },
+      detail: { ja: "総合とコアの前月比・前年比をBLS公式発表から取得。市場予想との比較は含みません。", en: "Headline and core monthly and annual changes from the official BLS release. No consensus comparison." },
+      sourceUrl: item.url, verifiedOn: item.observedAt.slice(0, 10),
+    });
+  }
   // One release per indicator/period. Verified official results take precedence;
   // incoming social posts must not add a second English-titled calendar row.
   const officialIds = new Set(results.keys());
