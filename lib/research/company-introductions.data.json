@@ -14139,5 +14139,905 @@
         }
       ]
     }
+  },
+  {
+    "cik": 810136,
+    "tickers": [
+      "PLAB"
+    ],
+    "name": "Photronics",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Business / Products / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体やディスプレーの回路パターンを製造工程へ転写する原版、フォトマスクを作る会社。",
+      "revenue": "半導体・ディスプレーメーカーへ、用途別に設計・製造したフォトマスクを販売して稼ぐ。",
+      "strength": "微細な回路データを大面積のマスクへ正確に描画し、顧客工場の認定を受けて短納期で量産供給できる。",
+      "risks": "半導体・ディスプレー投資、大口顧客、設備の高額化、歩留まり、輸出規制、マスク原板や装置の供給に左右される。",
+      "competition": "半導体・ディスプレー用フォトマスクで、内製部門や他の独立系マスクメーカーと品質・納期・価格を競う。",
+      "relationships": "半導体・ディスプレーメーカーへフォトマスクを供給し、マスク原板、描画・検査装置を外部から調達する。"
+    },
+    "en": {
+      "business": "Makes photomasks, the master templates used to transfer circuit patterns during semiconductor and display manufacturing.",
+      "revenue": "Earns revenue by selling application-specific photomasks to semiconductor and display manufacturers.",
+      "strength": "Writes fine customer circuit data accurately onto large masks, qualifies with fabs and supports production on short delivery cycles.",
+      "risks": "Semiconductor and display investment, large customers, costly equipment, yield, export controls and blank or tool supply affect results.",
+      "competition": "Competes in semiconductor and display photomasks with captive mask shops and other merchant suppliers on quality, delivery and price.",
+      "relationships": "Supplies photomasks to semiconductor and display makers and sources mask blanks plus writing and inspection equipment externally."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Photomask manufacturers and captive mask shops",
+          "nameJa": "フォトマスクメーカー・内製部門",
+          "role": "competitor",
+          "label": {
+            "ja": "品質・納期・価格で競合",
+            "en": "Quality, delivery and price"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor and display manufacturers",
+          "nameJa": "半導体・ディスプレーメーカー",
+          "role": "customer",
+          "label": {
+            "ja": "回路転写用フォトマスクを供給",
+            "en": "Photomasks for pattern transfer"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Mask blank and lithography equipment suppliers",
+          "nameJa": "マスク原板・描画装置会社",
+          "role": "supplier",
+          "label": {
+            "ja": "原板と製造・検査装置を調達",
+            "en": "Mask blanks and production tools"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1040470,
+    "tickers": [
+      "AEHR"
+    ],
+    "name": "Aehr Test Systems",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Products / Markets / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1040470/000165495426006919/aehr_10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体をウエハーや個片の段階で高温・高負荷にかけ、不良を早期発見する試験・バーンイン装置を作る会社。",
+      "revenue": "FOX試験装置、WaferPak接触部品、Sonomaバーンイン装置と保守を半導体メーカーへ販売して稼ぐ。",
+      "strength": "SiC・GaN電力半導体、光半導体、AI向け部品などを量産前に多数同時試験し、長期信頼性の弱い個体を選別できる。",
+      "risks": "少数顧客への売上集中、長い製品認定、設備投資の波、需要予測、専用接触部品と単一調達部品に左右される。",
+      "competition": "ウエハーレベル試験、バーンイン装置、プローブカード・接触部品で半導体試験装置会社と競う。",
+      "relationships": "電力・光・メモリー・プロセッサー半導体メーカーへ試験装置と接触部品を供給し、精密部品を外部調達する。"
+    },
+    "en": {
+      "business": "Makes test and burn-in systems that stress semiconductors at wafer or die level to find early failures.",
+      "revenue": "Sells FOX test systems, WaferPak contactors, Sonoma burn-in systems and service to semiconductor manufacturers.",
+      "strength": "Tests many SiC and GaN power, photonics and AI-related devices in parallel before production to screen weak units for reliability.",
+      "risks": "Customer concentration, long qualifications, capital-spending cycles, demand forecasts, custom contactors and sole-source parts affect results.",
+      "competition": "Competes in wafer-level test, burn-in systems and probe-card or contact technology with semiconductor-test suppliers.",
+      "relationships": "Supplies systems and contactors to power, photonics, memory and processor makers and sources precision components externally."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor burn-in and wafer-test vendors",
+          "nameJa": "半導体バーンイン・ウエハー試験会社",
+          "role": "competitor",
+          "label": {
+            "ja": "試験装置と接触技術で競合",
+            "en": "Test systems and contact technology"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Power, photonics and AI semiconductor makers",
+          "nameJa": "電力・光・AI半導体メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "試験・バーンイン装置を供給",
+            "en": "Test and burn-in systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Precision contactor and component suppliers",
+          "nameJa": "精密接触部品・部材会社",
+          "role": "supplier",
+          "label": {
+            "ja": "接触部品と装置部材を調達",
+            "en": "Contactors and system components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1387467,
+    "tickers": [
+      "AOSL"
+    ],
+    "name": "Alpha and Omega Semiconductor",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Products / Customers / Manufacturing / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "電気を変換・制御するMOSFETなどの電力半導体と、電源管理ICを設計・供給する会社。",
+      "revenue": "PC、家電、通信、産業、自動車向けメーカーへ電力ディスクリートと電源管理ICを販売して稼ぐ。",
+      "strength": "電力素子と制御ICの両方を持ち、用途ごとに損失・発熱・サイズを抑えた電源回路を提案できる。",
+      "risks": "PC・家電需要、販売価格の低下、顧客認定、製造歩留まり、製造委託先、品質事故や在庫調整に左右される。",
+      "competition": "MOSFET、電力ディスクリート、電源管理ICで大手総合半導体会社や電力半導体専業と競う。",
+      "relationships": "OEM・設計製造会社へ電力半導体を直接または販売代理店経由で供給し、外部工場と組立検査会社も利用する。"
+    },
+    "en": {
+      "business": "Designs and supplies power semiconductors such as MOSFETs plus power-management integrated circuits.",
+      "revenue": "Sells power discretes and power-management ICs into computing, consumer, communications, industrial and automotive equipment.",
+      "strength": "Combines power devices and control ICs to tailor power circuits for lower loss, heat and size in each application.",
+      "risks": "PC and consumer demand, price erosion, qualifications, manufacturing yield, outsourced capacity, quality events and inventory corrections affect results.",
+      "competition": "Competes in MOSFETs, power discretes and power-management ICs with broad semiconductor and power-specialist suppliers.",
+      "relationships": "Supplies power semiconductors to OEMs and design manufacturers directly or through distributors and uses outside fabs and assembly-test providers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Power semiconductor and analog IC suppliers",
+          "nameJa": "電力半導体・アナログIC会社",
+          "role": "competitor",
+          "label": {
+            "ja": "MOSFET・電源ICで競合",
+            "en": "MOSFETs and power ICs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Computing, consumer and industrial OEMs",
+          "nameJa": "PC・家電・産業機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "電力半導体を供給",
+            "en": "Power semiconductors"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Foundry and assembly-test providers",
+          "nameJa": "半導体工場・組立検査会社",
+          "role": "supplier",
+          "label": {
+            "ja": "製造と組立検査を委託",
+            "en": "Wafer fabrication and assembly-test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1821769,
+    "tickers": [
+      "NVTS"
+    ],
+    "name": "Navitas Semiconductor",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Strategy / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "GaN電力IC、SiC電力半導体、制御ICを設計し、高効率な電力変換を支えるファブレス半導体会社。",
+      "revenue": "AIデータセンター、電力網、産業機器、太陽光・蓄電、充電器向けに電力半導体と制御製品を販売して稼ぐ。",
+      "strength": "高速に切り替わるGaN、耐高電圧のSiC、制御・絶縁を組み合わせ、電源を小型化しながら変換損失を減らせる。",
+      "risks": "高出力市場への移行、設計採用の獲得、赤字継続、製造委託先、量産品質、製品責任と輸出規制に左右される。",
+      "competition": "GaN・SiC・シリコン電力半導体と電源制御で、大手電力半導体会社や新興GaN企業と競う。",
+      "relationships": "データセンター・エネルギー・産業機器メーカーへ電力半導体を供給し、ウエハー製造と組立検査を外部へ委託する。"
+    },
+    "en": {
+      "business": "A fabless semiconductor company designing GaN power ICs, SiC power devices and controllers for efficient power conversion.",
+      "revenue": "Sells power semiconductors and controls for AI data centers, grids, industrial systems, solar and storage, and chargers.",
+      "strength": "Combines fast-switching GaN, high-voltage SiC and control or isolation to shrink power systems while reducing conversion loss.",
+      "risks": "The shift to high-power markets, design wins, continued losses, outsourced manufacturing, production quality, liability and export controls affect results.",
+      "competition": "Competes across GaN, SiC and silicon power devices and controls with large power-semiconductor vendors and GaN specialists.",
+      "relationships": "Supplies power devices to data-center, energy and industrial-equipment makers while outsourcing wafer fabrication and assembly-test."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "GaN, SiC and silicon power semiconductor suppliers",
+          "nameJa": "GaN・SiC・シリコン電力半導体会社",
+          "role": "competitor",
+          "label": {
+            "ja": "高効率電力変換で競合",
+            "en": "Efficient power conversion"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Data-center, energy and industrial equipment makers",
+          "nameJa": "データセンター・エネルギー・産業機器会社",
+          "role": "customer",
+          "label": {
+            "ja": "電力半導体と制御ICを供給",
+            "en": "Power devices and controllers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Wafer foundry and packaging partners",
+          "nameJa": "ウエハー工場・組立検査会社",
+          "role": "supplier",
+          "label": {
+            "ja": "製造と組立検査を委託",
+            "en": "Fabrication and assembly-test"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1111928,
+    "tickers": [
+      "IPGP"
+    ],
+    "name": "IPG Photonics",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Products / Markets / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1111928/000111192826000040/ipgp-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "金属の切断・溶接・加工などに使う高出力ファイバーレーザー、増幅器、レーザー装置を作る会社。",
+      "revenue": "産業機械メーカー、システム会社、製造業へレーザー光源・装置・部品と保守を販売して稼ぐ。",
+      "strength": "ダイオード、光ファイバー、光学部品まで主要部品を垂直統合し、高出力・高効率・長寿命の光源を作れる。",
+      "risks": "中国を含む産業設備投資、販売価格の低下、顧客の内製、輸出規制、部材、工場稼働率と技術転換に左右される。",
+      "competition": "ファイバーレーザー、固体レーザー、レーザー加工システムで光源メーカーと産業装置会社と競う。",
+      "relationships": "機械メーカー、システムインテグレーター、製造業へレーザーを供給し、電子部品や原材料を外部調達する。"
+    },
+    "en": {
+      "business": "Makes high-power fiber lasers, amplifiers and laser systems used for cutting, welding and other material processing.",
+      "revenue": "Sells laser sources, systems, parts and service to industrial equipment makers, integrators and manufacturers.",
+      "strength": "Vertically integrates key diodes, fibers and optics to build high-power, efficient and long-life laser sources.",
+      "risks": "Industrial investment including China, price erosion, customer insourcing, export controls, materials, utilization and technology shifts affect results.",
+      "competition": "Competes in fiber and solid-state lasers and laser-processing systems with photonics suppliers and industrial-equipment companies.",
+      "relationships": "Supplies lasers to machine builders, system integrators and manufacturers and sources electronics and raw materials externally."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Industrial laser and photonics suppliers",
+          "nameJa": "産業レーザー・光学機器会社",
+          "role": "competitor",
+          "label": {
+            "ja": "レーザー光源・加工装置で競合",
+            "en": "Laser sources and processing systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Machine builders, integrators and manufacturers",
+          "nameJa": "機械メーカー・システム会社・製造業",
+          "role": "customer",
+          "label": {
+            "ja": "レーザー光源と装置を供給",
+            "en": "Laser sources and systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Optical material and electronic component suppliers",
+          "nameJa": "光学材料・電子部品会社",
+          "role": "supplier",
+          "label": {
+            "ja": "光学材料と電子部品を調達",
+            "en": "Optical materials and electronics"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 912093,
+    "tickers": [
+      "VIAV"
+    ],
+    "name": "Viavi Solutions",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Segments / Products / Markets / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm"
+      }
+    ],
+    "ja": {
+      "business": "通信網の試験・監視装置、測位・時刻同期、紙幣や光学製品向けの特殊光学部材を作る会社。",
+      "revenue": "通信会社、ネットワーク機器・データセンター、航空宇宙防衛、偽造防止・ディスプレー市場へ製品とソフトを販売して稼ぐ。",
+      "strength": "高速通信を現場から研究所まで測る技術と、精密な光学・色制御、測位・時刻技術を複数市場へ展開できる。",
+      "risks": "通信設備投資、顧客集中、買収統合、政府予算、部品供給、製品移行、輸出規制と工場稼働率に左右される。",
+      "competition": "通信試験・監視、測位・時刻、光学セキュリティ部材で計測器会社や光学技術会社と競う。",
+      "relationships": "通信・データセンター、航空宇宙防衛、偽造防止・表示機器会社へ測定装置や光学部材を供給し、電子・光学部品を調達する。"
+    },
+    "en": {
+      "business": "Makes network test and assurance tools, positioning and timing products, and specialty optics for security and display uses.",
+      "revenue": "Sells hardware and software to telecom, network and data-center, aerospace-defense, anti-counterfeit and display markets.",
+      "strength": "Combines field-to-lab high-speed network measurement with precision optical, color, positioning and timing technologies across markets.",
+      "risks": "Telecom spending, customer concentration, acquisition integration, government budgets, components, transitions, export controls and utilization affect results.",
+      "competition": "Competes in network test and assurance, positioning and timing, and optical security materials with test and photonics companies.",
+      "relationships": "Supplies test systems and optics to communications, data-center, defense and secure-document or display customers and sources optical-electronic parts."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Network-test and optical-technology vendors",
+          "nameJa": "通信計測・光学技術会社",
+          "role": "competitor",
+          "label": {
+            "ja": "通信測定・光学部材で競合",
+            "en": "Network measurement and optics"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Telecom, data-center and defense customers",
+          "nameJa": "通信・データセンター・防衛関連会社",
+          "role": "customer",
+          "label": {
+            "ja": "試験装置と測位製品を供給",
+            "en": "Test, assurance and timing products"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Optical and electronic component suppliers",
+          "nameJa": "光学・電子部品会社",
+          "role": "supplier",
+          "label": {
+            "ja": "光学・電子部品を調達",
+            "en": "Optical and electronic components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 24741,
+    "tickers": [
+      "GLW"
+    ],
+    "name": "Corning",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Segments / Products / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/24741/000002474126000124/glw-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "光ファイバー、ディスプレー用ガラス、スマホ向けカバーガラス、排ガス浄化用セラミックなどを作る材料会社。",
+      "revenue": "通信網・データセンター、ディスプレー・端末、自動車、研究・医療向けにガラス、光通信部材、セラミック製品を販売して稼ぐ。",
+      "strength": "ガラス・セラミック・光学の材料科学と独自製造工程を組み合わせ、顧客仕様の高性能部材を大規模生産できる。",
+      "risks": "大口顧客、通信・ディスプレー需要、価格交渉、エネルギー・原材料、工場稼働率、為替と設備投資に左右される。",
+      "competition": "光ファイバー・接続部品、表示ガラス、カバーガラス、セラミック材料で各分野の材料メーカーと競う。",
+      "relationships": "通信・データセンター、端末・表示、自動車・研究機器会社へ材料と部品を供給し、原材料と製造装置を調達する。"
+    },
+    "en": {
+      "business": "Makes optical fiber, display glass, device cover glass and ceramic substrates used for emissions control and other applications.",
+      "revenue": "Sells glass, optical-connectivity and ceramic products into networks and data centers, displays and devices, automotive and life sciences.",
+      "strength": "Combines glass, ceramic and optical materials science with proprietary processes to mass-produce demanding customer-specific components.",
+      "risks": "Large customers, network and display demand, pricing, energy and raw materials, utilization, currency and capital investment affect results.",
+      "competition": "Competes in optical fiber and connectivity, display and cover glass, and ceramic materials with specialized materials suppliers.",
+      "relationships": "Supplies materials and components to network, device, display, auto and life-science customers and sources raw materials and production equipment."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Advanced glass, optical-fiber and ceramic suppliers",
+          "nameJa": "高機能ガラス・光ファイバー・セラミック会社",
+          "role": "competitor",
+          "label": {
+            "ja": "材料性能と量産技術で競合",
+            "en": "Materials performance and scale"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Network, display, device and automotive manufacturers",
+          "nameJa": "通信・表示・端末・自動車メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "ガラス・光通信・セラミック部材を供給",
+            "en": "Glass, optical and ceramic components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Raw-material and production-equipment suppliers",
+          "nameJa": "原材料・製造装置会社",
+          "role": "supplier",
+          "label": {
+            "ja": "原材料と製造装置を調達",
+            "en": "Raw materials and production tools"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1385157,
+    "tickers": [
+      "TEL"
+    ],
+    "name": "TE Connectivity",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Segments / Products / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1385157/000110465925109150/tel-20250926x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "自動車、工場、航空宇宙、通信機器の電気やデータをつなぐコネクター、センサー、リレーを作る会社。",
+      "revenue": "輸送機器、産業機器、通信・データ機器メーカーへ接続部品、センサー、工具を大量供給して稼ぐ。",
+      "strength": "厳しい温度・振動・小型化条件に合わせて接続部品を設計し、顧客製品へ認定された部品を世界各地で量産できる。",
+      "risks": "自動車・産業需要、顧客プログラム、原材料価格、関税、工場移管、品質、買収統合と販売代理店在庫に左右される。",
+      "competition": "コネクター、センサー、リレー、端子加工工具で大手接続部品メーカーや専門会社と競う。",
+      "relationships": "自動車・産業・通信機器メーカーへ接続部品を供給し、金属、樹脂、電子部品と製造設備を外部調達する。"
+    },
+    "en": {
+      "business": "Makes connectors, sensors and relays that carry power and data in vehicles, factories, aerospace and communications equipment.",
+      "revenue": "Supplies high volumes of connectivity parts, sensors and tooling to transportation, industrial and communications-equipment manufacturers.",
+      "strength": "Engineers connections for harsh temperature, vibration and space constraints, qualifies into customer platforms and manufactures globally.",
+      "risks": "Auto and industrial demand, customer programs, materials, tariffs, factory transfers, quality, acquisitions and channel inventory affect results.",
+      "competition": "Competes in connectors, sensors, relays and application tooling with broad connectivity companies and specialists.",
+      "relationships": "Supplies connectivity products to automotive, industrial and communications makers and sources metals, resins, electronics and equipment."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Connector, sensor and relay manufacturers",
+          "nameJa": "コネクター・センサー・リレーメーカー",
+          "role": "competitor",
+          "label": {
+            "ja": "接続・センシング部品で競合",
+            "en": "Connectivity and sensing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Automotive, industrial and communications OEMs",
+          "nameJa": "自動車・産業・通信機器メーカー",
+          "role": "customer",
+          "label": {
+            "ja": "コネクターとセンサーを供給",
+            "en": "Connectors and sensors"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Metal, resin and electronic component suppliers",
+          "nameJa": "金属・樹脂・電子部品会社",
+          "role": "supplier",
+          "label": {
+            "ja": "材料と部品を調達",
+            "en": "Materials and components"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 7536,
+    "tickers": [
+      "ARW"
+    ],
+    "name": "Arrow Electronics",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Segments / Products and services / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/7536/000110465926012765/arw-20251231x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体・電子部品と、サーバー・クラウド・ソフトをメーカーから仕入れ、企業へ届ける技術商社。",
+      "revenue": "部品流通と設計支援、在庫・物流サービス、企業向けIT製品・クラウドの販売で仕入れ値との差額を稼ぐ。",
+      "strength": "多数の仕入先と顧客を結び、部品選定、設計、在庫、物流、IT統合まで一括して支援できる。",
+      "risks": "薄い利益率、半導体在庫サイクル、仕入先の販売方針、価格下落、信用損失、運転資金、関税に左右される。",
+      "competition": "電子部品流通では大手代理店やメーカー直販、IT流通では企業向け技術商社やクラウド市場と競う。",
+      "relationships": "半導体・電子部品・ITメーカーから製品を仕入れ、OEM、受託製造会社、販売店、ITサービス会社へ供給する。"
+    },
+    "en": {
+      "business": "A technology distributor that sources semiconductors and components plus servers, cloud and software and delivers them to businesses.",
+      "revenue": "Earns distribution margins from components, design and logistics services, and enterprise IT products and cloud offerings.",
+      "strength": "Connects many suppliers and customers while supporting component selection, design, inventory, logistics and IT integration.",
+      "risks": "Thin margins, semiconductor inventory cycles, supplier policies, price declines, credit losses, working capital and tariffs affect results.",
+      "competition": "Competes with large component distributors and direct sales, and with enterprise technology distributors and cloud marketplaces.",
+      "relationships": "Buys from semiconductor, component and enterprise-technology vendors and supplies OEMs, contract manufacturers, resellers and service providers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Electronic-component and enterprise-IT distributors",
+          "nameJa": "電子部品・企業IT流通会社",
+          "role": "competitor",
+          "label": {
+            "ja": "部品・IT流通と支援で競合",
+            "en": "Component and IT distribution"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor, component and enterprise-technology vendors",
+          "nameJa": "半導体・電子部品・企業ITメーカー",
+          "role": "supplier",
+          "label": {
+            "ja": "販売製品を仕入れ",
+            "en": "Products for distribution"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "OEMs, contract manufacturers and IT resellers",
+          "nameJa": "OEM・受託製造・IT販売会社",
+          "role": "customer",
+          "label": {
+            "ja": "部品・IT製品と支援を提供",
+            "en": "Components, IT products and services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 8858,
+    "tickers": [
+      "AVT"
+    ],
+    "name": "Avnet",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2026 Form 10-K · Segments / Products and services / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/8858/000110465926096346/avt-20260627x10k.htm"
+      }
+    ],
+    "ja": {
+      "business": "半導体、コネクター、受動部品、組み込み機器をメーカーから仕入れ、設計・調達支援とともに販売する技術商社。",
+      "revenue": "OEM、受託製造会社、技術者へ電子部品と組み込み製品を販売し、在庫・物流・設計サービスも提供して稼ぐ。",
+      "strength": "量産向けの世界規模の供給網と、Farnellの小口・即納販売を持ち、試作から量産まで同じ顧客を支援できる。",
+      "risks": "半導体サイクル、在庫評価損、仕入先契約、価格下落、顧客信用、運転資金、物流と地政学に左右される。",
+      "competition": "電子部品流通、オンライン小口販売、組み込み製品で大手代理店、専門商社、メーカー直販と競う。",
+      "relationships": "半導体・電子部品メーカーから仕入れ、OEM・受託製造会社・技術者へ部品、設計、供給網サービスを提供する。"
+    },
+    "en": {
+      "business": "A technology distributor sourcing semiconductors, interconnect, passive and embedded products and selling them with design and procurement support.",
+      "revenue": "Sells components and embedded products to OEMs, contract manufacturers and engineers and provides inventory, logistics and design services.",
+      "strength": "Combines a global production supply chain with Farnell's small-order, quick-delivery channel to support customers from prototype to volume.",
+      "risks": "Semiconductor cycles, inventory write-downs, supplier agreements, price declines, customer credit, working capital, logistics and geopolitics affect results.",
+      "competition": "Competes in component distribution, online high-service sales and embedded products with large distributors, specialists and direct sales.",
+      "relationships": "Sources from semiconductor and component makers and provides parts, design help and supply-chain services to OEMs, manufacturers and engineers."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Electronic-component distributors and online specialists",
+          "nameJa": "電子部品商社・オンライン専門販売会社",
+          "role": "competitor",
+          "label": {
+            "ja": "部品流通と設計支援で競合",
+            "en": "Component distribution and design support"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor and electronic-component manufacturers",
+          "nameJa": "半導体・電子部品メーカー",
+          "role": "supplier",
+          "label": {
+            "ja": "販売する部品を仕入れ",
+            "en": "Components for distribution"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "OEMs, contract manufacturers and engineers",
+          "nameJa": "OEM・受託製造会社・技術者",
+          "role": "customer",
+          "label": {
+            "ja": "部品と設計・供給支援を提供",
+            "en": "Parts, design and supply support"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 897723,
+    "tickers": [
+      "SANM"
+    ],
+    "name": "Sanmina",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Services / Markets / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/897723/000089772326000015/sanm-20251227.htm"
+      }
+    ],
+    "ja": {
+      "business": "他社ブランドの電子機器を設計支援し、基板・部品から完成品まで製造、修理、物流まで請け負う会社。",
+      "revenue": "産業・エネルギー、医療、防衛・航空、自動車、通信、クラウド・AI企業から製造サービスを受託して稼ぐ。",
+      "strength": "高信頼性が必要な複雑製品を、設計、部品製造、組立、試験、供給網、修理まで一貫して支援できる。",
+      "risks": "大口顧客と注文変動、薄い利益率、工場稼働率、部品不足、品質、関税、規制産業の認定に左右される。",
+      "competition": "電子機器の受託設計・製造で世界のEMS会社、専門メーカー、顧客の内製部門と競う。",
+      "relationships": "幅広い機器メーカーから設計・製造を受託し、半導体、電子部品、金属・樹脂材料を外部から調達する。"
+    },
+    "en": {
+      "business": "Designs and manufactures branded customers' electronics from boards and components through finished systems, repair and logistics.",
+      "revenue": "Earns manufacturing-service revenue from industrial and energy, medical, defense, auto, communications and cloud-AI customers.",
+      "strength": "Supports complex high-reliability products across design, component fabrication, assembly, test, supply chain and repair.",
+      "risks": "Large customers and order changes, thin margins, utilization, shortages, quality, tariffs and regulated-market qualifications affect results.",
+      "competition": "Competes in electronics design and manufacturing with global EMS providers, specialists and customers' internal operations.",
+      "relationships": "Provides design and manufacturing to equipment companies and sources semiconductors, electronic components, metals and resins."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Electronics manufacturing services providers",
+          "nameJa": "電子機器受託製造会社",
+          "role": "competitor",
+          "label": {
+            "ja": "設計・製造・供給網で競合",
+            "en": "Design, manufacturing and supply chain"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Industrial, medical, defense and cloud equipment companies",
+          "nameJa": "産業・医療・防衛・クラウド機器会社",
+          "role": "customer",
+          "label": {
+            "ja": "設計・製造・修理を受託",
+            "en": "Design, manufacturing and repair"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Semiconductor, component and material suppliers",
+          "nameJa": "半導体・電子部品・材料会社",
+          "role": "supplier",
+          "label": {
+            "ja": "製造用部品と材料を調達",
+            "en": "Production components and materials"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 863436,
+    "tickers": [
+      "BHE"
+    ],
+    "name": "Benchmark Electronics",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "FY2025 Form 10-K · Services / Markets / Customers / Competition / Risk factors",
+        "url": "https://www.sec.gov/Archives/edgar/data/863436/000119312526064849/bhe-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "複雑な電子機器を、設計・試作から精密加工、組立、試験、量産、修理まで受託する製品実現会社。",
+      "revenue": "半導体装置、航空宇宙・防衛、産業、通信・コンピューティング、医療企業から設計・製造を受託して稼ぐ。",
+      "strength": "高精度加工と電子組立を組み合わせ、規制や品質要求が厳しい少量多品種の複雑製品を一貫支援できる。",
+      "risks": "顧客集中、製品計画と受注時期、工場稼働率、部品不足、品質・規制認定、関税と固定費に左右される。",
+      "competition": "製品設計・受託製造、精密加工で世界のEMS会社、専門製造会社、顧客の内製部門と競う。",
+      "relationships": "半導体装置・防衛・産業・通信・医療機器会社から設計製造を受託し、電子部品と加工材料を外部調達する。"
+    },
+    "en": {
+      "business": "A product-realization company handling complex electronics from design and prototypes through precision machining, assembly, test, production and repair.",
+      "revenue": "Earns design and manufacturing revenue from semiconductor-equipment, aerospace-defense, industrial, communications-computing and medical customers.",
+      "strength": "Combines precision machining and electronics assembly to support complex, lower-volume products with demanding quality and regulatory needs.",
+      "risks": "Customer concentration, program timing, utilization, shortages, quality and regulatory approvals, tariffs and fixed costs affect results.",
+      "competition": "Competes in product design, contract manufacturing and precision machining with global EMS firms, specialists and customer in-house operations.",
+      "relationships": "Provides design and manufacturing to equipment makers and sources electronic components and precision materials externally."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Product-realization and electronics manufacturing providers",
+          "nameJa": "製品開発・電子機器受託製造会社",
+          "role": "competitor",
+          "label": {
+            "ja": "設計・精密加工・製造で競合",
+            "en": "Design, precision machining and manufacturing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "industry",
+          "name": "Semiconductor-equipment, defense, industrial and medical companies",
+          "nameJa": "半導体装置・防衛・産業・医療機器会社",
+          "role": "customer",
+          "label": {
+            "ja": "複雑製品の設計製造を受託",
+            "en": "Complex-product design and manufacturing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Electronic-component and precision-material suppliers",
+          "nameJa": "電子部品・精密材料会社",
+          "role": "supplier",
+          "label": {
+            "ja": "部品と加工材料を調達",
+            "en": "Components and machining materials"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
   }
 ]

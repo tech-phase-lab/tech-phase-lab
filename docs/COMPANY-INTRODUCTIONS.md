@@ -4,7 +4,7 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is one hundred thirty-one issuers / one hundred thirty-two tickers:
+Researched coverage is one hundred forty-three issuers / one hundred forty-four tickers:
 LITE, COHR, AMAT, APH, ANET, MRVL, VRT, ALAB, MSFT, NBIS, TSM, ASML, AVGO,
 AMD, ARM, CRDO, NVDA, MU, GOOG, GOOGL, AAPL, AMZN, META, COST, INTC, SIMO,
 AAOI, BE, VST, GEV, IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL,
@@ -14,7 +14,8 @@ DDOG, MDB, ADBE, INTU, UBER, NFLX, AKAM, OKTA, S, CHKP, TEAM, TWLO, DOCU,
 HUBS, SHOP, APP, ABNB, SPOT, RDDT, PINS, SNAP, RBLX, ROKU, TTD, DASH, MELI,
 PYPL, XYZ, SOFI, DUOL, ONTO, TER, ENTG, ACMR, ICHR, UCTT, MKSI, SWKS, QRVO,
 MTSI, POWI, SITM, CAMT, NVMI, ACLS, COHU, AMKR, ASX, GFS, TSEM, RMBS, DIOD,
-SLAB, CEVA, UMC, STM, HIMX, IMOS, CRUS, SYNA, AMBA, INDI, PI, LSCC, MXL and FORM.
+SLAB, CEVA, UMC, STM, HIMX, IMOS, CRUS, SYNA, AMBA, INDI, PI, LSCC, MXL, FORM,
+PLAB, AEHR, AOSL, NVTS, IPGP, VIAV, GLW, TEL, ARW, AVT, SANM and BHE.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -238,4 +239,14 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - Himax / Cirrus Logic / Synaptics / Ambarella / indie Semiconductor / Impinj / Lattice Semiconductor / MaxLinearは、表示、音声、IoT、映像AI、車載、RFID、FPGA、通信という製品用途を具体化した。顧客名が開示されない取引は社名を推測せず業種単位で表示する。
 - FormFactorは半導体製造装置の段へ、UMCはファウンドリー、ChipMOSは後工程、そのほかは半導体設計・製造の段へ配置。競争、顧客、外部製造・供給を別の線として扱う。
 - 公式資料: [UMC](https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm), [STM](https://www.sec.gov/Archives/edgar/data/932787/000093278726000009/stm-20251231.htm), [HIMX](https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm), [IMOS](https://www.sec.gov/Archives/edgar/data/1123134/000119312526153743/imos-20251231.htm), [CRUS](https://www.sec.gov/Archives/edgar/data/772406/000077240626000018/crus-20260328.htm), [SYNA](https://www.sec.gov/Archives/edgar/data/817720/000081772026000055/syna-20260627.htm), [AMBA](https://www.sec.gov/Archives/edgar/data/1280263/000119312526119321/amba-20260131.htm), [INDI](https://www.sec.gov/Archives/edgar/data/1841925/000119312526082535/indi-20251231.htm), [PI](https://www.sec.gov/Archives/edgar/data/1114995/000119312526042813/pi-20251231.htm), [LSCC](https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm), [MXL](https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm), [FORM](https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm).
+- 共通UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は継続する。
+
+### 2026-10-14 フォトマスク・電力・光学・接続・流通・受託製造12社追加
+
+- PLAB / AEHR / AOSL / NVTS / IPGP / VIAV / GLW / TEL / ARW / AVT / SANM / BHEを追加。合計143社・144銘柄コード。
+- フォトマスク、半導体バーンイン、電力半導体、産業レーザー、通信計測、光ファイバー・高機能ガラス、コネクター、技術商社、電子機器受託製造について、各社の最新Form 10-Kを一次資料として日英6項目と関係マップを確認した。確認日は2026-10-14。
+- Photronicsは回路を作る半導体そのものではなく製造用の原版、Aehr Test Systemsは量産前後の信頼性試験、NavitasはGaN・SiCを使う高効率電力変換という役割を分けた。
+- ArrowとAvnetはメーカーと顧客を結ぶ流通・設計支援、SanminaとBenchmarkは顧客製品の設計・製造を請け負う会社として区別した。匿名の仕入先・顧客は社名を推測せず業種単位で表示する。
+- TE ConnectivityのティッカーTELを東京エレクトロンと混同せず、コネクター・センサー会社として収録。競争、顧客、外部製造・材料調達を別の線として扱う。
+- 公式資料: [PLAB](https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm), [AEHR](https://www.sec.gov/Archives/edgar/data/1040470/000165495426006919/aehr_10k.htm), [AOSL](https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm), [NVTS](https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm), [IPGP](https://www.sec.gov/Archives/edgar/data/1111928/000111192826000040/ipgp-20251231.htm), [VIAV](https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm), [GLW](https://www.sec.gov/Archives/edgar/data/24741/000002474126000124/glw-20251231.htm), [TEL](https://www.sec.gov/Archives/edgar/data/1385157/000110465925109150/tel-20250926x10k.htm), [ARW](https://www.sec.gov/Archives/edgar/data/7536/000110465926012765/arw-20251231x10k.htm), [AVT](https://www.sec.gov/Archives/edgar/data/8858/000110465926096346/avt-20260627x10k.htm), [SANM](https://www.sec.gov/Archives/edgar/data/897723/000089772326000015/sanm-20251227.htm), [BHE](https://www.sec.gov/Archives/edgar/data/863436/000119312526064849/bhe-20251231.htm).
 - 共通UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は継続する。
