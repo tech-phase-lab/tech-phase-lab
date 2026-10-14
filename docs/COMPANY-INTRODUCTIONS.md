@@ -4,7 +4,7 @@ The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 
 The scope is every searchable issuer, independent of the monitored-news universe.
-Researched coverage is one hundred fifty-five issuers / one hundred fifty-six tickers:
+Researched coverage is one hundred sixty-five issuers / one hundred sixty-six tickers:
 LITE, COHR, AMAT, APH, ANET, MRVL, VRT, ALAB, MSFT, NBIS, TSM, ASML, AVGO,
 AMD, ARM, CRDO, NVDA, MU, GOOG, GOOGL, AAPL, AMZN, META, COST, INTC, SIMO,
 AAOI, BE, VST, GEV, IREN, LRCX, KLAC, SMCI, CSCO, HPE, CRWV, ORCL, DELL,
@@ -16,7 +16,8 @@ PYPL, XYZ, SOFI, DUOL, ONTO, TER, ENTG, ACMR, ICHR, UCTT, MKSI, SWKS, QRVO,
 MTSI, POWI, SITM, CAMT, NVMI, ACLS, COHU, AMKR, ASX, GFS, TSEM, RMBS, DIOD,
 SLAB, CEVA, UMC, STM, HIMX, IMOS, CRUS, SYNA, AMBA, INDI, PI, LSCC, MXL, FORM,
 PLAB, AEHR, AOSL, NVTS, IPGP, VIAV, GLW, TEL, ARW, AVT, SANM, BHE, TSLA,
-IONQ, RGTI, QBTS, QUBT, RKLB, ASTS, PL, BKSY, AVAV, KTOS and RDW.
+IONQ, RGTI, QBTS, QUBT, RKLB, ASTS, PL, BKSY, AVAV, KTOS, RDW, ZM, DOCN,
+ESTC, GTLB, FROG, NTNX, NTAP, BOX, WDAY and PATH.
 The second batch was reviewed on 2026-10-13 using the linked annual filings;
 Arm's June 2026 report also confirms its expansion into designed silicon products.
 The third batch adds networking and data-center infrastructure companies, reviewed
@@ -259,3 +260,14 @@ The monitored-news list and Claude-owned pipelines are unchanged.
 - 実用化前の技術、開発中のロケット・衛星、契約済みのサービス、現在の売上を区別した。未開示の顧客・供給会社は推測せず業種単位で表示し、競争と取引関係も別の線として扱う。
 - 公式資料: [TSLA](https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm), [IONQ](https://www.sec.gov/Archives/edgar/data/1824920/000119312526071562/ionq-20251231.htm), [RGTI](https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm), [QBTS](https://www.sec.gov/Archives/edgar/data/1907982/000190798226000026/qbts-20251231.htm), [QUBT](https://www.sec.gov/Archives/edgar/data/1758009/000121390026022417/ea0278445-10k_quantum.htm), [RKLB](https://www.sec.gov/Archives/edgar/data/1819994/000181999426000013/rklb-20251231.htm), [ASTS](https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm), [PL](https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm), [BKSY](https://www.sec.gov/Archives/edgar/data/1753539/000175353926000032/bksy-20251231.htm), [AVAV](https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm), [KTOS](https://www.sec.gov/Archives/edgar/data/1069258/000106925826000013/ktos-20251228.htm), [RDW](https://www.sec.gov/Archives/edgar/data/1819810/000181981026000029/rdw-20251231.htm).
 - 共通UI、ニュース・目標株価・翻訳、RESOLUTEは変更していない。全検索企業の収録は継続する。
+
+
+### 2026-10-14 クラウド・開発基盤・業務ソフト10社追加
+
+- ZM / DOCN / ESTC / GTLB / FROG / NTNX / NTAP / BOX / WDAY / PATHを追加。155社・156銘柄コードから165社・166銘柄コードへ拡大。確認日は2026-10-14。
+- 日英6項目と根拠付きマップを共通インポーターで追加。Zoomの電話・顧客対応、GitLabの開発工程、JFrogの配布物管理、Elasticの検索・監視、Nutanixの計算基盤、NetAppの保存基盤を区別した。
+- DigitalOceanのGPU採用は直接購入契約と扱わない。BoxとZoom、UiPathとMicrosoft/SAPは製品連携。WorkdayとADP、JFrogとMicrosoftなどは競争と協力を別の線で保持する。非開示の顧客・仕入先名は推測していない。
+- 年次報告に加え、DigitalOcean / Elastic / GitLab / JFrog / Boxの直近決算発表とUiPathの公式連携ページを確認。GitLabの人数・クレジット課金、JFrogのClaude Codeプラグインを反映した。取引関係の網羅やリアルタイム更新を意味しない。
+- 年次資料: [ZM](https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm), [DOCN](https://www.sec.gov/Archives/edgar/data/1582961/000158296126000019/docn-20251231.htm), [ESTC](https://www.sec.gov/Archives/edgar/data/1707753/000170775326000018/estc-20260430.htm), [GTLB](https://www.sec.gov/Archives/edgar/data/1653482/000162828026018731/gtlb-20260131.htm), [FROG](https://www.sec.gov/Archives/edgar/data/1800667/000119312526051382/frog-20251231.htm), [NTNX](https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm), [NTAP](https://www.sec.gov/Archives/edgar/data/1002047/000119312526259683/ntap-20260424.htm), [BOX](https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm), [WDAY](https://www.sec.gov/Archives/edgar/data/1327811/000132781126000014/wday-20260131.htm), [PATH](https://www.sec.gov/Archives/edgar/data/1734722/000173472226000012/path-20260131.htm)。
+- 補足資料は各レコードのsourcesに収録。UI・ニュース設定・目標株価・翻訳・RESOLUTEは変更なし。
+- 次候補: DBX / OTEX / FIVN / RNG / NICE / DT / CFLTなど。CFLTなどの上場・買収状況と未収録を実行時に確認してから選ぶ。今回の10社を重複して追加しない。全検索企業の収録は未完了。
