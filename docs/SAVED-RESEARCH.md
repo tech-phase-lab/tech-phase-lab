@@ -70,3 +70,8 @@
 - Saved view starts with its collection only. Entering/re-entering clears its independent selected article; filters never fall back to opening another saved article. Initial URL restoration uses a neutral loading surface rather than briefly rendering Home.
 - Removed the saved-detail save bar and redundant saved confirmation text. Saved collection bookmark remains an icon-only removal control with an accessible label.
 - Article actions are Annotate, Save PDF and a More menu for occasional ink-management/visibility actions. Notes show their complete referenced passage without an expansion step.
+
+## 2026-10-14: compact notes and collapsed marks
+- Reduced note panel/card spacing and Edit/Delete buttons to 30px height. Referenced passages remain fully visible.
+- Removed the permanent 300px bottom spacer; it is reserved only while the fixed annotation editor is open. Collapsed mark management now takes only its summary height and expands with its contents.
+- Selection logic, annotation storage, undo and PDF export are unchanged.

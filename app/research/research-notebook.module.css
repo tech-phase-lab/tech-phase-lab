@@ -1,5 +1,5 @@
 .notebook{min-width:0}
-.notebook[data-enabled=true]{padding-bottom:300px}
+.notebook[data-enabled=true]:has(.editor){padding-bottom:300px}
 .controls{margin:0 0 22px;padding-bottom:16px;border-bottom:1px solid #2b3c48}
 .actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
 .actions button,.editor form button,.markItem button{min-height:40px;padding:7px 12px;border:1px solid #344754;border-radius:7px;background:#14222d;color:#dce9ef;font-size:12px;cursor:pointer}
@@ -29,7 +29,7 @@
 .content{position:relative;overflow-wrap:anywhere;user-select:text;-webkit-user-select:text}
 .content [data-ink-block]{user-select:text;-webkit-user-select:text}
 .content [data-ink-id]{cursor:pointer}
-.markList{margin-top:24px;padding-top:16px;border-top:1px solid #30414d;scroll-margin-top:90px}
+.markList{margin-top:16px;padding-top:10px;border-top:1px solid #30414d;scroll-margin-top:90px}
 .markList summary{cursor:pointer;color:#b5d9d0;font-size:13px}
 .markList summary span{margin-left:6px}
 .markList>p{font-size:11px;color:#9caebc}
@@ -44,7 +44,7 @@
 .palette>.done{margin-left:auto;padding-inline:10px;background:#24433f;color:#b1f1d7;border-color:#385f54}
 @media(max-width:380px){.colors button{width:36px}.palette{gap:4px}.palette>button{padding-inline:6px;font-size:11px}.palette>.done{padding-inline:8px}}
 
-.notesList{margin-top:28px;padding:18px;border:1px solid #304a57;border-radius:12px;background:#101e29;scroll-margin-top:90px}
-.notesList h3{margin:0 0 14px;font-size:16px;color:#b8e7dd}.notesList h3 span{margin-left:6px;font-size:12px;color:#9cb5bf}.notesList>p{font-size:11px;color:#9caebc}.noteItem{padding:14px;background:#172936;border-radius:6px}.noteItem>p{margin:0 0 12px;font-size:15px;line-height:1.85;overflow-wrap:anywhere;color:#e5eef3}.noteItem summary{font-size:12px;color:#a6bac5;cursor:pointer}.noteItem>div{margin-top:12px}
+.notesList{margin-top:20px;padding:12px;border:1px solid #304a57;border-radius:12px;background:#101e29;scroll-margin-top:90px}
+.notesList h3{margin:0 0 8px;font-size:16px;color:#b8e7dd}.notesList h3 span{margin-left:6px;font-size:12px;color:#9cb5bf}.notesList>p{font-size:11px;color:#9caebc}.noteItem{padding:10px 12px;background:#172936;border-radius:6px}.noteItem>p{margin:0 0 8px;font-size:15px;line-height:1.85;overflow-wrap:anywhere;color:#e5eef3}.noteItem summary{font-size:12px;color:#a6bac5;cursor:pointer}.noteItem>div{margin-top:8px}.noteItem button{min-height:30px;padding:3px 12px}.notesList>p:last-child{margin:8px 0 0}
 
-.actions .writeAction{background:#203d38;border-color:#609c8c;color:#c6f4e4}.moreActions{position:relative;margin-left:auto}.moreActions>summary{display:flex;align-items:center;gap:8px;min-height:40px;padding:0 10px;list-style:none;color:#b9cbd3;font-size:12px;cursor:pointer}.moreActions>summary::-webkit-details-marker{display:none}.moreActions>summary span{font-size:22px}.moreActions>div{position:absolute;right:0;top:100%;z-index:20;display:grid;gap:4px;min-width:160px;padding:8px;border:1px solid #3a515e;border-radius:10px;background:#10212c;box-shadow:0 8px 24px #0008}.moreActions button{text-align:left}.noteItem .noteQuote{max-height:none;overflow:visible;padding:10px 12px;margin:12px 0;background:#0d1c26;border-left:2px solid #496574;border-radius:4px;overflow-wrap:anywhere}.noteQuote span{display:block;margin-bottom:5px;font-size:10px;color:#8ea7b4}
+.actions .writeAction{background:#203d38;border-color:#609c8c;color:#c6f4e4}.moreActions{position:relative;margin-left:auto}.moreActions>summary{display:flex;align-items:center;gap:8px;min-height:40px;padding:0 10px;list-style:none;color:#b9cbd3;font-size:12px;cursor:pointer}.moreActions>summary::-webkit-details-marker{display:none}.moreActions>summary span{font-size:22px}.moreActions>div{position:absolute;right:0;top:100%;z-index:20;display:grid;gap:4px;min-width:160px;padding:8px;border:1px solid #3a515e;border-radius:10px;background:#10212c;box-shadow:0 8px 24px #0008}.moreActions button{text-align:left}.noteItem .noteQuote{max-height:none;overflow:visible;padding:8px 10px;margin:8px 0;background:#0d1c26;border-left:2px solid #496574;border-radius:4px;overflow-wrap:anywhere}.noteQuote span{display:block;margin-bottom:5px;font-size:10px;color:#8ea7b4}
