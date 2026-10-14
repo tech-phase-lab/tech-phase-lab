@@ -135,6 +135,24 @@ class ResultTests(unittest.TestCase):
             self.assertIsNone(results.projection(schedule,['ECON']))
         self.assertIsNone(results.projection('Eurozone September CPI rose 3.8% YoY. Core CPI: 2.5% YoY.',['ECON']))
 
+    def test_the_oct_14_wall_st_engine_cpi_post_is_read_and_still_never_guesses(self):
+        # The exact post (screenshot, Oct 14): "(Sept)" after the label, "y/y" and "m/m" after the
+        # figure, and two figures on one line joined by a middle dot. It was dropped unread.
+        post = ('US CPI (Sept): +3.7% y/y (Est. +3.6%)\nCore CPI: +2.6% y/y (Est. +2.5%)\n'
+                'CPI m/m: +0.6% (Est. +0.6%) \u00b7 Core m/m: +0.3% (Est. +0.2%)')
+        r = results.projection(post, ['ECON'])
+        self.assertEqual({f['key']: f['value'] for f in r['facts']},
+                         {'cpi-yoy': '+3.7%', 'core-cpi-yoy': '+2.6%', 'cpi-mom': '+0.6%', 'core-cpi-mom': '+0.3%'})
+        self.assertEqual(r['period'], 'SEPTEMBER U.S. CPI')
+        self.assertEqual(r['titleJa'], '米国CPI（9月）：前年比 +3.7%、コア前年比 +2.6%、前月比 +0.6%、コア前月比 +0.3%')
+        self.assertEqual(next(f for f in r['facts'] if f['key'] == 'core-cpi-mom')['comparisons'], {'forecast': '+0.2%'})
+        source = next(s for s in signals.SOURCES if s['id'] == 'x-wallstengine')
+        payload = {'data': [{'id': '1', 'author_id': '1', 'text': post}], 'includes': {'users': [{'id': '1', 'username': 'wallstengine'}]}}
+        self.assertEqual(x_api.parse_response(source, payload, [])[0]['matches'], {'ECON': ['economic-result']})
+        # Two different figures for one measure, or a core figure with no index before it, are still withheld.
+        self.assertIsNone(results.projection(post + '\nCPI y/y: +3.8%', ['ECON']))
+        self.assertIsNone(results.projection('Core m/m: +0.3%', ['ECON']))
+
     def test_earnings_preserve_actuals_ranges_and_ignore_different_consensus(self):
         r=results.projection(TEXT,['MU'])
         self.assertEqual(r['period'],'Q4 2026')

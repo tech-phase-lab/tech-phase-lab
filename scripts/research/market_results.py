@@ -152,7 +152,7 @@ MONTH_NAMES = ('January', 'February', 'March', 'April', 'May', 'June', 'July', '
                'September', 'October', 'November', 'December')
 INFLATION_LINE = re.compile(
     r'^\s*(?:(?:the\s+)?U\.?S\.?\s+)?(?:(?:' + '|'.join(MONTH_NAMES) + r')\s+)?(?P<core>core\s+)?(?P<ind>CPI|PPI|PCE)'
-    r'(?:\s+(?:price\s+)?index)?\s*(?P<b1>\((?:MoM|YoY|M/M|Y/Y)\)|MoM|YoY|M/M|Y/Y)?\s*'
+    r'(?:\s+(?:price\s+)?index)?(?:\s*\((?P<mon>(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*)\.?\))?\s*(?P<b1>\((?:MoM|YoY|M/M|Y/Y)\)|MoM|YoY|M/M|Y/Y)?\s*'
     r'(?:(?:actual|[:=])\s*[:=]?\s*)?(?P<val>[-+−]?\d+(?:\.\d+)?)\s*%'
     r'(?:\s*(?P<b2>\((?:MoM|YoY|M/M|Y/Y)\)|MoM|YoY|M/M|Y/Y))?(?P<rest>.*)$', re.I)
 
@@ -166,7 +166,13 @@ def inflation_projection(text):
     whole post, since a wrong basis would misstate inflation.
     """
     facts, seen = [], {}
-    for line in re.split(r'[\n|]', text):
+    # Wall St Engine joins two figures on one line with a middle dot (Oct 14: the CPI flash was
+    # dropped because "(Sept)" and "·" were not read).
+    month_short = last_index = None
+    for line in re.split(r'[\n|·•]', text):
+        # "CPI m/m: +0.6% · Core m/m: +0.3%": the second figure names no index; it is the same one.
+        if last_index and not INFLATION_LABEL.search(line) and re.match(r'\s*core\s+(?:MoM|YoY|M/M|Y/Y)\b', line, re.I):
+            line = re.sub(r'^(\s*core)', lambda m: m[1] + ' ' + last_index, line, count=1, flags=re.I)
         if not INFLATION_LABEL.search(line) or not re.search(r'\d', line):
             continue
         match = INFLATION_LINE.match(line)
@@ -174,6 +180,8 @@ def inflation_projection(text):
             if re.search(r'\d+(?:\.\d+)?\s*%', line):
                 return None
             continue  # A heading such as "U.S. SEPTEMBER CPI 👇".
+        month_short = month_short or match['mon']
+        last_index = match['ind'].upper()
         bases = [b for b in (match['b1'], match['b2']) if b]
         if len(bases) != 1 or re.match(r'\s*(?:est\b|expected|forecast|estimate|consensus|previous|prior|予想|前回)',
                                        match['rest'], re.I):
@@ -198,6 +206,9 @@ def inflation_projection(text):
     indices = list(dict.fromkeys(f['key'].replace('core-', '').split('-')[0].upper() for f in facts))
     # Only a month written as the report's own period ("SEPTEMBER U.S. CPI").
     month = re.search(r'\b(' + '|'.join(MONTH_NAMES) + r')\s+(?:U\.?S\.?\s+)?(?:core\s+)?(?:CPI|PPI|PCE)\b', text, re.I)
+    if not month and month_short:
+        full = next(name for name in MONTH_NAMES if name[:3].lower() == month_short[:3].lower())
+        month = re.match(r'(.*)', full)
     period = ((month[1].upper() + ' ') if month else '') + 'U.S. ' + '/'.join(indices)
     month_ja = ('（' + str(MONTH_NAMES.index(month[1].capitalize()) + 1) + '月）') if month else ''
     single = len(indices) == 1
