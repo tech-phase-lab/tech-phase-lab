@@ -72,6 +72,44 @@ class BlsCpiTests(unittest.TestCase):
         self.assertIs(source["officialUpdates"], True)
         self.assertIn(source, signals.enabled_sources())
 
+    def test_bls_is_fetched_with_the_declared_contact_agent_and_a_failed_route_retries_within_minutes(self):
+        source = self.source()
+        self.assertIs(source["contactUserAgent"], True)
+        seen = {}
+
+        class Response:
+            headers = type("H", (), {"get_content_type": lambda self: "text/html"})()
+            status = 200
+            def read(self, _size=-1):
+                return b"" if seen.get("done") else (seen.update(done=True) or b"<main>page</main>")
+            def __enter__(self): return self
+            def __exit__(self, *exc): return False
+            def getheader(self, *_a): return None
+
+        class Opener:
+            def open(self, request, timeout=None):
+                seen["agent"] = request.get_header("User-agent")
+                return Response()
+
+        with patch.dict("os.environ", {"RESEARCH_USER_AGENT": "TechPhaseResearch ops@example.com"}), \
+                patch.object(signals, "build_opener", return_value=Opener()):
+            try:
+                signals.fetch(source, {})
+            except Exception:
+                pass
+        self.assertEqual(seen["agent"], "TechPhaseResearch ops@example.com")
+        # Without a contact address nothing is sent at all.
+        with patch.dict("os.environ", {"RESEARCH_USER_AGENT": "no-contact"}), self.assertRaises(ValueError):
+            signals.fetch(source, {})
+        with tempfile.TemporaryDirectory() as directory, monitor.connect(Path(directory) / "test.sqlite") as db:
+            signals.schema(db)
+            db.execute("INSERT INTO signal_routes(id,checked_at,next_check_at,failures,error) VALUES('bls-cpi',?,?,1,'http-403')",
+                       ("2026-10-14T13:12:12+00:00", "2026-10-14T19:12:12+00:00"))
+            db.commit()
+            for moment, due in (("2026-10-14T13:14:00+00:00", False), ("2026-10-14T13:17:13+00:00", True)):
+                with patch.object(signals, "stamp", return_value=moment):
+                    self.assertEqual("bls-cpi" in [s["id"] for s in signals.due(db, [source])], due, moment)
+
     def test_intake_publishes_the_exact_release_once_and_only_while_current(self):
         source = self.source()
         with tempfile.TemporaryDirectory() as directory, monitor.connect(Path(directory) / "test.sqlite") as db:

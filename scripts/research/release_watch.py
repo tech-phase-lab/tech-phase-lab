@@ -28,7 +28,9 @@ BURST_AFTER = timedelta(minutes=15)
 BURST_INTERVAL_SECONDS = 10
 ALERT_AFTER = timedelta(minutes=3)
 RELEASE_LOOKBACK = timedelta(minutes=5)
-CALL_LOOKBACK = timedelta(hours=6)
+# Oct 14: ASML's call is 8 hours after its release; a 6-hour window missed the already
+# published result and sent a false "not published" alert at the call.
+CALL_LOOKBACK = timedelta(hours=12)
 WATCH_FOR = timedelta(hours=6)
 # X routes that post U.S. indicator results and earnings flashes.
 # Official release page polled in the same window as the social routes.

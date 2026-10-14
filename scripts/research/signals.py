@@ -79,6 +79,10 @@ class Redirects(HTTPRedirectHandler):
 def fetch(source, validators):
     url = safe_url(source["url"], source)
     headers = {"User-Agent": source.get("userAgent", "TechPhaseResearch/0.1 (+source-monitor)"), "Accept-Encoding": "identity"}
+    if source.get("contactUserAgent") is True:
+        # Oct 14: bls.gov answers 403 to any agent without a contact address (the
+        # same rule as SEC). The declared contact is configuration, never code.
+        headers["User-Agent"] = monitor.sec_user_agent()
     for key, header in (("etag", "If-None-Match"), ("last_modified", "If-Modified-Since")):
         value = monitor.http_validator(validators.get(key)) if source.get("conditionalRequests", True) else None
         if value:
@@ -2278,6 +2282,13 @@ def due(db, sources=None):
         if source["id"] in burst and row["checked_at"]:
             checked = instant_or_none(row["checked_at"])
             if checked is None or checked <= current - timedelta(seconds=release_watch.BURST_INTERVAL_SECONDS):
+                return True
+        if source["id"] in MACRO_RELEASE_SOURCES and row["error"]:
+            # A release page that failed is retried within minutes, never parked for
+            # hours behind an access-control back-off (Oct 14: bls.gov 403 held the
+            # CPI route until the next morning).
+            checked = instant_or_none(row["checked_at"])
+            if checked is not None and checked + timedelta(minutes=5) <= current:
                 return True
         # Invalid persisted schedules must not strand a route forever. A
         # valid bounded future schedule is still respected, including the

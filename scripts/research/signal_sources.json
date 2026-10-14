@@ -40,7 +40,8 @@
     "intervalSeconds": 60,
     "retainUnmatched": true,
     "officialUpdates": true,
-    "reuse": "factual-results-only"
+    "reuse": "factual-results-only",
+    "contactUserAgent": true
   },
   {
     "id": "nvidia-developer",
