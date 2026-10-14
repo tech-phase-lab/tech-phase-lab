@@ -217,7 +217,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
                 <li><strong>{t("リサーチQ&A", "Research Q&A")}</strong>{t("｜会員の疑問を深掘り", " · Member questions explored")}</li>
                 <li><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong>{t("｜相場の着眼点", " · Market perspectives")}</li>
                 <li><strong>{t("銘柄比較 PRO", "Stock comparison PRO")}</strong>{t("｜気になる2〜3銘柄を瞬時に判断", " · Assess 2–3 stocks at a glance")}</li>
-                <li><strong>{t("資本マップ", "CAPITAL MAP")}</strong>{t("｜運用会社・ETFの投資先と変化（提供準備中）", " · Manager portfolios, ETF holdings and changes (in development)")}</li>
+                <li><strong>{t("資本マップ", "CAPITAL MAP")}</strong>{t("｜運用会社・ETFの投資先と変化", " · Manager portfolios, ETF holdings and changes")}</li>
               </ul>
             </article>
           </div>
@@ -227,7 +227,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           <span id="metrics" className={styles.anchorTarget} aria-hidden="true" />
           <span id="saved" className={styles.anchorTarget} aria-hidden="true" />
           {tab === "saved" && <header className={styles.savedHeader}>
-            <div><span className={styles.savedEyebrow}>MY RESEARCH</span><h1>{t("保存したリサーチ", "Saved research")}</h1><p>{t("気になった記事を、いつでも手元に。", "Your reading, ready to revisit.")}</p></div>
+            <div><span className={styles.savedEyebrow}>MY RESEARCH</span><h1>{t("保存したリサーチ", "Saved research")}</h1><p>{t("気になる記事を残して、あとからまとめて読み返す。", "Keep useful research together and revisit it anytime.")}</p></div>
             <div className={styles.savedCount}><Bookmark filled /><strong>{saved.filter((id) => events.some((event) => event.id === id)).length}</strong><span>{t("保存済み", "Saved")}</span></div>
           </header>}
           <div className={styles.toolbar}>
