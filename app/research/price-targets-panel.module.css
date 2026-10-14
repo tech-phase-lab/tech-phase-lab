@@ -84,3 +84,14 @@
 .panel .notificationToggle:hover{background:rgba(217,180,106,.1);border-color:transparent}
 .bellIcon{width:15px;height:15px;flex:none}
 .notificationToggle:focus-visible{outline:2px solid #d9b46a}
+
+/* Larger ticker; the phone-notification setting lines up with the "data fetched" line (owner, Oct 14). */
+.card .ticker{font-size:18px;min-width:70px;padding:11px 8px}
+@media(max-width:700px){.card .ticker{font-size:17px;min-width:64px;padding:10px 6px}}
+.footer{align-items:start}
+.panel .notificationToggle{min-height:0;padding:0;line-height:1.5;align-self:start}
+.updated{line-height:1.5}
+.updated{white-space:normal}
+.syncMeta{min-width:0}
+.panel .notificationToggle{white-space:nowrap}
+.updated time{white-space:nowrap}

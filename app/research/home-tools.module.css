@@ -111,5 +111,12 @@
 .helpLinks a:focus-visible{outline:2px solid #7fd6b0;outline-offset:2px}
 @media(max-width:650px){.helpLinks a{gap:6px;font-size:12.5px}.helpLinks a+a{padding-left:12px}.help h2{font-size:22px}}
 
-/* RESOLUTE is a paid feature: its title is gold (owner, Oct 14). */
-.grid .paidTitle{color:#d9b46a}
+/* RESOLUTE reads small next to the Japanese titles: a little larger, white (owner, Oct 14). */
+.grid .paidTitle{font-size:14.5px;letter-spacing:.04em}
+
+/* Content sits in the middle of each menu card instead of leaving a gap below (owner, Oct 14). */
+.grid>a,.grid>button{justify-content:center}
+/* The old divider rule also matched these links; one line only. */
+.help .helpLinks a:nth-of-type(even)::before{content:none}
+.help .helpLinks a:nth-of-type(even){padding-left:16px}
+@media(max-width:650px){.help .helpLinks a:nth-of-type(even){padding-left:12px}}
