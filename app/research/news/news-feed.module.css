@@ -1,4 +1,4 @@
-.feed{margin:26px 0 8px}
+.feed{margin:26px 0 8px;scroll-margin-top:100px}
 .eyebrow{margin:0;font:10.5px var(--font-geist-mono),monospace;letter-spacing:.2em;color:#566174}
 .feed>h2{margin:4px 0 14px;font-size:24px;font-weight:800;letter-spacing:.02em;color:#eef2f8}
 .tabs{display:flex;gap:4px;width:max-content;max-width:100%;margin:0 0 18px;padding:4px;border:1px solid #1a2332;border-radius:999px;background:#0d121b;overflow-x:auto;scrollbar-width:none}

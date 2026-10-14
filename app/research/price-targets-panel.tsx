@@ -8,6 +8,7 @@ import { observePageActivity } from "@/lib/research/page-activity";
 
 import { formatTargetTime } from "@/lib/research/price-target-time";
 import { publicPriceTargets, type PriceTarget as Target } from "@/lib/research/price-targets";
+import { publishPriceTargets } from "@/lib/research/price-target-snapshot";
 
 import FeedPagination from "./news/feed-pagination";
 import { useCalendarClock } from "./use-calendar-clock";
@@ -38,7 +39,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
       const data = publicPriceTargets(value);
       if (active && !signal.aborted) {
         const at = new Date().toISOString(); snapshot = { items: data.items, at, time: Date.now() };
-        setItems(data.items); setStatus("ready"); setUpdatedAt(at);
+        setItems(data.items); publishPriceTargets(data.items); setStatus("ready"); setUpdatedAt(at);
       }
     };
     const readFallback = async (signal: AbortSignal) => {
@@ -58,6 +59,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
           // Keep mounted items with the existing stale warning, but never
           // remount a failed check as a fresh, ready in-memory snapshot.
           snapshot = null;
+          publishPriceTargets(null);
           setStatus("error");
         }
       }
@@ -164,7 +166,7 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
   }, []);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const time = (date: string) => formatTargetTime(date, lang);
-  return <section ref={panelRef} className={styles.panel} aria-label={t("目標株価の速報", "Price target updates")}>
+  return <section ref={panelRef} id="home-price-targets" className={styles.panel} aria-label={t("目標株価の速報", "Price target updates")}>
     <div className={styles.head}><p className={styles.eyebrow}>ANALYST</p><h2>{t("目標株価の変更", "Price target changes")}</h2><p className={styles.period}>{t("過去1週間", "Past week")}</p></div>
     {status === "error" && <p role="status" className={styles.state}>{t("現在、目標株価の更新を取得できません。表示内容は最新とは限りません。", "Price target updates are temporarily unavailable. Displayed items may be stale.")}</p>}
     {status === "loading" && <div aria-busy="true" aria-label={t("目標株価を取得中", "Fetching price targets")} className={styles.pending} />}

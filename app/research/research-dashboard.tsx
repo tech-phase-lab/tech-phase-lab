@@ -15,6 +15,7 @@ import { researchViewFromHash, researchViewHashes, type ResearchView } from "@/l
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./research.module.css";
 import HomeTools, { HomeHelp } from "./home-tools";
+import HomeToday from "./home-today";
 import type { InitialNewsSnapshot } from "@/lib/research/general-news";
 import NewsFeed from "./news/news-feed";
 import ResearchPulse from "./research-pulse";
@@ -158,6 +159,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
         {tab === "home" && <>
           <ResearchPulse lang={lang} />
           <HomeTools lang={lang} onPro={() => openView("pro")} onWatch={() => openView("companies")} />
+          <HomeToday lang={lang} />
           <NewsFeed lang={lang} initialNews={initialNews} />
           <HomeHelp lang={lang} />
         </>}
