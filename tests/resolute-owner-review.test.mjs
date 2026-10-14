@@ -62,3 +62,44 @@ test('transient verification errors are not definitive denial; revoked sessions 
  assert.equal(await requestReviewAccess(async()=>null,undefined,async()=>assert.fail('no request without token')),'unavailable');
  assert.equal(await requestReviewAccess(token,AbortSignal.abort(),async()=>assert.fail('aborted')),'unavailable');
 });
+
+test('owner preview sample is valid and can open tools without completing the quiz',async()=>{
+ const { createReviewSamplePlan } = await import('../lib/resolute/review-sample.ts');
+ const store=createReviewStore();
+ const saved=await store.requestPlan({plan:createReviewSamplePlan(),baseRevision:0});
+ assert.equal(parsePlanSnapshot(saved).plan.tolerancePct,30);
+ assert.equal(saved.plan.buyLines.length,3);
+});
+test('device persistence requires opt-in, restores validated plans and settings, and can be removed',async()=>{
+ const { REVIEW_STORAGE_KEY } = await import('../lib/resolute/review-store.ts');
+ const { createReviewSamplePlan } = await import('../lib/resolute/review-sample.ts');
+ const data=new Map();
+ const storage={getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,v),removeItem:k=>data.delete(k)};
+ const a=createReviewStore(storage);
+ const plan=createReviewSamplePlan();
+ await a.requestPlan({plan,baseRevision:0});
+ assert.equal(data.size,0);
+ a.setRemembered(true);
+ assert.equal(a.getPersistence().remembered,true);
+ await a.requestPlan({plan:{...plan,noBuyConditions:['saved personal rule']},baseRevision:1});
+ const initial=await a.requestNotificationSettings();
+ await a.requestNotificationSettings({settings:{...initial.settings,deliveryHourJst:9},baseRevision:0});
+ const reopened=createReviewStore(storage);
+ assert.equal((await reopened.requestPlan()).revision,2);
+ assert.deepEqual((await reopened.requestPlan()).plan.noBuyConditions,['saved personal rule']);
+ assert.equal((await reopened.requestNotificationSettings()).settings.deliveryHourJst,9);
+ reopened.setRemembered(false);
+ assert.equal(data.has(REVIEW_STORAGE_KEY),false);
+ assert.equal((await createReviewStore(storage).requestPlan()).plan,null);
+ assert.ok((await reopened.requestPlan()).plan,'removing device copy preserves current screen');
+});
+test('corrupt or unavailable device storage never prevents memory-only preview',async()=>{
+ const bad=createReviewStore({getItem:()=>'{bad',setItem:()=>{throw Error('quota');},removeItem:()=>{throw Error('blocked');}});
+ assert.equal((await bad.requestPlan()).plan,null);
+ assert.equal(bad.getPersistence().error,true);
+ bad.setRemembered(true);
+ assert.deepEqual(bad.getPersistence(),{remembered:false,error:true});
+ const missing=createReviewStore();
+ missing.setRemembered(true);
+ assert.equal(missing.getPersistence().remembered,false);
+});

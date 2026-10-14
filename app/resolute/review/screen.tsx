@@ -1,6 +1,8 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { requestReviewAccess, type ReviewAccess, type ReviewSessionToken } from "@/lib/resolute/review-client";
+import { createReviewSamplePlan } from "@/lib/resolute/review-sample";
+import controls from "./controls.module.css";
 import { createReviewStore } from "@/lib/resolute/review-store";
 import { ReviewContext, type ReviewPath } from "../review-context";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
@@ -43,7 +45,12 @@ export default function ReviewScreen({getSessionToken}:{getSessionToken?:ReviewS
  </section></div></main> : null}</>;
 }
 function Workspace() {
- const [store] = useState(createReviewStore);
+ const [store] = useState(() => {
+  try { return createReviewStore(window.localStorage); } catch { return createReviewStore(); }
+ });
+ const persistence = useSyncExternalStore(store.subscribe,store.getPersistence,store.getPersistence);
+ const [planVersion,setPlanVersion] = useState(0);
+ const [opening,setOpening] = useState(false);
  const [path,setPath] = useState<ReviewPath>("/resolute");
  const [notificationsVisited,setNotificationsVisited]=useState(false);
  const [locale,setLocale] = useState<DiagnosisLocale>("ja");
@@ -52,8 +59,32 @@ function Workspace() {
   setPath(next);
   window.scrollTo({top:0});
  }
+ async function openFeature(next: ReviewPath) {
+  if (opening) return;
+  setOpening(true);
+  try {
+   const current = await store.requestPlan();
+   if (!current.plan) {
+    await store.requestPlan({plan:createReviewSamplePlan(),baseRevision:current.revision});
+    setPlanVersion(v=>v+1);
+   }
+   navigate(next);
+  } finally { setOpening(false); }
+ }
+ const en = locale === "en";
  return <ReviewContext.Provider value={{...store,path,navigate,locale,setLocale}}>
-  <div hidden={path !== "/resolute"}><DiagnosisScreen/></div>
+  <aside className={controls.panel} aria-label={en?"Owner preview shortcuts":"運営者用の確認ショートカット"}>
+   <p>{en?"Skip the quiz and preview any tool. Your saved rules are used when available. Otherwise, a fictional sample plan is loaded.":"30問に答えずに各画面を確認できます。保存済みのルールがあれば使い、なければ架空のサンプル計画で開きます"}</p>
+   <div className={controls.links}>
+    {([["/resolute/wall",en?"Rule wallpaper":"お守りを見る"],["/resolute/notebook",en?"My rulebook":"一冊を見る"],["/resolute/tonight",en?"A moment tonight":"今夜のひと息を見る"]] as [ReviewPath,string][]).map(([target,label])=>
+     <button key={target} disabled={opening} onClick={()=>void openFeature(target)}>{label}</button>)}
+   </div>
+   <label><input type="checkbox" checked={persistence.remembered} onChange={event=>store.setRemembered(event.target.checked)}/>
+    {en?"Keep saved preview rules and settings on this device":"保存した確認用ルールと設定をこの端末に残す"}</label>
+   <p className={controls.note}>{en?"Includes financial amounts and answers. Use only on your own device. Uncheck to remove the device copy. Unsaved quiz answers are not retained.":"資産額や回答も含まれます。自分専用の端末でご利用ください。チェックを外すと端末の保存データを消します。診断途中の未保存の回答は残りません"}</p>
+   {persistence.error?<p role="status">{en?"Device storage is unavailable. Your changes are still available in this tab.":"端末への保存・削除を確認できませんでした。この画面内の入力は保持しています"}</p>:null}
+  </aside>
+  <div hidden={path !== "/resolute"}><DiagnosisScreen key={planVersion}/></div>
   {path === "/resolute/simulation" ? <SimulationScreen/> : path === "/resolute/tax" ? <TaxScreen/> :
    path === "/resolute/wall" ? <WallScreen/> : path === "/resolute/tonight" ? <TonightScreen/> : path === "/resolute/news" ? <NewsScreen/> : path === "/resolute/notebook" ? <NotebookScreen/> : path === "/resolute/thermometer" ? <ThermometerScreen/> : null}
   {notificationsVisited?<div hidden={path!=="/resolute/alerts"&&path!=="/resolute/morning"}><NotificationScreen mode={path==="/resolute/morning"?"morning":"alerts"}/></div>:null}

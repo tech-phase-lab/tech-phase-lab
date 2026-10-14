@@ -56,7 +56,7 @@ export default function ToolShell({ identityReady=true, children }: { identityRe
    {access==="signed-out" ? <Link href="/research/account" prefetch={false}>{en?"Sign in":"ログイン"}</Link> : null}
    <button type="button" className={styles.secondary} disabled={access==="loading"} onClick={()=>setAttempt(n=>n+1)}>{en?"Check again":"再確認"}</button>
   </section>}
-  {review ? <p className={styles.reviewNote}>{en ? "Owner access · Your input stays in this tab and resets on reload. No emails are sent." : "運営者専用。入力・保存はこの画面内だけで、再読み込みすると消えます。メールは送信しません。"}</p> : null}
+  {review ? <p className={styles.reviewNote}>{en ? "Owner preview · Device storage is optional. No emails are sent." : "運営者専用の確認画面です。端末への保存は上の設定で選べます。メールは送信しません。"}</p> : null}
   <footer className={styles.footer}>{!reviewing ? <Link href="/resolute/settings" prefetch={false}>{en?"Language and time zone":"言語とタイムゾーン"}</Link> : null}
    <Link href="/research" prefetch={false}>Tech Phase</Link></footer>
  </div></main>;
