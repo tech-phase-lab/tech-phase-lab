@@ -264,7 +264,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           <span id="metrics" className={styles.anchorTarget} aria-hidden="true" />
           <span id="saved" className={styles.anchorTarget} aria-hidden="true" />
           {tab === "saved" && <header className={styles.savedHeader}>
-            <div><span className={styles.savedEyebrow}>MY RESEARCH</span><h1>{t("保存したリサーチ", "Saved research")}</h1><p>{t("気になる記事にメモを書き込み、自分だけのリサーチノートに。", "Add your own notes to useful articles and build your personal research notebook.")}</p></div>
+            <div><span className={styles.savedEyebrow}>MY RESEARCH</span><h1>{t("保存したリサーチ", "Saved research")}</h1><p>{t("気になる記事にメモを書き込み、自分だけのノートに。", "Add your own notes to useful articles and build your personal research notebook.")}</p></div>
             <div className={styles.savedCount}><Bookmark filled /><strong>{saved.filter((id) => events.some((event) => event.id === id)).length}</strong><span>{t("保存済み", "Saved")}</span></div>
           </header>}
           {!showingResearchArticle && (tab !== "saved" || hasSavedArticles) && <div className={`${styles.toolbar} ${tab === "saved" ? styles.savedToolbar : ""}`}>
