@@ -34,9 +34,16 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
   const byId = useMemo(() => new Map(graph.nodes.map(node => [node.id, node])), [graph.nodes]);
   const selected = byId.get(graph.root)!;
   const focus = useMemo(() => networkFocus(graph, selected.id, mode), [graph, selected.id, mode]);
-  const layout = useMemo(() => layoutCompanyNetwork(graph.nodes, width), [graph.nodes, width]);
+  // Preserve the approved NVDA presentation. Other maps remove cards outside
+  // the selected depth instead of leaving hundreds of dimmed cards behind.
+  const namedCompetitors = [...focus.competitors].filter(id => byId.get(id)?.kind === "company");
+  const visibleNodes = useMemo(() => graph.root === "NVDA" ? graph.nodes : graph.nodes.filter(node =>
+    !(node.kind === "industry" && focus.competitors.has(node.id)) &&
+    (mode === "all" || focus.distances.has(node.id) || focus.competitors.has(node.id))), [graph, mode, focus]);
+  const layout = useMemo(() => layoutCompanyNetwork(visibleNodes, width), [visibleNodes, width]);
+  const visibleEdges = focus.visibleEdges.filter(edge => layout.positions[edge.from] && layout.positions[edge.to]);
   const direct = graph.edges.filter(edge => edge.from === selected.id || edge.to === selected.id);
-  const relationships = direct;
+  const relationships = direct.filter(edge => edge.kind !== "competition" || namedCompetitors.includes(edge.from === selected.id ? edge.to : edge.from));
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
 
   useEffect(() => {
@@ -67,7 +74,7 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
       </div>
       <div className={styles.selection}>
         <div className={styles.selectedName} role="status"><strong>{selected.ticker ?? label(selected, lang)}</strong>{selected.ticker && <span>{label(selected, lang)}</span>}</div>
-        <span className={styles.count}>{graph.nodes.filter(node => node.kind === "company").length}{t("社", " companies")} · {graph.edges.length}{t("の関係", " connections")}</span>
+        <span className={styles.count}>{visibleNodes.filter(node => node.kind === "company").length}{t("社", " companies")} · {(graph.root === "NVDA" ? graph.edges : visibleEdges).length}{t("の関係", " connections")}</span>
       </div>
     </div>
 
@@ -76,22 +83,22 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
     </div>
     <div className={styles.competitors} data-topic="competition">
       <h3><span>05</span>{t("競合は？", "Who competes with it?")}</h3>
-      <div>{[...focus.competitors].map(id => {
+      <div>{namedCompetitors.map(id => {
         const node = byId.get(id)!;
-        return <span key={id} className={styles.competitor}>{node.ticker ?? label(node, lang)}</span>;
-      })}{focus.competitors.size === 0 && <span>{t("具体的な競合は未収録", "No named competitors recorded")}</span>}</div>
+        return <span key={id} className={styles.competitor}>{graph.root === "NVDA" ? node.ticker ?? label(node, lang) : `${label(node, lang)}${node.ticker ? ` (${node.ticker})` : ""}`}</span>;
+      })}{namedCompetitors.length === 0 && <span>{t("競合社名は確認中", "Named competitors are under review")}</span>}</div>
     </div>
     <h3 className={styles.mapHeading}><span>06</span>{t("どこと繋がる？", "Who does it work with?")}</h3>
     <div className={styles.board} ref={board} style={{ height: layout.height }} aria-label={t("事業別の企業マップ", "Companies by business area")}>
       {layout.layers.map(layer => <div key={layer.index} className={styles.layer} style={{ top: layer.y }}>{networkLayers[layer.index][lang]}</div>)}
       <svg className={styles.lines} width="100%" height={layout.height} viewBox={`0 0 ${layout.width} ${layout.height}`} aria-hidden="true" focusable="false">
-        {focus.visibleEdges.map((edge, index) => {
+        {visibleEdges.map((edge, index) => {
           const from = layout.positions[edge.from], to = layout.positions[edge.to];
           const tone = edgeTone(edge);
           return <path key={edge.id} d={networkEdgePath(from, to, index % 4 * 2)} data-tone={tone} data-direct={edge.from === selected.id || edge.to === selected.id} />;
         })}
       </svg>
-      {graph.nodes.map(node => {
+      {visibleNodes.map(node => {
         const position = layout.positions[node.id];
         const active = node.id === selected.id;
         const distance = focus.distances.get(node.id);

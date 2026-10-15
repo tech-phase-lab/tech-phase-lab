@@ -16,7 +16,7 @@ test('rejects incomplete translations, unsupported map edges, duplicate identiti
     item => { item.maps.relationships[0].ticker = item.tickers[0]; },
     item => { item.reviewedOn = '2026-02-30'; },
     item => { item.sources[0].url = 'javascript:alert(1)'; },
-    item => { item.maps.competition[0].ticker = 'NVDA'; }, // industry is not an issuer
+    item => { item.maps.competition[0].kind = 'industry'; item.maps.competition[0].ticker = 'NVDA'; }, // industry is not an issuer
   ]) {
     const item = structuredClone(companyIntroductions[0]);
     mutate(item);
@@ -34,6 +34,12 @@ test('bulk upsert preserves untouched issuers and rejects older research', () =>
   assert.deepEqual(next.slice(1), companyIntroductions.slice(1));
   item.reviewedOn = '2020-01-01';
   assert.throws(() => mergeCompanyIntroductions(companyIntroductions, [item]), /Stale review/);
+});
+
+test('new batches cannot substitute industry labels for named competitors', () => {
+  const item = structuredClone(companyIntroductions[0]);
+  item.maps.competition = [{kind:'industry',name:'Optical suppliers',role:'competitor',label:{ja:'光通信メーカー',en:'Optical suppliers'},sourceIndexes:[0]}];
+  assert.throws(() => mergeCompanyIntroductions(companyIntroductions, [item]), /Named competitor required/);
 });
 
 test('batch validation is read-only by default and failed input cannot partially overwrite the registry', () => {

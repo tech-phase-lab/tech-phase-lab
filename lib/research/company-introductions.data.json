@@ -5,11 +5,19 @@
       "LITE"
     ],
     "name": "Lumentum",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Business / Risk factors / NVIDIA investment",
         "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm"
+      },
+      {
+        "label": "COHR · annual filing · products and competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm"
+      },
+      {
+        "label": "IPGP · annual filing · products and competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1111928/000111192826000040/ipgp-20251231.htm"
       }
     ],
     "ja": {
@@ -17,7 +25,7 @@
       "revenue": "通信向けレーザーや光信号を送受信するモジュール、工場で使うレーザーなどの販売。",
       "strength": "光を生み出す半導体から通信モジュールまで手がけ、顧客が求める速度や省電力性能に合わせて設計できる。",
       "risks": "大口顧客の発注変更、価格競争、新製品の量産や供給能力拡大の遅れ。需要予測が外れると在庫も負担になる。",
-      "competition": "光通信部品・モジュールやレーザーのメーカー。顧客が同種の部品を内製する場合も競争になる。",
+      "competition": "Coherent（COHR）とは光通信部品・トランシーバーや産業用レーザーで製品領域が重なる。IPG Photonics（IPGP）とは材料加工向けレーザーで競合し、IPGの年次報告もLumentumを実名で挙げている。競合する範囲は製品ごとに異なる。",
       "relationships": "クラウド事業者や通信機器メーカーへ供給。NVIDIAからは2026年3月に出資を受けた。"
     },
     "en": {
@@ -25,35 +33,37 @@
       "revenue": "Sales of communications lasers, optical transceivers and lasers used in manufacturing.",
       "strength": "Spans laser chips through optical modules, tailoring designs to customers' bandwidth and power needs.",
       "risks": "Major-customer order changes, pricing pressure, production-ramp delays and excess inventory if demand falls short.",
-      "competition": "Optical-component, module and laser manufacturers, plus customers that develop competing products in-house.",
+      "competition": "Coherent (COHR) overlaps in optical components, transceivers and industrial lasers, based on the companies’ disclosed product portfolios. IPG Photonics (IPGP) explicitly names Lumentum as a competitor in materials-processing lasers. Competitive overlap varies by product.",
       "relationships": "Supplies cloud providers and network-equipment makers; received an investment from NVIDIA in March 2026."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Optical suppliers",
-          "nameJa": "光通信メーカー",
+          "kind": "company",
+          "name": "Coherent",
+          "ticker": "COHR",
           "role": "competitor",
           "label": {
-            "ja": "部品・モジュールで競合",
-            "en": "Components & modules"
+            "ja": "光通信部品・トランシーバーと産業用レーザー。両社の公表製品から比較",
+            "en": "Optical components, transceivers and industrial lasers; comparison of both disclosed product portfolios"
           },
           "sourceIndexes": [
-            0
+            0,
+            1,
+            2
           ]
         },
         {
-          "kind": "industry",
-          "name": "Laser makers",
-          "nameJa": "レーザーメーカー",
+          "kind": "company",
+          "name": "IPG Photonics",
+          "ticker": "IPGP",
           "role": "competitor",
           "label": {
-            "ja": "産業用レーザーで競合",
-            "en": "Industrial lasers"
+            "ja": "材料加工向けレーザー。IPGの年次報告がLumentumを競合に列挙",
+            "en": "Materials-processing lasers; IPG explicitly names Lumentum as a competitor"
           },
           "sourceIndexes": [
-            0
+            2
           ]
         }
       ],
@@ -106,11 +116,19 @@
       "COHR"
     ],
     "name": "Coherent",
-    "reviewedOn": "2026-10-13",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Business / Risk factors / NVIDIA agreements",
         "url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm"
+      },
+      {
+        "label": "LITE · annual filing · products and competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm"
+      },
+      {
+        "label": "IPGP · annual filing · products and competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1111928/000111192826000040/ipgp-20251231.htm"
       }
     ],
     "ja": {
@@ -118,7 +136,7 @@
       "revenue": "データセンター・通信向けの光製品と、工場や半導体製造、医療・研究で使うレーザーや部品の販売。",
       "strength": "材料から重要部品、完成モジュールまで自社で手がける範囲が広く、性能と量産の両面を調整できる。",
       "risks": "生産能力の拡大に必要な資金と時間、顧客による量産認定の遅れ、大口顧客の需要変動。",
-      "competition": "光通信モジュールやレーザー、光学材料のメーカー。別の技術で同じ用途を実現する製品とも競う。",
+      "competition": "Lumentum（LITE）とは光通信部品・トランシーバーや産業用レーザーで製品領域が重なる。IPG Photonics（IPGP）とは材料加工向けレーザーで競合し、IPGの年次報告もCoherentを実名で挙げている。全事業で同じ競合になるわけではない。",
       "relationships": "通信機器メーカーなどの設計・試験を支援。NVIDIAとは光技術の開発と供給に関する複数年契約を結ぶ。"
     },
     "en": {
@@ -126,35 +144,37 @@
       "revenue": "Optical-product sales for data centers and telecom, plus lasers and components for manufacturing, medical and research uses.",
       "strength": "In-house capabilities span materials, critical components and finished modules, supporting performance and production scaling.",
       "risks": "The cost and timing of capacity expansion, customer qualification delays and major-customer demand shifts.",
-      "competition": "Optical-transceiver, laser and materials suppliers, as well as alternative technologies serving the same applications.",
+      "competition": "Lumentum (LITE) overlaps in optical components, transceivers and industrial lasers, based on the companies’ disclosed product portfolios. IPG Photonics (IPGP) explicitly names Coherent as a materials-processing laser competitor. Rivalry does not extend equally across every business.",
       "relationships": "Supports equipment customers' design and qualification work; has a multi-year optics development and supply agreement with NVIDIA."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Optical suppliers",
-          "nameJa": "光通信メーカー",
+          "kind": "company",
+          "name": "Lumentum",
+          "ticker": "LITE",
           "role": "competitor",
           "label": {
-            "ja": "光通信モジュールで競合",
-            "en": "Optical transceivers"
+            "ja": "光通信部品・トランシーバーと産業用レーザー。両社の公表製品から比較",
+            "en": "Optical components, transceivers and industrial lasers; comparison of both disclosed product portfolios"
           },
           "sourceIndexes": [
-            0
+            0,
+            1,
+            2
           ]
         },
         {
-          "kind": "industry",
-          "name": "Laser & materials suppliers",
-          "nameJa": "レーザー・材料メーカー",
+          "kind": "company",
+          "name": "IPG Photonics",
+          "ticker": "IPGP",
           "role": "competitor",
           "label": {
-            "ja": "加工・光学製品で競合",
-            "en": "Lasers & optical materials"
+            "ja": "材料加工向けレーザー。IPGの年次報告がCoherentを競合に列挙",
+            "en": "Materials-processing lasers; IPG explicitly names Coherent as a competitor"
           },
           "sourceIndexes": [
-            0
+            2
           ]
         }
       ],
@@ -14446,7 +14466,7 @@
       "IPGP"
     ],
     "name": "IPG Photonics",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Markets / Customers / Competition / Risk factors",
@@ -14458,7 +14478,7 @@
       "revenue": "産業機械メーカー、システム会社、製造業へレーザー光源・装置・部品と保守を販売して稼ぐ。",
       "strength": "ダイオード、光ファイバー、光学部品まで主要部品を垂直統合し、高出力・高効率・長寿命の光源を作れる。",
       "risks": "中国を含む産業設備投資、販売価格の低下、顧客の内製、輸出規制、部材、工場稼働率と技術転換に左右される。",
-      "competition": "ファイバーレーザー、固体レーザー、レーザー加工システムで光源メーカーと産業装置会社と競う。",
+      "competition": "材料加工向けレーザーではCoherent（COHR）やLumentum（LITE）などと競合する。IPGの年次報告は両社を実名で列挙している。競争は出力、加工品質、価格などで起こり、顧客によるレーザーの内製化もリスクになる。",
       "relationships": "機械メーカー、システムインテグレーター、製造業へレーザーを供給し、電子部品や原材料を外部調達する。"
     },
     "en": {
@@ -14466,19 +14486,32 @@
       "revenue": "Sells laser sources, systems, parts and service to industrial equipment makers, integrators and manufacturers.",
       "strength": "Vertically integrates key diodes, fibers and optics to build high-power, efficient and long-life laser sources.",
       "risks": "Industrial investment including China, price erosion, customer insourcing, export controls, materials, utilization and technology shifts affect results.",
-      "competition": "Competes in fiber and solid-state lasers and laser-processing systems with photonics suppliers and industrial-equipment companies.",
+      "competition": "Coherent (COHR) and Lumentum (LITE) are among the companies explicitly listed as competitors in materials-processing lasers in IPG’s annual report. Competition involves output power, processing quality and price. Customers developing their own lasers can also reduce the available market.",
       "relationships": "Supplies lasers to machine builders, system integrators and manufacturers and sources electronics and raw materials externally."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Industrial laser and photonics suppliers",
-          "nameJa": "産業レーザー・光学機器会社",
+          "kind": "company",
+          "name": "Coherent",
+          "ticker": "COHR",
           "role": "competitor",
           "label": {
-            "ja": "レーザー光源・加工装置で競合",
-            "en": "Laser sources and processing systems"
+            "ja": "材料加工向けレーザーで競合。IPGが競合企業として明記",
+            "en": "Materials-processing lasers; explicitly identified in IPG’s competition disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Lumentum",
+          "ticker": "LITE",
+          "role": "competitor",
+          "label": {
+            "ja": "材料加工向けレーザーで競合。光通信事業全体の競合を意味しない",
+            "en": "Materials-processing lasers; this does not imply competition across all optical communications products"
           },
           "sourceIndexes": [
             0

@@ -1,5 +1,29 @@
 # Six-part stock introductions
 
+## 2026-10-15: map recovery is the current priority
+
+The user accepted the restored NVDA map as the reference scale. Its exact
+pre-expansion payload from 95b5b29 is stored in
+`company-network-nvda-reviewed.data.json` and protected by an independent digest.
+Keep its 41 companies, 61 relationships, ordering, labels, layers and evidence.
+Never regenerate this reviewed map from the growing introduction registry.
+
+Other issuers start from their own sourced facts. Further context comes only
+from the fixed reviewed graph: at most three steps, 41 cards and 61 edges.
+These are ceilings, not targets. Rivalry never bridges to another supply chain.
+Direct and two-step views remove out-of-range cards. Do not add companies simply
+because their biographies have been added to the registry.
+
+LITE, COHR and IPGP now name actual competitors and their competing products.
+Optical overlap is an editorial comparison of current disclosed portfolios;
+IPG explicitly names Coherent and Lumentum in materials-processing competition.
+Anonymous competitor categories are not displayed as company names. Unreviewed
+names are marked pending, not guessed. The importer rejects new batches without
+a named competitor. Existing industry-only records still require factual review;
+hiding a placeholder does not complete that review. The working chat's audit
+currently records three corrections and 110 remaining industry-only issuers.
+Finish these quality corrections before adding new issuers.
+
 The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
 

@@ -35,7 +35,7 @@ test('requires both issuer identity and ticker; supports share classes and non-m
 
 const require = createRequire(import.meta.url);
 function compileComponent(file, extra = {}) {
-  const compiled = ts.transpileModule(readFileSync(new URL(`../app/research/stocks/${file}.tsx`, import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
+  const compiled = ts.transpileModule(readFileSync(new URL(`../app/research/stocks/${file}.tsx`, import.meta.url), 'utf8'), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
   const mod = {exports:{}};
   new Function('require','module','exports',compiled)(name => name.endsWith('.css') ? {default:{}} : extra[name] ?? require(name), mod, mod.exports);
   return mod.exports;
@@ -72,9 +72,22 @@ test('all issuers render same-page selection maps in both languages', () => {
       assert.ok(!html.includes('href="/research/stocks'));
       assert.ok(!html.includes(lang==='ja'?'最初に戻る':'Reset'));
       const network = companyNetworkFor({cik:introduction.cik,ticker:introduction.tickers[0]});
-      assert.equal((html.match(/<button/g)??[]).length,3 + network.nodes.length);
-      assert.ok(html.includes(`aria-current="true" aria-label="${introduction.name}"`));
+      const focus = networkHelpers.networkFocus(network, network.root, 'two');
+      const visible = network.root === 'NVDA' ? network.nodes : network.nodes.filter(node => !(node.kind === 'industry' && focus.competitors.has(node.id)) && (focus.distances.has(node.id) || focus.competitors.has(node.id)));
+      assert.equal((html.match(/<button/g)??[]).length,3 + visible.length);
+      assert.ok(html.includes(`aria-current="true" aria-label="${introduction.name}"`), introduction.tickers[0]);
       assert.ok(html.includes(lang==='ja'?'どこと繋がる？':'Who does it work with?'));
     }
   }
+});
+
+test('Lumentum shows actual competitors, excludes anonymous rivals and removes out-of-range cards', () => {
+  const introduction = companyIntroductionFor({cik:1633978,ticker:'LITE'});
+  const network = companyNetworkFor({cik:1633978,ticker:'LITE'});
+  const html = renderToStaticMarkup(createElement(panel.CompanyIntroductionPanel,{introduction,lang:'ja',network}));
+  assert.ok(html.includes('Coherent (COHR)'));
+  assert.ok(html.includes('IPG Photonics (IPGP)'));
+  assert.ok(!html.includes('光通信メーカー'));
+  assert.ok(!html.includes('レーザーメーカー'));
+  assert.ok(!html.includes('aria-label="Nikon"'));
 });
