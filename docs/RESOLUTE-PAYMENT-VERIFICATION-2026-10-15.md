@@ -12,6 +12,12 @@
 - The temporary verification function was restored to its original read-only
   function and temporary PayPal credential references were cleared.
 - These observations concern Sandbox only. No production entitlement was granted.
+- USD 59 initial purchase: capture and completion notification succeeded. The
+  ledger contained exactly one active annual grant.
+- JPY 5,980 FREE renewal: capture and completion notification succeeded. Exactly
+  one renewal grant extended the existing annual period by one year, without a
+  gap or duplicate grant. Database verification was read-only and the temporary
+  verifier was restored afterward.
 
 ## Local automated coverage
 
@@ -22,17 +28,38 @@ continued access after post-payment PRO downgrade, final identity lookup downgra
 rejection, injected prices/currencies/PRO claims, and renewal without a purchase.
 USD capture amount/currency mismatches must not grant access.
 
-This is not evidence of actual USD or renewal payments. PGlite tests do not prove
-multi-session PostgreSQL concurrency safety.
+The automated tests do not establish actual PRO-price payments. PGlite tests do
+not prove multi-session PostgreSQL concurrency safety.
+
+## PostgreSQL concurrency gate
+
+Added a separate CI job using a disposable PostgreSQL 17 service. Five tests
+exercise the real SQL store across simultaneous connections: repeated order
+creation, repeated completion, competing capture authorization, refund racing
+completion, and repeated renewal completion. The refund race also checks that
+only one alert is queued and delayed completion cannot revive revoked access.
+The test refuses non-loopback databases and databases containing application
+tables. It does not contact PayPal or Clerk or use deployment credentials.
+Execution result remains pending until the new CI job completes; adding the
+tests alone is not a passing concurrency result.
 
 ## Next steps and privacy
 
-The owner has been asked to approve a USD 59 Sandbox initial purchase in their own
-browser. Its capture remains unverified. Never inspect their PayPal management
-browser or request login details/screenshots. Do not alter their real PRO membership
-to manufacture renewal test eligibility.
+USD initial and JPY FREE renewal purchases are verified as described above.
+Never inspect the owner's PayPal management browser or request login details or
+screenshots. Do not alter their real PRO membership to manufacture renewal test
+eligibility. Actual PRO-price testing requires an isolated eligible identity and
+appropriately restricted test configuration; that setup has not been performed.
 
-Still required before live sales: actual USD and renewal transactions, PostgreSQL
+Repeated temporary verifier deployments caused repeated Railway approval dialogs.
+Avoid this workflow for routine checks. Existing authenticated order-status and
+audit routes can support inspection without redeployment; accessing them still
+requires normal owner authentication. The status route may reconcile a pending
+capture, so it is not a strictly read-only database audit. Current routes do not
+replace checks of grant count and grant periods. Do not bypass deployment
+approvals or relax authentication to obtain easier access.
+
+Still required before live sales: actual USD FREE and JPY/USD PRO renewals, PostgreSQL
 concurrency, dispute delivery, payment-table backup/restore, production entitlement
 projection, reconciliation, alert delivery, mobile checkout QA, and deactivation
 of legacy fixed payment links. No real-money sales or email dispatch enabled.
