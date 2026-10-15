@@ -109,3 +109,8 @@
 
 ## 2026-10-15: quieter collection return
 - Back to collection uses a small muted, frameless label with a left triangle. Mobile touch height and keyboard focus indication remain, as do navigation and scroll restoration.
+
+## 2026-10-15: dismiss selection tools and readable export
+- Deselecting an article passage closes the pen tray; toolbar selection restoration and pending note drafts are preserved.
+- Mobile Back to top stays at a fixed bottom-right offset above navigation instead of deriving its height from the menu rectangle.
+- Export includes a mobile viewport and larger screen/print typography (18px preview, 14pt print body). The native print/PDF flow and annotations remain intact. Physical phone preview validation remains separate.

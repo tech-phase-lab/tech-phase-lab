@@ -37,7 +37,7 @@
 
 /* Phone: a slim pill "↑ 先頭へ", 14px above the bottom menu, floating up when it appears (owner, Oct 14). */
 @media (max-width:760px) {
-  .dock { right:max(18px, env(safe-area-inset-right)); bottom:var(--above-nav, calc(104px + env(safe-area-inset-bottom))); }
+  .dock { right:max(18px, env(safe-area-inset-right)); bottom:calc(104px + env(safe-area-inset-bottom)); }
   .button, .button:not(.show) {
     display:flex; align-items:center; gap:6px; width:auto; height:34px; padding:0 14px 0 11px; border-radius:999px;
     border:1px solid #2a3a52; background:#0d1420e6; -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
