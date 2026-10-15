@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 128 issuers with published competitor corrections and 0 remaining
+records 138 issuers with published competitor corrections and 0 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -675,3 +675,11 @@ Reviewed SNOW / IBM / OKTA / S / CHKP / DOCU / ABNB / SPOT / ASAN / DIS (10 exis
 Preserved every prior named map competitor and all five prior Spotify prose names. Microsoft/Atlassian integrations and Disney distribution/royalty relationships remain intact alongside product competition. Databricks SQL and Foundry overlap selected Snowflake scopes, not every workload. Okta workforce identity, customer authentication and governance are distinct. SentinelOne endpoint, SIEM and cloud rivals are attributed by field; Broadcom's endpoint products are not classified as semiconductors in this map. Google completed Wiz's acquisition in March 2026. Comcast's NBCUniversal/Sky separation remains planned, not completed.
 
 The ten selected maps receive relevant headings and short compared-product captions. No global company taxonomy changes. NVDA's original 41-card/61-relationship payload, unrelated maps, other five bilingual answers, non-competition facts and 12px scrollbar spacing are preserved. Reviewed 2026-10-16. The remaining mixed lists, peer-only leads and additional product scopes are still open; no claim of exhaustive completion.
+
+## 2026-10-16 · development, storage, payroll and banking product scopes
+
+Reviewed GTLB / NTAP / PAYX / ADP / BILL / APPN / NCNO / ALKT / RPD / SAP (10 existing records; no new issuers). Preserved prior named map rivals and Paychex's prior prose reference to Paylocity. Competitors are attributed separately to own disclosure, named peer disclosure or editorial comparisons of official products. A shared third-party competitor list is not treated as a direct disclosure between its listed companies.
+
+Distinguish payroll from co-employment services, bank lending from account opening, file storage from full cloud platforms, and warehouse management from full ERP suites. Nutanix and NetApp's announced integration collaboration can coexist with storage competition; planned availability is not asserted as generally available. Manual accounting and internal development remain alternatives in prose. Existing integrations and non-competition relationships remain intact.
+
+Only the ten selected maps receive product-specific headings and captions. Splunk security analytics is not classified as networking hardware; IBM FlashSystem is enterprise storage in the NetApp comparison. Preserve NVDA's original 41 cards / 61 relationships, unrelated map structure and all other five bilingual answers. Reviewed 2026-10-16. Additional product scopes and peer-only leads remain open; this is not an exhaustive quality-audit completion.

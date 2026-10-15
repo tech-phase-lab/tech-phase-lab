@@ -72,6 +72,43 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "GTLB") return {
+    6: { ja: "開発・クラウド基盤", en: "Development & cloud platforms" },
+    7: { ja: "開発・配布ツール", en: "Development & delivery tools" },
+  };
+  if (root === "NTAP") return {
+    5: { ja: "企業向けストレージ", en: "Enterprise storage" },
+    6: { ja: "クラウド・データ基盤", en: "Cloud & data platforms" },
+  };
+  if (root === "PAYX") return {
+    7: { ja: "給与・人事・共同雇用型支援", en: "Payroll, HR & co-employment services" },
+  };
+  if (root === "ADP") return {
+    7: { ja: "給与・人事・共同雇用型支援", en: "Payroll, HR & co-employment services" },
+  };
+  if (root === "BILL") return {
+    7: { ja: "経理・請求・経費管理", en: "Accounting, invoices & expenses" },
+    6: { ja: "クラウド・業務ソフト", en: "Cloud & business software" },
+  };
+  if (root === "APPN") return {
+    7: { ja: "業務自動化・導入支援", en: "Process automation & implementation" },
+    6: { ja: "クラウド・開発基盤", en: "Cloud & development platforms" },
+  };
+  if (root === "NCNO") return {
+    7: { ja: "銀行業務ソフト・導入支援", en: "Banking software & implementation" },
+    6: { ja: "クラウド・業務基盤", en: "Cloud & business platforms" },
+  };
+  if (root === "ALKT") return {
+    7: { ja: "デジタル銀行・口座開設", en: "Digital banking & account opening" },
+  };
+  if (root === "RPD") return {
+    7: { ja: "セキュリティ製品・運用サービス", en: "Security products & managed operations" },
+    6: { ja: "クラウド・セキュリティ基盤", en: "Cloud & security platforms" },
+  };
+  if (root === "SAP") return {
+    7: { ja: "基幹業務ソフト・導入支援", en: "Enterprise applications & implementation" },
+    6: { ja: "クラウド・業務基盤", en: "Cloud & business platforms" },
+  };
   if (root === "SNOW") return {
     6: { ja: "データ分析・クラウド基盤", en: "Data analytics & cloud platforms" },
   };
@@ -534,6 +571,376 @@ const productContexts: Record<string, Record<string, { layer: number; businessLa
       "businessLabel": {
         "ja": "映像の電子配信",
         "en": "Digital video distribution"
+      }
+    }
+  },
+  "GTLB": {
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "GitHub・クラウド基盤",
+        "en": "GitHub & cloud infrastructure"
+      }
+    },
+    "TEAM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Bitbucket・コード管理",
+        "en": "Bitbucket code management"
+      }
+    },
+    "FROG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Artifactory・配布物管理",
+        "en": "Artifactory artifact management"
+      }
+    },
+    "Harness": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "公開・配備の自動化",
+        "en": "Continuous delivery"
+      }
+    }
+  },
+  "NTAP": {
+    "NTNX": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Unified Storage",
+        "en": "Unified Storage"
+      }
+    },
+    "DELL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "PowerStore",
+        "en": "PowerStore"
+      }
+    },
+    "HPE": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "Alletra Storage",
+        "en": "Alletra Storage"
+      }
+    },
+    "IBM": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "FlashSystem",
+        "en": "FlashSystem"
+      }
+    },
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "EFS・クラウド基盤",
+        "en": "EFS & cloud infrastructure"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Azure Files・クラウド基盤",
+        "en": "Azure Files & cloud infrastructure"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Filestore・クラウド基盤",
+        "en": "Filestore & cloud infrastructure"
+      }
+    }
+  },
+  "PAYX": {
+    "ADP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "給与・TotalSource",
+        "en": "Payroll & TotalSource"
+      }
+    },
+    "PAYC": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "給与・人事管理",
+        "en": "Payroll & HR"
+      }
+    },
+    "PCTY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "給与管理",
+        "en": "Payroll"
+      }
+    },
+    "TNET": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "共同雇用型の人事支援",
+        "en": "Co-employment HR services"
+      }
+    },
+    "NSP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "共同雇用型の人事支援",
+        "en": "Co-employment HR services"
+      }
+    }
+  },
+  "ADP": {
+    "PAYX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "給与・共同雇用型支援",
+        "en": "Payroll & co-employment services"
+      }
+    },
+    "PAYC": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "給与・人事管理",
+        "en": "Payroll & HR"
+      }
+    },
+    "TNET": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "共同雇用型の人事支援",
+        "en": "Co-employment HR services"
+      }
+    },
+    "NSP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "共同雇用型の人事支援",
+        "en": "Co-employment HR services"
+      }
+    },
+    "WDAY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "人事・給与管理",
+        "en": "HCM & payroll"
+      }
+    }
+  },
+  "BILL": {
+    "INTU": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "QuickBooks Bill Pay",
+        "en": "QuickBooks Bill Pay"
+      }
+    },
+    "Ramp": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "請求書の支払い",
+        "en": "Invoice payments"
+      }
+    },
+    "Tipalti": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "買掛金・支払い自動化",
+        "en": "Accounts payable automation"
+      }
+    },
+    "SAP": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Concur Expense",
+        "en": "Concur Expense"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "NetSuite・クラウド基盤",
+        "en": "NetSuite & cloud infrastructure"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Dynamics・クラウド基盤",
+        "en": "Dynamics & cloud infrastructure"
+      }
+    }
+  },
+  "APPN": {
+    "PEGA": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Pega Platform",
+        "en": "Pega Platform"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Power Platform・Azure",
+        "en": "Power Platform & Azure"
+      }
+    },
+    "NOW": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "App Engine Studio",
+        "en": "App Engine Studio"
+      }
+    },
+    "PATH": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "RPA・業務自動化",
+        "en": "RPA automation"
+      }
+    },
+    "ACN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "導入・業務変革支援",
+        "en": "Implementation & transformation"
+      }
+    }
+  },
+  "NCNO": {
+    "QTWO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "融資・条件設定",
+        "en": "Lending & relationship pricing"
+      }
+    },
+    "FIS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "法人向け融資管理",
+        "en": "Commercial loan origination"
+      }
+    },
+    "Abrigo": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "融資・信用リスク管理",
+        "en": "Lending & credit risk"
+      }
+    },
+    "MeridianLink": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "デジタル口座開設",
+        "en": "Digital account opening"
+      }
+    },
+    "ACN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "銀行業務の導入支援",
+        "en": "Banking implementation"
+      }
+    }
+  },
+  "ALKT": {
+    "QTWO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "デジタル銀行サービス",
+        "en": "Digital banking"
+      }
+    },
+    "FI": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Experience Digital",
+        "en": "Experience Digital"
+      }
+    },
+    "JKHY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "デジタル銀行サービス",
+        "en": "Digital banking"
+      }
+    },
+    "MeridianLink": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "デジタル口座開設",
+        "en": "Digital account opening"
+      }
+    }
+  },
+  "RPD": {
+    "TENB": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "脆弱性・露出管理",
+        "en": "Vulnerability & exposure management"
+      }
+    },
+    "QLYS": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "脆弱性管理",
+        "en": "Vulnerability management"
+      }
+    },
+    "CSCO": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Splunk Enterprise Security",
+        "en": "Splunk Enterprise Security"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Sentinel・クラウド基盤",
+        "en": "Sentinel & cloud infrastructure"
+      }
+    },
+    "CRWD": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Falcon Complete MDR",
+        "en": "Falcon Complete MDR"
+      }
+    }
+  },
+  "SAP": {
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Fusion ERP・クラウド",
+        "en": "Fusion ERP & cloud"
+      }
+    },
+    "WDAY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "人事・財務管理",
+        "en": "HCM & financial management"
+      }
+    },
+    "MANH": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "倉庫管理",
+        "en": "Warehouse management"
+      }
+    },
+    "ACN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "業務ソフトの導入支援",
+        "en": "Enterprise application implementation"
       }
     }
   }

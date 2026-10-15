@@ -19433,7 +19433,7 @@
       "GTLB"
     ],
     "name": "GitLab",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual Form 10-K · Business / Competition / Partners / Risk factors",
@@ -19442,6 +19442,22 @@
       {
         "label": "Q2 FY2027 results · GitLab Flex commercial model",
         "url": "https://ir.gitlab.com/news/news-details/2026/GitLab-Reports-Second-Quarter-Fiscal-Year-2027-Financial-Results/default.aspx"
+      },
+      {
+        "label": "GitHub · Code hosting and collaboration",
+        "url": "https://docs.github.com/en/get-started/start-your-journey/what-is-github"
+      },
+      {
+        "label": "Atlassian · Bitbucket code collaboration",
+        "url": "https://www.atlassian.com/software/bitbucket"
+      },
+      {
+        "label": "JFrog · Artifactory artifact management",
+        "url": "https://docs.jfrog.com/artifactory/docs/artifact-management"
+      },
+      {
+        "label": "Harness · Continuous delivery and GitOps",
+        "url": "https://www.harness.io/products/continuous-delivery"
       }
     ],
     "ja": {
@@ -19449,7 +19465,7 @@
       "revenue": "有料プランの利用人数に応じた契約料と、AIエージェント向けクレジットの利用料金が主な柱。自社運用版とクラウド版を提供する。",
       "strength": "開発と運用、セキュリティの情報を一つの工程につなげられる。個別ツールを行き来する手間を減らし、変更の履歴や承認を追いやすい。",
       "risks": "GitHubなどの大手やAI開発ツールとの競争が激しい。無料利用を有料契約へつなげることや、人数課金と利用量課金の両立が課題になる。",
-      "competition": "MicrosoftのGitHubなどの開発基盤やAtlassianと競合。開発工程の一部だけを得意とする専門ツールも競争相手になる。",
+      "competition": "コード管理ではMicrosoft傘下GitHubとAtlassian Bitbucket、ソフトの部品・配布物管理ではJFrog Artifactory、公開工程の自動化ではHarnessが競合例。GitLab自身が4社を実名で挙げ、製品分野は公式情報で照合した。開発工程の一部での重なりであり、各製品がGitLab全体を同じ形で置き換えるわけではない。",
       "relationships": "AWSやGoogle Cloudを含むパートナー網を持つ。販売・移行・導入支援を担う各社と協力して、顧客の開発組織へ展開する。"
     },
     "en": {
@@ -19457,7 +19473,7 @@
       "revenue": "Charges for paid platform seats and AI-agent credits, with self-managed and hosted options.",
       "strength": "Shared workflows connect development, security and operations, making changes and approvals easier to trace.",
       "risks": "Faces major platforms and new AI coding tools. Converting free users and balancing seat and usage pricing are challenges.",
-      "competition": "Competes with Microsoft, including GitHub, Atlassian and specialized development tools.",
+      "competition": "Examples are Microsoft-owned GitHub and Atlassian Bitbucket in code collaboration, JFrog Artifactory in artifact management, and Harness in delivery automation. GitLab names all four vendors; official products support the field-specific examples. Overlap in selected development stages does not make every product an identical replacement for the entire GitLab platform.",
       "relationships": "Cloud partners include AWS and Google Cloud; resellers and integrators help customers purchase, migrate and implement the platform."
     },
     "maps": {
@@ -19465,40 +19481,56 @@
         {
           "kind": "company",
           "name": "Microsoft",
-          "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "GitHubなどの開発基盤で競合",
-            "en": "GitHub and development platforms"
+            "ja": "GitHubのコード管理・共同開発。企業名はGitLab自身の開示",
+            "en": "GitHub code hosting/collaboration; vendor named by GitLab"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "MSFT"
         },
         {
           "kind": "company",
           "name": "Atlassian",
-          "ticker": "TEAM",
           "role": "competitor",
           "label": {
-            "ja": "開発・共同作業ツールで競合",
-            "en": "Development and collaboration tools"
+            "ja": "Bitbucketのコード共同開発。企業名はGitLab自身の開示",
+            "en": "Bitbucket code collaboration; vendor named by GitLab"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            3
+          ],
+          "ticker": "TEAM"
         },
         {
-          "kind": "industry",
-          "name": "Specialized development tools",
-          "nameJa": "開発工程の専門ツール",
+          "kind": "company",
+          "name": "JFrog",
           "role": "competitor",
           "label": {
-            "ja": "コード管理・テスト・AIなどの一部機能で競合",
-            "en": "Point solutions across development stages"
+            "ja": "Artifactoryのソフト部品・配布物管理。自社開示と製品照合",
+            "en": "Artifactory artifact management; named vendor and product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            4
+          ],
+          "ticker": "FROG"
+        },
+        {
+          "kind": "company",
+          "name": "Harness",
+          "role": "competitor",
+          "label": {
+            "ja": "継続的な公開・配備の自動化。自社開示と製品照合",
+            "en": "Continuous delivery/deployment automation; named vendor and product check"
+          },
+          "sourceIndexes": [
+            0,
+            5
           ]
         }
       ],
@@ -19858,7 +19890,7 @@
       "NTAP"
     ],
     "name": "NetApp",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual Form 10-K · Business / Competition / Partners / Risk factors",
@@ -19867,6 +19899,42 @@
       {
         "label": "Nutanix FY2026 Form 10-K · Competitors include NetApp",
         "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm"
+      },
+      {
+        "label": "NetApp · ONTAP storage and data management",
+        "url": "https://www.netapp.com/ontap-data-management-software/"
+      },
+      {
+        "label": "Nutanix · Unified Storage file, object and block services",
+        "url": "https://www.nutanix.com/solutions/unified-storage"
+      },
+      {
+        "label": "Nutanix and NetApp · April 7, 2026 strategic alliance and planned integration",
+        "url": "https://www.nutanix.com/press-releases/2026/nutanix-and-netapp-form-strategic-alliance"
+      },
+      {
+        "label": "Dell · PowerStore enterprise storage",
+        "url": "https://www.dell.com/en-us/shop/powerstore/sf/power-store"
+      },
+      {
+        "label": "HPE · Alletra Storage MP B10000 block and file storage",
+        "url": "https://www.hpe.com/us/en/products/storage/alletra/mp-b10000.html"
+      },
+      {
+        "label": "IBM · Storage FlashSystem",
+        "url": "https://www.ibm.com/products/flashsystem"
+      },
+      {
+        "label": "AWS · Elastic File System shared file storage",
+        "url": "https://aws.amazon.com/efs/"
+      },
+      {
+        "label": "Microsoft · Azure Files managed file shares",
+        "url": "https://learn.microsoft.com/en-gb/azure/storage/files/storage-files-introduction"
+      },
+      {
+        "label": "Google · Filestore managed file storage",
+        "url": "https://docs.cloud.google.com/filestore/docs/overview"
       }
     ],
     "ja": {
@@ -19874,7 +19942,7 @@
       "revenue": "装置とソフトの販売、保守・サポート、クラウド上のデータサービスで稼ぐ。設備を一括購入せず利用する契約形態も持つ。",
       "strength": "同じデータ管理技術を社内設備と主要クラウドで使える。移動、バックアップ、復旧を組み合わせ、データを置く場所が変わっても管理を続けやすい。",
       "risks": "部品調達を外部に依存し、メモリーなどの値上がりは利益を圧迫する。顧客がクラウド標準サービスを選ぶと、自社製品の出番が減る可能性もある。",
-      "competition": "ストレージやデータ管理の専業会社、大手IT機器会社、クラウド標準サービスと競う。Nutanixとも一部の基盤用途で競合する。",
+      "competition": "企業向けストレージではDell PowerStore、HPE Alletra、IBM FlashSystem、Nutanix Unified Storageが比較例。クラウドの共有ファイル保存ではAWS EFS、Azure Files、Google Filestoreを、ONTAPの対象用途と公式製品で比較する編集上の例とした。クラウド3社との技術連携やNutanixとの統合に向けた協業も併存し、製品の機能・規模がすべて同じとは扱わない。",
       "relationships": "AWS、Azure、Google Cloudへ技術を統合し、NVIDIAとはAI向け構成で協力する。装置製造は外部へ委託している。"
     },
     "en": {
@@ -19882,49 +19950,109 @@
       "revenue": "Earns hardware, software, support and cloud-service revenue, including consumption-based offerings.",
       "strength": "Shared technology supports data movement, protection and recovery across enterprise systems and major clouds.",
       "risks": "Outsourced components expose margins to memory pricing; native cloud services can substitute for its offerings.",
-      "competition": "Competes with storage vendors, IT systems suppliers and native cloud services, including Nutanix in overlapping infrastructure uses.",
+      "competition": "Enterprise-storage examples are Dell PowerStore, HPE Alletra, IBM FlashSystem and Nutanix Unified Storage. AWS EFS, Azure Files and Google Filestore are shared-file-storage examples. These are editorial comparisons of official products with selected ONTAP uses, not a NetApp-named list. Cloud integrations and the announced Nutanix integration collaboration coexist; features and scale differ.",
       "relationships": "Integrates with AWS, Azure and Google Cloud and collaborates with NVIDIA on AI architectures. Third parties manufacture its systems."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Storage and data management vendors",
-          "nameJa": "ストレージ・データ管理会社",
+          "kind": "company",
+          "name": "Nutanix",
           "role": "competitor",
           "label": {
-            "ja": "データの保存・管理・保護で競合",
-            "en": "Storage, management and protection"
+            "ja": "Unified Storageのファイル・ブロック保存。統合に向けた協業も公表",
+            "en": "Unified Storage file/block services; integration collaboration also announced"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Native cloud storage services",
-          "nameJa": "クラウド標準の保存サービス",
-          "role": "competitor",
-          "label": {
-            "ja": "クラウド上のデータ保存・管理で競合",
-            "en": "Native cloud storage and management"
-          },
-          "sourceIndexes": [
-            0
-          ]
+            2,
+            3,
+            4
+          ],
+          "ticker": "NTNX"
         },
         {
           "kind": "company",
-          "name": "Nutanix",
-          "ticker": "NTNX",
+          "name": "Dell Technologies",
           "role": "competitor",
           "label": {
-            "ja": "一部の企業向け基盤用途で競合",
-            "en": "Overlapping enterprise infrastructure"
+            "ja": "PowerStoreの企業向けストレージ。公式製品の比較",
+            "en": "PowerStore enterprise storage; editorial official-product comparison"
           },
           "sourceIndexes": [
-            1
-          ]
+            2,
+            5
+          ],
+          "ticker": "DELL"
+        },
+        {
+          "kind": "company",
+          "name": "Hewlett Packard Enterprise",
+          "role": "competitor",
+          "label": {
+            "ja": "Alletra Storage MP B10000のブロック・ファイル保存",
+            "en": "Alletra Storage MP B10000 block/file storage; editorial comparison"
+          },
+          "sourceIndexes": [
+            2,
+            6
+          ],
+          "ticker": "HPE"
+        },
+        {
+          "kind": "company",
+          "name": "IBM",
+          "role": "competitor",
+          "label": {
+            "ja": "FlashSystemの企業向けストレージ。公式製品の比較",
+            "en": "FlashSystem enterprise storage; editorial official-product comparison"
+          },
+          "sourceIndexes": [
+            2,
+            7
+          ],
+          "ticker": "IBM"
+        },
+        {
+          "kind": "company",
+          "name": "Amazon Web Services",
+          "role": "competitor",
+          "label": {
+            "ja": "EFSの共有ファイル保存。NetApp技術の連携サービスとは区別",
+            "en": "EFS shared file storage; distinct from NetApp-integrated offerings"
+          },
+          "sourceIndexes": [
+            2,
+            8
+          ],
+          "ticker": "AMZN"
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "competitor",
+          "label": {
+            "ja": "Azure Filesの共有ファイル保存。技術連携と競合は併存",
+            "en": "Azure Files shared storage; integration and competition coexist"
+          },
+          "sourceIndexes": [
+            2,
+            9
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "Google Cloud",
+          "role": "competitor",
+          "label": {
+            "ja": "Filestoreの共有ファイル保存。公式製品の比較",
+            "en": "Filestore shared file storage; editorial product comparison"
+          },
+          "sourceIndexes": [
+            2,
+            10
+          ],
+          "ticker": "GOOG"
         }
       ],
       "relationships": [
@@ -21237,7 +21365,7 @@
       "PAYX"
     ],
     "name": "Paychex",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, competition, risks and revenue",
@@ -21250,6 +21378,26 @@
       {
         "label": "Paychex FY2027 Q1 Form 10-Q",
         "url": "https://www.sec.gov/Archives/edgar/data/723531/000072353126000006/payx-20260831.htm"
+      },
+      {
+        "label": "Paychex · Payroll services",
+        "url": "https://www.paychex.com/payroll"
+      },
+      {
+        "label": "ADP · Payroll services",
+        "url": "https://www.adp.com/what-we-offer/payroll.aspx"
+      },
+      {
+        "label": "Paylocity · Payroll software",
+        "url": "https://www.paylocity.com/products/hr/payroll/"
+      },
+      {
+        "label": "TriNet FY2025 Form 10-K · PEO competition names ADP TotalSource and Paychex",
+        "url": "https://www.sec.gov/Archives/edgar/data/937098/000093709826000010/tnet-20251231.htm"
+      },
+      {
+        "label": "Insperity FY2025 Form 10-K · PEO competition names ADP and Paychex",
+        "url": "https://www.sec.gov/Archives/edgar/data/1000753/000100075326000011/nsp-20251231.htm"
       }
     ],
     "ja": {
@@ -21257,7 +21405,7 @@
       "revenue": "給与・人事の利用料、管理代行料、福利厚生や保険関連の収入、預かり資金の利息で稼ぐ。PEOでは雇用主と一部の雇用上の責任を分担する共同雇用の形で人事業務を支援する。",
       "strength": "ソフトだけでなく給与・労務の相談や実務を支える担当者も提供できる。給与から福利厚生、採用・人材管理へ取引を広げる製品と顧客基盤がある。",
       "risks": "顧客企業の倒産や雇用減少で利用が縮み、金利低下で利息収入が減る。給与の資金移動や個人情報の保護、保険費用、Paycorの統合と買収に伴う借入もリスク。",
-      "competition": "給与・人事ではADP、Paycom、Paylocityなどと競合する。共同雇用型の管理代行では他のPEO事業者とも競い、ソフトと人の支援をまとめた価格・品質が比較される。",
+      "competition": "給与・人事ソフトではADP、Paycom、Paylocity、共同雇用型のPEOではADP TotalSource、TriNet、Insperityが競合例。給与の例は公式製品の比較とPaycomなど相手側の開示、PEOの例はTriNet・Insperity側の実名開示に基づく。人事ソフトと共同雇用型の業務代行は提供範囲・責任が異なる。PaycorはPaychex傘下で独立した競合とは数えない。",
       "relationships": "雇用主の給与・人事を支援し、銀行が給与・税金の送金、保険会社が福利厚生を支える。Paycorの買収は2025年4月に完了済みで、独立した競合として数えない。"
     },
     "en": {
@@ -21265,7 +21413,7 @@
       "revenue": "Earns service and administration fees, benefits and insurance revenue, and client-fund interest. PEO services share certain employer responsibilities through co-employment.",
       "strength": "Combines software with practical payroll and HR advice, expanding customer relationships into benefits, recruiting and talent management.",
       "risks": "Customer failures and employment cuts reduce demand; lower rates reduce interest. Payment security, insurance costs, Paycor integration and acquisition debt add risk.",
-      "competition": "Competes with ADP, Paycom and Paylocity in payroll and HR, and other PEO providers in co-employment administration.",
+      "competition": "Payroll/HR examples are ADP, Paycom and Paylocity; PEO examples are ADP TotalSource, TriNet and Insperity. Payroll examples use official-product comparisons and counterpart disclosures; PEO examples use TriNet/Insperity named disclosures. HR software differs from co-employment outsourcing in coverage and responsibilities. Paycor belongs to Paychex and is not counted separately.",
       "relationships": "Serves employers; banks support remittances and insurers support benefits. Paycor was acquired in April 2025 and is not counted as an independent competitor."
     },
     "maps": {
@@ -21273,42 +21421,69 @@
         {
           "kind": "company",
           "name": "Automatic Data Processing",
-          "ticker": "ADP",
           "role": "competitor",
           "label": {
-            "ja": "給与・人事・共同雇用型代行で競合",
-            "en": "Payroll, HR and PEO administration"
+            "ja": "給与・人事管理。両社の公式給与サービスを比較",
+            "en": "Payroll/HR; editorial comparison of both official payroll services"
           },
           "sourceIndexes": [
-            0,
-            1
-          ]
+            3,
+            4
+          ],
+          "ticker": "ADP"
         },
         {
           "kind": "company",
           "name": "Paycom Software",
-          "ticker": "PAYC",
           "role": "competitor",
           "label": {
-            "ja": "給与・人事クラウドで競合",
-            "en": "Cloud payroll and HR"
+            "ja": "給与・人事クラウド。Paycom側の競合開示",
+            "en": "Cloud payroll/HR; Paycom-side competition disclosure"
           },
           "sourceIndexes": [
             1
-          ]
+          ],
+          "ticker": "PAYC"
         },
         {
-          "kind": "industry",
-          "name": "Other PEO providers",
-          "nameJa": "共同雇用型の人事代行会社",
+          "kind": "company",
+          "name": "Paylocity Holding",
           "role": "competitor",
           "label": {
-            "ja": "給与・福利厚生の管理代行で競合",
-            "en": "Co-employment payroll and benefits administration"
+            "ja": "給与ソフト。両社の公式給与サービスを比較",
+            "en": "Payroll software; editorial comparison of both official products"
           },
           "sourceIndexes": [
-            0
-          ]
+            3,
+            5
+          ],
+          "ticker": "PCTY"
+        },
+        {
+          "kind": "company",
+          "name": "TriNet Group",
+          "role": "competitor",
+          "label": {
+            "ja": "共同雇用型の給与・福利厚生管理。TriNet側の実名開示",
+            "en": "Co-employment payroll/benefits; TriNet-side named disclosure"
+          },
+          "sourceIndexes": [
+            6
+          ],
+          "ticker": "TNET"
+        },
+        {
+          "kind": "company",
+          "name": "Insperity",
+          "role": "competitor",
+          "label": {
+            "ja": "共同雇用型の人事・福利厚生支援。Insperity側の実名開示",
+            "en": "Co-employment HR/benefits; Insperity-side named disclosure"
+          },
+          "sourceIndexes": [
+            7
+          ],
+          "ticker": "NSP"
         }
       ],
       "relationships": [
@@ -21360,7 +21535,7 @@
       "ADP"
     ],
     "name": "Automatic Data Processing",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, competition, risks and revenue",
@@ -21369,6 +21544,30 @@
       {
         "label": "Paycom FY2025 Form 10-K · named payroll / HR competitors",
         "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm"
+      },
+      {
+        "label": "Paychex · Payroll services",
+        "url": "https://www.paychex.com/payroll"
+      },
+      {
+        "label": "ADP · Payroll services",
+        "url": "https://www.adp.com/what-we-offer/payroll.aspx"
+      },
+      {
+        "label": "TriNet FY2025 Form 10-K · PEO competition names ADP TotalSource and Paychex",
+        "url": "https://www.sec.gov/Archives/edgar/data/937098/000093709826000010/tnet-20251231.htm"
+      },
+      {
+        "label": "Insperity FY2025 Form 10-K · PEO competition names ADP and Paychex",
+        "url": "https://www.sec.gov/Archives/edgar/data/1000753/000100075326000011/nsp-20251231.htm"
+      },
+      {
+        "label": "Workday FY2026 Form 10-K · HCM competition names ADP and SAP",
+        "url": "https://www.sec.gov/Archives/edgar/data/1327811/000132781126000014/wday-20260131.htm"
+      },
+      {
+        "label": "Workday · Human capital management and payroll scope",
+        "url": "https://www.workday.com/en-us/products/human-capital-management.html"
       }
     ],
     "ja": {
@@ -21376,7 +21575,7 @@
       "revenue": "給与処理・人事ソフト・業務代行の料金、PEOの管理サービスと福利厚生関連の収入、顧客から一時的に預かる資金の利息で稼ぐ。顧客の給与や税金の元本をADPの売上と数えない。",
       "strength": "国や地域で異なる給与・税務ルールへの対応、蓄積した実務知識、幅広い顧客規模を支える体制。ソフトだけで完結しない給与の計算・送金・届出まで支援できる。",
       "risks": "顧客の雇用減少や金利変化が収益に響く。巨額の給与・納税資金を正確に送る必要があり、障害・不正・情報漏えいは大きな責任につながる。PEOには雇用・保険制度の変更リスクもある。",
-      "competition": "PaychexやPaycomなどの給与・人事サービスと競合し、大企業向けではクラウド人事・業務基盤の会社とも競う。PEOでは他の共同雇用型の人事代行会社が競合する。",
+      "competition": "給与・人事ではPaychex、Paycom、Workday、共同雇用型のPEOではPaychex、TriNet、Insperityが競合例。給与の例は公式製品の比較とPaycomなど相手側の開示、PEOの例はTriNet・Insperity側の実名開示に基づく。人事ソフトと共同雇用型の業務代行は提供範囲・責任が異なる。社内で人事・給与を処理する方法も代替手段になる。",
       "relationships": "雇用主の依頼で従業員や税務当局へ給与・税金を送る。ADP TotalSourceは共同雇用の形で福利厚生と人事管理を支援する。顧客資金を受け取る相手とソフトの購入者を区別する。"
     },
     "en": {
@@ -21384,7 +21583,7 @@
       "revenue": "Earns processing, software, outsourcing and PEO-related revenue plus client-fund interest. Customer payroll and tax principal is not ADP revenue.",
       "strength": "Combines regulatory expertise and operating scale with calculation, payments and filings, supporting payroll work that extends beyond software alone.",
       "risks": "Employment and rates affect earnings. Payment failures, fraud and breaches create substantial liability; PEO operations also face employment and insurance regulation risks.",
-      "competition": "Competes with Paychex and Paycom in payroll and HR, broader cloud business platforms for large employers, and other PEO administrators.",
+      "competition": "Payroll/HR examples are Paychex, Paycom and Workday; PEO examples are Paychex, TriNet and Insperity. Payroll examples use official-product comparisons and counterpart disclosures; PEO examples use TriNet/Insperity named disclosures. HR software differs from co-employment outsourcing in coverage and responsibilities. In-house payroll/HR remains another alternative.",
       "relationships": "Serves employers and remits their payroll and taxes. TotalSource supports benefits and HR through co-employment; payment recipients are distinct from purchasing clients."
     },
     "maps": {
@@ -21392,41 +21591,69 @@
         {
           "kind": "company",
           "name": "Paychex",
-          "ticker": "PAYX",
           "role": "competitor",
           "label": {
-            "ja": "給与・人事管理で競合",
-            "en": "Payroll and HR management"
+            "ja": "給与・人事管理。両社の公式給与サービスを比較",
+            "en": "Payroll/HR; editorial comparison of both official payroll services"
           },
           "sourceIndexes": [
-            1
-          ]
+            2,
+            3
+          ],
+          "ticker": "PAYX"
         },
         {
           "kind": "company",
           "name": "Paycom Software",
-          "ticker": "PAYC",
           "role": "competitor",
           "label": {
-            "ja": "給与・人事クラウドで競合",
-            "en": "Cloud payroll and HR"
+            "ja": "給与・人事クラウド。Paycom側の競合開示",
+            "en": "Cloud payroll/HR; Paycom-side competition disclosure"
           },
           "sourceIndexes": [
             1
-          ]
+          ],
+          "ticker": "PAYC"
         },
         {
-          "kind": "industry",
-          "name": "Other PEO providers",
-          "nameJa": "共同雇用型の人事代行会社",
+          "kind": "company",
+          "name": "TriNet Group",
           "role": "competitor",
           "label": {
-            "ja": "共同雇用型の管理代行で競合",
-            "en": "PEO administration"
+            "ja": "共同雇用型の給与・福利厚生管理。TriNet側の実名開示",
+            "en": "Co-employment payroll/benefits; TriNet-side named disclosure"
           },
           "sourceIndexes": [
-            0
-          ]
+            4
+          ],
+          "ticker": "TNET"
+        },
+        {
+          "kind": "company",
+          "name": "Insperity",
+          "role": "competitor",
+          "label": {
+            "ja": "共同雇用型の人事・福利厚生支援。Insperity側の実名開示",
+            "en": "Co-employment HR/benefits; Insperity-side named disclosure"
+          },
+          "sourceIndexes": [
+            5
+          ],
+          "ticker": "NSP"
+        },
+        {
+          "kind": "company",
+          "name": "Workday",
+          "role": "competitor",
+          "label": {
+            "ja": "人事・給与関連ソフト。Workday側の実名開示",
+            "en": "HCM/payroll-related software; Workday-side named disclosure"
+          },
+          "sourceIndexes": [
+            6,
+            7
+          ],
+          "ticker": "WDAY"
         }
       ],
       "relationships": [
@@ -22155,7 +22382,7 @@
       "BILL"
     ],
     "name": "BILL",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, revenue, competition and risks",
@@ -22164,6 +22391,22 @@
       {
         "label": "Latest reviewed quarterly results · 2026 disclosure",
         "url": "https://www.bill.com/press-release/bill-reports-fourth-quarter-and-fiscal-year-2026-financial-results"
+      },
+      {
+        "label": "Intuit · QuickBooks Bill Pay",
+        "url": "https://quickbooks.intuit.com/bill-pay/"
+      },
+      {
+        "label": "Ramp · Accounts payable automation and bill payments",
+        "url": "https://ramp.com/accounts-payable"
+      },
+      {
+        "label": "Tipalti · Accounts payable automation",
+        "url": "https://tipalti.com/accounts-payable-software/"
+      },
+      {
+        "label": "SAP Concur · Expense management",
+        "url": "https://www.concur.com/products/concur-expense"
       }
     ],
     "ja": {
@@ -22171,7 +22414,7 @@
       "revenue": "月額・年額の利用料と、送金・カード決済などの処理手数料で稼ぐ。顧客資金を預かる間の利息収入もあるが、送金する元本そのものを売上とは扱わない。",
       "strength": "請求書・承認・決済・会計記録がつながり、二重入力や支払い状況の確認を減らせる。会計事務所や銀行との販売関係、取引先も参加するネットワークが普及を支える。",
       "risks": "中小企業の支出が減ると決済手数料にも影響する。不正送金、カードの信用損失、金融規制、金利低下による利息収入の減少が課題。会計ソフトとの連携条件にも依存する。",
-      "competition": "紙・表計算による手作業に加え、経費・支払いの専用サービスや銀行の機能と競う。IntuitのQuickBooks内蔵の請求書決済は、連携先が競合にもなる例。",
+      "competition": "請求書の承認・支払いではIntuit QuickBooks Bill Pay、Ramp、Tipalti、従業員の経費管理ではSAP Concur Expenseが比較例。BILLの対象業務と各社の公式製品を比較した編集上の例で、全サービスや顧客規模が同じという意味ではない。QuickBooksとの会計連携は競合と併存する。紙や表計算による手作業、銀行の支払い機能も代替手段になる。",
       "relationships": "中小企業・会計事務所へサービスを提供し、銀行・カード発行会社・決済会社が資金移動を支える。QuickBooks、Oracle NetSuite、Microsoft Dynamicsなどとは会計データを同期する。"
     },
     "en": {
@@ -22179,7 +22422,7 @@
       "revenue": "Earns subscriptions, transaction and card-related fees, plus interest on customer funds. Payment principal is not revenue.",
       "strength": "Integrated approvals, payments and accounting reduce duplicate entry. Accountant, bank and supplier networks support adoption.",
       "risks": "SMB spending, fraud, credit losses, regulation, lower interest rates and accounting-integration dependence affect results.",
-      "competition": "Competes with manual processes, specialist spending tools and banks. Intuit’s native QuickBooks bill payment also competes.",
+      "competition": "Invoice-approval/payment examples are Intuit QuickBooks Bill Pay, Ramp and Tipalti; SAP Concur Expense is an employee-expense example. These editorial official-product comparisons match selected BILL workflows, without assuming identical coverage or customer size. QuickBooks accounting integration coexists with competition. Paper/spreadsheets and bank payment functions remain alternatives.",
       "relationships": "Serves SMBs and accountants; financial partners support payments. Syncs accounting data with QuickBooks, NetSuite and Dynamics."
     },
     "maps": {
@@ -22187,41 +22430,56 @@
         {
           "kind": "company",
           "name": "Intuit",
-          "ticker": "INTU",
           "role": "competitor",
           "label": {
-            "ja": "QuickBooks内蔵の請求書決済と競合",
-            "en": "Native QuickBooks bill payment"
+            "ja": "QuickBooks Bill Payの請求書決済。会計連携も併存",
+            "en": "QuickBooks Bill Pay invoice payments; accounting integration coexists"
           },
           "sourceIndexes": [
-            0
+            0,
+            2
+          ],
+          "ticker": "INTU"
+        },
+        {
+          "kind": "company",
+          "name": "Ramp",
+          "role": "competitor",
+          "label": {
+            "ja": "請求書の取込・承認・支払い。公式製品の比較",
+            "en": "Invoice capture, approval and payment; editorial product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            3
           ]
         },
         {
-          "kind": "industry",
-          "name": "Spend and payment software",
-          "nameJa": "経費・支払いソフト",
+          "kind": "company",
+          "name": "Tipalti",
           "role": "competitor",
           "label": {
-            "ja": "経費管理・請求書決済で競合",
-            "en": "Expense management and bill payments"
+            "ja": "買掛金・請求書・支払いの自動化。公式製品の比較",
+            "en": "Accounts payable/invoice/payment automation; editorial comparison"
           },
           "sourceIndexes": [
-            0
+            0,
+            4
           ]
         },
         {
-          "kind": "industry",
-          "name": "Manual financial workflows",
-          "nameJa": "手作業の経理",
+          "kind": "company",
+          "name": "SAP",
           "role": "competitor",
           "label": {
-            "ja": "紙・表計算による処理を置き換える",
-            "en": "Replaces paper and spreadsheet workflows"
+            "ja": "Concur Expenseの従業員経費管理。BILL全体と同一視しない",
+            "en": "Concur Expense employee expenses; not equivalent to all of BILL"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            5
+          ],
+          "ticker": "SAP"
         }
       ],
       "relationships": [
@@ -24462,7 +24720,7 @@
       "APPN"
     ],
     "name": "Appian",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -24471,6 +24729,26 @@
       {
         "label": "Appian · process-automation rivalry",
         "url": "https://appian.com/pega-verdict"
+      },
+      {
+        "label": "Pega · Platform process and case management",
+        "url": "https://www.pega.com/products/platform"
+      },
+      {
+        "label": "Microsoft · Power Apps application building",
+        "url": "https://www.microsoft.com/en-us/power-platform/products/power-apps"
+      },
+      {
+        "label": "Microsoft · Power Automate workflow automation",
+        "url": "https://www.microsoft.com/en-us/power-platform/products/power-automate"
+      },
+      {
+        "label": "ServiceNow · App Engine Studio low-code workflow applications",
+        "url": "https://www.servicenow.com/products/app-engine-studio.html"
+      },
+      {
+        "label": "UiPath · Enterprise robotic process automation",
+        "url": "https://www.uipath.com/platform/agentic-automation/rpa"
       }
     ],
     "ja": {
@@ -24478,7 +24756,7 @@
       "revenue": "主な収益はソフトの継続利用料。利用者数、個別アプリの契約や処理の利用量などで料金を決める。顧客がアプリを構築・導入する際の支援サービスも売上になる。",
       "strength": "別々のシステムにある情報を大規模な移し替えなしで参照し、承認ルールと自動処理を一つにつなげられる。導入後に対象業務を増やすほど、社内の仕事に組み込まれていく。",
       "risks": "大企業や行政への販売は審査・導入に時間がかかり、予算変更でも遅れる。AIの判断を業務に使うには誤りを抑える管理が必要で、クラウド運営費や導入支援の負担も利益を左右する。",
-      "competition": "Pegasystemsとは複雑な業務の自動化で競う。ほかにアプリ開発基盤や個別の自動化ツール、顧客の社内開発が代替手段となる。",
+      "competition": "複雑な業務・案件の管理ではPega Platform、アプリ構築ではMicrosoft Power AppsとServiceNow App Engine Studio、定型作業の自動化ではPower AutomateやUiPath RPAが比較例。Appianの開示する用途と各社の公式製品を比較した編集上の例で、一部の処理を自動化する製品と業務全体の基盤は同一ではない。顧客の社内開発も代替手段になる。",
       "relationships": "AWSがクラウドの稼働基盤を提供する。Accentureなどの導入会社は顧客紹介やアプリ構築を支援し、企業・行政機関が業務用アプリを利用する。"
     },
     "en": {
@@ -24486,7 +24764,7 @@
       "revenue": "Earns mainly recurring software fees, priced by users, individual application agreements or consumption. Professional services help customers build and deploy applications.",
       "strength": "Connects information across existing systems without a large data migration, combining business rules with automated tasks. Adoption becomes more embedded as customers extend it to additional workflows.",
       "risks": "Enterprise and government sales involve lengthy evaluations and deployments, with budget changes causing delays. AI errors require controls, while hosting and implementation costs affect profitability.",
-      "competition": "Competes with Pegasystems in complex process automation, alongside development platforms, individual automation tools and customers’ internal software teams.",
+      "competition": "Examples are Pega Platform for process/case management, Microsoft Power Apps and ServiceNow App Engine Studio for application building, and Power Automate/UiPath RPA for repetitive-task automation. These editorial comparisons match official products to Appian’s disclosed uses. A task automation tool is not identical to an end-to-end process platform. Internal development remains an alternative.",
       "relationships": "AWS supplies cloud hosting. Implementation firms such as Accenture refer customers and help build applications used by businesses and public agencies."
     },
     "maps": {
@@ -24496,39 +24774,57 @@
           "name": "Pegasystems",
           "role": "competitor",
           "label": {
-            "ja": "複雑な業務の自動化で競合",
-            "en": "Complex process automation"
+            "ja": "Pega Platformの案件管理・業務自動化。公式製品の比較",
+            "en": "Pega Platform case/process management; editorial product comparison"
           },
           "sourceIndexes": [
-            1
+            0,
+            2
           ],
           "ticker": "PEGA"
         },
         {
-          "kind": "industry",
-          "name": "Application and automation platforms",
-          "nameJa": "アプリ開発・自動化基盤",
+          "kind": "company",
+          "name": "Microsoft",
           "role": "competitor",
           "label": {
-            "ja": "アプリ構築や個別の自動処理で競合",
-            "en": "Application building and task automation"
+            "ja": "Power Apps・Power Automateのアプリ構築・処理自動化",
+            "en": "Power Apps/Power Automate app building and task automation"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            3,
+            4
+          ],
+          "ticker": "MSFT"
         },
         {
-          "kind": "industry",
-          "name": "In-house development",
-          "nameJa": "顧客の社内開発",
+          "kind": "company",
+          "name": "ServiceNow",
           "role": "competitor",
           "label": {
-            "ja": "独自システムの開発が代替手段",
-            "en": "Internally developed workflow systems"
+            "ja": "App Engine Studioの業務アプリ構築。公式製品の比較",
+            "en": "App Engine Studio workflow applications; editorial comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            5
+          ],
+          "ticker": "NOW"
+        },
+        {
+          "kind": "company",
+          "name": "UiPath",
+          "role": "competitor",
+          "label": {
+            "ja": "RPAによる定型作業の自動化。公式製品の比較",
+            "en": "RPA repetitive-task automation; editorial product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            6
+          ],
+          "ticker": "PATH"
         }
       ],
       "relationships": [
@@ -24729,7 +25025,7 @@
       "NCNO"
     ],
     "name": "nCino",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -24738,6 +25034,18 @@
       {
         "label": "Q2 annual filing · named lending competitors",
         "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm"
+      },
+      {
+        "label": "FIS · Commercial Loan Origination credit lifecycle",
+        "url": "https://www.fisglobal.com/products/fis-commercial-lending-suite/fis-commercial-loan-origination"
+      },
+      {
+        "label": "Abrigo · Lending platform loan origination and credit risk",
+        "url": "https://www.abrigo.com/software/lending-and-credit-risk/"
+      },
+      {
+        "label": "MeridianLink · Opening digital deposit-account onboarding",
+        "url": "https://www.meridianlink.com/products/digital-account-opening/"
       }
     ],
     "ja": {
@@ -24745,7 +25053,7 @@
       "revenue": "金融機関から受け取る継続利用料が中心で、導入支援でも稼ぐ。利用者の席数を基にした課金から、対象事業の資産規模に連動する料金へ移行している。融資金利を受け取る銀行ではない。",
       "strength": "金融機関固有の書類・審査・規制対応を共通の業務基盤にまとめている。蓄積したデータやAIを使う機能と導入会社の支援を組み合わせ、複数部門へ展開できる。",
       "risks": "銀行側の審査とシステム接続が長引くと導入も遅れる。Salesforceへの支払いと基盤依存、新料金への移行、買収製品の統合が収益性に影響する。",
-      "competition": "Q2とは融資業務や取引条件の設定を支援する分野で競う。特定の銀行業務に絞ったソフトやAI企業、金融機関の内製システムも代替となる。",
+      "competition": "Q2の融資・取引条件設定、FIS Commercial Loan Origination、Abrigo Lending Platform、MeridianLink Openingの口座開設が競合例。Q2はQ2側の年次開示、他はnCinoの対象業務と公式製品を照合した編集上の比較。商業融資・消費者融資・口座開設は用途が異なり、銀行基幹システムの全体と同一視しない。金融機関の内製も代替手段になる。",
       "relationships": "Salesforceが主要機能の基盤を提供し、nCinoは利用料を支払う。AWSはデータ・AI向け基盤を担い、Accentureなどが導入を支援する。ソフトの利用者は銀行や信用組合など。"
     },
     "en": {
@@ -24753,7 +25061,7 @@
       "revenue": "Recurring financial-institution subscriptions dominate, with implementation services alongside them. Pricing is shifting from seats toward assets in supported business lines. It does not earn lending interest as a bank.",
       "strength": "Combines banking-specific documentation, workflows and regulatory needs with data and AI capabilities. Implementation partners help extend the platform across business lines.",
       "risks": "Bank evaluations and integrations can delay deployments. Salesforce dependency and fees, pricing changes, acquisition integration can affect profitability and retention.",
-      "competition": "Competes with Q2 in lending and relationship-pricing software, as well as specialist banking tools, AI-focused entrants and internally developed systems.",
+      "competition": "Examples are Q2 lending/relationship pricing, FIS Commercial Loan Origination, Abrigo Lending Platform and MeridianLink Opening deposit onboarding. Q2 names nCino; the others are editorial official-product comparisons with nCino’s scope. Commercial lending, consumer lending and deposit opening differ and do not equal an entire banking core. Internal bank systems remain alternatives.",
       "relationships": "Salesforce supplies underlying capabilities for which nCino pays subscription fees. AWS supports data and AI infrastructure; firms such as Accenture implement the software for financial institutions."
     },
     "maps": {
@@ -24763,8 +25071,8 @@
           "name": "Q2 Holdings",
           "role": "competitor",
           "label": {
-            "ja": "融資・取引条件の設定支援で競合",
-            "en": "Lending and relationship-pricing software"
+            "ja": "融資・取引条件の設定支援。Q2側の実名開示",
+            "en": "Lending/relationship pricing; Q2-side named disclosure"
           },
           "sourceIndexes": [
             1
@@ -24772,29 +25080,43 @@
           "ticker": "QTWO"
         },
         {
-          "kind": "industry",
-          "name": "Specialist banking software",
-          "nameJa": "銀行業務の専用ソフト",
+          "kind": "company",
+          "name": "Fidelity National Information Services",
           "role": "competitor",
           "label": {
-            "ja": "口座開設・審査などの個別業務で競合",
-            "en": "Account opening and underwriting workflows"
+            "ja": "Commercial Loan Originationの商業融資手続き。公式製品の比較",
+            "en": "Commercial Loan Origination workflows; editorial product comparison"
           },
           "sourceIndexes": [
-            0
+            0,
+            2
+          ],
+          "ticker": "FIS"
+        },
+        {
+          "kind": "company",
+          "name": "Abrigo",
+          "role": "competitor",
+          "label": {
+            "ja": "Lending Platformの融資申込・審査管理。公式製品の比較",
+            "en": "Lending Platform origination/credit workflows; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            3
           ]
         },
         {
-          "kind": "industry",
-          "name": "Internal banking systems",
-          "nameJa": "金融機関の内製システム",
+          "kind": "company",
+          "name": "MeridianLink",
           "role": "competitor",
           "label": {
-            "ja": "独自開発した業務システムが代替",
-            "en": "Internally developed banking workflows"
+            "ja": "Openingの預金口座開設。融資基幹全体とは区別",
+            "en": "Opening deposit-account onboarding; distinct from a whole lending core"
           },
           "sourceIndexes": [
-            0
+            0,
+            4
           ]
         }
       ],
@@ -24999,7 +25321,7 @@
       "ALKT"
     ],
     "name": "Alkami Technology",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -25008,6 +25330,18 @@
       {
         "label": "Q2 annual filing · digital banking competitors",
         "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm"
+      },
+      {
+        "label": "Fiserv · Experience Digital banking journeys",
+        "url": "https://www.fiserv.com/en/solutions/digital-banking.html"
+      },
+      {
+        "label": "Jack Henry · Digital banking platform",
+        "url": "https://www.jackhenry.com/what-we-offer/digital-banking"
+      },
+      {
+        "label": "MeridianLink · Opening digital deposit-account onboarding",
+        "url": "https://www.meridianlink.com/products/digital-account-opening/"
       }
     ],
     "ja": {
@@ -25015,7 +25349,7 @@
       "revenue": "長期契約のクラウド利用料が中心で、登録利用者数と契約する機能によって料金が増減する。最低利用額を設ける契約もあり、既存顧客の利用者増加と追加機能の採用が成長につながる。",
       "strength": "共通のクラウド基盤を使い、多くの顧客へ改善を届けられる。口座開設、日常の銀行操作、データ分析をつなぎ、外部の金融サービスも組み合わせて地域銀行の営業・接客を支える。",
       "risks": "顧客の既存システムとの接続や必要機能の調整に時間がかかり、稼働開始が遅れると売上計上も遅れる。銀行合併による解約とAWSへの依存、買収したMANTLの統合も注意点。",
-      "competition": "Q2とはデジタル銀行サービスで競う。銀行の基幹処理会社が提供するネット銀行機能や、口座開設などに特化したソフト、金融機関の内製システムも競合する。",
+      "competition": "デジタル銀行の画面・取引機能ではQ2、Fiserv Experience Digital、Jack Henryのデジタル銀行基盤、口座開設ではMeridianLink Openingが比較例。Q2はQ2側の実名開示、他はAlkamiの分野と公式製品を照合した編集上の比較。預金残高を管理する基幹処理そのものと、利用者向けの銀行画面は区別する。金融機関の内製も代替手段になる。",
       "relationships": "AWSがクラウド稼働基盤を提供し、地域銀行や信用組合が自社の利用者向けに導入する。外部の基幹処理・決済サービスと接続する。MANTLは買収済みの口座開設事業で、独立した取引先とは扱わない。"
     },
     "en": {
@@ -25023,7 +25357,7 @@
       "revenue": "Earns mainly long-term SaaS fees based on registered users and licensed products, often with minimum commitments. User growth and additional product adoption expand existing contracts.",
       "strength": "A shared cloud architecture distributes improvements across clients. Connects account opening, banking and analytics with external financial services to support customer acquisition and service.",
       "risks": "Complex integrations can delay launches and revenue recognition. Bank-merger churn, AWS dependency and integration of acquired MANTL operations are additional risks.",
-      "competition": "Competes with Q2 in digital banking, core-processing vendors’ online products, specialist account-opening tools and institutions’ internal systems.",
+      "competition": "Digital-banking examples are Q2, Fiserv Experience Digital and Jack Henry’s digital-banking platform; MeridianLink Opening covers deposit onboarding. Q2 names Alkami; other examples are editorial official-product comparisons with Alkami’s scope. Account-holder experiences differ from the underlying core ledger. Institutions’ internal systems remain alternatives.",
       "relationships": "AWS supplies hosting; regional banks and credit unions deploy the platform for their account holders. External processing and payment systems connect to it. MANTL is an acquired business, not an independent counterparty."
     },
     "maps": {
@@ -25033,8 +25367,8 @@
           "name": "Q2 Holdings",
           "role": "competitor",
           "label": {
-            "ja": "デジタル銀行サービスで競合",
-            "en": "Digital banking software"
+            "ja": "デジタル銀行ソフト。Q2側の実名開示",
+            "en": "Digital banking software; Q2-side named disclosure"
           },
           "sourceIndexes": [
             1
@@ -25042,29 +25376,44 @@
           "ticker": "QTWO"
         },
         {
-          "kind": "industry",
-          "name": "Core-processing vendors",
-          "nameJa": "銀行基幹処理会社",
+          "kind": "company",
+          "name": "Fiserv",
           "role": "competitor",
           "label": {
-            "ja": "基幹システムに付随する銀行画面で競合",
-            "en": "Digital banking bundled with core processing"
+            "ja": "Experience Digitalのネット・スマホ銀行。公式製品の比較",
+            "en": "Experience Digital online/mobile banking; editorial comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "FI"
         },
         {
-          "kind": "industry",
-          "name": "Specialist financial software",
-          "nameJa": "金融業務の専用ソフト",
+          "kind": "company",
+          "name": "Jack Henry & Associates",
           "role": "competitor",
           "label": {
-            "ja": "口座開設などの個別機能で競合",
-            "en": "Account-opening and other point solutions"
+            "ja": "デジタル銀行基盤。基幹台帳全体とは区別",
+            "en": "Digital banking platform; distinct from the entire core ledger"
           },
           "sourceIndexes": [
-            0
+            0,
+            3
+          ],
+          "ticker": "JKHY"
+        },
+        {
+          "kind": "company",
+          "name": "MeridianLink",
+          "role": "competitor",
+          "label": {
+            "ja": "Openingの預金口座開設。公式製品の比較",
+            "en": "Opening deposit-account onboarding; editorial product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            4
           ]
         }
       ],
@@ -25244,7 +25593,7 @@
       "RPD"
     ],
     "name": "Rapid7",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -25257,6 +25606,18 @@
       {
         "label": "Qualys annual filing · named competitors",
         "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784326000008/qlys-20251231.htm"
+      },
+      {
+        "label": "Cisco Splunk · Enterprise Security SIEM",
+        "url": "https://www.splunk.com/en_us/products/enterprise-security.html"
+      },
+      {
+        "label": "Microsoft · Sentinel SIEM",
+        "url": "https://learn.microsoft.com/en-us/azure/sentinel/overview"
+      },
+      {
+        "label": "CrowdStrike · Falcon Complete managed detection and response",
+        "url": "https://www.crowdstrike.com/en-us/services/falcon-complete-mdr/"
       }
     ],
     "ja": {
@@ -25264,7 +25625,7 @@
       "revenue": "クラウドソフトと運用を代行するサービスの継続契約が中心。顧客の環境で動かす期間ライセンスや保守、導入・調査支援もあり、製品と人によるサービスを組み合わせて稼ぐ。",
       "strength": "攻撃される前の弱点と実際に起きている不審な動きをまとめて見られる。専門家が顧客の代わりに監視・対応するため、自社だけでは人手が足りない組織にも提供できる。",
       "risks": "監視の見落としや対応の遅れは顧客の被害と信用低下につながる。専門人材の確保と運営費が必要で、顧客の更新減少や大手への製品集約、AWSなど基盤側の障害も影響する。",
-      "competition": "Tenable、Qualysとはシステムの弱点管理で競う。攻撃の検知・対応では監視代行会社やログ分析基盤、クラウド保護などの事業者とも競合する。",
+      "competition": "弱点管理ではTenableとQualys、ログから脅威を検知するSIEMではCisco傘下Splunk Enterprise SecurityとMicrosoft Sentinel、監視・対応代行ではCrowdStrike Falcon Completeが比較例。Tenable・Qualysは相手側の実名開示、後者はRapid7の対象分野と公式製品を比較した編集上の例。Microsoftなどとの技術連携と競合は併存する。",
       "relationships": "AWSが計算・保存の基盤を提供する。MicrosoftやGoogle、Palo Alto Networksなどとは技術連携もあり、競合する領域とは区別する。企業のセキュリティ担当者や運用代行会社が製品を利用する。"
     },
     "en": {
@@ -25272,7 +25633,7 @@
       "revenue": "Earns recurring cloud-software and managed-service fees, alongside term licenses, support and professional services. Its model combines software with human expertise.",
       "strength": "Connects pre-attack weaknesses with suspicious activity, while specialists monitor and respond for customers that lack sufficient internal security staff.",
       "risks": "Missed threats and slow responses can harm customers and trust. Staffing costs, weaker renewals, security-suite consolidation and infrastructure outages affect performance.",
-      "competition": "Competes with Tenable and Qualys in vulnerability management, and with managed-response, log-analysis and cloud-security providers in other areas.",
+      "competition": "Vulnerability examples are Tenable and Qualys; SIEM examples are Cisco-owned Splunk Enterprise Security and Microsoft Sentinel; managed detection/response includes CrowdStrike Falcon Complete. Tenable/Qualys name Rapid7; the latter examples are editorial official-product comparisons with Rapid7’s fields. Technology integrations, including Microsoft, can coexist with competition.",
       "relationships": "AWS supplies computing and storage. Technology integrations include Microsoft, Google and Palo Alto Networks, distinct from competitive overlap. Security teams and managed-service providers use its products."
     },
     "maps": {
@@ -25282,8 +25643,8 @@
           "name": "Tenable",
           "role": "competitor",
           "label": {
-            "ja": "システムの弱点管理で競合",
-            "en": "Vulnerability management"
+            "ja": "脆弱性・弱点の管理。Tenable側の実名開示",
+            "en": "Vulnerability management; Tenable-side named disclosure"
           },
           "sourceIndexes": [
             1
@@ -25295,8 +25656,8 @@
           "name": "Qualys",
           "role": "competitor",
           "label": {
-            "ja": "システムの弱点管理で競合",
-            "en": "Vulnerability management"
+            "ja": "脆弱性・弱点の管理。Qualys側の実名開示",
+            "en": "Vulnerability management; Qualys-side named disclosure"
           },
           "sourceIndexes": [
             2
@@ -25304,17 +25665,46 @@
           "ticker": "QLYS"
         },
         {
-          "kind": "industry",
-          "name": "Detection and response providers",
-          "nameJa": "攻撃検知・対応サービス会社",
+          "kind": "company",
+          "name": "Cisco Systems / Splunk",
           "role": "competitor",
           "label": {
-            "ja": "ログ分析や監視・対応代行で競合",
-            "en": "Log analysis and managed detection and response"
+            "ja": "Splunk Enterprise SecurityのSIEM。Cisco傘下の製品比較",
+            "en": "Splunk Enterprise Security SIEM; Cisco-owned product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            3
+          ],
+          "ticker": "CSCO"
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "competitor",
+          "label": {
+            "ja": "Sentinelのログ分析・脅威検知。公式製品の比較",
+            "en": "Sentinel log analytics/threat detection; editorial product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            4
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "CrowdStrike",
+          "role": "competitor",
+          "label": {
+            "ja": "Falcon Completeの監視・対応代行。公式製品の比較",
+            "en": "Falcon Complete managed detection/response; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            5
+          ],
+          "ticker": "CRWD"
         }
       ],
       "relationships": [
@@ -25942,7 +26332,7 @@
       "SAP"
     ],
     "name": "SAP",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -25959,6 +26349,26 @@
       {
         "label": "May 11, 2026 · RISE with SAP on Azure",
         "url": "https://news.sap.com/2026/05/expanding-rise-with-sap-microsoft-azure-elevating-customer-success/"
+      },
+      {
+        "label": "SAP · Cloud ERP business operations",
+        "url": "https://www.sap.com/products/erp.html?dfa=1&gad=1"
+      },
+      {
+        "label": "Oracle · Fusion Cloud enterprise resource planning",
+        "url": "https://www.oracle.com/erp/"
+      },
+      {
+        "label": "Manhattan Associates FY2025 Form 10-K · Competition names SAP",
+        "url": "https://www.sec.gov/Archives/edgar/data/1056696/000119312526037138/manh-20251231.htm"
+      },
+      {
+        "label": "Manhattan Associates · Warehouse management",
+        "url": "https://www.manh.com/solutions/supply-chain-management-software/warehouse-management"
+      },
+      {
+        "label": "SAP · Extended Warehouse Management features",
+        "url": "https://www.sap.com/products/scm/extended-warehouse-management/features.html"
       }
     ],
     "ja": {
@@ -25966,7 +26376,7 @@
       "revenue": "クラウドソフトの継続利用料が成長の中心。顧客の設備で動く従来型ソフトのライセンスと保守、導入支援の収入もある。既存顧客のクラウド移行と利用業務の拡大が売上を伸ばす。",
       "strength": "各国の会計や業種別の複雑な業務を扱い、基幹システムとして長く使われる。社内データと実際の取引手順がつながるため、AIを日々の業務へ組み込みやすい。導入を支える提携会社も多い。",
       "risks": "基幹システムの入れ替えは大きな工事となり、顧客がクラウド移行を延期することがある。移行で従来の保守収入が減る一方、クラウド運営費やAI投資は増える。障害・情報漏洩の影響も広い。",
-      "competition": "Oracleとは企業全体の業務を支えるソフトで、Workdayとは人事や財務管理で競う。特定業種の専用ソフトも競合となり、既存システムを使い続ける選択にも向き合う。",
+      "competition": "Oracle Fusion Cloud ERPとは基幹業務、Workdayとは人事・財務、Manhattan Active Warehouse ManagementとはSAP EWMの倉庫管理分野で競う。WorkdayとManhattanは相手側の年次報告がSAPを実名で挙げ、製品範囲も公式情報で照合した。倉庫業務の専用ソフトと企業全体の業務基盤は同一ではなく、既存システムを使い続ける方法も代替手段になる。",
       "relationships": "MicrosoftとはAzureへの移行・稼働支援で連携し、Accentureは企業への導入を支える。Google Cloudとはデータ連携を進め、企業や公共機関がSAPを日常業務の基盤として利用する。"
     },
     "en": {
@@ -25974,7 +26384,7 @@
       "revenue": "Cloud subscriptions drive growth, alongside traditional software licenses, maintenance and services. Customer migration and adoption across more business functions expand revenue.",
       "strength": "Handles complex industry workflows and local requirements as a deeply embedded system of record. Connected business data and transactions support practical AI, reinforced by a broad implementation ecosystem.",
       "risks": "Core-system migrations are complex and may be postponed. Moving to subscriptions can reduce legacy maintenance while hosting and AI spending rise; outages or breaches can disrupt critical operations.",
-      "competition": "Competes with Oracle in enterprise applications and Workday in HR and financial management, as well as specialist software and customers’ decisions to retain existing systems.",
+      "competition": "Examples are Oracle Fusion Cloud ERP in enterprise operations, Workday in HR/finance and Manhattan Active Warehouse Management against SAP EWM in warehouse management. Workday and Manhattan name SAP in annual filings; official products support the scoped examples. A warehouse specialist is not the same as an entire ERP suite. Retaining existing systems remains an alternative.",
       "relationships": "Works with Microsoft on Azure migration and operations, Accenture on implementation, and Google Cloud on data interoperability. Businesses and public organizations use SAP to run operations."
     },
     "maps": {
@@ -25984,11 +26394,12 @@
           "name": "Oracle",
           "role": "competitor",
           "label": {
-            "ja": "企業の基幹業務ソフトで競合",
-            "en": "Enterprise business applications"
+            "ja": "Fusion Cloud ERPの基幹業務。公式製品の対象分野を比較",
+            "en": "Fusion Cloud ERP enterprise operations; official product-scope comparison"
           },
           "sourceIndexes": [
-            1
+            4,
+            5
           ],
           "ticker": "ORCL"
         },
@@ -25997,8 +26408,8 @@
           "name": "Workday",
           "role": "competitor",
           "label": {
-            "ja": "人事・財務管理で競合",
-            "en": "HR and financial management"
+            "ja": "人事・財務管理。Workday側の実名開示",
+            "en": "HR/financial management; Workday-side named disclosure"
           },
           "sourceIndexes": [
             2
@@ -26006,17 +26417,19 @@
           "ticker": "WDAY"
         },
         {
-          "kind": "industry",
-          "name": "Specialist enterprise software",
-          "nameJa": "業種別・業務別ソフト",
+          "kind": "company",
+          "name": "Manhattan Associates",
           "role": "competitor",
           "label": {
-            "ja": "特定業務や業種に絞った製品で競合",
-            "en": "Industry-specific and point solutions"
+            "ja": "Active Warehouse ManagementとSAP EWMの倉庫管理。Manhattan側がSAPを明記",
+            "en": "Warehouse management versus SAP EWM; Manhattan explicitly names SAP"
           },
           "sourceIndexes": [
-            0
-          ]
+            6,
+            7,
+            8
+          ],
+          "ticker": "MANH"
         }
       ],
       "relationships": [
