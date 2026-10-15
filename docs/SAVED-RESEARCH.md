@@ -106,3 +106,6 @@
 - Explicit saved-card selection waits for committed layout and places the article top below the measured sticky header with a 12px gap, on desktop and mobile. This keeps Back to collection fully visible. Initial visits still do not open an article; collection return positioning is retained.
 - Annotate and Save PDF have small pen/notebook outline icons to the right of their labels. Accessible names and annotation behavior are unchanged.
 - Article company links use the existing monitored-company name followed by the ticker, e.g. Micron（MU） and NVIDIA（NVDA）, without the duplicate ticker/arrow label. When the company name and ticker are identical (ASML), show the name only. Article body/annotation anchor structure is preserved.
+
+## 2026-10-15: quieter collection return
+- Back to collection uses a small muted, frameless label with a left triangle. Mobile touch height and keyboard focus indication remain, as do navigation and scroll restoration.
