@@ -72,6 +72,37 @@ const catalog = buildNetwork();
 // Label the selected product context without reclassifying nodes or moving cards.
 // The reviewed NVIDIA graph and every other issuer keep their existing labels.
 function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (root === "SNOW") return {
+    6: { ja: "データ分析・クラウド基盤", en: "Data analytics & cloud platforms" },
+  };
+  if (root === "IBM") return {
+    6: { ja: "企業向けソフトウェア・クラウド", en: "Enterprise software & cloud" },
+    7: { ja: "ITコンサルティング・業務サービス", en: "IT consulting & business services" },
+  };
+  if (root === "OKTA") return {
+    6: { ja: "ID管理・認証基盤", en: "Identity management & authentication" },
+  };
+  if (root === "S") return {
+    6: { ja: "セキュリティ基盤", en: "Security platforms" },
+  };
+  if (root === "CHKP") return {
+    6: { ja: "セキュリティ基盤", en: "Security platforms" },
+  };
+  if (root === "DOCU") return {
+    7: { ja: "電子署名・契約管理", en: "E-signatures & contract management" },
+  };
+  if (root === "ABNB") return {
+    7: { ja: "宿泊予約・旅行検索", en: "Accommodation booking & travel search" },
+  };
+  if (root === "SPOT") return {
+    7: { ja: "音楽・コンテンツ・広告", en: "Music, content & advertising" },
+  };
+  if (root === "ASAN") return {
+    7: { ja: "業務管理・コラボレーション", en: "Work management & collaboration" },
+  };
+  if (root === "DIS") return {
+    7: { ja: "映像・スポーツ・テーマパーク", en: "Video, sports & theme parks" },
+  };
   if (["WDC", "STX"].includes(root)) return {
     2: { ja: "ストレージ製品", en: "Storage products" },
   };
@@ -114,7 +145,405 @@ function sectorLayerLabels(root: string): Record<number, NetworkText> | undefine
 
 // A diversified peer's product in this comparison can differ from its category
 // in the fixed semiconductor context (for example Canon printers versus optics).
+const productContexts: Record<string, Record<string, { layer: number; businessLabel: NetworkText }>> = {
+  "SNOW": {
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Redshift・クラウド基盤",
+        "en": "Redshift & cloud infrastructure"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Fabric・クラウド基盤",
+        "en": "Fabric & cloud infrastructure"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "BigQuery・クラウド基盤",
+        "en": "BigQuery & cloud infrastructure"
+      }
+    },
+    "Databricks": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "SQLデータ分析",
+        "en": "SQL data analytics"
+      }
+    },
+    "PLTR": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "データ統合・業務分析",
+        "en": "Data integration & analytics"
+      }
+    }
+  },
+  "IBM": {
+    "AMZN": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "クラウド・企業向けソフト",
+        "en": "Cloud & enterprise software"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "クラウド・企業向けソフト",
+        "en": "Cloud & enterprise software"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "クラウド・企業向けソフト",
+        "en": "Cloud & enterprise software"
+      }
+    },
+    "ORCL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "データベース・企業向けソフト",
+        "en": "Databases & enterprise software"
+      }
+    },
+    "DELL": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "企業向けサーバー",
+        "en": "Enterprise servers"
+      }
+    },
+    "HPE": {
+      "layer": 5,
+      "businessLabel": {
+        "ja": "企業向けサーバー",
+        "en": "Enterprise servers"
+      }
+    },
+    "ACN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ITコンサルティング",
+        "en": "IT consulting"
+      }
+    },
+    "Capgemini": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ITコンサルティング",
+        "en": "IT consulting"
+      }
+    }
+  },
+  "OKTA": {
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Entra ID・従業員認証",
+        "en": "Entra ID workforce authentication"
+      }
+    },
+    "Ping Identity": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "従業員・顧客向け認証",
+        "en": "Workforce/customer authentication"
+      }
+    },
+    "SAIL": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "アクセス権限ガバナンス",
+        "en": "Access governance"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "アプリ利用者の認証",
+        "en": "Application-user authentication"
+      }
+    }
+  },
+  "S": {
+    "CRWD": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "端末の脅威防御",
+        "en": "Endpoint threat protection"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "端末の脅威防御",
+        "en": "Endpoint threat protection"
+      }
+    },
+    "AVGO": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Carbon Black・Symantec",
+        "en": "Carbon Black & Symantec"
+      }
+    },
+    "Trellix": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "端末の脅威防御",
+        "en": "Endpoint threat protection"
+      }
+    },
+    "PANW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "セキュリティ基盤",
+        "en": "Security platforms"
+      }
+    },
+    "CSCO": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Splunk・脅威検知",
+        "en": "Splunk threat detection"
+      }
+    },
+    "ESTC": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ログ分析・脅威検知",
+        "en": "Log analytics & threat detection"
+      }
+    },
+    "GOOG": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Wiz・クラウド防御",
+        "en": "Wiz cloud protection"
+      }
+    }
+  },
+  "CHKP": {
+    "PANW": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ネットワーク防御",
+        "en": "Network security"
+      }
+    },
+    "FTNT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ファイアウォール",
+        "en": "Firewalls"
+      }
+    },
+    "CSCO": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "ネットワーク防御",
+        "en": "Network security"
+      }
+    },
+    "CRWD": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Falcon Cloud Security",
+        "en": "Falcon Cloud Security"
+      }
+    },
+    "MSFT": {
+      "layer": 6,
+      "businessLabel": {
+        "ja": "Defender for Cloud",
+        "en": "Defender for Cloud"
+      }
+    }
+  },
+  "DOCU": {
+    "ADBE": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Acrobat Sign・電子署名",
+        "en": "Acrobat Sign e-signatures"
+      }
+    },
+    "DBX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Dropbox Sign・電子署名",
+        "en": "Dropbox Sign e-signatures"
+      }
+    },
+    "Icertis": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "契約ライフサイクル管理",
+        "en": "Contract lifecycle management"
+      }
+    },
+    "Ironclad": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "契約ライフサイクル管理",
+        "en": "Contract lifecycle management"
+      }
+    },
+    "MSFT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Microsoft 365内の署名",
+        "en": "Signing within Microsoft 365"
+      }
+    }
+  },
+  "ABNB": {
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "旅行・宿泊検索",
+        "en": "Travel & accommodation search"
+      }
+    },
+    "BKNG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "宿泊施設の予約",
+        "en": "Accommodation booking"
+      }
+    },
+    "EXPE": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Vrbo・貸切住宅予約",
+        "en": "Vrbo whole-home booking"
+      }
+    },
+    "MAR": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "ホテル・リゾート",
+        "en": "Hotels & resorts"
+      }
+    }
+  },
+  "SPOT": {
+    "GOOG": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "YouTube Music・動画・広告",
+        "en": "YouTube Music, video & ads"
+      }
+    },
+    "AMZN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "音楽・Audible・広告",
+        "en": "Music, Audible & ads"
+      }
+    },
+    "AAPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "音楽・番組・音声書籍",
+        "en": "Music, podcasts & audiobooks"
+      }
+    },
+    "META": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "コンテンツ・広告",
+        "en": "Content & advertising"
+      }
+    },
+    "ByteDance": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "短編動画・利用時間",
+        "en": "Short video & attention"
+      }
+    }
+  },
+  "ASAN": {
+    "MSFT": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Planner・Teams連携",
+        "en": "Planner & Teams integration"
+      }
+    },
+    "TEAM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Jira・Trello",
+        "en": "Jira & Trello"
+      }
+    },
+    "MNDY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "業務・プロジェクト管理",
+        "en": "Work & project management"
+      }
+    },
+    "CRM": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "Slackなどの業務連携",
+        "en": "Slack/work integrations"
+      }
+    }
+  },
+  "DIS": {
+    "SONY": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "映画・映像制作",
+        "en": "Film & content production"
+      }
+    },
+    "NFLX": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "映画・テレビ配信",
+        "en": "Film & TV streaming"
+      }
+    },
+    "CMCSA": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "映像・スポーツ・パーク",
+        "en": "Video, sports & theme parks"
+      }
+    },
+    "AMZN": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "映像・スポーツ配信",
+        "en": "Video & sports streaming"
+      }
+    },
+    "AAPL": {
+      "layer": 7,
+      "businessLabel": {
+        "ja": "映像の電子配信",
+        "en": "Digital video distribution"
+      }
+    }
+  }
+};
+
 function productScopedNodes(root: string, nodes: NetworkNode[]): NetworkNode[] {
+  if (productContexts[root]) return nodes.map(node => {
+    const product = productContexts[root][node.id];
+    return product ? { ...node, ...product } : node;
+  });
   if (root === "MELI") return nodes.map(node => {
     if (["AMZN", "SE"].includes(node.id)) return {
       ...node, layer: 7, businessLabel: { ja: "ブラジルの通販", en: "Brazilian commerce" },

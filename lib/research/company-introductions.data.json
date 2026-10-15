@@ -4830,11 +4830,35 @@
       "SNOW"
     ],
     "name": "Snowflake",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Platform / Cloud providers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1640147/000164014726000008/snow-20260131.htm"
+      },
+      {
+        "label": "AWS · Redshift cloud data warehouse",
+        "url": "https://aws.amazon.com/redshift/"
+      },
+      {
+        "label": "Microsoft · Fabric analytics platform",
+        "url": "https://learn.microsoft.com/en-us/fabric/fundamentals/microsoft-fabric-overview"
+      },
+      {
+        "label": "Google Cloud · BigQuery analytics platform",
+        "url": "https://cloud.google.com/bigquery"
+      },
+      {
+        "label": "Databricks · SQL cloud data warehouse on lakehouse architecture",
+        "url": "https://docs.databricks.com/aws/en/sql"
+      },
+      {
+        "label": "Snowflake · Platform data engineering, analytics and AI scope",
+        "url": "https://www.snowflake.com/en/product/platform/"
+      },
+      {
+        "label": "Palantir · Foundry data operations architecture",
+        "url": "https://www.palantir.com/docs/foundry/architecture-center/overview"
       }
     ],
     "ja": {
@@ -4842,7 +4866,7 @@
       "revenue": "保存量や計算処理など、顧客が実際に使った分に応じて課金する。契約額ではなく利用量が売上の時期を左右する。",
       "strength": "AWS、Azure、Google Cloudをまたいで同じ仕組みを使え、データの管理・共有・分析を分断せずに行える。",
       "risks": "顧客が処理を節約すると売上がすぐ鈍る。基盤を借りる大手クラウド自身が競合でもあり、価格や障害の影響を受ける。",
-      "competition": "AWS、Microsoft Azure、Google Cloudなどの大手クラウドと、データ基盤・分析ソフトの専門会社が競合。",
+      "competition": "データ分析ではAmazon Redshift、Microsoft Fabric、Google BigQueryが製品例。Snowflake自身がAWS・Microsoft・Googleを競合として挙げる。Databricks SQLの分析基盤、Palantir Foundryのデータ統合・業務分析は、両社の公式製品とSnowflakeの範囲を照合した編集上の比較。クラウド提供・協業と競合は併存し、Foundry全体と同一製品とは扱わない。",
       "relationships": "AWS、Microsoft Azure、Google Cloudの設備上でサービスを動かし、企業のデータ担当者や開発者へ従量課金で提供する。"
     },
     "en": {
@@ -4850,7 +4874,7 @@
       "revenue": "Charges mainly for actual compute, storage and other consumption, so usage rather than contract value determines revenue timing.",
       "strength": "Runs a consistent governed data layer across AWS, Azure and Google Cloud without separating storage, sharing and analytics.",
       "risks": "Customer optimization can slow revenue quickly; the cloud providers hosting the platform also compete and influence cost and availability.",
-      "competition": "Competes with AWS, Microsoft Azure, Google Cloud and specialist data-platform and analytics vendors.",
+      "competition": "Analytics examples are Amazon Redshift, Microsoft Fabric and Google BigQuery; Snowflake names their providers as competitors. Databricks SQL and Palantir Foundry data integration/operational analytics are editorial comparisons of official products with Snowflake’s scope. Foundry is not an identical replacement for the whole platform. Cloud supply and collaboration can coexist with competition.",
       "relationships": "Runs on AWS, Microsoft Azure and Google Cloud infrastructure and serves enterprise data teams and developers on a consumption basis."
     },
     "maps": {
@@ -4858,54 +4882,72 @@
         {
           "kind": "company",
           "name": "Amazon / AWS",
-          "ticker": "AMZN",
           "role": "competitor",
           "label": {
-            "ja": "データ基盤で競合",
-            "en": "Data platform"
+            "ja": "Redshiftのデータ分析基盤。提供企業は自社開示、製品は公式照合",
+            "en": "Redshift analytics; provider named by Snowflake, product independently checked"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1
+          ],
+          "ticker": "AMZN"
         },
         {
           "kind": "company",
           "name": "Microsoft Azure",
-          "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "データ基盤で競合",
-            "en": "Data platform"
+            "ja": "Fabricの統合分析。提供企業は自社開示、製品は公式照合",
+            "en": "Fabric integrated analytics; named provider, official product check"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "MSFT"
         },
         {
           "kind": "company",
           "name": "Google Cloud",
-          "ticker": "GOOG",
           "role": "competitor",
           "label": {
-            "ja": "データ基盤で競合",
-            "en": "Data platform"
+            "ja": "BigQueryのデータ分析。提供企業は自社開示、製品は公式照合",
+            "en": "BigQuery analytics; named provider, official product check"
           },
           "sourceIndexes": [
-            0
+            0,
+            3
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Databricks",
+          "role": "competitor",
+          "label": {
+            "ja": "Databricks SQLの分析用データ基盤。編集上の製品比較",
+            "en": "Databricks SQL analytical data warehouse; editorial product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            4,
+            5
           ]
         },
         {
-          "kind": "industry",
-          "name": "Data and analytics vendors",
-          "nameJa": "データ・分析ソフト会社",
+          "kind": "company",
+          "name": "Palantir Technologies",
           "role": "competitor",
           "label": {
-            "ja": "分析・管理機能で競合",
-            "en": "Analytics and governance"
+            "ja": "Foundryのデータ統合・業務分析に限る編集上の比較",
+            "en": "Foundry data integration/operational analytics; scoped editorial comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            5,
+            6
+          ],
+          "ticker": "PLTR"
         }
       ],
       "relationships": [
@@ -5363,11 +5405,19 @@
       "IBM"
     ],
     "name": "IBM",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K and Annual Report · Segments / Clients / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm"
+      },
+      {
+        "label": "Dell · PowerEdge server portfolio",
+        "url": "https://www.dell.com/en-us/shop/dell-poweredge-servers/sc/servers"
+      },
+      {
+        "label": "HPE · ProLiant and hybrid compute portfolio",
+        "url": "https://www.hpe.com/us/en/products/compute.html"
       }
     ],
     "ja": {
@@ -5375,7 +5425,7 @@
       "revenue": "ソフトの定額契約と保守、コンサル・システム構築、メインフレームやサーバー、関連金融サービスで稼ぐ。",
       "strength": "長年運用される基幹システムと顧客関係を持ち、Red Hatの技術を使って社内設備と複数クラウドをまたぐ運用を支援できる。",
       "risks": "クラウド・AIで競争が激しく、古い事業から成長分野への移行には実行力が必要。大型案件、人材確保、為替、サイバー障害も影響する。",
-      "competition": "クラウド・AIソフト、ITコンサル、企業向けインフラの各分野で、大手総合会社と専門会社を含む多数の企業と競う。",
+      "competition": "ソフトウェア・クラウドではGoogle、AWS、Microsoft、Oracle、ITコンサルティングではAccentureとCapgemini、サーバーではDell PowerEdgeとHPE ProLiantが比較例。企業名はIBM自身の分野別実名開示に基づき、サーバーの製品名は相手側の公式情報で確認した。協業と競合は分野ごとに併存し、各社の全製品がIBM全体の代替になるとはしない。",
       "relationships": "企業と公共機関へソフト、コンサル、基幹機器を組み合わせて提供し、クラウド会社や業務ソフト会社とも提携と競争を同時に行う。"
     },
     "en": {
@@ -5383,7 +5433,7 @@
       "revenue": "Software subscriptions and support, consulting and systems work, mainframes and servers, and related financing generate revenue.",
       "strength": "Deep mission-critical customer relationships and Red Hat technology support operations spanning on-premises systems and multiple clouds.",
       "risks": "Cloud and AI competition makes portfolio execution critical; large projects, skilled labor, currency and cyber incidents also affect results.",
-      "competition": "Competes with broad and specialist vendors across cloud and AI software, IT consulting and enterprise infrastructure.",
+      "competition": "Examples are Google, AWS, Microsoft and Oracle in software/cloud; Accenture and Capgemini in IT consulting; and Dell PowerEdge and HPE ProLiant in servers. IBM names the companies by business segment; peer official portfolios support the server examples. Partnerships and competition coexist by field, without implying every portfolio replaces all of IBM.",
       "relationships": "Combines software, consulting and core systems for enterprises and governments while partnering and competing with cloud and application vendors."
     },
     "maps": {
@@ -5391,50 +5441,89 @@
         {
           "kind": "company",
           "name": "Google",
-          "ticker": "GOOG",
           "role": "competitor",
           "label": {
-            "ja": "クラウド・AIソフトで競合",
-            "en": "Cloud and AI software"
+            "ja": "クラウド・企業向けソフトウェア。IBM Softwareの実名開示",
+            "en": "Cloud/enterprise software; IBM Software named disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "GOOG"
         },
         {
           "kind": "company",
           "name": "Amazon / AWS",
-          "ticker": "AMZN",
           "role": "competitor",
           "label": {
-            "ja": "クラウド基盤で競合",
-            "en": "Cloud platforms"
+            "ja": "クラウド・企業向けソフトウェア。IBMの実名開示",
+            "en": "Cloud/enterprise software; IBM named disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "AMZN"
         },
         {
           "kind": "company",
           "name": "Microsoft",
-          "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "クラウド・業務ソフトで競合",
-            "en": "Cloud and enterprise software"
+            "ja": "クラウド・企業向けソフトウェア。IBMの実名開示",
+            "en": "Cloud/enterprise software; IBM named disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "MSFT"
         },
         {
           "kind": "company",
           "name": "Oracle",
-          "ticker": "ORCL",
           "role": "competitor",
           "label": {
-            "ja": "企業向けソフトで競合",
-            "en": "Enterprise software"
+            "ja": "データベース等の企業向けソフトウェア。IBMの実名開示",
+            "en": "Enterprise software including databases; IBM named disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ORCL"
+        },
+        {
+          "kind": "company",
+          "name": "Dell Technologies",
+          "role": "competitor",
+          "label": {
+            "ja": "PowerEdgeサーバー。企業名はIBM Infrastructureの開示",
+            "en": "PowerEdge servers; company named in IBM Infrastructure"
+          },
+          "sourceIndexes": [
+            0,
+            1
+          ],
+          "ticker": "DELL"
+        },
+        {
+          "kind": "company",
+          "name": "Accenture",
+          "role": "competitor",
+          "label": {
+            "ja": "IT戦略・システム統合・運用支援。IBM Consultingの実名開示",
+            "en": "IT strategy, systems integration and operations; IBM Consulting disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ACN"
+        },
+        {
+          "kind": "company",
+          "name": "Capgemini",
+          "role": "competitor",
+          "label": {
+            "ja": "ITコンサルティング・システム統合。IBMの実名開示",
+            "en": "IT consulting/systems integration; IBM named disclosure"
           },
           "sourceIndexes": [
             0
@@ -5442,29 +5531,17 @@
         },
         {
           "kind": "company",
-          "name": "Dell Technologies",
-          "ticker": "DELL",
+          "name": "Hewlett Packard Enterprise",
           "role": "competitor",
           "label": {
-            "ja": "企業向け機器で競合",
-            "en": "Enterprise infrastructure"
+            "ja": "ProLiantなどの企業向けサーバー。公式製品を照合",
+            "en": "Enterprise servers including ProLiant; official product check"
           },
           "sourceIndexes": [
-            0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "IT consulting firms",
-          "nameJa": "ITコンサル会社",
-          "role": "competitor",
-          "label": {
-            "ja": "システム構築で競合",
-            "en": "Systems and consulting"
-          },
-          "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "HPE"
         }
       ],
       "relationships": [
@@ -8978,11 +9055,27 @@
       "OKTA"
     ],
     "name": "Okta",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Platform / Subscription revenue / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm"
+      },
+      {
+        "label": "Microsoft · Entra ID workforce identity",
+        "url": "https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-id"
+      },
+      {
+        "label": "Ping Identity · Workforce and customer identity solutions",
+        "url": "https://www.pingidentity.com/en/platform/solutions.html"
+      },
+      {
+        "label": "SailPoint · Identity security and governance platform",
+        "url": "https://www.sailpoint.com/products/platform"
+      },
+      {
+        "label": "Google · Identity Platform application authentication",
+        "url": "https://docs.cloud.google.com/identity-platform/docs"
       }
     ],
     "ja": {
@@ -8990,7 +9083,7 @@
       "revenue": "Workforce IdentityとCustomer Identityのクラウド契約が中心で、利用者数や機能、契約期間に応じたサブスク収入を得る。",
       "strength": "特定クラウドに偏らず、多数の業務アプリや端末と接続できる統合網とID専業の運用知識が強み。",
       "risks": "自社や顧客への侵害は信用を直接損ない、大手ソフト企業との競争、長い販売期間、クラウド障害も成長を左右する。",
-      "competition": "従業員IDでは大手ソフト企業やID専業、顧客IDでは内製システムや開発者向け認証サービスと競う。",
+      "competition": "Microsoft Entra IDは従業員向け認証の製品例で、MicrosoftはOkta自身が主要競合と明記する。Ping Identityの従業員・顧客向け認証、SailPointのアクセス権限ガバナンス、Google Identity Platformのアプリ利用者認証は公式製品に基づく編集上の比較。Auth0の顧客認証と従業員の権限管理を分ける。社内開発やオープンソースも代替手段になる。",
       "relationships": "企業の人事・業務アプリや顧客向けサービスをつなぎ、販売・導入パートナーを通じて認証とアクセス制御を提供する。"
     },
     "en": {
@@ -8998,7 +9091,7 @@
       "revenue": "Earns mainly subscription revenue from Workforce Identity and Customer Identity, priced by users, capabilities and contract terms.",
       "strength": "Its vendor-neutral integration network connects many business applications and devices, backed by focused identity expertise.",
       "risks": "A breach can directly damage trust, while large software rivals, long sales cycles and cloud outages can slow growth.",
-      "competition": "Competes with large software suites and identity specialists for workforce identity, and with in-house or developer authentication tools for customer identity.",
+      "competition": "Microsoft Entra ID is a workforce-authentication example; Okta explicitly names Microsoft as a principal competitor. Ping Identity workforce/customer authentication, SailPoint access governance and Google Identity Platform app authentication are editorial comparisons of official products. Customer authentication, including Auth0, differs from workforce governance. In-house development and open-source software remain alternatives.",
       "relationships": "Connects enterprise HR and business apps and customer services, delivering authentication and access controls through implementation and channel partners."
     },
     "maps": {
@@ -9006,41 +9099,57 @@
         {
           "kind": "company",
           "name": "Microsoft",
-          "ticker": "MSFT",
           "role": "competitor",
           "label": {
-            "ja": "従業員ID管理で競合",
-            "en": "Workforce identity"
+            "ja": "Entra IDの従業員向け認証。企業名はOkta自身の開示",
+            "en": "Entra ID workforce authentication; Microsoft named by Okta"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "Ping Identity",
+          "role": "competitor",
+          "label": {
+            "ja": "PingOneの従業員・顧客向け認証。編集上の比較",
+            "en": "PingOne workforce/customer authentication; editorial comparison"
+          },
+          "sourceIndexes": [
+            0,
+            2
           ]
         },
         {
-          "kind": "industry",
-          "name": "Identity security specialists",
-          "nameJa": "IDセキュリティ専業",
+          "kind": "company",
+          "name": "SailPoint",
           "role": "competitor",
           "label": {
-            "ja": "認証・アクセス管理で競合",
-            "en": "Authentication and access"
+            "ja": "アクセス権限のガバナンス。認証全体と同一視しない",
+            "en": "Access governance; not equivalent to all authentication"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            3
+          ],
+          "ticker": "SAIL"
         },
         {
-          "kind": "industry",
-          "name": "In-house identity systems",
-          "nameJa": "企業の内製ID基盤",
+          "kind": "company",
+          "name": "Google Cloud",
           "role": "competitor",
           "label": {
-            "ja": "顧客IDの内製と競合",
-            "en": "Customer identity build-outs"
+            "ja": "Identity Platformのアプリ利用者認証。Auth0分野の比較",
+            "en": "Identity Platform application-user authentication; Auth0 scope"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            4
+          ],
+          "ticker": "GOOG"
         }
       ],
       "relationships": [
@@ -9092,11 +9201,19 @@
       "S"
     ],
     "name": "SentinelOne",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Singularity platform / Revenue / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm"
+      },
+      {
+        "label": "Broadcom · Symantec and Carbon Black endpoint products",
+        "url": "https://www.broadcom.com/topics/endpoint-security"
+      },
+      {
+        "label": "Google · Wiz acquisition completed March 11, 2026",
+        "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/wiz-acquisition/"
       }
     ],
     "ja": {
@@ -9104,7 +9221,7 @@
       "revenue": "保護する端末や利用機能に応じた期間契約のサブスクが中心で、企業や公的機関から継続収入を得る。",
       "strength": "端末からクラウドまでの情報を一つのデータ基盤に集め、検知後の調査と復旧を自動化できる。",
       "risks": "競争が激しく赤字が続く可能性があり、検知漏れ、侵害、AI判断の誤り、クラウド費、販売パートナー依存が負担になる。",
-      "competition": "端末防御、クラウド防御、ログ分析、ID防御を一体化する市場で、大手セキュリティ企業やソフト企業と競う。",
+      "competition": "SentinelOneの開示では、端末防御にCrowdStrike・Broadcom（Carbon Black／Symantec）・Trellix・Microsoft、セキュリティ基盤にPalo Alto Networks、ログを集めて脅威を検知するSIEMにCisco傘下SplunkとElastic、クラウド防御にGoogle傘下Wizを挙げる。製品分野ごとの競合で、全サービスが同一ではない。WizのGoogleによる取得完了も公式発表で確認した。",
       "relationships": "企業や政府へ直接または販売会社・運用代行会社経由で提供し、クラウドや業務ツールと連携して脅威データを集める。"
     },
     "en": {
@@ -9112,7 +9229,7 @@
       "revenue": "Earns recurring term-subscription revenue based mainly on protected endpoints and purchased capabilities from enterprises and public organizations.",
       "strength": "Brings endpoint, cloud and identity telemetry into one data platform and automates investigation, response and recovery.",
       "risks": "Intense competition, continued losses, missed detections, breaches, AI errors, cloud costs and reliance on channel partners can hurt results.",
-      "competition": "Competes with major security and software vendors across endpoint, cloud, analytics and identity protection.",
+      "competition": "SentinelOne names CrowdStrike, Broadcom’s Carbon Black/Symantec, Trellix and Microsoft in endpoint protection; Palo Alto Networks in broader security; Cisco-owned Splunk and Elastic in SIEM; and Google-owned Wiz in cloud security. These are field-specific rivals with different portfolios. Google’s official announcement independently confirms completion of the Wiz acquisition.",
       "relationships": "Sells directly and through resellers and managed-security providers, integrating with cloud and business tools to collect threat telemetry."
     },
     "maps": {
@@ -9120,11 +9237,50 @@
         {
           "kind": "company",
           "name": "CrowdStrike",
-          "ticker": "CRWD",
           "role": "competitor",
           "label": {
-            "ja": "端末・クラウド防御で競合",
-            "en": "Endpoint and cloud security"
+            "ja": "端末の脅威防御。SentinelOneの実名開示",
+            "en": "Endpoint threat protection; SentinelOne named disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "CRWD"
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "competitor",
+          "label": {
+            "ja": "端末のマルウェア対策。SentinelOneの実名開示",
+            "en": "Endpoint malware protection; SentinelOne named disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "Broadcom",
+          "role": "competitor",
+          "label": {
+            "ja": "Carbon Black・Symantecの端末防御。現行製品も照合",
+            "en": "Carbon Black/Symantec endpoint protection; current products checked"
+          },
+          "sourceIndexes": [
+            0,
+            1
+          ],
+          "ticker": "AVGO"
+        },
+        {
+          "kind": "company",
+          "name": "Trellix",
+          "role": "competitor",
+          "label": {
+            "ja": "端末のマルウェア対策。SentinelOneの実名開示",
+            "en": "Endpoint malware protection; SentinelOne named disclosure"
           },
           "sourceIndexes": [
             0
@@ -9132,29 +9288,56 @@
         },
         {
           "kind": "company",
-          "name": "Microsoft",
-          "ticker": "MSFT",
+          "name": "Palo Alto Networks",
           "role": "competitor",
           "label": {
-            "ja": "統合セキュリティで競合",
-            "en": "Integrated security"
+            "ja": "幅広いセキュリティ基盤。SentinelOneの実名開示",
+            "en": "Broad security platforms; SentinelOne named disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "PANW"
         },
         {
-          "kind": "industry",
-          "name": "Security analytics platforms",
-          "nameJa": "セキュリティ分析基盤",
+          "kind": "company",
+          "name": "Cisco Systems / Splunk",
           "role": "competitor",
           "label": {
-            "ja": "ログ分析・対応で競合",
-            "en": "Security analytics and response"
+            "ja": "SplunkのSIEM。Cisco傘下として表示",
+            "en": "Splunk SIEM; shown under Cisco ownership"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "CSCO"
+        },
+        {
+          "kind": "company",
+          "name": "Elastic",
+          "role": "competitor",
+          "label": {
+            "ja": "ログ分析・脅威検知のSIEM。SentinelOneの実名開示",
+            "en": "Log analytics/threat detection SIEM; SentinelOne named disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ESTC"
+        },
+        {
+          "kind": "company",
+          "name": "Google Cloud / Wiz",
+          "role": "competitor",
+          "label": {
+            "ja": "Wizのクラウド防御。2026年3月にGoogleが取得完了",
+            "en": "Wiz cloud protection; Google acquisition completed March 2026"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "GOOG"
         }
       ],
       "relationships": [
@@ -9206,11 +9389,19 @@
       "CHKP"
     ],
     "name": "Check Point Software Technologies",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Products / Revenue / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1015922/000117891326001932/zk2634942.htm"
+      },
+      {
+        "label": "CrowdStrike · Falcon Cloud Security",
+        "url": "https://www.crowdstrike.com/en-us/platform/cloud-security/"
+      },
+      {
+        "label": "Microsoft · Defender for Cloud",
+        "url": "https://www.microsoft.com/en-us/security/business/cloud-security/microsoft-defender-cloud"
       }
     ],
     "ja": {
@@ -9218,7 +9409,7 @@
       "revenue": "機器・ソフトの販売に加え、脅威防御のサブスク、更新、保守・サポートから継続収入を得る。",
       "strength": "長年蓄積した脅威情報と一元管理技術を使い、ネットワークからクラウド・端末まで共通方針で守れる。",
       "risks": "クラウド移行への対応遅れ、激しい価格競争、検知漏れや脆弱性、販売会社依存、為替やイスラエル情勢が業績に影響する。",
-      "competition": "ネットワーク防御、クラウド防御、端末・メール防御で、それぞれ大手セキュリティ会社やクラウド事業者と競う。",
+      "competition": "ネットワーク防御ではPalo Alto Networks、Fortinet、Cisco、クラウド防御ではCrowdStrike Falcon Cloud SecurityとMicrosoft Defender for Cloudが競合例。企業名はCheck Point自身の開示にあり、後者2製品は公式情報をCloudGuardの分野と照合した。ネットワーク・クラウド・端末は分けて見る。メールやモバイルなど他分野まで同一の競合構成とはしない。",
       "relationships": "販売会社やシステム構築会社を通じて企業・政府へ提供し、クラウドや端末環境を一つの管理基盤で保護する。"
     },
     "en": {
@@ -9226,7 +9417,7 @@
       "revenue": "Earns from appliances and software plus recurring threat-prevention subscriptions, updates, maintenance and support.",
       "strength": "Combines long-developed threat intelligence and centralized management to enforce common policies from networks to cloud and endpoints.",
       "risks": "Slow cloud adaptation, price competition, missed threats or vulnerabilities, channel dependence, currencies and conditions in Israel can affect results.",
-      "competition": "Competes with major security companies and cloud providers across network, cloud, endpoint and email security.",
+      "competition": "Network-security examples are Palo Alto Networks, Fortinet and Cisco. Cloud examples are CrowdStrike Falcon Cloud Security and Microsoft Defender for Cloud. Check Point names the companies; the latter two product examples are editorial comparisons against CloudGuard using official descriptions. Network, cloud and endpoint scopes differ; email/mobile competition is not assumed identical.",
       "relationships": "Reaches enterprises and governments through resellers and integrators, protecting cloud, network and endpoint environments through one management layer."
     },
     "maps": {
@@ -9234,41 +9425,69 @@
         {
           "kind": "company",
           "name": "Palo Alto Networks",
-          "ticker": "PANW",
           "role": "competitor",
           "label": {
-            "ja": "ネットワーク・クラウド防御で競合",
-            "en": "Network and cloud security"
+            "ja": "ネットワーク防御。Check Point自身の実名開示",
+            "en": "Network security; Check Point named disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "PANW"
         },
         {
           "kind": "company",
           "name": "Fortinet",
-          "ticker": "FTNT",
           "role": "competitor",
           "label": {
-            "ja": "ファイアウォールで競合",
-            "en": "Firewall security"
+            "ja": "ファイアウォール・ネットワーク防御。自社の実名開示",
+            "en": "Firewalls/network security; Check Point named disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "FTNT"
         },
         {
-          "kind": "industry",
-          "name": "Cloud-native security vendors",
-          "nameJa": "クラウド防御専業",
+          "kind": "company",
+          "name": "Cisco Systems",
           "role": "competitor",
           "label": {
-            "ja": "クラウド保護で競合",
-            "en": "Cloud protection"
+            "ja": "ネットワーク防御。Check Pointの実名開示",
+            "en": "Network security; Check Point named disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "CSCO"
+        },
+        {
+          "kind": "company",
+          "name": "CrowdStrike",
+          "role": "competitor",
+          "label": {
+            "ja": "Falcon Cloud Security。企業名は自社開示、分野は製品比較",
+            "en": "Falcon Cloud Security; named company, editorial product scope"
+          },
+          "sourceIndexes": [
+            0,
+            1
+          ],
+          "ticker": "CRWD"
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "competitor",
+          "label": {
+            "ja": "Defender for Cloud。企業名は自社開示、分野は製品比較",
+            "en": "Defender for Cloud; named company, editorial product scope"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "MSFT"
         }
       ],
       "relationships": [
@@ -9539,11 +9758,27 @@
       "DOCU"
     ],
     "name": "Docusign",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · IAM / Subscription revenue / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1261333/000126133326000021/docu-20260131.htm"
+      },
+      {
+        "label": "Dropbox FY2025 Form 10-K · E-signature competition with Docusign",
+        "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm"
+      },
+      {
+        "label": "Icertis · Contract lifecycle management",
+        "url": "https://www.icertis.com/products/operate/contract-lifecycle-management/"
+      },
+      {
+        "label": "Ironclad · AI contract lifecycle management platform",
+        "url": "https://ironcladapp.com/product/ai-based-contract-management"
+      },
+      {
+        "label": "Microsoft · Microsoft 365 eSignature and provider integrations",
+        "url": "https://learn.microsoft.com/en-us/microsoft-365/documentprocessing/esignature-overview?view=o365-worldwide"
       }
     ],
     "ja": {
@@ -9551,7 +9786,7 @@
       "revenue": "eSignatureや契約管理クラウドのサブスクが中心で、プロフェッショナルサービスなども一部収益になる。",
       "strength": "電子署名の知名度と大きな利用基盤を入口に、契約の作成前から締結後まで同じ基盤へ広げられる。",
       "risks": "電子署名の成熟、無料・同梱製品との競争、情報漏えい、各国の電子契約法やデータ保管規制が成長を左右する。",
-      "competition": "電子署名、契約ライフサイクル管理、文書作成・共有で、大手ソフト企業や契約管理専業と競う。",
+      "competition": "電子署名ではAdobe Acrobat SignとDropbox Sign、契約作成から管理までのCLMではIcertisとIronclad、Microsoft 365内の基本的な署名ではMicrosoft eSignatureを比較する。AdobeはDocusign自身の明記、DropboxはDropbox側の開示、他は公式製品に基づく編集上の比較。Microsoft 365にはDocusignとの連携もあり、競合と連携が併存する。",
       "relationships": "企業の営業・法務・人事・購買部門が利用し、業務アプリや導入支援会社との連携で契約工程へ組み込む。"
     },
     "en": {
@@ -9559,7 +9794,7 @@
       "revenue": "Earns mainly subscriptions for eSignature and agreement-management cloud products, with services contributing a smaller share.",
       "strength": "Uses its well-known eSignature product and large user base to expand across the agreement process before and after signing.",
       "risks": "A maturing eSignature market, free or bundled rivals, data breaches and electronic-contract or residency rules can affect growth.",
-      "competition": "Competes with large software suites and specialists in eSignature, contract lifecycle management and document workflows.",
+      "competition": "E-signature examples are Adobe Acrobat Sign and Dropbox Sign; contract-lifecycle management examples are Icertis and Ironclad; Microsoft eSignature covers basic signing within Microsoft 365. Docusign names Adobe, Dropbox names Docusign, and the other examples are editorial official-product comparisons. Microsoft 365 also integrates Docusign, so competition and integration coexist.",
       "relationships": "Sales, legal, HR and procurement teams use the platform, integrated into workflows through business apps and implementation partners."
     },
     "maps": {
@@ -9567,41 +9802,68 @@
         {
           "kind": "company",
           "name": "Adobe",
-          "ticker": "ADBE",
           "role": "competitor",
           "label": {
-            "ja": "電子署名・文書業務で競合",
-            "en": "E-signature and document workflows"
+            "ja": "Acrobat Signの電子署名。Docusign自身の実名開示",
+            "en": "Acrobat Sign e-signatures; Docusign named disclosure"
           },
           "sourceIndexes": [
             0
+          ],
+          "ticker": "ADBE"
+        },
+        {
+          "kind": "company",
+          "name": "Dropbox",
+          "role": "competitor",
+          "label": {
+            "ja": "Dropbox Signの電子署名。Dropbox側がDocusignを明記",
+            "en": "Dropbox Sign e-signatures; Dropbox names Docusign"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "DBX"
+        },
+        {
+          "kind": "company",
+          "name": "Icertis",
+          "role": "competitor",
+          "label": {
+            "ja": "契約作成・審査・管理のCLM。公式製品の比較",
+            "en": "Contract lifecycle management; editorial official-product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            2
           ]
         },
         {
-          "kind": "industry",
-          "name": "Contract lifecycle management vendors",
-          "nameJa": "契約管理ソフト会社",
+          "kind": "company",
+          "name": "Ironclad",
           "role": "competitor",
           "label": {
-            "ja": "契約管理で競合",
-            "en": "Contract lifecycle management"
+            "ja": "契約ワークフロー・管理のCLM。公式製品の比較",
+            "en": "Contract workflows/lifecycle management; editorial product comparison"
           },
           "sourceIndexes": [
-            0
+            0,
+            3
           ]
         },
         {
-          "kind": "industry",
-          "name": "Bundled productivity suites",
-          "nameJa": "統合業務ソフト",
+          "kind": "company",
+          "name": "Microsoft",
           "role": "competitor",
           "label": {
-            "ja": "同梱機能と競合",
-            "en": "Bundled agreement features"
+            "ja": "Microsoft 365 eSignatureの基本署名。Docusign連携も併存",
+            "en": "Microsoft 365 eSignature basic signing; Docusign integration coexists"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            4
+          ],
+          "ticker": "MSFT"
         }
       ],
       "relationships": [
@@ -10032,11 +10294,23 @@
       "ABNB"
     ],
     "name": "Airbnb",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Marketplace / Service fees / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1559720/000155972026000004/abnb-20251231.htm"
+      },
+      {
+        "label": "Booking Holdings · Booking.com accommodation portfolio",
+        "url": "https://www.bookingholdings.com/about/factsheet/"
+      },
+      {
+        "label": "Expedia Group · Vrbo vacation rentals",
+        "url": "https://partner.expediagroup.com/en-us/industries/vacation-rentals"
+      },
+      {
+        "label": "Marriott · Hotel brands and properties",
+        "url": "https://www.marriott.com/marriott/aboutmarriott.mi"
       }
     ],
     "ja": {
@@ -10044,7 +10318,7 @@
       "revenue": "予約金額に対するサービス料が中心で、宿泊開始時に売上を認識する。2025年からホスト側の単一料金へ移行を始めた。",
       "strength": "世界中の多様な宿泊在庫と強いブランド、ホストとゲストが互いを呼ぶネットワーク、決済・安全支援を一体で持つ。",
       "risks": "短期賃貸規制、安全事故、不正、旅行需要の変動、ホスト不足、保険・決済費、地域ごとの法令が成長を左右する。",
-      "competition": "ホストとゲストをめぐり、オンライン旅行会社、ホテル、検索サービス、体験予約サイトと競う。",
+      "competition": "宿泊予約ではBooking HoldingsのBooking.com、貸切住宅ではExpedia GroupのVrbo、ホテル滞在ではMarriottのホテル群が比較例。Airbnbの開示する競合分野と相手側の公式サービスを照合した編集上の比較で、ホテルと民泊の全体が同じ商品ではない。既存のAlphabet／Googleも旅行検索での競合として保持する。体験予約やホスト獲得は別に確認する。",
       "relationships": "ホストの宿泊・体験・サービスをゲストへ仲介し、カード網、銀行、決済会社を通じて代金を回収・送金する。"
     },
     "en": {
@@ -10052,49 +10326,65 @@
       "revenue": "Earns mainly service fees tied to bookings and recognizes revenue at check-in; it began shifting toward a host-only single-fee structure in 2025.",
       "strength": "Combines diverse global inventory, a strong brand, host-guest network effects, payments and trust support.",
       "risks": "Short-term rental rules, safety incidents, fraud, travel demand, host supply, insurance, payments and local laws can constrain growth.",
-      "competition": "Competes for hosts and guests with online travel agencies, hotels, search services and experiences marketplaces.",
+      "competition": "Accommodation examples are Booking Holdings’ Booking.com, Expedia Group’s Vrbo whole-home rentals and Marriott hotels. These are editorial comparisons of official services with Airbnb’s competitive categories; hotels and home stays are not identical products. Alphabet/Google is retained for travel-search competition. Experiences and host acquisition require separate review.",
       "relationships": "Matches host stays, experiences and services with guests and uses card networks, banks and processors to collect and remit payments."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Online travel agencies",
-          "nameJa": "オンライン旅行会社",
+          "kind": "company",
+          "name": "Alphabet",
           "role": "competitor",
           "label": {
-            "ja": "宿泊予約で競合",
-            "en": "Accommodation bookings"
+            "ja": "旅行・宿泊の検索。Airbnbの既存実名開示を保持",
+            "en": "Travel/accommodation search; existing named disclosure retained"
           },
           "sourceIndexes": [
             0
-          ]
-        },
-        {
-          "kind": "industry",
-          "name": "Hotels and property managers",
-          "nameJa": "ホテル・物件管理会社",
-          "role": "competitor",
-          "label": {
-            "ja": "宿泊在庫で競合",
-            "en": "Lodging supply"
-          },
-          "sourceIndexes": [
-            0
-          ]
+          ],
+          "ticker": "GOOG"
         },
         {
           "kind": "company",
-          "name": "Alphabet",
-          "ticker": "GOOG",
+          "name": "Booking Holdings",
           "role": "competitor",
           "label": {
-            "ja": "旅行検索で競合",
-            "en": "Travel search"
+            "ja": "Booking.comのホテル・代替宿泊施設予約。編集上の比較",
+            "en": "Booking.com hotel/alternative-accommodation booking; editorial comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1
+          ],
+          "ticker": "BKNG"
+        },
+        {
+          "kind": "company",
+          "name": "Expedia Group",
+          "role": "competitor",
+          "label": {
+            "ja": "Vrboの貸切住宅予約。編集上のサービス比較",
+            "en": "Vrbo whole-home booking; editorial service comparison"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "EXPE"
+        },
+        {
+          "kind": "company",
+          "name": "Marriott International",
+          "role": "competitor",
+          "label": {
+            "ja": "ホテル・リゾート宿泊。民泊と用途が同一とはしない",
+            "en": "Hotel/resort stays; not identical to home-sharing"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ],
+          "ticker": "MAR"
         }
       ],
       "relationships": [
@@ -10146,11 +10436,15 @@
       "SPOT"
     ],
     "name": "Spotify Technology",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 20-F · Premium / Advertising / Content / Competition / Risks",
         "url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm"
+      },
+      {
+        "label": "ByteDance · TikTok and Douyin product identity",
+        "url": "https://www.bytedance.com/en/"
       }
     ],
     "ja": {
@@ -10158,7 +10452,7 @@
       "revenue": "Premiumなどの月額契約が中心で、無料版では音声・動画・表示広告を広告主や代理店へ販売する。",
       "strength": "大きな利用者基盤と再生データを使った推薦、無料版から有料版へ移す導線、複数音声形式を一つに集める点が強い。",
       "risks": "レーベル・出版社への権利料、契約更新、Appleなど端末基盤との競争、値上げ・解約、広告市況が利益を左右する。",
-      "competition": "音声利用時間と広告費をめぐり、Apple、Alphabet、Amazon、Meta、ByteDanceなどのサービスと競う。",
+      "competition": "音楽ではApple Music・YouTube Music・Amazon Music、音声書籍ではApple Books・Amazon Audibleなどが競合例。Spotify自身の分野別開示に基づく。以前の本文のMetaとByteDanceも保持し、Facebook等やTikTok・Douyinなどで利用時間や広告予算を争う文脈で区別する。これらを有料音楽サービスと同じ商品とは扱わない。",
       "relationships": "レーベル、出版社、制作者から音源・番組の権利を得て利用者へ配信し、通信会社経由でも有料契約を販売する。"
     },
     "en": {
@@ -10166,7 +10460,7 @@
       "revenue": "Earns mainly monthly Premium and related subscriptions, while the free service sells audio, video and display ads to brands and agencies.",
       "strength": "A large user base, personalization data, free-to-paid conversion and multiple audio formats reinforce engagement.",
       "risks": "Label and publisher royalties, contract renewals, competition from device platforms, price-related churn and ad markets can affect profits.",
-      "competition": "Competes for listening time and advertising with services from Apple, Alphabet, Amazon, Meta, ByteDance and others.",
+      "competition": "Music examples are Apple Music, YouTube Music and Amazon Music; audiobook examples include Apple Books and Amazon Audible, based on Spotify’s own field-specific disclosures. Prior prose names Meta and ByteDance are retained for competition over attention and advertising through Facebook and short-video products such as TikTok/Douyin. These are not treated as identical paid-music services.",
       "relationships": "Licenses music and programs from labels, publishers and creators, distributes them to listeners and also sells subscriptions through telecom partners."
     },
     "maps": {
@@ -10174,40 +10468,66 @@
         {
           "kind": "company",
           "name": "Alphabet",
-          "ticker": "GOOG",
           "role": "competitor",
           "label": {
-            "ja": "音声・動画・広告で競合",
-            "en": "Audio, video and advertising"
+            "ja": "YouTube Music・YouTube、広告。在来の実名を保持",
+            "en": "YouTube Music/YouTube and ads; prior named peer retained"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "GOOG"
         },
         {
           "kind": "company",
           "name": "Amazon",
-          "ticker": "AMZN",
           "role": "competitor",
           "label": {
-            "ja": "音楽・音声契約で競合",
-            "en": "Music and audio subscriptions"
+            "ja": "Amazon Music・Audibleと広告。Spotifyの実名開示",
+            "en": "Amazon Music, Audible and ads; Spotify named disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "AMZN"
         },
         {
-          "kind": "industry",
-          "name": "Device-linked audio services",
-          "nameJa": "端末連携型の音声サービス",
+          "kind": "company",
+          "name": "Apple",
           "role": "competitor",
           "label": {
-            "ja": "端末標準・音声配信で競合",
-            "en": "Default placement and audio"
+            "ja": "Apple Music・Podcasts・Books。Spotifyの実名開示",
+            "en": "Apple Music, Podcasts and Books; Spotify named disclosure"
           },
           "sourceIndexes": [
             0
+          ],
+          "ticker": "AAPL"
+        },
+        {
+          "kind": "company",
+          "name": "Meta Platforms",
+          "role": "competitor",
+          "label": {
+            "ja": "Facebook等で利用時間・広告を争う。音楽定額とは区別",
+            "en": "Facebook/content attention and advertising; distinct from paid music"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "META"
+        },
+        {
+          "kind": "company",
+          "name": "ByteDance",
+          "role": "competitor",
+          "label": {
+            "ja": "TikTok・Douyin等の短編動画で利用時間を争う",
+            "en": "TikTok/Douyin short-video attention; not a paid-music service"
+          },
+          "sourceIndexes": [
+            0,
+            1
           ]
         }
       ],
@@ -21979,7 +22299,7 @@
       "ASAN"
     ],
     "name": "Asana",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · Business, revenue, competition and risks",
@@ -21992,6 +22312,14 @@
       {
         "label": "Latest reviewed quarterly results · 2026 disclosure",
         "url": "https://investors.asana.com/news-releases/news-release-details/asana-announces-second-quarter-fiscal-2027-results"
+      },
+      {
+        "label": "Microsoft · Planner work, task and project management",
+        "url": "https://www.microsoft.com/en-us/microsoft-365/planner/microsoft-planner"
+      },
+      {
+        "label": "Atlassian · Jira and Trello project management",
+        "url": "https://www.atlassian.com/software/trello/trello-and-jira"
       }
     ],
     "ja": {
@@ -21999,7 +22327,7 @@
       "revenue": "基本の仕事管理は利用者数とプランに応じた継続料金。AI StudioとAI Teammatesは使用量に応じた方式も採り、無料利用からの有料化や組織内の利用拡大が収益につながる。",
       "strength": "誰が何を担当し、どの目標や作業につながるかをWork Graphで結び付ける。部門ごとの別々の道具をつなぎ、進捗や遅れの影響を組織全体で把握できる。",
       "risks": "有料化や社内での利用拡大が止まると成長が鈍る。無料・付属ツールとの競争、販売費用、AI処理費用と誤動作も課題。AIによる自動化を顧客が継続して使う価値へ変えられるかが重要。",
-      "competition": "仕事管理の専用ソフト、業務ソフトに付属する管理機能、部門別の専用ツールと競う。monday.comとは仕事管理で競合し、比較する範囲は単純なタスクから組織全体の計画まで広い。",
+      "competition": "monday.comの業務管理、Microsoft Plannerのタスク・プロジェクト管理、AtlassianのJira・Trelloが競合例。monday.comは相手側年次報告の実名記載、MicrosoftとAtlassianはAsanaの開示する分野と公式製品を照合した編集上の比較。Teams・Jiraなどの既存連携はそのまま保持し、競合と連携が併存することを区別する。",
       "relationships": "AWSがサービスの稼働基盤を提供する。Microsoft Teams、SalesforceのSlack、AtlassianのJiraなどと製品連携し、OpenAIとAnthropicのモデルをAI機能に使う。"
     },
     "en": {
@@ -22007,7 +22335,7 @@
       "revenue": "Earns seat-based work-management subscriptions and consumption-based AI fees, supported by paid conversion and expansion.",
       "strength": "Work Graph links people, tasks and goals to show progress and dependencies across departments.",
       "risks": "Paid conversion, expansion, bundled alternatives, sales costs and reliable, cost-effective AI adoption are challenges.",
-      "competition": "Competes with dedicated work-management, productivity-suite and departmental tools, including monday.com in work management.",
+      "competition": "Examples are monday.com work management, Microsoft Planner task/project management, and Atlassian Jira/Trello. monday.com names Asana in its annual report; Microsoft/Atlassian are editorial comparisons of official products with Asana’s disclosed categories. Existing Teams/Jira integrations are retained: integration and competition can coexist.",
       "relationships": "AWS hosts its platform. Integrates with Teams, Slack and Jira, and uses OpenAI and Anthropic models for AI features."
     },
     "maps": {
@@ -22015,28 +22343,44 @@
         {
           "kind": "company",
           "name": "monday.com",
-          "ticker": "MNDY",
           "role": "competitor",
           "label": {
-            "ja": "仕事・プロジェクト管理で競合",
-            "en": "Work and project management"
+            "ja": "業務管理。monday.com側の年次報告がAsanaを明記",
+            "en": "Work management; monday.com annual report names Asana"
           },
           "sourceIndexes": [
+            0,
             1
-          ]
+          ],
+          "ticker": "MNDY"
         },
         {
-          "kind": "industry",
-          "name": "Productivity suites",
-          "nameJa": "業務ソフトの管理機能",
+          "kind": "company",
+          "name": "Microsoft",
           "role": "competitor",
           "label": {
-            "ja": "付属の計画・共同作業機能と競合",
-            "en": "Bundled planning and collaboration tools"
+            "ja": "Plannerのタスク・プロジェクト管理。公式製品の比較",
+            "en": "Planner task/project management; editorial product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            3
+          ],
+          "ticker": "MSFT"
+        },
+        {
+          "kind": "company",
+          "name": "Atlassian",
+          "role": "competitor",
+          "label": {
+            "ja": "Jira・Trelloのチーム計画・業務管理。連携も併存",
+            "en": "Jira/Trello team planning/work management; integrations coexist"
+          },
+          "sourceIndexes": [
+            0,
+            4
+          ],
+          "ticker": "TEAM"
         }
       ],
       "relationships": [
@@ -25737,7 +26081,7 @@
       "DIS"
     ],
     "name": "Disney",
-    "reviewedOn": "2026-10-15",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "Annual filing · business, revenue, competition and risks",
@@ -25746,6 +26090,30 @@
       {
         "label": "Sony annual filing · overlapping screen-content activities",
         "url": "https://www.sec.gov/Archives/edgar/data/313838/000119312526274893/d28719d20f.htm"
+      },
+      {
+        "label": "Disney FY2025 annual report · Entertainment, sports and experiences competition",
+        "url": "https://investors.thewaltdisneycompany.com/files/doc_financials/2025/ar/2025-Annual-Report.pdf"
+      },
+      {
+        "label": "Netflix · Film and television streaming service",
+        "url": "https://www.netflix.com/"
+      },
+      {
+        "label": "Comcast · September 2026 NBC, Universal, Peacock and theme-park business scope",
+        "url": "https://corporate.comcast.com/press/releases/comcast-and-fastlys-new-content-delivery-model-powers-highest-quality-experience-for-peacocks-biggest-live-events?trk=test"
+      },
+      {
+        "label": "Comcast · NBCUniversal/Sky separation announced, expected in approximately one year",
+        "url": "https://corporate.comcast.com/press/releases/comcast-announces-plans-to-separate-media-and-technology-businesses-into-two-leading-public-companies"
+      },
+      {
+        "label": "Peacock · Live sports portfolio",
+        "url": "https://www.peacocktv.com/sports"
+      },
+      {
+        "label": "Amazon · Prime Video live sports portfolio",
+        "url": "https://www.aboutamazon.com/news/entertainment/live-sports-streaming-prime-video"
       }
     ],
     "ja": {
@@ -25753,7 +26121,7 @@
       "revenue": "パークの入場券、ホテルやクルーズ、配信の会員料、広告、映画の興行・販売、キャラクター使用料などが収益源。一つの作品を映像だけで終わらせず、体験や商品にも展開する。",
       "strength": "世代を超えて知られるキャラクターと作品群を持つ。映画が入口となって配信、旅行、商品へ利用が広がり、他社が短期間では作れないブランドと施設を組み合わせられる。",
       "risks": "映画や配信作品は制作費が大きく、ヒットしても十分な利益が出るとは限らない。スポーツ放映権の高騰と従来型テレビの契約減少が重荷となり、パークは景気・旅行費用・悪天候に影響される。",
-      "competition": "映像制作・配信ではソニーなどの娯楽企業や動画サービスと視聴者を取り合う。パークは他の旅行先や娯楽施設、ESPNはほかのスポーツ放送・配信と放映権や契約者を競う。",
+      "competition": "映像配信ではNetflix、Amazon Prime Video、Comcast傘下Peacock、映画ではSonyとUniversal、テーマパークではComcast傘下Universal、スポーツ配信ではPrime VideoとNBC／Peacockが比較例。公式製品に基づく編集上の比較と、既存のSony側開示を区別する。ComcastのNBCUniversal・Sky分離は2026年6月に計画発表、約1年後の完了予定で、現在の親会社を維持する。",
       "relationships": "Apple、Amazon、Comcastなどを通じて映像を届け、NFLなどからスポーツ放映権を得る。東京ディズニーリゾートはオリエンタルランドが所有・運営し、Disneyはライセンスに基づく使用料を受け取る。"
     },
     "en": {
@@ -25761,7 +26129,7 @@
       "revenue": "Earns from park admissions, hotels, cruises, subscriptions, advertising, theatrical and content distribution, and licensing. A successful property can generate revenue across media, experiences and merchandise.",
       "strength": "Combines enduring characters and franchises with distribution and physical destinations. Films can feed streaming, travel and merchandise demand, supported by brands and infrastructure that take years to build.",
       "risks": "Content is expensive and hits do not guarantee attractive returns. Sports-rights inflation and declining traditional-TV subscriptions add pressure; parks depend on travel spending, economic conditions and weather.",
-      "competition": "Overlaps with Sony and other studios and streaming providers in screen entertainment. Parks compete for travel and leisure budgets, while ESPN competes for sports rights and subscribers.",
+      "competition": "Examples are Netflix, Amazon Prime Video and Comcast’s Peacock in streaming; Sony/Universal in film; Universal in theme parks; and Prime Video/NBC/Peacock in sports. These official-product comparisons are distinguished from the existing Sony-side disclosure. Comcast announced a planned NBCUniversal/Sky separation in June 2026, expected in approximately one year; current ownership is retained.",
       "relationships": "Distributes content through Apple, Amazon, Comcast and other outlets, and licenses sports rights from organizations such as the NFL. Oriental Land owns and operates Tokyo Disney Resort and pays Disney royalties."
     },
     "maps": {
@@ -25771,53 +26139,57 @@
           "name": "Sony Group",
           "role": "competitor",
           "label": {
-            "ja": "映画制作・配信などで事業領域が重なる",
-            "en": "Overlapping film and streaming activities"
+            "ja": "映画・映像制作。既存のSony側開示を保持",
+            "en": "Film/content production; prior Sony-side disclosure retained"
           },
           "sourceIndexes": [
-            0,
             1
           ],
           "ticker": "SONY"
         },
         {
-          "kind": "industry",
-          "name": "Streaming and television services",
-          "nameJa": "動画配信・テレビサービス",
+          "kind": "company",
+          "name": "Netflix",
           "role": "competitor",
           "label": {
-            "ja": "会員・視聴時間・広告を競う",
-            "en": "Compete for subscribers, attention and advertising"
+            "ja": "映画・テレビ番組の配信。Disneyの事業範囲との編集上の比較",
+            "en": "Film/TV streaming; editorial comparison with Disney scope"
           },
           "sourceIndexes": [
-            0
-          ]
+            2,
+            3
+          ],
+          "ticker": "NFLX"
         },
         {
-          "kind": "industry",
-          "name": "Travel and leisure destinations",
-          "nameJa": "旅行先・娯楽施設",
+          "kind": "company",
+          "name": "Comcast / NBCUniversal",
           "role": "competitor",
           "label": {
-            "ja": "旅行・娯楽の予算を競う",
-            "en": "Compete for travel and leisure spending"
+            "ja": "Peacock・NBCスポーツ、Universal映画・テーマパーク。分離は計画段階",
+            "en": "Peacock/NBC sports, Universal films/theme parks; separation planned"
           },
           "sourceIndexes": [
-            0
-          ]
+            2,
+            4,
+            5,
+            6
+          ],
+          "ticker": "CMCSA"
         },
         {
-          "kind": "industry",
-          "name": "Sports broadcasters",
-          "nameJa": "スポーツ放送・配信会社",
+          "kind": "company",
+          "name": "Amazon",
           "role": "competitor",
           "label": {
-            "ja": "放映権と契約者を競う",
-            "en": "Compete for rights and subscribers"
+            "ja": "Prime Videoの映像・スポーツ配信。配信連携も併存",
+            "en": "Prime Video films/sports; distribution collaboration coexists"
           },
           "sourceIndexes": [
-            0
-          ]
+            2,
+            7
+          ],
+          "ticker": "AMZN"
         }
       ],
       "relationships": [

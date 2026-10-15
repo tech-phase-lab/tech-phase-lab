@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 118 issuers with published competitor corrections and 0 remaining
+records 128 issuers with published competitor corrections and 0 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -667,3 +667,11 @@ All prior named map competitors are retained. HP's prior prose names (including 
 Only nine selected issuer maps receive contextual layer headings, including storage and PC/printing. All other five bilingual answers, non-competition relationships, the original NVDA 41-company/61-relation payload and scrollbar 12px spacing are preserved. Reviewed on 2026-10-16. Mixed lists and additional product scopes remain open before new issuers.
 
 Public review caught Canon's printer comparison inheriting its semiconductor-equipment category and Amazon's retail comparison inheriting its cloud category. HP's eight named peers use the PC/printing layer and product captions only within HP's selected map; MercadoLibre's comparisons use commerce/finance placement. WDC/STX HDD and SSD peers likewise use storage-specific captions and placement. Peer identity, relationships and evidence stay intact; other issuers and the reviewed NVDA graph retain their original categories.
+
+## 2026-10-16 · mixed lists and product-specific competition
+
+Reviewed SNOW / IBM / OKTA / S / CHKP / DOCU / ABNB / SPOT / ASAN / DIS (10 existing records; no new issuers). Mixed company/industry rival lists now give named, product-scoped examples. Own disclosure, peer disclosure and editorial comparisons of official products are identified separately. Internal development and open-source identity tools remain alternatives in prose, not fabricated companies.
+
+Preserved every prior named map competitor and all five prior Spotify prose names. Microsoft/Atlassian integrations and Disney distribution/royalty relationships remain intact alongside product competition. Databricks SQL and Foundry overlap selected Snowflake scopes, not every workload. Okta workforce identity, customer authentication and governance are distinct. SentinelOne endpoint, SIEM and cloud rivals are attributed by field; Broadcom's endpoint products are not classified as semiconductors in this map. Google completed Wiz's acquisition in March 2026. Comcast's NBCUniversal/Sky separation remains planned, not completed.
+
+The ten selected maps receive relevant headings and short compared-product captions. No global company taxonomy changes. NVDA's original 41-card/61-relationship payload, unrelated maps, other five bilingual answers, non-competition facts and 12px scrollbar spacing are preserved. Reviewed 2026-10-16. The remaining mixed lists, peer-only leads and additional product scopes are still open; no claim of exhaustive completion.
