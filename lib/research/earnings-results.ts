@@ -12,6 +12,11 @@ export type EarningsResult = {
   sources: { name: string; url: string }[];
 };
 
+/** Companies known by a name other than their ticker on screen (owner, Oct 15: "TSM" next to "TSMC"). */
+const DISPLAY_NAME: Record<string, string> = { TSM: "TSMC" };
+const displayName = (ticker: string) => DISPLAY_NAME[ticker] ?? ticker;
+const withName = <T extends string | null>(text: T, ticker: string): T => (text ? text.replace(new RegExp(`^${ticker}(?=[\\s　Q])`), displayName(ticker)) : text) as T;
+
 /** One earnings event is one row: a release and its flashes (or two copies of
  * the same release) fall within this window of each other. */
 const SAME_EVENT_MS = 36 * 3_600_000;
@@ -34,8 +39,8 @@ export function earningsResults(updates: OfficialUpdate[] = [], briefs: ResultBr
   for (const brief of briefs) {
     if (brief.kind !== "earnings") continue;
     rows.push({ id: `flash-${brief.id}`, ticker: brief.ticker, releasedAt: brief.publishedAt, kind: "flash",
-      title: { ja: `${brief.ticker} 決算速報（${brief.period}）`, en: `${brief.ticker} ${brief.period} earnings flash` },
-      result: { ja: brief.titleJa, en: brief.titleEn }, sourceUrl: brief.url, sourceName: brief.publisher,
+      title: { ja: `${displayName(brief.ticker)} 決算速報（${brief.period}）`, en: `${displayName(brief.ticker)} ${brief.period} earnings flash` },
+      result: { ja: withName(brief.titleJa, brief.ticker), en: withName(brief.titleEn, brief.ticker) }, sourceUrl: brief.url, sourceName: brief.publisher,
       facts: brief.facts.map(fact => ({ ja: `${fact.ja} ${fact.value}`, en: `${fact.en} ${fact.value}` })),
       body: { ja: null, en: null }, sources: [{ name: brief.publisher, url: brief.url }] });
   }
@@ -44,7 +49,7 @@ export function earningsResults(updates: OfficialUpdate[] = [], briefs: ResultBr
     const at = item.publishedAt ?? item.observedAt;
     if (!ticker || item.tickers.length !== 1 || !RESULTS.test(item.title) || NOT_RESULTS.test(item.title) || !at) continue;
     rows.push({ id: `release-${item.id}`, ticker, releasedAt: at, kind: "release",
-      title: { ja: `${ticker} 決算発表`, en: `${ticker} earnings release` },
+      title: { ja: `${displayName(ticker)} 決算発表`, en: `${displayName(ticker)} earnings release` },
       result: { ja: item.translationJa ?? null, en: item.title }, sourceUrl: item.url, sourceName: item.publisher,
       facts: [], body: { ja: item.bodyJa?.trim() || null, en: item.bodyEn?.trim() || null }, sources: [{ name: item.publisher, url: item.url }] });
   }
