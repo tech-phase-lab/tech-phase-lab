@@ -16,15 +16,15 @@ const now = Date.parse('2026-10-15T06:00:00Z');
 let created = false;
 const member = id => identity({ id, primaryEmailAddressId: 'email_test',
   emailAddresses: [{ id: 'email_test', verification: { status: 'verified' } }], privateMetadata: {} }, now);
-async function order(id, key = randomUUID(), kind = 'initial') {
-  return store.create(id, key, rights => quote(kind, 'ja', member(id), rights, now), now);
+async function order(id, key = randomUUID(), kind = 'initial', time = now) {
+  return store.create(id, key, rights => quote(kind, 'ja', member(id), rights, time), time);
 }
-async function ready(id, kind = 'initial') {
-  let o = await order(id, randomUUID(), kind);
+async function ready(id, kind = 'initial', time = now) {
+  let o = await order(id, randomUUID(), kind, time);
   o = await store.bind(o, randomUUID().replaceAll('-', '').toUpperCase());
-  return store.prepare(o, member(id), now, () => {});
+  return store.prepare(o, member(id), time, () => {});
 }
-const payment = () => ({ captureId: randomUUID(), paidAt: new Date(now + 1000).toISOString() });
+const payment = (time = now + 1000) => ({ captureId: randomUUID(), paidAt: new Date(time).toISOString() });
 async function grants(id) {
   return (await pool.query('SELECT * FROM resolute_payments_sandbox.grants WHERE user_id=$1 ORDER BY starts_at', [id])).rows;
 }
@@ -88,7 +88,7 @@ test('refund racing completion cannot leave an active grant or duplicate refund 
 test('duplicate renewal completion extends once, from the existing expiry', async () => {
   const id = 'user_renewal', initial = await ready(id);
   await store.paid(initial, payment());
-  const previous = (await grants(id))[0], renewal = await ready(id, 'renewal'), p = payment();
+  const previous = (await grants(id))[0], renewal = await ready(id, 'renewal', now + 2000), p = payment(now + 3000);
   await Promise.all(Array.from({ length: 10 }, () => store.paid(renewal, p)));
   const rows = await grants(id);
   assert.equal(rows.length, 2);
