@@ -114,3 +114,7 @@
 - Deselecting an article passage closes the pen tray; toolbar selection restoration and pending note drafts are preserved.
 - Mobile Back to top stays at a fixed bottom-right offset above navigation instead of deriving its height from the menu rectangle.
 - Export includes a mobile viewport and larger screen/print typography (18px preview, 14pt print body). The native print/PDF flow and annotations remain intact. Physical phone preview validation remains separate.
+
+## 2026-10-15: compact print action
+- Removed the export instruction paragraph and large tinted panel in both languages. A single 44px-minimum-height Save PDF / Print button sits at the upper right and stays available while scrolling.
+- Controls remain excluded from printed output. Article typography, annotations and the native PDF flow are unchanged.
