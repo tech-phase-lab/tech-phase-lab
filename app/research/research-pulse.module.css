@@ -22,7 +22,7 @@
 
 /* Live band (owner, Oct 14): LIVE mark, rotating headline, time, and a light line that keeps flowing underneath. */
 .pulse{gap:12px;min-height:46px;padding:10px 2px 11px;margin:0 0 20px;border-top:1px solid #1a2332;border-bottom:1px solid #1a2332;background:none;overflow:hidden}
-.pulse::before{content:"LIVE";flex:none;font:600 10px var(--font-geist-mono),monospace;letter-spacing:.16em;color:#06201a;background:#5dffb4;border-radius:5px;padding:1px 7px;line-height:18px}
+.pulse::before{content:"LIVE";flex:none;font:600 8.5px var(--font-geist-mono),monospace;letter-spacing:.1em;color:#06201a;background:#5dffb4;border-radius:4px;padding:0 5px;line-height:15px}
 .headline{font-size:13.5px;color:#eef2f8}
 .clock{font:11px var(--font-geist-mono),monospace;color:#566174}
 .progress{left:0;right:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,#7fd6b0,transparent);opacity:1;transform:translateX(-100%);transform-origin:left;animation:flow 4.2s linear infinite}

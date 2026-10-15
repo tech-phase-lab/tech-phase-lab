@@ -45,8 +45,8 @@ export function usEasternTime(at: string, kind: string) {
 export function clockTime(at: string, kind: string, _observedAt?: string) {
   return { at, kind };
 }
-/** One clock format for the top strip: "M/D HH:MM JST" (ET in English). */
+/** One clock format for the top strip: "M/D HH:MM", Japan time in Japanese and U.S. Eastern in English, with no zone suffix (owner, Oct 15). */
 export function pulseClock(at: string, kind: string, ja: boolean, observedAt?: string) {
   const time = clockTime(at, kind, observedAt);
-  return (ja ? null : usEasternTime(time.at, time.kind)) ?? shortNewsTime(time.at, time.kind);
+  return ((ja ? null : usEasternTime(time.at, time.kind)) ?? shortNewsTime(time.at, time.kind)).replace(/ (?:JST|ET)$/, "");
 }

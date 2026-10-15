@@ -12,7 +12,7 @@ import styles from "../research-tools.module.css";
 import calendarStyles from "./event-calendar.module.css";
 import DeepAnalysisPanel from "../deep-analysis-panel";
 
-export default function EconomicResultsPanel({ lang, zone, period, kind = "all" }: { lang: "ja" | "en"; zone: string; period: string; kind?: "all" | "earnings" | "economic" }) {
+export default function EconomicResultsPanel({ lang, zone, period, kind = "all", onReported }: { lang: "ja" | "en"; zone: string; period: string; kind?: "all" | "earnings" | "economic"; onReported?: (rows: { ticker: string; at: number }[]) => void }) {
   const [updates, setUpdates] = useState<OfficialUpdate[]>([]);
   const [briefs, setBriefs] = useState<ResultBrief[]>([]);
   const [failed, setFailed] = useState(false);
@@ -35,6 +35,10 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all" 
     };
   }, []);
   const ja = lang === "ja";
+  // The agenda below marks a company's call "results posted" from these rows (owner, Oct 15).
+  useEffect(() => {
+    onReported?.(earningsResults(updates, briefs).filter(row => !ja || row.result.ja).map(row => ({ ticker: row.ticker, at: Date.parse(row.releasedAt) })));
+  }, [updates, briefs, ja, onReported]);
   const results = mergeEconomicResults(updates, briefs).filter(event => (period === "upcoming" || period === "today-upcoming") || calendarDateKey(event.releasedAt, zone).startsWith(period));
   const zoneLabel = zone === "Asia/Tokyo" ? "JST" : "ET";
   const inPeriod = (at: string) => period === "upcoming" || period === "today-upcoming" || calendarDateKey(at, zone).startsWith(period);

@@ -5,6 +5,8 @@ import { officialPulseHeadlineJa } from "./official-news-ja.ts";
 import { isEarningsRelated } from "./earnings-results.ts";
 import { informativeOfficial, officialNewsDisplay, shownInLanguage } from "./news-presentation.ts";
 import { NEWS_MAX_AGE_MS, clockTime, officialTime } from "./news-time.ts";
+import { WATCH_TICKERS } from "./flash-rows.ts";
+import type { CompanyWireItem } from "./company-wire.ts";
 import { officialPulseHeadlines, marketPulseHeadlines, generalPulseHeadlines } from "./news-pulse-headline.ts";
 
 const JAPANESE = /[\u3040-\u30ff\u3400-\u9fff]/;
@@ -19,7 +21,7 @@ export function freshPulseItems<T extends { at: string; kind: string }>(items: T
 }
 
 /** Use the published feed shared with the home news list, including market updates. */
-export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language, now?: number) {
+export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language, now?: number, wire: Record<string, CompanyWireItem[]> = {}) {
   const ja = lang === "ja";
   return [
     // Placeholders awaiting checked copy stay in the news list only.
@@ -46,6 +48,12 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
       body: ja ? item.summary.bodyJa : item.summary.bodyEn, shortTitle: ja ? item.pulseTitleJa : item.pulseTitleEn,
       url: item.sourceUrl, at: item.sourcePublishedAt ?? item.previewPublishedAt, kind: "published" as const }] : []),
     ...(feed?.items ?? []).map(item => ({ headlines: generalPulseHeadlines(item.tickers, lang, ja ? item.summaryJa : item.title, ja ? item.pulseTitleJa ?? item.shortTitleJa : item.pulseTitleEn ?? item.shortTitleEn), id: item.id, ticker: item.tickers.join(" · "), title: ja ? item.summaryJa : item.title, body: ja ? item.summaryJa : item.summaryEn, shortTitle: ja ? item.shortTitleJa : item.shortTitleEn, url: item.url, at: item.publishedAt, kind: "published" as const })),
+    // Company headlines from Yahoo Finance and Google News, the same ones the Alerts page lists
+    // (owner, Oct 15: the strip hardly moved). Only the 22 watched companies, in the shown language.
+    ...Object.entries(wire).flatMap(([ticker, list]) => !WATCH_TICKERS.has(ticker) ? [] : list.flatMap(item => {
+      const title = ja ? item.titleJa : item.titleEn;
+      return title ? [{ id: `wire-${item.id}`, ticker, title, body: title, shortTitle: title, headlines: [title], url: item.url, at: item.publishedAt, kind: "published" as const, observedAt: undefined as string | undefined }] : [];
+    })),
   ].map(item => ({ ...item, shortTitle: item.shortTitle ?? item.title, summary: item.headlines[0] }))
     // The strip is a one-line Japanese summary; an item still awaiting its
     // reviewed translation stays in the news list below (in its original) only.

@@ -11,7 +11,7 @@ const require=createRequire(import.meta.url);
 let source=await readFile(new URL('../app/research/research-pulse.tsx',import.meta.url),'utf8');
 source=source.replace('import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";',
   'const newsSnapshot = () => globalThis.__pulseTestSnapshot; const serverNewsSnapshot = newsSnapshot; const subscribeNews = () => () => {};');
-for (const name of ['news-pulse-items','news-time','news-pulse-headline']) {
+for (const name of ['news-pulse-items','news-time','news-pulse-headline','company-wire']) {
   source=source.replace(`"@/lib/research/${name}"`,JSON.stringify(new URL(`../lib/research/${name}.ts`,import.meta.url).href));
 }
 source=source.replace('import styles from "./research-pulse.module.css";', 'const styles={pulse:"pulse",headline:"headline",clipped:"clipped",clock:"clock",eastern:"eastern",fresh:"fresh",progress:"progress"};');
@@ -37,8 +37,8 @@ test('header has readable non-disclosure text and only a separate rotation butto
     assert.doesNotMatch(html,/>企業ニュース<|>Company news</);
     assert.match(html,/class="clock"/);
     // One clock per language: Japan time in Japanese, U.S. Eastern time in English; no "取得" prefix.
-    if(lang==='ja') { assert.match(html,/aria-label="10\/3 22:34 JST"/); assert.doesNotMatch(html,/ ET/); }
-    else { assert.match(html,/aria-label="10\/3 09:34 ET"/); assert.doesNotMatch(html,/JST/); }
+    if(lang==='ja') { assert.match(html,/aria-label="10\/3 22:34"/); assert.doesNotMatch(html,/ ET|JST/); }
+    else { assert.match(html,/aria-label="10\/3 09:34"/); assert.doesNotMatch(html,/JST| ET/); }
     assert.doesNotMatch(html,/取得|Found/);
     assert.match(html,/2026-10-03T13:34:30.000Z/);
     assert.match(html,/aria-label="(自動切替を停止|Pause rotation)"/);
