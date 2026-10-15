@@ -22,23 +22,29 @@ export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: Res
       sourceUrl: item.url, verifiedOn: item.observedAt.slice(0, 10),
     });
   }
-  // The CPI release read straight from bls.gov (Oct 14): the official result takes the same place as BEA's PCE.
-  for (const item of updates) {
+  // The CPI and PPI releases read straight from bls.gov (Oct 14/15): the official result takes the same place as BEA's PCE.
+  const blsIndicators = [
+    { key: "cpi", label: "CPI", title: { ja: (month: number) => `米国CPI（消費者物価指数）（${month}月）`, en: (period: string) => `U.S. Consumer Price Index (${period})` },
+      detail: { ja: "総合とコアの前月比・前年比をBLS公式発表から取得。市場予想との比較は含みません。", en: "Headline and core monthly and annual changes from the official BLS release. No consensus comparison." } },
+    { key: "ppi", label: "PPI", title: { ja: (month: number) => `米国PPI（生産者物価指数）（${month}月）`, en: (period: string) => `U.S. Producer Price Index (${period})` },
+      detail: { ja: "最終需要の前月比・前年比と、食品・エネルギー・商業サービスを除くコアの変化をBLS公式発表から取得。市場予想との比較は含みません。", en: "Final demand and core (less foods, energy and trade services) monthly and annual changes from the official BLS release. No consensus comparison." } },
+  ];
+  for (const indicator of blsIndicators) for (const item of updates) {
     const url = new URL(item.url);
-    const match = /^\/news\.release\/archives\/cpi_(\d{2})(\d{2})(20\d{2})\.htm$/.exec(url.pathname);
-    const named = /^U\.S\. ([A-Z][a-z]+) CPI:/.exec(item.title);
+    const match = new RegExp(`^\\/news\\.release\\/archives\\/${indicator.key}_(\\d{2})(\\d{2})(20\\d{2})\\.htm$`).exec(url.pathname);
+    const named = new RegExp(`^U\\.S\\. ([A-Z][a-z]+) ${indicator.label}:`).exec(item.title);
     if (url.origin !== "https://www.bls.gov" || url.search || url.hash || !match || !named || item.publisher !== "BLS" || !item.publishedAt || !item.translationJa) continue;
     const month = months.indexOf(named[1].toLowerCase()) + 1;
     if (!month) continue;
     const releaseMonth = Number(match[1]), releaseYear = Number(match[3]);
     const year = releaseYear - (month > releaseMonth ? 1 : 0);
     const period = `${year}-${String(month).padStart(2, "0")}`;
-    const id = `cpi-${period}`;
+    const id = `${indicator.key}-${period}`;
     results.set(id, {
-      id, title: { ja: `米国CPI（消費者物価指数）（${month}月）`, en: `U.S. Consumer Price Index (${period})` },
+      id, title: { ja: indicator.title.ja(month), en: indicator.title.en(period) },
       sourceName: "BLS", releasedAt: item.publishedAt,
       result: { ja: item.translationJa, en: item.title },
-      detail: { ja: "総合とコアの前月比・前年比をBLS公式発表から取得。市場予想との比較は含みません。", en: "Headline and core monthly and annual changes from the official BLS release. No consensus comparison." },
+      detail: indicator.detail,
       sourceUrl: item.url, verifiedOn: item.observedAt.slice(0, 10),
     });
   }

@@ -44,6 +44,21 @@
     "contactUserAgent": true
   },
   {
+    "id": "bls-ppi",
+    "name": "BLS",
+    "kind": "publisher-update",
+    "url": "https://www.bls.gov/news.release/ppi.nr0.htm",
+    "format": "document",
+    "allowedHosts": [
+      "www.bls.gov"
+    ],
+    "intervalSeconds": 60,
+    "retainUnmatched": true,
+    "officialUpdates": true,
+    "reuse": "factual-results-only",
+    "contactUserAgent": true
+  },
+  {
     "id": "nvidia-developer",
     "name": "NVIDIA Developer Blog",
     "kind": "publisher-update",

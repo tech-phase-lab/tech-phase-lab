@@ -102,3 +102,25 @@ test("a CPI result for a December release names the previous year's January data
   const january = { ...cpi, title: cpi.title.replace("September", "December"), url: "https://www.bls.gov/news.release/archives/cpi_01142027.htm", publishedAt: "2027-01-14T08:30:00-05:00" };
   assert.ok(mergeEconomicResults([january]).some(event => event.id === "cpi-2026-12"));
 });
+
+const ppi = {
+  id: "9102", title: "U.S. September PPI: final demand +1.3% MoM / +6.3% YoY; core +0.5% MoM / +5.0% YoY",
+  translationJa: "米国9月PPI：総合 前月比+1.3%・前年比+6.3%／コア 前月比+0.5%・前年比+5.0%",
+  url: "https://www.bls.gov/news.release/archives/ppi_10152026.htm", publisher: "BLS", tickers: [],
+  observedAt: "2026-10-15T12:30:07Z", publishedAt: "2026-10-15T08:30:00-04:00",
+};
+
+test("the PPI release read from bls.gov is accepted only at its dated archive path and joins the calendar results", () => {
+  const payload = publicNewsPayload({ ok: true, enabled: false, items: [], officialUpdates: [{ ...ppi, text: "private evidence" }] });
+  assert.equal(payload.officialUpdates.length, 1);
+  assert.equal(payload.officialUpdates[0].text, undefined);
+  for (const url of ["https://www.bls.gov/news.release/ppi.nr0.htm", ppi.url + "?q=1", ppi.url.replace("www.bls.gov", "bls.gov.evil.example")]) {
+    assert.throws(() => publicNewsPayload({ ok: true, enabled: false, items: [], officialUpdates: [{ ...ppi, url }] }));
+  }
+  const row = mergeEconomicResults([ppi]).find(event => event.id === "ppi-2026-09");
+  assert.ok(row);
+  assert.equal(row.title.ja, "米国PPI（生産者物価指数）（9月）");
+  assert.equal(row.sourceName, "BLS");
+  assert.equal(row.releasedAt, "2026-10-15T08:30:00-04:00");
+  assert.equal(row.result.ja, ppi.translationJa);
+});

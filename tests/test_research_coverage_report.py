@@ -62,8 +62,8 @@ class CoverageReportTests(unittest.TestCase):
             signals.schema(db)
             now = datetime.now(timezone.utc)
             # Use the real intake path to create a valid record without networking.
-            # bls-cpi reads one exact release page and rejects any other document (tested in test_bls_cpi).
-            source = next(s for s in signals.SOURCES if s['format'] == 'document' and s['id'] != 'bls-cpi')
+            # bls-cpi and bls-ppi read one exact release page and rejects any other document (tested in test_bls_cpi).
+            source = next(s for s in signals.SOURCES if s['format'] == 'document' and s['id'] not in ('bls-cpi', 'bls-ppi'))
             signals.check(db, source, list(signals.ALIASES), lambda *_: {
                 'body': ('<main>' + 'A source document about infrastructure. ' * 10 + '</main>').encode()})
             self.assertEqual(next(r for r in coverage_report.report(path)['routes'] if r['id'] == source['id'])['status'], 'fresh')

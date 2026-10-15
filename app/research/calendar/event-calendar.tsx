@@ -42,11 +42,11 @@ export default function EventCalendar() {
   const [period, setPeriod] = useState("today-upcoming");
   const [reported, setReported] = useState<{ ticker: string; at: number }[]>([]);
   const onReported = useCallback((rows: { ticker: string; at: number }[]) => setReported(rows), []);
-  // A company's result is in the "released" list above: its call row says so instead of "time passed".
+  // A company whose result is already in the "released" list above no longer keeps its call row (owner, Oct 15).
   const resultPosted = (event: CalendarEvent) => !!event.ticker && reported.some(row => row.ticker === event.ticker && Math.abs(row.at - Date.parse(event.startsAt)) <= 36 * 3_600_000);
   const now = useCalendarClock();
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
-  const visible = now === null ? [] : selectCalendarEvents(favoritesOnly ? filterFavoriteEvents(calendarEvents, favorites) : calendarEvents, kind, period, now, zone);
+  const visible = now === null ? [] : selectCalendarEvents(favoritesOnly ? filterFavoriteEvents(calendarEvents, favorites) : calendarEvents, kind, period, now, zone).filter(event => !resultPosted(event));
   const visibleDateOnly = now === null ? [] : selectDateOnlyEvents(favoritesOnly ? filterFavoriteEvents(dateOnlyEvents, favorites) : dateOnlyEvents, kind, period, now);
   const reviewedCompanies = coverage.filter((company) => company.lastCheckedOn !== null).length;
   const pendingCompanies = coverage.length - reviewedCompanies;
@@ -77,7 +77,7 @@ export default function EventCalendar() {
       <details>
         <summary>
           <time dateTime={event.startsAt}>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, month: "numeric", day: "numeric", weekday: "short" }).format(new Date(event.startsAt))}<small>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(event.startsAt))} {zoneLabel(zone)}</small></time>
-          <span className={calendarStyles.eventName}>{event.title[lang]}{resultPosted(event) ? <small>{t("決算結果は掲載済み（上の一覧）", "Results posted (see list above)")}</small> : now !== null && Date.parse(event.startsAt) < now && <small>{t("予定時刻を経過", "Scheduled time passed")}</small>}</span>
+          <span className={calendarStyles.eventName}>{event.title[lang]}{now !== null && Date.parse(event.startsAt) < now && <small>{t("予定時刻を経過", "Scheduled time passed")}</small>}</span>
           <span className={calendarStyles.expand} aria-hidden="true">＋</span>
         </summary>
         <div className={calendarStyles.eventDetails}>

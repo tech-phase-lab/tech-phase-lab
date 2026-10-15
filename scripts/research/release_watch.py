@@ -34,7 +34,7 @@ CALL_LOOKBACK = timedelta(hours=12)
 WATCH_FOR = timedelta(hours=6)
 # X routes that post U.S. indicator results and earnings flashes.
 # Official release page polled in the same window as the social routes.
-OFFICIAL_CPI_ROUTE = 'bls-cpi'
+OFFICIAL_ROUTES = {'cpi': 'bls-cpi', 'ppi': 'bls-ppi'}
 BURST_ROUTES = {'economic': ('x-wallstengine',), 'earnings': ('x-wallstengine', 'x-tipranks', 'x-tradethenews')}
 INDICATORS = {
     'jobs': r'payroll|非農業|雇用統計|unemployment rate|失業率',
@@ -112,9 +112,9 @@ def burst_routes(now, events=None):
     for event in [*(load_schedule() if events is None else events), *detected_events(now)]:
         if event['phase'] == 'release' and event['at'] - BURST_BEFORE <= now <= event['at'] + BURST_AFTER:
             routes.update(BURST_ROUTES[event['kind']])
-            # Oct 14: the CPI result is also read straight from the BLS release page.
-            if event['kind'] == 'economic' and event.get('indicator') == 'cpi':
-                routes.add(OFFICIAL_CPI_ROUTE)
+            # Oct 14/15: the CPI and PPI results are also read straight from the BLS release page.
+            if event['kind'] == 'economic' and event.get('indicator') in OFFICIAL_ROUTES:
+                routes.add(OFFICIAL_ROUTES[event['indicator']])
     return routes
 
 
@@ -250,8 +250,8 @@ def diagnostics(db, now, events=None):
     ] if db.execute("SELECT 1 FROM sqlite_master WHERE name='release_watch_alerts'").fetchone() else []
     official = []
     if db.execute("SELECT 1 FROM sqlite_master WHERE name='signal_routes'").fetchone():
-        for row in db.execute('SELECT id,checked_at,succeeded_at,next_check_at,failures,error FROM signal_routes WHERE id=?',
-                              (OFFICIAL_CPI_ROUTE,)):
+        for row in db.execute('SELECT id,checked_at,succeeded_at,next_check_at,failures,error FROM signal_routes WHERE id IN (%s)'
+                              % ','.join('?' for _ in OFFICIAL_ROUTES), tuple(OFFICIAL_ROUTES.values())):
             official.append({'id': row['id'], 'checkedAt': row['checked_at'], 'succeededAt': row['succeeded_at'],
                              'nextCheckAt': row['next_check_at'], 'failures': row['failures'],
                              'error': persisted_error_code(row['error'])})
