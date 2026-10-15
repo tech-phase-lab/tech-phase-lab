@@ -1172,6 +1172,7 @@ def x_recent_posts(db, sources=SOURCES, limit=40):
                 enumerate([s for s in sources if s.get("format") == "x-api"], 1)}
     if not approved or not db.execute("SELECT 1 FROM sqlite_master WHERE name='signal_x_acquisition'").fetchone():
         return []
+    import market_results
     has_results = bool(db.execute("SELECT 1 FROM sqlite_master WHERE name='market_result_publications'").fetchone())
     rows = db.execute("""SELECT a.source_id,a.url,a.title,a.text,a.published_at,a.first_seen_at,
         (SELECT e.id FROM signal_events e WHERE e.source_id=a.source_id AND e.url=a.url ORDER BY e.id DESC LIMIT 1) AS event_id
@@ -1186,9 +1187,17 @@ def x_recent_posts(db, sources=SOURCES, limit=40):
             url = safe_url(row["url"], next(s for s in sources if s["id"] == row["source_id"]))
         except ValueError:
             continue
+        text = str(row["text"] or row["title"])
+        source = next(s for s in sources if s["id"] == row["source_id"])
+        # Oct 15: say why a post was left out, so only a real miss reads as "unreadable".
+        looks_like_result = bool(x_api.EARNINGS_PATTERN.search(text) or market_results.TTN_HEADER.match(text))
+        cashtags = set(re.findall(r"(?<!\w)\$([A-Z]{1,5}(?:\.[A-Z])?)(?![\w.])", text))
+        reason = ("published" if published else "saved" if row["event_id"] is not None else
+                  "not-roster" if looks_like_result and not cashtags & set(source.get("tickers", [])) else
+                  "unreadable" if looks_like_result else "not-result")
         result.append({"route": approved[row["source_id"]], "url": url, "publishedAt": row["published_at"],
-                       "seenAt": row["first_seen_at"], "text": str(row["text"] or row["title"])[:400],
-                       "saved": row["event_id"] is not None, "published": published})
+                       "seenAt": row["first_seen_at"], "text": text[:400],
+                       "saved": row["event_id"] is not None, "published": published, "reason": reason})
     return result
 
 

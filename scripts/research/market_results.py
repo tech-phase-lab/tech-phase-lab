@@ -314,6 +314,12 @@ def trade_the_news_projection(text, tickers):
             'titleEn': tickers[0] + ' ' + quarter + ' earnings: ' + ', '.join(f['en'] + ' ' + f['value'] for f in lead)}
 
 
+def ttn_result(text):
+    """True for a Trade The News result line whose figures can actually be read."""
+    header = TTN_HEADER.match(text) if isinstance(text, str) else None
+    return bool(header and trade_the_news_projection(text, [header[1]]))
+
+
 def projection(text, tickers):
     if not isinstance(text, str) or len(text) > 160000 or PREVIEW.search(text):
         return None

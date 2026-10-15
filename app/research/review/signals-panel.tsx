@@ -44,7 +44,7 @@ type Queue = {
     minimumSpacingSeconds?: number; minimumSourceSpacingSeconds?: number; pacedUntil?: string | null };
   priceTargetReconciliation?: TargetReconciliation;
   /** What the X routes returned, newest first (owner only). */
-  xRecent?: { route: number; url: string; publishedAt: string | null; seenAt: string; text: string; saved: boolean; published: boolean }[];
+  xRecent?: { route: number; url: string; publishedAt: string | null; seenAt: string; text: string; saved: boolean; published: boolean; reason?: string }[];
 };
 const kindNames: Record<string, string> = {
   baseline: "初回取得・過去資料", new: "新規検出・発表時刻は要確認", changed: "内容変更",
@@ -240,9 +240,9 @@ function SignalsSession({ token }: { token: string | null }) {
         </li>)}</ul>
       </details>
       {!!data.xRecent?.length && <details className={styles.routes}><summary>Xで取得した直近の投稿（{data.xRecent.length}件・新しい順）</summary>
-        <p className={styles.note}>取得経路は設定順の番号です。「読み取れず」は、保存はされたが記事・結果として読み取れなかった投稿です。時刻は日本時間です。</p>
+        <p className={styles.note}>取得経路は設定順の番号です。「読み取れず」は決算の形なのに読み取れなかった投稿で、直す対象です。「対象外」は決算・目標株価の投稿ではない、または監視銘柄ではないため、載せないのが正しい投稿です。時刻は日本時間です。</p>
         <ul>{data.xRecent.map(post => <li key={post.url}>
-          <strong>{post.published ? "掲載済み" : post.saved ? "保存のみ（未掲載）" : "読み取れず"}</strong>
+          <strong>{post.published ? "掲載済み" : post.saved ? "保存のみ（未掲載）" : post.reason === "not-roster" ? "対象外（監視銘柄ではない決算投稿）" : post.reason === "not-result" ? "対象外（決算・目標株価の投稿ではない）" : "読み取れず"}</strong>
           <span>経路{post.route} · 投稿 {timeLabel(post.publishedAt)} · 取得 {timeLabel(post.seenAt)}</span>
           <small><a href={post.url} target="_blank" rel="noopener noreferrer">{post.text.replace(/\s+/g, " ")} ↗</a></small>
         </li>)}</ul>

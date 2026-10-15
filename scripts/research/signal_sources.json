@@ -670,7 +670,7 @@
       "AMAT",
       "SIMO"
     ],
-    "query": "from:Trade_The_News \"Reports\" (Q1 OR Q2 OR Q3 OR Q4) -is:retweet -is:reply",
+    "query": "from:Trade_The_News (Q1 OR Q2 OR Q3 OR Q4) \"Reports\" -is:retweet -is:reply",
     "accounts": [
       "Trade_The_News"
     ],

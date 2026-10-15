@@ -115,9 +115,11 @@ def parse_response(source, payload, tickers):
             cashtags = set(re.findall(r"(?<!\w)\$([A-Z]{1,5}(?:[.-][A-Z])?)(?![\w.])", text))
             if cashtags:
                 matches = {ticker: ["$" + ticker] for ticker in cashtags}
-        is_earnings = bool(EARNINGS_PATTERN.search(text) and
-                           not EARNINGS_PREVIEW_PATTERN.search(text))
         import market_results
+        # Oct 15: a Trade The News result line ("$TSM Reports Q3 (NT$) Net ...") never says
+        # "earnings" or "results", so its fixed header is accepted as a result post too.
+        is_earnings = bool((EARNINGS_PATTERN.search(text) or market_results.ttn_result(text)) and
+                           not EARNINGS_PREVIEW_PATTERN.search(text))
         is_economic = market_results.projection(text, ['ECON']) is not None
         if is_economic:
             matches = {'ECON':['economic-result']}
