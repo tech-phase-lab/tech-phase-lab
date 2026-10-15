@@ -70,6 +70,10 @@ export function mergeResultNews(updates: OfficialUpdate[], briefs: ResultBrief[]
       : { title: `${period}: source figures differ`, translationJa: "経済指標：情報源による数値の相違" }
       : {};
     const body = (lang: "ja" | "en") => [...facts.values()].map(({ fact, publishers }) => {
+      // Source names are shown only where sources disagree about a figure (different values or different forecasts);
+      // otherwise nobody needs to know where it came from (owner, Oct 15).
+      const sameMetric = [...facts.values()].filter(other => other.fact.key === fact.key && other.fact.ja === fact.ja && other.fact.en === fact.en);
+      if (!conflict && sameMetric.length < 2) return resultFactText(fact, lang);
       const attribution = [...publishers].join(" / ");
       return resultFactText(fact, lang) + (lang === "ja" ? `（${attribution}）` : ` (${attribution})`);
     }).join("\n");

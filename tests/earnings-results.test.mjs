@@ -50,3 +50,11 @@ test('results releases and earnings notices are kept off the home news list; oth
   assert.equal(isEarningsRelated(update('Apple unveils new iPad')), false);
   assert.equal(isEarningsRelated(update('Apple reports fourth quarter results', { tickers: ['AAPL', 'MSFT'] })), false);
 });
+
+test('one result shows the time of its earliest post (Trade The News 14:34 before Wall St Engine 15:22)', () => {
+  const early = { ...brief, id: '6', researchId: 'x-result-6', publisher: 'Trade The News', url: 'https://x.com/Trade_The_News/status/55334', publishedAt: '2026-10-15T05:34:18Z' };
+  const late = { ...brief, id: '7', researchId: 'x-result-7', publisher: 'Wall St Engine', url: 'https://x.com/wallstengine/status/7', publishedAt: '2026-10-15T06:22:29Z' };
+  const rows = earningsResults([], [late, early]);
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].releasedAt, '2026-10-15T05:34:18Z');
+});

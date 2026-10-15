@@ -65,7 +65,8 @@ export function earningsResults(updates: OfficialUpdate[] = [], briefs: ResultBr
     const flash = group.find(row => row.kind === "flash");
     const first = release ?? group[0];
     const seen = new Set<string>();
-    return { ...first, kind: release ? "release" as const : "flash" as const,
+    // One result, one time: the earliest post of it (Trade The News 14:34 before Wall St Engine 15:22).
+    return { ...first, releasedAt: group[0].releasedAt, kind: release ? "release" as const : "flash" as const,
       // Figures come from the flash; the release supplies the official wording.
       result: flash && !release?.result.ja ? flash.result : release ? { ja: flash?.result.ja ?? release.result.ja, en: flash?.result.en ?? release.result.en } : first.result,
       facts: group.flatMap(row => row.facts).filter(fact => !seen.has(fact.en) && seen.add(fact.en)),

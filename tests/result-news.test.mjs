@@ -26,7 +26,8 @@ test('MU syndicated replay creates one news row with one fact and both original 
   assert.deepEqual(new Set(result.sources.map(s=>s.url)),new Set(rows.map(r=>r.url)));
   assert.equal(result.bodyEn.split('\n').length,1);
   assert.match(result.bodyEn,/\$54\.23B/);
-  for(const publisher of ['Wall St Engine','TipRanks']) assert.ok(result.bodyEn.includes(publisher));
+  // Sources that agree are not named in the text (owner, Oct 15); they stay in `sources`.
+  for(const publisher of ['Wall St Engine','TipRanks']) assert.ok(!result.bodyEn.includes(publisher)&&!result.bodyJa.includes(publisher));
   assert.deepEqual(rows,copy);
 });
 
