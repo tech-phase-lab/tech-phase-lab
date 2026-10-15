@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 46 issuers with published competitor corrections and 68 remaining
+records 57 issuers with published competitor corrections and 57 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -106,6 +106,23 @@ Cohu's contact-interface competition still requires focused review. Intuit's
 Mailchimp gains HubSpot using Mailchimp's own marketing comparison; its existing
 tax/payment peers remain, while payroll and consumer-finance review stays open.
 Reviewed on 2026-10-15; the frozen NVDA map and scrollbar spacing are preserved.
+
+The next batch corrects KEYS, ASX, JBL, FLEX, SANM, BHE, ARW, AVT, ICHR,
+UCTT and MKSI (11 existing issuers; no additions). KEYS separates product test,
+oscilloscopes, network test and RF design software. ASX separates chip packaging
+from its USI electronics manufacturing business. EMS and distribution examples
+attribute peer-side disclosures; portfolio comparisons are marked separately.
+Flex power/cooling is distinguished from outsourced manufacturing, and its
+planned separation is not treated as completed. Ichor and Ultra Clean separate
+fluid delivery, precision machining, equipment modules and cleaning services.
+MKS examples span power/plasma, vacuum, laser/photonics and chemistry products;
+its display name is corrected to MKS Inc. using the official May 2025 rename.
+Sanmina's existing sanm-20251227 source is correctly labelled FY2026 Q1 Form
+10-Q rather than FY2025 Form 10-K. No previously named rival, other bilingual
+answer or non-competition relationship was removed. The selected examples do
+not exhaust every product line: precision-machining niches, smaller chemical
+subsystem suppliers and additional MKS plating-tool peers require further review.
+Reviewed on 2026-10-15; frozen NVDA and competitor-scrollbar spacing are preserved.
 
 The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.

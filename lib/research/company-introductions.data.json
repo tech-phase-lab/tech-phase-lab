@@ -6527,11 +6527,23 @@
       "JBL"
     ],
     "name": "Jabil",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Segments / Design and manufacturing / Customers / Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm"
+      },
+      {
+        "label": "Sanmina FY2026 Q1 Form 10-Q · EMS competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/897723/000089772326000015/sanm-20251227.htm"
+      },
+      {
+        "label": "Benchmark FY2025 Annual Report · Services and Competition, printed pages 2–8",
+        "url": "https://www.sec.gov/Archives/edgar/data/863436/000119312526161736/2025_ars.pdf"
+      },
+      {
+        "label": "Flex FY2026 Form 10-K · Manufacturing and cloud/power infrastructure",
+        "url": "https://www.sec.gov/Archives/edgar/data/866374/000086637426000012/flex-20260331.htm"
       }
     ],
     "ja": {
@@ -6539,7 +6551,7 @@
       "revenue": "規制産業、AI・クラウドを含むインテリジェント基盤、生活・デジタル商取引の3分野で製造サービス料を得る。",
       "strength": "世界各地の工場、専用生産ライン、自動化、設計から調達・量産までの一貫運営により、顧客が短期間で生産量を増減できる。",
       "risks": "2025年度は上位5顧客が売上の約36％。部品不足、特定顧客の発注減、顧客による製造内製化、専用設備の遊休が利益を圧迫する。",
-      "competition": "電子機器の受託製造会社、総合製造サービス会社、設計会社に加え、顧客自身の工場とも競う。",
+      "competition": "電子機器の設計・受託製造ではSanmina、Benchmark Electronics、Flexが競合例。SanminaとBenchmarkはJabilを実名で挙げている。Flexは両社の公表する製造サービスを比較したもの。扱う機器や必要な認証、量産規模によって競合する案件は異なる。",
       "relationships": "クラウド・データセンター、通信、半導体装置、車、医療、エネルギーなどの企業から設計・調達・製造を受託する。"
     },
     "en": {
@@ -6547,49 +6559,50 @@
       "revenue": "Earns manufacturing-service revenue across Regulated Industries, Intelligent Infrastructure including AI and cloud, and Connected Living and Digital Commerce.",
       "strength": "Global factories, dedicated lines, automation and integrated design-to-production operations let customers scale output quickly.",
       "risks": "Its top five customers were about 36% of fiscal 2025 revenue; component shortages, order reductions, customer insourcing and idle dedicated capacity can hurt margins.",
-      "competition": "Competes with electronics manufacturing providers, diversified manufacturers, design firms and customers' own factories.",
+      "competition": "Examples in electronics design and contract manufacturing include Sanmina, Benchmark Electronics and Flex. Sanmina and Benchmark explicitly name Jabil; Flex is an editorial comparison of disclosed manufacturing services. Product requirements, qualifications and production volumes vary.",
       "relationships": "Performs design, sourcing and manufacturing for cloud, data-center, communications, semiconductor-equipment, automotive, healthcare and energy companies."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Electronics manufacturing services",
-          "nameJa": "電子機器の受託製造会社",
+          "kind": "company",
+          "name": "Sanmina",
           "role": "competitor",
           "label": {
-            "ja": "設計・量産受託で競合",
-            "en": "Design and contract manufacturing"
+            "ja": "電子機器受託製造で競合。SanminaがJabilを明記",
+            "en": "Electronics contract manufacturing; Sanmina names Jabil"
           },
           "sourceIndexes": [
-            0
-          ]
+            1
+          ],
+          "ticker": "SANM"
         },
         {
-          "kind": "industry",
-          "name": "Diversified manufacturers",
-          "nameJa": "総合製造サービス会社",
+          "kind": "company",
+          "name": "Benchmark Electronics",
           "role": "competitor",
           "label": {
-            "ja": "世界規模の製造網で競合",
-            "en": "Global manufacturing networks"
+            "ja": "電子機器の設計・製造で競合。Benchmarkの開示",
+            "en": "Electronics design and manufacturing; Benchmark names Jabil"
           },
           "sourceIndexes": [
-            0
-          ]
+            2
+          ],
+          "ticker": "BHE"
         },
         {
-          "kind": "industry",
-          "name": "Customers' internal factories",
-          "nameJa": "顧客の自社工場",
+          "kind": "company",
+          "name": "Flex",
           "role": "competitor",
           "label": {
-            "ja": "製造の内製化と競合",
-            "en": "Customer insourcing"
+            "ja": "電子機器の設計・製造で競合。公表サービス比較",
+            "en": "Electronics design and manufacturing; service comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            3
+          ],
+          "ticker": "FLEX"
         }
       ],
       "relationships": [
@@ -7009,11 +7022,35 @@
       "KEYS"
     ],
     "name": "Keysight Technologies",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Solutions / Markets / Customers / Competition",
         "url": "https://www.sec.gov/Archives/edgar/data/1601046/000160104625000127/keys-20251031.htm"
+      },
+      {
+        "label": "Teradyne FY2025 Form 10-K · Product-test competitors, printed page 6",
+        "url": "https://investors.teradyne.com/sec-filings/all-sec-filings/content/0001193125-26-059002/0001193125-26-059002.pdf"
+      },
+      {
+        "label": "Keysight · Rohde & Schwarz oscilloscope comparison",
+        "url": "https://www.keysight.com/us/en/assets/7018-04098/flyers/5991-3142.pdf"
+      },
+      {
+        "label": "Rohde & Schwarz · Current MXO 5 oscilloscope portfolio",
+        "url": "https://www.rohde-schwarz.com/us/products/test-and-measurement/oscilloscopes/rs-mxo-5-oscilloscope_334228.html"
+      },
+      {
+        "label": "VIAVI FY2026 Form 10-K · Network and service enablement competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm"
+      },
+      {
+        "label": "Keysight · ADS high-frequency circuit and EM simulation",
+        "url": "https://www.keysight.com/us/en/products/software/pathwave-design-software/pathwave-advanced-design-system.html"
+      },
+      {
+        "label": "Cadence · AWR RF/microwave circuit and EM design",
+        "url": "https://www.cadence.com/en_US/home/tools/system-analysis/rf-microwave-design/awr-design-environment-platform.html"
       }
     ],
     "ja": {
@@ -7021,7 +7058,7 @@
       "revenue": "電子計測器と試験システムの販売、設計・解析ソフト、校正・修理・技術支援から稼ぐ。",
       "strength": "80年以上の計測技術と広い導入基盤を持ち、設計、シミュレーション、試作、量産検査まで同じ会社で支援できる。",
       "risks": "顧客の研究開発費と設備投資、中国向け規制、部品供給、買収事業の統合、技術世代の切り替えに左右される。",
-      "competition": "通信・半導体の計測器、EDA・物理解析、ネットワーク試験の各市場で専門会社や総合機器会社と競う。",
+      "competition": "電子機器の試験ではTeradyne、オシロスコープではRohde & Schwarz、通信網の試験・監視ではVIAVI、RF回路・電磁界の設計ソフトではCadenceが競合例。TeradyneとVIAVIはKeysightを実名で列挙。RohdeはKeysightの比較資料、Cadenceは両社の公表製品を比較したもの。",
       "relationships": "通信機器、半導体、自動車・電池、航空宇宙・防衛の開発会社へ測定器と設計・試験ソフトを提供する。"
     },
     "en": {
@@ -7029,49 +7066,63 @@
       "revenue": "Earns from electronic instruments and test systems, design and simulation software, calibration, repair and engineering services.",
       "strength": "Combines more than 80 years of measurement expertise and a large installed base with tools spanning design, simulation, prototype and production test.",
       "risks": "Results depend on customer R&D and capital spending and face China restrictions, component supply, acquisition integration and technology-transition risks.",
-      "competition": "Competes with specialist and diversified vendors in communications and semiconductor test, EDA and physics simulation, and network assurance.",
+      "competition": "Examples include Teradyne in product test, Rohde & Schwarz in oscilloscopes, VIAVI in network test and monitoring, and Cadence in RF circuit and electromagnetic design. Teradyne and VIAVI name Keysight; Rohde is supported by Keysight’s comparison and Cadence by an editorial comparison of disclosed products.",
       "relationships": "Supplies measurement and design and test software to communications, semiconductor, automotive, battery, aerospace and defense developers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Electronic test-equipment vendors",
-          "nameJa": "電子計測器メーカー",
+          "kind": "company",
+          "name": "Teradyne",
           "role": "competitor",
           "label": {
-            "ja": "通信・電子計測で競合",
-            "en": "Communications and electronic test"
+            "ja": "電子機器の製品試験で競合。TeradyneがKeysightを明記",
+            "en": "Product-test equipment; Teradyne names Keysight"
           },
           "sourceIndexes": [
-            0
+            1
+          ],
+          "ticker": "TER"
+        },
+        {
+          "kind": "company",
+          "name": "Rohde & Schwarz",
+          "role": "competitor",
+          "label": {
+            "ja": "オシロスコープで競合。Keysightの比較と現行製品",
+            "en": "Oscilloscopes; Keysight comparison and current product portfolio"
+          },
+          "sourceIndexes": [
+            2,
+            3
           ]
         },
         {
-          "kind": "industry",
-          "name": "EDA and simulation vendors",
-          "nameJa": "EDA・解析ソフト会社",
+          "kind": "company",
+          "name": "VIAVI Solutions",
           "role": "competitor",
           "label": {
-            "ja": "設計・物理解析で競合",
-            "en": "Design and physics simulation"
+            "ja": "通信網の試験・監視で競合。VIAVIの開示",
+            "en": "Network test and monitoring; VIAVI’s disclosure"
           },
           "sourceIndexes": [
-            0
-          ]
+            4
+          ],
+          "ticker": "VIAV"
         },
         {
-          "kind": "industry",
-          "name": "Network assurance vendors",
-          "nameJa": "ネットワーク試験会社",
+          "kind": "company",
+          "name": "Cadence",
           "role": "competitor",
           "label": {
-            "ja": "通信網の試験・監視で競合",
-            "en": "Network test and assurance"
+            "ja": "ADSとAWRのRF回路・電磁界設計で競合。公表製品比較",
+            "en": "ADS versus AWR RF circuit and EM design; product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            5,
+            6
+          ],
+          "ticker": "CDNS"
         }
       ],
       "relationships": [
@@ -7136,11 +7187,27 @@
       "FLEX"
     ],
     "name": "Flex",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Segments / Markets / Customers / Spin-off risks",
         "url": "https://www.sec.gov/Archives/edgar/data/866374/000086637426000012/flex-20260331.htm"
+      },
+      {
+        "label": "Sanmina FY2026 Q1 Form 10-Q · EMS competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/897723/000089772326000015/sanm-20251227.htm"
+      },
+      {
+        "label": "Jabil FY2025 Form 10-K · Design and manufacturing services",
+        "url": "https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm"
+      },
+      {
+        "label": "Vertiv FY2025 Form 10-K · Power and thermal-management products",
+        "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm"
+      },
+      {
+        "label": "Eaton FY2025 Form 10-K · Electrical distribution and data-center products",
+        "url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000007/etn-20251231.htm"
       }
     ],
     "ja": {
@@ -7148,7 +7215,7 @@
       "revenue": "通信機器、産業機器、自動車、医療機器の受託製造と、データセンター向け電源・冷却システムから稼ぐ。",
       "strength": "世界各地の工場、調達網、設計力を組み合わせ、部品調達から量産、修理まで一括で請け負える。",
       "risks": "低採算になりやすい受託製造、顧客の生産計画変更、部品価格、工場稼働率に加え、電源事業の分離計画にも実行リスクがある。",
-      "competition": "EMS・受託製造会社、電源・冷却設備会社、顧客の内製工場と、価格、品質、量産速度、供給網で競う。",
+      "competition": "受託製造ではSanminaとJabil、データセンターの電源・冷却ではVertiv、配電設備ではEatonが競合例。SanminaはFlexを競合に列挙。他は両社の公表するサービス・製品の比較で、受託製造と自社の電源・冷却製品を同一視しない。",
       "relationships": "通信、クラウド・データセンター、自動車、医療、産業機器会社の製品と電源設備を設計・製造する。"
     },
     "en": {
@@ -7156,49 +7223,65 @@
       "revenue": "Earns from outsourced manufacturing for communications, industrial, automotive and medical products and from data-center power and cooling systems.",
       "strength": "Combines a global factory and sourcing network with engineering to handle component procurement, production and lifecycle services.",
       "risks": "Contract manufacturing carries margin, customer-schedule, component-cost and utilization risks, while the planned power-business separation adds execution risk.",
-      "competition": "Competes with electronics manufacturing services, power and cooling vendors and customers' internal factories on cost, quality, speed and supply resilience.",
+      "competition": "Examples include Sanmina and Jabil in contract manufacturing, Vertiv in data-center power and cooling, and Eaton in electrical distribution. Sanmina names Flex; the other examples compare disclosed services and products. Manufacturing services and owned infrastructure products are distinct businesses.",
       "relationships": "Designs and manufactures products and power infrastructure for communications, cloud and data-center, automotive, medical and industrial customers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Electronics manufacturing services",
-          "nameJa": "電子機器受託製造会社",
+          "kind": "company",
+          "name": "Sanmina",
           "role": "competitor",
           "label": {
-            "ja": "設計・調達・量産で競合",
-            "en": "Design, sourcing and manufacturing"
+            "ja": "電子機器受託製造で競合。SanminaがFlexを明記",
+            "en": "Electronics contract manufacturing; Sanmina names Flex"
           },
           "sourceIndexes": [
-            0
-          ]
+            1
+          ],
+          "ticker": "SANM"
         },
         {
-          "kind": "industry",
-          "name": "Data-center power and cooling vendors",
-          "nameJa": "データセンター電源・冷却会社",
+          "kind": "company",
+          "name": "Jabil",
           "role": "competitor",
           "label": {
-            "ja": "電源・冷却設備で競合",
-            "en": "Power and cooling systems"
+            "ja": "電子機器受託製造で競合。公表サービス比較",
+            "en": "Electronics contract manufacturing; service comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            2
+          ],
+          "ticker": "JBL"
         },
         {
-          "kind": "industry",
-          "name": "Customers' internal manufacturing",
-          "nameJa": "顧客の自社工場",
+          "kind": "company",
+          "name": "Vertiv",
           "role": "competitor",
           "label": {
-            "ja": "製造の内製化と競合",
-            "en": "Customer in-house manufacturing"
+            "ja": "データセンターの電源・冷却で競合。公表製品比較",
+            "en": "Data-center power and cooling; product comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            3
+          ],
+          "ticker": "VRT"
+        },
+        {
+          "kind": "company",
+          "name": "Eaton",
+          "role": "competitor",
+          "label": {
+            "ja": "データセンター等の配電設備で競合。公表製品比較",
+            "en": "Electrical distribution for data centers and related uses; product comparison"
+          },
+          "sourceIndexes": [
+            0,
+            4
+          ],
+          "ticker": "ETN"
         }
       ],
       "relationships": [
@@ -11711,11 +11794,15 @@
       "ICHR"
     ],
     "name": "Ichor Holdings",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1652535/000165253526000012/ichr-20251226.htm"
+      },
+      {
+        "label": "Benchmark FY2025 Annual Report · Services and Competition, printed pages 2–8",
+        "url": "https://www.sec.gov/Archives/edgar/data/863436/000119312526161736/2025_ars.pdf"
       }
     ],
     "ja": {
@@ -11723,7 +11810,7 @@
       "revenue": "大手半導体装置メーカー向けに、設計済みの流体供給サブシステム、部品、精密加工品を販売して稼ぐ。",
       "strength": "顧客装置に合わせた設計、厳しい清浄度管理、精密溶接と量産対応を一体で提供する。認定に時間がかかるため継続採用されやすい。",
       "risks": "売上が少数の装置メーカーに大きく集中し、その生産計画と半導体設備投資に左右される。品質問題や部品不足も影響が大きい。",
-      "competition": "流体供給サブシステム、精密溶接、機械加工を行う専門会社や、装置メーカーの内製部門と競う。",
+      "competition": "流体供給サブシステムではUltra Clean、半導体装置向け精密加工ではBenchmark Electronicsが競合例。Ultra CleanはIchor自身の開示、Benchmarkは両社の公表する加工サービスの比較。ガス・薬液供給と精密加工は別の製品・工程として見る。",
       "relationships": "半導体装置メーカーへ組み込まれる流体システムと部品を供給し、精密加工・材料の仕入先から部材を調達する。"
     },
     "en": {
@@ -11731,36 +11818,37 @@
       "revenue": "Sells engineered fluid-delivery subsystems, components and precision-machined products to major semiconductor equipment makers.",
       "strength": "Combines customer-specific design, stringent purity control, precision welding and volume manufacturing; lengthy qualification can support recurring programs.",
       "risks": "Revenue is highly concentrated among a few equipment customers and follows their production plans and semiconductor capital spending; quality issues and component shortages can have outsized effects.",
-      "competition": "Competes with specialist fluid-system, precision-welding and machining suppliers and with equipment makers' internal production.",
+      "competition": "Examples include Ultra Clean in fluid-delivery subsystems and Benchmark Electronics in semiconductor-equipment precision machining. Ichor explicitly names Ultra Clean; Benchmark is an editorial comparison of disclosed machining services. Fluid delivery and machining are distinct scopes.",
       "relationships": "Supplies fluid systems and components integrated into wafer-fab equipment and sources materials and precision parts from its supplier base."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Fluid-delivery subsystem suppliers",
-          "nameJa": "流体供給システム会社",
+          "kind": "company",
+          "name": "Ultra Clean Holdings",
           "role": "competitor",
           "label": {
-            "ja": "装置内サブシステムで競合",
-            "en": "Equipment subsystems"
+            "ja": "流体供給サブシステムで競合。Ichorの開示",
+            "en": "Fluid-delivery subsystems; Ichor names Ultra Clean"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "UCTT"
         },
         {
-          "kind": "industry",
-          "name": "Equipment makers' internal production",
-          "nameJa": "装置メーカーの内製部門",
+          "kind": "company",
+          "name": "Benchmark Electronics",
           "role": "competitor",
           "label": {
-            "ja": "内製との比較で競合",
-            "en": "Competes with insourcing"
+            "ja": "半導体装置向け精密加工で競合。公表サービス比較",
+            "en": "Semiconductor-equipment precision machining; service comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            0,
+            1
+          ],
+          "ticker": "BHE"
         }
       ],
       "relationships": [
@@ -11799,7 +11887,7 @@
       "UCTT"
     ],
     "name": "Ultra Clean Holdings",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Services / Customers / Competition / Risk factors",
@@ -11811,7 +11899,7 @@
       "revenue": "装置メーカー向けの製品部門と、部品洗浄・コーティング・分析などのサービス部門で稼ぐ。",
       "strength": "複雑な装置モジュールを世界各地で量産し、洗浄・再生・分析まで一社で扱える。顧客の生産拠点近くで支援できる。",
       "risks": "少数の大手装置顧客への依存、半導体設備投資の変動、急な増減産、品質管理、世界各地の供給網がリスク。",
-      "competition": "装置サブシステムの受託製造会社、精密部品会社、超高純度洗浄・コーティング会社と競う。",
+      "competition": "ガス供給ではIchorとFujikin、装置サブシステムではBenchmark Electronics、部品の洗浄・コーティングではEnproが競合例。Ultra Clean自身が製品分野ごとに実名を挙げている。供給装置、加工部品、洗浄サービスを同じものとして比較しない。",
       "relationships": "半導体装置メーカーへ組立済みサブシステムを供給し、装置会社や半導体工場から部品を預かって洗浄・分析する。"
     },
     "en": {
@@ -11819,36 +11907,61 @@
       "revenue": "Earns through a Products segment serving equipment makers and a Services segment covering cleaning, coating and analytical work.",
       "strength": "Combines global manufacturing of complex modules with cleaning, refurbishment and analysis close to customers' production locations.",
       "risks": "Dependence on a few large equipment customers, semiconductor capital cycles, rapid production changes, quality execution and a global supply chain create risk.",
-      "competition": "Competes with subsystem contract manufacturers, precision-component suppliers and ultra-high-purity cleaning and coating providers.",
+      "competition": "Ultra Clean names Ichor and Fujikin in gas delivery, Benchmark Electronics in critical subsystems, and Enpro in cleaning and coating services. Delivery systems, manufactured components and refurbishment services have different functions.",
       "relationships": "Supplies assembled subsystems to equipment manufacturers and receives parts from equipment companies and fabs for cleaning and analysis."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Equipment subsystem manufacturers",
-          "nameJa": "装置サブシステムメーカー",
+          "kind": "company",
+          "name": "Ichor Holdings",
           "role": "competitor",
           "label": {
-            "ja": "複雑な装置モジュールで競合",
-            "en": "Complex equipment modules"
+            "ja": "ガス供給システムで競合。Ultra Cleanの開示",
+            "en": "Gas-delivery systems; Ultra Clean’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ICHR"
+        },
+        {
+          "kind": "company",
+          "name": "Fujikin",
+          "role": "competitor",
+          "label": {
+            "ja": "ガス供給システム・部品で競合。Ultra Cleanの開示",
+            "en": "Gas-delivery systems and components; Ultra Clean’s disclosure"
           },
           "sourceIndexes": [
             0
           ]
         },
         {
-          "kind": "industry",
-          "name": "Precision cleaning providers",
-          "nameJa": "精密洗浄サービス会社",
+          "kind": "company",
+          "name": "Benchmark Electronics",
           "role": "competitor",
           "label": {
-            "ja": "洗浄・コーティングで競合",
-            "en": "Cleaning and coating"
+            "ja": "半導体装置のサブシステムで競合。Ultra Cleanの開示",
+            "en": "Semiconductor-equipment critical subsystems; Ultra Clean’s disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "BHE"
+        },
+        {
+          "kind": "company",
+          "name": "Enpro",
+          "role": "competitor",
+          "label": {
+            "ja": "洗浄・コーティングのサービスで競合。Ultra Cleanの開示",
+            "en": "Cleaning and coating services; Ultra Clean’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "NPO"
         }
       ],
       "relationships": [
@@ -11886,12 +11999,20 @@
     "tickers": [
       "MKSI"
     ],
-    "name": "MKS Instruments",
-    "reviewedOn": "2026-10-14",
+    "name": "MKS Inc.",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Vacuum / Photonics / Materials / Markets / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1049502/000119312526066820/mksi-20251231.htm"
+      },
+      {
+        "label": "MKS FY2025 Annual Report · Product-specific competitors, printed pages 10–11",
+        "url": "https://investor.mks.com/static-files/b9811017-fb6a-4575-a2a7-c14e8fe4c97c"
+      },
+      {
+        "label": "MKS · Corporate name changed effective May 16, 2025",
+        "url": "https://investor.mks.com/news-releases/news-release-details/mks-instruments-announces-change-corporate-name-mks-inc"
       }
     ],
     "ja": {
@@ -11899,7 +12020,7 @@
       "revenue": "半導体・産業機器向けの装置部品、レーザー、光学製品、電子材料・薬品の販売と保守・消耗品で稼ぐ。",
       "strength": "真空制御、光、レーザー、材料加工を横断する技術と大きな導入基盤がある。装置の重要部品から製造材料まで扱える。",
       "risks": "半導体と産業設備の投資循環、買収事業の統合と負債、顧客集中、部品・原材料不足、輸出規制の影響を受ける。",
-      "competition": "真空・工程制御、レーザー・光学、電子材料の各市場で、専門メーカーや大手総合会社と製品ごとに競う。",
+      "competition": "電源・プラズマ制御ではAdvanced Energy、圧力・真空制御ではINFICON、レーザー・光学ではCoherentやLumentum、電子材料の薬液ではElement Solutionsが競合例。MKS自身が製品別に実名を記載しており、全製品で競う一社があるという意味ではない。",
       "relationships": "半導体装置メーカー、半導体工場、電子基板メーカー、産業機器会社へ重要部品、光源、材料を供給する。"
     },
     "en": {
@@ -11907,36 +12028,74 @@
       "revenue": "Earns from equipment components, lasers, optical products, electronic materials and chemicals plus service and consumables across semiconductor and industrial markets.",
       "strength": "Spans vacuum control, photonics, lasers and materials processing with a large installed base, covering both critical tool components and manufacturing materials.",
       "risks": "Semiconductor and industrial investment cycles, acquisition integration and debt, customer concentration, supply constraints and export controls affect results.",
-      "competition": "Competes product by product with specialists and diversified suppliers in vacuum and process control, lasers and optics, and electronic materials.",
+      "competition": "MKS names Advanced Energy in power and plasma products, INFICON in pressure and vacuum control, Coherent and Lumentum in laser/photonics products, and Element Solutions in chemistry. These are product-specific examples rather than one company competing across the entire portfolio.",
       "relationships": "Supplies critical components, light sources and materials to equipment makers, wafer fabs, circuit-board manufacturers and industrial companies."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Vacuum and process-control suppliers",
-          "nameJa": "真空・工程制御メーカー",
+          "kind": "company",
+          "name": "Advanced Energy",
           "role": "competitor",
           "label": {
-            "ja": "装置部品で競合",
-            "en": "Tool components"
+            "ja": "電源・プラズマ制御などで競合。MKSの開示",
+            "en": "Power and plasma-control products; MKS’s disclosure"
           },
           "sourceIndexes": [
-            0
+            1
+          ],
+          "ticker": "AEIS"
+        },
+        {
+          "kind": "company",
+          "name": "INFICON",
+          "role": "competitor",
+          "label": {
+            "ja": "圧力・真空制御で競合。MKSの開示",
+            "en": "Pressure and vacuum control; MKS’s disclosure"
+          },
+          "sourceIndexes": [
+            1
           ]
         },
         {
-          "kind": "industry",
-          "name": "Photonics and laser suppliers",
-          "nameJa": "光学・レーザーメーカー",
+          "kind": "company",
+          "name": "Coherent",
           "role": "competitor",
           "label": {
-            "ja": "光源・レーザーで競合",
-            "en": "Photonics and lasers"
+            "ja": "レーザー・光学で競合。MKSの開示",
+            "en": "Laser and photonics products; MKS’s disclosure"
           },
           "sourceIndexes": [
-            0
-          ]
+            1
+          ],
+          "ticker": "COHR"
+        },
+        {
+          "kind": "company",
+          "name": "Lumentum",
+          "role": "competitor",
+          "label": {
+            "ja": "レーザーで競合。MKSの開示",
+            "en": "Laser products; MKS’s disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "LITE"
+        },
+        {
+          "kind": "company",
+          "name": "Element Solutions",
+          "role": "competitor",
+          "label": {
+            "ja": "電子材料の薬液で競合。MKSの開示",
+            "en": "Electronics chemistry; MKS’s disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "ESI"
         }
       ],
       "relationships": [
@@ -12992,11 +13151,27 @@
       "ASX"
     ],
     "name": "ASE Technology Holding",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 20-F · ATM and EMS businesses / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm"
+      },
+      {
+        "label": "Amkor FY2025 Form 10-K · Named packaging and test competitors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm"
+      },
+      {
+        "label": "USI · ASE-owned electronics design and manufacturing services",
+        "url": "https://www.usiglobal.com/public/index.php/en/company-profile"
+      },
+      {
+        "label": "Jabil FY2025 Form 10-K · Design and manufacturing services",
+        "url": "https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm"
+      },
+      {
+        "label": "Flex FY2026 Form 10-K · Manufacturing and cloud/power infrastructure",
+        "url": "https://www.sec.gov/Archives/edgar/data/866374/000086637426000012/flex-20260331.htm"
       }
     ],
     "ja": {
@@ -13004,7 +13179,7 @@
       "revenue": "半導体の組立・テスト事業と、通信・コンピューター・車載機器などの電子機器製造サービスで稼ぐ。",
       "strength": "世界最大級の生産規模と、先端パッケージ、テスト、基板・完成品組立を一社でつなげられる工程範囲が強み。",
       "risks": "半導体・電子機器需要、大口顧客、工場稼働率、設備投資、台湾海峡の地政学、為替、電力・水供給に左右される。",
-      "competition": "半導体組立・テストではOSATや顧客内製、電子機器製造では世界のEMS会社と競う。",
+      "competition": "半導体のパッケージ・テスト受託ではAmkor、USIが担う電子機器の設計・製造ではJabilとFlexが競合例。AmkorはASEを実名で列挙。JabilとFlexはUSIおよび各社の公表する製造サービスを比較したもので、半導体後工程と完成機器の製造は区別する。",
       "relationships": "半導体会社から組立・テストを、電子機器ブランドから基板・完成品製造を受託し、材料・装置会社から生産資材を調達する。"
     },
     "en": {
@@ -13012,36 +13187,51 @@
       "revenue": "Earns from semiconductor assembly-and-test operations and EMS for communications, computing, automotive and other electronics.",
       "strength": "Combines very large manufacturing scale with advanced packaging, test, board assembly and finished-product manufacturing under one group.",
       "risks": "Semiconductor and electronics demand, large customers, factory utilization, capital spending, Taiwan Strait geopolitics, currencies and power and water availability affect results.",
-      "competition": "Competes with OSATs and customers' internal operations in assembly and test and with global EMS providers in electronics manufacturing.",
+      "competition": "Examples include Amkor in outsourced semiconductor packaging and test, and Jabil and Flex in the electronics design and manufacturing services provided by ASE subsidiary USI. Amkor explicitly names ASE; the EMS examples are editorial comparisons of disclosed services, separate from chip packaging.",
       "relationships": "Performs packaging and test for chip companies and board and finished-product manufacturing for electronics brands, sourcing materials and equipment externally."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Outsourced assembly and test providers",
-          "nameJa": "半導体組立・検査受託会社",
+          "kind": "company",
+          "name": "Amkor Technology",
           "role": "competitor",
           "label": {
-            "ja": "組立・テストで競合",
-            "en": "Assembly and test"
+            "ja": "半導体パッケージ・テスト受託で競合。Amkorの開示",
+            "en": "Outsourced semiconductor packaging and test; Amkor names ASE"
           },
           "sourceIndexes": [
-            0
-          ]
+            1
+          ],
+          "ticker": "AMKR"
         },
         {
-          "kind": "industry",
-          "name": "Electronics manufacturing services providers",
-          "nameJa": "電子機器製造受託会社",
+          "kind": "company",
+          "name": "Jabil",
           "role": "competitor",
           "label": {
-            "ja": "電子機器製造で競合",
-            "en": "Electronics manufacturing"
+            "ja": "USIの電子機器設計・製造で競合。公表サービス比較",
+            "en": "USI electronics design and manufacturing; service comparison"
           },
           "sourceIndexes": [
-            0
-          ]
+            2,
+            3
+          ],
+          "ticker": "JBL"
+        },
+        {
+          "kind": "company",
+          "name": "Flex",
+          "role": "competitor",
+          "label": {
+            "ja": "USIの電子機器設計・製造で競合。公表サービス比較",
+            "en": "USI electronics design and manufacturing; service comparison"
+          },
+          "sourceIndexes": [
+            2,
+            4
+          ],
+          "ticker": "FLEX"
         }
       ],
       "relationships": [
@@ -15198,11 +15388,19 @@
       "ARW"
     ],
     "name": "Arrow Electronics",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Segments / Products and services / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/7536/000110465926012765/arw-20251231x10k.htm"
+      },
+      {
+        "label": "Avnet FY2026 Form 10-K · Component distribution competitors",
+        "url": "https://www.sec.gov/Archives/edgar/data/8858/000110465926096346/avt-20260627x10k.htm"
+      },
+      {
+        "label": "TD SYNNEX FY2025 Form 10-K · Technology distribution competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1177394/000162828026003598/snx-20251130.htm"
       }
     ],
     "ja": {
@@ -15210,7 +15408,7 @@
       "revenue": "部品流通と設計支援、在庫・物流サービス、企業向けIT製品・クラウドの販売で仕入れ値との差額を稼ぐ。",
       "strength": "多数の仕入先と顧客を結び、部品選定、設計、在庫、物流、IT統合まで一括して支援できる。",
       "risks": "薄い利益率、半導体在庫サイクル、仕入先の販売方針、価格下落、信用損失、運転資金、関税に左右される。",
-      "competition": "電子部品流通では大手代理店やメーカー直販、IT流通では企業向け技術商社やクラウド市場と競う。",
+      "competition": "電子部品の流通ではAvnet、企業向けIT機器・ソフトの流通ではTD SYNNEXが競合例。いずれも相手側の年次報告がArrowを実名で挙げている。部品の在庫・設計支援と、企業ITの販売店向け流通は異なる分野として比べる。",
       "relationships": "半導体・電子部品・ITメーカーから製品を仕入れ、OEM、受託製造会社、販売店、ITサービス会社へ供給する。"
     },
     "en": {
@@ -15218,23 +15416,36 @@
       "revenue": "Earns distribution margins from components, design and logistics services, and enterprise IT products and cloud offerings.",
       "strength": "Connects many suppliers and customers while supporting component selection, design, inventory, logistics and IT integration.",
       "risks": "Thin margins, semiconductor inventory cycles, supplier policies, price declines, credit losses, working capital and tariffs affect results.",
-      "competition": "Competes with large component distributors and direct sales, and with enterprise technology distributors and cloud marketplaces.",
+      "competition": "Examples include Avnet in electronic-component distribution and TD SYNNEX in enterprise technology distribution. Both peers explicitly name Arrow in annual filings. Component inventory and design support differ from enterprise IT distribution to resellers.",
       "relationships": "Buys from semiconductor, component and enterprise-technology vendors and supplies OEMs, contract manufacturers, resellers and service providers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Electronic-component and enterprise-IT distributors",
-          "nameJa": "電子部品・企業IT流通会社",
+          "kind": "company",
+          "name": "Avnet",
           "role": "competitor",
           "label": {
-            "ja": "部品・IT流通と支援で競合",
-            "en": "Component and IT distribution"
+            "ja": "電子部品の流通で競合。AvnetがArrowを明記",
+            "en": "Electronic-component distribution; Avnet names Arrow"
           },
           "sourceIndexes": [
-            0
-          ]
+            1
+          ],
+          "ticker": "AVT"
+        },
+        {
+          "kind": "company",
+          "name": "TD SYNNEX",
+          "role": "competitor",
+          "label": {
+            "ja": "企業ITの流通で競合。TD SYNNEXがArrowを明記",
+            "en": "Enterprise IT distribution; TD SYNNEX names Arrow"
+          },
+          "sourceIndexes": [
+            2
+          ],
+          "ticker": "SNX"
         }
       ],
       "relationships": [
@@ -15273,7 +15484,7 @@
       "AVT"
     ],
     "name": "Avnet",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Segments / Products and services / Customers / Competition / Risk factors",
@@ -15285,7 +15496,7 @@
       "revenue": "OEM、受託製造会社、技術者へ電子部品と組み込み製品を販売し、在庫・物流・設計サービスも提供して稼ぐ。",
       "strength": "量産向けの世界規模の供給網と、Farnellの小口・即納販売を持ち、試作から量産まで同じ顧客を支援できる。",
       "risks": "半導体サイクル、在庫評価損、仕入先契約、価格下落、顧客信用、運転資金、物流と地政学に左右される。",
-      "competition": "電子部品流通、オンライン小口販売、組み込み製品で大手代理店、専門商社、メーカー直販と競う。",
+      "competition": "電子部品の量産向け流通ではArrow Electronics、Farnellの少量・短納期販売ではMouser、Digi-Key、RSが競合例。Avnet自身が年次報告で実名を挙げている。量産調達と試作・小口の通販では顧客の用途や必要なサービスが異なる。",
       "relationships": "半導体・電子部品メーカーから仕入れ、OEM・受託製造会社・技術者へ部品、設計、供給網サービスを提供する。"
     },
     "en": {
@@ -15293,19 +15504,55 @@
       "revenue": "Sells components and embedded products to OEMs, contract manufacturers and engineers and provides inventory, logistics and design services.",
       "strength": "Combines a global production supply chain with Farnell's small-order, quick-delivery channel to support customers from prototype to volume.",
       "risks": "Semiconductor cycles, inventory write-downs, supplier agreements, price declines, customer credit, working capital, logistics and geopolitics affect results.",
-      "competition": "Competes in component distribution, online high-service sales and embedded products with large distributors, specialists and direct sales.",
+      "competition": "Avnet names Arrow Electronics in production component distribution and Mouser, Digi-Key and RS among Farnell’s high-service distribution competitors. Volume sourcing differs from prototype and small-order online procurement.",
       "relationships": "Sources from semiconductor and component makers and provides parts, design help and supply-chain services to OEMs, manufacturers and engineers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Electronic-component distributors and online specialists",
-          "nameJa": "電子部品商社・オンライン専門販売会社",
+          "kind": "company",
+          "name": "Arrow Electronics",
           "role": "competitor",
           "label": {
-            "ja": "部品流通と設計支援で競合",
-            "en": "Component distribution and design support"
+            "ja": "量産向け電子部品流通で競合。Avnetの開示",
+            "en": "Production electronic-component distribution; Avnet’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "ARW"
+        },
+        {
+          "kind": "company",
+          "name": "Mouser Electronics",
+          "role": "competitor",
+          "label": {
+            "ja": "Farnellの小口・短納期販売で競合。Avnetの開示",
+            "en": "Farnell high-service component distribution; Avnet’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Digi-Key Electronics",
+          "role": "competitor",
+          "label": {
+            "ja": "Farnellの小口・短納期販売で競合。Avnetの開示",
+            "en": "Farnell high-service component distribution; Avnet’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "RS",
+          "role": "competitor",
+          "label": {
+            "ja": "Farnellの小口・短納期販売で競合。Avnetの開示",
+            "en": "Farnell high-service component distribution; Avnet’s disclosure"
           },
           "sourceIndexes": [
             0
@@ -15348,10 +15595,10 @@
       "SANM"
     ],
     "name": "Sanmina",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
-        "label": "FY2025 Form 10-K · Services / Markets / Customers / Competition / Risk factors",
+        "label": "FY2026 Q1 Form 10-Q · Markets / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/897723/000089772326000015/sanm-20251227.htm"
       }
     ],
@@ -15360,7 +15607,7 @@
       "revenue": "産業・エネルギー、医療、防衛・航空、自動車、通信、クラウド・AI企業から製造サービスを受託して稼ぐ。",
       "strength": "高信頼性が必要な複雑製品を、設計、部品製造、組立、試験、供給網、修理まで一貫して支援できる。",
       "risks": "大口顧客と注文変動、薄い利益率、工場稼働率、部品不足、品質、関税、規制産業の認定に左右される。",
-      "competition": "電子機器の受託設計・製造で世界のEMS会社、専門メーカー、顧客の内製部門と競う。",
+      "competition": "電子機器の設計・製造受託ではJabil、Flex、Benchmark Electronicsが競合例。Sanmina自身が四半期報告で実名を挙げている。医療、通信、クラウド機器などでは製造技術や認証条件が異なり、全社がすべての案件を同じ条件で競うわけではない。",
       "relationships": "幅広い機器メーカーから設計・製造を受託し、半導体、電子部品、金属・樹脂材料を外部から調達する。"
     },
     "en": {
@@ -15368,23 +15615,49 @@
       "revenue": "Earns manufacturing-service revenue from industrial and energy, medical, defense, auto, communications and cloud-AI customers.",
       "strength": "Supports complex high-reliability products across design, component fabrication, assembly, test, supply chain and repair.",
       "risks": "Large customers and order changes, thin margins, utilization, shortages, quality, tariffs and regulated-market qualifications affect results.",
-      "competition": "Competes in electronics design and manufacturing with global EMS providers, specialists and customers' internal operations.",
+      "competition": "Sanmina names Jabil, Flex and Benchmark Electronics among its electronics manufacturing competitors. Medical, communications and cloud products require different technologies and qualifications, so competition differs by program.",
       "relationships": "Provides design and manufacturing to equipment companies and sources semiconductors, electronic components, metals and resins."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Electronics manufacturing services providers",
-          "nameJa": "電子機器受託製造会社",
+          "kind": "company",
+          "name": "Jabil",
           "role": "competitor",
           "label": {
-            "ja": "設計・製造・供給網で競合",
-            "en": "Design, manufacturing and supply chain"
+            "ja": "電子機器の設計・製造受託で競合。Sanminaの開示",
+            "en": "Electronics design and contract manufacturing; Sanmina’s disclosure"
           },
           "sourceIndexes": [
             0
-          ]
+          ],
+          "ticker": "JBL"
+        },
+        {
+          "kind": "company",
+          "name": "Flex",
+          "role": "competitor",
+          "label": {
+            "ja": "電子機器の設計・製造受託で競合。Sanminaの開示",
+            "en": "Electronics design and contract manufacturing; Sanmina’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "FLEX"
+        },
+        {
+          "kind": "company",
+          "name": "Benchmark Electronics",
+          "role": "competitor",
+          "label": {
+            "ja": "電子機器の設計・製造受託で競合。Sanminaの開示",
+            "en": "Electronics design and contract manufacturing; Sanmina’s disclosure"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "BHE"
         }
       ],
       "relationships": [
@@ -15423,11 +15696,15 @@
       "BHE"
     ],
     "name": "Benchmark Electronics",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-15",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Services / Markets / Customers / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/863436/000119312526064849/bhe-20251231.htm"
+      },
+      {
+        "label": "Benchmark FY2025 Annual Report · Services and Competition, printed pages 2–8",
+        "url": "https://www.sec.gov/Archives/edgar/data/863436/000119312526161736/2025_ars.pdf"
       }
     ],
     "ja": {
@@ -15435,7 +15712,7 @@
       "revenue": "半導体装置、航空宇宙・防衛、産業、通信・コンピューティング、医療企業から設計・製造を受託して稼ぐ。",
       "strength": "高精度加工と電子組立を組み合わせ、規制や品質要求が厳しい少量多品種の複雑製品を一貫支援できる。",
       "risks": "顧客集中、製品計画と受注時期、工場稼働率、部品不足、品質・規制認定、関税と固定費に左右される。",
-      "competition": "製品設計・受託製造、精密加工で世界のEMS会社、専門製造会社、顧客の内製部門と競う。",
+      "competition": "複雑な電子機器の設計・製造ではJabil、Flex、Sanminaが競合例。Benchmark自身が年次報告で実名を列挙している。医療・防衛などの認証や生産数量によって条件が異なり、受託製造の競合を精密加工の全製品へ一律に当てはめない。",
       "relationships": "半導体装置・防衛・産業・通信・医療機器会社から設計製造を受託し、電子部品と加工材料を外部調達する。"
     },
     "en": {
@@ -15443,23 +15720,49 @@
       "revenue": "Earns design and manufacturing revenue from semiconductor-equipment, aerospace-defense, industrial, communications-computing and medical customers.",
       "strength": "Combines precision machining and electronics assembly to support complex, lower-volume products with demanding quality and regulatory needs.",
       "risks": "Customer concentration, program timing, utilization, shortages, quality and regulatory approvals, tariffs and fixed costs affect results.",
-      "competition": "Competes in product design, contract manufacturing and precision machining with global EMS firms, specialists and customer in-house operations.",
+      "competition": "Benchmark names Jabil, Flex and Sanmina among its competitors in electronics design and manufacturing services. Qualifications and volumes differ across medical, defense and other programs; this does not equate every precision-machining capability.",
       "relationships": "Provides design and manufacturing to equipment makers and sources electronic components and precision materials externally."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Product-realization and electronics manufacturing providers",
-          "nameJa": "製品開発・電子機器受託製造会社",
+          "kind": "company",
+          "name": "Jabil",
           "role": "competitor",
           "label": {
-            "ja": "設計・精密加工・製造で競合",
-            "en": "Design, precision machining and manufacturing"
+            "ja": "電子機器の設計・製造で競合。Benchmarkの開示",
+            "en": "Electronics design and manufacturing; Benchmark’s disclosure"
           },
           "sourceIndexes": [
-            0
-          ]
+            1
+          ],
+          "ticker": "JBL"
+        },
+        {
+          "kind": "company",
+          "name": "Flex",
+          "role": "competitor",
+          "label": {
+            "ja": "電子機器の設計・製造で競合。Benchmarkの開示",
+            "en": "Electronics design and manufacturing; Benchmark’s disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "FLEX"
+        },
+        {
+          "kind": "company",
+          "name": "Sanmina",
+          "role": "competitor",
+          "label": {
+            "ja": "電子機器の設計・製造で競合。Benchmarkの開示",
+            "en": "Electronics design and manufacturing; Benchmark’s disclosure"
+          },
+          "sourceIndexes": [
+            1
+          ],
+          "ticker": "SANM"
         }
       ],
       "relationships": [
