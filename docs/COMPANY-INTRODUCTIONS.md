@@ -60,8 +60,21 @@ transceivers. Preserve AAOI as a scoped LITE competitor with that peer-side
 source. The reviewed NVDA payload remains unchanged.
 
 Completion requires a content review, not just one named competitor. Track
-mixed named/industry lists and omitted-peer candidates separately from the 97
-industry-only issuers. BABA's commerce competitors still require review.
+mixed named/industry lists and omitted-peer candidates separately from the
+industry-only issuers.
+
+The next reviewed correction batch covers AAPL, META, BABA, COHR, ZS, DDOG,
+MDB, ADBE, TEAM, HUBS and GLW (11 existing issuers; no additions). It replaces
+nine industry-only lists, leaving 88, and retains every previously named rival.
+BABA now distinguishes JD.com and Pinduoduo in e-commerce, Meituan in quick
+commerce, and its existing Baidu cloud comparison. COHR retains LITE and IPGP
+and adds AAOI using AAOI's explicit optical-transceiver competition disclosure.
+Peer-side disclosures are attributed; official-portfolio comparisons are marked
+as comparisons. Corning's NGK peer uses its current 2026 corporate name.
+These are representative product-specific examples, not exhaustive lists.
+Apple wearables and service-specific competition still require further review.
+Reviewed on 2026-10-15; all other editorial answers and the frozen NVDA payload
+are preserved.
 
 The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
