@@ -27,7 +27,7 @@
 .competitors { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; padding: 12px var(--section-inset); border-top: 2px solid #b18bd7; border-bottom: 0; }
 .competitors h3 { font-size: 13px; }
 .competitors h3 > span { color: #d1a3ff; }
-.competitors > div { display: flex; flex-wrap: nowrap; align-items: center; gap: 7px; min-width: 0; max-width: 100%; overflow-x: auto; }
+.competitors > div { display: flex; flex-wrap: nowrap; align-items: center; gap: 7px; min-width: 0; max-width: 100%; padding-bottom: 12px; overflow-x: auto; }
 .competitor { flex-shrink: 0; justify-content: center; white-space: nowrap; min-height: 36px; padding: 5px 12px; border: 1px dashed #9f8bb9; border-radius: 7px; background: #211f33; color: #ded1f3; font-weight: 700; font-size: 13px; }
 .competitors > div > span:not(.competitor) { color: #8da0b3; font-size: 12px; }
 .board { position: relative; margin: 10px; isolation: isolate; overflow: hidden; }

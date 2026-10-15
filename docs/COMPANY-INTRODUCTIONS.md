@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 36 issuers with published competitor corrections and 78 remaining
+records 46 issuers with published competitor corrections and 68 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -89,6 +89,23 @@ unchanged. Selection notes retain follow-up work for product areas not covered
 by these representative examples, including Intuit marketing and JD logistics.
 Do not copy old corporate names or segments without checking later divestitures.
 Reviewed on 2026-10-15.
+
+A further batch corrects AKAM, NVMI, CAMT, ACMR, ACLS, TER, COHU, FORM,
+PLAB, AMKR and INTU (11 existing issuers; no additions). Names are tied to product
+areas rather than industry placeholders. Nova's explicit disclosure supports
+its Onto and Camtek relationships; Camtek's other inspection comparisons use
+published equipment portfolios. Akamai's CDN/security peer comparisons are
+attributed, while AWS delivery/compute is an editorial product comparison.
+Teradyne separates semiconductor test, product test, collaborative arms and
+mobile robots. FormFactor separates cards, probes/stations, thermal and
+cryogenic equipment. Photronics retains the DNP geographic restriction and
+uses the current Tekscend name. Nova's German Merck has no US MRK ticker.
+No previous named competitor, other bilingual answer or non-competition
+relationship was removed. Representative examples are not an exhaustive audit;
+Cohu's contact-interface competition still requires focused review. Intuit's
+Mailchimp gains HubSpot using Mailchimp's own marketing comparison; its existing
+tax/payment peers remain, while payroll and consumer-finance review stays open.
+Reviewed on 2026-10-15; the frozen NVDA map and scrollbar spacing are preserved.
 
 The stock-search price panel now includes six editorial answers in Japanese and
 English: 何の会社？ / どこで稼ぐ？ / 何が強い？ / 弱点は？ / 競合は？ / どこと繋がる？.
