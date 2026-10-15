@@ -69,6 +69,27 @@ function buildNetwork() {
 
 const catalog = buildNetwork();
 
+// Label the selected product context without reclassifying nodes or moving cards.
+// The reviewed NVIDIA graph and every other issuer keep their existing labels.
+function sectorLayerLabels(root: string): Record<number, NetworkText> | undefined {
+  if (["IONQ", "RGTI", "QBTS", "QUBT"].includes(root)) return {
+    6: { ja: "量子計算システム", en: "Quantum computing systems" },
+    7: { ja: "量子計算の関連企業", en: "Related quantum computing companies" },
+  };
+  if (root === "ASTS") return {
+    5: { ja: "衛星通信システム", en: "Satellite communications systems" },
+    7: { ja: "衛星通信の関連企業", en: "Related satellite communications companies" },
+  };
+  if (["PL", "BKSY"].includes(root)) return {
+    5: { ja: "衛星画像・地理空間情報", en: "Satellite imagery & geospatial intelligence" },
+    7: { ja: "地理空間情報の関連企業", en: "Related geospatial intelligence companies" },
+  };
+  if (["RKLB", "RDW", "AVAV", "KTOS"].includes(root)) return {
+    5: { ja: "宇宙・防衛システム", en: "Space & defense systems" },
+    7: { ja: "宇宙・防衛の関連企業", en: "Related space & defense companies" },
+  };
+}
+
 export function companyNetworkFor(issuer: { cik: number; ticker: string }): CompanyNetwork | null {
   const introduction = companyIntroductionFor(issuer);
   if (!introduction) return null;
@@ -106,5 +127,6 @@ export function companyNetworkFor(issuer: { cik: number; ticker: string }): Comp
   const nodes = new Map(context.nodes.filter(node => included.has(node.id)).map(node => [node.id, node]));
   for (const node of catalog.nodes) if (included.has(node.id) && !nodes.has(node.id)) nodes.set(node.id, node);
   nodes.set(root, catalog.nodes.find(node => node.id === root)!);
-  return { root, nodes: [...nodes.values()], edges: [...edges.values()] };
+  const layerLabels = sectorLayerLabels(root);
+  return { root, nodes: [...nodes.values()], edges: [...edges.values()], ...(layerLabels ? { layerLabels } : {}) };
 }

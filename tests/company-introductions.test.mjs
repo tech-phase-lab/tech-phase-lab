@@ -94,3 +94,21 @@ test('Lumentum shows actual competitors, excludes anonymous rivals and removes o
   assert.ok(!html.includes('レーザーメーカー'));
   assert.ok(!html.includes('aria-label="Nikon"'));
 });
+
+test('quantum and space maps render sector headings without changing the reviewed NVIDIA context', () => {
+  const targets = new Set(['IONQ','RGTI','QBTS','QUBT','RKLB','ASTS','PL','BKSY','AVAV','KTOS','RDW']);
+  for (const introduction of companyIntroductions) {
+    const graph = companyNetworkFor({cik:introduction.cik,ticker:introduction.tickers[0]});
+    if (!targets.has(graph.root)) {
+      assert.equal(graph.layerLabels, undefined, graph.root);
+      continue;
+    }
+    for (const lang of ['ja','en']) {
+      const html = renderToStaticMarkup(createElement(networkComponent.CompanyNetworkMap,{graph,lang}));
+      assert.ok(!html.includes(lang==='ja'?'サーバー・ネットワーク・電源':'Servers, networking &amp; power'), graph.root);
+      assert.ok(!html.includes(lang==='ja'?'クラウド・AIサービス':'Cloud &amp; AI services'), graph.root);
+      assert.ok(Object.values(graph.layerLabels).some(text => html.includes(text[lang].replaceAll('&','&amp;'))), graph.root);
+      assert.equal((html.match(/aria-current="true"/g)??[]).length,1);
+    }
+  }
+});

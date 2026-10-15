@@ -90,7 +90,7 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
     </div>
     <h3 className={styles.mapHeading}><span>06</span>{t("どこと繋がる？", "Who does it work with?")}</h3>
     <div className={styles.board} ref={board} style={{ height: layout.height }} aria-label={t("事業別の企業マップ", "Companies by business area")}>
-      {layout.layers.map(layer => <div key={layer.index} className={styles.layer} style={{ top: layer.y }}>{networkLayers[layer.index][lang]}</div>)}
+      {layout.layers.map(layer => <div key={layer.index} className={styles.layer} style={{ top: layer.y }}>{(graph.layerLabels?.[layer.index] ?? networkLayers[layer.index])[lang]}</div>)}
       <svg className={styles.lines} width="100%" height={layout.height} viewBox={`0 0 ${layout.width} ${layout.height}`} aria-hidden="true" focusable="false">
         {visibleEdges.map((edge, index) => {
           const from = layout.positions[edge.from], to = layout.positions[edge.to];
