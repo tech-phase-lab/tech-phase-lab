@@ -55,8 +55,8 @@ export default function FlashPage({ lang }: { lang: Language }) {
   const list = useRef<HTMLDivElement>(null);
   const sources = useRef<HTMLDetailsElement>(null);
   useEffect(() => {
-    // The list closes on an outside tap or Escape, so it never stays over the timeline.
-    const close = (event: Event) => { if (sources.current?.open && (event instanceof KeyboardEvent ? event.key === "Escape" : !sources.current.contains(event.target as Node))) sources.current.open = false; };
+    // A tap anywhere (inside the list too) or Escape closes it; only the button itself toggles it.
+    const close = (event: Event) => { if (sources.current?.open && (event instanceof KeyboardEvent ? event.key === "Escape" : !(event.target as Element | null)?.closest?.("summary") || !sources.current.contains(event.target as Node))) sources.current.open = false; };
     document.addEventListener("pointerdown", close); document.addEventListener("keydown", close);
     return () => { document.removeEventListener("pointerdown", close); document.removeEventListener("keydown", close); };
   }, []);
