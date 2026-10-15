@@ -16959,11 +16959,31 @@
       "IONQ"
     ],
     "name": "IonQ",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Business / Revenue / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526071562/ionq-20251231.htm"
+      },
+      {
+        "label": "IonQ FY2025 annual report · architecture-specific competitors",
+        "url": "https://s28.q4cdn.com/828571518/files/doc_financials/2025/ar/IONQ-2025-Annual-Report.pdf"
+      },
+      {
+        "label": "Quantinuum · Trapped-ion systems",
+        "url": "https://www.quantinuum.com/products-solutions/quantinuum-systems"
+      },
+      {
+        "label": "IBM · Quantum hardware and roadmap",
+        "url": "https://www.ibm.com/quantum/hardware"
+      },
+      {
+        "label": "Google Quantum AI · Quantum hardware",
+        "url": "https://quantumai.google/"
+      },
+      {
+        "label": "Rigetti FY2025 Form 10-K · gate-model systems and named competition",
+        "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm"
       }
     ],
     "ja": {
@@ -16971,7 +16991,7 @@
       "revenue": "量子計算機へのクラウドアクセス、専用システム、研究開発契約、保守・専門サービスで稼ぐ。",
       "strength": "同じ種類の原子を量子ビットに使うためばらつきが小さく、計算機から制御ソフトまで一体で開発できる。",
       "risks": "市場が初期段階で赤字が続き、性能向上、量産、部品調達、人材、政府・大口案件の時期に左右される。",
-      "competition": "超伝導、光、中性原子など別方式の量子計算機と、クラウドや古典計算を含む代替手段と競う。",
+      "competition": "イオントラップ型ではQuantinuum、超伝導ゲート型ではIBM、Google、Rigettiが競合例。IonQの年次報告は各方式と企業名を挙げている。計算機の方式・利用環境が異なるため、量子ビット数だけで性能を同一視しない。",
       "relationships": "企業、大学、研究機関、政府へ量子計算環境と開発支援を提供し、レーザー・光学・真空など専門部品を調達する。"
     },
     "en": {
@@ -16979,23 +16999,65 @@
       "revenue": "Cloud access, dedicated systems, research contracts, maintenance and professional services.",
       "strength": "Uses identical atomic ions for consistent qubits and develops the system, controls and software as an integrated stack.",
       "risks": "An early market, continuing losses, performance and scale-up goals, specialized supply, talent and contract timing create risk.",
-      "competition": "Competes with superconducting, photonic, neutral-atom and other quantum systems, plus cloud and classical alternatives.",
+      "competition": "IonQ names Quantinuum in trapped-ion computing and IBM, Google and Rigetti in superconducting gate-model computing. These are architecture-specific examples, not equivalent performance claims based on qubit counts.",
       "relationships": "Provides quantum access and development support to enterprises, researchers and governments while sourcing lasers, optics and vacuum components."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Quantum-computing platforms",
-          "nameJa": "量子コンピューター開発会社",
+          "kind": "company",
+          "name": "Quantinuum",
           "role": "competitor",
           "label": {
-            "ja": "方式・性能・利用環境で競合",
-            "en": "Architecture, performance and access"
+            "ja": "イオントラップ型量子計算機。IonQの実名開示",
+            "en": "Trapped-ion quantum systems; IonQ disclosure"
           },
           "sourceIndexes": [
-            0
+            1,
+            2
           ]
+        },
+        {
+          "kind": "company",
+          "name": "IBM",
+          "role": "competitor",
+          "label": {
+            "ja": "超伝導ゲート型量子計算機。IonQの実名開示",
+            "en": "Superconducting gate-model systems; IonQ disclosure"
+          },
+          "sourceIndexes": [
+            1,
+            3
+          ],
+          "ticker": "IBM"
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet / Google",
+          "role": "competitor",
+          "label": {
+            "ja": "Googleの超伝導量子計算機。IonQの実名開示",
+            "en": "Google superconducting systems; IonQ disclosure"
+          },
+          "sourceIndexes": [
+            1,
+            4
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Rigetti Computing",
+          "role": "competitor",
+          "label": {
+            "ja": "超伝導ゲート型量子計算機。IonQの実名開示",
+            "en": "Superconducting gate-model systems; IonQ disclosure"
+          },
+          "sourceIndexes": [
+            1,
+            5
+          ],
+          "ticker": "RGTI"
         }
       ],
       "relationships": [
@@ -17034,11 +17096,27 @@
       "RGTI"
     ],
     "name": "Rigetti Computing",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Revenue / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm"
+      },
+      {
+        "label": "IBM · Quantum hardware and roadmap",
+        "url": "https://www.ibm.com/quantum/hardware"
+      },
+      {
+        "label": "Google Quantum AI · Quantum hardware",
+        "url": "https://quantumai.google/"
+      },
+      {
+        "label": "IonQ FY2025 annual report · architecture-specific competitors",
+        "url": "https://s28.q4cdn.com/828571518/files/doc_financials/2025/ar/IONQ-2025-Annual-Report.pdf"
+      },
+      {
+        "label": "Quantinuum · Trapped-ion systems",
+        "url": "https://www.quantinuum.com/products-solutions/quantinuum-systems"
       }
     ],
     "ja": {
@@ -17046,7 +17124,7 @@
       "revenue": "クラウド経由の計算利用、量子チップとシステムの販売、政府・研究機関との開発契約で稼ぐ。",
       "strength": "量子チップを自社施設で製造し、高速ゲート、複数チップ接続、制御ソフトを一体で改善できる。",
       "risks": "実用上の優位性はまだ確立せず、誤り率と拡張性、赤字と資金、政府案件、極低温部品に左右される。",
-      "competition": "超伝導や別方式の量子計算機、クラウド各社、従来型の高性能計算と競う。",
+      "competition": "ゲート型量子計算機ではIBMとGoogleの超伝導方式、IonQとQuantinuumのイオントラップ方式が競合例。Rigetti自身の実名開示と各社の方式を照合した。クラウドで利用できることと、そのクラウド会社が計算機を製造することは区別する。",
       "relationships": "政府研究所、大学、企業へ量子計算機と研究支援を提供し、極低温・電子制御・製造材料を調達する。"
     },
     "en": {
@@ -17054,22 +17132,64 @@
       "revenue": "Cloud computing access, QPU and system sales, and development contracts with governments and research institutions.",
       "strength": "Fabricates chips in-house and can co-develop fast gates, multi-chip scaling, controls and software.",
       "risks": "Practical advantage is unproven; error rates, scaling, losses, funding, government work and cryogenic supply create risk.",
-      "competition": "Competes with superconducting and other quantum architectures, cloud providers and conventional high-performance computing.",
+      "competition": "Rigetti names IBM and Google, which develop superconducting systems, and IonQ and Quantinuum, which use trapped ions, as computing competitors. Hardware development is distinct from cloud distribution, and different architectures are not treated as interchangeable.",
       "relationships": "Provides systems and research support to government labs, universities and enterprises and sources cryogenic and control components."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Quantum-computing platforms",
-          "nameJa": "量子コンピューター開発会社",
+          "kind": "company",
+          "name": "IBM",
           "role": "competitor",
           "label": {
-            "ja": "量子方式・性能で競合",
-            "en": "Quantum architectures and performance"
+            "ja": "超伝導ゲート型量子計算機。自社開示と公式製品",
+            "en": "Superconducting gate-model systems; own disclosure and products"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
+          ],
+          "ticker": "IBM"
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet / Google",
+          "role": "competitor",
+          "label": {
+            "ja": "超伝導量子計算機。自社開示と公式製品",
+            "en": "Superconducting quantum systems; own disclosure and products"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "IonQ",
+          "role": "competitor",
+          "label": {
+            "ja": "イオントラップ型量子計算機。自社開示と相手側の説明",
+            "en": "Trapped-ion systems; own disclosure and peer description"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ],
+          "ticker": "IONQ"
+        },
+        {
+          "kind": "company",
+          "name": "Quantinuum",
+          "role": "competitor",
+          "label": {
+            "ja": "イオントラップ型量子計算機。自社開示と公式製品",
+            "en": "Trapped-ion systems; own disclosure and products"
+          },
+          "sourceIndexes": [
+            0,
+            4
           ]
         }
       ],
@@ -17109,11 +17229,27 @@
       "QBTS"
     ],
     "name": "D-Wave Quantum",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Revenue / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1907982/000190798226000026/qbts-20251231.htm"
+      },
+      {
+        "label": "IBM · Quantum hardware and roadmap",
+        "url": "https://www.ibm.com/quantum/hardware"
+      },
+      {
+        "label": "D-Wave · Advantage2 annealing systems and Leap access",
+        "url": "https://www.dwavequantum.com/company/newsroom/press-release/d-wave-announces-general-availability-of-advantage2-quantum-computer-its-most-advanced-and-performant-system/"
+      },
+      {
+        "label": "Google Quantum AI · Quantum hardware",
+        "url": "https://quantumai.google/"
+      },
+      {
+        "label": "Quantinuum · Trapped-ion systems",
+        "url": "https://www.quantinuum.com/products-solutions/quantinuum-systems"
       }
     ],
     "ja": {
@@ -17121,7 +17257,7 @@
       "revenue": "Leapクラウドの契約、専門サービス・研修、量子システム販売と保守で稼ぐ。システム販売は時期で振れやすい。",
       "strength": "アニーリング機を実際の最適化問題へ使うためのハード、ハイブリッドソルバー、開発環境を一体で持つ。",
       "risks": "市場が初期段階で赤字が続き、採用速度、システム販売時期、技術ロードマップ、資金と部品に左右される。",
-      "competition": "他方式の量子計算機、量子クラウド、従来の最適化ソフトや高性能計算と競う。",
+      "competition": "D-WaveはIBM、Google、Quantinuumなどを量子計算市場の競合として開示している。IBM・Googleの超伝導ゲート型とQuantinuumのイオントラップ型は、同社のAdvantage2アニーリング機とは方式が異なる。計算需要や研究予算で競う例であり、同じ最適化問題で同等の製品だとは断定しない。",
       "relationships": "企業、政府、研究機関へクラウド利用と導入支援を提供し、極低温・電子制御部品を調達する。"
     },
     "en": {
@@ -17129,22 +17265,53 @@
       "revenue": "Leap cloud subscriptions, professional services and training, system sales and maintenance; system revenue can be lumpy.",
       "strength": "Combines annealing hardware, hybrid solvers and developer tools aimed at applied optimization workloads.",
       "risks": "An early market, continuing losses, adoption, irregular system sales, roadmap execution, funding and components create risk.",
-      "competition": "Competes with other quantum systems and clouds, classical optimization software and high-performance computing.",
+      "competition": "D-Wave names IBM, Google and Quantinuum among quantum-computing competitors. Their gate-model systems differ from Advantage2 annealing: they compete for computing demand and research budgets, without implying identical optimization capabilities or performance.",
       "relationships": "Provides cloud access and implementation support to enterprises, governments and researchers and sources cryogenic and control equipment."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Quantum and optimization platforms",
-          "nameJa": "量子・最適化基盤会社",
+          "kind": "company",
+          "name": "IBM",
           "role": "competitor",
           "label": {
-            "ja": "量子計算・最適化で競合",
-            "en": "Quantum and optimization workloads"
+            "ja": "ゲート型量子計算の代替方式。D-Waveの開示",
+            "en": "Alternative gate-model computing; D-Wave disclosure"
           },
           "sourceIndexes": [
-            0
+            0,
+            1,
+            2
+          ],
+          "ticker": "IBM"
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet / Google",
+          "role": "competitor",
+          "label": {
+            "ja": "超伝導ゲート型の代替方式。D-Waveの開示",
+            "en": "Alternative superconducting gate-model systems; D-Wave disclosure"
+          },
+          "sourceIndexes": [
+            0,
+            3,
+            2
+          ],
+          "ticker": "GOOG"
+        },
+        {
+          "kind": "company",
+          "name": "Quantinuum",
+          "role": "competitor",
+          "label": {
+            "ja": "イオントラップ型の代替方式。D-Waveの開示",
+            "en": "Alternative trapped-ion systems; D-Wave disclosure"
+          },
+          "sourceIndexes": [
+            0,
+            4,
+            2
           ]
         }
       ],
@@ -17184,11 +17351,23 @@
       "QUBT"
     ],
     "name": "Quantum Computing Inc.",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Products / Revenue / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1758009/000121390026022417/ea0278445-10k_quantum.htm"
+      },
+      {
+        "label": "D-Wave · Advantage2 annealing systems and Leap access",
+        "url": "https://www.dwavequantum.com/company/newsroom/press-release/d-wave-announces-general-availability-of-advantage2-quantum-computer-its-most-advanced-and-performant-system/"
+      },
+      {
+        "label": "IBM · Quantum hardware and roadmap",
+        "url": "https://www.ibm.com/quantum/hardware"
+      },
+      {
+        "label": "Xanadu · Aurora photonic quantum computer",
+        "url": "https://www.xanadu.ai/blog/lighting-up-the-quantum-computing-horizon-with-aurora"
       }
     ],
     "ja": {
@@ -17196,7 +17375,7 @@
       "revenue": "研究・専門サービス、光学製品、量子最適化機Diracのクラウド利用、光集積回路の製品・製造サービスで稼ぐ段階。",
       "strength": "室温で動く光学方式、光集積回路の設計、チップ製造設備を組み合わせて試作から製品まで進められる。",
       "risks": "2025年売上は小さく、赤字と資金需要、製品化と顧客獲得、工場立ち上げ、競合の豊富な資金に左右される。",
-      "competition": "量子計算機、光集積回路、量子センシング、従来型の最適化技術を持つ企業や研究機関と競う。",
+      "competition": "Diracなどの量子・光学計算ではD-WaveのAdvantage2、IBMのゲート型計算機、Xanaduの光量子計算機Auroraが競合・代替方式の例。同社の実名開示と公式製品で範囲を確認した。光を使う方式でも設計と用途は異なり、これらを薄膜ニオブ酸リチウムの製造受託会社だとは扱わない。",
       "relationships": "企業・政府・研究機関へ製品と開発支援を提供し、光学・半導体材料や製造装置を調達する。"
     },
     "en": {
@@ -17204,22 +17383,50 @@
       "revenue": "Early revenue comes from research services, optical products, cloud access to Dirac optimization systems and photonic products and foundry work.",
       "strength": "Combines room-temperature photonics, integrated-circuit design and chip fabrication from prototype through product development.",
       "risks": "Revenue remains small; losses, funding, commercialization, customer adoption, foundry ramp and better-funded rivals create risk.",
-      "competition": "Competes in quantum computing, photonic chips, quantum sensing and classical optimization with companies and research institutions.",
+      "competition": "QCi names D-Wave, IBM and Xanadu among computing competitors. Examples include Advantage2 annealing, IBM gate-model systems and Xanadu Aurora photonic computing, checked against official products. Their architectures and applications differ; none is inferred to be a thin-film lithium-niobate foundry rival.",
       "relationships": "Provides products and development work to enterprise, government and research users and sources optical materials and fabrication equipment."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Quantum and photonic-technology developers",
-          "nameJa": "量子・光技術開発会社",
+          "kind": "company",
+          "name": "D-Wave Quantum",
           "role": "competitor",
           "label": {
-            "ja": "量子・光集積技術で競合",
-            "en": "Quantum and photonic technology"
+            "ja": "Advantage2の最適化計算。自社開示と公式製品",
+            "en": "Advantage2 optimization computing; own disclosure and products"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
+          ],
+          "ticker": "QBTS"
+        },
+        {
+          "kind": "company",
+          "name": "IBM",
+          "role": "competitor",
+          "label": {
+            "ja": "ゲート型量子計算の代替方式。自社開示と公式製品",
+            "en": "Alternative gate-model systems; own disclosure and products"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "IBM"
+        },
+        {
+          "kind": "company",
+          "name": "Xanadu",
+          "role": "competitor",
+          "label": {
+            "ja": "Auroraの光量子計算。自社開示と公式製品",
+            "en": "Aurora photonic computing; own disclosure and products"
+          },
+          "sourceIndexes": [
+            0,
+            3
           ]
         }
       ],
@@ -17259,11 +17466,27 @@
       "RKLB"
     ],
     "name": "Rocket Lab",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Launch / Space systems / Customers / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000013/rklb-20251231.htm"
+      },
+      {
+        "label": "SpaceX · Falcon 9 launch vehicle",
+        "url": "https://www.spacex.com/vehicles/falcon-9/"
+      },
+      {
+        "label": "Firefly · Alpha Block II launch configuration, Nasdaq FLY",
+        "url": "https://fireflyspace.com/news/firefly-aerospace-announces-alpha-block-ii-configuration-upgrade-for-flight-8/"
+      },
+      {
+        "label": "Northrop Grumman · ESPAStar spacecraft bus",
+        "url": "https://www.northropgrumman.com/what-we-do/space/spacecraft/espastar/espastar-a-freight-train-to-space"
+      },
+      {
+        "label": "Redwire FY2025 Form 10-K · space components, UAS and named competitors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1819810/000181981026000029/rdw-20251231.htm"
       }
     ],
     "ja": {
@@ -17271,7 +17494,7 @@
       "revenue": "打ち上げサービスと、衛星本体、太陽電池、姿勢制御・通信部品、宇宙機の製造・運用で稼ぐ。",
       "strength": "ロケット、発射場、衛星、主要部品、軌道上運用を一社でつなぎ、任務全体をまとめて提供できる。",
       "risks": "打ち上げ失敗や延期、Neutron開発費、政府案件への依存、工場増産、部品・規制に左右される。",
-      "competition": "小型・中型ロケットの打ち上げと、衛星製造・宇宙部品・運用サービスで宇宙企業と競う。",
+      "competition": "打ち上げではSpaceXのFalcon 9とFireflyのAlpha、宇宙機ではNorthrop Grumman、宇宙機部品ではRedwireが競合例。Rocket Lab自身が分野別に実名を開示している。機体規模や相乗り・専用打ち上げの条件、部品の用途を区別して見る。",
       "relationships": "政府・商業衛星事業者へ打ち上げと宇宙システムを提供し、航空宇宙材料や電子・推進部品を調達する。"
     },
     "en": {
@@ -17279,23 +17502,65 @@
       "revenue": "Launch services and sales of spacecraft, solar power, attitude-control and communications components, manufacturing and operations.",
       "strength": "Connects rockets, launch sites, spacecraft, key components and on-orbit operations into an end-to-end mission offering.",
       "risks": "Launch failures or delays, Neutron development cost, government exposure, production ramps, components and regulation create risk.",
-      "competition": "Competes in small and medium launch, spacecraft manufacturing, space components and mission operations.",
+      "competition": "Rocket Lab names SpaceX and Firefly in launch, Northrop Grumman in spacecraft and Redwire in components. Falcon 9 rideshare/dedicated launches and Alpha serve different payload needs; spacecraft and component competition is a separate scope.",
       "relationships": "Provides launch and space systems to government and commercial satellite operators and sources aerospace materials, electronics and propulsion parts."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Launch and spacecraft providers",
-          "nameJa": "ロケット・衛星システム会社",
+          "kind": "company",
+          "name": "SpaceX",
           "role": "competitor",
           "label": {
-            "ja": "打ち上げ・宇宙機で競合",
-            "en": "Launch and spacecraft systems"
+            "ja": "Falcon 9などの打ち上げサービス。自社開示",
+            "en": "Falcon 9 launch services; own disclosure"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Firefly Aerospace",
+          "role": "competitor",
+          "label": {
+            "ja": "Alphaの打ち上げサービス。自社開示と公式製品",
+            "en": "Alpha launch services; own disclosure and products"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "FLY"
+        },
+        {
+          "kind": "company",
+          "name": "Northrop Grumman",
+          "role": "competitor",
+          "label": {
+            "ja": "宇宙機・衛星バス。自社開示とESPAStar製品",
+            "en": "Spacecraft/buses; own disclosure and ESPAStar products"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ],
+          "ticker": "NOC"
+        },
+        {
+          "kind": "company",
+          "name": "Redwire",
+          "role": "competitor",
+          "label": {
+            "ja": "宇宙機の電力・構造などの部品。自社開示",
+            "en": "Spacecraft power/structure components; own disclosure"
+          },
+          "sourceIndexes": [
+            0,
+            4
+          ],
+          "ticker": "RDW"
         }
       ],
       "relationships": [
@@ -17334,11 +17599,23 @@
       "ASTS"
     ],
     "name": "AST SpaceMobile",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · SpaceMobile service / Revenue / Competition / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm"
+      },
+      {
+        "label": "AST SpaceMobile · FY2025 business update and direct-to-device scope",
+        "url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000005/asts-ex99_1.htm"
+      },
+      {
+        "label": "SpaceX · Starlink direct-to-cell messaging service",
+        "url": "https://starlink.com/public-files/DIRECT_TO_CELL_SERVICE_FEB_25.pdf"
+      },
+      {
+        "label": "Globalstar · Q2 2026 Form 10-Q, handset services and pending Amazon transaction",
+        "url": "https://investors.globalstar.com/static-files/d9651b64-921b-428d-9701-f7fbacec73e9"
       }
     ],
     "ja": {
@@ -17346,7 +17623,7 @@
       "revenue": "通信事業者を通じた衛星通信サービス、政府案件、設備・開発サービスから収益化を始めた段階。",
       "strength": "端末に専用機器を追加せず、携帯会社の周波数と顧客基盤を使って圏外地域を補完する設計。",
       "risks": "衛星配備に多額の資金が必要で、打ち上げ、技術性能、周波数・各国認可、通信会社との契約に左右される。",
-      "competition": "衛星通信、地上の携帯網、スマートフォン直接接続を開発する他の宇宙・通信企業と競う。",
+      "competition": "スマートフォンの圏外通信ではSpaceXのStarlink直接接続とGlobalstarの端末向け衛星サービスが競合例。各社の公式説明を照合した編集上の比較で、メッセージ・SOSとブロードバンドの対応範囲は同一ではない。GlobalstarのAmazonによる買収は契約済み・完了予定の段階として区別する。",
       "relationships": "携帯通信会社とサービスを組み、利用者へ提供する。衛星部品、製造設備、打ち上げサービスを外部調達する。"
     },
     "en": {
@@ -17354,23 +17631,37 @@
       "revenue": "Is beginning to monetize satellite service through mobile operators, government work, equipment and development services.",
       "strength": "Uses mobile operators' spectrum and customer reach without requiring a special device, extending coverage beyond terrestrial networks.",
       "risks": "Capital needs, launches, technical performance, spectrum and country approvals, and definitive operator agreements drive risk.",
-      "competition": "Competes with satellite communications, terrestrial mobile networks and other direct-to-device developers.",
+      "competition": "Examples for off-grid handset connectivity are SpaceX Starlink direct-to-cell and Globalstar handset satellite services. This editorial comparison of official disclosures distinguishes messaging/SOS from broadband. Globalstar’s agreed Amazon transaction is pending, not treated as completed.",
       "relationships": "Works with mobile-network operators to reach subscribers and sources satellite components, production equipment and launch services."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Satellite and mobile-connectivity providers",
-          "nameJa": "衛星・携帯通信事業者",
+          "kind": "company",
+          "name": "SpaceX",
           "role": "competitor",
           "label": {
-            "ja": "圏外通信・直接接続で競合",
-            "en": "Coverage and direct-to-device service"
+            "ja": "Starlinkの携帯直接接続。公式資料の編集比較",
+            "en": "Starlink direct-to-cell; editorial primary-source comparison"
           },
           "sourceIndexes": [
-            0
+            1,
+            2
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Globalstar",
+          "role": "competitor",
+          "label": {
+            "ja": "端末向け衛星通信。公式資料の編集比較、Amazon買収は未完了",
+            "en": "Handset satellite services; editorial comparison, Amazon deal pending"
+          },
+          "sourceIndexes": [
+            1,
+            3
+          ],
+          "ticker": "GSAT"
         }
       ],
       "relationships": [
@@ -17409,11 +17700,27 @@
       "PL"
     ],
     "name": "Planet Labs",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Platform / Customers / Revenue / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm"
+      },
+      {
+        "label": "Planet · PlanetScope, SkySat and Pelican imagery products",
+        "url": "https://www.planet.com/products/satellite-imagery-of-earth/"
+      },
+      {
+        "label": "Vantor · Former Maxar Intelligence, WorldView and spatial-intelligence products",
+        "url": "https://vantor.com/blog/vantor-rebrands-from-maxar-intelligence-unveils-ai-powered-platform/"
+      },
+      {
+        "label": "Airbus · Pleiades Neo optical satellite imagery",
+        "url": "https://space-solutions.airbus.com/imagery/our-optical-and-radar-satellite-imagery/pleiades-neo/"
+      },
+      {
+        "label": "BlackSky · Gen-3 imagery and Spectra general availability",
+        "url": "https://blacksky.com/press-releases/blacksky-successfully-commissions-gen-3-in-less-than-one-week-opening-gen-3-general-availability-for-global-customer-base/"
       }
     ],
     "ja": {
@@ -17421,7 +17728,7 @@
       "revenue": "政府・企業向けの衛星画像とデータ基盤の契約、分析サービス、専用衛星・関連サービスで稼ぐ。",
       "strength": "高い撮影頻度と長年の画像履歴を組み合わせ、地域の変化を時系列で比較しやすい。",
       "risks": "契約更新、政府予算、衛星・打ち上げ失敗、画像性能、競争、赤字と継続投資に左右される。",
-      "competition": "地球観測衛星、航空画像、地理空間データ・分析、政府の自前システムと競う。",
+      "competition": "光学衛星画像・撮影指示ではVantorのWorldView、AirbusのPléiades Neo、BlackSkyのGen-3・Spectraが競合例。両社の公式製品を照合した編集上の比較で、解像度・再訪頻度・分析機能は同一ではない。Vantorは旧Maxar Intelligenceの現社名で、旧上場銘柄とは結び付けない。",
       "relationships": "政府、防衛、農業、地図、保険などへ画像・分析を提供し、打ち上げと衛星部品を外部から調達する。"
     },
     "en": {
@@ -17429,23 +17736,50 @@
       "revenue": "Contracts for imagery and data platforms, analytics, dedicated satellites and related services for governments and businesses.",
       "strength": "Combines frequent collection with a long image archive, making geographic change easier to compare over time.",
       "risks": "Renewals, government budgets, satellite or launch failures, image performance, competition, losses and continued investment create risk.",
-      "competition": "Competes with satellite and aerial imagery, geospatial data and analytics, and government-owned systems.",
+      "competition": "Examples in optical imagery and tasking are Vantor WorldView, Airbus Pleiades Neo and BlackSky Gen-3/Spectra. This editorial comparison of official products does not imply equal resolution, revisit or analytics. Vantor is the current name of former Maxar Intelligence, without an obsolete public ticker.",
       "relationships": "Provides imagery and analytics to government, defense, agriculture, mapping and insurance users and sources launches and satellite components."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Earth-imagery and geospatial-data providers",
-          "nameJa": "地球観測・地理空間データ会社",
+          "kind": "company",
+          "name": "Vantor",
           "role": "competitor",
           "label": {
-            "ja": "画像・分析データで競合",
-            "en": "Imagery and geospatial analytics"
+            "ja": "WorldViewの光学画像・撮影指示。公式製品の編集比較",
+            "en": "WorldView optical imagery/tasking; editorial product comparison"
           },
           "sourceIndexes": [
-            0
+            1,
+            2
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Airbus",
+          "role": "competitor",
+          "label": {
+            "ja": "Pléiades Neoの光学衛星画像。公式製品の編集比較",
+            "en": "Pleiades Neo optical imagery; editorial product comparison"
+          },
+          "sourceIndexes": [
+            1,
+            3
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "BlackSky Technology",
+          "role": "competitor",
+          "label": {
+            "ja": "Gen-3画像・Spectraの撮影指示と分析。公式製品の編集比較",
+            "en": "Gen-3 imagery/Spectra tasking and analytics; editorial comparison"
+          },
+          "sourceIndexes": [
+            1,
+            4
+          ],
+          "ticker": "BKSY"
         }
       ],
       "relationships": [
@@ -17484,11 +17818,27 @@
       "BKSY"
     ],
     "name": "BlackSky Technology",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Spectra platform / Revenue / Customers / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1753539/000175353926000032/bksy-20251231.htm"
+      },
+      {
+        "label": "BlackSky · Gen-3 imagery and Spectra general availability",
+        "url": "https://blacksky.com/press-releases/blacksky-successfully-commissions-gen-3-in-less-than-one-week-opening-gen-3-general-availability-for-global-customer-base/"
+      },
+      {
+        "label": "Vantor · Former Maxar Intelligence, WorldView and spatial-intelligence products",
+        "url": "https://vantor.com/blog/vantor-rebrands-from-maxar-intelligence-unveils-ai-powered-platform/"
+      },
+      {
+        "label": "Airbus · Pleiades Neo optical satellite imagery",
+        "url": "https://space-solutions.airbus.com/imagery/our-optical-and-radar-satellite-imagery/pleiades-neo/"
+      },
+      {
+        "label": "Planet · PlanetScope, SkySat and Pelican imagery products",
+        "url": "https://www.planet.com/products/satellite-imagery-of-earth/"
       }
     ],
     "ja": {
@@ -17496,7 +17846,7 @@
       "revenue": "BlackSky Spectraの画像・AIサービス、各国向けの専用宇宙システム、技術開発プログラムで稼ぐ。",
       "strength": "衛星の撮影指示から画像配信・変化検知までをソフトで自動化し、短い時間で判断材料を届けられる。",
       "risks": "政府顧客への集中、契約・予算、衛星と打ち上げ、製造、資金需要、AI分析の品質に左右される。",
-      "competition": "高解像度の地球観測、政府向け宇宙インテリジェンス、地理空間AIの事業者と競う。",
+      "competition": "光学衛星画像・撮影指示ではVantorのWorldView、AirbusのPléiades Neo、PlanetのSkySat・Pelicanが競合例。両社の公式製品を照合した編集上の比較で、解像度・再訪頻度・分析機能は同一ではない。Vantorは旧Maxar Intelligenceの現社名で、旧上場銘柄とは結び付けない。",
       "relationships": "米国・海外政府を中心に画像・分析と専用システムを提供し、衛星部品、打ち上げ、クラウド基盤を利用する。"
     },
     "en": {
@@ -17504,23 +17854,50 @@
       "revenue": "BlackSky Spectra imagery and AI services, sovereign mission solutions and advanced technology programs.",
       "strength": "Automates tasking, delivery and change detection in one software platform to shorten the time from request to insight.",
       "risks": "Government concentration, awards and budgets, satellite and launch performance, manufacturing, capital needs and AI quality create risk.",
-      "competition": "Competes in high-resolution Earth observation, government space intelligence and geospatial AI.",
+      "competition": "Examples in optical imagery and tasking are Vantor WorldView, Airbus Pleiades Neo and Planet SkySat/Pelican. This editorial comparison of official products does not imply equal resolution, revisit or analytics. Vantor is the current name of former Maxar Intelligence, without an obsolete public ticker.",
       "relationships": "Provides imagery, analytics and mission systems mainly to U.S. and foreign governments and uses satellite, launch and cloud suppliers."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Earth-intelligence and geospatial-AI providers",
-          "nameJa": "宇宙情報・地理空間AI会社",
+          "kind": "company",
+          "name": "Vantor",
           "role": "competitor",
           "label": {
-            "ja": "高頻度画像・AI分析で競合",
-            "en": "Rapid imagery and AI analysis"
+            "ja": "WorldViewの光学画像・撮影指示。公式製品の編集比較",
+            "en": "WorldView optical imagery/tasking; editorial product comparison"
           },
           "sourceIndexes": [
-            0
+            1,
+            2
           ]
+        },
+        {
+          "kind": "company",
+          "name": "Airbus",
+          "role": "competitor",
+          "label": {
+            "ja": "Pléiades Neoの光学衛星画像。公式製品の編集比較",
+            "en": "Pleiades Neo optical imagery; editorial product comparison"
+          },
+          "sourceIndexes": [
+            1,
+            3
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Planet Labs",
+          "role": "competitor",
+          "label": {
+            "ja": "SkySat・Pelicanの光学画像。公式製品の編集比較",
+            "en": "SkySat/Pelican optical imagery; editorial comparison"
+          },
+          "sourceIndexes": [
+            1,
+            4
+          ],
+          "ticker": "PL"
         }
       ],
       "relationships": [
@@ -17559,11 +17936,23 @@
       "AVAV"
     ],
     "name": "AeroVironment",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2026 Form 10-K · Autonomous systems / Space, cyber and directed energy / Revenue / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm"
+      },
+      {
+        "label": "Redwire FY2025 Form 10-K · space components, UAS and named competitors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1819810/000181981026000029/rdw-20251231.htm"
+      },
+      {
+        "label": "Anduril · Roadrunner counter-UAS effector",
+        "url": "https://www.anduril.com/roadrunner"
+      },
+      {
+        "label": "RTX Raytheon · Coyote counter-UAS effector",
+        "url": "https://www.rtx.com/raytheon/what-we-do/integrated-air-and-missile-defense/coyote"
       }
     ],
     "ja": {
@@ -17571,7 +17960,7 @@
       "revenue": "米国・同盟国向けの無人機や精密攻撃製品、宇宙・電波・サイバー装置、研究開発・保守契約で稼ぐ。",
       "strength": "小型無人機から攻撃・迎撃、指揮ソフト、宇宙・電波技術までを統合し、実任務向けに提供できる。",
       "risks": "政府予算と契約時期、製品性能、機密・輸出規制、増産、部品調達、買収事業の統合に左右される。",
-      "competition": "無人機、精密攻撃、対ドローン、宇宙・サイバー・電子戦で防衛大手と専門企業に競う。",
+      "competition": "小型無人機ではRedwire傘下Edge AutonomyのStalker・Penguin、対ドローンではAndurilのRoadrunnerとRTXのCoyoteが競合例。AeroVironmentの分野別実名開示と公式製品で確認した。大型協働戦闘機、徘徊型攻撃兵器、迎撃機を同じ製品として一括りにしない。",
       "relationships": "米国政府と同盟国へ製品・開発・保守を提供し、航空電子、推進、通信、複合材料を調達する。"
     },
     "en": {
@@ -17579,23 +17968,51 @@
       "revenue": "Products and development and support contracts for U.S. and allied customers across autonomy, precision strike, space, RF and cyber.",
       "strength": "Integrates small drones, strike and counter-drone systems, command software, space and RF capabilities for operational missions.",
       "risks": "Budgets and award timing, product performance, security and export rules, production, supply and acquisition integration create risk.",
-      "competition": "Competes with defense primes and specialists in autonomy, precision strike, counter-UAS, space, cyber and electronic warfare.",
+      "competition": "Examples include Redwire/Edge Autonomy Stalker and Penguin in small UAS and Anduril Roadrunner and RTX Coyote in counter-UAS. AeroVironment names these firms in the relevant categories; product evidence supports the scope. Small ISR aircraft, loitering munitions and interceptors are distinct.",
       "relationships": "Provides products, development and support to U.S. and allied governments and sources avionics, propulsion, communications and composites."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Defense autonomy and mission-system providers",
-          "nameJa": "防衛無人機・任務システム会社",
+          "kind": "company",
+          "name": "Redwire",
           "role": "competitor",
           "label": {
-            "ja": "無人機・迎撃・宇宙技術で競合",
-            "en": "Autonomy, counter-UAS and space"
+            "ja": "Edge Autonomyの小型ISR無人機。自社開示と相手側の製品説明",
+            "en": "Edge Autonomy small ISR UAS; own disclosure and peer products"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
+          ],
+          "ticker": "RDW"
+        },
+        {
+          "kind": "company",
+          "name": "Anduril Industries",
+          "role": "competitor",
+          "label": {
+            "ja": "Roadrunnerの対ドローン迎撃。自社開示と公式製品",
+            "en": "Roadrunner counter-UAS interception; own disclosure and products"
+          },
+          "sourceIndexes": [
+            0,
+            2
           ]
+        },
+        {
+          "kind": "company",
+          "name": "RTX",
+          "role": "competitor",
+          "label": {
+            "ja": "Coyoteの対ドローン迎撃。自社開示と公式製品",
+            "en": "Coyote counter-UAS interception; own disclosure and products"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ],
+          "ticker": "RTX"
         }
       ],
       "relationships": [
@@ -17634,11 +18051,23 @@
       "KTOS"
     ],
     "name": "Kratos Defense",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Government Solutions / Unmanned Systems / Customers / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1069258/000106925826000013/ktos-20251228.htm"
+      },
+      {
+        "label": "Anduril · Fury autonomous aircraft",
+        "url": "https://www.anduril.com/fury/"
+      },
+      {
+        "label": "General Atomics · MQ-20 autonomous aircraft and CCA development",
+        "url": "https://www.ga-asi.com/ga-asi-makes-another-autonomous-aerial-intercept-in-company-funded-demo-with-mq-20-avenger"
+      },
+      {
+        "label": "L3Harris · InControl satellite command-and-control software",
+        "url": "https://www.l3harris.com/all-capabilities/incontrol-satellite-command-and-control"
       }
     ],
     "ja": {
@@ -17646,7 +18075,7 @@
       "revenue": "Government SolutionsとUnmanned Systemsで、主に米国政府向けの製品販売と固定価格・原価加算契約から稼ぐ。",
       "strength": "比較的低コストで量産できる無人機、標的機、推進・電波技術を持ち、新しい防衛構想を短期間で試せる。",
       "risks": "米国政府予算と調達、契約採算、試験・量産、機密資格、専門人材、部品、買収統合に左右される。",
-      "competition": "無人航空機、標的機、宇宙通信、推進、ミサイル防衛で防衛大手と専門企業に競う。",
+      "competition": "戦術用無人ジェットではAndurilのFuryとGeneral AtomicsのAvenger・協働機開発、衛星地上管制ではL3HarrisのInControlが競合例。Kratosの実名開示と公式製品を照合した。防衛案件では企業同士が別の案件で提携する場合もあり、競合から取引関係を推測しない。",
       "relationships": "米国政府、同盟国、防衛元請けへ製品と技術を提供し、航空宇宙・電子部品を外部調達する。"
     },
     "en": {
@@ -17654,23 +18083,50 @@
       "revenue": "Government Solutions and Unmanned Systems earn mainly from U.S. government product sales and fixed-price and cost-plus contracts.",
       "strength": "Combines relatively affordable, producible drones and targets with propulsion and RF technologies for rapid defense experimentation.",
       "risks": "U.S. budgets and procurement, contract margins, testing and production, clearances, talent, parts and acquisition integration create risk.",
-      "competition": "Competes with defense primes and specialists in unmanned aircraft, targets, space communications, propulsion and missile defense.",
+      "competition": "Examples include Anduril Fury and General Atomics Avenger/CCA development in tactical autonomous jets, and L3Harris InControl in satellite ground control. Kratos names these firms; official products support the scopes. Firms may team on other programs, so rivalry does not establish a commercial relationship.",
       "relationships": "Provides products and technology to U.S. government, allied and prime-contractor customers and sources aerospace and electronic components."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Defense and unmanned-system providers",
-          "nameJa": "防衛・無人システム会社",
+          "kind": "company",
+          "name": "Anduril Industries",
           "role": "competitor",
           "label": {
-            "ja": "無人機・宇宙・推進で競合",
-            "en": "Unmanned, space and propulsion systems"
+            "ja": "Furyの戦術用自律ジェット。自社開示と公式製品",
+            "en": "Fury tactical autonomous jet; own disclosure and products"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
           ]
+        },
+        {
+          "kind": "company",
+          "name": "General Atomics",
+          "role": "competitor",
+          "label": {
+            "ja": "Avenger・協働無人機の開発。自社開示と公式製品",
+            "en": "Avenger/CCA development; own disclosure and products"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "L3Harris Technologies",
+          "role": "competitor",
+          "label": {
+            "ja": "InControlの衛星地上管制。自社開示と公式製品",
+            "en": "InControl satellite ground control; own disclosure and products"
+          },
+          "sourceIndexes": [
+            0,
+            3
+          ],
+          "ticker": "LHX"
         }
       ],
       "relationships": [
@@ -17709,11 +18165,23 @@
       "RDW"
     ],
     "name": "Redwire",
-    "reviewedOn": "2026-10-14",
+    "reviewedOn": "2026-10-16",
     "sources": [
       {
         "label": "FY2025 Form 10-K · Space / Defense Tech / Customers / Risk factors",
         "url": "https://www.sec.gov/Archives/edgar/data/1819810/000181981026000029/rdw-20251231.htm"
+      },
+      {
+        "label": "Rocket Lab FY2025 Form 10-K · spacecraft components and named competitors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000013/rklb-20251231.htm"
+      },
+      {
+        "label": "AeroVironment FY2026 Form 10-K · product-specific named competitors",
+        "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm"
+      },
+      {
+        "label": "Shield AI · V-BAT ISR aircraft",
+        "url": "https://shield.ai/v-bat/"
       }
     ],
     "ja": {
@@ -17721,7 +18189,7 @@
       "revenue": "SpaceとDefense Techの2部門で、政府・商業顧客向けの機器販売、開発・製造・長期プロジェクトから稼ぐ。",
       "strength": "宇宙での運用実績を持つ部品・大型構造・微小重力技術と、防衛向け無人・センサー技術を組み合わせる。",
       "risks": "政府案件、固定価格契約、衛星・任務失敗、部品、買収統合と負債、内部統制の重要な不備に左右される。",
-      "competition": "宇宙機・電力・構造・微小重力サービスと、防衛無人機・光学・電波システムで競う。",
+      "competition": "宇宙機の電力・構造などの部品ではRocket Lab、小型の偵察無人機ではAeroVironmentとShield AIのV-BATが競合例。Redwire自身の実名開示と公式の製品範囲を照合した。宇宙機部品と無人機を分け、提携や共同提案から全面的な競合・取引を推測しない。",
       "relationships": "民間宇宙、国家安全保障、政府・同盟国へ機器と開発を提供し、航空宇宙材料・電子部品を調達する。"
     },
     "en": {
@@ -17729,22 +18197,50 @@
       "revenue": "Its Space and Defense Tech segments earn from hardware and development, manufacturing and long-duration projects for government and commercial customers.",
       "strength": "Combines flight-proven components, large structures and microgravity capabilities with autonomous and sensing technologies for defense.",
       "risks": "Government work, fixed-price contracts, mission failures, supply, acquisition integration and debt, and material control weaknesses create risk.",
-      "competition": "Competes across spacecraft, power, structures, microgravity services, defense autonomy, optics and RF systems.",
+      "competition": "Redwire names Rocket Lab in space components and AeroVironment and Shield AI in UAS. Examples include spacecraft power/structures, small ISR aircraft and Shield AI V-BAT, checked against official scope. Space components and UAS are separate; teaming does not imply blanket rivalry or a new customer relationship.",
       "relationships": "Provides hardware and development to civil, national-security, commercial and allied customers and sources aerospace materials and electronics."
     },
     "maps": {
       "competition": [
         {
-          "kind": "industry",
-          "name": "Space-infrastructure and defense-technology providers",
-          "nameJa": "宇宙インフラ・防衛技術会社",
+          "kind": "company",
+          "name": "Rocket Lab",
           "role": "competitor",
           "label": {
-            "ja": "宇宙機・部品・無人技術で競合",
-            "en": "Spacecraft, components and autonomy"
+            "ja": "宇宙機の電力・構造などの部品。自社開示と相手側の説明",
+            "en": "Spacecraft power/structure components; own disclosure and peer scope"
           },
           "sourceIndexes": [
-            0
+            0,
+            1
+          ],
+          "ticker": "RKLB"
+        },
+        {
+          "kind": "company",
+          "name": "AeroVironment",
+          "role": "competitor",
+          "label": {
+            "ja": "小型ISR無人機。自社開示と相手側の製品分野",
+            "en": "Small ISR UAS; own disclosure and peer product scope"
+          },
+          "sourceIndexes": [
+            0,
+            2
+          ],
+          "ticker": "AVAV"
+        },
+        {
+          "kind": "company",
+          "name": "Shield AI",
+          "role": "competitor",
+          "label": {
+            "ja": "V-BATのISR無人機。自社開示と公式製品",
+            "en": "V-BAT ISR UAS; own disclosure and products"
+          },
+          "sourceIndexes": [
+            0,
+            3
           ]
         }
       ],

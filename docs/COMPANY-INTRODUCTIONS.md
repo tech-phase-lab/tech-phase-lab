@@ -21,7 +21,7 @@ Anonymous competitor categories are not displayed as company names. Unreviewed
 names are marked pending, not guessed. The importer rejects new batches without
 a named competitor. Existing industry-only records still require factual review;
 hiding a placeholder does not complete that review. The working chat's audit
-records 97 issuers with published competitor corrections and 17 remaining
+records 108 issuers with published competitor corrections and 6 remaining
 industry-only issuers after the batches below. These are corrections, not a claim
 of exhaustive review of all product areas.
 Finish these quality corrections before adding new issuers.
@@ -645,3 +645,11 @@ Reviewed SWKS / QRVO / UMC / STM / SLAB / SYNA / HIMX / IMOS / AEHR / INDI (10 e
 The October 5, 2026 Skyworks closing 8-K and Qorvo delisting notice establish the completed combination. The QRVO record is retained as historical information; its six answers and existing relationship labels are explicitly dated to the former standalone business. No automatic SWKS–QRVO rivalry, invented named customer, or new supplier relationship is added. Skyworks business/risk copy reflects the completed combination. Silicon Labs describes the Texas Instruments agreement as pending, with expected closing in the first half of 2027; it is not treated as completed. indie business/strength copy reflects the disclosed reduction of lower-value interior lighting.
 
 For the other six records, all five non-competition bilingual answers are unchanged. Non-competition relationship identities are retained for all ten; only QRVO labels/evidence are date-qualified. All 205 other issuer card/relation sets and NVDA’s exact reviewed map remain preserved. The 12px scrollbar spacing is unchanged.
+
+## 2026-10-16 · quantum architecture, optical imagery and defense scope
+
+Reviewed IONQ / RGTI / QBTS / QUBT / RKLB / ASTS / PL / BKSY / AVAV / KTOS / RDW (11 existing records; no additions). Quantum entries distinguish trapped-ion, superconducting gate-model, annealing and photonic architectures; named companies do not imply equivalent capability or a performance ranking. QCi foundry and sensing competitors remain separate follow-ups.
+
+Rocket Lab separates launch, spacecraft and components. Optical imagery examples for Planet and BlackSky are editorial comparisons of official products, not assertions that a filing explicitly names the other company. Vantor is the current name of former Maxar Intelligence, with no obsolete MAXR ticker. AST SpaceMobile compares handset satellite service scopes from official sources; messaging/SOS and broadband differ. Globalstar is shown separately while its Amazon transaction remains pending. No current private/public status or invented public ticker is assigned to SpaceX.
+
+AeroVironment and Redwire independently name one another in small UAS; Edge Autonomy belongs within Redwire. Kratos separates tactical autonomous jets and satellite ground-control software. Competition and teaming can coexist without establishing any new customer/supplier relationship. All five other bilingual answers and all non-competition map relationships remain unchanged for all eleven. NVDA’s exact reviewed payload, all 204 other issuer card/relation sets and 12px scrollbar padding remain preserved. Reviewed on 2026-10-16; product-scope and mixed-list audits remain open.
