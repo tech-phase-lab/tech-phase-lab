@@ -36,16 +36,16 @@ function MarketGauge({ locale }: { locale: DiagnosisLocale }) {
       <p className={styles.gaugeEmpty}>—</p><p className={styles.status}>{t("準備中です。", "Coming soon.")}</p>
       <p className={styles.muted}>{t("現在の相場の判定はまだ表示していません。", "Current market readings are not available yet.")}</p>
     </section>
-    <section className={styles.card}><h2>{t("4つの位置", "Four market positions")}</h2><p className={styles.muted}>{t("マスを押すと、説明が出ます。", "Tap a box to see what it means.")}</p>
+    <section className={styles.card}><h2>{t("4つの位置", "Four ways the market can look")}</h2><p className={styles.muted}>{t("マスを押すと、説明が出ます。", "Tap a box to see what it means.")}</p>
       <div className={styles.mapAxis}><span>{t("◀ 冷えている", "◀ Cool")}</span><span>{t("行き過ぎ", "Temperature")}</span><span>{t("熱い ▶", "Hot ▶")}</span></div>
       <div className={styles.marketMap} role="group" aria-label={t("トレンドと相場の温度", "Trend and market temperature")}>{positions.map((p, i) => <button key={p.en} aria-label={p[locale]} aria-pressed={selected === i} aria-controls="market-position-description" onClick={() => setSelected(i)}>{p[locale].split(" × ").map((line,k)=><span key={k}>{line}</span>)}</button>)}</div>
-      <div id="market-position-description" aria-live="polite">{selected !== null ? <><h2>{positions[selected][locale]}</h2><p>{en ? positions[selected].detailEn : positions[selected].detailJa}</p></> : <p className={styles.muted}>{t("それぞれの位置の意味を確認できます。", "Explore what each position means.")}</p>}</div>
+      <div id="market-position-description" aria-live="polite">{selected !== null ? <><h2>{positions[selected][locale]}</h2><p>{en ? positions[selected].detailEn : positions[selected].detailJa}</p></> : <p className={styles.muted}>{t("それぞれの位置の意味を確認できます。", "See what each combination means.")}</p>}</div>
     </section>
     <section className={styles.card}><div className={styles.switchRow}><h2>{t("セクター別", "By sector")}</h2><span className={styles.badge}>{t("通知利用権", "Alerts access")}</span></div>
       {[["半導体", "Semiconductors"], ["クラウド・AI", "Cloud & AI"], ["ソフトウェア", "Software"], ["通信機器", "Networking"], ["ヘルスケア", "Healthcare"]].map(([ja, eng]) => <div className={styles.sectorRow} key={eng}><span>{t(ja, eng)}</span><span className={styles.muted}>{t("準備中", "Coming soon")}</span></div>)}
     </section>
     <details className={`${styles.card} ${styles.disclosure}`}><summary>{t("この温度計の判断のしかた", "How this gauge works")}</summary><dl className={styles.methodRows}>
-      <div><dt>{t("更新のタイミング", "When it updates")}</dt><dd>{t("米国市場の終値が確定したあと、1日1回の更新を予定しています。", "Planned updates: once a day, after the US market close is final.")}</dd></div>
+      <div><dt>{t("更新のタイミング", "When it updates")}</dt><dd>{t("米国市場の終値が確定したあと、1日1回の更新を予定しています。", "We plan to update this once a day, after US closing prices are confirmed.")}</dd></div>
       {[["トレンドの見方", "How we read the trend"], ["行き過ぎの見方", "How we measure market temperature"], ["データの出どころ", "Data source"]].map(([ja, eng]) => <div key={eng}><dt>{t(ja, eng)}</dt><dd>{t("準備中です。", "Coming soon.")}</dd></div>)}
     </dl></details>
     <p className={styles.disclaimer}>{t("これからの値動きを当てるものではありません。あくまでも一つの指標として捉えてください。", "This does not predict future moves. Treat it as one indicator among many.")}</p>

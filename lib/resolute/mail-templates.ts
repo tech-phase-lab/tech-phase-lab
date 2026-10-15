@@ -51,7 +51,7 @@ function lineEn(e: AlertEvent): string {
     const lines = (e.newLines ?? []).map((l) => `-${l}%`).join(', ');
     return `- ${e.symbol}: closed at ${usd(e.close)}, down ${pct(e.dropPct)}% from your reference price. Newly reached levels: ${lines}`;
   }
-  return `- ${e.symbol}: closed at ${usd(e.close)}, up ${pct(e.risePct)}% from your reference price. That reaches the upside threshold you set.`;
+  return `- ${e.symbol}: closed at ${usd(e.close)}, up ${pct(e.risePct)}% from your reference price. That reaches the rise alert level you set.`;
 }
 
 export function renderAlertMail(i: AlertMailInput): RenderedMail {
@@ -92,13 +92,13 @@ export function renderAlertMail(i: AlertMailInput): RenderedMail {
 
   const subject =
     hasLine && hasSurge
-      ? '[RESOLUTE] Your downside and upside thresholds were reached'
+      ? '[RESOLUTE] Your drop and rise alert levels were reached'
       : hasLine
         ? '[RESOLUTE] A price level in your plan was reached'
-        : '[RESOLUTE] An upside threshold in your plan was reached';
+        : '[RESOLUTE] A rise alert level in your plan was reached';
   const notes: string[] = [];
-  if (hasLine) notes.push('In your plan, a downside level like this is your cue to pause and reread the rules you wrote for yourself.');
-  if (hasSurge) notes.push('In your plan, an upside threshold is your cue to check whether one holding has grown too big.');
+  if (hasLine) notes.push('In your plan, a drop to this level is your cue to pause and reread the rules you wrote for yourself.');
+  if (hasSurge) notes.push('In your plan, reaching a rise alert level is your cue to check whether one holding has grown too big.');
   return {
     subject,
     text: [
@@ -154,7 +154,7 @@ export function renderNextMorningMail(i: NextMorningInput): RenderedMail {
     subject: "[RESOLUTE] How are you feeling after yesterday's alert?",
     text: [
       "Quick check-in on yesterday's alert.",
-      "Choose the response that best describes how you feel right now.",
+      "Pick the answer that feels closest right now.",
       '',
       `- I followed my plan: ${i.doneUrl}`,
       `- I held off: ${i.skippedUrl}`,

@@ -55,6 +55,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   const savedReturn = useRef<{ id: string; top: number; scroll: number } | null>(null);
   const cardButtons = useRef(new Map<string, HTMLButtonElement>());
   const returnFrame = useRef(0);
+  const detailFrame = useRef(0);
   const [ticker, setTicker] = useState("all");
   const [category, setCategory] = useState("all");
   const [query, setQuery] = useState("");
@@ -101,6 +102,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
     window.addEventListener("popstate", syncHash);
     return () => {
       cancelAnimationFrame(returnFrame.current);
+      cancelAnimationFrame(detailFrame.current);
       window.removeEventListener("hashchange", syncHash);
       window.removeEventListener("popstate", syncHash);
     };
@@ -118,6 +120,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   const selected = tab === "saved" ? filtered.find(event => event.id === savedActiveId) : filtered.find((event) => event.id === activeId) ?? filtered[0];
   const article = useMemberArticle(selected?.id, Boolean(selected?.locked && (tab === "changes" || tab === "saved")));
   const active = article.event ?? selected;
+  const activeCompanyName = active ? monitoredCompanies.find(company => company.ticker === active.ticker)?.name ?? active.company : "";
   const comparisonPeriods = [...new Set(active?.metrics.flatMap((metric) => {
     const previous = active.previous?.find((item) => item.name === metric.name);
     return previous && compareMetrics(metric, previous).ok ? [`${previous.period} → ${metric.period}`] : [];
@@ -137,8 +140,19 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
       setSavedActiveId(id);
     }
     if (tab === "changes") window.history.replaceState(null, "", `#what-changed/${id}`);
-    if (window.matchMedia("(max-width: 1150px)").matches) {
-      requestAnimationFrame(() => { detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }); detailRef.current?.focus({ preventScroll: true }); });
+    if (tab === "saved" || window.matchMedia("(max-width: 1150px)").matches) {
+      cancelAnimationFrame(detailFrame.current);
+      // Wait for the selected article and collection layout to commit, then
+      // place its top below the actual sticky header (including safe-area padding).
+      detailFrame.current = requestAnimationFrame(() => {
+        detailFrame.current = requestAnimationFrame(() => {
+          const detail = detailRef.current;
+          if (!detail) return;
+          const headerHeight = document.querySelector<HTMLElement>("header[data-plan]")?.getBoundingClientRect().height ?? 0;
+          window.scrollTo({ top: Math.max(0, window.scrollY + detail.getBoundingClientRect().top - headerHeight - 12), behavior: "instant" });
+          detail.focus({ preventScroll: true });
+        });
+      });
     }
   }
   function returnToSaved() {
@@ -286,7 +300,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
               </div>}
               <ResearchNotebook key={`${collection.scope}:${active.id}:${lang}:${Boolean(active.locked)}`} raw={JSON.stringify(collection.document.notebooks[notebookKey(active.id, lang)] ?? [])} onCommit={(raw, marks) => collection.commitMarks(active.id, lang, raw, marks)} editable={collection.editable} lang={lang} title={active.title[lang]} enabled={tab === "saved" || saved.includes(active.id)}>
               <div className={styles.detailTop}><span className={styles.eyebrow}>RESEARCH NOTE</span><span className={styles.version}>{active.analysisAsOf ? "v3" : active.analysis ? "v2" : "v1"} · {(active.id === "mu-q4-2026" || active.id.startsWith("x-result-")) ? t("決算速報", "Earnings update") : active.id.startsWith("ir-result-") ? t("公式発表", "Company update") : active.analysisAsOf ? t("分析更新", "Updated analysis") : t("過去事例", "Historical")}</span></div>
-              <div className={styles.detailCompany}><Link className={styles.detailTicker} href={`/research/companies/${active.ticker}`} aria-label={t(`${active.ticker}の銘柄ページ`, `${active.ticker} company research`)}>{active.ticker} ↗</Link><span>{active.company}</span></div>
+              <div className={styles.detailCompany}><Link className={styles.detailTicker} href={`/research/companies/${active.ticker}`} aria-label={t(`${active.ticker}の銘柄ページ`, `${active.ticker} company research`)}>{activeCompanyName}{activeCompanyName !== active.ticker && `（${active.ticker}）`}</Link></div>
               <h2>{active.title[lang]}</h2>{active.id === "mu-q3-2026" && <p>{t("PRO分析の無料サンプルです。ほかの詳細分析はPRO会員向けです。", "A free sample of PRO research. Other in-depth analysis requires PRO membership.")}</p>}
               <dl className={styles.announcementContext}>
                 {active.analysisAsOf && <div><dt>{t("分析基準日", "Analysis as of")}</dt><dd>{dateLabel(active.analysisAsOf, lang)}</dd></div>}

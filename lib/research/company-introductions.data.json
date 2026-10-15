@@ -19869,5 +19869,1409 @@
         }
       ]
     }
+  },
+  {
+    "cik": 1002638,
+    "tickers": [
+      "OTEX"
+    ],
+    "name": "OpenText",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1002638/000100263826000068/otex-20260630.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業の文書や取引データを整理し、安全に使えるようにするソフト会社。契約書・記録の管理に加え、企業間の受発注、IT運用、セキュリティなどを支え、情報を業務やAIへつなぐ。",
+      "revenue": "クラウドサービスの継続料金、導入済みソフトの保守・サポート料、ソフトのライセンス、導入支援で稼ぐ。クラウド利用だけでなく、企業が自社設備で動かすソフトの契約も収益源になる。",
+      "strength": "文書の取り込みから保存・検索・廃棄までを管理し、会計や顧客管理の業務と結び付けられる。長年蓄積した情報や承認手順を扱うため、顧客が別製品へ移るにはデータ移行と業務の見直しが必要。",
+      "risks": "買収した多くの製品を統合しながら、保守・ライセンス中心の顧客をクラウドへ移す必要がある。買収に伴う負債、大手のAI・業務ソフトとの競争、重要文書の漏えいも経営上の制約になる。",
+      "competition": "企業情報や業務ソフトではIBM、Microsoft、Oracle、ServiceNow、文書管理ではBoxやHylandなどと競う。Microsoftは競合であると同時に連携先でもあり、競争する製品とつながる製品は異なる。",
+      "relationships": "SAPの基幹業務・人事ソフト、Salesforceの顧客管理、Microsoft 365などと文書・業務を連携する。製造・金融・政府などに情報管理を提供し、販売・導入パートナーが展開を支える。"
+    },
+    "en": {
+      "business": "Provides software to govern enterprise documents and transaction data. Its portfolio also supports business-to-business exchanges, IT operations and security, connecting information with business workflows and AI.",
+      "revenue": "Earns cloud subscription fees, support renewals for installed software, software-license revenue and implementation fees. Customers can operate products on their own infrastructure as well as use hosted services.",
+      "strength": "Manages information from capture through retention and disposal, linking it with business systems. Moving historical content and established approval processes to another vendor can require substantial work.",
+      "risks": "Must integrate acquired products and migrate customers toward cloud services. Acquisition-related debt, competition from large AI and business-software providers, and sensitive-document breaches are risks.",
+      "competition": "Competes with IBM, Microsoft, Oracle and ServiceNow in enterprise software and with Box and Hyland in content management. Microsoft is also an integration partner; the roles depend on the product.",
+      "relationships": "Connects content with SAP business and HR systems, Salesforce CRM and Microsoft 365. Serves manufacturing, finance, government and other sectors, supported by resellers and implementation partners."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "IBM",
+          "ticker": "IBM",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向け情報・業務ソフトで競合",
+            "en": "Enterprise information and business software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "業務・情報管理で競合",
+            "en": "Business and information management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Oracle",
+          "ticker": "ORCL",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向け業務ソフトで競合",
+            "en": "Enterprise business software"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "ServiceNow",
+          "ticker": "NOW",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向け業務ソフトで競合",
+            "en": "Enterprise workflows"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Box",
+          "ticker": "BOX",
+          "role": "competitor",
+          "label": {
+            "ja": "文書・情報管理で競合",
+            "en": "Content management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "SAP",
+          "ticker": "SAP",
+          "role": "partner",
+          "label": {
+            "ja": "基幹業務・人事ソフトと文書を連携",
+            "en": "Content integration with business and HR systems"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "partner",
+          "label": {
+            "ja": "顧客管理と文書・業務を連携",
+            "en": "Content and workflow integration with CRM"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "partner",
+          "label": {
+            "ja": "Microsoft 365などと情報管理を連携",
+            "en": "Information management integration with Microsoft 365"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprise and public-sector organizations",
+          "nameJa": "企業・公共機関",
+          "role": "customer",
+          "label": {
+            "ja": "文書・取引・IT情報の管理を提供",
+            "en": "Document, transaction and IT information management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1514416,
+    "tickers": [
+      "BAND"
+    ],
+    "name": "Bandwidth",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000017/band-20251231.htm"
+      },
+      {
+        "label": "September 2026 investor presentation · Salesforce rollout and customer examples",
+        "url": "https://www.sec.gov/Archives/edgar/data/1514416/000151441626000069/a2026bandwidthinvestorpr.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業のアプリや電話サービスに、通話・メッセージ・緊急通報を組み込む会社。自社の通信網とソフトを組み合わせ、電話番号の管理からAI音声の接続までを提供する。",
+      "revenue": "通話やメッセージの使用量に応じた料金が中心。電話番号の保有・管理、緊急通報への接続などの継続料金も得る。通信事業者へのメッセージ追加料金を顧客へ転嫁する売上も含まれる。",
+      "strength": "通信網と各国の規制対応を持ち、企業が複数地域の通信を一つの基盤から管理できる。Maestroで電話、顧客窓口、AI音声などを結び、既存システムを使いながら接続先を選べる。",
+      "risks": "顧客の通信量が減ると売上も減り、選挙向けメッセージなど一時的な需要にも左右される。通信事業者の料金変更、迷惑電話・メッセージへの規制、通信障害や攻撃への対応が必要。",
+      "competition": "通信機能をアプリへ提供するサービス会社や既存の通信事業者と競う。通話品質、届きやすさ、対応する国、規制への対応、使用量に応じた価格が選ばれる条件になる。",
+      "relationships": "Microsoft、Google、Zoom、Cisco、RingCentral、Five9などの通信サービスへ通話・メッセージ基盤を提供する。Salesforceの顧客窓口との提携も拡大しているが、各国への展開は段階的に進める計画。"
+    },
+    "en": {
+      "business": "Embeds calling, messaging and emergency services into enterprise applications and phone platforms. Combines its communications network with software for number management and voice-AI connections.",
+      "revenue": "Most revenue comes from usage-based calling and messaging fees, with recurring number-management and emergency-access charges. Revenue also includes carrier messaging surcharges passed through to customers.",
+      "strength": "Owns network infrastructure and regulatory capabilities across countries. Maestro connects telephony, contact centers and voice AI while letting enterprises retain existing systems and choose integrations.",
+      "risks": "Revenue varies with customer traffic and episodic demand such as election messaging. Carrier price changes, anti-abuse regulations, outages and cyberattacks can affect costs and service quality.",
+      "competition": "Competes with communications API providers and established telecom carriers. Reliability, message delivery, geographic coverage, regulatory support and usage pricing influence customer selection.",
+      "relationships": "Supplies voice and messaging infrastructure to Microsoft, Google, Zoom, Cisco, RingCentral and Five9. Its Salesforce contact-center collaboration has expanded; international rollout is a phased plan."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Communications API providers",
+          "nameJa": "通信APIサービス会社",
+          "role": "competitor",
+          "label": {
+            "ja": "アプリへの通話・メッセージ提供で競合",
+            "en": "Calling and messaging APIs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Telecommunications carriers",
+          "nameJa": "通信事業者",
+          "role": "competitor",
+          "label": {
+            "ja": "企業向け通信網・電話番号で競合",
+            "en": "Enterprise networks and phone-number services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "customer",
+          "label": {
+            "ja": "通信サービスを支える通話・メッセージ基盤",
+            "en": "Voice and messaging infrastructure for communications services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "ticker": "GOOG",
+          "role": "customer",
+          "label": {
+            "ja": "通信サービスを支える通話・メッセージ基盤",
+            "en": "Voice and messaging infrastructure for communications services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Zoom",
+          "ticker": "ZM",
+          "role": "customer",
+          "label": {
+            "ja": "クラウド通信の接続基盤を提供",
+            "en": "Infrastructure for cloud communications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Cisco",
+          "ticker": "CSCO",
+          "role": "customer",
+          "label": {
+            "ja": "クラウド通信の接続基盤を提供",
+            "en": "Infrastructure for cloud communications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "RingCentral",
+          "ticker": "RNG",
+          "role": "customer",
+          "label": {
+            "ja": "通話・メッセージ・緊急通報基盤を提供",
+            "en": "Voice, messaging and emergency-service infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Five9",
+          "ticker": "FIVN",
+          "role": "customer",
+          "label": {
+            "ja": "顧客窓口の通信基盤を提供",
+            "en": "Contact-center communications infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "partner",
+          "label": {
+            "ja": "顧客窓口の通信基盤で提携・国際展開は段階的",
+            "en": "Contact-center infrastructure collaboration; phased global rollout"
+          },
+          "sourceIndexes": [
+            1
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1023731,
+    "tickers": [
+      "EGHT"
+    ],
+    "name": "8x8",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000041/eght-20260331.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業の社員用電話と顧客の問い合わせ窓口をクラウドでつなぐ会社。電話・会議・メッセージ、担当者への振り分け、会話分析、アプリに組み込む通信APIを提供する。",
+      "revenue": "社員用通信と顧客窓口の継続利用料、通話・メッセージなどの使用量に応じた料金が中心。通信機器や導入支援も販売し、同じ企業へ複数の通信機能を追加できる。",
+      "strength": "社員同士の連絡と外部の顧客対応を一つの基盤でつなぎ、問い合わせを専門部署へ引き継げる。複数拠点の電話や顧客情報をまとめ、AIによる分析や対応を組み込める。",
+      "risks": "MicrosoftやZoomの包括的なサービス、顧客窓口の専門会社との競争が強い。通信品質と各国の規制対応が欠かせず、契約更新、顧客離れ、負債の返済も収益を左右する。",
+      "competition": "社員用通信ではRingCentral、Zoom、Cisco、Microsoft、顧客窓口ではFive9、NiCE、Genesys、通信APIではTwilioなどと競う。電話からAI対応まで、事業ごとに競合が違う。",
+      "relationships": "企業へ通信・顧客対応基盤を提供し、Microsoft TeamsやSalesforceと製品連携する。通信事業者と販売代理店が販売・展開を支え、連携先を8x8製品の購入者とは断定しない。"
+    },
+    "en": {
+      "business": "Connects employee communications and customer contact centers in the cloud, offering phone, meetings, messaging, routing, analytics and communications APIs.",
+      "revenue": "Earns recurring communications and contact-center fees plus calling and messaging usage charges. Equipment and implementation services complement subscriptions and expansion within existing customers.",
+      "strength": "Links internal collaboration with external customer service, enabling handoffs to specialist teams. Combines multi-site telephony, customer records and AI-assisted analysis and responses.",
+      "risks": "Faces bundled communications suites and contact-center specialists. Call reliability, international telecom compliance, renewals, customer churn and debt repayment affect business performance.",
+      "competition": "Competes with RingCentral, Zoom, Cisco and Microsoft in employee communications; Five9, NiCE and Genesys in contact centers; and Twilio in communications APIs.",
+      "relationships": "Serves enterprise communications and service teams, integrates with Microsoft Teams and Salesforce, and distributes through telecom and reseller partners. Integration does not establish a purchasing relationship."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "RingCentral",
+          "ticker": "RNG",
+          "role": "competitor",
+          "label": {
+            "ja": "社員用通信で競合",
+            "en": "Employee communications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Zoom",
+          "ticker": "ZM",
+          "role": "competitor",
+          "label": {
+            "ja": "電話・会議で競合",
+            "en": "Phone and meetings"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "competitor",
+          "label": {
+            "ja": "Teamsなどの社員用通信で競合",
+            "en": "Teams and employee communications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Five9",
+          "ticker": "FIVN",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客窓口で競合",
+            "en": "Contact centers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "NiCE",
+          "ticker": "NICE",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客窓口で競合",
+            "en": "Contact centers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Twilio",
+          "ticker": "TWLO",
+          "role": "competitor",
+          "label": {
+            "ja": "通信APIで競合",
+            "en": "Communications APIs"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "partner",
+          "label": {
+            "ja": "Teamsと製品連携",
+            "en": "Product integration with Teams"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "partner",
+          "label": {
+            "ja": "顧客管理と製品連携",
+            "en": "CRM product integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Business communications and service teams",
+          "nameJa": "企業の通信・顧客対応部門",
+          "role": "customer",
+          "label": {
+            "ja": "社員用通信・顧客窓口を提供",
+            "en": "Employee communications and contact centers"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Telecom and reseller partners",
+          "nameJa": "通信事業者・販売代理店",
+          "role": "partner",
+          "label": {
+            "ja": "販売・導入を支える",
+            "en": "Support distribution and deployment"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1642896,
+    "tickers": [
+      "IOT"
+    ],
+    "name": "Samsara",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1642896/000162828026018167/iot-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "車両・機械・現場で起きていることをデータで把握する会社。車載カメラや通信機器とクラウドソフトを組み合わせ、運送・建設などの安全、車両運用、設備管理を支える。",
+      "revenue": "Connected Operations Platformの継続利用料が中心。接続する車両や設備と使う機能を増やすことで契約を広げる。契約には機器、クラウド利用、通信接続、サポートなどが組み込まれる。",
+      "strength": "車両映像、位置、運転、設備の稼働情報を同じ基盤で扱い、複数の現場を横断して改善に使える。単にデータを集めるだけでなく、危険運転への対応や保守作業につなげられる。",
+      "risks": "機器の製造・部品供給や携帯通信、AWSに依存し、供給不足や障害は導入を遅らせる。運転者の映像・位置情報を扱うため、プライバシー対応と、AIが誤検知した際の信頼も重要になる。",
+      "competition": "車両管理ではGeotabやVerizon Connect、映像による安全管理ではLytx、Motive、Netradyneなどと競う。設備・現場を含めた統合基盤と、用途ごとの専用製品が比較される。",
+      "relationships": "運送、建設、物流、製造、公共機関などへ現場管理を提供する。AmazonのAWSがクラウド稼働基盤を担い、機器製造・部品会社と携帯通信会社がデータの収集・送信を支える。"
+    },
+    "en": {
+      "business": "Uses connected cameras, gateways and cloud software to understand vehicles, equipment and worksites. Helps transportation, construction and other physical operations improve safety and operating efficiency.",
+      "revenue": "Earns recurring Connected Operations Platform subscription fees. Customers expand by connecting more assets and adopting more applications; subscriptions incorporate devices, cloud services, connectivity and support.",
+      "strength": "Combines video, location, driving and equipment data across operations. Turns observations into safety interventions, maintenance workflows and operational improvements.",
+      "risks": "Depends on device manufacturers, components, cellular networks and AWS. Supply shortages and outages can delay deployments, while video and location data create privacy and AI-detection risks.",
+      "competition": "Competes with Geotab and Verizon Connect in fleet management and Lytx, Motive and Netradyne in video safety. Integrated operations platforms compete with application-specific tools.",
+      "relationships": "Serves transportation, construction, logistics, manufacturing and public-sector operations. AWS supplies hosting; device manufacturers, component suppliers and cellular carriers enable data collection and transmission."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Fleet-management providers",
+          "nameJa": "車両管理サービス会社",
+          "role": "competitor",
+          "label": {
+            "ja": "Geotab・Verizon Connectなどと車両管理で競合",
+            "en": "Fleet management, including Geotab and Verizon Connect"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Video-safety providers",
+          "nameJa": "映像安全管理サービス会社",
+          "role": "competitor",
+          "label": {
+            "ja": "Lytx・Motive・Netradyneなどと競合",
+            "en": "Video safety, including Lytx, Motive and Netradyne"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "supplier",
+          "label": {
+            "ja": "AWSがクラウド稼働基盤を提供",
+            "en": "AWS provides cloud hosting"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Device manufacturers and component suppliers",
+          "nameJa": "機器製造・部品会社",
+          "role": "supplier",
+          "label": {
+            "ja": "車載・現場向け接続機器を支える",
+            "en": "Support connected devices for vehicles and worksites"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Cellular carriers",
+          "nameJa": "携帯通信会社",
+          "role": "supplier",
+          "label": {
+            "ja": "機器からのデータ送信を支える",
+            "en": "Enable device data transmission"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Physical-operations organizations",
+          "nameJa": "車両・設備・現場を持つ企業や公共機関",
+          "role": "customer",
+          "label": {
+            "ja": "安全・車両運用・設備管理を提供",
+            "en": "Safety, fleet and equipment management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1835830,
+    "tickers": [
+      "KVYO"
+    ],
+    "name": "Klaviyo",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業が顧客データを使って販売促進と顧客対応を行うソフト会社。購買履歴や行動をまとめ、メール、SMS、WhatsAppなどで一人ひとりに合った案内を届ける。",
+      "revenue": "クラウドソフトの継続利用料が中心。顧客データの規模、送信量、利用する機能などに応じて料金が増え、マーケティングに加え顧客対応・分析などへ利用を広げる。",
+      "strength": "購買・行動・連絡への同意を同じ顧客データにまとめ、案内の作成から送信、結果の確認までつなげる。Shopifyを含む多数の既存システムと接続し、企業が自社のデータを使える。",
+      "risks": "Shopifyとの連携・販促契約への依存があり、条件変更は顧客獲得に影響する。消費の減速、個人情報の規制、メールやメッセージの届きにくさも利用量と成果を左右する。",
+      "competition": "マーケティング配信ではMailchimpやBraze、広範な販売促進ソフトではAdobeやSalesforceと競う。データを蓄積するだけでなく、顧客への働きかけへ使えるかが比較のポイント。",
+      "relationships": "Shopifyとデータ連携・販促の提携を行い、Klaviyoが契約に基づく収益分配を支払う。Google、Meta、Toastなどとも製品連携し、小売・飲食などへ提供する。連携を取引先の購入とは扱わない。"
+    },
+    "en": {
+      "business": "Provides customer-data-driven marketing and service software. Combines purchase history and behavior to personalize email, SMS, WhatsApp and other customer interactions.",
+      "revenue": "Earns recurring cloud subscription fees that vary with customer-data scale, messaging volumes and features. Expands into service, analytics and additional marketing capabilities.",
+      "strength": "Unifies purchases, behavior and consent, connecting campaign creation, delivery and measurement. Integrations with Shopify and other systems let businesses activate their own first-party data.",
+      "risks": "Depends partly on Shopify integration and marketing agreements. Changes in terms, weaker consumer spending, privacy regulation and message deliverability can affect acquisition and usage.",
+      "competition": "Competes with Mailchimp and Braze in marketing communications and Adobe and Salesforce in broader marketing platforms. Turning stored data into relevant customer interactions is a key distinction.",
+      "relationships": "Partners with Shopify on interoperability and marketing, paying a contractual revenue share. Integrates with Google, Meta and Toast and serves retail, restaurants and other businesses. Integrations do not establish purchases."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Braze",
+          "ticker": "BRZE",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客向けマーケティング配信で競合",
+            "en": "Customer marketing communications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Adobe",
+          "ticker": "ADBE",
+          "role": "competitor",
+          "label": {
+            "ja": "マーケティング自動化で競合",
+            "en": "Marketing automation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "competitor",
+          "label": {
+            "ja": "マーケティング自動化で競合",
+            "en": "Marketing automation"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Mailchimp",
+          "nameJa": "Mailchimp",
+          "role": "competitor",
+          "label": {
+            "ja": "メールなどのマーケティングで競合",
+            "en": "Email and other marketing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Shopify",
+          "ticker": "SHOP",
+          "role": "partner",
+          "label": {
+            "ja": "データ・販促で提携、Klaviyoから収益分配を支払う",
+            "en": "Data and marketing collaboration; Klaviyo pays revenue share"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "ticker": "GOOG",
+          "role": "partner",
+          "label": {
+            "ja": "製品・データ連携",
+            "en": "Product and data integrations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Meta",
+          "ticker": "META",
+          "role": "partner",
+          "label": {
+            "ja": "製品・データ連携",
+            "en": "Product and data integrations"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Toast",
+          "ticker": "TOST",
+          "role": "partner",
+          "label": {
+            "ja": "飲食店のシステムとデータ連携",
+            "en": "Restaurant-system data integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Consumer-facing businesses",
+          "nameJa": "消費者向けに販売する企業",
+          "role": "customer",
+          "label": {
+            "ja": "顧客データを使った販促・対応を提供",
+            "en": "Data-driven customer marketing and service"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1676238,
+    "tickers": [
+      "BRZE"
+    ],
+    "name": "Braze",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1676238/000167623826000013/brze-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業が顧客への案内を状況に合わせて届けるためのソフト会社。アプリやウェブでの行動を受け取り、メール、通知、アプリ内表示などを連動させて顧客とのやり取りを作る。",
+      "revenue": "プラットフォームの継続利用料が中心。月間の利用者数、送信量、使う機能などの契約条件に応じて料金を決め、導入支援でも稼ぐ。別ブランド・地域への展開や追加機能で契約を広げる。",
+      "strength": "顧客の行動に応じて内容や配信経路を変え、複数の接点を一つの流れとして設計できる。実験や結果分析を組み込み、データを集める部門と顧客へ働きかける部門をつなぐ。",
+      "risks": "企業の販促予算の削減や契約更新の失敗が成長を抑える。個人情報の扱い、メール・通知の配信ルールの変更、誤ったAI出力や大規模配信の障害はブランドへの信頼を損ねる。",
+      "competition": "Adobe、Salesforce、Iterable、Klaviyoなどのマーケティングソフトと競う。配信できる経路だけでなく、顧客の行動をすばやく反映し、一貫した体験にできるかが争点になる。",
+      "relationships": "Snowflakeとデータ共有で提携し、Microsoft Azure、AWS、Google Cloudなどへイベントデータを出力できる。企業のマーケティング部門へ提供し、これらの接続を各社の購入契約とは扱わない。"
+    },
+    "en": {
+      "business": "Helps businesses deliver context-sensitive customer engagement. Uses app and web activity to coordinate email, notifications, in-app messages and other interactions.",
+      "revenue": "Earns platform subscriptions priced by contracted monthly active users, messaging volumes, platform access and add-on products, plus implementation services. Expands through additional brands, geographies and capabilities.",
+      "strength": "Adapts messages and channels to customer behavior while coordinating a complete journey. Experimentation and measurement connect data teams with teams responsible for customer engagement.",
+      "risks": "Marketing-budget cuts and failed renewals can constrain growth. Privacy obligations, delivery-rule changes, incorrect AI output and large-scale messaging outages threaten customer trust.",
+      "competition": "Competes with Adobe, Salesforce, Iterable and Klaviyo. Rapidly acting on customer behavior and maintaining consistency across channels are central differentiators.",
+      "relationships": "Partners with Snowflake for data sharing and exports event data to Azure, AWS, Google Cloud and other systems. Serves enterprise marketing teams; connectivity does not mean these platform providers buy Braze."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Adobe",
+          "ticker": "ADBE",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客向けマーケティングで競合",
+            "en": "Customer marketing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客向けマーケティングで競合",
+            "en": "Customer marketing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Klaviyo",
+          "ticker": "KVYO",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客への配信・体験設計で競合",
+            "en": "Customer messaging and journeys"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Iterable",
+          "nameJa": "Iterable",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客への配信・体験設計で競合",
+            "en": "Customer messaging and journeys"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Snowflake",
+          "ticker": "SNOW",
+          "role": "partner",
+          "label": {
+            "ja": "顧客行動などのデータ共有で提携",
+            "en": "Customer-event data sharing"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "partner",
+          "label": {
+            "ja": "Azureへイベントデータを出力",
+            "en": "Event-data export to Azure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "partner",
+          "label": {
+            "ja": "AWSへイベントデータを出力",
+            "en": "Event-data export to AWS"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "ticker": "GOOG",
+          "role": "partner",
+          "label": {
+            "ja": "Google Cloudへイベントデータを出力",
+            "en": "Event-data export to Google Cloud"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Marketing and growth teams",
+          "nameJa": "企業のマーケティング・成長支援部門",
+          "role": "customer",
+          "label": {
+            "ja": "顧客への配信・体験設計を提供",
+            "en": "Customer messaging and journey orchestration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1569345,
+    "tickers": [
+      "CXM"
+    ],
+    "name": "Sprinklr",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1569345/000156934526000015/cxm-20260131.htm"
+      }
+    ],
+    "ja": {
+      "business": "大企業がSNSや電話などで顧客とやり取りする業務をまとめる会社。投稿管理、評判・反応の分析、顧客窓口、広告・マーケティングを共通のデータ基盤で扱う。",
+      "revenue": "クラウドソフトの継続利用料が中心で、導入・設定などの支援も販売する。企業が追加製品を使い、別の部門や国へ展開することで契約を広げる。",
+      "strength": "多数のSNS・デジタル窓口で得た反応をまとめ、分析と実際の顧客対応へつなげられる。大企業の承認・権限・多言語対応を同じ仕組みで管理し、部門間の情報の分断を減らす。",
+      "risks": "大企業への大型契約は販売・導入に時間がかかり、更新や追加購入の減少が収益に響く。SNSのデータ提供条件の変更、複雑な製品の導入、顧客データの保護も課題になる。",
+      "competition": "SNS管理・評判分析、顧客窓口、マーケティングの専用サービスや、顧客管理ソフトの付属機能と競う。一つの用途に強い製品と、複数部門を統合する基盤の両方が比較対象。",
+      "relationships": "Salesforce、Microsoft、Adobe、Google、Oracle、SAP、ServiceNowなどの業務・分析ソフトと接続する。大企業の顧客対応や販促部門へ提供し、連携先が顧客であるとは断定しない。"
+    },
+    "en": {
+      "business": "Unifies how large organizations interact with customers across social media, phone and digital channels. Combines publishing, listening, contact centers and marketing on a common data platform.",
+      "revenue": "Earns cloud subscription fees and deployment or configuration service revenue. Expands through additional products and adoption across departments and countries.",
+      "strength": "Turns social and digital feedback into analysis and customer responses. Shared permissions, approvals and multilingual workflows reduce information fragmentation in large enterprises.",
+      "risks": "Large enterprise contracts require lengthy sales and deployment work. Weaker renewals or expansion, changes in social-data access, deployment complexity and sensitive-data protection are risks.",
+      "competition": "Competes with specialist social-management, listening, contact-center and marketing tools, plus built-in CRM capabilities. Buyers compare focused products with cross-department platforms.",
+      "relationships": "Connects with Salesforce, Microsoft, Adobe, Google, Oracle, SAP and ServiceNow business and analytics systems. Serves enterprise service and marketing teams; connectivity is not evidence of a customer contract."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Social-management and listening vendors",
+          "nameJa": "SNS管理・評判分析サービス会社",
+          "role": "competitor",
+          "label": {
+            "ja": "投稿管理・顧客の反応分析で競合",
+            "en": "Publishing and customer-feedback analysis"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Contact-center vendors",
+          "nameJa": "顧客窓口サービス会社",
+          "role": "competitor",
+          "label": {
+            "ja": "電話・デジタルの顧客対応で競合",
+            "en": "Voice and digital customer service"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "CRM and marketing platforms",
+          "nameJa": "顧客管理・販促ソフト会社",
+          "role": "competitor",
+          "label": {
+            "ja": "顧客管理に付属する対応・販促機能で競合",
+            "en": "Built-in service and marketing capabilities"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Salesforce",
+          "ticker": "CRM",
+          "role": "partner",
+          "label": {
+            "ja": "顧客管理ソフトとデータ接続",
+            "en": "CRM data integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "partner",
+          "label": {
+            "ja": "業務ソフトと製品連携",
+            "en": "Business-software integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Adobe",
+          "ticker": "ADBE",
+          "role": "partner",
+          "label": {
+            "ja": "マーケティングなどのシステムと接続",
+            "en": "Marketing-system integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "ServiceNow",
+          "ticker": "NOW",
+          "role": "partner",
+          "label": {
+            "ja": "企業向け業務システムと接続",
+            "en": "Enterprise workflow integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprise customer-facing teams",
+          "nameJa": "大企業の顧客対応・販促部門",
+          "role": "customer",
+          "label": {
+            "ja": "顧客対応・SNS管理・分析を提供",
+            "en": "Customer service, social management and analytics"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1517375,
+    "tickers": [
+      "SPT"
+    ],
+    "name": "Sprout Social",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737526000015/spt-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業のSNS運用をまとめるソフト会社。投稿予約、コメントや問い合わせへの対応、反応の分析、評判の把握、インフルエンサーとの施策を支える。",
+      "revenue": "利用者数とプランに応じた継続利用料が中心。基本のSNS管理に、詳しい分析、評判分析、インフルエンサー向け機能などを追加して収益を広げる。",
+      "strength": "複数のSNSを一つの画面で扱い、投稿・対応・分析の作業をつなげられる。SNS各社との接続を整え、企業の既存の販売・顧客対応の仕組みにSNSの情報を組み込める。",
+      "risks": "SNS各社のAPIやデータ提供の条件に依存し、料金・機能・アクセス権の変更が製品に影響する。大企業向けの販売長期化、販促予算の削減、AWSの障害も契約や稼働を左右する。",
+      "competition": "Hootsuite、Khoros、SprinklrなどのSNS管理会社や、分析・投稿などに特化した製品と競う。機能の多さだけでなく、使い始めやすさ、企業での管理、成果の把握が選択基準になる。",
+      "relationships": "MetaのFacebook・Instagram、MicrosoftのLinkedIn、GoogleのYouTubeなどと接続し、投稿や反応を扱う。AWSが主な稼働基盤を提供する。SNS会社への接続と、SNS会社が製品を買う関係は別。"
+    },
+    "en": {
+      "business": "Provides software for business social-media operations, including publishing, replies, analytics, listening and influencer campaigns.",
+      "revenue": "Earns recurring per-user and plan subscriptions. Adds revenue through advanced analytics, listening, influencer capabilities and other additional products.",
+      "strength": "Connects publishing, engagement and measurement across networks. Integrations bring social data into existing commerce and customer-service workflows.",
+      "risks": "Depends on social-network APIs and data-access terms. Pricing or access changes, longer enterprise sales cycles, marketing-budget cuts and AWS outages can affect contracts and operations.",
+      "competition": "Competes with Hootsuite, Khoros, Sprinklr and specialist publishing or analytics tools. Usability, enterprise controls and measurable outcomes matter alongside feature breadth.",
+      "relationships": "Connects to Meta social networks, Microsoft LinkedIn and Google YouTube for publishing and engagement data. AWS supplies most hosting. Network connectivity does not imply that network owners purchase Sprout Social."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "company",
+          "name": "Sprinklr",
+          "ticker": "CXM",
+          "role": "competitor",
+          "label": {
+            "ja": "SNS管理・顧客の反応分析で競合",
+            "en": "Social management and listening"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Hootsuite",
+          "nameJa": "Hootsuite",
+          "role": "competitor",
+          "label": {
+            "ja": "SNSの投稿・管理で競合",
+            "en": "Social publishing and management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Khoros",
+          "nameJa": "Khoros",
+          "role": "competitor",
+          "label": {
+            "ja": "SNS運用・顧客対応で競合",
+            "en": "Social operations and customer care"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Meta",
+          "ticker": "META",
+          "role": "partner",
+          "label": {
+            "ja": "Facebook・Instagramなどへ投稿・データ接続",
+            "en": "Publishing and data connectivity with Facebook and Instagram"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "ticker": "MSFT",
+          "role": "partner",
+          "label": {
+            "ja": "LinkedInと投稿・データ接続",
+            "en": "Publishing and data connectivity with LinkedIn"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Google",
+          "ticker": "GOOG",
+          "role": "partner",
+          "label": {
+            "ja": "YouTubeなどとデータ接続",
+            "en": "YouTube and other data connectivity"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "supplier",
+          "label": {
+            "ja": "AWSが主なクラウド基盤を提供",
+            "en": "AWS supplies most cloud infrastructure"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Brand and social-media teams",
+          "nameJa": "企業のブランド・SNS運用部門",
+          "role": "customer",
+          "label": {
+            "ja": "投稿・対応・分析を提供",
+            "en": "Social publishing, care and analytics"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1445305,
+    "tickers": [
+      "WK"
+    ],
+    "name": "Workiva",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1445305/000144530526000016/wk-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "企業の決算・開示・監査資料を作る作業を支えるソフト会社。会計や人事などのシステムから数字をつなぎ、財務報告、リスク管理、サステナビリティ報告を同じ基盤で扱う。",
+      "revenue": "クラウドソフトとサポートの継続利用料が中心で、導入支援なども収益になる。財務報告を入り口に、監査・内部統制や環境などの報告へ用途を広げ、追加契約につなげる。",
+      "strength": "一つの数字を複数の資料に連動させ、変更履歴と承認を残せる。別々の表計算を手直しする作業を減らし、報告する数字と根拠を追えるため、監査や開示の確認に使いやすい。",
+      "risks": "開示・環境報告の規制が変わると顧客の導入優先度も変わる。誤ったデータ連携や報告、機密情報の漏えいは影響が大きく、顧客ごとに異なるシステムとの接続・導入も負担になる。",
+      "competition": "財務・リスク管理の専用ソフト、基幹業務ソフト、報告を代行する専門会社と競う。顧客が表計算と手作業を使い続けることも、統合基盤を導入する際の競争相手になる。",
+      "relationships": "AWSを主なクラウド基盤として使い、企業の会計・人事・顧客管理システムからデータを取り込む。財務・監査・リスク・環境報告の担当者へ提供し、専門サービス会社や技術パートナーが導入を支える。"
+    },
+    "en": {
+      "business": "Supports financial disclosure, audit and reporting workflows. Connects data from accounting, HR and other systems for financial reporting, risk management and sustainability reporting.",
+      "revenue": "Earns recurring software and support subscriptions plus implementation revenue. Expands from financial reporting into audit, controls and other reporting uses.",
+      "strength": "Links a single data value across documents while preserving changes and approvals. Reduces manual spreadsheet updates and makes reported figures traceable to supporting evidence.",
+      "risks": "Changing disclosure and sustainability regulations can alter purchase priorities. Incorrect linked data, confidential-information breaches and complex customer-specific integrations pose risks.",
+      "competition": "Competes with specialist finance and risk software, enterprise systems and reporting-service providers. Existing spreadsheet-based manual processes are also a substitute for adopting its platform.",
+      "relationships": "Runs primarily on AWS and connects with customers’ accounting, HR and CRM systems. Serves finance, audit, risk and sustainability teams, supported by services and technology partners."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Reporting and GRC software providers",
+          "nameJa": "開示・監査・リスク管理ソフト会社",
+          "role": "competitor",
+          "label": {
+            "ja": "報告・内部統制の専用機能で競合",
+            "en": "Reporting and control applications"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Enterprise software providers",
+          "nameJa": "基幹業務ソフト会社",
+          "role": "competitor",
+          "label": {
+            "ja": "業務システム内の報告機能で競合",
+            "en": "Built-in reporting capabilities"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Manual reporting and professional services",
+          "nameJa": "表計算・報告代行サービス",
+          "role": "competitor",
+          "label": {
+            "ja": "既存の手作業・外部委託が代替手段",
+            "en": "Existing manual processes and reporting services"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "supplier",
+          "label": {
+            "ja": "AWSが主なクラウド稼働基盤を提供",
+            "en": "AWS supplies primary cloud hosting"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Finance, audit and reporting teams",
+          "nameJa": "財務・監査・報告部門",
+          "role": "customer",
+          "label": {
+            "ja": "データ連動した開示・監査資料を作成",
+            "en": "Data-linked disclosures and audit reporting"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Professional services and technology partners",
+          "nameJa": "専門サービス・技術パートナー",
+          "role": "partner",
+          "label": {
+            "ja": "導入支援・システム連携を担う",
+            "en": "Implementation and system integration"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cik": 1611052,
+    "tickers": [
+      "PCOR"
+    ],
+    "name": "Procore",
+    "reviewedOn": "2026-10-14",
+    "sources": [
+      {
+        "label": "Annual filing · business, revenue, competition and risks",
+        "url": "https://www.sec.gov/Archives/edgar/data/1611052/000162828026011055/pcor-20251231.htm"
+      }
+    ],
+    "ja": {
+      "business": "建設工事の情報を一つにまとめるソフト会社。発注者、元請け、専門工事会社が、図面、現場の進捗、費用、品質、安全などを共有して工事を進める。",
+      "revenue": "ソフトの継続利用料がほぼ全ての収益源。契約する製品の組み合わせと、基盤上で管理する工事金額などを基に料金を決める。案件や使う機能を増やすと契約拡大につながる。",
+      "strength": "工事に関わる多くの会社を同じ情報へつなぎ、図面の取り違えや報告の行き違いを減らす。会計・文書・工程管理などの他ソフトとも接続し、工事の記録を共通の基盤に蓄積できる。",
+      "risks": "建設案件の延期や減少、顧客の資金繰りが契約規模に影響する。現場への導入・定着に時間がかかり、データの誤りや障害は工事を妨げる。AWSなど外部の稼働基盤にも依存する。",
+      "competition": "建設管理をまとめたソフト、会計ソフトの工事管理機能、図面・入札・工程などの専用ツールと競う。紙、メール、表計算を使い続ける現場を置き換えることも必要になる。",
+      "relationships": "発注者、元請け、専門工事会社へ建設管理を提供し、AWSが主なクラウド稼働基盤を担う。会計・文書・工程ソフトとの連携で現場と事務をつなぎ、参加企業がすべて直接の契約者とは限らない。"
+    },
+    "en": {
+      "business": "Connects construction owners, general contractors and specialty contractors on a shared platform for drawings, progress, costs, quality and safety.",
+      "revenue": "Generates substantially all revenue from software subscriptions. Pricing generally reflects product mix and contracted construction volume managed on the platform, with expansion through more projects or capabilities.",
+      "strength": "Brings multiple project participants to the same records, reducing document mismatches and communication gaps. Integrates accounting, document and scheduling tools into a shared construction system of record.",
+      "risks": "Project delays, lower construction activity and customers’ finances can reduce contract size. Deployment and adoption take time; data errors, outages and reliance on AWS can disrupt projects.",
+      "competition": "Competes with broad construction suites, accounting products with project features and specialized drawing, bidding or scheduling tools. Paper, email and spreadsheets remain alternative workflows.",
+      "relationships": "Serves owners, general contractors and specialty contractors, with AWS providing primary hosting. Integrations connect field and office systems; not every project participant is a direct contracting customer."
+    },
+    "maps": {
+      "competition": [
+        {
+          "kind": "industry",
+          "name": "Construction-management suites",
+          "nameJa": "建設管理ソフト会社",
+          "role": "competitor",
+          "label": {
+            "ja": "工事全体の情報管理で競合",
+            "en": "Project-wide construction management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Accounting and specialist construction tools",
+          "nameJa": "会計・工事専用ツール",
+          "role": "competitor",
+          "label": {
+            "ja": "原価・図面・入札・工程などで競合",
+            "en": "Costs, drawings, bidding and scheduling"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Manual project workflows",
+          "nameJa": "紙・メール・表計算による管理",
+          "role": "competitor",
+          "label": {
+            "ja": "従来の現場管理が代替手段",
+            "en": "Existing manual project management"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Amazon",
+          "ticker": "AMZN",
+          "role": "supplier",
+          "label": {
+            "ja": "AWSが主なクラウド稼働基盤を提供",
+            "en": "AWS supplies primary cloud hosting"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Owners and construction contractors",
+          "nameJa": "発注者・元請け・専門工事会社",
+          "role": "customer",
+          "label": {
+            "ja": "図面・進捗・費用・安全を共有する基盤",
+            "en": "Shared drawings, progress, costs and safety platform"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "kind": "industry",
+          "name": "Accounting, document and scheduling systems",
+          "nameJa": "会計・文書・工程管理システム",
+          "role": "ecosystem",
+          "label": {
+            "ja": "外部ソフト連携で現場と事務をつなぐ",
+            "en": "External integrations connect field and office workflows"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
   }
 ]

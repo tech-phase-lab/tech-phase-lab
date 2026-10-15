@@ -21,15 +21,15 @@ const copy = {
     note: "設定の保存だけではメール配信は始まりません。", back: "Tech Phaseへ戻る" },
   en: { title: "Language and time zone", intro: "Choose the language for RESOLUTE and the time zone used to display dates and times.",
     language: "Language", choose: "Please select", zone: "Time zone", zoneHint: "For example: Asia/Tokyo (Japan) or America/New_York (US Eastern)",
-    device: "Use this device’s time zone", deviceError: "Could not detect your time zone. Please enter it.",
+    device: "Use this device’s time zone", deviceError: "We couldn’t detect your time zone. Please enter it.",
     save: "Save settings", saving: "Saving…", loading: "Loading settings…",
-    unset: "Your settings have not been saved yet. Choose a language and time zone, then save.",
-    saved: "Settings saved.", changed: "Your changes have not been saved yet.", invalid: "Choose a language and a valid time zone.",
-    loadError: "Could not load your settings. Please wait and reload.",
-    saveError: "Could not confirm the save. Reload your saved settings to check.",
+    unset: "Your settings haven’t been saved yet. Choose a language and time zone, then save.",
+    saved: "Settings saved.", changed: "You have unsaved changes.", invalid: "Choose a language and a valid time zone.",
+    loadError: "We couldn’t load your settings. Try again in a moment.",
+    saveError: "We couldn’t confirm your settings were saved. Reload them to check.",
     reload: "Reload saved settings", login: "Sign in to save your settings.", account: "Go to sign-in",
     afterLogin: "After signing in, return here and reload your settings.",
-    note: "Saving settings does not start email delivery.", back: "Back to Tech Phase" },
+    note: "Saving these settings won’t turn on email alerts.", back: "Back to Tech Phase" },
 };
 type Phase = "loading" | "ready" | "saving" | "saved" | "signed-out" | "error";
 type Message = "unset" | "saved" | "changed" | "invalid" | "loadError" | "saveError" | "deviceError" | null;

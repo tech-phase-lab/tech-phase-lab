@@ -285,7 +285,7 @@ export function calcLossRealization(i: LossInput): LossResult {
 export const NOTE_TEXT: Record<string, { ja: string; en: string }> = {
   nisa_tax_free: {
     ja: 'NISA口座の売却益は非課税として計算しています。',
-    en: 'Gains in a NISA account are treated as tax-free in this estimate (Japan-specific account type).',
+    en: 'This estimate treats gains in a NISA account as tax-free. NISA is a Japanese account type.',
   },
   nisa_loss_not_deductible: {
     ja: 'NISA口座の損失は、他の口座の利益と相殺できず、繰り越しもできません。',
@@ -293,7 +293,7 @@ export const NOTE_TEXT: Record<string, { ja: string; en: string }> = {
   },
   carryforward_used: {
     ja: '確定申告で繰り越している譲渡損失を差し引いて計算しています。',
-    en: 'Carried-forward capital losses (declared in a prior-year tax return) were deducted.',
+    en: 'We’ve deducted capital losses carried forward from an earlier tax return.',
   },
   carryforward_expired: {
     ja: '繰越期間(翌年以後3年)を過ぎた損失は差し引いていません。',
@@ -301,7 +301,7 @@ export const NOTE_TEXT: Record<string, { ja: string; en: string }> = {
   },
   net_loss_this_year: {
     ja: '同じ年の通算で損失になっています。確定申告をすると、翌年以後3年にわたって繰り越せます。',
-    en: 'Your net result for the year is a loss. By filing a tax return you can carry it forward for up to 3 following years.',
+    en: 'Your total for the year is a loss. You can carry it forward for up to the next 3 years by filing a tax return.',
   },
   filing_required: {
     ja: '一般口座は、利益が出た場合に自分で確定申告が必要です。',
@@ -313,7 +313,7 @@ export const NOTE_TEXT: Record<string, { ja: string; en: string }> = {
   },
   carryforward_requires_filing: {
     ja: '相殺しきれない損失は、確定申告をすると翌年以後3年にわたって繰り越せます。',
-    en: 'Any loss not fully offset can be carried forward for 3 following years, but only by filing a tax return.',
+    en: 'If a loss can’t be fully offset, you can carry it forward for the next 3 years by filing a tax return.',
   },
   withholding_account_year_end_settlement: {
     ja: '特定口座(源泉徴収あり)では、同じ口座内の損益は年末に精算されます。実際の還付・納付は証券会社の年間取引報告書で確認してください。',

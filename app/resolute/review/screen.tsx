@@ -76,13 +76,13 @@ function Workspace() {
   <aside className={controls.panel} aria-label={en?"Owner preview shortcuts":"運営者用の確認ショートカット"}>
    <p>{en?"Skip the quiz and preview any tool. Your saved rules are used when available. Otherwise, a fictional sample plan is loaded.":"30問に答えずに各画面を確認できます。保存済みのルールがあれば使い、なければ架空のサンプル計画で開きます"}</p>
    <div className={controls.links}>
-    {([["/resolute/news",en?"News risk sample":"危険度チェッカーを見る"],["/resolute/wall",en?"Rule wallpaper":"お守りを見る"],["/resolute/notebook",en?"My rulebook":"一冊を見る"],["/resolute/tonight",en?"A moment tonight":"今夜のひと息を見る"]] as [ReviewPath,string][]).map(([target,label])=>
+    {([["/resolute/news",en?"News risk checker":"危険度チェッカーを見る"],["/resolute/wall",en?"Rules wallpaper":"お守りを見る"],["/resolute/notebook",en?"My rulebook":"一冊を見る"],["/resolute/tonight",en?"A moment to breathe":"今夜のひと息を見る"]] as [ReviewPath,string][]).map(([target,label])=>
      <button key={target} disabled={opening} onClick={()=>void openFeature(target)}>{label}</button>)}
    </div>
    <label><input type="checkbox" checked={persistence.remembered} onChange={event=>store.setRemembered(event.target.checked)}/>
     {en?"Keep saved preview rules and settings on this device":"保存した確認用ルールと設定をこの端末に残す"}</label>
-   <p className={controls.note}>{en?"Includes financial amounts and answers. Use only on your own device. Uncheck to remove the device copy. Unsaved quiz answers are not retained.":"資産額や回答も含まれます。自分専用の端末でご利用ください。チェックを外すと端末の保存データを消します。診断途中の未保存の回答は残りません"}</p>
-   {persistence.error?<p role="status">{en?"Device storage is unavailable. Your changes are still available in this tab.":"端末への保存・削除を確認できませんでした。この画面内の入力は保持しています"}</p>:null}
+   <p className={controls.note}>{en?"This includes your financial amounts and answers. Use only on your own device. Uncheck to remove the saved copy. Unfinished quiz answers won’t be kept.":"資産額や回答も含まれます。自分専用の端末でご利用ください。チェックを外すと端末の保存データを消します。診断途中の未保存の回答は残りません"}</p>
+   {persistence.error?<p role="status">{en?"We couldn’t save or remove the copy on this device. Your changes are still here in this tab.":"端末への保存・削除を確認できませんでした。この画面内の入力は保持しています"}</p>:null}
   </aside>
   <div hidden={path !== "/resolute"}><DiagnosisScreen key={planVersion}/></div>
   {path === "/resolute/simulation" ? <SimulationScreen/> : path === "/resolute/tax" ? <TaxScreen/> :
